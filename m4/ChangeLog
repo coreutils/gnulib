@@ -6,6 +6,8 @@
 	* unicodeio.m4 (gl_UNICODEIO): Remove <string.h> check.
 	* setenv.m4 (gl_PREREQ_SETENV, gl_PREREQ_UNSETENV): Remove
 	<stdlib.h> and <string.h> checks.
+	* xreadlink.m4 (gl_XREADLINK): Remove <stdlib.h> check.
+	* yesno.m4 (gl_YESNO): Remove <stdlib.h> check.
 
 2003-09-09  Paul Eggert  <eggert@twinsun.com>
 

@@ -6,6 +6,9 @@
 	* unicodeio.c: Include <string.h> unconditionally.
 	* setenv.c: Include <stdlib.h> and <string.h> unconditionally.
 	* unsetenv.c: Likewise.
+	* xreadlink.c: Include <stdlib.h> unconditionally.
+	* yesno.c: Include <stdlib.h> unconditionally.
+	(rpmatch): Add prototype.
 
 2003-09-10  Jim Meyering  <jim@meyering.net>
 
