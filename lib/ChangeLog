@@ -1,3 +1,17 @@
+2004-08-05  Paul Eggert  <eggert@cs.ucla.edu>
+o
+	Merge from coreutils.
+
+	* .gdb-history: Remove; this doesn't belong here.
+
+	* c-strtod.c, c-strtod.h, c-strtold.c, cycle-check.c,
+	cycle-check.h, dev-ino.h: New files.
+
+	* error.c: Work around bug in OpenBSD 3.4 sterror_r: it
+	sometimes returns a positive errno value even when it succeeds.
+	(print_errno_message) [!LIBC]: Fall back on strerror if
+	__strerror_r fails.
+
 2004-08-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* fatal.c, fatal.h: Remove as the "fatal" module wasn't used or working.
