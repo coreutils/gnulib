@@ -1,4 +1,4 @@
-#serial 8
+#serial 9
 
 dnl From Jim Meyering.
 dnl Determine whether stat has the bug that it succeeds when given the
