@@ -90,6 +90,10 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 char *strerror_r ();
 # endif
 
+#ifndef SIZE_MAX
+# define SIZE_MAX ((size_t) -1)
+#endif
+
 /* The calling program should define program_name and set it to the
    name of the executing program.  */
 extern char *program_name;
@@ -142,40 +146,27 @@ error_tail (int status, int errnum, const char *message, va_list args)
     {
 # define ALLOCA_LIMIT 2000
       size_t len = strlen (message) + 1;
-      wchar_t *wmessage = NULL;
+      const wchar_t *wmessage = L"out of memory";
       mbstate_t st;
       size_t res;
       const char *tmp;
+      wchar_t *wbuf = (len < ALLOCA_LIMIT
+		       ? (void *) alloca (len * sizeof *wbuf)
+		       : len <= SIZE_MAX / sizeof *wbuf
+		       ? malloc (len * sizeof *wbuf)
+		       : NULL);
 
-      do
+      if (wbuf)
 	{
-	  if (len < ALLOCA_LIMIT)
-	    wmessage = (wchar_t *) alloca (len * sizeof (wchar_t));
-	  else
-	    {
-	      if (wmessage != NULL && len / 2 < ALLOCA_LIMIT)
-		wmessage = NULL;
-
-	      wmessage = (wchar_t *) realloc (wmessage,
-					      len * sizeof (wchar_t));
-
-	      if (wmessage == NULL)
-		{
-		  fputws_unlocked (L"out of memory\n", stderr);
-		  return;
-		}
-	    }
-
 	  memset (&st, '\0', sizeof (st));
 	  tmp =message;
+	  res = mbsrtowcs (wbuf, &tmp, len, &st);
+	  wmessage = res == (size_t) -1 ? L"???" : wbuf;
 	}
-      while ((res = mbsrtowcs (wmessage, &tmp, len, &st)) == len);
-
-      if (res == (size_t) -1)
-	/* The string cannot be converted.  */
-	wmessage = (wchar_t *) L"???";
 
       __vfwprintf (stderr, wmessage, args);
+      if (! (len < ALLOCA_LIMIT))
+	free (wbuf);
     }
   else
 #endif
