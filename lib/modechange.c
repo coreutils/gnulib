@@ -1,5 +1,5 @@
 /* modechange.c -- file mode manipulation
-   
+
    Copyright (C) 1989, 1990, 1997, 1998, 1999, 2001, 2003 Free Software
    Foundation, Inc.
 
