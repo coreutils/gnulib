@@ -221,7 +221,7 @@ static
 time_t
 __mktime_internal (struct tm *tp,
 		   struct tm *(*convert) (const time_t *, struct tm *),
-		   time_t *offset)
+		   long int *offset)
 {
   time_t t, dt, t0, t1, t2;
   struct tm tm;
@@ -279,8 +279,11 @@ __mktime_internal (struct tm *tp,
   tm.tm_year = EPOCH_YEAR - TM_YEAR_BASE;
   tm.tm_yday = tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
   t0 = ydhms_tm_diff (year, yday, hour, min, sec, &tm);
+  t = t0 + *offset;
+  if ((t < t0) != (*offset < 0))
+    t = t0;
 
-  for (t = t1 = t2 = t0 + *offset, dst2 = 0;
+  for (t1 = t2 = t, dst2 = 0;
        (dt = ydhms_tm_diff (year, yday, hour, min, sec,
 			    ranged_convert (convert, &t, &tm)));
        t1 = t2, t2 = t, t += dt, dst2 = tm.tm_isdst != 0)
@@ -376,7 +379,7 @@ __mktime_internal (struct tm *tp,
 }
 
 
-static time_t localtime_offset;
+static long int localtime_offset;
 
 /* Convert *TP to a time_t value.  */
 time_t
