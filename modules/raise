@@ -1,0 +1,18 @@
+Description:
+Send a signal to the executing process.
+
+Files:
+lib/raise.c
+
+Depends-on:
+
+configure.ac:
+AC_REPLACE_FUNCS(raise)
+
+Makefile.am:
+
+Include:
+
+Maintainer:
+Jim Meyering
+
