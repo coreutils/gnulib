@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-06-27.16}
+\def\texinfoversion{2004-07-25.00}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -608,7 +608,7 @@
 % The \TeX{} logo, as in plain, but resetting the spacing so that a
 % period following counts as ending a sentence.  (Idea found in latex.)
 %
-\edef\TeX{\TeX \spacefactor=3000 }
+\edef\TeX{\TeX \spacefactor=1000 }
 
 % @LaTeX{} logo.  Not quite the same results as the definition in
 % latex.ltx, since we use a different font for the raised A; it's most
@@ -1715,6 +1715,7 @@ where each line of input produces a line of output.}
 \def\cite#1{{\sl #1}\futurelet\next\smartitalicx}
 
 \let\i=\smartitalic
+\let\slanted=\smartslanted
 \let\var=\smartslanted
 \let\dfn=\smartslanted
 \let\emph=\smartitalic
