@@ -1,3 +1,7 @@
+2003-11-21  Karl Berry  <karl@gnu.org>
+
+	* config.{sub,guess}: update from config.
+
 2003-11-18  Karl Berry  <karl@gnu.org>
 
 	* config.{sub,guess}: update from config.
