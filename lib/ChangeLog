@@ -1,3 +1,9 @@
+2002-09-25    <karl@gnu.org>
+
+	* strdup.c: copy from libc/string (via ../config/srclist*).
+	* getopt*: copy from libc/posix.
+	* .cppi-disable: add strdup.c.
+
 2002-07-01  Jim Meyering  <meyering@lucent.com>
 
 	* c-stack.c: Include sys/time.h.
