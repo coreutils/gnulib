@@ -34,14 +34,30 @@ rename (from, to)
      char *from;
      char *to;
 {
-  struct stat from_stats;
+  struct stat from_stats, to_stats;
   int pid, status;
 
   if (stat (from, &from_stats))
     return -1;
 
-  if (unlink (to) && errno != ENOENT)
-    return -1;
+  /* Be careful not to unlink `from' if it happens to be equal to `to' or
+     (on filesystems that silently truncate filenames after 14 characters)
+     if `from' and `to' share the significant characters. */
+  if (stat (to, &to_stats))
+    {
+      if (errno != ENOENT)
+        return -1;
+    }
+  else
+    {
+      if ((from_stats.st_dev == to_stats.st_dev)
+          && (from_stats.st_ino == to_stats.st_dev))
+        /* `from' and `to' designate the same file on that filesystem. */
+        return 0;
+
+      if (unlink (to) && errno != ENOENT)
+        return -1;
+    }
 
   if (S_ISDIR (from_stats.st_mode))
     {

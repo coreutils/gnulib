@@ -82,6 +82,12 @@ void error ();
 #include <sys/vfs.h>
 #endif
 
+#ifdef DOLPHIN
+/* So special that it's not worth putting this in autoconf.  */
+#undef MOUNTED_FREAD_FSTYP
+#define MOUNTED_GETMNTTBL
+#endif
+
 #ifdef MOUNTED_GETMNTENT1	/* 4.3BSD, SunOS, HP-UX, Dynix, Irix.  */
 /* Return the value of the hexadecimal number represented by CP.
    No prefix (like '0x') or suffix (like 'h') is expected to be
@@ -357,6 +363,26 @@ read_filesystem_list (need_fs_type, all_fs)
       return NULL;
   }
 #endif /* MOUNTED_FREAD || MOUNTED_FREAD_FSTYP.  */
+
+#ifdef MOUNTED_GETMNTTBL	/* DolphinOS goes it's own way */
+  {
+    struct mntent **mnttbl=getmnttbl(),**ent;
+    for (ent=mnttbl;*ent;ent++)
+      {
+	me = (struct mount_entry *) xmalloc (sizeof (struct mount_entry));
+	me->me_devname = xstrdup ( (*ent)->mt_resource);
+	me->me_mountdir = xstrdup( (*ent)->mt_directory);
+	me->me_type =  xstrdup ((*ent)->mt_fstype);
+	me->me_dev = -1;	/* Magic; means not known yet. */
+	me->me_next = NULL;
+	
+	/* Add to the linked list. */
+	mtail->me_next = me;
+	mtail = me;
+      }
+    endmnttbl();
+  }
+#endif
 
 #ifdef MOUNTED_GETMNTENT2	/* SVR4.  */
   {
