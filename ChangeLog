@@ -1,3 +1,7 @@
+2005-03-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/xnanosleep (Depends-on): Remove gethrxtime.
+
 2005-02-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/gethrxtime: New file.

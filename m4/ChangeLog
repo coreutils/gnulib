@@ -1,3 +1,8 @@
+2005-03-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* xnanosleep.m4 (gl_XNANOSLEEP): Remove configuration attempting
+	to detect nanosleep bug.
+
 2005-02-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* gethrxtime.m4, xnanosleep.m4: New files.
