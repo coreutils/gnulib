@@ -1,3 +1,9 @@
+2003-11-11  Bruno Haible  <bruno@clisp.org>
+
+	* xsize.h (SIZE_MAX): Remove fallback definition.
+	* xalloc.h: Include limits.h. Assume SIZE_MAX and PTRDIFF_MAX are
+	defined.
+
 2003-11-10  Paul Eggert  <eggert@twinsun.com>
 
 	* xalloc.h (xalloc_oversized): [! (defined PTRDIFF_MAX &&
@@ -14,7 +20,7 @@
 	Reject sizes of exactly SIZE_MAX bytes.
 	* xreadlink.c: Include "xalloc.h" before checking whether SIZE_MAX
 	is defined, since "xalloc.h" now defines SIZE_MAX on modern hosts.
-	
+
 2003-11-05  Bruno Haible  <bruno@clisp.org>
 
 	* xsize.h: Include limits.h, to avoid a possible collision with

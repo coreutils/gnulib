@@ -1,4 +1,4 @@
-# xalloc.m4 serial 6
+# xalloc.m4 serial 7
 dnl Copyright (C) 2002-2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -8,8 +8,16 @@ dnl the same distribution terms as the rest of that program.
 
 AC_DEFUN([gl_XALLOC],
 [
+  gl_PREREQ_XALLOC
   gl_PREREQ_XMALLOC
   gl_PREREQ_XSTRDUP
+])
+
+# Prerequisites of lib/xalloc.h.
+AC_DEFUN([gl_PREREQ_XALLOC], [
+  AC_REQUIRE([gl_SIZE_MAX])
+  AC_REQUIRE([gl_PTRDIFF_MAX])
+  :
 ])
 
 # Prerequisites of lib/xmalloc.c.

@@ -27,9 +27,6 @@
 #if HAVE_STDINT_H
 # include <stdint.h>
 #endif
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
 
 /* The size of memory objects is often computed through expressions of
    type size_t. Example:

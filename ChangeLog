@@ -1,3 +1,8 @@
+2003-11-11  Bruno Haible  <bruno@clisp.org>
+
+	* modules/xsize (Files): Add m4/size_max.m4.
+	* modules/xalloc (Files): Add m4/size_max.m4, m4_ptrdiff_max.m4.
+
 2003-11-04  Bruno Haible  <bruno@clisp.org>
 
 	* modules/xsize: New file.

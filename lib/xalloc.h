@@ -20,7 +20,11 @@
 #ifndef XALLOC_H_
 # define XALLOC_H_
 
+/* Get size_t.  */
 # include <stddef.h>
+
+/* Get SIZE_MAX, PTRDIFF_MAX.  */
+# include <limits.h>
 # if HAVE_STDINT_H
 #  include <stdint.h>
 # endif
@@ -74,10 +78,10 @@ char *xstrdup (const char *str);
    PTRDIFF_MAX < SIZE_MAX, so do not bother to test for
    exactly-SIZE_MAX allocations on such hosts; this avoids a test and
    branch when S is known to be 1.  */
-# if defined PTRDIFF_MAX && PTRDIFF_MAX < SIZE_MAX
+# if PTRDIFF_MAX < SIZE_MAX
 #  define xalloc_oversized(n, s) (SIZE_MAX / (s) < (n))
-# else /* SIZE_MAX might not be defined, so avoid (SIZE_MAX - 1).  */
-#  define xalloc_oversized(n, s) ((size_t) -2 / (s) < (n))
+# else
+#  define xalloc_oversized(n, s) ((SIZE_MAX - 1) / (s) < (n))
 # endif
 
 /* These macros are deprecated; they will go away soon, and are retained

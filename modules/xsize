@@ -4,6 +4,7 @@ Checked size_t computations.
 Files:
 lib/xsize.h
 m4/xsize.m4
+m4/size_max.m4
 
 Depends-on:
 

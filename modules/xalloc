@@ -6,6 +6,8 @@ lib/xalloc.h
 lib/xmalloc.c
 lib/xstrdup.c
 m4/xalloc.m4
+m4/size_max.m4
+m4/ptrdiff_max.m4
 
 Depends-on:
 malloc
