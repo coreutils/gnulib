@@ -1,3 +1,8 @@
+2004-09-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/argp (Maintainer): Replace Simon Josefsson
+	by Sergey Poznyakoff.
+
 2004-09-29  Bruno Haible  <bruno@clisp.org>
 
 	* modules/alloca-opt: New file, derived from modules/alloca.
