@@ -1,3 +1,9 @@
+2003-07-16    <karl@gnu.org>
+
+	* srclist-update: was running fixlicense twice, which caused
+		texinfo.tex to be nullified for some reason.  Simplify,
+		$gplsrc is no longer needed as far as I can see?
+
 2003-07-15  Paul Eggert  <eggert@twinsun.com>
 
 	* srclist.txt: Get the following files from gettext-runtime/intl

@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.9 2003-07-15 20:20:39 eggert Exp $
+# $Id: srclist-update,v 1.10 2003-07-16 12:47:48 karl Exp $
 #
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
@@ -14,7 +14,6 @@ verbose=false
 #chicken="echo (would)"
 
 : ${TMPDIR=/tmp}
-srctmp=$TMPDIR/srclist.src
 dsttmp=$TMPDIR/srclist.dst
 
 mydir=`dirname $0`
@@ -64,7 +63,7 @@ fixlicense() \
 # $1 is input file, $2 is output.
 # Remove $Id lines, since they'll differ between source locations.
 # If $options contains "gpl", change the license to be the standard
-# GPL.  We use this for libc files.
+# GPL.  We use this for libc files, et al.
 #
 fixfile() \
 {
@@ -74,17 +73,19 @@ fixfile() \
   *)
     cat $1;;
   esac \
-  | grep -v '[$]Id:.*[$]' >&$2
+  | grep -v '[$]Id:.*[$]' >$2 2>&1
 }
 
 
 # 
 cat | while read src dst options; do
+  #echo "src=$src, dst=$dst, options=$options" >&2
   case $src:$dst in
-    *: ) continue;;  # skip lines without second element
+    *: ) continue;;    # skip lines without second element
     '#'* ) continue;;  # skip comment-only lines
   esac
 
+  # Expand variables and make sure we have an input file.
   eval src=$src
   if test ! -r $src; then
     echo "$0: cannot read $src" >&2
@@ -93,28 +94,25 @@ cat | while read src dst options; do
 
   # Ignore subdirs in src dir.  E.g., if input spec is
   #   src/subdir/foo.c dst
-  # write destination file dst/foo.c.
+  # then write destination file dst/foo.c.
   eval dst=$dst
   test -d $dst && dst=$dst/`basename $src`
 
-  # Make changes for sake of comparison.
+  # Do license changes and $Id removal in both src and dst, for the sake
+  # of a clean comparison.
+  srctmp=$TMPDIR/`basename $src`
   fixfile $src $srctmp
   test -r $dst && fixfile $dst $dsttmp
 
-  # don't show license differences.
-  gplsrc=$TMPDIR/`basename $src`
-  fixlicense $src >$gplsrc
-  cmp -s $src $gplsrc && gplsrc=$src
-
   if test ! -e $dst; then
-    echo "## $gplsrc $dst  # new"
-    $chicken cp -p $gplsrc $dst
+    echo "## $srctmp $dst  # new"
+    $chicken cp -p $srctmp $dst
   elif cmp -s $srctmp $dsttmp; then
-    $verbose && echo "## $gplsrc $dst  # unchanged"
+    $verbose && echo "## $srctmp $dst  # unchanged"
   else
-    echo "## $gplsrc $dst  # changes"
-    diff -C 2 $dst $gplsrc
+    echo "## $srctmp $dst  # changes"
+    diff -C 2 $dst $srctmp
   fi
 done
 
-rm -f $srctmp $dsttmp
+rm -f $dsttmp
