@@ -58,7 +58,7 @@ extern int errno;
 #endif
 
 /* Read up to COUNT bytes at BUF from descriptor FD, retrying if interrupted.
-   Return the actual number of bytes read, zero for EOF, or SAFE_RW_ERROR
+   Return the actual number of bytes read, zero for EOF, or SAFE_READ_ERROR
    upon error.  */
 size_t
 safe_read (int fd, void *buf, size_t count)
