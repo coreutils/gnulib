@@ -1,0 +1,29 @@
+Description:
+Waiting for a subprocess to finish.
+
+Files:
+lib/wait-process.h
+lib/wait-process.c
+m4/wait-process.m4
+m4/sig_atomic_t.m4
+
+Depends-on:
+fatal-signal
+error
+exit
+xalloc
+gettext
+stdbool
+
+configure.ac:
+gl_WAIT_PROCESS
+
+Makefile.am:
+lib_SOURCES += wait-process.h wait-process.c
+
+Include:
+"wait-process.h"
+
+Maintainer:
+Bruno Haible
+

@@ -1,3 +1,8 @@
+2003-10-20  Bruno Haible  <bruno@clisp.org>
+
+	* modules/wait-process: New file.
+	* MODULES.html.sh (func_all_modules): Add wait-process.
+
 2003-10-16  Paul Eggert  <eggert@twinsun.com>
 
 	* README: Mention that gnulib assumes that (foo *) NULL + 0 == NULL.
