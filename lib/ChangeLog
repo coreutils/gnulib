@@ -2,6 +2,17 @@
 
 	* version-etc.c: Update year in translatable copyright string.
 
+2002-12-25  Bruno Haible  <bruno@clisp.org>
+
+	* strtoimax.c: Include <stdint.h> as an alternative to <inttypes.h>.
+	* xstrtol.h: Likewise.
+	* xstrtoimax.c: Likewise.
+	* xstrtoumax.c: Likewise.
+	* human.h: Likewise.
+
+	* tempname.c: Include <inttypes.h> too. Avoids a compilation error
+	on systems that have <inttypes.h> but not <stdint.h>.
+
 2002-12-31  Paul Eggert  <eggert@twinsun.com>
 
 	* memcoll.c (memcoll): Fall back on a simple algorithm using
