@@ -38,7 +38,7 @@
 #else
 # include "gettext.h"
 #endif
-#define N_(msgid) (msgid)
+#define N_(msgid) msgid
 
 #include "argp.h"
 #include "argp-namefrob.h"
