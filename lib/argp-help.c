@@ -1669,7 +1669,10 @@ Try `%s --help' or `%s --usage' for more information.\n"),
 void __argp_help (const struct argp *argp, FILE *stream,
 		  unsigned flags, char *name)
 {
-  _help (argp, 0, stream, flags, name);
+  struct argp_state state;
+  memset (&state, 0, sizeof state);
+  state.root_argp = argp;
+  _help (argp, &state, stream, flags, name);
 }
 #ifdef weak_alias
 weak_alias (__argp_help, argp_help)
