@@ -1,3 +1,7 @@
+2003-10-16  Jim Meyering  <jim@meyering.net>
+
+	* xmalloc.c: Include <string.h>, for declarations of memset and memcpy.
+
 2003-10-15  Paul Eggert  <eggert@twinsun.com>
 
 	* exclude.c: Do not include <inttypes.h> or <stdint.h>.
@@ -46,7 +50,7 @@
 	* xstrtoul.c (STRTOL_T_MINIMUM, STRTOL_T_MAXIMUM): New macros.
 	* xstrtoumax.c (STRTOL_T_MINIMUM, STRTOL_T_MAXIMUM)
 	[defined UINTMAX_MAX]: New macros.
-	
+
 2003-10-14  Bruno Haible  <bruno@clisp.org>
 
 	* fatal-signal.h: Improved comments. Suggested by Paul Eggert.
