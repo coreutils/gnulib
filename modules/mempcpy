@@ -12,7 +12,6 @@ configure.ac:
 gl_FUNC_MEMPCPY
 
 Makefile.am:
-lib_SOURCES += mempcpy.h
 
 Include:
 "mempcpy.h"
