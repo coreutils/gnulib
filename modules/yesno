@@ -4,6 +4,7 @@ Read a response from the user, and its classification as matching "yes" or
 
 Files:
 lib/yesno.c
+lib/yesno.h
 m4/yesno.m4
 
 Depends-on:
@@ -14,7 +15,7 @@ configure.ac:
 gl_YESNO
 
 Makefile.am:
-lib_SOURCES += yesno.c
+lib_SOURCES += yesno.c yesno.h
 
 Include:
 

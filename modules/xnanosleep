@@ -1,0 +1,22 @@
+Description:
+a more convenient interface to nanosleep
+
+Files:
+lib/xnanosleep.h
+lib/xnanosleep.c
+
+Depends-on:
+timespec
+xalloc
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += xnanosleep.h xnanosleep.c
+
+Include:
+"xnanosleep.h"
+
+Maintainer:
+Paul Eggert, Jim Meyering
+
