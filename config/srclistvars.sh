@@ -1,10 +1,10 @@
-# $Id: srclistvars.sh,v 1.5 2002-09-25 14:18:57 karl Exp $
+# $Id: srclistvars.sh,v 1.6 2002-11-25 00:18:50 karl Exp $
 # Variables for srclist-update and srclist.txt.
 # Will change for each user.
 
 : ${ACLOCAL=/usr/local/gnu/share/aclocal}
 : ${AUTOCONF=/usr/local/gnu/share/autoconf}
-: ${AUTOMAKE=/usr/local/gnu/share/automake-1.6}
+: ${AUTOMAKE=/usr/local/gnu/share/automake-1.7}
 : ${EMACSSRC=$HOME/gnu/src/emacs}
 : ${GETTEXT=/usr/local/gnu/share/gettext}
 : ${GNUBIN=/usr/local/gnu/bin}
