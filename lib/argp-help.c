@@ -1055,7 +1055,13 @@ hol_entry_help (struct hol_entry *entry, const struct argp_state *state,
   int old_wm = __argp_fmtstream_wmargin (stream);
   /* PEST is a state block holding some of our variables that we'd like to
      share with helper functions.  */
-  struct pentry_state pest = { entry, stream, hhstate, 1, state };
+  struct pentry_state pest;
+
+  pest.entry = entry;
+  pest.stream = stream;
+  pest.hhstate = hhstate;
+  pest.first = 1;
+  pest.state = state;
 
   if (! odoc (real))
     for (opt = real, num = entry->num; num > 0; opt++, num--)
