@@ -2,8 +2,6 @@
 # include <config.h>
 #endif
 
-/* FIXME: define EXIT_FAILURE */
-
 #include <stdio.h>
 
 #if HAVE_VPRINTF || HAVE_DOPRNT || _LIBC
