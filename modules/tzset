@@ -1,0 +1,20 @@
+Description:
+tzset - initialize time conversion information
+
+Files:
+m4/tzset.m4
+
+Depends-on:
+gettimeofday
+
+configure.ac:
+gl_FUNC_TZSET_CLOBBER
+
+Makefile.am:
+
+Include:
+<time.h>
+
+Maintainer:
+Jim Meyering
+

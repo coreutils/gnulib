@@ -1,4 +1,4 @@
-#serial 3
+#serial 4
 
 dnl From Jim Meyering.
 dnl
@@ -58,15 +58,22 @@ main ()
 	 jm_cv_func_gettimeofday_clobber=yes)
   ])
   if test $jm_cv_func_gettimeofday_clobber = yes; then
-    AC_LIBOBJ(gettimeofday)
-    AC_DEFINE(localtime, rpl_localtime,
-      [Define to rpl_localtime if the replacement function should be used.])
+    gl_GETTIMEOFDAY_REPLACE_LOCALTIME
+
     AC_DEFINE(gettimeofday, rpl_gettimeofday,
       [Define to rpl_gettimeofday if the replacement function should be used.])
     AC_DEFINE(GETTIMEOFDAY_CLOBBERS_LOCALTIME_BUFFER, 1,
       [Define if gettimeofday clobbers localtime's static buffer.])
     gl_PREREQ_GETTIMEOFDAY
   fi
+])
+
+AC_DEFUN([gl_GETTIMEOFDAY_REPLACE_LOCALTIME], [
+  AC_LIBOBJ(gettimeofday)
+  AC_DEFINE(gmtime, rpl_gmtime,
+    [Define to rpl_gmtime if the replacement function should be used.])
+  AC_DEFINE(localtime, rpl_localtime,
+    [Define to rpl_localtime if the replacement function should be used.])
 ])
 
 # Prerequisites of lib/gettimeofday.c.
