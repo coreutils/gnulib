@@ -1,7 +1,9 @@
 2004-12-23  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* getdate.y (YYINITDEPTH): New macro, so that the initial stack
-	is small too.
+	* getdate.y (YYSTACK_USE_ALLOCA): Define to 0, since there's no
+	need to extend the stack.
+	(YYINITDEPTH): New macro, so that the initial stack isn't overly
+	large.
 
 2004-12-22  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
