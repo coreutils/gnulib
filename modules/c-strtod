@@ -2,12 +2,13 @@ Description:
 Convert string to double in C locale.
 
 Files:
-lib/c-strtod.h
 lib/c-strtod.c
+lib/c-strtod.h
 m4/c-strtod.m4
 
 Depends-on:
 extensions
+xalloc
 
 configure.ac:
 gl_C_STRTOD

@@ -8,6 +8,7 @@ lib/c-strtold.c
 m4/c-strtod.m4
 
 Depends-on:
+xalloc
 extensions
 
 configure.ac:
