@@ -1,5 +1,5 @@
 /* xmalloc.c -- malloc with out of memory checking
-   Copyright (C) 1990, 1991, 1993 Free Software Foundation, Inc.
+   Copyright (C) 1990, 91, 92, 93, 94 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,8 +35,16 @@ VOID *realloc ();
 void free ();
 #endif
 
-#if __STDC__ && defined (HAVE_VPRINTF)
-void error (int, int, char const *, ...);
+#ifndef EXIT_FAILURE
+#define EXIT_FAILURE 1
+#endif
+
+/* Exit value when the requested amount of memory is not available.
+   The caller may set it to some other value.  */
+int xmalloc_exit_failure = EXIT_FAILURE;
+
+#if __STDC__ && (HAVE_VPRINTF || HAVE_DOPRNT)
+void error (int, int, const char *, ...);
 #else
 void error ();
 #endif
@@ -51,8 +59,7 @@ xmalloc (n)
 
   p = malloc (n);
   if (p == 0)
-    /* Must exit with 2 for `cmp'.  */
-    error (2, 0, "memory exhausted");
+    error (xmalloc_exit_failure, 0, "memory exhausted");
   return p;
 }
 
@@ -75,7 +82,6 @@ xrealloc (p, n)
     }
   p = realloc (p, n);
   if (p == 0)
-    /* Must exit with 2 for `cmp'.  */
-    error (2, 0, "memory exhausted");
+    error (xmalloc_exit_failure, 0, "memory exhausted");
   return p;
 }
