@@ -1,3 +1,7 @@
+2004-08-01  Simon Josefsson  <jas@extundo.com>
+
+	* xgetdomainname.c: Include stdlib.h, for free().
+
 2004-08-02  Simon Josefsson  <jas@extundo.com>
 
 	* getsubopt.h: New file, with comments from Bruno Haible.
