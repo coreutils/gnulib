@@ -1,3 +1,27 @@
+2004-10-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getdate.y: Use Bison 1.875 features, and some minor
+	code cleanups.  This change does not affect semantics.
+	Don't include <stdlib.h>; no longer needed.
+	Don't include unlocked-io.h; only the "#if TEST" code uses
+	stdio, and performance isn't crucial there.
+	(PC, YYLEX_PARAM, YYPARSE_PARAM): Remove; replaced by
+	Bison 1.875 features as described below.
+	All uses of "PC." replaced by "pc->".
+	(YYSTYPE): Add a forward declaration.
+	(yylex, yyerror): Use full prototypes in forward decls.
+	Use "%pure-parser" rather than obsolescent "%pure_parser".
+	Use %parse-param and %lex-param instead of obsolescent
+	YYPARSE_PARAM and YYLEX_PARAM.
+	(meridian_table, month_and_day_table, time_units_table,
+	relative_time_table, time_zone_table, military_table,
+	lookup_zone, lookup_word, get_date):
+	Use NULL instead of 0 where appropriate.
+	(to_hour): Avoid abort (), to avoid a dependency on
+	stdlib.h.
+	(yyerror, yylex): Now accepts parser_control * arg.
+	(main) [TEST]: Use '\0' rather than 0 for char.
+	
 2004-10-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getpagesize.c (getpagesize): Don't assume <sys/param.h> exists.
