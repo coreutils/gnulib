@@ -1,3 +1,7 @@
+2005-03-10  Jim Meyering  <jim@meyering.net>
+
+	* save-cwd.m4 (gl_SAVE_CWD): Check for fchdir.
+
 2005-03-07  Bruno Haible  <bruno@clisp.org>
 
 	* mmap-anon.m4 (MAP_FILE, MAP_FAILED): Remove definitions.
