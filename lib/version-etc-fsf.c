@@ -1,5 +1,5 @@
-/* Utility to help print --version output in a consistent format.
-   Copyright (C) 1999, 2003, 2005 Free Software Foundation, Inc.
+/* Variable with FSF copyright information, for version-etc.
+   Copyright (C) 1999-2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,21 +17,15 @@
 
 /* Written by Jim Meyering. */
 
-#ifndef VERSION_ETC_H
-# define VERSION_ETC_H 1
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
 
-# include <stdarg.h>
-# include <stdio.h>
+/* Specification.  */
+#include "version-etc.h"
 
-extern const char version_etc_copyright[];
+/* Default copyright goes to the FSF. */
 
-extern void version_etc_va (FILE *stream,
-			    const char *command_name, const char *package,
-			    const char *version, va_list authors);
-
-extern void version_etc (FILE *stream,
-			 const char *command_name, const char *package,
-			 const char *version,
-		         /* const char *author1, ...*/ ...);
-
-#endif /* VERSION_ETC_H */
+const char version_etc_copyright[] =
+  /* Do *not* mark this string for translation.  */
+  "Copyright (C) 2005 Free Software Foundation, Inc.";

@@ -1,3 +1,10 @@
+2005-01-20  Simon Josefsson  <jas@extundo.com>
+
+	* version-etc-fsf.c: New file, with version_etc_copyright.
+	* version-etc.c: Remove version_etc_copyright.
+	* version-etc.h (version_etc_copyright): Use [] instead of * in
+	prototype, suggested by Paul Eggert <eggert@CS.UCLA.EDU>.
+
 2005-01-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* save-cwd.c (save_cwd): Remove code to support the case

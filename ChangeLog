@@ -1,3 +1,11 @@
+2005-01-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh (Command-line arguments): Add version-etc-fsf.
+
+2005-01-20  Simon Josefsson  <jas@extundo.com>
+
+	* modules/version-etc-fsf: New file.
+
 2005-01-19  Paul Eggert  <eggert@cs.ucla.edu>
 
         * modules/mempcpy (Makefile.am): Remove mention of mempcpy.h;
