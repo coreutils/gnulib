@@ -1,3 +1,7 @@
+2004-11-30  Simon Josefsson  <jas@extundo.com>
+
+	* modules/restrict (License): Change to LGPL.
+
 2004-11-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/getcwd (Files): Add lib/getcwd.h, m4/getcwd.m4.
