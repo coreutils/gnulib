@@ -12,6 +12,7 @@ cycle-check
 path-concat
 xalloc
 xgetcwd
+xreadlink
 
 configure.ac:
 AC_FUNC_CANONICALIZE_FILE_NAME
@@ -27,4 +28,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-
