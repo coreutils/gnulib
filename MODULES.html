@@ -1547,14 +1547,14 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/c-strtod.h">c-strtod.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/c-strtod.c">c-strtod.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/c-strtod.m4">c-strtod.m4</A><BR>gl_C_STRTOD
-        <TD ALIGN=LEFT VALIGN=TOP>extensions
+        <TD ALIGN=LEFT VALIGN=TOP>extensions<BR>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=c-strtold"></A><A HREF="modules/c-strtold">c-strtold</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/c-strtod.h">c-strtod.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/c-strtod.c">c-strtod.c</A><BR><A HREF="lib/c-strtold.c">c-strtold.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/c-strtod.m4">c-strtod.m4</A><BR>gl_C_STRTOLD
-        <TD ALIGN=LEFT VALIGN=TOP>extensions
+        <TD ALIGN=LEFT VALIGN=TOP>extensions<BR>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xstrtod"></A><A HREF="modules/xstrtod">xstrtod</A>
@@ -1656,7 +1656,7 @@ variables.
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xvasprintf"></A><A HREF="modules/xvasprintf">xvasprintf</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xvasprintf.h">xvasprintf.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xvasprintf.c">xvasprintf.c</A><BR><A HREF="lib/xasprintf.c">xasprintf.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xvasprintf.c">xvasprintf.c</A><BR><A HREF="lib/xasprintf.c">xasprintf.c</A><BR><A HREF="lib/xalloc.h">xalloc.h</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP>vasprintf
       </TR>
@@ -1843,9 +1843,9 @@ variables.
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=hash"></A><A HREF="modules/hash">hash</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/hash.h">hash.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/hash.c">hash.c</A><BR><A HREF="lib/xalloc.h">xalloc.h</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/hash.c">hash.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/hash.m4">hash.m4</A><BR>gl_HASH
-        <TD ALIGN=LEFT VALIGN=TOP>stdbool
+        <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=readtokens"></A><A HREF="modules/readtokens">readtokens</A>
@@ -2765,7 +2765,7 @@ variables.
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=userspec"></A><A HREF="modules/userspec">userspec</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/userspec.h">userspec.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/intprops.h">intprops.h</A><BR><A HREF="lib/userspec.c">userspec.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/inttostr.h">inttostr.h</A><BR><A HREF="lib/intprops.h">intprops.h</A><BR><A HREF="lib/userspec.c">userspec.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/userspec.m4">userspec.m4</A><BR>gl_USERSPEC
         <TD ALIGN=LEFT VALIGN=TOP>posixver<BR>xalloc<BR>xstrtol<BR>strdup<BR>gettext
       </TR>
@@ -3255,7 +3255,7 @@ variables.
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gethrxtime"></A><A HREF="modules/gethrxtime">gethrxtime</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xtime.h">xtime.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/gethrxtime.c">gethrxtime.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/gethrxtime.c">gethrxtime.c</A><BR><A HREF="lib/gethrxtime.h">gethrxtime.h</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/gethrxtime.m4">gethrxtime.m4</A><BR><A HREF="m4/clock_time.m4">clock_time.m4</A><BR><A HREF="m4/longlong.m4">longlong.m4</A><BR>gl_GETHRXTIME
         <TD ALIGN=LEFT VALIGN=TOP>extensions
       </TR>
@@ -3276,7 +3276,6 @@ variables.
     </TABLE>
     <H2>Lone files - please create new modules containing them</H2>
     <PRE>
-<A HREF="lib/gethrxtime.h">lib/gethrxtime.h</A>
 <A HREF="lib/progreloc.c">lib/progreloc.c</A>
 <A HREF="m4/d-type.m4">m4/d-type.m4</A>
 <A HREF="m4/host-os.m4">m4/host-os.m4</A>
@@ -3305,6 +3304,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 22 March 2005.
+    Generated from <CODE>MODULES.html.sh</CODE> on 27 March 2005.
   </BODY>
 </HTML>
