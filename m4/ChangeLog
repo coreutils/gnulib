@@ -1,6 +1,9 @@
 2004-04-19  Bruno Haible  <bruno@clisp.org>
 
 	* mbrtowc.m4: Change jm_ to gl_ in cache variables as well.
+	* inttypes_h.m4: Likewise.
+	* stdint_h.m4: Likewise.
+	* uintmax_t.m4: Likewise.
 
 2004-04-18  Jim Meyering  <jim@meyering.net>
 
