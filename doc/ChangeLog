@@ -1,3 +1,7 @@
+2004-01-18  Karl Berry  <karl@gnu.org>
+
+	* gpl.texi, lgpl.texi: new files.
+
 2003-03-13  Paul Eggert  <eggert@twinsun.com>
 
 	* COPYING.DOC, fdl.texi: Sync with latest FSF version.

@@ -1,3 +1,8 @@
+2004-01-18  Karl Berry  <karl@gnu.org>
+
+	* srclistvars.sh (GNUWWWLICENSES): new variable.
+	* srclist.txt ({fdl,gpl,lgpl}.text): get from there.
+
 2004-01-14  Karl Berry  <karl@gnu.org>
 
 	* install-sh: update from automake.

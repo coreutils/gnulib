@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.31 2003-12-24 13:07:08 uid65818 Exp $
+# $Id: srclist.txt,v 1.32 2004-01-18 14:54:16 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -15,7 +15,9 @@ $TEXINFOSRC/doc/texinfo.tex	config
 
 $AUTOCONF/INSTALL		doc
 #
-$GNUORG/fdl.texi		doc
+$GNUWWWLICENSES/fdl.texi	doc
+$GNUWWWLICENSES/gpl.texi	doc
+$GNUWWWLICENSES/lgpl.texi	doc
 
 $GETTEXT/gettext-runtime/libasprintf/asnprintf.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/asprintf.c		lib gpl
