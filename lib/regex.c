@@ -3,7 +3,7 @@
    (Implements POSIX draft P10003.2/D11.2, except for
    internationalization features.)
 
-   Copyright (C) 1993 Free Software Foundation, Inc.
+   Copyright (C) 1993, 1994 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -40,10 +40,6 @@
 /* We need this for `regex.h', and perhaps for the Emacs include files.  */
 #include <sys/types.h>
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 /* The `emacs' switch turns on certain matching commands
    that make sense only in Emacs. */
 #ifdef emacs
@@ -67,6 +63,7 @@ char *realloc ();
 
 /* We used to test for `BSTRING' here, but only GCC and Emacs define
    `BSTRING', as far as I know, and neither of them use this code.  */
+#ifndef INHIBIT_STRING_HEADER
 #if HAVE_STRING_H || STDC_HEADERS
 #include <string.h>
 #ifndef bcmp
@@ -80,6 +77,7 @@ char *realloc ();
 #endif
 #else
 #include <strings.h>
+#endif
 #endif
 
 /* Define the syntax stuff for \<, \>, etc.  */
@@ -892,7 +890,7 @@ static const char *re_error_msg[] =
 
 /* Avoiding alloca during matching, to placate r_alloc.  */
 
-/* Define MATCH_MAY_ALLOCATE if we need to make sure that the
+/* Define MATCH_MAY_ALLOCATE unless we need to make sure that the
    searching and matching functions should not call alloca.  On some
    systems, alloca is implemented in terms of malloc, and if we're
    using the relocating allocator routines, then malloc could cause a
@@ -2496,11 +2494,32 @@ regex_compile (pattern, size, syntax, bufp)
     /* Since DOUBLE_FAIL_STACK refuses to double only if the current size
        is strictly greater than re_max_failures, the largest possible stack
        is 2 * re_max_failures failure points.  */
-    fail_stack.size = (2 * re_max_failures * MAX_FAILURE_ITEMS);
-    if (! fail_stack.stack)
-      fail_stack.stack =
-	(fail_stack_elt_t *) malloc (fail_stack.size 
-				     * sizeof (fail_stack_elt_t));
+    if (fail_stack.size < (2 * re_max_failures * MAX_FAILURE_ITEMS))
+      {
+	fail_stack.size = (2 * re_max_failures * MAX_FAILURE_ITEMS);
+
+#ifdef emacs
+	if (! fail_stack.stack)
+	  fail_stack.stack
+	    = (fail_stack_elt_t *) xmalloc (fail_stack.size 
+					    * sizeof (fail_stack_elt_t));
+	else
+	  fail_stack.stack
+	    = (fail_stack_elt_t *) xrealloc (fail_stack.stack,
+					     (fail_stack.size
+					      * sizeof (fail_stack_elt_t)));
+#else /* not emacs */
+	if (! fail_stack.stack)
+	  fail_stack.stack
+	    = (fail_stack_elt_t *) malloc (fail_stack.size 
+					   * sizeof (fail_stack_elt_t));
+	else
+	  fail_stack.stack
+	    = (fail_stack_elt_t *) realloc (fail_stack.stack,
+					    (fail_stack.size
+					     * sizeof (fail_stack_elt_t)));
+#endif /* not emacs */
+      }
 
     /* Initialize some other variables the matcher uses.  */
     RETALLOC_IF (regstart,	 num_regs, const char *);
@@ -3157,7 +3176,11 @@ re_search_2 (bufp, string1, size1, string2, size2, startpos, range, regs, stop)
 
       val = re_match_2_internal (bufp, string1, size1, string2, size2,
 				 startpos, regs, stop);
+#ifndef REGEX_MALLOC
+#ifdef C_ALLOCA
       alloca (0);
+#endif
+#endif
 
       if (val >= 0)
 	return startpos;
@@ -4249,8 +4272,10 @@ re_match_2_internal (bufp, string1, size1, string2, size2, pos, regs, stop)
 	      }
             else if ((re_opcode_t) *p2 == charset)
 	      {
+#ifdef DEBUG
 		register unsigned char c
                   = *p2 == (unsigned char) endline ? '\n' : p2[2];
+#endif
 
                 if ((re_opcode_t) p1[3] == exactn
 		    && ! (p2[1] * BYTEWIDTH > p1[4]
@@ -4451,7 +4476,6 @@ re_match_2_internal (bufp, string1, size1, string2, size2, pos, regs, stop)
           goto fail;
 
 #ifdef emacs
-#ifdef emacs19
   	case before_dot:
           DEBUG_PRINT1 ("EXECUTING before_dot.\n");
  	  if (PTR_CHAR_POS ((unsigned char *) d) >= point)
@@ -4469,7 +4493,7 @@ re_match_2_internal (bufp, string1, size1, string2, size2, pos, regs, stop)
           if (PTR_CHAR_POS ((unsigned char *) d) <= point)
   	    goto fail;
   	  break;
-#else /* not emacs19 */
+#if 0 /* not emacs19 */
 	case at_dot:
           DEBUG_PRINT1 ("EXECUTING at_dot.\n");
 	  if (PTR_CHAR_POS ((unsigned char *) d) + 1 != point)
