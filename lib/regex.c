@@ -33,6 +33,14 @@
 /* We need this for `regex.h', and perhaps for the Emacs include files.  */
 #include <sys/types.h>
 
+/* This is for other GNU distributions with internationalized messages.
+   The GNU C Library itself does not yet support such messages.  */
+#if HAVE_LIBINTL_H
+# include <libintl.h>
+#else
+# define gettext(msgid) (msgid)
+#endif
+
 /* The `emacs' switch turns on certain matching commands
    that make sense only in Emacs. */
 #ifdef emacs
@@ -40,9 +48,6 @@
 #include "lisp.h"
 #include "buffer.h"
 #include "syntax.h"
-
-/* Emacs uses `NULL' as a predicate.  */
-#undef NULL
 
 #else  /* not emacs */
 
@@ -79,6 +84,12 @@ char *realloc ();
    commands in re_match_2.  */
 #ifndef Sword 
 #define Sword 1
+#endif
+
+#ifdef SWITCH_ENUM_BUG
+#define SWITCH_ENUM_CAST(x) ((int)(x))
+#else
+#define SWITCH_ENUM_CAST(x) (x)
 #endif
 
 #ifdef SYNTAX_TABLE
@@ -266,6 +277,9 @@ static int re_match_2_internal ();
 typedef enum
 {
   no_op = 0,
+
+  /* Succeed right away--no more backtracking.  */
+  succeed,
 
         /* Followed by one byte giving n, then by n literal bytes.  */
   exactn,
@@ -495,8 +509,6 @@ static int debug = 0;
   if (debug) print_double_string (w, s1, sz1, s2, sz2)
 
 
-extern void printchar ();
-
 /* Print the fastmap in human-readable form.  */
 
 void
@@ -511,7 +523,7 @@ print_fastmap (fastmap)
       if (fastmap[i++])
 	{
 	  was_a_range = 0;
-          printchar (i - 1);
+          putchar (i - 1);
           while (i < (1 << BYTEWIDTH)  &&  fastmap[i])
             {
               was_a_range = 1;
@@ -520,7 +532,7 @@ print_fastmap (fastmap)
 	  if (was_a_range)
             {
               printf ("-");
-              printchar (i - 1);
+              putchar (i - 1);
             }
         }
     }
@@ -563,7 +575,7 @@ print_partial_compiled_pattern (start, end)
           do
 	    {
               putchar ('/');
-	      printchar (*p++);
+	      putchar (*p++);
             }
           while (--mcnt);
           break;
@@ -610,18 +622,18 @@ print_partial_compiled_pattern (start, end)
 		  /* Have we broken a range?  */
 		  else if (last + 1 != c && in_range)
               {
-		      printchar (last);
+		      putchar (last);
 		      in_range = 0;
 		    }
                 
 		  if (! in_range)
-		    printchar (c);
+		    putchar (c);
 
 		  last = c;
               }
 
 	    if (in_range)
-	      printchar (last);
+	      putchar (last);
 
 	    putchar (']');
 
@@ -806,13 +818,13 @@ print_double_string (where, string1, size1, string2, size2)
       if (FIRST_STRING_P (where))
         {
           for (this_char = where - string1; this_char < size1; this_char++)
-            printchar (string1[this_char]);
+            putchar (string1[this_char]);
 
           where = string2;    
         }
 
       for (this_char = where - string2; this_char < size2; this_char++)
-        printchar (string2[this_char]);
+        putchar (string2[this_char]);
     }
 }
 
@@ -834,7 +846,9 @@ print_double_string (where, string1, size1, string2, size2)
 /* Set by `re_set_syntax' to the current regexp syntax to recognize.  Can
    also be assigned to arbitrarily: each pattern buffer stores its own
    syntax, so it can be changed between regex compilations.  */
-reg_syntax_t re_syntax_options = RE_SYNTAX_EMACS;
+/* This has no initializer because initialized variables in Emacs
+   become read-only after dumping.  */
+reg_syntax_t re_syntax_options;
 
 
 /* Specify the precise syntax of regexps for compilation.  This provides
@@ -855,10 +869,12 @@ re_set_syntax (syntax)
 }
 
 /* This table gives an error message for each of the error codes listed
-   in regex.h.  Obviously the order here has to be same as there.  */
+   in regex.h.  Obviously the order here has to be same as there.
+   POSIX doesn't require that we do anything for REG_NOERROR,
+   but why not be nice?  */
 
-static const char *re_error_msg[] =
-  { NULL,					/* REG_NOERROR */
+static const char *re_error_msgid[] =
+  { "Success",					/* REG_NOERROR */
     "No match",					/* REG_NOMATCH */
     "Invalid regular expression",		/* REG_BADPAT */
     "Invalid collation character",		/* REG_ECOLLATE */
@@ -1184,6 +1200,7 @@ typedef struct
       DEBUG_PRINT2 ("      start: 0x%x\n", regstart[this_reg]);		\
     }									\
 									\
+  set_regs_matched_done = 0;						\
   DEBUG_STATEMENT (nfailure_points_popped++);				\
 } /* POP_FAILURE_POINT */
 
@@ -1227,19 +1244,23 @@ typedef union
 #define SET_REGS_MATCHED()						\
   do									\
     {									\
-      unsigned r;							\
-      for (r = lowest_active_reg; r <= highest_active_reg; r++)		\
-        {								\
-          MATCHED_SOMETHING (reg_info[r])				\
-            = EVER_MATCHED_SOMETHING (reg_info[r])			\
-            = 1;							\
-        }								\
+      if (!set_regs_matched_done)					\
+	{								\
+	  unsigned r;							\
+	  set_regs_matched_done = 1;					\
+	  for (r = lowest_active_reg; r <= highest_active_reg; r++)	\
+	    {								\
+	      MATCHED_SOMETHING (reg_info[r])				\
+		= EVER_MATCHED_SOMETHING (reg_info[r])			\
+		= 1;							\
+	    }								\
+	}								\
     }									\
   while (0)
 
-
 /* Registers are set to a sentinel when they haven't yet matched.  */
-#define REG_UNSET_VALUE ((char *) -1)
+static char reg_unset_dummy;
+#define REG_UNSET_VALUE (&reg_unset_dummy)
 #define REG_UNSET(e) ((e) == REG_UNSET_VALUE)
 
 
@@ -1547,7 +1568,7 @@ regex_compile (pattern, size, syntax, bufp)
       unsigned debug_count;
       
       for (debug_count = 0; debug_count < size; debug_count++)
-        printchar (pattern[debug_count]);
+        putchar (pattern[debug_count]);
       putchar ('\n');
     }
 #endif /* DEBUG */
@@ -2470,6 +2491,11 @@ regex_compile (pattern, size, syntax, bufp)
   if (!COMPILE_STACK_EMPTY) 
     FREE_STACK_RETURN (REG_EPAREN);
 
+  /* If we don't want backtracking, force success
+     the first time we reach the end of the compiled pattern.  */
+  if (syntax & RE_NO_POSIX_BACKTRACKING)
+    BUF_PUSH (succeed);
+
   free (compile_stack.stack);
 
   /* We have succeeded; set the length of the buffer.  */
@@ -2772,26 +2798,30 @@ re_compile_fastmap (bufp)
   bufp->fastmap_accurate = 1;	    /* It will be when we're done.  */
   bufp->can_be_null = 0;
       
-  while (p != pend || !FAIL_STACK_EMPTY ())
+  while (1)
     {
-      if (p == pend)
-        {
-          bufp->can_be_null |= path_can_be_null;
-          
-          /* Reset for next path.  */
-          path_can_be_null = true;
-          
-          p = fail_stack.stack[--fail_stack.avail];
+      if (p == pend || *p == succeed)
+	{
+	  /* We have reached the (effective) end of pattern.  */
+	  if (!FAIL_STACK_EMPTY ())
+	    {
+	      bufp->can_be_null |= path_can_be_null;
+
+	      /* Reset for next path.  */
+	      path_can_be_null = true;
+
+	      p = fail_stack.stack[--fail_stack.avail];
+
+	      continue;
+	    }
+	  else
+	    break;
 	}
 
       /* We should never be about to go beyond the end of the pattern.  */
       assert (p < pend);
       
-#ifdef SWITCH_ENUM_BUG
-      switch ((int) ((re_opcode_t) *p++))
-#else
-      switch ((re_opcode_t) *p++)
-#endif
+      switch (SWITCH_ENUM_CAST ((re_opcode_t) *p++))
 	{
 
         /* I guess the idea here is to simply not bother with a fastmap
@@ -3456,6 +3486,9 @@ re_match_2_internal (bufp, string1, size1, string2, size2, pos, regs, stop)
      and need to test it, it's not garbage.  */
   const char *match_end = NULL;
 
+  /* This helps SET_REGS_MATCHED avoid doing redundant work.  */
+  int set_regs_matched_done = 0;
+
   /* Used when we pop values we don't care about.  */
 #ifdef MATCH_MAY_ALLOCATE /* otherwise, these are global.  */
   const char **reg_dummy;
@@ -3652,6 +3685,7 @@ re_match_2_internal (bufp, string1, size1, string2, size2, pos, regs, stop)
                 }
             } /* d != end_match_2 */
 
+	succeed:
           DEBUG_PRINT1 ("Accepting match.\n");
 
           /* If caller wants register contents data back, do it.  */
@@ -3740,11 +3774,7 @@ re_match_2_internal (bufp, string1, size1, string2, size2, pos, regs, stop)
         }
 
       /* Otherwise match next pattern command.  */
-#ifdef SWITCH_ENUM_BUG
-      switch ((int) ((re_opcode_t) *p++))
-#else
-      switch ((re_opcode_t) *p++)
-#endif
+      switch (SWITCH_ENUM_CAST ((re_opcode_t) *p++))
 	{
         /* Ignore these.  Used to ignore the n of succeed_n's which
            currently have n == 0.  */
@@ -3752,6 +3782,9 @@ re_match_2_internal (bufp, string1, size1, string2, size2, pos, regs, stop)
           DEBUG_PRINT1 ("EXECUTING no_op.\n");
           break;
 
+	case succeed:
+          DEBUG_PRINT1 ("EXECUTING succeed.\n");
+	  goto succeed;
 
         /* Match the next n pattern characters exactly.  The following
            byte in the pattern defines n, and the n bytes after that
@@ -3859,6 +3892,9 @@ re_match_2_internal (bufp, string1, size1, string2, size2, pos, regs, stop)
 
           IS_ACTIVE (reg_info[*p]) = 1;
           MATCHED_SOMETHING (reg_info[*p]) = 0;
+
+	  /* Clear this whenever we change the register activity status.  */
+	  set_regs_matched_done = 0;
           
           /* This is the new highest active register.  */
           highest_active_reg = *p;
@@ -3871,6 +3907,7 @@ re_match_2_internal (bufp, string1, size1, string2, size2, pos, regs, stop)
           /* Move past the register number and inner group count.  */
           p += 2;
 	  just_past_start_mem = p;
+
           break;
 
 
@@ -3896,7 +3933,10 @@ re_match_2_internal (bufp, string1, size1, string2, size2, pos, regs, stop)
 
           /* This register isn't active anymore.  */
           IS_ACTIVE (reg_info[*p]) = 0;
-          
+
+	  /* Clear this whenever we change the register activity status.  */
+	  set_regs_matched_done = 0;
+
           /* If this was the only register active, nothing is active
              anymore.  */
           if (lowest_active_reg == highest_active_reg)
@@ -4064,6 +4104,9 @@ re_match_2_internal (bufp, string1, size1, string2, size2, pos, regs, stop)
                     : bcmp (d, d2, mcnt))
 		  goto fail;
 		d += mcnt, d2 += mcnt;
+
+		/* Do this because we've match some characters.  */
+		SET_REGS_MATCHED ();
 	      }
 	  }
 	  break;
@@ -4930,7 +4973,9 @@ re_compile_pattern (pattern, length, bufp)
   
   ret = regex_compile (pattern, length, re_syntax_options, bufp);
 
-  return re_error_msg[(int) ret];
+  if (!ret)
+    return NULL;
+  return gettext (re_error_msgid[(int) ret]);
 }     
 
 /* Entry points compatible with 4.2 BSD regex library.  We don't define
@@ -4950,7 +4995,7 @@ re_comp (s)
   if (!s)
     {
       if (!re_comp_buf.buffer)
-	return "No previous regular expression";
+	return gettext ("No previous regular expression");
       return 0;
     }
 
@@ -4958,12 +5003,12 @@ re_comp (s)
     {
       re_comp_buf.buffer = (unsigned char *) malloc (200);
       if (re_comp_buf.buffer == NULL)
-        return "Memory exhausted";
+        return gettext (re_error_msgid[(int) REG_ESPACE]);
       re_comp_buf.allocated = 200;
 
       re_comp_buf.fastmap = (char *) malloc (1 << BYTEWIDTH);
       if (re_comp_buf.fastmap == NULL)
-	return "Memory exhausted";
+	return gettext (re_error_msgid[(int) REG_ESPACE]);
     }
 
   /* Since `re_exec' always passes NULL for the `regs' argument, we
@@ -4974,8 +5019,11 @@ re_comp (s)
 
   ret = regex_compile (s, strlen (s), re_syntax_options, &re_comp_buf);
   
-  /* Yes, we're discarding `const' here.  */
-  return (char *) re_error_msg[(int) ret];
+  if (!ret)
+    return NULL;
+
+  /* Yes, we're discarding `const' here if !HAVE_LIBINTL.  */
+  return (char *) gettext (re_error_msgid[(int) ret]);
 }
 
 
@@ -5179,19 +5227,14 @@ regerror (errcode, preg, errbuf, errbuf_size)
   size_t msg_size;
 
   if (errcode < 0
-      || errcode >= (sizeof (re_error_msg) / sizeof (re_error_msg[0])))
+      || errcode >= (sizeof (re_error_msgid) / sizeof (re_error_msgid[0])))
     /* Only error codes returned by the rest of the code should be passed 
        to this routine.  If we are given anything else, or if other regex
        code generates an invalid error code, then the program has a bug.
        Dump core so we can fix it.  */
     abort ();
 
-  msg = re_error_msg[errcode];
-
-  /* POSIX doesn't require that we do anything in this case, but why
-     not be nice.  */
-  if (! msg)
-    msg = "Success";
+  msg = gettext (re_error_msgid[errcode]);
 
   msg_size = strlen (msg) + 1; /* Includes the null.  */
   

@@ -20,6 +20,9 @@
 
 #include <ctype.h>
 #include <errno.h>
+#ifndef errno
+extern int errno;
+#endif
 
 #if HAVE_LIMITS_H
 #include <limits.h>
@@ -42,7 +45,6 @@
 #include <stdlib.h>
 #else
 #define NULL 0
-extern int errno;
 #endif
 
 #ifndef	UNSIGNED

@@ -53,7 +53,9 @@ void (*error_print_progname) () = NULL;
 extern char *program_name;
 
 #if HAVE_STRERROR
+# ifndef strerror		/* On some systems, sterror is a macro */
 char *strerror ();
+# endif
 #else
 static char *
 private_strerror (errnum)

@@ -35,6 +35,14 @@ VOID *realloc ();
 void free ();
 #endif
 
+/* This is for other GNU distributions with internationalized messages.
+   The GNU C Library itself does not yet support such messages.  */
+#if HAVE_LIBINTL_H
+# include <libintl.h>
+#else
+# define gettext(msgid) (msgid)
+#endif
+
 #ifndef EXIT_FAILURE
 #define EXIT_FAILURE 1
 #endif
@@ -59,7 +67,7 @@ fixup_null_alloc (n)
   if (n == 0)
     p = malloc ((size_t) 1);
   if (p == 0)
-    error (xmalloc_exit_failure, 0, "memory exhausted");
+    error (xmalloc_exit_failure, 0, gettext ("Memory exhausted"));
   return p;
 }
 
