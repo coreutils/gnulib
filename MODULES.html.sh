@@ -1837,13 +1837,13 @@ func_all_modules ()
   func_wrap H3
   func_echo "$element"
 
-  #func_begin_table
-  #func_module findprog
+  func_begin_table
+  func_module findprog
   #func_module wait-process
   #func_module execute
   #func_module pipe
   #func_module sh-quote
-  #func_end_table
+  func_end_table
 
   element="Java"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
