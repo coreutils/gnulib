@@ -1,3 +1,11 @@
+2004-07-19  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh (func_all_modules): Add dummy.
+
+2004-07-16  Simon Josefsson  <jas@extundo.com>
+
+	* modules/dummy: New file.
+
 2004-07-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/chown (Files): Add lib/fchown-stub.c, since

@@ -1,0 +1,17 @@
+Description:
+A dummy file, to make sure the library is non-empty.
+
+Files:
+lib/dummy.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += dummy.c
+
+Include:
+
+Maintainer:
+all
