@@ -1,5 +1,7 @@
 2004-01-20  Karl Berry  <karl@gnu.org>
 
+	* config.guess: update from config.
+
 	* srclistvars.sh: GNUWWWLICENSES for karl.
 
 2004-01-18  Karl Berry  <karl@gnu.org>
