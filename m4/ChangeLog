@@ -1,3 +1,8 @@
+2002-07-06  Jim Meyering  <meyering@lucent.com>
+
+	* README: Don't mention Makefile.am.in.
+	Outline how I've tested changes to .m4 files.  Yep, it's a pain.
+
 2002-06-11  Paul Eggert  <eggert@twinsun.com>
 
 	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Check for btowc.
