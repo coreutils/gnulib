@@ -22,6 +22,7 @@
 #endif
 
 #include <alloca.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -41,6 +42,9 @@
 
 #include "argp.h"
 #include "argp-namefrob.h"
+
+#define alignof(type) offsetof (struct { char c; type x; }, x)
+#define alignto(n, d) ((((n) + (d) - 1) / (d)) * (d))
 
 /* Getopt return values.  */
 #define KEY_END (-1)		/* The end of the options.  */
@@ -462,6 +466,11 @@ parser_init (struct parser *parser, const struct argp *argp,
   struct group *group;
   struct parser_sizes szs;
   struct _getopt_data opt_data = _GETOPT_DATA_INITIALIZER;
+  char *storage;
+  size_t glen, gsum;
+  size_t clen, csum;
+  size_t llen, lsum;
+  size_t slen, ssum;
 
   szs.short_len = (flags & ARGP_NO_ARGS) ? 0 : 1;
   szs.long_len = 0;
@@ -472,22 +481,27 @@ parser_init (struct parser *parser, const struct argp *argp,
     calc_sizes (argp, &szs);
 
   /* Lengths of the various bits of storage used by PARSER.  */
-#define GLEN (szs.num_groups + 1) * sizeof (struct group)
-#define CLEN (szs.num_child_inputs * sizeof (void *))
-#define LLEN ((szs.long_len + 1) * sizeof (struct option))
-#define SLEN (szs.short_len + 1)
+  glen = (szs.num_groups + 1) * sizeof (struct group);
+  gsum = alignto (glen, alignof (void *));
+  clen = szs.num_child_inputs * sizeof (void *);
+  csum = alignto (gsum + clen, alignof (struct option));
+  llen = (szs.long_len + 1) * sizeof (struct option);
+  lsum = alignto (csum + llen, alignof (char));
+  slen = szs.short_len + 1;
+  ssum = lsum + slen;
 
-  parser->storage = malloc (GLEN + CLEN + LLEN + SLEN);
+  parser->storage = malloc (ssum);
   if (! parser->storage)
     return ENOMEM;
 
+  storage = parser->storage;
   parser->groups = parser->storage;
-  parser->child_inputs = (void **)((char*) parser->storage + GLEN);
-  parser->long_opts = (struct option *)((char*) parser->storage + GLEN + CLEN);
-  parser->short_opts = (char*) parser->storage + GLEN + CLEN + LLEN;
+  parser->child_inputs = (void **) (storage + gsum);
+  parser->long_opts = (struct option *) (storage + csum);
+  parser->short_opts = storage + lsum;
   parser->opt_data = opt_data;
 
-  memset (parser->child_inputs, 0, szs.num_child_inputs * sizeof (void *));
+  memset (parser->child_inputs, 0, clen);
   parser_convert (parser, argp, flags);
 
   memset (&parser->state, 0, sizeof (struct argp_state));
