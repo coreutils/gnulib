@@ -1,3 +1,8 @@
+2004-09-08  Oskar Liljeblad  <oskar@osk.mine.nu>
+
+	* modules/xvasprintf: New file.
+	* MODULES.html.sh (Extra functions based on ANSI C 89): Add vasprintf.
+
 2004-08-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/userspec: Don't depend on alloca.

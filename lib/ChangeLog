@@ -1,3 +1,9 @@
+2004-09-08  Oskar Liljeblad  <oskar@osk.mine.nu>
+
+	* xvasprintf.h: New file.
+	* xvasprintf.c: New file.
+	* xasprintf.c: New file.
+
 2004-09-08  Bruno Haible  <bruno@clisp.org>
 
 	* vasnprintf.c (VASNPRINTF): Signal EOVERFLOW if the resulting length

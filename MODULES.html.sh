@@ -1558,6 +1558,7 @@ func_all_modules ()
   func_module fwriteerror
   func_module vasnprintf
   func_module vasprintf
+  func_module xvasprintf
   func_end_table
 
   element="Signal handling <signal.h>"
