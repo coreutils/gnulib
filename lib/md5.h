@@ -1,6 +1,6 @@
 /* md5.h - Declaration of functions and data types used for MD5 sum
    computing library functions.
-   Copyright (C) 1995, 1996, 1999 Free Software Foundation, Inc.
+   Copyright (C) 1995, 1996, 1999, 2000, 2003 Free Software Foundation, Inc.
    NOTE: The canonical source of this file is maintained with the GNU C
    Library.  Bugs can be reported to bug-glibc@prep.ai.mit.edu.
 
@@ -35,8 +35,9 @@
    is usually not possible.  */
 
 #ifdef _LIBC
-# include <sys/types.h>
-typedef u_int32_t md5_uint32;
+# include <stdint.h>
+typedef uint32_t md5_uint32;
+typedef uintptr_t md5_uintptr;
 #else
 # if defined __STDC__ && __STDC__
 #  define UINT_MAX_32_BITS 4294967295U
@@ -68,6 +69,9 @@ typedef u_int32_t md5_uint32;
 #   endif
 #  endif
 # endif
+/* We have to make a guess about the integer type equivalent in size
+   to pointers which should always be correct.  */
+typedef unsigned long int md5_uintptr;
 #endif
 
 #undef __P
