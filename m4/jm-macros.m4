@@ -1,8 +1,8 @@
-#serial 79   -*- autoconf -*-
+#serial 82   -*- autoconf -*-
 
 dnl Misc type-related macros for coreutils.
 
-# Copyright (C) 1998, 2000, 2001, 2002, 2003, 2004 Free Software
+# Copyright (C) 1998, 2000, 2001, 2002, 2003, 2004, 2005 Free Software
 # Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
@@ -64,6 +64,7 @@ AC_DEFUN([gl_MACROS],
   # This is for od and stat, and any other program that
   # uses the PRI.MAX macros from inttypes.h.
   AC_REQUIRE([gt_INTTYPES_PRI])
+  AC_REQUIRE([gl_ULLONG_MAX])
 
   AC_REQUIRE([gl_FUNC_GETGROUPS])
 
@@ -109,7 +110,6 @@ AC_DEFUN([gl_MACROS],
     iswspace \
     lchown \
     listmntent \
-    localeconv \
     memcpy \
     mempcpy \
     mkfifo \
@@ -177,6 +177,7 @@ AC_DEFUN([gl_MACROS],
   AC_CHECK_FUNC([fchdir], , [AC_LIBOBJ(fchdir-stub)])
 
   AC_REQUIRE([gl_FUNC_FREE])
+  AC_REQUIRE([gl_FUNC_CHDIR_LONG])
 ])
 
 # These tests must be run before any use of AC_CHECK_TYPE,
