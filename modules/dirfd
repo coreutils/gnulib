@@ -9,7 +9,7 @@ m4/dirfd.m4
 Depends-on:
 
 configure.ac:
-UTILS_FUNC_DIRFD
+gl_FUNC_DIRFD
 
 Makefile.am:
 lib_SOURCES += dirfd.h
@@ -19,4 +19,3 @@ Include:
 
 Maintainer:
 Jim Meyering
-
