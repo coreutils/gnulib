@@ -1458,7 +1458,6 @@ func_all_modules ()
   func_begin_table
   func_module xalloc
   func_module alloca
-  func_module bumpalloc
   func_end_table
 
   element="Integer arithmetic functions <stdlib.h>"

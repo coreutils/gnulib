@@ -1,3 +1,7 @@
+2003-08-05  Paul Eggert  <eggert@twinsun.com>
+
+	* bumpalloc.h: Remove.
+
 2003-08-04  Paul Eggert  <eggert@twinsun.com>
 
 	* getloadavg.c: Change copyright notice and spacing to conform to
