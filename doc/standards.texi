@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate December 19, 2004
+@set lastupdate December 30, 2004
 @c %**end of header
 
 @dircategory GNU organization
@@ -2685,37 +2685,50 @@ while ((c = getchar()) != EOF)
   write(file_descriptor, &c, 1);
 @end example
 
-When calling functions, you need not worry about the difference between
-pointers of various types, or between pointers and integers.  On most
-machines, there's no difference anyway.  As for the few machines where
-there is a difference, all of them support Standard C prototypes, so you can
-use prototypes (perhaps conditionalized to be active only in Standard C)
-to make the code work on those systems.
+It used to be ok to not worry about the difference between pointers
+and integers when passing arguments to functions.  However, on most
+modern 64-bit machines pointers are wider than @code{int}.
+Conversely, integer types like @code{long long int} and @code{off_t}
+are wider than pointers on most modern 32-bit machines.  Hence it's
+often better nowadays to use prototypes to define functions whose
+argument types are not trivial.
 
-In certain cases, it is ok to pass integer and pointer arguments
-indiscriminately to the same function, and use no prototype on any
-system.  For example, many GNU programs have error-reporting functions
-that pass their arguments along to @code{printf} and friends:
+In particular, if functions accept varying argument counts or types
+they should be declared using prototypes containing @samp{...} and
+defined using @file{stdarg.h}.  For an example of this, please see the
+@uref{http://www.gnu.org/software/gnulib/, Gnulib} error module, which
+declares and defines the following function:
 
 @example
-error (s, a1, a2, a3)
-     char *s;
-     char *a1, *a2, *a3;
-@{
-  fprintf (stderr, "error: ");
-  fprintf (stderr, s, a1, a2, a3);
-@}
+/* Print a message with `fprintf (stderr, FORMAT, ...)';
+   if ERRNUM is nonzero, follow it with ": " and strerror (ERRNUM).
+   If STATUS is nonzero, terminate the program with `exit (STATUS)'.  */
+
+void error (int status, int errnum, const char *format, ...);
 @end example
 
-@noindent
-In practice, this works on all machines, since a pointer is generally
-the widest possible kind of argument; it is much simpler than any
-``correct'' alternative.  Be sure @emph{not} to use a prototype for such
-functions.
+A simple way to use the Gnulib error module is to obtain the two
+source files @file{error.c} and @file{error.h} from the Gnulib library
+source code repository at
+@uref{http://savannah.gnu.org/cgi-bin/viewcvs/gnulib/gnulib/lib/}.
+Here's a sample use:
 
-If you have decided to use Standard C, then you can instead define
-@code{error} using @file{stdarg.h}, and pass the arguments along to
-@code{vfprintf}.
+@example
+#include "error.h"
+#include <errno.h>
+#include <stdio.h>
+
+char *program_name = "myprogram";
+
+FILE *
+xfopen (char const *name)
+@{
+  FILE *fp = fopen (name, "r");
+  if (! fp)
+    error (1, errno, "cannot read %s", name);
+  return fp;
+@}
+@end example
 
 @cindex casting pointers to integers
 Avoid casting pointers to integers if you can.  Such casts greatly
@@ -3782,9 +3795,9 @@ advertise them to new potential customers.  Proprietary software is a
 social and ethical problem, and the point of GNU is to solve that
 problem.
 
-The GNU definition of free software is found in
-@url{http://www.gnu.org/philosophy/free-sw.html}, with a list of
-important licenses and whether they qualify as free in
+The GNU definition of free software is found on the GNU web site at
+@url{http://www.gnu.org/philosophy/free-sw.html}.  A list of
+important licenses and whether they qualify as free is in
 @url{http://www.gnu.org/licenses/license-list.html}.  The terms
 ``free'' and ``non-free'', used in this document, refer to that
 definition.  If it is not clear whether a license qualifies as free
