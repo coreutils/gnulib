@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2005-01-30.17}
+\def\texinfoversion{2005-02-13.16}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005 Free Software
@@ -647,13 +647,28 @@
 \let\/=\allowbreak
 
 % @. is an end-of-sentence period.
-\def\.{.\spacefactor=3000 }
+\def\.{.\spacefactor=\endofsentencespacefactor}
 
 % @! is an end-of-sentence bang.
-\def\!{!\spacefactor=3000 }
+\def\!{!\spacefactor=\endofsentencespacefactor}
 
 % @? is an end-of-sentence query.
-\def\?{?\spacefactor=3000 }
+\def\?{?\spacefactor=\endofsentencespacefactor}
+
+% @frenchspacing on|off  says whether to put extra space after punctuation.
+% 
+\def\onword{on}
+\def\offword{off}
+%
+\parseargdef\frenchspacing{%
+  \def\temp{#1}%
+  \ifx\temp\onword \plainfrenchspacing
+  \else\ifx\temp\offword \plainnonfrenchspacing
+  \else
+    \errhelp = \EMsimple
+    \errmessage{Unknown @frenchspacing option `\temp', must be on/off}%
+  \fi\fi
+}
 
 % @w prevents a word break.  Without the \leavevmode, @w at the
 % beginning of a paragraph, when TeX is still in vertical mode, would
@@ -1092,7 +1107,7 @@ where each line of input produces a line of output.}
 %
 \def\enddots{%
   \dots
-  \spacefactor=3000
+  \spacefactor=\endofsentencespacefactor
 }
 
 % @comma{} is so commas can be inserted into text without messing up
@@ -1749,14 +1764,21 @@ where each line of input produces a line of output.}
 % sometimes \x has an active definition that messes things up.
 %
 \catcode`@=11
-  \def\frenchspacing{%
+  \def\plainfrenchspacing{%
     \sfcode\dotChar  =\@m \sfcode\questChar=\@m \sfcode\exclamChar=\@m
     \sfcode\colonChar=\@m \sfcode\semiChar =\@m \sfcode\commaChar =\@m
+    \def\endofsentencespacefactor{1000}% for @. and friends
+  }
+  \def\plainnonfrenchspacing{%
+    \sfcode`\.3000\sfcode`\?3000\sfcode`\!3000
+    \sfcode`\:2000\sfcode`\;1500\sfcode`\,1250
+    \def\endofsentencespacefactor{3000}% for @. and friends
   }
 \catcode`@=\other
+\def\endofsentencespacefactor{3000}% default
 
 \def\t#1{%
-  {\tt \rawbackslash \frenchspacing #1}%
+  {\tt \rawbackslash \plainfrenchspacing #1}%
   \null
 }
 \def\samp#1{`\tclose{#1}'\null}
@@ -1793,7 +1815,7 @@ where each line of input produces a line of output.}
     \nohyphenation
     %
     \rawbackslash
-    \frenchspacing
+    \plainfrenchspacing
     #1%
   }%
   \null
@@ -1962,7 +1984,7 @@ where each line of input produces a line of output.}
 % 
 \def\abbr#1{\doabbr #1,,\finish}
 \def\doabbr#1,#2,#3\finish{%
-  {\frenchspacing #1}%
+  {\plainfrenchspacing #1}%
   \def\temp{#2}%
   \ifx\temp\empty \else
     \space ({\unsepspaces \ignorespaces \temp \unskip})%
@@ -4765,6 +4787,7 @@ where each line of input produces a line of output.}
   \let\/=\ptexslash
   \let\*=\ptexstar
   \let\t=\ptext
+  \let\frenchspacing=\plainfrenchspacing
   %
   \def\endldots{\mathinner{\ldots\ldots\ldots\ldots}}%
   \def\enddots{\relax\ifmmode\endldots\else$\mathsurround=0pt \endldots\,$\fi}%
