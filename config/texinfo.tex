@@ -5879,7 +5879,12 @@ width0pt\relax} \fi
 % If its value is nonempty, SUFFIX is output afterward.
 
 \def\refx#1#2{%
-  \expandafter\ifx\csname X#1\endcsname\relax
+  {%
+    \indexdummies
+    \expandafter\global\expandafter\let\expandafter\thisrefX
+      \csname X#1\endcsname
+  }%
+  \ifx\thisrefX\relax
     % If not defined, say something at least.
     \angleleft un\-de\-fined\angleright
     \iflinks
@@ -5894,7 +5899,7 @@ width0pt\relax} \fi
     \fi
   \else
     % It's defined, so just use it.
-    \csname X#1\endcsname
+    \thisrefX
   \fi
   #2% Output the suffix in any case.
 }
