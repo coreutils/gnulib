@@ -49,8 +49,8 @@ struct mode_change
 #  define __P(Args) Args
 # else
 #  define __P(Args) ()
-# endif
-#endif
+# endif  /* GCC.  */
+#endif  /* Not __P.  */
 
 struct mode_change *mode_compile __P ((const char *, unsigned));
 unsigned short mode_adjust __P ((unsigned, const struct mode_change *));
