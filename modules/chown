@@ -3,6 +3,7 @@ chown() function: change ownership of a file.
 
 Files:
 lib/chown.c
+lib/fchown-stub.c
 m4/chown.m4
 
 Depends-on:

@@ -1,3 +1,8 @@
+2004-07-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/chown (Files): Add lib/fchown-stub.c, since
+	gl_PREREQ_CHOWN invokes AC_LIBOBJ(fchown-stub).
+
 2004-06-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/argz: Omit "#include".
