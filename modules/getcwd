@@ -4,6 +4,7 @@ Return the current working directory.
 Files:
 lib/getcwd.h
 lib/getcwd.c
+m4/d-ino.m4
 m4/getcwd-path-max.m4
 m4/getcwd.m4
 
