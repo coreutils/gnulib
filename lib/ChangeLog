@@ -1,3 +1,8 @@
+2005-03-13  Simon Josefsson  <jas@extundo.com>
+
+	* timegm.h: Use proper prototype CPP guards, reported by Dave Love
+	<fx@gnu.org>.
+
 2005-03-14  Jim Meyering  <jim@meyering.net>
 
 	* strftime.c (my_strftime) [HAVE_STRFTIME && ! (_NL_CURRENT
