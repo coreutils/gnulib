@@ -90,6 +90,7 @@ init_fatal_signals (void)
   static bool fatal_signals_initialized = false;
   if (!fatal_signals_initialized)
     {
+#if HAVE_SIGACTION
       size_t i;
 
       for (i = 0; i < num_fatal_signals; i++)
@@ -100,6 +101,7 @@ init_fatal_signals (void)
 	      && action.sa_handler == SIG_IGN)
 	    fatal_signals[i] = -1;
 	}
+#endif
 
       fatal_signals_initialized = true;
     }

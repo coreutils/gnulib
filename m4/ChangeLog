@@ -1,3 +1,7 @@
+2004-12-18  Bruno Haible  <bruno@clisp.org>
+
+	* fatal-signal.m4 (gl_FATAL_SIGNAL): Also test for sigaction.
+
 2004-12-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* ls-mntd-fs.m4 (AC_FUNC_GETMNTENT): Fix typo in previous change:
