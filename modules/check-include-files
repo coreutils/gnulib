@@ -1,21 +1,25 @@
 #!/usr/bin/perl -w
-
-use strict;
-use Getopt::Long;
-#use Coda;
-
-(my $VERSION = '$Revision: 1.2 $ ') =~ tr/[0-9].//cd;
-(my $ME = $0) =~ s|.*/||;
-
-use constant ST_INIT => 1;
-use constant ST_FILES => 2;
-use constant ST_DEPENDENTS => 3;
-
 # Read a module description file and derive the set of files
 # included directly by any .c or .h file listed in the `Files:' section.
 # Take the union of all such sets for any dependent modules.
 # Then, compare that set with the set derived from the names
 # listed in the various Files: sections.
+
+# This script makes no attempt to diagnose invalid or empty
+# module-description files.
+
+# Written by Jim Meyering
+
+use strict;
+use Getopt::Long;
+#use Coda;
+
+(my $VERSION = '$Revision: 1.3 $ ') =~ tr/[0-9].//cd;
+(my $ME = $0) =~ s|.*/||;
+
+use constant ST_INIT => 1;
+use constant ST_FILES => 2;
+use constant ST_DEPENDENTS => 3;
 
 # Parse a module file (returning list of Files: names and
 # list of dependent-modules.
@@ -86,7 +90,6 @@ sub parse_module_file ($)
 # Depends-on:
 # some-other-module
 
-
 sub usage ($)
 {
   my ($exit_code) = @_;
@@ -97,15 +100,19 @@ sub usage ($)
     }
   else
     {
-      # FIXME: add new option descriptions here
       print $STREAM <<EOF;
-Usage: $ME [OPTIONS] FIXME: FILE ?
+Usage: $ME [OPTIONS] FILE...
+
+Read a module description file and derive the set of files
+included directly by any .c or .h file listed in the `Files:' section.
+Take the union of all such sets for any dependent modules.
+Then, compare that set with the set derived from the names
+listed in the various Files: sections.
 
 OPTIONS:
 
    --help             display this help and exit
    --version          output version information and exit
-   --verbose	      generate verbose output
 
 EOF
     }
@@ -155,14 +162,10 @@ sub find_included_lib_files ($)
 {
   GetOptions
     (
-     # FIXME: add new options here
      help => sub { usage 0 },
      version => sub { print "$ME version $VERSION\n"; exit },
     ) or usage 1;
 
-  # Make sure we have the right number of non-option arguments.
-  # Always tell the user why we fail.
-  # FIXME: this assumes there is exactly 1 required argument.
   @ARGV < 1
     and (warn "$ME: missing FILE argument\n"), usage 1;
 
@@ -181,8 +184,6 @@ sub find_included_lib_files ($)
 	and next;
       $seen_module{$m} = 1;
       my ($file, $dep) = parse_module_file $m;
-      my @t = sort keys %$file;
-      # warn "$m: @t\n";
       push @m, keys %$dep;
       foreach my $f (keys %$file)
 	{
