@@ -1,3 +1,7 @@
+2003-09-25  Karl Berry  <karl@gnu.org>
+
+	* argp-fmtstream.c, argp-help.c: update from libc.
+
 2003-09-25  Bruno Haible  <bruno@clisp.org>
 
 	* version-etc-2.h: New file, from version-etc.h with modifications.
