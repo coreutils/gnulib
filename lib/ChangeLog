@@ -1,3 +1,8 @@
+2003-04-25  Jim Meyering  <jim@meyering.net>
+
+	* copy-file.c (copy_file_preserving): Declare buf_size to be
+	of type size_t, not int.
+
 2003-04-11  Jim Meyering  <jim@meyering.net>
 
 	Merge changes from Coreutils.
