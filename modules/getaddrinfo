@@ -1,0 +1,26 @@
+Description:
+Get address information.
+
+Files:
+lib/getaddrinfo.h
+lib/getaddrinfo.c
+lib/gai_strerror.c
+m4/getaddrinfo.m4
+m4/sockpfaf.m4
+
+Depends-on:
+restrict
+gettext
+stdbool
+
+configure.ac:
+gl_GETADDRINFO
+
+Makefile.am:
+lib_SOURCES += getaddrinfo.h
+
+Include:
+"getaddrinfo.h"
+
+Maintainer:
+Simon Josefsson

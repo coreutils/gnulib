@@ -1,3 +1,10 @@
+2004-11-08  Simon Josefsson  <jas@extundo.com>
+
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
+	getaddrinfo.
+
+	* modules/getaddrinfo: New file.
+
 2004-11-10  Jim Meyering  <jim@meyering.net>
 
 	* modules/closeout (Depends-on): Remove fpending.

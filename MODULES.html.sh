@@ -1730,6 +1730,7 @@ func_all_modules ()
   func_module chown
   func_module dup2
   func_module ftruncate
+  func_module getaddrinfo
   func_module getcwd
   func_module getgroups
   func_module gethostname

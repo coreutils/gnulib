@@ -1,3 +1,7 @@
+2004-11-08  Simon Josefsson  <jas@extundo.com>
+
+	* getaddrinfo.m4: New file.
+
 2004-11-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* strftime.m4 (_gl_STRFTIME_PREREQS): Remove.  Move its body to

@@ -1,3 +1,7 @@
+2004-11-08  Simon Josefsson  <jas@extundo.com>
+
+	* getaddrinfo.h, getaddrinfo.c: New file.
+
 2004-11-10  Jim Meyering  <jim@meyering.net>
 
 	Ensure that no close failure goes unreported.
