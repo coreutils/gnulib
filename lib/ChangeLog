@@ -1,3 +1,24 @@
+2004-10-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils.
+
+	* modechange.c (mode_compile): Don't decrement a pointer that
+	points to the start of a string, as the C Standard says the
+	resulting behavior is undefined.
+
+	* backupfile.h (enum backuptype): Rename none -> no_backups,
+	simple -> simple_backups, numbered_existing ->
+	numbered_existing_backups, numbered -> numbered_backups
+	to avoid shadowing problems.  All uses changed.
+	* argmatch.c (enum backuptype) [defined TEST]: Likewise.
+	* backupfile.c (check_extension, numbered_backup):
+	Rename locals to avoid shadowing 'basename'.
+	* backupfile.h (VALID_BACKUP_TYPE): Don't evaluate arg more than
+	once.
+
+	* .cppi-disable: Add getopt_.h, getopt_int.h.
+	* .cvsignore: Add getopt.h.
+
 2004-10-02  Jim Meyering  <jim@meyering.net>
 
 	* dirfd.h, getpagesize.h: Add copyright notice.
