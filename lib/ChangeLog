@@ -3,6 +3,8 @@
 	* xalloc.h (xalloc_oversized): New static inline function, for
 	callers that want to do their own size-overflow checking.  Include
 	<stdbool.h>, since xalloc_oversized returns bool.
+	* xalloc.c (array_size_overflow): Remove.  All callers changed
+	to use xalloc_oversized.
 
 	Add two functions x2realloc, x2nrealloc, for programs that grow
 	arrays dynamically by doubling their sizes.

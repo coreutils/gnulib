@@ -1,3 +1,8 @@
+2003-10-26  Paul Eggert  <eggert@twinsun.com>
+
+	* xalloc.m4 (gl_XALLOC): Requore AC_C_INLINE, since xalloc.h
+	now uses inline.
+
 2003-10-23  Paul Eggert  <eggert@twinsun.com>
 
 	* getline.m4 (AM_FUNC_GETLINE):
