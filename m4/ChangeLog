@@ -1,11 +1,69 @@
+2003-08-16  Paul Eggert  <eggert@twinsun.com>
+
+	Merges from coreutils, etc.
+	* readlink.m4 (gl_PREREQ_READLINK): Renamed from gl_PREREQ_READLINE,
+	fixing a typo.
+	* host-os.m4 (UTILS_HOST_OS): Add GNU/NetBSD, GNU/FreeBSD.
+	* hash.m4 (gl_HASH): Use AM_STDBOOL_H, not AC_HEADER_STDBOOL.
+
+2003-08-16  Jim Meyering  <jim@meyering.net>
+	and Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merges from coreutils, etc.
+	* physmem.m4 (gl_SYS__SYSTEM_CONFIGURATION): New macro.
+	(gl_PHYSMEM): Use it.  
+	Also check for `table' function.
+	Check for new headers and functions.
+	Add check for sys/sysmp.h.
+	With suggestions from Kaveh Ghazi.
+	Ignore headers that are present but cannot be compiled.  This
+	avoids spurious warnings on Solaris 9 sparc with Forte Developer 7
+	C 5.4.
+	
+2003-08-16  Jim Meyering  <jim@meyering.net>
+
+	Merges from coreutils.
+	* readdir.m4 (GL_FUNC_READDIR): Change name to have GL_ (not jm_)
+	prefix.  Adjust cache variables similarly.  Create 500 rather than
+	just 300 files, to exercise bug on Darwin6.5, too.
+	* perl.m4 (jm_PERL): Use $am_missing_run, not undefined $missing_dir.
+	* jm-winsz1.m4: Require AC_SYS_POSIX_TERMIOS, not AM_SYS_POSIX_TERMIOS.
+	Reported by mkc@mathdogs.com.
+	Also change use of $am_cv_sys_posix_termios
+	to $ac_cv_sys_posix_termios.   Reported by Andreas Schwab.
+	* getgroups.m4 (jm_FUNC_GETGROUPS): Rewrite to use AC_FUNC_GETGROUPS
+	and (if needed) to call AC_LIBOBJ and to set GETGROUPS_LIB.
+	* fsusage.m4 [__GLIBC__]: GNU libc's statvfs stats each mount point in
+	/proc/mounts until it finds one with matching device number.  This is
+	unnecessary when the FILE argument *is* a mount point.  No stat call
+	is necessary in that case.  So, disable the statvfs-testing code on
+	systems with GNU libc.  Reported by Andrei Gaponenko via Tim Waugh
+	as RedHat bug# 84846.
+	* c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Limit stack size
+	to 1MB, so as not to render systems with no stack size limit (e.g.,
+	linux-2.2.x) unusable.  Suggestion and code from Bruno Haible.
+	Include <unistd.h>.  On some systems,
+	it is required for the definition of _SC_PAGESIZE.
+
+2003-08-15  Jim Meyering  <jim@meyering.net>
+	and Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merges from coreutils, etc.
+	* strftime.m4 (_jm_STRFTIME_PREREQS):
+	Require gl_FUNC_TZSET_CLOBBER.
+	* readutmp.m4 (gl_READUTMP): Check for ut_exit.ut_exit, ut_exit.e_exit,
+	ut_exit.ut_termination, and ut_exit.e_termination members.
+
 2003-08-14  Paul Eggert  <eggert@twinsun.com>
 
+	Help the merge from coreutils.
 	* gettimeofday.m4 (gl_GETTIMEOFDAY_REPLACE_LOCALTIME): New macro.
 	(AC_FUNC_GETTIMEOFDAY_CLOBBER): Use it.
 	* tzset.m4: Use it too.
 
 2003-08-14  Jim Meyering  <jim@meyering.net>
 
+	Merge from coreutils.
 	* tzset.m4: New file.
 	* ls-mntd-fs.m4 (jm_LIST_MOUNTED_FILESYSTEMS): Move the MOUNTED_VMOUNT
 	test to precede the MOUNTED_GETMNTENT1 tests, since otherwise, AIX 5.1
