@@ -1,7 +1,9 @@
 2004-08-05  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* modules/c-strtod, modules/c-strtold, modules/cycle-check: New
-	files.
+	Merge from coreutils.
+	* modules/c-strtod, modules/c-strtold, modules/canonicalize,
+	modules/cycle-check, modules/fcntl-safer, modules/getcwd: New files.
+	* modules/path-concat: Don't depend on strdup.
 
 2004-08-03  Paul Eggert  <eggert@cs.ucla.edu>
 
@@ -28,7 +30,7 @@
 	* MODULES.html.sh (func_all_modules): Add calloc, to match
 	2004-06-01 addition of calloc module.
 
-2004-06-22  Gary V. Vaughan  <gary@gnu.org>  
+2004-06-22  Gary V. Vaughan  <gary@gnu.org>
 
 	* modules/argz: New file.
 	* MODULES.html.sh (func_all_modules): Add argz.

@@ -1,6 +1,21 @@
 2004-08-05  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* c-strtod.m4: New file.
+	Merge from coreutils.
+
+	* c-strtod.m4, canonicalize.m4, fcntl-safer.m4, getcwd-path-max.m4:
+	New files.
+
+	* dos.m4 (gl_AC_DOS): filesystem -> file system renaming.
+	FILESYSTEM_PREFIX_LEN ->
+	FILE_SYSTEM_PREFIX_LEN.
+	FILESYSTEM_ACCEPTS_DRIVE_LETTER_PREFIX ->
+	FILE_SYSTEM_ACCEPTS_DRIVE_LETTER_PREFIX.
+	FILESYSTEM_BACKSLASH_IS_FILE_NAME_SEPARATOR ->
+	FILE_SYSTEM_BACKSLASH_IS_FILE_NAME_SEPARATOR.
+
+	* path-concat.m4 (gl_PATH_CONCAT): Don't require gl_AC_DOS, the
+	prerequisite modules now handle the DOS stuff.
+	Don't check for unistd.h.
 
 2004-08-03  Paul Eggert  <eggert@cs.ucla.edu>
 
