@@ -3,9 +3,9 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-04-24.16}
+\def\texinfoversion{2004-04-29.05}
 %
-% Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
+% Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995, 2004,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
 % Foundation, Inc.
 %
@@ -3062,6 +3062,7 @@ width0pt\relax} \fi
   \def\definedummyletter##1{%
     \expandafter\def\csname ##1\endcsname{\realbackslash ##1}%
   }%
+  \let\definedummyaccent\definedummyletter
   %
   % Do the redefinitions.
   \commondummies
@@ -3084,6 +3085,7 @@ width0pt\relax} \fi
   \def\definedummyletter##1{%
     \expandafter\def\csname ##1\endcsname{@##1}%
   }%
+  \let\definedummyaccent\definedummyletter
   %
   % Do the redefinitions.
   \commondummies
@@ -3164,18 +3166,18 @@ width0pt\relax} \fi
   \gdef\commondummiesnofonts{%
     % Control letters and accents.
     \definedummyletter{!}%
-    \definedummyletter{"}%
-    \definedummyletter{'}%
+    \definedummyaccent{"}%
+    \definedummyaccent{'}%
     \definedummyletter{*}%
-    \definedummyletter{,}%
+    \definedummyaccent{,}%
     \definedummyletter{.}%
     \definedummyletter{/}%
     \definedummyletter{:}%
-    \definedummyletter{=}%
+    \definedummyaccent{=}%
     \definedummyletter{?}%
-    \definedummyletter{^}%
-    \definedummyletter{`}%
-    \definedummyletter{~}%
+    \definedummyaccent{^}%
+    \definedummyaccent{`}%
+    \definedummyaccent{~}%
     \definedummyword{u}%
     \definedummyword{v}%
     \definedummyword{H}%
@@ -3223,13 +3225,16 @@ width0pt\relax} \fi
 % would be for a given command (usually its argument).
 %
 \def\indexnofonts{%
-  \def\definedummyword##1{%
+  % Accent commands should become @asis.
+  \def\definedummyaccent##1{%
     \expandafter\let\csname ##1\endcsname\asis
   }%
-  % We can just ignore the accent commands and other control letters.
+  % We can just ignore other control letters.
   \def\definedummyletter##1{%
     \expandafter\def\csname ##1\endcsname{}%
   }%
+  % Hopefully, all control words can become @asis.
+  \let\definedummyword\definedummyaccent
   %
   \commondummiesnofonts
   %
@@ -5752,9 +5757,8 @@ width0pt\relax} \fi
 % goes to end-of-line is not handled.
 % 
 \def\emptyusermacros{\begingroup
-  \def\do##1{\let\noexpand##1=\noexpand\identity}%
+  \def\do##1{\let\noexpand##1=\noexpand\asis}%
   \edef\next{\macrolist}\expandafter\endgroup\next}
-\def\identity#1{#1}
 
 
 % @alias.
