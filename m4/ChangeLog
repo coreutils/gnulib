@@ -1,3 +1,7 @@
+2003-08-11  Bruno Haible  <bruno@clisp.org>
+
+	* vasnprintf.m4 (gl_PREREQ_VASNPRINTF): Also check for wcslen.
+
 2003-08-09  Paul Eggert  <eggert@twinsun.com>
 
 	* regex.m4 (jm_INCLUDED_REGEX): Change "\201" to "\371";

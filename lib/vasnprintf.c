@@ -47,6 +47,24 @@
 # define freea(p) free (p) 
 #endif
 
+#ifdef HAVE_WCHAR_T
+# ifdef HAVE_WCSLEN
+#  define local_wcslen wcslen
+# else
+   /* Solaris 2.5.1 has wcslen() in a separate library libw.so. To avoid
+      a dependency towards this library, here is a local substitute.  */
+static size_t
+local_wcslen (const wchar_t *s)
+{
+  const wchar_t *ptr;
+
+  for (ptr = s; *ptr != (wchar_t) 0; ptr++)
+    ;
+  return ptr - s;
+}
+# endif
+#endif
+
 char *
 vasnprintf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 {
@@ -368,7 +386,7 @@ vasnprintf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 # ifdef HAVE_WCHAR_T
 		      if (type == TYPE_WIDE_STRING)
 			tmp_length =
-			  wcslen (a.arg[dp->arg_index].a.a_wide_string)
+			  local_wcslen (a.arg[dp->arg_index].a.a_wide_string)
 			  * MB_CUR_MAX;
 		      else
 # endif

@@ -1,5 +1,10 @@
 2003-08-11  Bruno Haible  <bruno@clisp.org>
 
+	* vasnprintf.c (local_wcslen): New function, for Solaris 2.5.1.
+	(vasnprintf): Use it instead of wcslen.
+
+2003-08-11  Bruno Haible  <bruno@clisp.org>
+
 	* stdbool_.h (_Bool): Undo last change; instead use a negative enum
 	value to ensure that _Bool promotes to int. Use #define for _Bool when
 	using the Solaris C compiler. Adds comments suggested by Paul Eggert.
