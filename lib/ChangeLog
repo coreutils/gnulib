@@ -1,5 +1,12 @@
 2004-10-04  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* xalloc.h (xmemdup): Renamed from xclone.
+	* xmalloc.c (xmemdup): Likewise.
+	* xalloc.h (CCLONE, CLONE, NEW, XCALLOC, XMALLOC, XREALLOC,
+	XFREE): Remove these long-obsolescent macros.
+	* xmalloc.c (xstrdup): Implementation moved here from xstrdup.c
+	* xstrdup.c: Remove.
+
 	* regex.c (re_comp): Cast gettext return value to char *,
 	Problem reported by Martin Neitzel via Mark D. Baushke.
 	

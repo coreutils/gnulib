@@ -1,5 +1,7 @@
 2004-10-04  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* modules/xalloc (Files, Makefile.am): Remove xstrdup.c.
+
 	* modules/argmatch, modules/argp, modules/closeout, modules/error,
 	modules/exclude, modules/getdate, modules/getline,
 	modules/getndelim2, modules/getpass, modules/getpass-gnu,

@@ -4,7 +4,6 @@ Memory allocation with out-of-memory checking.  Also see xalloc-die.
 Files:
 lib/xalloc.h
 lib/xmalloc.c
-lib/xstrdup.c
 m4/xalloc.m4
 
 Depends-on:
@@ -13,7 +12,7 @@ configure.ac:
 gl_XALLOC
 
 Makefile.am:
-lib_SOURCES += xalloc.h xmalloc.c xstrdup.c
+lib_SOURCES += xalloc.h xmalloc.c
 
 Include:
 "xalloc.h"
