@@ -2,14 +2,14 @@
 
 	* gnulib-tool: Untabify. Initialize supplied_libname.
 	(func_usage): More homogenous output.
-	(func_modules_transitive_closure, func_modules_to_filelist): New
-	functions.
+	(func_modules_transitive_closure, func_modules_to_filelist,
+	func_emit_lib_Makefile_am): New functions.
 	(func_import): New function, extracted from big case statement. Use
 	func_get_license, func_modules_transitive_closure,
-	func_modules_to_filelist. Initialize opt_lgpl. Don't use test -a, as
-	it's not portable.
+	func_modules_to_filelist, func_emit_lib_Makefile_am. Initialize
+	opt_lgpl. Don't use test -a, as it's not portable.
 	(func_create_testdir): Use func_modules_transitive_closure,
-	func_modules_to_filelist.
+	func_modules_to_filelist, func_emit_lib_Makefile_am.
 
 2004-10-11  Bruno Haible  <bruno@clisp.org>
 
