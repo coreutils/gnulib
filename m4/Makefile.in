@@ -70,6 +70,7 @@ CXX = @CXX@
 CXXCPP = @CXXCPP@
 DATADIRNAME = @DATADIRNAME@
 DEPDIR = @DEPDIR@
+DF_PROG = @DF_PROG@
 GENCAT = @GENCAT@
 GETCONF = @GETCONF@
 GMOFILES = @GMOFILES@
@@ -90,7 +91,6 @@ PACKAGE = @PACKAGE@
 PERL = @PERL@
 POFILES = @POFILES@
 POSUB = @POSUB@
-POW_LIBM = @POW_LIBM@
 RANLIB = @RANLIB@
 U = @U@
 USE_INCLUDED_LIBINTL = @USE_INCLUDED_LIBINTL@
@@ -147,6 +147,7 @@ search-libs.m4 \
 st_dm_mode.m4 \
 st_mtim.m4 \
 stat.m4 \
+strerror_r.m4 \
 strftime.m4 \
 timespec.m4 \
 uintmax_t.m4 \
