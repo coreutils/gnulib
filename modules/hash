@@ -2,13 +2,13 @@ Description:
 Parametrizable hash table.
 
 Files:
-lib/hash.h
 lib/hash.c
+lib/hash.h
 m4/hash.m4
-lib/xalloc.h
 
 Depends-on:
 stdbool
+xalloc
 
 configure.ac:
 gl_HASH
