@@ -1,3 +1,7 @@
+2003-06-07    <karl@gnu.org>
+
+	* config.{guess,sub}: update from prep.
+
 2003-06-04  Paul Eggert  <eggert@twinsun.com>
 
 	* srclist.txt ($LIBCSRC/time/mktime.c lib gpl): Comment out for now,
