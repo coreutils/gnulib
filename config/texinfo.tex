@@ -4028,9 +4028,9 @@ width0pt\relax} \fi
   \parsearg\chapheadingzzz
 }
 
-\def\chapheading{\parsearg\chapheadingzzz}
+\def\chapheading{\chapbreak \parsearg\chapheadingzzz}
 \def\chapheadingzzz #1{%
-  {\chapfonts \chapbreak \vbox{\hyphenpenalty=10000\tolerance=5000
+  {\chapfonts \vbox{\hyphenpenalty=10000\tolerance=5000
                     \parindent=0pt\raggedright
                     \rm #1\hfill}}%
   \bigskip \par\penalty 200\relax
