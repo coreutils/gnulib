@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) 2002, 2003 Free Software Foundation, Inc.
+# Copyright (C) 2002-2004 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1430,6 +1430,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module eealloc
   func_module malloc
   func_module realloc
   func_end_table
