@@ -1,3 +1,8 @@
+2004-09-29  Simon Josefsson  <jas@extundo.com>
+
+	* gnulib-tool: New parameter --lgpl, to asseert that modules are
+	LGPL, and to replace license template from GPL to LGPL.
+
 2004-09-23  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib-tool (--import): Make sure *.m4 end up in m4/ by default.
