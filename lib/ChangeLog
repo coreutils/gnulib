@@ -6,6 +6,8 @@
 	* regex.c (byte_re_match_2_internal): Reduce scope of same_str_p
 	variable.
 
+	* regex.c (EXTEND_BUFFER, regcomp): Cast the realloc/malloc results.
+
 2005-03-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* mktime.c (TYPE_TWOS_COMPLEMENT, TYPE_ONES_COMPLEMENT,

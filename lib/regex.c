@@ -4,7 +4,7 @@
    internationalization features.)
 
    Copyright (C) 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001,
-   2002, 2003, 2004 Free Software Foundation, Inc.
+   2002, 2003, 2004, 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -2079,7 +2079,8 @@ static reg_errcode_t byte_compile_range (unsigned int range_start,
     bufp->allocated <<= 1;						\
     if (bufp->allocated > MAX_BUF_SIZE)					\
       bufp->allocated = MAX_BUF_SIZE;					\
-    bufp->buffer = REALLOC (COMPILED_BUFFER_VAR, bufp->allocated);	\
+    bufp->buffer							\
+      = (UCHAR_T *) REALLOC (COMPILED_BUFFER_VAR, bufp->allocated);	\
     if (COMPILED_BUFFER_VAR == NULL)					\
       return REG_ESPACE;						\
     /* If the buffer moved, move all the pointers into it.  */		\
@@ -8017,14 +8018,15 @@ regcomp (regex_t *preg, const char *pattern, int cflags)
   preg->used = 0;
 
   /* Try to allocate space for the fastmap.  */
-  preg->fastmap = malloc (1 << BYTEWIDTH);
+  preg->fastmap = (char *) malloc (1 << BYTEWIDTH);
 
   if (cflags & REG_ICASE)
     {
       unsigned i;
 
-      preg->translate = malloc (CHAR_SET_SIZE
-				* sizeof (*(RE_TRANSLATE_TYPE)0));
+      preg->translate =
+	(RE_TRANSLATE_TYPE)
+	malloc (CHAR_SET_SIZE * sizeof (*(RE_TRANSLATE_TYPE)0));
       if (preg->translate == NULL)
         return (int) REG_ESPACE;
 
