@@ -1,3 +1,14 @@
+2004-11-15  Jim Meyering  <jim@meyering.net>
+
+	* closeout.c: Include "__fpending.h" once again.
+	Include <stdbool.h>.
+	(close_stdout): Don't fail just because stdout was closed initially,
+	since some programs don't write to stdout in the normal course of
+	operation (other than --version and --help), and we don't want this
+	function to make e.g. `touch file >&-' fail.
+	But do fail if it was closed and someone has tried to write to it.
+	E.g., `printf foo >&-' must fail.
+
 2004-11-11  Simon Josefsson  <jas@extundo.com>
 
 	* strtok_r.h, strtok_r.c: New file.
