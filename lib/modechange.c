@@ -112,6 +112,9 @@ mode_compile (mode_string, masked_ops)
   umask (umask_value);		/* Restore the old value. */
 
   head = NULL;
+#ifdef lint
+  change = NULL;
+#endif
   --mode_string;
 
   /* One loop iteration for each "ugoa...=+-rwxXstugo...[=+-rwxXstugo...]". */
