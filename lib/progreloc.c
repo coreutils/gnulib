@@ -50,8 +50,9 @@
 
 #ifdef NO_XMALLOC
 # define xmalloc malloc
+# define xstrdup strdup
 #else
-# include "xmalloc.h"
+# include "xalloc.h"
 #endif
 
 /* Pathname support.
