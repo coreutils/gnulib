@@ -1,7 +1,7 @@
 /* sha.c - Functions to compute the SHA1 hash (message-digest) of files
    or blocks of memory.  Complies to the NIST specification FIPS-180-1.
 
-   Copyright (C) 2000, 2001 Scott G. Miller
+   Copyright (C) 2000, 2001, 2003 Scott G. Miller
 
    Credits:
       Robert Klep <robert@ilse.nl>  -- Expansion function fix
@@ -39,6 +39,13 @@
 # define NOTSWAP(n)                                                         \
     (((n) << 24) | (((n) & 0xff00) << 8) | (((n) >> 8) & 0xff00) | ((n) >> 24))
 # define SWAP(n) (n)
+#endif
+
+#define BLOCKSIZE 4096
+/* Ensure that BLOCKSIZE is a multiple of 64.  */
+#if BLOCKSIZE % 64 != 0
+/* FIXME-someday (soon?): use #error instead of this kludge.  */
+"invalid BLOCKSIZE"
 #endif
 
 /* This array contains the bytes used to pad the buffer to the next
@@ -118,8 +125,6 @@ sha_finish_ctx (struct sha_ctx *ctx, void *resbuf)
 int
 sha_stream (FILE *stream, void *resblock)
 {
-  /* Important: BLOCKSIZE must be a multiple of 64.  */
-#define BLOCKSIZE 4096
   struct sha_ctx ctx;
   char buffer[BLOCKSIZE + 72];
   size_t sum;
@@ -137,19 +142,31 @@ sha_stream (FILE *stream, void *resblock)
       sum = 0;
 
       /* Read block.  Take care for partial reads.  */
-      do
+      while (1)
 	{
 	  n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
 
 	  sum += n;
-	}
-      while (sum < BLOCKSIZE && n != 0);
-      if (n == 0 && ferror (stream))
-        return 1;
 
-      /* If end of file is reached, end the loop.  */
-      if (n == 0)
-	break;
+	  if (sum == BLOCKSIZE)
+	    break;
+
+	  if (n == 0)
+	    {
+	      /* Check for the error flag IFF N == 0, so that we don't
+		 exit the loop after a partial read due to e.g., EAGAIN
+		 or EWOULDBLOCK.  */
+	      if (ferror (stream))
+		return 1;
+	      goto process_partial_block;
+	    }
+
+	  /* We've read at least one byte, so ignore errors.  But always
+	     check for EOF, since feof may be true even though N > 0.
+	     Otherwise, we could end up calling fread after EOF.  */
+	  if (feof (stream))
+	    goto process_partial_block;
+	}
 
       /* Process buffer with BLOCKSIZE bytes.  Note that
 			BLOCKSIZE % 64 == 0
@@ -157,7 +174,9 @@ sha_stream (FILE *stream, void *resblock)
       sha_process_block (buffer, BLOCKSIZE, &ctx);
     }
 
-  /* Add the last bytes if necessary.  */
+ process_partial_block:;
+
+  /* Process any remaining bytes.  */
   if (sum > 0)
     sha_process_bytes (buffer, sum, &ctx);
 
@@ -198,13 +217,14 @@ sha_process_bytes (const void *buffer, size_t len, struct sha_ctx *ctx)
       memcpy (&ctx->buffer[left_over], buffer, add);
       ctx->buflen += add;
 
-      if (left_over + add > 64)
+      if (ctx->buflen > 64)
 	{
-	  sha_process_block (ctx->buffer, (left_over + add) & ~63, ctx);
+	  sha_process_block (ctx->buffer, ctx->buflen & ~63, ctx);
+
+	  ctx->buflen &= 63;
 	  /* The regions in the following copy operation cannot overlap.  */
 	  memcpy (ctx->buffer, &ctx->buffer[(left_over + add) & ~63],
-		  (left_over + add) & 63);
-	  ctx->buflen = (left_over + add) & 63;
+		  ctx->buflen);
 	}
 
       buffer = (const char *) buffer + add;
@@ -212,18 +232,46 @@ sha_process_bytes (const void *buffer, size_t len, struct sha_ctx *ctx)
     }
 
   /* Process available complete blocks.  */
-  if (len > 64)
+  if (len >= 64)
     {
-      sha_process_block (buffer, len & ~63, ctx);
-      buffer = (const char *) buffer + (len & ~63);
-      len &= 63;
+#if !_STRING_ARCH_unaligned
+/* To check alignment gcc has an appropriate operator.  Other
+   compilers don't.  */
+# if __GNUC__ >= 2
+#  define UNALIGNED_P(p) (((md5_uintptr) p) % __alignof__ (md5_uint32) != 0)
+# else
+#  define UNALIGNED_P(p) (((md5_uintptr) p) % sizeof (md5_uint32) != 0)
+# endif
+      if (UNALIGNED_P (buffer))
+	while (len > 64)
+	  {
+	    sha_process_block (memcpy (ctx->buffer, buffer, 64), 64, ctx);
+	    buffer = (const char *) buffer + 64;
+	    len -= 64;
+	  }
+      else
+#endif
+	{
+	  sha_process_block (buffer, len & ~63, ctx);
+	  buffer = (const char *) buffer + (len & ~63);
+	  len &= 63;
+	}
     }
 
   /* Move remaining bytes in internal buffer.  */
   if (len > 0)
     {
-      memcpy (ctx->buffer, buffer, len);
-      ctx->buflen = len;
+      size_t left_over = ctx->buflen;
+
+      memcpy (&ctx->buffer[left_over], buffer, len);
+      left_over += len;
+      if (left_over >= 64)
+	{
+	  sha_process_block (ctx->buffer, 64, ctx);
+	  left_over -= 64;
+	  memcpy (ctx->buffer, &ctx->buffer[64], left_over);
+	}
+      ctx->buflen = left_over;
     }
 }
 
