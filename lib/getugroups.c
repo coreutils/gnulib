@@ -24,29 +24,13 @@
 #include <unistd.h>
 #endif
 
-/* Even though SunOS 4, Ultrix 4, and 386BSD are mostly POSIX.1 compliant,
-   their getgroups system call (except in the `System V' environment, which
-   is troublesome in other ways) fills in an array of int, not gid_t
-   (which is `short' on those systems).  We do the same, for consistency.
-   Kludge, kludge.  */
-
-#ifdef _POSIX_VERSION
-#if !defined(sun) && !defined(ultrix) && !defined(__386BSD__)
-#define GETGROUPS_T gid_t
-#else /* sun or ultrix or 386BSD */
-#define GETGROUPS_T int
-#endif /* sun or ultrix or 386BSD */
-#else /* not _POSIX_VERSION */
-#define GETGROUPS_T int
-#endif /* not _POSIX_VERSION */
-
 /* setgrent, getgrent, and endgrent are not specified by POSIX.1,
    so header files might not declare them.
    If you don't have them at all, we can't implement this function.
    You lose!  */
 struct group *getgrent ();
 
-#if defined(USG) || defined(STDC_HEADERS)
+#if defined(STDC_HEADERS) || defined(HAVE_STRING_H)
 #include <string.h>
 #else
 #include <strings.h>

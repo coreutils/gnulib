@@ -15,9 +15,11 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
-#if defined(USG) || defined(STDC_HEADERS)
+#if defined(STDC_HEADERS) || defined(HAVE_STRING_H)
 #include <string.h>
+#ifndef rindex
 #define rindex strrchr
+#endif
 #else
 #include <strings.h>
 #endif

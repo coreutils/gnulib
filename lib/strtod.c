@@ -34,10 +34,6 @@ extern int errno;
 #define HUGE_VAL HUGE
 #endif
 
-#if !__STDC__
-#define const
-#endif
-
 /* Convert NPTR to a double.  If ENDPTR is not NULL, a pointer to the
    character after the last one used in the number is put in *ENDPTR.  */
 double

@@ -20,7 +20,7 @@
 #ifdef __GNUC__
 #define alloca __builtin_alloca
 #else
-#ifdef sparc
+#ifdef HAVE_ALLOCA_H
 #include <alloca.h>
 #else
 #ifdef _AIX
@@ -33,7 +33,19 @@ char *alloca ();
 
 #include <stdio.h>
 #include <sys/types.h>
+
+#ifdef TM_IN_SYS_TIME
+#include <sys/time.h>
+#else
 #include <time.h>
+#endif
+
+/* Some old versions of bison generate parsers that use bcopy.
+   That loses on systems that don't provide the function, so we have
+   to redefine it here.  */
+#if !defined (HAVE_BCOPY) && defined (HAVE_MEMCPY) && !defined (bcopy)
+#define bcopy(from, to, len) memcpy ((to), (from), (len))
+#endif
 
 #define YYDEBUG 1
 

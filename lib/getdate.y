@@ -1,23 +1,37 @@
 %{
-/* $Revision: 2.1 $
-**
+/*
 **  Originally written by Steven M. Bellovin <smb@research.att.com> while
 **  at the University of North Carolina at Chapel Hill.  Later tweaked by
 **  a couple of people on Usenet.  Completely overhauled by Rich $alz
 **  <rsalz@bbn.com> and Jim Berets <jberets@bbn.com> in August, 1990;
 **  send any email to Rich.
 **
-**  This grammar has eight shift/reduce conflicts.
+**  This grammar has nine shift/reduce conflicts.
 **
 **  This code is in the public domain and has no copyright.
 */
 /* SUPPRESS 287 on yaccpar_sccsid *//* Unusd static variable */
 /* SUPPRESS 288 on yyerrlab *//* Label unused */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+/* Since the code of getdate.y is not included in the Emacs executable
+   itself, there is no need to #define static in this file.  Even if
+   the code were included in the Emacs executable, it probably
+   wouldn't do any harm to #undef it here; this will only cause
+   problems if we try to write to a static variable, which I don't
+   think this code needs to do.  */
+#ifdef emacs
+#undef static
+#endif
+
 #ifdef __GNUC__
+#undef alloca
 #define alloca __builtin_alloca
 #else
-#ifdef sparc
+#ifdef HAVE_ALLOCA_H
 #include <alloca.h>
 #else
 #ifdef _AIX /* for Bison */
@@ -36,10 +50,6 @@ char *alloca ();
    tricks are need, but defaults to using the gettimeofday system call.
    Include <sys/time.h> if that will be used.  */
 
-#if !defined (USG) && !defined (sgi) && !defined (__386BSD__)
-#include <sys/time.h>
-#endif
-
 #if	defined(vms)
 
 #include <types.h>
@@ -49,32 +59,36 @@ char *alloca ();
 
 #include <sys/types.h>
 
-#if	defined(USG) || !defined(HAVE_FTIME)
+#ifdef TIME_WITH_SYS_TIME
+#include <sys/time.h>
+#include <time.h>
+#else
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>
+#else
+#include <time.h>
+#endif
+#endif
+
+#ifdef timezone
+#undef timezone /* needed for sgi */
+#endif
+
+#if defined(HAVE_SYS_TIMEB_H) || (!defined(USG) && defined(HAVE_FTIME))
+#include <sys/timeb.h>
+#else
 /*
-**  If you need to do a tzset() call to set the
-**  timezone, and don't have ftime().
+** We use the obsolete `struct timeb' as part of our interface!
+** Since the system doesn't have it, we define it here;
+** our callers must do likewise.
 */
 struct timeb {
     time_t		time;		/* Seconds since the epoch	*/
     unsigned short	millitm;	/* Field not used		*/
-    short		timezone;
+    short		timezone;	/* Minutes west of GMT		*/
     short		dstflag;	/* Field not used		*/
 };
-
-#else
-
-#include <sys/timeb.h>
-
-#endif	/* defined(USG) && !defined(HAVE_FTIME) */
-
-#if	defined(BSD4_2) || defined(BSD4_1C) || (defined (hp9000) && !defined (hpux))
-#include <sys/time.h>
-#else
-#if defined(_AIX)
-#include <sys/time.h>
-#endif
-#include <time.h>
-#endif	/* defined(BSD4_2) */
+#endif /* defined(HAVE_SYS_TIMEB_H) */
 
 #endif	/* defined(vms) */
 
@@ -82,15 +96,22 @@ struct timeb {
 #include <string.h>
 #endif
 
-#if sgi
-#undef timezone
+/* Some old versions of bison generate parsers that use bcopy.
+   That loses on systems that don't provide the function, so we have
+   to redefine it here.  */
+#if !defined (HAVE_BCOPY) && defined (HAVE_MEMCPY) && !defined (bcopy)
+#define bcopy(from, to, len) memcpy ((to), (from), (len))
 #endif
 
+extern struct tm	*gmtime();
 extern struct tm	*localtime();
 
 #define yyparse getdate_yyparse
 #define yylex getdate_yylex
 #define yyerror getdate_yyerror
+
+static int yylex ();
+static int yyerror ();
 
 #if	!defined(lint) && !defined(SABER)
 static char RCS[] =
@@ -366,7 +387,7 @@ o_merid	: /* NULL */ {
 %%
 
 /* Month and day table. */
-static TABLE	MonthDayTable[] = {
+static TABLE const MonthDayTable[] = {
     { "january",	tMONTH,  1 },
     { "february",	tMONTH,  2 },
     { "march",		tMONTH,  3 },
@@ -395,7 +416,7 @@ static TABLE	MonthDayTable[] = {
 };
 
 /* Time units table. */
-static TABLE	UnitsTable[] = {
+static TABLE const UnitsTable[] = {
     { "year",		tMONTH_UNIT,	12 },
     { "month",		tMONTH_UNIT,	1 },
     { "fortnight",	tMINUTE_UNIT,	14 * 24 * 60 },
@@ -410,7 +431,7 @@ static TABLE	UnitsTable[] = {
 };
 
 /* Assorted relative-time words. */
-static TABLE	OtherTable[] = {
+static TABLE const OtherTable[] = {
     { "tomorrow",	tMINUTE_UNIT,	1 * 24 * 60 },
     { "yesterday",	tMINUTE_UNIT,	-1 * 24 * 60 },
     { "today",		tMINUTE_UNIT,	0 },
@@ -436,7 +457,7 @@ static TABLE	OtherTable[] = {
 
 /* The timezone table. */
 /* Some of these are commented out because a time_t can't store a float. */
-static TABLE	TimezoneTable[] = {
+static TABLE const TimezoneTable[] = {
     { "gmt",	tZONE,     HOUR( 0) },	/* Greenwich Mean */
     { "ut",	tZONE,     HOUR( 0) },	/* Universal (Coordinated) */
     { "utc",	tZONE,     HOUR( 0) },
@@ -520,7 +541,7 @@ static TABLE	TimezoneTable[] = {
 };
 
 /* Military timezone table. */
-static TABLE	MilitaryTable[] = {
+static TABLE const MilitaryTable[] = {
     { "a",	tZONE,	HOUR(  1) },
     { "b",	tZONE,	HOUR(  2) },
     { "c",	tZONE,	HOUR(  3) },
@@ -553,7 +574,7 @@ static TABLE	MilitaryTable[] = {
 
 
 /* ARGSUSED */
-int
+static int
 yyerror(s)
     char	*s;
 {
@@ -599,7 +620,7 @@ Convert(Month, Day, Year, Hours, Minutes, Seconds, Meridian, DSTmode)
     MERIDIAN	Meridian;
     DSTMODE	DSTmode;
 {
-    static int	DaysInMonth[12] = {
+    static int DaysInMonth[12] = {
 	31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
     };
     time_t	tod;
@@ -693,7 +714,7 @@ LookupWord(buff)
 {
     register char	*p;
     register char	*q;
-    register TABLE	*tp;
+    register const TABLE	*tp;
     int			i;
     int			abbrev;
 
@@ -794,7 +815,7 @@ LookupWord(buff)
 }
 
 
-int
+static int
 yylex()
 {
     register char	c;
@@ -847,12 +868,38 @@ yylex()
 }
 
 
+#define TM_YEAR_ORIGIN 1900
+
+/* Yield A - B, measured in seconds.  */
+static time_t
+difftm(a, b)
+     struct tm *a, *b;
+{
+  int ay = a->tm_year + (TM_YEAR_ORIGIN - 1);
+  int by = b->tm_year + (TM_YEAR_ORIGIN - 1);
+  return
+    (
+     (
+      (
+       /* difference in day of year */
+       a->tm_yday - b->tm_yday
+       /* + intervening leap days */
+       +  ((ay >> 2) - (by >> 2))
+       -  (ay/100 - by/100)
+       +  ((ay/100 >> 2) - (by/100 >> 2))
+       /* + difference in years * 365 */
+       +  (time_t)(ay-by) * 365
+       )*24 + (a->tm_hour - b->tm_hour)
+      )*60 + (a->tm_min - b->tm_min)
+     )*60 + (a->tm_sec - b->tm_sec);
+}
+
 time_t
 get_date(p, now)
     char		*p;
     struct timeb	*now;
 {
-    struct tm		*tm;
+    struct tm		*tm, gmt;
     struct timeb	ftz;
     time_t		Start;
     time_t		tod;
@@ -860,34 +907,12 @@ get_date(p, now)
     yyInput = p;
     if (now == NULL) {
         now = &ftz;
-#if	!defined(HAVE_FTIME)
 	(void)time(&ftz.time);
-	/* Set the timezone global. */
-	tzset();
-	{
-#if sgi
-	    ftz.timezone = (int) _timezone / 60;
-#else /* not sgi */
-#ifdef __386BSD__
-	    ftz.timezone = 0;
-#else /* neither sgi nor 386BSD */
-#if defined (USG)
-	    extern time_t timezone;
 
-	    ftz.timezone = (int) timezone / 60;
-#else /* neither sgi nor 386BSD nor USG */
-	    struct timeval tv;
-	    struct timezone tz;
-
-	    gettimeofday (&tv, &tz);
-	    ftz.timezone = (int) tz.tz_minuteswest;
-#endif /* neither sgi nor 386BSD nor USG */
-#endif /* neither sgi nor 386BSD */
-#endif /* not sgi */
-	}
-#else /* HAVE_FTIME */
-	(void)ftime(&ftz);
-#endif /* HAVE_FTIME */
+	if (! (tm = gmtime (&ftz.time)))
+	    return -1;
+	gmt = *tm;	/* Make a copy, in case localtime modifies *tm.  */
+	ftz.timezone = difftm (&gmt, localtime (&ftz.time)) / 60;
     }
 
     tm = localtime(&now->time);
