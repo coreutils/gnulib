@@ -1,22 +1,22 @@
 /* Convert a `struct tm' to a time_t value.
-   Copyright (C) 1993, 94, 95, 96, 97, 98, 99 Free Software Foundation, Inc.
+   Copyright (C) 1993-1999, 2002 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Paul Eggert (eggert@twinsun.com).
 
    The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public License as
-   published by the Free Software Foundation; either version 2 of the
-   License, or (at your option) any later version.
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
 
    The GNU C Library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
+   Lesser General Public License for more details.
 
-   You should have received a copy of the GNU Library General Public
-   License along with the GNU C Library; see the file COPYING.LIB.  If not,
-   write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-   Boston, MA 02111-1307, USA.  */
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
 
 /* Define this to have a standalone program to test this implementation of
    mktime.  */
@@ -29,6 +29,9 @@
 #ifdef _LIBC
 # define HAVE_LIMITS_H 1
 # define STDC_HEADERS 1
+# define STATIC /* empty */
+#else
+# define STATIC static
 #endif
 
 /* Assume that leap seconds are possible, unless told otherwise.
@@ -99,7 +102,7 @@
 #endif
 
 /* How many days come before each month (0-12).  */
-const unsigned short int __mon_yday[2][13] =
+STATIC const unsigned short int __mon_yday[2][13] =
   {
     /* Normal years.  */
     { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 },
@@ -212,7 +215,7 @@ ranged_convert (struct tm *(*convert) (const time_t *, struct tm *),
    Use *OFFSET to keep track of a guess at the offset of the result,
    compared to what the result would be for UTC without leap seconds.
    If *OFFSET's guess is correct, only one CONVERT call is needed.  */
-time_t
+STATIC time_t
 __mktime_internal (struct tm *tp,
 		   struct tm *(*convert) (const time_t *, struct tm *),
 		   time_t *offset)
