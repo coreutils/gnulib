@@ -55,7 +55,7 @@ snprintf (char *str, size_t size, const char *format, ...)
   if (!output)
     return -1;
 
-  if (str)
+  if (str && size > 0)
     {
       memcpy (str, output, MIN (len + 1, size));
       str[size - 1] = '\0';

@@ -1,4 +1,8 @@
 2004-10-01  Simon Josefsson  <jas@extundo.com>
+
+	* snprintf.c (snprintf): Handle size==0.
+
+2004-10-01  Simon Josefsson  <jas@extundo.com>
             Bruno Haible  <bruno@clisp.org>
 
 	* snprintf.c: Include <stdarg.h>, <stdlib.h>, <string.h>.
