@@ -1,3 +1,11 @@
+2003-02-20  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh (func_all_modules): Add poll.
+
+2003-02-19  Paolo Bonzino  <bonzini@gnu.org>
+
+	* modules/poll: New file.
+
 2003-02-18  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh (func_all_modules): Add mathl.

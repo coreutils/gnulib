@@ -1,3 +1,8 @@
+2003-02-19  Paolo Bonzino  <bonzini@gnu.org>
+
+	* poll_.h: New file.
+	* poll.c: New file.
+
 2003-02-18  Paolo Bonzino  <bonzini@gnu.org>
 
 	* mathl.h: New file.

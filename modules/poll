@@ -1,0 +1,23 @@
+Description:
+poll() function: wait for some event on a set of file descriptors.
+
+Files:
+lib/poll.c
+lib/poll_.h
+m4/poll.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_POLL
+
+Makefile.am:
+noinst_HEADERS += poll_.h
+DISTCLEANFILES += poll.h
+
+Include:
+#include <poll.h>
+
+Maintainer:
+Paolo Bonzini  <bonzini@gnu.org>
+
