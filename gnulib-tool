@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 2002 Free Software Foundation, Inc.
+# Copyright (C) 2002, 2003 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,8 +22,8 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2002-12-31 13:47:17 $'
-last_checkin_date=`echo "$cvsdatestamp" | sed -e 's/^\$Date: 2002-12-31 13:47:17 $$//'`
+cvsdatestamp='$Date: 2003-01-01 14:49:10 $'
+last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
 # You can set AUTOCONFPATH to empty if autoconf 2.57 is already in your PATH.
