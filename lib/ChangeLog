@@ -1,3 +1,11 @@
+2002-11-04  Bruno Haible  <bruno@clisp.org>
+
+	* stpcpy.h: New file, from GNU gettext-0.11.5.
+	* strcase.h: New file, from GNU gettext-0.11.5.
+	* strpbrk.h: New file, from GNU gettext-0.11.5.
+	* strstr.h: New file, from GNU gettext-0.11.5.
+	* xgetcwd.h: New file, from GNU gettext-0.11.5.
+
 2002-05-09  Bruno Haible  <bruno@clisp.org>
 
 	* config.charset: Update for newest glibc. Add canonical names
