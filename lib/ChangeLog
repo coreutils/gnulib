@@ -1,5 +1,18 @@
 2003-10-21  Paul Eggert  <eggert@twinsun.com>
 
+	* obstack.c: Merge from glibc.
+	[defined _LIBC]: Include <obstack.h>, not "obstack.h".
+	Add libc_hidden_def (_obstack_newchunk).
+	(_obstack_free) [! defined _LIBC]: Remove.
+	[defined _LIBC]: Make a strong alias from obstack_free, rather than
+	a clone of the function body.
+	(fputs) [defined _LIBC && defined USE_IN_LIBIO]: Remove.
+	[defined _LIBC && !defined USE_IN_LIBIO]: Include <libio/iolibio.h>.
+
+	* obstack.h: Indenting cleanup, to make it easier to merge with glibc.
+	(obstack_grow, obstack_grow0): Remove unnecessary parentheses around
+	arg to memcpy.
+
 	* obstack.h (obstack_1grow_fast): Properly parenthesize arg.
 	(obstack_ptr_grow_fast, obstack_int_grow_fast):
 	Don't use lvalue casts, as GCC plans to remove support for them
