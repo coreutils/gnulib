@@ -1,0 +1,28 @@
+Description:
+Line breaking (works also for East-Asian languages).
+
+Files:
+lib/linebreak.h
+lib/linebreak.c
+lib/lbrkprop.h
+m4/linebreak.m4
+
+Depends-on:
+localcharset
+c-ctype
+iconv
+utf8-ucs4
+utf16-ucs4
+
+configure.ac:
+gl_LINEBREAK
+
+Makefile.am:
+lib_SOURCES += linebreak.h linebreak.c lbrkprop.h
+
+Include:
+"linebreak.h"
+
+Maintainer:
+Bruno Haible
+
