@@ -20,6 +20,7 @@
 #ifndef XALLOC_H_
 # define XALLOC_H_
 
+# include <stdbool.h>
 # include <stddef.h>
 
 # ifndef __attribute__
@@ -58,6 +59,16 @@ void *x2realloc (void *p, size_t *pn);
 void *x2nrealloc (void *p, size_t *pn, size_t s);
 void *xclone (void const *p, size_t s);
 char *xstrdup (const char *str);
+
+/* Return true if an array of N objects, each of size S, cannot exist
+   due to size arithmetic overflow.  S must be nonzero.  */
+
+static inline bool
+xalloc_oversized (size_t n, size_t s)
+{
+  size_t size_max = -1;
+  return size_max / s < n;
+}
 
 /* These macros are deprecated; they will go away soon, and are retained
    temporarily only to ease conversion to the functions described above.  */

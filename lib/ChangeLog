@@ -1,3 +1,26 @@
+2003-10-26  Paul Eggert  <eggert@twinsun.com>
+
+	* xalloc.h (xalloc_oversized): New static inline function, for
+	callers that want to do their own size-overflow checking.  Include
+	<stdbool.h>, since xalloc_oversized returns bool.
+
+	Add two functions x2realloc, x2nrealloc, for programs that grow
+	arrays dynamically by doubling their sizes.
+	* xalloc.h (x2realloc, x2nrealloc): New decls.
+	* xmalloc.c (x2nrealloc_inline, x2nrealloc, x2realloc):
+	New functions.
+
+	Port to C99 semantics for 'inline' of external functions.
+	Bug reported by Bruno Haible.
+	* xmalloc.c (xnmalloc_inline): New static inline function,
+	with the old contents of xnmalloc.
+	(xnmalloc, xmalloc): Use it.
+	(xnrealloc_inline): New static inline function,
+	with the old contents of xnrealloc.
+	(xnrealloc, xrealloc): Use it.
+
+	* alloc.c (alloca): xmalloc cannot return NULL, so don't test for that.
+
 2003-10-25  Paul Eggert  <eggert@twinsun.com>
 
 	Fix several address-calculation bugs in the hash modules,

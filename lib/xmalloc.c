@@ -23,7 +23,6 @@
 
 #include "xalloc.h"
 
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -49,15 +48,6 @@
 /* If non NULL, call this function when memory is exhausted. */
 void (*xalloc_fail_func) (void) = 0;
 
-/* Return true if array of N objects, each of size S, cannot exist due
-   to arithmetic overflow.  S must be nonzero.  */
-
-static inline bool
-array_size_overflow (size_t n, size_t s)
-{
-  return SIZE_MAX / s < n;
-}
-
 /* If XALLOC_FAIL_FUNC is NULL, or does return, display this message
    before exiting when memory is exhausted.  Goes through gettext. */
 char const xalloc_msg_memory_exhausted[] = N_("memory exhausted");
@@ -81,7 +71,7 @@ static inline void *
 xnmalloc_inline (size_t n, size_t s)
 {
   void *p;
-  if (array_size_overflow (n, s) || ! (p = malloc (n * s)))
+  if (xalloc_oversized (n, s) || ! (p = malloc (n * s)))
     xalloc_die ();
   return p;
 }
@@ -106,7 +96,7 @@ xmalloc (size_t n)
 static inline void *
 xnrealloc_inline (void *p, size_t n, size_t s)
 {
-  if (array_size_overflow (n, s) || ! (p = realloc (p, n * s)))
+  if (xalloc_oversized (n, s) || ! (p = realloc (p, n * s)))
     xalloc_die ();
   return p;
 }
@@ -249,7 +239,7 @@ xcalloc (size_t n, size_t s)
   void *p;
   /* Test for overflow, since some calloc implementations don't have
      proper overflow checks.  */
-  if (array_size_overflow (n, s) || ! (p = calloc (n, s)))
+  if (xalloc_oversized (n, s) || ! (p = calloc (n, s)))
     xalloc_die ();
   return p;
 }
