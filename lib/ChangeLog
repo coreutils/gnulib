@@ -1,5 +1,9 @@
 2003-06-04  Paul Eggert  <eggert@twinsun.com>
 
+	* exclude.c: (new_exclude, add_exclude): Remove casts that are
+	unnecessary now that we assume C89 or better.  This change
+	imported from coreutils.
+
 	* mktime.c (__mktime_internal): Do not reject negative timestamps
 	arbitrarily.  This is the same patch as 2003-05-28, but it got lost
 	in the 2003-05-30 sync from glibc.
