@@ -1,3 +1,8 @@
+2004-12-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getdate.texi (Time of day items, Time zone items):
+	Describe new formats +00:00, UTC+00:00.
+
 2004-11-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getdate.texi (General date syntax): "next" is 1, not 2.
