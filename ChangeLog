@@ -1,3 +1,9 @@
+2003-09-27  Oskar Liljeblad  <oskar@osk.mine.nu>
+
+	Trivial fixes to Makefile.am parts of module listings.
+	* modules/strstr: Append strstr.h to lib_SOURCES.
+	* modules/strcase: Likewise, for strcase.h.
+
 2003-09-27  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/free: New file.

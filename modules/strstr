@@ -12,6 +12,7 @@ configure.ac:
 gl_FUNC_STRSTR
 
 Makefile.am:
+lib_SOURCES += strstr.h
 
 Include:
 "strstr.h"
