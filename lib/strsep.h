@@ -40,7 +40,9 @@
 
    Caveat: It modifies the original string.
    Caveat: It doesn't work with multibyte strings unless all of the delimiter
-           characters are ASCII characters < 0x30.  */
+           characters are ASCII characters < 0x30.
+
+   See also strtok_r().  */
 
 extern char *strsep (char **stringp, const char *delim);
 
