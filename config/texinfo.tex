@@ -89,10 +89,11 @@
 \let\ptexhat=^
 \let\ptexi=\i
 \let\ptexindent=\indent
-\let\ptexnoindent=\noindent
 \let\ptexinsert=\insert
 \let\ptexlbrace=\{
 \let\ptexless=<
+\let\ptexnewwrite\newwrite
+\let\ptexnoindent=\noindent
 \let\ptexplus=+
 \let\ptexrbrace=\}
 \let\ptexslash=\/
@@ -2972,9 +2973,8 @@ where each line of input produces a line of output.}
 % Index generation facilities
 
 % Define \newwrite to be identical to plain tex's \newwrite
-% except not \outer, so it can be used within \newindex.
-{\catcode`\@=11
-\gdef\newwrite{\alloc@7\write\chardef\sixt@@n}}
+% except not \outer, so it can be used within macros and \if's.
+\edef\newwrite{\makecsname{ptexnewwrite}}
 
 % \newindex {foo} defines an index named foo.
 % It automatically defines \fooindex such that
