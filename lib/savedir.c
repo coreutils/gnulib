@@ -17,6 +17,17 @@
 
 /* Written by David MacKenzie <djm@gnu.ai.mit.edu>. */
 
+#ifdef HAVE_CONFIG_H
+#if defined (CONFIG_BROKETS)
+/* We use <config.h> instead of "config.h" so that a compilation
+   using -I. -I will use ./config.h rather than /config.h
+   (which it would do because it found this file in ).  */
+#include <config.h>
+#else
+#include "config.h"
+#endif
+#endif
+
 #include <sys/types.h>
 
 #ifdef HAVE_UNISTD_H

@@ -17,6 +17,17 @@
 
 /* Written by Brian L. Matthews, blm@6sceng.UUCP. */
 
+#ifdef HAVE_CONFIG_H
+#if defined (CONFIG_BROKETS)
+/* We use <config.h> instead of "config.h" so that a compilation
+   using -I. -I will use ./config.h rather than /config.h
+   (which it would do because it found this file in ).  */
+#include <config.h>
+#else
+#include "config.h"
+#endif
+#endif
+
 #if !defined (HAVE_ST_BLOCKS) && !defined(_POSIX_SOURCE)
 #include <sys/types.h>
 #include <sys/param.h>

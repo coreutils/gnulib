@@ -1,6 +1,17 @@
 /* ftruncate emulations that work on some System V's.
    This file is in the public domain. */
 
+#ifdef HAVE_CONFIG_H
+#if defined (CONFIG_BROKETS)
+/* We use <config.h> instead of "config.h" so that a compilation
+   using -I. -I will use ./config.h rather than /config.h
+   (which it would do because it found this file in ).  */
+#include <config.h>
+#else
+#include "config.h"
+#endif
+#endif
+
 #include <sys/types.h>
 #include <fcntl.h>
 
