@@ -1,0 +1,20 @@
+Description:
+Return machine's domainname, without size limitations.
+
+Files:
+lib/xgetdomainname.h
+lib/xgetdomainname.c
+
+Depends-on:
+getdomainname
+xalloc
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += xgetdomainname.h xgetdomainname.c
+
+Include:
+
+Maintainer:
+Simon Josefsson

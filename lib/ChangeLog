@@ -1,4 +1,9 @@
 2003-09-25  Simon Josefsson  <jas@extundo.com>
+
+	* xgetdomainname.h: New file.
+	* xgetdomainname.c: New file.
+
+2003-09-25  Simon Josefsson  <jas@extundo.com>
             Bruno Haible  <bruno@clisp.org>
 
 	* getdomainname.h: New file.
