@@ -148,7 +148,7 @@ error_tail (int status, int errnum, const char *message, va_list args)
       size_t len = strlen (message) + 1;
       const wchar_t *wmessage = L"out of memory";
       wchar_t *wbuf = (len < ALLOCA_LIMIT
-		       ? (void *) alloca (len * sizeof *wbuf)
+		       ? alloca (len * sizeof *wbuf)
 		       : len <= SIZE_MAX / sizeof *wbuf
 		       ? malloc (len * sizeof *wbuf)
 		       : NULL);
