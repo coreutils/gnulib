@@ -10,6 +10,7 @@ memcoll
 gettext
 error
 quotearg
+exitfail
 
 configure.ac:
 

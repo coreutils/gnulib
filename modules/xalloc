@@ -12,6 +12,7 @@ malloc
 realloc
 error
 gettext
+exitfail
 
 configure.ac:
 gl_XALLOC

@@ -1,3 +1,22 @@
+2003-07-22  Paul Eggert  <eggert@twinsun.com>
+
+	* xalloc.h (XCALLOC, XREALLOC, CCLONE): Fix under- and
+	over-parenthesization in macros.
+
+	Sync with coreutils.
+
+	* xalloc.h (XMALLOC, XCALLOC, XREALLOC): Remove casts not
+	required by C99.
+
+	Use `exit_failure' for xalloc and xmemcoll instead of their own
+	private exit-failure variables.
+	* xalloc.h (xalloc_exit_failure): Remove.
+	* xmalloc.c: Likewise.  Include exitfail.h.
+	(xalloc_die): Use exit_failure instead of xalloc_exit_failure.
+	* xmemcoll.h (xmemcoll_exit_failure): Remove.
+	* xmemcoll.c: Likewise.  Include exitfail.h.
+	(xmemcoll): Use exit_failure instead of xalloc_exit_failure.
+
 2003-07-18  Paul Eggert  <eggert@twinsun.com>
 
 	* closeout.h (close_stdout_set_status, close_stdout_status): Remove.

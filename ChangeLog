@@ -1,3 +1,8 @@
+2003-07-22  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/xalloc (Depends-on): Add exitfail.
+	* modules/xmemcoll: Likewise.
+
 2003-07-20  Jim Meyering  <jim@meyering.net>
 
 	* modules/closeout (Depends-on): Add exitfail.

@@ -32,11 +32,6 @@
 #  define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
 # endif
 
-/* Exit value when the requested amount of memory is not available.
-   It is initialized to EXIT_FAILURE, but the caller may set it to
-   some other value.  */
-extern int xalloc_exit_failure;
-
 /* If this pointer is non-zero, run the specified function upon each
    allocation failure.  It is initialized to zero. */
 extern void (*xalloc_fail_func) (void);
@@ -47,7 +42,8 @@ extern void (*xalloc_fail_func) (void);
 extern char const xalloc_msg_memory_exhausted[];
 
 /* This function is always triggered when memory is exhausted.  It is
-   in charge of honoring the three previous items.  This is the
+   in charge of honoring the two previous items.  It exits with status
+   exit_failure (defined in exitfail.h).  This is the
    function to call when one wants the program to die because of a
    memory allocation failure.  */
 extern void xalloc_die (void) ATTRIBUTE_NORETURN;
@@ -57,10 +53,9 @@ void *xcalloc (size_t n, size_t s);
 void *xrealloc (void *p, size_t n);
 char *xstrdup (const char *str);
 
-# define XMALLOC(Type, N_items) ((Type *) xmalloc (sizeof (Type) * (N_items)))
-# define XCALLOC(Type, N_items) ((Type *) xcalloc (sizeof (Type), (N_items)))
-# define XREALLOC(Ptr, Type, N_items) \
-  ((Type *) xrealloc ((void *) (Ptr), sizeof (Type) * (N_items)))
+# define XMALLOC(Type, N_items) xmalloc (sizeof (Type) * (N_items))
+# define XCALLOC(Type, N_items) xcalloc (sizeof (Type), N_items)
+# define XREALLOC(Ptr, Type, N_items) xrealloc (Ptr, sizeof (Type) * (N_items))
 
 /* Declare and alloc memory for VAR of type TYPE. */
 # define NEW(Type, Var)  Type *(Var) = XMALLOC (Type, 1)
@@ -74,7 +69,7 @@ char *xstrdup (const char *str);
 
 /* Return a pointer to a malloc'ed copy of the array SRC of NUM elements. */
 # define CCLONE(Src, Num) \
-  (memcpy (xmalloc (sizeof (*Src) * (Num)), (Src), sizeof (*Src) * (Num)))
+  (memcpy (xmalloc (sizeof *(Src) * (Num)), Src, sizeof *(Src) * (Num)))
 
 /* Return a malloc'ed copy of SRC. */
 # define CLONE(Src) CCLONE (Src, 1)
