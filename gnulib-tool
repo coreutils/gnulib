@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-08-12 20:47:12 $'
+cvsdatestamp='$Date: 2004-08-17 23:36:21 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -90,6 +90,7 @@ Options:
                             placed (default \"m4\"), for --import.
       --libtool             Use libtool rules, for --import.
       --no-changelog        don't update or create ChangeLog files
+      --dry-run             For --import, only print what would have been done.
 
 Report bugs to <bug-gnulib@gnu.org>."
 }
@@ -123,14 +124,18 @@ func_fatal_error ()
 # - m4base          from --m4-base
 # - libtool         true if --libtool was given, blank otherwise
 # - do_changelog    false if --no-changelog was given, : otherwise
+# - dry_run         true if --dry-run was given, blank otherwise
 {
   mode=
   destdir=
   libname=libgnu
-  sourcebase=lib
-  m4base=m4
+  sourcebase=
+  m4base=
   libtool=
   do_changelog=:
+  dry_run=
+
+  supplied_opts="$@"
 
   while test $# -gt 0; do
     case "$1" in
@@ -171,9 +176,11 @@ func_fatal_error ()
           func_fatal_error "missing argument for --lib"
         fi
         libname=$1
+	supplied_libname=true
         shift ;;
       --lib=* )
         libname=`echo "X$1" | sed -e 's/^X--lib=//'`
+	supplied_libname=true
         shift ;;
       --source-base )
         shift
@@ -200,6 +207,9 @@ func_fatal_error ()
         shift ;;
       --no-changelog | --no-changelo | --no-changel | --no-change | --no-chang | --no-chan | --no-cha | --no-ch | --no-c )
         do_changelog=false
+        shift ;;
+      --dry-run )
+        dry_run=true
         shift ;;
       --help | --hel | --he | --h )
         func_usage
@@ -572,28 +582,67 @@ case $mode in
     ;;
 
   import )
+	# Where to import.
 	if test -z "$destdir"; then
 	    destdir=.
 	fi
 	test -d "$destdir" \
 	    || func_fatal_error "destination directory does not exist: $destdir"
-	sourcebase=`cd $destdir; $AUTOCONF --trace=gl_SOURCE_BASE | sed 's,^.*:,,g'`
+
+        # Prefer configure.ac to configure.in
+	test -f $destdir/configure.in && configure_ac=$destdir/configure.in
+	test -f $destdir/configure.ac && configure_ac=$destdir/configure.ac
+	test -f "$configure_ac" \
+            || func_fatal_error "cannot find $destdir/configure.ac"
+
+	# Get settings.
+	my_sed_traces='s,#.*$,,; s,^dnl .*$,,; s, dnl .*$,,;
+        /gl_MODULES[^_]/  {
+            s,^.*gl_MODULES([[   ]*\([^])]*\).*$,ac_modules="\1",; p;
+        };
+        /gl_SOURCE_BASE/   {
+            s,^.*gl_SOURCE_BASE([[         ]*\([^])]*\).*$,ac_sourcebase="\1",; p;
+        };
+        /gl_M4_BASE/   {
+            s,^.*gl_M4_BASE([[         ]*\([^])]*\).*$,ac_m4base="\1",; p;
+        };
+        /gl_LIB/   {
+            s,^.*gl_LIB([[         ]*\([^])]*\).*$,ac_libname="\1",; p;
+        };
+        /A[CM]_PROG_LIBTOOL/ { s,^.*$,seen_libtool=:,; p; };
+        /LT_INIT/            { s,^.*$,seen_libtool=:,; p; };
+        d;'
+	eval `cat $configure_ac | sed "$my_sed_traces"`
+
+	# Override libname?
+	if test -z "$supplied_libname" && test -n "$ac_libname"; then
+	    libname="$ac_libname"
+	fi
+
+	# Set up source base.
+	test -z "$sourcebase" && sourcebase="$ac_sourcebase"
+	test -z "$sourcebase" && sourcebase="lib"
 	test -d "$destdir/$sourcebase" || \
-	    mkdir "$destdir/$sourcebase" || \
-	    func_fatal_error \
-	    "could not create source base directory: $destdir/$sourcebase"
-	m4base=`cd $destdir; $AUTOCONF --trace=gl_M4_BASE | sed 's,^.*:,,g'`
+	    (test -z "$dry_run" && mkdir "$destdir/$sourcebase") || \
+	    func_fatal_error "source base $destdir/$sourcebase doesn't exist"
+
+	# Set up m4 base.
+	test -z "$m4base" && m4base="$ac_m4base"
+	test -z "$sourcebase" && m4base="m4"
 	test -d "$destdir/$m4base" || \
-	    mkdir "$destdir/$m4base" || \
-	    func_fatal_error \
-	    "could not create m4 base directory: $destdir/$m4base"
+	    (test -z "$dry_run" && mkdir "$destdir/$m4base") || \
+	    func_fatal_error "m4 base $destdir/$m4base doesn't exist"
+
+	# Using libtool?
+	if test x$seen_libtool != x; then
+	    libtool=true
+	fi
+
+	# What modules to extract.
 	supplied_modules="$*"
 	modules=`for m in $supplied_modules; do echo $m; done | sort | uniq`
 	if test -z "$modules"; then
-	    modules=`cd $destdir; $AUTOCONF --trace=gl_MODULES | sed 's,^.*:,,g'`
-	fi
-	if test x`cd $destdir; $AUTOCONF --trace=AC_PROG_LIBTOOL` != x; then
-	    libtool=true
+	    modules="$ac_modules"
 	fi
 
         # Determine final module list.
@@ -631,6 +680,9 @@ case $mode in
 	echo "File list:"
 	echo "$files" | sed -e 's/^/  /'
 
+	test -n "$files" \
+	    || func_fatal_error "refusing to do nothing"
+
         # Copy files.
 	for f in $files; do
 	    case "$f" in
@@ -639,10 +691,20 @@ case $mode in
 		m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
 		*) g="$f" ;;
 	    esac
-	    cp -p "$gnulib_dir/$f" "$destdir/$g"
+	    test -n "$dry_run" && dry=echo
+	    $dry cp -p "$gnulib_dir/$f" "$destdir/$g"
 	done
 
+	# Commands printed in a comment in generated files.
+	cmd="gnulib-tool $supplied_opts"
+	opt_libtool=
+	if test -n "$libtool"; then
+	    opt_libtool="--libtool"
+	fi
+	actioncmd="gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool `echo $modules`"
+
         # Create lib/Makefile.am.
+	echo "Creating $destdir/$sourcebase/Makefile.am..."
 	if test -n "$libtool"; then
 	    libext=la
 	    perhapsLT=LT
@@ -650,7 +712,13 @@ case $mode in
 	    libext=a
 	    perhapsLT=
 	fi
-	(echo "## Process this file with automake to produce Makefile.in."
+	(
+	    if test -z "$dry_run"; then
+		exec > $destdir/$sourcebase/Makefile.am
+	    else
+		echo "# $destdir/$sourcebase/Makefile.am"
+	    fi
+	    echo "## Process this file with automake to produce Makefile.in."
 	    echo "# Copyright (C) 2004 Free Software Foundation, Inc."
 	    echo "#"
 	    echo "# This file is free software, distributed under the terms of the GNU"
@@ -661,11 +729,8 @@ case $mode in
 	    echo "#"
 	    echo "# Generated by gnulib-tool."
 	    echo "#"
-	    opt_libtool=
-	    if test -n "$libtool"; then
-		opt_libtool="--libtool"
-	    fi
-	    echo "# gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool $supplied_modules"
+	    echo "# Invoked as: $cmd"
+	    echo "# Reproduce by: $actioncmd"
 	    echo
 	    echo "AUTOMAKE_OPTIONS = 1.8 gnits"
 	    echo
@@ -689,10 +754,19 @@ case $mode in
 		    fi
 		fi
 	    done
-	) > "$destdir/$sourcebase/Makefile.am"
+	    echo
+	    echo "# Makefile.am ends here"
+	)
 
         # Create gnulib.m4.
-	(echo "# Copyright (C) 2004 Free Software Foundation, Inc."
+	echo "Creating $destdir/$m4base/gnulib.m4..."
+	(
+	    if test -z "$dry_run"; then
+		exec > $destdir/$m4base/gnulib.m4
+	    else
+		echo "# $destdir/$m4base/gnulib.m4"
+	    fi
+	    echo "# Copyright (C) 2004 Free Software Foundation, Inc."
 	    echo "# This file is free software, distributed under the terms of the GNU"
 	    echo "# General Public License.  As a special exception to the GNU General"
 	    echo "# Public License, this file may be distributed as part of a program"
@@ -701,11 +775,8 @@ case $mode in
 	    echo "#"
 	    echo "# Generated by gnulib-tool."
 	    echo "#"
-	    opt_libtool=
-	    if test -n "$libtool"; then
-		opt_libtool="--libtool"
-	    fi
-	    echo "# gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool $supplied_modules"
+	    echo "# Invoked as: $cmd"
+	    echo "# Reproduce by: $actioncmd"
 	    echo
 	    echo "AC_DEFUN([gl_EARLY],"
 	    echo "["
@@ -735,7 +806,14 @@ case $mode in
 	    echo
 	    echo "dnl Usage: gl_M4_BASE(DIR)"
 	    echo "AC_DEFUN([gl_M4_BASE], [])"
-	) > "$destdir/$m4base/gnulib.m4"
+	    echo
+	    echo "# gnulib.m4 ends here"
+	)
+	echo "Finished."
+	echo
+	echo "Don't forget to add \"$sourcebase/Makefile\""
+	echo "to AC_CONFIG_FILES in \"$configure_ac\" and to mention"
+	echo "\"`basename $sourcebase`\" in SUBDIRS in some Makefile.am."
 	;;
 
   create-testdir )
