@@ -1,5 +1,8 @@
 2002-12-02  Jim Meyering  <jim@meyering.net>
 
+	* safe-read.c (EINTR): Define.
+	(safe_read): Rewrite to iterate IFF the read fails with EINTR.
+
 	* safe-read.h (SAFE_READ_ERROR): Define.
 
 2002-12-01  Jim Meyering  <jim@meyering.net>
