@@ -19,6 +19,7 @@ AC_DEFUN([gl_FUNC_GETPASS],
 # arbitrary length (not just 8 bytes as on HP-UX).
 AC_DEFUN([gl_FUNC_GETPASS_GNU],
 [
+  dnl TODO: Detect when GNU getpass() is already found in glibc.
   AC_LIBOBJ(getpass)
   gl_PREREQ_GETPASS
   dnl We must choose a different name for our function, since on ELF systems
