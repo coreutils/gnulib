@@ -1,3 +1,7 @@
+2004-11-16  Jim Meyering  <jim@meyering.net>
+
+	* modules/closeout (Depends-on): Add fpending.
+
 2004-11-11  Simon Josefsson  <jas@extundo.com>
 
 	* modules/strtok_r: New file.
