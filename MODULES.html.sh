@@ -19,6 +19,8 @@
 
 # Usage: MODULES.html.sh > MODULES.html
 
+PATH=`dirname $0`:$PATH; export PATH
+
 sed_lt='s,<,\&lt;,g'
 sed_gt='s,>,\&gt;,g'
 sed_escape_dot='s,\.,\\.,g'
