@@ -1,3 +1,18 @@
+2005-01-18  Bruno Haible  <bruno@clisp.org>
+
+	* allocsa.m4, codeset.m4, copy-file.m4, eaccess.m4, eealloc.m4:
+	* eoverflow.m4, execute.m4, fatal-signal.m4, findprog.m4, glibc21.m4:
+	* iconv.m4, intmax_t.m4, inttypes_h.m4, lib-ld.m4, lib-link.m4:
+	* lib-prefix.m4, linebreak.m4, localcharset.m4, longdouble.m4:
+	* longlong.m4, mbrtowc.m4, mbstate_t.m4, mbswidth.m4, mkdtemp.m4:
+	* pipe.m4, readlink.m4, safe-read.m4, safe-write.m4, setenv.m4:
+	* sig_atomic_t.m4, signalblocking.m4, signed.m4, size_max.m4:
+	* ssize_t.m4, stdbool.m4, stdint_h.m4, stpcpy.m4, stpncpy.m4:
+	* strcase.m4, strcspn.m4, strpbrk.m4, strstr.m4, ucs4-utf.m4:
+	* uintmax_t.m4, ulonglong.m4, unicodeio.m4, utf-ucs4.m4, vasnprintf.m4:
+	* vasprintf.m4, wait-process.m4, wchar_t.m4, wint_t.m4, xsize.m4:
+	Use an all-permissive copyright notice, recommended by RMS.
+
 2005-01-06  Bruno Haible  <bruno@clisp.org>
 
 	* stpncpy.m4 (gl_FUNC_STPNCPY): Rename stpncpy to gnu_stpncpy here.
