@@ -191,7 +191,7 @@
 	(free): Remove decl.
 
 	* strchrnul.c (strchrnul): Define with a prototype.
-	Fix bug: c_in was not converted to unsigned char before searching.
+	Fix bug: c_in was not converted to char before searching.
 
 	The following changes are not K&R related:
 
