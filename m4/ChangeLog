@@ -1,3 +1,10 @@
+2004-03-07  Paul Eggert  <eggert@twinsun.com>
+
+	* c-stack.m4 (gl_PREREQ_C_STACK): Renamed from jm_PREREQ_C_STACK.
+	All uses changed.  Check for sa_sigaction member; this fixes
+	a bug first reported by Jason Andrade in
+	<http://mail.gnu.org/archive/html/bug-textutils/2003-03/msg00027.html>.
+
 2004-01-18  Simon Josefsson  <jas@extundo.com>
 
 	* strdup.m4 (gl_PREREQ_STRDUP): Check whether strdup is declared.

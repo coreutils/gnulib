@@ -1,3 +1,12 @@
+2004-03-07  Paul Eggert  <eggert@twinsun.com>
+
+	* c-stack.c (SIGACTION_WORKS): New macro.  Use it instead of long
+	'#if' expressions.  Unlike the code it replaces, it it does not
+	depend on (defined _SC_PAGESIZE).  However, it does depend on
+	HAVE_STRUCT_SIGACTION_SA_SIGACTION; this last change fixes a bug
+	first reported by Jason Andrade in
+	<http://mail.gnu.org/archive/html/bug-textutils/2003-03/msg00027.html>.
+
 2004-01-18  Simon Josefsson  <jas@extundo.com>
 
 	* strdup.h: New file.

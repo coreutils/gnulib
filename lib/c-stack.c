@@ -91,6 +91,13 @@ typedef struct sigaltstack stack_t;
 #include "c-stack.h"
 #include "exitfail.h"
 
+#if (HAVE_STRUCT_SIGACTION_SA_SIGACTION && defined SA_NODEFER \
+     && defined SA_ONSTACK && defined SA_RESETHAND && defined SA_SIGINFO)
+# define SIGACTION_WORKS 1
+#else
+# define SIGACTION_WORKS 0
+#endif
+
 extern char *program_name;
 
 /* The user-specified action to take when a SEGV-related program error
@@ -153,7 +160,7 @@ static union
   void *p;
 } alternate_signal_stack;
 
-# if defined SA_ONSTACK && defined SA_SIGINFO && defined _SC_PAGESIZE
+# if SIGACTION_WORKS
 
 /* Handle a segmentation violation and exit.  This function is
    async-signal-safe.  */
@@ -238,9 +245,7 @@ c_stack_action (void (*action) (int))
   stack_overflow_message = _("stack overflow");
 
   {
-# if ! (defined SA_ONSTACK && defined SA_SIGINFO && defined _SC_PAGESIZE)
-    return signal (SIGSEGV, die) == SIG_ERR ? -1 : 0;
-# else
+# if SIGACTION_WORKS
     struct sigaction act;
     sigemptyset (&act.sa_mask);
 
@@ -252,6 +257,8 @@ c_stack_action (void (*action) (int))
     act.sa_sigaction = segv_handler;
 
     return sigaction (SIGSEGV, &act, 0);
+# else
+    return signal (SIGSEGV, die) == SIG_ERR ? -1 : 0;
 # endif
   }
 }
