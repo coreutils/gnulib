@@ -1,3 +1,17 @@
+2004-05-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* obstack.c (_obstack): Remove unused variable.  It hasn't been
+	present in glibc since revision 1.1 of this file.
+	* obstack.h (_obstack_free, obstack_1grow, obstack_1grow_fast,
+	obstack_alignment_mask, obstack_alloc, obstack_base,
+	obstack_blank, obstack_blank_fast, obstack_chunk_size,
+	obstack_copy, obstack_copy0, obstack_finish, obstack_grow,
+	obstack_grow0, obstack_init, obstack_int_grow,
+	obstack_int_grow_fast, obstack_make_room, obstack_memory_used,
+	obstack_next_free, obstack_object_size, obstack_ptr_grow,
+	obstack_ptr_grow_fast, obstack_room): Remove declarations of
+	nonexistent functions.
+
 2004-05-17  Derek R. Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 

@@ -102,11 +102,6 @@ int obstack_exit_failure = EXIT_FAILURE;
 #  define obstack_exit_failure exit_failure
 # endif
 
-/* The non-GNU-C macros copy the obstack into this global variable
-   to avoid multiple evaluation.  */
-
-struct obstack *_obstack;
-
 /* Define a macro that either calls functions with the traditional malloc/free
    calling interface, or calls functions with the mmalloc/mfree interface
    (that adds an extra first argument), based on the state of use_extra_arg.
