@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-01-04.06}
+\def\texinfoversion{2004-01-04.14}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -3055,26 +3055,11 @@ width0pt\relax} \fi
   %
   \normalturnoffactive
   %
-  % Control letters and accents.
-  \definedummyletter{_}%
-  \definedummyletter{,}%
-  \definedummyletter{"}%
-  \definedummyletter{`}%
-  \definedummyletter{'}%
-  \definedummyletter{^}%
-  \definedummyletter{~}%
-  \definedummyletter{=}%
-  \definedummyword{u}%
-  \definedummyword{v}%
-  \definedummyword{H}%
-  \definedummyword{dotaccent}%
-  \definedummyword{ringaccent}%
-  \definedummyword{tieaccent}%
-  \definedummyword{ubaraccent}%
-  \definedummyword{udotaccent}%
-  \definedummyword{dotless}%
+  \commondummiesnofonts
   %
-  % Other non-English letters.
+  \definedummyletter{_}%
+  %
+  % Non-English letters.
   \definedummyword{AA}%
   \definedummyword{AE}%
   \definedummyword{L}%
@@ -3101,35 +3086,9 @@ width0pt\relax} \fi
   \definedummyword{tclose}%
   \definedummyword{tt}%
   %
-  % Texinfo font commands.
-  \definedummyword{b}%
-  \definedummyword{i}%
-  \definedummyword{r}%
-  \definedummyword{sc}%
-  \definedummyword{t}%
-  %
   \definedummyword{LaTeX}%
   \definedummyword{TeX}%
-  \definedummyword{acronym}%
-  \definedummyword{cite}%
-  \definedummyword{code}%
-  \definedummyword{command}%
-  \definedummyword{dfn}%
   \definedummyword{dots}%
-  \definedummyword{emph}%
-  \definedummyword{env}%
-  \definedummyword{file}%
-  \definedummyword{kbd}%
-  \definedummyword{key}%
-  \definedummyword{math}%
-  \definedummyword{option}%
-  \definedummyword{samp}%
-  \definedummyword{strong}%
-  \definedummyword{uref}%
-  \definedummyword{url}%
-  \definedummyword{var}%
-  \definedummyword{verb}%
-  \definedummyword{w}%
   %
   % Assorted special characters.
   \definedummyword{bullet}%
@@ -3157,40 +3116,83 @@ width0pt\relax} \fi
   \turnoffmacros
 }
 
+% \commondummiesnofonts: common to \commondummies and \indexnofonts.
+%
+% Better have this without active chars.
+{
+  \catcode`\~=\other
+  \gdef\commondummiesnofonts{%
+    % Control letters and accents.
+    \definedummyletter{,}%
+    \definedummyletter{"}%
+    \definedummyletter{`}%
+    \definedummyletter{'}%
+    \definedummyletter{^}%
+    \definedummyletter{~}%
+    \definedummyletter{=}%
+    \definedummyword{u}%
+    \definedummyword{v}%
+    \definedummyword{H}%
+    \definedummyword{dotaccent}%
+    \definedummyword{ringaccent}%
+    \definedummyword{tieaccent}%
+    \definedummyword{ubaraccent}%
+    \definedummyword{udotaccent}%
+    \definedummyword{dotless}%
+    %
+    % Texinfo font commands.
+    \definedummyword{b}%
+    \definedummyword{i}%
+    \definedummyword{r}%
+    \definedummyword{sc}%
+    \definedummyword{t}%
+    %
+    \definedummyword{acronym}%
+    \definedummyword{cite}%
+    \definedummyword{code}%
+    \definedummyword{command}%
+    \definedummyword{dfn}%
+    \definedummyword{emph}%
+    \definedummyword{env}%
+    \definedummyword{file}%
+    \definedummyword{kbd}%
+    \definedummyword{key}%
+    \definedummyword{math}%
+    \definedummyword{option}%
+    \definedummyword{samp}%
+    \definedummyword{strong}%
+    \definedummyword{uref}%
+    \definedummyword{url}%
+    \definedummyword{var}%
+    \definedummyword{verb}%
+    \definedummyword{w}%
+  }
+}
 
 % \indexnofonts is used when outputting the strings to sort the index
 % by, and when constructing control sequence names.  It eliminates all
 % control sequences and just writes whatever the best ASCII sort string
 % would be for a given command (usually its argument).
 %
-\def\indexdummylatex{LaTeX}
-\def\indexdummytex{TeX}
-\def\indexdummydots{...}
-%
 \def\indexnofonts{%
+  \def\definedummyword##1{%
+    \expandafter\let\csname ##1\endcsname\asis
+  }%
+  \let\definedummyletter=\definedummyword
+  %
+  \commondummiesnofonts
+  %
+  % Don't no-op \tt, since it isn't a user-level command
+  % and is used in the definitions of the active chars like <, >, |, etc.
+  % Likewise with the other plain tex font commands.
+  %\let\tt=\asis
+  %
   \def\ { }%
   \def\@{@}%
   % how to handle braces?
   \def\_{\normalunderscore}%
   %
-  \let\,=\asis
-  \let\"=\asis
-  \let\`=\asis
-  \let\'=\asis
-  \let\^=\asis
-  \let\~=\asis
-  \let\==\asis
-  \let\u=\asis
-  \let\v=\asis
-  \let\H=\asis
-  \let\dotaccent=\asis
-  \let\ringaccent=\asis
-  \let\tieaccent=\asis
-  \let\ubaraccent=\asis
-  \let\udotaccent=\asis
-  \let\dotless=\asis
-  %
-  % Other non-English letters.
+  % Non-English letters.
   \def\AA{AA}%
   \def\AE{AE}%
   \def\L{L}%
@@ -3207,40 +3209,9 @@ width0pt\relax} \fi
   \def\ordf{a}%
   \def\ordm{o}%
   %
-  % Don't no-op \tt, since it isn't a user-level command
-  % and is used in the definitions of the active chars like <, >, |, etc.
-  % Likewise with the other plain tex font commands.
-  %\let\tt=\asis
-  %
-  % Texinfo font commands.
-  \let\b=\asis
-  \let\i=\asis
-  \let\r=\asis
-  \let\sc=\asis
-  \let\t=\asis
-  %
-  \let\LaTeX=\indexdummylatex
-  \let\TeX=\indexdummytex
-  \let\acronym=\asis
-  \let\cite=\asis
-  \let\code=\asis
-  \let\command=\asis
-  \let\dfn=\asis
-  \let\dots=\indexdummydots
-  \let\emph=\asis
-  \let\env=\asis
-  \let\file=\asis
-  \let\kbd=\asis
-  \let\key=\asis
-  \let\math=\asis
-  \let\option=\asis
-  \let\samp=\asis
-  \let\strong=\asis
-  \let\uref=\asis
-  \let\url=\asis
-  \let\var=\asis
-  \let\verb=\asis
-  \let\w=\asis
+  \def\LaTeX{LaTeX}%
+  \def\TeX{TeX}%
+  \def\dots{...}%
 }
 
 \let\indexbackslash=0  %overridden during \printindex.
