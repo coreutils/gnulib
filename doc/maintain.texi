@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 15, 2004
+@set lastupdate June 28, 2004
 @c %**end of header
 
 @dircategory GNU organization
@@ -807,6 +807,14 @@ alternatively ask @email{alias-file@@gnu.org} to add you to the
 bug-reporting list for your program.  To set up a new list, contact
 @email{new-mailing-list@@gnu.org}.  You can subscribe to a list managed
 by Mailman by sending mail to the corresponding @samp{-request} address.
+
+You should moderate postings from non-subscribed addresses on your
+mailing lists, to prevent propagation of unwanted messages (``spam'')
+to subscribers and to the list archives.  For lists controlled by
+Mailman, you can do this by setting @code{Privacy Options - Sender
+Filter - generic_nonmember_action} to @code{Hold}, and then
+periodically (daily is best) reviewing the held messages, accepting
+the real ones and discarding the junk.
 
 @cindex responding to bug reports
 When you receive bug reports, keep in mind that bug reports are crucial
