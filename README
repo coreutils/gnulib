@@ -130,6 +130,11 @@ as well.  GNULib code makes the following additional assumptions:
    for all practical hosts with flat address spaces, but it is not
    always true for hosts with segmented address spaces.
 
+ * If an existing object has size S, and if T is sufficiently small
+   (e.g., 8 KiB), then S + T cannot overflow.  Overflow in this case
+   would mean that the rest of your program fits into T bytes, which
+   can't happen in realistic flat-address-space hosts.
+
  * Objects with all bits zero are treated as 0 or NULL.  For example,
    memset (A, 0, sizeof A) initializes an array A of pointers to NULL.
 
