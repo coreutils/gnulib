@@ -1,0 +1,24 @@
+Description:
+Set file access and modification times.
+
+Files:
+lib/utimens.h
+lib/utimens.c
+m4/utimens.m4
+m4/utimes.m4
+
+Depends-on:
+timespec
+
+configure.ac:
+gl_UTIMENS
+
+Makefile.am:
+lib_SOURCES += utimens.h utimens.c
+
+Include:
+"utimens.h"
+
+Maintainer:
+Paul Eggert, Jim Meyering
+
