@@ -1,0 +1,633 @@
+#! /bin/sh
+#
+# Copyright (C) 2002 Free Software Foundation, Inc.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+#
+
+# This program is meant for authors or maintainers which want to import
+# modules from gnulib into their packages.
+
+progname=$0
+package=gnulib
+cvsdatestamp='$Date: 2002-12-31 13:47:17 $'
+last_checkin_date=`echo "$cvsdatestamp" | sed -e 's/^\$Date: 2002-12-31 13:47:17 $$//'`
+version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
+
+# You can set AUTOCONFPATH to empty if autoconf 2.57 is already in your PATH.
+AUTOCONFPATH=
+case $USER in
+  bruno )
+    AUTOCONFBINDIR=/packages/gnu-inst-autoconf/2.57/bin
+    AUTOCONFPATH="eval env PATH=${AUTOCONFBINDIR}:\$PATH "
+    ;;
+esac
+
+AUTOCONF="${AUTOCONFPATH}autoconf"
+AUTOHEADER="${AUTOCONFPATH}autoheader"
+AUTOMAKE="${AUTOCONFPATH}automake-1.7"
+ACLOCAL="aclocal-1.7"
+
+# func_usage
+# outputs to stdout the --help usage message.
+func_usage ()
+{
+  echo "\
+Usage: gnulib-tool --list
+       gnulib-tool --import module1 ... moduleN
+       gnulib-tool --create-testdir --dir=directory module1 ... moduleN
+       gnulib-tool --create-megatestdir --dir=directory [module1 ... moduleN]
+       gnulib-tool --test --dir=directory module1 ... moduleN
+       gnulib-tool --megatest --dir=directory [module1 ... moduleN]
+       gnulib-tool --extract-description module
+       gnulib-tool --extract-filelist module
+       gnulib-tool --extract-dependencies module
+       gnulib-tool --extract-autoconf-snippet module
+       gnulib-tool --extract-automake-snippet module
+       gnulib-tool --extract-include-directive module
+
+Operation modes:
+      --list                print the available module names
+      --import              import the given modules into the current package
+      --create-testdir      create a scratch package with the given modules
+      --create-megatestdir  create a mega scratch package with the given modules
+                            one by one and all together
+      --test                test the combination of the given modules
+                            (recommended to use CC="gcc -Wall -Werror" here)
+      --megatest            test the given modules one by one and all together
+                            (recommended to use CC="gcc -Wall -Werror" here)
+      --extract-description        extract the description
+      --extract-filelist           extract the list of files
+      --extract-dependencies       extract the dependencies
+      --extract-autoconf-snippet   extract the snippet for configure.ac
+      --extract-automake-snippet   extract the snippet for lib/Makefile.am
+      --extract-include-directive  extract the #include directive
+
+Options:
+      --dir=DIRECTORY       specify the target directory
+      --lib=libRARY         specify the library name
+      --no-changelog        don't update or create ChangeLog files
+
+Report bugs to <bug-gnulib@gnu.org>."
+}
+
+# func_version
+# outputs to stdout the --version message.
+func_version ()
+{
+  echo "$progname (GNU $package) $version"
+  echo "Copyright (C) 2002 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+  echo "Written by" "Bruno Haible"
+}
+
+# func_fatal_error message
+# outputs to stderr a fatal error message, and terminates the program.
+func_fatal_error ()
+{
+  echo "gnulib-tool: *** $1" 1>&2
+  echo "gnulib-tool: *** Stop." 1>&2
+  exit 1
+}
+
+# Command-line option processing.
+# Removes the OPTIONS from the arguments. Sets the variables:
+# - mode            list or import or create-testdir or create-megatestdir
+# - destdir         from --dir
+# - libname         from --lib
+# - do_changelog    false if --no-changelog was given, : otherwise
+{
+  mode=
+  destdir=
+  libname=libfoo
+  do_changelog=:
+
+  while test $# -gt 0; do
+    case "$1" in
+      --list | --lis )
+        mode=list
+        shift ;;
+      --import | --impor | --impo | --imp | --im | --i )
+        mode=import
+        shift ;;
+      --create-testdir | --create-testdi | --create-testd | --create-test | --create-tes | --create-te | --create-t )
+        mode=create-testdir
+        shift ;;
+      --create-megatestdir | --create-megatestdi | --create-megatestd | --create-megatest | --create-megates | --create-megate | --create-megat | --create-mega | --create-meg | --create-me | --create-m )
+        mode=create-megatestdir
+        shift ;;
+      --test | --tes | --te | --t )
+        mode=test
+        shift ;;
+      --megatest | --megates | --megate | --megat | --mega | --meg | --me | --m )
+        mode=megatest
+        shift ;;
+      --extract-* )
+        mode=`echo "X$1" | sed -e 's/^X--//'`
+        shift ;;
+      --dir )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --dir"
+        fi
+        destdir=$1
+        shift ;;
+      --dir=* )
+        destdir=`echo "X$1" | sed -e 's/^X--dir=//'`
+        shift ;;
+      --lib )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --lib"
+        fi
+        libname=$1
+        shift ;;
+      --lib=* )
+        libname=`echo "X$1" | sed -e 's/^X--lib=//'`
+        shift ;;
+      --no-changelog | --no-changelo | --no-changel | --no-change | --no-chang | --no-chan | --no-cha | --no-ch | --no-c )
+        do_changelog=false
+        shift ;;
+      --help | --hel | --he | --h )
+        func_usage
+        exit 0 ;;
+      --version | --versio | --versi | --vers | --ver | --ve | --v )
+        func_version
+        exit 0 ;;
+      -- )
+        # Stop option prcessing
+        shift
+        break ;;
+      -* )
+        echo "gnulib-tool: unknown option $1" 1>&2
+        echo "Try 'gnulib-tool --help' for more information." 1>&2
+        exit 1 ;;
+      * )
+        break ;;
+    esac
+  done
+}
+
+case "$0" in
+  /*) self_abspathname="$0" ;;
+  */*) self_abspathname=`pwd`/"$0" ;;
+  *) for d in `echo ":$PATH:" | sed -e 's/:::*/:.:/g' | sed -e 's/:/ /g'`; do
+       if test -x "$d/$0" && test ! -d "$d/$0"; then
+         self_abspathname="$d/$0"
+         break
+       fi
+     done
+     if test -z "$self_abspathname"; then
+       func_fatal_error "could not locate the gnulib-tool program - how did you invoke it?"
+     fi
+     ;;
+esac
+while test -L "$self_abspathname"; do
+  # Resolve symbolic link.
+  sedexpr1='s, -> ,#%%#,'
+  sedexpr2='s,^.*#%%#\(.*\)$,\1,p'
+  linkval=`LC_ALL=C ls -l "$self_abspathname" | sed -e "$sedexpr1" | sed -n -e "$sedexpr2"`
+  test -n "$linkval" || break
+  case "$linkval" in
+    /* ) self_abspathname="$linkval" ;;
+    * ) self_abspathname=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`/"$linkval" ;;
+  esac
+done
+gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
+
+# func_all_modules
+func_all_modules ()
+{
+  (cd "$gnulib_dir/modules" && ls -1) \
+      | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^TEMPLATE$/d' \
+      | sort
+}
+
+# func_verify_module
+# verifies a module name
+func_verify_module ()
+{
+  if test ! -f "$gnulib_dir/modules/$module" \
+     || test "CVS" = "$module" || test "ChangeLog" = "$module" || test "TEMPLATE" = "$module"; then
+    echo "gnulib-tool: module $1 doesn't exist" 1>&2
+    module=
+  fi
+}
+
+tags_regexp='\(Description\|Files\|Depends-on\|configure\.ac\|Makefile\.am\|Include\)'
+sed_extract_prog=':[ 	]*$/ {
+  :a
+    n
+    s/^'"$tags_regexp"':[ 	]*$//
+    tb
+    p
+    ba
+  :b
+}'
+
+# func_get_description module
+func_get_description ()
+{
+  sed -n -e "/^Description$sed_extract_prog" < "$gnulib_dir/modules/$1"
+}
+
+# func_get_filelist module
+func_get_filelist ()
+{
+  sed -n -e "/^Files$sed_extract_prog" < "$gnulib_dir/modules/$1"
+  #echo m4/onceonly.m4
+  echo m4/onceonly_2_57.m4
+}
+
+# func_get_dependencies module
+func_get_dependencies ()
+{
+  sed -n -e "/^Depends-on$sed_extract_prog" < "$gnulib_dir/modules/$1"
+}
+
+# func_get_autoconf_snippet module
+func_get_autoconf_snippet ()
+{
+  sed -n -e "/^configure\.ac$sed_extract_prog" < "$gnulib_dir/modules/$1"
+}
+
+# func_get_automake_snippet module
+func_get_automake_snippet ()
+{
+  sed -n -e "/^Makefile\.am$sed_extract_prog" < "$gnulib_dir/modules/$1"
+}
+
+# func_get_include_directive module
+func_get_include_directive ()
+{
+  sed -n -e "/^Include$sed_extract_prog" < "$gnulib_dir/modules/$1" | \
+  sed -e 's/^\(["<]\)/#include \1/'
+}
+
+# func_create_testdir testdir modules
+func_create_testdir ()
+{
+  testdir="$1"
+  modules="$2"
+  modules=`for m in $modules; do echo $m; done | sort | uniq`
+
+  # Determine final module list.
+  while true; do
+    xmodules=
+    for module in $modules; do
+      func_verify_module
+      if test -n "$module"; then
+        xmodules="$xmodules $module "`func_get_dependencies $module`
+      fi
+    done
+    xmodules=`for m in $xmodules; do echo $m; done | sort | uniq`
+    if test "$xmodules" = "$modules"; then
+      break
+    fi
+    modules="$xmodules"
+  done
+  echo "Module list with included dependencies:"
+  echo "$modules" | sed -e 's/^/  /'
+
+  # Determine final file list.
+  files=
+  for module in $modules; do
+    func_verify_module
+    if test -n "$module"; then
+      files="$files "`func_get_filelist $module`
+    fi
+  done
+  files=`for f in $files; do echo $f; done | sort | uniq`
+  echo "File list:"
+  echo "$files" | sed -e 's/^/  /'
+
+  # Create directories.
+  for d in `echo "$files" | sed -n -e 's,^\(.*\)/[^/]*,\1,p'`; do
+    mkdir -p "$testdir/$d"
+  done
+
+  # Copy files.
+  for f in $files; do
+    ln "$gnulib_dir/$f" "$testdir/$f" 2>/dev/null ||
+    cp -p "$gnulib_dir/$f" "$testdir/$f"
+  done
+
+  # Create lib/Makefile.am.
+  mkdir -p "$testdir/lib"
+  (echo "## Process this file with automake to produce Makefile.in."
+   echo
+   echo "AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies"
+   echo
+   echo "noinst_LIBRARIES = $libname.a"
+   echo
+   echo "$libname"'_a_SOURCES ='
+   echo "$libname"'_a_LIBADD = @LIBOBJS@'
+   echo '#'"$libname"'_la_LIBADD = @LTLIBOBJS@'
+   echo "EXTRA_DIST ="
+   echo "BUILT_SOURCES ="
+   echo "SUFFIXES ="
+   echo "MOSTLYCLEANFILES ="
+   echo "CLEANFILES ="
+   echo "DISTCLEANFILES ="
+   echo "MAINTAINERCLEANFILES ="
+   for module in $modules; do
+     func_verify_module
+     if test -n "$module"; then
+       func_get_automake_snippet "$module" | sed -e "s,lib_SOURCES,$libname"'_a_SOURCES,g'
+       if test "$module" = 'alloca'; then
+         echo "$libname"'_a_LIBADD += @ALLOCA@'
+         echo '#'"$libname"'_la_LIBADD += @LTALLOCA@'
+       fi
+     fi
+   done
+  ) > "$testdir/lib/Makefile.am"
+
+  # Create m4/Makefile.am.
+  mkdir -p "$testdir/m4"
+  (echo "## Process this file with automake to produce Makefile.in."
+   echo
+   echo "EXTRA_DIST ="
+   for f in $files; do
+     case "$f" in
+       m4/* )
+         echo "EXTRA_DIST += "`echo "$f" | sed -e 's,^m4/,,'` ;;
+     esac
+   done
+  ) > "$testdir/m4/Makefile.am"
+
+  subdirs="lib m4"
+
+  if test -f "$testdir"/m4/gettext.m4; then
+    # Avoid stupid error message from automake:
+    # "AM_GNU_GETTEXT used but `po' not in SUBDIRS"
+    mkdir -p "$testdir/po"
+    (echo "## Process this file with automake to produce Makefile.in."
+    ) > "$testdir/po/Makefile.am"
+    subdirs="$subdirs po"
+  fi
+
+  # Create Makefile.am.
+  (echo "## Process this file with automake to produce Makefile.in."
+   echo
+   echo "AUTOMAKE_OPTIONS = 1.5 foreign"
+   echo
+   echo "SUBDIRS = $subdirs"
+   echo
+   echo "ACLOCAL_AMFLAGS = -I m4"
+  ) > "$testdir/Makefile.am"
+
+  # Create configure.ac.
+  (echo "# Process this file with autoconf to produce a configure script."
+   echo "AC_INIT(dummy,0)"
+   echo "AM_INIT_AUTOMAKE"
+   echo
+   echo "AM_CONFIG_HEADER(config.h)"
+   echo
+   echo "AC_PROG_CC"
+   echo "AC_PROG_INSTALL"
+   echo "AC_PROG_MAKE_SET"
+   echo "AC_PROG_RANLIB"
+   echo
+   if grep AC_GNU_SOURCE "$testdir"/m4/*.m4 > /dev/null; then
+     echo "AC_GNU_SOURCE"
+     echo
+   fi
+   for module in $modules; do
+     func_verify_module
+     if test -n "$module"; then
+       func_get_autoconf_snippet "$module"
+     fi
+   done
+   echo
+   makefiles="Makefile"
+   for d in $subdirs; do
+     makefiles="$makefiles $d/Makefile"
+   done
+   echo "AC_OUTPUT([$makefiles])"
+  ) > "$testdir/configure.ac"
+
+  # Create autogenerated files.
+  (cd "$testdir"
+   echo "executing ${ACLOCAL} -I m4"
+   ${ACLOCAL} -I m4
+   echo "executing ${AUTOHEADER}"
+   ${AUTOHEADER}
+   echo "executing ${AUTOCONF}"
+   ${AUTOCONF}
+   echo "executing ${AUTOMAKE} --add-missing --copy"
+   ${AUTOMAKE} --add-missing --copy
+  )
+  if grep '^BUILT_SOURCES *+=' "$testdir/lib/Makefile.am" > /dev/null; then
+    (cd "$testdir"
+     ./configure
+       cd lib
+       built_sources=`grep '^BUILT_SOURCES *=' Makefile.in | sed -e 's/^BUILT_SOURCES *=//'`
+       if test -n "$built_sources"; then
+         make $built_sources
+       fi
+       cd ..
+     make distclean
+    )
+  fi
+}
+
+# func_create_megatestdir megatestdir allmodules
+func_create_megatestdir ()
+{
+  megatestdir="$1"
+  allmodules="$2"
+  if test -z "$allmodules"; then
+    allmodules=`func_all_modules`
+  fi
+
+  megasubdirs=
+  # First, all modules one by one.
+  for onemodule in $allmodules; do
+    func_create_testdir "$megatestdir/$onemodule" $onemodule
+    megasubdirs="${megasubdirs}$onemodule "
+  done
+  # Then, all modules all together.
+  # Except fnmatch-posix, which conflicts with fnmatch-gnu. FIXME.
+  allmodules=`for m in $allmodules; do if test $m != fnmatch-posix; then echo $m; fi; done`
+  func_create_testdir "$megatestdir/ALL" "$allmodules"
+  megasubdirs="${megasubdirs}ALL"
+
+  # Create Makefile.am.
+  (echo "## Process this file with automake to produce Makefile.in."
+   echo
+   echo "AUTOMAKE_OPTIONS = 1.5 foreign"
+   echo
+   echo "SUBDIRS = $megasubdirs"
+  ) > "$megatestdir/Makefile.am"
+
+  # Create configure.ac.
+  (echo "# Process this file with autoconf to produce a configure script."
+   echo "AC_INIT(dummy,0)"
+   echo "AM_INIT_AUTOMAKE"
+   echo
+   echo "AC_PROG_MAKE_SET"
+   echo
+   echo "AC_CONFIG_SUBDIRS([$megasubdirs])"
+   echo "AC_OUTPUT([Makefile])"
+  ) > "$megatestdir/configure.ac"
+
+  # Create autogenerated files.
+  (cd "$megatestdir"
+   echo "executing ${ACLOCAL}"
+   ${ACLOCAL}
+   echo "executing ${AUTOCONF}"
+   ${AUTOCONF}
+   echo "executing ${AUTOMAKE} --add-missing --copy Makefile"
+   ${AUTOMAKE} --add-missing --copy Makefile
+  )
+}
+
+case $mode in
+  "" )
+    func_fatal_error "no mode specified" ;;
+
+  list )
+    func_all_modules
+    ;;
+
+  import )
+    func_fatal_error "NYI" ;;
+
+  create-testdir )
+    if test -z "$destdir"; then
+      func_fatal_error "please specify --dir option"
+    fi
+    mkdir "$destdir" || func_fatal_error "could not create destination directory"
+    func_create_testdir "$destdir" "$*"
+    ;;
+
+  create-megatestdir )
+    if test -z "$destdir"; then
+      func_fatal_error "please specify --dir option"
+    fi
+    mkdir "$destdir" || func_fatal_error "could not create destination directory"
+    func_create_megatestdir "$destdir" "$*"
+    ;;
+
+  test )
+    test -n "$destdir" || destdir=testdir$$
+    mkdir "$destdir" || func_fatal_error "could not create destination directory"
+    func_create_testdir "$destdir" "$*"
+    cd "$destdir"
+      mkdir build
+      cd build
+        ../configure
+        make
+        make check
+        make distclean
+        remaining=`find . -type f -print`
+        if test -n "$remaining"; then
+          echo "Remaining files:" $remaining 1>&2
+          echo "gnulib-tool: *** Stop." 1>&2
+          exit 1
+        fi
+      cd ..
+    cd ..
+    rm -rf "$destdir"
+    ;;
+
+  megatest )
+    test -n "$destdir" || destdir=testdir$$
+    mkdir "$destdir" || func_fatal_error "could not create destination directory"
+    func_create_megatestdir "$destdir" "$*"
+    cd "$destdir"
+      mkdir build
+      cd build
+        ../configure
+        make
+        make check
+        make distclean
+        remaining=`find . -type f -print`
+        if test -n "$remaining"; then
+          echo "Remaining files:" $remaining 1>&2
+          echo "gnulib-tool: *** Stop." 1>&2
+          exit 1
+        fi
+      cd ..
+    cd ..
+    rm -rf "$destdir"
+    ;;
+
+  extract-description )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_description "$module"
+      fi
+    done
+    ;;
+
+  extract-filelist )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_filelist "$module"
+      fi
+    done
+    ;;
+
+  extract-dependencies )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_dependencies "$module"
+      fi
+    done
+    ;;
+
+  extract-autoconf-snippet )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_autoconf_snippet "$module"
+      fi
+    done
+    ;;
+
+  extract-automake-snippet )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_automake_snippet "$module"
+      fi
+    done
+    ;;
+
+  extract-include-directive )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_include_directive "$module"
+      fi
+    done
+    ;;
+
+  * )
+    func_fatal_error "unknown operation mode --$mode" ;;
+esac
+
+exit 0
