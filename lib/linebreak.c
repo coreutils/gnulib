@@ -1383,7 +1383,7 @@ iconv_string_length (iconv_t cd, const char *s, size_t n)
         return (size_t)(-1);
       count += outptr - tmpbuf;
     }
-  /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
+  /* Avoid glibc-2.1 bug and Solaris 7 through 9 bug.  */
 #if defined _LIBICONV_VERSION \
     || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
   {
@@ -1448,7 +1448,7 @@ iconv_string_keeping_offsets (iconv_t cd, const char *s, size_t n,
       if (res == (size_t)(-1))
         abort ();
     }
-  /* Avoid glibc-2.1 bug and Solaris 2.7 bug.  */
+  /* Avoid glibc-2.1 bug and Solaris 7 bug.  */
 #if defined _LIBICONV_VERSION \
     || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
   if (iconv (cd, NULL, NULL, &outptr, &outsize) == (size_t)(-1))
@@ -1498,7 +1498,7 @@ mbs_possible_linebreaks (const char *s, size_t n, const char *encoding,
 	to_utf8 = (iconv_t)(-1);
       else
 # endif
-      /* Avoid Solaris 2.9 bug with GB2312, EUC-TW, BIG5, BIG5-HKSCS, GBK,
+      /* Avoid Solaris 9 bug with GB2312, EUC-TW, BIG5, BIG5-HKSCS, GBK,
          GB18030.  */
 # if defined __sun && !defined _LIBICONV_VERSION
       if (   STREQ (encoding, "GB2312", 'G', 'B', '2', '3', '1', '2', 0, 0, 0)
@@ -1591,7 +1591,7 @@ mbs_width_linebreaks (const char *s, size_t n,
 	to_utf8 = (iconv_t)(-1);
       else
 # endif
-      /* Avoid Solaris 2.9 bug with GB2312, EUC-TW, BIG5, BIG5-HKSCS, GBK,
+      /* Avoid Solaris 9 bug with GB2312, EUC-TW, BIG5, BIG5-HKSCS, GBK,
          GB18030.  */
 # if defined __sun && !defined _LIBICONV_VERSION
       if (   STREQ (encoding, "GB2312", 'G', 'B', '2', '3', '1', '2', 0, 0, 0)
