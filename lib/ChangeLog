@@ -1,3 +1,8 @@
+2002-12-31  Paul Eggert  <eggert@twinsun.com>
+
+	* memcoll.c (memcoll): Fall back on a simple algorithm using
+	memcmp if strcoll doesn't work.
+
 2002-12-23  Bruno Haible  <bruno@clisp.org>
 
 	* localcharset.h: New file.
