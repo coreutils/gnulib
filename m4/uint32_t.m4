@@ -1,4 +1,4 @@
-# uint32_t.m4 serial 2
+# uint32_t.m4 serial 3
 
 # Copyright (C) 2004 Free Software Foundation, Inc.
 
