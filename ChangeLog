@@ -1,3 +1,8 @@
+2005-01-21  Bruno Haible  <bruno@clisp.org>
+
+	* modules/classpath: New file.
+	* MODULES.html.sh (Java): Add classpath.
+
 2005-01-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* MODULES.html.sh (Command-line arguments): Add version-etc-fsf.

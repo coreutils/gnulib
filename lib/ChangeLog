@@ -1,3 +1,8 @@
+2005-01-21  Bruno Haible  <bruno@clisp.org>
+
+	* classpath.h: New file, from GNU gettext.
+	* classpath.c: New file, from GNU gettext.
+
 2005-01-20  Simon Josefsson  <jas@extundo.com>
 
 	* version-etc-fsf.c: New file, with version_etc_copyright.

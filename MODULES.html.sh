@@ -1942,12 +1942,12 @@ func_all_modules ()
   func_wrap H3
   func_echo "$element"
 
-  #func_begin_table
-  #func_module classpath
+  func_begin_table
+  func_module classpath
   #func_module javacomp
   #func_module javaexec
   #func_module gcj
-  #func_end_table
+  func_end_table
 
   element="Misc"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
