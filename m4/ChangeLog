@@ -1,3 +1,7 @@
+2003-02-17  Bruno Haible  <bruno@clisp.org>
+
+	* mkdtemp.m4: New file, from GNU gettext with modifications.
+
 2003-02-02  Jim Meyering  <jim@meyering.net>
 
 	* regex.m4 (jm_INCLUDED_REGEX): Detect broken re_search in

@@ -1,0 +1,26 @@
+Description:
+mkdtemp() function: create a private temporary directory.
+
+Files:
+lib/mkdtemp.h
+lib/mkdtemp.c
+m4/ulonglong.m4
+m4/stdint_h.m4
+m4/inttypes_h.m4
+m4/uintmax_t.m4
+m4/mkdtemp.m4
+
+Depends-on:
+
+configure.ac:
+gt_FUNC_MKDTEMP
+
+Makefile.am:
+lib_SOURCES += mkdtemp.h
+
+Include:
+"mkdtemp.h"
+
+Maintainer:
+Bruno Haible
+

@@ -1659,7 +1659,7 @@ func_all_modules ()
   func_module gettimeofday
   func_module mkdir
   func_module mkstemp
-  #func_module mkdtemp
+  func_module mkdtemp
   func_module stat
   func_module lstat
   func_module timespec
