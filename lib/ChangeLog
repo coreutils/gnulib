@@ -1,3 +1,13 @@
+2004-11-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* xreadlink.c (MAXSIZE): New macro.
+	(xreadlink): Use it instead of SSIZE_MAX.  Ensure initial buffer
+	size does not exceed MAXSIZE.  Avoid cast.
+	As suggested by Mark D. Baushke in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2004-11/msg00009.html>,
+	if readlink fails with buffer size just under MAXSIZE, try again
+	with MAXSIZE.
+
 2004-11-02  Derek R. Price  <derek@ximbiot.com>
        and  Paul Eggert  <eggert@cs.ucla.edu>
 
