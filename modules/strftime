@@ -2,6 +2,7 @@ Description:
 
 Files:
 lib/strftime.c
+m4/mbstate_t.m4
 m4/tm_gmtoff.m4
 m4/strftime.m4
 

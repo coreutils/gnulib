@@ -27,7 +27,7 @@ AC_DEFUN([gl_PREREQ_XSTRTOL],
   AC_CHECK_HEADERS_ONCE(limits.h string.h)
   AC_CHECK_FUNCS_ONCE(isascii)
   AC_CHECK_DECLS_ONCE(strtol strtoul)
-  AC_CHECK_DECLS(strtoimax strtoumax)
+  AC_CHECK_DECLS([strtoimax, strtoumax])
 ])
 
 # Prerequisites of lib/xstrtoul.c.

@@ -9,6 +9,7 @@ Depends-on:
 iconv
 gettext
 localcharset
+error
 
 configure.ac:
 gl_UNICODEIO
