@@ -1,3 +1,8 @@
+2004-11-02  Bruno Haible  <bruno@clisp.org>
+
+	* setenv.h (unsetenv): Define as a macro if the system's unsetenv()
+	function returns void.
+
 2004-11-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/getpass.c (fflush_unlocked, flockfile, funlockfile)

@@ -1,3 +1,8 @@
+2004-11-02  Bruno Haible  <bruno@clisp.org>
+
+	* setenv.m4 (gt_FUNC_SETENV): Define VOID_UNSETENV if unsetenv()
+	returns void.
+
 2004-11-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/getpass.m4 (gl_PREREQ_GETPASS): Check for declarations of

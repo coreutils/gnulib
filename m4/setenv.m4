@@ -1,5 +1,5 @@
-# setenv.m4 serial 4
-dnl Copyright (C) 2001-2003 Free Software Foundation, Inc.
+# setenv.m4 serial 5
+dnl Copyright (C) 2001-2004 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -14,6 +14,22 @@ AC_DEFUN([gt_FUNC_SETENV],
   fi
   if test $ac_cv_func_unsetenv = no; then
     gl_PREREQ_UNSETENV
+  else
+    AC_CACHE_CHECK([for unsetenv() return type], gt_cv_func_unsetenv_ret,
+      [AC_TRY_COMPILE([#include <stdlib.h>
+extern
+#ifdef __cplusplus
+"C"
+#endif
+#if defined(__STDC__) || defined(__cplusplus)
+int unsetenv (const char *name);
+#else
+int unsetenv();
+#endif
+], , gt_cv_func_unsetenv_ret='int', gt_cv_func_unsetenv_ret='void')])
+    if test $gt_cv_func_unsetenv_ret = 'void'; then
+      AC_DEFINE(VOID_UNSETENV, 1, [Define if unsetenv() returns void, not int.])
+    fi
   fi
 ])
 
