@@ -1,3 +1,8 @@
+2004-10-01  Simon Josefsson  <jas@extundo.com>
+
+	* memmem.h: New file.
+	* memmem.c: New file, taken from glibc.
+
 2004-10-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.

@@ -1,3 +1,9 @@
+2004-10-01  Simon Josefsson  <jas@extundo.com>
+
+	* modules/memmem: New file.
+	* tests/test-memmem.c: New file.
+	* MODULES.html.sh (Extra functions based on ANSI C 89): Add memmem.
+
 2004-10-01  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh: Add strsep.
