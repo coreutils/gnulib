@@ -1,3 +1,9 @@
+2003-11-03  Jim Meyering  <jim@meyering.net>
+
+	* modules/userspec (lib_SOURCES): Add userspec.h.
+	(Include): Add "userspec.h".
+	Improve description.
+
 2003-10-29  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/group-member: Depend on stdbool.
