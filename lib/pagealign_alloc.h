@@ -26,8 +26,8 @@
    boundary.
    If SIZE is not a multiple of the system page size, it will be rounded up
    to the next multiple.
-   Return a pointer to the start of the memory block, or NULL if the allocation
-   failed.  */
+   Return a pointer to the start of the memory block. Upon allocation failure,
+   return NULL and set errno.  */
 extern void *pagealign_alloc (size_t size);
 
 /* Like pagealign_alloc, except it exits the program if the allocation
