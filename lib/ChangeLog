@@ -1,13 +1,18 @@
+2004-03-30  Bruno Haible  <bruno@clisp.org>
+
+	* getloadavg.c (getloadavg): Don't assume setlocale returns
+	nonnull.
+
 2004-03-29  Paul Eggert  <eggert@twinsun.com>
 
 	Merge changes to getloadavg.c from coreutils and Emacs.
 
-	* lib/getloadavg.c [!defined HAVE_SETLOCALE] (setlocale):
+	* getloadavg.c [!defined HAVE_SETLOCALE] (setlocale):
 	Define to an expression, not to the empty string.
 	Include cloexec.h and xalloc.h.
 	(getloadavg): Restore LC_NUMERIC locale after setting it temporarily.
 	Use set_cloexec_flag rather than rolling our own.
-	* lib/cloexec.c, lib/cloexec.h: New files.
+	* cloexec.c, cloexec.h: New files.
 
 2004-03-18  Paul Eggert  <eggert@twinsun.com>
 
@@ -24,7 +29,7 @@
 
 	* argp-parse.c, getopt.c, getopt.h, getopt1.c:
 	Sync with libc CVS.
-	* lib/getopt_int.h: New file, also synced from libc.
+	* getopt_int.h: New file, also synced from libc.
 
 2004-03-07  Paul Eggert  <eggert@twinsun.com>
 
@@ -592,17 +597,17 @@
 
 2003-10-12  Paul Eggert  <eggert@twinsun.com>
 
-	* lib/xalloc.h (xnmalloc, xzalloc, xnrealloc, xclone): New decls.
+	* xalloc.h (xnmalloc, xzalloc, xnrealloc, xclone): New decls.
 	(XMALLOC, XCALLOC, XREALLOC, XFREE, CCLONE, CLONE): Deprecate,
 	and define in terms of the other primitives.
-	* lib/xmalloc.c: Include stdbool.h; do not include exit.h.
+	* xmalloc.c: Include stdbool.h; do not include exit.h.
 	(SIZE_MAX): Define if not already defined.
 	(array_size_overflow): New function.
 	(xalloc_die): Abort instead of exiting if 'error' returns.
 	(xnmalloc, xnrealloc, xzalloc, xclone): New functions.
 	(xmalloc, xrealloc): Use them.
 	(xcalloc): Check for address arithmetic overflow.
-	* lib/xstrdup.c (xstrdup): Use xclone, since memcpy should be
+	* xstrdup.c (xstrdup): Use xclone, since memcpy should be
 	a bit faster than strcpy.
 
 2003-10-08  Paul Eggert  <eggert@twinsun.com>
@@ -1394,11 +1399,11 @@
 
 	Merge some files from coreutils.  These changes were
 	originally made by Jim Meyering.
-	* lib/acl.c: Include <sys/types.h> before <sys/stat.h>;
+	* acl.c: Include <sys/types.h> before <sys/stat.h>;
 	many older Unixes require this.
-	* lib/alloca.c (alloca): Remove cast to argument of free;
+	* alloca.c (alloca): Remove cast to argument of free;
 	no longer needed in C89.
-	* lib/alloca_.h, lib/regex.h: Fix white space to match
+	* alloca_.h, regex.h: Fix white space to match
 	what GNU indent does.
 
 2003-08-05  Paul Eggert  <eggert@twinsun.com>
