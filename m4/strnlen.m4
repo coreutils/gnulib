@@ -1,5 +1,5 @@
-# strnlen.m4 serial 1
-dnl Copyright (C) 2002 Free Software Foundation, Inc.
+# strnlen.m4 serial 2
+dnl Copyright (C) 2002-2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -17,6 +17,8 @@ AC_DEFUN([gl_FUNC_STRNLEN],
     # that the above use of AC_FUNC_STRNLEN means we may have to use
     # lib/strnlen.c.
     #AC_LIBOBJ(strnlen)
+    AC_DEFINE(strnlen, rpl_strnlen,
+      [Define to rpl_strnlen if the replacement function should be used.])
     gl_PREREQ_STRNLEN
   fi
 ])

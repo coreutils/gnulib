@@ -1,3 +1,14 @@
+2003-01-31  Bruno Haible  <bruno@clisp.org>
+
+	* rename.m4 (vb_FUNC_RENAME): Add a redirection from 'rename' to
+	'rpl_rename'.
+	* strnlen.m4 (gl_FUNC_STRNLEN): Add a redirection from 'strnlen' to
+	'rpl_strnlen'.
+	* strtod.m4 (gl_FUNC_STRTOD): Add a redirection from 'strtod' to
+	'rpl_strtod'.
+	* utime.m4 (jm_FUNC_UTIME): Add a redirection from 'utime' to
+	'rpl_utime'.
+
 2003-01-30  Bruno Haible  <bruno@clisp.org>
 
 	* signed.m4: New file, from GNU gettext.
