@@ -1,3 +1,8 @@
+2003-10-26  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt (COPYING.DOC): no longer available from
+	/gd/gnuorg; don't know where the ultimate source is.
+
 2003-10-18  Karl Berry  <karl@gnu.org>
 
 	* config.guess: update from config.
