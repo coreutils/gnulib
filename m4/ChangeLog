@@ -1,3 +1,21 @@
+2003-09-08  Paul Eggert  <eggert@twinsun.com>
+
+	Assume C89 or better; remove K&R cruft.
+	* alloca.m4 (gl_PREREQ_ALLOCA): Don't check for stdlib.h, string.h.
+	* backupfile.m4 (gl_BACKUPFILE): Don't check for stdlib.h,
+	string.h, getenv, malloc.
+	* dirname.m4 (gl_DIRNAME): Don't check for string.h or C standard
+	headers.
+	* canon-host.m4 (gl_CANON_HOST): Don't check for string.h, stdlib.h.
+	* error.m4 (jm_PREREQ_ERROR): Do not require STDC headers, and
+	do not check for strerror.
+	* exclude.m4: Do not check for stdlib.h, string.h, strings.h.
+	* exitfail.m4 (gl_EXITFAIL): Do not check for stdlib.h.
+	* fatal.m4 (gl_FATAL): Do not require STDC headers, and
+	do not check for doprnt or vprintf.
+	* fnmatch.m4 (gl_PREREQ_FNMATCH_EXTRA): Remove.  All uses removed.
+	* getdate.m4 (gl_GETDATE): Don't check for stdlib.h or string.h.
+	
 2003-09-06  Paul Eggert  <eggert@twinsun.com>
 
 	* time_4.m4: New file.
