@@ -1,3 +1,12 @@
+2005-03-14  Jim Meyering  <jim@meyering.net>
+
+	* strftime.c (my_strftime) [HAVE_STRFTIME && ! (_NL_CURRENT
+	&& HAVE_STRUCT_ERA_ENTRY)]: Initialize the first byte of ubuf[]
+	to be nonzero so that we (and caller) can detect the difference
+	between a valid zero-length expansion and an error return, even
+	when the underlying strftime fails before writing anything into
+	that location.
+
 2005-03-10  Jim Meyering  <jim@meyering.net>
 
 	* save-cwd.c [!HAVE_FCHDIR]: Define open, fchdir, and chdir_long
