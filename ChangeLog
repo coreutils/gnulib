@@ -1,3 +1,8 @@
+2004-08-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/obstack (Files): Add m4/inttypes_h.m4, m4/stdint_h.m4,
+	m4/uintmax_t.m4.
+
 2004-08-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/xalloc-die: New file.
