@@ -1,3 +1,9 @@
+2003-08-15  Paul Eggert  <eggert@twinsun.com>
+
+	* config.charset, ref-add.sin, ref-del.sin: Use three spaces,
+	rather than tab, after '#' in shell-script copyright notices.
+	Suggested by Bruno Haible.
+
 2003-08-14  Jim Meyering  <jim@meyering.net>
 
 	* mountlist.c: Remove anachronistic casts of xmalloc, xrealloc,

@@ -1,3 +1,9 @@
+2003-08-15  Paul Eggert  <eggert@twinsun.com>
+
+	* srclist-update: Use three spaces, rather than tab, after '#'
+	in shell-script copyright notices.  Suggested by Bruno Haible.
+	Remove unnecessary parenthesization in regular expression.
+	
 2003-08-13  Paul Eggert  <eggert@twinsun.com>
 
 	* srclist-update: Change update back to the old behavior, leaving
