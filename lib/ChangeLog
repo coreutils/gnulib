@@ -1,5 +1,10 @@
 2003-07-17  Bruno Haible  <bruno@clisp.org>
 
+	* Makefile.am: Remove file.
+	* Makefile.in: Remove file.
+
+2003-07-17  Bruno Haible  <bruno@clisp.org>
+
 	* getnline.h: New file.
 	* getnline.c: New file.
 	* getndelim2.c: New file, extracted from getline.c.

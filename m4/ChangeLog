@@ -1,5 +1,11 @@
 2003-07-17  Bruno Haible  <bruno@clisp.org>
 
+	* Makefile.am.in: Remove file.
+	* Makefile.am: Remove file.
+	* Makefile.in: Remove file.
+
+2003-07-17  Bruno Haible  <bruno@clisp.org>
+
 	* getnline.m4: New file.
 
 2003-07-14  Simon Josefsson  <jas@extundo.com>
