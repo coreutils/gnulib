@@ -23,6 +23,8 @@ strchrnul
 sysexits
 mempcpy
 strndup
+restrict
+strcase
 
 configure.ac:
 gl_ARGP

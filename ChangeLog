@@ -1,3 +1,7 @@
+2003-10-10  Simon Josefsson  <jas@extundo.com>
+
+	* modules/argp (Depends-on): Add restrict and strcase.
+
 2003-10-08  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/getpass: Depend on stdbool.
