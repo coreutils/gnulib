@@ -1,3 +1,8 @@
+2004-10-16  Simon Josefsson  <jas@extundo.com>
+
+	* gnulib-tool: Fix comments.  Fix parse problem.
+	(func_emit_lib_Makefile_am): Don't hard code a in libgl_a_SOURCES.
+
 2004-10-15  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Let gl_INIT define LT_ALLOCA when needed.
@@ -76,6 +81,15 @@
 	* modules/argp (Maintainer): Replace Simon Josefsson
 	by Sergey Poznyakoff.
 
+2004-10-01  Simon Josefsson  <jas@extundo.com>
+
+	* MODULES.html.sh (Extra functions based on ANSI C 89): Add
+	memmem.
+
+	* tests/test-memmem.c: New file.
+
+	* modules/memmem: New file.
+
 2004-09-29  Bruno Haible  <bruno@clisp.org>
 
 	* modules/alloca-opt: New file, derived from modules/alloca.
@@ -92,6 +106,31 @@
 
 	* gnulib-tool: New parameter --lgpl, to asseert that modules are
 	LGPL, and to replace license template from GPL to LGPL.
+
+2004-09-24  Simon Josefsson  <jas@extundo.com>
+
+	* modules/minmax (License): Change from GPL to LGPL.
+
+2004-09-23  Simon Josefsson  <jas@extundo.com>
+
+	* gnulib-tool (--import): Typo.
+
+2004-09-21  Simon Josefsson  <jas@extundo.com>
+
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
+	snprintf.
+
+	* modules/snprintf: New file.
+
+2004-09-16  Simon Josefsson  <jas@extundo.com>
+
+	* MODULES.html.sh: Add xctime.
+
+	* modules/xctime: New file.
+
+2004-09-05  Simon Josefsson  <jas@extundo.com>
+
+	* modules/getaddrinfo: Add.
 
 2004-09-23  Simon Josefsson  <jas@extundo.com>
 
@@ -278,151 +317,7 @@
 	* modules/pipe (Depends-on): Add wait-process.
 	* modules/stat (Depends-on): Add xalloc.
 	* modules/userspec (Files): Add lib/userspec.h.
-	* modules/xstrtol (Depends-on): Add error.
-
-2004-06-01  Jim Meyering  <jim@meyering.net>
-
-	* modules/calloc: New file.
-
-2004-06-01  Paul Eggert  <eggert@cs.ucla.edu>
-
-	* modules/file-type: Add lib/stat-macros.h.
-
-2004-05-30  Paul Eggert  <eggert@cs.ucla.edu>
-
-	* modules/hash (Depends-on): Remove malloc, realloc.
-	* modules/xalloc (Depends-on): Likewise.
-
-	* README: Mention that the 'free' module works around the
-	problem with 'free (0)'.
-	Mention LIA-1 and C99.
-	Add a copyright notice.
-
-2004-05-17  Derek R. Price  <derek@ximbiot.com>
-	    Paul Eggert  <eggert@cs.ucla.edu>
-
-	* modules/argp: Depend on alloca.
-
-2004-05-16  Paul Eggert  <eggert@cs.ucla.edu>
-
-	* modules/getdate: Depend on alloca.
-	* modules/setenv: Likewise.
-
-2004-05-04  Derek Price  <derek@ximbiot.com>
-
-	* modules/argp: Remove dependency on alloca.
-
-2004-04-27  Derek Price  <derek@ximbiot.com>
-
-	* m4/dos.m4 (gl_AC_DOS): Add Cygwin to list of Windows/DOS
-	environments that accept backslashes and drive letters in paths.
-
-2004-04-20  Jim Meyering  <jim@meyering.net>
-
-	* modules/dirfd: Change UTILS_ macro name prefix to gl_.
-	* modules/mkstemp: Likewise.
-	* modules/mkdir: Likewise.
-
-2004-04-18  Jim Meyering  <jim@meyering.net>
-
-	Change jm_ to gl_ in AC_DEFINE'd names.
-	* modules/assert, modules/chown, modules/fpending:
-	* modules/ftruncate, modules/getgroups, modules/group-member:
-	* modules/lchown, modules/lstat, modules/memcmp:
-	* modules/nanosleep, modules/putenv, modules/stat:
-	* modules/strftime, modules/unlocked-io, modules/utime:
-	* modules/xstrtoimax, modules/xstrtoumax:
-
-2004-04-12  Paul Eggert  <eggert@twinsun.com>
-
-	* config/srclist.txt: Restore setenv.c, unsetenv.c from gettext.
-	Add intmax.m4, printf-posix.m4, sig_atomic_t.m4,
-	signalblocking.m4, ssize_t.m4.
-	* lib/unsetenv.c: Regenerate: this subtracts 1 from the
-	copyright year (!).
-	* m4/printf-posix.m4: Regenerate.
-
-	* modules/inttostr (EXTRA_DIST): Move inttostr.c here....
-	(lib_SOURCES): from here.
-	* modules/getopt (lib_SOURCES): Add getopt_int.h.
-
-2004-04-12  Jim Meyering  <jim@meyering.net>
-
-	* MODULES.html.sh (func_all_modules): Add cloexec, inttostr, free,
-	tzset.
-
-2004-03-30  Jim Meyering  <jim@meyering.net>
-
-	* modules/realloc (Files): Remove m4/realloc.m4.
-	(configure.ac): Depend on AC_FUNC_REALLOC, rather than jm_FUNC_REALLOC.
-	* modules/malloc (Files): Remove m4/malloc.m4.
-	(configure.ac): Depend on AC_FUNC_MALLOC, rather than jm_FUNC_MALLOC.
-
-2004-03-30  Paul Eggert  <eggert@twinsun.com>
-
-	* modules/inttostr: New file.
-	* modules/getdate: Depend on timespec, stdbool, gettime.
-
-2004-03-29  Paul Eggert  <eggert@twinsun.com>
-
-	* modules/getloadvg: Depend on cloexec and xalloc.
-
-2004-03-09  Paul Eggert  <eggert@twinsun.com>
-
-	* modules/getopt: Add lib/getopt_int.h.
-
-2004-01-18  Simon Josefsson  <jas@extundo.com>
-
-	* modules/strdup (Files, Makefile.am): Add strdup.h.
-
-2004-02-22  Bruno Haible  <bruno@clisp.org>
-
-	* modules/xalloc: Remove dependency on stdbool.
-	Reported by Derek Robert Price <derek@ximbiot.com>.
-
-2004-02-03  Bruno Haible  <bruno@clisp.org>
-
-	* modules/pipe: New file.
-	* MODULES.html.sh (func_all_modules): Add pipe.
-
-2004-01-27  Bruno Haible  <bruno@clisp.org>
-
-	* modules/execute: New file.
-	* MODULES.html.sh (func_all_modules): Add execute.
-
-2004-01-23  Paul Eggert  <eggert@twinsun.com>
-
-	* modules/argmatch, modules/obstack, modules/xstrtol:
-	Depend on exitfail.
-
-2004-01-20  Bruno Haible  <bruno@clisp.org>
-
-	* modules/setenv: Depend on allocsa instead of alloca.
-
-2004-01-20  Bruno Haible  <bruno@clisp.org>
-
-	* modules/xallocsa: New file.
-	* MODULES.html.sh (func_all_modules): Add xallocsa.
-
-2004-01-20  Bruno Haible  <bruno@clisp.org>
-
-	* modules/allocsa: New file.
-	* MODULES.html.sh (func_all_modules): Add allocsa.
-
-2004-01-20  Bruno Haible  <bruno@clisp.org>
-
-	* modules/eealloc: New file.
-	* MODULES.html.sh (func_all_modules): Add eealloc.
-
-2004-01-15  Paul Eggert  <eggert@twinsun.com>
-
-	* modules/poll: Add BUILT_SOURCES.
-	Prefer "$@" to "poll.h" in rule for building poll.h.
-	All this is for consistency with alloca and fnmatch.
-
-	* modules/same: Depend on stdbool.
-
-2003-12-03  Bruno Haible  <bruno@clisp.org>
+	* modules/xstrto
 
 	Upgrade from gettext-0.13.
 	* modules/gettext (Files): Add m4/intmax.m4, m4/longdouble.m4,
