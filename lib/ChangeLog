@@ -1,5 +1,7 @@
 2003-06-06  Jim Meyering  <jim@meyering.net>
 
+	* modechange.c: Remove trailing blanks.
+
 	Merge from coreutils.
 	* fsusage.c: Remove declaration of statfs.
 	It conflicted with one from OSF/1 5.1 in <sys/mount.h>.
