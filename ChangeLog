@@ -1,3 +1,11 @@
+2004-09-09  Karl Berry  <karl@gnu.org>
+
+	* regex.[ch]: delete from the root.  These were supposed to be
+		synced with emacs cvs, but this has not happened for about
+		a year, and anyway nothing else uses emacs regex.[ch].
+		bug-gnulib mail from Jeff Bailey, 9 Sep 2004 15:49:24 -0700.
+		lib/regex[.ch] is untouched.
+		
 2004-09-09  Bruno Haible  <bruno@clisp.org>
 
 	* modules/vasnprintf (Files): Add m4/eoverflow.m4.
