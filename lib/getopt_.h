@@ -44,13 +44,16 @@
 # undef opterr
 # undef optind
 # undef optopt
-# define getopt __GETOPT_PREFIX##getopt
-# define getopt_long __GETOPT_PREFIX##getopt_long
-# define getopt_long_only __GETOPT_PREFIX##getopt_long_only
-# define optarg __GETOPT_PREFIX##optarg
-# define opterr __GETOPT_PREFIX##opterr
-# define optind __GETOPT_PREFIX##optind
-# define optopt __GETOPT_PREFIX##optopt
+# ifndef __CONCAT
+#  define __CONCAT(x, y) x ## y
+# endif
+# define getopt __CONCAT (__GETOPT_PREFIX, getopt)
+# define getopt_long __CONCAT (__GETOPT_PREFIX, getopt_long)
+# define getopt_long_only __CONCAT (__GETOPT_PREFIX, getopt_long_only)
+# define optarg __CONCAT (__GETOPT_PREFIX, optarg)
+# define opterr __CONCAT (__GETOPT_PREFIX, opterr)
+# define optind __CONCAT (__GETOPT_PREFIX, optind)
+# define optopt __CONCAT (__GETOPT_PREFIX, optopt)
 #endif
 
 /* Standalone applications get correct prototypes for getopt_long and
