@@ -1,3 +1,10 @@
+2002-09-25    <karl@gnu.org>
+
+	* config.{guess,sub}: update from prep.
+	* depcomp, install-sh, mdate-sh, missing, mkinstalldirs: update
+		from automake 1.6.3.
+	See srclist*.
+
 2002-02-17  Jim Meyering  <meyering@lucent.com>
 
 	* config.guess (main): Don't use `head -1'; it's no longer portable.
