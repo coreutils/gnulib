@@ -23,10 +23,8 @@
 
 #if HAVE_INTTYPES_H
 # include <inttypes.h>
-#else
-# if HAVE_STDINT_H
-#  include <stdint.h>
-# endif
+#elif HAVE_STDINT_H
+# include <stdint.h>
 #endif
 
 #if HAVE_STDLIB_H
