@@ -1,10 +1,28 @@
-#serial 49   -*- autoconf -*-
+#serial 67   -*- autoconf -*-
+
+m4_undefine([AC_LANG_SOURCE(C)])
+dnl The following is identical to the definition in c.m4
+dnl from the autoconf cvs repository on 2003-03-07.
+dnl FIXME: remove this code once we upgrade to autoconf-2.58.
+
+# We can't use '#line $LINENO "configure"' here, since
+# Sun c89 (Sun WorkShop 6 update 2 C 5.3 Patch 111679-08 2002/05/09)
+# rejects $LINENO greater than 32767, and some configure scripts
+# are longer than 32767 lines.
+m4_define([AC_LANG_SOURCE(C)],
+[/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+$1])
+
 
 dnl Misc type-related macros for fileutils, sh-utils, textutils.
 
 AC_DEFUN([jm_MACROS],
 [
-  AC_PREREQ(2.52g)
+  AC_PREREQ(2.57)
 
   GNU_PACKAGE="GNU $PACKAGE"
   AC_DEFINE_UNQUOTED(GNU_PACKAGE, "$GNU_PACKAGE",
@@ -13,7 +31,6 @@ AC_DEFUN([jm_MACROS],
 
   AM_MISSING_PROG(HELP2MAN, help2man)
   AC_SUBST(OPTIONAL_BIN_PROGS)
-  AC_SUBST(OPTIONAL_BIN_ZCRIPTS)
   AC_SUBST(MAN)
   AC_SUBST(DF_PROG)
 
@@ -21,11 +38,8 @@ AC_DEFUN([jm_MACROS],
   AC_REQUIRE([AC_ISC_POSIX])dnl
 
   jm_CHECK_ALL_TYPES
-  gl_REGEX
 
   AC_REQUIRE([UTILS_HOST_OS])
-  AC_REQUIRE([UTILS_FUNC_MKDIR_TRAILING_SLASH])
-  AC_REQUIRE([jm_BISON])
   AC_REQUIRE([jm_ASSERT])
   AC_REQUIRE([jm_CHECK_TYPE_STRUCT_UTIMBUF])
   AC_REQUIRE([jm_CHECK_TYPE_STRUCT_DIRENT_D_TYPE])
@@ -36,59 +50,34 @@ AC_DEFUN([jm_MACROS],
 
   AC_REQUIRE([UTILS_FUNC_DIRFD])
   AC_REQUIRE([AC_FUNC_ACL])
+  AC_REQUIRE([AC_FUNC_FTW])
   AC_REQUIRE([jm_FUNC_LCHOWN])
   AC_REQUIRE([fetish_FUNC_RMDIR_NOTEMPTY])
   AC_REQUIRE([jm_FUNC_CHOWN])
-  AC_REQUIRE([gl_FUNC_MKTIME])
-  AC_REQUIRE([jm_FUNC_LSTAT])
   AC_REQUIRE([AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
-  AC_REQUIRE([jm_FUNC_STAT])
-  AC_REQUIRE([jm_FUNC_REALLOC])
-  AC_REQUIRE([jm_FUNC_MALLOC])
   AC_REQUIRE([AC_FUNC_STRERROR_R])
-  AC_REQUIRE([jm_FUNC_NANOSLEEP])
-  AC_REQUIRE([jm_FUNC_READDIR])
-  AC_REQUIRE([jm_FUNC_MEMCMP])
-  AC_REQUIRE([jm_FUNC_GLIBC_UNLOCKED_IO])
-  AC_REQUIRE([AC_FUNC_FNMATCH_GNU])
   AC_REQUIRE([jm_FUNC_GROUP_MEMBER])
-  AC_REQUIRE([jm_FUNC_PUTENV])
   AC_REQUIRE([jm_AFS])
-  AC_REQUIRE([jm_AC_PREREQ_XSTRTOUMAX])
-  AC_REQUIRE([jm_AC_PREREQ_XSTRTOIMAX])
   AC_REQUIRE([jm_AC_FUNC_LINK_FOLLOWS_SYMLINK])
-  AC_REQUIRE([AC_FUNC_ERROR_AT_LINE])
-  AC_REQUIRE([jm_FUNC_GNU_STRFTIME])
   AC_REQUIRE([jm_FUNC_FPENDING])
 
+  # This is for od and stat, and any other program that
+  # uses the PRI.MAX macros from inttypes.h.
+  AC_REQUIRE([gt_INTTYPES_PRI])
+
   AC_REQUIRE([jm_FUNC_GETGROUPS])
-  test -n "$GETGROUPS_LIB" && LIBS="$GETGROUPS_LIB $LIBS"
 
   AC_REQUIRE([AC_FUNC_FSEEKO])
-  AC_REQUIRE([AC_FUNC_VPRINTF])
   AC_REQUIRE([AC_FUNC_ALLOCA])
+
+  AC_CONFIG_LIBOBJ_DIR([lib])
   AC_FUNC_GETLOADAVG([lib])
+
   AC_REQUIRE([jm_SYS_PROC_UPTIME])
   AC_REQUIRE([jm_FUNC_FTRUNCATE])
-  AC_REQUIRE([vb_FUNC_RENAME])
 
-  AC_REPLACE_FUNCS(strcasecmp strncasecmp)
-  AC_REPLACE_FUNCS(dup2)
-  AC_REPLACE_FUNCS(gethostname getusershell)
-  AC_REPLACE_FUNCS(sig2str)
-  AC_REPLACE_FUNCS(strcspn stpcpy strstr strtol strtoul)
-  AC_REPLACE_FUNCS(strpbrk)
-  AC_REPLACE_FUNCS(euidaccess memcmp rmdir rpmatch strndup strverscmp)
-  AC_REPLACE_FUNCS(atexit)
-  AC_REPLACE_FUNCS(getpass)
-
-  dnl used by e.g. intl/*domain.c and lib/canon-host.c
-  AC_REPLACE_FUNCS(strdup)
-
-  AC_REPLACE_FUNCS(memchr memcpy memmove memrchr memset)
-  AC_CHECK_FUNCS(getpagesize)
-
-  AC_REQUIRE([UTILS_FUNC_MKSTEMP])
+  # raise is used by at least sort and ls.
+  AC_REPLACE_FUNCS(raise)
 
   # By default, argmatch should fail calling usage (1).
   AC_DEFINE(ARGMATCH_DIE, [usage (1)],
@@ -102,36 +91,18 @@ AC_DEFUN([jm_MACROS],
   AC_FUNC_SETVBUF_REVERSED
 
   # used by sleep and shred
-  # Solaris 2.5.1 needs -lposix4 to get the clock_gettime function.
-  # Solaris 7 prefers the library name -lrt to the obsolescent name -lposix4.
-
-  # Save and restore LIBS so e.g., -lrt, isn't added to it.  Otherwise, *all*
-  # programs in the package would end up linked with that potentially-shared
-  # library, inducing unnecessary run-time overhead.
-  fetish_saved_libs=$LIBS
-    AC_SEARCH_LIBS(clock_gettime, [rt posix4],
-		   [LIB_CLOCK_GETTIME=$ac_cv_search_clock_gettime])
-    AC_SUBST(LIB_CLOCK_GETTIME)
-    AC_CHECK_FUNCS(clock_gettime clock_settime)
-  LIBS=$fetish_saved_libs
+  AC_REQUIRE([gl_CLOCK_TIME])
   AC_CHECK_FUNCS(gettimeofday)
   AC_FUNC_GETTIMEOFDAY_CLOBBER
 
   AC_REQUIRE([AC_FUNC_CLOSEDIR_VOID])
-  AC_REQUIRE([jm_FUNC_UTIME])
 
   AC_CHECK_FUNCS( \
-    bcopy \
-    canonicalize_file_name \
     endgrent \
     endpwent \
-    fchdir \
     fdatasync \
-    ftime \
     ftruncate \
-    getcwd \
     gethrtime \
-    getmntinfo \
     hasmntopt \
     isascii \
     iswspace \
@@ -142,23 +113,23 @@ AC_DEFUN([jm_MACROS],
     mempcpy \
     mkfifo \
     realpath \
-    resolvepath \
     sethostname \
     strchr \
     strerror \
     strrchr \
+    sysctl \
     sysinfo \
     wcrtomb \
     tzset \
   )
 
-  AM_FUNC_GETLINE
-  if test $am_cv_func_working_getline != yes; then
-    AC_CHECK_FUNCS(getdelim)
-  fi
-  AC_FUNC_OBSTACK
+  # for test.c
+  AC_CHECK_FUNCS(setreuid setregid)
 
   AC_FUNC_STRTOD
+  AC_REQUIRE([UTILS_SYS_OPEN_MAX])
+  AC_REQUIRE([GL_FUNC_GETCWD_PATH_MAX])
+  AC_REQUIRE([GL_FUNC_READDIR])
 
   # See if linking `seq' requires -lm.
   # It does on nearly every system.  The single exception (so far) is
@@ -184,16 +155,18 @@ AC_DEFUN([jm_MACROS],
   jm_FUNC_UNLINK_BUSY_TEXT
 
   # These tests are for df.
-  jm_LIST_MOUNTED_FILESYSTEMS([list_mounted_fs=yes], [list_mounted_fs=no])
-  jm_FSTYPENAME
-  jm_FILE_SYSTEM_USAGE([space=yes], [space=no])
-  if test $list_mounted_fs = yes && test $space = yes; then
-    DF_PROG=df
-    AC_LIBOBJ(fsusage)
-    AC_LIBOBJ(mountlist)
+  AC_REQUIRE([gl_FSUSAGE])
+  AC_REQUIRE([gl_MOUNTLIST])
+  if test $gl_list_mounted_fs = yes && test $gl_cv_fs_space = yes; then
+    DF_PROG='df$(EXEEXT)'
   fi
   AC_REQUIRE([jm_AC_DOS])
+  AC_REQUIRE([AC_FUNC_CANONICALIZE_FILE_NAME])
 
+  # If any of these functions don't exist (e.g. DJGPP 2.03),
+  # use the corresponding stub.
+  AC_CHECK_FUNC([fchdir], , [AC_LIBOBJ(fchdir-stub)])
+  AC_CHECK_FUNC([fchown], , [AC_LIBOBJ(fchown-stub)])
 ])
 
 # These tests must be run before any use of AC_CHECK_TYPE,
@@ -204,7 +177,6 @@ AC_DEFUN([jm_CHECK_ALL_HEADERS],
   AC_CHECK_HEADERS( \
     errno.h  \
     fcntl.h \
-    fenv.h \
     float.h \
     hurd.h \
     limits.h \
@@ -229,6 +201,7 @@ AC_DEFUN([jm_CHECK_ALL_HEADERS],
     sys/socket.h \
     sys/statfs.h \
     sys/statvfs.h \
+    sys/sysctl.h \
     sys/systeminfo.h \
     sys/time.h \
     sys/timeb.h \
@@ -273,12 +246,9 @@ AC_DEFUN([jm_CHECK_ALL_TYPES],
   ])
   AC_REQUIRE([AC_STRUCT_ST_BLOCKS])
 
-  AC_REQUIRE([AC_STRUCT_TM])
-  AC_REQUIRE([AC_STRUCT_TIMEZONE])
   AC_REQUIRE([AC_HEADER_STAT])
   AC_REQUIRE([AC_STRUCT_ST_MTIM_NSEC])
   AC_REQUIRE([AC_STRUCT_ST_DM_MODE])
-  AC_REQUIRE([jm_CHECK_TYPE_STRUCT_TIMESPEC])
 
   AC_REQUIRE([AC_TYPE_GETGROUPS])
   AC_REQUIRE([AC_TYPE_MODE_T])
@@ -289,9 +259,10 @@ AC_DEFUN([jm_CHECK_ALL_TYPES],
   AC_REQUIRE([AC_TYPE_UID_T])
   AC_CHECK_TYPE(ino_t, unsigned long)
 
+  gt_TYPE_SSIZE_T
+
   dnl This relies on the fact that autoconf 2.14a's implementation of
   dnl AC_CHECK_TYPE checks includes unistd.h.
-  AC_CHECK_TYPE(ssize_t, int)
   AC_CHECK_TYPE(major_t, unsigned int)
   AC_CHECK_TYPE(minor_t, unsigned int)
 
