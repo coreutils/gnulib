@@ -1,5 +1,5 @@
 /* Locale-specific memory comparison.
-   Copyright (C) 1999, 2002 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -83,6 +83,7 @@ memcoll (char *s1, size_t s1len, char *s2, size_t s2len)
   diff = memcmp (s1, s2, s1len < s2len ? s1len : s2len);
   if (! diff)
     diff = s1len < s2len ? -1 : s1len != s2len;
+  errno = 0;
 
 #endif
 
