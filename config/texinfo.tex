@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-03-11.15}
+\def\texinfoversion{2004-03-21.11}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -3214,7 +3214,10 @@ width0pt\relax} \fi
   \def\definedummyword##1{%
     \expandafter\let\csname ##1\endcsname\asis
   }%
-  \let\definedummyletter=\definedummyword
+  % We can just ignore the accent commands and other control letters.
+  \def\definedummyletter##1{%
+    \expandafter\def\csname ##1\endcsname{}%
+  }%
   %
   \commondummiesnofonts
   %
