@@ -171,10 +171,10 @@ extern int errno;
 # define _NL_CURRENT(category, item) \
   (current->values[_NL_ITEM_INDEX (item)].string)
 # define LOCALE_PARAM , loc
-# define LOCALE_PARAM_DECL , __locale_t loc
+# define LOCALE_PARAM_PROTO , __locale_t loc
 #else
 # define LOCALE_PARAM
-# define LOCALE_PARAM_DECL
+# define LOCALE_PARAM_PROTO
 #endif
 
 #if defined _LIBC || defined HAVE_WCHAR_H
@@ -235,7 +235,7 @@ extern int errno;
 
 INT
 INTERNAL (strtol) (const STRING_TYPE *nptr, STRING_TYPE **endptr,
-		   int base, int group LOCALE_PARAM_DECL)
+		   int base, int group LOCALE_PARAM_PROTO)
 {
   int negative;
   register unsigned LONG int cutoff;
@@ -426,7 +426,7 @@ INT
 weak_function
 #endif
 strtol (const STRING_TYPE *nptr, STRING_TYPE **endptr,
-	int base LOCALE_PARAM_DECL)
+	int base LOCALE_PARAM_PROTO)
 {
   return INTERNAL (strtol) (nptr, endptr, base, 0 LOCALE_PARAM);
 }
