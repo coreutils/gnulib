@@ -1,3 +1,7 @@
+2004-03-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getopt.h: Sync with libc CVS.
+
 2004-03-18  Paul Eggert  <eggert@twinsun.com>
             Bruno Haible  <bruno@clisp.org>
 
