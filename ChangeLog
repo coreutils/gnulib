@@ -1,3 +1,8 @@
+2003-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_all_modules): Ignore files ending in ~.
+	* MODULES.html.sh: Likewise.
+
 2003-01-09    <karl@gnu.org>
 
 	* MODULES.html.sh: include `dirname $0` in PATH, to find

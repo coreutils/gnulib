@@ -29,7 +29,7 @@ trnl='\012'
 
 indent=""
 missed_modules=`gnulib-tool --list`
-missed_files=`ls -d lib/* m4/* | sed -e /CVS/d -e /README/d -e /ChangeLog/d -e /Makefile/d -e /TODO/d`
+missed_files=`ls -d lib/* m4/* | sed -e /CVS/d -e /README/d -e /ChangeLog/d -e /Makefile/d -e /TODO/d -e '/~$/d'`
 
 # func_echo line
 # outputs line with indentation.

@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2003-01-01 14:58:41 $'
+cvsdatestamp='$Date: 2003-01-09 13:22:53 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -212,7 +212,7 @@ gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
 func_all_modules ()
 {
   (cd "$gnulib_dir/modules" && ls -1) \
-      | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^TEMPLATE$/d' \
+      | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^TEMPLATE$/d' -e '/~$/d' \
       | sort
 }
 
