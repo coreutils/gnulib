@@ -1,3 +1,9 @@
+2005-02-22  Simon Josefsson  <jas@extundo.com>
+
+	* modules/iconvme: New file.
+
+	* MODULES.html.sh: Add iconvme.
+
 2005-02-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/chdir-long (Depends-on): Add memrchr.

@@ -1905,6 +1905,7 @@ func_all_modules ()
   func_begin_table
   func_module gettext
   func_module iconv
+  func_module iconvme
   func_module localcharset
   func_module hard-locale
   func_module mbswidth
