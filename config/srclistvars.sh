@@ -1,8 +1,8 @@
-# $Id: srclistvars.sh,v 1.2 2002-09-12 20:29:26 karl Exp $
+# $Id: srclistvars.sh,v 1.3 2002-09-13 20:40:39 karl Exp $
 # Variables for srclist-update and srclist.txt.
 # Definitely will change for each user.
 
-: ${AUTOCONF=/usr/local/texmf/texmf}
+: ${AUTOCONF=/usr/local/gnu/share/autoconf}
 : ${EMACSSRC=$HOME/gnu/src/emacs}
 : ${GETTEXT=/usr/local/gnu/share/gettext}
 : ${GNUBIN=/usr/local/gnu/bin}
