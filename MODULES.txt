@@ -1,0 +1,852 @@
+This is a list of the modules which make up gnulib, with dependencies.
+
+* Support for systems lacking ANSI C 89.
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+---             ---                   c-bs-a.m4                   ---
+                                      AC_C_BACKSLASH_A
+
+<assert.h>      ---                   assert.m4                   ---
+                                      jm_ASSERT
+
+<stdlib.h>      atexit.c              AC_REPLACE_FUNCS(atexit)    ---
+
+<stdlib.h>      strtod.c              AC_REPLACE_FUNCS(strtod)    ---
+                                      AC_STDC_HEADERS
+                                      AC_CHECK_HEADERS(float.h)
+                                      AC_CHECK_FUNCS(isascii)
+                                      AC_CHECK_LIB(m, pow, ...)
+
+<stdlib.h>      strtol.c              AC_REPLACE_FUNCS(strtol)    ---
+                                      AC_STDC_HEADERS
+                                      AC_CHECK_HEADERS(limits.h)
+                                      AC_CHECK_FUNCS(isascii)
+
+<stdlib.h>      strtoul.c             AC_REPLACE_FUNCS(strtoul)   strtol
+
+<string.h>      memchr.c              AC_REPLACE_FUNCS(memchr)    ---
+                                      AC_CHECK_HEADERS(limits.h)
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      see also jm_PREREQ_MEMCHR
+
+<string.h>      memcmp.c              memcmp.m4                   ---
+                                      jm_FUNC_MEMCMP
+
+<string.h>      memcpy.c              AC_REPLACE_FUNCS(memcpy)    ---
+
+<string.h>      memmove.c             AC_REPLACE_FUNCS(memmove)   ---
+
+<string.h>      memset.c              AC_REPLACE_FUNCS(memset)    ---
+
+<string.h>      strcspn.c             AC_REPLACE_FUNCS(strcspn)   ---
+                                      AC_CHECK_HEADERS(string.h)
+
+strpbrk.h       strpbrk.c             AC_REPLACE_FUNCS(strpbrk)   ---
+                                      AC_CHECK_HEADERS(string.h)
+
+strstr.h        strstr.c              AC_REPLACE_FUNCS(strstr)    ---
+                                      AC_CHECK_HEADERS(string.h)
+
+<string.h>      strerror.c            AC_REPLACE_FUNCS(strerror)  ---
+
+<time.h>        mktime.c              AC_FUNC_MKTIME              ---
+                                      AC_STDC_HEADERS
+                                      AC_CHECK_HEADERS(limits.h)
+                                      see also jm_FUNC_MKTIME
+
+-------------------------------------------------------------------------------
+
+These modules are not listed among dependencies below, for simplicity.
+
+* Enhancements for ANSI C 89 functions.
+
++ Memory management functions <stdlib.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+<stdlib.h>      malloc.c              malloc.m4                   ---
+                                      jm_FUNC_MALLOC
+                                      or autoconf >= 2.57
+                                      AC_FUNC_MALLOC
+
+<stdlib.h>      realloc.c             realloc.m4                  ---
+                                      jm_FUNC_REALLOC
+                                      or autoconf >= 2.57
+                                      AC_FUNC_REALLOC
+
+-------------------------------------------------------------------------------
+
++ Date and time <time.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+<time.h>        strftime.c            strftime.m4                 ---
+                                      jm_FUNC_GNU_STRFTIME
+
+-------------------------------------------------------------------------------
+
+* Extra functions based on ANSI C 89.
+
++ Memory management functions <stdlib.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+xalloc.h        xmalloc.c             AC_STDC_HEADERS             malloc
+                xstrdup.c             AC_CHECK_HEADERS(string.h)  realloc
+                                                                  error
+                                                                  gettext
+
+30 lines        alloca.c              AC_FUNC_ALLOCA              xalloc
+
+bumpalloc.h     ---                   ---                         xalloc
+
+-------------------------------------------------------------------------------
+
++ Integer arithmetic functions <stdlib.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+gcd.h           gcd.c                 ---                         ---
+
+-------------------------------------------------------------------------------
+
++ Environment variables <stdlib.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+NYI             putenv.c              putenv.m4                   ---
+                                      jm_FUNC_PUTENV
+                                      AC_CHECK_HEADERS(string.h)
+                                      AC_CHECK_HEADERS(unistd.h)
+                                      AC_CHECK_FUNCS(strchr)
+                                      AC_CHECK_FUNCS(memcpy)
+
+setenv.h        setenv.c              setenv.m4                   ---
+                unsetenv.c            gt_FUNC_SETENV
+                                      AC_FUNC_ALLOCA
+
+-------------------------------------------------------------------------------
+
++ Character handling <ctype.h>
+
++ String handling <string.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+NYI             bcopy.c               AC_REPLACE_FUNCS(bcopy)     ---
+
+NYI             memrchr.c             AC_REPLACE_FUNCS(memrchr)   ---
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      AC_CHECK_HEADERS(limits.h)
+                                      AC_GNU_SOURCE
+
+stpcpy.h        stpcpy.c              AC_REPLACE_FUNCS(stpcpy)    ---
+                                      AC_GNU_SOURCE
+
+strcase.h       strcasecmp.c          AC_REPLACE_FUNCS(strcasecmp)  ---
+                strncasecmp.c         AC_REPLACE_FUNCS(strncasecmp)
+
+NYI             strdup.c              AC_REPLACE_FUNCS(strdup)    ---
+                                      AC_STDC_HEADERS
+
+NYI             strndup.c             AC_REPLACE_FUNCS(strndup)   strnlen
+                                      AC_STDC_HEADERS
+                                      AC_CHECK_DECLS(strnlen)
+                                      AC_GNU_SOURCE
+
+NYI             strnlen.c             AC_REPLACE_FUNCS(strnlen)   ---
+                                      AC_FUNC_STRNLEN
+                                      AC_STDC_HEADERS
+                                      AC_CHECK_HEADERS(string.h)
+                                      AC_CHECK_HEADERS(memory.h)
+                                      AC_CHECK_DECLS(memchr)
+                                      AC_GNU_SOURCE
+                                      see also jm_PREREQ_STRNLEN
+
+-------------------------------------------------------------------------------
+
++ Numeric conversion functions <stdlib.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+xstrtod.h       xstrtod.c             AC_STDC_HEADERS             ---
+
+xstrtol.h       xstrtol.c             xstrtoimax.m4               ---
+                xstrtoul.c            xstrtoumax.m4
+                xstrtoimax.c          AC_STDC_HEADERS
+                xstrtoumax.c          AC_CHECK_HEADERS(string.h)
+                                      AC_CHECK_HEADERS(limits.h)
+                                      AC_CHECK_HEADERS(inttypes.h)
+                                      AC_CHECK_FUNCS(isascii)
+                                      AC_CHECK_DECLS(strtol)
+                                      AC_CHECK_DECLS(strtoul)
+                                      AC_CHECK_DECLS(strtoimax)
+                                      AC_CHECK_DECLS(strtoumax)
+                                      see also jm_AC_PREREQ_XSTRTOIMAX
+                                      see also jm_AC_PREREQ_XSTRTOUMAX
+
+NYI             strtoimax.c           longlong.m4                 ---
+                                      AC_CHECK_HEADERS(inttypes.h)
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      AC_CHECK_DECLS(strtol)
+                                      AC_CHECK_DECLS(strtoll)
+                                      jm_AC_TYPE_LONG_LONG
+
+NYI             strtoumax.c           longlong.m4                 ---
+                                      AC_CHECK_HEADERS(inttypes.h)
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      AC_CHECK_DECLS(strtoul)
+                                      AC_CHECK_DECLS(strtoull)
+                                      jm_AC_TYPE_UNSIGNED_LONG_LONG
+
+-------------------------------------------------------------------------------
+
++ Date and time <time.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+getdate.h       getdate.y             bison.m4                    unlocked-io
+                                      AC_STDC_HEADERS
+                                      AC_HEADER_TIME
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      AC_CHECK_HEADERS(string.h)
+                                      AC_CHECK_HEADERS(sys/time.h)
+                                      AC_CHECK_FUNCS(isascii)
+                                      AC_STRUCT_TIMEZONE
+                                      HAVE_TM_GMTOFF see strftime.m4
+                                      jm_BISON
+
+-------------------------------------------------------------------------------
+
++ Input/Output <stdio.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+unlocked-io.h   ---                   jm-glibc-io.m4              ---
+                                      jm_FUNC_GLIBC_UNLOCKED_IO
+                                      AC_GNU_SOURCE
+
+-------------------------------------------------------------------------------
+
++ Command-line arguments
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+argmatch.h      argmatch.c            ---                         gettext
+                                                                  error
+                                                                  quotearg
+                                                                  quote
+                                                                  unlocked-io
+
+version-etc.h   version-etc.c         ---                         unlocked-io
+                                                                  gettext
+
+long-options.h  long-options.c        AC_CHECK_HEADERS(stdlib.h)  version-etc
+
+-------------------------------------------------------------------------------
+
++ Cryptographic computations
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+md5.h           md5.c                 AC_STDC_HEADERS             unlocked-io
+                                      AC_CHECK_HEADERS(limits.h)
+                                      AC_CHECK_FUNCS(memcpy)
+
+sha.h           sha.c                 AC_STDC_HEADERS             unlocked-io
+                                      AC_CHECK_FUNCS(memcpy)      md5
+
+-------------------------------------------------------------------------------
+
++ Misc
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+diacrit.h       diacrit.c             ---                         ---
+
+getstr.h        getstr.c              AC_STDC_HEADERS             unlocked-io
+
+getline.h       getline.c             getline.m4                  getstr
+                                      AM_FUNC_GETLINE
+                                      AC_CHECK_FUNCS(getdelim)
+                                      AC_GNU_SOURCE
+
+linebuffer.h    linebuffer.c          ---                         xalloc
+                                                                  unlocked-io
+
+obstack.h       obstack.c             AC_CHECK_HEADERS(stddef.h)  gettext
+                                      AC_CHECK_HEADERS(string.h)
+
+hash-pjw.h      hash-pjw.c            ---                         ---
+
+hash.h          hash.c                AC_CHECK_HEADERS(stdlib.h)  malloc
+                                      AC_HEADER_STDBOOL           realloc
+                                      AC_CHECK_DECLS(malloc)
+                                      AC_CHECK_DECLS(free)
+                                      see also jm_PREREQ_HASH
+
+readtokens.h    readtokens.c          AC_STDC_HEADERS             xalloc
+                                      AC_CHECK_HEADERS(string.h)  unlocked-io
+                                      AC_CHECK_HEADERS(memory.h)
+
+strverscmp.h    strverscmp.c          AC_REPLACE_FUNCS(strverscmp) ---
+                                      AC_GNU_SOURCE
+
+-------------------------------------------------------------------------------
+
+* Support for systems lacking ISO C 99.
+
++ Boolean type and values <stdbool.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+---             ---                   stdbool.m4                  ---
+                                      AC_HEADER_STDBOOL
+
+-------------------------------------------------------------------------------
+
++ Numeric conversion functions <stdlib.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+<stdlib.h>      strtoll.c             AC_REPLACE_FUNCS(strtoll)   strtol
+
+<stdlib.h>      strtoull.c            AC_REPLACE_FUNCS(strtoull)  strtoul
+
+-------------------------------------------------------------------------------
+
+* Enhancements for ISO C 99 functions.
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+
+* Extra functions based on ISO C 99.
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+
+* Support for systems lacking POSIX:2001.
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+<unistd.h>      chown.c               chown.m4                    ---
+                                      jm_FUNC_CHOWN
+
+<unistd.h>      dup2.c                AC_REPLACE_FUNCS(dup2)      ---
+                                      AC_CHECK_HEADERS(unistd.h)
+                                      AC_CHECK_HEADERS(fcntl.h)
+
+<unistd.h>      ftruncate.c           ftruncate.m4                ---
+                                      jm_FUNC_FTRUNCATE
+
+<unistd.h>      getgroups.c           getgroups.m4                xalloc
+                                      jm_FUNC_GETGROUPS
+
+<sys/time.h>    gettimeofday.c        gettimeofday.m4             ---
+                                      AC_FUNC_GETTIMEOFDAY_CLOBBER
+
+<sys/stat.h>    mkdir.c               mkdir-slash.m4              xalloc
+                                      AC_CHECK_HEADERS(stdlib.h)  dirname
+                                      AC_CHECK_HEADERS(string.h)
+                                      AC_CHECK_DECLS(free)
+                                      UTILS_FUNC_MKDIR_TRAILING_SLASH
+
+<stdlib.h>      mkstemp.c             mkstemp.m4                  ---
+                tempname.c            UTILS_FUNC_MKSTEMP
+                                      jm_PREREQ_TEMPNAME
+
+<sys/stat.h>    stat.c                stat.m4                     ---
+                                      jm_FUNC_STAT
+
+<sys/stat.h>    lstat.c               lstat.m4                    stat
+                                      jm_FUNC_LSTAT               xalloc
+                                      AC_HEADER_STAT
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      AC_CHECK_DECLS(free)
+
+timespec.h      ---                   timespec.m4                 ---
+                                      st_mtim.m4
+                                      AC_CHECK_HEADERS(sys/time.h)
+                                      jm_CHECK_TYPE_STRUCT_TIMESPEC
+                                      AC_STRUCT_ST_MTIM_NSEC
+                                      AC_CHECK_DECLS(nanosleep)
+
+<time.h>        nanosleep.c           nanosleep.m4                timespec
+                timespec.h (BAD)      jm_FUNC_NANOSLEEP
+                                      AC_CHECK_HEADERS(unistd.h)
+
+regex.h         regex.c               regex.m4                    alloca
+                                      jm_INCLUDED_REGEX           unlocked-io
+                                      jm_PREREQ_REGEX             gettext
+
+<stdio.h>       rename.c              rename.m4                   xalloc
+                                      vb_FUNC_RENAME              dirname
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      AC_CHECK_HEADERS(string.h)
+                                      AC_CHECK_DECLS(free)
+
+<unistd.h>      rmdir.c               AC_REPLACE_FUNCS(rmdir)     ---
+                                      AC_HEADER_STAT
+
+<utime.h>       utime.c               utime.m4                    safe-read
+                                      utimbuf.m4                  full-write
+                                      utimes.m4
+                                      jm_FUNC_UTIME
+
+-------------------------------------------------------------------------------
+
+* Enhancements for POSIX:2001 functions.
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+dirname.h       dirname.c             dos.m4                      xalloc
+                basename.c            jm_AC_DOS
+                stripslash.c          jm_PREREQ_DIRNAME
+
+getopt.h        getopt.c              AC_CHECK_HEADERS(string.h)  gettext
+                getopt1.c
+
+unistd-safer.h  dup-safer.c           AC_CHECK_HEADERS(unistd.h)  ---
+                                      AC_CHECK_HEADERS(fcntl.h)
+
+fnmatch_.h      fnmatch.c             fnmatch.m4                  alloca
+                fnmatch_loop.c        mbstate_t.m4
+                                      AC_FUNC_FNMATCH_GNU
+                                      AC_STDC_HEADERS
+                                      AC_CHECK_HEADERS(string.h)
+                                      AC_CHECK_HEADERS(strings.h)
+
+exclude.h       exclude.c             jm_PREREQ_EXCLUDE           xalloc
+                                      AC_CHECK_HEADERS(stdlib.h)  strcase
+                                      AC_CHECK_HEADERS(string.h)  unlocked-io
+                                      AC_CHECK_HEADERS(strings.h) fnmatch
+                                      AC_CHECK_HEADERS(sys/types.h)
+                                      AC_CHECK_HEADERS(inttypes.h)
+                                      AC_CHECK_HEADERS(stdint.h)
+
+-------------------------------------------------------------------------------
+
+* Extra functions based on POSIX:2001.
+
++ Numeric conversion functions
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+human.h         human.c               AC_CHECK_HEADERS(inttypes.h) gettext
+                                      AC_CHECK_HEADERS(string.h)   argmatch
+                                      AC_CHECK_HEADERS(limits.h)   error
+                                      AC_CHECK_HEADERS(stdlib.h)   xstrtol
+                                      AC_CHECK_DECLS(getenv)
+                                      jm_PREREQ_HUMAN
+
+-------------------------------------------------------------------------------
+
++ File system functions
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+acl.h           acl.c                 acl.m4                      ---
+                                      AC_FUNC_ACL
+
+backupfile.h    backupfile.c          d-ino.m4                    argmatch
+                addext.c              dos.m4                      dirname
+                getversion.c          jm_PREREQ_ADDEXT
+                                      jm_CHECK_TYPE_STRUCT_DIRENT_D_INO
+                                      jm_AC_DOS
+                                      AC_STDC_HEADERS
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      AC_CHECK_DECLS(malloc)
+                                      AC_CHECK_DECLS(getenv)
+
+fsusage.h       fsusage.c             fsusage.m4                  full-read
+                                      jm_FILE_SYSTEM_USAGE
+                                      STATFS_TRUNCATES_BLOCK_COUNTS ?
+                                      jm_AC_TYPE_UINTMAX_T
+                                      AC_LIBOBJ(fsusage)
+                                      AC_CHECK_HEADERS(inttypes.h)
+                                      AC_CHECK_HEADERS(stdint.h)
+                                      AC_CHECK_HEADERS(limits.h)
+                                      AC_CHECK_HEADERS(fcntl.h)
+                                      AC_CHECK_HEADERS(dustat.h)
+                                      AC_CHECK_HEADERS(sys/param.h)
+                                      AC_CHECK_HEADERS(sys/mount.h)
+                                      AC_CHECK_HEADERS(sys/vfs.h)
+                                      AC_CHECK_HEADERS(sys/fs/s5param.h)
+                                      AC_CHECK_HEADERS(sys/filsys.h)
+                                      AC_CHECK_HEADERS(sys/statfs.h)
+                                      AC_CHECK_HEADERS(sys/statvfs.h)
+
+dirfd.h         dirfd.c               dirfd.m4                    ---
+                                      UTILS_FUNC_DIRFD
+
+NYI             euidaccess.c          AC_GNU_SOURCE               ---
+                                      AC_REPLACE_FUNCS(euidaccess)
+                                      AC_CHECK_HEADERS(unistd.h)
+                                      AC_CHECK_FUNCS(getgroups)
+
+file-type.h     file-type.c           AC_HEADER_STAT              gettext
+
+NYI             fileblocks.c          AC_STRUCT_ST_BLOCKS         ---
+                                      AC_CHECK_HEADERS(unistd.h)
+                                      AC_CHECK_HEADERS(sys/param.h)
+
+filemode.h      filemode.c            AC_HEADER_STAT              ---
+
+NYI             isdir.c               AC_HEADER_STAT              ---
+
+NYI             lchown.h              lchown.m4                   chown
+                lchown.c              jm_FUNC_LCHOWN
+                                      AC_HEADER_STAT
+
+makepath.h      makepath.c            afs.m4                      alloca
+                                      AC_FUNC_ALLOCA              chown
+                                      AC_HEADER_STAT              gettext
+                                      AC_CHECK_HEADERS(unistd.h)  save-cwd
+                                      AC_CHECK_HEADERS(string.h)  dirname
+                                                                  error
+                                                                  quote
+
+modechange.h    modechange.c          AC_CHECK_HEADERS            xstrtol
+                                      AC_HEADER_STAT
+
+mountlist.h     mountlist.c           ls-mntd-fs.m4               xalloc
+                                      fstypename.m4               unlocked-io
+                                      jm_LIST_MOUNTED_FILESYSTEMS
+                                      jm_FSTYPENAME
+                                      AC_LIBOBJ(mountlist)
+                                      AC_STDC_HEADERS
+                                      AC_CHECK_HEADERS(unistd.h)
+                                      AC_CHECK_HEADERS(string.h)
+                                      AC_CHECK_HEADERS(fcntl.h)
+                                      AC_CHECK_HEADERS(sys/mntent.h)
+
+path-concat.h   path-concat.c         dos.m4                      strdup
+                                      jm_AC_DOS                   xalloc
+                                      AC_STDC_HEADERS             dirname
+                                      AC_CHECK_HEADERS(string.h)
+                                      AC_CHECK_HEADERS(strings.h)
+                                      AC_CHECK_HEADERS(memory.h)
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      AC_CHECK_HEADERS(unistd.h)
+                                      AC_CHECK_FUNCS(mempcpy)
+                                      AC_CHECK_DECLS(malloc)
+
+pathmax.h       ---                   AC_CHECK_HEADERS(unistd.h)  ---
+                                      AC_CHECK_HEADERS(limits.h)
+                                      AC_CHECK_HEADERS(sys/param.h)
+
+same.h          same.c                AC_CHECK_HEADERS(unistd.h)  xalloc
+                                      AC_CHECK_HEADERS(stdlib.h)  error
+                                      AC_CHECK_HEADERS(string.h)  dirname
+                                      AC_CHECK_DECLS(free)
+
+save-cwd.h      save-cwd.c            AC_STDC_HEADERS             error
+                                      AC_CHECK_HEADERS(unistd.h)
+                                      AC_CHECK_HEADERS(fcntl.h)
+                                      AC_CHECK_FUNCS(fchdir)
+
+savedir.h       savedir.c             AC_STDC_HEADERS             xalloc
+                                      AC_DIR_HEADER
+                                      AC_FUNC_CLOSEDIR_VOID
+
+xgetcwd.h       xgetcwd.c             getcwd.m4                   xalloc
+                                      jm_PREREQ_XGETCWD           pathmax
+
+xreadlink.h     xreadlink.c           jm_PREREQ_XREADLINK         xalloc
+
+-------------------------------------------------------------------------------
+
++ File descriptor based Input/Output
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+safe-read.h     safe-read.c           AC_CHECK_HEADERS(unistd.h)  ---
+
+safe-write.h    safe-write.c          ---                         safe-read
+
+full-read.h     full-read.c           ---                         safe-read
+
+full-write.h    full-write.c          ---                         safe-write
+
+-------------------------------------------------------------------------------
+
++ File stream based Input/Output
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+__fpending.h    __fpending.c          fpending.m4                 ---
+                                      jm_FUNC_FPENDING
+
+closeout.h      closeout.c            AC_CHECK_HEADERS(stdlib.h)  unlocked-io
+                                                                  gettext
+                                                                  error
+                                                                  quotearg
+                                                                  fpending
+
+stdio-safer.h   fopen-safer.c         AC_CHECK_HEADERS(unistd.h)  unistd-safer
+
+NYI             getpass.c             AC_REPLACE_FUNCS(getpass)   unlocked-io
+                                                                  getline
+
+-------------------------------------------------------------------------------
+
++ Users and groups
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+NYI             getugroups.c          AC_STDC_HEADERS             ---
+                                      AC_CHECK_HEADERS(unistd.h)
+                                      AC_CHECK_HEADERS(string.h)
+                                      AC_TYPE_GETGROUPS
+
+group-member.h  group-member.c        group-member.m4             xalloc
+                                      jm_FUNC_GROUP_MEMBER
+                                      AC_STDC_HEADERS
+                                      AC_CHECK_HEADERS(unistd.h)
+                                      AC_FUNC_GETGROUPS
+                                      AC_GNU_SOURCE
+
+NYI             idcache.c             AC_STDC_HEADERS             xalloc
+                                      AC_CHECK_HEADERS(unistd.h)
+                                      AC_CHECK_HEADERS(string.h)
+
+NYI             userspec.c            AC_STDC_HEADERS             alloca
+                                      AC_FUNC_ALLOCA              xalloc
+                                      AC_CHECK_HEADERS(string.h)  xstrtol
+                                      AC_CHECK_HEADERS(limits.h)  strdup
+                                      AC_CHECK_HEADERS(unistd.h)  gettext
+                                      AC_CHECK_HEADERS(sys/param.h)
+
+-------------------------------------------------------------------------------
+
++ Date and time
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+NYI             gettime.c             for clock_gettime           gettimeofday
+                timespec.h (BAD)      see jm-macros.m4
+
+NYI             settime.c             for clock_settime           ---
+                timespec.h (BAD)      see jm-macros.m4
+
+NYI             stime.c               ---                         ---
+                (TODO: remove)
+
+posixtm.h       posixtm.c             AC_HEADER_TIME              unlocked-io
+                                      AC_CHECK_HEADERS(string.h)
+                                      AC_CHECK_HEADERS(stdlib.h)
+
+-------------------------------------------------------------------------------
+
++ Networking functions
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+NYI             gethostname.c         AC_REPLACE_FUNCS(gethostname) ---
+                                      AC_CHECK_FUNCS(uname)
+
+NYI             xgethostname.c        ---                         gehostname
+                                                                  xalloc
+                                                                  error
+
+NYI             canon-host.c          jm_PREREQ_CANON_HOST        ---
+                                      AC_CHECK_HEADERS(stdlib.h)
+
+-------------------------------------------------------------------------------
+
++ Internationalization functions
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+gettext.h       libintl               gettext.m4 et al.           ---
+                (part of gettext)     (use gettextize)
+                                      AM_GNU_GETTEXT
+
+iconv.h         libiconv              iconv.m4 et al.             ---
+                (part of libiconv)    AM_ICONV
+
+NYI             localcharset.c        codeset.m4                  ---
+                config.charset        glibc21.m4
+                ref-add.sin           AC_CANONICAL_HOST
+                ref-del.sin           jm_LANGINFO_CODESET
+                                      jm_GLIBC21
+                                      AC_CHECK_HEADERS(stddef.h)
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      AC_CHECK_HEADERS(string.h)
+                                      AC_CHECK_FUNCS(setlocale)
+                                      see libiconv/libcharset/INTEGRATE
+
+hard-locale.h   hard-locale.c         jm_PREREQ_HARD_LOCALE       ---
+
+mbswidth.h      mbswidth.c            mbswidth.m4                 ---
+                                      mbrtowc.m4
+                                      mbstate_t.m4
+                                      jm_PREREQ_MBSWIDTH
+
+memcasecmp.h    memcasecmp.c          AC_STDC_HEADERS             ---
+                                      HAVE_ISASCII
+
+memcoll.h       memcoll.c             AC_CHECK_HEADERS(string.h)  ---
+
+xmemcoll.h      xmemcoll.c            ---                         memcoll
+                                                                  gettext
+                                                                  error
+                                                                  quotearg
+
+unicodeio.h     unicodeio.c           AC_CHECK_HEADERS(stddef.h)  iconv
+                                      AC_CHECK_HEADERS(string.h)  gettext
+
+NYI             rpmatch.c             AC_REPLACE_FUNCS(rpmatch)   gettext
+                                      AC_STDC_HEADERS             regex
+
+NYI             yesno.c               AC_CHECK_HEADERS(stdlib.h)  unlocked-io
+                                                                  rpmatch
+
+-------------------------------------------------------------------------------
+
++ Executing programs
+
++ Java
+
++ Misc
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+exitfail.h      exitfail.c            AC_CHECK_HEADERS(stdlib.h)  ---
+
+c-stack.h       c-stack.c             c-stack.m4                  gettext
+                                      jm_PREREQ_C_STACK
+
+error.h         error.c               error.m4                    unlocked-io
+                                      strerror_r.m4               gettext
+                                      jm_PREREQ_ERROR
+
+fatal.h         fatal.c               AC_STDC_HEADERS             unlocked-io
+                                      AC_CHECK_FUNCS(vprintf)     error
+                                      AC_CHECK_FUNCS(doprnt)
+
+NYI             getloadavg.c          getloadavg.m4               ---
+                                      AC_FUNC_GETLOADAVG
+
+getpagesize.h   ---                   jm_PREREQ_GETPAGESIZE       ---
+
+NYI             getusershell.c        AC_REPLACE_FUNCS(getusershell) xalloc
+                                      AC_CHECK_HEADERS(stdlib.h)  unlocked-io
+                                      AC_CHECK_FUNCS(isascii)
+
+physmem.h       physmem.c             jm_PREREQ_PHYSMEM           ---
+
+posixver.h      posixver.c            jm_PREREQ_POSIXVER          ---
+
+quotearg.h      quotearg.c            mbrtowc.m4                  xalloc
+                                      jm_PREREQ_QUOTEARG          gettext
+                                      AC_CHECK_FUNCS(mbsinit)
+
+quote.h         quote.c               AC_CHECK_HEADERS(stddef.h)  quotearg
+
+readutmp.h      readutmp.c            jm_PREREQ_READUTMP          xalloc
+                                      AC_CHECK_DECLS(getutent)    unlocked-io
+
+sig2str.h       sig2str.c             AC_REPLACE_FUNCS(sig2str)   ---
+                (TODO: use strsignal)
+
+-------------------------------------------------------------------------------
+
+
+Ideally a module could consist of:
+- A header file: lib/module.h
+- One or more implementation files: lib/module.c et al.
+- One or more autoconf macro files: m4/module.m4 et al.
+- A configure.ac fragment: m4/module.ac
+- A Makefile.am fragment: lib/module.am
+- Some documentation
+- A POT file and some PO files
+- A testsuite
+- A dependency list: modules/module.dep
