@@ -1,0 +1,26 @@
+Description:
+compare file time stamps
+
+Files:
+lib/utimecmp.h
+lib/utimecmp.c
+m4/utimecmp.m4
+
+Depends-on:
+hash
+timespec
+utimens
+xalloc
+
+configure.ac:
+gl_UTIMECMP
+
+Makefile.am:
+lib_SOURCES += utimecmp.h utimecmp.c
+
+Include:
+"utimecmp.h"
+
+Maintainer:
+Paul Eggert, Jim Meyering
+
