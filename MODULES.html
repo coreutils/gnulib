@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, getstr, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, mkdir, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, mkdir, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
@@ -459,16 +459,10 @@
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "getstr.h"
-      <TD ALIGN=LEFT VALIGN=TOP>getstr.c
-      <TD ALIGN=LEFT VALIGN=TOP>getstr.m4<BR>gl_GETSTR
-      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
-    </TR>
-    <TR>
       <TD ALIGN=LEFT VALIGN=TOP>#include "getline.h"
       <TD ALIGN=LEFT VALIGN=TOP>getline.c
       <TD ALIGN=LEFT VALIGN=TOP>getline.m4<BR>AM_FUNC_GETLINE
-      <TD ALIGN=LEFT VALIGN=TOP>getstr
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
     </TR>
     <TR>
       <TD ALIGN=LEFT VALIGN=TOP>#include "linebuffer.h"
@@ -574,13 +568,13 @@
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>strtoimax.c
       <TD ALIGN=LEFT VALIGN=TOP>longlong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>intmax_t.m4<BR>strtoimax.m4<BR>gl_FUNC_STRTOIMAX
-      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>strtoll
     </TR>
     <TR>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>strtoumax.c
       <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>uintmax_t.m4<BR>strtoumax.m4<BR>gl_FUNC_STRTOUMAX
-      <TD ALIGN=LEFT VALIGN=TOP>strtoimax
+      <TD ALIGN=LEFT VALIGN=TOP>strtoimax<BR>strtoull
     </TR>
   </TABLE>
   <H2>Enhancements for ISO C 99 functions</H2>
@@ -1340,5 +1334,5 @@ m4/uptime.m4
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on 12 January 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 14 January 2003.
 </HTML>
