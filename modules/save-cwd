@@ -7,13 +7,13 @@ lib/save-cwd.c
 m4/save-cwd.m4
 
 Depends-on:
+chdir-long
 xgetcwd
 
 configure.ac:
 gl_SAVE_CWD
 
 Makefile.am:
-lib_SOURCES += save-cwd.h save-cwd.c
 
 Include:
 "save-cwd.h"

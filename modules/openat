@@ -1,0 +1,27 @@
+Description:
+Open a file at a directory.
+
+Files:
+lib/openat.c
+lib/openat.h
+m4/openat.m4
+
+Depends-on:
+save-cwd
+gettext
+error
+exitfail
+
+configure.ac:
+gl_FUNC_OPENAT
+
+Makefile.am:
+
+Include:
+"openat.h"
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering
