@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-10-15 16:51:32 $'
+cvsdatestamp='$Date: 2004-10-15 16:54:14 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -465,7 +465,6 @@ func_emit_lib_Makefile_am ()
         echo "## begin gnulib module $module"
         echo
         cat amsnippet.tmp
-        echo
         echo "## end   gnulib module $module"
         echo
       fi
