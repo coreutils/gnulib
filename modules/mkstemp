@@ -13,7 +13,7 @@ m4/mkstemp.m4
 Depends-on:
 
 configure.ac:
-UTILS_FUNC_MKSTEMP
+gl_FUNC_MKSTEMP
 
 Makefile.am:
 
@@ -22,4 +22,3 @@ Include:
 
 Maintainer:
 Jim Meyering
-
