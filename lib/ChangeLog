@@ -1,6 +1,6 @@
 2004-10-04  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* xalloc.h (xmemdup): Renamed from xclone.
+	* xalloc.h (xmemdup): Renamed from xclone.  All uses changed.
 	* xmalloc.c (xmemdup): Likewise.
 	* xalloc.h (CCLONE, CLONE, NEW, XCALLOC, XMALLOC, XREALLOC,
 	XFREE): Remove these long-obsolescent macros.
