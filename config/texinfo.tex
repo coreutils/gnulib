@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-02-19.09}
+\def\texinfoversion{2004-02-24.06}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -3915,9 +3915,6 @@ width0pt\relax} \fi
   \global\let\subsubsection = \appendixsubsubsec
 }
 
-% @centerchap is like @unnumbered, but the heading is centered.
-\outer\parseargdef\centerchap{{\unnumberedyyy{#1}}}
-
 \outer\parseargdef\unnumbered{\unnmhead0{#1}} % normally unnmhead0 calls unnumberedzzz
 \def\unnumberedzzz#1{%
   \global\secno=0 \global\subsecno=0 \global\subsubsecno=0
@@ -3946,6 +3943,16 @@ width0pt\relax} \fi
   \global\let\section = \unnumberedsec
   \global\let\subsection = \unnumberedsubsec
   \global\let\subsubsection = \unnumberedsubsubsec
+}
+
+% @centerchap is like @unnumbered, but the heading is centered.
+\outer\parseargdef\centerchap{%
+  % Well, we could do the following in a group, but that would break
+  % an assumption that \chapmacro is called at the outermost level.
+  % Thus we are safer this way:		--kasal, 24feb04
+  \let\centerparametersmaybe = \centerparameters
+  \unnmhead0{#1}%
+  \let\centerparametersmaybe = \relax
 }
 
 % @top is like @unnumbered.
@@ -4014,24 +4021,6 @@ width0pt\relax} \fi
                  {\the\unnumberedno.\the\secno.\the\subsecno.\the\subsubsecno}%
 }
 
-% These are variants which are not "outer", so they can appear in @ifinfo.
-% Actually, they are now be obsolete; ordinary section commands should work.
-\def\infotop{\parsearg\unnumberedzzz}
-\def\infounnumbered{\parsearg\unnumberedzzz}
-\def\infounnumberedsec{\parsearg\unnumberedseczzz}
-\def\infounnumberedsubsec{\parsearg\unnumberedsubseczzz}
-\def\infounnumberedsubsubsec{\parsearg\unnumberedsubsubseczzz}
-
-\def\infoappendix{\parsearg\appendixzzz}
-\def\infoappendixsec{\parsearg\appendixseczzz}
-\def\infoappendixsubsec{\parsearg\appendixsubseczzz}
-\def\infoappendixsubsubsec{\parsearg\appendixsubsubseczzz}
-
-\def\infochapter{\parsearg\chapterzzz}
-\def\infosection{\parsearg\sectionzzz}
-\def\infosubsection{\parsearg\subsectionzzz}
-\def\infosubsubsection{\parsearg\subsubsectionzzz}
-
 % These macros control what the section commands do, according
 % to what kind of chapter we are in (ordinary, appendix, or unnumbered).
 % Define them by default for a numbered chapter.
@@ -4079,8 +4068,6 @@ width0pt\relax} \fi
 %%% Args are the skip and penalty (usually negative)
 \def\dobreak#1#2{\par\ifdim\lastskip<#1\removelastskip\penalty#2\vskip#1\fi}
 
-\def\setchapterstyle #1 {\csname CHAPF#1\endcsname}
-
 %%% Define plain chapter starts, and page on/off switching for it
 % Parameter controlling skip before chapter headings (if needed)
 
@@ -4111,11 +4098,7 @@ width0pt\relax} \fi
 
 \CHAPPAGon
 
-\def\CHAPFplain{%
-\global\let\chapmacro=\chfplain
-\global\let\centerchapmacro=\centerchfplain}
-
-% Normal chapter opening.
+% Chapter opening.
 % 
 % #1 is the text, #2 is the section type (Ynumbered, Ynothing,
 % Yappendix, Yomitfromtoc), #3 the chapter number.
@@ -4125,7 +4108,7 @@ width0pt\relax} \fi
 \def\Yomitfromtockeyword{Yomitfromtoc}
 \def\Yappendixkeyword{Yappendix}
 %
-\def\chfplain#1#2#3{%
+\def\chapmacro#1#2#3{%
   \pchapsepmacro
   {%
     \chapfonts \rm
@@ -4186,40 +4169,35 @@ width0pt\relax} \fi
 
 % @centerchap -- centered and unnumbered.
 \let\centerparametersmaybe = \relax
-\def\centerchfplain#1{{%
-  \def\centerparametersmaybe{%
-    \advance\rightskip by 3\rightskip
-    \leftskip = \rightskip
-    \parfillskip = 0pt
-  }%
-  \chfplain{#1}{Ynothing}{}%
-}}
+\def\centerparameters{%
+  \advance\rightskip by 3\rightskip
+  \leftskip = \rightskip
+  \parfillskip = 0pt
+}
 
-\CHAPFplain % The default
 
 % I don't think this chapter style is supported any more, so I'm not
 % updating it with the new noderef stuff.  We'll see.  --karl, 11aug03.
 % 
+\def\setchapterstyle #1 {\csname CHAPF#1\endcsname}
+%
 \def\unnchfopen #1{%
 \chapoddpage {\chapfonts \vbox{\hyphenpenalty=10000\tolerance=5000
                        \parindent=0pt\raggedright
                        \rm #1\hfill}}\bigskip \par\nobreak
 }
-
 \def\chfopen #1#2{\chapoddpage {\chapfonts
 \vbox to 3in{\vfil \hbox to\hsize{\hfil #2} \hbox to\hsize{\hfil #1} \vfil}}%
 \par\penalty 5000 %
 }
-
 \def\centerchfopen #1{%
 \chapoddpage {\chapfonts \vbox{\hyphenpenalty=10000\tolerance=5000
                        \parindent=0pt
                        \hfill {\rm #1}\hfill}}\bigskip \par\nobreak
 }
-
 \def\CHAPFopen{%
-\global\let\chapmacro=\chfopen
-\global\let\centerchapmacro=\centerchfopen}
+  \global\let\chapmacro=\chfopen
+  \global\let\centerchapmacro=\centerchfopen}
 
 
 % Section titles.  These macros combine the section number parts and
@@ -6319,6 +6297,9 @@ width0pt\relax} \fi
   %
   % don't lose footnotes inside @float.
   \startsavinginserts
+  %
+  % We can't be used inside a paragraph.
+  \par
   %
   \vtop\bgroup
     \def\floattype{#1}%
