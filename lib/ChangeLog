@@ -1,3 +1,12 @@
+2003-09-10  Bruno Haible  <bruno@clisp.org>
+
+	* strcspn.c: Include <string.h> unconditionally.
+	* strpbrk.c: Include <string.h> unconditionally.
+	* strstr.c: Include <string.h> unconditionally.
+	* unicodeio.c: Include <string.h> unconditionally.
+	* setenv.c: Include <stdlib.h> and <string.h> unconditionally.
+	* unsetenv.c: Likewise.
+
 2003-09-10  Jim Meyering  <jim@meyering.net>
 
 	* error.c: Correct indentation of cpp directives.

@@ -1,3 +1,12 @@
+2003-09-10  Bruno Haible  <bruno@clisp.org>
+
+	* strcspn.m4 (gl_PREREQ_STRCSPN): Remove <string.h> check.
+	* strpbrk.m4 (gl_PREREQ_STRPBRK): Remove <string.h> check.
+	* strstr.m4 (gl_PREREQ_STRSTR): Remove <string.h> check.
+	* unicodeio.m4 (gl_UNICODEIO): Remove <string.h> check.
+	* setenv.m4 (gl_PREREQ_SETENV, gl_PREREQ_UNSETENV): Remove
+	<stdlib.h> and <string.h> checks.
+
 2003-09-09  Paul Eggert  <eggert@twinsun.com>
 
 	* getcwd.m4 (AC_FUNC_GETCWD_NULL): Don't check for stdlib.h.
