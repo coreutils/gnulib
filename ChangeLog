@@ -1,3 +1,7 @@
+2003-07-15  Jim Meyering  <jim@meyering.net>
+
+	* modules/save-cwd: Don't depend on error.  From Derek Price.
+
 2003-07-14  Simon Josefsson  <jas@extundo.com>
 
 	* modules/mempcpy: New file.
