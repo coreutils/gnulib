@@ -40,6 +40,10 @@ char *xrealloc ();
 char *xstrdup ();
 void error ();
 
+#ifdef HAVE_SYS_PARAM_H
+#include <sys/param.h>
+#endif
+
 #if defined (MOUNTED_GETFSSTAT)	/* __alpha running OSF_1 */
 #  include <sys/mount.h>
 #  include <sys/fs_types.h>
@@ -62,7 +66,6 @@ void error ();
 #endif
 
 #ifdef MOUNTED_GETMNT		/* Ultrix.  */
-#include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/fs_types.h>
 #endif
@@ -120,7 +123,7 @@ xatoi (cp)
 }
 #endif /* MOUNTED_GETMNTENT1.  */
 
-#ifdef MOUNTED_GETMNTINFO	/* 4.4BSD.  */
+#if defined (MOUNTED_GETMNTINFO) && !defined (__NetBSD__)
 static char *
 fstype_to_string (t)
      short t;
@@ -248,7 +251,11 @@ read_filesystem_list (need_fs_type, all_fs)
 	me = (struct mount_entry *) xmalloc (sizeof (struct mount_entry));
 	me->me_devname = xstrdup (fsp->f_mntfromname);
 	me->me_mountdir = xstrdup (fsp->f_mntonname);
+#ifdef __NetBSD__
+	me->me_type = fsp->f_fstypename;
+#else
 	me->me_type = fstype_to_string (fsp->f_type);
+#endif
 	me->me_dev = -1;	/* Magic; means not known yet. */
 	me->me_next = NULL;
 
