@@ -1,6 +1,14 @@
-2004-11-08  Simon Josefsson  <jas@extundo.com>
+2004-11-10  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* getaddrinfo.h, getaddrinfo.c: New file.
+	* mktime.c (SHR): New macro, which is a portable
+	substitute for >> that should work even on Crays.
+	(TIME_T_MIDPOINT, ydhms_diff, __mktime_internal): Use it.
+	Problem reported by Mark D. Baushke in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2004-11/msg00071.html>.
+
+2004-11-10  Simon Josefsson  <jas@extundo.com>
+
+	* getaddrinfo.h, getaddrinfo.c: New files.
 
 2004-11-10  Jim Meyering  <jim@meyering.net>
 
