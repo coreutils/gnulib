@@ -1,5 +1,5 @@
 /* error.c -- error handler for noninteractive utilities
-   Copyright (C) 1990, 1991, 1992 Free Software Foundation, Inc.
+   Copyright (C) 1990, 1991, 1992, 1993 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,6 +16,10 @@
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 /* Written by David MacKenzie.  */
+
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <stdio.h>
 
@@ -48,6 +52,8 @@
 void exit ();
 #endif /* !STDC_HEADERS */
 
+extern char *program_name;
+
 #ifndef HAVE_STRERROR
 static char *
 private_strerror (errnum)
@@ -79,7 +85,6 @@ error (status, errnum, message, va_alist)
      va_dcl
 #endif /* !HAVE_VPRINTF or !__STDC__ */
 {
-  extern char *program_name;
 #ifdef HAVE_VPRINTF
   va_list args;
 #endif /* HAVE_VPRINTF */
