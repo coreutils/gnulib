@@ -33,6 +33,12 @@
 extern int errno;
 #endif
 
+#ifdef EINTR
+# define IS_EINTR(x) ((x) == EINTR)
+#else
+# define IS_EINTR(x) 0
+#endif
+
 #include <limits.h>
 
 #ifndef CHAR_BIT
@@ -77,11 +83,7 @@ safe_read (int fd, void *buf, size_t count)
     {
       result = read (fd, buf, nbytes_to_read);
     }
-#ifdef EINTR
-  while (result < 0 && errno == EINTR);
-#else
-  while (0);
-#endif
+  while (result < 0 && IS_EINTR (errno));
 
   return (size_t) result;
 }
