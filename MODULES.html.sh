@@ -1749,6 +1749,7 @@ func_all_modules ()
   func_module regex
   func_module rename
   func_module rmdir
+  func_module strtok_r
   func_module utime
   func_end_table
 

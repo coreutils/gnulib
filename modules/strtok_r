@@ -1,0 +1,24 @@
+Description:
+strtok_r() function: split string into tokens, thread safe.
+
+Files:
+lib/strtok_r.c
+lib/strtok_r.h
+m4/strtok_r.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_STRTOK_R
+
+Makefile.am:
+lib_SOURCES += strtok_r.h
+
+Include:
+"strtok_r.h"
+
+License:
+LGPL
+
+Maintainer:
+all, glibc
