@@ -1,3 +1,7 @@
+2004-11-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* utimens.m4 (gl_UTIMENS): Check for futimes function.
+
 2004-11-23  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
 	* argp.m4 (gl_ARGP): Require gl_GETOPT_SUBSTITUTE unconditionally:
