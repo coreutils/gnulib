@@ -1,8 +1,9 @@
 2004-11-20  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* getopt_.h (__CONCAT): New macro.
+	* getopt_.h (__GETOPT_CONCAT, __GETOPT_XCONCAT, __GETOPT_ID):
+	New macros.
 	(getopt, getopt_long, getopt_long_only, optarg, opterr, optind,
-	optopt): Use it instead of invoking ## directly; otherwise, the
+	optopt): Use them instead of invoking ## directly; otherwise, the
 	symbols will be __GETOPT_PREFIXgetopt rather than rpl_getopt.
 
 2004-11-19  Bruno Haible  <bruno@clisp.org>
