@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 bool
 c_isascii (int c)
 {
-  return ((c & ~0x7f) == 0);
+  return (c >= 0x00 && c <= 0x7f);
 }
 
 bool

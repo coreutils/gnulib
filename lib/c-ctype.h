@@ -27,6 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 #include <stdbool.h>
 
 
+/* The functions defined in this file assume the "C" locale and a character
+   set without diacritics (ASCII-US or EBCDIC-US or something like that).
+   Even if the "C" locale on a particular system is an extension of the ASCII
+   character set (like on BeOS, where it is UTF-8, or on AmigaOS, where it
+   is ISO-8859-1), the functions in this file recognize only the ASCII
+   characters.  */
+
+
 /* Check whether the ASCII optimizations apply. */
 
 /* ANSI C89 (and ISO C99 5.2.1.3 too) already guarantees that
@@ -82,8 +90,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
     && ('s' == 115) && ('t' == 116) && ('u' == 117) && ('v' == 118) \
     && ('w' == 119) && ('x' == 120) && ('y' == 121) && ('z' == 122) \
     && ('{' == 123) && ('|' == 124) && ('}' == 125) && ('~' == 126)
-/* The character set is ISO646-US, not EBCDIC.
-   The test of '$' is important to distinguish it from other ISO646 variants.
+/* The character set is ASCII or one of its variants or extensions, not EBCDIC.
    Testing the value of '\n' and '\r' is not relevant.  */
 #define C_CTYPE_ASCII 1
 #endif
@@ -116,7 +123,7 @@ extern int c_toupper (int c);
 
 #define c_isascii(c) \
   ({ int __c = (c); \
-     ((__c & ~0x7f) == 0); \
+     (__c >= 0x00 && __c <= 0x7f); \
    })
 
 #if C_CTYPE_CONSECUTIVE_DIGITS \
