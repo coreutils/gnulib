@@ -1,3 +1,11 @@
+2003-03-14  Jim Meyering  <jim@meyering.net>
+
+	Merge changes from Coreutils.
+	* obstack.h (obstack_object_size): Declare temporary, __o,
+	to be const, in order to avoid warnings.
+	(obstack_room): Likewise.
+	(obstack_empty_p): Likewise.
+
 2003-03-13  Paul Eggert  <eggert@twinsun.com>
 
 	Merge changes from Bison.
