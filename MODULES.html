@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, allocsa, argmatch, argp, argz, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chown, cloexec, closeout, copy-file, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, fcntl-safer, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getcwd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, inttostr, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha1, sig2str, stat, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chown, cloexec, closeout, copy-file, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, fcntl-safer, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getcwd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, inttostr, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha1, sig2str, stat, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -132,6 +132,12 @@
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=alloca">alloca</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Memory allocation on the stack.
+      </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=alloca-opt">alloca-opt</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Memory allocation on the stack, as an optional optimization.
+It allows using the alloca() macro if and only if the autoconf tests define
+HAVE_ALLOCA.
       </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=allocsa">allocsa</A>
@@ -1222,11 +1228,18 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=alloca-opt"></A><A HREF="modules/alloca-opt">alloca-opt</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include &lt;alloca.h&gt;
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/alloca_.h">alloca_.h</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/alloca.m4">alloca.m4</A><BR>gl_FUNC_ALLOCA
+        <TD ALIGN=LEFT VALIGN=TOP>---
+      </TR>
+      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=allocsa"></A><A HREF="modules/allocsa">allocsa</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/allocsa.h">allocsa.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/allocsa.c">allocsa.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/allocsa.m4">allocsa.m4</A><BR><A HREF="m4/eealloc.m4">eealloc.m4</A><BR><A HREF="m4/longlong.m4">longlong.m4</A><BR><A HREF="m4/longdouble.m4">longdouble.m4</A><BR>gl_ALLOCSA
-        <TD ALIGN=LEFT VALIGN=TOP>alloca
+        <TD ALIGN=LEFT VALIGN=TOP>alloca-opt
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xallocsa"></A><A HREF="modules/xallocsa">xallocsa</A>
@@ -1295,7 +1308,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/setenv.h">setenv.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/setenv.c">setenv.c</A><BR><A HREF="lib/unsetenv.c">unsetenv.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/setenv.m4">setenv.m4</A><BR>gt_FUNC_SETENV
-        <TD ALIGN=LEFT VALIGN=TOP>allocsa<BR>alloca
+        <TD ALIGN=LEFT VALIGN=TOP>allocsa<BR>alloca-opt
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xsetenv"></A><A HREF="modules/xsetenv">xsetenv</A>
@@ -1541,7 +1554,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/vasnprintf.h">vasnprintf.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/printf-args.h">printf-args.h</A><BR><A HREF="lib/printf-args.c">printf-args.c</A><BR><A HREF="lib/printf-parse.h">printf-parse.h</A><BR><A HREF="lib/printf-parse.c">printf-parse.c</A><BR><A HREF="lib/vasnprintf.c">vasnprintf.c</A><BR><A HREF="lib/asnprintf.c">asnprintf.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/signed.m4">signed.m4</A><BR><A HREF="m4/longdouble.m4">longdouble.m4</A><BR><A HREF="m4/wchar_t.m4">wchar_t.m4</A><BR><A HREF="m4/wint_t.m4">wint_t.m4</A><BR><A HREF="m4/longlong.m4">longlong.m4</A><BR><A HREF="m4/intmax_t.m4">intmax_t.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/eoverflow.m4">eoverflow.m4</A><BR><A HREF="m4/vasnprintf.m4">vasnprintf.m4</A><BR>gl_FUNC_VASNPRINTF
-        <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>xsize
+        <TD ALIGN=LEFT VALIGN=TOP>alloca-opt<BR>xsize
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=vasprintf"></A><A HREF="modules/vasprintf">vasprintf</A>
@@ -3028,6 +3041,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 23 September 2004.
+    Generated from <CODE>MODULES.html.sh</CODE> on 30 September 2004.
   </BODY>
 </HTML>
