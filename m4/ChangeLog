@@ -1,3 +1,9 @@
+2004-11-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* jm-macros.m4: Sync from coreutils.
+	(gl_MACROS): Check for mbrlen, for pathchk.
+	(gl_CHECK_ALL_TYPES): Require AC_TYPE_MBSTATE_T, for pathchk.
+	
 2004-11-02  Bruno Haible  <bruno@clisp.org>
 
 	* setenv.m4 (gt_FUNC_SETENV): Define VOID_UNSETENV if unsetenv()
