@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2003-09-21.13}
+\def\texinfoversion{2003-09-22.06}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
@@ -4117,16 +4117,12 @@ width0pt\relax} \fi
           \unhbox0 #1}%
   }%
   % Add extra space after the heading -- half of whatever came above it.
-  \skip0 = \csname #2headingskip\endcsname
-  \divide\skip0 by 2  % .5<glue> eliminates stretch and shrink
-  \vskip\skip0
+  % Don't allow stretch, though.
+  \nobreak \kern .5 \csname #2headingskip\endcsname
   %
   % We'll almost certainly start a paragraph next, so don't let that
-  % glue accumulate.
-  \nobreak\vskip-\parskip
-  %
-  % Attempt to avoid a break at whatever comes next.
-  \nobreak
+  % glue accumulate.  Avoid a break.
+  \nobreak \vskip-\parskip
 }
 
 
