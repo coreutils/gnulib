@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate February 6, 2004
+@set lastupdate April 4, 2004
 @c %**end of header
 
 @dircategory GNU organization
@@ -846,7 +846,7 @@ be a very useful thing to do.
 It is very important to keep backup files of all source files of GNU.
 You can do this using RCS, CVS or PRCS if you like.  The easiest way to
 use RCS or CVS is via the Version Control library in Emacs;
-@ref{Concepts of VC, , Concepts of Version Control, emacs, The GNU Emacs
+@ref{VC Concepts,, Concepts of Version Control, emacs, The GNU Emacs
 Manual}.
 
 The history of previous revisions and log entries is very important for
