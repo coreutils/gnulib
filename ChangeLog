@@ -1,3 +1,9 @@
+2004-01-15  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/poll: Add BUILT_SOURCES.
+	Prefer "$@" to "poll.h" in rule for building poll.h.
+	All this is for consistency with alloca and fnmatch.
+
 2003-12-03  Bruno Haible  <bruno@clisp.org>
 
 	Upgrade from gettext-0.13.
