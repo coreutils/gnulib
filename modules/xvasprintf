@@ -5,6 +5,7 @@ Files:
 lib/xvasprintf.h
 lib/xvasprintf.c
 lib/xasprintf.c
+lib/xalloc.h
 
 Depends-on:
 vasprintf
@@ -12,7 +13,7 @@ vasprintf
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += xvasprintf.h xvasprintf.c xasprintf.c 
+lib_SOURCES += xvasprintf.h xvasprintf.c xasprintf.c
 
 Include:
 "xvasprintf.h"
