@@ -697,7 +697,7 @@ in different manuals will overwrite each other.
 
 @item uninstall
 Delete all the installed files---the copies that the @samp{install}
-target creates.
+and @samp{install-*} targets create.
 
 This rule should not modify the directories where compilation is done,
 only the directories where files are installed.
