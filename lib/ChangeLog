@@ -2,6 +2,9 @@
 
 	Merge in changes from the coreutils.
 
+	* xmalloc.c: Adjust to work with new autoconf macros, AC_FUNC_MALLOC
+	and AC_FUNC_REALLOC: test #ifndef HAVE_MALLOC/HAVE_REALLOC.
+
 	* mountlist.h (ME_DUMMY): Don't count entries of type `auto' as dummy
 	ones.  At least on GNU/Linux systems, `auto' means something else.
 	From Michael Stone.
