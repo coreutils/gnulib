@@ -1576,7 +1576,6 @@ func_all_modules ()
 
   func_begin_table
   func_module diacrit
-  func_module getstr
   func_module getline
   func_module linebuffer
   func_module obstack
@@ -1818,7 +1817,7 @@ func_all_modules ()
   #func_module ucs4-utf16
   #func_module utf8-ucs4
   #func_module utf16-ucs4
-  func_module linebreak
+  #func_module linebreak
   func_end_table
 
   element="Executing programs"
