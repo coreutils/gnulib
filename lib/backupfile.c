@@ -60,11 +60,13 @@
 char *malloc ();
 #endif
 
-#ifndef isascii
-#define ISDIGIT(c) (isdigit ((unsigned char) (c)))
-#else
-#define ISDIGIT(c) (isascii (c) && isdigit (c))
+#if !defined (isascii) || defined (STDC_HEADERS)
+#undef isascii
+#define isascii(c) 1
 #endif
+
+#define ISDIGIT(c) (isascii ((unsigned char ) c) \
+		    && isdigit ((unsigned char) (c)))
 
 #if defined (HAVE_UNISTD_H)
 #include <unistd.h>

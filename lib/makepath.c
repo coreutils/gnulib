@@ -51,7 +51,9 @@ extern int errno;
 
 #if defined(STDC_HEADERS) || defined(HAVE_STRING_H)
 #include <string.h>
+#ifndef index
 #define index strchr
+#endif
 #else
 #include <strings.h>
 #endif
@@ -93,7 +95,7 @@ make_path (argpath, mode, parent_mode, owner, group, verbose_fmt_string)
   int retval = 0;
   int oldmask = umask (0);
 
-  dirpath = alloca (strlen (argpath) + 1);
+  dirpath = (char *) alloca (strlen (argpath) + 1);
   strcpy (dirpath, argpath);
 
   if (stat (dirpath, &stats))

@@ -24,7 +24,9 @@
 
 #if defined(STDC_HEADERS) || defined(HAVE_STRING_H)
 #include <string.h>
+#ifndef index
 #define index strchr
+#endif
 #else
 #include <strings.h>
 #endif
