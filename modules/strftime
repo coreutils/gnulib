@@ -19,7 +19,7 @@ Makefile.am:
 lib_SOURCES += strftime.c strftime.h
 
 Include:
-<time.h>
+"strftime.h"
 
 Maintainer:
 glibc
