@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
@@ -373,6 +373,10 @@
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=poll">poll</A>
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/poll.html">poll</A>() function: wait for some event on a set of file descriptors.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=readlink">readlink</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/readlink.html">readlink</A>() function: read the value of a symbolic link.
     </TR>
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=stat">stat</A>
@@ -1657,6 +1661,13 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=readlink"></A><A HREF="modules/readlink">readlink</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/readlink.c">readlink.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/readlink.m4">readlink.m4</A><BR>gl_FUNC_READLINK
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
       <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=stat"></A><A HREF="modules/stat">stat</A>
       <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/sys/stat.h.html">sys/stat.h</A>&gt;
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/stat.c">stat.c</A>
@@ -1971,8 +1982,8 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xreadlink"></A><A HREF="modules/xreadlink">xreadlink</A>
       <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xreadlink.h">xreadlink.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xreadlink.c">xreadlink.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/xreadlink.m4">xreadlink.m4</A><BR>gl_XREADLINK
-      <TD ALIGN=LEFT VALIGN=TOP>xalloc
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/xreadlink.m4">xreadlink.m4</A><BR><A HREF="m4/ssize_t.m4">ssize_t.m4</A><BR>gl_XREADLINK
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>readlink
     </TR>
   </TABLE>
   <H3><A NAME="posix_ext_filedesc">File descriptor based Input/Output</A></H3>
@@ -1995,7 +2006,7 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=safe-read"></A><A HREF="modules/safe-read">safe-read</A>
       <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/safe-read.h">safe-read.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/safe-read.c">safe-read.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/safe-read.m4">safe-read.m4</A><BR>gl_SAFE_READ
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/safe-read.m4">safe-read.m4</A><BR><A HREF="m4/ssize_t.m4">ssize_t.m4</A><BR>gl_SAFE_READ
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
@@ -2504,5 +2515,5 @@ variables.
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on 12 June 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 26 June 2003.
 </HTML>
