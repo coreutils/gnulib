@@ -1511,6 +1511,7 @@ func_all_modules ()
   func_module strnlen
   func_module strndup
   #func_module fstrcmp
+  func_module xstrndup
   func_end_table
 
   element="Numeric conversion functions <stdlib.h>"

@@ -1,3 +1,12 @@
+2003-08-17  Simon Josefsson  <jas@extundo.com>
+
+	* modules/xstrndup: New file.
+	* MODULES.html.sh (func_all_modules): Add xstrndup.
+
+2003-08-17  Bruno Haible  <bruno@clisp.org>
+
+	* modules/strndup (Files, Include): Add lib/strndup.h.
+
 2003-08-17  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_create_testdir): Handle gl_USE_SYSTEM_EXTENSIONS
