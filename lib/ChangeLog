@@ -20,20 +20,6 @@
 	xstrtod.h, xstrtoimax.c, xstrtol.c, xstrtol.h, xstrtoumax.c:
 	Import changes from coreutils.
 
-2004-08-03  Simon Josefsson  <jas@extundo.com>
-
-	* progname.h: Don't include stdbool.h.
-
-2004-08-01  Simon Josefsson  <jas@extundo.com>
-
-	* xgetdomainname.c: Include stdlib.h, for free().
-
-2004-08-02  Simon Josefsson  <jas@extundo.com>
-
-	* getsubopt.h: New file, with comments from Bruno Haible.
-	* getsubopt.c: New file, from glibc, but slightly modified based on
-	suggestions from Paul Eggert <eggert@cs.ucla.edu>.
-
 2004-08-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge from coreutils.
@@ -80,6 +66,21 @@
 
 	* fatal.c, fatal.h: Remove as the "fatal" module wasn't used or
 	working.
+
+2004-08-03  Simon Josefsson  <jas@extundo.com>
+
+	* strdup.h: Only use HAVE_DECL_STRDUP if defined.
+	* progname.h: Don't include stdbool.h.
+
+2004-08-02  Simon Josefsson  <jas@extundo.com>
+
+	* getsubopt.h: New file, with comments from Bruno Haible.
+	* getsubopt.c: New file, from glibc, but slightly modified based on
+	suggestions from Paul Eggert <eggert@cs.ucla.edu>.
+
+2004-08-01  Simon Josefsson  <jas@extundo.com>
+
+	* xgetdomainname.c: Include stdlib.h, for free().
 
 2004-07-16  Simon Josefsson  <jas@extundo.com>
 

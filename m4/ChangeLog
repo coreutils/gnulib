@@ -7,10 +7,6 @@
 	fsusage.m4, jm-macros.m4, ls-mntd-fs.m4, md5.m4, mountlist.m4,
 	prereq.m4, sha.m4: Import changes from coreutils.
 
-2004-08-02  Simon Josefsson  <jas@extundo.com>
-
-	* getsubopt.m4: New file.
-
 2004-08-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge from coreutils.
@@ -29,6 +25,14 @@
 	* path-concat.m4 (gl_PATH_CONCAT): Don't require gl_AC_DOS, the
 	prerequisite modules now handle the DOS stuff.
 	Don't check for unistd.h.
+
+2004-08-03  Simon Josefsson  <jas@extundo.com>
+
+	* strdup.m4: Always run gl_PREREQ_STRDUP, since strdup.h need it.
+
+2004-08-02  Simon Josefsson  <jas@extundo.com>
+
+	* getsubopt.m4: New file.
 
 2004-08-03  Paul Eggert  <eggert@cs.ucla.edu>
 
