@@ -1,3 +1,7 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* modules/gettext (Files): Add m4/glibc2.m4.
+
 2005-02-22  Simon Josefsson  <jas@extundo.com>
 
 	* modules/iconvme: New file.

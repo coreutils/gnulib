@@ -4,6 +4,7 @@
 	* lib-link.m4, lib-prefix.m4, nls.m4, po.m4, printf-posix.m4:
 	* progtest.m4:
 	Update from GNU gettext 0.14.2.
+	* glibc2.m4: New file, from GNU gettext 0.14.2.
 
 2005-02-22  Simon Josefsson  <jas@extundo.com>
 
