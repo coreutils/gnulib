@@ -63,15 +63,13 @@ Other things:
   systems that have the function.
 * Autoconf functions can use gl_* prefix. The AC_* prefix is for
   autoconf internal functions.
-* Try to prevent that the files are built if they aren't needed on a
-  platform.  Valid excuses to this rule include ELIDE constructs that
-  lead to an empty .o file (see getopt module).
-* If you have a .c file that leads to an empty .o file on some platforms
-  (through some big #if around all the code), still make sure that after
-  preprocessing the compilation unit is not empty. This is usually fulfilled
-  if you #include <stdio.h> or #include <sys/types.h> before the big #if;
-  otherwise you need to add a #else branch containing "typedef int dummy;"
-  or "extern int dummy;".
+* Build files only if they are needed on a platform.  Look at the
+  alloca and fnmatch modules for how to achieve this.  If for some
+  reason you cannot do this, and you have a .c file that leads to an
+  empty .o file on some platforms (through some big #if around all the
+  code), then ensure that the compilation unit is not empty after
+  preprocessing.  One way to do this is to #include <stddef.h> or
+  <stdio.h> before the big #if.
 
 Portability guidelines
 ----------------------

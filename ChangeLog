@@ -1,3 +1,9 @@
+2003-10-05  Paul Eggert  <eggert@twinsun.com>
+
+	* README: Rework advice for preventing empty .o files.
+	Don't recommend ELIDE constructs.  Recommend <stddef.h>,
+	not <sys/types.h>.
+
 2003-10-02  Bruno Haible  <bruno@clisp.org>
 
 	* modules/lchown (Include): Add lchown.h.
