@@ -1035,7 +1035,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xalloc.h">xalloc.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xmalloc.c">xmalloc.c</A><BR><A HREF="lib/xstrdup.c">xstrdup.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/xalloc.m4">xalloc.m4</A><BR>gl_XALLOC
-        <TD ALIGN=LEFT VALIGN=TOP>malloc<BR>realloc<BR>error<BR>gettext<BR>exitfail
+        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>exitfail<BR>gettext<BR>malloc<BR>realloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=alloca"></A><A HREF="modules/alloca">alloca</A>
@@ -1353,7 +1353,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/argmatch.h">argmatch.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/argmatch.c">argmatch.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>error<BR>quotearg<BR>quote<BR>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>gettext<BR>quote<BR>quotearg<BR>unlocked-io
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=version-etc"></A><A HREF="modules/version-etc">version-etc</A>
@@ -1457,7 +1457,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/obstack.h">obstack.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/obstack.c">obstack.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/obstack.m4">obstack.m4</A><BR>gl_OBSTACK
-        <TD ALIGN=LEFT VALIGN=TOP>gettext
+        <TD ALIGN=LEFT VALIGN=TOP>exit<BR>gettext
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=hash-pjw"></A><A HREF="modules/hash-pjw">hash-pjw</A>
@@ -2299,7 +2299,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xgethostname.c">xgethostname.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP>gethostname<BR>xalloc<BR>error
+        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>gethostname<BR>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=canon-host"></A><A HREF="modules/canon-host">canon-host</A>
@@ -2491,7 +2491,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/exitfail.h">exitfail.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/exitfail.c">exitfail.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/exitfail.m4">exitfail.m4</A><BR>gl_EXITFAIL
-        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>exit
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=c-stack"></A><A HREF="modules/c-stack">c-stack</A>
@@ -2519,7 +2519,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fatal.h">fatal.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fatal.c">fatal.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/fatal.m4">fatal.m4</A><BR>gl_FATAL
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>error
+        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>unlocked-io
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getloadavg"></A><A HREF="modules/getloadavg">getloadavg</A>
@@ -2657,6 +2657,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on  9 September 2003.
+    Generated from <CODE>MODULES.html.sh</CODE> on 13 September 2003.
   </BODY>
 </HTML>
