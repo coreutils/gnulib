@@ -1431,6 +1431,7 @@ func_all_modules ()
 
   func_begin_table
   func_module eealloc
+  func_module free
   func_module malloc
   func_module realloc
   func_end_table
@@ -1538,6 +1539,7 @@ func_all_modules ()
   func_begin_table
   func_module getdate
   func_module timegm
+  func_module tzset
   func_end_table
 
   element="Input/Output <stdio.h>"
@@ -1682,6 +1684,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module inttostr
   func_module xstrtoimax
   func_module xstrtoumax
   func_end_table
@@ -1871,6 +1874,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module cloexec
   func_module findprog
   func_module wait-process
   func_module execute
