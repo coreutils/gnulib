@@ -1,3 +1,10 @@
+2003-12-03  Bruno Haible  <bruno@clisp.org>
+
+	Upgrade from gettext-0.13.
+	* modules/gettext (Files): Add m4/intmax.m4, m4/longdouble.m4,
+	m4/longlong.m4, m4/printf-posix.m4, m4/signed.m4, m4/size_max.m4,
+	m4/wchar_t.m4, m4/wint_t.m4, m4/xsize.m4.
+
 2003-11-25  Bruno Haible  <bruno@clisp.org>
 
 	* modules/vasnprintf (Files): Remove m4/ssize_t.m4.
