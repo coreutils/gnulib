@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chown, cloexec, closeout, copy-file, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, fcntl-safer, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getcwd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, inttostr, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha1, sig2str, snprintf, stat, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strsep, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chown, cloexec, closeout, copy-file, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, fcntl-safer, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getcwd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, inttostr, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmem, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha1, sig2str, snprintf, stat, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strsep, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -188,6 +188,10 @@ HAVE_ALLOCA.
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=bcopy">bcopy</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Old BSD <A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/bcopy.html">bcopy</A>() function: copy memory area.
+      </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=memmem">memmem</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">memmem() function: locate first substring in a buffer.
       </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=mempcpy">mempcpy</A>
@@ -1220,7 +1224,7 @@ variables.
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xalloc"></A><A HREF="modules/xalloc">xalloc</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xalloc.h">xalloc.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xmalloc.c">xmalloc.c</A><BR><A HREF="lib/xstrdup.c">xstrdup.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xmalloc.c">xmalloc.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/xalloc.m4">xalloc.m4</A><BR>gl_XALLOC
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
@@ -1377,6 +1381,13 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=memmem"></A><A HREF="modules/memmem">memmem</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/memmem.h">memmem.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/memmem.c">memmem.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/memmem.m4">memmem.m4</A><BR>gl_FUNC_MEMMEM
+        <TD ALIGN=LEFT VALIGN=TOP>---
+      </TR>
+      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mempcpy"></A><A HREF="modules/mempcpy">mempcpy</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mempcpy.h">mempcpy.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mempcpy.c">mempcpy.c</A>
@@ -1520,7 +1531,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getdate.h">getdate.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getdate.y">getdate.y</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/bison.m4">bison.m4</A><BR><A HREF="m4/tm_gmtoff.m4">tm_gmtoff.m4</A><BR><A HREF="m4/getdate.m4">getdate.m4</A><BR>gl_GETDATE
-        <TD ALIGN=LEFT VALIGN=TOP>timespec<BR>stdbool<BR>gettime<BR>mktime<BR>alloca<BR>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>timespec<BR>stdbool<BR>gettime<BR>mktime<BR>alloca
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=timegm"></A><A HREF="modules/timegm">timegm</A>
@@ -1641,14 +1652,14 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/argmatch.h">argmatch.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/argmatch.c">argmatch.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>error<BR>quotearg<BR>quote<BR>unlocked-io<BR>exit<BR>exitfail
+        <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>error<BR>quotearg<BR>quote<BR>exit<BR>exitfail
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=version-etc"></A><A HREF="modules/version-etc">version-etc</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/version-etc.h">version-etc.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/version-etc.c">version-etc.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext
+        <TD ALIGN=LEFT VALIGN=TOP>gettext
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=long-options"></A><A HREF="modules/long-options">long-options</A>
@@ -1679,14 +1690,14 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/md5.h">md5.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/md5.c">md5.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/md5.m4">md5.m4</A><BR><A HREF="m4/uint32_t.m4">uint32_t.m4</A><BR>gl_MD5
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=sha1"></A><A HREF="modules/sha1">sha1</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/sha1.h">sha1.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/sha1.c">sha1.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/sha1.m4">sha1.m4</A><BR>gl_SHA1
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>md5
+        <TD ALIGN=LEFT VALIGN=TOP>md5
       </TR>
     </TABLE>
     <H3><A NAME="ansic_ext_misc">Misc</A></H3>
@@ -1717,7 +1728,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getline.h">getline.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getline.c">getline.c</A><BR><A HREF="lib/getndelim2.h">getndelim2.h</A><BR><A HREF="lib/getndelim2.c">getndelim2.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getline.m4">getline.m4</A><BR><A HREF="m4/getndelim2.m4">getndelim2.m4</A><BR><A HREF="m4/ssize_t.m4">ssize_t.m4</A><BR>AM_FUNC_GETLINE
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getnline"></A><A HREF="modules/getnline">getnline</A>
@@ -1731,14 +1742,14 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getndelim2.h">getndelim2.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getndelim2.c">getndelim2.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getndelim2.m4">getndelim2.m4</A><BR><A HREF="m4/ssize_t.m4">ssize_t.m4</A><BR>gl_GETNDELIM2
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=linebuffer"></A><A HREF="modules/linebuffer">linebuffer</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/linebuffer.h">linebuffer.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/linebuffer.c">linebuffer.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=obstack"></A><A HREF="modules/obstack">obstack</A>
@@ -1766,7 +1777,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/readtokens.h">readtokens.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/readtokens.c">readtokens.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/readtokens.m4">readtokens.m4</A><BR>gl_READTOKENS
-        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=readtokens0"></A><A HREF="modules/readtokens0">readtokens0</A>
@@ -2169,7 +2180,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/regex.h">regex.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/regex.c">regex.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/regex.m4">regex.m4</A><BR>gl_REGEX
-        <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>unlocked-io<BR>gettext<BR>restrict
+        <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>gettext<BR>restrict
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=rename"></A><A HREF="modules/rename">rename</A>
@@ -2263,7 +2274,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/exclude.h">exclude.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/exclude.c">exclude.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/exclude.m4">exclude.m4</A><BR>gl_EXCLUDE
-        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>strcase<BR>unlocked-io<BR>fnmatch-gnu<BR>stdbool
+        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>strcase<BR>fnmatch-gnu<BR>stdbool
       </TR>
     </TABLE>
     <H2><A NAME="posix_ext">Extra functions based on POSIX:2001</A></H2>
@@ -2417,7 +2428,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mountlist.h">mountlist.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mountlist.c">mountlist.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ls-mntd-fs.m4">ls-mntd-fs.m4</A><BR><A HREF="m4/fstypename.m4">fstypename.m4</A><BR><A HREF="m4/mountlist.m4">mountlist.m4</A><BR>gl_MOUNTLIST
-        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=path-concat"></A><A HREF="modules/path-concat">path-concat</A>
@@ -2570,7 +2581,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/closeout.h">closeout.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/closeout.c">closeout.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/closeout.m4">closeout.m4</A><BR>gl_CLOSEOUT
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext<BR>error<BR>quotearg<BR>fpending<BR>exitfail
+        <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>error<BR>quotearg<BR>fpending<BR>exitfail
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=stdio-safer"></A><A HREF="modules/stdio-safer">stdio-safer</A>
@@ -2584,14 +2595,14 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getpass.h">getpass.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getpass.c">getpass.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getpass.m4">getpass.m4</A><BR>gl_FUNC_GETPASS
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>getline<BR>stdbool
+        <TD ALIGN=LEFT VALIGN=TOP>getline<BR>stdbool
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getpass-gnu"></A><A HREF="modules/getpass-gnu">getpass-gnu</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getpass.h">getpass.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getpass.c">getpass.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getpass.m4">getpass.m4</A><BR>gl_FUNC_GETPASS_GNU
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>getline<BR>stdbool
+        <TD ALIGN=LEFT VALIGN=TOP>getline<BR>stdbool
       </TR>
     </TABLE>
     <H3><A NAME="posix_ext_uidgid">Users and groups</A></H3>
@@ -2674,7 +2685,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/posixtm.h">posixtm.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/posixtm.c">posixtm.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/posixtm.m4">posixtm.m4</A><BR>gl_POSIXTM
-        <TD ALIGN=LEFT VALIGN=TOP>mktime<BR>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>mktime
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xnanosleep"></A><A HREF="modules/xnanosleep">xnanosleep</A>
@@ -2806,7 +2817,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/yesno.h">yesno.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/yesno.c">yesno.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/yesno.m4">yesno.m4</A><BR>gl_YESNO
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>rpmatch
+        <TD ALIGN=LEFT VALIGN=TOP>rpmatch
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=ucs4-utf8"></A><A HREF="modules/ucs4-utf8">ucs4-utf8</A>
@@ -2917,7 +2928,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=argp"></A><A HREF="modules/argp">argp</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/argp.h">argp.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/argp-ba.c">argp-ba.c</A><BR><A HREF="lib/argp-eexst.c">argp-eexst.c</A><BR><A HREF="lib/argp-fmtstream.c">argp-fmtstream.c</A><BR><A HREF="lib/argp-fmtstream.h">argp-fmtstream.h</A><BR><A HREF="lib/argp-fs-xinl.c">argp-fs-xinl.c</A><BR><A HREF="lib/argp-help.c">argp-help.c</A><BR><A HREF="lib/argp-namefrob.h">argp-namefrob.h</A><BR><A HREF="lib/argp-parse.c">argp-parse.c</A><BR><A HREF="lib/argp-pv.c">argp-pv.c</A><BR><A HREF="lib/argp-pvh.c">argp-pvh.c</A><BR><A HREF="lib/argp-xinl.c">argp-xinl.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/argp.m4">argp.m4</A><BR><A HREF="m4/unlocked-io.m4">unlocked-io.m4</A><BR>gl_ARGP
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/argp.m4">argp.m4</A><BR>gl_ARGP
         <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>getopt<BR>strchrnul<BR>sysexits<BR>mempcpy<BR>strndup<BR>restrict<BR>strcase<BR>extensions
       </TR>
       <TR>
@@ -2946,7 +2957,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/error.h">error.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/error.c">error.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/error.m4">error.m4</A><BR><A HREF="m4/strerror_r.m4">strerror_r.m4</A><BR>gl_ERROR
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext
+        <TD ALIGN=LEFT VALIGN=TOP>gettext
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=extensions"></A><A HREF="modules/extensions">extensions</A>
@@ -2988,7 +2999,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getusershell.c">getusershell.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getusershell.m4">getusershell.m4</A><BR>gl_PREREQ_GETUSERSHELL
-        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=physmem"></A><A HREF="modules/physmem">physmem</A>
@@ -3030,7 +3041,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/readutmp.h">readutmp.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/readutmp.c">readutmp.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/readutmp.m4">readutmp.m4</A><BR>gl_READUTMP
-        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=sig2str"></A><A HREF="modules/sig2str">sig2str</A>
@@ -3083,6 +3094,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on  2 October 2004.
+    Generated from <CODE>MODULES.html.sh</CODE> on  5 October 2004.
   </BODY>
 </HTML>
