@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-01-15.09}
+\def\texinfoversion{2004-01-17.16}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -2314,11 +2314,9 @@ where each line of input produces a line of output.}
 
 \newcount \itemno
 
-\envdef\itemize{%
-  \parsearg\itemizey
-}
+\envdef\itemize{\parsearg\doitemize}
 
-\def\itemizey#1{%
+\def\doitemize#1{%
   \aboveenvbreak
   \itemmax=\itemindent
   \advance\itemmax by -\itemmargin
@@ -2331,6 +2329,27 @@ where each line of input produces a line of output.}
   % @itemize with no arg is equivalent to @itemize @bullet.
   \ifx\itemcontents\empty\def\itemcontents{\bullet}\fi
   \let\item=\itemizeitem
+}
+
+% Definition of @item while inside @itemize and @enumerate.
+%
+\def\itemizeitem{%
+  \advance\itemno by 1  % for enumerations
+  {\let\par=\endgraf \smallbreak}% reasonable place to break
+  {%
+   % If the document has an @itemize directly after a section title, a
+   % \nobreak will be the last contribution, and \sectionheading will have
+   % done a \vskip-\parskip.  In that case, we don't want to zero
+   % parskip, or the item text will crash with the heading.  On the
+   % other hand, when there is normal text preceding the item (as there
+   % usually is), we do want to zero parskip, or there would be too much
+   % space.  In that case, we won't have a \nobreak before.  At least
+   % that's the theory.
+   \ifnum\lastpenalty<10000 \parskip=0in \fi
+   \noindent
+   \hbox to 0pt{\hss \itemcontents \kern\itemmargin}%
+   \vadjust{\penalty 1200}}% not good to break after first line of item.
+  \flushcr
 }
 
 % \splitoff TOKENS\endmark defines \first to be the first token in
@@ -2414,13 +2433,13 @@ where each line of input produces a line of output.}
   }%
 }
 
-% Call itemizey, adding a period to the first argument and supplying the
+% Call \doitemize, adding a period to the first argument and supplying the
 % common last two arguments.  Also subtract one from the initial value in
 % \itemno, since @item increments \itemno.
 %
 \def\startenumeration#1{%
   \advance\itemno by -1
-  \itemizey{#1.}\flushcr
+  \doitemize{#1.}\flushcr
 }
 
 % @alphaenumerate and @capsenumerate are abbreviations for giving an arg
@@ -2431,16 +2450,6 @@ where each line of input produces a line of output.}
 \def\Ealphaenumerate{\Eenumerate}
 \def\Ecapsenumerate{\Eenumerate}
 
-% Definition of @item while inside @itemize.
-
-\def\itemizeitem{%
-\advance\itemno by 1
-{\let\par=\endgraf \smallbreak}%
-\ifhmode \errmessage{In hmode at itemizeitem}\fi
-{\parskip=0in \hskip 0pt
-\hbox to 0pt{\hss \itemcontents\hskip \itemmargin}%
-\vadjust{\penalty 1200}}%
-\flushcr}
 
 % @multitable macros
 % Amy Hendrickson, 8/18/94, 3/6/96
@@ -4619,7 +4628,7 @@ width0pt\relax} \fi
       \removelastskip
       % it's not a good place to break if the last penalty was \nobreak
       % or better ...
-      \ifnum\lastpenalty>10000 \else \penalty-50 \fi
+      \ifnum\lastpenalty<10000 \penalty-50 \fi
       \vskip\envskipamount
     \fi
   \fi
