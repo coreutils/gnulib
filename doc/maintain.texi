@@ -655,6 +655,11 @@ are permitted in any medium without royalty provided the copyright
 notice and this notice are preserved.
 @end smallexample
 
+If your package distributes Autoconf macros that are intended to be
+used (hence distributed) by third-party packages under possibly
+incompatible licenses, you may also use the above all-permissive
+license for these macros.
+
 If you would like help with license issues or with using the GFDL,
 please contact @email{licensing@@gnu.org}.
 
