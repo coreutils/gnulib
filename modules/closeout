@@ -10,7 +10,6 @@ Depends-on:
 gettext
 error
 quotearg
-fpending
 exitfail
 
 configure.ac:
