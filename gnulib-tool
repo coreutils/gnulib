@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-09-28 23:43:38 $'
+cvsdatestamp='$Date: 2004-09-29 05:58:14 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -726,7 +726,7 @@ case $mode in
 	if test -n "$lgpl"; then
 	    opt_lgpl="--lgpl"
 	fi
-	actioncmd="gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool $lgpl `echo $modules`"
+	actioncmd="gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool $opt_lgpl `echo $modules`"
 
         # Create lib/Makefile.am.
 	echo "Creating $destdir/$sourcebase/Makefile.am..."
