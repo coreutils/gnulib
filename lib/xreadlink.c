@@ -36,15 +36,15 @@ extern int errno;
 # include <unistd.h>
 #endif
 
+#include "xalloc.h"
+#include "xreadlink.h"
+
 #ifndef SIZE_MAX
 # define SIZE_MAX ((size_t) -1)
 #endif
 #ifndef SSIZE_MAX
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
-
-#include "xalloc.h"
-#include "xreadlink.h"
 
 /* Call readlink to get the symbolic link value of FILENAME.
    Return a pointer to that NUL-terminated string in malloc'd storage.
