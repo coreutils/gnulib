@@ -19,5 +19,5 @@ Include:
 "md5.h"
 
 Maintainer:
-Jim Meyering
+Jim Meyering, glibc
 
