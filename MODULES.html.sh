@@ -1904,8 +1904,6 @@ func_end HEAD
 
 func_begin BODY
 
-func_end BODY
-
 element="Gnulib Module List"
 func_wrap H1
 func_echo "$element"
@@ -1964,5 +1962,7 @@ func_end UL
 
 func_echo '<HR>'
 func_echo 'Generated from <CODE>MODULES.html.sh</CODE> on '`LC_ALL=C date +"%e %B %Y"`.
+
+func_end BODY
 
 func_end HTML
