@@ -1,8 +1,16 @@
+2004-05-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* alloca.m4 (gl_FUNC_ALLOCA): Define HAVE_ALLOCA_H always,
+	for backward compatibility with older code.  We need our own
+	alloca.h if _AIX is defined.  Define HAVE_ALLOCA if we discover
+	it under some other name, and our alloca.h will define it.
+
 2004-05-13  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* gettime.m4 (gl_GETTIME): Require gl_TIMESPEC.  Check for gettimeofday.
-	* settime.m4 (gl_SETTIME): Require gl_TIMESPEC.  Check for settimeofday,
-	stime.
+	* gettime.m4 (gl_GETTIME): Require gl_TIMESPEC.
+	Check for gettimeofday.
+	* settime.m4 (gl_SETTIME): Require gl_TIMESPEC.
+	Check for settimeofday, stime.
 	
 2004-04-20  Paul Eggert  <eggert@twinsun.com>
 

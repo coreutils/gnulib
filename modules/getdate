@@ -13,6 +13,7 @@ timespec
 stdbool
 gettime
 mktime
+alloca
 unlocked-io
 
 configure.ac:

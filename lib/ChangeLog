@@ -1,3 +1,16 @@
+2004-05-16  Paul Eggert  <eggert@cs.ucla.edu>
+	    Derek Price  <derek@ximbiot.com>
+
+	* alloca.c: Include <alloca.h>, to get our interface.
+	* alloca_.h: Use __alloca on AIX, so that we don't have to
+	include <alloca.h> first.  Use C89 prototype for alloca; this
+	requires including <stddef.h> for size_t.  Use extern "C" if C++.
+	Use #elif for simplicity, since we can assume C89 now.
+	Don't try to source the system alloca.h since it will not be found
+	and to prevent recursively including its replacement.
+	* fnmatch.c: Include <alloca.h> instead of opencoding.
+	* lib/regex.c: Likewise.
+
 2004-05-16  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
@@ -5,11 +18,11 @@
 	arguments, and meaning of delim2 (now uses EOF, not 0, to indicate
 	no delimiter).
 	
-	* lib/getline.c: Don't include stddef.h or stdio.h, since our
+	* getline.c: Don't include stddef.h or stdio.h, since our
 	interface does that.
 	(getline): Always use getdelim, so that we don't have two
 	copies of this code.
-	* lib/getndelim2.c: Include <limits.h>, <inttypes.h>, <stdint.h>
+	* getndelim2.c: Include <limits.h>, <inttypes.h>, <stdint.h>
 	if available.
 	(PTRDIFF_MAX, SIZE_MAX, SSIZE_MAX): Define if not defined.
 	(GETNDELIM2_MAXIMUM): New macro.
@@ -17,15 +30,15 @@
 	instead of the old practice of delim2==0.  All callers changed.
 	Return -1 on overflow, instead of returning junk.
 	Do not set *linesize unless allocation succeeds.
-	* lib/getndelim2.h: Do not include stddef.h; no longer needed, now
+	* getndelim2.h: Do not include stddef.h; no longer needed, now
 	that we include sys/types.h.
-	* lib/getnline.h: Likewise.
-	* lib/getndelim2.h (GETNLINE_NO_LIMIT): New macro.
+	* getnline.h: Likewise.
+	* getndelim2.h (GETNLINE_NO_LIMIT): New macro.
 	(getndelim2): Reorder arguments.
-	* lib/getnline.c (getnline, getndelim):
+	* getnline.c (getnline, getndelim):
 	Don't discard the NMAX argument.
 	(getnline): Invoke getndelim, to avoid code duplication.
-	* lib/getnline.h (GETNLINE_NO_LIMIT): New macro, used instead
+	* getnline.h (GETNLINE_NO_LIMIT): New macro, used instead
 	of (size_t) -1 by callers of the getnline family.
 
 2004-05-13  Paul Eggert  <eggert@cs.ucla.edu>

@@ -1,3 +1,8 @@
+2004-05-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/getdate: Depend on alloca.
+	* modules/setenv: Likewise.
+
 2004-05-04  Derek Price  <derek@ximbiot.com>
 
 	* modules/argp: Remove dependency on alloca.
