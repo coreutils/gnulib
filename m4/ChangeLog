@@ -1,3 +1,9 @@
+2003-08-12  Paul Eggert  <eggert@twinsun.com>
+
+	* lib-ld.m4, lib-link.m4, lib-prefix.m4: Regenerate from gettext
+	0.12.1.  These files are now being upgraded automatically by
+	../config/srclist-update.
+
 2003-08-11  Bruno Haible  <bruno@clisp.org>
 
 	* vasnprintf.m4 (gl_PREREQ_VASNPRINTF): Also check for wcslen.

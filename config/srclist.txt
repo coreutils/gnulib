@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.20 2003-08-12 14:33:10 karl Exp $
+# $Id: srclist.txt,v 1.21 2003-08-12 21:16:52 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -42,6 +42,25 @@ $GETTEXT/gettext-tools/lib/gettext.h			lib gpl
 $GETTEXT/gettext-tools/lib/mkdtemp.c			lib gpl
 $GETTEXT/gettext-tools/lib/setenv.c			lib gpl
 $GETTEXT/gettext-tools/lib/unsetenv.c			lib gpl
+
+$GETTEXT/autoconf-lib-link/m4/lib-ld.m4			m4
+$GETTEXT/autoconf-lib-link/m4/lib-link.m4		m4
+$GETTEXT/autoconf-lib-link/m4/lib-prefix.m4		m4
+
+$GETTEXT/gettext-runtime/m4/codeset.m4			m4
+$GETTEXT/gettext-runtime/m4/gettext.m4			m4
+$GETTEXT/gettext-runtime/m4/glibc21.m4			m4
+$GETTEXT/gettext-runtime/m4/iconv.m4			m4
+$GETTEXT/gettext-runtime/m4/intdiv0.m4			m4
+$GETTEXT/gettext-runtime/m4/inttypes-pri.m4		m4
+$GETTEXT/gettext-runtime/m4/lcmessage.m4		m4
+$GETTEXT/gettext-runtime/m4/longdouble.m4		m4
+$GETTEXT/gettext-runtime/m4/nls.m4			m4
+$GETTEXT/gettext-runtime/m4/po.m4			m4
+$GETTEXT/gettext-runtime/m4/progtest.m4			m4
+$GETTEXT/gettext-runtime/m4/signed.m4			m4
+$GETTEXT/gettext-runtime/m4/wchar_t.m4			m4
+$GETTEXT/gettext-runtime/m4/wint_t.m4			m4
 #
 $LIBCSRC/argp/argp-ba.c			lib gpl
 $LIBCSRC/argp/argp-eexst.c		lib gpl

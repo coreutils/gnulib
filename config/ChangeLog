@@ -1,3 +1,11 @@
+2003-08-12  Paul Eggert  <eggert@twinsun.com>
+
+	* srclist.txt: Get the following m4 files from gettext:
+	codeset.m4, gettext.m4, glibc21.m4, iconv.m4, intdiv0.m4,
+	inttypes-pri.m4, lcmessage.m4, lib-ld.m4, lib-link.m4, lib-prefix.m4,
+	longdouble.m4, nls.m4, po.m4, progtest.m4, signed.m4, wchar_t.m4,
+	wint_t.m4.
+
 2003-08-12  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt: can't sync vasnprintf.c any more, changes have been
