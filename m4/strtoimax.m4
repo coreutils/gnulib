@@ -1,5 +1,5 @@
-# strtoimax.m4 serial 1
-dnl Copyright (C) 2002 Free Software Foundation, Inc.
+# strtoimax.m4 serial 2
+dnl Copyright (C) 2002-2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -14,12 +14,12 @@ AC_DEFUN([gl_FUNC_STRTOIMAX],
 
   AC_CACHE_CHECK([whether <inttypes.h> defines strtoimax as a macro],
     jm_cv_func_strtoimax_macro,
-    AC_EGREP_CPP([inttypes_h_defines_strtoimax], [#include <inttypes.h>
+    [AC_EGREP_CPP([inttypes_h_defines_strtoimax], [#include <inttypes.h>
 #ifdef strtoimax
  inttypes_h_defines_strtoimax
 #endif],
-      jm_cv_func_strtoimax_macro=yes,
-      jm_cv_func_strtoimax_macro=no))
+       jm_cv_func_strtoimax_macro=yes,
+       jm_cv_func_strtoimax_macro=no)])
 
   if test "$jm_cv_func_strtoimax_macro" != yes; then
     AC_REPLACE_FUNCS(strtoimax)

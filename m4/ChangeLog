@@ -1,3 +1,12 @@
+2003-05-17  Bruno Haible  <bruno@clisp.org>
+
+	* dirfd.m4 (UTILS_FUNC_DIRFD): Fix a quoting bug leading to an invalid
+	expansion for AC_EGREP_CPP.
+	* strtoimax.m4 (gl_FUNC_STRTOIMAX): Likewise.
+	* strtoumax.m4 (gl_FUNC_STRTOUMAX): Likewise.
+	Suggested by Akim Demaille <akim@epita.fr> in
+	http://mail.gnu.org/archive/html/bug-autoconf/2003-05/threads.html
+
 2003-04-21  Paul Eggert  <eggert@twinsun.com>
 
 	* error.m4 (gl_ERROR): Do not put under dynamic conditions some
