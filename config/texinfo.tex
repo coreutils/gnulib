@@ -4944,8 +4944,6 @@ width0pt\relax} \fi
 \newskip\defargsindent \defargsindent=50pt
 \newskip\deflastargmargin \deflastargmargin=18pt
 
-\newcount\parencount
-
 % We want ()&[] to print specially on the defun line.
 %
 \def\activeparens{%
@@ -4957,43 +4955,78 @@ width0pt\relax} \fi
 % Make control sequences which act like normal parenthesis chars.
 \let\lparen = ( \let\rparen = )
 
-{\activeparens % Now, smart parens don't turn on until &foo (see \amprm)
-
 % Be sure that we always have a definition for `(', etc.  For example,
 % if the fn name has parens in it, \boldbrax will not be in effect yet,
 % so TeX would otherwise complain about undefined control sequence.
-\global\let(=\lparen \global\let)=\rparen
-\global\let[=\lbrack \global\let]=\rbrack
-\global\let& = \ampnr
+{
+  \activeparens
+  \global\let(=\lparen \global\let)=\rparen
+  \global\let[=\lbrack \global\let]=\rbrack
+  \global\let& = \&
 
-\gdef\functionparens{\boldbrax\let&=\amprm\parencount=0 }
-\gdef\boldbrax{\let(=\opnr\let)=\clnr\let[=\lbrb\let]=\rbrb}
-
-% Definitions of (, ) and & used in args for functions.
-% This is the definition of ( outside of all parentheses.
-\gdef\oprm#1 {{\rm\lparen}#1 \bf \let(=\opnested
-  \global\advance\parencount by 1
+  \gdef\functionparens{\boldbrax\let&=\amprm}
+  \gdef\boldbrax{\let(=\opnr\let)=\clnr\let[=\lbrb\let]=\rbrb}
 }
-%
-% This is the definition of ( when already inside a level of parens.
-\gdef\opnested{\lparen\global\advance\parencount by 1 }
-%
-\gdef\clrm{% Print a paren in roman if it is taking us back to depth of 0.
-  % also in that case restore the outer-level definition of (.
-  \ifnum \parencount=1 {\rm\rparen}\sl \let(=\oprm \else \rparen \fi
-  \global\advance\parencount by -1 }
+
+\newcount\parencount
+
 % If we encounter &foo, then turn on ()-hacking afterwards
-\gdef\amprm#1 {{\rm\&#1}\let(=\oprm \let)=\clrm\ }
-%
-\gdef\normalparens{\boldbrax\let&=\ampnr}
-} % End of definition inside \activeparens
-%% These parens (in \boldbrax) actually are a little bolder than the
-%% contained text.  This is especially needed for [ and ]
-\def\opnr{{\sf(}\global\advance\parencount by 1 }
-\def\clnr{{\sf)}\global\advance\parencount by -1 }
-\let\ampnr = \&
-\def\lbrb{{\bf[}}
-\def\rbrb{{\bf]}}
+\newif\ifampseen
+\def\amprm#1 {\ampseentrue{\rm\&#1} }
+
+\def\parenfont{%
+  \ifampseen
+    % At the first level, print parens in roman,
+    % otherwise use the default font.
+    \ifnum \parencount=1 \rm \fi
+  \else
+    % The \sf parens (in \boldbrax) actually are a little bolder than
+    % the contained text.  This is especially needed for [ and ] .
+    \sf
+  \fi
+}
+\def\infirstlevel#1{%
+  \ifampseen
+    \ifnum\parencount=1
+      #1%
+    \fi
+  \fi
+}
+\def\bfafterword#1 {#1 \bf}
+
+\def\opnr{%
+  \global\advance\parencount by 1
+  {\parenfont(}%
+  \infirstlevel \bfafterword
+}
+\def\clnr{%
+  {\parenfont)}%
+  \infirstlevel \sl
+  \global\advance\parencount by -1
+}
+
+\newcount\brackcount
+\def\lbrb{%
+  \global\advance\brackcount by 1
+  {\bf[}%
+}
+\def\rbrb{%
+  {\bf]}%
+  \global\advance\brackcount by -1
+}
+
+\def\checkparencounts{%
+  \ifnum\parencount=0 \else \badparencount \fi
+  \ifnum\brackcount=0 \else \badbrackcount \fi
+}
+\def\badparencount{%
+  \errmessage{Unbalanced parentheses in @def}%
+  \global\parencount=0
+}
+\def\badbrackcount{%
+  \errmessage{Unbalanced square braces in @def}%
+  \global\brackcount=0
+}
 
 % \defname, which formats the name of the @def (not the args).
 % #1 is the function name.
@@ -5009,10 +5042,12 @@ width0pt\relax} \fi
   \def\temp{#2}%
   \setbox0=\hbox{\kern\deflastargmargin \ifx\temp\empty\else [\rm\temp]\fi}
   %
-  % Figure out line sizes for the paragraph shape: the first line, ...
-  \dimen0=\hsize \advance \dimen0 by -\wd0
-  % ... and the continuations:
-  \dimen2=\hsize \advance \dimen2 by -\defargsindent
+  % Figure out line sizes for the paragraph shape.
+  % The first line needs space for \box0; but if \rightskip is nonzero,
+  % we need only space for the part of \box0 which exceeds it:
+  \dimen0=\hsize  \advance\dimen0 by -\wd0  \advance\dimen0 by \rightskip
+  % The continuations:
+  \dimen2=\hsize  \advance\dimen2 by -\defargsindent
   % (plain.tex says that \dimen1 should be used only as global.)
   \parshape 2 0in \dimen0 \defargsindent \dimen2
   %
@@ -5022,7 +5057,7 @@ width0pt\relax} \fi
     \hfil\box0 \kern-\hsize
     % \hsize has to be shortened this way:
     \kern\leftskip
-    % Intentionally do not respect \righskip, since we need the space.
+    % Intentionally do not respect \rightskip, since we need the space.
   }%
   %
   % Allow all lines to be underfull without complaint:
@@ -5039,19 +5074,21 @@ width0pt\relax} \fi
 %
 \def\parsebodycommon#1#2#3{%
   \begingroup\inENV
-  % If there are two @def commands in a row, we'll have a \nobreak,
-  % which is there to keep the function description together with its
-  % header.  But if there's nothing but headers, we need to allow a
-  % break somewhere.  Check for penalty 10002 (inserted by
-  % \defargscommonending) instead of 10000, since the sectioning
-  % commands insert a \penalty10000, and we don't want to allow a break
-  % between a section heading and a defun.
-  \ifnum\lastpenalty=10002 \penalty2000 \fi
-  %
-  % Similarly, after a section heading, do not allow a break.
-  % But do insert the glue.
-  \ifnum\lastpenalty<10000 \medbreak
-  \else \medskip  % preceded by discardable penalty, so not a breakpoint
+  \ifnum\lastpenalty<10000
+    \medbreak
+  \else
+    % If there are two @def commands in a row, we'll have a \nobreak,
+    % which is there to keep the function description together with its
+    % header.  But if there's nothing but headers, we need to allow a
+    % break somewhere.  Check for penalty 10002 (inserted by
+    % \defargscommonending) instead of 10000, since the sectioning
+    % commands insert a \penalty10000, and we don't want to allow a break
+    % between a section heading and a defun.
+    \ifnum\lastpenalty=10002 \penalty2000 \fi
+    %
+    % Similarly, after a section heading, do not allow a break.
+    % But do insert the glue.
+    \medskip  % preceded by discardable penalty, so not a breakpoint
   \fi
   %
   % Define the \E... end token that this defining construct specifies
@@ -5068,7 +5105,7 @@ width0pt\relax} \fi
 \def\defxbodycommon{%
   % As with \parsebodycommon above, allow line break if we have multiple
   % x headers in a row.  It's not a great place, though.
-  \ifnum\lastpenalty=10002 \penalty2000 \fi
+  \ifnum\lastpenalty=10002 \penalty3000 \fi
   %
   \begingroup\obeylines
 }
@@ -5228,10 +5265,7 @@ width0pt\relax} \fi
 {\tensl\hyphenchar\font=0}%
 #1%
 {\tensl\hyphenchar\font=45}%
-  \ifnum\parencount=0 \else
-    \errmessage{Unbalanced parentheses in @def}%
-    \global\parencount=0
-  \fi
+  \checkparencounts
   \defargscommonending
 }
 
@@ -5293,8 +5327,6 @@ width0pt\relax} \fi
 \def\deftypefnheaderx #1#2#3 #4\relax{%
 \doind {fn}{\code{#3}}% Make entry in function index
 \begingroup
-\normalparens % notably, turn off `&' magic, which prevents
-%               at least some C++ text from working
 \defname {\defheaderxcond#2\relax$.$#3}{#1}%
 \deftypefunargs {#4}\endgroup %
 \catcode\equalChar=\other % Turn off change made in \defparsebody
@@ -5420,7 +5452,9 @@ width0pt\relax} \fi
 % First, define the processing that is wanted for arguments of @defvar.
 % This is actually simple: just print them in roman.
 % This must expand the args and terminate the paragraph they make up
-\def\defvarargs #1{\normalparens #1%
+\def\defvarargs #1{%
+  \boldbrax
+  #1%
   \defargscommonending
 }
 
@@ -6714,6 +6748,8 @@ should work if nowhere else does.}
 @c time-stamp-format: "%:y-%02m-%02d.%02H"
 @c time-stamp-end: "}"
 @c End:
+
+@c vim:sw=2:
 
 @ignore
    arch-tag: e1b36e32-c96e-4135-a41a-0b2efa2ea115
