@@ -21,7 +21,7 @@
 	* readdir.m4 (GL_FUNC_READDIR): Don't check for string.h.
 	* readutmp.m4 (gl_PREREQ_READUTMP): Don't check for standard C headers
 	or for string.h.
-	* strtoumax.m4 (gl_PREREQ_STRTOUMAX): Don't check for stdlb.h
+	* strtoumax.m4 (gl_PREREQ_STRTOUMAX): Don't check for stdlib.h
 	or strtoul.
 
 	* mkstemp.m4 (jm_PREREQ_TEMPNAME): Do not require standard C headers.
