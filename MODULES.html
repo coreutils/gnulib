@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, mkdir, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, mkdir, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
@@ -17,6 +17,10 @@
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=assert">assert</A>
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Allow the installer to disable assertions through "configure --disable-assert".
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=exit">exit</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/exit.html">exit</A>() function: program termination.
     </TR>
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=atexit">atexit</A>
@@ -708,6 +712,13 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/assert.h.html">assert.h</A>&gt;
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/assert.m4">assert.m4</A><BR>jm_ASSERT
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=exit"></A><A HREF="modules/exit">exit</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/exit.h">exit.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
@@ -2205,5 +2216,5 @@ variables.
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on 22 January 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 23 January 2003.
 </HTML>
