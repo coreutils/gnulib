@@ -1,5 +1,5 @@
 /* String copying.
-   Copyright (C) 1995, 2001-2004 Free Software Foundation, Inc.
+   Copyright (C) 1995, 2001-2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,12 +28,13 @@ extern "C" {
 
 #if !HAVE_STPNCPY
 
-/* Copy no more than N bytes of SRC to DST, returning a pointer past the
-   last non-NUL byte written into DST.  */
 /* When not using the GNU libc we use the stpncpy implementation we
    provide here.  */
-extern char *gnu_stpncpy (char *dst, const char *src, size_t n);
-#define stpncpy(Dst, Src, N) gnu_stpncpy (Dst, Src, N)
+#define stpncpy gnu_stpncpy
+
+/* Copy no more than N bytes of SRC to DST, returning a pointer past the
+   last non-NUL byte written into DST.  */
+extern char *stpncpy (char *dst, const char *src, size_t n);
 
 #endif
 

@@ -1,3 +1,8 @@
+2005-01-28  Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.h (stpncpy): Define as a macro without arguments, so that
+	stpncpy.c uses it.
+
 2005-03-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Remove workaround for bug in Linux kernel 2.6.8 or thereabouts.
