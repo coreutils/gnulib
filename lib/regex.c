@@ -7909,7 +7909,7 @@ re_comp (const char *s)
   if (!s)
     {
       if (!re_comp_buf.buffer)
-	return gettext ("No previous regular expression");
+	return (char *) gettext ("No previous regular expression");
       return 0;
     }
 
