@@ -1,0 +1,9 @@
+# $Id: srclist.txt,v 1.1 2002-09-10 23:41:12 karl Exp $
+# Files for which we are not the source.
+
+TEXINFO=/u/texinfo/src
+GNUCONFIG=$HOME/gnu/src/ftp.gnu.org/pub/gnu/config
+
+$TEXINFO/doc/texinfo.tex	config
+$GNUCONFIG/config.guess		config
+$GNUCONFIG/config.sub		config

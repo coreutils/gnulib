@@ -1,0 +1,52 @@
+#!/bin/sh
+# $Id: srclist-update,v 1.1 2002-09-10 23:41:12 karl Exp $
+# 
+# Check for files being up to date, according to the list on stdin.
+# 
+# Source $mydir/srclistvars.sh first, if it exists, where
+# $mydir=`dirname $0`.
+
+if test -n "$1"; then
+  cd "$1" || exit 1
+fi
+
+verbose=false
+#chicken="echo (would)"
+
+srctmp=${TMPDIR-/tmp}/srclist.src
+dsttmp=${TMPDIR-/tmp}/srclist.dst
+
+mydir=`dirname $0`
+test -r $mydir/srclistvars.sh && . $mydir/srclistvars.sh
+
+cat | while read src dst; do
+  test -z "$dst" && continue  # skip lines without second element
+  echo "$src $dst" | sed 's/#.*$//' | egrep '^\s*$' >/dev/null \
+  && continue  # skip whitespace and comment-only lines
+  
+  src=`eval echo $src`
+  if test ! -r $src; then
+    echo "$0: cannot read $src" >&2
+    continue
+  fi
+  
+  # If given src/foo.c dst, copy to dst/foo.c.
+  dst=`eval echo $dst`
+  test -d $dst && dst=$dst/`basename $src`
+  
+  # $ Id: lines will differ.
+  fgrep -v '$'"Id:" $src >$srctmp
+  test -r $dst && fgrep -v '$'"Id:" $dst >$dsttmp
+
+  if test ! -e $dst; then
+    echo "## $src $dst  # new"
+    $chicken cp -p $src $dst
+  elif cmp -s $srctmp $dsttmp; then
+    $verbose && echo "## $src $dst  # unchanged"
+  else
+    echo "## $src $dst  # changes"
+    diff -c2 $src $dst
+  fi
+done
+
+rm -f $srctmp $dsttmp
