@@ -53,13 +53,13 @@
 	? (t) -1 \
 	: ~ (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))))
 
-/* Bound on length of the string representing an integer value of type T.
+/* Bound on length of the string representing an integer type or expression T.
    Subtract 1 for the sign bit if t is signed; log10 (2.0) < 146/485;
    add 1 for integer division truncation; add 1 more for a minus sign
    if needed.  */
 #define INT_STRLEN_BOUND(t) \
   ((sizeof (t) * CHAR_BIT - 1) * 146 / 485 + 2)
 
-/* Bound on buffer size needed to represent an integer value of type T,
+/* Bound on buffer size needed to represent an integer type or expression T,
    including the terminating null.  */
 #define INT_BUFSIZE_BOUND(t) (INT_STRLEN_BOUND (t) + 1)
