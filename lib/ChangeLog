@@ -1,3 +1,7 @@
+2004-06-24  Jim Meyering  <jim@meyering.net>
+
+	* obstack.h (obstack_base): Cast to (void *), per documentation.
+
 2004-06-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* argz.c, argz_.h: New files, which are autoupdated from libtool.
