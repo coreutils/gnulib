@@ -1,3 +1,10 @@
+2003-04-21  Paul Eggert  <eggert@twinsun.com>
+
+	* error.m4 (gl_ERROR): Do not put under dynamic conditions some
+	code which expansion is under static control.  Patch imported from
+	Akim Demaille's patch to Bison; see
+	<http://mail.gnu.org/archive/html/bison-patches/2003-03/msg00057.html>.
+
 2003-04-14  Bruno Haible  <bruno@clisp.org>
 
 	* error.m4 (jm_PREREQ_ERROR): Use AC_FUNC_VPRINTF.
