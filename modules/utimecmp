@@ -2,6 +2,7 @@ Description:
 compare file time stamps
 
 Files:
+lib/intprops.h
 lib/utimecmp.h
 lib/utimecmp.c
 m4/utimecmp.m4
@@ -26,4 +27,3 @@ GPL
 
 Maintainer:
 Paul Eggert, Jim Meyering
-

@@ -5,6 +5,7 @@ with K/M/G suffix.
 Files:
 lib/human.h
 lib/human.c
+lib/intprops.h
 m4/ulonglong.m4
 m4/stdint_h.m4
 m4/inttypes_h.m4
@@ -32,4 +33,3 @@ GPL
 
 Maintainer:
 Paul Eggert
-

@@ -2,6 +2,7 @@ Description:
 Convert between signal names and signal numbers.
 
 Files:
+lib/intprops.h
 lib/sig2str.h
 lib/sig2str.c
 m4/sig2str.m4
@@ -22,4 +23,3 @@ GPL
 
 Maintainer:
 Paul Eggert, Jim Meyering
-

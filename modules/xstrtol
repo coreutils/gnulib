@@ -2,6 +2,7 @@ Description:
 Convert string to 'long` or 'unsigned long', with error checking.
 
 Files:
+lib/intprops.h
 lib/xstrtol.h
 lib/xstrtol.c
 lib/xstrtoul.c
