@@ -17,8 +17,8 @@ EXTRA_DIST += sysexit_.h
 # doesn't have one that works with the given compiler.
 all-local $(lib_OBJECTS): @SYSEXITS_H@
 sysexits.h: sysexit_.h
-        cp $(srcdir)/sysexit_.h sysexits.h-t
-        mv sysexits.h-t sysexits.h
+	cp $(srcdir)/sysexit_.h sysexits.h-t
+	mv sysexits.h-t sysexits.h
 MOSTLYCLEANFILES += sysexits.h sysexits.h-t
 
 Include:
