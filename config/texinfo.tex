@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2003-10-23.07}
+\def\texinfoversion{2003-10-23.19}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
@@ -1748,6 +1748,7 @@ where each line of input produces a line of output.}
 \def\ii#1{{\it #1}}             % italic font
 
 % @acronym downcases the argument and prints in smallcaps.
+% It would be nicer to go one point size down.
 \def\acronym#1{{\smallcaps \lowercase{#1}}}
 
 % @pounds{} is a sterling sign.
@@ -5858,9 +5859,10 @@ width0pt\relax} \fi
 % \setref{NAME}{SNT} defines a cross-reference point NAME (a node or an
 % anchor), namely NAME-title (the corresponding @chapter/etc. name),
 % NAME-pg (the page number), and NAME-snt (section number and type).
-% Called from \foonoderef.
+% Called from \donoderef and \anchor.
 % 
-% We take care not to expand the title.
+% We take care not to fully expand the title, since it may contain
+% arbitrary macros.
 %
 % Use \turnoffactive so that punctuation chars such as underscore
 % and backslash work in node names.
@@ -5873,8 +5875,8 @@ width0pt\relax} \fi
       \edef\writexrdef##1##2{%
 	\write\auxfile{@xrdef{#1-% #1 of \setref, expanded by the \edef
 	  ##1}{##2}}% these are parameters of \writexrdef
-      }
-      \toks0 = \expandafter{\thissection}
+      }%
+      \toks0 = \expandafter{\thissection}%
       \immediate \writexrdef{title}{\the\toks0 }%
       \immediate \writexrdef{snt}{\csname #2\endcsname}% \Ynumbered etc.
       \writexrdef{pg}{\folio}% will be written later, during \shipout
@@ -6045,6 +6047,8 @@ width0pt\relax} \fi
 \def\xrdef#1{\expandafter\gdef\csname X#1\endcsname}
 
 % Read the last existing aux file, if any.  No error if none exists.
+% Open the new one.
+% 
 \def\readauxfile{\begingroup
   \catcode`\^^@=\other
   \catcode`\^^A=\other
@@ -6131,8 +6135,10 @@ width0pt\relax} \fi
     \input \jobname.aux
     \global\havexrefstrue
   \fi
-  % Open the new aux file.  TeX will close it automatically at exit.
-  \openout\auxfile=\jobname.aux
+  % Open the new aux file right away (otherwise the \immediate's in
+  % \setref cause spurious terminal output).  TeX will close it
+  % automatically at exit.
+  \immediate\openout\auxfile=\jobname.aux
 \endgroup}
 
 
