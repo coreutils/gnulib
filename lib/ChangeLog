@@ -1,3 +1,18 @@
+2003-06=10  Simon Josefsson <jas@extundo.com>
+
+	* argp.h: New file, from glibc.
+	* argp-ba.c: New file, from glibc.
+	* argp-eexst.c: New file, from glibc.
+	* argp-fmtstream.c: New file, from glibc.
+	* argp-fmtstream.h: New file, from glibc.
+	* argp-fs-xinl.c: New file, from glibc.
+	* argp-help.c: New file, from glibc.
+	* argp-namefrob.h: New file, from glibc.
+	* argp-parse.c: New file, from glibc.
+	* argp-pv.c: New file, from glibc.
+	* argp-pvh.c: New file, from glibc.
+	* argp-xinl.c: New file, from glibc.
+
 2003-06-07  Jim Meyering  <jim@meyering.net>
 
 	* readtokens.h: Put `Free Software Foundation, Inc.'
