@@ -1,3 +1,14 @@
+2002-12-06  Paul Eggert  <eggert@twinsun.com>
+
+	Undo the 2001-07-02 change for jm-glibc-io, as it was too much of
+	a pain in practice to deal with generated m4 files.  This change
+	goes together with the 2002-12-04 unlocked-io.h change in ../lib.
+
+	* Makefile.am.in (Makefile.am): Don't mention jm-glibc-io.m4n
+	and jm-glibc-io.m4, as they are no longer a special case.
+	* jm-glibc-io.m4: New file.
+	* jm-glibc-io.m4n: Remove.
+
 2002-07-06  Jim Meyering  <meyering@lucent.com>
 
 	* README: Don't mention Makefile.am.in.
