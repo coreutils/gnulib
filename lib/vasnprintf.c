@@ -39,12 +39,12 @@
 #include "printf-parse.h"
 
 /* For those losing systems which don't have 'alloca' we have to add
-   some additional code emulating it.  */ 
-#ifdef HAVE_ALLOCA 
+   some additional code emulating it.  */
+#ifdef HAVE_ALLOCA
 # define freea(p) /* nothing */
 #else
-# define alloca(n) malloc (n) 
-# define freea(p) free (p) 
+# define alloca(n) malloc (n)
+# define freea(p) free (p)
 #endif
 
 #ifdef HAVE_WCHAR_T
