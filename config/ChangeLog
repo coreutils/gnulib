@@ -1,3 +1,7 @@
+2003-05-29    <karl@gnu.org>
+
+	* config.rpath: update from gettext.
+
 2003-05-24    <karl@gnu.org>
 
 	* config.guess: update from prep.
