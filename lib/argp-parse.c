@@ -29,24 +29,15 @@
 #include <getopt.h>
 #include <getopt_int.h>
 
-#ifndef _
-/* This is for other GNU distributions with internationalized messages.
-   When compiling libc, the _ macro is predefined.  */
-# if defined HAVE_LIBINTL_H || defined _LIBC
-#  include <libintl.h>
-#  ifdef _LIBC
-#   undef dgettext
-#   define dgettext(domain, msgid) \
-  INTUSE(__dcgettext) (domain, msgid, LC_MESSAGES)
-#  endif
-# else
-#  define dgettext(domain, msgid) (msgid)
-#  define gettext(msgid) (msgid)
-# endif
+#ifdef _LIBC
+# include <libintl.h>
+# undef dgettext
+# define dgettext(domain, msgid) \
+   INTUSE(__dcgettext) (domain, msgid, LC_MESSAGES)
+#else
+# include "gettext.h"
 #endif
-#ifndef N_
-# define N_(msgid) (msgid)
-#endif
+#define N_(msgid) (msgid)
 
 #include "argp.h"
 #include "argp-namefrob.h"
@@ -85,11 +76,11 @@ static volatile int _argp_hang;
 static const struct argp_option argp_default_options[] =
 {
   {"help",	  '?',    	0, 0,  N_("Give this help list"), -1},
-  {"usage",	  OPT_USAGE,	0, 0,  N_("Give a short usage message")},
-  {"program-name",OPT_PROGNAME,"NAME", OPTION_HIDDEN, N_("Set the program name")},
+  {"usage",	  OPT_USAGE,	0, 0,  N_("Give a short usage message"), 0},
+  {"program-name",OPT_PROGNAME,"NAME", OPTION_HIDDEN, N_("Set the program name"), 0},
   {"HANG",	  OPT_HANG,    "SECS", OPTION_ARG_OPTIONAL | OPTION_HIDDEN,
-     N_("Hang for SECS seconds (default 3600)")},
-  {0, 0}
+     N_("Hang for SECS seconds (default 3600)"), 0},
+  {NULL, 0, 0, 0, NULL, 0}
 };
 
 static error_t
@@ -150,7 +141,7 @@ static const struct argp argp_default_argp =
 static const struct argp_option argp_version_options[] =
 {
   {"version",	  'V',    	0, 0,  N_("Print program version"), -1},
-  {0, 0}
+  {NULL, 0, 0, 0, NULL, 0}
 };
 
 static error_t
