@@ -1,5 +1,6 @@
-/* gettime -- get the system clock
-   Copyright (C) 2002, 2004, 2005 Free Software Foundation, Inc.
+/* gethrxtime -- get high resolution real time
+
+   Copyright (C) 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,37 +18,20 @@
 
 /* Written by Paul Eggert.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#ifndef GETHRXTIME_H_
+#define GETHRXTIME_H_ 1
 
-#include "timespec.h"
+#include "xtime.h"
 
-/* Get the system time into *TS.  */
+/* Get the current time, as a count of the number of nanoseconds since
+   an arbitrary epoch (e.g., the system boot time).  This clock can't
+   be set, is always increasing, and is nearly linear.  */
 
-void
-gettime (struct timespec *ts)
-{
-#if HAVE_NANOTIME
-  nanotime (ts);
+#if HAVE_ARITHMETIC_HRTIME_T && HAVE_DECL_GETHRTIME
+# include <time.h>
+static inline xtime_t gethrxtime (void) { return gethrtime (); }
 #else
-
-# if defined CLOCK_REALTIME && HAVE_CLOCK_GETTIME
-  if (clock_gettime (CLOCK_REALTIME, ts) == 0)
-    return;
-# endif
-
-# if HAVE_GETTIMEOFDAY
-  {
-    struct timeval tv;
-    gettimeofday (&tv, NULL);
-    ts->tv_sec = tv.tv_sec;
-    ts->tv_nsec = tv.tv_usec * 1000;
-  }
-# else
-  ts->tv_sec = time (NULL);
-  ts->tv_nsec = 0;
-# endif
+xtime_t gethrxtime (void);
+#endif
 
 #endif
-}

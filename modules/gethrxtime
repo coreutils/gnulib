@@ -1,0 +1,26 @@
+Description:
+Get high resolution real time.
+
+Files:
+lib/xtime.h
+lib/gethrxtime.c
+m4/gethrxtime.m4
+m4/clock_time.m4
+m4/longlong.m4
+
+Depends-on:
+extensions
+
+configure.ac:
+gl_GETHRXTIME
+
+Makefile.am:
+
+Include:
+#include "xtime.h"
+
+License:
+GPL
+
+Maintainer:
+Paul Eggert

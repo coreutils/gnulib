@@ -1,3 +1,8 @@
+2005-02-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* gethrxtime.m4, xnanosleep.m4: New files.
+	* gettime.m4 (gl_GETTIME): Check for nanotime.
+
 2005-02-24  Bruno Haible  <bruno@clisp.org>
 
 	* gettext.m4, intdiv0.m4, intmax.m4, inttypes-pri.m4, lcmessage.m4:

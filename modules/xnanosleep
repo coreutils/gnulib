@@ -4,15 +4,16 @@ a more convenient interface to nanosleep
 Files:
 lib/xnanosleep.h
 lib/xnanosleep.c
+m4/xnanosleep.m4
 
 Depends-on:
 timespec
-xalloc
+gethrxtime
 
 configure.ac:
+gl_XNANOSLEEP
 
 Makefile.am:
-lib_SOURCES += xnanosleep.h xnanosleep.c
 
 Include:
 "xnanosleep.h"
@@ -22,4 +23,3 @@ GPL
 
 Maintainer:
 Paul Eggert, Jim Meyering
-
