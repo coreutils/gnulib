@@ -1,6 +1,7 @@
 2004-03-31  Jim Meyering  <jim@meyering.net>
 
 	* prereq.m4: Require AC_FUNC_MALLOC, not jm_FUNC_MALLOC.
+	Require AC_FUNC_REALLOC, not jm_FUNC_REALLOC.
 	* xalloc.m4: Likewise.
 
 2004-03-30  Jim Meyering  <jim@meyering.net>
