@@ -1,3 +1,31 @@
+2004-06-01  Paul Eggert  <eggert@cs.ucla.edu>
+       and  Jim Meyering  <jim@meyering.net>
+
+	Merge from coreutils CVS.
+
+	* stat-macros.h: New file, with contents from file-type.h
+	and coreutils' system.h.
+	* file-type.c: Include "stat-macros.h".
+	* file-type.h (file_type): Move all macro definitions to new file,
+	stat-macros.h.
+
+	* chown.c (rpl_chown) [CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE]:
+	Wrap old code with this conditional.
+	[CHOWN_MODIFIES_SYMLINK]: Try to work around a chown
+	function that does not dereference symlinks.
+	* lchown.c (lchown) [CHOWN_MODIFIES_SYMLINK]: Just call chown.
+
+	* xreadlink.c: Include xreadlink.h first, to catch .h file
+	dependency problems.
+	(xreadlink): Accept new arg SIZE, for efficiency.
+	All decls and uses changed.
+	* xreadlink.h: Include <stddef.h>, for size_t.
+
+	* .cppi-disable: Add alloca_.h, allocsa.h, exit.h, getndelim2.h,
+	gettext.h, localcharset.h, strdup.h, strndup.h, strtoul.c, time_r.h.
+
+	* .cvsignore: Add alloca.h, fnmatch.h, poll.h, stdbool.h, sysexits.h.
+
 2004-05-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* xmalloc.c (HAVE_MALLOC, HAVE_REALLOC): Do not require these

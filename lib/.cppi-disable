@@ -1,9 +1,15 @@
+alloca_.h
+allocsa.h
 error.h
+exit.h
 fnmatch.h
+getndelim2.h
 getopt.c
 getopt.h
 getopt1.c
 getpagesize.h
+gettext.h
+localcharset.h
 md5.h
 obstack.h
 printf-args.h
@@ -11,5 +17,9 @@ printf-parse.h
 regex.c
 regex.h
 stdbool_.h
+strdup.h
+strndup.h
+strtoul.c
+time_r.h
 vasnprintf.h
 vasprintf.h

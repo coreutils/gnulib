@@ -1,3 +1,22 @@
+2004-06-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merge from coreutils CVS.
+
+	* backupfile.m4, dirname.m4, human.m4, inttypes.m4, longlong.m4,
+	makepath.m4, memchr.m4, memcmp.m4, mountlist.m4, path-concat.m4,
+	putenv.m4, quotearg.m4, readutmp.m4, strtoimax.m4, strtoll.m4,
+	strtoull.m4, strtoumax.m4, ulonglong.m4, vasnprintf.m4,
+	xstrtol.m4: Fix copyright date and/or serial number.
+
+	* chown.m4 (gl_PREREQ_CHOWN): Check for fcntl.h.
+	See if we need an fchown replacement.
+	(gl_FUNC_CHOWN_FOLLOWS_SYMLINK): New macro.
+	(gl_FUNC_CHOWN): Require gl_FUNC_CHOWN_FOLLOWS_SYMLINK,
+	and use the replacement function if we detect either defect.
+
+	* prereq.m4 (gl_PREREQ): Add gl_ALLOCSA, gl_CLOEXEC, gl_INTTOSTR,
+	gl_UTIMECMP.
+
 2004-05-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* stdbool.m4 (AC_HEADER_STDBOOL): Detect _Bool bug in HP aC++/ANSI
