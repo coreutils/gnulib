@@ -161,12 +161,6 @@
 
 	* modules/snprintf: New file.
 
-2004-09-16  Simon Josefsson  <jas@extundo.com>
-
-	* MODULES.html.sh: Add xctime.
-
-	* modules/xctime: New file.
-
 2004-09-05  Simon Josefsson  <jas@extundo.com>
 
 	* modules/getaddrinfo: Add.
