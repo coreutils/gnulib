@@ -83,7 +83,7 @@ long double cosl(long double x)
 
 #if 0
 int
-main ()
+main (void)
 {
   printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492));
   printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *29));

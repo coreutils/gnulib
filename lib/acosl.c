@@ -186,7 +186,8 @@ acosl (long double x)
 }
 
 #if 0
-main()
+int
+main (void)
 {
   printf ("%.18Lg %.18Lg\n",
           acosl(1.0L),

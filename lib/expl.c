@@ -119,7 +119,7 @@ expl (long double x)
 
 #if 0
 int
-main ()
+main (void)
 {
   printf ("%.16Lg\n", expl(1.0L));
   printf ("%.16Lg\n", expl(-1.0L));

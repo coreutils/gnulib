@@ -79,7 +79,7 @@ frexpl(long double x, int *exp)
 
 #if 0
 int
-main()
+main (void)
 {
   long double x;
   int y;
