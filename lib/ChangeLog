@@ -1,3 +1,20 @@
+2003-09-26  Paul Eggert  <eggert@twinsun.com>
+
+	* error.c (SIZE_MAX) [!defined SIZE_MAX]: Define.
+	(error_tail): Do not loop, reallocating temporary buffer, since
+	the original size is big enough.  This avoids one potential size
+	overflow calculation.  Check for size overflow when calculating
+	temporary buffer size.  Free temporary buffer when done, if
+	it was allocated with malloc; this closes a memory leak.
+
+	Merge error changes from glibc.
+
+	* error.c, error.h: Update copyright notice header to match glibc.
+	* error.c [defined _LIBC]: Include <errno.h>, <bits/libc-lock.h>.
+	(error, error_at_line) [defined _LIBC && defined __libc_ptf_call]:
+	Disable cancellation while printing error.
+	* error.h: Prepend __ to parameter names.
+
 2003-09-25  Karl Berry  <karl@gnu.org>
 
 	* argp-fmtstream.c, argp-help.c: update from libc.
@@ -17,6 +34,12 @@
 
 	* getdomainname.h: New file.
 	* getdomainname.c: New file.
+
+2003-09-24  Paul Eggert  <eggert@twinsun.com>
+
+	* linebuffer.c (freebuffer): Don't free the argument, just
+	the buffer associated with the argument.  Bug reported by
+	Simon Josefsson.
 
 2003-09-19  Karl Berry  <karl@gnu.org>
 

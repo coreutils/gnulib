@@ -11,6 +11,18 @@
 	* modules/xgetdomainname: New file.
 	* MODULES.html.sh (func_all_modules): Add getdomainname, xgetdomainname.
 
+2003-09-24  Paul Eggert  <eggert@twinsun.com>
+
+	* README: Document assumptions that 'int' is at least 32 bits
+	wide, that integer arithmetic is 2's complement without overflow,
+	that there are no holes in integer values, that adding sizes of
+	two nonoverlapping objects can't overflow, and that all-bits-zero
+	yields scalar zero.  Fix spelling and capitalization typos.
+
+2003-09-24  Simon Josefsson  <jas@extundo.com>
+
+	* modules/xgethostname: Add xgethostname.h.
+
 2003-09-17  Paul Eggert  <eggert@twinsun.com>
 
 	* gnulib-tool: Use "test -h", not "test -L", for portability
