@@ -1235,6 +1235,7 @@ where each line of input produces a line of output.}
 \font\titlei=cmmi12 scaled \magstep3
 \font\titlesy=cmsy10 scaled \magstep4
 \def\authorrm{\secrm}
+\def\authortt{\sectt}
 
 % Chapter (and unnumbered) fonts (17.28pt).
 \setfont\chaprm\rmbshape{12}{\magstep2}
@@ -1349,6 +1350,7 @@ where each line of input produces a line of output.}
 \setfont\shortcontrm\rmshape{12}{1000}
 \setfont\shortcontbf\bxshape{12}{1000}
 \setfont\shortcontsl\slshape{12}{1000}
+\setfont\shortconttt\ttshape{12}{1000}
 
 %% Add scribe-like font environments, plus @l for inline lisp (usually sans
 %% serif) and @ii for TeX italic
@@ -1596,7 +1598,8 @@ where each line of input produces a line of output.}
    \let\subtitlerm=\tenrm
    \def\subtitlefont{\subtitlerm \normalbaselineskip = 13pt \normalbaselines}%
    %
-   \def\authorfont{\authorrm \normalbaselineskip = 16pt \normalbaselines}%
+   \def\authorfont{\authorrm \normalbaselineskip = 16pt \normalbaselines
+                   \let\tt=\authortt}%
    %
    % Leave some space at the very top of the page.
    \vglue\titlepagetopglue
@@ -3554,13 +3557,18 @@ width0pt\relax} \fi
 \global\let\subsubsection = \numberedsubsubsec
 }
 
+% we use \chapno to avoid indenting back
+\def\appendixbox#1{%
+  \setbox0 = \hbox{\putwordAppendix{} \the\chapno}%
+  \hbox to \wd0{#1\hss}}
+
 \outer\def\appendix{\parsearg\appendixyyy}
 \def\appendixyyy #1{\apphead0{#1}} % normally apphead0 calls appendixzzz
 \def\appendixzzz #1{%
 \secno=0 \subsecno=0 \subsubsecno=0
 \global\advance \appendixno by 1
 \message{\putwordAppendix\space \appendixletter}%
-\chapmacro {#1}{\putwordAppendix{} \appendixletter}%
+\chapmacro {#1}{\appendixbox{\putwordAppendix{} \appendixletter}}%
 \gdef\thissection{#1}%
 \gdef\thischaptername{#1}%
 \xdef\thischapter{\putwordAppendix{} \appendixletter: \noexpand\thischaptername}%
@@ -4012,7 +4020,8 @@ width0pt\relax} \fi
       \let\unnumbchapentry = \shortunnumberedentry
       % We want a true roman here for the page numbers.
       \secfonts
-      \let\rm=\shortcontrm \let\bf=\shortcontbf \let\sl=\shortcontsl
+      \let\rm=\shortcontrm \let\bf=\shortcontbf
+      \let\sl=\shortcontsl \let\tt=\shortconttt
       \rm
       \hyphenpenalty = 10000
       \advance\baselineskip by 1pt % Open it up a little.
@@ -4054,7 +4063,8 @@ width0pt\relax} \fi
 }
 
 % Appendices, in the main contents.
-\def\appendixentry#1#2#3{\dochapentry{\putwordAppendix{} #2\labelspace#1}{#3}}
+\def\appendixentry#1#2#3{%
+  \dochapentry{\appendixbox{\putwordAppendix{} #2}\labelspace#1}{#3}}
 %
 % Appendices, in the short toc.
 \let\shortappendixentry = \shortchapentry
