@@ -1,3 +1,9 @@
+2003-08-11  Bruno Haible  <bruno@clisp.org>
+
+	* stdbool_.h (_Bool): Undo last change; instead use a negative enum
+	value to ensure that _Bool promotes to int. Use #define for _Bool when
+	using the Solaris C compiler. Adds comments suggested by Paul Eggert.
+
 2003-08-10  Karl Berry  <karl@gnu.org>
 
 	* regex.h: update from libc (whitespace fix).
