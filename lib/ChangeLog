@@ -1,3 +1,10 @@
+2004-01-18  Simon Josefsson  <jas@extundo.com>
+
+	* strdup.h: New file.
+	* strdup.c: Include it.
+	* path-concat.c: Include strdup.h. Drop strdup declaration.
+	* userspec.c: Include strdup.h. Drop strdup declaration.
+
 2004-02-06  Karl Berry  <karl@gnu.org>
 
 	* config.charset: update from gettext 0.14.1.

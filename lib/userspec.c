@@ -1,5 +1,5 @@
 /* userspec.c -- Parse a user and group string.
-   Copyright (C) 1989-1992, 1997-1998, 2000, 2002-2003 Free Software
+   Copyright (C) 1989-1992, 1997-1998, 2000, 2002-2004 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -24,6 +24,9 @@
 
 #include <alloca.h>
 
+/* Specification.  */
+#include "userspec.h"
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <pwd.h>
@@ -41,7 +44,7 @@
 # include <unistd.h>
 #endif
 
-#include "userspec.h"
+#include "strdup.h"
 #include "posixver.h"
 #include "xalloc.h"
 #include "xstrtol.h"
@@ -108,10 +111,6 @@ struct group *getgrgid ();
    ISDIGIT_LOCALE unless it's important to use the locale's definition
    of `digit' even when the host does not conform to POSIX.  */
 #define ISDIGIT(c) ((unsigned) (c) - '0' <= 9)
-
-#ifndef strdup
-char *strdup ();
-#endif
 
 /* Return nonzero if STR represents an unsigned decimal integer,
    otherwise return 0. */
