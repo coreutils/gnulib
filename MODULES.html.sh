@@ -1823,8 +1823,6 @@ func_all_modules ()
   func_begin_table
   func_module gethostname
   func_module xgethostname
-  func_module getdomainname
-  func_module xgetdomainname
   func_module canon-host
   func_end_table
 
