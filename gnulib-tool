@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-01-05 02:50:04 $'
+cvsdatestamp='$Date: 2005-03-04 19:28:13 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -115,6 +115,37 @@ func_fatal_error ()
   echo "gnulib-tool: *** $1" 1>&2
   echo "gnulib-tool: *** Stop." 1>&2
   exit 1
+}
+
+# func_cp_if_changed SRC DEST
+#
+# cp, but avoid munging timestamps if the file hasn't changed.
+func_cp_if_changed ()
+{
+  if test $# -ne 2; then
+    echo "usage: cp_if_changed SRC DEST" >&2
+  fi
+  test -n "$dry_run" && dry=echo
+  if cmp "$1" "$2" >/dev/null 2>&1; then :; else
+    $dry cp -p "$1" "$2"
+  fi
+}
+
+# func_mv_if_changed SRC DEST
+#
+# mv, but avoid munging timestamps if the file hasn't changed.
+# Remove the source file if it is not renamed.
+func_mv_if_changed ()
+{
+  if test $# -ne 2; then
+    echo "usage: mv_if_changed SRC DEST" >&2
+  fi
+  test -n "$dry_run" && dry=echo
+  if cmp "$1" "$2" >/dev/null 2>&1; then
+    $dry rm "$1"
+  else
+    $dry mv "$1" "$2"
+  fi
 }
 
 # Command-line option processing.
@@ -523,8 +554,7 @@ func_import ()
       m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
       *) g="$f" ;;
     esac
-    test -n "$dry_run" && dry=echo
-    $dry cp -p "$gnulib_dir/$f" "$destdir/$g"
+    func_cp_if_changed "$gnulib_dir/$f" "$destdir/$g"
     # Update license.
     if test -z "$dry_run" && test -n "$lgpl" && test -n "$source"; then
       perl -pi -e 's/GNU General/GNU Lesser General/g;' \
@@ -548,16 +578,18 @@ func_import ()
   # Create lib/Makefile.am.
   echo "Creating $destdir/$sourcebase/Makefile.am..."
   if test -z "$dry_run"; then
-    func_emit_lib_Makefile_am > $destdir/$sourcebase/Makefile.am
+    func_emit_lib_Makefile_am > $destdir/$sourcebase/Makefile.am.new
   else
     func_emit_lib_Makefile_am
   fi
+  func_mv_if_changed $destdir/$sourcebase/Makefile.am.new \
+                     $destdir/$sourcebase/Makefile.am
 
   # Create gnulib.m4.
   echo "Creating $destdir/$m4base/gnulib.m4..."
   (
     if test -z "$dry_run"; then
-      exec > $destdir/$m4base/gnulib.m4
+      exec > $destdir/$m4base/gnulib.m4.new
     else
       echo "# $destdir/$m4base/gnulib.m4"
     fi
@@ -616,6 +648,7 @@ func_import ()
     echo
     echo "# gnulib.m4 ends here"
   )
+  func_mv_if_changed $destdir/$m4base/gnulib.m4.new $destdir/$m4base/gnulib.m4
   echo "Finished."
   echo
   echo "You may need to add #include directives for the following .h files."
