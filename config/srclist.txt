@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.56 2005-03-02 16:51:18 karl Exp $
+# $Id: srclist.txt,v 1.57 2005-03-13 14:22:21 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -95,7 +95,7 @@ $LIBCSRC/sysdeps/generic/strtoll.c	lib gpl
 $LIBCSRC/sysdeps/generic/strtoul.c	lib gpl
 $LIBCSRC/sysdeps/generic/strtok_r.c	lib gpl
 $LIBCSRC/sysdeps/generic/memmem.c	lib gpl
-$LIBCSRC/time/mktime.c			lib gpl
+#$LIBCSRC/time/mktime.c			lib gpl
 #
 # These are close, but ...
 #$LIBCSRC/crypt/md5.c			lib gpl
