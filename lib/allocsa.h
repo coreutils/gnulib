@@ -1,5 +1,5 @@
 /* Safe automatic memory allocation.
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003-2004 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -77,6 +77,10 @@ extern void freesa (void *p);
 #elif defined __cplusplus
   template <class type> struct sa_alignof_helper { char __slot1; type __slot2; };
 # define sa_alignof(type) offsetof (sa_alignof_helper<type>, __slot2)
+#elif defined __hpux
+  /* Work around a HP-UX 10.20 cc bug with enums constants defined as offsetof
+     values.  */
+# define sa_alignof(type) (sizeof (type) <= 4 ? 4 : 8)
 #else
 # define sa_alignof(type) offsetof (struct { char __slot1; type __slot2; }, __slot2)
 #endif

@@ -1,3 +1,12 @@
+2004-11-04  Bruno Haible  <bruno@clisp.org>
+
+	2004-09-11  Bruno Haible  <bruno@clisp.org>
+		* allocsa.valgrind: New file.
+	2004-02-06  Bruno Haible  <bruno@clisp.org>
+		* allocsa.h (sa_alignof): Define differently with HP-UX cc, to
+		avoid a bug of this cc on HP-UX 10.20 dealing with enums.
+		Reported by Christopher Seip <chris.seip@hp.com>.
+
 2004-11-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* xreadlink.c (xreadlink): AIX and HP-UX readlink return -1
