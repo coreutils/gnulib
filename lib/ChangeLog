@@ -1,3 +1,11 @@
+2003-11-04  Bruno Haible  <bruno@clisp.org>
+
+	* xsize.h: New file.
+	* linebreak.c: Include xsize.h.
+	(mbs_possible_linebreaks, mbs_width_linebreaks): Check malloc()
+	argument for overflow.
+	Suggested by Paul Eggert.
+
 2003-10-31  Bruno Haible  <bruno@clisp.org>
 
 	* wait-process.c (wait_process): Use waitid with WNOWAIT if available,
