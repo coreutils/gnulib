@@ -1,3 +1,27 @@
+2002-11-05  Bruno Haible  <bruno@clisp.org>
+
+	* error.c [!_LIBC]: Include gettext.h instead of <libintl.h>.
+	* getopt.c [!_LIBC]: Include gettext.h instead of <libintl.h>.
+	* obstack.c [!_LIBC]: Include gettext.h instead of <libintl.h>.
+	* regex.c [!_LIBC]: Include gettext.h instead of <libintl.h>.
+
+	* argmatch.c: Include gettext.h instead of <locale.h> and <libintl.h>.
+	* makepath.c: Include gettext.h instead of <locale.h> and <libintl.h>.
+
+	* closeout.c: Include gettext.h instead of <libintl.h>.
+	* human.c: Include gettext.h instead of <libintl.h>.
+	* quotearg.c: Include gettext.h instead of <libintl.h>.
+	* rpmatch.c: Include gettext.h instead of <libintl.h>.
+	* unicodeio.c: Include gettext.h instead of <libintl.h>.
+	* userspec.c: Include gettext.h instead of <libintl.h>.
+	* version-etc.c: Include gettext.h instead of <libintl.h>.
+	* xmalloc.c: Include gettext.h instead of <libintl.h>.
+	(textdomain): Remove definition.
+	* xmemcoll.c: Include gettext.h instead of <libintl.h>.
+
+	* long-options.c: Remove include of <libintl.h> and definition of _.
+	* same.c: Remove include of <libintl.h> and definition of _.
+
 2002-11-04  Bruno Haible  <bruno@clisp.org>
 
 	* stpcpy.h: New file, from GNU gettext-0.11.5.

@@ -2,7 +2,7 @@
    version 0.12.
    (Implements POSIX draft P1003.2/D11.2, except for some of the
    internationalization features.)
-   Copyright (C) 1993-1999, 2000, 2001 Free Software Foundation, Inc.
+   Copyright (C) 1993-1999, 2000-2002 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -95,21 +95,15 @@
 #  include <locale/coll-lookup.h>
 # endif
 
-/* This is for other GNU distributions with internationalized messages.  */
-# if (HAVE_LIBINTL_H && ENABLE_NLS) || defined _LIBC
+# ifdef _LIBC
 #  include <libintl.h>
-#  ifdef _LIBC
-#   undef gettext
-#   define gettext(msgid) __dcgettext ("libc", msgid, LC_MESSAGES)
-#  endif
+#  undef gettext
+#  define gettext(msgid) __dcgettext ("libc", msgid, LC_MESSAGES)
+   /* This define is so xgettext can find the internationalizable strings.  */
+#  define gettext_noop(msgid) msgid
 # else
-#  define gettext(msgid) (msgid)
-# endif
-
-# ifndef gettext_noop
-/* This define is so xgettext can find the internationalizable
-   strings.  */
-#  define gettext_noop(String) String
+/* This is for other GNU distributions with internationalized messages.  */
+#  include "gettext.h"
 # endif
 
 /* Support for bounded pointers.  */

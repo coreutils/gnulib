@@ -1,6 +1,6 @@
 /* human.c -- print human readable file size
 
-   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001 Free Software
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -52,12 +52,8 @@
 char *getenv ();
 #endif
 
-#if ENABLE_NLS
-# include <libintl.h>
-# define _(Text) gettext (Text)
-#else
-# define _(Text) Text
-#endif
+#include "gettext.h"
+#define _(msgid) gettext (msgid)
 
 #include <argmatch.h>
 #include <error.h>

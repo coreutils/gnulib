@@ -1,5 +1,5 @@
 /* argmatch.c -- find a match for a string in an array
-   Copyright (C) 1990, 1998, 1999, 2001 Free Software Foundation, Inc.
+   Copyright (C) 1990, 1998, 1999, 2001, 2002 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,16 +25,8 @@
 # include <string.h>
 #endif
 
-#if HAVE_LOCALE_H
-# include <locale.h>
-#endif
-
-#if ENABLE_NLS
-# include <libintl.h>
-# define _(Text) gettext (Text)
-#else
-# define _(Text) Text
-#endif
+#include "gettext.h"
+#define _(msgid) gettext (msgid)
 
 #include "error.h"
 #include "quotearg.h"

@@ -76,19 +76,16 @@
 # endif
 #endif
 
-#ifndef _
+#ifdef _LIBC
+# include <libintl.h>
+#else
 /* This is for other GNU distributions with internationalized messages.  */
-# if (HAVE_LIBINTL_H && ENABLE_NLS) || defined _LIBC
-#  include <libintl.h>
-#  ifndef _
-#   define _(msgid)	gettext (msgid)
-#  endif
-# else
-#  define _(msgid)	(msgid)
-# endif
-# if defined _LIBC && defined USE_IN_LIBIO
-#  include <wchar.h>
-# endif
+# include "gettext.h"
+#endif
+#define _(msgid) gettext (msgid)
+
+#if defined _LIBC && defined USE_IN_LIBIO
+# include <wchar.h>
 #endif
 
 #ifndef attribute_hidden
