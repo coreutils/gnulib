@@ -1,3 +1,13 @@
+2002-11-24  Jim Meyering  <jim@meyering.net>
+
+	Update from coreutils:
+
+	Avoid a link-time failure on some Linux systems.
+	* mktime.c (STATIC): Define to be empty (_LIBC) or `static' (otherwise).
+	(__mon_yday): Declare with the STATIC attribute.
+	(__mktime_internal): Likewise.
+	Based on a report from Greg Schafer.
+
 2002-11-23  Jim Meyering  <jim@meyering.net>
 
 	* sig2str.c (str2signum, sig2str): Avoid a warning from gcc:
