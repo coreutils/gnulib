@@ -1,4 +1,4 @@
-# inttypes_h.m4 serial 5a
+# inttypes_h.m4 serial 6
 dnl Copyright (C) 1997-2004 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
