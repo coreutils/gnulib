@@ -1,0 +1,27 @@
+Description:
+Return the canonical absolute name of a given file.
+
+Files:
+lib/canonicalize.h
+lib/canonicalize.c
+lib/stat-macros.h
+m4/canonicalize.m4
+
+Depends-on:
+cycle-check
+path-concat
+xalloc
+xgetcwd
+
+configure.ac:
+AC_FUNC_CANONICALIZE_FILE_NAME
+
+Makefile.am:
+lib_SOURCES += canonicalize.h canonicalize.c
+
+Include:
+"canonicalize.h"
+
+Maintainer:
+Jim Meyering
+
