@@ -1,3 +1,41 @@
+2003-10-25  Paul Eggert  <eggert@twinsun.com>
+
+	Fix several address-calculation bugs in the hash modules,
+	plus some minor code cleanup.
+
+	* hash.h: Include <stdbool.h>, for bool.
+	* hash.c: Don't include <stdbool.h>, since hash.h does it now.
+	* hash.h (Hash_hasher, hash_get_n_buckets, hash_get_n_buckets_used,
+	hash_get_n_entries, hash_get_max_bucket_length,
+	hash_get_entries, hash_do_for_each, hash_string, hash_initialize,
+	hash_rehash): Use size_t rather than unsigned.
+	* hash.c (struct hash_table, hash_get_n_buckets,
+	hash_get_n_buckets_used, hash_get_n_entries,
+	hash_get_max_bucket_length, hash_table_ok, hash_print_statistics,
+	hash_get_entries, hash_do_for_each, hash_string, is_prime,
+	next_prime, hash_initialize, hash_rehash, hash_delete, hash_print):
+	Likewise.
+	(SIZE_MAX): Define if not defined.
+	(hash_get_max_bucket_length, hash_table_ok, hash_lookup,
+	hash_get_first, hash_get_next, hash_get_entries, hash_do_for_each,
+	hash_print):
+	Use const * when possible.
+	(hash_string): Use (unsigned char) *P rather than *(unsigned char *) P.
+	(check_tuning): Fix bug: if tuning parameters were very close to
+	0 or 1, rounding errors could have caused subscript violations.
+	(hash_initialize, allocate_entry, hash_print): Remove unnecessary cast.
+	(hash_initialize): Add 'fail:' label
+	to free table and return NULL, and use it to simplify code.
+	Use calloc rather than clearing the storage ourself.
+	(hash_initialize, hash_rehash): Check for arithmetic overflow in
+	buffer size calculations.
+	* hash-pjw.h (hash_pjw): Use size_t, not unsigned.
+	Include <stddef.h>, for size_t.
+	* hash-pjw.c (hash_pjw): Likewise.
+	Switch to method described by Bruno Haible.
+	Include <limits.h>, for CHAR_BIT.
+	(SIZE_BITS): New macro.
+
 2003-10-21  Paul Eggert  <eggert@twinsun.com>
 
 	* getndelim2.c (getndelim2): When size calculation overflows,
