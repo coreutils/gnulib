@@ -1,0 +1,22 @@
+Description:
+stpncpy() function: copy a size-bounded string, returning a pointer to its end.
+
+Files:
+lib/stpncpy.h
+lib/stpncpy.c
+m4/stpncpy.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_STPNCPY
+
+Makefile.am:
+lib_SOURCES += stpncpy.h
+
+Include:
+"stpncpy.h"
+
+Maintainer:
+Bruno Haible, glibc
+

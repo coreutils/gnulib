@@ -1,3 +1,8 @@
+2003-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.h: New file, from GNU gettext with modifications.
+	* stpncpy.c: New file, from GNU gettext with modifications.
+
 2003-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* c-ctype.h: New file, from GNU gettext, with changes suggested by

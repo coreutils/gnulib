@@ -1,3 +1,7 @@
+2003-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.m4: New file.
+
 2003-01-23  Jim Meyering  <jim@meyering.net>
 
 	* dirfd.m4 (UTILS_FUNC_DIRFD): Correct typo: s/-1/no/ that kept this

@@ -1490,9 +1490,9 @@ func_all_modules ()
   func_wrap H3
   func_echo "$element"
 
-  #func_begin_table
-  #func_module c-ctype
-  #func_end_table
+  func_begin_table
+  func_module c-ctype
+  func_end_table
 
   element="String handling <string.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
@@ -1504,7 +1504,7 @@ func_all_modules ()
   func_module bcopy
   func_module memrchr
   func_module stpcpy
-  #func_module stpncpy
+  func_module stpncpy
   func_module strcase
   func_module strdup
   func_module strnlen
