@@ -43,6 +43,8 @@ extern int errno;
 #define S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
 #endif
 
+#include "safe-stat.h"
+
 /* Rename file FROM to file TO.
    Return 0 if successful, -1 if not. */
 
@@ -54,13 +56,13 @@ rename (from, to)
   struct stat from_stats, to_stats;
   int pid, status;
 
-  if (stat (from, &from_stats))
+  if (SAFE_STAT (from, &from_stats))
     return -1;
 
   /* Be careful not to unlink `from' if it happens to be equal to `to' or
      (on filesystems that silently truncate filenames after 14 characters)
      if `from' and `to' share the significant characters. */
-  if (stat (to, &to_stats))
+  if (SAFE_STAT (to, &to_stats))
     {
       if (errno != ENOENT)
         return -1;

@@ -29,6 +29,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include "safe-stat.h"
+
 #ifdef	STAT_MACROS_BROKEN
 #ifdef S_ISDIR
 #undef S_ISDIR
@@ -48,5 +50,5 @@ isdir (path)
 {
   struct stat stats;
 
-  return stat (path, &stats) == 0 && S_ISDIR (stats.st_mode);
+  return SAFE_STAT (path, &stats) == 0 && S_ISDIR (stats.st_mode);
 }
