@@ -1,3 +1,7 @@
+2003-09-09  Paul Eggert  <eggert@twinsun.com>
+
+	* README: New section: portability guidelines.
+
 2003-09-07  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/time_r: Depend on 'restrict'.  Fix from Simon Josefsson in
@@ -9,7 +13,7 @@
 	* modules/time_r: New file.
 	* modules/mktime, modules/strftime, modules/timegm: Depend on time_r.
 	* modules/timegm: Depend on mktime.  Change maintainer to "all, glibc".
-	
+
 2003-08-31  Simon Josefsson  <jas@extundo.com>
 
 	* modules/timegm: New file.

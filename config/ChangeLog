@@ -1,3 +1,7 @@
+2003-09-09  Paul Eggert  <eggert@twinsun.com>
+
+	* srclist.txt: Do not get getopt.h or getopt1.c from libc.
+
 2003-09-08  Karl Berry  <karl@gnu.org>
 
 	* config.sub, config.guess, srclistvars.sh: update from savannah

@@ -1,3 +1,44 @@
+2003-09-09  Paul Eggert  <eggert@twinsun.com>
+
+	* getopt.m4 (gl_GETOPT): Don't check for string.h.
+	* getugroups.m4 (gl_GETUGROUPS): Do not check for standard C headers
+	or for string.h.
+	* getusershell.m4 (gl_PREREQ_GETUSERSHELL): Do not check for stdlib.h.
+	* group-member.m4 (gl_PREREQ_GROUP_MEMBER): Do not require standard C
+	headers.
+	* hard-locale.m4 (gl_HARD_LOCALE): Do not check for stdlib.h,
+	string.h.
+	* hash.m4 (gl_HASH): Do not check for stdlib.h, malloc, free.
+	* human.m4 (gl_HUMAN): Do not check for stdlib.h, string.h, getenv.
+	* idcache.m4 (gl_IDCACHE): Do not check for standard C headers,
+	or for string.h.
+	* long-options.m4 (gl_LONG_OPTIONS): Do not check for stdlib.h.
+	* mkpath.m4 (gl_MAKEPATH): Do not check for string.h or standard
+	C headers.
+	* md5.m4 (gl_MD5): Don't check for limits.h, standard C headers,
+	memcpy.
+	* sha.m4 (gl_SHA): Don't check for standard Cheaders, memcpy.
+	* memrchr.m4 (jm_PREREQ_MEMCHR): Don't check for limits.h, stdlib.h.
+	* memcmp.m4 (gl_PREREQ_MEMCMP): Don't check for string.h.
+	* memcoll.m4 (gl_MEMCOLL): Likewise.
+	* memrchr.c (gl_PREREQ_MEMRCHR): Don't check for limits.h.
+	* mkdir-slash.m4 (gl_PREREQ_MKDIR): Don't check for stdlib.h,
+	string.h, free.
+	* mktime.m4 (gl_PREREQ_MKTIME): Don't check for standard C headers.
+	* modechange.m4 (gl_MODECHANGE): Don't check for standard C headers.
+	* mountlist.m4 (gl_PREREQ_MOUNTLIST_EXTRA): Don't check for standard
+	C orders, or for string.h.
+	* obstack.m4 (gl_OBSTACK): Don't check for stddefe.h, string.h.
+	(gl_PREREQ_OBSTACK): Don't check for stdlib.h.
+	* path-concat.m4 (gl_PATH_CONCAT): Don't check for standard C
+	headers, memory.h, stdlib.h, string.h, strings.h.
+	* savedir.m4 (gl_SAVEDIR): Don't check for standard C headers.
+
+2003-09-09  Derek Robert Price  <derek@ximbiot.com>
+
+	* getndelim2.m4 (gl_PREREQ_GETNDELIM2): Assume stdlib.h per the
+	C89 spec.
+
 2003-09-08  Paul Eggert  <eggert@twinsun.com>
 
 	Assume C89 or better; remove K&R cruft.
@@ -15,10 +56,10 @@
 	do not check for doprnt or vprintf.
 	* fnmatch.m4 (gl_PREREQ_FNMATCH_EXTRA): Remove.  All uses removed.
 	* getdate.m4 (gl_GETDATE): Don't check for stdlib.h or string.h.
-	
+
 2003-09-06  Paul Eggert  <eggert@twinsun.com>
 
-	* time_4.m4: New file.
+	* time_r.m4: New file.
 	* mktime.m4 (gl_PREREQ_MKTIME): Remove check for limits.h.
 	* timegm.m4 (gl_FUNC_TIMEGM): Assume that timegm is buggy if mktime is.
 	Check for timegm declaration.
