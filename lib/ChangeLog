@@ -132,6 +132,67 @@
 	* physmem.c (physmem_total, physmem_available, main): Define
 	with prototypes.
 
+	* posixtm.c: Include <stdlib.h>, <string.h> unconditionally.
+	(main): Define with a prototype.
+
+	* posixver.c (getenv): Remove decl.
+
+	* putenv.c (malloc): Returns void *, not char *.
+	Include <string.h> unconditionally.
+	(strchr, memcpy, NULL): Do not define.
+
+	* readtokens.c: Include readtokens.h first, to test interface.
+	Include <stdlib.h>, <string.h> unconditionally.
+	(init_tokenbuffer): Define with a prototype.
+
+	* regex.c (PARAMS): Remove.  All uses removed.
+	All uses of _RE_ARGS removed, too.
+	Include <stddef.h>, <stdlib.h>, <string.h>, <limits.h>
+	unconditionally.
+	(bzero): Assume memset exists.
+	(memcmp, memcpy, NULL): Remove.
+	(SIGN_EXTEND_CHAR): Remove; all uses replaced by casts to signed
+	char, or assignments to local vars of type signed char.
+	(init_syntax_once, PREFIX(extract_number_and_incr),
+	PREFIX(print_partial_compiled_pattern),
+	PREFIX(print_compiled_pattern), PREFIX(print_double_string),
+	convert_mbs_to_wcs, print_fastmap, re_set_syntax,
+	PREFIX(regex_grow_registers), PREFIX(regex_compile),
+	PREFIX(store_op1), PREFIX(store_op2), PREFIX(insert_op1),
+	PREFIX(insert_op2), PREFIX(at_begline_loc_p),
+	PREFIX(at_endline_loc_p), group_in_compile_stack, insert_space,
+	wcs_compile_range, byte_compile_range, truncate_wchar,
+	PREFIX(re_compile_fastmap), re_compile_fastmap, re_set_registers,
+	re_search, re_search_2, PREFIX(re_search_2), re_match, re_match_2,
+	count_mbs_length, wcs_re_match_2_internal,
+	byte_re_match_2_internal, PREFIX(group_match_null_string_p),
+	PREFIX(alt_match_null_string_p),
+	PREFIX(common_op_match_null_string_p), PREFIX(bcmp_translate),
+	re_compile_pattern, re_comp, re_exec, regcomp, regexec, regerror,
+	regfree, PREFIX(extract_number)): Define with prototype.  Remove
+	now-unnecessary declaration, if any.
+	(byte_compile_range, PREFIX(regex_compile), re_comp, re_exec,
+	regcomp, regexec):
+	Remove now-unnecessary casts among pointer types.
+	* regex.h (_RE_ARGS): Remove.  All uses removed.
+
+	* rename.c: Include <stdlib.h>, <string.h> unconditionally.
+	(free): Remove decl.
+
+	* rpmatch.c: Include <stdlib.h> unconditionally.
+
+	* same.c: Include <stdlib.h>, <string.h> unconditionally.
+	(free): Remove decl.
+
+	* save-cwd.c: Include <stdlib.h> unconditionally.
+	* xgetcwd.c: Likewise.
+
+	* stat.c: Include <stdlib.h>, <string.h> unconditionally.
+	(free): Remove decl.
+
+	* strchrnul.c (strchrnul): Define with a prototype.
+	Fix bug: c_in was not converted to unsigned char before searching.
+
 	The following changes are not K&R related:
 
 	* group-member.h: Include <sys/types.h>, so that this file is

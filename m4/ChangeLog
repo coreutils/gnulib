@@ -1,5 +1,6 @@
 2003-09-09  Paul Eggert  <eggert@twinsun.com>
 
+	* getcwd.m4 (AC_FUNC_GETCWD_NULL): Don't check for stdlib.h.
 	* getopt.m4 (gl_GETOPT): Don't check for string.h.
 	* getugroups.m4 (gl_GETUGROUPS): Do not check for standard C headers
 	or for string.h.
@@ -32,8 +33,22 @@
 	(gl_PREREQ_OBSTACK): Don't check for stdlib.h.
 	* path-concat.m4 (gl_PATH_CONCAT): Don't check for standard C
 	headers, memory.h, stdlib.h, string.h, strings.h.
+	* posixtm.m4 (gl_POSIXTM): Don't check for stdlib.h, string.h.
+	* posixver.m4 (gl_POSIXVER): Don't check for getenv.
+	* putenv.m4 (gl_PREREQ_PUTENV): Don't check for string.h, memcpy,
+	strchr.
+	* readtokens.m4 (gl_READTOKENS): Don't check for standard C
+	headers, memory.h, string.h.
+	* regex.m4 (jm_PREREQ_REGEX): Do not check for limits.h, string.h.
+	* rename.m4 (gl_PREREQ_RENAME): Do not check for stdlib.h, string.h,
+	free.
+	* rpmatch.m4 (gl_PREREQ_RPMATCH): Don't check for standard C headers.
+	* same.m4 (gl_SAME): Don't check for stdlib.h, string.h, free.
+	* save-cwd.m4 (gl_SAVE_CWD): Don't check for standard C headers.
 	* savedir.m4 (gl_SAVEDIR): Don't check for standard C headers.
-
+	* strchrnul.m4 (gl_PREREQ_STRCHRNUL): Don't check for string.h.
+	* xgetcwd.m4 (gl_XGETCWD): Don't check for stdlib.h.
+	
 2003-09-09  Derek Robert Price  <derek@ximbiot.com>
 
 	* getndelim2.m4 (gl_PREREQ_GETNDELIM2): Assume stdlib.h per the
