@@ -37,7 +37,6 @@ Cambridge, MA 02139, USA.  */
 #define DBL_MAX 1.7976931348623159e+308
 #define DBL_MIN 2.2250738585072010e-308
 #endif
-#endif
 
 #if STDC_HEADERS
 #include <stdlib.h>
@@ -47,6 +46,7 @@ Cambridge, MA 02139, USA.  */
 extern int errno;
 #ifndef HUGE_VAL
 #define HUGE_VAL HUGE
+#endif
 #endif
 
 /* Convert NPTR to a double.  If ENDPTR is not NULL, a pointer to the
