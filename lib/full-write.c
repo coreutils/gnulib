@@ -1,4 +1,4 @@
-/* safe-write.c -- an interface to write that retries after interrupts
+/* full-write.c -- an interface to write that retries after interrupts
    Copyright (C) 1993 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -41,14 +41,17 @@ extern int errno;
 #endif
 
 /* Write LEN bytes at PTR to descriptor DESC, retrying if interrupted.
-   Return zero upon success, write's (negative) error code otherwise.  */
+   Return LEN upon success, write's (negative) error code otherwise.  */
 
 int
-safe_write (desc, ptr, len)
+full_write (desc, ptr, len)
      int desc;
      char *ptr;
      int len;
 {
+  int total_written;
+
+  total_written = 0;
   while (len > 0)
     {
       int written = write (desc, ptr, len);
@@ -60,8 +63,9 @@ safe_write (desc, ptr, len)
 #endif
 	  return written;
 	}
+      total_written += written;
       ptr += written;
       len -= written;
     }
-  return 0;
+  return total_written;
 }
