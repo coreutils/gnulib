@@ -1,3 +1,10 @@
+2005-01-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils.
+	* modules/getloadavg (Files): Remove m4/getloadavg.m4.
+	(Depends-on): Add c-strtod.
+	(configure.ac): Replace gl_FUNC_GETLOADAVG with AC_FUNC_GETLOADAVG.
+
 2005-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* modules/javacomp: New file.

@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, base64, bcopy, binary-io, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chdir-long, chown, classpath, cloexec, closeout, copy-file, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, fcntl-safer, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getaddrinfo, getcwd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, inttostr, isdir, javaexec, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmem, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, openat, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sh-quote, sha1, sig2str, snprintf, stat, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strsep, strstr, strtod, strtoimax, strtok_r, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, ullong_max, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, version-etc-fsf, vsnprintf, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, base64, bcopy, binary-io, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chdir-long, chown, classpath, cloexec, closeout, copy-file, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, fcntl-safer, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getaddrinfo, getcwd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, inttostr, isdir, javacomp, javaexec, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmem, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, openat, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sh-quote, sha1, sig2str, snprintf, stat, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strsep, strstr, strtod, strtoimax, strtok_r, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, ullong_max, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, version-etc-fsf, vsnprintf, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -932,6 +932,14 @@ usually the host name including FQDN.
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=classpath">classpath</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Java CLASSPATH handling.
+      </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=javacomp">javacomp</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Compile a Java program.
+      </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=javaexec">javaexec</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Execute a Java program.
       </TR>
     </TABLE>
     <H3><A HREF="#posix_ext_misc">Misc</A></H3>
@@ -3034,6 +3042,20 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>xsetenv<BR>xalloc
       </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=javacomp"></A><A HREF="modules/javacomp">javacomp</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/javacomp.h">javacomp.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/javacomp.c">javacomp.c</A><BR><A HREF="lib/javacomp.sh.in">javacomp.sh.in</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/javacomp.m4">javacomp.m4</A><BR>gt_JAVACOMP
+        <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>xallocsa<BR>execute<BR>pipe<BR>wait-process<BR>classpath<BR>xsetenv<BR>sh-quote<BR>safe-read<BR>xalloc<BR>error<BR>gettext
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=javaexec"></A><A HREF="modules/javaexec">javaexec</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/javaexec.h">javaexec.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/javaexec.c">javaexec.c</A><BR><A HREF="lib/javaexec.sh.in">javaexec.sh.in</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/javaexec.m4">javaexec.m4</A><BR>gt_JAVAEXEC
+        <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>execute<BR>classpath<BR>xsetenv<BR>sh-quote<BR>pathname<BR>xalloc<BR>xallocsa<BR>error<BR>gettext
+      </TR>
     </TABLE>
     <H3><A NAME="posix_ext_misc">Misc</A></H3>
     <TABLE>
@@ -3111,8 +3133,8 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getloadavg"></A><A HREF="modules/getloadavg">getloadavg</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getloadavg.c">getloadavg.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getloadavg.m4">getloadavg.m4</A><BR>gl_FUNC_GETLOADAVG
-        <TD ALIGN=LEFT VALIGN=TOP>cloexec<BR>xalloc
+        <TD ALIGN=LEFT VALIGN=TOP>AC_FUNC_GETLOADAVG
+        <TD ALIGN=LEFT VALIGN=TOP>cloexec<BR>xalloc<BR>c-strtod
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getpagesize"></A><A HREF="modules/getpagesize">getpagesize</A>
@@ -3209,13 +3231,6 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>openat
       </TR>
       <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=javaexec"></A><A HREF="modules/javaexec">javaexec</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/javaexec.h">javaexec.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/javaexec.c">javaexec.c</A><BR><A HREF="lib/javaexec.sh.in">javaexec.sh.in</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/javaexec.m4">javaexec.m4</A><BR>gt_JAVAEXEC
-        <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>execute<BR>classpath<BR>xsetenv<BR>sh-quote<BR>pathname<BR>xalloc<BR>xallocsa<BR>error<BR>gettext
-      </TR>
-      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=openat"></A><A HREF="modules/openat">openat</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/openat.h">openat.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/openat.c">openat.c</A>
@@ -3226,22 +3241,16 @@ variables.
     <H2>Lone files - please create new modules containing them</H2>
     <PRE>
 <A HREF="lib/progreloc.c">lib/progreloc.c</A>
-<A HREF="m4/check-decl.m4">m4/check-decl.m4</A>
 <A HREF="m4/d-type.m4">m4/d-type.m4</A>
-<A HREF="m4/glibc.m4">m4/glibc.m4</A>
 <A HREF="m4/host-os.m4">m4/host-os.m4</A>
-<A HREF="m4/jm-macros.m4">m4/jm-macros.m4</A>
 <A HREF="m4/jm-winsz1.m4">m4/jm-winsz1.m4</A>
 <A HREF="m4/jm-winsz2.m4">m4/jm-winsz2.m4</A>
-<A HREF="m4/lib-check.m4">m4/lib-check.m4</A>
 <A HREF="m4/link-follow.m4">m4/link-follow.m4</A>
 <A HREF="m4/onceonly.m4">m4/onceonly.m4</A>
 <A HREF="m4/perl.m4">m4/perl.m4</A>
-<A HREF="m4/prereq.m4">m4/prereq.m4</A>
 <A HREF="m4/ptrdiff_max.m4">m4/ptrdiff_max.m4</A>
 <A HREF="m4/readdir.m4">m4/readdir.m4</A>
 <A HREF="m4/rmdir-errno.m4">m4/rmdir-errno.m4</A>
-<A HREF="m4/search-libs.m4">m4/search-libs.m4</A>
 <A HREF="m4/st_dm_mode.m4">m4/st_dm_mode.m4</A>
 <A HREF="m4/uintptr_t.m4">m4/uintptr_t.m4</A>
 <A HREF="m4/unlink-busy.m4">m4/unlink-busy.m4</A>
@@ -3259,6 +3268,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 27 January 2005.
+    Generated from <CODE>MODULES.html.sh</CODE> on 28 January 2005.
   </BODY>
 </HTML>

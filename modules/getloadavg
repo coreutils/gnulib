@@ -3,14 +3,14 @@ Return the current system load averages.
 
 Files:
 lib/getloadavg.c
-m4/getloadavg.m4
 
 Depends-on:
 cloexec
 xalloc
+c-strtod
 
 configure.ac:
-gl_FUNC_GETLOADAVG
+AC_FUNC_GETLOADAVG
 
 Makefile.am:
 
@@ -21,4 +21,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

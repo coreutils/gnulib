@@ -1,3 +1,11 @@
+2005-01-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils.
+	* getloadavg.m4, glibc.m4, search-libs.m4: Remove.
+
+	Remove files that are specific to coreutils.
+	* check-decl.m4, jm-macros.m4, lib-check.m4, prereq.m4: Remove.
+
 2005-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* javacomp.m4: New file, from GNU gettext.
