@@ -1,15 +1,15 @@
-# $Id: srclist.txt,v 1.9 2002-11-25 16:31:49 karl Exp $
+# $Id: srclist.txt,v 1.10 2002-11-25 22:24:53 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
 $GNUCONFIG/config.guess		config
 $GNUCONFIG/config.sub		config
 #
-$AUTOMAKE/depcomp		config
-# after next release $AUTOMAKE/install-sh		config
-$AUTOMAKE/mdate-sh		config
-$AUTOMAKE/missing		config
-# after next release $AUTOMAKE/mkinstalldirs		config
+$AUTOMAKE/lib/depcomp		config
+$AUTOMAKE/lib/install-sh	config
+$AUTOMAKE/lib/mdate-sh		config
+$AUTOMAKE/lib/missing		config
+# after next release $AUTOMAKE/lib/mkinstalldirs		config
 #
 $TEXINFOSRC/doc/texinfo.tex	config
 

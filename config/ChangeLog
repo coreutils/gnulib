@@ -1,5 +1,8 @@
 2002-11-25    <karl@gnu.org>
 
+	* install-sh: update from automake for variable quoting, $0 in
+	error msgs, etc.
+
 	* srclist.txt ($LIBCSRC/time/mktime.c lib gpl): new entry.
 	* srclist.txt ($LIBCSRC/sysdeps/generic/strtoll.c lib gpl): new
 	entry.
