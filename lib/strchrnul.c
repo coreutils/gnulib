@@ -20,12 +20,11 @@
 
 /* Find the first occurrence of C in S or the final NUL byte.  */
 char *
-strchrnul (s, c_in)
-     const char *s;
-     int c_in;
+strchrnul (const char *s, int c_in)
 {
-  while (*s && (*s != c_in))
+  unsigned char c = c_in;
+  while (*s && (*s != c))
     s++;
 
-  return (char*) s;
+  return (char *) s;
 }
