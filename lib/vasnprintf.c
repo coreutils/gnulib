@@ -51,15 +51,6 @@
 /* Checked size_t computations.  */
 #include "xsize.h"
 
-/* For those losing systems which don't have 'alloca' we have to add
-   some additional code emulating it.  */
-#ifdef HAVE_ALLOCA
-# define freea(p) /* nothing */
-#else
-# define alloca(n) malloc (n)
-# define freea(p) free (p)
-#endif
-
 #ifdef HAVE_WCHAR_T
 # ifdef HAVE_WCSLEN
 #  define local_wcslen wcslen
@@ -139,10 +130,9 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
     }
 
   {
-    size_t buf_neededlength =
-      xsum4 (7, d.max_width_length, d.max_precision_length, 6);
-    CHAR_T *buf =
-      (CHAR_T *) alloca (xtimes (buf_neededlength, sizeof (CHAR_T)));
+    size_t buf_neededlength;
+    CHAR_T *buf;
+    CHAR_T *buf_malloced;
     const CHAR_T *cp;
     size_t i;
     DIRECTIVE *dp;
@@ -150,6 +140,28 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
     CHAR_T *result;
     size_t allocated;
     size_t length;
+
+    /* Allocate a small buffer that will hold a directive passed to
+       sprintf or snprintf.  */
+    buf_neededlength =
+      xsum4 (7, d.max_width_length, d.max_precision_length, 6);
+#if HAVE_ALLOCA
+    if (buf_neededlength < 4000 / sizeof (CHAR_T))
+      {
+	buf = (CHAR_T *) alloca (buf_neededlength * sizeof (CHAR_T));
+	buf_malloced = NULL;
+      }
+    else
+#endif
+      {
+	size_t buf_memsize = xtimes (buf_neededlength, sizeof (CHAR_T));
+	if (size_overflow_p (buf_memsize))
+	  goto out_of_memory_1;
+	buf = (CHAR_T *) malloc (buf_memsize);
+	if (buf == NULL)
+	  goto out_of_memory_1;
+	buf_malloced = buf;
+      }
 
     if (resultbuf != NULL)
       {
@@ -788,7 +800,8 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      {
 			if (!(result == resultbuf || result == NULL))
 			  free (result);
-			freea (buf);
+			if (buf_malloced != NULL)
+			  free (buf_malloced);
 			CLEANUP ();
 			errno = EINVAL;
 			return NULL;
@@ -846,7 +859,8 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 	  result = memory;
       }
 
-    freea (buf);
+    if (buf_malloced != NULL)
+      free (buf_malloced);
     CLEANUP ();
     *lengthp = length;
     return result;
@@ -854,7 +868,9 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
   out_of_memory:
     if (!(result == resultbuf || result == NULL))
       free (result);
-    freea (buf);
+    if (buf_malloced != NULL)
+      free (buf_malloced);
+  out_of_memory_1:
     CLEANUP ();
     errno = ENOMEM;
     return NULL;
