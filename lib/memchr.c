@@ -56,10 +56,11 @@ memchr (s, c, n)
 
      The 1-bits make sure that carries propagate to the next 0-bit.
      The 0-bits provide holes for carries to fall into.  */
-  magic_bits = 0x7efefeff;
 #ifdef LONG_64_BITS
   /* 64-bit version of the magic.  */
-  magic_bits = (0x7efefefe << 32) | 0xfefefeff;
+  magic_bits = ((unsigned long int) 0x7efefefe << 32) | 0xfefefeff;
+#else
+  magic_bits = 0x7efefeff;
 #endif /* LONG_64_BITS */
 
   /* Set up a longword, each of whose bytes is C.  */
@@ -68,6 +69,9 @@ memchr (s, c, n)
 #ifdef LONG_64_BITS
   charmask |= charmask << 32;
 #endif /* LONG_64_BITS */
+  if (sizeof (longword) > 8)
+    abort ();
+
 
   /* Instead of the traditional loop which tests each character,
      we will test a longword at a time.  The tricky part is testing
