@@ -1,3 +1,40 @@
+2003-10-08  Paul Eggert  <eggert@twinsun.com>
+
+	Merge getpass from libc, plus a few fixes.
+
+	* getpass.c (HAVE_STDIO_EXT) [_LIBC]: Define to 1.
+	Include <stdbool.h>.
+	Include <stdio_ext.h> if HAVE_STDIO_H, otherwise define
+	__fsetlocking to empty.
+	[_LIBC]: Do not include "getline.h" or "unlocked-io.h", but
+	do include <bits/libc-lock.h>.
+	Do not include <fcntl.h>; not needed.
+	[_LIBC]: Include <wchar.h>.
+	(NOTCANCEL_MODE): New macro.
+	(flockfile, funlockfile) [_LIBC]: New macros.
+	(__libc_cleanup_push, __libc_cleanup_pop, __getline, __tcgetattr)
+	[!_LIBC]: New macros.
+	(call_fclose): New function.
+	(getpass): Use it.  Save tty stream separately; this simplifies the
+	code and makes it more reliable if stdin happens to equal stdout.
+	Invoke __fsetlocking on tty.
+	Handle thread cancellation if needed.
+	Namespace cleanup (use __tcgetattr, __getline).
+	Use bool for Booleans.
+	[USE_IN_LIBIO]: Handle wide streams.
+	[!_LIBC]: Unconditionally do the fseek, since we don't know what
+	stream might go where.
+
+	* unlocked-io.h: Include <stdio.h>, so that the caller
+	doesn't have to include <stdio.h> before us.
+	(clearerr_unlocked, feof_unlocked, ferror_unlocked,
+	fflush_unlocked, fgets_unlocked, fputc_unlocked, fputs_unlocked,
+	fread_unlocked, fwrite_unlocked, getc_unlocked, getchar_unlocked,
+	putc_unlocked, putchar_unlocked): Define to the unlocked counterpart
+	if not declared, so that we can use getpass.c code from libc without
+	rewriting it.
+	(flockfile, ftrylockfile, funlockfile): New macros.
+
 2003-10-06  Bruno Haible  <bruno@clisp.org>
 
 	* version-etc-2.h: Remove file.

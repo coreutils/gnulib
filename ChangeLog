@@ -1,3 +1,7 @@
+2003-10-08  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/getpass: Depend on stdbool.
+
 2003-10-06  Bruno Haible  <bruno@clisp.org>
 
 	* modules/version-etc-2: Remove file.

@@ -8,6 +8,7 @@ m4/getpass.m4
 Depends-on:
 unlocked-io
 getline
+stdbool
 
 configure.ac:
 gl_FUNC_GETPASS
