@@ -1,4 +1,8 @@
 2004-04-20  Jim Meyering  <jim@meyering.net>
+
+	* getndelim2.c (getndelim2): Upon realloc failure, don't leak memory.
+
+2004-04-20  Jim Meyering  <jim@meyering.net>
             Bruno Haible  <bruno@clisp.org>
 
 	* localcharset.c (get_charset_aliases) [!VMS && !WIN32]: Don't leak
