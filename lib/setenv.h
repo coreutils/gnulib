@@ -1,5 +1,5 @@
 /* Setting environment variables.
-   Copyright (C) 2001-2002 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #if HAVE_SETENV || HAVE_UNSETENV
 
 /* Get setenv(), unsetenv() declarations.  */
-#include <stdlib.h>
+# include <stdlib.h>
 
 #endif
 
