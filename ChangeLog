@@ -2,10 +2,13 @@
 
 	* gnulib-tool: Untabify. Initialize supplied_libname.
 	(func_usage): More homogenous output.
-	(func_modules_transitive_closure): New function.
+	(func_modules_transitive_closure, func_modules_to_filelist): New
+	functions.
 	(func_import): New function, extracted from big case statement. Use
-	func_get_license, func_modules_transitive_closure.
-	(func_create_testdir): Use func_modules_transitive_closure.
+	func_get_license, func_modules_transitive_closure,
+	func_modules_to_filelist.
+	(func_create_testdir): Use func_modules_transitive_closure,
+	func_modules_to_filelist.
 
 2004-10-11  Bruno Haible  <bruno@clisp.org>
 

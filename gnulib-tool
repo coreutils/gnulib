@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-10-15 15:37:43 $'
+cvsdatestamp='$Date: 2004-10-15 15:40:45 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -385,6 +385,23 @@ func_modules_transitive_closure ()
   done
 }
 
+# func_modules_to_filelist
+# Input:
+# - modules         list of modules, including dependencies
+# Output:
+# - files           list of files
+func_modules_to_filelist ()
+{
+  files=
+  for module in $modules; do
+    func_verify_module
+    if test -n "$module"; then
+      files="$files "`func_get_filelist $module`
+    fi
+  done
+  files=`for f in $files; do echo $f; done | sort | uniq`
+}
+
 # func_import modules
 # Uses also the variables
 # - destdir         target directory
@@ -415,14 +432,7 @@ func_import ()
   fi
 
   # Determine final file list.
-  files=
-  for module in $modules; do
-    func_verify_module
-    if test -n "$module"; then
-      files="$files "`func_get_filelist $module`
-    fi
-  done
-  files=`for f in $files; do echo $f; done | sort | uniq`
+  func_modules_to_filelist
   echo "File list:"
   echo "$files" | sed -e 's/^/  /'
 
@@ -591,14 +601,7 @@ func_create_testdir ()
   echo "$modules" | sed -e 's/^/  /'
 
   # Determine final file list.
-  files=
-  for module in $modules; do
-    func_verify_module
-    if test -n "$module"; then
-      files="$files "`func_get_filelist $module`
-    fi
-  done
-  files=`for f in $files; do echo $f; done | sort | uniq`
+  func_modules_to_filelist
   echo "File list:"
   echo "$files" | sed -e 's/^/  /'
 
