@@ -1,3 +1,39 @@
+2002-12-11  Bruno Haible  <bruno@clisp.org>
+
+	* setenv.h: Rewritten to cope with systems that have setenv() but not
+	unsetenv().
+	* setenv.c, unsetenv.c: Taken from glibc-2.2.4 with the following
+	modifications:
+
+	2002-12-11  Bruno Haible  <bruno@clisp.org>
+
+		* setenv.c (alloca): Fall back to malloc.
+		(freea): New macro.
+		(setenv): Use freea() to free memory allocated with alloca().
+
+	2002-11-13  Bruno Haible  <bruno@clisp.org>
+
+		* setenv.c (compar_fn_t, __add_to_environ, setenv): Use ANSI C
+		function declarations.
+		* unsetenv.c (unsetenv): Likewise.
+
+	2002-03-04  Bruno Haible  <bruno@clisp.org>
+
+		Portability to AIX 4.3.3.
+		* unsetenv.c: New file, extracted from setenv.c.
+		* setenv.c: Move the unsetenv() function to unsetenv.c.
+
+	2001-12-20  Bruno Haible  <bruno@clisp.org>
+
+		* setenv.c (__add_to_environ): Don't call realloc(NULL,...),
+		use malloc instead. For SunOS4.
+
+	2001-12-11  Bruno Haible  <bruno@clisp.org>
+
+		* setenv.c: Declare alloca.
+		(compar_fn_t): New typedef.
+		(KNOWN_VALUE, STORE_VALUE): Use it.
+
 2002-12-10  Paul Eggert  <eggert@twinsun.com>
 
 	Port exclude.c and exclude.h to more non-GNU systems, e.g. Solaris 7.
