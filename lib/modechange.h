@@ -46,11 +46,11 @@ struct mode_change
 
 #ifndef __P
 # if defined (__GNUC__) || (defined (__STDC__) && __STDC__)
-#  define __P(args) args
+#  define __P(Args) Args
 # else
-#  define __P(args) ()
-# endif  /* GCC.  */
-#endif  /* Not __P.  */
+#  define __P(Args) ()
+# endif
+#endif
 
 struct mode_change *mode_compile __P ((const char *, unsigned));
 unsigned short mode_adjust __P ((unsigned, const struct mode_change *));
