@@ -1,5 +1,5 @@
-# stpncpy.m4 serial 1
-dnl Copyright (C) 2002-2003 Free Software Foundation, Inc.
+# stpncpy.m4 serial 2
+dnl Copyright (C) 2002-2003, 2005 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -51,6 +51,8 @@ int main () {
     AC_DEFINE(HAVE_STPNCPY, 1,
       [Define if you have the stpncpy() function and it works.])
   else
+    AC_DEFINE([stpncpy], [gnu_stpncpy],
+      [Define to a replacement function name for stpncpy().])
     AC_LIBOBJ([stpncpy])
     gl_PREREQ_STPNCPY
   fi

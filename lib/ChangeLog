@@ -1,3 +1,8 @@
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.c: Remove HAVE_STPNCPY and gnu_stpncpy renaming, redundant
+	because stpncpy.m4 takes care of it.
+
 2004-01-24  Bruno Haible  <bruno@clisp.org>
 
 	* progreloc.c (xstrdup): Define as strdup if no xmalloc should be used.
