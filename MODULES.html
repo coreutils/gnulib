@@ -87,6 +87,10 @@
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Memory allocation with expensive empty allocations (glibc compatible).
       </TR>
       <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=free">free</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Work around incompatibility on older systems where free (NULL) fails.
+      </TR>
+      <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=malloc">malloc</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/malloc.html">malloc</A>() function that is glibc compatible.
       </TR>
@@ -228,6 +232,10 @@
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=timegm">timegm</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Convert calendar time to simple time, inverse of mktime.
+      </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=tzset">tzset</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">tzset - initialize time conversion information
       </TR>
     </TABLE>
     <H3><A HREF="#ansic_ext_stdio">Input/Output &lt;stdio.h&gt;</A></H3>
@@ -377,6 +385,10 @@ memory allocation.
     <H2><A HREF="#isoc_ext">Extra functions based on ISO C 99</A></H2>
     <H3><A HREF="#isoc_ext_stdlib_conv">Numeric conversion functions &lt;stdlib.h&gt;</A></H3>
     <TABLE>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=inttostr">inttostr</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Convert integers to printable strings.
+      </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xstrtoimax">xstrtoimax</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Convert string to 'intmax_t', with error checking.
@@ -769,6 +781,10 @@ usually the host name including FQDN.
     <H3><A HREF="#posix_ext_exec">Executing programs</A></H3>
     <TABLE>
       <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=cloexec">cloexec</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Set or clear the close-on-exec descriptor flag.
+      </TR>
+      <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=findprog">findprog</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Locating a program in PATH.
       </TR>
@@ -1025,6 +1041,13 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include &lt;eealloc.h&gt;
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/eealloc.h">eealloc.h</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/eealloc.m4">eealloc.m4</A><BR>gl_EEALLOC
+        <TD ALIGN=LEFT VALIGN=TOP>---
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=free"></A><A HREF="modules/free">free</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/free.c">free.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/free.m4">free.m4</A><BR>gl_FUNC_FREE
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
@@ -1366,6 +1389,13 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/timegm.c">timegm.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/timegm.m4">timegm.m4</A><BR>gl_FUNC_TIMEGM
         <TD ALIGN=LEFT VALIGN=TOP>mktime<BR>time_r
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=tzset"></A><A HREF="modules/tzset">tzset</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/time.h.html">time.h</A>&gt;
+        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/tzset.m4">tzset.m4</A><BR>gl_FUNC_TZSET_CLOBBER
+        <TD ALIGN=LEFT VALIGN=TOP>gettimeofday
       </TR>
     </TABLE>
     <H3><A NAME="ansic_ext_stdio">Input/Output &lt;stdio.h&gt;</A></H3>
@@ -1761,6 +1791,13 @@ variables.
         <TH ALIGN=LEFT>Implementation
         <TH ALIGN=LEFT>Autoconf macro
         <TH ALIGN=LEFT>Depends on
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=inttostr"></A><A HREF="modules/inttostr">inttostr</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/inttostr.h">inttostr.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/imaxtostr.c">imaxtostr.c</A><BR><A HREF="lib/inttostr.c">inttostr.c</A><BR><A HREF="lib/offtostr.c">offtostr.c</A><BR><A HREF="lib/umaxtostr.c">umaxtostr.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/intmax_t.m4">intmax_t.m4</A><BR><A HREF="m4/inttostr.m4">inttostr.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR>gl_INTTOSTR
+        <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xstrtoimax"></A><A HREF="modules/xstrtoimax">xstrtoimax</A>
@@ -2560,6 +2597,13 @@ variables.
         <TH ALIGN=LEFT>Depends on
       </TR>
       <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=cloexec"></A><A HREF="modules/cloexec">cloexec</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/cloexec.h">cloexec.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/cloexec.c">cloexec.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/cloexec.m4">cloexec.m4</A><BR>gl_CLOEXEC
+        <TD ALIGN=LEFT VALIGN=TOP>stdbool
+      </TR>
+      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=findprog"></A><A HREF="modules/findprog">findprog</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/findprog.h">findprog.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/findprog.c">findprog.c</A>
@@ -2739,51 +2783,6 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
     </TABLE>
-    <H2>Unclassified modules - please update MODULES.html.sh</H2>
-    <TABLE>
-      <TR>
-        <TH ALIGN=LEFT>modules/
-        <TH ALIGN=LEFT>lib/
-        <TH ALIGN=LEFT>lib/
-        <TH ALIGN=LEFT>m4/
-        <TH ALIGN=LEFT>&nbsp;
-      </TR>
-      <TR>
-        <TH ALIGN=LEFT>Module
-        <TH ALIGN=LEFT>Header
-        <TH ALIGN=LEFT>Implementation
-        <TH ALIGN=LEFT>Autoconf macro
-        <TH ALIGN=LEFT>Depends on
-      </TR>
-      <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=cloexec"></A><A HREF="modules/cloexec">cloexec</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/cloexec.h">cloexec.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/cloexec.c">cloexec.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/cloexec.m4">cloexec.m4</A><BR>gl_CLOEXEC
-        <TD ALIGN=LEFT VALIGN=TOP>stdbool
-      </TR>
-      <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=free"></A><A HREF="modules/free">free</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/free.c">free.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/free.m4">free.m4</A><BR>gl_FUNC_FREE
-        <TD ALIGN=LEFT VALIGN=TOP>---
-      </TR>
-      <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=inttostr"></A><A HREF="modules/inttostr">inttostr</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/inttostr.h">inttostr.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/imaxtostr.c">imaxtostr.c</A><BR><A HREF="lib/inttostr.c">inttostr.c</A><BR><A HREF="lib/offtostr.c">offtostr.c</A><BR><A HREF="lib/umaxtostr.c">umaxtostr.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/intmax_t.m4">intmax_t.m4</A><BR><A HREF="m4/inttostr.m4">inttostr.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR>gl_INTTOSTR
-        <TD ALIGN=LEFT VALIGN=TOP>---
-      </TR>
-      <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=tzset"></A><A HREF="modules/tzset">tzset</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/time.h.html">time.h</A>&gt;
-        <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/tzset.m4">tzset.m4</A><BR>gl_FUNC_TZSET_CLOBBER
-        <TD ALIGN=LEFT VALIGN=TOP>gettimeofday
-      </TR>
-    </TABLE>
     <H2>Lone files - please create new modules containing them</H2>
     <PRE>
 <A HREF="lib/progreloc.c">lib/progreloc.c</A>
@@ -2820,6 +2819,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 31 March 2004.
+    Generated from <CODE>MODULES.html.sh</CODE> on 13 April 2004.
   </BODY>
 </HTML>
