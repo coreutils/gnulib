@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, extensions, fatal, fatal-signal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, progname, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, allocsa, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, eealloc, error, euidaccess, exclude, exit, exitfail, extensions, fatal, fatal-signal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, progname, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -83,6 +83,10 @@
     <H3><A HREF="#ansic_enh_stdlib_memory">Memory management functions &lt;stdlib.h&gt;</A></H3>
     <TABLE>
       <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=eealloc">eealloc</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Memory allocation with expensive empty allocations (glibc compatible).
+      </TR>
+      <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=malloc">malloc</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/malloc.html">malloc</A>() function that is glibc compatible.
       </TR>
@@ -112,6 +116,14 @@
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=alloca">alloca</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Memory allocation on the stack.
+      </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=allocsa">allocsa</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Safe automatic memory allocation.
+      </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xallocsa">xallocsa</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Safe automatic memory allocation with out of memory checking.
       </TR>
     </TABLE>
     <H3><A HREF="#ansic_ext_stdlib_arith">Integer arithmetic functions &lt;stdlib.h&gt;</A></H3>
@@ -1001,6 +1013,13 @@ variables.
         <TH ALIGN=LEFT>Depends on
       </TR>
       <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=eealloc"></A><A HREF="modules/eealloc">eealloc</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include &lt;eealloc.h&gt;
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/eealloc.h">eealloc.h</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/eealloc.m4">eealloc.m4</A><BR>gl_EEALLOC
+        <TD ALIGN=LEFT VALIGN=TOP>---
+      </TR>
+      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=malloc"></A><A HREF="modules/malloc">malloc</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/malloc.c">malloc.c</A>
@@ -1077,6 +1096,20 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/alloca.m4">alloca.m4</A><BR>gl_FUNC_ALLOCA
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=allocsa"></A><A HREF="modules/allocsa">allocsa</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/allocsa.h">allocsa.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/allocsa.c">allocsa.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/allocsa.m4">allocsa.m4</A><BR><A HREF="m4/eealloc.m4">eealloc.m4</A><BR><A HREF="m4/longlong.m4">longlong.m4</A><BR><A HREF="m4/longdouble.m4">longdouble.m4</A><BR>gl_ALLOCSA
+        <TD ALIGN=LEFT VALIGN=TOP>alloca
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xallocsa"></A><A HREF="modules/xallocsa">xallocsa</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xallocsa.h">xallocsa.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xallocsa.c">xallocsa.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>allocsa<BR>xalloc
+      </TR>
     </TABLE>
     <H3><A NAME="ansic_ext_stdlib_arith">Integer arithmetic functions &lt;stdlib.h&gt;</A></H3>
     <TABLE>
@@ -1137,7 +1170,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/setenv.h">setenv.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/setenv.c">setenv.c</A><BR><A HREF="lib/unsetenv.c">unsetenv.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/setenv.m4">setenv.m4</A><BR>gt_FUNC_SETENV
-        <TD ALIGN=LEFT VALIGN=TOP>alloca
+        <TD ALIGN=LEFT VALIGN=TOP>allocsa
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xsetenv"></A><A HREF="modules/xsetenv">xsetenv</A>
@@ -2751,6 +2784,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 16 January 2004.
+    Generated from <CODE>MODULES.html.sh</CODE> on 21 January 2004.
   </BODY>
 </HTML>
