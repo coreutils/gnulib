@@ -1,3 +1,7 @@
+2004-01-13  Karl Berry  <karl@gnu.org>
+
+	* install-sh: update from automake.
+
 2004-01-09  Karl Berry  <karl@gnu.org>
 
 	* install-sh: update from automake.
