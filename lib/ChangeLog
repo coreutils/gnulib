@@ -1,3 +1,9 @@
+2004-12-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* error.c [!_LIBC && !ENABLE_NLS]: Do not include "gettext.h";
+	not needed.  This removes a dependency on the gettext module.
+	[defined _LIBC]: Do not include <libintl.h>; not needed.
+
 2004-12-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* c-strtod.c (STRTOD): Depend on HAVE_C99_STRTOLD, not
