@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-10-15 16:45:28 $'
+cvsdatestamp='$Date: 2004-10-15 16:51:32 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -450,13 +450,26 @@ func_emit_lib_Makefile_am ()
   echo "CLEANFILES ="
   echo "DISTCLEANFILES ="
   echo "MAINTAINERCLEANFILES ="
+  echo
   for module in $modules; do
     func_verify_module
     if test -n "$module"; then
-      func_get_automake_snippet "$module" | sed -e "s,lib_SOURCES,$libname"'_a_SOURCES,g' -e "s,lib_OBJECTS,$libname"'_a_OBJECTS,g'
-      if test "$module" = 'alloca'; then
-        echo "${libname}_${libext}_LIBADD += @{perhapsLT}ALLOCA@"
+      {
+        func_get_automake_snippet "$module" | sed -e "s,lib_SOURCES,$libname"'_a_SOURCES,g' -e "s,lib_OBJECTS,$libname"'_a_OBJECTS,g'
+        if test "$module" = 'alloca'; then
+          echo "${libname}_${libext}_LIBADD += @{perhapsLT}ALLOCA@"
+        fi
+      } > amsnippet.tmp
+      # Skip the contents if its entirely empty.
+      if grep '[^ 	]' amsnippet.tmp > /dev/null ; then
+        echo "## begin gnulib module $module"
+        echo
+        cat amsnippet.tmp
+        echo
+        echo "## end   gnulib module $module"
+        echo
       fi
+      rm -f amsnippet.tmp
     fi
   done
 }

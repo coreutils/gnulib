@@ -1,5 +1,11 @@
 2004-10-15  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_emit_lib_Makefile_am): Add markers to separate
+	the portions belonging to each module.
+	Suggested by Derek Robert Price <derek@ximbiot.com>.
+
+2004-10-15  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool: Untabify. Initialize supplied_libname.
 	(func_usage): More homogenous output.
 	(func_modules_transitive_closure, func_modules_to_filelist,
