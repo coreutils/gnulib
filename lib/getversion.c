@@ -1,5 +1,5 @@
 /* getversion.c -- select backup filename type
-   Copyright (C) 1990, 1998, 2000 Free Software Foundation, Inc.
+   Copyright (C) 1990, 1998, 2000, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,9 +23,7 @@
 
 #include "backupfile.h"
 
-#if STDC_HEADERS
-# include <stdlib.h>
-#endif
+#include <stdlib.h>
 
 int argmatch ();
 void invalid_arg ();
