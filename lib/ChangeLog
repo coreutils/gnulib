@@ -1,3 +1,39 @@
+2005-01-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merge changes from coreutils, as described below in several
+	changelogs dated today.
+
+	* save-cwd.c: Include "save-cwd.h" before other include files.
+	(O_DIRECTORY): Remove; not needed here, since "." must be
+	a directory.  All uses removed.
+	(save_cwd): Use __sgi || __sun, not sun || __sun.  __sun is
+	universal on Suns, and we also need to test for IRIX.
+	Revamp code to use 'if' rather than '#if'.
+	Avoid unnecessary comparison of cwd->desc to 0.
+
+	* utimens.c (futimens): Robustify the previous patch, by checking
+	for known valid error numbers rather than observed invalid ones.
+
+2005-01-18  Jim Meyering  <jim@meyering.net>
+
+	* version-etc.c (version_etc_copyright): Update copyright date.
+
+	* utimens.c (futimens): Account for the fact that futimes
+	can also fail with errno == ENOSYS or errno == ENOENT.
+	Patch from Dmitry V. Levin.
+
+	Change the name of the robust chdir function from chdir to chdir_long.
+	* save-cwd.c: Include chdir-long.h rather than chdir.h.
+	(restore_cwd): Use chdir_long, not chdir.
+	* chdir-long.c: Renamed from chdir.c.
+	* chdir-long.h: Renamed from chdir.h.
+	[!defined PATH_MAX]: Define chdir_long to chdir on systems like the Hurd.
+2005-01-18  Bob Proulx  <bob@proulx.com>
+
+	* obstack.c [DEFAULT_ALIGNMENT]: Use an intermediate type to simplify
+	offsetof() macro construct to avoid compile failure with native HP-UX
+	11.0 ANSI C compiler.
+
 2005-01-06  Bruno Haible  <bruno@clisp.org>
 
 	* stpncpy.c: Remove HAVE_STPNCPY and gnu_stpncpy renaming, redundant

@@ -1,3 +1,30 @@
+2005-01-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merge from coreutils.
+	* ullong_max.m4: New file.
+	* jm-macros.m4 (gl_MACROS): Require gl_ULLONG_MAX.
+	(gl_MACROS): Assume localeconv exists.
+
+2005-01-18  Jim Meyering  <jim@meyering.net>
+
+	Merge from coreutils.
+	* chdir-long.m4, openat.m4: New files.
+	* save-cwd.m4 (gl_SAVE_CWD): Add AC_LIBSOURCES for save-cwd.c,
+	save-cwd.h.  Add AC_LIBOBJ for save-cwd.
+	* chown.m4 (gl_FUNC_CHOWN): When cross-compiling, assume that chown
+	is sane and DOES follow symlinks.  Besides, testing 20 different
+	systems found no broken chown implementations.
+	Prompted by a change in rsync's copy of this macro.
+	* jm-macros.m4 (gl_MACROS): Require gl_FUNC_CHDIR_LONG.
+
+	* lchown.m4 (gl_FUNC_LCHOWN): Use AC_LIBSOURCES.
+
+	* utimes.m4: Work around tests/touch/empty-file failure on a system
+	(sparc64, Linux-2.4.28, glibc-2.3.3) that didn't honor utimes'
+	NULL-means-set-to-current-time semantics.
+	Remove temporary file immediately, rather than waiting
+	for configure's at-exit trap code to do it.
+
 2005-01-18  Bruno Haible  <bruno@clisp.org>
 
 	* allocsa.m4, codeset.m4, copy-file.m4, eaccess.m4, eealloc.m4:

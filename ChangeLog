@@ -1,3 +1,11 @@
+2005-01-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/ullong_max: New file.
+
+	* modules/chdir-long, modules/openat: New files.
+	* modules/save-cwd (Depends-on): Depend on chdir-long.
+	(Makefile.am): Remove lib_SOURCES; now handled by AC_LIBSOURCES.
+
 2005-01-11  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
 	* modules/argp: Depend on vsnprintf
