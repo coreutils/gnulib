@@ -26,6 +26,7 @@ strndup
 restrict
 strcase
 extensions
+vsnprintf
 
 configure.ac:
 gl_ARGP
