@@ -1,5 +1,11 @@
 2003-08-13  Paul Eggert  <eggert@twinsun.com>
 
+	* exclude.c: Include <ctype.h>
+	(IN_CTYPE_DOMAIN): New macro.
+	(is_space): New fn.
+	(add_exclude_file): If LINE_END is a space, ignore trailing spaces
+	and empty lines.
+
 	* argp-help.c, argp-parse.c, config.charset, getopt.h:
 	Undo previous (whitespace-only) change.
 
