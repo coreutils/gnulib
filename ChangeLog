@@ -1,3 +1,7 @@
+2003-05-30  Bruno Haible  <bruno@clisp.org>
+
+	* modules/gettext: Add files m4/nls.m4 and m4/po.m4.
+
 2003-05-22    <karl@gnu.org>
 
 	* gnulib-tool (func_usage): =LIBRARY not =libRARY in help msg.
