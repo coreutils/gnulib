@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.37 2004-04-21 12:53:26 karl Exp $
+# $Id: srclist.txt,v 1.38 2004-05-18 05:18:41 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -80,9 +80,11 @@ $LIBCSRC/argp/argp-eexst.c		lib gpl
 $LIBCSRC/argp/argp-fmtstream.c		lib gpl
 $LIBCSRC/argp/argp-fmtstream.h		lib gpl
 $LIBCSRC/argp/argp-fs-xinl.c		lib gpl
-$LIBCSRC/argp/argp-help.c		lib gpl
+# Currently not quite the same, due to alloca-related patch in gnulib.
+#$LIBCSRC/argp/argp-help.c		lib gpl
 $LIBCSRC/argp/argp-namefrob.h		lib gpl
-$LIBCSRC/argp/argp-parse.c		lib gpl
+# Currently not quite the same, due to alloca-related patch in gnulib.
+#$LIBCSRC/argp/argp-parse.c		lib gpl
 $LIBCSRC/argp/argp-pv.c			lib gpl
 $LIBCSRC/argp/argp-pvh.c		lib gpl
 $LIBCSRC/argp/argp-xinl.c		lib gpl

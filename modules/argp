@@ -17,6 +17,7 @@ lib/argp-xinl.c
 m4/argp.m4
 
 Depends-on:
+alloca
 getopt
 strchrnul
 sysexits

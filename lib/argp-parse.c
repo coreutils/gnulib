@@ -21,21 +21,7 @@
 #include <config.h>
 #endif
 
-/* AIX requires this to be the first thing in the file.  */
-#ifndef __GNUC__
-# if HAVE_ALLOCA_H || defined _LIBC
-#  include <alloca.h>
-# else
-#  ifdef _AIX
-#pragma alloca
-#  else
-#   ifndef alloca /* predefined by HP cc +Olibcalls */
-char *alloca ();
-#   endif
-#  endif
-# endif
-#endif
-
+#include <alloca.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>

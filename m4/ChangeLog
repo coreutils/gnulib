@@ -1,3 +1,8 @@
+2004-05-17  Derek R. Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	* argp: Depend on alloca.
+
 2004-05-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* alloca.m4 (gl_FUNC_ALLOCA): Define HAVE_ALLOCA_H always,
