@@ -64,6 +64,12 @@ Other things:
 * Try to prevent that the files are built if they aren't needed on a
   platform.  Valid excuses to this rule include ELIDE constructs that
   lead to an empty .o file (see getopt module).
+* If you have a .c file that leads to an empty .o file on some platforms
+  (through some big #if around all the code), still make sure that after
+  preprocessing the compilation unit is not empty. This is usually fulfilled
+  if you #include <stdio.h> or #include <sys/types.h> before the big #if;
+  otherwise you need to add a #else branch containing "typedef int dummy;"
+  or "extern int dummy;".
 
 High Quality
 ============
