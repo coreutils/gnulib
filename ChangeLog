@@ -1,3 +1,9 @@
+2003-08-12  Paul Eggert  <eggert@twinsun.com>
+
+	Merge from coreutils.
+	* modules/euidaccess: Add lib_SOURCES, include for new
+	file euidaccess.h
+
 2003-08-11  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/gnu-source, m4/gnu-source.m4:

@@ -12,8 +12,10 @@ configure.ac:
 gl_FUNC_EUIDACCESS
 
 Makefile.am:
+lib_SOURCES += euidaccess.h
 
 Include:
+"euidaccess.h"
 
 Maintainer:
 Jim Meyering, glibc

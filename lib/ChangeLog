@@ -1,3 +1,12 @@
+2003-08-12  Paul Eggert  <eggert@twinsun.com>
+
+	Merge from coreutils.
+	* euidaccess.h: New file.
+	* euidaccess.c: Include it.
+	* .cppi-disable: Add printf-args.h, printf-parse.h, stdbool_.h,
+	vasnprintf.h, vasprintf.h.  Remove strdup.c, gettext.h.
+	* regex.h, strdup.c, strtoll.c, strtoul.c: Normalize white space.
+	
 2003-08-11  Bruno Haible  <bruno@clisp.org>
 
 	* vasnprintf.c (local_wcslen): New function, for Solaris 2.5.1.
