@@ -35,7 +35,9 @@
 #ifndef NINDIR
 /* Some SysV's, like Irix, seem to lack these.  Hope they're correct. */
 /* Size of a indirect block, in bytes. */
+#ifndef BSIZE
 #define BSIZE 1024
+#endif
 
 /* Number of inode pointers per indirect block. */
 #define NINDIR (BSIZE/sizeof(daddr_t))
