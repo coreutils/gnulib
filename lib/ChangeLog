@@ -7,6 +7,21 @@
 	* getloadavg.c: Change copyright notice and spacing to conform to
 	GNU coding style.
 
+	Merge from coreutils.
+	* error.c [!USE_IN_LIBIO]: Omit this case; assume USE_IN_LIBIO is 1.
+	From glibc.
+	* getdate.y (date): Also accept dates like May-23-2003; suggestion
+	from Karl Berry, implemented by Jim Meyering.
+	* getgroups.c: Include "xalloc.h" instead of declaring xalloc fns;
+	from Dmitry V. Levin.
+	Remove anachronistic cast of xrealloc.
+	* fnmatch_.h (__const): Remove.  Use 'const'.
+	* fnmatch_loop.c (NEW_PATTERN): Cast alloca return value to proper
+	type. Otherwise, it wouldn't compile with at least /bin/cc on
+	ymp-cray-unicos9.0.2.X.
+	Combine two mostly-identical uses of alloca into one.
+	Thanks to the Cray-Cyber project for access to a Cray Y-MP.
+
 2003-08-04  Dave Love <d.love@dl.ac.uk>
 
 	[From Emacs.]
