@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.38 2004-05-18 05:18:41 eggert Exp $
+# $Id: srclist.txt,v 1.39 2004-05-18 12:22:41 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -29,7 +29,7 @@ $GETTEXT/gettext-runtime/libasprintf/printf-args.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/printf-args.h	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/printf-parse.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/printf-parse.h	lib gpl
-$GETTEXT/gettext-runtime/libasprintf/vasnprintf.c	lib gpl
+#$GETTEXT/gettext-runtime/libasprintf/vasnprintf.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/vasnprintf.h	lib gpl
 #$GETTEXT/gettext-runtime/libasprintf/vasprintf.c	lib gpl
 # Ugly: we currently need to take vasprintf.h from the wrong directory.

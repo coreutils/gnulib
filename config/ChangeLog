@@ -1,3 +1,7 @@
+2004-05-18  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt: break link for vasnprintf.c.
+
 2004-05-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Break link for argp-help.c and argp-parse.c until
