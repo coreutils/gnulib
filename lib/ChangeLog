@@ -1,3 +1,10 @@
+2003-07-14  Paul Eggert  <eggert@twinsun.com>
+
+	* ceill.c, expl.c, floorl.c, frexpl.c, ldexpl.c, mathl.h,
+	sincosl.c, sqrtl.c, trigl.c, trigl.h, poll.c, poll_.h, mkstemp.c,
+	unicodeio.c, unicodeio.h, unlocked-io.h:
+	Switch from LGPL to GPL.
+
 2003-07-11  Alexandre Duret-Lutz  <adl@gnu.org>
 
 	* obstack.h (__INT_TO_PTR): Revert change of 2003-03-13;
