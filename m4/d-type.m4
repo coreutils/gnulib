@@ -1,4 +1,4 @@
-#serial 3
+#serial 2
 
 dnl From Jim Meyering.
 dnl
