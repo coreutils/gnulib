@@ -2,6 +2,8 @@
 
 	Update from coreutils:
 
+	* mktime.c: Merge in changes from libc.
+
 	Avoid a link-time failure on some Linux systems.
 	* mktime.c (STATIC): Define to be empty (_LIBC) or `static' (otherwise).
 	(__mon_yday): Declare with the STATIC attribute.
