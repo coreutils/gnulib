@@ -17,6 +17,23 @@
 
 /* Written by Jim Kingdon and David MacKenzie. */
 %{
+
+#ifdef HAVE_CONFIG_H
+#if defined (CONFIG_BROKETS)
+/* We use <config.h> instead of "config.h" so that a compilation
+   using -I. -I will use ./config.h rather than /config.h
+   (which it would do because it found this file in ).  */
+#include <config.h>
+#else
+#include "config.h"
+#endif
+#endif
+
+/* The following block of alloca-related preprocessor directives is here
+   solely to allow compilation by non GNU-C compilers of the C parser
+   produced from this file by old versions of bison.  Newer versions of
+   bison include a block similar to this one in bison.simple.  */
+   
 #ifdef __GNUC__
 #define alloca __builtin_alloca
 #else
@@ -28,17 +45,6 @@
 #else
 void *alloca ();
 #endif
-#endif
-#endif
-
-#ifdef HAVE_CONFIG_H
-#if defined (CONFIG_BROKETS)
-/* We use <config.h> instead of "config.h" so that a compilation
-   using -I. -I will use ./config.h rather than /config.h
-   (which it would do because it found this file in ).  */
-#include <config.h>
-#else
-#include "config.h"
 #endif
 #endif
 
