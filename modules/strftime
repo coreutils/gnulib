@@ -8,6 +8,7 @@ m4/tm_gmtoff.m4
 m4/strftime.m4
 
 Depends-on:
+tzset
 
 configure.ac:
 jm_FUNC_GNU_STRFTIME

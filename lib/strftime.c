@@ -492,25 +492,11 @@ static CHAR_T const month_name[][10] =
 # define ns 0
 #endif
 
-#if !defined _LIBC && HAVE_TZNAME && HAVE_TZSET
-  /* Solaris 2.5 tzset sometimes modifies the storage returned by localtime.
-     Work around this bug by copying *tp before it might be munged.  */
-  size_t _strftime_copytm __P ((char *, size_t, const char *,
-			        const struct tm * extra_args_spec_iso));
-  size_t
-  my_strftime (s, maxsize, format, tp extra_args)
-      CHAR_T *s;
-      size_t maxsize;
-      const CHAR_T *format;
-      const struct tm *tp;
-      extra_args_spec
-  {
-    struct tm tmcopy;
-    tmcopy = *tp;
-    return _strftime_copytm (s, maxsize, format, &tmcopy extra_args);
-  }
-# undef my_strftime
-# define my_strftime _strftime_copytm
+#if ! defined _LIBC && ! HAVE_RUN_TZSET_TEST
+/* Solaris 2.5.x and 2.6 tzset sometimes modify the storage returned
+   by localtime.  On such systems, we must use the tzset and localtime
+   wrappers to work around the bug.  */
+"you must run the autoconf test for a working tzset function"
 #endif
 
 
@@ -614,7 +600,7 @@ my_strftime (s, maxsize, format, tp extra_args LOCALE_PARAM)
       int pad = 0;		/* Padding for number ('-', '_', or 0).  */
       int modifier;		/* Field modifier ('E', 'O', or 0).  */
       int digits;		/* Max digits for numeric format.  */
-      int number_value; 	/* Numeric value to be printed.  */
+      int number_value;		/* Numeric value to be printed.  */
       int negative_number;	/* 1 if the number is negative.  */
       const CHAR_T *subfmt;
       CHAR_T *bufp;
@@ -1028,7 +1014,7 @@ my_strftime (s, maxsize, format, tp extra_args LOCALE_PARAM)
 	    do
 	      *--bufp = u % 10 + L_('0');
 	    while ((u /= 10) != 0);
-  	  }
+	  }
 
 	do_number_sign_and_padding:
 	  if (negative_number)
@@ -1170,13 +1156,17 @@ my_strftime (s, maxsize, format, tp extra_args LOCALE_PARAM)
 	  goto subformat;
 
 	case L_('r'):
-#ifdef _NL_CURRENT
+#if !defined _NL_CURRENT && HAVE_STRFTIME
+	  goto underlying_strftime;
+#else
+# ifdef _NL_CURRENT
 	  if (*(subfmt = (const CHAR_T *) _NL_CURRENT (LC_TIME,
 						       NLW(T_FMT_AMPM)))
 	      == L_('\0'))
-#endif
+# endif
 	    subfmt = L_("%I:%M:%S %p");
 	  goto subformat;
+#endif
 
 	case L_('S'):
 	  if (modifier == L_('E'))
@@ -1185,7 +1175,7 @@ my_strftime (s, maxsize, format, tp extra_args LOCALE_PARAM)
 	  DO_NUMBER (2, tp->tm_sec);
 
 	case L_('s'):		/* GNU extension.  */
-  	  {
+	  {
 	    struct tm ltm;
 	    time_t t;
 
