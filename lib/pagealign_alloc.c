@@ -44,6 +44,9 @@
 #include "exit.h"
 #include "getpagesize.h"
 #include "xalloc.h"
+#include "gettext.h"
+
+#define _(str) gettext (str)
 
 
 #if HAVE_MMAP || ! HAVE_POSIX_MEMALIGN
@@ -129,7 +132,7 @@ pagealign_alloc (size_t size)
     {
       fd = open ("/dev/zero", O_RDONLY, 0666);
       if (fd < 0)
-	error (EXIT_FAILURE, errno, "Failed to open /dev/zero for read");
+	error (EXIT_FAILURE, errno, _("Failed to open /dev/zero for read"));
     }
 # endif /* HAVE_MAP_ANONYMOUS */
   ret = mmap (NULL, size, PROT_READ | PROT_WRITE, flags, fd, 0);
