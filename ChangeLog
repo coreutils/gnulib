@@ -1,3 +1,8 @@
+2004-11-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/canonicalize (Depends-on): Add xreadlink.
+	Problem reported by James Youngman.
+
 2004-11-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/canon-host (Depends-on): Add strdup.
