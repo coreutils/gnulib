@@ -121,8 +121,10 @@ fstype_to_string (t)
       return "ufs";
     case MOUNT_NFS:
       return "nfs";
+#ifdef MOUNT_PC
     case MOUNT_PC:
       return "pc";
+#endif
 #ifdef MOUNT_MFS
     case MOUNT_MFS:
       return "mfs";
