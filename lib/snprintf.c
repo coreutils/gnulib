@@ -42,19 +42,19 @@ snprintf (char *str, size_t size, const char *format, ...)
   va_list args;
 
   va_start (args, format);
-  output = vasnprintf (NULL, &len, format, args);
+  len = size;
+  output = vasnprintf (str, &len, format, args);
   va_end (args);
 
   if (!output)
     return -1;
 
-  if (str && size > 0)
-    {
-      memcpy (str, output, MIN (len + 1, size));
+  if (str != NULL)
+    if (len > size - 1) /* equivalent to: (size > 0 && len >= size) */
       str[size - 1] = '\0';
-    }
 
-  free (output);
+  if (output != str)
+    free (output);
 
   return len;
 }

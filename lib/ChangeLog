@@ -1,3 +1,8 @@
+2004-10-07  Bruno Haible  <bruno@clisp.org>
+
+	* snprintf.c (snprintf): Avoid a memory allocation if the result fits
+	into the provided buffer.
+
 2004-10-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* diacrit.c, diacrit.h: Add GPL notice.
