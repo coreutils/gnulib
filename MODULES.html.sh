@@ -1945,7 +1945,7 @@ func_all_modules ()
   func_begin_table
   func_module classpath
   #func_module javacomp
-  #func_module javaexec
+  func_module javaexec
   #func_module gcj
   func_end_table
 
