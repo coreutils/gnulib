@@ -36,7 +36,7 @@ functions (either under the same name, or as a slightly different
 name), we should be able to include it.
 
 If your functions define completely new but rarely used functionality,
-you should probably consider packaging it as a seperate library.
+you should probably consider packaging it as a separate library.
 
 How to add a new module
 -----------------------
