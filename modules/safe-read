@@ -5,6 +5,7 @@ Files:
 lib/safe-read.h
 lib/safe-read.c
 m4/safe-read.m4
+m4/ssize_t.m4
 
 Depends-on:
 

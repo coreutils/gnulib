@@ -5,6 +5,7 @@ Files:
 lib/xreadlink.h
 lib/xreadlink.c
 m4/xreadlink.m4
+m4/ssize_t.m4
 
 Depends-on:
 xalloc

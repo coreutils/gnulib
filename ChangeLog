@@ -1,3 +1,8 @@
+2003-06-22  Bruno Haible  <bruno@clisp.org>
+
+	* modules/safe-read: Add m4/ssize_t.m4.
+	* modules/xreadlink: Add m4/ssize_t.m4.
+
 2003-06-11  Simon Josefsson  <jas@extundo.com>
 
 	* modules/sysexits: New file.
