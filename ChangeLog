@@ -1,3 +1,7 @@
+2003-06=10  Simon Josefsson <jas@extundo.com>
+
+	* modules/argp: New file.
+
 2003-06-07  Bruno Haible  <bruno@clisp.org>
 
 	* modules/poll (Makefile.am): Use explicit creation rule for poll.h, to

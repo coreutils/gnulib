@@ -1,0 +1,36 @@
+Description:
+Hierarchical processing of command line arguments.
+
+Files:
+lib/argp.h
+lib/argp-ba.c
+lib/argp-eexst.c
+lib/argp-fmtstream.c
+lib/argp-fmtstream.h
+lib/argp-fs-xinl.c
+lib/argp-help.c
+lib/argp-namefrob.h
+lib/argp-parse.c
+lib/argp-pv.c
+lib/argp-pvh.c
+lib/argp-xinl.c
+m4/argp.m4
+
+Depends-on:
+alloca
+getopt
+
+configure.ac:
+AC_FUNC_ARGP
+
+Makefile.am:
+lib_SOURCES += argp.h argp-ba.c argp-eexst.c \
+           argp-fmtstream.c argp-fmtstream.h argp-fs-xinl.c argp-help.c \
+           argp-namefrob.h argp-parse.c argp-pv.c argp-pvh.c argp-xinl.c
+
+Include:
+"argp.h"
+
+Maintainer:
+Simon Josefsson, glibc
+
