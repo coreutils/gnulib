@@ -46,7 +46,22 @@
 
 #include "mathl.h"
 
-/* Copyright 2001 by Stephen L. Moshier <moshier@na-net.ornl.gov> */
+/* Copyright 2001 by Stephen L. Moshier <moshier@na-net.ornl.gov>
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; see the file COPYING.
+   If not, write to the Free Software Foundation,
+   59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 /* log(1+x) = x - .5 x^2 + x^3 l(x)
    -.0078125 <= x <= +.0078125
@@ -173,7 +188,8 @@ static const long double
 long double
 logl(long double x)
 {
-  long double z, y, w, u, t;
+  long double z, y, w;
+  long double u, t;
   unsigned int m;
   int k, e;
 
@@ -181,15 +197,19 @@ logl(long double x)
 
   /* log(0) = -infinity. */
   if (x == 0.0L)
-    return -0.5L / 0.0L;
-
+    {
+      return -0.5L / ZERO;
+    }
   /* log ( x < 0 ) = NaN */
   if (x < 0.0L)
-    return (x - x) / (x - x);
-
+    {
+      return (x - x) / ZERO;
+    }
   /* log (infinity or NaN) */
   if (x + x == x || x != x)
-    return x + x;
+    {
+      return x + x;
+    }
 
   /* Extract exponent and reduce domain to 0.703125 <= u < 1.40625  */
   x = frexpl(x, &e);
@@ -202,13 +222,13 @@ logl(long double x)
   /* On this interval the table is not used due to cancellation error.  */
   if ((x <= 1.0078125L) && (x >= 0.9921875L))
     {
+      z = x - 1.0L;
       k = 64;
       t = 1.0L;
-      z = x - 1.0L;
     }
   else
     {
-      k = floorl((x - 0.5L) * 128.0L);
+      k = floorl ((x - 0.5L) * 128.0L);
       t = 0.5L + k / 128.0L;
       z = (x - t) / t;
     }
