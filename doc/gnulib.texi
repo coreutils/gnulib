@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.3 2004-09-23 23:15:03 karl Exp $
+@comment $Id: gnulib.texi,v 1.4 2004-09-28 22:19:08 karl Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2004-09-23 23:15:03 $
+@set UPDATED $Date: 2004-09-28 22:19:08 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -80,6 +80,7 @@ Getting started:
 
 @menu
 * Comments::
+* Header files::
 * ctime::
 * inet_ntoa::
 * Out of memory handling::
@@ -97,6 +98,64 @@ people prefer to put that documentation in the .h file.  In any case,
 it should appear in just one place unless you can ensure that the
 multiple copies will always remain identical.
 
+
+@node Header files
+@section Header files
+
+@cindex double inclusion of header files
+@cindex header file include protection
+It is a tradition to use CPP tricks to avoid parsing the same header
+file more than once, which might cause warnings.  The trick is to wrap
+the content of the header file (say, @file{foo.h}) in a block, as in:
+
+@example
+#ifndef FOO_H
+# define FOO_H
+...
+body of header file goes here
+...
+#endif /* FOO_H */
+@end example
+
+Whether to use @code{FOO_H} or @code{_FOO_H} is a matter of taste and
+style.  The C99 standard reserve all identifiers that begin with an
+underscore and either an uppercase letter or another underscore, for
+any use.  Thus, in theory, an application might not safely assume that
+@code{_FOO_H} has not already been defined by a library.  On the other
+hand, using @code{FOO_H} will likely lead the higher risk of
+collisions with other symbols (e.g., @code{COFF_LONG_H} which is a CPP
+macro function).  Your preference may depeend on whether you consider
+the header file under discussion as part of the application (which has
+its own namespace for CPP symbols) or a supporting library (that
+shouldn't interfer with the application's CPP symbol namespace).
+
+@cindex C++ header files
+@cindex Header files and C++
+Adapting C header files for use in C++ applications can use another
+CPP trick, as in:
+
+@example
+# ifdef __cplusplus
+extern "C"
+@{
+# endif
+...
+body of header file goes here
+...
+# ifdef __cplusplus
+@}
+# endif
+@end example
+
+The idea here is that @code{__cplusplus} is only defined when C++ run
+the preprocessor.  It will wrap the header file in a @samp{extern "C"}
+block.  Again, whether to use this trick is a matter of taste and
+style.  While the above can be seen as harmless, it could be argued
+that the header file is written in C, and any C++ application using it
+should explicitly use the @samp{extern "C"} block itself.  Your
+preference might depend on whether you consider the API exported by
+your header file as something available for only C programs, or for C
+and C++ programs alike.
 
 @node ctime
 @section ctime
