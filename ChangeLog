@@ -1,5 +1,10 @@
 2005-03-23  Jim Meyering  <jim@meyering.net>
 
+	* modules/c-strtold (Depends-on): Add xalloc.
+	* modules/c-strtod (Depends-on): Add xalloc.
+	* modules/hash (Depends-on): Add xalloc.
+	(Files): Remove lib/xalloc.h.
+
 	* modules/gethrxtime (Files): Add lib/gethrxtime.h.
 	* modules/userspec (Files): Add lib/inttostr.h.
 
