@@ -1,5 +1,9 @@
 2004-10-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* getpagesize.c (getpagesize): Don't assume <sys/param.h> exists.
+	It's now the caller's responsibility to handle the case where
+	!HAVE_GETPAGESIZE && !defined getpagesize.
+
 	* mktime.c (leapyear): Arg is long int, not int.
 
 2004-10-18  Paul Eggert  <eggert@cs.ucla.edu>

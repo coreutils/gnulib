@@ -1,3 +1,7 @@
+2004-10-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getpagesize.m4 (gl_GETPAGESIZE): Check for <sys/param.h>.
+
 2004-10-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getopt.m4 (gl_GETOPT): Detect and reject the incompatible BSD
