@@ -16,8 +16,8 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
+#if HAVE_CONFIG_H
+# include <config.h>
 #endif
 
 #if defined _LIBC || defined  STDC_HEADERS
@@ -35,7 +35,9 @@ char *memcpy ();
 # define __strdup strdup
 #endif
 
-/* Duplicate S, returning an identical malloc'd string.  */
+/* Duplicate S, returning an identical malloc'd string.
+   Return NULL if out of memory. */
+
 char *
 __strdup (const char *s)
 {
