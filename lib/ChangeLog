@@ -2,6 +2,9 @@
 
 	Merge in changes from the coreutils.
 
+	* mountlist.c: #undef MNT_IGNORE before defining it, to avoid warning
+	on FreeBSD.
+
 	* makepath.c (make_path): Restore umask *before* creating the final
 	component.
 	(make_path): Minor reformatting.
