@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
@@ -354,6 +354,10 @@
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=mkstemp">mkstemp</A>
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/mkstemp.html">mkstemp</A>() function: create a private temporary file.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=mkdtemp">mkdtemp</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">mkdtemp() function: create a private temporary directory.
     </TR>
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=stat">stat</A>
@@ -1546,6 +1550,13 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mkdtemp"></A><A HREF="modules/mkdtemp">mkdtemp</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mkdtemp.h">mkdtemp.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mkdtemp.c">mkdtemp.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR><A HREF="m4/mkdtemp.m4">mkdtemp.m4</A><BR>gt_FUNC_MKDTEMP
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
       <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=stat"></A><A HREF="modules/stat">stat</A>
       <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/sys/stat.h.html">sys/stat.h</A>&gt;
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/stat.c">stat.c</A>
@@ -2301,5 +2312,5 @@ variables.
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on 31 January 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 18 February 2003.
 </HTML>
