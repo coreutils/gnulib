@@ -14,7 +14,7 @@ AM_STDBOOL_H
 Makefile.am:
 EXTRA_DIST += stdbool_.h
 
-# The following is needed in order to create an <stdbool.h> when the system
+# We need the following in order to create an <stdbool.h> when the system
 # doesn't have one that works.
 all-local $(lib_OBJECTS): $(STDBOOL_H)
 stdbool.h: stdbool_.h

@@ -15,7 +15,7 @@ gl_FUNC_ALLOCA
 Makefile.am:
 EXTRA_DIST += alloca_.h
 
-# The following is needed in order to create an <alloca.h> when the system
+# We need the following in order to create an <alloca.h> when the system
 # doesn't have one that works with the given compiler.
 all-local $(lib_OBJECTS): @ALLOCA_H@
 alloca.h: alloca_.h
