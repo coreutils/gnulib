@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-08-18.16}
+\def\texinfoversion{2004-08-19.05}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -5453,7 +5453,11 @@ width0pt\relax} \fi
     \newlinechar`\^^M
     \let\xeatspaces\eatspaces
     % Undo catcode changes of \startcontents and \doprintindex
-    \catcode`\@=0 \catcode`\\=\other \escapechar=`\@
+    % When called from @insertcopying or (short)caption, we need active
+    % backslash to get it printed correctly.  Previously, we had
+    % \catcode`\\=\other instead.  We'll see whether a problem appears
+    % with macro expansion.				--kasal, 19aug04
+    \catcode`\@=0 \catcode`\\=\active \escapechar=`\@
     % ... and \example
     \spaceisspace
     %
