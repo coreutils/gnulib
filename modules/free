@@ -1,0 +1,20 @@
+Description:
+Work around incompatibility on older systems where free (NULL) fails.
+
+Files:
+lib/free.c
+m4/free.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_FREE
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+
+Maintainer:
+Paul Eggert
+

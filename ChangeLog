@@ -1,3 +1,7 @@
+2003-09-27  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/free: New file.
+
 2003-09-25  Bruno Haible  <bruno@clisp.org>
 
 	* modules/version-etc-2: New file, from modules/version-etc with

@@ -1,3 +1,7 @@
+2003-09-27  Paul Eggert  <eggert@twinsun.com>
+
+	* free.m4: New file.
+
 2003-09-26  Bruno Haible  <bruno@clisp.org>
 
 	* stpncpy.m4 (gl_FUNC_STPNCPY): Add comments about the AIX stpncpy().
