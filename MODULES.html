@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
@@ -702,6 +702,12 @@ usually the host name including FQDN.
     </TR>
   </TABLE>
   <H3><A HREF="#posix_ext_exec">Executing programs</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=findprog">findprog</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Locating a program in PATH.
+    </TR>
+  </TABLE>
   <H3><A HREF="#posix_ext_java">Java</A></H3>
   <H3><A HREF="#posix_ext_misc">Misc</A></H3>
   <TABLE>
@@ -2298,6 +2304,29 @@ variables.
     </TR>
   </TABLE>
   <H3><A NAME="posix_ext_exec">Executing programs</A></H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>modules/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Module
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=findprog"></A><A HREF="modules/findprog">findprog</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/findprog.h">findprog.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/findprog.c">findprog.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/findprog.m4">findprog.m4</A><BR><A HREF="m4/eaccess.m4">eaccess.m4</A><BR>gl_FINDPROG
+      <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>xalloc<BR>pathname
+    </TR>
+  </TABLE>
   <H3><A NAME="posix_ext_java">Java</A></H3>
   <H3><A NAME="posix_ext_misc">Misc</A></H3>
   <TABLE>
@@ -2443,5 +2472,5 @@ variables.
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on  5 April 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 11 April 2003.
 </HTML>
