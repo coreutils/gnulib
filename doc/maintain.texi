@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate June 28, 2004
+@set lastupdate October 4, 2004
 @c %**end of header
 
 @dircategory GNU organization
@@ -235,10 +235,10 @@ vs.@: disclaim) and their consequences.
 
 Once the conversation is under way and the contributor is ready for
 more details, you should send one of the templates that are found in
-@file{/gd/gnuorg/Copyright}.  This section explains which templates
-you should use in which circumstances.  @strong{Please don't use any
-of the templates except for those listed here, and please don't change
-the wording.}
+the directory @file{/gd/gnuorg/Copyright/}.  This section explains
+which templates you should use in which circumstances.  @strong{Please
+don't use any of the templates except for those listed here, and
+please don't change the wording.}
 
 Once the conversation is under way, you can send the contributor the
 precise wording and instructions by email.  Before you do this, make
@@ -281,7 +281,7 @@ manual.  For smaller changes, use
 @file{disclaim.changes.manual}; for larger ones, use
 @file{assign.changes.manual}.  To cover both past and future
 changes to a manual, you can use @file{assign.future.manual}.
-For a translation of a manual, use @file{assign.translate.manual}.
+For a translation of a manual, use @file{assign.translation.manual}.
 
 If a contributor is reluctant to sign an assignment for a large change,
 and is willing to sign a disclaimer instead, that is acceptable, so you
@@ -502,8 +502,8 @@ would probably change this (as well as many other aspects).
 
 For an FSF-copyrighted package, if you have followed the procedures to
 obtain legal papers, each file should have just one copyright holder:
-the Free Software Foundation, Inc.  So the copyright notice should give
-that name.
+the Free Software Foundation, Inc.  You should edit the file's
+copyright notice to list that name and only that name.
 
 But if contributors are not all assigning their copyrights to a single
 copyright holder, it can easily happen that one file has several
