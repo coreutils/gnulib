@@ -42,7 +42,7 @@ getline (char **lineptr, size_t *linesize, FILE *stream)
 
 #else /* ! have getdelim */
 
-#include "getndelim2.h"
+# include "getndelim2.h"
 
 ssize_t
 getline (char **lineptr, size_t *linesize, FILE *stream)
