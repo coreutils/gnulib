@@ -41,17 +41,6 @@
 	x = strtok_r(NULL, "-=", &sp);	// x = "def", sp = NULL
 	x = strtok_r(NULL, "=", &sp);	// x = NULL
 		// s = "abc\0-def\0"
-
-   For the POSIX documentation for this function, see:
-   http://www.opengroup.org/onlinepubs/009695399/functions/strtok.html
-
-   Caveat: It modifies the original string.
-   Caveat: These functions cannot be used on constant strings.
-   Caveat: The identity of the delimiting character is lost.
-   Caveat: It doesn't work with multibyte strings unless all of the delimiter
-           characters are ASCII characters < 0x30.
-
-   See also strsep().
 */
 char *
 __strtok_r (char *s, const char *delim, char **save_ptr)
