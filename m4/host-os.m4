@@ -30,9 +30,10 @@ AC_DEFUN([UTILS_HOST_OS],
        openbsd*)	os='OpenBSD';;
        nsk*)		os='NonStop Kernel';;
        nonstopux*)	os='NonStop-UX';;
+       netbsd*-gnu)	os='GNU/NetBSD';; # NetBSD kernel+libc, GNU userland
        netbsd*)		os='NetBSD';;
-       knetbsd*-gnu*)	os='GNU/KNetBSD';;
-       kfreebsd*-gnu*)	os='GNU/KFreeBSD';;
+       knetbsd*-gnu)	os='GNU/KNetBSD';; # NetBSD kernel, GNU libc+userland
+       kfreebsd*-gnu)	os='GNU/KFreeBSD';; # FreeBSD kernel, GNU libc+userland
        msdosdjgpp*)	os='DJGPP';;
        mpeix*)		os='MPE/iX';;
        mint*)		os='MiNT';;
