@@ -1,3 +1,9 @@
+2004-10-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getopt.m4 (gl_GETOPT): Detect and reject the incompatible BSD
+	implementation of getopt_long.  Problem reported by Alexander Taler in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2004-10/msg00103.html
+
 2004-10-11  Yoann Vandoorselaere  <yoann@prelude-ids.org>
 
 	* vsnprintf.m4: New file.
