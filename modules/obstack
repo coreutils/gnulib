@@ -4,7 +4,10 @@ Memory allocation, optimized for stack-like allocation patterns.
 Files:
 lib/obstack.h
 lib/obstack.c
+m4/inttypes_h.m4
 m4/obstack.m4
+m4/stdint_h.m4
+m4/uintmax_t.m4
 
 Depends-on:
 gettext
