@@ -1,5 +1,9 @@
 2004-11-16  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* canon-host.c: Include "strdup.h".
+	(canon_host): Use getaddrinfo if available, so that IPv6 works.
+	Use strdup instead of malloc/strcpy to duplicate strings.
+
 	Further getopt changes to make it more likely that glibc will
 	buy the changes back.
 	* getopt.c (POSIXLY_CORRECT): New constant.

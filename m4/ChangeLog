@@ -1,3 +1,11 @@
+2004-11-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* canon-host.m4 (gl_CANON_HOST): Check for getaddrinfo.
+
+2004-11-13  Jim Meyering  <jim@meyering.net>
+
+	* jm-macros.m4: Do require gl_FUNC_FPENDING.
+
 2004-11-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getopt.m4 (gl_GETOPT_SUBSTITUTE): Define __GETOPT_PREFIX instead

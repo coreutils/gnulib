@@ -7,6 +7,7 @@ lib/canon-host.c
 m4/canon-host.m4
 
 Depends-on:
+strdup
 
 configure.ac:
 gl_CANON_HOST
@@ -21,4 +22,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

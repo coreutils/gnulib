@@ -1,3 +1,7 @@
+2004-11-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/canon-host (Depends-on): Add strdup.
+
 2004-11-16  Jim Meyering  <jim@meyering.net>
 
 	* modules/closeout (Depends-on): Add fpending.
