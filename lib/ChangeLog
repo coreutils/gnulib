@@ -34,6 +34,9 @@
 		(compar_fn_t): New typedef.
 		(KNOWN_VALUE, STORE_VALUE): Use it.
 
+	* Makefile.am (libfetish_a_SOURCES): Add setenv.c, unsetenv.c,
+	setenv.h.
+
 2002-12-10  Paul Eggert  <eggert@twinsun.com>
 
 	Port exclude.c and exclude.h to more non-GNU systems, e.g. Solaris 7.
