@@ -1,3 +1,14 @@
+2003-08-09  Paul Eggert  <eggert@twinsun.com>
+
+	Merge some files from coreutils.  These changes were
+	originally made by Jim Meyering.
+	* lib/acl.c: Include <sys/types.h> before <sys/stat.h>;
+	many older Unixes require this.
+	* lib/alloca.c (alloca): Remove cast to argument of free;
+	no longer needed in C89.
+	* lib/alloca_.h, lib/regex.h: Fix white space to match
+	what GNU indent does.
+
 2003-08-05  Paul Eggert  <eggert@twinsun.com>
 
 	* bumpalloc.h: Remove.

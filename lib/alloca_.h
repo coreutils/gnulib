@@ -21,7 +21,7 @@
    "config.h", not later.  */
 
 #ifndef _ALLOCA_H
-#define _ALLOCA_H
+# define _ALLOCA_H
 
 /* alloca(N) returns a pointer (void* or char*) to N bytes of memory
    allocated on the stack, and which will last until the function returns.
@@ -34,35 +34,35 @@
        request, the program just crashes.
  */
 
-#ifdef __GNUC__
-# ifndef alloca
-#  define alloca __builtin_alloca
-# endif
-#else
-# ifdef _MSC_VER
-#  include <malloc.h>
-#  define alloca _alloca
+# ifdef __GNUC__
+#  ifndef alloca
+#   define alloca __builtin_alloca
+#  endif
 # else
-#  if HAVE_ALLOCA_H
-#   include <alloca.h>
+#  ifdef _MSC_VER
+#   include <malloc.h>
+#   define alloca _alloca
 #  else
-#   ifdef _AIX
- #pragma alloca
+#   if HAVE_ALLOCA_H
+#    include <alloca.h>
 #   else
-#    ifdef __hpux /* This section must match that of bison generated files. */
-#     ifdef __cplusplus
+#    ifdef _AIX
+ #    pragma alloca
+#    else
+#     ifdef __hpux /* This section must match that of bison generated files. */
+#      ifdef __cplusplus
 extern "C" void *alloca (unsigned int);
-#     else /* not __cplusplus */
+#      else /* not __cplusplus */
 extern void *alloca ();
-#     endif /* not __cplusplus */
-#    else /* not __hpux */
-#     ifndef alloca
+#      endif /* not __cplusplus */
+#     else /* not __hpux */
+#      ifndef alloca
 extern char *alloca ();
-#     endif
-#    endif /* __hpux */
+#      endif
+#     endif /* __hpux */
+#    endif
 #   endif
 #  endif
 # endif
-#endif
 
 #endif /* _ALLOCA_H */
