@@ -1,5 +1,9 @@
+2003-08-18  Jim Meyering  <jim@meyering.net>
+
+	* vasnprintf.c: Remove trailing blanks.
+
 2003-08-17  Simon Josefsson  <jas@extundo.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* xstrndup.h: New file.
 	* xstrndup.c: New file.
@@ -19,7 +23,7 @@
 	Merge from coreutils.
 	* xstrtoimax.c: #else #if -> #elif.
 	* xstrtoumax.c: Likewise.
-	
+
 2003-08-15  Paul Eggert  <eggert@twinsun.com>
 
 	* config.charset, ref-add.sin, ref-del.sin: Use three spaces,
@@ -74,7 +78,7 @@
 	virtual memory.  Based in part on a patch from Mike Jetzer.
 
 2003-08-14  Jim Meyering  <jim@meyering.net>
-        and Paul Eggert  <eggert@twinsun.com>
+	and Paul Eggert  <eggert@twinsun.com>
 
 	Merges from coreutils, plus other fixes.
 	* physmem.c: Merge in portability changes from gcc/libiberty
@@ -125,14 +129,14 @@
 	Normalize leading white space and remove trailing white space.
 	* ref-add.sin, ref-del.sin: Use '#' before empty line in copyright
 	notice, as per ../config/srclist-update.
-	
+
 	Merge from coreutils.
 	* euidaccess.h: New file.
 	* euidaccess.c: Include it.
 	* .cppi-disable: Add printf-args.h, printf-parse.h, stdbool_.h,
 	vasnprintf.h, vasprintf.h.  Remove strdup.c, gettext.h.
 	* regex.h, strdup.c, strtoll.c, strtoul.c: Normalize white space.
-	
+
 2003-08-11  Bruno Haible  <bruno@clisp.org>
 
 	* vasnprintf.c (local_wcslen): New function, for Solaris 2.5.1.
@@ -206,7 +210,7 @@
 	(strerror): Don't assume that a printable int fits in 14 bytes.
 
 2003-07-24  Derek Robert Price  <derek@ximbiot.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* getline.h (getline, getdelim): Change return type to ssize_t.
 	* getline.c (getline, getdelim): Likewise.
@@ -783,7 +787,7 @@
 	http://mail.gnu.org/archive/html/bug-bison/2003-03/msg00017.html
 
 2003-03-03  Paul Eggert  <eggert@twinsun.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* mbswidth.h: Include <wchar.h>. Needed for UnixWare 7.1.1.
 	Reported by John Hughes, see
@@ -1709,7 +1713,7 @@
 	included.
 
 	* regex.c [!__BOUNDED_POINTERS__]: Define away __bounded,
-        __unbounded, and __ptrvalue.  Reported by Uwe H. Steinfeld.
+	__unbounded, and __ptrvalue.  Reported by Uwe H. Steinfeld.
 
 2001-11-30  Akim Demaille  <akim@epita.fr>
 
