@@ -1,3 +1,7 @@
+2003-06-11  Bruno Haible  <bruno@clisp.org>
+
+	* sysexits.m4: New file.
+
 2003-06-10  Simon Josefsson  <jas@extundo.com>
 
 	* strchrnul.m4: New file.

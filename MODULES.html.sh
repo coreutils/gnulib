@@ -1880,6 +1880,7 @@ func_all_modules ()
   func_module quote
   func_module readutmp
   func_module sig2str
+  func_module sysexits
   func_end_table
 }
 
