@@ -7,7 +7,6 @@ lib/alloca.c
 m4/alloca.m4
 
 Depends-on:
-xalloc
 
 configure.ac:
 gl_FUNC_ALLOCA

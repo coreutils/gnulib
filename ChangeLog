@@ -1,3 +1,7 @@
+2003-11-24  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/alloca: Remove dependency on xalloc.
+
 2003-11-17  Paul Eggert  <eggert@twinsun.com>
 
 	* README: Mention that S+T cannot overflow if S is the size of

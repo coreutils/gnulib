@@ -1,3 +1,13 @@
+2003-11-24  Paul Eggert  <eggert@twinsun.com>
+
+	* lib/alloca.c: Remove dependency on xalloc module.
+	(xalloc_die): Remove.
+	(memory_full) [!defined emacs]: New macro.
+	[!defined emacs]: Don't include xalloc.h.
+	(alloca): Invoke memory_full, not xalloc_die, if malloc fails or
+	address arithmetic overflows.  Change datatypes a bit to avoid
+	unnecessary casts.
+
 2003-11-22  Jim Meyering  <jim@meyering.net>
 
 	* xmalloc.c (x2nrealloc_inline): Fix typos in comments: s/size/size_t/.
