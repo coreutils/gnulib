@@ -1,3 +1,17 @@
+2004-08-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh: Add xalloc-die, c-strtod, c-strtold, raise,
+	readtokens0, getcwd, fcntl-safer, canonicalize, cycle-check,
+	utimecmp, utimens, xnanosleep.  Rename sha to sha1.
+
+2004-08-16  Simon Josefsson  <jas@extundo.com>
+
+	* gnulib-tool: Use sed instead of autoconf --trace, inspired by
+	libtoolize behaviour by "Gary V. Vaughan" <gary@gnu.org>.
+	Add --dry-run for --import.
+	Let user provided command line parameters override configure.ac
+	settings.
+
 2004-08-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/argp (Files): Add m4/unlocked-io.m4.
