@@ -35,9 +35,7 @@
 void
 initbuffer (struct linebuffer *linebuffer)
 {
-  linebuffer->length = 0;
-  linebuffer->size = 200;
-  linebuffer->buffer = xmalloc (linebuffer->size);
+  memset (linebuffer, 0, sizeof *linebuffer);
 }
 
 /* Read an arbitrarily long line of text from STREAM into LINEBUFFER.
@@ -73,9 +71,9 @@ readlinebuffer (struct linebuffer *linebuffer, FILE *stream)
 	}
       if (p == end)
 	{
-	  linebuffer->size *= 2;
-	  buffer = xrealloc (buffer, linebuffer->size);
-	  p = p - linebuffer->buffer + buffer;
+	  size_t oldsize = linebuffer->size;
+	  buffer = x2realloc (buffer, &linebuffer->size);
+	  p = buffer + oldsize;
 	  linebuffer->buffer = buffer;
 	  end = buffer + linebuffer->size;
 	}

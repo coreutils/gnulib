@@ -1,5 +1,13 @@
 2003-10-29  Paul Eggert  <eggert@twinsun.com>
 
+	* getusershell.c (readname): Simplify the code by using x2nrealloc
+	rather than xmalloc/xrealloc.
+	* linebuffer.c (initbuffer, readlinebuffer): Simplify the code by
+	using x2realloc rather than xmalloc/xrealloc.  Also, fix a C
+	conformance bug: the old code used a pointer after freeing the
+	storage that it addressed.
+	* hash.c (hash_initialize): Simplify the code by using xalloc_oversized
+	rather than doing it by hand.
 	* getgroups.c (getgroups): Don't use xrealloc, since we don't need
 	the buffer preserved.  Use free and xmalloc instead.
 	* quotearg.c (quotearg_n_options): Likewise.
