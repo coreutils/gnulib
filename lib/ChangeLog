@@ -1,3 +1,8 @@
+2004-07-16  Bruno Haible  <bruno@clisp.org>
+
+	* mbswidth.h: Add extern "C" for C++.
+	Reported by Albert Chin-A-Young <china@thewrittenword.com>.
+
 2004-07-09  Simon Josefsson  <jas@extundo.com>
 
 	* getndelim2.c: Include stddef.h, for ptrdiff_t.  (FreeBSD 4.9
