@@ -22,5 +22,8 @@ lib_SOURCES += getaddrinfo.h
 Include:
 "getaddrinfo.h"
 
+License:
+LGPL
+
 Maintainer:
 Simon Josefsson

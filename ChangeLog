@@ -1,3 +1,8 @@
+2004-12-04  Simon Josefsson  <jas@extundo.com>
+
+	* modules/getaddrinfo (License): Add LGPL, reported by Yoann
+	Vandoorselaere <yoann@prelude-ids.org>.
+
 2004-11-30  Simon Josefsson  <jas@extundo.com>
 
 	* MODULES.html.sh (Extra functions based on ANSI C 89): Add
