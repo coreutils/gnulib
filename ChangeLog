@@ -1,3 +1,7 @@
+2003-08-14  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/tzset: New file.
+
 2003-08-12  Paul Eggert  <eggert@twinsun.com>
 
 	Merge from coreutils.
