@@ -1,3 +1,9 @@
+2003-07-11  Alexandre Duret-Lutz  <adl@gnu.org>
+
+	* obstack.h (__INT_TO_PTR): Revert change of 2003-03-13;
+	it breaks C++ compilation.
+	[!__GNUC__ || !__STDC__] (obstack_finish): Cast result to void*.
+
 2003-07-10  Jim Meyering  <jim@meyering.net>
 
 	* vasnprintf.c: Remove trailing blanks.
