@@ -25,6 +25,7 @@
 #include <errno.h>
 
 #include "vasprintf.h"
+#include "xalloc.h"
 
 char *
 xvasprintf (const char *format, va_list args)
@@ -34,7 +35,7 @@ xvasprintf (const char *format, va_list args)
   if (vasprintf (&result, format, args) < 0)
     {
       if (errno == ENOMEM)
-	xmalloc_die();
+	xalloc_die ();
       return NULL;
     }
 
