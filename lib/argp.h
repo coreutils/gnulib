@@ -126,11 +126,12 @@ struct argp_option
    should be displayed in much the same manner as the options.  If this flag
    is set, then the option NAME field is displayed unmodified (e.g., no `--'
    prefix is added) at the left-margin (where a *short* option would normally
-   be displayed), and the documentation string in the normal place.  For
-   purposes of sorting, any leading whitespace and punctuation is ignored,
-   except that if the first non-whitespace character is not `-', this entry
-   is displayed after all options (and OPTION_DOC entries with a leading `-')
-   in the same group.  */
+   be displayed), and the documentation string in the normal place. The NAME
+   field will be translated using gettext, unless OPTION_NO_TRANS is set (see
+   below). For purposes of sorting, any leading whitespace and punctuation is
+   ignored, except that if the first non-whitespace character is not `-', this
+   entry is displayed after all options (and OPTION_DOC entries with a leading
+   `-') in the same group.  */
 #define OPTION_DOC		0x8
 
 /* This option shouldn't be included in `long' usage messages (but is still
@@ -141,6 +142,11 @@ struct argp_option
    distinguish these two cases, -x should probably be marked
    OPTION_NO_USAGE.  */
 #define OPTION_NO_USAGE		0x10
+
+/* Valid only in conjunction with OPTION_DOC. This option disables translation
+   of option name. */
+#define OPTION_NO_TRANS         0x20
+
 
 struct argp;			/* fwd declare this type */
 struct argp_state;		/* " */
