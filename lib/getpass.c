@@ -1,4 +1,4 @@
-/* Copyright (C) 1992,93,94,95,96,97,98,99,2000, 2001 Free Software Foundation, Inc.
+/* Copyright (C) 1992-2001, 2003 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software; you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <termios.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include "getline.h"
 #include "unlocked-io.h"
 
@@ -84,8 +85,18 @@ getpass (const char *prompt)
 	  /* Remove the newline.  */
 	  buf[nread - 1] = '\0';
 	  if (tty_changed)
-	    /* Write the newline that was not echoed.  */
-	    putc ('\n', out);
+	    {
+	      /* Write the newline that was not echoed.
+		 But before doing that, do a no-op fseek.  According to the C
+		 standard, input may not be followed by output on the same
+		 stream without an intervening call to a file positioning
+		 function.  Without this fseek() call, on Solaris, HP-UX,
+		 AIX, OSF/1, the previous input gets echoed, whereas on IRIX,
+		 the following newline is not output as it should.  */
+	      if (out == in)
+		fseek (out, 0, SEEK_CUR);
+	      putc ('\n', out);
+	    }
 	}
     }
 

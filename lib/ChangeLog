@@ -1,3 +1,8 @@
+2003-10-01  Larry Jones  <lawrence.jones@eds.com>
+
+	* getpass.c (getpass): Use a no-op fseek when switching from input to
+	output mode on the same stream.
+
 2003-09-29  Paul Eggert  <eggert@twinsun.com>
 
 	* strftime.c (tm_diff) [! HAVE_TM_GMTOFF]:
