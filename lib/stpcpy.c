@@ -15,12 +15,16 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 /* Copy SRC to DEST, returning the address of the terminating '\0' in DEST.  */
 
 char *
 stpcpy (dest, src)
      char *dest;
-     char *src;
+     const char *src;
 {
   while ((*dest++ = *src++) != '\0')
     /* Do nothing. */ ;

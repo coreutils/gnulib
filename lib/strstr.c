@@ -15,12 +15,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
-/* Author:
-	Mike Rendell			Department of Computer Science
-	michael@garfield.mun.edu	Memorial University of Newfoundland
-	..!uunet!garfield!michael	St. John's, Nfld., Canada
-	(709) 737-4550			A1C 5S7
-*/
+/* Written by Mike Rendell <michael@cs.mun.ca>.  */
 
 /* Return the starting address of string S2 in S1;
    return 0 if it is not found. */
