@@ -1822,6 +1822,8 @@ func_all_modules ()
   func_begin_table
   func_module gethostname
   func_module xgethostname
+  func_module getdomainname
+  func_module xgetdomainname
   func_module canon-host
   func_end_table
 
@@ -1890,6 +1892,8 @@ func_all_modules ()
   func_module error
   func_module extensions
   func_module fatal
+  func_module getdomainname
+  func_module xgetdomainname
   func_module getloadavg
   func_module getpagesize
   func_module getusershell
