@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.8 2003-07-15 12:47:27 karl Exp $
+# $Id: srclist-update,v 1.9 2003-07-15 20:20:39 eggert Exp $
 #
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
@@ -74,7 +74,7 @@ fixfile() \
   *)
     cat $1;;
   esac \
-  | grep -v '\$Id: srclist-update,v 1.8 2003-07-15 12:47:27 karl Exp $2
+  | grep -v '[$]Id:.*[$]' >&$2
 }
 
 
