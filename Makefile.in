@@ -43,7 +43,7 @@ DEFS = @DEFS@
 
 SHELL = /bin/sh
 
-subdirs = doc test
+subdirs = m4 lib
 
 default all:: regex.o
 .PHONY: default all

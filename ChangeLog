@@ -1,3 +1,10 @@
+2002-11-01  Bruno Haible  <bruno@clisp.org>
+
+	* configure.in: Add AC_CONFIG_AUX_DIR call.
+	(AC_OUTPUT): Add m4/Makefile, lib/Makefile. Remove doc/Makefile,
+	test/Makefile.
+	* Makefile.in (subdirs): Add m4, lib. Remove doc, test.
+
 2002-08-23  Stefan Monnier  <monnier@cs.yale.edu>
 
 	* regex.c (PATFETCH): Remove the translating fetch.
