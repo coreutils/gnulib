@@ -1,5 +1,13 @@
 2002-11-22  Paul Eggert  <eggert@twinsun.com>
 
+	* hash.c: Avoid use of <assert.h>, as the GNU Coding Standards
+	hint that one should use `if (! x) abort ();' rather than `assert
+	(x);', and anyway it's one less thing to worry about configuring.
+	(hash_lookup, hash_get_first, hash_get_next, hash_find_entry,
+	hash_rehash, hash_insert): Use abort rather than assert.
+
+2002-11-22  Paul Eggert  <eggert@twinsun.com>
+
 	* quotearg.h: Allow multiple inclusion by surrounding with
 	"#ifndef QUOTEARG_H_".  Include <stddef.h>, for size_t,
 	so that we can be included first.
