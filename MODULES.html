@@ -523,9 +523,9 @@
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#if HAVE_STDBOOL_H<BR># include &lt;stdbool.h&gt;<BR>#else<BR># if ! HAVE__BOOL<BR>#  ifdef __cplusplus<BR>typedef bool _Bool;<BR>#  else<BR>typedef enum {false = 0, true = 1} _Bool;<BR>#  endif<BR># endif<BR># define bool _Bool<BR># define false 0<BR># define true 1<BR># define __bool_true_false_are_defined 1<BR>#endif
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdbool.h&gt;
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>stdbool.m4<BR>AC_HEADER_STDBOOL
+      <TD ALIGN=LEFT VALIGN=TOP>stdbool.m4<BR>AM_STDBOOL_H
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
@@ -975,7 +975,7 @@
       <TD ALIGN=LEFT VALIGN=TOP>#include "full-read.h"
       <TD ALIGN=LEFT VALIGN=TOP>full-read.c
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>safe-read
+      <TD ALIGN=LEFT VALIGN=TOP>safe-read<BR>full-write
     </TR>
     <TR>
       <TD ALIGN=LEFT VALIGN=TOP>#include "full-write.h"
@@ -1307,6 +1307,7 @@
   <H2>Lone files - please create new modules containing them</H2>
   <PRE>
 lib/getversion.c
+lib/stdbool.h.in
 m4/check-decl.m4
 m4/d-type.m4
 m4/glibc.m4
@@ -1340,5 +1341,5 @@ m4/uptime.m4
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on  7 January 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 10 January 2003.
 </HTML>
