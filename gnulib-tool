@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 2002, 2003 Free Software Foundation, Inc.
+# Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2003-09-17 18:30:23 $'
+cvsdatestamp='$Date: 2004-08-12 20:47:12 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -46,7 +46,7 @@ func_usage ()
 {
   echo "\
 Usage: gnulib-tool --list
-       gnulib-tool --import module1 ... moduleN
+       gnulib-tool --import [MODULE...]
        gnulib-tool --create-testdir --dir=directory module1 ... moduleN
        gnulib-tool --create-megatestdir --dir=directory [module1 ... moduleN]
        gnulib-tool --test --dir=directory module1 ... moduleN
@@ -79,7 +79,16 @@ Operation modes:
 
 Options:
       --dir=DIRECTORY       specify the target directory
-      --lib=LIBRARY         specify the library name
+                            For --import, this specify where your
+                            configure.ac can be found.  Defaults to current
+                            directory.
+      --lib=LIBRARY         Specify the library name.  Defaults to 'libgnu'.
+      --source-base=DIRECTORY
+                            Directory relative --dir where source code is
+                            placed (default \"lib\"), for --import.
+      --m4-base=DIRECTORY   Directory relative --dir where *.m4 macros are
+                            placed (default \"m4\"), for --import.
+      --libtool             Use libtool rules, for --import.
       --no-changelog        don't update or create ChangeLog files
 
 Report bugs to <bug-gnulib@gnu.org>."
@@ -110,11 +119,17 @@ func_fatal_error ()
 # - mode            list or import or create-testdir or create-megatestdir
 # - destdir         from --dir
 # - libname         from --lib
+# - sourcebase      from --source-base
+# - m4base          from --m4-base
+# - libtool         true if --libtool was given, blank otherwise
 # - do_changelog    false if --no-changelog was given, : otherwise
 {
   mode=
   destdir=
-  libname=libfoo
+  libname=libgnu
+  sourcebase=lib
+  m4base=m4
+  libtool=
   do_changelog=:
 
   while test $# -gt 0; do
@@ -159,6 +174,29 @@ func_fatal_error ()
         shift ;;
       --lib=* )
         libname=`echo "X$1" | sed -e 's/^X--lib=//'`
+        shift ;;
+      --source-base )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --source-base"
+        fi
+        sourcebase=$1
+        shift ;;
+      --source-base=* )
+        sourcebase=`echo "X$1" | sed -e 's/^X--source-base=//'`
+        shift ;;
+      --m4-base )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --m4-base"
+        fi
+        m4base=$1
+        shift ;;
+      --m4-base=* )
+        m4base=`echo "X$1" | sed -e 's/^X--m4-base=//'`
+        shift ;;
+      --libtool )
+        libtool=true
         shift ;;
       --no-changelog | --no-changelo | --no-changel | --no-change | --no-chang | --no-chan | --no-cha | --no-ch | --no-c )
         do_changelog=false
@@ -534,7 +572,171 @@ case $mode in
     ;;
 
   import )
-    func_fatal_error "NYI" ;;
+	if test -z "$destdir"; then
+	    destdir=.
+	fi
+	test -d "$destdir" \
+	    || func_fatal_error "destination directory does not exist: $destdir"
+	sourcebase=`cd $destdir; $AUTOCONF --trace=gl_SOURCE_BASE | sed 's,^.*:,,g'`
+	test -d "$destdir/$sourcebase" || \
+	    mkdir "$destdir/$sourcebase" || \
+	    func_fatal_error \
+	    "could not create source base directory: $destdir/$sourcebase"
+	m4base=`cd $destdir; $AUTOCONF --trace=gl_M4_BASE | sed 's,^.*:,,g'`
+	test -d "$destdir/$m4base" || \
+	    mkdir "$destdir/$m4base" || \
+	    func_fatal_error \
+	    "could not create m4 base directory: $destdir/$m4base"
+	supplied_modules="$*"
+	modules=`for m in $supplied_modules; do echo $m; done | sort | uniq`
+	if test -z "$modules"; then
+	    modules=`cd $destdir; $AUTOCONF --trace=gl_MODULES | sed 's,^.*:,,g'`
+	fi
+	if test x`cd $destdir; $AUTOCONF --trace=AC_PROG_LIBTOOL` != x; then
+	    libtool=true
+	fi
+
+        # Determine final module list.
+	while true; do
+	    xmodules=
+	    for module in $modules; do
+		func_verify_module
+		if test -n "$module"; then
+                    # Duplicate dependenies are harmless, but Jim wants a warning.
+		    duplicated_deps=`func_get_dependencies $module | sort | uniq -d`
+		    if test -n "$duplicated_deps"; then
+			echo "warning: module $module has duplicated dependencies: "`echo $duplicated_deps` 1>&2
+		    fi
+		    xmodules="$xmodules $module "`func_get_dependencies $module`
+		fi
+	    done
+	    xmodules=`for m in $xmodules; do echo $m; done | sort | uniq`
+	    if test "$xmodules" = "$modules"; then
+		break
+	    fi
+	    modules="$xmodules"
+	done
+	echo "Module list with included dependencies:"
+	echo "$modules" | sed -e 's/^/  /'
+
+        # Determine final file list.
+	files=
+	for module in $modules; do
+	    func_verify_module
+	    if test -n "$module"; then
+		files="$files "`func_get_filelist $module`
+	    fi
+	done
+	files=`for f in $files; do echo $f; done | sort | uniq`
+	echo "File list:"
+	echo "$files" | sed -e 's/^/  /'
+
+        # Copy files.
+	for f in $files; do
+	    case "$f" in
+		config/*) g=`echo "$f" | sed -e 's,^config/,,'` ;;
+		lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
+		m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
+		*) g="$f" ;;
+	    esac
+	    cp -p "$gnulib_dir/$f" "$destdir/$g"
+	done
+
+        # Create lib/Makefile.am.
+	if test -n "$libtool"; then
+	    libext=la
+	    perhapsLT=LT
+	else
+	    libext=a
+	    perhapsLT=
+	fi
+	(echo "## Process this file with automake to produce Makefile.in."
+	    echo "# Copyright (C) 2004 Free Software Foundation, Inc."
+	    echo "#"
+	    echo "# This file is free software, distributed under the terms of the GNU"
+	    echo "# General Public License.  As a special exception to the GNU General"
+	    echo "# Public License, this file may be distributed as part of a program"
+	    echo "# that contains a configuration script generated by Automake, under"
+	    echo "# the same distribution terms as the rest of that program."
+	    echo "#"
+	    echo "# Generated by gnulib-tool."
+	    echo "#"
+	    opt_libtool=
+	    if test -n "$libtool"; then
+		opt_libtool="--libtool"
+	    fi
+	    echo "# gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool $supplied_modules"
+	    echo
+	    echo "AUTOMAKE_OPTIONS = 1.8 gnits"
+	    echo
+	    echo "noinst_${perhapsLT}LIBRARIES = $libname.$libext"
+	    echo
+	    echo "${libname}_${libext}_SOURCES ="
+	    echo "${libname}_${libext}_LIBADD = @${perhapsLT}LIBOBJS@"
+	    echo "EXTRA_DIST ="
+	    echo "BUILT_SOURCES ="
+	    echo "SUFFIXES ="
+	    echo "MOSTLYCLEANFILES ="
+	    echo "CLEANFILES ="
+	    echo "DISTCLEANFILES ="
+	    echo "MAINTAINERCLEANFILES ="
+	    for module in $modules; do
+		func_verify_module
+		if test -n "$module"; then
+		    func_get_automake_snippet "$module" | sed -e "s,lib_SOURCES,${libname}_${libext}_SOURCES,g" -e "s,lib_OBJECTS,${libname}_${libext}_OBJECTS,g"
+		    if test "$module" = 'alloca'; then
+			echo "${libname}_${libext}_LIBADD += @ALLOCA@"
+		    fi
+		fi
+	    done
+	) > "$destdir/$sourcebase/Makefile.am"
+
+        # Create gnulib.m4.
+	(echo "# Copyright (C) 2004 Free Software Foundation, Inc."
+	    echo "# This file is free software, distributed under the terms of the GNU"
+	    echo "# General Public License.  As a special exception to the GNU General"
+	    echo "# Public License, this file may be distributed as part of a program"
+	    echo "# that contains a configuration script generated by Autoconf, under"
+	    echo "# the same distribution terms as the rest of that program."
+	    echo "#"
+	    echo "# Generated by gnulib-tool."
+	    echo "#"
+	    opt_libtool=
+	    if test -n "$libtool"; then
+		opt_libtool="--libtool"
+	    fi
+	    echo "# gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool $supplied_modules"
+	    echo
+	    echo "AC_DEFUN([gl_EARLY],"
+	    echo "["
+	    if grep AC_GNU_SOURCE "$destdir"/$m4base/*.m4 > /dev/null; then
+		echo "  AC_GNU_SOURCE"
+	    fi
+	    if grep gl_USE_SYSTEM_EXTENSIONS "$destdir"/$m4base/*.m4 > /dev/null; then
+		echo "  gl_USE_SYSTEM_EXTENSIONS"
+	    fi
+	    echo "])"
+	    echo
+	    echo "AC_DEFUN([gl_INIT],"
+	    echo "["
+	    for module in $modules; do
+		func_verify_module
+		if test -n "$module"; then
+		    func_get_autoconf_snippet "$module" | sed -e '/^$/d;' -e 's/^/  /' -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
+		fi
+	    done
+	    echo "])"
+	    echo
+	    echo "dnl Usage: gl_MODULES(module1 module2 ...)"
+	    echo "AC_DEFUN([gl_MODULES], [])"
+	    echo
+	    echo "dnl Usage: gl_SOURCE_BASE(DIR)"
+	    echo "AC_DEFUN([gl_SOURCE_BASE], [])"
+	    echo
+	    echo "dnl Usage: gl_M4_BASE(DIR)"
+	    echo "AC_DEFUN([gl_M4_BASE], [])"
+	) > "$destdir/$m4base/gnulib.m4"
+	;;
 
   create-testdir )
     if test -z "$destdir"; then
