@@ -1,4 +1,5 @@
 Description:
+Extract specific portions of filenames.
 
 Files:
 lib/dirname.h

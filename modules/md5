@@ -1,4 +1,5 @@
 Description:
+Compute MD5 checksum.
 
 Files:
 lib/md5.h

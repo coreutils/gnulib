@@ -1,4 +1,6 @@
 Description:
+Manipulation of mode changes specified by strings (e.g. as first argument of
+chmod utility).
 
 Files:
 lib/modechange.h

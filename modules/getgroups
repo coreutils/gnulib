@@ -1,4 +1,5 @@
 Description:
+getgroups() function: return the supplementary group IDs of the current process.
 
 Files:
 lib/getgroups.c

@@ -1,4 +1,5 @@
 Description:
+euidaccess() function: check effective user's permissions for a file.
 
 Files:
 lib/euidaccess.c

@@ -1,4 +1,5 @@
 Description:
+Increase table allocation by one element.
 
 Files:
 lib/bumpalloc.h

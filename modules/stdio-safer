@@ -1,4 +1,5 @@
 Description:
+File stream functions that avoid clobbering std{in,out,err}.
 
 Files:
 lib/stdio-safer.h

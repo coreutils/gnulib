@@ -1,4 +1,5 @@
 Description:
+Determine whether the current process has the permissions of a given group ID.
 
 Files:
 lib/group-member.h

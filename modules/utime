@@ -1,4 +1,5 @@
 Description:
+utime() function: change access and/or modification times of a file.
 
 Files:
 lib/utime.c

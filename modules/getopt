@@ -1,4 +1,5 @@
 Description:
+Process command line arguments.
 
 Files:
 lib/getopt.h

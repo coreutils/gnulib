@@ -1,4 +1,5 @@
 Description:
+memset() function: fill memory with a constant byte.
 
 Files:
 lib/memset.c

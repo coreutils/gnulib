@@ -1,4 +1,6 @@
 Description:
+Canonicalize a host name: return a name other hosts can understand, i.e.
+usually the host name including FQDN.
 
 Files:
 lib/canon-host.c

@@ -1,4 +1,5 @@
 Description:
+struct timespec.
 
 Files:
 lib/timespec.h

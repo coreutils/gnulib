@@ -1,4 +1,5 @@
 Description:
+Search for an exact or abbreviated match of a string in an array of strings.
 
 Files:
 lib/argmatch.h

@@ -1,4 +1,5 @@
 Description:
+Determine the number of bytes waiting in the output buffer of a stream.
 
 Files:
 lib/__fpending.h

@@ -1,4 +1,5 @@
 Description:
+Locale dependent memory area comparison, with error checking.
 
 Files:
 lib/xmemcoll.h

@@ -1,4 +1,5 @@
 Description:
+Ensure that a directory path exists.
 
 Files:
 lib/makepath.h

@@ -1,4 +1,5 @@
 Description:
+Return the current working directory, without size limitations.
 
 Files:
 lib/xgetcwd.h

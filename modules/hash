@@ -1,4 +1,5 @@
 Description:
+Parametrizable hash table.
 
 Files:
 lib/hash.h

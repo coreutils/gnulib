@@ -1,4 +1,5 @@
 Description:
+strnlen() function: determine the length of a size-bounded string.
 
 Files:
 lib/strnlen.c

@@ -1,4 +1,5 @@
 Description:
+strtoul() function: convert string to 'unsigned long'.
 
 Files:
 lib/strtoul.c

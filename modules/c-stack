@@ -1,4 +1,5 @@
 Description:
+Stack overflow handling, causing program exit.
 
 Files:
 lib/c-stack.h

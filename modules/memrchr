@@ -1,4 +1,5 @@
 Description:
+memrchr() function: scan memory for a byte, from the right end.
 
 Files:
 lib/memrchr.c

@@ -1,4 +1,5 @@
 Description:
+Enable faster, non-thread-safe stdio functions if available.
 
 Files:
 lib/unlocked-io.h

@@ -1,4 +1,5 @@
 Description:
+dup2() function: duplicate an open file descriptor.
 
 Files:
 lib/dup2.c

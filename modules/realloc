@@ -1,4 +1,5 @@
 Description:
+realloc() function that is glibc compatible.
 
 Files:
 lib/realloc.c

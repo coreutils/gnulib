@@ -1,4 +1,5 @@
 Description:
+Memory allocation, optimized for stack-like allocation patterns.
 
 Files:
 lib/obstack.h

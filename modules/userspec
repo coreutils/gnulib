@@ -1,4 +1,6 @@
 Description:
+Parse a specifying a user and/or group (e.g. as first argument of chown
+utility).
 
 Files:
 lib/userspec.c

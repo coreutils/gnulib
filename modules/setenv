@@ -1,4 +1,6 @@
 Description:
+setenv() function: set an environment variable.
+unsetenv() function: remove an environment variable.
 
 Files:
 lib/setenv.h

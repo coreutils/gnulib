@@ -1,4 +1,5 @@
 Description:
+Return names of valid user shells.
 
 Files:
 lib/getusershell.c

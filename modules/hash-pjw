@@ -1,4 +1,5 @@
 Description:
+Compute a hash value for a NUL-terminated string.
 
 Files:
 lib/hash-pjw.h

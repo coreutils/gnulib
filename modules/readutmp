@@ -1,4 +1,5 @@
 Description:
+Read entire utmp file into memory.
 
 Files:
 lib/readutmp.h

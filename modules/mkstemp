@@ -1,4 +1,5 @@
 Description:
+mkstemp() function: create a private temporary file.
 
 Files:
 lib/mkstemp.c

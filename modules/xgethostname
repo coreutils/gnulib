@@ -1,4 +1,5 @@
 Description:
+Return machine's hostname, without size limitations.
 
 Files:
 lib/xgethostname.c

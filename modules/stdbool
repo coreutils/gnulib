@@ -1,4 +1,6 @@
 Description:
+An <stdbool.h> that nearly conforms to C99.
+(Nearly: casts to bool may not work.)
 
 Files:
 lib/stdbool.h.in

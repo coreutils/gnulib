@@ -1,4 +1,5 @@
 Description:
+nanosleep() function: pause execution for a specified time.
 
 Files:
 lib/nanosleep.c

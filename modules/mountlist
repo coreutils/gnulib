@@ -1,4 +1,5 @@
 Description:
+Return list of mounted filesystems.
 
 Files:
 lib/mountlist.h

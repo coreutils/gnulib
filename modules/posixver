@@ -1,4 +1,6 @@
 Description:
+Determine desired POSIX specification version, according to user's environment
+variables.
 
 Files:
 lib/posixver.h

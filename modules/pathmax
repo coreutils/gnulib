@@ -1,4 +1,5 @@
 Description:
+Return maximum size of reasonable pathnames.  (Unportable: Hurd has no limit.)
 
 Files:
 lib/pathmax.h

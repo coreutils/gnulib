@@ -1,4 +1,5 @@
 Description:
+Manage list of filenames or wildcard patterns for --exclude option processing.
 
 Files:
 lib/exclude.h

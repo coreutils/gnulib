@@ -1,4 +1,5 @@
 Description:
+Convert between signal names and signal numbers.
 
 Files:
 lib/sig2str.h

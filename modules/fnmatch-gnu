@@ -1,4 +1,5 @@
 Description:
+fnmatch() function: wildcard matching, with GNU extensions.
 
 Files:
 

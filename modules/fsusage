@@ -1,4 +1,5 @@
 Description:
+Return filesystem space usage info.
 
 Files:
 lib/fsusage.h

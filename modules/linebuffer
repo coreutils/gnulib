@@ -1,4 +1,5 @@
 Description:
+Read a line from a stream.
 
 Files:
 lib/linebuffer.h

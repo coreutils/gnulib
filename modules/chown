@@ -1,4 +1,5 @@
 Description:
+chown() function: change ownership of a file.
 
 Files:
 lib/chown.c

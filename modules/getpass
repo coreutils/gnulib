@@ -1,4 +1,5 @@
 Description:
+getpass() function: read a password from /dev/tty.
 
 Files:
 lib/getpass.c

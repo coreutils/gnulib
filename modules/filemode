@@ -1,4 +1,6 @@
 Description:
+Return a string (?rwxrwxrwx format) describing the type and permissions of a
+file.
 
 Files:
 lib/filemode.h

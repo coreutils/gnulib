@@ -1,4 +1,5 @@
 Description:
+getpagesize() function: Return memory page size.
 
 Files:
 lib/getpagesize.h

@@ -1,4 +1,5 @@
 Description:
+Return the entries of a directory (just the names) as an argz string.
 
 Files:
 lib/savedir.h

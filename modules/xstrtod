@@ -1,4 +1,5 @@
 Description:
+Convert string to 'double', with error checking.
 
 Files:
 lib/xstrtod.h

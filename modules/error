@@ -1,4 +1,5 @@
 Description:
+error() and error_at_line() functions: Error reporting.
 
 Files:
 lib/error.h

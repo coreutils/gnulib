@@ -1,4 +1,5 @@
 Description:
+Convert string to 'long` or 'unsigned long', with error checking.
 
 Files:
 lib/xstrtol.h

@@ -1,4 +1,5 @@
 Description:
+GNU fnmatch() implementation.
 
 Files:
 lib/fnmatch_.h

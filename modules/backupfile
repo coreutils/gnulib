@@ -1,4 +1,6 @@
 Description:
+Determination of the filename of a backup file, according to user environment
+variables.
 
 Files:
 lib/backupfile.h

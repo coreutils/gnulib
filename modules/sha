@@ -1,4 +1,5 @@
 Description:
+Compute SHA checksum.
 
 Files:
 lib/sha.h

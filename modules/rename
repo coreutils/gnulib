@@ -1,4 +1,5 @@
 Description:
+rename() function: change the name or location of a file.
 
 Files:
 lib/rename.c

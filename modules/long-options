@@ -1,4 +1,5 @@
 Description:
+Handle --help and --version options.
 
 Files:
 lib/long-options.h

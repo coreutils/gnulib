@@ -1,4 +1,5 @@
 Description:
+Convert string to 'uintmax_t', with error checking.
 
 Files:
 lib/xstrtoumax.c

@@ -1,4 +1,5 @@
 Description:
+Return amount of total/available physical memory.
 
 Files:
 lib/physmem.h

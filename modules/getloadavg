@@ -1,4 +1,5 @@
 Description:
+Return the current system load averages.
 
 Files:
 lib/getloadavg.c

@@ -1,4 +1,5 @@
 Description:
+strndup() function: duplicate a size-bounded string.
 
 Files:
 lib/strndup.c

@@ -1,4 +1,5 @@
 Description:
+Return the group IDs of a user.
 
 Files:
 lib/getugroups.c

@@ -1,4 +1,5 @@
 Description:
+Close stdout, checking for errors.
 
 Files:
 lib/closeout.h

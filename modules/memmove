@@ -1,4 +1,5 @@
 Description:
+memmove() function: copy memory area.
 
 Files:
 lib/memmove.c

@@ -1,4 +1,5 @@
 Description:
+atexit() function: register a function to be called at program termination.
 
 Files:
 lib/atexit.c

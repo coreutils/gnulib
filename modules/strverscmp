@@ -1,4 +1,5 @@
 Description:
+Compare strings holding version numbers.
 
 Files:
 lib/strverscmp.h

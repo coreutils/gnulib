@@ -1,4 +1,6 @@
 Description:
+Convert a number (usually a file size) to a human readable string, possibly
+with K/M/G suffix.
 
 Files:
 lib/human.h

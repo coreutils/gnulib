@@ -1,4 +1,5 @@
 Description:
+mkdir() function: create a directory.
 
 Files:
 lib/mkdir.c

@@ -1,4 +1,5 @@
 Description:
+Retrieving the file descriptor of an open directory stream.  (Unportable.)
 
 Files:
 lib/dirfd.h

@@ -1,4 +1,5 @@
 Description:
+Translate messages to user's native language.
 
 Files:
 lib/gettext.h

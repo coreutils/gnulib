@@ -1,4 +1,5 @@
 Description:
+Regular expression matching.
 
 Files:
 lib/regex.h

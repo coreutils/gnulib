@@ -1,4 +1,5 @@
 Description:
+Character set conversion.
 
 Files:
 m4/iconv.m4

@@ -1,4 +1,5 @@
 Description:
+Memory allocation with out-of-memory checking.
 
 Files:
 lib/xalloc.h

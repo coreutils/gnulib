@@ -1,4 +1,5 @@
 Description:
+Save and restore the current working directory.
 
 Files:
 lib/save-cwd.h

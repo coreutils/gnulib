@@ -1,4 +1,5 @@
 Description:
+Estimate number of blocks of a file, if 'struct stat' doesn't have st_blocks.
 
 Files:
 lib/fileblocks.c

@@ -1,4 +1,5 @@
 Description:
+malloc() function that is glibc compatible.
 
 Files:
 lib/malloc.c

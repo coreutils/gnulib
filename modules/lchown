@@ -1,4 +1,5 @@
 Description:
+lchown() function: change ownership of a file.
 
 Files:
 lib/lchown.h

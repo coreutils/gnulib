@@ -1,4 +1,5 @@
 Description:
+Read tokens from a stream.
 
 Files:
 lib/readtokens.h

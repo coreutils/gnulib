@@ -1,4 +1,5 @@
 Description:
+strstr() function: search for a substring in a string.
 
 Files:
 lib/strstr.h

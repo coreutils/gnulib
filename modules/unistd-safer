@@ -1,4 +1,5 @@
 Description:
+File descriptor functions that avoid clobbering STD{IN,OUT,ERR}_FILENO.
 
 Files:
 lib/unistd-safer.h

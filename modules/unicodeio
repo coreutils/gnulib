@@ -1,4 +1,5 @@
 Description:
+Unicode character output to streams with locale dependent encoding.
 
 Files:
 lib/unicodeio.h

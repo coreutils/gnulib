@@ -1,4 +1,5 @@
 Description:
+Determine whether the current locale is different from the "C" locale.
 
 Files:
 lib/hard-locale.h

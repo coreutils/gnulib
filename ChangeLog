@@ -1,5 +1,12 @@
 2003-01-11  Bruno Haible  <bruno@clisp.org>
 
+	* modules/*: Add a description.
+	* modules/strpbrk: Fix Makefile.am snippet.
+	* modules/strtoimax: Fix dependencies.
+	* modules/strtoumax: Likewise.
+
+2003-01-11  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_create_testdir): Substitute lib_OBJECTS.
 	* modules/alloca (Makefile.am): All object files depend on alloca.h.
 	* modules/stdbool (Makefile.am): All object files depend on stdbool.h.

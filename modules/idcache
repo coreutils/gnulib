@@ -1,4 +1,5 @@
 Description:
+Username <--> uid and groupname <--> gid conversions, with cache for speed.
 
 Files:
 lib/idcache.c

@@ -1,4 +1,5 @@
 Description:
+Print --version output.
 
 Files:
 lib/version-etc.h

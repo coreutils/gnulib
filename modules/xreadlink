@@ -1,4 +1,5 @@
 Description:
+Return the contents of a symbolic link, without size limitations.
 
 Files:
 lib/xreadlink.h

@@ -1,4 +1,6 @@
 Description:
+Construct a full pathname by concatenating a directory name and a relative
+filename.
 
 Files:
 lib/path-concat.h

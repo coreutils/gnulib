@@ -1,4 +1,5 @@
 Description:
+nstrftime() function: convert date and time to string, with GNU extensions.
 
 Files:
 lib/strftime.c

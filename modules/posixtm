@@ -1,4 +1,5 @@
 Description:
+Convert a date/time string (POSIX syntax) to linear time or broken-down time.
 
 Files:
 lib/posixtm.h

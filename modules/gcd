@@ -1,4 +1,5 @@
 Description:
+Greatest common divisor.
 
 Files:
 lib/gcd.h

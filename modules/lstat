@@ -1,4 +1,5 @@
 Description:
+stat() function: return information about a file or symbolic link.
 
 Files:
 lib/lstat.c

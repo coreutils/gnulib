@@ -1,4 +1,5 @@
 Description:
+strtol() function: convert string to 'long'.
 
 Files:
 lib/strtol.c

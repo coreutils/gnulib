@@ -1,4 +1,5 @@
 Description:
+Error reporting for fatal errors.
 
 Files:
 lib/fatal.h

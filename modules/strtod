@@ -1,4 +1,5 @@
 Description:
+strtod() function: convert string to 'double'.
 
 Files:
 lib/strtod.c

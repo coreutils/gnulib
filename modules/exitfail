@@ -1,4 +1,5 @@
 Description:
+Set exit status for fatal signal.
 
 Files:
 lib/exitfail.h

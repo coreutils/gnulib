@@ -1,4 +1,5 @@
 Description:
+gethostname() function: Return machine's hostname.
 
 Files:
 lib/gethostname.c

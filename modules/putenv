@@ -1,4 +1,5 @@
 Description:
+putenv() function: change or add an environment variable.
 
 Files:
 lib/putenv.c

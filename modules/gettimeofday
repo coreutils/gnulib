@@ -1,4 +1,5 @@
 Description:
+gettimeofday() function: return current time.
 
 Files:
 lib/gettimeofday.c

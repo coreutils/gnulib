@@ -1,4 +1,6 @@
 Description:
+Determine whether two pathnames refer to the same directory entry of the same
+directory.
 
 Files:
 lib/same.h

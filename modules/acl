@@ -1,4 +1,5 @@
 Description:
+Access control lists of files.  (Unportable.)
 
 Files:
 lib/acl.h

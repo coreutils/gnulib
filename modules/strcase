@@ -1,4 +1,5 @@
 Description:
+Case-insensitive string comparison functions.
 
 Files:
 lib/strcase.h

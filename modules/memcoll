@@ -1,4 +1,5 @@
 Description:
+Locale dependent memory area comparison.
 
 Files:
 lib/memcoll.h

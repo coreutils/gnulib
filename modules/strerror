@@ -1,4 +1,5 @@
 Description:
+strerror() function: return string describing error code.
 
 Files:
 lib/strerror.c

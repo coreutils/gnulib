@@ -1,4 +1,5 @@
 Description:
+Determine whether a directory exists.
 
 Files:
 lib/isdir.c

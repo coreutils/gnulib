@@ -1,4 +1,5 @@
 Description:
+strtoimax() function: convert string to 'intmax_t'.
 
 Files:
 lib/strtoimax.c
@@ -9,6 +10,7 @@ m4/intmax_t.m4
 m4/strtoimax.m4
 
 Depends-on:
+strtoll
 
 configure.ac:
 gl_FUNC_STRTOIMAX

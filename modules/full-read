@@ -1,4 +1,5 @@
 Description:
+An interface to read() that reads all it is asked to read.
 
 Files:
 lib/full-read.h

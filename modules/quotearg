@@ -1,4 +1,5 @@
 Description:
+Quote arguments for use in error messages.
 
 Files:
 lib/quotearg.h

@@ -1,4 +1,5 @@
 Description:
+Decomposition of composed ISO-8859-1 characters.
 
 Files:
 lib/diacrit.h

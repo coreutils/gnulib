@@ -1,4 +1,5 @@
 Description:
+rmdir() function: delete a directory.
 
 Files:
 lib/rmdir.c

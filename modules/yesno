@@ -1,4 +1,6 @@
 Description:
+Read a response from the user, and its classification as matching "yes" or
+"no".
 
 Files:
 lib/yesno.c

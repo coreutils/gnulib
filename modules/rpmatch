@@ -1,4 +1,5 @@
 Description:
+Locale dependent classification of a response as matching "yes" or "no".
 
 Files:
 lib/rpmatch.c

@@ -1,4 +1,5 @@
 Description:
+Old BSD bcopy() function: copy memory area.
 
 Files:
 lib/bcopy.c

@@ -1,4 +1,5 @@
 Description:
+ftruncate() function: truncate an open file to a specified length.
 
 Files:
 lib/ftruncate.c

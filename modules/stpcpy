@@ -1,4 +1,5 @@
 Description:
+stpcpy() function: copy a string, returning a pointer to its end.
 
 Files:
 lib/stpcpy.h

@@ -1,4 +1,5 @@
 Description:
+memcmp() function: compare memory areas.
 
 Files:
 lib/memcmp.c

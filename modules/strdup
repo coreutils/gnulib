@@ -1,4 +1,5 @@
 Description:
+strdup() function: duplicate a string.
 
 Files:
 lib/strdup.c

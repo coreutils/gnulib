@@ -1,4 +1,5 @@
 Description:
+Return a string describing the type of a file.
 
 Files:
 lib/file-type.h

@@ -1,4 +1,5 @@
 Description:
+memchr() function: scan memory for a byte.
 
 Files:
 lib/memchr.c

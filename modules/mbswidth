@@ -1,4 +1,5 @@
 Description:
+Determine the number of screen columns needed for a string.
 
 Files:
 lib/mbswidth.h

@@ -1,4 +1,5 @@
 Description:
+Case-insensitive memory area comparison.
 
 Files:
 lib/memcasecmp.h

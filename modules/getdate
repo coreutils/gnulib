@@ -1,4 +1,5 @@
 Description:
+Convert a date/time string to linear time.
 
 Files:
 lib/getdate.h
