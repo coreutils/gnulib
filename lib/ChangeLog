@@ -1,3 +1,23 @@
+2005-03-21  Jim Meyering  <jim@meyering.net>
+
+	Changes imported from coreutils.
+
+	* cycle-check.c: Don't include xalloc.h.
+
+	* path-concat.c: Don't include assert.h.
+	(path_concat): Remove assertion that would have triggered
+	for ABASE starting with more than one slash.
+	Reported by Andreas Schwab.
+
+	* path-concat.c (path_concat): Set *BASE_IN_RESULT
+	properly when ABASE is an absolute file name.
+	Correct the description of this function.
+	Include <assert.h>.
+	Add an assertion and a test driver.
+	This fixes a bug introduced on 2004-07-02.
+	Andreas Schwab reported the resulting failure of cp --parents:
+	http://lists.gnu.org/archive/html/bug-coreutils/2005-01/msg00130.html
+
 2005-03-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* strftime.c (my_strftime): If the underlying strftime returns 0
