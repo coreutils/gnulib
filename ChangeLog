@@ -1,3 +1,8 @@
+2005-01-28  Bruno Haible  <bruno@clisp.org>
+
+	* modules/javacomp: New file.
+	* MODULES.html.sh (Java): Add javacomp.
+
 2005-01-26  Bruno Haible  <bruno@clisp.org>
 
 	* modules/javaexec: New file.

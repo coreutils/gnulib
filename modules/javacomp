@@ -1,0 +1,39 @@
+Description:
+Compile a Java program.
+
+Files:
+lib/javacomp.h
+lib/javacomp.c
+lib/javacomp.sh.in
+m4/javacomp.m4
+
+Depends-on:
+stdbool
+xallocsa
+execute
+pipe
+wait-process
+classpath
+xsetenv
+sh-quote
+safe-read
+xalloc
+error
+gettext
+
+configure.ac:
+gt_JAVACOMP
+
+Makefile.am:
+lib_SOURCES += javacomp.h javacomp.c
+EXTRA_DIST += javacomp.sh.in
+
+Include:
+"javacomp.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible
+

@@ -1,3 +1,9 @@
+2005-01-28  Bruno Haible  <bruno@clisp.org>
+
+	* javacomp.sh.in: New file, from GNU gettext.
+	* javacomp.h: New file, from GNU gettext.
+	* javacomp.c: New file, from GNU gettext.
+
 2005-01-26  Bruno Haible  <bruno@clisp.org>
 
 	* javaexec.sh.in: New file, from GNU gettext.
