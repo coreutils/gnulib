@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-08-27.06}
+\def\texinfoversion{2004-09-06.16}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -6493,14 +6493,20 @@ width0pt\relax} \fi
       % caption if specified, else the full caption if specified, else nothing.
       {%
         \atdummies \turnoffactive \otherbackslash
-        \immediate\write\auxfile{@xrdef{\floatlabel-lof}{%
-          \floatident
-          \ifx\thisshortcaption\empty
-            \ifx\thiscaption\empty \else : \thiscaption \fi
-          \else
-            : \thisshortcaption
-          \fi
-        }}%
+        % since we read the caption text in the macro world, where ^^M
+        % is turned into a normal character, we have to scan it back, so
+        % we don't write the literal three characters "^^M" into the aux file.
+	\scanexp{%
+	  \xdef\noexpand\gtemp{%
+	    \ifx\thisshortcaption\empty
+	      \thiscaption
+	    \else
+	      \thisshortcaption
+	    \fi
+	  }%
+	}%
+        \immediate\write\auxfile{@xrdef{\floatlabel-lof}{\floatident
+	  \ifx\gtemp\empty \else : \gtemp \fi}}%
       }%
     \fi
   \egroup  % end of \vtop
