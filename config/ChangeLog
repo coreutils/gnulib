@@ -1,3 +1,7 @@
+2004-10-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclistvars.sh: Add GNUSTANDARDS (for eggert only).
+
 2004-10-04  Simon Josefsson  <jas@extundo.com>
 
 	* srclist.txt: Add memmem from glibc.
