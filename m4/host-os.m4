@@ -50,8 +50,8 @@ AC_DEFUN([gl_HOST_OS],
        nonstopux*)	os='NonStop-UX';;
        netbsd*-gnu*)	os='GNU/NetBSD';; # NetBSD kernel+libc, GNU userland
        netbsd*)		os='NetBSD';;
-       knetbsd*-gnu)	os='GNU/KNetBSD';; # NetBSD kernel, GNU libc+userland
-       kfreebsd*-gnu)	os='GNU/KFreeBSD';; # FreeBSD kernel, GNU libc+userland
+       knetbsd*-gnu)	os='GNU/kNetBSD';; # NetBSD kernel, GNU libc+userland
+       kfreebsd*-gnu)	os='GNU/kFreeBSD';; # FreeBSD kernel, GNU libc+userland
        msdosdjgpp*)	os='DJGPP';;
        mpeix*)		os='MPE/iX';;
        mint*)		os='MiNT';;

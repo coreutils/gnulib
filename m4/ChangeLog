@@ -1,3 +1,7 @@
+2004-07-13  Robert Millan  <robertmh@gnu.org>
+
+	* host-os.m4: s/KNetBSD/kNetBSD/g and s/KFreeBSD/kFreeBSD/g.
+
 2004-06-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* argz.m4: New file, which is autoupdated from libtool.
