@@ -1,3 +1,8 @@
+2003-12-03  Paul Eggert  <eggert@twinsun.com>
+
+	* getgroups.c (getgroups): xmalloc takes one argument, not two.
+	Bug reported by Alfred M. Szmidt.
+
 2003-11-29  Karl Berry  <karl@gnu.org>
 
 	* argp-{help.c,parse.c,namefrob.h}, argp.h: update from libc.
