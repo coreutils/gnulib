@@ -1,3 +1,15 @@
+2003-05-03  Bruno Haible  <bruno@clisp.org>
+
+	Upgrade to Unicode-4.0.
+	* linebreak.c (nonspacing_table_data): Change width of U+00AD,
+	U+0350..U+0357, U+035D..U+035F, U+0600..U+0603, U+0610..U+0615,
+	U+0656..U+0658, U+0A01, U+0AE2..U+0AE3, U+0CBC, U+17B4..U+17B5,
+	U+17DD, U+1920..U+1922, U+1927..U+192B, U+1932, U+1939..U+193B
+	from 1 to 0. Change width of U+0CBF, U+0CC6, U+180E from 0 to 1.
+	(uc_width): Change width of U+4DC0..U+4DFF from 2 to 1. Change width
+	of U+2A6D7..U+2F7FF, U+2FA1E..U+2FFFD, U+30000..U+3FFFD from 1 to 2.
+	Change width of U+E0100..U+E01EF from 1 to 0.
+
 2003-04-25  Bruno Haible  <bruno@clisp.org>
 
 	* copy-file.c: Include <stddef.h>, for size_t.
