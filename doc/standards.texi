@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate February 20, 2004
+@set lastupdate October 1, 2004
 @c %**end of header
 
 @dircategory GNU organization
@@ -94,15 +94,9 @@ This release of the GNU Coding Standards was last updated
 @cindex downloading this manual
 If you did not obtain this file directly from the GNU project and
 recently, please check for a newer version.  You can get the GNU
-Coding Standards from the GNU World Wide Web server host in several
-different formats: @uref{http://www.gnu.org/prep/standards.text},
-@uref{http://www.gnu.org/prep/standards.info}, and
-@uref{http://www.gnu.org/prep/standards.dvi}, as well as the
-Texinfo ``source'' which is divided in two files:
-@uref{http://www.gnu.org/prep/standards.texi} and
-@uref{http://www.gnu.org/prep/make-stds.texi}.  The GNU Coding
-Standards are also available in HTML format starting at
-@uref{http://www.gnu.org/prep/standards_toc.html}.
+Coding Standards from the GNU web server in many
+different formats, including the Texinfo source, PDF, HTML, DVI, plain
+text, and more, at: @uref{http://www.gnu.org/prep/standards/}.
 
 Corrections or suggestions for this document should be sent to
 @email{bug-standards@@gnu.org}.  If you make a suggestion, please include a
@@ -130,7 +124,7 @@ world!}.  @uref{http://www.gnu.org/software/hello/hello.html}.
 @chapter Keeping Free Software Free
 @cindex legal aspects
 
-This @value{CHAPTER} discusses how you can make sure that GNU software
+This chapter discusses how you can make sure that GNU software
 avoids legal difficulties, and other related issues.
 
 @menu
@@ -208,7 +202,7 @@ You might have to take that code out again!
 You don't need papers for changes of a few lines here or there, since
 they are not significant for copyright purposes.  Also, you don't need
 papers if all you get from the suggestion is some ideas, not actual code
-which you use.  For example, if someone send you one implementation, but
+which you use.  For example, if someone sent you one implementation, but
 you write a different implementation of the same idea, you don't need to
 get papers.
 
@@ -218,7 +212,8 @@ result.
 
 We have more detailed advice for maintainers of programs; if you have
 reached the stage of actually maintaining a program for GNU (whether
-released or not), please ask us for a copy.
+released or not), please ask us for a copy.  It is also available
+online for your perusal: @uref{http://www.gnu.org/prep/maintain/}.
 
 @node Trademarks
 @section Trademarks
@@ -255,7 +250,7 @@ functions in Emacs that deal with Windows start with @samp{w32}.
 @chapter General Program Design
 @cindex program design
 
-This @value{CHAPTER} discusses some of the issues you should take into
+This chapter discusses some of the issues you should take into
 account when designing your program.
 
 @c                         Standard or ANSI C
@@ -518,7 +513,7 @@ an easy workaround.  Simply introduce another macro
 @node Program Behavior
 @chapter Program Behavior for All Programs
 
-This @value{CHAPTER} describes conventions for writing robust
+This chapter describes conventions for writing robust
 software.  It also describes general standards for error messages, the
 command line interface, and how libraries should behave.
 
@@ -2137,7 +2132,7 @@ directory.
 @node Writing C
 @chapter Making The Best Use of C
 
-This @value{CHAPTER} provides advice on how best to use the C language
+This chapter provides advice on how best to use the C language
 when writing GNU software.
 
 @menu
@@ -3143,7 +3138,7 @@ Each program documented in the manual should have a node named
 @samp{@var{program} Invocation} or @samp{Invoking @var{program}}.  This
 node (together with its subnodes, if any) should describe the program's
 command line arguments and how to run it (the sort of information people
-would look in a man page for).  Start with an @samp{@@example}
+would look for in a man page).  Start with an @samp{@@example}
 containing a template for all the options and arguments that the program
 uses.
 
@@ -3468,6 +3463,11 @@ updating.  If so, put a prominent note near the beginning of the man
 page explaining that you don't maintain it and that the Texinfo manual
 is more authoritative.  The note should say how to access the Texinfo
 documentation.
+
+Finally, the GNU help2man program
+(@uref{http://www.gnu.org/software/help2man/}) is one way to automate
+generation of a man page, in this case from @option{--help} output.
+This is sufficient in many cases.
 
 @node Reading other Manuals
 @section Reading other Manuals
