@@ -1593,6 +1593,16 @@ func_all_modules ()
   func_wrap H2
   func_echo "$element"
 
+  element="Keywords"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap isoc_sup_keywords
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module restrict
+  func_end_table
+
   element="Boolean type and values <stdbool.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap isoc_sup_stdbool

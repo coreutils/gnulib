@@ -10,6 +10,7 @@ Depends-on:
 alloca
 unlocked-io
 gettext
+restrict
 
 configure.ac:
 gl_REGEX

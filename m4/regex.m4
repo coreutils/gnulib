@@ -1,4 +1,4 @@
-#serial 17
+#serial 18
 
 dnl Initially derived from code in GNU grep.
 dnl Mostly written by Jim Meyering.
@@ -110,6 +110,7 @@ AC_DEFUN([jm_PREREQ_REGEX],
   dnl Persuade glibc <string.h> to declare mempcpy().
   AC_REQUIRE([AC_GNU_SOURCE])
 
+  AC_REQUIRE([gl_C_RESTRICT])
   AC_REQUIRE([AC_FUNC_ALLOCA])
   AC_REQUIRE([AC_HEADER_STDC])
   AC_CHECK_HEADERS_ONCE(limits.h string.h wchar.h wctype.h)

@@ -1,0 +1,17 @@
+Description:
+The C99 'restrict' keyword.
+
+Files:
+m4/restrict.m4
+
+Depends-on:
+
+configure.ac:
+gl_C_RESTRICT
+
+Makefile.am:
+
+Include:
+
+Maintainer:
+Paul Eggert and Jim Meyering
