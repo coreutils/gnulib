@@ -35,6 +35,7 @@ Header          Implementation        Autoconf macro              Depends on
 
 <string.h>      memcmp.c              memcmp.m4                   ---
                                       jm_FUNC_MEMCMP
+                                      AC_CHECK_HEADERS(string.h)
 
 <string.h>      memcpy.c              AC_REPLACE_FUNCS(memcpy)    ---
 
