@@ -1,3 +1,9 @@
+2004-05-14  Bruno Haible  <bruno@clisp.org>
+
+	* vasnprintf.c (VASNPRINTF): Correctly handle the case of a precision
+	that consists of a '.' followed by an empty digit string.
+	Patch by Tor Lillqvist <tml@iki.fi>.
+
 2004-05-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Port obstack to the AS/400, where pointers are 16 bytes wide and
