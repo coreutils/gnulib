@@ -1544,6 +1544,7 @@ func_all_modules ()
 
   func_begin_table
   func_module unlocked-io
+  func_module fwriteerror
   func_module vasnprintf
   func_module vasprintf
   func_end_table
