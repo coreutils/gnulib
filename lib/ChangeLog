@@ -1,3 +1,11 @@
+2002-11-21  Jim Meyering  <jim@meyering.net>
+
+	Merge in changes from the coreutils.
+
+	* mountlist.h (ME_DUMMY): Don't count entries of type `auto' as dummy
+	ones.  At least on GNU/Linux systems, `auto' means something else.
+	From Michael Stone.
+
 2002-11-20  Paul Eggert  <eggert@twinsun.com>
 
 	Merge argmatch cleanups from Bison.  Assume C89.
