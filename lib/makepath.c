@@ -1,5 +1,7 @@
 /* makepath.c -- Ensure that a directory path exists.
-   Copyright (C) 1990, 1997-1999, 2000, 2002-2003 Free Software Foundation, Inc.
+
+   Copyright (C) 1990, 1997, 1998, 1999, 2000, 2002, 2003 Free
+   Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -86,7 +88,6 @@ extern int errno;
 
 #define WX_USR (S_IWUSR | S_IXUSR)
 
-/* Include this before libintl.h so we get our definition of PARAMS. */
 #include "makepath.h"
 
 #include "gettext.h"

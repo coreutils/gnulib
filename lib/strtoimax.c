@@ -1,5 +1,5 @@
 /* Convert string representation of a number into an intmax_t value.
-   Copyright 1999, 2001, 2002 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2001, 2002, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,14 +33,6 @@
 # include <stdlib.h>
 #endif
 
-#ifndef PARAMS
-# if defined PROTOTYPES || defined __STDC__
-#  define PARAMS(Args) Args
-# else
-#  define PARAMS(Args) ()
-# endif
-#endif
-
 /* Verify a requirement at compile-time (unlike assert, which is runtime).  */
 #define verify(name, assertion) struct name { char a[(assertion) ? 1 : -1]; }
 
@@ -49,13 +41,13 @@
 "this configure-time declaration test was not run"
 # endif
 # if !HAVE_DECL_STRTOUL
-unsigned long strtoul PARAMS ((char const *, char **, int));
+unsigned long strtoul (char const *, char **, int);
 # endif
 # ifndef HAVE_DECL_STRTOULL
 "this configure-time declaration test was not run"
 # endif
 # if !HAVE_DECL_STRTOULL && HAVE_UNSIGNED_LONG_LONG
-unsigned long long strtoull PARAMS ((char const *, char **, int));
+unsigned long long strtoull (char const *, char **, int);
 # endif
 
 #else
@@ -64,13 +56,13 @@ unsigned long long strtoull PARAMS ((char const *, char **, int));
 "this configure-time declaration test was not run"
 # endif
 # if !HAVE_DECL_STRTOL
-long strtol PARAMS ((char const *, char **, int));
+long strtol (char const *, char **, int);
 # endif
 # ifndef HAVE_DECL_STRTOLL
 "this configure-time declaration test was not run"
 # endif
 # if !HAVE_DECL_STRTOLL && HAVE_UNSIGNED_LONG_LONG
-long long strtoll PARAMS ((char const *, char **, int));
+long long strtoll (char const *, char **, int);
 # endif
 #endif
 

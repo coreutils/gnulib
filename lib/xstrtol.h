@@ -1,5 +1,7 @@
 /* A more useful interface to strtol.
-   Copyright 1995, 1996, 1998, 1999, 2001, 2002 Free Software Foundation, Inc.
+
+   Copyright (C) 1995, 1996, 1998, 1999, 2001, 2002, 2003 Free
+   Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,14 +29,6 @@
 #  endif
 # endif
 
-# ifndef PARAMS
-#  if defined PROTOTYPES || (defined __STDC__ && __STDC__)
-#   define PARAMS(Args) Args
-#  else
-#   define PARAMS(Args) ()
-#  endif
-# endif
-
 # ifndef _STRTOL_ERROR
 enum strtol_error
   {
@@ -44,9 +38,7 @@ typedef enum strtol_error strtol_error;
 # endif
 
 # define _DECLARE_XSTRTOL(name, type) \
-  strtol_error \
-    name PARAMS ((const char *s, char **ptr, int base, \
-		  type *val, const char *valid_suffixes));
+  strtol_error name (const char *, char **, int, type *, const char *);
 _DECLARE_XSTRTOL (xstrtol, long int)
 _DECLARE_XSTRTOL (xstrtoul, unsigned long int)
 _DECLARE_XSTRTOL (xstrtoimax, intmax_t)

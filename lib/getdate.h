@@ -1,4 +1,6 @@
-/*  Copyright (C) 1995, 1997, 1998 Free Software Foundation, Inc.
+/* Parse a string into an internal time stamp.
+
+   Copyright (C) 1995, 1997, 1998, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,14 +20,6 @@
 # include <config.h>
 #endif
 
-#ifndef PARAMS
-# if defined PROTOTYPES || (defined __STDC__ && __STDC__)
-#  define PARAMS(Args) Args
-# else
-#  define PARAMS(Args) ()
-# endif
-#endif
-
 #ifdef vms
 # include <types.h>
 # include <time.h>
@@ -43,4 +37,4 @@
 # endif
 #endif /* defined (vms) */
 
-time_t get_date PARAMS ((const char *p, const time_t *now));
+time_t get_date (const char *p, const time_t *now);
