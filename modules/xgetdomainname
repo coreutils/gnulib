@@ -15,6 +15,7 @@ Makefile.am:
 lib_SOURCES += xgetdomainname.h xgetdomainname.c
 
 Include:
+"xgetdomainname.h"
 
 Maintainer:
 Simon Josefsson

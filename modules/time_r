@@ -17,7 +17,7 @@ Makefile.am:
 lib_SOURCES += time_r.h
 
 Include:
-<time_r.h>
+"time_r.h"
 
 Maintainer:
 Paul Eggert

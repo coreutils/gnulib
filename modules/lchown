@@ -16,6 +16,7 @@ Makefile.am:
 lib_SOURCES += lchown.h
 
 Include:
+"lchown.h"
 
 Maintainer:
 Jim Meyering
