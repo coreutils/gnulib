@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.16 2003-07-08 23:25:13 eggert Exp $
+# $Id: srclist.txt,v 1.17 2003-07-10 05:07:45 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -25,27 +25,93 @@ $LIBCSRC/argp/argp-eexst.c		lib gpl
 $LIBCSRC/argp/argp-fmtstream.c		lib gpl
 $LIBCSRC/argp/argp-fmtstream.h		lib gpl
 $LIBCSRC/argp/argp-fs-xinl.c		lib gpl
-$LIBCSRC/argp/argp.h			lib gpl
 $LIBCSRC/argp/argp-help.c		lib gpl
 $LIBCSRC/argp/argp-namefrob.h		lib gpl
 $LIBCSRC/argp/argp-parse.c		lib gpl
 $LIBCSRC/argp/argp-pv.c			lib gpl
 $LIBCSRC/argp/argp-pvh.c		lib gpl
 $LIBCSRC/argp/argp-xinl.c		lib gpl
-$LIBCSRC/sysdeps/generic/strtoll.c	lib gpl
+$LIBCSRC/argp/argp.h			lib gpl
 $LIBCSRC/posix/getopt.h			lib gpl
 $LIBCSRC/posix/getopt1.c		lib gpl
 $LIBCSRC/posix/regex.h			lib gpl
 $LIBCSRC/string/strdup.c		lib gpl
-# This can be uncommented after libc mktime is fixed.
-#$LIBCSRC/time/mktime.c			lib gpl
+$LIBCSRC/sysdeps/generic/strtoll.c	lib gpl
+$LIBCSRC/sysdeps/generic/strtoul.c	lib gpl
 #
 # These are close, but ...
+#$LIBCSRC/crypt/md5.c			lib gpl
+#$LIBCSRC/crypt/md5.h			lib gpl
+#$LIBCSRC/locale/programs/xmalloc.c	lib gpl
+#$LIBCSRC/locale/programs/xstrdup.c	lib gpl
 #$LIBCSRC/malloc/obstack.c		lib gpl
+#$LIBCSRC/malloc/obstack.h		lib gpl
+#$LIBCSRC/misc/error.c			lib gpl
+#$LIBCSRC/misc/error.h			lib gpl
+#$LIBCSRC/misc/getpass.c		lib gpl
+#$LIBCSRC/misc/mkstemp.c		lib gpl
+#$LIBCSRC/posix/fnmatch.c		lib gpl
+#$LIBCSRC/posix/fnmatch.h		lib gpl (fnmatch_.h in gnulib)
+#$LIBCSRC/posix/fnmatch_loop.c		lib gpl
 #$LIBCSRC/posix/getopt.c		lib gpl
+#$LIBCSRC/posix/tempname.c		lib gpl
+#$LIBCSRC/stdlib/rpmatch.c		lib gpl
+#$LIBCSRC/string/strndup.c		lib gpl
+#$LIBCSRC/string/strverscmp.c		lib gpl
+#$LIBCSRC/sysdeps/generic/memchr.c	lib gpl
+#$LIBCSRC/sysdeps/generic/memcmp.c	lib gpl
+#$LIBCSRC/sysdeps/generic/memrchr.c	lib gpl
+#$LIBCSRC/sysdeps/generic/putenv.c	lib gpl
+#$LIBCSRC/sysdeps/generic/stpcpy.c	lib gpl
+#$LIBCSRC/sysdeps/generic/stpncpy.c	lib gpl
+#$LIBCSRC/sysdeps/generic/strcspn.c	lib gpl
+#$LIBCSRC/sysdeps/generic/strpbrk.c	lib gpl
+#$LIBCSRC/sysdeps/generic/strstr.c	lib gpl
+#$LIBCSRC/sysdeps/generic/strtol.c	lib gpl
+#$LIBCSRC/sysdeps/posix/dup2.c		lib gpl
+#$LIBCSRC/sysdeps/posix/euidaccess.c	lib gpl
+#$LIBCSRC/sysdeps/unix/bsd/poll.c	lib gpl
+#$LIBCSRC/sysdeps/unix/dirfd.c		lib gpl
+#$LIBCSRC/sysdeps/unix/rmdir.c		lib gpl
+#$LIBCSRC/time/mktime.c			lib gpl
+#$LIBCSRC/time/strftime.c		lib gpl
+# These are close, but we are using the gettext versions.
+#$LIBCSRC/misc/mkdtemp.c		lib gpl
+#$LIBCSRC/sysdeps/generic/setenv.c	lib gpl (setenv.c, unsetenv.c)
 #
-# - libc/sysdeps/generic has memcpy.c, memmove.c, strcasecmp.c, but they
-#   are totally different implementations.
-# - Likewise libc/string/strerror.c.
-# - libc/locale/programs/xstrdup.c is almost usable, but uses the __P
-#   prototype macro.
+# These implementations are quite different.
+#$LIBCSRC/io/lstat.c				lib gpl
+#$LIBCSRC/io/stat.c				lib gpl
+#$LIBCSRC/libio/__fpending.c			lib gpl
+#$LIBCSRC/malloc/malloc.c			lib gpl
+#$LIBCSRC/misc/dirname.c			lib gpl
+#$LIBCSRC/misc/getusershell.c			lib gpl
+#$LIBCSRC/stdio-common/getline.c		lib gpl
+#$LIBCSRC/stdlib/atexit.c			lib gpl
+#$LIBCSRC/stdlib/exit.h				lib gpl
+#$LIBCSRC/stdlib/strtod.c			lib gpl
+#$LIBCSRC/string/basename.c			lib gpl
+#$LIBCSRC/string/strerror.c			lib gpl
+#$LIBCSRC/sysdeps/generic/bcopy.c		lib gpl
+#$LIBCSRC/sysdeps/generic/chown.c		lib gpl
+#$LIBCSRC/sysdeps/generic/ftruncate.c		lib gpl
+#$LIBCSRC/sysdeps/generic/getgroups.c		lib gpl
+#$LIBCSRC/sysdeps/generic/getloadavg.c		lib gpl
+#$LIBCSRC/sysdeps/generic/lchown.c		lib gpl
+#$LIBCSRC/sysdeps/generic/memcpy.c		lib gpl
+#$LIBCSRC/sysdeps/generic/memmove.c		lib gpl
+#$LIBCSRC/sysdeps/generic/memset.c		lib gpl
+#$LIBCSRC/sysdeps/generic/nanosleep.c		lib gpl
+#$LIBCSRC/sysdeps/generic/readlink.c		lib gpl
+#$LIBCSRC/sysdeps/generic/regex.c		lib gpl
+#$LIBCSRC/sysdeps/generic/strcasecmp.c		lib gpl
+#$LIBCSRC/sysdeps/generic/strchrnul.c		lib gpl
+#$LIBCSRC/sysdeps/generic/strnlen.c		lib gpl
+#$LIBCSRC/sysdeps/generic/strtoimax.c		lib gpl
+#$LIBCSRC/sysdeps/generic/strtoull.c		lib gpl
+#$LIBCSRC/sysdeps/generic/strtoumax.c		lib gpl
+#$LIBCSRC/sysdeps/posix/gettimeofday.c		lib gpl
+#$LIBCSRC/sysdeps/posix/rename.c		lib gpl
+#$LIBCSRC/sysdeps/unix/sysv/gethostname.c	lib gpl
+#$LIBCSRC/sysdeps/unix/mkdir.c			lib gpl
+#$LIBCSRC/sysdeps/unix/utime.c			lib gpl
