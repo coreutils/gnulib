@@ -1,5 +1,8 @@
 2002-11-23  Jim Meyering  <jim@meyering.net>
 
+	* sig2str.c (str2signum, sig2str): Avoid a warning from gcc:
+	Use `unsigned', not `int', as type of index.
+
 	* xstat.in [@BEGIN_LSTAT_ONLY@]: Include <string.h>.
 
 	* fsusage.c: Remove unneeded parentheses around operands of `defined'.
