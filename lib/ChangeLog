@@ -1,5 +1,7 @@
 2002-11-23  Jim Meyering  <jim@meyering.net>
 
+	* xstat.in [@BEGIN_LSTAT_ONLY@]: Include <string.h>.
+
 	* fsusage.c: Remove unneeded parentheses around operands of `defined'.
 
 2002-11-22  Paul Eggert  <eggert@twinsun.com>
