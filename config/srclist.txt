@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.49 2004-10-10 22:32:37 karl Exp $
+# $Id: srclist.txt,v 1.50 2004-11-02 19:22:29 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -98,6 +98,7 @@ $LIBCSRC/posix/getopt_int.h		lib gpl
 $LIBCSRC/sysdeps/generic/strtoll.c	lib gpl
 $LIBCSRC/sysdeps/generic/strtoul.c	lib gpl
 $LIBCSRC/sysdeps/generic/memmem.c	lib gpl
+$LIBCSRC/time/mktime.c			lib gpl
 #
 # These are close, but ...
 #$LIBCSRC/crypt/md5.c			lib gpl
@@ -133,7 +134,6 @@ $LIBCSRC/sysdeps/generic/memmem.c	lib gpl
 #$LIBCSRC/sysdeps/unix/bsd/poll.c	lib gpl
 #$LIBCSRC/sysdeps/unix/dirfd.c		lib gpl
 #$LIBCSRC/sysdeps/unix/rmdir.c		lib gpl
-#$LIBCSRC/time/mktime.c			lib gpl
 #$LIBCSRC/time/strftime.c		lib gpl
 # These are close, but we are using the gettext versions.
 #$LIBCSRC/misc/mkdtemp.c		lib gpl
