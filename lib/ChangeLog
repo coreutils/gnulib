@@ -1,5 +1,10 @@
 2003-10-21  Paul Eggert  <eggert@twinsun.com>
 
+	* getndelim2.c (getndelim2): When size calculation overflows,
+	ceiling the allocation at NMAX bytes rather than silently
+	discarding input bytes before NMAX is reached.  This makes
+	a difference only if NMAX exceeds SIZE_MAX / 2.
+
 	* obstack.c: Merge from glibc.
 	[defined _LIBC]: Include <obstack.h>, not "obstack.h".
 	Add libc_hidden_def (_obstack_newchunk).
