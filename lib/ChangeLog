@@ -1,3 +1,7 @@
+2005-01-26  Simon Josefsson  <jas@extundo.com>
+
+	* gai_strerror.c: Use GPL in header.
+
 2005-01-24  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
 	* argp-help.c (hol_entry_help): Avoid using non-constant
