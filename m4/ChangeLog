@@ -1,6 +1,6 @@
 2004-12-06  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* ls-mnt-fs.m4 (AC_FUNC_GETMNTENT): New macro, to work around bug
+	* ls-mntd-fs.m4 (AC_FUNC_GETMNTENT): New macro, to work around bug
 	in Autoconf 2.59.  Problem reported by Mark D. Baushke.
 
 2004-12-04  Paul Eggert  <eggert@cs.ucla.edu>
