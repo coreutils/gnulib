@@ -1,3 +1,10 @@
+2003-08-11  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/gnu-source, m4/gnu-source.m4:
+	Remove; we're assuming Autoconf 2.54 or later now.
+	Suggested by Bruno Haible.
+	* MODULES.html.sh (func_all_modules): Remove gnu-source.
+	
 2003-08-08  Paul Eggert  <eggert@twinsun.com>
 
 	* MODULES.html.sh (func_all_modules): Add extensions, gnu-source.
