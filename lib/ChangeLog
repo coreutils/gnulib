@@ -1,3 +1,7 @@
+2003-09-10  Jim Meyering  <jim@meyering.net>
+
+	* error.c: Correct indentation of cpp directives.
+
 2003-09-09  Paul Eggert  <eggert@twinsun.com>
 
 	More K&R removal.
@@ -259,7 +263,7 @@
 
 	* exitfail.c: Include <stdlib.h> unconditionally.
 
-	* fnmatch.h (__P): Remove.  All uses changed to assume
+	* fnmatch_.h (__P): Remove.  All uses changed to assume
 	prototypes.
 	* fnmatch.c: Include fnmatch.h first, to test interface.
 	Include <string.h>, <stddef.h>, <stdlib.h> unconditionally.
