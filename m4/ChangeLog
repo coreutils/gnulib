@@ -1,3 +1,8 @@
+2005-03-03  Bruno Haible  <bruno@clisp.org>
+
+	* inttypes.m4, isc-posix.m4, once-only.m4:
+	Use an all-permissive copyright notice, recommended by RMS.
+
 2005-03-03  Derek R. Price  <derek@ximbiot.com>
 
 	* mmap-anon.m4: New file.
