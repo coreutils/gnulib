@@ -1,3 +1,7 @@
+2003-01-01    <karl@gnu.org>
+
+	* gnulib-tool (last_checkin_date): don't expand the $Date here.
+
 2002-12-24  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.txt: Update according to m4/ changes.
