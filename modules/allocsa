@@ -19,7 +19,7 @@ Makefile.am:
 lib_SOURCES += allocsa.h allocsa.c
 
 Include:
-#include <allocsa.h>
+#include "allocsa.h"
 
 Maintainer:
 Bruno Haible
