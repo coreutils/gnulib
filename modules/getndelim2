@@ -15,7 +15,7 @@ configure.ac:
 gl_GETNDELIM2
 
 Makefile.am:
-lib_SOURCES += getndelim2.h getndelim2.c
+EXTRA_DIST += getndelim2.h getndelim2.c
 
 Include:
 "getndelim2.h"

@@ -1,3 +1,8 @@
+2003-08-07  Bruno Haible  <bruno@clisp.org>
+
+	* getndelim2.m4 (gl_GETNDELIM2): Use AC_LIBOBJ(getndelim2). This makes
+	the module 'getndelim2' compatible with the module 'getline'.
+
 2003-08-05  Paul Eggert  <eggert@twinsun.com>
 
 	* regex.m4 (jm_INCLUDED_REGEX): Replace a single non-ASCII

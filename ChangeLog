@@ -1,3 +1,8 @@
+2003-08-07  Bruno Haible  <bruno@clisp.org>
+
+	* modules/getndelim2 (Makefile.am): Add the files to EXTRA_DIST, not
+	lib_SOURCES, because getndelim2.m4 now uses AC_LIBOBJ(getndelim2).
+
 2003-08-05  Paul Eggert  <eggert@twinsun.com>
 
 	* MODULES.html.sh (func_all_modules): Remove bumpalloc.
