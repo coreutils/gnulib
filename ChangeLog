@@ -1,6 +1,6 @@
 2004-12-12  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* modules/getcwd (Depends-on): Add m4/d-ino.m4.
+	* modules/getcwd (Files): Add m4/d-ino.m4.
 	Suggested by Mark D. Baushke.
 
 2004-12-04  Paul Eggert  <eggert@cs.ucla.edu>
