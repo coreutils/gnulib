@@ -30,7 +30,7 @@ AC_DEFUN([UTILS_HOST_OS],
        openbsd*)	os='OpenBSD';;
        nsk*)		os='NonStop Kernel';;
        nonstopux*)	os='NonStop-UX';;
-       netbsd*-gnu)	os='GNU/NetBSD';; # NetBSD kernel+libc, GNU userland
+       netbsd*-gnu*)	os='GNU/NetBSD';; # NetBSD kernel+libc, GNU userland
        netbsd*)		os='NetBSD';;
        knetbsd*-gnu)	os='GNU/KNetBSD';; # NetBSD kernel, GNU libc+userland
        kfreebsd*-gnu)	os='GNU/KFreeBSD';; # FreeBSD kernel, GNU libc+userland
