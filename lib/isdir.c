@@ -18,8 +18,14 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#ifdef	STAT_MACROS_BROKEN
+#ifdef S_ISDIR
+#undef S_ISDIR
+#endif
+#endif	/* STAT_MACROS_BROKEN.  */
+
 #if !defined(S_ISDIR) && defined(S_IFDIR)
-#define	S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
+#define S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
 #endif
 
 /* If PATH is an existing directory or symbolic link to a directory,

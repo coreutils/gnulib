@@ -1,5 +1,5 @@
 /* filemode.c -- make a string describing file modes
-   Copyright (C) 1985, 1990 Free Software Foundation, Inc.
+   Copyright (C) 1985, 1990, 1993 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,7 +16,11 @@
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #ifdef HAVE_CONFIG_H
+#if defined (emacs) || defined (CONFIG_BROKETS)
+#include <config.h>
+#else
 #include "config.h"
+#endif
 #endif
 
 #include <sys/types.h>
@@ -33,26 +37,59 @@
 #define mode_t unsigned short
 #endif
 
+#ifdef	STAT_MACROS_BROKEN
+#ifdef S_ISBLK
+#undef S_ISBLK
+#endif
+#ifdef S_ISCHR
+#undef S_ISCHR
+#endif
+#ifdef S_ISDIR
+#undef S_ISDIR
+#endif
+#ifdef S_ISFIFO
+#undef S_ISFIFO
+#endif
+#ifdef S_ISLNK
+#undef S_ISLNK
+#endif
+#ifdef S_ISMPB
+#undef S_ISMPB
+#endif
+#ifdef S_ISMPC
+#undef S_ISMPC
+#endif
+#ifdef S_ISNWK
+#undef S_ISNWK
+#endif
+#ifdef S_ISREG
+#undef S_ISREG
+#endif
+#ifdef S_ISSOCK
+#undef S_ISSOCK
+#endif
+#endif	/* STAT_MACROS_BROKEN.  */
+
 #if !defined(S_ISBLK) && defined(S_IFBLK)
-#define	S_ISBLK(m) (((m) & S_IFMT) == S_IFBLK)
+#define S_ISBLK(m) (((m) & S_IFMT) == S_IFBLK)
 #endif
 #if !defined(S_ISCHR) && defined(S_IFCHR)
-#define	S_ISCHR(m) (((m) & S_IFMT) == S_IFCHR)
+#define S_ISCHR(m) (((m) & S_IFMT) == S_IFCHR)
 #endif
 #if !defined(S_ISDIR) && defined(S_IFDIR)
-#define	S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
+#define S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
 #endif
 #if !defined(S_ISREG) && defined(S_IFREG)
-#define	S_ISREG(m) (((m) & S_IFMT) == S_IFREG)
+#define S_ISREG(m) (((m) & S_IFMT) == S_IFREG)
 #endif
 #if !defined(S_ISFIFO) && defined(S_IFIFO)
-#define	S_ISFIFO(m) (((m) & S_IFMT) == S_IFIFO)
+#define S_ISFIFO(m) (((m) & S_IFMT) == S_IFIFO)
 #endif
 #if !defined(S_ISLNK) && defined(S_IFLNK)
-#define	S_ISLNK(m) (((m) & S_IFMT) == S_IFLNK)
+#define S_ISLNK(m) (((m) & S_IFMT) == S_IFLNK)
 #endif
 #if !defined(S_ISSOCK) && defined(S_IFSOCK)
-#define	S_ISSOCK(m) (((m) & S_IFMT) == S_IFSOCK)
+#define S_ISSOCK(m) (((m) & S_IFMT) == S_IFSOCK)
 #endif
 #if !defined(S_ISMPB) && defined(S_IFMPB) /* V7 */
 #define S_ISMPB(m) (((m) & S_IFMT) == S_IFMPB)

@@ -22,6 +22,16 @@
 extern int errno;
 #endif
 
+#ifdef	STAT_MACROS_BROKEN
+#ifdef S_ISDIR
+#undef S_ISDIR
+#endif
+#endif	/* STAT_MACROS_BROKEN.  */
+
+#if !defined(S_ISDIR) && defined(S_IFDIR)
+#define S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
+#endif
+
 /* mkdir and rmdir adapted from GNU tar.  */
 
 /* Make directory DPATH, with permission mode DMODE.
@@ -95,7 +105,7 @@ rmdir (dpath)
   if (stat (dpath, &statbuf) != 0)
     return -1;			/* stat set errno.  */
 
-  if ((statbuf.st_mode & S_IFMT) != S_IFDIR)
+  if (!S_ISDIR (statbuf.st_mode))
     {
       errno = ENOTDIR;
       return -1;
