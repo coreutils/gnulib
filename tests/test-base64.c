@@ -1,4 +1,4 @@
-/* Recode strings between character sets, using iconv.
+/* Self tests for base64.
    Copyright (C) 2004 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
