@@ -1,3 +1,9 @@
+2005-03-26  Jim Meyering  <jim@meyering.net>
+
+	Comment nits.
+	* intprops.h: Add the apostrophe in `(one|two)'s complement'.
+	Correct typos: s/or/of/.
+
 2005-03-23  Jim Meyering  <jim@meyering.net>
 
 	* canonicalize.c: Remove duplicate `#include "stat-macros.h"'.
