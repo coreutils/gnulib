@@ -2,6 +2,7 @@ Description:
 strdup() function: duplicate a string.
 
 Files:
+lib/strdup.h
 lib/strdup.c
 m4/strdup.m4
 
@@ -11,8 +12,10 @@ configure.ac:
 gl_FUNC_STRDUP
 
 Makefile.am:
+lib_SOURCES += strdup.h
 
 Include:
+"strdup.h"
 
 Maintainer:
 all, glibc
