@@ -14,6 +14,6 @@ AC_DEFUN([bh_C_SIGNED],
    [AC_TRY_COMPILE(, [signed char x;], bh_cv_c_signed=yes, bh_cv_c_signed=no)])
   if test $bh_cv_c_signed = no; then
     AC_DEFINE(signed, ,
-	      [Define to empty if the C compiler doesn't support this keyword.])
+              [Define to empty if the C compiler doesn't support this keyword.])
   fi
 ])

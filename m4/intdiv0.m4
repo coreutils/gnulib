@@ -53,15 +53,15 @@ int main ()
   exit (1);
 }
 ], gt_cv_int_divbyzero_sigfpe=yes, gt_cv_int_divbyzero_sigfpe=no,
-	[
-	  # Guess based on the CPU.
-	  case "$host_cpu" in
-	    alpha* | i[34567]86 | m68k | s390*)
-	      gt_cv_int_divbyzero_sigfpe="guessing yes";;
-	    *)
-	      gt_cv_int_divbyzero_sigfpe="guessing no";;
-	  esac
-	])
+        [
+          # Guess based on the CPU.
+          case "$host_cpu" in
+            alpha* | i[34567]86 | m68k | s390*)
+              gt_cv_int_divbyzero_sigfpe="guessing yes";;
+            *)
+              gt_cv_int_divbyzero_sigfpe="guessing no";;
+          esac
+        ])
     ])
   case "$gt_cv_int_divbyzero_sigfpe" in
     *yes) value=1;;

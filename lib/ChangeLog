@@ -1,3 +1,8 @@
+2003-08-13  Paul Eggert  <eggert@twinsun.com>
+
+	* argp-help.c, argp-parse.c, config.charset, getopt.h:
+	Undo previous (whitespace-only) change.
+
 2003-08-12  Paul Eggert  <eggert@twinsun.com>
 
 	* argp-help.c, argp-parse.c, config.charset, getopt.h:

@@ -66,12 +66,12 @@ AC_CACHE_VAL(ac_cv_path_$1,
       IFS="$ac_save_IFS"
       test -z "$ac_dir" && ac_dir=.
       for ac_exec_ext in '' $ac_executable_extensions; do
-	if $ac_executable_p "$ac_dir/$ac_word$ac_exec_ext"; then
-	  if [$3]; then
-	    ac_cv_path_$1="$ac_dir/$ac_word$ac_exec_ext"
-	    break 2
-	  fi
-	fi
+        if $ac_executable_p "$ac_dir/$ac_word$ac_exec_ext"; then
+          if [$3]; then
+            ac_cv_path_$1="$ac_dir/$ac_word$ac_exec_ext"
+            break 2
+          fi
+        fi
       done
     done
     IFS="$ac_save_IFS"

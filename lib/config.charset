@@ -257,8 +257,8 @@ case "$os" in
 	  echo "$l.ASCII ASCII"
 	done
 	for l in da_DK de_AT de_CH de_DE en_AU en_CA en_GB en_US es_ES \
-		 fi_FI fr_BE fr_CA fr_CH fr_FR is_IS it_CH it_IT la_LN \
-		 lt_LN nl_BE nl_NL no_NO pt_PT sv_SE; do
+	         fi_FI fr_BE fr_CA fr_CH fr_FR is_IS it_CH it_IT la_LN \
+	         lt_LN nl_BE nl_NL no_NO pt_PT sv_SE; do
 	  echo "$l.ISO_8859-1 ISO-8859-1"
 	  echo "$l.DIS_8859-15 ISO-8859-15"
 	done

@@ -17,12 +17,12 @@ AC_DEFUN([gt_TYPE_LONGDOUBLE],
        gt_cv_c_long_double=yes
      else
        AC_TRY_COMPILE([
-	 /* The Stardent Vistra knows sizeof(long double), but does not support it.  */
-	 long double foo = 0.0;
-	 /* On Ultrix 4.3 cc, long double is 4 and double is 8.  */
-	 int array [2*(sizeof(long double) >= sizeof(double)) - 1];
-	 ], ,
-	 gt_cv_c_long_double=yes, gt_cv_c_long_double=no)
+         /* The Stardent Vistra knows sizeof(long double), but does not support it.  */
+         long double foo = 0.0;
+         /* On Ultrix 4.3 cc, long double is 4 and double is 8.  */
+         int array [2*(sizeof(long double) >= sizeof(double)) - 1];
+         ], ,
+         gt_cv_c_long_double=yes, gt_cv_c_long_double=no)
      fi])
   if test $gt_cv_c_long_double = yes; then
     AC_DEFINE(HAVE_LONG_DOUBLE, 1, [Define if you have the 'long double' type.])

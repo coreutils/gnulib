@@ -1,9 +1,19 @@
+2003-08-13  Paul Eggert  <eggert@twinsun.com>
+
+	* srclist-update: Change update back to the old behavior, leaving
+	whitespace alone.  Use one 'sed' command rather than a pipeline.
+	(fixlicense): Now a variable, not a function.
+	(remove_trailing_blanks): Remove.
+	(fixfile): Don't invoke unexpand or cat, or remove trailing blanks.
+	* config.guess, config.sub, install-sh, missing, texinfo.tex:
+	Undo previous (whitespace-only) change.
+
 2003-08-12  Paul Eggert  <eggert@twinsun.com>
 
 	* srclist-update: Add copyright notice.
 	(remove_id_lines, remove_trailing_blanks): New constants.
 	(fixfile): Use them to normalize spacing a bit in copied files.
-	* config.guess, config.sub, install-sh, missing, texinfo.texi:
+	* config.guess, config.sub, install-sh, missing, texinfo.tex:
 	Normalize leading white space and remove trailing white space.
 	
 	* texinfo.tex: Sync with texinfo.

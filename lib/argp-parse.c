@@ -411,7 +411,7 @@ convert_options (const struct argp *argp,
 
       if (children)
 	/* Assign GROUP's CHILD_INPUTS field some space from
-	   CVT->child_inputs_end.*/
+           CVT->child_inputs_end.*/
 	{
 	  unsigned num_children = 0;
 	  while (children[num_children].argp)
@@ -845,7 +845,7 @@ parser_parse_next (struct parser *parser, int *arg_ebadkey)
 	  parser->try_getopt = 0;
 	  if (parser->state.next > 1
 	      && strcmp (parser->state.argv[parser->state.next - 1], QUOTE)
-		   == 0)
+	           == 0)
 	    /* Not only is this the end of the options, but it's a
 	       `quoted' region, which may have args that *look* like
 	       options, so we definitely shouldn't try to use getopt past

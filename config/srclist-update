@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.12 2003-08-13 07:04:57 eggert Exp $
+# $Id: srclist-update,v 1.13 2003-08-13 20:23:14 eggert Exp $
 #
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
@@ -41,12 +41,8 @@ test -r $mydir/srclistvars.sh && . $mydir/srclistvars.sh
 
 
 # 
-# $1 is input, output to stdout with gpl.
-#
-fixlicense() \
-{
-    sed '
-
+# sed command to fix the license to be GPL.
+fixlicense='
   /^\([[:space:]]*#[[:space:]]*\)Th[ei][ s].* is free software/,/^[[:space:]]*#.*USA\./c\
 #	This program is free software; you can redistribute it and/or modify\
 #	it under the terms of the GNU General Public License as published by\
@@ -76,35 +72,27 @@ fixlicense() \
    You should have received a copy of the GNU General Public License along\
    with this program; if not, write to the Free Software Foundation,\
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
-' $1
-}
-
-
+'
 
 # sed command to remove lines containing $Id lines.
 # Quote the $Id so that CVS does not expand it in this script.
 remove_id_lines='/[$]Id:.*[$]/d'
 
-# sed command to remove trailing blanks.
-# Do not use [[:space:]] in this pattern, as that would kill formfeeds.
-remove_trailing_blanks='s/[	 ][	 ]*$//'
-
 # $1 is input file, $2 is output.
 # Remove $Id lines, since they'll differ between source locations.
 # If $options contains "gpl", change the license to be the standard
 # GPL.  We use this for libc files, et al.
-# Also, normalize white space simple-mindedly.
 #
 fixfile() \
 {
+  sed_command="$remove_id_lines"
+
   case " $options " in
   *' gpl '*)
-    fixlicense $1;;
-  *)
-    cat $1;;
-  esac \
-  | unexpand \
-  | sed "$remove_id_lines; $remove_trailing_blanks" >$2
+    sed_command="$sed_command; $fixlicense";;
+  esac
+
+  sed "$sed_command" $1 >$2
 }
 
 

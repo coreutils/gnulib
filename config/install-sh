@@ -96,53 +96,53 @@ Environment variables override the default commands:
 while test -n "$1"; do
   case $1 in
     -b=*) transformbasename=`echo $1 | sed 's/-b=//'`
-	shift
-	continue;;
+        shift
+        continue;;
 
     -c) instcmd=$cpprog
-	shift
-	continue;;
+        shift
+        continue;;
 
     -d) dir_arg=true
-	shift
-	continue;;
+        shift
+        continue;;
 
     -g) chgrpcmd="$chgrpprog $2"
-	shift
-	shift
-	continue;;
+        shift
+        shift
+        continue;;
 
     --help) echo "$usage"; exit 0;;
 
     -m) chmodcmd="$chmodprog $2"
-	shift
-	shift
-	continue;;
+        shift
+        shift
+        continue;;
 
     -o) chowncmd="$chownprog $2"
-	shift
-	shift
-	continue;;
+        shift
+        shift
+        continue;;
 
     -s) stripcmd=$stripprog
-	shift
-	continue;;
+        shift
+        continue;;
 
     -t=*) transformarg=`echo $1 | sed 's/-t=//'`
-	shift
-	continue;;
+        shift
+        continue;;
 
     --version) echo "$0 $scriptversion"; exit 0;;
 
     *)  if test -z "$src"; then
-	  src=$1
-	else
-	  # this colon is to work around a 386BSD /bin/sh bug
-	  :
-	  dst=$1
-	fi
-	shift
-	continue;;
+          src=$1
+        else
+          # this colon is to work around a 386BSD /bin/sh bug
+          :
+          dst=$1
+        fi
+        shift
+        continue;;
   esac
 done
 
@@ -223,7 +223,7 @@ else
     dstfile=`basename "$dst"`
   else
     dstfile=`basename "$dst" $transformbasename \
-	     | sed $transformarg`$transformbasename
+             | sed $transformarg`$transformbasename
   fi
 
   # don't allow the sed command to completely eliminate the filename.
