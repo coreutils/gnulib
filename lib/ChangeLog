@@ -1,5 +1,9 @@
 2005-02-24  Bruno Haible  <bruno@clisp.org>
 
+	* gettext.h: Update from GNU gettext 0.14.2.
+
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
 	* localcharset.c: Update from GNU gettext 0.14.2.
 	* config.charset: Update from GNU gettext 0.14.2.
 
