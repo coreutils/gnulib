@@ -1,3 +1,8 @@
+2002-11-25    <karl@gnu.org>
+
+	* srclist.txt ($LIBCSRC/sysdeps/generic/strtoll.c lib gpl): new
+	entry.
+
 2002-11-14    <karl@gnu.org>
 
 	* mkinstalldirs: `do' on separate line, instead of `for var; do'.

@@ -1,3 +1,8 @@
+2002-11-25    <karl@gnu.org>
+
+	* strtoll.c: copy from libc, meaning we now #include <strtol.c>
+	instead of "strtol.c".
+
 2002-11-25  Jim Meyering  <jim@meyering.net>
 
 	* mktime.c: Sync from libc, now that it has the latest fix.
