@@ -1,3 +1,9 @@
+2004-11-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/getpass.m4 (gl_PREREQ_GETPASS): Check for declarations of
+	fflush_unlocked, flockfile, funlockfile, funlockfile,
+	fputs_unlocked, putc_unlocked.
+
 2004-10-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getpagesize.m4 (gl_GETPAGESIZE): Check for <sys/param.h>.
