@@ -1,3 +1,9 @@
+2003-09-17  Paul Eggert  <eggert@twinsun.com>
+
+	* extensions.m4 (gl_USE_SYSTEM_EXTENSIONS): Call AC_BEFORE first,
+	to avoid spurious warnings like "AC_RUN_IFELSE was called before
+	gl_USE_SYSTEM_EXTENSIONS" from autoreconf.
+
 2003-09-12  Paul Eggert  <eggert@twinsun.com>
 
 	* error.m4: Require AC_FUNC_STRERROR_R rather than invoking it.
