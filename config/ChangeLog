@@ -1,3 +1,7 @@
+2004-09-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Comment out argp-pvh.c.
+
 2004-08-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Remove getopt.c, getopt.h (renamed to getopt_.h),
