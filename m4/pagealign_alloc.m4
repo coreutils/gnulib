@@ -17,7 +17,7 @@ AC_DEFUN([gl_PAGEALIGN_ALLOC],
 # Prerequisites of lib/pagealign_alloc.c.
 AC_DEFUN([gl_PREREQ_PAGEALIGN_ALLOC],
 [
-  AC_REQUIRE([gl_FUNC_MMAP])
+  AC_REQUIRE([gl_FUNC_MMAP_ANON])
   AC_REQUIRE([gl_GETPAGESIZE])
   AC_CHECK_FUNCS_ONCE([posix_memalign])
   AC_CHECK_HEADERS_ONCE([fcntl.h unistd.h])

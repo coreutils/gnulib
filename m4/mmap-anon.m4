@@ -4,7 +4,7 @@ dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_DEFUN([gl_FUNC_MMAP],
+AC_DEFUN([gl_FUNC_MMAP_ANON],
 [
   dnl Work around a bug of AC_EGREP_CPP in autoconf-2.57.
   AC_REQUIRE([AC_PROG_CPP])
