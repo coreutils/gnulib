@@ -1,3 +1,9 @@
+2003-03-17  Bruno Haible  <bruno@clisp.org>
+
+	* onceonly_2_57.m4: Likewise.
+	* onceonly.m4: Require autoconf 2.54 or newer.
+	(m4_quote): Remove macro.
+
 2003-03-14  Bruno Haible  <bruno@clisp.org>
 
 	* onceonly_2_57.m4 (AC_CHECK_HEADERS_ONCE, AC_CHECK_FUNCS_ONCE,
