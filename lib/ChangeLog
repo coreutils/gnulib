@@ -1,5 +1,10 @@
+2002-04-28  Paul Eggert  <eggert@twinsun.com>
+
+	* sig2str.h, sig2str.c: New files.
+
 2002-04-24  Jim Meyering  <meyering@lucent.com>
 
+	* gettext.h: New file, from Gettext.
 	* Makefile.am (INCLUDES): Remove -I../intl.
 	(libfetish_a_SOURCES): Add gettext.h.
 
