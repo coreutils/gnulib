@@ -24,11 +24,7 @@
 # include <config.h>
 #endif
 
-#if HAVE_STDBOOL_H
-# include <stdbool.h>
-#else
-typedef enum {false = 0, true = 1} bool;
-#endif
+#include <stdbool.h>
 
 #include <errno.h>
 #ifndef errno

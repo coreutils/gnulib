@@ -32,9 +32,7 @@
 # include <sys/param.h>
 #endif
 
-#if HAVE_LIMITS_H
-# include <limits.h>
-#endif
+#include <limits.h>
 
 #if HAVE_STRING_H
 # include <string.h>
@@ -72,10 +70,6 @@ struct group *getgrgid ();
 
 #ifndef HAVE_ENDPWENT
 # define endpwent() ((void) 0)
-#endif
-
-#ifndef CHAR_BIT
-# define CHAR_BIT 8
 #endif
 
 /* The extra casts work around common compiler bugs.  */

@@ -1,5 +1,25 @@
 2003-05-28  Paul Eggert  <eggert@twinsun.com>
 
+	Assume the headers required for C89 freestanding compilers.
+	* addext.c, backupfile.c, fsusage.c, human.c, pathmax.h,
+	rpmatch.c, userspec.c, xreadlink.c, xstrtol.c: Include <limits.h>
+	without checking for HAVE_LIMITS_H.
+	* backupfile.c, fsusage.c, hash.c, human.c, safe-read.c, userspec.c,
+	xstrtol.c (CHAR_BIT) : Don't define, since <limits.h> is guaranteed
+	to do that.
+	* fatal.c: Include <stdarg.h> without checking for __STDC__.
+	* exclude.c: Include <stdbool.h> unconditionally.
+	* tempname.c: Include <stddef.h> unconditionally.
+	* hash.c: Include <limits.h>, since we no longer define CHAR_BIT.
+	* modechange.c, rpmatch.c (NULL): Don't define, since
+	<stddef.h> does that.
+	* quote.c: Dont include <stddef.h> or <sys/types.h>; not needed.
+	* safe-read.c (INT_MAX): Don't define, since <limits.h> does that.
+	* safe-read.c (TYPE_MINIMUM, TYPE_MAXIMUM): Remove; no longer needed.
+	* xstrtol.c: Likewise.
+	* safe-read.c: Remove TYPE_SIGNED; no longer needed.
+	* savedir.c: Include <stddef.h> instead of defining NULL.
+
 	* addext.c (addext): Use assignment rather than cast, to avoid
 	warnings on some platforms.
 

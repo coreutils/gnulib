@@ -1,4 +1,4 @@
-#serial 9
+#serial 10
 
 # From fileutils/configure.in
 
@@ -235,7 +235,7 @@ choke -- this is a workaround for a Sun-specific problem
 AC_DEFUN([gl_PREREQ_FSUSAGE_EXTRA],
 [
   AC_REQUIRE([jm_AC_TYPE_UINTMAX_T])
-  AC_CHECK_HEADERS_ONCE(fcntl.h limits.h)
+  AC_CHECK_HEADERS_ONCE(fcntl.h)
   AC_CHECK_HEADERS(dustat.h sys/fs/s5param.h sys/filsys.h sys/statfs.h sys/statvfs.h)
   jm_STATFS_TRUNCATES
 ])

@@ -1,3 +1,16 @@
+2003-05-28  Paul Eggert  <eggert@twinsun.com>
+
+	Assume the headers required for C89 freestanding compilers.
+	* backupfile.m4 (gl_BACKUPFILE): Don't check for limits.h.
+	* fsusage.m4 (gl_PREREQ_FSUSAGE_EXTRA): Likewise.
+	* human.m4 (gl_HUMAN): Likewise.
+	* pathmax.m4 (gl_PATHMAX): Likewise.
+	* rpmatch.m4 (gl_FUNC_RPMATCH): Likewise.
+	* userspec.m4 (gl_USERSPEC): Likewise.
+	* xreadlink.m4 (gl_XREADLINK): Likewise.
+	* m4/xstrtol.m4 (gl_PREREQ_XSTRTOL): Likewise.
+	* quote.m4 (gl_QUOTE): Don't check for stddef.h.
+
 2003-05-26  Jim Meyering  <jim@meyering.net>
 
 	Merge in a change from coreutils:

@@ -1,7 +1,7 @@
 /* human.c -- print human readable file size
 
-   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002 Free Software
-   Foundation, Inc.
+   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003 Free
+   Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,10 +27,7 @@
 
 #include <sys/types.h>
 #include <stdio.h>
-
-#if HAVE_LIMITS_H
-# include <limits.h>
-#endif
+#include <limits.h>
 
 #if HAVE_STRING_H
 # include <string.h>
@@ -38,9 +35,6 @@
 # include <strings.h>
 #endif
 
-#ifndef CHAR_BIT
-# define CHAR_BIT 8
-#endif
 #if HAVE_STDLIB_H
 # include <stdlib.h>
 #endif

@@ -31,9 +31,7 @@
 # define HAVE_LONG_FILE_NAMES 0
 #endif
 
-#if HAVE_LIMITS_H
-# include <limits.h>
-#endif
+#include <limits.h>
 #ifndef _POSIX_NAME_MAX
 # define _POSIX_NAME_MAX 14
 #endif
