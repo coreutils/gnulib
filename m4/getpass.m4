@@ -34,4 +34,3 @@ AC_DEFUN([gl_PREREQ_GETPASS], [
   AC_CHECK_HEADERS_ONCE(stdio_ext.h)
   :
 ])
-
