@@ -1733,7 +1733,7 @@ func_all_modules ()
   func_module modechange
   func_module mountlist
   func_module path-concat
-  #func_module pathname
+  func_module pathname
   func_module pathmax
   func_module same
   func_module save-cwd

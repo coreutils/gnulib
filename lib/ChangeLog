@@ -1,3 +1,8 @@
+2003-04-01  Bruno Haible  <bruno@clisp.org>
+
+	* pathname.h: New file, from GNU gettext.
+	* concatpath.c: New file, from GNU gettext.
+
 2003-03-30  Bruno Haible  <bruno@clisp.org>
 
 	* copy-file.c (copy_file_preserving): Don't set owner if the function

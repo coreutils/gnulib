@@ -1,0 +1,23 @@
+Description:
+Construct a full pathname by concatenating a directory name, a relative
+filename, and a suffix.
+
+Files:
+lib/pathname.h
+lib/concatpath.c
+
+Depends-on:
+xalloc
+stpcpy
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += pathname.h concatpath.c
+
+Include:
+"pathname.h"
+
+Maintainer:
+Bruno Haible
+

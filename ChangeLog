@@ -1,3 +1,8 @@
+2003-04-01  Bruno Haible  <bruno@clisp.org>
+
+	* modules/pathname: New file.
+	* MODULES.html.sh (func_all_modules): Add it.
+
 2003-03-28  Bruno Haible  <bruno@clisp.org>
 
 	* modules/copy-file: New file.
