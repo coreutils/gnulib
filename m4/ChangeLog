@@ -1,3 +1,8 @@
+2004-10-05  Bruno Haible  <bruno@clisp.org>
+
+	* strsep.m4 (gl_FUNC_STRSEP): Require AC_GNU_SOURCE. Don't check
+	for the declaration of strsep.
+
 2004-10-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* xalloc.m4 (gl_PREREQ_XSTRDUP): Remove.  All uses removed.

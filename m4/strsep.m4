@@ -1,4 +1,4 @@
-# strsep.m4 serial 1
+# strsep.m4 serial 2
 dnl Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -8,8 +8,10 @@ dnl the same distribution terms as the rest of that program.
 
 AC_DEFUN([gl_FUNC_STRSEP],
 [
+  dnl Persuade glibc <string.h> to declare strsep().
+  AC_REQUIRE([AC_GNU_SOURCE])
+
   AC_REPLACE_FUNCS(strsep)
-  AC_CHECK_DECLS_ONCE(strsep)
   gl_PREREQ_STRSEP
 ])
 
