@@ -1462,6 +1462,7 @@ func_all_modules ()
   func_begin_table
   func_module xsize
   func_module xalloc
+  func_module xalloc-die
   func_module alloca
   func_module allocsa
   func_module xallocsa
@@ -1528,6 +1529,8 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module c-strtod
+  func_module c-strtold
   func_module xstrtod
   func_module xstrtol
   func_end_table
@@ -1565,6 +1568,7 @@ func_all_modules ()
 
   func_begin_table
   func_module fatal-signal
+  func_module raise
   func_end_table
 
   element="Command-line arguments"
@@ -1587,7 +1591,7 @@ func_all_modules ()
 
   func_begin_table
   func_module md5
-  func_module sha
+  func_module sha1
   func_end_table
 
   element="Misc"
@@ -1606,6 +1610,7 @@ func_all_modules ()
   func_module hash-pjw
   func_module hash
   func_module readtokens
+  func_module readtokens0
   func_module strverscmp
   func_end_table
 
@@ -1700,6 +1705,7 @@ func_all_modules ()
   func_module chown
   func_module dup2
   func_module ftruncate
+  func_module getcwd
   func_module getgroups
   func_module gethostname
   func_module getsubopt
@@ -1728,6 +1734,7 @@ func_all_modules ()
   func_begin_table
   func_module dirname
   func_module getopt
+  func_module fcntl-safer
   func_module unistd-safer
   func_module fnmatch
   func_module fnmatch-posix
@@ -1759,7 +1766,9 @@ func_all_modules ()
   func_begin_table
   func_module acl
   func_module backupfile
+  func_module canonicalize
   func_module copy-file
+  func_module cycle-check
   func_module fsusage
   func_module dirfd
   func_module euidaccess
@@ -1777,6 +1786,8 @@ func_all_modules ()
   func_module same
   func_module save-cwd
   func_module savedir
+  func_module utimecmp
+  func_module utimens
   func_module xgetcwd
   func_module xreadlink
   func_end_table
@@ -1832,6 +1843,7 @@ func_all_modules ()
   func_module gettime
   func_module settime
   func_module posixtm
+  func_module xnanosleep
   func_end_table
 
   element="Networking functions"
