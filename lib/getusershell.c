@@ -32,9 +32,7 @@
 #endif
 
 #include <stdio.h>
-#if HAVE_STDLIB_H
-# include <stdlib.h>
-#endif
+#include <stdlib.h>
 #include <ctype.h>
 #include "unlocked-io.h"
 #include "xalloc.h"
@@ -47,7 +45,7 @@
 
 #define ISSPACE(c) (IN_CTYPE_DOMAIN (c) && isspace (c))
 
-static int readname ();
+static int readname (char **, int *, FILE *);
 
 #if ! defined ADDITIONAL_DEFAULT_SHELLS && defined __MSDOS__
 # define ADDITIONAL_DEFAULT_SHELLS \
@@ -82,7 +80,7 @@ static int line_size = 0;
    Return NULL if there are no more entries.  */
 
 char *
-getusershell ()
+getusershell (void)
 {
   if (default_index > 0)
     {
@@ -114,7 +112,7 @@ getusershell ()
 /* Rewind the shells file. */
 
 void
-setusershell ()
+setusershell (void)
 {
   default_index = 0;
   if (shellstream)
@@ -124,7 +122,7 @@ setusershell ()
 /* Close the shells file. */
 
 void
-endusershell ()
+endusershell (void)
 {
   if (shellstream)
     {
@@ -142,10 +140,7 @@ endusershell ()
    if some nonempty sequence was found, otherwise 0.  */
 
 static int
-readname (name, size, stream)
-     char **name;
-     int *size;
-     FILE *stream;
+readname (char **name, int *size, FILE *stream)
 {
   int c;
   int name_index = 0;
@@ -175,7 +170,8 @@ readname (name, size, stream)
 }
 
 #ifdef TEST
-main ()
+int
+main (void)
 {
   char *s;
 
