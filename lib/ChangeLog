@@ -1,3 +1,9 @@
+2002-11-27  Paul Eggert  <eggert@twinsun.com>
+
+	* hash.c (hash_lookup, hash_get_first, hash_get_next, hash_find_entry,
+	hash_rehash): Replace `if (limit <= value) abort ();' with
+	`if (! (value < limit)) abort ();', for readability.
+
 2002-11-26    <karl@gnu.org>
 
 	* strdup.c: copy from libc again, with jim's ok.
