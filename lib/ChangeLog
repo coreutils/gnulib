@@ -1,3 +1,8 @@
+2002-12-01  Jim Meyering  <jim@meyering.net>
+
+	* safe-read.c: (safe_read): Also exit the loop when read returns zero.
+	(CHAR_BIT, TYPE_SIGNED, TYPE_MINIMUM, TYPE_MAXIMUM, INT_MAX): Define.
+
 2002-11-27  Paul Eggert  <eggert@twinsun.com>
 
 	* hash.c (hash_lookup, hash_get_first, hash_get_next, hash_find_entry,
