@@ -1,3 +1,9 @@
+2004-11-02  Derek R. Price  <derek@ximbiot.com>
+       and  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getdate.y [!TEST]: Include <stdio.h>, since we use sprintf now.
+	(get_date): Overparenthesize to avoid GCC warning.
+
 2004-11-02  Bruno Haible  <bruno@clisp.org>
 
 	* setenv.h (unsetenv): Define as a macro if the system's unsetenv()
