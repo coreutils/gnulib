@@ -1,3 +1,8 @@
+2004-06-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getdate.y (yylex): Allow space between sign and number.
+	Problem reported by Dan Jacobson.
+
 2004-06-01  Paul Eggert  <eggert@cs.ucla.edu>
        and  Jim Meyering  <jim@meyering.net>
 
