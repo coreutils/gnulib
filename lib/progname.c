@@ -24,7 +24,6 @@
 /* Specification.  */
 #include "progname.h"
 
-#include <stdio.h>
 #include <string.h>
 
 #undef set_program_name
