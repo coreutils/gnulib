@@ -25,9 +25,7 @@
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif
-#if HAVE_STDLIB_H
-# include <stdlib.h>
-#endif
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <ctype.h>
@@ -36,23 +34,12 @@
 extern int errno;
 #endif
 
-#if HAVE_STRING_H
-# include <string.h>
-#else
-# include <strings.h>
-#endif
+#include <string.h>
 
 #include "same.h"
 #include "dirname.h"
 #include "error.h"
 #include "xalloc.h"
-
-#ifndef HAVE_DECL_FREE
-"this configure-time declaration test was not run"
-#endif
-#if !HAVE_DECL_FREE
-void free ();
-#endif
 
 #define SAME_INODE(Stat_buf_1, Stat_buf_2) \
   ((Stat_buf_1).st_ino == (Stat_buf_2).st_ino \
