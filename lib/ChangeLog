@@ -1,3 +1,16 @@
+2004-10-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getdate.y: Add support for TZ="foo" within a date string.
+	Fix some bugs near time_t boundaries.  Reject dates with
+	out-of-range components, e.g., "Sept 31".
+	Include <stdlib.h>, "setenv.h", "xalloc.h".
+	(ISDIGIT_LOCALE): Remove; unused.
+	Note that the TZ and time functions used here are not reentrant.
+	(mktime_ok, get_tz): New functions.
+	(TZBUFSIZE): New constant.
+	(get_date): Parse leading TZ="foo".  Reject out-of-range components;.
+	This requires that we sometimes generate our own TZ="XXX..." setting.
+
 2004-10-27  Derek R. Price  <derek@ximbiot.com>
 
 	* mktime.c (not_equal_tm): Remove redundant check.

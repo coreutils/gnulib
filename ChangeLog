@@ -1,3 +1,8 @@
+2004-10-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/getdate (Files): Add doc/getdate.texi.
+	(Depends-on): Add setenv, xalloc.
+
 2004-10-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/regex (lib_SOURCES): Add regex.c.
