@@ -4,6 +4,7 @@ Safe automatic memory allocation.
 Files:
 lib/allocsa.h
 lib/allocsa.c
+lib/allocsa.valgrind
 m4/allocsa.m4
 m4/eealloc.m4
 m4/longlong.m4
@@ -17,6 +18,7 @@ gl_ALLOCSA
 
 Makefile.am:
 lib_SOURCES += allocsa.h allocsa.c
+EXTRA_DIST += allocsa.valgrind
 
 Include:
 #include "allocsa.h"
