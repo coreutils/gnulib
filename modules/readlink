@@ -1,0 +1,19 @@
+Description:
+readlink() function: read the value of a symbolic link.
+
+Files:
+lib/readlink.c
+m4/readlink.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_READLINK
+
+Makefile.am:
+
+Include:
+
+Maintainer:
+Bruno Haible
+

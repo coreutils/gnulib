@@ -9,6 +9,7 @@ m4/ssize_t.m4
 
 Depends-on:
 xalloc
+readlink
 
 configure.ac:
 gl_XREADLINK

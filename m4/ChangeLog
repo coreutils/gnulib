@@ -1,3 +1,7 @@
+2003-06-25  Bruno Haible  <bruno@clisp.org>
+
+	* readlink.m4: New file.
+
 2003-06-22  Bruno Haible  <bruno@clisp.org>
 
 	Portability to mingw32.

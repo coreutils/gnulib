@@ -1,3 +1,9 @@
+2003-06-25  Bruno Haible  <bruno@clisp.org>
+
+	* modules/readlink: New file.
+	* modules/xreadlink: Depend on it.
+	* MODULES.html.sh (func_all_modules): Add readlink.
+
 2003-06-22  Bruno Haible  <bruno@clisp.org>
 
 	* modules/safe-read: Add m4/ssize_t.m4.

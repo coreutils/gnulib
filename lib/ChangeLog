@@ -1,3 +1,7 @@
+2003-06-25  Bruno Haible  <bruno@clisp.org>
+
+	* readlink.c: New file.
+
 2003-06-20  Bruno Haible  <bruno@clisp.org>
 
 	Assume C89, so PARAMS isn't needed.

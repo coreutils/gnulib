@@ -1672,6 +1672,7 @@ func_all_modules ()
   func_module mkstemp
   func_module mkdtemp
   func_module poll
+  func_module readlink
   func_module stat
   func_module lstat
   func_module timespec
