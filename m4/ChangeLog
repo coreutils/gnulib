@@ -1,3 +1,7 @@
+2004-11-09  Bruno Haible  <bruno@clisp.org>
+
+	* sockpfaf.m4: New file.
+
 2004-11-03  Albert Chin <china@thewrittenword.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
