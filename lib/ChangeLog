@@ -1,5 +1,8 @@
 2002-11-19  Bruno Haible  <bruno@clisp.org>
 
+	* mbswidth.c: Include mbswidth.h right at the beginning.
+	* mbswidth.h: Include <stddef.h>, for size_t.
+
 	* mbswidth.h (PARAMS): Remove macro.
 	(mbswidth, mbsnwidth): Use ANSI C function declarations.
 	* mbswidth.c (mbswidth, mbsnwidth): Likewise.

@@ -21,6 +21,9 @@
 # include <config.h>
 #endif
 
+/* Specification.  */
+#include "mbswidth.h"
+
 /* Get MB_CUR_MAX.  */
 #include <stdlib.h>
 
@@ -77,8 +80,6 @@ int wcwidth ();
 #define ISPRINT(c) (IN_CTYPE_DOMAIN (c) && isprint (c))
 #undef ISCNTRL
 #define ISCNTRL(c) (IN_CTYPE_DOMAIN (c) && iscntrl (c))
-
-#include "mbswidth.h"
 
 /* Returns the number of columns needed to represent the multibyte
    character string pointed to by STRING.  If a non-printable character
