@@ -9,11 +9,13 @@ lib/unsetenv.c
 m4/setenv.m4
 
 Depends-on:
+alloca
 
 configure.ac:
 gt_FUNC_SETENV
 
 Makefile.am:
+lib_SOURCES += setenv.h
 
 Include:
 "setenv.h"

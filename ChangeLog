@@ -1,5 +1,10 @@
 2003-01-11  Bruno Haible  <bruno@clisp.org>
 
+	* modules/stpcpy: Distribute lib/stpcpy.h.
+	* modules/setenv: Depend on alloca. Distribute lib/setenv.h.
+
+2003-01-11  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_create_testdir): Store config/* files in the main
 	directory.
 	* config.rpath: Move to ...

@@ -12,6 +12,7 @@ configure.ac:
 gl_FUNC_STPCPY
 
 Makefile.am:
+lib_SOURCES += stpcpy.h
 
 Include:
 "stpcpy.h"
