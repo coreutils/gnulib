@@ -9,4 +9,3 @@ md5.h
 obstack.h
 regex.c
 regex.h
-strdup.c
