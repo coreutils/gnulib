@@ -1,5 +1,8 @@
 2004-12-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* modules/regex (lib_SOURCES): Remove regex.c, undoing previous
+	(2004-10-24) change.  Apparently this was a false alarm.
+
 	* modules/getdate: Depend on alloca-opt, not alloca.
 
 2004-12-18  Simon Josefsson  <jas@extundo.com>
