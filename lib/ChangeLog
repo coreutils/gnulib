@@ -1,3 +1,11 @@
+2003-09-11  Paul Eggert  <eggert@twinsun.com>
+
+	* strndup.c: Don't include <stdio.h>, <sys/types.h>.
+	Include <stdlib.h>, <string.h> unconditionally.
+	Remove now-unnecessary cast to char *.
+	* strnlen.c: Include <string.h> unconditionally.
+	* yesno (main): Define with a prototype.
+	
 2003-09-10  Bruno Haible  <bruno@clisp.org>
 
 	* strcspn.c: Include <string.h> unconditionally.
