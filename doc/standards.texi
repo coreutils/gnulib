@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate October 1, 2004
+@set lastupdate November 29, 2004
 @c %**end of header
 
 @dircategory GNU organization
@@ -264,7 +264,7 @@ account when designing your program.
 @c A major revision of the C Standard appeared in 1999.
 
 @menu
-* Source Language::             Which languges to use.
+* Source Language::             Which languages to use.
 * Compatibility::               Compatibility with other implementations
 * Using Extensions::            Using non-standard features
 * Standard C::                  Using Standard C features
@@ -273,7 +273,7 @@ account when designing your program.
 
 @node Source Language
 @section Which Languages to Use
-@cindex programming languges
+@cindex programming languages
 
 When you want to use a language that gets compiled and runs at high
 speed, the best language to use is C.  Using another language is like
@@ -3463,6 +3463,20 @@ updating.  If so, put a prominent note near the beginning of the man
 page explaining that you don't maintain it and that the Texinfo manual
 is more authoritative.  The note should say how to access the Texinfo
 documentation.
+
+Be sure that man pages include a copyright statement and free
+license.  The simple all-permissive license is appropriate for simple
+man pages:
+
+@example
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+@end example
+
+For long man pages, with enough explanation and documentation that
+they can be considered true manuals, use the GFDL (@pxref{License for
+Manuals}).
 
 Finally, the GNU help2man program
 (@uref{http://www.gnu.org/software/help2man/}) is one way to automate

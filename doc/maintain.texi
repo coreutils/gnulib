@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 4, 2004
+@set lastupdate October 29, 2004
 @c %**end of header
 
 @dircategory GNU organization
@@ -184,7 +184,7 @@ as you maintain the program, to avoid legal difficulties.
 @cindex copyright papers
 
 If you maintain an FSF-copyrighted package
-certain legal procedures when incorporating legally significant
+certain legal procedures are required when incorporating legally significant
 changes written by other people.  This ensures that the FSF has the
 legal right to distribute the package, and the standing to defend its
 GPL-covered status in court if necessary.
@@ -1160,7 +1160,8 @@ your package (in the example above, that is @code{bar}).
 
 Your designated upload email addresses (@pxref{Automated Upload
 Registration}) are sent a message if there are any problems processing
-an upload for your package.
+an upload for your package.  You also receive a message when your
++upload has been successfully processed.
 
 If you have difficulties processing an upload, email
 @email{ftp-upload@@gnu.org}.

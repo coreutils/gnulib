@@ -388,10 +388,10 @@ write it as @file{$(prefix)/share}.  @samp{datadir}'s default value is
 based on this variable; so are @samp{infodir}, @samp{mandir}, and others.
 
 @item datadir
-The directory for installing ideosyncratic read-only
+The directory for installing idiosyncratic read-only
 architecture-independent data files for this program.  This is usually
 the same place as @samp{datarootdir}, but we use the two separate
-variables so that you can move these ideosyncratic files without
+variables so that you can move these idiosyncratic files without
 altering the location for Info files, man pages, etc.
 
 The default definition of @samp{datadir} should be
@@ -471,11 +471,34 @@ package.
 To tell whether @file{foo.h} came from the Foo package, put a magic
 string in the file---part of a comment---and @code{grep} for that string.
 
+@item docdir
+The directory for installing documentation files (other than Info) for
+this package.  By default, it should be
+@file{/usr/local/share/doc/@var{yourpkg}}, but it should be written as
+@file{$(datarootdir)/doc/@var{yourpkg}}.  (If you are using Autoconf,
+write it as @samp{@@docdir@@}.)  The @var{yourpkg} subdirectory, which
+may include a version number, prevents collisions among files with
+common names, such as @file{README}.
+
 @item infodir
 The directory for installing the Info files for this package.  By
 default, it should be @file{/usr/local/share/info}, but it should be
 written as @file{$(datarootdir)/info}.  (If you are using Autoconf,
-write it as @samp{@@infodir@@}.)
+write it as @samp{@@infodir@@}.)  @code{infodir} is separate from
+@code{docdir} for compatibility with existing practice.
+
+@item htmldir
+@itemx dvidir
+@itemx pdfdir
+@itemx psdir
+Directories for installing documentation files in the particular
+format.  (It is not required to support documentation in all these
+formats.)  They should all be set to @code{$(docdir)} by default.  (If
+you are using Autoconf, write them as @samp{@@htmldir@@},
+@samp{@@dvidir@@}, etc.)  Packages which supply several translations
+of their documentation should install them in
+@samp{$(htmldir)/}@var{ll}, @samp{$(pdfdir)/}@var{ll}, etc. where
+@var{ll} is a locale abbreviation such as @samp{en} or @samp{pt_BR}.
 
 @item libdir
 The directory for object files and libraries of object code.  Do not
@@ -654,6 +677,24 @@ commands into three categories: normal ones, @dfn{pre-installation}
 commands and @dfn{post-installation} commands.  @xref{Install Command
 Categories}.
 
+@item install-html
+@itemx install-dvi
+@itemx install-pdf
+@itemx install-ps
+These targets install documentation in formats other than Info;
+they're intended to be called explicitly by the person installing the
+package, if that format is desired.  GNU prefers Info files, so these
+must be installed by the @code{install} target.
+
+When you have many documentation files to install, we recommend that
+you avoid collisions and clutter by arranging for these targets to
+install in subdirectories of the appropriate installation directory,
+such as @code{htmldir}.  As one example, if your package has multiple
+manuals, and you wish to install HTML documentation with many files
+(such as the ``split'' mode output by @code{makeinfo --html}), you'll
+certainly want to use subdirectories, or two nodes with the same name
+in different manuals will overwrite each other.
+
 @item uninstall
 Delete all the installed files---the copies that the @samp{install}
 target creates.
@@ -767,8 +808,11 @@ users build the package, ordinarily Make will not update the Info files
 because they will already be up to date.
 
 @item dvi
-Generate DVI files for all Texinfo documentation.
-For example:
+@itemx html
+@itemx pdf
+@itemx ps
+Generate documentation files in the given format, if possible.
+Here's an example rule for generating DVI files from Texinfo:
 
 @smallexample
 dvi: foo.dvi
@@ -783,6 +827,20 @@ run the program @code{texi2dvi}, which is part of the Texinfo
 distribution.@footnote{@code{texi2dvi} uses @TeX{} to do the real work
 of formatting. @TeX{} is not distributed with Texinfo.}  Alternatively,
 write just the dependencies, and allow GNU @code{make} to provide the command.
+
+Here's another example, this one for generating HTML from Texinfo:
+
+@smallexample
+html: foo.html
+
+foo.html: foo.texi chap1.texi chap2.texi
+        $(TEXI2HTML) $(srcdir)/foo.texi
+@end smallexample
+
+@noindent
+Again, you would define the variable @code{TEXI2HTML} in the Makefile;
+for example, it might run @code{makeinfo --no-split --html}
+(@command{makeinfo} is part of the Texinfo distribution).
 
 @item dist
 Create a distribution tar file for this program.  The tar file should be
