@@ -1,6 +1,12 @@
+2004-04-11  Paul Eggert  <eggert@twinsun.com>
+
+	* inttostr.h: Include <limits.h> unconditionally, since we assume C89.
+	(CHAR_BIT): Remove, since we assume C89.
+	Include <stdint.h> if available, as per current Autoconf CVS advice.
+
 2004-03-30  Paul Eggert  <eggert@twinsun.com>
 
-	* lib/cloexec.h, lib/cloexec.c (set_cloexec_flag): Return int
+	* cloexec.h, cloexec.c (set_cloexec_flag): Return int
 	not bool, to be more consistent with Unix conventions.
 	Suggested by Bruno Haible.
 
