@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-10-15 15:28:43 $'
+cvsdatestamp='$Date: 2004-10-15 15:32:25 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -397,7 +397,7 @@ func_import ()
   # If --lgpl, check the license of modules are compatible.
   if test -n "$lgpl"; then
     for module in $modules; do
-      license=`sed -n -e "/^License$sed_extract_prog" < "$gnulib_dir/modules/$module"`
+      license=`func_get_license $module`
       if test $license != LGPL; then
         func_fatal_error "incompatible license on module \`$module\`: $license"
       fi

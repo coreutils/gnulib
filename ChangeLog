@@ -2,7 +2,8 @@
 
 	* gnulib-tool: Untabify. Initialize supplied_libname.
 	(func_usage): More homogenous output.
-	(func_import): New function, extracted from big case statement.
+	(func_import): New function, extracted from big case statement. Use
+	func_get_license.
 
 2004-10-11  Bruno Haible  <bruno@clisp.org>
 
