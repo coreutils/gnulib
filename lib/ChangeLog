@@ -1,5 +1,10 @@
 2002-12-22  Bruno Haible  <bruno@clisp.org>
 
+	* getstr.h (getstr): Define, to avoid clash with libcurses.
+	* linebuffer.h (readline): Define, to avoid clash with libreadline.
+
+2002-12-22  Bruno Haible  <bruno@clisp.org>
+
 	* getdate.y (get_date): Test HAVE_STRUCT_TM_TM_ZONE, not HAVE_TM_ZONE.
 
 2002-12-23  Bruno Haible  <bruno@clisp.org>

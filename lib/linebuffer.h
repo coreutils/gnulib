@@ -1,5 +1,5 @@
 /* linebuffer.h -- declarations for reading arbitrarily long lines
-   Copyright (C) 1986, 1991, 1998, 1999 Free Software Foundation, Inc.
+   Copyright (C) 1986, 1991, 1998, 1999, 2002 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -34,6 +34,9 @@ struct linebuffer
 #   define PARAMS(Args) ()
 #  endif
 # endif
+
+/* Avoid collision with readline() from libreadline.  */
+#define readline readlinebuffer
 
 /* Initialize linebuffer LINEBUFFER for use. */
 void initbuffer PARAMS ((struct linebuffer *linebuffer));

@@ -11,6 +11,9 @@
 #  endif
 # endif
 
+/* Avoid collision with getstr() from libcurses.  */
+#define getstr getdelim2
+
 int
 getstr PARAMS ((char **lineptr, size_t *n, FILE *stream,
 		int delim1, int delim2,
