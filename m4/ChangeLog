@@ -1,3 +1,9 @@
+2004-05-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* stdbool.m4 (AC_HEADER_STDBOOL): Detect _Bool bug in HP aC++/ANSI
+	C B3910B A.05.55 [Dec 04 2003].  Problem reported by Jim Meyering.
+	Also, fix a typo in a diagnostic.
+
 2004-05-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* xalloc.m4 (gl_PREREQ_XMALLOC): Do not require AC_FUNC_MALLOC
@@ -26,7 +32,7 @@
 	Check for gettimeofday.
 	* settime.m4 (gl_SETTIME): Require gl_TIMESPEC.
 	Check for settimeofday, stime.
-	
+
 2004-04-20  Paul Eggert  <eggert@twinsun.com>
 
 	* host-os.m4: Add a copyright notice.
