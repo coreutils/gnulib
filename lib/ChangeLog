@@ -1,3 +1,12 @@
+2004-11-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getopt_.h [defined __GETOPT_PREFIX && !defined __need_getopt]:
+	Include <unistd.h> if available.
+	Then rename getopt to __GETOPT_PREFIX##getopt, and so forth for
+	the other external symbols.
+	(getopt) [!defined __GNU_LIBRARY]: Use prototype, not old-style
+	declaration, since the above renaming now works around collisions.
+
 2004-11-11  Jim Meyering  <jim@meyering.net>
 
 	* linebreak.c: Remove trailing blanks.
