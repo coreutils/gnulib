@@ -1622,6 +1622,16 @@ func_all_modules ()
   func_module strtoumax
   func_end_table
 
+  element="Mathematics <math.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap isoc_sup_math
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module mathl
+  func_end_table
+
   element="Enhancements for ISO C 99 functions"
   func_section_wrap isoc_enh
   func_wrap H2
