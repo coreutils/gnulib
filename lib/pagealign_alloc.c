@@ -119,15 +119,14 @@ pagealign_alloc (size_t size)
 {
   void *ret;
 #if HAVE_MMAP
-  int flags;
 # ifdef HAVE_MAP_ANONYMOUS
   const int fd = -1;
-  flags = MAP_ANONYMOUS | MAP_PRIVATE;
+  const int flags = MAP_ANONYMOUS | MAP_PRIVATE;
 # else /* !HAVE_MAP_ANONYMOUS */
   static int fd = -1;  /* Only open /dev/zero once in order to avoid limiting
 			  the amount of memory we may allocate based on the
 			  number of open file descriptors.  */
-  flags = MAP_FILE | MAP_PRIVATE;
+  const int flags = MAP_FILE | MAP_PRIVATE;
   if (fd == -1)
     {
       fd = open ("/dev/zero", O_RDONLY, 0666);
@@ -136,13 +135,16 @@ pagealign_alloc (size_t size)
     }
 # endif /* HAVE_MAP_ANONYMOUS */
   ret = mmap (NULL, size, PROT_READ | PROT_WRITE, flags, fd, 0);
-  if (!ret)
+  if (ret == MAP_FAILED)
     return NULL;
   new_memnode (ret, size);
 #elif HAVE_POSIX_MEMALIGN
   int status = posix_memalign (&ret, getpagesize (), size);
   if (status)
-    return NULL;
+    {
+      errno = status;
+      return NULL;
+    }
 #else /* !HAVE_MMAP && !HAVE_POSIX_MEMALIGN */
   size_t pagesize = getpagesize ();
   void *unaligned_ptr = malloc (size + pagesize - 1);
@@ -172,7 +174,8 @@ void
 pagealign_free (void *aligned_ptr)
 {
 #if HAVE_MMAP
-  munmap (aligned_ptr, get_memnode (aligned_ptr));
+  if (munmap (aligned_ptr, get_memnode (aligned_ptr)) < 0)
+    error (EXIT_FAILURE, errno, "Failed to unmap memory");
 #elif HAVE_POSIX_MEMALIGN
   free (aligned_ptr);
 #else
