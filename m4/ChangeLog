@@ -1,3 +1,9 @@
+2003-10-27  Paul Eggert  <eggert@twinsun.com>
+
+	* host-os.m4 (UTILS_HOST_OS): Identify GNU/KFreeBSD and
+	GNU/KNetBSD using their new names (which have a "K" in front of
+	the kernel name).  Requested by Richard Stallman.
+
 2003-10-26  Paul Eggert  <eggert@twinsun.com>
 
 	* xalloc.m4 (gl_XALLOC): Requore AC_C_INLINE, since xalloc.h
