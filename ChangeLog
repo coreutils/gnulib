@@ -9,7 +9,7 @@
 	* modules/restrict: New file.
 	* MODULES.html.sh (func_all_modules): Add restrict.
 	* modules/regex: Depend on restrict.
-	
+
 2003-08-07  Bruno Haible  <bruno@clisp.org>
 
 	* modules/getndelim2 (Makefile.am): Add the files to EXTRA_DIST, not
@@ -19,7 +19,7 @@
 
 	* MODULES.html.sh (func_all_modules): Remove bumpalloc.
 	* modules/bumpalloc: Remove.
-	
+
 2003-07-31  Bruno Haible  <bruno@clisp.org>
 
 	* modules/getpass-gnu: New file.
