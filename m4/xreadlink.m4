@@ -10,5 +10,5 @@ AC_DEFUN([gl_XREADLINK],
 [
   dnl Prerequisites of lib/xreadlink.c.
   AC_REQUIRE([gt_TYPE_SSIZE_T])
-  AC_CHECK_HEADERS_ONCE(stdlib.h sys/types.h unistd.h)
+  AC_CHECK_HEADERS_ONCE(stdlib.h unistd.h)
 ])

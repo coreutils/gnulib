@@ -1,3 +1,8 @@
+2003-07-01  Paul Eggert  <eggert@twinsun.com>
+
+	* xreadlink.m4 (gl_XREADLINK): Don't check for sys/types.h, since
+	xreadlink.c now includes it unconditionally.
+
 2003-07-01  Bruno Haible  <bruno@clisp.org>
 
 	* ssize_t.m4 (gt_TYPE_SSIZE_T): Don't include <unistd.h>. <sys/types.h>
