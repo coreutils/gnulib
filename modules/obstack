@@ -22,6 +22,9 @@ Makefile.am:
 Include:
 "obstack.h"
 
+License:
+LGPL
+
 Maintainer:
 all, glibc
 

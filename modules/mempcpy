@@ -17,5 +17,8 @@ lib_SOURCES += mempcpy.h
 Include:
 "mempcpy.h"
 
+License:
+GPL
+
 Maintainer:
 Simon Josefsson

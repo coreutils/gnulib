@@ -18,6 +18,9 @@ lib_SOURCES += c-strtod.h c-strtod.c
 Include:
 "c-strtod.h"
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert, Jim Meyering
 

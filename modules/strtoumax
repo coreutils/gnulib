@@ -20,6 +20,9 @@ Makefile.am:
 
 Include:
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert
 

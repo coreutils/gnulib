@@ -26,5 +26,8 @@ MOSTLYCLEANFILES += argz.h argz.h-t
 Include:
 <argz.h>
 
+License:
+GPL
+
 Maintainer:
 bug-libtool@gnu.org

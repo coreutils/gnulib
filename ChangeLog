@@ -1,3 +1,9 @@
+2004-09-22  Bruno Haible  <bruno@clisp.org>
+
+	* modules/*: Add 'License' field.
+	* gnulib-tool: Accept --extract-license option.
+	(func_get_license): New function.
+
 2004-09-21  Bruno Haible  <bruno@clisp.org>
 
 	* modules/vasnprintf (Files): Add m4/stdint_h.m4, m4/inttypes_h.m4.

@@ -13,6 +13,9 @@ Makefile.am:
 
 Include:
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

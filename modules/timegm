@@ -19,5 +19,8 @@ lib_SOURCES += timegm.h
 Include:
 "timegm.h"
 
+License:
+LGPL
+
 Maintainer:
 all, glibc

@@ -19,6 +19,9 @@ lib_SOURCES += utimens.h utimens.c
 Include:
 "utimens.h"
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert, Jim Meyering
 

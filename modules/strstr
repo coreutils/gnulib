@@ -17,6 +17,9 @@ lib_SOURCES += strstr.h
 Include:
 "strstr.h"
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible, glibc
 

@@ -19,6 +19,9 @@ lib_SOURCES += readutmp.h
 Include:
 "readutmp.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

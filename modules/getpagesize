@@ -16,6 +16,9 @@ lib_SOURCES += getpagesize.h
 Include:
 "getpagesize.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

@@ -32,6 +32,9 @@ noinst_HEADERS += mathl.h trigl.h trigl.c sincosl.c
 Include:
 "mathl.h"
 
+License:
+GPL
+
 Maintainer:
 Paolo Bonzini  <bonzini@gnu.org>
 

@@ -20,6 +20,9 @@ lib_SOURCES += xreadlink.h xreadlink.c
 Include:
 "xreadlink.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

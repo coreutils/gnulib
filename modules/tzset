@@ -15,6 +15,9 @@ Makefile.am:
 Include:
 <time.h>
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

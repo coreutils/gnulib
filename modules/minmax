@@ -14,6 +14,9 @@ lib_SOURCES += minmax.h
 Include:
 "minmax.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible
 

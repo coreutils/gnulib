@@ -15,6 +15,9 @@ lib_SOURCES += progname.h progname.c
 Include:
 "progname.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible
 

@@ -19,6 +19,9 @@ lib_SOURCES += hash.h hash.c
 Include:
 "hash.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

@@ -20,6 +20,9 @@ lib_SOURCES += xmemcoll.h xmemcoll.c
 Include:
 "xmemcoll.h"
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert, Jim Meyering
 

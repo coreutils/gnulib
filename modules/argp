@@ -39,6 +39,9 @@ lib_SOURCES += argp.h argp-ba.c argp-eexst.c \
 Include:
 "argp.h"
 
+License:
+LGPL
+
 Maintainer:
 Simon Josefsson, glibc
 

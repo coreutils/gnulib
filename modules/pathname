@@ -18,6 +18,9 @@ lib_SOURCES += pathname.h concatpath.c
 Include:
 "pathname.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible
 

@@ -21,6 +21,9 @@ lib_SOURCES += utimecmp.h utimecmp.c
 Include:
 "utimecmp.h"
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert, Jim Meyering
 

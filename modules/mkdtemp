@@ -21,6 +21,9 @@ lib_SOURCES += mkdtemp.h
 Include:
 "mkdtemp.h"
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible
 

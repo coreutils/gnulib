@@ -28,5 +28,8 @@ MOSTLYCLEANFILES += stdint.h stdint.h-t
 Include:
 #include <stdint.h>
 
+License:
+GPL
+
 Maintainer:
 all

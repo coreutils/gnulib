@@ -24,6 +24,9 @@ Include:
 # include <sys/utime.h>
 #endif
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

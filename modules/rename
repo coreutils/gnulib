@@ -17,6 +17,9 @@ Makefile.am:
 Include:
 <stdio.h>
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

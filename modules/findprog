@@ -21,6 +21,9 @@ lib_SOURCES += findprog.h findprog.c
 Include:
 "findprog.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible
 

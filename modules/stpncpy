@@ -17,6 +17,9 @@ lib_SOURCES += stpncpy.h
 Include:
 "stpncpy.h"
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible, glibc
 

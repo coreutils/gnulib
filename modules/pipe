@@ -25,6 +25,9 @@ lib_SOURCES += pipe.h pipe.c w32spawn.h
 Include:
 "pipe.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible
 

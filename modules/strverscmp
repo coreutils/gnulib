@@ -17,6 +17,9 @@ lib_SOURCES += strverscmp.h
 Include:
 "strverscmp.h"
 
+License:
+LGPL
+
 Maintainer:
 Jim Meyering, glibc
 

@@ -17,6 +17,9 @@ lib_SOURCES += __fpending.h
 Include:
 "__fpending.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

@@ -18,6 +18,9 @@ lib_SOURCES += fcntl-safer.h open-safer.c
 Include:
 "fcntl-safer.h"
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert, Jim Meyering
 

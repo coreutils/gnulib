@@ -15,5 +15,8 @@ lib_SOURCES += fwriteerror.h fwriteerror.c
 Include:
 "fwriteerror.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible

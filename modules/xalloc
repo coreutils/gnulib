@@ -18,6 +18,9 @@ lib_SOURCES += xalloc.h xmalloc.c xstrdup.c
 Include:
 "xalloc.h"
 
+License:
+GPL
+
 Maintainer:
 all
 

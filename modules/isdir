@@ -15,6 +15,9 @@ lib_SOURCES += isdir.c
 
 Include:
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

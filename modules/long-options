@@ -18,6 +18,9 @@ lib_SOURCES += long-options.h long-options.c
 Include:
 "long-options.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

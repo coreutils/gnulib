@@ -15,6 +15,9 @@ lib_SOURCES += diacrit.h diacrit.c
 Include:
 "diacrit.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

@@ -18,5 +18,8 @@ lib_SOURCES += cloexec.c cloexec.h
 Include:
 "cloexec.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering

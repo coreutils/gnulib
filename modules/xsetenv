@@ -20,6 +20,9 @@ lib_SOURCES += xsetenv.h xsetenv.c
 Include:
 "xsetenv.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible
 

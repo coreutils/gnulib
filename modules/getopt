@@ -29,6 +29,9 @@ MOSTLYCLEANFILES += getopt.h getopt.h-t
 Include:
 <getopt.h>
 
+License:
+LGPL
+
 Maintainer:
 all, glibc
 

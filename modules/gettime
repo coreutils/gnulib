@@ -18,6 +18,9 @@ lib_SOURCES += gettime.c
 
 Include:
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert, Jim Meyering
 

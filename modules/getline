@@ -23,6 +23,9 @@ EXTRA_DIST += getndelim2.h getndelim2.c
 Include:
 "getline.h"
 
+License:
+GPL
+
 Maintainer:
 all
 

@@ -18,6 +18,9 @@ lib_SOURCES += savedir.h savedir.c
 Include:
 "savedir.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

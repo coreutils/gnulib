@@ -18,6 +18,9 @@ lib_SOURCES += strndup.h
 Include:
 "strndup.h"
 
+License:
+LGPL
+
 Maintainer:
 glibc
 

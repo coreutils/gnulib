@@ -15,6 +15,9 @@ Makefile.am:
 Include:
 <string.h>
 
+License:
+GPL
+
 Maintainer:
 all
 

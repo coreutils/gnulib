@@ -16,5 +16,8 @@ LIBS += $(POW_LIB)
 Include:
 <stdlib.h>
 
+License:
+GPL
+
 Maintainer:
 all

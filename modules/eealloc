@@ -16,5 +16,8 @@ EXTRA_DIST += eealloc.h
 Include:
 #include <eealloc.h>
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible

@@ -17,5 +17,8 @@ lib_SOURCES += xgetdomainname.h xgetdomainname.c
 Include:
 "xgetdomainname.h"
 
+License:
+GPL
+
 Maintainer:
 Simon Josefsson

@@ -21,6 +21,9 @@ lib_SOURCES += regex.h
 Include:
 "regex.h"
 
+License:
+LGPL
+
 Maintainer:
 all
 

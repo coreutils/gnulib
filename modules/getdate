@@ -27,6 +27,9 @@ MAINTAINERCLEANFILES += getdate.c
 Include:
 "getdate.h"
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert
 

@@ -19,6 +19,9 @@ lib_SOURCES += time_r.h
 Include:
 "time_r.h"
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert
 

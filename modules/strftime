@@ -21,6 +21,9 @@ lib_SOURCES += strftime.c strftime.h
 Include:
 "strftime.h"
 
+License:
+LGPL
+
 Maintainer:
 glibc
 

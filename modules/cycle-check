@@ -16,6 +16,9 @@ lib_SOURCES += cycle-check.c cycle-check.h dev-ino.h
 Include:
 "cycle-check.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

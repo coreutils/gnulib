@@ -19,6 +19,9 @@ lib_SOURCES += lchown.h stat-macros.h
 Include:
 "lchown.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

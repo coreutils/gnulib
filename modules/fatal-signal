@@ -21,6 +21,9 @@ lib_SOURCES += fatal-signal.h fatal-signal.c
 Include:
 "fatal-signal.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible
 

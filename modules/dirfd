@@ -17,5 +17,8 @@ lib_SOURCES += dirfd.h
 Include:
 "dirfd.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering

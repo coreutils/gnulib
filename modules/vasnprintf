@@ -33,6 +33,9 @@ lib_SOURCES += printf-args.h printf-parse.h vasnprintf.h
 Include:
 "vasnprintf.h"
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible
 

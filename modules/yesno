@@ -20,6 +20,9 @@ lib_SOURCES += yesno.c yesno.h
 Include:
 "yesno.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

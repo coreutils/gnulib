@@ -21,6 +21,9 @@ lib_SOURCES += setenv.h
 Include:
 "setenv.h"
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible
 

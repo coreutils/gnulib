@@ -18,6 +18,9 @@ lib_SOURCES += timespec.h
 Include:
 "timespec.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

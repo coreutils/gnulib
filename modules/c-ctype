@@ -16,6 +16,9 @@ lib_SOURCES += c-ctype.h c-ctype.c
 Include:
 "c-ctype.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible
 

@@ -19,6 +19,9 @@ lib_SOURCES += posixtm.h posixtm.c
 Include:
 "posixtm.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

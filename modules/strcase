@@ -18,6 +18,9 @@ lib_SOURCES += strcase.h
 Include:
 "strcase.h"
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible
 

@@ -24,6 +24,9 @@ lib_SOURCES += wait-process.h wait-process.c
 Include:
 "wait-process.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible
 

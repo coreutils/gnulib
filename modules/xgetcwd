@@ -20,6 +20,9 @@ lib_SOURCES += xgetcwd.h xgetcwd.c
 Include:
 "xgetcwd.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

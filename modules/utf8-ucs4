@@ -15,6 +15,9 @@ lib_SOURCES += utf8-ucs4.h
 
 Include:
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible
 

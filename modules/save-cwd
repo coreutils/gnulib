@@ -18,5 +18,8 @@ lib_SOURCES += save-cwd.h save-cwd.c
 Include:
 "save-cwd.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering

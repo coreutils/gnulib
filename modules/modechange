@@ -19,6 +19,9 @@ lib_SOURCES += modechange.h modechange.c
 Include:
 "modechange.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

@@ -16,6 +16,9 @@ lib_SOURCES += idcache.c
 
 Include:
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

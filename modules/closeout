@@ -23,5 +23,8 @@ lib_SOURCES += closeout.h closeout.c
 Include:
 "closeout.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering

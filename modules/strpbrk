@@ -17,6 +17,9 @@ lib_SOURCES += strpbrk.h
 Include:
 "strpbrk.h"
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible, glibc
 

@@ -26,6 +26,9 @@ MOSTLYCLEANFILES += stdbool.h stdbool.h-t
 Include:
 #include <stdbool.h>
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible
 

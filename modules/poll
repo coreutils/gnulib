@@ -26,5 +26,8 @@ MOSTLYCLEANFILES += poll.h poll.h-t
 Include:
 #include <poll.h>
 
+License:
+GPL
+
 Maintainer:
 Paolo Bonzini  <bonzini@gnu.org>

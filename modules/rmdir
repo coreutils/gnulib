@@ -17,6 +17,9 @@ lib_SOURCES += stat-macros.h
 Include:
 <unistd.h>
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

@@ -17,6 +17,9 @@ lib_SOURCES += full-read.h full-read.c
 Include:
 "full-read.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering, Bruno Haible
 

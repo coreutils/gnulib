@@ -20,6 +20,9 @@ lib_SOURCES += getpass.h
 Include:
 "getpass.h"
 
+License:
+LGPL
+
 Maintainer:
 Jim Meyering, glibc
 

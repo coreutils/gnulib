@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-09-21 14:22:48 $'
+cvsdatestamp='$Date: 2004-09-22 15:11:04 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -54,6 +54,7 @@ Usage: gnulib-tool --list
        gnulib-tool --extract-autoconf-snippet module
        gnulib-tool --extract-automake-snippet module
        gnulib-tool --extract-include-directive module
+       gnulib-tool --extract-license module
        gnulib-tool --extract-maintainer module
 
 Operation modes:
@@ -72,6 +73,8 @@ Operation modes:
       --extract-autoconf-snippet   extract the snippet for configure.ac
       --extract-automake-snippet   extract the snippet for lib/Makefile.am
       --extract-include-directive  extract the #include directive
+      --extract-license            report the license terms of the source files
+                                   under lib/
       --extract-maintainer         report the maintainer(s) inside gnulib
 
 Options:
@@ -285,6 +288,7 @@ sed_extract_prog=':[ 	]*$/ {
     s/^configure\.ac:[ 	]*$//
     s/^Makefile\.am:[ 	]*$//
     s/^Include:[ 	]*$//
+    s/^License:[ 	]*$//
     s/^Maintainer:[ 	]*$//
     tb
     p
@@ -329,6 +333,12 @@ func_get_include_directive ()
 {
   sed -n -e "/^Include$sed_extract_prog" < "$gnulib_dir/modules/$1" | \
   sed -e 's/^\(["<]\)/#include \1/'
+}
+
+# func_get_license module
+func_get_license ()
+{
+  sed -n -e "/^License$sed_extract_prog" < "$gnulib_dir/modules/$1"
 }
 
 # func_get_maintainer module
@@ -924,6 +934,16 @@ case $mode in
       func_verify_module
       if test -n "$module"; then
         func_get_include_directive "$module"
+      fi
+    done
+    ;;
+
+  extract-license )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_license "$module"
       fi
     done
     ;;

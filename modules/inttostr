@@ -24,5 +24,8 @@ lib_SOURCES += imaxtostr.c inttostr.h offtostr.c umaxtostr.c
 Include:
 "inttostr.h"
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert

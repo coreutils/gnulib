@@ -19,6 +19,9 @@ lib_SOURCES += group-member.h
 Include:
 "group-member.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

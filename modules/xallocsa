@@ -17,5 +17,8 @@ lib_SOURCES += xallocsa.h xallocsa.c
 Include:
 #include "xallocsa.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible

@@ -17,5 +17,8 @@ lib_SOURCES += strchrnul.h
 Include:
 "strchrnul.h"
 
+License:
+GPL
+
 Maintainer:
 FSF

@@ -16,6 +16,9 @@ lib_SOURCES += full-write.h full-write.c
 Include:
 "full-write.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering, Bruno Haible
 

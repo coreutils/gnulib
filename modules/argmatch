@@ -22,6 +22,9 @@ lib_SOURCES += argmatch.h argmatch.c
 Include:
 "argmatch.h"
 
+License:
+GPL
+
 Maintainer:
 all
 

@@ -17,6 +17,9 @@ lib_SOURCES += xnanosleep.h xnanosleep.c
 Include:
 "xnanosleep.h"
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert, Jim Meyering
 

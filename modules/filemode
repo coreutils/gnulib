@@ -19,6 +19,9 @@ lib_SOURCES += filemode.h filemode.c stat-macros.h
 Include:
 "filemode.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

@@ -24,5 +24,8 @@ MOSTLYCLEANFILES += sysexits.h sysexits.h-t
 Include:
 #include <sysexits.h>
 
+License:
+GPL
+
 Maintainer:
 Simon Josefsson

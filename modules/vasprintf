@@ -19,6 +19,9 @@ lib_SOURCES += vasprintf.h
 Include:
 "vasprintf.h"
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible
 

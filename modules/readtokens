@@ -19,6 +19,9 @@ lib_SOURCES += readtokens.h readtokens.c
 Include:
 "readtokens.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

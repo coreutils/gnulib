@@ -17,6 +17,9 @@ lib_SOURCES += xsize.h
 Include:
 "xsize.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible
 

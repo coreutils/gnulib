@@ -15,6 +15,9 @@ Makefile.am:
 Include:
 <stdlib.h>
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert
 

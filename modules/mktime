@@ -16,6 +16,9 @@ Makefile.am:
 Include:
 <time.h>
 
+License:
+LGPL
+
 Maintainer:
 Paul Eggert, Jim Meyering, glibc
 

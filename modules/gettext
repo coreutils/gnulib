@@ -44,6 +44,9 @@ lib_SOURCES += gettext.h
 Include:
 "gettext.h"
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible
 

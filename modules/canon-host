@@ -16,6 +16,9 @@ lib_SOURCES += canon-host.c
 
 Include:
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

@@ -19,6 +19,9 @@ lib_SOURCES += getnline.h getnline.c
 Include:
 "getnline.h"
 
+License:
+GPL
+
 Maintainer:
 all
 

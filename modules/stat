@@ -18,6 +18,9 @@ lib_SOURCES += stat-macros.h
 Include:
 <sys/stat.h>
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

@@ -22,5 +22,8 @@ lib_SOURCES += userspec.c userspec.h
 Include:
 "userspec.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering

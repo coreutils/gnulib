@@ -21,5 +21,8 @@ lib_SOURCES += allocsa.h allocsa.c
 Include:
 #include "allocsa.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible

@@ -26,5 +26,8 @@ MOSTLYCLEANFILES += alloca.h alloca.h-t
 Include:
 #include <alloca.h>
 
+License:
+GPL
+
 Maintainer:
 bug-gnulib@gnu.org

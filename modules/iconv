@@ -18,6 +18,9 @@ Makefile.am:
 Include:
 <iconv.h>
 
+License:
+LGPL
+
 Maintainer:
 Bruno Haible
 

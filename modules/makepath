@@ -26,6 +26,9 @@ lib_SOURCES += makepath.h makepath.c stat-macros.h
 Include:
 "makepath.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

@@ -18,6 +18,9 @@ lib_SOURCES += xalloc-die.c
 Include:
 "xalloc.h"
 
+License:
+GPL
+
 Maintainer:
 all
 

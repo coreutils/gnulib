@@ -17,6 +17,9 @@ Makefile.am:
 Include:
 <stdlib.h>
 
+License:
+LGPL
+
 Maintainer:
 glibc
 

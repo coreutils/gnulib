@@ -19,6 +19,9 @@ lib_SOURCES += sha1.h sha1.c
 Include:
 "sha1.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

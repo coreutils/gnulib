@@ -17,6 +17,9 @@ lib_SOURCES += linebuffer.h linebuffer.c
 Include:
 "linebuffer.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

@@ -29,5 +29,8 @@ MOSTLYCLEANFILES += fnmatch.h fnmatch.h-t
 Include:
 <fnmatch.h>
 
+License:
+LGPL
+
 Maintainer:
 all, glibc

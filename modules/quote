@@ -18,6 +18,9 @@ lib_SOURCES += quote.h quote.c
 Include:
 "quote.h"
 
+License:
+GPL
+
 Maintainer:
 Paul Eggert
 

@@ -25,6 +25,9 @@ lib_SOURCES += execute.h execute.c w32spawn.h
 Include:
 "execute.h"
 
+License:
+GPL
+
 Maintainer:
 Bruno Haible
 

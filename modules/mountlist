@@ -21,6 +21,9 @@ lib_SOURCES += mountlist.h
 Include:
 "mountlist.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 

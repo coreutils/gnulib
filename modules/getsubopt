@@ -18,5 +18,8 @@ lib_SOURCES += getsubopt.h
 Include:
 "getsubopt.h"
 
+License:
+LGPL
+
 Maintainer:
 all, glibc

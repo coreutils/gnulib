@@ -15,6 +15,9 @@ lib_SOURCES += hash-pjw.h hash-pjw.c
 Include:
 "hash-pjw.h"
 
+License:
+GPL
+
 Maintainer:
 Jim Meyering
 
