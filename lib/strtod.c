@@ -31,16 +31,20 @@ Cambridge, MA 02139, USA.  */
 #include <ctype.h>
 #include <math.h>
 
-#if STDC_HEADERS
+#ifdef HAVE_FLOAT_H
 #include <float.h>
+#else
+#define DBL_MAX 1.7976931348623159e+308
+#define DBL_MIN 2.2250738585072010e-308
+#endif
+#endif
+
+#if STDC_HEADERS
 #include <stdlib.h>
 #include <string.h>
 #else
 #define NULL 0
-#define DBL_MAX 1.7976931348623159e+308
-#define DBL_MIN 2.2250738585072010e-308
 extern int errno;
-#endif
 #ifndef HUGE_VAL
 #define HUGE_VAL HUGE
 #endif
