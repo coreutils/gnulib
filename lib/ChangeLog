@@ -1,3 +1,9 @@
+2004-10-12  Simon Josefsson  <jas@extundo.com>
+
+	* getpass.c (fflush_unlocked, flockfile, funlockfile)
+	(fputs_unlocked, putc_unlocked) [!_LIBCS && !USE_UNLOCKED_IO]: Map
+	to real functions.
+
 2004-10-11  Yoann Vandoorselaere  <yoann@prelude-ids.org>
 
 	* vsnprintf.h: New file.
