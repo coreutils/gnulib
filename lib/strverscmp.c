@@ -1,7 +1,6 @@
 /* Compare strings while treating digits characters numerically.
    Copyright (C) 1997, 2000 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
-   Contributed by Jean-François Bignolles <bignolle@ecoledoc.ibp.fr>, 1997.
 
    The GNU C Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
@@ -21,20 +20,6 @@
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
-
-#include <string.h>
-#include <ctype.h>
-
-/* states: S_N: normal, S_I: comparing integral part, S_F: comparing
-           Fractional parts, S_Z: idem but with leading Zeroes only */
-#define S_N    0x0
-#define S_I    0x4
-#define S_F    0x8
-#define S_Z    0xC
-
-/* result_type: CMP: return diff; LEN: compare using len_diff/diff */
-#define CMP    2
-#define LEN    3
 
 /* ISDIGIT differs from isdigit, as follows:
    - Its arg may be any int or unsigned int; it need not be an unsigned char.
@@ -56,67 +41,82 @@ strverscmp (const char *s1, const char *s2)
 {
   const unsigned char *p1 = (const unsigned char *) s1;
   const unsigned char *p2 = (const unsigned char *) s2;
-  unsigned char c1, c2;
-  int state;
   int diff;
 
-  /* Symbol(s)    0       [1-9]   others  (padding)
-     Transition   (10) 0  (01) d  (00) x  (11) -   */
-  static const unsigned int next_state[] =
-  {
-      /* state    x    d    0    - */
-      /* S_N */  S_N, S_I, S_Z, S_N,
-      /* S_I */  S_N, S_I, S_I, S_I,
-      /* S_F */  S_N, S_F, S_F, S_F,
-      /* S_Z */  S_N, S_F, S_Z, S_Z
-  };
-
-  static const int result_type[] =
-  {
-      /* state   x/x  x/d  x/0  x/-  d/x  d/d  d/0  d/-
-                 0/x  0/d  0/0  0/-  -/x  -/d  -/0  -/- */
-
-      /* S_N */  CMP, CMP, CMP, CMP, CMP, LEN, CMP, CMP,
-                 CMP, CMP, CMP, CMP, CMP, CMP, CMP, CMP,
-      /* S_I */  CMP, -1,  -1,  CMP,  1,  LEN, LEN, CMP,
-                  1,  LEN, LEN, CMP, CMP, CMP, CMP, CMP,
-      /* S_F */  CMP, CMP, CMP, CMP, CMP, LEN, CMP, CMP,
-                 CMP, CMP, CMP, CMP, CMP, CMP, CMP, CMP,
-      /* S_Z */  CMP,  1,   1,  CMP, -1,  CMP, CMP, CMP,
-                 -1,  CMP, CMP, CMP
-  };
-
-  if (p1 == p2)
-    return 0;
-
-  c1 = *p1++;
-  c2 = *p2++;
-  /* Hint: '0' is a digit too.  */
-  state = S_N | ((c1 == '0') + (ISDIGIT (c1) != 0));
-
-  while ((diff = c1 - c2) == 0 && c1 != '\0')
+  while (*p1 != '\0' && *p1 == *p2)
     {
-      state = next_state[state];
-      c1 = *p1++;
-      c2 = *p2++;
-      state |= (c1 == '0') + (ISDIGIT (c1) != 0);
+      ++p1;
+      ++p2;
     }
-
-  state = result_type[state << 2 | ((c2 == '0') + (ISDIGIT (c2) != 0))];
-
-  switch (state)
+  diff = *p1 - *p2;
+  if (ISDIGIT (*p1) || ISDIGIT (*p2))
     {
-    case CMP:
-      return diff;
-
-    case LEN:
       while (ISDIGIT (*p1++))
 	if (!ISDIGIT (*p2++))
-	  return 1;
-
-      return ISDIGIT (*p2) ? -1 : diff;
-
-    default:
-      return state;
+	    return 1;
+      if (ISDIGIT (*p2))
+	return -1;
     }
+  return diff;
 }
+
+#ifdef TESTING_STRVERSCMP
+
+# include <stdio.h>
+
+/*
+BEGIN-DATA
+1.010 1.01  1         # 10 > 1;  yes, these are non-intuitive, but see below.
+1.010.tgz 1.01.tgz  1 # 10 > 1
+1.007 1.01a 1         # 7 > 1
+1.51a 1.507 -1        # 51 < 507
+1.001 1.2 -1          # 1 < 2
+foo-1.tar foo-1.2.tar -1
+END-DATA
+
+Justification from Karl Heuer:
+
+  Yes, it's possible that 1.007 was meant to sort earlier than 1.01a,
+  but anyone who's using that style is also going to want 1.507 to sort
+  earlier than 1.51a, and I think that making opposite assumptions for
+  these two examples is just asking for trouble.  People who want their
+  version numbers to be sorted "floating-point style" should simply make
+  the digits strings have fixed width; 1.007 < 1.010a unambiguously.)
+
+Run this test like this:
+
+  gcc -DTESTING_STRVERSCMP -Wall strverscmp.c
+  sed -n '/^BEGIN-DATA/,/END-DATA/p' strverscmp.c|grep -v -e -DATA | ./a.out
+
+*/
+
+# define MAX_BUFF_LEN 1024
+# define STREQ(s1, s2) ((strcmp (s1, s2) == 0))
+
+int
+main ()
+{
+  char buff[MAX_BUFF_LEN + 1];
+
+  int fail = 0;
+  buff[MAX_BUFF_LEN] = 0;
+  while (fgets (buff, MAX_BUFF_LEN, stdin) && buff[0])
+    {
+      char v1[MAX_BUFF_LEN], v2[MAX_BUFF_LEN], result[MAX_BUFF_LEN];
+      int r_expected, r_actual;
+      sscanf (buff, "%s %s %s", v1, v2, result);
+      r_expected = atoi (result);
+      if (!(STREQ (result, "1") || STREQ (result, "-1") || STREQ (result, "0")))
+	abort ();
+      r_actual = strverscmp (v1, v2);
+      if (r_expected != r_actual)
+	{
+	  printf ("FAIL: %s %s %s (actual: %d)\n", v1, v2, result, r_actual);
+	  fail = 1;
+	}
+    }
+  exit (fail);
+
+}
+
+#endif
