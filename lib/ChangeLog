@@ -3,6 +3,9 @@
 	* regex.c (byte_re_match_2_internal): Rename local variable 'not' to
 	'negate'.
 
+	* regex.c (byte_re_match_2_internal): Reduce scope of same_str_p
+	variable.
+
 2005-03-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* mktime.c (TYPE_TWOS_COMPLEMENT, TYPE_ONES_COMPLEMENT,
