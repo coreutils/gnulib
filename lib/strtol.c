@@ -33,10 +33,17 @@ Cambridge, MA 02139, USA.  */
 #if HAVE_LIMITS_H
 #include <limits.h>
 #endif
+
 #ifndef ULONG_MAX
-#define	LONG_MAX (~(1 << (sizeof (long) * 8 - 1)))
-#define LONG_MIN (-LONG_MAX-1)
 #define ULONG_MAX ((unsigned long) ~(unsigned long) 0)
+#endif
+
+#ifndef LONG_MAX
+#define	LONG_MAX (~(1 << (sizeof (long) * 8 - 1)))
+#endif
+
+#ifndef LONG_MIN
+#define LONG_MIN (-LONG_MAX - 1)
 #endif
 
 #if STDC_HEADERS
