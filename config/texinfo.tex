@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-01-04.14}
+\def\texinfoversion{2004-01-05.16}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -3259,7 +3259,7 @@ width0pt\relax} \fi
   % Remember, we are within a group.
   \indexdummies % Must do this here, since \bf, etc expand at this stage
   \escapechar=`\\
-  \def\rawbackslashxx{\indexbackslash}% \indexbackslash isn't defined now
+  \def\backslashcurfont{\indexbackslash}% \indexbackslash isn't defined now
       % so it will be output as is; and it will print as backslash.
   %
   % Process the index entry with all font commands turned off, to
@@ -3418,7 +3418,7 @@ width0pt\relax} \fi
       % Index files are almost Texinfo source, but we use \ as the escape
       % character.  It would be better to use @, but that's too big a change
       % to make right now.
-      \def\indexbackslash{\rawbackslashxx}%
+      \def\indexbackslash{\backslashcurfont}%
       \catcode`\\ = 0
       \escapechar = `\\
       \begindoublecolumns
@@ -5715,7 +5715,7 @@ width0pt\relax} \fi
   \pdfmkdest{#1}%
   \iflinks
     {%
-      \indexnofonts
+      \atdummies  % preserve commands, but don't expand them
       \turnoffactive
       \otherbackslash
       \edef\writexrdef##1##2{%
@@ -5993,7 +5993,7 @@ width0pt\relax} \fi
     }%
   }%
   %
-  % @ is our escape character in .aux files.
+  % @ is our escape character in .aux files, and we need braces.
   \catcode`\{=1
   \catcode`\}=2
   \catcode`\@=0
@@ -6100,8 +6100,8 @@ width0pt\relax} \fi
   \fi
 }
 
-% This \insert replacements works for both \insert\footins{xx} and
-% \insert\footins\bgroup xx\egroup, but it doesn't work for \insert27{xx}.
+% This \insert replacements works for both \insert\footins{foo} and
+% \insert\footins\bgroup foo\egroup, but it doesn't work for \insert27{foo}.
 %
 \def\saveinsert#1{%
   \edef\next{\noexpand\savetobox \makeSAVEname#1}%
@@ -6239,13 +6239,19 @@ width0pt\relax} \fi
     \def\floattype{#1}%
     \def\floatlabel{#2}%
     \def\floatloc{#3}% we do nothing with this yet.
-    % xx should we indent the whole thing? center it?
     %
     \ifx\floattype\empty \else
-      % For now, assume the FLOATTYPE is entirely letters, so we just use it
-      % in a control sequence name literally.  We want each FLOATTYPE to be
-      % numbered separately (Figure 1, Table 1, Figure 2, ...).
-      \expandafter\getfloatno\csname\floattype floatno\endcsname
+      {%
+        % the floattype might have accents or other special characters,
+        % but we need to use it in a control sequence name.
+        \indexnofonts
+        \turnoffactive
+        \xdef\safefloattype{\floattype}%
+      }%
+      % We want each FLOATTYPE to be numbered separately (Figure 1,
+      % Table 1, Figure 2, ...).
+      % 
+      \expandafter\getfloatno\csname\safefloattype floatno\endcsname
       \global\advance\floatno by 1
       %
       \ifx\floatlabel\empty \else
@@ -6253,7 +6259,7 @@ width0pt\relax} \fi
 	  % This magic value for \thissection is output by \setref as the
 	  % XREFLABEL-title value.  \xrefX uses it to distinguish float
 	  % labels (which have a completely different output format) from
-	  % nodes and xref labels.
+	  % node and anchor labels.
 	  % 
 	  \let\thissection=\floatmagic
 	  \setref{\floatlabel}{Yfloat}%
@@ -6285,7 +6291,7 @@ width0pt\relax} \fi
       \ifx\printedsomething\empty
 	\vskip.5\parskip  % space above caption
       \else
-	:\space  % had a number, so print a colon.
+	:\space  % had a number, so print a colon before the caption.
       \fi
       %
       % Print caption text.
@@ -6639,15 +6645,15 @@ should work if nowhere else does.}
 
 \catcode`\@=0
 
-% \rawbackslashxx outputs one backslash character in current font,
+% \backslashcurfont outputs one backslash character in current font,
 % as in \char`\\.
-\global\chardef\rawbackslashxx=`\\
+\global\chardef\backslashcurfont=`\\
 
-% \rawbackslash defines an active \ to do \rawbackslashxx.
+% \rawbackslash defines an active \ to do \backslashcurfont.
 % \otherbackslash defines an active \ to be a literal `\' character with
 % catcode other.
 {\catcode`\\=\active
- @gdef@rawbackslash{@let\=@rawbackslashxx}
+ @gdef@rawbackslash{@let\=@backslashcurfont}
  @gdef@otherbackslash{@let\=@realbackslash}
 }
 
@@ -6655,7 +6661,7 @@ should work if nowhere else does.}
 {\catcode`\\=\other @gdef@realbackslash{\}}
 
 % \normalbackslash outputs one backslash in fixed width font.
-\def\normalbackslash{{\tt\rawbackslashxx}}
+\def\normalbackslash{{\tt\backslashcurfont}}
 
 \catcode`\\=\active
 
