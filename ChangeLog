@@ -1,3 +1,15 @@
+2004-08-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/md5 (Files): Add m4/uint32_t.m4.
+	* modules/sha1: Renamed from modules/sha.
+	(Files):
+	Rename lib/sha.h to lib/sha1.h.
+	Rename lib/sha.c to lib/sha1.c.
+	Rename m4/sha.m4 to m4/sha1.m4.
+	(lib_SOURCES): Likewise.
+	(configure.ac): Rename gl_SHA to gl_SHA1.
+	(Include): sha.h -> sha1.h.
+
 2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	More merge from coreutils.
