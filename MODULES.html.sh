@@ -1549,6 +1549,16 @@ func_all_modules ()
   func_module vasprintf
   func_end_table
 
+  element="Signal handling <signal.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap ansic_ext_signal
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module fatal-signal
+  func_end_table
+
   element="Command-line arguments"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap ansic_ext_argv

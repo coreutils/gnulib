@@ -1,0 +1,25 @@
+Description:
+Emergency actions in case of a fatal signal.
+
+Files:
+lib/fatal-signal.h
+lib/fatal-signal.c
+m4/fatal-signal.m4
+m4/signalblocking.m4
+
+Depends-on:
+xalloc
+stdbool
+
+configure.ac:
+gl_FATAL_SIGNAL
+
+Makefile.am:
+lib_SOURCES += fatal-signal.h fatal-signal.c
+
+Include:
+"fatal-signal.h"
+
+Maintainer:
+Bruno Haible
+

@@ -1,0 +1,52 @@
+/* Emergency actions in case of a fatal signal.
+   Copyright (C) 2003 Free Software Foundation, Inc.
+   Written by Bruno Haible <bruno@clisp.org>, 2003.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software Foundation,
+   Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+/* It is often useful to do some cleanup action when a usually fatal signal
+   terminates the process, like removing a temporary file or killing a
+   subprocess that may be stuck waiting for a device, pipe or network input.
+   Such signals are SIGHUP, SIGINT, SIGPIPE, SIGTERM, and possibly others.
+   The limitation of this facility is that it cannot work for SIGKILL.  */
+
+/* Register a cleanup function to be executed when a catchable fatal signal
+   occurs.  */
+extern void at_fatal_signal (void (*function) (void));
+
+
+/* Sometimes it is necessary to block the usually fatal signals while the
+   data structures being accessed by the cleanup action are being built or
+   reorganized.  This is the case, for example, when a temporary file or
+   directory is created through mkstemp() or mkdtemp(), because these
+   functions create the temporary file or directory _before_ returning its
+   name to the application.  */
+
+/* Temporarily delay the catchable fatal signals.  */
+extern void block_fatal_signals (void);
+
+/* Stop delaying the catchable fatal signals.  */
+extern void unblock_fatal_signals (void);
+
+
+#ifdef __cplusplus
+}
+#endif
