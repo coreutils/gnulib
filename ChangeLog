@@ -1,3 +1,7 @@
+2004-08-03  Simon Josefsson  <jas@extundo.com>
+
+	* modules/progname (Depends-on): Don't depend on stdbool.
+
 2004-08-02  Simon Josefsson  <jas@extundo.com>
 
 	* modules/getsubopt: New file.

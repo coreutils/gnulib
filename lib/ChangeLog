@@ -1,3 +1,7 @@
+2004-08-03  Simon Josefsson  <jas@extundo.com>
+
+	* progname.h: Don't include stdbool.h.
+
 2004-08-01  Simon Josefsson  <jas@extundo.com>
 
 	* xgetdomainname.c: Include stdlib.h, for free().

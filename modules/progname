@@ -6,7 +6,6 @@ lib/progname.h
 lib/progname.c
 
 Depends-on:
-stdbool
 
 configure.ac:
 

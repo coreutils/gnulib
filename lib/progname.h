@@ -19,8 +19,6 @@
 #ifndef _PROGNAME_H
 #define _PROGNAME_H
 
-#include <stdbool.h>
-
 /* Programs using this file should do the following in main():
      set_program_name (argv[0]);
  */
