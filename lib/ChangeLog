@@ -1,3 +1,8 @@
+2003-07-31  Paul Eggert  <eggert@twinsun.com>
+
+	* strerror.c: Include config.h, limits.h.  Declare sprintf.
+	(strerror): Don't assume that a printable int fits in 14 bytes.
+
 2003-07-24  Derek Robert Price  <derek@ximbiot.com>
             Bruno Haible  <bruno@clisp.org>
 
