@@ -1,27 +1,34 @@
-# $Id: srclist.txt,v 1.6 2002-09-28 15:06:23 karl Exp $
+# $Id: srclist.txt,v 1.7 2002-11-25 00:19:45 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
 $GNUCONFIG/config.guess		config
 $GNUCONFIG/config.sub		config
+#
 $AUTOMAKE/depcomp		config
 # after next release $AUTOMAKE/install-sh		config
 $AUTOMAKE/mdate-sh		config
 $AUTOMAKE/missing		config
 # after next release $AUTOMAKE/mkinstalldirs		config
+#
 $TEXINFOSRC/doc/texinfo.tex	config
 
 $AUTOCONF/INSTALL		doc
+#
 $GNUORG/COPYING.DOC		doc
 $GNUORG/fdl.texi		doc
 
-$LIBCSRC/posix/getopt.c		lib
-$LIBCSRC/posix/getopt.h		lib
-$LIBCSRC/posix/getopt1.c	lib
 $GETTEXT/gettext.h		lib
+#
+#$LIBCSRC/malloc/obstack.c	lib gpl
+#$LIBCSRC/posix/getopt.c		lib gpl
+$LIBCSRC/posix/getopt.h		lib gpl
+$LIBCSRC/posix/getopt1.c	lib gpl
+$LIBCSRC/posix/regex.h		lib gpl
+#$LIBCSRC/string/strdup.c	lib gpl
+#
 # - libc/sysdeps/generic has memcpy.c, memmove.c, strcasecmp.c, but they
 #   are totally different implementations.
 # - Likewise libc/string/strerror.c.
 # - libc/locale/programs/xstrdup.c is almost usable, but uses the __P
 #   prototype macro.
-$LIBCSRC/string/strdup.c	lib
