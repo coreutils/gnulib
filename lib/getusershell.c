@@ -45,7 +45,7 @@
 
 #define ISSPACE(c) (IN_CTYPE_DOMAIN (c) && isspace (c))
 
-static int readname (char **, int *, FILE *);
+static size_t readname (char **, size_t *, FILE *);
 
 #if ! defined ADDITIONAL_DEFAULT_SHELLS && defined __MSDOS__
 # define ADDITIONAL_DEFAULT_SHELLS \
@@ -63,7 +63,7 @@ static char const* const default_shells[] =
 
 /* Index of the next shell in `default_shells' to return.
    0 means we are not using `default_shells'. */
-static int default_index = 0;
+static size_t default_index = 0;
 
 /* Input stream from the shells file. */
 static FILE *shellstream = NULL;
@@ -72,7 +72,7 @@ static FILE *shellstream = NULL;
 static char *line = NULL;
 
 /* Number of bytes allocated for `line'. */
-static int line_size = 0;
+static size_t line_size = 0;
 
 /* Return an entry from the shells file, ignoring comment lines.
    If the file doesn't exist, use the list in DEFAULT_SHELLS (above).
@@ -136,18 +136,21 @@ endusershell (void)
    and/or realloc'd as necessary and can start out NULL,
    and whose size is passed and returned in *SIZE.
 
-   Return the number of characters placed in *NAME
+   Return the number of bytes placed in *NAME
    if some nonempty sequence was found, otherwise 0.  */
 
-static int
-readname (char **name, int *size, FILE *stream)
+static size_t
+readname (char **name, size_t *size, FILE *stream)
 {
   int c;
-  int name_index = 0;
+  size_t name_index = 0;
 
   if (*name == NULL)
     {
-      *size = 10;
+      /* The initial size must be a power of two, so that the overflow
+	 check works.  */
+      *size = 16;
+
       *name = xmalloc (*size);
     }
 
@@ -158,9 +161,11 @@ readname (char **name, int *size, FILE *stream)
   while (c != EOF && !ISSPACE (c))
     {
       (*name)[name_index++] = c;
-      while (name_index >= *size)
+      if (*size < name_index)
 	{
 	  *size *= 2;
+	  if (! *size)
+	    xalloc_die ();
 	  *name = xrealloc (*name, *size);
 	}
       c = getc (stream);
