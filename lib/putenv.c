@@ -106,7 +106,8 @@ putenv (string)
       char **new_environ = (char **) malloc ((size + 2) * sizeof (char *));
       if (new_environ == NULL)
 	return -1;
-      (void) bcopy ((char *) environ, (char *) new_environ, size * sizeof (char *));
+      (void) bcopy ((char *) environ, (char *) new_environ,
+		    size * sizeof (char *));
       new_environ[size] = (char *) string;
       new_environ[size + 1] = NULL;
       if (last_environ != NULL)
