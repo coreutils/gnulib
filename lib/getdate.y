@@ -22,16 +22,13 @@
    <rsalz@bbn.com> and Jim Berets <jberets@bbn.com> in August, 1990.
 
    Modified by Paul Eggert <eggert@twinsun.com> in August 1999 to do
-   the right thing about local DST, and in February 2004 to support
-   nanosecond-resolution time stamps.  Unlike previous versions, this
-   version is reentrant.  */
+   the right thing about local DST.  Also modified by Paul Eggert
+   <eggert@cs.ucla.edu> in February 2004 to support
+   nanosecond-resolution time stamps, and in October 2004 to support
+   TZ strings in dates.  */
 
 /* FIXME: Check for arithmetic overflow in all cases, not just
-   some of them.
-
-   FIXME: The current code uses 'int' to count seconds; it should use
-   something like 'intmax_t' to support time stamps that don't fit in
-   32 bits.  */
+   some of them.  */
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -53,6 +50,11 @@
 
 #include <ctype.h>
 #include <limits.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "setenv.h"
+#include "xalloc.h"
 
 #if STDC_HEADERS || (! defined isascii && ! HAVE_ISASCII)
 # define IN_CTYPE_DOMAIN(c) 1
@@ -63,18 +65,15 @@
 #define ISSPACE(c) (IN_CTYPE_DOMAIN (c) && isspace (c))
 #define ISALPHA(c) (IN_CTYPE_DOMAIN (c) && isalpha (c))
 #define ISLOWER(c) (IN_CTYPE_DOMAIN (c) && islower (c))
-#define ISDIGIT_LOCALE(c) (IN_CTYPE_DOMAIN (c) && isdigit (c))
 
-/* ISDIGIT differs from ISDIGIT_LOCALE, as follows:
+/* ISDIGIT differs from isdigit, as follows:
    - Its arg may be any int or unsigned int; it need not be an unsigned char.
    - It's guaranteed to evaluate its argument exactly once.
    - It's typically faster.
    POSIX says that only '0' through '9' are digits.  Prefer ISDIGIT to
-   ISDIGIT_LOCALE unless it's important to use the locale's definition
+   isdigit unless it's important to use the locale's definition
    of `digit' even when the host does not conform to POSIX.  */
 #define ISDIGIT(c) ((unsigned int) (c) - '0' <= 9)
-
-#include <string.h>
 
 #if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8) || __STRICT_ANSI__
 # define __attribute__(x)
@@ -167,7 +166,8 @@ static int yyerror (parser_control *, char *);
 
 %}
 
-/* We want a reentrant parser.  */
+/* We want a reentrant parser, even if the TZ manipulation and the calls to
+   localtime and gmtime are not reentrant.  */
 %pure-parser
 %parse-param { parser_control *pc }
 %lex-param { parser_control *pc }
@@ -990,6 +990,51 @@ yyerror (parser_control *pc ATTRIBUTE_UNUSED, char *s ATTRIBUTE_UNUSED)
   return 0;
 }
 
+/* If *TM0 is the old and *TM1 is the new value of a struct tm after
+   passing it to mktime, return true if it's OK that mktime returned T.
+   It's not OK if *TM0 has out-of-range members.  */
+
+static bool
+mktime_ok (struct tm const *tm0, struct tm const *tm1, time_t t)
+{
+  if (t == (time_t) -1)
+    {
+      /* Guard against falsely reporting an error when parsing a time
+	 stamp that happens to equal (time_t) -1, on a host that
+	 supports such a time stamp.  */
+      tm1 = localtime (&t);
+      if (!tm1)
+	return false;
+    }
+
+  return ! ((tm0->tm_sec ^ tm1->tm_sec)
+	    | (tm0->tm_min ^ tm1->tm_min)
+	    | (tm0->tm_hour ^ tm1->tm_hour)
+	    | (tm0->tm_mday ^ tm1->tm_mday)
+	    | (tm0->tm_mon ^ tm1->tm_mon)
+	    | (tm0->tm_year ^ tm1->tm_year));
+}
+
+/* A reasonable upper bound for the size of ordinary TZ strings.
+   Use heap allocation if TZ's length exceeds this.  */
+enum { TZBUFSIZE = 100 };
+
+/* Return a copy of TZ, stored in TZBUF if it fits, and heap-allocated
+   otherwise.  */
+static char *
+get_tz (char tzbuf[TZBUFSIZE])
+{
+  char *tz = getenv ("TZ");
+  if (tz)
+    {
+      size_t tzsize = strlen (tz) + 1;
+      tz = (tzsize <= TZBUFSIZE
+	    ? memcpy (tzbuf, tz, tzsize)
+	    : xmemdup (tz, tzsize));
+    }
+  return tz;
+}
+
 /* Parse a date/time string, storing the resulting time value into *RESULT.
    The string itself is pointed to by P.  Return true if successful.
    P can be an incomplete or relative time specification; if so, use
@@ -1004,6 +1049,11 @@ get_date (struct timespec *result, char const *p, struct timespec const *now)
   struct tm tm0;
   parser_control pc;
   struct timespec gettime_buffer;
+  unsigned char c;
+  bool tz_was_altered = false;
+  char *tz0 = NULL;
+  char tz0buf[TZBUFSIZE];
+  bool ok = true;
 
   if (! now)
     {
@@ -1018,6 +1068,44 @@ get_date (struct timespec *result, char const *p, struct timespec const *now)
   tmp = localtime (&now->tv_sec);
   if (! tmp)
     return false;
+
+  while (c = *p, ISSPACE (c))
+    p++;
+
+  if (strncmp (p, "TZ=\"", 4) == 0)
+    {
+      char const *tzbase = p + 4;
+      size_t tzsize = 1;
+      char const *s;
+      
+      for (s = tzbase; *s; s++, tzsize++)
+	if (*s == '\\')
+	  {
+	    s++;
+	    if (! (*s == '\\' || *s == '"'))
+	      break;
+	  }
+	else if (*s == '"')
+	  {
+	    char *z;
+	    char *tz1;
+	    char tz1buf[TZBUFSIZE];
+	    bool large_tz = TZBUFSIZE < tzsize;
+	    bool setenv_ok;
+	    tz0 = get_tz (tz0buf);
+	    z = tz1 = large_tz ? xmalloc (tzsize) : tz1buf;
+	    for (s = tzbase; *s != '"'; s++)
+	      *z++ = *(s += *s == '\\');
+	    *z = '\0';
+	    setenv_ok = setenv ("TZ", tz1, 1) == 0;
+	    if (large_tz)
+	      free (tz1);
+	    if (!setenv_ok)
+	      goto fail;
+	    tz_was_altered = true;
+	    p = s + 1;
+	  }
+    }
 
   pc.input = p;
   pc.year.value = tmp->tm_year;
@@ -1106,142 +1194,173 @@ get_date (struct timespec *result, char const *p, struct timespec const *now)
     }
 
   if (yyparse (&pc) != 0)
-    return false;
+    goto fail;
 
   if (pc.timespec_seen)
-    {
-      *result = pc.seconds;
-      return true;
-    }
-
-  if (1 < pc.times_seen || 1 < pc.dates_seen || 1 < pc.days_seen
-      || 1 < (pc.local_zones_seen + pc.zones_seen)
-      || (pc.local_zones_seen && 1 < pc.local_isdst))
-    return false;
-
-  tm.tm_year = to_year (pc.year) - TM_YEAR_BASE + pc.rel_year;
-  tm.tm_mon = pc.month - 1 + pc.rel_month;
-  tm.tm_mday = pc.day + pc.rel_day;
-  if (pc.times_seen || (pc.rels_seen && ! pc.dates_seen && ! pc.days_seen))
-    {
-      tm.tm_hour = to_hour (pc.hour, pc.meridian);
-      if (tm.tm_hour < 0)
-	return false;
-      tm.tm_min = pc.minutes;
-      tm.tm_sec = pc.seconds.tv_sec;
-    }
+    *result = pc.seconds;
   else
     {
-      tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
-      pc.seconds.tv_nsec = 0;
-    }
+      if (1 < pc.times_seen || 1 < pc.dates_seen || 1 < pc.days_seen
+	  || 1 < (pc.local_zones_seen + pc.zones_seen)
+	  || (pc.local_zones_seen && 1 < pc.local_isdst))
+	goto fail;
 
-  /* Let mktime deduce tm_isdst if we have an absolute time stamp,
-     or if the relative time stamp mentions days, months, or years.  */
-  if (pc.dates_seen | pc.days_seen | pc.times_seen | pc.rel_day
-      | pc.rel_month | pc.rel_year)
-    tm.tm_isdst = -1;
-
-  /* But if the input explicitly specifies local time with or without
-     DST, give mktime that information.  */
-  if (pc.local_zones_seen)
-    tm.tm_isdst = pc.local_isdst;
-
-  tm0 = tm;
-
-  Start = mktime (&tm);
-
-  if (Start == (time_t) -1)
-    {
-
-      /* Guard against falsely reporting errors near the time_t boundaries
-	 when parsing times in other time zones.  For example, if the min
-	 time_t value is 1970-01-01 00:00:00 UTC and we are 8 hours ahead
-	 of UTC, then the min localtime value is 1970-01-01 08:00:00; if
-	 we apply mktime to 1970-01-01 00:00:00 we will get an error, so
-	 we apply mktime to 1970-01-02 08:00:00 instead and adjust the time
-	 zone by 24 hours to compensate.  This algorithm assumes that
-	 there is no DST transition within a day of the time_t boundaries.  */
-      if (pc.zones_seen)
+      tm.tm_year = to_year (pc.year) - TM_YEAR_BASE;
+      tm.tm_mon = pc.month - 1;
+      tm.tm_mday = pc.day;
+      if (pc.times_seen || (pc.rels_seen && ! pc.dates_seen && ! pc.days_seen))
 	{
-	  tm = tm0;
-	  if (tm.tm_year <= EPOCH_YEAR - TM_YEAR_BASE)
-	    {
-	      tm.tm_mday++;
-	      pc.time_zone += 24 * 60;
-	    }
-	  else
-	    {
-	      tm.tm_mday--;
-	      pc.time_zone -= 24 * 60;
-	    }
-	  Start = mktime (&tm);
+	  tm.tm_hour = to_hour (pc.hour, pc.meridian);
+	  if (tm.tm_hour < 0)
+	    goto fail;
+	  tm.tm_min = pc.minutes;
+	  tm.tm_sec = pc.seconds.tv_sec;
+	}
+      else
+	{
+	  tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
+	  pc.seconds.tv_nsec = 0;
 	}
 
-      if (Start == (time_t) -1)
-	return false;
-    }
+      /* Let mktime deduce tm_isdst if we have an absolute time stamp.  */
+      if (pc.dates_seen | pc.days_seen | pc.times_seen)
+	tm.tm_isdst = -1;
 
-  if (pc.days_seen && ! pc.dates_seen)
-    {
-      tm.tm_mday += ((pc.day_number - tm.tm_wday + 7) % 7
-		     + 7 * (pc.day_ordinal - (0 < pc.day_ordinal)));
-      tm.tm_isdst = -1;
+      /* But if the input explicitly specifies local time with or without
+	 DST, give mktime that information.  */
+      if (pc.local_zones_seen)
+	tm.tm_isdst = pc.local_isdst;
+
+      tm0 = tm;
+
       Start = mktime (&tm);
-      if (Start == (time_t) -1)
-	return false;
-    }
 
-  if (pc.zones_seen)
-    {
-      long int delta = pc.time_zone * 60;
-      time_t t1;
+      if (! mktime_ok (&tm0, &tm, Start))
+	{
+	  if (! pc.zones_seen)
+	    goto fail;
+	  else
+	    {
+	      /* Guard against falsely reporting errors near the time_t
+		 boundaries when parsing times in other time zones.  For
+		 example, suppose the input string "1969-12-31 23:00:00 -0100",
+		 the current time zone is 8 hours ahead of UTC, and the min
+		 time_t value is 1970-01-01 00:00:00 UTC.  Then the min
+		 localtime value is 1970-01-01 08:00:00, and mktime will
+		 therefore fail on 1969-12-31 23:00:00.  To work around the
+		 problem, set the time zone to 1 hour behind UTC temporarily
+		 by setting TZ="XXX1:00" and try mktime again.  */
+
+	      long int time_zone = pc.time_zone;
+	      long int abs_time_zone = time_zone < 0 ? - time_zone : time_zone;
+	      long int abs_time_zone_hour = abs_time_zone / 60;
+	      int abs_time_zone_min = abs_time_zone % 60;
+	      char tz1buf[sizeof "XXX+0:00"
+			  + sizeof pc.time_zone * CHAR_BIT / 3];
+	      if (!tz_was_altered)
+		tz0 = get_tz (tz0buf);
+	      sprintf (tz1buf, "XXX%s%ld:%02d", "-" + (time_zone < 0),
+		       abs_time_zone_hour, abs_time_zone_min);
+	      if (setenv ("TZ", tz1buf, 1) != 0)
+		goto fail;
+	      tz_was_altered = true;
+	      tm = tm0;
+	      Start = mktime (&tm);
+	      if (! mktime_ok (&tm0, &tm, Start))
+		goto fail;
+	    }
+	}
+
+      if (pc.days_seen && ! pc.dates_seen)
+	{
+	  tm.tm_mday += ((pc.day_number - tm.tm_wday + 7) % 7
+			 + 7 * (pc.day_ordinal - (0 < pc.day_ordinal)));
+	  tm.tm_isdst = -1;
+	  Start = mktime (&tm);
+	  if (Start == (time_t) -1)
+	    goto fail;
+	}
+
+      if (pc.zones_seen)
+	{
+	  long int delta = pc.time_zone * 60;
+	  time_t t1;
 #ifdef HAVE_TM_GMTOFF
-      delta -= tm.tm_gmtoff;
+	  delta -= tm.tm_gmtoff;
 #else
-      time_t t = Start;
-      struct tm const *gmt = gmtime (&t);
-      if (! gmt)
-	return false;
-      delta -= tm_diff (&tm, gmt);
+	  time_t t = Start;
+	  struct tm const *gmt = gmtime (&t);
+	  if (! gmt)
+	    goto fail;
+	  delta -= tm_diff (&tm, gmt);
 #endif
-      t1 = Start - delta;
-      if ((Start < t1) != (delta < 0))
-	return false;	/* time_t overflow */
-      Start = t1;
+	  t1 = Start - delta;
+	  if ((Start < t1) != (delta < 0))
+	    goto fail;	/* time_t overflow */
+	  Start = t1;
+	}
+
+      /* Add relative date.  */
+      if (pc.rel_year | pc.rel_month | pc.rel_day)
+	{
+	  int year = tm.tm_year + pc.rel_year;
+	  int month = tm.tm_mon + pc.rel_month;
+	  int day = tm.tm_mday + pc.rel_day;
+	  if (((year < tm.tm_year) ^ (pc.rel_year < 0))
+	      | (month < tm.tm_mon) ^ (pc.rel_month < 0)
+	      | (day < tm.tm_mday) ^ (pc.rel_day < 0))
+	    goto fail;
+	  tm.tm_year = year;
+	  tm.tm_mon = month;
+	  tm.tm_mday = day;
+	  Start = mktime (&tm);
+	  if (Start == (time_t) -1)
+	    goto fail;
+	}
+
+      /* Add relative hours, minutes, and seconds.  On hosts that support
+	 leap seconds, ignore the possibility of leap seconds; e.g.,
+	 "+ 10 minutes" adds 600 seconds, even if one of them is a
+	 leap second.  Typically this is not what the user wants, but it's
+	 too hard to do it the other way, because the time zone indicator
+	 must be applied before relative times, and if mktime is applied
+	 again the time zone will be lost.  */
+      {
+	long int sum_ns = pc.seconds.tv_nsec + pc.rel_ns;
+	long int normalized_ns = (sum_ns % BILLION + BILLION) % BILLION;
+	time_t t0 = Start;
+	long int d1 = 60 * 60 * pc.rel_hour;
+	time_t t1 = t0 + d1;
+	long int d2 = 60 * pc.rel_minutes;
+	time_t t2 = t1 + d2;
+	long int d3 = pc.rel_seconds;
+	time_t t3 = t2 + d3;
+	long int d4 = (sum_ns - normalized_ns) / BILLION;
+	time_t t4 = t3 + d4;
+
+	if ((d1 / (60 * 60) ^ pc.rel_hour)
+	    | (d2 / 60 ^ pc.rel_minutes)
+	    | ((t1 < t0) ^ (d1 < 0))
+	    | ((t2 < t1) ^ (d2 < 0))
+	    | ((t3 < t2) ^ (d3 < 0))
+	    | ((t4 < t3) ^ (d4 < 0)))
+	  goto fail;
+
+	result->tv_sec = t4;
+	result->tv_nsec = normalized_ns;
+      }
     }
 
-  /* Add relative hours, minutes, and seconds.  Ignore leap seconds;
-     i.e. "+ 10 minutes" means 600 seconds, even if one of them is a
-     leap second.  Typically this is not what the user wants, but it's
-     too hard to do it the other way, because the time zone indicator
-     must be applied before relative times, and if mktime is applied
-     again the time zone will be lost.  */
-  {
-    long int sum_ns = pc.seconds.tv_nsec + pc.rel_ns;
-    long int normalized_ns = (sum_ns % BILLION + BILLION) % BILLION;
-    time_t t0 = Start;
-    long int d1 = 60 * 60 * pc.rel_hour;
-    time_t t1 = t0 + d1;
-    long int d2 = 60 * pc.rel_minutes;
-    time_t t2 = t1 + d2;
-    long int d3 = pc.rel_seconds;
-    time_t t3 = t2 + d3;
-    long int d4 = (sum_ns - normalized_ns) / BILLION;
-    time_t t4 = t3 + d4;
+  goto done;
 
-    if ((d1 / (60 * 60) ^ pc.rel_hour)
-	| (d2 / 60 ^ pc.rel_minutes)
-	| ((t1 < t0) ^ (d1 < 0))
-	| ((t2 < t1) ^ (d2 < 0))
-	| ((t3 < t2) ^ (d3 < 0))
-	| ((t4 < t3) ^ (d4 < 0)))
-      return false;
-
-    result->tv_sec = t4;
-    result->tv_nsec = normalized_ns;
-    return true;
-  }
+ fail:
+  ok = false;
+ done:
+  if (tz_was_altered)
+    ok &= (tz0 ? setenv ("TZ", tz0, 1) : unsetenv ("TZ")) == 0;
+  if (tz0 != tz0buf)
+    free (tz0);
+  return ok;
 }
 
 #if TEST
