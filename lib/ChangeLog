@@ -1,4 +1,14 @@
+2004-12-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* c-strtod.c (STRTOD): Depend on HAVE_C99_STRTOLD, not
+        HAVE_DECL_STRTOLD.
+
 2004-12-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* argp-parse.c: Include <stddef.h>.
+	(alignof, alignto): New macros.
+	(parser_init): Don't assume that void * is aligned sufficiently
+	for struct option.
 
 	* getdate.y (YYSTACK_USE_ALLOCA): Define to 0, since there's no
 	need to extend the stack.
