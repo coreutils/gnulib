@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
@@ -308,6 +308,13 @@
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strtoumax">strtoumax</A>
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strtoumax.html">strtoumax</A>() function: convert string to 'uintmax_t'.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#isoc_sup_math">Mathematics &lt;math.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=mathl">mathl</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">C99 functions for transcendental functions with long double arguments.
     </TR>
   </TABLE>
   <H2><A HREF="#isoc_enh">Enhancements for ISO C 99 functions</A></H2>
@@ -1435,6 +1442,30 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP>strtoimax<BR>strtoull
     </TR>
   </TABLE>
+  <H3><A NAME="isoc_sup_math">Mathematics &lt;math.h&gt;</A></H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>modules/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Module
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mathl"></A><A HREF="modules/mathl">mathl</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mathl.h">mathl.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/acosl.c">acosl.c</A><BR><A HREF="lib/asinl.c">asinl.c</A><BR><A HREF="lib/atanl.c">atanl.c</A><BR><A HREF="lib/ceill.c">ceill.c</A><BR><A HREF="lib/cosl.c">cosl.c</A><BR><A HREF="lib/expl.c">expl.c</A><BR><A HREF="lib/floorl.c">floorl.c</A><BR><A HREF="lib/frexpl.c">frexpl.c</A><BR><A HREF="lib/ldexpl.c">ldexpl.c</A><BR><A HREF="lib/logl.c">logl.c</A><BR><A HREF="lib/sincosl.c">sincosl.c</A><BR><A HREF="lib/sinl.c">sinl.c</A><BR><A HREF="lib/sqrtl.c">sqrtl.c</A><BR><A HREF="lib/tanl.c">tanl.c</A><BR><A HREF="lib/trigl.c">trigl.c</A><BR><A HREF="lib/trigl.h">trigl.h</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mathl.m4">mathl.m4</A><BR>gl_FUNC_LONG_DOUBLE_MATH
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
   <H2><A NAME="isoc_enh">Enhancements for ISO C 99 functions</A></H2>
   <TABLE>
     <TR>
@@ -2312,5 +2343,5 @@ variables.
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on 18 February 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 19 February 2003.
 </HTML>
