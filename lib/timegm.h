@@ -1,6 +1,6 @@
 /* Convert UTC calendar time to simple time.  Like mktime but assumes UTC.
 
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,6 +18,6 @@
 
 #include <time.h>
 
-#ifndef HAVE_DECL_TIMEGM
+#if defined HAVE_DECL_TIMEGM && !HAVE_DECL_TIMEGM
 time_t timegm (struct tm *tm);
 #endif
