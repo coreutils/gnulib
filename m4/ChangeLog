@@ -1,3 +1,7 @@
+2003-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* stdbool.m4 (AM_STDBOOL_H): New macro.
+
 2002-12-31  Paul Eggert  <eggert@twinsun.com>
 
 	* memcoll.m4 (gl_MEMCOLL): Require AC_FUNC_MEMCMP.

@@ -1,3 +1,7 @@
+2003-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* stdbool.h.in: New file.
+
 2003-01-08  Bruno Haible  <bruno@clisp.org>
 
 	* safe-read.c: Include specification header first, to ensure its

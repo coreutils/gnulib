@@ -1,5 +1,10 @@
 2003-01-09  Bruno Haible  <bruno@clisp.org>
 
+	* modules/stdbool: Change configure.ac, Makefile.am requirements.
+	Simplify Include requirements.
+
+2003-01-09  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_all_modules): Ignore files ending in ~.
 	* MODULES.html.sh: Likewise.
 

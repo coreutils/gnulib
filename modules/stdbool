@@ -6,24 +6,18 @@ m4/stdbool.m4
 Depends-on:
 
 configure.ac:
-AC_HEADER_STDBOOL
+AM_STDBOOL_H
 
 Makefile.am:
+EXTRA_DIST += stdbool.h.in
+
+# The following is needed in order to create an <stdbool.h> when the system
+# doesn't have one that works.
+all-local: @STDBOOL_H@
+stdbool.h: stdbool.h.in
+	sed -e 's/@''HAVE__BOOL''@/@HAVE__BOOL@/g' < $(srcdir)/stdbool.h.in > stdbool.h
+MOSTLYCLEANFILES += stdbool.h
 
 Include:
-#if HAVE_STDBOOL_H
-# include <stdbool.h>
-#else
-# if ! HAVE__BOOL
-#  ifdef __cplusplus
-typedef bool _Bool;
-#  else
-typedef enum {false = 0, true = 1} _Bool;
-#  endif
-# endif
-# define bool _Bool
-# define false 0
-# define true 1
-# define __bool_true_false_are_defined 1
-#endif
+#include <stdbool.h>
 
