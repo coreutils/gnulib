@@ -1,3 +1,12 @@
+2004-11-23  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
+
+	* argp.m4 (gl_ARGP): Require gl_GETOPT_SUBSTITUTE unconditionally:
+	argp-parse.c depends on getopt internals, that means we should
+	always use our getopt, to be on the safe side.
+	* getopt.m4 (gl_GETOPT): Check if GETOPT_H is already set, in
+	order not to spoil the result of an eventual previous invocation
+	of gl_GETOPT_SUBSTITUTE.
+
 2004-11-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* calloc.m4 (_AC_FUNC_CALLOC_IF): Check for buggy calloc implementations
