@@ -1,3 +1,12 @@
+2004-08-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merge from coreutils.
+	
+	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Check for wmemchr and wmemcpy.
+
+	* obstack.m4 (gl_PREREQ_OBSTACK): Require
+	gl_AC_HEADER_INTTYPES_H, gl_AC_HEADER_STDINT_H, gl_AC_TYPE_UINTMAX_T.
+
 2004-08-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* uint32_t.m4, uintptr_t.m4: New files.
