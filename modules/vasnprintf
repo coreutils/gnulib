@@ -15,6 +15,7 @@ m4/wchar_t.m4
 m4/wint_t.m4
 m4/longlong.m4
 m4/intmax_t.m4
+m4/inttypes_h.m4
 m4/eoverflow.m4
 m4/vasnprintf.m4
 
