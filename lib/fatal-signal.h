@@ -1,5 +1,5 @@
 /* Emergency actions in case of a fatal signal.
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003-2004 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -26,7 +26,12 @@ extern "C" {
    terminates the process, like removing a temporary file or killing a
    subprocess that may be stuck waiting for a device, pipe or network input.
    Such signals are SIGHUP, SIGINT, SIGPIPE, SIGTERM, and possibly others.
-   The limitation of this facility is that it cannot work for SIGKILL.  */
+   The limitation of this facility is that it cannot work for SIGKILL.
+
+   Signals with a SIG_IGN handler are considered to be non-fatal.  The
+   functions in this file assume that when a SIG_IGN handler is installed
+   for a signal, it was installed before any functions in this file were
+   called and it stays so for the whole lifetime of the process.  */
 
 /* Register a cleanup function to be executed when a catchable fatal signal
    occurs.

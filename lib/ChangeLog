@@ -1,3 +1,14 @@
+2004-12-18  Bruno Haible  <bruno@clisp.org>
+
+	* fatal-signal.c (fatal_signals): Make non-const.
+	(init_fatal_signals): New function.
+	(uninstall_handlers, install_handlers): Ignore signals that were set to
+	SIG_IGN.
+	(at_fatal_signal): Call init_fatal_signals.
+	(init_fatal_signal_set): Likewise. Ignore signals that were set to
+	SIG_IGN.
+	Reported by Paul Eggert.
+
 2004-12-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getdate.y (textint): New member "negative".

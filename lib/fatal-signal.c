@@ -1,5 +1,5 @@
 /* Emergency actions in case of a fatal signal.
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003-2004 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -54,7 +54,7 @@
    plus
      SIGXCPU, SIGXFSZ - because they are quite similar to SIGTERM.  */
 
-static const int fatal_signals[] =
+static int fatal_signals[] =
   {
     /* ISO C 99 signals.  */
 #ifdef SIGINT
@@ -81,6 +81,29 @@ static const int fatal_signals[] =
   };
 
 #define num_fatal_signals (SIZEOF (fatal_signals) - 1)
+
+/* Eliminate signals whose signal handler is SIG_IGN.  */
+
+static void
+init_fatal_signals (void)
+{
+  static bool fatal_signals_initialized = false;
+  if (!fatal_signals_initialized)
+    {
+      size_t i;
+
+      for (i = 0; i < num_fatal_signals; i++)
+	{
+	  struct sigaction action;
+
+	  if (sigaction (fatal_signals[i], NULL, &action) >= 0
+	      && action.sa_handler == SIG_IGN)
+	    fatal_signals[i] = -1;
+	}
+
+      fatal_signals_initialized = true;
+    }
+}
 
 
 /* ========================================================================= */
@@ -111,7 +134,8 @@ uninstall_handlers ()
   size_t i;
 
   for (i = 0; i < num_fatal_signals; i++)
-    signal (fatal_signals[i], SIG_DFL);
+    if (fatal_signals[i] >= 0)
+      signal (fatal_signals[i], SIG_DFL);
 }
 
 
@@ -153,7 +177,8 @@ install_handlers ()
   size_t i;
 
   for (i = 0; i < num_fatal_signals; i++)
-    signal (fatal_signals[i], &fatal_signal_handler);
+    if (fatal_signals[i] >= 0)
+      signal (fatal_signals[i], &fatal_signal_handler);
 }
 
 
@@ -165,6 +190,7 @@ at_fatal_signal (action_t action)
   static bool cleanup_initialized = false;
   if (!cleanup_initialized)
     {
+      init_fatal_signals ();
       install_handlers ();
       cleanup_initialized = true;
     }
@@ -211,9 +237,12 @@ init_fatal_signal_set ()
     {
       size_t i;
 
+      init_fatal_signals ();
+
       sigemptyset (&fatal_signal_set);
       for (i = 0; i < num_fatal_signals; i++)
-	sigaddset (&fatal_signal_set, fatal_signals[i]);
+	if (fatal_signals[i] >= 0)
+	  sigaddset (&fatal_signal_set, fatal_signals[i]);
 
       fatal_signal_set_initialized = true;
     }
