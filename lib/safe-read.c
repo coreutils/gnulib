@@ -1,4 +1,4 @@
-/* An interface to read() that retries after interrupts.
+/* An interface to read that retries after interrupts.
    Copyright (C) 1993, 1994, 1998, 2002 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -35,6 +35,22 @@ extern int errno;
 
 #include <limits.h>
 
+#ifndef CHAR_BIT
+# define CHAR_BIT 8
+#endif
+
+/* The extra casts work around common compiler bugs.  */
+#define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
+/* The outer cast is needed to work around a bug in Cray C 5.0.3.0.
+   It is necessary at least when t == time_t.  */
+#define TYPE_MINIMUM(t) ((t) (TYPE_SIGNED (t) \
+			      ? ~ (t) 0 << (sizeof (t) * CHAR_BIT - 1) : (t) 0))
+#define TYPE_MAXIMUM(t) ((t) (~ (t) 0 - TYPE_MINIMUM (t)))
+
+#ifndef INT_MAX
+# define INT_MAX TYPE_MAXIMUM (int)
+#endif
+
 /* We don't pass an nbytes count > SSIZE_MAX to read() - POSIX says the
    effect would be implementation-defined.  Also we don't pass an nbytes
    count > INT_MAX but <= SSIZE_MAX to read() - this triggers a bug in
@@ -42,41 +58,39 @@ extern int errno;
 #define MAX_BYTES_TO_READ INT_MAX
 
 /* Read up to COUNT bytes at BUF from descriptor FD, retrying if interrupted.
-   Return the actual number of bytes read, zero for EOF, or (size_t) -1
-   for an error.  */
+   Return the actual number of bytes read, zero for EOF, or SAFE_READ_ERROR
+   upon error.  */
 size_t
 safe_read (int fd, void *buf, size_t count)
 {
   size_t total_read = 0;
+  char *ptr = buf;
 
-  if (count > 0)
+  while (count > 0)
     {
-      char *ptr = (char *) buf;
-      do
+      size_t nbytes_to_read = count;
+      ssize_t result;
+
+      /* Limit the number of bytes to read in one round, to avoid running
+	 into unspecified behaviour.  But keep the file pointer block
+	 aligned when doing so.  */
+      if (nbytes_to_read > MAX_BYTES_TO_READ)
+	nbytes_to_read = MAX_BYTES_TO_READ & ~8191;
+
+      result = read (fd, ptr, nbytes_to_read);
+      if (result == 0)
+	break;
+      if (result < 0)
 	{
-	  size_t nbytes_to_read = count;
-	  ssize_t result;
-
-	  /* Limit the number of bytes to read in one round, to avoid running
-	     into unspecified behaviour.  But keep the file pointer block
-	     aligned when doing so.  */
-	  if (nbytes_to_read > MAX_BYTES_TO_READ)
-	    nbytes_to_read = MAX_BYTES_TO_READ & ~8191;
-
-	  result = read (fd, ptr, nbytes_to_read);
-	  if (result < 0)
-	    {
 #ifdef EINTR
-	      if (errno == EINTR)
-		continue;
+	  if (errno == EINTR)
+	    continue;
 #endif
-	      return result;
-	    }
-	  total_read += result;
-	  ptr += result;
-	  count -= result;
+	  return SAFE_READ_ERROR;
 	}
-      while (count > 0);
+      total_read += result;
+      ptr += result;
+      count -= result;
     }
 
   return total_read;
