@@ -1,5 +1,7 @@
 2002-12-06  Jim Meyering  <jim@meyering.net>
 
+	* error.c: Be consistent: change `#ifndef _LIBC' to `#if !_LIBC'.
+
 	Merge in changes from libc's misc/error.c, in preparation
 	for the merge of gnulib's changes back into libc.
 
