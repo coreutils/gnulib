@@ -1,5 +1,11 @@
 2003-01-11  Bruno Haible  <bruno@clisp.org>
 
+	* longlong.m4 (jm_AC_TYPE_LONG_LONG): Also test the LL suffix.
+	* ulonglong.m4 (jm_AC_TYPE_UNSIGNED_LONG_LONG): Also test the ULL
+	suffix.
+
+2003-01-11  Bruno Haible  <bruno@clisp.org>
+
 	* md5.m4 (gl_MD5): Require AC_C_INLINE.
 
 2003-01-11  Bruno Haible  <bruno@clisp.org>
