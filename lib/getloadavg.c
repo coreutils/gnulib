@@ -1,6 +1,9 @@
 /* Get the system load averages.
-   Copyright (C) 1985, 86, 87, 88, 89, 91, 92, 93, 1994, 1995, 1997
+   Copyright (C) 1985, 86, 87, 88, 89, 91, 92, 93, 1994, 1995, 1997, 2003
    	Free Software Foundation, Inc.
+
+   NOTE: The canonical source of this file is maintained with gnulib.
+   Bugs can be reported to bug-gnulib@gnu.org.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,12 +38,17 @@
    LOAD_AVE_TYPE		Type of the load average array in the kernel.
 				Must be defined unless one of
 				apollo, DGUX, NeXT, or UMAX is defined;
+                                or we have libkstat;
 				otherwise, no load average is available.
+   HAVE_NLIST_H                 nlist.h is available.  NLIST_STRUCT defaults
+                                to this.
    NLIST_STRUCT			Include nlist.h, not a.out.h, and
 				the nlist n_name element is a pointer,
 				not an array.
-   NLIST_NAME_UNION		struct nlist has an n_un member, not n_name.
+   HAVE_STRUCT_NLIST_N_UN_N_NAME `n_un.n_name' is member of `struct nlist'.
    LINUX_LDAV_FILE		[__linux__]: File containing load averages.
+   HAVE_LOCALE_H                locale.h is available.
+   HAVE_SETLOCALE               The `setlocale' function is available.
 
    Specific system predefines this file uses, aside from setting
    default values if not emacs:
@@ -81,7 +89,7 @@
 /* Both the Emacs and non-Emacs sections want this.  Some
    configuration files' definitions for the LOAD_AVE_CVT macro (like
    sparc.h's) use macros like FSCALE, defined here.  */
-#ifdef unix
+#if defined (unix) || defined (__unix)
 # include <sys/param.h>
 #endif
 
@@ -98,10 +106,10 @@
 extern int errno;
 #endif
 
-#if HAVE_LOCALE_H
+#ifdef HAVE_LOCALE_H
 # include <locale.h>
 #endif
-#if !HAVE_SETLOCALE
+#ifndef HAVE_SETLOCALE
 # define setlocale(Category, Locale) /* empty */
 #endif
 
@@ -136,6 +144,12 @@ extern int errno;
    defined to mean that the nlist method should be used, which is not true.  */
 #  undef FSCALE
 # endif
+
+/* Same issues as for NeXT apply to the HURD-based GNU system.  */
+# ifdef __GNU__
+#  undef BSD
+#  undef FSCALE
+# endif /* __GNU__ */
 
 /* Set values that are different from the defaults, which are
    set a little farther down with #ifndef.  */
@@ -314,68 +328,6 @@ extern int errno;
 #  endif
 # endif
 
-/* VAX C can't handle multi-line #ifs, or lines longer that 256 characters.  */
-# ifndef NLIST_STRUCT
-
-#  ifdef MORE_BSD
-#   define NLIST_STRUCT
-#  endif
-
-#  ifdef sun
-#   define NLIST_STRUCT
-#  endif
-
-#  ifdef decstation
-#   define NLIST_STRUCT
-#  endif
-
-#  ifdef hpux
-#   define NLIST_STRUCT
-#  endif
-
-#  if defined (_SEQUENT_) || defined (sequent)
-#   define NLIST_STRUCT
-#  endif
-
-#  ifdef sgi
-#   define NLIST_STRUCT
-#  endif
-
-#  ifdef SVR4
-#   define NLIST_STRUCT
-#  endif
-
-#  ifdef sony_news
-#   define NLIST_STRUCT
-#  endif
-
-#  ifdef OSF_ALPHA
-#   define NLIST_STRUCT
-#  endif
-
-#  if defined (ardent) && defined (titan)
-#   define NLIST_STRUCT
-#  endif
-
-#  ifdef tek4300
-#   define NLIST_STRUCT
-#  endif
-
-#  ifdef butterfly
-#   define NLIST_STRUCT
-#  endif
-
-#  if defined(alliant) && defined(i860) /* Alliant FX/2800 */
-#   define NLIST_STRUCT
-#  endif
-
-#  ifdef _AIX
-#   define NLIST_STRUCT
-#  endif
-
-# endif /* defined (NLIST_STRUCT) */
-
-
 # if defined(sgi) || (defined(mips) && !defined(BSD))
 #  define FIXUP_KERNEL_SYMBOL_ADDR(nl) ((nl)[0].n_value &= ~(1 << 31))
 # endif
@@ -528,7 +480,7 @@ static unsigned int samples;
 static struct dg_sys_info_load_info load_info;	/* what-a-mouthful! */
 # endif /* DGUX */
 
-# ifdef LOAD_AVE_TYPE
+#if !defined(HAVE_LIBKSTAT) && defined(LOAD_AVE_TYPE)
 /* File descriptor open to /dev/kmem or VMS load ave driver.  */
 static int channel;
 /* Nonzero iff channel is valid.  */
@@ -544,7 +496,7 @@ static struct nlist nl[2];
 static kvm_t *kd;
 #  endif /* SUNOS_5 */
 
-# endif /* LOAD_AVE_TYPE */
+#endif /* LOAD_AVE_TYPE && !HAVE_LIBKSTAT */
 
 /* Put the 1 minute, 5 minute and 15 minute load averages
    into the first NELEM elements of LOADAVG.
@@ -930,13 +882,13 @@ getloadavg (loadavg, nelem)
       strcpy (nl[0].n_name, LDAV_SYMBOL);
       strcpy (nl[1].n_name, "");
 #   else /* NLIST_STRUCT */
-#    ifdef NLIST_NAME_UNION
+#    ifdef HAVE_STRUCT_NLIST_N_UN_N_NAME
       nl[0].n_un.n_name = LDAV_SYMBOL;
       nl[1].n_un.n_name = 0;
-#    else /* not NLIST_NAME_UNION */
+#    else /* not HAVE_STRUCT_NLIST_N_UN_N_NAME */
       nl[0].n_name = LDAV_SYMBOL;
       nl[1].n_name = 0;
-#    endif /* not NLIST_NAME_UNION */
+#    endif /* not HAVE_STRUCT_NLIST_N_UN_N_NAME */
 #   endif /* NLIST_STRUCT */
 
 #   ifndef SUNOS_5
@@ -973,7 +925,7 @@ getloadavg (loadavg, nelem)
 	{
 	  /* Set the channel to close on exec, so it does not
 	     litter any child's descriptor table.  */
-#   ifdef FD_SETFD
+#   ifdef F_SETFD
 #    ifndef FD_CLOEXEC
 #     define FD_CLOEXEC 1
 #    endif
