@@ -21,16 +21,9 @@
 # include <config.h>
 #endif
 
-#include <sys/types.h>
+#include "xalloc.h"
 
-#if STDC_HEADERS
-# include <stdlib.h>
-#else
-void *calloc ();
-void *malloc ();
-void *realloc ();
-void free ();
-#endif
+#include <stdlib.h>
 
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
@@ -38,7 +31,6 @@ void free ();
 
 #include "error.h"
 #include "exitfail.h"
-#include "xalloc.h"
 
 #ifndef EXIT_FAILURE
 # define EXIT_FAILURE 1

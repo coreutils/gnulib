@@ -285,7 +285,7 @@ set_program_name_and_installdir (const char *argv0,
 /* Return the full pathname of the current executable, based on the earlier
    call to set_program_name_and_installdir.  Return NULL if unknown.  */
 char *
-get_full_program_name ()
+get_full_program_name (void)
 {
   return executable_fullname;
 }

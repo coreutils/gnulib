@@ -27,12 +27,6 @@
 /* Specification.  */
 #include "stpncpy.h"
 
-#ifdef _LIBC
-# include <string.h>
-#else
-# include <sys/types.h>
-#endif
-
 #ifndef weak_alias
 # define __stpncpy stpncpy
 #endif
