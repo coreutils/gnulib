@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.30 2003-11-18 13:43:51 karl Exp $
+# $Id: srclist.txt,v 1.31 2003-12-24 13:07:08 uid65818 Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -19,12 +19,11 @@ $GNUORG/fdl.texi		doc
 
 $GETTEXT/gettext-runtime/libasprintf/asnprintf.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/asprintf.c		lib gpl
-#$GETTEXT/gettext-runtime/libasprintf/printf-args.c	lib gpl
-#$GETTEXT/gettext-runtime/libasprintf/printf-args.h	lib gpl
-#$GETTEXT/gettext-runtime/libasprintf/printf-parse.c	lib gpl
-#$GETTEXT/gettext-runtime/libasprintf/printf-parse.h	lib gpl
-# put back after next gettext release --12aug03.
-#$GETTEXT/gettext-runtime/libasprintf/vasnprintf.c	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/printf-args.c	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/printf-args.h	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/printf-parse.c	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/printf-parse.h	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/vasnprintf.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/vasnprintf.h	lib gpl
 #$GETTEXT/gettext-runtime/libasprintf/vasprintf.c	lib gpl
 # Ugly: we currently need to take vasprintf.h from the wrong directory.

@@ -85,6 +85,12 @@
 # define S_IXUSR 00100
 #endif
 
+#ifdef __MINGW32__
+/* mingw's mkdir() function has 1 argument, but we pass 2 arguments.
+   Therefore we have to disable the argument count checking.  */
+# define mkdir ((int (*)()) mkdir)
+#endif
+
 #if !_LIBC
 # define __getpid getpid
 # define __gettimeofday gettimeofday

@@ -120,6 +120,105 @@ echo "# It was automatically generated from config.charset."
 # List of references, updated during installation:
 echo "# Packages using this file: "
 case "$os" in
+    linux-gnulibc1*)
+	# Linux libc5 doesn't have nl_langinfo(CODESET); therefore
+	# localcharset.c falls back to using the full locale name
+	# from the environment variables.
+	echo "C ASCII"
+	echo "POSIX ASCII"
+	for l in af af_ZA ca ca_ES da da_DK de de_AT de_BE de_CH de_DE de_LU \
+	         en en_AU en_BW en_CA en_DK en_GB en_IE en_NZ en_US en_ZA \
+	         en_ZW es es_AR es_BO es_CL es_CO es_DO es_EC es_ES es_GT \
+	         es_HN es_MX es_PA es_PE es_PY es_SV es_US es_UY es_VE et \
+	         et_EE eu eu_ES fi fi_FI fo fo_FO fr fr_BE fr_CA fr_CH fr_FR \
+	         fr_LU ga ga_IE gl gl_ES id id_ID in in_ID is is_IS it it_CH \
+	         it_IT kl kl_GL nl nl_BE nl_NL no no_NO pt pt_BR pt_PT sv \
+	         sv_FI sv_SE; do
+	  echo "$l ISO-8859-1"
+	  echo "$l.iso-8859-1 ISO-8859-1"
+	  echo "$l.iso-8859-15 ISO-8859-15"
+	  echo "$l.iso-8859-15@euro ISO-8859-15"
+	  echo "$l@euro ISO-8859-15"
+	  echo "$l.cp-437 CP437"
+	  echo "$l.cp-850 CP850"
+	  echo "$l.cp-1252 CP1252"
+	  echo "$l.cp-1252@euro CP1252"
+	  #echo "$l.atari-st ATARI-ST" # not a commonly used encoding
+	  echo "$l.utf-8 UTF-8"
+	  echo "$l.utf-8@euro UTF-8"
+	done
+	for l in cs cs_CZ hr hr_HR hu hu_HU pl pl_PL ro ro_RO sk sk_SK sl \
+	         sl_SI sr sr_CS sr_YU; do
+	  echo "$l ISO-8859-2"
+	  echo "$l.iso-8859-2 ISO-8859-2"
+	  echo "$l.cp-852 CP852"
+	  echo "$l.cp-1250 CP1250"
+	  echo "$l.utf-8 UTF-8"
+	done
+	for l in mk mk_MK ru ru_RU; do
+	  echo "$l ISO-8859-5"
+	  echo "$l.iso-8859-5 ISO-8859-5"
+	  echo "$l.koi8-r KOI8-R"
+	  echo "$l.cp-866 CP866"
+	  echo "$l.cp-1251 CP1251"
+	  echo "$l.utf-8 UTF-8"
+	done
+	for l in ar ar_SA; do
+	  echo "$l ISO-8859-6"
+	  echo "$l.iso-8859-6 ISO-8859-6"
+	  echo "$l.cp-864 CP864"
+	  #echo "$l.cp-868 CP868" # not a commonly used encoding
+	  echo "$l.cp-1256 CP1256"
+	  echo "$l.utf-8 UTF-8"
+	done
+	for l in el el_GR gr gr_GR; do
+	  echo "$l ISO-8859-7"
+	  echo "$l.iso-8859-7 ISO-8859-7"
+	  echo "$l.cp-869 CP869"
+	  echo "$l.cp-1253 CP1253"
+	  echo "$l.cp-1253@euro CP1253"
+	  echo "$l.utf-8 UTF-8"
+	  echo "$l.utf-8@euro UTF-8"
+	done
+	for l in he he_IL iw iw_IL; do
+	  echo "$l ISO-8859-8"
+	  echo "$l.iso-8859-8 ISO-8859-8"
+	  echo "$l.cp-862 CP862"
+	  echo "$l.cp-1255 CP1255"
+	  echo "$l.utf-8 UTF-8"
+	done
+	for l in tr tr_TR; do
+	  echo "$l ISO-8859-9"
+	  echo "$l.iso-8859-9 ISO-8859-9"
+	  echo "$l.cp-857 CP857"
+	  echo "$l.cp-1254 CP1254"
+	  echo "$l.utf-8 UTF-8"
+	done
+	for l in lt lt_LT lv lv_LV; do
+	  #echo "$l BALTIC" # not a commonly used encoding, wrong encoding name
+	  echo "$l ISO-8859-13"
+	done
+	for l in ru_UA uk uk_UA; do
+	  echo "$l KOI8-U"
+	done
+	for l in zh zh_CN; do
+	  #echo "$l GB_2312-80" # not a commonly used encoding, wrong encoding name
+	  echo "$l GB2312"
+	done
+	for l in ja ja_JP ja_JP.EUC; do
+	  echo "$l EUC-JP"
+	done
+	for l in ko ko_KR; do
+	  echo "$l EUC-KR"
+	done
+	for l in th th_TH; do
+	  echo "$l TIS-620"
+	done
+	for l in fa fa_IR; do
+	  #echo "$l ISIRI-3342" # a broken encoding
+	  echo "$l.utf-8 UTF-8"
+	done
+	;;
     linux* | *-gnu*)
 	# With glibc-2.1 or newer, we don't need any canonicalization,
 	# because glibc has iconv and both glibc and libiconv support all
@@ -409,6 +508,7 @@ case "$os" in
 	echo "sq CP852"
 	echo "sq_AL CP852"
 	echo "sr CP852"    # CP852 or CP866 or CP855 ??
+	echo "sr_CS CP852" # CP852 or CP866 or CP855 ??
 	echo "sr_YU CP852" # CP852 or CP866 or CP855 ??
 	# ISO-8859-3 languages
 	echo "mt CP850"
