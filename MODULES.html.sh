@@ -1461,6 +1461,7 @@ func_all_modules ()
   func_module xalloc
   func_module alloca
   func_module allocsa
+  func_module xallocsa
   func_end_table
 
   element="Integer arithmetic functions <stdlib.h>"
