@@ -15,7 +15,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-/* Written by Jim Meyering <meyering@na-net.ornl.gov>.  */
+/* Written by Jim Meyering.  */
 
 #if HAVE_CONFIG_H
 # include "config.h"
@@ -47,9 +47,7 @@ extern int errno;
 #endif
 
 #include "save-cwd.h"
-#include "error.h"
-
-char *xgetcwd (void);
+#include "xgetcwd.h"
 
 /* Record the location of the current working directory in CWD so that
    the program may change to other directories and later use restore_cwd
@@ -58,7 +56,15 @@ char *xgetcwd (void);
    use free_cwd to perform the necessary free or close.  Upon failure,
    no memory is allocated, any locally opened file descriptors are
    closed;  return non-zero -- in that case, free_cwd need not be
-   called, but doing so is ok.  Otherwise, return zero.  */
+   called, but doing so is ok.  Otherwise, return zero.
+
+   The `raison d'etre' for this interface is that some systems lack
+   support for fchdir, and getcwd is not robust or as efficient.
+   So, we prefer to use the open/fchdir approach, but fall back on
+   getcwd if necessary.  Some systems lack fchdir altogether: OS/2,
+   Cygwin (as of March 2003), SCO Xenix.  At least SunOS4 and Irix 5.3
+   provide the function, yet it doesn't work for partitions on which
+   auditing is enabled.  */
 
 int
 save_cwd (struct saved_cwd *cwd)
@@ -73,14 +79,11 @@ save_cwd (struct saved_cwd *cwd)
 #if HAVE_FCHDIR
       cwd->desc = open (".", O_RDONLY | O_DIRECTORY);
       if (cwd->desc < 0)
-	{
-	  error (0, errno, "cannot open current directory");
-	  return 1;
-	}
+	return 1;
 
 # if __sun__ || sun
-      /* On SunOS 4, fchdir returns EINVAL if accounting is enabled,
-	 so we have to fall back to chdir.  */
+      /* On SunOS 4 and IRIX 5.3, fchdir returns EINVAL when auditing
+	 is enabled, so we have to fall back to chdir.  */
       if (fchdir (cwd->desc))
 	{
 	  if (errno == EINVAL)
@@ -91,9 +94,10 @@ save_cwd (struct saved_cwd *cwd)
 	    }
 	  else
 	    {
-	      error (0, errno, "current directory");
+	      int saved_errno = errno;
 	      close (cwd->desc);
 	      cwd->desc = -1;
+	      errno = saved_errno;
 	      return 1;
 	    }
 	}
@@ -108,39 +112,22 @@ save_cwd (struct saved_cwd *cwd)
     {
       cwd->name = xgetcwd ();
       if (cwd->name == NULL)
-	{
-	  error (0, errno, "cannot get current directory");
-	  return 1;
-	}
+	return 1;
     }
   return 0;
 }
 
 /* Change to recorded location, CWD, in directory hierarchy.
-   If "saved working directory", NULL))
-   */
+   Upon failure, return nonzero (errno is set by chdir or fchdir).
+   Upon success, return zero.  */
 
 int
-restore_cwd (const struct saved_cwd *cwd, const char *dest, const char *from)
+restore_cwd (const struct saved_cwd *cwd)
 {
-  int fail = 0;
-  if (cwd->desc >= 0)
-    {
-      if (fchdir (cwd->desc))
-	{
-	  error (0, errno, "cannot return to %s%s%s",
-		 (dest ? dest : "saved working directory"),
-		 (from ? " from " : ""),
-		 (from ? from : ""));
-	  fail = 1;
-	}
-    }
-  else if (chdir (cwd->name) < 0)
-    {
-      error (0, errno, "%s", cwd->name);
-      fail = 1;
-    }
-  return fail;
+  if (0 <= cwd->desc)
+    return fchdir (cwd->desc) < 0;
+  else
+    return chdir (cwd->name) < 0;
 }
 
 void
