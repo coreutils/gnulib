@@ -29,6 +29,9 @@
 /* Get size_t, NULL.  */
 #include <stddef.h>
 
+/* Get ssize_t.  */
+#include <sys/types.h>
+
 /* Get intmax_t.  */
 #if HAVE_STDINT_H_WITH_UINTMAX
 # include <stdint.h>
@@ -39,6 +42,13 @@
 
 /* malloc(), realloc(), free().  */
 #include <stdlib.h>
+
+/* Checked size_t computations.  */
+#include "xsize.h"
+
+#ifndef SSIZE_MAX
+# define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
+#endif
 
 #if WIDE_CHAR_VERSION
 # define PRINTF_PARSE wprintf_parse
@@ -59,11 +69,11 @@ int
 PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 {
   const CHAR_T *cp = format;		/* pointer into format */
-  int arg_posn = 0;		/* number of regular arguments consumed */
-  unsigned int d_allocated;		/* allocated elements of d->dir */
-  unsigned int a_allocated;		/* allocated elements of a->arg */
-  unsigned int max_width_length = 0;
-  unsigned int max_precision_length = 0;
+  ssize_t arg_posn = 0;		/* number of regular arguments consumed */
+  size_t d_allocated;			/* allocated elements of d->dir */
+  size_t a_allocated;			/* allocated elements of a->arg */
+  size_t max_width_length = 0;
+  size_t max_precision_length = 0;
 
   d->count = 0;
   d_allocated = 1;
@@ -78,16 +88,22 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 
 #define REGISTER_ARG(_index_,_type_) \
   {									\
-    unsigned int n = (_index_);						\
+    size_t n = (_index_);						\
     if (n >= a_allocated)						\
       {									\
+	size_t memory_size;						\
 	argument *memory;						\
-	a_allocated = 2 * a_allocated;					\
+									\
+	a_allocated = xtimes (a_allocated, 2);				\
 	if (a_allocated <= n)						\
-	  a_allocated = n + 1;						\
+	  a_allocated = xsum (n, 1);					\
+	memory_size = xtimes (a_allocated, sizeof (argument));		\
+	if (size_overflow_p (memory_size))				\
+	  /* Overflow, would lead to out of memory.  */			\
+	  goto error;							\
 	memory = (a->arg						\
-		  ? realloc (a->arg, a_allocated * sizeof (argument))	\
-		  : malloc (a_allocated * sizeof (argument)));		\
+		  ? realloc (a->arg, memory_size)			\
+		  : malloc (memory_size));				\
 	if (memory == NULL)						\
 	  /* Out of memory.  */						\
 	  goto error;							\
@@ -107,7 +123,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
       CHAR_T c = *cp++;
       if (c == '%')
 	{
-	  int arg_index = -1;
+	  ssize_t arg_index = -1;
 	  DIRECTIVE *dp = &d->dir[d->count];/* pointer to next directive */
 
 	  /* Initialize the next directive.  */
@@ -130,12 +146,15 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		;
 	      if (*np == '$')
 		{
-		  unsigned int n = 0;
+		  size_t n = 0;
 
 		  for (np = cp; *np >= '0' && *np <= '9'; np++)
-		    n = 10 * n + (*np - '0');
+		    n = xsum (xtimes (n, 10), *np - '0');
 		  if (n == 0)
 		    /* Positional argument 0.  */
+		    goto error;
+		  if (size_overflow_p (n) || n - 1 > SSIZE_MAX)
+		    /* n too large, would lead to out of memory later.  */
 		    goto error;
 		  arg_index = n - 1;
 		  cp = np + 1;
@@ -197,24 +216,32 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		    ;
 		  if (*np == '$')
 		    {
-		      unsigned int n = 0;
+		      size_t n = 0;
 
 		      for (np = cp; *np >= '0' && *np <= '9'; np++)
-			n = 10 * n + (*np - '0');
+			n = xsum (xtimes (n, 10), *np - '0');
 		      if (n == 0)
 			/* Positional argument 0.  */
+			goto error;
+		      if (size_overflow_p (n) || n - 1 > SSIZE_MAX)
+			/* n too large, would lead to out of memory later.  */
 			goto error;
 		      dp->width_arg_index = n - 1;
 		      cp = np + 1;
 		    }
 		}
 	      if (dp->width_arg_index < 0)
-		dp->width_arg_index = arg_posn++;
+		{
+		  dp->width_arg_index = arg_posn++;
+		  if (dp->width_arg_index < 0)
+		    /* arg_posn wrapped around at SSIZE_MAX.  */
+		    goto error;
+		}
 	      REGISTER_ARG (dp->width_arg_index, TYPE_INT);
 	    }
 	  else if (*cp >= '0' && *cp <= '9')
 	    {
-	      unsigned int width_length;
+	      size_t width_length;
 
 	      dp->width_start = cp;
 	      for (; *cp >= '0' && *cp <= '9'; cp++)
@@ -246,24 +273,33 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 			;
 		      if (*np == '$')
 			{
-			  unsigned int n = 0;
+			  size_t n = 0;
 
 			  for (np = cp; *np >= '0' && *np <= '9'; np++)
-			    n = 10 * n + (*np - '0');
+			    n = xsum (xtimes (n, 10), *np - '0');
 			  if (n == 0)
 			    /* Positional argument 0.  */
+			    goto error;
+			  if (size_overflow_p (n) || n - 1 > SSIZE_MAX)
+			    /* n too large, would lead to out of memory
+			       later.  */
 			    goto error;
 			  dp->precision_arg_index = n - 1;
 			  cp = np + 1;
 			}
 		    }
 		  if (dp->precision_arg_index < 0)
-		    dp->precision_arg_index = arg_posn++;
+		    {
+		      dp->precision_arg_index = arg_posn++;
+		      if (dp->precision_arg_index < 0)
+			/* arg_posn wrapped around at SSIZE_MAX.  */
+			goto error;
+		    }
 		  REGISTER_ARG (dp->precision_arg_index, TYPE_INT);
 		}
 	      else
 		{
-		  unsigned int precision_length;
+		  size_t precision_length;
 
 		  dp->precision_start = cp - 1;
 		  for (; *cp >= '0' && *cp <= '9'; cp++)
@@ -456,7 +492,12 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 	      {
 		dp->arg_index = arg_index;
 		if (dp->arg_index < 0)
-		  dp->arg_index = arg_posn++;
+		  {
+		    dp->arg_index = arg_posn++;
+		    if (dp->arg_index < 0)
+		      /* arg_posn wrapped around at SSIZE_MAX.  */
+		      goto error;
+		  }
 		REGISTER_ARG (dp->arg_index, type);
 	      }
 	    dp->conversion = c;
@@ -466,10 +507,18 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 	  d->count++;
 	  if (d->count >= d_allocated)
 	    {
+	      size_t memory_size;
 	      DIRECTIVE *memory;
 
-	      d_allocated = 2 * d_allocated;
-	      memory = realloc (d->dir, d_allocated * sizeof (DIRECTIVE));
+	      d_allocated = xtimes (d_allocated, 2);
+	      if (size_overflow_p (d_allocated))
+		/* Overflow, would lead to out of memory.  */
+		goto error;
+	      memory_size = xtimes (d_allocated, sizeof (DIRECTIVE));
+	      if (size_overflow_p (memory_size))
+		/* Overflow, would lead to out of memory.  */
+		goto error;
+	      memory = realloc (d->dir, memory_size);
 	      if (memory == NULL)
 		/* Out of memory.  */
 		goto error;

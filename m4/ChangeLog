@@ -1,3 +1,7 @@
+2003-11-17  Bruno Haible  <bruno@clisp.org>
+
+	* vasnprintf.m4 (gl_PREREQ_PRINTF_PARSE): Require gt_TYPE_SSIZE_T.
+
 2003-11-12  Paul Eggert  <eggert@twinsun.com>
 
 	* xalloc.m4 (gl_PREREQ_XALLOC): Do not require gl_SIZE_MAX or
@@ -8,7 +12,7 @@
 	* size_max.m4: New file.
 	* ptrdiff_max.m4: New file.
 	* xsize,m4 (gl_XSIZE): Require gl_SIZE_MAX.
-	* xalloc.m4 (gl_PREREQ_XALLOC): New file.
+	* xalloc.m4 (gl_PREREQ_XALLOC): New macro.
 	(gl_XALLOC): Invoke it.
 
 2003-11-04  Bruno Haible  <bruno@clisp.org>

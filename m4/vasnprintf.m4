@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 2
+# vasnprintf.m4 serial 3
 dnl Copyright (C) 2002-2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -38,6 +38,7 @@ AC_DEFUN([gl_PREREQ_PRINTF_PARSE],
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   AC_REQUIRE([AC_TYPE_SIZE_T])
+  AC_REQUIRE([gt_TYPE_SSIZE_T])
   AC_CHECK_TYPES(ptrdiff_t)
   AC_REQUIRE([gt_AC_TYPE_INTMAX_T])
 ])

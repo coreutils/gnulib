@@ -1,3 +1,8 @@
+2003-11-17  Bruno Haible  <bruno@clisp.org>
+
+	* modules/vasnprintf (Files): Add m4/ssize_t.m4.
+	(Depends-on): Add xsize.
+
 2003-11-12  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/xalloc (Files): Undo latest change, since xalloc.h

@@ -15,10 +15,12 @@ m4/wchar_t.m4
 m4/wint_t.m4
 m4/longlong.m4
 m4/intmax_t.m4
+m4/ssize_t.m4
 m4/vasnprintf.m4
 
 Depends-on:
 alloca
+xsize
 
 configure.ac:
 gl_FUNC_VASNPRINTF

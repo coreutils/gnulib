@@ -48,6 +48,9 @@
 # include "printf-parse.h"
 #endif
 
+/* Checked size_t computations.  */
+#include "xsize.h"
+
 /* For those losing systems which don't have 'alloca' we have to add
    some additional code emulating it.  */
 #ifdef HAVE_ALLOCA
@@ -136,11 +139,12 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
     }
 
   {
+    size_t buf_neededlength =
+      xsum4 (7, d.max_width_length, d.max_precision_length, 6);
     CHAR_T *buf =
-      (CHAR_T *) alloca ((7 + d.max_width_length + d.max_precision_length + 6)
-			 * sizeof (CHAR_T));
+      (CHAR_T *) alloca (xtimes (buf_neededlength, sizeof (CHAR_T)));
     const CHAR_T *cp;
-    unsigned int i;
+    size_t i;
     DIRECTIVE *dp;
     /* Output string accumulator.  */
     CHAR_T *result;
@@ -162,28 +166,26 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
        result is either == resultbuf or == NULL or malloc-allocated.
        If length > 0, then result != NULL.  */
 
+    /* Ensures that allocated >= needed.  Aborts through a jump to
+       out_of_memory if needed is SIZE_MAX or otherwise too big.  */
 #define ENSURE_ALLOCATION(needed) \
     if ((needed) > allocated)						     \
       {									     \
+	size_t memory_size;						     \
 	CHAR_T *memory;							     \
 									     \
-	allocated = (allocated > 0 ? 2 * allocated : 12);		     \
+	allocated = (allocated > 0 ? xtimes (allocated, 2) : 12);	     \
 	if ((needed) > allocated)					     \
 	  allocated = (needed);						     \
+	memory_size = xtimes (allocated, sizeof (CHAR_T));		     \
+	if (size_overflow_p (memory_size))				     \
+	  goto out_of_memory;						     \
 	if (result == resultbuf || result == NULL)			     \
-	  memory = (CHAR_T *) malloc (allocated * sizeof (CHAR_T));	     \
+	  memory = (CHAR_T *) malloc (memory_size);			     \
 	else								     \
-	  memory = (CHAR_T *) realloc (result, allocated * sizeof (CHAR_T)); \
-									     \
+	  memory = (CHAR_T *) realloc (result, memory_size);		     \
 	if (memory == NULL)						     \
-	  {								     \
-	    if (!(result == resultbuf || result == NULL))		     \
-	      free (result);						     \
-	    freea (buf);						     \
-	    CLEANUP ();							     \
-	    errno = ENOMEM;						     \
-	    return NULL;						     \
-	  }								     \
+	  goto out_of_memory;						     \
 	if (result == resultbuf && length > 0)				     \
 	  memcpy (memory, result, length * sizeof (CHAR_T));		     \
 	result = memory;						     \
@@ -194,10 +196,11 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 	if (cp != dp->dir_start)
 	  {
 	    size_t n = dp->dir_start - cp;
+	    size_t augmented_length = xsum (length, n);
 
-	    ENSURE_ALLOCATION (length + n);
+	    ENSURE_ALLOCATION (augmented_length);
 	    memcpy (result + length, cp, n * sizeof (CHAR_T));
-	    length += n;
+	    length = augmented_length;
 	  }
 	if (i == d.count)
 	  break;
@@ -205,11 +208,14 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 	/* Execute a single directive.  */
 	if (dp->conversion == '%')
 	  {
+	    size_t augmented_length;
+
 	    if (!(dp->arg_index < 0))
 	      abort ();
-	    ENSURE_ALLOCATION (length + 1);
+	    augmented_length = xsum (length, 1);
+	    ENSURE_ALLOCATION (augmented_length);
 	    result[length] = '%';
-	    length += 1;
+	    length = augmented_length;
 	  }
 	else
 	  {
@@ -248,15 +254,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		unsigned int prefix_count;
 		int prefixes[2];
 #if !USE_SNPRINTF
-		unsigned int tmp_length;
+		size_t tmp_length;
 		CHAR_T tmpbuf[700];
 		CHAR_T *tmp;
 
 		/* Allocate a temporary buffer of sufficient size for calling
 		   sprintf.  */
 		{
-		  unsigned int width;
-		  unsigned int precision;
+		  size_t width;
+		  size_t precision;
 
 		  width = 0;
 		  if (dp->width_start != dp->width_end)
@@ -268,14 +274,14 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
 			    abort ();
 			  arg = a.arg[dp->width_arg_index].a.a_int;
-			  width = (arg < 0 ? -arg : arg);
+			  width = (arg < 0 ? (unsigned int) (-arg) : arg);
 			}
 		      else
 			{
 			  const CHAR_T *digitp = dp->width_start;
 
 			  do
-			    width = width * 10 + (*digitp++ - '0');
+			    width = xsum (xtimes (width, 10), *digitp++ - '0');
 			  while (digitp != dp->width_end);
 			}
 		    }
@@ -298,7 +304,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 
 			  precision = 0;
 			  do
-			    precision = precision * 10 + (*digitp++ - '0');
+			    precision = xsum (xtimes (precision, 10), *digitp++ - '0');
 			  while (digitp != dp->precision_end);
 			}
 		    }
@@ -399,7 +405,6 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 					  * 2 /* estimate for FLAG_GROUP */
 					 )
 			  + 1 /* turn floor into ceil */
-			  + precision
 			  + 10; /* sign, decimal point etc. */
 		      else
 # endif
@@ -409,15 +414,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 					  * 2 /* estimate for FLAG_GROUP */
 					 )
 			  + 1 /* turn floor into ceil */
-			  + precision
 			  + 10; /* sign, decimal point etc. */
+		      tmp_length = xsum (tmp_length, precision);
 		      break;
 
 		    case 'e': case 'E': case 'g': case 'G':
 		    case 'a': case 'A':
 		      tmp_length =
-			precision
-			+ 12; /* sign, decimal point, exponent etc. */
+			12; /* sign, decimal point, exponent etc. */
+		      tmp_length = xsum (tmp_length, precision);
 		      break;
 
 		    case 'c':
@@ -432,14 +437,14 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    case 's':
 # ifdef HAVE_WCHAR_T
 		      if (type == TYPE_WIDE_STRING)
-#  if WIDE_CHAR_VERSION
-			tmp_length =
-			  local_wcslen (a.arg[dp->arg_index].a.a_wide_string);
-#  else
-			tmp_length =
-			  local_wcslen (a.arg[dp->arg_index].a.a_wide_string)
-			  * MB_CUR_MAX;
+			{
+			  tmp_length =
+			    local_wcslen (a.arg[dp->arg_index].a.a_wide_string);
+
+#  if !WIDE_CHAR_VERSION
+			  tmp_length = xtimes (tmp_length, MB_CUR_MAX);
 #  endif
+			}
 		      else
 # endif
 			tmp_length = strlen (a.arg[dp->arg_index].a.a_string);
@@ -461,24 +466,22 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		  if (tmp_length < width)
 		    tmp_length = width;
 
-		  tmp_length++; /* account for trailing NUL */
+		  tmp_length = xsum (tmp_length, 1); /* account for trailing NUL */
 		}
 
 		if (tmp_length <= sizeof (tmpbuf) / sizeof (CHAR_T))
 		  tmp = tmpbuf;
 		else
 		  {
-		    tmp = (CHAR_T *) malloc (tmp_length * sizeof (CHAR_T));
+		    size_t tmp_memsize = xtimes (tmp_length, sizeof (CHAR_T));
+
+		    if (size_overflow_p (tmp_memsize))
+		      /* Overflow, would lead to out of memory.  */
+		      goto out_of_memory;
+		    tmp = (CHAR_T *) malloc (tmp_memsize);
 		    if (tmp == NULL)
-		      {
-			/* Out of memory.  */
-			if (!(result == resultbuf || result == NULL))
-			  free (result);
-			freea (buf);
-			CLEANUP ();
-			errno = ENOMEM;
-			return NULL;
-		      }
+		      /* Out of memory.  */
+		      goto out_of_memory;
 		  }
 #endif
 
@@ -564,7 +567,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 #if USE_SNPRINTF
 		/* Prepare checking whether snprintf returns the count
 		   via %n.  */
-		ENSURE_ALLOCATION (length + 1);
+		ENSURE_ALLOCATION (xsum (length, 1));
 		result[length] = '\0';
 #endif
 
@@ -769,7 +772,8 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 				   *and* it returns -1 (rather than the length
 				   that would have been required) when the
 				   buffer is too small.  */
-				size_t bigger_need = 2 * allocated + 12;
+				size_t bigger_need =
+				  xsum (xtimes (allocated, 2), 12);
 				ENSURE_ALLOCATION (bigger_need);
 				continue;
 			      }
@@ -803,10 +807,8 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			/* Need at least count bytes.  But allocate
 			   proportionally, to avoid looping eternally if
 			   snprintf() reports a too small count.  */
-			size_t n = length + count;
-
-			if (n < 2 * allocated)
-			  n = 2 * allocated;
+			size_t n =
+			  xmax (xsum (length, count), xtimes (allocated, 2));
 
 			ENSURE_ALLOCATION (n);
 #if USE_SNPRINTF
@@ -831,7 +833,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
       }
 
     /* Add the final NUL.  */
-    ENSURE_ALLOCATION (length + 1);
+    ENSURE_ALLOCATION (xsum (length, 1));
     result[length] = '\0';
 
     if (result != resultbuf && length + 1 < allocated)
@@ -848,6 +850,14 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
     CLEANUP ();
     *lengthp = length;
     return result;
+
+  out_of_memory:
+    if (!(result == resultbuf || result == NULL))
+      free (result);
+    freea (buf);
+    CLEANUP ();
+    errno = ENOMEM;
+    return NULL;
   }
 }
 
