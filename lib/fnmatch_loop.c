@@ -1009,6 +1009,7 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
   size_t pattern_len = STRLEN (pattern);
   const CHAR *p;
   const CHAR *rs;
+  enum { ALLOCA_LIMIT = 8000 };
 
   /* Parse the pattern.  Store the individual parts in the list.  */
   level = 0;
@@ -1044,7 +1045,6 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
 	if (level-- == 0)
 	  {
 	    /* This means we found the end of the pattern.  */
-#define ALLOCA_LIMIT 8000
 #define NEW_PATTERN \
 	    struct patternlist *newp;					      \
 	    size_t plen;						      \

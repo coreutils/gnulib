@@ -1,5 +1,9 @@
 2004-01-14  Paul Eggert  <eggert@twinsun.com>
 
+	* fnmatch_loop.c (ALLOCA_LIMIT): Remove macro, which collided
+	with like-named macro in fnmatch.c.
+	(EXT): Use an internal constant instead.
+
 	Merge fnmatch patches from glibc.
 	* fnmatch.c (mbsinit): Remove define.
 	Add libc_hidden_ver (__fnmatch, fnmatch).
