@@ -13,7 +13,7 @@ realloc
 error
 gettext
 exitfail
-exit
+stdbool
 
 configure.ac:
 gl_XALLOC
@@ -25,5 +25,5 @@ Include:
 "xalloc.h"
 
 Maintainer:
-Bruno Haible
+all
 

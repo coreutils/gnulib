@@ -1,3 +1,18 @@
+2003-10-12  Paul Eggert  <eggert@twinsun.com>
+
+	* lib/xalloc.h (xnmalloc, xzalloc, xnrealloc, xclone): New decls.
+	(XMALLOC, XCALLOC, XREALLOC, XFREE, CCLONE, CLONE): Deprecate,
+	and define in terms of the other primitives.
+	* lib/xmalloc.c: Include stdbool.h; do not include exit.h.
+	(SIZE_MAX): Define if not already defined.
+	(array_size_overflow): New function.
+	(xalloc_die): Abort instead of exiting if 'error' returns.
+	(xnmalloc, xnrealloc, xzalloc, xclone): New functions.
+	(xmalloc, xrealloc): Use them.
+	(xcalloc): Check for address arithmetic overflow.
+	* lib/xstrdup.c (xstrdup): Use xclone, since memcpy should be
+	a bit faster than strcpy.
+
 2003-10-08  Paul Eggert  <eggert@twinsun.com>
 
 	Merge getpass from libc, plus a few fixes.

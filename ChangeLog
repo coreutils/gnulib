@@ -1,3 +1,8 @@
+2003-10-12  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/xalloc: Do not depend on 'exit'.  Depend on 'stdbool'.
+	Change maintainer from Bruno Haible to 'all'.
+
 2003-10-10  Simon Josefsson  <jas@extundo.com>
 
 	* modules/argp (Depends-on): Add restrict and strcase.

@@ -1,3 +1,7 @@
+2003-10-12  Paul Eggert  <eggert@twinsun.com>
+
+	* xalloc.m4 (gl_PREREQ_XMALLOC): Require AC_C_INLINE.
+
 2003-10-10  Simon Josefsson  <jas@extundo.com>
 
 	* argp.m4: Add AC_C_INLINE.
