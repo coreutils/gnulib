@@ -24,7 +24,7 @@
 	This undoes the 2003-06-04 change, which is no longer needed now
 	that we have better overflow checking.
 	(localtime_offset): Likewise.
-	
+
 	(__mktime_internal): Avoid harmful overflow on hosts where time_t
 	and long are 64-bit but int is only 32-bit.
 	(ydhms_diff): Use long int to store year1 and yday1.
@@ -52,7 +52,7 @@
 	(main): Likewise.
 	Don't loop if the iteration overflows time_t.
 	Allow a negative step in the iteration.
-	
+
 2003-07-01  Paul Eggert  <eggert@twinsun.com>
 
 	* xreadlink.c: Include <sys/types.h> unconditionally, instead of
