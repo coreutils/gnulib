@@ -1436,6 +1436,7 @@ func_all_modules ()
   func_module free
   func_module malloc
   func_module realloc
+  func_module pagealign_alloc
   func_end_table
 
   element="Date and time <time.h>"
