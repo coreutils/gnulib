@@ -293,9 +293,18 @@ installed.
 
 Installation directories should always be named by variables, so it is
 easy to install in a nonstandard place.  The standard names for these
-variables are described below.  They are based on a standard filesystem
-layout; variants of it are used in SVR4, 4.4BSD, GNU/Linux, Ultrix v4,
-and other modern operating systems.
+variables and the values they should have in GNU packages are
+described below.  They are based on a standard filesystem layout;
+variants of it are used in GNU/Linux and other modern operating
+systems.
+
+Installers are expected to override these values when calling
+@command{make} (e.g., @kbd{make prefix=/usr install} or
+@command{configure} (e.g., @kbd{configure --prefix=/usr}).  GNU
+packages should not try to guess which value should be appropriate for
+these variables on the system they are being installed onto: use the
+default settings specified here so that all GNU packages behave
+identically, allowing the installer to achieve any desired layout.
 
 These two variables set the root for the installation.  All the other
 installation directories should be subdirectories of one of these two,
@@ -355,6 +364,12 @@ The directory for installing executable programs to be run by other
 programs rather than by users.  This directory should normally be
 @file{/usr/local/libexec}, but write it as @file{$(exec_prefix)/libexec}.
 (If you are using Autoconf, write it as @samp{@@libexecdir@@}.)
+
+The definition of @samp{libexecdir} is the same for all packages, so
+you should install your data in a subdirectory thereof.  Most packages
+install their data under @file{$(libexecdir)/@var{package-name}/},
+possibly within additional subdirectories thereof, such as
+@file{$(libexecdir)/@var{package-name}/@var{machine}/@var{version}}.
 @end table
 
 Data files used by the program during its execution are divided into
@@ -384,19 +399,25 @@ to put these various kinds of files in:
 @item datarootdir
 The root of the directory tree for read-only architecture-independent
 data files.  This should normally be @file{/usr/local/share}, but
-write it as @file{$(prefix)/share}.  @samp{datadir}'s default value is
-based on this variable; so are @samp{infodir}, @samp{mandir}, and others.
+write it as @file{$(prefix)/share}.  (If you are using Autoconf, write
+it as @samp{@@datarootdir@@}.)  @samp{datadir}'s default value is
+based on this variable; so are @samp{infodir}, @samp{mandir}, and
+others.
 
 @item datadir
 The directory for installing idiosyncratic read-only
 architecture-independent data files for this program.  This is usually
 the same place as @samp{datarootdir}, but we use the two separate
-variables so that you can move these idiosyncratic files without
+variables so that you can move these program-specific files without
 altering the location for Info files, man pages, etc.
 
-The default definition of @samp{datadir} should be
+This should normally be @file{/usr/local/share}, but write it as
 @file{$(datarootdir)}.  (If you are using Autoconf, write it as
 @samp{@@datadir@@}.)
+
+The definition of @samp{datadir} is the same for all packages, so you
+should install your data in a subdirectory thereof.  Most packages
+install their data under @file{$(datadir)/@var{package-name}/}.
 
 @item sysconfdir
 The directory for installing read-only data files that pertain to a
