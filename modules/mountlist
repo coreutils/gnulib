@@ -21,3 +21,6 @@ lib_SOURCES += mountlist.h
 Include:
 "mountlist.h"
 
+Maintainer:
+Jim Meyering
+

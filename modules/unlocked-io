@@ -16,3 +16,6 @@ lib_SOURCES += unlocked-io.h
 Include:
 "unlocked-io.h"
 
+Maintainer:
+Jim Meyering
+

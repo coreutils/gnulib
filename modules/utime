@@ -23,3 +23,6 @@ Include:
 # include <sys/utime.h>
 #endif
 
+Maintainer:
+Jim Meyering
+

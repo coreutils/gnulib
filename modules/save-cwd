@@ -18,3 +18,6 @@ lib_SOURCES += save-cwd.h save-cwd.c
 Include:
 "save-cwd.h"
 
+Maintainer:
+Jim Meyering
+

@@ -17,3 +17,6 @@ lib_SOURCES += exitfail.h exitfail.c
 Include:
 "exitfail.h"
 
+Maintainer:
+Paul Eggert
+

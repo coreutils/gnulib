@@ -22,3 +22,6 @@ lib_SOURCES += closeout.h closeout.c
 Include:
 "closeout.h"
 
+Maintainer:
+Jim Meyering
+

@@ -23,3 +23,6 @@ lib_SOURCES += backupfile.h backupfile.c addext.c
 Include:
 "backupfile.h"
 
+Maintainer:
+Paul Eggert, Jim Meyering
+

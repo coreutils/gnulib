@@ -15,3 +15,6 @@ Makefile.am:
 Include:
 <time.h>
 
+Maintainer:
+Paul Eggert, Jim Meyering, glibc
+

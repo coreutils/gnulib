@@ -16,3 +16,6 @@ LIBS += @POW_LIB@
 Include:
 <stdlib.h>
 
+Maintainer:
+all
+

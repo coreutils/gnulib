@@ -17,3 +17,6 @@ lib_SOURCES += timespec.h
 Include:
 "timespec.h"
 
+Maintainer:
+Jim Meyering
+

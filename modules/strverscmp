@@ -17,3 +17,6 @@ lib_SOURCES += strverscmp.h
 Include:
 "strverscmp.h"
 
+Maintainer:
+Jim Meyering, glibc
+

@@ -17,3 +17,6 @@ lib_SOURCES += settime.c
 
 Include:
 
+Maintainer:
+Paul Eggert, Jim Meyering
+

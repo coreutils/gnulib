@@ -20,3 +20,6 @@ Makefile.am:
 Include:
 <stdlib.h>
 
+Maintainer:
+Jim Meyering
+

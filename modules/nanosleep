@@ -16,3 +16,6 @@ Makefile.am:
 Include:
 <time.h>
 
+Maintainer:
+Jim Meyering
+

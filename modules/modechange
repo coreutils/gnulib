@@ -19,3 +19,6 @@ lib_SOURCES += modechange.h modechange.c
 Include:
 "modechange.h"
 
+Maintainer:
+Jim Meyering
+

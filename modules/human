@@ -26,3 +26,6 @@ lib_SOURCES += human.h human.c
 Include:
 "human.h"
 
+Maintainer:
+Paul Eggert
+

@@ -16,3 +16,6 @@ lib_SOURCES += pathmax.h
 Include:
 "pathmax.h"
 
+Maintainer:
+Jim Meyering
+

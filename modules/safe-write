@@ -18,3 +18,6 @@ lib_SOURCES += safe-write.h safe-write.c
 Include:
 "safe-write.h"
 
+Maintainer:
+Jim Meyering, Bruno Haible
+

@@ -22,3 +22,6 @@ lib_SOURCES += path-concat.h path-concat.c
 Include:
 "path-concat.h"
 
+Maintainer:
+Jim Meyering
+

@@ -14,3 +14,6 @@ Makefile.am:
 Include:
 <assert.h>
 
+Maintainer:
+Jim Meyering
+

@@ -17,3 +17,6 @@ lib_SOURCES += safe-read.h safe-read.c
 Include:
 "safe-read.h"
 
+Maintainer:
+Jim Meyering, Bruno Haible
+

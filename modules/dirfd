@@ -17,3 +17,6 @@ lib_SOURCES += dirfd.h
 Include:
 "dirfd.h"
 
+Maintainer:
+Jim Meyering
+

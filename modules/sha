@@ -19,3 +19,6 @@ lib_SOURCES += sha.h sha.c
 Include:
 "sha.h"
 
+Maintainer:
+Jim Meyering
+

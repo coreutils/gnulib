@@ -20,4 +20,8 @@ EXTRA_DIST += fnmatch_loop.c
 DISTCLEANFILES += fnmatch.h
 
 Include:
+<fnmatch.h>
+
+Maintainer:
+all, glibc
 

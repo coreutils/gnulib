@@ -20,3 +20,6 @@ lib_SOURCES += setenv.h
 Include:
 "setenv.h"
 
+Maintainer:
+Bruno Haible
+

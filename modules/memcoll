@@ -17,3 +17,6 @@ lib_SOURCES += memcoll.h memcoll.c
 Include:
 "memcoll.h"
 
+Maintainer:
+Paul Eggert, Jim Meyering
+

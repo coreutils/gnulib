@@ -20,3 +20,6 @@ lib_SOURCES += hash.h hash.c
 Include:
 "hash.h"
 
+Maintainer:
+Jim Meyering
+

@@ -21,3 +21,6 @@ lib_SOURCES += same.h same.c
 Include:
 "same.h"
 
+Maintainer:
+Jim Meyering
+

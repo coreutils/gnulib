@@ -21,3 +21,6 @@ lib_SOURCES += quotearg.h quotearg.c
 Include:
 "quotearg.h"
 
+Maintainer:
+Paul Eggert
+

@@ -17,3 +17,6 @@ lib_SOURCES += __fpending.h
 Include:
 "__fpending.h"
 
+Maintainer:
+Jim Meyering
+

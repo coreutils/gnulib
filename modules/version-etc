@@ -17,3 +17,6 @@ lib_SOURCES += version-etc.h version-etc.c
 Include:
 "version-etc.h"
 
+Maintainer:
+Jim Meyering
+

@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2003-01-13 21:57:21 $'
+cvsdatestamp='$Date: 2003-01-20 10:02:37 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -57,6 +57,7 @@ Usage: gnulib-tool --list
        gnulib-tool --extract-autoconf-snippet module
        gnulib-tool --extract-automake-snippet module
        gnulib-tool --extract-include-directive module
+       gnulib-tool --extract-maintainer module
 
 Operation modes:
       --list                print the available module names
@@ -65,15 +66,16 @@ Operation modes:
       --create-megatestdir  create a mega scratch package with the given modules
                             one by one and all together
       --test                test the combination of the given modules
-                            (recommended to use CC="gcc -Wall -Werror" here)
+                            (recommended to use CC=\"gcc -Wall\" here)
       --megatest            test the given modules one by one and all together
-                            (recommended to use CC="gcc -Wall -Werror" here)
+                            (recommended to use CC=\"gcc -Wall\" here)
       --extract-description        extract the description
       --extract-filelist           extract the list of files
       --extract-dependencies       extract the dependencies
       --extract-autoconf-snippet   extract the snippet for configure.ac
       --extract-automake-snippet   extract the snippet for lib/Makefile.am
       --extract-include-directive  extract the #include directive
+      --extract-maintainer         report the maintainer(s) inside gnulib
 
 Options:
       --dir=DIRECTORY       specify the target directory
@@ -277,6 +279,12 @@ func_get_include_directive ()
 {
   sed -n -e "/^Include$sed_extract_prog" < "$gnulib_dir/modules/$1" | \
   sed -e 's/^\(["<]\)/#include \1/'
+}
+
+# func_get_maintainer module
+func_get_maintainer ()
+{
+  sed -n -e "/^Maintainer$sed_extract_prog" < "$gnulib_dir/modules/$1"
 }
 
 # func_create_testdir testdir modules
@@ -632,6 +640,16 @@ case $mode in
       func_verify_module
       if test -n "$module"; then
         func_get_include_directive "$module"
+      fi
+    done
+    ;;
+
+  extract-maintainer )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_maintainer "$module"
       fi
     done
     ;;

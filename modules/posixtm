@@ -18,3 +18,6 @@ lib_SOURCES += posixtm.h posixtm.c
 Include:
 "posixtm.h"
 
+Maintainer:
+Jim Meyering
+

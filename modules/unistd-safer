@@ -17,3 +17,6 @@ lib_SOURCES += unistd-safer.h dup-safer.c
 Include:
 "unistd-safer.h"
 
+Maintainer:
+Paul Eggert, Jim Meyering
+

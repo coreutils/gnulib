@@ -19,3 +19,6 @@ lib_SOURCES += readtokens.h readtokens.c
 Include:
 "readtokens.h"
 
+Maintainer:
+Jim Meyering
+

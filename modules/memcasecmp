@@ -17,3 +17,6 @@ lib_SOURCES += memcasecmp.h memcasecmp.c
 Include:
 "memcasecmp.h"
 
+Maintainer:
+Jim Meyering
+

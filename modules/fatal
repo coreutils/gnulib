@@ -19,3 +19,5 @@ lib_SOURCES += fatal.h fatal.c
 Include:
 "fatal.h"
 
+Maintainer:
+

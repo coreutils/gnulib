@@ -19,3 +19,6 @@ lib_SOURCES += xstrtoimax.c
 Include:
 "xstrtol.h"
 
+Maintainer:
+Paul Eggert
+

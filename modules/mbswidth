@@ -19,3 +19,6 @@ lib_SOURCES += mbswidth.h mbswidth.c
 Include:
 "mbswidth.h"
 
+Maintainer:
+Bruno Haible
+

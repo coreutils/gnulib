@@ -18,3 +18,6 @@ lib_SOURCES += gettime.c
 
 Include:
 
+Maintainer:
+Paul Eggert, Jim Meyering
+

@@ -17,3 +17,6 @@ lib_SOURCES += sig2str.h
 Include:
 "sig2str.h"
 
+Maintainer:
+Paul Eggert, Jim Meyering
+

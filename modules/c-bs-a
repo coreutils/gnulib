@@ -13,3 +13,6 @@ Makefile.am:
 
 Include:
 
+Maintainer:
+Paul Eggert
+

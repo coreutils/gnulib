@@ -15,3 +15,6 @@ Makefile.am:
 Include:
 <sys/stat.h>
 
+Maintainer:
+Jim Meyering
+

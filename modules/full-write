@@ -16,3 +16,6 @@ lib_SOURCES += full-write.h full-write.c
 Include:
 "full-write.h"
 
+Maintainer:
+Jim Meyering, Bruno Haible
+

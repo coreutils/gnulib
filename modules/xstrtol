@@ -24,3 +24,6 @@ lib_SOURCES += xstrtol.h xstrtol.c xstrtoul.c
 Include:
 "xstrtol.h"
 
+Maintainer:
+Jim Meyering
+

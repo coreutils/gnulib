@@ -17,3 +17,6 @@ lib_SOURCES += lchown.h
 
 Include:
 
+Maintainer:
+Jim Meyering
+

@@ -22,3 +22,6 @@ lib_SOURCES += fsusage.h
 Include:
 "fsusage.h"
 
+Maintainer:
+Jim Meyering
+

@@ -24,3 +24,6 @@ MOSTLYCLEANFILES += stdbool.h
 Include:
 #include <stdbool.h>
 
+Maintainer:
+Bruno Haible
+

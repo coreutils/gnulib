@@ -17,3 +17,6 @@ lib_SOURCES += stpcpy.h
 Include:
 "stpcpy.h"
 
+Maintainer:
+Bruno Haible, glibc
+

@@ -15,3 +15,6 @@ lib_SOURCES += gcd.h gcd.c
 Include:
 "gcd.h"
 
+Maintainer:
+Bruno Haible
+

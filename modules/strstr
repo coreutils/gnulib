@@ -16,3 +16,6 @@ Makefile.am:
 Include:
 "strstr.h"
 
+Maintainer:
+Bruno Haible, glibc
+

@@ -16,3 +16,6 @@ Makefile.am:
 Include:
 <unistd.h>
 
+Maintainer:
+Jim Meyering
+

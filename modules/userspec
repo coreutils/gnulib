@@ -21,3 +21,6 @@ lib_SOURCES += userspec.c
 
 Include:
 
+Maintainer:
+Jim Meyering
+

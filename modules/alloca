@@ -25,3 +25,6 @@ MOSTLYCLEANFILES += alloca.h
 Include:
 #include <alloca.h>
 
+Maintainer:
+bug-gnulib@gnu.org
+

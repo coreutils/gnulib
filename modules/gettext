@@ -33,3 +33,6 @@ lib_SOURCES += gettext.h
 Include:
 "gettext.h"
 
+Maintainer:
+Bruno Haible
+

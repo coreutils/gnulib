@@ -72,3 +72,6 @@ CLEANFILES += charset.alias ref-add.sed ref-del.sed
 Include:
 "localcharset.h"
 
+Maintainer:
+Bruno Haible
+

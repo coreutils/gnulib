@@ -19,3 +19,6 @@ lib_SOURCES += xmemcoll.h xmemcoll.c
 Include:
 "xmemcoll.h"
 
+Maintainer:
+Paul Eggert, Jim Meyering
+

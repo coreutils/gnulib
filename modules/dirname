@@ -21,3 +21,6 @@ lib_SOURCES += dirname.h dirname.c basename.c stripslash.c
 Include:
 "dirname.h"
 
+Maintainer:
+Jim Meyering
+

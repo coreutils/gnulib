@@ -22,3 +22,6 @@ lib_SOURCES += exclude.h exclude.c
 Include:
 "exclude.h"
 
+Maintainer:
+Paul Eggert
+

@@ -15,3 +15,6 @@ Makefile.am:
 
 Include:
 
+Maintainer:
+Jim Meyering, glibc
+

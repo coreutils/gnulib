@@ -17,3 +17,6 @@ Makefile.am:
 Include:
 "obstack.h"
 
+Maintainer:
+all, glibc
+

@@ -17,3 +17,6 @@ lib_SOURCES += hard-locale.h hard-locale.c
 Include:
 "hard-locale.h"
 
+Maintainer:
+Paul Eggert
+

@@ -17,3 +17,6 @@ Makefile.am:
 Include:
 "strcase.h"
 
+Maintainer:
+Bruno Haible
+

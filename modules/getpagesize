@@ -16,3 +16,6 @@ lib_SOURCES += getpagesize.h
 Include:
 "getpagesize.h"
 
+Maintainer:
+Jim Meyering
+

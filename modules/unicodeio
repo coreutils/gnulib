@@ -21,3 +21,6 @@ lib_SOURCES += unicodeio.h unicodeio.c
 Include:
 "unicodeio.h"
 
+Maintainer:
+Bruno Haible
+

@@ -15,3 +15,6 @@ Makefile.am:
 Include:
 <string.h>
 
+Maintainer:
+all
+

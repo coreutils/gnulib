@@ -19,3 +19,6 @@ lib_SOURCES += readutmp.h
 Include:
 "readutmp.h"
 
+Maintainer:
+Jim Meyering
+

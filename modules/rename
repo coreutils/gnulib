@@ -17,3 +17,6 @@ Makefile.am:
 Include:
 <stdio.h>
 
+Maintainer:
+Jim Meyering
+

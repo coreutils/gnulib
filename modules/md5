@@ -18,3 +18,6 @@ lib_SOURCES += md5.h md5.c
 Include:
 "md5.h"
 
+Maintainer:
+Jim Meyering
+

@@ -16,3 +16,6 @@ lib_SOURCES += canon-host.c
 
 Include:
 
+Maintainer:
+Jim Meyering
+

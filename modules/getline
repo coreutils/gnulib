@@ -18,3 +18,6 @@ lib_SOURCES += getline.h
 Include:
 "getline.h"
 
+Maintainer:
+all
+

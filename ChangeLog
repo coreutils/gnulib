@@ -1,3 +1,9 @@
+2003-01-19  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool: Recognize option --extract-maintainer.
+	(func_get_maintainer): New function.
+	* modules/*: Add Maintainer entry.
+
 2003-01-16  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh: Add a table of contents. Add the module name as

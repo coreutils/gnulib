@@ -18,3 +18,6 @@ lib_SOURCES += xreadlink.h xreadlink.c
 Include:
 "xreadlink.h"
 
+Maintainer:
+Jim Meyering
+

@@ -19,3 +19,6 @@ lib_SOURCES += c-stack.h c-stack.c
 Include:
 "c-stack.h"
 
+Maintainer:
+Paul Eggert
+

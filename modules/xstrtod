@@ -17,3 +17,6 @@ lib_SOURCES += xstrtod.h xstrtod.c
 Include:
 "xstrtod.h"
 
+Maintainer:
+Jim Meyering
+

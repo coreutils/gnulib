@@ -17,3 +17,6 @@ lib_SOURCES += acl.h acl.c
 Include:
 "acl.h"
 
+Maintainer:
+Paul Eggert, Jim Meyering
+

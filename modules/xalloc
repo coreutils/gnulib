@@ -22,3 +22,6 @@ lib_SOURCES += xalloc.h xmalloc.c xstrdup.c
 Include:
 "xalloc.h"
 
+Maintainer:
+Bruno Haible
+

@@ -22,3 +22,6 @@ MAINTAINERCLEANFILES += getdate.c
 Include:
 "getdate.h"
 
+Maintainer:
+Paul Eggert
+

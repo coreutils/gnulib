@@ -16,3 +16,6 @@ lib_SOURCES += xgethostname.c
 
 Include:
 
+Maintainer:
+Jim Meyering
+
