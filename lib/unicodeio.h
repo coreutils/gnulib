@@ -1,6 +1,6 @@
 /* Unicode character output to streams with locale dependent encoding.
 
-   Copyright (C) 2000-2002 Free Software Foundation, Inc.
+   Copyright (C) 2000-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -23,23 +23,15 @@
 # include <stddef.h>
 # include <stdio.h>
 
-# ifndef PARAMS
-#  if defined PROTOTYPES || (defined __STDC__ && __STDC__)
-#   define PARAMS(Args) Args
-#  else
-#   define PARAMS(Args) ()
-#  endif
-# endif
-
 /* Outputs the Unicode character CODE to the output stream STREAM.
    Upon failure, exit if exit_on_error is true, otherwise output a fallback
    notation.  */
-extern void print_unicode_char PARAMS ((FILE *stream, unsigned int code,
-					int exit_on_error));
+extern void print_unicode_char (FILE *stream, unsigned int code,
+				 int exit_on_error);
 
 /* Simple success callback that outputs the converted string.
    The STREAM is passed as callback_arg.  */
-extern long fwrite_success_callback PARAMS ((const char *buf, size_t buflen,
-					     void *callback_arg));
+extern long fwrite_success_callback (const char *buf, size_t buflen,
+				      void *callback_arg);
 
 #endif

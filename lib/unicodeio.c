@@ -1,6 +1,6 @@
 /* Unicode character output to streams with locale dependent encoding.
 
-   Copyright (C) 2000-2002 Free Software Foundation, Inc.
+   Copyright (C) 2000-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -112,10 +112,10 @@ utf8_wctomb (unsigned char *r, unsigned int wc)
    Assumes that the locale doesn't change between two calls.  */
 long
 unicode_to_mb (unsigned int code,
-	       long (*success) PARAMS ((const char *buf, size_t buflen,
-					void *callback_arg)),
-	       long (*failure) PARAMS ((unsigned int code, const char *msg,
-					void *callback_arg)),
+	       long (*success) (const char *buf, size_t buflen,
+				void *callback_arg),
+	       long (*failure) (unsigned int code, const char *msg,
+				void *callback_arg),
 	       void *callback_arg)
 {
   static int initialized;
