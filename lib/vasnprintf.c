@@ -39,12 +39,12 @@
 #include "printf-parse.h"
 
 /* For those losing systems which don't have 'alloca' we have to add
-   some additional code emulating it.  */
-#ifdef HAVE_ALLOCA
+   some additional code emulating it.  */ 
+#ifdef HAVE_ALLOCA 
 # define freea(p) /* nothing */
 #else
-# define alloca(n) malloc (n)
-# define freea(p) free (p)
+# define alloca(n) malloc (n) 
+# define freea(p) free (p) 
 #endif
 
 char *
@@ -509,7 +509,7 @@ vasnprintf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 		    retcount = 0;
 
 #if HAVE_SNPRINTF
-# define SNPRINTF_BUF(arg) \
+#define SNPRINTF_BUF(arg) \
 		    switch (prefix_count)				    \
 		      {							    \
 		      case 0:						    \
@@ -529,7 +529,7 @@ vasnprintf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 			abort ();					    \
 		      }
 #else
-# define SNPRINTF_BUF(arg) \
+#define SNPRINTF_BUF(arg) \
 		    switch (prefix_count)				    \
 		      {							    \
 		      case 0:						    \

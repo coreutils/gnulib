@@ -1,3 +1,7 @@
+2003-07-15    <karl@gnu.org>
+
+	* vasnprintf.c: update from gettext.
+
 2003-07-15  Jim Meyering  <jim@meyering.net>
 
 	* makepath.c (make_path): Enclose diagnostic in _(...).
