@@ -1,4 +1,4 @@
-/* An interface to write() that writes all it is asked to write.
+/* An interface to read() that reads all it is asked to read.
 
    Copyright (C) 2002 Free Software Foundation, Inc.
 
@@ -13,12 +13,12 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
+   along with this program; if not, read to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 #include <stddef.h>
 
-/* Write COUNT bytes at BUF to descriptor FD, retrying if interrupted
-   or if partial writes occur.  Return the number of bytes successfully
-   written, setting errno if that is less than COUNT.  */
-extern size_t full_write (int fd, const void *buf, size_t count);
+/* Read COUNT bytes at BUF to descriptor FD, retrying if interrupted
+   or if partial reads occur.  Return the number of bytes successfully
+   read, setting errno if that is less than COUNT.  errno = 0 means EOF.  */
+extern size_t full_read (int fd, void *buf, size_t count);

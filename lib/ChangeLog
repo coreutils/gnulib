@@ -1,3 +1,18 @@
+2002-11-22  Bruno Haible  <bruno@clisp.org>
+
+	* safe-read.h: Assume C89. Add comments.
+	(safe_read): Change return type to size_t.
+	* safe-read.c (safe_read): Change return type to size_t. Handle byte
+	counts > SSIZE_MAX correctly.
+	* safe-write.h: New file.
+	* safe-write.c: New file.
+	* full-read.h: New file.
+	* full-read.c: New file.
+	* full-write.h: Assume C89. Add comments.
+	* full-write.c: Include safe-write.h.
+	(full_write): Rewritten to use safe_write.
+	Suggested by Jim Meyering and Paul Eggert.
+
 2002-11-21  Bruno Haible  <bruno@clisp.org>
 
 	Remove case insensitive option matching.

@@ -1,5 +1,4 @@
-/* An interface to write() that writes all it is asked to write.
-
+/* An interface to write() that retries after interrupts.
    Copyright (C) 2002 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -18,7 +17,7 @@
 
 #include <stddef.h>
 
-/* Write COUNT bytes at BUF to descriptor FD, retrying if interrupted
-   or if partial writes occur.  Return the number of bytes successfully
-   written, setting errno if that is less than COUNT.  */
-extern size_t full_write (int fd, const void *buf, size_t count);
+/* Write up to COUNT bytes at BUF to descriptor FD, retrying if interrupted.
+   Return the actual number of bytes written, zero for EOF, or (size_t) -1
+   for an error.  */
+extern size_t safe_write (int fd, const void *buf, size_t count);

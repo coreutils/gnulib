@@ -1,4 +1,4 @@
-/* An interface to read() that retries after interrupts.
+/* An interface to write() that retries after interrupts.
    Copyright (C) 1993, 1994, 1998, 2002 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 #endif
 
 /* Specification.  */
-#include "safe-read.h"
+#include "safe-write.h"
 
 /* Get ssize_t.  */
 #include <sys/types.h>
@@ -35,35 +35,35 @@ extern int errno;
 
 #include <limits.h>
 
-/* We don't pass an nbytes count > SSIZE_MAX to read() - POSIX says the
+/* We don't pass an nbytes count > SSIZE_MAX to write() - POSIX says the
    effect would be implementation-defined.  Also we don't pass an nbytes
-   count > INT_MAX but <= SSIZE_MAX to read() - this triggers a bug in
+   count > INT_MAX but <= SSIZE_MAX to write() - this triggers a bug in
    Tru64 5.1.  */
 #define MAX_BYTES_TO_READ INT_MAX
 
-/* Read up to COUNT bytes at BUF from descriptor FD, retrying if interrupted.
-   Return the actual number of bytes read, zero for EOF, or (size_t) -1
+/* Write up to COUNT bytes at BUF to descriptor FD, retrying if interrupted.
+   Return the actual number of bytes written, zero for EOF, or (size_t) -1
    for an error.  */
 size_t
-safe_read (int fd, void *buf, size_t count)
+safe_write (int fd, const void *buf, size_t count)
 {
-  size_t total_read = 0;
+  size_t total_written = 0;
 
   if (count > 0)
     {
-      char *ptr = (char *) buf;
+      const char *ptr = (const char *) buf;
       do
 	{
-	  size_t nbytes_to_read = count;
+	  size_t nbytes_to_write = count;
 	  ssize_t result;
 
-	  /* Limit the number of bytes to read in one round, to avoid running
+	  /* Limit the number of bytes to write in one round, to avoid running
 	     into unspecified behaviour.  But keep the file pointer block
 	     aligned when doing so.  */
-	  if (nbytes_to_read > MAX_BYTES_TO_READ)
-	    nbytes_to_read = MAX_BYTES_TO_READ & ~8191;
+	  if (nbytes_to_write > MAX_BYTES_TO_READ)
+	    nbytes_to_write = MAX_BYTES_TO_READ & ~8191;
 
-	  result = read (fd, ptr, nbytes_to_read);
+	  result = write (fd, ptr, nbytes_to_write);
 	  if (result < 0)
 	    {
 #ifdef EINTR
@@ -72,12 +72,12 @@ safe_read (int fd, void *buf, size_t count)
 #endif
 	      return result;
 	    }
-	  total_read += result;
+	  total_written += result;
 	  ptr += result;
 	  count -= result;
 	}
       while (count > 0);
     }
 
-  return total_read;
+  return total_written;
 }

@@ -1,4 +1,4 @@
-/* An interface to write() that writes all it is asked to write.
+/* An interface to read() that reads all it is asked to read.
 
    Copyright (C) 1993, 1994, 1997, 1998, 1999, 2000, 2001, 2002 Free Software
    Foundation, Inc.
@@ -14,7 +14,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software Foundation,
+   along with this program; if not, read to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 #if HAVE_CONFIG_H
@@ -22,45 +22,44 @@
 #endif
 
 /* Specification.  */
-#include "full-write.h"
+#include "full-read.h"
 
 #include <errno.h>
 #ifndef errno
 extern int errno;
 #endif
 
-#include "safe-write.h"
+#include "safe-read.h"
 
-/* Write COUNT bytes at BUF to descriptor FD, retrying if interrupted
-   or if partial writes occur.  Return the number of bytes successfully
-   written, setting errno if that is less than COUNT.  */
+/* Read COUNT bytes at BUF to descriptor FD, retrying if interrupted
+   or if partial reads occur.  Return the number of bytes successfully
+   read, setting errno if that is less than COUNT.  errno = 0 means EOF.  */
 size_t
-full_write (int fd, const void *buf, size_t count)
+full_read (int fd, void *buf, size_t count)
 {
-  size_t total_written = 0;
+  size_t total_read = 0;
 
   if (count > 0)
     {
-      const char *ptr = buf;
+      char *ptr = buf;
 
       do
 	{
-	  size_t written = safe_write (fd, ptr, count);
-	  if (written == (size_t)-1)
+	  size_t nread = safe_read (fd, ptr, count);
+	  if (nread == (size_t)-1)
 	    break;
-	  if (written == 0)
+	  if (nread == 0)
 	    {
-	      /* Some buggy drivers return 0 when you fall off a device's
-		 end.  (Example: Linux 1.2.13 on /dev/fd0.)  */
-	      errno = ENOSPC;
+	      /* EOF.  */
+	      errno = 0;
 	      break;
 	    }
-	  total_written += written;
-	  ptr += written;
-	  count -= written;
+	  total_read += nread;
+	  ptr += nread;
+	  count -= nread;
 	}
       while (count > 0);
     }
 
-  return total_written;
+  return total_read;
 }
