@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-01-19.07}
+\def\texinfoversion{2004-01-22.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -6295,7 +6295,9 @@ width0pt\relax} \fi
     \def\floatlabel{#2}%
     \def\floatloc{#3}% we do nothing with this yet.
     %
-    \ifx\floattype\empty \else
+    \ifx\floattype\empty
+      \let\safefloattype=\empty
+    \else
       {%
         % the floattype might have accents or other special characters,
         % but we need to use it in a control sequence name.
@@ -6303,30 +6305,34 @@ width0pt\relax} \fi
         \turnoffactive
         \xdef\safefloattype{\floattype}%
       }%
+    \fi
+    %
+    % If label is given but no type, we handle that as the empty type.
+    \ifx\floatlabel\empty \else
       % We want each FLOATTYPE to be numbered separately (Figure 1,
-      % Table 1, Figure 2, ...).
+      % Table 1, Figure 2, ...).  (And if no label, no number.)
       % 
       \expandafter\getfloatno\csname\safefloattype floatno\endcsname
       \global\advance\floatno by 1
       %
-      \ifx\floatlabel\empty \else
-	{%
-	  % This magic value for \thissection is output by \setref as the
-	  % XREFLABEL-title value.  \xrefX uses it to distinguish float
-	  % labels (which have a completely different output format) from
-	  % node and anchor labels.  And \xrdef uses it to construct the
-	  % lists of floats.
-	  % 
-	  \edef\thissection{\floatmagic=\safefloattype}%
-	  \setref{\floatlabel}{Yfloat}%
-	}%
-      \fi
+      {%
+        % This magic value for \thissection is output by \setref as the
+        % XREFLABEL-title value.  \xrefX uses it to distinguish float
+        % labels (which have a completely different output format) from
+        % node and anchor labels.  And \xrdef uses it to construct the
+        % lists of floats.
+        % 
+        \edef\thissection{\floatmagic=\safefloattype}%
+        \setref{\floatlabel}{Yfloat}%
+      }%
     \fi
 }
 
-% we have four possibilities:
+% we have these possibilities:
 % @float Foo,lbl & @caption{Cap}: Foo 1.1: Cap
 % @float Foo,lbl & no caption:    Foo 1.1
+% @float ,lbl & Caption{Cap}:     1.1: Cap
+% @float ,lbl & no caption:       1.1
 % @float & @caption{Cap}:         Cap
 % @float & no caption:
 %
