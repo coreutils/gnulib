@@ -1,3 +1,7 @@
+2003-07-16  Jim Meyering  <jim@meyering.net>
+
+	* modules/save-cwd: Depend on xgetcwd.  From Derek Price.
+
 2003-07-15  Jim Meyering  <jim@meyering.net>
 
 	* modules/save-cwd: Don't depend on error.  From Derek Price.
