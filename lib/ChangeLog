@@ -1,7 +1,13 @@
+2002-12-04  Jim Meyering  <jim@meyering.net>
+
+	* safe-read.c: Rework so that it may serve to define safe_write, too.
+	* safe-write.c: Simply #define SAFE_WRITE and include safe-read.c.
+
 2002-12-03  Jim Meyering  <jim@meyering.net>
 
 	* safe-read.c, safe-write.c: Change variable names and comments, but
 	not semantics, to minimize the differences between these two files.
+	(safe_read): Change comment to mention SAFE_READ_ERROR.
 
 	* safe-read.c (IS_EINTR): Define.
 	(safe_read): Use IS_EINTR in place of in-function cpp directives.
