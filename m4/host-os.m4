@@ -1,12 +1,30 @@
-#serial 3
+#serial 4
+
+# Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
+
+# Written by Paul Eggert.
 
 dnl From Paul Eggert.
 
 # Define HOST_OPERATING_SYSTEM to a name for the host operating system.
-AC_DEFUN([UTILS_HOST_OS],
+AC_DEFUN([gl_HOST_OS],
 [
   AC_CACHE_CHECK([host operating system],
-    utils_cv_host_operating_system,
+    gl_cv_host_operating_system,
 
     [[case $host_os in
 
@@ -67,8 +85,8 @@ AC_DEFUN([UTILS_HOST_OS],
        *)
 	 os=$host_os;;
      esac
-     utils_cv_host_operating_system=$os]])
+     gl_cv_host_operating_system=$os]])
   AC_DEFINE_UNQUOTED(HOST_OPERATING_SYSTEM,
-    "$utils_cv_host_operating_system",
+    "$gl_cv_host_operating_system",
     [The host operating system.])
 ])
