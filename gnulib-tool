@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2003-01-20 10:02:37 $'
+cvsdatestamp='$Date: 2003-01-21 13:21:17 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -231,7 +231,7 @@ func_verify_module ()
   fi
 }
 
-tags_regexp='\(Description\|Files\|Depends-on\|configure\.ac\|Makefile\.am\|Include\)'
+tags_regexp='\(Description\|Files\|Depends-on\|configure\.ac\|Makefile\.am\|Include\|Maintainer\)'
 sed_extract_prog=':[ 	]*$/ {
   :a
     n
