@@ -1,3 +1,7 @@
+2003-01-08  Bruno Haible  <bruno@clisp.org>
+
+	* modules/full-read: Depend on full-write.
+
 2003-01-07  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh: Add copyright notice.

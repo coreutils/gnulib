@@ -6,6 +6,7 @@ lib/full-read.c
 
 Depends-on:
 safe-read
+full-write
 
 configure.ac:
 
