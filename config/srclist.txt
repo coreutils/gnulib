@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.48 2004-10-04 13:29:13 jas Exp $
+# $Id: srclist.txt,v 1.49 2004-10-10 22:32:37 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -19,9 +19,9 @@ $GNUWWWLICENSES/fdl.texi	doc
 $GNUWWWLICENSES/gpl.texi	doc
 $GNUWWWLICENSES/lgpl.texi	doc
 #
-$GNUORG/maintain.texi		doc
-$GNUORG/standards.texi		doc
-$GNUORG/make-stds.texi		doc
+$GNUSTANDARDS/maintain.texi	doc
+$GNUSTANDARDS/standards.texi	doc
+$GNUSTANDARDS/make-stds.texi	doc
 
 $GETTEXT/gettext-runtime/libasprintf/asnprintf.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/asprintf.c		lib gpl
