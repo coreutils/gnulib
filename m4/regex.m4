@@ -52,7 +52,7 @@ AC_DEFUN([jm_INCLUDED_REGEX],
 	    /* The following example is derived from a problem report
                against gawk from Jorge Stolfi <stolfi@ic.unicamp.br>.  */
 	    memset (&regex, 0, sizeof (regex));
-	    s = re_compile_pattern ("[[an\371]]*n", 7, &regex);
+	    s = re_compile_pattern ("[[an\201]]*n", 7, &regex);
 	    if (s)
 	      exit (1);
 
