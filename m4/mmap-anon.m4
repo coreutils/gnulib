@@ -1,4 +1,4 @@
-# mmap-anon.m4 serial 1
+# mmap-anon.m4 serial 2
 dnl Copyright (C) 2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,16 +44,5 @@ AC_DEFUN([gl_FUNC_MMAP_ANON],
         [Define to 1 if mmap()'s MAP_ANONYMOUS flag is available after including
          config.h and <sys/mman.h>.])
     fi
-
-    AH_VERBATIM([MAP_FILE],
-[/* Define MAP_FILE when it isn't otherwise.  */
-#ifndef MAP_FILE
-# define MAP_FILE 0
-#endif
-
-/* Define MAP_FAILED for old systems which neglect to.  */
-#ifndef MAP_FAILED
-# define MAP_FAILED ((void *)-1)
-#endif])
   fi
 ])

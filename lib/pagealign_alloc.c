@@ -48,6 +48,17 @@
 
 #define _(str) gettext (str)
 
+#if HAVE_MMAP
+/* Define MAP_FILE when it isn't otherwise.  */
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+/* Define MAP_FAILED for old systems which neglect to.  */
+# ifndef MAP_FAILED
+#  define MAP_FAILED ((void *)-1)
+# endif
+#endif
+
 
 #if HAVE_MMAP || ! HAVE_POSIX_MEMALIGN
 

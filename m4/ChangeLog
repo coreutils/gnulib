@@ -1,3 +1,7 @@
+2005-03-07  Bruno Haible  <bruno@clisp.org>
+
+	* mmap-anon.m4 (MAP_FILE, MAP_FAILED): Remove definitions.
+
 2005-03-03  Bruno Haible  <bruno@clisp.org>
 
 	* inttypes.m4, isc-posix.m4, once-only.m4:
