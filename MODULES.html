@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chown, cloexec, closeout, copy-file, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, fcntl-safer, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getcwd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, inttostr, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha1, sig2str, stat, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, bcopy, binary-io, calloc, canon-host, canonicalize, c-bs-a, c-ctype, chown, cloexec, closeout, copy-file, c-stack, c-strtod, c-strtold, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, fcntl-safer, fileblocks, filemode, file-type, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getcwd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, inttostr, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha1, sig2str, snprintf, stat, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, timegm, time_r, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -395,6 +395,13 @@ memory allocation.
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">An &lt;stdint.h&gt; that nearly conforms to C99.
 (Nearly: {uint,int}_{fast,least}{8,16,32,64}_t may not correspond
 to the fastest and smallest types available on the system.)
+      </TR>
+    </TABLE>
+    <H3><A HREF="#isoc_sup_stdio">Input/output &lt;stdio.h&gt;</A></H3>
+    <TABLE>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=snprintf">snprintf</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/snprintf.html">snprintf</A>() function: print formatted output to a fixed length string
       </TR>
     </TABLE>
     <H3><A HREF="#isoc_sup_stdlib_conv">Numeric conversion functions &lt;stdlib.h&gt;</A></H3>
@@ -1836,6 +1843,30 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/stdint_.h">stdint_.h</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/stdint.m4">stdint.m4</A><BR><A HREF="m4/inttypes.m4">inttypes.m4</A><BR>gl_STDINT_H
         <TD ALIGN=LEFT VALIGN=TOP>---
+      </TR>
+    </TABLE>
+    <H3><A NAME="isoc_sup_stdio">Input/output &lt;stdio.h&gt;</A></H3>
+    <TABLE>
+      <TR>
+        <TH ALIGN=LEFT>modules/
+        <TH ALIGN=LEFT>lib/
+        <TH ALIGN=LEFT>lib/
+        <TH ALIGN=LEFT>m4/
+        <TH ALIGN=LEFT>&nbsp;
+      </TR>
+      <TR>
+        <TH ALIGN=LEFT>Module
+        <TH ALIGN=LEFT>Header
+        <TH ALIGN=LEFT>Implementation
+        <TH ALIGN=LEFT>Autoconf macro
+        <TH ALIGN=LEFT>Depends on
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=snprintf"></A><A HREF="modules/snprintf">snprintf</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/snprintf.h">snprintf.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/snprintf.c">snprintf.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/snprintf.m4">snprintf.m4</A><BR>gl_FUNC_SNPRINTF
+        <TD ALIGN=LEFT VALIGN=TOP>vasnprintf<BR>minmax
       </TR>
     </TABLE>
     <H3><A NAME="isoc_sup_stdlib_conv">Numeric conversion functions &lt;stdlib.h&gt;</A></H3>
