@@ -1,3 +1,7 @@
+2003-08-19  Bruno Haible  <bruno@clisp.org>
+
+	* xstrdup.c: Assume <string.h> exists.
+
 2003-08-18  Jim Meyering  <jim@meyering.net>
 
 	* setenv.h: Indent nested cpp directive.
