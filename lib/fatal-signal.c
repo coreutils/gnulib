@@ -50,6 +50,7 @@
      SIGSTKFLT - because it is more similar to SIGFPE, SIGSEGV, SIGBUS,
      SIGSYS - because it is more similar to SIGABRT, SIGSEGV,
      SIGPWR - because it of too special use,
+     SIGRTMIN...SIGRTMAX - because they are reserved for application use.
    plus
      SIGXCPU, SIGXFSZ - because they are quite similar to SIGTERM.  */
 
@@ -85,11 +86,21 @@ static const int fatal_signals[] =
 /* ========================================================================= */
 
 
-/* The registered cleanup actions.  */
 typedef void (*action_t) (void);
-static action_t static_actions[32];
-static action_t * volatile actions = static_actions;
-static size_t volatile actions_count = 0;
+
+/* Type of an entry in the actions array.
+   The 'action' field is accessed from within the fatal_signal_handler(),
+   therefore we mark it as 'volatile'.  */
+typedef struct
+{
+  volatile action_t action;
+}
+actions_entry_t;
+
+/* The registered cleanup actions.  */
+static actions_entry_t static_actions[32];
+static actions_entry_t * volatile actions = static_actions;
+static sig_atomic_t volatile actions_count = 0;
 static size_t actions_allocated = SIZEOF (static_actions);
 
 
@@ -117,12 +128,15 @@ fatal_signal_handler (int sig)
 	break;
       n--;
       actions_count = n;
-      action = actions[n];
+      action = actions[n].action;
       /* Execute the action.  */
       action ();
     }
 
-  /* Now execute the signal's default action.  */
+  /* Now execute the signal's default action.
+     If signal() blocks the signal being delivered for the duration of the
+     signal handler's execution, the re-raised signal is delivered when this
+     handler returns; otherwise it is delivered already during raise().  */
   uninstall_handlers ();
 #if HAVE_RAISE
   raise (sig);
@@ -160,19 +174,24 @@ at_fatal_signal (action_t action)
       /* Extend the actions array.  Note that we cannot use xrealloc(),
 	 because then the cleanup() function could access an already
 	 deallocated array.  */
-      action_t *old_actions = actions;
+      actions_entry_t *old_actions = actions;
       size_t new_actions_allocated = 2 * actions_allocated;
-      action_t *new_actions =
-	xmalloc (new_actions_allocated * sizeof (action_t));
+      actions_entry_t *new_actions =
+	xmalloc (new_actions_allocated * sizeof (actions_entry_t));
 
-      memcpy (new_actions, actions, actions_allocated * sizeof (action_t));
+      memcpy (new_actions, old_actions,
+	      actions_allocated * sizeof (actions_entry_t));
       actions = new_actions;
       actions_allocated = new_actions_allocated;
       /* Now we can free the old actions array.  */
       if (old_actions != static_actions)
 	free (old_actions);
     }
-  actions[actions_count] = action;
+  /* The two uses of 'volatile' in the types above (and ISO C 99 section
+     5.1.2.3.(5)) ensure that we increment the actions_count only after
+     the new action has been written to the memory location
+     actions[actions_count].  */
+  actions[actions_count].action = action;
   actions_count++;
 }
 
@@ -200,6 +219,7 @@ init_fatal_signal_set ()
     }
 }
 
+/* Temporarily delay the catchable fatal signals.  */
 void
 block_fatal_signals ()
 {
@@ -207,6 +227,7 @@ block_fatal_signals ()
   sigprocmask (SIG_BLOCK, &fatal_signal_set, NULL);
 }
 
+/* Stop delaying the catchable fatal signals.  */
 void
 unblock_fatal_signals ()
 {

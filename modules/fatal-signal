@@ -6,6 +6,7 @@ lib/fatal-signal.h
 lib/fatal-signal.c
 m4/fatal-signal.m4
 m4/signalblocking.m4
+m4/sig_atomic_t.m4
 
 Depends-on:
 xalloc

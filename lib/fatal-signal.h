@@ -29,7 +29,24 @@ extern "C" {
    The limitation of this facility is that it cannot work for SIGKILL.  */
 
 /* Register a cleanup function to be executed when a catchable fatal signal
-   occurs.  */
+   occurs.
+
+   Restrictions for the cleanup function:
+     - The cleanup function can do all kinds of system calls.
+     - It can also access application dependent memory locations and data
+       structures provided they are in a consistent state. One way to ensure
+       this is through block_fatal_signals()/unblock_fatal_signals(), see
+       below.  Another - more tricky - way to ensure this is the careful use
+       of 'volatile'.
+   However,
+     - malloc() and similarly complex facilities are not safe to be called
+       because they are not guaranteed to be in a consistent state.
+     - Also, the cleanup function must not block the catchable fatal signals
+       and leave them blocked upon return.
+
+   The cleanup function is executed asynchronously.  It is unspecified
+   whether during its execution the catchable fatal signals are blocked
+   or not.  */
 extern void at_fatal_signal (void (*function) (void));
 
 
@@ -40,7 +57,10 @@ extern void at_fatal_signal (void (*function) (void));
    functions create the temporary file or directory _before_ returning its
    name to the application.  */
 
-/* Temporarily delay the catchable fatal signals.  */
+/* Temporarily delay the catchable fatal signals.
+   The signals will be blocked (= delayed) until the next call to
+   unblock_fatal_signals().  If the signals are already blocked, a further
+   call to block_fatal_signals() has no effect.  */
 extern void block_fatal_signals (void);
 
 /* Stop delaying the catchable fatal signals.  */

@@ -1,3 +1,8 @@
+2003-10-14  Bruno Haible  <bruno@clisp.org>
+
+	* sig_atomic_t: New file, from GNU gettext.
+	* fatal-signal.m4 (gl_FATAL_SIGNAL): Require gt_TYPE_SIG_ATOMIC_T.
+
 2003-10-12  Paul Eggert  <eggert@twinsun.com>
 
 	* xalloc.m4 (gl_PREREQ_XMALLOC): Require AC_C_INLINE.

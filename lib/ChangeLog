@@ -1,3 +1,9 @@
+2003-10-14  Bruno Haible  <bruno@clisp.org>
+
+	* fatal-signal.h: Improved comments. Suggested by Paul Eggert.
+	* fatal-signal.c: Use sig_atomic_t. Suggested by Paul Eggert.
+	Also use volatile where needed.
+
 2003-10-12  Paul Eggert  <eggert@twinsun.com>
 
 	* lib/xalloc.h (xnmalloc, xzalloc, xnrealloc, xclone): New decls.

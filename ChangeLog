@@ -1,3 +1,7 @@
+2003-10-14  Bruno Haible  <bruno@clisp.org>
+
+	* modules/fatal-signal: Add m4/sig_atomic_t.m4 to file list.
+
 2003-10-12  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/xalloc: Do not depend on 'exit'.  Depend on 'stdbool'.
