@@ -1,3 +1,9 @@
+2003-07-01  Bruno Haible  <bruno@clisp.org>
+
+	* ssize_t.m4 (gt_TYPE_SSIZE_T): Don't include <unistd.h>. <sys/types.h>
+	should be sufficient.
+	Reported by Paul Eggert.
+
 2003-06-25  Bruno Haible  <bruno@clisp.org>
 
 	* readlink.m4: New file.

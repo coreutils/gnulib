@@ -1,4 +1,4 @@
-# ssize_t.m4 serial 2 (gettext-0.12.2)
+# ssize_t.m4 serial 3 (gettext-0.12.2)
 dnl Copyright (C) 2001-2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -11,13 +11,9 @@ dnl Test whether ssize_t is defined.
 
 AC_DEFUN([gt_TYPE_SSIZE_T],
 [
-  AC_CHECK_HEADERS_ONCE(unistd.h)
   AC_CACHE_CHECK([for ssize_t], gt_cv_ssize_t,
-    [AC_TRY_COMPILE([
-#include <sys/types.h>
-#if HAVE_UNISTD_H
-#include <unistd.h>
-#endif], [int x = sizeof (ssize_t *) + sizeof (ssize_t);],
+    [AC_TRY_COMPILE([#include <sys/types.h>],
+       [int x = sizeof (ssize_t *) + sizeof (ssize_t);],
        gt_cv_ssize_t=yes, gt_cv_ssize_t=no)])
   if test $gt_cv_ssize_t = no; then
     AC_DEFINE(ssize_t, int,
