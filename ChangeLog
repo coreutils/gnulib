@@ -1,3 +1,7 @@
+2004-12-18  Simon Josefsson  <jas@extundo.com>
+
+	* modules/alloca: Depend on alloca-opt, instead of duplicating it.
+
 2004-12-16  Simon Josefsson  <jas@extundo.com>
 
 	* tests/test-base64.c: Add license.
