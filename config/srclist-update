@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.1 2002-09-10 23:41:12 karl Exp $
+# $Id: srclist-update,v 1.2 2002-09-25 14:18:57 karl Exp $
 # 
 # Check for files being up to date, according to the list on stdin.
 # 
@@ -45,7 +45,7 @@ cat | while read src dst; do
     $verbose && echo "## $src $dst  # unchanged"
   else
     echo "## $src $dst  # changes"
-    diff -c2 $src $dst
+    diff -c2 $dst $src
   fi
 done
 
