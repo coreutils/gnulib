@@ -1,5 +1,5 @@
 /* provide a replacement openat function
-   Copyright (C) 2004 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,8 +21,14 @@
 # include <fcntl.h>
 #endif
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <unistd.h>
+
 #ifndef AT_FDCWD
 # define AT_FDCWD (-3041965) /* same value as Solaris 9 */
+# define AT_SYMLINK_NOFOLLOW 4096 /* same value as Solaris 9 */
 
 # ifdef __OPENAT_PREFIX
 #  undef openat
@@ -31,5 +37,10 @@
 #  define __OPENAT_ID(y) __OPENAT_XCONCAT (__OPENAT_PREFIX, y)
 #  define openat __OPENAT_ID (openat)
 int openat (int fd, char const *filename, int flags, /* mode_t mode */ ...);
+#  define fdopendir __OPENAT_ID (fdopendir)
+DIR *fdopendir (int fd);
+#  define fstatat __OPENAT_ID (fstatat)
+int fstatat (int fd, char const *filename, struct stat *st, int flag);
 # endif
+
 #endif
