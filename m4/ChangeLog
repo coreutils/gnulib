@@ -1,3 +1,8 @@
+2005-03-14  Bruno Haible  <bruno@clisp.org>
+
+	* lib-link.m4, gettext.m4, nls.m4, po.m4:
+	Update from GNU gettext 0.14.3.
+
 2005-03-10  Jim Meyering  <jim@meyering.net>
 
 	* save-cwd.m4 (gl_SAVE_CWD): Check for fchdir.
