@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.8 2002-11-25 14:24:39 karl Exp $
+# $Id: srclist.txt,v 1.9 2002-11-25 16:31:49 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -27,6 +27,7 @@ $LIBCSRC/posix/getopt.h			lib gpl
 $LIBCSRC/posix/getopt1.c		lib gpl
 $LIBCSRC/posix/regex.h			lib gpl
 #$LIBCSRC/string/strdup.c		lib gpl
+$LIBCSRC/time/mktime.c			lib gpl
 #
 # - libc/sysdeps/generic has memcpy.c, memmove.c, strcasecmp.c, but they
 #   are totally different implementations.
