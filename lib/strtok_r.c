@@ -49,7 +49,7 @@
    Caveat: These functions cannot be used on constant strings.
    Caveat: The identity of the delimiting character is lost.
    Caveat: It doesn't work with multibyte strings unless all of the delimiter
-           characters are ASCII characters < 0x80.
+           characters are ASCII characters < 0x30.
 
    See also strsep().
 */
