@@ -1,3 +1,15 @@
+2004-04-28  Bruno Haible  <bruno@clisp.org>
+
+	* findprog.c (find_in_path): Treat Cygwin like Windows, since it also
+	implicitly appends .exe to executables.
+	* localcharset.c (ISSLASH): Treat Cygwin like Windows, since it now
+	accepts Windows pathnames.
+	* pathname.h (ISSLASH, IS_PATH_WITH_DIR, FILESYSTEM_PREFIX_LEN): Treat
+	Cygwin like Windows, since it now accepts Windows pathnames.
+	* progreloc.c (ISSLASH, IS_PATH_WITH_DIR, FILESYSTEM_PREFIX_LEN): Treat
+	Cygwin like Windows, since it now accepts Windows pathnames.
+	Reported by Derek Robert Price <derek@ximbiot.com>.
+
 2004-04-20  Jim Meyering  <jim@meyering.net>
 
 	* getndelim2.c (getndelim2): Upon realloc failure, don't leak memory.
