@@ -1,5 +1,9 @@
 2003-01-11  Bruno Haible  <bruno@clisp.org>
 
+	* md5.m4 (gl_MD5): Require AC_C_INLINE.
+
+2003-01-11  Bruno Haible  <bruno@clisp.org>
+
 	* alloca.m4 (gl_FUNC_ALLOCA): Invoke AC_EGREP_CPP prerequisites.
 
 2003-01-12  Paul Eggert  <eggert@twinsun.com>
