@@ -1,0 +1,1344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+  <HEAD>
+    <TITLE>Gnulib Module List</TITLE>
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, getstr, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, mkdir, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+  </HEAD>
+  <BODY>
+  </BODY>
+  <H1>Gnulib Module List</H1>
+  This is a list of the modules which make up gnulib, with dependencies.
+  <H2>Support for systems lacking ANSI C 89</H2>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>c-bs-a.m4<BR>AC_C_BACKSLASH_A
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;assert.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>assert.m4<BR>jm_ASSERT
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>atexit.c
+      <TD ALIGN=LEFT VALIGN=TOP>atexit.m4<BR>gl_FUNC_ATEXIT
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>strtod.c
+      <TD ALIGN=LEFT VALIGN=TOP>strtod.m4<BR>gl_FUNC_STRTOD
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>strtol.c
+      <TD ALIGN=LEFT VALIGN=TOP>strtol.m4<BR>gl_FUNC_STRTOL
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>strtoul.c
+      <TD ALIGN=LEFT VALIGN=TOP>strtoul.m4<BR>gl_FUNC_STRTOUL
+      <TD ALIGN=LEFT VALIGN=TOP>strtol
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>memchr.c
+      <TD ALIGN=LEFT VALIGN=TOP>memchr.m4<BR>gl_FUNC_MEMCHR
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>memcmp.c
+      <TD ALIGN=LEFT VALIGN=TOP>memcmp.m4<BR>jm_FUNC_MEMCMP
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>memcpy.c
+      <TD ALIGN=LEFT VALIGN=TOP>memcpy.m4<BR>gl_FUNC_MEMCPY
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>memmove.c
+      <TD ALIGN=LEFT VALIGN=TOP>memmove.m4<BR>gl_FUNC_MEMMOVE
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>memset.c
+      <TD ALIGN=LEFT VALIGN=TOP>memset.m4<BR>gl_FUNC_MEMSET
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>strcspn.c
+      <TD ALIGN=LEFT VALIGN=TOP>strcspn.m4<BR>gl_FUNC_STRCSPN
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "strpbrk.h"
+      <TD ALIGN=LEFT VALIGN=TOP>strpbrk.c
+      <TD ALIGN=LEFT VALIGN=TOP>strpbrk.m4<BR>gl_FUNC_STRPBRK
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "strstr.h"
+      <TD ALIGN=LEFT VALIGN=TOP>strstr.c
+      <TD ALIGN=LEFT VALIGN=TOP>strstr.m4<BR>gl_FUNC_STRSTR
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>strerror.c
+      <TD ALIGN=LEFT VALIGN=TOP>strerror.m4<BR>gl_FUNC_STRERROR
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;time.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>mktime.c
+      <TD ALIGN=LEFT VALIGN=TOP>mktime.m4<BR>gl_FUNC_MKTIME
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  These modules are not listed among dependencies below, for simplicity.
+  <H2>Enhancements for ANSI C 89 functions</H2>
+  <H3>Memory management functions &lt;stdlib.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>malloc.c
+      <TD ALIGN=LEFT VALIGN=TOP>malloc.m4<BR>jm_FUNC_MALLOC
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>realloc.c
+      <TD ALIGN=LEFT VALIGN=TOP>realloc.m4<BR>jm_FUNC_REALLOC
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H3>Date and time &lt;time.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;time.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>strftime.c
+      <TD ALIGN=LEFT VALIGN=TOP>mbstate_t.m4<BR>tm_gmtoff.m4<BR>strftime.m4<BR>jm_FUNC_GNU_STRFTIME
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H2>Extra functions based on ANSI C 89</H2>
+  <H3>Memory management functions &lt;stdlib.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "xalloc.h"
+      <TD ALIGN=LEFT VALIGN=TOP>xmalloc.c<BR>xstrdup.c
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc.m4<BR>gl_XALLOC
+      <TD ALIGN=LEFT VALIGN=TOP>malloc<BR>realloc<BR>error<BR>gettext
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#ifdef __GNUC__<BR># ifndef alloca<BR>#  define alloca __builtin_alloca<BR># endif<BR>#else<BR># ifdef _MSC_VER<BR>#  include &lt;malloc.h&gt;<BR>#  define alloca _alloca<BR># else<BR>#  if HAVE_ALLOCA_H<BR>#   include &lt;alloca.h&gt;<BR>#  else<BR>#   ifdef _AIX<BR> #pragma alloca<BR>#   else<BR>#    ifdef __hpux /* This section must match that of bison generated files. */<BR>#     ifdef __cplusplus<BR>extern "C" void *alloca (unsigned int);<BR>#     else /* not __cplusplus */<BR>void *alloca ();<BR>#     endif /* not __cplusplus */<BR>#    else /* not __hpux */<BR>#     ifndef alloca<BR>char *alloca ();<BR>#     endif<BR>#    endif /* __hpux */<BR>#   endif<BR>#  endif<BR># endif<BR>#endif
+      <TD ALIGN=LEFT VALIGN=TOP>alloca.c
+      <TD ALIGN=LEFT VALIGN=TOP>alloca.m4<BR>gl_FUNC_ALLOCA
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "bumpalloc.h"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc
+    </TR>
+  </TABLE>
+  <H3>Integer arithmetic functions &lt;stdlib.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "gcd.h"
+      <TD ALIGN=LEFT VALIGN=TOP>gcd.c
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H3>Environment variables &lt;stdlib.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>putenv.c
+      <TD ALIGN=LEFT VALIGN=TOP>putenv.m4<BR>jm_FUNC_PUTENV
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "setenv.h"
+      <TD ALIGN=LEFT VALIGN=TOP>setenv.c<BR>unsetenv.c
+      <TD ALIGN=LEFT VALIGN=TOP>setenv.m4<BR>gt_FUNC_SETENV
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H3>Character handling &lt;ctype.h&gt;</H3>
+  <H3>String handling &lt;string.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>bcopy.c
+      <TD ALIGN=LEFT VALIGN=TOP>AC_REPLACE_FUNCS(bcopy)
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>memrchr.c
+      <TD ALIGN=LEFT VALIGN=TOP>memrchr.m4<BR>gl_FUNC_MEMRCHR
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "stpcpy.h"
+      <TD ALIGN=LEFT VALIGN=TOP>stpcpy.c
+      <TD ALIGN=LEFT VALIGN=TOP>stpcpy.m4<BR>gl_FUNC_STPCPY
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "strcase.h"
+      <TD ALIGN=LEFT VALIGN=TOP>strcasecmp.c<BR>strncasecmp.c
+      <TD ALIGN=LEFT VALIGN=TOP>strcase.m4<BR>gl_STRCASE
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>strdup.c
+      <TD ALIGN=LEFT VALIGN=TOP>strdup.m4<BR>gl_FUNC_STRDUP
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>strnlen.c
+      <TD ALIGN=LEFT VALIGN=TOP>strnlen.m4<BR>gl_FUNC_STRNLEN
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>strndup.c
+      <TD ALIGN=LEFT VALIGN=TOP>strndup.m4<BR>gl_FUNC_STRNDUP
+      <TD ALIGN=LEFT VALIGN=TOP>strnlen
+    </TR>
+  </TABLE>
+  <H3>Numeric conversion functions &lt;stdlib.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "xstrtod.h"
+      <TD ALIGN=LEFT VALIGN=TOP>xstrtod.c
+      <TD ALIGN=LEFT VALIGN=TOP>xstrtod.m4<BR>gl_XSTRTOD
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "xstrtol.h"
+      <TD ALIGN=LEFT VALIGN=TOP>xstrtol.c<BR>xstrtoul.c
+      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>longlong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>uintmax_t.m4<BR>intmax_t.m4<BR>xstrtol.m4<BR>gl_XSTRTOL
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H3>Date and time &lt;time.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "getdate.h"
+      <TD ALIGN=LEFT VALIGN=TOP>getdate.y
+      <TD ALIGN=LEFT VALIGN=TOP>bison.m4<BR>tm_gmtoff.m4<BR>getdate.m4<BR>gl_GETDATE
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
+    </TR>
+  </TABLE>
+  <H3>Input/Output &lt;stdio.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "unlocked-io.h"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io.m4<BR>jm_FUNC_GLIBC_UNLOCKED_IO
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H3>Command-line arguments</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "argmatch.h"
+      <TD ALIGN=LEFT VALIGN=TOP>argmatch.c
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>error<BR>quotearg<BR>quote<BR>unlocked-io
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "version-etc.h"
+      <TD ALIGN=LEFT VALIGN=TOP>version-etc.c
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "long-options.h"
+      <TD ALIGN=LEFT VALIGN=TOP>long-options.c
+      <TD ALIGN=LEFT VALIGN=TOP>long-options.m4<BR>gl_LONG_OPTIONS
+      <TD ALIGN=LEFT VALIGN=TOP>version-etc
+    </TR>
+  </TABLE>
+  <H3>Cryptographic computations</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "md5.h"
+      <TD ALIGN=LEFT VALIGN=TOP>md5.c
+      <TD ALIGN=LEFT VALIGN=TOP>md5.m4<BR>gl_MD5
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "sha.h"
+      <TD ALIGN=LEFT VALIGN=TOP>sha.c
+      <TD ALIGN=LEFT VALIGN=TOP>sha.m4<BR>gl_SHA
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>md5
+    </TR>
+  </TABLE>
+  <H3>Misc</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "diacrit.h"
+      <TD ALIGN=LEFT VALIGN=TOP>diacrit.c
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "getstr.h"
+      <TD ALIGN=LEFT VALIGN=TOP>getstr.c
+      <TD ALIGN=LEFT VALIGN=TOP>getstr.m4<BR>gl_GETSTR
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "getline.h"
+      <TD ALIGN=LEFT VALIGN=TOP>getline.c
+      <TD ALIGN=LEFT VALIGN=TOP>getline.m4<BR>AM_FUNC_GETLINE
+      <TD ALIGN=LEFT VALIGN=TOP>getstr
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "linebuffer.h"
+      <TD ALIGN=LEFT VALIGN=TOP>linebuffer.c
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "obstack.h"
+      <TD ALIGN=LEFT VALIGN=TOP>obstack.c
+      <TD ALIGN=LEFT VALIGN=TOP>obstack.m4<BR>gl_OBSTACK
+      <TD ALIGN=LEFT VALIGN=TOP>gettext
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "hash-pjw.h"
+      <TD ALIGN=LEFT VALIGN=TOP>hash-pjw.c
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "hash.h"
+      <TD ALIGN=LEFT VALIGN=TOP>hash.c
+      <TD ALIGN=LEFT VALIGN=TOP>hash.m4<BR>gl_HASH
+      <TD ALIGN=LEFT VALIGN=TOP>malloc<BR>realloc<BR>stdbool
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "readtokens.h"
+      <TD ALIGN=LEFT VALIGN=TOP>readtokens.c
+      <TD ALIGN=LEFT VALIGN=TOP>readtokens.m4<BR>gl_READTOKENS
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "strverscmp.h"
+      <TD ALIGN=LEFT VALIGN=TOP>strverscmp.c
+      <TD ALIGN=LEFT VALIGN=TOP>strverscmp.m4<BR>gl_FUNC_STRVERSCMP
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H2>Support for systems lacking ISO C 99</H2>
+  <H3>Boolean type and values &lt;stdbool.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#if HAVE_STDBOOL_H<BR># include &lt;stdbool.h&gt;<BR>#else<BR># if ! HAVE__BOOL<BR>#  ifdef __cplusplus<BR>typedef bool _Bool;<BR>#  else<BR>typedef enum {false = 0, true = 1} _Bool;<BR>#  endif<BR># endif<BR># define bool _Bool<BR># define false 0<BR># define true 1<BR># define __bool_true_false_are_defined 1<BR>#endif
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>stdbool.m4<BR>AC_HEADER_STDBOOL
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H3>Numeric conversion functions &lt;stdlib.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>strtoll.c
+      <TD ALIGN=LEFT VALIGN=TOP>longlong.m4<BR>strtoll.m4<BR>gl_FUNC_STRTOLL
+      <TD ALIGN=LEFT VALIGN=TOP>strtol
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>strtoull.c
+      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>strtoull.m4<BR>gl_FUNC_STRTOULL
+      <TD ALIGN=LEFT VALIGN=TOP>strtoul
+    </TR>
+  </TABLE>
+  <H3>Functions for greatest-width integer types &lt;inttypes.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>strtoimax.c
+      <TD ALIGN=LEFT VALIGN=TOP>longlong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>intmax_t.m4<BR>strtoimax.m4<BR>gl_FUNC_STRTOIMAX
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>strtoumax.c
+      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>uintmax_t.m4<BR>strtoumax.m4<BR>gl_FUNC_STRTOUMAX
+      <TD ALIGN=LEFT VALIGN=TOP>strtoimax
+    </TR>
+  </TABLE>
+  <H2>Enhancements for ISO C 99 functions</H2>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+  </TABLE>
+  <H2>Extra functions based on ISO C 99</H2>
+  <H3>Numeric conversion functions &lt;stdlib.h&gt;</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "xstrtol.h"
+      <TD ALIGN=LEFT VALIGN=TOP>xstrtoimax.c
+      <TD ALIGN=LEFT VALIGN=TOP>xstrtoimax.m4<BR>jm_XSTRTOIMAX
+      <TD ALIGN=LEFT VALIGN=TOP>xstrtol<BR>strtoimax
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "xstrtol.h"
+      <TD ALIGN=LEFT VALIGN=TOP>xstrtoumax.c
+      <TD ALIGN=LEFT VALIGN=TOP>xstrtoumax.m4<BR>jm_XSTRTOUMAX
+      <TD ALIGN=LEFT VALIGN=TOP>xstrtol<BR>strtoumax
+    </TR>
+  </TABLE>
+  <H2>Support for systems lacking POSIX:2001</H2>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;unistd.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>chown.c
+      <TD ALIGN=LEFT VALIGN=TOP>chown.m4<BR>jm_FUNC_CHOWN
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;unistd.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>dup2.c
+      <TD ALIGN=LEFT VALIGN=TOP>dup2.m4<BR>gl_FUNC_DUP2
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;unistd.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>ftruncate.c
+      <TD ALIGN=LEFT VALIGN=TOP>ftruncate.m4<BR>jm_FUNC_FTRUNCATE
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;unistd.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>getgroups.c
+      <TD ALIGN=LEFT VALIGN=TOP>getgroups.m4<BR>jm_FUNC_GETGROUPS
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;sys/time.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>gettimeofday.c
+      <TD ALIGN=LEFT VALIGN=TOP>gettimeofday.m4<BR>AC_FUNC_GETTIMEOFDAY_CLOBBER
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;sys/stat.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>mkdir.c
+      <TD ALIGN=LEFT VALIGN=TOP>mkdir-slash.m4<BR>UTILS_FUNC_MKDIR_TRAILING_SLASH
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>dirname
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>mkstemp.c<BR>tempname.c
+      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>uintmax_t.m4<BR>mkstemp.m4<BR>UTILS_FUNC_MKSTEMP
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;sys/stat.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>stat.c
+      <TD ALIGN=LEFT VALIGN=TOP>stat.m4<BR>jm_FUNC_STAT
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;sys/stat.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>lstat.c
+      <TD ALIGN=LEFT VALIGN=TOP>lstat.m4<BR>jm_FUNC_LSTAT
+      <TD ALIGN=LEFT VALIGN=TOP>stat<BR>xalloc
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "timespec.h"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>st_mtim.m4<BR>timespec.m4<BR>gl_TIMESPEC
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;time.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>nanosleep.c
+      <TD ALIGN=LEFT VALIGN=TOP>nanosleep.m4<BR>jm_FUNC_NANOSLEEP
+      <TD ALIGN=LEFT VALIGN=TOP>timespec
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "regex.h"
+      <TD ALIGN=LEFT VALIGN=TOP>regex.c
+      <TD ALIGN=LEFT VALIGN=TOP>regex.m4<BR>gl_REGEX
+      <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>unlocked-io<BR>gettext
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdio.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>rename.c
+      <TD ALIGN=LEFT VALIGN=TOP>rename.m4<BR>vb_FUNC_RENAME
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>dirname
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;unistd.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>rmdir.c
+      <TD ALIGN=LEFT VALIGN=TOP>rmdir.m4<BR>gl_FUNC_RMDIR
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#if HAVE_UTIME_H<BR># include &lt;utime.h&gt;<BR>#else<BR># include &lt;sys/utime.h&gt;<BR>#endif
+      <TD ALIGN=LEFT VALIGN=TOP>utime.c
+      <TD ALIGN=LEFT VALIGN=TOP>utimbuf.m4<BR>utimes.m4<BR>utime.m4<BR>jm_FUNC_UTIME
+      <TD ALIGN=LEFT VALIGN=TOP>safe-read<BR>full-write
+    </TR>
+  </TABLE>
+  <H2>Enhancements for POSIX:2001 functions</H2>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "dirname.h"
+      <TD ALIGN=LEFT VALIGN=TOP>dirname.c<BR>basename.c<BR>stripslash.c
+      <TD ALIGN=LEFT VALIGN=TOP>dos.m4<BR>dirname.m4<BR>gl_DIRNAME
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "getopt.h"
+      <TD ALIGN=LEFT VALIGN=TOP>getopt.c<BR>getopt1.c
+      <TD ALIGN=LEFT VALIGN=TOP>getopt.m4<BR>gl_GETOPT
+      <TD ALIGN=LEFT VALIGN=TOP>gettext
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "unistd-safer.h"
+      <TD ALIGN=LEFT VALIGN=TOP>dup-safer.c
+      <TD ALIGN=LEFT VALIGN=TOP>unistd-safer.m4<BR>gl_UNISTD_SAFER
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>fnmatch_.h<BR>fnmatch.c<BR>fnmatch_loop.c
+      <TD ALIGN=LEFT VALIGN=TOP>mbstate_t.m4<BR>fnmatch.m4<BR># No macro. You should also use one of fnmatch-posix or fnmatch-gnu.
+      <TD ALIGN=LEFT VALIGN=TOP>alloca
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "fnmatch.h"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>gl_FUNC_FNMATCH_POSIX
+      <TD ALIGN=LEFT VALIGN=TOP>fnmatch
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "fnmatch.h"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>gl_FUNC_FNMATCH_GNU
+      <TD ALIGN=LEFT VALIGN=TOP>fnmatch
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "exclude.h"
+      <TD ALIGN=LEFT VALIGN=TOP>exclude.c
+      <TD ALIGN=LEFT VALIGN=TOP>exclude.m4<BR>gl_EXCLUDE
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>strcase<BR>unlocked-io<BR>fnmatch-gnu<BR>stdbool
+    </TR>
+  </TABLE>
+  <H2>Extra functions based on POSIX:2001</H2>
+  <H3>Numeric conversion functions</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "human.h"
+      <TD ALIGN=LEFT VALIGN=TOP>human.c
+      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>uintmax_t.m4<BR>human.m4<BR>gl_HUMAN
+      <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>argmatch<BR>error<BR>xstrtol
+    </TR>
+  </TABLE>
+  <H3>File system functions</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "acl.h"
+      <TD ALIGN=LEFT VALIGN=TOP>acl.c
+      <TD ALIGN=LEFT VALIGN=TOP>acl.m4<BR>AC_FUNC_ACL
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "backupfile.h"
+      <TD ALIGN=LEFT VALIGN=TOP>backupfile.c<BR>addext.c
+      <TD ALIGN=LEFT VALIGN=TOP>dos.m4<BR>d-ino.m4<BR>backupfile.m4<BR>gl_BACKUPFILE
+      <TD ALIGN=LEFT VALIGN=TOP>argmatch<BR>dirname
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "fsusage.h"
+      <TD ALIGN=LEFT VALIGN=TOP>fsusage.c
+      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>uintmax_t.m4<BR>fsusage.m4<BR>gl_FSUSAGE
+      <TD ALIGN=LEFT VALIGN=TOP>full-read
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "dirfd.h"
+      <TD ALIGN=LEFT VALIGN=TOP>dirfd.c
+      <TD ALIGN=LEFT VALIGN=TOP>dirfd.m4<BR>UTILS_FUNC_DIRFD
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>euidaccess.c
+      <TD ALIGN=LEFT VALIGN=TOP>euidaccess.m4<BR>gl_FUNC_EUIDACCESS
+      <TD ALIGN=LEFT VALIGN=TOP>group-member
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "file-type.h"
+      <TD ALIGN=LEFT VALIGN=TOP>file-type.c
+      <TD ALIGN=LEFT VALIGN=TOP>file-type.m4<BR>gl_FILE_TYPE
+      <TD ALIGN=LEFT VALIGN=TOP>gettext
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>fileblocks.c
+      <TD ALIGN=LEFT VALIGN=TOP>fileblocks.m4<BR>gl_FILEBLOCKS
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "filemode.h"
+      <TD ALIGN=LEFT VALIGN=TOP>filemode.c
+      <TD ALIGN=LEFT VALIGN=TOP>filemode.m4<BR>gl_FILEMODE
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>isdir.c
+      <TD ALIGN=LEFT VALIGN=TOP>isdir.m4<BR>gl_ISDIR
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>lchown.h<BR>lchown.c
+      <TD ALIGN=LEFT VALIGN=TOP>lchown.m4<BR>jm_FUNC_LCHOWN
+      <TD ALIGN=LEFT VALIGN=TOP>chown
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "makepath.h"
+      <TD ALIGN=LEFT VALIGN=TOP>makepath.c
+      <TD ALIGN=LEFT VALIGN=TOP>afs.m4<BR>makepath.m4<BR>gl_MAKEPATH
+      <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>chown<BR>gettext<BR>save-cwd<BR>dirname<BR>error<BR>quote
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "modechange.h"
+      <TD ALIGN=LEFT VALIGN=TOP>modechange.c
+      <TD ALIGN=LEFT VALIGN=TOP>modechange.m4<BR>gl_MODECHANGE
+      <TD ALIGN=LEFT VALIGN=TOP>xstrtol
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "mountlist.h"
+      <TD ALIGN=LEFT VALIGN=TOP>mountlist.c
+      <TD ALIGN=LEFT VALIGN=TOP>ls-mntd-fs.m4<BR>fstypename.m4<BR>mountlist.m4<BR>gl_MOUNTLIST
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "path-concat.h"
+      <TD ALIGN=LEFT VALIGN=TOP>path-concat.c
+      <TD ALIGN=LEFT VALIGN=TOP>dos.m4<BR>path-concat.m4<BR>gl_PATH_CONCAT
+      <TD ALIGN=LEFT VALIGN=TOP>strdup<BR>xalloc<BR>dirname
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "pathmax.h"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>pathmax.m4<BR>gl_PATHMAX
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "same.h"
+      <TD ALIGN=LEFT VALIGN=TOP>same.c
+      <TD ALIGN=LEFT VALIGN=TOP>same.m4<BR>gl_SAME
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>error<BR>dirname
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "save-cwd.h"
+      <TD ALIGN=LEFT VALIGN=TOP>save-cwd.c
+      <TD ALIGN=LEFT VALIGN=TOP>save-cwd.m4<BR>gl_SAVE_CWD
+      <TD ALIGN=LEFT VALIGN=TOP>error
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "savedir.h"
+      <TD ALIGN=LEFT VALIGN=TOP>savedir.c
+      <TD ALIGN=LEFT VALIGN=TOP>savedir.m4<BR>gl_SAVEDIR
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "xgetcwd.h"
+      <TD ALIGN=LEFT VALIGN=TOP>xgetcwd.c
+      <TD ALIGN=LEFT VALIGN=TOP>getcwd.m4<BR>xgetcwd.m4<BR>gl_XGETCWD
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>pathmax
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "xreadlink.h"
+      <TD ALIGN=LEFT VALIGN=TOP>xreadlink.c
+      <TD ALIGN=LEFT VALIGN=TOP>xreadlink.m4<BR>gl_XREADLINK
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc
+    </TR>
+  </TABLE>
+  <H3>File descriptor based Input/Output</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "safe-read.h"
+      <TD ALIGN=LEFT VALIGN=TOP>safe-read.c
+      <TD ALIGN=LEFT VALIGN=TOP>safe-read.m4<BR>gl_SAFE_READ
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "safe-write.h"
+      <TD ALIGN=LEFT VALIGN=TOP>safe-write.c
+      <TD ALIGN=LEFT VALIGN=TOP>safe-write.m4<BR>gl_SAFE_WRITE
+      <TD ALIGN=LEFT VALIGN=TOP>safe-read
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "full-read.h"
+      <TD ALIGN=LEFT VALIGN=TOP>full-read.c
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>safe-read
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "full-write.h"
+      <TD ALIGN=LEFT VALIGN=TOP>full-write.c
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>safe-write
+    </TR>
+  </TABLE>
+  <H3>File stream based Input/Output</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "__fpending.h"
+      <TD ALIGN=LEFT VALIGN=TOP>__fpending.c
+      <TD ALIGN=LEFT VALIGN=TOP>fpending.m4<BR>jm_FUNC_FPENDING
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "closeout.h"
+      <TD ALIGN=LEFT VALIGN=TOP>closeout.c
+      <TD ALIGN=LEFT VALIGN=TOP>closeout.m4<BR>gl_CLOSEOUT
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext<BR>error<BR>quotearg<BR>fpending
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "stdio-safer.h"
+      <TD ALIGN=LEFT VALIGN=TOP>fopen-safer.c
+      <TD ALIGN=LEFT VALIGN=TOP>stdio-safer.m4<BR>gl_STDIO_SAFER
+      <TD ALIGN=LEFT VALIGN=TOP>unistd-safer
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>getpass.c
+      <TD ALIGN=LEFT VALIGN=TOP>getpass.m4<BR>gl_FUNC_GETPASS
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>getline
+    </TR>
+  </TABLE>
+  <H3>Users and groups</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>getugroups.c
+      <TD ALIGN=LEFT VALIGN=TOP>getugroups.m4<BR>gl_GETUGROUPS
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "group-member.h"
+      <TD ALIGN=LEFT VALIGN=TOP>group-member.c
+      <TD ALIGN=LEFT VALIGN=TOP>group-member.m4<BR>jm_FUNC_GROUP_MEMBER
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>idcache.c
+      <TD ALIGN=LEFT VALIGN=TOP>idcache.m4<BR>gl_IDCACHE
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>userspec.c
+      <TD ALIGN=LEFT VALIGN=TOP>userspec.m4<BR>gl_USERSPEC
+      <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>xalloc<BR>xstrtol<BR>strdup<BR>gettext
+    </TR>
+  </TABLE>
+  <H3>Date and time</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>gettime.c
+      <TD ALIGN=LEFT VALIGN=TOP>clock_time.m4<BR>gettime.m4<BR>gl_GETTIME
+      <TD ALIGN=LEFT VALIGN=TOP>gettimeofday<BR>timespec
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>settime.c
+      <TD ALIGN=LEFT VALIGN=TOP>clock_time.m4<BR>settime.m4<BR>gl_SETTIME
+      <TD ALIGN=LEFT VALIGN=TOP>timespec
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "posixtm.h"
+      <TD ALIGN=LEFT VALIGN=TOP>posixtm.c
+      <TD ALIGN=LEFT VALIGN=TOP>posixtm.m4<BR>gl_POSIXTM
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
+    </TR>
+  </TABLE>
+  <H3>Networking functions</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>gethostname.c
+      <TD ALIGN=LEFT VALIGN=TOP>gethostname.m4<BR>gl_FUNC_GETHOSTNAME
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>xgethostname.c
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>gethostname<BR>xalloc<BR>error
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>canon-host.c
+      <TD ALIGN=LEFT VALIGN=TOP>canon-host.m4<BR>gl_CANON_HOST
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H3>Internationalization functions</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "gettext.h"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>codeset.m4<BR>gettext.m4<BR>glibc21.m4<BR>iconv.m4<BR>intdiv0.m4<BR>inttypes.m4<BR>inttypes_h.m4<BR>inttypes-pri.m4<BR>isc-posix.m4<BR>lcmessage.m4<BR>lib-ld.m4<BR>lib-link.m4<BR>lib-prefix.m4<BR>progtest.m4<BR>stdint_h.m4<BR>uintmax_t.m4<BR>ulonglong.m4<BR>AM_GNU_GETTEXT([external])
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;iconv.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>iconv.m4<BR>lib-ld.m4<BR>lib-link.m4<BR>lib-prefix.m4<BR>AM_ICONV
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "localcharset.h"
+      <TD ALIGN=LEFT VALIGN=TOP>localcharset.c<BR>config.charset<BR>ref-add.sin<BR>ref-del.sin
+      <TD ALIGN=LEFT VALIGN=TOP>codeset.m4<BR>glibc21.m4<BR>localcharset.m4<BR>gl_LOCALCHARSET
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "hard-locale.h"
+      <TD ALIGN=LEFT VALIGN=TOP>hard-locale.c
+      <TD ALIGN=LEFT VALIGN=TOP>hard-locale.m4<BR>gl_HARD_LOCALE
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "mbswidth.h"
+      <TD ALIGN=LEFT VALIGN=TOP>mbswidth.c
+      <TD ALIGN=LEFT VALIGN=TOP>mbstate_t.m4<BR>mbrtowc.m4<BR>mbswidth.m4<BR>gl_MBSWIDTH
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "memcasecmp.h"
+      <TD ALIGN=LEFT VALIGN=TOP>memcasecmp.c
+      <TD ALIGN=LEFT VALIGN=TOP>memcasecmp.m4<BR>gl_MEMCASECMP
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "memcoll.h"
+      <TD ALIGN=LEFT VALIGN=TOP>memcoll.c
+      <TD ALIGN=LEFT VALIGN=TOP>memcoll.m4<BR>gl_MEMCOLL
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "xmemcoll.h"
+      <TD ALIGN=LEFT VALIGN=TOP>xmemcoll.c
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>memcoll<BR>gettext<BR>error<BR>quotearg
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "unicodeio.h"
+      <TD ALIGN=LEFT VALIGN=TOP>unicodeio.c
+      <TD ALIGN=LEFT VALIGN=TOP>unicodeio.m4<BR>gl_UNICODEIO
+      <TD ALIGN=LEFT VALIGN=TOP>iconv<BR>gettext<BR>localcharset<BR>error
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>rpmatch.c
+      <TD ALIGN=LEFT VALIGN=TOP>rpmatch.m4<BR>gl_FUNC_RPMATCH
+      <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>regex
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>yesno.c
+      <TD ALIGN=LEFT VALIGN=TOP>yesno.m4<BR>gl_YESNO
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>rpmatch
+    </TR>
+  </TABLE>
+  <H3>Executing programs</H3>
+  <H3>Java</H3>
+  <H3>Misc</H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "exitfail.h"
+      <TD ALIGN=LEFT VALIGN=TOP>exitfail.c
+      <TD ALIGN=LEFT VALIGN=TOP>exitfail.m4<BR>gl_EXITFAIL
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "c-stack.h"
+      <TD ALIGN=LEFT VALIGN=TOP>c-stack.c
+      <TD ALIGN=LEFT VALIGN=TOP>c-stack.m4<BR>gl_C_STACK
+      <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>exitfail
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "error.h"
+      <TD ALIGN=LEFT VALIGN=TOP>error.c
+      <TD ALIGN=LEFT VALIGN=TOP>error.m4<BR>gl_ERROR
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "fatal.h"
+      <TD ALIGN=LEFT VALIGN=TOP>fatal.c
+      <TD ALIGN=LEFT VALIGN=TOP>fatal.m4<BR>gl_FATAL
+      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>error
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>getloadavg.c
+      <TD ALIGN=LEFT VALIGN=TOP>getloadavg.m4<BR>gl_FUNC_GETLOADAVG
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "getpagesize.h"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>getpagesize.m4<BR>gl_GETPAGESIZE
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>getusershell.c
+      <TD ALIGN=LEFT VALIGN=TOP>getusershell.m4<BR>gl_PREREQ_GETUSERSHELL
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "physmem.h"
+      <TD ALIGN=LEFT VALIGN=TOP>physmem.c
+      <TD ALIGN=LEFT VALIGN=TOP>physmem.m4<BR>gl_PHYSMEM
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "posixver.h"
+      <TD ALIGN=LEFT VALIGN=TOP>posixver.c
+      <TD ALIGN=LEFT VALIGN=TOP>posixver.m4<BR>gl_POSIXVER
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "quotearg.h"
+      <TD ALIGN=LEFT VALIGN=TOP>quotearg.c
+      <TD ALIGN=LEFT VALIGN=TOP>mbstate_t.m4<BR>mbrtowc.m4<BR>quotearg.m4<BR>gl_QUOTEARG
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>gettext
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "quote.h"
+      <TD ALIGN=LEFT VALIGN=TOP>quote.c
+      <TD ALIGN=LEFT VALIGN=TOP>quote.m4<BR>gl_QUOTE
+      <TD ALIGN=LEFT VALIGN=TOP>quotearg
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "readutmp.h"
+      <TD ALIGN=LEFT VALIGN=TOP>readutmp.c
+      <TD ALIGN=LEFT VALIGN=TOP>readutmp.m4<BR>gl_READUTMP
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "sig2str.h"
+      <TD ALIGN=LEFT VALIGN=TOP>sig2str.c
+      <TD ALIGN=LEFT VALIGN=TOP>sig2str.m4<BR>gl_FUNC_SIG2STR
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H2>Lone files - please create new modules containing them</H2>
+  <PRE>
+lib/getversion.c
+m4/check-decl.m4
+m4/d-type.m4
+m4/glibc.m4
+m4/gnu-source.m4
+m4/host-os.m4
+m4/jm-macros.m4
+m4/jm-winsz1.m4
+m4/jm-winsz2.m4
+m4/lib-check.m4
+m4/link-follow.m4
+m4/onceonly.m4
+m4/perl.m4
+m4/prereq.m4
+m4/readdir.m4
+m4/rmdir-errno.m4
+m4/search-libs.m4
+m4/st_dm_mode.m4
+m4/strerror_r.m4
+m4/unlink-busy.m4
+m4/uptime.m4
+</PRE>
+  <H2>Future developments</H2>
+  Ideally a module could consist of:
+  <UL>
+    <LI>A header file: lib/<VAR>module</VAR>.h
+    <LI>One or more implementation files: lib/<VAR>module</VAR>.c et al.
+    <LI>One or more autoconf macro files: m4/<VAR>module</VAR>.m4 et al.
+    <LI>A configure.ac fragment, Makefile.am fragment, dependency list: modules/<VAR>module</VAR>
+    <LI>Some documentation
+    <LI>A POT file and some PO files
+    <LI>A testsuite
+  </UL>
+  <HR>
+  Generated from <CODE>MODULES.html.sh</CODE> on  7 January 2003.
+</HTML>
