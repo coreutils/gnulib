@@ -1,3 +1,7 @@
+2003-06-10  Simon Josefsson  <jas@extundo.com>
+
+	* strchrnul.m4: New file.
+
 2003-06-07  Bruno Haible  <bruno@clisp.org>
 
 	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH, gl_FUNC_FNMATCH_POSIX,

@@ -1,4 +1,8 @@
-2003-06=10  Simon Josefsson <jas@extundo.com>
+2003-06-10  Simon Josefsson  <jas@extundo.com>
+
+	* modules/strchrnul: New file.
+
+2003-06-10  Simon Josefsson  <jas@extundo.com>
 
 	* modules/argp: New file.
 

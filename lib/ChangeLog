@@ -1,3 +1,8 @@
+2003-06-10  Simon Josefsson  <jas@extundo.com>
+
+	* strchrnul.h: New file.
+	* strchrnul.c: New file.
+
 2003-06=10  Simon Josefsson <jas@extundo.com>
 
 	* argp.h: New file, from glibc.

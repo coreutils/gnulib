@@ -1,0 +1,20 @@
+Description:
+strchrnul(): Find the first occurrence of C in S or the final NUL byte.
+
+Files:
+lib/strchrnul.h
+lib/strchrnul.c
+m4/strchrnul.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_STRCHRNUL
+
+Makefile.am:
+
+Include:
+"strchrnul.h"
+
+Maintainer:
+FSF
