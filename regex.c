@@ -49,12 +49,8 @@
 
 /* Whether to use ISO C Amendment 1 wide char functions.
    Those should not be used for Emacs since it uses its own.  */
-#if defined _LIBC
-#define WIDE_CHAR_SUPPORT 1
-#else
 #define WIDE_CHAR_SUPPORT \
-	(HAVE_WCTYPE_H && HAVE_WCHAR_H && HAVE_BTOWC && !emacs)
-#endif
+  (defined _LIBC || HAVE_WCTYPE_H && HAVE_WCHAR_H && HAVE_BTOWC && !emacs)
 
 /* For platform which support the ISO C amendement 1 functionality we
    support user defined character classes.  */
@@ -1327,8 +1323,7 @@ static const char *re_error_msgid[] =
 /* Roughly the maximum number of failure points on the stack.  Would be
    exactly that if always used TYPICAL_FAILURE_SIZE items each time we failed.
    This is a variable only so users of regex can assign to it; we never
-   change it ourselves.  We always multiply it by TYPICAL_FAILURE_SIZE
-   before using it, so it should probably be a byte-count instead.  */
+   change it ourselves.  */
 # if defined MATCH_MAY_ALLOCATE
 /* Note that 4400 was enough to cause a crash on Alpha OSF/1,
    whose default stack limit is 2mb.  In order for a larger
@@ -1580,7 +1575,7 @@ do {									\
 /* Estimate the size of data pushed by a typical failure stack entry.
    An estimate is all we need, because all we use this for
    is to choose a limit for how big to make the failure stack.  */
-/* BEWARE, the value `20' is hard-coded in emacs.c:main().  */
+
 #define TYPICAL_FAILURE_SIZE 20
 
 /* How many items can still be added to the stack without overflowing it.  */
@@ -1967,10 +1962,9 @@ typedef int re_wchar_t;
 
 /* Map a string to the char class it names (if any).  */
 static re_wctype_t
-re_wctype (str)
-     re_char *str;
+re_wctype (string)
+     re_char *string;
 {
-  const char *string = str;
   if      (STREQ (string, "alnum"))	return RECC_ALNUM;
   else if (STREQ (string, "alpha"))	return RECC_ALPHA;
   else if (STREQ (string, "word"))	return RECC_WORD;
