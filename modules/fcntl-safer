@@ -1,0 +1,23 @@
+Description:
+File control functions that avoid clobbering std{in,out,err}.
+
+Files:
+lib/fcntl-safer.h
+lib/open-safer.c
+m4/fcntl-safer.m4
+
+Depends-on:
+unistd-safer
+
+configure.ac:
+gl_FCNTL_SAFER
+
+Makefile.am:
+lib_SOURCES += fcntl-safer.h open-safer.c
+
+Include:
+"fcntl-safer.h"
+
+Maintainer:
+Paul Eggert, Jim Meyering
+
