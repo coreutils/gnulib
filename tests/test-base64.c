@@ -16,10 +16,16 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-#include "base64.h"
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
 
+#include <stddef.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
+
+#include "base64.h"
 
 int
 main (int argc, char *argv[])
@@ -27,7 +33,6 @@ main (int argc, char *argv[])
   const char *in = "abcdefghijklmnop";
   const char *b64in = "YWJjZGVmZw==";
   char out[255];
-  char *p;
   size_t len;
   bool ok;
 
