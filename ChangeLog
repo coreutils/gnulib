@@ -1,3 +1,8 @@
+2005-01-19  Bruno Haible  <bruno@clisp.org>
+
+	* modules/sh-quote: New file.
+	* MODULES.html.sh (Executing programs): Add sh-quote.
+
 2005-01-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/ullong_max: New file.

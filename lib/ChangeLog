@@ -1,3 +1,8 @@
+2005-01-19  Bruno Haible  <bruno@clisp.org>
+
+	* sh-quote.h: New file, from GNU gettext.
+	* sh-quote.c: New file, from GNU gettext.
+
 2005-01-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge changes from coreutils, as described below in several
