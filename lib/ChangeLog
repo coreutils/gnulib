@@ -1,5 +1,10 @@
 2003-01-11  Bruno Haible  <bruno@clisp.org>
 
+	* readtokens.c (readtoken): Cast character to 'unsigned char', not
+	'unsigned int'.
+
+2003-01-11  Bruno Haible  <bruno@clisp.org>
+
 	* hash-pjw.c: Add comment about low quality of this function.
 
 2003-01-12  Paul Eggert  <eggert@twinsun.com>
