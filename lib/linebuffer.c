@@ -87,11 +87,10 @@ readlinebuffer (struct linebuffer *linebuffer, FILE *stream)
   return linebuffer;
 }
 
-/* Free linebuffer LINEBUFFER and its data, all allocated with malloc. */
+/* Free the buffer that was allocated for linebuffer LINEBUFFER.  */
 
 void
 freebuffer (struct linebuffer *linebuffer)
 {
   free (linebuffer->buffer);
-  free (linebuffer);
 }
