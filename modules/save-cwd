@@ -7,6 +7,7 @@ lib/save-cwd.c
 m4/save-cwd.m4
 
 Depends-on:
+xgetcwd
 
 configure.ac:
 gl_SAVE_CWD
