@@ -1,3 +1,7 @@
+2004-09-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/dummy: Change license to LGPL.
+
 2004-09-29  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib-tool: New parameter --lgpl, to asseert that modules are
