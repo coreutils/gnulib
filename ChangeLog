@@ -1,3 +1,9 @@
+2005-03-03  Derek R. Price  <derek@ximbiot.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* modules/pagealign_alloc: New file.
+	* MODULES.html.sh (Memory management functions): Add pagealign_alloc.
+
 2005-03-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/gettime (Makefile.am): Remove lib_SOURCES line.

@@ -1,3 +1,8 @@
+2005-03-03  Derek R. Price  <derek@ximbiot.com>
+
+	* mmap-anon.m4: New file.
+	* pagealign_alloc.m4: New file.
+
 2005-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* stpncpy.m4 (gl_FUNC_STPNCPY): Undo the replacement here. Because of
