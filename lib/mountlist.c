@@ -36,6 +36,11 @@ char *xrealloc ();
 char *xstrdup ();
 void error ();
 
+#if defined (MOUNTED_GETFSSTAT)	/* __alpha running OSF_1 */
+#  include <sys/mount.h>
+#  include <sys/fs_types.h>
+#endif /* MOUNTED_GETFSSTAT */
+
 #ifdef MOUNTED_GETMNTENT1	/* 4.3BSD, SunOS, HP-UX, Dynix, Irix.  */
 #include <mntent.h>
 #if !defined(MOUNTED)
@@ -267,6 +272,43 @@ read_filesystem_list (need_fs_type, all_fs)
       return NULL;
   }
 #endif /* MOUNTED_GETMNT. */
+
+#if defined (MOUNTED_GETFSSTAT)	/* __alpha running OSF_1 */
+  {
+    int numsys, counter, bufsize;
+    struct statfs *stats;
+
+    numsys = getfsstat ((struct statfs *)0, 0L, MNT_WAIT);
+    if (numsys < 0)
+      return (NULL);
+
+    bufsize = (1 + numsys) * sizeof (struct statfs);
+    stats = (struct statfs *)xmalloc (bufsize);
+    numsys = getfsstat (stats, bufsize, MNT_WAIT);
+
+    if (numsys < 0)
+      {
+	free (stats);
+	return (NULL);
+      }
+
+    for (counter = 0; counter < numsys; counter++)
+      {
+	me = (struct mount_entry *) xmalloc (sizeof (struct mount_entry));
+	me->me_devname = xstrdup (stats[counter].f_mntfromname);
+	me->me_mountdir = xstrdup (stats[counter].f_mntonname);
+	me->me_type = mnt_names[stats[counter].f_type];
+	me->me_dev = -1;	/* Magic; means not known yet. */
+	me->me_next = NULL;
+
+	/* Add to the linked list. */
+	mtail->me_next = me;
+	mtail = me;
+      }
+
+    free (stats);
+  }
+#endif /* MOUNTED_GETFSSTAT */
 
 #if defined (MOUNTED_FREAD) || defined (MOUNTED_FREAD_FSTYP) /* SVR[23].  */
   {
