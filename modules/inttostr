@@ -9,6 +9,7 @@ lib/offtostr.c
 lib/umaxtostr.c
 m4/intmax_t.m4
 m4/inttostr.m4
+m4/longlong.m4
 m4/uintmax_t.m4
 
 Depends-on:
