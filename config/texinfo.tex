@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-07-25.00}
+\def\texinfoversion{2004-07-27.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -5062,8 +5062,7 @@ width0pt\relax} \fi
 }
 
 % @copying ... @end copying.
-% Save the text away for @insertcopying later.  Many commands won't be
-% allowed in this context, but that's ok.
+% Save the text away for @insertcopying later.
 %
 % We save the uninterpreted tokens, rather than creating a box.
 % Saving the text in a box would be much easier, but then all the
@@ -5072,62 +5071,14 @@ width0pt\relax} \fi
 % file; b) letting users define the frontmatter in as flexible order as
 % possible is very desirable.
 %
-\def\copying{\begingroup
-  % Define a command to swallow text until we reach `@end copying'.
-  % \ is the escape char in this texinfo.tex file, so it is the
-  % delimiter for the command; @ will be the escape char when we read
-  % it, but that doesn't matter.
-  \long\def\docopying##1\end copying{\gdef\copyingtext{##1}\enddocopying}%
-  %
-  % We must preserve ^^M's in the input file; see \insertcopying below.
-  \catcode`\^^M = \active
-  \docopying
-}
-
-% What we do to finish off the copying text.
+\def\copying{\checkenv{}\begingroup\scanargctxt\docopying}
+\def\docopying#1@end copying{\endgroup\def\copyingtext{#1}}
 %
-\def\enddocopying{\endgroup\ignorespaces}
-
-% @insertcopying.  Here we must play games with ^^M's.  On the one hand,
-% we need them to delimit commands such as `@end quotation', so they
-% must be active.  On the other hand, we certainly don't want every
-% end-of-line to be a \par, as would happen with the normal active
-% definition of ^^M.  On the third hand, two ^^M's in a row should still
-% generate a \par.
-%
-% Our approach is to make ^^M insert a space and a penalty1 normally;
-% then it can also check if \lastpenalty=1.  If it does, then manually
-% do \par.
-%
-% This messes up the normal definitions of @c[omment], so we redefine
-% them.  Similarly for @ignore.  (These commands are used in the gcc
-% manual for man page generation.)
-%
-% Seems pretty fragile, most line-oriented commands will presumably
-% fail, but for the limited use of getting the copying text (which
-% should be quite simple) inserted, we can hope it's ok.
-%
-{\catcode`\^^M=\active %
-\gdef\insertcopying{\begingroup %
-  \parindent = 0pt  % paragraph indentation looks wrong on title page
-  \def^^M{%
-    \ifnum \lastpenalty=1 %
-      \par %
-    \else %
-      \space \penalty 1 %
-    \fi %
-  }%
-  %
-  % Fix @c[omment] for catcode 13 ^^M's.
-  \def\c##1^^M{\ignorespaces}%
-  \let\comment = \c %
-  %
-  % Don't bother jumping through all the hoops that \doignore does, it
-  % would be very hard since the catcodes are already set.
-  \long\def\ignore##1\end ignore{\ignorespaces}%
-  %
-  \copyingtext %
-\endgroup}%
+\def\insertcopying{%
+  \begingroup
+    \parindent = 0pt  % paragraph indentation looks wrong on title page
+    \scanexp\copyingtext
+  \endgroup
 }
 
 \message{defuns,}
@@ -5473,7 +5424,7 @@ width0pt\relax} \fi
 \ifx\eTeXversion\undefined
   \newwrite\macscribble
   \def\scantokens#1{%
-    \toks0={#1\endinput}%
+    \toks0={#1}%
     \immediate\openout\macscribble=\jobname.tmp
     \immediate\write\macscribble{\the\toks0}%
     \immediate\closeout\macscribble
@@ -5496,6 +5447,11 @@ width0pt\relax} \fi
     %							--kasal, 29nov03
     \scantokens{#1\endinput}%
   \endgroup
+}
+
+\def\scanexp#1{%
+  \edef\temp{\noexpand\scanmacro{#1}}%
+  \temp
 }
 
 \newcount\paramno   % Count of parameters
@@ -5538,7 +5494,7 @@ width0pt\relax} \fi
 % done by  making ^^M (\endlinechar) catcode 12 when reading the macro
 % body, and then making it the \newlinechar in \scanmacro.
 
-\def\macrobodyctxt{%
+\def\scanctxt{%
   \catcode`\~=\other
   \catcode`\^=\other
   \catcode`\_=\other
@@ -5546,22 +5502,27 @@ width0pt\relax} \fi
   \catcode`\<=\other
   \catcode`\>=\other
   \catcode`\+=\other
+  \catcode`\@=\other
+}
+
+\def\scanargctxt{%
+  \scanctxt
+  \catcode`\\=\other
+  \catcode`\^^M=\other
+}
+
+\def\macrobodyctxt{%
+  \scanctxt
   \catcode`\{=\other
   \catcode`\}=\other
-  \catcode`\@=\other
   \catcode`\^^M=\other
-  \usembodybackslash}
+  \usembodybackslash
+}
 
 \def\macroargctxt{%
-  \catcode`\~=\other
-  \catcode`\^=\other
-  \catcode`\_=\other
-  \catcode`\|=\other
-  \catcode`\<=\other
-  \catcode`\>=\other
-  \catcode`\+=\other
-  \catcode`\@=\other
-  \catcode`\\=\other}
+  \scanctxt
+  \catcode`\\=\other
+}
 
 % \mbodybackslash is the definition of \ in @macro bodies.
 % It maps \foo\ => \csname macarg.foo\endcsname => #N
@@ -6367,11 +6328,14 @@ width0pt\relax} \fi
 \endgroup}
 
 
-% @float FLOATTYPE,LOC ... @end float for displayed figures, tables, etc.
-% We don't actually implement floating yet, we just plop the float "here".
-% But it seemed the best name for the future.
+% @float FLOATTYPE,LABEL,LOC ... @end float for displayed figures, tables,
+% etc.  We don't actually implement floating yet, we always include the
+% float "here".  But it seemed the best name for the future.
 %
-\envparseargdef\float{\dofloat #1,,,\finish}
+\envparseargdef\float{\eatcommaspace\eatcommaspace\dofloat#1, , ,\finish}
+
+% There may be a space before second and/or third parameter; delete it.
+\def\eatcommaspace#1, {#1,}
 
 % #1 is the optional FLOATTYPE, the text label for this float, typically
 % "Figure", "Table", "Example", etc.  Can't contain commas.  If omitted,
@@ -6392,6 +6356,10 @@ width0pt\relax} \fi
   \let\thisshortcaption=\empty
   %
   % don't lose footnotes inside @float.
+  %
+  % BEWARE: when the floats start float, we have to issue warning whenever an
+  % insert appears inside a float which could possibly float. --kasal, 26may04
+  %
   \startsavinginserts
   %
   % We can't be used inside a paragraph.
@@ -6476,7 +6444,7 @@ width0pt\relax} \fi
       \fi
       %
       % caption text.
-      \appendtomacro\captionline\thiscaption
+      \appendtomacro\captionline{\scanexp\thiscaption}%
     \fi
     %
     % If we have anything to print, print it, with space before.
@@ -6508,23 +6476,27 @@ width0pt\relax} \fi
     % Space below caption, if we printed anything.
     \ifx\printedsomething\empty \else \vskip\parskip \fi
   \egroup  % end of \vtop
+  %
+  % place the captured inserts
+  %
+  % BEWARE: when the floats start float, we have to issue warning whenever an
+  % insert appears inside a float which could possibly float. --kasal, 26may04
+  %
   \checkinserts
 }
 
 % Append the tokens #2 to the definition of macro #1, not expanding either.
 %
-\newtoks\appendtomacroAtoks
-\newtoks\appendtomacroBtoks
 \def\appendtomacro#1#2{%
-  \appendtomacroAtoks = \expandafter{#1}%
-  \appendtomacroBtoks = {#2}%
-  \edef#1{\the\appendtomacroAtoks \the\appendtomacroBtoks}%
+  \expandafter\def\expandafter#1\expandafter{#1#2}%
 }
 
-% @caption, @shortcaption are easy.
+% @caption, @shortcaption
 %
-\long\def\caption#1{\checkenv\float \def\thiscaption{#1}}
-\def\shortcaption#1{\checkenv\float \def\thisshortcaption{#1}}
+\def\caption{\docaption\thiscaption}
+\def\shortcaption{\docaption\thisshortcaption}
+\def\docaption{\checkenv\float \bgroup\scanargctxt\defcaption}
+\def\defcaption#1#2{\egroup \def#1{#2}}
 
 % The parameter is the control sequence identifying the counter we are
 % going to use.  Create it if it doesn't exist and assign it to \floatno.
