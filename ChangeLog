@@ -1,7 +1,7 @@
 2003-01-09  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stdbool: Change configure.ac, Makefile.am requirements.
-	Simplify Include requirements.
+	Simplify Include requirements. Add lib/stdbool.h.in to file list.
 
 2003-01-09  Bruno Haible  <bruno@clisp.org>
 

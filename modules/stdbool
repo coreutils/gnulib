@@ -1,6 +1,7 @@
 Description:
 
 Files:
+lib/stdbool.h.in
 m4/stdbool.m4
 
 Depends-on:
