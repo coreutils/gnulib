@@ -36,7 +36,34 @@ functions (either under the same name, or as a slightly different
 name), we should be able to include it.
 
 If your functions define completely new but rarely used functionality,
-you should probably consider packaging it as a seperate library
+you should probably consider packaging it as a seperate library.
+
+How to add a new module
+-----------------------
+
+* Add the header files and source files to lib/.
+* If the module needs configure-time checks, write an autoconf
+  macro for it in m4/<module>.m4. See m4/README for details.
+* Write a module description modules/<module>, based on modules/TEMPLATE.
+* Add the module to the list in MODULES.html.sh.
+
+You can test that a module builds correctly with:
+  $ ./gnulib-tool --create-testdir --dir=/tmp/testdir module1 ... moduleN
+  $ cd /tmp/testdir
+  $ ./configure && make
+
+Other things:
+* Check the license and copyright year of headers.
+* Add source files to config/srclist* if they are identical to upstream
+  and should be upgraded in gnulib whenever the upstream source changes.
+* Include header files in source files to verify the function prototypes.
+* Make sure a replacement function doesn't cause warnings or clashes on
+  systems that have the function.
+* Autoconf functions can use gl_* prefix. The AC_* prefix is for
+  autoconf internal functions.
+* Try to prevent that the files are built if they aren't needed on a
+  platform.  Valid excuses to this rule include ELIDE constructs that
+  lead to an empty .o file (see getopt module).
 
 High Quality
 ============
