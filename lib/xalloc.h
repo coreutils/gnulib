@@ -68,15 +68,16 @@ char *xstrdup (const char *str);
    works correctly even when SIZE_MAX < N.
 
    By gnulib convention, SIZE_MAX represents overflow in size
-   calculations, so reject attempted allocations of exactly SIZE_MAX
-   bytes.  However, malloc (SIZE_MAX) fails on all known hosts where
+   calculations, so the conservative dividend to use here is
+   SIZE_MAX - 1, since SIZE_MAX might represent an overflowed value.
+   However, malloc (SIZE_MAX) fails on all known hosts where
    PTRDIFF_MAX < SIZE_MAX, so do not bother to test for
    exactly-SIZE_MAX allocations on such hosts; this avoids a test and
    branch when S is known to be 1.  */
 # if defined PTRDIFF_MAX && PTRDIFF_MAX < SIZE_MAX
-#  define xalloc_oversized(n, s) ((size_t) -1 / (s) < (n))
-# else
-#  define xalloc_oversized(n, s) ((size_t) -1 / (s) <= (n))
+#  define xalloc_oversized(n, s) (SIZE_MAX / (s) < (n))
+# else /* SIZE_MAX might not be defined, so avoid (SIZE_MAX - 1).  */
+#  define xalloc_oversized(n, s) ((size_t) -2 / (s) < (n))
 # endif
 
 /* These macros are deprecated; they will go away soon, and are retained
