@@ -1,9 +1,9 @@
-# $Id: srclistvars.sh,v 1.20 2004-10-11 05:02:17 eggert Exp $
+# $Id: srclistvars.sh,v 1.21 2004-11-11 23:49:55 jas Exp $
 # Variables for srclist-update and srclist.txt.
 # Will change for each user.
 
 case $LOGNAME in
-eggert)
+jas | eggert)
   : ${AUTOCONF=../autoconf}
   : ${AUTOMAKE=../automake}
   : ${GETTEXT=../gettext}
