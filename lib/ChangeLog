@@ -1,3 +1,8 @@
+2002-11-21  Bruno Haible  <bruno@clisp.org>
+
+	* xmalloc.c: Change compile-time error message. Add comment about
+	required autoconf version.
+
 2002-11-21  Jim Meyering  <jim@meyering.net>
 
 	* strdup.c (strdup): Tweak comment and initial #if/#include.
