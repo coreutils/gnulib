@@ -1,4 +1,4 @@
-#serial 71   -*- autoconf -*-
+#serial 72   -*- autoconf -*-
 
 dnl Misc type-related macros for fileutils, sh-utils, textutils.
 
@@ -21,7 +21,7 @@ AC_DEFUN([gl_MACROS],
 
   gl_CHECK_ALL_TYPES
 
-  AC_REQUIRE([UTILS_HOST_OS])
+  AC_REQUIRE([gl_HOST_OS])
   AC_REQUIRE([gl_ASSERT])
   AC_REQUIRE([gl_CHECK_TYPE_STRUCT_UTIMBUF])
   AC_REQUIRE([gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE])
