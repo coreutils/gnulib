@@ -1,3 +1,8 @@
+2003-09-26  Jim Meyering  <jim@meyering.net>
+
+	* error.c (error_tail): Move some declarations
+	into inner scope where the local variables are used.
+
 2003-09-26  Bruno Haible  <bruno@clisp.org>
 
 	* stpncpy.h (gnu_stpncpy): New declaration.
@@ -8,10 +13,13 @@
 
 	* error.c (SIZE_MAX) [!defined SIZE_MAX]: Define.
 	(error_tail): Do not loop, reallocating temporary buffer, since
-	the original size is big enough.  This avoids one potential size
-	overflow calculation.  Check for size overflow when calculating
-	temporary buffer size.  Free temporary buffer when done, if
-	it was allocated with malloc; this closes a memory leak.
+	the output cannot contain more wide characters than the input
+	contains bytes, the size must be big enough already.  This avoids
+	one potential size overflow calculation.  Check for size overflow
+	when calculating temporary buffer size.  Free temporary buffer
+	when done, if it was allocated with malloc; this plugs a memory
+	leak.  Remove casts from void * to pointers, that are no longer
+	needed now that we're assuming C89 or better.
 
 	Merge error changes from glibc.
 

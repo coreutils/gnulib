@@ -147,9 +147,6 @@ error_tail (int status, int errnum, const char *message, va_list args)
 # define ALLOCA_LIMIT 2000
       size_t len = strlen (message) + 1;
       const wchar_t *wmessage = L"out of memory";
-      mbstate_t st;
-      size_t res;
-      const char *tmp;
       wchar_t *wbuf = (len < ALLOCA_LIMIT
 		       ? (void *) alloca (len * sizeof *wbuf)
 		       : len <= SIZE_MAX / sizeof *wbuf
@@ -158,8 +155,10 @@ error_tail (int status, int errnum, const char *message, va_list args)
 
       if (wbuf)
 	{
+	  size_t res;
+	  mbstate_t st;
+	  const char *tmp = message;
 	  memset (&st, '\0', sizeof (st));
-	  tmp =message;
 	  res = mbsrtowcs (wbuf, &tmp, len, &st);
 	  wmessage = res == (size_t) -1 ? L"???" : wbuf;
 	}
