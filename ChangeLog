@@ -1,3 +1,7 @@
+2003-07-10  Simon Josefsson  <jas@extundo.com>
+
+	* modules/strchrnul (Makefile.am): Add strchrnul.h.
+
 2003-06-26  Bruno Haible  <bruno@clisp.org>
 
 	* modules/human: Depend on module stdbool.
