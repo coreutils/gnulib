@@ -1,3 +1,11 @@
+2003-08-08  Paul Eggert  <eggert@twinsun.com>
+
+	* extensions.m4: New file.
+	* timespec.m4 (jm_CHECK_TYPE_STRUCT_TIMESPEC):
+	Require gl_USE_SYSTEM_EXTENSIONS.
+	* unlocked-io.m4 (jm_FUNC_GLIBC_UNLOCKED_IO):
+	Require gl_USE_SYSTEM_EXTENSIONS rather than AC_GNU_SOURCE.
+
 2003-08-07  Paul Eggert  <eggert@twinsun.com>
 
 	* restrict.m4: New file.
@@ -114,7 +122,7 @@
 	* rpmatch.m4 (gl_FUNC_RPMATCH): Likewise.
 	* userspec.m4 (gl_USERSPEC): Likewise.
 	* xreadlink.m4 (gl_XREADLINK): Likewise.
-	* m4/xstrtol.m4 (gl_PREREQ_XSTRTOL): Likewise.
+	* xstrtol.m4 (gl_PREREQ_XSTRTOL): Likewise.
 	* quote.m4 (gl_QUOTE): Don't check for stddef.h.
 
 2003-05-26  Jim Meyering  <jim@meyering.net>
@@ -955,7 +963,7 @@
 
 2002-02-15  Paul Eggert  <eggert@twinsun.com>
 
-	* m4/prereq.m4 (jm_PREREQ_POSIXVER): New macro.
+	* prereq.m4 (jm_PREREQ_POSIXVER): New macro.
 	(jm_PREREQ): Use it.
 
 2002-01-26  Jim Meyering  <meyering@lucent.com>

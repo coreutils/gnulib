@@ -6,6 +6,7 @@ lib/unlocked-io.h
 m4/unlocked-io.m4
 
 Depends-on:
+extensions
 
 configure.ac:
 jm_FUNC_GLIBC_UNLOCKED_IO

@@ -1,3 +1,9 @@
+2003-08-08  Paul Eggert  <eggert@twinsun.com>
+
+	* MODULES.html.sh (func_all_modules): Add extensions, gnu-source.
+	* modules/extensions, modules/gnu-source: New files.
+	* modules/timespec, modules/unlocked-io: Depend on extensions.
+
 2003-08-07 Paul Eggert  <eggert@twinsun.com>
 
 	* modules/restrict: New file.
