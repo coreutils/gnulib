@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-04-02.09}
+\def\texinfoversion{2004-04-07.08}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -1851,8 +1851,8 @@ where each line of input produces a line of output.}
 \else{\tclose{\kbdfont\look}}\fi
 \else{\tclose{\kbdfont\look}}\fi}
 
-% For @url, @env, @command quotes seem unnecessary, so use \code.
-\let\url=\code
+% For @indicateurl, @env, @command quotes seem unnecessary, so use \code.
+\let\indicateurl=\code
 \let\env=\code
 \let\command=\code
 
@@ -1883,6 +1883,10 @@ where each line of input produces a line of output.}
   \fi
   \endlink
 \endgroup}
+
+% @url synonym for @uref, since that's how everyone uses it.
+% 
+\let\url=\uref
 
 % rms does not like angle brackets --karl, 17may97.
 % So now @email is just like @uref, unless we are pdf.
@@ -5760,7 +5764,11 @@ width0pt\relax} \fi
 % We don't want such trailing spaces in the node name.
 % 
 \parseargdef\node{\checkenv{}\donode #1 ,\finishnodeparse}
-\def\donode#1 ,#2\finishnodeparse{\gdef\lastnode{#1}}
+%
+% also remove a trailing comma, in case of something like this:
+% @node Help-Cross,  ,  , Cross-refs
+\def\donode#1 ,#2\finishnodeparse{\dodonode #1,\finishnodeparse}
+\def\dodonode#1,#2\finishnodeparse{\gdef\lastnode{#1}}
 
 \let\nwnode=\node
 \let\lastnode=\empty
