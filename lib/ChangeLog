@@ -1,3 +1,7 @@
+2004-10-02  Jim Meyering  <jim@meyering.net>
+
+	* dirfd.h, getpagesize.h: Add copyright notice.
+
 2004-10-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* snprintf.c: Remove comments as to why each header is needed.
@@ -99,16 +103,16 @@
 	* argp-parse.c (N_): Define unconditionally.
 	(argp_default_options): Fill out initializers with 0 to avoid
 	gcc warnings.
-	
+
 2004-08-12  Simon Josefsson  <jas@extundo.com>
 
 	* getopt.c, getopt1.c: Remove ELIDE_CODE hack.
 	* getopt_.h: Renamed from getopt.h.
-	
+
 2004-08-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge from coreutils.
-	
+
 	* fnmatch.c (WIDE_CHAR_SUPPORT): Don't set to 1 if missing
 	wmemchr or wmemcpy.  Problem reported by Robert Dahlem
 	for Reliant Unix 5.43.
@@ -135,7 +139,7 @@
 	readable.  This could be improved further but it'd take some work.
 
 2004-08-08  Simon Josefsson  <jas@extundo.com>
-	
+
 	* xgethostname.c: Don't include error.h (not used).
 
 	* getpass.h: Add.
