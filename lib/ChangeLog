@@ -1,3 +1,7 @@
+2003-03-13  Paul Eggert  <eggert@twinsun.com>
+
+	* hash.c: Include <stdbool.h> unconditionally.
+
 2003-03-09  Paul Eggert  <eggert@twinsun.com>
 
 	* argmatch.c (EXIT_FAILURE): Define if the system doesn't.
