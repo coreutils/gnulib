@@ -1,5 +1,5 @@
 /* Provide relocatable programs.
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003-2004 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify it
@@ -67,12 +67,12 @@
      && (P)[1] == ':')
 # define IS_PATH_WITH_DIR(P) \
     (strchr (P, '/') != NULL || strchr (P, '\\') != NULL || HAS_DEVICE (P))
-# define FILESYSTEM_PREFIX_LEN(P) (HAS_DEVICE (P) ? 2 : 0)
+# define FILE_SYSTEM_PREFIX_LEN(P) (HAS_DEVICE (P) ? 2 : 0)
 #else
   /* Unix */
 # define ISSLASH(C) ((C) == '/')
 # define IS_PATH_WITH_DIR(P) (strchr (P, '/') != NULL)
-# define FILESYSTEM_PREFIX_LEN(P) 0
+# define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
 
 #undef set_program_name

@@ -38,13 +38,13 @@ extern "C" {
 # define IS_ABSOLUTE_PATH(P) (ISSLASH ((P)[0]) || HAS_DEVICE (P))
 # define IS_PATH_WITH_DIR(P) \
     (strchr (P, '/') != NULL || strchr (P, '\\') != NULL || HAS_DEVICE (P))
-# define FILESYSTEM_PREFIX_LEN(P) (HAS_DEVICE (P) ? 2 : 0)
+# define FILE_SYSTEM_PREFIX_LEN(P) (HAS_DEVICE (P) ? 2 : 0)
 #else
   /* Unix */
 # define ISSLASH(C) ((C) == '/')
 # define IS_ABSOLUTE_PATH(P) ISSLASH ((P)[0])
 # define IS_PATH_WITH_DIR(P) (strchr (P, '/') != NULL)
-# define FILESYSTEM_PREFIX_LEN(P) 0
+# define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
 
 /* Concatenate a directory pathname, a relative pathname and an optional

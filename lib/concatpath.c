@@ -1,5 +1,5 @@
 /* Construct a full pathname from a directory and a filename.
-   Copyright (C) 2001-2002 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -53,7 +53,7 @@ concatenated_pathname (const char *directory, const char *filename,
     {
       size_t directory_len = strlen (directory);
       int need_slash =
-	(directory_len > FILESYSTEM_PREFIX_LEN (directory)
+	(directory_len > FILE_SYSTEM_PREFIX_LEN (directory)
 	 && !ISSLASH (directory[directory_len - 1]));
       result = (char *) xmalloc (directory_len + need_slash
 				 + strlen (filename)
