@@ -1,6 +1,8 @@
 2004-04-20  Jim Meyering  <jim@meyering.net>
 
-	* modules/dirfd: Reflect renaming: s/UTILS_FUNC_DIRFD/gl_FUNC_DIRFD/.
+	* modules/dirfd: Change UTILS_ macro name prefix to gl_.
+	* modules/mkstemp: Likewise.
+	* modules/mkdir: Likewise.
 
 2004-04-18  Jim Meyering  <jim@meyering.net>
 
