@@ -1,3 +1,7 @@
+2003-05-20  Derek Price  <derek@ximbiot.com>
+
+	* stat.c [LSTAT]: Compile/use slash_aware_lstat only if it is necessary.
+
 2003-06-10  Simon Josefsson  <jas@extundo.com>
 
 	* strchrnul.h: New file.
