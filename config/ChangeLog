@@ -1,3 +1,8 @@
+2003-07-15    <karl@gnu.org>
+
+	* srclist-update (fixfile): grep for $Id: ChangeLog,v 1.28 2003-07-15 12:47:54 karl Exp $Id: ChangeLog,v 1.28 2003-07-15 12:47:54 karl Exp $, since the
+	latter gets expanded.
+
 2003-07-14  Paul Eggert  <eggert@twinsun.com>
 
 	* srclist.txt: Add tons more gettext files.  $GETTEXT is now
