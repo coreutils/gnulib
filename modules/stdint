@@ -1,0 +1,32 @@
+Description:
+An <stdint.h> that nearly conforms to C99.
+(Nearly: {uint,int}_{fast,least}{8,16,32,64}_t may not correspond
+to the fastest and smallest types available on the system.)
+
+Files:
+lib/stdint_.h
+m4/stdint.m4
+m4/inttypes.m4
+
+Depends-on:
+
+configure.ac:
+gl_STDINT_H
+
+Makefile.am:
+BUILT_SOURCES += $(STDINT_H)
+EXTRA_DIST += stdint_.h
+
+# We need the following in order to create an <stdint.h> when the system
+# doesn't have one that works with the given compiler.
+all-local $(lib_OBJECTS): $(STDINT_H)
+stdint.h: stdint_.h
+	sed -e 's/@''HAVE_LONG_64BIT''@/$(HAVE_LONG_64BIT)/g;s/@''HAVE_LONGLONG_64BIT@/$(HAVE_LONGLONG_64BIT)/g' < $(srcdir)/stdint_.h > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += stdint.h stdint.h-t
+
+Include:
+#include <stdint.h>
+
+Maintainer:
+all

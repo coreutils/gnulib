@@ -1,3 +1,7 @@
+2004-09-08  Bruno Haible  <bruno@clisp.org>
+
+	* stdint.m4: New file, taken from GNU clisp with modifications.
+
 2004-08-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* userspec.m4 (gl_USERSPEC): Don't require AC_FUNC_ALLOCA.

@@ -1,3 +1,9 @@
+2004-09-08  Bruno Haible  <bruno@clisp.org>
+            Oskar Liljeblad  <oskar@osk.mine.nu>
+
+	* modules/stdint: New file.
+	* MODULES.html.sh (Support for systems lacking ISO C 99): Add stdint.
+
 2004-09-08  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* modules/xvasprintf: New file.
