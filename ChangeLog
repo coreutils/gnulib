@@ -1,3 +1,8 @@
+2003-01-09    <karl@gnu.org>
+
+	* MODULES.html.sh: include `dirname $0` in PATH, to find
+	gnulib-tool.
+
 2003-01-08  Bruno Haible  <bruno@clisp.org>
 
 	* modules/full-read: Depend on full-write.
