@@ -1,3 +1,9 @@
+2003-06-07  Jim Meyering  <jim@meyering.net>
+
+	From coreutils.
+	* xgetcwd.c (xgetcwd): Include "xgetcwd.h".
+	Improve comment.
+
 2003-06-06  Jim Meyering  <jim@meyering.net>
 
 	* stdbool_.h: Renamed from stdbool.h.in.
