@@ -1,4 +1,9 @@
-2004-12-28  Simon Josefsson  <jas@extundo.com>
+2005-01-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* save-cwd.c (save_cwd): Remove code to support the case
+	where fchdir is missing or flaky.
+
+2005-01-20  Simon Josefsson  <jas@extundo.com>
 
 	* base64.h (isbase64): Add.
 

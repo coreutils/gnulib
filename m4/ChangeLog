@@ -1,3 +1,7 @@
+2005-01-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* save-cwd.m4 (gl_SAVE_CWD): Remove check for fcntl; we now assume it.
+
 2005-01-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge from coreutils.
