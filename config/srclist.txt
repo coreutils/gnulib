@@ -1,9 +1,7 @@
-# $Id: srclist.txt,v 1.12 2003-05-30 14:58:40 karl Exp $
+# $Id: srclist.txt,v 1.13 2003-06-03 12:55:44 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
-$GETTEXT/config.rpath		config
-#
 $GNUCONFIG/config.guess		config
 $GNUCONFIG/config.sub		config
 #
