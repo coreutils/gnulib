@@ -1,3 +1,8 @@
+2003-01-16  Jim Meyering  <jim@meyering.net>
+
+	* regex.m4: The `regex' struct is both input and output.
+	Initialize it before each use.  Patch by Tim Waugh.
+
 2003-01-11  Bruno Haible  <bruno@clisp.org>
 
 	* longlong.m4 (jm_AC_TYPE_LONG_LONG): Also test the LL suffix.
