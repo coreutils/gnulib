@@ -12,8 +12,15 @@ configure.ac:
 gl_FUNC_POLL
 
 Makefile.am:
-noinst_HEADERS += poll_.h
-DISTCLEANFILES += poll.h
+EXTRA_DIST += poll_.h
+
+# We need the following in order to create an <poll.h> when the system
+# doesn't have one.
+all-local $(lib_OBJECTS): @POLL_H@
+poll.h: poll_.h
+	cp $(srcdir)/poll_.h poll.h-t
+	mv poll.h-t poll.h
+MOSTLYCLEANFILES += poll.h poll.h-t
 
 Include:
 #include <poll.h>

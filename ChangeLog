@@ -1,3 +1,11 @@
+2003-06-07  Bruno Haible  <bruno@clisp.org>
+
+	* modules/poll (Makefile.am): Use explicit creation rule for poll.h, to
+	avoid AC_CONFIG_LINKS.
+	* modules/fnmatch (Makefile.am): Use explicit creation rule for
+	fnmatch.h, to avoid AC_CONFIG_LINKS.
+	* modules/alloca (Makefile.am): Make creation of alloca.h Ctrl-C safe.
+
 2003-06-07  Jim Meyering  <jim@meyering.net>
 
 	* modules/strtod: Use $(...) notation, not @...@ for

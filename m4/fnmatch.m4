@@ -3,7 +3,7 @@
 # This is a modified version of autoconf's AC_FUNC_FNMATCH.
 # This file should be simplified after Autoconf 2.57 is required.
 
-# Copyright (C) 2000, 2001, 2002 Free Software Foundation, Inc.
+# Copyright (C) 2000-2003 Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ AC_CHECK_DECLS([getenv])
 AC_CHECK_FUNCS([btowc mbsrtowcs mempcpy wmempcpy])
 AC_CHECK_HEADERS([wchar.h wctype.h])
 AC_LIBOBJ([fnmatch])
-AC_CONFIG_LINKS([lib/fnmatch.h:lib/fnmatch_.h])
+FNMATCH_H=fnmatch.h
 AC_DEFINE(fnmatch, rpl_fnmatch,
           [Define to rpl_fnmatch if the replacement function should be used.])
 ])# _AC_LIBOBJ_FNMATCH
@@ -89,6 +89,7 @@ AC_DEFUN([gl_PREREQ_FNMATCH_EXTRA],
 
 AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
 [
+  FNMATCH_H=
   _AC_FUNC_FNMATCH_IF([POSIX], [ac_cv_func_fnmatch_posix],
                       [rm -f lib/fnmatch.h],
                       [_AC_LIBOBJ_FNMATCH])
@@ -100,6 +101,7 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
     AC_DEFINE([fnmatch], [posix_fnmatch],
       [Define to a replacement function name for fnmatch().])
   fi
+  AC_SUBST([FNMATCH_H])
 ])
 
 
@@ -108,6 +110,7 @@ AC_DEFUN([gl_FUNC_FNMATCH_GNU],
   dnl Persuade glibc <fnmatch.h> to declare FNM_CASEFOLD etc.
   AC_REQUIRE([AC_GNU_SOURCE])
 
+  FNMATCH_H=
   _AC_FUNC_FNMATCH_IF([GNU], [ac_cv_func_fnmatch_gnu],
                       [rm -f lib/fnmatch.h],
                       [_AC_LIBOBJ_FNMATCH])
@@ -119,4 +122,5 @@ AC_DEFUN([gl_FUNC_FNMATCH_GNU],
     AC_DEFINE([fnmatch], [gnu_fnmatch],
       [Define to a replacement function name for fnmatch().])
   fi
+  AC_SUBST([FNMATCH_H])
 ])

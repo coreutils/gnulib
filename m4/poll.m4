@@ -1,4 +1,4 @@
-# poll.m4 serial 1
+# poll.m4 serial 2
 dnl Copyright (c) 2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -9,9 +9,12 @@ dnl the same distribution terms as the rest of the program.
 AC_DEFUN([gl_FUNC_POLL],
 [
   AC_CHECK_HEADERS(poll.h)
-  if test x$ac_cv_header_poll_h = xno; then
-    AC_CONFIG_LINKS([lib/poll.h:lib/poll_.h])
+  if test "$ac_cv_header_poll_h" = no; then
+    POLL_H=poll.h
+  else
+    POLL_H=
   fi
+  AC_SUBST([POLL_H])
 
   AC_REPLACE_FUNCS(poll)
   if test $ac_cv_func_poll = no; then

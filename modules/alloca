@@ -19,8 +19,9 @@ EXTRA_DIST += alloca_.h
 # doesn't have one that works with the given compiler.
 all-local $(lib_OBJECTS): @ALLOCA_H@
 alloca.h: alloca_.h
-	cp $(srcdir)/alloca_.h alloca.h
-MOSTLYCLEANFILES += alloca.h
+	cp $(srcdir)/alloca_.h alloca.h-t
+	mv alloca.h-t alloca.h
+MOSTLYCLEANFILES += alloca.h alloca.h-t
 
 Include:
 #include <alloca.h>

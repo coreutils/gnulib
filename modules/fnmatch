@@ -15,9 +15,15 @@ configure.ac:
 # No macro. You should also use one of fnmatch-posix or fnmatch-gnu.
 
 Makefile.am:
-lib_SOURCES += fnmatch_.h
-EXTRA_DIST += fnmatch_loop.c
-DISTCLEANFILES += fnmatch.h
+EXTRA_DIST += fnmatch_.h fnmatch_loop.c
+
+# We need the following in order to create an <fnmatch.h> when the system
+# doesn't have one that supports the required API.
+all-local $(lib_OBJECTS): @FNMATCH_H@
+fnmatch.h: fnmatch_.h
+	cp $(srcdir)/fnmatch_.h fnmatch.h-t
+	mv fnmatch.h-t fnmatch.h
+MOSTLYCLEANFILES += fnmatch.h fnmatch.h-t
 
 Include:
 <fnmatch.h>

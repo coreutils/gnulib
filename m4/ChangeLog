@@ -1,3 +1,13 @@
+2003-06-07  Bruno Haible  <bruno@clisp.org>
+
+	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH, gl_FUNC_FNMATCH_POSIX,
+	gl_FUNC_FNMATCH_GNU): Set FNMATCH_H instead of invoking
+	AC_CONFIG_LINKS. Needed to allow for a different name of the lib
+	directory.
+	* poll.m4 (gl_FUNC_POLL): Set POLL_H instead of invoking
+	AC_CONFIG_LINKS. Needed to allow for a different name of the lib
+	directory.
+
 2003-06-04  Paul Eggert  <eggert@twinsun.com>
 
 	* human.m4 (gl_HUMAN): Require AM_STDBOOL_H.  Check for
@@ -1953,7 +1963,7 @@
 2000-02-09  Jim Meyering  <meyering@lucent.com>
 
 	* lib-check.m4 (jm_LIB_CHECK): Fix typo: check for sp_pwdp in
-	struct spwd, rather than in struct passwd.  Reported by Gaël Quéri.
+	struct spwd, rather than in struct passwd.  Reported by Gaï¿½ Quï¿½i.
 
 2000-02-08  Akim Demaille  <akim@epita.fr>
 
@@ -2011,7 +2021,7 @@
 2000-01-28  Jim Meyering  <meyering@lucent.com>
 
 	* perl.m4: Change format of warning message to look more like that
-	from the missing script.  Suggestion from François Pinard.
+	from the missing script.  Suggestion from Franï¿½is Pinard.
 
 2000-01-25  Jim Meyering  <meyering@lucent.com>
 
