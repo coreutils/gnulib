@@ -17,7 +17,7 @@ EXTRA_DIST += alloca_.h
 
 # The following is needed in order to create an <alloca.h> when the system
 # doesn't have one that works with the given compiler.
-all-local: @ALLOCA_H@
+all-local $(lib_OBJECTS): @ALLOCA_H@
 alloca.h: alloca_.h
 	cp $(srcdir)/alloca_.h alloca.h
 MOSTLYCLEANFILES += alloca.h
