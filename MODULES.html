@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, extensions, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, progname, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, extensions, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getdate, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, progname, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -1035,7 +1035,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xalloc.h">xalloc.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xmalloc.c">xmalloc.c</A><BR><A HREF="lib/xstrdup.c">xstrdup.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/xalloc.m4">xalloc.m4</A><BR>gl_XALLOC
-        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>exitfail<BR>gettext<BR>malloc<BR>realloc
+        <TD ALIGN=LEFT VALIGN=TOP>malloc<BR>realloc<BR>error<BR>gettext<BR>exitfail<BR>exit
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=alloca"></A><A HREF="modules/alloca">alloca</A>
@@ -1353,7 +1353,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/argmatch.h">argmatch.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/argmatch.c">argmatch.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>gettext<BR>quote<BR>quotearg<BR>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>error<BR>quotearg<BR>quote<BR>unlocked-io<BR>exit
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=version-etc"></A><A HREF="modules/version-etc">version-etc</A>
@@ -1457,7 +1457,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/obstack.h">obstack.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/obstack.c">obstack.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/obstack.m4">obstack.m4</A><BR>gl_OBSTACK
-        <TD ALIGN=LEFT VALIGN=TOP>exit<BR>gettext
+        <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>exit
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=hash-pjw"></A><A HREF="modules/hash-pjw">hash-pjw</A>
@@ -2299,7 +2299,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xgethostname.c">xgethostname.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>gethostname<BR>xalloc
+        <TD ALIGN=LEFT VALIGN=TOP>gethostname<BR>xalloc<BR>error<BR>exit
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=canon-host"></A><A HREF="modules/canon-host">canon-host</A>
@@ -2519,7 +2519,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fatal.h">fatal.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fatal.c">fatal.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/fatal.m4">fatal.m4</A><BR>gl_FATAL
-        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>unlocked-io
+        <TD ALIGN=LEFT VALIGN=TOP>error<BR>unlocked-io<BR>exit
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getloadavg"></A><A HREF="modules/getloadavg">getloadavg</A>
@@ -2616,6 +2616,13 @@ variables.
         <TH ALIGN=LEFT>Depends on
       </TR>
       <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fwriteerror"></A><A HREF="modules/fwriteerror">fwriteerror</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fwriteerror.h">fwriteerror.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fwriteerror.c">fwriteerror.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>---
+      </TR>
+      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=tzset"></A><A HREF="modules/tzset">tzset</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/time.h.html">time.h</A>&gt;
         <TD ALIGN=LEFT VALIGN=TOP>---
@@ -2657,6 +2664,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 13 September 2003.
+    Generated from <CODE>MODULES.html.sh</CODE> on 17 September 2003.
   </BODY>
 </HTML>
