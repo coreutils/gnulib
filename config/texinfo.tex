@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-02-09.15}
+\def\texinfoversion{2004-02-11.16}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -972,8 +972,6 @@ where each line of input produces a line of output.}
 % By default, we suppress indentation.
 %
 \def\suppressfirstparagraphindent{\dosuppressfirstparagraphindent}
-\newdimen\currentparindent
-%
 \def\insertword{insert}
 %
 \parseargdef\firstparagraphindent{%
@@ -6302,6 +6300,9 @@ width0pt\relax} \fi
 \let\resetallfloatnos=\empty
 %
 \def\dofloat#1,#2,#3,#4\finish{%
+  \let\thiscaption=\empty
+  \let\thisshortcaption=\empty
+  %
   % don't lose footnotes inside @float.
   \startsavinginserts
   %
@@ -6341,58 +6342,76 @@ width0pt\relax} \fi
         \setref{\floatlabel}{Yfloat}%
       }%
     \fi
+    %
+    % start with \parskip glue, I guess.
+    \vskip\parskip
+    %
+    % Don't suppress indentation if a float happens to start a section.
+    \restorefirstparagraphindent
 }
 
 % we have these possibilities:
 % @float Foo,lbl & @caption{Cap}: Foo 1.1: Cap
 % @float Foo,lbl & no caption:    Foo 1.1
+% @float Foo & @caption{Cap}:     Foo: Cap
+% @float Foo & no caption:        Foo
 % @float ,lbl & Caption{Cap}:     1.1: Cap
 % @float ,lbl & no caption:       1.1
 % @float & @caption{Cap}:         Cap
 % @float & no caption:
 %
 \def\Efloat{%
-    \let\printedsomething = \empty
+    \let\floatident = \empty
     %
-    \ifx\floattype\empty \else
-      \vskip.5\parskip  % space above caption
+    % In all cases, if we have a float type, it comes first.
+    \ifx\floattype\empty \else \def\floatident{\floattype}\fi
+    %
+    % If we have an xref label, the number comes next.
+    \ifx\floatlabel\empty \else
+      \ifx\floattype\empty \else % if also had float type, need tie first.
+        \appendtomacro\floatident{\tie}%
+      \fi
+      % the number.
+      \appendtomacro\floatident{\chaplevelprefix\the\floatno}%
+    \fi
+    %
+    % Start the printed caption with what we've constructed in
+    % \floatident, but keep it separate; we need \floatident again.
+    \let\captionline = \floatident
+    %
+    \ifx\thiscaption\empty \else
+      \ifx\floatident\empty \else
+	\appendtomacro\captionline{: }% had ident, so need a colon between
+      \fi
       %
-      % Print the float number preceded by the chapter-level number
-      % (empty in the case of unnumbered), as in "Figure 1.1".  Although
-      % there are other styles of float numbering, we hardwire this one.
-      \def\floatident{\floattype\tie\chaplevelprefix\the\floatno}%
-      \floatident
-      \let\printedsomething = t%
-      %
-      % Write the text that goes in the list of floats to the aux file
-      % as \floatlabel-lof.  Besides the float ident, we include the
-      % short caption if specified, else the full caption if specified,
-      % else nothing.
+      % caption text.
+      \appendtomacro\captionline\thiscaption
+    \fi
+    %
+    % If we have anything to print, print it, with space before.
+    % Eventually this needs to become an \insert.
+    \ifx\captionline\empty \else
+      \vskip.5\parskip
+      \captionline
+    \fi
+    %
+    % If have an xref label, write the list of floats info.  Do this
+    % after the caption, to avoid chance of it being a breakpoint.
+    \ifx\floatlabel\empty \else
+      % Write the text that goes in the lof to the aux file as
+      % \floatlabel-lof.  Besides \floatident, we include the short
+      % caption if specified, else the full caption if specified, else nothing.
       {%
         \atdummies \turnoffactive \otherbackslash
         \immediate\write\auxfile{@xrdef{\floatlabel-lof}{%
           \floatident
           \ifx\thisshortcaption\empty
-            \ifx\thiscaption\empty \else
-              : \thiscaption
-            \fi
+            \ifx\thiscaption\empty \else : \thiscaption \fi
           \else
             : \thisshortcaption
           \fi
         }}%
       }%
-    \fi % end have xref label for this float
-    %
-    \ifx\thiscaption\empty \else
-      \ifx\printedsomething\empty
-	\vskip.5\parskip  % space above caption
-      \else
-	:\space  % had a number, so print a colon before the caption.
-      \fi
-      %
-      % Print caption text.
-      \thiscaption
-      \let\printedsomething = t%
     \fi
     %
     % Space below caption, if we printed anything.
@@ -6401,10 +6420,18 @@ width0pt\relax} \fi
   \checkinserts
 }
 
+% Append the tokens #2 to the macro #1, not expanding either.
+% 
+\def\appendtomacro#1#2{%
+  \toksA = \expandafter{#1}%
+  \toksB = {#2}%
+  \edef#1{\the\toksA \the\toksB}%
+}
+
+% @caption, @shortcaption are easy.
+% 
 \def\caption#1{\checkenv\float \def\thiscaption{#1}}
 \def\shortcaption#1{\checkenv\float \def\thisshortcaption{#1}}
-\let\thiscaption=\empty
-\let\thisshortcaption=\empty
 
 % The parameter is the control sequence identifying the counter we are
 % going to use.  Create it if it doesn't exist and assign it to \floatno.
