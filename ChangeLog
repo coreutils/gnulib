@@ -1,5 +1,9 @@
 2004-10-15  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import): Let gl_INIT define LT_ALLOCA when needed.
+
+2004-10-15  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_lib_Makefile_am): Add markers to separate
 	the portions belonging to each module.
 	Suggested by Derek Robert Price <derek@ximbiot.com>.

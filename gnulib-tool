@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-10-15 16:54:14 $'
+cvsdatestamp='$Date: 2004-10-15 20:20:11 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -589,6 +589,12 @@ func_import ()
       func_verify_module
       if test -n "$module"; then
         func_get_autoconf_snippet "$module" | sed -e '/^$/d;' -e 's/^/  /' -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
+        if test "$module" = 'alloca' && test -n "$libtool; then
+          echo 'changequote(,)dnl'
+          echo 'LTALLOCA=`echo "$ALLOCA" | sed '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
+          echo 'changequote([, ])dnl'
+          echo 'AC_SUBST(LTALLOCA)'
+        fi
       fi
     done
     echo "])"
