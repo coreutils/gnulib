@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.6 2003-07-08 23:33:45 eggert Exp $
+# $Id: srclist-update,v 1.7 2003-07-14 22:44:04 eggert Exp $
 #
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
@@ -26,7 +26,24 @@ test -r $mydir/srclistvars.sh && . $mydir/srclistvars.sh
 #
 fixlicense() \
 {
-    sed '/The .* is free software/,/USA\.  *\*\//c\
+    sed '
+
+  /^\([[:space:]]*#[[:space:]]*\)Th[ei][ s].* is free software/,/^[[:space:]]*#.*USA\./c\
+#	This program is free software; you can redistribute it and/or modify\
+#	it under the terms of the GNU General Public License as published by\
+#	the Free Software Foundation; either version 2, or (at your option)\
+#	any later version.\
+#\
+#	This program is distributed in the hope that it will be useful,\
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of\
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\
+#	GNU General Public License for more details.\
+#\
+#	You should have received a copy of the GNU General Public License along\
+#	with this program; if not, write to the Free Software Foundation,\
+#	Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+  /Th[ei][ s].* is free software/,/USA\.  *\*\//c\
    This program is free software; you can redistribute it and/or modify\
    it under the terms of the GNU General Public License as published by\
    the Free Software Foundation; either version 2, or (at your option)\
@@ -57,7 +74,7 @@ fixfile() \
   *)
     cat $1;;
   esac \
-  | grep -v '\$Id: srclist-update,v 1.6 2003-07-08 23:33:45 eggert Exp $' >$2
+  | grep -v '\$Id: srclist-update,v 1.7 2003-07-14 22:44:04 eggert Exp $' >$2
 }
 
 

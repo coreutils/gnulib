@@ -1,3 +1,19 @@
+2003-07-14  Paul Eggert  <eggert@twinsun.com>
+
+	* srclist.txt: Add tons more gettext files.  $GETTEXT is now
+	assumed to refer to the root of the most recent stable gettext version.
+	* srclistvars.sh: Add defaults for eggert.
+	* srclist-update: Convert LGPL to GPL in shell scripts, too.
+	Match "This program" as well as "The program".  This is needed
+	for gettext.
+
+2003-07-09  Paul Eggert  <eggert@twinsun.com>
+
+	* srclist.txt: Sort sublists.  Add $LIBCSRC/sysdeps/generic/strtoul.c.
+	In comments, add more libc files that differ from gnulib for one
+	reason or another; we'd like this list to be smaller but for now
+	let's document what we have.
+
 2003-07-08  Paul Eggert  <eggert@twinsun.com>
 
 	* srclist-update: Port to POSIX 1003.1-2001 hosts by avoiding the

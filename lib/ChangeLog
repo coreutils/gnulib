@@ -1,3 +1,13 @@
+2003-07-14  Paul Eggert  <eggert@twinsun.com>
+
+	* asnprintf.c, asprintf.c, config.charset, gettext.h,
+	localcharset.c, localcharset.h, mkdtemp.c, printf-args.c,
+	printf-args.h, printf-parse.c, printf-parse.h, ref-add.sin,
+	ref-del.sin, setenv.c, unsetenv.c, vasnprintf.c, vasnprintf.h,
+	vasprintf.c, vasprintf.h: Regenerate.  These files are now being
+	updated automatically by ../config/srclist-update.  This changes
+	their license from LPGL to GPL.
+
 2003-07-14  Jim Meyering  <jim@meyering.net>
 
 	Don't emit diagnostics.  Let callers do that.

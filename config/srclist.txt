@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.17 2003-07-10 05:07:45 eggert Exp $
+# $Id: srclist.txt,v 1.18 2003-07-14 22:44:04 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -18,7 +18,25 @@ $AUTOCONF/INSTALL		doc
 $GNUORG/COPYING.DOC		doc
 $GNUORG/fdl.texi		doc
 
-$GETTEXT/gettext.h		lib
+$GETTEXT/gettext-runtime/libasprintf/asnprintf.c	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/asprintf.c		lib gpl
+$GETTEXT/gettext-runtime/libasprintf/printf-args.c	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/printf-args.h	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/printf-parse.c	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/printf-parse.h	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/vasnprintf.c	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/vasnprintf.h	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/vasprintf.c	lib gpl
+$GETTEXT/gettext-tools/lib/config.charset		lib gpl
+$GETTEXT/gettext-tools/lib/gettext.h			lib gpl
+$GETTEXT/gettext-tools/lib/localcharset.c		lib gpl
+$GETTEXT/gettext-tools/lib/localcharset.h		lib gpl
+$GETTEXT/gettext-tools/lib/mkdtemp.c			lib gpl
+$GETTEXT/gettext-tools/lib/ref-add.sin			lib gpl
+$GETTEXT/gettext-tools/lib/ref-del.sin			lib gpl
+$GETTEXT/gettext-tools/lib/setenv.c			lib gpl
+$GETTEXT/gettext-tools/lib/unsetenv.c			lib gpl
+$GETTEXT/gettext-tools/lib/vasprintf.h			lib gpl
 #
 $LIBCSRC/argp/argp-ba.c			lib gpl
 $LIBCSRC/argp/argp-eexst.c		lib gpl
