@@ -1,6 +1,6 @@
 /* readtokens.h -- Functions for reading tokens from an input stream.
 
-   Copyright (C) 1990, 1991, 1999, 2001, 2003 Jim Meyering.
+   Copyright (C) 1990, 1991, 1999, 2001, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,21 +38,14 @@ typedef struct tokenbuffer token_buffer;
 
 # endif /* not TOKENBUFFER_DEFINED */
 
-# undef __P
-# if defined (__STDC__) && __STDC__
-#  define	__P(x) x
-# else
-#  define	__P(x) ()
-# endif
-
-void init_tokenbuffer __P ((token_buffer *tokenbuffer));
+void init_tokenbuffer (token_buffer *tokenbuffer);
 
 long
-  readtoken __P ((FILE *stream, const char *delim, int n_delim,
-	     token_buffer *tokenbuffer));
+  readtoken (FILE *stream, const char *delim, int n_delim,
+	     token_buffer *tokenbuffer);
 int
-  readtokens __P ((FILE *stream, int projected_n_tokens,
+  readtokens (FILE *stream, int projected_n_tokens,
 	      const char *delim, int n_delim,
-	      char ***tokens_out, long **token_lengths));
+	      char ***tokens_out, long **token_lengths);
 
 #endif /* not H_READTOKENS_H */
