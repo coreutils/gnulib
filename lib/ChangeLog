@@ -1,3 +1,10 @@
+2004-09-30  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
+
+	* argp-help.c (canon_doc_option): Fixed coredump if *name==NULL
+	(hol_entry_help): Never translate an empty string.
+	Do not translate option tag (opt->name) if OPTION_NO_TRANS is set
+	* argp.h (OPTION_NO_TRANS): New option.
+
 2004-09-29  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* xvasprintf.c: Include xalloc.h.
