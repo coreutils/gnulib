@@ -15,28 +15,30 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
-/* Written by David MacKenzie <djm@ai.mit.edu>. */
+/* Written by David MacKenzie <djm@gnu.ai.mit.edu>. */
 
 #include <sys/types.h>
-#ifdef DIRENT
-#include <dirent.h>
-#ifdef direct
-#undef direct
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
 #endif
-#define direct dirent
+
+#if defined(DIRENT) || defined(_POSIX_VERSION)
+#include <dirent.h>
 #define NLENGTH(direct) (strlen((direct)->d_name))
-#else
+#else /* not (DIRENT or _POSIX_VERSION) */
+#define dirent direct
 #define NLENGTH(direct) ((direct)->d_namlen)
-#ifdef USG
 #ifdef SYSNDIR
 #include <sys/ndir.h>
-#else
-#include <ndir.h>
-#endif
-#else
+#endif /* SYSNDIR */
+#ifdef SYSDIR
 #include <sys/dir.h>
-#endif
-#endif
+#endif /* SYSDIR */
+#ifdef NDIR
+#include <ndir.h>
+#endif /* NDIR */
+#endif /* DIRENT or _POSIX_VERSION */
 
 #ifdef VOID_CLOSEDIR
 /* Fake a return value. */
@@ -71,7 +73,7 @@ savedir (dir, name_size)
      unsigned name_size;
 {
   DIR *dirp;
-  struct direct *dp;
+  struct dirent *dp;
   char *name_space;
   char *namep;
 

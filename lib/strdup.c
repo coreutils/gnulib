@@ -23,10 +23,6 @@ char *malloc ();
 char *strcpy ();
 #endif
 
-#if !__STDC__
-#define const
-#endif
-
 /* Return a newly allocated copy of STR,
    or 0 if out of memory. */
 

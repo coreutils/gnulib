@@ -15,7 +15,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
-#if defined(STDC_HEADERS) || defined(USG)
+#if defined(STDC_HEADERS) || defined(HAVE_STRING_H)
 #include <string.h>
 #else
 #include <strings.h>
