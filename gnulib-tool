@@ -22,18 +22,18 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-09-19 02:08:45 $'
+cvsdatestamp='$Date: 2004-09-21 14:22:48 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
 # You can set AUTOCONFPATH to empty if autoconf 2.57 is already in your PATH.
 AUTOCONFPATH=
-case $USER in
-  bruno )
-    AUTOCONFBINDIR=/packages/gnu-inst-autoconf/2.57/bin
-    AUTOCONFPATH="eval env PATH=${AUTOCONFBINDIR}:\$PATH "
-    ;;
-esac
+#case $USER in
+#  bruno )
+#    AUTOCONFBINDIR=/packages/gnu-inst-autoconf/2.57/bin
+#    AUTOCONFPATH="eval env PATH=${AUTOCONFBINDIR}:\$PATH "
+#    ;;
+#esac
 
 AUTORECONF="${AUTOCONFPATH}autoreconf"
 
