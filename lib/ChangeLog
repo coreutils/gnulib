@@ -1,3 +1,8 @@
+2004-10-01  Yoann Vandoorselaere <yoann@prelude-ids.org>
+
+	* strsep.h: New file.
+	* strsep.c: New file.
+
 2004-10-01  Simon Josefsson  <jas@extundo.com>
 
 	* snprintf.c (snprintf): Handle size==0.

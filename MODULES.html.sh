@@ -1519,6 +1519,7 @@ func_all_modules ()
   func_module strdup
   func_module strnlen
   func_module strndup
+  func_module strsep
   #func_module fstrcmp
   func_module xstrndup
   func_end_table

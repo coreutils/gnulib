@@ -1,3 +1,7 @@
+2004-10-01  Yoann Vandoorselaere <yoann@prelude-ids.org>
+
+	* strsep.m4: New file.
+
 2004-09-30  Simon Josefsson  <jas@extundo.com>
 
 	* snprintf.m4: New file.

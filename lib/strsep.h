@@ -1,0 +1,43 @@
+/* Copyright (C) 2004 Free Software Foundation, Inc.
+ * Written by Yoann Vandoorselaere <yoann@prelude-ids.org>
+ *
+ * The file is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This file is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this file; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ * USA.
+ */
+
+#ifndef GNULIB_STRSEP_H_
+#define GNULIB_STRSEP_H_
+
+/*
+ * Get strsep, if available.
+ */
+#include <string.h>
+
+/* Searches the next delimiter (char listed in DELIM) starting at *STRINGP.
+   If one is found, it is overwritten with a NUL, and *STRINGP is advanced
+   to point to the next char after it.  Otherwise, *STRINGP is set to NULL.
+   If *STRINGP was already NULL, nothing happens.
+   Returns the old value of *STRINGP.
+
+   This is a variant of strtok() that is multithread-safe and supports
+   empty fields.
+
+   Caveat: It modifies the original string.
+   Caveat: It doesn't work with multibyte strings unless all of the delimiter
+           characters are ASCII characters < 0x30.  */
+
+extern char *strsep (char **stringp, const char *delim);
+
+#endif /* GNULIB_STRSEP_H_ */
