@@ -1,3 +1,7 @@
+2002-12-31  Paul Eggert  <eggert@twinsun.com>
+
+	* memcoll.m4 (gl_MEMCOLL): Require AC_FUNC_MEMCMP.
+
 2002-12-24  Bruno Haible  <bruno@clisp.org>
 
 	General infrasructure.
