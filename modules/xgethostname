@@ -8,8 +8,6 @@ lib/xgethostname.c
 Depends-on:
 gethostname
 xalloc
-error
-exit
 
 configure.ac:
 

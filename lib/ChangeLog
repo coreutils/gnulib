@@ -1,3 +1,7 @@
+2004-08-08  Simon Josefsson  <jas@extundo.com>
+
+	* xgethostname.c: Don't include error.h (not used).
+
 2004-08-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* xalloc-die.c: New files.

@@ -13,6 +13,11 @@
 	(configure.ac): Rename gl_SHA to gl_SHA1.
 	(Include): sha.h -> sha1.h.
 
+2004-08-08  Simon Josefsson  <jas@extundo.com>
+
+	* modules/xgethostname (Depends-on): Remove exit and error (not
+	used).
+
 2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	More merge from coreutils.
