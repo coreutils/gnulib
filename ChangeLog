@@ -1,3 +1,8 @@
+2003-01-16  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh: Add a table of contents. Add the module name as
+	leftmost column. Add hyperlinks.
+
 2003-01-11  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stpcpy: Distribute lib/stpcpy.h.
