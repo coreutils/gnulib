@@ -1,3 +1,7 @@
+2004-10-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* argp-fs-xinl.c, argp-xinl.c: Update from glibc.
+
 2004-10-12  Simon Josefsson  <jas@extundo.com>
 
 	* getpass.c (fflush_unlocked, flockfile, funlockfile)
@@ -38,7 +42,7 @@
 
 	* regex.c (re_comp): Cast gettext return value to char *,
 	Problem reported by Martin Neitzel via Mark D. Baushke.
-	
+
 2004-10-04  Simon Josefsson  <jas@extundo.com>
 
 	* error.c, md5.c, regex.c: Use '#if USE_UNLOCKED_IO' instead of
