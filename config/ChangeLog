@@ -1,3 +1,7 @@
+2003-11-02  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt (vasprintf.c): sync broken, sigh.
+
 2003-10-26  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt (COPYING.DOC): no longer available from
