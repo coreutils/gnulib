@@ -1,3 +1,38 @@
+2002-05-09  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Update for newest glibc. Add canonical names
+	ISO-8859-14, KOI8-T, TCVN5712-1, GEORGIAN-PS.
+
+2002-05-09  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c (get_charset_aliases): Add more Windows specific
+	aliases.
+
+2002-05-08  Owen Taylor  <otaylor@redhat.com>
+
+	* config.charset: A few additions for Solaris.
+
+2001-12-05  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c (locale_charset): Don't return an empty string.
+
+2001-10-23  Bruno Haible  <haible@clisp.cons.org>
+
+	* config.charset: msdos in uk_UA uses CP1125.
+
+2001-08-05  Bruno Haible  <haible@clisp.cons.org>
+
+	Make it possible to build libcharset with CC=gcc CFLAGS="-x c++".
+	* localcharset.c (locale_charset): Declare as extern "C".
+
+2002-02-15  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset [msdosdjgpp]: For Russian, use CP866.
+
+2002-02-11  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Add support for NetBSD.
+
 2002-09-25    <karl@gnu.org>
 
 	* strdup.c: copy from libc/string (via ../config/srclist*).
