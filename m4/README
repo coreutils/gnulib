@@ -1,18 +1,85 @@
-Many of the files in this directory are shared between the diffutils,
-fileutils, sh-utils, and textutils packages -- and others, so if you
+Many of the files in this directory are shared between the coreutils,
+diffutils, tar and gettext packages -- and others, so if you
 change them, try to ensure that you don't break those packages.
-Unfortunately, that's hard.
+That's hard without a systematic approach, but here is a set of conventions
+that makes it easy.
 
-One way to do that is to put the modified .m4 file in each of the packages,
-run `make dist' to create a .tar.gz file, then build that package on as
-many different types of systems as possible.  Then repeat, but using the
-original version of the .m4 file.  Run configure like this each time
-`./configure --cache=config.cache' and be sure to save the following files
-from each run: config.cache config.status config.out config.h*.
-Then compare the two versions of each of those files and be prepared to
-explain any differences.
+- The lib/ sources are split into modules.  Usually the module of a
+  lib/foo.h and lib/foo.c is called "foo" - not unexpected, hey! -, but
+  in more ambiguous cases you can look up the module a file belongs to
+  by doing "grep lib/foo.c modules/*".
 
-These files are used by a program called aclocal (part of the GNU automake
-package).  aclocal uses these files to create aclocal.m4 which is in turn
-used by autoconf to create the configure script at the top level in
-this distribution.
+- For every module there is an autoconf macro file, usually called
+  m4/foo.m4 according to the module name.  When you modify lib/foo.h or
+  lib/foo.c, remember to modify m4/foo.m4 as well!
+  What if you don't find m4/foo.m4? This probably means that the module
+  doesn't need autoconf support up to now (again, take a look in modules/*).
+  So you might need to create one.
+
+- A module which defines a replacement function (i.e. a function which is
+  compiled only on systems which lack it or where it exists but doesn't
+  work satisfactorily) has a .m4 file with typically the following structure:
+
+  AC_DEFUN([gl_FUNC_FOO],
+  [
+    AC_REPLACE_FUNCS(foo)
+    if test $ac_cv_func_foo = no; then
+      gl_PREREQ_FOO
+    fi
+  ])
+
+  # Prerequisites of lib/foo.c.
+  AC_DEFUN([gl_PREREQ_FOO], [
+    dnl Many AC_CHECK_* invocations.
+  ])
+
+- A module which is compiled on all platforms can define multiple functions
+  and be spread across multiple source files (although each time you do
+  this you should consider splitting the module, if the source files could
+  be independent). The .m4 file has typically the following structure:
+
+  AC_DEFUN([gl_FOO],
+  [
+    dnl Prerequisites of lib/foo.c.
+    dnl Many AC_CHECK_* invocations.
+
+    dnl Prerequisites of lib/foobar.c.
+    dnl Many AC_CHECK_* invocations.
+  ])
+
+- When a module FOO depends on a module BAR, you do *not* generally need
+  to write
+
+  AC_DEFUN([gl_FOO],
+  [
+    AC_REQUIRE([gl_BAR])
+    ...
+  ])
+
+  because the maintainers might want to use locally modified / renamed copies
+  of the module BAR.
+
+- If the autoconf tests for the modules FOO and BAR have some checks in
+  common, still list them separately. Autoconf has two mechanisms for
+  avoiding that a configure file runs the same test twice: AC_REQUIRE
+  and AC_CACHE_CHECK. Trying to omit the checks leads to maintenance
+  problems: If FOO depends on BAR, and you omit a check from FOO's .m4 file,
+  later on, when someone modifies bar.c and removes the check from bar.m4,
+  he will not remember that foo.c needs the check as well.
+
+- Now, how can you find the prerequisites of lib/foo.c? Try this:
+    "grep '#.*if' lib/foo.c | grep -v endif"
+  and for each HAVE_* macro search in the autoconf documentation what could
+  be the autoconf macro that provides it. This is only an approximation; in
+  general you should look at all preprocessor directives in lib/foo.c.
+
+- After ANY modifications of an m4 file, you should increment its serial
+  number (in the first line). Also, if this first line features a particular
+  release, _remove_ this release stamp. Example: Change
+
+    # setenv.m4 serial 2 (gettext-0.11.1)
+
+  into
+
+    # setenv.m4 serial 3
+

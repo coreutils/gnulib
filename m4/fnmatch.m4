@@ -1,7 +1,7 @@
 # Check for fnmatch.
 
 # This is a modified version of autoconf's AC_FUNC_FNMATCH.
-# This file should be removed after Autoconf 2.54 is required.
+# This file should be simplified after Autoconf 2.57 is required.
 
 # Copyright (C) 2000, 2001, 2002 Free Software Foundation, Inc.
 
@@ -34,7 +34,9 @@ AC_DEFUN([_AC_FUNC_FNMATCH_IF],
    # Thanks to John Oleynick, Franc,ois Pinard, and Paul Eggert for this test.
    AC_RUN_IFELSE(
       [AC_LANG_PROGRAM(
-	 [#include <fnmatch.h>
+	 [
+#	   include <stdlib.h>
+#	   include <fnmatch.h>
 #	   define y(a, b, c) (fnmatch (a, b, c) == 0)
 #	   define n(a, b, c) (fnmatch (a, b, c) == FNM_NOMATCH)
          ],
@@ -77,11 +79,44 @@ AC_DEFINE(fnmatch, rpl_fnmatch,
 ])# _AC_LIBOBJ_FNMATCH
 
 
-# AC_FUNC_FNMATCH_GNU
-# -------------------
-AC_DEFUN([AC_FUNC_FNMATCH_GNU],
-[AC_REQUIRE([AC_GNU_SOURCE])
-_AC_FUNC_FNMATCH_IF([GNU], [ac_cv_func_fnmatch_gnu],
-                    [rm -f lib/fnmatch.h],
-                    [_AC_LIBOBJ_FNMATCH])
-])# AC_FUNC_FNMATCH_GNU
+# Additional prerequisites of lib/fnmatch.c, not part of _AC_LIBOBJ_FNMATCH.
+AC_DEFUN([gl_PREREQ_FNMATCH_EXTRA],
+[
+  AC_REQUIRE([AC_HEADER_STDC])
+  AC_CHECK_HEADERS_ONCE(string.h strings.h)
+])
+
+
+AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
+[
+  _AC_FUNC_FNMATCH_IF([POSIX], [ac_cv_func_fnmatch_posix],
+                      [rm -f lib/fnmatch.h],
+                      [_AC_LIBOBJ_FNMATCH])
+  if test $ac_cv_func_fnmatch_posix != yes; then
+    gl_PREREQ_FNMATCH_EXTRA
+    dnl We must choose a different name for our function, since on ELF systems
+    dnl a broken fnmatch() in libc.so would override our fnmatch() if it is
+    dnl compiled into a shared library.
+    AC_DEFINE([fnmatch], [posix_fnmatch],
+      [Define to a replacement function name for fnmatch().])
+  fi
+])
+
+
+AC_DEFUN([gl_FUNC_FNMATCH_GNU],
+[
+  dnl Persuade glibc <fnmatch.h> to declare FNM_CASEFOLD etc.
+  AC_REQUIRE([AC_GNU_SOURCE])
+
+  _AC_FUNC_FNMATCH_IF([GNU], [ac_cv_func_fnmatch_gnu],
+                      [rm -f lib/fnmatch.h],
+                      [_AC_LIBOBJ_FNMATCH])
+  if test $ac_cv_func_fnmatch_gnu != yes; then
+    gl_PREREQ_FNMATCH_EXTRA
+    dnl We must choose a different name for our function, since on ELF systems
+    dnl a broken fnmatch() in libc.so would override our fnmatch() if it is
+    dnl compiled into a shared library.
+    AC_DEFINE([fnmatch], [gnu_fnmatch],
+      [Define to a replacement function name for fnmatch().])
+  fi
+])

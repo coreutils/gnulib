@@ -1,4 +1,4 @@
-#serial 2
+#serial 3
 
 dnl From Jim Meyering.
 dnl
@@ -12,7 +12,7 @@ dnl the wrapper functions that work around the problem.
 AC_DEFUN([AC_FUNC_GETTIMEOFDAY_CLOBBER],
 [
  AC_REQUIRE([AC_HEADER_TIME])
- AC_CHECK_HEADERS(string.h stdlib.h)
+ AC_CHECK_HEADERS_ONCE(stdlib.h string.h)
  AC_CACHE_CHECK([whether gettimeofday clobbers localtime buffer],
   jm_cv_func_gettimeofday_clobber,
   [AC_TRY_RUN([
@@ -65,5 +65,11 @@ main ()
       [Define to rpl_gettimeofday if the replacement function should be used.])
     AC_DEFINE(GETTIMEOFDAY_CLOBBERS_LOCALTIME_BUFFER, 1,
       [Define if gettimeofday clobbers localtime's static buffer.])
+    gl_PREREQ_GETTIMEOFDAY
   fi
+])
+
+# Prerequisites of lib/gettimeofday.c.
+AC_DEFUN([gl_PREREQ_GETTIMEOFDAY], [
+  AC_REQUIRE([AC_HEADER_TIME])
 ])

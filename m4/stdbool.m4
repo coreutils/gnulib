@@ -17,6 +17,9 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
+# This file is only needed in autoconf <= 2.54.  Newer versions of autoconf
+# have this macro built-in.
+
 AC_DEFUN([AC_HEADER_STDBOOL],
   [AC_CACHE_CHECK([for stdbool.h that conforms to C99],
      [ac_cv_header_stdbool_h],
@@ -57,6 +60,7 @@ AC_DEFUN([AC_HEADER_STDBOOL],
 	[ return !a + !b + !c + !d + !e + !f + !g + !h + !i; ],
 	[ac_cv_header_stdbool_h=yes],
 	[ac_cv_header_stdbool_h=no])])
+   AC_CHECK_TYPES([_Bool])
    if test $ac_cv_header_stdbool_h = yes; then
      AC_DEFINE(HAVE_STDBOOL_H, 1, [Define to 1 if stdbool.h conforms to C99.])
    fi])

@@ -1,4 +1,4 @@
-#serial 9
+#serial 10
 
 # A replacement for autoconf's macro by the same name.  This version
 # accepts an optional argument specifying the name of the $srcdir-relative
@@ -12,7 +12,8 @@ undefine([AC_FUNC_GETLOADAVG])
 AC_DEFUN([AC_FUNC_GETLOADAVG],
 [ac_have_func=no # yes means we've found a way to get the load average.
 
-AC_CHECK_HEADERS(locale.h unistd.h mach/mach.h fcntl.h)
+AC_CHECK_HEADERS_ONCE(fcntl.h locale.h unistd.h)
+AC_CHECK_HEADERS(mach/mach.h)
 AC_CHECK_FUNCS(setlocale)
 
 # By default, expect to find getloadavg.c in $srcdir/.
@@ -106,3 +107,19 @@ LIBS=$ac_save_LIBS
 
 AC_SUBST(GETLOADAVG_LIBS)dnl
 ])# AC_FUNC_GETLOADAVG
+
+
+AC_DEFUN([gl_FUNC_GETLOADAVG],
+[
+  AC_FUNC_GETLOADAVG([lib])
+  dnl Note AC_FUNC_GETLOADAVG does AC_LIBOBJ(getloadavg).
+  if test $ac_cv_func_getloadavg = no; then
+    gl_PREREQ_GETLOADAVG
+  fi
+])
+
+# Prerequisites of lib/getloadavg.c not done by autoconf's AC_FUNC_GETLOADAVG.
+AC_DEFUN([gl_PREREQ_GETLOADAVG],
+[
+  AC_CHECK_HEADERS_ONCE(fcntl.h unistd.h)
+])
