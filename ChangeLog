@@ -1,3 +1,7 @@
+2004-10-15  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool: Untabify.
+
 2004-10-11  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh (Support for systems lacking ISO C 99): Add
