@@ -1,3 +1,9 @@
+2002-12-23  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.h: New file.
+	* localcharset.c: Include it.
+	* unicodeio.c: Likewise.
+
 2002-12-22  Bruno Haible  <bruno@clisp.org>
 
 	* utime.c (utime_null): No need to call ftruncate if the file was

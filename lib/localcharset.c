@@ -23,6 +23,9 @@
 # include <config.h>
 #endif
 
+/* Specification.  */
+#include "localcharset.h"
+
 #if HAVE_STDDEF_H
 # include <stddef.h>
 #endif

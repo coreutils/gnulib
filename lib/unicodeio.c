@@ -51,6 +51,8 @@ extern int errno;
 #define _(msgid) gettext (msgid)
 #define N_(msgid) msgid
 
+#include "localcharset.h"
+
 /* When we pass a Unicode character to iconv(), we must pass it in a
    suitable encoding. The standardized Unicode encodings are
    UTF-8, UCS-2, UCS-4, UTF-16, UTF-16BE, UTF-16LE, UTF-7.
@@ -127,7 +129,6 @@ unicode_to_mb (unsigned int code,
 
   if (!initialized)
     {
-      extern const char *locale_charset PARAMS ((void));
       const char *charset = locale_charset ();
 
       is_utf8 = !strcmp (charset, UTF8_NAME);
