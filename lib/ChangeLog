@@ -1,8 +1,8 @@
 2003-08-20  Bruno Haible  <bruno@clisp.org>
 
-	* progname.h: New file, from GNU gettext with modifications.
-	* progname.c: New file, from GNU gettext with modifications.
-	* progreloc.c: New file.
+	* progname.h: New file, from GNU gettext.
+	* progname.c: New file, from GNU gettext.
+	* progreloc.c: New file, from GNU gettext.
 
 2003-08-19  Bruno Haible  <bruno@clisp.org>
 
