@@ -1,3 +1,7 @@
+2003-05-30    <karl@gnu.org>
+
+	* mktime.c: update from libc.
+
 2003-05-30  Bruno Haible  <bruno@clisp.org>
 
 	* config.charset: Upgrade to gettext-0.12.1 and libiconv-1.9.1.
