@@ -1,4 +1,4 @@
-# size_max.m4 serial 1
+# size_max.m4 serial 2
 dnl Copyright (C) 2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -10,7 +10,7 @@ dnl From Bruno Haible.
 
 AC_DEFUN([gl_SIZE_MAX],
 [
-  AC_CHECK_HEADERS_ONCE(stdint.h)
+  AC_CHECK_HEADERS(stdint.h)
   dnl First test whether the system already has SIZE_MAX.
   AC_MSG_CHECKING([for SIZE_MAX])
   result=

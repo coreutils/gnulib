@@ -1,3 +1,11 @@
+2003-12-03  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.m4: Upgrade from gettext-0.13.
+	* po.m4: Upgrade from gettext-0.13.
+	* size_max.m4 (gl_SIZE_MAX): Don't use the _ONCE macros here.
+	* intmax.m4: New file, from gettext-0.13.
+	* printf-posix.m4: New file, from gettext-0.13.
+
 2003-11-25  Bruno Haible  <bruno@clisp.org>
 
 	* vasnprintf.m4 (gl_PREREQ_PRINTF_PARSE): Don't require
