@@ -221,6 +221,10 @@
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Enable faster, non-thread-safe stdio functions if available.
       </TR>
       <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fwriteerror">fwriteerror</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Detect write error on a stream.
+      </TR>
+      <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=vasnprintf">vasnprintf</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">vsprintf with automatic memory allocation and bounded output size.
       </TR>
@@ -1316,6 +1320,13 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/unlocked-io.m4">unlocked-io.m4</A><BR>jm_FUNC_GLIBC_UNLOCKED_IO
         <TD ALIGN=LEFT VALIGN=TOP>extensions
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fwriteerror"></A><A HREF="modules/fwriteerror">fwriteerror</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fwriteerror.h">fwriteerror.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fwriteerror.c">fwriteerror.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=vasnprintf"></A><A HREF="modules/vasnprintf">vasnprintf</A>
@@ -2616,13 +2627,6 @@ variables.
         <TH ALIGN=LEFT>Depends on
       </TR>
       <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fwriteerror"></A><A HREF="modules/fwriteerror">fwriteerror</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fwriteerror.h">fwriteerror.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fwriteerror.c">fwriteerror.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP>---
-      </TR>
-      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=tzset"></A><A HREF="modules/tzset">tzset</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/time.h.html">time.h</A>&gt;
         <TD ALIGN=LEFT VALIGN=TOP>---
@@ -2664,6 +2668,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 17 September 2003.
+    Generated from <CODE>MODULES.html.sh</CODE> on 18 September 2003.
   </BODY>
 </HTML>
