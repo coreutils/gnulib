@@ -20,10 +20,14 @@
 # include <config.h>
 #endif
 
-/* Get specification.  */
+/* Specification.  */
 #include "snprintf.h"
 
-/* Get memcpy.  */
+/* Get va_list, va_start, va_end. */
+#include <stdarg.h>
+/* Get free. */
+#include <stdlib.h>
+/* Get memcpy, size_t. */
 #include <string.h>
 
 /* Get vasnprintf.  */
@@ -40,19 +44,24 @@
 int
 snprintf (char *str, size_t size, const char *format, ...)
 {
+  char *output;
   size_t len;
-  char *out = vasnprintf (NULL, &len, format, args);
+  va_list args;
 
-  if (!out)
+  va_start (args, format);
+  output = vasnprintf (NULL, &len, format, args);
+  va_end (args);
+
+  if (!output)
     return -1;
 
   if (str)
     {
-      memcpy (str, out, MIN (len + 1, size));
+      memcpy (str, output, MIN (len + 1, size));
       str[size - 1] = '\0';
     }
 
-  free (out);
+  free (output);
 
   return len;
 }

@@ -1,6 +1,8 @@
-2004-10-01  Bruno Haible  <bruno@clisp.org>
+2004-10-01  Simon Josefsson  <jas@extundo.com>
+            Bruno Haible  <bruno@clisp.org>
 
-	* snprintf.c: Include <string.h>.
+	* snprintf.c: Include <stdarg.h>, <stdlib.h>, <string.h>.
+	(snprintf): Declare 'args'.
 
 2004-09-30  Simon Josefsson  <jas@extundo.com>
 
