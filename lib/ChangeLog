@@ -1,5 +1,12 @@
 2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Merge from tar.
+	* argp-help.c (make_hol, hol_append): Don't assume that
+	SIZE_MAX is a valid preprocessor constant.
+	(__argp_basename): Change from "#ifndef _LIBC"
+	to "#ifndef __argp_short_program_name", so that
+	we don't compile these functions for tar.
+
 	More merges from coreutils.
 	* raise.c, readtokens0.h, readtokens0.c, strftime.h, utimens.h,
 	utimens.c, utimecmp.h, utimecmp.c, xnanosleep.h, xnanosleep.c,
