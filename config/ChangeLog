@@ -1,7 +1,16 @@
+2003-07-15  Paul Eggert  <eggert@twinsun.com>
+
+	* srclist.txt: Get the following files from gettext-runtime/intl
+	instead: config.charset, localcharset.c, localcharset.h, ref-add.sin,
+	ref-del.sin.  From Bruno Haible.
+	* srclist-update (fixfile): Change grep pattern again, since the
+	previous fix didn't work (there was another trailing $).  Use
+	'[$]' to escape the $s.
+
 2003-07-15    <karl@gnu.org>
 
-	* srclist-update (fixfile): grep for $Id: ChangeLog,v 1.28 2003-07-15 12:47:54 karl Exp $Id: ChangeLog,v 1.28 2003-07-15 12:47:54 karl Exp $, since the
-	latter gets expanded.
+	* srclist-update (fixfile): Change grep pattern, since 'Id'
+	gets expanded when surrounded by '$'.
 
 2003-07-14  Paul Eggert  <eggert@twinsun.com>
 
