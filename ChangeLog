@@ -8,6 +8,7 @@
 2004-03-30  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/inttostr: New file.
+	* modules/getdate: Depend on timespec, stdbool, gettime.
 
 2004-03-29  Paul Eggert  <eggert@twinsun.com>
 

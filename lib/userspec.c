@@ -22,10 +22,10 @@
 # include <config.h>
 #endif
 
-#include <alloca.h>
-
 /* Specification.  */
 #include "userspec.h"
+
+#include <alloca.h>
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -45,7 +45,6 @@
 #endif
 
 #include "strdup.h"
-#include "posixver.h"
 #include "xalloc.h"
 #include "xstrtol.h"
 
@@ -157,7 +156,6 @@ parse_user_spec (const char *spec_arg, uid_t *uid, gid_t *gid,
   struct group *grp;
   char *g, *u, *separator;
   char *groupname;
-  int maybe_retry = 0;
   char *dot = NULL;
 
   error_msg = NULL;
@@ -170,17 +168,14 @@ parse_user_spec (const char *spec_arg, uid_t *uid, gid_t *gid,
   separator = strchr (spec, ':');
 
   /* If there is no colon, then see if there's a `.'.  */
-  if (separator == NULL && posix2_version () < 200112)
+  if (separator == NULL)
     {
       dot = strchr (spec, '.');
       /* If there's no colon but there is a `.', then first look up the
 	 whole spec, in case it's an OWNER name that includes a dot.
 	 If that fails, then we'll try again, but interpreting the `.'
-	 as a separator.  */
-      /* FIXME: accepting `.' as the separator is contrary to POSIX.
-	 someday we should drop support for this.  */
-      if (dot)
-	maybe_retry = 1;
+	 as a separator.  This is a compatible extension to POSIX, since
+	 the POSIX-required behavior is always tried first.  */
     }
 
  retry:
@@ -310,10 +305,10 @@ parse_user_spec (const char *spec_arg, uid_t *uid, gid_t *gid,
 	}
     }
 
-  if (error_msg && maybe_retry)
+  if (error_msg && dot)
     {
-      maybe_retry = 0;
       separator = dot;
+      dot = NULL;
       error_msg = NULL;
       goto retry;
     }

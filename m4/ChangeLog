@@ -13,7 +13,22 @@
 
 2004-03-30  Paul Eggert  <eggert@twinsun.com>
 
+	Merge from coreutils.
+	
 	* inttostr.m4: New file.
+	* getdate.m4 (gl_GETDATE): Remove time-related stuff.
+	Require AM_STDBOOL_H and gl_TIMESPEC instead.
+	Require gl_CLOCK_TIME.
+	* clock_time.m4 (gl_CLOCK_TIME): Require AC_GNU_SOURCE.
+
+2004-03-30  Jim Meyering  <jim@meyering.net>
+
+	Merge from coreutils.
+
+	Avoid a configure-time warning about sys/ucred.h on OSF V4.0.
+	* ls-mntd-fs.m4: Test for sys/ucred.h separately, since
+	on some systems one must include <grp.h> before it.
+	Reported by Christian Krackowizer.
 
 2004-03-29  Paul Eggert  <eggert@twinsun.com>
 

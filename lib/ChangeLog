@@ -1,11 +1,86 @@
 2004-03-30  Paul Eggert  <eggert@twinsun.com>
 
-	* imaxtostr.c, inttostr.c, inttostr.h, offtostr.c, umaxtostr.c:
-	New files.
-
 	* lib/cloexec.h, lib/cloexec.c (set_cloexec_flag): Return int
 	not bool, to be more consistent with Unix conventions.
 	Suggested by Bruno Haible.
+
+	Merge from coreutils.
+
+	* imaxtostr.c, inttostr.c, inttostr.h, offtostr.c, umaxtostr.c:
+	New files.
+
+	* getdate.h: Include stdbool.h, and timespec.h instead of
+	the usual <time.h> dance.
+	(get_date): Change signature to support fractional time stamps.
+	All callers changed.
+	* getdate.y: Include "getdate.h" first, as we can now
+	assume C89 and don't need to worry about 'const'.
+	Similarly, include "unlocked-io.h" near start, not in middle.
+	Include <limits.h>.
+	(textint.value): Use long int rather than int.
+	(textint.digits): Use size_t rather than int.
+	(BILLION, LOG10_BILLION): New constants.
+	(parser_control): New member rel_ns.  Members day_ordinal,
+	time_zone, month, day, hour, minutes, rel_year, rel_month,
+	rel_day, rel_hour, rel_minutes, rel_seconds
+	are now long int, not int.  Member seconds is now struct timespec,
+	not int.  New member timespec_seen.  Members dates_seen, days_seen,
+	local_zones_seen, rels_seen, times_seen, zones_seen are now size_t,
+	not int.
+	(%union.intval): Now long int, not int.
+	New member timespec.
+	(tSDECIMAL_NUMBER, tUDECIMAL_NUMBER): New tokens.
+	(seconds, signed_seconds, unsigned_seconds): New nonterminals.
+	(spec): Now is a timespec or an item list.
+	(timespec, items): New nonterminals.
+	(time, rel, relunit, number, get_date):
+	Add support for fractional seconds.
+	(time): Fix bug: seconds weren't cleared in "00:00 +0000" syntax.
+	(gmtime, localtime, mktime): Remove decls; not needed with C89.
+	(to_hour): First arg is now long int, not int.
+	(to_year): Returns long int, not int.
+	Don't treat year -70 like 70.
+	(tm_diff): Returns long int, not int.
+	(lookup_word): Use bool instead of int when appropriate.
+	(yylex): Use size_t for count, not int.
+	Detect overflow when parsing large integer constants.
+	Add support for fractions.
+	(get_date): Make pointers 'const' if possible.
+	Use more-portable code to detect integer overflow.
+	(main) [TEST]: Adjust to above changes.  Test for localtime failure.
+	Don't use ctime; it's not reliable if the year has >4 digits.
+
+	* human.c (humblock): Inspect BLOCKSIZE if BLOCK_SIZE isn't set.
+	This is for compatibility with BSD.
+
+	* timespec.h (ST_TIME_CMP_NS, ST_TIME_CMP): Define.
+	(ATIME_CMP, CTIME_CMP, MTIME_CMP, TIMESPEC_NS): Likewise.
+	From coreutils' system.h.
+
+	* userspec.c: Don't include "posixver.h".
+	(parse_user_spec): Fall back on USER.GROUP parsing, regardless
+	of POSIX version, as POSIX 1003.1-2001 allows that behavior as a
+	compatible extension.  Simplify code by removing a boolean int
+	that was always nonzero if a string was nonnull.
+	
+2004-03-30  Jim Meyering  <jim@meyering.net>
+
+	Merge from coreutils.
+
+	* mountlist.c [HAVE_SYS_UCRED_H]: Include grp.h before sys/ucred.h.
+
+	* readtokens.c (readtoken): Don't leak 64 bytes when reading
+	an empty input stream.
+
+	* readtokens.c: Include <stdbool.h>.
+	(readtoken): Use `size_t' rather than int/long.
+	All callers adjusted.
+	Use `bool' rather than `int' where appropriate.
+	Use memset rather than an explicit loop.
+	Use x2nrealloc rather than xrealloc.
+	Allow the use of `\0' as a delimiter.
+	(readtokens): Likewise.
+	* readtokens.h (readtoken, readtokens): Update prototypes.
 
 2004-03-30  Bruno Haible  <bruno@clisp.org>
 

@@ -1,4 +1,4 @@
-2004-03-09  Paul Eggert  <eggert@cs.ucla.edu>
+2004-03-09  Paul Eggert  <eggert@twinsun.com>
 
 	* srclistvars.sh: Add GNUWWWLICENSES for eggert.
 	* srclist.txt: Sync getopt with libc.  Add getopt_int.h.
