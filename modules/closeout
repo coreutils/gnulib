@@ -12,6 +12,7 @@ gettext
 error
 quotearg
 fpending
+exitfail
 
 configure.ac:
 gl_CLOSEOUT
@@ -24,4 +25,3 @@ Include:
 
 Maintainer:
 Jim Meyering
-
