@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.4 2004-09-28 22:19:08 karl Exp $
+@comment $Id: gnulib.texi,v 1.5 2004-09-28 22:58:00 eggert Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2004-09-28 22:19:08 $
+@set UPDATED $Date: 2004-09-28 22:58:00 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -118,7 +118,7 @@ body of header file goes here
 @end example
 
 Whether to use @code{FOO_H} or @code{_FOO_H} is a matter of taste and
-style.  The C99 standard reserve all identifiers that begin with an
+style.  The C89 and C99 standards reserve all identifiers that begin with an
 underscore and either an uppercase letter or another underscore, for
 any use.  Thus, in theory, an application might not safely assume that
 @code{_FOO_H} has not already been defined by a library.  On the other
@@ -127,7 +127,7 @@ collisions with other symbols (e.g., @code{COFF_LONG_H} which is a CPP
 macro function).  Your preference may depeend on whether you consider
 the header file under discussion as part of the application (which has
 its own namespace for CPP symbols) or a supporting library (that
-shouldn't interfer with the application's CPP symbol namespace).
+shouldn't interfere with the application's CPP symbol namespace).
 
 @cindex C++ header files
 @cindex Header files and C++
@@ -147,14 +147,14 @@ body of header file goes here
 # endif
 @end example
 
-The idea here is that @code{__cplusplus} is only defined when C++ run
-the preprocessor.  It will wrap the header file in a @samp{extern "C"}
+The idea here is that @code{__cplusplus} is defined only by C++
+implementations, which will wrap the header file in an @samp{extern "C"}
 block.  Again, whether to use this trick is a matter of taste and
 style.  While the above can be seen as harmless, it could be argued
 that the header file is written in C, and any C++ application using it
 should explicitly use the @samp{extern "C"} block itself.  Your
 preference might depend on whether you consider the API exported by
-your header file as something available for only C programs, or for C
+your header file as something available for C programs only, or for C
 and C++ programs alike.
 
 @node ctime
