@@ -21,6 +21,7 @@
 # include <config.h>
 #endif
 
+#include <stdlib.h>
 #include <sys/types.h>
 
 #include <errno.h>
@@ -45,6 +46,9 @@ int gethostname ();
 # define INITIAL_HOSTNAME_LENGTH 34
 #endif
 
+/* Return the current hostname in malloc'd storage.
+   If malloc fails, exit.
+   Upon any other failure, return NULL.  */
 char *
 xgethostname ()
 {
@@ -67,7 +71,12 @@ xgethostname ()
       if (err >= 0 && hostname[k] == '\0')
 	break;
       else if (err < 0 && errno != ENAMETOOLONG && errno != 0)
-	error (EXIT_FAILURE, errno, "gethostname");
+	{
+	  int saved_errno = errno;
+	  free (hostname);
+	  errno = saved_errno;
+	  return NULL;
+	}
       size *= 2;
       hostname = xrealloc (hostname, size + 1);
     }
