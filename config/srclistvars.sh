@@ -1,4 +1,4 @@
-# $Id: srclistvars.sh,v 1.10 2003-07-15 12:42:06 karl Exp $
+# $Id: srclistvars.sh,v 1.11 2003-09-08 21:00:16 karl Exp $
 # Variables for srclist-update and srclist.txt.
 # Will change for each user.
 
@@ -20,7 +20,7 @@ karl)
   : ${EMACSSRC=$HOME/gnu/src/emacs}
   : ${GETTEXT=$HOME/gnu/src/gettext}
   : ${GNUBIN=/usr/local/gnu/bin}
-  : ${GNUCONFIG=$HOME/gnu/src/ftp.gnu.org/pub/gnu/config}
+  : ${GNUCONFIG=$HOME/gnu/src/config}
   : ${GNULIBSRC=$HOME/gnu/src/gnulib}
   : ${GNUORG=$HOME/gnu/gnuorg}
   : ${LIBCSRC=$HOME/gnu/src/libc}
