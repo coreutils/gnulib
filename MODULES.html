@@ -1255,9 +1255,9 @@ variables.
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=alloca"></A><A HREF="modules/alloca">alloca</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include &lt;alloca.h&gt;
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/alloca_.h">alloca_.h</A><BR><A HREF="lib/alloca.c">alloca.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/alloca.m4">alloca.m4</A><BR>gl_FUNC_ALLOCA
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/alloca.c">alloca.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>alloca-opt
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=alloca-opt"></A><A HREF="modules/alloca-opt">alloca-opt</A>
@@ -1548,7 +1548,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getdate.h">getdate.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getdate.y">getdate.y</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/bison.m4">bison.m4</A><BR><A HREF="m4/tm_gmtoff.m4">tm_gmtoff.m4</A><BR><A HREF="m4/getdate.m4">getdate.m4</A><BR>gl_GETDATE
-        <TD ALIGN=LEFT VALIGN=TOP>timespec<BR>stdbool<BR>gettime<BR>mktime<BR>setenv<BR>xalloc<BR>alloca
+        <TD ALIGN=LEFT VALIGN=TOP>timespec<BR>stdbool<BR>gettime<BR>mktime<BR>setenv<BR>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=timegm"></A><A HREF="modules/timegm">timegm</A>
@@ -2626,7 +2626,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/closeout.h">closeout.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/closeout.c">closeout.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/closeout.m4">closeout.m4</A><BR>gl_CLOSEOUT
-        <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>error<BR>quotearg<BR>fpending<BR>exitfail
+        <TD ALIGN=LEFT VALIGN=TOP>atexit<BR>gettext<BR>error<BR>quotearg<BR>fpending<BR>exitfail
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=stdio-safer"></A><A HREF="modules/stdio-safer">stdio-safer</A>
@@ -2974,7 +2974,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/argp.h">argp.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/argp-ba.c">argp-ba.c</A><BR><A HREF="lib/argp-eexst.c">argp-eexst.c</A><BR><A HREF="lib/argp-fmtstream.c">argp-fmtstream.c</A><BR><A HREF="lib/argp-fmtstream.h">argp-fmtstream.h</A><BR><A HREF="lib/argp-fs-xinl.c">argp-fs-xinl.c</A><BR><A HREF="lib/argp-help.c">argp-help.c</A><BR><A HREF="lib/argp-namefrob.h">argp-namefrob.h</A><BR><A HREF="lib/argp-parse.c">argp-parse.c</A><BR><A HREF="lib/argp-pv.c">argp-pv.c</A><BR><A HREF="lib/argp-pvh.c">argp-pvh.c</A><BR><A HREF="lib/argp-xinl.c">argp-xinl.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/argp.m4">argp.m4</A><BR>gl_ARGP
-        <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>getopt<BR>strchrnul<BR>sysexits<BR>mempcpy<BR>strndup<BR>restrict<BR>strcase<BR>extensions
+        <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>getopt<BR>strchrnul<BR>sysexits<BR>mempcpy<BR>strndup<BR>restrict<BR>strcase<BR>extensions<BR>vsnprintf
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=argz"></A><A HREF="modules/argz">argz</A>
@@ -3002,7 +3002,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/error.h">error.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/error.c">error.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/error.m4">error.m4</A><BR><A HREF="m4/strerror_r.m4">strerror_r.m4</A><BR>gl_ERROR
-        <TD ALIGN=LEFT VALIGN=TOP>gettext
+        <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=extensions"></A><A HREF="modules/extensions">extensions</A>
@@ -3139,6 +3139,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 13 December 2004.
+    Generated from <CODE>MODULES.html.sh</CODE> on 15 January 2005.
   </BODY>
 </HTML>
