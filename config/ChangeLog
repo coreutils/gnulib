@@ -1,3 +1,7 @@
+2003-09-14  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt (strdup.c): disable for c89 changes.
+
 2003-09-11  Bruno Haible  <bruno@clisp.org>
 
 	* srclist.txt (setenv.c, unsetenv.c): Disable for the moment.
