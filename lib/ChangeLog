@@ -1,3 +1,20 @@
+2003-01-12  Paul Eggert  <eggert@twinsun.com>
+
+	Finish renaming getstr -> getdelim2 and readline -> readlinebuffer,
+	to avoid collisions with libcurses and libreadline.
+
+	* Makefile.am (libfetish_a_SOURCES): Remove getstr.c, getstr.h.
+	* getstr.h, getstr.c: Remove.
+	* getline.c: Include "getline.h", to check interface.
+	Move body of old getstr.c here: this defines MIN_CHUNK and
+	declares getdelim2, which is renamed from getstr.
+	(getline, getdelim): Adjust to renaming of getstr -> getdelim2.
+
+	* linebuffer.c (readlinebuffer): Renamed from readline.
+	All uses changed.
+	* linebuffer.h: Likewise.
+	(readline): Remove backward-compatibility macro.
+
 2003-01-12  Jim Meyering  <jim@meyering.net>
 
 	* makepath.c: Don't test HAVE_ERRNO_H.  It's not necessary.

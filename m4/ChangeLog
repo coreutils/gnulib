@@ -1,3 +1,11 @@
+2003-01-12  Paul Eggert  <eggert@twinsun.com>
+
+	Finish renaming getstr -> getdelim2 and readline -> readlinebuffer,
+	to avoid collisions with libcurses and libreadline.
+
+	* getstr.m4: Remove.
+	* getline.m4 (gl_PREREQ_GETLINE): Require AC_HEADER_STDC.
+
 2003-01-10  Bruno Haible  <bruno@clisp.org>
 
 	* alloca.m4 (gl_FUNC_ALLOCA): Also define ALLOCA_H.

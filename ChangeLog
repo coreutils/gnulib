@@ -1,3 +1,11 @@
+2003-01-12  Paul Eggert  <eggert@twinsun.com>
+
+	Finish renaming getstr -> getdelim2 and readline -> readlinebuffer,
+	to avoid collisions with libcurses and libreadline.
+	* getstr: Remove.
+	* MODULES.html.sh: Remove getstr.
+	* modules/getline: Depend on unlocked-io, not getstr.
+
 2003-01-10  Bruno Haible  <bruno@clisp.org>
 
 	* modules/alloca: Change Makefile.am requirements. Simplify Include
