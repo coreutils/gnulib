@@ -9,7 +9,6 @@ m4/getndelim2.m4
 m4/ssize_t.m4
 
 Depends-on:
-unlocked-io
 
 configure.ac:
 gl_GETNDELIM2

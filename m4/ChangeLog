@@ -1,4 +1,9 @@
-2004-10-01  Simon Josefsson  <jas@extundo.com>
+2004-10-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* unlocked-io.m4: Add copyright notice.
+	(gl_FUNC_GLIBC_UNLOCKED_IO): Define USE_UNLOCKED_IO.
+
+2004-10-04  Simon Josefsson  <jas@extundo.com>
 
 	* memmem.m4: New file.
 

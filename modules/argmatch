@@ -10,7 +10,6 @@ gettext
 error
 quotearg
 quote
-unlocked-io
 exit
 exitfail
 

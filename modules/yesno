@@ -8,7 +8,6 @@ lib/yesno.h
 m4/yesno.m4
 
 Depends-on:
-unlocked-io
 rpmatch
 
 configure.ac:

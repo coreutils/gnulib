@@ -7,7 +7,6 @@ lib/linebuffer.c
 
 Depends-on:
 xalloc
-unlocked-io
 
 configure.ac:
 

@@ -7,7 +7,6 @@ lib/getpass.c
 m4/getpass.m4
 
 Depends-on:
-unlocked-io
 getline
 stdbool
 

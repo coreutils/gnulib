@@ -8,7 +8,6 @@ m4/md5.m4
 m4/uint32_t.m4
 
 Depends-on:
-unlocked-io
 
 configure.ac:
 gl_MD5

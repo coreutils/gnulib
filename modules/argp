@@ -15,7 +15,6 @@ lib/argp-pv.c
 lib/argp-pvh.c
 lib/argp-xinl.c
 m4/argp.m4
-m4/unlocked-io.m4
 
 Depends-on:
 alloca

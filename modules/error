@@ -8,7 +8,6 @@ m4/error.m4
 m4/strerror_r.m4
 
 Depends-on:
-unlocked-io
 gettext
 
 configure.ac:

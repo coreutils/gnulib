@@ -10,7 +10,6 @@ m4/mountlist.m4
 
 Depends-on:
 xalloc
-unlocked-io
 
 configure.ac:
 gl_MOUNTLIST

@@ -9,7 +9,6 @@ m4/exclude.m4
 Depends-on:
 xalloc
 strcase
-unlocked-io
 fnmatch-gnu
 stdbool
 

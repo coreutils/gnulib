@@ -7,7 +7,6 @@ lib/sha1.c
 m4/sha1.m4
 
 Depends-on:
-unlocked-io
 md5
 
 configure.ac:

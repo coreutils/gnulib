@@ -7,7 +7,6 @@ m4/getusershell.m4
 
 Depends-on:
 xalloc
-unlocked-io
 
 configure.ac:
 gl_PREREQ_GETUSERSHELL
