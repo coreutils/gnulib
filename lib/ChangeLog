@@ -1,3 +1,15 @@
+2004-11-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* utimens.c (__attribute__, ATTRIBUTE_UNUSED): New macros.
+	(futimens): New function, which uses futimes if available.
+	(futimens, utimens): Support timespec==NULL, with same semantics
+	as utime and utimens.
+	* utimens.h (futimens): New decl.
+
+2004-11-23  Jim Meyering  <jim@meyering.net>
+
+	* __fpending.c: Add comment.
+
 2004-11-23  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
 	* lib/getopt_.h: Re-addition of __getopt_argv_const caused
@@ -9,7 +21,6 @@
 	[defined __GETOPT_PREFIX && !defined __need_getopt]: Undef
 	__need_getopt after including <stdio.h> and <unistd.h> These
 	headers might have defined it.
-	
 
 2004-11-20  Paul Eggert  <eggert@cs.ucla.edu>
 
