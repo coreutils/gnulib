@@ -15,7 +15,7 @@ configure.ac:
 gl_REGEX
 
 Makefile.am:
-lib_SOURCES += regex.h regex.c
+lib_SOURCES += regex.h
 
 Include:
 "regex.h"
@@ -25,4 +25,3 @@ LGPL
 
 Maintainer:
 all
-
