@@ -1,6 +1,6 @@
 2004-09-21  Bruno Haible  <bruno@clisp.org>
 
-	* modules/vasnprintf (Files): Add m4/inttypes_h.m4.
+	* modules/vasnprintf (Files): Add m4/stdint_h.m4, m4/inttypes_h.m4.
 	Reported by Simon Josefsson.
 
 2004-09-20  Paul Eggert  <eggert@cs.ucla.edu>
