@@ -1,5 +1,8 @@
 2002-12-03  Jim Meyering  <jim@meyering.net>
 
+	* safe-read.c, safe-write.c: Change variable names and comments, but
+	not semantics, to minimize the differences between these two files.
+
 	* safe-read.c (IS_EINTR): Define.
 	(safe_read): Use IS_EINTR in place of in-function cpp directives.
 
