@@ -1,7 +1,7 @@
 2003-03-14  Bruno Haible  <bruno@clisp.org>
 
-	* onceonly_2_57.m4 (AC_CHECK_HEADERS_ONCE): Quote AC_FOREACH
-	variable-expansions properly.
+	* onceonly_2_57.m4 (AC_CHECK_HEADERS_ONCE, AC_CHECK_FUNCS_ONCE,
+	AC_CHECK_DECLS_ONCE): Quote AC_FOREACH variable-expansions properly.
 
 2003-03-13  Paul Eggert  <eggert@twinsun.com>
 
