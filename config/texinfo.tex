@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-07-31.11}
+\def\texinfoversion{2004-08-14.09}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -5477,13 +5477,15 @@ width0pt\relax} \fi
                     % \do\macro1\do\macro2...
 
 % Utility routines.
-% This does \let #1 = #2, except with \csnames.
+% This does \let #1 = #2, with \csnames; that is,
+%   \let \csname#1\endcsname = \csname#2\endcsname
+% (except of course we have to play expansion games).
+% 
 \def\cslet#1#2{%
-\expandafter\expandafter
-\expandafter\let
-\expandafter\expandafter
-\csname#1\endcsname
-\csname#2\endcsname}
+  \expandafter\let
+  \csname#1\expandafter\endcsname
+  \csname#2\endcsname
+}
 
 % Trim leading and trailing spaces off a string.
 % Concepts from aro-bend problem 15 (see CTAN).
