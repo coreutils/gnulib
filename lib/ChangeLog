@@ -1,3 +1,9 @@
+2004-11-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* xreadlink.c (xreadlink): AIX and HP-UX readlink return -1
+	with errno == ERANGE if the buffer is too small.
+	Problem reported by Mark D. Baushke.
+
 2004-11-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* xreadlink.c (MAXSIZE): New macro.
