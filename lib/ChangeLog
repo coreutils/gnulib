@@ -1,3 +1,10 @@
+2003-01-28  Bruno Haible  <bruno@clisp.org>
+
+	* c-ctype.h: New file, from GNU gettext, with changes suggested by
+	Paul Eggert.
+	* c-ctype.c: New file, from GNU gettext, with changes suggested by
+	Paul Eggert.
+
 2003-01-27  Bruno Haible  <bruno@clisp.org>
 
 	* xsetenv.h: New file, from GNU gettext.
