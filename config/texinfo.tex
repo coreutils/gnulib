@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2003-01-30.15}
+\def\texinfoversion{2003-01-30.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
@@ -3215,7 +3215,10 @@ width0pt\relax} \fi
         %
         % Process the index entry with all font commands turned off, to
         % get the string to sort by.
-        {\indexnofonts \xdef\indexsorttmp{\the\toks0}}%
+        {\indexnofonts
+         \edef\temp{\the\toks0}% need full expansion
+         \xdef\indexsorttmp{\temp}%
+        }%
         %
         % Set up the complete index entry, with both the sort key and
         % the original text, including any font commands.  We write
@@ -4159,7 +4162,7 @@ width0pt\relax} \fi
       \advance\hsize by -\contentsrightmargin % Don't use the full line length.
       %
       % Roman numerals for page numbers.
-      \ifnum \pageno>0 \pageno = \lastnegativepageno \fi
+      \ifnum \pageno>0 \global\pageno = \lastnegativepageno \fi
 }
 
 
@@ -4176,7 +4179,7 @@ width0pt\relax} \fi
      \pdfmakeoutlines
    \endgroup
    \lastnegativepageno = \pageno
-   \pageno = \savepageno
+   \global\pageno = \savepageno
 }
 
 % And just the chapters.
@@ -4208,7 +4211,7 @@ width0pt\relax} \fi
      \contentsalignmacro % in case @setchapternewpage odd is in effect
    \endgroup
    \lastnegativepageno = \pageno
-   \pageno = \savepageno
+   \global\pageno = \savepageno
 }
 \let\shortcontents = \summarycontents
 
@@ -5792,9 +5795,9 @@ width0pt\relax} \fi
 % NAME-pg (the page number), and NAME-snt (section number and type).
 % Called from \foonoderef.
 % 
-% We have to set \indexdummies so commands such as @code in a section
-% title aren't expanded.  It would be nicer not to expand the titles in
-% the first place, but there's so many layers that that is hard to do.
+% We have to set \atdummies so commands such as @code in a section title
+% aren't expanded.  Could we just stuff the args into \toks registers
+% and avoid expansion that way?
 %
 % Likewise, use \turnoffactive so that punctuation chars such as underscore
 % and backslash work in node names.
