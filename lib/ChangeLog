@@ -1,6 +1,11 @@
 2003-04-05  Jim Meyering  <jim@meyering.net>
 
-	Merge change from Coreutils.
+	Merge changes from Coreutils.
+
+	* dirname.c [TEST_DIRNAME]: Update build instructions for test.
+	Add test-cases for DOS filenames. Declare program_name.
+	(main): Set up program_name.  Patch by Rich Dawe.
+
 	* mountlist.c (read_filesystem_list) [MOUNTED_VMOUNT]: Detect any
 	error from mntctl.
 	Use mntctl's return value to drive the entry-processing loop, since
