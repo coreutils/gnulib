@@ -1,3 +1,14 @@
+2002-12-24  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.txt: Update according to m4/ changes.
+
+	Module gettext.
+	* config.rpath: New file, from gettext-0.11.5.
+
+	* modules/*: New module descriptions.
+	* gnulib-tool: New file.
+	* MODULES.html.sh: New file.
+
 2002-11-01  Bruno Haible  <bruno@clisp.org>
 
 	* configure.in: Add AC_CONFIG_AUX_DIR call.
