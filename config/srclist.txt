@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.24 2003-09-09 18:36:53 eggert Exp $
+# $Id: srclist.txt,v 1.25 2003-09-10 06:18:22 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -74,7 +74,6 @@ $LIBCSRC/argp/argp-pv.c			lib gpl
 $LIBCSRC/argp/argp-pvh.c		lib gpl
 $LIBCSRC/argp/argp-xinl.c		lib gpl
 $LIBCSRC/argp/argp.h			lib gpl
-$LIBCSRC/posix/regex.h			lib gpl
 $LIBCSRC/string/strdup.c		lib gpl
 $LIBCSRC/sysdeps/generic/strtoll.c	lib gpl
 $LIBCSRC/sysdeps/generic/strtoul.c	lib gpl
@@ -96,6 +95,7 @@ $LIBCSRC/sysdeps/generic/strtoul.c	lib gpl
 #$LIBCSRC/posix/getopt.c		lib gpl
 #$LIBCSRC/posix/getopt.h		lib gpl
 #$LIBCSRC/posix/getopt1.c		lib gpl
+#$LIBCSRC/posix/regex.h			lib gpl
 #$LIBCSRC/posix/tempname.c		lib gpl
 #$LIBCSRC/stdlib/rpmatch.c		lib gpl
 #$LIBCSRC/string/strndup.c		lib gpl
