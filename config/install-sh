@@ -296,7 +296,7 @@ do
 	       || $doit $mvcmd -f "$dstdir/$dstfile" "$rmtmp" 2>/dev/null \
 	       || {
 		 echo "$0: cannot unlink or rename $dstdir/$dstfile" >&2
-		 (exit 1); exit
+		 (exit 1); exit 1
 	       }
 	     else
 	       :
@@ -307,12 +307,12 @@ do
 	   $doit $mvcmd "$dsttmp" "$dstdir/$dstfile"
 	 }
     }
-  fi || { (exit 1); exit; }
+  fi || { (exit 1); exit 1; }
 done
 
 # The final little trick to "correctly" pass the exit status to the exit trap.
 {
-  (exit 0); exit
+  (exit 0); exit 0
 }
 
 # Local variables:
