@@ -1,6 +1,20 @@
+2003-08-16  Jim Meyering  <jim@meyering.net>
+
+	* utimes.m4 (gl_FUNC_UTIMES): New file.
+	* utimes.m4: Removed.
+	* utimes-null.m4: Renamed from utimes.m4.
+
+	* c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Limit stack size
+	to 1MB, so as not to render systems with no stack size limit (e.g.,
+	linux-2.2.x) unusable.  Suggestion and code from Bruno Haible.
+	Include <unistd.h>.  On some systems,
+	it is required for the definition of _SC_PAGESIZE.
+
 2003-08-16  Paul Eggert  <eggert@twinsun.com>
 
 	Merges from coreutils, etc.
+	* rpmatch.m4 (gl_PREREQ_RPMATCH): Insert ':' to prevent a syntax
+	error in gl_FUNC_MATCH.  This fixes a bug I introduced on 2003-05-28.
 	* readlink.m4 (gl_PREREQ_READLINK): Renamed from gl_PREREQ_READLINE,
 	fixing a typo.
 	* host-os.m4 (UTILS_HOST_OS): Add GNU/NetBSD, GNU/FreeBSD.
@@ -10,8 +24,59 @@
 	and Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merges from coreutils, etc.
+
+	* jm-macros.m4 (AC_LANG_SOURCE(C)): New macro, undefine, then define
+	using the latest version from cvs.  This avoids problems with #line
+	directives using a vendor (Sun) compiler.
+	(jm_MACROS): Bump prerequisite from 2.52g to 2.57.
+	Don't set GETGROUPS_LIB here; now it's
+	done via getgroups.m4's wrapper function.
+	AC_SUBST OPTIONAL_BIN_PROGS, OPTIONAL_BIN_ZCRIPTS, and MAN here,
+	rather than just in sh-util/configure.in, so that the
+	now-shared-by-fileutils-and-textutils lib/Makefile.am are all the
+	same.
+	Use AC_CONFIG_LIBOBJ_DIR(lib) to tell the new
+	AC_FUNC_GETLOADAVG where to find getloadavg.c.
+	Require AC_FUNC_FTW, gt_INTTYPES_PRI, gl_CLOCK_TIME,
+	UTILS_SYS_OPEN_MAX, GL_FUNC_GETCWD_PATH_MAX, GL_FUNC_READDIR,
+	gl_FSUSAGE, gl_MOUNTLIST, AC_FUNC_CANONICALIZE_FILE_NAME.
+	Remove code that is now done by the newly-required macros.
+	Append $(EXEEXT) to DF_PROG.
+	AC_LIBOBJ fchdir-stub if fchdir doesn't exist; similarly for fchown.
+	Do not invoke or require the following here,
+	since prereq.m4 or some gnulib .m4 now does this for us:
+	gl_REGEX, UTILS_FUNC_MKDIR_TRAILING_SLASH, jm_BISON, gl_FUNC_MKTIME,
+	jm_FUNC_LSTAT, jm_FUNC_STAT, jm_FUNC_REALLOC, jm_FUNC_MALLOC,
+	jm_FUNC_NANOSLEEP, jm_FUNC_READDIR, jm_FUNC_MEMCMP,
+	jm_FUNC_GLIBC_UNLOCKED_IO, AC_FUNC_FNMATCH_GNU, jm_FUNC_PUTENV,
+	jm_AC_PREREQ_XSTRTOUMAX, jm_AC_PREREQ_XSTRTOIMAX,
+	AC_FUNC_ERROR_AT_LINE, jm_FUNC_GNU_STRFTIME, AC_FUNC_VPRINTF,
+	vb_FUNC_RENAME, UTILS_FUNC_MKSTEP, jm_FUNC_UTIME, AM_FUNC_GETLINE,
+	AC_FUNC_OBSTACK.
+	Do not replace the following functions, as this is now the job
+	of some gnulib .m4: strcasecmp, strncasecmp, dup2, gethostname,
+	getusershell, sig2str, strcspn, stpcpy, strstr, strtol, strtoul
+	strpbrk, euidaccess, memcmp, rmdir, rpmatch, strndup, strverscmp,
+	atexit getpass, strdup, getpagesize.
+	Replace 'raise'.
+	Do not check for the following functions, as this is now the job
+	of some gnulib .m4: bcopy, canonicalize_file_name, fchdir, ftime,
+	getcwd, getmntinfo, resolvepath.  But check for sysctl, setreuid,
+	setregid.
+	(jm_CHECK_ALL_HEADERS): Do not check for fenv.h.
+	Check for sys/sysctl.h.
+	(jm_CHECK_ALL_TYPES): Do not require AC_STRUCT_TM, AC_STRUCT_TIMEZONE,
+	jm_CHECK_TYPE_STRUCT_TIMESPEC.  Invoke gt_TYPE_SSIZE_T instead
+	of checking for ssize_t ourselves.
+
+	* prereq.m4 (jm_PREREQ): Don't invoke macros; AC_REQUIRE them.
+	Require every macro that gnulib/modules/* suggests for us.
+	(jm_PREREQ_ADDEXT): New macro.
+	(jm_PREREQ_STAT): Check for 'struct statfs' on Ultrix 4.4.
+	Require jm_AC_TYPE_LONG_LONG instead of invoking it.
+
 	* physmem.m4 (gl_SYS__SYSTEM_CONFIGURATION): New macro.
-	(gl_PHYSMEM): Use it.  
+	(gl_PHYSMEM): Use it.
 	Also check for `table' function.
 	Check for new headers and functions.
 	Add check for sys/sysmp.h.
@@ -19,7 +84,7 @@
 	Ignore headers that are present but cannot be compiled.  This
 	avoids spurious warnings on Solaris 9 sparc with Forte Developer 7
 	C 5.4.
-	
+
 2003-08-16  Jim Meyering  <jim@meyering.net>
 
 	Merges from coreutils.
