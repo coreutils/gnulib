@@ -1,3 +1,7 @@
+2003-08-31  Karl Berry  <karl@gnu.org>
+
+	* argp.h: update from libc.
+
 2003-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* binary-io.h: Undefine O_BINARY before defining it. This avoids a
