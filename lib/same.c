@@ -79,7 +79,7 @@ same_name (const char *source, const char *dest)
       struct stat dest_dir_stats;
       char *source_dirname, *dest_dirname;
 
-      /* Compare the directories (by comparing their inodes).  */
+      /* Compare the parent directories (via the device and inode numbers).  */
       source_dirname = dir_name (source);
       dest_dirname = dir_name (dest);
 
