@@ -34,6 +34,7 @@
 
    Put up to LEN bytes of the NIS domain name into NAME.
    Null terminate it if the name is shorter than LEN.
+   If the NIS domain name is longer than LEN, set errno = EINVAL and return -1.
    Return 0 if successful, otherwise set errno and return -1.  */
 extern int getdomainname(char *name, size_t len);
 

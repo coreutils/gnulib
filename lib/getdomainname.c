@@ -25,6 +25,7 @@
 #include "getdomainname.h"
 
 #include <string.h>
+#include <errno.h>
 
 /* Return the NIS domain name of the machine.
    WARNING! The NIS domain name is unrelated to the fully qualified host name
@@ -33,10 +34,21 @@
 
    Put up to LEN bytes of the NIS domain name into NAME.
    Null terminate it if the name is shorter than LEN.
+   If the NIS domain name is longer than LEN, set errno = EINVAL and return -1.
    Return 0 if successful, otherwise set errno and return -1.  */
 int
 getdomainname (char *name, size_t len)
 {
-  strncpy (name, "", len);	/* Hardcode your domain name if you want.  */
+  const char *result = "";	/* Hardcode your domain name if you want.  */
+  size_t result_len = strlen (result);
+
+  if (result_len > len)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  memcpy (name, result, result_len);
+  if (result_len < len)
+    name[result_len] = '\0';
   return 0;
 }
