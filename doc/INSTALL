@@ -1,4 +1,4 @@
-Copyright 1994, 1995, 1996, 1999, 2000, 2001, 2002 Free Software
+Copyright (C) 1994, 1995, 1996, 1999, 2000, 2001, 2002 Free Software
 Foundation, Inc.
 
    This file is free documentation; the Free Software Foundation gives
@@ -71,8 +71,9 @@ Compilers and Options
 the `configure' script does not know about.  Run `./configure --help'
 for details on some of the pertinent environment variables.
 
-   You can give `configure' initial values for variables by setting
-them in the environment.  You can do that on the command line like this:
+   You can give `configure' initial values for configuration parameters
+by setting variables in the command line or in the environment.  Here
+is an example:
 
      ./configure CC=c89 CFLAGS=-O2 LIBS=-lposix
 
