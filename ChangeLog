@@ -1,5 +1,9 @@
 2005-03-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* modules/gettime (Makefile.am): Remove lib_SOURCES line.
+	Reported by Derek Price.
+	(Include): Add "timespec.h".
+
 	* modules/xnanosleep (Depends-on): Remove gethrxtime.
 
 2005-02-26  Paul Eggert  <eggert@cs.ucla.edu>
