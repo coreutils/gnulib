@@ -11,6 +11,7 @@
 	Also rename jm_-prefixed variables to have gl_ prefix.
 
 	* jm-macros.m4: Reflect the renamings.
+	* prereq.m4: Likewise.
 
 2004-04-19  Jim Meyering  <jim@meyering.net>
 
