@@ -1,5 +1,7 @@
 2004-10-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* diacrit.c, diacrit.h: Add GPL notice.
+
 	* atanl.c, logl.c: Add GPL notice, to match glibc's added LGPL notice.
 	* atanl.c (atanl): Keep the code as similar to glibc as possible.
 	* logl.c (logl): Keep the code as similar to glibc as possible.
