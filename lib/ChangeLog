@@ -1,3 +1,9 @@
+2003-05-30  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Upgrade to gettext-0.12.1 and libiconv-1.9.1.
+	* localcharset.h: Likewise.
+	* localcharset.c: Likewise.
+
 2003-05-28  Paul Eggert  <eggert@twinsun.com>
 
 	Assume the headers required for C89 freestanding compilers.
