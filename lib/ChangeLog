@@ -1,3 +1,9 @@
+2004-03-30  Paul Eggert  <eggert@twinsun.com>
+
+	* lib/cloexec.h, lib/cloexec.c (set_cloexec_flag): Return int
+	not bool, to be more consistent with Unix conventions.
+	Suggested by Bruno Haible.
+
 2004-03-30  Bruno Haible  <bruno@clisp.org>
 
 	* getloadavg.c (getloadavg): Don't assume setlocale returns
