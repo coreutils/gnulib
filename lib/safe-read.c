@@ -1,5 +1,5 @@
 /* An interface to read and write that retries after interrupts.
-   Copyright (C) 1993, 1994, 1998, 2002 Free Software Foundation, Inc.
+   Copyright (C) 1993, 1994, 1998, 2002-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,6 +17,13 @@
 
 #if HAVE_CONFIG_H
 # include <config.h>
+#endif
+
+/* Specification.  */
+#ifdef SAFE_WRITE
+# include "safe-write.h"
+#else
+# include "safe-read.h"
 #endif
 
 /* Get ssize_t.  */
@@ -55,11 +62,9 @@ extern int errno;
 #endif
 
 #ifdef SAFE_WRITE
-# include "safe-write.h"
 # define safe_rw safe_write
 # define rw write
 #else
-# include "safe-read.h"
 # define safe_rw safe_read
 # define rw read
 # undef const
