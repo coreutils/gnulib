@@ -15,7 +15,7 @@ configure.ac:
 gl_GETOPT
 
 Makefile.am:
-lib_SOURCES += getopt.h getopt.c getopt1.c
+lib_SOURCES += getopt.h getopt.c getopt1.c getopt_int.h
 
 Include:
 "getopt.h"
