@@ -1,5 +1,9 @@
 2003-04-11  Jim Meyering  <jim@meyering.net>
 
+	2003-03-22  Jim Meyering  <jim@meyering.net>
+
+	* strftime.c (widen): Cast alloca return value to proper type.
+
 	2003-01-19  Ulrich Drepper  <drepper@redhat.com>
 
 	From GNU libc.
