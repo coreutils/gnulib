@@ -18,6 +18,11 @@
 #ifndef _MINMAX_H
 #define _MINMAX_H
 
+/* Note: MIN, MAX are also defined in <sys/param.h> on some systems
+   (glibc, IRIX, HP-UX, OSF/1).  Therefore you might get warnings about
+   MIN, MAX macro redefinitions on some systems; the workaround is to
+   #include this file as the last one among the #include list.  */
+
 /* Before we define the following symbols we get the <limits.h> file
    since otherwise we get redefinitions on some systems.  */
 #include <limits.h>
