@@ -1,3 +1,10 @@
+2000-10-24  Andrew Innes  <andrewi@gnu.org>
+
+	* regex.c (IMMEDIATE_QUIT_CHECK): New macro, which does QUIT on
+	NT-Emacs only.
+	(re_match_2_internal): Use IMMEDIATE_QUIT_CHECK instead of QUIT,
+	so that re_search functions only quit when callers expect them to.
+
 2000-10-24  Kenichi Handa  <handa@etl.go.jp>
 
 	* regex.c (regex_compile): Change the way of handling a range from
