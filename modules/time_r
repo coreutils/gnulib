@@ -1,0 +1,23 @@
+Description:
+Reentrant time functions like localtime_r.
+
+Files:
+lib/time_r.c
+lib/time_r.h
+m4/time_r.m4
+
+Depends-on:
+extensions
+
+configure.ac:
+gl_TIME_R
+
+Makefile.am:
+lib_SOURCES += time_r.h
+
+Include:
+<time_r.h>
+
+Maintainer:
+Paul Eggert
+

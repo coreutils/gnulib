@@ -8,6 +8,7 @@ m4/tm_gmtoff.m4
 m4/strftime.m4
 
 Depends-on:
+time_r
 tzset
 
 configure.ac:

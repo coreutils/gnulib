@@ -1,3 +1,14 @@
+2003-09-06  Paul Eggert  <eggert@twinsun.com>
+
+	* time_4.m4: New file.
+	* mktime.m4 (gl_PREREQ_MKTIME): Remove check for limits.h.
+	* timegm.m4 (gl_FUNC_TIMEGM): Assume that timegm is buggy if mktime is.
+	Check for timegm declaration.
+	(gl_PREREQ_TIMEGM): Require gl_FUNC_MKTIME.
+	Do not check for gmtime_r.
+	Replace mktime if __mktime_internal does not exist and if mktime
+	hasn't been replaced already.
+
 2003-08-31  Simon Josefsson  <jas@extundo.com>
 
 	* timegm.m4: New file.

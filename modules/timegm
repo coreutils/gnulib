@@ -7,6 +7,8 @@ lib/timegm.c
 m4/timegm.m4
 
 Depends-on:
+mktime
+time_r
 
 configure.ac:
 gl_FUNC_TIMEGM
@@ -18,4 +20,4 @@ Include:
 "timegm.h"
 
 Maintainer:
-Simon Josefsson
+all, glibc

@@ -1,4 +1,5 @@
-/* Convert calendar time to simple time, inverse of mktime.
+/* Convert UTC calendar time to simple time.  Like mktime but assumes UTC.
+
    Copyright (C) 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -15,17 +16,8 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-#ifdef HAVE_TIMEGM
-
-/* Get timegm declaration.  */
 #include <time.h>
 
-#else
-
-/* Get time_t and struct tm.  */
-#include <time.h>
-
-/* Convert calendar time to simple time, inverse of mktime.  */
-extern time_t timegm (struct tm *tm);
-
+#ifndef HAVE_DECL_TIMEGM
+time_t timegm (struct tm *tm);
 #endif

@@ -1689,6 +1689,7 @@ func_all_modules ()
   func_module readlink
   func_module stat
   func_module lstat
+  func_module time_r
   func_module timespec
   func_module nanosleep
   func_module regex

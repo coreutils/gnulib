@@ -6,6 +6,7 @@ lib/mktime.c
 m4/mktime.m4
 
 Depends-on:
+time_r
 
 configure.ac:
 gl_FUNC_MKTIME
