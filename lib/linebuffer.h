@@ -20,6 +20,8 @@
 #if !defined LINEBUFFER_H
 # define LINEBUFFER_H
 
+# include <stdio.h>
+
 /* A `struct linebuffer' holds a line of text. */
 
 struct linebuffer

@@ -25,8 +25,8 @@
 # include <config.h>
 #endif
 
+#include <stddef.h>
 #include <stdio.h>
-#include <sys/types.h>
 #if HAVE_STRING_H
 # include <string.h>
 #else

@@ -1,4 +1,21 @@
-2002-08-05  Paul Eggert  <eggert@twinsun.com>
+2003-06-04  Paul Eggert  <eggert@twinsun.com>
+
+	.h files should stand alone, but we shouldn't include <sys/types.h>
+	if we can get away with just <stddef.h>.
+
+	* __fpending.h, addext.c, backupfile.c, exclude.c, getline.c,
+	malloc.c, putenv.c, realloc.c, strcasecmp.c: Include <stddef.h>
+	rather than <sys/types.h>, as we merely need size_t.
+	* dirname.h, memcoll.h, xalloc.h, xmemcoll.h: Include <stddef.h>,
+	to get size_t.
+	* hash.h, linebuffer.h, readtokens.h, stdio-safer.h, version-etc.h:
+	Include <stdio.h>, to get FILE.
+	* memcasecmp.c: Don't include <sys/types.h>, as we can assume
+	memcasecmp.h has included <stddef.h> and all we need is size_t.
+	* memcoll.c: Include "memcoll.h", which gets us size_t and checks
+	our interface, instead of including <sys/types.h>
+
+2003-06-02  Paul Eggert  <eggert@twinsun.com>
 
 	[from coreutils]
 	Fix some minor time-related bugs with POSIX time arguments.

@@ -21,12 +21,12 @@
 # include <config.h>
 #endif
 
+#include "memcoll.h"
+
 #include <errno.h>
 #ifndef errno
 extern int errno;
 #endif
-
-#include <sys/types.h>
 
 #if HAVE_STRING_H
 # include <string.h>

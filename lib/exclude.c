@@ -30,10 +30,8 @@
 #ifndef errno
 extern int errno;
 #endif
+#include <stddef.h>
 #include <stdio.h>
-#if HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
 #if HAVE_STDLIB_H
 # include <stdlib.h>
 #endif

@@ -9,5 +9,5 @@ dnl the same distribution terms as the rest of that program.
 AC_DEFUN([gl_EXCLUDE],
 [
   dnl Prerequisites of lib/exclude.c.
-  AC_CHECK_HEADERS_ONCE(stdlib.h string.h strings.h sys/types.h)
+  AC_CHECK_HEADERS_ONCE(stdlib.h string.h strings.h)
 ])

@@ -21,7 +21,6 @@
 # include <config.h>
 #endif
 
-#include <sys/types.h>
 #include <ctype.h>
 
 #if defined (STDC_HEADERS) || (!defined (isascii) && !defined (HAVE_ISASCII))

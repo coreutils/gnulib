@@ -31,8 +31,8 @@
 # define _GNU_SOURCE 1
 #endif
 
+#include <stddef.h>
 #include <stdio.h>
-#include <sys/types.h>
 
 #if defined __GNU_LIBRARY__ && HAVE_GETDELIM
 
