@@ -1,32 +1,46 @@
-#serial 4
+# See if we need to work around bugs in glibc's implementation of
+# utimes from around July/August 2003.
+# First, there was a bug that would make utimes set mtime
+# and atime to zero (1970-01-01) unconditionally.
+# Then, there is/was code to round rather than truncate.
+#
+# From Jim Meyering, with suggestions from Paul Eggert.
 
-dnl Shamelessly cloned from acspecific.m4's AC_FUNC_UTIME_NULL,
-dnl then do case-insensitive s/utime/utimes/.
-
-AC_DEFUN([jm_FUNC_UTIMES_NULL],
-[AC_CACHE_CHECK(whether utimes accepts a null argument, ac_cv_func_utimes_null,
-[rm -f conftest.data; > conftest.data
-AC_TRY_RUN([
-/* In case stat has been defined to rpl_stat, undef it here.  */
-#undef stat
+AC_DEFUN([gl_FUNC_UTIMES],
+[
+  AC_CACHE_CHECK([determine whether the utimes function works],
+		 gl_cv_func_working_utimes,
+  [
+  AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <sys/types.h>
 #include <sys/stat.h>
-main() {
-struct stat s, t;
-exit(!(stat ("conftest.data", &s) == 0
-       && utimes("conftest.data", (long *)0) == 0
-       && stat("conftest.data", &t) == 0
-       && t.st_mtime >= s.st_mtime
-       && t.st_mtime - s.st_mtime < 120));
-}],
-  ac_cv_func_utimes_null=yes,
-  ac_cv_func_utimes_null=no,
-  ac_cv_func_utimes_null=no)
-rm -f core core.* *.core])
+#include <sys/time.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <utime.h>
 
-    if test $ac_cv_func_utimes_null = yes; then
-      AC_DEFINE(HAVE_UTIMES_NULL, 1,
-		[Define if utimes accepts a null argument])
-    fi
-  ]
-)
+int
+main ()
+{
+  static struct timeval timeval[2] = {{9, 10}, {999999, 999999}};
+  struct stat sbuf;
+  char const *file = "conftest.utimes";
+  FILE *f;
+
+  exit ( ! ((f = fopen (file, "w"))
+	    && fclose (f) == 0
+	    && utimes (file, timeval) == 0
+	    && lstat (file, &sbuf) == 0
+	    && sbuf.st_atime == timeval[0].tv_sec
+	    && sbuf.st_mtime == timeval[1].tv_sec) );
+}
+  ]])],
+       [gl_cv_func_working_utimes=yes],
+       [gl_cv_func_working_utimes=no],
+       [gl_cv_func_working_utimes=no])])
+
+  if test $gl_cv_func_working_utimes = yes; then
+    AC_DEFINE([HAVE_WORKING_UTIMES], 1, [Define if utimes works properly. ])
+  fi
+])

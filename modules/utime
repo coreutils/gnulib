@@ -4,8 +4,9 @@ utime() function: change access and/or modification times of a file.
 Files:
 lib/utime.c
 m4/utimbuf.m4
-m4/utimes.m4
 m4/utime.m4
+m4/utimes.m4
+m4/utimes-null.m4
 
 Depends-on:
 safe-read
