@@ -1,5 +1,13 @@
+2003-08-16  Paul Eggert  <eggert@twinsun.com>
+
+	Document merge from coreutils.
+	* modules/alloca: Append $(ALLOCA_H) to BUILT_SOURCES.
+	* modules/fnmatch: Append $(FNMATCH_H) to BUILT_SOURCES.
+	* modules/utime: Add m4/utimes-null.m4.
+
 2003-08-15  Paul Eggert  <eggert@twinsun.com>
 
+	Document merge from coreutils.
 	* modules/userspec: Depend on posixver.
 	* modules/strftime: Depend on tzset.
 
@@ -30,7 +38,7 @@
 	Remove; we're assuming Autoconf 2.54 or later now.
 	Suggested by Bruno Haible.
 	* MODULES.html.sh (func_all_modules): Remove gnu-source.
-	
+
 2003-08-08  Paul Eggert  <eggert@twinsun.com>
 
 	* MODULES.html.sh (func_all_modules): Add extensions, gnu-source.
