@@ -1,3 +1,8 @@
+2004-10-04  Simon Josefsson  <jas@extundo.com>
+
+	* error.c, md5.c, regex.c: Use '#if USE_UNLOCKED_IO' instead of
+	'#ifdef USE_UNLOCKED_IO'.
+
 2004-10-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* argmatch.c, closeout.c, error.c, exclude.c, getdate.y,
