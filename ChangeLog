@@ -10,7 +10,7 @@
 
 2004-10-15  Bruno Haible  <bruno@clisp.org>
 
-	* gnulib-tool (func_import): Let gl_INIT define LT_ALLOCA when needed.
+	* gnulib-tool (func_import): Let gl_INIT define LTALLOCA when needed.
 
 2004-10-15  Bruno Haible  <bruno@clisp.org>
 
