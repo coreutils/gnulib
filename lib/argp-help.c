@@ -1745,7 +1745,8 @@ __argp_error (const struct argp_state *state, const char *fmt, ...)
 	    {
 	      char *buf;
 
-	      __asprintf (&buf, fmt, ap);
+	      if (__asprintf (&buf, fmt, ap) < 0)
+		buf = NULL;
 
 	      __fwprintf (stream, L"%s: %s\n",
 			  state ? state->name : __argp_short_program_name (),
@@ -1823,7 +1824,8 @@ __argp_failure (const struct argp_state *state, int status, int errnum,
 		{
 		  char *buf;
 
-		  __asprintf (&buf, fmt, ap);
+		  if (__asprintf (&buf, fmt, ap) < 0)
+		    buf = NULL;
 
 		  __fwprintf (stream, L": %s", buf);
 
@@ -1863,7 +1865,8 @@ __argp_failure (const struct argp_state *state, int status, int errnum,
 #endif
 #if !_LIBC
 		  if (! s && ! (s = strerror (errnum)))
-		    s = "Unknown system error"; /* FIXME: translate this */
+		    s = dgettext (state->root_argp->argp_domain,
+				  "Unknown system error");
 #endif
 		  fputs (s, stream);
 		}
