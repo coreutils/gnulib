@@ -54,6 +54,8 @@ You can test that a module builds correctly with:
 
 Other things:
 * Check the license and copyright year of headers.
+* Check that the source code follows the GNU coding standards;
+  see <http://www.gnu.org/prep/standards>.
 * Add source files to config/srclist* if they are identical to upstream
   and should be upgraded in gnulib whenever the upstream source changes.
 * Include header files in source files to verify the function prototypes.
@@ -70,6 +72,55 @@ Other things:
   if you #include <stdio.h> or #include <sys/types.h> before the big #if;
   otherwise you need to add a #else branch containing "typedef int dummy;"
   or "extern int dummy;".
+
+Portability guidelines
+----------------------
+
+GNULib code is intended to be portable to a wide variety of platforms,
+not just GNU platforms.
+
+Many GNULib modules exist so that applications need not worry about
+undesirable variability in implementations.  For example, an
+application that uses the 'malloc' module need not worry about (malloc
+(0)) returning NULL on some Standard C platforms; and 'time_r' users
+need not worry about localtime_r returning int (not char *) on some
+platforms that predate POSIX 1003.1-2001.
+
+Originally much of the GNULib code was portable to ancient hosts like
+4.2BSD, but it is a maintenance hassle to maintain compatibility with
+unused hosts, so currently we assume at least a freestanding C89
+compiler, possibly operating with a C library that predates C89.  The
+oldest environment currently ported to is probably SunOS 4 + GCC 1.x,
+though we haven't tested this exact combination.  SunOS 4 last shipped
+on 1998-09-30, and Sun dropped support for it on 2003-10-01, so at
+some point we may start assuming a C89 library as well.
+
+Because we assume a freestanding C89 compiler, GNULib code can include
+<float.h>, <limits.h>, <stdarg.h>, and <stddef.h> unconditionally.  It
+can also include hosted headers like <errno.h> that were present in
+Unix Version 7 and are thus widely available.  Similarly, many modules
+include <sys/types.h> even though it's not even in C99; that's OK
+since <sys/types.h> has been around nearly forever.  <string.h> and
+<stdlib.h> were not in Unix Version 7, so they weren't universally
+available on ancient hosts, but they are both in SunOS 4 (the oldest
+platform still in relatively-common use) so GNUlib assumes them now.
+
+Even if the include files exist, they may not conform to C89.
+However, GCC has a "fixincludes" script that attempts to fix most
+C89-conformance problems.  So GNULib currently assumes include files
+largely conform to C89 or better.  People still using ancient hosts
+should use fixincludes or fix their include files manually.
+
+Even if the include files conform to C89, the library itself may not.
+For example, SunOS 4's (free (NULL)) can dump core, so GNULib code
+must avoid freeing a null pointer, even though C89 allows it.
+
+GNULib code should port without problem to new hosts, e.g., hosts
+conforming to C99 or to recent POSIX standards.  Hence GNUlib code
+should avoid using constructs (e.g., undeclared functions return
+'int') that do not conform to C99.  However, the GNU coding standards
+allow one departure from strict C99: GNUlib code can assume that
+standard internal types like size_t are no wider than 'long'.
 
 High Quality
 ============
