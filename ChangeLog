@@ -1,7 +1,8 @@
 2005-03-04  Derek R. Price  <derek@ximbiot.com>
 
-	* gnulib-tool: Only replace files via --import when they have
-	actually changed.
+	* gnulib-tool (func_cp_if_changed, func_mv_if_changed): New functions.
+	(func_import): Only replace files via --import when they have actually
+	changed.
 
 2005-03-03  Derek R. Price  <derek@ximbiot.com>
             Bruno Haible  <bruno@clisp.org>

@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-03-04 19:28:13 $'
+cvsdatestamp='$Date: 2005-03-04 19:36:42 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -118,27 +118,31 @@ func_fatal_error ()
 }
 
 # func_cp_if_changed SRC DEST
-#
-# cp, but avoid munging timestamps if the file hasn't changed.
+# Like cp, but avoids munging timestamps if the file hasn't changed.
+# Uses also the variables
+# - dry_run         true if actions shall only be printed, blank otherwise
 func_cp_if_changed ()
 {
   if test $# -ne 2; then
-    echo "usage: cp_if_changed SRC DEST" >&2
+    echo "usage: func_cp_if_changed SRC DEST" >&2
   fi
   test -n "$dry_run" && dry=echo
-  if cmp "$1" "$2" >/dev/null 2>&1; then :; else
+  if cmp "$1" "$2" >/dev/null 2>&1; then
+    :
+  else
     $dry cp -p "$1" "$2"
   fi
 }
 
 # func_mv_if_changed SRC DEST
-#
-# mv, but avoid munging timestamps if the file hasn't changed.
-# Remove the source file if it is not renamed.
+# Like mv, but avoids munging timestamps if the file hasn't changed.
+# Removes SRC if it is not renamed.
+# Uses also the variables
+# - dry_run         true if actions shall only be printed, blank otherwise
 func_mv_if_changed ()
 {
   if test $# -ne 2; then
-    echo "usage: mv_if_changed SRC DEST" >&2
+    echo "usage: func_mv_if_changed SRC DEST" >&2
   fi
   test -n "$dry_run" && dry=echo
   if cmp "$1" "$2" >/dev/null 2>&1; then
