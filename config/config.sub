@@ -1301,6 +1301,9 @@ case $os in
 	-kaos*)
 		os=-kaos
 		;;
+	-zvmoe)
+		os=-zvmoe
+		;;
 	-none)
 		;;
 	*)
