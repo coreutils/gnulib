@@ -1,3 +1,12 @@
+2003-05-26  Jim Meyering  <jim@meyering.net>
+
+	Merge in a change from coreutils:
+	* dirfd.m4 (UTILS_FUNC_DIRFD): Test the cache variable, not one
+	that is guaranteed to be `no'.  Use `no_such_member' to indicate
+	that condition, rather than `-1' which is slightly misleading.
+	Change the name of the cache variable to have the gl_ prefix.
+	Prompted by a patch from Richard Dawe for DJGPP.
+
 2003-05-17  Bruno Haible  <bruno@clisp.org>
 
 	* dirfd.m4 (UTILS_FUNC_DIRFD): Fix a quoting bug leading to an invalid
