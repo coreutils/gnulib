@@ -1,0 +1,22 @@
+Description:
+Convert string to double in C locale.
+
+Files:
+lib/c-strtod.h
+lib/c-strtod.c
+
+Depends-on:
+extensions
+
+configure.ac:
+gl_C_STRTOD
+
+Makefile.am:
+lib_SOURCES += c-strtod.h c-strtod.c
+
+Include:
+"c-strtod.h"
+
+Maintainer:
+Paul Eggert, Jim Meyering
+
