@@ -1,3 +1,11 @@
+2004-01-14  Paul Eggert  <eggert@twinsun.com>
+
+	Merge fnmatch patches from glibc.
+	* fnmatch.c (mbsinit): Remove define.
+	Add libc_hidden_ver (__fnmatch, fnmatch).
+	* fnmatch_loop.c (FCT): Cast to int32_t and UCHAR when appropriate.
+	Adjust to renaming of collseq_table_lookup to __collseq_table_lookup.
+
 2003-12-14  Karl Berry  <karl@gnu.org>
 
 	* config.charset: update from gettext-runtime.
