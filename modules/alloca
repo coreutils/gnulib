@@ -1,6 +1,8 @@
 Description:
+Memory allocation on the stack.
 
 Files:
+lib/alloca_.h
 lib/alloca.c
 m4/alloca.m4
 
@@ -11,36 +13,15 @@ configure.ac:
 gl_FUNC_ALLOCA
 
 Makefile.am:
+EXTRA_DIST += alloca_.h
+
+# The following is needed in order to create an <alloca.h> when the system
+# doesn't have one that works with the given compiler.
+all-local: @ALLOCA_H@
+alloca.h: alloca_.h
+	cp $(srcdir)/alloca_.h alloca.h
+MOSTLYCLEANFILES += alloca.h
 
 Include:
-#ifdef __GNUC__
-# ifndef alloca
-#  define alloca __builtin_alloca
-# endif
-#else
-# ifdef _MSC_VER
-#  include <malloc.h>
-#  define alloca _alloca
-# else
-#  if HAVE_ALLOCA_H
-#   include <alloca.h>
-#  else
-#   ifdef _AIX
- #pragma alloca
-#   else
-#    ifdef __hpux /* This section must match that of bison generated files. */
-#     ifdef __cplusplus
-extern "C" void *alloca (unsigned int);
-#     else /* not __cplusplus */
-void *alloca ();
-#     endif /* not __cplusplus */
-#    else /* not __hpux */
-#     ifndef alloca
-char *alloca ();
-#     endif
-#    endif /* __hpux */
-#   endif
-#  endif
-# endif
-#endif
+#include <alloca.h>
 

@@ -1,4 +1,4 @@
-/* Copyright (C) 1992,1995-1999,2000-2002 Free Software Foundation, Inc.
+/* Copyright (C) 1992,1995-1999,2000-2003 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -20,36 +20,7 @@
 # include <config.h>
 #endif
 
-#ifdef __GNUC__
-# ifndef alloca
-#  define alloca __builtin_alloca
-# endif
-#else
-# ifdef _MSC_VER
-#  include <malloc.h>
-#  define alloca _alloca
-# else
-#  if HAVE_ALLOCA_H
-#   include <alloca.h>
-#  else
-#   ifdef _AIX
- #pragma alloca
-#   else
-#    ifdef __hpux /* This section must match that of bison generated files. */
-#     ifdef __cplusplus
-extern "C" void *alloca (unsigned int);
-#     else /* not __cplusplus */
-void *alloca ();
-#     endif /* not __cplusplus */
-#    else /* not __hpux */
-#     ifndef alloca
-char *alloca ();
-#     endif
-#    endif /* __hpux */
-#   endif
-#  endif
-# endif
-#endif
+#include <alloca.h>
 
 #include <errno.h>
 #if !_LIBC

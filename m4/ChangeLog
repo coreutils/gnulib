@@ -1,3 +1,7 @@
+2003-01-10  Bruno Haible  <bruno@clisp.org>
+
+	* alloca.m4 (gl_FUNC_ALLOCA): Also define ALLOCA_H.
+
 2003-01-09  Bruno Haible  <bruno@clisp.org>
 
 	* stdbool.m4 (AM_STDBOOL_H): New macro.

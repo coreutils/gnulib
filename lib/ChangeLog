@@ -1,3 +1,11 @@
+2003-01-10  Bruno Haible  <bruno@clisp.org>
+
+	* alloca_.h: New file.
+	* getdate.y: Unconditionally include alloca.h.
+	* makepath.c: Likewise.
+	* setenv.c: Likewise.
+	* userspec.c: Likewise.
+
 2003-01-09  Bruno Haible  <bruno@clisp.org>
 
 	* stdbool.h.in: New file.
