@@ -57,31 +57,25 @@ extern int errno;
 # define INT_MAX TYPE_MAXIMUM (int)
 #endif
 
-/* We don't pass an nbytes count > SSIZE_MAX to read() - POSIX says the
-   effect would be implementation-defined.  Also we don't pass an nbytes
-   count > INT_MAX but <= SSIZE_MAX to read() - this triggers a bug in
-   Tru64 5.1.  */
-#define MAX_BYTES_TO_READ INT_MAX
-
 /* Read up to COUNT bytes at BUF from descriptor FD, retrying if interrupted.
-   Return the actual number of bytes read, zero for EOF, or SAFE_READ_ERROR
+   Return the actual number of bytes read, zero for EOF, or SAFE_RW_ERROR
    upon error.  */
 size_t
 safe_read (int fd, void *buf, size_t count)
 {
-  size_t nbytes_to_read = count;
   ssize_t result;
 
-  /* Limit the number of bytes to read, to avoid running into unspecified
-     behaviour.  But keep the file pointer block aligned when doing so.
-     Note that in this case we don't need to call read() multiple times here,
-     because the caller is prepared to partial results.  */
-  if (nbytes_to_read > MAX_BYTES_TO_READ)
-    nbytes_to_read = MAX_BYTES_TO_READ & ~8191;
+  /* POSIX limits COUNT to SSIZE_MAX, but we limit it further, requiring
+     that COUNT <= INT_MAX, to avoid triggering a bug in Tru64 5.1.
+     When decreasing COUNT, keep the file pointer block-aligned.
+     Note that in any case, read may succeed, yet read fewer than COUNT
+     bytes, so the caller must be prepared to handle partial results.  */
+  if (count > INT_MAX)
+    count = INT_MAX & ~8191;
 
   do
     {
-      result = read (fd, buf, nbytes_to_read);
+      result = read (fd, buf, count);
     }
   while (result < 0 && IS_EINTR (errno));
 

@@ -1,4 +1,4 @@
-/* An interface to write() that retries after interrupts.
+/* An interface to write that retries after interrupts.
    Copyright (C) 1993, 1994, 1998, 2002 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -33,6 +33,12 @@
 extern int errno;
 #endif
 
+#ifdef EINTR
+# define IS_EINTR(x) ((x) == EINTR)
+#else
+# define IS_EINTR(x) 0
+#endif
+
 #include <limits.h>
 
 #ifndef CHAR_BIT
@@ -51,37 +57,27 @@ extern int errno;
 # define INT_MAX TYPE_MAXIMUM (int)
 #endif
 
-/* We don't pass an nbytes count > SSIZE_MAX to write() - POSIX says the
-   effect would be implementation-defined.  Also we don't pass an nbytes
-   count > INT_MAX but <= SSIZE_MAX to write() - this triggers a bug in
-   Tru64 5.1.  */
-#define MAX_BYTES_TO_READ INT_MAX
-
 /* Write up to COUNT bytes at BUF to descriptor FD, retrying if interrupted.
-   Return the actual number of bytes written, zero for EOF, or (size_t) -1
-   for an error.  */
+   Return the actual number of bytes written, zero for EOF, or SAFE_RW_ERROR
+   upon error.  */
 size_t
 safe_write (int fd, const void *buf, size_t count)
 {
-  size_t nbytes_to_write = count;
   ssize_t result;
 
-  /* Limit the number of bytes to write, to avoid running into unspecified
-     behaviour.  But keep the file pointer block aligned when doing so.
-     Note that in this case we don't need to call write() multiple times here,
-     because the caller is prepared to partial results.  */
-  if (nbytes_to_write > MAX_BYTES_TO_READ)
-    nbytes_to_write = MAX_BYTES_TO_READ & ~8191;
+  /* POSIX limits COUNT to SSIZE_MAX, but we limit it further, requiring
+     that COUNT <= INT_MAX, to avoid triggering a bug in Tru64 5.1.
+     When decreasing COUNT, keep the file pointer block-aligned.
+     Note that in any case, write may succeed, yet write fewer than COUNT
+     bytes, so the caller must be prepared to handle partial results.  */
+  if (count > INT_MAX)
+    count = INT_MAX & ~8191;
 
   do
     {
-      result = write (fd, buf, nbytes_to_write);
+      result = write (fd, buf, count);
     }
-#ifdef EINTR
-  while (result < 0 && errno == EINTR);
-#else
-  while (0);
-#endif
+  while (result < 0 && IS_EINTR (errno));
 
   return (size_t) result;
 }
