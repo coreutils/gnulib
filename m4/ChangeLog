@@ -1,3 +1,8 @@
+2002-12-17  Bruno Haible  <bruno@clisp.org>
+
+	* mbswidth.m4 (jm_PREREQ_MBSWIDTH): Remove checks for limits.h,
+	stdlib.h, string.h.
+
 2002-12-11  Bruno Haible  <bruno@clisp.org>
 
 	* setenv.m4: New file, from gettext-0.11.5.
