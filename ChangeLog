@@ -1,3 +1,7 @@
+2004-08-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/userspec: Don't depend on alloca.
+
 2004-08-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* MODULES.html.sh: Add xalloc-die, c-strtod, c-strtold, raise,

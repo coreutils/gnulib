@@ -9,6 +9,5 @@ dnl the same distribution terms as the rest of that program.
 AC_DEFUN([gl_USERSPEC],
 [
   dnl Prerequisites of lib/userspec.c.
-  AC_REQUIRE([AC_FUNC_ALLOCA])
   AC_CHECK_HEADERS_ONCE(sys/param.h unistd.h)
 ])

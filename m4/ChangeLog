@@ -1,3 +1,7 @@
+2004-08-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* userspec.m4 (gl_USERSPEC): Don't require AC_FUNC_ALLOCA.
+
 2004-08-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* argp.m4 (gl_ARGP): Do not check for argp.h or argp_parse; nobody

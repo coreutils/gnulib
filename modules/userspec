@@ -7,7 +7,6 @@ lib/userspec.h
 m4/userspec.m4
 
 Depends-on:
-alloca
 posixver
 xalloc
 xstrtol
