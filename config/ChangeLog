@@ -1,3 +1,7 @@
+2003-12-31  Karl Berry  <karl@gnu.org>
+
+	* depcomp: update from automake.
+
 2003-11-21  Karl Berry  <karl@gnu.org>
 
 	* config.{sub,guess}: update from config.
