@@ -29,10 +29,14 @@
 # undef true
 #endif
 
-/* For the sake of symbolic names in gdb, define true and false as
-   enum constants.  However, do not define _Bool as the enum type,
-   since the enum type might be compatible with unsigned int, whereas
-   _Bool must promote to int.  */
+/* For the sake of symbolic names in gdb, we define true and false as
+   enum constants, not only as macros.
+   It is tempting to write
+      typedef enum { false = 0, true = 1 } _Bool;
+   so that gdb prints values of type 'bool' symbolically. But if we do
+   this, values of type '_Bool' may promote to 'int' or 'unsigned int'
+   (see ISO C 99 6.7.2.2.(4)); however, '_Bool' must promote to 'int'
+   (see ISO C 99 6.3.1.1.(2)).  */
 #ifndef __cplusplus
 # if !@HAVE__BOOL@
 enum { false = 0, true = 1 };
