@@ -18,18 +18,16 @@
 #ifndef _STPNCPY_H
 #define _STPNCPY_H
 
-#if HAVE_STPNCPY
-
-/* Get stpncpy() declaration.  */
 #include <string.h>
 
-#else
+#if !HAVE_STPNCPY
 
-#include <stddef.h>
-
-/* Copy no more than N characters of SRC to DST, returning the address of
-   the last character written into DST.  */
-extern char *stpncpy (char *dst, const char *src, size_t n);
+/* Copy no more than N bytes of SRC to DST, returning a pointer past the
+   last non-NUL byte written into DST.  */
+/* When not using the GNU libc we use the stpncpy implementation we
+   provide here.  */
+extern char *gnu_stpncpy (char *dst, const char *src, size_t n);
+#define stpncpy(Dst, Src, N) gnu_stpncpy (Dst, Src, N)
 
 #endif
 

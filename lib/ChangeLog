@@ -1,3 +1,9 @@
+2003-09-26  Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.h (gnu_stpncpy): New declaration.
+	(stpncpy): Define as alias for gnu_stpncpy.
+	* stpncpy.c [!_LIBC]: Define gnu_stpncpy, not stpncpy.
+
 2003-09-26  Paul Eggert  <eggert@twinsun.com>
 
 	* error.c (SIZE_MAX) [!defined SIZE_MAX]: Define.

@@ -1,3 +1,7 @@
+2003-09-26  Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.m4: Add comments about the AIX stpncpy().
+
 2003-09-25  Simon Josefsson  <jas@extundo.com>
             Bruno Haible  <bruno@clisp.org>
 

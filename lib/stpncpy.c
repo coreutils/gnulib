@@ -27,12 +27,21 @@
 /* Specification.  */
 #include "stpncpy.h"
 
+#if !HAVE_STPNCPY
+
+#ifndef _LIBC
+/* We cannot generally use the name 'stpncpy' since AIX 4 defines an unusable
+   variant of the function but we cannot use it.  */
+# undef stpncpy
+# define stpncpy gnu_stpncpy
+#endif
+
 #ifndef weak_alias
 # define __stpncpy stpncpy
 #endif
 
-/* Copy no more than N characters of SRC to DEST, returning the address of
-   the terminating '\0' in DEST, if any, or else DEST + N.  */
+/* Copy no more than N bytes of SRC to DST, returning a pointer past the
+   last non-NUL byte written into DST.  */
 char *
 __stpncpy (char *dest, const char *src, size_t n)
 {
@@ -92,4 +101,6 @@ __stpncpy (char *dest, const char *src, size_t n)
 }
 #ifdef weak_alias
 weak_alias (__stpncpy, stpncpy)
+#endif
+
 #endif

@@ -11,6 +11,16 @@ AC_DEFUN([gl_FUNC_STPNCPY],
   dnl Persuade glibc <string.h> to declare stpncpy().
   AC_REQUIRE([AC_GNU_SOURCE])
 
+  dnl Both glibc and AIX (4.3.3, 5.1) have an stpncpy() function
+  dnl declared in <string.h>. Its side effects are the same as those
+  dnl of strncpy():
+  dnl      stpncpy (dest, src, n)
+  dnl overwrites dest[0..n-1], min(strlen(src),n) bytes coming from src,
+  dnl and the remaining bytes being NULs.  However, the return value is
+  dnl   in glibc:   dest + min(strlen(src),n)
+  dnl   in AIX:     dest + max(0,n-1)
+  dnl Only the glibc return value is useful in practice.
+
   AC_CACHE_CHECK([for working stpncpy], gl_cv_func_stpncpy, [
     AC_TRY_RUN([
 #include <stdlib.h>
