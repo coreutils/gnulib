@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, classpath, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, execute, exit, exitfail, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fstrcmp, fsusage, ftruncate, full-read, full-write, gcd, gcj, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, javacomp, javaexec, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, pipe, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sh-quote, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, mkdir, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
@@ -218,6 +218,10 @@
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=diacrit">diacrit</A>
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Decomposition of composed ISO-8859-1 characters.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getstr">getstr</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">
     </TR>
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getline">getline</A>
@@ -623,7 +627,7 @@ usually the host name including FQDN.
     </TR>
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=linebreak">linebreak</A>
-      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Line breaking (works also for East-Asian languages).
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">
     </TR>
   </TABLE>
   <H3><A HREF="#posix_ext_exec">Executing programs</A></H3>
@@ -1199,6 +1203,13 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=diacrit"></A><A HREF="modules/diacrit">diacrit</A>
       <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/diacrit.h">diacrit.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/diacrit.c">diacrit.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getstr"></A><A HREF="modules/getstr">getstr</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
@@ -2064,10 +2075,10 @@ variables.
     </TR>
     <TR>
       <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=linebreak"></A><A HREF="modules/linebreak">linebreak</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/linebreak.h">linebreak.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/linebreak.c">linebreak.c</A><BR><A HREF="lib/lbrkprop.h">lbrkprop.h</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/linebreak.m4">linebreak.m4</A><BR>gl_LINEBREAK
-      <TD ALIGN=LEFT VALIGN=TOP>localcharset<BR>c-ctype<BR>iconv<BR>utf8-ucs4<BR>utf16-ucs4
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
   <H3><A NAME="posix_ext_exec">Executing programs</A></H3>
@@ -2180,191 +2191,6 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
-  <H2>Unclassified modules - please update MODULES.html.sh</H2>
-  <TABLE>
-    <TR>
-      <TH ALIGN=LEFT>modules/
-      <TH ALIGN=LEFT>lib/
-      <TH ALIGN=LEFT>lib/
-      <TH ALIGN=LEFT>m4/
-      <TH ALIGN=LEFT>&nbsp;
-    </TR>
-    <TR>
-      <TH ALIGN=LEFT>Module
-      <TH ALIGN=LEFT>Header
-      <TH ALIGN=LEFT>Implementation
-      <TH ALIGN=LEFT>Autoconf macro
-      <TH ALIGN=LEFT>Depends on
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=binary-io"></A><A HREF="modules/binary-io">binary-io</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/binary-io.h">binary-io.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=c-ctype"></A><A HREF="modules/c-ctype">c-ctype</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/c-ctype.h">c-ctype.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/c-ctype.c">c-ctype.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>stdbool
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=classpath"></A><A HREF="modules/classpath">classpath</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/classpath.h">classpath.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/classpath.c">classpath.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>xsetenv<BR>xalloc
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=copy-file"></A><A HREF="modules/copy-file">copy-file</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/copy-file.h">copy-file.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/copy-file.c">copy-file.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/copy-file.m4">copy-file.m4</A><BR>gl_COPY_FILE
-      <TD ALIGN=LEFT VALIGN=TOP>error<BR>full-write<BR>binary-io<BR>exit<BR>gettext
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=execute"></A><A HREF="modules/execute">execute</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/execute.h">execute.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/execute.c">execute.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/execute.m4">execute.m4</A><BR>gl_EXECUTE
-      <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>wait-process<BR>gettext<BR>stdbool
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=exit"></A><A HREF="modules/exit">exit</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/exit.h">exit.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=findprog"></A><A HREF="modules/findprog">findprog</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/findprog.h">findprog.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/findprog.c">findprog.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/findprog.m4">findprog.m4</A><BR>gl_FINDPROG
-      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>pathname
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fstrcmp"></A><A HREF="modules/fstrcmp">fstrcmp</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fstrcmp.h">fstrcmp.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fstrcmp.c">fstrcmp.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>xalloc
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gcj"></A><A HREF="modules/gcj">gcj</A>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/gcj.m4">gcj.m4</A><BR>gt_GCJ
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=javacomp"></A><A HREF="modules/javacomp">javacomp</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/javacomp.h">javacomp.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/javacomp.c">javacomp.c</A><BR><A HREF="lib/javacomp.sh.in">javacomp.sh.in</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/javacomp.m4">javacomp.m4</A><BR>gt_JAVACOMP
-      <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>alloca<BR>execute<BR>pipe<BR>wait-process<BR>classpath<BR>xsetenv<BR>sh-quote<BR>safe-read<BR>xalloc<BR>error<BR>gettext
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=javaexec"></A><A HREF="modules/javaexec">javaexec</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/javaexec.h">javaexec.h</A>"<BR>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/javaexec.c">javaexec.c</A><BR><A HREF="lib/javaexec.sh.in">javaexec.sh.in</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/javaexec.m4">javaexec.m4</A><BR>gt_JAVAEXEC
-      <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>alloca<BR>execute<BR>classpath<BR>xsetenv<BR>sh-quote<BR>pathname<BR>xalloc<BR>error<BR>gettext
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=minmax"></A><A HREF="modules/minmax">minmax</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/minmax.h">minmax.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mkdtemp"></A><A HREF="modules/mkdtemp">mkdtemp</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mkdtemp.h">mkdtemp.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mkdtemp.c">mkdtemp.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR><A HREF="m4/mkdtemp.m4">mkdtemp.m4</A><BR>gt_FUNC_MKDTEMP
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=pipe"></A><A HREF="modules/pipe">pipe</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/pipe.h">pipe.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/pipe-in.c">pipe-in.c</A><BR><A HREF="lib/pipe-out.c">pipe-out.c</A><BR><A HREF="lib/pipe-bidi.c">pipe-bidi.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/pipe.m4">pipe.m4</A><BR>gl_PIPE
-      <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>gettext<BR>stdbool
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=sh-quote"></A><A HREF="modules/sh-quote">sh-quote</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/sh-quote.h">sh-quote.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/sh-quote.c">sh-quote.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>strpbrk<BR>xalloc
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=stpncpy"></A><A HREF="modules/stpncpy">stpncpy</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/stpncpy.h">stpncpy.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/stpncpy.c">stpncpy.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/stpncpy.m4">stpncpy.m4</A><BR>gl_FUNC_STPNCPY
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=ucs4-utf16"></A><A HREF="modules/ucs4-utf16">ucs4-utf16</A>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/ucs4-utf16.h">ucs4-utf16.h</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ucs4-utf.m4">ucs4-utf.m4</A><BR>gl_UCS4_UTF
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=ucs4-utf8"></A><A HREF="modules/ucs4-utf8">ucs4-utf8</A>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/ucs4-utf8.h">ucs4-utf8.h</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ucs4-utf.m4">ucs4-utf.m4</A><BR>gl_UCS4_UTF
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=utf16-ucs4"></A><A HREF="modules/utf16-ucs4">utf16-ucs4</A>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/utf16-ucs4.h">utf16-ucs4.h</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/utf-ucs4.m4">utf-ucs4.m4</A><BR>gl_UTF_UCS4
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=utf8-ucs4"></A><A HREF="modules/utf8-ucs4">utf8-ucs4</A>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/utf8-ucs4.h">utf8-ucs4.h</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/utf-ucs4.m4">utf-ucs4.m4</A><BR>gl_UTF_UCS4
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=vasnprintf"></A><A HREF="modules/vasnprintf">vasnprintf</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/vasnprintf.h">vasnprintf.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/printf-args.h">printf-args.h</A><BR><A HREF="lib/printf-args.c">printf-args.c</A><BR><A HREF="lib/printf-parse.h">printf-parse.h</A><BR><A HREF="lib/printf-parse.c">printf-parse.c</A><BR><A HREF="lib/vasnprintf.c">vasnprintf.c</A><BR><A HREF="lib/asnprintf.c">asnprintf.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/signed.m4">signed.m4</A><BR><A HREF="m4/longdouble.m4">longdouble.m4</A><BR><A HREF="m4/wchar_t.m4">wchar_t.m4</A><BR><A HREF="m4/wint_t.m4">wint_t.m4</A><BR><A HREF="m4/longlong.m4">longlong.m4</A><BR><A HREF="m4/intmax_t.m4">intmax_t.m4</A><BR><A HREF="m4/vasnprintf.m4">vasnprintf.m4</A><BR>gl_FUNC_VASNPRINTF
-      <TD ALIGN=LEFT VALIGN=TOP>alloca
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=vasprintf"></A><A HREF="modules/vasprintf">vasprintf</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/vasprintf.h">vasprintf.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/vasprintf.c">vasprintf.c</A><BR><A HREF="lib/asprintf.c">asprintf.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/vasprintf.m4">vasprintf.m4</A><BR>gl_FUNC_VASPRINTF
-      <TD ALIGN=LEFT VALIGN=TOP>vasnprintf
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=wait-process"></A><A HREF="modules/wait-process">wait-process</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/wait-process.h">wait-process.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/wait-process.c">wait-process.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/wait-process.m4">wait-process.m4</A><BR>gl_WAIT_PROCESS
-      <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>gettext<BR>stdbool
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xsetenv"></A><A HREF="modules/xsetenv">xsetenv</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xsetenv.h">xsetenv.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xsetenv.c">xsetenv.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>setenv<BR>error<BR>exit<BR>gettext
-    </TR>
-  </TABLE>
   <H2>Lone files - please create new modules containing them</H2>
   <PRE>
 <A HREF="lib/getversion.c">lib/getversion.c</A>
@@ -2401,5 +2227,5 @@ variables.
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on 17 January 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 18 January 2003.
 </HTML>
