@@ -133,6 +133,9 @@ as well.  GNULib code makes the following additional assumptions:
  * Objects with all bits zero are treated as 0 or NULL.  For example,
    memset (A, 0, sizeof A) initializes an array A of pointers to NULL.
 
+ * Adding zero to a null pointer does not change the pointer.
+   For example, 0 + (char *) NULL == (char *) NULL.
+
 The above assumptions are not required by the C or POSIX standards but
 hold on all practical porting targets that we're familiar with.  If
 you have a porting target where these assumptions are not true, we'd

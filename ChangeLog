@@ -1,3 +1,7 @@
+2003-10-16  Paul Eggert  <eggert@twinsun.com>
+
+	* README: Mention that gnulib assumes that (foo *) NULL + 0 == NULL.
+
 2003-10-14  Bruno Haible  <bruno@clisp.org>
 
 	* modules/fatal-signal: Add m4/sig_atomic_t.m4 to file list.
