@@ -482,12 +482,18 @@ parser_init (struct parser *parser, const struct argp *argp,
 
   /* Lengths of the various bits of storage used by PARSER.  */
   glen = (szs.num_groups + 1) * sizeof (struct group);
-  gsum = alignto (glen, alignof (void *));
   clen = szs.num_child_inputs * sizeof (void *);
-  csum = alignto (gsum + clen, alignof (struct option));
   llen = (szs.long_len + 1) * sizeof (struct option);
-  lsum = alignto (csum + llen, alignof (char));
   slen = szs.short_len + 1;
+
+  /* Sums of previous lengths, properly aligned.  There's no need to
+     align gsum, since struct group is aligned at least as strictly as
+     void * (since it contains a void * member).  And there's no need
+     to align lsum, since struct option is aligned at least as
+     strictly as char.  */
+  gsum = glen;
+  csum = alignto (gsum + clen, alignof (struct option));
+  lsum = csum + llen;
   ssum = lsum + slen;
 
   parser->storage = malloc (ssum);
