@@ -54,6 +54,8 @@ void *xzalloc (size_t s);
 void *xcalloc (size_t n, size_t s);
 void *xrealloc (void *p, size_t s);
 void *xnrealloc (void *p, size_t n, size_t s);
+void *x2realloc (void *p, size_t *pn);
+void *x2nrealloc (void *p, size_t *pn, size_t s);
 void *xclone (void const *p, size_t s);
 char *xstrdup (const char *str);
 
