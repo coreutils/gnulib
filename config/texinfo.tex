@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2003-01-23.10}
+\def\texinfoversion{2003-01-24.11}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
@@ -1365,7 +1365,25 @@ where each line of input produces a line of output.}
   \let\tensf=\smallersf \let\teni=\smalleri \let\tensy=\smallersy
   \let\tenttsl=\smallerttsl
   \resetmathfonts \setleading{9.5pt}}
-\let\smallexamplefonts = \smallerfonts
+
+% Set the fonts to use with the @small... environments.
+\let\smallexamplefonts = \smallfonts
+
+% About \smallexamplefonts.  If we use \smallfonts (9pt), @smallexample
+% can fit this many characters:
+%   8.5x11=86   smallbook=72  a4=90  a5=69
+% If we use \smallerfonts (8pt), then we can fit this many characters:
+%   8.5x11=90+  smallbook=80  a4=90+  a5=77
+% For me, subjectively, the few extra characters that fit aren't worth
+% the additional smallness of 8pt.  So I'm making the default 9pt.
+% 
+% By the way, for comparison, here's what fits with @example (10pt):
+%   8.5x11=71  smallbook=60  a4=75  a5=58
+% 
+% I wish we used A4 paper on this side of the Atlantic.
+% 
+% --karl, 24jan03.
+
 
 % Set up the default fonts, so we can use them for creating boxes.
 %
@@ -4514,27 +4532,16 @@ width0pt\relax} \fi
 % @example: Same as @lisp.
 \def\example{\begingroup \def\Eexample{\nonfillfinish\endgroup}\lisp}
 
-% @small... is usually equivalent to the non-small (@smallbook
-% redefines).  We must call \example (or whatever) last in the
-% definition, since it reads the return following the @example (or
-% whatever) command.
-%
-% This actually allows (for example) @end display inside an
-% @smalldisplay.  Too bad, but makeinfo will catch the error anyway.
-%
-\def\smalldisplay{\begingroup\def\Esmalldisplay{\nonfillfinish\endgroup}\display}
-\def\smallexample{\begingroup\def\Esmallexample{\nonfillfinish\endgroup}\lisp}
-\def\smallformat{\begingroup\def\Esmallformat{\nonfillfinish\endgroup}\format}
-\def\smalllisp{\begingroup\def\Esmalllisp{\nonfillfinish\endgroup}\lisp}
-
-% Real @smallexample and @smalllisp (when @smallbook): use smaller fonts.
+% @smallexample and @smalllisp: use smaller fonts.
 % Originally contributed by Pavel@xerox.
-\def\smalllispx{\begingroup
+\def\smalllisp{\begingroup
   \def\Esmalllisp{\nonfillfinish\endgroup}%
   \def\Esmallexample{\nonfillfinish\endgroup}%
   \smallexamplefonts
   \lisp
 }
+\let\smallexample = \smalllisp
+
 
 % @display: same as @lisp except keep current font.
 %
@@ -4544,9 +4551,9 @@ width0pt\relax} \fi
   \gobble
 }
 %
-% @smalldisplay (when @smallbook): @display plus smaller fonts.
+% @smalldisplay: @display plus smaller fonts.
 %
-\def\smalldisplayx{\begingroup
+\def\smalldisplay{\begingroup
   \def\Esmalldisplay{\nonfillfinish\endgroup}%
   \smallexamplefonts \rm
   \display
@@ -4561,9 +4568,9 @@ width0pt\relax} \fi
   \gobble
 }
 %
-% @smallformat (when @smallbook): @format plus smaller fonts.
+% @smallformat: @format plus smaller fonts.
 %
-\def\smallformatx{\begingroup
+\def\smallformat{\begingroup
   \def\Esmallformat{\nonfillfinish\endgroup}%
   \smallexamplefonts \rm
   \format
@@ -6314,15 +6321,6 @@ should work if nowhere else does.}
   \setemergencystretch
 }
 
-% Use `small' versions.
-% 
-\def\smallenvironments{%
-  \let\smalldisplay = \smalldisplayx
-  \let\smallexample = \smalllispx
-  \let\smallformat = \smallformatx
-  \let\smalllisp = \smalllispx
-}
-
 % @letterpaper (the default).
 \def\letterpaper{{\globaldefs = 1
   \parskip = 3pt plus 2pt minus 1pt
@@ -6350,7 +6348,6 @@ should work if nowhere else does.}
   \hfuzz = 1pt
   \contentsrightmargin = 0pt
   \defbodyindent = .5cm
-  \smallenvironments
 }}
 
 % Use @afourpaper to print on European A4 paper.
@@ -6397,8 +6394,6 @@ should work if nowhere else does.}
   \contentsrightmargin = 0pt
   \defbodyindent = 2mm
   \tableindent = 12mm
-  %
-  \smallenvironments
 }}
 
 % A specific text layout, 24x15cm overall, intended for A4 paper.  
