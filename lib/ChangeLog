@@ -1,3 +1,21 @@
+2003-10-15  Paul Eggert  <eggert@twinsun.com>
+
+	* exclude.c: Do not include <inttypes.h> or <stdint.h>.
+	(SIZE_MAX): Remove.
+	(new_exclude, add_exclude_file): Initial size no longer needs to
+	be a power of 2.
+	(add_exclude, add_exclude_file): Use xnrealloc instead of rolling
+	our own address arithmetic overflow checking.
+
+	* fnmatch.c (SIZE_MAX): Define if standard headers don't.
+	(fnmatch): Do not alloca more than 2000 wide characters;
+	instead, use malloc for large buffers.
+	Check for address arithmetic overflow, and return -1
+	with errno set to ENOMEM in that case.
+	* fnmatch_loop.c (ALLOCA_LIMIT): New macro.
+	(NEW_PATTERN): Do not alloca more than 8000 bytes;
+	instead, return -1.  Check for address arithmetic overflow.
+
 2003-10-14  Paul Eggert  <eggert@twinsun.com>
 
 	Handle invalid suffixes and overflow independently, so that
