@@ -1,3 +1,8 @@
+2003-08-31  Simon Josefsson  <jas@extundo.com>
+
+	* timegm.h: New file.
+	* timegm.c: New file.  Based on wget-1.8.2/src/http.c:mktime_from_utc.
+
 2003-08-31  Karl Berry  <karl@gnu.org>
 
 	* argp.h: update from libc.

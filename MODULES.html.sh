@@ -1533,6 +1533,7 @@ func_all_modules ()
 
   func_begin_table
   func_module getdate
+  func_module timegm
   func_end_table
 
   element="Input/Output <stdio.h>"

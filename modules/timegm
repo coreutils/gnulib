@@ -1,0 +1,21 @@
+Description:
+Convert calendar time to simple time, inverse of mktime.
+
+Files:
+lib/timegm.h
+lib/timegm.c
+m4/timegm.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_TIMEGM
+
+Makefile.am:
+lib_SOURCES += timegm.h
+
+Include:
+"timegm.h"
+
+Maintainer:
+Simon Josefsson

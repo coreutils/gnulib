@@ -1,3 +1,7 @@
+2003-08-31  Simon Josefsson  <jas@extundo.com>
+
+	* timegm.m4: New file.
+
 2003-08-26  Bruno Haible  <bruno@clisp.org>
 
 	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Remove AC_DEFINE of fnmatch here.
