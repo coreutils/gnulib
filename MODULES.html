@@ -386,6 +386,10 @@ memory allocation.
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/getgroups.html">getgroups</A>() function: return the supplementary group IDs of the current process.
       </TR>
       <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=gethostname">gethostname</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/gethostname.html">gethostname</A>() function: Return machine's hostname.
+      </TR>
+      <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=gettimeofday">gettimeofday</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/gettimeofday.html">gettimeofday</A>() function: return current time.
       </TR>
@@ -667,20 +671,8 @@ utility).
     <H3><A HREF="#posix_ext_net">Networking functions</A></H3>
     <TABLE>
       <TR WIDTH="100%">
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=gethostname">gethostname</A>
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/gethostname.html">gethostname</A>() function: Return machine's hostname.
-      </TR>
-      <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xgethostname">xgethostname</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return machine's hostname, without size limitations.
-      </TR>
-      <TR WIDTH="100%">
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getdomainname">getdomainname</A>
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">getdomainname() function: Return machine's NIS domain name.
-      </TR>
-      <TR WIDTH="100%">
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xgetdomainname">xgetdomainname</A>
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return machine's domainname, without size limitations.
       </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=canon-host">canon-host</A>
@@ -1755,6 +1747,13 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>xalloc
       </TR>
       <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gethostname"></A><A HREF="modules/gethostname">gethostname</A>
+        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/gethostname.c">gethostname.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/gethostname.m4">gethostname.m4</A><BR>gl_FUNC_GETHOSTNAME
+        <TD ALIGN=LEFT VALIGN=TOP>---
+      </TR>
+      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gettimeofday"></A><A HREF="modules/gettimeofday">gettimeofday</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/sys/time.h.html">sys/time.h</A>&gt;
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/gettimeofday.c">gettimeofday.c</A>
@@ -1812,8 +1811,8 @@ variables.
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=time_r"></A><A HREF="modules/time_r">time_r</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include &lt;time_r.h&gt;
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/time_r.c">time_r.c</A><BR><A HREF="lib/time_r.h">time_r.h</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/time_r.h">time_r.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/time_r.c">time_r.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/time_r.m4">time_r.m4</A><BR>gl_TIME_R
         <TD ALIGN=LEFT VALIGN=TOP>extensions<BR>restrict
       </TR>
@@ -2039,8 +2038,8 @@ variables.
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=lchown"></A><A HREF="modules/lchown">lchown</A>
-        <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/lchown.h">lchown.h</A><BR><A HREF="lib/lchown.c">lchown.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/lchown.h">lchown.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/lchown.c">lchown.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/lchown.m4">lchown.m4</A><BR>jm_FUNC_LCHOWN
         <TD ALIGN=LEFT VALIGN=TOP>chown
       </TR>
@@ -2326,32 +2325,11 @@ variables.
         <TH ALIGN=LEFT>Depends on
       </TR>
       <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gethostname"></A><A HREF="modules/gethostname">gethostname</A>
-        <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/gethostname.c">gethostname.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/gethostname.m4">gethostname.m4</A><BR>gl_FUNC_GETHOSTNAME
-        <TD ALIGN=LEFT VALIGN=TOP>---
-      </TR>
-      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xgethostname"></A><A HREF="modules/xgethostname">xgethostname</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xgethostname.h">xgethostname.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xgethostname.c">xgethostname.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP>gethostname<BR>xalloc<BR>error<BR>exit
-      </TR>
-      <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getdomainname"></A><A HREF="modules/getdomainname">getdomainname</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getdomainname.h">getdomainname.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getdomainname.c">getdomainname.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getdomainname.m4">getdomainname.m4</A><BR>gl_FUNC_GETDOMAINNAME
-        <TD ALIGN=LEFT VALIGN=TOP>---
-      </TR>
-      <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xgetdomainname"></A><A HREF="modules/xgetdomainname">xgetdomainname</A>
-        <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xgetdomainname.h">xgetdomainname.h</A><BR><A HREF="lib/xgetdomainname.c">xgetdomainname.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP>getdomainname<BR>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=canon-host"></A><A HREF="modules/canon-host">canon-host</A>
@@ -2582,8 +2560,8 @@ variables.
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xgetdomainname"></A><A HREF="modules/xgetdomainname">xgetdomainname</A>
-        <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xgetdomainname.h">xgetdomainname.h</A><BR><A HREF="lib/xgetdomainname.c">xgetdomainname.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xgetdomainname.h">xgetdomainname.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xgetdomainname.c">xgetdomainname.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP>getdomainname<BR>xalloc
       </TR>
@@ -2730,6 +2708,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 28 September 2003.
+    Generated from <CODE>MODULES.html.sh</CODE> on  3 October 2003.
   </BODY>
 </HTML>
