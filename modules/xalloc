@@ -1,5 +1,5 @@
 Description:
-Memory allocation with out-of-memory checking.
+Memory allocation with out-of-memory checking.  Also see xalloc-die.
 
 Files:
 lib/xalloc.h
@@ -8,9 +8,6 @@ lib/xstrdup.c
 m4/xalloc.m4
 
 Depends-on:
-error
-gettext
-exitfail
 
 configure.ac:
 gl_XALLOC
