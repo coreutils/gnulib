@@ -8,6 +8,10 @@ dnl the same distribution terms as the rest of that program.
 
 AC_DEFUN([gl_FUNC_ALLOCA],
 [
+  dnl Work around a bug of AC_EGREP_CPP in autoconf-2.57.
+  AC_REQUIRE([AC_PROG_CPP])
+  AC_REQUIRE([AC_PROG_EGREP])
+
   AC_REQUIRE([AC_FUNC_ALLOCA])
   if test $ac_cv_func_alloca_works = no; then
     gl_PREREQ_ALLOCA

@@ -1,3 +1,7 @@
+2003-01-11  Bruno Haible  <bruno@clisp.org>
+
+	* alloca.m4 (gl_FUNC_ALLOCA): Invoke AC_EGREP_CPP prerequisites.
+
 2003-01-12  Paul Eggert  <eggert@twinsun.com>
 
 	Finish renaming getstr -> getdelim2 and readline -> readlinebuffer,
