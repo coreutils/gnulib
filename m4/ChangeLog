@@ -1,3 +1,9 @@
+2004-03-18  Paul Eggert  <eggert@twinsun.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* mbswidth.m4 (gl_MBSWIDTH): Also test whether <wchar.h> declares
+	mbswidth.
+
 2004-03-07  Paul Eggert  <eggert@twinsun.com>
 
 	* c-stack.m4 (gl_PREREQ_C_STACK): Renamed from jm_PREREQ_C_STACK.

@@ -1,3 +1,10 @@
+2004-03-18  Paul Eggert  <eggert@twinsun.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* mbswidth.h: Include <wchar.h> only if HAVE_DECL_MBSWIDTH_IN_WCHAR_H,
+	not on all platforms that have <wchar.h>.
+	* mbswidth.c: Include <stdio.h> and <time.h> before <wchar.h>.
+
 2004-03-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* argp-parse.c, getopt.c, getopt.h, getopt1.c:
