@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2003-01-27.08}
+\def\texinfoversion{2003-01-30.15}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
@@ -3202,27 +3202,20 @@ width0pt\relax} \fi
         \def\rawbackslashxx{\indexbackslash}% \indexbackslash isn't defined now
         % so it will be output as is; and it will print as backslash.
         %
-        \def\thirdarg{#3}%
-        %
-        % If third arg is present, precede it with space in sort key.
-        \ifx\thirdarg\emptymacro
-          \let\subentry = \empty
-        \else
-          \def\subentry{ #3}%
-        \fi
-        %
-        % First process the index entry with all font commands turned
-        % off to get the string to sort by.
-        {\indexnofonts \xdef\indexsorttmp{#2\subentry}}%
-        %
-        % Now the real index entry with the fonts.
+        % The main index entry text.
         \toks0 = {#2}%
         %
-        % If the third (subentry) arg is present, add it to the index
-        % line to write.
+        % If third arg is present, precede it with space in sort key.
+        \def\thirdarg{#3}%
         \ifx\thirdarg\emptymacro \else
-          \toks0 = \expandafter{\the\toks0{#3}}%
+           % If the third (subentry) arg is present, add it to the index
+           % line to write.
+          \toks0 = \expandafter{\the\toks0 \space #3}%
         \fi
+        %
+        % Process the index entry with all font commands turned off, to
+        % get the string to sort by.
+        {\indexnofonts \xdef\indexsorttmp{\the\toks0}}%
         %
         % Set up the complete index entry, with both the sort key and
         % the original text, including any font commands.  We write
@@ -3254,11 +3247,10 @@ width0pt\relax} \fi
         \iflinks
           \ifvmode
             \skip0 = \lastskip
-            \ifdim\lastskip = 0pt \else \nobreak\vskip-\lastskip \fi
+            \ifdim\lastskip = 0pt \else \nobreak\vskip-\skip0 \fi
           \fi
           %
           \temp % do the write
-          %
           %
           \ifvmode \ifdim\skip0 = 0pt \else \nobreak\vskip\skip0 \fi \fi
         \fi
@@ -5271,9 +5263,11 @@ width0pt\relax} \fi
 \defopparsebody\Edefop\defopx\defopheader\defoptype}
 %
 \def\defopheader#1#2#3{%
-\dosubind {fn}{\code{#2}}{\putwordon\ #1}% Make entry in function index
-\begingroup\defname {#2}{\defoptype\ \putwordon\ #1}%
-\defunargs {#3}\endgroup %
+  \dosubind{fn}{\code{#2}}{\putwordon\ \code{#1}}% function index entry
+  \begingroup
+    \defname{#2}{\defoptype\ \putwordon\ #1}%
+    \defunargs{#3}%
+  \endgroup
 }
 
 % @deftypeop CATEGORY CLASS TYPE OPERATION ARG...
@@ -5340,9 +5334,11 @@ width0pt\relax} \fi
 \defopvarparsebody\Edefcv\defcvx\defcvarheader\defcvtype}
 
 \def\defcvarheader #1#2#3{%
-\dosubind {vr}{\code{#2}}{\putwordof\ #1}% Make entry in var index
-\begingroup\defname {#2}{\defcvtype\ \putwordof\ #1}%
-\defvarargs {#3}\endgroup %
+  \dosubind{vr}{\code{#2}}{\putwordof\ \code{#1}}% variable index entry
+  \begingroup
+    \defname{#2}{\defcvtype\ \putwordof\ #1}%
+    \defvarargs{#3}%
+  \endgroup
 }
 
 % @defivar CLASS VARNAME == @defcv {Instance Variable} CLASS VARNAME
@@ -5350,7 +5346,7 @@ width0pt\relax} \fi
 \def\defivar{\defvrparsebody\Edefivar\defivarx\defivarheader}
 %
 \def\defivarheader#1#2#3{%
-  \dosubind {vr}{\code{#2}}{\putwordof\ #1}% entry in var index
+  \dosubind{vr}{\code{#2}}{\putwordof\ \code{#1}}% entry in var index
   \begingroup
     \defname{#2}{\putwordInstanceVariableof\ #1}%
     \defvarargs{#3}%
