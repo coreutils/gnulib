@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-03-06.11}
+\def\texinfoversion{2004-03-11.15}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -1162,16 +1162,21 @@ where each line of input produces a line of output.}
 \newif\ifpdf
 \newif\ifpdfmakepagedest
 
+% when pdftex is run in dvi mode, \pdfoutput is defined (so \pdfoutput=1
+% can be set).  So we test for \relax and 0 as well as \undefined,
+% borrowed from ifpdf.sty.
 \ifx\pdfoutput\undefined
-  \pdffalse
-  \let\pdfmkdest = \gobble
-  \let\pdfurl = \gobble
-  \let\endlink = \relax
-  \let\linkcolor = \relax
-  \let\pdfmakeoutlines = \relax
 \else
-  \pdftrue
-  \pdfoutput = 1
+  \ifx\pdfoutput\relax
+  \else
+    \ifcase\pdfoutput
+    \else
+      \pdftrue
+    \fi
+  \fi
+\fi
+%
+\ifpdf
   \input pdfcolor
   \pdfcatalog{/PageMode /UseOutlines}%
   \def\dopdfimage#1#2#3{%
@@ -1374,7 +1379,13 @@ where each line of input produces a line of output.}
     \startlink attr{/Border [0 0 0]} goto name{\pdfmkpgn{#1}}
     \linkcolor #1\endlink}
   \def\done{\edef\st{\global\noexpand\toksA={\the\toksB}}\st}
-\fi % \ifx\pdfoutput
+\else
+  \let\pdfmkdest = \gobble
+  \let\pdfurl = \gobble
+  \let\endlink = \relax
+  \let\linkcolor = \relax
+  \let\pdfmakeoutlines = \relax
+\fi  % \ifx\pdfoutput
 
 
 \message{fonts,}
