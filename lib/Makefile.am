@@ -1,7 +1,7 @@
 ## Makefile for gnulib/lib				-*-Makefile-*-
 
-# Copyright (C) 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002 Free
-# Software Foundation, Inc.
+# Copyright (C) 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003
+# Free Software Foundation, Inc.
 
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -62,7 +62,6 @@ libfetish_a_SOURCES = \
   full-write.c full-write.h \
   getline.h \
   getpagesize.h \
-  getstr.c getstr.h \
   gettime.c \
   gettext.h \
   getugroups.c \
