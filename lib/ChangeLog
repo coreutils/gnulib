@@ -1,3 +1,12 @@
+2004-05-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* gettime.c (gettime): Fall back on `time' if `gettimeofday'
+	doesn't work.
+	* settime.c: Include <unistd.h>, for stime (on Solaris 8, anyway).
+	(ENOSYS): Define if not defined.
+	(settime): Fall back on stime if it exists and settimeofday fails.
+	But don't bother with fallbacks if a method fails with errno == EPERM.
+
 2004-05-11  Jim Meyering  <jim@meyering.net>
 
 	Prior to this change, the save_cwd caller required read access to the

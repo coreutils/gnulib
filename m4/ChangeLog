@@ -1,3 +1,9 @@
+2004-05-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* gettime.m4 (gl_GETTIME): Require gl_TIMESPEC.  Check for gettimeofday.
+	* settime.m4 (gl_SETTIME): Require gl_TIMESPEC.  Check for settimeofday,
+	stime.
+	
 2004-04-20  Paul Eggert  <eggert@twinsun.com>
 
 	* host-os.m4: Add a copyright notice.
