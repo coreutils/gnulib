@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2002-10-30.16}
+\def\texinfoversion{2002-10-31.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002 Free Software Foundation, Inc.
@@ -68,6 +68,13 @@
 \everyjob{\message{[Texinfo version \texinfoversion]}%
   \catcode`+=\active \catcode`\_=\active}
 
+\message{Basics,}
+\chardef\other=12
+
+% We never want plain's outer \+ definition in Texinfo.
+% For @tex, we can use \tabalign.
+\let\+ = \relax
+
 % Save some parts of plain tex whose names we will redefine.
 \let\ptexb=\b
 \let\ptexbullet=\bullet
@@ -78,18 +85,15 @@
 \let\ptexend=\end
 \let\ptexequiv=\equiv
 \let\ptexexclam=\!
+\let\ptexgtr=>
+\let\ptexhat=^
 \let\ptexi=\i
 \let\ptexlbrace=\{
+\let\ptexless=<
+\let\ptexplus=+
 \let\ptexrbrace=\}
 \let\ptexstar=\*
 \let\ptext=\t
-
-% We never want plain's outer \+ definition in Texinfo.
-% For @tex, we can use \tabalign.
-\let\+ = \relax
-
-\message{Basics,}
-\chardef\other=12
 
 % If this character appears in an error message or help string, it
 % starts a new line in the output.
@@ -841,11 +845,6 @@ where each line of input produces a line of output.}
 % to set catcodes according to plain TeX first, to allow for subscripts,
 % superscripts, special math chars, etc.
 % 
-% @math does not do math typesetting in section titles, index
-% entries, and other such contexts where the catcodes are set before
-% @math gets a chance to work.  This could perhaps be fixed, but for now
-% at least we can have real math in the main text, where it's needed most.
-%
 \let\implicitmath = $%$ font-lock fix
 %
 % One complication: _ usually means subscripts, but it could also mean
@@ -871,8 +870,26 @@ where each line of input produces a line of output.}
   \tex
   \mathcode`\_="8000 \mathunderscore
   \let\\ = \mathbackslash
+  \mathactive
   \implicitmath\finishmath}
 \def\finishmath#1{#1\implicitmath\Etex}
+
+% Some active characters (such as <) are spaced differently in math.
+% We have to reset their definitions in case the @math was an
+% argument to a command which set the catcodes (such as @item or @section).
+% 
+{
+  \catcode`^ = \active
+  \catcode`< = \active
+  \catcode`> = \active
+  \catcode`+ = \active
+  \gdef\mathactive{%
+    \let^ = \ptexhat
+    \let< = \ptexless
+    \let> = \ptexgtr
+    \let+ = \ptexplus
+  }
+}
 
 % @bullet and @minus need the same treatment as @math, just above.
 \def\bullet{\implicitmath\ptexbullet\implicitmath}
@@ -1875,10 +1892,18 @@ where each line of input produces a line of output.}
     % \parskip glue -- logically it's part of the @item we just started.
     \nobreak \vskip-\parskip
     %
-    % Stop a page break at the \parskip glue coming up.  Unfortunately
+    % Stop a page break at the \parskip glue coming up.  (Unfortunately
     % we can't prevent a possible page break at the following
-    % \baselineskip glue.
-    \nobreak
+    % \baselineskip glue.)  However, if what follows is an environment
+    % such as @example, there will be no \parskip glue; then
+    % the negative vskip we just would cause the example and the item to
+    % crash together.  So we use this bizarre value of 10001 as a signal
+    % to \aboveenvbreak to insert \parskip glue after all.
+    % (Possibly there are other commands that could be followed by
+    % @example which need the same treatment, but not section titles; or
+    % maybe section titles are the only special case and they should be
+    % penalty 10001...)
+    \penalty 10001
     \endgroup
     \itemxneedsnegativevskipfalse
   \else
@@ -4272,12 +4297,15 @@ width0pt\relax} \fi
 % start of the next paragraph will insert \parskip.
 %
 \def\aboveenvbreak{{%
-  \ifnum\lastpenalty < 10000
+  % =10000 instead of <10000 because of a special case in \itemzzz, q.v.
+  \ifnum \lastpenalty=10000 \else
     \advance\envskipamount by \parskip
     \endgraf
     \ifdim\lastskip<\envskipamount
       \removelastskip
-      \penalty-50
+      % it's not a good place to break if the last penalty was \nobreak
+      % or better ...
+      \ifnum\lastpenalty>10000 \else \penalty-50 \fi
       \vskip\envskipamount
     \fi
   \fi
