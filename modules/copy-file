@@ -1,0 +1,28 @@
+Description:
+Copying of files.
+
+Files:
+lib/copy-file.h
+lib/copy-file.c
+m4/copy-file.m4
+
+Depends-on:
+error
+safe-read
+full-write
+binary-io
+exit
+gettext
+
+configure.ac:
+gl_COPY_FILE
+
+Makefile.am:
+lib_SOURCES += copy-file.h copy-file.c
+
+Include:
+"copy-file.h"
+
+Maintainer:
+Bruno Haible
+

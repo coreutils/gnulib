@@ -1,3 +1,8 @@
+2003-03-28  Bruno Haible  <bruno@clisp.org>
+
+	* copy-file.h: New file, from GNU gettext.
+	* copy-file.c: New file, from GNU gettext.
+
 2003-03-18  Jim Meyering  <jim@meyering.net>
 
 	* quote.c (quote_n): Fix typo in comment.

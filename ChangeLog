@@ -1,3 +1,8 @@
+2003-03-28  Bruno Haible  <bruno@clisp.org>
+
+	* modules/copy-file: New file.
+	* MODULES.html.sh (func_all_modules): Add it.
+
 2003-02-20  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh (func_all_modules): Add poll.

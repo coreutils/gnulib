@@ -1,3 +1,7 @@
+2003-03-28  Bruno Haible  <bruno@clisp.org>
+
+	* copy-file.m4: New file.
+
 2003-03-18  Bruno Haible  <bruno@clisp.org>
 
 	* onceonly.m4: Use m4_defn instead of defn, for better error checking.
