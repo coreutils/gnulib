@@ -1,9 +1,15 @@
-2003-06-06  Jim Meyering  <jim@meyering.net>
-            Bruno Haible  <bruno@clisp.org>
+2003-06-07  Jim Meyering  <jim@meyering.net>
 
-        * modules/stdbool: Reflect renaming: stdbool.h.in -> stdbool_.h.
-        Adjust Makefile.am snippet not to redirect directly to target.
-        Use $(STDBOOL_H) notation, not @STDBOOL_H@ for AC_REPLACE'd variables.
+	* modules/strtod: Use $(...) notation, not @...@ for
+	AC_REPLACE'd variables.
+	* modules/localcharset: Likewise.
+
+2003-06-06  Jim Meyering  <jim@meyering.net>
+	    Bruno Haible  <bruno@clisp.org>
+
+	* modules/stdbool: Reflect renaming: stdbool.h.in -> stdbool_.h.
+	Adjust Makefile.am snippet not to redirect directly to target.
+	Use $(STDBOOL_H) notation, not @STDBOOL_H@ for AC_REPLACE'd variables.
 
 2003-05-30  Bruno Haible  <bruno@clisp.org>
 
@@ -279,4 +285,3 @@
 2000-10-15  Stefan Monnier  <monnier@cs.yale.edu>
 
 	* regex.c (WIDE_CHAR_SUPPORT): Define if _LIBC as well.
-
