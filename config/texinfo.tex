@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-01-17.16}
+\def\texinfoversion{2004-01-19.07}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -1279,7 +1279,15 @@ where each line of input produces a line of output.}
       \def\numsubsubsecentry##1##2##3##4{% count is always zero
         \dopdfoutline{##1}{}{##3}{##4}}%
       %
-      % Make special characters normal for writing to the pdf file.
+      % PDF outlines are displayed using system fonts, instead of
+      % document fonts.  Therefore we cannot use special characters,
+      % since the encoding is unknown.  For example, the eogonek from
+      % Latin 2 (0xea) gets translated to a | character.  Info from
+      % Staszek Wawrykiewicz, 19 Jan 2004 04:09:24 +0100.
+      % 
+      % xx to do this right, we have to translate 8-bit characters to
+      % their "best" equivalent, based on the @documentencoding.  Right
+      % now, I guess we'll just let the pdf reader have its way.
       \indexnofonts
       \turnoffactive
       \input \jobname.toc
@@ -2338,7 +2346,7 @@ where each line of input produces a line of output.}
   {\let\par=\endgraf \smallbreak}% reasonable place to break
   {%
    % If the document has an @itemize directly after a section title, a
-   % \nobreak will be the last contribution, and \sectionheading will have
+   % \nobreak will be last on the list, and \sectionheading will have
    % done a \vskip-\parskip.  In that case, we don't want to zero
    % parskip, or the item text will crash with the heading.  On the
    % other hand, when there is normal text preceding the item (as there
@@ -3097,7 +3105,6 @@ width0pt\relax} \fi
   %
   \definedummyword{LaTeX}%
   \definedummyword{TeX}%
-  \definedummyword{dots}%
   %
   % Assorted special characters.
   \definedummyword{bullet}%
@@ -3132,13 +3139,19 @@ width0pt\relax} \fi
   \catcode`\~=\other
   \gdef\commondummiesnofonts{%
     % Control letters and accents.
-    \definedummyletter{,}%
+    \definedummyletter{!}%
     \definedummyletter{"}%
-    \definedummyletter{`}%
     \definedummyletter{'}%
-    \definedummyletter{^}%
-    \definedummyletter{~}%
+    \definedummyletter{*}%
+    \definedummyletter{,}%
+    \definedummyletter{.}%
+    \definedummyletter{/}%
+    \definedummyletter{:}%
     \definedummyletter{=}%
+    \definedummyletter{?}%
+    \definedummyletter{^}%
+    \definedummyletter{`}%
+    \definedummyletter{~}%
     \definedummyword{u}%
     \definedummyword{v}%
     \definedummyword{H}%
@@ -3170,6 +3183,7 @@ width0pt\relax} \fi
     \definedummyword{option}%
     \definedummyword{samp}%
     \definedummyword{strong}%
+    \definedummyword{tie}%
     \definedummyword{uref}%
     \definedummyword{url}%
     \definedummyword{var}%
@@ -3469,12 +3483,12 @@ width0pt\relax} \fi
 % then page number (#2) flushed to the right margin.  It is used for index
 % and table of contents entries.  The paragraph is indented by \leftskip.
 %
-% A straigtforward implementation would start like this:
+% A straightforward implementation would start like this:
 %	\def\entry#1#2{...
 % But this frozes the catcodes in the argument, and can cause problems to
-% @code, which set's active ``-''.  This problem was fixed by a kludge---
-% ``-'' was active throughout whole index, but this isn't what we really
-% want.
+% @code, which sets - active.  This problem was fixed by a kludge---
+% ``-'' was active throughout whole index, but this isn't really right.
+% 
 % The right solution is to prevent \entry from swallowing the whole text.
 %                                 --kasal, 21nov03
 \def\entry{%
@@ -4476,7 +4490,8 @@ width0pt\relax} \fi
 \def\unnsubsubsecentry#1#2#3#4{\dosubsubsecentry{#1}{#4}}
 
 % This parameter controls the indentation of the various levels.
-\newdimen\tocindent \tocindent = 2pc
+% Same as \defaultparindent.
+\newdimen\tocindent \tocindent = 15pt
 
 % Now for the actual typesetting. In all these, #1 is the text and #2 is the
 % page number.
@@ -5141,7 +5156,7 @@ width0pt\relax} \fi
 % \deffngeneral {subind}category name args
 %
 \def\deffngeneral#1#2 #3 #4\endheader{%
-  % Remember that \dosubin{fn}{xxx}{} is equivalent to \doind{fn}{xxx}.
+  % Remember that \dosubind{fn}{foo}{} is equivalent to \doind{fn}{foo}.
   \dosubind{fn}{\code{#3}}{#1}%
   \defname{#2}{}{#3}\magicamp\defunargs{#4\unskip}%
 }
@@ -5709,17 +5724,16 @@ width0pt\relax} \fi
 
 % \setref{NAME}{SNT} defines a cross-reference point NAME (a node or an
 % anchor), which consists of three parts:
-% 1) NAME-title - the current sectioning name, taken from \thissection;
-% 2) NAME-snt   - section number and type, defined as the SNT arg;
+% 1) NAME-title - the current sectioning name taken from \thissection,
+%                 or the anchor name.
+% 2) NAME-snt   - section number and type, passed as the SNT arg, or
+%                 empty for anchors.
 % 3) NAME-pg    - the page number.
-% This is called from \donoderef, \anchor, and \dofloat.
 % 
-% We take care not to fully expand the title, since it may contain
-% arbitrary macros.
-%
-% Use \turnoffactive so that punctuation chars such as underscore
-% and backslash work in node names.
-%
+% This is called from \donoderef, \anchor, and \dofloat.  In the case of
+% floats, there is an additional part, which is not written here:
+% 4) NAME-lof   - the text as it should appear in a @listoffloats.
+% 
 \def\setref#1#2{%
   \pdfmkdest{#1}%
   \iflinks
@@ -5802,9 +5816,9 @@ width0pt\relax} \fi
     \turnoffactive
     \otherbackslash
     \expandafter\global\expandafter\let\expandafter\Xthisreftitle
-      \csname X#1-title\endcsname
+      \csname XR#1-title\endcsname
   }%
-  \ifx \Xthisreftitle \floatmagic
+  \iffloat\Xthisreftitle
     % If the user specified the print name (third arg) to the ref,
     % print it instead of our usual "Figure 1.2".
     \ifdim\wd0 = 0pt
@@ -5897,7 +5911,7 @@ width0pt\relax} \fi
     \indexnofonts
     \otherbackslash
     \expandafter\global\expandafter\let\expandafter\thisrefX
-      \csname X#1\endcsname
+      \csname XR#1\endcsname
   }%
   \ifx\thisrefX\relax
     % If not defined, say something at least.
@@ -5919,9 +5933,32 @@ width0pt\relax} \fi
   #2% Output the suffix in any case.
 }
 
-% This is the macro invoked by entries in the aux file.
+% This is the macro invoked by entries in the aux file.  Usually it's
+% just a \def (we prepend XR to the control sequence name to avoid
+% collisions).  But if this is a float type, we have more work to do.
 %
-\def\xrdef#1{\expandafter\gdef\csname X#1\endcsname}
+\def\xrdef#1#2{%
+  \expandafter\gdef\csname XR#1\endcsname{#2}% remember this xref value.
+  %
+  % Was that xref control sequence that we just defined for a float?
+  \expandafter\iffloat\csname XR#1\endcsname
+    % it was a float, and we have the (safe) float type in \iffloattype.
+    \expandafter\let\expandafter\floatlist
+      \csname floatlist\iffloattype\endcsname
+    % 
+    % Is this the first time we've seen this float type?
+    \expandafter\ifx\floatlist\relax
+      \toks0 = {\do}% yes, so just \do
+    \else
+      % had it before, so preserve previous elements in list.
+      \toks0 = \expandafter{\floatlist\do}%
+    \fi
+    %
+    % Remember this xref in the control sequence \floatlistFLOATTYPE,
+    % for later use in \listoffloats.
+    \expandafter\xdef\csname floatlist\iffloattype\endcsname{\the\toks0{#1}}%
+  \fi
+}
 
 % Read the last existing aux file, if any.  No error if none exists.
 % 
@@ -6277,9 +6314,10 @@ width0pt\relax} \fi
 	  % This magic value for \thissection is output by \setref as the
 	  % XREFLABEL-title value.  \xrefX uses it to distinguish float
 	  % labels (which have a completely different output format) from
-	  % node and anchor labels.
+	  % node and anchor labels.  And \xrdef uses it to construct the
+	  % lists of floats.
 	  % 
-	  \let\thissection=\floatmagic
+	  \edef\thissection{\floatmagic=\safefloattype}%
 	  \setref{\floatlabel}{Yfloat}%
 	}%
       \fi
@@ -6287,9 +6325,9 @@ width0pt\relax} \fi
 }
 
 % we have four possibilities:
-% @float Foo & @caption{Cap}: Foo 1.1: Cap
-% @float Foo & no caption:    Foo 1.1
-% @float & @caption{Cap}:     Cap
+% @float Foo,lbl & @caption{Cap}: Foo 1.1: Cap
+% @float Foo,lbl & no caption:    Foo 1.1
+% @float & @caption{Cap}:         Cap
 % @float & no caption:
 %
 \def\Efloat{%
@@ -6299,11 +6337,30 @@ width0pt\relax} \fi
       \vskip.5\parskip  % space above caption
       %
       % Print the float number preceded by the chapter-level number
-      % (empty in the case of unnumbered).  Although there are other
-      % styles of float numbering, we hardwire this one.
-      \floattype\space\chaplevelprefix\the\floatno
+      % (empty in the case of unnumbered), as in "Figure 1.1".  Although
+      % there are other styles of float numbering, we hardwire this one.
+      \def\floatident{\floattype\tie\chaplevelprefix\the\floatno}%
+      \floatident
       \let\printedsomething = t%
-    \fi
+      %
+      % Write the text that goes in the list of floats to the aux file
+      % as \floatlabel-lof.  Besides the float ident, we include the
+      % short caption if specified, else the full caption if specified,
+      % else nothing.
+      {%
+        \atdummies \turnoffactive \otherbackslash
+        \immediate\write\auxfile{@xrdef{\floatlabel-lof}{%
+          \floatident
+          \ifx\thisshortcaption\empty
+            \ifx\thiscaption\empty \else
+              : \thiscaption
+            \fi
+          \else
+            : \thisshortcaption
+          \fi
+        }}%
+      }%
+    \fi % end have xref label for this float
     %
     \ifx\thiscaption\empty \else
       \ifx\printedsomething\empty
@@ -6319,7 +6376,6 @@ width0pt\relax} \fi
     %
     % Space below caption, if we printed anything.
     \ifx\printedsomething\empty \else \vskip\parskip \fi
-    %
   \egroup  % end of \vtop
   \checkinserts
 }
@@ -6347,16 +6403,67 @@ width0pt\relax} \fi
 % to the FLOATLABEL to expand to "Figure 3.1".  We call \setref when we
 % first read the @float command.
 % 
-\def\Yfloat{\floattype @tie{}\chaplevelprefix\the\floatno}%
+\def\Yfloat{\floattype@tie \chaplevelprefix\the\floatno}%
 
 % Magic string used for the XREFLABEL-title value, so \xrefX can
 % distinguish floats from other xref types.
 \def\floatmagic{!!float!!}
 
-% @listoffloats FLOATTYPE - print a list of floats like a table of contents.
-\parseargdef\listoffloats{%xx
+% #1 is the control sequence we are passed; we expand into a conditional
+% which is true if #1 represents a float ref.  That is, the magic
+% \thissection value which we \setref above.
+% 
+\def\iffloat#1{\expandafter\doiffloat#1==\finish}
+%
+% #1 is (maybe) the \floatmagic string.  If so, #2 will be the
+% (safe) float type for this float.  We set \iffloattype to #2.
+% 
+\def\doiffloat#1=#2=#3\finish{%
+  \def\temp{#1}%
+  \def\iffloattype{#2}%
+  \ifx\temp\floatmagic
 }
 
+% @listoffloats FLOATTYPE - print a list of floats like a table of contents.
+% 
+\parseargdef\listoffloats{%
+  \def\floattype{#1}% floattype
+  {%
+    % the floattype might have accents or other special characters,
+    % but we need to use it in a control sequence name.
+    \indexnofonts
+    \turnoffactive
+    \xdef\safefloattype{\floattype}%
+  }%
+  %
+  % \xrdef saves the floats as a \do-list in \floatlistSAFEFLOATTYPE.
+  \expandafter\ifx\csname floatlist\safefloattype\endcsname \relax
+    \ifhavexrefs
+      % if the user said @listoffloats foo but never @float foo.
+      \message{\linenumber No `\safefloattype' floats to list.}%
+    \fi
+  \else
+    \begingroup
+      \leftskip=\tocindent  % indent these entries like a toc
+      \let\do=\listoffloatsdo
+      \csname floatlist\safefloattype\endcsname
+    \endgroup
+  \fi
+}
+
+% This is called on each entry in a list of floats.  We're passed the
+% xref label, in the form LABEL-title, which is how we save it in the
+% aux file.  We strip off the -title and look up \XRLABEL-lof, which
+% has the text we're supposed to typeset here.
+% 
+% Figures without xref labels will not be included in the list (since
+% they won't appear in the aux file).
+% 
+\def\listoffloatsdo#1{\listoffloatsdoentry#1\finish}
+\def\listoffloatsdoentry#1-title\finish{%
+  % use the same \entry we use for the TOC.
+  \entry{\csname XR#1-lof\endcsname}{\csname XR#1-pg\endcsname}%
+}
 
 \message{localization,}
 % and i18n.
@@ -6666,6 +6773,7 @@ should work if nowhere else does.}
 % \backslashcurfont outputs one backslash character in current font,
 % as in \char`\\.
 \global\chardef\backslashcurfont=`\\
+\global\let\rawbackslashxx=\backslashcurfont  % let existing .??s files work
 
 % \rawbackslash defines an active \ to do \backslashcurfont.
 % \otherbackslash defines an active \ to be a literal `\' character with
