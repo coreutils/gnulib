@@ -1,3 +1,8 @@
+2003-09-12  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/argmatch, modules/exitfail, modules/fatal, modules/obstack,
+	modules/xgethostname, modules/xalloc: Depend on exit.
+
 2003-09-09  Paul Eggert  <eggert@twinsun.com>
 
 	* README: New section: portability guidelines.

@@ -1,3 +1,66 @@
+2003-09-12  Paul Eggert  <eggert@twinsun.com>
+
+	* argmatch.c, fatal.c, xgethostname.c, xmalloc.c: Include exit.h.
+	* obstack.c [!defined _LIBC]: Likewise.
+	* argmatch.c (EXIT_FAILURE): Remove; now done by exit.h
+	* exitfail.c, fatal.c, xgethostname.c, xmalloc.c: Likewise.
+	* exitfail.c: Don't include stdlib.h; no longer needed.
+
+	More changes to assume C89 or better.
+
+	* error.c (error_tail): Assume vprintf.
+
+	* argmatch.c (getenv): Remove decl.
+	* progreloc.c (get_full_program_name): Define via prototype.
+	* setenv.c (clearenv): Likewise.
+	* stpncpy.c: Do not include <string.h> or <sys/types.h>; not
+	needed.
+	* strdup.c: Include <stdlib.h>, <string.h> unconditionally.
+	(malloc, memcpy): Remove decls.
+	* strftime.c (HAVE_LIMITS_H, STDC_HEADERS) [defined _LIBC]: Remove.
+	(HAVE_MEMCPY) [defined emacs && !defined HAVE_BCOPY]: Remove.
+	Include <limits.h>, <stddef.h>, <stdlib.h>, <string.h> unconditionally.
+	(memcpy): Remove macro.
+	(MEMCPY) [!defined COMPILE_WIDE]: Define to memcpy unconditionally.
+	(__P): Remove.  All uses removed.
+	(PTR): Remove.  All uses changed to void *.
+	(CHAR_BIT, NULL): Remove.
+	(spaces, zeros, memset_space, memset_zero)
+	[!defined memset && !defined HAVE_MEMSET && !defined _LIBC]:
+	Remove.
+	(LOCALE_PARAM, LOCALE_PARAM_DECL): Remove.
+	(memcpy_lowcase, memcpy_uppcase, tm_diff, iso_week_days):
+	Define with prototype.
+	Remove now-unnecessary prototype decl.
+	(extra_args_spec): Assume ANSI C.  All uses changed.
+	(extra_args_spec_iso): Remove.
+	(my_strftime, emacs_strftimeu): Define via prototype.
+	* strtod.c: Include <float.h>, <stdlib.h>, <string.h>
+	unconditionally.
+	(DBL_MAX, DBL_MIN, HUGE_VAL, NULL): Remove decls.
+	* strtoimax.c: Include <stdlib.h> unconditionally.
+	(strtoul, strtol): Remove decls.
+	* strtol.c (STDC_HEADERS, HAVE_LIMITS_H, NULL, ULONG_MAX,
+	LONG_MAX): Remove.
+	Include <limits.h>, <stddef.h>, <stdlib.h>, <string.h> unconditionally.
+	(LOCALE_PARAM_DECL): Remove.  All uses changed to LOCALE_PARAM_PROTO.
+	(LOCALE_PARAM_PROTO): New macro.
+	(INTERNAL, INTERNAL1, WEAKNAME): Assume ANSI C, not K&R.
+	(INTERNAL (strtol), strtol): Define with a prototype.
+	(PARAMS): Remove.  All uses removed.
+	* tempname.c: Include <string.h> unconditionally.
+	* userspec.c: Include <stdlib.h>, <string.h> unconditionally.
+	* xgethostname.c (main): Define with a prototype.
+	* xmalloc.c: Include "xalloc.h" first, to check interface.
+	Include <stdlib.h> unconditionally.
+	(calloc, malloc, realloc, free): Remove decls.
+	* xstrtod.c: Include "xstrtod.h" first, to check interface.
+	Include <stdlib.h> unconditionally.  Sort include file names.
+	(strtod): Remove.
+	(xstrtod): Define with a prototype.
+	* xstrtol.c: Include <stdlib.h>, <string.h> unconditionally.
+	(strtol, strtoul): Remove decls.
+
 2003-09-11  Paul Eggert  <eggert@twinsun.com>
 
 	* strndup.c: Don't include <stdio.h>, <sys/types.h>.
@@ -5,7 +68,7 @@
 	Remove now-unnecessary cast to char *.
 	* strnlen.c: Include <string.h> unconditionally.
 	* yesno.c (yesno): Define with a prototype.
-	
+
 2003-09-10  Bruno Haible  <bruno@clisp.org>
 
 	* strcspn.c: Include <string.h> unconditionally.

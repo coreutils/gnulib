@@ -1,9 +1,52 @@
+2003-09-12  Paul Eggert  <eggert@twinsun.com>
+
+	* error.m4: Require AC_FUNC_STRERROR_R rather than invoking it.
+
+	* extensions.m4 (gl_USE_SYSTEM_EXTENSIONS): Require AC_AIX
+	and AC_MINIX, too, so that their extensions are available.
+
+	* prereq.m4 (jm_PREREQ_ADDEXT): Remove.  All uses removed.
+	This macro has been superseded by gl_BACKUPFILE.
+
+	More patches to assume C89 or better.
+
+	* error.m4 (gl_ERROR): Don't check for vprintf.
+
+	* check-decl.m4 (jm_CHECK_DECLS): Include <string.h>, <stdlib.h>
+	unconditionally.
+	* closeout.m4 (gl_CLOSEOUT): Don't check for stdlib.h.
+	* gettimeofday.m4 (AC_FUNC_GETTIMEOFDAY_CLOBBER):
+	Include <string.h>, <stdlib.h> unconditionally.
+	* lstat.m4 (gl_PREREQ_LSTAT): Don't check for stdlib.h, free.
+	* readdir.m4 (GL_FUNC_READDIR): Don't check for string.h.
+	* readutmp.m4 (gl_PREREQ_READUTMP): Don't check for standard C headers
+	or for string.h.
+	* strtoumax.m4 (gl_PREREQ_STRTOUMAX): Don't check for stdlb.h
+	or strtoul.
+
+	* mkstemp.m4 (jm_PREREQ_TEMPNAME): Do not require standard C headers.
+	* strdup.m4 (gl_PREREQ_STRDUP): Likewise.
+	* userspec.m4 (gl_USERSPEC): Likewise.
+	* xalloc.m4 (gl_PREREQ_XMALLOC): Likewise.
+	* xstrtod.m4 (gl_XSTRTOD): Likewise.
+	* xstrtol.m4 (gl_PREREQ_XSTRTOL): Likewise.
+	* strftime.m4 (_jm_STRFTIME_PREREQS): Don't check for limits.h,
+	memcpy, memset.
+	(jm_FUNC_GNU_STRFTIME): Don't require standard C headers.
+	* strtod.m4 (gl_FUNC_STRTOD): Do not check for float.h.
+	* strtoimax.m4 (gl_PREREQ_STRTOIMAX): Do not check for stdlib.h, strtol.
+	* strtol.m4 (gl_FUNC_STRTOL): Do not check for limits.h.
+	* userspec.m4 (gl_USERSPEC): Do not check for string.h.
+	* xstrtol.m4 (gl_PREREQ_XSTRTOL): Do not check for string.h, strtol,
+	strtoul.
+
 2003-09-11  Paul Eggert  <eggert@twinsun.com>
 
+	More patches to assume C89 or better.
 	* strndup.m4 (gl_PREREQ_STRNDUP): Remove STDC_HEADERS check.
 	* strnlen.m4 (gl_PREREQ_STRNLEN): Don't check for memory.h,
 	string.h, memchr, STDC_HEADERS.
-	
+
 2003-09-10  Bruno Haible  <bruno@clisp.org>
 
 	* strcspn.m4 (gl_PREREQ_STRCSPN): Remove <string.h> check.
@@ -17,6 +60,7 @@
 
 2003-09-09  Paul Eggert  <eggert@twinsun.com>
 
+	More patches to assume C89 or better.
 	* getcwd.m4 (AC_FUNC_GETCWD_NULL): Don't check for stdlib.h.
 	* getopt.m4 (gl_GETOPT): Don't check for string.h.
 	* getugroups.m4 (gl_GETUGROUPS): Do not check for standard C headers
@@ -65,7 +109,7 @@
 	* savedir.m4 (gl_SAVEDIR): Don't check for standard C headers.
 	* strchrnul.m4 (gl_PREREQ_STRCHRNUL): Don't check for string.h.
 	* xgetcwd.m4 (gl_XGETCWD): Don't check for stdlib.h.
-	
+
 2003-09-09  Derek Robert Price  <derek@ximbiot.com>
 
 	* getndelim2.m4 (gl_PREREQ_GETNDELIM2): Assume stdlib.h per the
