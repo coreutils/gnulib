@@ -9,7 +9,7 @@
 @cindex standards for makefiles
 
 @c Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 2000, 2001,
-@c 2004, 2005 Free @c Software Foundation, Inc.
+@c 2004, 2005 Free Software Foundation, Inc.
 
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.1
@@ -525,7 +525,8 @@ AC_SUBST(lispdir)
 The directory for installing locale-specific message catalogs for this
 package.  By default, it should be @file{/usr/local/share/locale}, but
 it should be written as @file{$(datarootdir)/locale}.  (If you are
-using Autoconf, write it as @samp{@@localedir@@}.)
+using Autoconf, write it as @samp{@@localedir@@}.)  This directory
+usually has a subdirectory per locale.
 @end table
 
 Unix-style man pages are installed in one of the following:
