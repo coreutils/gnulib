@@ -8,8 +8,8 @@
 @cindex conventions for makefiles
 @cindex standards for makefiles
 
-@c Copyright 1992, 1993, 1994, 1995, 1996, 1997, 1998, 2000, 2001 Free
-@c Software Foundation, Inc.
+@c Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 2000, 2001,
+@c 2004, 2005 Free @c Software Foundation, Inc.
 
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.1
@@ -1023,10 +1023,12 @@ execute the pre-installation and post-installation commands.
 
 Programs to build binary packages work by extracting the
 pre-installation and post-installation commands.  Here is one way of
-extracting the pre-installation commands:
+extracting the pre-installation commands (the @option{-s} option to
+@command{make} is needed to silence messages about entering
+subdirectories):
 
 @smallexample
-make -n install -o all \
+make -s -n install -o all \
       PRE_INSTALL=pre-install \
       POST_INSTALL=post-install \
       NORMAL_INSTALL=normal-install \
@@ -1037,10 +1039,7 @@ make -n install -o all \
 where the file @file{pre-install.awk} could contain this:
 
 @smallexample
-$0 ~ /^\t[ \t]*(normal_install|post_install)[ \t]*$/ @{on = 0@}
+$0 ~ /^(normal-install|post-install)[ \t]*$/ @{on = 0@}
 on @{print $0@}
-$0 ~ /^\t[ \t]*pre_install[ \t]*$/ @{on = 1@}
+$0 ~ /^pre-install[ \t]*$/ @{on = 1@}
 @end smallexample
-
-The resulting file of pre-installation commands is executed as a shell
-script as part of installing the binary package.
