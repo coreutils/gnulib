@@ -12,6 +12,7 @@ quotearg
 quote
 unlocked-io
 exit
+exitfail
 
 configure.ac:
 

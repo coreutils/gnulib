@@ -1,7 +1,8 @@
 /* obstack.c - subroutines used implicitly by object stack macros
 
    Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1996, 1997,
-   1998, 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
+   1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software Foundation,
+   Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,9 +23,9 @@
 #endif
 
 #ifdef _LIBC
-#include <obstack.h>
+# include <obstack.h>
 #else
-#include "obstack.h"
+# include "obstack.h"
 #endif
 
 /* NOTE BEFORE MODIFYING THIS FILE: This version number must be
@@ -86,10 +87,12 @@ void (*obstack_alloc_failed_handler) (void) = print_and_abort;
 
 /* Exit value used when `print_and_abort' is used.  */
 # include <stdlib.h>
-# ifndef _LIBC
-#  include "exit.h"
-# endif
+# ifdef _LIBC
 int obstack_exit_failure = EXIT_FAILURE;
+# else
+#  include "exitfail.h"
+#  define obstack_exit_failure exit_failure
+# endif
 
 /* The non-GNU-C macros copy the obstack into this global variable
    to avoid multiple evaluation.  */
@@ -286,9 +289,9 @@ _obstack_newchunk (struct obstack *h, int length)
   /* The new chunk certainly contains no empty object yet.  */
   h->maybe_empty_object = 0;
 }
-#ifdef _LIBC
+# ifdef _LIBC
 libc_hidden_def (_obstack_newchunk)
-#endif
+# endif
 
 /* Return nonzero if object OBJ has been allocated from obstack H.
    This is here for debugging.
@@ -351,11 +354,11 @@ obstack_free (struct obstack *h, void *obj)
     abort ();
 }
 
-#ifdef _LIBC
+# ifdef _LIBC
 /* Older versions of libc used a function _obstack_free intended to be
    called by non-GCC compilers.  */
 strong_alias (obstack_free, _obstack_free)
-#endif
+# endif
 
 int
 _obstack_memory_used (struct obstack *h)

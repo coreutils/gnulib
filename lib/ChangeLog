@@ -1,3 +1,23 @@
+2004-01-23  Paul Eggert  <eggert@twinsun.com>
+
+	Exit-status fix from coreutils.
+
+	Use exit_failure consistently in place of EXIT_FAILURE,
+	so that program exit statuses are consistent on failure.
+
+	* argmatch.c (ARGMATCH_DIE) [! defined ARGMATCH_DIE]:
+	Include "exitfail.h", and use exit_failure rather than EXIT_FAILURE.
+	* argmatch.h: Comment fix to match the above.
+	* obstack.c (obstack_exit_failure) [!defined _LIBC]:
+	Now a macro referring to exit_failure, instead of a separate
+	variable.  Include "exitfail.h" to get it.
+	* xstrtol.h: Include "exitfail.h".
+	(STRTOL_FATAL_ERROR): Exit with status exit_failure, not 2.
+
+	* long-options.c (parse_long_options): Use prototype
+	for usage function arg.  Pass it EXIT_SUCCESS rather than 0,
+	for clarity.
+
 2004-01-21  Jim Meyering  <jim@meyering.net>
 
 	* mktime.c (__mktime_internal) [!_LIBC]: Define to mktime_internal
@@ -5,6 +25,23 @@
 	function in GNU libc.
 	* timegm.c (__mktime_internal) [!_LIBC]: Likewise.
 	Problem building statically-linked `ls' reported by Michael Brunnbauer.
+
+2004-01-18  Paul Eggert  <eggert@twinsun.com>
+
+	Merge from diffutils.
+
+	* file-type.c (file_type): Add typed memory objects.
+	* file-type.h (S_TYPEISTMO): New macro.
+
+	* c-stack.h (c_stack_action): Remove argv argument.
+	* c-stack.c (c_stack_action): Likewise.  All uses changed.
+	(die): Don't calculate message unless segv_action returns.
+	(get_stack_location, min_address_from_argv, max_address_from_argv,
+	volatile stack_base, volatile_stack_size): Remove.
+	(segv_handler): If ! HAVE_XSI_STACK_OVERFLOW_HEURISTIC, assume
+	that every segmentation violation is a stack overflow.  (Ouch!)
+	See Debian bug 136249 (still outstanding) for more info about why
+	HAVE_XSI_STACK_OVERFLOW_HEURISTIC fails on Linux kernels.
 
 2003-11-30  Bruno Haible  <bruno@clisp.org>
 

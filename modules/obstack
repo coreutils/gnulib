@@ -9,6 +9,7 @@ m4/obstack.m4
 Depends-on:
 gettext
 exit
+exitfail
 
 configure.ac:
 gl_OBSTACK
