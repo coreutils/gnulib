@@ -1,5 +1,9 @@
+2005-03-22  Jim Meyering  <jim@meyering.net>
+
+	* stat-macros.m4 (gl_STAT_MACROS): New file/macro.
+
 2005-03-21  Jim Meyering  <jim@meyering.net>
-       and  Paul Eggert  <eggert@cs.ucla.edu>
+	and  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* acl.m4, backupfile.m4, c-strtod.m4, canon-host.m4, canonicalize.m4,
 	cloexec.m4, closeout.m4, dirfd.m4, dirname.m4, exclude.m4,
@@ -666,7 +670,7 @@
 	* cloexec.m4: New file.
 
 2004-03-18  Paul Eggert  <eggert@twinsun.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* mbswidth.m4 (gl_MBSWIDTH): Also test whether <wchar.h> declares
 	mbswidth.
