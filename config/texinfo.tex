@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-06-17.17}
+\def\texinfoversion{2004-06-27.16}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -2265,17 +2265,13 @@ where each line of input produces a line of output.}
     % \parskip glue -- logically it's part of the @item we just started.
     \nobreak \vskip-\parskip
     %
-    % Stop a page break at the \parskip glue coming up.  (Unfortunately
-    % we can't prevent a possible page break at the following
-    % \baselineskip glue.)  However, if what follows is an environment
-    % such as @example, there will be no \parskip glue; then
-    % the negative vskip we just would cause the example and the item to
-    % crash together.  So we use this bizarre value of 10001 as a signal
-    % to \aboveenvbreak to insert \parskip glue after all.
-    % (Possibly there are other commands that could be followed by
-    % @example which need the same treatment, but not section titles; or
-    % maybe section titles are the only special case and they should be
-    % penalty 10001...)
+    % Stop a page break at the \parskip glue coming up.  However, if
+    % what follows is an environment such as @example, there will be no
+    % \parskip glue; then the negative vskip we just inserted would
+    % cause the example and the item to crash together.  So we use this
+    % bizarre value of 10001 as a signal to \aboveenvbreak to insert
+    % \parskip glue after all.  Section titles are handled this way also.
+    % 
     \penalty 10001
     \endgroup
     \itemxneedsnegativevskipfalse
@@ -3408,17 +3404,18 @@ width0pt\relax} \fi
   \dosubindwrite
   %
   \ifx\lastskipmacro\zeroskipmacro
-    % if \lastskip was zero, perhaps the last item was a
-    % penalty, and perhaps it was >=10000, e.g., a \nobreak.
-    % In that case, we want to re-insert the penalty; since we
-    % just inserted a non-discardable item, any following glue
-    % (such as a \parskip) would be a breakpoint.  For example:
+    % If \lastskip was zero, perhaps the last item was a penalty, and
+    % perhaps it was >=10000, e.g., a \nobreak.  In that case, we want
+    % to re-insert the same penalty (values >10000 are used for various
+    % signals); since we just inserted a non-discardable item, any
+    % following glue (such as a \parskip) would be a breakpoint.  For example:
+    % 
     %   @deffn deffn-whatever
     %   @vindex index-whatever
     %   Description.
     % would allow a break between the index-whatever whatsit
     % and the "Description." paragraph.
-    \ifnum\count255>9999 \nobreak \fi
+    \ifnum\count255>9999 \penalty\count255 \fi
   \else
     % On the other hand, if we had a nonzero \lastskip,
     % this make-up glue would be preceded by a non-discardable item
@@ -4350,14 +4347,14 @@ width0pt\relax} \fi
   % glue accumulate.  (Not a breakpoint because it's preceded by a
   % discardable item.)
   \vskip-\parskip
-  %
-  % This \nobreak is purely so the last item on the list is a \penalty
-  % of 10000.  This is so other code, for instance \parsebodycommon, can
-  % check for and avoid allowing breakpoints.  Otherwise, it would
-  % insert a valid breakpoint between:
+  % 
+  % This is purely so the last item on the list is a known \penalty >
+  % 10000.  This is so \startdefun can avoid allowing breakpoints after
+  % section headings.  Otherwise, it would insert a valid breakpoint between:
+  % 
   %   @section sec-whatever
   %   @deffn def-whatever
-  \nobreak
+  \penalty 10001
 }
 
 
@@ -4702,7 +4699,8 @@ width0pt\relax} \fi
 % start of the next paragraph will insert \parskip.
 %
 \def\aboveenvbreak{{%
-  % =10000 instead of <10000 because of a special case in \itemzzz, q.v.
+  % =10000 instead of <10000 because of a special case in \itemzzz and
+  % \sectionheading, q.v.
   \ifnum \lastpenalty=10000 \else
     \advance\envskipamount by \parskip
     \endgraf
@@ -5146,10 +5144,11 @@ width0pt\relax} \fi
     % If there are two @def commands in a row, we'll have a \nobreak,
     % which is there to keep the function description together with its
     % header.  But if there's nothing but headers, we need to allow a
-    % break somewhere.  Check for penalty 10002 (inserted by
-    % \defargscommonending) instead of 10000, since the sectioning
-    % commands insert a \penalty10000, and we don't want to allow a break
-    % between a section heading and a defun.
+    % break somewhere.  Check specifically for penalty 10002, inserted
+    % by \defargscommonending, instead of 10000, since the sectioning
+    % commands also insert a nobreak penalty, and we don't want to allow
+    % a break between a section heading and a defun.
+    % 
     \ifnum\lastpenalty=10002 \penalty2000 \fi
     %
     % Similarly, after a section heading, do not allow a break.
