@@ -1,3 +1,7 @@
+2003-06-26    <karl@gnu.org>
+
+	* depcomp: update from automake.
+
 2003-06-22    <karl@gnu.org>
 
 	* srclist.txt: update mkinstalldirs from automake.
