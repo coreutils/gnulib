@@ -1,4 +1,4 @@
-#serial 13
+#serial 14
 
 dnl Initially derived from code in GNU grep.
 dnl Mostly written by Jim Meyering.
@@ -27,6 +27,7 @@ AC_DEFUN([jm_INCLUDED_REGEX],
 		   jm_cv_func_working_re_compile_pattern,
       AC_TRY_RUN(
 [#include <stdio.h>
+#include <string.h>
 #include <regex.h>
 	  int
 	  main ()
@@ -35,12 +36,14 @@ AC_DEFUN([jm_INCLUDED_REGEX],
 	    const char *s;
 	    struct re_registers regs;
 	    re_set_syntax (RE_SYNTAX_POSIX_EGREP);
+	    memset (&regex, 0, sizeof (regex));
 	    [s = re_compile_pattern ("a[[:@:>@:]]b\n", 9, &regex);]
 	    /* This should fail with _Invalid character class name_ error.  */
 	    if (!s)
 	      exit (1);
 
 	    /* This should succeed, but doesn't for e.g. glibc-2.1.3.  */
+	    memset (&regex, 0, sizeof (regex));
 	    s = re_compile_pattern ("{1", 2, &regex);
 
 	    if (s)
@@ -48,6 +51,7 @@ AC_DEFUN([jm_INCLUDED_REGEX],
 
 	    /* The following example is derived from a problem report
                against gawk from Jorge Stolfi <stolfi@ic.unicamp.br>.  */
+	    memset (&regex, 0, sizeof (regex));
 	    s = re_compile_pattern ("[[anù]]*n", 7, &regex);
 	    if (s)
 	      exit (1);
