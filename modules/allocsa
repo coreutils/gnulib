@@ -1,0 +1,25 @@
+Description:
+Safe automatic memory allocation.
+
+Files:
+lib/allocsa.h
+lib/allocsa.c
+m4/allocsa.m4
+m4/eealloc.m4
+m4/longlong.m4
+m4/longdouble.m4
+
+Depends-on:
+alloca
+
+configure.ac:
+gl_ALLOCSA
+
+Makefile.am:
+lib_SOURCES += allocsa.h allocsa.c
+
+Include:
+#include <allocsa.h>
+
+Maintainer:
+Bruno Haible

@@ -1,5 +1,9 @@
 2003-11-24  Bruno Haible  <bruno@clisp.org>
 
+	* allocsa.m4: New file, from GNU gettext.
+
+2003-11-24  Bruno Haible  <bruno@clisp.org>
+
 	* eealloc.m4: New file, from GNU gettext.
 
 2004-01-15  Paul Eggert  <eggert@twinsun.com>

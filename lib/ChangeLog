@@ -1,5 +1,10 @@
 2003-11-24  Bruno Haible  <bruno@clisp.org>
 
+	* allocsa.h: New file, from GNU gettext.
+	* allocsa.c: New file, from GNU gettext.
+
+2003-11-24  Bruno Haible  <bruno@clisp.org>
+
 	* eealloc.h: New file.
 
 2004-01-15  Jim Meyering  <jim@meyering.net>
