@@ -1,3 +1,12 @@
+2003-10-29  Paul Eggert  <eggert@twinsun.com>
+
+	* getgroups.c (getgroups): Don't use xrealloc, since we don't need
+	the buffer preserved.  Use free and xmalloc instead.
+	* quotearg.c (quotearg_n_options): Likewise.
+	Use a simpler test for size overflow.  Don't use xalloc_oversized
+	because unsigned int might be wider than size_t (!); this suggests
+	that we should switch from unsigned int to size_t for slot numbers.
+	
 2003-10-27  Bruno Haible  <bruno@clisp.org>
 
 	* stdbool_.h: Better support for BeOS.
