@@ -1,3 +1,9 @@
+2003-08-26  Bruno Haible  <bruno@clisp.org>
+
+	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Remove AC_DEFINE of fnmatch here.
+	This avoids havoc on compilers for which '#define fnmatch rpl_fnmatch'
+	followed by '#define fnmatch fnmatch_posix' gives an error.
+
 2003-08-27  Jim Meyering  <jim@meyering.net>
 
 	* mkstemp.m4: Require that the system mkstemp be able to create
