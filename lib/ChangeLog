@@ -1,3 +1,8 @@
+2002-12-23  Bruno Haible  <bruno@clisp.org>
+
+	* memcoll.c (STRCOLL): New macro.
+	(memcoll): Use it.
+
 2002-12-22  Bruno Haible  <bruno@clisp.org>
 
 	* getstr.h (getstr): Define, to avoid clash with libcurses.

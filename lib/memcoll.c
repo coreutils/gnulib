@@ -32,6 +32,13 @@ extern int errno;
 # include <string.h>
 #endif
 
+/* Use strcoll() only if it really works.  */
+#if HAVE_STRCOLL
+# define STRCOLL strcoll
+#else
+# define STRCOLL strcmp
+#endif
+
 /* Compare S1 (with length S1LEN) and S2 (with length S2LEN) according
    to the LC_COLLATE locale.  S1 and S2 do not overlap, and are not
    adjacent.  Temporarily modify the bytes after S1 and S2, but
@@ -47,7 +54,7 @@ memcoll (char *s1, size_t s1len, char *s2, size_t s2len)
   s1[s1len++] = '\0';
   s2[s2len++] = '\0';
 
-  while (! (errno = 0, (diff = strcoll (s1, s2)) || errno))
+  while (! (errno = 0, (diff = STRCOLL (s1, s2)) || errno))
     {
       /* strcoll found no difference, but perhaps it was fooled by NUL
 	 characters in the data.  Work around this problem by advancing
