@@ -1,5 +1,5 @@
 # canon-host.m4 serial 1
-dnl Copyright (C) 2002 Free Software Foundation, Inc.
+dnl Copyright (C) 2002, 2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -13,10 +13,10 @@ AC_DEFUN([gl_CANON_HOST],
   AC_CHECK_HEADERS(netdb.h sys/socket.h netinet/in.h arpa/inet.h)
 
   dnl Add any libraries as early as possible.
-  dnl In particular, inet_ntoa needs -lnsl at least on Solaris5.5.1,
+  dnl In particular, inet_ntoa needs -lnsl at least on Solaris 2.5.1,
   dnl so we have to add -lnsl to LIBS before checking for that function.
   AC_SEARCH_LIBS(gethostbyname, [inet nsl])
 
-  dnl These come from -lnsl on Solaris5.5.1.
+  dnl These come from -lnsl on Solaris 2.5.1.
   AC_CHECK_FUNCS(gethostbyname gethostbyaddr inet_ntoa)
 ])

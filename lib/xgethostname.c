@@ -1,5 +1,5 @@
 /* xgethostname.c -- return current hostname with unlimited length
-   Copyright (C) 1992, 1996, 2000, 2001 Free Software Foundation, Inc.
+   Copyright (C) 1992, 1996, 2000, 2001, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ xgethostname ()
 
   size = INITIAL_HOSTNAME_LENGTH;
   /* Use size + 1 here rather than size to work around the bug
-     in SunOS5.5's gethostname whereby it NUL-terminates HOSTNAME
+     in SunOS 5.5's gethostname whereby it NUL-terminates HOSTNAME
      even when the name is longer than the supplied buffer.  */
   hostname = xmalloc (size + 1);
   while (1)
