@@ -825,7 +825,7 @@ EOF
 	echo cris-axis-linux-gnu
 	exit 0 ;;
     crisv32:Linux:*:*)
-    	echo crisv32-axis-linux-gnu
+	echo crisv32-axis-linux-gnu
 	exit 0 ;;
     ia64:Linux:*:*)
 	echo ${UNAME_MACHINE}-unknown-linux-gnu
