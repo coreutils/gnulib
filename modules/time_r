@@ -8,6 +8,7 @@ m4/time_r.m4
 
 Depends-on:
 extensions
+restrict
 
 configure.ac:
 gl_TIME_R

@@ -59,11 +59,11 @@ ctime_r (time_t const *t, char *buf)
 struct tm *
 gmtime_r (time_t const * restrict t, struct tm * restrict tp)
 {
-  return copy_tm_result (gmtime (t));
+  return copy_tm_result (tp, gmtime (t));
 }
 
 struct tm *
 localtime_r (time_t const * restrict t, struct tm * restrict tp)
 {
-  return copy_tm_result (localtime (t));
+  return copy_tm_result (tp, localtime (t));
 }

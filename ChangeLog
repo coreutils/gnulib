@@ -1,3 +1,8 @@
+2003-09-07  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/time_r: Depend on 'restrict'.  Fix from Simon Josefsson in
+	<http://mail.gnu.org/archive/html/bug-gnulib/2003-09/msg00028.html>.
+
 2003-09-06  Paul Eggert  <eggert@twinsun.com>
 
 	* MODULES.html.sh (func_all_modules): Add time_r.

@@ -1,3 +1,9 @@
+2003-09-07  Paul Eggert  <eggert@twinsun.com>
+
+	* time_r.c (gmtime_r, localtime_r): Fix silly typo: missing arg to
+	copy_tm_result.  Bug reported by Simon Josefsson in
+	<http://mail.gnu.org/archive/html/bug-gnulib/2003-09/msg00028.html>.
+
 2003-09-06  Paul Eggert  <eggert@twinsun.com>
 
 	* time_r.c, time_r.h: New files.
