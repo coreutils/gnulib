@@ -1,3 +1,15 @@
+2005-01-04  Jim Meyering  <jim@meyering.net>
+
+	Changes imported from coreutils.
+	* mkstemp.m4 (gl_FUNC_MKSTEMP): Rather than using "conftestXXXXXX"
+	as the mkstemp template, use a temporary directory and an
+	8.3-friendly template to avoid trouble on systems like DJGPP.
+	Reported by Juan M. Guerrero via Stepan Kasal.
+	* (gl_FUNC_MKSTEMP): Include <unistd.h> for the declaration of close.
+	Remove the temporary directory right away, rather than waiting
+	for configure's at-exit trap code to do it.
+	Suggestion from Stepan Kasal.
+
 2004-12-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* c-strtod.m4 (gl_C99_STRTOLD): New macro.
