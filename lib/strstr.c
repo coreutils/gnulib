@@ -1,4 +1,4 @@
-/* Copyright (C) 1994, 1999 Free Software Foundation, Inc.
+/* Copyright (C) 1994, 1999, 2002 Free Software Foundation, Inc.
 This file is part of the GNU C Library.
 
 This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 #if defined _LIBC || defined HAVE_STRING_H
 # include <string.h>
 #endif
-#include <sys/types.h>
 
 typedef unsigned chartype;
 
