@@ -2,6 +2,8 @@
 # include <config.h>
 #endif
 
+/* FIXME: define EXIT_FAILURE */
+
 #include <stdio.h>
 
 #if HAVE_VPRINTF || HAVE_DOPRNT || _LIBC
@@ -33,6 +35,7 @@ extern char *program_name;
 #endif
 
 #include "fatal.h"
+#include "unlocked-io.h"
 
 /* Like error, but always exit with EXIT_FAILURE.  */
 
