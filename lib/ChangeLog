@@ -1,3 +1,12 @@
+2003-09-03  Paul Eggert  <eggert@twinsun.com>
+
+	* getdate.y (relative_time_table): Use tDAY_UNIT for "tomorrow",
+	"yesterday", "today", and "now" rather than tMINUTE_UNIT.  Of
+	course with correspondingly smaller numbers for tomorrow and
+	yesterday.  From Tadayoshi Funaba.  Originally installed into
+	sh-utils on 1999-08-07, but the patch got lost (I guess during the
+	coreutils merge?).
+
 2003-08-31  Simon Josefsson  <jas@extundo.com>
 
 	* timegm.h: New file.
