@@ -37,12 +37,14 @@
 # undef O_TEXT
 #endif
 #if O_BINARY
-# if !(defined __EMX__ || defined __DJGPP__)
+# if !(defined __EMX__ || defined __DJGPP__ || defined __CYGWIN__)
 #  define setmode _setmode
 #  define fileno _fileno
 # endif
-# ifdef __DJGPP__
+# if defined __DJGPP__ || defined __CYGWIN__
 #  include <io.h> /* declares setmode() */
+# endif
+# ifdef __DJGPP__
 #  include <unistd.h> /* declares isatty() */
 #  /* Avoid putting stdin/stdout in binary mode if it is connected to the
 #     console, because that would make it impossible for the user to
