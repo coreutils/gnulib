@@ -38,6 +38,21 @@ name), we should be able to include it.
 If your functions define completely new but rarely used functionality,
 you should probably consider packaging it as a separate library.
 
+License
+-------
+
+GNULib contain code both under GPL and LGPL.  Because several packages
+that use GNULib are GPL, the files state they are licensed under GPL.
+However, to support LGPL projects as well, you may use some of the
+files under LGPL.  The "License:" information in the files under
+modules/ clarify the real license that apply to source.
+
+Keep in mind that if you submit patches to files in GNULib, you should
+license them under a compatible license.  Which means that sometimes
+the contribution will have to be LGPL, if the original file is
+available under LGPL via a "License: LGPL" information in the
+projects' modules/ file.
+
 How to add a new module
 -----------------------
 
