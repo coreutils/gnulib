@@ -1,0 +1,21 @@
+Description:
+Read NUL-separated tokens from a stream.
+
+Files:
+lib/readtokens0.h
+lib/readtokens0.c
+
+Depends-on:
+obstack
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += readtokens0.h readtokens0.c
+
+Include:
+"readtokens0.h"
+
+Maintainer:
+Jim Meyering
+
