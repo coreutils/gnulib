@@ -1,3 +1,58 @@
+2003-07-07  Paul Eggert  <eggert@twinsun.com>
+
+	* mktime.c: Fix some boundary cases and remove need for floating point.
+
+	Issue a compile-time diagnostic if time_t is floating point, or if
+	two's complement arithmetic is not in effect, or if arithmetic
+	right shift does not propagate the sign.  These assumptions were
+	all in the original code but they weren't checked.
+
+	(TIME_T_MIDPOINT, verify): New macros.
+	(__isleap): Remove; it has integer overflow problems.
+	(leapyear): New function, without those problems.
+	(ydhms_tm_diff): Remove; splitting into two parts.
+	(ydhms_diff): New function, containing the arithmetic part of
+	the old ydhms_tm_diff function.  Issue a compile-time
+	diagnostic if we are not using C99 integer division.
+	Avoid casts when possible.
+	(guess_time_tm): New function, containing the checking part of
+	the old ydhms_tm_diff function.  Return the new value, rather than
+	the difference between it and the old.  Accept a new argument T
+	so that *T specifies the old value.  Check for overflow in the result.
+
+	(__mktime_internal): Use a time_t offset, not a long int offset.
+	This undoes the 2003-06-04 change, which is no longer needed now
+	that we have better overflow checking.
+	(localtime_offset): Likewise.
+	
+	(__mktime_internal): Avoid harmful overflow on hosts where time_t
+	and long are 64-bit but int is only 32-bit.
+	(ydhms_diff): Use long int to store year1 and yday1.
+	Issue a compile-time diagnostic if long int is not wide enough.
+
+	(__mktime_internal): Use long int to store adjusted year and yday.
+	Use plain C rather than preprocessor commands, if that doesn't
+	affect efficiency.
+	Check for overflow (and try to repair) after each probe
+	rather than checking only at the very end.  This avoids some bugs
+	(e.g., southern hemisphere, behind GMT, and GMT offset at minimum time
+	does not equal GMT offset at maximum time).
+	Use integer to check for overflow rather than floating point; this
+	is more portable to non-IEEE hosts, and is a tad faster.
+	When we detect that we are oscillating between two values,
+	don't check whether tm_isdst has the requested value, since
+	we already know the answer.  When tm_isdst has the wrong value,
+	use a different heuristic to find the right one, based on the
+	extreme values actually observed in practice in tz2003a,
+	rather than the (overly optimistic) "previous 3 calendar quarters".
+
+	(not_equal_tm, print_tm, check_result): Use "const T" rather than
+	"T const" to accommodate glibc style.
+	(check_result): Use less-confusing report format.  "long" -> "long int.
+	(main): Likewise.
+	Don't loop if the iteration overflows time_t.
+	Allow a negative step in the iteration.
+	
 2003-07-01  Paul Eggert  <eggert@twinsun.com>
 
 	* xreadlink.c: Include <sys/types.h> unconditionally, instead of
@@ -105,6 +160,11 @@
 	* posixtm.c: Include <stdbool.h> unconditionally.
 
 2003-06-05  Paul Eggert  <eggert@twinsun.com>
+
+	* mktime.c (__mktime_internal): When resolving a tm_isdst
+	mismatch, look in future quarters as well as past.  This fixes a
+	bug when processing fall-backwards gaps immediately after a long
+	period of daylight-saving time.
 
 	* mktime.c: Assume freestanding C89 or better.
 	(HAVE_LIMITS_H): Remove.  Assume it's 1.
