@@ -1,3 +1,8 @@
+2004-02-22  Bruno Haible  <bruno@clisp.org>
+
+	* modules/xalloc: Remove dependency on stdbool.
+	Reported by Derek Robert Price <derek@ximbiot.com>.
+
 2004-02-03  Bruno Haible  <bruno@clisp.org>
 
 	* modules/pipe: New file.

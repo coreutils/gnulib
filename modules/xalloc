@@ -13,7 +13,6 @@ realloc
 error
 gettext
 exitfail
-stdbool
 
 configure.ac:
 gl_XALLOC
