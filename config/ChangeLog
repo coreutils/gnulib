@@ -1,5 +1,8 @@
 2003-05-18    <karl@gnu.org>
 
+	* srclistvars.sh (TEXMF): use TEXMFROOT instead, since TEXMF might
+		actually be set by the user.
+
 	* depcomp, install-sh, mdate-sh: update from automake.
 
 2003-05-11    <karl@gnu.org>

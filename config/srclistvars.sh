@@ -1,4 +1,4 @@
-# $Id: srclistvars.sh,v 1.7 2002-11-25 22:24:53 karl Exp $
+# $Id: srclistvars.sh,v 1.8 2003-05-18 15:28:33 karl Exp $
 # Variables for srclist-update and srclist.txt.
 # Will change for each user.
 
@@ -13,4 +13,4 @@
 : ${GNUORG=$HOME/gnu/gnuorg}
 : ${LIBCSRC=$HOME/gnu/src/libc}
 : ${TEXINFOSRC=/u/texinfo/src}
-: ${TEXMF=/usr/local/texmf/texmf}
+: ${TEXMFROOT=/usr/local/texmf/texmf}
