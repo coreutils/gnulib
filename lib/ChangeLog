@@ -1,3 +1,7 @@
+2003-04-02  Bruno Haible  <bruno@clisp.org>
+
+	* binary-io.h: New file, from GNU gettext.
+
 2003-04-01  Bruno Haible  <bruno@clisp.org>
 
 	* pathname.h: New file, from GNU gettext.

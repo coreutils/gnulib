@@ -1753,7 +1753,7 @@ func_all_modules ()
   func_module safe-write
   func_module full-read
   func_module full-write
-  #func_module binary-io
+  func_module binary-io
   func_end_table
 
   element="File stream based Input/Output"
