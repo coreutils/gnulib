@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
@@ -171,6 +171,10 @@
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strcase">strcase</A>
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Case-insensitive string comparison functions.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strchrnul">strchrnul</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">strchrnul(): Find the first occurrence of C in S or the final NUL byte.
     </TR>
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strdup">strdup</A>
@@ -712,6 +716,10 @@ usually the host name including FQDN.
   <H3><A HREF="#posix_ext_misc">Misc</A></H3>
   <TABLE>
     <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=argp">argp</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Hierarchical processing of command line arguments.
+    </TR>
+    <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=exitfail">exitfail</A>
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Set exit status for fatal signal.
     </TR>
@@ -1139,6 +1147,13 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/strcase.h">strcase.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strcasecmp.c">strcasecmp.c</A><BR><A HREF="lib/strncasecmp.c">strncasecmp.c</A>
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strcase.m4">strcase.m4</A><BR>gl_STRCASE
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strchrnul"></A><A HREF="modules/strchrnul">strchrnul</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/strchrnul.h">strchrnul.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strchrnul.c">strchrnul.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strchrnul.m4">strchrnul.m4</A><BR>gl_FUNC_STRCHRNUL
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
@@ -2345,6 +2360,13 @@ variables.
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=argp"></A><A HREF="modules/argp">argp</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/argp.h">argp.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/argp-ba.c">argp-ba.c</A><BR><A HREF="lib/argp-eexst.c">argp-eexst.c</A><BR><A HREF="lib/argp-fmtstream.c">argp-fmtstream.c</A><BR><A HREF="lib/argp-fmtstream.h">argp-fmtstream.h</A><BR><A HREF="lib/argp-fs-xinl.c">argp-fs-xinl.c</A><BR><A HREF="lib/argp-help.c">argp-help.c</A><BR><A HREF="lib/argp-namefrob.h">argp-namefrob.h</A><BR><A HREF="lib/argp-parse.c">argp-parse.c</A><BR><A HREF="lib/argp-pv.c">argp-pv.c</A><BR><A HREF="lib/argp-pvh.c">argp-pvh.c</A><BR><A HREF="lib/argp-xinl.c">argp-xinl.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/argp.m4">argp.m4</A><BR>AC_FUNC_ARGP
+      <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>getopt
+    </TR>
+    <TR>
       <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=exitfail"></A><A HREF="modules/exitfail">exitfail</A>
       <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/exitfail.h">exitfail.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/exitfail.c">exitfail.c</A>
@@ -2471,5 +2493,5 @@ variables.
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on  7 June 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 11 June 2003.
 </HTML>
