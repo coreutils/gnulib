@@ -1,3 +1,11 @@
+2004-11-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* strftime.m4 (_gl_STRFTIME_PREREQS): Remove.  Move its body to
+	gl_FUNC_STRFTIME.
+	(gl_FUNC_STRFTIME): Use AC_CHECK_FUNCS_ONCE and AC_CHECK_HEADERS_ONCE
+	and AC_REQUIRE when possible, to avoid duplicate checks.
+	Check for <wchar.h>.
+
 2004-11-09  Bruno Haible  <bruno@clisp.org>
 
 	* sockpfaf.m4: New file.
