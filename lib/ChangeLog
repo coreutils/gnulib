@@ -1,3 +1,7 @@
+2002-11-23  Jim Meyering  <jim@meyering.net>
+
+	* fsusage.c: Remove unneeded parentheses around operands of `defined'.
+
 2002-11-22  Paul Eggert  <eggert@twinsun.com>
 
 	* hash.c: Avoid use of <assert.h>, as the GNU Coding Standards
