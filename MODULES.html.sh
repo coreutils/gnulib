@@ -1456,6 +1456,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module xsize
   func_module xalloc
   func_module alloca
   func_end_table
