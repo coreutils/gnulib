@@ -6,7 +6,7 @@ lib/getline.c
 m4/getline.m4
 
 Depends-on:
-getstr
+unlocked-io
 
 configure.ac:
 AM_FUNC_GETLINE
