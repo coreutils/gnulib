@@ -1,4 +1,22 @@
 #!/bin/sh
+#
+# Copyright (C) 2002, 2003 Free Software Foundation, Inc.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+#
+
 # Usage: MODULES.html.sh > MODULES.html
 
 sed_lt='s,<,\&lt;,g'
@@ -9,7 +27,7 @@ trnl='\012'
 
 indent=""
 missed_modules=`gnulib-tool --list`
-missed_files=`ls lib/* m4/* | sed -e /CVS/d -e /README/d -e /ChangeLog/d -e /Makefile/d -e /TODO/d`
+missed_files=`ls -d lib/* m4/* | sed -e /CVS/d -e /README/d -e /ChangeLog/d -e /Makefile/d -e /TODO/d`
 
 # func_echo line
 # outputs line with indentation.
@@ -78,7 +96,11 @@ func_module ()
 {
   func_begin TR
 
-  element=`gnulib-tool --extract-include-directive $1 | sed -e "$sed_lt" -e "$sed_gt" -e '${/^$/d}' | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
+  sed_remove_trailing_empty_line='${
+/^$/d
+}'
+
+  element=`gnulib-tool --extract-include-directive $1 | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
   test -n "$element" || element='---'
   func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
@@ -90,11 +112,11 @@ func_module ()
   func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
   sed_choose_m4_files='s,^m4/\(.*\)$,\1,p'
-  element=`(gnulib-tool --extract-filelist $1 | sed -e '${/^$/d}' | sed -n -e "$sed_choose_m4_files" | sed -e '/^onceonly/d'; gnulib-tool --extract-autoconf-snippet $1 | sed -e '${/^$/d}') | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
+  element=`(gnulib-tool --extract-filelist $1 | sed -e "$sed_remove_trailing_empty_line" | sed -n -e "$sed_choose_m4_files" | sed -e '/^onceonly/d'; gnulib-tool --extract-autoconf-snippet $1 | sed -e "$sed_remove_trailing_empty_line") | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
   test -n "$element" || element='---'
   func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
-  element=`gnulib-tool --extract-dependencies $1 | sed -e '${/^$/d}' | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
+  element=`gnulib-tool --extract-dependencies $1 | sed -e "$sed_remove_trailing_empty_line" | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
   test -n "$element" || element='---'
   func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 

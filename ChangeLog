@@ -1,3 +1,10 @@
+2003-01-07  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh: Add copyright notice.
+	(missed_files): Omit CVS directory entries.
+	(func_module): Make it work with sed-3.02.
+	* MODULES.txt: Remove file.
+
 2003-01-01    <karl@gnu.org>
 
 	* gnulib-tool (func_verify_module): report module name $module in
