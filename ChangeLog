@@ -1,3 +1,8 @@
+2000-10-30  Stefan Monnier  <monnier@cs.yale.edu>
+
+	* regex.c (re_iswctype, re_wctype_to_bit): Fix braino.
+	(regex_compile): Catch bogus \(\1\).
+
 2000-10-27  Stefan Monnier  <monnier@cs.yale.edu>
 
 	* regex.c (POP_FAILURE_REG_OR_COUNT, re_match_2_internal)
