@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
@@ -1238,7 +1238,7 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getdate.h">getdate.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getdate.y">getdate.y</A>
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/bison.m4">bison.m4</A><BR><A HREF="m4/tm_gmtoff.m4">tm_gmtoff.m4</A><BR><A HREF="m4/getdate.m4">getdate.m4</A><BR>gl_GETDATE
-      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
+      <TD ALIGN=LEFT VALIGN=TOP>mktime<BR>unlocked-io
     </TR>
   </TABLE>
   <H3><A NAME="ansic_ext_stdio">Input/Output &lt;stdio.h&gt;</A></H3>
@@ -2163,7 +2163,7 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/posixtm.h">posixtm.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/posixtm.c">posixtm.c</A>
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/posixtm.m4">posixtm.m4</A><BR>gl_POSIXTM
-      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
+      <TD ALIGN=LEFT VALIGN=TOP>mktime<BR>unlocked-io
     </TR>
   </TABLE>
   <H3><A NAME="posix_ext_net">Networking functions</A></H3>
@@ -2480,6 +2480,30 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
+  <H2>Unclassified modules - please update MODULES.html.sh</H2>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>modules/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Module
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mempcpy"></A><A HREF="modules/mempcpy">mempcpy</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mempcpy.h">mempcpy.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mempcpy.c">mempcpy.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mempcpy.m4">mempcpy.m4</A><BR>gl_FUNC_MEMPCPY
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
   <H2>Lone files - please create new modules containing them</H2>
   <PRE>
 <A HREF="lib/getversion.c">lib/getversion.c</A>
@@ -2515,5 +2539,5 @@ variables.
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on 27 June 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 15 July 2003.
 </HTML>
