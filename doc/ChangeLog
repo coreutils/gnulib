@@ -1,3 +1,7 @@
+2003-03-13  Paul Eggert  <eggert@twinsun.com>
+
+	* COPYING.DOC, fdl.texi: Sync with latest FSF version.
+
 2003-01-02    <karl@gnu.org>
 
 	* COPYING.DOC: belatedly updated to 1.2.
