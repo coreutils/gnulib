@@ -1,5 +1,7 @@
 /* Error handler for noninteractive utilities
-   Copyright (C) 1990-1998, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
+   Copyright (C) 1990-1998, 2000-2002, 2003 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation; either version 2, or (at your option)
@@ -58,6 +60,7 @@ unsigned int error_message_count;
 /* In the GNU C library, there is a predefined variable for this.  */
 
 # define program_name program_invocation_name
+# include <errno.h>
 # include <libio/libioP.h>
 
 /* In GNU libc we want do not want to use the common name `error' directly.
@@ -75,6 +78,8 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 # define fflush(s) INTUSE(_IO_fflush) (s)
 # undef putc
 # define putc(c, fp) INTUSE(_IO_putc) (c, fp)
+
+# include <bits/libc-lock.h>
 
 #else /* not _LIBC */
 
@@ -201,6 +206,14 @@ error (int status, int errnum, const char *message, ...)
 {
   va_list args;
 
+#if defined _LIBC && defined __libc_ptf_call
+  /* We do not want this call to be cut short by a thread
+     cancellation.  Therefore disable cancellation for now.  */
+  int state = PTHREAD_CANCEL_ENABLE;
+  __libc_ptf_call (pthread_setcancelstate, (PTHREAD_CANCEL_DISABLE, &state),
+		   0);
+#endif
+
   fflush (stdout);
 #ifdef _LIBC
   _IO_flockfile (stderr);
@@ -222,6 +235,9 @@ error (int status, int errnum, const char *message, ...)
 
 #ifdef _LIBC
   _IO_funlockfile (stderr);
+# ifdef __libc_ptf_call
+  __libc_ptf_call (pthread_setcancelstate, (state, NULL), 0);
+# endif
 #endif
 }
 
@@ -249,6 +265,14 @@ error_at_line (int status, int errnum, const char *file_name,
       old_file_name = file_name;
       old_line_number = line_number;
     }
+
+#if defined _LIBC && defined __libc_ptf_call
+  /* We do not want this call to be cut short by a thread
+     cancellation.  Therefore disable cancellation for now.  */
+  int state = PTHREAD_CANCEL_ENABLE;
+  __libc_ptf_call (pthread_setcancelstate, (PTHREAD_CANCEL_DISABLE, &state),
+		   0);
+#endif
 
   fflush (stdout);
 #ifdef _LIBC
@@ -281,6 +305,9 @@ error_at_line (int status, int errnum, const char *file_name,
 
 #ifdef _LIBC
   _IO_funlockfile (stderr);
+# ifdef __libc_ptf_call
+  __libc_ptf_call (pthread_setcancelstate, (state, NULL), 0);
+# endif
 #endif
 }
 
