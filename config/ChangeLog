@@ -1,3 +1,8 @@
+2003-08-12  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt: can't sync vasnprintf.c any more, changes have been
+	made.
+
 2003-08-03  Karl Berry  <karl@gnu.org>
 
 	* depcomp: update from automake.
