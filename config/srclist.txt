@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.55 2005-03-02 01:39:26 karl Exp $
+# $Id: srclist.txt,v 1.56 2005-03-02 16:51:18 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -32,7 +32,6 @@ $GETTEXT/gettext-runtime/libasprintf/printf-parse.h	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/vasnprintf.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/vasnprintf.h	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/vasprintf.c	lib gpl
-$GETTEXT/gettext-runtime/libasprintf/vasprintf.h	lib gpl
 
 $GETTEXT/gettext-runtime/intl/config.charset		lib gpl
 $GETTEXT/gettext-runtime/intl/localcharset.h		lib gpl
