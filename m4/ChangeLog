@@ -1,3 +1,7 @@
+2004-04-19  Bruno Haible  <bruno@clisp.org>
+
+	* mbrtowc.m4: Change jm_ to gl_ in cache variables as well.
+
 2004-04-18  Jim Meyering  <jim@meyering.net>
 
 	* prereq.m4: Don't forbid jm_ prefix.
