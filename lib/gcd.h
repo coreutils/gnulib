@@ -19,15 +19,7 @@
 #ifndef _GCD_H
 #define _GCD_H
 
-#ifndef PARAMS
-# if __STDC__ || defined __GNUC__ || defined __SUNPRO_C || defined __cplusplus || __PROTOTYPES
-#  define PARAMS(args) args
-# else
-#  define PARAMS(args) ()
-# endif
-#endif
-
 /* Return the greatest common divisor of a > 0 and b > 0.  */
-extern unsigned long gcd PARAMS ((unsigned long a, unsigned long b));
+extern unsigned long gcd (unsigned long a, unsigned long b);
 
 #endif /* _GCD_H */

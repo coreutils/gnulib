@@ -23,9 +23,7 @@
 
 /* Return the greatest common divisor of a > 0 and b > 0.  */
 unsigned long
-gcd (a, b)
-     unsigned long a;
-     unsigned long b;
+gcd (unsigned long a, unsigned long b)
 {
   /* Why no division, as in Euclid's algorithm? Because in Euclid's algorithm
      the division result floor(a/b) or floor(b/a) is very often = 1 or = 2,
