@@ -4,6 +4,7 @@ Get high resolution real time.
 Files:
 lib/xtime.h
 lib/gethrxtime.c
+lib/gethrxtime.h
 m4/gethrxtime.m4
 m4/clock_time.m4
 m4/longlong.m4
