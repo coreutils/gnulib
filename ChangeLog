@@ -1,3 +1,9 @@
+2004-09-18  Simon Josefsson  <jas@extundo.com>
+       and  Paul Eggert  <eggert@cs.ucla.edu>
+	
+	* gnulib-tool: Replace various ad-hoc automake/autoconf/aclocal
+	calls with autoreconf.  Define GL_LIB.
+
 2004-09-09  Karl Berry  <karl@gnu.org>
 
 	* regex.[ch]: delete from the root.  These were supposed to be
