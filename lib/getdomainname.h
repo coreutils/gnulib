@@ -30,7 +30,8 @@
 /* Return the NIS domain name of the machine.
    WARNING! The NIS domain name is unrelated to the fully qualified host name
             of the machine.  It is also unrelated to email addresses.
-   WARNING! The NIS domain name is usually the empty string when not using NIS.
+   WARNING! The NIS domain name is usually the empty string or "(none)" when
+            not using NIS.
 
    Put up to LEN bytes of the NIS domain name into NAME.
    Null terminate it if the name is shorter than LEN.

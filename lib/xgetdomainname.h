@@ -21,7 +21,8 @@
 /* Return the NIS domain name of the machine, in malloc'd storage.
    WARNING! The NIS domain name is unrelated to the fully qualified host name
             of the machine.  It is also unrelated to email addresses.
-   WARNING! The NIS domain name is usually the empty string when not using NIS.
+   WARNING! The NIS domain name is usually the empty string or "(none)" when
+            not using NIS.
    If malloc fails, exit.
    Upon any other failure, set errno and return NULL.  */
 extern char *xgetdomainname (void);
