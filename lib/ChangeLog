@@ -1,5 +1,8 @@
 2003-05-28  Paul Eggert  <eggert@twinsun.com>
 
+	* addext.c (addext): Use assignment rather than cast, to avoid
+	warnings on some platforms.
+
 	* mktime.c (__mktime_internal): Do not reject negative timestamps
 	arbitrarily.
 
