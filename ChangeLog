@@ -1,3 +1,15 @@
+2004-02-05  Paul Eggert  <eggert@twinsun.com>
+
+	Add comments and code, prompted by suggestions from Bruno Haible
+	for sh-quote.
+	* quotearg.h (quotearg_alloc): New decl.  Improve the comments
+	describing the enum quoting_style values.
+	* quotearg.c (quotearg_alloc): New function.
+	(quotearg_buffer_restyled): Treat lone { and } as special.
+	Treat = as special.  Work around bug with older shells
+	that "see" a '\' that is really the 2nd byte of a multibyte char.
+	Quote empty string with shell_quoting_style.
+
 2004-02-03  Bruno Haible  <bruno@clisp.org>
 
 	* modules/pipe: New file.
