@@ -18,9 +18,14 @@
 #ifndef _BINARY_H
 #define _BINARY_H
 
-#include <fcntl.h>
 /* For systems that distinguish between text and binary I/O.
    O_BINARY is usually declared in <fcntl.h>. */
+#include <fcntl.h>
+
+/* The MSVC7 <stdio.h> doesn't like to be included after '#define fileno ...',
+   so we include it here first.  */
+#include <stdio.h>
+
 #if !defined O_BINARY && defined _O_BINARY
   /* For MSC-compatible compilers.  */
 # define O_BINARY _O_BINARY
