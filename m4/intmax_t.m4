@@ -1,5 +1,5 @@
-# intmax_t.m4 serial 1
-dnl Copyright (C) 1997-2002 Free Software Foundation, Inc.
+# intmax_t.m4 serial 2
+dnl Copyright (C) 1997-2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -40,7 +40,7 @@ AC_DEFUN([gt_AC_TYPE_INTMAX_T],
   AC_REQUIRE([jm_AC_HEADER_STDINT_H])
   AC_CACHE_CHECK(for intmax_t, gt_cv_c_intmax_t,
     [AC_TRY_COMPILE([
-#include <stddef.h> 
+#include <stddef.h>
 #include <stdlib.h>
 #if HAVE_STDINT_H_WITH_UINTMAX
 #include <stdint.h>

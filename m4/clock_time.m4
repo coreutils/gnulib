@@ -1,5 +1,5 @@
-# clock_time.m4 serial 1
-dnl Copyright (C) 2002 Free Software Foundation, Inc.
+# clock_time.m4 serial 2
+dnl Copyright (C) 2002, 2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -11,7 +11,7 @@ AC_DEFUN([gl_CLOCK_TIME],
 [
   # Solaris 2.5.1 needs -lposix4 to get the clock_gettime function.
   # Solaris 7 prefers the library name -lrt to the obsolescent name -lposix4.
-  
+
   # Save and restore LIBS so e.g., -lrt, isn't added to it.  Otherwise, *all*
   # programs in the package would end up linked with that potentially-shared
   # library, inducing unnecessary run-time overhead.
