@@ -1,6 +1,19 @@
+2002-12-02  Bruno Haible  <bruno@clisp.org>
+
+	* safe-write.c (CHAR_BIT, TYPE_SIGNED, TYPE_MINIMUM, TYPE_MAXIMUM):
+	Define, taken from safe-read.c.
+	(INT_MAX): Provide fallback.
+	(safe_write): Rewrite to iterate IFF the write fails with EINTR.
+	* safe-write.h (SAFE_WRITE_ERROR): Define.
+
+	* safe-read.c (EINTR): Remove definition.
+	(safe_read): Don't use EINTR if it is absent.
+
 2002-12-02  Jim Meyering  <jim@meyering.net>
 
 	* safe-read.c (EINTR): Define.
+	(CHAR_BIT, TYPE_SIGNED, TYPE_MINIMUM, TYPE_MAXIMUM): Define.
+	(INT_MAX): Provide fallback.
 	(safe_read): Rewrite to iterate IFF the read fails with EINTR.
 
 	* safe-read.h (SAFE_READ_ERROR): Define.

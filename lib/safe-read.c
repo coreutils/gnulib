@@ -57,12 +57,6 @@ extern int errno;
    Tru64 5.1.  */
 #define MAX_BYTES_TO_READ INT_MAX
 
-#ifndef EINTR
-/* If a system doesn't have support for EINTR, define it
-   to be a value to which errno will never be set.  */
-# define EINTR (INT_MAX - 10)
-#endif
-
 /* Read up to COUNT bytes at BUF from descriptor FD, retrying if interrupted.
    Return the actual number of bytes read, zero for EOF, or SAFE_READ_ERROR
    upon error.  */
@@ -72,9 +66,10 @@ safe_read (int fd, void *buf, size_t count)
   size_t nbytes_to_read = count;
   ssize_t result;
 
-  /* Limit the number of bytes to read, to avoid running
-     into unspecified behaviour.  But keep the file pointer block
-     aligned when doing so.  */
+  /* Limit the number of bytes to read, to avoid running into unspecified
+     behaviour.  But keep the file pointer block aligned when doing so.
+     Note that in this case we don't need to call read() multiple times here,
+     because the caller is prepared to partial results.  */
   if (nbytes_to_read > MAX_BYTES_TO_READ)
     nbytes_to_read = MAX_BYTES_TO_READ & ~8191;
 
@@ -82,7 +77,11 @@ safe_read (int fd, void *buf, size_t count)
     {
       result = read (fd, buf, nbytes_to_read);
     }
+#ifdef EINTR
   while (result < 0 && errno == EINTR);
+#else
+  while (0);
+#endif
 
   return (size_t) result;
 }
