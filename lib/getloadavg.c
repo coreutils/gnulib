@@ -1,7 +1,7 @@
 /* Get the system load averages.
 
    Copyright (C) 1985, 1986, 1987, 1988, 1989, 1991, 1992, 1993, 1994,
-   1995, 1997, 1999, 2000, 2003 Free Software Foundation, Inc.
+   1995, 1997, 1999, 2000, 2003, 2004 Free Software Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with gnulib.
    Bugs can be reported to bug-gnulib@gnu.org.
@@ -111,8 +111,11 @@ extern int errno;
 # include <locale.h>
 #endif
 #ifndef HAVE_SETLOCALE
-# define setlocale(Category, Locale) /* empty */
+# define setlocale(Category, Locale) ((char *) NULL)
 #endif
+
+#include "cloexec.h"
+#include "xalloc.h"
 
 #ifndef HAVE_GETLOADAVG
 
@@ -592,6 +595,7 @@ getloadavg (double loadavg[], int nelem)
   char ldavgbuf[40];
   double load_ave[3];
   int fd, count;
+  char *old_locale;
 
   fd = open (LINUX_LDAV_FILE, O_RDONLY);
   if (fd == -1)
@@ -602,10 +606,12 @@ getloadavg (double loadavg[], int nelem)
     return -1;
 
   /* The following sscanf must use the C locale.  */
+  old_locale = xstrdup (setlocale (LC_NUMERIC, NULL));
   setlocale (LC_NUMERIC, "C");
   count = sscanf (ldavgbuf, "%lf %lf %lf",
 		  &load_ave[0], &load_ave[1], &load_ave[2]);
-  setlocale (LC_NUMERIC, "");
+  setlocale (LC_NUMERIC, old_locale);
+  free (old_locale);
   if (count < 1)
     return -1;
 
@@ -924,12 +930,7 @@ getloadavg (double loadavg[], int nelem)
 	{
 	  /* Set the channel to close on exec, so it does not
 	     litter any child's descriptor table.  */
-#   ifdef F_SETFD
-#    ifndef FD_CLOEXEC
-#     define FD_CLOEXEC 1
-#    endif
-	  (void) fcntl (channel, F_SETFD, FD_CLOEXEC);
-#   endif
+	  set_cloexec_flag (channel, true);
 	  getloadavg_initialized = 1;
 	}
 #  else /* SUNOS_5 */

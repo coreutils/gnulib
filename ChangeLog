@@ -1,4 +1,8 @@
-2004-03-09  Paul Eggert  <eggert@cs.ucla.edu>
+2004-03-29  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/getloadvg: Depend on cloexec and xalloc.
+
+2004-03-09  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/getopt: Add lib/getopt_int.h.
 

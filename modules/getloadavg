@@ -6,6 +6,8 @@ lib/getloadavg.c
 m4/getloadavg.m4
 
 Depends-on:
+cloexec
+xalloc
 
 configure.ac:
 gl_FUNC_GETLOADAVG
