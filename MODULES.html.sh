@@ -1651,6 +1651,16 @@ func_all_modules ()
   func_module stdint
   func_end_table
 
+  element="Input/output <stdio.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap isoc_sup_stdio
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module snprintf
+  func_end_table
+
   element="Numeric conversion functions <stdlib.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap isoc_sup_stdlib_conv
@@ -1735,7 +1745,6 @@ func_all_modules ()
   func_module regex
   func_module rename
   func_module rmdir
-  func_module snprintf
   func_module utime
   func_end_table
 
