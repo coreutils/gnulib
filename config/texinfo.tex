@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-06-14.14}
+\def\texinfoversion{2004-06-17.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -2786,14 +2786,14 @@ width0pt\relax} \fi
   \doignorecount = 0
   %
   % Swallow text until we reach the matching `@end #1'.
-  \dodoignore {#1}%
+  \dodoignore{#1}%
 }
 
 { \catcode`_=11 % We want to use \_STOP_ which cannot appear in texinfo source.
   \obeylines %
   %
   \gdef\dodoignore#1{%
-    % #1 contains the string `ifinfo'.
+    % #1 contains the command name as a string, e.g., `ifinfo'.
     %
     % Define a command to find the next `@end #1', which must be on a line
     % by itself.
@@ -5101,7 +5101,7 @@ width0pt\relax} \fi
 % do \par.
 %
 % This messes up the normal definitions of @c[omment], so we redefine
-% it.  Similarly for @ignore.  (These commands are used in the gcc
+% them.  Similarly for @ignore.  (These commands are used in the gcc
 % manual for man page generation.)
 %
 % Seems pretty fragile, most line-oriented commands will presumably
@@ -5110,7 +5110,7 @@ width0pt\relax} \fi
 %
 {\catcode`\^^M=\active %
 \gdef\insertcopying{\begingroup %
-  \parindent = 0pt  % looks wrong on title page
+  \parindent = 0pt  % paragraph indentation looks wrong on title page
   \def^^M{%
     \ifnum \lastpenalty=1 %
       \par %
