@@ -1,3 +1,9 @@
+2003-08-16  Paul Eggert  <eggert@twinsun.com>
+
+	* regex.h, strdup.c, strtoll.c, strtoul.c: Do not normalize white
+	space, undoing this 2003-08-12 change:
+	<http://mail.gnu.org/archive/html/bug-gnulib/2003-08/msg00080.html>
+
 2003-08-16  Jim Meyering  <jim@meyering.net>
 
 	Merge from coreutils.

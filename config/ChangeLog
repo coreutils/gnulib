@@ -1,9 +1,15 @@
+2003-08-16  Paul Eggert  <eggert@twinsun.com>
+
+	* srclist.txt: Get regex.h, strdup.c, strtoll.c,
+	strtoul.c from libc, undoing this 2003-08-12 change:
+	<http://mail.gnu.org/archive/html/bug-gnulib/2003-08/msg00080.html>
+
 2003-08-15  Paul Eggert  <eggert@twinsun.com>
 
 	* srclist-update: Use three spaces, rather than tab, after '#'
 	in shell-script copyright notices.  Suggested by Bruno Haible.
 	Remove unnecessary parenthesization in regular expression.
-	
+
 2003-08-13  Paul Eggert  <eggert@twinsun.com>
 
 	* srclist-update: Change update back to the old behavior, leaving
@@ -21,12 +27,12 @@
 	(fixfile): Use them to normalize spacing a bit in copied files.
 	* config.guess, config.sub, install-sh, missing, texinfo.tex:
 	Normalize leading white space and remove trailing white space.
-	
+
 	* texinfo.tex: Sync with texinfo.
 
 	* srclist.txt: Don't get regex.h, strdup.c, strtoll.c,
 	strtoul.c from libc, to merge coreutils whitespace changes.
-	
+
 	* srclist.txt: Get the following m4 files from gettext:
 	codeset.m4, gettext.m4, glibc21.m4, iconv.m4, intdiv0.m4,
 	inttypes-pri.m4, lcmessage.m4, lib-ld.m4, lib-link.m4, lib-prefix.m4,
