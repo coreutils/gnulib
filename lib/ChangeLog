@@ -1,3 +1,7 @@
+2003-10-31  Jim Meyering  <jim@meyering.net>
+
+	* linebuffer.c: Include <string.h> for declaration of memset.
+
 2003-10-30  Paul Eggert  <eggert@twinsun.com>
             Bruno Haible  <bruno@clisp.org>
 
@@ -30,7 +34,7 @@
 	Use a simpler test for size overflow.  Don't use xalloc_oversized
 	because unsigned int might be wider than size_t (!); this suggests
 	that we should switch from unsigned int to size_t for slot numbers.
-	
+
 2003-10-27  Bruno Haible  <bruno@clisp.org>
 
 	* stdbool_.h: Better support for BeOS.
@@ -43,7 +47,7 @@
 	(add_exclude): Use x2nrealloc to reallocate ex->exclude,
 	instead of xnrealloc.
 	(add_exclude_file): Use x2realloc instead of malloc + xnrealloc.
-	
+
 2003-10-26  Paul Eggert  <eggert@twinsun.com>
 
 	* xalloc.h (xalloc_oversized): New static inline function, for
