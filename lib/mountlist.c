@@ -136,6 +136,7 @@ extern int errno;
 # include <sys/mntent.h>
 #endif
 
+#undef MNT_IGNORE
 #if defined MNTOPT_IGNORE && defined HAVE_HASMNTOPT
 # define MNT_IGNORE(M) hasmntopt ((M), MNTOPT_IGNORE)
 #else
