@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-10-15 15:43:58 $'
+cvsdatestamp='$Date: 2004-10-15 15:46:41 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -451,7 +451,7 @@ func_import ()
     test -n "$dry_run" && dry=echo
     $dry cp -p "$gnulib_dir/$f" "$destdir/$g"
     # Update license.
-    if test -z "$dry_run" -a -n "$lgpl" -a -n "$source"; then
+    if test -z "$dry_run" && test -n "$lgpl" && test -n "$source"; then
       perl -pi -e 's/GNU General/GNU Lesser General/g;' \
                -e 's/version 2([ ,])/version 2.1\1/g' \
                $destdir/$g
