@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-04-18.09}
+\def\texinfoversion{2004-04-24.16}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -3278,6 +3278,9 @@ width0pt\relax} \fi
   \def\point{.}%
   \def\print{-|}%
   \def\result{=>}%
+  %
+  % Don't write macro names.
+  \emptyusermacros
 }
 
 \let\indexbackslash=0  %overridden during \printindex.
@@ -5733,10 +5736,25 @@ width0pt\relax} \fi
     \expandafter\parsearg
   \fi \next}
 
-% We mant to disable all macros during \shipout so that they are not
+% We want to disable all macros during \shipout so that they are not
 % expanded by \write.
 \def\turnoffmacros{\begingroup \def\do##1{\let\noexpand##1=\relax}%
   \edef\next{\macrolist}\expandafter\endgroup\next}
+
+% For \indexnofonts, we need to get rid of all macros, leaving only the
+% arguments (if present).  Of course this is not nearly correct, but it
+% is the best we can do for now.  makeinfo does not expand macros in the
+% argument to @deffn, which ends up writing an index entry, and texindex
+% isn't prepared for an index sort entry that starts with \.
+% 
+% Since macro invocations are followed by braces, we can just redefine them
+% to take a single TeX argument.  The case of a macro invocation that
+% goes to end-of-line is not handled.
+% 
+\def\emptyusermacros{\begingroup
+  \def\do##1{\let\noexpand##1=\noexpand\identity}%
+  \edef\next{\macrolist}\expandafter\endgroup\next}
+\def\identity#1{#1}
 
 
 % @alias.
