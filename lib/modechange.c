@@ -25,14 +25,7 @@
    performance gain. */
 
 #ifdef HAVE_CONFIG_H
-#if defined (CONFIG_BROKETS)
-/* We use <config.h> instead of "config.h" so that a compilation
-   using -I. -I$srcdir will use ./config.h rather than $srcdir/config.h
-   (which it would do because it found this file in $srcdir).  */
 #include <config.h>
-#else
-#include "config.h"
-#endif
 #endif
 
 #include <sys/types.h>
@@ -49,11 +42,9 @@ char *malloc ();
 #define NULL 0
 #endif
 
-#ifdef	STAT_MACROS_BROKEN
-#ifdef S_ISDIR
+#ifdef STAT_MACROS_BROKEN
 #undef S_ISDIR
-#endif
-#endif	/* STAT_MACROS_BROKEN.  */
+#endif /* STAT_MACROS_BROKEN.  */
 
 #if !defined(S_ISDIR) && defined(S_IFDIR)
 #define S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)

@@ -18,14 +18,7 @@
 /* Written by David MacKenzie <djm@gnu.ai.mit.edu>. */
 
 #ifdef HAVE_CONFIG_H
-#if defined (CONFIG_BROKETS)
-/* We use <config.h> instead of "config.h" so that a compilation
-   using -I. -I$srcdir will use ./config.h rather than $srcdir/config.h
-   (which it would do because it found this file in $srcdir).  */
 #include <config.h>
-#else
-#include "config.h"
-#endif
 #endif
 
 #include <sys/types.h>
@@ -34,24 +27,24 @@
 #include <unistd.h>
 #endif
 
-#ifdef DIRENT
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
 #define NLENGTH(direct) (strlen((direct)->d_name))
-#else /* not DIRENT */
+#else /* not HAVE_DIRENT_H */
 #define dirent direct
 #define NLENGTH(direct) ((direct)->d_namlen)
-#ifdef SYSNDIR
+#ifdef HAVE_SYS_NDIR_H
 #include <sys/ndir.h>
-#endif /* SYSNDIR */
-#ifdef SYSDIR
+#endif /* HAVE_SYS_NDIR_H */
+#ifdef HAVE_SYS_DIR_H
 #include <sys/dir.h>
-#endif /* SYSDIR */
-#ifdef NDIR
+#endif /* HAVE_SYS_DIR_H */
+#ifdef HAVE_NDIR_H
 #include <ndir.h>
-#endif /* NDIR */
-#endif /* DIRENT */
+#endif /* HAVE_NDIR_H */
+#endif /* HAVE_DIRENT_H */
 
-#ifdef VOID_CLOSEDIR
+#ifdef CLOSEDIR_VOID
 /* Fake a return value. */
 #define CLOSEDIR(d) (closedir (d), 0)
 #else

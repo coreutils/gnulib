@@ -16,11 +16,7 @@
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #ifdef HAVE_CONFIG_H
-#if defined (emacs) || defined (CONFIG_BROKETS)
 #include <config.h>
-#else
-#include "config.h"
-#endif
 #endif
 
 #include <sys/types.h>
@@ -41,38 +37,18 @@
 #endif
 #endif
 
-#ifdef	STAT_MACROS_BROKEN
-#ifdef S_ISBLK
+#ifdef STAT_MACROS_BROKEN
 #undef S_ISBLK
-#endif
-#ifdef S_ISCHR
 #undef S_ISCHR
-#endif
-#ifdef S_ISDIR
 #undef S_ISDIR
-#endif
-#ifdef S_ISFIFO
 #undef S_ISFIFO
-#endif
-#ifdef S_ISLNK
 #undef S_ISLNK
-#endif
-#ifdef S_ISMPB
 #undef S_ISMPB
-#endif
-#ifdef S_ISMPC
 #undef S_ISMPC
-#endif
-#ifdef S_ISNWK
 #undef S_ISNWK
-#endif
-#ifdef S_ISREG
 #undef S_ISREG
-#endif
-#ifdef S_ISSOCK
 #undef S_ISSOCK
-#endif
-#endif	/* STAT_MACROS_BROKEN.  */
+#endif /* STAT_MACROS_BROKEN.  */
 
 #if !defined(S_ISBLK) && defined(S_IFBLK)
 #define S_ISBLK(m) (((m) & S_IFMT) == S_IFBLK)

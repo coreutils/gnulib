@@ -1,4 +1,4 @@
-/* mkdir.c -- BSD compatible make directory function for System V
+/* rmdir.c -- BSD compatible remove directory function for System V
    Copyright (C) 1988, 1990 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -44,36 +44,26 @@ extern int errno;
 
 #include "safe-stat.h"
 
-/* mkdir adapted from GNU tar.  */
+/* rmdir adapted from GNU tar.  */
 
-/* Make directory DPATH, with permission mode DMODE.
-
-   Written by Robert Rother, Mariah Corporation, August 1985
-   (sdcsvax!rmr or rmr@uscd).  If you want it, it's yours.
-
-   Severely hacked over by John Gilmore to make a 4.2BSD compatible
-   subroutine.	11Mar86; hoptoad!gnu
-
-   Modified by rmtodd@uokmax 6-28-87 -- when making an already existing dir,
-   subroutine didn't return EEXIST.  It does now.  */
+/* Remove directory DPATH.
+   Return 0 if successful, -1 if not.  */
 
 int
-mkdir (dpath, dmode)
+rmdir (dpath)
      char *dpath;
-     int dmode;
 {
   int cpid, status;
   struct stat statbuf;
 
-  if (SAFE_STAT (dpath, &statbuf) == 0)
+  if (SAFE_STAT (dpath, &statbuf) != 0)
+    return -1;			/* errno already set */
+
+  if (!S_ISDIR (statbuf.st_mode))
     {
-      errno = EEXIST;		/* stat worked, it already exists */
+      errno = ENOTDIR;
       return -1;
     }
-
-  /* If stat fails for a reason other than non-existence, return error.  */
-  if (errno != ENOENT)
-    return -1;
 
   cpid = fork ();
   switch (cpid)
@@ -82,15 +72,7 @@ mkdir (dpath, dmode)
       return -1;		/* errno already set */
 
     case 0:			/* child process */
-
-      /* Cheap hack to set mode of new directory.  Since this child
-	 process is going away anyway, we zap its umask.  This won't
-	 suffice to set SUID, SGID, etc. on this directory, so the parent
-	 process calls chmod afterward.  */
-
-      status = umask (0);
-      umask (status | (0777 & ~dmode));
-      execl ("/bin/mkdir", "mkdir", dpath, (char *) 0);
+      execl ("/bin/rmdir", "rmdir", dpath, (char *) 0);
       _exit (1);
 
     default:			/* parent process */
@@ -103,11 +85,11 @@ mkdir (dpath, dmode)
       if (status & 0xFFFF)
 	{
 
-	  /* /bin/mkdir failed.  */
+	  /* /bin/rmdir failed.  */
 
 	  errno = EIO;
 	  return -1;
 	}
-      return chmod (dpath, dmode);
+      return 0;
     }
 }
