@@ -2,6 +2,7 @@ Description:
 Convert a date/time string to linear time.
 
 Files:
+doc/getdate.texi
 lib/getdate.h
 lib/getdate.y
 m4/bison.m4
@@ -13,6 +14,8 @@ timespec
 stdbool
 gettime
 mktime
+setenv
+xalloc
 alloca
 
 configure.ac:
