@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2003-01-24.11}
+\def\texinfoversion{2003-01-24.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
@@ -3128,13 +3128,6 @@ width0pt\relax} \fi
   \let\w=\asis
 }
 
-% To define \realbackslash, we must make \ not be an escape.
-% We must first make another character (@) an escape
-% so we do not become unable to do a definition.
-
-{\catcode`\@=0 \catcode`\\=\other
- @gdef@realbackslash{\}}
-
 \let\indexbackslash=0  %overridden during \printindex.
 \let\SETmarginindex=\relax % put index entries in margin (undocumented)?
 
@@ -5754,11 +5747,13 @@ width0pt\relax} \fi
 \gdef\restoresf{\relax \ifhmode \spacefactor=\savesfregister \fi}
 \gdef\anchor#1{\savesf \setref{#1}{Ynothing}\restoresf \ignorespaces}
 
-% \setref{NAME}{SNT} defines a cross-reference point NAME, namely
-% NAME-title, NAME-pg, and NAME-SNT.  Called from \foonoderef.  We have
-% to set \indexdummies so commands such as @code in a section title
-% aren't expanded.  It would be nicer not to expand the titles in the
-% first place, but there's so many layers that that is hard to do.
+% \setref{NAME}{SNT} defines a cross-reference point NAME (a node or an
+% anchor), namely NAME-title (the corresponding @chapter name), NAME-pg
+% (the page number), and NAME-snt (section number).  Called from
+% \foonoderef.  We have to set \indexdummies so commands such as @code
+% in a section title aren't expanded.  It would be nicer not to expand
+% the titles in the first place, but there's so many layers that that is
+% hard to do.
 %
 \def\setref#1#2{{%
   \indexdummies
@@ -5814,7 +5809,7 @@ width0pt\relax} \fi
   \ifpdf
     \leavevmode
     \getfilename{#4}%
-    {\normalturnoffactive
+    {\turnoffactive \otherbackslash
      \ifnum\filenamelength>0
        \startlink attr{/Border [0 0 0]}%
          goto file{\the\filename.pdf} name{#1}%
@@ -5834,7 +5829,7 @@ width0pt\relax} \fi
     % into the usual \leavevmode...\vrule stuff for purposes of
     % printing. So we \turnoffactive for the \refx-snt, back on for the
     % printing, back off for the \refx-pg.
-    {\normalturnoffactive
+    {\normalturnoffactive \otherbackslash
      % Only output a following space if the -snt ref is nonempty; for
      % @unnumbered and @anchor, it won't be.
      \setbox2 = \hbox{\ignorespaces \refx{#1-snt}{}}%
@@ -5843,58 +5838,56 @@ width0pt\relax} \fi
     % [mynode],
     [\printednodename],\space
     % page 3
-    \turnoffactive \putwordpage\tie\refx{#1-pg}{}%
+    \turnoffactive \otherbackslash \putwordpage\tie\refx{#1-pg}{}%
   \fi
   \endlink
 \endgroup}
 
 % \dosetq is the interface for calls from other macros
 
-% Use \normalturnoffactive so that punctuation chars such as underscore
-% and backslash work in node names.  (\turnoffactive doesn't do \.)
+% Use \turnoffactive so that punctuation chars such as underscore
+% and backslash work in node names.
 \def\dosetq#1#2{%
   {\let\folio=0%
-   \normalturnoffactive
+   \turnoffactive
    \edef\next{\write\auxfile{\internalsetq{#1}{#2}}}%
-   \iflinks
-     \next
-   \fi
+   \iflinks \next \fi
   }%
 }
 
-% \internalsetq {foo}{page} expands into
-% CHARACTERS 'xrdef {foo}{...expansion of \Ypage...}
-% When the aux file is read, ' is the escape character
+% \internalsetq{foo}{page} expands into
+%   CHARACTERS @xrdef{foo}{...expansion of \Ypage...}
+\def\internalsetq#1#2{@xrdef{#1}{\csname #2\endcsname}}
 
-\def\internalsetq #1#2{'xrdef {#1}{\csname #2\endcsname}}
-
-% Things to be expanded by \internalsetq
-
+% Things to be expanded by \internalsetq.
+% 
 \def\Ypagenumber{\folio}
-
 \def\Ytitle{\thissection}
-
 \def\Ynothing{}
-
 \def\Ysectionnumberandtype{%
-\ifnum\secno=0 \putwordChapter\xreftie\the\chapno %
-\else \ifnum \subsecno=0 \putwordSection\xreftie\the\chapno.\the\secno %
-\else \ifnum \subsubsecno=0 %
-\putwordSection\xreftie\the\chapno.\the\secno.\the\subsecno %
-\else %
-\putwordSection\xreftie\the\chapno.\the\secno.\the\subsecno.\the\subsubsecno %
-\fi \fi \fi }
+  \ifnum\secno=0
+    \putwordChapter@tie \the\chapno
+  \else \ifnum\subsecno=0
+    \putwordSection@tie \the\chapno.\the\secno
+  \else \ifnum\subsubsecno=0
+    \putwordSection@tie \the\chapno.\the\secno.\the\subsecno
+  \else
+    \putwordSection@tie \the\chapno.\the\secno.\the\subsecno.\the\subsubsecno
+  \fi\fi\fi
+}
 
 \def\Yappendixletterandtype{%
-\ifnum\secno=0 \putwordAppendix\xreftie'char\the\appendixno{}%
-\else \ifnum \subsecno=0 \putwordSection\xreftie'char\the\appendixno.\the\secno %
-\else \ifnum \subsubsecno=0 %
-\putwordSection\xreftie'char\the\appendixno.\the\secno.\the\subsecno %
-\else %
-\putwordSection\xreftie'char\the\appendixno.\the\secno.\the\subsecno.\the\subsubsecno %
-\fi \fi \fi }
-
-\gdef\xreftie{'tie}
+  \ifnum\secno=0
+     \putwordAppendix@tie @char\the\appendixno{}%
+  \else \ifnum\subsecno=0
+     \putwordSection@tie @char\the\appendixno.\the\secno
+  \else \ifnum\subsubsecno=0
+    \putwordSection@tie @char\the\appendixno.\the\secno.\the\subsecno
+  \else
+    \putwordSection@tie
+      @char\the\appendixno.\the\secno.\the\subsecno.\the\subsubsecno
+  \fi\fi\fi
+}
 
 % Use TeX 3.0's \inputlineno to get the line number, for better error
 % messages, but if we're using an old version of TeX, don't do anything.
@@ -5907,10 +5900,11 @@ width0pt\relax} \fi
 
 % Define \refx{NAME}{SUFFIX} to reference a cross-reference string named NAME.
 % If its value is nonempty, SUFFIX is output afterward.
-
+%
 \def\refx#1#2{%
   {%
-    \indexdummies
+    \indexnofonts
+    \otherbackslash
     \expandafter\global\expandafter\let\expandafter\thisrefX
       \csname X#1\endcsname
   }%
@@ -5936,12 +5930,7 @@ width0pt\relax} \fi
 
 % This is the macro invoked by entries in the aux file.
 %
-\def\xrdef#1{\begingroup
-  % Reenable \ as an escape while reading the second argument.
-  \catcode`\\ = 0
-  \afterassignment\endgroup
-  \expandafter\gdef\csname X#1\endcsname
-}
+\def\xrdef#1{\expandafter\gdef\csname X#1\endcsname}
 
 % Read the last existing aux file, if any.  No error if none exists.
 \def\readauxfile{\begingroup
@@ -5972,9 +5961,7 @@ width0pt\relax} \fi
   \catcode`\^^]=\other
   \catcode`\^^^=\other
   \catcode`\^^_=\other
-  \catcode`\@=\other
-  \catcode`\^=\other
-  % It was suggested to define this as 7, which would allow ^^e4 etc.
+  % It was suggested to set the catcode of ^ to 7, which would allow ^^e4 etc.
   % in xref tags, i.e., node names.  But since ^^e4 notation isn't
   % supported in the main text, it doesn't seem desirable.  Furthermore,
   % that is not enough: for node names that actually contain a ^
@@ -5987,6 +5974,9 @@ width0pt\relax} \fi
   % \def\auxhat{\def^{'hat }}% extra space so ok if followed by letter
   % and then to call \auxhat in \setq.
   %
+  \catcode`\^=\other
+  %
+  % Special characters.  Should be turned off anyway, but...
   \catcode`\~=\other
   \catcode`\[=\other
   \catcode`\]=\other
@@ -5998,7 +5988,9 @@ width0pt\relax} \fi
   \catcode`\$=\other
   \catcode`\#=\other
   \catcode`\&=\other
+  \catcode`\%=\other
   \catcode`+=\other % avoid \+ for paranoia even though we've turned it off
+  %
   % Make the characters 128-255 be printing characters
   {%
     \count 1=128
@@ -6008,17 +6000,18 @@ width0pt\relax} \fi
       \ifnum \count 1<256 \loop \fi
     }%
   }%
-  % The aux file uses ' as the escape (for now).
+  %
   % Turn off \ as an escape so we do not lose on
   % entries which were dumped with control sequences in their names.
-  % For example, 'xrdef {$\leq $-fun}{page ...} made by @defun ^^
+  % For example, @xrdef{$\leq $-fun}{page ...} made by @defun ^^
   % Reference to such entries still does not work the way one would wish,
   % but at least they do not bomb out when the aux file is read in.
+  \catcode`\\=\other
+  %
+  % @ is our escape character in .aux files.
   \catcode`\{=1
   \catcode`\}=2
-  \catcode`\%=\other
-  \catcode`\'=0
-  \catcode`\\=\other
+  \catcode`\@=0
   %
   \openin 1 \jobname.aux
   \ifeof 1 \else
@@ -6534,14 +6527,20 @@ should work if nowhere else does.}
 
 \catcode`\@=0
 
-% \rawbackslashxx output one backslash character in current font
+% \rawbackslashxx outputs one backslash character in current font,
+% as in \char`\\.
 \global\chardef\rawbackslashxx=`\\
-%{\catcode`\\=\other
-%@gdef@rawbackslashxx{\}}
 
-% \rawbackslash redefines \ as input to do \rawbackslashxx.
+% \rawbackslash defines an active \ to do \rawbackslashxx.
+% \otherbackslash defines an active \ to be a literal `\' character with
+% catcode other.
 {\catcode`\\=\active
-@gdef@rawbackslash{@let\=@rawbackslashxx }}
+ @gdef@rawbackslash{@let\=@rawbackslashxx}
+ @gdef@otherbackslash{@let\=@realbackslash}
+}
+
+% \realbackslash is an actual character `\' with catcode other.
+{\catcode`\\=\other @gdef@realbackslash{\}}
 
 % \normalbackslash outputs one backslash in fixed width font.
 \def\normalbackslash{{\tt\rawbackslashxx}}
@@ -6550,18 +6549,23 @@ should work if nowhere else does.}
 
 % Used sometimes to turn off (effectively) the active characters
 % even after parsing them.
-@def@turnoffactive{@let"=@normaldoublequote
-@let\=@realbackslash
-@let~=@normaltilde
-@let^=@normalcaret
-@let_=@normalunderscore
-@let|=@normalverticalbar
-@let<=@normalless
-@let>=@normalgreater
-@let+=@normalplus
-@let$=@normaldollar}%$ font-lock fix
+@def@turnoffactive{%
+  @let"=@normaldoublequote
+  @let\=@realbackslash
+  @let~=@normaltilde
+  @let^=@normalcaret
+  @let_=@normalunderscore
+  @let|=@normalverticalbar
+  @let<=@normalless
+  @let>=@normalgreater
+  @let+=@normalplus
+  @let$=@normaldollar %$ font-lock fix
+}
 
-% Same as @turnoffactive except for \.
+% Same as @turnoffactive except outputs \ as {\tt\char`\\} instead of
+% the literal character `\'.  (Thus, \ is not expandable when this is in
+% effect.)
+% 
 @def@normalturnoffactive{@turnoffactive @let\=@normalbackslash}
 
 % Make _ and + \other characters, temporarily.
