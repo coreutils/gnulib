@@ -1,0 +1,20 @@
+Description:
+Conversion UTF-8 to UCS-4.
+
+Files:
+lib/utf8-ucs4.h
+m4/utf-ucs4.m4
+
+Depends-on:
+
+configure.ac:
+gl_UTF_UCS4
+
+Makefile.am:
+lib_SOURCES += utf8-ucs4.h
+
+Include:
+
+Maintainer:
+Bruno Haible
+

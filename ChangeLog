@@ -1,3 +1,11 @@
+2003-04-03  Bruno Haible  <bruno@clisp.org>
+
+	* modules/utf8-ucs4: New file.
+	* modules/utf16-ucs4: New file.
+	* modules/ucs4-utf8: New file.
+	* modules/ucs4-utf16: New file.
+	* MODULES.html.sh (func_all_modules): Add them.
+
 2003-04-02  Bruno Haible  <bruno@clisp.org>
 
 	* modules/binary-io: New file.

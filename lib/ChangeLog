@@ -1,3 +1,10 @@
+2003-04-03  Bruno Haible  <bruno@clisp.org>
+
+	* utf8-ucs4.h: New file, from GNU gettext.
+	* utf16-ucs4.h: New file, from GNU gettext.
+	* ucs4-utf8.h: New file, from GNU gettext.
+	* ucs4-utf16.h: New file, from GNU gettext.
+
 2003-04-02  Bruno Haible  <bruno@clisp.org>
 
 	* binary-io.h: New file, from GNU gettext.

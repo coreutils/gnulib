@@ -1824,10 +1824,10 @@ func_all_modules ()
   func_module unicodeio
   func_module rpmatch
   func_module yesno
-  #func_module ucs4-utf8
-  #func_module ucs4-utf16
-  #func_module utf8-ucs4
-  #func_module utf16-ucs4
+  func_module ucs4-utf8
+  func_module ucs4-utf16
+  func_module utf8-ucs4
+  func_module utf16-ucs4
   #func_module linebreak
   func_end_table
 

@@ -1,0 +1,20 @@
+Description:
+Conversion UCS-4 to UTF-16.
+
+Files:
+lib/ucs4-utf16.h
+m4/ucs4-utf.m4
+
+Depends-on:
+
+configure.ac:
+gl_UCS4_UTF
+
+Makefile.am:
+lib_SOURCES += ucs4-utf16.h
+
+Include:
+
+Maintainer:
+Bruno Haible
+
