@@ -1,6 +1,19 @@
+2003-11-23  Paul Eggert  <eggert@twinsun.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* printf-parse.h: Don't include sys/types.h.
+	(ARG_NONE): New macro.
+	(char_directive): Change type of *arg_index fields to size_t.
+	* printf-parse.c: Don't include sys/types.h.
+	(SSIZE_MAX): Remove macro.
+	(PRINTF_PARSE): Change the type of the arg_index variables to size_t.
+	Remove unnecessary overflow check.
+	* vasnprintf.c (VASNPRINTF): Update for type change of *arg_index
+	fields.
+
 2003-11-24  Paul Eggert  <eggert@twinsun.com>
 
-	* lib/alloca.c: Remove dependency on xalloc module.
+	* alloca.c: Remove dependency on xalloc module.
 	(xalloc_die): Remove.
 	(memory_full) [!defined emacs]: New macro.
 	[!defined emacs]: Don't include xalloc.h.

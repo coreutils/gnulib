@@ -29,9 +29,6 @@
 /* Get size_t, NULL.  */
 #include <stddef.h>
 
-/* Get ssize_t.  */
-#include <sys/types.h>
-
 /* Get intmax_t.  */
 #if HAVE_STDINT_H_WITH_UINTMAX
 # include <stdint.h>
@@ -45,10 +42,6 @@
 
 /* Checked size_t computations.  */
 #include "xsize.h"
-
-#ifndef SSIZE_MAX
-# define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
-#endif
 
 #if WIDE_CHAR_VERSION
 # define PRINTF_PARSE wprintf_parse
@@ -69,7 +62,7 @@ int
 PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 {
   const CHAR_T *cp = format;		/* pointer into format */
-  ssize_t arg_posn = 0;		/* number of regular arguments consumed */
+  size_t arg_posn = 0;		/* number of regular arguments consumed */
   size_t d_allocated;			/* allocated elements of d->dir */
   size_t a_allocated;			/* allocated elements of a->arg */
   size_t max_width_length = 0;
@@ -123,7 +116,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
       CHAR_T c = *cp++;
       if (c == '%')
 	{
-	  ssize_t arg_index = -1;
+	  size_t arg_index = ARG_NONE;
 	  DIRECTIVE *dp = &d->dir[d->count];/* pointer to next directive */
 
 	  /* Initialize the next directive.  */
@@ -131,11 +124,11 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 	  dp->flags = 0;
 	  dp->width_start = NULL;
 	  dp->width_end = NULL;
-	  dp->width_arg_index = -1;
+	  dp->width_arg_index = ARG_NONE;
 	  dp->precision_start = NULL;
 	  dp->precision_end = NULL;
-	  dp->precision_arg_index = -1;
-	  dp->arg_index = -1;
+	  dp->precision_arg_index = ARG_NONE;
+	  dp->arg_index = ARG_NONE;
 
 	  /* Test for positional argument.  */
 	  if (*cp >= '0' && *cp <= '9')
@@ -153,7 +146,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		  if (n == 0)
 		    /* Positional argument 0.  */
 		    goto error;
-		  if (size_overflow_p (n) || n - 1 > SSIZE_MAX)
+		  if (size_overflow_p (n))
 		    /* n too large, would lead to out of memory later.  */
 		    goto error;
 		  arg_index = n - 1;
@@ -223,18 +216,18 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		      if (n == 0)
 			/* Positional argument 0.  */
 			goto error;
-		      if (size_overflow_p (n) || n - 1 > SSIZE_MAX)
+		      if (size_overflow_p (n))
 			/* n too large, would lead to out of memory later.  */
 			goto error;
 		      dp->width_arg_index = n - 1;
 		      cp = np + 1;
 		    }
 		}
-	      if (dp->width_arg_index < 0)
+	      if (dp->width_arg_index == ARG_NONE)
 		{
 		  dp->width_arg_index = arg_posn++;
-		  if (dp->width_arg_index < 0)
-		    /* arg_posn wrapped around at SSIZE_MAX.  */
+		  if (dp->width_arg_index == ARG_NONE)
+		    /* arg_posn wrapped around.  */
 		    goto error;
 		}
 	      REGISTER_ARG (dp->width_arg_index, TYPE_INT);
@@ -280,7 +273,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 			  if (n == 0)
 			    /* Positional argument 0.  */
 			    goto error;
-			  if (size_overflow_p (n) || n - 1 > SSIZE_MAX)
+			  if (size_overflow_p (n))
 			    /* n too large, would lead to out of memory
 			       later.  */
 			    goto error;
@@ -288,11 +281,11 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 			  cp = np + 1;
 			}
 		    }
-		  if (dp->precision_arg_index < 0)
+		  if (dp->precision_arg_index == ARG_NONE)
 		    {
 		      dp->precision_arg_index = arg_posn++;
-		      if (dp->precision_arg_index < 0)
-			/* arg_posn wrapped around at SSIZE_MAX.  */
+		      if (dp->precision_arg_index == ARG_NONE)
+			/* arg_posn wrapped around.  */
 			goto error;
 		    }
 		  REGISTER_ARG (dp->precision_arg_index, TYPE_INT);
@@ -491,11 +484,11 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 	    if (type != TYPE_NONE)
 	      {
 		dp->arg_index = arg_index;
-		if (dp->arg_index < 0)
+		if (dp->arg_index == ARG_NONE)
 		  {
 		    dp->arg_index = arg_posn++;
-		    if (dp->arg_index < 0)
-		      /* arg_posn wrapped around at SSIZE_MAX.  */
+		    if (dp->arg_index == ARG_NONE)
+		      /* arg_posn wrapped around.  */
 		      goto error;
 		  }
 		REGISTER_ARG (dp->arg_index, type);
@@ -511,9 +504,6 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 	      DIRECTIVE *memory;
 
 	      d_allocated = xtimes (d_allocated, 2);
-	      if (size_overflow_p (d_allocated))
-		/* Overflow, would lead to out of memory.  */
-		goto error;
 	      memory_size = xtimes (d_allocated, sizeof (DIRECTIVE));
 	      if (size_overflow_p (memory_size))
 		/* Overflow, would lead to out of memory.  */

@@ -222,7 +222,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 	  {
 	    size_t augmented_length;
 
-	    if (!(dp->arg_index < 0))
+	    if (!(dp->arg_index == ARG_NONE))
 	      abort ();
 	    augmented_length = xsum (length, 1);
 	    ENSURE_ALLOCATION (augmented_length);
@@ -231,7 +231,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 	  }
 	else
 	  {
-	    if (!(dp->arg_index >= 0))
+	    if (!(dp->arg_index != ARG_NONE))
 	      abort ();
 
 	    if (dp->conversion == 'n')
@@ -279,7 +279,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		  width = 0;
 		  if (dp->width_start != dp->width_end)
 		    {
-		      if (dp->width_arg_index >= 0)
+		      if (dp->width_arg_index != ARG_NONE)
 			{
 			  int arg;
 
@@ -301,7 +301,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		  precision = 6;
 		  if (dp->precision_start != dp->precision_end)
 		    {
-		      if (dp->precision_arg_index >= 0)
+		      if (dp->precision_arg_index != ARG_NONE)
 			{
 			  int arg;
 
@@ -563,13 +563,13 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 
 		/* Construct the arguments for calling snprintf or sprintf.  */
 		prefix_count = 0;
-		if (dp->width_arg_index >= 0)
+		if (dp->width_arg_index != ARG_NONE)
 		  {
 		    if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
 		      abort ();
 		    prefixes[prefix_count++] = a.arg[dp->width_arg_index].a.a_int;
 		  }
-		if (dp->precision_arg_index >= 0)
+		if (dp->precision_arg_index != ARG_NONE)
 		  {
 		    if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
 		      abort ();

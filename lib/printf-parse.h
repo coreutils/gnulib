@@ -20,9 +20,6 @@
 
 #include "printf-args.h"
 
-/* Get ssize_t.  */
-#include <sys/types.h>
-
 
 /* Flags */
 #define FLAG_GROUP	 1	/* ' flag */
@@ -32,6 +29,9 @@
 #define FLAG_ALT	16	/* # flag */
 #define FLAG_ZERO	32
 
+/* arg_index value indicating that no argument is consumed.  */
+#define ARG_NONE	(~(size_t)0)
+
 /* A parsed directive.  */
 typedef struct
 {
@@ -40,12 +40,12 @@ typedef struct
   int flags;
   const char* width_start;
   const char* width_end;
-  ssize_t width_arg_index;
+  size_t width_arg_index;
   const char* precision_start;
   const char* precision_end;
-  ssize_t precision_arg_index;
+  size_t precision_arg_index;
   char conversion; /* d i o u x X f e E g G c s p n U % but not C S */
-  ssize_t arg_index;
+  size_t arg_index;
 }
 char_directive;
 
