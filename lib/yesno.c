@@ -31,7 +31,7 @@
 extern int rpmatch (char const *response);
 
 int
-yesno ()
+yesno (void)
 {
   /* We make some assumptions here:
      a) leading white space in the response are not vital
