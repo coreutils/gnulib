@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2002-10-01.17}
+\def\texinfoversion{2002-10-13.14}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002 Free Software Foundation, Inc.
@@ -141,14 +141,20 @@
 %
 \def\gobble#1{}
 
+% True if #1 is the empty string, i.e., called like `\ifempty{}'.
+%
+\def\ifempty#1{\ifemptyx #1\emptymarkA\emptymarkB}%
+\def\ifemptyx#1#2\emptymarkB{\ifx #1\emptymarkA}%
+
+% Hyphenation fixes.
 \hyphenation{ap-pen-dix}
 \hyphenation{mini-buf-fer mini-buf-fers}
 \hyphenation{eshell}
 \hyphenation{white-space}
 
 % Margin to add to right of even pages, to left of odd pages.
-\newdimen \bindingoffset
-\newdimen \normaloffset
+\newdimen\bindingoffset
+\newdimen\normaloffset
 \newdimen\pagewidth \newdimen\pageheight
 
 % Sometimes it is convenient to have everything in the transcript file
@@ -4681,7 +4687,6 @@ width0pt\relax} \fi
 
 \newskip\defbodyindent \defbodyindent=.4in
 \newskip\defargsindent \defargsindent=50pt
-\newskip\deftypemargin \deftypemargin=12pt
 \newskip\deflastargmargin \deflastargmargin=18pt
 
 \newcount\parencount
@@ -4740,32 +4745,47 @@ width0pt\relax} \fi
   \global\let& = \ampnr
 }
 
-% First, defname, which formats the header line itself.
-% #1 should be the function name.
-% #2 should be the type of definition, such as "Function".
-
-\def\defname #1#2{%
-% Get the values of \leftskip and \rightskip as they were
-% outside the @def...
-\dimen2=\leftskip
-\advance\dimen2 by -\defbodyindent
-\noindent
-\setbox0=\hbox{\hskip \deflastargmargin{\rm #2}\hskip \deftypemargin}%
-\dimen0=\hsize \advance \dimen0 by -\wd0 % compute size for first line
-\dimen1=\hsize \advance \dimen1 by -\defargsindent %size for continuations
-\parshape 2 0in \dimen0 \defargsindent \dimen1
-% Now output arg 2 ("Function" or some such)
-% ending at \deftypemargin from the right margin,
-% but stuck inside a box of width 0 so it does not interfere with linebreaking
-{% Adjust \hsize to exclude the ambient margins,
-% so that \rightline will obey them.
-\advance \hsize by -\dimen2
-\rlap{\rightline{{\rm #2}\hskip -1.25pc }}}%
-% Make all lines underfull and no complaints:
-\tolerance=10000 \hbadness=10000
-\advance\leftskip by -\defbodyindent
-\exdentamount=\defbodyindent
-{\df #1}\enskip        % Generate function name
+% \defname, which formats the name of the @def (not the args).
+% #1 is the function name.
+% #2 is the type of definition, such as "Function".
+%
+\def\defname#1#2{%
+  % How we'll output the type name.  Putting it in brackets helps
+  % distinguish it from the body text that may end up on the next line
+  % just below it.
+  \ifempty{#2}%
+    \def\defnametype{}%
+  \else
+    \def\defnametype{[\rm #2]}%
+  \fi
+  %
+  % Get the values of \leftskip and \rightskip as they were outside the @def...
+  \dimen2=\leftskip
+  \advance\dimen2 by -\defbodyindent
+  %
+  % Figure out values for the paragraph shape.
+  \setbox0=\hbox{\hskip \deflastargmargin{\defnametype}}%
+  \dimen0=\hsize \advance \dimen0 by -\wd0  % compute size for first line
+  \dimen1=\hsize \advance \dimen1 by -\defargsindent  % size for continuations
+  \parshape 2 0in \dimen0 \defargsindent \dimen1
+  %
+  % Output arg 2 ("Function" or some such) but stuck inside a box of
+  % width 0 so it does not interfere with linebreaking.
+  \noindent
+  %
+  {% Adjust \hsize to exclude the ambient margins,
+   % so that \rightline will obey them.
+   \advance \hsize by -\dimen2
+   \dimen3 = 0pt  % was -1.25pc
+   \rlap{\rightline{\defnametype\kern\dimen3}}%
+  }%
+  %
+  % Allow all lines to be underfull without complaint:
+  \tolerance=10000 \hbadness=10000
+  \advance\leftskip by -\defbodyindent
+  \exdentamount=\defbodyindent
+  {\df #1}\enskip        % output function name
+  % \defunargs will be called next to output the arguments, if any.
 }
 
 % Common pieces to start any @def...
@@ -6144,7 +6164,6 @@ should work if nowhere else does.}
   \tolerance = 700
   \hfuzz = 1pt
   \contentsrightmargin = 0pt
-  \deftypemargin = 0pt
   \defbodyindent = .5cm
   \smallenvironments
 }}
@@ -6172,7 +6191,6 @@ should work if nowhere else does.}
   \tolerance = 700
   \hfuzz = 1pt
   \contentsrightmargin = 0pt
-  \deftypemargin = 0pt
   \defbodyindent = 5mm
 }}
 
@@ -6192,7 +6210,6 @@ should work if nowhere else does.}
   \tolerance = 800
   \hfuzz = 1.2pt
   \contentsrightmargin = 0pt
-  \deftypemargin = 0pt
   \defbodyindent = 2mm
   \tableindent = 12mm
   %
