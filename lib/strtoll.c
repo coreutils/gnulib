@@ -1,7 +1,6 @@
 /* Function to parse a `long long int' from text.
-
-   Copyright (C) 1995, 1996, 1997, 1999, 2001, 2002 Free Software
-   Foundation, Inc.
+   Copyright (C) 1995, 1996, 1997, 1999, 2001 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,7 +18,7 @@
 
 #define	QUAD	1
 
-#include "strtol.c"
+#include <strtol.c>
 
 #ifdef _LIBC
 # ifdef SHARED
