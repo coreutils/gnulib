@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2003-01-21 13:21:17 $'
+cvsdatestamp='$Date: 2003-05-22 13:57:59 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -79,7 +79,7 @@ Operation modes:
 
 Options:
       --dir=DIRECTORY       specify the target directory
-      --lib=libRARY         specify the library name
+      --lib=LIBRARY         specify the library name
       --no-changelog        don't update or create ChangeLog files
 
 Report bugs to <bug-gnulib@gnu.org>."
