@@ -1,0 +1,4 @@
+2000-10-15  Stefan Monnier  <monnier@cs.yale.edu>
+
+	* regex.c (WIDE_CHAR_SUPPORT): Define if _LIBC as well.
+
