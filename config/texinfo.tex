@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-02-15.09}
+\def\texinfoversion{2004-02-19.09}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -175,11 +175,12 @@
 
 % Hyphenation fixes.
 \hyphenation{
-  Flor-i-da Ghost-script Ghost-view Mac-OS Ra-dha-krish-nan
-  ap-pen-dix bit-map data-base data-bases eshell fall-ing half-way
-  long-est mini-buf-fer mini-buf-fers over-view par-a-digm
-  rec-tan-gu-lar ro-bot-ics se-vere-ly set-up spa-ces strong-est
-  time-stamp which-ever white-space wide-spread wrap-around
+  Flor-i-da Ghost-script Ghost-view Mac-OS ap-pen-dix bit-map bit-maps
+  data-base data-bases eshell fall-ing half-way long-est man-u-script
+  man-u-scripts mini-buf-fer mini-buf-fers over-view par-a-digm
+  par-a-digms rec-tan-gu-lar ro-bot-ics se-vere-ly set-up spa-ces
+  stand-alone strong-est time-stamp time-stamps which-ever white-space
+  wide-spread wrap-around
 }
 
 % Margin to add to right of even pages, to left of odd pages.
@@ -2035,11 +2036,12 @@ where each line of input produces a line of output.}
 }
 
 % @author should come last, but may come many times.
+% It can also be used inside @quotation.
+% 
 \parseargdef\author{%
   \def\temp{\quotation}%
   \ifx\thisenv\temp
-    This edition of the manual is dedicated to Karl Berry who should
-    really make affiliations work.
+    \def\quotationauthor{#1}% printed in \Equotation.
   \else
     \checkenv\titlepage
     \ifseenauthor\else \vskip 0pt plus 1filll \seenauthortrue \fi
@@ -4833,7 +4835,9 @@ width0pt\relax} \fi
 
 
 % @quotation does normal linebreaking (hence we can't use \nonfillstart)
-% and narrows the margins.
+% and narrows the margins.  We keep \parskip nonzero in general, since
+% we're doing normal filling.  So, when using \aboveenvbreak and
+% \afterenvbreak, temporarily make \parskip 0.
 %
 \envdef\quotation{%
   {\parskip=0pt \aboveenvbreak}% because \aboveenvbreak inserts \parskip
@@ -4850,8 +4854,16 @@ width0pt\relax} \fi
 }
 
 % We have retained a nonzero parskip for the environment, since we're
-% doing normal filling. So to avoid extra space below the environment...
-\def\Equotation{\parskip = 0pt \afterenvbreak}
+% doing normal filling.
+% 
+\def\Equotation{%
+  \par
+  \ifx\quotationauthor\undefined\else
+    % indent a bit.
+    \leftline{\kern 2\leftskip \sl ---\quotationauthor}%
+  \fi
+  {\parskip=0pt \afterenvbreak}%
+}
 
 % If we're given an argument, typeset it in bold with a colon after.
 \def\quotationlabel#1{%
@@ -5300,15 +5312,16 @@ width0pt\relax} \fi
   % arguments will be output next, if any.
 }
 
-% Print arguments in slanted typewriter, prevent hyphenation at `-' chars.
+% Print arguments in slanted roman (not ttsl), inconsistently with using
+% tt for the name.  This is because literal text is sometimes needed in
+% the argument list (groff manual), and ttsl and tt are not very
+% distinguishable.  Prevent hyphenation at `-' chars.
 % 
 \def\defunargs#1{%
-  % use sl by default (not ttsl), inconsistently with using tt for the
-  % name.  This is because literal text is sometimes needed in the
-  % argument list (groff manual), and ttsl and tt are not very
-  % distinguishable.
+  % use sl by default (not ttsl), 
   % tt for the names.
   \df \sl \hyphenchar\font=0
+  %
   % On the other hand, if an argument has two dashes (for instance), we
   % want a way to get ttsl.  Let's try @var for that.
   \let\var=\ttslanted
