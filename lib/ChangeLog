@@ -1,3 +1,8 @@
+2003-07-10  Jim Meyering  <jim@meyering.net>
+
+	* vasnprintf.c: Remove trailing blanks.
+	Make cpp indentation consistent.
+
 2003-07-09  Paul Eggert  <eggert@twinsun.com>
 
 	* alloca_.h, euidaccess.c, getpass.c, memrchr.c, obstack.h,
