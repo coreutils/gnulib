@@ -1,3 +1,16 @@
+2002-12-06  Jim Meyering  <jim@meyering.net>
+
+	Merge in changes from libc's misc/error.c, in preparation
+	for the merge of gnulib's changes back into libc.
+
+	* error.c (_): Define only if not already defined.
+	Move definition to follow all #include directives.
+	Include unlocked-io.h only if !_LIBC.
+	[_LIBC]: Include <libio/libioP.h>.
+	[USE_IN_LIBIO]: Include <libio/iolibio.h>
+	(fflush): Tweak definition to use INTUSE.
+	(putc): Define.
+
 2002-12-05  Paul Eggert  <eggert@twinsun.com>
 
 	* alloca.c [defined emacs]: Include "lisp.h".
@@ -9,7 +22,7 @@
 	(malloc): Remove decl; we now always use xmalloc.
 	(alloca): Use old-style definition, since Emacs needs this.
 	Check for arithmetic overflow when computing combined size.
-	
+
 2002-12-04  Paul Eggert  <eggert@twinsun.com>
 
 	Do not generate unlocked-io.h automatically, since it's easier to
