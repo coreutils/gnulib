@@ -27,7 +27,7 @@
    since otherwise we get redefinitions on some systems.  */
 #include <limits.h>
 
-/* Note: MIN and MAX should preferrably be used with two arguments of the
+/* Note: MIN and MAX should be used with two arguments of the
    same type.  They might not return the minimum and maximum of their two
    arguments, if the arguments have different types or have unusual
    floating-point values.  For example, on a typical host with 32-bit 'int',
@@ -42,28 +42,12 @@
 
 /* MAX(a,b) returns the maximum of A and B.  */
 #ifndef MAX
-# if __STDC__ && defined __GNUC__ && __GNUC__ >= 2
-#  define MAX(a,b) (__extension__					    \
-		     ({__typeof__ (a) _a = (a);				    \
-		       __typeof__ (b) _b = (b);				    \
-		       _a > _b ? _a : _b;				    \
-		      }))
-# else
-#  define MAX(a,b) ((a) > (b) ? (a) : (b))
-# endif
+# define MAX(a,b) ((a) > (b) ? (a) : (b))
 #endif
 
 /* MIN(a,b) returns the minimum of A and B.  */
 #ifndef MIN
-# if __STDC__ && defined __GNUC__ && __GNUC__ >= 2
-#  define MIN(a,b) (__extension__					    \
-		     ({__typeof__ (a) _a = (a);				    \
-		       __typeof__ (b) _b = (b);				    \
-		       _a < _b ? _a : _b;				    \
-		      }))
-# else
-#  define MIN(a,b) ((a) < (b) ? (a) : (b))
-# endif
+# define MIN(a,b) ((a) < (b) ? (a) : (b))
 #endif
 
 #endif /* _MINMAX_H */

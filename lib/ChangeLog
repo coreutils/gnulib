@@ -1,5 +1,11 @@
 2003-09-27  Paul Eggert  <eggert@twinsun.com>
 
+	* minmax.h (MIN, MAX) [__STDC__ && defined __GNUC__ && __GNUC__ >= 2]:
+	Omit the special code that used __typeof__, since we worry that
+	it could be more trouble than it's worth.  See:
+	http://mail.gnu.org/archive/html/bug-gnulib/2003-01/msg00090.html
+	http://mail.gnu.org/archive/html/bug-gnulib/2003-01/msg00095.html
+
 	* free.c: New file.
 
 2003-09-26  Jim Meyering  <jim@meyering.net>
