@@ -1,3 +1,7 @@
+2004-04-12  Jim Meyering  <jim@meyering.net>
+
+	* MODULES.html.sh (func_all_modules): Add cloexec, inttostr, free, tzset.
+
 2004-03-30  Jim Meyering  <jim@meyering.net>
 
 	* modules/realloc (Files): Remove m4/realloc.m4.
