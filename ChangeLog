@@ -1,5 +1,12 @@
 2004-04-12  Paul Eggert  <eggert@twinsun.com>
 
+	* config/srclist.txt: Restore setenv.c, unsetenv.c from gettext.
+	Add intmax.m4, printf-posix.m4, sig_atomic_t.m4,
+	signalblocking.m4, ssize_t.m4.
+	* lib/unsetenv.c: Regenerate: this subtracts 1 from the
+	copyright year (!).
+	* m4/printf-posix.m4: Regenerate.
+
 	* modules/inttostr (EXTRA_DIST): Move inttostr.c here....
 	(lib_SOURCES): from here.
 	* modules/getopt (lib_SOURCES): Add getopt_int.h.

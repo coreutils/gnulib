@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.34 2004-03-09 19:42:23 eggert Exp $
+# $Id: srclist.txt,v 1.35 2004-04-13 06:38:44 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -44,9 +44,8 @@ $GETTEXT/gettext-runtime/intl/ref-del.sin		lib gpl
 
 $GETTEXT/gettext-tools/lib/gettext.h			lib gpl
 $GETTEXT/gettext-tools/lib/mkdtemp.c			lib gpl
-# Put back after next gettext release.
-#$GETTEXT/gettext-tools/lib/setenv.c			lib gpl
-#$GETTEXT/gettext-tools/lib/unsetenv.c			lib gpl
+$GETTEXT/gettext-tools/lib/setenv.c			lib gpl
+$GETTEXT/gettext-tools/lib/unsetenv.c			lib gpl
 
 $GETTEXT/autoconf-lib-link/m4/lib-ld.m4			m4
 $GETTEXT/autoconf-lib-link/m4/lib-link.m4		m4
@@ -57,15 +56,21 @@ $GETTEXT/gettext-runtime/m4/gettext.m4			m4
 $GETTEXT/gettext-runtime/m4/glibc21.m4			m4
 $GETTEXT/gettext-runtime/m4/iconv.m4			m4
 $GETTEXT/gettext-runtime/m4/intdiv0.m4			m4
+$GETTEXT/gettext-runtime/m4/intmax.m4			m4
 $GETTEXT/gettext-runtime/m4/inttypes-pri.m4		m4
 $GETTEXT/gettext-runtime/m4/lcmessage.m4		m4
 $GETTEXT/gettext-runtime/m4/longdouble.m4		m4
 $GETTEXT/gettext-runtime/m4/nls.m4			m4
 $GETTEXT/gettext-runtime/m4/po.m4			m4
+$GETTEXT/gettext-runtime/m4/printf-posix.m4		m4
 $GETTEXT/gettext-runtime/m4/progtest.m4			m4
 $GETTEXT/gettext-runtime/m4/signed.m4			m4
 $GETTEXT/gettext-runtime/m4/wchar_t.m4			m4
 $GETTEXT/gettext-runtime/m4/wint_t.m4			m4
+
+$GETTEXT/gettext-tools/m4/sig_atomic_t.m4		m4
+$GETTEXT/gettext-tools/m4/signalblocking.m4		m4
+$GETTEXT/gettext-tools/m4/ssize_t.m4			m4
 #
 $LIBCSRC/argp/argp-ba.c			lib gpl
 $LIBCSRC/argp/argp-eexst.c		lib gpl
