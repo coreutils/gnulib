@@ -1,3 +1,9 @@
+2004-11-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/getpass.c (fflush_unlocked, flockfile, funlockfile)
+	(funlockfile, fputs_unlocked, putc_unlocked): Don't define if
+	already declared.
+
 2004-10-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getdate.y: Add support for TZ="foo" within a date string.
