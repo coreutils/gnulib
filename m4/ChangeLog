@@ -1,3 +1,9 @@
+2003-08-09  Paul Eggert  <eggert@twinsun.com>
+
+	* regex.m4 (jm_INCLUDED_REGEX): Change "\201" to "\371";
+	apparently Emacs's Unicode mode got confused before my 2003-08-05
+	checkin.
+
 2003-08-08  Paul Eggert  <eggert@twinsun.com>
 
 	* extensions.m4: New file.
