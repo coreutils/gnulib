@@ -1,3 +1,7 @@
+2004-09-30  Simon Josefsson  <jas@extundo.com>
+
+	* snprintf.m4: New file.
+
 2004-09-09  Bruno Haible  <bruno@clisp.org>
 
 	* eoverflow.m4: New file, taken from GNU libiconv eilseq.m4 with

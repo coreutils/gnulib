@@ -1,0 +1,23 @@
+Description:
+snprintf() function: print formatted output to a fixed length string
+
+Files:
+lib/snprintf.h
+lib/snprintf.c
+m4/snprintf.m4
+
+Depends-on:
+vasnprintf
+minmax
+
+configure.ac:
+gl_FUNC_SNPRINTF
+
+Makefile.am:
+lib_SOURCES += snprintf.h
+
+Include:
+"snprintf.h"
+
+Maintainer:
+Simon Josefsson

@@ -1,3 +1,7 @@
+2004-09-30  Simon Josefsson  <jas@extundo.com>
+
+	* snprintf.h, snprintf.c: New files.
+
 2004-09-30  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
 	* argp-help.c (canon_doc_option): Fixed coredump if *name==NULL

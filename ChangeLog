@@ -1,3 +1,10 @@
+2004-09-30  Simon Josefsson  <jas@extundo.com>
+
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
+	snprintf.
+
+	* modules/snprintf: New file.
+
 2004-09-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/argp (Maintainer): Replace Simon Josefsson
