@@ -1,0 +1,19 @@
+Description:
+calloc() function that is glibc compatible.
+
+Files:
+lib/calloc.c
+m4/calloc.m4
+
+Depends-on:
+
+configure.ac:
+AC_FUNC_CALLOC
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+
+Maintainer:
+Jim Meyering
