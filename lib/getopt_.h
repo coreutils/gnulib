@@ -37,6 +37,7 @@
 # if HAVE_UNISTD_H
 #  include <unistd.h>
 # endif
+# undef __need_getopt
 # undef getopt
 # undef getopt_long
 # undef getopt_long_only
@@ -60,11 +61,24 @@
    getopt_long_only; they declare "char **argv".  libc uses prototypes
    with "char *const *argv" that are incorrect because getopt_long and
    getopt_long_only can permute argv; this is required for backward
-   compatibility (e.g., for LSB 2.0.1).  */
-#if defined __GETOPT_PREFIX && !defined __need_getopt
-# define __getopt_argv_const /* empty */
-#else
-# define __getopt_argv_const const
+   compatibility (e.g., for LSB 2.0.1).
+
+   This used to be `#if defined __GETOPT_PREFIX && !defined __need_getopt',
+   but it caused redefinition warnings if both unistd.h and getopt.h were
+   included, since unistd.h includes getopt.h having previously defined
+   __need_getopt.
+   
+   The only place where __getopt_argv_const is used is in definitions
+   of getopt_long and getopt_long_only below, but these are visible
+   only if __need_getopt is not defined, so it is quite safe to rewrite
+   the conditional as follows:
+*/
+#if !defined __need_getopt
+# if defined __GETOPT_PREFIX 
+#  define __getopt_argv_const /* empty */
+# else
+#  define __getopt_argv_const const
+# endif
 #endif
 
 /* If __GNU_LIBRARY__ is not already defined, either we are being used
