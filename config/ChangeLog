@@ -1,5 +1,11 @@
+2002-09-28    <karl@gnu.org>
+
+	* srclist.txt: can't copy install-sh/mkinstalldirs from installed
+	automake until the next release, since changes have been made.
+
 2002-09-25    <karl@gnu.org>
 
+	* srclist.txt: enable gettext.h check.
 	* config.{guess,sub}: update from prep.
 	* depcomp, install-sh, mdate-sh, missing, mkinstalldirs: update
 		from automake 1.6.3.
