@@ -16,6 +16,7 @@ gettext
 argmatch
 error
 xstrtol
+stdbool
 
 configure.ac:
 gl_HUMAN
