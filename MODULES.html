@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
@@ -135,6 +135,11 @@
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=setenv">setenv</A>
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/setenv.html">setenv</A>() function: set an environment variable.
+<A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/unsetenv.html">unsetenv</A>() function: remove an environment variable.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xsetenv">xsetenv</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">xsetenv() function: set an environment variable, with out-of-memory checking.
 <A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/unsetenv.html">unsetenv</A>() function: remove an environment variable.
     </TR>
   </TABLE>
@@ -980,6 +985,13 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/setenv.c">setenv.c</A><BR><A HREF="lib/unsetenv.c">unsetenv.c</A>
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/setenv.m4">setenv.m4</A><BR>gt_FUNC_SETENV
       <TD ALIGN=LEFT VALIGN=TOP>alloca
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xsetenv"></A><A HREF="modules/xsetenv">xsetenv</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xsetenv.h">xsetenv.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xsetenv.c">xsetenv.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>setenv<BR>error<BR>exit<BR>gettext
     </TR>
   </TABLE>
   <H3><A NAME="ansic_ext_ctype">Character handling &lt;ctype.h&gt;</A></H3>
@@ -2227,5 +2239,5 @@ variables.
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on 24 January 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 28 January 2003.
 </HTML>
