@@ -527,7 +527,7 @@ vasnprintf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 		    retcount = 0;
 
 #if HAVE_SNPRINTF
-#define SNPRINTF_BUF(arg) \
+# define SNPRINTF_BUF(arg) \
 		    switch (prefix_count)				    \
 		      {							    \
 		      case 0:						    \
@@ -547,7 +547,7 @@ vasnprintf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 			abort ();					    \
 		      }
 #else
-#define SNPRINTF_BUF(arg) \
+# define SNPRINTF_BUF(arg) \
 		    switch (prefix_count)				    \
 		      {							    \
 		      case 0:						    \

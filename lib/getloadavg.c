@@ -481,7 +481,7 @@ static unsigned int samples;
 static struct dg_sys_info_load_info load_info;	/* what-a-mouthful! */
 # endif /* DGUX */
 
-#if !defined (HAVE_LIBKSTAT) && defined (LOAD_AVE_TYPE)
+# if !defined (HAVE_LIBKSTAT) && defined (LOAD_AVE_TYPE)
 /* File descriptor open to /dev/kmem or VMS load ave driver.  */
 static int channel;
 /* Nonzero iff channel is valid.  */
@@ -497,7 +497,7 @@ static struct nlist nl[2];
 static kvm_t *kd;
 #  endif /* SUNOS_5 */
 
-#endif /* LOAD_AVE_TYPE && !HAVE_LIBKSTAT */
+# endif /* LOAD_AVE_TYPE && !HAVE_LIBKSTAT */
 
 /* Put the 1 minute, 5 minute and 15 minute load averages
    into the first NELEM elements of LOADAVG.
