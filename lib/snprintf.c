@@ -20,21 +20,14 @@
 # include <config.h>
 #endif
 
-/* Specification.  */
 #include "snprintf.h"
 
-/* Get va_list, va_start, va_end. */
 #include <stdarg.h>
-/* Get free. */
 #include <stdlib.h>
-/* Get memcpy, size_t. */
 #include <string.h>
 
-/* Get vasnprintf.  */
-#include "vasnprintf.h"
-
-/* Get MIN. */
 #include "minmax.h"
+#include "vasnprintf.h"
 
 /* Print formatted output to string STR.  Similar to sprintf, but
    additional length SIZE limit how much is written into STR.  Returns
