@@ -46,9 +46,7 @@
 # include <stdlib.h>
 #endif
 
-#if HAVE_ERRNO_H
-# include <errno.h>
-#endif
+#include <errno.h>
 
 #ifndef errno
 extern int errno;
