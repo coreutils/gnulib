@@ -1,5 +1,5 @@
 /* Detect write error on a stream.
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2005 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -22,7 +22,7 @@
      (a) Test the return value of every fwrite() or fprintf() call, and react
          immediately.
      (b) Just before fclose(), test the error indicator in the stream and
-         the return value of the final fflush() or fclose() call.
+         the return value of the final fclose() call.
 
    The benefit of (a) is that non file related errors (such that ENOMEM during
    fprintf) and temporary error conditions can be diagnosed accurately.
@@ -40,12 +40,12 @@
 
 #include <stdio.h>
 
-/* Write out the not yet written buffered contents of the stream FP, and then
-   test whether some error occurred on the stream FP.  FP must be a stream
-   opened for writing.
-   Return 0 if no error occurred.  In this case it can be assumed that
-   fclose (fp) will succeed.
+/* Write out the not yet written buffered contents of the stream FP, close
+   the stream FP, and test whether some error occurred on the stream FP.
+   FP must be a stream opened for writing.
+   Return 0 if no error occurred and fclose (fp) succeeded.
    Return -1 and set errno if there was an error.  The errno value will be 0
    if the cause of the error cannot be determined.
- */
+   For any given stream FP other than stdout, fwriteerror (FP) may only be
+   called once.  */
 extern int fwriteerror (FILE *fp);

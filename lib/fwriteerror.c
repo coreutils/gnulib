@@ -1,5 +1,5 @@
 /* Detect write error on a stream.
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003-2005 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -24,24 +24,30 @@
 #include "fwriteerror.h"
 
 #include <errno.h>
+#include <stdbool.h>
 
 int
 fwriteerror (FILE *fp)
 {
+  /* State to allow multiple calls to fwriteerror (stdout).  */
+  static bool stdout_closed = false;
+
+  if (fp == stdout && stdout_closed)
+    return 0;
+
   /* Need to
      1. test the error indicator of the stream,
-     2. flush the buffers (what fclose() would do), testing for error again.
-     We can equally well swap these steps; this leads to smaller code.  */
+     2. flush the buffers both in userland and in the kernel, through fclose,
+        testing for error again.  */
 
   /* Clear errno, so that on non-POSIX systems the caller doesn't see a
      wrong value of errno when we return -1.  */
   errno = 0;
 
-  if (fflush (fp))
-    return -1; /* errno is set here */
-
   if (ferror (fp))
     {
+      if (fflush (fp))
+	return -1; /* errno is set here */
       /* The stream had an error earlier, but its errno was lost.  If the
 	 error was not temporary, we can get the same errno by writing and
 	 flushing one more byte.  We can do so because at this point the
@@ -54,6 +60,13 @@ fwriteerror (FILE *fp)
       errno = 0;
       return -1;
     }
+
+  /* If we are closing stdout, don't attempt to do it later again.  */
+  if (fp == stdout)
+    stdout_closed = true;
+
+  if (fclose (fp))
+    return -1; /* errno is set here */
 
   return 0;
 }
@@ -109,10 +122,6 @@ main ()
 	  else
 	    fprintf (stderr, "Test %u:%u: fwriteerror found no error!\n",
 		     i, j);
-
-	  if (fclose (stream))
-	    fprintf (stderr, "Test %u:%u: fclose failed, errno = %d\n",
-		     i, j, errno);
 	}
     }
 

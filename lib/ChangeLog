@@ -1,3 +1,10 @@
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* fwriteerror.h (fwriteerror): Change specification to include fclose.
+	* fwriteerror.c: Include <stdbool.h>.
+	(fwriteerror): At the end, close the file stream. Record whether
+	stdout was already closed.
+
 2004-05-27  Bruno Haible  <bruno@clisp.org>
 
 	* execute.c (environ): Declare if needed.
