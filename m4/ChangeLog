@@ -1,3 +1,12 @@
+2003-10-23  Paul Eggert  <eggert@twinsun.com>
+
+	* getline.m4 (AM_FUNC_GETLINE):
+	Don't include getndelim2.o twice into LIBOBJS; this breaks on some
+	hosts.  Problem reported by Derek Robert Price in
+	<http://mail.gnu.org/archive/html/bug-gnulib/2003-10/msg00092.html>.
+	This patch can be withdrawn after Autoconf 2.58 is required for gnulib.
+	* getndelim2.m4 (gl_GETNDELIM2): Likewise.
+
 2003-10-20  Bruno Haible  <bruno@clisp.org>
 
 	* wait-process.m4: New file.
@@ -34,7 +43,7 @@
 	Don't define stpncpy through config.h; it's now done through stpncpy.h.
 
 2003-09-25  Simon Josefsson  <jas@extundo.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* getdomainname.m4: New file.
 
@@ -330,7 +339,7 @@
 	* jm-winsz1.m4: Require AC_SYS_POSIX_TERMIOS, not AM_SYS_POSIX_TERMIOS.
 	Reported by mkc@mathdogs.com.
 	Also change use of $am_cv_sys_posix_termios
-	to $ac_cv_sys_posix_termios.   Reported by Andreas Schwab.
+	to $ac_cv_sys_posix_termios.  Reported by Andreas Schwab.
 	* getgroups.m4 (jm_FUNC_GETGROUPS): Rewrite to use AC_FUNC_GETGROUPS
 	and (if needed) to call AC_LIBOBJ and to set GETGROUPS_LIB.
 	* fsusage.m4 [__GLIBC__]: GNU libc's statvfs stats each mount point in
@@ -1804,7 +1813,7 @@
 
 2001-03-20  Bruno Haible  <haible@clisp.cons.org>
 
-        * iconv.m4 (jm_ICONV): Recommend GNU libiconv.
+	* iconv.m4 (jm_ICONV): Recommend GNU libiconv.
 
 2001-03-17  Jim Meyering  <meyering@lucent.com>
 
