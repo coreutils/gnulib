@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-01-22.17}
+\def\texinfoversion{2004-01-28.14}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -603,7 +603,7 @@
 % The \TeX{} logo, as in plain, but resetting the spacing so that a
 % period following counts as ending a sentence.  (Idea found in latex.)
 % 
-\def\TeX{T\kern-.1667em\lower.5ex\hbox{E}\kern-.125emX\spacefactor=3000 }
+\edef\TeX{\TeX \spacefactor=3000 }
 
 % @LaTeX{} logo.  Not quite the same results as the definition in
 % latex.ltx, since we use a different font for the raised A; it's most
@@ -6155,7 +6155,7 @@ width0pt\relax} \fi
   \fi
 }
 
-% This \insert replacements works for both \insert\footins{foo} and
+% This \insert replacement works for both \insert\footins{foo} and
 % \insert\footins\bgroup foo\egroup, but it doesn't work for \insert27{foo}.
 %
 \def\saveinsert#1{%
