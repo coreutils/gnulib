@@ -1,3 +1,10 @@
+2004-03-30  Jim Meyering  <jim@meyering.net>
+
+	* realloc.m4: Remove file, since now it does no more than
+	AC_REQUIRE([AC_FUNC_REALLOC]), and that can be done via
+	the `configure.ac' section of module/realloc.
+	* malloc.m4: Likewise, but for AC_FUNC_MALLOC.
+
 2004-03-30  Paul Eggert  <eggert@twinsun.com>
 
 	* inttostr.m4: New file.
@@ -285,12 +292,12 @@
 	* idcache.m4 (gl_IDCACHE): Do not check for standard C headers,
 	or for string.h.
 	* long-options.m4 (gl_LONG_OPTIONS): Do not check for stdlib.h.
-	* mkpath.m4 (gl_MAKEPATH): Do not check for string.h or standard
+	* makepath.m4 (gl_MAKEPATH): Do not check for string.h or standard
 	C headers.
 	* md5.m4 (gl_MD5): Don't check for limits.h, standard C headers,
 	memcpy.
 	* sha.m4 (gl_SHA): Don't check for standard Cheaders, memcpy.
-	* memrchr.m4 (jm_PREREQ_MEMCHR): Don't check for limits.h, stdlib.h.
+	* memchr.m4 (jm_PREREQ_MEMCHR): Don't check for limits.h, stdlib.h.
 	* memcmp.m4 (gl_PREREQ_MEMCMP): Don't check for string.h.
 	* memcoll.m4 (gl_MEMCOLL): Likewise.
 	* memrchr.c (gl_PREREQ_MEMRCHR): Don't check for limits.h.
@@ -299,7 +306,7 @@
 	* mktime.m4 (gl_PREREQ_MKTIME): Don't check for standard C headers.
 	* modechange.m4 (gl_MODECHANGE): Don't check for standard C headers.
 	* mountlist.m4 (gl_PREREQ_MOUNTLIST_EXTRA): Don't check for standard
-	C orders, or for string.h.
+	C headers, or for string.h.
 	* obstack.m4 (gl_OBSTACK): Don't check for stddefe.h, string.h.
 	(gl_PREREQ_OBSTACK): Don't check for stdlib.h.
 	* path-concat.m4 (gl_PATH_CONCAT): Don't check for standard C
