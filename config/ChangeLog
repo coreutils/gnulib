@@ -1,3 +1,7 @@
+2003-09-08  Karl Berry  <karl@gnu.org>
+
+	* depcomp, missing: update from automake.
+
 2003-08-16  Paul Eggert  <eggert@twinsun.com>
 
 	* srclist.txt: Get regex.h, strdup.c, strtoll.c,
