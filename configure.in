@@ -1,9 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(regex.c)
 
-dnl Because regex may or may not be used with Autoconf, we need to know.
-AC_DEFINE(USING_AUTOCONF)
-
 AC_PROG_CC
 AC_PROG_INSTALL
 
