@@ -1,3 +1,8 @@
+2005-03-28  Eric Blake  <ebb9@byu.net>  (tiny change)
+
+	* getcwd-path-max.m4: Return success on systems such as Cygwin
+	where no absolute path name can be longer than PATH_MAX.
+
 2005-03-22  Jim Meyering  <jim@meyering.net>
 
 	* stat-macros.m4 (gl_STAT_MACROS): New file/macro.
