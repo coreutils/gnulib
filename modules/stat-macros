@@ -1,0 +1,23 @@
+Description:
+stat-related macros
+
+Files:
+lib/stat-macros.h
+m4/stat-macros.m4
+
+Depends-on:
+stat-macros
+
+configure.ac:
+gl_STAT_MACROS
+
+Makefile.am:
+
+Include:
+"stat-macros.h"
+
+License:
+GPL
+
+Maintainer:
+all
