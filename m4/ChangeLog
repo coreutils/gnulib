@@ -1,3 +1,9 @@
+2004-11-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getopt.m4 (gl_GETOPT_SUBSTITUTE): Define __GETOPT_PREFIX instead
+	of replacing opterr, getopt, etc.  This should handle the
+	powerpc-apple-darwin5.5 problem recently noted by Simon Josefsson.
+
 2004-11-11  Simon Josefsson  <jas@extundo.com>
 
 	* getopt.m4: Replace opterr.
