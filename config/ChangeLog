@@ -1,5 +1,8 @@
 2003-09-08  Karl Berry  <karl@gnu.org>
 
+	* config.sub, config.guess: update from savannah config, forget
+		about prep.
+
 	* depcomp, missing: update from automake.
 
 2003-08-16  Paul Eggert  <eggert@twinsun.com>
