@@ -1,3 +1,29 @@
+2004-05-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Port obstack to the AS/400, where pointers are 16 bytes wide and
+	you cannot cast an integer to a valid pointer.  This patch is
+	currently waiting to be integrated into glibc; see
+	<http://sources.redhat.com/ml/libc-alpha/2004-05/msg00073.html>.
+
+	* obstack.h (__PTR_TO_INT, __INT_TO_PTR): Remove.
+	All uses of __INT_TO_PTR (PTR_TO_INT ...) replaced by __PTR_ALIGN.
+	(__BPTR_ALIGN, __PTR_ALIGN): New macros.
+	(struct obstack): temp member is now a union of a pointer and
+	an integer, instead of an integer.  All integer uses changed.
+	This does not affect the physical layout of struct obstack,
+	except on hosts (like the AS/400) where the size or alignment of
+	void * is greater than that of ptrdiff_t.
+	(obstack_finish) [! (defined __GNUC__ && defined __STDC__ &&
+	__STDC__)]: Store temporary in pointer member of union, not
+	integer member.
+	* obstack.c: Include <stddef.h>, for offsetof.
+	(struct fooalign): Remove; it doesn't need a name.
+	(union fooround): Change double to long double, and add void *.
+	(DEFAULT_ALIGNMENT): Use offsetof to compute.
+	(DEFAULT_ALIGNMENT, DEFAULT_ROUNDING): Now an enum constant,
+	not a macro.  Hence the values are always int; so remove all
+	casts-to-int in uses.
+
 2004-05-16  Paul Eggert  <eggert@cs.ucla.edu>
 	    Derek Price  <derek@ximbiot.com>
 
@@ -17,7 +43,7 @@
 	getline cleanup.  This changes the getndelim2 API: both order of
 	arguments, and meaning of delim2 (now uses EOF, not 0, to indicate
 	no delimiter).
-	
+
 	* getline.c: Don't include stddef.h or stdio.h, since our
 	interface does that.
 	(getline): Always use getdelim, so that we don't have two
