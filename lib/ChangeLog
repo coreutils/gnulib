@@ -1,3 +1,8 @@
+2003-11-16  Bruno Haible  <bruno@clisp.org>
+
+	* xsize.h (xmax): New function.
+	(xsum, xsum3, xsum4): Declare as "pure" functions.
+
 2003-11-12  Paul Eggert  <eggert@twinsun.com>
 
 	* xalloc.h: Do not include <limits.h> or <stdint.h>.
