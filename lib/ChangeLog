@@ -1,3 +1,9 @@
+2002-05-22  Jim Meyering  <meyering@lucent.com>
+
+	* Makefile.am (libfetish_a_SOURCES): Add file-type.c and file-type.h.
+	* file-type.h: New file.
+	* file-type.c (file_type): New file/function.  Extracted from diffutils.
+
 2002-04-29  Paul Eggert  <eggert@twinsun.com>
 
 	* hard-locale.c: Upgrade to version used in GNU Diffutils 2.8.1.
