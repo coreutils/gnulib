@@ -1,0 +1,19 @@
+Description:
+Detect write error on a stream.
+
+Files:
+lib/fwriteerror.h
+lib/fwriteerror.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += fwriteerror.h fwriteerror.c
+
+Include:
+"fwriteerror.h"
+
+Maintainer:
+Bruno Haible
