@@ -439,9 +439,8 @@ make_hol (const struct argp *argp, struct hol_cluster *cluster)
       hol->short_options = malloc (num_short_options + 1);
 
       assert (hol->entries && hol->short_options);
-#if SIZE_MAX <= UINT_MAX
-      assert (hol->num_entries <= SIZE_MAX / sizeof (struct hol_entry));
-#endif
+      if (SIZE_MAX <= UINT_MAX)
+	assert (hol->num_entries <= SIZE_MAX / sizeof (struct hol_entry));
 
       /* Fill in the entries.  */
       so = hol->short_options;
@@ -835,9 +834,8 @@ hol_append (struct hol *hol, struct hol *more)
 	    malloc (hol_so_len + strlen (more->short_options) + 1);
 
 	  assert (entries && short_options);
-#if SIZE_MAX <= UINT_MAX
-	  assert (num_entries <= SIZE_MAX / sizeof (struct hol_entry));
-#endif
+	  if (SIZE_MAX <= UINT_MAX)
+	    assert (num_entries <= SIZE_MAX / sizeof (struct hol_entry));
 
 	  __mempcpy (__mempcpy (entries, hol->entries,
 				hol->num_entries * sizeof (struct hol_entry)),
@@ -1676,7 +1674,7 @@ void __argp_help (const struct argp *argp, FILE *stream,
 weak_alias (__argp_help, argp_help)
 #endif
 
-#ifndef _LIBC
+#ifndef __argp_short_program_name
 char *__argp_basename (char *name)
 {
   char *short_name = strrchr (name, '/');
