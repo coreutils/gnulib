@@ -1,0 +1,20 @@
+Description:
+Memory allocation with expensive empty allocations (glibc compatible).
+
+Files:
+lib/eealloc.h
+m4/eealloc.m4
+
+Depends-on:
+
+configure.ac:
+gl_EEALLOC
+
+Makefile.am:
+EXTRA_DIST += eealloc.h
+
+Include:
+#include <eealloc.h>
+
+Maintainer:
+Bruno Haible
