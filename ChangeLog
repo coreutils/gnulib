@@ -1,3 +1,7 @@
+2005-01-24  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
+
+	* modules/lchown (Depends-on): Remove lchown.h
+
 2005-01-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/chdir-long (Depends-on): Remove mempcpy.

@@ -2,6 +2,9 @@
 
 	* argp-help.c (hol_entry_help): Avoid using non-constant
 	initializers for struct pentry_state.
+	(__argp_error): Check return value of __asprintf
+	(__argp_failure): Translate error message
+
 	* argp-parse.c: Removed braces around the expansion of N_()
 
 2005-01-21  Jim Meyering  <jim@meyering.net>
