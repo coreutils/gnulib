@@ -109,7 +109,7 @@ xatoi (cp)
      char *cp;
 {
   int val;
-  
+
   val = 0;
   while (*cp)
     {
@@ -386,7 +386,7 @@ read_filesystem_list (need_fs_type, all_fs)
 	me->me_type =  xstrdup ((*ent)->mt_fstype);
 	me->me_dev = -1;	/* Magic; means not known yet. */
 	me->me_next = NULL;
-	
+
 	/* Add to the linked list. */
 	mtail->me_next = me;
 	mtail = me;
@@ -459,7 +459,7 @@ read_filesystem_list (need_fs_type, all_fs)
 	  }
 	else
 	  {
-	    me->me_devname = xstrdup (thisent + 
+	    me->me_devname = xstrdup (thisent +
 				      vmp->vmt_data[VMT_OBJECT].vmt_off);
 	  }
 	me->me_mountdir = xstrdup (thisent + vmp->vmt_data[VMT_STUB].vmt_off);

@@ -210,7 +210,7 @@ getgidbyname (group)
       group_alist = tail;
       return &tail->id.g;
     }
-  
+
   tail->next = nogroup_alist;
   nogroup_alist = tail;
   return 0;
