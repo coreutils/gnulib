@@ -126,7 +126,9 @@
 	(restore_cwd): Use chdir_long, not chdir.
 	* chdir-long.c: Renamed from chdir.c.
 	* chdir-long.h: Renamed from chdir.h.
-	[!defined PATH_MAX]: Define chdir_long to chdir on systems like the Hurd.
+	[!defined PATH_MAX]: Define chdir_long to chdir on systems like the
+	Hurd.
+
 2005-01-18  Bob Proulx  <bob@proulx.com>
 
 	* obstack.c [DEFAULT_ALIGNMENT]: Use an intermediate type to simplify
