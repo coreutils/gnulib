@@ -1,0 +1,37 @@
+Sun seems to care about Solaris versus SunOS branding...
+
+Here is a mapping table that maps the `uname -sr` values to Sun's marketing
+names.
+
+       SunOS 2.x       == SunOS 2.x
+       SunOS 3.x       == SunOS 3.x
+
+Starting with 4.1.1B of SunOS we have the 'Solaris 1.0' release.
+
+       SunOS 4.1.1B    == Solaris 1.0
+       SunOS 4.1.2     == Solaris 1.0.1
+       SunOS 4.1.3     == Solaris 1.1
+       SunOS 4.1.3C    == Solaris 1.1C
+       SunOS 4.1.3_U1  == Solaris 1.1.1
+       SunOS 4.1.3_U1B == Solaris 1.1.1 B
+       SunOS 4.1.4     == Solaris 1.1.2
+
+The SunOS 5.x uname output maps to the Solaris 2.x numbers thru 2.6
+
+       SunOS 5.0       == Solaris 2.0
+       SunOS 5.1       == Solaris 2.1
+       SunOS 5.2       == Solaris 2.2
+       SunOS 5.3       == Solaris 2.3
+       SunOS 5.4       == Solaris 2.4
+       SunOS 5.5       == Solaris 2.5
+       SunOS 5.5.1     == Solaris 2.5.1
+       SunOS 5.6       == Solaris 2.6
+
+After SunOS 5.6, they started number based on the second digit 
+
+       SunOS 5.7       == Solaris 7
+       SunOS 5.8       == Solaris 8
+       SunOS 5.9       == Solaris 9
+
+The common terminology is to use the name "SunOS ..." to designate SunOS 2.x,
+3.x, 4.x, and "Solaris ..." to designate SunOS 5.x.
