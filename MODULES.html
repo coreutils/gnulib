@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, extensions, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, gnu-source, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -755,6 +755,10 @@ usually the host name including FQDN.
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">error() and error_at_line() functions: Error reporting.
       </TR>
       <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=extensions">extensions</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Enable extensions in standard headers
+      </TR>
+      <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fatal">fatal</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Error reporting for fatal errors.
       </TR>
@@ -769,6 +773,10 @@ usually the host name including FQDN.
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getusershell">getusershell</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return names of valid user shells.
+      </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=gnu-source">gnu-source</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Enable GNU extensions in standard headers
       </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=physmem">physmem</A>
@@ -1281,7 +1289,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/unlocked-io.h">unlocked-io.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/unlocked-io.m4">unlocked-io.m4</A><BR>jm_FUNC_GLIBC_UNLOCKED_IO
-        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>extensions
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=vasnprintf"></A><A HREF="modules/vasnprintf">vasnprintf</A>
@@ -1743,7 +1751,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/timespec.h">timespec.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/st_mtim.m4">st_mtim.m4</A><BR><A HREF="m4/timespec.m4">timespec.m4</A><BR>gl_TIMESPEC
-        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>extensions
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=nanosleep"></A><A HREF="modules/nanosleep">nanosleep</A>
@@ -2467,6 +2475,13 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext
       </TR>
       <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=extensions"></A><A HREF="modules/extensions">extensions</A>
+        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/extensions.m4">extensions.m4</A><BR>gl_USE_SYSTEM_EXTENSIONS
+        <TD ALIGN=LEFT VALIGN=TOP>---
+      </TR>
+      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fatal"></A><A HREF="modules/fatal">fatal</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fatal.h">fatal.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fatal.c">fatal.c</A>
@@ -2493,6 +2508,13 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getusershell.c">getusershell.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getusershell.m4">getusershell.m4</A><BR>gl_PREREQ_GETUSERSHELL
         <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gnu-source"></A><A HREF="modules/gnu-source">gnu-source</A>
+        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/gnu-source.m4">gnu-source.m4</A><BR>AC_GNU_SOURCE
+        <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=physmem"></A><A HREF="modules/physmem">physmem</A>
@@ -2550,7 +2572,6 @@ variables.
 <A HREF="m4/check-decl.m4">m4/check-decl.m4</A>
 <A HREF="m4/d-type.m4">m4/d-type.m4</A>
 <A HREF="m4/glibc.m4">m4/glibc.m4</A>
-<A HREF="m4/gnu-source.m4">m4/gnu-source.m4</A>
 <A HREF="m4/host-os.m4">m4/host-os.m4</A>
 <A HREF="m4/jm-macros.m4">m4/jm-macros.m4</A>
 <A HREF="m4/jm-winsz1.m4">m4/jm-winsz1.m4</A>
@@ -2579,6 +2600,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on  8 August 2003.
+    Generated from <CODE>MODULES.html.sh</CODE> on  9 August 2003.
   </BODY>
 </HTML>
