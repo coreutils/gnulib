@@ -61,6 +61,9 @@
 #if HAVE_STDINT_H || _LIBC
 # include <stdint.h>
 #endif
+#if HAVE_INTTYPES_H
+# include <inttypes.h>
+#endif
 
 #if HAVE_UNISTD_H || _LIBC
 # include <unistd.h>

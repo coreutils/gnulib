@@ -1,5 +1,5 @@
 /* A more useful interface to strtol.
-   Copyright 1995, 1996, 1998, 1999, 2001 Free Software Foundation, Inc.
+   Copyright 1995, 1996, 1998, 1999, 2001, 2002 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,8 +18,13 @@
 #ifndef XSTRTOL_H_
 # define XSTRTOL_H_ 1
 
+/* Get uintmax_t.  */
 # if HAVE_INTTYPES_H
-#  include <inttypes.h> /* for uintmax_t */
+#  include <inttypes.h>
+# else
+#  if HAVE_STDINT_H
+#   include <stdint.h>
+#  endif
 # endif
 
 # ifndef PARAMS

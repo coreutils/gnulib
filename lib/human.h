@@ -7,6 +7,10 @@
 
 # if HAVE_INTTYPES_H
 #  include <inttypes.h>
+# else
+#  if HAVE_STDINT_H
+#   include <stdint.h>
+#  endif
 # endif
 
 /* A conservative bound on the maximum length of a human-readable string.
