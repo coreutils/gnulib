@@ -1,3 +1,19 @@
+2003-08-15  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/userspec: Depend on posixver.
+	* modules/strftime: Depend on tzset.
+
+2003-08-14  Jim Meyering  <jim@meyering.net>
+
+	Merges from coreutils.
+	* modules/fnmatch: Use the `$(FNMATCH_H)' notation for AC_REPLACED
+	variable names, rather than @FNMATCH_H@.
+	* modules/alloca: Likewise for $(ALLOCA_H).
+
+	* modules/fnmatch (fnmatch.h): Use `$@' in the commands, in place of
+	the three copies of the literal target, `fnmatch.h'.
+	* modules/alloca (alloca.h): Likewise.
+
 2003-08-14  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/tzset: New file.
