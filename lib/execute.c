@@ -1,5 +1,5 @@
 /* Creation of autonomous subprocesses.
-   Copyright (C) 2001-2003 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -59,6 +59,10 @@
 #  endif
 # endif
 
+#endif
+
+#ifndef HAVE_ENVIRON_DECL
+extern char **environ;
 #endif
 
 #ifndef STDIN_FILENO

@@ -1,3 +1,9 @@
+2004-05-27  Bruno Haible  <bruno@clisp.org>
+
+	* execute.c (environ): Declare if needed.
+	* pipe.c (environ): Likewise.
+	Reported by Michael Schloh von Bennewitz <michael.schloh@cw.com>.
+
 2005-01-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* human.c (SIZE_MAX, UINTMAX_MAX): Move these conditional
