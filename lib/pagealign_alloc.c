@@ -95,7 +95,7 @@ get_memnode (void *aligned_ptr)
     if (c->aligned_ptr == aligned_ptr)
       break;
 
-  if (!c)
+  if (c == NULL)
     /* An attempt to free untracked memory.  A wrong pointer was passed
        to pagealign_free().  */
     abort ();
@@ -117,13 +117,13 @@ pagealign_alloc (size_t size)
   void *ret;
 #if HAVE_MMAP
   int flags;
+# ifdef HAVE_MAP_ANONYMOUS
+  const int fd = -1;
+  flags = MAP_ANONYMOUS | MAP_PRIVATE;
+# else /* !HAVE_MAP_ANONYMOUS */
   static int fd = -1;  /* Only open /dev/zero once in order to avoid limiting
 			  the amount of memory we may allocate based on the
 			  number of open file descriptors.  */
-# ifdef HAVE_MAP_ANONYMOUS
-  flags = MAP_ANONYMOUS | MAP_PRIVATE;
-  fd = -1;
-# else /* !HAVE_MAP_ANONYMOUS */
   flags = MAP_FILE | MAP_PRIVATE;
   if (fd == -1)
     {
@@ -134,19 +134,33 @@ pagealign_alloc (size_t size)
 # endif /* HAVE_MAP_ANONYMOUS */
   ret = mmap (NULL, size, PROT_READ | PROT_WRITE, flags, fd, 0);
   if (!ret)
-    error (EXIT_FAILURE, errno, "mmap to /dev/zero failed");
+    return NULL;
   new_memnode (ret, size);
 #elif HAVE_POSIX_MEMALIGN
   int status = posix_memalign (&ret, getpagesize (), size);
   if (status)
-    error (EXIT_FAILURE, status, "posix_memalign failed");
+    return NULL;
 #else /* !HAVE_MMAP && !HAVE_POSIX_MEMALIGN */
   size_t pagesize = getpagesize ();
-  void *unaligned_ptr = xmalloc (size + pagesize - 1);
+  void *unaligned_ptr = malloc (size + pagesize - 1);
+  if (unaligned_ptr == NULL)
+    return NULL;
   ret = (char *) unaligned_ptr
         + ((- (unsigned long) unaligned_ptr) & (pagesize - 1));
   new_memnode (ret, unaligned_ptr);
 #endif /* HAVE_MMAP && HAVE_POSIX_MEMALIGN */
+  return ret;
+}
+
+
+void *
+pagealign_xalloc (size_t size)
+{
+  void *ret;
+
+  ret = pagealign_alloc (size);
+  if (ret == NULL)
+    xalloc_die ();
   return ret;
 }
 

@@ -30,8 +30,13 @@
    failed.  */
 extern void *pagealign_alloc (size_t size);
 
+/* Like pagealign_alloc, except it exits the program if the allocation
+   fails.  */
+extern void *pagealign_xalloc (size_t size);
+
 /* Free a memory block.
-   PTR must be a pointer returned by pagealign_alloc.  */
+   PTR must be a non-NULL pointer returned by pagealign_alloc or
+   pagealign_xalloc.  */
 extern void pagealign_free (void *ptr);
 
 #endif /* _PAGEALIGN_ALLOC_H */
