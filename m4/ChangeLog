@@ -1,3 +1,7 @@
+2002-12-11  Bruno Haible  <bruno@clisp.org>
+
+	* setenv.m4: New file, from gettext-0.11.5.
+
 2002-12-06  Paul Eggert  <eggert@twinsun.com>
 
 	Undo the 2001-07-02 change for jm-glibc-io, as it was too much of
