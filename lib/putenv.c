@@ -36,6 +36,8 @@ Cambridge, MA 02139, USA.  */
 /* Don't include stdlib.h for non-GNU C libraries because some of them
    contain conflicting prototypes for getopt.  */
 #include <stdlib.h>
+#else
+char *malloc ();
 #endif	/* GNU C library.  */
 
 #ifndef STDC_HEADERS
