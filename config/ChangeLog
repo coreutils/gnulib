@@ -1,3 +1,8 @@
+2004-08-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Remove getopt.c, getopt.h (renamed to getopt_.h),
+	getopt1.c.
+
 2004-06-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist-update: Don't insist on "USA." before the close-comment,

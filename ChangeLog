@@ -1,3 +1,14 @@
+2004-08-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/argp (Files): Add m4/unlocked-io.m4.
+	(Depends-on): Add extensions.
+
+2004-08-12  Simon Josefsson  <jas@extundo.com>
+
+	* modules/getopt (Files): Rename getopt.h to getopt_.h.
+	(Makefile.am): Rewrite, use logic from argz.
+	(Include): Use <getopt.h> instead of "getopt.h".
+
 2004-08-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/obstack (Files): Add m4/inttypes_h.m4, m4/stdint_h.m4,

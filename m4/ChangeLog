@@ -1,3 +1,23 @@
+2004-08-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* argp.m4 (gl_ARGP): Do not check for argp.h or argp_parse; nobody
+	uses HAVE_ARGP_H or HAVE_ARGP_PARSE.
+	Require gl_FUNC_GLIBC_UNLOCKED_IO, gl_USE_SYSTEM_EXTENSIONS.
+	Check for program_invocation_name, program_invocation_short_name,
+	flockfile, funlockfile, features.h, _getopt_long_only_r.
+
+2004-08-12  Simon Josefsson  <jas@extundo.com>
+
+	* getopt.m4 (gl_GETOPT_SUBSTITUTE): New macro,
+	as discussed with Paul Eggert in threads rooted at
+	<http://lists.gnu.org/archive/html/bug-gnulib/2004-06/msg00039.html>
+	and
+	<http://lists.gnu.org/archive/html/bug-gnulib/2004-07/msg00001.html>.
+	Before, the test was empty, and relied on ELIDE_CODE in source
+	code.)
+	(gl_PREREQ_GETOPT): New macro.
+	(gl_GETOPT): Use them.
+
 2004-08-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge from coreutils.

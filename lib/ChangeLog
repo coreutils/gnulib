@@ -1,3 +1,25 @@
+2004-08-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* argp-help.c, argp-parse.c: Use "gettext.h" instead of
+	its complicated substitute.
+	* argp-help.c: Include <errno.h>, for program_invocation_short_name
+	and program_invocation_name.
+	(__argp_basename) [!_LIBC]: Remove; the only use was
+	replaced by its body.
+	(__argp_short_program_name): Change condition from
+	!defined __argp_short_program_name to
+	! (defined _LIBC || HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME),
+	to match argp-namefrob.h.
+	(__argp_failure): Don't assume strerror_r returns char *.
+	* argp-parse.c (N_): Define unconditionally.
+	(argp_default_options): Fill out initializers with 0 to avoid
+	gcc warnings.
+	
+2004-08-12  Simon Josefsson  <jas@extundo.com>
+
+	* getopt.c, getopt1.c: Remove ELIDE_CODE hack.
+	* getopt_.h: Renamed from getopt.h.
+	
 2004-08-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge from coreutils.
