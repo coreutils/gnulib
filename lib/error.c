@@ -90,9 +90,9 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 char *strerror_r ();
 # endif
 
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
+# ifndef SIZE_MAX
+#  define SIZE_MAX ((size_t) -1)
+# endif
 
 /* The calling program should define program_name and set it to the
    name of the executing program.  */
