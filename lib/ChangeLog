@@ -1,3 +1,11 @@
+2003-06-18  Jim Meyering  <jim@meyering.net>
+
+	Merge changes from coreutils.
+	* readutmp.c: Include <string.h> and <stdlib.h> unconditionally.
+	Remove explicit declarations of xmalloc and realloc.
+	Include xalloc.h.
+	(read_utmp): Remove anachronistic cast of xmalloc.
+
 2003-06-17  Paul Eggert  <eggert@twinsun.com>
 
 	Assume C89, so PARAMS isn't needed.
@@ -12,7 +20,7 @@
 	* filemode.h, hard-locale.h, memcoll.h, modechange.h, physmem.h,
 	same.h, strverscmp.h: Do not include config.h; no longer needed.
 	Anyway, config.h should always be included before any other file.
-	
+
 2003-06-11  Simon Josefsson  <jas@extundo.com>
 
 	* sysexit_.h: New file.
