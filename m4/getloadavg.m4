@@ -1,4 +1,4 @@
-#serial 10
+#serial 11
 
 # A replacement for autoconf's macro by the same name.  This version
 # accepts an optional argument specifying the name of the $srcdir-relative
@@ -92,7 +92,7 @@ if test $ac_cv_func_getloadavg_setgid = yes; then
   # If we got an error (system does not support symlinks), try without -L.
   test -z "$ac_ls_output" && ac_ls_output=`ls -lg /dev/kmem`
   ac_cv_group_kmem=`echo $ac_ls_output \
-    | sed -ne ['s/[ 	][ 	]*/ /g;
+    | sed -ne ['s/[	 ][	 ]*/ /g;
 	       s/^.[sSrwx-]* *[0-9]* *\([^0-9]*\)  *.*/\1/;
 	       / /s/.* //;p;']`
 ])

@@ -1,4 +1,4 @@
-# lib-ld.m4 serial 2 (gettext-0.12)
+# lib-ld.m4 serial 1003 (gettext-0.12)
 dnl Copyright (C) 1996-2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -80,7 +80,7 @@ else
 fi
 AC_CACHE_VAL(acl_cv_path_LD,
 [if test -z "$LD"; then
-  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS="${IFS}${PATH_SEPARATOR-:}"
+  IFS="${IFS=	 }"; ac_save_ifs="$IFS"; IFS="${IFS}${PATH_SEPARATOR-:}"
   for ac_dir in $PATH; do
     test -z "$ac_dir" && ac_dir=.
     if test -f "$ac_dir/$ac_prog" || test -f "$ac_dir/$ac_prog$ac_exeext"; then
