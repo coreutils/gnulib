@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.5 2004-09-28 22:58:00 eggert Exp $
+@comment $Id: gnulib.texi,v 1.6 2004-09-29 10:58:47 haible Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2004-09-28 22:58:00 $
+@set UPDATED $Date: 2004-09-29 10:58:47 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -123,8 +123,9 @@ underscore and either an uppercase letter or another underscore, for
 any use.  Thus, in theory, an application might not safely assume that
 @code{_FOO_H} has not already been defined by a library.  On the other
 hand, using @code{FOO_H} will likely lead the higher risk of
-collisions with other symbols (e.g., @code{COFF_LONG_H} which is a CPP
-macro function).  Your preference may depeend on whether you consider
+collisions with other symbols (e.g., @code{KEY_H}, @code{XK_H}, @code{BPF_H},
+which are CPP macro constants, or @code{COFF_LONG_H}, which is a CPP
+macro function).  Your preference may depend on whether you consider
 the header file under discussion as part of the application (which has
 its own namespace for CPP symbols) or a supporting library (that
 shouldn't interfere with the application's CPP symbol namespace).
