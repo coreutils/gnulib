@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, extensions, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, progname, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, version-etc-2, xalloc, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xreadlink, xsetenv, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, extensions, fatal, fatal-signal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, progname, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xreadlink, xsetenv, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -233,6 +233,13 @@
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">vsprintf with automatic memory allocation.
       </TR>
     </TABLE>
+    <H3><A HREF="#ansic_ext_signal">Signal handling &lt;signal.h&gt;</A></H3>
+    <TABLE>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fatal-signal">fatal-signal</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Emergency actions in case of a fatal signal.
+      </TR>
+    </TABLE>
     <H3><A HREF="#ansic_ext_argv">Command-line arguments</A></H3>
     <TABLE>
       <TR WIDTH="100%">
@@ -242,10 +249,6 @@
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=version-etc">version-etc</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Print --version output.
-      </TR>
-      <TR WIDTH="100%">
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=version-etc-2">version-etc-2</A>
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Print --version output. Translator-friendly.
       </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=long-options">long-options</A>
@@ -1355,6 +1358,30 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>vasnprintf
       </TR>
     </TABLE>
+    <H3><A NAME="ansic_ext_signal">Signal handling &lt;signal.h&gt;</A></H3>
+    <TABLE>
+      <TR>
+        <TH ALIGN=LEFT>modules/
+        <TH ALIGN=LEFT>lib/
+        <TH ALIGN=LEFT>lib/
+        <TH ALIGN=LEFT>m4/
+        <TH ALIGN=LEFT>&nbsp;
+      </TR>
+      <TR>
+        <TH ALIGN=LEFT>Module
+        <TH ALIGN=LEFT>Header
+        <TH ALIGN=LEFT>Implementation
+        <TH ALIGN=LEFT>Autoconf macro
+        <TH ALIGN=LEFT>Depends on
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fatal-signal"></A><A HREF="modules/fatal-signal">fatal-signal</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fatal-signal.h">fatal-signal.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fatal-signal.c">fatal-signal.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/fatal-signal.m4">fatal-signal.m4</A><BR><A HREF="m4/signalblocking.m4">signalblocking.m4</A><BR>gl_FATAL_SIGNAL
+        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>stdbool
+      </TR>
+    </TABLE>
     <H3><A NAME="ansic_ext_argv">Command-line arguments</A></H3>
     <TABLE>
       <TR>
@@ -1382,13 +1409,6 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=version-etc"></A><A HREF="modules/version-etc">version-etc</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/version-etc.h">version-etc.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/version-etc.c">version-etc.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext
-      </TR>
-      <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=version-etc-2"></A><A HREF="modules/version-etc-2">version-etc-2</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/version-etc-2.h">version-etc-2.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/version-etc-2.c">version-etc-2.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext
       </TR>
@@ -2708,6 +2728,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on  3 October 2003.
+    Generated from <CODE>MODULES.html.sh</CODE> on  7 October 2003.
   </BODY>
 </HTML>
