@@ -789,6 +789,8 @@ xmemcoll.h      xmemcoll.c            ---                         memcoll
 
 unicodeio.h     unicodeio.c           AC_CHECK_HEADERS(stddef.h)  iconv
                                       AC_CHECK_HEADERS(string.h)  gettext
+                                                                  localcharset
+                                                                  error
 
 NYI             rpmatch.c             AC_REPLACE_FUNCS(rpmatch)   gettext
                                       AC_STDC_HEADERS             regex
