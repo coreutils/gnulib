@@ -1,3 +1,7 @@
+2004-08-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* fatal.m4: Remove, as the "fatal" module wasn't used or working.
+
 2004-07-13  Robert Millan  <robertmh@gnu.org>
 
 	* host-os.m4: s/KNetBSD/kNetBSD/g and s/KFreeBSD/kFreeBSD/g.

@@ -1,3 +1,7 @@
+2004-08-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* fatal.c, fatal.h: Remove as the "fatal" module wasn't used or working.
+
 2004-07-16  Simon Josefsson  <jas@extundo.com>
 
 	* dummy.c: New file.

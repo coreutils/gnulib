@@ -1909,7 +1909,6 @@ func_all_modules ()
   func_module c-stack
   func_module error
   func_module extensions
-  func_module fatal
   func_module getdomainname
   func_module xgetdomainname
   func_module getloadavg
