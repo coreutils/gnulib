@@ -23,11 +23,14 @@
 /* Get specification.  */
 #include "snprintf.h"
 
+/* Get memcpy.  */
+#include <string.h>
+
 /* Get vasnprintf.  */
 #include "vasnprintf.h"
 
 /* Get MIN. */
-#include <minmax.h>
+#include "minmax.h"
 
 /* Print formatted output to string STR.  Similar to sprintf, but
    additional length SIZE limit how much is written into STR.  Returns

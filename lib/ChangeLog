@@ -1,3 +1,7 @@
+2004-10-01  Bruno Haible  <bruno@clisp.org>
+
+	* snprintf.c: Include <string.h>.
+
 2004-09-30  Simon Josefsson  <jas@extundo.com>
 
 	* snprintf.h, snprintf.c: New files.
