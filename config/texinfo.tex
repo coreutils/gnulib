@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-01-05.16}
+\def\texinfoversion{2004-01-15.09}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -1110,14 +1110,14 @@ where each line of input produces a line of output.}
 % So open here the files we need to have open while reading the input.
 % This makes it possible to make a .fmt file for texinfo.
 \def\setfilename{%
+   \fixbackslash  % Turn off hack to swallow `\input texinfo'.
    \iflinks
      \tryauxfile
      % Open the new aux file.  TeX will close it automatically at exit.
      \immediate\openout\auxfile=\jobname.aux
    \fi % \openindices needs to do some work in any case.
    \openindices
-   \fixbackslash  % Turn off hack to swallow `\input texinfo'.
-   \global\let\setfilename=\comment % Ignore extra @setfilename cmds.
+   \let\setfilename=\comment % Ignore extra @setfilename cmds.
    %
    % If texinfo.cnf is present on the system, read it.
    % Useful for site-wide @afourpaper, etc.
@@ -5983,7 +5983,16 @@ width0pt\relax} \fi
   \catcode`\%=\other
   \catcode`+=\other % avoid \+ for paranoia even though we've turned it off
   %
-  % Make the characters 128-255 be printing characters
+  % This is to support \ in node names and titles, since the \
+  % characters end up in a \csname.  It's easier than
+  % leaving it active and making its active definition an actual \
+  % character.  What I don't understand is why it works in the *value*
+  % of the xrdef.  Seems like it should be a catcode12 \, and that
+  % should not typeset properly.  But it works, so I'm moving on for
+  % now.  --karl, 15jan04.
+  \catcode`\\=\other
+  %
+  % Make the characters 128-255 be printing characters.
   {%
     \count 1=128
     \def\loop{%
