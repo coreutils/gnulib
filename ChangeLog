@@ -5,6 +5,16 @@
 
 2004-08-12  Simon Josefsson  <jas@extundo.com>
 
+	* gnulib-tool: Add --source-base, --m4-base, --libtool options.
+	Change default library name from libfoo to libgnu.
+	Now, if you have a configure.ac that says:
+		gl_SOURCE_BASE(gl)
+		gl_M4_BASE(gl/m4)
+		gl_MODULES(error getopt etcetera)
+		gl_INIT
+	you can import all you need by running:
+		../gnulib/gnulib-tool --import
+
 	* modules/getopt (Files): Rename getopt.h to getopt_.h.
 	(Makefile.am): Rewrite, use logic from argz.
 	(Include): Use <getopt.h> instead of "getopt.h".
