@@ -1,5 +1,9 @@
 2003-10-29  Paul Eggert  <eggert@twinsun.com>
 
+	* xalloc.m4 (gl_XALLOC): Undo previous change.
+
+2003-10-29  Paul Eggert  <eggert@twinsun.com>
+
 	* host-os.m4 (UTILS_HOST_OS): Resurrect netbsd*-gnu.  Add comments
 	to it, and to knetbsd*-gnu and kfreebsd*-gnu.  Remove the '*' from
 	after the 'gnu' in these cases.  This fixes some bugs in the

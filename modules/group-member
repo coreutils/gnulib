@@ -8,6 +8,7 @@ m4/group-member.m4
 
 Depends-on:
 xalloc
+stdbool
 
 configure.ac:
 jm_FUNC_GROUP_MEMBER

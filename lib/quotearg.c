@@ -539,7 +539,7 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
     {
       unsigned int n1 = n0 + 1;
 
-      if (SIZE_MAX / sizeof *slotvec < n1)
+      if (xalloc_oversized (n1, sizeof *slotvec))
 	xalloc_die ();
 
       if (slotvec == &slotvec0)

@@ -1,5 +1,15 @@
 2003-10-29  Paul Eggert  <eggert@twinsun.com>
 
+	* xalloc.h (xalloc_oversized): Now a macro, not a function,
+	so that it works even if SIZE_MAX < N.  Do not include <stdbool.h>;
+	no longer needed.
+	* quotearg.c (quotearg_n_options): Use it.
+	* group-member.c: Include <stdbool.h>.
+	(free_group_info): Arg is now const *; don't free arg.
+	(get_group_info): Now returns bool and accepts struct group_info *,
+	rather than returning a malloc'ed struct group_info *.
+	All uses changed.  Check for overflow in internal size calculation.
+
 	* getusershell.c (readname): Simplify the code by using x2nrealloc
 	rather than xmalloc/xrealloc.
 	* linebuffer.c (initbuffer, readlinebuffer): Simplify the code by
