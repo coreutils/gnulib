@@ -1,0 +1,21 @@
+Description:
+The maximum unsigned long long value, as a preprocessor constant.
+
+Files:
+m4/ullong_max.m4
+
+Depends-on:
+
+configure.ac:
+gl_ULLONG_MAX
+
+Makefile.am:
+
+Include:
+<limits.h>
+
+License:
+GPL
+
+Maintainer:
+Paul Eggert
