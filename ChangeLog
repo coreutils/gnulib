@@ -1,5 +1,10 @@
 2005-03-23  Jim Meyering  <jim@meyering.net>
 
+	* modules/check-include-files: New script to check for
+	missing dependencies, multiple includes, etc.
+
+	* modules/xvasprintf (Depends-on): Add xalloc-die.
+
 	* modules/c-strtold (Depends-on): Add xalloc.
 	* modules/c-strtod (Depends-on): Add xalloc.
 	* modules/hash (Depends-on): Add xalloc.
