@@ -1,3 +1,8 @@
+2005-03-15  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt (config.rpath): from gettext.
+	* config.rpath: update.
+
 2005-02-22  Simon Josefsson  <jas@extundo.com>
 
 	* srclist.txt: Sync iconvme.h, iconvme.c from libc.

@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.57 2005-03-13 14:22:21 karl Exp $
+# $Id: srclist.txt,v 1.58 2005-03-15 22:08:36 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -45,6 +45,7 @@ $GETTEXT/gettext-tools/lib/setenv.c			lib gpl
 $GETTEXT/gettext-tools/lib/unsetenv.c			lib gpl
 $GETTEXT/gettext-tools/lib/vasprintf.h			lib gpl
 
+$GETTEXT/autoconf-lib-link/config.rpath			config
 $GETTEXT/autoconf-lib-link/m4/lib-ld.m4			m4
 $GETTEXT/autoconf-lib-link/m4/lib-link.m4		m4
 $GETTEXT/autoconf-lib-link/m4/lib-prefix.m4		m4
