@@ -3,6 +3,7 @@
 	From coreutils.
 	* xgetcwd.c (xgetcwd): Include "xgetcwd.h".
 	Improve comment.
+	* xgetcwd.h: Remove definition/uses of PARAMS.
 
 2003-06-06  Jim Meyering  <jim@meyering.net>
 
