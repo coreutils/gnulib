@@ -2,1325 +2,2392 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, bumpalloc, c-bs-a, c-stack, canon-host, chown, closeout, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, mkdir, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, unicodeio, unistd-safer, unlocked-io, userspec, utime, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, classpath, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, execute, exit, exitfail, fatal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fstrcmp, fsusage, ftruncate, full-read, full-write, gcd, gcj, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, javacomp, javaexec, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, physmem, pipe, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sh-quote, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
   <H1>Gnulib Module List</H1>
   This is a list of the modules which make up gnulib, with dependencies.
-  <H2>Support for systems lacking ANSI C 89</H2>
+  <H2><A HREF="#ansic_sup">Support for systems lacking ANSI C 89</A></H2>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=c-bs-a">c-bs-a</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Determine portability of "\a".
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=assert">assert</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Allow the installer to disable assertions through "configure --disable-assert".
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=atexit">atexit</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/atexit.html">atexit</A>() function: register a function to be called at program termination.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strtod">strtod</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strtod.html">strtod</A>() function: convert string to 'double'.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strtol">strtol</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strtol.html">strtol</A>() function: convert string to 'long'.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strtoul">strtoul</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strtoul.html">strtoul</A>() function: convert string to 'unsigned long'.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=memchr">memchr</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/memchr.html">memchr</A>() function: scan memory for a byte.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=memcmp">memcmp</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/memcmp.html">memcmp</A>() function: compare memory areas.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=memcpy">memcpy</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/memcpy.html">memcpy</A>() function: copy memory area.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=memmove">memmove</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/memmove.html">memmove</A>() function: copy memory area.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=memset">memset</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/memset.html">memset</A>() function: fill memory with a constant byte.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strcspn">strcspn</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strcspn.html">strcspn</A>() function: search a string for any of a set of characters.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strpbrk">strpbrk</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strpbrk.html">strpbrk</A>() function: search a string for any of a set of characters.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strstr">strstr</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strstr.html">strstr</A>() function: search for a substring in a string.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strerror">strerror</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strerror.html">strerror</A>() function: return string describing error code.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=mktime">mktime</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/mktime.html">mktime</A>() function: convert broken-down time to linear time.
+    </TR>
+  </TABLE>
+  These modules are not listed among dependencies below, for simplicity.
+  <H2><A HREF="#ansic_enh">Enhancements for ANSI C 89 functions</A></H2>
+  <H3><A HREF="#ansic_enh_stdlib_memory">Memory management functions &lt;stdlib.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=malloc">malloc</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/malloc.html">malloc</A>() function that is glibc compatible.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=realloc">realloc</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/realloc.html">realloc</A>() function that is glibc compatible.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#ansic_enh_time_datetime">Date and time &lt;time.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strftime">strftime</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">nstrftime() function: convert date and time to string, with GNU extensions.
+    </TR>
+  </TABLE>
+  <H2><A HREF="#ansic_ext">Extra functions based on ANSI C 89</A></H2>
+  <H3><A HREF="#ansic_ext_stdlib_memory">Memory management functions &lt;stdlib.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xalloc">xalloc</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Memory allocation with out-of-memory checking.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=alloca">alloca</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Memory allocation on the stack.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=bumpalloc">bumpalloc</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Increase table allocation by one element.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#ansic_ext_stdlib_arith">Integer arithmetic functions &lt;stdlib.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=gcd">gcd</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Greatest common divisor.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#ansic_ext_stdlib_env">Environment variables &lt;stdlib.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=putenv">putenv</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/putenv.html">putenv</A>() function: change or add an environment variable.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=setenv">setenv</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/setenv.html">setenv</A>() function: set an environment variable.
+<A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/unsetenv.html">unsetenv</A>() function: remove an environment variable.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#ansic_ext_ctype">Character handling &lt;ctype.h&gt;</A></H3>
+  <H3><A HREF="#ansic_ext_string">String handling &lt;string.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=bcopy">bcopy</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Old BSD <A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/bcopy.html">bcopy</A>() function: copy memory area.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=memrchr">memrchr</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">memrchr() function: scan memory for a byte, from the right end.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=stpcpy">stpcpy</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">stpcpy() function: copy a string, returning a pointer to its end.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strcase">strcase</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Case-insensitive string comparison functions.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strdup">strdup</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strdup.html">strdup</A>() function: duplicate a string.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strnlen">strnlen</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">strnlen() function: determine the length of a size-bounded string.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strndup">strndup</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">strndup() function: duplicate a size-bounded string.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#ansic_ext_stdlib_conv">Numeric conversion functions &lt;stdlib.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xstrtod">xstrtod</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Convert string to 'double', with error checking.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xstrtol">xstrtol</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Convert string to 'long` or 'unsigned long', with error checking.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#ansic_ext_time_datetime">Date and time &lt;time.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getdate">getdate</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Convert a date/time string to linear time.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#ansic_ext_stdio">Input/Output &lt;stdio.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=unlocked-io">unlocked-io</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Enable faster, non-thread-safe stdio functions if available.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#ansic_ext_argv">Command-line arguments</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=argmatch">argmatch</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Search for an exact or abbreviated match of a string in an array of strings.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=version-etc">version-etc</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Print --version output.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=long-options">long-options</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Handle --help and --version options.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#ansic_ext_crypto">Cryptographic computations</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=md5">md5</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Compute MD5 checksum.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=sha">sha</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Compute SHA checksum.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#ansic_ext_misc">Misc</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=diacrit">diacrit</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Decomposition of composed ISO-8859-1 characters.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getline">getline</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Read a line from a stream.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=linebuffer">linebuffer</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Read a line from a stream.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=obstack">obstack</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Memory allocation, optimized for stack-like allocation patterns.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=hash-pjw">hash-pjw</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Compute a hash value for a NUL-terminated string.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=hash">hash</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Parametrizable hash table.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=readtokens">readtokens</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Read tokens from a stream.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strverscmp">strverscmp</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Compare strings holding version numbers.
+    </TR>
+  </TABLE>
+  <H2><A HREF="#isoc_sup">Support for systems lacking ISO C 99</A></H2>
+  <H3><A HREF="#isoc_sup_stdbool">Boolean type and values &lt;stdbool.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=stdbool">stdbool</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">An &lt;stdbool.h&gt; that nearly conforms to C99.
+(Nearly: casts to bool may not work.)
+    </TR>
+  </TABLE>
+  <H3><A HREF="#isoc_sup_stdlib_conv">Numeric conversion functions &lt;stdlib.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strtoll">strtoll</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strtoll.html">strtoll</A>() function: convert string to 'long long'.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strtoull">strtoull</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strtoull.html">strtoull</A>() function: convert string to 'unsigned long long'.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#isoc_sup_inttypes">Functions for greatest-width integer types &lt;inttypes.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strtoimax">strtoimax</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strtoimax.html">strtoimax</A>() function: convert string to 'intmax_t'.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=strtoumax">strtoumax</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/strtoumax.html">strtoumax</A>() function: convert string to 'uintmax_t'.
+    </TR>
+  </TABLE>
+  <H2><A HREF="#isoc_enh">Enhancements for ISO C 99 functions</A></H2>
+  <TABLE>
+  </TABLE>
+  <H2><A HREF="#isoc_ext">Extra functions based on ISO C 99</A></H2>
+  <H3><A HREF="#isoc_ext_stdlib_conv">Numeric conversion functions &lt;stdlib.h&gt;</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xstrtoimax">xstrtoimax</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Convert string to 'intmax_t', with error checking.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xstrtoumax">xstrtoumax</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Convert string to 'uintmax_t', with error checking.
+    </TR>
+  </TABLE>
+  <H2><A HREF="#posix_sup">Support for systems lacking POSIX:2001</A></H2>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=chown">chown</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/chown.html">chown</A>() function: change ownership of a file.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=dup2">dup2</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/dup2.html">dup2</A>() function: duplicate an open file descriptor.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=ftruncate">ftruncate</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/ftruncate.html">ftruncate</A>() function: truncate an open file to a specified length.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getgroups">getgroups</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/getgroups.html">getgroups</A>() function: return the supplementary group IDs of the current process.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=gettimeofday">gettimeofday</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/gettimeofday.html">gettimeofday</A>() function: return current time.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=mkdir">mkdir</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/mkdir.html">mkdir</A>() function: create a directory.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=mkstemp">mkstemp</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/mkstemp.html">mkstemp</A>() function: create a private temporary file.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=stat">stat</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/stat.html">stat</A>() function: return information about a file, following symbolic links.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=lstat">lstat</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/stat.html">stat</A>() function: return information about a file or symbolic link.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=timespec">timespec</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">struct timespec.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=nanosleep">nanosleep</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/nanosleep.html">nanosleep</A>() function: pause execution for a specified time.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=regex">regex</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Regular expression matching.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=rename">rename</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/rename.html">rename</A>() function: change the name or location of a file.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=rmdir">rmdir</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/rmdir.html">rmdir</A>() function: delete a directory.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=utime">utime</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/utime.html">utime</A>() function: change access and/or modification times of a file.
+    </TR>
+  </TABLE>
+  <H2><A HREF="#posix_enh">Enhancements for POSIX:2001 functions</A></H2>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=dirname">dirname</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Extract specific portions of filenames.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getopt">getopt</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Process command line arguments.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=unistd-safer">unistd-safer</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">File descriptor functions that avoid clobbering STD{IN,OUT,ERR}_FILENO.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fnmatch">fnmatch</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">GNU <A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/fnmatch.html">fnmatch</A>() implementation.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fnmatch-posix">fnmatch-posix</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/fnmatch.html">fnmatch</A>() function: wildcard matching.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fnmatch-gnu">fnmatch-gnu</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/fnmatch.html">fnmatch</A>() function: wildcard matching, with GNU extensions.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=exclude">exclude</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Manage list of filenames or wildcard patterns for --exclude option processing.
+    </TR>
+  </TABLE>
+  <H2><A HREF="#posix_ext">Extra functions based on POSIX:2001</A></H2>
+  <H3><A HREF="#posix_ext_conv">Numeric conversion functions</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=human">human</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Convert a number (usually a file size) to a human readable string, possibly
+with K/M/G suffix.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#posix_ext_filesys">File system functions</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=acl">acl</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Access control lists of files.  (Unportable.)
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=backupfile">backupfile</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Determination of the filename of a backup file, according to user environment
+variables.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fsusage">fsusage</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return filesystem space usage info.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=dirfd">dirfd</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Retrieving the file descriptor of an open directory stream.  (Unportable.)
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=euidaccess">euidaccess</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">euidaccess() function: check effective user's permissions for a file.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=file-type">file-type</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return a string describing the type of a file.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fileblocks">fileblocks</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Estimate number of blocks of a file, if 'struct stat' doesn't have st_blocks.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=filemode">filemode</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return a string (?rwxrwxrwx format) describing the type and permissions of a
+file.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=isdir">isdir</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Determine whether a directory exists.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=lchown">lchown</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/lchown.html">lchown</A>() function: change ownership of a file.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=makepath">makepath</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Ensure that a directory path exists.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=modechange">modechange</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Manipulation of mode changes specified by strings (e.g. as first argument of
+chmod utility).
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=mountlist">mountlist</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return list of mounted filesystems.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=path-concat">path-concat</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Construct a full pathname by concatenating a directory name and a relative
+filename.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=pathmax">pathmax</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return maximum size of reasonable pathnames.  (Unportable: Hurd has no limit.)
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=same">same</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Determine whether two pathnames refer to the same directory entry of the same
+directory.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=save-cwd">save-cwd</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Save and restore the current working directory.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=savedir">savedir</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return the entries of a directory (just the names) as an argz string.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xgetcwd">xgetcwd</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return the current working directory, without size limitations.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xreadlink">xreadlink</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return the contents of a symbolic link, without size limitations.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#posix_ext_filedesc">File descriptor based Input/Output</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=safe-read">safe-read</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">An interface to <A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/read.html">read</A>() that retries after interrupts.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=safe-write">safe-write</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">An interface to <A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/write.html">write</A>() that retries after interrupts.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=full-read">full-read</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">An interface to <A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/read.html">read</A>() that reads all it is asked to read.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=full-write">full-write</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">An interface to <A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/write.html">write</A>() that writes all it is asked to write.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#posix_ext_filestream">File stream based Input/Output</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fpending">fpending</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Determine the number of bytes waiting in the output buffer of a stream.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=closeout">closeout</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Close stdout, checking for errors.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=stdio-safer">stdio-safer</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">File stream functions that avoid clobbering std{in,out,err}.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getpass">getpass</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">getpass() function: read a password from /dev/tty.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#posix_ext_uidgid">Users and groups</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getugroups">getugroups</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return the group IDs of a user.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=group-member">group-member</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Determine whether the current process has the permissions of a given group ID.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=idcache">idcache</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Username &lt;--&gt; uid and groupname &lt;--&gt; gid conversions, with cache for speed.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=userspec">userspec</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Parse a specifying a user and/or group (e.g. as first argument of chown
+utility).
+    </TR>
+  </TABLE>
+  <H3><A HREF="#posix_ext_datetime">Date and time</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=gettime">gettime</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return current time, with nanosecond resolution.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=settime">settime</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Set the current time, with nanosecond resolution.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=posixtm">posixtm</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Convert a date/time string (POSIX syntax) to linear time or broken-down time.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#posix_ext_net">Networking functions</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=gethostname">gethostname</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/gethostname.html">gethostname</A>() function: Return machine's hostname.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xgethostname">xgethostname</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return machine's hostname, without size limitations.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=canon-host">canon-host</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Canonicalize a host name: return a name other hosts can understand, i.e.
+usually the host name including FQDN.
+    </TR>
+  </TABLE>
+  <H3><A HREF="#posix_ext_i18n">Internationalization functions</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=gettext">gettext</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Translate messages to user's native language.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=iconv">iconv</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Character set conversion.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=localcharset">localcharset</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return current locale's character encoding.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=hard-locale">hard-locale</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Determine whether the current locale is different from the "C" locale.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=mbswidth">mbswidth</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Determine the number of screen columns needed for a string.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=memcasecmp">memcasecmp</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Case-insensitive memory area comparison.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=memcoll">memcoll</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Locale dependent memory area comparison.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=xmemcoll">xmemcoll</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Locale dependent memory area comparison, with error checking.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=unicodeio">unicodeio</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Unicode character output to streams with locale dependent encoding.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=rpmatch">rpmatch</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Locale dependent classification of a response as matching "yes" or "no".
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=yesno">yesno</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Read a response from the user, and its classification as matching "yes" or
+"no".
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=linebreak">linebreak</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Line breaking (works also for East-Asian languages).
+    </TR>
+  </TABLE>
+  <H3><A HREF="#posix_ext_exec">Executing programs</A></H3>
+  <H3><A HREF="#posix_ext_java">Java</A></H3>
+  <H3><A HREF="#posix_ext_misc">Misc</A></H3>
+  <TABLE>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=exitfail">exitfail</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Set exit status for fatal signal.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=c-stack">c-stack</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Stack overflow handling, causing program exit.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=error">error</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">error() and error_at_line() functions: Error reporting.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fatal">fatal</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Error reporting for fatal errors.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getloadavg">getloadavg</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return the current system load averages.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getpagesize">getpagesize</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">getpagesize() function: Return memory page size.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getusershell">getusershell</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return names of valid user shells.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=physmem">physmem</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return amount of total/available physical memory.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=posixver">posixver</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Determine desired POSIX specification version, according to user's environment
+variables.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=quotearg">quotearg</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Quote arguments for use in error messages.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=quote">quote</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Quote arguments for use in error messages.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=readutmp">readutmp</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Read entire utmp file into memory.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=sig2str">sig2str</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Convert between signal names and signal numbers.
+    </TR>
+  </TABLE>
+  <H2><A NAME="ansic_sup">Support for systems lacking ANSI C 89</A></H2>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=c-bs-a"></A><A HREF="modules/c-bs-a">c-bs-a</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>c-bs-a.m4<BR>AC_C_BACKSLASH_A
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;assert.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>assert.m4<BR>jm_ASSERT
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/c-bs-a.m4">c-bs-a.m4</A><BR>AC_C_BACKSLASH_A
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>atexit.c
-      <TD ALIGN=LEFT VALIGN=TOP>atexit.m4<BR>gl_FUNC_ATEXIT
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=assert"></A><A HREF="modules/assert">assert</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/assert.h.html">assert.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/assert.m4">assert.m4</A><BR>jm_ASSERT
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>strtod.c
-      <TD ALIGN=LEFT VALIGN=TOP>strtod.m4<BR>gl_FUNC_STRTOD
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=atexit"></A><A HREF="modules/atexit">atexit</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/atexit.c">atexit.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/atexit.m4">atexit.m4</A><BR>gl_FUNC_ATEXIT
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>strtol.c
-      <TD ALIGN=LEFT VALIGN=TOP>strtol.m4<BR>gl_FUNC_STRTOL
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strtod"></A><A HREF="modules/strtod">strtod</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strtod.c">strtod.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strtod.m4">strtod.m4</A><BR>gl_FUNC_STRTOD
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>strtoul.c
-      <TD ALIGN=LEFT VALIGN=TOP>strtoul.m4<BR>gl_FUNC_STRTOUL
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strtol"></A><A HREF="modules/strtol">strtol</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strtol.c">strtol.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strtol.m4">strtol.m4</A><BR>gl_FUNC_STRTOL
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strtoul"></A><A HREF="modules/strtoul">strtoul</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strtoul.c">strtoul.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strtoul.m4">strtoul.m4</A><BR>gl_FUNC_STRTOUL
       <TD ALIGN=LEFT VALIGN=TOP>strtol
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>memchr.c
-      <TD ALIGN=LEFT VALIGN=TOP>memchr.m4<BR>gl_FUNC_MEMCHR
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=memchr"></A><A HREF="modules/memchr">memchr</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/string.h.html">string.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/memchr.c">memchr.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/memchr.m4">memchr.m4</A><BR>gl_FUNC_MEMCHR
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>memcmp.c
-      <TD ALIGN=LEFT VALIGN=TOP>memcmp.m4<BR>jm_FUNC_MEMCMP
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=memcmp"></A><A HREF="modules/memcmp">memcmp</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/string.h.html">string.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/memcmp.c">memcmp.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/memcmp.m4">memcmp.m4</A><BR>jm_FUNC_MEMCMP
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>memcpy.c
-      <TD ALIGN=LEFT VALIGN=TOP>memcpy.m4<BR>gl_FUNC_MEMCPY
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=memcpy"></A><A HREF="modules/memcpy">memcpy</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/string.h.html">string.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/memcpy.c">memcpy.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/memcpy.m4">memcpy.m4</A><BR>gl_FUNC_MEMCPY
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>memmove.c
-      <TD ALIGN=LEFT VALIGN=TOP>memmove.m4<BR>gl_FUNC_MEMMOVE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=memmove"></A><A HREF="modules/memmove">memmove</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/string.h.html">string.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/memmove.c">memmove.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/memmove.m4">memmove.m4</A><BR>gl_FUNC_MEMMOVE
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>memset.c
-      <TD ALIGN=LEFT VALIGN=TOP>memset.m4<BR>gl_FUNC_MEMSET
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=memset"></A><A HREF="modules/memset">memset</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/string.h.html">string.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/memset.c">memset.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/memset.m4">memset.m4</A><BR>gl_FUNC_MEMSET
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>strcspn.c
-      <TD ALIGN=LEFT VALIGN=TOP>strcspn.m4<BR>gl_FUNC_STRCSPN
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strcspn"></A><A HREF="modules/strcspn">strcspn</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/string.h.html">string.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strcspn.c">strcspn.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strcspn.m4">strcspn.m4</A><BR>gl_FUNC_STRCSPN
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "strpbrk.h"
-      <TD ALIGN=LEFT VALIGN=TOP>strpbrk.c
-      <TD ALIGN=LEFT VALIGN=TOP>strpbrk.m4<BR>gl_FUNC_STRPBRK
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strpbrk"></A><A HREF="modules/strpbrk">strpbrk</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/strpbrk.h">strpbrk.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strpbrk.c">strpbrk.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strpbrk.m4">strpbrk.m4</A><BR>gl_FUNC_STRPBRK
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "strstr.h"
-      <TD ALIGN=LEFT VALIGN=TOP>strstr.c
-      <TD ALIGN=LEFT VALIGN=TOP>strstr.m4<BR>gl_FUNC_STRSTR
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strstr"></A><A HREF="modules/strstr">strstr</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/strstr.h">strstr.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strstr.c">strstr.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strstr.m4">strstr.m4</A><BR>gl_FUNC_STRSTR
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;string.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>strerror.c
-      <TD ALIGN=LEFT VALIGN=TOP>strerror.m4<BR>gl_FUNC_STRERROR
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strerror"></A><A HREF="modules/strerror">strerror</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/string.h.html">string.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strerror.c">strerror.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strerror.m4">strerror.m4</A><BR>gl_FUNC_STRERROR
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;time.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>mktime.c
-      <TD ALIGN=LEFT VALIGN=TOP>mktime.m4<BR>gl_FUNC_MKTIME
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mktime"></A><A HREF="modules/mktime">mktime</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/time.h.html">time.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mktime.c">mktime.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mktime.m4">mktime.m4</A><BR>gl_FUNC_MKTIME
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
   These modules are not listed among dependencies below, for simplicity.
-  <H2>Enhancements for ANSI C 89 functions</H2>
-  <H3>Memory management functions &lt;stdlib.h&gt;</H3>
+  <H2><A NAME="ansic_enh">Enhancements for ANSI C 89 functions</A></H2>
+  <H3><A NAME="ansic_enh_stdlib_memory">Memory management functions &lt;stdlib.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>malloc.c
-      <TD ALIGN=LEFT VALIGN=TOP>malloc.m4<BR>jm_FUNC_MALLOC
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=malloc"></A><A HREF="modules/malloc">malloc</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/malloc.c">malloc.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/malloc.m4">malloc.m4</A><BR>jm_FUNC_MALLOC
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>realloc.c
-      <TD ALIGN=LEFT VALIGN=TOP>realloc.m4<BR>jm_FUNC_REALLOC
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-  </TABLE>
-  <H3>Date and time &lt;time.h&gt;</H3>
-  <TABLE>
-    <TR>
-      <TH ALIGN=LEFT>lib/
-      <TH ALIGN=LEFT>lib/
-      <TH ALIGN=LEFT>m4/
-      <TH ALIGN=LEFT>&nbsp;
-    </TR>
-    <TR>
-      <TH ALIGN=LEFT>Header
-      <TH ALIGN=LEFT>Implementation
-      <TH ALIGN=LEFT>Autoconf macro
-      <TH ALIGN=LEFT>Depends on
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;time.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>strftime.c
-      <TD ALIGN=LEFT VALIGN=TOP>mbstate_t.m4<BR>tm_gmtoff.m4<BR>strftime.m4<BR>jm_FUNC_GNU_STRFTIME
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=realloc"></A><A HREF="modules/realloc">realloc</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/realloc.c">realloc.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/realloc.m4">realloc.m4</A><BR>jm_FUNC_REALLOC
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
-  <H2>Extra functions based on ANSI C 89</H2>
-  <H3>Memory management functions &lt;stdlib.h&gt;</H3>
+  <H3><A NAME="ansic_enh_time_datetime">Date and time &lt;time.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "xalloc.h"
-      <TD ALIGN=LEFT VALIGN=TOP>xmalloc.c<BR>xstrdup.c
-      <TD ALIGN=LEFT VALIGN=TOP>xalloc.m4<BR>gl_XALLOC
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strftime"></A><A HREF="modules/strftime">strftime</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/time.h.html">time.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strftime.c">strftime.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbstate_t.m4">mbstate_t.m4</A><BR><A HREF="m4/tm_gmtoff.m4">tm_gmtoff.m4</A><BR><A HREF="m4/strftime.m4">strftime.m4</A><BR>jm_FUNC_GNU_STRFTIME
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H2><A NAME="ansic_ext">Extra functions based on ANSI C 89</A></H2>
+  <H3><A NAME="ansic_ext_stdlib_memory">Memory management functions &lt;stdlib.h&gt;</A></H3>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>modules/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Module
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xalloc"></A><A HREF="modules/xalloc">xalloc</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xalloc.h">xalloc.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xmalloc.c">xmalloc.c</A><BR><A HREF="lib/xstrdup.c">xstrdup.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/xalloc.m4">xalloc.m4</A><BR>gl_XALLOC
       <TD ALIGN=LEFT VALIGN=TOP>malloc<BR>realloc<BR>error<BR>gettext
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=alloca"></A><A HREF="modules/alloca">alloca</A>
       <TD ALIGN=LEFT VALIGN=TOP>#include &lt;alloca.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>alloca_.h<BR>alloca.c
-      <TD ALIGN=LEFT VALIGN=TOP>alloca.m4<BR>gl_FUNC_ALLOCA
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/alloca_.h">alloca_.h</A><BR><A HREF="lib/alloca.c">alloca.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/alloca.m4">alloca.m4</A><BR>gl_FUNC_ALLOCA
       <TD ALIGN=LEFT VALIGN=TOP>xalloc
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "bumpalloc.h"
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=bumpalloc"></A><A HREF="modules/bumpalloc">bumpalloc</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/bumpalloc.h">bumpalloc.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>xalloc
     </TR>
   </TABLE>
-  <H3>Integer arithmetic functions &lt;stdlib.h&gt;</H3>
+  <H3><A NAME="ansic_ext_stdlib_arith">Integer arithmetic functions &lt;stdlib.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "gcd.h"
-      <TD ALIGN=LEFT VALIGN=TOP>gcd.c
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gcd"></A><A HREF="modules/gcd">gcd</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/gcd.h">gcd.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/gcd.c">gcd.c</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
-  <H3>Environment variables &lt;stdlib.h&gt;</H3>
+  <H3><A NAME="ansic_ext_stdlib_env">Environment variables &lt;stdlib.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=putenv"></A><A HREF="modules/putenv">putenv</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>putenv.c
-      <TD ALIGN=LEFT VALIGN=TOP>putenv.m4<BR>jm_FUNC_PUTENV
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/putenv.c">putenv.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/putenv.m4">putenv.m4</A><BR>jm_FUNC_PUTENV
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "setenv.h"
-      <TD ALIGN=LEFT VALIGN=TOP>setenv.c<BR>unsetenv.c
-      <TD ALIGN=LEFT VALIGN=TOP>setenv.m4<BR>gt_FUNC_SETENV
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=setenv"></A><A HREF="modules/setenv">setenv</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/setenv.h">setenv.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/setenv.c">setenv.c</A><BR><A HREF="lib/unsetenv.c">unsetenv.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/setenv.m4">setenv.m4</A><BR>gt_FUNC_SETENV
       <TD ALIGN=LEFT VALIGN=TOP>alloca
     </TR>
   </TABLE>
-  <H3>Character handling &lt;ctype.h&gt;</H3>
-  <H3>String handling &lt;string.h&gt;</H3>
+  <H3><A NAME="ansic_ext_ctype">Character handling &lt;ctype.h&gt;</A></H3>
+  <H3><A NAME="ansic_ext_string">String handling &lt;string.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=bcopy"></A><A HREF="modules/bcopy">bcopy</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>bcopy.c
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/bcopy.c">bcopy.c</A>
       <TD ALIGN=LEFT VALIGN=TOP>AC_REPLACE_FUNCS(bcopy)
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=memrchr"></A><A HREF="modules/memrchr">memrchr</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>memrchr.c
-      <TD ALIGN=LEFT VALIGN=TOP>memrchr.m4<BR>gl_FUNC_MEMRCHR
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "stpcpy.h"
-      <TD ALIGN=LEFT VALIGN=TOP>stpcpy.c
-      <TD ALIGN=LEFT VALIGN=TOP>stpcpy.m4<BR>gl_FUNC_STPCPY
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/memrchr.c">memrchr.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/memrchr.m4">memrchr.m4</A><BR>gl_FUNC_MEMRCHR
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "strcase.h"
-      <TD ALIGN=LEFT VALIGN=TOP>strcasecmp.c<BR>strncasecmp.c
-      <TD ALIGN=LEFT VALIGN=TOP>strcase.m4<BR>gl_STRCASE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=stpcpy"></A><A HREF="modules/stpcpy">stpcpy</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/stpcpy.h">stpcpy.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/stpcpy.c">stpcpy.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/stpcpy.m4">stpcpy.m4</A><BR>gl_FUNC_STPCPY
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>strdup.c
-      <TD ALIGN=LEFT VALIGN=TOP>strdup.m4<BR>gl_FUNC_STRDUP
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>strnlen.c
-      <TD ALIGN=LEFT VALIGN=TOP>strnlen.m4<BR>gl_FUNC_STRNLEN
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strcase"></A><A HREF="modules/strcase">strcase</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/strcase.h">strcase.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strcasecmp.c">strcasecmp.c</A><BR><A HREF="lib/strncasecmp.c">strncasecmp.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strcase.m4">strcase.m4</A><BR>gl_STRCASE
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strdup"></A><A HREF="modules/strdup">strdup</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>strndup.c
-      <TD ALIGN=LEFT VALIGN=TOP>strndup.m4<BR>gl_FUNC_STRNDUP
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strdup.c">strdup.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strdup.m4">strdup.m4</A><BR>gl_FUNC_STRDUP
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strnlen"></A><A HREF="modules/strnlen">strnlen</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strnlen.c">strnlen.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strnlen.m4">strnlen.m4</A><BR>gl_FUNC_STRNLEN
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strndup"></A><A HREF="modules/strndup">strndup</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strndup.c">strndup.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strndup.m4">strndup.m4</A><BR>gl_FUNC_STRNDUP
       <TD ALIGN=LEFT VALIGN=TOP>strnlen
     </TR>
   </TABLE>
-  <H3>Numeric conversion functions &lt;stdlib.h&gt;</H3>
+  <H3><A NAME="ansic_ext_stdlib_conv">Numeric conversion functions &lt;stdlib.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "xstrtod.h"
-      <TD ALIGN=LEFT VALIGN=TOP>xstrtod.c
-      <TD ALIGN=LEFT VALIGN=TOP>xstrtod.m4<BR>gl_XSTRTOD
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xstrtod"></A><A HREF="modules/xstrtod">xstrtod</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xstrtod.h">xstrtod.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xstrtod.c">xstrtod.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/xstrtod.m4">xstrtod.m4</A><BR>gl_XSTRTOD
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "xstrtol.h"
-      <TD ALIGN=LEFT VALIGN=TOP>xstrtol.c<BR>xstrtoul.c
-      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>longlong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>uintmax_t.m4<BR>intmax_t.m4<BR>xstrtol.m4<BR>gl_XSTRTOL
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xstrtol"></A><A HREF="modules/xstrtol">xstrtol</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xstrtol.h">xstrtol.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xstrtol.c">xstrtol.c</A><BR><A HREF="lib/xstrtoul.c">xstrtoul.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR><A HREF="m4/longlong.m4">longlong.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR><A HREF="m4/intmax_t.m4">intmax_t.m4</A><BR><A HREF="m4/xstrtol.m4">xstrtol.m4</A><BR>gl_XSTRTOL
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
-  <H3>Date and time &lt;time.h&gt;</H3>
+  <H3><A NAME="ansic_ext_time_datetime">Date and time &lt;time.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "getdate.h"
-      <TD ALIGN=LEFT VALIGN=TOP>getdate.y
-      <TD ALIGN=LEFT VALIGN=TOP>bison.m4<BR>tm_gmtoff.m4<BR>getdate.m4<BR>gl_GETDATE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getdate"></A><A HREF="modules/getdate">getdate</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getdate.h">getdate.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getdate.y">getdate.y</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/bison.m4">bison.m4</A><BR><A HREF="m4/tm_gmtoff.m4">tm_gmtoff.m4</A><BR><A HREF="m4/getdate.m4">getdate.m4</A><BR>gl_GETDATE
       <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
     </TR>
   </TABLE>
-  <H3>Input/Output &lt;stdio.h&gt;</H3>
+  <H3><A NAME="ansic_ext_stdio">Input/Output &lt;stdio.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "unlocked-io.h"
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=unlocked-io"></A><A HREF="modules/unlocked-io">unlocked-io</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/unlocked-io.h">unlocked-io.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>unlocked-io.m4<BR>jm_FUNC_GLIBC_UNLOCKED_IO
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/unlocked-io.m4">unlocked-io.m4</A><BR>jm_FUNC_GLIBC_UNLOCKED_IO
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
-  <H3>Command-line arguments</H3>
+  <H3><A NAME="ansic_ext_argv">Command-line arguments</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "argmatch.h"
-      <TD ALIGN=LEFT VALIGN=TOP>argmatch.c
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=argmatch"></A><A HREF="modules/argmatch">argmatch</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/argmatch.h">argmatch.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/argmatch.c">argmatch.c</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>error<BR>quotearg<BR>quote<BR>unlocked-io
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "version-etc.h"
-      <TD ALIGN=LEFT VALIGN=TOP>version-etc.c
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=version-etc"></A><A HREF="modules/version-etc">version-etc</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/version-etc.h">version-etc.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/version-etc.c">version-etc.c</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "long-options.h"
-      <TD ALIGN=LEFT VALIGN=TOP>long-options.c
-      <TD ALIGN=LEFT VALIGN=TOP>long-options.m4<BR>gl_LONG_OPTIONS
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=long-options"></A><A HREF="modules/long-options">long-options</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/long-options.h">long-options.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/long-options.c">long-options.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/long-options.m4">long-options.m4</A><BR>gl_LONG_OPTIONS
       <TD ALIGN=LEFT VALIGN=TOP>version-etc
     </TR>
   </TABLE>
-  <H3>Cryptographic computations</H3>
+  <H3><A NAME="ansic_ext_crypto">Cryptographic computations</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "md5.h"
-      <TD ALIGN=LEFT VALIGN=TOP>md5.c
-      <TD ALIGN=LEFT VALIGN=TOP>md5.m4<BR>gl_MD5
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=md5"></A><A HREF="modules/md5">md5</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/md5.h">md5.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/md5.c">md5.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/md5.m4">md5.m4</A><BR>gl_MD5
       <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "sha.h"
-      <TD ALIGN=LEFT VALIGN=TOP>sha.c
-      <TD ALIGN=LEFT VALIGN=TOP>sha.m4<BR>gl_SHA
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=sha"></A><A HREF="modules/sha">sha</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/sha.h">sha.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/sha.c">sha.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/sha.m4">sha.m4</A><BR>gl_SHA
       <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>md5
     </TR>
   </TABLE>
-  <H3>Misc</H3>
+  <H3><A NAME="ansic_ext_misc">Misc</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "diacrit.h"
-      <TD ALIGN=LEFT VALIGN=TOP>diacrit.c
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=diacrit"></A><A HREF="modules/diacrit">diacrit</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/diacrit.h">diacrit.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/diacrit.c">diacrit.c</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "getline.h"
-      <TD ALIGN=LEFT VALIGN=TOP>getline.c
-      <TD ALIGN=LEFT VALIGN=TOP>getline.m4<BR>AM_FUNC_GETLINE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getline"></A><A HREF="modules/getline">getline</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getline.h">getline.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getline.c">getline.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getline.m4">getline.m4</A><BR>AM_FUNC_GETLINE
       <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "linebuffer.h"
-      <TD ALIGN=LEFT VALIGN=TOP>linebuffer.c
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=linebuffer"></A><A HREF="modules/linebuffer">linebuffer</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/linebuffer.h">linebuffer.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/linebuffer.c">linebuffer.c</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "obstack.h"
-      <TD ALIGN=LEFT VALIGN=TOP>obstack.c
-      <TD ALIGN=LEFT VALIGN=TOP>obstack.m4<BR>gl_OBSTACK
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=obstack"></A><A HREF="modules/obstack">obstack</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/obstack.h">obstack.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/obstack.c">obstack.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/obstack.m4">obstack.m4</A><BR>gl_OBSTACK
       <TD ALIGN=LEFT VALIGN=TOP>gettext
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "hash-pjw.h"
-      <TD ALIGN=LEFT VALIGN=TOP>hash-pjw.c
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=hash-pjw"></A><A HREF="modules/hash-pjw">hash-pjw</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/hash-pjw.h">hash-pjw.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/hash-pjw.c">hash-pjw.c</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "hash.h"
-      <TD ALIGN=LEFT VALIGN=TOP>hash.c
-      <TD ALIGN=LEFT VALIGN=TOP>hash.m4<BR>gl_HASH
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=hash"></A><A HREF="modules/hash">hash</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/hash.h">hash.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/hash.c">hash.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/hash.m4">hash.m4</A><BR>gl_HASH
       <TD ALIGN=LEFT VALIGN=TOP>malloc<BR>realloc<BR>stdbool
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "readtokens.h"
-      <TD ALIGN=LEFT VALIGN=TOP>readtokens.c
-      <TD ALIGN=LEFT VALIGN=TOP>readtokens.m4<BR>gl_READTOKENS
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=readtokens"></A><A HREF="modules/readtokens">readtokens</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/readtokens.h">readtokens.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/readtokens.c">readtokens.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/readtokens.m4">readtokens.m4</A><BR>gl_READTOKENS
       <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "strverscmp.h"
-      <TD ALIGN=LEFT VALIGN=TOP>strverscmp.c
-      <TD ALIGN=LEFT VALIGN=TOP>strverscmp.m4<BR>gl_FUNC_STRVERSCMP
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strverscmp"></A><A HREF="modules/strverscmp">strverscmp</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/strverscmp.h">strverscmp.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strverscmp.c">strverscmp.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/strverscmp.m4">strverscmp.m4</A><BR>gl_FUNC_STRVERSCMP
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
-  <H2>Support for systems lacking ISO C 99</H2>
-  <H3>Boolean type and values &lt;stdbool.h&gt;</H3>
+  <H2><A NAME="isoc_sup">Support for systems lacking ISO C 99</A></H2>
+  <H3><A NAME="isoc_sup_stdbool">Boolean type and values &lt;stdbool.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdbool.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>stdbool.h.in
-      <TD ALIGN=LEFT VALIGN=TOP>stdbool.m4<BR>AM_STDBOOL_H
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=stdbool"></A><A HREF="modules/stdbool">stdbool</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdbool.h.html">stdbool.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/stdbool.h.in">stdbool.h.in</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/stdbool.m4">stdbool.m4</A><BR>AM_STDBOOL_H
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
-  <H3>Numeric conversion functions &lt;stdlib.h&gt;</H3>
+  <H3><A NAME="isoc_sup_stdlib_conv">Numeric conversion functions &lt;stdlib.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>strtoll.c
-      <TD ALIGN=LEFT VALIGN=TOP>longlong.m4<BR>strtoll.m4<BR>gl_FUNC_STRTOLL
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strtoll"></A><A HREF="modules/strtoll">strtoll</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strtoll.c">strtoll.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/longlong.m4">longlong.m4</A><BR><A HREF="m4/strtoll.m4">strtoll.m4</A><BR>gl_FUNC_STRTOLL
       <TD ALIGN=LEFT VALIGN=TOP>strtol
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>strtoull.c
-      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>strtoull.m4<BR>gl_FUNC_STRTOULL
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strtoull"></A><A HREF="modules/strtoull">strtoull</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strtoull.c">strtoull.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR><A HREF="m4/strtoull.m4">strtoull.m4</A><BR>gl_FUNC_STRTOULL
       <TD ALIGN=LEFT VALIGN=TOP>strtoul
     </TR>
   </TABLE>
-  <H3>Functions for greatest-width integer types &lt;inttypes.h&gt;</H3>
+  <H3><A NAME="isoc_sup_inttypes">Functions for greatest-width integer types &lt;inttypes.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strtoimax"></A><A HREF="modules/strtoimax">strtoimax</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>strtoimax.c
-      <TD ALIGN=LEFT VALIGN=TOP>longlong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>intmax_t.m4<BR>strtoimax.m4<BR>gl_FUNC_STRTOIMAX
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strtoimax.c">strtoimax.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/longlong.m4">longlong.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/intmax_t.m4">intmax_t.m4</A><BR><A HREF="m4/strtoimax.m4">strtoimax.m4</A><BR>gl_FUNC_STRTOIMAX
       <TD ALIGN=LEFT VALIGN=TOP>strtoll
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=strtoumax"></A><A HREF="modules/strtoumax">strtoumax</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>strtoumax.c
-      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>uintmax_t.m4<BR>strtoumax.m4<BR>gl_FUNC_STRTOUMAX
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/strtoumax.c">strtoumax.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR><A HREF="m4/strtoumax.m4">strtoumax.m4</A><BR>gl_FUNC_STRTOUMAX
       <TD ALIGN=LEFT VALIGN=TOP>strtoimax<BR>strtoull
     </TR>
   </TABLE>
-  <H2>Enhancements for ISO C 99 functions</H2>
+  <H2><A NAME="isoc_enh">Enhancements for ISO C 99 functions</A></H2>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
   </TABLE>
-  <H2>Extra functions based on ISO C 99</H2>
-  <H3>Numeric conversion functions &lt;stdlib.h&gt;</H3>
+  <H2><A NAME="isoc_ext">Extra functions based on ISO C 99</A></H2>
+  <H3><A NAME="isoc_ext_stdlib_conv">Numeric conversion functions &lt;stdlib.h&gt;</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "xstrtol.h"
-      <TD ALIGN=LEFT VALIGN=TOP>xstrtoimax.c
-      <TD ALIGN=LEFT VALIGN=TOP>xstrtoimax.m4<BR>jm_XSTRTOIMAX
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xstrtoimax"></A><A HREF="modules/xstrtoimax">xstrtoimax</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xstrtol.h">xstrtol.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xstrtoimax.c">xstrtoimax.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/xstrtoimax.m4">xstrtoimax.m4</A><BR>jm_XSTRTOIMAX
       <TD ALIGN=LEFT VALIGN=TOP>xstrtol<BR>strtoimax
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "xstrtol.h"
-      <TD ALIGN=LEFT VALIGN=TOP>xstrtoumax.c
-      <TD ALIGN=LEFT VALIGN=TOP>xstrtoumax.m4<BR>jm_XSTRTOUMAX
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xstrtoumax"></A><A HREF="modules/xstrtoumax">xstrtoumax</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xstrtol.h">xstrtol.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xstrtoumax.c">xstrtoumax.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/xstrtoumax.m4">xstrtoumax.m4</A><BR>jm_XSTRTOUMAX
       <TD ALIGN=LEFT VALIGN=TOP>xstrtol<BR>strtoumax
     </TR>
   </TABLE>
-  <H2>Support for systems lacking POSIX:2001</H2>
+  <H2><A NAME="posix_sup">Support for systems lacking POSIX:2001</A></H2>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;unistd.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>chown.c
-      <TD ALIGN=LEFT VALIGN=TOP>chown.m4<BR>jm_FUNC_CHOWN
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=chown"></A><A HREF="modules/chown">chown</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/unistd.h.html">unistd.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/chown.c">chown.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/chown.m4">chown.m4</A><BR>jm_FUNC_CHOWN
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;unistd.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>dup2.c
-      <TD ALIGN=LEFT VALIGN=TOP>dup2.m4<BR>gl_FUNC_DUP2
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=dup2"></A><A HREF="modules/dup2">dup2</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/unistd.h.html">unistd.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/dup2.c">dup2.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/dup2.m4">dup2.m4</A><BR>gl_FUNC_DUP2
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;unistd.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>ftruncate.c
-      <TD ALIGN=LEFT VALIGN=TOP>ftruncate.m4<BR>jm_FUNC_FTRUNCATE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=ftruncate"></A><A HREF="modules/ftruncate">ftruncate</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/unistd.h.html">unistd.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/ftruncate.c">ftruncate.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ftruncate.m4">ftruncate.m4</A><BR>jm_FUNC_FTRUNCATE
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;unistd.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>getgroups.c
-      <TD ALIGN=LEFT VALIGN=TOP>getgroups.m4<BR>jm_FUNC_GETGROUPS
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getgroups"></A><A HREF="modules/getgroups">getgroups</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/unistd.h.html">unistd.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getgroups.c">getgroups.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getgroups.m4">getgroups.m4</A><BR>jm_FUNC_GETGROUPS
       <TD ALIGN=LEFT VALIGN=TOP>xalloc
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;sys/time.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>gettimeofday.c
-      <TD ALIGN=LEFT VALIGN=TOP>gettimeofday.m4<BR>AC_FUNC_GETTIMEOFDAY_CLOBBER
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gettimeofday"></A><A HREF="modules/gettimeofday">gettimeofday</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/sys/time.h.html">sys/time.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/gettimeofday.c">gettimeofday.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/gettimeofday.m4">gettimeofday.m4</A><BR>AC_FUNC_GETTIMEOFDAY_CLOBBER
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;sys/stat.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>mkdir.c
-      <TD ALIGN=LEFT VALIGN=TOP>mkdir-slash.m4<BR>UTILS_FUNC_MKDIR_TRAILING_SLASH
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mkdir"></A><A HREF="modules/mkdir">mkdir</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/sys/stat.h.html">sys/stat.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mkdir.c">mkdir.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mkdir-slash.m4">mkdir-slash.m4</A><BR>UTILS_FUNC_MKDIR_TRAILING_SLASH
       <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>dirname
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdlib.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>mkstemp.c<BR>tempname.c
-      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>uintmax_t.m4<BR>mkstemp.m4<BR>UTILS_FUNC_MKSTEMP
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mkstemp"></A><A HREF="modules/mkstemp">mkstemp</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mkstemp.c">mkstemp.c</A><BR><A HREF="lib/tempname.c">tempname.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR><A HREF="m4/mkstemp.m4">mkstemp.m4</A><BR>UTILS_FUNC_MKSTEMP
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;sys/stat.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>stat.c
-      <TD ALIGN=LEFT VALIGN=TOP>stat.m4<BR>jm_FUNC_STAT
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=stat"></A><A HREF="modules/stat">stat</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/sys/stat.h.html">sys/stat.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/stat.c">stat.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/stat.m4">stat.m4</A><BR>jm_FUNC_STAT
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;sys/stat.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>lstat.c
-      <TD ALIGN=LEFT VALIGN=TOP>lstat.m4<BR>jm_FUNC_LSTAT
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=lstat"></A><A HREF="modules/lstat">lstat</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/sys/stat.h.html">sys/stat.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/lstat.c">lstat.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/lstat.m4">lstat.m4</A><BR>jm_FUNC_LSTAT
       <TD ALIGN=LEFT VALIGN=TOP>stat<BR>xalloc
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "timespec.h"
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=timespec"></A><A HREF="modules/timespec">timespec</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/timespec.h">timespec.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>st_mtim.m4<BR>timespec.m4<BR>gl_TIMESPEC
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/st_mtim.m4">st_mtim.m4</A><BR><A HREF="m4/timespec.m4">timespec.m4</A><BR>gl_TIMESPEC
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;time.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>nanosleep.c
-      <TD ALIGN=LEFT VALIGN=TOP>nanosleep.m4<BR>jm_FUNC_NANOSLEEP
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=nanosleep"></A><A HREF="modules/nanosleep">nanosleep</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/time.h.html">time.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/nanosleep.c">nanosleep.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/nanosleep.m4">nanosleep.m4</A><BR>jm_FUNC_NANOSLEEP
       <TD ALIGN=LEFT VALIGN=TOP>timespec
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "regex.h"
-      <TD ALIGN=LEFT VALIGN=TOP>regex.c
-      <TD ALIGN=LEFT VALIGN=TOP>regex.m4<BR>gl_REGEX
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=regex"></A><A HREF="modules/regex">regex</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/regex.h">regex.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/regex.c">regex.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/regex.m4">regex.m4</A><BR>gl_REGEX
       <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>unlocked-io<BR>gettext
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdio.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>rename.c
-      <TD ALIGN=LEFT VALIGN=TOP>rename.m4<BR>vb_FUNC_RENAME
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=rename"></A><A HREF="modules/rename">rename</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdio.h.html">stdio.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/rename.c">rename.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/rename.m4">rename.m4</A><BR>vb_FUNC_RENAME
       <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>dirname
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;unistd.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>rmdir.c
-      <TD ALIGN=LEFT VALIGN=TOP>rmdir.m4<BR>gl_FUNC_RMDIR
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=rmdir"></A><A HREF="modules/rmdir">rmdir</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/unistd.h.html">unistd.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/rmdir.c">rmdir.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/rmdir.m4">rmdir.m4</A><BR>gl_FUNC_RMDIR
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=utime"></A><A HREF="modules/utime">utime</A>
       <TD ALIGN=LEFT VALIGN=TOP>#if HAVE_UTIME_H<BR># include &lt;utime.h&gt;<BR>#else<BR># include &lt;sys/utime.h&gt;<BR>#endif
-      <TD ALIGN=LEFT VALIGN=TOP>utime.c
-      <TD ALIGN=LEFT VALIGN=TOP>utimbuf.m4<BR>utimes.m4<BR>utime.m4<BR>jm_FUNC_UTIME
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/utime.c">utime.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/utimbuf.m4">utimbuf.m4</A><BR><A HREF="m4/utimes.m4">utimes.m4</A><BR><A HREF="m4/utime.m4">utime.m4</A><BR>jm_FUNC_UTIME
       <TD ALIGN=LEFT VALIGN=TOP>safe-read<BR>full-write
     </TR>
   </TABLE>
-  <H2>Enhancements for POSIX:2001 functions</H2>
+  <H2><A NAME="posix_enh">Enhancements for POSIX:2001 functions</A></H2>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "dirname.h"
-      <TD ALIGN=LEFT VALIGN=TOP>dirname.c<BR>basename.c<BR>stripslash.c
-      <TD ALIGN=LEFT VALIGN=TOP>dos.m4<BR>dirname.m4<BR>gl_DIRNAME
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=dirname"></A><A HREF="modules/dirname">dirname</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/dirname.h">dirname.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/dirname.c">dirname.c</A><BR><A HREF="lib/basename.c">basename.c</A><BR><A HREF="lib/stripslash.c">stripslash.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/dos.m4">dos.m4</A><BR><A HREF="m4/dirname.m4">dirname.m4</A><BR>gl_DIRNAME
       <TD ALIGN=LEFT VALIGN=TOP>xalloc
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "getopt.h"
-      <TD ALIGN=LEFT VALIGN=TOP>getopt.c<BR>getopt1.c
-      <TD ALIGN=LEFT VALIGN=TOP>getopt.m4<BR>gl_GETOPT
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getopt"></A><A HREF="modules/getopt">getopt</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getopt.h">getopt.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getopt.c">getopt.c</A><BR><A HREF="lib/getopt1.c">getopt1.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getopt.m4">getopt.m4</A><BR>gl_GETOPT
       <TD ALIGN=LEFT VALIGN=TOP>gettext
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "unistd-safer.h"
-      <TD ALIGN=LEFT VALIGN=TOP>dup-safer.c
-      <TD ALIGN=LEFT VALIGN=TOP>unistd-safer.m4<BR>gl_UNISTD_SAFER
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=unistd-safer"></A><A HREF="modules/unistd-safer">unistd-safer</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/unistd-safer.h">unistd-safer.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/dup-safer.c">dup-safer.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/unistd-safer.m4">unistd-safer.m4</A><BR>gl_UNISTD_SAFER
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fnmatch"></A><A HREF="modules/fnmatch">fnmatch</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>fnmatch_.h<BR>fnmatch.c<BR>fnmatch_loop.c
-      <TD ALIGN=LEFT VALIGN=TOP>mbstate_t.m4<BR>fnmatch.m4<BR># No macro. You should also use one of fnmatch-posix or fnmatch-gnu.
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fnmatch_.h">fnmatch_.h</A><BR><A HREF="lib/fnmatch.c">fnmatch.c</A><BR><A HREF="lib/fnmatch_loop.c">fnmatch_loop.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbstate_t.m4">mbstate_t.m4</A><BR><A HREF="m4/fnmatch.m4">fnmatch.m4</A><BR># No macro. You should also use one of fnmatch-posix or fnmatch-gnu.
       <TD ALIGN=LEFT VALIGN=TOP>alloca
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "fnmatch.h"
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fnmatch-posix"></A><A HREF="modules/fnmatch-posix">fnmatch-posix</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fnmatch.h">fnmatch.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>gl_FUNC_FNMATCH_POSIX
       <TD ALIGN=LEFT VALIGN=TOP>fnmatch
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "fnmatch.h"
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fnmatch-gnu"></A><A HREF="modules/fnmatch-gnu">fnmatch-gnu</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fnmatch.h">fnmatch.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>gl_FUNC_FNMATCH_GNU
       <TD ALIGN=LEFT VALIGN=TOP>fnmatch
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "exclude.h"
-      <TD ALIGN=LEFT VALIGN=TOP>exclude.c
-      <TD ALIGN=LEFT VALIGN=TOP>exclude.m4<BR>gl_EXCLUDE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=exclude"></A><A HREF="modules/exclude">exclude</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/exclude.h">exclude.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/exclude.c">exclude.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/exclude.m4">exclude.m4</A><BR>gl_EXCLUDE
       <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>strcase<BR>unlocked-io<BR>fnmatch-gnu<BR>stdbool
     </TR>
   </TABLE>
-  <H2>Extra functions based on POSIX:2001</H2>
-  <H3>Numeric conversion functions</H3>
+  <H2><A NAME="posix_ext">Extra functions based on POSIX:2001</A></H2>
+  <H3><A NAME="posix_ext_conv">Numeric conversion functions</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "human.h"
-      <TD ALIGN=LEFT VALIGN=TOP>human.c
-      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>uintmax_t.m4<BR>human.m4<BR>gl_HUMAN
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=human"></A><A HREF="modules/human">human</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/human.h">human.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/human.c">human.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR><A HREF="m4/human.m4">human.m4</A><BR>gl_HUMAN
       <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>argmatch<BR>error<BR>xstrtol
     </TR>
   </TABLE>
-  <H3>File system functions</H3>
+  <H3><A NAME="posix_ext_filesys">File system functions</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "acl.h"
-      <TD ALIGN=LEFT VALIGN=TOP>acl.c
-      <TD ALIGN=LEFT VALIGN=TOP>acl.m4<BR>AC_FUNC_ACL
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=acl"></A><A HREF="modules/acl">acl</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/acl.h">acl.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/acl.c">acl.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/acl.m4">acl.m4</A><BR>AC_FUNC_ACL
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "backupfile.h"
-      <TD ALIGN=LEFT VALIGN=TOP>backupfile.c<BR>addext.c
-      <TD ALIGN=LEFT VALIGN=TOP>dos.m4<BR>d-ino.m4<BR>backupfile.m4<BR>gl_BACKUPFILE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=backupfile"></A><A HREF="modules/backupfile">backupfile</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/backupfile.h">backupfile.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/backupfile.c">backupfile.c</A><BR><A HREF="lib/addext.c">addext.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/dos.m4">dos.m4</A><BR><A HREF="m4/d-ino.m4">d-ino.m4</A><BR><A HREF="m4/backupfile.m4">backupfile.m4</A><BR>gl_BACKUPFILE
       <TD ALIGN=LEFT VALIGN=TOP>argmatch<BR>dirname
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "fsusage.h"
-      <TD ALIGN=LEFT VALIGN=TOP>fsusage.c
-      <TD ALIGN=LEFT VALIGN=TOP>ulonglong.m4<BR>stdint_h.m4<BR>inttypes_h.m4<BR>uintmax_t.m4<BR>fsusage.m4<BR>gl_FSUSAGE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fsusage"></A><A HREF="modules/fsusage">fsusage</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fsusage.h">fsusage.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fsusage.c">fsusage.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR><A HREF="m4/fsusage.m4">fsusage.m4</A><BR>gl_FSUSAGE
       <TD ALIGN=LEFT VALIGN=TOP>full-read
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "dirfd.h"
-      <TD ALIGN=LEFT VALIGN=TOP>dirfd.c
-      <TD ALIGN=LEFT VALIGN=TOP>dirfd.m4<BR>UTILS_FUNC_DIRFD
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=dirfd"></A><A HREF="modules/dirfd">dirfd</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/dirfd.h">dirfd.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/dirfd.c">dirfd.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/dirfd.m4">dirfd.m4</A><BR>UTILS_FUNC_DIRFD
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=euidaccess"></A><A HREF="modules/euidaccess">euidaccess</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>euidaccess.c
-      <TD ALIGN=LEFT VALIGN=TOP>euidaccess.m4<BR>gl_FUNC_EUIDACCESS
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/euidaccess.c">euidaccess.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/euidaccess.m4">euidaccess.m4</A><BR>gl_FUNC_EUIDACCESS
       <TD ALIGN=LEFT VALIGN=TOP>group-member
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "file-type.h"
-      <TD ALIGN=LEFT VALIGN=TOP>file-type.c
-      <TD ALIGN=LEFT VALIGN=TOP>file-type.m4<BR>gl_FILE_TYPE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=file-type"></A><A HREF="modules/file-type">file-type</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/file-type.h">file-type.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/file-type.c">file-type.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/file-type.m4">file-type.m4</A><BR>gl_FILE_TYPE
       <TD ALIGN=LEFT VALIGN=TOP>gettext
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fileblocks"></A><A HREF="modules/fileblocks">fileblocks</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>fileblocks.c
-      <TD ALIGN=LEFT VALIGN=TOP>fileblocks.m4<BR>gl_FILEBLOCKS
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "filemode.h"
-      <TD ALIGN=LEFT VALIGN=TOP>filemode.c
-      <TD ALIGN=LEFT VALIGN=TOP>filemode.m4<BR>gl_FILEMODE
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fileblocks.c">fileblocks.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/fileblocks.m4">fileblocks.m4</A><BR>gl_FILEBLOCKS
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>isdir.c
-      <TD ALIGN=LEFT VALIGN=TOP>isdir.m4<BR>gl_ISDIR
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=filemode"></A><A HREF="modules/filemode">filemode</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/filemode.h">filemode.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/filemode.c">filemode.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/filemode.m4">filemode.m4</A><BR>gl_FILEMODE
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=isdir"></A><A HREF="modules/isdir">isdir</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>lchown.h<BR>lchown.c
-      <TD ALIGN=LEFT VALIGN=TOP>lchown.m4<BR>jm_FUNC_LCHOWN
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/isdir.c">isdir.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/isdir.m4">isdir.m4</A><BR>gl_ISDIR
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=lchown"></A><A HREF="modules/lchown">lchown</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/lchown.h">lchown.h</A><BR><A HREF="lib/lchown.c">lchown.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/lchown.m4">lchown.m4</A><BR>jm_FUNC_LCHOWN
       <TD ALIGN=LEFT VALIGN=TOP>chown
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "makepath.h"
-      <TD ALIGN=LEFT VALIGN=TOP>makepath.c
-      <TD ALIGN=LEFT VALIGN=TOP>afs.m4<BR>makepath.m4<BR>gl_MAKEPATH
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=makepath"></A><A HREF="modules/makepath">makepath</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/makepath.h">makepath.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/makepath.c">makepath.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/afs.m4">afs.m4</A><BR><A HREF="m4/makepath.m4">makepath.m4</A><BR>gl_MAKEPATH
       <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>chown<BR>gettext<BR>save-cwd<BR>dirname<BR>error<BR>quote
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "modechange.h"
-      <TD ALIGN=LEFT VALIGN=TOP>modechange.c
-      <TD ALIGN=LEFT VALIGN=TOP>modechange.m4<BR>gl_MODECHANGE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=modechange"></A><A HREF="modules/modechange">modechange</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/modechange.h">modechange.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/modechange.c">modechange.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/modechange.m4">modechange.m4</A><BR>gl_MODECHANGE
       <TD ALIGN=LEFT VALIGN=TOP>xstrtol
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "mountlist.h"
-      <TD ALIGN=LEFT VALIGN=TOP>mountlist.c
-      <TD ALIGN=LEFT VALIGN=TOP>ls-mntd-fs.m4<BR>fstypename.m4<BR>mountlist.m4<BR>gl_MOUNTLIST
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mountlist"></A><A HREF="modules/mountlist">mountlist</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mountlist.h">mountlist.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mountlist.c">mountlist.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ls-mntd-fs.m4">ls-mntd-fs.m4</A><BR><A HREF="m4/fstypename.m4">fstypename.m4</A><BR><A HREF="m4/mountlist.m4">mountlist.m4</A><BR>gl_MOUNTLIST
       <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "path-concat.h"
-      <TD ALIGN=LEFT VALIGN=TOP>path-concat.c
-      <TD ALIGN=LEFT VALIGN=TOP>dos.m4<BR>path-concat.m4<BR>gl_PATH_CONCAT
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=path-concat"></A><A HREF="modules/path-concat">path-concat</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/path-concat.h">path-concat.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/path-concat.c">path-concat.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/dos.m4">dos.m4</A><BR><A HREF="m4/path-concat.m4">path-concat.m4</A><BR>gl_PATH_CONCAT
       <TD ALIGN=LEFT VALIGN=TOP>strdup<BR>xalloc<BR>dirname
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "pathmax.h"
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=pathmax"></A><A HREF="modules/pathmax">pathmax</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/pathmax.h">pathmax.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>pathmax.m4<BR>gl_PATHMAX
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/pathmax.m4">pathmax.m4</A><BR>gl_PATHMAX
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "same.h"
-      <TD ALIGN=LEFT VALIGN=TOP>same.c
-      <TD ALIGN=LEFT VALIGN=TOP>same.m4<BR>gl_SAME
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=same"></A><A HREF="modules/same">same</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/same.h">same.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/same.c">same.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/same.m4">same.m4</A><BR>gl_SAME
       <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>error<BR>dirname
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "save-cwd.h"
-      <TD ALIGN=LEFT VALIGN=TOP>save-cwd.c
-      <TD ALIGN=LEFT VALIGN=TOP>save-cwd.m4<BR>gl_SAVE_CWD
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=save-cwd"></A><A HREF="modules/save-cwd">save-cwd</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/save-cwd.h">save-cwd.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/save-cwd.c">save-cwd.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/save-cwd.m4">save-cwd.m4</A><BR>gl_SAVE_CWD
       <TD ALIGN=LEFT VALIGN=TOP>error
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "savedir.h"
-      <TD ALIGN=LEFT VALIGN=TOP>savedir.c
-      <TD ALIGN=LEFT VALIGN=TOP>savedir.m4<BR>gl_SAVEDIR
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=savedir"></A><A HREF="modules/savedir">savedir</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/savedir.h">savedir.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/savedir.c">savedir.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/savedir.m4">savedir.m4</A><BR>gl_SAVEDIR
       <TD ALIGN=LEFT VALIGN=TOP>xalloc
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "xgetcwd.h"
-      <TD ALIGN=LEFT VALIGN=TOP>xgetcwd.c
-      <TD ALIGN=LEFT VALIGN=TOP>getcwd.m4<BR>xgetcwd.m4<BR>gl_XGETCWD
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xgetcwd"></A><A HREF="modules/xgetcwd">xgetcwd</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xgetcwd.h">xgetcwd.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xgetcwd.c">xgetcwd.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getcwd.m4">getcwd.m4</A><BR><A HREF="m4/xgetcwd.m4">xgetcwd.m4</A><BR>gl_XGETCWD
       <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>pathmax
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "xreadlink.h"
-      <TD ALIGN=LEFT VALIGN=TOP>xreadlink.c
-      <TD ALIGN=LEFT VALIGN=TOP>xreadlink.m4<BR>gl_XREADLINK
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xreadlink"></A><A HREF="modules/xreadlink">xreadlink</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xreadlink.h">xreadlink.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xreadlink.c">xreadlink.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/xreadlink.m4">xreadlink.m4</A><BR>gl_XREADLINK
       <TD ALIGN=LEFT VALIGN=TOP>xalloc
     </TR>
   </TABLE>
-  <H3>File descriptor based Input/Output</H3>
+  <H3><A NAME="posix_ext_filedesc">File descriptor based Input/Output</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "safe-read.h"
-      <TD ALIGN=LEFT VALIGN=TOP>safe-read.c
-      <TD ALIGN=LEFT VALIGN=TOP>safe-read.m4<BR>gl_SAFE_READ
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=safe-read"></A><A HREF="modules/safe-read">safe-read</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/safe-read.h">safe-read.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/safe-read.c">safe-read.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/safe-read.m4">safe-read.m4</A><BR>gl_SAFE_READ
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "safe-write.h"
-      <TD ALIGN=LEFT VALIGN=TOP>safe-write.c
-      <TD ALIGN=LEFT VALIGN=TOP>safe-write.m4<BR>gl_SAFE_WRITE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=safe-write"></A><A HREF="modules/safe-write">safe-write</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/safe-write.h">safe-write.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/safe-write.c">safe-write.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/safe-write.m4">safe-write.m4</A><BR>gl_SAFE_WRITE
       <TD ALIGN=LEFT VALIGN=TOP>safe-read
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "full-read.h"
-      <TD ALIGN=LEFT VALIGN=TOP>full-read.c
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=full-read"></A><A HREF="modules/full-read">full-read</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/full-read.h">full-read.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/full-read.c">full-read.c</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>safe-read<BR>full-write
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "full-write.h"
-      <TD ALIGN=LEFT VALIGN=TOP>full-write.c
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=full-write"></A><A HREF="modules/full-write">full-write</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/full-write.h">full-write.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/full-write.c">full-write.c</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>safe-write
     </TR>
   </TABLE>
-  <H3>File stream based Input/Output</H3>
+  <H3><A NAME="posix_ext_filestream">File stream based Input/Output</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "__fpending.h"
-      <TD ALIGN=LEFT VALIGN=TOP>__fpending.c
-      <TD ALIGN=LEFT VALIGN=TOP>fpending.m4<BR>jm_FUNC_FPENDING
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fpending"></A><A HREF="modules/fpending">fpending</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/__fpending.h">__fpending.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/__fpending.c">__fpending.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/fpending.m4">fpending.m4</A><BR>jm_FUNC_FPENDING
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "closeout.h"
-      <TD ALIGN=LEFT VALIGN=TOP>closeout.c
-      <TD ALIGN=LEFT VALIGN=TOP>closeout.m4<BR>gl_CLOSEOUT
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=closeout"></A><A HREF="modules/closeout">closeout</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/closeout.h">closeout.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/closeout.c">closeout.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/closeout.m4">closeout.m4</A><BR>gl_CLOSEOUT
       <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext<BR>error<BR>quotearg<BR>fpending
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "stdio-safer.h"
-      <TD ALIGN=LEFT VALIGN=TOP>fopen-safer.c
-      <TD ALIGN=LEFT VALIGN=TOP>stdio-safer.m4<BR>gl_STDIO_SAFER
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=stdio-safer"></A><A HREF="modules/stdio-safer">stdio-safer</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/stdio-safer.h">stdio-safer.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fopen-safer.c">fopen-safer.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/stdio-safer.m4">stdio-safer.m4</A><BR>gl_STDIO_SAFER
       <TD ALIGN=LEFT VALIGN=TOP>unistd-safer
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getpass"></A><A HREF="modules/getpass">getpass</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>getpass.c
-      <TD ALIGN=LEFT VALIGN=TOP>getpass.m4<BR>gl_FUNC_GETPASS
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getpass.c">getpass.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getpass.m4">getpass.m4</A><BR>gl_FUNC_GETPASS
       <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>getline
     </TR>
   </TABLE>
-  <H3>Users and groups</H3>
+  <H3><A NAME="posix_ext_uidgid">Users and groups</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getugroups"></A><A HREF="modules/getugroups">getugroups</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>getugroups.c
-      <TD ALIGN=LEFT VALIGN=TOP>getugroups.m4<BR>gl_GETUGROUPS
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getugroups.c">getugroups.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getugroups.m4">getugroups.m4</A><BR>gl_GETUGROUPS
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "group-member.h"
-      <TD ALIGN=LEFT VALIGN=TOP>group-member.c
-      <TD ALIGN=LEFT VALIGN=TOP>group-member.m4<BR>jm_FUNC_GROUP_MEMBER
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=group-member"></A><A HREF="modules/group-member">group-member</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/group-member.h">group-member.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/group-member.c">group-member.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/group-member.m4">group-member.m4</A><BR>jm_FUNC_GROUP_MEMBER
       <TD ALIGN=LEFT VALIGN=TOP>xalloc
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=idcache"></A><A HREF="modules/idcache">idcache</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>idcache.c
-      <TD ALIGN=LEFT VALIGN=TOP>idcache.m4<BR>gl_IDCACHE
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/idcache.c">idcache.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/idcache.m4">idcache.m4</A><BR>gl_IDCACHE
       <TD ALIGN=LEFT VALIGN=TOP>xalloc
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=userspec"></A><A HREF="modules/userspec">userspec</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>userspec.c
-      <TD ALIGN=LEFT VALIGN=TOP>userspec.m4<BR>gl_USERSPEC
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/userspec.c">userspec.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/userspec.m4">userspec.m4</A><BR>gl_USERSPEC
       <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>xalloc<BR>xstrtol<BR>strdup<BR>gettext
     </TR>
   </TABLE>
-  <H3>Date and time</H3>
+  <H3><A NAME="posix_ext_datetime">Date and time</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gettime"></A><A HREF="modules/gettime">gettime</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>gettime.c
-      <TD ALIGN=LEFT VALIGN=TOP>clock_time.m4<BR>gettime.m4<BR>gl_GETTIME
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/gettime.c">gettime.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/clock_time.m4">clock_time.m4</A><BR><A HREF="m4/gettime.m4">gettime.m4</A><BR>gl_GETTIME
       <TD ALIGN=LEFT VALIGN=TOP>gettimeofday<BR>timespec
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=settime"></A><A HREF="modules/settime">settime</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>settime.c
-      <TD ALIGN=LEFT VALIGN=TOP>clock_time.m4<BR>settime.m4<BR>gl_SETTIME
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/settime.c">settime.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/clock_time.m4">clock_time.m4</A><BR><A HREF="m4/settime.m4">settime.m4</A><BR>gl_SETTIME
       <TD ALIGN=LEFT VALIGN=TOP>timespec
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "posixtm.h"
-      <TD ALIGN=LEFT VALIGN=TOP>posixtm.c
-      <TD ALIGN=LEFT VALIGN=TOP>posixtm.m4<BR>gl_POSIXTM
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=posixtm"></A><A HREF="modules/posixtm">posixtm</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/posixtm.h">posixtm.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/posixtm.c">posixtm.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/posixtm.m4">posixtm.m4</A><BR>gl_POSIXTM
       <TD ALIGN=LEFT VALIGN=TOP>unlocked-io
     </TR>
   </TABLE>
-  <H3>Networking functions</H3>
+  <H3><A NAME="posix_ext_net">Networking functions</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gethostname"></A><A HREF="modules/gethostname">gethostname</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>gethostname.c
-      <TD ALIGN=LEFT VALIGN=TOP>gethostname.m4<BR>gl_FUNC_GETHOSTNAME
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/gethostname.c">gethostname.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/gethostname.m4">gethostname.m4</A><BR>gl_FUNC_GETHOSTNAME
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xgethostname"></A><A HREF="modules/xgethostname">xgethostname</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>xgethostname.c
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xgethostname.c">xgethostname.c</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>gethostname<BR>xalloc<BR>error
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=canon-host"></A><A HREF="modules/canon-host">canon-host</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>canon-host.c
-      <TD ALIGN=LEFT VALIGN=TOP>canon-host.m4<BR>gl_CANON_HOST
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/canon-host.c">canon-host.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/canon-host.m4">canon-host.m4</A><BR>gl_CANON_HOST
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
-  <H3>Internationalization functions</H3>
+  <H3><A NAME="posix_ext_i18n">Internationalization functions</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "gettext.h"
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gettext"></A><A HREF="modules/gettext">gettext</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/gettext.h">gettext.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>codeset.m4<BR>gettext.m4<BR>glibc21.m4<BR>iconv.m4<BR>intdiv0.m4<BR>inttypes.m4<BR>inttypes_h.m4<BR>inttypes-pri.m4<BR>isc-posix.m4<BR>lcmessage.m4<BR>lib-ld.m4<BR>lib-link.m4<BR>lib-prefix.m4<BR>progtest.m4<BR>stdint_h.m4<BR>uintmax_t.m4<BR>ulonglong.m4<BR>AM_GNU_GETTEXT([external])
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;iconv.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>iconv.m4<BR>lib-ld.m4<BR>lib-link.m4<BR>lib-prefix.m4<BR>AM_ICONV
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/codeset.m4">codeset.m4</A><BR><A HREF="m4/gettext.m4">gettext.m4</A><BR><A HREF="m4/glibc21.m4">glibc21.m4</A><BR><A HREF="m4/iconv.m4">iconv.m4</A><BR><A HREF="m4/intdiv0.m4">intdiv0.m4</A><BR><A HREF="m4/inttypes.m4">inttypes.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/inttypes-pri.m4">inttypes-pri.m4</A><BR><A HREF="m4/isc-posix.m4">isc-posix.m4</A><BR><A HREF="m4/lcmessage.m4">lcmessage.m4</A><BR><A HREF="m4/lib-ld.m4">lib-ld.m4</A><BR><A HREF="m4/lib-link.m4">lib-link.m4</A><BR><A HREF="m4/lib-prefix.m4">lib-prefix.m4</A><BR><A HREF="m4/progtest.m4">progtest.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR>AM_GNU_GETTEXT([external])
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "localcharset.h"
-      <TD ALIGN=LEFT VALIGN=TOP>localcharset.c<BR>config.charset<BR>ref-add.sin<BR>ref-del.sin
-      <TD ALIGN=LEFT VALIGN=TOP>codeset.m4<BR>glibc21.m4<BR>localcharset.m4<BR>gl_LOCALCHARSET
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=iconv"></A><A HREF="modules/iconv">iconv</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/iconv.h.html">iconv.h</A>&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/iconv.m4">iconv.m4</A><BR><A HREF="m4/lib-ld.m4">lib-ld.m4</A><BR><A HREF="m4/lib-link.m4">lib-link.m4</A><BR><A HREF="m4/lib-prefix.m4">lib-prefix.m4</A><BR>AM_ICONV
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "hard-locale.h"
-      <TD ALIGN=LEFT VALIGN=TOP>hard-locale.c
-      <TD ALIGN=LEFT VALIGN=TOP>hard-locale.m4<BR>gl_HARD_LOCALE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=localcharset"></A><A HREF="modules/localcharset">localcharset</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/localcharset.h">localcharset.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/localcharset.c">localcharset.c</A><BR><A HREF="lib/config.charset">config.charset</A><BR><A HREF="lib/ref-add.sin">ref-add.sin</A><BR><A HREF="lib/ref-del.sin">ref-del.sin</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/codeset.m4">codeset.m4</A><BR><A HREF="m4/glibc21.m4">glibc21.m4</A><BR><A HREF="m4/localcharset.m4">localcharset.m4</A><BR>gl_LOCALCHARSET
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "mbswidth.h"
-      <TD ALIGN=LEFT VALIGN=TOP>mbswidth.c
-      <TD ALIGN=LEFT VALIGN=TOP>mbstate_t.m4<BR>mbrtowc.m4<BR>mbswidth.m4<BR>gl_MBSWIDTH
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=hard-locale"></A><A HREF="modules/hard-locale">hard-locale</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/hard-locale.h">hard-locale.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/hard-locale.c">hard-locale.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/hard-locale.m4">hard-locale.m4</A><BR>gl_HARD_LOCALE
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "memcasecmp.h"
-      <TD ALIGN=LEFT VALIGN=TOP>memcasecmp.c
-      <TD ALIGN=LEFT VALIGN=TOP>memcasecmp.m4<BR>gl_MEMCASECMP
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mbswidth"></A><A HREF="modules/mbswidth">mbswidth</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mbswidth.h">mbswidth.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mbswidth.c">mbswidth.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbstate_t.m4">mbstate_t.m4</A><BR><A HREF="m4/mbrtowc.m4">mbrtowc.m4</A><BR><A HREF="m4/mbswidth.m4">mbswidth.m4</A><BR>gl_MBSWIDTH
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "memcoll.h"
-      <TD ALIGN=LEFT VALIGN=TOP>memcoll.c
-      <TD ALIGN=LEFT VALIGN=TOP>memcoll.m4<BR>gl_MEMCOLL
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=memcasecmp"></A><A HREF="modules/memcasecmp">memcasecmp</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/memcasecmp.h">memcasecmp.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/memcasecmp.c">memcasecmp.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/memcasecmp.m4">memcasecmp.m4</A><BR>gl_MEMCASECMP
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "xmemcoll.h"
-      <TD ALIGN=LEFT VALIGN=TOP>xmemcoll.c
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=memcoll"></A><A HREF="modules/memcoll">memcoll</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/memcoll.h">memcoll.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/memcoll.c">memcoll.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/memcoll.m4">memcoll.m4</A><BR>gl_MEMCOLL
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xmemcoll"></A><A HREF="modules/xmemcoll">xmemcoll</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xmemcoll.h">xmemcoll.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xmemcoll.c">xmemcoll.c</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
       <TD ALIGN=LEFT VALIGN=TOP>memcoll<BR>gettext<BR>error<BR>quotearg
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "unicodeio.h"
-      <TD ALIGN=LEFT VALIGN=TOP>unicodeio.c
-      <TD ALIGN=LEFT VALIGN=TOP>unicodeio.m4<BR>gl_UNICODEIO
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=unicodeio"></A><A HREF="modules/unicodeio">unicodeio</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/unicodeio.h">unicodeio.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/unicodeio.c">unicodeio.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/unicodeio.m4">unicodeio.m4</A><BR>gl_UNICODEIO
       <TD ALIGN=LEFT VALIGN=TOP>iconv<BR>gettext<BR>localcharset<BR>error
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=rpmatch"></A><A HREF="modules/rpmatch">rpmatch</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>rpmatch.c
-      <TD ALIGN=LEFT VALIGN=TOP>rpmatch.m4<BR>gl_FUNC_RPMATCH
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/rpmatch.c">rpmatch.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/rpmatch.m4">rpmatch.m4</A><BR>gl_FUNC_RPMATCH
       <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>regex
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=yesno"></A><A HREF="modules/yesno">yesno</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>yesno.c
-      <TD ALIGN=LEFT VALIGN=TOP>yesno.m4<BR>gl_YESNO
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/yesno.c">yesno.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/yesno.m4">yesno.m4</A><BR>gl_YESNO
       <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>rpmatch
     </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=linebreak"></A><A HREF="modules/linebreak">linebreak</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/linebreak.h">linebreak.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/linebreak.c">linebreak.c</A><BR><A HREF="lib/lbrkprop.h">lbrkprop.h</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/linebreak.m4">linebreak.m4</A><BR>gl_LINEBREAK
+      <TD ALIGN=LEFT VALIGN=TOP>localcharset<BR>c-ctype<BR>iconv<BR>utf8-ucs4<BR>utf16-ucs4
+    </TR>
   </TABLE>
-  <H3>Executing programs</H3>
-  <H3>Java</H3>
-  <H3>Misc</H3>
+  <H3><A NAME="posix_ext_exec">Executing programs</A></H3>
+  <H3><A NAME="posix_ext_java">Java</A></H3>
+  <H3><A NAME="posix_ext_misc">Misc</A></H3>
   <TABLE>
     <TR>
+      <TH ALIGN=LEFT>modules/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>lib/
       <TH ALIGN=LEFT>m4/
       <TH ALIGN=LEFT>&nbsp;
     </TR>
     <TR>
+      <TH ALIGN=LEFT>Module
       <TH ALIGN=LEFT>Header
       <TH ALIGN=LEFT>Implementation
       <TH ALIGN=LEFT>Autoconf macro
       <TH ALIGN=LEFT>Depends on
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "exitfail.h"
-      <TD ALIGN=LEFT VALIGN=TOP>exitfail.c
-      <TD ALIGN=LEFT VALIGN=TOP>exitfail.m4<BR>gl_EXITFAIL
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=exitfail"></A><A HREF="modules/exitfail">exitfail</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/exitfail.h">exitfail.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/exitfail.c">exitfail.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/exitfail.m4">exitfail.m4</A><BR>gl_EXITFAIL
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "c-stack.h"
-      <TD ALIGN=LEFT VALIGN=TOP>c-stack.c
-      <TD ALIGN=LEFT VALIGN=TOP>c-stack.m4<BR>gl_C_STACK
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=c-stack"></A><A HREF="modules/c-stack">c-stack</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/c-stack.h">c-stack.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/c-stack.c">c-stack.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/c-stack.m4">c-stack.m4</A><BR>gl_C_STACK
       <TD ALIGN=LEFT VALIGN=TOP>gettext<BR>exitfail
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "error.h"
-      <TD ALIGN=LEFT VALIGN=TOP>error.c
-      <TD ALIGN=LEFT VALIGN=TOP>error.m4<BR>gl_ERROR
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=error"></A><A HREF="modules/error">error</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/error.h">error.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/error.c">error.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/error.m4">error.m4</A><BR>gl_ERROR
       <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>gettext
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "fatal.h"
-      <TD ALIGN=LEFT VALIGN=TOP>fatal.c
-      <TD ALIGN=LEFT VALIGN=TOP>fatal.m4<BR>gl_FATAL
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fatal"></A><A HREF="modules/fatal">fatal</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fatal.h">fatal.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fatal.c">fatal.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/fatal.m4">fatal.m4</A><BR>gl_FATAL
       <TD ALIGN=LEFT VALIGN=TOP>unlocked-io<BR>error
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getloadavg"></A><A HREF="modules/getloadavg">getloadavg</A>
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>getloadavg.c
-      <TD ALIGN=LEFT VALIGN=TOP>getloadavg.m4<BR>gl_FUNC_GETLOADAVG
-      <TD ALIGN=LEFT VALIGN=TOP>---
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "getpagesize.h"
-      <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>getpagesize.m4<BR>gl_GETPAGESIZE
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getloadavg.c">getloadavg.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getloadavg.m4">getloadavg.m4</A><BR>gl_FUNC_GETLOADAVG
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getpagesize"></A><A HREF="modules/getpagesize">getpagesize</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getpagesize.h">getpagesize.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP>---
-      <TD ALIGN=LEFT VALIGN=TOP>getusershell.c
-      <TD ALIGN=LEFT VALIGN=TOP>getusershell.m4<BR>gl_PREREQ_GETUSERSHELL
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getpagesize.m4">getpagesize.m4</A><BR>gl_GETPAGESIZE
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getusershell"></A><A HREF="modules/getusershell">getusershell</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getusershell.c">getusershell.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getusershell.m4">getusershell.m4</A><BR>gl_PREREQ_GETUSERSHELL
       <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "physmem.h"
-      <TD ALIGN=LEFT VALIGN=TOP>physmem.c
-      <TD ALIGN=LEFT VALIGN=TOP>physmem.m4<BR>gl_PHYSMEM
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=physmem"></A><A HREF="modules/physmem">physmem</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/physmem.h">physmem.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/physmem.c">physmem.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/physmem.m4">physmem.m4</A><BR>gl_PHYSMEM
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "posixver.h"
-      <TD ALIGN=LEFT VALIGN=TOP>posixver.c
-      <TD ALIGN=LEFT VALIGN=TOP>posixver.m4<BR>gl_POSIXVER
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=posixver"></A><A HREF="modules/posixver">posixver</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/posixver.h">posixver.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/posixver.c">posixver.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/posixver.m4">posixver.m4</A><BR>gl_POSIXVER
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "quotearg.h"
-      <TD ALIGN=LEFT VALIGN=TOP>quotearg.c
-      <TD ALIGN=LEFT VALIGN=TOP>mbstate_t.m4<BR>mbrtowc.m4<BR>quotearg.m4<BR>gl_QUOTEARG
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=quotearg"></A><A HREF="modules/quotearg">quotearg</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/quotearg.h">quotearg.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/quotearg.c">quotearg.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbstate_t.m4">mbstate_t.m4</A><BR><A HREF="m4/mbrtowc.m4">mbrtowc.m4</A><BR><A HREF="m4/quotearg.m4">quotearg.m4</A><BR>gl_QUOTEARG
       <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>gettext
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "quote.h"
-      <TD ALIGN=LEFT VALIGN=TOP>quote.c
-      <TD ALIGN=LEFT VALIGN=TOP>quote.m4<BR>gl_QUOTE
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=quote"></A><A HREF="modules/quote">quote</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/quote.h">quote.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/quote.c">quote.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/quote.m4">quote.m4</A><BR>gl_QUOTE
       <TD ALIGN=LEFT VALIGN=TOP>quotearg
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "readutmp.h"
-      <TD ALIGN=LEFT VALIGN=TOP>readutmp.c
-      <TD ALIGN=LEFT VALIGN=TOP>readutmp.m4<BR>gl_READUTMP
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=readutmp"></A><A HREF="modules/readutmp">readutmp</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/readutmp.h">readutmp.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/readutmp.c">readutmp.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/readutmp.m4">readutmp.m4</A><BR>gl_READUTMP
       <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>unlocked-io
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "sig2str.h"
-      <TD ALIGN=LEFT VALIGN=TOP>sig2str.c
-      <TD ALIGN=LEFT VALIGN=TOP>sig2str.m4<BR>gl_FUNC_SIG2STR
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=sig2str"></A><A HREF="modules/sig2str">sig2str</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/sig2str.h">sig2str.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/sig2str.c">sig2str.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/sig2str.m4">sig2str.m4</A><BR>gl_FUNC_SIG2STR
       <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+  </TABLE>
+  <H2>Unclassified modules - please update MODULES.html.sh</H2>
+  <TABLE>
+    <TR>
+      <TH ALIGN=LEFT>modules/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>lib/
+      <TH ALIGN=LEFT>m4/
+      <TH ALIGN=LEFT>&nbsp;
+    </TR>
+    <TR>
+      <TH ALIGN=LEFT>Module
+      <TH ALIGN=LEFT>Header
+      <TH ALIGN=LEFT>Implementation
+      <TH ALIGN=LEFT>Autoconf macro
+      <TH ALIGN=LEFT>Depends on
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=binary-io"></A><A HREF="modules/binary-io">binary-io</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/binary-io.h">binary-io.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=c-ctype"></A><A HREF="modules/c-ctype">c-ctype</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/c-ctype.h">c-ctype.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/c-ctype.c">c-ctype.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>stdbool
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=classpath"></A><A HREF="modules/classpath">classpath</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/classpath.h">classpath.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/classpath.c">classpath.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>xsetenv<BR>xalloc
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=copy-file"></A><A HREF="modules/copy-file">copy-file</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/copy-file.h">copy-file.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/copy-file.c">copy-file.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/copy-file.m4">copy-file.m4</A><BR>gl_COPY_FILE
+      <TD ALIGN=LEFT VALIGN=TOP>error<BR>full-write<BR>binary-io<BR>exit<BR>gettext
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=execute"></A><A HREF="modules/execute">execute</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/execute.h">execute.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/execute.c">execute.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/execute.m4">execute.m4</A><BR>gl_EXECUTE
+      <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>wait-process<BR>gettext<BR>stdbool
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=exit"></A><A HREF="modules/exit">exit</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/exit.h">exit.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=findprog"></A><A HREF="modules/findprog">findprog</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/findprog.h">findprog.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/findprog.c">findprog.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/findprog.m4">findprog.m4</A><BR>gl_FINDPROG
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>pathname
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fstrcmp"></A><A HREF="modules/fstrcmp">fstrcmp</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fstrcmp.h">fstrcmp.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fstrcmp.c">fstrcmp.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>xalloc
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gcj"></A><A HREF="modules/gcj">gcj</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/gcj.m4">gcj.m4</A><BR>gt_GCJ
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=javacomp"></A><A HREF="modules/javacomp">javacomp</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/javacomp.h">javacomp.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/javacomp.c">javacomp.c</A><BR><A HREF="lib/javacomp.sh.in">javacomp.sh.in</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/javacomp.m4">javacomp.m4</A><BR>gt_JAVACOMP
+      <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>alloca<BR>execute<BR>pipe<BR>wait-process<BR>classpath<BR>xsetenv<BR>sh-quote<BR>safe-read<BR>xalloc<BR>error<BR>gettext
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=javaexec"></A><A HREF="modules/javaexec">javaexec</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/javaexec.h">javaexec.h</A>"<BR>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/javaexec.c">javaexec.c</A><BR><A HREF="lib/javaexec.sh.in">javaexec.sh.in</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/javaexec.m4">javaexec.m4</A><BR>gt_JAVAEXEC
+      <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>alloca<BR>execute<BR>classpath<BR>xsetenv<BR>sh-quote<BR>pathname<BR>xalloc<BR>error<BR>gettext
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=minmax"></A><A HREF="modules/minmax">minmax</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/minmax.h">minmax.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mkdtemp"></A><A HREF="modules/mkdtemp">mkdtemp</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mkdtemp.h">mkdtemp.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mkdtemp.c">mkdtemp.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR><A HREF="m4/mkdtemp.m4">mkdtemp.m4</A><BR>gt_FUNC_MKDTEMP
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=pipe"></A><A HREF="modules/pipe">pipe</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/pipe.h">pipe.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/pipe-in.c">pipe-in.c</A><BR><A HREF="lib/pipe-out.c">pipe-out.c</A><BR><A HREF="lib/pipe-bidi.c">pipe-bidi.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/pipe.m4">pipe.m4</A><BR>gl_PIPE
+      <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>gettext<BR>stdbool
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=sh-quote"></A><A HREF="modules/sh-quote">sh-quote</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/sh-quote.h">sh-quote.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/sh-quote.c">sh-quote.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>strpbrk<BR>xalloc
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=stpncpy"></A><A HREF="modules/stpncpy">stpncpy</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/stpncpy.h">stpncpy.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/stpncpy.c">stpncpy.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/stpncpy.m4">stpncpy.m4</A><BR>gl_FUNC_STPNCPY
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=ucs4-utf16"></A><A HREF="modules/ucs4-utf16">ucs4-utf16</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/ucs4-utf16.h">ucs4-utf16.h</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ucs4-utf.m4">ucs4-utf.m4</A><BR>gl_UCS4_UTF
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=ucs4-utf8"></A><A HREF="modules/ucs4-utf8">ucs4-utf8</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/ucs4-utf8.h">ucs4-utf8.h</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ucs4-utf.m4">ucs4-utf.m4</A><BR>gl_UCS4_UTF
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=utf16-ucs4"></A><A HREF="modules/utf16-ucs4">utf16-ucs4</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/utf16-ucs4.h">utf16-ucs4.h</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/utf-ucs4.m4">utf-ucs4.m4</A><BR>gl_UTF_UCS4
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=utf8-ucs4"></A><A HREF="modules/utf8-ucs4">utf8-ucs4</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/utf8-ucs4.h">utf8-ucs4.h</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/utf-ucs4.m4">utf-ucs4.m4</A><BR>gl_UTF_UCS4
+      <TD ALIGN=LEFT VALIGN=TOP>---
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=vasnprintf"></A><A HREF="modules/vasnprintf">vasnprintf</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/vasnprintf.h">vasnprintf.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/printf-args.h">printf-args.h</A><BR><A HREF="lib/printf-args.c">printf-args.c</A><BR><A HREF="lib/printf-parse.h">printf-parse.h</A><BR><A HREF="lib/printf-parse.c">printf-parse.c</A><BR><A HREF="lib/vasnprintf.c">vasnprintf.c</A><BR><A HREF="lib/asnprintf.c">asnprintf.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/signed.m4">signed.m4</A><BR><A HREF="m4/longdouble.m4">longdouble.m4</A><BR><A HREF="m4/wchar_t.m4">wchar_t.m4</A><BR><A HREF="m4/wint_t.m4">wint_t.m4</A><BR><A HREF="m4/longlong.m4">longlong.m4</A><BR><A HREF="m4/intmax_t.m4">intmax_t.m4</A><BR><A HREF="m4/vasnprintf.m4">vasnprintf.m4</A><BR>gl_FUNC_VASNPRINTF
+      <TD ALIGN=LEFT VALIGN=TOP>alloca
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=vasprintf"></A><A HREF="modules/vasprintf">vasprintf</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/vasprintf.h">vasprintf.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/vasprintf.c">vasprintf.c</A><BR><A HREF="lib/asprintf.c">asprintf.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/vasprintf.m4">vasprintf.m4</A><BR>gl_FUNC_VASPRINTF
+      <TD ALIGN=LEFT VALIGN=TOP>vasnprintf
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=wait-process"></A><A HREF="modules/wait-process">wait-process</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/wait-process.h">wait-process.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/wait-process.c">wait-process.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/wait-process.m4">wait-process.m4</A><BR>gl_WAIT_PROCESS
+      <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>gettext<BR>stdbool
+    </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=xsetenv"></A><A HREF="modules/xsetenv">xsetenv</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xsetenv.h">xsetenv.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xsetenv.c">xsetenv.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>setenv<BR>error<BR>exit<BR>gettext
     </TR>
   </TABLE>
   <H2>Lone files - please create new modules containing them</H2>
   <PRE>
-lib/getversion.c
-m4/check-decl.m4
-m4/d-type.m4
-m4/glibc.m4
-m4/gnu-source.m4
-m4/host-os.m4
-m4/jm-macros.m4
-m4/jm-winsz1.m4
-m4/jm-winsz2.m4
-m4/lib-check.m4
-m4/link-follow.m4
-m4/onceonly.m4
-m4/perl.m4
-m4/prereq.m4
-m4/readdir.m4
-m4/rmdir-errno.m4
-m4/search-libs.m4
-m4/st_dm_mode.m4
-m4/strerror_r.m4
-m4/unlink-busy.m4
-m4/uptime.m4
+<A HREF="lib/getversion.c">lib/getversion.c</A>
+<A HREF="m4/check-decl.m4">m4/check-decl.m4</A>
+<A HREF="m4/d-type.m4">m4/d-type.m4</A>
+<A HREF="m4/glibc.m4">m4/glibc.m4</A>
+<A HREF="m4/gnu-source.m4">m4/gnu-source.m4</A>
+<A HREF="m4/host-os.m4">m4/host-os.m4</A>
+<A HREF="m4/jm-macros.m4">m4/jm-macros.m4</A>
+<A HREF="m4/jm-winsz1.m4">m4/jm-winsz1.m4</A>
+<A HREF="m4/jm-winsz2.m4">m4/jm-winsz2.m4</A>
+<A HREF="m4/lib-check.m4">m4/lib-check.m4</A>
+<A HREF="m4/link-follow.m4">m4/link-follow.m4</A>
+<A HREF="m4/onceonly.m4">m4/onceonly.m4</A>
+<A HREF="m4/perl.m4">m4/perl.m4</A>
+<A HREF="m4/prereq.m4">m4/prereq.m4</A>
+<A HREF="m4/readdir.m4">m4/readdir.m4</A>
+<A HREF="m4/rmdir-errno.m4">m4/rmdir-errno.m4</A>
+<A HREF="m4/search-libs.m4">m4/search-libs.m4</A>
+<A HREF="m4/st_dm_mode.m4">m4/st_dm_mode.m4</A>
+<A HREF="m4/strerror_r.m4">m4/strerror_r.m4</A>
+<A HREF="m4/unlink-busy.m4">m4/unlink-busy.m4</A>
+<A HREF="m4/uptime.m4">m4/uptime.m4</A>
 </PRE>
   <H2>Future developments</H2>
   Ideally a module could consist of:
