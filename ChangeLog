@@ -1,5 +1,7 @@
 2004-04-12  Paul Eggert  <eggert@twinsun.com>
 
+	* modules/inttostr (EXTRA_DIST): Move inttostr.c here....
+	(lib_SOURCES): from here.
 	* modules/getopt (lib_SOURCES): Add getopt_int.h.
 
 2004-04-12  Jim Meyering  <jim@meyering.net>
