@@ -19,9 +19,13 @@ m4/argp.m4
 Depends-on:
 alloca
 getopt
+strchrnul
+sysexits
+mempcpy
+strndup
 
 configure.ac:
-AC_FUNC_ARGP
+gl_ARGP
 
 Makefile.am:
 lib_SOURCES += argp.h argp-ba.c argp-eexst.c \

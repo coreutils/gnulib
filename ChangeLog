@@ -1,5 +1,9 @@
 2003-08-17  Simon Josefsson  <jas@extundo.com>
 
+	* modules/argp: Fix autoconf macro name. Add more dependencies.
+
+2003-08-17  Simon Josefsson  <jas@extundo.com>
+
 	* modules/xstrndup: New file.
 	* MODULES.html.sh (func_all_modules): Add xstrndup.
 
