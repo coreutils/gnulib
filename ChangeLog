@@ -1,6 +1,7 @@
 2004-10-15  Bruno Haible  <bruno@clisp.org>
 
-	* gnulib-tool: Untabify.
+	* gnulib-tool: Untabify. Initialize supplied_libname.
+	(func_usage): More homogenous output.
 
 2004-10-11  Bruno Haible  <bruno@clisp.org>
 

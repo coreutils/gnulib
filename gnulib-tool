@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-10-15 14:49:59 $'
+cvsdatestamp='$Date: 2004-10-15 14:58:04 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -43,7 +43,7 @@ func_usage ()
 {
   echo "\
 Usage: gnulib-tool --list
-       gnulib-tool --import [MODULE...]
+       gnulib-tool --import [module1 ... moduleN]
        gnulib-tool --create-testdir --dir=directory module1 ... moduleN
        gnulib-tool --create-megatestdir --dir=directory [module1 ... moduleN]
        gnulib-tool --test --dir=directory module1 ... moduleN
@@ -79,7 +79,7 @@ Operation modes:
 
 Options:
       --dir=DIRECTORY       specify the target directory
-                            For --import, this specify where your
+                            For --import, this specifies where your
                             configure.ac can be found.  Defaults to current
                             directory.
       --lib=LIBRARY         Specify the library name.  Defaults to 'libgnu'.
@@ -131,6 +131,7 @@ func_fatal_error ()
   mode=
   destdir=
   libname=libgnu
+  supplied_libname=
   sourcebase=
   m4base=
   libtool=
