@@ -1,0 +1,16 @@
+Sketchy start at information on using files in gnulib.
+
+for mktemp, need these files (including adding to EXTRA_DIST):
+$GNULIBSRC/m4/check-decl.m4	m4
+$GNULIBSRC/m4/mkstemp.m4	m4
+$GNULIBSRC/m4/prereq.m4		m4
+$GNULIBSRC/lib/tempname.c	lib
+$GNULIBSRC/lib/mkstemp.c	lib
+
+then in configure.ac:
+AC_DEFUN([texinfo_MACROS],
+[
+  AC_REQUIRE([jm_PREREQ_TEMPNAME])dnl for mkstemp
+  AC_REQUIRE([UTILS_FUNC_MKSTEMP])
+])dnl
+texinfo_MACROS
