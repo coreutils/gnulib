@@ -57,7 +57,7 @@ copy_file_preserving (const char *src_filename, const char *dest_filename)
   int mode;
   int dest_fd;
   char buf[4096];
-  const int buf_size = sizeof (buf);
+  const size_t buf_size = sizeof (buf);
 
   src_fd = open (src_filename, O_RDONLY | O_BINARY);
   if (src_fd < 0 || fstat (src_fd, &statbuf) < 0)
