@@ -1,3 +1,7 @@
+2003-03-18  Jim Meyering  <jim@meyering.net>
+
+	* quote.c (quote_n): Fix typo in comment.
+
 2003-03-14  Jim Meyering  <jim@meyering.net>
 
 	Merge changes from Coreutils.
