@@ -10,7 +10,7 @@ stat
 xalloc
 
 configure.ac:
-jm_FUNC_LSTAT
+gl_FUNC_LSTAT
 
 Makefile.am:
 

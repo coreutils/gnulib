@@ -12,7 +12,7 @@ time_r
 tzset
 
 configure.ac:
-jm_FUNC_GNU_STRFTIME
+gl_FUNC_GNU_STRFTIME
 
 Makefile.am:
 lib_SOURCES += strftime.c

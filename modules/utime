@@ -13,7 +13,7 @@ safe-read
 full-write
 
 configure.ac:
-jm_FUNC_UTIME
+gl_FUNC_UTIME
 
 Makefile.am:
 

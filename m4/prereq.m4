@@ -1,13 +1,12 @@
 #serial 38
 
-dnl We use jm_ for non Autoconf macros.
-m4_pattern_forbid([^jm_[ABCDEFGHIJKLMNOPQRSTUVXYZ]])dnl
+dnl We use gl_ for non Autoconf macros.
 m4_pattern_forbid([^gl_[ABCDEFGHIJKLMNOPQRSTUVXYZ]])dnl
 
 # These are the prerequisite macros for files in the lib/
 # directory of the coreutils package.
 
-AC_DEFUN([jm_PREREQ],
+AC_DEFUN([gl_PREREQ],
 [
   # We don't yet use c-stack.c.
   # AC_REQUIRE([gl_C_STACK])
@@ -110,17 +109,17 @@ AC_DEFUN([jm_PREREQ],
   AC_REQUIRE([gl_XSTRTOD])
   AC_REQUIRE([gl_XSTRTOL])
   AC_REQUIRE([gl_YESNO])
-  AC_REQUIRE([jm_FUNC_GLIBC_UNLOCKED_IO])
-  AC_REQUIRE([jm_FUNC_GNU_STRFTIME])
-  AC_REQUIRE([jm_FUNC_LSTAT])
+  AC_REQUIRE([gl_FUNC_GLIBC_UNLOCKED_IO])
+  AC_REQUIRE([gl_FUNC_GNU_STRFTIME])
+  AC_REQUIRE([gl_FUNC_LSTAT])
   AC_REQUIRE([AC_FUNC_MALLOC])
-  AC_REQUIRE([jm_FUNC_MEMCMP])
-  AC_REQUIRE([jm_FUNC_NANOSLEEP])
-  AC_REQUIRE([jm_FUNC_PUTENV])
+  AC_REQUIRE([gl_FUNC_MEMCMP])
+  AC_REQUIRE([gl_FUNC_NANOSLEEP])
+  AC_REQUIRE([gl_FUNC_PUTENV])
   AC_REQUIRE([AC_FUNC_REALLOC])
-  AC_REQUIRE([jm_FUNC_STAT])
-  AC_REQUIRE([jm_FUNC_UTIME])
-  AC_REQUIRE([jm_XSTRTOIMAX])
-  AC_REQUIRE([jm_XSTRTOUMAX])
+  AC_REQUIRE([gl_FUNC_STAT])
+  AC_REQUIRE([gl_FUNC_UTIME])
+  AC_REQUIRE([gl_XSTRTOIMAX])
+  AC_REQUIRE([gl_XSTRTOUMAX])
   AC_REQUIRE([vb_FUNC_RENAME])
 ])

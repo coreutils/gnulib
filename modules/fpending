@@ -9,7 +9,7 @@ m4/fpending.m4
 Depends-on:
 
 configure.ac:
-jm_FUNC_FPENDING
+gl_FUNC_FPENDING
 
 Makefile.am:
 lib_SOURCES += __fpending.h

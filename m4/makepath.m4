@@ -1,4 +1,4 @@
-# makepath.m4 serial 2
+# makepath.m4 serial 3
 dnl Copyright (C) 2002, 2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -12,5 +12,5 @@ AC_DEFUN([gl_MAKEPATH],
   AC_REQUIRE([AC_FUNC_ALLOCA])
   AC_CHECK_HEADERS_ONCE(unistd.h)
   AC_REQUIRE([AC_HEADER_STAT])
-  AC_REQUIRE([jm_AFS])
+  AC_REQUIRE([gl_AFS])
 ])

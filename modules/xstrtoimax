@@ -11,7 +11,7 @@ xstrtol
 strtoimax
 
 configure.ac:
-jm_XSTRTOIMAX
+gl_XSTRTOIMAX
 
 Makefile.am:
 lib_SOURCES += xstrtoimax.c

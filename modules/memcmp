@@ -8,7 +8,7 @@ m4/memcmp.m4
 Depends-on:
 
 configure.ac:
-jm_FUNC_MEMCMP
+gl_FUNC_MEMCMP
 
 Makefile.am:
 

@@ -11,7 +11,7 @@ xalloc
 stdbool
 
 configure.ac:
-jm_FUNC_GROUP_MEMBER
+gl_FUNC_GROUP_MEMBER
 
 Makefile.am:
 lib_SOURCES += group-member.h

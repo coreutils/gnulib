@@ -1,3 +1,13 @@
+2004-04-18  Jim Meyering  <jim@meyering.net>
+
+	Change jm_ to gl_ in AC_DEFINE'd names.
+	* modules/assert, modules/chown, modules/fpending:
+	* modules/ftruncate, modules/getgroups, modules/group-member:
+	* modules/lchown, modules/lstat, modules/memcmp:
+	* modules/nanosleep, modules/putenv, modules/stat:
+	* modules/strftime, modules/unlocked-io, modules/utime:
+	* modules/xstrtoimax, modules/xstrtoumax:
+
 2004-04-12  Paul Eggert  <eggert@twinsun.com>
 
 	* config/srclist.txt: Restore setenv.c, unsetenv.c from gettext.

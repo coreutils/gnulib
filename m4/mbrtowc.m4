@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 5
+# mbrtowc.m4 serial 6
 dnl Copyright (C) 2001-2002 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -8,10 +8,10 @@ dnl the same distribution terms as the rest of that program.
 
 dnl From Paul Eggert
 
-dnl This file can be removed, and jm_FUNC_MBRTOWC replaced with
+dnl This file can be removed, and gl_FUNC_MBRTOWC replaced with
 dnl AC_FUNC_MBRTOWC, when autoconf 2.57 can be assumed everywhere.
 
-AC_DEFUN([jm_FUNC_MBRTOWC],
+AC_DEFUN([gl_FUNC_MBRTOWC],
 [
   AC_CACHE_CHECK([whether mbrtowc and mbstate_t are properly declared],
     jm_cv_func_mbrtowc,

@@ -10,7 +10,7 @@ xstrtol
 strtoumax
 
 configure.ac:
-jm_XSTRTOUMAX
+gl_XSTRTOUMAX
 
 Makefile.am:
 lib_SOURCES += xstrtoumax.c

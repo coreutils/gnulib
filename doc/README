@@ -10,7 +10,7 @@ $GNULIBSRC/lib/mkstemp.c	lib
 then in configure.ac:
 AC_DEFUN([texinfo_MACROS],
 [
-  AC_REQUIRE([jm_PREREQ_TEMPNAME])dnl for mkstemp
+  AC_REQUIRE([gl_PREREQ_TEMPNAME])dnl for mkstemp
   AC_REQUIRE([UTILS_FUNC_MKSTEMP])
 ])dnl
 texinfo_MACROS

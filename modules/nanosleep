@@ -9,7 +9,7 @@ Depends-on:
 timespec
 
 configure.ac:
-jm_FUNC_NANOSLEEP
+gl_FUNC_NANOSLEEP
 
 Makefile.am:
 

@@ -1,4 +1,4 @@
-# path-concat.m4 serial 2
+# path-concat.m4 serial 3
 dnl Copyright (C) 2002, 2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -9,7 +9,7 @@ dnl the same distribution terms as the rest of that program.
 AC_DEFUN([gl_PATH_CONCAT],
 [
   dnl Prerequisites of lib/path-concat.c.
-  AC_REQUIRE([jm_AC_DOS])
+  AC_REQUIRE([gl_AC_DOS])
   AC_CHECK_HEADERS_ONCE(unistd.h)
   AC_CHECK_FUNCS_ONCE(mempcpy)
 ])

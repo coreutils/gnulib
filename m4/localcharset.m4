@@ -1,4 +1,4 @@
-# localcharset.m4 serial 1
+# localcharset.m4 serial 2
 dnl Copyright (C) 2002 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -15,5 +15,5 @@ AC_DEFUN([gl_LOCALCHARSET],
 
   dnl Prerequisites of the lib/Makefile.am snippet.
   AC_REQUIRE([AC_CANONICAL_HOST])
-  AC_REQUIRE([jm_GLIBC21])
+  AC_REQUIRE([gl_GLIBC21])
 ])

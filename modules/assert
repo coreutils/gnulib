@@ -7,7 +7,7 @@ m4/assert.m4
 Depends-on:
 
 configure.ac:
-jm_ASSERT
+gl_ASSERT
 
 Makefile.am:
 
