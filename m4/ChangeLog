@@ -1,3 +1,7 @@
+2004-02-06  Karl Berry  <karl@gnu.org>
+
+	* po.m4: update from gettext 0.14.1.
+
 2004-02-03  Bruno Haible  <bruno@clisp.org>
 
 	* pipe.m4: New file, from GNU gettext.
