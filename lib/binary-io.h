@@ -53,6 +53,7 @@
 # endif
 #else
   /* On reasonable systems, binary I/O is the default.  */
+# undef O_BINARY
 # define O_BINARY 0
 # define SET_BINARY(fd) /* nothing */
 #endif
