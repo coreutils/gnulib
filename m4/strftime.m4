@@ -1,4 +1,4 @@
-#serial 17
+#serial 18
 
 dnl This macro is intended to be used solely in this file.
 dnl These are the prerequisite macros for GNU's strftime.c replacement.
