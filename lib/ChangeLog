@@ -1,3 +1,34 @@
+2003-10-14  Paul Eggert  <eggert@twinsun.com>
+
+	Handle invalid suffixes and overflow independently, so that
+	callers can treat them independently as needed.  Fix some bugs in
+	suffix handling, e.g., "100k@" was not diagnosed as an invalid
+	suffix for a human-readable blocksize.  The major caller-visible
+	change is the addition of a new
+	LONGINT_INVALID_SUFFIX_CHAR_WITH_OVERFLOW enum value, indicating
+	that both overflow and suffix chars were found.
+
+	* human.c (humblock): Don't check separately for invalid suffix
+	char; that is xstrtoumax's job (now that its bug is fixed).
+	* xstrtoimax.c (STRTOL_T_MINIMUM, STRTOL_T_MAXIMUM) [defined
+	INTMAX_MAX]: New macros.
+	* xstrtol.c (STRTOL_T_MINIMUM, STRTOL_T_MAXIMUM, TYPE_MINIMUM,
+	TYPE_MAXIMUM): New macros.
+	(bkm_scale, bkm_scale_by_power): Return strtol_error, not int.
+	(bkm_scale, bkm_scale_by_power, __xstrtol): Return maximal values
+	if overflow occurs, as it's what __strtol does and it's more useful
+	in practice.
+	(__xstrtol): If __strtol reports some error other than ERANGE,
+	reflect it to the caller as LONGINT_INVALID.  If it reports
+	ERANGE, continue the rest of parsing, and report LONGINT_OVERFLOW
+	| LONGINT_INVALID_SUFFIX_CHAR if both errors occur.
+	* xstrtol.h (LONGINT_INVALID_SUFFIX_CHAR_WITH_OVERFLOW): New enum
+	value.
+	(_STRTOL_ERROR): Handle it.  Abort when given unknown error codes.
+	* xstrtoul.c (STRTOL_T_MINIMUM, STRTOL_T_MAXIMUM): New macros.
+	* xstrtoumax.c (STRTOL_T_MINIMUM, STRTOL_T_MAXIMUM)
+	[defined UINTMAX_MAX]: New macros.
+	
 2003-10-14  Bruno Haible  <bruno@clisp.org>
 
 	* fatal-signal.h: Improved comments. Suggested by Paul Eggert.
