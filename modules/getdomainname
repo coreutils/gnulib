@@ -1,0 +1,21 @@
+Description:
+getdomainname() function: Return machine's NIS domain name.
+
+Files:
+lib/getdomainname.h
+lib/getdomainname.c
+m4/getdomainname.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_GETDOMAINNAME
+
+Makefile.am:
+lib_SOURCES += getdomainname.h
+
+Include:
+"getdomainname.h"
+
+Maintainer:
+all
