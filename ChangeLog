@@ -1,3 +1,15 @@
+2004-11-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/getcwd (Files): Add lib/getcwd.h, m4/getcwd.m4.
+	(Depends-on): Remove pathmax, same.  Add mempcpy.
+	(configure.ac): GL_FUNC_GETCWD_PATH_MAX -> gl_FUNC_GETCWD.
+	(Makefile.am): Append getcwd.h to lib_SOURCES.
+	(Include): Add getcwd.h.
+	(Maintainer): Change from Jim Meyering to "all, glibc",
+	since getdate now uses intended-for-glibc code.
+	* modules/xgetcwd (Files): Remove m4/getcwd.m4.
+	(Depends-on): Depend on getcwd.  Do not depend on pathmax.
+
 2004-11-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/canonicalize (Depends-on): Add xreadlink.

@@ -2,23 +2,25 @@ Description:
 Return the current working directory.
 
 Files:
+lib/getcwd.h
 lib/getcwd.c
 m4/getcwd-path-max.m4
+m4/getcwd.m4
 
 Depends-on:
-pathmax
-same
+mempcpy
 
 configure.ac:
-GL_FUNC_GETCWD_PATH_MAX
+gl_FUNC_GETCWD
 
 Makefile.am:
+lib_SOURCES += getcwd.h
 
 Include:
+"getcwd.h"
 
 License:
 GPL
 
 Maintainer:
-Jim Meyering
-
+all, glibc
