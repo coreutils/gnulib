@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 29, 2004
+@set lastupdate January 4, 2005
 @c %**end of header
 
 @dircategory GNU organization
@@ -25,7 +25,7 @@
 Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
-2001, 2002, 2003, 2004 Free Software Foundation, Inc.
+2001, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to make and distribute verbatim copies
@@ -262,6 +262,11 @@ before sending it.  Just send the file verbatim to the contributor.  The
 file gives per instructions for how to ask the FSF to mail per the
 papers to sign.  The @file{request-} file also raises the issue of
 getting a copyright disclaimer from the contributor's employer.
+
+When the contributor emails the form to the FSF, the FSF sends per
+papers to sign.  If person signs them right away, the whole process
+takes about two weeks--mostly waiting for letters to go back and
+forth.
 
 For less common cases, we have template files you should send to the
 contributor.  Be sure to fill in the name of the person and the name
