@@ -1,0 +1,29 @@
+Description:
+Creation of subprocesses, communicating via pipes.
+
+Files:
+lib/pipe.h
+lib/pipe.c
+lib/w32spawn.h
+m4/pipe.m4
+
+Depends-on:
+error
+exit
+fatal-signal
+gettext
+stdbool
+strpbrk
+
+configure.ac:
+gl_PIPE
+
+Makefile.am:
+lib_SOURCES += pipe.h pipe.c w32spawn.h
+
+Include:
+"pipe.h"
+
+Maintainer:
+Bruno Haible
+

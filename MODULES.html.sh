@@ -1874,7 +1874,7 @@ func_all_modules ()
   func_module findprog
   func_module wait-process
   func_module execute
-  #func_module pipe
+  func_module pipe
   #func_module sh-quote
   func_end_table
 

@@ -1,3 +1,8 @@
+2004-02-03  Bruno Haible  <bruno@clisp.org>
+
+	* pipe.h: New file, from GNU gettext.
+	* pipe.c: New file, from GNU gettext.
+
 2004-01-27  Bruno Haible  <bruno@clisp.org>
 
 	* execute.h: New file, from GNU gettext.
