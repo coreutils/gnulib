@@ -15,7 +15,7 @@ configure.ac:
 gl_REGEX
 
 Makefile.am:
-lib_SOURCES += regex.h
+lib_SOURCES += regex.h regex.c
 
 Include:
 "regex.h"
