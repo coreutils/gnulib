@@ -1,5 +1,9 @@
 2003-08-17  Simon Josefsson  <jas@extundo.com>
 
+	* argp.m4: New file.
+
+2003-08-17  Simon Josefsson  <jas@extundo.com>
+
 	* xstrndup.m4: New file.
 
 2003-08-16  Jim Meyering  <jim@meyering.net>
