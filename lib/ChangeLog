@@ -1,7 +1,18 @@
 2004-11-11  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* getopt_.h (__getopt_argv_const): New macro, to be used so that
+	we can stop lying to compilers about the constness of argv when we
+	are compiled outside glibc.
+	(getopt, getopt_long, getopt_long_only): Use it.
+	* getopt.c (_getopt_initialize, _getopt_internal_r, _getopt_internal,
+	getopt): Likewise.
+	* getopt1.c (getopt_long, _getopt_long_r, getopt_long_only,
+	_getopt_long_only_r): Likewise.
+	* getopt_int.h (_getopt_internal, _getopt_internal_r, _getopt_long_r,
+	_getopt_long_only_r): Likewise.
+
 	* getopt_.h [defined __GETOPT_PREFIX && !defined __need_getopt]:
-	Include <unistd.h> if available.
+	Include <stdlib.h> and <stdio.h>, and <unistd.h> if available.
 	Then rename getopt to __GETOPT_PREFIX##getopt, and so forth for
 	the other external symbols.
 	(getopt) [!defined __GNU_LIBRARY]: Use prototype, not old-style
