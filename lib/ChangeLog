@@ -1,3 +1,8 @@
+2004-10-11  Yoann Vandoorselaere  <yoann@prelude-ids.org>
+
+	* vsnprintf.h: New file.
+	* vsnprintf.c: New file.
+
 2004-10-07  Bruno Haible  <bruno@clisp.org>
 
 	* snprintf.c (snprintf): Avoid a memory allocation if the result fits

@@ -1,3 +1,7 @@
+2004-10-11  Yoann Vandoorselaere  <yoann@prelude-ids.org>
+
+	* vsnprintf.m4: New file.
+
 2004-10-05  Bruno Haible  <bruno@clisp.org>
 
 	* strsep.m4 (gl_FUNC_STRSEP): Require AC_GNU_SOURCE. Don't check

@@ -1,0 +1,27 @@
+Description:
+vsnprintf() function: print formatted output from an stdarg argument list
+to a fixed length string
+
+Files:
+lib/vsnprintf.h
+lib/vsnprintf.c
+m4/vsnprintf.m4
+
+Depends-on:
+vasnprintf
+minmax
+
+configure.ac:
+gl_FUNC_VSNPRINTF
+
+Makefile.am:
+lib_SOURCES += vsnprintf.h
+
+Include:
+"vsnprintf.h"
+
+License:
+LGPL
+
+Maintainer:
+Yoann Vandoorselaere

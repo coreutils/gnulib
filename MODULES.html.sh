@@ -1661,6 +1661,7 @@ func_all_modules ()
 
   func_begin_table
   func_module snprintf
+  func_module vsnprintf
   func_end_table
 
   element="Numeric conversion functions <stdlib.h>"

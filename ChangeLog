@@ -1,3 +1,12 @@
+2004-10-11  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh (Support for systems lacking ISO C 99): Add
+	vsnprintf.
+
+2004-10-11  Yoann Vandoorselaere  <yoann@prelude-ids.org>
+
+	* modules/vsnprintf: New file.
+
 2004-10-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/xalloc (Files, Makefile.am): Remove xstrdup.c.
