@@ -1,3 +1,7 @@
+2004-10-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* snprintf.c: Remove comments as to why each header is needed.
+
 2004-10-01  Yoann Vandoorselaere <yoann@prelude-ids.org>
 
 	* strsep.h: New file.
