@@ -1,3 +1,10 @@
+2003-06-06  Jim Meyering  <jim@meyering.net>
+            Bruno Haible  <bruno@clisp.org>
+
+        * modules/stdbool: Reflect renaming: stdbool.h.in -> stdbool_.h.
+        Adjust Makefile.am snippet not to redirect directly to target.
+        Use $(STDBOOL_H) notation, not @STDBOOL_H@ for AC_REPLACE'd variables.
+
 2003-05-30  Bruno Haible  <bruno@clisp.org>
 
 	* modules/gettext: Add files m4/nls.m4 and m4/po.m4.
