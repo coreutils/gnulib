@@ -6,12 +6,12 @@ lib/argmatch.h
 lib/argmatch.c
 
 Depends-on:
-error
-exit
 gettext
-quote
+error
 quotearg
+quote
 unlocked-io
+exit
 
 configure.ac:
 

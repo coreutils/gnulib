@@ -5,10 +5,10 @@ Files:
 lib/xgethostname.c
 
 Depends-on:
-error
-exit
 gethostname
 xalloc
+error
+exit
 
 configure.ac:
 

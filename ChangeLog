@@ -1,3 +1,9 @@
+2003-09-15  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/argmatch, modules/fatal, modules/obstack,
+	modules/xalloc, modules/xgethostname: Sort dependencies by
+	importance, not alphabetically.
+
 2003-09-14  Bruno Haible  <bruno@clisp.org>
 
 	* modules/fwriteerror: New file.

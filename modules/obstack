@@ -7,8 +7,8 @@ lib/obstack.c
 m4/obstack.m4
 
 Depends-on:
-exit
 gettext
+exit
 
 configure.ac:
 gl_OBSTACK

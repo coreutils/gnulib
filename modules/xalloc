@@ -8,12 +8,12 @@ lib/xstrdup.c
 m4/xalloc.m4
 
 Depends-on:
-error
-exit
-exitfail
-gettext
 malloc
 realloc
+error
+gettext
+exitfail
+exit
 
 configure.ac:
 gl_XALLOC

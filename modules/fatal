@@ -8,8 +8,8 @@ m4/fatal.m4
 
 Depends-on:
 error
-exit
 unlocked-io
+exit
 
 configure.ac:
 gl_FATAL
