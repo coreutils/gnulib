@@ -228,6 +228,9 @@ fill_in_uparams (const struct argp_state *state)
 /* Returns true if OPT is an documentation-only entry.  */
 #define odoc(opt) ((opt)->flags & OPTION_DOC)
 
+/* Returns true if OPT should not be translated */
+#define onotrans(opt) ((opt)->flags & OPTION_NO_TRANS)
+
 /* Returns true if OPT is the end-of-list marker for a list of options.  */
 #define oend(opt) __option_is_end (opt)
 
@@ -676,14 +679,20 @@ static int
 canon_doc_option (const char **name)
 {
   int non_opt;
-  /* Skip initial whitespace.  */
-  while (isspace (**name))
-    (*name)++;
-  /* Decide whether this looks like an option (leading `-') or not.  */
-  non_opt = (**name != '-');
-  /* Skip until part of name used for sorting.  */
-  while (**name && !isalnum (**name))
-    (*name)++;
+
+  if (!*name)
+    non_opt = 1;
+  else
+    {
+      /* Skip initial whitespace.  */
+      while (isspace (**name))
+	(*name)++;
+      /* Decide whether this looks like an option (leading `-') or not.  */
+      non_opt = (**name != '-');
+      /* Skip until part of name used for sorting.  */
+      while (**name && !isalnum (**name))
+	(*name)++;
+    }
   return non_opt;
 }
 
@@ -1081,13 +1090,15 @@ hol_entry_help (struct hol_entry *entry, const struct argp_state *state,
     {
       __argp_fmtstream_set_wmargin (stream, uparams.doc_opt_col);
       for (opt = real, num = entry->num; num > 0; opt++, num--)
-	if (opt->name && ovisible (opt))
+	if (opt->name && *opt->name && ovisible (opt))
 	  {
 	    comma (uparams.doc_opt_col, &pest);
-	    /* Calling gettext here isn't quite right, since sorting will
+	    /* Calling dgettext here isn't quite right, since sorting will
 	       have been done on the original; but documentation options
 	       should be pretty rare anyway...  */
 	    __argp_fmtstream_puts (stream,
+				   onotrans (opt) ?
+				             opt->name :
 				   dgettext (state->root_argp->argp_domain,
 					     opt->name));
 	  }
