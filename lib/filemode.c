@@ -15,16 +15,24 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <sys/types.h>
 #include <sys/stat.h>
+
 #ifndef S_IREAD
 #define S_IREAD S_IRUSR
 #define S_IWRITE S_IWUSR
 #define S_IEXEC S_IXUSR
 #endif
-#ifndef S_ISREG			/* Doesn't have POSIX.1 stat stuff.  */
+
+#if !defined(S_ISREG) || defined(NO_MODE_T)
+/* Doesn't have POSIX.1 stat stuff or doesn't have mode_t.  */
 #define mode_t unsigned short
 #endif
+
 #if !defined(S_ISBLK) && defined(S_IFBLK)
 #define	S_ISBLK(m) (((m) & S_IFMT) == S_IFBLK)
 #endif
