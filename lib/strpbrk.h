@@ -1,5 +1,5 @@
 /* Searching in a string.
-   Copyright (C) 2001 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,14 +15,6 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-#ifndef PARAMS
-# if __STDC__ || defined __GNUC__ || defined __SUNPRO_C || defined __cplusplus || __PROTOTYPES
-#  define PARAMS(Args) Args
-# else
-#  define PARAMS(Args) ()
-# endif
-#endif
-
 #if HAVE_STRPBRK
 
 /* Get strpbrk() declaration.  */
@@ -31,6 +23,6 @@
 #else
 
 /* Find the first occurrence in S of any character in ACCEPT.  */
-extern char *strpbrk PARAMS ((const char *s, const char *accept));
+extern char *strpbrk (const char *s, const char *accept);
 
 #endif
