@@ -7,7 +7,7 @@
 2004-03-07  Paul Eggert  <eggert@twinsun.com>
 
 	* c-stack.c (SIGACTION_WORKS): New macro.  Use it instead of long
-	'#if' expressions.  Unlike the code it replaces, it it does not
+	'#if' expressions.  Unlike the code it replaces, it does not
 	depend on (defined _SC_PAGESIZE).  However, it does depend on
 	HAVE_STRUCT_SIGACTION_SA_SIGACTION; this last change fixes a bug
 	first reported by Jason Andrade in
