@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-10-15 15:32:25 $'
+cvsdatestamp='$Date: 2004-10-15 15:37:43 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -357,21 +357,13 @@ func_get_maintainer ()
   sed -n -e "/^Maintainer$sed_extract_prog" < "$gnulib_dir/modules/$1"
 }
 
-# func_import modules
-# Uses also the variables
-# - destdir         target directory
-# - libname         library name
-# - sourcebase      directory relative to destdir where to place source code
-# - m4base          directory relative to destdir where to place *.m4 macros
-# - lgpl            true if library's license shall be LGPL, blank otherwise
-# - dry_run         true if actions shall only be printed, blank otherwise
-# - supplied_opts   all options passed to gnulib-tool
-func_import ()
+# func_modules_transitive_closure
+# Input:
+# - modules         list of specified modules
+# Output:
+# - modules         list of modules, including dependencies
+func_modules_transitive_closure ()
 {
-  modules="$1"
-  modules=`for m in $modules; do echo $m; done | sort | uniq`
-
-  # Determine final module list.
   while true; do
     xmodules=
     for module in $modules; do
@@ -391,6 +383,24 @@ func_import ()
     fi
     modules="$xmodules"
   done
+}
+
+# func_import modules
+# Uses also the variables
+# - destdir         target directory
+# - libname         library name
+# - sourcebase      directory relative to destdir where to place source code
+# - m4base          directory relative to destdir where to place *.m4 macros
+# - lgpl            true if library's license shall be LGPL, blank otherwise
+# - dry_run         true if actions shall only be printed, blank otherwise
+# - supplied_opts   all options passed to gnulib-tool
+func_import ()
+{
+  modules="$1"
+  modules=`for m in $modules; do echo $m; done | sort | uniq`
+
+  # Determine final module list.
+  func_modules_transitive_closure
   echo "Module list with included dependencies:"
   echo "$modules" | sed -e 's/^/  /'
 
@@ -576,25 +586,7 @@ func_create_testdir ()
   modules=`for m in $modules; do echo $m; done | sort | uniq`
 
   # Determine final module list.
-  while true; do
-    xmodules=
-    for module in $modules; do
-      func_verify_module
-      if test -n "$module"; then
-        # Duplicate dependenies are harmless, but Jim wants a warning.
-        duplicated_deps=`func_get_dependencies $module | sort | uniq -d`
-        if test -n "$duplicated_deps"; then
-          echo "warning: module $module has duplicated dependencies: "`echo $duplicated_deps` 1>&2
-        fi
-        xmodules="$xmodules $module "`func_get_dependencies $module`
-      fi
-    done
-    xmodules=`for m in $xmodules; do echo $m; done | sort | uniq`
-    if test "$xmodules" = "$modules"; then
-      break
-    fi
-    modules="$xmodules"
-  done
+  func_modules_transitive_closure
   echo "Module list with included dependencies:"
   echo "$modules" | sed -e 's/^/  /'
 
