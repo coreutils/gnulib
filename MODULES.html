@@ -106,6 +106,10 @@
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=realloc">realloc</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/realloc.html">realloc</A>() function that is glibc compatible.
       </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=pagealign_alloc">pagealign_alloc</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Memory allocation aligned on page boundaries.
+      </TR>
     </TABLE>
     <H3><A HREF="#ansic_enh_time_datetime">Date and time &lt;time.h&gt;</A></H3>
     <TABLE>
@@ -1221,6 +1225,13 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/realloc.c">realloc.c</A>
         <TD ALIGN=LEFT VALIGN=TOP>AC_FUNC_REALLOC
         <TD ALIGN=LEFT VALIGN=TOP>---
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=pagealign_alloc"></A><A HREF="modules/pagealign_alloc">pagealign_alloc</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/pagealign_alloc.h">pagealign_alloc.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/pagealign_alloc.c">pagealign_alloc.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mmap-anon.m4">mmap-anon.m4</A><BR><A HREF="m4/pagealign_alloc.m4">pagealign_alloc.m4</A><BR>gl_PAGEALIGN_ALLOC
+        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>getpagesize<BR>gettext<BR>xalloc
       </TR>
     </TABLE>
     <H3><A NAME="ansic_enh_time_datetime">Date and time &lt;time.h&gt;</A></H3>
@@ -3255,13 +3266,6 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/openat.m4">openat.m4</A><BR>gl_FUNC_OPENAT
         <TD ALIGN=LEFT VALIGN=TOP>save-cwd<BR>gettext<BR>error<BR>exitfail
       </TR>
-      <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=pagealign_alloc"></A><A HREF="modules/pagealign_alloc">pagealign_alloc</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/pagealign_alloc.h">pagealign_alloc.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/pagealign_alloc.c">pagealign_alloc.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mmap-anon.m4">mmap-anon.m4</A><BR><A HREF="m4/pagealign_alloc.m4">pagealign_alloc.m4</A><BR>gl_PAGEALIGN_ALLOC
-        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>getpagesize<BR>gettext<BR>xalloc
-      </TR>
     </TABLE>
     <H2>Lone files - please create new modules containing them</H2>
     <PRE>
@@ -3294,6 +3298,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on  4 March 2005.
+    Generated from <CODE>MODULES.html.sh</CODE> on  5 March 2005.
   </BODY>
 </HTML>
