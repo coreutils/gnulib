@@ -1,3 +1,11 @@
+2004-11-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* prereq.m4 (gl_PREREQ): Require gt_FUNC_SETENV.
+
+2004-11-10  Jim Meyering  <jim@meyering.net>
+
+	* jm-macros.m4 (gl_MACROS): Don't require gl_FUNC_FPENDING.
+
 2004-11-08  Simon Josefsson  <jas@extundo.com>
 
 	* getaddrinfo.m4: New file.
