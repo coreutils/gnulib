@@ -1,3 +1,7 @@
+2004-09-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* dummy.c: Change copyright notice to FSF, and license to GPL.
+
 2004-09-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* argp-pvh.c (argp_program_version_hook): Provide initial value.
