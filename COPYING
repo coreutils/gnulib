@@ -1,11 +1,7 @@
-The files in here are all Copyright (C) Free Software Foundation, and
-are under three different licenses:
+$Id: COPYING,v 1.2 2004-09-15 15:59:43 karl Exp $
+The files in here are mostly copyright (C) Free Software Foundation, and
+are under assorted licenses.  Mostly, but not entirely, GPL.
 
-* GPL  - (text in doc/COPYING)
-* LGPL - (text in doc/COPYING.LIB)
-* FDL  - (text in doc/COPYING.DOC and doc/fdl.texi)
-
-The source files are grouped by license into their respective
-directories.  All documents in doc/ contain the relevant licensing
-information.
-
+Some of the source files in lib/ have different licenses.  Also, the
+copy of maintain.texi in doc/ has a verbatim-copying license, and
+doc/standards.texi and make-stds.texi are GFDL.
