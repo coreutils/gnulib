@@ -16,8 +16,7 @@ AC_STDC_HEADERS
 AC_USG
 
 AC_ALLOCA
-dnl We would like to use AC_CONST, but then the test on __STDC__ fails,
-dnl and any package which does *not* use AC_CONST loses.
+AC_CONST
 
 AC_PREFIX(gcc)
 

@@ -57,9 +57,6 @@ clean mostlyclean::
 distclean:: clean
 	rm -f Makefile config.status
 
-realclean:: distclean
-	rm -f configure
-
 extraclean:: distclean
 	rm -f patch* *~* *\#* *.orig *.rej *.bak core a.out
 
@@ -67,7 +64,7 @@ configure: configure.in
 	autoconf
 
 config.status: configure
-	configure
+	sh configure --no-create
 
 Makefile: Makefile.in config.status
 	sh config.status
@@ -84,7 +81,7 @@ TAGS check::
 # Prevent GNU make 3 from overflowing arg limit on system V.
 .NOEXPORT:
 
-distfiles = AUTHORS ChangeLog COPYING NEWS README \
+distfiles = AUTHORS ChangeLog COPYING INSTALL NEWS README \
             *.in configure regex.c regex.h 
 distdir = regex-$(version)
 distargs = version=$(version) distdir=../$(distdir)/$$d
