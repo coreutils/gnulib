@@ -211,20 +211,6 @@ xstrtol.h       xstrtol.c             xstrtoimax.m4               ---
                                       see also jm_AC_PREREQ_XSTRTOIMAX
                                       see also jm_AC_PREREQ_XSTRTOUMAX
 
-NYI             strtoimax.c           longlong.m4                 ---
-                                      AC_CHECK_HEADERS(inttypes.h)
-                                      AC_CHECK_HEADERS(stdlib.h)
-                                      AC_CHECK_DECLS(strtol)
-                                      AC_CHECK_DECLS(strtoll)
-                                      jm_AC_TYPE_LONG_LONG
-
-NYI             strtoumax.c           longlong.m4                 ---
-                                      AC_CHECK_HEADERS(inttypes.h)
-                                      AC_CHECK_HEADERS(stdlib.h)
-                                      AC_CHECK_DECLS(strtoul)
-                                      AC_CHECK_DECLS(strtoull)
-                                      jm_AC_TYPE_UNSIGNED_LONG_LONG
-
 -------------------------------------------------------------------------------
 
 + Date and time <time.h>
@@ -359,6 +345,29 @@ Header          Implementation        Autoconf macro              Depends on
 <stdlib.h>      strtoll.c             AC_REPLACE_FUNCS(strtoll)   strtol
 
 <stdlib.h>      strtoull.c            AC_REPLACE_FUNCS(strtoull)  strtoul
+
+-------------------------------------------------------------------------------
+
++ Functions for greatest-width integer types <inttypes.h>
+
+-------------------------------------------------------------------------------
+lib/            lib/                  m4/
+Header          Implementation        Autoconf macro              Depends on
+-------------------------------------------------------------------------------
+
+NYI             strtoimax.c           longlong.m4                 ---
+                                      AC_CHECK_HEADERS(inttypes.h)
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      AC_CHECK_DECLS(strtol)
+                                      AC_CHECK_DECLS(strtoll)
+                                      jm_AC_TYPE_LONG_LONG
+
+NYI             strtoumax.c           longlong.m4                 ---
+                                      AC_CHECK_HEADERS(inttypes.h)
+                                      AC_CHECK_HEADERS(stdlib.h)
+                                      AC_CHECK_DECLS(strtoul)
+                                      AC_CHECK_DECLS(strtoull)
+                                      jm_AC_TYPE_UNSIGNED_LONG_LONG
 
 -------------------------------------------------------------------------------
 
