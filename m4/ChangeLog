@@ -6,6 +6,8 @@
 
 2004-11-11  Simon Josefsson  <jas@extundo.com>
 
+	* strtok_r.m4: New file.
+
 	* getopt.m4: Replace opterr.
 
 2004-11-10  Paul Eggert  <eggert@cs.ucla.edu>

@@ -1,3 +1,10 @@
+2004-11-11  Simon Josefsson  <jas@extundo.com>
+
+	* modules/strtok_r: New file.
+
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
+	strtok_r.
+
 2004-11-08  Simon Josefsson  <jas@extundo.com>
 
 	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add

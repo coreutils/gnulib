@@ -1,3 +1,7 @@
+2004-11-11  Simon Josefsson  <jas@extundo.com>
+
+	* strtok_r.h, strtok_r.c: New file.
+
 2004-11-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getopt_.h (__getopt_argv_const): New macro, to be used so that
