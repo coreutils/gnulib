@@ -7,6 +7,7 @@ lib/hard-locale.c
 m4/hard-locale.m4
 
 Depends-on:
+strdup
 
 configure.ac:
 gl_HARD_LOCALE
@@ -22,4 +23,3 @@ GPL
 
 Maintainer:
 Paul Eggert
-
