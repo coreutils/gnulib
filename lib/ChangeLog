@@ -1,3 +1,9 @@
+2004-11-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getdate.y (tORDINAL): New token.
+	(day, relunit): Allow it for relative times.
+	(relative_time_table): Use tORDINAL for ordinals.
+
 2004-11-15  Jim Meyering  <jim@meyering.net>
 
 	* closeout.c: Include "__fpending.h" once again.
