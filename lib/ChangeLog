@@ -1,3 +1,8 @@
+2004-07-09  Simon Josefsson  <jas@extundo.com>
+
+	* getndelim2.c: Include stddef.h, for ptrdiff_t.  (FreeBSD 4.9
+	failed without this.)
+
 2004-07-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* fchown-stub.c: New file.
