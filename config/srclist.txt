@@ -1,9 +1,11 @@
-# $Id: srclist.txt,v 1.1 2002-09-10 23:41:12 karl Exp $
-# Files for which we are not the source.
-
-TEXINFO=/u/texinfo/src
-GNUCONFIG=$HOME/gnu/src/ftp.gnu.org/pub/gnu/config
+# $Id: srclist.txt,v 1.2 2002-09-12 20:29:26 karl Exp $
+# Files for which we are not the source.  See ./srclistvars.sh for the
+# variable definitions.
 
 $TEXINFO/doc/texinfo.tex	config
 $GNUCONFIG/config.guess		config
 $GNUCONFIG/config.sub		config
+$LIBCSRC/scripts/install-sh	config
+$LIBCSRC/scripts/mkinstalldirs	config
+
+$AUTOCONF/INSTALL		doc
