@@ -1,5 +1,12 @@
 2004-05-13  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* nanosleep.c (suspended): Change its type from int to
+	sig_atomic_t volatile.
+	(first_call): Make it private to rpl_nanosleep, and have it
+	be zero initially as that's a bit faster.
+	(my_usleep): Round up fractional times instead of truncating them,
+	as this is the usual meaning for 'sleep'.
+
 	* gettime.c (gettime): Fall back on `time' if `gettimeofday'
 	doesn't work.
 	* settime.c: Include <unistd.h>, for stime (on Solaris 8, anyway).
