@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2003-09-16 14:53:35 $'
+cvsdatestamp='$Date: 2003-09-17 18:30:23 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -197,7 +197,7 @@ case "$0" in
      fi
      ;;
 esac
-while test -L "$self_abspathname"; do
+while test -h "$self_abspathname"; do
   # Resolve symbolic link.
   sedexpr1='s, -> ,#%%#,'
   sedexpr2='s,^.*#%%#\(.*\)$,\1,p'
@@ -231,11 +231,16 @@ func_verify_module ()
   fi
 }
 
-tags_regexp='\(Description\|Files\|Depends-on\|configure\.ac\|Makefile\.am\|Include\|Maintainer\)'
 sed_extract_prog=':[ 	]*$/ {
   :a
     n
-    s/^'"$tags_regexp"':[ 	]*$//
+    s/^Description:[ 	]*$//
+    s/^Files:[ 	]*$//
+    s/^Depends-on:[ 	]*$//
+    s/^configure\.ac:[ 	]*$//
+    s/^Makefile\.am:[ 	]*$//
+    s/^Include:[ 	]*$//
+    s/^Maintainer:[ 	]*$//
     tb
     p
     ba

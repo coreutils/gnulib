@@ -1,3 +1,11 @@
+2003-09-17  Paul Eggert  <eggert@twinsun.com>
+
+	* gnulib-tool: Use "test -h", not "test -L", for portability
+	to Solaris 8 /bin/sh.  (This bug is fixed in Solaris 9.)
+	(tags_regexp): Remove, since \| doesn't conform to POSIX.
+	(sed_extract_prog): Issue s commands one-by-one, rather than
+	using \| in one s command.
+
 2003-09-16  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_create_testdir): Warn about duplicated
