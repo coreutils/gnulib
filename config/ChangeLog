@@ -1,3 +1,10 @@
+2003-07-08  Paul Eggert  <eggert@twinsun.com>
+
+	* srclist-update: Port to POSIX 1003.1-2001 hosts by avoiding the
+	use of GNU extensions.  Change "x=`eval echo $x`" to the shorter
+	and sweeter "eval x=$x".
+	* srclist.txt: Get lib/argp* from glibc.
+
 2003-07-06    <karl@gnu.org>
 
 	* depcomp: update from automake.
