@@ -2,6 +2,9 @@
 
 	Merge in changes from the coreutils.
 
+	* makepath.c (make_path): Restore umask *before* creating the final
+	component.
+
 	* xmalloc.c: Adjust to work with new autoconf macros, AC_FUNC_MALLOC
 	and AC_FUNC_REALLOC: test #ifndef HAVE_MALLOC/HAVE_REALLOC.
 
