@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 4, 2004
+@set lastupdate April 11, 2004
 @c %**end of header
 
 @dircategory GNU organization
@@ -1222,6 +1222,7 @@ so based on the contents of your @file{manual} directory.
 
 @menu
 * Invoking gendocs.sh::
+* CVS Keywords in Web Pages::
 @end menu
 
 @node  Invoking gendocs.sh
@@ -1290,6 +1291,47 @@ and @env{DVIPS} to control the programs that get executed, and
 
 Please email bug reports, enhancement requests, or other
 correspondence to @email{bug-texinfo@@gnu.org}.
+
+
+@node CVS Keywords in Web Pages
+@section CVS Keywords in Web Pages
+@cindex cvs keywords in web pages
+@cindex rcs keywords in web pages
+@cindex $ keywords in web pages
+@cindex web pages, and cvs keywords
+
+Since @code{www.gnu.org} works through CVS, CVS keywords in your
+manual, such as @code{@w{$}Log$}, need special treatment (even if you
+don't happen to maintain your manual in CVS).
+
+If these keywords end up in the generated output as literal strings,
+they will be expanded.  The most robust way to handle this is to turn
+off keyword expansion for such generated files.  For existing files,
+this is done with:
+
+@example
+cvs admin -ko @var{file1} @var{file2} ...
+@end example
+
+@noindent
+For new files:
+
+@example
+cvs add -ko @var{file1} @var{file2} ...
+@end example
+
+@xref{Keyword substitution,,,cvs,Version Management with CVS}.
+
+In Texinfo source, the recommended way to literally specify a
+``dollar'' keyword is:
+
+@example
+@@w@{$@}Log$
+@end example
+
+The @code{@@w} prevents keyword expansion in the Texinfo source
+itself.  Also, @code{makeinfo} notices the @code{@@w} and generates
+output avoiding the literal keyword string.
 
 
 @node   Ethical and Philosophical Consideration
