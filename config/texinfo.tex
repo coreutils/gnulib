@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-02-24.06}
+\def\texinfoversion{2004-02-25.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -3822,52 +3822,87 @@ width0pt\relax} \fi
 \def\lowersections{\global\advance\secbase by 1}
 \let\down=\lowersections % original BFox name
 
-% Choose a numbered-heading macro
-% #1 is heading level if unmodified by @raisesections or @lowersections
-% #2 is text for heading
-\def\numhead#1#2{\absseclevel=\secbase\advance\absseclevel by #1
-\ifcase\absseclevel
-      \chapterzzz{#2}%
-  \or \seczzz{#2}%
-  \or \numberedsubseczzz{#2}%
-  \or \numberedsubsubseczzz{#2}%
+% we only have subsub.
+\chardef\maxseclevel = 3
+%
+% A numbered section within an unnumbered changes to unnumbered too.
+% To achive this, remember the "biggest" unnum. sec. we are currently in:
+\chardef\unmlevel = \maxseclevel
+%
+% Trace whether the current chapter is an appendix or not:
+% \chapheadtype is "N" or "A", unnumbered chapters are ignored.
+\def\chapheadtype{N}
+
+% Choose a heading macro
+% #1 is heading type
+% #2 is heading level
+% #3 is text for heading
+\def\genhead#1#2#3{%
+  % Compute the abs. sec. level:
+  \absseclevel=#2
+  \advance\absseclevel by \secbase
+  % Make sure \absseclevel doesn't fall outside the range:
+  \ifnum \absseclevel < 0
+    \absseclevel = 0
   \else
-    \ifnum \absseclevel<0 \chapterzzz{#2}%
-    \else \numberedsubsubseczzz{#2}%
+    \ifnum \absseclevel > 3
+      \absseclevel = 3
+    \fi
+  \fi
+  % The heading type:
+  \def\headtype{#1}%
+  \if \headtype U%
+    \ifnum \absseclevel < \unmlevel
+      \chardef\unmlevel = \absseclevel
+    \fi
+  \else
+    % Check for appendix sections:
+    \ifnum \absseclevel = 0
+      \edef\chapheadtype{\headtype}%
+    \else
+      \if \headtype A\if \chapheadtype N%
+	\errmessage{@appendix... within a non-appendix chapter}%
+      \fi\fi
+    \fi
+    % Check for numbered within unnumbered:
+    \ifnum \absseclevel > \unmlevel
+      \def\headtype{U}%
+    \else
+      \chardef\unmlevel = 3
+    \fi
+  \fi
+  % Now print the heading:
+  \if \headtype U%
+    \ifcase\absseclevel
+	\unnumberedzzz{#3}%
+    \or \unnumberedseczzz{#3}%
+    \or \unnumberedsubseczzz{#3}%
+    \or \unnumberedsubsubseczzz{#3}%
+    \fi
+  \else
+    \if \headtype A%
+      \ifcase\absseclevel
+	  \appendixzzz{#3}%
+      \or \appendixsectionzzz{#3}%
+      \or \appendixsubseczzz{#3}%
+      \or \appendixsubsubseczzz{#3}%
+      \fi
+    \else
+      \ifcase\absseclevel
+	  \chapterzzz{#3}%
+      \or \seczzz{#3}%
+      \or \numberedsubseczzz{#3}%
+      \or \numberedsubsubseczzz{#3}%
+      \fi
     \fi
   \fi
   \suppressfirstparagraphindent
 }
 
-% like \numhead, but chooses appendix heading levels
-\def\apphead#1#2{\absseclevel=\secbase\advance\absseclevel by #1
-\ifcase\absseclevel
-      \appendixzzz{#2}%
-  \or \appendixsectionzzz{#2}%
-  \or \appendixsubseczzz{#2}%
-  \or \appendixsubsubseczzz{#2}%
-  \else
-    \ifnum \absseclevel<0 \appendixzzz{#2}%
-    \else \appendixsubsubseczzz{#2}%
-    \fi
-  \fi
-  \suppressfirstparagraphindent
-}
-
-% like \numhead, but chooses numberless heading levels
-\def\unnmhead#1#2{\absseclevel=\secbase\advance\absseclevel by #1
-  \ifcase\absseclevel
-      \unnumberedzzz{#2}%
-  \or \unnumberedseczzz{#2}%
-  \or \unnumberedsubseczzz{#2}%
-  \or \unnumberedsubsubseczzz{#2}%
-  \else
-    \ifnum \absseclevel<0 \unnumberedzzz{#2}%
-    \else \unnumberedsubsubseczzz{#2}%
-    \fi
-  \fi
-  \suppressfirstparagraphindent
-}
+% an interface:
+\def\numhead{\genhead N}
+\def\apphead{\genhead A}
+\def\unnmhead{\genhead U}
 
 % @chapter, @appendix, @unnumbered.  Increment top-level counter, reset
 % all lower-level sectioning counters to zero.
