@@ -1,3 +1,9 @@
+2005-02-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/chdir-long (Depends-on): Add memrchr.
+	* modules/memrchr (Files): Add lib/memrchr.h.
+	(Include): "memrchr.h".
+
 2005-01-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.

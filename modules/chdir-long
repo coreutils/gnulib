@@ -8,6 +8,7 @@ m4/chdir-long.m4
 
 Depends-on:
 openat
+memrchr
 
 configure.ac:
 gl_FUNC_CHDIR_LONG
