@@ -1,3 +1,9 @@
+2005-01-24  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
+
+	* sysexits.m4 (gl_SYSEXITS): Reverted logic. SYSEXITS_H
+	must be defined if the header file was not found, in order
+	to provide a replacement. Reported by Todd Vierling <tv@duh.org>
+
 2005-01-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* acl.m4, afs.m4, alloca.m4, argp.m4, assert.m4, atexit.m4,
