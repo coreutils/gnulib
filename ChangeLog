@@ -1,7 +1,12 @@
+2003-11-12  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/xalloc (Files): Undo latest change, since xalloc.h
+	no longer needs SIZE_MAX or PTRDIFF_MAX.
+
 2003-11-11  Bruno Haible  <bruno@clisp.org>
 
 	* modules/xsize (Files): Add m4/size_max.m4.
-	* modules/xalloc (Files): Add m4/size_max.m4, m4_ptrdiff_max.m4.
+	* modules/xalloc (Files): Add m4/size_max.m4, m4/ptrdiff_max.m4.
 
 2003-11-04  Bruno Haible  <bruno@clisp.org>
 
@@ -175,7 +180,7 @@
 2003-08-18  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/stdbool: Add BUILT_SOURCES.  Prefer $@ to target name
-        in makefile rules.
+	in makefile rules.
 
 2003-08-17  Simon Josefsson  <jas@extundo.com>
 

@@ -1,3 +1,8 @@
+2003-11-12  Paul Eggert  <eggert@twinsun.com>
+
+	* xalloc.m4 (gl_PREREQ_XALLOC): Do not require gl_SIZE_MAX or
+	gl_PTRDIFF_MAX.
+
 2003-11-11  Bruno Haible  <bruno@clisp.org>
 
 	* size_max.m4: New file.

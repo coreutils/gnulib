@@ -1,3 +1,17 @@
+2003-11-12  Paul Eggert  <eggert@twinsun.com>
+
+	* xalloc.h: Do not include <limits.h> or <stdint.h>.
+	(xalloc_oversized): Use sizeof (ptrdiff_t) and sizeof (size_t) for
+	the heuristic, rather than PTRDIFF_MAX and SIZE_MAX.  This
+	heuristic is just as accurate as far as we know, and it removes a
+	dependency on size_max.m4 and ptrdiff_max.m4.
+
+2003-11-12  Paul Eggert  <eggert@twinsun.com>
+
+	* xstrtol.c (__xstrtol): Remove "break" immediately after
+	"return", to pacify some unknown compiler.  Problem reported
+	by Joerg Schilling.
+
 2003-11-11  Bruno Haible  <bruno@clisp.org>
 
 	* xsize.h (SIZE_MAX): Remove fallback definition.
