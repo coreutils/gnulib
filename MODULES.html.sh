@@ -323,7 +323,6 @@ func_echo "$element"
 
 func_begin_table
 func_module diacrit
-func_module getstr
 func_module getline
 func_module linebuffer
 func_module obstack
