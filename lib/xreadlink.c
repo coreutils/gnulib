@@ -36,9 +36,6 @@ extern int errno;
 # include <unistd.h>
 #endif
 
-#include "xalloc.h"
-#include "xreadlink.h"
-
 #ifndef SIZE_MAX
 # define SIZE_MAX ((size_t) -1)
 #endif
@@ -46,10 +43,13 @@ extern int errno;
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
 
+#include "xalloc.h"
+#include "xreadlink.h"
+
 /* Call readlink to get the symbolic link value of FILENAME.
    Return a pointer to that NUL-terminated string in malloc'd storage.
    If readlink fails, return NULL (caller may use errno to diagnose).
-   If realloc fails, or if the link value is longer than SIZE_MAX :-),
+   If malloc fails, or if the link value is longer than SSIZE_MAX :-),
    give a diagnostic and exit.  */
 
 char *

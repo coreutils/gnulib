@@ -10,4 +10,5 @@ AC_DEFUN([gl_SAME],
 [
   dnl Prerequisites of lib/same.c.
   AC_CHECK_HEADERS_ONCE(unistd.h)
+  AC_CHECK_FUNCS(pathconf)
 ])

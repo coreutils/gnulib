@@ -1,3 +1,37 @@
+2004-01-15  Jim Meyering  <jim@meyering.net>
+
+	Merge from coreutils.
+
+	* md5.h (rol) [__GNUC__ && __i386__]: Don't use `asm' code.  These
+	days, gcc-3.x does better all by itself.  Patch from Dean Gaudet:
+	http://mail.gnu.org/archive/html/bug-coreutils/2003-11/msg00144.html
+
+	* posixver.c (DEFAULT_POSIX2_VERSION): Use definition of new,
+	optional configure-time default.
+
+	* version-etc.c (version_etc_copyright): Update copyright date.
+
+	* xreadlink.c (xreadlink): Correct outdated comment.
+
+2004-01-15  Paul Eggert  <eggert@twinsun.com>
+
+	Merge from coreutils.
+
+	* posixver.c: Include posixver.h.
+
+	* same.c: Include <stdbool.h>, <limits.h>.
+	(_POSIX_NAME_MAX): Define if not defined.
+	(MIN): New macro.
+	(same_name): If file names are silently truncated, report
+	that the file names are the same if they are the same after
+	the silent truncation.
+
+	* xstrtod.h (xstrtod): Accept an extra arg, specifying the
+	conversion function.
+	* xstrtod.c (xstrtod): Likewise.  All callers changed to
+	include c-strtod.h and use c_strtod.  Don't include stdlib.h; no
+	longer needed.
+
 2004-01-14  Paul Eggert  <eggert@twinsun.com>
 
 	* fnmatch_loop.c (ALLOCA_LIMIT): Remove macro, which collided

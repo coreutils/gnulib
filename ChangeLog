@@ -4,6 +4,8 @@
 	Prefer "$@" to "poll.h" in rule for building poll.h.
 	All this is for consistency with alloca and fnmatch.
 
+	* modules/same: Depend on stdbool.
+
 2003-12-03  Bruno Haible  <bruno@clisp.org>
 
 	Upgrade from gettext-0.13.

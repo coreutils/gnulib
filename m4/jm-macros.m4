@@ -1,28 +1,10 @@
-#serial 68   -*- autoconf -*-
-
-m4_undefine([AC_LANG_SOURCE(C)])
-dnl The following is identical to the definition in c.m4
-dnl from the autoconf cvs repository on 2003-03-07.
-dnl FIXME: remove this code once we upgrade to autoconf-2.58.
-
-# We can't use '#line $LINENO "configure"' here, since
-# Sun c89 (Sun WorkShop 6 update 2 C 5.3 Patch 111679-08 2002/05/09)
-# rejects $LINENO greater than 32767, and some configure scripts
-# are longer than 32767 lines.
-m4_define([AC_LANG_SOURCE(C)],
-[/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-$1])
-
+#serial 70   -*- autoconf -*-
 
 dnl Misc type-related macros for fileutils, sh-utils, textutils.
 
 AC_DEFUN([jm_MACROS],
 [
-  AC_PREREQ(2.57)
+  AC_PREREQ(2.58)
 
   GNU_PACKAGE="GNU $PACKAGE"
   AC_DEFINE_UNQUOTED(GNU_PACKAGE, "$GNU_PACKAGE",
@@ -50,7 +32,6 @@ AC_DEFUN([jm_MACROS],
 
   AC_REQUIRE([UTILS_FUNC_DIRFD])
   AC_REQUIRE([AC_FUNC_ACL])
-  AC_REQUIRE([AC_FUNC_FTW])
   AC_REQUIRE([jm_FUNC_LCHOWN])
   AC_REQUIRE([fetish_FUNC_RMDIR_NOTEMPTY])
   AC_REQUIRE([jm_FUNC_CHOWN])
@@ -127,7 +108,6 @@ AC_DEFUN([jm_MACROS],
   AC_CHECK_FUNCS(setreuid setregid)
 
   AC_FUNC_STRTOD
-  AC_REQUIRE([UTILS_SYS_OPEN_MAX])
   AC_REQUIRE([GL_FUNC_GETCWD_PATH_MAX])
   AC_REQUIRE([GL_FUNC_READDIR])
 
@@ -167,6 +147,8 @@ AC_DEFUN([jm_MACROS],
   # use the corresponding stub.
   AC_CHECK_FUNC([fchdir], , [AC_LIBOBJ(fchdir-stub)])
   AC_CHECK_FUNC([fchown], , [AC_LIBOBJ(fchown-stub)])
+
+  AC_REQUIRE([gl_FUNC_FREE])
 ])
 
 # These tests must be run before any use of AC_CHECK_TYPE,
@@ -257,7 +239,8 @@ AC_DEFUN([jm_CHECK_ALL_TYPES],
   AC_REQUIRE([AC_TYPE_SIGNAL])
   AC_REQUIRE([AC_TYPE_SIZE_T])
   AC_REQUIRE([AC_TYPE_UID_T])
-  AC_CHECK_TYPE(ino_t, unsigned long)
+  AC_CHECK_TYPE(ino_t, unsigned long int)
+  AC_CHECK_TYPE(uintptr_t, size_t)
 
   gt_TYPE_SSIZE_T
 

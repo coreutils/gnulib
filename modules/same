@@ -11,6 +11,7 @@ Depends-on:
 xalloc
 error
 dirname
+stdbool
 
 configure.ac:
 gl_SAME
