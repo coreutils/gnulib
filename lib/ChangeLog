@@ -1,3 +1,7 @@
+2005-03-27  Jim Meyering  <jim@meyering.net>
+
+	* argmatch.c: Clarify comment: null-terminated -> NULL-terminated.
+
 2005-03-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* intprops.h (INT_STRLEN_BOUND, INT_BUFSIZE_BOUND):
@@ -6,6 +10,10 @@
 	* mktime.c, strftime.c: Propagate intprops.h comment nits.
 
 2005-03-26  Jim Meyering  <jim@meyering.net>
+
+	* intprops.h: Say `terminating NUL byte' rather than `terminating null'.
+	* quotearg.c: Likewise.
+	* filemode.c: Likewise.
 
 	Comment nits.
 	* intprops.h: Add the apostrophe in `(one|two)'s complement'.
