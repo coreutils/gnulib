@@ -1,3 +1,7 @@
+2004-11-23  Jim Meyering  <jim@meyering.net>
+
+	* getopt_.h: Remove trailing blanks.
+
 2004-11-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* utimens.c (__attribute__, ATTRIBUTE_UNUSED): New macros.
