@@ -38,8 +38,6 @@
 
 #include <limits.h>
 
-int statfs ();
-
 #if HAVE_SYS_PARAM_H
 # include <sys/param.h>
 #endif
