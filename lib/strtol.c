@@ -36,7 +36,7 @@ Cambridge, MA 02139, USA.  */
 extern int errno;
 #endif
 
-#if !__STDC__
+#if !__STDC__ && !defined(const)
 #define const
 #endif
 
