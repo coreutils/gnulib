@@ -1,3 +1,7 @@
+2003-06-10  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh (func_all_modules): Add strchrnul and argp.
+
 2003-06-10  Simon Josefsson  <jas@extundo.com>
 
 	* modules/strchrnul: New file.

@@ -1506,6 +1506,7 @@ func_all_modules ()
   func_module stpcpy
   func_module stpncpy
   func_module strcase
+  func_module strchrnul
   func_module strdup
   func_module strnlen
   func_module strndup
@@ -1865,6 +1866,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module argp
   func_module exitfail
   func_module c-stack
   func_module error
