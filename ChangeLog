@@ -1,3 +1,10 @@
+2004-05-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* README: Mention that the 'free' module works around the
+	problem with 'free (0)'.
+	Mention LIA-1 and C99.
+	Add a copyright notice.
+
 2004-05-17  Derek R. Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 

@@ -112,6 +112,8 @@ should use fixincludes or fix their include files manually.
 Even if the include files conform to C89, the library itself may not.
 For example, SunOS 4's (free (NULL)) can dump core, so GNULib code
 must avoid freeing a null pointer, even though C89 allows it.
+You can work around some of these problems by requiring the relevant
+modules, e.g., the GNULib 'free' module supplies a conforming 'free'.
 
 The GNU coding standards allow one departure from strict C99: GNULib
 code can assume that standard internal types like size_t are no wider
@@ -120,7 +122,9 @@ require 'int' to be at least 32 bits wide, so GNULib code assumes this
 as well.  GNULib code makes the following additional assumptions:
 
  * Signed integer arithmetic is two's complement, without runtime
-   overflow checking.
+   overflow checking.  This is the traditional behavior, and is
+   supported by C99 implementations that conform to ISO/IEC 10967-1
+   (LIA-1) and that define signed integer types as being modulo.
 
  * There are no "holes" in integer values: all the bits of an integer
    contribute to its value in the usual way.
@@ -174,3 +178,21 @@ $ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib login
 (Just hit Enter or Return when prompt for a password)
 $ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib checkout gnulib
 
+
+-----
+
+Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
