@@ -1,4 +1,4 @@
-# copy-file.m4 serial 1
+# copy-file.m4 serial 2
 dnl Copyright (C) 2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -9,5 +9,5 @@ dnl the same distribution terms as the rest of that program.
 AC_DEFUN([gl_COPY_FILE],
 [
   AC_CHECK_HEADERS_ONCE(unistd.h utime.h)
-  AC_CHECK_FUNCS(utime utimes)
+  AC_CHECK_FUNCS(chown utime utimes)
 ])

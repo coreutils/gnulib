@@ -1,3 +1,8 @@
+2003-03-30  Bruno Haible  <bruno@clisp.org>
+
+	* copy-file.c (copy_file_preserving): Don't set owner if the function
+	chown() doesn't exist.
+
 2003-03-28  Bruno Haible  <bruno@clisp.org>
 
 	* copy-file.h: New file, from GNU gettext.

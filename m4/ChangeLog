@@ -1,3 +1,7 @@
+2003-03-30  Bruno Haible  <bruno@clisp.org>
+
+	* copy-file.m4 (gl_COPY_FILE): Add check for chown().
+
 2003-03-28  Bruno Haible  <bruno@clisp.org>
 
 	* copy-file.m4: New file.
