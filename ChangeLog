@@ -1,3 +1,8 @@
+2003-08-18  Paul Eggert  <eggert@twinsun.com>
+
+	* modules/stdbool: Add BUILT_SOURCES.  Prefer $@ to target name
+        in makefile rules.
+
 2003-08-17  Simon Josefsson  <jas@extundo.com>
 
 	* modules/argp: Fix autoconf macro name. Add more dependencies.
