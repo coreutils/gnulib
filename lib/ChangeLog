@@ -1,5 +1,12 @@
 2003-06-06  Jim Meyering  <jim@meyering.net>
 
+	Merge from coreutils.
+	This avoids a core dump on systems without GNU putenv,
+	when running `env -u SOME_ALREADY_UNSET_VARIABLE'.
+	* putenv.c (__set_errno, LOCK, UNLOCK): Define.
+	(unsetenv): New static function, from GNU libc.
+	(rpl_putenv): Use it.
+
 	* modechange.c: Remove trailing blanks.
 
 	Merge from coreutils.
