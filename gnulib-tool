@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
+# Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-12-15 22:31:01 $'
+cvsdatestamp='$Date: 2005-01-05 02:50:04 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -617,6 +617,11 @@ func_import ()
     echo "# gnulib.m4 ends here"
   )
   echo "Finished."
+  echo
+  echo "You may need to add #include directives for the following .h files."
+  for module in $modules; do
+    func_get_include_directive "$module" | sed -e '/^$/d;' -e 's/^/  /'
+  done
   echo
   echo "Don't forget to add \"$sourcebase/Makefile\""
   echo "to AC_CONFIG_FILES in \"$configure_ac\" and to mention"
