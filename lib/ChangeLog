@@ -1,3 +1,7 @@
+2004-11-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* strftime.c (DO_MULTIBYTE): Check for wchar.h, too.
+
 2004-11-05  Bruno Haible  <bruno@clisp.org>
 
 	* readlink.c: Include stddef.h, needed for size_t on Woe32.
@@ -85,7 +89,7 @@
 	stdlib.h.
 	(yyerror, yylex): Now accepts parser_control * arg.
 	(main) [TEST]: Use '\0' rather than 0 for char.
-	
+
 2004-10-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getpagesize.c (getpagesize): Don't assume <sys/param.h> exists.
