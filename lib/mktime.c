@@ -18,6 +18,10 @@ License along with the GNU C Library; see the file COPYING.LIB.  If
 not, write to the Free Software Foundation, Inc., 675 Mass Ave,
 Cambridge, MA 02139, USA.  */
 
+/* #define DEBUG */    /* Define this to have a standalone shell to test
+                        * this implementation of mktime
+                        */
+
 #ifdef HAVE_CONFIG_H
 #if defined (CONFIG_BROKETS)
 /* We use <config.h> instead of "config.h" so that a compilation
@@ -51,6 +55,10 @@ const unsigned short int __mon_lengths[2][12] =
   };
 
 
+static int times_through_search; /* This library routine should never
+				    hang -- make sure we always return
+				    when we're searching for a value */
+
 /* After testing this, the maximum number of iterations that I had on
    any number that I tried was 3!  Not bad.
 
@@ -61,9 +69,12 @@ const unsigned short int __mon_lengths[2][12] =
 
 #ifdef DEBUG
 
+#include <stdio.h>
+#include <ctype.h>
+
 int debugging_enabled = 0;
 
-/* Print the values in a `struct tm'.  */
+/* Print the values in a `struct tm'. */
 static void
 printtm (it)
      struct tm *it;
@@ -82,6 +93,7 @@ printtm (it)
 }
 #endif
 
+
 static time_t
 dist_tm (t1, t2)
      struct tm *t1;
@@ -93,48 +105,62 @@ dist_tm (t1, t2)
 
   v1 = v2 = 0;
 
-#define doit(x, secs)							      \
-  v1 += t1->x * secs;							      \
-  v2 += t2->x * secs;							      \
-  if (!diff_flag)							      \
-    {									      \
-      if (t1->x < t2->x)						      \
-	diff_flag = -1;							      \
-      else if (t1->x > t2->x)						      \
-	diff_flag = 1;							      \
+#define doit(x, secs)                                                         \
+  v1 += t1->x * secs;                                                         \
+  v2 += t2->x * secs;                                                         \
+  if (!diff_flag)                                                             \
+    {                                                                         \
+      if (t1->x < t2->x)                                                      \
+	diff_flag = -1;                                                       \
+      else if (t1->x > t2->x)                                                 \
+	diff_flag = 1;                                                        \
     }
-
-  doit (tm_year, 31536000);	/* Okay, not all years have 365 days.  */
-  doit (tm_mon, 2592000);	/* Okay, not all months have 30 days.  */
+  
+  doit (tm_year, 31536000);	/* Okay, not all years have 365 days. */
+  doit (tm_mon, 2592000);	/* Okay, not all months have 30 days. */
   doit (tm_mday, 86400);
   doit (tm_hour, 3600);
   doit (tm_min, 60);
   doit (tm_sec, 1);
-
+  
 #undef doit
+  
+  /* We should also make sure that the sign of DISTANCE is correct --
+   * if DIFF_FLAG is positive, the distance should be positive and
+   * vice versa. */
+  
+  distance = (v1 > v2) ? (v1 - v2) : (v2 - v1);
+  if (diff_flag < 0)
+    distance = -distance;
 
-  distance = v1 - v2;
+  if (times_through_search > 20) /* Arbitrary # of calls, but makes
+				    sure we never hang if there's a
+				    problem with this algorithm */
+    {
+      distance = diff_flag;
+    }
 
-  /* We need this DIFF_FLAG business because it is forseeable that the
-     distance may be zero when, in actuality, the two structures are
-     different.  This is usually the case when the dates are 366 days
-     apart and one of the years is a leap year.  */
+  /* We need this DIFF_FLAG business because it is forseeable that
+   * the distance may be zero when, in actuality, the two structures
+   * are different.  This is usually the case when the dates are
+   * 366 days apart and one of the years is a leap year. */
 
-  if (distance == 0 && diff_flag)
+  if ((distance == 0) && diff_flag)
     distance = 86400 * diff_flag;
 
   return distance;
 }
+      
 
-
-/* Modified binary search -- make intelligent guesses as to where the time
-   might lie along the timeline, assuming that our target time lies a
-   linear distance (w/o considering time jumps of a particular region).
-
-   Assume that time does not fluctuate at all along the timeline -- e.g.,
-   assume that a day will always take 86400 seconds, etc. -- and come up
-   with a hypothetical value for the time_t representation of the struct tm
-   TARGET, in relation to the guess variable -- it should be pretty close!  */
+/* Modified b-search -- make intelligent guesses as to where the time
+ * might lie along the timeline, assuming that our target time lies a
+ * linear distance (w/o considering time jumps of a particular region).
+ *
+ * Assume that time does not fluctuate at all along the timeline --
+ * e.g., assume that a day will always take 86400 seconds, etc. -- and
+ * come up with a hypothetical value for the time_t representation of
+ * the struct tm TARGET, in relation to the guess variable -- it should
+ * be pretty close! */
 
 static time_t
 search (target)
@@ -144,46 +170,49 @@ search (target)
   time_t guess = 0;
   time_t distance = 0;
 
+  times_through_search = 0;
+
   do
     {
       guess += distance;
 
+      times_through_search++;     
+      
       guess_tm = localtime (&guess);
-
+      
 #ifdef DEBUG
       if (debugging_enabled)
 	{
-	  printf ("guess %d == ", guess);
+	  printf ("guess %d == ", (int) guess);
 	  printtm (guess_tm);
 	  puts ("");
 	}
 #endif
-
-      /* Are we on the money?  */
+      
+      /* Are we on the money? */
       distance = dist_tm (target, guess_tm);
-
+      
     } while (distance != 0);
 
   return guess;
 }
 
 /* Since this function will call localtime many times (and the user might
-   be passing their `struct tm *' right from localtime, let's make a copy
-   for ourselves and run the search on the copy.
-
-   Also, we have to normalize the timeptr because it's possible to call mktime
-   with values that are out of range for a specific item (like 30th Feb).  */
-
+ * be passing their `struct tm *' right from localtime, let's make a copy
+ * for ourselves and run the search on the copy.
+ *
+ * Also, we have to normalize the timeptr because it's possible to call mktime
+ * with values that are out of range for a specific item (like 30th Feb). */
 time_t
 mktime (timeptr)
      struct tm *timeptr;
 {
-  struct tm private_mktime_struct_tm; /* Yes, users can get a ptr to this.  */
+  struct tm private_mktime_struct_tm; /* Yes, users can get a ptr to this. */
   struct tm *me;
   time_t result;
 
   me = &private_mktime_struct_tm;
-
+  
   *me = *timeptr;
 
 #define normalize(foo,x,y,bar); \
@@ -197,25 +226,25 @@ mktime (timeptr)
       me->bar++; \
       me->foo = (x + (me->foo - y)); \
     }
-
+  
   normalize (tm_sec, 0, 59, tm_min);
   normalize (tm_min, 0, 59, tm_hour);
   normalize (tm_hour, 0, 23, tm_mday);
-
-  /* Do the month first, so day range can be found.  */
+  
+  /* Do the month first, so day range can be found. */
   normalize (tm_mon, 0, 11, tm_year);
   normalize (tm_mday, 1,
 	     __mon_lengths[__isleap (me->tm_year)][me->tm_mon],
 	     tm_mon);
 
-  /* Do the month again, because the day may have pushed it out of range.  */
+  /* Do the month again, because the day may have pushed it out of range. */
   normalize (tm_mon, 0, 11, tm_year);
 
-  /* Do day again, because month may have changed the range.  */
+  /* Do the day again, because the month may have changed the range. */
   normalize (tm_mday, 1,
 	     __mon_lengths[__isleap (me->tm_year)][me->tm_mon],
 	     tm_mon);
-
+  
 #ifdef DEBUG
   if (debugging_enabled)
     {
@@ -241,44 +270,44 @@ main (argc, argv)
   int time;
   int result_time;
   struct tm *tmptr;
-
+  
   if (argc == 1)
     {
       long q;
-
+      
       printf ("starting long test...\n");
 
       for (q = 10000000; q < 1000000000; q++)
 	{
 	  struct tm *tm = localtime (&q);
 	  if ((q % 10000) == 0) { printf ("%ld\n", q); fflush (stdout); }
-	  if (q != my_mktime (tm))
+	  if (q != mktime (tm))
 	    { printf ("failed for %ld\n", q); fflush (stdout); }
 	}
-
+      
       printf ("test finished\n");
 
       exit (0);
     }
-
+  
   if (argc != 2)
     {
       printf ("wrong # of args\n");
       exit (0);
     }
-
-  debugging_enabled = 1;	/* we want to see the info */
+  
+  debugging_enabled = 1;	/* We want to see the info */
 
   ++argv;
   time = atoi (*argv);
+  
+  printf ("Time: %d %s\n", time, ctime ((time_t *) &time));
 
-  printf ("Time: %d %s\n", time, ctime (&time));
-
-  tmptr = localtime (&time);
+  tmptr = localtime ((time_t *) &time);
   printf ("localtime returns: ");
   printtm (tmptr);
   printf ("\n");
-  printf ("mktime: %d\n\n", mktime (tmptr));
+  printf ("mktime: %d\n\n", (int) mktime (tmptr));
 
   tmptr->tm_sec -= 20;
   tmptr->tm_min -= 20;
@@ -286,8 +315,8 @@ main (argc, argv)
   tmptr->tm_mday -= 20;
   tmptr->tm_mon -= 20;
   tmptr->tm_year -= 20;
-  tmptr->tm_gmtoff -= 20000;	/* this has no effect! */
-  tmptr->tm_zone = NULL;	/* nor does this! */
+  tmptr->tm_gmtoff -= 20000;	/* This has no effect! */
+  tmptr->tm_zone = NULL;	/* Nor does this! */
   tmptr->tm_isdst = -1;
 
   printf ("changed ranges: ");
@@ -295,6 +324,6 @@ main (argc, argv)
   printf ("\n\n");
 
   result_time = mktime (tmptr);
-  printf ("\n  mine: %d\n", result_time);
+  printf ("\nmktime: %d\n", result_time);
 }
 #endif /* DEBUG */
