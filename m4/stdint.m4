@@ -1,5 +1,5 @@
-# stdint.m4 serial 3
-dnl Copyright (C) 2001-2002, 2004 Free Software Foundation, Inc.
+# stdint.m4 serial 4
+dnl Copyright (C) 2001-2002, 2004-2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -47,11 +47,11 @@ typedef int array [2 * (POW63 != 0 && POW64 == 0) - 1];
 typedef int array [2 * (POW63 != 0 && POW64 == 0) - 1];
 ], , gl_cv_longlong_bitsize_64=yes, gl_cv_longlong_bitsize_64=no)])
   if test $gl_cv_longlong_bitsize_64 = yes; then
-    HAVE_LONGLONG_64BIT=1
+    HAVE_LONG_LONG_64BIT=1
   else
-    HAVE_LONGLONG_64BIT=0
+    HAVE_LONG_LONG_64BIT=0
   fi
-  AC_SUBST(HAVE_LONGLONG_64BIT)
+  AC_SUBST(HAVE_LONG_LONG_64BIT)
 
 fi
 AC_SUBST(STDINT_H)
