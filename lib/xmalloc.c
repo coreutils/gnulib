@@ -41,12 +41,12 @@ void free ();
 # define EXIT_FAILURE 1
 #endif
 
-#ifndef HAVE_DONE_WORKING_MALLOC_CHECK
-"you must run the autoconf test for a properly working malloc -- see malloc.m4"
+#ifndef HAVE_MALLOC
+"you must run the autoconf test for a properly working malloc"
 #endif
 
-#ifndef HAVE_DONE_WORKING_REALLOC_CHECK
-"you must run the autoconf test for a properly working realloc --see realloc.m4"
+#ifndef HAVE_REALLOC
+"you must run the autoconf test for a properly working realloc"
 #endif
 
 /* Exit value when the requested amount of memory is not available.
