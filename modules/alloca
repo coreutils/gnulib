@@ -13,6 +13,7 @@ configure.ac:
 gl_FUNC_ALLOCA
 
 Makefile.am:
+BUILT_SOURCES += $(ALLOCA_H)
 EXTRA_DIST += alloca_.h
 
 # We need the following in order to create an <alloca.h> when the system

@@ -15,6 +15,7 @@ configure.ac:
 # No macro. You should also use one of fnmatch-posix or fnmatch-gnu.
 
 Makefile.am:
+BUILT_SOURCES += $(FNMATCH_H)
 EXTRA_DIST += fnmatch_.h fnmatch_loop.c
 
 # We need the following in order to create an <fnmatch.h> when the system
