@@ -1,3 +1,9 @@
+2003-10-31  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.c (wait_process): Use waitid with WNOWAIT if available,
+	to avoid (extremely rare) race condition.
+	Suggested by Paul Eggert.
+
 2003-11-03  Jim Meyering  <jim@meyering.net>
 
 	* userspec.c: Include "userspec.h".

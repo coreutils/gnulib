@@ -101,6 +101,15 @@
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
 
+#if defined _MSC_VER || defined __MINGW32__
+
+/* The return value of spawnvp() is really a process handle as returned
+   by CreateProcess().  Therefore we can kill it using TerminateProcess.  */
+#define kill(pid,sig) TerminateProcess ((HANDLE) (pid), sig)
+
+#endif
+
+
 /* Type of an entry in the slaves array.
    The 'used' bit determines whether this entry is currently in use.
    (If pid_t was an atomic type like sig_atomic_t, we could just set the
@@ -243,6 +252,85 @@ wait_subprocess (pid_t child, const char *progname,
 		 bool null_stderr,
 		 bool slave_process, bool exit_on_error)
 {
+#if HAVE_WAITID && defined WNOWAIT
+  /* Use of waitid() with WNOWAIT avoids a race condition: If slave_process is
+     true, and this process sleeps a very long time between the return from
+     waitpid() and the execution of unregister_slave_subprocess(), and
+     meanwhile another process acquires the same PID as child, and then - still
+     before unregister_slave_subprocess() - this process gets a fatal signal,
+     it would kill the other totally unrelated process.  */
+  siginfo_t info;
+  for (;;)
+    {
+      if (waitid (P_PID, child, &info, slave_process ? WNOWAIT : 0) < 0)
+	{
+# ifdef EINTR
+	  if (errno == EINTR)
+	    continue;
+# endif
+	  if (exit_on_error || !null_stderr)
+	    error (exit_on_error ? EXIT_FAILURE : 0, errno,
+		   _("%s subprocess"), progname);
+	  return 127;
+	}
+
+      /* info.si_code is set to one of CLD_EXITED, CLD_KILLED, CLD_DUMPED,
+	 CLD_TRAPPED, CLD_STOPPED, CLD_CONTINUED.  Loop until the program
+	 terminates.  */
+      if (info.si_code == CLD_EXITED
+	  || info.si_code == CLD_KILLED || info.si_code == CLD_DUMPED)
+	break;
+    }
+
+  /* The child process has exited or was signalled.  */
+
+  if (slave_process)
+    {
+      /* Unregister the child from the list of slave subprocesses, so that
+	 later, when we exit, we don't kill a totally unrelated process which
+	 may have acquired the same pid.  */
+      unregister_slave_subprocess (child);
+
+      /* Now remove the zombie from the process list.  */
+      for (;;)
+	{
+	  if (waitid (P_PID, child, &info, 0) < 0)
+	    {
+# ifdef EINTR
+	      if (errno == EINTR)
+		continue;
+# endif
+	      if (exit_on_error || !null_stderr)
+		error (exit_on_error ? EXIT_FAILURE : 0, errno,
+		       _("%s subprocess"), progname);
+	      return 127;
+	    }
+	  break;
+	}
+    }
+
+  switch (info.si_code)
+    {
+    case CLD_KILLED:
+    case CLD_DUMPED:
+      if (exit_on_error || !null_stderr)
+	error (exit_on_error ? EXIT_FAILURE : 0, 0,
+	       _("%s subprocess got fatal signal %d"),
+	       progname, info.si_status);
+      return 127;
+    case CLD_EXITED:
+      if (info.si_status == 127)
+	{
+	  if (exit_on_error || !null_stderr)
+	    error (exit_on_error ? EXIT_FAILURE : 0, 0,
+		   _("%s subprocess failed"), progname);
+	  return 127;
+	}
+      return info.si_status;
+    default:
+      abort ();
+    }
+#else
   /* waitpid() is just as portable as wait() nowadays.  */
   WAIT_T status;
 
@@ -253,11 +341,11 @@ wait_subprocess (pid_t child, const char *progname,
 
       if (result != child)
 	{
-#ifdef EINTR
+# ifdef EINTR
 	  if (errno == EINTR)
 	    continue;
-#endif
-#if 0 /* defined ECHILD */
+# endif
+# if 0 /* defined ECHILD */
 	  if (errno == ECHILD)
 	    {
 	      /* Child process nonexistent?! Assume it terminated
@@ -265,7 +353,7 @@ wait_subprocess (pid_t child, const char *progname,
 	      *(int *) &status = 0;
 	      break;
 	    }
-#endif
+# endif
 	  if (exit_on_error || !null_stderr)
 	    error (exit_on_error ? EXIT_FAILURE : 0, errno,
 		   _("%s subprocess"), progname);
@@ -302,4 +390,5 @@ wait_subprocess (pid_t child, const char *progname,
       return 127;
     }
   return WEXITSTATUS (status);
+#endif
 }

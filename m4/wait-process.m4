@@ -1,4 +1,4 @@
-# wait-process.m4 serial 1
+# wait-process.m4 serial 2
 dnl Copyright (C) 2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -12,4 +12,5 @@ AC_DEFUN([gl_WAIT_PROCESS],
   AC_CHECK_HEADERS_ONCE(unistd.h)
   dnl Prerequisites of lib/wait-process.c.
   AC_REQUIRE([gt_TYPE_SIG_ATOMIC_T])
+  AC_CHECK_FUNCS(waitid)
 ])

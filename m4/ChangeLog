@@ -1,3 +1,7 @@
+2003-11-03  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.m4 (gl_WAIT_PROCESS): Also check for waitid.
+
 2003-10-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* host-os.m4 (UTILS_HOST_OS): Change netbsd*-gnu pattern back to
