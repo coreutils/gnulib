@@ -1,3 +1,7 @@
+2004-05-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* obstack.c, obstack.h: Import changes from libc.
+
 2004-04-28  Bruno Haible  <bruno@clisp.org>
 
 	* findprog.c (find_in_path): Treat Cygwin like Windows, since it also
