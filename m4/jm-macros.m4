@@ -1,4 +1,4 @@
-#serial 67   -*- autoconf -*-
+#serial 68   -*- autoconf -*-
 
 m4_undefine([AC_LANG_SOURCE(C)])
 dnl The following is identical to the definition in c.m4
@@ -157,7 +157,7 @@ AC_DEFUN([jm_MACROS],
   # These tests are for df.
   AC_REQUIRE([gl_FSUSAGE])
   AC_REQUIRE([gl_MOUNTLIST])
-  if test $gl_list_mounted_fs = yes && test $gl_cv_fs_space = yes; then
+  if test $gl_cv_list_mounted_fs = yes && test $gl_cv_fs_space = yes; then
     DF_PROG='df$(EXEEXT)'
   fi
   AC_REQUIRE([jm_AC_DOS])
