@@ -1,5 +1,9 @@
 2003-06-04  Paul Eggert  <eggert@twinsun.com>
 
+	* mktime.c (__mktime_internal): Do not reject negative timestamps
+	arbitrarily.  This is the same patch as 2003-05-28, but it got lost
+	in the 2003-05-30 sync from glibc.
+
 	.h files should stand alone, but we shouldn't include <sys/types.h>
 	if we can get away with just <stddef.h>.
 

@@ -1,3 +1,8 @@
+2003-06-04  Paul Eggert  <eggert@twinsun.com>
+
+	* srclist.txt ($LIBCSRC/time/mktime.c lib gpl): Comment out for now,
+	as glibc mktime is buggy on non-glibc systems.
+
 2003-06-03    <karl@gnu.org>
 
 	* config.sub: update from prep.
