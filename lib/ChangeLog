@@ -1,3 +1,8 @@
+2003-01-11  Bruno Haible  <bruno@clisp.org>
+
+	* stpcpy.h (stpcpy): Use ANSI C function declarations.
+	* strcase.h (strcasecmp, strncasecmp): Likewise.
+
 2003-01-14  Jim Meyering  <jim@meyering.net>
 
 	* same.c (same_name): Tweak a comment.

@@ -1,5 +1,5 @@
 /* String copying.
-   Copyright (C) 1995, 2001 Free Software Foundation, Inc.
+   Copyright (C) 1995, 2001, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,14 +18,6 @@
 #ifndef _STPCPY_H
 #define _STPCPY_H
 
-#ifndef PARAMS
-# if __STDC__ || defined __GNUC__ || defined __SUNPRO_C || defined __cplusplus || __PROTOTYPES
-#  define PARAMS(args) args
-# else
-#  define PARAMS(args) ()
-# endif
-#endif
-
 #if HAVE_STPCPY
 
 /* Get stpcpy() declaration.  */
@@ -33,7 +25,8 @@
 
 #else
 
-extern char *stpcpy PARAMS ((char *__dst, const char *__src));
+/* Copy SRC to DST, returning the address of the terminating '\0' in DST.  */
+extern char *stpcpy (char *dst, const char *src);
 
 #endif
 
