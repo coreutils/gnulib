@@ -1,5 +1,5 @@
 /* GNU's read utmp module.
-   Copyright (C) 1992-2001 Free Software Foundation, Inc.
+   Copyright (C) 1992-2001, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,17 +23,12 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#if defined(STDC_HEADERS) || defined(HAVE_STRING_H)
-# include <string.h>
-#else
-# include <strings.h>
-#endif /* STDC_HEADERS || HAVE_STRING_H */
+#include <string.h>
+#include <stdlib.h>
 
 #include "readutmp.h"
 #include "unlocked-io.h"
-
-char *xmalloc ();
-char *realloc ();
+#include "xalloc.h"
 
 /* Copy UT->ut_name into storage obtained from malloc.  Then remove any
    trailing spaces from the copy, NUL terminate it, and return the copy.  */
@@ -112,7 +107,7 @@ read_utmp (const char *filename, int *n_entries, STRUCT_UTMP **utmp_buf)
   fstat (fileno (utmp), &file_stats);
   size = file_stats.st_size;
   if (size > 0)
-    buf = (STRUCT_UTMP *) xmalloc (size);
+    buf = xmalloc (size);
   else
     {
       fclose (utmp);
