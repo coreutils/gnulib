@@ -1,0 +1,61 @@
+GNULib
+======
+
+GNULib is inteded to be the canonical source for most of the important
+"Portability" files for GNU projects.
+
+While portability is not one of our primary goals, it has helped
+introduce many people to the GNU system, and is worthwhile when it can
+be acheived at a low cost.  This collection helps lower that cost.
+
+There are three directories that contain all of the files:
+
+gpl/   - Any source files licensed under the GNU General Public License
+lgpl/  - Any source files licensed under the GNU Lesser GPL
+doc/   - Any documents that may be nice to have in applications.  This
+includes such files as 'COPYING, COPYING.LIB, etc.'
+
+Contributing to GNULib
+======================
+
+All software here is Copyright (c) Free Software Foundation - you need
+to have filled out an assignment form for a project that uses the
+module for that contribution to be accepted here.
+
+If you have a piece of code that you would like to contribute, please
+email bug-gnulib@gnu.org.  We will add you to the maintainers list.
+
+Generally we are looking for files that fulfill at least one of the
+following requirements:
+
+    * If your .c and .h files define functions that are broken or
+missing on some other system, we should be able to include it.
+
+    * If your functions remove arbitrary limits from existing
+functions (either under the same name, or as a slightly different
+name), we should be able to include it.
+
+If your functions define completely new but rarely used functionality,
+you should probably consider packaging it as a seperate library
+
+High Quality
+============
+
+We will be developing a testsuite for these applications.  The goal is
+to have a 100% firm interface so that maintainers can feel free to
+update to the code in CVS at *any* time and know that their
+application will not break.  This means that before any change can be
+committed to the repository, a test suite program must be produced
+that exposes the bug for regression testing.  All experimental work
+should be done on branches to help promote this.
+
+CVS
+===
+
+GNULib is available for anonymous checkout.  In any Bourne-shell the
+following should work:
+
+$ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib login
+(Just hit Enter or Return when prompt for a password)
+$ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib checkout gnulib
+
