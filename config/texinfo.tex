@@ -2575,7 +2575,7 @@ width0pt\relax} \fi
 % Ignore text until a line `@end #1', keeping track of nested conditionals.
 %
 % A count to remember the depth of nesting.
-\newcount\doignorecount  \doignorecount = 0
+\newcount\doignorecount
 
 \def\doignore#1{\begingroup
   % Don't complain about control sequences we have declared \outer.
@@ -2623,7 +2623,7 @@ width0pt\relax} \fi
   \else					% Found a nested condition, ...
     \advance\doignorecount by 1
     \let\next\doignoretextyyy		% ..., look for another.
-    % If we're here, #1 ends with \ifinfo (for example).
+    % If we're here, #1 ends with ^^M\ifinfo (for example).
   \fi
   \next #1% the token \ST@P is present just after this macro.
 }
