@@ -707,7 +707,23 @@ vasnprintf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 			    p[1] = '\0';
 			    continue;
 			  }
-			count = retcount;
+			else
+			  {
+			    /* Look at the snprintf() return value.  */
+			    if (retcount < 0)
+			      {
+				/* HP-UX 10.20 snprintf() is doubly deficient:
+				   It doesn't understand the '%n' directive,
+				   *and* it returns -1 (rather than the length
+				   that would have been required) when the
+				   buffer is too small.  */
+				size_t bigger_need = 2 * allocated + 12;
+				ENSURE_ALLOCATION (bigger_need);
+				continue;
+			      }
+			    else
+			      count = retcount;
+			  }
 		      }
 #endif
 
