@@ -1,3 +1,7 @@
+2004-03-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/getopt: Add lib/getopt_int.h.
+
 2004-01-18  Simon Josefsson  <jas@extundo.com>
 
 	* modules/strdup (Files, Makefile.am): Add strdup.h.

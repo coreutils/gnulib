@@ -1,3 +1,9 @@
+2004-03-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclistvars.sh: Add GNUWWWLICENSES for eggert.
+	* srclist.txt: Sync getopt with libc.  Add getopt_int.h.
+	Bring back getopt.c, getopt.h, getopt1.c.
+
 2004-02-23  Karl Berry  <karl@gnu.org>
 
 	* srclistvars.sh (GNUORG) [karl]: redefine.

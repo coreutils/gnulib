@@ -1,4 +1,4 @@
-# $Id: srclistvars.sh,v 1.14 2004-02-24 01:05:44 karl Exp $
+# $Id: srclistvars.sh,v 1.15 2004-03-09 19:42:23 eggert Exp $
 # Variables for srclist-update and srclist.txt.
 # Will change for each user.
 
@@ -9,6 +9,7 @@ eggert)
   : ${GETTEXT=../gettext}
   : ${GNUCONFIG=../config}
   : ${GNUORG=../gnuorg}
+  : ${GNUWWWLICENSES=$GNUORG}
   : ${LIBCSRC=../libc}
   : ${TEXINFOSRC=../texinfo}
   ;;

@@ -5,6 +5,7 @@ Files:
 lib/getopt.h
 lib/getopt.c
 lib/getopt1.c
+lib/getopt_int.h
 m4/getopt.m4
 
 Depends-on:
