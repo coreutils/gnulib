@@ -1357,7 +1357,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/xstrtol.h">xstrtol.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/xstrtol.c">xstrtol.c</A><BR><A HREF="lib/xstrtoul.c">xstrtoul.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR><A HREF="m4/longlong.m4">longlong.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR><A HREF="m4/intmax_t.m4">intmax_t.m4</A><BR><A HREF="m4/xstrtol.m4">xstrtol.m4</A><BR>gl_XSTRTOL
-        <TD ALIGN=LEFT VALIGN=TOP>exitfail
+        <TD ALIGN=LEFT VALIGN=TOP>exitfail<BR>error
       </TR>
     </TABLE>
     <H3><A NAME="ansic_ext_time_datetime">Date and time &lt;time.h&gt;</A></H3>
@@ -1604,7 +1604,7 @@ variables.
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=hash"></A><A HREF="modules/hash">hash</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/hash.h">hash.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/hash.c">hash.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/hash.c">hash.c</A><BR><A HREF="lib/xalloc.h">xalloc.h</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/hash.m4">hash.m4</A><BR>gl_HASH
         <TD ALIGN=LEFT VALIGN=TOP>stdbool
       </TR>
@@ -1912,7 +1912,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/sys/stat.h.html">sys/stat.h</A>&gt;
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/stat.c">stat.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/stat.m4">stat.m4</A><BR>gl_FUNC_STAT
-        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=lstat"></A><A HREF="modules/lstat">lstat</A>
@@ -2629,7 +2629,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/pipe.h">pipe.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/pipe.c">pipe.c</A><BR><A HREF="lib/w32spawn.h">w32spawn.h</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/pipe.m4">pipe.m4</A><BR>gl_PIPE
-        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>fatal-signal<BR>gettext<BR>stdbool<BR>strpbrk
+        <TD ALIGN=LEFT VALIGN=TOP>wait-process<BR>error<BR>exit<BR>fatal-signal<BR>gettext<BR>stdbool<BR>strpbrk
       </TR>
     </TABLE>
     <H3><A NAME="posix_ext_java">Java</A></H3>
@@ -2810,7 +2810,6 @@ variables.
     <H2>Lone files - please create new modules containing them</H2>
     <PRE>
 <A HREF="lib/progreloc.c">lib/progreloc.c</A>
-<A HREF="lib/userspec.h">lib/userspec.h</A>
 <A HREF="m4/check-decl.m4">m4/check-decl.m4</A>
 <A HREF="m4/d-type.m4">m4/d-type.m4</A>
 <A HREF="m4/glibc.m4">m4/glibc.m4</A>
@@ -2843,6 +2842,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 11 June 2004.
+    Generated from <CODE>MODULES.html.sh</CODE> on 14 June 2004.
   </BODY>
 </HTML>
