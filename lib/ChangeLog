@@ -2,6 +2,7 @@
 
 	* getloadavg.c: Correct cpp indentation.
 	* strdup.c: Likewise.
+	* vasnprintf.c: Likewise.
 
 2003-09-12  Paul Eggert  <eggert@twinsun.com>
 
