@@ -1,3 +1,8 @@
+2004-02-18  Bruno Haible  <bruno@clisp.org>
+
+	* xsize.m4 (gl_XSIZE): Require AC_C_INLINE.
+	Reported by Derek Robert Price <derek@ximbiot.com>.
+
 2004-02-06  Karl Berry  <karl@gnu.org>
 
 	* po.m4: update from gettext 0.14.1.
