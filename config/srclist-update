@@ -1,10 +1,10 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.2 2002-09-25 14:18:57 karl Exp $
+# $Id: srclist-update,v 1.3 2002-11-25 00:20:03 karl Exp $
 # 
-# Check for files being up to date, according to the list on stdin.
+# Check for files in directory $1 being up to date, according to the
+# list on stdin.  Don't actually make any changes, just show the diffs.
 # 
-# Source $mydir/srclistvars.sh first, if it exists, where
-# $mydir=`dirname $0`.
+# Source `dirname $0`/srclistvars.sh first, if it exists.
 
 if test -n "$1"; then
   cd "$1" || exit 1
@@ -19,7 +19,48 @@ dsttmp=${TMPDIR-/tmp}/srclist.dst
 mydir=`dirname $0`
 test -r $mydir/srclistvars.sh && . $mydir/srclistvars.sh
 
-cat | while read src dst; do
+
+# 
+# $1 is input, output to stdout with gpl.
+# 
+fixlicense() \
+{
+    sed '/The .* is free software/,/USA\.  *\*\//c\
+   This program is free software; you can redistribute it and/or modify\
+   it under the terms of the GNU General Public License as published by\
+   the Free Software Foundation; either version 2, or (at your option)\
+   any later version.\
+\
+   This program is distributed in the hope that it will be useful,\
+   but WITHOUT ANY WARRANTY; without even the implied warranty of\
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\
+   GNU General Public License for more details.\
+\
+   You should have received a copy of the GNU General Public License along\
+   with this program; if not, write to the Free Software Foundation,\
+   Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
+' $1
+}
+
+
+# $1 is input file, $2 is output.
+# Remove $Id lines, since they'll differ between source locations.
+# If $options contains "gpl", change the license to be the standard
+# GPL.  We use this for libc files.
+# 
+fixfile() \
+{
+  if echo "$options" | grep -w gpl >/dev/null; then
+    fixlicense $1
+  else
+    cat $1
+  fi \
+  | fgrep -v '$'"Id:" >$2
+}
+
+
+# 
+cat | while read src dst options; do
   test -z "$dst" && continue  # skip lines without second element
   echo "$src $dst" | sed 's/#.*$//' | egrep '^\s*$' >/dev/null \
   && continue  # skip whitespace and comment-only lines
@@ -30,22 +71,29 @@ cat | while read src dst; do
     continue
   fi
   
-  # If given src/foo.c dst, copy to dst/foo.c.
+  # Ignore subdirs in src dir.  E.g., if input spec is
+  #   src/subdir/foo.c dst
+  # write destination file dst/foo.c.
   dst=`eval echo $dst`
   test -d $dst && dst=$dst/`basename $src`
   
-  # $ Id: lines will differ.
-  fgrep -v '$'"Id:" $src >$srctmp
-  test -r $dst && fgrep -v '$'"Id:" $dst >$dsttmp
-
+  # Make changes for sake of comparison.
+  fixfile $src $srctmp
+  test -r $dst && fixfile $dst $dsttmp
+  
+  # don't show license differences.
+  gplsrc=$TMPDIR/`basename $src`
+  fixlicense $src >$gplsrc
+  cmp -s $src $gplsrc && gplsrc=$src
+  
   if test ! -e $dst; then
-    echo "## $src $dst  # new"
-    $chicken cp -p $src $dst
+    echo "## $gplsrc $dst  # new"
+    $chicken cp -p $gplsrc $dst
   elif cmp -s $srctmp $dsttmp; then
-    $verbose && echo "## $src $dst  # unchanged"
+    $verbose && echo "## $gplsrc $dst  # unchanged"
   else
-    echo "## $src $dst  # changes"
-    diff -c2 $dst $src
+    echo "## $gplsrc $dst  # changes"
+    diff -c2 $dst $gplsrc
   fi
 done
 
