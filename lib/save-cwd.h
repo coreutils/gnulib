@@ -16,7 +16,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-/* Written by Jim Meyering <meyering@na-net.ornl.gov>.  */
+/* Written by Jim Meyering.  */
 
 #ifndef SAVE_CWD_H
 # define SAVE_CWD_H 1
@@ -28,8 +28,7 @@ struct saved_cwd
   };
 
 int save_cwd (struct saved_cwd *cwd);
-int restore_cwd (const struct saved_cwd *cwd, const char *dest,
-		 const char *from);
+int restore_cwd (const struct saved_cwd *cwd);
 void free_cwd (struct saved_cwd *cwd);
 
 #endif /* SAVE_CWD_H */
