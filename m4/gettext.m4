@@ -109,25 +109,25 @@ AC_DEFUN([AM_GNU_GETTEXT],
     ifelse(gt_included_intl, yes, [
       AC_MSG_CHECKING([whether included gettext is requested])
       AC_ARG_WITH(included-gettext,
-        [  --with-included-gettext use the GNU gettext library included here],
-        nls_cv_force_use_gnu_gettext=$withval,
-        nls_cv_force_use_gnu_gettext=no)
+	[  --with-included-gettext use the GNU gettext library included here],
+	nls_cv_force_use_gnu_gettext=$withval,
+	nls_cv_force_use_gnu_gettext=no)
       AC_MSG_RESULT($nls_cv_force_use_gnu_gettext)
 
       nls_cv_use_gnu_gettext="$nls_cv_force_use_gnu_gettext"
       if test "$nls_cv_force_use_gnu_gettext" != "yes"; then
     ])
-        dnl User does not insist on using GNU NLS library.  Figure out what
-        dnl to use.  If GNU gettext is available we use this.  Else we have
-        dnl to fall back to GNU NLS library.
+	dnl User does not insist on using GNU NLS library.  Figure out what
+	dnl to use.  If GNU gettext is available we use this.  Else we have
+	dnl to fall back to GNU NLS library.
 
-        dnl Add a version number to the cache macros.
-        define([gt_api_version], ifelse([$2], [need-formatstring-macros], 3, ifelse([$2], [need-ngettext], 2, 1)))
-        define([gt_cv_func_gnugettext_libc], [gt_cv_func_gnugettext]gt_api_version[_libc])
-        define([gt_cv_func_gnugettext_libintl], [gt_cv_func_gnugettext]gt_api_version[_libintl])
+	dnl Add a version number to the cache macros.
+	define([gt_api_version], ifelse([$2], [need-formatstring-macros], 3, ifelse([$2], [need-ngettext], 2, 1)))
+	define([gt_cv_func_gnugettext_libc], [gt_cv_func_gnugettext]gt_api_version[_libc])
+	define([gt_cv_func_gnugettext_libintl], [gt_cv_func_gnugettext]gt_api_version[_libintl])
 
-        AC_CACHE_CHECK([for GNU gettext in libc], gt_cv_func_gnugettext_libc,
-         [AC_TRY_LINK([#include <libintl.h>
+	AC_CACHE_CHECK([for GNU gettext in libc], gt_cv_func_gnugettext_libc,
+	 [AC_TRY_LINK([#include <libintl.h>
 ]ifelse([$2], [need-formatstring-macros],
 [#ifndef __GNU_GETTEXT_SUPPORTED_REVISION
 #define __GNU_GETTEXT_SUPPORTED_REVISION(major) ((major) == 0 ? 0 : -1)
@@ -137,29 +137,29 @@ typedef int array [2 * (__GNU_GETTEXT_SUPPORTED_REVISION(0) >= 1) - 1];
 changequote([,])dnl
 ], [])[extern int _nl_msg_cat_cntr;
 extern int *_nl_domain_bindings;],
-            [bindtextdomain ("", "");
+	    [bindtextdomain ("", "");
 return (int) gettext ("")]ifelse([$2], [need-ngettext], [ + (int) ngettext ("", "", 0)], [])[ + _nl_msg_cat_cntr + *_nl_domain_bindings],
-            gt_cv_func_gnugettext_libc=yes,
-            gt_cv_func_gnugettext_libc=no)])
+	    gt_cv_func_gnugettext_libc=yes,
+	    gt_cv_func_gnugettext_libc=no)])
 
-        if test "$gt_cv_func_gnugettext_libc" != "yes"; then
-          dnl Sometimes libintl requires libiconv, so first search for libiconv.
-          ifelse(gt_included_intl, yes, , [
-            AM_ICONV_LINK
-          ])
-          dnl Search for libintl and define LIBINTL, LTLIBINTL and INCINTL
-          dnl accordingly. Don't use AC_LIB_LINKFLAGS_BODY([intl],[iconv])
-          dnl because that would add "-liconv" to LIBINTL and LTLIBINTL
-          dnl even if libiconv doesn't exist.
-          AC_LIB_LINKFLAGS_BODY([intl])
-          AC_CACHE_CHECK([for GNU gettext in libintl],
-            gt_cv_func_gnugettext_libintl,
-           [gt_save_CPPFLAGS="$CPPFLAGS"
-            CPPFLAGS="$CPPFLAGS $INCINTL"
-            gt_save_LIBS="$LIBS"
-            LIBS="$LIBS $LIBINTL"
-            dnl Now see whether libintl exists and does not depend on libiconv.
-            AC_TRY_LINK([#include <libintl.h>
+	if test "$gt_cv_func_gnugettext_libc" != "yes"; then
+	  dnl Sometimes libintl requires libiconv, so first search for libiconv.
+	  ifelse(gt_included_intl, yes, , [
+	    AM_ICONV_LINK
+	  ])
+	  dnl Search for libintl and define LIBINTL, LTLIBINTL and INCINTL
+	  dnl accordingly. Don't use AC_LIB_LINKFLAGS_BODY([intl],[iconv])
+	  dnl because that would add "-liconv" to LIBINTL and LTLIBINTL
+	  dnl even if libiconv doesn't exist.
+	  AC_LIB_LINKFLAGS_BODY([intl])
+	  AC_CACHE_CHECK([for GNU gettext in libintl],
+	    gt_cv_func_gnugettext_libintl,
+	   [gt_save_CPPFLAGS="$CPPFLAGS"
+	    CPPFLAGS="$CPPFLAGS $INCINTL"
+	    gt_save_LIBS="$LIBS"
+	    LIBS="$LIBS $LIBINTL"
+	    dnl Now see whether libintl exists and does not depend on libiconv.
+	    AC_TRY_LINK([#include <libintl.h>
 ]ifelse([$2], [need-formatstring-macros],
 [#ifndef __GNU_GETTEXT_SUPPORTED_REVISION
 #define __GNU_GETTEXT_SUPPORTED_REVISION(major) ((major) == 0 ? 0 : -1)
@@ -173,14 +173,14 @@ extern
 "C"
 #endif
 const char *_nl_expand_alias ();],
-              [bindtextdomain ("", "");
+	      [bindtextdomain ("", "");
 return (int) gettext ("")]ifelse([$2], [need-ngettext], [ + (int) ngettext ("", "", 0)], [])[ + _nl_msg_cat_cntr + *_nl_expand_alias (0)],
-              gt_cv_func_gnugettext_libintl=yes,
-              gt_cv_func_gnugettext_libintl=no)
-            dnl Now see whether libintl exists and depends on libiconv.
-            if test "$gt_cv_func_gnugettext_libintl" != yes && test -n "$LIBICONV"; then
-              LIBS="$LIBS $LIBICONV"
-              AC_TRY_LINK([#include <libintl.h>
+	      gt_cv_func_gnugettext_libintl=yes,
+	      gt_cv_func_gnugettext_libintl=no)
+	    dnl Now see whether libintl exists and depends on libiconv.
+	    if test "$gt_cv_func_gnugettext_libintl" != yes && test -n "$LIBICONV"; then
+	      LIBS="$LIBS $LIBICONV"
+	      AC_TRY_LINK([#include <libintl.h>
 ]ifelse([$2], [need-formatstring-macros],
 [#ifndef __GNU_GETTEXT_SUPPORTED_REVISION
 #define __GNU_GETTEXT_SUPPORTED_REVISION(major) ((major) == 0 ? 0 : -1)
@@ -194,61 +194,61 @@ extern
 "C"
 #endif
 const char *_nl_expand_alias ();],
-                [bindtextdomain ("", "");
+		[bindtextdomain ("", "");
 return (int) gettext ("")]ifelse([$2], [need-ngettext], [ + (int) ngettext ("", "", 0)], [])[ + _nl_msg_cat_cntr + *_nl_expand_alias (0)],
-               [LIBINTL="$LIBINTL $LIBICONV"
-                LTLIBINTL="$LTLIBINTL $LTLIBICONV"
-                gt_cv_func_gnugettext_libintl=yes
-               ])
-            fi
-            CPPFLAGS="$gt_save_CPPFLAGS"
-            LIBS="$gt_save_LIBS"])
-        fi
+	       [LIBINTL="$LIBINTL $LIBICONV"
+		LTLIBINTL="$LTLIBINTL $LTLIBICONV"
+		gt_cv_func_gnugettext_libintl=yes
+	       ])
+	    fi
+	    CPPFLAGS="$gt_save_CPPFLAGS"
+	    LIBS="$gt_save_LIBS"])
+	fi
 
-        dnl If an already present or preinstalled GNU gettext() is found,
-        dnl use it.  But if this macro is used in GNU gettext, and GNU
-        dnl gettext is already preinstalled in libintl, we update this
-        dnl libintl.  (Cf. the install rule in intl/Makefile.in.)
-        if test "$gt_cv_func_gnugettext_libc" = "yes" \
-           || { test "$gt_cv_func_gnugettext_libintl" = "yes" \
-                && test "$PACKAGE" != gettext-runtime \
-                && test "$PACKAGE" != gettext-tools; }; then
-          gt_use_preinstalled_gnugettext=yes
-        else
-          dnl Reset the values set by searching for libintl.
-          LIBINTL=
-          LTLIBINTL=
-          INCINTL=
-        fi
+	dnl If an already present or preinstalled GNU gettext() is found,
+	dnl use it.  But if this macro is used in GNU gettext, and GNU
+	dnl gettext is already preinstalled in libintl, we update this
+	dnl libintl.  (Cf. the install rule in intl/Makefile.in.)
+	if test "$gt_cv_func_gnugettext_libc" = "yes" \
+	   || { test "$gt_cv_func_gnugettext_libintl" = "yes" \
+		&& test "$PACKAGE" != gettext-runtime \
+		&& test "$PACKAGE" != gettext-tools; }; then
+	  gt_use_preinstalled_gnugettext=yes
+	else
+	  dnl Reset the values set by searching for libintl.
+	  LIBINTL=
+	  LTLIBINTL=
+	  INCINTL=
+	fi
 
     ifelse(gt_included_intl, yes, [
-        if test "$gt_use_preinstalled_gnugettext" != "yes"; then
-          dnl GNU gettext is not found in the C library.
-          dnl Fall back on included GNU gettext library.
-          nls_cv_use_gnu_gettext=yes
-        fi
+	if test "$gt_use_preinstalled_gnugettext" != "yes"; then
+	  dnl GNU gettext is not found in the C library.
+	  dnl Fall back on included GNU gettext library.
+	  nls_cv_use_gnu_gettext=yes
+	fi
       fi
 
       if test "$nls_cv_use_gnu_gettext" = "yes"; then
-        dnl Mark actions used to generate GNU NLS library.
-        BUILD_INCLUDED_LIBINTL=yes
-        USE_INCLUDED_LIBINTL=yes
-        LIBINTL="ifelse([$3],[],\${top_builddir}/intl,[$3])/libintl.[]gt_libtool_suffix_prefix[]a $LIBICONV"
-        LTLIBINTL="ifelse([$3],[],\${top_builddir}/intl,[$3])/libintl.[]gt_libtool_suffix_prefix[]a $LTLIBICONV"
-        LIBS=`echo " $LIBS " | sed -e 's/ -lintl / /' -e 's/^ //' -e 's/ $//'`
+	dnl Mark actions used to generate GNU NLS library.
+	BUILD_INCLUDED_LIBINTL=yes
+	USE_INCLUDED_LIBINTL=yes
+	LIBINTL="ifelse([$3],[],\${top_builddir}/intl,[$3])/libintl.[]gt_libtool_suffix_prefix[]a $LIBICONV"
+	LTLIBINTL="ifelse([$3],[],\${top_builddir}/intl,[$3])/libintl.[]gt_libtool_suffix_prefix[]a $LTLIBICONV"
+	LIBS=`echo " $LIBS " | sed -e 's/ -lintl / /' -e 's/^ //' -e 's/ $//'`
       fi
 
       if test "$gt_use_preinstalled_gnugettext" = "yes" \
-         || test "$nls_cv_use_gnu_gettext" = "yes"; then
-        dnl Mark actions to use GNU gettext tools.
-        CATOBJEXT=.gmo
+	 || test "$nls_cv_use_gnu_gettext" = "yes"; then
+	dnl Mark actions to use GNU gettext tools.
+	CATOBJEXT=.gmo
       fi
     ])
 
     if test "$gt_use_preinstalled_gnugettext" = "yes" \
        || test "$nls_cv_use_gnu_gettext" = "yes"; then
       AC_DEFINE(ENABLE_NLS, 1,
-        [Define to 1 if translation of program messages to the user's native language
+	[Define to 1 if translation of program messages to the user's native language
    is requested.])
     else
       USE_NLS=no
@@ -261,9 +261,9 @@ return (int) gettext ("")]ifelse([$2], [need-ngettext], [ + (int) ngettext ("", 
     AC_MSG_CHECKING([where the gettext function comes from])
     if test "$gt_use_preinstalled_gnugettext" = "yes"; then
       if test "$gt_cv_func_gnugettext_libintl" = "yes"; then
-        gt_source="external libintl"
+	gt_source="external libintl"
       else
-        gt_source="libc"
+	gt_source="libc"
       fi
     else
       gt_source="included intl directory"
@@ -275,9 +275,9 @@ return (int) gettext ("")]ifelse([$2], [need-ngettext], [ + (int) ngettext ("", 
 
     if test "$gt_use_preinstalled_gnugettext" = "yes"; then
       if test "$gt_cv_func_gnugettext_libintl" = "yes"; then
-        AC_MSG_CHECKING([how to link with libintl])
-        AC_MSG_RESULT([$LIBINTL])
-        AC_LIB_APPENDTOVAR([CPPFLAGS], [$INCINTL])
+	AC_MSG_CHECKING([how to link with libintl])
+	AC_MSG_RESULT([$LIBINTL])
+	AC_LIB_APPENDTOVAR([CPPFLAGS], [$INCINTL])
       fi
 
       dnl For backward compatibility. Some packages may be using this.
@@ -400,7 +400,7 @@ changequote(<<,>>)dnl
       '') ac_prog_version="v. ?.??, bad"; ac_verc_fail=yes;;
       1.2[6-9]* | 1.[3-9][0-9]* | [2-9].*)
 changequote([,])dnl
-         ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
+	 ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
       *) ac_prog_version="$ac_prog_version, bad"; ac_verc_fail=yes;;
     esac
     AC_MSG_RESULT([$ac_prog_version])

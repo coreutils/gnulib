@@ -294,13 +294,13 @@ fill_in_uparams (const struct argp_state *state)
      {"no-parent", 'P',	      0,     0, "Include processes without parents"},
      {0,           'x',       0,     OPTION_ALIAS},
      {"all-fields",'Q',       0,     0, "Don't elide unusable fields (normally"
-                                        " if there's some reason ps can't"
+					" if there's some reason ps can't"
 					" print a field for any process, it's"
-                                        " removed from the output entirely)" },
+					" removed from the output entirely)" },
      {"reverse",   'r',       0,     0, "Reverse the order of any sort"},
      {"gratuitously-long-reverse-option", 0, 0, OPTION_ALIAS},
      {"session",   OPT_SESS,  "SID", OPTION_ARG_OPTIONAL,
-                                        "Add the processes from the session"
+					"Add the processes from the session"
 					" SID (which defaults to the sid of"
 					" the current process)" },
 
@@ -1641,7 +1641,7 @@ Try `%s --help' or `%s --usage' for more information.\n"),
 	__argp_fmtstream_putc (fs, '\n');
       __argp_fmtstream_printf (fs, dgettext (argp->argp_domain,
 					     "Report bugs to %s.\n"),
- 			       argp_program_bug_address);
+			       argp_program_bug_address);
       anything = 1;
     }
 

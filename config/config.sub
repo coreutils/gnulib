@@ -162,10 +162,10 @@ case $os in
 		os=-chorusos
 		basic_machine=$1
 		;;
- 	-chorusrdb)
- 		os=-chorusrdb
+	-chorusrdb)
+		os=-chorusrdb
 		basic_machine=$1
- 		;;
+		;;
 	-hiux*)
 		os=-hiuxwe2
 		;;
@@ -1100,8 +1100,8 @@ esac
 if [ x"$os" != x"" ]
 then
 case $os in
-        # First match some system type aliases
-        # that might get confused with valid system types.
+	# First match some system type aliases
+	# that might get confused with valid system types.
 	# -solaris* is a basic system type, with this one exception.
 	-solaris1 | -solaris1.*)
 		os=`echo $os | sed -e 's|solaris1|sunos4|'`
@@ -1288,8 +1288,8 @@ case $basic_machine in
 		os=-aout
 		;;
     c4x-* | tic4x-*)
-        os=-coff
-        ;;
+	os=-coff
+	;;
 	# This must come before the *-dec entry.
 	pdp10-*)
 		os=-tops20

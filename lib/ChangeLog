@@ -1,5 +1,10 @@
 2003-08-12  Paul Eggert  <eggert@twinsun.com>
 
+	* argp-help.c, argp-parse.c, config.charset, getopt.h:
+	Normalize leading white space and remove trailing white space.
+	* ref-add.sin, ref-del.sin: Use '#' before empty line in copyright
+	notice, as per ../config/srclist-update.
+	
 	Merge from coreutils.
 	* euidaccess.h: New file.
 	* euidaccess.c: Include it.

@@ -18,7 +18,7 @@ AC_DEFUN([AC_LIB_LINKFLAGS],
   AC_REQUIRE([AC_LIB_RPATH])
   define([Name],[translit([$1],[./-], [___])])
   define([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./-],
-                               [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
+			       [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
   AC_CACHE_CHECK([how to link with lib[]$1], [ac_cv_lib[]Name[]_libs], [
     AC_LIB_LINKFLAGS_BODY([$1], [$2])
     ac_cv_lib[]Name[]_libs="$LIB[]NAME"
@@ -52,7 +52,7 @@ AC_DEFUN([AC_LIB_HAVE_LINKFLAGS],
   AC_REQUIRE([AC_LIB_RPATH])
   define([Name],[translit([$1],[./-], [___])])
   define([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./-],
-                               [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
+			       [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
 
   dnl Search for lib[]Name and define LIB[]NAME, LTLIB[]NAME and INC[]NAME
   dnl accordingly.
@@ -125,7 +125,7 @@ dnl Sets the LIB${NAME}, LTLIB${NAME} and INC${NAME} variables.
 AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
 [
   define([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./-],
-                               [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
+			       [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
   dnl By default, look in $includedir and $libdir.
   use_additional=yes
   AC_LIB_WITH_FINAL_PREFIX([
@@ -140,13 +140,13 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
       use_additional=no
     else
       if test "X$withval" = "X"; then
-        AC_LIB_WITH_FINAL_PREFIX([
-          eval additional_includedir=\"$includedir\"
-          eval additional_libdir=\"$libdir\"
-        ])
+	AC_LIB_WITH_FINAL_PREFIX([
+	  eval additional_includedir=\"$includedir\"
+	  eval additional_libdir=\"$libdir\"
+	])
       else
-        additional_includedir="$withval/include"
-        additional_libdir="$withval/lib"
+	additional_includedir="$withval/include"
+	additional_libdir="$withval/lib"
       fi
     fi
 ])
@@ -165,332 +165,332 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
     for name in $names_this_round; do
       already_handled=
       for n in $names_already_handled; do
-        if test "$n" = "$name"; then
-          already_handled=yes
-          break
-        fi
+	if test "$n" = "$name"; then
+	  already_handled=yes
+	  break
+	fi
       done
       if test -z "$already_handled"; then
-        names_already_handled="$names_already_handled $name"
-        dnl See if it was already located by an earlier AC_LIB_LINKFLAGS
-        dnl or AC_LIB_HAVE_LINKFLAGS call.
-        uppername=`echo "$name" | sed -e 'y|abcdefghijklmnopqrstuvwxyz./-|ABCDEFGHIJKLMNOPQRSTUVWXYZ___|'`
-        eval value=\"\$HAVE_LIB$uppername\"
-        if test -n "$value"; then
-          if test "$value" = yes; then
-            eval value=\"\$LIB$uppername\"
-            test -z "$value" || LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$value"
-            eval value=\"\$LTLIB$uppername\"
-            test -z "$value" || LTLIB[]NAME="${LTLIB[]NAME}${LTLIB[]NAME:+ }$value"
-          else
-            dnl An earlier call to AC_LIB_HAVE_LINKFLAGS has determined
-            dnl that this library doesn't exist. So just drop it.
-            :
-          fi
-        else
-          dnl Search the library lib$name in $additional_libdir and $LDFLAGS
-          dnl and the already constructed $LIBNAME/$LTLIBNAME.
-          found_dir=
-          found_la=
-          found_so=
-          found_a=
-          if test $use_additional = yes; then
-            if test -n "$shlibext" && test -f "$additional_libdir/lib$name.$shlibext"; then
-              found_dir="$additional_libdir"
-              found_so="$additional_libdir/lib$name.$shlibext"
-              if test -f "$additional_libdir/lib$name.la"; then
-                found_la="$additional_libdir/lib$name.la"
-              fi
-            else
-              if test -f "$additional_libdir/lib$name.$libext"; then
-                found_dir="$additional_libdir"
-                found_a="$additional_libdir/lib$name.$libext"
-                if test -f "$additional_libdir/lib$name.la"; then
-                  found_la="$additional_libdir/lib$name.la"
-                fi
-              fi
-            fi
-          fi
-          if test "X$found_dir" = "X"; then
-            for x in $LDFLAGS $LTLIB[]NAME; do
-              AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
-              case "$x" in
-                -L*)
-                  dir=`echo "X$x" | sed -e 's/^X-L//'`
-                  if test -n "$shlibext" && test -f "$dir/lib$name.$shlibext"; then
-                    found_dir="$dir"
-                    found_so="$dir/lib$name.$shlibext"
-                    if test -f "$dir/lib$name.la"; then
-                      found_la="$dir/lib$name.la"
-                    fi
-                  else
-                    if test -f "$dir/lib$name.$libext"; then
-                      found_dir="$dir"
-                      found_a="$dir/lib$name.$libext"
-                      if test -f "$dir/lib$name.la"; then
-                        found_la="$dir/lib$name.la"
-                      fi
-                    fi
-                  fi
-                  ;;
-              esac
-              if test "X$found_dir" != "X"; then
-                break
-              fi
-            done
-          fi
-          if test "X$found_dir" != "X"; then
-            dnl Found the library.
-            LTLIB[]NAME="${LTLIB[]NAME}${LTLIB[]NAME:+ }-L$found_dir -l$name"
-            if test "X$found_so" != "X"; then
-              dnl Linking with a shared library. We attempt to hardcode its
-              dnl directory into the executable's runpath, unless it's the
-              dnl standard /usr/lib.
-              if test "$enable_rpath" = no || test "X$found_dir" = "X/usr/lib"; then
-                dnl No hardcoding is needed.
-                LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$found_so"
-              else
-                dnl Use an explicit option to hardcode DIR into the resulting
-                dnl binary.
-                dnl Potentially add DIR to ltrpathdirs.
-                dnl The ltrpathdirs will be appended to $LTLIBNAME at the end.
-                haveit=
-                for x in $ltrpathdirs; do
-                  if test "X$x" = "X$found_dir"; then
-                    haveit=yes
-                    break
-                  fi
-                done
-                if test -z "$haveit"; then
-                  ltrpathdirs="$ltrpathdirs $found_dir"
-                fi
-                dnl The hardcoding into $LIBNAME is system dependent.
-                if test "$hardcode_direct" = yes; then
-                  dnl Using DIR/libNAME.so during linking hardcodes DIR into the
-                  dnl resulting binary.
-                  LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$found_so"
-                else
-                  if test -n "$hardcode_libdir_flag_spec" && test "$hardcode_minus_L" = no; then
-                    dnl Use an explicit option to hardcode DIR into the resulting
-                    dnl binary.
-                    LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$found_so"
-                    dnl Potentially add DIR to rpathdirs.
-                    dnl The rpathdirs will be appended to $LIBNAME at the end.
-                    haveit=
-                    for x in $rpathdirs; do
-                      if test "X$x" = "X$found_dir"; then
-                        haveit=yes
-                        break
-                      fi
-                    done
-                    if test -z "$haveit"; then
-                      rpathdirs="$rpathdirs $found_dir"
-                    fi
-                  else
-                    dnl Rely on "-L$found_dir".
-                    dnl But don't add it if it's already contained in the LDFLAGS
-                    dnl or the already constructed $LIBNAME
-                    haveit=
-                    for x in $LDFLAGS $LIB[]NAME; do
-                      AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
-                      if test "X$x" = "X-L$found_dir"; then
-                        haveit=yes
-                        break
-                      fi
-                    done
-                    if test -z "$haveit"; then
-                      LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }-L$found_dir"
-                    fi
-                    if test "$hardcode_minus_L" != no; then
-                      dnl FIXME: Not sure whether we should use
-                      dnl "-L$found_dir -l$name" or "-L$found_dir $found_so"
-                      dnl here.
-                      LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$found_so"
-                    else
-                      dnl We cannot use $hardcode_runpath_var and LD_RUN_PATH
-                      dnl here, because this doesn't fit in flags passed to the
-                      dnl compiler. So give up. No hardcoding. This affects only
-                      dnl very old systems.
-                      dnl FIXME: Not sure whether we should use
-                      dnl "-L$found_dir -l$name" or "-L$found_dir $found_so"
-                      dnl here.
-                      LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }-l$name"
-                    fi
-                  fi
-                fi
-              fi
-            else
-              if test "X$found_a" != "X"; then
-                dnl Linking with a static library.
-                LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$found_a"
-              else
-                dnl We shouldn't come here, but anyway it's good to have a
-                dnl fallback.
-                LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }-L$found_dir -l$name"
-              fi
-            fi
-            dnl Assume the include files are nearby.
-            additional_includedir=
-            case "$found_dir" in
-              */lib | */lib/)
-                basedir=`echo "X$found_dir" | sed -e 's,^X,,' -e 's,/lib/*$,,'`
-                additional_includedir="$basedir/include"
-                ;;
-            esac
-            if test "X$additional_includedir" != "X"; then
-              dnl Potentially add $additional_includedir to $INCNAME.
-              dnl But don't add it
-              dnl   1. if it's the standard /usr/include,
-              dnl   2. if it's /usr/local/include and we are using GCC on Linux,
-              dnl   3. if it's already present in $CPPFLAGS or the already
-              dnl      constructed $INCNAME,
-              dnl   4. if it doesn't exist as a directory.
-              if test "X$additional_includedir" != "X/usr/include"; then
-                haveit=
-                if test "X$additional_includedir" = "X/usr/local/include"; then
-                  if test -n "$GCC"; then
-                    case $host_os in
-                      linux*) haveit=yes;;
-                    esac
-                  fi
-                fi
-                if test -z "$haveit"; then
-                  for x in $CPPFLAGS $INC[]NAME; do
-                    AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
-                    if test "X$x" = "X-I$additional_includedir"; then
-                      haveit=yes
-                      break
-                    fi
-                  done
-                  if test -z "$haveit"; then
-                    if test -d "$additional_includedir"; then
-                      dnl Really add $additional_includedir to $INCNAME.
-                      INC[]NAME="${INC[]NAME}${INC[]NAME:+ }-I$additional_includedir"
-                    fi
-                  fi
-                fi
-              fi
-            fi
-            dnl Look for dependencies.
-            if test -n "$found_la"; then
-              dnl Read the .la file. It defines the variables
-              dnl dlname, library_names, old_library, dependency_libs, current,
-              dnl age, revision, installed, dlopen, dlpreopen, libdir.
-              save_libdir="$libdir"
-              case "$found_la" in
-                */* | *\\*) . "$found_la" ;;
-                *) . "./$found_la" ;;
-              esac
-              libdir="$save_libdir"
-              dnl We use only dependency_libs.
-              for dep in $dependency_libs; do
-                case "$dep" in
-                  -L*)
-                    additional_libdir=`echo "X$dep" | sed -e 's/^X-L//'`
-                    dnl Potentially add $additional_libdir to $LIBNAME and $LTLIBNAME.
-                    dnl But don't add it
-                    dnl   1. if it's the standard /usr/lib,
-                    dnl   2. if it's /usr/local/lib and we are using GCC on Linux,
-                    dnl   3. if it's already present in $LDFLAGS or the already
-                    dnl      constructed $LIBNAME,
-                    dnl   4. if it doesn't exist as a directory.
-                    if test "X$additional_libdir" != "X/usr/lib"; then
-                      haveit=
-                      if test "X$additional_libdir" = "X/usr/local/lib"; then
-                        if test -n "$GCC"; then
-                          case $host_os in
-                            linux*) haveit=yes;;
-                          esac
-                        fi
-                      fi
-                      if test -z "$haveit"; then
-                        haveit=
-                        for x in $LDFLAGS $LIB[]NAME; do
-                          AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
-                          if test "X$x" = "X-L$additional_libdir"; then
-                            haveit=yes
-                            break
-                          fi
-                        done
-                        if test -z "$haveit"; then
-                          if test -d "$additional_libdir"; then
-                            dnl Really add $additional_libdir to $LIBNAME.
-                            LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }-L$additional_libdir"
-                          fi
-                        fi
-                        haveit=
-                        for x in $LDFLAGS $LTLIB[]NAME; do
-                          AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
-                          if test "X$x" = "X-L$additional_libdir"; then
-                            haveit=yes
-                            break
-                          fi
-                        done
-                        if test -z "$haveit"; then
-                          if test -d "$additional_libdir"; then
-                            dnl Really add $additional_libdir to $LTLIBNAME.
-                            LTLIB[]NAME="${LTLIB[]NAME}${LTLIB[]NAME:+ }-L$additional_libdir"
-                          fi
-                        fi
-                      fi
-                    fi
-                    ;;
-                  -R*)
-                    dir=`echo "X$dep" | sed -e 's/^X-R//'`
-                    if test "$enable_rpath" != no; then
-                      dnl Potentially add DIR to rpathdirs.
-                      dnl The rpathdirs will be appended to $LIBNAME at the end.
-                      haveit=
-                      for x in $rpathdirs; do
-                        if test "X$x" = "X$dir"; then
-                          haveit=yes
-                          break
-                        fi
-                      done
-                      if test -z "$haveit"; then
-                        rpathdirs="$rpathdirs $dir"
-                      fi
-                      dnl Potentially add DIR to ltrpathdirs.
-                      dnl The ltrpathdirs will be appended to $LTLIBNAME at the end.
-                      haveit=
-                      for x in $ltrpathdirs; do
-                        if test "X$x" = "X$dir"; then
-                          haveit=yes
-                          break
-                        fi
-                      done
-                      if test -z "$haveit"; then
-                        ltrpathdirs="$ltrpathdirs $dir"
-                      fi
-                    fi
-                    ;;
-                  -l*)
-                    dnl Handle this in the next round.
-                    names_next_round="$names_next_round "`echo "X$dep" | sed -e 's/^X-l//'`
-                    ;;
-                  *.la)
-                    dnl Handle this in the next round. Throw away the .la's
-                    dnl directory; it is already contained in a preceding -L
-                    dnl option.
-                    names_next_round="$names_next_round "`echo "X$dep" | sed -e 's,^X.*/,,' -e 's,^lib,,' -e 's,\.la$,,'`
-                    ;;
-                  *)
-                    dnl Most likely an immediate library name.
-                    LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$dep"
-                    LTLIB[]NAME="${LTLIB[]NAME}${LTLIB[]NAME:+ }$dep"
-                    ;;
-                esac
-              done
-            fi
-          else
-            dnl Didn't find the library; assume it is in the system directories
-            dnl known to the linker and runtime loader. (All the system
-            dnl directories known to the linker should also be known to the
-            dnl runtime loader, otherwise the system is severely misconfigured.)
-            LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }-l$name"
-            LTLIB[]NAME="${LTLIB[]NAME}${LTLIB[]NAME:+ }-l$name"
-          fi
-        fi
+	names_already_handled="$names_already_handled $name"
+	dnl See if it was already located by an earlier AC_LIB_LINKFLAGS
+	dnl or AC_LIB_HAVE_LINKFLAGS call.
+	uppername=`echo "$name" | sed -e 'y|abcdefghijklmnopqrstuvwxyz./-|ABCDEFGHIJKLMNOPQRSTUVWXYZ___|'`
+	eval value=\"\$HAVE_LIB$uppername\"
+	if test -n "$value"; then
+	  if test "$value" = yes; then
+	    eval value=\"\$LIB$uppername\"
+	    test -z "$value" || LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$value"
+	    eval value=\"\$LTLIB$uppername\"
+	    test -z "$value" || LTLIB[]NAME="${LTLIB[]NAME}${LTLIB[]NAME:+ }$value"
+	  else
+	    dnl An earlier call to AC_LIB_HAVE_LINKFLAGS has determined
+	    dnl that this library doesn't exist. So just drop it.
+	    :
+	  fi
+	else
+	  dnl Search the library lib$name in $additional_libdir and $LDFLAGS
+	  dnl and the already constructed $LIBNAME/$LTLIBNAME.
+	  found_dir=
+	  found_la=
+	  found_so=
+	  found_a=
+	  if test $use_additional = yes; then
+	    if test -n "$shlibext" && test -f "$additional_libdir/lib$name.$shlibext"; then
+	      found_dir="$additional_libdir"
+	      found_so="$additional_libdir/lib$name.$shlibext"
+	      if test -f "$additional_libdir/lib$name.la"; then
+		found_la="$additional_libdir/lib$name.la"
+	      fi
+	    else
+	      if test -f "$additional_libdir/lib$name.$libext"; then
+		found_dir="$additional_libdir"
+		found_a="$additional_libdir/lib$name.$libext"
+		if test -f "$additional_libdir/lib$name.la"; then
+		  found_la="$additional_libdir/lib$name.la"
+		fi
+	      fi
+	    fi
+	  fi
+	  if test "X$found_dir" = "X"; then
+	    for x in $LDFLAGS $LTLIB[]NAME; do
+	      AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
+	      case "$x" in
+		-L*)
+		  dir=`echo "X$x" | sed -e 's/^X-L//'`
+		  if test -n "$shlibext" && test -f "$dir/lib$name.$shlibext"; then
+		    found_dir="$dir"
+		    found_so="$dir/lib$name.$shlibext"
+		    if test -f "$dir/lib$name.la"; then
+		      found_la="$dir/lib$name.la"
+		    fi
+		  else
+		    if test -f "$dir/lib$name.$libext"; then
+		      found_dir="$dir"
+		      found_a="$dir/lib$name.$libext"
+		      if test -f "$dir/lib$name.la"; then
+			found_la="$dir/lib$name.la"
+		      fi
+		    fi
+		  fi
+		  ;;
+	      esac
+	      if test "X$found_dir" != "X"; then
+		break
+	      fi
+	    done
+	  fi
+	  if test "X$found_dir" != "X"; then
+	    dnl Found the library.
+	    LTLIB[]NAME="${LTLIB[]NAME}${LTLIB[]NAME:+ }-L$found_dir -l$name"
+	    if test "X$found_so" != "X"; then
+	      dnl Linking with a shared library. We attempt to hardcode its
+	      dnl directory into the executable's runpath, unless it's the
+	      dnl standard /usr/lib.
+	      if test "$enable_rpath" = no || test "X$found_dir" = "X/usr/lib"; then
+		dnl No hardcoding is needed.
+		LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$found_so"
+	      else
+		dnl Use an explicit option to hardcode DIR into the resulting
+		dnl binary.
+		dnl Potentially add DIR to ltrpathdirs.
+		dnl The ltrpathdirs will be appended to $LTLIBNAME at the end.
+		haveit=
+		for x in $ltrpathdirs; do
+		  if test "X$x" = "X$found_dir"; then
+		    haveit=yes
+		    break
+		  fi
+		done
+		if test -z "$haveit"; then
+		  ltrpathdirs="$ltrpathdirs $found_dir"
+		fi
+		dnl The hardcoding into $LIBNAME is system dependent.
+		if test "$hardcode_direct" = yes; then
+		  dnl Using DIR/libNAME.so during linking hardcodes DIR into the
+		  dnl resulting binary.
+		  LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$found_so"
+		else
+		  if test -n "$hardcode_libdir_flag_spec" && test "$hardcode_minus_L" = no; then
+		    dnl Use an explicit option to hardcode DIR into the resulting
+		    dnl binary.
+		    LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$found_so"
+		    dnl Potentially add DIR to rpathdirs.
+		    dnl The rpathdirs will be appended to $LIBNAME at the end.
+		    haveit=
+		    for x in $rpathdirs; do
+		      if test "X$x" = "X$found_dir"; then
+			haveit=yes
+			break
+		      fi
+		    done
+		    if test -z "$haveit"; then
+		      rpathdirs="$rpathdirs $found_dir"
+		    fi
+		  else
+		    dnl Rely on "-L$found_dir".
+		    dnl But don't add it if it's already contained in the LDFLAGS
+		    dnl or the already constructed $LIBNAME
+		    haveit=
+		    for x in $LDFLAGS $LIB[]NAME; do
+		      AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
+		      if test "X$x" = "X-L$found_dir"; then
+			haveit=yes
+			break
+		      fi
+		    done
+		    if test -z "$haveit"; then
+		      LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }-L$found_dir"
+		    fi
+		    if test "$hardcode_minus_L" != no; then
+		      dnl FIXME: Not sure whether we should use
+		      dnl "-L$found_dir -l$name" or "-L$found_dir $found_so"
+		      dnl here.
+		      LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$found_so"
+		    else
+		      dnl We cannot use $hardcode_runpath_var and LD_RUN_PATH
+		      dnl here, because this doesn't fit in flags passed to the
+		      dnl compiler. So give up. No hardcoding. This affects only
+		      dnl very old systems.
+		      dnl FIXME: Not sure whether we should use
+		      dnl "-L$found_dir -l$name" or "-L$found_dir $found_so"
+		      dnl here.
+		      LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }-l$name"
+		    fi
+		  fi
+		fi
+	      fi
+	    else
+	      if test "X$found_a" != "X"; then
+		dnl Linking with a static library.
+		LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$found_a"
+	      else
+		dnl We shouldn't come here, but anyway it's good to have a
+		dnl fallback.
+		LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }-L$found_dir -l$name"
+	      fi
+	    fi
+	    dnl Assume the include files are nearby.
+	    additional_includedir=
+	    case "$found_dir" in
+	      */lib | */lib/)
+		basedir=`echo "X$found_dir" | sed -e 's,^X,,' -e 's,/lib/*$,,'`
+		additional_includedir="$basedir/include"
+		;;
+	    esac
+	    if test "X$additional_includedir" != "X"; then
+	      dnl Potentially add $additional_includedir to $INCNAME.
+	      dnl But don't add it
+	      dnl   1. if it's the standard /usr/include,
+	      dnl   2. if it's /usr/local/include and we are using GCC on Linux,
+	      dnl   3. if it's already present in $CPPFLAGS or the already
+	      dnl      constructed $INCNAME,
+	      dnl   4. if it doesn't exist as a directory.
+	      if test "X$additional_includedir" != "X/usr/include"; then
+		haveit=
+		if test "X$additional_includedir" = "X/usr/local/include"; then
+		  if test -n "$GCC"; then
+		    case $host_os in
+		      linux*) haveit=yes;;
+		    esac
+		  fi
+		fi
+		if test -z "$haveit"; then
+		  for x in $CPPFLAGS $INC[]NAME; do
+		    AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
+		    if test "X$x" = "X-I$additional_includedir"; then
+		      haveit=yes
+		      break
+		    fi
+		  done
+		  if test -z "$haveit"; then
+		    if test -d "$additional_includedir"; then
+		      dnl Really add $additional_includedir to $INCNAME.
+		      INC[]NAME="${INC[]NAME}${INC[]NAME:+ }-I$additional_includedir"
+		    fi
+		  fi
+		fi
+	      fi
+	    fi
+	    dnl Look for dependencies.
+	    if test -n "$found_la"; then
+	      dnl Read the .la file. It defines the variables
+	      dnl dlname, library_names, old_library, dependency_libs, current,
+	      dnl age, revision, installed, dlopen, dlpreopen, libdir.
+	      save_libdir="$libdir"
+	      case "$found_la" in
+		*/* | *\\*) . "$found_la" ;;
+		*) . "./$found_la" ;;
+	      esac
+	      libdir="$save_libdir"
+	      dnl We use only dependency_libs.
+	      for dep in $dependency_libs; do
+		case "$dep" in
+		  -L*)
+		    additional_libdir=`echo "X$dep" | sed -e 's/^X-L//'`
+		    dnl Potentially add $additional_libdir to $LIBNAME and $LTLIBNAME.
+		    dnl But don't add it
+		    dnl   1. if it's the standard /usr/lib,
+		    dnl   2. if it's /usr/local/lib and we are using GCC on Linux,
+		    dnl   3. if it's already present in $LDFLAGS or the already
+		    dnl      constructed $LIBNAME,
+		    dnl   4. if it doesn't exist as a directory.
+		    if test "X$additional_libdir" != "X/usr/lib"; then
+		      haveit=
+		      if test "X$additional_libdir" = "X/usr/local/lib"; then
+			if test -n "$GCC"; then
+			  case $host_os in
+			    linux*) haveit=yes;;
+			  esac
+			fi
+		      fi
+		      if test -z "$haveit"; then
+			haveit=
+			for x in $LDFLAGS $LIB[]NAME; do
+			  AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
+			  if test "X$x" = "X-L$additional_libdir"; then
+			    haveit=yes
+			    break
+			  fi
+			done
+			if test -z "$haveit"; then
+			  if test -d "$additional_libdir"; then
+			    dnl Really add $additional_libdir to $LIBNAME.
+			    LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }-L$additional_libdir"
+			  fi
+			fi
+			haveit=
+			for x in $LDFLAGS $LTLIB[]NAME; do
+			  AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
+			  if test "X$x" = "X-L$additional_libdir"; then
+			    haveit=yes
+			    break
+			  fi
+			done
+			if test -z "$haveit"; then
+			  if test -d "$additional_libdir"; then
+			    dnl Really add $additional_libdir to $LTLIBNAME.
+			    LTLIB[]NAME="${LTLIB[]NAME}${LTLIB[]NAME:+ }-L$additional_libdir"
+			  fi
+			fi
+		      fi
+		    fi
+		    ;;
+		  -R*)
+		    dir=`echo "X$dep" | sed -e 's/^X-R//'`
+		    if test "$enable_rpath" != no; then
+		      dnl Potentially add DIR to rpathdirs.
+		      dnl The rpathdirs will be appended to $LIBNAME at the end.
+		      haveit=
+		      for x in $rpathdirs; do
+			if test "X$x" = "X$dir"; then
+			  haveit=yes
+			  break
+			fi
+		      done
+		      if test -z "$haveit"; then
+			rpathdirs="$rpathdirs $dir"
+		      fi
+		      dnl Potentially add DIR to ltrpathdirs.
+		      dnl The ltrpathdirs will be appended to $LTLIBNAME at the end.
+		      haveit=
+		      for x in $ltrpathdirs; do
+			if test "X$x" = "X$dir"; then
+			  haveit=yes
+			  break
+			fi
+		      done
+		      if test -z "$haveit"; then
+			ltrpathdirs="$ltrpathdirs $dir"
+		      fi
+		    fi
+		    ;;
+		  -l*)
+		    dnl Handle this in the next round.
+		    names_next_round="$names_next_round "`echo "X$dep" | sed -e 's/^X-l//'`
+		    ;;
+		  *.la)
+		    dnl Handle this in the next round. Throw away the .la's
+		    dnl directory; it is already contained in a preceding -L
+		    dnl option.
+		    names_next_round="$names_next_round "`echo "X$dep" | sed -e 's,^X.*/,,' -e 's,^lib,,' -e 's,\.la$,,'`
+		    ;;
+		  *)
+		    dnl Most likely an immediate library name.
+		    LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$dep"
+		    LTLIB[]NAME="${LTLIB[]NAME}${LTLIB[]NAME:+ }$dep"
+		    ;;
+		esac
+	      done
+	    fi
+	  else
+	    dnl Didn't find the library; assume it is in the system directories
+	    dnl known to the linker and runtime loader. (All the system
+	    dnl directories known to the linker should also be known to the
+	    dnl runtime loader, otherwise the system is severely misconfigured.)
+	    LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }-l$name"
+	    LTLIB[]NAME="${LTLIB[]NAME}${LTLIB[]NAME:+ }-l$name"
+	  fi
+	fi
       fi
     done
   done
@@ -501,7 +501,7 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
       dnl single library, but not when more than one $LIBNAMEs are used.
       alldirs=
       for found_dir in $rpathdirs; do
-        alldirs="${alldirs}${alldirs:+$hardcode_libdir_separator}$found_dir"
+	alldirs="${alldirs}${alldirs:+$hardcode_libdir_separator}$found_dir"
       done
       dnl Note: hardcode_libdir_flag_spec uses $libdir and $wl.
       acl_save_libdir="$libdir"
@@ -512,11 +512,11 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
     else
       dnl The -rpath options are cumulative.
       for found_dir in $rpathdirs; do
-        acl_save_libdir="$libdir"
-        libdir="$found_dir"
-        eval flag=\"$hardcode_libdir_flag_spec\"
-        libdir="$acl_save_libdir"
-        LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$flag"
+	acl_save_libdir="$libdir"
+	libdir="$found_dir"
+	eval flag=\"$hardcode_libdir_flag_spec\"
+	libdir="$acl_save_libdir"
+	LIB[]NAME="${LIB[]NAME}${LIB[]NAME:+ }$flag"
       done
     fi
   fi
@@ -540,8 +540,8 @@ AC_DEFUN([AC_LIB_APPENDTOVAR],
     for x in $[$1]; do
       AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
       if test "X$x" = "X$element"; then
-        haveit=yes
-        break
+	haveit=yes
+	break
       fi
     done
     if test -z "$haveit"; then

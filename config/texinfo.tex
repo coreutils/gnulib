@@ -255,25 +255,25 @@
     \escapechar = `\\     % use backslash in output files.
     \indexdummies         % don't expand commands in the output.
     \normalturnoffactive  % \ in index entries must not stay \, e.g., if
-                   % the page break happens to be in the middle of an example.
+		   % the page break happens to be in the middle of an example.
     \shipout\vbox{%
       \ifcropmarks \vbox to \outervsize\bgroup
-        \hsize = \outerhsize
-        \vskip-\topandbottommargin
-        \vtop to0pt{%
-          \line{\ewtop\hfil\ewtop}%
-          \nointerlineskip
-          \line{%
-            \vbox{\moveleft\cornerthick\nstop}%
-            \hfill
-            \vbox{\moveright\cornerthick\nstop}%
-          }%
-          \vss}%
-        \vskip\topandbottommargin
-        \line\bgroup
-          \hfil % center the page within the outer (page) hsize.
-          \ifodd\pageno\hskip\bindingoffset\fi
-          \vbox\bgroup
+	\hsize = \outerhsize
+	\vskip-\topandbottommargin
+	\vtop to0pt{%
+	  \line{\ewtop\hfil\ewtop}%
+	  \nointerlineskip
+	  \line{%
+	    \vbox{\moveleft\cornerthick\nstop}%
+	    \hfill
+	    \vbox{\moveright\cornerthick\nstop}%
+	  }%
+	  \vss}%
+	\vskip\topandbottommargin
+	\line\bgroup
+	  \hfil % center the page within the outer (page) hsize.
+	  \ifodd\pageno\hskip\bindingoffset\fi
+	  \vbox\bgroup
       \fi
       %
       % Do this early so pdf references go to the beginning of the page.
@@ -282,27 +282,27 @@
       \unvbox\headlinebox
       \pagebody{#1}%
       \ifdim\ht\footlinebox > 0pt
-        % Only leave this space if the footline is nonempty.
-        % (We lessened \vsize for it in \oddfootingxxx.)
-        % The \baselineskip=24pt in plain's \makefootline has no effect.
-        \vskip 2\baselineskip
-        \unvbox\footlinebox
+	% Only leave this space if the footline is nonempty.
+	% (We lessened \vsize for it in \oddfootingxxx.)
+	% The \baselineskip=24pt in plain's \makefootline has no effect.
+	\vskip 2\baselineskip
+	\unvbox\footlinebox
       \fi
       %
       \ifcropmarks
-          \egroup % end of \vbox\bgroup
-        \hfil\egroup % end of (centering) \line\bgroup
-        \vskip\topandbottommargin plus1fill minus1fill
-        \boxmaxdepth = \cornerthick
-        \vbox to0pt{\vss
-          \line{%
-            \vbox{\moveleft\cornerthick\nsbot}%
-            \hfill
-            \vbox{\moveright\cornerthick\nsbot}%
-          }%
-          \nointerlineskip
-          \line{\ewbot\hfil\ewbot}%
-        }%
+	  \egroup % end of \vbox\bgroup
+	\hfil\egroup % end of (centering) \line\bgroup
+	\vskip\topandbottommargin plus1fill minus1fill
+	\boxmaxdepth = \cornerthick
+	\vbox to0pt{\vss
+	  \line{%
+	    \vbox{\moveleft\cornerthick\nsbot}%
+	    \hfill
+	    \vbox{\moveright\cornerthick\nsbot}%
+	  }%
+	  \nointerlineskip
+	  \line{\ewbot\hfil\ewbot}%
+	}%
       \egroup % \vbox from first cropmarks clause
       \fi
     }% end of \shipout\vbox
@@ -595,7 +595,7 @@
     % group, force a page break.
     \ifdim \dimen0 > \dimen2
       \ifdim \pagetotal < \vfilllimit\pageheight
-        \page
+	\page
       \fi
     \fi
     \copy\groupbox
@@ -1078,9 +1078,9 @@ where each line of input produces a line of output.}
       \ifx\empty\imagewidth\else width \imagewidth \fi
       \ifx\empty\imageheight\else height \imageheight \fi
       \ifnum\pdftexversion<13
-         #1.pdf%
+	 #1.pdf%
        \else
-         {#1.pdf}%
+	 {#1.pdf}%
        \fi
     \ifnum\pdftexversion < 14 \else
       \pdfrefximage \pdflastximage
@@ -1123,13 +1123,13 @@ where each line of input produces a line of output.}
       % The `-' means take the \expnumber as the absolute number of
       % subentries, which we calculated on our first read of the .toc above.
       \def\chapentry##1##2##3{%
-        \pdfoutline goto name{\pdfmkpgn{##3}}count-\expnumber{chap##2}{##1}}
+	\pdfoutline goto name{\pdfmkpgn{##3}}count-\expnumber{chap##2}{##1}}
       \def\secentry##1##2##3##4{%
-        \pdfoutline goto name{\pdfmkpgn{##1}}count-\expnumber{sec##2.##3}{##1}}
+	\pdfoutline goto name{\pdfmkpgn{##1}}count-\expnumber{sec##2.##3}{##1}}
       \def\subsecentry##1##2##3##4##5{%
-        \pdfoutline goto name{\pdfmkpgn{##5}}count-\expnumber{subsec##2.##3.##4}{##1}}
+	\pdfoutline goto name{\pdfmkpgn{##5}}count-\expnumber{subsec##2.##3.##4}{##1}}
       \def\subsubsecentry##1##2##3##4##5##6{%
-        \pdfoutline goto name{\pdfmkpgn{##6}}{##1}}
+	\pdfoutline goto name{\pdfmkpgn{##6}}{##1}}
       %
       % Make special characters normal for writing to the pdf file.
       \indexnofonts
@@ -1147,7 +1147,7 @@ where each line of input produces a line of output.}
       \ifnum\lnkcount>0,\fi
       \picknum{#1}%
       \startlink attr{/Border [0 0 0]}
-        goto name{\pdfmkpgn{\the\pgn}}%
+	goto name{\pdfmkpgn{\the\pgn}}%
       \linkcolor #1%
       \advance\lnkcount by 1%
       \endlink
@@ -1173,7 +1173,7 @@ where each line of input produces a line of output.}
     \ifx\PP\D\let\nextsp\relax
     \else\let\nextsp\skipspaces
       \ifx\p\space\else\addtokens{\filename}{\PP}%
-        \advance\filenamelength by 1
+	\advance\filenamelength by 1
       \fi
     \fi
     \nextsp}
@@ -1189,8 +1189,8 @@ where each line of input produces a line of output.}
       \let\value=\expandablevalue
       \leavevmode\Red
       \startlink attr{/Border [0 0 0]}%
-        user{/Subtype /Link /A << /S /URI /URI (#1) >>}%
-        % #1
+	user{/Subtype /Link /A << /S /URI /URI (#1) >>}%
+	% #1
     \endgroup}
   \def\pdfgettoks#1.{\setbox\boxA=\hbox{\toksA={#1.}\toksB={}\maketoks}}
   \def\addtokens#1#2{\edef\addtoks{\noexpand#1={\the#1#2}}\addtoks}
@@ -1205,9 +1205,9 @@ where each line of input produces a line of output.}
     \else
       \ifnum0=\countA\else\makelink\fi
       \ifx\first.\let\next=\done\else
-        \let\next=\maketoks
-        \addtokens{\toksB}{\the\toksD}
-        \ifx\first,\addtokens{\toksB}{\space}\fi
+	\let\next=\maketoks
+	\addtokens{\toksB}{\the\toksD}
+	\ifx\first,\addtokens{\toksB}{\space}\fi
       \fi
     \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
     \next}
@@ -1249,7 +1249,7 @@ where each line of input produces a line of output.}
   \normalbaselines
   \setbox\strutbox =\hbox{%
     \vrule width0pt height\strutheightpercent\baselineskip
-                    depth \strutdepthpercent \baselineskip
+		    depth \strutdepthpercent \baselineskip
   }%
 }
 
@@ -1487,7 +1487,7 @@ where each line of input produces a line of output.}
 % \smartitalic{ARG} outputs arg in italics, followed by an italic correction
 % unless the following character is such as not to need one.
 \def\smartitalicx{\ifx\next,\else\ifx\next-\else\ifx\next.\else
-                    \ptexslash\fi\fi\fi}
+		    \ptexslash\fi\fi\fi}
 \def\smartslanted#1{{\ifusingtt\ttsl\sl #1}\futurelet\next\smartitalicx}
 \def\smartitalic#1{{\ifusingtt\ttsl\it #1}\futurelet\next\smartitalicx}
 
@@ -1595,10 +1595,10 @@ where each line of input produces a line of output.}
   % will therefore expand the active definition of _, which is us
   % (inside @code that is), therefore an endless loop.
   \ifusingtt{\ifmmode
-               \mathchar"075F % class 0=ordinary, family 7=ttfam, pos 0x5F=_.
-             \else\normalunderscore \fi
-             \discretionary{}{}{}}%
-            {\_}%
+	       \mathchar"075F % class 0=ordinary, family 7=ttfam, pos 0x5F=_.
+	     \else\normalunderscore \fi
+	     \discretionary{}{}{}}%
+	    {\_}%
 }
 \def\codex #1{\tclose{#1}\endgroup}
 
@@ -1657,9 +1657,9 @@ where each line of input produces a line of output.}
     \setbox0 = \hbox{\ignorespaces #2}%
     \ifdim\wd0 > 0pt
       \ifpdf
-        \unhbox0             % PDF: 2nd arg given, show only it
+	\unhbox0             % PDF: 2nd arg given, show only it
       \else
-        \unhbox0\ (\code{#1})% DVI: 2nd arg given, show both it and url
+	\unhbox0\ (\code{#1})% DVI: 2nd arg given, show both it and url
       \fi
     \else
       \code{#1}% only url given, so show it
@@ -1745,14 +1745,14 @@ where each line of input produces a line of output.}
 
 \def\shorttitlepage{\parsearg\shorttitlepagezzz}
 \def\shorttitlepagezzz #1{\begingroup\hbox{}\vskip 1.5in \chaprm \centerline{#1}%
-        \endgroup\page\hbox{}\page}
+	\endgroup\page\hbox{}\page}
 
 \def\titlepage{\begingroup \parindent=0pt \textfonts
    \let\subtitlerm=\tenrm
    \def\subtitlefont{\subtitlerm \normalbaselineskip = 13pt \normalbaselines}%
    %
    \def\authorfont{\authorrm \normalbaselineskip = 16pt \normalbaselines
-                   \let\tt=\authortt}%
+		   \let\tt=\authortt}%
    %
    % Leave some space at the very top of the page.
    \vglue\titlepagetopglue
@@ -1760,9 +1760,9 @@ where each line of input produces a line of output.}
    % Now you can print the title using @title.
    \def\title{\parsearg\titlezzz}%
    \def\titlezzz##1{\leftline{\titlefonts\rm ##1}
-                    % print a rule at the page bottom also.
-                    \finishedtitlepagefalse
-                    \vskip4pt \hrule height 4pt width \hsize \vskip4pt}%
+		    % print a rule at the page bottom also.
+		    \finishedtitlepagefalse
+		    \vskip4pt \hrule height 4pt width \hsize \vskip4pt}%
    % No rule at page bottom unless we print one at the top with @title.
    \finishedtitlepagetrue
    %
@@ -1780,7 +1780,7 @@ where each line of input produces a line of output.}
    \let\oldpage = \page
    \def\page{%
       \iffinishedtitlepage\else
-         \finishtitlepage
+	 \finishtitlepage
       \fi
       \oldpage
       \let\page = \oldpage
@@ -1835,9 +1835,9 @@ where each line of input produces a line of output.}
 
 % Now make Tex use those variables
 \headline={{\textfonts\rm \ifodd\pageno \the\oddheadline
-                            \else \the\evenheadline \fi}}
+			    \else \the\evenheadline \fi}}
 \footline={{\textfonts\rm \ifodd\pageno \the\oddfootline
-                            \else \the\evenfootline \fi}\HEADINGShook}
+			    \else \the\evenfootline \fi}\HEADINGShook}
 \let\HEADINGShook=\relax
 
 % Commands to set those variables.
@@ -2001,10 +2001,10 @@ where each line of input produces a line of output.}
 \def\internalBkitemx{\itemxpar \parsearg\kitemzzz}
 
 \def\kitemzzz #1{\dosubind {kw}{\code{#1}}{for {\bf \lastfunction}}%
-                 \itemzzz {#1}}
+		 \itemzzz {#1}}
 
 \def\xitemzzz #1{\dosubind {kw}{\code{#1}}{for {\bf \xitemsubtopic}}%
-                 \itemzzz {#1}}
+		 \itemzzz {#1}}
 
 \def\itemzzz #1{\begingroup %
   \advance\hsize by -\rightskip
@@ -2192,9 +2192,9 @@ where each line of input produces a line of output.}
     \else
       % It's a letter.
       \ifnum\lccode\expandafter`\thearg=\expandafter`\thearg\relax
-        \lowercaseenumerate % lowercase letter
+	\lowercaseenumerate % lowercase letter
       \else
-        \uppercaseenumerate % uppercase letter
+	\uppercaseenumerate % uppercase letter
       \fi
     \fi
   \else
@@ -2218,7 +2218,7 @@ where each line of input produces a line of output.}
     % Be sure we're not beyond the end of the alphabet.
     \ifnum\itemno=0
       \errmessage{No more lowercase letters in @enumerate; get a bigger
-                  alphabet}%
+		  alphabet}%
     \fi
     \char\lccode\itemno
   }%
@@ -2231,7 +2231,7 @@ where each line of input produces a line of output.}
     % Be sure we're not beyond the end of the alphabet.
     \ifnum\itemno=0
       \errmessage{No more uppercase letters in @enumerate; get a bigger
-                  alphabet}
+		  alphabet}
     \fi
     \char\uccode\itemno
   }%
@@ -2371,12 +2371,12 @@ where each line of input produces a line of output.}
       \global\setpercenttrue
     \else
       \ifsetpercent
-         \let\go\pickupwholefraction
+	 \let\go\pickupwholefraction
       \else
-         \global\advance\colcount by 1
-         \setbox0=\hbox{#1\unskip\space}% Add a normal word space as a
-                   % separator; typically that is always in the input, anyway.
-         \expandafter\xdef\csname col\the\colcount\endcsname{\the\wd0}%
+	 \global\advance\colcount by 1
+	 \setbox0=\hbox{#1\unskip\space}% Add a normal word space as a
+		   % separator; typically that is always in the input, anyway.
+	 \expandafter\xdef\csname col\the\colcount\endcsname{\the\wd0}%
       \fi
     \fi
     \ifx\go\pickupwholefraction
@@ -2494,12 +2494,12 @@ width0pt\relax} \fi
 \ifdim\multitableparskip>\multitablelinespace
 \global\multitableparskip=\multitablelinespace
 \global\advance\multitableparskip-7pt %% to keep parskip somewhat smaller
-                                      %% than skip between lines in the table.
+				      %% than skip between lines in the table.
 \fi%
 \ifdim\multitableparskip=0pt
 \global\multitableparskip=\multitablelinespace
 \global\advance\multitableparskip-7pt %% to keep parskip somewhat smaller
-                                      %% than skip between lines in the table.
+				      %% than skip between lines in the table.
 \fi}
 
 % In case a @footnote appears inside an alignment, save the footnote
@@ -2631,7 +2631,7 @@ width0pt\relax} \fi
 }
 
 % We have to swallow the remaining "\ST@P".
-% 
+%
 \def\doignoretextzzz#1{%
   \ifnum\doignorecount = 0	% We have just found the outermost @end.
     \let\next\enddoignore
@@ -3128,65 +3128,65 @@ width0pt\relax} \fi
       \indexdummies % Must do this here, since \bf, etc expand at this stage
       \escapechar=`\\
       {%
-        \let\folio = 0% We will expand all macros now EXCEPT \folio.
-        \def\rawbackslashxx{\indexbackslash}% \indexbackslash isn't defined now
-        % so it will be output as is; and it will print as backslash.
-        %
-        % The main index entry text.
-        \toks0 = {#2}%
-        %
-        % If third arg is present, precede it with space in sort key.
-        \def\thirdarg{#3}%
-        \ifx\thirdarg\emptymacro \else
-           % If the third (subentry) arg is present, add it to the index
-           % line to write.
-          \toks0 = \expandafter{\the\toks0 \space #3}%
-        \fi
-        %
-        % Process the index entry with all font commands turned off, to
-        % get the string to sort by.
-        {\indexnofonts
-         \edef\temp{\the\toks0}% need full expansion
-         \xdef\indexsorttmp{\temp}%
-        }%
-        %
-        % Set up the complete index entry, with both the sort key and
-        % the original text, including any font commands.  We write
-        % three arguments to \entry to the .?? file (four in the
-        % subentry case), texindex reduces to two when writing the .??s
-        % sorted result.
-        \edef\temp{%
-          \write\csname#1indfile\endcsname{%
-            \realbackslash entry{\indexsorttmp}{\folio}{\the\toks0}}%
-        }%
-        %
-        % If a skip is the last thing on the list now, preserve it
-        % by backing up by \lastskip, doing the \write, then inserting
-        % the skip again.  Otherwise, the whatsit generated by the
-        % \write will make \lastskip zero.  The result is that sequences
-        % like this:
-        % @end defun
-        % @tindex whatever
-        % @defun ...
-        % will have extra space inserted, because the \medbreak in the
-        % start of the @defun won't see the skip inserted by the @end of
-        % the previous defun.
-        %
-        % But don't do any of this if we're not in vertical mode.  We
-        % don't want to do a \vskip and prematurely end a paragraph.
-        %
-        % Avoid page breaks due to these extra skips, too.
-        %
-        \iflinks
-          \ifvmode
-            \skip0 = \lastskip
-            \ifdim\lastskip = 0pt \else \nobreak\vskip-\skip0 \fi
-          \fi
-          %
-          \temp % do the write
-          %
-          \ifvmode \ifdim\skip0 = 0pt \else \nobreak\vskip\skip0 \fi \fi
-        \fi
+	\let\folio = 0% We will expand all macros now EXCEPT \folio.
+	\def\rawbackslashxx{\indexbackslash}% \indexbackslash isn't defined now
+	% so it will be output as is; and it will print as backslash.
+	%
+	% The main index entry text.
+	\toks0 = {#2}%
+	%
+	% If third arg is present, precede it with space in sort key.
+	\def\thirdarg{#3}%
+	\ifx\thirdarg\emptymacro \else
+	   % If the third (subentry) arg is present, add it to the index
+	   % line to write.
+	  \toks0 = \expandafter{\the\toks0 \space #3}%
+	\fi
+	%
+	% Process the index entry with all font commands turned off, to
+	% get the string to sort by.
+	{\indexnofonts
+	 \edef\temp{\the\toks0}% need full expansion
+	 \xdef\indexsorttmp{\temp}%
+	}%
+	%
+	% Set up the complete index entry, with both the sort key and
+	% the original text, including any font commands.  We write
+	% three arguments to \entry to the .?? file (four in the
+	% subentry case), texindex reduces to two when writing the .??s
+	% sorted result.
+	\edef\temp{%
+	  \write\csname#1indfile\endcsname{%
+	    \realbackslash entry{\indexsorttmp}{\folio}{\the\toks0}}%
+	}%
+	%
+	% If a skip is the last thing on the list now, preserve it
+	% by backing up by \lastskip, doing the \write, then inserting
+	% the skip again.  Otherwise, the whatsit generated by the
+	% \write will make \lastskip zero.  The result is that sequences
+	% like this:
+	% @end defun
+	% @tindex whatever
+	% @defun ...
+	% will have extra space inserted, because the \medbreak in the
+	% start of the @defun won't see the skip inserted by the @end of
+	% the previous defun.
+	%
+	% But don't do any of this if we're not in vertical mode.  We
+	% don't want to do a \vskip and prematurely end a paragraph.
+	%
+	% Avoid page breaks due to these extra skips, too.
+	%
+	\iflinks
+	  \ifvmode
+	    \skip0 = \lastskip
+	    \ifdim\lastskip = 0pt \else \nobreak\vskip-\skip0 \fi
+	  \fi
+	  %
+	  \temp % do the write
+	  %
+	  \ifvmode \ifdim\skip0 = 0pt \else \nobreak\vskip\skip0 \fi \fi
+	\fi
       }%
     }%
     \penalty\count255
@@ -3872,8 +3872,8 @@ width0pt\relax} \fi
 \def\chapheading{\chapbreak \parsearg\chapheadingzzz}
 \def\chapheadingzzz #1{%
   {\chapfonts \vbox{\hyphenpenalty=10000\tolerance=5000
-                    \parindent=0pt\raggedright
-                    \rm #1\hfill}}%
+		    \parindent=0pt\raggedright
+		    \rm #1\hfill}}%
   \bigskip \par\penalty 200\relax
   \suppressfirstparagraphindent
 }
@@ -3939,8 +3939,8 @@ width0pt\relax} \fi
     \def\chapnum{#2}%
     \setbox0 = \hbox{#2\ifx\chapnum\empty\else\enspace\fi}%
     \vbox{\hyphenpenalty=10000 \tolerance=5000 \parindent=0pt \raggedright
-          \hangindent = \wd0 \centerparametersmaybe
-          \unhbox0 #1\par}%
+	  \hangindent = \wd0 \centerparametersmaybe
+	  \unhbox0 #1\par}%
   }%
   \nobreak\bigskip % no page break after a chapter title
   \nobreak
@@ -3964,8 +3964,8 @@ width0pt\relax} \fi
 
 \def\unnchfopen #1{%
 \chapoddpage {\chapfonts \vbox{\hyphenpenalty=10000\tolerance=5000
-                       \parindent=0pt\raggedright
-                       \rm #1\hfill}}\bigskip \par\nobreak
+		       \parindent=0pt\raggedright
+		       \rm #1\hfill}}\bigskip \par\nobreak
 }
 
 \def\chfopen #1#2{\chapoddpage {\chapfonts
@@ -3975,8 +3975,8 @@ width0pt\relax} \fi
 
 \def\centerchfopen #1{%
 \chapoddpage {\chapfonts \vbox{\hyphenpenalty=10000\tolerance=5000
-                       \parindent=0pt
-                       \hfill {\rm #1}\hfill}}\bigskip \par\nobreak
+		       \parindent=0pt
+		       \hfill {\rm #1}\hfill}}\bigskip \par\nobreak
 }
 
 \def\CHAPFopen{%
@@ -4022,8 +4022,8 @@ width0pt\relax} \fi
     \setbox0 = \hbox{#2\ifx\secnum\empty\else\enspace\fi}%
     %
     \vbox{\hyphenpenalty=10000 \tolerance=5000 \parindent=0pt \raggedright
-          \hangindent = \wd0 % zero if no section number
-          \unhbox0 #3}%
+	  \hangindent = \wd0 % zero if no section number
+	  \unhbox0 #3}%
   }%
   % Add extra space after the heading -- either a line space or a
   % paragraph space, whichever is more.  (Some people like to set
@@ -4142,8 +4142,8 @@ width0pt\relax} \fi
       \let\unnumbsubsubsecentry = \subsubsecentry
       \openin 1 \jobname.toc
       \ifeof 1 \else
-        \closein 1
-        \input \jobname.toc
+	\closein 1
+	\input \jobname.toc
       \fi
      \vfill \eject
      \contentsalignmacro % in case @setchapternewpage odd is in effect
@@ -4299,8 +4299,8 @@ width0pt\relax} \fi
    \vbox{
       \hrule height\dimen2
       \hbox{\vrule width\dimen2 \kern3pt          % Space to left of text.
-         \vtop{\kern2.4pt \box0 \kern2.4pt}% Space above/below.
-         \kern3pt\vrule width\dimen2}% Space to right.
+	 \vtop{\kern2.4pt \box0 \kern2.4pt}% Space above/below.
+	 \kern3pt\vrule width\dimen2}% Space to right.
       \hrule height\dimen2}
     \hfil}
 %
@@ -4411,51 +4411,51 @@ width0pt\relax} \fi
 \def\cbl{{\circle\char'012\hskip -6pt}}
 \def\cbr{{\hskip 6pt\circle\char'011}}
 \def\carttop{\hbox to \cartouter{\hskip\lskip
-        \ctl\leaders\hrule height\circthick\hfil\ctr
-        \hskip\rskip}}
+	\ctl\leaders\hrule height\circthick\hfil\ctr
+	\hskip\rskip}}
 \def\cartbot{\hbox to \cartouter{\hskip\lskip
-        \cbl\leaders\hrule height\circthick\hfil\cbr
-        \hskip\rskip}}
+	\cbl\leaders\hrule height\circthick\hfil\cbr
+	\hskip\rskip}}
 %
 \newskip\lskip\newskip\rskip
 
 \def\cartouche{%
 \par  % can't be in the midst of a paragraph.
 \begingroup
-        \lskip=\leftskip \rskip=\rightskip
-        \leftskip=0pt\rightskip=0pt %we want these *outside*.
-        \cartinner=\hsize \advance\cartinner by-\lskip
-                          \advance\cartinner by-\rskip
-        \cartouter=\hsize
-        \advance\cartouter by 18.4pt % allow for 3pt kerns on either
+	\lskip=\leftskip \rskip=\rightskip
+	\leftskip=0pt\rightskip=0pt %we want these *outside*.
+	\cartinner=\hsize \advance\cartinner by-\lskip
+			  \advance\cartinner by-\rskip
+	\cartouter=\hsize
+	\advance\cartouter by 18.4pt % allow for 3pt kerns on either
 %                                    side, and for 6pt waste from
 %                                    each corner char, and rule thickness
-        \normbskip=\baselineskip \normpskip=\parskip \normlskip=\lineskip
-        % Flag to tell @lisp, etc., not to narrow margin.
-        \let\nonarrowing=\comment
-        \vbox\bgroup
-                \baselineskip=0pt\parskip=0pt\lineskip=0pt
-                \carttop
-                \hbox\bgroup
-                        \hskip\lskip
-                        \vrule\kern3pt
-                        \vbox\bgroup
-                                \hsize=\cartinner
-                                \kern3pt
-                                \begingroup
-                                        \baselineskip=\normbskip
-                                        \lineskip=\normlskip
-                                        \parskip=\normpskip
-                                        \vskip -\parskip
+	\normbskip=\baselineskip \normpskip=\parskip \normlskip=\lineskip
+	% Flag to tell @lisp, etc., not to narrow margin.
+	\let\nonarrowing=\comment
+	\vbox\bgroup
+		\baselineskip=0pt\parskip=0pt\lineskip=0pt
+		\carttop
+		\hbox\bgroup
+			\hskip\lskip
+			\vrule\kern3pt
+			\vbox\bgroup
+				\hsize=\cartinner
+				\kern3pt
+				\begingroup
+					\baselineskip=\normbskip
+					\lineskip=\normlskip
+					\parskip=\normpskip
+					\vskip -\parskip
 \def\Ecartouche{%
-                                \endgroup
-                                \kern3pt
-                        \egroup
-                        \kern3pt\vrule
-                        \hskip\rskip
-                \egroup
-                \cartbot
-        \egroup
+				\endgroup
+				\kern3pt
+			\egroup
+			\kern3pt\vrule
+			\hskip\rskip
+		\egroup
+		\cartbot
+	\egroup
 \endgroup
 }}
 
@@ -5226,14 +5226,14 @@ width0pt\relax} \fi
 %
 \def\deftypeop #1 {\def\deftypeopcategory{#1}%
   \deftypeopparsebody\Edeftypeop\deftypeopx\deftypeopheader
-                       \deftypeopcategory}
+		       \deftypeopcategory}
 %
 % #1 is the class name, #2 the data type, #3 the operation name, #4 the args.
 \def\deftypeopheader#1#2#3#4{%
   \dosubind{fn}{\code{#3}}{\putwordon\ \code{#1}}% entry in function index
   \begingroup
     \defname{\defheaderxcond#2\relax$.$#3}
-            {\deftypeopcategory\ \putwordon\ \code{#1}}%
+	    {\deftypeopcategory\ \putwordon\ \code{#1}}%
     \deftypefunargs{#4}%
   \endgroup
 }
@@ -5262,7 +5262,7 @@ width0pt\relax} \fi
   \dosubind{vr}{\code{#3}}{\putwordof\ \code{#1}}% entry in variable index
   \begingroup
     \defname{\defheaderxcond#2\relax$.$#3}
-            {\putwordInstanceVariableof\ \code{#1}}%
+	    {\putwordInstanceVariableof\ \code{#1}}%
     \defvarargs{#3}%
   \endgroup
 }
@@ -5428,7 +5428,7 @@ width0pt\relax} \fi
 \newtoks\macname    % Macro name
 \newif\ifrecursive  % Is it recursive?
 \def\macrolist{}    % List of all defined macros in the form
-                    % \do\macro1\do\macro2...
+		    % \do\macro1\do\macro2...
 
 % Utility routines.
 % Thisdoes \let #1 = #2, except with \csnames.
@@ -5577,13 +5577,13 @@ width0pt\relax} \fi
 % the macro is used.
 
 \def\parsemargdef#1;{\paramno=0\def\paramlist{}%
-        \let\hash\relax\let\xeatspaces\relax\parsemargdefxxx#1,;,}
+	\let\hash\relax\let\xeatspaces\relax\parsemargdefxxx#1,;,}
 \def\parsemargdefxxx#1,{%
   \if#1;\let\next=\relax
   \else \let\next=\parsemargdefxxx
     \advance\paramno by 1%
     \expandafter\edef\csname macarg.\eatspaces{#1}\endcsname
-        {\xeatspaces{\hash\the\paramno}}%
+	{\xeatspaces{\hash\the\paramno}}%
     \edef\paramlist{\paramlist\hash\the\paramno,}%
   \fi\next}
 
@@ -5606,55 +5606,55 @@ width0pt\relax} \fi
     \ifcase\paramno
     % 0
       \expandafter\xdef\csname\the\macname\endcsname{%
-        \noexpand\scanmacro{\temp}}%
+	\noexpand\scanmacro{\temp}}%
     \or % 1
       \expandafter\xdef\csname\the\macname\endcsname{%
-         \bgroup\noexpand\macroargctxt
-         \noexpand\braceorline
-         \expandafter\noexpand\csname\the\macname xxx\endcsname}%
+	 \bgroup\noexpand\macroargctxt
+	 \noexpand\braceorline
+	 \expandafter\noexpand\csname\the\macname xxx\endcsname}%
       \expandafter\xdef\csname\the\macname xxx\endcsname##1{%
-         \egroup\noexpand\scanmacro{\temp}}%
+	 \egroup\noexpand\scanmacro{\temp}}%
     \else % many
       \expandafter\xdef\csname\the\macname\endcsname{%
-         \bgroup\noexpand\macroargctxt
-         \noexpand\csname\the\macname xx\endcsname}%
+	 \bgroup\noexpand\macroargctxt
+	 \noexpand\csname\the\macname xx\endcsname}%
       \expandafter\xdef\csname\the\macname xx\endcsname##1{%
-          \expandafter\noexpand\csname\the\macname xxx\endcsname ##1,}%
+	  \expandafter\noexpand\csname\the\macname xxx\endcsname ##1,}%
       \expandafter\expandafter
       \expandafter\xdef
       \expandafter\expandafter
-        \csname\the\macname xxx\endcsname
-          \paramlist{\egroup\noexpand\scanmacro{\temp}}%
+	\csname\the\macname xxx\endcsname
+	  \paramlist{\egroup\noexpand\scanmacro{\temp}}%
     \fi
   \else
     \ifcase\paramno
     % 0
       \expandafter\xdef\csname\the\macname\endcsname{%
-        \noexpand\norecurse{\the\macname}%
-        \noexpand\scanmacro{\temp}\egroup}%
+	\noexpand\norecurse{\the\macname}%
+	\noexpand\scanmacro{\temp}\egroup}%
     \or % 1
       \expandafter\xdef\csname\the\macname\endcsname{%
-         \bgroup\noexpand\macroargctxt
-         \noexpand\braceorline
-         \expandafter\noexpand\csname\the\macname xxx\endcsname}%
+	 \bgroup\noexpand\macroargctxt
+	 \noexpand\braceorline
+	 \expandafter\noexpand\csname\the\macname xxx\endcsname}%
       \expandafter\xdef\csname\the\macname xxx\endcsname##1{%
-        \egroup
-        \noexpand\norecurse{\the\macname}%
-        \noexpand\scanmacro{\temp}\egroup}%
+	\egroup
+	\noexpand\norecurse{\the\macname}%
+	\noexpand\scanmacro{\temp}\egroup}%
     \else % many
       \expandafter\xdef\csname\the\macname\endcsname{%
-         \bgroup\noexpand\macroargctxt
-         \expandafter\noexpand\csname\the\macname xx\endcsname}%
+	 \bgroup\noexpand\macroargctxt
+	 \expandafter\noexpand\csname\the\macname xx\endcsname}%
       \expandafter\xdef\csname\the\macname xx\endcsname##1{%
-          \expandafter\noexpand\csname\the\macname xxx\endcsname ##1,}%
+	  \expandafter\noexpand\csname\the\macname xxx\endcsname ##1,}%
       \expandafter\expandafter
       \expandafter\xdef
       \expandafter\expandafter
       \csname\the\macname xxx\endcsname
       \paramlist{%
-          \egroup
-          \noexpand\norecurse{\the\macname}%
-          \noexpand\scanmacro{\temp}\egroup}%
+	  \egroup
+	  \noexpand\norecurse{\the\macname}%
+	  \noexpand\scanmacro{\temp}\egroup}%
     \fi
   \fi}
 
@@ -5683,7 +5683,7 @@ width0pt\relax} \fi
 \def\aliasxxx #1{\aliasyyy#1\relax}
 \def\aliasyyy #1=#2\relax{\ignoreactivespaces
 \edef\next{\global\let\expandafter\noexpand\csname#1\endcsname=%
-           \expandafter\noexpand\csname#2\endcsname}%
+	   \expandafter\noexpand\csname#2\endcsname}%
 \expandafter\endgroup\next}
 
 
@@ -5782,16 +5782,16 @@ width0pt\relax} \fi
       % Use the actual chapter/section title appear inside
       % the square brackets.  Use the real section title if we have it.
       \ifdim \wd1 > 0pt
-        % It is in another manual, so we don't have it.
-        \def\printednodename{\ignorespaces #1}%
+	% It is in another manual, so we don't have it.
+	\def\printednodename{\ignorespaces #1}%
       \else
-        \ifhavexrefs
-          % We know the real title if we have the xref values.
-          \def\printednodename{\refx{#1-title}{}}%
-        \else
-          % Otherwise just copy the Info node name.
-          \def\printednodename{\ignorespaces #1}%
-        \fi%
+	\ifhavexrefs
+	  % We know the real title if we have the xref values.
+	  \def\printednodename{\refx{#1-title}{}}%
+	\else
+	  % Otherwise just copy the Info node name.
+	  \def\printednodename{\ignorespaces #1}%
+	\fi%
       \fi
     \fi
   \fi
@@ -5808,10 +5808,10 @@ width0pt\relax} \fi
     {\turnoffactive \otherbackslash
      \ifnum\filenamelength>0
        \startlink attr{/Border [0 0 0]}%
-         goto file{\the\filename.pdf} name{#1}%
+	 goto file{\the\filename.pdf} name{#1}%
      \else
        \startlink attr{/Border [0 0 0]}%
-         goto name{\pdfmkpgn{#1}}%
+	 goto name{\pdfmkpgn{#1}}%
      \fi
     }%
     \linkcolor
@@ -5917,12 +5917,12 @@ width0pt\relax} \fi
     \angleleft un\-de\-fined\angleright
     \iflinks
       \ifhavexrefs
-        \message{\linenumber Undefined cross reference `#1'.}%
+	\message{\linenumber Undefined cross reference `#1'.}%
       \else
-        \ifwarnedxrefs\else
-          \global\warnedxrefstrue
-          \message{Cross reference values unknown; you must run TeX again.}%
-        \fi
+	\ifwarnedxrefs\else
+	  \global\warnedxrefstrue
+	  \message{Cross reference values unknown; you must run TeX again.}%
+	\fi
       \fi
     \fi
   \else
@@ -6325,9 +6325,9 @@ should work if nowhere else does.}
   %
   % If page is nothing but text, make it come out even.
   \internalpagesizes{46\baselineskip}{6in}%
-                    {\voffset}{.25in}%
-                    {\bindingoffset}{36pt}%
-                    {11in}{8.5in}%
+		    {\voffset}{.25in}%
+		    {\bindingoffset}{36pt}%
+		    {11in}{8.5in}%
 }}
 
 % Use @smallbook to reset parameters for 7x9.5 (or so) format.
@@ -6336,9 +6336,9 @@ should work if nowhere else does.}
   \textleading = 12pt
   %
   \internalpagesizes{7.5in}{5in}%
-                    {\voffset}{.25in}%
-                    {\bindingoffset}{16pt}%
-                    {9.25in}{7in}%
+		    {\voffset}{.25in}%
+		    {\bindingoffset}{16pt}%
+		    {9.25in}{7in}%
   %
   \lispnarrowing = 0.3in
   \tolerance = 700
@@ -6363,9 +6363,9 @@ should work if nowhere else does.}
   % \global\bindingoffset = 10mm
   % @end tex
   \internalpagesizes{51\baselineskip}{160mm}
-                    {\voffset}{\hoffset}%
-                    {\bindingoffset}{44pt}%
-                    {297mm}{210mm}%
+		    {\voffset}{\hoffset}%
+		    {\bindingoffset}{44pt}%
+		    {297mm}{210mm}%
   %
   \tolerance = 700
   \hfuzz = 1pt
@@ -6381,9 +6381,9 @@ should work if nowhere else does.}
   \textleading = 12.5pt
   %
   \internalpagesizes{160mm}{120mm}%
-                    {\voffset}{\hoffset}%
-                    {\bindingoffset}{8pt}%
-                    {210mm}{148mm}%
+		    {\voffset}{\hoffset}%
+		    {\bindingoffset}{8pt}%
+		    {210mm}{148mm}%
   %
   \lispnarrowing = 0.2in
   \tolerance = 800
@@ -6397,9 +6397,9 @@ should work if nowhere else does.}
 \def\afourlatex{{\globaldefs = 1
   \afourpaper
   \internalpagesizes{237mm}{150mm}%
-                    {\voffset}{4.6mm}%
-                    {\bindingoffset}{7mm}%
-                    {297mm}{210mm}%
+		    {\voffset}{4.6mm}%
+		    {\bindingoffset}{7mm}%
+		    {297mm}{210mm}%
   %
   % Must explicitly reset to 0 because we call \afourpaper.
   \globaldefs = 0
@@ -6409,9 +6409,9 @@ should work if nowhere else does.}
 \def\afourwide{{\globaldefs = 1
   \afourpaper
   \internalpagesizes{241mm}{165mm}%
-                    {\voffset}{-2.95mm}%
-                    {\bindingoffset}{7mm}%
-                    {297mm}{210mm}%
+		    {\voffset}{-2.95mm}%
+		    {\bindingoffset}{7mm}%
+		    {297mm}{210mm}%
   \globaldefs = 0
 }}
 
@@ -6435,9 +6435,9 @@ should work if nowhere else does.}
   \advance\dimen2 by \normaloffset
   %
   \internalpagesizes{#1}{\hsize}%
-                    {\voffset}{\normaloffset}%
-                    {\bindingoffset}{44pt}%
-                    {\dimen0}{\dimen2}%
+		    {\voffset}{\normaloffset}%
+		    {\bindingoffset}{44pt}%
+		    {\dimen0}{\dimen2}%
 }}
 
 % Set default to letter.

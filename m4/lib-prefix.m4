@@ -41,13 +41,13 @@ AC_DEFUN([AC_LIB_PREFIX],
       use_additional=no
     else
       if test "X$withval" = "X"; then
-        AC_LIB_WITH_FINAL_PREFIX([
-          eval additional_includedir=\"$includedir\"
-          eval additional_libdir=\"$libdir\"
-        ])
+	AC_LIB_WITH_FINAL_PREFIX([
+	  eval additional_includedir=\"$includedir\"
+	  eval additional_libdir=\"$libdir\"
+	])
       else
-        additional_includedir="$withval/include"
-        additional_libdir="$withval/lib"
+	additional_includedir="$withval/include"
+	additional_libdir="$withval/lib"
       fi
     fi
 ])
@@ -61,26 +61,26 @@ AC_DEFUN([AC_LIB_PREFIX],
     if test "X$additional_includedir" != "X/usr/include"; then
       haveit=
       for x in $CPPFLAGS; do
-        AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
-        if test "X$x" = "X-I$additional_includedir"; then
-          haveit=yes
-          break
-        fi
+	AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
+	if test "X$x" = "X-I$additional_includedir"; then
+	  haveit=yes
+	  break
+	fi
       done
       if test -z "$haveit"; then
-        if test "X$additional_includedir" = "X/usr/local/include"; then
-          if test -n "$GCC"; then
-            case $host_os in
-              linux*) haveit=yes;;
-            esac
-          fi
-        fi
-        if test -z "$haveit"; then
-          if test -d "$additional_includedir"; then
-            dnl Really add $additional_includedir to $CPPFLAGS.
-            CPPFLAGS="${CPPFLAGS}${CPPFLAGS:+ }-I$additional_includedir"
-          fi
-        fi
+	if test "X$additional_includedir" = "X/usr/local/include"; then
+	  if test -n "$GCC"; then
+	    case $host_os in
+	      linux*) haveit=yes;;
+	    esac
+	  fi
+	fi
+	if test -z "$haveit"; then
+	  if test -d "$additional_includedir"; then
+	    dnl Really add $additional_includedir to $CPPFLAGS.
+	    CPPFLAGS="${CPPFLAGS}${CPPFLAGS:+ }-I$additional_includedir"
+	  fi
+	fi
       fi
     fi
     dnl Potentially add $additional_libdir to $LDFLAGS.
@@ -92,26 +92,26 @@ AC_DEFUN([AC_LIB_PREFIX],
     if test "X$additional_libdir" != "X/usr/lib"; then
       haveit=
       for x in $LDFLAGS; do
-        AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
-        if test "X$x" = "X-L$additional_libdir"; then
-          haveit=yes
-          break
-        fi
+	AC_LIB_WITH_FINAL_PREFIX([eval x=\"$x\"])
+	if test "X$x" = "X-L$additional_libdir"; then
+	  haveit=yes
+	  break
+	fi
       done
       if test -z "$haveit"; then
-        if test "X$additional_libdir" = "X/usr/local/lib"; then
-          if test -n "$GCC"; then
-            case $host_os in
-              linux*) haveit=yes;;
-            esac
-          fi
-        fi
-        if test -z "$haveit"; then
-          if test -d "$additional_libdir"; then
-            dnl Really add $additional_libdir to $LDFLAGS.
-            LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-L$additional_libdir"
-          fi
-        fi
+	if test "X$additional_libdir" = "X/usr/local/lib"; then
+	  if test -n "$GCC"; then
+	    case $host_os in
+	      linux*) haveit=yes;;
+	    esac
+	  fi
+	fi
+	if test -z "$haveit"; then
+	  if test -d "$additional_libdir"; then
+	    dnl Really add $additional_libdir to $LDFLAGS.
+	    LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-L$additional_libdir"
+	  fi
+	fi
       fi
     fi
   fi

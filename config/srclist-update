@@ -1,10 +1,28 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.10 2003-07-16 12:47:48 karl Exp $
+# $Id: srclist-update,v 1.11 2003-08-13 06:48:58 eggert Exp $
 #
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
 #
 # Source `dirname $0`/srclistvars.sh first, if it exists.
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+
+# Written by Karl Berry.
+
 
 if test -n "$1"; then
   cd "$1" || exit 1
@@ -60,10 +78,20 @@ fixlicense() \
 }
 
 
+
+# sed command to remove lines containing $Id lines.
+# Quote the $Id so that CVS does not expand it in this script.
+remove_id_lines='/[$]Id:.*[$]/d'
+
+# sed command to remove trailing blanks.
+# Do not use [[:space:]] in this pattern, as that would kill formfeeds.
+remove_trailing_blanks='s/[	 ][	 ]*$//'
+
 # $1 is input file, $2 is output.
 # Remove $Id lines, since they'll differ between source locations.
 # If $options contains "gpl", change the license to be the standard
 # GPL.  We use this for libc files, et al.
+# Also, normalize white space simple-mindedly.
 #
 fixfile() \
 {
@@ -73,7 +101,8 @@ fixfile() \
   *)
     cat $1;;
   esac \
-  | grep -v '[$]Id:.*[$]' >$2 2>&1
+  | unexpand \
+  | sed "$remove_id_lines; $remove_trailing_blanks" >$2
 }
 
 
@@ -98,7 +127,7 @@ cat | while read src dst options; do
   eval dst=$dst
   test -d $dst && dst=$dst/`basename $src`
 
-  # Do license changes and $Id removal in both src and dst, for the sake
+  # Fix files in both src and dst, for the sake
   # of a clean comparison.
   srctmp=$TMPDIR/`basename $src`
   fixfile $src $srctmp

@@ -95,9 +95,9 @@ Supported PROGRAM values:
 
     echo 1>&2 "\
 WARNING: \`$1' is missing on your system.  You should only need it if
-         you modified \`acinclude.m4' or \`${configure_ac}'.  You might want
-         to install the \`Automake' and \`Perl' packages.  Grab them from
-         any GNU archive site."
+	 you modified \`acinclude.m4' or \`${configure_ac}'.  You might want
+	 to install the \`Automake' and \`Perl' packages.  Grab them from
+	 any GNU archive site."
     touch aclocal.m4
     ;;
 
@@ -109,9 +109,9 @@ WARNING: \`$1' is missing on your system.  You should only need it if
 
     echo 1>&2 "\
 WARNING: \`$1' is missing on your system.  You should only need it if
-         you modified \`${configure_ac}'.  You might want to install the
-         \`Autoconf' and \`GNU m4' packages.  Grab them from any GNU
-         archive site."
+	 you modified \`${configure_ac}'.  You might want to install the
+	 \`Autoconf' and \`GNU m4' packages.  Grab them from any GNU
+	 archive site."
     touch configure
     ;;
 
@@ -123,9 +123,9 @@ WARNING: \`$1' is missing on your system.  You should only need it if
 
     echo 1>&2 "\
 WARNING: \`$1' is missing on your system.  You should only need it if
-         you modified \`acconfig.h' or \`${configure_ac}'.  You might want
-         to install the \`Autoconf' and \`GNU m4' packages.  Grab them
-         from any GNU archive site."
+	 you modified \`acconfig.h' or \`${configure_ac}'.  You might want
+	 to install the \`Autoconf' and \`GNU m4' packages.  Grab them
+	 from any GNU archive site."
     files=`sed -n 's/^[ ]*A[CM]_CONFIG_HEADER(\([^)]*\)).*/\1/p' ${configure_ac}`
     test -z "$files" && files="config.h"
     touch_files=
@@ -147,9 +147,9 @@ WARNING: \`$1' is missing on your system.  You should only need it if
 
     echo 1>&2 "\
 WARNING: \`$1' is missing on your system.  You should only need it if
-         you modified \`Makefile.am', \`acinclude.m4' or \`${configure_ac}'.
-         You might want to install the \`Automake' and \`Perl' packages.
-         Grab them from any GNU archive site."
+	 you modified \`Makefile.am', \`acinclude.m4' or \`${configure_ac}'.
+	 You might want to install the \`Automake' and \`Perl' packages.
+	 Grab them from any GNU archive site."
     find . -type f -name Makefile.am -print |
 	   sed 's/\.am$/.in/' |
 	   while read f; do touch "$f"; done
@@ -163,10 +163,10 @@ WARNING: \`$1' is missing on your system.  You should only need it if
 
     echo 1>&2 "\
 WARNING: \`$1' is needed, and you do not seem to have it handy on your
-         system.  You might have modified some files without having the
-         proper tools for further handling them.
-         You can get \`$1' as part of \`Autoconf' from any GNU
-         archive site."
+	 system.  You might have modified some files without having the
+	 proper tools for further handling them.
+	 You can get \`$1' as part of \`Autoconf' from any GNU
+	 archive site."
 
     file=`echo "$*" | sed -n 's/.*--output[ =]*\([^ ]*\).*/\1/p'`
     test -z "$file" && file=`echo "$*" | sed -n 's/.*-o[ ]*\([^ ]*\).*/\1/p'`
@@ -186,21 +186,21 @@ WARNING: \`$1' is needed, and you do not seem to have it handy on your
   bison|yacc)
     echo 1>&2 "\
 WARNING: \`$1' is missing on your system.  You should only need it if
-         you modified a \`.y' file.  You may need the \`Bison' package
-         in order for those modifications to take effect.  You can get
-         \`Bison' from any GNU archive site."
+	 you modified a \`.y' file.  You may need the \`Bison' package
+	 in order for those modifications to take effect.  You can get
+	 \`Bison' from any GNU archive site."
     rm -f y.tab.c y.tab.h
     if [ $# -ne 1 ]; then
-        eval LASTARG="\${$#}"
+	eval LASTARG="\${$#}"
 	case "$LASTARG" in
 	*.y)
 	    SRCFILE=`echo "$LASTARG" | sed 's/y$/c/'`
 	    if [ -f "$SRCFILE" ]; then
-	         cp "$SRCFILE" y.tab.c
+		 cp "$SRCFILE" y.tab.c
 	    fi
 	    SRCFILE=`echo "$LASTARG" | sed 's/y$/h/'`
 	    if [ -f "$SRCFILE" ]; then
-	         cp "$SRCFILE" y.tab.h
+		 cp "$SRCFILE" y.tab.h
 	    fi
 	  ;;
 	esac
@@ -216,17 +216,17 @@ WARNING: \`$1' is missing on your system.  You should only need it if
   lex|flex)
     echo 1>&2 "\
 WARNING: \`$1' is missing on your system.  You should only need it if
-         you modified a \`.l' file.  You may need the \`Flex' package
-         in order for those modifications to take effect.  You can get
-         \`Flex' from any GNU archive site."
+	 you modified a \`.l' file.  You may need the \`Flex' package
+	 in order for those modifications to take effect.  You can get
+	 \`Flex' from any GNU archive site."
     rm -f lex.yy.c
     if [ $# -ne 1 ]; then
-        eval LASTARG="\${$#}"
+	eval LASTARG="\${$#}"
 	case "$LASTARG" in
 	*.l)
 	    SRCFILE=`echo "$LASTARG" | sed 's/l$/c/'`
 	    if [ -f "$SRCFILE" ]; then
-	         cp "$SRCFILE" lex.yy.c
+		 cp "$SRCFILE" lex.yy.c
 	    fi
 	  ;;
 	esac
@@ -269,11 +269,11 @@ WARNING: \`$1' is missing on your system.  You should only need it if
 
     echo 1>&2 "\
 WARNING: \`$1' is missing on your system.  You should only need it if
-         you modified a \`.texi' or \`.texinfo' file, or any other file
-         indirectly affecting the aspect of the manual.  The spurious
-         call might also be the consequence of using a buggy \`make' (AIX,
-         DU, IRIX).  You might want to install the \`Texinfo' package or
-         the \`GNU make' package.  Grab either from any GNU archive site."
+	 you modified a \`.texi' or \`.texinfo' file, or any other file
+	 indirectly affecting the aspect of the manual.  The spurious
+	 call might also be the consequence of using a buggy \`make' (AIX,
+	 DU, IRIX).  You might want to install the \`Texinfo' package or
+	 the \`GNU make' package.  Grab either from any GNU archive site."
     file=`echo "$*" | sed -n 's/.*-o \([^ ]*\).*/\1/p'`
     if test -z "$file"; then
       file=`echo "$*" | sed 's/.* \([^ ]*\) *$/\1/'`
@@ -316,19 +316,19 @@ WARNING: \`$1' is missing on your system.  You should only need it if
 
     echo 1>&2 "\
 WARNING: I can't seem to be able to run \`tar' with the given arguments.
-         You may want to install GNU tar or Free paxutils, or check the
-         command line arguments."
+	 You may want to install GNU tar or Free paxutils, or check the
+	 command line arguments."
     exit 1
     ;;
 
   *)
     echo 1>&2 "\
 WARNING: \`$1' is needed, and you do not seem to have it handy on your
-         system.  You might have modified some files without having the
-         proper tools for further handling them.  Check the \`README' file,
-         it often tells you about the needed prerequirements for installing
-         this package.  You may also peek at any GNU archive site, in case
-         some other package would contain this missing \`$1' program."
+	 system.  You might have modified some files without having the
+	 proper tools for further handling them.  Check the \`README' file,
+	 it often tells you about the needed prerequirements for installing
+	 this package.  You may also peek at any GNU archive site, in case
+	 some other package would contain this missing \`$1' program."
     exit 1
     ;;
 esac

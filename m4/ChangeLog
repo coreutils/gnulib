@@ -1,5 +1,9 @@
 2003-08-12  Paul Eggert  <eggert@twinsun.com>
 
+	* gettext.m4, iconv.m4, intdiv0.m4, inttypes-pri.m4, lib-link.m4,
+	lib-prefix.m4, longdouble.m4, po.m4, progtest.m4, signed.m4:
+	Normalize leading white space and remove trailing white space.
+
 	Merge from coreutils
 	* euidaccess.m4 (gl_FUNC_EUIDACCESS): Check for euidaccess decl.
 
