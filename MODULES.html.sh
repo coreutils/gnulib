@@ -1720,7 +1720,7 @@ func_all_modules ()
   func_begin_table
   func_module acl
   func_module backupfile
-  #func_module copy-file
+  func_module copy-file
   func_module fsusage
   func_module dirfd
   func_module euidaccess
