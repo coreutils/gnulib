@@ -96,6 +96,7 @@ error (status, errnum, message, va_alist)
   va_list args;
 #endif /* HAVE_VPRINTF */
 
+  fflush (stdout);
   fprintf (stderr, "%s: ", program_name);
 #ifdef HAVE_VPRINTF
   VA_START (args, message);
