@@ -8,8 +8,6 @@ lib/xstrdup.c
 m4/xalloc.m4
 
 Depends-on:
-malloc
-realloc
 error
 gettext
 exitfail

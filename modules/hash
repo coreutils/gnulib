@@ -7,8 +7,6 @@ lib/hash.c
 m4/hash.m4
 
 Depends-on:
-malloc
-realloc
 stdbool
 
 configure.ac:

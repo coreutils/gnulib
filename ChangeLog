@@ -1,5 +1,8 @@
 2004-05-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* modules/hash (Depends-on): Remove malloc, realloc.
+	* modules/xalloc (Depends-on): Likewise.
+
 	* README: Mention that the 'free' module works around the
 	problem with 'free (0)'.
 	Mention LIA-1 and C99.

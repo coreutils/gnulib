@@ -1,3 +1,8 @@
+2004-05-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* xalloc.m4 (gl_PREREQ_XMALLOC): Do not require AC_FUNC_MALLOC
+	or AC_FUNC_REALLOC.
+
 2004-05-20  Andreas Schwab  <schwab@suse.de>
 
 	* free.m4: Replace free if it not known to work, not the other

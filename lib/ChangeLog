@@ -1,3 +1,10 @@
+2004-05-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* xmalloc.c (HAVE_MALLOC, HAVE_REALLOC): Do not require these
+	macros to be defined.
+	(xnmalloc_inline, xnrealloc_inline, xcalloc): Do not die if
+	the allocator returns NULL because the requested size is zero.
+
 2004-05-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* malloc/obstack.c (_obstack) [defined _LIBC]: Bring back this
