@@ -1,3 +1,8 @@
+2004-09-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/inttostr (Files): Add m4/longlong.m4, since it uses
+	gl_AC_TYPE_LONG_LONG.
+
 2004-09-18  Simon Josefsson  <jas@extundo.com>
        and  Paul Eggert  <eggert@cs.ucla.edu>
 	
