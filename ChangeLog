@@ -1,3 +1,15 @@
+2004-06-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/argz: Omit "#include".
+
+	* MODULES.html.sh (func_all_modules): Add calloc, to match
+	2004-06-01 addition of calloc module.
+
+2004-06-22  Gary V. Vaughan  <gary@gnu.org>  
+
+	* modules/argz: New file.
+	* MODULES.html.sh (func_all_modules): Add argz.
+
 2004-06-12  Jim Meyering  <jim@meyering.net>
        and  Paul Eggert  <eggert@cs.ucla.edu>
 

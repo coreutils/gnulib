@@ -1,3 +1,10 @@
+2004-06-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist-update: Don't insist on "USA." before the close-comment,
+	as libtool omits the period and puts the */ on a separate line.
+	* srclist.txt: Add argz.c, argz_.h, argz.m4.
+	* srclistvars.sh: Add LIBTOOL (for eggert only).
+
 2004-05-18  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt: break link for vasnprintf.c.

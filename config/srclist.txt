@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.39 2004-05-18 12:22:41 karl Exp $
+# $Id: srclist.txt,v 1.40 2004-06-22 18:28:25 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -173,3 +173,7 @@ $LIBCSRC/sysdeps/generic/strtoul.c	lib gpl
 #$LIBCSRC/sysdeps/unix/sysv/gethostname.c	lib gpl
 #$LIBCSRC/sysdeps/unix/mkdir.c			lib gpl
 #$LIBCSRC/sysdeps/unix/utime.c			lib gpl
+
+$LIBTOOL/libltdl/argz.c				lib gpl
+$LIBTOOL/libltdl/argz_.h			lib gpl
+$LIBTOOL/m4/argz.m4				m4

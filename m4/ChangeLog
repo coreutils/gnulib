@@ -1,3 +1,7 @@
+2004-06-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* argz.m4: New file, which is autoupdated from libtool.
+
 2004-06-01  Jim Meyering  <jim@meyering.net>
 
 	* calloc.m4: New file.
