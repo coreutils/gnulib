@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.47 2004-10-04 12:43:45 karl Exp $
+# $Id: srclist.txt,v 1.48 2004-10-04 13:29:13 jas Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -97,6 +97,7 @@ $LIBCSRC/posix/getopt_int.h		lib gpl
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
 $LIBCSRC/sysdeps/generic/strtoll.c	lib gpl
 $LIBCSRC/sysdeps/generic/strtoul.c	lib gpl
+$LIBCSRC/sysdeps/generic/memmem.c	lib gpl
 #
 # These are close, but ...
 #$LIBCSRC/crypt/md5.c			lib gpl
