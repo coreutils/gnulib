@@ -1,3 +1,8 @@
+2005-03-26  Jim Meyering  <jim@meyering.net>
+
+	* modules/check-include-files: Move to ../ and rename to...
+	* check-module: ...this.
+
 2005-03-25  Jim Meyering  <jim@meyering.net>
 
 	* modules/xvasprintf (Files): Add xalloc.h.
