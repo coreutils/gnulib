@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 11, 2004
+@set lastupdate May 15, 2004
 @c %**end of header
 
 @dircategory GNU organization
@@ -478,7 +478,12 @@ released, were @emph{completed}.  So if you finish a version on Dec 31,
 of 1994, but doesn't require the inclusion of 1995.
 
 Do not abbreviate the year list using a range; for instance, do not
-write @samp{1996--1998}; instead, write @samp{1996, 1997, 1998}.
+write @samp{1996--1998}; instead, write @samp{1996, 1997, 1998}.  Do
+write each relevant year as a four-digit number.  In the normal course
+of maintenance, you may come across copyright notices which omit the
+century, as in @samp{1996, 97, 98}---change these to include the
+century.  However, there is no need to systematically change the
+notice in every old file.
 
 The versions that matter, for purposes of this list, are versions that
 were ancestors of the current version.  So if you made a temporary
