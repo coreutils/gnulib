@@ -1,5 +1,10 @@
 2003-03-13  Paul Eggert  <eggert@twinsun.com>
 
+	Merge changes from Bison.
+	* obstack.h: (__INT_TO_PTR) [__STDC__]: Cast result to
+	(void *) to avoid diagnostic with native c89 on SGI IRIX 6.5
+	when compiling Bison 1.875's `bitset bset = obstack_alloc
+	(bobstack, bytes);'.  Problem reported by Nelson H. F. Beebe.
 	* hash.c: Include <stdbool.h> unconditionally.
 
 2003-03-09  Paul Eggert  <eggert@twinsun.com>
