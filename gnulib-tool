@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2003-01-01 14:49:10 $'
+cvsdatestamp='$Date: 2003-01-01 14:51:23 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -510,7 +510,9 @@ case $mode in
     if test -z "$destdir"; then
       func_fatal_error "please specify --dir option"
     fi
-    mkdir "$destdir" || func_fatal_error "could not create destination directory"
+    mkdir "$destdir"
+    test -d "$destdir" \
+      || func_fatal_error "could not create destination directory"
     func_create_testdir "$destdir" "$*"
     ;;
 
