@@ -20,10 +20,9 @@
 # include <config.h>
 #endif
 
-/* FIXME: define EXIT_FAILURE */
-
 #include "fatal.h"
 
+#include "exit.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>

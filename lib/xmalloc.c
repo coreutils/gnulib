@@ -30,11 +30,8 @@
 #define N_(msgid) msgid
 
 #include "error.h"
+#include "exit.h"
 #include "exitfail.h"
-
-#ifndef EXIT_FAILURE
-# define EXIT_FAILURE 1
-#endif
 
 /* The following tests require AC_PREREQ(2.54).  */
 

@@ -7,6 +7,7 @@ lib/exitfail.c
 m4/exitfail.m4
 
 Depends-on:
+exit
 
 configure.ac:
 gl_EXITFAIL
