@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, allocsa, argmatch, argp, argz, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, calloc, canon-host, chown, cloexec, closeout, copy-file, diacrit, dirfd, dirname, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal, fatal-signal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, inttostr, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, allocsa, argmatch, argp, argz, assert, atexit, backupfile, bcopy, binary-io, calloc, canon-host, c-bs-a, c-ctype, chown, cloexec, closeout, copy-file, c-stack, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, fileblocks, filemode, file-type, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, inttostr, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, timegm, time_r, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -831,10 +831,6 @@ usually the host name including FQDN.
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=extensions">extensions</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Enable extensions in standard headers
-      </TR>
-      <TR WIDTH="100%">
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fatal">fatal</A>
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Error reporting for fatal errors.
       </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=getdomainname">getdomainname</A>
@@ -1848,7 +1844,7 @@ variables.
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=chown"></A><A HREF="modules/chown">chown</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/unistd.h.html">unistd.h</A>&gt;
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/chown.c">chown.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/chown.c">chown.c</A><BR><A HREF="lib/fchown-stub.c">fchown-stub.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/chown.m4">chown.m4</A><BR>gl_FUNC_CHOWN
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
@@ -2707,13 +2703,6 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fatal"></A><A HREF="modules/fatal">fatal</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fatal.h">fatal.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fatal.c">fatal.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/fatal.m4">fatal.m4</A><BR>gl_FATAL
-        <TD ALIGN=LEFT VALIGN=TOP>error<BR>unlocked-io<BR>exit
-      </TR>
-      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getdomainname"></A><A HREF="modules/getdomainname">getdomainname</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/getdomainname.h">getdomainname.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getdomainname.c">getdomainname.c</A>
@@ -2805,10 +2794,35 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
     </TABLE>
+    <H2>Unclassified modules - please update MODULES.html.sh</H2>
+    <TABLE>
+      <TR>
+        <TH ALIGN=LEFT>modules/
+        <TH ALIGN=LEFT>lib/
+        <TH ALIGN=LEFT>lib/
+        <TH ALIGN=LEFT>m4/
+        <TH ALIGN=LEFT>&nbsp;
+      </TR>
+      <TR>
+        <TH ALIGN=LEFT>Module
+        <TH ALIGN=LEFT>Header
+        <TH ALIGN=LEFT>Implementation
+        <TH ALIGN=LEFT>Autoconf macro
+        <TH ALIGN=LEFT>Depends on
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=dummy"></A><A HREF="modules/dummy">dummy</A>
+        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/dummy.c">dummy.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>---
+      </TR>
+    </TABLE>
     <H2>Lone files - please create new modules containing them</H2>
     <PRE>
 <A HREF="lib/progreloc.c">lib/progreloc.c</A>
 <A HREF="m4/check-decl.m4">m4/check-decl.m4</A>
+<A HREF="m4/c-strtod.m4">m4/c-strtod.m4</A>
 <A HREF="m4/d-type.m4">m4/d-type.m4</A>
 <A HREF="m4/glibc.m4">m4/glibc.m4</A>
 <A HREF="m4/host-os.m4">m4/host-os.m4</A>
@@ -2840,6 +2854,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 23 June 2004.
+    Generated from <CODE>MODULES.html.sh</CODE> on  3 August 2004.
   </BODY>
 </HTML>
