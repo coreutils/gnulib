@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-03-21.11}
+\def\texinfoversion{2004-04-02.09}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -5754,9 +5754,14 @@ width0pt\relax} \fi
   node \samp{\ignorespaces#1{}}}
 
 % @node's only job in TeX is to define \lastnode, which is used in
-% cross-references.
-\parseargdef\node{\checkenv{}\nodexxx #1,\finishnodeparse}
-\def\nodexxx#1,#2\finishnodeparse{\gdef\lastnode{#1}}
+% cross-references.  The @node line might or might not have commas, and
+% might or might not have spaces before the first comma, like:
+% @node foo , bar , ...
+% We don't want such trailing spaces in the node name.
+% 
+\parseargdef\node{\checkenv{}\donode #1 ,\finishnodeparse}
+\def\donode#1 ,#2\finishnodeparse{\gdef\lastnode{#1}}
+
 \let\nwnode=\node
 \let\lastnode=\empty
 
