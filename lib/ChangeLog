@@ -2,6 +2,11 @@
 
 	* mktime.c: Sync from libc, now that it has the latest fix.
 
+2002-11-24    <karl@gnu.org>
+
+	* error.c, getopt.c, getopt.h, getopt1.c, obstack.c, regex.c,
+	regex.h, strdup.c, strtoll.c, tempname.c: change license to gpl.
+
 2002-11-24  Jim Meyering  <jim@meyering.net>
 
 	Update from coreutils:
