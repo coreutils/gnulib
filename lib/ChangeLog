@@ -1,5 +1,6 @@
 2003-08-18  Jim Meyering  <jim@meyering.net>
 
+	* setenv.h: Indent nested cpp directive.
 	* vasnprintf.c: Remove trailing blanks.
 
 2003-08-17  Simon Josefsson  <jas@extundo.com>
