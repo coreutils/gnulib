@@ -3,6 +3,7 @@ Parse a `user:group' specifier (e.g. the first argument of chown utility).
 
 Files:
 lib/userspec.c
+lib/userspec.h
 m4/userspec.m4
 
 Depends-on:

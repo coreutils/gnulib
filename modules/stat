@@ -6,6 +6,7 @@ lib/stat.c
 m4/stat.m4
 
 Depends-on:
+xalloc
 
 configure.ac:
 gl_FUNC_STAT

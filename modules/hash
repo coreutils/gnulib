@@ -5,6 +5,7 @@ Files:
 lib/hash.h
 lib/hash.c
 m4/hash.m4
+lib/xalloc.h
 
 Depends-on:
 stdbool

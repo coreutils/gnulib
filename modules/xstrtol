@@ -15,6 +15,7 @@ m4/xstrtol.m4
 
 Depends-on:
 exitfail
+error
 
 configure.ac:
 gl_XSTRTOL
