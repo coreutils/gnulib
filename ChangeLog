@@ -1,3 +1,8 @@
+2001-01-24  Stefan Monnier  <monnier@cs.yale.edu>
+
+	* regex.c (mutually_exclusive_p): Don't blindly handle `charset_not'
+	as if it was a `charset'.
+
 2000-10-30  Stefan Monnier  <monnier@cs.yale.edu>
 
 	* regex.c (re_iswctype, re_wctype_to_bit): Fix braino.
