@@ -3,9 +3,9 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-04-29.05}
+\def\texinfoversion{2004-06-14.14}
 %
-% Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995, 2004,
+% Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
 % Foundation, Inc.
 %
@@ -3134,6 +3134,7 @@ width0pt\relax} \fi
   %
   % Assorted special characters.
   \definedummyword{bullet}%
+  \definedummyword{comma}%
   \definedummyword{copyright}%
   \definedummyword{registeredsymbol}%
   \definedummyword{dots}%
@@ -3271,6 +3272,7 @@ width0pt\relax} \fi
   % Assorted special characters.
   % (The following {} will end up in the sort string, but that's ok.)
   \def\bullet{bullet}%
+  \def\comma{,}%
   \def\copyright{copyright}%
   \def\registeredsymbol{R}%
   \def\dots{...}%
