@@ -1,3 +1,9 @@
+2005-01-24  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
+
+	* argp-help.c (hol_entry_help): Avoid using non-constant
+	initializers for struct pentry_state.
+	* argp-parse.c: Removed braces around the expansion of N_()
+
 2005-01-21  Jim Meyering  <jim@meyering.net>
 
 	* openat.h (AT_SYMLINK_NOFOLLOW): Define to 4096, so it's the
