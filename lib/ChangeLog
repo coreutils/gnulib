@@ -1,3 +1,9 @@
+2004-09-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* argp-pvh.c (argp_program_version_hook): Provide initial value.
+	Problem reported by Bruno Haible in:
+	http://lists.gnu.org/archive/html/bug-tar/2004-09/msg00023.html
+
 2004-09-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* mempcpy.h: Wrap the entire include file inside #ifndef mempcpy,
