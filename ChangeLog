@@ -1,3 +1,7 @@
+2004-09-23  Simon Josefsson  <jas@extundo.com>
+
+	* gnulib-tool (--import): Make sure *.m4 end up in m4/ by default.
+
 2004-09-22  Bruno Haible  <bruno@clisp.org>
 
 	* modules/*: Add 'License' field.

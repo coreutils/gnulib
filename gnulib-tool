@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-09-22 15:11:04 $'
+cvsdatestamp='$Date: 2004-09-23 16:15:07 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -625,7 +625,7 @@ case $mode in
 
 	# Set up m4 base.
 	test -z "$m4base" && m4base="$ac_m4base"
-	test -z "$sourcebase" && m4base="m4"
+	test -z "$m4base" && m4base="m4"
 	test -d "$destdir/$m4base" || \
 	    (test -z "$dry_run" && mkdir "$destdir/$m4base") || \
 	    func_fatal_error "m4 base $destdir/$m4base doesn't exist"
