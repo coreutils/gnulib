@@ -1,3 +1,7 @@
+2003-05-20    <karl@gnu.org>
+
+	* config.guess: update from prep.
+
 2003-05-18    <karl@gnu.org>
 
 	* srclistvars.sh (TEXMF): use TEXMFROOT instead, since TEXMF might
