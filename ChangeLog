@@ -1,5 +1,10 @@
 2003-10-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/version-etc-2: Remove file.
+	* MODULES.html.sh (func_all_modules): Remove version-etc-2.
+
+2003-10-06  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fatal-signal: New file.
 	* MODULES.html.sh (func_all_modules): Add fatal-signal.
 
