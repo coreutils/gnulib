@@ -191,8 +191,8 @@
       <TD ALIGN=LEFT VALIGN=TOP>malloc<BR>realloc<BR>error<BR>gettext
     </TR>
     <TR>
-      <TD ALIGN=LEFT VALIGN=TOP>#ifdef __GNUC__<BR># ifndef alloca<BR>#  define alloca __builtin_alloca<BR># endif<BR>#else<BR># ifdef _MSC_VER<BR>#  include &lt;malloc.h&gt;<BR>#  define alloca _alloca<BR># else<BR>#  if HAVE_ALLOCA_H<BR>#   include &lt;alloca.h&gt;<BR>#  else<BR>#   ifdef _AIX<BR> #pragma alloca<BR>#   else<BR>#    ifdef __hpux /* This section must match that of bison generated files. */<BR>#     ifdef __cplusplus<BR>extern "C" void *alloca (unsigned int);<BR>#     else /* not __cplusplus */<BR>void *alloca ();<BR>#     endif /* not __cplusplus */<BR>#    else /* not __hpux */<BR>#     ifndef alloca<BR>char *alloca ();<BR>#     endif<BR>#    endif /* __hpux */<BR>#   endif<BR>#  endif<BR># endif<BR>#endif
-      <TD ALIGN=LEFT VALIGN=TOP>alloca.c
+      <TD ALIGN=LEFT VALIGN=TOP>#include &lt;alloca.h&gt;
+      <TD ALIGN=LEFT VALIGN=TOP>alloca_.h<BR>alloca.c
       <TD ALIGN=LEFT VALIGN=TOP>alloca.m4<BR>gl_FUNC_ALLOCA
       <TD ALIGN=LEFT VALIGN=TOP>xalloc
     </TR>
@@ -524,7 +524,7 @@
     </TR>
     <TR>
       <TD ALIGN=LEFT VALIGN=TOP>#include &lt;stdbool.h&gt;
-      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP>stdbool.h.in
       <TD ALIGN=LEFT VALIGN=TOP>stdbool.m4<BR>AM_STDBOOL_H
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
@@ -1307,7 +1307,6 @@
   <H2>Lone files - please create new modules containing them</H2>
   <PRE>
 lib/getversion.c
-lib/stdbool.h.in
 m4/check-decl.m4
 m4/d-type.m4
 m4/glibc.m4
@@ -1341,5 +1340,5 @@ m4/uptime.m4
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on 10 January 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on 12 January 2003.
 </HTML>
