@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-02-11.16}
+\def\texinfoversion{2004-02-14.10}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -1322,7 +1322,6 @@ where each line of input produces a line of output.}
   \def\ppn#1{\pgn=#1\gobble}
   \def\ppnn{\pgn=\first}
   \def\pdfmklnk#1{\lnkcount=0\makelinks #1,END,}
-  \def\addtokens#1#2{\edef\addtoks{\noexpand#1={\the#1#2}}\addtoks}
   \def\skipspaces#1{\def\PP{#1}\def\D{|}%
     \ifx\PP\D\let\nextsp\relax
     \else\let\nextsp\skipspaces
@@ -1344,14 +1343,13 @@ where each line of input produces a line of output.}
       \leavevmode\Red
       \startlink attr{/Border [0 0 0]}%
         user{/Subtype /Link /A << /S /URI /URI (#1) >>}%
-        % #1
     \endgroup}
   \def\pdfgettoks#1.{\setbox\boxA=\hbox{\toksA={#1.}\toksB={}\maketoks}}
   \def\addtokens#1#2{\edef\addtoks{\noexpand#1={\the#1#2}}\addtoks}
   \def\adn#1{\addtokens{\toksC}{#1}\global\countA=1\let\next=\maketoks}
   \def\poptoks#1#2|ENDTOKS|{\let\first=#1\toksD={#1}\toksA={#2}}
   \def\maketoks{%
-    \expandafter\poptoks\the\toksA|ENDTOKS|
+    \expandafter\poptoks\the\toksA|ENDTOKS|\relax
     \ifx\first0\adn0
     \else\ifx\first1\adn1 \else\ifx\first2\adn2 \else\ifx\first3\adn3
     \else\ifx\first4\adn4 \else\ifx\first5\adn5 \else\ifx\first6\adn6
@@ -3572,7 +3570,8 @@ width0pt\relax} \fi
       % part of (the primitive) \par.  Without it, a spurious underfull
       % \hbox ensues.
       \ifpdf
-	\pdfgettoks#1.\ \the\toksA
+	\pdfgettoks#1.%
+	\ \the\toksA
       \else
 	\ #1%
       \fi
@@ -6420,17 +6419,19 @@ width0pt\relax} \fi
   \checkinserts
 }
 
-% Append the tokens #2 to the macro #1, not expanding either.
+% Append the tokens #2 to the definition of macro #1, not expanding either.
 % 
+\newtoks\appendtomacroAtoks
+\newtoks\appendtomacroBtoks
 \def\appendtomacro#1#2{%
-  \toksA = \expandafter{#1}%
-  \toksB = {#2}%
-  \edef#1{\the\toksA \the\toksB}%
+  \appendtomacroAtoks = \expandafter{#1}%
+  \appendtomacroBtoks = {#2}%
+  \edef#1{\the\appendtomacroAtoks \the\appendtomacroBtoks}%
 }
 
 % @caption, @shortcaption are easy.
 % 
-\def\caption#1{\checkenv\float \def\thiscaption{#1}}
+\long\def\caption#1{\checkenv\float \def\thiscaption{#1}}
 \def\shortcaption#1{\checkenv\float \def\thisshortcaption{#1}}
 
 % The parameter is the control sequence identifying the counter we are
@@ -6508,10 +6509,17 @@ width0pt\relax} \fi
 % they won't appear in the aux file).
 % 
 \def\listoffloatsdo#1{\listoffloatsdoentry#1\finish}
-\def\listoffloatsdoentry#1-title\finish{%
-  % use the same \entry we use for the TOC.
-  \entry{\csname XR#1-lof\endcsname}{\csname XR#1-pg\endcsname}%
-}
+\def\listoffloatsdoentry#1-title\finish{{%
+  % Can't fully expand XR#1-lof because it can contain anything.  Just
+  % pass the control sequence.  On the other hand, XR#1-pg is just the
+  % page number, and we want to fully expand that so we can get a link
+  % in pdf output.
+  \toksA = \expandafter{\csname XR#1-lof\endcsname}%
+  %
+  % use the same \entry macro we use to generate the TOC and index.
+  \edef\writeentry{\noexpand\entry{\the\toksA}{\csname XR#1-pg\endcsname}}%
+  \writeentry
+}}
 
 \message{localization,}
 % and i18n.
