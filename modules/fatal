@@ -7,8 +7,9 @@ lib/fatal.c
 m4/fatal.m4
 
 Depends-on:
-unlocked-io
 error
+exit
+unlocked-io
 
 configure.ac:
 gl_FATAL
