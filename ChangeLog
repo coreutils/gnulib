@@ -1,3 +1,8 @@
+2005-03-23  Jim Meyering  <jim@meyering.net>
+
+	* modules/gethrxtime (Files): Add lib/gethrxtime.h.
+	* modules/userspec (Files): Add lib/inttostr.h.
+
 2005-03-22  Jim Meyering  <jim@meyering.net>
 
 	* modules/stat-macros: New module.
@@ -45,7 +50,7 @@
 	changed.
 
 2005-03-03  Derek R. Price  <derek@ximbiot.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* modules/pagealign_alloc: New file.
 	* MODULES.html.sh (Memory management functions): Add pagealign_alloc.
@@ -122,8 +127,8 @@
 
 2005-01-19  Paul Eggert  <eggert@cs.ucla.edu>
 
-        * modules/mempcpy (Makefile.am): Remove mention of mempcpy.h;
-        AC_LIBSOURCES now does this.
+	* modules/mempcpy (Makefile.am): Remove mention of mempcpy.h;
+	AC_LIBSOURCES now does this.
 	* MODULES.html.sh (Sizes of integer types <limits.h>): New element,
 	with new ullong_max module.
 
@@ -424,7 +429,7 @@
 	gl_AC_TYPE_LONG_LONG.
 
 2004-09-18  Simon Josefsson  <jas@extundo.com>
-       and  Paul Eggert  <eggert@cs.ucla.edu>
+	and  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* gnulib-tool: Replace various ad-hoc automake/autoconf/aclocal
 	calls with autoreconf.  Define GL_LIB.
@@ -442,7 +447,7 @@
 	* modules/vasnprintf (Files): Add m4/eoverflow.m4.
 
 2004-09-08  Bruno Haible  <bruno@clisp.org>
-            Oskar Liljeblad  <oskar@osk.mine.nu>
+	    Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* modules/stdint: New file.
 	* MODULES.html.sh (Support for systems lacking ISO C 99): Add stdint.
@@ -582,7 +587,7 @@
 	* MODULES.html.sh (func_all_modules): Add argz.
 
 2004-06-12  Jim Meyering  <jim@meyering.net>
-       and  Paul Eggert  <eggert@cs.ucla.edu>
+	and  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/hash (Files): Add lib/xalloc.h.
 	* modules/pipe (Depends-on): Add wait-process.
@@ -715,7 +720,7 @@
 	* MODULES.html.sh (func_all_modules): Add version-etc-2.
 
 2003-09-25  Simon Josefsson  <jas@extundo.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* modules/getdomainname: New file.
 	* modules/xgetdomainname: New file.
@@ -1272,7 +1277,6 @@
 	* regex.c (WIDE_CHAR_SUPPORT): Define if _LIBC as well.
 
 
-Copyright (C) 2000, 2001, 2002, 2003, 2004
-  Free Software Foundation, Inc.
+Copyright (C) 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
 Copying and distribution of this file, with or without modification,
 are permitted provided the copyright notice and this notice are preserved.
