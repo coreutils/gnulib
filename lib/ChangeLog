@@ -1,3 +1,7 @@
+2003-08-10  Karl Berry  <karl@gnu.org>
+
+	* regex.h: update from libc (whitespace fix).
+
 2003-08-09  Paul Eggert  <eggert@twinsun.com>
 
 	Merge some files from coreutils.  These changes were
