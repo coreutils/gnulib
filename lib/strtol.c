@@ -36,10 +36,6 @@ Cambridge, MA 02139, USA.  */
 extern int errno;
 #endif
 
-#if !__STDC__ && !defined(const)
-#define const
-#endif
-
 #ifndef	UNSIGNED
 #define	UNSIGNED	0
 #endif
@@ -156,7 +152,7 @@ strtol (nptr, endptr, base)
   /* Check for a value that is within the range of
      `unsigned long int', but outside the range of `long int'.  */
   if (i > (negative ?
-	   - (unsigned long int) LONG_MIN : (unsigned long int) LONG_MAX))
+	   -(unsigned long int) LONG_MIN : (unsigned long int) LONG_MAX))
     overflow = 1;
 #endif
 
@@ -171,7 +167,7 @@ strtol (nptr, endptr, base)
     }
 
   /* Return the result of the appropriate sign.  */
-  return (negative ? - i : i);
+  return (negative ? -i : i);
 
 noconv:;
   /* There was no number to convert.  */

@@ -145,7 +145,7 @@ extern reg_syntax_t re_syntax_options;
 #define RE_SYNTAX_AWK							\
   (RE_BACKSLASH_ESCAPE_IN_LISTS | RE_DOT_NOT_NULL			\
    | RE_NO_BK_PARENS            | RE_NO_BK_REFS				\
-   | RE_NO_BK_VAR               | RE_NO_EMPTY_RANGES			\
+   | RE_NO_BK_VBAR               | RE_NO_EMPTY_RANGES			\
    | RE_UNMATCHED_RIGHT_PAREN_ORD)
 
 #define RE_SYNTAX_POSIX_AWK 						\
@@ -387,18 +387,16 @@ typedef struct
    prototype (if we are ANSI), and once without (if we aren't) -- we
    use the following macro to declare argument types.  This
    unfortunately clutters up the declarations a bit, but I think it's
-   worth it.
-   
-   We may also have to undo `const' if we are not ANSI -- but if it has
-   already been defined, as by Autoconf's AC_CONST, don't do anything.  */
+   worth it.  */
 
 #if __STDC__
+
 #define _RE_ARGS(args) args
+
 #else /* not __STDC__ */
+
 #define _RE_ARGS(args) ()
-#if !const && !HAVE_CONST
-#define const
-#endif
+
 #endif /* not __STDC__ */
 
 /* Sets the current default syntax to SYNTAX, and return the old syntax.

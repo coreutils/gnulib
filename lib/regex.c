@@ -3,7 +3,7 @@
    (Implements POSIX draft P10003.2/D11.2, except for
    internationalization features.)
 
-   Copyright (C) 1985, 89, 90, 91, 92 Free Software Foundation, Inc.
+   Copyright (C) 1993 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 /* We need this for `regex.h', and perhaps for the Emacs include files.  */
 #include <sys/types.h>
 
-#if defined (HAVE_CONFIG_H) || defined (emacs)
+#ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
@@ -124,15 +124,34 @@ init_syntax_once ()
 /* Get the interface, including the syntax bits.  */
 #include "regex.h"
 
-
 /* isalpha etc. are used for the character classes.  */
 #include <ctype.h>
-#ifndef isgraph
-#define isgraph(c) (isprint (c) && !isspace (c))
+
+#ifndef isascii
+#define isascii(c) 1
 #endif
-#ifndef isblank
-#define isblank(c) ((c) == ' ' || (c) == '\t')
+
+#ifdef isblank
+#define ISBLANK(c) (isascii (c) && isblank (c))
+#else
+#define ISBLANK(c) ((c) == ' ' || (c) == '\t')
 #endif
+#ifdef isgraph
+#define ISGRAPH(c) (isascii (c) && isgraph (c))
+#else
+#define ISGRAPH(c) (isascii (c) && isprint (c) && !isspace (c))
+#endif
+
+#define ISPRINT(c) (isascii (c) && isprint (c))
+#define ISDIGIT(c) (isascii (c) && isdigit (c))
+#define ISALNUM(c) (isascii (c) && isalnum (c))
+#define ISALPHA(c) (isascii (c) && isalpha (c))
+#define ISCNTRL(c) (isascii (c) && iscntrl (c))
+#define ISLOWER(c) (isascii (c) && islower (c))
+#define ISPUNCT(c) (isascii (c) && ispunct (c))
+#define ISSPACE(c) (isascii (c) && isspace (c))
+#define ISUPPER(c) (isascii (c) && isupper (c))
+#define ISXDIGIT(c) (isascii (c) && isxdigit (c))
 
 #ifndef NULL
 #define NULL 0
@@ -999,7 +1018,7 @@ typedef struct
   { if (p != pend)							\
      {									\
        PATFETCH (c); 							\
-       while (isdigit (c)) 						\
+       while (ISDIGIT (c)) 						\
          { 								\
            if (num < 0)							\
               num = 0;							\
@@ -1464,18 +1483,18 @@ regex_compile (pattern, size, syntax, bufp)
 
                         for (ch = 0; ch < 1 << BYTEWIDTH; ch++)
                           {
-                            if (   (is_alnum  && isalnum (ch))
-                                || (is_alpha  && isalpha (ch))
-                                || (is_blank  && isblank (ch))
-                                || (is_cntrl  && iscntrl (ch))
-                                || (is_digit  && isdigit (ch))
-                                || (is_graph  && isgraph (ch))
-                                || (is_lower  && islower (ch))
-                                || (is_print  && isprint (ch))
-                                || (is_punct  && ispunct (ch))
-                                || (is_space  && isspace (ch))
-                                || (is_upper  && isupper (ch))
-                                || (is_xdigit && isxdigit (ch)))
+                            if (   (is_alnum  && ISALNUM (ch))
+                                || (is_alpha  && ISALPHA (ch))
+                                || (is_blank  && ISBLANK (ch))
+                                || (is_cntrl  && ISCNTRL (ch))
+                                || (is_digit  && ISDIGIT (ch))
+                                || (is_graph  && ISGRAPH (ch))
+                                || (is_lower  && ISLOWER (ch))
+                                || (is_print  && ISPRINT (ch))
+                                || (is_punct  && ISPUNCT (ch))
+                                || (is_space  && ISSPACE (ch))
+                                || (is_upper  && ISUPPER (ch))
+                                || (is_xdigit && ISXDIGIT (ch)))
                             SET_LIST_BIT (ch);
                           }
                         had_char_class = true;
@@ -2178,18 +2197,20 @@ compile_range (p_ptr, pend, translate, syntax, b)
   unsigned this_char;
 
   const char *p = *p_ptr;
+  int range_start, range_end;
   
-  /* Even though the pattern is a signed `char *', we need to fetch into
-     `unsigned char's.  Reason: if the high bit of the pattern character
-     is set, the range endpoints will be negative if we fetch into a
-     signed `char *'.  */
-  unsigned char range_end;
-  unsigned char range_start = p[-2];
-
   if (p == pend)
     return REG_ERANGE;
 
-  PATFETCH (range_end);
+  /* Even though the pattern is a signed `char *', we need to fetch
+     with unsigned char *'s; if the high bit of the pattern character
+     is set, the range endpoints will be negative if we fetch using a
+     signed char *.
+
+     We also want to fetch the endpoints without translating them; the 
+     appropriate translation is done in the bit-setting loop below.  */
+  range_start = ((unsigned char *) p)[-2];
+  range_end   = ((unsigned char *) p)[0];
 
   /* Have to increment the pointer into the pattern string, so the
      caller isn't still at the ending character.  */
@@ -3970,21 +3991,13 @@ re_match_2 (bufp, string1, size1, string2, size2, pos, regs, stop)
 
             /* If we're at the end of the pattern, we can change.  */
             if (p2 == pend)
-              { /* But if we're also at the end of the string, we might
-                   as well skip changing anything.  For example, in `a+'
-                   against `a', we'll have already matched the `a', and
-                   I don't see the the point of changing the opcode,
-                   popping the failure point, finding out it fails, and
-                   then going into our endgame.  */
-                if (d == dend)
-                  {
-                    p = pend;
-                    DEBUG_PRINT1 ("  End of pattern & string => done.\n");
-                    continue;
-                  }
-                
+	      {
+		/* Consider what happens when matching ":\(.*\)"
+		   against ":/".  I don't really understand this code
+		   yet.  */
   	        p[-3] = (unsigned char) pop_failure_jump;
-                DEBUG_PRINT1 ("  End of pattern => pop_failure_jump.\n");
+                DEBUG_PRINT1
+                  ("  End of pattern: change to `pop_failure_jump'.\n");
               }
 
             else if ((re_opcode_t) *p2 == exactn
@@ -4740,7 +4753,7 @@ regcomp (preg, pattern, cflags)
 
       /* Map uppercase characters to corresponding lowercase ones.  */
       for (i = 0; i < CHAR_SET_SIZE; i++)
-        preg->translate[i] = isupper (i) ? tolower (i) : i;
+        preg->translate[i] = ISUPPER (i) ? tolower (i) : i;
     }
   else
     preg->translate = NULL;
@@ -4856,9 +4869,18 @@ regerror (errcode, preg, errbuf, errbuf_size)
     char *errbuf;
     size_t errbuf_size;
 {
-  const char *msg
-    = re_error_msg[errcode] == NULL ? "Success" : re_error_msg[errcode];
-  size_t msg_size = strlen (msg) + 1; /* Includes the null.  */
+  const char *msg;
+  size_t msg_size;
+
+  if (errcode < 0
+      || errcode >= (sizeof (re_error_msg) / sizeof (re_error_msg[0])))
+    /* Only error codes returned by the rest of the code should be passed 
+       to this routine.  If we are given anything else, or if other regex
+       code generates an invalid error code, then the program has a bug.
+       Dump core so we can fix it.  */
+    abort ();
+
+  msg_size = strlen (msg) + 1; /* Includes the null.  */
   
   if (errbuf_size != 0)
     {
