@@ -1,0 +1,16 @@
+@c Documentation of gnulib module 'alloca-opt'.
+
+The alloca-opt module provides for a function alloca() which allocates memory
+on the stack, where the system allows it. A memory block allocated with alloca()
+exists only until the function that calls alloca() returns or exits abruptly.
+
+There are a few systems where this is not possible: HP-UX systems, and some
+other platforms when the C++ compiler is used. On these platforms the alloca-opt
+module provides no replacement, just a preprocessor macro HAVE_ALLOCA.
+
+The user can #include <alloca.h> on all platforms, and use alloca() on those
+platforms where the preprocessor macro HAVE_ALLOCA evaluates to true. If
+HAVE_ALLOCA is false, the code should use a heap-based memory allocation
+based on malloc() or - in C++ - 'new'. Note that the #include <alloca.h> must be
+the first one after the autoconf-generated config.h. Thanks to AIX for this nice
+restriction!

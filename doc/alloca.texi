@@ -1,0 +1,19 @@
+@c Documentation of gnulib module 'alloca'.
+
+The alloca module provides for a function alloca() which allocates memory
+on the stack, where the system allows it. A memory block allocated with alloca()
+exists only until the function that calls alloca() returns or exits abruptly.
+
+There are a few systems where this is not possible: HP-UX systems, and some
+other platforms when the C++ compiler is used. On these platforms the alloca
+module provides a malloc() based emulation. This emulation will not free a
+memory block immediately when the calling function returns, but rather will
+wait until the next alloca() call from a function with the same or a shorter
+stack length. Thus, in some cases, a few memory blocks will be kept although
+they are not needed any more.
+
+The user can #include <alloca.h> and use alloca() on all platforms. Note
+that the #include <alloca.h> must be the first one after the autoconf-generated
+config.h. Thanks to AIX for this nice restriction!
+
+An alternative to this module is the 'alloca-opt' module.
