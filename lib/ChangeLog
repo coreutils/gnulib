@@ -5336,6 +5336,8 @@
 	alert, backslash, formfeed, and vertical tab unnecessarily in
 	shell quoting style.
 
-Local Variables:
-version-control: never
-End:
+
+Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004
+  Free Software Foundation, Inc.
+Copying and distribution of this file, with or without modification,
+are permitted provided the copyright notice and this notice are preserved.
