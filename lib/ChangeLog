@@ -1,3 +1,9 @@
+2004-08-02  Simon Josefsson  <jas@extundo.com>
+
+	* getsubopt.h: New file, with comments from Bruno Haible.
+	* getsubopt.c: New file, from glibc, but slightly modified based on
+	suggestions from Paul Eggert <eggert@cs.ucla.edu>.
+
 2004-08-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge from coreutils.

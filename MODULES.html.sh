@@ -1702,6 +1702,7 @@ func_all_modules ()
   func_module ftruncate
   func_module getgroups
   func_module gethostname
+  func_module getsubopt
   func_module gettimeofday
   func_module mkdir
   func_module mkstemp
