@@ -1,0 +1,21 @@
+Description:
+help detect directory cycles efficiently
+
+Files:
+lib/cycle-check.c
+lib/cycle-check.h
+lib/dev-ino.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += cycle-check.c cycle-check.h dev-ino.h
+
+Include:
+"cycle-check.h"
+
+Maintainer:
+Jim Meyering
+
