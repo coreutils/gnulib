@@ -1,5 +1,44 @@
 2003-06-04  Paul Eggert  <eggert@twinsun.com>
 
+	Merge 'human' changes from coreutils.  Rewrite to support
+	locale-specific notations like thousands separators.
+	* human.c: Simplify authorship notice.
+	Include human.h immediately after config.h.
+	<sys/types.h>, <stdio.h>: Do not include; no longer needed.
+	<limits.h>: Do not include, since human.h does.
+	(SIZE_MAX, UINTMAX_MAX): New macros.
+	<strings.h>: Include if HAVE_STRINGS_H, not if !HAVE_STRING_H.
+	<locale.h>: Include if HAVE_LOCALE_H and HAVE_LOCALECONV.
+	(HUMAN_READABLE_SUFFIX_LENGTH_MAX): New macro.
+	(power_letter): Renamed from suffixes.
+	(generate_suffix_backwards): Remove.
+	(adjust_value): Now takes int style (because of human.h changes)
+	and long double value (for greater precision on some platforms).
+	(group_number): New function.
+	(human_readable): Use it.  Use integer options, not enum.
+	Put the options before the sizes in the arg list.
+	Support all the new options.
+	The old human_readable function has been removed;
+	use inttostr.h instead.
+	(human_readable, default_block_size, humblock):
+	Use uintmax_t, not int, for block sizes.
+	(human_readable_inexact, block_size_types): Remove.
+	(block_size_opts): New constant.
+	(human_options): Renamed from human_block_size, with new signature
+	that allows block sizes up to UINTMAX_MAX.  All callers changed.
+	* human.h: Add copyright and authorship notice.
+	Include <limits.h> and <stdbool.h> unconditionally.
+	(PARAMS): Remove.  All uses removed.
+	(LONGEST_HUMAN_READABLE): Add support for thousands separator.
+	(enum human_inexact_style): Remove tag; now a nameless enum.
+	(human_floor, human_ceiling, human_round_to_even): Now have
+	values 2, 0, 1 rather than -1, 1, 0.
+	(human_group_digits, human_suppress_point_zero, human_autoscale,
+	human_base_1024, human_SI, human_B): New constants.
+	(human_readable_inexact, human_block_size): Remove.
+	(human_readable): Size args are now uintmax_t, not int.
+	(human_options): New decl.
+
 	* exclude.c: (new_exclude, add_exclude): Remove casts that are
 	unnecessary now that we assume C89 or better.  This change
 	imported from coreutils.

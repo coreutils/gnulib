@@ -1,5 +1,8 @@
 2003-06-04  Paul Eggert  <eggert@twinsun.com>
 
+	* human.m4 (gl_HUMAN): Require AM_STDBOOL_H.  Check for
+	locale.h, localeconv.  This merges changes from coreutils.
+
 	* mktime.m4 (AC_FUNC_MKTIME): New macro, taken from Autoconf CVS.
 	It can be removed after the next Autoconf is released.
 	* exclude.m4 (gl_EXCLUDE): Don't check for sys/types.h; no loner
