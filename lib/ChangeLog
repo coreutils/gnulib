@@ -1,6 +1,8 @@
 2003-06-07  Jim Meyering  <jim@meyering.net>
 
 	From coreutils.
+	* readtokens.c (readtokens): Remove anachronistic casts of xmalloc,
+	xrealloc, and xcalloc return values.
 	* xgetcwd.c (xgetcwd): Include "xgetcwd.h".
 	Improve comment.
 	* xgetcwd.h: Remove definition/uses of PARAMS.
