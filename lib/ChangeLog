@@ -1,3 +1,9 @@
+2004-04-20  Jim Meyering  <jim@meyering.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c (get_charset_aliases) [!VMS && !WIN32]: Don't leak
+	memory when realloc fails.
+
 2004-04-18  Jim Meyering  <jim@meyering.net>
 
 	* readutmp.c (read_utmp) [UTMP_NAME_FUNCTION]: Upon realloc failure,
