@@ -4,7 +4,7 @@
 	Include <stdlib.h>, <string.h> unconditionally.
 	Remove now-unnecessary cast to char *.
 	* strnlen.c: Include <string.h> unconditionally.
-	* yesno (main): Define with a prototype.
+	* yesno.c (yesno): Define with a prototype.
 	
 2003-09-10  Bruno Haible  <bruno@clisp.org>
 
