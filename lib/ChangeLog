@@ -1,3 +1,8 @@
+2003-05-10  Bruno Haible  <bruno@clisp.org>
+
+	* linebreak.c (iconv_string_length): Don't return -1 just because the
+	string is longer than 4 KB.
+
 2003-05-12  Jim Meyering  <jim@meyering.net>
 
 	* strftime.c (my_strftime): Let the `-' (no-pad) flag affect

@@ -1379,7 +1379,7 @@ iconv_string_length (iconv_t cd, const char *s, size_t n)
       char *outptr = tmpbuf;
       size_t outsize = TMPBUFSIZE;
       size_t res = iconv (cd, (ICONV_CONST char **) &inptr, &insize, &outptr, &outsize);
-      if (res == (size_t)(-1))
+      if (res == (size_t)(-1) && errno != E2BIG)
         return (size_t)(-1);
       count += outptr - tmpbuf;
     }
