@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.4 2002-11-25 13:17:17 meyering Exp $
+# $Id: srclist-update,v 1.5 2002-11-26 22:58:57 karl Exp $
 #
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
@@ -13,8 +13,9 @@ fi
 verbose=false
 #chicken="echo (would)"
 
-srctmp=${TMPDIR-/tmp}/srclist.src
-dsttmp=${TMPDIR-/tmp}/srclist.dst
+: ${TMPDIR=/tmp}
+srctmp=$TMPDIR/srclist.src
+dsttmp=$TMPDIR/srclist.dst
 
 mydir=`dirname $0`
 test -r $mydir/srclistvars.sh && . $mydir/srclistvars.sh

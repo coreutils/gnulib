@@ -15,8 +15,8 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
+#ifdef HAVE_CONFIG_H
+#include <config.h>
 #endif
 
 #if defined _LIBC || defined  STDC_HEADERS
@@ -34,9 +34,7 @@ char *memcpy ();
 # define __strdup strdup
 #endif
 
-/* Duplicate S, returning an identical malloc'd string.
-   Return NULL if out of memory. */
-
+/* Duplicate S, returning an identical malloc'd string.  */
 char *
 __strdup (const char *s)
 {

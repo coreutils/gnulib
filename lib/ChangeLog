@@ -1,3 +1,8 @@
+2002-11-26    <karl@gnu.org>
+
+	* strdup.c: copy from libc again, with jim's ok.
+	* .cppi-disable: re-add strdup.c
+
 2002-11-25    <karl@gnu.org>
 
 	* strtoll.c: copy from libc, meaning we now #include <strtol.c>
