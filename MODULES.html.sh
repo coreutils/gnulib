@@ -1683,6 +1683,7 @@ func_all_modules ()
   func_module dup2
   func_module ftruncate
   func_module getgroups
+  func_module gethostname
   func_module gettimeofday
   func_module mkdir
   func_module mkstemp
@@ -1821,7 +1822,6 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module gethostname
   func_module xgethostname
   func_module canon-host
   func_end_table

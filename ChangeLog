@@ -1,3 +1,8 @@
+2003-10-01  Simon Josefsson  <jas@extundo.com>
+
+	* MODULES.html.sh: Move gethostname from section 'based on' to section
+	'lacking' POSIX:2001.
+
 2003-09-27  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	Trivial fixes to Makefile.am parts of module listings.
