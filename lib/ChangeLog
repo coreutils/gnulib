@@ -1,3 +1,14 @@
+2002-12-10  Paul Eggert  <eggert@twinsun.com>
+
+	Port exclude.c and exclude.h to more non-GNU systems, e.g. Solaris 7.
+	* exclude.h (EXCLUDE_ANCHORED, EXCLUDE_INCLUDE, EXCLUDE_WILDCARDS):
+	Choose values that are less likely to collide with system fnmatch
+	options.
+	* exclude.c (FNM_CASEFOLD, FNM_LEADING_DIR): Define to 0 if not
+	defined (e.g., a pure POSIX system).
+	(EXCLUDE_macros_do_not_collide_with_FNM_macros): Use FNM_PATHNAME
+	instead of FNM_FILE_NAME, for compatibility with pure POSIX sytems.
+
 2002-12-06  Jim Meyering  <jim@meyering.net>
 
 	* error.c: Be consistent: change `#ifndef _LIBC' to `#if !_LIBC'.
