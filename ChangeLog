@@ -1,3 +1,11 @@
+2004-09-29  Bruno Haible  <bruno@clisp.org>
+
+	* modules/alloca-opt: New file, derived from modules/alloca.
+	* modules/allocsa: Depend on alloca-opt instead of alloca.
+	* modules/setenv: Likewise.
+	* modules/vasnprintf: Likewise.
+	* MODULES.html.sh: Add alloca-opt.
+
 2004-09-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/dummy: Change license to LGPL.

@@ -21,7 +21,7 @@ m4/eoverflow.m4
 m4/vasnprintf.m4
 
 Depends-on:
-alloca
+alloca-opt
 xsize
 
 configure.ac:

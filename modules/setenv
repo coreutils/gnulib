@@ -10,7 +10,7 @@ m4/setenv.m4
 
 Depends-on:
 allocsa
-alloca
+alloca-opt
 
 configure.ac:
 gt_FUNC_SETENV

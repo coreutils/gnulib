@@ -10,7 +10,7 @@ m4/longlong.m4
 m4/longdouble.m4
 
 Depends-on:
-alloca
+alloca-opt
 
 configure.ac:
 gl_ALLOCSA

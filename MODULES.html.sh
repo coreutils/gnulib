@@ -1464,6 +1464,7 @@ func_all_modules ()
   func_module xalloc
   func_module xalloc-die
   func_module alloca
+  func_module alloca-opt
   func_module allocsa
   func_module xallocsa
   func_end_table

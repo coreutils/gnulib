@@ -1,0 +1,34 @@
+Description:
+Memory allocation on the stack, as an optional optimization.
+It allows using the alloca() macro if and only if the autoconf tests define
+HAVE_ALLOCA.
+
+Files:
+lib/alloca_.h
+m4/alloca.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_ALLOCA
+
+Makefile.am:
+BUILT_SOURCES += $(ALLOCA_H)
+EXTRA_DIST += alloca_.h
+
+# We need the following in order to create an <alloca.h> when the system
+# doesn't have one that works with the given compiler.
+all-local $(lib_OBJECTS): $(ALLOCA_H)
+alloca.h: alloca_.h
+	cp $(srcdir)/alloca_.h $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += alloca.h alloca.h-t
+
+Include:
+#include <alloca.h>
+
+License:
+LGPL
+
+Maintainer:
+bug-gnulib@gnu.org
