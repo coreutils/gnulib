@@ -1,3 +1,20 @@
+2003-12-28  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.c (wait_subprocess): Add ignore_sigpipe argument.
+	* wait-process.c (wait_subprocess): Likewise. Handle SIGPIPE specially.
+
+2003-11-28  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.c (cleanup_slaves): Use ANSI C declaration.
+
+2003-11-27  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.c: On Windows, include windows.h. Needed on mingw.
+
+2003-11-17  Bruno Haible  <bruno@clisp.org>
+
+	* wait-process.c (wait_process): Disable the 2003-10-31 waitid() patch.
+
 2003-11-24  Bruno Haible  <bruno@clisp.org>
 
 	* xallocsa.h: New file, from GNU gettext.

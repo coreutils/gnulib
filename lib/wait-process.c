@@ -103,6 +103,9 @@
 
 #if defined _MSC_VER || defined __MINGW32__
 
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
 /* The return value of spawnvp() is really a process handle as returned
    by CreateProcess().  Therefore we can kill it using TerminateProcess.  */
 #define kill(pid,sig) TerminateProcess ((HANDLE) (pid), sig)
@@ -140,7 +143,7 @@ static size_t slaves_allocated = SIZEOF (static_slaves);
 
 /* The cleanup action.  It gets called asynchronously.  */
 static void
-cleanup_slaves ()
+cleanup_slaves (void)
 {
   for (;;)
     {
@@ -249,10 +252,13 @@ unregister_slave_subprocess (pid_t child)
    return 127.  */
 int
 wait_subprocess (pid_t child, const char *progname,
-		 bool null_stderr,
+		 bool ignore_sigpipe, bool null_stderr,
 		 bool slave_process, bool exit_on_error)
 {
-#if HAVE_WAITID && defined WNOWAIT
+#if HAVE_WAITID && defined WNOWAIT && 0
+  /* Commented out because waitid() with WNOWAIT doesn't work: On Solaris 7
+     and OSF/1 4.0, it returns -1 and sets errno = ECHILD, and on HP-UX 10.20
+     it just hangs.  */
   /* Use of waitid() with WNOWAIT avoids a race condition: If slave_process is
      true, and this process sleeps a very long time between the return from
      waitpid() and the execution of unregister_slave_subprocess(), and
@@ -313,6 +319,10 @@ wait_subprocess (pid_t child, const char *progname,
     {
     case CLD_KILLED:
     case CLD_DUMPED:
+# ifdef SIGPIPE
+      if (info.si_status == SIGPIPE && ignore_sigpipe)
+	return 0;
+# endif
       if (exit_on_error || !null_stderr)
 	error (exit_on_error ? EXIT_FAILURE : 0, 0,
 	       _("%s subprocess got fatal signal %d"),
@@ -376,6 +386,10 @@ wait_subprocess (pid_t child, const char *progname,
 
   if (WIFSIGNALED (status))
     {
+# ifdef SIGPIPE
+      if (WTERMSIG (status) == SIGPIPE && ignore_sigpipe)
+	return 0;
+# endif
       if (exit_on_error || !null_stderr)
 	error (exit_on_error ? EXIT_FAILURE : 0, 0,
 	       _("%s subprocess got fatal signal %d"),
