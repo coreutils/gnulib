@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2005-02-19.15}
+\def\texinfoversion{2005-03-21.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005 Free Software
@@ -1886,8 +1886,14 @@ where each line of input produces a line of output.}
   \catcode`\_=\active
   %
   \global\def\code{\begingroup
-    \catcode`\-=\active \let-\codedash
-    \catcode`\_=\active \let_\codeunder
+    \catcode`\-=\active  \catcode`\_=\active
+    \ifallowcodebreaks
+     \let-\codedash
+     \let_\codeunder
+    \else
+     \let-\realdash
+     \let_\realunder
+    \fi
     \codex
   }
 }
@@ -1906,6 +1912,28 @@ where each line of input produces a line of output.}
             {\_}%
 }
 \def\codex #1{\tclose{#1}\endgroup}
+
+% An additional complication: the above will allow breaks after, e.g.,
+% each of the four underscores in __typeof__.  This is undesirable in
+% some manuals, especially if they don't have long identifiers in
+% general.  @allowcodebreaks provides a way to control this.
+% 
+\newif\ifallowcodebreaks  \allowcodebreakstrue
+
+\def\keywordtrue{true}
+\def\keywordfalse{false}
+
+\parseargdef\allowcodebreaks{%
+  \def\arg{#1}%
+  \ifx\arg\keywordtrue
+    \allowcodebreakstrue
+  \else\ifx\arg\keywordfalse
+    \allowcodebreaksfalse
+  \else
+    \errhelp = \EMsimple
+    \errmessage{Unknown @allowcodebreaks option `\arg'}%
+  \fi\fi
+}
 
 % @kbd is like @code, except that if the argument is just one @key command,
 % then @kbd has no effect.
@@ -7073,6 +7101,7 @@ should work if nowhere else does.}
 
 \catcode`\_=\active
 \def_{\ifusingtt\normalunderscore\_}
+\let\realunder=_
 % Subroutine for the previous macro.
 \def\_{\leavevmode \kern.07em \vbox{\hrule width.3em height.1ex}\kern .07em }
 
