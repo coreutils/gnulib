@@ -1,0 +1,22 @@
+Description:
+Print --version output. Translator-friendly.
+
+Files:
+lib/version-etc-2.h
+lib/version-etc-2.c
+
+Depends-on:
+unlocked-io
+gettext
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += version-etc-2.h version-etc-2.c
+
+Include:
+"version-etc-2.h"
+
+Maintainer:
+Jim Meyering, Bruno Haible
+

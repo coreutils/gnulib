@@ -1558,6 +1558,7 @@ func_all_modules ()
   func_begin_table
   func_module argmatch
   func_module version-etc
+  func_module version-etc-2
   func_module long-options
   func_end_table
 
