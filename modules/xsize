@@ -18,7 +18,7 @@ Include:
 "xsize.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Bruno Haible
