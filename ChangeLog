@@ -1,3 +1,8 @@
+2000-10-24  Kenichi Handa  <handa@etl.go.jp>
+
+	* regex.c (regex_compile): Change the way of handling a range from
+	a char less than 256 to a char not less than 256.
+
 2000-10-15  Stefan Monnier  <monnier@cs.yale.edu>
 
 	* regex.c (WIDE_CHAR_SUPPORT): Define if _LIBC as well.
