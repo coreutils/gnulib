@@ -1,0 +1,56 @@
+/* Emulation for sqrtl.
+   Contributed by Paolo Bonzini
+
+   Copyright 2002, 2003 Free Software Foundation, Inc.
+
+   This file is part of gnulib.
+
+   gnulib is free software; you can redistribute it and/or modify it
+   under the terms of the GNU Lesser General Public License as published
+   by the Free Software Foundation; either version 2.1, or (at your option)
+   any later version.
+
+   gnulib is distributed in the hope that it will be useful, but WITHOUT
+   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+   License for more details.
+
+   You should have received a copy of the GNU Lesser General Public License
+   along with gnulib; see the file COPYING.LIB.  If not, write to the Free
+   Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+   USA.
+ */
+
+#include <float.h>
+#include <math.h>
+
+#include "mathl.h"
+
+/* A simple Newton-Raphson method. */
+long double
+sqrtl(long double x)
+{
+  long double delta, y;
+  int exponent;
+
+  /* Check for negative numbers */
+  if (x < 0.0L)
+    return (long double) sqrt(-1);
+
+  /* Check for zero, NANs and infinites */
+  if (x + x == x || x != x)
+    return x;
+
+  frexpl (x, &exponent);
+  y = ldexpl (x, -exponent / 2);
+
+  do
+    {
+      delta = y;
+      y = (y + x / y) * 0.5L;
+      delta -= y;
+    }
+  while (delta != 0.0L);
+
+  return y;
+}

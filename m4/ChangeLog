@@ -1,3 +1,7 @@
+2003-02-18  Paolo Bonzino  <bonzini@gnu.org>
+
+	* mathl.m4: New file.
+
 2003-02-17  Bruno Haible  <bruno@clisp.org>
 
 	* mkdtemp.m4: New file, from GNU gettext with modifications.

@@ -1,0 +1,97 @@
+/* s_cosl.c -- long double version of s_sin.c.
+ * Conversion to long double by Jakub Jelinek, jj@ultra.linux.cz.
+ */
+
+/*
+ * ====================================================
+ * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
+ *
+ * Developed at SunPro, a Sun Microsystems, Inc. business.
+ * Permission to use, copy, modify, and distribute this
+ * software is freely granted, provided that this notice
+ * is preserved.
+ * ====================================================
+ */
+
+/* sinl(x)
+ * Return sine function of x.
+ *
+ * kernel function:
+ *	__kernel_sinl		... sine function on [-pi/4,pi/4]
+ *	__kernel_cosl		... cose function on [-pi/4,pi/4]
+ *	__ieee754_rem_pio2l	... argument reduction routine
+ *
+ * Method.
+ *      Let S,C and T denote the sin, cos and tan respectively on
+ *	[-PI/4, +PI/4]. Reduce the argument x to y1+y2 = x-k*pi/2
+ *	in [-pi/4 , +pi/4], and let n = k mod 4.
+ *	We have
+ *
+ *          n        sin(x)      cos(x)        tan(x)
+ *     ----------------------------------------------------------
+ *	    0	       S	   C		 T
+ *	    1	       C	  -S		-1/T
+ *	    2	      -S	  -C		 T
+ *	    3	      -C	   S		-1/T
+ *     ----------------------------------------------------------
+ *
+ * Special cases:
+ *      Let trig be any of sin, cos, or tan.
+ *      trig(+-INF)  is NaN, with signals;
+ *      trig(NaN)    is that NaN;
+ *
+ * Accuracy:
+ *	TRIG(x) returns trig(x) nearly rounded
+ */
+
+#include <math.h>
+
+#include "mathl.h"
+
+#include "trigl.h"
+#ifdef HAVE_SINL
+#include "trigl.c"
+#include "sincosl.c"
+#endif
+
+long double cosl(long double x)
+{
+	long double y[2],z=0.0L;
+	int n;
+
+    /* |x| ~< pi/4 */
+        if(x >= -0.7853981633974483096156608458198757210492 &&
+           x <= 0.7853981633974483096156608458198757210492)
+          return kernel_cosl(x, z);
+
+    /* sinl(Inf or NaN) is NaN, sinl(0) is 0 */
+        else if ((x + x == x && x != 0.0) || x != x)
+          return x-x;           /* NaN */
+
+    /* argument reduction needed */
+	else {
+	    n = ieee754_rem_pio2l(x,y);
+            switch(n&3) {
+                case 0: return  kernel_cosl(y[0],y[1]);
+                case 1: return -kernel_sinl(y[0],y[1],1);
+                case 2: return -kernel_cosl(y[0],y[1]);
+                default:
+                        return  kernel_sinl(y[0],y[1],1);
+	    }
+	}
+}
+
+#if 0
+int
+main ()
+{
+  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492));
+  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *29));
+  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *2));
+  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *30));
+  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *4));
+  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *32));
+  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *2/3));
+  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *4/3));
+}
+#endif

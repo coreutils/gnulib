@@ -1,3 +1,23 @@
+2003-02-18  Paolo Bonzino  <bonzini@gnu.org>
+
+	* mathl.h: New file.
+	* acosl.c: New file.
+	* asinl.c: New file.
+	* atanl.c: New file.
+	* ceill.c: New file.
+	* cosl.c: New file.
+	* expl.c: New file.
+	* floorl.c: New file.
+	* frexpl.c: New file.
+	* ldexpl.c: New file.
+	* logl.c: New file.
+	* sincosl.c: New file.
+	* sinl.c: New file.
+	* sqrtl.c: New file.
+	* tanl.c: New file.
+	* trigl.c: New file.
+	* trigl.h: New file.
+
 2003-02-17  Bruno Haible  <bruno@clisp.org>
 
 	* mkdtemp.h: New file, from GNU gettext.

@@ -1,0 +1,37 @@
+Description:
+C99 functions for transcendental functions with long double arguments.
+
+Files:
+lib/mathl.h
+lib/acosl.c
+lib/asinl.c
+lib/atanl.c
+lib/ceill.c
+lib/cosl.c
+lib/expl.c
+lib/floorl.c
+lib/frexpl.c
+lib/ldexpl.c
+lib/logl.c
+lib/sincosl.c
+lib/sinl.c
+lib/sqrtl.c
+lib/tanl.c
+lib/trigl.c
+lib/trigl.h
+m4/mathl.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_LONG_DOUBLE_MATH
+
+Makefile.am:
+noinst_HEADERS += mathl.h trigl.h trigl.c sincosl.c
+
+Include:
+"mathl.h"
+
+Maintainer:
+Paolo Bonzini  <bonzini@gnu.org>
+
