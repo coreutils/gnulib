@@ -1,7 +1,11 @@
+2004-12-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getdate.y (YYINITDEPTH): New macro, so that the initial stack
+	is small too.
+
 2004-12-22  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
-	* lib/argp-parse.c (parser_init): Avoid arithmetics on void
-	pointers. 
+	* argp-parse.c (parser_init): Avoid arithmetics on void pointers.
 
 2004-12-19  Paul Eggert  <eggert@cs.ucla.edu>
 
@@ -154,7 +158,7 @@
 
 2004-11-23  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
-	* lib/getopt_.h: Re-addition of __getopt_argv_const caused
+	* getopt_.h: Re-addition of __getopt_argv_const caused
 	redefinition warnings. To avoid them, include the defines
 	in `#if !defined __need_getopt ... #endif'. The only place
 	where __getopt_argv_const is used is in definitions
@@ -341,7 +345,7 @@
 
 2004-11-01  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* lib/getpass.c (fflush_unlocked, flockfile, funlockfile)
+	* getpass.c (fflush_unlocked, flockfile, funlockfile)
 	(funlockfile, fputs_unlocked, putc_unlocked): Don't define if
 	already declared.
 
@@ -900,7 +904,7 @@
 	Don't try to source the system alloca.h since it will not be found
 	and to prevent recursively including its replacement.
 	* fnmatch.c: Include <alloca.h> instead of opencoding.
-	* lib/regex.c: Likewise.
+	* regex.c: Likewise.
 
 2004-05-16  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
