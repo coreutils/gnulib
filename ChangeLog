@@ -1,3 +1,8 @@
+2003-07-14  Simon Josefsson  <jas@extundo.com>
+
+	* modules/mempcpy: New file.
+	* MODULES.html.sh (func_all_modules): Add mempcpy.
+
 2003-07-14  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/getdate, modules/posixtm: Depend on mktime.

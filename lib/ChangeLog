@@ -1,3 +1,8 @@
+2003-07-14  Simon Josefsson  <jas@extundo.com>
+
+	* mempcpy.h: New file.
+	* mempcpy.c: New file.
+
 2003-07-14  Paul Eggert  <eggert@twinsun.com>
 
 	* ceill.c, expl.c, floorl.c, frexpl.c, ldexpl.c, mathl.h,
