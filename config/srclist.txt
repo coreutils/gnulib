@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.4 2002-09-25 14:18:57 karl Exp $
+# $Id: srclist.txt,v 1.5 2002-09-25 15:26:47 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -20,7 +20,7 @@ $GNUORG/fdl.texi		doc
 $LIBCSRC/posix/getopt.c		lib
 $LIBCSRC/posix/getopt.h		lib
 $LIBCSRC/posix/getopt1.c	lib
-#$GETTEXT/gettext.h		lib
+$GETTEXT/gettext.h		lib
 # - libc/sysdeps/generic has memcpy.c, memmove.c, strcasecmp.c, but they
 #   are totally different implementations.
 # - Likewise libc/string/strerror.c.
