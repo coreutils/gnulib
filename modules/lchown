@@ -4,17 +4,16 @@ lchown() function: change ownership of a file.
 Files:
 lib/lchown.h
 lib/lchown.c
-lib/stat-macros.h
 m4/lchown.m4
 
 Depends-on:
 chown
+stat-macros
 
 configure.ac:
 gl_FUNC_LCHOWN
 
 Makefile.am:
-lib_SOURCES += stat-macros.h
 
 Include:
 "lchown.h"
@@ -24,4 +23,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

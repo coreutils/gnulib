@@ -5,10 +5,10 @@ file.
 Files:
 lib/filemode.h
 lib/filemode.c
-lib/stat-macros.h
 m4/filemode.m4
 
 Depends-on:
+stat-macros
 
 configure.ac:
 gl_FILEMODE

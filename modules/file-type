@@ -4,11 +4,11 @@ Return a string describing the type of a file.
 Files:
 lib/file-type.h
 lib/file-type.c
-lib/stat-macros.h
 m4/file-type.m4
 
 Depends-on:
 gettext
+stat-macros
 
 configure.ac:
 gl_FILE_TYPE

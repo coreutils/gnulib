@@ -4,17 +4,17 @@ euidaccess() function: check effective user's permissions for a file.
 Files:
 lib/euidaccess.h
 lib/euidaccess.c
-lib/stat-macros.h
 m4/euidaccess.m4
 
 Depends-on:
 group-member
+stat-macros
 
 configure.ac:
 gl_FUNC_EUIDACCESS
 
 Makefile.am:
-lib_SOURCES += euidaccess.h stat-macros.h
+lib_SOURCES += euidaccess.h
 
 Include:
 "euidaccess.h"
@@ -24,4 +24,3 @@ LGPL
 
 Maintainer:
 Jim Meyering, glibc
-

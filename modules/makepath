@@ -4,7 +4,6 @@ Ensure that a directory path exists.
 Files:
 lib/makepath.h
 lib/makepath.c
-lib/stat-macros.h
 m4/afs.m4
 m4/makepath.m4
 
@@ -16,6 +15,7 @@ save-cwd
 dirname
 error
 quote
+stat-macros
 
 configure.ac:
 gl_MAKEPATH
