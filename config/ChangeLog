@@ -1,3 +1,7 @@
+2003-11-03  Karl Berry  <karl@gnu.org>
+
+	* config.{guess,sub}: update from config.
+
 2003-11-02  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt (vasprintf.c): sync broken, sigh.
