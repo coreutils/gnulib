@@ -5,6 +5,13 @@
 	(TIME_T_MIDPOINT, ydhms_diff, __mktime_internal): Use it.
 	Problem reported by Mark D. Baushke in
 	<http://lists.gnu.org/archive/html/bug-gnulib/2004-11/msg00071.html>.
+	* getdate.y (SHR): Likewise.
+	(tm_diff): Use it.
+	* strftime.c (SHR): Likewise.
+	(tm_diff): Use it.
+	* quotearg.c (struct quoting_options): Use unsigned int for
+	quote_these_too, so that right shifts are well defined.  All uses
+	changed.
 
 2004-11-10  Simon Josefsson  <jas@extundo.com>
 
