@@ -1,5 +1,7 @@
 2003-01-01    <karl@gnu.org>
 
+	* gnulib-tool (create-testdir): don't complain if destdir couldn't
+	be created, only if it doesn't exist.
 	* gnulib-tool (last_checkin_date): don't expand the $Date here.
 
 2002-12-24  Bruno Haible  <bruno@clisp.org>
