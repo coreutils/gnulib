@@ -652,8 +652,7 @@ directory.
       </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=userspec">userspec</A>
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Parse a specifying a user and/or group (e.g. as first argument of chown
-utility).
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Parse a `user:group' specifier (e.g. the first argument of chown utility).
       </TR>
     </TABLE>
     <H3><A HREF="#posix_ext_datetime">Date and time</A></H3>
@@ -2288,7 +2287,7 @@ variables.
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=userspec"></A><A HREF="modules/userspec">userspec</A>
-        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/userspec.h">userspec.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/userspec.c">userspec.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/userspec.m4">userspec.m4</A><BR>gl_USERSPEC
         <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>posixver<BR>xalloc<BR>xstrtol<BR>strdup<BR>gettext
@@ -2708,6 +2707,7 @@ variables.
     <H2>Lone files - please create new modules containing them</H2>
     <PRE>
 <A HREF="lib/progreloc.c">lib/progreloc.c</A>
+<A HREF="lib/userspec.h">lib/userspec.h</A>
 <A HREF="m4/check-decl.m4">m4/check-decl.m4</A>
 <A HREF="m4/d-type.m4">m4/d-type.m4</A>
 <A HREF="m4/glibc.m4">m4/glibc.m4</A>
@@ -2739,6 +2739,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 30 October 2003.
+    Generated from <CODE>MODULES.html.sh</CODE> on  4 November 2003.
   </BODY>
 </HTML>
