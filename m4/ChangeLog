@@ -1,14 +1,19 @@
+2003-03-14  Bruno Haible  <bruno@clisp.org>
+
+	* onceonly_2_57.m4 (AC_CHECK_HEADERS_ONCE): Quote AC_FOREACH
+	variable-expansions properly.
+
 2003-03-13  Paul Eggert  <eggert@twinsun.com>
 
 	* onceonly.m4 (m4_quote): New macro.
 	(AC_CHECK_HEADERS_ONCE, AC_CHECK_FUNCS_ONCE, AC_CHECK_DECLS_ONCE):
 	Quote AC_FOREACH variable-expansions properly.
 
-2003-02-19  Paolo Bonzino  <bonzini@gnu.org>
+2003-02-19  Paolo Bonzini  <bonzini@gnu.org>
 
 	* poll.m4: New file.
 
-2003-02-18  Paolo Bonzino  <bonzini@gnu.org>
+2003-02-18  Paolo Bonzini  <bonzini@gnu.org>
 
 	* mathl.m4: New file.
 

@@ -1,5 +1,5 @@
-# onceonly_2_57.m4 serial 1
-dnl Copyright (C) 2002 Free Software Foundation, Inc.
+# onceonly_2_57.m4 serial 2
+dnl Copyright (C) 2002-2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -31,14 +31,16 @@ dnl size reduction is ca. 9%.
 AC_DEFUN([AC_CHECK_HEADERS_ONCE], [
   :
   AC_FOREACH([gl_HEADER_NAME], [$1], [
-    AC_DEFUN([gl_CHECK_HEADER_]translit(gl_HEADER_NAME,[./-], [___]), [
+    AC_DEFUN([gl_CHECK_HEADER_]m4_quote(translit(gl_HEADER_NAME,
+                                                 [./-], [___])), [
       m4_divert_text([INIT_PREPARE],
         [gl_header_list="$gl_header_list gl_HEADER_NAME"])
       gl_HEADERS_EXPANSION
-      AH_TEMPLATE(AS_TR_CPP(HAVE_[]gl_HEADER_NAME),
+      AH_TEMPLATE(AS_TR_CPP([HAVE_]gl_HEADER_NAME),
         [Define to 1 if you have the <]gl_HEADER_NAME[> header file.])
     ])
-    AC_REQUIRE([gl_CHECK_HEADER_]translit(gl_HEADER_NAME,[./-], [___]))
+    AC_REQUIRE([gl_CHECK_HEADER_]m4_quote(translit(gl_HEADER_NAME,
+                                                   [./-], [___])))
   ])
 ])
 m4_define([gl_HEADERS_EXPANSION], [
@@ -56,7 +58,7 @@ AC_DEFUN([AC_CHECK_FUNCS_ONCE], [
       m4_divert_text([INIT_PREPARE],
         [gl_func_list="$gl_func_list gl_FUNC_NAME"])
       gl_FUNCS_EXPANSION
-      AH_TEMPLATE(AS_TR_CPP(HAVE_[]gl_FUNC_NAME),
+      AH_TEMPLATE(AS_TR_CPP([HAVE_]gl_FUNC_NAME),
         [Define to 1 if you have the `]gl_FUNC_NAME[' function.])
     ])
     AC_REQUIRE([gl_CHECK_FUNC_]gl_FUNC_NAME)
