@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-09-23 16:15:07 $'
+cvsdatestamp='$Date: 2004-09-28 23:43:38 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -88,6 +88,8 @@ Options:
                             placed (default \"lib\"), for --import.
       --m4-base=DIRECTORY   Directory relative --dir where *.m4 macros are
                             placed (default \"m4\"), for --import.
+      --lgpl                Abort if modules aren't available under the LGPL.
+                            Also modify license template from GPL to LGPL.
       --libtool             Use libtool rules, for --import.
       --no-changelog        don't update or create ChangeLog files
       --dry-run             For --import, only print what would have been done.
@@ -134,6 +136,7 @@ func_fatal_error ()
   libtool=
   do_changelog=:
   dry_run=
+  lgpl=
 
   supplied_opts="$@"
 
@@ -204,6 +207,9 @@ func_fatal_error ()
         shift ;;
       --libtool )
         libtool=true
+        shift ;;
+      --lgpl )
+        lgpl=true
         shift ;;
       --no-changelog | --no-changelo | --no-changel | --no-change | --no-chang | --no-chan | --no-cha | --no-ch | --no-c )
         do_changelog=false
@@ -608,6 +614,7 @@ case $mode in
         };
         /A[CM]_PROG_LIBTOOL/ { s,^.*$,seen_libtool=:,; p; };
         /LT_INIT/            { s,^.*$,seen_libtool=:,; p; };
+        /gl_LGPL/            { s,^.*$,lgpl=true,; p; };
         d;'
 	eval `cat $configure_ac | sed "$my_sed_traces"`
 
@@ -665,6 +672,17 @@ case $mode in
 	echo "Module list with included dependencies:"
 	echo "$modules" | sed -e 's/^/  /'
 
+	# If --lgpl, check the license of modules are compatible.
+	if test -n "$lgpl"; then
+	    for module in $modules; do
+		license=`sed -n -e "/^License$sed_extract_prog" < "$gnulib_dir/modules/$module"`
+		if test $license != LGPL; then
+		    func_fatal_error \
+		    "incompatible license on module \`$module\`: $license"
+		fi
+	    done
+	fi
+
         # Determine final file list.
 	files=
 	for module in $modules; do
@@ -682,14 +700,21 @@ case $mode in
 
         # Copy files.
 	for f in $files; do
+	    source=
 	    case "$f" in
 		config/*) g=`echo "$f" | sed -e 's,^config/,,'` ;;
-		lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
+		lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"`;
+		    source=true ;;
 		m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
 		*) g="$f" ;;
 	    esac
 	    test -n "$dry_run" && dry=echo
 	    $dry cp -p "$gnulib_dir/$f" "$destdir/$g"
+	    # Update license.
+	    if test -z "$dry_run" -a -n "$lgpl" -a -n "$source"; then
+		perl -pi -e 's/GNU General/GNU Lesser General/g;' \
+		    -e 's/version 2([ ,])/version 2.1\1/g' $destdir/$g
+	    fi
 	done
 
 	# Commands printed in a comment in generated files.
@@ -698,7 +723,10 @@ case $mode in
 	if test -n "$libtool"; then
 	    opt_libtool="--libtool"
 	fi
-	actioncmd="gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool `echo $modules`"
+	if test -n "$lgpl"; then
+	    opt_lgpl="--lgpl"
+	fi
+	actioncmd="gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool $lgpl `echo $modules`"
 
         # Create lib/Makefile.am.
 	echo "Creating $destdir/$sourcebase/Makefile.am..."
@@ -806,6 +834,9 @@ case $mode in
 	    echo
 	    echo "dnl Usage: gl_LIB(LIBNAME)"
 	    echo "AC_DEFUN([gl_LIB], [])"
+	    echo
+	    echo "dnl Usage: gl_LGPL"
+	    echo "AC_DEFUN([gl_LGPL], [])"
 	    echo
 	    echo "# gnulib.m4 ends here"
 	)
