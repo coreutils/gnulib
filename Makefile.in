@@ -54,7 +54,7 @@ regex.o: regex.c regex.h
 clean mostlyclean::
 	rm -f *.o
 
-distclean:: clean
+distclean realclean:: clean
 	rm -f Makefile config.status
 
 extraclean:: distclean
