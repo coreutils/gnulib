@@ -1,3 +1,10 @@
+2002-12-23  Bruno Haible  <bruno@clisp.org>
+
+	* getline.h: Include <stddef.h>, for size_t.
+
+	* unicodeio.h: Include <stddef.h>, for size_t.
+	* unicodeio.c: Don't include <stddef.h>.
+
 2002-12-17  Bruno Haible  <bruno@clisp.org>
 
 	* canon-host.c (strdup): Remove unused declaration.

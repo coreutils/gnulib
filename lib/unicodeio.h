@@ -20,6 +20,7 @@
 #ifndef UNICODEIO_H
 # define UNICODEIO_H
 
+# include <stddef.h>
 # include <stdio.h>
 
 # ifndef PARAMS

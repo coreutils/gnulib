@@ -26,9 +26,8 @@
 # include <config.h>
 #endif
 
-#if HAVE_STDDEF_H
-# include <stddef.h>
-#endif
+/* Specification.  */
+#include "unicodeio.h"
 
 #include <stdio.h>
 #if HAVE_STRING_H
@@ -51,9 +50,6 @@ extern int errno;
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 #define N_(msgid) msgid
-
-/* Specification.  */
-#include "unicodeio.h"
 
 /* When we pass a Unicode character to iconv(), we must pass it in a
    suitable encoding. The standardized Unicode encodings are
