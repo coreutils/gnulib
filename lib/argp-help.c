@@ -26,6 +26,7 @@
 #endif
 
 #include <alloca.h>
+#include <errno.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,30 +38,13 @@
 # include <wchar.h>
 #endif
 
-#ifndef _
-/* This is for other GNU distributions with internationalized messages.  */
-# if defined HAVE_LIBINTL_H || defined _LIBC
-#  include <libintl.h>
-#  ifdef _LIBC
-#   undef dgettext
-#   define dgettext(domain, msgid) \
-  INTUSE(__dcgettext) (domain, msgid, LC_MESSAGES)
-#  endif
-# else
-#  define dgettext(domain, msgid) (msgid)
-# endif
-#endif
-
-#ifndef _LIBC
-# if HAVE_STRERROR_R
-#  if !HAVE_DECL_STRERROR_R
-char *strerror_r (int errnum, char *buf, size_t buflen);
-#  endif
-# else
-#  if !HAVE_DECL_STRERROR
-char *strerror (int errnum);
-#  endif
-# endif
+#ifdef _LIBC
+# include <libintl.h>
+# undef dgettext
+# define dgettext(domain, msgid) \
+   INTUSE(__dcgettext) (domain, msgid, LC_MESSAGES)
+#else
+# include "gettext.h"
 #endif
 
 #include "argp.h"
@@ -1674,20 +1658,13 @@ void __argp_help (const struct argp *argp, FILE *stream,
 weak_alias (__argp_help, argp_help)
 #endif
 
-#ifndef __argp_short_program_name
-char *__argp_basename (char *name)
-{
-  char *short_name = strrchr (name, '/');
-  return short_name ? short_name + 1 : name;
-}
-
+#if ! (defined _LIBC || HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME)
 char *
 __argp_short_program_name (void)
 {
-# if HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
-  return program_invocation_short_name;
-# elif HAVE_DECL_PROGRAM_INVOCATION_NAME
-  return __argp_basename (program_invocation_name);
+# if HAVE_DECL_PROGRAM_INVOCATION_NAME
+  char *name = strrchr (program_invocation_name, '/');
+  return name ? name + 1 : program_invocation_name;
 # else
   /* FIXME: What now? Miles suggests that it is better to use NULL,
      but currently the value is passed on directly to fputs_unlocked,
@@ -1858,13 +1835,20 @@ __argp_failure (const struct argp_state *state, int status, int errnum,
 	      else
 #endif
 		{
+		  char const *s = NULL;
 		  putc_unlocked (':', stream);
 		  putc_unlocked (' ', stream);
-#if defined _LIBC || defined HAVE_STRERROR_R
-		  fputs (__strerror_r (errnum, buf, sizeof (buf)), stream);
-#else
-		  fputs (strerror (errnum), stream);
+#if _LIBC || (HAVE_DECL_STRERROR_R && STRERROR_R_CHAR_P)
+		  s = __strerror_r (errnum, buf, sizeof buf);
+#elif HAVE_DECL_STRERROR_R
+		  if (__strerror_r (errnum, buf, sizeof buf) == 0)
+		    s = buf;
 #endif
+#if !_LIBC
+		  if (! s && ! (s = strerror (errnum)))
+		    s = "Unknown system error"; /* FIXME: translate this */
+#endif
+		  fputs (s, stream);
 		}
 	    }
 
