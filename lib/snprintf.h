@@ -23,7 +23,7 @@
 #include <stdio.h>
 
 #if defined HAVE_DECL_SNPRINTF && !HAVE_DECL_SNPRINTF
-int snprintf(char *str, size_t size, const char *format, ...);
+int snprintf (char *str, size_t size, const char *format, ...);
 #endif
 
 #endif /* SNPRINTF_H */
