@@ -1,3 +1,8 @@
+2003-01-30  Bruno Haible  <bruno@clisp.org>
+
+	* modules/vasnprintf, modules/vasprintf: New modules.
+	* MODULES.html.sh (func_all_modules): Add them.
+
 2003-01-29  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stpncpy: New module.

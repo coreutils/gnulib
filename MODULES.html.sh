@@ -1541,8 +1541,8 @@ func_all_modules ()
 
   func_begin_table
   func_module unlocked-io
-  #func_module vasnprintf
-  #func_module vasprintf
+  func_module vasnprintf
+  func_module vasprintf
   func_end_table
 
   element="Command-line arguments"

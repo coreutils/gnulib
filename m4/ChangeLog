@@ -1,3 +1,12 @@
+2003-01-30  Bruno Haible  <bruno@clisp.org>
+
+	* signed.m4: New file, from GNU gettext.
+	* longdouble.m4: New file, from GNU gettext.
+	* wchar_t.m4: New file, from GNU gettext.
+	* wint_t.m4: New file, from GNU gettext.
+	* vasnprintf.m4: New file.
+	* vasprintf.m4: New file.
+
 2003-01-29  Bruno Haible  <bruno@clisp.org>
 
 	* stpncpy.m4: New file.

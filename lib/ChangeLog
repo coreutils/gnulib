@@ -1,3 +1,16 @@
+2003-01-30  Bruno Haible  <bruno@clisp.org>
+
+	* printf-args.h: New file, from GNU gettext.
+	* printf-args.c: New file, from GNU gettext.
+	* printf-parse.h: New file, from GNU gettext.
+	* printf-parse.c: New file, from GNU gettext.
+	* vasnprintf.h: New file, from GNU gettext.
+	* vasnprintf.c: New file, from GNU gettext.
+	* asnprintf.c: New file, from GNU gettext.
+	* vasprintf.h: New file, from GNU gettext with modifications.
+	* vasprintf.c: New file, from GNU gettext.
+	* asprintf.c: New file, from GNU gettext.
+
 2003-01-29  Bruno Haible  <bruno@clisp.org>
 
 	* stpncpy.h: New file, from GNU gettext with modifications.

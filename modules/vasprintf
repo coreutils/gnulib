@@ -1,0 +1,24 @@
+Description:
+vsprintf with automatic memory allocation.
+
+Files:
+lib/vasprintf.h
+lib/vasprintf.c
+lib/asprintf.c
+m4/vasprintf.m4
+
+Depends-on:
+vasnprintf
+
+configure.ac:
+gl_FUNC_VASPRINTF
+
+Makefile.am:
+lib_SOURCES += vasprintf.h
+
+Include:
+"vasprintf.h"
+
+Maintainer:
+Bruno Haible
+
