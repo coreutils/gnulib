@@ -1772,6 +1772,7 @@ func_all_modules ()
   func_module closeout
   func_module stdio-safer
   func_module getpass
+  func_module getpass-gnu
   func_end_table
 
   element="Users and groups"

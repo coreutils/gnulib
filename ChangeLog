@@ -1,3 +1,8 @@
+2003-07-31  Bruno Haible  <bruno@clisp.org>
+
+	* modules/getpass-gnu: New file.
+	* MODULES.html.sh (func_all_modules): Add getpass-gnu.
+
 2003-07-22  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/xalloc (Depends-on): Add exitfail.

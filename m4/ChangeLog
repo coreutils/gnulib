@@ -1,3 +1,7 @@
+2003-07-31  Bruno Haible  <bruno@clisp.org>
+
+	* getpass.m4 (gl_FUNC_GETPASS_GNU): New macro.
+
 2003-07-18  Bruno Haible  <bruno@clisp.org>
 
 	* getndelim2.m4: New file.
