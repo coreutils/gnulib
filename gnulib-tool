@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-10-15 14:58:04 $'
+cvsdatestamp='$Date: 2004-10-15 15:28:43 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -121,10 +121,11 @@ func_fatal_error ()
 # Removes the OPTIONS from the arguments. Sets the variables:
 # - mode            list or import or create-testdir or create-megatestdir
 # - destdir         from --dir
-# - libname         from --lib
+# - libname, supplied_libname  from --lib
 # - sourcebase      from --source-base
 # - m4base          from --m4-base
 # - libtool         true if --libtool was given, blank otherwise
+# - lgpl            true if --lgpl was given, blank otherwise
 # - do_changelog    false if --no-changelog was given, : otherwise
 # - dry_run         true if --dry-run was given, blank otherwise
 {
@@ -135,6 +136,7 @@ func_fatal_error ()
   sourcebase=
   m4base=
   libtool=
+  lgpl=
   do_changelog=:
   dry_run=
   lgpl=
@@ -353,6 +355,217 @@ func_get_license ()
 func_get_maintainer ()
 {
   sed -n -e "/^Maintainer$sed_extract_prog" < "$gnulib_dir/modules/$1"
+}
+
+# func_import modules
+# Uses also the variables
+# - destdir         target directory
+# - libname         library name
+# - sourcebase      directory relative to destdir where to place source code
+# - m4base          directory relative to destdir where to place *.m4 macros
+# - lgpl            true if library's license shall be LGPL, blank otherwise
+# - dry_run         true if actions shall only be printed, blank otherwise
+# - supplied_opts   all options passed to gnulib-tool
+func_import ()
+{
+  modules="$1"
+  modules=`for m in $modules; do echo $m; done | sort | uniq`
+
+  # Determine final module list.
+  while true; do
+    xmodules=
+    for module in $modules; do
+      func_verify_module
+      if test -n "$module"; then
+        # Duplicate dependenies are harmless, but Jim wants a warning.
+        duplicated_deps=`func_get_dependencies $module | sort | uniq -d`
+        if test -n "$duplicated_deps"; then
+          echo "warning: module $module has duplicated dependencies: "`echo $duplicated_deps` 1>&2
+        fi
+        xmodules="$xmodules $module "`func_get_dependencies $module`
+      fi
+    done
+    xmodules=`for m in $xmodules; do echo $m; done | sort | uniq`
+    if test "$xmodules" = "$modules"; then
+      break
+    fi
+    modules="$xmodules"
+  done
+  echo "Module list with included dependencies:"
+  echo "$modules" | sed -e 's/^/  /'
+
+  # If --lgpl, check the license of modules are compatible.
+  if test -n "$lgpl"; then
+    for module in $modules; do
+      license=`sed -n -e "/^License$sed_extract_prog" < "$gnulib_dir/modules/$module"`
+      if test $license != LGPL; then
+        func_fatal_error "incompatible license on module \`$module\`: $license"
+      fi
+    done
+  fi
+
+  # Determine final file list.
+  files=
+  for module in $modules; do
+    func_verify_module
+    if test -n "$module"; then
+      files="$files "`func_get_filelist $module`
+    fi
+  done
+  files=`for f in $files; do echo $f; done | sort | uniq`
+  echo "File list:"
+  echo "$files" | sed -e 's/^/  /'
+
+  test -n "$files" \
+    || func_fatal_error "refusing to do nothing"
+
+  # Copy files.
+  for f in $files; do
+    source=
+    case "$f" in
+      config/*) g=`echo "$f" | sed -e 's,^config/,,'` ;;
+      lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"`; source=true ;;
+      m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
+      *) g="$f" ;;
+    esac
+    test -n "$dry_run" && dry=echo
+    $dry cp -p "$gnulib_dir/$f" "$destdir/$g"
+    # Update license.
+    if test -z "$dry_run" -a -n "$lgpl" -a -n "$source"; then
+      perl -pi -e 's/GNU General/GNU Lesser General/g;' \
+               -e 's/version 2([ ,])/version 2.1\1/g' \
+               $destdir/$g
+    fi
+  done
+
+  # Commands printed in a comment in generated files.
+  cmd="gnulib-tool $supplied_opts"
+  opt_libtool=
+  if test -n "$libtool"; then
+    opt_libtool="--libtool"
+  fi
+  if test -n "$lgpl"; then
+    opt_lgpl="--lgpl"
+  fi
+  actioncmd="gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool $opt_lgpl `echo $modules`"
+
+  # Create lib/Makefile.am.
+  echo "Creating $destdir/$sourcebase/Makefile.am..."
+  if test -n "$libtool"; then
+    libext=la
+    perhapsLT=LT
+  else
+    libext=a
+    perhapsLT=
+  fi
+  (
+    if test -z "$dry_run"; then
+      exec > $destdir/$sourcebase/Makefile.am
+    else
+      echo "# $destdir/$sourcebase/Makefile.am"
+    fi
+    echo "## Process this file with automake to produce Makefile.in."
+    echo "# Copyright (C) 2004 Free Software Foundation, Inc."
+    echo "#"
+    echo "# This file is free software, distributed under the terms of the GNU"
+    echo "# General Public License.  As a special exception to the GNU General"
+    echo "# Public License, this file may be distributed as part of a program"
+    echo "# that contains a configuration script generated by Automake, under"
+    echo "# the same distribution terms as the rest of that program."
+    echo "#"
+    echo "# Generated by gnulib-tool."
+    echo "#"
+    echo "# Invoked as: $cmd"
+    echo "# Reproduce by: $actioncmd"
+    echo
+    echo "AUTOMAKE_OPTIONS = 1.8 gnits"
+    echo
+    echo "noinst_${perhapsLT}LIBRARIES = $libname.$libext"
+    echo
+    echo "${libname}_${libext}_SOURCES ="
+    echo "${libname}_${libext}_LIBADD = @${perhapsLT}LIBOBJS@"
+    echo "EXTRA_DIST ="
+    echo "BUILT_SOURCES ="
+    echo "SUFFIXES ="
+    echo "MOSTLYCLEANFILES ="
+    echo "CLEANFILES ="
+    echo "DISTCLEANFILES ="
+    echo "MAINTAINERCLEANFILES ="
+    for module in $modules; do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_automake_snippet "$module" | sed -e "s,lib_SOURCES,${libname}_${libext}_SOURCES,g" -e "s,lib_OBJECTS,${libname}_${libext}_OBJECTS,g"
+        if test "$module" = 'alloca'; then
+          echo "${libname}_${libext}_LIBADD += @ALLOCA@"
+        fi
+      fi
+    done
+    echo
+    echo "# Makefile.am ends here"
+  )
+
+  # Create gnulib.m4.
+  echo "Creating $destdir/$m4base/gnulib.m4..."
+  (
+    if test -z "$dry_run"; then
+      exec > $destdir/$m4base/gnulib.m4
+    else
+      echo "# $destdir/$m4base/gnulib.m4"
+    fi
+    echo "# Copyright (C) 2004 Free Software Foundation, Inc."
+    echo "# This file is free software, distributed under the terms of the GNU"
+    echo "# General Public License.  As a special exception to the GNU General"
+    echo "# Public License, this file may be distributed as part of a program"
+    echo "# that contains a configuration script generated by Autoconf, under"
+    echo "# the same distribution terms as the rest of that program."
+    echo "#"
+    echo "# Generated by gnulib-tool."
+    echo "#"
+    echo "# Invoked as: $cmd"
+    echo "# Reproduce by: $actioncmd"
+    echo
+    echo "AC_DEFUN([gl_EARLY],"
+    echo "["
+    if grep AC_GNU_SOURCE "$destdir"/$m4base/*.m4 > /dev/null; then
+      echo "  AC_GNU_SOURCE"
+    fi
+    if grep gl_USE_SYSTEM_EXTENSIONS "$destdir"/$m4base/*.m4 > /dev/null; then
+      echo "  gl_USE_SYSTEM_EXTENSIONS"
+    fi
+    echo "])"
+    echo
+    echo "AC_DEFUN([gl_INIT],"
+    echo "["
+    for module in $modules; do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_autoconf_snippet "$module" | sed -e '/^$/d;' -e 's/^/  /' -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
+      fi
+    done
+    echo "])"
+    echo
+    echo "dnl Usage: gl_MODULES(module1 module2 ...)"
+    echo "AC_DEFUN([gl_MODULES], [])"
+    echo
+    echo "dnl Usage: gl_SOURCE_BASE(DIR)"
+    echo "AC_DEFUN([gl_SOURCE_BASE], [])"
+    echo
+    echo "dnl Usage: gl_M4_BASE(DIR)"
+    echo "AC_DEFUN([gl_M4_BASE], [])"
+    echo
+    echo "dnl Usage: gl_LIB(LIBNAME)"
+    echo "AC_DEFUN([gl_LIB], [])"
+    echo
+    echo "dnl Usage: gl_LGPL"
+    echo "AC_DEFUN([gl_LGPL], [])"
+    echo
+    echo "# gnulib.m4 ends here"
+  )
+  echo "Finished."
+  echo
+  echo "Don't forget to add \"$sourcebase/Makefile\""
+  echo "to AC_CONFIG_FILES in \"$configure_ac\" and to mention"
+  echo "\"`basename $sourcebase`\" in SUBDIRS in some Makefile.am."
 }
 
 # func_create_testdir testdir modules
@@ -640,212 +853,18 @@ case $mode in
       || func_fatal_error "m4 base $destdir/$m4base doesn't exist"
 
     # Using libtool?
-    if test x$seen_libtool != x; then
+    if test -n "$seen_libtool"; then
       libtool=true
     fi
 
     # What modules to extract.
-    supplied_modules="$*"
-    modules=`for m in $supplied_modules; do echo $m; done | sort | uniq`
-    if test -z "$modules"; then
+    if test $# = 0; then
       modules="$ac_modules"
-    fi
-
-    # Determine final module list.
-    while true; do
-      xmodules=
-      for module in $modules; do
-        func_verify_module
-        if test -n "$module"; then
-          # Duplicate dependenies are harmless, but Jim wants a warning.
-          duplicated_deps=`func_get_dependencies $module | sort | uniq -d`
-          if test -n "$duplicated_deps"; then
-            echo "warning: module $module has duplicated dependencies: "`echo $duplicated_deps` 1>&2
-          fi
-          xmodules="$xmodules $module "`func_get_dependencies $module`
-        fi
-      done
-      xmodules=`for m in $xmodules; do echo $m; done | sort | uniq`
-      if test "$xmodules" = "$modules"; then
-        break
-      fi
-      modules="$xmodules"
-    done
-    echo "Module list with included dependencies:"
-    echo "$modules" | sed -e 's/^/  /'
-
-    # If --lgpl, check the license of modules are compatible.
-    if test -n "$lgpl"; then
-      for module in $modules; do
-        license=`sed -n -e "/^License$sed_extract_prog" < "$gnulib_dir/modules/$module"`
-        if test $license != LGPL; then
-          func_fatal_error "incompatible license on module \`$module\`: $license"
-        fi
-      done
-    fi
-
-    # Determine final file list.
-    files=
-    for module in $modules; do
-      func_verify_module
-      if test -n "$module"; then
-        files="$files "`func_get_filelist $module`
-      fi
-    done
-    files=`for f in $files; do echo $f; done | sort | uniq`
-    echo "File list:"
-    echo "$files" | sed -e 's/^/  /'
-
-    test -n "$files" \
-      || func_fatal_error "refusing to do nothing"
-
-    # Copy files.
-    for f in $files; do
-      source=
-      case "$f" in
-        config/*) g=`echo "$f" | sed -e 's,^config/,,'` ;;
-        lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"`; source=true ;;
-        m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
-        *) g="$f" ;;
-      esac
-      test -n "$dry_run" && dry=echo
-      $dry cp -p "$gnulib_dir/$f" "$destdir/$g"
-      # Update license.
-      if test -z "$dry_run" -a -n "$lgpl" -a -n "$source"; then
-        perl -pi -e 's/GNU General/GNU Lesser General/g;' \
-                 -e 's/version 2([ ,])/version 2.1\1/g' \
-                 $destdir/$g
-      fi
-    done
-
-    # Commands printed in a comment in generated files.
-    cmd="gnulib-tool $supplied_opts"
-    opt_libtool=
-    if test -n "$libtool"; then
-      opt_libtool="--libtool"
-    fi
-    if test -n "$lgpl"; then
-      opt_lgpl="--lgpl"
-    fi
-    actioncmd="gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool $opt_lgpl `echo $modules`"
-
-    # Create lib/Makefile.am.
-    echo "Creating $destdir/$sourcebase/Makefile.am..."
-    if test -n "$libtool"; then
-      libext=la
-      perhapsLT=LT
     else
-      libext=a
-      perhapsLT=
+      modules="$*"
     fi
-    (
-      if test -z "$dry_run"; then
-        exec > $destdir/$sourcebase/Makefile.am
-      else
-        echo "# $destdir/$sourcebase/Makefile.am"
-      fi
-      echo "## Process this file with automake to produce Makefile.in."
-      echo "# Copyright (C) 2004 Free Software Foundation, Inc."
-      echo "#"
-      echo "# This file is free software, distributed under the terms of the GNU"
-      echo "# General Public License.  As a special exception to the GNU General"
-      echo "# Public License, this file may be distributed as part of a program"
-      echo "# that contains a configuration script generated by Automake, under"
-      echo "# the same distribution terms as the rest of that program."
-      echo "#"
-      echo "# Generated by gnulib-tool."
-      echo "#"
-      echo "# Invoked as: $cmd"
-      echo "# Reproduce by: $actioncmd"
-      echo
-      echo "AUTOMAKE_OPTIONS = 1.8 gnits"
-      echo
-      echo "noinst_${perhapsLT}LIBRARIES = $libname.$libext"
-      echo
-      echo "${libname}_${libext}_SOURCES ="
-      echo "${libname}_${libext}_LIBADD = @${perhapsLT}LIBOBJS@"
-      echo "EXTRA_DIST ="
-      echo "BUILT_SOURCES ="
-      echo "SUFFIXES ="
-      echo "MOSTLYCLEANFILES ="
-      echo "CLEANFILES ="
-      echo "DISTCLEANFILES ="
-      echo "MAINTAINERCLEANFILES ="
-      for module in $modules; do
-        func_verify_module
-        if test -n "$module"; then
-          func_get_automake_snippet "$module" | sed -e "s,lib_SOURCES,${libname}_${libext}_SOURCES,g" -e "s,lib_OBJECTS,${libname}_${libext}_OBJECTS,g"
-          if test "$module" = 'alloca'; then
-            echo "${libname}_${libext}_LIBADD += @ALLOCA@"
-          fi
-        fi
-      done
-      echo
-      echo "# Makefile.am ends here"
-    )
 
-    # Create gnulib.m4.
-    echo "Creating $destdir/$m4base/gnulib.m4..."
-    (
-      if test -z "$dry_run"; then
-        exec > $destdir/$m4base/gnulib.m4
-      else
-        echo "# $destdir/$m4base/gnulib.m4"
-      fi
-      echo "# Copyright (C) 2004 Free Software Foundation, Inc."
-      echo "# This file is free software, distributed under the terms of the GNU"
-      echo "# General Public License.  As a special exception to the GNU General"
-      echo "# Public License, this file may be distributed as part of a program"
-      echo "# that contains a configuration script generated by Autoconf, under"
-      echo "# the same distribution terms as the rest of that program."
-      echo "#"
-      echo "# Generated by gnulib-tool."
-      echo "#"
-      echo "# Invoked as: $cmd"
-      echo "# Reproduce by: $actioncmd"
-      echo
-      echo "AC_DEFUN([gl_EARLY],"
-      echo "["
-      if grep AC_GNU_SOURCE "$destdir"/$m4base/*.m4 > /dev/null; then
-        echo "  AC_GNU_SOURCE"
-      fi
-      if grep gl_USE_SYSTEM_EXTENSIONS "$destdir"/$m4base/*.m4 > /dev/null; then
-        echo "  gl_USE_SYSTEM_EXTENSIONS"
-      fi
-      echo "])"
-      echo
-      echo "AC_DEFUN([gl_INIT],"
-      echo "["
-      for module in $modules; do
-        func_verify_module
-        if test -n "$module"; then
-          func_get_autoconf_snippet "$module" | sed -e '/^$/d;' -e 's/^/  /' -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
-        fi
-      done
-      echo "])"
-      echo
-      echo "dnl Usage: gl_MODULES(module1 module2 ...)"
-      echo "AC_DEFUN([gl_MODULES], [])"
-      echo
-      echo "dnl Usage: gl_SOURCE_BASE(DIR)"
-      echo "AC_DEFUN([gl_SOURCE_BASE], [])"
-      echo
-      echo "dnl Usage: gl_M4_BASE(DIR)"
-      echo "AC_DEFUN([gl_M4_BASE], [])"
-      echo
-      echo "dnl Usage: gl_LIB(LIBNAME)"
-      echo "AC_DEFUN([gl_LIB], [])"
-      echo
-      echo "dnl Usage: gl_LGPL"
-      echo "AC_DEFUN([gl_LGPL], [])"
-      echo
-      echo "# gnulib.m4 ends here"
-    )
-    echo "Finished."
-    echo
-    echo "Don't forget to add \"$sourcebase/Makefile\""
-    echo "to AC_CONFIG_FILES in \"$configure_ac\" and to mention"
-    echo "\"`basename $sourcebase`\" in SUBDIRS in some Makefile.am."
+    func_import "$modules"
     ;;
 
   create-testdir )
