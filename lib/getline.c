@@ -38,24 +38,24 @@
 #if defined __GNU_LIBRARY__ && HAVE_GETDELIM
 
 int
-getline (char **lineptr, size_t *n, FILE *stream)
+getline (char **lineptr, size_t *linesize, FILE *stream)
 {
-  return getdelim (lineptr, n, '\n', stream);
+  return getdelim (lineptr, linesize, '\n', stream);
 }
 
 #else /* ! have getdelim */
 
-#include "getndelim2.c"
+#include "getndelim2.h"
 
 int
-getline (char **lineptr, size_t *n, FILE *stream)
+getline (char **lineptr, size_t *linesize, FILE *stream)
 {
-  return getndelim2 (lineptr, n, (size_t)(-1), stream, '\n', 0, 0);
+  return getndelim2 (lineptr, linesize, (size_t)(-1), stream, '\n', 0, 0);
 }
 
 int
-getdelim (char **lineptr, size_t *n, int delimiter, FILE *stream)
+getdelim (char **lineptr, size_t *linesize, int delimiter, FILE *stream)
 {
-  return getndelim2 (lineptr, n, (size_t)(-1), stream, delimiter, 0, 0);
+  return getndelim2 (lineptr, linesize, (size_t)(-1), stream, delimiter, 0, 0);
 }
 #endif

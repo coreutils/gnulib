@@ -1,3 +1,11 @@
+2003-07-18  Bruno Haible  <bruno@clisp.org>
+
+	* modules/getndelim2: New file.
+	* modules/getline: Share files with module getndelim2.
+	* modules/getnline: Depend on getndelim2 instead of sharing files with
+	it. Add getnline.c to lib_SOURCES.
+	* MODULES.html.sh (func_all_modules): Add getndelim2.
+
 2003-07-17  Bruno Haible  <bruno@clisp.org>
 
 	* modules/getnline: New file.

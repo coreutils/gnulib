@@ -23,6 +23,8 @@
 /* Specification.  */
 #include "getnline.h"
 
+#include "getndelim2.h"
+
 ssize_t
 getnline (char **lineptr, size_t *linesize, size_t nmax, FILE *stream)
 {

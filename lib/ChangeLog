@@ -1,3 +1,13 @@
+2003-07-18  Bruno Haible  <bruno@clisp.org>
+
+	* getndelim2.h: New file.
+	* getndelim2.c: Make into a module of its own. Include config.h,
+	getndelim2.h.
+	(getndelim2): Make non-static. Change return type to ssize_t.
+	* getline.h: Change argument names.
+	* getline.c: Include getndelim2.h instead of getndelim2.c.
+	* getnline.c: Include getndelim2.h.
+
 2003-07-17  Bruno Haible  <bruno@clisp.org>
 
 	* Makefile.am: Remove file.

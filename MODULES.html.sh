@@ -1580,6 +1580,7 @@ func_all_modules ()
   func_module diacrit
   func_module getline
   func_module getnline
+  func_module getndelim2
   func_module linebuffer
   func_module obstack
   func_module hash-pjw

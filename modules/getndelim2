@@ -1,12 +1,10 @@
 Description:
-Read a line from a stream.
+Read a line from a stream, stopping at one of 2 delimiters, with bounded
+memory allocation.
 
 Files:
-lib/getline.h
-lib/getline.c
 lib/getndelim2.h
 lib/getndelim2.c
-m4/getline.m4
 m4/getndelim2.m4
 m4/ssize_t.m4
 
@@ -14,14 +12,13 @@ Depends-on:
 unlocked-io
 
 configure.ac:
-AM_FUNC_GETLINE
+gl_GETNDELIM2
 
 Makefile.am:
-lib_SOURCES += getline.h
-EXTRA_DIST += getndelim2.h getndelim2.c
+lib_SOURCES += getndelim2.h getndelim2.c
 
 Include:
-"getline.h"
+"getndelim2.h"
 
 Maintainer:
 all

@@ -1,4 +1,4 @@
-# getline.m4 serial 8
+# getline.m4 serial 9
 
 dnl Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003 Free Software
 dnl Foundation, Inc.
@@ -56,13 +56,14 @@ AC_DEFUN([AM_FUNC_GETLINE],
     AC_DEFINE([getline], [gnu_getline],
       [Define to a replacement function name for getline().])
     AC_LIBOBJ(getline)
+    AC_LIBOBJ(getndelim2)
     gl_PREREQ_GETLINE
+    gl_PREREQ_GETNDELIM2
   fi
 ])
 
 # Prerequisites of lib/getline.c.
 AC_DEFUN([gl_PREREQ_GETLINE],
 [
-  AC_REQUIRE([AC_HEADER_STDC])
   AC_CHECK_FUNCS(getdelim)
 ])

@@ -1,4 +1,5 @@
-/* getndelim2 - Core of getline, getdelim, getnline, getndelim.
+/* getndelim2 - Read a line from a stream, stopping at one of 2 delimiters,
+   with bounded memory allocation.
 
    Copyright (C) 1993, 1996, 1997, 1998, 2000, 2003 Free Software
    Foundation, Inc.
@@ -17,6 +18,15 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
+/* Originally written by Jan Brittenson, bson@gnu.ai.mit.edu.  */
+
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+/* Specification.  */
+#include "getndelim2.h"
+
 #if STDC_HEADERS
 # include <stdlib.h>
 #else
@@ -28,17 +38,7 @@ char *malloc (), *realloc ();
 /* Always add at least this many bytes when extending the buffer.  */
 #define MIN_CHUNK 64
 
-/* Read up to (and including) a delimiter DELIM1 from STREAM into *LINEPTR
-   + OFFSET (and NUL-terminate it).  If DELIM2 is non-zero, then read up
-   and including the first occurrence of DELIM1 or DELIM2.  *LINEPTR is
-   a pointer returned from malloc (or NULL), pointing to *LINESIZE bytes of
-   space.  It is realloc'd as necessary.  Reallocation is limited to
-   NMAX bytes; if the line is longer than that, the extra bytes are read but
-   thrown away.
-   Return the number of bytes read and stored at *LINEPTR + OFFSET (not
-   including the NUL terminator), or -1 on error or EOF.  */
-
-static int
+ssize_t
 getndelim2 (char **lineptr, size_t *linesize, size_t nmax,
 	    FILE *stream, int delim1, int delim2, size_t offset)
 {
