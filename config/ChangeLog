@@ -1,3 +1,8 @@
+2003-06-22    <karl@gnu.org>
+
+	* srclist.txt: update mkinstalldirs from automake.
+	* mkinstalldirs: update.
+
 2003-06-18    <karl@gnu.org>
 
 	* config.{guess,sub}: update from prep.

@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.14 2003-06-04 20:09:47 eggert Exp $
+# $Id: srclist.txt,v 1.15 2003-06-22 22:47:40 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -9,7 +9,7 @@ $AUTOMAKE/lib/depcomp		config
 $AUTOMAKE/lib/install-sh	config
 $AUTOMAKE/lib/mdate-sh		config
 $AUTOMAKE/lib/missing		config
-# after next release $AUTOMAKE/lib/mkinstalldirs		config
+$AUTOMAKE/lib/mkinstalldirs	config
 #
 $TEXINFOSRC/doc/texinfo.tex	config
 
@@ -21,14 +21,16 @@ $GNUORG/fdl.texi		doc
 $GETTEXT/gettext.h		lib
 #
 $LIBCSRC/sysdeps/generic/strtoll.c	lib gpl
-#$LIBCSRC/malloc/obstack.c		lib gpl
-#$LIBCSRC/posix/getopt.c		lib gpl
 $LIBCSRC/posix/getopt.h			lib gpl
 $LIBCSRC/posix/getopt1.c		lib gpl
 $LIBCSRC/posix/regex.h			lib gpl
 $LIBCSRC/string/strdup.c		lib gpl
 # This can be uncommented after libc mktime is fixed.
 #$LIBCSRC/time/mktime.c			lib gpl
+#
+# These are close, but ...
+#$LIBCSRC/malloc/obstack.c		lib gpl
+#$LIBCSRC/posix/getopt.c		lib gpl
 #
 # - libc/sysdeps/generic has memcpy.c, memmove.c, strcasecmp.c, but they
 #   are totally different implementations.
