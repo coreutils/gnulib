@@ -1,3 +1,12 @@
+2003-10-27  Paul Eggert  <eggert@twinsun.com>
+
+	* exclude.c (new_exclude): Use xzalloc rather than xmalloc
+	to allocate the returned structure.  Do not allocate a subarray,
+	as x2nrealloc will do that.
+	(add_exclude): Use x2nrealloc to reallocate ex->exclude,
+	instead of xnrealloc.
+	(add_exclude_file): Use x2realloc instead of malloc + xnrealloc.
+	
 2003-10-26  Paul Eggert  <eggert@twinsun.com>
 
 	* xalloc.h (xalloc_oversized): New static inline function, for
