@@ -1,0 +1,21 @@
+Description:
+Program name management.
+
+Files:
+lib/progname.h
+lib/progname.c
+
+Depends-on:
+stdbool
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += progname.h progname.c
+
+Include:
+"progname.h"
+
+Maintainer:
+Bruno Haible
+

@@ -1892,6 +1892,7 @@ func_all_modules ()
   func_module getusershell
   func_module physmem
   func_module posixver
+  func_module progname
   func_module quotearg
   func_module quote
   func_module readutmp
