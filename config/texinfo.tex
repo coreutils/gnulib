@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-07-27.17}
+\def\texinfoversion{2004-07-31.11}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -1930,6 +1930,10 @@ where each line of input produces a line of output.}
 \def\sc#1{{\smallcaps#1}}       % smallcaps font
 \def\ii#1{{\it #1}}             % italic font
 
+% @acronym for "FBI", "NATO", and the like.
+% We print this one point size smaller, since it's intended for
+% all-uppercase.
+% 
 \def\acronym#1{\doacronym #1,,\finish}
 \def\doacronym#1,#2,#3\finish{%
   {\selectfonts\lsize #1}%
@@ -1939,7 +1943,19 @@ where each line of input produces a line of output.}
   \fi
 }
 
-% @pounds{} is a sterling sign, which is in the CM italic font.
+% @abbr for "Comput. J." and the like.
+% No font change, but don't do end-of-sentence spacing.
+% 
+\def\abbr#1{\doabbr #1,,\finish}
+\def\doabbr#1,#2,#3\finish{%
+  {\frenchspacing #1}%
+  \def\temp{#2}%
+  \ifx\temp\empty \else
+    \space ({\unsepspaces \ignorespaces \temp \unskip})%
+  \fi
+}
+
+% @pounds{} is a sterling sign, which Knuth put in the CM italic font.
 %
 \def\pounds{{\it\$}}
 
