@@ -3,7 +3,7 @@
    has this bug.  Also work around a deficiency in Solaris systems (up to at
    least Solaris 9) regarding the semantics of `lstat ("symlink/", sbuf).'
 
-   Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003 Free
+   Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free
    Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -27,25 +27,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
-#ifndef errno
-extern int errno;
-#endif
 #if defined LSTAT && ! LSTAT_FOLLOWS_SLASHED_SYMLINK
 # include <stdlib.h>
 # include <string.h>
 
-# ifdef STAT_MACROS_BROKEN
-#  undef S_ISLNK
-# endif
-
-# ifndef S_ISLNK
-#  ifdef S_IFLNK
-#   define S_ISLNK(m) (((m) & S_IFMT) == S_IFLNK)
-#  else
-#   define S_ISLNK(m) 0
-#  endif
-# endif
-
+# include "stat-macros.h"
 # include "xalloc.h"
 
 /* lstat works differently on Linux and Solaris systems.  POSIX (see

@@ -1,6 +1,9 @@
 /* md5.h - Declaration of functions and data types used for MD5 sum
    computing library functions.
-   Copyright (C) 1995, 1996, 1999, 2000, 2003 Free Software Foundation, Inc.
+
+   Copyright (C) 1995, 1996, 1999, 2000, 2003, 2004 Free Software
+   Foundation, Inc.
+
    NOTE: The canonical source of this file is maintained with the GNU C
    Library.  Bugs can be reported to bug-glibc@prep.ai.mit.edu.
 
@@ -22,41 +25,15 @@
 #define _MD5_H 1
 
 #include <stdio.h>
-#include <limits.h>
 
-/* The following contortions are an attempt to use the C preprocessor
-   to determine an unsigned integral type that is 32 bits wide.  An
-   alternative approach is to use autoconf's AC_CHECK_SIZEOF macro, but
-   doing that would require that the configure script compile and *run*
-   the resulting executable.  Locally running cross-compiled executables
-   is usually not possible.  */
-
-#ifdef _LIBC
-# include <stdint.h>
-typedef uint32_t md5_uint32;
-typedef uintptr_t md5_uintptr;
-#else
-# define UINT_MAX_32_BITS 4294967295U
-
-# if UINT_MAX == UINT_MAX_32_BITS
-   typedef unsigned int md5_uint32;
-# else
-#  if USHRT_MAX == UINT_MAX_32_BITS
-    typedef unsigned short md5_uint32;
-#  else
-#   if ULONG_MAX == UINT_MAX_32_BITS
-     typedef unsigned long md5_uint32;
-#   else
-     /* The following line is intended to evoke an error.
-        Using #error is not portable enough.  */
-     "Cannot determine unsigned 32-bit data type."
-#   endif
-#  endif
-# endif
-/* We have to make a guess about the integer type equivalent in size
-   to pointers which should always be correct.  */
-typedef unsigned long int md5_uintptr;
+#if HAVE_INTTYPES_H
+# include <inttypes.h>
 #endif
+#if HAVE_STDINT_H || _LIBC
+# include <stdint.h>
+#endif
+
+typedef uint32_t md5_uint32;
 
 /* Structure to save state of computation between the single steps.  */
 struct md5_ctx

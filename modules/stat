@@ -3,6 +3,7 @@ stat() function: return information about a file, following symbolic links.
 
 Files:
 lib/stat.c
+lib/stat-macros.h
 m4/stat.m4
 
 Depends-on:
@@ -12,6 +13,7 @@ configure.ac:
 gl_FUNC_STAT
 
 Makefile.am:
+lib_SOURCES += stat-macros.h
 
 Include:
 <sys/stat.h>

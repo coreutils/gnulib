@@ -1,11 +1,34 @@
-#serial 12
+# fsusage.m4 serial 13
+# Obtaining file system usage information.
 
-# From fileutils/configure.in
+# Copyright (C) 1997, 1998, 2000, 2001, 2003, 2004 Free Software
+# Foundation, Inc.
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# Written by Jim Meyering.
 
 AC_DEFUN([gl_FSUSAGE],
 [
   AC_CHECK_HEADERS_ONCE(sys/param.h)
-  AC_CHECK_HEADERS(sys/mount.h sys/vfs.h sys/fs_types.h)
+  AC_CHECK_HEADERS_ONCE(sys/vfs.h sys/fs_types.h)
+  AC_CHECK_HEADERS(sys/mount.h, [], [],
+    [AC_INCLUDES_DEFAULT
+     [#if HAVE_SYS_PARAM_H
+       #include <sys/param.h>
+      #endif]])
   gl_FILE_SYSTEM_USAGE([gl_cv_fs_space=yes], [gl_cv_fs_space=no])
   if test $gl_cv_fs_space = yes; then
     AC_LIBOBJ(fsusage)
@@ -13,7 +36,7 @@ AC_DEFUN([gl_FSUSAGE],
   fi
 ])
 
-# Try to determine how a program can obtain filesystem usage information.
+# Try to determine how a program can obtain file system usage information.
 # If successful, define the appropriate symbol (see fsusage.c) and
 # execute ACTION-IF-FOUND.  Otherwise, execute ACTION-IF-NOT-FOUND.
 #
@@ -22,7 +45,7 @@ AC_DEFUN([gl_FSUSAGE],
 AC_DEFUN([gl_FILE_SYSTEM_USAGE],
 [
 
-echo "checking how to get filesystem space usage..."
+echo "checking how to get file system space usage..."
 ac_fsusage_space=no
 
 # Perform only the link test since it seems there are no variants of the
@@ -199,7 +222,7 @@ if test $ac_fsusage_space = no; then
   AC_TRY_CPP([#include <sys/filsys.h>
     ],
     AC_DEFINE(STAT_READ_FILSYS, 1,
-      [Define if there is no specific function for reading filesystems usage
+      [Define if there is no specific function for reading file systems usage
        information and you have the <sys/filsys.h> header file.  (SVR2)])
     ac_fsusage_space=yes)
 fi

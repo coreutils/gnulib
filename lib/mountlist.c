@@ -1,4 +1,4 @@
-/* mountlist.c -- return a list of mounted filesystems
+/* mountlist.c -- return a list of mounted file systems
    Copyright (C) 1991, 1992, 1997-2004 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -26,18 +26,11 @@
 
 #include "xalloc.h"
 
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
-
 #ifndef strstr
 char *strstr ();
 #endif
 
 #include <errno.h>
-#ifndef errno
-extern int errno;
-#endif
 
 #ifdef HAVE_FCNTL_H
 # include <fcntl.h>
@@ -143,39 +136,15 @@ extern int errno;
 #include "mountlist.h"
 #include "unlocked-io.h"
 
-#ifdef MOUNTED_GETMNTENT1	/* 4.3BSD, SunOS, HP-UX, Dynix, Irix.  */
-/* Return the value of the hexadecimal number represented by CP.
-   No prefix (like '0x') or suffix (like 'h') is expected to be
-   part of CP. */
-/* FIXME: this can overflow */
-
-static int
-xatoi (char *cp)
-{
-  int val;
-
-  val = 0;
-  while (*cp)
-    {
-      if (*cp >= 'a' && *cp <= 'f')
-	val = val * 16 + *cp - 'a' + 10;
-      else if (*cp >= 'A' && *cp <= 'F')
-	val = val * 16 + *cp - 'A' + 10;
-      else if (*cp >= '0' && *cp <= '9')
-	val = val * 16 + *cp - '0';
-      else
-	break;
-      cp++;
-    }
-  return val;
-}
-#endif /* MOUNTED_GETMNTENT1.  */
+#ifndef SIZE_MAX
+# define SIZE_MAX ((size_t) -1)
+#endif
 
 #if MOUNTED_GETMNTINFO
 
 # if ! HAVE_F_FSTYPENAME_IN_STATFS
 static char *
-fstype_to_string (short t)
+fstype_to_string (short int t)
 {
   switch (t)
     {
@@ -296,13 +265,13 @@ fstype_to_string (int t)
 }
 #endif /* MOUNTED_VMOUNT */
 
-/* Return a list of the currently mounted filesystems, or NULL on error.
+/* Return a list of the currently mounted file systems, or NULL on error.
    Add each entry to the tail of the list so that they stay in order.
-   If NEED_FS_TYPE is nonzero, ensure that the filesystem type fields in
+   If NEED_FS_TYPE is true, ensure that the file system type fields in
    the returned list are valid.  Otherwise, they might not be.  */
 
 struct mount_entry *
-read_filesystem_list (int need_fs_type)
+read_file_system_list (bool need_fs_type)
 {
   struct mount_entry *mount_list;
   struct mount_entry *me;
@@ -360,12 +329,7 @@ read_filesystem_list (int need_fs_type)
 	me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
 	devopt = strstr (mnt->mnt_opts, "dev=");
 	if (devopt)
-	  {
-	    if (devopt[4] == '0' && (devopt[5] == 'x' || devopt[5] == 'X'))
-	      me->me_dev = xatoi (devopt + 6);
-	    else
-	      me->me_dev = xatoi (devopt + 4);
-	  }
+	  me->me_dev = strtoul (devopt + 4, NULL, 16);
 	else
 	  me->me_dev = (dev_t) -1;	/* Magic; means not known yet. */
 
@@ -438,14 +402,14 @@ read_filesystem_list (int need_fs_type)
 #if defined MOUNTED_FS_STAT_DEV /* BeOS */
   {
     /* The next_dev() and fs_stat_dev() system calls give the list of
-       all filesystems, including the information returned by statvfs()
+       all file systems, including the information returned by statvfs()
        (fs type, total blocks, free blocks etc.), but without the mount
-       point. But on BeOS all filesystems except / are mounted in the
+       point. But on BeOS all file systems except / are mounted in the
        rootfs, directly under /.
        The directory name of the mount point is often, but not always,
        identical to the volume name of the device.
        We therefore get the list of subdirectories of /, and the list
-       of all filesystems, and match the two lists.  */
+       of all file systems, and match the two lists.  */
 
     DIR *dirp;
     struct rootdir_entry
@@ -744,12 +708,12 @@ read_filesystem_list (int need_fs_type)
     int n_entries;
     int i;
 
-    /* Ask how many bytes to allocate for the mounted filesystem info.  */
+    /* Ask how many bytes to allocate for the mounted file system info.  */
     if (mntctl (MCTL_QUERY, sizeof bufsize, (struct vmount *) &bufsize) != 0)
       return NULL;
     entries = xmalloc (bufsize);
 
-    /* Get the list of mounted filesystems.  */
+    /* Get the list of mounted file systems.  */
     n_entries = mntctl (MCTL_QUERY, bufsize, (struct vmount *) entries);
     if (n_entries < 0)
       {

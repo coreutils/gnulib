@@ -1,5 +1,7 @@
 /* Convert string representation of a number into an intmax_t value.
-   Copyright (C) 1999, 2001, 2002, 2003 Free Software Foundation, Inc.
+
+   Copyright (C) 1999, 2001, 2002, 2003, 2004 Free Software
+   Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,7 +25,8 @@
 
 #if HAVE_INTTYPES_H
 # include <inttypes.h>
-#elif HAVE_STDINT_H
+#endif
+#if HAVE_STDINT_H
 # include <stdint.h>
 #endif
 
@@ -66,14 +69,14 @@ strtoimax (char const *ptr, char **endptr, int base)
 {
 #if HAVE_LONG_LONG
   verify (size_is_that_of_long_or_long_long,
-	  (sizeof (INT) == sizeof (long)
-	   || sizeof (INT) == sizeof (long long)));
+	  (sizeof (INT) == sizeof (long int)
+	   || sizeof (INT) == sizeof (long long int)));
 
-  if (sizeof (INT) != sizeof (long))
+  if (sizeof (INT) != sizeof (long int))
     return strtoll (ptr, endptr, base);
 #else
   verify (size_is_that_of_long,
-	  sizeof (INT) == sizeof (long));
+	  sizeof (INT) == sizeof (long int));
 #endif
 
   return strtol (ptr, endptr, base);

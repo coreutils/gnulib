@@ -1,7 +1,7 @@
 /* exclude.c -- exclude file names
 
-   Copyright (C) 1992, 1993, 1994, 1997, 1999, 2000, 2001, 2002, 2003 Free
-   Software Foundation, Inc.
+   Copyright (C) 1992, 1993, 1994, 1997, 1999, 2000, 2001, 2002, 2003,
+   2004 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,9 +28,6 @@
 
 #include <ctype.h>
 #include <errno.h>
-#ifndef errno
-extern int errno;
-#endif
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>

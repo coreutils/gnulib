@@ -1,6 +1,25 @@
-#serial 72   -*- autoconf -*-
+#serial 75   -*- autoconf -*-
 
-dnl Misc type-related macros for fileutils, sh-utils, textutils.
+dnl Misc type-related macros for coreutils.
+
+# Copyright (C) 1998, 2000, 2001, 2002, 2003, 2004 Free Software
+# Foundation, Inc.
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# Written by Jim Meyering.
 
 AC_DEFUN([gl_MACROS],
 [
@@ -73,15 +92,16 @@ AC_DEFUN([gl_MACROS],
 
   # used by sleep and shred
   AC_REQUIRE([gl_CLOCK_TIME])
-  AC_CHECK_FUNCS(gettimeofday)
+  AC_CHECK_FUNCS_ONCE(gettimeofday)
   AC_FUNC_GETTIMEOFDAY_CLOBBER
+  # used by shred
+  AC_CHECK_FUNCS_ONCE(directio)
 
   AC_REQUIRE([AC_FUNC_CLOSEDIR_VOID])
 
-  AC_CHECK_FUNCS( \
+  AC_CHECK_FUNCS_ONCE( \
     endgrent \
     endpwent \
-    fdatasync \
     ftruncate \
     gethrtime \
     hasmntopt \
@@ -100,16 +120,25 @@ AC_DEFUN([gl_MACROS],
     strrchr \
     sysctl \
     sysinfo \
+    tcgetpgrp \
     wcrtomb \
     tzset \
   )
 
-  # for test.c
-  AC_CHECK_FUNCS(setreuid setregid)
-
   AC_FUNC_STRTOD
+
+  AC_REQUIRE([cu_PREREQ_STAT_PROG])
   AC_REQUIRE([GL_FUNC_GETCWD_PATH_MAX])
   AC_REQUIRE([GL_FUNC_READDIR])
+
+  # for dd.c and shred.c
+  fetish_saved_libs=$LIBS
+    AC_SEARCH_LIBS([fdatasync], [rt posix4],
+		   [test "$ac_cv_search_fdatasync" = "none required" ||
+		    LIB_FDATASYNC=$ac_cv_search_fdatasync])
+    AC_SUBST([LIB_FDATASYNC])
+    AC_CHECK_FUNCS(fdatasync)
+  LIBS=$fetish_saved_libs
 
   # See if linking `seq' requires -lm.
   # It does on nearly every system.  The single exception (so far) is
@@ -146,7 +175,6 @@ AC_DEFUN([gl_MACROS],
   # If any of these functions don't exist (e.g. DJGPP 2.03),
   # use the corresponding stub.
   AC_CHECK_FUNC([fchdir], , [AC_LIBOBJ(fchdir-stub)])
-  AC_CHECK_FUNC([fchown], , [AC_LIBOBJ(fchown-stub)])
 
   AC_REQUIRE([gl_FUNC_FREE])
 ])
@@ -156,7 +184,7 @@ AC_DEFUN([gl_MACROS],
 # See the definition of ac_includes_default in `configure'.
 AC_DEFUN([gl_CHECK_ALL_HEADERS],
 [
-  AC_CHECK_HEADERS( \
+  AC_CHECK_HEADERS_ONCE( \
     errno.h  \
     fcntl.h \
     float.h \
@@ -177,13 +205,11 @@ AC_DEFUN([gl_CHECK_ALL_HEADERS],
     sys/fstyp.h \
     sys/ioctl.h \
     sys/mntent.h \
-    sys/mount.h \
     sys/param.h \
     sys/resource.h \
     sys/socket.h \
     sys/statfs.h \
     sys/statvfs.h \
-    sys/sysctl.h \
     sys/systeminfo.h \
     sys/time.h \
     sys/timeb.h \
@@ -193,8 +219,12 @@ AC_DEFUN([gl_CHECK_ALL_HEADERS],
     termios.h \
     unistd.h \
     utime.h \
-    values.h \
   )
+  AC_CHECK_HEADERS(sys/mount.h sys/sysctl.h, [], [],
+    [AC_INCLUDES_DEFAULT
+     [#if HAVE_SYS_PARAM_H
+       #include <sys/param.h>
+      #endif]])
 ])
 
 # This macro must be invoked before any tests that run the compiler.
@@ -240,7 +270,6 @@ AC_DEFUN([gl_CHECK_ALL_TYPES],
   AC_REQUIRE([AC_TYPE_SIZE_T])
   AC_REQUIRE([AC_TYPE_UID_T])
   AC_CHECK_TYPE(ino_t, unsigned long int)
-  AC_CHECK_TYPE(uintptr_t, size_t)
 
   gt_TYPE_SSIZE_T
 
@@ -249,7 +278,9 @@ AC_DEFUN([gl_CHECK_ALL_TYPES],
   AC_CHECK_TYPE(major_t, unsigned int)
   AC_CHECK_TYPE(minor_t, unsigned int)
 
+  AC_REQUIRE([gl_AC_TYPE_UINT32_T])
   AC_REQUIRE([gl_AC_TYPE_UINTMAX_T])
+  AC_REQUIRE([gl_AC_TYPE_UINTPTR_T])
   AC_REQUIRE([gl_AC_TYPE_UNSIGNED_LONG_LONG])
 
   AC_REQUIRE([AC_HEADER_MAJOR])

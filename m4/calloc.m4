@@ -1,8 +1,4 @@
-#serial 1
-
-# FIXME: remove this whole file once we can depend
-# on having the definition from autoconf.
-undefine([AC_FUNC_CALLOC])
+#serial 2
 
 # Determine whether calloc (N, S) returns non-NULL when N*S is zero.
 # If so, define HAVE_CALLOC.  Otherwise, define calloc to rpl_calloc

@@ -1,4 +1,4 @@
-/* Copyright (C) 1992,1995-1999,2000-2003 Free Software Foundation, Inc.
+/* Copyright (C) 1992,1995-1999,2000-2004 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software; you can redistribute it and/or modify
@@ -21,10 +21,7 @@
 #include <alloca.h>
 
 #include <errno.h>
-#if !_LIBC
-# if !defined errno && !defined HAVE_ERRNO_DECL
-extern int errno;
-# endif
+#ifndef __set_errno
 # define __set_errno(ev) ((errno) = (ev))
 #endif
 

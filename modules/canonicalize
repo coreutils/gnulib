@@ -17,7 +17,7 @@ configure.ac:
 AC_FUNC_CANONICALIZE_FILE_NAME
 
 Makefile.am:
-lib_SOURCES += canonicalize.h canonicalize.c
+lib_SOURCES += canonicalize.h canonicalize.c stat-macros.h
 
 Include:
 "canonicalize.h"

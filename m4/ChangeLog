@@ -1,3 +1,12 @@
+2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	More merge from coreutils.
+
+	* utimens.m4, utimecmp.m4: New files.
+	* backupfile.m4, euidacces.m4, acl.m4, afs.m4, calloc.m4, dirfd.m4,
+	fsusage.m4, jm-macros.m4, ls-mntd-fs.m4, md5.m4, mountlist.m4,
+	prereq.m4, sha.m4: Import changes from coreutils.
+
 2004-08-02  Simon Josefsson  <jas@extundo.com>
 
 	* getsubopt.m4: New file.

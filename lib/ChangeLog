@@ -1,3 +1,25 @@
+2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	More merges from coreutils.
+	* raise.c, readtokens0.h, readtokens0.c, strftime.h, utimens.h,
+	utimens.c, utimecmp.h, utimecmp.c, xnanosleep.h, xnanosleep.c,
+	yesno.h: New files.
+	* addext.c: Remove; no longer needed.
+	* yesno.c, argmatch.h, argmatch.c, backupfile.h, backupfile.c,
+	euidaccess.c, filemode.c, closeout.c, dup2.c, exclude.c,
+	fileblocks.c, filemode.c, fnmatch.c, fnmtahc_loop.c,
+	fopen-safer.c, fsusage.c, fsusage.h, ftruncate.c, full-write.c,
+	getdate.y, getloadavg.c, getugroups.c, hard-locale.c, hard-locale.h,
+	hash.c, human.c, human.h, lchown.c, lchown.h, makepath.c, makepath.h,
+	md5.c, md5.h, memchr.c, memcoll.c, memrchr.c, modechange.c,
+	modechange.h, mountlist.c, mountlist.h, nanosleep.c, posixtm.c,
+	putenv.c, quotearg.c, quotearg.h, readtokens.c, readutmp.c,
+	readutmp.h, rmdir.c, safe-read.c, save-cwd.c, savedir.c, setenv.c,
+	sig2str.c, stat.c, strtoimax.c, strverscmp.c, userspec.c, utime.c,
+	version-etc.c., xgethostname.c, xmemcoll.c, xreadlink.c, xstrtod.c,
+	xstrtod.h, xstrtoimax.c, xstrtol.c, xstrtol.h, xstrtoumax.c:
+	Import changes from coreutils.
+
 2004-08-03  Simon Josefsson  <jas@extundo.com>
 
 	* progname.h: Don't include stdbool.h.

@@ -1,4 +1,4 @@
-/* Copyright (C) 1991, 1994, 1997, 1998, 2000, 2003 Free Software Foundation, Inc.
+/* Copyright (C) 1991, 1994, 1997, 1998, 2000, 2003, 2004 Free Software Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C
    Library.  Bugs can be reported to bug-glibc@prep.ai.mit.edu.
@@ -26,10 +26,7 @@
 /* Include errno.h *after* sys/types.h to work around header problems
    on AIX 3.2.5.  */
 #include <errno.h>
-#if !_LIBC
-# if !defined errno
-extern int errno;
-# endif
+#ifndef __set_errno
 # define __set_errno(ev) ((errno) = (ev))
 #endif
 

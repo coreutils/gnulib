@@ -1,4 +1,4 @@
-#serial 7
+#serial 8
 
 dnl Find out how to get the file descriptor associated with an open DIR*.
 dnl From Jim Meyering

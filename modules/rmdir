@@ -3,6 +3,7 @@ rmdir() function: delete a directory.
 
 Files:
 lib/rmdir.c
+lib/stat-macros.h
 m4/rmdir.m4
 
 Depends-on:
@@ -11,6 +12,7 @@ configure.ac:
 gl_FUNC_RMDIR
 
 Makefile.am:
+lib_SOURCES += stat-macros.h
 
 Include:
 <unistd.h>

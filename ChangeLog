@@ -1,3 +1,17 @@
+2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	More merge from coreutils.
+	* modules/raise, modules/readtokens0, modules/utimens,
+	modules/utimecmp, module/xnanosleep: New files.
+	* modules/strftime: Add lib/strftime.h.
+	Change include from <time.h> to "strftime.h".
+	* modules/yesno: Add lib/yesno.h.
+	* modules/backupfile: Remove lib/addext.c.
+	* modules/euidaccess: Add stat-macros.h.
+	* modules/canonicalize, modules/euidaccess,
+	modules/filemode, modules/lchown, modules/makepath,
+	modules/rmdir, modules/stat: Likewise.
+	
 2004-08-03  Simon Josefsson  <jas@extundo.com>
 
 	* modules/progname (Depends-on): Don't depend on stdbool.
