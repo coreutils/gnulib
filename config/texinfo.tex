@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2003-10-23.19}
+\def\texinfoversion{2003-10-24.09}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
@@ -4954,8 +4954,8 @@ width0pt\relax} \fi
 %
 \def\activeparens{%
   \catcode`\(=\active \catcode`\)=\active
-  \catcode`\&=\active
   \catcode`\[=\active \catcode`\]=\active
+  \catcode`\&=\active
 }
 
 % Make control sequences which act like normal parenthesis chars.
@@ -4968,26 +4968,24 @@ width0pt\relax} \fi
 % so TeX would otherwise complain about undefined control sequence.
 \global\let(=\lparen \global\let)=\rparen
 \global\let[=\lbrack \global\let]=\rbrack
+\global\let& = \ampnr
 
 \gdef\functionparens{\boldbrax\let&=\amprm\parencount=0 }
 \gdef\boldbrax{\let(=\opnr\let)=\clnr\let[=\lbrb\let]=\rbrb}
-% This is used to turn on special parens
-% but make & act ordinary (given that it's active).
-\gdef\boldbraxnoamp{\let(=\opnr\let)=\clnr\let[=\lbrb\let]=\rbrb\let&=\ampnr}
 
 % Definitions of (, ) and & used in args for functions.
 % This is the definition of ( outside of all parentheses.
-\gdef\oprm#1 {{\rm\char`\(}#1 \bf \let(=\opnested
+\gdef\oprm#1 {{\rm\lparen}#1 \bf \let(=\opnested
   \global\advance\parencount by 1
 }
 %
 % This is the definition of ( when already inside a level of parens.
-\gdef\opnested{\char`\(\global\advance\parencount by 1 }
+\gdef\opnested{\lparen\global\advance\parencount by 1 }
 %
 \gdef\clrm{% Print a paren in roman if it is taking us back to depth of 0.
   % also in that case restore the outer-level definition of (.
-  \ifnum \parencount=1 {\rm \char `\)}\sl \let(=\oprm \else \char `\) \fi
-  \global\advance \parencount by -1 }
+  \ifnum \parencount=1 {\rm\rparen}\sl \let(=\oprm \else \rparen \fi
+  \global\advance\parencount by -1 }
 % If we encounter &foo, then turn on ()-hacking afterwards
 \gdef\amprm#1 {{\rm\&#1}\let(=\oprm \let)=\clrm\ }
 %
@@ -4995,57 +4993,44 @@ width0pt\relax} \fi
 } % End of definition inside \activeparens
 %% These parens (in \boldbrax) actually are a little bolder than the
 %% contained text.  This is especially needed for [ and ]
-\def\opnr{{\sf\char`\(}\global\advance\parencount by 1 }
-\def\clnr{{\sf\char`\)}\global\advance\parencount by -1 }
+\def\opnr{{\sf(}\global\advance\parencount by 1 }
+\def\clnr{{\sf)}\global\advance\parencount by -1 }
 \let\ampnr = \&
-\def\lbrb{{\bf\char`\[}}
-\def\rbrb{{\bf\char`\]}}
-
-% Active &'s sneak into the index arguments, so make sure it's defined.
-{
-  \catcode`& = \active
-  \global\let& = \ampnr
-}
+\def\lbrb{{\bf[}}
+\def\rbrb{{\bf]}}
 
 % \defname, which formats the name of the @def (not the args).
 % #1 is the function name.
 % #2 is the type of definition, such as "Function".
 %
 \def\defname#1#2{%
-  % How we'll output the type name.  Putting it in brackets helps
+  % Get the values of \leftskip and \rightskip as they were outside the @def...
+  \advance\leftskip by -\defbodyindent
+  %
+  % How we'll format the type name.  Putting it in brackets helps
   % distinguish it from the body text that may end up on the next line
   % just below it.
   \def\temp{#2}%
-  \ifx\temp\empty
-    \def\defnametype{}%
-  \else
-    \def\defnametype{[\rm #2]}%
-  \fi
+  \setbox0=\hbox{\kern\deflastargmargin \ifx\temp\empty\else [\rm\temp]\fi}
   %
-  % Get the values of \leftskip and \rightskip as they were outside the @def...
-  \dimen2=\leftskip
-  \advance\dimen2 by -\defbodyindent
+  % Figure out line sizes for the paragraph shape: the first line, ...
+  \dimen0=\hsize \advance \dimen0 by -\wd0
+  % ... and the continuations:
+  \dimen2=\hsize \advance \dimen2 by -\defargsindent
+  % (plain.tex says that \dimen1 should be used only as global.)
+  \parshape 2 0in \dimen0 \defargsindent \dimen2
   %
-  % Figure out values for the paragraph shape.
-  \setbox0=\hbox{\hskip \deflastargmargin{\defnametype}}%
-  \dimen0=\hsize \advance \dimen0 by -\wd0  % compute size for first line
-  \dimen1=\hsize \advance \dimen1 by -\defargsindent  % size for continuations
-  \parshape 2 0in \dimen0 \defargsindent \dimen1
-  %
-  % Output arg 2 ("Function" or some such) but stuck inside a box of
-  % width 0 so it does not interfere with linebreaking.
+  % Put the type name to the right margin.
   \noindent
-  %
-  {% Adjust \hsize to exclude the ambient margins,
-   % so that \rightline will obey them.
-   \advance \hsize by -\dimen2
-   \dimen3 = 0pt  % was -1.25pc
-   \rlap{\rightline{\defnametype\kern\dimen3}}%
+  \hbox to 0pt{%
+    \hfil\box0 \kern-\hsize
+    % \hsize has to be shortened this way:
+    \kern\leftskip
+    % Intentionally do not respect \righskip, since we need the space.
   }%
   %
   % Allow all lines to be underfull without complaint:
   \tolerance=10000 \hbadness=10000
-  \advance\leftskip by -\defbodyindent
   \exdentamount=\defbodyindent
   {\df #1}\enskip        % output function name
   % \defunargs will be called next to output the arguments, if any.
@@ -5247,15 +5232,18 @@ width0pt\relax} \fi
 {\tensl\hyphenchar\font=0}%
 #1%
 {\tensl\hyphenchar\font=45}%
-\ifnum\parencount=0 \else \errmessage{Unbalanced parentheses in @def}\fi%
+  \ifnum\parencount=0 \else
+    \errmessage{Unbalanced parentheses in @def}%
+    \global\parencount=0
+  \fi
   \defargscommonending
 }
 
 \def\deftypefunargs #1{%
 % Expand, preventing hyphenation at `-' chars.
 % Note that groups don't affect changes in \hyphenchar.
-% Use \boldbraxnoamp, not \functionparens, so that & is not special.
-\boldbraxnoamp
+% Use \boldbrax, not \functionparens, so that & is not special.
+\boldbrax
 \tclose{#1}% avoid \code because of side effects on active chars
   \defargscommonending
 }
