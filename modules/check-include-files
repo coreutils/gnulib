@@ -1,0 +1,231 @@
+#!/usr/bin/perl -w
+
+use strict;
+use Getopt::Long;
+use Coda;
+
+(my $VERSION = '$Revision: 1.1 $ ') =~ tr/[0-9].//cd;
+(my $ME = $0) =~ s|.*/||;
+
+use constant ST_INIT => 1;
+use constant ST_FILES => 2;
+use constant ST_DEPENDENTS => 3;
+
+# Read a module description file and derive the set of files
+# included directly by any .c or .h file listed in the `Files:' section.
+# Take the union of all such sets for any dependent modules.
+# Then, compare that set with the set derived from the names
+# listed in the various Files: sections.
+
+# Parse a module file (returning list of Files: names and
+# list of dependent-modules.
+# my ($file, $dep) = parse_module_file $module_file;
+sub parse_module_file ($)
+{
+  my ($module_file) = @_;
+
+  open FH, '<', $module_file
+    or die "$ME: can't open `$module_file' for reading: $!\n";
+
+  my %file_set;
+  my %dep_set;
+
+  my $state = ST_INIT;
+  while (defined (my $line = <FH>))
+    {
+      if ($state eq ST_INIT)
+	{
+	  if ($line =~ /^Files:$/)
+	    {
+	      $state = ST_FILES;
+	    }
+	  elsif ($line =~ /^Depends-on:$/)
+	    {
+	      $state = ST_DEPENDENTS;
+	    }
+	}
+      else
+	{
+	  chomp $line;
+	  $line =~ s/^\s+//;
+	  $line =~ s/\s+$//;
+	  if ( ! $line)
+	    {
+	      $state = ST_INIT;
+	      next;
+	    }
+
+	  if ($state eq ST_FILES)
+	    {
+	      $file_set{$line} = 1;
+	    }
+	  elsif ($state eq ST_DEPENDENTS)
+	    {
+	      $dep_set{$line} = 1;
+	    }
+	}
+    }
+  close FH;
+
+  # my @t = sort keys %file_set;
+  # print "files: @t\n";
+  # my @u = sort keys %dep_set;
+  # print "dependents: @u\n";
+
+  return (\%file_set, \%dep_set);
+}
+
+# Extract the set of files required for this module, including
+# those required via dependent modules.
+
+# Files:
+# lib/stat.c
+# m4/stat.m4
+# lib/foo.h
+#
+# Depends-on:
+# some-other-module
+
+
+sub usage ($)
+{
+  my ($exit_code) = @_;
+  my $STREAM = ($exit_code == 0 ? *STDOUT : *STDERR);
+  if ($exit_code != 0)
+    {
+      print $STREAM "Try `$ME --help' for more information.\n";
+    }
+  else
+    {
+      # FIXME: add new option descriptions here
+      print $STREAM <<EOF;
+Usage: $ME [OPTIONS] FIXME: FILE ?
+
+OPTIONS:
+
+   --help             display this help and exit
+   --version          output version information and exit
+   --verbose	      generate verbose output
+
+EOF
+    }
+  exit $exit_code;
+}
+
+sub find_included_lib_files ($)
+{
+  my ($file) = @_;
+
+  # Special cases...
+  my %special_non_dup = ( 'fnmatch_loop.c' => 1, 'regex.c' => 1 );
+
+  my %inc;
+  open FH, '<', $file
+    or die "$ME: can't open `$file' for reading: $!\n";
+
+  while (defined (my $line = <FH>))
+    {
+      # Ignore test-driver code at end of file.
+      $line =~ m!^\#if(def)? TEST_!
+	and last;
+
+      $line =~ m!^\s*\#\s*include\s+"!
+	or next;
+      $line =~ s///;
+      chomp $line;
+      $line =~ s/".*//;
+      exists $inc{$line} && ! exists $special_non_dup{$line}
+	and warn "$ME: $file: duplicate inclusion of $line\n";
+
+      # Some known exceptions.
+      $file =~ /\bfull-write\.c$/ && $line eq 'full-read.h'
+	and next;
+      $file =~ /\bsafe-read.c$/ && $line eq 'safe-write.h'
+	and next;
+      $file =~ /\bhash\.c$/ && $line eq 'obstack.h'
+	and next;
+
+      $inc{$line} = 1;
+    }
+  close FH;
+
+  return \%inc;
+}
+
+{
+  GetOptions
+    (
+     # FIXME: add new options here
+     help => sub { usage 0 },
+     version => sub { print "$ME version $VERSION\n"; exit },
+    ) or usage 1;
+
+  # Make sure we have the right number of non-option arguments.
+  # Always tell the user why we fail.
+  # FIXME: this assumes there is exactly 1 required argument.
+  @ARGV < 1
+    and (warn "$ME: missing FILE argument\n"), usage 1;
+
+  my %file;
+  my %module_all_files;
+  my %dep;
+  my %seen_module;
+
+  my @m = $ARGV[0];
+
+  while (@m)
+    {
+      my $m = pop @m;
+      # warn "M: $m\n";
+      exists $seen_module{$m}
+	and next;
+      $seen_module{$m} = 1;
+      my ($file, $dep) = parse_module_file $m;
+      my @t = sort keys %$file;
+      # warn "$m: @t\n";
+      push @m, keys %$dep;
+      foreach my $f (keys %$file)
+	{
+	  $module_all_files{$f} = 1;
+	}
+    }
+
+  my %exempt_header =
+    (
+     # Exempt headers like unlocked-io.h that are `#include'd
+     # but not necessarily used.
+     'unlocked-io.h' => 1,
+
+     # Give gettext.h a free pass only when included from lib/error.c,
+     # since that we've made that exception solely to make the error
+     # module easier to use -- at RMS's request.
+     'lib/error.c:gettext.h' => 1,
+    );
+
+  my @t = sort keys %module_all_files;
+  # warn "ALL files: @t\n";
+
+  # Derive from %module_all_files (by parsing the .c and .h files therein),
+  # the list of all #include'd files that reside in lib/.
+  foreach my $f (keys %module_all_files)
+    {
+      $f =~ /\.[ch]$/
+	or next;
+      # FIXME: this is too naive
+      my $inc = find_included_lib_files "../$f";
+      foreach my $i (sort keys %$inc)
+	{
+	  my $lib_file = "lib/$i";
+	  exists $exempt_header{"$f:$i"}
+	    || exists $exempt_header{$i}
+	      and next;
+	  !exists $module_all_files{$lib_file} && -f "../lib/$i"
+	    and warn "$f: $i is `#include'd, but not "
+	      . "listed in module's Files: section\n";
+	}
+      #my @t = sort keys %$inc;
+      #print "** $f: @t\n";
+    }
+
+  exit 0;
+}
