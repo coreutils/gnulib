@@ -45,7 +45,7 @@
 	* pagealign_alloc.c (MAP_FILE, MAP_FAILED): Define fallbacks.
 
 2005-03-03  Derek R. Price  <derek@ximbiot.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* pagealign_alloc.h: New file.
 	* pagealign_alloc.c: New file.
@@ -282,7 +282,7 @@
 2004-12-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* c-strtod.c (STRTOD): Depend on HAVE_C99_STRTOLD, not
-        HAVE_DECL_STRTOLD.
+	HAVE_DECL_STRTOLD.
 
 2004-12-23  Paul Eggert  <eggert@cs.ucla.edu>
 
@@ -626,7 +626,7 @@
 	with MAXSIZE.
 
 2004-11-02  Derek R. Price  <derek@ximbiot.com>
-       and  Paul Eggert  <eggert@cs.ucla.edu>
+	and  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getdate.y [!TEST]: Include <stdio.h>, since we use sprintf now.
 	(get_date): Overparenthesize to avoid GCC warning.
@@ -793,7 +793,7 @@
 	* snprintf.c (snprintf): Handle size==0.
 
 2004-10-01  Simon Josefsson  <jas@extundo.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* snprintf.c: Include <stdarg.h>, <stdlib.h>, <string.h>.
 	(snprintf): Declare 'args'.
@@ -1094,7 +1094,7 @@
 	Problem reported by Dan Jacobson.
 
 2004-06-01  Paul Eggert  <eggert@cs.ucla.edu>
-       and  Jim Meyering  <jim@meyering.net>
+	and  Jim Meyering  <jim@meyering.net>
 
 	Merge from coreutils CVS.
 
@@ -1274,7 +1274,7 @@
 	* getndelim2.c (getndelim2): Upon realloc failure, don't leak memory.
 
 2004-04-20  Jim Meyering  <jim@meyering.net>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* localcharset.c (get_charset_aliases) [!VMS && !WIN32]: Don't leak
 	memory when realloc fails.
@@ -1395,7 +1395,7 @@
 	* getopt.h: Sync with libc CVS.
 
 2004-03-18  Paul Eggert  <eggert@twinsun.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* mbswidth.h: Include <wchar.h> only if HAVE_DECL_MBSWIDTH_IN_WCHAR_H,
 	not on all platforms that have <wchar.h>.
@@ -1599,7 +1599,7 @@
 	* argp-{help.c,parse.c,namefrob.h}, argp.h: update from libc.
 
 2003-11-23  Paul Eggert  <eggert@twinsun.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* printf-parse.h: Don't include sys/types.h.
 	(ARG_NONE): New macro.
@@ -1642,7 +1642,7 @@
 	Reported by Geoff Collyer via Arnold Robbins.
 
 2003-11-16  Paul Eggert  <eggert@twinsun.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Protect against address arithmetic overflow.
 	* printf-args.h: Include stddef.h.
@@ -1758,7 +1758,7 @@
 	* linebuffer.c: Include <string.h> for declaration of memset.
 
 2003-10-30  Paul Eggert  <eggert@twinsun.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* vasprintf.c: Include <limits.h>, <stdlib.h>.
 	(vasprintf): Fail if the resulting length doesn't fit in an 'int'.
@@ -2029,7 +2029,7 @@
 	* version-etc-2.c: Remove file.
 
 2003-09-25  Jim Meyering  <jim@meyering.net>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	This lets translators provide better translations for the
 	"Written by ..." part of --version output.
@@ -2131,7 +2131,7 @@
 	* xgetdomainname.c: New file.
 
 2003-09-25  Simon Josefsson  <jas@extundo.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* getdomainname.h: New file.
 	* getdomainname.c: New file.
@@ -6262,6 +6262,6 @@
 
 
 Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005
-  Free Software Foundation, Inc.
+Free Software Foundation, Inc.
 Copying and distribution of this file, with or without modification,
 are permitted provided the copyright notice and this notice are preserved.
