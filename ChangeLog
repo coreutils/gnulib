@@ -1,6 +1,7 @@
 2003-05-30  Bruno Haible  <bruno@clisp.org>
 
 	* modules/gettext: Add files m4/nls.m4 and m4/po.m4.
+	* config/config.rpath: Upgrade to gettext-0.12.1.
 
 2003-05-22    <karl@gnu.org>
 
