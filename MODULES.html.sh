@@ -1605,6 +1605,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module base64
   func_module diacrit
   func_module getline
   func_module getnline

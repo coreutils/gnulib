@@ -1,5 +1,9 @@
 2004-11-30  Simon Josefsson  <jas@extundo.com>
 
+	* base64.m4: New file.
+
+2004-11-30  Simon Josefsson  <jas@extundo.com>
+
 	* restrict.m4: Add copyright and copying conditions.
 
 2004-11-25  Paul Eggert  <eggert@cs.ucla.edu>

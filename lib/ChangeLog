@@ -1,3 +1,7 @@
+2004-11-28  Simon Josefsson  <jas@extundo.com>
+
+	* base64.h, base64.c: New file.
+
 2004-11-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getcwd.h: New file, which I forgot to check in on 2004-11-25.
