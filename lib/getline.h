@@ -23,13 +23,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 # include <stddef.h>
 # include <stdio.h>
 
+/* Get ssize_t.  */
+# include <sys/types.h>
+
 /* glibc2 has these functions declared in <stdio.h>.  Avoid redeclarations.  */
 # if __GLIBC__ < 2
 
-extern int getline (char **_lineptr, size_t *_linesize, FILE *_stream);
+extern ssize_t getline (char **_lineptr, size_t *_linesize, FILE *_stream);
 
-extern int getdelim (char **_lineptr, size_t *_linesize, int _delimiter,
-		     FILE *_stream);
+extern ssize_t getdelim (char **_lineptr, size_t *_linesize, int _delimiter,
+			  FILE *_stream);
 
 # endif
 

@@ -1,3 +1,11 @@
+2003-07-24  Derek Robert Price  <derek@ximbiot.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* getline.h (getline, getdelim): Change return type to ssize_t.
+	* getline.c (getline, getdelim): Likewise.
+	Remove _GNU_SOURCE define; now it's defined in config.h through
+	m4/getline.m4.
+
 2003-07-22  Paul Eggert  <eggert@twinsun.com>
 
 	* xalloc.h (XCALLOC, XREALLOC, CCLONE): Fix under- and
