@@ -1,3 +1,7 @@
+2003-09-19  Karl Berry  <karl@gnu.org>
+
+	* argp.h: update from libc.
+
 2003-09-16  Paul Eggert  <eggert@twinsun.com>
 
 	* linebuffer.c (readlinebuffer): Return NULL immediately upon
