@@ -1,3 +1,9 @@
+2004-01-27  Bruno Haible  <bruno@clisp.org>
+
+	* execute.h: New file, from GNU gettext.
+	* execute.c: New file, from GNU gettext.
+	* w32spawn.h: New file, from GNU gettext.
+
 2004-01-23  Paul Eggert  <eggert@twinsun.com>
 
 	Exit-status fix from coreutils.

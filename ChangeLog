@@ -1,3 +1,8 @@
+2004-01-27  Bruno Haible  <bruno@clisp.org>
+
+	* modules/execute: New file.
+	* MODULES.html.sh (func_all_modules): Add execute.
+
 2004-01-23  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/argmatch, modules/obstack, modules/xstrtol:
