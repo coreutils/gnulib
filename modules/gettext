@@ -20,7 +20,7 @@ m4/progtest.m4
 m4/stdint_h.m4
 m4/uintmax_t.m4
 m4/ulonglong.m4
-config.rpath
+config/config.rpath
 
 Depends-on:
 

@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2003-01-13 16:03:12 $'
+cvsdatestamp='$Date: 2003-01-13 21:57:21 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -318,13 +318,19 @@ func_create_testdir ()
 
   # Create directories.
   for d in `echo "$files" | sed -n -e 's,^\(.*\)/[^/]*,\1,p'`; do
-    mkdir -p "$testdir/$d"
+    if test "$d" != config; then
+      mkdir -p "$testdir/$d"
+    fi
   done
 
   # Copy files.
   for f in $files; do
-    ln "$gnulib_dir/$f" "$testdir/$f" 2>/dev/null ||
-    cp -p "$gnulib_dir/$f" "$testdir/$f"
+    case "$f" in
+      config/*) g=`echo "$f" | sed -e 's,^config/,,'` ;;
+      *) g="$f" ;;
+    esac
+    ln "$gnulib_dir/$f" "$testdir/$g" 2>/dev/null ||
+    cp -p "$gnulib_dir/$f" "$testdir/$g"
   done
 
   # Create lib/Makefile.am.
