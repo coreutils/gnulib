@@ -14,7 +14,7 @@ configure.ac:
 gl_FUNC_LCHOWN
 
 Makefile.am:
-lib_SOURCES += lchown.h stat-macros.h
+lib_SOURCES += stat-macros.h
 
 Include:
 "lchown.h"
