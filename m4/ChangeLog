@@ -1,3 +1,8 @@
+2002-12-18  Bruno Haible  <bruno@clisp.org>
+
+	* strftime.m4 (_jm_STRFTIME_PREREQS): Don't test for localtime_r.
+	* jm-mktime.m4 (jm_FUNC_MKTIME): Likewise.
+
 2002-12-17  Bruno Haible  <bruno@clisp.org>
 
 	* mbswidth.m4 (jm_PREREQ_MBSWIDTH): Remove checks for limits.h,

@@ -4,9 +4,8 @@ dnl This macro is intended to be used solely in this file.
 dnl These are the prerequisite macros for GNU's strftime.c replacement.
 AC_DEFUN([_jm_STRFTIME_PREREQS],
 [
- dnl strftime.c uses localtime_r and the underyling system strftime
- dnl if they exist.
- AC_CHECK_FUNCS(localtime_r strftime)
+ dnl strftime.c uses the underyling system strftime if it exists.
+ AC_CHECK_FUNCS(strftime)
 
  AC_CHECK_HEADERS(limits.h)
  AC_CHECK_FUNCS(bcopy tzset mempcpy memcpy memset)
