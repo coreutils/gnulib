@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2003-08-17 15:25:00 $'
+cvsdatestamp='$Date: 2003-09-16 14:53:35 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -300,6 +300,11 @@ func_create_testdir ()
     for module in $modules; do
       func_verify_module
       if test -n "$module"; then
+        # Duplicate dependenies are harmless, but Jim wants a warning.
+        duplicated_deps=`func_get_dependencies $module | sort | uniq -d`
+        if test -n "$duplicated_deps"; then
+          echo "warning: module $module has duplicated dependencies: "`echo $duplicated_deps` 1>&2
+        fi
         xmodules="$xmodules $module "`func_get_dependencies $module`
       fi
     done

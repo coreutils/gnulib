@@ -1,3 +1,8 @@
+2003-09-16  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_create_testdir): Warn about duplicated
+	dependencies.
+
 2003-09-15  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/argmatch, modules/fatal, modules/obstack,
