@@ -1,3 +1,8 @@
+2005-03-15  Bruno Haible  <bruno@clisp.org>
+
+	* regex.c (byte_re_match_2_internal): Rename local variable 'not' to
+	'negate'.
+
 2005-03-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* mktime.c (TYPE_TWOS_COMPLEMENT, TYPE_ONES_COMPLEMENT,
