@@ -1469,7 +1469,7 @@ func_all_modules ()
 
   func_begin_table
   func_module gcd
-  #func_module minmax
+  func_module minmax
   func_end_table
 
   element="Environment variables <stdlib.h>"

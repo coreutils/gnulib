@@ -1,0 +1,19 @@
+Description:
+MIN, MAX macros.
+
+Files:
+lib/minmax.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += minmax.h
+
+Include:
+"minmax.h"
+
+Maintainer:
+Bruno Haible
+
