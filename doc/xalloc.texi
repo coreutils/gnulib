@@ -1,0 +1,39 @@
+@node Out of Memory handling
+@section Out of Memory handling
+
+@cindex Out of Memory handling
+@cindex Memory allocation failure
+The GSS API does not have a standard error code for the out of memory
+error condition.  Instead of adding a non-standard error code, this
+library has chosen to adopt a different strategy.  Out of memory
+handling happens in rare situations, but performing the out of memory
+error handling after almost all API function invocations pollute your
+source code and might make it harder to spot more serious problems.
+The strategy chosen improve code readability and robustness.
+
+@cindex Aborting execution
+For most applications, aborting the application with an error message
+when the out of memory situation occur is the best that can be wished
+for.  This is how the library behaves by default.
+
+@vindex xalloc_fail_func
+However, we realize that some applications may not want to have the
+GSS library abort execution in any situation.  The GSS library support
+a hook to let the application regain control and perform its own
+cleanups when an out of memory situation has occured.  The application
+can define a function (having a @code{void} prototype, i.e., no return
+value and no parameters) and set the library variable
+@code{xalloc_fail_func} to that function.  The variable should be
+declared as follows.
+
+@example
+extern void (*xalloc_fail_func) (void);
+@end example
+
+The GSS library will invoke this function if an out of memory error
+occurs.  Note that after this the GSS library is in an undefined
+state, so you must unload or restart the application to continue call
+GSS library functions.  The hook is only intended to allow the
+application to log the situation in a special way.  Of course, care
+must be taken to not allocate more memory, as that will likely also
+fail.
