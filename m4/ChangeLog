@@ -1,3 +1,8 @@
+2004-03-31  Jim Meyering  <jim@meyering.net>
+
+	* prereq.m4: Require AC_FUNC_MALLOC, not jm_FUNC_MALLOC.
+	* xalloc.m4: Likewise.
+
 2004-03-30  Jim Meyering  <jim@meyering.net>
 
 	* realloc.m4: Remove file, since now it does no more than
