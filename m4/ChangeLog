@@ -1,6 +1,16 @@
+2003-08-19  Jim Meyering  <jim@meyering.net>
+
+	* lib-ld.m4: Revert yesterday's change, per Bruno's request here:
+	http://mail.gnu.org/archive/html/bug-gnulib/2003-08/msg00155.html
+
 2003-08-19  Bruno Haible  <bruno@clisp.org>
 
 	* xalloc.m4 (gl_PREREQ_XSTRDUP): Don't check for <string.h> any more.
+
+2003-08-18  Jim Meyering  <jim@meyering.net>
+
+	* getloadavg.m4: Use [\t ], not [ \t] (where \t is a literal TAB).
+	* lib-ld.m4: Likewise.
 
 2003-08-17  Simon Josefsson  <jas@extundo.com>
 
