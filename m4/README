@@ -1,10 +1,18 @@
-The files in this directory are shared between the fileutils, sh-utils,
-and textutils packages.
+Many of the files in this directory are shared between the diffutils,
+fileutils, sh-utils, and textutils packages -- and others, so if you
+change them, try to ensure that you don't break those packages.
+Unfortunately, that's hard.
+
+One way to do that is to put the modified .m4 file in each of the packages,
+run `make dist' to create a .tar.gz file, then build that package on as
+many different types of systems as possible.  Then repeat, but using the
+original version of the .m4 file.  Run configure like this each time
+`./configure --cache=config.cache' and be sure to save the following files
+from each run: config.cache config.status config.out config.h*.
+Then compare the two versions of each of those files and be prepared to
+explain any differences.
 
 These files are used by a program called aclocal (part of the GNU automake
 package).  aclocal uses these files to create aclocal.m4 which is in turn
 used by autoconf to create the configure script at the top level in
 this distribution.
-
-The Makefile.am file in this directory is automatically generated
-from the template file, Makefile.am.in.
