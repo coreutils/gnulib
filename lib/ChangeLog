@@ -1,3 +1,7 @@
+2003-10-04  Karl Berry  <karl@gnu.org>
+
+	* argp*: update from libc.
+
 2003-10-01  Larry Jones  <lawrence.jones@eds.com>
 
 	* getpass.c (getpass): Use a no-op fseek when switching from input to
