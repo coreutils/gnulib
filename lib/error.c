@@ -55,7 +55,7 @@ void exit ();
 
 #include "error.h"
 
-#ifndef _LIBC
+#if !_LIBC
 # include "unlocked-io.h"
 #endif
 
