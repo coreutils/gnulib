@@ -20,7 +20,11 @@
 #endif
 
 /* Specification.  */
-#include "printf-parse.h"
+#if WIDE_CHAR_VERSION
+# include "wprintf-parse.h"
+#else
+# include "printf-parse.h"
+#endif
 
 /* Get size_t, NULL.  */
 #include <stddef.h>
@@ -36,13 +40,25 @@
 /* malloc(), realloc(), free().  */
 #include <stdlib.h>
 
+#if WIDE_CHAR_VERSION
+# define PRINTF_PARSE wprintf_parse
+# define CHAR_T wchar_t
+# define DIRECTIVE wchar_t_directive
+# define DIRECTIVES wchar_t_directives
+#else
+# define PRINTF_PARSE printf_parse
+# define CHAR_T char
+# define DIRECTIVE char_directive
+# define DIRECTIVES char_directives
+#endif
+
 #ifdef STATIC
 STATIC
 #endif
 int
-printf_parse (const char *format, char_directives *d, arguments *a)
+PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 {
-  const char *cp = format;		/* pointer into format */
+  const CHAR_T *cp = format;		/* pointer into format */
   int arg_posn = 0;		/* number of regular arguments consumed */
   unsigned int d_allocated;		/* allocated elements of d->dir */
   unsigned int a_allocated;		/* allocated elements of a->arg */
@@ -51,7 +67,7 @@ printf_parse (const char *format, char_directives *d, arguments *a)
 
   d->count = 0;
   d_allocated = 1;
-  d->dir = malloc (d_allocated * sizeof (char_directive));
+  d->dir = malloc (d_allocated * sizeof (DIRECTIVE));
   if (d->dir == NULL)
     /* Out of memory.  */
     return -1;
@@ -88,11 +104,11 @@ printf_parse (const char *format, char_directives *d, arguments *a)
 
   while (*cp != '\0')
     {
-      char c = *cp++;
+      CHAR_T c = *cp++;
       if (c == '%')
 	{
 	  int arg_index = -1;
-	  char_directive *dp = &d->dir[d->count];/* pointer to next directive */
+	  DIRECTIVE *dp = &d->dir[d->count];/* pointer to next directive */
 
 	  /* Initialize the next directive.  */
 	  dp->dir_start = cp - 1;
@@ -108,7 +124,7 @@ printf_parse (const char *format, char_directives *d, arguments *a)
 	  /* Test for positional argument.  */
 	  if (*cp >= '0' && *cp <= '9')
 	    {
-	      const char *np;
+	      const CHAR_T *np;
 
 	      for (np = cp; *np >= '0' && *np <= '9'; np++)
 		;
@@ -175,7 +191,7 @@ printf_parse (const char *format, char_directives *d, arguments *a)
 	      /* Test for positional argument.  */
 	      if (*cp >= '0' && *cp <= '9')
 		{
-		  const char *np;
+		  const CHAR_T *np;
 
 		  for (np = cp; *np >= '0' && *np <= '9'; np++)
 		    ;
@@ -224,7 +240,7 @@ printf_parse (const char *format, char_directives *d, arguments *a)
 		  /* Test for positional argument.  */
 		  if (*cp >= '0' && *cp <= '9')
 		    {
-		      const char *np;
+		      const CHAR_T *np;
 
 		      for (np = cp; *np >= '0' && *np <= '9'; np++)
 			;
@@ -450,10 +466,10 @@ printf_parse (const char *format, char_directives *d, arguments *a)
 	  d->count++;
 	  if (d->count >= d_allocated)
 	    {
-	      char_directive *memory;
+	      DIRECTIVE *memory;
 
 	      d_allocated = 2 * d_allocated;
-	      memory = realloc (d->dir, d_allocated * sizeof (char_directive));
+	      memory = realloc (d->dir, d_allocated * sizeof (DIRECTIVE));
 	      if (memory == NULL)
 		/* Out of memory.  */
 		goto error;
@@ -474,3 +490,8 @@ error:
     free (d->dir);
   return -1;
 }
+
+#undef DIRECTIVES
+#undef DIRECTIVE
+#undef CHAR_T
+#undef PRINTF_PARSE
