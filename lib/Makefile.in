@@ -61,7 +61,7 @@ all: libfu.a
 
 subdir = lib
 Makefile: ../config.status Makefile.in
-	cd ..; CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= ./config.status
+	cd .. && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= ./config.status
 
 installdirs:
 
