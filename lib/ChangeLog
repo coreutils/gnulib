@@ -1,3 +1,10 @@
+2004-09-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* mempcpy.h: Wrap the entire include file inside #ifndef mempcpy,
+	in case some system header has #define'd it.  Problem reported by
+	Soeren D. Schulze in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2004-09/msg00017.html>.
+
 2004-09-08  Bruno Haible  <bruno@clisp.org>
 
 	* stdint_.h.in: New file, taken from GNU clisp.
