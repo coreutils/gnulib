@@ -6,7 +6,7 @@
 	functions.
 	(func_import): New function, extracted from big case statement. Use
 	func_get_license, func_modules_transitive_closure,
-	func_modules_to_filelist.
+	func_modules_to_filelist. Initialize opt_lgpl.
 	(func_create_testdir): Use func_modules_transitive_closure,
 	func_modules_to_filelist.
 

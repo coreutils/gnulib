@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-10-15 15:40:45 $'
+cvsdatestamp='$Date: 2004-10-15 15:43:58 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -464,6 +464,7 @@ func_import ()
   if test -n "$libtool"; then
     opt_libtool="--libtool"
   fi
+  opt_lgpl=
   if test -n "$lgpl"; then
     opt_lgpl="--lgpl"
   fi
