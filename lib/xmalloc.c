@@ -59,7 +59,7 @@ xmalloc (n)
   p = malloc (n);
   if (p == 0)
     /* Must exit with 2 for `cmp'.  */
-    error (2, 0, "virtual memory exhausted");
+    error (2, 0, "memory exhausted");
   return p;
 }
 
@@ -83,6 +83,6 @@ xrealloc (p, n)
   p = realloc (p, n);
   if (p == 0)
     /* Must exit with 2 for `cmp'.  */
-    error (2, 0, "virtual memory exhausted");
+    error (2, 0, "memory exhausted");
   return p;
 }
