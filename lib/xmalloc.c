@@ -49,6 +49,20 @@ void error (int, int, const char *, ...);
 void error ();
 #endif
 
+static VOID *
+fixup_null_alloc (n)
+     size_t n;
+{
+  VOID *p;
+
+  p = 0;
+  if (n == 0)
+    p = malloc ((size_t) 1);
+  if (p == 0)
+    error (xmalloc_exit_failure, 0, "memory exhausted");
+  return p;
+}
+
 /* Allocate N bytes of memory dynamically, with error checking.  */
 
 VOID *
@@ -59,14 +73,13 @@ xmalloc (n)
 
   p = malloc (n);
   if (p == 0)
-    error (xmalloc_exit_failure, 0, "memory exhausted");
+    p = fixup_null_alloc (n);
   return p;
 }
 
 /* Change the size of an allocated block of memory P to N bytes,
    with error checking.
-   If P is NULL, run xmalloc.
-   If N is 0, run free and return NULL.  */
+   If P is NULL, run xmalloc.  */
 
 VOID *
 xrealloc (p, n)
@@ -75,13 +88,8 @@ xrealloc (p, n)
 {
   if (p == 0)
     return xmalloc (n);
-  if (n == 0)
-    {
-      free (p);
-      return 0;
-    }
   p = realloc (p, n);
   if (p == 0)
-    error (xmalloc_exit_failure, 0, "memory exhausted");
+    p = fixup_null_alloc (n);
   return p;
 }
