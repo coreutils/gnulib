@@ -1,4 +1,4 @@
-/* Copyright (C) 2001-2002 Free Software Foundation, Inc.
+/* Copyright (C) 2001, 2002, 2003 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -29,10 +29,14 @@
 # undef true
 #endif
 
-/* For the sake of symbolic names in gdb, define _Bool as an enum type.  */
+/* For the sake of symbolic names in gdb, define true and false as
+   enum constants.  However, do not define _Bool as the enum type,
+   since the enum type might be compatible with unsigned int, whereas
+   _Bool must promote to int.  */
 #ifndef __cplusplus
 # if !@HAVE__BOOL@
-typedef enum { false = 0, true = 1 } _Bool;
+enum { false = 0, true = 1 };
+typedef signed char _Bool;
 # endif
 #else
 typedef bool _Bool;
