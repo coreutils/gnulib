@@ -1,3 +1,8 @@
+2003-09-25  Simon Josefsson  <jas@extundo.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* getdomainname.m4: New file.
+
 2003-09-17  Paul Eggert  <eggert@twinsun.com>
 
 	* extensions.m4 (gl_USE_SYSTEM_EXTENSIONS): Call AC_BEFORE first,
