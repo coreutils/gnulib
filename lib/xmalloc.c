@@ -25,10 +25,11 @@
 #define VOID char
 #endif
 
+#include <sys/types.h>
+
 #if STDC_HEADERS
 #include <stdlib.h>
 #else
-#include <sys/types.h>
 VOID *malloc ();
 VOID *realloc ();
 void free ();
