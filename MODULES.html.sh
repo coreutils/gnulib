@@ -1399,7 +1399,7 @@ func_all_modules ()
   func_begin_table
   func_module c-bs-a
   func_module assert
-  #func_module exit
+  func_module exit
   func_module atexit
   func_module strtod
   func_module strtol

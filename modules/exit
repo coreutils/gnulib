@@ -1,0 +1,19 @@
+Description:
+exit() function: program termination.
+
+Files:
+lib/exit.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += exit.h
+
+Include:
+"exit.h"
+
+Maintainer:
+Bruno Haible
+
