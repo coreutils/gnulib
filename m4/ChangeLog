@@ -6,8 +6,10 @@
 
 	* Makefile.am.in (Makefile.am): Don't mention jm-glibc-io.m4n
 	and jm-glibc-io.m4, as they are no longer a special case.
-	* jm-glibc-io.m4: New file.
-	* jm-glibc-io.m4n: Remove.
+	* jm-glibc-io.m4: Rename from jm-glibc-io.m4n, and remove the
+	kludge and the auto-generation stuff.  Check only whether the
+	functions are declared, not whether they exist, since older hosts
+	that don't declare the functions can't use the optimization anyway.
 
 2002-07-06  Jim Meyering  <meyering@lucent.com>
 
