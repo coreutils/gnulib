@@ -1,3 +1,8 @@
+2004-02-23  Karl Berry  <karl@gnu.org>
+
+	* srclistvars.sh (GNUORG) [karl]: redefine.
+	* srclist.txt: add maintain/standards documents.
+
 2004-02-16  Karl Berry  <karl@gnu.org>
 
 	* mkinstalldirs, install-sh: update from automake.

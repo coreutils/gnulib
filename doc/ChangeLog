@@ -1,3 +1,8 @@
+2004-02-23  Karl Berry  <karl@gnu.org>
+
+	* maintain.texi, standards.texi, make-stds.texi: new files
+	(from fencepost.gnu.org:/gd/gnuorg).
+
 2004-01-18  Karl Berry  <karl@gnu.org>
 
 	* gpl.texi, lgpl.texi: new files.
