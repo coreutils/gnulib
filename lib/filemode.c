@@ -32,9 +32,13 @@
 #define S_IEXEC S_IXUSR
 #endif
 
+#if 0 /* This is unreliable, since GCC 2.5 always has S_ISREG in its
+	 fixed headers but it does not always have mode_t.
+	 It seems safer not to try to use mode_t ever.  */
 #if !defined(S_ISREG) || defined(NO_MODE_T)
 /* Doesn't have POSIX.1 stat stuff or doesn't have mode_t.  */
 #define mode_t unsigned short
+#endif
 #endif
 
 #ifdef	STAT_MACROS_BROKEN
@@ -156,7 +160,7 @@ mode_string (mode, str)
      unsigned short mode;
      char *str;
 {
-  str[0] = ftypelet (mode);
+  str[0] = ftypelet ((long) mode);
   rwx ((mode & 0700) << 0, &str[1]);
   rwx ((mode & 0070) << 3, &str[4]);
   rwx ((mode & 0007) << 6, &str[7]);
@@ -177,7 +181,7 @@ mode_string (mode, str)
 
 static char
 ftypelet (bits)
-     mode_t bits;
+     long bits;
 {
 #ifdef S_ISBLK
   if (S_ISBLK (bits))
