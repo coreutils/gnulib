@@ -1,5 +1,12 @@
 2003-08-17  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_create_testdir): Handle gl_USE_SYSTEM_EXTENSIONS
+	like AC_GNU_SOURCE.
+	* modules/extensions (configure.ac): Comment out the invocation of
+	gl_USE_SYSTEM_EXTENSIONS.
+
+2003-08-17  Bruno Haible  <bruno@clisp.org>
+
 	* modules/euidaccess (Files): Add lib/euidaccess.h.
 
 2003-08-16  Paul Eggert  <eggert@twinsun.com>

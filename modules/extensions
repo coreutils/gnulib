@@ -7,7 +7,7 @@ m4/extensions.m4
 Depends-on:
 
 configure.ac:
-gl_USE_SYSTEM_EXTENSIONS
+dnl gl_USE_SYSTEM_EXTENSIONS must be added quite early to configure.ac.
 
 Makefile.am:
 

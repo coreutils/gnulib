@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2003-05-22 13:57:59 $'
+cvsdatestamp='$Date: 2003-08-17 15:25:00 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -419,6 +419,10 @@ func_create_testdir ()
    echo
    if grep AC_GNU_SOURCE "$testdir"/m4/*.m4 > /dev/null; then
      echo "AC_GNU_SOURCE"
+     echo
+   fi
+   if grep gl_USE_SYSTEM_EXTENSIONS "$testdir"/m4/*.m4 > /dev/null; then
+     echo "gl_USE_SYSTEM_EXTENSIONS"
      echo
    fi
    for module in $modules; do
