@@ -1,3 +1,10 @@
+2004-12-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Changes imported from coreutils.
+	* hard-locale.m4 (gl_HARD_LOCALE): Assume locale.h and setlocale
+	exist.
+	* human.m4 (gl_HUMAN): Assume locale.h and localeconv exist.
+
 2004-11-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getcwd-path-max.m4 (gl_FUNC_GETCWD_PATH_MAX):

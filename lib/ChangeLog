@@ -1,3 +1,15 @@
+2004-12-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Changes imported from coreutils.
+	* hard-locale.c: Assume <locale.h> exists.
+	Include "strdup.h".
+	(GLIBC_VERSION): New macro.
+	(hard_locale): Assume setlocale exists.
+	Rewrite to avoid #ifdef.
+	Use strdup rather than malloc + strcpy.
+	* human.c: Assume <locale.h> exists.
+	(human_readable): Assume localeconv exists.
+
 2004-12-01  Jakub Jelinek  <jakub@redhat.com>
 
 	* mktime.c (__mktime_internal): If SEC_REQUESTED != SEC,
