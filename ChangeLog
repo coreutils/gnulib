@@ -1,3 +1,10 @@
+2005-01-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+        * modules/mempcpy (Makefile.am): Remove mention of mempcpy.h;
+        AC_LIBSOURCES now does this.
+	* MODULES.html.sh (Sizes of integer types <limits.h>): New element,
+	with new ullong_max module.
+
 2005-01-19  Bruno Haible  <bruno@clisp.org>
 
 	* modules/sh-quote: New file.
