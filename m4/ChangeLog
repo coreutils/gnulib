@@ -1,3 +1,7 @@
+2004-11-30  Simon Josefsson  <jas@extundo.com>
+
+	* restrict.m4: Add copyright and copying conditions.
+
 2004-11-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getcwd-path-max.m4 (gl_FUNC_GETCWD_PATH_MAX): Renamed from
