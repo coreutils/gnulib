@@ -29,7 +29,7 @@ AC_PREREQ(2.54)
 AC_DEFUN([AC_CHECK_HEADERS_ONCE], [
   :
   AC_FOREACH([gl_HEADER_NAME], [$1], [
-    AC_DEFUN([gl_CHECK_HEADER_]m4_quote(translit(defn([gl_HEADER_NAME]),
+    AC_DEFUN([gl_CHECK_HEADER_]m4_quote(translit(m4_defn([gl_HEADER_NAME]),
                                                  [-./], [___])), [
       AC_CHECK_HEADERS(gl_HEADER_NAME)
     ])
@@ -43,10 +43,10 @@ AC_DEFUN([AC_CHECK_HEADERS_ONCE], [
 AC_DEFUN([AC_CHECK_FUNCS_ONCE], [
   :
   AC_FOREACH([gl_FUNC_NAME], [$1], [
-    AC_DEFUN([gl_CHECK_FUNC_]defn([gl_FUNC_NAME]), [
-      AC_CHECK_FUNCS(defn([gl_FUNC_NAME]))
+    AC_DEFUN([gl_CHECK_FUNC_]m4_defn([gl_FUNC_NAME]), [
+      AC_CHECK_FUNCS(m4_defn([gl_FUNC_NAME]))
     ])
-    AC_REQUIRE([gl_CHECK_FUNC_]defn([gl_FUNC_NAME]))
+    AC_REQUIRE([gl_CHECK_FUNC_]m4_defn([gl_FUNC_NAME]))
   ])
 ])
 
@@ -55,9 +55,9 @@ AC_DEFUN([AC_CHECK_FUNCS_ONCE], [
 AC_DEFUN([AC_CHECK_DECLS_ONCE], [
   :
   AC_FOREACH([gl_DECL_NAME], [$1], [
-    AC_DEFUN([gl_CHECK_DECL_]defn([gl_DECL_NAME]), [
-      AC_CHECK_DECLS(defn([gl_DECL_NAME]))
+    AC_DEFUN([gl_CHECK_DECL_]m4_defn([gl_DECL_NAME]), [
+      AC_CHECK_DECLS(m4_defn([gl_DECL_NAME]))
     ])
-    AC_REQUIRE([gl_CHECK_DECL_]defn([gl_DECL_NAME]))
+    AC_REQUIRE([gl_CHECK_DECL_]m4_defn([gl_DECL_NAME]))
   ])
 ])

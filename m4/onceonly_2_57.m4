@@ -39,8 +39,8 @@ AC_DEFUN([AC_CHECK_HEADERS_ONCE], [
       m4_divert_text([INIT_PREPARE],
         [gl_header_list="$gl_header_list gl_HEADER_NAME"])
       gl_HEADERS_EXPANSION
-      AH_TEMPLATE(AS_TR_CPP([HAVE_]defn([gl_HEADER_NAME])),
-        [Define to 1 if you have the <]defn([gl_HEADER_NAME])[> header file.])
+      AH_TEMPLATE(AS_TR_CPP([HAVE_]m4_defn([gl_HEADER_NAME])),
+        [Define to 1 if you have the <]m4_defn([gl_HEADER_NAME])[> header file.])
     ])
     AC_REQUIRE([gl_CHECK_HEADER_]m4_quote(translit(gl_HEADER_NAME,
                                                    [./-], [___])))
@@ -57,14 +57,14 @@ m4_define([gl_HEADERS_EXPANSION], [
 AC_DEFUN([AC_CHECK_FUNCS_ONCE], [
   :
   AC_FOREACH([gl_FUNC_NAME], [$1], [
-    AC_DEFUN([gl_CHECK_FUNC_]defn([gl_FUNC_NAME]), [
+    AC_DEFUN([gl_CHECK_FUNC_]m4_defn([gl_FUNC_NAME]), [
       m4_divert_text([INIT_PREPARE],
         [gl_func_list="$gl_func_list gl_FUNC_NAME"])
       gl_FUNCS_EXPANSION
-      AH_TEMPLATE(AS_TR_CPP([HAVE_]defn([gl_FUNC_NAME])),
-        [Define to 1 if you have the `]defn([gl_FUNC_NAME])[' function.])
+      AH_TEMPLATE(AS_TR_CPP([HAVE_]m4_defn([gl_FUNC_NAME])),
+        [Define to 1 if you have the `]m4_defn([gl_FUNC_NAME])[' function.])
     ])
-    AC_REQUIRE([gl_CHECK_FUNC_]defn([gl_FUNC_NAME]))
+    AC_REQUIRE([gl_CHECK_FUNC_]m4_defn([gl_FUNC_NAME]))
   ])
 ])
 m4_define([gl_FUNCS_EXPANSION], [
@@ -78,9 +78,9 @@ m4_define([gl_FUNCS_EXPANSION], [
 AC_DEFUN([AC_CHECK_DECLS_ONCE], [
   :
   AC_FOREACH([gl_DECL_NAME], [$1], [
-    AC_DEFUN([gl_CHECK_DECL_]defn([gl_DECL_NAME]), [
-      AC_CHECK_DECLS(defn([gl_DECL_NAME]))
+    AC_DEFUN([gl_CHECK_DECL_]m4_defn([gl_DECL_NAME]), [
+      AC_CHECK_DECLS(m4_defn([gl_DECL_NAME]))
     ])
-    AC_REQUIRE([gl_CHECK_DECL_]defn([gl_DECL_NAME]))
+    AC_REQUIRE([gl_CHECK_DECL_]m4_defn([gl_DECL_NAME]))
   ])
 ])

@@ -1,8 +1,13 @@
+2003-03-18  Bruno Haible  <bruno@clisp.org>
+
+	* onceonly.m4: Use m4_defn instead of defn, for better error checking.
+	* onceonly_2_57.m4: Likewise.
+
 2003-03-17  Bruno Haible  <bruno@clisp.org>
 
-	* onceonly_2_57.m4: Likewise.
 	* onceonly.m4: Require autoconf 2.54 or newer.
 	(m4_quote): Remove macro.
+	* onceonly_2_57.m4: Require autoconf 2.54 or newer.
 
 2003-03-14  Bruno Haible  <bruno@clisp.org>
 
