@@ -8,6 +8,7 @@ m4/chdir-long.m4
 
 Depends-on:
 openat
+mempcpy
 memrchr
 
 configure.ac:
