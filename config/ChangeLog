@@ -1,3 +1,7 @@
+2004-09-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Add getsubopt.c, since libc bought our changes.
+
 2004-09-14  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt: unsync setenv.c, sigh.
@@ -84,7 +88,7 @@
 2003-11-18  Karl Berry  <karl@gnu.org>
 
 	* config.{sub,guess}: update from config.
-	
+
 	* (printf-{parse,args}.[ch]): sync broken, sigh.
 
 2003-11-09  Karl Berry  <karl@gnu.org>
