@@ -1,3 +1,7 @@
+2004-10-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* mktime.c (leapyear): Arg is long int, not int.
+
 2004-10-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* argp-fs-xinl.c, argp-xinl.c: Update from glibc.
