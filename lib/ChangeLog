@@ -1,3 +1,77 @@
+2003-09-08  Paul Eggert  <eggert@twinsun.com>
+
+	Assume C89 or better; remove K&R cruft.
+	A few of these changes were first proposed by Derek Robert Price
+	in <http://mail.gnu.org/archive/html/bug-gnulib/2003-07/msg00105.html>.
+
+	* addext.c: Include <string.h> unconditionally.
+	* backupfile.c: Include <string.h>, <stdlib.h> unconditionally.
+	Don't declare getenv or malloc.
+
+	* alloca.c: Include <string.h>, <stdlib.h> unconditionally.
+	(POINTER_TYPE, pointer): Remove; all uses changed to void *.
+	(NULL): Remove.
+	(find_stack_direction, alloca): Use prototypes.
+
+	* atexit.c (atexit): Define using a prototype.
+
+	* basename.c, dirname.c, stripslash.c:
+	Include <string.h> unconditionally.
+
+	* bcopy.c: Include <stddef.h>.
+	(bcopy): Define with prototype, using 'const' and 'void' and 'size_t'.
+
+	* canon-host.c: Include <stdlib.h>, <string.h> unconditionally.
+
+	* error.h (error, error_at_line, error_print_progname)
+	[! (defined (__STDC__) && __STDC__)]: Remove decls.
+	* error.c: Include error.h first, to check interface.
+	Include <stdarg.h>, <stdlib.h>, <string.h> unconditionally.
+	(VA_START): Remove; all uses changeed to va_start.
+	(exit, strerror): Remove decls.
+	(error_print_progname): Prototype uncondionally.
+	Don't include <errno.h>; no longer needed.
+	(private_strerror): Remove.
+	(error_tail): Always define.
+	(error, error_at_line): Assume C89 or better; always use prototypes.
+	* fatal.c: Include "fatal.h" first, to test interface.
+	Include <stdarg.h>, <stdlib.h>, <string.h> unconditionally.
+	(VA_START): Remove; all uses changed to va_start.
+	[! (HAVE_VPRINTF || HAVE_DOPRNT || _LIBC)]: Remove support for
+	this case.
+	(exit): Remove decl.
+	(fatal): Prototype unconditionally.  Assume va_start works.
+	Abort at end, to pacify gcc.
+
+	* euidaccess.c (main): Define with a prototype.
+
+	* exclude.c: Include <stdlib.h>, <string.h> unconditionally.
+
+	* exitfail.c: Include <stdlib.h> unconditionally.
+
+	* fnmatch.h (__P): Remove.  All uses changed to assume
+	prototypes.
+	* fnmatch.c: Include fnmatch.h first, to test interface.
+	Include <string.h>, <stddef.h>, <stdlib.h> unconditionally.
+	(getenv): Remove decl.
+	(fnmatch): Define using a prototype.
+	* fnmatch_loop.c (FCT): Remove forward decl; no longer needed.
+	(FCT): Define using a prototype.
+
+	* getdate.y: Include <stdlib.h>, <string.h> unconditionally.
+
+	* gethostname.c: Include <stddef.h>.
+	(gethostname): Define with prototype.  Length is size_t, not int.
+
+2003-09-08  Paul Eggert  <eggert@twinsun.com>
+
+	* getversion.c: Remove; was migrated to backupfile.c in 1997.
+	getversion.c should have been removed then, but was accidentally
+	preserved.
+
+	* utime.c [!HAVE_UTIMES_NULL]: Include <sys/stat.h>, <fcntl.h>.
+	(utime_null): Fix typo: 'st' was sometimes called 'sb'.
+
 2003-09-07  Paul Eggert  <eggert@twinsun.com>
 
 	* time_r.c (gmtime_r, localtime_r): Fix silly typo: missing arg to
