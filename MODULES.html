@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, argmatch, assert, atexit, backupfile, bcopy, binary-io, bumpalloc, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, error, euidaccess, exclude, exit, exitfail, fatal, file-type, fileblocks, filemode, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, fsusage, ftruncate, full-read, full-write, gcd, getdate, getgroups, gethostname, getline, getloadavg, getopt, getpagesize, getpass, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, poll, posixtm, posixver, putenv, quote, quotearg, readtokens, readutmp, realloc, regex, rename, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, timespec, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, xalloc, xgetcwd, xgethostname, xmemcoll, xreadlink, xsetenv, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
   </BODY>
@@ -695,6 +695,10 @@ usually the host name including FQDN.
     <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=utf16-ucs4">utf16-ucs4</A>
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Conversion UTF-16 to UCS-4.
+    </TR>
+    <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=linebreak">linebreak</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Line breaking (works also for East-Asian languages).
     </TR>
   </TABLE>
   <H3><A HREF="#posix_ext_exec">Executing programs</A></H3>
@@ -2285,6 +2289,13 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/utf-ucs4.m4">utf-ucs4.m4</A><BR>gl_UTF_UCS4
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
+    <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=linebreak"></A><A HREF="modules/linebreak">linebreak</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/linebreak.h">linebreak.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/linebreak.c">linebreak.c</A><BR><A HREF="lib/lbrkprop.h">lbrkprop.h</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/linebreak.m4">linebreak.m4</A><BR>gl_LINEBREAK
+      <TD ALIGN=LEFT VALIGN=TOP>localcharset<BR>c-ctype<BR>iconv<BR>utf8-ucs4<BR>utf16-ucs4
+    </TR>
   </TABLE>
   <H3><A NAME="posix_ext_exec">Executing programs</A></H3>
   <H3><A NAME="posix_ext_java">Java</A></H3>
@@ -2432,5 +2443,5 @@ variables.
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on  4 April 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on  5 April 2003.
 </HTML>
