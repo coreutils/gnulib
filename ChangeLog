@@ -1,3 +1,12 @@
+2005-03-22  Jim Meyering  <jim@meyering.net>
+
+	* modules/stat-macros: New module.
+	* modules/canonicalize, modules/euidaccess, modules/file-type,
+	* modules/filemode, modules/lchown, modules/makepath,
+	* modules/rmdir, modules/stat: Depend on new stat-macros module
+	rather than listing lib/stat-macros.h manually.
+	Don't add stat-macros.h to lib_SOURCES or list it in Files: section.
+
 2005-03-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/chdir-long (Depends-on): Add mempcpy.
