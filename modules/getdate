@@ -16,7 +16,6 @@ gettime
 mktime
 setenv
 xalloc
-alloca-opt
 
 configure.ac:
 gl_GETDATE
