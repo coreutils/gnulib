@@ -1,3 +1,7 @@
+2003-10-27  Bruno Haible  <bruno@clisp.org>
+
+	* stdbool_.h: Better support for BeOS.
+
 2003-10-27  Paul Eggert  <eggert@twinsun.com>
 
 	* exclude.c (new_exclude): Use xzalloc rather than xmalloc
