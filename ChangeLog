@@ -1,5 +1,11 @@
 2003-07-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/getnline: New file.
+	* modules/getline: Add lib/getndelim2.c to source file list.
+	* MODULES.html.sh (func_all_modules): Add getnline.
+
+2003-07-17  Bruno Haible  <bruno@clisp.org>
+
 	* configure.in: Remove file.
 	* Makefile.in: Remove file.
 

@@ -4,6 +4,7 @@ Read a line from a stream.
 Files:
 lib/getline.h
 lib/getline.c
+lib/getndelim2.c
 m4/getline.m4
 
 Depends-on:
@@ -14,6 +15,7 @@ AM_FUNC_GETLINE
 
 Makefile.am:
 lib_SOURCES += getline.h
+EXTRA_DIST += getndelim2.c
 
 Include:
 "getline.h"
