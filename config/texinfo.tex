@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-01-28.14}
+\def\texinfoversion{2004-02-06.08}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -3090,8 +3090,8 @@ width0pt\relax} \fi
   \definedummyword{ss}%
   \definedummyword{exclamdown}%
   \definedummyword{questiondown}%
-  \definedummyword{ordm}%
   \definedummyword{ordf}%
+  \definedummyword{ordm}%
   %
   % Although these internal commands shouldn't show up, sometimes they do.
   \definedummyword{bf}%
@@ -3169,6 +3169,7 @@ width0pt\relax} \fi
     \definedummyword{sc}%
     \definedummyword{t}%
     %
+    % Commands that take arguments.
     \definedummyword{acronym}%
     \definedummyword{cite}%
     \definedummyword{code}%
@@ -3234,7 +3235,22 @@ width0pt\relax} \fi
   %
   \def\LaTeX{LaTeX}%
   \def\TeX{TeX}%
+  %
+  % Assorted special characters.
+  % (The following {} will end up in the sort string, but that's ok.)
+  \def\bullet{bullet}%
+  \def\copyright{copyright}%
+  \def\registeredsymbol{R}%
   \def\dots{...}%
+  \def\enddots{...}%
+  \def\equiv{==}%
+  \def\error{error}%
+  \def\expansion{==>}%
+  \def\minus{-}%
+  \def\pounds{pounds}%
+  \def\point{.}%
+  \def\print{-|}%
+  \def\result{=>}%
 }
 
 \let\indexbackslash=0  %overridden during \printindex.
