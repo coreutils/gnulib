@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, allocsa, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, canon-host, chown, closeout, copy-file, diacrit, dirfd, dirname, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal, fatal-signal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, allocsa, argmatch, argp, assert, atexit, backupfile, bcopy, binary-io, c-bs-a, c-ctype, c-stack, canon-host, chown, cloexec, closeout, copy-file, diacrit, dirfd, dirname, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal, fatal-signal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getdate, getdomainname, getgroups, gethostname, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, idcache, isdir, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, readlink, readtokens, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sha, sig2str, stat, stdbool, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strstr, strtod, strtoimax, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, vasnprintf, vasprintf, version-etc, wait-process, xalloc, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -2666,7 +2666,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/getloadavg.c">getloadavg.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/getloadavg.m4">getloadavg.m4</A><BR>gl_FUNC_GETLOADAVG
-        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>cloexec<BR>xalloc
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=getpagesize"></A><A HREF="modules/getpagesize">getpagesize</A>
@@ -2756,6 +2756,13 @@ variables.
         <TH ALIGN=LEFT>Depends on
       </TR>
       <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=cloexec"></A><A HREF="modules/cloexec">cloexec</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/cloexec.h">cloexec.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/cloexec.c">cloexec.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/cloexec.m4">cloexec.m4</A><BR>gl_CLOEXEC
+        <TD ALIGN=LEFT VALIGN=TOP>stdbool
+      </TR>
+      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=free"></A><A HREF="modules/free">free</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/onlinepubs/007904975/basedefs/stdlib.h.html">stdlib.h</A>&gt;
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/free.c">free.c</A>
@@ -2806,6 +2813,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 10 March 2004.
+    Generated from <CODE>MODULES.html.sh</CODE> on 30 March 2004.
   </BODY>
 </HTML>
