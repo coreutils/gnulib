@@ -19,5 +19,8 @@ lib_SOURCES += snprintf.h
 Include:
 "snprintf.h"
 
+License:
+LGPL
+
 Maintainer:
 Simon Josefsson
