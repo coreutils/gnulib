@@ -153,6 +153,7 @@ mountlist.o: mountlist.h
 xgetcwd.o: pathmax.h
 euidaccess.o fsusage.o isdir.o makepath.o mkdir.o rename.o: safe-stat.h
 makepath.o: makepath.h
+obstack.o: obstack.h
 
 # Tell versions [3.59,3.63) of GNU make not to export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
