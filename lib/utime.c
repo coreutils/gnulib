@@ -65,7 +65,7 @@ utime_null (const char *file)
 	 of patches, but that system doesn't use this code: it has utimes.
 	 || fsync (fd) < 0
       */
-      || ftruncate (fd, st.st_size) < 0
+      || (st.st_size == 0 && ftruncate (fd, st.st_size) < 0)
       || close (fd) < 0)
     status = -1;
   return status;

@@ -1,3 +1,8 @@
+2002-12-22  Bruno Haible  <bruno@clisp.org>
+
+	* utime.c (utime_null): No need to call ftruncate if the file was
+	nonempty.
+
 2002-12-23  Bruno Haible  <bruno@clisp.org>
 
 	* memcoll.c (STRCOLL): New macro.
