@@ -1,5 +1,7 @@
 2003-04-11  Jim Meyering  <jim@meyering.net>
 
+	Merge changes from Coreutils.
+
 	2003-03-22  Jim Meyering  <jim@meyering.net>
 
 	* strftime.c (widen): Cast alloca return value to proper type.
