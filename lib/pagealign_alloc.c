@@ -149,7 +149,12 @@ pagealign_alloc (size_t size)
   size_t pagesize = getpagesize ();
   void *unaligned_ptr = malloc (size + pagesize - 1);
   if (unaligned_ptr == NULL)
-    return NULL;
+    {
+      /* Set errno.  We don't know whether malloc already set errno: some
+	 implementations of malloc do, some don't.  */
+      errno = ENOMEM;
+      return NULL;
+    }
   ret = (char *) unaligned_ptr
         + ((- (unsigned long) unaligned_ptr) & (pagesize - 1));
   new_memnode (ret, unaligned_ptr);
