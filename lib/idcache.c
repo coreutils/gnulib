@@ -1,5 +1,5 @@
 /* idcache.c -- map user and group IDs, cached for speed
-   Copyright (C) 1985, 1988, 1989, 1990, 1997, 1998 Free Software
+   Copyright (C) 1985, 1988, 1989, 1990, 1997, 1998, 2003 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -35,15 +35,14 @@
 # include <unistd.h>
 #endif
 
+#include "xalloc.h"
+
 #ifndef _POSIX_VERSION
 struct passwd *getpwuid ();
 struct passwd *getpwnam ();
 struct group *getgrgid ();
 struct group *getgrnam ();
 #endif
-
-char *xmalloc ();
-char *xstrdup ();
 
 #ifdef __DJGPP__
 static char digits[] = "0123456789";
@@ -78,7 +77,7 @@ getuser (uid_t uid)
       return tail->name;
 
   pwent = getpwuid (uid);
-  tail = (struct userid *) xmalloc (sizeof (struct userid));
+  tail = xmalloc (sizeof (struct userid));
   tail->id.u = uid;
   tail->name = pwent ? xstrdup (pwent->pw_name) : NULL;
 
@@ -120,7 +119,7 @@ getuidbyname (const char *user)
     }
 #endif
 
-  tail = (struct userid *) xmalloc (sizeof (struct userid));
+  tail = xmalloc (sizeof (struct userid));
   tail->name = xstrdup (user);
 
   /* Add to the head of the list, so most recently used is first.  */
@@ -154,7 +153,7 @@ getgroup (gid_t gid)
       return tail->name;
 
   grent = getgrgid (gid);
-  tail = (struct userid *) xmalloc (sizeof (struct userid));
+  tail = xmalloc (sizeof (struct userid));
   tail->id.g = gid;
   tail->name = grent ? xstrdup (grent->gr_name) : NULL;
 
@@ -196,7 +195,7 @@ getgidbyname (const char *group)
     }
 #endif
 
-  tail = (struct userid *) xmalloc (sizeof (struct userid));
+  tail = xmalloc (sizeof (struct userid));
   tail->name = xstrdup (group);
 
   /* Add to the head of the list, so most recently used is first.  */
