@@ -1,3 +1,9 @@
+2005-03-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/gettext (Files): config/config.rpath -> build-aux/config.rpath
+	* modules/iconv (Files): Likewise.
+	Problem reported by Oskar Liljeblad.
+
 2005-03-23  Jim Meyering  <jim@meyering.net>
 
 	* modules/check-include-files: New script to check for
