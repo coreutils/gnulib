@@ -33,13 +33,13 @@ all-local: charset.alias ref-add.sed ref-del.sed
 charset_alias = $(DESTDIR)$(libdir)/charset.alias
 charset_tmp = $(DESTDIR)$(libdir)/charset.tmp
 install-exec-local: all-local
-	test @GLIBC21@ != no || $(mkinstalldirs) $(DESTDIR)$(libdir)
+	test $(GLIBC21) != no || $(mkinstalldirs) $(DESTDIR)$(libdir)
 	if test -f $(charset_alias); then \
 	  sed -f ref-add.sed $(charset_alias) > $(charset_tmp) ; \
 	  $(INSTALL_DATA) $(charset_tmp) $(charset_alias) ; \
 	  rm -f $(charset_tmp) ; \
 	else \
-	  if test @GLIBC21@ = no; then \
+	  if test $(GLIBC21) = no; then \
 	    sed -f ref-add.sed charset.alias > $(charset_tmp) ; \
 	    $(INSTALL_DATA) $(charset_tmp) $(charset_alias) ; \
 	    rm -f $(charset_tmp) ; \
@@ -59,12 +59,12 @@ uninstall-local: all-local
 	fi
 
 charset.alias: config.charset
-	$(SHELL) $(srcdir)/config.charset '@host@' > t-$@
+	$(SHELL) $(srcdir)/config.charset '$(host)' > t-$@
 	mv t-$@ $@
 
 SUFFIXES += .sed .sin
 .sin.sed:
-	sed -e '/^#/d' -e 's/@''PACKAGE''@/@PACKAGE@/g' $< > t-$@
+	sed -e '/^#/d' -e 's/@''PACKAGE''@/$(PACKAGE)/g' $< > t-$@
 	mv t-$@ $@
 
 CLEANFILES += charset.alias ref-add.sed ref-del.sed
@@ -74,4 +74,3 @@ Include:
 
 Maintainer:
 Bruno Haible
-

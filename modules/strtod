@@ -11,11 +11,10 @@ configure.ac:
 gl_FUNC_STRTOD
 
 Makefile.am:
-LIBS += @POW_LIB@
+LIBS += $(POW_LIB)
 
 Include:
 <stdlib.h>
 
 Maintainer:
 all
-
