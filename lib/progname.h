@@ -21,12 +21,8 @@
 
 #include <stdbool.h>
 
-/* This file supports selectively prefixing or nor prefixing error messages
-   with the program name.
-
-   Programs using this file should do the following in main():
+/* Programs using this file should do the following in main():
      set_program_name (argv[0]);
-     error_print_progname = maybe_print_progname;
  */
 
 /* String containing name the program is called with.  */
