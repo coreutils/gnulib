@@ -52,8 +52,6 @@ int main () {
       [Define if you have the stpncpy() function and it works.])
   else
     AC_LIBOBJ([stpncpy])
-    AC_DEFINE(stpncpy, rpl_stpncpy,
-      [Define to rpl_stpncpy if the replacement function should be used.])
     gl_PREREQ_STPNCPY
   fi
 ])

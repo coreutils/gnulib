@@ -1,6 +1,7 @@
 2003-09-26  Bruno Haible  <bruno@clisp.org>
 
-	* stpncpy.m4: Add comments about the AIX stpncpy().
+	* stpncpy.m4 (gl_FUNC_STPNCPY): Add comments about the AIX stpncpy().
+	Don't define stpncpy through config.h; it's now done through stpncpy.h.
 
 2003-09-25  Simon Josefsson  <jas@extundo.com>
             Bruno Haible  <bruno@clisp.org>
