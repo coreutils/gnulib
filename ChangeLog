@@ -1,3 +1,7 @@
+2004-12-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/hard-locale (Depends-on): Add strdup.
+
 2004-12-04  Simon Josefsson  <jas@extundo.com>
 
 	* modules/getaddrinfo (License): Add LGPL, reported by Yoann
