@@ -733,18 +733,24 @@ executable elsewhere in case there is a bug.
 @comment in the printed Make manual.  Please leave it in.
 @item clean
 
-Delete all files from the current directory that are normally created by
-building the program.  Don't delete the files that record the
-configuration.  Also preserve files that could be made by building, but
-normally aren't because the distribution comes with them.
+Delete all files in the current directory that are normally created by
+building the program.  Also delete files in other directories if they
+are created by this makefile.  However, don't delete the files that
+record the configuration.  Also preserve files that could be made by
+building, but normally aren't because the distribution comes with
+them.  There is no need to delete parent directories that were created
+with @samp{mkdir -p}, since they could have existed anyway.
 
 Delete @file{.dvi} files here if they are not part of the distribution.
 
 @item distclean
-Delete all files from the current directory that are created by
-configuring or building the program.  If you have unpacked the source
-and built the program without creating any other files, @samp{make
-distclean} should leave only the files that were in the distribution.
+Delete all files in the current directory (or created by this
+makefile) that are created by configuring or building the program.  If
+you have unpacked the source and built the program without creating
+any other files, @samp{make distclean} should leave only the files
+that were in the distribution.  However, there is no need to delete
+parent directories that were created with @samp{mkdir -p}, since they
+could have existed anyway.
 
 @item mostlyclean
 Like @samp{clean}, but may refrain from deleting a few files that people
@@ -753,18 +759,21 @@ target for GCC does not delete @file{libgcc.a}, because recompiling it
 is rarely necessary and takes a lot of time.
 
 @item maintainer-clean
-Delete almost everything from the current directory that can be
-reconstructed with this Makefile.  This typically includes everything
-deleted by @code{distclean}, plus more: C source files produced by
-Bison, tags tables, Info files, and so on.
+Delete almost everything that can be reconstructed with this Makefile.
+This typically includes everything deleted by @code{distclean}, plus
+more: C source files produced by Bison, tags tables, Info files, and
+so on.
 
 The reason we say ``almost everything'' is that running the command
-@samp{make maintainer-clean} should not delete @file{configure} even if
-@file{configure} can be remade using a rule in the Makefile.  More generally,
-@samp{make maintainer-clean} should not delete anything that needs to
-exist in order to run @file{configure} and then begin to build the
-program.  This is the only exception; @code{maintainer-clean} should
-delete everything else that can be rebuilt.
+@samp{make maintainer-clean} should not delete @file{configure} even
+if @file{configure} can be remade using a rule in the Makefile.  More
+generally, @samp{make maintainer-clean} should not delete anything
+that needs to exist in order to run @file{configure} and then begin to
+build the program.  Also, there is no need to delete parent
+directories that were created with @samp{mkdir -p}, since they could
+have existed anyway.  These are the only exceptions;
+@code{maintainer-clean} should delete everything else that can be
+rebuilt.
 
 The @samp{maintainer-clean} target is intended to be used by a maintainer of
 the package, not by ordinary users.  You may need special tools to
