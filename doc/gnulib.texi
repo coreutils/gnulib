@@ -1,13 +1,13 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.1 2004-09-19 13:17:06 karl Exp $
+@comment $Id: gnulib.texi,v 1.2 2004-09-23 23:13:19 karl Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
-@syncodeindex pg cp
 @syncodeindex fn cp
+@syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2004-09-19 13:17:06 $
+@set UPDATED $Date: 2004-09-23 23:13:19 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -185,6 +185,231 @@ fail.
 
 Run @samp{gnulib-tool --help}, and use the source.
 @command{gnulib-tool} is the way to import Gnulib modules.
+
+@menu
+* Initial import::              First import of Gnulib modules.
+* Importing updated files::     Subsequent imports.
+* Finishing touches::           Simplifying imports.
+@end menu
+
+
+@node Initial import
+@section Initial import
+@cindex initial import
+
+Gnulib assumes your project uses Autoconf and Automake.  Invoking
+@samp{gnulib-tool --import} will copy source files, create a
+@file{Makefile.am} to build them, and generate a @file{gnulib.m4} with
+Autoconf M4 macro declarations used by @file{configure.ac}.
+
+Our example will be a library that uses Autoconf, Automake and
+Libtool.  It calls @code{strdup}, and you wish to use gnulib to make
+the package portable to C89 (which doesn't have @code{strdup}).
+
+@example
+~/src/libfoo$ gnulib-tool --import strdup
+Module list with included dependencies:
+  strdup
+File list:
+  lib/strdup.c
+  lib/strdup.h
+  m4/onceonly_2_57.m4
+  m4/strdup.m4
+Creating ./lib/Makefile.am...
+Creating ./m4/gnulib.m4...
+Finished.
+
+Don't forget to add "lib/Makefile"
+to AC_CONFIG_FILES in "./configure.ac" and to mention
+"lib" in SUBDIRS in some Makefile.am.
+~/src/libfoo$
+@end example
+
+By default, the source code is copied into @file{lib/} and the M4
+macros in @file{m4/}.  You can override these paths by using
+@code{--source-base=DIRECTORY} and @code{--m4-base=DIRECTORY}, or by
+adding @samp{gl_SOURCE_BASE(DIRECTORY)} and
+@samp{gl_M4_BASE(DIRECTORY)} to your @file{configure.ac}.
+
+@code{gnulib-tool} will overwrite any pre-existing files, in
+particular @file{Makefile.am}.  Unfortunately, separating the
+generated @file{Makefile.am} content (for building the gnulib library)
+into a separate file, say @file{gnulib.mk}, that could be included
+by your handwritten @file{Makefile.am} is not possible, due to how
+variable assignments are handled by Automake.
+
+Consequently, it can be a good idea to chose directories that are not
+already used by your projects, to separate gnulib imported files from
+your own files.  This approach can also be useful if you want to avoid
+conflicts between other tools (e.g., @code{getextize} that also copy
+M4 files into your package.  Simon Josefsson successfully uses a source
+base of @file{gl/}, and a M4 base of @file{gl/m4/}, in several
+packages.
+
+A few manual steps are required to finish the initial import.
+
+First, you need to make sure Autoconf can find the macro definitions
+in @file{gnulib.m4}.  Use the @code{ACLOCAL_AMFLAGS} specifier in your
+top-level @file{Makefile.am} file, as in:
+
+@example
+ACLOCAL_AMFLAGS = -I m4
+@end example
+
+Naturally, replace @file{m4} with the value from @code{--m4-base} or
+@code{gl_M4_BASE}.  If the M4 base is @file{gl/m4} you would use:
+
+@example
+ACLOCAL_AMFLAGS = -I gl/m4
+@end example
+
+You are now ready to call the M4 macros in @code{gnulib.m4} from
+@file{configure.ac}.  The macro @code{gl_EARLY} must be called as soon
+as possible after verifying that the C compiler is working.
+Typically, this is immediately after @code{AC_PROG_CC}, as in:
+
+@example
+...
+AC_PROG_CC
+gl_EARLY
+...
+@end example
+
+The core part of the gnulib checks are done by the macro
+@code{gl_INIT}.  Place it further down in the file, typically where
+you normally check for header files or functions.  Or in a separate
+section with other gnulib statements, such as @code{gl_SOURCE_BASE}.
+For example:
+
+@example
+...
+# For gnulib.
+gl_INIT
+...
+@end example
+
+You must also make sure that the gnulib library is built.  Add the
+@code{Makefile} in the gnulib source base directory to
+@code{AC_CONFIG_FILES}, as in:
+
+@example
+AC_CONFIG_FILES(... lib/Makefile ...)
+@end example
+
+If your gnulib source base is @file{gl}, you would use:
+
+@example
+AC_CONFIG_FILES(... gl/Makefile ...)
+@end example
+
+You must also make sure that @code{make} work in the gnulib directory.
+Add the gnulib source base directory to a @code{SUBDIRS} Makefile.am
+statement, as in:
+
+@example
+SUBDIRS = lib
+@end example
+
+or if you, more likely, already have a few entries in @code{SUBDIRS},
+you can add something like:
+
+@example
+SUBDIRS += lib
+@end example
+
+If you are using a gnulib source base of @code{gl}, you would use:
+
+@example
+SUBDIRS += gl
+@end example
+
+Finally, you have add C flags and LD flags, so that you can make use
+of the gnulib library.  For example:
+
+@example
+...
+AM_CPPFLAGS = -I$(top_srcdir)/lib
+...
+LIBADD = lib/libgnu.la
+...
+@end example
+
+Don't forget to @code{#include} the various header files.  In this
+example, you would need to make sure that @samp{#include <strdup.h>}
+is evaluated when compiling all source code files, that want to make
+use of @code{strdup}.
+
+
+@node Importing updated files
+@section Importing updated files
+
+From time to time, you may want to invoke @samp{gnulib-tool --import}
+to update the files in your package.  Once you have set up your
+package for gnulib, this step is quite simple.  For example:
+
+@example
+~/src/libfoo$ gnulib-tool --import --source-base gl --m4-base gl/m4 strdup
+Module list with included dependencies:
+  strdup
+File list:
+  lib/strdup.c
+  lib/strdup.h
+  m4/onceonly_2_57.m4
+  m4/strdup.m4
+Creating ./lib/Makefile.am...
+Creating ./m4/gnulib.m4...
+Finished.
+
+Don't forget to add "lib/Makefile"
+to AC_CONFIG_FILES in "./configure.ac" and to mention
+"lib" in SUBDIRS in some Makefile.am.
+~/src/libfoo$
+@end example
+
+If you don't recall how you invoked the tool last time, the commands
+used (and the operations it resulted in) are placed in comments within
+the generated @file{Makefile.am} and @file{gnulib.m4}, as in:
+
+@example
+...
+# Invoked as: gnulib-tool --import strdup
+# Reproduce by: gnulib-tool --import --dir=. --lib=libgnu --source-base=lib --m4-base=m4 --libtool strdup
+...
+@end example
+
+
+@node Finishing touches
+@section Finishing touches
+
+Invoking @samp{gnulib-tool --import} with the proper parameters (e.g.,
+@samp{--m4-base gl/m4}) and list of modules (e.g., @samp{strdup
+snprintf getline minmax}) can be tedious.  To simplify this procedure,
+you may put the command line parameters in your @file{configure.ac}.
+For example:
+
+@example
+...
+AC_PROG_CC
+gl_EARLY
+...
+# For gnulib.
+gl_SOURCE_BASE(gl)
+gl_M4_BASE(gl/m4)
+gl_LIB(libgl)
+gl_MODULES(getopt progname strdup dummy exit error getpass-gnu getaddrinfo)
+gl_INIT
+...
+@end example
+
+This illustrate all macros defined in @file{gnulib.m4}.  With the
+above, importing new files are as simple as running @samp{gnulib-tool
+--import} with no additional parameters.
+
+The macros @code{gl_EARLY}, @code{gl_INIT}, @code{gl_SOURCE_BASE}, and
+@code{gl_M4_BASE} have been discussed earlier.  The @code{gl_LIB}
+macro can be used if you wish to change the library name (by default
+@file{libgnu.a} or @file{libgnu.la} if you use libtool).  The
+@code{gl_MODULES} macro is used to specify which modules to import.
 
 
 @node Copying This Manual
