@@ -1,4 +1,4 @@
-2005-01-19  Jim Meyering  <jim@meyering.net>
+2005-01-21  Jim Meyering  <jim@meyering.net>
 
 	* openat.h (AT_SYMLINK_NOFOLLOW): Define to 4096, so it's the
 	same value as for Solaris 9.
