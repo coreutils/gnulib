@@ -455,6 +455,10 @@ with K/M/G suffix.
 variables.
     </TR>
     <TR WIDTH="100%">
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=copy-file">copy-file</A>
+      <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Copying of files.
+    </TR>
+    <TR WIDTH="100%">
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fsusage">fsusage</A>
       <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return filesystem space usage info.
     </TR>
@@ -1777,6 +1781,13 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP>argmatch<BR>dirname
     </TR>
     <TR>
+      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=copy-file"></A><A HREF="modules/copy-file">copy-file</A>
+      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/copy-file.h">copy-file.h</A>"
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/copy-file.c">copy-file.c</A>
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/copy-file.m4">copy-file.m4</A><BR>gl_COPY_FILE
+      <TD ALIGN=LEFT VALIGN=TOP>error<BR>safe-read<BR>full-write<BR>binary-io<BR>exit<BR>gettext
+    </TR>
+    <TR>
       <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fsusage"></A><A HREF="modules/fsusage">fsusage</A>
       <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fsusage.h">fsusage.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fsusage.c">fsusage.c</A>
@@ -2318,30 +2329,6 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP>---
     </TR>
   </TABLE>
-  <H2>Unclassified modules - please update MODULES.html.sh</H2>
-  <TABLE>
-    <TR>
-      <TH ALIGN=LEFT>modules/
-      <TH ALIGN=LEFT>lib/
-      <TH ALIGN=LEFT>lib/
-      <TH ALIGN=LEFT>m4/
-      <TH ALIGN=LEFT>&nbsp;
-    </TR>
-    <TR>
-      <TH ALIGN=LEFT>Module
-      <TH ALIGN=LEFT>Header
-      <TH ALIGN=LEFT>Implementation
-      <TH ALIGN=LEFT>Autoconf macro
-      <TH ALIGN=LEFT>Depends on
-    </TR>
-    <TR>
-      <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=copy-file"></A><A HREF="modules/copy-file">copy-file</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/copy-file.h">copy-file.h</A>"
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/copy-file.c">copy-file.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/copy-file.m4">copy-file.m4</A><BR>gl_COPY_FILE
-      <TD ALIGN=LEFT VALIGN=TOP>error<BR>safe-read<BR>full-write<BR>binary-io<BR>exit<BR>gettext
-    </TR>
-  </TABLE>
   <H2>Lone files - please create new modules containing them</H2>
   <PRE>
 <A HREF="lib/getversion.c">lib/getversion.c</A>
@@ -2378,5 +2365,5 @@ variables.
     <LI>A testsuite
   </UL>
   <HR>
-  Generated from <CODE>MODULES.html.sh</CODE> on 29 March 2003.
+  Generated from <CODE>MODULES.html.sh</CODE> on  1 April 2003.
 </HTML>
