@@ -57,15 +57,17 @@ memchr (s, c, n)
      The 1-bits make sure that carries propagate to the next 0-bit.
      The 0-bits provide holes for carries to fall into.  */
   magic_bits = 0x7efefeff;
-  if (sizeof (longword) > 4)
-    /* 64-bit version of the magic.  */
-    magic_bits = (0x7efefefe << 32) | 0xfefefeff;
+#ifdef LONG_64_BITS
+  /* 64-bit version of the magic.  */
+  magic_bits = (0x7efefefe << 32) | 0xfefefeff;
+#endif /* LONG_64_BITS */
 
   /* Set up a longword, each of whose bytes is C.  */
   charmask = c | (c << 8);
   charmask |= charmask << 16;
-  if (sizeof (longword) > 4)
-    charmask |= charmask << 32;
+#ifdef LONG_64_BITS
+  charmask |= charmask << 32;
+#endif /* LONG_64_BITS */
 
   /* Instead of the traditional loop which tests each character,
      we will test a longword at a time.  The tricky part is testing
@@ -132,17 +134,16 @@ memchr (s, c, n)
 	    return (char *) &cp[2];
 	  if (cp[3] == c)
 	    return (char *) &cp[3];
-	  if (sizeof (longword) > 4)
-	    {
-	      if (cp[4] == c)
-		return (char *) &cp[4];
-	      if (cp[5] == c)
-		return (char *) &cp[5];
-	      if (cp[6] == c)
-		return (char *) &cp[6];
-	      if (cp[7] == c)
-		return (char *) &cp[7];
-	    }
+#ifdef LONG_64_BITS
+	  if (cp[4] == c)
+	    return (char *) &cp[4];
+	  if (cp[5] == c)
+	    return (char *) &cp[5];
+	  if (cp[6] == c)
+	    return (char *) &cp[6];
+	  if (cp[7] == c)
+	    return (char *) &cp[7];
+#endif /* LONG_64_BITS */
 	}
 
       n -= sizeof (longword);
