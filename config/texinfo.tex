@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2004-02-06.08}
+\def\texinfoversion{2004-02-09.15}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software
@@ -2535,13 +2535,12 @@ where each line of input produces a line of output.}
 \def\xcolumnfractions{\columnfractions}
 \newif\ifsetpercent
 
-% #1 is the part of the @columnfraction before the decimal point, which
-% is presumably either 0 or the empty string (but we don't check, we
-% just throw it away).  #2 is the decimal part, which we use as the
-% percent of \hsize for this column.
-\def\pickupwholefraction#1.#2 {%
+% #1 is the @columnfraction, usually a decimal number like .5, but might
+% be just 1.  We just use it, whatever it is.
+% 
+\def\pickupwholefraction#1 {%
   \global\advance\colcount by 1
-  \expandafter\xdef\csname col\the\colcount\endcsname{.#2\hsize}%
+  \expandafter\xdef\csname col\the\colcount\endcsname{#1\hsize}%
   \setuptable
 }
 
