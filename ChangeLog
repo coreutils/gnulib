@@ -1,3 +1,7 @@
+2003-05-09  Bruno Haible  <bruno@clisp.org>
+
+	* modules/error: Add m4/strerror_r.m4 to file list.
+
 2003-04-10  Bruno Haible  <bruno@clisp.org>
 
 	* modules/findprog: New file.
