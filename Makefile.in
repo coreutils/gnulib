@@ -89,8 +89,7 @@ distfiles = AUTHORS ChangeLog COPYING NEWS README \
 distdir = regex-$(version)
 distargs = version=$(version) distdir=../$(distdir)/$$d
 dist: TAGS configure
-	@echo "Version numbers in:"
-	@echo "  Makefile.in, ChangeLog, NEWS,"
+	@echo "Version numbers in: Makefile.in, ChangeLog, NEWS,"
 	@echo "  regex.c, regex.h,"
 	@echo "  and doc/xregex.texi (if modified)."
 	rm -rf $(distdir)
