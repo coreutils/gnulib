@@ -1,5 +1,5 @@
-# readutmp.m4 serial 1
-dnl Copyright (C) 2002 Free Software Foundation, Inc.
+# readutmp.m4 serial 2
+dnl Copyright (C) 2002, 2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -39,6 +39,16 @@ $ac_includes_default
     AC_CHECK_MEMBERS([struct utmp.ut_id],,,[$utmp_includes])
     AC_CHECK_MEMBERS([struct utmpx.ut_exit],,,[$utmp_includes])
     AC_CHECK_MEMBERS([struct utmp.ut_exit],,,[$utmp_includes])
+
+    AC_CHECK_MEMBERS([struct utmpx.ut_exit.ut_exit],,,[$utmp_includes])
+    AC_CHECK_MEMBERS([struct utmp.ut_exit.ut_exit],,,[$utmp_includes])
+    AC_CHECK_MEMBERS([struct utmpx.ut_exit.e_exit],,,[$utmp_includes])
+    AC_CHECK_MEMBERS([struct utmp.ut_exit.e_exit],,,[$utmp_includes])
+
+    AC_CHECK_MEMBERS([struct utmpx.ut_exit.ut_termination],,,[$utmp_includes])
+    AC_CHECK_MEMBERS([struct utmp.ut_exit.ut_termination],,,[$utmp_includes])
+    AC_CHECK_MEMBERS([struct utmpx.ut_exit.e_termination],,,[$utmp_includes])
+    AC_CHECK_MEMBERS([struct utmp.ut_exit.e_termination],,,[$utmp_includes])
 
     AC_LIBOBJ(readutmp)
     gl_PREREQ_READUTMP
