@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/strtod.c
+m4/strtod.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_STRTOD
+
+Makefile.am:
+LIBS += @POW_LIB@
+
+Include:
+<stdlib.h>
+

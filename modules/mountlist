@@ -1,0 +1,22 @@
+Description:
+
+Files:
+lib/mountlist.h
+lib/mountlist.c
+m4/ls-mntd-fs.m4
+m4/fstypename.m4
+m4/mountlist.m4
+
+Depends-on:
+xalloc
+unlocked-io
+
+configure.ac:
+gl_MOUNTLIST
+
+Makefile.am:
+lib_SOURCES += mountlist.h
+
+Include:
+"mountlist.h"
+

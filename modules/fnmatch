@@ -1,0 +1,22 @@
+Description:
+
+Files:
+lib/fnmatch_.h
+lib/fnmatch.c
+lib/fnmatch_loop.c
+m4/mbstate_t.m4
+m4/fnmatch.m4
+
+Depends-on:
+alloca
+
+configure.ac:
+# No macro. You should also use one of fnmatch-posix or fnmatch-gnu.
+
+Makefile.am:
+lib_SOURCES += fnmatch_.h
+EXTRA_DIST += fnmatch_loop.c
+DISTCLEANFILES += fnmatch.h
+
+Include:
+

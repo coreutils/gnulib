@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/chown.c
+m4/chown.m4
+
+Depends-on:
+
+configure.ac:
+jm_FUNC_CHOWN
+
+Makefile.am:
+
+Include:
+<unistd.h>
+

@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/full-read.h
+lib/full-read.c
+
+Depends-on:
+safe-read
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += full-read.h full-read.c
+
+Include:
+"full-read.h"
+

@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/getpagesize.h
+m4/getpagesize.m4
+
+Depends-on:
+
+configure.ac:
+gl_GETPAGESIZE
+
+Makefile.am:
+lib_SOURCES += getpagesize.h
+
+Include:
+"getpagesize.h"
+

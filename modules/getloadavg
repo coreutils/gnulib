@@ -1,0 +1,15 @@
+Description:
+
+Files:
+lib/getloadavg.c
+m4/getloadavg.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_GETLOADAVG
+
+Makefile.am:
+
+Include:
+

@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/strftime.c
+m4/tm_gmtoff.m4
+m4/strftime.m4
+
+Depends-on:
+
+configure.ac:
+jm_FUNC_GNU_STRFTIME
+
+Makefile.am:
+lib_SOURCES += strftime.c
+
+Include:
+<time.h>
+

@@ -1,0 +1,22 @@
+Description:
+
+Files:
+lib/dirname.h
+lib/dirname.c
+lib/basename.c
+lib/stripslash.c
+m4/dos.m4
+m4/dirname.m4
+
+Depends-on:
+xalloc
+
+configure.ac:
+gl_DIRNAME
+
+Makefile.am:
+lib_SOURCES += dirname.h dirname.c basename.c stripslash.c
+
+Include:
+"dirname.h"
+

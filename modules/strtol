@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/strtol.c
+m4/strtol.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_STRTOL
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+

@@ -1,0 +1,22 @@
+Description:
+
+Files:
+lib/quotearg.h
+lib/quotearg.c
+m4/mbstate_t.m4
+m4/mbrtowc.m4
+m4/quotearg.m4
+
+Depends-on:
+xalloc
+gettext
+
+configure.ac:
+gl_QUOTEARG
+
+Makefile.am:
+lib_SOURCES += quotearg.h quotearg.c
+
+Include:
+"quotearg.h"
+

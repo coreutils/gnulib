@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/safe-write.h
+lib/safe-write.c
+m4/safe-write.m4
+
+Depends-on:
+safe-read
+
+configure.ac:
+gl_SAFE_WRITE
+
+Makefile.am:
+lib_SOURCES += safe-write.h safe-write.c
+
+Include:
+"safe-write.h"
+

@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/stpcpy.h
+lib/stpcpy.c
+m4/stpcpy.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_STPCPY
+
+Makefile.am:
+
+Include:
+"stpcpy.h"
+

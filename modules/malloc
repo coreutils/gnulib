@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/malloc.c
+m4/malloc.m4
+
+Depends-on:
+
+configure.ac:
+jm_FUNC_MALLOC
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+

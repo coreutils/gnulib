@@ -1,0 +1,20 @@
+Description:
+
+Files:
+lib/readutmp.h
+lib/readutmp.c
+m4/readutmp.m4
+
+Depends-on:
+xalloc
+unlocked-io
+
+configure.ac:
+gl_READUTMP
+
+Makefile.am:
+lib_SOURCES += readutmp.h
+
+Include:
+"readutmp.h"
+

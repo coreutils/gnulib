@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/lchown.h
+lib/lchown.c
+m4/lchown.m4
+
+Depends-on:
+chown
+
+configure.ac:
+jm_FUNC_LCHOWN
+
+Makefile.am:
+lib_SOURCES += lchown.h
+
+Include:
+

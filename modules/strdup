@@ -1,0 +1,15 @@
+Description:
+
+Files:
+lib/strdup.c
+m4/strdup.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_STRDUP
+
+Makefile.am:
+
+Include:
+

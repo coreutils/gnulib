@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/strtoul.c
+m4/strtoul.m4
+
+Depends-on:
+strtol
+
+configure.ac:
+gl_FUNC_STRTOUL
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+

@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/memcasecmp.h
+lib/memcasecmp.c
+m4/memcasecmp.m4
+
+Depends-on:
+
+configure.ac:
+gl_MEMCASECMP
+
+Makefile.am:
+lib_SOURCES += memcasecmp.h memcasecmp.c
+
+Include:
+"memcasecmp.h"
+

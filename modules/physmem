@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/physmem.h
+lib/physmem.c
+m4/physmem.m4
+
+Depends-on:
+
+configure.ac:
+gl_PHYSMEM
+
+Makefile.am:
+lib_SOURCES += physmem.h physmem.c
+
+Include:
+"physmem.h"
+

@@ -1,0 +1,46 @@
+Description:
+
+Files:
+lib/alloca.c
+m4/alloca.m4
+
+Depends-on:
+xalloc
+
+configure.ac:
+gl_FUNC_ALLOCA
+
+Makefile.am:
+
+Include:
+#ifdef __GNUC__
+# ifndef alloca
+#  define alloca __builtin_alloca
+# endif
+#else
+# ifdef _MSC_VER
+#  include <malloc.h>
+#  define alloca _alloca
+# else
+#  if HAVE_ALLOCA_H
+#   include <alloca.h>
+#  else
+#   ifdef _AIX
+ #pragma alloca
+#   else
+#    ifdef __hpux /* This section must match that of bison generated files. */
+#     ifdef __cplusplus
+extern "C" void *alloca (unsigned int);
+#     else /* not __cplusplus */
+void *alloca ();
+#     endif /* not __cplusplus */
+#    else /* not __hpux */
+#     ifndef alloca
+char *alloca ();
+#     endif
+#    endif /* __hpux */
+#   endif
+#  endif
+# endif
+#endif
+

@@ -1,0 +1,21 @@
+Description:
+
+Files:
+lib/regex.h
+lib/regex.c
+m4/regex.m4
+
+Depends-on:
+alloca
+unlocked-io
+gettext
+
+configure.ac:
+gl_REGEX
+
+Makefile.am:
+lib_SOURCES += regex.h
+
+Include:
+"regex.h"
+

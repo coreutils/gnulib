@@ -1,0 +1,20 @@
+Description:
+
+Files:
+lib/readtokens.h
+lib/readtokens.c
+m4/readtokens.m4
+
+Depends-on:
+xalloc
+unlocked-io
+
+configure.ac:
+gl_READTOKENS
+
+Makefile.am:
+lib_SOURCES += readtokens.h readtokens.c
+
+Include:
+"readtokens.h"
+

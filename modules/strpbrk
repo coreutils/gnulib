@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/strpbrk.h
+lib/strpbrk.c
+m4/strpbrk.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_STRPBRK
+
+Makefile.am:
+
+Include:
+"strpbrk.h"
+

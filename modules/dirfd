@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/dirfd.h
+lib/dirfd.c
+m4/dirfd.m4
+
+Depends-on:
+
+configure.ac:
+UTILS_FUNC_DIRFD
+
+Makefile.am:
+lib_SOURCES += dirfd.h
+
+Include:
+"dirfd.h"
+

@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/modechange.h
+lib/modechange.c
+m4/modechange.m4
+
+Depends-on:
+xstrtol
+
+configure.ac:
+gl_MODECHANGE
+
+Makefile.am:
+lib_SOURCES += modechange.h modechange.c
+
+Include:
+"modechange.h"
+

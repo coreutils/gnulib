@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/unistd-safer.h
+lib/dup-safer.c
+m4/unistd-safer.m4
+
+Depends-on:
+
+configure.ac:
+gl_UNISTD_SAFER
+
+Makefile.am:
+lib_SOURCES += unistd-safer.h dup-safer.c
+
+Include:
+"unistd-safer.h"
+

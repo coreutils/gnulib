@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/posixtm.h
+lib/posixtm.c
+m4/posixtm.m4
+
+Depends-on:
+unlocked-io
+
+configure.ac:
+gl_POSIXTM
+
+Makefile.am:
+lib_SOURCES += posixtm.h posixtm.c
+
+Include:
+"posixtm.h"
+

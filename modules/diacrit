@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/diacrit.h
+lib/diacrit.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += diacrit.h diacrit.c
+
+Include:
+"diacrit.h"
+

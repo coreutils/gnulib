@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/stdio-safer.h
+lib/fopen-safer.c
+m4/stdio-safer.m4
+
+Depends-on:
+unistd-safer
+
+configure.ac:
+gl_STDIO_SAFER
+
+Makefile.am:
+lib_SOURCES += stdio-safer.h fopen-safer.c
+
+Include:
+"stdio-safer.h"
+

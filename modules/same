@@ -1,0 +1,21 @@
+Description:
+
+Files:
+lib/same.h
+lib/same.c
+m4/same.m4
+
+Depends-on:
+xalloc
+error
+dirname
+
+configure.ac:
+gl_SAME
+
+Makefile.am:
+lib_SOURCES += same.h same.c
+
+Include:
+"same.h"
+

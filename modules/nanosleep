@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/nanosleep.c
+m4/nanosleep.m4
+
+Depends-on:
+timespec
+
+configure.ac:
+jm_FUNC_NANOSLEEP
+
+Makefile.am:
+
+Include:
+<time.h>
+

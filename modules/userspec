@@ -1,0 +1,21 @@
+Description:
+
+Files:
+lib/userspec.c
+m4/userspec.m4
+
+Depends-on:
+alloca
+xalloc
+xstrtol
+strdup
+gettext
+
+configure.ac:
+gl_USERSPEC
+
+Makefile.am:
+lib_SOURCES += userspec.c
+
+Include:
+

@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/posixver.h
+lib/posixver.c
+m4/posixver.m4
+
+Depends-on:
+
+configure.ac:
+gl_POSIXVER
+
+Makefile.am:
+lib_SOURCES += posixver.h posixver.c
+
+Include:
+"posixver.h"
+

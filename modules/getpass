@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/getpass.c
+m4/getpass.m4
+
+Depends-on:
+unlocked-io
+getline
+
+configure.ac:
+gl_FUNC_GETPASS
+
+Makefile.am:
+
+Include:
+

@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/unlocked-io.h
+m4/unlocked-io.m4
+
+Depends-on:
+
+configure.ac:
+jm_FUNC_GLIBC_UNLOCKED_IO
+
+Makefile.am:
+lib_SOURCES += unlocked-io.h
+
+Include:
+"unlocked-io.h"
+

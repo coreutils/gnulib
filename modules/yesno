@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/yesno.c
+m4/yesno.m4
+
+Depends-on:
+unlocked-io
+rpmatch
+
+configure.ac:
+gl_YESNO
+
+Makefile.am:
+lib_SOURCES += yesno.c
+
+Include:
+

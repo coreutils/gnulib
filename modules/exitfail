@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/exitfail.h
+lib/exitfail.c
+m4/exitfail.m4
+
+Depends-on:
+
+configure.ac:
+gl_EXITFAIL
+
+Makefile.am:
+lib_SOURCES += exitfail.h exitfail.c
+
+Include:
+"exitfail.h"
+

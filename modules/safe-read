@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/safe-read.h
+lib/safe-read.c
+m4/safe-read.m4
+
+Depends-on:
+
+configure.ac:
+gl_SAFE_READ
+
+Makefile.am:
+lib_SOURCES += safe-read.h safe-read.c
+
+Include:
+"safe-read.h"
+

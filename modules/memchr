@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/memchr.c
+m4/memchr.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_MEMCHR
+
+Makefile.am:
+
+Include:
+<string.h>
+

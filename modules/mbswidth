@@ -1,0 +1,20 @@
+Description:
+
+Files:
+lib/mbswidth.h
+lib/mbswidth.c
+m4/mbstate_t.m4
+m4/mbrtowc.m4
+m4/mbswidth.m4
+
+Depends-on:
+
+configure.ac:
+gl_MBSWIDTH
+
+Makefile.am:
+lib_SOURCES += mbswidth.h mbswidth.c
+
+Include:
+"mbswidth.h"
+

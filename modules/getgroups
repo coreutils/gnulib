@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/getgroups.c
+m4/getgroups.m4
+
+Depends-on:
+xalloc
+
+configure.ac:
+jm_FUNC_GETGROUPS
+
+Makefile.am:
+
+Include:
+<unistd.h>
+

@@ -1,0 +1,26 @@
+Description:
+
+Files:
+lib/makepath.h
+lib/makepath.c
+m4/afs.m4
+m4/makepath.m4
+
+Depends-on:
+alloca
+chown
+gettext
+save-cwd
+dirname
+error
+quote
+
+configure.ac:
+gl_MAKEPATH
+
+Makefile.am:
+lib_SOURCES += makepath.h makepath.c
+
+Include:
+"makepath.h"
+

@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/sig2str.h
+lib/sig2str.c
+m4/sig2str.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_SIG2STR
+
+Makefile.am:
+lib_SOURCES += sig2str.h
+
+Include:
+"sig2str.h"
+

@@ -1,0 +1,23 @@
+Description:
+
+Files:
+lib/getdate.h
+lib/getdate.y
+m4/bison.m4
+m4/tm_gmtoff.m4
+m4/getdate.m4
+
+Depends-on:
+unlocked-io
+
+configure.ac:
+gl_GETDATE
+
+Makefile.am:
+lib_SOURCES += getdate.h getdate.y
+BUILT_SOURCES += getdate.c
+MAINTAINERCLEANFILES += getdate.c
+
+Include:
+"getdate.h"
+

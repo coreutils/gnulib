@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/settime.c
+m4/clock_time.m4
+m4/settime.m4
+
+Depends-on:
+timespec
+
+configure.ac:
+gl_SETTIME
+
+Makefile.am:
+lib_SOURCES += settime.c
+
+Include:
+

@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/euidaccess.c
+m4/euidaccess.m4
+
+Depends-on:
+group-member
+
+configure.ac:
+gl_FUNC_EUIDACCESS
+
+Makefile.am:
+
+Include:
+

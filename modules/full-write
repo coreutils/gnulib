@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/full-write.h
+lib/full-write.c
+
+Depends-on:
+safe-write
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += full-write.h full-write.c
+
+Include:
+"full-write.h"
+

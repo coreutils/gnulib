@@ -1,0 +1,23 @@
+Description:
+
+Files:
+lib/exclude.h
+lib/exclude.c
+m4/exclude.m4
+
+Depends-on:
+xalloc
+strcase
+unlocked-io
+fnmatch-gnu
+stdbool
+
+configure.ac:
+gl_EXCLUDE
+
+Makefile.am:
+lib_SOURCES += exclude.h exclude.c
+
+Include:
+"exclude.h"
+

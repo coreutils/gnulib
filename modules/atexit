@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/atexit.c
+m4/atexit.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_ATEXIT
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+

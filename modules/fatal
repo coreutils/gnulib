@@ -1,0 +1,20 @@
+Description:
+
+Files:
+lib/fatal.h
+lib/fatal.c
+m4/fatal.m4
+
+Depends-on:
+unlocked-io
+error
+
+configure.ac:
+gl_FATAL
+
+Makefile.am:
+lib_SOURCES += fatal.h fatal.c
+
+Include:
+"fatal.h"
+

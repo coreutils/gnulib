@@ -1,0 +1,21 @@
+Description:
+
+Files:
+lib/xgetcwd.h
+lib/xgetcwd.c
+m4/getcwd.m4
+m4/xgetcwd.m4
+
+Depends-on:
+xalloc
+pathmax
+
+configure.ac:
+gl_XGETCWD
+
+Makefile.am:
+lib_SOURCES += xgetcwd.h xgetcwd.c
+
+Include:
+"xgetcwd.h"
+

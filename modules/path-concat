@@ -1,0 +1,22 @@
+Description:
+
+Files:
+lib/path-concat.h
+lib/path-concat.c
+m4/dos.m4
+m4/path-concat.m4
+
+Depends-on:
+strdup
+xalloc
+dirname
+
+configure.ac:
+gl_PATH_CONCAT
+
+Makefile.am:
+lib_SOURCES += path-concat.h path-concat.c
+
+Include:
+"path-concat.h"
+

@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/rpmatch.c
+m4/rpmatch.m4
+
+Depends-on:
+gettext
+regex
+
+configure.ac:
+gl_FUNC_RPMATCH
+
+Makefile.am:
+
+Include:
+

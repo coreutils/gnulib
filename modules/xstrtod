@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/xstrtod.h
+lib/xstrtod.c
+m4/xstrtod.m4
+
+Depends-on:
+
+configure.ac:
+gl_XSTRTOD
+
+Makefile.am:
+lib_SOURCES += xstrtod.h xstrtod.c
+
+Include:
+"xstrtod.h"
+

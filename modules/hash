@@ -1,0 +1,21 @@
+Description:
+
+Files:
+lib/hash.h
+lib/hash.c
+m4/hash.m4
+
+Depends-on:
+malloc
+realloc
+stdbool
+
+configure.ac:
+gl_HASH
+
+Makefile.am:
+lib_SOURCES += hash.h hash.c
+
+Include:
+"hash.h"
+

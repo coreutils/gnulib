@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/canon-host.c
+m4/canon-host.m4
+
+Depends-on:
+
+configure.ac:
+gl_CANON_HOST
+
+Makefile.am:
+lib_SOURCES += canon-host.c
+
+Include:
+

@@ -1,0 +1,15 @@
+Description:
+
+Files:
+lib/putenv.c
+m4/putenv.m4
+
+Depends-on:
+
+configure.ac:
+jm_FUNC_PUTENV
+
+Makefile.am:
+
+Include:
+

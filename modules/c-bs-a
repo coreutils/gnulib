@@ -1,0 +1,15 @@
+Description:
+Determine portability of "\a".
+
+Files:
+m4/c-bs-a.m4
+
+Depends-on:
+
+configure.ac:
+AC_C_BACKSLASH_A
+
+Makefile.am:
+
+Include:
+

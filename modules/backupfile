@@ -1,0 +1,23 @@
+Description:
+
+Files:
+lib/backupfile.h
+lib/backupfile.c
+lib/addext.c
+m4/dos.m4
+m4/d-ino.m4
+m4/backupfile.m4
+
+Depends-on:
+argmatch
+dirname
+
+configure.ac:
+gl_BACKUPFILE
+
+Makefile.am:
+lib_SOURCES += backupfile.h backupfile.c addext.c
+
+Include:
+"backupfile.h"
+

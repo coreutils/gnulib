@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/bumpalloc.h
+
+Depends-on:
+xalloc
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += bumpalloc.h
+
+Include:
+"bumpalloc.h"
+

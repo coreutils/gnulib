@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/xreadlink.h
+lib/xreadlink.c
+m4/xreadlink.m4
+
+Depends-on:
+xalloc
+
+configure.ac:
+gl_XREADLINK
+
+Makefile.am:
+lib_SOURCES += xreadlink.h xreadlink.c
+
+Include:
+"xreadlink.h"
+

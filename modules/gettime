@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/gettime.c
+m4/clock_time.m4
+m4/gettime.m4
+
+Depends-on:
+gettimeofday
+timespec
+
+configure.ac:
+gl_GETTIME
+
+Makefile.am:
+lib_SOURCES += gettime.c
+
+Include:
+

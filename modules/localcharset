@@ -1,0 +1,73 @@
+Description:
+
+Files:
+lib/localcharset.h
+lib/localcharset.c
+lib/config.charset
+lib/ref-add.sin
+lib/ref-del.sin
+m4/codeset.m4
+m4/glibc21.m4
+m4/localcharset.m4
+
+Depends-on:
+
+configure.ac:
+gl_LOCALCHARSET
+
+Makefile.am:
+lib_SOURCES += localcharset.h localcharset.c
+EXTRA_DIST += config.charset ref-add.sin ref-del.sin
+DEFS += -DLIBDIR=\"$(libdir)\"
+
+# The following is needed in order to install a simple file in $(libdir)
+# which is shared with other installed packages. We use a list of referencing
+# packages so that "make uninstall" will remove the file if and only if it
+# is not used by another installed package.
+# On systems with glibc-2.1 or newer, the file is redundant, therefore we
+# avoid installing it.
+
+all-local: charset.alias ref-add.sed ref-del.sed
+
+charset_alias = $(DESTDIR)$(libdir)/charset.alias
+charset_tmp = $(DESTDIR)$(libdir)/charset.tmp
+install-exec-local: all-local
+	test @GLIBC21@ != no || $(mkinstalldirs) $(DESTDIR)$(libdir)
+	if test -f $(charset_alias); then \
+	  sed -f ref-add.sed $(charset_alias) > $(charset_tmp) ; \
+	  $(INSTALL_DATA) $(charset_tmp) $(charset_alias) ; \
+	  rm -f $(charset_tmp) ; \
+	else \
+	  if test @GLIBC21@ = no; then \
+	    sed -f ref-add.sed charset.alias > $(charset_tmp) ; \
+	    $(INSTALL_DATA) $(charset_tmp) $(charset_alias) ; \
+	    rm -f $(charset_tmp) ; \
+	  fi ; \
+	fi
+
+uninstall-local: all-local
+	if test -f $(charset_alias); then \
+	  sed -f ref-del.sed $(charset_alias) > $(charset_tmp); \
+	  if grep '^# Packages using this file: $$' $(charset_tmp) \
+	      > /dev/null; then \
+	    rm -f $(charset_alias); \
+	  else \
+	    $(INSTALL_DATA) $(charset_tmp) $(charset_alias); \
+	  fi; \
+	  rm -f $(charset_tmp); \
+	fi
+
+charset.alias: config.charset
+	$(SHELL) $(srcdir)/config.charset '@host@' > t-$@
+	mv t-$@ $@
+
+SUFFIXES += .sed .sin
+.sin.sed:
+	sed -e '/^#/d' -e 's/@''PACKAGE''@/@PACKAGE@/g' $< > t-$@
+	mv t-$@ $@
+
+CLEANFILES += charset.alias ref-add.sed ref-del.sed
+
+Include:
+"localcharset.h"
+

@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/strstr.h
+lib/strstr.c
+m4/strstr.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_STRSTR
+
+Makefile.am:
+
+Include:
+"strstr.h"
+

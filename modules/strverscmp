@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/strverscmp.h
+lib/strverscmp.c
+m4/strverscmp.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_STRVERSCMP
+
+Makefile.am:
+lib_SOURCES += strverscmp.h
+
+Include:
+"strverscmp.h"
+

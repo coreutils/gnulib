@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/version-etc.h
+lib/version-etc.c
+
+Depends-on:
+unlocked-io
+gettext
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += version-etc.h version-etc.c
+
+Include:
+"version-etc.h"
+

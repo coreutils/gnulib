@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/memcoll.h
+lib/memcoll.c
+m4/memcoll.m4
+
+Depends-on:
+
+configure.ac:
+gl_MEMCOLL
+
+Makefile.am:
+lib_SOURCES += memcoll.h memcoll.c
+
+Include:
+"memcoll.h"
+

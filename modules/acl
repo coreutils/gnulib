@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/acl.h
+lib/acl.c
+m4/acl.m4
+
+Depends-on:
+
+configure.ac:
+AC_FUNC_ACL
+
+Makefile.am:
+lib_SOURCES += acl.h acl.c
+
+Include:
+"acl.h"
+

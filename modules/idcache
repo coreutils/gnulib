@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/idcache.c
+m4/idcache.m4
+
+Depends-on:
+xalloc
+
+configure.ac:
+gl_IDCACHE
+
+Makefile.am:
+lib_SOURCES += idcache.c
+
+Include:
+

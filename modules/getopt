@@ -1,0 +1,20 @@
+Description:
+
+Files:
+lib/getopt.h
+lib/getopt.c
+lib/getopt1.c
+m4/getopt.m4
+
+Depends-on:
+gettext
+
+configure.ac:
+gl_GETOPT
+
+Makefile.am:
+lib_SOURCES += getopt.h getopt.c getopt1.c
+
+Include:
+"getopt.h"
+

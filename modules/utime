@@ -1,0 +1,24 @@
+Description:
+
+Files:
+lib/utime.c
+m4/utimbuf.m4
+m4/utimes.m4
+m4/utime.m4
+
+Depends-on:
+safe-read
+full-write
+
+configure.ac:
+jm_FUNC_UTIME
+
+Makefile.am:
+
+Include:
+#if HAVE_UTIME_H
+# include <utime.h>
+#else
+# include <sys/utime.h>
+#endif
+

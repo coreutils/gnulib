@@ -1,0 +1,20 @@
+Description:
+
+Files:
+lib/xmemcoll.h
+lib/xmemcoll.c
+
+Depends-on:
+memcoll
+gettext
+error
+quotearg
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += xmemcoll.h xmemcoll.c
+
+Include:
+"xmemcoll.h"
+

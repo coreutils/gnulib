@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/pathmax.h
+m4/pathmax.m4
+
+Depends-on:
+
+configure.ac:
+gl_PATHMAX
+
+Makefile.am:
+lib_SOURCES += pathmax.h
+
+Include:
+"pathmax.h"
+

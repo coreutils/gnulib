@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/ftruncate.c
+m4/ftruncate.m4
+
+Depends-on:
+
+configure.ac:
+jm_FUNC_FTRUNCATE
+
+Makefile.am:
+
+Include:
+<unistd.h>
+

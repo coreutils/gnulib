@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/getstr.h
+lib/getstr.c
+m4/getstr.m4
+
+Depends-on:
+unlocked-io
+
+configure.ac:
+gl_GETSTR
+
+Makefile.am:
+lib_SOURCES += getstr.h getstr.c
+
+Include:
+"getstr.h"
+

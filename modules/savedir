@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/savedir.h
+lib/savedir.c
+m4/savedir.m4
+
+Depends-on:
+xalloc
+
+configure.ac:
+gl_SAVEDIR
+
+Makefile.am:
+lib_SOURCES += savedir.h savedir.c
+
+Include:
+"savedir.h"
+

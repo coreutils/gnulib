@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/gettimeofday.c
+m4/gettimeofday.m4
+
+Depends-on:
+
+configure.ac:
+AC_FUNC_GETTIMEOFDAY_CLOBBER
+
+Makefile.am:
+
+Include:
+<sys/time.h>
+

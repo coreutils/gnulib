@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/filemode.h
+lib/filemode.c
+m4/filemode.m4
+
+Depends-on:
+
+configure.ac:
+gl_FILEMODE
+
+Makefile.am:
+lib_SOURCES += filemode.h filemode.c
+
+Include:
+"filemode.h"
+

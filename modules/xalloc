@@ -1,0 +1,23 @@
+Description:
+
+Files:
+lib/xalloc.h
+lib/xmalloc.c
+lib/xstrdup.c
+m4/xalloc.m4
+
+Depends-on:
+malloc
+realloc
+error
+gettext
+
+configure.ac:
+gl_XALLOC
+
+Makefile.am:
+lib_SOURCES += xalloc.h xmalloc.c xstrdup.c
+
+Include:
+"xalloc.h"
+

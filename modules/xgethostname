@@ -1,0 +1,17 @@
+Description:
+
+Files:
+lib/xgethostname.c
+
+Depends-on:
+gethostname
+xalloc
+error
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += xgethostname.c
+
+Include:
+

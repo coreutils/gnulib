@@ -1,0 +1,21 @@
+Description:
+
+Files:
+lib/unicodeio.h
+lib/unicodeio.c
+m4/unicodeio.m4
+
+Depends-on:
+iconv
+gettext
+localcharset
+
+configure.ac:
+gl_UNICODEIO
+
+Makefile.am:
+lib_SOURCES += unicodeio.h unicodeio.c
+
+Include:
+"unicodeio.h"
+

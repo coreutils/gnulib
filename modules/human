@@ -1,0 +1,26 @@
+Description:
+
+Files:
+lib/human.h
+lib/human.c
+m4/ulonglong.m4
+m4/stdint_h.m4
+m4/inttypes_h.m4
+m4/uintmax_t.m4
+m4/human.m4
+
+Depends-on:
+gettext
+argmatch
+error
+xstrtol
+
+configure.ac:
+gl_HUMAN
+
+Makefile.am:
+lib_SOURCES += human.h human.c
+
+Include:
+"human.h"
+

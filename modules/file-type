@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/file-type.h
+lib/file-type.c
+m4/file-type.m4
+
+Depends-on:
+gettext
+
+configure.ac:
+gl_FILE_TYPE
+
+Makefile.am:
+lib_SOURCES += file-type.h file-type.c
+
+Include:
+"file-type.h"
+

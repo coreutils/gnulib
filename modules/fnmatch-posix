@@ -1,0 +1,15 @@
+Description:
+
+Files:
+
+Depends-on:
+fnmatch
+
+configure.ac:
+gl_FUNC_FNMATCH_POSIX
+
+Makefile.am:
+
+Include:
+"fnmatch.h"
+

@@ -1,0 +1,20 @@
+Description:
+
+Files:
+lib/sha.h
+lib/sha.c
+m4/sha.m4
+
+Depends-on:
+unlocked-io
+md5
+
+configure.ac:
+gl_SHA
+
+Makefile.am:
+lib_SOURCES += sha.h sha.c
+
+Include:
+"sha.h"
+

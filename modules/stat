@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/stat.c
+m4/stat.m4
+
+Depends-on:
+
+configure.ac:
+jm_FUNC_STAT
+
+Makefile.am:
+
+Include:
+<sys/stat.h>
+

@@ -1,0 +1,21 @@
+Description:
+
+Files:
+lib/argmatch.h
+lib/argmatch.c
+
+Depends-on:
+gettext
+error
+quotearg
+quote
+unlocked-io
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += argmatch.h argmatch.c
+
+Include:
+"argmatch.h"
+

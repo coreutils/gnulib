@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/strerror.c
+m4/strerror.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_STRERROR
+
+Makefile.am:
+
+Include:
+<string.h>
+

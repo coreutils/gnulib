@@ -1,0 +1,23 @@
+Description:
+
+Files:
+lib/closeout.h
+lib/closeout.c
+m4/closeout.m4
+
+Depends-on:
+unlocked-io
+gettext
+error
+quotearg
+fpending
+
+configure.ac:
+gl_CLOSEOUT
+
+Makefile.am:
+lib_SOURCES += closeout.h closeout.c
+
+Include:
+"closeout.h"
+

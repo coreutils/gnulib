@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/memcpy.c
+m4/memcpy.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_MEMCPY
+
+Makefile.am:
+
+Include:
+<string.h>
+

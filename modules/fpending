@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/__fpending.h
+lib/__fpending.c
+m4/fpending.m4
+
+Depends-on:
+
+configure.ac:
+jm_FUNC_FPENDING
+
+Makefile.am:
+lib_SOURCES += __fpending.h
+
+Include:
+"__fpending.h"
+

@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/dup2.c
+m4/dup2.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_DUP2
+
+Makefile.am:
+
+Include:
+<unistd.h>
+

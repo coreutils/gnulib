@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/xstrtoumax.c
+m4/xstrtoumax.m4
+
+Depends-on:
+xstrtol
+strtoumax
+
+configure.ac:
+jm_XSTRTOUMAX
+
+Makefile.am:
+lib_SOURCES += xstrtoumax.c
+
+Include:
+"xstrtol.h"
+

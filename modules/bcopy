@@ -1,0 +1,14 @@
+Description:
+
+Files:
+lib/bcopy.c
+
+Depends-on:
+
+configure.ac:
+AC_REPLACE_FUNCS(bcopy)
+
+Makefile.am:
+
+Include:
+

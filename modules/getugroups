@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/getugroups.c
+m4/getugroups.m4
+
+Depends-on:
+
+configure.ac:
+gl_GETUGROUPS
+
+Makefile.am:
+lib_SOURCES += getugroups.c
+
+Include:
+

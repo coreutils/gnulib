@@ -1,0 +1,16 @@
+Description:
+
+Files:
+lib/rmdir.c
+m4/rmdir.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_RMDIR
+
+Makefile.am:
+
+Include:
+<unistd.h>
+

@@ -1,0 +1,15 @@
+Description:
+
+Files:
+lib/fileblocks.c
+m4/fileblocks.m4
+
+Depends-on:
+
+configure.ac:
+gl_FILEBLOCKS
+
+Makefile.am:
+
+Include:
+

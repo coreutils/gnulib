@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/getline.h
+lib/getline.c
+m4/getline.m4
+
+Depends-on:
+getstr
+
+configure.ac:
+AM_FUNC_GETLINE
+
+Makefile.am:
+lib_SOURCES += getline.h
+
+Include:
+"getline.h"
+

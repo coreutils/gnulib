@@ -1,0 +1,19 @@
+Description:
+
+Files:
+lib/group-member.h
+lib/group-member.c
+m4/group-member.m4
+
+Depends-on:
+xalloc
+
+configure.ac:
+jm_FUNC_GROUP_MEMBER
+
+Makefile.am:
+lib_SOURCES += group-member.h
+
+Include:
+"group-member.h"
+

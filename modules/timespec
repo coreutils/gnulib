@@ -1,0 +1,18 @@
+Description:
+
+Files:
+lib/timespec.h
+m4/st_mtim.m4
+m4/timespec.m4
+
+Depends-on:
+
+configure.ac:
+gl_TIMESPEC
+
+Makefile.am:
+lib_SOURCES += timespec.h
+
+Include:
+"timespec.h"
+
