@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.40 2004-06-22 18:28:25 eggert Exp $
+# $Id: srclist.txt,v 1.41 2004-08-12 08:09:17 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -80,18 +80,18 @@ $LIBCSRC/argp/argp-eexst.c		lib gpl
 $LIBCSRC/argp/argp-fmtstream.c		lib gpl
 $LIBCSRC/argp/argp-fmtstream.h		lib gpl
 $LIBCSRC/argp/argp-fs-xinl.c		lib gpl
-# Currently not quite the same, due to alloca-related patch in gnulib.
+# Currently not quite the same.
 #$LIBCSRC/argp/argp-help.c		lib gpl
 $LIBCSRC/argp/argp-namefrob.h		lib gpl
-# Currently not quite the same, due to alloca-related patch in gnulib.
+# Currently not quite the same.
 #$LIBCSRC/argp/argp-parse.c		lib gpl
 $LIBCSRC/argp/argp-pv.c			lib gpl
 $LIBCSRC/argp/argp-pvh.c		lib gpl
 $LIBCSRC/argp/argp-xinl.c		lib gpl
 $LIBCSRC/argp/argp.h			lib gpl
-$LIBCSRC/posix/getopt.c			lib gpl
-$LIBCSRC/posix/getopt.h			lib gpl
-$LIBCSRC/posix/getopt1.c		lib gpl
+#$LIBCSRC/posix/getopt.c		lib gpl
+#$LIBCSRC/posix/getopt.h		lib gpl (getopt_.h in gnulib)
+#$LIBCSRC/posix/getopt1.c		lib gpl
 $LIBCSRC/posix/getopt_int.h		lib gpl
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
 $LIBCSRC/sysdeps/generic/strtoll.c	lib gpl
