@@ -1,5 +1,9 @@
 2003-06-07  Jim Meyering  <jim@meyering.net>
 
+	* readtokens.h: Put `Free Software Foundation, Inc.'
+	in place of my name in the copyright comment.
+	Remove definition and uses of __P.
+
 	From coreutils.
 	* stat.c: Don't declare xmalloc explicitly.
 	Instead, include "xalloc.h".
