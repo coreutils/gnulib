@@ -1,3 +1,7 @@
+2004-12-15  Stepan Kasal  <address@hidden>
+
+	* gnulib-tool (func_emit_lib_Makefile_am): Shorten a long sed command.
+
 2004-12-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/getcwd (Files): Add m4/d-ino.m4.
