@@ -1,3 +1,7 @@
+2003-08-20  Karl Berry  <karl@gnu.org>
+
+	* lib-ld.m4: serial 1003 from gettext, no changes besides serial.
+
 2003-08-19  Jim Meyering  <jim@meyering.net>
 
 	* lib-ld.m4: Revert yesterday's change, per Bruno's request here:
