@@ -16,7 +16,7 @@ gettime
 mktime
 setenv
 xalloc
-alloca
+alloca-opt
 
 configure.ac:
 gl_GETDATE
@@ -34,4 +34,3 @@ GPL
 
 Maintainer:
 Paul Eggert
-
