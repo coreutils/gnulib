@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2003-11-29.14}
+\def\texinfoversion{2003-12-01.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
@@ -5942,8 +5942,8 @@ width0pt\relax} \fi
 \endgroup}
 
 
-\message{footnotes,}
-% and other hacking with inserts
+\message{insertions,}
+% including footnotes.
 
 \newcount \footnoteno
 
@@ -6082,8 +6082,6 @@ width0pt\relax} \fi
 \newsaveins\margin
 
 
-\message{figures,}
-
 % @image.  We use the macros from epsf.tex to support this.
 % If epsf.tex is not installed and @image is used, we complain.
 %
@@ -6151,6 +6149,47 @@ width0pt\relax} \fi
   %
   \ifimagevmode \hss \egroup \bigbreak \fi  % space after the image
 \endgroup}
+
+
+% @float FLOATTYPE,LOC ... @end float for displayed figures, tables, etc.
+% We don't actually implement floating yet, we just plop the float "here".
+% But it seemed the best name for the future.
+% 
+\def\float{\parsearg\parsefloat}
+\def\parsefloat#1{\dofloat #1,\finish}
+
+% #1 is the text label for this float, typically "Figure", "Table",
+% "Example", etc.  #2 is optional and ignored; it will be for specifying
+% the positions allowed to float to (here, top, bottom).
+% 
+\def\dofloat#1,#2\finish{\vtop\bgroup
+  % xx should we indent the whole thing? center it?
+  % 
+  % allow @[short]caption now.
+  \let\thiscaption=\empty
+  \def\caption##1{\def\thiscaption{##1}}%
+  %
+  \let\thisshortcaption=\empty
+  \def\shortcaption##1{\def\thisshortcaption{##1}}%
+  %
+  \def\Efloat{%
+    \ifx\thiscaption\empty \else
+      \vskip.5\parskip
+      \thiscaption
+      \vskip\parskip
+    \fi
+    \egroup  % end of \vtop
+  }%
+}
+
+% @listoffloats FLOATTYPE - print a list of floats like a table of contents.
+\def\listoffloats{\parsearg\dolistoffloats}
+\def\dolistoffloats#1{%xx
+}
+
+% Default definitions.
+\def\caption{\errmessage{@caption while not in @float environment}}
+\def\shortcaption{\errmessage{@shortcaption while not in @float environment}}
 
 
 \message{localization,}
