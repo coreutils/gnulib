@@ -1227,6 +1227,9 @@ EOF
     SEI:*:*:SEIUX)
         echo mips-sei-seiux${UNAME_RELEASE}
 	exit 0 ;;
+    *:DRAGONFLY:*:*)
+	echo ${UNAME_MACHINE}-unknown-dragonfly${UNAME_RELEASE}
+	exit 0 ;;
 esac
 
 #echo '(No uname command or uname output not recognized.)' 1>&2
