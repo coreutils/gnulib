@@ -1,6 +1,6 @@
 /* getnline - Read a line from a stream, with bounded memory allocation.
 
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2004 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,11 +19,10 @@
 #ifndef GETNLINE_H
 #define GETNLINE_H 1
 
-#include <stddef.h>
 #include <stdio.h>
-
-/* Get ssize_t.  */
 #include <sys/types.h>
+
+#define GETNLINE_NO_LIMIT ((size_t) -1)
 
 /* Read a line, up to the next newline, from STREAM, and store it in *LINEPTR.
    *LINEPTR is a pointer returned from malloc (or NULL), pointing to *LINESIZE

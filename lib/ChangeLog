@@ -1,3 +1,33 @@
+2004-05-16  Derek Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	getline cleanup.  This changes the getndelim2 API: both order of
+	arguments, and meaning of delim2 (now uses EOF, not 0, to indicate
+	no delimiter).
+	
+	* lib/getline.c: Don't include stddef.h or stdio.h, since our
+	interface does that.
+	(getline): Always use getdelim, so that we don't have two
+	copies of this code.
+	* lib/getndelim2.c: Include <limits.h>, <inttypes.h>, <stdint.h>
+	if available.
+	(PTRDIFF_MAX, SIZE_MAX, SSIZE_MAX): Define if not defined.
+	(GETNDELIM2_MAXIMUM): New macro.
+	(getndelim2): Reorder arguments.  delim==EOF now means no delimiter,
+	instead of the old practice of delim2==0.  All callers changed.
+	Return -1 on overflow, instead of returning junk.
+	Do not set *linesize unless allocation succeeds.
+	* lib/getndelim2.h: Do not include stddef.h; no longer needed, now
+	that we include sys/types.h.
+	* lib/getnline.h: Likewise.
+	* lib/getndelim2.h (GETNLINE_NO_LIMIT): New macro.
+	(getndelim2): Reorder arguments.
+	* lib/getnline.c (getnline, getndelim):
+	Don't discard the NMAX argument.
+	(getnline): Invoke getndelim, to avoid code duplication.
+	* lib/getnline.h (GETNLINE_NO_LIMIT): New macro, used instead
+	of (size_t) -1 by callers of the getnline family.
+
 2004-05-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* nanosleep.c (suspended): Change its type from int to

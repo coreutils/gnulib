@@ -1,6 +1,6 @@
 /* getnline - Read a line from a stream, with bounded memory allocation.
 
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2004 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,14 +26,14 @@
 #include "getndelim2.h"
 
 ssize_t
-getnline (char **lineptr, size_t *linesize, size_t nmax, FILE *stream)
-{
-  return getndelim2 (lineptr, linesize, (size_t)(-1), stream, '\n', 0, 0);
-}
-
-ssize_t
 getndelim (char **lineptr, size_t *linesize, size_t nmax,
 	   int delimiter, FILE *stream)
 {
-  return getndelim2 (lineptr, linesize, (size_t)(-1), stream, delimiter, 0, 0);
+  return getndelim2 (lineptr, linesize, 0, nmax, delimiter, EOF, stream);
+}
+
+ssize_t
+getnline (char **lineptr, size_t *linesize, size_t nmax, FILE *stream)
+{
+  return getndelim (lineptr, linesize, nmax, '\n', stream);
 }
