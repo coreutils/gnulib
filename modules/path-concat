@@ -9,7 +9,6 @@ m4/dos.m4
 m4/path-concat.m4
 
 Depends-on:
-strdup
 xalloc
 dirname
 
