@@ -27,7 +27,7 @@
 #  define S_IRUSR S_IREAD
 # else
 #  define S_IRUSR 00400
-#endif
+# endif
 #endif
 
 #if !S_IWUSR
