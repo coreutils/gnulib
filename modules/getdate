@@ -9,6 +9,7 @@ m4/tm_gmtoff.m4
 m4/getdate.m4
 
 Depends-on:
+mktime
 unlocked-io
 
 configure.ac:
