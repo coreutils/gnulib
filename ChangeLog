@@ -1,3 +1,9 @@
+2004-10-04  Bruno Haible  <bruno@clisp.org>
+
+	* modules/README: New file.
+	* gnulib-tool (func_all_modules, func_verify_module): modules/README is
+	not a module.
+
 2004-10-01  Simon Josefsson  <jas@extundo.com>
 
 	* modules/memmem: New file.

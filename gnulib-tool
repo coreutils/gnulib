@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2004-09-29 05:58:14 $'
+cvsdatestamp='$Date: 2004-10-04 11:44:19 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -268,7 +268,7 @@ gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
 func_all_modules ()
 {
   (cd "$gnulib_dir/modules" && ls -1) \
-      | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^TEMPLATE$/d' -e '/~$/d' \
+      | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^README$/d' -e '/^TEMPLATE$/d' -e '/~$/d' \
       | sort
 }
 
@@ -279,6 +279,7 @@ func_verify_module ()
   if test ! -f "$gnulib_dir/modules/$module" \
      || test "CVS" = "$module" \
      || test "ChangeLog" = "$module" \
+     || test "README" = "$module" \
      || test "TEMPLATE" = "$module"; then
     echo "gnulib-tool: module $module doesn't exist" 1>&2
     module=
