@@ -2,7 +2,8 @@
 
 	* strdup.c: copy from libc/string (via ../config/srclist*).
 	* getopt*: copy from libc/posix.
-	* .cppi-disable: add strdup.c.
+	* gettext.h: copy from gettext.
+	* .cppi-disable: add strdup.c, gettext.h.
 
 2002-07-01  Jim Meyering  <meyering@lucent.com>
 
