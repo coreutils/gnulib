@@ -1,5 +1,9 @@
 2004-01-20  Bruno Haible  <bruno@clisp.org>
 
+	* modules/setenv: Depend on allocsa instead of alloca.
+
+2004-01-20  Bruno Haible  <bruno@clisp.org>
+
 	* modules/xallocsa: New file.
 	* MODULES.html.sh (func_all_modules): Add xallocsa.
 

@@ -9,7 +9,7 @@ lib/unsetenv.c
 m4/setenv.m4
 
 Depends-on:
-alloca
+allocsa
 
 configure.ac:
 gt_FUNC_SETENV

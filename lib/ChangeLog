@@ -1,3 +1,12 @@
+2003-11-30  Bruno Haible  <bruno@clisp.org>
+
+	Safer stack allocation.
+	* setenv.c: Include allocsa.h.
+	(alloca): Remove fallback definition.
+	(freea): Remove macro.
+	(__add_to_environ) [!_LIBC]: Use allocsa instead of alloca. Use freesa
+	instead of freea.
+
 2003-10-17  Bruno Haible  <bruno@clisp.org>
 
 	* binary-io.h: Avoid warnings on Cygwin.
