@@ -1481,7 +1481,7 @@ func_all_modules ()
   func_begin_table
   func_module putenv
   func_module setenv
-  #func_module xsetenv
+  func_module xsetenv
   func_end_table
 
   element="Character handling <ctype.h>"

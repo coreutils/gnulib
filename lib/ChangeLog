@@ -1,3 +1,8 @@
+2003-01-27  Bruno Haible  <bruno@clisp.org>
+
+	* xsetenv.h: New file, from GNU gettext.
+	* xsetenv.c: New file, from GNU gettext.
+
 2003-01-23  Bruno Haible  <bruno@clisp.org>
 
 	* minmax.h: New file, from GNU gettext, with comments from Paul Eggert.
