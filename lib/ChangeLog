@@ -1,5 +1,9 @@
 2003-06-06  Jim Meyering  <jim@meyering.net>
 
+	Merge from coreutils.
+	* fsusage.c: Remove declaration of statfs.
+	It conflicted with one from OSF/1 5.1 in <sys/mount.h>.
+
 	* posixtm.c: Include <stdbool.h> unconditionally.
 
 2003-06-05  Paul Eggert  <eggert@twinsun.com>
