@@ -1,3 +1,7 @@
+2005-01-26  Bruno Haible  <bruno@clisp.org>
+
+	* javaexec.m4: New file, from GNU gettext.
+
 2005-01-24  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
 	* sysexits.m4 (gl_SYSEXITS): Reverted logic. SYSEXITS_H

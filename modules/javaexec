@@ -1,0 +1,38 @@
+Description:
+Execute a Java program.
+
+Files:
+lib/javaexec.h
+lib/javaexec.c
+lib/javaexec.sh.in
+m4/javaexec.m4
+
+Depends-on:
+stdbool
+execute
+classpath
+xsetenv
+sh-quote
+pathname
+xalloc
+xallocsa
+error
+gettext
+
+configure.ac:
+gt_JAVAEXEC
+
+Makefile.am:
+DEFS += -DEXEEXT=\"$(EXEEXT)\"
+lib_SOURCES += javaexec.h javaexec.c
+EXTRA_DIST += javaexec.sh.in
+
+Include:
+"javaexec.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible
+
