@@ -1,8 +1,15 @@
-2003-10-27  Paul Eggert  <eggert@twinsun.com>
+2003-10-29  Paul Eggert  <eggert@twinsun.com>
+
+	* host-os.m4 (UTILS_HOST_OS): Resurrect netbsd*-gnu.  Add comments
+	to it, and to knetbsd*-gnu and kfreebsd*-gnu.  Remove the '*' from
+	after the 'gnu' in these cases.  This fixes some bugs in the
+	previous change, and is based on suggestions by Robbert Millan.
+
+2003-10-28  Paul Eggert  <eggert@twinsun.com>
 
 	* host-os.m4 (UTILS_HOST_OS): Identify GNU/KFreeBSD and
-	GNU/KNetBSD using their new names (which have a "K" in front of
-	the kernel name).  Requested by Richard Stallman.
+	GNU/KNetBSD.  These implementations use glibc atop the FreeBSD and
+	NetBSD kernels.  Requested by Richard Stallman.
 
 2003-10-26  Paul Eggert  <eggert@twinsun.com>
 
