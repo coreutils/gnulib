@@ -19,7 +19,14 @@ not, write to the Free Software Foundation, Inc., 675 Mass Ave,
 Cambridge, MA 02139, USA.  */
 
 #ifdef HAVE_CONFIG_H
+#if defined (CONFIG_BROKETS)
+/* We use <config.h> instead of "config.h" so that a compilation
+   using -I. -I$srcdir will use ./config.h rather than $srcdir/config.h
+   (which it would do because it found this file in $srcdir).  */
+#include <config.h>
+#else
 #include "config.h"
+#endif
 #endif
 
 #include <sys/types.h>		/* Some systems define `time_t' here.  */
@@ -96,14 +103,14 @@ dist_tm (t1, t2)
       else if (t1->x > t2->x)						      \
 	diff_flag = 1;							      \
     }
-  
+
   doit (tm_year, 31536000);	/* Okay, not all years have 365 days.  */
   doit (tm_mon, 2592000);	/* Okay, not all months have 30 days.  */
   doit (tm_mday, 86400);
   doit (tm_hour, 3600);
   doit (tm_min, 60);
   doit (tm_sec, 1);
-  
+
 #undef doit
 
   distance = v1 - v2;
@@ -118,7 +125,7 @@ dist_tm (t1, t2)
 
   return distance;
 }
-      
+
 
 /* Modified binary search -- make intelligent guesses as to where the time
    might lie along the timeline, assuming that our target time lies a
@@ -142,7 +149,7 @@ search (target)
       guess += distance;
 
       guess_tm = localtime (&guess);
-      
+
 #ifdef DEBUG
       if (debugging_enabled)
 	{
@@ -151,7 +158,7 @@ search (target)
 	  puts ("");
 	}
 #endif
-      
+
       /* Are we on the money?  */
       distance = dist_tm (target, guess_tm);
 
@@ -176,7 +183,7 @@ mktime (timeptr)
   time_t result;
 
   me = &private_mktime_struct_tm;
-  
+
   *me = *timeptr;
 
 #define normalize(foo,x,y,bar); \
@@ -190,11 +197,11 @@ mktime (timeptr)
       me->bar++; \
       me->foo = (x + (me->foo - y)); \
     }
-  
+
   normalize (tm_sec, 0, 59, tm_min);
   normalize (tm_min, 0, 59, tm_hour);
   normalize (tm_hour, 0, 23, tm_mday);
-  
+
   /* Do the month first, so day range can be found.  */
   normalize (tm_mon, 0, 11, tm_year);
   normalize (tm_mday, 1,
@@ -208,7 +215,7 @@ mktime (timeptr)
   normalize (tm_mday, 1,
 	     __mon_lengths[__isleap (me->tm_year)][me->tm_mon],
 	     tm_mon);
-  
+
 #ifdef DEBUG
   if (debugging_enabled)
     {
@@ -234,11 +241,11 @@ main (argc, argv)
   int time;
   int result_time;
   struct tm *tmptr;
-  
+
   if (argc == 1)
     {
       long q;
-      
+
       printf ("starting long test...\n");
 
       for (q = 10000000; q < 1000000000; q++)
@@ -248,23 +255,23 @@ main (argc, argv)
 	  if (q != my_mktime (tm))
 	    { printf ("failed for %ld\n", q); fflush (stdout); }
 	}
-      
+
       printf ("test finished\n");
 
       exit (0);
     }
-  
+
   if (argc != 2)
     {
       printf ("wrong # of args\n");
       exit (0);
     }
-  
+
   debugging_enabled = 1;	/* we want to see the info */
 
   ++argv;
   time = atoi (*argv);
-  
+
   printf ("Time: %d %s\n", time, ctime (&time));
 
   tmptr = localtime (&time);
