@@ -1,3 +1,8 @@
+2004-04-27  Derek Price  <derek@ximbiot.com>
+
+	* m4/dos.m4 (gl_AC_DOS): Add Cygwin to list of Windows/DOS
+	environments that accept backslashes and drive letters in paths.
+
 2004-04-20  Jim Meyering  <jim@meyering.net>
 
 	* modules/dirfd: Change UTILS_ macro name prefix to gl_.
