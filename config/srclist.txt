@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.25 2003-09-10 06:18:22 eggert Exp $
+# $Id: srclist.txt,v 1.26 2003-09-11 14:12:03 haible Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -40,8 +40,9 @@ $GETTEXT/gettext-runtime/intl/ref-del.sin		lib gpl
 
 $GETTEXT/gettext-tools/lib/gettext.h			lib gpl
 $GETTEXT/gettext-tools/lib/mkdtemp.c			lib gpl
-$GETTEXT/gettext-tools/lib/setenv.c			lib gpl
-$GETTEXT/gettext-tools/lib/unsetenv.c			lib gpl
+# Put back after next gettext release.
+#$GETTEXT/gettext-tools/lib/setenv.c			lib gpl
+#$GETTEXT/gettext-tools/lib/unsetenv.c			lib gpl
 
 $GETTEXT/autoconf-lib-link/m4/lib-ld.m4			m4
 $GETTEXT/autoconf-lib-link/m4/lib-link.m4		m4

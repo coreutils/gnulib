@@ -1,3 +1,7 @@
+2003-09-11  Bruno Haible  <bruno@clisp.org>
+
+	* srclist.txt (setenv.c, unsetenv.c): Disable for the moment.
+
 2003-09-09  Paul Eggert  <eggert@twinsun.com>
 
 	* srclist.txt: Do not get getopt.h, getopt1.c, or regex.h from
