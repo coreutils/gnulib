@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2003-10-07.17}
+\def\texinfoversion{2003-10-08.12}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
@@ -254,7 +254,7 @@
                    % the page break happens to be in the middle of an example.
     \shipout\vbox{%
       % Do this early so pdf references go to the beginning of the page.
-      \ifpdfmakepagedest \pdfmkdest{\the\pageno}\fi
+      \ifpdfmakepagedest \pdfdest name{\the\pageno} xyz\fi
       %
       \ifcropmarks \vbox to \outervsize\bgroup
         \hsize = \outerhsize
@@ -1091,7 +1091,13 @@ where each line of input produces a line of output.}
     \ifnum\pdftexversion < 14 \else
       \pdfrefximage \pdflastximage
     \fi}
-  \def\pdfmkdest#1{{\normalturnoffactive \pdfdest name{#1} xyz}}
+  \def\pdfmkdest#1{{%
+    % We have to set dummies so commands such as @code in a section title
+    % aren't expanded.
+    \atdummies
+    \normalturnoffactive
+    \pdfdest name{#1} xyz%
+  }}
   \def\pdfmkpgn#1{#1}
   \let\linkcolor = \Blue  % was Cyan, but that seems light?
   \def\endlink{\Black\pdfendlink}
@@ -1334,7 +1340,7 @@ where each line of input produces a line of output.}
 \font\textsy=cmsy10 scaled \mainmagstep
 
 % A few fonts for @defun, etc.
-\setfont\defbf\bfshape{10}{\magstep1} %was 1314
+\setfont\defbf\bfshape{10}{\magstep1}
 \setfont\deftt\ttshape{10}{\magstep1}
 \def\df{\let\tentt=\deftt \let\tenbf = \defbf \bf}
 
@@ -3199,7 +3205,7 @@ width0pt\relax} \fi
   \temp
 }
 
-%  Take care of unwanted page breaks:
+% Take care of unwanted page breaks:
 %
 % If a skip is the last thing on the list now, preserve it
 % by backing up by \lastskip, doing the \write, then inserting
@@ -3966,9 +3972,8 @@ width0pt\relax} \fi
     \chapfonts \rm
     %
     % Have to define \thissection before calling \donoderef, because the
-    % xref code eventually uses it, as \Ytitle.  On the other hand, it
-    % has to be called after \pchapsepmacro, or the headline will change
-    % too soon.
+    % xref code eventually uses it.  On the other hand, it has to be called
+    % after \pchapsepmacro, or the headline will change too soon.
     \gdef\thissection{#1}%
     \gdef\thischaptername{#1}%
     %
@@ -5842,7 +5847,7 @@ width0pt\relax} \fi
 % 
 \def\donoderef#1{%
   \ifx\lastnode\empty\else
-    \expandafter\expandafter\expandafter\setref{\lastnode}{#1}%
+    \setref{\lastnode}{#1}%
     \global\let\lastnode=\empty
   \fi
 }
@@ -5860,24 +5865,27 @@ width0pt\relax} \fi
 % NAME-pg (the page number), and NAME-snt (section number and type).
 % Called from \foonoderef.
 % 
-% We have to set dummies so commands such as @code in a section title
-% aren't expanded.  It would be nicer not to expand the titles in the
-% first place, but that is hard to do.
+% We take care not to expand the title.
 %
-% Likewise, use \turnoffactive so that punctuation chars such as underscore
+% Use \turnoffactive so that punctuation chars such as underscore
 % and backslash work in node names.
 %
-\def\setref#1#2{{%
-  \atdummies
+\def\setref#1#2{%
   \pdfmkdest{#1}%
-  %
   \iflinks
-    \turnoffactive
-    \dosetq{#1-title}{Ytitle}%
-    \dosetq{#1-pg}{Ypagenumber}%
-    \dosetq{#1-snt}{#2}%
+    {%
+      \turnoffactive
+      \edef\writexrdef##1##2{%
+	\write\auxfile{@xrdef{#1-% #1 of \setref, expanded by the \edef
+	  ##1}{##2}}% these are parameters of \writexrdef
+      }
+      \toks0 = \expandafter{\thissection}
+      \immediate \writexrdef{title}{\the\toks0 }%
+      \immediate \writexrdef{snt}{\csname #2\endcsname}% \Ynumbered etc.
+      \writexrdef{pg}{\folio}% will be written later, during \shipout
+    }%
   \fi
-}}
+}
 
 % @xref, @pxref, and @ref generate cross-references.  For \xrefX, #1 is
 % the node name, #2 the name of the Info cross-reference, #3 the printed
@@ -5970,21 +5978,8 @@ width0pt\relax} \fi
 %
 \def\xrefprintnodename#1{[#1]}
 
-% \dosetq is called from \setref to do the actual \write (\iflinks).
+% Things referred to by \setref.
 %
-\def\dosetq#1#2{%
-  \edef\next{\write\auxfile{\internalsetq{#1}{#2}}}%
-  \next
-}
-
-% \internalsetq{foo}{page} expands into
-%   CHARACTERS @xrdef{foo}{...expansion of \page...}
-\def\internalsetq#1#2{@xrdef{#1}{\csname #2\endcsname}}
-
-% Things to be expanded by \internalsetq.
-%
-\def\Ypagenumber{\noexpand\folio}
-\def\Ytitle{\thissection}
 \def\Ynothing{}
 \def\Yomitfromtoc{}
 \def\Ynumbered{%
