@@ -132,11 +132,11 @@ print_errno_message (int errnum)
 static void
 error_tail (int status, int errnum, const char *message, va_list args)
 {
-# if HAVE_VPRINTF || _LIBC
-#  if _LIBC
+#if HAVE_VPRINTF || _LIBC
+# if _LIBC
   if (_IO_fwide (stderr, 0) > 0)
     {
-#   define ALLOCA_LIMIT	2000
+#  define ALLOCA_LIMIT	2000
       size_t len = strlen (message) + 1;
       wchar_t *wmessage = NULL;
       mbstate_t st;
@@ -174,21 +174,21 @@ error_tail (int status, int errnum, const char *message, va_list args)
       __vfwprintf (stderr, wmessage, args);
     }
   else
-#  endif
-    vfprintf (stderr, message, args);
-# else
-  _doprnt (message, args, stderr);
 # endif
+    vfprintf (stderr, message, args);
+#else
+  _doprnt (message, args, stderr);
+#endif
   va_end (args);
 
   ++error_message_count;
   if (errnum)
     print_errno_message (errnum);
-# if _LIBC
+#if _LIBC
   if (_IO_fwide (stderr, 0) > 0)
     putwc (L'\n', stderr);
   else
-# endif
+#endif
     putc ('\n', stderr);
   fflush (stderr);
   if (status)
