@@ -252,7 +252,7 @@ read_filesystem_list (need_fs_type, all_fs)
 	me->me_devname = xstrdup (fsp->f_mntfromname);
 	me->me_mountdir = xstrdup (fsp->f_mntonname);
 #ifdef __NetBSD__
-	me->me_type = fsp->f_fstypename;
+	me->me_type = xstrdup (fsp->f_fstypename);
 #else
 	me->me_type = fstype_to_string (fsp->f_type);
 #endif
