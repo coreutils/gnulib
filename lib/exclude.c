@@ -267,21 +267,25 @@ add_exclude_file (void (*add_func) (struct exclude *, char const *, int),
     e = errno;
 
   buf = xrealloc (buf, buf_count + 1);
+  buf[buf_count] = line_end;
+  lim = buf + buf_count + ! (buf_count == 0 || buf[buf_count - 1] == line_end);
+  pattern = buf;
 
-  for (pattern = p = buf, lim = buf + buf_count;  p <= lim;  p++)
-    if (p < lim ? *p == line_end : buf < p && p[-1])
+  for (p = buf; p < lim; p++)
+    if (*p == line_end)
       {
+	char *pattern_end = p;
+
 	if (is_space (line_end))
 	  {
-	    char *pattern_end = p;
 	    for (; ; pattern_end--)
 	      if (pattern_end == pattern)
 		goto next_pattern;
 	      else if (! is_space (pattern_end[-1]))
 		break;
-	    *pattern_end = '\0';
 	  }
 
+	*pattern_end = '\0';
 	(*add_func) (ex, pattern, options);
 
       next_pattern:
