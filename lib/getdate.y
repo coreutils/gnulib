@@ -486,6 +486,7 @@ static TABLE const TimezoneTable[] = {
     { "met",	tZONE,     -HOUR(1) },	/* Middle European */
     { "mewt",	tZONE,     -HOUR(1) },	/* Middle European Winter */
     { "mest",	tDAYZONE,  -HOUR(1) },	/* Middle European Summer */
+    { "mesz",	tDAYZONE,  -HOUR(1) },	/* Middle European Summer */
     { "swt",	tZONE,     -HOUR(1) },	/* Swedish Winter */
     { "sst",	tDAYZONE,  -HOUR(1) },	/* Swedish Summer */
     { "fwt",	tZONE,     -HOUR(1) },	/* French Winter */
@@ -502,7 +503,7 @@ static TABLE const TimezoneTable[] = {
 #endif
     { "zp6",	tZONE,     -HOUR(6) },	/* USSR Zone 5 */
 #if	0
-    /* For completeness.  NST is also Newfoundland Stanard, and SST is
+    /* For completeness.  NST is also Newfoundland Standard, and SST is
      * also Swedish Summer. */
     { "nst",	tZONE,     -HOUR(6.5) },/* North Sumatra */
     { "sst",	tZONE,     -HOUR(7) },	/* South Sumatra, USSR Zone 6 */
@@ -866,16 +867,16 @@ difftm (a, b)
 {
   int ay = a->tm_year + (TM_YEAR_ORIGIN - 1);
   int by = b->tm_year + (TM_YEAR_ORIGIN - 1);
-  int days = (
-	      /* difference in day of year */
-	      a->tm_yday - b->tm_yday
-	      /* + intervening leap days */
-	      +  ((ay >> 2) - (by >> 2))
-	      -  (ay/100 - by/100)
-	      +  ((ay/100 >> 2) - (by/100 >> 2))
-	      /* + difference in years * 365 */
-	      +  (long)(ay-by) * 365
-	      );
+  long days = (
+	       /* difference in day of year */
+	       a->tm_yday - b->tm_yday
+	       /* + intervening leap days */
+	       +  ((ay >> 2) - (by >> 2))
+	       -  (ay/100 - by/100)
+	       +  ((ay/100 >> 2) - (by/100 >> 2))
+	       /* + difference in years * 365 */
+	       +  (long)(ay-by) * 365
+	       );
   return (60*(60*(24*days + (a->tm_hour - b->tm_hour))
 	      + (a->tm_min - b->tm_min))
 	  + (a->tm_sec - b->tm_sec));
