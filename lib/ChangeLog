@@ -1,3 +1,9 @@
+2005-01-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* human.c (SIZE_MAX, UINTMAX_MAX): Move these conditional
+	definitions to be after all include files, to avoid collisions.
+	Problem reported by Bob Proulx.
+
 2004-12-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* error.c [!_LIBC && !ENABLE_NLS]: Do not include "gettext.h";
@@ -5986,7 +5992,7 @@
 	shell quoting style.
 
 
-Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004
+Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005
   Free Software Foundation, Inc.
 Copying and distribution of this file, with or without modification,
 are permitted provided the copyright notice and this notice are preserved.
