@@ -1,4 +1,4 @@
-# getopt.m4 serial 4
+# getopt.m4 serial 5
 dnl Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -19,6 +19,8 @@ AC_DEFUN([gl_GETOPT_SUBSTITUTE],
     [Define to rpl_optarg if the replacement variable should be used.])
   AC_DEFINE([optind], [rpl_optind],
     [Define to rpl_optind if the replacement variable should be used.])
+  AC_DEFINE([opterr], [rpl_opterr],
+    [Define to rpl_opterr if the replacement variable should be used.])
   AC_DEFINE([optopt], [rpl_optopt],
     [Define to rpl_optopt if the replacement variable should be used.])
   AC_DEFINE([getopt], [rpl_getopt],

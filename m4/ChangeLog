@@ -1,3 +1,7 @@
+2004-11-11  Simon Josefsson  <jas@extundo.com>
+
+	* getopt.m4: Replace opterr.
+
 2004-11-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* prereq.m4 (gl_PREREQ): Require gt_FUNC_SETENV.
