@@ -1,5 +1,18 @@
 2004-07-16  Bruno Haible  <bruno@clisp.org>
 
+	* backupfile.h: Add extern "C" for C++.
+	* closeout.h: Likewise.
+	* copy-file.h: Likewise.
+	* findprog.h: Likewise.
+	* full-write.h: Likewise.
+	* pathname.h: Likewise.
+	* progname.h: Likewise.
+	* stpcpy.h: Likewise.
+	* stpncpy.h: Likewise.
+	* strcase.h: Likewise.
+	* strstr.h: Likewise.
+	* xalloc.h: Likewise.
+
 	* mbswidth.h: Add extern "C" for C++.
 	Reported by Albert Chin-A-Young <china@thewrittenword.com>.
 

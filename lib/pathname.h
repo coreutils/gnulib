@@ -18,6 +18,11 @@
 #ifndef _PATHNAME_H
 #define _PATHNAME_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Pathname support.
    ISSLASH(C)           tests whether C is a directory separator character.
    IS_ABSOLUTE_PATH(P)  tests whether P is an absolute path.  If it is not,
@@ -46,5 +51,9 @@
    suffix.  Return a freshly allocated pathname.  */
 extern char *concatenated_pathname (const char *directory,
 				    const char *filename, const char *suffix);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _PATHNAME_H */

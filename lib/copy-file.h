@@ -16,9 +16,20 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Copy a regular file: from src_filename to dest_filename.
    The destination file is assumed to be a backup file.
    Modification times, owner, group and access permissions are preserved as
    far as possible.
    Exit upon failure.  */
 extern void copy_file_preserving (const char *src_filename, const char *dest_filename);
+
+
+#ifdef __cplusplus
+}
+#endif

@@ -1,5 +1,5 @@
 /* Program name management.
-   Copyright (C) 2001-2003 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -25,6 +25,12 @@
      set_program_name (argv[0]);
  */
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* String containing name the program is called with.  */
 extern const char *program_name;
 
@@ -46,5 +52,11 @@ extern void set_program_name_and_installdir (const char *argv0,
 extern char *get_full_program_name (void);
 
 #endif
+
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif /* _PROGNAME_H */

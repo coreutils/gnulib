@@ -1,5 +1,5 @@
 /* Searching in a string.
-   Copyright (C) 2001, 2002 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,7 +22,15 @@
 
 #else
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Find the first occurrence of NEEDLE in HAYSTACK.  */
 extern char *strstr (const char *haystack, const char *needle);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

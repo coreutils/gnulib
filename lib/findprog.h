@@ -16,6 +16,12 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* Look up a program in the PATH.
    Attempt to determine the pathname that would be called by execlp/execvp
    of PROGNAME.  If successful, return a pathname containing a slash
@@ -25,3 +31,8 @@
    execl/execv on the returned pathname.
    The returned string is freshly malloc()ed if it is != PROGNAME.  */
 extern const char *find_in_path (const char *progname);
+
+
+#ifdef __cplusplus
+}
+#endif

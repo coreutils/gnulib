@@ -1,5 +1,5 @@
 /* String copying.
-   Copyright (C) 1995, 2001-2003 Free Software Foundation, Inc.
+   Copyright (C) 1995, 2001-2004 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,6 +20,12 @@
 
 #include <string.h>
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #if !HAVE_STPNCPY
 
 /* Copy no more than N bytes of SRC to DST, returning a pointer past the
@@ -30,5 +36,11 @@ extern char *gnu_stpncpy (char *dst, const char *src, size_t n);
 #define stpncpy(Dst, Src, N) gnu_stpncpy (Dst, Src, N)
 
 #endif
+
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif /* _STPNCPY_H */
