@@ -5,6 +5,10 @@
 2003-06-06  Jim Meyering  <jim@meyering.net>
 
 	Merge from coreutils.
+	* same.c: (same_name): Declare *_basename locals to be `const'.
+	Consolidate declarations and initializations of *_base* locals.
+
+	Merge from coreutils.
 	This avoids a core dump on systems without GNU putenv,
 	when running `env -u SOME_ALREADY_UNSET_VARIABLE'.
 	* putenv.c (__set_errno, LOCK, UNLOCK): Define.
