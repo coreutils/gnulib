@@ -1,12 +1,12 @@
 GNULib
 ======
 
-GNULib is inteded to be the canonical source for most of the important
+GNULib is intended to be the canonical source for most of the important
 "Portability" files for GNU projects.
 
 While portability is not one of our primary goals, it has helped
 introduce many people to the GNU system, and is worthwhile when it can
-be acheived at a low cost.  This collection helps lower that cost.
+be achieved at a low cost.  This collection helps lower that cost.
 
 There are three directories that contain all of the files:
 
@@ -103,7 +103,7 @@ include <sys/types.h> even though it's not even in C99; that's OK
 since <sys/types.h> has been around nearly forever.  <string.h> and
 <stdlib.h> were not in Unix Version 7, so they weren't universally
 available on ancient hosts, but they are both in SunOS 4 (the oldest
-platform still in relatively-common use) so GNUlib assumes them now.
+platform still in relatively-common use) so GNULib assumes them now.
 
 Even if the include files exist, they may not conform to C89.
 However, GCC has a "fixincludes" script that attempts to fix most
@@ -115,12 +115,37 @@ Even if the include files conform to C89, the library itself may not.
 For example, SunOS 4's (free (NULL)) can dump core, so GNULib code
 must avoid freeing a null pointer, even though C89 allows it.
 
-GNULib code should port without problem to new hosts, e.g., hosts
-conforming to C99 or to recent POSIX standards.  Hence GNUlib code
-should avoid using constructs (e.g., undeclared functions return
-'int') that do not conform to C99.  However, the GNU coding standards
-allow one departure from strict C99: GNUlib code can assume that
-standard internal types like size_t are no wider than 'long'.
+The GNU coding standards allow one departure from strict C99: GNULib
+code can assume that standard internal types like size_t are no wider
+than 'long'.  POSIX 1003.1-2001 and the GNU coding standards both
+require 'int' to be at least 32 bits wide, so GNULib code assumes this
+as well.  GNULib code makes the following additional assumptions:
+
+ * Signed integer arithmetic is two's complement, without runtime
+   overflow checking.
+
+ * There are no "holes" in integer values: all the bits of an integer
+   contribute to its value in the usual way.
+
+ * If two nonoverlapping objects have sizes S and T represented as
+   size_t values, then S + T cannot overflow.  This assumption is true
+   for all practical hosts with flat address spaces, but it is not
+   always true for hosts with segmented address spaces.
+
+ * Objects with all bits zero are treated as 0 or NULL.  For example,
+   memset (A, 0, sizeof A) initializes an array A of pointers to NULL.
+
+The above assumptions are not required by the C or POSIX standards but
+hold on all practical porting targets that we're familiar with.  If
+you have a porting target where these assumptions are not true, we'd
+appreciate hearing of any fixes.  We need fixes that do not increase
+runtime overhead on standard hosts and that are relatively easy to
+maintain.
+
+With the above caveats, GNULib code should port without problem to new
+hosts, e.g., hosts conforming to C99 or to recent POSIX standards.
+Hence GNULib code should avoid using constructs (e.g., undeclared
+functions return 'int') that do not conform to C99.
 
 High Quality
 ============
