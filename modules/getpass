@@ -2,6 +2,7 @@ Description:
 getpass() function: read a password from /dev/tty.
 
 Files:
+lib/getpass.h
 lib/getpass.c
 m4/getpass.m4
 
@@ -14,8 +15,10 @@ configure.ac:
 gl_FUNC_GETPASS
 
 Makefile.am:
+lib_SOURCES += getpass.h
 
 Include:
+"getpass.h"
 
 Maintainer:
 Jim Meyering, glibc

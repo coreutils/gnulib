@@ -1,6 +1,9 @@
 2004-08-08  Simon Josefsson  <jas@extundo.com>
-
+	
 	* xgethostname.c: Don't include error.h (not used).
+
+	* getpass.h: Add.
+	* getpass.c: Include getpass.h first.
 
 2004-08-08  Paul Eggert  <eggert@cs.ucla.edu>
 

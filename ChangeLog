@@ -18,6 +18,10 @@
 	* modules/xgethostname (Depends-on): Remove exit and error (not
 	used).
 
+	* modules/getpass-gnu: Add getpass.h.
+	(Depends-on): Add stdbool.
+	* modules/getpass: Add getpass.h.
+
 2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	More merge from coreutils.
