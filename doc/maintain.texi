@@ -1424,14 +1424,15 @@ doesn't mean that all GNU contributors and maintainers have to agree;
 your views on these issues are up to you, and you're entitled to express
 them when speaking for yourself.
 
-However, due to the much greater publicity that the Open Source Movement
-receives, the GNU Project needs to overcome a widespread mistaken
-impression that GNU is @emph{and always was} an activity of the Open
-Source Movement.  For this reason, please use the term ``free
-software,'' rather than ``open source,'' in GNU software releases, GNU
+However, due to the much greater publicity that the Open Source
+Movement receives, the GNU Project needs to overcome a widespread
+mistaken impression that GNU is @emph{and always was} an activity of
+the Open Source Movement.  For this reason, please use the term ``free
+software,'' not ``open source,'' in GNU software releases, GNU
 documentation, and announcements and articles that you publish in your
 role as the maintainer of a GNU package.  A reference to the URL given
-above, to explain the difference, is a useful thing to include as well.
+above, to explain the difference, is a useful thing to include as
+well.
 
 @node GNU and Linux
 @section GNU and Linux
