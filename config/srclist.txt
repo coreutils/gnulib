@@ -1,17 +1,17 @@
-# $Id: srclist.txt,v 1.58 2005-03-15 22:08:36 karl Exp $
+# $Id: srclist.txt,v 1.59 2005-03-22 15:12:21 haible Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
-$GNUCONFIG/config.guess		config
-$GNUCONFIG/config.sub		config
+$GNUCONFIG/config.guess		build-aux
+$GNUCONFIG/config.sub		build-aux
 #
-$AUTOMAKE/lib/depcomp		config
-$AUTOMAKE/lib/install-sh	config
-$AUTOMAKE/lib/mdate-sh		config
-$AUTOMAKE/lib/missing		config
-$AUTOMAKE/lib/mkinstalldirs	config
+$AUTOMAKE/lib/depcomp		build-aux
+$AUTOMAKE/lib/install-sh	build-aux
+$AUTOMAKE/lib/mdate-sh		build-aux
+$AUTOMAKE/lib/missing		build-aux
+$AUTOMAKE/lib/mkinstalldirs	build-aux
 #
-$TEXINFOSRC/doc/texinfo.tex	config
+$TEXINFOSRC/doc/texinfo.tex	build-aux
 
 $AUTOCONF/INSTALL		doc
 #
@@ -45,7 +45,7 @@ $GETTEXT/gettext-tools/lib/setenv.c			lib gpl
 $GETTEXT/gettext-tools/lib/unsetenv.c			lib gpl
 $GETTEXT/gettext-tools/lib/vasprintf.h			lib gpl
 
-$GETTEXT/autoconf-lib-link/config.rpath			config
+$GETTEXT/autoconf-lib-link/config.rpath			build-aux
 $GETTEXT/autoconf-lib-link/m4/lib-ld.m4			m4
 $GETTEXT/autoconf-lib-link/m4/lib-link.m4		m4
 $GETTEXT/autoconf-lib-link/m4/lib-prefix.m4		m4

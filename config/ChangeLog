@@ -1,3 +1,9 @@
+2005-03-22  Bruno Haible  <bruno@clisp.org>
+
+	* srclist.txt: Replace target directory 'config' with 'build-aux'.
+	* config.guess, config.sub, config.rpath, depcomp, install-sh:
+	* mdate-sh, missing, mkinstalldirs, texinfo.tex: Move to ../build-aux/.
+
 2005-03-15  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt (config.rpath): from gettext.
