@@ -1430,6 +1430,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module calloc
   func_module eealloc
   func_module free
   func_module malloc
