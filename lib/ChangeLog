@@ -1,5 +1,7 @@
 2002-11-21  Jim Meyering  <jim@meyering.net>
 
+	* strdup.c (strdup): Tweak comment and initial #if/#include.
+
 	Merge in changes from the coreutils.
 
 	2002-09-25  Paul Eggert  <eggert@twinsun.com>
