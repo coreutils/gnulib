@@ -11,10 +11,6 @@
 
 2005-03-26  Jim Meyering  <jim@meyering.net>
 
-	* intprops.h: Say `terminating NUL byte' rather than `terminating null'.
-	* quotearg.c: Likewise.
-	* filemode.c: Likewise.
-
 	Comment nits.
 	* intprops.h: Add the apostrophe in `(one|two)'s complement'.
 	Correct typos: s/or/of/.
