@@ -1,6 +1,6 @@
 /* Stack overflow handling.
 
-   Copyright (C) 2002 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2004 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -32,11 +32,7 @@
    (e.g., with malloc).  Yes, this is a pain, but we don't know of any
    better solution that is portable.
 
-   No attempt has been made to deal with multithreaded applications.
-
-   If ! HAVE_XSI_STACK_OVERFLOW_HEURISTIC, the current implementation
-   assumes that, if the RLIMIT_STACK limit changes during execution,
-   then c_stack_action is invoked immediately afterwards.  */
+   No attempt has been made to deal with multithreaded applications.  */
 
 #if HAVE_CONFIG_H
 # include <config.h>
@@ -115,9 +111,9 @@ static void die (int) __attribute__ ((noreturn));
 static void
 die (int signo)
 {
-  char const *message =
-    signo ? program_error_message : stack_overflow_message;
+  char const *message;
   segv_action (signo);
+  message = signo ? program_error_message : stack_overflow_message;
   write (STDERR_FILENO, program_name, strlen (program_name));
   write (STDERR_FILENO, ": ", 2);
   write (STDERR_FILENO, message, strlen (message));
@@ -141,132 +137,6 @@ find_stack_direction (char const *addr)
 {
   char dummy;
   return ! addr ? find_stack_direction (&dummy) : addr < &dummy ? 1 : -1;
-}
-# endif
-
-# if HAVE_XSI_STACK_OVERFLOW_HEURISTIC
-#  define get_stack_location(argv) 0
-# else
-
-#  if defined RLIMIT_STACK && defined _SC_PAGESIZE
-
-/* Return the minimum machine address deducible from ARGV.  This
-   includes the addresses of all the strings that ARGV points at, as
-   well as the address of ARGV itself.  */
-
-static char const *
-min_address_from_argv (char * const *argv)
-{
-  char const *min = (char const *) argv;
-  char const *p;
-  while ((p = *argv++))
-    if (p < min)
-      min = p;
-  return min;
-}
-
-/* Return the maximum machine address deducible from ARGV.  */
-
-static char const *
-max_address_from_argv (char * const *argv)
-{
-  char const *max = *argv;
-  char const *max1;
-  char const *p;
-  while ((p = *argv++))
-    if (max < p)
-      max = p;
-  max1 = (char const *) (argv + 1);
-  return max && max1 < max ? max + strlen (max) + 1 : max1;
-}
-#  endif
-
-/* The base and size of the stack, determined at startup.  */
-static char const * volatile stack_base;
-static size_t volatile stack_size;
-
-/* Store the base and size of the stack into the static variables
-   STACK_BASE and STACK_SIZE.  The base is the numerically lowest
-   address in the stack.  Return -1 (setting errno) if this cannot be
-   done.  */
-
-static int
-get_stack_location (char * const *argv)
-{
-#  if ! (defined RLIMIT_STACK && defined _SC_PAGESIZE)
-
-  errno = ENOTSUP;
-  return -1;
-
-#  else
-
-  struct rlimit rlimit;
-  int r = getrlimit (RLIMIT_STACK, &rlimit);
-  if (r == 0)
-    {
-      char const *base;
-      size_t size = rlimit.rlim_cur;
-      extern char **environ;
-      size_t page_size = sysconf (_SC_PAGESIZE);
-      int stack_direction = find_stack_direction (0);
-
-#   if HAVE_GETCONTEXT && HAVE_DECL_GETCONTEXT
-      ucontext_t context;
-      if (getcontext (&context) == 0)
-	{
-	  base = context.uc_stack.ss_sp;
-	  if (stack_direction < 0)
-	    base -= size - context.uc_stack.ss_size;
-	}
-      else
-#   endif
-	{
-	  if (stack_direction < 0)
-	    {
-	      char const *a = max_address_from_argv (argv);
-	      char const *b = max_address_from_argv (environ);
-	      base = (a < b ? b : a) - size;
-	      base += - (size_t) base % page_size;
-	    }
-	  else
-	    {
-	      char const *a = min_address_from_argv (argv);
-	      char const *b = min_address_from_argv (environ);
-	      base = a < b ? a : b;
-	      base -= (size_t) base % page_size;
-	    }
-	}
-
-      if (size != rlimit.rlim_cur
-	  || rlimit.rlim_cur < 0
-	  || base + size < base
-#   ifdef RLIM_SAVED_CUR
-	  || rlimit.rlim_cur == RLIM_SAVED_CUR
-#   endif
-#   ifdef RLIM_SAVED_MAX
-	  || rlimit.rlim_cur == RLIM_SAVED_MAX
-#   endif
-#   ifdef RLIM_INFINITY
-	  || rlimit.rlim_cur == RLIM_INFINITY
-#   endif
-	  )
-	{
-	  errno = EOVERFLOW;
-	  return -1;
-	}
-
-      stack_base = base;
-      stack_size = size;
-
-#   if DEBUG
-      fprintf (stderr, "get_stack_location base=%p size=%lx\n",
-	       base, (unsigned long) size);
-#   endif
-    }
-
-  return r;
-
-#  endif
 }
 # endif
 
@@ -296,14 +166,18 @@ segv_handler (int signo, siginfo_t *info,
   /* Clear SIGNO if it seems to have been a stack overflow.  */
   if (0 < info->si_code)
     {
+#  if ! HAVE_XSI_STACK_OVERFLOW_HEURISTIC
+      /* We can't easily determine whether it is a stack overflow; so
+	 assume that the rest of our program is perfect (!) and that
+	 this segmentation violation is a stack overflow.  */
+      signo = 0;
+#  else
       /* If the faulting address is within the stack, or within one
 	 page of the stack end, assume that it is a stack
 	 overflow.  */
-#  if HAVE_XSI_STACK_OVERFLOW_HEURISTIC
       ucontext_t const *user_context = context;
       char const *stack_base = user_context->uc_stack.ss_sp;
       size_t stack_size = user_context->uc_stack.ss_size;
-#  endif
       char const *faulting_address = info->si_addr;
       size_t s = faulting_address - stack_base;
       size_t page_size = sysconf (_SC_PAGESIZE);
@@ -312,7 +186,7 @@ segv_handler (int signo, siginfo_t *info,
       if (s < stack_size + page_size)
 	signo = 0;
 
-#  if DEBUG
+#   if DEBUG
       {
 	char buf[1024];
 	sprintf (buf,
@@ -321,6 +195,7 @@ segv_handler (int signo, siginfo_t *info,
 		 (unsigned long) page_size, signo);
 	write (STDERR_FILENO, buf, strlen (buf));
       }
+#   endif
 #  endif
     }
 
@@ -333,13 +208,13 @@ null_action (int signo __attribute__ ((unused)))
 {
 }
 
-/* Assuming ARGV is the argument vector of `main', set up ACTION so
-   that it is invoked on C stack overflow.  Return -1 (setting errno)
-   if this cannot be done.
+/* Set up ACTION so that it is invoked on C stack overflow.  Return -1
+   (setting errno) if this cannot be done.
 
    When ACTION is called, it is passed an argument equal to SIGSEGV
    for a segmentation violation that does not appear related to stack
-   overflow, and is passed zero otherwise.
+   overflow, and is passed zero otherwise.  On many platforms it is
+   hard to tell; when in doubt, zero is passed.
 
    A null ACTION acts like an action that does nothing.
 
@@ -347,22 +222,16 @@ null_action (int signo __attribute__ ((unused)))
    must not require more than SIGSTKSZ bytes of stack space.  */
 
 int
-c_stack_action (char * const *argv __attribute__ ((unused)),
-		void (*action) (int))
+c_stack_action (void (*action) (int))
 {
-  int r = get_stack_location (argv);
+  int r;
+  stack_t st;
+  st.ss_flags = 0;
+  st.ss_sp = alternate_signal_stack.buffer;
+  st.ss_size = sizeof alternate_signal_stack.buffer;
+  r = sigaltstack (&st, 0);
   if (r != 0)
     return r;
-
-  {
-    stack_t st;
-    st.ss_flags = 0;
-    st.ss_sp = alternate_signal_stack.buffer;
-    st.ss_size = sizeof alternate_signal_stack.buffer;
-    r = sigaltstack (&st, 0);
-    if (r != 0)
-      return r;
-  }
 
   segv_action = action ? action : null_action;
   program_error_message = _("program error");
@@ -390,8 +259,7 @@ c_stack_action (char * const *argv __attribute__ ((unused)),
 #else /* ! (HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK) */
 
 int
-c_stack_action (char * const *argv __attribute__ ((unused)),
-		void (*action) (int)  __attribute__ ((unused)))
+c_stack_action (void (*action) (int)  __attribute__ ((unused)))
 {
   errno = ENOTSUP;
   return -1;
@@ -419,8 +287,9 @@ int
 main (int argc __attribute__ ((unused)), char **argv)
 {
   program_name = argv[0];
-  fprintf (stderr, "The last line of output should be \"stack overflow\".\n");
-  if (c_stack_action (argv, 0) == 0)
+  fprintf (stderr,
+	   "The last output line should contain \"stack overflow\".\n");
+  if (c_stack_action (0) == 0)
     return recurse ("\1");
   perror ("c_stack_action");
   return 1;
