@@ -1,5 +1,12 @@
 2003-06-04  Paul Eggert  <eggert@twinsun.com>
 
+	* mktime.c: Fix Debian bug 177940
+	<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=177940>.
+	(localtime_offset): Now long int, not time_t, because we want it
+	to be guaranteed to be signed.  All uses changed.
+	(__mktime_internal): If overflow would occur when adding offset,
+	don't add it.
+
 	Merge 'human' changes from coreutils.  Rewrite to support
 	locale-specific notations like thousands separators.
 	* human.c: Simplify authorship notice.
