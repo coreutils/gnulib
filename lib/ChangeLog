@@ -1,3 +1,7 @@
+2004-11-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getcwd.h: New file, which I forgot to check in on 2004-11-25.
+
 2004-11-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Fix problems reported by Scott S. Tinsley for HP-UX 11.11 using
