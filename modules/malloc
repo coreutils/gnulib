@@ -3,12 +3,11 @@ malloc() function that is glibc compatible.
 
 Files:
 lib/malloc.c
-m4/malloc.m4
 
 Depends-on:
 
 configure.ac:
-jm_FUNC_MALLOC
+AC_FUNC_MALLOC
 
 Makefile.am:
 
@@ -17,4 +16,3 @@ Include:
 
 Maintainer:
 Jim Meyering
-

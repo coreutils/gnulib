@@ -3,12 +3,11 @@ realloc() function that is glibc compatible.
 
 Files:
 lib/realloc.c
-m4/realloc.m4
 
 Depends-on:
 
 configure.ac:
-jm_FUNC_REALLOC
+AC_FUNC_REALLOC
 
 Makefile.am:
 
@@ -17,4 +16,3 @@ Include:
 
 Maintainer:
 Jim Meyering
-
