@@ -274,10 +274,10 @@ static const signed char b64[0x100] = {
   B64 (252), B64 (253), B64 (254), B64 (255)
 };
 
-static inline bool
-isb64 (unsigned char ch)
+bool
+isbase64 (char ch)
 {
-  return ch <= 255 && 0 <= b64[ch];
+  return to_uchar (ch) <= 255 && 0 <= b64[to_uchar (ch)];
 }
 
 /* Decode base64 encoded input array IN of length INLEN to output
@@ -295,7 +295,7 @@ base64_decode (const char *restrict in, size_t inlen,
 
   while (inlen >= 2)
     {
-      if (!isb64 (in[0]) || !isb64 (in[1]))
+      if (!isbase64 (in[0]) || !isbase64 (in[1]))
 	break;
 
       if (outleft)
@@ -319,7 +319,7 @@ base64_decode (const char *restrict in, size_t inlen,
 	}
       else
 	{
-	  if (!isb64 (in[2]))
+	  if (!isbase64 (in[2]))
 	    break;
 
 	  if (outleft)
@@ -339,7 +339,7 @@ base64_decode (const char *restrict in, size_t inlen,
 	    }
 	  else
 	    {
-	      if (!isb64 (in[3]))
+	      if (!isbase64 (in[3]))
 		break;
 
 	      if (outleft)
