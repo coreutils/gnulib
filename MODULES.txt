@@ -344,7 +344,7 @@ lib/            lib/                  m4/
 Header          Implementation        Autoconf macro              Depends on
 -------------------------------------------------------------------------------
 
----             ---                   stdbool.m4                  ---
+5 lines         ---                   stdbool.m4                  ---
                                       AC_HEADER_STDBOOL
 
 -------------------------------------------------------------------------------
@@ -554,7 +554,7 @@ NYI             euidaccess.c          AC_GNU_SOURCE               ---
 file-type.h     file-type.c           AC_HEADER_STAT              gettext
 
 NYI             fileblocks.c          AC_STRUCT_ST_BLOCKS         ---
-                                      AC_CHECK_HEADERS(unistd.h)
+(see coreutils/lib/system.h)          AC_CHECK_HEADERS(unistd.h)
                                       AC_CHECK_HEADERS(sys/param.h)
 
 filemode.h      filemode.c            AC_HEADER_STAT              ---
@@ -747,7 +747,7 @@ gettext.h       libintl               gettext.m4 et al.           ---
                 (part of gettext)     (use gettextize)
                                       AM_GNU_GETTEXT
 
-iconv.h         libiconv              iconv.m4 et al.             ---
+<iconv.h>       libiconv              iconv.m4 et al.             ---
                 (part of libiconv)    AM_ICONV
 
 NYI             localcharset.c        codeset.m4                  ---
