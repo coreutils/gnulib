@@ -4,9 +4,12 @@ getopt.c
 getopt.h
 getopt1.c
 getpagesize.h
-gettext.h
 md5.h
 obstack.h
+printf-args.h
+printf-parse.h
 regex.c
 regex.h
-strdup.c
+stdbool_.h
+vasnprintf.h
+vasprintf.h
