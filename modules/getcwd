@@ -1,0 +1,21 @@
+Description:
+Return the current working directory.
+
+Files:
+lib/getcwd.c
+m4/getcwd-path-max.m4
+
+Depends-on:
+pathmax
+same
+
+configure.ac:
+GL_FUNC_GETCWD_PATH_MAX
+
+Makefile.am:
+
+Include:
+
+Maintainer:
+Jim Meyering
+
