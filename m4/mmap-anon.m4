@@ -49,6 +49,11 @@ AC_DEFUN([gl_FUNC_MMAP_ANON],
 [/* Define MAP_FILE when it isn't otherwise.  */
 #ifndef MAP_FILE
 # define MAP_FILE 0
+#endif
+
+/* Define MAP_FAILED for old systems which neglect to.  */
+#ifndef MAP_FAILED
+# define MAP_FAILED ((void *)-1)
 #endif])
   fi
 ])
