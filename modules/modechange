@@ -14,7 +14,6 @@ configure.ac:
 gl_MODECHANGE
 
 Makefile.am:
-lib_SOURCES += modechange.h modechange.c
 
 Include:
 "modechange.h"
@@ -24,4 +23,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

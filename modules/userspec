@@ -18,7 +18,6 @@ configure.ac:
 gl_USERSPEC
 
 Makefile.am:
-lib_SOURCES += userspec.c userspec.h
 
 Include:
 "userspec.h"

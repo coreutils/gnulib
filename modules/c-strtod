@@ -13,7 +13,6 @@ configure.ac:
 gl_C_STRTOD
 
 Makefile.am:
-lib_SOURCES += c-strtod.h c-strtod.c
 
 Include:
 "c-strtod.h"
@@ -23,4 +22,3 @@ GPL
 
 Maintainer:
 Paul Eggert, Jim Meyering
-

@@ -14,7 +14,6 @@ configure.ac:
 gl_YESNO
 
 Makefile.am:
-lib_SOURCES += yesno.c yesno.h
 
 Include:
 "yesno.h"
@@ -24,4 +23,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

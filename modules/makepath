@@ -21,7 +21,6 @@ configure.ac:
 gl_MAKEPATH
 
 Makefile.am:
-lib_SOURCES += makepath.h makepath.c stat-macros.h
 
 Include:
 "makepath.h"
@@ -31,4 +30,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

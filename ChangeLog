@@ -1,3 +1,29 @@
+2005-03-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/chdir-long (Depends-on): Add mempcpy.
+
+	* modules/acl, modules/backupfile, modules/c-strtod,
+	modules/c-strtold, modules/canon-host, modules/canonicalize,
+	modules/cloexec, modules/closeout, modules/dirfd, modules/dirname,
+	modules/exclude, modules/exitfail, modules/file-type,
+	modules/filemode, modules/fpending, modules/fsusage, modules/getcwd,
+	modules/getdate, modules/getline, modules/getpagesize,
+	modules/getpass, modules/getugroups, modules/group-member,
+	modules/hard-locale, modules/hash, modules/human, modules/idcache,
+	modules/inttostr, modules/long-options, modules/makepath,
+	modules/md5, modules/memcasecmp, modules/memcoll,
+	modules/modechange, modules/mountlist, modules/path-concat,
+	modules/pathmax, modules/physmem, modules/posixtm, modules/posixver,
+	modules/quote, modules/quotearg, modules/readtokens, modules/readutmp,
+	modules/safe-read, modules/safe-write, modules/same, modules/savedir,
+	modules/settime, modules/sha1, modules/sig2str, modules/strdup,
+	modules/strftime, modules/strndup, modules/strverscmp,
+	modules/timespec, modules/unlocked-io, modules/userspec,
+	modules/utimecmp, modules/utimens, modules/xalloc, modules/xstrtol,
+	modules/yesno:
+	Remove lib_SOURCES line from Makefile.am section, as this is now
+	done automatically by the corresponding Autoconf macro.
+
 2005-03-16  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stdint (Makefile.am): Use HAVE_LONG_LONG_64BIT instead of

@@ -13,7 +13,6 @@ configure.ac:
 gl_CLOEXEC
 
 Makefile.am:
-lib_SOURCES += cloexec.c cloexec.h
 
 Include:
 "cloexec.h"

@@ -20,7 +20,6 @@ gl_INTTOSTR
 
 Makefile.am:
 EXTRA_DIST += inttostr.c
-lib_SOURCES += imaxtostr.c inttostr.h offtostr.c umaxtostr.c
 
 Include:
 "inttostr.h"

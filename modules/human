@@ -23,7 +23,6 @@ configure.ac:
 gl_HUMAN
 
 Makefile.am:
-lib_SOURCES += human.h human.c
 
 Include:
 "human.h"

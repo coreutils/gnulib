@@ -17,7 +17,6 @@ configure.ac:
 gl_SAME
 
 Makefile.am:
-lib_SOURCES += same.h same.c
 
 Include:
 "same.h"
@@ -27,4 +26,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

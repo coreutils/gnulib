@@ -13,7 +13,6 @@ configure.ac:
 gl_FUNC_SIG2STR
 
 Makefile.am:
-lib_SOURCES += sig2str.h
 
 Include:
 "sig2str.h"

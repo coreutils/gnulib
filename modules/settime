@@ -13,7 +13,6 @@ configure.ac:
 gl_SETTIME
 
 Makefile.am:
-lib_SOURCES += settime.c
 
 Include:
 
@@ -22,4 +21,3 @@ GPL
 
 Maintainer:
 Paul Eggert, Jim Meyering
-

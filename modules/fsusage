@@ -17,7 +17,6 @@ configure.ac:
 gl_FSUSAGE
 
 Makefile.am:
-lib_SOURCES += fsusage.h
 
 Include:
 "fsusage.h"
@@ -27,4 +26,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

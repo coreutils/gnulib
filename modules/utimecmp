@@ -17,7 +17,6 @@ configure.ac:
 gl_UTIMECMP
 
 Makefile.am:
-lib_SOURCES += utimecmp.h utimecmp.c
 
 Include:
 "utimecmp.h"

@@ -13,7 +13,6 @@ configure.ac:
 gl_FUNC_STRNDUP
 
 Makefile.am:
-lib_SOURCES += strndup.h
 
 Include:
 "strndup.h"
@@ -23,4 +22,3 @@ LGPL
 
 Maintainer:
 glibc
-

@@ -14,7 +14,6 @@ configure.ac:
 gl_FUNC_GROUP_MEMBER
 
 Makefile.am:
-lib_SOURCES += group-member.h
 
 Include:
 "group-member.h"
@@ -24,4 +23,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

@@ -15,7 +15,6 @@ configure.ac:
 gl_MOUNTLIST
 
 Makefile.am:
-lib_SOURCES += mountlist.h
 
 Include:
 "mountlist.h"
@@ -25,4 +24,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

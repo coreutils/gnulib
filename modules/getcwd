@@ -15,7 +15,6 @@ configure.ac:
 gl_FUNC_GETCWD
 
 Makefile.am:
-lib_SOURCES += getcwd.h
 
 Include:
 "getcwd.h"

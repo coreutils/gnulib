@@ -16,7 +16,6 @@ configure.ac:
 AM_FUNC_GETLINE
 
 Makefile.am:
-lib_SOURCES += getline.h
 EXTRA_DIST += getndelim2.h getndelim2.c
 
 Include:
@@ -27,4 +26,3 @@ GPL
 
 Maintainer:
 all
-

@@ -13,7 +13,6 @@ configure.ac:
 gl_LONG_OPTIONS
 
 Makefile.am:
-lib_SOURCES += long-options.h long-options.c
 
 Include:
 "long-options.h"
@@ -23,4 +22,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

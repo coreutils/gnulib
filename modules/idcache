@@ -12,7 +12,6 @@ configure.ac:
 gl_IDCACHE
 
 Makefile.am:
-lib_SOURCES += idcache.c
 
 Include:
 
@@ -21,4 +20,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

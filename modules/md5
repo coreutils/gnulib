@@ -13,7 +13,6 @@ configure.ac:
 gl_MD5
 
 Makefile.am:
-lib_SOURCES += md5.h md5.c
 
 Include:
 "md5.h"
@@ -23,4 +22,3 @@ LGPL
 
 Maintainer:
 Jim Meyering, glibc
-

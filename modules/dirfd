@@ -12,7 +12,6 @@ configure.ac:
 gl_FUNC_DIRFD
 
 Makefile.am:
-lib_SOURCES += dirfd.h
 
 Include:
 "dirfd.h"

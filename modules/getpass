@@ -14,7 +14,6 @@ configure.ac:
 gl_FUNC_GETPASS
 
 Makefile.am:
-lib_SOURCES += getpass.h
 
 Include:
 "getpass.h"
@@ -24,4 +23,3 @@ LGPL
 
 Maintainer:
 Jim Meyering, glibc
-

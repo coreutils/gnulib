@@ -16,7 +16,6 @@ configure.ac:
 gl_EXCLUDE
 
 Makefile.am:
-lib_SOURCES += exclude.h exclude.c
 
 Include:
 "exclude.h"
@@ -26,4 +25,3 @@ GPL
 
 Maintainer:
 Paul Eggert
-

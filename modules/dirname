@@ -16,7 +16,7 @@ configure.ac:
 gl_DIRNAME
 
 Makefile.am:
-lib_SOURCES += dirname.h dirname.c basename.c stripslash.c
+lib_SOURCES += basename.c stripslash.c
 
 Include:
 "dirname.h"
@@ -26,4 +26,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-
