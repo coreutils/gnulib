@@ -24,7 +24,7 @@ Include:
 #include "allocsa.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Bruno Haible
