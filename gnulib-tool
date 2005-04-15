@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-04-15 09:06:26 $'
+cvsdatestamp='$Date: 2005-04-15 09:10:09 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -95,7 +95,7 @@ Options:
       --libtool             Use libtool rules, for --import.
       --no-changelog        don't update or create ChangeLog files
       --dry-run             For --import, only print what would have been done.
-      --symlink             Make symbolic links instead of copying files.
+      --symbolic            Make symbolic links instead of copying files.
 
 Report bugs to <bug-gnulib@gnu.org>."
 }
@@ -197,7 +197,7 @@ func_ln_if_changed ()
   lgpl=
   do_changelog=:
   dry_run=
-  symlink=
+  symbolic=
   lgpl=
 
   supplied_opts="$@"
@@ -289,8 +289,8 @@ func_ln_if_changed ()
       --dry-run )
         dry_run=true
         shift ;;
-      --symlink )
-        symlink=true
+      --symbolic )
+        symbolic=true
         shift ;;
       --help | --hel | --he | --h )
         func_usage
@@ -557,7 +557,7 @@ func_emit_lib_Makefile_am ()
 # - libtool         true if libtool will be used, blank otherwise
 # - lgpl            true if library's license shall be LGPL, blank otherwise
 # - dry_run         true if actions shall only be printed, blank otherwise
-# - symlink         true if files should be symlinked, copied otherwise
+# - symbolic        true if files should be symlinked, copied otherwise
 # - supplied_opts   all options passed to gnulib-tool
 func_import ()
 {
@@ -596,7 +596,7 @@ func_import ()
       m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
       *) g="$f" ;;
     esac
-    if test -z "$symlink"; then
+    if test -z "$symbolic"; then
       func_cp_if_changed "$gnulib_dir/$f" "$destdir/$g"
     else
       func_ln_if_changed "$gnulib_dir/$f" "$destdir/$g"
@@ -740,7 +740,7 @@ func_create_testdir ()
       *) g="$f" ;;
     esac
     ln "$gnulib_dir/$f" "$testdir/$g" 2>/dev/null ||
-    if test -z "$symlink"; then
+    if test -z "$symbolic"; then
       cp -p "$gnulib_dir/$f" "$testdir/$g"
     else
       ln -s "$gnulib_dir/$f" "$testdir/$g"
