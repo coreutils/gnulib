@@ -1,3 +1,10 @@
+2005-04-15  Oskar Liljeblad <oskar@osk.mine.nu>
+
+	* gnulib-tool: Add -s, --symlink option to gnulib-tool to make
+	symbolic links to files instead of copying/moving.  Add --aux-dir,
+	specifying directory relative --dir where auxiliary build tools
+	are placed.
+
 2005-04-14  Bruno Haible  <bruno@clisp.org>
 
 	* modules/allocsa (License): Change to LGPL.

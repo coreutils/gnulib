@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-03-04 19:36:42 $'
+cvsdatestamp='$Date: 2005-04-15 09:06:26 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -88,11 +88,14 @@ Options:
                             placed (default \"lib\"), for --import.
       --m4-base=DIRECTORY   Directory relative --dir where *.m4 macros are
                             placed (default \"m4\"), for --import.
+      --aux-dir=DIRECTORY   Directory relative --dir where auxiliary build
+                            tools are placed (default \".\"), for --import.
       --lgpl                Abort if modules aren't available under the LGPL.
                             Also modify license template from GPL to LGPL.
       --libtool             Use libtool rules, for --import.
       --no-changelog        don't update or create ChangeLog files
       --dry-run             For --import, only print what would have been done.
+      --symlink             Make symbolic links instead of copying files.
 
 Report bugs to <bug-gnulib@gnu.org>."
 }
@@ -152,6 +155,24 @@ func_mv_if_changed ()
   fi
 }
 
+# func_ln_if_changed SRC DEST
+# Like ln -s, but avoids munging timestamps if the link is correct.
+# Uses also the variables
+# - dry_run         true if actions shall only be printed, blank otherwise
+func_ln_if_changed ()
+{
+  if test $# -ne 2; then
+    echo "usage: func_ln_if_changed SRC DEST" >&2
+  fi
+  test -n "$dry_run" && dry=echo
+  if test -L "$2" -a "$1" = "`readlink "$2"`"; then
+    :
+  else
+    $dry rm "$2"
+    $dry ln -s "$1" "$2"
+  fi
+}
+
 # Command-line option processing.
 # Removes the OPTIONS from the arguments. Sets the variables:
 # - mode            list or import or create-testdir or create-megatestdir
@@ -159,6 +180,7 @@ func_mv_if_changed ()
 # - libname, supplied_libname  from --lib
 # - sourcebase      from --source-base
 # - m4base          from --m4-base
+# - auxdir          from --aux-dir
 # - libtool         true if --libtool was given, blank otherwise
 # - lgpl            true if --lgpl was given, blank otherwise
 # - do_changelog    false if --no-changelog was given, : otherwise
@@ -170,10 +192,12 @@ func_mv_if_changed ()
   supplied_libname=
   sourcebase=
   m4base=
+  auxdir=
   libtool=
   lgpl=
   do_changelog=:
   dry_run=
+  symlink=
   lgpl=
 
   supplied_opts="$@"
@@ -243,6 +267,16 @@ func_mv_if_changed ()
       --m4-base=* )
         m4base=`echo "X$1" | sed -e 's/^X--m4-base=//'`
         shift ;;
+      --aux-dir )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --aux-dir"
+        fi
+        auxdir=$1
+        shift ;;
+      --aux-dir=* )
+        auxdir=`echo "X$1" | sed -e 's/^X--aux-dir=//'`
+        shift ;;
       --libtool )
         libtool=true
         shift ;;
@@ -254,6 +288,9 @@ func_mv_if_changed ()
         shift ;;
       --dry-run )
         dry_run=true
+        shift ;;
+      --symlink )
+        symlink=true
         shift ;;
       --help | --hel | --he | --h )
         func_usage
@@ -520,6 +557,7 @@ func_emit_lib_Makefile_am ()
 # - libtool         true if libtool will be used, blank otherwise
 # - lgpl            true if library's license shall be LGPL, blank otherwise
 # - dry_run         true if actions shall only be printed, blank otherwise
+# - symlink         true if files should be symlinked, copied otherwise
 # - supplied_opts   all options passed to gnulib-tool
 func_import ()
 {
@@ -549,16 +587,20 @@ func_import ()
   test -n "$files" \
     || func_fatal_error "refusing to do nothing"
 
-  # Copy files.
+  # Copy files or make symbolic links.
   for f in $files; do
     source=
     case "$f" in
-      config/*) g=`echo "$f" | sed -e 's,^config/,,'` ;;
+      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
       lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"`; source=true ;;
       m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
       *) g="$f" ;;
     esac
-    func_cp_if_changed "$gnulib_dir/$f" "$destdir/$g"
+    if test -z "$symlink"; then
+      func_cp_if_changed "$gnulib_dir/$f" "$destdir/$g"
+    else
+      func_ln_if_changed "$gnulib_dir/$f" "$destdir/$g"
+    fi
     # Update license.
     if test -z "$dry_run" && test -n "$lgpl" && test -n "$source"; then
       perl -pi -e 's/GNU General/GNU Lesser General/g;' \
@@ -577,7 +619,7 @@ func_import ()
   if test -n "$lgpl"; then
     opt_lgpl="--lgpl"
   fi
-  actioncmd="gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base $opt_libtool $opt_lgpl `echo $modules`"
+  actioncmd="gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base --aux-dir=$auxdir $opt_libtool $opt_lgpl `echo $modules`"
 
   # Create lib/Makefile.am.
   echo "Creating $destdir/$sourcebase/Makefile.am..."
@@ -684,19 +726,25 @@ func_create_testdir ()
 
   # Create directories.
   for d in `echo "$files" | sed -n -e 's,^\(.*\)/[^/]*,\1,p'`; do
-    if test "$d" != config; then
+    if test "$d" = build-aux; then
+      mkdir -p "$testdir/$auxdir"
+    else
       mkdir -p "$testdir/$d"
     fi
   done
 
-  # Copy files.
+  # Copy files or make symbolic links.
   for f in $files; do
     case "$f" in
-      config/*) g=`echo "$f" | sed -e 's,^config/,,'` ;;
+      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
       *) g="$f" ;;
     esac
     ln "$gnulib_dir/$f" "$testdir/$g" 2>/dev/null ||
-    cp -p "$gnulib_dir/$f" "$testdir/$g"
+    if test -z "$symlink"; then
+      cp -p "$gnulib_dir/$f" "$testdir/$g"
+    else
+      ln -s "$gnulib_dir/$f" "$testdir/$g"
+    fi
   done
 
   # Create lib/Makefile.am.
@@ -873,6 +921,9 @@ case $mode in
       /gl_LIB/   {
         s,^.*gl_LIB([[         ]*\([^])]*\).*$,ac_libname="\1",; p;
       };
+      /AC_CONFIG_AUX_DIR/  {
+        s,^.*AC_CONFIG_AUX_DIR([[         ]*\([^])]*\).*$,ac_auxdir="\1",; p;
+      }
       /A[CM]_PROG_LIBTOOL/ { s,^.*$,seen_libtool=:,; p; };
       /LT_INIT/            { s,^.*$,seen_libtool=:,; p; };
       /gl_LGPL/            { s,^.*$,lgpl=true,; p; };
@@ -897,6 +948,13 @@ case $mode in
     test -d "$destdir/$m4base" \
       || (test -z "$dry_run" && mkdir "$destdir/$m4base") \
       || func_fatal_error "m4 base $destdir/$m4base doesn't exist"
+
+    # Set up auxiliary directory.
+    test -z "$auxdir" && auxdir="$ac_auxdir"
+    test -z "$auxdir" && auxdir="."
+    test -d "$destdir/$auxdir" \
+      || (test -z "$dry_run" && mkdir "$destdir/$auxdir") \
+      || func_fatal_error "aux directory $destdir/$auxdir doesn't exist"
 
     # Using libtool?
     if test -n "$seen_libtool"; then
