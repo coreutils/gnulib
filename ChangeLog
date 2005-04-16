@@ -1,3 +1,7 @@
+2005-03-14  Simon Josefsson  <jas@extundo.com>
+
+	* modules/getpass-gnu (Makefile.am): Don't mention getpass.h.
+
 2005-04-15  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib-tool: Rename --symlink to --symbolic.
