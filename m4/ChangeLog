@@ -1,3 +1,7 @@
+2005-04-15  Simon Josefsson  <jas@extundo.com>
+
+	* getpass.m4 (gl_FUNC_GETPASS): Use AC_LIBSOURCES.
+
 2005-03-28  Eric Blake  <ebb9@byu.net>  (tiny change)
 
 	* getcwd-path-max.m4: Return success on systems such as Cygwin
