@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.6 2004-09-29 10:58:47 haible Exp $
+@comment $Id: gnulib.texi,v 1.7 2005-04-18 20:58:20 jas Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2004-09-29 10:58:47 $
+@set UPDATED $Date: 2005-04-18 20:58:20 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -279,6 +279,9 @@ Creating ./lib/Makefile.am...
 Creating ./m4/gnulib.m4...
 Finished.
 
+You may need to add #include directives for the following .h files.
+  #include "strdup.h"
+
 Don't forget to add "lib/Makefile"
 to AC_CONFIG_FILES in "./configure.ac" and to mention
 "lib" in SUBDIRS in some Makefile.am.
@@ -290,6 +293,15 @@ macros in @file{m4/}.  You can override these paths by using
 @code{--source-base=DIRECTORY} and @code{--m4-base=DIRECTORY}, or by
 adding @samp{gl_SOURCE_BASE(DIRECTORY)} and
 @samp{gl_M4_BASE(DIRECTORY)} to your @file{configure.ac}.
+Some modules also provide other files necessary
+for building. These files are copied into the directory specified
+by @samp{AC_CONFIG_AUX_DIR} in @file{configure.ac} or by the
+@code{--aux-dir=DIRECTORY} option. If neither is specified, the
+current directory is assumed.
+
+@code{gnulib-tool} can make symbolic links instead
+of copying the source files. Use the @code{--symbolic}
+(or @code{-s} for short) option to do this.
 
 @code{gnulib-tool} will overwrite any pre-existing files, in
 particular @file{Makefile.am}.  Unfortunately, separating the
