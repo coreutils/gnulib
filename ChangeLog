@@ -1,3 +1,7 @@
+2005-04-19  Simon Josefsson  <jas@extundo.com>
+
+	* gnulib-tool (Options): Make --symlink mean --symbolic.
+
 2005-03-14  Simon Josefsson  <jas@extundo.com>
 
 	* modules/getpass-gnu (Makefile.am): Don't mention getpass.h.
