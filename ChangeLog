@@ -1,3 +1,9 @@
+2005-04-21  Oskar Liljeblad  <oskar@osk.mine.nu>
+
+	* gnulib-tool (Options): Add -s for --symlink/--symbolic.
+	(func_ln_if_changed) Remove forcibly for no error message
+	in case file does not exist.
+
 2005-04-19  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib-tool (Options): Make --symlink mean --symbolic.

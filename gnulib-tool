@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-04-19 07:52:49 $'
+cvsdatestamp='$Date: 2005-04-21 22:10:05 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -95,7 +95,7 @@ Options:
       --libtool             Use libtool rules, for --import.
       --no-changelog        don't update or create ChangeLog files
       --dry-run             For --import, only print what would have been done.
-      --symbolic, --symlink Make symbolic links instead of copying files.
+  -s, --symbolic, --symlink Make symbolic links instead of copying files.
 
 Report bugs to <bug-gnulib@gnu.org>."
 }
@@ -168,7 +168,7 @@ func_ln_if_changed ()
   if test -L "$2" -a "$1" = "`readlink "$2"`"; then
     :
   else
-    $dry rm "$2"
+    $dry rm -f "$2"
     $dry ln -s "$1" "$2"
   fi
 }
@@ -289,7 +289,7 @@ func_ln_if_changed ()
       --dry-run )
         dry_run=true
         shift ;;
-      --symbolic | --symlink )
+      -s | --symbolic | --symlink )
         symbolic=true
         shift ;;
       --help | --hel | --he | --h )
