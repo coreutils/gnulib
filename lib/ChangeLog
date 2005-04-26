@@ -1,3 +1,8 @@
+2005-04-25  Albert Chin  <bug-gnulib@mlists.thewrittenword.com>
+
+	* regex.c: Include <stdio.h>, as a workaround to a Compaq Desktop
+	Toolkit C bug.
+
 2005-04-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getdate.y (zone): Allow relunit_snumber after tZONE, so
