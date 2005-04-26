@@ -1,4 +1,4 @@
-2005-04-25  Albert Chin  <bug-gnulib@mlists.thewrittenword.com>
+2005-04-25  Albert Chin  <china@thewrittenword.com>
 
 	* regex.c: Include <stdio.h>, as a workaround to a Compaq Desktop
 	Toolkit C bug.
