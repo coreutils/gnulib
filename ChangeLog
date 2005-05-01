@@ -1,3 +1,11 @@
+2005-05-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh (Misc): Add byteswap.
+
+2005-05-01  Oskar Liljeblad  <oskar@osk.mine.nu>
+
+	* modules/byteswap: New file.
+
 2005-04-21  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* gnulib-tool (Options): Add -s for --symlink/--symbolic.

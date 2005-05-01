@@ -1,0 +1,32 @@
+Description:
+Swap bytes of 16, 32 and 64 bit values.
+
+Files:
+lib/byteswap_.h
+m4/byteswap.m4
+
+Depends-on:
+
+configure.ac:
+gl_BYTESWAP
+
+Makefile.am:
+BUILT_SOURCES += $(BYTESWAP_H)
+EXTRA_DIST += byteswap_.h
+
+# We need the following in order to create a <byteswap.h> when the system
+# doesn't have one.
+all-local $(lib_OBJECTS): $(BYTESWAP_H)
+byteswap.h: byteswap_.h
+	cp $(srcdir)/$< $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += byteswap.h byteswap.h-t
+
+Include:
+<byteswap.h>
+
+License:
+LGPL
+
+Maintainer:
+Oskar Liljeblad

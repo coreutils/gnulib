@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, base64, bcopy, binary-io, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chdir-long, chown, classpath, cloexec, closeout, copy-file, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, fcntl-safer, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getaddrinfo, getcwd, getdate, getdomainname, getgroups, gethostname, gethrxtime, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, iconvme, idcache, inttostr, isdir, javacomp, javaexec, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmem, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, openat, pagealign_alloc, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sh-quote, sha1, sig2str, snprintf, stat, stat-macros, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strsep, strstr, strtod, strtoimax, strtok_r, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, ullong_max, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, version-etc-fsf, vsnprintf, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, base64, bcopy, binary-io, byteswap, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chdir-long, chown, classpath, cloexec, closeout, copy-file, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, fcntl-safer, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getaddrinfo, getcwd, getdate, getdomainname, getgroups, gethostname, gethrxtime, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, iconvme, idcache, inttostr, isdir, javacomp, javaexec, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmem, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, openat, pagealign_alloc, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sh-quote, sha1, sig2str, snprintf, stat, stat-macros, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strsep, strstr, strtod, strtoimax, strtok_r, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, ullong_max, unicodeio, unistd-safer, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, version-etc-fsf, vsnprintf, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -959,6 +959,10 @@ usually the host name including FQDN.
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=argz">argz</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Argv style string arrays in a single null delimited char*.
+      </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=byteswap">byteswap</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Swap bytes of 16, 32 and 64 bit values.
       </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=exitfail">exitfail</A>
@@ -3110,6 +3114,13 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=byteswap"></A><A HREF="modules/byteswap">byteswap</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include &lt;byteswap.h&gt;
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/byteswap_.h">byteswap_.h</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/byteswap.m4">byteswap.m4</A><BR>gl_BYTESWAP
+        <TD ALIGN=LEFT VALIGN=TOP>---
+      </TR>
+      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=exitfail"></A><A HREF="modules/exitfail">exitfail</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/exitfail.h">exitfail.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/exitfail.c">exitfail.c</A>
@@ -3304,6 +3315,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 27 March 2005.
+    Generated from <CODE>MODULES.html.sh</CODE> on  1 May 2005.
   </BODY>
 </HTML>
