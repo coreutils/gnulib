@@ -11,6 +11,7 @@ save-cwd
 gettext
 error
 exitfail
+extensions
 
 configure.ac:
 gl_FUNC_OPENAT
