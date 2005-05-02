@@ -1774,7 +1774,6 @@ func_all_modules ()
   func_begin_table
   func_module dirname
   func_module getopt
-  func_module fcntl-safer
   func_module unistd-safer
   func_module fnmatch
   func_module fnmatch-posix

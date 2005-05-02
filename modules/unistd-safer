@@ -4,6 +4,7 @@ File descriptor functions that avoid clobbering STD{IN,OUT,ERR}_FILENO.
 Files:
 lib/unistd-safer.h
 lib/dup-safer.c
+lib/fd-safer.c
 m4/unistd-safer.m4
 
 Depends-on:
@@ -12,7 +13,6 @@ configure.ac:
 gl_UNISTD_SAFER
 
 Makefile.am:
-lib_SOURCES += unistd-safer.h dup-safer.c
 
 Include:
 "unistd-safer.h"
@@ -22,4 +22,3 @@ GPL
 
 Maintainer:
 Paul Eggert, Jim Meyering
-

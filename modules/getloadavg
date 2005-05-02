@@ -9,6 +9,7 @@ Depends-on:
 cloexec
 xalloc
 c-strtod
+unistd-safer
 
 configure.ac:
 AC_FUNC_GETLOADAVG

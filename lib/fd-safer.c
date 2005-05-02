@@ -1,6 +1,6 @@
-/* Invoke open, but avoid some glitches.
+/* Return a safer copy of a file descriptor.
 
-   Copyright (C) 2004 Free Software Foundation, Inc.
+   Copyright (C) 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,47 +22,33 @@
 # include <config.h>
 #endif
 
-#include <fcntl-safer.h>
-
-#include <unistd-safer.h>
+#include "unistd-safer.h"
 
 #include <errno.h>
-#include <stdarg.h>
-
-#if HAVE_FCNTL_H
-# include <fcntl.h>
-#endif
 
 #if HAVE_UNISTD_H
 # include <unistd.h>
+#endif
+#ifndef STDIN_FILENO
+# define STDIN_FILENO 0
 #endif
 #ifndef STDERR_FILENO
 # define STDERR_FILENO 2
 #endif
 
-/* Like open, but do not return STDIN_FILENO, STDOUT_FILENO, or
-   STDERR_FILENO.  */
+/* Return FD, unless FD would be a copy of standard input, output, or
+   error; in that case, return a duplicate of FD, closing FD.  On
+   failure to duplicate, close FD, set errno, and return -1.  Preserve
+   errno if FD is negative, so that the caller can always inspect
+   errno when the returned value is negative.
+
+   This function is usefully wrapped around functions that return file
+   descriptors, e.g., fd_safer (open ("file", O_RDONLY)).  */
 
 int
-open_safer (char const *file, int oflag, ...)
+fd_safer (int fd)
 {
-  int fd;
-  mode_t mode = 0;
-
-  if (oflag & O_CREAT)
-    {
-      va_list args;
-      va_start (args, oflag);
-      if (sizeof (int) <= sizeof (mode_t))
-	mode = va_arg (args, mode_t);
-      else
-	mode = va_arg (args, int);
-      va_end (args);
-    }
-
-  fd = open (file, oflag, mode);
-
-  if (0 <= fd && fd <= STDERR_FILENO)
+  if (STDIN_FILENO <= fd && fd <= STDERR_FILENO)
     {
       int f = dup_safer (fd);
       int e = errno;

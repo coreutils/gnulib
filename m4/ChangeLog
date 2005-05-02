@@ -1,3 +1,41 @@
+2005-05-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* euidaccess.m4 (gl_PREREQ_EUIDACCESS): Don't require AC_HEADER_STAT.
+	* lchown.m4 (gl_FUNC_CHOWN): Likewise.
+	(gl_PREREQ_CHOWN): Remove.
+	* lstat.m4 (gl_FUNC_LSTAT): Require AC_FUNC_LSTAT instead of calling
+	it.  Don't require AC_HEADER_STAT.
+	(gl_PREREQ_LSTAT): Remove.
+	* mkstemp.m4 (gl_PREREQ_TEMPNAME): Check stdint.h only once.
+	Don't require AC_HEADER_STAT.
+	* rmdir.m4 (gl_FUNC_RMDIR): Don't require AC_HEADER_STAT.
+	(gl_PREREQ_RMDIR): Remove.
+	* canonicalize.m4 (AC_FUNC_CANONICALIZE_FILE_NAME): Don't
+	mention stat-macros.h or AC_HEADER_STAT, since we'll make
+	the stat-macros module a prerequisite.
+	* file-type.m4 (gl_FILE_TYPE): Likewise.
+	* filemode.m4 (gl_FILEMODE): Likewise.
+	* makepath.m4 (gl_MAKEPATH): Likewise.
+	* modechange.m4 (gl_MODECHANGE): Likewise.
+	* clock_time.m4 (gl_CLOCK_TIME): Use gl_ rather than fetish_ for
+	variable names.
+	* rmdir-errno.m4 (gl_FUNC_RMDIR_NOTEMPTY): Renamed from
+	fetish_FUNC_RMDIR_NOTEMPTY.  All uses changed.  Use gl_ for
+	variable prefixes.
+	* fcntl-safer.m4: Remove.
+	* stdio-safer.m4 (gl_STDIO_SAFER): Use AC_LIBSOURCES and AC_LIBOBJ.
+	* unistd-safer.m4 (gl_UNISTD_SAFER): Likewise.
+	Invoke gl_PREREQ_FD_SAFER.
+	(gl_PREREQ_FD_SAFER): New macro.
+	* nanosleep.m4 (gl_PREREQ_NANOSLEEP): Check for siginterrupt.
+	* readutmp.m4 (gl_READUTMP): Require AC_C_INLINE.
+	Use AC_CHECK_HEADERS_ONCE and AC_CHECK_FUNCS_ONCE when possible.
+	Remove duplicate call to AC_LIBOBJ(readutmp).
+	(gl_PREREQ_READUTMP): Remove.  All uses inlined.
+
+	* mmap-anon.m4 (gl_FUNC_MMAP_ANON): Check for message, not for
+	MAP_ANON.  Problem reported by Moriyoshi Koizumi to bug-cvs.
+
 2005-05-01  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* byteswap.m4: New file.

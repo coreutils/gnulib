@@ -11,6 +11,7 @@ m4/uintmax_t.m4
 m4/mkstemp.m4
 
 Depends-on:
+stat-macros
 
 configure.ac:
 gl_FUNC_MKSTEMP

@@ -8,7 +8,8 @@ lib/modechange.c
 m4/modechange.m4
 
 Depends-on:
-xstrtol
+stat-macros
+xalloc
 
 configure.ac:
 gl_MODECHANGE

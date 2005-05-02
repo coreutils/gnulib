@@ -1,3 +1,85 @@
+2005-05-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merge from coreutils.  Among other things,
+	add bulletproofing for cases where stdin, stdout, or stderr are closed.
+	* fd-safer.c: New file.
+	* fcntl-safer.h, open-safer.c: Remove.
+	* chdir-long.c: Fix comment "fetish" -> "coreutils".
+	* dup-safer.c: Include unistd-safer.h first.
+	Don't include errno.h.
+	(dup_safer) [!defined F_DUPFD]: Let fd_safer do the real work.
+	* file-type.h: Don't assume invoker included sys/stat.h first.
+	* file-type.c: Rely on file-type.h change.
+	* getloadavg.c: Include unistd-safer.h.
+	(getloadavg): Use safer open.
+	* getusershell.c: Include "stdio-safer.h".
+	(getusershell): Use safer fopen.
+	* long-options.c (long_options): Use NULL rather than 0.
+	* modechange.h (mode_free): Remove; all callers changed to invoke
+	'free'.
+	* modechange.c: Likewise.
+	xstrtol.h, stdbool.h, stddef.h: Don't include; no longer needed.
+	(MODE_DONE): New constant.
+	(struct mode_change): Remove 'next' member.
+	(make_node_op_equals): New function; like the old one of the
+	same name, except it allocates an array.
+	(mode_compile, mode_create_from_ref): Use it.
+	(mode_compile): Allocate result as an array, not a linked list.
+	Parse octal string ourself, so that we catch mistakes like "+0".
+	(mode_adjust): Arg is an array, not a linked list.
+	* modechange.c: Include stat-macros.h, xalloc.h.
+	(S_ISDIR, S_ISUID, S_ISGID, S_ISVTX, S_IRUSR, S_IWUSR, S_IXUSR):
+	(S_IRGRP, S_IWGRP, S_IXGRP, S_IROTH, S_IWOTH, S_IXOTH, S_IRXWU):
+	(S_IRWXG, S_IRWXO, CHMOD_MODE_BITS):
+	Remove.  This is now stat-macros.h's job.
+	(talloc): Remove.  All callers replaced by xalloc, so that
+	our invokers don't have to worry about reporting memory failures.
+	(make_node_op_equals): Remove.
+	(MODE_ORDINARY_CHAGE, MODE_X_IF_ANY_X, MODE_COPY_EXISTING):
+	New constants.
+	(struct mode_change): Moved here from modechange.h.
+	(mode_append_entry): Remove.
+	(mode_compile): Remove MASKED_OPS arg, since it encouraged
+	apps to have incorrect behavior.  Use simpler algorithm for head
+	and tail.  Don't futz with umask; that's now the job of mode_adjust.
+	Detect more invalid usages rather than having somewhat-random behavior.
+	Don't insert an "a=" action, as that leads to incorrect behavior.
+	(mode_compile, mode_create_from_ref): Return NULL on error instead
+	of an enum, since now there's only one way to have an error.  All
+	callers changed.
+	(mode_adjust): Accept new arg UMASK_VALUE, and interpret it
+	at the correct time.  Simplify calculation of "+u" and its ilk.
+	Don't mishandle "+X".
+	(mode_free): Remove "register" and localize decls.
+	* modechange.h (MODE_X_IF_ANY_X, MODE_COPY_EXISTING):
+	(struct mode_change): Move to modechange.c; callers don't
+	need to see this stuff.
+	(MODE_MASK_EQUALS, MODE_MASK_PLUS, MODE_MASK_MINUS, MODE_MASK_ALL):
+	(MODE_INVALID, MODE_MEMORY_EXHAUSTED, MODE_BAD_REFERENCE): Remove.
+	(mode_change, mode_adjust): Reflect the new signatures noted above.
+	* nanosleep.c (rpl_nanosleep): Include "timespec.h" before macros
+	that might redefine system include files.
+	(siginterrupt) [!HAVE_SIGINTERRUPT]: New macro.
+	(my_usleep): Use NULL rather than (void *) 0.
+	(rpl_nanosleep) [!defined SA_NOCLDSTOP]:
+	Use siginterrupt to specify that system calls should be interrupted.
+	(rpl_nanosleep): Move initialization of suspended closer to call of
+	my_usleep.
+	* readutmp.h (read_utmp): New arg OPTIONS.  All uses changed.
+	* readutmp.c: Likewise.  Include signal.h, stdbool.h.
+	(desirable_utmp_entry): New function.
+	(read_utmp) [defined UTMP_NAME_FUNCTION]: Redo memory allocation
+	using x2nrealloc, to simplify logic.
+	(read_utmp) [!defined UTMP_NAME_FUNCTION]: Check for overflow in
+	size calculation.  Do not assume utmp file is a regular file.
+	* readutmp.h (UT_PID): Moved here from ../src/who.c.
+	(READ_UTMP_CHECK_PIDS): New constant.
+	* save-cwd.c: Include unistd-safer.h.
+	(save_cwd): Use fd_safer.
+	* tempname.c (S_ISDIR, S_IRUSR, S_IRUSR, S_IWUSR, S_IXUSR): Remove.
+	[!_LIBC] Include "stat-macros.h" instead.
+	* unistd-safer.h (fd_safer): New decl.
+
 2005-05-01  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* byteswap_.h: New file.

@@ -6,6 +6,7 @@ lib/getusershell.c
 m4/getusershell.m4
 
 Depends-on:
+stdio-safer
 xalloc
 
 configure.ac:
@@ -20,4 +21,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

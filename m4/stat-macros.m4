@@ -1,4 +1,4 @@
-#serial 1
+#serial 2
 
 # Copyright (C) 2005 Free Software Foundation, Inc.
 #
@@ -9,4 +9,6 @@
 AC_DEFUN([gl_STAT_MACROS],
 [
   AC_LIBSOURCES([stat-macros.h])
+  
+  AC_REQUIRE([AC_HEADER_STAT])
 ])

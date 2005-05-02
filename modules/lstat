@@ -7,7 +7,6 @@ m4/lstat.m4
 
 Depends-on:
 stat
-xalloc
 
 configure.ac:
 gl_FUNC_LSTAT
@@ -22,4 +21,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

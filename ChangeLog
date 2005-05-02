@@ -1,3 +1,19 @@
+2005-05-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/getloadavg (Depends-on): Add unistd-safer.
+	* modules/getusershell (Depends-on): Add stdio-safer.
+	* modules/lstat (Depends-on): Remove xalloc.
+	* modules/mkstemp (Depends-on): Add stat-macros.
+	* modules/modechange (Depends-on): Remove xstrtol.
+	Add stat-macros, xalloc.
+	* modules/save-cwd (Depends-on): Add unistd-safer.
+	* modules/stdio-safer (Makefile.am): Remove lib_SOURCES.
+	* modules/unistd-safer (Files): Add lib/fd-safer.c
+	(Makefile.am): Remove lib_SOURCES.
+
+	* MODULES.html.sh (Enhancements for POSIX:2001 functions):
+	Remove fcntl-safer; unistd-safer supersedes it.
+
 2005-05-01  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* modules/getcwd (Depends-on): Add extensions.
