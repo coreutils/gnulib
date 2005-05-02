@@ -1,4 +1,4 @@
-# mmap-anon.m4 serial 2
+# mmap-anon.m4 serial 3
 dnl Copyright (C) 2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,8 +27,8 @@ AC_DEFUN([gl_FUNC_MMAP_ANON],
 #endif
 ],
       [gl_have_mmap_anonymous=yes])
-    if test $gl_have_mmap_anonymous = no; then
-      AC_EGREP_HEADER([MAP_ANON], [
+    if test $gl_have_mmap_anonymous != yes; then
+      AC_EGREP_CPP([I cant identify this map.], [
 #include <sys/mman.h>
 #ifdef MAP_ANON
     I cant identify this map.
