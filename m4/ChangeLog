@@ -40,6 +40,10 @@
 
 	* byteswap.m4: New file.
 
+2005-04-25  karl
+
+	* gettext.m4: Update from GNU gettext 0.14.4.
+
 2005-04-15  Simon Josefsson  <jas@extundo.com>
 
 	* getpass.m4 (gl_FUNC_GETPASS): Use AC_LIBSOURCES.
