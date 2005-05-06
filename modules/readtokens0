@@ -7,6 +7,7 @@ lib/readtokens0.c
 
 Depends-on:
 obstack
+stdbool
 
 configure.ac:
 
@@ -21,4 +22,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

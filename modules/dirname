@@ -11,6 +11,7 @@ m4/dirname.m4
 
 Depends-on:
 xalloc
+stdbool
 
 configure.ac:
 gl_DIRNAME

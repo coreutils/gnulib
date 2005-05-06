@@ -12,6 +12,7 @@ m4/backupfile.m4
 Depends-on:
 argmatch
 dirname
+stdbool
 
 configure.ac:
 gl_BACKUPFILE

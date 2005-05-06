@@ -11,6 +11,7 @@ m4/quotearg.m4
 Depends-on:
 xalloc
 gettext
+stdbool
 
 configure.ac:
 gl_QUOTEARG

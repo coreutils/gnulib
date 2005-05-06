@@ -16,6 +16,7 @@ dirname
 error
 quote
 stat-macros
+stdbool
 
 configure.ac:
 gl_MAKEPATH

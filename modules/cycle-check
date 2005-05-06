@@ -7,6 +7,7 @@ lib/cycle-check.h
 lib/dev-ino.h
 
 Depends-on:
+stdbool
 
 configure.ac:
 
@@ -21,4 +22,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

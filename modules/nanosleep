@@ -7,6 +7,7 @@ m4/nanosleep.m4
 
 Depends-on:
 timespec
+stdbool
 
 configure.ac:
 gl_FUNC_NANOSLEEP
@@ -21,4 +22,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

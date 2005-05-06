@@ -12,6 +12,7 @@ hash
 timespec
 utimens
 xalloc
+stdbool
 
 configure.ac:
 gl_UTIMECMP

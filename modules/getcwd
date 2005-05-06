@@ -11,6 +11,7 @@ m4/getcwd.m4
 Depends-on:
 mempcpy
 extensions
+stdbool
 
 configure.ac:
 gl_FUNC_GETCWD

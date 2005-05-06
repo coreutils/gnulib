@@ -1,3 +1,34 @@
+2005-05-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/argmatch (Depends-on): Add stdbool.
+	* modules/backupfile (Depends-on): Likewise.
+	* modules/chdir-long (Depends-on): Likewise.
+	* modules/closeout (Depends-on): Likewise.
+	* modules/cycle-check (Depends-on): Likewise.
+	* modules/dirname (Depends-on): Likewise.
+	* modules/fnmatch (Depends-on): Likewise.
+	* modules/fsusage (Depends-on): Likewise.
+	* modules/fwriteerror (Depends-on): Likewise.
+	* modules/getcwd (Depends-on): Likewise.
+	* modules/getloadavg (Depends-on): Likewise.
+	* modules/hard-locale (Depends-on): Likewise.
+	* modules/makepath (Depends-on): Likewise.
+	* modules/mountlist (Depends-on): Likewise.
+	* modules/nanosleep (Depends-on): Likewise.
+	* modules/posixtm (Depends-on): Likewise.
+	* modules/quotearg (Depends-on): Likewise.
+	* modules/readtokens (Depends-on): Likewise.
+	* modules/readtokens0 (Depends-on): Likewise.
+	* modules/readutmp (Depends-on): Likewise.
+	* modules/save-cwd (Depends-on): Likewise.
+	* modules/strftime (Depends-on): Likewise.
+	* modules/userspec (Depends-on): Likewise.
+	* modules/utimecmp (Depends-on): Likewise.
+	* modules/xgetcwd (Depends-on): Likewise.
+	* modules/xnanosleep (Depends-on): Likewise.
+	* modules/xstrtod (Depends-on): Likewise.
+	* modules/yesno (Depends-on): Likewise.
+
 2005-05-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/getloadavg (Depends-on): Add unistd-safer.

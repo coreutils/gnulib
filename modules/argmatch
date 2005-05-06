@@ -12,6 +12,7 @@ quotearg
 quote
 exit
 exitfail
+stdbool
 
 configure.ac:
 
@@ -26,4 +27,3 @@ GPL
 
 Maintainer:
 all
-

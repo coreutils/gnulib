@@ -8,6 +8,7 @@ m4/readutmp.m4
 
 Depends-on:
 xalloc
+stdbool
 
 configure.ac:
 gl_READUTMP

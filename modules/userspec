@@ -14,6 +14,7 @@ xalloc
 xstrtol
 strdup
 gettext
+stdbool
 
 configure.ac:
 gl_USERSPEC

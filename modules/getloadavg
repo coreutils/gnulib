@@ -9,6 +9,7 @@ Depends-on:
 cloexec
 xalloc
 c-strtod
+stdbool
 unistd-safer
 
 configure.ac:

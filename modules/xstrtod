@@ -7,6 +7,7 @@ lib/xstrtod.c
 m4/xstrtod.m4
 
 Depends-on:
+stdbool
 
 configure.ac:
 gl_XSTRTOD
@@ -22,4 +23,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

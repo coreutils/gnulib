@@ -10,6 +10,7 @@ Depends-on:
 chdir-long
 unistd-safer
 xgetcwd
+stdbool
 
 configure.ac:
 gl_SAVE_CWD

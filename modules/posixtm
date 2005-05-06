@@ -8,6 +8,7 @@ m4/posixtm.m4
 
 Depends-on:
 mktime
+stdbool
 
 configure.ac:
 gl_POSIXTM

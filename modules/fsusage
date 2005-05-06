@@ -12,6 +12,7 @@ m4/fsusage.m4
 
 Depends-on:
 full-read
+stdbool
 
 configure.ac:
 gl_FSUSAGE

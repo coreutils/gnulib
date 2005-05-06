@@ -10,6 +10,7 @@ m4/fnmatch.m4
 
 Depends-on:
 alloca
+stdbool
 
 configure.ac:
 # No macro. You should also use one of fnmatch-posix or fnmatch-gnu.

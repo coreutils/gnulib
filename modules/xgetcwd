@@ -9,6 +9,7 @@ m4/xgetcwd.m4
 Depends-on:
 getcwd
 xalloc
+stdbool
 
 configure.ac:
 gl_XGETCWD
