@@ -41,7 +41,7 @@
 # define PATH_SEPARATOR ';'
 #else
   /* Unix */
-# define PATH_SEPARATOR ':' 
+# define PATH_SEPARATOR ':'
 #endif
 
 /* Return the new CLASSPATH value.  The given classpaths are prepended to
