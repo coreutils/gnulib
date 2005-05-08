@@ -1,3 +1,7 @@
+2005-05-08  Jim Meyering  <jim@meyering.net>
+
+	* classpath.c (PATH_SEPARATOR): Remove insignificant trailing blank.
+
 2005-05-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge from coreutils.  Among other things,
