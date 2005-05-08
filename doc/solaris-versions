@@ -27,7 +27,7 @@ The SunOS 5.x uname output maps to the Solaris 2.x numbers thru 2.6
        SunOS 5.5.1     == Solaris 2.5.1
        SunOS 5.6       == Solaris 2.6
 
-After SunOS 5.6, they started number based on the second digit 
+After SunOS 5.6, they started number based on the second digit
 
        SunOS 5.7       == Solaris 7
        SunOS 5.8       == Solaris 8
