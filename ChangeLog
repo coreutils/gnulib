@@ -1,5 +1,9 @@
 2005-05-09  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* modules/extensions (License): Change to LGPL.  Actually,
+	the license is more permissive than that, but currently gnulib-tool
+	doesn't know how to handle more-permissive licenses.
+
 	* modules/stat-macros (Depends-on): Don't depend on stat-macros (!).
 	Problem reported by Dave Love.
 
