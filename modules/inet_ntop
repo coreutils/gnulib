@@ -1,0 +1,25 @@
+Description:
+Convert internet address from internal to printable, presentable format.
+
+Files:
+lib/inet_ntop.h
+lib/inet_ntop.c
+m4/inet_ntop.m4
+m4/sockpfaf.m4
+
+Depends-on:
+
+configure.ac:
+gl_INET_NTOP
+
+Makefile.am:
+lib_SOURCES += inet_ntop.h
+
+License:
+LGPL
+
+Include:
+"inet_ntop.h"
+
+Maintainer:
+Yoann Vandoorselaere, glibc

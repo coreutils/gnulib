@@ -1749,6 +1749,7 @@ func_all_modules ()
   func_module gethostname
   func_module getsubopt
   func_module gettimeofday
+  func_module inet_ntop
   func_module mkdir
   func_module mkstemp
   func_module mkdtemp

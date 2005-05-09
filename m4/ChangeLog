@@ -1,3 +1,8 @@
+2005-05-09  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* inet_ntop.m4: New file.
+
 2005-05-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getopt.m4 (gl_GETOPT): Check for Solaris 10 getopt, and avoid

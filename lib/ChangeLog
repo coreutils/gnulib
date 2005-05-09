@@ -1,3 +1,9 @@
+2005-05-09  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* inet_ntop.h: New file.
+	* inet_ntop.c: New file, from glibc with modifications.
+
 2005-05-08  Jim Meyering  <jim@meyering.net>
 
 	* classpath.c (PATH_SEPARATOR): Remove insignificant trailing blank.
