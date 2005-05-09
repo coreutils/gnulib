@@ -1,3 +1,8 @@
+2005-05-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/stat-macros (Depends-on): Don't depend on stat-macros (!).
+	Problem reported by Dave Love.
+
 2005-05-09  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
             Bruno Haible  <bruno@clisp.org>
 

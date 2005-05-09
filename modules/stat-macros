@@ -6,7 +6,6 @@ lib/stat-macros.h
 m4/stat-macros.m4
 
 Depends-on:
-stat-macros
 
 configure.ac:
 gl_STAT_MACROS
