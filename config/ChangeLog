@@ -1,5 +1,8 @@
 2005-05-10  Karl Berry  <karl@gnu.org>
 
+	* srclist.txt (COPYING.LESSER): rename from COPYING.LIB.
+	(COPYING.DOC): remove.
+
 	* srclist-update: new FSF address.
 
 2005-03-22  Bruno Haible  <bruno@clisp.org>
