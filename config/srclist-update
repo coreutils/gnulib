@@ -1,12 +1,12 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.15 2004-06-22 18:28:25 eggert Exp $
+# $Id: srclist-update,v 1.16 2005-05-10 13:02:40 karl Exp $
 #
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
 #
 # Source `dirname $0`/srclistvars.sh first, if it exists.
 
-# Copyright (C) 2002, 2003 Free Software Foundation, Inc.
+# Copyright (C) 2002, 2003, 2005 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,10 +20,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-# 02111-1307, USA.
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA.
 
-# Written by Karl Berry.
+# Originally written by Karl Berry.
 
 
 if test -n "$1"; then
@@ -56,7 +55,7 @@ fixlicense='
 #\
 #   You should have received a copy of the GNU General Public License along\
 #   with this program; if not, write to the Free Software Foundation,\
-#   Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+#   Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA.
 
   /Th[ei][ s].* is free software/,/\*\//c\
    This program is free software; you can redistribute it and/or modify\
@@ -71,7 +70,7 @@ fixlicense='
 \
    You should have received a copy of the GNU General Public License along\
    with this program; if not, write to the Free Software Foundation,\
-   Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
+   Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA.
 '
 
 # sed command to remove lines containing $Id lines.

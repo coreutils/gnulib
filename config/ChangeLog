@@ -1,3 +1,7 @@
+2005-05-10  Karl Berry  <karl@gnu.org>
+
+	* srclist-update: new FSF address.
+
 2005-03-22  Bruno Haible  <bruno@clisp.org>
 
 	* srclist.txt: Replace target directory 'config' with 'build-aux'.
