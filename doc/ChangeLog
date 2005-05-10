@@ -1,3 +1,11 @@
+2005-05-10  Karl Berry  <karl@gnu.org>
+
+	* fdl.texi, gpl.texi, lgpl.texi, COPYING: update FSF address
+	(from http://www.gnu.org/licenses).
+	* COPYING.LIB: also rename to COPYING.LESSER.
+	* COPYING.DOC: remove; per rms, only needed in doc files, so
+	fdl.texi suffices.
+
 2005-04-18  Oskar Liljeblad <oskar@osk.mine.nu>
 
 	* gnulib.texi (Initial import): Fix.  Mention --aux-dir.
