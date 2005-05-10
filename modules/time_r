@@ -20,8 +20,7 @@ Include:
 "time_r.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paul Eggert
-
