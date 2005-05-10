@@ -1,3 +1,12 @@
+2005-05-10  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+
+	* getaddrinfo.c: Don't fail when SOCK_STREAM or SOCK_DGRAM are
+	specified in ai_socktype. Fix invalid ai_protocol
+	check. ai_protocol is usually set to 0 or depending on
+	ai_family/ai_socktype to IPPROTO_TCP / IPPROTO_UDP.  Checking for
+	SOCK_STREAM / SOCK_DGRAM in ai_protocol was invalid.  Set
+	ai_socktype / ai_protocol in the returned addrinfo structure.
+
 2005-05-09  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
             Bruno Haible  <bruno@clisp.org>
 
