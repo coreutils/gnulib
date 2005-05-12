@@ -23,6 +23,7 @@ gl_GETDATE
 Makefile.am:
 BUILT_SOURCES += getdate.c
 MAINTAINERCLEANFILES += getdate.c
+EXTRA_DIST += getdate.c
 
 Include:
 "getdate.h"
