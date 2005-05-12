@@ -3,7 +3,7 @@
 #   Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 #   2000, 2001, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
 
-timestamp='2005-04-22'
+timestamp='2005-05-12'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -327,7 +327,10 @@ case "${UNAME_MACHINE}:${UNAME_SYSTEM}:${UNAME_RELEASE}:${UNAME_VERSION}" in
 	exit 0 ;;
     arm:RISC*:1.[012]*:*|arm:riscix:1.[012]*:*)
 	echo arm-acorn-riscix${UNAME_RELEASE}
-	exit 0;;
+	exit 0 ;;
+    arm:riscos:*:*|arm:RISCOS:*:*)
+	echo arm-unknown-riscos
+	exit 0 ;;
     SR2?01:HI-UX/MPP:*:* | SR8000:HI-UX/MPP:*:*)
 	echo hppa1.1-hitachi-hiuxmpp
 	exit 0;;
@@ -650,7 +653,18 @@ EOF
 	then
 	    # avoid double evaluation of $set_cc_for_build
 	    test -n "$CC_FOR_BUILD" || eval $set_cc_for_build
-	    if echo __LP64__ | (CCOPTS= $CC_FOR_BUILD -E -) | grep __LP64__ >/dev/null
+	    
+	    # hppa2.0w-hp-hpux* has a 64-bit kernel and a compiler generating
+	    # 32-bit code.  hppa64-hp-hpux* has the same kernel and a compiler
+	    # generating 64-bit code.  GNU and HP use different nomenclature:
+	    #
+	    # $ CC_FOR_BUILD=cc ./config.guess
+	    # => hppa2.0w-hp-hpux11.23
+	    # $ CC_FOR_BUILD="cc +DA2.0w" ./config.guess
+	    # => hppa64-hp-hpux11.23
+
+	    if echo __LP64__ | (CCOPTS= $CC_FOR_BUILD -E - 2>/dev/null) |
+		grep __LP64__ >/dev/null
 	    then
 		HP_ARCH="hppa2.0w"
 	    else
@@ -1295,7 +1309,7 @@ main ()
 #endif
 
 #if defined (__arm) && defined (__acorn) && defined (__unix)
-  printf ("arm-acorn-riscix"); exit (0);
+  printf ("arm-acorn-riscix\n"); exit (0);
 #endif
 
 #if defined (hp300) && !defined (hpux)
