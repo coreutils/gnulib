@@ -1,3 +1,7 @@
+2005-05-12  Eric Blake  <ebb9@byu.net>  (tiny change)
+
+	* gnulib-tool (func_import): Sort and uniquify recommended includes.
+
 2005-05-12  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
 	* modules/getdate (Makefile.am): Add getdate.c to EXTRA_DIST
