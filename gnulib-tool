@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-04-21 22:10:05 $'
+cvsdatestamp='$Date: 2005-05-13 07:01:19 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -699,8 +699,8 @@ func_import ()
   echo
   echo "You may need to add #include directives for the following .h files."
   for module in $modules; do
-    func_get_include_directive "$module" | sed -e '/^$/d;' -e 's/^/  /'
-  done
+    func_get_include_directive "$module"
+  done | LC_ALL=C sort -u | sed -e '/^$/d;' -e 's/^/  /'
   echo
   echo "Don't forget to add \"$sourcebase/Makefile\""
   echo "to AC_CONFIG_FILES in \"$configure_ac\" and to mention"
