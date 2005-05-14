@@ -1,3 +1,9 @@
+2005-05-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh, README, gnulib-tool, tests/test-base64.c,
+	tests/test-memmem.c, tests/test-stpncpy.c:
+	Update FSF postal mail address.
+
 2005-05-12  Eric Blake  <ebb9@byu.net>  (tiny change)
 
 	* gnulib-tool (func_import): Sort and uniquify recommended includes.
