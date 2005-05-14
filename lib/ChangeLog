@@ -1,5 +1,9 @@
 2005-05-13  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* byteswap_.h, getsubopt.h, iconvme.h, strsep.c, strsep.h:
+	Change the initial comment to refer to GPL, not LGPL.
+	gnulib-tool will change it to LGPL as needed.
+
 	* __fpending.c, acl.c, acl.h, alloca_.h, allocsa.c, allocsa.h,
 	argmatch.c, argmatch.h, argp-ba.c, argp-eexst.c, argp-fmtstream.c,
 	argp-fmtstream.h, argp-fs-xinl.c, argp-help.c, argp-namefrob.h,
