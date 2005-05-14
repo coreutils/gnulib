@@ -83,6 +83,9 @@ typedef unsigned long  uint64_t;
 typedef long long          int64_t;
 #endif
 typedef unsigned long long uint64_t;
+#elif defined(_MSC_VER)
+typedef __int64          int64_t;
+typedef unsigned __int64 uint64_t;
 #endif
 
 #endif /* !FreeBSD */
@@ -95,7 +98,7 @@ typedef int16_t  int_least16_t;
 typedef uint16_t uint_least16_t;
 typedef int32_t  int_least32_t;
 typedef uint32_t uint_least32_t;
-#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@
+#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@ || defined(_MSC_VER)
 typedef int64_t  int_least64_t;
 typedef uint64_t uint_least64_t;
 #endif
@@ -108,7 +111,7 @@ typedef int32_t  int_fast16_t;
 typedef uint32_t uint_fast16_t;
 typedef int32_t  int_fast32_t;
 typedef uint32_t uint_fast32_t;
-#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@
+#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@ || defined(_MSC_VER)
 typedef int64_t  int_fast64_t;
 typedef uint64_t uint_fast64_t;
 #endif
@@ -126,7 +129,7 @@ typedef unsigned long uintptr_t;
 
 /* 7.18.1.5. Greatest-width integer types */
 
-#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@
+#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@ || defined(_MSC_VER)
 typedef int64_t  intmax_t;
 typedef uint64_t uintmax_t;
 #else
@@ -157,6 +160,10 @@ typedef uint32_t uintmax_t;
 #define INT64_MIN   (~INT64_MIN)
 #define INT64_MAX   9223372036854775807LL
 #define UINT64_MAX 18446744073709551615ULL
+#elif defined(_MSC_VER)
+#define INT64_MIN   (~INT64_MIN)
+#define INT64_MAX   9223372036854775807i64
+#define UINT64_MAX 18446744073709551615ui64
 #endif
 
 /* 7.18.2.2. Limits of minimum-width integer types */
@@ -170,7 +177,7 @@ typedef uint32_t uintmax_t;
 #define INT_LEAST32_MIN INT32_MIN
 #define INT_LEAST32_MAX INT32_MAX
 #define UINT_LEAST32_MAX UINT32_MAX
-#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@
+#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@ || defined(_MSC_VER)
 #define INT_LEAST64_MIN INT64_MIN
 #define INT_LEAST64_MAX INT64_MAX
 #define UINT_LEAST64_MAX UINT64_MAX
@@ -187,7 +194,7 @@ typedef uint32_t uintmax_t;
 #define INT_FAST32_MIN INT32_MIN
 #define INT_FAST32_MAX INT32_MAX
 #define UINT_FAST32_MAX UINT32_MAX
-#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@
+#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@ || defined(_MSC_VER)
 #define INT_FAST64_MIN INT64_MIN
 #define INT_FAST64_MAX INT64_MAX
 #define UINT_FAST64_MAX UINT64_MAX
@@ -201,7 +208,7 @@ typedef uint32_t uintmax_t;
 
 /* 7.18.2.5. Limits of greatest-width integer types */
 
-#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@
+#if @HAVE_LONG_64BIT@ || @HAVE_LONG_LONG_64BIT@ || defined(_MSC_VER)
 #define INTMAX_MIN INT64_MIN
 #define INTMAX_MAX INT64_MAX
 #define UINTMAX_MAX UINT64_MAX
@@ -245,6 +252,9 @@ typedef uint32_t uintmax_t;
 #elif @HAVE_LONG_LONG_64BIT@
 #define INT64_C(x) x##LL
 #define UINT64_C(x) x##ULL
+#elif defined(_MSC_VER)
+#define INT64_C(x) x##i64
+#define UINT64_C(x) x##ui64
 #endif
 
 /* 7.18.4.2. Macros for greatest-width integer constants */
@@ -255,6 +265,9 @@ typedef uint32_t uintmax_t;
 #elif @HAVE_LONG_LONG_64BIT@
 #define INTMAX_C(x) x##LL
 #define UINTMAX_C(x) x##ULL
+#elif defined(_MSC_VER)
+#define INTMAX_C(x) x##i64
+#define UINTMAX_C(x) x##ui64
 #else
 #define INTMAX_C(x) x
 #define UINTMAX_C(x) x##U

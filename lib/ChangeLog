@@ -1,3 +1,12 @@
+2005-05-13  Bruno Haible  <bruno@clisp.org>
+
+	* stdint_.h (int64_t, uint64_t, int_least64_t, uint_least64_t,
+	int_fast64_t, uint_fast64_t, intmax_t, uintmax_t, INT64_MIN, INT64_MAX,
+	UINT64_MAX, INT_LEAST64_MIN, INT_LEAST64_MAX, UINT_LEAST64_MAX,
+	INT_FAST64_MIN, INT_FAST64_MAX, UINT_FAST64_MAX, INTMAX_MIN,
+	INTMAX_MAX, UINTMAX_MAX, INT64_C, UINT64_C, INTMAX_C, UINTMAX_C):
+	Add support for 64-bit integers in the MSVC compiler.
+
 2005-05-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* byteswap_.h, getsubopt.h, iconvme.h, strsep.c, strsep.h:
