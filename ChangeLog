@@ -1,3 +1,7 @@
+2005-05-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/yesno (Depends-on): Add getline.
+
 2005-05-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* MODULES.html.sh, README, gnulib-tool, tests/test-base64.c,

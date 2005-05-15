@@ -1,3 +1,14 @@
+2005-05-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils.
+	* gethrxtime.c, gethrxtime.h, getpass.h, mountlist.h, path-concat.c,
+	regex.h, strtoll.c, unlocked-io.h, xtime.h:
+	White space changes only.
+	* makepath.c (make_path): Port to hosts where leading "//" is special.
+	* yesno.c: Include getline.h, not ctype.h.
+	(yesno): Don't remove leading white space; POSIX doesn't allow it.
+	Use getline to remove arbitrary restriction on response length.
+
 2005-05-13  Bruno Haible  <bruno@clisp.org>
 
 	* stdint_.h (int64_t, uint64_t, int_least64_t, uint_least64_t,

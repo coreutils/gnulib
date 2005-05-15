@@ -17,15 +17,15 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #ifndef GETPASS_H
-#define GETPASS_H
+# define GETPASS_H
 
 /* Get getpass declaration, if available.  */
-#include <unistd.h>
+# include <unistd.h>
 
-#if defined HAVE_DECL_GETPASS && !HAVE_DECL_GETPASS
+# if defined HAVE_DECL_GETPASS && !HAVE_DECL_GETPASS
 /* Read a password of arbitrary length from /dev/tty or stdin.  */
 char *getpass (const char *prompt);
 
-#endif
+# endif
 
 #endif /* GETPASS_H */
