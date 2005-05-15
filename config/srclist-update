@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.16 2005-05-10 13:02:40 karl Exp $
+# $Id: srclist-update,v 1.17 2005-05-15 06:51:32 eggert Exp $
 #
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
@@ -19,8 +19,8 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA.
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 # Originally written by Karl Berry.
 
@@ -55,7 +55,7 @@ fixlicense='
 #\
 #   You should have received a copy of the GNU General Public License along\
 #   with this program; if not, write to the Free Software Foundation,\
-#   Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA.
+#   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
   /Th[ei][ s].* is free software/,/\*\//c\
    This program is free software; you can redistribute it and/or modify\
@@ -70,7 +70,7 @@ fixlicense='
 \
    You should have received a copy of the GNU General Public License along\
    with this program; if not, write to the Free Software Foundation,\
-   Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA.
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 '
 
 # sed command to remove lines containing $Id lines.
