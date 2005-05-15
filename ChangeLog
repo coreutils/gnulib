@@ -1,5 +1,12 @@
 2005-05-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* config/srclist-update: Spell out "Street" in FSF postal
+	mail address; this is the style the FSF seems to prefer.
+
+	* build-aux/depcomp, build-aux/install-sh, build-aux/mdate-sh,
+	build-aux/missing, build-aux/mkinstalldirs: Sync from Automake;
+	this updates FSF postal mail address.
+
 	Sync from coreutils.
 	* modules/unlinkdir: New file.
 	* modules/yesno (Depends-on): Add getline.
