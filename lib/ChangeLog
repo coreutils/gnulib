@@ -3,7 +3,7 @@
 	Sync from coreutils.
 	* unlinkdir.c, unlinkdir.h: New files.
 	* gethrxtime.c, gethrxtime.h, getpass.h, mountlist.h, path-concat.c,
-	regex.h, strtoll.c, unlocked-io.h, xtime.h:
+	regex.h, unlocked-io.h, xtime.h:
 	White space changes only.
 	* makepath.c (make_path): Port to hosts where leading "//" is special.
 	* yesno.c: Include getline.h, not ctype.h.
