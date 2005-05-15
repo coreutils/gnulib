@@ -1,6 +1,7 @@
 2005-05-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.
+	* unlinkdir.c, unlinkdir.h: New files.
 	* gethrxtime.c, gethrxtime.h, getpass.h, mountlist.h, path-concat.c,
 	regex.h, strtoll.c, unlocked-io.h, xtime.h:
 	White space changes only.

@@ -1,6 +1,9 @@
 2005-05-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Sync from coreutils.
+	* modules/unlinkdir: New file.
 	* modules/yesno (Depends-on): Add getline.
+	* MODULES.html.sh (File system functions): Add unlinkdir.
 
 2005-05-13  Paul Eggert  <eggert@cs.ucla.edu>
 

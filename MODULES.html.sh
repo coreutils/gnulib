@@ -1826,6 +1826,7 @@ func_all_modules ()
   func_module same
   func_module save-cwd
   func_module savedir
+  func_module unlinkdir
   func_module utimecmp
   func_module utimens
   func_module xgetcwd
