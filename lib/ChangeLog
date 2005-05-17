@@ -1,3 +1,7 @@
+2005-05-17  Jim Meyering  <jim@meyering.net>
+
+	* fts.c, fts_.h: New files, from coreutils.
+
 2005-05-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.
@@ -113,7 +117,7 @@
 	ai_socktype / ai_protocol in the returned addrinfo structure.
 
 2005-05-09  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* inet_ntop.h: New file.
 	* inet_ntop.c: New file, from glibc with modifications.
