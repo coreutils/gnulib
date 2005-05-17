@@ -1,3 +1,7 @@
+2005-05-17  Jim Meyering  <jim@meyering.net>
+
+	* fts.m4: New file, from coreutils.
+
 2005-05-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.
