@@ -1,3 +1,8 @@
+2005-05-18  Jim Meyering  <jim@meyering.net>
+
+	* modules/dirfd (License): Change to LGPL.  Most of the code
+	is already in the public domain.
+
 2005-05-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* config/srclist-update: Spell out "Street" in FSF postal
