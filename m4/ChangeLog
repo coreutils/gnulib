@@ -1,3 +1,21 @@
+2005-05-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* canonicalize.m4 (AC_FUNC_CANONICALIZE_FILE_NAME]):
+	Don't check for stddef.h.
+	* fts.m4 (gl_FUNC_FTS): Don't require AC_HEADER_STDC, as we
+	don't use its results.
+	Don't check for fcntl.h, stddef.h, stdlib.h, string.h, unistd.h,
+	since we include them unconditionally.  Don't require
+	AM_STDBOOL_H, since stdbool is a prerequisite.
+	Don't require AC_C_CONST, AC_TYPE_SIZE_T or check for ptrdiff_t
+	since we assume C89 or better.
+	Don't require AC_FUNC_CLOSEDIR_VOID, AC_FUNC_LSTAT, or AC_FUNC_STAT,
+	as we don't use their results.
+	Don't check for fchdir, memmove, memset, strrchr, as we use
+	them unconditionally.
+	* gettimeofday.m4 (AC_FUNC_GETTIMEOFDAY_CLOBBER): Don't define
+	GETTIMEOFDAY_CLOBBERS_LOCALTIME_BUFFER, since nobody uses it.
+
 2005-05-18  Jim Meyering  <jim@meyering.net>
 
 	* fts.m4 (AC_LIBSOURCES): Add intprops.h to the list.
