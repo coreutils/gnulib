@@ -1,3 +1,8 @@
+2005-05-18  Jim Meyering  <jim@meyering.net>
+
+	* fts.m4 (AC_LIBSOURCES): Add intprops.h to the list.
+	Reported by Yoann Vandoorselaere.
+
 2005-05-17  Jim Meyering  <jim@meyering.net>
 
 	* fts.m4: New file, from coreutils.
