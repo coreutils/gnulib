@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, base64, bcopy, binary-io, byteswap, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chdir-long, chown, classpath, cloexec, closeout, copy-file, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, full-read, full-write, fwriteerror, gcd, getaddrinfo, getcwd, getdate, getdomainname, getgroups, gethostname, gethrxtime, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, iconvme, idcache, inet_ntop, inttostr, isdir, javacomp, javaexec, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmem, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, openat, pagealign_alloc, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sh-quote, sha1, sig2str, snprintf, stat, stat-macros, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strsep, strstr, strtod, strtoimax, strtok_r, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, ullong_max, unicodeio, unistd-safer, unlinkdir, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, version-etc-fsf, vsnprintf, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, base64, bcopy, binary-io, byteswap, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chdir-long, chown, classpath, cloexec, closeout, copy-file, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, fts, fts-lgpl, full-read, full-write, fwriteerror, gcd, getaddrinfo, getcwd, getdate, getdomainname, getgroups, gethostname, gethrxtime, getline, getloadavg, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, group-member, hard-locale, hash, hash-pjw, human, iconv, iconvme, idcache, inet_ntop, inttostr, isdir, javacomp, javaexec, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmem, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, openat, pagealign_alloc, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sh-quote, sha1, sig2str, snprintf, stat, stat-macros, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strsep, strstr, strtod, strtoimax, strtok_r, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, ullong_max, unicodeio, unistd-safer, unlinkdir, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, version-etc-fsf, vsnprintf, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -674,6 +674,14 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=filemode">filemode</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return a string (?rwxrwxrwx format) describing the type and permissions of a
 file.
+      </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fts">fts</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Traverse a file hierarchy.
+      </TR>
+      <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fts-lgpl">fts-lgpl</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Traverse a file hierarchy (LPGL'ed version).
       </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=isdir">isdir</A>
@@ -2524,6 +2532,20 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>stat-macros
       </TR>
       <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fts"></A><A HREF="modules/fts">fts</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fts_.h">fts_.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fts.c">fts.c</A><BR><A HREF="lib/fts-cycle.c">fts-cycle.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/fts.m4">fts.m4</A><BR>gl_FUNC_FTS
+        <TD ALIGN=LEFT VALIGN=TOP>cycle-check<BR>hash<BR>dirfd<BR>unistd-safer<BR>stdbool<BR>gettext
+      </TR>
+      <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fts-lgpl"></A><A HREF="modules/fts-lgpl">fts-lgpl</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fts_.h">fts_.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fts.c">fts.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/fts.m4">fts.m4</A><BR>gl_FUNC_FTS_LGPL
+        <TD ALIGN=LEFT VALIGN=TOP>dirfd<BR>stdbool<BR>gettext
+      </TR>
+      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=isdir"></A><A HREF="modules/isdir">isdir</A>
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/isdir.c">isdir.c</A>
@@ -3298,11 +3320,8 @@ variables.
     </TABLE>
     <H2>Lone files - please create new modules containing them</H2>
     <PRE>
-<A HREF="lib/fts.c">lib/fts.c</A>
-<A HREF="lib/fts_.h">lib/fts_.h</A>
 <A HREF="lib/progreloc.c">lib/progreloc.c</A>
 <A HREF="m4/d-type.m4">m4/d-type.m4</A>
-<A HREF="m4/fts.m4">m4/fts.m4</A>
 <A HREF="m4/host-os.m4">m4/host-os.m4</A>
 <A HREF="m4/jm-winsz1.m4">m4/jm-winsz1.m4</A>
 <A HREF="m4/jm-winsz2.m4">m4/jm-winsz2.m4</A>
@@ -3329,6 +3348,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 17 May 2005.
+    Generated from <CODE>MODULES.html.sh</CODE> on 20 May 2005.
   </BODY>
 </HTML>
