@@ -1,3 +1,7 @@
+2005-05-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh (File system functions): Add fts, fts-lgpl.
+
 2005-05-18  Jim Meyering  <jim@meyering.net>
 
 	* modules/dirfd (License): Change to LGPL.  Most of the code

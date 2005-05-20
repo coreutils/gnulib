@@ -1,0 +1,30 @@
+Description:
+Traverse a file hierarchy.
+
+Files:
+lib/fts_.h
+lib/fts.c
+lib/fts-cycle.c
+m4/fts.m4
+
+Depends-on:
+cycle-check
+hash
+dirfd
+unistd-safer
+stdbool
+gettext
+
+configure.ac:
+gl_FUNC_FTS
+
+Makefile.am:
+
+Include:
+"fts_.h"
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering
