@@ -1,3 +1,7 @@
+2005-05-20  Eric Blake  <ebb9@byu.net>  (tiny change)
+
+	* chown.c (rpl_chown): Return -1 on failure.
+
 2005-05-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* canonicalize.c: Include canonicalize.h first, to test interface.

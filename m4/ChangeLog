@@ -1,3 +1,8 @@
+2005-05-20  Eric Blake  <ebb9@byu.net>  (tiny change)
+
+	* chown.m4 (gl_FUNC_CHOWN): Correct sense of test for honoring IDs
+	of -1.
+
 2005-05-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* canonicalize.m4 (AC_FUNC_CANONICALIZE_FILE_NAME]):
