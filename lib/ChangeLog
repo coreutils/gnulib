@@ -1,5 +1,11 @@
 2005-05-22  Bruno Haible  <bruno@clisp.org>
 
+	* minmax.h: Include <limits.h> only when it defines MIN, MAX.
+	Also include <sys/param.h> if it defines MIN, MAX.
+	Based on a patch by Derek Price <derek@ximbiot.com>.
+
+2005-05-22  Bruno Haible  <bruno@clisp.org>
+
 	* stdint_.h (_STDINT_H_HAVE_INT64): New macro. Use it in #ifdefs.
 	(INT64_MIN): Fix definition.
 	Suggested by Paul Eggert <eggert@cs.ucla.edu>.

@@ -1,3 +1,8 @@
+2005-05-22  Bruno Haible  <bruno@clisp.org>
+
+	* minmax.m4: New file.
+	Based on a patch by Derek Price <derek@ximbiot.com>.
+
 2005-05-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* fts.m4 (gl_FUNC_FTS_CORE): Renamed from gl_FUNC_FTS.
