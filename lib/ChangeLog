@@ -1,5 +1,9 @@
 2005-05-22  Bruno Haible  <bruno@clisp.org>
 
+	* stdint_.h (_STDINT_H_HAVE_INT64): New macro. Use it in #ifdefs.
+	(INT64_MIN): Fix definition.
+	Suggested by Paul Eggert <eggert@cs.ucla.edu>.
+
 	* stdint_.h (_STDINT_H_NEED_SIGNED_INT_TYPES): Renamed from
 	NEED_SIGNED_INT_TYPES.
 
