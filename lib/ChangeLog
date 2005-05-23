@@ -1,5 +1,8 @@
 2005-05-22  Bruno Haible  <bruno@clisp.org>
 
+	* stdint_.h (_STDINT_H_NEED_SIGNED_INT_TYPES): Renamed from
+	NEED_SIGNED_INT_TYPES.
+
 	* stdint_.h (_STDINT_H_HAVE_SYSTEM_INTTYPES): Renamed from
 	HAVE_SYSTEM_INTTYPES.
 

@@ -49,7 +49,7 @@
 # define _STDINT_H_HAVE_SYSTEM_INTTYPES
 #endif
 #if !(defined(UNIX_CYGWIN32) && defined(__BIT_TYPES_DEFINED__))
-# define NEED_SIGNED_INT_TYPES
+# define _STDINT_H_NEED_SIGNED_INT_TYPES
 #endif
 
 #if !defined(_STDINT_H_HAVE_SYSTEM_INTTYPES)
@@ -58,28 +58,28 @@
 
 #if !defined(__FreeBSD__)
 
-#ifdef NEED_SIGNED_INT_TYPES
+#ifdef _STDINT_H_NEED_SIGNED_INT_TYPES
 typedef signed char    int8_t;
 #endif
 typedef unsigned char  uint8_t;
 
-#ifdef NEED_SIGNED_INT_TYPES
+#ifdef _STDINT_H_NEED_SIGNED_INT_TYPES
 typedef short          int16_t;
 #endif
 typedef unsigned short uint16_t;
 
-#ifdef NEED_SIGNED_INT_TYPES
+#ifdef _STDINT_H_NEED_SIGNED_INT_TYPES
 typedef int            int32_t;
 #endif
 typedef unsigned int   uint32_t;
 
 #if @HAVE_LONG_64BIT@
-#ifdef NEED_SIGNED_INT_TYPES
+#ifdef _STDINT_H_NEED_SIGNED_INT_TYPES
 typedef long           int64_t;
 #endif
 typedef unsigned long  uint64_t;
 #elif @HAVE_LONG_LONG_64BIT@
-#ifdef NEED_SIGNED_INT_TYPES
+#ifdef _STDINT_H_NEED_SIGNED_INT_TYPES
 typedef long long          int64_t;
 #endif
 typedef unsigned long long uint64_t;
