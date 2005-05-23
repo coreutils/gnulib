@@ -38,7 +38,7 @@
   /* Solaris 7 <sys/inttypes.h> has the types except the *_fast*_t types, and
      the macros except for *_FAST*_*, INTPTR_MIN, PTRDIFF_MIN, PTRDIFF_MAX.
      But note that <sys/int_types.h> contains only the type definitions!  */
-# define HAVE_SYSTEM_INTTYPES
+# define _STDINT_H_HAVE_SYSTEM_INTTYPES
 #endif
 #if (defined(__hpux) || defined(_AIX)) && HAVE_INTTYPES_H
 # include <inttypes.h>
@@ -46,13 +46,13 @@
      UINT_FAST8_MAX, PTRDIFF_MIN, PTRDIFF_MAX.  */
   /* AIX 4 <inttypes.h> has nearly everything, except INTPTR_MIN, INTPTR_MAX,
      UINTPTR_MAX, PTRDIFF_MIN, PTRDIFF_MAX.  */
-# define HAVE_SYSTEM_INTTYPES
+# define _STDINT_H_HAVE_SYSTEM_INTTYPES
 #endif
 #if !(defined(UNIX_CYGWIN32) && defined(__BIT_TYPES_DEFINED__))
 # define NEED_SIGNED_INT_TYPES
 #endif
 
-#if !defined(HAVE_SYSTEM_INTTYPES)
+#if !defined(_STDINT_H_HAVE_SYSTEM_INTTYPES)
 
 /* 7.18.1.1. Exact-width integer types */
 
@@ -275,6 +275,6 @@ typedef uint32_t uintmax_t;
 
 #endif
 
-#endif  /* !HAVE_SYSTEM_INTTYPES */
+#endif  /* !_STDINT_H_HAVE_SYSTEM_INTTYPES */
 
 #endif /* _STDINT_H */
