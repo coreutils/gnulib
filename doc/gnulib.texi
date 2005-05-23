@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.8 2005-05-19 13:17:34 karl Exp $
+@comment $Id: gnulib.texi,v 1.9 2005-05-23 11:05:53 jas Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2005-05-19 13:17:34 $
+@set UPDATED $Date: 2005-05-23 11:05:53 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -158,6 +158,19 @@ should explicitly use the @samp{extern "C"} block itself.  Your
 preference might depend on whether you consider the API exported by
 your header file as something available for C programs only, or for C
 and C++ programs alike.
+
+@subsection Include ordering
+
+When writing a gnulib module, or even in general, a good way to order
+the @samp{#include} directives is the following.
+
+@itemize
+@item First comes the #include "..." specifying the module being implemented.
+@item Then come all the #include <...> of system or system-replacement headers,
+in arbitrary order.
+@item Then come all the #include "..." of gnulib and private headers, in
+arbitrary order.
+@end itemize
 
 @node ctime
 @section ctime
