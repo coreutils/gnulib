@@ -1,4 +1,8 @@
 2005-05-25  Derek Price  <derek@ximbiot.com>
+
+	* MODULES.html.sh: Add getlogin_r to POSIX.2001 support section.
+
+2005-05-25  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/getlogin_r: New files.
