@@ -28,8 +28,7 @@
 
    Returns 0 if successful.  Upon error, an error number is returned, or -1 in
    the case that the login name cannot be found but no specific error is
-   provided by getlogin (getlogin returned NULL and did not set errno - this
-   case is hopefully rare but is left open by the POSIX spec).
+   provided (this case is hopefully rare but is left open by the POSIX spec).
 
    See <http://www.opengroup.org/onlinepubs/009695399/functions/getlogin.html>.
  */
