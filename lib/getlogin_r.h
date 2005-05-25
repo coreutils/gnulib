@@ -33,5 +33,6 @@
 
    See <http://www.opengroup.org/onlinepubs/009695399/functions/getlogin.html>.
  */
+# include <stddef.h>
 int getlogin_r (char *name, size_t size);
 #endif

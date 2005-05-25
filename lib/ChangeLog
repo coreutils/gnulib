@@ -1,3 +1,8 @@
+2005-05-25  Derek Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getlogin_r.c, getlogin_r.h: New files.
+
 2005-05-22  Bruno Haible  <bruno@clisp.org>
 
 	* minmax.h: Include <limits.h> only when it defines MIN, MAX.

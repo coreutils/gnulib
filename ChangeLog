@@ -1,8 +1,7 @@
 2005-05-25  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
-	* lib/getlogin_r.c, lib/getlogin_r.h, m4/getlogin_r.m4,
-	modules/getlogin_r: New files.
+	* modules/getlogin_r: New files.
 
 2005-05-18  Derek Price  <derek@ximbiot.com>
 

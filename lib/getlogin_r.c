@@ -18,7 +18,9 @@
 
 /* written by Paul Eggert and Derek Price */
 
-#include <config.h>
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
 
 #include "getlogin_r.h"
 
@@ -38,22 +40,15 @@ int
 getlogin_r (char *name, size_t size)
 {
   char *n;
-  int save_errno = errno;
+  size_t nlen;
 
   errno = 0;
   n = getlogin ();
-  if (n)
-    {
-      size_t nlen = strlen (n);
-      if (nlen < size)
-        {
-          memcpy (name, n, nlen + 1);
-          return 0;
-        }
-      errno = ERANGE;
-    }
-
-  if (errno) return errno;
-  errno = save_errno;
-  return -1;
+  if (!n)
+    return errno ? errno : ENOENT;
+  nlen = strlen (n);
+  if (size <= nlen)
+    return ERANGE;
+  memcpy (name, n, nlen + 1);
+  return 0;
 }
