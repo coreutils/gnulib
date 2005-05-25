@@ -1,0 +1,23 @@
+Description:
+Get user name to a buffer allocated by the caller.
+
+Files:
+lib/getlogin_r.h
+lib/getlogin_r.c
+m4/getlogin_r.m4
+
+Depends-on:
+
+configure.ac:
+gl_GETLOGIN_R
+
+Makefile.am:
+
+Include:
+"getlogin_r.h"
+
+License:
+LGPL
+
+Maintainer:
+all
