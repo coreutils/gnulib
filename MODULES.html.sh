@@ -1417,7 +1417,7 @@ func_all_modules ()
   func_module mktime
   func_end_table
 
-  func_echo 'These modules are not listed among dependencies below, for simplicity.'
+  func_echo 'Most of these modules are not listed among dependencies below, for simplicity.'
 
   element="Enhancements for ANSI C 89 functions"
   func_section_wrap ansic_enh
