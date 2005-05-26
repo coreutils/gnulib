@@ -1,3 +1,8 @@
+2005-05-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* extensions.m4 (gl_USE_SYSTEM_EXTENSIONS): Define
+	_POSIX_PTHREAD_SEMANTICS for Solaris.
+
 2005-05-25  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
