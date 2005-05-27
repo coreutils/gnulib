@@ -6,7 +6,6 @@ lib/fts_.h
 lib/fts.c
 lib/fts-cycle.c
 m4/fts.m4
-m4/inttypes-pri.m4
 
 Depends-on:
 cycle-check

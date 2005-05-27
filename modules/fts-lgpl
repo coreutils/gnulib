@@ -9,7 +9,6 @@ m4/fts.m4
 Depends-on:
 dirfd
 stdbool
-gettext
 
 configure.ac:
 gl_FUNC_FTS_LGPL
