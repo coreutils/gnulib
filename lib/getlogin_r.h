@@ -18,11 +18,12 @@
 
 /* Written by Paul Eggert and Derek Price.  */
 
+#include <stddef.h>
+
 #if HAVE_UNISTD_H
 # include <unistd.h>
 #endif
 
-#if !HAVE_DECL_GETLOGIN_R
 /* Copies the user's login name to NAME.
    The array pointed to by NAME has room for SIZE bytes.
 
@@ -32,6 +33,6 @@
 
    See <http://www.opengroup.org/onlinepubs/009695399/functions/getlogin.html>.
  */
-# include <stddef.h>
+#if !HAVE_DECL_GETLOGIN_R
 int getlogin_r (char *name, size_t size);
 #endif
