@@ -44,8 +44,15 @@ getlogin_r (char *name, size_t size)
 
   errno = 0;
   n = getlogin ();
+
+  /* A system function like getlogin_r is never supposed to set errno
+     to zero, so make sure errno is nonzero here.  ENOENT is a
+     reasonable errno value if getlogin returns NULL.  */
+  if (!errno)
+    errno = ENOENT;
+
   if (!n)
-    return errno ? errno : ENOENT;
+    return errno;
   nlen = strlen (n);
   if (size <= nlen)
     return ERANGE;
