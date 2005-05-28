@@ -1,5 +1,7 @@
 2005-05-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* getlogin_r.c (getlogin_r): Don't set errno to 0 on return.
+
 	* fts.c: Don't worry about debugging on pre-C99-comopatible hosts;
 	the configuration hassle isn't worth it.
 	Include inttypes.h and stdint.h unconditionally if FTS_DEBUG.
