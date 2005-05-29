@@ -1,3 +1,9 @@
+2005-05-29  Derek Price  <derek@ximbiot.com>
+
+	* MODULES.html.sh: Add glob to Enhanced POSIX.2001 section.
+	* modules/glob: New file.
+	* modules/getlogin_r: Add link to POSIX spec in description.
+
 2005-05-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/fts (Files): Remove m4/inttypes-pri.m4.

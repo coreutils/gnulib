@@ -1780,6 +1780,7 @@ func_all_modules ()
   func_module fnmatch
   func_module fnmatch-posix
   func_module fnmatch-gnu
+  func_module glob
   func_module exclude
   func_end_table
 

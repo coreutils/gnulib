@@ -1,5 +1,5 @@
 Description:
-Get user name to a buffer allocated by the caller.
+getlogin_r() function: Get user name to a buffer allocated by the caller.
 
 Files:
 lib/getlogin_r.h

@@ -1,3 +1,8 @@
+2005-05-29  Derek Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	* glob.m4: New file.
+
 2005-05-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* fts.m4 (gl_FUNC_FTS_CORE): Don't check for inttypes.h or stdint.h,

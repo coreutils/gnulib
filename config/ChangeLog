@@ -1,3 +1,7 @@
+2005-05-29  Derek Price  <derek@ximbiot.com>
+
+	* srclist.txt (glob_.h, glob.c): Add these files.
+
 2005-05-10  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt (COPYING.LESSER): rename from COPYING.LIB.
