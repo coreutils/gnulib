@@ -19,7 +19,13 @@
 #ifndef	_GLOB_H
 #define	_GLOB_H	1
 
-#ifndef MISSING_SYS_CDEFS_H
+/* Note the reversal of the common HAVE_SYS_CDEFS_H idiom below.  In this
+   way, #ifndef _SYS_CDEFS_H may be used to include <sys/cdefs.h> both when
+   it has been checked for via the GNULIB configure test and found and when
+   it has not been checked for, which we can presume means that the <glob.h>
+   GNULIB shares with GLIBC is being included as a system header and not as
+   part of GNULIB, in which case <sys/cdefs.h> may be assumed.  */
+#ifndef _SYS_CDEFS_H
 # include <sys/cdefs.h>
 #endif
 #ifndef __BEGIN_DECLS
