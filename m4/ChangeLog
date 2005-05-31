@@ -1,3 +1,9 @@
+2005-05-31  Derek Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from cvs.
+	* glob.m4: s/MISSING_SYS_CDEFS_H/_SYS_CDEFS_H/ and comment.
+
 2005-05-29  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 

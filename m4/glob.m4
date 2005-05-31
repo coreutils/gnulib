@@ -43,8 +43,15 @@ AC_DEFUN([gl_PREREQ_GLOB],
   AC_CHECK_HEADERS_ONCE([sys/cdefs.h unistd.h])dnl
   AC_CHECK_FUNCS_ONCE([getlogin_r getpwnam_r])dnl
   AC_CHECK_HEADERS([sys/cdefs.h], [SYS_CDEFS_H=yes], [SYS_CDEFS_H=no])
+
+  dnl Note the reversal of the common HAVE_SYS_CDEFS_H idiom below.  In this
+  dnl way, #ifndef _SYS_CDEFS_H may be used to include <sys/cdefs.h> both when
+  dnl it has been checked for via the GNULIB configure test and found and when
+  dnl it has not been checked for, which we can presume means that the <glob.h>
+  dnl GNULIB shares with GLIBC is being included as a system header and not as
+  dnl part of GNULIB, in which case <sys/cdefs.h> may be assumed.
   if test $SYS_CDEFS_H = no; then
-    AC_DEFINE(MISSING_SYS_CDEFS_H, 1,
+    AC_DEFINE(_SYS_CDEFS_H, 1,
       [Define to `1' if <sys/cdefs.h> is *not* available on this system.])
   fi
   :])
