@@ -1,0 +1,38 @@
+Description:
+Execute a C# program.
+
+Files:
+lib/csharpexec.h
+lib/csharpexec.c
+lib/csharpexec.sh.in
+m4/csharpexec.m4
+m4/csharp.m4
+
+Depends-on:
+stdbool
+execute
+classpath
+xsetenv
+sh-quote
+xalloc
+xallocsa
+error
+gettext
+
+configure.ac:
+gt_CSHARPEXEC
+
+Makefile.am:
+DEFS += -DEXEEXT=\"$(EXEEXT)\"
+lib_SOURCES += csharpexec.h csharpexec.c
+EXTRA_DIST += csharpexec.sh.in
+
+Include:
+"csharpexec.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible
+

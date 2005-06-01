@@ -1956,6 +1956,17 @@ func_all_modules ()
   #func_module gcj
   func_end_table
 
+  element="C#"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap posix_ext_csharp
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  #func_module csharpcomp
+  func_module csharpexec
+  func_end_table
+
   element="Misc"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap posix_ext_misc

@@ -1,3 +1,8 @@
+2005-06-01  Bruno Haible  <bruno@clisp.org>
+
+	* modules/csharpexec: New file.
+	* MODULES.html.sh (C#): New section.
+
 2005-05-29  Derek Price  <derek@ximbiot.com>
 
 	* MODULES.html.sh: Add glob to Enhanced POSIX.2001 section.
