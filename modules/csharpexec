@@ -5,13 +5,14 @@ Files:
 lib/csharpexec.h
 lib/csharpexec.c
 lib/csharpexec.sh.in
+lib/classpath.h
+lib/classpath.c
 m4/csharpexec.m4
 m4/csharp.m4
 
 Depends-on:
 stdbool
 execute
-classpath
 xsetenv
 sh-quote
 xalloc
@@ -24,7 +25,7 @@ gt_CSHARPEXEC
 
 Makefile.am:
 DEFS += -DEXEEXT=\"$(EXEEXT)\"
-lib_SOURCES += csharpexec.h csharpexec.c
+lib_SOURCES += csharpexec.h csharpexec.c classpath.h classpath.c
 EXTRA_DIST += csharpexec.sh.in
 
 Include:
