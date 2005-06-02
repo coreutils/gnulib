@@ -1,5 +1,5 @@
 /* Define PATH_MAX somehow.  Requires sys/types.h.
-   Copyright (C) 1992, 1999, 2001, 2003 Free Software Foundation, Inc.
+   Copyright (C) 1992, 1999, 2001, 2003, 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,15 +22,10 @@
 #  include <unistd.h>
 # endif
 
-/* Non-POSIX BSD systems might have gcc's limits.h, which doesn't define
-   PATH_MAX but might cause redefinition warnings when sys/param.h is
-   later included (as on MORE/BSD 4.3).  */
-# if defined _POSIX_VERSION || !defined __GNUC__
-#  include <limits.h>
-# endif
+# include <limits.h>
 
 # ifndef _POSIX_PATH_MAX
-#  define _POSIX_PATH_MAX 255
+#  define _POSIX_PATH_MAX 256
 # endif
 
 # if !defined PATH_MAX && defined _PC_PATH_MAX

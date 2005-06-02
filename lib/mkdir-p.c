@@ -1,4 +1,4 @@
-/* makepath.c -- Ensure that a directory path exists.
+/* mkdir-p.c -- Ensure that a directory and its parents exist.
 
    Copyright (C) 1990, 1997, 1998, 1999, 2000, 2002, 2003, 2004, 2005
    Free Software Foundation, Inc.
@@ -23,7 +23,7 @@
 # include <config.h>
 #endif
 
-#include "makepath.h"
+#include "mkdir-p.h"
 
 #include <alloca.h>
 
@@ -78,16 +78,16 @@
     }							\
   while (0)
 
-/* Attempt to create directory DIR (aka DIRPATH) with the specified MODE.
+/* Attempt to create directory DIR (aka FULLDIR) with the specified MODE.
    If CREATED_DIR_P is non-NULL, set *CREATED_DIR_P if this
    function creates DIR and clear it otherwise.  Give a diagnostic and
    return false if DIR cannot be created or cannot be determined to
-   exist already.  Use DIRPATH in any diagnostic, not DIR.
+   exist already.  Use FULLDIR in any diagnostic, not DIR.
    Note that if DIR already exists, this function returns true
    (indicating success) and clears *CREATED_DIR_P.  */
 
 bool
-make_dir (const char *dir, const char *dirpath, mode_t mode,
+make_dir (char const *dir, char const *fulldir, mode_t mode,
 	  bool *created_dir_p)
 {
   bool ok = true;
@@ -111,17 +111,17 @@ make_dir (const char *dir, const char *dirpath, mode_t mode,
       if (stat (dir, &stats))
 	{
 	  error (0, saved_errno, _("cannot create directory %s"),
-		 quote (dirpath));
+		 quote (fulldir));
 	  ok = false;
 	}
       else if (!S_ISDIR (stats.st_mode))
 	{
-	  error (0, 0, _("%s exists but is not a directory"), quote (dirpath));
+	  error (0, 0, _("%s exists but is not a directory"), quote (fulldir));
 	  ok = false;
 	}
       else
 	{
-	  /* DIR (aka DIRPATH) already exists and is a directory. */
+	  /* DIR (aka FULLDIR) already exists and is a directory. */
 	}
     }
 
@@ -131,36 +131,36 @@ make_dir (const char *dir, const char *dirpath, mode_t mode,
   return ok;
 }
 
-/* Ensure that the directory ARGPATH exists.
+/* Ensure that the directory ARG exists.
 
    Create any leading directories that don't already exist, with
    permissions PARENT_MODE.
-   If the last element of ARGPATH does not exist, create it as
+   If the last element of ARG does not exist, create it as
    a new directory with permissions MODE.
    If OWNER and GROUP are non-negative, use them to set the UID and GID of
    any created directories.
    If VERBOSE_FMT_STRING is nonzero, use it as a printf format
    string for printing a message after successfully making a directory,
    with the name of the directory that was just made as an argument.
-   If PRESERVE_EXISTING is true and ARGPATH is an existing directory,
+   If PRESERVE_EXISTING is true and ARG is an existing directory,
    then do not attempt to set its permissions and ownership.
 
-   Return true iff ARGPATH exists as a directory with the proper
+   Return true iff ARG exists as a directory with the proper
    ownership and permissions when done.  */
 
 bool
-make_path (const char *argpath,
-	   mode_t mode,
-	   mode_t parent_mode,
-	   uid_t owner,
-	   gid_t group,
-	   bool preserve_existing,
-	   const char *verbose_fmt_string)
+make_dir_parents (char const *arg,
+		  mode_t mode,
+		  mode_t parent_mode,
+		  uid_t owner,
+		  gid_t group,
+		  bool preserve_existing,
+		  char const *verbose_fmt_string)
 {
   struct stat stats;
   bool retval = true;
 
-  if (stat (argpath, &stats))
+  if (stat (arg, &stats) != 0)
     {
       char *slash;
       mode_t tmp_mode;		/* Initial perms for leading dirs.  */
@@ -174,15 +174,15 @@ make_path (const char *argpath,
       bool do_chdir;		/* Whether to chdir before each mkdir.  */
       struct saved_cwd cwd;
       char *basename_dir;
-      char *dirpath;
+      char *dir;
 
       /* Temporarily relax umask in case it's overly restrictive.  */
       mode_t oldmask = umask (0);
 
-      /* Make a copy of ARGPATH that we can scribble NULs on.  */
-      dirpath = (char *) alloca (strlen (argpath) + 1);
-      strcpy (dirpath, argpath);
-      strip_trailing_slashes (dirpath);
+      /* Make a copy of ARG that we can scribble NULs on.  */
+      dir = (char *) alloca (strlen (arg) + 1);
+      strcpy (dir, arg);
+      strip_trailing_slashes (dir);
 
       /* If leading directories shouldn't be writable or executable,
 	 or should have set[ug]id or sticky bits set and we are setting
@@ -204,19 +204,19 @@ make_path (const char *argpath,
 	 to do the chdir optimization.  */
       do_chdir = (save_cwd (&cwd) == 0);
 
-      /* If we've saved the cwd and DIRPATH is an absolute pathname,
+      /* If we've saved the cwd and DIR is an absolute file name,
 	 we must chdir to `/' in order to enable the chdir optimization.
          So if chdir ("/") fails, turn off the optimization.  */
-      if (do_chdir && dirpath[0] == '/')
+      if (do_chdir && dir[0] == '/')
 	{
 	  /* POSIX says "//" might be special, so chdir to "//" if the
 	     file name starts with exactly two slashes.  */
-	  char const *root = "//" + (dirpath[1] != '/' || dirpath[2] == '/');
+	  char const *root = "//" + (dir[1] != '/' || dir[2] == '/');
 	  if (chdir (root) != 0)
 	    do_chdir = false;
 	}
 
-      slash = dirpath;
+      slash = dir;
 
       /* Skip over leading slashes.  */
       while (*slash == '/')
@@ -226,7 +226,7 @@ make_path (const char *argpath,
 	{
 	  bool newly_created_dir;
 
-	  /* slash points to the leftmost unprocessed component of dirpath.  */
+	  /* slash points to the leftmost unprocessed component of dir.  */
 	  basename_dir = slash;
 
 	  slash = strchr (slash, '/');
@@ -236,10 +236,10 @@ make_path (const char *argpath,
 	  /* If we're *not* doing chdir before each mkdir, then we have to refer
 	     to the target using the full (multi-component) directory name.  */
 	  if (!do_chdir)
-	    basename_dir = dirpath;
+	    basename_dir = dir;
 
 	  *slash = '\0';
-	  if (! make_dir (basename_dir, dirpath, tmp_mode, &newly_created_dir))
+	  if (! make_dir (basename_dir, dir, tmp_mode, &newly_created_dir))
 	    {
 	      CLEANUP;
 	      return false;
@@ -248,7 +248,7 @@ make_path (const char *argpath,
 	  if (newly_created_dir)
 	    {
 	      if (verbose_fmt_string)
-		error (0, 0, verbose_fmt_string, quote (dirpath));
+		error (0, 0, verbose_fmt_string, quote (dir));
 
 	      if ((owner != (uid_t) -1 || group != (gid_t) -1)
 		  && chown (basename_dir, owner, group)
@@ -258,7 +258,7 @@ make_path (const char *argpath,
 		  )
 		{
 		  error (0, errno, _("cannot change owner and/or group of %s"),
-			 quote (dirpath));
+			 quote (dir));
 		  CLEANUP;
 		  return false;
 		}
@@ -280,7 +280,7 @@ make_path (const char *argpath,
 	  if (do_chdir && chdir (basename_dir) < 0)
 	    {
 	      error (0, errno, _("cannot chdir to directory %s"),
-		     quote (dirpath));
+		     quote (dir));
 	      CLEANUP;
 	      return false;
 	    }
@@ -288,28 +288,28 @@ make_path (const char *argpath,
 	  *slash++ = '/';
 
 	  /* Avoid unnecessary calls to `stat' when given
-	     pathnames containing multiple adjacent slashes.  */
+	     file names containing multiple adjacent slashes.  */
 	  while (*slash == '/')
 	    slash++;
 	}
 
       if (!do_chdir)
-	basename_dir = dirpath;
+	basename_dir = dir;
 
       /* Done creating leading directories.  Restore original umask.  */
       umask (oldmask);
 
       /* We're done making leading directories.
-	 Create the final component of the path.  */
+	 Create the final component of the file name.  */
 
-      if (! make_dir (basename_dir, dirpath, mode, NULL))
+      if (! make_dir (basename_dir, dir, mode, NULL))
 	{
 	  CLEANUP;
 	  return false;
 	}
 
       if (verbose_fmt_string != NULL)
-	error (0, 0, verbose_fmt_string, quote (dirpath));
+	error (0, 0, verbose_fmt_string, quote (dir));
 
       if (owner != (uid_t) -1 || group != (gid_t) -1)
 	{
@@ -320,7 +320,7 @@ make_path (const char *argpath,
 	      )
 	    {
 	      error (0, errno, _("cannot change owner and/or group of %s"),
-		     quote (dirpath));
+		     quote (dir));
 	      retval = false;
 	    }
 	}
@@ -334,7 +334,7 @@ make_path (const char *argpath,
 	  && chmod (basename_dir, mode))
 	{
 	  error (0, errno, _("cannot change permissions of %s"),
-		 quote (dirpath));
+		 quote (dir));
 	  retval = false;
 	}
 
@@ -346,23 +346,23 @@ make_path (const char *argpath,
       for (p = leading_dirs; p != NULL; p = p->next)
 	{
 	  *(p->dirname_end) = '\0';
-	  if (chmod (dirpath, parent_mode))
+	  if (chmod (dir, parent_mode) != 0)
 	    {
 	      error (0, errno, _("cannot change permissions of %s"),
-		     quote (dirpath));
+		     quote (dir));
 	      retval = false;
 	    }
 	}
     }
   else
     {
-      /* We get here if the entire path already exists.  */
+      /* We get here if the file already exists.  */
 
-      const char *dirpath = argpath;
+      char const *dir = arg;
 
       if (!S_ISDIR (stats.st_mode))
 	{
-	  error (0, 0, _("%s exists but is not a directory"), quote (dirpath));
+	  error (0, 0, _("%s exists but is not a directory"), quote (dir));
 	  return false;
 	}
 
@@ -375,20 +375,20 @@ make_path (const char *argpath,
 	     be able to chmod them.  So don't give files away.  */
 
 	  if ((owner != (uid_t) -1 || group != (gid_t) -1)
-	      && chown (dirpath, owner, group)
+	      && chown (dir, owner, group)
 #ifdef AFS
 	      && errno != EPERM
 #endif
 	      )
 	    {
 	      error (0, errno, _("cannot change owner and/or group of %s"),
-		     quote (dirpath));
+		     quote (dir));
 	      retval = false;
 	    }
-	  if (chmod (dirpath, mode))
+	  if (chmod (dir, mode) != 0)
 	    {
 	      error (0, errno, _("cannot change permissions of %s"),
-				 quote (dirpath));
+				 quote (dir));
 	      retval = false;
 	    }
 	}

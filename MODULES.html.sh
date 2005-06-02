@@ -1817,14 +1817,14 @@ func_all_modules ()
   func_module file-type
   func_module fileblocks
   func_module filemode
+  func_module filenamecat
   func_module fts
   func_module fts-lgpl
   func_module isdir
   func_module lchown
-  func_module makepath
+  func_module mkdir-p
   func_module modechange
   func_module mountlist
-  func_module path-concat
   func_module pathname
   func_module pathmax
   func_module same

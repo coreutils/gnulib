@@ -1,6 +1,6 @@
-/* makepath.c -- Ensure that a directory path exists.
+/* mkdir-p.h -- Ensure that a directory and its parents exist.
 
-   Copyright (C) 1994, 1995, 1996, 1997, 2000, 2003, 2004 Free
+   Copyright (C) 1994, 1995, 1996, 1997, 2000, 2003, 2004, 2005 Free
    Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -22,15 +22,15 @@
 #include <stdbool.h>
 #include <sys/types.h>
 
-bool make_path (const char *argpath,
-		mode_t mode,
-		mode_t parent_mode,
-		uid_t owner,
-		gid_t group,
-		bool preserve_existing,
-		const char *verbose_fmt_string);
+bool make_dir_parents (char const *argname,
+		       mode_t mode,
+		       mode_t parent_mode,
+		       uid_t owner,
+		       gid_t group,
+		       bool preserve_existing,
+		       char const *verbose_fmt_string);
 
-bool make_dir (const char *dir,
-	       const char *dirpath,
+bool make_dir (char const *dir,
+	       char const *fulldir,
 	       mode_t mode,
 	       bool *created_dir_p);

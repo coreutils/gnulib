@@ -1,11 +1,11 @@
 Description:
-Ensure that a directory path exists.
+Ensure that a directory and its parents exist.
 
 Files:
-lib/makepath.h
-lib/makepath.c
+lib/mkdir-p.h
+lib/mkdir-p.c
 m4/afs.m4
-m4/makepath.m4
+m4/mkdir-p.m4
 
 Depends-on:
 alloca
@@ -19,12 +19,12 @@ stat-macros
 stdbool
 
 configure.ac:
-gl_MAKEPATH
+gl_MKDIR_PARENTS
 
 Makefile.am:
 
 Include:
-"makepath.h"
+"mkdir-p.h"
 
 License:
 GPL

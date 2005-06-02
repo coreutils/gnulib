@@ -1,6 +1,6 @@
-/* Concatenate two arbitrary pathnames.
+/* Concatenate two arbitrary file names.
 
-   Copyright (C) 1996, 1997, 2003 Free Software Foundation, Inc.
+   Copyright (C) 1996, 1997, 2003, 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,9 +18,5 @@
 
 /* Written by Jim Meyering.  */
 
-#if ! defined PATH_CONCAT_H_
-# define PATH_CONCAT_H_
-
-char *path_concat (const char *dir, const char *base, char **base_in_result);
-
-#endif
+char *file_name_concat (char const *dir, char const *base,
+			char **base_in_result);

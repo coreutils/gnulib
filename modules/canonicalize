@@ -8,7 +8,7 @@ m4/canonicalize.m4
 
 Depends-on:
 cycle-check
-path-concat
+filenamecat
 stat-macros
 xalloc
 xgetcwd

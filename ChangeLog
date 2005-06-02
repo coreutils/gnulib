@@ -1,3 +1,20 @@
+2005-06-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils.
+	Use "file name" when talking about file names, instead of "filename"
+	or "path", as per the GNU coding standards.
+	* MODULES.html.sh: mkdir-p renamed from makepath.
+	filenamecat renamed from path-concat.
+	* modules/filenamecat: Renamed from modules/path-concat.
+	(Files): filenamecat.h and filenamecat.c renamed from
+	path-concat.h and path-concat.c.
+	(configure.ac): gl_FILE_NAME_CONCAT, not gl_PATH_CONCAT.
+	(Include): filenamecat.h, not path-concat.h.
+	* modules/mkdir-p: Renamed from modules/makepath.
+	(Files): mkdir-p.h and mkdir-p.c renamed from makepath.h and makepath.c.
+	(configure.ac): gl_MKDIR_PARENTS, not gl_MAKEPATH.
+	(Include): mkdir-p.h, not makepath.h.
+
 2005-06-01  Bruno Haible  <bruno@clisp.org>
 
 	* modules/csharpexec: New file.

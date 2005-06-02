@@ -1,6 +1,6 @@
 /* euidaccess -- check if effective user id can access file
 
-   Copyright (C) 1990, 1991, 1995, 1998, 2000, 2003, 2004 Free
+   Copyright (C) 1990, 1991, 1995, 1998, 2000, 2003, 2004, 2005 Free
    Software Foundation, Inc.
 
    This file is part of the GNU C Library.
@@ -41,13 +41,6 @@
 # include <libgen.h>
 #endif
 
-#ifndef _POSIX_VERSION
-uid_t getuid ();
-gid_t getgid ();
-uid_t geteuid ();
-gid_t getegid ();
-#endif
-
 #include <errno.h>
 #ifndef __set_errno
 # define __set_errno(val) errno = (val)
@@ -84,21 +77,21 @@ gid_t getegid ();
 
 #endif
 
-/* Return 0 if the user has permission of type MODE on file PATH;
+/* Return 0 if the user has permission of type MODE on FILE;
    otherwise, return -1 and set `errno'.
    Like access, except that it uses the effective user and group
    id's instead of the real ones, and it does not always check for read-only
    file system, text busy, etc.  */
 
 int
-euidaccess (const char *path, int mode)
+euidaccess (const char *file, int mode)
 {
 #if defined EFF_ONLY_OK
-  return access (path, mode | EFF_ONLY_OK);
+  return access (file, mode | EFF_ONLY_OK);
 #elif defined ACC_SELF
-  return accessx (path, mode, ACC_SELF);
+  return accessx (file, mode, ACC_SELF);
 #elif HAVE_EACCESS
-  return eaccess (path, mode);
+  return eaccess (file, mode);
 #else
 
   uid_t uid = getuid ();
@@ -117,7 +110,7 @@ euidaccess (const char *path, int mode)
      safe.  */
 
   if (mode == F_OK)
-    return stat (path, &stats);
+    return stat (file, &stats);
   else
     {
       int result;
@@ -128,7 +121,7 @@ euidaccess (const char *path, int mode)
       if (gid != egid)
 	setregid (egid, gid);
 
-      result = access (path, mode);
+      result = access (file, mode);
       saved_errno = errno;
 
       /* Restore them.  */
@@ -150,9 +143,9 @@ euidaccess (const char *path, int mode)
   unsigned int granted;
   if (uid == euid && gid == egid)
     /* If we are not set-uid or set-gid, access does the same.  */
-    return access (path, mode);
+    return access (file, mode);
 
-  if (stat (path, &stats))
+  if (stat (file, &stats) != 0)
     return -1;
 
   /* The super-user can read and write any file, and execute any file

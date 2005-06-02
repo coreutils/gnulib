@@ -1,4 +1,4 @@
-/* path-concat.c -- concatenate two arbitrary pathnames
+/* Concatenate two arbitrary file names.
 
    Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005 Free
    Software Foundation, Inc.
@@ -24,7 +24,7 @@
 #endif
 
 /* Specification.  */
-#include "path-concat.h"
+#include "filenamecat.h"
 
 #include <string.h>
 
@@ -46,7 +46,7 @@ longest_relative_suffix (char const *f)
   return f;
 }
 
-/* Concatenate two pathname components, DIR and ABASE, in
+/* Concatenate two file name components, DIR and ABASE, in
    newly-allocated storage and return the result.
    The resulting file name F is such that the commands "ls F" and "(cd
    DIR; ls BASE)" refer to the same file, where BASE is ABASE with any
@@ -62,7 +62,7 @@ longest_relative_suffix (char const *f)
    Report an error if memory is exhausted.  */
 
 char *
-path_concat (char const *dir, char const *abase, char **base_in_result)
+file_name_concat (char const *dir, char const *abase, char **base_in_result)
 {
   char const *dirbase = base_name (dir);
   size_t dirbaselen = base_len (dirbase);
@@ -88,7 +88,7 @@ path_concat (char const *dir, char const *abase, char **base_in_result)
   return p_concat;
 }
 
-#ifdef TEST_PATH_CONCAT
+#ifdef TEST_FILE_NAME_CONCAT
 # include <stdlib.h>
 # include <stdio.h>
 int
@@ -114,7 +114,7 @@ main ()
     {
       char *base_in_result;
       char const *const *t = tests[i];
-      char *res = path_concat (t[0], t[1], &base_in_result);
+      char *res = file_name_concat (t[0], t[1], &base_in_result);
       if (strcmp (res, t[2]) != 0)
 	{
 	  printf ("got %s, expected %s\n", res, t[2]);
