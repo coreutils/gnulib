@@ -17,7 +17,7 @@
 
    You should have received a copy of the GNU General Public License along
    with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 /* Provide our wierdo HAVE_CONFIG_H rvalue for other clients.  */
 #if !defined(LTDL) && defined(HAVE_CONFIG_H)
@@ -88,7 +88,7 @@ argz_create_sep (const char *str, int delim, char **pargz, size_t *pargz_len)
   assert (pargz);
   assert (pargz_len);
 
-  /* Make a copy of STR, but replacing each occurence of
+  /* Make a copy of STR, but replacing each occurrence of
      DELIM with '\0'.  */
   argz_len = 1+ strlen (str);
   if (argz_len)
