@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate January 1, 2005
+@set lastupdate May 27, 2005
 @c %**end of header
 
 @dircategory GNU organization
@@ -33,7 +33,7 @@
 The GNU coding standards, last updated @value{lastupdate}.
 
 Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
-2001, 2002, 2003, 2004 Free Software Foundation, Inc.
+2001, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1
@@ -239,9 +239,9 @@ C'' as a label for the compiler rather than for the language.
 
 Please don't use ``win'' as an abbreviation for Microsoft Windows in
 GNU software or documentation.  In hacker terminology, calling
-something a "win" is a form of praise.  If you wish to praise
+something a ``win'' is a form of praise.  If you wish to praise
 Microsoft Windows when speaking on your own, by all means do so, but
-not in GNU software.  Usually we write the word ``windows'' in full,
+not in GNU software.  Usually we write the name ``Windows'' in full,
 but when brevity is very important (as in file names and sometimes
 symbol names), we abbreviate it to ``w''.  For instance, the files and
 functions in Emacs that deal with Windows start with @samp{w32}.
@@ -850,7 +850,7 @@ All programs should support two standard options: @samp{--version}
 and @samp{--help}.  CGI programs should accept these as command-line
 options, and also if given as the @env{PATH_INFO}; for instance,
 visiting @url{http://example.org/p.cgi/--help} in a browser should
-output the same information as inokving @samp{p.cgi --help} from the
+output the same information as invoking @samp{p.cgi --help} from the
 command line.
 
 @table @code
@@ -2160,13 +2160,12 @@ These tools will not work on code not formatted that way.
 It is also important for function definitions to start the name of the
 function in column zero.  This helps people to search for function
 definitions, and may also help certain tools recognize them.  Thus,
-the proper format is this:
+using Standard C syntax, the format is this:
 
 @example
 static char *
-concat (s1, s2)        /* Name starts in column zero here */
-     char *s1, *s2;
-@{                     /* Open brace in column zero here */
+concat (char *s1, char *s2)
+@{
   @dots{}
 @}
 @end example
@@ -2177,8 +2176,9 @@ this:
 
 @example
 static char *
-concat (char *s1, char *s2)
-@{
+concat (s1, s2)        /* Name starts in column zero here */
+     char *s1, *s2;
+@{                     /* Open brace in column zero here */
   @dots{}
 @}
 @end example
@@ -3087,9 +3087,9 @@ functions, variables, options, and important concepts that are part of
 the program.  One combined Index should do for a short manual, but
 sometimes for a complex package it is better to use multiple indices.
 The Texinfo manual includes advice on preparing good index entries, see
-@ref{Index Entries, , Making Index Entries, texinfo, The GNU Texinfo
-Manual}, and see @ref{Indexing Commands, , Defining the Entries of an
-Index, texinfo, The GNU Texinfo manual}.
+@ref{Index Entries, , Making Index Entries, texinfo, GNU Texinfo}, and
+see @ref{Indexing Commands, , Defining the Entries of an
+Index, texinfo, GNU Texinfo}.
 
 Don't use Unix man pages as a model for how to write GNU documentation;
 most of them are terse, badly structured, and give inadequate
