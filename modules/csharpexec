@@ -25,8 +25,8 @@ gt_CSHARPEXEC
 
 Makefile.am:
 DEFS += -DEXEEXT=\"$(EXEEXT)\"
-lib_SOURCES += csharpexec.h csharpexec.c classpath.h classpath.c
-EXTRA_DIST += csharpexec.sh.in
+lib_SOURCES += csharpexec.h csharpexec.c
+EXTRA_DIST += csharpexec.sh.in classpath.h classpath.c
 
 Include:
 "csharpexec.h"
