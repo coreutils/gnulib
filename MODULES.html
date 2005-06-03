@@ -2,7 +2,7 @@
 <HTML>
   <HEAD>
     <TITLE>Gnulib Module List</TITLE>
-    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, base64, bcopy, binary-io, byteswap, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chdir-long, chown, classpath, cloexec, closeout, copy-file, csharpexec, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, file-type, fileblocks, filemode, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, fts, fts-lgpl, full-read, full-write, fwriteerror, gcd, getaddrinfo, getcwd, getdate, getdomainname, getgroups, gethostname, gethrxtime, getline, getloadavg, getlogin_r, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, glob, group-member, hard-locale, hash, hash-pjw, human, iconv, iconvme, idcache, inet_ntop, inttostr, isdir, javacomp, javaexec, lchown, linebreak, linebuffer, localcharset, long-options, lstat, makepath, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmem, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, openat, pagealign_alloc, path-concat, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sh-quote, sha1, sig2str, snprintf, stat, stat-macros, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strsep, strstr, strtod, strtoimax, strtok_r, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, ullong_max, unicodeio, unistd-safer, unlinkdir, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, version-etc-fsf, vsnprintf, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
+    <META NAME="keywords" CONTENT="acl, alloca, alloca-opt, allocsa, argmatch, argp, argz, assert, atexit, backupfile, base64, bcopy, binary-io, byteswap, c-bs-a, c-ctype, c-stack, c-strtod, c-strtold, calloc, canon-host, canonicalize, chdir-long, chown, classpath, cloexec, closeout, copy-file, csharpexec, cycle-check, diacrit, dirfd, dirname, dummy, dup2, eealloc, error, euidaccess, exclude, execute, exit, exitfail, extensions, fatal-signal, file-type, fileblocks, filemode, filenamecat, findprog, fnmatch, fnmatch-gnu, fnmatch-posix, fpending, free, fsusage, ftruncate, fts, fts-lgpl, full-read, full-write, fwriteerror, gcd, getaddrinfo, getcwd, getdate, getdomainname, getgroups, gethostname, gethrxtime, getline, getloadavg, getlogin_r, getndelim2, getnline, getopt, getpagesize, getpass, getpass-gnu, getsubopt, gettext, gettime, gettimeofday, getugroups, getusershell, glob, group-member, hard-locale, hash, hash-pjw, human, iconv, iconvme, idcache, inet_ntop, inttostr, isdir, javacomp, javaexec, lchown, linebreak, linebuffer, localcharset, long-options, lstat, malloc, mathl, mbswidth, md5, memcasecmp, memchr, memcmp, memcoll, memcpy, memmem, memmove, mempcpy, memrchr, memset, minmax, mkdir, mkdir-p, mkdtemp, mkstemp, mktime, modechange, mountlist, nanosleep, obstack, openat, pagealign_alloc, pathmax, pathname, physmem, pipe, poll, posixtm, posixver, progname, putenv, quote, quotearg, raise, readlink, readtokens, readtokens0, readutmp, realloc, regex, rename, restrict, rmdir, rpmatch, safe-read, safe-write, same, save-cwd, savedir, setenv, settime, sh-quote, sha1, sig2str, snprintf, stat, stat-macros, stdbool, stdint, stdio-safer, stpcpy, stpncpy, strcase, strchrnul, strcspn, strdup, strerror, strftime, strndup, strnlen, strpbrk, strsep, strstr, strtod, strtoimax, strtok_r, strtol, strtoll, strtoul, strtoull, strtoumax, strverscmp, sysexits, time_r, timegm, timespec, tzset, ucs4-utf16, ucs4-utf8, ullong_max, unicodeio, unistd-safer, unlinkdir, unlocked-io, userspec, utf16-ucs4, utf8-ucs4, utime, utimecmp, utimens, vasnprintf, vasprintf, version-etc, version-etc-fsf, vsnprintf, wait-process, xalloc, xalloc-die, xallocsa, xgetcwd, xgetdomainname, xgethostname, xmemcoll, xnanosleep, xreadlink, xsetenv, xsize, xstrndup, xstrtod, xstrtoimax, xstrtol, xstrtoumax, xvasprintf, yesno">
   </HEAD>
   <BODY>
     <H1>Gnulib Module List</H1>
@@ -685,6 +685,10 @@ variables.
 file.
       </TR>
       <TR WIDTH="100%">
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=filenamecat">filenamecat</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Concatenate two arbitrary file names.
+      </TR>
+      <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=fts">fts</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Traverse a file hierarchy.
       </TR>
@@ -701,8 +705,8 @@ file.
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%"><A HREF="http://www.opengroup.org/onlinepubs/007904975/functions/lchown.html">lchown</A>() function: change ownership of a file.
       </TR>
       <TR WIDTH="100%">
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=makepath">makepath</A>
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Ensure that a directory path exists.
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=mkdir-p">mkdir-p</A>
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Ensure that a directory and its parents exist.
       </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=modechange">modechange</A>
@@ -712,11 +716,6 @@ chmod utility).
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=mountlist">mountlist</A>
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Return list of mounted filesystems.
-      </TR>
-      <TR WIDTH="100%">
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=path-concat">path-concat</A>
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">Construct a full pathname by concatenating a directory name and a relative
-filename.
       </TR>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=pathname">pathname</A>
@@ -2503,7 +2502,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/canonicalize.h">canonicalize.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/canonicalize.c">canonicalize.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/canonicalize.m4">canonicalize.m4</A><BR>AC_FUNC_CANONICALIZE_FILE_NAME
-        <TD ALIGN=LEFT VALIGN=TOP>cycle-check<BR>path-concat<BR>stat-macros<BR>xalloc<BR>xgetcwd<BR>xreadlink
+        <TD ALIGN=LEFT VALIGN=TOP>cycle-check<BR>filenamecat<BR>stat-macros<BR>xalloc<BR>xgetcwd<BR>xreadlink
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=copy-file"></A><A HREF="modules/copy-file">copy-file</A>
@@ -2562,6 +2561,13 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>stat-macros
       </TR>
       <TR>
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=filenamecat"></A><A HREF="modules/filenamecat">filenamecat</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/filenamecat.h">filenamecat.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/filenamecat.c">filenamecat.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/dos.m4">dos.m4</A><BR><A HREF="m4/filenamecat.m4">filenamecat.m4</A><BR>gl_FILE_NAME_CONCAT
+        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>dirname
+      </TR>
+      <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fts"></A><A HREF="modules/fts">fts</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fts_.h">fts_.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fts.c">fts.c</A><BR><A HREF="lib/fts-cycle.c">fts-cycle.c</A>
@@ -2590,10 +2596,10 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>chown<BR>stat-macros
       </TR>
       <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=makepath"></A><A HREF="modules/makepath">makepath</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/makepath.h">makepath.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/makepath.c">makepath.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/afs.m4">afs.m4</A><BR><A HREF="m4/makepath.m4">makepath.m4</A><BR>gl_MAKEPATH
+        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mkdir-p"></A><A HREF="modules/mkdir-p">mkdir-p</A>
+        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mkdir-p.h">mkdir-p.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mkdir-p.c">mkdir-p.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/afs.m4">afs.m4</A><BR><A HREF="m4/mkdir-p.m4">mkdir-p.m4</A><BR>gl_MKDIR_PARENTS
         <TD ALIGN=LEFT VALIGN=TOP>alloca<BR>chown<BR>gettext<BR>save-cwd<BR>dirname<BR>error<BR>quote<BR>stat-macros<BR>stdbool
       </TR>
       <TR>
@@ -2609,13 +2615,6 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mountlist.c">mountlist.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ls-mntd-fs.m4">ls-mntd-fs.m4</A><BR><A HREF="m4/fstypename.m4">fstypename.m4</A><BR><A HREF="m4/mountlist.m4">mountlist.m4</A><BR>gl_MOUNTLIST
         <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>xalloc
-      </TR>
-      <TR>
-        <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=path-concat"></A><A HREF="modules/path-concat">path-concat</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/path-concat.h">path-concat.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/path-concat.c">path-concat.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/dos.m4">dos.m4</A><BR><A HREF="m4/path-concat.m4">path-concat.m4</A><BR>gl_PATH_CONCAT
-        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>dirname
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=pathname"></A><A HREF="modules/pathname">pathname</A>
@@ -3401,6 +3400,6 @@ variables.
       <LI>A testsuite
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on  2 June 2005.
+    Generated from <CODE>MODULES.html.sh</CODE> on  3 June 2005.
   </BODY>
 </HTML>
