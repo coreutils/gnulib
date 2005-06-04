@@ -1,11 +1,9 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.17 2005-05-15 06:51:32 eggert Exp $
+# $Id: srclist-update,v 1.18 2005-06-04 11:44:47 karl Exp $
 #
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
 #
-# Source `dirname $0`/srclistvars.sh first, if it exists.
-
 # Copyright (C) 2002, 2003, 2005 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -35,6 +33,7 @@ verbose=false
 : ${TMPDIR=/tmp}
 dsttmp=$TMPDIR/srclist.dst
 
+# Source `dirname $0`/srclistvars.sh first, if it exists.
 mydir=`dirname $0`
 test -r $mydir/srclistvars.sh && . $mydir/srclistvars.sh
 
@@ -70,11 +69,11 @@ fixlicense='
 \
    You should have received a copy of the GNU General Public License along\
    with this program; if not, write to the Free Software Foundation,\
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. */
 '
 
 # sed command to remove lines containing $Id lines.
-# Quote the $Id so that CVS does not expand it in this script.
+# Quote the $ so that CVS does not expand it in this script.
 remove_id_lines='/[$]Id:.*[$]/d'
 
 # $1 is input file, $2 is output.
