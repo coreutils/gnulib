@@ -1,3 +1,8 @@
+2005-06-07  Derek Price  <derek@ximbiot.com>
+
+	Sync from CVS.
+	* glob_.h: Indent nested #ifdef.
+
 2005-06-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.

@@ -135,11 +135,11 @@ typedef struct
        are used instead of the normal file access functions.  */
     void (*gl_closedir) (void *);
 #ifdef __USE_GNU
-#if defined HAVE_DIRENT_H || defined __GNU_LIBRARY__
+# if defined HAVE_DIRENT_H || defined __GNU_LIBRARY__
     struct dirent *(*gl_readdir) (void *);
-#else
+# else
     struct direct *(*gl_readdir) (void *);
-#endif
+# endif
 #else
     void *(*gl_readdir) (void *);
 #endif
