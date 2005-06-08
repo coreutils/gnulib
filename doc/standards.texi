@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate May 27, 2005
+@set lastupdate June 8, 2005
 @c %**end of header
 
 @dircategory GNU organization
@@ -2616,11 +2616,11 @@ Avoid using the format of semi-internal data bases (e.g., directories)
 when there is a higher-level alternative (@code{readdir}).
 
 @cindex non-@sc{posix} systems, and portability
-As for systems that are not like Unix, such as MSDOS, Windows, the
-Macintosh, VMS, and MVS, supporting them is often a lot of work.  When
-that is the case, it is better to spend your time adding features that
-will be useful on GNU and GNU/Linux, rather than on supporting other
-incompatible systems.
+As for systems that are not like Unix, such as MSDOS, Windows, VMS,
+MVS, and older Macintosh systems, supporting them is often a lot of
+work.  When that is the case, it is better to spend your time adding
+features that will be useful on GNU and GNU/Linux, rather than on
+supporting other incompatible systems.
 
 If you do support Windows, please do not abbreviate it as ``win''.  In
 hacker terminology, calling something a ``win'' is a form of praise.
@@ -3854,7 +3854,7 @@ scope of an operating system project.
 Referring to a web site that describes or recommends a non-free
 program is in effect promoting that software, so please do not make
 links (or mention by name) web sites that contain such material.  This
-policy is relevant particulary for the web pages for a GNU package.
+policy is relevant particularly for the web pages for a GNU package.
 
 Following links from nearly any web site can lead to non-free
 software; this is an inescapable aspect of the nature of the web, and
