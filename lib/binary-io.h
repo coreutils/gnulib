@@ -1,5 +1,5 @@
 /* Binary mode I/O.
-   Copyright (C) 2001, 2003 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2003, 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@
 #if O_BINARY
 # if !(defined __EMX__ || defined __DJGPP__ || defined __CYGWIN__)
 #  define setmode _setmode
+#  undef fileno
 #  define fileno _fileno
 # endif
 # if defined __DJGPP__ || defined __CYGWIN__
