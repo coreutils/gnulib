@@ -1,3 +1,8 @@
+2005-06-08  Bruno Haible  <bruno@clisp.org>
+
+	* modules/csharpcomp: New file.
+	* MODULES.html.sh (C#): Add csharpcomp.
+
 2005-06-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.

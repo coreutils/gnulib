@@ -1,0 +1,38 @@
+Description:
+Compile a C# program.
+
+Files:
+lib/csharpcomp.h
+lib/csharpcomp.c
+lib/csharpcomp.sh.in
+m4/csharpcomp.m4
+m4/csharp.m4
+
+Depends-on:
+stdbool
+xallocsa
+execute
+pipe
+wait-process
+getline
+sh-quote
+safe-read
+error
+gettext
+
+configure.ac:
+gt_CSHARPCOMP
+
+Makefile.am:
+lib_SOURCES += csharpcomp.h csharpcomp.c
+EXTRA_DIST += csharpcomp.sh.in
+
+Include:
+"csharpcomp.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible
+

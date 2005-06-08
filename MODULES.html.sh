@@ -1963,7 +1963,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  #func_module csharpcomp
+  func_module csharpcomp
   func_module csharpexec
   func_end_table
 

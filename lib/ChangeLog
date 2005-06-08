@@ -1,3 +1,9 @@
+2005-06-08  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.h: New file, from GNU gettext.
+	* csharpcomp.c: New file, from GNU gettext.
+	* csharpcomp.sh.in: New file, from GNU gettext.
+
 2005-06-07  Derek Price  <derek@ximbiot.com>
 
 	Sync from CVS.
