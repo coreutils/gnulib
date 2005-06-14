@@ -45,6 +45,11 @@
 
 	* modules/getlogin_r: New files.
 
+2005-05-21  Jim Meyering  <jim@meyering.net>
+
+	* modules/fts (Files): Add m4/inttypes-pri.m4.
+	(Depends-on): Add lstat and remove gettext.  Alphabetize.
+
 2005-05-18  Derek Price  <derek@ximbiot.com>
 
 	* modules/minmax (Files): Add m4/minmax.m4.
@@ -98,7 +103,7 @@
 	Problem reported by Dave Love.
 
 2005-05-09  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* modules/inet_ntop: New file.
 	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
