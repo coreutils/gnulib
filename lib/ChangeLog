@@ -1,3 +1,9 @@
+2005-06-16  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
+
+	* argp.h (__option_is_short): Check upper limit of
+	__key. Isprint() requires its argument to have the value 
+        of an unsigned char or EOF.
+
 2005-06-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* fnmatch.c (fnmatch): If there is an encoding error in a
