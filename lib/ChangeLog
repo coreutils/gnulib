@@ -1,8 +1,13 @@
+2005-06-16  Jim Meyering  <jim@meyering.net>
+
+	* calloc.c (rpl_calloc): Allocate a 1-byte buffer (not 1xS or Nx1)
+	when either N or S is zero.
+
 2005-06-16  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
 	* argp.h (__option_is_short): Check upper limit of
-	__key. Isprint() requires its argument to have the value 
-        of an unsigned char or EOF.
+	__key. Isprint() requires its argument to have the value
+	of an unsigned char or EOF.
 
 2005-06-10  Paul Eggert  <eggert@cs.ucla.edu>
 
