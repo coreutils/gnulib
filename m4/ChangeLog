@@ -1,3 +1,8 @@
+2005-06-20  Derek Price  <derek@ximbiot.com>
+
+	* bison.m4: Note that precious decls of YACC & YFLAGS will be
+	unnecessary for Autoconfs > 2.59c.
+
 2005-06-16  Derek Price  <derek@ximbiot.com>
 
 	* bison.m4: Declare YACC & YFLAGS precious.
