@@ -1,5 +1,8 @@
 2005-06-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* readutmp.c (desirable_utmp_entry): Fix bug where "who -b" and
+	"who -r" failed to give output.  Problem reported by Tim Waugh.
+
 	* xmalloc.c (HAVE_GNU_CALLOC): New constant.
 	(xcalloc): Use it to avoid needless tests.
 	Problem reported by Jim Meyering.
