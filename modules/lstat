@@ -1,12 +1,14 @@
 Description:
-stat() function: return information about a file or symbolic link.
+lstat() function: return information about a file or symbolic link.
 
 Files:
 lib/lstat.c
+lib/lstat.h
 m4/lstat.m4
 
 Depends-on:
-stat
+xalloc
+stat-macros
 
 configure.ac:
 gl_FUNC_LSTAT
@@ -14,7 +16,7 @@ gl_FUNC_LSTAT
 Makefile.am:
 
 Include:
-<sys/stat.h>
+"lstat.h"
 
 License:
 GPL

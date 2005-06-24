@@ -1,3 +1,15 @@
+2005-06-24  Derek Price  <derek@ximbiot.com>
+	and Bruno Haible  <bruno@clisp.org>
+
+	Remove stat module & update lstat.
+	* MODULES.html.sh (stat): Remove.
+	* MODULES.html: Regenerated.
+	* modules/lstat (Description): Correct function name.
+	(Files): Add "lstat.h".
+	(Depends-on): Remove stat, add xalloc, stat-macros.
+	* modules/stat: Remove this file.
+	(Include): Add "lstat.h", remove <sys/stat.h>.
+
 2005-06-08  Bruno Haible  <bruno@clisp.org>
 
 	* modules/csharpcomp: New file.

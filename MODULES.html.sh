@@ -1063,7 +1063,6 @@ srand
 srand48
 srandom
 sscanf
-stat
 statvfs
 stdin
 strcasecmp
@@ -1756,7 +1755,6 @@ func_all_modules ()
   func_module mkdtemp
   func_module poll
   func_module readlink
-  func_module stat
   func_module lstat
   func_module time_r
   func_module timespec

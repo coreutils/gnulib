@@ -1,3 +1,11 @@
+2005-06-24  Derek Price  <derek@ximbiot.com>
+	and Bruno Haible  <bruno@clisp.org>
+
+	Remove stat module & update lstat.
+	* lstat.m4 (gl_FUNC_LSTAT): Drop AC_FUNC_LSTAT in favor of
+	AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK.
+	* stat.m4: Remove this file.
+
 2005-06-20  Derek Price  <derek@ximbiot.com>
 
 	* bison.m4: Note that precious decls of YACC & YFLAGS will be

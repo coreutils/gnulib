@@ -1,3 +1,9 @@
+2005-06-24  Derek Price  <derek@ximbiot.com>
+	and Bruno Haible  <bruno@clisp.org>
+
+	Remove stat module & update lstat.
+	* srclist.txt (libc sources): Remove stat.
+
 2005-05-29  Derek Price  <derek@ximbiot.com>
 
 	* srclist.txt (glob_.h, glob.c): Add these files.

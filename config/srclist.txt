@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.63 2005-05-29 16:56:02 dprice Exp $
+# $Id: srclist.txt,v 1.64 2005-06-24 14:53:03 dprice Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -143,7 +143,6 @@ $LIBCSRC/sysdeps/generic/memmem.c	lib gpl
 #
 # These implementations are quite different.
 #$LIBCSRC/io/lstat.c				lib gpl
-#$LIBCSRC/io/stat.c				lib gpl
 #$LIBCSRC/libio/__fpending.c			lib gpl
 #$LIBCSRC/malloc/malloc.c			lib gpl
 #$LIBCSRC/misc/dirname.c			lib gpl
