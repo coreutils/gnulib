@@ -1,3 +1,9 @@
+2005-06-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* canon-host.c (canon-host): Append trailing "," to 0 in
+	initializer of struct addrinfo, as an indication that we don't
+	care how many members the structure has.
+
 2005-06-24  Derek Price  <derek@ximbiot.com>
 	and Bruno Haible  <bruno@clisp.org>
 

@@ -1,6 +1,6 @@
 /* Host name canonicalization
 
-   Copyright (C) 1995, 1999, 2000, 2002, 2003, 2004 Free Software
+   Copyright (C) 1995, 1999, 2000, 2002, 2003, 2004, 2005 Free Software
    Foundation, Inc.
 
    Written by Miles Bader <miles@gnu.ai.mit.edu>
@@ -54,7 +54,7 @@ canon_host (char const *host)
 
 #if HAVE_GETADDRINFO
   {
-    struct addrinfo hint = { 0 };
+    struct addrinfo hint = { 0, };
     struct addrinfo *res = NULL;
     hint.ai_flags = AI_CANONNAME;
     if (getaddrinfo (host, NULL, &hint, &res) == 0)
