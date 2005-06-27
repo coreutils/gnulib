@@ -1,5 +1,5 @@
 /* base64.c -- Encode binary data using printable characters.
-   Copyright (C) 1999, 2000, 2001, 2004 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2000, 2001, 2004, 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -65,30 +65,34 @@ void
 base64_encode (const char *restrict in, size_t inlen,
 	       char *restrict out, size_t outlen)
 {
-  const char b64[64] =
+  const char b64str[64] =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
   while (inlen && outlen)
     {
-      *out++ = b64[to_uchar (in[0]) >> 2];
+      *out++ = b64str[to_uchar (in[0]) >> 2];
       if (!--outlen)
 	break;
-      *out++ = b64[((to_uchar (in[0]) << 4)
-		    + (--inlen ? to_uchar (in[1]) >> 4 : 0)) & 0x3f];
+      *out++ = b64str[((to_uchar (in[0]) << 4)
+		       + (--inlen ? to_uchar (in[1]) >> 4 : 0))
+		      & 0x3f];
       if (!--outlen)
 	break;
       *out++ =
 	(inlen
-	 ? b64[((to_uchar (in[1]) << 2)
-		+ (--inlen ? to_uchar (in[2]) >> 6 : 0)) & 0x3f] : '=');
+	 ? b64str[((to_uchar (in[1]) << 2)
+		   + (--inlen ? to_uchar (in[2]) >> 6 : 0))
+		  & 0x3f]
+	 : '=');
       if (!--outlen)
 	break;
-      *out++ = inlen ? b64[to_uchar (in[2]) & 0x3f] : '=';
+      *out++ = inlen ? b64str[to_uchar (in[2]) & 0x3f] : '=';
       if (!--outlen)
 	break;
       if (inlen)
 	inlen--;
-      in += 3;
+      if (inlen)
+	in += 3;
     }
 
   if (outlen)
@@ -289,7 +293,7 @@ isbase64 (char ch)
    encountered, decoding is stopped and false is returned. */
 bool
 base64_decode (const char *restrict in, size_t inlen,
-	       char *restrict out, size_t * outlen)
+	       char *restrict out, size_t *outlen)
 {
   size_t outleft = *outlen;
 
@@ -376,7 +380,7 @@ base64_decode (const char *restrict in, size_t inlen,
    undefined. */
 bool
 base64_decode_alloc (const char *in, size_t inlen, char **out,
-		     size_t * outlen)
+		     size_t *outlen)
 {
   /* This may allocate a few bytes too much, depending on input,
      but it's not worth the extra CPU time to compute the exact amount.

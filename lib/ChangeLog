@@ -1,3 +1,16 @@
+2005-06-28  Simon Josefsson  <jas@extundo.com>
+
+	* base64.c (base64_encode): Indent.  Rename 'b64' to avoid
+	collision with global variable.  Better indentation.  Don't
+	increment buffer pointer beyond buffer end.  Based on comments
+	from Paul Eggert <eggert@cs.ucla.edu>.
+
+	* base64.h: Indent.
+
+2005-06-25  Simon Josefsson  <jas@extundo.com>
+
+	* check_version.h, check_version.c: New file.
+
 2005-06-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* canon-host.c (canon-host): Append trailing "," to 0 in

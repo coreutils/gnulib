@@ -1,5 +1,5 @@
 /* base64.h -- Encode binary data using printable characters.
-   Copyright (C) 2004 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2005 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
    This program is free software; you can redistribute it and/or modify
@@ -37,9 +37,9 @@ extern void base64_encode (const char *restrict in, size_t inlen,
 extern size_t base64_encode_alloc (const char *in, size_t inlen, char **out);
 
 extern bool base64_decode (const char *restrict in, size_t inlen,
-			   char *restrict out, size_t * outlen);
+			   char *restrict out, size_t *outlen);
 
 extern bool base64_decode_alloc (const char *in, size_t inlen,
-				 char **out, size_t * outlen);
+				 char **out, size_t *outlen);
 
 #endif /* BASE64_H */
