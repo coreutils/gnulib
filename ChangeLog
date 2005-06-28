@@ -1,3 +1,11 @@
+2005-06-28  Jim Meyering  <jim@meyering.net>
+
+	* check-module (find_included_lib_files): Hard-code another
+	pair of exceptions: fts.c includes fts-cycle.c and unistd-safer.h
+	but the fts-lgpl (correctly) does not list those files.
+
+	* modules/canonicalize (Files): Add lib/pathmax.h.
+
 2005-06-28  Simon Josefsson  <jas@extundo.com>
 
 	* modules/check-version (Files): Add check-version.m4.
