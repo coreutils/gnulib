@@ -2,7 +2,7 @@
 
 	* check-module (find_included_lib_files): Hard-code another
 	pair of exceptions: fts.c includes fts-cycle.c and unistd-safer.h
-	but the fts-lgpl (correctly) does not list those files.
+	but modules/fts-lgpl (correctly) does not list those files.
 
 	* modules/canonicalize (Files): Add lib/pathmax.h.
 
