@@ -1,3 +1,8 @@
+2005-06-28  Simon Josefsson  <jas@extundo.com>
+
+	* check-version.m4: New file, suggested by Jim Meyering
+	<jim@meyering.net>.
+
 2005-06-24  Derek Price  <derek@ximbiot.com>
 	and Bruno Haible  <bruno@clisp.org>
 
