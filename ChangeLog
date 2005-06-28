@@ -1,3 +1,7 @@
+2005-06-28  Simon Josefsson  <jas@extundo.com>
+
+	* modules/check-version (Files): Add check-version.m4.
+
 2005-06-25  Simon Josefsson  <jas@extundo.com>
 
 	* modules/check-version: New file.
