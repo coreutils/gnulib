@@ -28,7 +28,7 @@
 #include <strverscmp.h>
 
 /* Get specification. */
-#include "check_version.h"
+#include "check-version.h"
 
 /* Check that the the version of the library (i.e., the CPP symbol
  * VERSION) is at minimum the requested one in REQ_VERSION (typically
