@@ -14,7 +14,7 @@ use strict;
 use Getopt::Long;
 #use Coda;
 
-(my $VERSION = '$Revision: 1.1 $ ') =~ tr/[0-9].//cd;
+(my $VERSION = '$Revision: 1.2 $ ') =~ tr/[0-9].//cd;
 (my $ME = $0) =~ s|.*/||;
 
 use constant ST_INIT => 1;
@@ -151,6 +151,9 @@ sub find_included_lib_files ($)
 	and next;
       $file =~ /\bhash\.c$/ && $line eq 'obstack.h'
 	and next;
+      $file =~ /\bfts\.c$/ &&
+	($line eq 'fts-cycle.c' || $line eq 'unistd-safer.h')
+	  and next;
 
       $inc{$line} = 1;
     }
@@ -198,7 +201,7 @@ sub find_included_lib_files ($)
      'unlocked-io.h' => 1,
 
      # Give gettext.h a free pass only when included from lib/error.c,
-     # since that we've made that exception solely to make the error
+     # since we've made that exception solely to make the error
      # module easier to use -- at RMS's request.
      'lib/error.c:gettext.h' => 1,
     );
