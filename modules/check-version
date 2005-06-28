@@ -1,0 +1,23 @@
+Description:
+Check version string compatibility.
+
+Files:
+lib/check-version.h
+lib/check-version.c
+
+Depends-on:
+strverscmp
+
+configure.ac:
+gl_CHECK_VERSION
+
+Makefile.am:
+
+Include:
+"check-version.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

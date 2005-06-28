@@ -1,5 +1,9 @@
 2005-06-28  Simon Josefsson  <jas@extundo.com>
 
+	* check-version.h, check-version.c: New files.
+
+2005-06-28  Simon Josefsson  <jas@extundo.com>
+
 	* base64.c (base64_encode): Indent.  Rename 'b64' to avoid
 	collision with global variable.  Better indentation.  Don't
 	increment buffer pointer beyond buffer end.  Based on comments

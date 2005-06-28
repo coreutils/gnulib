@@ -1,3 +1,7 @@
+2005-06-25  Simon Josefsson  <jas@extundo.com>
+
+	* modules/check-version: New file.
+
 2005-06-24  Derek Price  <derek@ximbiot.com>
 	and Bruno Haible  <bruno@clisp.org>
 
