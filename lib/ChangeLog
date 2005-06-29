@@ -1,3 +1,9 @@
+2005-06-29  Jim Meyering  <jim@meyering.net>
+
+	* mkdir-p.c (make_dir_parents): Don't apply sizeof to a hard-coded
+	type name.  Use the variable name instead.
+	* idcache.c (getuser, getuidbyname, getgroup, getgidbyname): Likewise.
+
 2005-06-28  Simon Josefsson  <jas@extundo.com>
 
 	* check-version.h, check-version.c: New files.
