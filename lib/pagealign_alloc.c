@@ -28,9 +28,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#if HAVE_FCNTL_H
-# include <fcntl.h>
-#endif
+#include <fcntl.h>
 
 #if HAVE_UNISTD_H
 # include <unistd.h>
