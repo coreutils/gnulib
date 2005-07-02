@@ -1,3 +1,7 @@
+2005-07-02  Jim Meyering  <jim@meyering.net>
+
+	* backupfile.c (backup_args): Change a `0' to NULL.
+
 2005-07-01  Jim Meyering  <jim@meyering.net>
 
 	* chown.c, cloexec.c, dup-safer.c, dup2.c, fsusage.c, getcwd.c:
