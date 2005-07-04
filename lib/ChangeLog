@@ -1,3 +1,13 @@
+2005-07-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Remove the dependency of the strftime module on the tzset module.
+	* strftime.c (my_strftime) [! defined _LIBC && ! HAVE_RUN_TZSET_TEST]:
+	Copy the input structure, to work around some of the bug with
+	Solaris 2.5.1 and Solaris 2.6.  If you still care about these old
+	Solaris releases, you should also use the tzset module, but we won't
+	require it as a dependency any more since we don't want LGPLed code
+	to depend on GPLed code.
+
 2005-07-02  Jim Meyering  <jim@meyering.net>
 
 	* backupfile.c (backup_args): Change a `0' to NULL.

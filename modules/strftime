@@ -10,7 +10,6 @@ m4/strftime.m4
 
 Depends-on:
 time_r
-tzset
 stdbool
 
 configure.ac:

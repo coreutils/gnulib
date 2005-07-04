@@ -1,3 +1,8 @@
+2005-07-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Remove the dependency of the strftime module on the tzset module.
+	* modules/strftime (Depends-on): Remove dependency on tzset.
+
 2005-06-28  Jim Meyering  <jim@meyering.net>
 
 	* check-module (find_included_lib_files): Hard-code another
