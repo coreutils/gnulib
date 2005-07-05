@@ -1,3 +1,12 @@
+2005-07-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* gnulib-tool (func_import): Add support for 'public domain' license.
+	* modules/alloca, modules/atexit, modules/memmove:
+	Now public domain, not GPL.
+	* modules/dup2, modules/getpagesize, modules/malloc, modules/memset:
+	* modules/realloc, modules/strerror, modules/strtod:
+	Now LGPL, not GPL.
+
 2005-07-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Remove the dependency of the strftime module on the tzset module.

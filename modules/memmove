@@ -16,8 +16,7 @@ Include:
 <string.h>
 
 License:
-GPL
+public domain
 
 Maintainer:
 Jim Meyering
-

@@ -16,7 +16,7 @@ Include:
 "getpagesize.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Jim Meyering

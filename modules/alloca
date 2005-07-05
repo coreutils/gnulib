@@ -15,7 +15,7 @@ Include:
 #include <alloca.h>
 
 License:
-GPL
+public domain
 
 Maintainer:
 bug-gnulib@gnu.org

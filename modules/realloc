@@ -15,7 +15,7 @@ Include:
 <stdlib.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Jim Meyering
