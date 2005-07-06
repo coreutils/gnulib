@@ -3249,7 +3249,6 @@ where each line of input produces a line of output.}
 % Called from \indexdummies and \atdummies.
 %
 \def\commondummies{%
-  \normalturnoffactive
   %
   % \definedummyword defines \#1 as \string\#1\space, thus effectively
   % preventing its expansion.  This is used only for control% words,
@@ -3319,15 +3318,14 @@ where each line of input produces a line of output.}
   \definedummyword\print
   \definedummyword\result
   %
+  % We want to disable all macros so that they are not expanded by \write.
+  \macrolist
+  %
+  \normalturnoffactive
+  %
   % Handle some cases of @value -- where it does not contain any
   % (non-fully-expandable) commands.
   \makevalueexpandable
-  %
-  % Normal spaces, not active ones.
-  \unsepspaces
-  %
-  % We want to disable all macros so that they are not expanded by \write.
-  \macrolist
 }
 
 % \commondummiesnofonts: common to \commondummies and \indexnofonts.
