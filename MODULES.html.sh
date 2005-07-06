@@ -1908,6 +1908,7 @@ func_all_modules ()
 
   func_begin_table
   func_module gettext
+  func_module gettext-h
   func_module iconv
   func_module iconvme
   func_module localcharset

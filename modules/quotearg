@@ -10,7 +10,7 @@ m4/quotearg.m4
 
 Depends-on:
 xalloc
-gettext
+gettext-h
 stdbool
 
 configure.ac:

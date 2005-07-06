@@ -8,7 +8,7 @@ m4/regex.m4
 
 Depends-on:
 alloca
-gettext
+gettext-h
 restrict
 
 configure.ac:

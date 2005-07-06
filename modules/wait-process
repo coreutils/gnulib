@@ -12,7 +12,7 @@ fatal-signal
 error
 exit
 xalloc
-gettext
+gettext-h
 stdbool
 
 configure.ac:

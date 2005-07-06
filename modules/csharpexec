@@ -18,7 +18,7 @@ sh-quote
 xalloc
 xallocsa
 error
-gettext
+gettext-h
 
 configure.ac:
 gt_CSHARPEXEC
@@ -36,4 +36,3 @@ GPL
 
 Maintainer:
 Bruno Haible
-

@@ -13,7 +13,7 @@ m4/uintmax_t.m4
 m4/human.m4
 
 Depends-on:
-gettext
+gettext-h
 argmatch
 error
 xstrtol

@@ -17,7 +17,7 @@ pathname
 xalloc
 xallocsa
 error
-gettext
+gettext-h
 
 configure.ac:
 gt_JAVAEXEC

@@ -12,7 +12,7 @@ error
 exit
 fatal-signal
 wait-process
-gettext
+gettext-h
 stdbool
 strpbrk
 
@@ -30,4 +30,3 @@ GPL
 
 Maintainer:
 Bruno Haible
-

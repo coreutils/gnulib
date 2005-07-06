@@ -6,7 +6,7 @@ lib/argmatch.h
 lib/argmatch.c
 
 Depends-on:
-gettext
+gettext-h
 error
 quotearg
 quote

@@ -7,7 +7,7 @@ lib/file-type.c
 m4/file-type.m4
 
 Depends-on:
-gettext
+gettext-h
 stat-macros
 
 configure.ac:

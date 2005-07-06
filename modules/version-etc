@@ -6,7 +6,7 @@ lib/version-etc.h
 lib/version-etc.c
 
 Depends-on:
-gettext
+gettext-h
 
 configure.ac:
 

@@ -8,7 +8,7 @@ m4/openat.m4
 
 Depends-on:
 save-cwd
-gettext
+gettext-h
 error
 exitfail
 extensions

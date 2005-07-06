@@ -2,7 +2,6 @@ Description:
 Translate messages to user's native language.
 
 Files:
-lib/gettext.h
 m4/codeset.m4
 m4/gettext.m4
 m4/glibc2.m4
@@ -35,12 +34,12 @@ m4/xsize.m4
 build-aux/config.rpath
 
 Depends-on:
+gettext-h
 
 configure.ac:
 AM_GNU_GETTEXT([external])
 
 Makefile.am:
-lib_SOURCES += gettext.h
 
 Include:
 "gettext.h"
@@ -50,4 +49,3 @@ LGPL
 
 Maintainer:
 Bruno Haible
-

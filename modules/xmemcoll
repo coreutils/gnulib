@@ -7,7 +7,7 @@ lib/xmemcoll.c
 
 Depends-on:
 memcoll
-gettext
+gettext-h
 error
 quotearg
 exitfail

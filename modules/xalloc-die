@@ -7,7 +7,7 @@ lib/xalloc-die.c
 Depends-on:
 xalloc
 error
-gettext
+gettext-h
 exitfail
 
 configure.ac:

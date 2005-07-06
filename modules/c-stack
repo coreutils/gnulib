@@ -7,7 +7,7 @@ lib/c-stack.c
 m4/c-stack.m4
 
 Depends-on:
-gettext
+gettext-h
 exitfail
 
 configure.ac:
@@ -24,4 +24,3 @@ GPL
 
 Maintainer:
 Paul Eggert
-

@@ -1,3 +1,23 @@
+2005-07-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Support programs like Emacs that use gnulib but not gettext.
+	* MODULES.html.sh (Internationalization functions): Add gettext-h.
+	* modules/gettext-h: New file.
+	* modules/gettext (Files): Remove lib/gettext.h.
+	(Depends-on): Add gettext-h.
+	(Makefile.am): Remove lib_SOURCES.
+	* modules/argmatch, modules/c-stack, modules/closeout:
+	* modules/copy-file, modules/csharpcomp, modules/csharpexec:
+	* modules/execute, modules/file-type, modules/getaddrinfo:
+	* modules/getopt, modules/human, modules/javacomp:
+	* modules/javaexec, modules/mkdir-p, modules/obstack:
+	* modules/openat, modules/pagealign_alloc, modules/pipe:
+	* modules/quotearg, modules/regex, modules/rpmatch:
+	* modules/unicodeio, modules/userspec, modules/version-etc:
+	* modules/wait-process, modules/xalloc-die, modules/xmemcoll:
+	* modules/xsetenv:
+	Depend on gettext-h, not gettext.
+
 2005-07-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* gnulib-tool (func_import): Add support for 'public domain' license.

@@ -11,7 +11,7 @@ Depends-on:
 error
 exit
 getpagesize
-gettext
+gettext-h
 xalloc
 
 configure.ac:

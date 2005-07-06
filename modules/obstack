@@ -10,7 +10,7 @@ m4/stdint_h.m4
 m4/uintmax_t.m4
 
 Depends-on:
-gettext
+gettext-h
 exit
 exitfail
 

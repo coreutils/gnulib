@@ -12,7 +12,7 @@ wait-process
 error
 exit
 fatal-signal
-gettext
+gettext-h
 stdbool
 strpbrk
 

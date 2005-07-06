@@ -1,0 +1,21 @@
+Description:
+Translate messages to user's native language if the gettext module is also used.
+
+Files:
+lib/gettext.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += gettext.h
+
+Include:
+"gettext.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

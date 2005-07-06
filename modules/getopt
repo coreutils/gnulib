@@ -9,7 +9,7 @@ lib/getopt_int.h
 m4/getopt.m4
 
 Depends-on:
-gettext
+gettext-h
 
 configure.ac:
 gl_GETOPT
@@ -34,4 +34,3 @@ LGPL
 
 Maintainer:
 all, glibc
-

@@ -10,7 +10,7 @@ m4/sockpfaf.m4
 
 Depends-on:
 restrict
-gettext
+gettext-h
 stdbool
 
 configure.ac:

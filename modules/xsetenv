@@ -10,7 +10,7 @@ Depends-on:
 setenv
 error
 exit
-gettext
+gettext-h
 
 configure.ac:
 
@@ -25,4 +25,3 @@ GPL
 
 Maintainer:
 Bruno Haible
-

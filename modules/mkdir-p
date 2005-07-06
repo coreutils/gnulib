@@ -10,7 +10,7 @@ m4/mkdir-p.m4
 Depends-on:
 alloca
 chown
-gettext
+gettext-h
 save-cwd
 dirname
 error

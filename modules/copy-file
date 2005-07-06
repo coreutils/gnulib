@@ -12,7 +12,7 @@ safe-read
 full-write
 binary-io
 exit
-gettext
+gettext-h
 
 configure.ac:
 gl_COPY_FILE
@@ -28,4 +28,3 @@ GPL
 
 Maintainer:
 Bruno Haible
-

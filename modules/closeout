@@ -8,7 +8,7 @@ m4/closeout.m4
 
 Depends-on:
 atexit
-gettext
+gettext-h
 error
 quotearg
 fpending

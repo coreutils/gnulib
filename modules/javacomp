@@ -19,7 +19,7 @@ sh-quote
 safe-read
 xalloc
 error
-gettext
+gettext-h
 
 configure.ac:
 gt_JAVACOMP

@@ -13,7 +13,7 @@ posixver
 xalloc
 xstrtol
 strdup
-gettext
+gettext-h
 stdbool
 
 configure.ac:
