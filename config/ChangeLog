@@ -1,3 +1,10 @@
+2005-07-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Add regcomp.c, regex.c, regex.h, regex_internal.c,
+	regexec.c.
+	Add regex_internal.h too, but as a comment, since the libc version
+	is currently broken in gnulib mode.
+
 2005-06-24  Derek Price  <derek@ximbiot.com>
 	and Bruno Haible  <bruno@clisp.org>
 

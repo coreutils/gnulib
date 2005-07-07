@@ -1,3 +1,20 @@
+2005-07-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regex.m4: Adjust to new libc regex implementation.
+	(gl_INCLUDED_REGEX): Add AC_LIBSOURCES for
+	all the .c and .h parts of (the new) regex.
+	Quote the m4 stuff better.
+	Check for RE_ICASE bug of old gnulib.
+	Check for REG_STARTEND of recent libc.
+	Rename local variables from jm_* to gl_*.
+	Quote operand of "test -f".
+	Say "recent enough" version of libc, not "version 2".
+	(gl_PREREQ_REGEX): Remove AC_FUNC_ALLOCA, since alloca is a
+	prerequisite module.  Remove AC_HEADER_STDC; no longer needed.
+	Check for locale.h, isblank, mbrtowc, wcrtomb, wcscoll.
+	Remove check for btowc, isascii.
+	Require AM_LANGINFO_CODESET.
+
 2005-07-05  Bruno Haible  <bruno@clisp.org>
 
 	* mbrtowc.m4 (gl_FUNC_MBRTOWC): Upgrade to version from current

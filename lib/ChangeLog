@@ -1,3 +1,10 @@
+2005-07-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regex.c, regex.h: Sync from libc.
+	* regcomp.c, regexec_internal.c, regex_internal.h, regexec.c:
+	New files, synced from libc, except that regex_internal.h
+	currently has a small porting fix.
+
 2005-07-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Remove the dependency of the strftime module on the tzset module.

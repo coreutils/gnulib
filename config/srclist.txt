@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.64 2005-06-24 14:53:03 dprice Exp $
+# $Id: srclist.txt,v 1.65 2005-07-07 08:08:39 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -93,6 +93,13 @@ $LIBCSRC/stdlib/getsubopt.c		lib gpl
 #$LIBCSRC/posix/getopt.h		lib gpl (getopt_.h in gnulib)
 #$LIBCSRC/posix/getopt1.c		lib gpl
 #$LIBCSRC/posix/getopt_int.h		lib gpl
+$LIBCSRC/posix/regcomp.c		lib gpl
+$LIBCSRC/posix/regex.c			lib gpl
+$LIBCSRC/posix/regex.h			lib gpl
+$LIBCSRC/posix/regex_internal.c		lib gpl
+# regex_internal.h contains a porting fix (glibc defines __mempcpy)
+#$LIBCSRC/posix/regex_internal.h		lib gpl
+$LIBCSRC/posix/regexec.c		lib gpl
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
 $LIBCSRC/sysdeps/generic/strtoll.c	lib gpl
 $LIBCSRC/sysdeps/generic/strtoul.c	lib gpl
@@ -115,7 +122,6 @@ $LIBCSRC/sysdeps/generic/memmem.c	lib gpl
 #$LIBCSRC/posix/fnmatch.c		lib gpl
 #$LIBCSRC/posix/fnmatch.h		lib gpl (fnmatch_.h in gnulib)
 #$LIBCSRC/posix/fnmatch_loop.c		lib gpl
-#$LIBCSRC/posix/regex.h			lib gpl
 #$LIBCSRC/posix/tempname.c		lib gpl
 #$LIBCSRC/stdlib/rpmatch.c		lib gpl
 #$LIBCSRC/string/strndup.c		lib gpl
@@ -164,7 +170,6 @@ $LIBCSRC/sysdeps/generic/memmem.c	lib gpl
 #$LIBCSRC/sysdeps/generic/memset.c		lib gpl
 #$LIBCSRC/sysdeps/generic/nanosleep.c		lib gpl
 #$LIBCSRC/sysdeps/generic/readlink.c		lib gpl
-#$LIBCSRC/sysdeps/generic/regex.c		lib gpl
 #$LIBCSRC/sysdeps/generic/strcasecmp.c		lib gpl
 #$LIBCSRC/sysdeps/generic/strchrnul.c		lib gpl
 #$LIBCSRC/sysdeps/generic/strnlen.c		lib gpl

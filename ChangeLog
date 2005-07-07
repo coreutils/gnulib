@@ -1,3 +1,10 @@
+2005-07-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/regex (Files): Add lib/regex_internal.c,
+	lib/regex_internal.h, lib/regexec.c, lib/regcomp.c, m4/codeset.m4.
+	(Depends-on): Add extensions.
+	(Makefile.am): Remove lib_SOURCES; now done by m4 code.
+
 2005-07-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Support programs like Emacs that use gnulib but not gettext.

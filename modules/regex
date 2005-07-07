@@ -4,10 +4,16 @@ Regular expression matching.
 Files:
 lib/regex.h
 lib/regex.c
+lib/regex_internal.c
+lib/regex_internal.h
+lib/regexec.c
+lib/regcomp.c
+m4/codeset.m4
 m4/regex.m4
 
 Depends-on:
 alloca
+extensions
 gettext-h
 restrict
 
@@ -15,7 +21,6 @@ configure.ac:
 gl_REGEX
 
 Makefile.am:
-lib_SOURCES += regex.h
 
 Include:
 "regex.h"
