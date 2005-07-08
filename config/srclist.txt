@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.65 2005-07-07 08:08:39 eggert Exp $
+# $Id: srclist.txt,v 1.66 2005-07-08 17:57:01 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -93,11 +93,12 @@ $LIBCSRC/stdlib/getsubopt.c		lib gpl
 #$LIBCSRC/posix/getopt.h		lib gpl (getopt_.h in gnulib)
 #$LIBCSRC/posix/getopt1.c		lib gpl
 #$LIBCSRC/posix/getopt_int.h		lib gpl
-$LIBCSRC/posix/regcomp.c		lib gpl
+# regcomp.c contains a porting fix
+#$LIBCSRC/posix/regcomp.c		lib gpl
 $LIBCSRC/posix/regex.c			lib gpl
 $LIBCSRC/posix/regex.h			lib gpl
 $LIBCSRC/posix/regex_internal.c		lib gpl
-# regex_internal.h contains a porting fix (glibc defines __mempcpy)
+# regex_internal.h contains a porting fix
 #$LIBCSRC/posix/regex_internal.h		lib gpl
 $LIBCSRC/posix/regexec.c		lib gpl
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
