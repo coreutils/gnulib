@@ -1,5 +1,9 @@
 2005-07-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* backupfile.m4 (gl_BACKUPFILE): Use AC_CHECK_FUNCS_ONCE on pathconf.
+	* same.m4 (gl_SAME): Likewise.
+	Require AC_SYS_LONG_FILE_NAMES; bug reported by Gerrit P. Haase.
+
 	* regex.m4: Adjust to new libc regex implementation.
 	(gl_INCLUDED_REGEX): Add AC_LIBSOURCES for
 	all the .c and .h parts of (the new) regex.
