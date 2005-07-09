@@ -80,6 +80,7 @@
 #include "strcase.h"
 #include "strchrnul.h"
 #include "strndup.h"
+#include "unlocked-io.h"
 
 /* normal libc functions we call */
 #undef __flockfile
@@ -100,46 +101,6 @@
 #define __strndup strndup
 #undef __vsnprintf
 #define __vsnprintf vsnprintf
-
-#if defined(HAVE_DECL_CLEARERR_UNLOCKED) && !HAVE_DECL_CLEARERR_UNLOCKED
-# define clearerr_unlocked(x) clearerr (x)
-#endif
-#if defined(HAVE_DECL_FEOF_UNLOCKED) && !HAVE_DECL_FEOF_UNLOCKED
-# define feof_unlocked(x) feof (x)
-# endif
-#if defined(HAVE_DECL_FERROR_UNLOCKED) && !HAVE_DECL_FERROR_UNLOCKED
-# define ferror_unlocked(x) ferror (x)
-# endif
-#if defined(HAVE_DECL_FFLUSH_UNLOCKED) && !HAVE_DECL_FFLUSH_UNLOCKED
-# define fflush_unlocked(x) fflush (x)
-# endif
-#if defined(HAVE_DECL_FGETS_UNLOCKED) && !HAVE_DECL_FGETS_UNLOCKED
-# define fgets_unlocked(x,y,z) fgets (x,y,z)
-# endif
-#if defined(HAVE_DECL_FPUTC_UNLOCKED) && !HAVE_DECL_FPUTC_UNLOCKED
-# define fputc_unlocked(x,y) fputc (x,y)
-# endif
-#if defined(HAVE_DECL_FPUTS_UNLOCKED) && !HAVE_DECL_FPUTS_UNLOCKED
-# define fputs_unlocked(x,y) fputs (x,y)
-# endif
-#if defined(HAVE_DECL_FREAD_UNLOCKED) && !HAVE_DECL_FREAD_UNLOCKED
-# define fread_unlocked(w,x,y,z) fread (w,x,y,z)
-# endif
-#if defined(HAVE_DECL_FWRITE_UNLOCKED) && !HAVE_DECL_FWRITE_UNLOCKED
-# define fwrite_unlocked(w,x,y,z) fwrite (w,x,y,z)
-# endif
-#if defined(HAVE_DECL_GETC_UNLOCKED) && !HAVE_DECL_GETC_UNLOCKED
-# define getc_unlocked(x) getc (x)
-# endif
-#if defined(HAVE_DECL_GETCHAR_UNLOCKED) && !HAVE_DECL_GETCHAR_UNLOCKED
-#  define getchar_unlocked() getchar ()
-# endif
-#if defined(HAVE_DECL_PUTC_UNLOCKED) && !HAVE_DECL_PUTC_UNLOCKED
-# define putc_unlocked(x,y) putc (x,y)
-# endif
-#if defined(HAVE_DECL_PUTCHAR_UNLOCKED) && !HAVE_DECL_PUTCHAR_UNLOCKED
-# define putchar_unlocked(x) putchar (x)
-# endif
 
 extern char *__argp_basename (char *name);
 
