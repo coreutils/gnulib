@@ -1,3 +1,8 @@
+2005-07-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* argp-namefrob.h: Include unlocked-io.h. Removed unnecessary
+	block of defines.
+
 2005-07-08  Eric Blake  <ebb9@byu.net>  (tiny change)
        and  Paul Eggert  <eggert@cs.ucla.edu>
 

@@ -1,3 +1,7 @@
+2005-07-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* modules/argp (Depends-on): Add unlocked-io
+
 2005-07-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/regex (Files): Add lib/regex_internal.c,
