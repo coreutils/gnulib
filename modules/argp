@@ -26,6 +26,7 @@ strndup
 restrict
 strcase
 extensions
+unlocked-io
 vsnprintf
 
 configure.ac:
