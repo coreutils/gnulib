@@ -1,25 +1,23 @@
 Description:
-Checked size_t computations.
+Provide SIZE_MAX.
 
 Files:
-lib/xsize.h
-m4/xsize.m4
+m4/size_max.m4
+lib/size_max.h
 
 Depends-on:
-size_max
 
 configure.ac:
-gl_XSIZE
+gl_SIZE_MAX
 
 Makefile.am:
-lib_SOURCES += xsize.h
 
 Include:
-"xsize.h"
+#include "size_max.h"
 
 License:
 LGPL
 
 Maintainer:
+Simon Josefsson
 Bruno Haible
-
