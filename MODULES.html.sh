@@ -22,10 +22,10 @@
 # Extend the PATH so that gnulib-tool is found.
 PATH=`dirname "$0"`:$PATH; export PATH
 
-POSIX2001_URL='http://www.opengroup.org/onlinepubs/007904975/'
+POSIX2001_URL='http://www.opengroup.org/susv3'
 case $USER in
   bruno )
-    POSIX2001_URL='file:/packages/www/www.opengroup.org/susv3/' ;;
+    POSIX2001_URL='file:/packages/www/www.opengroup.org/susv3' ;;
 esac
 
 sed_lt='s,<,\&lt;,g'
@@ -1063,6 +1063,7 @@ srand
 srand48
 srandom
 sscanf
+stat
 statvfs
 stdin
 strcasecmp
@@ -1336,7 +1337,7 @@ func_module ()
     element='<A HREF="#module='$1'">'$1'</A>'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=\"20%\">$element"
 
-    element=`gnulib-tool --extract-description $1 | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" | sed -e 's,^, ,' | sed -e 's,\([^a-zA-Z]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'functions/\2.html">\2</A>(),g' | sed -e 's,^ ,,'`
+    element=`gnulib-tool --extract-description $1 | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" | sed -e 's,^, ,' | sed -e 's,\([^a-zA-Z]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A>(),g' | sed -e 's,^ ,,'`
     func_echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=\"80%\">$element"
 
     func_end TR
@@ -1348,7 +1349,7 @@ func_module ()
     element='<A NAME="module='$1'"></A><A HREF="modules/'$1'">'$1'</A>'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
-    element=`gnulib-tool --extract-include-directive $1 | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" | sed -e 's,^#include "\(.*\)"$,#include "<A HREF="lib/\1">\1</A>",' -e 's,^#include &lt;'"${posix_headers}"'\.h&gt;$,#include \&lt;<A HREF="'"$POSIX2001_URL"'basedefs/\1.h.html">\1.h</A>\&gt;,' | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
+    element=`gnulib-tool --extract-include-directive $1 | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" | sed -e 's,^#include "\(.*\)"$,#include "<A HREF="lib/\1">\1</A>",' -e 's,^#include &lt;'"${posix_headers}"'\.h&gt;$,#include \&lt;<A HREF="'"$POSIX2001_URL"'xbd/\1.h.html">\1.h</A>\&gt;,' | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 

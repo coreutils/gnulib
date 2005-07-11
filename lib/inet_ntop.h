@@ -31,7 +31,10 @@
    DST is returned.  If an error occurs, the return value is NULL and
    errno is set.  If CNT bytes are not sufficient to hold the result,
    the return value is NULL and errno is set to ENOSPC.  A good value
-   for CNT is 46.  */
+   for CNT is 46.
+
+   For more details, see the POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/inet_ntop.html>.  */
 
 #if !HAVE_INET_NTOP /* not already defined and declared in <arpa/inet.h> ? */
 extern const char *inet_ntop(int af, const void *src, char *dst, socklen_t cnt);

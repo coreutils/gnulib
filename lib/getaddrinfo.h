@@ -72,16 +72,22 @@ struct addrinfo
 # endif
 
 /* Translate name of a service location and/or a service name to set of
-   socket addresses.  */
+   socket addresses.
+   For more details, see the POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/getaddrinfo.html>.  */
 extern int getaddrinfo (const char *restrict nodename,
 			const char *restrict servname,
 			const struct addrinfo *restrict hints,
 			struct addrinfo **restrict res);
 
-/* Free `addrinfo' structure AI including associated storage.  */
+/* Free `addrinfo' structure AI including associated storage.
+   For more details, see the POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/getaddrinfo.html>.  */
 extern void freeaddrinfo (struct addrinfo *ai);
 
-/* Convert error return from getaddrinfo() to a string.  */
+/* Convert error return from getaddrinfo() to a string.
+   For more details, see the POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/gai_strerror.html>.  */
 extern const char *gai_strerror (int ecode);
 
 # endif

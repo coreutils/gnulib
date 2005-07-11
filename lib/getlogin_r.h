@@ -31,7 +31,7 @@
    the case that the login name cannot be found but no specific error is
    provided (this case is hopefully rare but is left open by the POSIX spec).
 
-   See <http://www.opengroup.org/onlinepubs/009695399/functions/getlogin.html>.
+   See <http://www.opengroup.org/susv3xsh/getlogin.html>.
  */
 #if !HAVE_DECL_GETLOGIN_R
 int getlogin_r (char *name, size_t size);

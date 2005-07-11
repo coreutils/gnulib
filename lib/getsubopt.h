@@ -1,5 +1,5 @@
 /* Parse comma separate list into words.
-   Copyright (C) 2004 Free Software Foundation, Inc.
+   Copyright (C) 2004-2005 Free Software Foundation, Inc.
    Contributed by Simon Josefsson <jas@extundo.com>, 2004.
 
    This program is free software; you can redistribute it and/or modify
@@ -26,7 +26,7 @@
      - It returns the index of the "token" in the given array of tokens.
    Otherwise it returns -1, and *OPTIONP and *VALUEP are undefined.
    For more details see the POSIX:2001 specification.
-   http://www.opengroup.org/onlinepubs/009695399/functions/getsubopt.html */
+   http://www.opengroup.org/susv3xsh/getsubopt.html */
 
 #if HAVE_GETSUBOPT
 
