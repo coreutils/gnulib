@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.11 2005-07-11 15:12:49 karl Exp $
+@comment $Id: gnulib.texi,v 1.12 2005-07-11 16:45:26 haible Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2005-07-11 15:12:49 $
+@set UPDATED $Date: 2005-07-11 16:45:26 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -527,7 +527,7 @@ of the definition for some symbols may be significant.
 For example, to use the @code{time_r} gnulib module you should
 use include header file provided by the gnulib, and so
 @samp{#include "time_r.h"}, but you shouldn't explicitely
-@samp{#include <time.h>} as it is allready done in @file{time_r.h}
+@samp{#include <time.h>} as it is already done in @file{time_r.h}
 before the redefinition of some symbols.
 
 @node Importing updated files
