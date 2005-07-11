@@ -1,3 +1,8 @@
+2005-07-11  Karl Berry  <karl@gnu.org>
+
+	* gnulib.texi (Quoting): new node.
+	(Initial import): more info, from Patrice.
+
 2005-06-28  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib.texi (Library version handling): New section.

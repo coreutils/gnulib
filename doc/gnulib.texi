@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.10 2005-06-27 22:36:50 jas Exp $
+@comment $Id: gnulib.texi,v 1.11 2005-07-11 15:12:49 karl Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2005-06-27 22:36:50 $
+@set UPDATED $Date: 2005-07-11 15:12:49 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -66,7 +66,7 @@ Software Foundation raise funds for GNU development.''
 @chapter Gnulib
 
 This manual contains some bare-bones documentation, but not much more.
-It's mostly been a place to store notes until someone (you?) gets
+It's mostly been a place to store notes until someone (you?)@ gets
 around to writing a coherent manual.
 
 Getting started:
@@ -82,11 +82,13 @@ Getting started:
 @menu
 * Comments::
 * Header files::
+* Quoting::
 * ctime::
 * inet_ntoa::
 * Out of memory handling::
 * Library version handling::
 @end menu
+
 
 @node Comments
 @section Comments
@@ -160,7 +162,7 @@ preference might depend on whether you consider the API exported by
 your header file as something available for C programs only, or for C
 and C++ programs alike.
 
-@subsection Include ordering
+@subheading Include ordering
 
 When writing a gnulib module, or even in general, a good way to order
 the @samp{#include} directives is the following.
@@ -172,6 +174,44 @@ in arbitrary order.
 @item Then come all the #include "..." of gnulib and private headers, in
 arbitrary order.
 @end itemize
+
+
+@node Quoting
+@section Quoting
+
+@cindex Quoting
+@findex quote
+@findex quotearg
+
+Gnulib provides @samp{quote} and @samp{quotearg} modules to help with
+quoting text, such as file names, in messages to the user.  Here's an
+example of using @samp{quote}:
+
+@example
+#include <quote.h>
+ ...
+  error (0, errno, _("cannot change owner of %s"), quote (fname));
+@end example
+
+This differs from
+
+@example
+  error (0, errno, _("cannot change owner of `%s'"), fname);
+@end example
+
+@noindent in that @code{quote} escapes unusual characters in
+@code{fname}, e.g., @samp{'} and control characters like @samp{\n}.
+
+@findex quote_n
+However, a caveat: @code{quote} reuses the storage that it returns.
+Hence if you need more than one thing quoted at the same time, you
+need to use @code{quote_n}.
+
+@findex quotearg_alloc
+Also, the quote module is not suited for multithreaded applications.
+In that case, you have to use @code{quotearg_alloc}, defined in the
+@samp{quotearg} module, which is decidedly less convenient.
+
 
 @node ctime
 @section ctime
@@ -297,6 +337,7 @@ Typical uses look like:
          die ("version mismatch\n");
 @end example
 
+
 @node Invoking gnulib-tool
 @chapter Invoking gnulib-tool
 
@@ -420,6 +461,12 @@ gl_INIT
 ...
 @end example
 
+@code{gl_INIT} will in turn call the macros related with the 
+gnulib functions, be it specific gnulib macros, like @code{gl_FUNC_ALLOCA}
+or autoconf or automake macro like @code{AC_FUNC_ALLOCA} or 
+@code{AM_FUNC_GETLINE} so there is no need to call those macros yourself
+when you use the corresponding gnulib modules.
+
 You must also make sure that the gnulib library is built.  Add the
 @code{Makefile} in the gnulib source base directory to
 @code{AC_CONFIG_FILES}, as in:
@@ -468,10 +515,20 @@ LIBADD = lib/libgnu.a
 @end example
 
 Don't forget to @code{#include} the various header files.  In this
-example, you would need to make sure that @samp{#include <strdup.h>}
+example, you would need to make sure that @samp{#include "strdup.h"}
 is evaluated when compiling all source code files, that want to make
-use of @code{strdup}.
+use of @code{strdup}. 
 
+When an include file is provided by the gnulib
+you shouldn't try to include the corresponding system header files 
+yourself but let the gnulib header file do it as the ordering
+of the definition for some symbols may be significant.
+
+For example, to use the @code{time_r} gnulib module you should
+use include header file provided by the gnulib, and so
+@samp{#include "time_r.h"}, but you shouldn't explicitely
+@samp{#include <time.h>} as it is allready done in @file{time_r.h}
+before the redefinition of some symbols.
 
 @node Importing updated files
 @section Importing updated files
