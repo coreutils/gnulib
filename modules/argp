@@ -26,7 +26,6 @@ strndup
 restrict
 strcase
 extensions
-unlocked-io
 vsnprintf
 
 configure.ac:
@@ -45,4 +44,3 @@ LGPL
 
 Maintainer:
 Sergey Poznyakoff, glibc
-

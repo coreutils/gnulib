@@ -1,3 +1,7 @@
+2005-07-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/argp (Depends-on): Remove unlocked-io.
+
 2005-07-11  Simon Josefsson  <jas@extundo.com>
 
 	* modules/size_max: New file.

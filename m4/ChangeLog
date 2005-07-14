@@ -1,3 +1,8 @@
+2005-07-14  Bruno Haible  <bruno@clisp.org>
+
+	* argp.m4 (gl_ARGP): Remove invocation of gl_FUNC_GLIBC_UNLOCKED_IO.
+	Instead, test for *_unlocked function declarations directly.
+
 2005-07-14  Derek Price  <derek@ximbiot.com>
 
 	* glob.m4 (gl_GLOB): Cache glob interface check result.  Add check for
