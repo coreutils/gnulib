@@ -25,11 +25,47 @@ AC_DEFUN([gl_GLOB],
   AC_CHECK_HEADERS([glob.h], [], [GLOB_H=glob.h])
 
   if test -z "$GLOB_H"; then
-    AC_COMPILE_IFELSE(
+    AC_CACHE_CHECK([for GNU glob interface version 1],
+      [gl_cv_gnu_glob_interface_version_1],
+[     AC_COMPILE_IFELSE(
 [[#include <gnu-versions.h>
 char a[_GNU_GLOB_INTERFACE_VERSION == 1 ? 1 : -1];]],
-      [], [GLOB_H=glob.h])
+	[gl_cv_gnu_glob_interface_version_1=yes],
+	[gl_cv_gnu_glob_interface_version_1=no])])
+
+    if test "$gl_cv_gnu_glob_interface_version_1" = "no"; then
+      GLOB_H=glob.h
+    fi
   fi
+
+  if test -z "$GLOB_H"; then
+    AC_CACHE_CHECK([whether glob lists broken symlinks],
+                   [gl_cv_glob_lists_symlinks],
+[     if ln -s conf-doesntexist conf$$-globtest 2>/dev/null; then
+        gl_cv_glob_lists_symlinks=maybe
+      else
+        # If we can't make a symlink, then we cannot test this issue.  Be
+        # pessimistic about this.
+        gl_cv_glob_lists_symlinks=no
+      fi
+
+      if test $gl_cv_glob_lists_symlinks = maybe; then
+        AC_RUN_IFELSE(
+AC_LANG_PROGRAM(
+[[#include <stddef.h>
+#include <glob.h>]],
+[[glob_t found;
+if (glob ("conf*-globtest", 0, NULL, &found) == GLOB_NOMATCH) return 1;]]),
+          [gl_cv_glob_lists_symlinks=yes],
+          [gl_cv_glob_lists_symlinks=no], [gl_cv_glob_lists_symlinks=no])
+      fi])
+
+    if test $gl_cv_glob_lists_symlinks = no; then
+      GLOB_H=glob.h
+    fi
+  fi
+
+  rm -f conf$$-globtest
 
   if test -n "$GLOB_H"; then
     gl_GLOB_SUBSTITUTE

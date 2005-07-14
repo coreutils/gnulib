@@ -1,3 +1,8 @@
+2005-07-14  Derek Price  <derek@ximbiot.com>
+
+	* glob.m4 (gl_GLOB): Cache glob interface check result.  Add check for
+	glob symlink bug.
+
 2005-07-10  Bruno Haible  <bruno@clisp.org>
 
 	* size_max.m4 (gl_SIZE_MAX): Cast ~(size_t)0 back to size_t.
