@@ -9,6 +9,7 @@ lib/xalloc.h
 
 Depends-on:
 vasprintf
+xalloc-die
 
 configure.ac:
 

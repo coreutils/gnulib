@@ -1,3 +1,8 @@
+2005-07-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/xalloc (Depends-on): Add xalloc-die.
+	* modules/xvasprintf (Depends-on): Add xalloc-die.
+
 2005-07-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/argp (Depends-on): Remove unlocked-io.
