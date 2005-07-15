@@ -1,3 +1,8 @@
+2005-06-01  Bruno Haible  <bruno@clisp.org>
+
+	* poll.m4 (gl_FUNC_POLL): Check against MacOS X 10.4 poll() bug.
+	When using lib/poll.c, define poll as rpl_poll.
+
 2005-07-14  Bruno Haible  <bruno@clisp.org>
 
 	* argp.m4 (gl_ARGP): Remove invocation of gl_FUNC_GLIBC_UNLOCKED_IO.
