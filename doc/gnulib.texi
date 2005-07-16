@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.12 2005-07-11 16:45:26 haible Exp $
+@comment $Id: gnulib.texi,v 1.13 2005-07-16 19:41:33 jas Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2005-07-11 16:45:26 $
+@set UPDATED $Date: 2005-07-16 19:41:33 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -295,7 +295,7 @@ fail.
 @node Library version handling
 @section Library version handling
 
-The module ``check_version'' can be useful when your gnulib
+The module @samp{check-version} can be useful when your gnulib
 application is a system library.  You will typically wrap the call to
 the @code{check_version} function through a library API, your library
 header file may contain:
@@ -306,8 +306,16 @@ header file may contain:
   extern const char *stringprep_check_version (const char *req_version);
 @end example
 
-The implementation of @code{stringprep_check_version} would simply
-pass on the call to @code{check_version}.
+To avoid ELF symbol collisions with other libraries that use the
+@samp{check-version} module, add to @file{config.h} through a
+AC_DEFINE something like:
+
+@example
+AC_DEFINE(check_version, stringprep_check_version, [Rename check_version.])
+@end example
+
+The @code{stringprep_check_version} function will thus be implemented
+by the @code{check_version} module.
 
 There are two uses of the interface.  The first is a way to provide
 for applications to find out the version number of the library it
