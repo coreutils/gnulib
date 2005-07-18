@@ -7,6 +7,11 @@
 	* lock.h: New file, from GNU gettext.
 	* lock.c: New file, from GNU gettext.
 
+2005-07-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* quotearg.c: Add translator comment suggested by Bruno Haible,
+	with a minor change.
+
 2005-07-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* version-etc-fsf.c (version_etc_copyright): Parameterize the
