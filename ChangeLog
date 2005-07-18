@@ -1,3 +1,8 @@
+2005-07-18  Bruno Haible  <bruno@clisp.org>
+
+	* modules/lock: New file.
+	* MODULES.html.sh (Multithreading): New section.
+
 2005-07-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/xalloc (Depends-on): Add xalloc-die.

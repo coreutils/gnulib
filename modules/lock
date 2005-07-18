@@ -1,0 +1,29 @@
+Description:
+Locking in multithreaded situations.
+
+Files:
+lib/lock.h
+lib/lock.c
+m4/lock.m4
+m4/lib-ld.m4
+m4/lib-link.m4
+m4/lib-prefix.m4
+build-aux/config.rpath
+
+Depends-on:
+
+configure.ac:
+gl_LOCK
+
+Makefile.am:
+lib_SOURCES += lock.h lock.c
+
+Include:
+"lock.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -1901,6 +1901,16 @@ func_all_modules ()
   func_module canon-host
   func_end_table
 
+  element="Multithreading"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap posix_ext_thread
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module lock
+  func_end_table
+
   element="Internationalization functions"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap posix_ext_i18n

@@ -1,3 +1,8 @@
+2005-07-18  Bruno Haible  <bruno@clisp.org>
+
+	* lock.h: New file, from GNU gettext.
+	* lock.c: New file, from GNU gettext.
+
 2005-07-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* version-etc-fsf.c (version_etc_copyright): Parameterize the

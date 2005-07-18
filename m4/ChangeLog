@@ -1,3 +1,7 @@
+2005-07-18  Bruno Haible  <bruno@clisp.org>
+
+	* lock.m4: New file, from GNU gettext.
+
 2005-06-01  Bruno Haible  <bruno@clisp.org>
 
 	* poll.m4 (gl_FUNC_POLL): Check against MacOS X 10.4 poll() bug.
