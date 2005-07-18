@@ -51,6 +51,11 @@
      Taking the lock:     gl_recursive_lock_lock (name);
      Releasing the lock:  gl_recursive_lock_unlock (name);
      De-initialization:   gl_recursive_lock_destroy (name);
+
+  Once-only execution:
+     Type:                gl_once_t
+     Initializer:         gl_once_define(extern, name)
+     Execution:           gl_once (name, initfunction);
 */
 
 
@@ -91,6 +96,7 @@
 #  pragma weak pthread_rwlock_wrlock
 #  pragma weak pthread_rwlock_unlock
 #  pragma weak pthread_rwlock_destroy
+#  pragma weak pthread_once
 #  pragma weak pthread_cond_init
 #  pragma weak pthread_cond_wait
 #  pragma weak pthread_cond_signal
@@ -301,6 +307,28 @@ extern void glthread_recursive_lock_destroy (gl_recursive_lock_t *lock);
 
 # endif
 
+/* -------------------------- gl_once_t datatype -------------------------- */
+
+typedef pthread_once_t gl_once_t;
+# define gl_once_define(STORAGECLASS, NAME) \
+    STORAGECLASS pthread_once_t NAME = PTHREAD_ONCE_INIT;
+# define gl_once(NAME, INITFUNCTION) \
+    do                                                   \
+      {                                                  \
+        if (pthread_in_use ())                           \
+          {                                              \
+            if (pthread_once (&NAME, INITFUNCTION) != 0) \
+              abort ();                                  \
+          }                                              \
+        else                                             \
+          {                                              \
+            if (glthread_once_singlethreaded (&NAME))    \
+              INITFUNCTION ();                           \
+          }                                              \
+      }                                                  \
+    while (0)
+extern int glthread_once_singlethreaded (pthread_once_t *once_control);
+
 #endif
 
 /* ========================================================================= */
@@ -322,6 +350,7 @@ extern void glthread_recursive_lock_destroy (gl_recursive_lock_t *lock);
 #  pragma weak pth_rwlock_init
 #  pragma weak pth_rwlock_acquire
 #  pragma weak pth_rwlock_release
+#  pragma weak pth_once
 
 #  pragma weak pth_cancel
 #  define pth_in_use() (pth_cancel != NULL)
@@ -382,6 +411,30 @@ typedef pth_mutex_t gl_recursive_lock_t;
      if (pth_in_use() && !pth_mutex_release (&NAME)) abort ()
 #  define gl_recursive_lock_destroy(NAME) \
      (void)(&NAME)
+
+/* -------------------------- gl_once_t datatype -------------------------- */
+
+typedef pth_once_t gl_once_t;
+# define gl_once_define(STORAGECLASS, NAME) \
+    STORAGECLASS pth_once_t NAME = PTH_ONCE_INIT;
+# define gl_once(NAME, INITFUNCTION) \
+    do                                                                \
+      {                                                               \
+        if (pth_in_use ())                                            \
+          {                                                           \
+            void (*gl_once_temp) (void) = INITFUNCTION;               \
+            if (!pth_once (&NAME, glthread_once_call, &gl_once_temp)) \
+              abort ();                                               \
+          }                                                           \
+        else                                                          \
+          {                                                           \
+            if (glthread_once_singlethreaded (&NAME))                 \
+              INITFUNCTION ();                                        \
+          }                                                           \
+      }                                                               \
+    while (0)
+extern void glthread_once_call (void *arg);
+extern int glthread_once_singlethreaded (pth_once_t *once_control);
 
 #endif
 
@@ -481,6 +534,33 @@ extern void glthread_recursive_lock_init (gl_recursive_lock_t *lock);
 extern void glthread_recursive_lock_lock (gl_recursive_lock_t *lock);
 extern void glthread_recursive_lock_unlock (gl_recursive_lock_t *lock);
 extern void glthread_recursive_lock_destroy (gl_recursive_lock_t *lock);
+
+/* -------------------------- gl_once_t datatype -------------------------- */
+
+typedef struct
+        {
+          volatile int inited;
+          mutex_t mutex;
+        }
+        gl_once_t;
+# define gl_once_define(STORAGECLASS, NAME) \
+    STORAGECLASS gl_once_t NAME = { 0, DEFAULTMUTEX };
+# define gl_once(NAME, INITFUNCTION) \
+    do                                                \
+      {                                               \
+        if (thread_in_use ())                         \
+          {                                           \
+            glthread_once (&NAME, INITFUNCTION);      \
+          }                                           \
+        else                                          \
+          {                                           \
+            if (glthread_once_singlethreaded (&NAME)) \
+              INITFUNCTION ();                        \
+          }                                           \
+      }                                               \
+    while (0)
+extern void glthread_once (gl_once_t *once_control, void (*initfunction) (void));
+extern int glthread_once_singlethreaded (gl_once_t *once_control);
 
 #endif
 
@@ -602,6 +682,21 @@ extern void glthread_recursive_lock_lock (gl_recursive_lock_t *lock);
 extern void glthread_recursive_lock_unlock (gl_recursive_lock_t *lock);
 extern void glthread_recursive_lock_destroy (gl_recursive_lock_t *lock);
 
+/* -------------------------- gl_once_t datatype -------------------------- */
+
+typedef struct
+        {
+          volatile int inited;
+          volatile long started;
+          CRITICAL_SECTION lock;
+        }
+        gl_once_t;
+# define gl_once_define(STORAGECLASS, NAME) \
+    STORAGECLASS gl_once_t NAME = { -1, -1 };
+# define gl_once(NAME, INITFUNCTION) \
+    glthread_once (&NAME, INITFUNCTION)
+extern void glthread_once (gl_once_t *once_control, void (*initfunction) (void));
+
 #endif
 
 /* ========================================================================= */
@@ -637,5 +732,21 @@ typedef int gl_recursive_lock_t;
 # define gl_recursive_lock_init(NAME)
 # define gl_recursive_lock_lock(NAME)
 # define gl_recursive_lock_unlock(NAME)
+
+/* -------------------------- gl_once_t datatype -------------------------- */
+
+typedef int gl_once_t;
+# define gl_once_define(STORAGECLASS, NAME) \
+    STORAGECLASS gl_once_t NAME = 0;
+# define gl_once(NAME, INITFUNCTION) \
+    do                       \
+      {                      \
+        if (NAME == 0)       \
+          {                  \
+            NAME = ~ 0;      \
+            INITFUNCTION (); \
+          }                  \
+      }                      \
+    while (0)
 
 #endif

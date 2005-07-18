@@ -1,3 +1,11 @@
+2005-07-18  Bruno Haible  <bruno@clisp.org>
+
+	* lock.h (gl_once_t): New type.
+	(gl_once_define, gl_once): New macros.
+	* lock.c (fresh_once): New variable.
+	(glthread_once, glthread_once_call, glthread_once_singlethreaded): New
+	functions.
+
 2005-07-18  Simon Josefsson  <jas@extundo.com>
 
 	* check-version.c (check_version): Accept identical versions too.

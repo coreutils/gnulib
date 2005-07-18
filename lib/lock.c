@@ -322,6 +322,26 @@ glthread_recursive_lock_destroy (gl_recursive_lock_t *lock)
 
 # endif
 
+/* -------------------------- gl_once_t datatype -------------------------- */
+
+static const pthread_once_t fresh_once = PTHREAD_ONCE_INIT;
+
+int
+glthread_once_singlethreaded (pthread_once_t *once_control)
+{
+  /* We don't know whether pthread_once_t is an integer type, a floating-point
+     type, a pointer type, or a structure type.  */
+  char *firstbyte = (char *)once_control;
+  if (*firstbyte == *(const char *)&fresh_once)
+    {
+      /* First time use of once_control.  Invert the first byte.  */
+      *firstbyte = ~ *(const char *)&fresh_once;
+      return 1;
+    }
+  else
+    return 0;
+}
+
 #endif
 
 /* ========================================================================= */
@@ -335,6 +355,30 @@ glthread_recursive_lock_destroy (gl_recursive_lock_t *lock)
 /* ------------------------- gl_rwlock_t datatype ------------------------- */
 
 /* --------------------- gl_recursive_lock_t datatype --------------------- */
+
+/* -------------------------- gl_once_t datatype -------------------------- */
+
+void
+glthread_once_call (void *arg)
+{
+  void (**gl_once_temp_addr) (void) = (void (**) (void)) arg;
+  void (*initfunction) (void) = *gl_once_temp_addr;
+  initfunction ();
+}
+
+int
+glthread_once_singlethreaded (pth_once_t *once_control)
+{
+  /* We know that pth_once_t is an integer type.  */
+  if (*once_control == PTH_ONCE_INIT)
+    {
+      /* First time use of once_control.  Invert the marker.  */
+      *once_control = ~ PTH_ONCE_INIT;
+      return 1;
+    }
+  else
+    return 0;
+}
 
 #endif
 
@@ -395,6 +439,41 @@ glthread_recursive_lock_destroy (gl_recursive_lock_t *lock)
     abort ();
   if (mutex_destroy (&lock->mutex) != 0)
     abort ();
+}
+
+/* -------------------------- gl_once_t datatype -------------------------- */
+
+void
+glthread_once (gl_once_t *once_control, void (*initfunction) (void))
+{
+  if (!once_control->inited)
+    {
+      /* Use the mutex to guarantee that if another thread is already calling
+	 the initfunction, this thread waits until it's finished.  */
+      if (mutex_lock (&once_control->mutex) != 0)
+	abort ();
+      if (!once_control->inited)
+	{
+	  once_control->inited = 1;
+	  initfunction ();
+	}
+      if (mutex_unlock (&once_control->mutex) != 0)
+	abort ();
+    }
+}
+
+int
+glthread_once_singlethreaded (gl_once_t *once_control)
+{
+  /* We know that gl_once_t contains an integer type.  */
+  if (!once_control->inited)
+    {
+      /* First time use of once_control.  Invert the marker.  */
+      once_control->inited = ~ 0;
+      return 1;
+    }
+  else
+    return 0;
 }
 
 #endif
@@ -762,6 +841,45 @@ glthread_recursive_lock_destroy (gl_recursive_lock_t *lock)
     abort ();
   DeleteCriticalSection (&lock->lock);
   lock->guard.done = 0;
+}
+
+/* -------------------------- gl_once_t datatype -------------------------- */
+
+void
+glthread_once (gl_once_t *once_control, void (*initfunction) (void))
+{
+  if (once_control->inited <= 0)
+    {
+      if (InterlockedIncrement (&once_control->started) == 0)
+	{
+	  /* This thread is the first one to come to this once_control.  */
+	  InitializeCriticalSection (&once_control->lock);
+	  EnterCriticalSection (&once_control->lock);
+	  once_control->inited = 0;
+	  initfunction ();
+	  once_control->inited = 1;
+	  LeaveCriticalSection (&once_control->lock);
+	}
+      else
+	{
+	  /* Undo last operation.  */
+	  InterlockedDecrement (&once_control->started);
+	  /* Some other thread has already started the initialization.
+	     Yield the CPU while waiting for the other thread to finish
+	     initializing and taking the lock.  */
+	  while (once_control->inited < 0)
+	    Sleep (0);
+	  if (once_control->inited <= 0)
+	    {
+	      /* Take the lock.  This blocks until the other thread has
+		 finished calling the initfunction.  */
+	      EnterCriticalSection (&once_control->lock);
+	      LeaveCriticalSection (&once_control->lock);
+	      if (!(once_control->inited > 0))
+		abort ();
+	    }
+	}
+    }
 }
 
 #endif
