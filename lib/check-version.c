@@ -40,7 +40,7 @@
 const char *
 check_version (const char *req_version)
 {
-  if (!req_version || strverscmp (req_version, VERSION) < 0)
+  if (!req_version || strverscmp (req_version, VERSION) <= 0)
     return VERSION;
 
   return NULL;
