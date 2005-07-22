@@ -1,3 +1,27 @@
+2005-07-22  Bruno Haible  <bruno@clisp.org>
+
+	* modules/alloca-opt (Makefile.am): Remove explicit dependency on
+	$(ALLOCA_H), redundant through BUILT_SOURCES.
+	* modules/argz (Makefile.am): Remove explicit dependency on $(ARGZ_H),
+	redundant through BUILT_SOURCES.
+	* modules/byteswap (Makefile.am): Remove explicit dependency on
+	$(BYTESWAP_H), redundant through BUILT_SOURCES.
+	* modules/fnmatch (Makefile.am): Remove explicit dependency on
+	$(FNMATCH_H), redundant through BUILT_SOURCES.
+	* modules/getopt (Makefile.am): Remove explicit dependency on
+	$(GETOPT_H), redundant through BUILT_SOURCES.
+	* modules/glob (Makefile.am): Remove explicit dependency on $(GLOB_H),
+	redundant through BUILT_SOURCES.
+	* modules/poll (Makefile.am): Remove explicit dependency on $(POLL_H),
+	redundant through BUILT_SOURCES.
+	* modules/stdbool (Makefile.am): Remove explicit dependency on
+	$(STDBOOL_H), redundant through BUILT_SOURCES.
+	* modules/stdint (Makefile.am): Remove explicit dependency on
+	$(STDINT_H), redundant through BUILT_SOURCES.
+	* modules/sysexits (Makefile.am): Add $(SYSEXITS_H) to BUILT_SOURCES.
+	Remove explicit dependency on $(SYSEXITS_H).
+	Reported by Alexandre Duret-Lutz <adl@src.lip6.fr>.
+
 2005-07-18  Bruno Haible  <bruno@clisp.org>
 
 	* modules/lock: New file.

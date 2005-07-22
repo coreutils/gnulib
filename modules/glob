@@ -26,9 +26,8 @@ Makefile.am:
 BUILT_SOURCES += $(GLOB_H)
 EXTRA_DIST += glob_.h
 
-# We need the following in order to create an <glob.h> when the system
+# We need the following in order to create <glob.h> when the system
 # doesn't have one that works with the given compiler.
-all-local $(lib_OBJECTS): $(GLOB_H)
 glob.h: glob_.h
 	cp $(srcdir)/glob_.h $@-t
 	mv $@-t $@

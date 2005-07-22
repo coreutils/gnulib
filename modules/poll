@@ -15,9 +15,8 @@ Makefile.am:
 BUILT_SOURCES += $(POLL_H)
 EXTRA_DIST += poll_.h
 
-# We need the following in order to create an <poll.h> when the system
+# We need the following in order to create <poll.h> when the system
 # doesn't have one.
-all-local $(lib_OBJECTS): $(POLL_H)
 poll.h: poll_.h
 	cp $(srcdir)/poll_.h $@-t
 	mv $@-t $@

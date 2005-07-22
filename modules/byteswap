@@ -14,9 +14,8 @@ Makefile.am:
 BUILT_SOURCES += $(BYTESWAP_H)
 EXTRA_DIST += byteswap_.h
 
-# We need the following in order to create a <byteswap.h> when the system
+# We need the following in order to create <byteswap.h> when the system
 # doesn't have one.
-all-local $(lib_OBJECTS): $(BYTESWAP_H)
 byteswap.h: byteswap_.h
 	cp $(srcdir)/$< $@-t
 	mv $@-t $@
