@@ -2004,6 +2004,7 @@ func_all_modules ()
   func_module readutmp
   func_module sig2str
   func_module sysexits
+  func_module visibility
   func_end_table
 }
 

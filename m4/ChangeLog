@@ -1,3 +1,7 @@
+2005-07-24  Bruno Haible  <bruno@clisp.org>
+
+	* visibility.m4: New file.
+
 2005-07-18  Bruno Haible  <bruno@clisp.org>
 
 	* lock.m4: New file, from GNU gettext.

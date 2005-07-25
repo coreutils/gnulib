@@ -1,3 +1,8 @@
+2005-07-24  Bruno Haible  <bruno@clisp.org>
+
+	* modules/visibility: New file.
+	* MODULES.html.sh (Misc): Add visibility.
+
 2005-07-22  Bruno Haible  <bruno@clisp.org>
 
 	* modules/alloca-opt (Makefile.am): Remove explicit dependency on

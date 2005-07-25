@@ -1,0 +1,21 @@
+Description:
+Control of symbols exported by shared libraries.
+
+Files:
+m4/visibility.m4
+
+Depends-on:
+
+configure.ac:
+gl_VISIBILITY
+
+Makefile.am:
+
+Include:
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
