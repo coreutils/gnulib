@@ -32,6 +32,43 @@
 
 /* Use the POSIX threads library.  */
 
+# if PTHREAD_IN_USE_DETECTION_HARD
+
+/* The function to be executed by a dummy thread.  */
+static void *
+dummy_thread_func (void *arg)
+{
+  return arg;
+}
+
+int
+glthread_in_use (void)
+{
+  static int tested;
+  static int result; /* 1: linked with -lpthread, 0: only with libc */
+
+  if (!tested)
+    {
+      pthread_t thread;
+
+      if (pthread_create (&thread, NULL, dummy_thread_func, NULL) != 0)
+	/* Thread creation failed.  */
+	result = 0;
+      else
+	{
+	  /* Thread creation works.  */
+	  void *retval;
+	  if (pthread_join (thread, &retval) != 0)
+	    abort ();
+	  result = 1;
+	}
+      tested = 1;
+    }
+  return result;
+}
+
+# endif
+
 /* -------------------------- gl_lock_t datatype -------------------------- */
 
 /* ------------------------- gl_rwlock_t datatype ------------------------- */

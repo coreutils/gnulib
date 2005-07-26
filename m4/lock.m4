@@ -16,9 +16,17 @@ dnl Sets the variables LIBMULTITHREAD and LTLIBMULTITHREAD similarly, for
 dnl programs that really need multithread functionality. The difference
 dnl between LIBTHREAD and LIBMULTITHREAD is that on platforms supporting weak
 dnl symbols, typically LIBTHREAD="" whereas LIBMULTITHREAD="-lpthread".
+dnl Adds to CPPFLAGS the flag -D_REENTRANT or -D_THREAD_SAFE if needed for
+dnl multithread-safe programs.
 
 AC_DEFUN([gl_LOCK],
 [
+  dnl Ordering constraints: This macro modifies CPPFLAGS in a way that
+  dnl influences the result of the autoconf tests that test for *_unlocked
+  dnl declarations, on AIX 5 at least. Therefore it must come early.
+  AC_BEFORE([$0], [gl_FUNC_GLIBC_UNLOCKED_IO])dnl
+  AC_BEFORE([$0], [gl_ARGP])dnl
+
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([AC_GNU_SOURCE]) dnl needed for pthread_rwlock_t on glibc systems
   dnl Check for multithreading.
@@ -51,19 +59,22 @@ AC_HELP_STRING([--disable-threads], [build without multithread safety]),
         #   -lgthreads
         case "$host_os" in
           osf*)
-            # On OSF/1, the compiler needs the flag -pthread so that it groks
-            # <pthread.h>. For the linker, it is equivalent to -lpthread.
-            if test -n "$GCC"; then
-              # gcc-2.95 doesn't understand -pthread, only -D_REENTRANT.
-              CPPFLAGS="$CPPFLAGS -D_REENTRANT"
-            else
-              CPPFLAGS="$CPPFLAGS -pthread"
-            fi
+            # On OSF/1, the compiler needs the flag -D_REENTRANT so that it
+            # groks <pthread.h>. cc also understands the flag -pthread, but
+            # we don't use it because 1. gcc-2.95 doesn't understand -pthread,
+            # 2. putting a flag into CPPFLAGS that has an effect on the linker
+            # causes the AC_TRY_LINK test below to succeed unexpectedly,
+            # leading to wrong values of LIBTHREAD and LTLIBTHREAD.
+            CPPFLAGS="$CPPFLAGS -D_REENTRANT"
             ;;
         esac
         gl_have_pthread=
+        # Test whether both pthread_mutex_lock and pthread_mutexattr_init exist
+        # in libc. IRIX 6.5 has the first one in both libc and libpthread, but
+        # the second one only in libpthread, and lock.c needs it.
         AC_TRY_LINK([#include <pthread.h>],
-          [pthread_mutex_lock((pthread_mutex_t*)0);],
+          [pthread_mutex_lock((pthread_mutex_t*)0);
+           pthread_mutexattr_init((pthread_mutexattr_t*)0);],
           [gl_have_pthread=yes])
         # Test for libpthread by looking for pthread_kill. (Not pthread_self,
         # since it is defined as a macro on OSF/1.)
@@ -71,7 +82,17 @@ AC_HELP_STRING([--disable-threads], [build without multithread safety]),
           # The program links fine without libpthread. But it may actually
           # need to link with libpthread in order to create multiple threads.
           AC_CHECK_LIB(pthread, pthread_kill,
-            [LIBMULTITHREAD=-lpthread LTLIBMULTITHREAD=-lpthread])
+            [LIBMULTITHREAD=-lpthread LTLIBMULTITHREAD=-lpthread
+             # On Solaris and HP-UX, most pthread functions exist also in libc.
+             # Therefore pthread_in_use() needs to actually try to create a
+             # thread: pthread_create from libc will fail, whereas
+             # pthread_create will actually create a thread.
+             case "$host_os" in
+               solaris* | hpux*)
+                 AC_DEFINE([PTHREAD_IN_USE_DETECTION_HARD], 1,
+                   [Define if the pthread_in_use() detection is hard.])
+             esac
+            ])
         else
           # Some library is needed. Try libpthread and libc_r.
           AC_CHECK_LIB(pthread, pthread_kill,
@@ -115,7 +136,8 @@ int x = (int)PTHREAD_MUTEX_RECURSIVE;
             [AC_DEFINE([HAVE_PTHREAD_MUTEX_RECURSIVE], 1,
                [Define if the <pthread.h> defines PTHREAD_MUTEX_RECURSIVE.])])
           # Some systems optimize for single-threaded programs by default, and
-          # need special flags to disable these optimizations.
+          # need special flags to disable these optimizations. For example, the
+          # definition of 'errno' in <errno.h>.
           case "$host_os" in
             aix* | freebsd*) CPPFLAGS="$CPPFLAGS -D_THREAD_SAFE" ;;
             solaris*) CPPFLAGS="$CPPFLAGS -D_REENTRANT" ;;
@@ -235,7 +257,8 @@ dnl
 dnl Solaris 7,8,9     posix       -lpthread       Y      Sol 7,8: 0.0; Sol 9: OK
 dnl                   solaris     -lthread        Y      Sol 7,8: 0.0; Sol 9: OK
 dnl
-dnl HP-UX 11          posix       -lpthread       Y      OK
+dnl HP-UX 11          posix       -lpthread       N (cc) OK
+dnl                                               Y (gcc)
 dnl
 dnl IRIX 6.5          posix       -lpthread       Y      0.5
 dnl

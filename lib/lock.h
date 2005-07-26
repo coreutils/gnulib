@@ -68,6 +68,15 @@
 # include <pthread.h>
 # include <stdlib.h>
 
+# if PTHREAD_IN_USE_DETECTION_HARD
+
+/* The pthread_in_use() detection needs to be done at runtime.  */
+#  define pthread_in_use() \
+     glthread_in_use ()
+extern int glthread_in_use (void);
+
+# endif
+
 # if USE_POSIX_THREADS_WEAK
 
 /* Use weak references to the POSIX threads library.  */
@@ -109,12 +118,16 @@
 #   pragma weak pthread_self
 #  endif
 
-#  pragma weak pthread_cancel
-#  define pthread_in_use() (pthread_cancel != NULL)
+#  if !PTHREAD_IN_USE_DETECTION_HARD
+#   pragma weak pthread_cancel
+#   define pthread_in_use() (pthread_cancel != NULL)
+#  endif
 
 # else
 
-#  define pthread_in_use() 1
+#  if !PTHREAD_IN_USE_DETECTION_HARD
+#   define pthread_in_use() 1
+#  endif
 
 # endif
 

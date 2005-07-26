@@ -1,3 +1,8 @@
+2005-07-26  Bruno Haible  <bruno@clisp.org>
+
+	* lock.h: Update from GNU gettext.
+	* lock.c: Update from GNU gettext.
+
 2005-07-18  Bruno Haible  <bruno@clisp.org>
 
 	* lock.h (gl_once_t): New type.
