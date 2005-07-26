@@ -1,3 +1,14 @@
+2005-07-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Add support to getopt for Emacs, which doesn't use LIBOBJS in the
+	normal way.
+	* getopt.m4 (gl_GETOPT_SUBSTITUTE_HEADER): New macro.
+	(gl_GETOPT_SUBSTITUTE): Use it.  Invoke gl_PREREQ_GETOPT.
+	(gl_GETOPT_IFELSE, gl_GETOPT_CHECK_HEADERS): New macros.
+	(gl_GETOPT): Use the new macros.  Most of the implementation
+	is moved to the new macros.  This is for programs like Emacs
+	that don't want all the functionality of gl_GETOPT.
+
 2005-07-26  Bruno Haible  <bruno@clisp.org>
 
 	* lock.m4: Update from GNU gettext.
