@@ -264,7 +264,7 @@ dnl IRIX 6.5          posix       -lpthread       Y      0.5
 dnl
 dnl AIX 4.3,5.1       posix       -lpthread       N      AIX 4: 0.5; AIX 5: OK
 dnl
-dnl OSF/1 4.0,5.1     posix       -pthread (cc)   Y      OK
+dnl OSF/1 4.0,5.1     posix       -pthread (cc)   N      OK
 dnl                               -lpthread (gcc) Y
 dnl
 dnl Cygwin            posix       -lpthread       Y      OK
