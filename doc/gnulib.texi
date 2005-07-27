@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.13 2005-07-16 19:41:33 jas Exp $
+@comment $Id: gnulib.texi,v 1.14 2005-07-27 00:16:01 karl Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2005-07-16 19:41:33 $
+@set UPDATED $Date: 2005-07-27 00:16:01 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -87,6 +87,7 @@ Getting started:
 * inet_ntoa::
 * Out of memory handling::
 * Library version handling::
+* Regular expressions::
 @end menu
 
 
@@ -344,6 +345,17 @@ Typical uses look like:
        if (!gcry_check_version (GCRYPT_VERSION))
          die ("version mismatch\n");
 @end example
+
+
+@node Regular expressions
+@section Regular expressions
+
+Gnulib supports many different types of regular expressions; although
+the underlying features are the same or identical, the syntax used
+varies.  The descriptions given here for the different types are
+generated automatically.
+
+@include regexprops-generic.texi
 
 
 @node Invoking gnulib-tool
