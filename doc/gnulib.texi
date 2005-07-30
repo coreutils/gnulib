@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.14 2005-07-27 00:16:01 karl Exp $
+@comment $Id: gnulib.texi,v 1.15 2005-07-30 13:47:19 karl Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2005-07-27 00:16:01 $
+@set UPDATED $Date: 2005-07-30 13:47:19 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -523,12 +523,14 @@ SUBDIRS += gl
 @end example
 
 Finally, you have to add compiler and linker flags in the appropriate
-source directories, so that you can make use
-of the gnulib library.  For example:
+source directories, so that you can make use of the gnulib library.
+Since some modules (@samp{getopt}, for example) may copy files into
+the build directory, @file{top_builddir/lib} is needed as well
+as @file{top_srcdir/lib}.  For example:
 
 @example
 ...
-AM_CPPFLAGS = -I$(top_srcdir)/lib
+AM_CPPFLAGS = -I$(top_srcdir)/lib -I$(top_builddir)/lib
 ...
 LIBADD = lib/libgnu.a
 ...

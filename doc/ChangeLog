@@ -1,3 +1,8 @@
+2005-07-30  Karl Berry  <karl@gnu.org>
+
+	* gnulib.texi (Initial import): mention -I$(top_builddir)/lib.
+	Report from Ben Pfaff, regarding getopt.
+
 2005-07-24  Bruno Haible  <bruno@clisp.org>
 
 	* visibility.texi: New file.
