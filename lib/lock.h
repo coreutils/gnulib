@@ -137,7 +137,9 @@ typedef pthread_mutex_t gl_lock_t;
 # define gl_lock_define(STORAGECLASS, NAME) \
     STORAGECLASS pthread_mutex_t NAME;
 # define gl_lock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS pthread_mutex_t NAME = PTHREAD_MUTEX_INITIALIZER;
+    STORAGECLASS pthread_mutex_t NAME = gl_lock_initializer;
+# define gl_lock_initializer \
+    PTHREAD_MUTEX_INITIALIZER
 # define gl_lock_init(NAME) \
     if (pthread_in_use () && pthread_mutex_init (&NAME, NULL) != 0) abort ()
 # define gl_lock_lock(NAME) \
@@ -157,7 +159,9 @@ typedef pthread_rwlock_t gl_rwlock_t;
 #   define gl_rwlock_define(STORAGECLASS, NAME) \
       STORAGECLASS pthread_rwlock_t NAME;
 #   define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
-      STORAGECLASS pthread_rwlock_t NAME = PTHREAD_RWLOCK_INITIALIZER;
+      STORAGECLASS pthread_rwlock_t NAME = gl_rwlock_initializer;
+#   define gl_rwlock_initializer \
+      PTHREAD_RWLOCK_INITIALIZER
 #   define gl_rwlock_init(NAME) \
       if (pthread_in_use () && pthread_rwlock_init (&NAME, NULL) != 0) abort ()
 #   define gl_rwlock_rdlock(NAME) \
@@ -181,7 +185,9 @@ typedef struct
 #   define gl_rwlock_define(STORAGECLASS, NAME) \
       STORAGECLASS gl_rwlock_t NAME;
 #   define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
-      STORAGECLASS gl_rwlock_t NAME = { 0, PTHREAD_MUTEX_INITIALIZER };
+      STORAGECLASS gl_rwlock_t NAME = gl_rwlock_initializer;
+#   define gl_rwlock_initializer \
+      { 0, PTHREAD_MUTEX_INITIALIZER }
 #   define gl_rwlock_init(NAME) \
       if (pthread_in_use ()) glthread_rwlock_init (&NAME)
 #   define gl_rwlock_rdlock(NAME) \
@@ -214,8 +220,9 @@ typedef struct
 # define gl_rwlock_define(STORAGECLASS, NAME) \
     STORAGECLASS gl_rwlock_t NAME;
 # define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS gl_rwlock_t NAME = \
-      { PTHREAD_MUTEX_INITIALIZER, PTHREAD_COND_INITIALIZER, PTHREAD_COND_INITIALIZER, 0, 0 };
+    STORAGECLASS gl_rwlock_t NAME = gl_rwlock_initializer;
+# define gl_rwlock_initializer \
+    { PTHREAD_MUTEX_INITIALIZER, PTHREAD_COND_INITIALIZER, PTHREAD_COND_INITIALIZER, 0, 0 }
 # define gl_rwlock_init(NAME) \
     if (pthread_in_use ()) glthread_rwlock_init (&NAME)
 # define gl_rwlock_rdlock(NAME) \
@@ -243,12 +250,14 @@ extern void glthread_rwlock_destroy (gl_rwlock_t *lock);
 typedef pthread_mutex_t gl_recursive_lock_t;
 #   define gl_recursive_lock_define(STORAGECLASS, NAME) \
       STORAGECLASS pthread_mutex_t NAME;
+#   define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
+      STORAGECLASS pthread_mutex_t NAME = gl_recursive_lock_initializer;
 #   ifdef PTHREAD_RECURSIVE_MUTEX_INITIALIZER
-#    define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
-       STORAGECLASS pthread_mutex_t NAME = PTHREAD_RECURSIVE_MUTEX_INITIALIZER;
+#    define gl_recursive_lock_initializer \
+       PTHREAD_RECURSIVE_MUTEX_INITIALIZER
 #   else
-#    define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
-       STORAGECLASS pthread_mutex_t NAME = PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP;
+#    define gl_recursive_lock_initializer \
+       PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP
 #   endif
 #   define gl_recursive_lock_init(NAME) \
       if (pthread_in_use () && pthread_mutex_init (&NAME, NULL) != 0) abort ()
@@ -271,8 +280,9 @@ typedef struct
 #   define gl_recursive_lock_define(STORAGECLASS, NAME) \
       STORAGECLASS gl_recursive_lock_t NAME;
 #   define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
-      STORAGECLASS gl_recursive_lock_t NAME = \
-        { PTHREAD_MUTEX_INITIALIZER, PTHREAD_MUTEX_INITIALIZER, 0 };
+      STORAGECLASS gl_recursive_lock_t NAME = gl_recursive_lock_initializer;
+#   define gl_recursive_lock_initializer \
+      { PTHREAD_MUTEX_INITIALIZER, PTHREAD_MUTEX_INITIALIZER, 0 }
 #   define gl_recursive_lock_init(NAME) \
       if (pthread_in_use ()) glthread_recursive_lock_init (&NAME)
 #   define gl_recursive_lock_lock(NAME) \
@@ -303,8 +313,9 @@ typedef struct
 #  define gl_recursive_lock_define(STORAGECLASS, NAME) \
      STORAGECLASS gl_recursive_lock_t NAME;
 #  define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
-     STORAGECLASS gl_recursive_lock_t NAME = \
-       { PTHREAD_MUTEX_INITIALIZER, (pthread_t) 0, 0 };
+     STORAGECLASS gl_recursive_lock_t NAME = gl_recursive_lock_initializer;
+#  define gl_recursive_lock_initializer \
+     { PTHREAD_MUTEX_INITIALIZER, (pthread_t) 0, 0 }
 #  define gl_recursive_lock_init(NAME) \
      if (pthread_in_use ()) glthread_recursive_lock_init (&NAME)
 #  define gl_recursive_lock_lock(NAME) \
@@ -380,7 +391,9 @@ typedef pth_mutex_t gl_lock_t;
 # define gl_lock_define(STORAGECLASS, NAME) \
     STORAGECLASS pth_mutex_t NAME;
 # define gl_lock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS pth_mutex_t NAME = PTH_MUTEX_INIT;
+    STORAGECLASS pth_mutex_t NAME = gl_lock_initializer;
+# define gl_lock_initializer \
+    PTH_MUTEX_INIT
 # define gl_lock_init(NAME) \
     if (pth_in_use() && !pth_mutex_init (&NAME)) abort ()
 # define gl_lock_lock(NAME) \
@@ -396,7 +409,9 @@ typedef pth_rwlock_t gl_rwlock_t;
 #  define gl_rwlock_define(STORAGECLASS, NAME) \
      STORAGECLASS pth_rwlock_t NAME;
 #  define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
-     STORAGECLASS pth_rwlock_t NAME = PTH_RWLOCK_INIT;
+     STORAGECLASS pth_rwlock_t NAME = gl_rwlock_initializer;
+#  define gl_rwlock_initializer \
+     PTH_RWLOCK_INIT
 #  define gl_rwlock_init(NAME) \
      if (pth_in_use() && !pth_rwlock_init (&NAME)) abort ()
 #  define gl_rwlock_rdlock(NAME) \
@@ -415,7 +430,9 @@ typedef pth_mutex_t gl_recursive_lock_t;
 #  define gl_recursive_lock_define(STORAGECLASS, NAME) \
      STORAGECLASS pth_mutex_t NAME;
 #  define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
-     STORAGECLASS pth_mutex_t NAME = PTH_MUTEX_INIT;
+     STORAGECLASS pth_mutex_t NAME = gl_recursive_lock_initializer;
+#  define gl_recursive_lock_initializer \
+     PTH_MUTEX_INIT
 #  define gl_recursive_lock_init(NAME) \
      if (pth_in_use() && !pth_mutex_init (&NAME)) abort ()
 #  define gl_recursive_lock_lock(NAME) \
@@ -491,7 +508,9 @@ typedef mutex_t gl_lock_t;
 # define gl_lock_define(STORAGECLASS, NAME) \
     STORAGECLASS mutex_t NAME;
 # define gl_lock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS mutex_t NAME = DEFAULTMUTEX;
+    STORAGECLASS mutex_t NAME = gl_lock_initializer;
+# define gl_lock_initializer \
+    DEFAULTMUTEX
 # define gl_lock_init(NAME) \
     if (thread_in_use () && mutex_init (&NAME, USYNC_THREAD, NULL) != 0) abort ()
 # define gl_lock_lock(NAME) \
@@ -507,7 +526,9 @@ typedef rwlock_t gl_rwlock_t;
 # define gl_rwlock_define(STORAGECLASS, NAME) \
     STORAGECLASS rwlock_t NAME;
 # define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS rwlock_t NAME = DEFAULTRWLOCK;
+    STORAGECLASS rwlock_t NAME = gl_rwlock_initializer;
+# define gl_rwlock_initializer \
+    DEFAULTRWLOCK
 # define gl_rwlock_init(NAME) \
     if (thread_in_use () && rwlock_init (&NAME, USYNC_THREAD, NULL) != 0) abort ()
 # define gl_rwlock_rdlock(NAME) \
@@ -534,7 +555,9 @@ typedef struct
 # define gl_recursive_lock_define(STORAGECLASS, NAME) \
     STORAGECLASS gl_recursive_lock_t NAME;
 # define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS gl_recursive_lock_t NAME = { DEFAULTMUTEX, (thread_t) 0, 0 };
+    STORAGECLASS gl_recursive_lock_t NAME = gl_recursive_lock_initializer;
+# define gl_recursive_lock_initializer \
+    { DEFAULTMUTEX, (thread_t) 0, 0 }
 # define gl_recursive_lock_init(NAME) \
     if (thread_in_use ()) glthread_recursive_lock_init (&NAME)
 # define gl_recursive_lock_lock(NAME) \
@@ -607,7 +630,9 @@ typedef struct
 # define gl_lock_define(STORAGECLASS, NAME) \
     STORAGECLASS gl_lock_t NAME;
 # define gl_lock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS gl_lock_t NAME = { { 0, -1 } };
+    STORAGECLASS gl_lock_t NAME = gl_lock_initializer;
+# define gl_lock_initializer \
+    { { 0, -1 } }
 # define gl_lock_init(NAME) \
     glthread_lock_init (&NAME)
 # define gl_lock_lock(NAME) \
@@ -647,7 +672,9 @@ typedef struct
 # define gl_rwlock_define(STORAGECLASS, NAME) \
     STORAGECLASS gl_rwlock_t NAME;
 # define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS gl_rwlock_t NAME = { { 0, -1 } };
+    STORAGECLASS gl_rwlock_t NAME = gl_rwlock_initializer;
+# define gl_rwlock_initializer \
+    { { 0, -1 } }
 # define gl_rwlock_init(NAME) \
     glthread_rwlock_init (&NAME)
 # define gl_rwlock_rdlock(NAME) \
@@ -681,7 +708,9 @@ typedef struct
 # define gl_recursive_lock_define(STORAGECLASS, NAME) \
     STORAGECLASS gl_recursive_lock_t NAME;
 # define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS gl_recursive_lock_t NAME = { { 0, -1 }, 0, 0 };
+    STORAGECLASS gl_recursive_lock_t NAME = gl_recursive_lock_initializer;
+# define gl_recursive_lock_initializer \
+    { { 0, -1 }, 0, 0 }
 # define gl_recursive_lock_init(NAME) \
     glthread_recursive_lock_init (&NAME)
 # define gl_recursive_lock_lock(NAME) \
