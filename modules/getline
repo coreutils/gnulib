@@ -4,25 +4,21 @@ Read a line from a stream.
 Files:
 lib/getline.h
 lib/getline.c
-lib/getndelim2.h
-lib/getndelim2.c
 m4/getline.m4
-m4/getndelim2.m4
-m4/ssize_t.m4
 
 Depends-on:
+getdelim
 
 configure.ac:
-AM_FUNC_GETLINE
+gl_FUNC_GETLINE
 
 Makefile.am:
-EXTRA_DIST += getndelim2.h getndelim2.c
 
 Include:
 "getline.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
-all
+Simon Josefsson

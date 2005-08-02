@@ -1,0 +1,23 @@
+Description:
+Read character delimited data from a stream.
+
+Files:
+lib/getdelim.h
+lib/getdelim.c
+m4/getdelim.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_GETDELIM
+
+Makefile.am:
+
+Include:
+"getdelim.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

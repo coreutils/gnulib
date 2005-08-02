@@ -1,3 +1,13 @@
+2005-08-02  Simon Josefsson  <jas@extundo.com>
+
+	* modules/getdelim: New file.
+
+	* modules/getline: Rewrite, don't use getndelim2.
+
+2005-07-16  Simon Josefsson  <jas@extundo.com>
+
+	* modules/readline: New file.
+
 2005-07-24  Bruno Haible  <bruno@clisp.org>
 
 	* modules/visibility: New file.

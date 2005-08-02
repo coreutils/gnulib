@@ -1,4 +1,4 @@
-/* getline.c --- Implementation of replacement getline function.
+/* getdelim.h --- Prototype for replacement getdelim function.
    Copyright (C) 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or
@@ -18,15 +18,11 @@
 
 /* Written by Simon Josefsson. */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+/* Get size_t, FILE, ssize_t.  And getdelim, if available.  */
+# include <stddef.h>
+# include <stdio.h>
+# include <sys/types.h>
 
-#include "getdelim.h"
-#include "getline.h"
-
-ssize_t
-getline (char **lineptr, size_t *n, FILE *stream)
-{
-  return getdelim (lineptr, n, '\n', stream);
-}
+#if !HAVE_DECL_GETDELIM
+ssize_t getdelim (char **lineptr, size_t *n, int delimiter, FILE *stream);
+#endif /* !HAVE_GETDELIM */

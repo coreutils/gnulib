@@ -1,3 +1,9 @@
+2005-08-02  Simon Josefsson  <jas@extundo.com>
+
+	* getline.h, getline.c: Rewrite.
+
+	* getdelim.h, getdelim.c: New files, ported from glibc.
+
 2005-07-31  Bruno Haible  <bruno@clisp.org>
 
 	* lock.h (gl_lock_initializer): New macro.
