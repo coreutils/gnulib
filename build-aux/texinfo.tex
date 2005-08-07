@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2005-08-04.11}
+\def\texinfoversion{2005-08-07.06}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005 Free Software
@@ -3378,6 +3378,8 @@ where each line of input produces a line of output.}
     \definedummyword\key
     \definedummyword\math
     \definedummyword\option
+    \definedummyword\pxref
+    \definedummyword\ref
     \definedummyword\samp
     \definedummyword\strong
     \definedummyword\tie
@@ -3386,6 +3388,7 @@ where each line of input produces a line of output.}
     \definedummyword\var
     \definedummyword\verb
     \definedummyword\w
+    \definedummyword\xref
   }
 }
 
@@ -6669,13 +6672,6 @@ where each line of input produces a line of output.}
       % caption if specified, else the full caption if specified, else nothing.
       {%
         \atdummies
-        %
-        % seems like we need to list every single command, as a long
-        % caption might well contain environments, etc.?  Or maybe this
-        % should be done in \commondummies?
-        \let\xref=\relax
-        \let\pxref=\relax
-        \let\ref=\relax
         %
         % since we read the caption text in the macro world, where ^^M
         % is turned into a normal character, we have to scan it back, so
