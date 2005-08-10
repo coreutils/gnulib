@@ -1,3 +1,7 @@
+2005-08-10  Stepan Kasal  <kasal@ucw.cz>
+
+	* onceonly_2_57.m4: Really require Autoconf 2.57.
+
 2005-08-02  Simon Josefsson  <jas@extundo.com>
 
 	* getline.m4: Separate out getdelim stuff into separate module.
