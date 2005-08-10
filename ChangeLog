@@ -1,3 +1,7 @@
+2005-08-10  Simon Josefsson  <jas@extundo.com>
+
+	* tests/test-iconvme.c: New file.
+
 2005-08-08  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>  (tiny change)
 
 	* README: Typos.
