@@ -1,3 +1,8 @@
+2005-08-11  Simon Josefsson  <jas@extundo.com>
+
+	* gnulib.texi (Initial import, Finishing touches): Mention
+	gl_AVOID.
+
 2005-07-30  Karl Berry  <karl@gnu.org>
 
 	* gnulib.texi (Initial import): mention -I$(top_builddir)/lib.

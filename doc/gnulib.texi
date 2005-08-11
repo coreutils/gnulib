@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.15 2005-07-30 13:47:19 karl Exp $
+@comment $Id: gnulib.texi,v 1.16 2005-08-11 10:08:57 jas Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2005-07-30 13:47:19 $
+@set UPDATED $Date: 2005-08-11 10:08:57 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -413,12 +413,15 @@ By default, the source code is copied into @file{lib/} and the M4
 macros in @file{m4/}.  You can override these paths by using
 @code{--source-base=DIRECTORY} and @code{--m4-base=DIRECTORY}, or by
 adding @samp{gl_SOURCE_BASE(DIRECTORY)} and
-@samp{gl_M4_BASE(DIRECTORY)} to your @file{configure.ac}.
-Some modules also provide other files necessary
-for building. These files are copied into the directory specified
-by @samp{AC_CONFIG_AUX_DIR} in @file{configure.ac} or by the
-@code{--aux-dir=DIRECTORY} option. If neither is specified, the
-current directory is assumed.
+@samp{gl_M4_BASE(DIRECTORY)} to your @file{configure.ac}.  Some
+modules also provide other files necessary for building. These files
+are copied into the directory specified by @samp{AC_CONFIG_AUX_DIR} in
+@file{configure.ac} or by the @code{--aux-dir=DIRECTORY} option.  If
+neither is specified, the current directory is assumed.  If a module
+is automatically added as a dependency is added, that you wish to
+avoid, you may use @code{--avoid=MODULE}, possibly several times.  Of
+course, you will then need to implement the same interface as the
+removed module.
 
 @code{gnulib-tool} can make symbolic links instead
 of copying the source files. Use the @code{--symbolic}
@@ -608,7 +611,8 @@ gl_EARLY
 gl_SOURCE_BASE(gl)
 gl_M4_BASE(gl/m4)
 gl_LIB(libgl)
-gl_MODULES(getopt progname strdup dummy exit error getpass-gnu getaddrinfo)
+gl_MODULES(xmalloc progname strdup dummy exit error getpass-gnu getaddrinfo)
+gl_AVOID(xalloc-die)
 gl_INIT
 ...
 @end example
@@ -622,7 +626,8 @@ The macros @code{gl_EARLY}, @code{gl_INIT}, @code{gl_SOURCE_BASE}, and
 macro can be used if you wish to change the library name (by default
 @file{libgnu.a} or @file{libgnu.la} if you use libtool).  The
 @code{gl_MODULES} macro is used to specify which modules to import.
-
+@code{gl_AVOID} macro is used to specify which modules, that are
+normally automatically added as a dependency, to avoid.
 
 @node Copying This Manual
 @appendix Copying This Manual

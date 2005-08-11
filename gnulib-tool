@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-07-11 11:37:09 $'
+cvsdatestamp='$Date: 2005-08-11 10:08:57 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -720,6 +720,9 @@ func_import ()
     echo "dnl Usage: gl_MODULES(module1 module2 ...)"
     echo "AC_DEFUN([gl_MODULES], [])"
     echo
+    echo "dnl Usage: gl_AVOID(module1 module2 ...)"
+    echo "AC_DEFUN([gl_AVOID], [])"
+    echo
     echo "dnl Usage: gl_SOURCE_BASE(DIR)"
     echo "AC_DEFUN([gl_SOURCE_BASE], [])"
     echo
@@ -952,6 +955,9 @@ case $mode in
       /gl_MODULES[^_]/  {
         s,^.*gl_MODULES([[   ]*\([^])]*\).*$,ac_modules="\1",; p;
       };
+      /gl_AVOID[^_]/  {
+        s,^.*gl_AVOID([[   ]*\([^])]*\).*$,ac_avoidlist="\1",; p;
+      };
       /gl_SOURCE_BASE/   {
         s,^.*gl_SOURCE_BASE([[         ]*\([^])]*\).*$,ac_sourcebase="\1",; p;
       };
@@ -1007,6 +1013,9 @@ case $mode in
     else
       modules="$*"
     fi
+
+    # Which modules to avoid?
+    avoidlist="$avoidlist $ac_avoidlist"
 
     func_import "$modules"
     ;;
