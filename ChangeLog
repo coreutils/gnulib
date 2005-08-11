@@ -1,5 +1,7 @@
 2005-08-11  Simon Josefsson  <jas@extundo.com>
 
+	* modules/readline: New file.
+
 	* modules/strnlen (Files): Add strnlen.h.
 
 2005-08-10  Simon Josefsson  <jas@extundo.com>

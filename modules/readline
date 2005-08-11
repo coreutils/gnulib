@@ -1,0 +1,25 @@
+Description:
+Simple implementation of readline.
+
+Files:
+lib/readline.h
+lib/readline.c
+m4/readline.m4
+m4/lib-link.m4
+
+Depends-on:
+getline
+
+configure.ac:
+gl_FUNC_READLINE
+
+Makefile.am:
+
+Include:
+"readline.h"
+
+License:
+GPL
+
+Maintainer:
+Simon Josefsson
