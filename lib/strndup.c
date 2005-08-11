@@ -1,4 +1,4 @@
-/* Copyright (C) 1996, 1997, 1998, 2000, 2003 Free Software Foundation, Inc.
+/* Copyright (C) 1996, 1997, 1998, 2000, 2003, 2005 Free Software Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C Library.
    Bugs can be reported to bug-glibc@prep.ai.mit.edu.
@@ -24,12 +24,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef HAVE_DECL_STRNLEN
-"this configure-time declaration test was not run"
-#endif
-#if !HAVE_DECL_STRNLEN
-size_t strnlen ();
-#endif
+/* Get strnlen. */
+#include "strnlen.h"
 
 #undef __strndup
 #undef strndup

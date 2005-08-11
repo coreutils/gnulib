@@ -1,3 +1,9 @@
+2005-08-10  Simon Josefsson  <jas@extundo.com>
+
+	* strndup.c: Use strnlen.h.
+
+	* strnlen.h: New file.
+
 2005-08-02  Simon Josefsson  <jas@extundo.com>
 
 	* getline.h, getline.c: Rewrite.

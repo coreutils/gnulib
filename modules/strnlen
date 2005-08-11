@@ -2,6 +2,7 @@ Description:
 strnlen() function: determine the length of a size-bounded string.
 
 Files:
+lib/strnlen.h
 lib/strnlen.c
 m4/strnlen.m4
 

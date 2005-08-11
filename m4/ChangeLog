@@ -1,3 +1,10 @@
+2005-08-10  Simon Josefsson  <jas@extundo.com>
+
+	* strnlen.m4: New file.
+
+	* strndup.m4: Don't check for strnlen declaration, done in
+	strnlen.m4.
+
 2005-08-10  Stepan Kasal  <kasal@ucw.cz>
 
 	* onceonly_2_57.m4: Really require Autoconf 2.57.
