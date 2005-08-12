@@ -1,5 +1,10 @@
 2005-08-12  Simon Josefsson  <jas@extundo.com>
 
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
+	ssize_t.
+
+2005-08-12  Simon Josefsson  <jas@extundo.com>
+
 	* modules/getndelim2: Use ssize_t module.
 	* modules/getnline: Likewise.
 	* modules/safe-read: Likewise.
