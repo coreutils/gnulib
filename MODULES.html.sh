@@ -1608,7 +1608,7 @@ func_all_modules ()
 
   func_begin_table
   func_module base64
-  func_module check_version
+  func_module check-version
   func_module diacrit
   func_module getline
   func_module getdelim
