@@ -39,8 +39,10 @@ AC_DEFUN([gl_FUNC_READLINE],
         [readline((char*)0);],
         gl_cv_lib_readline=yes)
       if test "$gl_cv_lib_readline" = yes; then
-        LIBREADLINE="$LIBREADLINE -l$extra_lib"
-        LTLIBREADLINE="$LTLIBREADLINE -l$extra_lib"
+        if test -n "$extra_lib"; then
+          LIBREADLINE="$LIBREADLINE -l$extra_lib"
+          LTLIBREADLINE="$LTLIBREADLINE -l$extra_lib"
+        fi
         break
       fi
     done
