@@ -1,8 +1,11 @@
-# readline.m4 serial 1
+# readline.m4 serial 2
 dnl Copyright (C) 2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
+
+dnl Written by Simon Josefsson, with help from Bruno Haible and Oskar
+dnl Liljeblad.
 
 AC_DEFUN([gl_FUNC_READLINE],
 [
@@ -26,22 +29,34 @@ AC_DEFUN([gl_FUNC_READLINE],
   AC_CACHE_CHECK(for readline, gl_cv_lib_readline, [
     gl_cv_lib_readline=no
     am_save_LIBS="$LIBS"
-    LIBS="$LIBS $LIBREADLINE"
-    AC_TRY_LINK([#include <stdio.h>
+    for extra_lib in "" termcap curses ncurses; do
+      LIBS="$am_save_LIBS $LIBREADLINE"
+      if test -n "$extra_lib"; then
+        LIBS="$LIBS -l$extra_lib"
+      fi
+      AC_TRY_LINK([#include <stdio.h>
 #include <readline/readline.h>],
-      [readline((char*)0);],
-      gl_cv_lib_readline=yes)
+        [readline((char*)0);],
+        gl_cv_lib_readline=yes)
+      if test "$gl_cv_lib_readline" = yes; then
+        LIBREADLINE="$LIBREADLINE -l$extra_lib"
+        LTLIBREADLINE="$LTLIBREADLINE -l$extra_lib"
+        break
+      fi
+    done
     LIBS="$am_save_LIBS"
   ])
+
   if test "$gl_cv_lib_readline" = yes; then
-    AC_DEFINE(HAVE_READLINE, 1, [Define if you have the readline() library.])
+    AC_DEFINE(HAVE_READLINE, 1, [Define if you have the readline library.])
   fi
+
   if test "$gl_cv_lib_readline" = yes; then
     AC_MSG_CHECKING([how to link with libreadline])
     AC_MSG_RESULT([$LIBREADLINE])
   else
-    dnl If $LIBREADLINE didn't lead to a usable library, we don't need $INCREADLINE
-    dnl either.
+    dnl If $LIBREADLINE didn't lead to a usable library, we don't
+    dnl need $INCREADLINE either.
     CPPFLAGS="$am_save_CPPFLAGS"
     LIBREADLINE=
     LTLIBREADLINE=
