@@ -1,5 +1,14 @@
 2005-08-12  Simon Josefsson  <jas@extundo.com>
 
+	* modules/getndelim2: Use ssize_t module.
+	* modules/getnline: Likewise.
+	* modules/safe-read: Likewise.
+	* modules/xreadlink: Likewise.
+
+	* modules/ssize_t: New file.
+
+2005-08-12  Simon Josefsson  <jas@extundo.com>
+
 	* MODULES.html.sh (Extra functions based on ANSI C 89: Misc): Add
 	readline, getdelim and check_version.
 	(Support for systems lacking ISO C 99: Sizes of integer types):

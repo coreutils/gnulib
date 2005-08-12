@@ -5,10 +5,10 @@ Files:
 lib/getnline.h
 lib/getnline.c
 m4/getnline.m4
-m4/ssize_t.m4
 
 Depends-on:
 getndelim2
+ssize_t
 
 configure.ac:
 gl_GETNLINE
@@ -24,4 +24,3 @@ GPL
 
 Maintainer:
 all
-
