@@ -1608,14 +1608,17 @@ func_all_modules ()
 
   func_begin_table
   func_module base64
+  func_module check_version
   func_module diacrit
   func_module getline
+  func_module getdelim
   func_module getnline
   func_module getndelim2
   func_module linebuffer
   func_module obstack
   func_module hash-pjw
   func_module hash
+  func_module readline
   func_module readtokens
   func_module readtokens0
   func_module strverscmp
@@ -1644,6 +1647,7 @@ func_all_modules ()
 
   func_begin_table
   func_module ullong_max
+  func_module size_max
   func_end_table
 
   element="Boolean type and values <stdbool.h>"

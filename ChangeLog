@@ -1,3 +1,10 @@
+2005-08-12  Simon Josefsson  <jas@extundo.com>
+
+	* MODULES.html.sh (Extra functions based on ANSI C 89: Misc): Add
+	readline, getdelim and check_version.
+	(Support for systems lacking ISO C 99: Sizes of integer types):
+	Add size_max.
+
 2005-08-11  Simon Josefsson  <jas@extundo.com>
 
 	* modules/readline: New file.
