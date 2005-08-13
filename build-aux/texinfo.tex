@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2005-08-07.06}
+\def\texinfoversion{2005-08-13.08}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005 Free Software
@@ -1279,6 +1279,7 @@ where each line of input produces a line of output.}
     % We have to set dummies so commands such as @code, and characters
     % such as \, aren't expanded when present in a section title.
     \atdummies
+    \turnoffactive
     \activebackslashdouble
     \def\pdfdestname{#1}%
     \backslashparens\pdfdestname
@@ -4572,6 +4573,7 @@ where each line of input produces a line of output.}
     %
     \iflinks
       {\atdummies
+       \turnoffactive
        \edef\temp{%
          \write\tocfile{@#1entry{#2}{#3}{\lastnode}{\noexpand\folio}}}%
        \temp
@@ -6004,6 +6006,7 @@ where each line of input produces a line of output.}
   \iflinks
     {%
       \atdummies  % preserve commands, but don't expand them
+      \turnoffactive
       \edef\writexrdef##1##2{%
 	\write\auxfile{@xrdef{#1-% #1 of \setref, expanded by the \edef
 	  ##1}{##2}}% these are parameters of \writexrdef
@@ -6672,6 +6675,7 @@ where each line of input produces a line of output.}
       % caption if specified, else the full caption if specified, else nothing.
       {%
         \atdummies
+        \turnoffactive
         %
         % since we read the caption text in the macro world, where ^^M
         % is turned into a normal character, we have to scan it back, so
