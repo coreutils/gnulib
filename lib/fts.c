@@ -71,6 +71,10 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 #include <string.h>
 #include <unistd.h>
 
+#if ! _LIBC
+# include "lstat.h"
+#endif
+
 #if defined _LIBC
 # include <dirent.h>
 # define NAMLEN(dirent) _D_EXACT_NAMLEN (dirent)
@@ -111,15 +115,6 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 # define internal_function /* empty */
 #endif
 
-/* Arrange to make lstat calls go through the wrapper function
-   on systems with an lstat function that does not dereference symlinks
-   that are specified with a trailing slash.  */
-#if ! _LIBC && ! LSTAT_FOLLOWS_SLASHED_SYMLINK
-int rpl_lstat (const char *, struct stat *);
-# undef lstat
-# define lstat(Name, Stat_buf) rpl_lstat(Name, Stat_buf)
-#endif
-
 #ifndef __set_errno
 # define __set_errno(Val) errno = (Val)
 #endif
@@ -152,10 +147,9 @@ static bool enter_dir (FTS *fts, FTSENT *ent) { return true; }
 static void leave_dir (FTS *fts, FTSENT *ent) {}
 static bool setup_dir (FTS *fts) { return true; }
 static void free_dir (FTS *fts) {}
-static int fd_safer (int fd) { return fd; }
 #else
+# include "fcntl--.h"
 # include "fts-cycle.c"
-# include "unistd-safer.h"
 #endif
 
 #ifndef MAX
@@ -1029,7 +1023,7 @@ fts_cross_check (FTS const *sp)
       struct Active_dir ad;
       ad.ino = t->fts_statp->st_ino;
       ad.dev = t->fts_statp->st_dev;
-      if ( ! hash_lookup (sp->active_dir_ht, &ad))
+      if ( ! hash_lookup (sp->fts_cycle.ht, &ad))
 	printf ("ERROR: active dir, %s, not in tree\n", t->fts_path);
     }
 
@@ -1040,8 +1034,8 @@ fts_cross_check (FTS const *sp)
 	  || ent->fts_info == FTS_D))
     {
       struct Active_dir *ad;
-      for (ad = hash_get_first (sp->active_dir_ht); ad != NULL;
-	   ad = hash_get_next (sp->active_dir_ht, ad))
+      for (ad = hash_get_first (sp->fts_cycle.ht); ad != NULL;
+	   ad = hash_get_next (sp->fts_cycle.ht, ad))
 	{
 	  find_matching_ancestor (ent, ad);
 	}
@@ -1319,7 +1313,7 @@ fts_safe_changedir (FTS *sp, FTSENT *p, int fd, char const *dir)
 	newfd = fd;
 	if (ISSET(FTS_NOCHDIR))
 		return (0);
-	if (fd < 0 && (newfd = fd_safer (diropen (dir))) < 0)
+	if (fd < 0 && (newfd = diropen (dir)) < 0)
 		return (-1);
 	if (fstat(newfd, &sb)) {
 		ret = -1;
