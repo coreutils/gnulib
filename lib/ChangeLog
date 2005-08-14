@@ -1,3 +1,21 @@
+2005-08-14  Jim Meyering  <jim@meyering.net>
+
+	Sync from coreutils.
+
+	* fts-cycle.c (setup_dir, enter_dir, leave_dir, free_dir):
+	Use the hash-table-based cycle-detection code not just when
+	FTS_TIGHT_CYCLE_CHECK if specified, but also with FTS_LOGICAL.
+	Reported by James Youngman in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2005-08/msg00011.html>.
+	* fts_.h: Mention that with FTS_LOGICAL, we use FTS_TIGHT_CYCLE_CHECK.
+	* fts.c (fts_cross_check) [FTS_DEBUG]: s/active_dir_ht/fts_cycle.ht/.
+	This lets us compile with -DFTS_DEBUG, once again.
+	* fts.c [! _LIBC]: Include "lstat.h" rather than rolling our own.
+	* fts.c (fd_safer): Remove decl.
+	Include fcntl--.h rather than unistd-safer.h
+	(fts_safe_changedir): Don't call fd_safer; no longer needed
+	now that we include fcntl--.h.
+
 2005-08-11  Simon Josefsson  <jas@extundo.com>
 
 	* readline.h, readline.c: New file.
@@ -271,7 +289,7 @@
 
 	* getlogin_r.c (getlogin_r): Don't set errno to 0 on return.
 
-	* fts.c: Don't worry about debugging on pre-C99-comopatible hosts;
+	* fts.c: Don't worry about debugging on pre-C99-compatible hosts;
 	the configuration hassle isn't worth it.
 	Include inttypes.h and stdint.h unconditionally if FTS_DEBUG.
 	(LONGEST_MODIFIER, PRIuMAX): Remove.
