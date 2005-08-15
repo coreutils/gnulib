@@ -2,6 +2,8 @@
 
 	* modules/ssize_t (License): Change to 'unlimited'.
 
+	* gnulib-tool (sed_extract_prog): Recognize 'unlimited' license.
+
 2005-08-12  Simon Josefsson  <jas@extundo.com>
 
 	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
