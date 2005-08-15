@@ -1,3 +1,7 @@
+2005-08-15  Simon Josefsson  <jas@extundo.com>
+
+	* modules/ssize_t (License): Change to 'unlimited'.
+
 2005-08-12  Simon Josefsson  <jas@extundo.com>
 
 	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
