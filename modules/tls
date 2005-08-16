@@ -1,0 +1,26 @@
+Description:
+Thread-local storage in multithreaded situations.
+
+Files:
+lib/tls.h
+lib/tls.c
+m4/tls.m4
+
+Depends-on:
+lock
+
+configure.ac:
+gl_TLS
+
+Makefile.am:
+lib_SOURCES += tls.h tls.c
+
+Include:
+"tls.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

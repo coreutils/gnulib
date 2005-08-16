@@ -1,3 +1,11 @@
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
+	* tls.m4: New file, from GNU gettext.
+
+2005-08-12  Bruno Haible  <bruno@clisp.org>
+
+	* readline.m4 (gl_FUNC_READLINE): Look for ncurses first.
+
 2005-08-12  Simon Josefsson  <jas@extundo.com>
 
 	* readline.m4: Look for termcap, curses or ncurses if required.

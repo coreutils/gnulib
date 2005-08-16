@@ -1,3 +1,8 @@
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
+	* modules/tls: New file.
+	* MODULES.html.sh (Multithreading): Add tls.
+
 2005-08-15  Simon Josefsson  <jas@extundo.com>
 
 	* modules/ssize_t (License): Change to 'unlimited'.

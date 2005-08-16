@@ -1914,6 +1914,7 @@ func_all_modules ()
 
   func_begin_table
   func_module lock
+  func_module tls
   func_end_table
 
   element="Internationalization functions"

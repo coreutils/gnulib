@@ -1,3 +1,8 @@
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
+	* tls.h: New file, from GNU gettext.
+	* tls.c: New file, from GNU gettext.
+
 2005-08-15  Bruno Haible  <bruno@clisp.org>
 
 	* regex.h (__restrict_arr): Don't define to __restrict if __cplusplus
