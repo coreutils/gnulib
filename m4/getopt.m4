@@ -1,4 +1,4 @@
-# getopt.m4 serial 10
+# getopt.m4 serial 11
 dnl Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,8 +27,10 @@ AC_DEFUN([gl_GETOPT_SUBSTITUTE_HEADER],
 
 AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
 [
-  GETOPT_H=
-  AC_CHECK_HEADERS([getopt.h], [], [GETOPT_H=getopt.h])
+  if test -z "$GETOPT_H"; then
+    AC_CHECK_HEADERS([getopt.h], [], [GETOPT_H=getopt.h])
+  fi
+
   if test -z "$GETOPT_H"; then
     AC_CHECK_FUNCS([getopt_long_only], [], [GETOPT_H=getopt.h])
   fi

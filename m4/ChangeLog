@@ -1,3 +1,11 @@
+2005-08-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getopt.m4 (gl_GETOPT_CHECK_HEADERS): Do not override the results
+	of gl_GETOPT_SUBSTITUTE.  That way, if both gl_GETOPT_SUBSTITUTE
+	and gl_GETOPT are both invoked via different paths (as happens
+	with GNU tar CVS because it uses both argp and getopt), the former
+	wins.
+
 2005-08-16  Bruno Haible  <bruno@clisp.org>
 
 	* strcase.m4 (gl_FUNC_STRCASECMP): Use the replacement function always.
