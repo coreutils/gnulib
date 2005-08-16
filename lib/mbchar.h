@@ -182,21 +182,29 @@ typedef struct mbchar mbchar_t;
 #define mb_iseq(mbc, sc) ((mbc).wc_valid && (mbc).wc == (sc))
 #define mb_isnul(mbc) ((mbc).wc_valid && (mbc).wc == 0)
 #define mb_cmp(mbc1, mbc2) \
-  ((mbc1).wc_valid && (mbc2).wc_valid					\
-   ? (int) (mbc1).wc - (int) (mbc2).wc					\
-   : (mbc1).bytes == (mbc2).bytes					\
-     ? memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes)			\
-     : (mbc1).bytes < (mbc2).bytes					\
-       ? (memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes) > 0 ? 1 : -1)	\
-       : (memcmp ((mbc1).ptr, (mbc2).ptr, (mbc2).bytes) >= 0 ? 1 : -1))
+  ((mbc1).wc_valid							\
+   ? ((mbc2).wc_valid							\
+      ? (int) (mbc1).wc - (int) (mbc2).wc				\
+      : -1)								\
+   : ((mbc2).wc_valid							\
+      ? 1								\
+      : (mbc1).bytes == (mbc2).bytes					\
+        ? memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes)			\
+        : (mbc1).bytes < (mbc2).bytes					\
+          ? (memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes) > 0 ? 1 : -1) \
+          : (memcmp ((mbc1).ptr, (mbc2).ptr, (mbc2).bytes) >= 0 ? 1 : -1)))
 #define mb_casecmp(mbc1, mbc2) \
-  ((mbc1).wc_valid && (mbc2).wc_valid					\
-   ? (int) towlower ((mbc1).wc) - (int) towlower ((mbc2).wc)		\
-   : (mbc1).bytes == (mbc2).bytes					\
-     ? memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes)			\
-     : (mbc1).bytes < (mbc2).bytes					\
-       ? (memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes) > 0 ? 1 : -1)	\
-       : (memcmp ((mbc1).ptr, (mbc2).ptr, (mbc2).bytes) >= 0 ? 1 : -1))
+  ((mbc1).wc_valid							\
+   ? ((mbc2).wc_valid							\
+      ? (int) towlower ((mbc1).wc) - (int) towlower ((mbc2).wc)		\
+      : -1)								\
+   : ((mbc2).wc_valid							\
+      ? 1								\
+      : (mbc1).bytes == (mbc2).bytes					\
+        ? memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes)			\
+        : (mbc1).bytes < (mbc2).bytes					\
+          ? (memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes) > 0 ? 1 : -1) \
+          : (memcmp ((mbc1).ptr, (mbc2).ptr, (mbc2).bytes) >= 0 ? 1 : -1)))
 #define mb_equal(mbc1, mbc2) \
   ((mbc1).wc_valid && (mbc2).wc_valid					\
    ? (mbc1).wc == (mbc2).wc						\
