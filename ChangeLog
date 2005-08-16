@@ -1,5 +1,11 @@
 2005-08-16  Bruno Haible  <bruno@clisp.org>
 
+	* modules/mbchar: New file.
+	* MODULES.html.sh (Extended multibyte and wide character utilities):
+	New section.
+
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
 	* modules/tls: New file.
 	* MODULES.html.sh (Multithreading): Add tls.
 

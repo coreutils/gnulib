@@ -1738,6 +1738,18 @@ func_all_modules ()
   func_module xstrtoumax
   func_end_table
 
+  element="Extended multibyte and wide character utilities <wchar.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap isoc_ext_wchar_mb
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module mbchar
+  #func_module mbiter
+  #func_module mbfile
+  func_end_table
+
   element="Support for systems lacking POSIX:2001"
   func_section_wrap posix_sup
   func_wrap H2

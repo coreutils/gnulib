@@ -1,0 +1,26 @@
+Description:
+Multibyte character data type.
+
+Files:
+lib/mbchar.h
+lib/mbchar.c
+m4/mbchar.m4
+
+Depends-on:
+stdbool
+
+configure.ac:
+gl_MBCHAR
+
+Makefile.am:
+lib_SOURCES += mbchar.h mbchar.c
+
+Include:
+"mbchar.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
