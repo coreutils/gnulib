@@ -116,12 +116,6 @@ mbiter_multi_next (struct mbiter_multi *iter)
   iter->next_done = true;
 }
 
-static inline void
-mbiter_multi_reloc (struct mbiter_multi *iter, ptrdiff_t ptrdiff)
-{
-  iter->cur.ptr += ptrdiff;
-}
-
 /* Iteration macros.  */
 typedef struct mbiter_multi mbi_iterator_t;
 #define mbi_init(iter, startptr) \
@@ -167,44 +161,11 @@ strcasecmp (const char *s1, const char *s2)
 
       while (mbi_avail (iter1) && mbi_avail (iter2))
 	{
-	  /* Sort invalid characters after all valid ones.  */
-	  if (!mbi_cur (iter1).wc_valid)
-	    {
-	      if (!mbi_cur (iter2).wc_valid)
-		{
-		  /* Compare two invalid characters.  */
-		  int cmp;
+	  int cmp = mb_casecmp (mbi_cur (iter1), mbi_cur (iter2));
 
-		  if (mbi_cur (iter1).bytes > mbi_cur (iter2).bytes)
-		    return 1;
-		  if (mbi_cur (iter1).bytes < mbi_cur (iter2).bytes)
-		    return -1;
-		  cmp = memcmp (mbi_cur_ptr (iter1), mbi_cur_ptr (iter2),
-				mbi_cur (iter1).bytes);
-		  if (cmp != 0)
-		    return cmp;
-		}
-	      else
-		/* mbi_cur (iter1) invalid, mbi_cur (iter2) valid.  */
-		return 1;
-	    }
-	  else
-	    {
-	      if (!mbi_cur (iter2).wc_valid)
-		/* mbi_cur (iter1) valid, mbi_cur (iter2) invalid.  */
-		return -1;
-	      else
-		{
-		  /* Compare two valid characters.  */
-		  wchar_t c1 = towlower (mbi_cur (iter1).wc);
-		  wchar_t c2 = towlower (mbi_cur (iter2).wc);
+	  if (cmp != 0)
+	    return cmp;
 
-		  if (c1 > c2)
-		    return 1;
-		  if (c1 < c2)
-		    return -1;
-		}
-	    }
 	  mbi_advance (iter1);
 	  mbi_advance (iter2);
 	}

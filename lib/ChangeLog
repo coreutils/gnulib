@@ -1,5 +1,12 @@
 2005-08-16  Bruno Haible  <bruno@clisp.org>
 
+	* mbchar.h (mb_cmp, mb_casecmp): Order the invalid characters after
+	the valid ones. Makes the comparison operations transitive:
+	cmp (a, b) < 0 && cmp (b, c) < 0 ==> cmp (a, c) < 0.
+	* strcasecmp.c (strcasecmp): Use mb_casecmp.
+
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
 	* strcase.h (strcasecmp): Add note in comments.
 	* strncasecmp.c: Use code from strcasecmp.c.
 	* strcasecmp.c: Use mbchar module. Define private mbiter variant.
