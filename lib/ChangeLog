@@ -1,5 +1,10 @@
 2005-08-16  Bruno Haible  <bruno@clisp.org>
 
+	* strnlen1.h: New file.
+	* strnlen1.c: New file.
+
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
 	* mbfile.h: New file.
 
 2005-08-16  Bruno Haible  <bruno@clisp.org>

@@ -1520,6 +1520,7 @@ func_all_modules ()
   func_module strchrnul
   func_module strdup
   func_module strnlen
+  func_module strnlen1
   func_module strndup
   func_module strsep
   #func_module fstrcmp

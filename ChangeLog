@@ -1,5 +1,10 @@
 2005-08-16  Bruno Haible  <bruno@clisp.org>
 
+	* modules/strnlen1: New file.
+	* MODULES.html.sh (String handling): Add strnlen1.
+
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
 	* modules/mbfile: New file.
 	* MODULES.html.sh (Extended multibyte and wide character utilities):
 	Add mbfile.
