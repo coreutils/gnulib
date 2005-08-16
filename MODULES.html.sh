@@ -1746,7 +1746,7 @@ func_all_modules ()
 
   func_begin_table
   func_module mbchar
-  #func_module mbiter
+  func_module mbiter
   #func_module mbfile
   func_end_table
 

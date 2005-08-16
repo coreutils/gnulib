@@ -1,5 +1,11 @@
 2005-08-16  Bruno Haible  <bruno@clisp.org>
 
+	* modules/mbiter: New file.
+	* MODULES.html.sh (Extended multibyte and wide character utilities):
+	Add mbiter.
+
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
 	* modules/mbchar: New file.
 	* MODULES.html.sh (Extended multibyte and wide character utilities):
 	New section.
