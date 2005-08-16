@@ -1,3 +1,8 @@
+2005-08-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Comment out $LIBCSRC/posix/regex.h.
+	Add comments for each pending glibc patch.
+
 2005-07-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Comment out regcomp.c, since we have a porting fix

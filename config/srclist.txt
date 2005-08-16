@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.66 2005-07-08 17:57:01 eggert Exp $
+# $Id: srclist.txt,v 1.67 2005-08-16 00:07:03 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -93,20 +93,30 @@ $LIBCSRC/stdlib/getsubopt.c		lib gpl
 #$LIBCSRC/posix/getopt.h		lib gpl (getopt_.h in gnulib)
 #$LIBCSRC/posix/getopt1.c		lib gpl
 #$LIBCSRC/posix/getopt_int.h		lib gpl
-# regcomp.c contains a porting fix
+#
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1057
 #$LIBCSRC/posix/regcomp.c		lib gpl
+#
 $LIBCSRC/posix/regex.c			lib gpl
-$LIBCSRC/posix/regex.h			lib gpl
+#
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1201
+#$LIBCSRC/posix/regex.h			lib gpl
+#
 $LIBCSRC/posix/regex_internal.c		lib gpl
-# regex_internal.h contains a porting fix
+#
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1054
 #$LIBCSRC/posix/regex_internal.h		lib gpl
+#
 $LIBCSRC/posix/regexec.c		lib gpl
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
 $LIBCSRC/sysdeps/generic/strtoll.c	lib gpl
 $LIBCSRC/sysdeps/generic/strtoul.c	lib gpl
 $LIBCSRC/sysdeps/generic/strtok_r.c	lib gpl
 $LIBCSRC/sysdeps/generic/memmem.c	lib gpl
+#
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1033
 #$LIBCSRC/time/mktime.c			lib gpl
+
 #
 # These are close, but ...
 #$LIBCSRC/crypt/md5.c			lib gpl
@@ -119,7 +129,10 @@ $LIBCSRC/sysdeps/generic/memmem.c	lib gpl
 #$LIBCSRC/misc/error.h			lib gpl
 #$LIBCSRC/misc/getpass.c		lib gpl
 #$LIBCSRC/misc/mkstemp.c		lib gpl
+#
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1060
 #$LIBCSRC/posix/glob.h			lib gpl (glob_.h in gnulib)
+#
 #$LIBCSRC/posix/fnmatch.c		lib gpl
 #$LIBCSRC/posix/fnmatch.h		lib gpl (fnmatch_.h in gnulib)
 #$LIBCSRC/posix/fnmatch_loop.c		lib gpl
@@ -127,7 +140,12 @@ $LIBCSRC/sysdeps/generic/memmem.c	lib gpl
 #$LIBCSRC/stdlib/rpmatch.c		lib gpl
 #$LIBCSRC/string/strndup.c		lib gpl
 #$LIBCSRC/string/strverscmp.c		lib gpl
+#
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1060
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1061
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1062
 #$LIBCSRC/sysdeps/generic/glob.c	lib gpl
+#
 #$LIBCSRC/sysdeps/generic/memchr.c	lib gpl
 #$LIBCSRC/sysdeps/generic/memcmp.c	lib gpl
 #$LIBCSRC/sysdeps/generic/memrchr.c	lib gpl

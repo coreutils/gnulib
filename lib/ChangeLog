@@ -1,3 +1,8 @@
+2005-08-15  Bruno Haible  <bruno@clisp.org>
+
+	* regex.h (__restrict_arr): Don't define to __restrict if __cplusplus
+	is defined.
+
 2005-08-14  Jim Meyering  <jim@meyering.net>
 
 	Sync from coreutils.
