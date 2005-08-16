@@ -6,8 +6,11 @@ lib/strcase.h
 lib/strcasecmp.c
 lib/strncasecmp.c
 m4/strcase.m4
+m4/mbrtowc.m4
 
 Depends-on:
+strnlen1
+mbchar
 
 configure.ac:
 gl_STRCASE

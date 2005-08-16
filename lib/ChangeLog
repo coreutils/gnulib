@@ -1,5 +1,12 @@
 2005-08-16  Bruno Haible  <bruno@clisp.org>
 
+	* strcase.h (strcasecmp): Add note in comments.
+	* strncasecmp.c: Use code from strcasecmp.c.
+	* strcasecmp.c: Use mbchar module. Define private mbiter variant.
+	(strcasecmp): Work correctly in multibyte locales.
+
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
 	* strnlen1.h: New file.
 	* strnlen1.c: New file.
 

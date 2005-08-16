@@ -1,5 +1,10 @@
 2005-08-16  Bruno Haible  <bruno@clisp.org>
 
+	* strcase.m4 (gl_FUNC_STRCASECMP): Use the replacement function always.
+	(gl_PREREQ_STRCASECMP): Use gl_FUNC_MBRTOWC.
+
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
 	* mbfile.m4: New file.
 
 2005-08-16  Bruno Haible  <bruno@clisp.org>
