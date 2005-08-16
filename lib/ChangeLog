@@ -1,5 +1,9 @@
 2005-08-16  Bruno Haible  <bruno@clisp.org>
 
+	* mbfile.h: New file.
+
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
 	* mbiter.h: New file.
 
 2005-08-16  Bruno Haible  <bruno@clisp.org>

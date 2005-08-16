@@ -1,0 +1,26 @@
+Description:
+Multibyte character I/O.
+
+Files:
+lib/mbfile.h
+m4/mbfile.m4
+
+Depends-on:
+mbchar
+stdbool
+
+configure.ac:
+gl_MBFILE
+
+Makefile.am:
+lib_SOURCES += mbfile.h
+
+Include:
+"mbfile.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
