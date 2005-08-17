@@ -1,5 +1,12 @@
 2005-08-16  Bruno Haible  <bruno@clisp.org>
 
+	* strcasecmp.c (struct mbiter_multi): Remove at_end field.
+	(mbi_init): Update.
+	(mbi_avail, mbi_advance): Let the iteration end before the terminating
+	NUL byte, not after it.
+
+2005-08-16  Bruno Haible  <bruno@clisp.org>
+
 	* mbchar.h (mb_cmp, mb_casecmp): Order the invalid characters after
 	the valid ones. Makes the comparison operations transitive:
 	cmp (a, b) < 0 && cmp (b, c) < 0 ==> cmp (a, c) < 0.

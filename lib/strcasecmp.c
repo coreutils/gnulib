@@ -30,7 +30,8 @@
 
 #include "strnlen1.h"
 
-/* Like mbiter.h, except it doesn't look at the entire string.  */
+/* Like mbiter.h, except it doesn't look at the entire string, only at
+   very few bytes past the current point.  */
 
 #include "mbchar.h"
 
@@ -42,7 +43,6 @@
 
 struct mbiter_multi
 {
-  bool at_end;		/* true if the end of the string has been reached */
   bool in_shift;	/* true if next byte may not be interpreted as ASCII */
   mbstate_t state;	/* if in_shift: current shift state */
   bool next_done;	/* true if mbi_avail has already filled the following */
@@ -119,14 +119,13 @@ mbiter_multi_next (struct mbiter_multi *iter)
 /* Iteration macros.  */
 typedef struct mbiter_multi mbi_iterator_t;
 #define mbi_init(iter, startptr) \
-  ((iter).cur.ptr = (startptr), (iter).at_end = false, \
+  ((iter).cur.ptr = (startptr), \
    (iter).in_shift = false, memset (&(iter).state, '\0', sizeof (mbstate_t)), \
    (iter).next_done = false)
 #define mbi_avail(iter) \
-  (!(iter).at_end && (mbiter_multi_next (&(iter)), true))
+  (mbiter_multi_next (&(iter)), !mb_isnul ((iter).cur))
 #define mbi_advance(iter) \
-  ((mb_isnul ((iter).cur) ? ((iter).at_end = true) : 0), \
-   (iter).cur.ptr += (iter).cur.bytes, (iter).next_done = false)
+  ((iter).cur.ptr += (iter).cur.bytes, (iter).next_done = false)
 
 /* Access to the current character.  */
 #define mbi_cur(iter) (iter).cur
