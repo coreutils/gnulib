@@ -1,3 +1,7 @@
+2005-08-17  Bruno Haible  <bruno@clisp.org>
+
+	* mbuiter.h: New file.
+
 2005-08-16  Bruno Haible  <bruno@clisp.org>
 
 	* strcasecmp.c (struct mbiter_multi): Remove at_end field.

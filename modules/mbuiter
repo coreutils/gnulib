@@ -1,0 +1,27 @@
+Description:
+Iterating through multibyte strings.
+
+Files:
+lib/mbuiter.h
+m4/mbiter.m4
+
+Depends-on:
+mbchar
+stdbool
+strnlen1
+
+configure.ac:
+gl_MBITER
+
+Makefile.am:
+lib_SOURCES += mbuiter.h
+
+Include:
+"mbuiter.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
