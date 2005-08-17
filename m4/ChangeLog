@@ -1,3 +1,8 @@
+2005-08-17  Bruno Haible  <bruno@clisp.org>
+
+	* strstr.m4 (gl_FUNC_STRSTR): Use the replacement function always.
+	(gl_PREREQ_STRSTR): Use gl_FUNC_MBRTOWC.
+
 2005-08-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getopt.m4 (gl_GETOPT_CHECK_HEADERS): Do not override the results

@@ -1,5 +1,10 @@
 2005-08-17  Bruno Haible  <bruno@clisp.org>
 
+	* strstr.h: Ignore HAVE_STRSTR, always declare the gnulib function.
+	* strstr.c: Completely rewritten, with multibyte locale support.
+
+2005-08-17  Bruno Haible  <bruno@clisp.org>
+
 	* strcasecmp.c: Use mbuiter.h.
 
 2005-08-17  Bruno Haible  <bruno@clisp.org>

@@ -5,8 +5,10 @@ Files:
 lib/strstr.h
 lib/strstr.c
 m4/strstr.m4
+m4/mbrtowc.m4
 
 Depends-on:
+mbuiter
 
 configure.ac:
 gl_FUNC_STRSTR
