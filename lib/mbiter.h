@@ -56,8 +56,8 @@
      advances the iterator by one multibyte character.
 
    mbi_cur (iter)
-     returns the current multibyte character, of type MB_CHAR.  All the macros
-     defined in mbchar_multi.h can be used on it.
+     returns the current multibyte character, of type mbchar_t.  All the
+     macros defined in mbchar.h can be used on it.
 
    mbi_cur_ptr (iter)
      return a pointer to the beginning of the current multibyte character.
