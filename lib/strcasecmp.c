@@ -27,110 +27,7 @@
 #include <ctype.h>
 
 #if HAVE_MBRTOWC
-
-#include "strnlen1.h"
-
-/* Like mbiter.h, except it doesn't look at the entire string, only at
-   very few bytes past the current point.  */
-
-#include "mbchar.h"
-
-#include <assert.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <wchar.h>
-#include <wctype.h>
-
-struct mbiter_multi
-{
-  bool in_shift;	/* true if next byte may not be interpreted as ASCII */
-  mbstate_t state;	/* if in_shift: current shift state */
-  bool next_done;	/* true if mbi_avail has already filled the following */
-  struct mbchar cur;	/* the current character:
-	const char *cur.ptr		pointer to current character
-	The following are only valid after mbi_avail.
-	size_t cur.bytes		number of bytes of current character
-	bool cur.wc_valid		true if wc is a valid wide character
-	wchar_t cur.wc			if wc_valid: the current character
-	*/
-};
-
-static inline void
-mbiter_multi_next (struct mbiter_multi *iter)
-{
-  if (iter->next_done)
-    return;
-  if (iter->in_shift)
-    goto with_shift;
-  /* Handle most ASCII characters quickly, without calling mbrtowc().  */
-  if (is_basic (*iter->cur.ptr))
-    {
-      /* These characters are part of the basic character set.  ISO C 99
-	 guarantees that their wide character code is identical to their
-	 char code.  */
-      iter->cur.bytes = 1;
-      iter->cur.wc = *iter->cur.ptr;
-      iter->cur.wc_valid = true;
-    }
-  else
-    {
-      assert (mbsinit (&iter->state));
-      iter->in_shift = true;
-    with_shift:
-      iter->cur.bytes = mbrtowc (&iter->cur.wc, iter->cur.ptr,
-				 strnlen1 (iter->cur.ptr, MB_CUR_MAX),
-				 &iter->state);
-      if (iter->cur.bytes == (size_t) -1)
-	{
-	  /* An invalid multibyte sequence was encountered.  */
-	  iter->cur.bytes = 1;
-	  iter->cur.wc_valid = false;
-	  /* Whether to set iter->in_shift = false and reset iter->state
-	     or not is not very important; the string is bogus anyway.  */
-	}
-      else if (iter->cur.bytes == (size_t) -2)
-	{
-	  /* An incomplete multibyte character at the end.  */
-	  iter->cur.bytes = strlen (iter->cur.ptr) + 1;
-	  iter->cur.wc_valid = false;
-	  /* Whether to set iter->in_shift = false and reset iter->state
-	     or not is not important; the string end is reached anyway.  */
-	}
-      else
-	{
-	  if (iter->cur.bytes == 0)
-	    {
-	      /* A null wide character was encountered.  */
-	      iter->cur.bytes = 1;
-	      assert (*iter->cur.ptr == '\0');
-	      assert (iter->cur.wc == 0);
-	    }
-	  iter->cur.wc_valid = true;
-
-	  /* When in the initial state, we can go back treating ASCII
-	     characters more quickly.  */
-	  if (mbsinit (&iter->state))
-	    iter->in_shift = false;
-	}
-    }
-  iter->next_done = true;
-}
-
-/* Iteration macros.  */
-typedef struct mbiter_multi mbi_iterator_t;
-#define mbi_init(iter, startptr) \
-  ((iter).cur.ptr = (startptr), \
-   (iter).in_shift = false, memset (&(iter).state, '\0', sizeof (mbstate_t)), \
-   (iter).next_done = false)
-#define mbi_avail(iter) \
-  (mbiter_multi_next (&(iter)), !mb_isnul ((iter).cur))
-#define mbi_advance(iter) \
-  ((iter).cur.ptr += (iter).cur.bytes, (iter).next_done = false)
-
-/* Access to the current character.  */
-#define mbi_cur(iter) (iter).cur
-#define mbi_cur_ptr(iter) (iter).cur.ptr
-
+# include "mbuiter.h"
 #endif
 
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
@@ -152,26 +49,26 @@ strcasecmp (const char *s1, const char *s2)
 #if HAVE_MBRTOWC
   if (MB_CUR_MAX > 1)
     {
-      mbi_iterator_t iter1;
-      mbi_iterator_t iter2;
+      mbui_iterator_t iter1;
+      mbui_iterator_t iter2;
 
-      mbi_init (iter1, s1);
-      mbi_init (iter2, s2);
+      mbui_init (iter1, s1);
+      mbui_init (iter2, s2);
 
-      while (mbi_avail (iter1) && mbi_avail (iter2))
+      while (mbui_avail (iter1) && mbui_avail (iter2))
 	{
-	  int cmp = mb_casecmp (mbi_cur (iter1), mbi_cur (iter2));
+	  int cmp = mb_casecmp (mbui_cur (iter1), mbui_cur (iter2));
 
 	  if (cmp != 0)
 	    return cmp;
 
-	  mbi_advance (iter1);
-	  mbi_advance (iter2);
+	  mbui_advance (iter1);
+	  mbui_advance (iter2);
 	}
-      if (mbi_avail (iter1))
+      if (mbui_avail (iter1))
 	/* s2 terminated before s1.  */
 	return 1;
-      if (mbi_avail (iter2))
+      if (mbui_avail (iter2))
 	/* s1 terminated before s2.  */
 	return -1;
       return 0;

@@ -9,8 +9,7 @@ m4/strcase.m4
 m4/mbrtowc.m4
 
 Depends-on:
-strnlen1
-mbchar
+mbuiter
 
 configure.ac:
 gl_STRCASE
