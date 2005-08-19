@@ -88,7 +88,7 @@ strcasestr (const char *haystack, const char *needle)
 		    {
 		      if (!mbui_avail (rneedle))
 			/* Found a match.  */
-			return (char *) haystack;
+			return (char *) mbui_cur_ptr (iter_haystack);
 		      if (!mbui_avail (rhaystack))
 			/* No match.  */
 			return NULL;
