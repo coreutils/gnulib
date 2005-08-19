@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate June 8, 2005
+@set lastupdate August 18, 2005
 @c %**end of header
 
 @dircategory GNU organization
@@ -2142,6 +2142,8 @@ when writing GNU software.
 * CPU Portability::             Supporting the range of CPU types
 * System Functions::            Portability and ``standard'' library functions
 * Internationalization::        Techniques for internationalization
+* Character Set::               Use ASCII by default.
+* Quote Characters::            Use `...' in the C locale.
 * Mmap::                        How you can safely use @code{mmap}.
 @end menu
 
@@ -2296,7 +2298,13 @@ page.  The formfeeds should appear alone on lines by themselves.
 @cindex commenting
 
 Every program should start with a comment saying briefly what it is for.
-Example: @samp{fmt - filter for simple filling of text}.
+Example: @samp{fmt - filter for simple filling of text}.  This comment
+should be at the top of the source file containing the @samp{main}
+function of the program.
+
+Also, please write a brief comment at the start of each source file,
+with the file name and a line or two about the overall purpose of the
+file.
 
 Please write the comments in a GNU program in English, because English
 is the one language that nearly all programmers in all countries can
@@ -2616,11 +2624,11 @@ Avoid using the format of semi-internal data bases (e.g., directories)
 when there is a higher-level alternative (@code{readdir}).
 
 @cindex non-@sc{posix} systems, and portability
-As for systems that are not like Unix, such as MSDOS, Windows, VMS,
-MVS, and older Macintosh systems, supporting them is often a lot of
-work.  When that is the case, it is better to spend your time adding
-features that will be useful on GNU and GNU/Linux, rather than on
-supporting other incompatible systems.
+As for systems that are not like Unix, such as MSDOS, Windows, VMS, MVS,
+and older Macintosh systems, supporting them is often a lot of work.
+When that is the case, it is better to spend your time adding features
+that will be useful on GNU and GNU/Linux, rather than on supporting
+other incompatible systems.
 
 If you do support Windows, please do not abbreviate it as ``win''.  In
 hacker terminology, calling something a ``win'' is a form of praise.
@@ -2968,6 +2976,63 @@ printf (f->tried_implicit
         ? "#  Implicit rule search has been done.\n",
         : "#  Implicit rule search has not been done.\n");
 @end example
+
+
+@node Character Set
+@section Character Set
+@cindex character set
+@cindex encodings
+@cindex ASCII characters
+@cindex non-ASCII characters
+
+Sticking to the ASCII character set (plain text, 7-bit characters) is
+preferred in GNU source code comments, text documents, and other
+contexts, unless there is good reason to do something else because of
+the application domain.  For example, if source code deals with the
+French Revolutionary calendar, it is OK if its literal strings contain
+accented characters in month names like ``Flor@'eal''.  Also, it is OK
+to use non-ASCII characters to represent proper names of contributors in
+change logs (@pxref{Change Logs}).
+
+If you need to use non-ASCII characters, you should normally stick with
+one encoding, as one cannot in general mix encodings reliably.
+
+
+@node Quote Characters
+@section Quote Characters
+@cindex quote characters
+@cindex locale-specific quote characters
+@cindex left quote
+@cindex grave accent
+
+In the C locale, GNU programs should stick to plain ASCII for quotation
+characters in messages to users: preferably 0x60 (@samp{`}) for left
+quotes and 0x27 (@samp{'}) for right quotes.  It is ok, but not
+required, to use locale-specific quotes in other locales.
+
+The @uref{http://www.gnu.org/software/gnulib/, Gnulib} @code{quote} and
+@code{quotearg} modules provide a reasonably straightforward way to
+support locale-specific quote characters, as well as taking care of
+other issues, such as quoting a filename that itself contains a quote
+character.  See the Gnulib documentation for usage details.
+
+In any case, the documentation for your program should clearly specify
+how it does quoting, if different than the preferred method of @samp{`}
+and @samp{'}.  This is especially important if the output of your
+program is ever likely to be parsed by another program.
+
+Quotation characters are a difficult area in the computing world at this
+time: there are no true left or right quote characters in ASCII, or even
+Latin1; the @samp{`} character we use was standardized as a grave
+accent.  Moreover, Latin1 is still not universally usable.
+
+Unicode contains the unambiguous quote characters required, and its
+common encoding UTF-8 is upward compatible with ASCII@.  However,
+Unicode and UTF-8 are not universally well-supported, either. 
+
+This may change over the next few years, and then we will revisit
+this.
+
 
 @node Mmap
 @section Mmap
@@ -3598,20 +3663,21 @@ For example, an Athlon-based GNU/Linux system might be
 
 The @code{configure} script needs to be able to decode all plausible
 alternatives for how to describe a machine.  Thus,
-@samp{athlon-pc-gnu/linux} would be a valid alias.
-There is a shell script called
-@uref{ftp://ftp.gnu.org/gnu/config/config.sub, @file{config.sub}}
-that you can use
-as a subroutine to validate system types and canonicalize aliases.
+@samp{athlon-pc-gnu/linux} would be a valid alias.  There is a shell
+script called
+@uref{http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/config/config/config.sub,
+@file{config.sub}} that you can use as a subroutine to validate system
+types and canonicalize aliases.
 
 The @code{configure} script should also take the option
 @option{--build=@var{buildtype}}, which should be equivalent to a
 plain @var{buildtype} argument.  For example, @samp{configure
 --build=i686-pc-linux-gnu} is equivalent to @samp{configure
 i686-pc-linux-gnu}.  When the build type is not specified by an option
-or argument, the @code{configure} script should normally guess it
-using the shell script
-@uref{ftp://ftp.gnu.org/gnu/config/config.guess, @file{config.guess}}.
+or argument, the @code{configure} script should normally guess it using
+the shell script
+@uref{http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/config/config/config.guess,
+@file{config.guess}}.
 
 @cindex optional features, configure-time
 Other options are permitted to specify in more detail the software
