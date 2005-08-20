@@ -1409,6 +1409,10 @@ re_acquire_state (err, dfa, nodes)
   re_dfastate_t *new_state;
   struct re_state_table_entry *spot;
   int i;
+#ifdef lint
+  /* Suppress bogus uninitialized-variable warnings.  */
+  *err = REG_NOERROR;
+#endif
   if (BE (nodes->nelem == 0, 0))
     {
       *err = REG_NOERROR;
@@ -1458,6 +1462,10 @@ re_acquire_state_context (err, dfa, nodes, context)
   re_dfastate_t *new_state;
   struct re_state_table_entry *spot;
   int i;
+#ifdef lint
+  /* Suppress bogus uninitialized-variable warnings.  */
+  *err = REG_NOERROR;
+#endif
   if (nodes->nelem == 0)
     {
       *err = REG_NOERROR;
