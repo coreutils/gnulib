@@ -1,3 +1,25 @@
+2005-08-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regex_internal.c (re_acquire_state, re_acquire_state_context)
+	[defined lint]: Suppress bogus uninitialized-variable warnings.
+
+	* regcomp.c (duplicate_node): Return new index, not an error code,
+	and let the caller return REG_ESPACE if out of space.  This
+	removes an uninitialied-variable warning with GCC 4.0.1, and also
+	avoids taking the address of a local variable.  All callers
+	changed.
+
+2005-08-19  Jim Meyering  <jim@meyering.net>
+
+	* regexec.c (proceed_next_node): Redo local variables to
+	avoid GCC shadowing warnings.
+
+2005-08-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regex_internal.c (re_string_realloc_buffers, re_node_set_insert):
+	(re_node_set_insert_last, re_dfa_add_node):
+	Rename local variables to avoid GCC shadowing warnings.
+
 2005-08-18  Bruno Haible  <bruno@clisp.org>
 
 	* strstr.c (strstr): Fix return value in multibyte case.
@@ -12,6 +34,10 @@
 	label so that it precedes the code to set `digits'.  Otherwise,
 	%0Ns wouldn't work.  Before this change, `date -d @-22 +%05s' would
 	print `00-22'.  Now, it prints `-0022', as it should.
+
+2005-08-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regex.h: Remove useless space-before-tab.  From coreutils.
 
 2005-08-17  Bruno Haible  <bruno@clisp.org>
 

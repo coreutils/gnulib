@@ -1,3 +1,9 @@
+2005-08-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Comment out $LIBCSRC/posix/regex_internal.c,
+	$LIBCSRC/posix/regexec.c.
+	Add glibc bug 1217 for regcomp.c.
+
 2005-08-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Comment out $LIBCSRC/posix/regex.h.
