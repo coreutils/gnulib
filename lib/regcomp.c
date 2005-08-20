@@ -50,8 +50,7 @@ static reg_errcode_t link_nfa_nodes (void *extra, bin_tree_t *node);
 static reg_errcode_t duplicate_node_closure (re_dfa_t *dfa, int top_org_node,
 					     int top_clone_node, int root_node,
 					     unsigned int constraint);
-static reg_errcode_t duplicate_node (int *new_idx, re_dfa_t *dfa, int org_idx,
-				     unsigned int constraint);
+static int duplicate_node (re_dfa_t *dfa, int org_idx, unsigned int constraint);
 static int search_duplicated_node (re_dfa_t *dfa, int org_node,
 				   unsigned int constraint);
 static reg_errcode_t calc_eclosure (re_dfa_t *dfa);
@@ -1468,7 +1467,6 @@ duplicate_node_closure (dfa, top_org_node, top_clone_node, root_node,
      int top_org_node, top_clone_node, root_node;
      unsigned int init_constraint;
 {
-  reg_errcode_t err;
   int org_node, clone_node, ret;
   unsigned int constraint = init_constraint;
   for (org_node = top_org_node, clone_node = top_clone_node;;)
@@ -1482,9 +1480,9 @@ duplicate_node_closure (dfa, top_org_node, top_clone_node, root_node,
 	     edests of the back reference.  */
 	  org_dest = dfa->nexts[org_node];
 	  re_node_set_empty (dfa->edests + clone_node);
-	  err = duplicate_node (&clone_dest, dfa, org_dest, constraint);
-	  if (BE (err != REG_NOERROR, 0))
-	    return err;
+	  clone_dest = duplicate_node (dfa, org_dest, constraint);
+	  if (BE (clone_dest == -1, 0))
+	    return REG_ESPACE;
 	  dfa->nexts[clone_node] = dfa->nexts[org_node];
 	  ret = re_node_set_insert (dfa->edests + clone_node, clone_dest);
 	  if (BE (ret < 0, 0))
@@ -1520,9 +1518,9 @@ duplicate_node_closure (dfa, top_org_node, top_clone_node, root_node,
 		}
 	      constraint |= dfa->nodes[org_node].opr.ctx_type;
 	    }
-	  err = duplicate_node (&clone_dest, dfa, org_dest, constraint);
-	  if (BE (err != REG_NOERROR, 0))
-	    return err;
+	  clone_dest = duplicate_node (dfa, org_dest, constraint);
+	  if (BE (clone_dest == -1, 0))
+	    return REG_ESPACE;
 	  ret = re_node_set_insert (dfa->edests + clone_node, clone_dest);
 	  if (BE (ret < 0, 0))
 	    return REG_ESPACE;
@@ -1538,9 +1536,10 @@ duplicate_node_closure (dfa, top_org_node, top_clone_node, root_node,
 	  if (clone_dest == -1)
 	    {
 	      /* There are no such a duplicated node, create a new one.  */
-	      err = duplicate_node (&clone_dest, dfa, org_dest, constraint);
-	      if (BE (err != REG_NOERROR, 0))
-		return err;
+	      reg_errcode_t err;
+	      clone_dest = duplicate_node (dfa, org_dest, constraint);
+	      if (BE (clone_dest == -1, 0))
+		return REG_ESPACE;
 	      ret = re_node_set_insert (dfa->edests + clone_node, clone_dest);
 	      if (BE (ret < 0, 0))
 		return REG_ESPACE;
@@ -1559,9 +1558,9 @@ duplicate_node_closure (dfa, top_org_node, top_clone_node, root_node,
 	    }
 
 	  org_dest = dfa->edests[org_node].elems[1];
-	  err = duplicate_node (&clone_dest, dfa, org_dest, constraint);
-	  if (BE (err != REG_NOERROR, 0))
-	    return err;
+	  clone_dest = duplicate_node (dfa, org_dest, constraint);
+	  if (BE (clone_dest == -1, 0))
+	    return REG_ESPACE;
 	  ret = re_node_set_insert (dfa->edests + clone_node, clone_dest);
 	  if (BE (ret < 0, 0))
 	    return REG_ESPACE;
@@ -1592,27 +1591,27 @@ search_duplicated_node (dfa, org_node, constraint)
 }
 
 /* Duplicate the node whose index is ORG_IDX and set the constraint CONSTRAINT.
-   The new index will be stored in NEW_IDX and return REG_NOERROR if succeeded,
-   otherwise return the error code.  */
+   Return the index of the new node, or -1 if insufficient storage is
+   available.  */
 
-static reg_errcode_t
-duplicate_node (new_idx, dfa, org_idx, constraint)
+static int
+duplicate_node (dfa, org_idx, constraint)
      re_dfa_t *dfa;
-     int *new_idx, org_idx;
+     int org_idx;
      unsigned int constraint;
 {
   int dup_idx = re_dfa_add_node (dfa, dfa->nodes[org_idx]);
-  if (BE (dup_idx == -1, 0))
-    return REG_ESPACE;
-  dfa->nodes[dup_idx].constraint = constraint;
-  if (dfa->nodes[org_idx].type == ANCHOR)
-    dfa->nodes[dup_idx].constraint |= dfa->nodes[org_idx].opr.ctx_type;
-  dfa->nodes[dup_idx].duplicated = 1;
+  if (BE (dup_idx != -1, 1))
+    {
+      dfa->nodes[dup_idx].constraint = constraint;
+      if (dfa->nodes[org_idx].type == ANCHOR)
+	dfa->nodes[dup_idx].constraint |= dfa->nodes[org_idx].opr.ctx_type;
+      dfa->nodes[dup_idx].duplicated = 1;
 
-  /* Store the index of the original node.  */
-  dfa->org_indices[dup_idx] = org_idx;
-  *new_idx = dup_idx;
-  return REG_NOERROR;
+      /* Store the index of the original node.  */
+      dfa->org_indices[dup_idx] = org_idx;
+    }
+  return dup_idx;
 }
 
 static reg_errcode_t
