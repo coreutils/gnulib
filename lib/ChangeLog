@@ -1,3 +1,69 @@
+2005-08-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regcomp.c:
+	(re_compile_pattern, re_set_syntax, re_compile_fastmap):
+	(re_compile_fastmap_iter, regcomp, regerror, regfree):
+	(re_compile_internal, init_dfa, init_word_char, free_workarea_compile):
+	(create_initial_state, optimize_utf8, analyze, postorder, preorder):
+	(optimize_subexps, lower_subexps, lower_subexp, calc_first, calc_next):
+	(link_nfa_nodes, duplicate_node_closure, search_duplicated_node):
+	(duplicate_node, calc_inveclosure, calc_eclosure, calc_eclosure_iter):
+	(fetch_token, peek_token, peek_token_bracket, parse, parse_reg_exp):
+	(parse_branch, parse_expression, parse_sub_exp, parse_dup_op):
+	(build_range_exp, build_collating_symbol, parse_bracket_exp):
+	(parse_bracket_element, parse_bracket_symbol, build_equiv_class):
+	(build_charclass, build_charclass_op, fetch_number, create_tree):
+	(create_token_tree, mark_opt_subexp, duplicate_tree):
+	Use prototypes rather than old-style definitions.
+	* regex_internal.c:
+	(re_string_allocate, re_string_construct, re_string_realloc_buffers):
+	(re_string_construct_common, build_wcs_buffer, build_wcs_upper_buffer):
+	(re_string_skip_chars, build_upper_buffer, re_string_translate_buffer):
+	(re_string_reconstruct, re_string_peek_byte_case):
+	(re_string_fetch_byte_case, re_string_destruct, re_string_context_at):
+	(re_node_set_alloc, re_node_set_init_1, re_node_set_init_2):
+	(re_node_set_init_copy, re_node_set_add_intersect):
+	(re_node_set_init_union, re_node_set_merge, re_node_set_insert):
+	(re_node_set_insert_last, re_node_set_compare, re_node_set_contains):
+	(re_node_set_remove_at, re_dfa_add_node, calc_state_hash):
+	(re_acquire_state, re_acquire_state_context, register_state):
+	(create_ci_newstate, create_cd_newstate, free_state):
+	Likewise.
+	* regexec.c (regexec, re_match, re_search, re_match_2, re_search_2):
+	(re_search_2_stub, re_search_stub, re_copy_regs, re_set_registers):
+	(re_search_internal, prune_impossible_nodes):
+	(acquire_init_state_context, check_matching, static):
+	(check_halt_node_context, check_halt_state_context, proceed_next_node):
+	(push_fail_stack, pop_fail_stack, set_regs, free_fail_stack_return):
+	(update_regs, sift_states_backward, build_sifted_states):
+	(clean_state_log_if_needed, merge_state_array):
+	(update_cur_sifted_state, add_epsilon_src_nodes):
+	(sub_epsilon_src_nodes, check_dst_limits, check_dst_limits_calc_pos_1):
+	(check_dst_limits_calc_pos, check_subexp_limits, sift_states_bkref):
+	(sift_states_iter_mb, transit_state, merge_state_with_log, static):
+	(find_recover_state, check_subexp_matching_top, transit_state_mb):
+	(transit_state_bkref, get_subexp, get_subexp_sub, find_subexp_node):
+	(check_arrival, check_arrival_add_next_nodes):
+	(check_arrival_expand_ecl, check_arrival_expand_ecl_sub):
+	(expand_bkref_cache, build_trtable, group_nodes_into_DFAstates):
+	(check_node_accept_bytes, check_node_accept, extend_buffers):
+	(match_ctx_init, match_ctx_clean, match_ctx_free, match_ctx_add_entry):
+	(search_cur_bkref_entry, match_ctx_add_subtop, match_ctx_add_sublast):
+	(sift_ctx_init):
+	Likewise.
+
+	* regex_internal.h:
+	(re_string_allocate, re_string_construct, re_string_reconstruct):
+	(re_string_realloc_buffers, build_wcs_buffer, build_wcs_upper_buffer):
+	(build_upper_buffer, re_string_translate_buffer, re_string_destruct):
+	(re_string_elem_size_at, re_string_char_size_at, re_string_wchar_at):
+	(re_string_context_at, re_string_peek_byte_case):
+	(re_string_fetch_byte_case): Declare even if RE_NO_INTERNAL_PROTOTYPES
+	is defined, since we now use prototypes always.
+
+	* regex.h (_RE_ARGS): Remove.  No longer needed, since we assume
+	C89 or better.  All uses removed.
+
 2005-08-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regex_internal.c (re_acquire_state, re_acquire_state_context)
