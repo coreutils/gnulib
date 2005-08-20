@@ -33,7 +33,6 @@ static reg_errcode_t create_initial_state (re_dfa_t *dfa);
 static void optimize_utf8 (re_dfa_t *dfa);
 #endif
 static reg_errcode_t analyze (regex_t *preg);
-static reg_errcode_t create_initial_state (re_dfa_t *dfa);
 static reg_errcode_t preorder (bin_tree_t *root,
 			       reg_errcode_t (fn (void *, bin_tree_t *)),
 			       void *extra);
