@@ -23,7 +23,6 @@ static void re_compile_fastmap_iter (regex_t *bufp,
 				     const re_dfastate_t *init_state,
 				     char *fastmap);
 static reg_errcode_t init_dfa (re_dfa_t *dfa, int pat_len);
-static void init_word_char (re_dfa_t *dfa);
 #ifdef RE_ENABLE_I18N
 static void free_charset (re_charset_t *cset);
 #endif /* RE_ENABLE_I18N */
@@ -46,9 +45,6 @@ static bin_tree_t *lower_subexp (reg_errcode_t *err, regex_t *preg,
 static reg_errcode_t calc_first (void *extra, bin_tree_t *node);
 static reg_errcode_t calc_next (void *extra, bin_tree_t *node);
 static reg_errcode_t link_nfa_nodes (void *extra, bin_tree_t *node);
-static reg_errcode_t duplicate_node_closure (re_dfa_t *dfa, int top_org_node,
-					     int top_clone_node, int root_node,
-					     unsigned int constraint);
 static int duplicate_node (re_dfa_t *dfa, int org_idx, unsigned int constraint);
 static int search_duplicated_node (re_dfa_t *dfa, int org_node,
 				   unsigned int constraint);
@@ -58,12 +54,8 @@ static reg_errcode_t calc_eclosure_iter (re_node_set *new_set, re_dfa_t *dfa,
 static reg_errcode_t calc_inveclosure (re_dfa_t *dfa);
 static int fetch_number (re_string_t *input, re_token_t *token,
 			 reg_syntax_t syntax);
-static void fetch_token (re_token_t *result, re_string_t *input,
-			 reg_syntax_t syntax);
 static int peek_token (re_token_t *token, re_string_t *input,
 			reg_syntax_t syntax);
-static int peek_token_bracket (re_token_t *token, re_string_t *input,
-			       reg_syntax_t syntax);
 static bin_tree_t *parse (re_string_t *regexp, regex_t *preg,
 			  reg_syntax_t syntax, reg_errcode_t *err);
 static bin_tree_t *parse_reg_exp (re_string_t *regexp, regex_t *preg,
@@ -93,24 +85,6 @@ static reg_errcode_t parse_bracket_element (bracket_elem_t *elem,
 static reg_errcode_t parse_bracket_symbol (bracket_elem_t *elem,
 					  re_string_t *regexp,
 					  re_token_t *token);
-#ifndef _LIBC
-# ifdef RE_ENABLE_I18N
-static reg_errcode_t build_range_exp (re_bitset_ptr_t sbcset,
-				      re_charset_t *mbcset, int *range_alloc,
-				      bracket_elem_t *start_elem,
-				      bracket_elem_t *end_elem);
-static reg_errcode_t build_collating_symbol (re_bitset_ptr_t sbcset,
-					     re_charset_t *mbcset,
-					     int *coll_sym_alloc,
-					     const unsigned char *name);
-# else /* not RE_ENABLE_I18N */
-static reg_errcode_t build_range_exp (re_bitset_ptr_t sbcset,
-				      bracket_elem_t *start_elem,
-				      bracket_elem_t *end_elem);
-static reg_errcode_t build_collating_symbol (re_bitset_ptr_t sbcset,
-					     const unsigned char *name);
-# endif /* not RE_ENABLE_I18N */
-#endif /* not _LIBC */
 #ifdef RE_ENABLE_I18N
 static reg_errcode_t build_equiv_class (re_bitset_ptr_t sbcset,
 					re_charset_t *mbcset,
