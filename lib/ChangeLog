@@ -1,5 +1,10 @@
 2005-08-20  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Fix problems reported by Sam Steingold in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2005-08/msg00007.html>.
+	* regexec.c (sift_states_bkref): Fix portability bug: the code
+	assumed that reg_errcode_t is a signed type, which is not
+	necessarily true if _XOPEN_SOURCE is not defined.
 	* regex_internal.c (calc_state_hash): Put 'inline' before type, since
 	some compilers warn about it otherwise.
 
