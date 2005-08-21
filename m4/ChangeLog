@@ -1,3 +1,7 @@
+2005-08-20  Bruno Haible  <bruno@clisp.org>
+
+	* regex.m4 (gl_PREREQ_REGEX): Require AC_GNU_SOURCE.
+
 2005-08-17  Bruno Haible  <bruno@clisp.org>
 
 	* strcasestr.m4: New file.

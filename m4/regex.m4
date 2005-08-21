@@ -1,4 +1,4 @@
-#serial 24
+#serial 25
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005 Free
 # Software Foundation, Inc.
@@ -125,6 +125,7 @@ AC_DEFUN([gl_INCLUDED_REGEX],
 # Prerequisites of lib/regex.c and lib/regex_internal.c.
 AC_DEFUN([gl_PREREQ_REGEX],
 [
+  AC_REQUIRE([AC_GNU_SOURCE])
   AC_REQUIRE([gl_C_RESTRICT])
   AC_REQUIRE([AM_LANGINFO_CODESET])
   AC_CHECK_HEADERS_ONCE([locale.h wchar.h wctype.h])
