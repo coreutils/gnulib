@@ -214,7 +214,9 @@ regexec (const regex_t *__restrict preg, const char *__restrict string,
 {
   reg_errcode_t err;
   int start, length;
+#ifdef _LIBC
   re_dfa_t *dfa = (re_dfa_t *)preg->buffer;
+#endif
 
   if (eflags & ~(REG_NOTBOL | REG_NOTEOL | REG_STARTEND))
     return REG_BADPAT;
@@ -393,7 +395,9 @@ re_search_stub (struct re_pattern_buffer *bufp,
   regmatch_t *pmatch;
   int nregs, rval;
   int eflags = 0;
+#ifdef _LIBC
   re_dfa_t *dfa = (re_dfa_t *)bufp->buffer;
+#endif
 
   /* Check for out-of-range.  */
   if (BE (start < 0 || start > length, 0))
