@@ -1,5 +1,8 @@
 2005-08-23  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* regex.h (RE_NO_EMPTY_RANGES): Fix doc bug reported by James Youngman
+	in <http://lists.gnu.org/archive/html/bug-gnulib/2005-07/msg00132.html>.
+
 	* regex_internal.c (re_string_skip_chars, register_state):
 	(calc_state_hash):
 	Remove forward decls; no longer needed now that we use prototypes.

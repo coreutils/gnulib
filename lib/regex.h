@@ -136,8 +136,7 @@ typedef unsigned long int reg_syntax_t;
 
 /* If this bit is set, then an ending range point collating higher
      than the starting range point, as in [z-a], is invalid.
-   If not set, then when ending range point collates higher than the
-     starting range point, the range is ignored.  */
+   If not set, the containing range is empty and does not match any string.  */
 #define RE_NO_EMPTY_RANGES (RE_NO_BK_VBAR << 1)
 
 /* If this bit is set, then an unmatched ) is ordinary.
