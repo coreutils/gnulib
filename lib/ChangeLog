@@ -1,5 +1,10 @@
 2005-08-23  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* regex.h (REG_NOSYS)
+	[!defined _XOPEN_SOURCE && 200112L <= _POSIX_C_SOURCE]:
+	Define, since POSIX requires it as of 2001.
+	(_REG_ENOSYS) [! (defined _XOPEN_SOURCE || 200112L <= _POSIX_C_SOURCE)]:
+	New private symbol, used to keep the enum signed in all cases.
 	* regex.h (RE_NO_EMPTY_RANGES): Fix doc bug reported by James Youngman
 	in <http://lists.gnu.org/archive/html/bug-gnulib/2005-07/msg00132.html>.
 

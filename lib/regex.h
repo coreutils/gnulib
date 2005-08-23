@@ -309,8 +309,10 @@ extern reg_syntax_t re_syntax_options;
    `re_error_msg' table in regex.c.  */
 typedef enum
 {
-#ifdef _XOPEN_SOURCE
+#if defined _XOPEN_SOURCE || 200112L <= _POSIX_C_SOURCE
   REG_ENOSYS = -1,	/* This will never happen for this implementation.  */
+#else
+  _REG_ENOSYS = -1,	/* This is so that reg_errcode_t is always signed.  */
 #endif
 
   REG_NOERROR = 0,	/* Success.  */
