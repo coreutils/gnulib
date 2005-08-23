@@ -51,32 +51,21 @@ static int re_search_stub (struct re_pattern_buffer *bufp,
 			   int ret_len) internal_function;
 static unsigned re_copy_regs (struct re_registers *regs, regmatch_t *pmatch,
 			      int nregs, int regs_allocated) internal_function;
-static inline re_dfastate_t *acquire_init_state_context
-     (reg_errcode_t *err, const re_match_context_t *mctx, int idx)
-     __attribute ((always_inline)) internal_function;
 static reg_errcode_t prune_impossible_nodes (re_match_context_t *mctx)
      internal_function;
 static int check_matching (re_match_context_t *mctx, int fl_longest_match,
 			   int *p_match_first)
      internal_function;
-static int check_halt_node_context (const re_dfa_t *dfa, int node,
-				    unsigned int context) internal_function;
 static int check_halt_state_context (const re_match_context_t *mctx,
 				     const re_dfastate_t *state, int idx)
      internal_function;
 static void update_regs (re_dfa_t *dfa, regmatch_t *pmatch,
 			 regmatch_t *prev_idx_match, int cur_node,
 			 int cur_idx, int nmatch) internal_function;
-static int proceed_next_node (const re_match_context_t *mctx,
-			      int nregs, regmatch_t *regs,
-			      int *pidx, int node, re_node_set *eps_via_nodes,
-			      struct re_fail_stack_t *fs) internal_function;
 static reg_errcode_t push_fail_stack (struct re_fail_stack_t *fs,
 				      int str_idx, int dest_node, int nregs,
 				      regmatch_t *regs,
 				      re_node_set *eps_via_nodes) internal_function;
-static int pop_fail_stack (struct re_fail_stack_t *fs, int *pidx, int nregs,
-			   regmatch_t *regs, re_node_set *eps_via_nodes) internal_function;
 static reg_errcode_t set_regs (const regex_t *preg,
 			       const re_match_context_t *mctx,
 			       size_t nmatch, regmatch_t *pmatch,
@@ -100,9 +89,6 @@ static reg_errcode_t update_cur_sifted_state (re_match_context_t *mctx,
 static reg_errcode_t add_epsilon_src_nodes (re_dfa_t *dfa,
 					    re_node_set *dest_nodes,
 					    const re_node_set *candidates) internal_function;
-static reg_errcode_t sub_epsilon_src_nodes (re_dfa_t *dfa, int node,
-					    re_node_set *dest_nodes,
-					    const re_node_set *and_nodes) internal_function;
 static int check_dst_limits (re_match_context_t *mctx, re_node_set *limits,
 			     int dst_node, int dst_idx, int src_node,
 			     int src_idx) internal_function;
@@ -122,8 +108,6 @@ static reg_errcode_t check_subexp_limits (re_dfa_t *dfa,
 static reg_errcode_t sift_states_bkref (re_match_context_t *mctx,
 					re_sift_context_t *sctx,
 					int str_idx, const re_node_set *candidates) internal_function;
-static reg_errcode_t clean_state_log_if_needed (re_match_context_t *mctx,
-					        int next_state_log_idx) internal_function;
 static reg_errcode_t merge_state_array (re_dfa_t *dfa, re_dfastate_t **dst,
 					re_dfastate_t **src, int num) internal_function;
 static re_dfastate_t *find_recover_state (reg_errcode_t *err,
@@ -996,7 +980,7 @@ prune_impossible_nodes (re_match_context_t *mctx)
    since initial states may have constraints like "\<", "^", etc..  */
 
 static inline re_dfastate_t *
-internal_function
+__attribute ((always_inline)) internal_function
 acquire_init_state_context (reg_errcode_t *err, const re_match_context_t *mctx,
 			    int idx)
 {

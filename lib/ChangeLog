@@ -1,3 +1,12 @@
+2005-08-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regex_internal.c (re_string_skip_chars, register_state):
+	(calc_state_hash):
+	Remove forward decls; no longer needed now that we use prototypes.
+	* regexec.c (acquire_init_state_context, check_halt_node_context):
+	(proceed_next_node, pop_fail_stack, sub_epsilon_src_nodes):
+	(clean_state_log_if_needed): Likewise.
+
 2005-08-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Fix problems reported by Sam Steingold in
