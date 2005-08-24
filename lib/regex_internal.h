@@ -348,7 +348,7 @@ struct re_string_t
      the beginning of the input string.  */
   unsigned int tip_context;
   /* The translation passed as a part of an argument of re_compile_pattern.  */
-  unsigned RE_TRANSLATE_TYPE trans;
+  unsigned REG_TRANSLATE_TYPE trans;
   /* Copy of re_dfa_t's word_char.  */
   re_const_bitset_ptr_t word_char;
   /* 1 if REG_ICASE.  */
@@ -377,11 +377,11 @@ typedef struct re_dfa_t re_dfa_t;
 
 static reg_errcode_t re_string_allocate (re_string_t *pstr, const char *str,
 					 int len, int init_len,
-					 RE_TRANSLATE_TYPE trans, int icase,
+					 REG_TRANSLATE_TYPE trans, int icase,
 					 const re_dfa_t *dfa)
      internal_function;
 static reg_errcode_t re_string_construct (re_string_t *pstr, const char *str,
-					  int len, RE_TRANSLATE_TYPE trans,
+					  int len, REG_TRANSLATE_TYPE trans,
 					  int icase, const re_dfa_t *dfa)
      internal_function;
 static reg_errcode_t re_string_reconstruct (re_string_t *pstr, int idx,

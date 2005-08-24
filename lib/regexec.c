@@ -199,7 +199,7 @@ regexec (const regex_t *__restrict preg, const char *__restrict string,
   reg_errcode_t err;
   int start, length;
 #ifdef _LIBC
-  re_dfa_t *dfa = (re_dfa_t *)preg->buffer;
+  re_dfa_t *dfa = (re_dfa_t *) preg->re_buffer;
 #endif
 
   if (eflags & ~(REG_NOTBOL | REG_NOTEOL | REG_STARTEND))
@@ -217,7 +217,7 @@ regexec (const regex_t *__restrict preg, const char *__restrict string,
     }
 
   __libc_lock_lock (dfa->lock);
-  if (preg->no_sub)
+  if (preg->re_no_sub)
     err = re_search_internal (preg, string, length, start, length - start,
 			      length, 0, NULL, eflags);
   else
@@ -267,7 +267,7 @@ compat_symbol (libc, __compat_regexec, regexec, GLIBC_2_0);
    the first STOP characters of the concatenation of the strings should be
    concerned.
 
-   If REGS is not NULL, and BUFP->no_sub is not set, the offsets of the match
+   If REGS is not NULL, and BUFP->re_no_sub is not set, the offsets of the match
    and all groups is stroed in REGS.  (For the "_2" variants, the offsets are
    computed relative to the concatenation, not relative to the individual
    strings.)
@@ -380,7 +380,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
   int nregs, rval;
   int eflags = 0;
 #ifdef _LIBC
-  re_dfa_t *dfa = (re_dfa_t *)bufp->buffer;
+  re_dfa_t *dfa = (re_dfa_t *) bufp->re_buffer;
 #endif
 
   /* Check for out-of-range.  */
@@ -393,23 +393,23 @@ re_search_stub (struct re_pattern_buffer *bufp,
 
   __libc_lock_lock (dfa->lock);
 
-  eflags |= (bufp->not_bol) ? REG_NOTBOL : 0;
-  eflags |= (bufp->not_eol) ? REG_NOTEOL : 0;
+  eflags |= (bufp->re_not_bol) ? REG_NOTBOL : 0;
+  eflags |= (bufp->re_not_eol) ? REG_NOTEOL : 0;
 
   /* Compile fastmap if we haven't yet.  */
-  if (range > 0 && bufp->fastmap != NULL && !bufp->fastmap_accurate)
+  if (range > 0 && bufp->re_fastmap != NULL && !bufp->re_fastmap_accurate)
     re_compile_fastmap (bufp);
 
-  if (BE (bufp->no_sub, 0))
+  if (BE (bufp->re_no_sub, 0))
     regs = NULL;
 
   /* We need at least 1 register.  */
   if (regs == NULL)
     nregs = 1;
-  else if (BE (bufp->regs_allocated == REGS_FIXED &&
-	       regs->num_regs < bufp->re_nsub + 1, 0))
+  else if (BE (bufp->re_regs_allocated == REG_FIXED
+	       && regs->rm_num_regs < bufp->re_nsub + 1, 0))
     {
-      nregs = regs->num_regs;
+      nregs = regs->rm_num_regs;
       if (BE (nregs < 1, 0))
 	{
 	  /* Nothing can be copied to regs.  */
@@ -437,9 +437,9 @@ re_search_stub (struct re_pattern_buffer *bufp,
   else if (regs != NULL)
     {
       /* If caller wants register contents data back, copy them.  */
-      bufp->regs_allocated = re_copy_regs (regs, pmatch, nregs,
-					   bufp->regs_allocated);
-      if (BE (bufp->regs_allocated == REGS_UNALLOCATED, 0))
+      bufp->re_regs_allocated = re_copy_regs (regs, pmatch, nregs,
+					      bufp->re_regs_allocated);
+      if (BE (bufp->re_regs_allocated == REG_UNALLOCATED, 0))
 	rval = -2;
     }
 
@@ -464,52 +464,53 @@ internal_function
 re_copy_regs (struct re_registers *regs, regmatch_t *pmatch, int nregs,
 	      int regs_allocated)
 {
-  int rval = REGS_REALLOCATE;
+  int rval = REG_REALLOCATE;
   int i;
   int need_regs = nregs + 1;
-  /* We need one extra element beyond `num_regs' for the `-1' marker GNU code
+  /* We need one extra element beyond `rm_num_regs' for the `-1' marker GNU code
      uses.  */
 
   /* Have the register data arrays been allocated?  */
-  if (regs_allocated == REGS_UNALLOCATED)
+  if (regs_allocated == REG_UNALLOCATED)
     { /* No.  So allocate them with malloc.  */
-      regs->start = re_malloc (regoff_t, need_regs);
-      regs->end = re_malloc (regoff_t, need_regs);
-      if (BE (regs->start == NULL, 0) || BE (regs->end == NULL, 0))
-	return REGS_UNALLOCATED;
-      regs->num_regs = need_regs;
+      regs->rm_start = re_malloc (regoff_t, need_regs);
+      regs->rm_end = re_malloc (regoff_t, need_regs);
+      if (BE (regs->rm_start == NULL, 0) || BE (regs->rm_end == NULL, 0))
+	return REG_UNALLOCATED;
+      regs->rm_num_regs = need_regs;
     }
-  else if (regs_allocated == REGS_REALLOCATE)
+  else if (regs_allocated == REG_REALLOCATE)
     { /* Yes.  If we need more elements than were already
 	 allocated, reallocate them.  If we need fewer, just
 	 leave it alone.  */
-      if (BE (need_regs > regs->num_regs, 0))
+      if (BE (need_regs > regs->rm_num_regs, 0))
 	{
-	  regoff_t *new_start = re_realloc (regs->start, regoff_t, need_regs);
-	  regoff_t *new_end = re_realloc (regs->end, regoff_t, need_regs);
+	  regoff_t *new_start =
+	    re_realloc (regs->rm_start, regoff_t, need_regs);
+	  regoff_t *new_end = re_realloc (regs->rm_end, regoff_t, need_regs);
 	  if (BE (new_start == NULL, 0) || BE (new_end == NULL, 0))
-	    return REGS_UNALLOCATED;
-	  regs->start = new_start;
-	  regs->end = new_end;
-	  regs->num_regs = need_regs;
+	    return REG_UNALLOCATED;
+	  regs->rm_start = new_start;
+	  regs->rm_end = new_end;
+	  regs->rm_num_regs = need_regs;
 	}
     }
   else
     {
-      assert (regs_allocated == REGS_FIXED);
-      /* This function may not be called with REGS_FIXED and nregs too big.  */
-      assert (regs->num_regs >= nregs);
-      rval = REGS_FIXED;
+      assert (regs_allocated == REG_FIXED);
+      /* This function may not be called with REG_FIXED and nregs too big.  */
+      assert (regs->rm_num_regs >= nregs);
+      rval = REG_FIXED;
     }
 
   /* Copy the regs.  */
   for (i = 0; i < nregs; ++i)
     {
-      regs->start[i] = pmatch[i].rm_so;
-      regs->end[i] = pmatch[i].rm_eo;
+      regs->rm_start[i] = pmatch[i].rm_so;
+      regs->rm_end[i] = pmatch[i].rm_eo;
     }
-  for ( ; i < regs->num_regs; ++i)
-    regs->start[i] = regs->end[i] = -1;
+  for ( ; i < regs->rm_num_regs; ++i)
+    regs->rm_start[i] = regs->rm_end[i] = -1;
 
   return rval;
 }
@@ -533,16 +534,16 @@ re_set_registers (struct re_pattern_buffer *bufp, struct re_registers *regs,
 {
   if (num_regs)
     {
-      bufp->regs_allocated = REGS_REALLOCATE;
-      regs->num_regs = num_regs;
-      regs->start = starts;
-      regs->end = ends;
+      bufp->re_regs_allocated = REG_REALLOCATE;
+      regs->rm_num_regs = num_regs;
+      regs->rm_start = starts;
+      regs->rm_end = ends;
     }
   else
     {
-      bufp->regs_allocated = REGS_UNALLOCATED;
-      regs->num_regs = 0;
-      regs->start = regs->end = (regoff_t *) 0;
+      bufp->re_regs_allocated = REG_UNALLOCATED;
+      regs->rm_num_regs = 0;
+      regs->rm_start = regs->rm_end = NULL;
     }
 }
 #ifdef _LIBC
@@ -584,7 +585,7 @@ re_search_internal (const regex_t *preg,
 		    int eflags)
 {
   reg_errcode_t err;
-  re_dfa_t *dfa = (re_dfa_t *)preg->buffer;
+  re_dfa_t *dfa = (re_dfa_t *) preg->re_buffer;
   int left_lim, right_lim, incr;
   int fl_longest_match, match_first, match_kind, match_last = -1;
   int extra_nmatch;
@@ -594,9 +595,10 @@ re_search_internal (const regex_t *preg,
 #else
   re_match_context_t mctx;
 #endif
-  char *fastmap = (preg->fastmap != NULL && preg->fastmap_accurate
-		   && range && !preg->can_be_null) ? preg->fastmap : NULL;
-  unsigned RE_TRANSLATE_TYPE t = (unsigned RE_TRANSLATE_TYPE) preg->translate;
+  char *fastmap = (preg->re_fastmap != NULL && preg->re_fastmap_accurate
+		   && range && !preg->re_can_be_null) ? preg->re_fastmap : NULL;
+  unsigned REG_TRANSLATE_TYPE t =
+    (unsigned REG_TRANSLATE_TYPE) preg->re_translate;
 
 #if !(defined _LIBC || (defined __STDC_VERSION__ && __STDC_VERSION__ >= 199901L))
   memset (&mctx, '\0', sizeof (re_match_context_t));
@@ -607,7 +609,7 @@ re_search_internal (const regex_t *preg,
   nmatch -= extra_nmatch;
 
   /* Check if the DFA haven't been compiled.  */
-  if (BE (preg->used == 0 || dfa->init_state == NULL
+  if (BE (preg->re_used == 0 || dfa->init_state == NULL
 	  || dfa->init_state_word == NULL || dfa->init_state_nl == NULL
 	  || dfa->init_state_begbuf == NULL, 0))
     return REG_NOMATCH;
@@ -618,12 +620,12 @@ re_search_internal (const regex_t *preg,
 #endif
 
   /* If initial states with non-begbuf contexts have no elements,
-     the regex must be anchored.  If preg->newline_anchor is set,
+     the regex must be anchored.  If preg->re_newline_anchor is set,
      we'll never use init_state_nl, so do not check it.  */
   if (dfa->init_state->nodes.nelem == 0
       && dfa->init_state_word->nodes.nelem == 0
       && (dfa->init_state_nl->nodes.nelem == 0
-	  || !preg->newline_anchor))
+	  || !preg->re_newline_anchor))
     {
       if (start != 0 && start + range != 0)
         return REG_NOMATCH;
@@ -634,12 +636,13 @@ re_search_internal (const regex_t *preg,
   fl_longest_match = (nmatch != 0 || dfa->nbackref);
 
   err = re_string_allocate (&mctx.input, string, length, dfa->nodes_len + 1,
-			    preg->translate, preg->syntax & RE_ICASE, dfa);
+			    preg->re_translate,
+			    preg->re_syntax & REG_IGNORE_CASE, dfa);
   if (BE (err != REG_NOERROR, 0))
     goto free_return;
   mctx.input.stop = stop;
   mctx.input.raw_stop = stop;
-  mctx.input.newline_anchor = preg->newline_anchor;
+  mctx.input.newline_anchor = preg->re_newline_anchor;
 
   err = match_ctx_init (&mctx, eflags, dfa->nbackref * 2);
   if (BE (err != REG_NOERROR, 0))
@@ -672,7 +675,7 @@ re_search_internal (const regex_t *preg,
   sb = dfa->mb_cur_max == 1;
   match_kind =
     (fastmap
-     ? ((sb || !(preg->syntax & RE_ICASE || t) ? 4 : 0)
+     ? ((sb || !(preg->re_syntax & REG_IGNORE_CASE || t) ? 4 : 0)
 	| (range >= 0 ? 2 : 0)
 	| (t != NULL ? 1 : 0))
      : 8);
@@ -794,13 +797,13 @@ re_search_internal (const regex_t *preg,
 	  else
 	    {
 	      mctx.match_last = match_last;
-	      if ((!preg->no_sub && nmatch > 1) || dfa->nbackref)
+	      if ((!preg->re_no_sub && nmatch > 1) || dfa->nbackref)
 		{
 		  re_dfastate_t *pstate = mctx.state_log[match_last];
 		  mctx.last_node = check_halt_state_context (&mctx, pstate,
 							     match_last);
 		}
-	      if ((!preg->no_sub && nmatch > 1 && dfa->has_plural_match)
+	      if ((!preg->re_no_sub && nmatch > 1 && dfa->has_plural_match)
 		  || dfa->nbackref)
 		{
 		  err = prune_impossible_nodes (&mctx);
@@ -836,7 +839,7 @@ re_search_internal (const regex_t *preg,
       pmatch[0].rm_so = 0;
       pmatch[0].rm_eo = mctx.match_last;
 
-      if (!preg->no_sub && nmatch > 1)
+      if (!preg->re_no_sub && nmatch > 1)
 	{
 	  err = set_regs (preg, &mctx, nmatch, pmatch,
 			  dfa->has_plural_match && dfa->nbackref > 0);
@@ -1346,7 +1349,7 @@ internal_function
 set_regs (const regex_t *preg, const re_match_context_t *mctx,
 	  size_t nmatch, regmatch_t *pmatch, int fl_backtrack)
 {
-  re_dfa_t *dfa = (re_dfa_t *) preg->buffer;
+  re_dfa_t *dfa = (re_dfa_t *) preg->re_buffer;
   int idx, cur_node;
   re_node_set eps_via_nodes;
   struct re_fail_stack_t *fs;
@@ -3474,18 +3477,18 @@ group_nodes_into_DFAstates (re_dfa_t *dfa, const re_dfastate_t *state,
 	  else
 #endif
 	    bitset_set_all (accepts);
-	  if (!(dfa->syntax & RE_DOT_NEWLINE))
+	  if (!(dfa->syntax & REG_DOT_NEWLINE))
 	    bitset_clear (accepts, '\n');
-	  if (dfa->syntax & RE_DOT_NOT_NULL)
+	  if (dfa->syntax & REG_DOT_NOT_NULL)
 	    bitset_clear (accepts, '\0');
 	}
 #ifdef RE_ENABLE_I18N
       else if (type == OP_UTF8_PERIOD)
         {
 	  memset (accepts, 255, sizeof (unsigned int) * BITSET_UINTS / 2);
-	  if (!(dfa->syntax & RE_DOT_NEWLINE))
+	  if (!(dfa->syntax & REG_DOT_NEWLINE))
 	    bitset_clear (accepts, '\n');
-	  if (dfa->syntax & RE_DOT_NOT_NULL)
+	  if (dfa->syntax & REG_DOT_NOT_NULL)
 	    bitset_clear (accepts, '\0');
         }
 #endif
@@ -3696,9 +3699,9 @@ check_node_accept_bytes (re_dfa_t *dfa, int node_idx,
       /* FIXME: I don't think this if is needed, as both '\n'
 	 and '\0' are char_len == 1.  */
       /* '.' accepts any one character except the following two cases.  */
-      if ((!(dfa->syntax & RE_DOT_NEWLINE) &&
+      if ((!(dfa->syntax & REG_DOT_NEWLINE) &&
 	   re_string_byte_at (input, str_idx) == '\n') ||
-	  ((dfa->syntax & RE_DOT_NOT_NULL) &&
+	  ((dfa->syntax & REG_DOT_NOT_NULL) &&
 	   re_string_byte_at (input, str_idx) == '\0'))
 	return 0;
       return char_len;
@@ -3954,8 +3957,8 @@ check_node_accept (const re_match_context_t *mctx, const re_token_t *node,
       /* FALLTHROUGH */
 #endif
     case OP_PERIOD:
-      if ((ch == '\n' && !(mctx->dfa->syntax & RE_DOT_NEWLINE))
-	  || (ch == '\0' && (mctx->dfa->syntax & RE_DOT_NOT_NULL)))
+      if ((ch == '\n' && !(mctx->dfa->syntax & REG_DOT_NEWLINE))
+	  || (ch == '\0' && (mctx->dfa->syntax & REG_DOT_NOT_NULL)))
 	return 0;
       break;
 
