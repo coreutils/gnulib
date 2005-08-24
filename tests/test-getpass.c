@@ -23,7 +23,8 @@
 #include <stdio.h>
 #include "getpass.h"
 
-int main (int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
   char *pass = getpass ("Enter password: ");
 
