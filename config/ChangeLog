@@ -1,3 +1,8 @@
+2005-08-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Remove glibc bug 1233 and add 1236, which supersedes it.
+	Add glibc bugs 1237 and 1238.  Comment out regex.c.
+
 2005-08-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Add glibc bugs 1231-1233.

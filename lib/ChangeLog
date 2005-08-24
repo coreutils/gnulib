@@ -1,3 +1,147 @@
+2005-08-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regex.c: Do not include <sys/types.h>, as POSIX no longer
+	requires this.  (The code never needed it.)
+
+	* regcomp.c, regex_internal.c, regex_internal.h, regexec.c:
+	All uses of recently-renamed identifiers changed to use the new,
+	POSIX-compliant names.  The code will build and run just fine
+	without these changes, but it's better to eat our own dog food
+	and use the standard-conforming names.
+
+	* regex.h: Fix a multitude of POSIX name space violations.
+	These changes have an effect only for programs that define
+	_POSIX_C_SOURCE, _POSIX_SOURCE, or _XOPEN_SOURCE; they
+	do not change anything for programs compiled in the normal way.
+	Also, there is no effect on the ABI.
+
+	(_REGEX_SOURCE): New macro.
+	Do not include <stddef.h> if _XOPEN_SOURCE and VMS are both
+	defined and _GNU_SOURCE is not; this fixes a name space violation.
+
+	Rename the following macros to obey POSIX requirements.
+	The old names are still visible as macros if _REGEX_SOURCE is defined.
+	(REG_BACKSLASH_ESCAPE_IN_LISTS): renamed from
+	RE_BACKSLASH_ESCAPE_IN_LISTS.
+	(REG_BK_PLUS_QM): renamed from RE_BK_PLUS_QM.
+	(REG_CHAR_CLASSES): renamed from RE_CHAR_CLASSES.
+	(REG_CONTEXT_INDEP_ANCHORS): renamed from RE_CONTEXT_INDEP_ANCHORS.
+	(REG_CONTEXT_INDEP_OPS): renamed from RE_CONTEXT_INDEP_OPS.
+	(REG_CONTEXT_INVALID_OPS): renamed from RE_CONTEXT_INVALID_OPS.
+	(REG_DOT_NEWLINE): renamed from RE_DOT_NEWLINE.
+	(REG_DOT_NOT_NULL): renamed from RE_DOT_NOT_NULL.
+	(REG_HAT_LISTS_NOT_NEWLINE): renamed from RE_HAT_LISTS_NOT_NEWLINE.
+	(REG_INTERVALS): renamed from RE_INTERVALS.
+	(REG_LIMITED_OPS): renamed from RE_LIMITED_OPS.
+	(REG_NEWLINE_ALT): renamed from RE_NEWLINE_ALT.
+	(REG_NO_BK_BRACES): renamed from RE_NO_BK_BRACES.
+	(REG_NO_BK_PARENS): renamed from RE_NO_BK_PARENS.
+	(REG_NO_BK_REFS): renamed from RE_NO_BK_REFS.
+	(REG_NO_BK_VBAR): renamed from RE_NO_BK_VBAR.
+	(REG_NO_EMPTY_RANGES): renamed from RE_NO_EMPTY_RANGES.
+	(REG_UNMATCHED_RIGHT_PAREN_ORD): renamed from
+	RE_UNMATCHED_RIGHT_PAREN_ORD.
+	(REG_NO_POSIX_BACKTRACKING): renamed from RE_NO_POSIX_BACKTRACKING.
+	(REG_NO_GNU_OPS): renamed from RE_NO_GNU_OPS.
+	(REG_DEBUG): renamed from RE_DEBUG.
+	(REG_INVALID_INTERVAL_ORD): renamed from RE_INVALID_INTERVAL_ORD.
+	(REG_IGNORE_CASE): renamed from RE_ICASE.  This renaming is a bit
+	unusual, since we can't clash with the POSIX REG_ICASE.
+	(REG_CARET_ANCHORS_HERE): renamed from RE_CARET_ANCHORS_HERE.
+	(REG_CONTEXT_INVALID_DUP): renamed from RE_CONTEXT_INVALID_DUP.
+	(REG_NO_SUB): renamed from RE_NO_SUB.
+	(REG_SYNTAX_EMACS): renamed from RE_SYNTAX_EMACS.
+	(REG_SYNTAX_AWK): renamed from RE_SYNTAX_AWK.
+	(REG_SYNTAX_GNU_AWK): renamed from RE_SYNTAX_GNU_AWK.
+	(REG_SYNTAX_POSIX_AWK): renamed from RE_SYNTAX_POSIX_AWK.
+	(REG_SYNTAX_GREP): renamed from RE_SYNTAX_GREP.
+	(REG_SYNTAX_EGREP): renamed from RE_SYNTAX_EGREP.
+	(REG_SYNTAX_POSIX_EGREP): renamed from RE_SYNTAX_POSIX_EGREP.
+	(REG_SYNTAX_ED): renamed from RE_SYNTAX_ED.
+	(REG_SYNTAX_SED): renamed from RE_SYNTAX_SED.
+	(_REG_SYNTAX_POSIX_COMMON): renamed from _RE_SYNTAX_POSIX_COMMON.
+	(REG_SYNTAX_POSIX_BASIC): renamed from RE_SYNTAX_POSIX_BASIC.
+	(REG_SYNTAX_POSIX_MINIMAL_BASIC): renamed from
+	RE_SYNTAX_POSIX_MINIMAL_BASIC.
+	(REG_SYNTAX_POSIX_EXTENDED): renamed from RE_SYNTAX_POSIX_EXTENDED.
+	(REG_SYNTAX_POSIX_MINIMAL_EXTENDED): renamed from
+	RE_SYNTAX_POSIX_MINIMAL_EXTENDED.
+	(REG_DUP_MAX): renamed from RE_DUP_MAX.  No need to undef it.
+	(REG_UNALLOCATED): Renamed from REGS_UNALLOCATED.
+	(REG_REALLOCATE): Renamed from REGS_REALLOCATE.
+	(REG_FIXED): Renamed from REGS_FIXED.
+	(REG_NREGS): Renamed from RE_NREGS.
+
+	(REG_ICASE, REG_NEWLINE, REG_NOSUB): Do not depend on the values
+	of other REG_* macros, since POSIX says the user is allowed to
+	#undef these macros selectively.
+
+	(reg_errcode_t): Update comment stating what other tables need
+	to be consistent.
+
+	Rename the following enum values to obey POSIX requirements.
+	The old names are still visible as macros.
+	(_REG_ENOSYS): Renamed from REG_ENOSYS.  Define even if _XOPEN_SOURCE
+	is not defined, since GNU is supposed to be a superset of POSIX as
+	much as possible, and since we want reg_errcode_t to be a signed
+	type for implementation consistency.
+	(_REG_NOERROR): Renamed from REG_NOERROR.
+	(_REG_NOMATCH): Renamed from REG_NOMATCH.
+	(_REG_BADPAT): Renamed from REG_BADPAT.
+	(_REG_ECOLLATE): Renamed from REG_ECOLLATE.
+	(_REG_ECTYPE): Renamed from REG_ECTYPE.
+	(_REG_EESCAPE): Renamed from REG_EESCAPE.
+	(_REG_ESUBREG): Renamed from REG_ESUBREG.
+	(_REG_EBRACK): Renamed from REG_EBRACK.
+	(_REG_EPAREN): Renamed from REG_EPAREN.
+	(_REG_EBRACE): Renamed from REG_EBRACE.
+	(_REG_BADBR): Renamed from REG_BADBR.
+	(_REG_ERANGE): Renamed from REG_ERANGE.
+	(_REG_ESPACE): Renamed from REG_ESPACE.
+	(_REG_BADRPT): Renamed from REG_BADRPT.
+	(_REG_EEND): Renamed from REG_EEND.
+	(_REG_ESIZE): Renamed from REG_ESIZE.
+	(_REG_ERPAREN): Renamed from REG_ERPAREN.
+	(REG_ENOSYS, REG_NOERROR, REG_NOMATCH, REG_BADPAT, REG_ECOLLATE):
+	(REG_ECTYPE, REG_EESCAPE, REG_ESUBREG, REG_EBRACK, REG_EPAREN):
+	(REG_EBRACE, REG_BADBR, REG_ERANGE, REG_ESPACE, REG_BADRPT, REG_EEND):
+	(REG_ESIZE, REG_ERPAREN): Now macros, not enum constants.
+
+	(_REG_RE_NAME, _REG_RM_NAME): New macros.
+	(REG_TRANSLATE_TYPE): Renamed from RE_TRANSLATE_TYPE.  All uses
+	changed.  But support the old name if the new one is not defined
+	and if _REGEX_SOURCE.
+
+	Change the following member names in struct re_pattern_buffer.
+	The old names are still supported if !_REGEX_SOURCE.
+	The new names are always supported, regardless of _REGEX_SOURCE.
+	(re_buffer): Renamed from buffer.
+	(re_allocated): Renamed from allocated.
+	(re_used): Renamed from used.
+	(re_syntax): Renamed from syntax.
+	(re_fastmap): Renamed from fastmap.
+	(re_translate): Renamed from translate.
+	(re_can_be_null): Renamed from can_be_null.
+	(re_regs_allocated): Renamed from regs_allocated.
+	(re_fastmap_accurate): Renamed from fastmap_accurate.
+	(re_no_sub): Renamed from no_sub.
+	(re_not_bol): Renamed from not_bol.
+	(re_not_eol): Renamed from not_eol.
+	(re_newline_anchor): Renamed from newline_anchor.
+
+	Change the following member names in struct re_registers.
+	The old names are still supported if !_REGEX_SOURCE.
+	The new names are always supported, regardless of _REGEX_SOURCE.
+	(rm_num_regs): Renamed from num_regs.
+	(rm_start): Renamed from start.
+	(rm_end): Renamed from end.
+
+	(re_set_syntax, re_compile_pattern, re_compile_fastmap):
+	(re_search, re_search_2, re_match, re_match_2, re_set_registers):
+	Prepend __ to parameter names.
+
+	Undo yesterday's changes.
+
 2005-08-24  Jim Meyering  <jim@meyering.net>
 
 	Sync from coreutils.
