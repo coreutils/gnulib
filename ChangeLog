@@ -1,3 +1,8 @@
+2005-08-24  Jim Meyering  <jim@meyering.net>
+
+	* modules/xgetcwd (Makefile.am): Remove `lib_SOURCES += ...' line,
+	now that xgetcwd.m4 requires xgetcwd.c and xgetcwd.h.
+
 2005-08-17  Bruno Haible  <bruno@clisp.org>
 
 	* modules/strcasestr: New file.
