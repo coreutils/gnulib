@@ -630,6 +630,7 @@ extern void regfree (regex_t *__preg);
 # define re_buffer buffer
 # define re_can_be_null can_be_null
 # define re_fastmap fastmap
+# define re_fastmap_accurate fastmap_accurate
 # define re_newline_anchor newline_anchor
 # define re_no_sub no_sub
 # define re_not_bol not_bol
