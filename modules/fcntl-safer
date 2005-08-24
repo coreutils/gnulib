@@ -1,0 +1,25 @@
+Description:
+File descriptor functions that avoid clobbering STD{IN,OUT,ERR}_FILENO.
+
+Files:
+lib/fcntl--.h
+lib/open-safer.c
+lib/fcntl-safer.h
+m4/fcntl-safer.m4
+
+Depends-on:
+unistd-safer
+
+configure.ac:
+gl_FCNTL_SAFER
+
+Makefile.am:
+
+Include:
+"fcntl-safer.h"
+
+License:
+GPL
+
+Maintainer:
+Paul Eggert, Jim Meyering

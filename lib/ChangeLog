@@ -1,3 +1,8 @@
+2005-08-24  Jim Meyering  <jim@meyering.net>
+
+	Sync from coreutils.
+	* fcntl--.h, fcntl-safer.h, open-safer.c: New files.
+
 2005-08-21  Bruno Haible  <bruno@clisp.org>
 
 	* lock.h: Add multiple inclusion guard.

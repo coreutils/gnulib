@@ -1,3 +1,10 @@
+2005-08-24  Jim Meyering  <jim@meyering.net>
+
+	* modules/fcntl-safer: New module.
+	* modules/fts (Depends-on): Add fcntl-safer.
+	* MODULES.html.sh (File descriptor based Input/Output):
+	Add fcntl-safer.
+
 2005-08-24  Simon Josefsson  <jas@extundo.com>
 
 	* tests/test-getpass.c: New file.
