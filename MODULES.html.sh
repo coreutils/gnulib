@@ -1863,6 +1863,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module fcntl-safer
   func_module safe-read
   func_module safe-write
   func_module full-read
