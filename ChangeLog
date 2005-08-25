@@ -1,5 +1,14 @@
 2005-08-24  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool: Add support for the --aux-dir option to
+	--create-testdir, --create-megatestdir, --test, --megatest.
+	(func_create_testdir, func_create_megatestdir): Optionally emit a
+	AC_CONFIG_AUX_DIR directive.
+	(create-testdir, create-megatestdir, test, megatest): Provide a
+	default value for $auxdir.
+
+2005-08-24  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (import): Use compound statement instead of subshell
 	where possible.
 

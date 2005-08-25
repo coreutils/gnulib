@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-25 12:02:37 $'
+cvsdatestamp='$Date: 2005-08-25 12:08:21 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -89,8 +89,7 @@ Options:
       --m4-base=DIRECTORY   Directory relative --dir where *.m4 macros are
                             placed (default \"m4\"), for --import.
       --aux-dir=DIRECTORY   Directory relative --dir where auxiliary build
-                            tools are placed (default \"build-aux\"),
-                            for --import.
+                            tools are placed (default \"build-aux\").
       --avoid=MODULE        Avoid including the given MODULE. Useful if you
                             have code that provides equivalent functionality.
                             This option can be repeated.
@@ -591,6 +590,7 @@ func_emit_lib_Makefile_am ()
 # - libname         library name
 # - sourcebase      directory relative to destdir where to place source code
 # - m4base          directory relative to destdir where to place *.m4 macros
+# - auxdir          directory relative to destdir where to place build aux files
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            true if library's license shall be LGPL, blank otherwise
 # - libtool         true if libtool will be used, blank otherwise
@@ -752,6 +752,8 @@ func_import ()
 }
 
 # func_create_testdir testdir modules
+# Input:
+# - auxdir          directory relative to destdir where to place build aux files
 func_create_testdir ()
 {
   testdir="$1"
@@ -832,6 +834,9 @@ func_create_testdir ()
   # Create configure.ac.
   (echo "# Process this file with autoconf to produce a configure script."
    echo "AC_INIT([dummy], [0])"
+   if test "$auxdir" != "."; then
+     echo "AC_CONFIG_AUX_DIR([$auxdir])"
+   fi
    echo "AM_INIT_AUTOMAKE"
    echo
    echo "AM_CONFIG_HEADER([config.h])"
@@ -883,6 +888,8 @@ func_create_testdir ()
 }
 
 # func_create_megatestdir megatestdir allmodules
+# Input:
+# - auxdir          directory relative to destdir where to place build aux files
 func_create_megatestdir ()
 {
   megatestdir="$1"
@@ -914,6 +921,9 @@ func_create_megatestdir ()
   # Create configure.ac.
   (echo "# Process this file with autoconf to produce a configure script."
    echo "AC_INIT([dummy], [0])"
+   if test "$auxdir" != "."; then
+     echo "AC_CONFIG_AUX_DIR([$auxdir])"
+   fi
    echo "AM_INIT_AUTOMAKE"
    echo
    echo "AC_PROG_MAKE_SET"
@@ -1028,6 +1038,7 @@ case $mode in
     mkdir "$destdir"
     test -d "$destdir" \
       || func_fatal_error "could not create destination directory"
+    test -n "$auxdir" || auxdir="build-aux"
     func_create_testdir "$destdir" "$*"
     ;;
 
@@ -1036,12 +1047,14 @@ case $mode in
       func_fatal_error "please specify --dir option"
     fi
     mkdir "$destdir" || func_fatal_error "could not create destination directory"
+    test -n "$auxdir" || auxdir="build-aux"
     func_create_megatestdir "$destdir" "$*"
     ;;
 
   test )
     test -n "$destdir" || destdir=testdir$$
     mkdir "$destdir" || func_fatal_error "could not create destination directory"
+    test -n "$auxdir" || auxdir="build-aux"
     func_create_testdir "$destdir" "$*"
     cd "$destdir"
       mkdir build
@@ -1064,6 +1077,7 @@ case $mode in
   megatest )
     test -n "$destdir" || destdir=testdir$$
     mkdir "$destdir" || func_fatal_error "could not create destination directory"
+    test -n "$auxdir" || auxdir="build-aux"
     func_create_megatestdir "$destdir" "$*"
     cd "$destdir"
       mkdir build
