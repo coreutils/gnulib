@@ -1,3 +1,8 @@
+2005-08-24  Simon Josefsson  <jas@extundo.com>
+
+	* getpass.m4: Check for termios.h, tcgetattr, tcsetattr, and
+	__fsetlocking.
+
 2005-08-25  Stepan Kasal  <kasal@ucw.cz>
 
 	* regex.m4: Add AC_PREREQ(2.50).
