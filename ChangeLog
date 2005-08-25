@@ -1,5 +1,10 @@
 2005-08-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/lock-tests: New file.
+	* tests/test-lock.c: New file, from GNU gettext.
+
+2005-08-24  Bruno Haible  <bruno@clisp.org>
+
 	Support for unit test modules.
 	* modules/README: Mention tests modules.
 	* modules/TEMPLATE-TESTS: New file.
