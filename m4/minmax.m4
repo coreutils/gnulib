@@ -1,4 +1,4 @@
-# minmax.m4 serial 1
+# minmax.m4 serial 2
 dnl Copyright (C) 2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,6 +17,8 @@ AC_DEFUN([gl_PREREQ_MINMAX],
 ])
 
 dnl gl_MINMAX_IN_HEADER(HEADER)
+dnl The parameter has to be a literal header name; it cannot be macro,
+dnl nor a shell variable.
 AC_DEFUN([gl_MINMAX_IN_HEADER],
 [
   define([header],[translit([$1],[./-],
