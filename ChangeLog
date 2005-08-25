@@ -1,5 +1,9 @@
 2005-08-24  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (import): Change --aux-dir default to "build-aux".
+
+2005-08-24  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import, func_create_testdir,
 	func_create_megatestdir): Quote all autoconf macro arguments.
 

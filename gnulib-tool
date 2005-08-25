@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-25 11:56:57 $'
+cvsdatestamp='$Date: 2005-08-25 12:00:38 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -89,7 +89,8 @@ Options:
       --m4-base=DIRECTORY   Directory relative --dir where *.m4 macros are
                             placed (default \"m4\"), for --import.
       --aux-dir=DIRECTORY   Directory relative --dir where auxiliary build
-                            tools are placed (default \".\"), for --import.
+                            tools are placed (default \"build-aux\"),
+                            for --import.
       --avoid=MODULE        Avoid including the given MODULE. Useful if you
                             have code that provides equivalent functionality.
                             This option can be repeated.
@@ -997,7 +998,7 @@ case $mode in
 
     # Set up auxiliary directory.
     test -z "$auxdir" && auxdir="$ac_auxdir"
-    test -z "$auxdir" && auxdir="."
+    test -z "$auxdir" && auxdir="build-aux"
     test -d "$destdir/$auxdir" \
       || (test -z "$dry_run" && mkdir "$destdir/$auxdir") \
       || func_fatal_error "aux directory $destdir/$auxdir doesn't exist"
