@@ -1,3 +1,9 @@
+2005-08-24  Simon Josefsson  <jas@extundo.com>
+
+	* getpass.c: Add WIN32 implementation.  Conditionalize use of
+	termios.h, tcgetattr, tcsetattr and __fsetlocking.  Remove some
+	GLIBC specific code.
+
 2005-08-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Make regex safe for g++.  This fixes one real bug (an "err"
