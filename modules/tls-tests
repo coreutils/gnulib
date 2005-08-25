@@ -1,0 +1,20 @@
+Files:
+tests/test-tls.c
+
+Depends-on:
+
+configure.ac:
+dnl Checks for special libraries for the tests/test-tls test.
+dnl On some systems, sched_yield is in librt, rather than in libpthread.
+LIBSCHED=
+if test $gl_threads_api = posix; then
+  AC_CHECK_LIB(rt, sched_yield, [LIBSCHED=-lrt])
+fi
+AC_SUBST([LIBSCHED])
+
+Makefile.am:
+TESTS += test-tls
+noinst_PROGRAMS += test-tls
+test_tls_SOURCES = test-tls.c
+test_tls_LDADD = @LIBMULTITHREAD@ @LIBSCHED@ $(LDADD)
+

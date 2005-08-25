@@ -1,5 +1,10 @@
 2005-08-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/tls-tests: New file.
+	* tests/test-tls.c: New file, from GNU gettext.
+
+2005-08-24  Bruno Haible  <bruno@clisp.org>
+
 	* modules/lock-tests: New file.
 	* tests/test-lock.c: New file, from GNU gettext.
 
