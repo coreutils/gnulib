@@ -391,7 +391,8 @@ static reg_errcode_t re_string_realloc_buffers (re_string_t *pstr,
      internal_function;
 #ifdef RE_ENABLE_I18N
 static void build_wcs_buffer (re_string_t *pstr) internal_function;
-static int build_wcs_upper_buffer (re_string_t *pstr) internal_function;
+static reg_errcode_t build_wcs_upper_buffer (re_string_t *pstr)
+     internal_function;
 #endif /* RE_ENABLE_I18N */
 static void build_upper_buffer (re_string_t *pstr) internal_function;
 static void re_string_translate_buffer (re_string_t *pstr) internal_function;
@@ -431,6 +432,7 @@ static unsigned char re_string_fetch_byte_case (re_string_t *pstr)
 #define re_string_set_index(pstr,idx) ((pstr)->cur_idx = (idx))
 
 #define re_malloc(t,n) ((t *) malloc ((n) * sizeof (t)))
+#define re_calloc(t,n) ((t *) calloc (n, sizeof (t)))
 #define re_realloc(p,t,n) ((t *) realloc (p, (n) * sizeof (t)))
 #define re_free(p) free (p)
 

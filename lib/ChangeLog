@@ -1,3 +1,20 @@
+2005-08-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Make regex safe for g++.  This fixes one real bug (an "err"
+	that should have been "*err").  g++ problem reported by
+	Sam Steingold.
+	* regex_internal.h (re_calloc): New macro, consistent with
+	re_malloc etc.  All callers of calloc changed to use re_calloc.
+	* regex_internal.c (build_wcs_upper_buffer): Return reg_errcode_t,
+	not int.  All callers changed.
+	* regcomp.c (re_compile_fastmap_iter): Don't use alloca (mb_cur_max);
+	just use an array of size MB_LEN_MAX.
+	* regexec.c (push_fail_stack): Use re_realloc, not realloc.
+	(find_recover_state): Change "err" to "*err"; this fixes what
+	appears to be a real bug.
+	(check_arrival_expand_ecl_sub): Be consistent about reg_errcode_t
+	versus int.
+
 2005-08-25  Jim Meyering  <jim@meyering.net>
 
 	* open-safer.c: Include <config.h>.

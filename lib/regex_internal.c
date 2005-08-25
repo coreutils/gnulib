@@ -258,7 +258,7 @@ build_wcs_buffer (re_string_t *pstr)
 /* Build wide character buffer PSTR->WCS like build_wcs_buffer,
    but for REG_ICASE.  */
 
-static int
+static reg_errcode_t
 internal_function
 build_wcs_upper_buffer (re_string_t *pstr)
 {
@@ -707,7 +707,7 @@ re_string_reconstruct (re_string_t *pstr, int idx, int eflags)
     {
       if (pstr->icase)
 	{
-	  int ret = build_wcs_upper_buffer (pstr);
+	  reg_errcode_t ret = build_wcs_upper_buffer (pstr);
 	  if (BE (ret != REG_NOERROR, 0))
 	    return ret;
 	}
@@ -1504,7 +1504,7 @@ create_ci_newstate (re_dfa_t *dfa, const re_node_set *nodes, unsigned int hash)
   reg_errcode_t err;
   re_dfastate_t *newstate;
 
-  newstate = (re_dfastate_t *) calloc (sizeof (re_dfastate_t), 1);
+  newstate = re_calloc (re_dfastate_t, 1);
   if (BE (newstate == NULL, 0))
     return NULL;
   err = re_node_set_init_copy (&newstate->nodes, nodes);
@@ -1554,7 +1554,7 @@ create_cd_newstate (re_dfa_t *dfa, const re_node_set *nodes,
   reg_errcode_t err;
   re_dfastate_t *newstate;
 
-  newstate = (re_dfastate_t *) calloc (sizeof (re_dfastate_t), 1);
+  newstate = re_calloc (re_dfastate_t, 1);
   if (BE (newstate == NULL, 0))
     return NULL;
   err = re_node_set_init_copy (&newstate->nodes, nodes);
