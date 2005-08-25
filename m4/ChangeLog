@@ -1,3 +1,8 @@
+2005-08-25  Stepan Kasal  <kasal@ucw.cz>
+
+	* regex.m4: Add AC_PREREQ(2.50).
+	(gl_REGEX): If --with-included-regex was given, skip the autodetection.
+
 2005-08-25  Bruno Haible  <bruno@clisp.org>
 
 	* minmax.m4 (gl_MINMAX_IN_HEADER): Add comments.

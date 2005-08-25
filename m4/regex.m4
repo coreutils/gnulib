@@ -1,4 +1,4 @@
-#serial 27
+#serial 28
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005 Free
 # Software Foundation, Inc.
@@ -10,27 +10,33 @@
 dnl Initially derived from code in GNU grep.
 dnl Mostly written by Jim Meyering.
 
+AC_PREREQ([2.50])
+
 AC_DEFUN([gl_REGEX],
 [
   AC_LIBSOURCES(
     [regcomp.c, regex.c, regex.h,
      regex_internal.c, regex_internal.h, regexec.c])
 
-  dnl Even packages that don't use regex.c can use this macro.
-  dnl Of course, for them it doesn't do anything.
+  AC_ARG_WITH([included-regex],
+    [AC_HELP_STRING([--without-included-regex],
+		    [don't compile regex; this is the default on
+		     systems with recent-enough versions of the GNU C
+		     Library (use with caution on other systems)])])
 
-  # Assume we'll default to using the included regex.c.
-  ac_use_included_regex=yes
-
-  # However, if the system regex support is good enough that it passes the
-  # the following run test, then default to *not* using the included regex.c.
-  # If cross compiling, assume the test would fail and use the included
-  # regex.c.  The first failing regular expression is from `Spencer ere
-  # test #75' in grep-2.3.
-  AC_CACHE_CHECK([for working re_compile_pattern],
-		 [gl_cv_func_working_re_compile_pattern],
-    [AC_RUN_IFELSE(
-       [AC_LANG_PROGRAM(
+  case $with_included_regex in
+  yes|no) ac_use_included_regex=$with_included_regex
+	;;
+  '')
+    # If the system regex support is good enough that it passes the the
+    # following run test, then default to *not* using the included regex.c.
+    # If cross compiling, assume the test would fail and use the included
+    # regex.c.  The first failing regular expression is from `Spencer ere
+    # test #75' in grep-2.3.
+    AC_CACHE_CHECK([for working re_compile_pattern],
+		   [gl_cv_func_re_compile_pattern_broken],
+      [AC_RUN_IFELSE(
+	[AC_LANG_PROGRAM(
 	  [AC_INCLUDES_DEFAULT
 	   #include <regex.h>],
 	  [[static struct re_pattern_buffer regex;
@@ -92,21 +98,17 @@ AC_DEFUN([gl_REGEX],
 	      exit (1);
 
 	    exit (0);]])],
-       [gl_cv_func_working_re_compile_pattern=yes],
-       [gl_cv_func_working_re_compile_pattern=no],
+       [gl_cv_func_re_compile_pattern_broken=no],
+       [gl_cv_func_re_compile_pattern_broken=yes],
        dnl When crosscompiling, assume it is broken.
-       [gl_cv_func_working_re_compile_pattern=no])])
-  if test $gl_cv_func_working_re_compile_pattern = yes; then
-    ac_use_included_regex=no
-  fi
+       [gl_cv_func_re_compile_pattern_broken=yes])])
+    ac_use_included_regex=$gl_cv_func_re_compile_pattern_broken
+    ;;
+  *) AC_MSG_ERROR([Invalid value for --with-included-regex: $with_included_regex])
+    ;;
+  esac
 
-  AC_ARG_WITH([included-regex],
-    [  --without-included-regex don't compile regex; this is the default on
-			systems with recent-enough versions of the GNU C
-			Library (use with caution on other systems)],
-    [gl_with_regex=$withval],
-    [gl_with_regex=$ac_use_included_regex])
-  if test "X$gl_with_regex" = Xyes; then
+  if test $ac_use_included_regex = yes; then
     AC_LIBOBJ([regex])
     gl_PREREQ_REGEX
   fi
