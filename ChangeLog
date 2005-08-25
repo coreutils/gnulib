@@ -1,5 +1,10 @@
 2005-08-24  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (import): Use compound statement instead of subshell
+	where possible.
+
+2005-08-24  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (import): Change --aux-dir default to "build-aux".
 
 2005-08-24  Bruno Haible  <bruno@clisp.org>

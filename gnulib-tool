@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-25 12:00:38 $'
+cvsdatestamp='$Date: 2005-08-25 12:02:37 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -986,21 +986,21 @@ case $mode in
     test -z "$sourcebase" && sourcebase="$ac_sourcebase"
     test -z "$sourcebase" && sourcebase="lib"
     test -d "$destdir/$sourcebase" \
-      || (test -z "$dry_run" && mkdir "$destdir/$sourcebase") \
+      || { test -z "$dry_run" && mkdir "$destdir/$sourcebase"; } \
       || func_fatal_error "source base $destdir/$sourcebase doesn't exist"
 
     # Set up m4 base.
     test -z "$m4base" && m4base="$ac_m4base"
     test -z "$m4base" && m4base="m4"
     test -d "$destdir/$m4base" \
-      || (test -z "$dry_run" && mkdir "$destdir/$m4base") \
+      || { test -z "$dry_run" && mkdir "$destdir/$m4base"; } \
       || func_fatal_error "m4 base $destdir/$m4base doesn't exist"
 
     # Set up auxiliary directory.
     test -z "$auxdir" && auxdir="$ac_auxdir"
     test -z "$auxdir" && auxdir="build-aux"
     test -d "$destdir/$auxdir" \
-      || (test -z "$dry_run" && mkdir "$destdir/$auxdir") \
+      || { test -z "$dry_run" && mkdir "$destdir/$auxdir"; } \
       || func_fatal_error "aux directory $destdir/$auxdir doesn't exist"
 
     # Using libtool?
