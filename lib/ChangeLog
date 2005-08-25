@@ -1,5 +1,8 @@
 2005-08-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* regcomp.c (regerror): 2nd arg is 'restrict', as per POSIX.
+	* regex.h (regerror): Likewise.
+
 	* regex.c: Do not include <sys/types.h>, as POSIX no longer
 	requires this.  (The code never needed it.)
 

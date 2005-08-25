@@ -614,8 +614,8 @@ extern int regexec (const regex_t *__restrict __preg,
 		    regmatch_t __pmatch[__restrict_arr],
 		    int __eflags);
 
-extern size_t regerror (int __errcode, const regex_t *__preg,
-			char *__errbuf, size_t __errbuf_size);
+extern size_t regerror (int __errcode, const regex_t *__restrict __preg,
+			char *__restrict __errbuf, size_t __errbuf_size);
 
 extern void regfree (regex_t *__preg);
 
