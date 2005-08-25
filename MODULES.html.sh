@@ -2099,9 +2099,9 @@ func_echo '<LI>A header file: lib/<VAR>module</VAR>.h'
 func_echo '<LI>One or more implementation files: lib/<VAR>module</VAR>.c et al.'
 func_echo '<LI>One or more autoconf macro files: m4/<VAR>module</VAR>.m4 et al.'
 func_echo '<LI>A configure.ac fragment, Makefile.am fragment, dependency list: modules/<VAR>module</VAR>'
+func_echo '<LI>A testsuite: source files in tests/ and metainformation (a configure.ac fragment, Makefile.am fragment, dependency list) in modules/<VAR>module</VAR>-tests'
 func_echo '<LI>Some documentation'
 func_echo '<LI>A POT file and some PO files'
-func_echo '<LI>A testsuite'
 func_end UL
 
 func_echo '<HR>'

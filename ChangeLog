@@ -1,5 +1,26 @@
 2005-08-24  Bruno Haible  <bruno@clisp.org>
 
+	Support for unit test modules.
+	* modules/README: Mention tests modules.
+	* modules/TEMPLATE-TESTS: New file.
+	* gnulib-tool: New options --extract-tests-module, --with-tests and
+	--tests-base (unused for the moment).
+	(testsbase, inctests): New variables.
+	(func_all_modules): Exclude TEMPLATE-TESTS and *-tests.
+	(func_verify_module): Exclude TEMPLATE-TESTS.
+	(func_verify_nontests_module, func_verify_tests_module): New functions.
+	(func_get_dependencies): Add implicit dependency for tests modules.
+	(func_get_tests_module): New function.
+	(func_modules_transitive_closure): When --with-tests was specified,
+	include the unit tests as well, unless explicitly avoided.
+	(func_emit_lib_Makefile_am): Ignore the tests modules here.
+	(func_emit_tests_Makefile_am): New function.
+	(func_create_testdir): When --with-tests was specified, emit a
+	tests/ directory.
+	* MODULES.html.sh (Future developments): Update.
+
+2005-08-24  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_version): Update.
 
 2005-08-24  Bruno Haible  <bruno@clisp.org>

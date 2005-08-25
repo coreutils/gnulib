@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-25 12:15:37 $'
+cvsdatestamp='$Date: 2005-08-25 12:36:00 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -56,6 +56,7 @@ Usage: gnulib-tool --list
        gnulib-tool --extract-include-directive module
        gnulib-tool --extract-license module
        gnulib-tool --extract-maintainer module
+       gnulib-tool --extract-tests-module module
 
 Operation modes:
       --list                print the available module names
@@ -76,6 +77,7 @@ Operation modes:
       --extract-license            report the license terms of the source files
                                    under lib/
       --extract-maintainer         report the maintainer(s) inside gnulib
+      --extract-tests-module       report the unit test module, if it exists
 
 Options:
       --dir=DIRECTORY       specify the target directory
@@ -88,8 +90,12 @@ Options:
                             placed (default \"lib\"), for --import.
       --m4-base=DIRECTORY   Directory relative --dir where *.m4 macros are
                             placed (default \"m4\"), for --import.
+      --tests-base=DIRECTORY
+                            Directory relative --dir where unit tests are
+                            placed (default \"tests\"), for --import.
       --aux-dir=DIRECTORY   Directory relative --dir where auxiliary build
                             tools are placed (default \"build-aux\").
+      --with-tests          Include unit tests for the included modules.
       --avoid=MODULE        Avoid including the given MODULE. Useful if you
                             have code that provides equivalent functionality.
                             This option can be repeated.
@@ -183,7 +189,9 @@ func_ln_if_changed ()
 # - libname, supplied_libname  from --lib
 # - sourcebase      from --source-base
 # - m4base          from --m4-base
+# - testsbase       from --tests-base
 # - auxdir          from --aux-dir
+# - inctests        true if --with-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            true if --lgpl was given, blank otherwise
 # - libtool         true if --libtool was given, blank otherwise
@@ -196,7 +204,9 @@ func_ln_if_changed ()
   supplied_libname=
   sourcebase=
   m4base=
+  testsbase=
   auxdir=
+  inctests=
   avoidlist=
   lgpl=
   libtool=
@@ -271,6 +281,16 @@ func_ln_if_changed ()
       --m4-base=* )
         m4base=`echo "X$1" | sed -e 's/^X--m4-base=//'`
         shift ;;
+      --tests-base )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --tests-base"
+        fi
+        testsbase=$1
+        shift ;;
+      --tests-base=* )
+        testsbase=`echo "X$1" | sed -e 's/^X--tests-base=//'`
+        shift ;;
       --aux-dir )
         shift
         if test $# = 0; then
@@ -280,6 +300,9 @@ func_ln_if_changed ()
         shift ;;
       --aux-dir=* )
         auxdir=`echo "X$1" | sed -e 's/^X--aux-dir=//'`
+        shift ;;
+      --with-tests )
+        inctests=true
         shift ;;
       --avoid )
         shift
@@ -356,8 +379,12 @@ gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
 # func_all_modules
 func_all_modules ()
 {
+  # Filter out metainformation files like README, which are not modules.
+  # Filter out unit test modules; they can be retrieved through
+  # --extract-tests-module if desired.
   (cd "$gnulib_dir/modules" && ls -1) \
-      | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^README$/d' -e '/^TEMPLATE$/d' -e '/~$/d' \
+      | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^README$/d' -e '/^TEMPLATE$/d' -e '/^TEMPLATE-TESTS$/d' -e '/~$/d' \
+      | sed -e '/-tests$/d' \
       | sort
 }
 
@@ -369,10 +396,31 @@ func_verify_module ()
      || test "CVS" = "$module" \
      || test "ChangeLog" = "$module" \
      || test "README" = "$module" \
-     || test "TEMPLATE" = "$module"; then
+     || test "TEMPLATE" = "$module" \
+     || test "TEMPLATE-TESTS" = "$module"; then
     echo "gnulib-tool: module $module doesn't exist" 1>&2
     module=
   fi
+}
+
+# func_verify_nontests_module
+# verifies a module name, excluding tests modules
+func_verify_nontests_module ()
+{
+  case "$module" in
+    *-tests ) module= ;;
+    * ) func_verify_module ;;
+  esac
+}
+
+# func_verify_tests_module
+# verifies a module name, considering only tests modules
+func_verify_tests_module ()
+{
+  case "$module" in
+    *-tests ) func_verify_module ;;
+    * ) module= ;;
+  esac
 }
 
 sed_extract_prog=':[ 	]*$/ {
@@ -409,6 +457,9 @@ func_get_filelist ()
 # func_get_dependencies module
 func_get_dependencies ()
 {
+  # ${module}-tests always implicitly depends on ${module}.
+  echo "$1" | sed -n -e 's/-tests//p'
+  # Then the explicit dependencies listed in the module description.
   sed -n -e "/^Depends-on$sed_extract_prog" < "$gnulib_dir/modules/$1"
 }
 
@@ -443,6 +494,15 @@ func_get_maintainer ()
   sed -n -e "/^Maintainer$sed_extract_prog" < "$gnulib_dir/modules/$1"
 }
 
+# func_get_tests_module module
+func_get_tests_module ()
+{
+  # The naming convention for tests modules is hardwired: ${module}-tests.
+  if test -f modules/"$1"-tests; then
+    echo "$1"-tests
+  fi
+}
+
 # func_acceptable module
 # tests whether a module is acceptable.
 # Input:
@@ -460,6 +520,7 @@ func_acceptable ()
 # func_modules_transitive_closure
 # Input:
 # - modules         list of specified modules
+# - inctests        true if tests should be included, blank otherwise
 # - avoidlist       list of modules to avoid
 # Output:
 # - modules         list of modules, including dependencies
@@ -482,6 +543,19 @@ func_modules_transitive_closure ()
               xmodules="$xmodules $depmodule"
             fi
           done
+          if test -n "$inctests"; then
+            testsmodule=`func_get_tests_module $module`
+            if test -n "$testsmodule"; then
+              if func_acceptable $testsmodule; then
+                xmodules="$xmodules $testsmodule"
+                for depmodule in `func_get_dependencies $testsmodule`; do
+                  if func_acceptable $depmodule; then
+                    xmodules="$xmodules $depmodule"
+                  fi
+                done
+              fi
+            fi
+          fi
         fi
       fi
     done
@@ -560,7 +634,7 @@ func_emit_lib_Makefile_am ()
   echo "MAINTAINERCLEANFILES ="
   echo
   for module in $modules; do
-    func_verify_module
+    func_verify_nontests_module
     if test -n "$module"; then
       {
         func_get_automake_snippet "$module" |
@@ -580,6 +654,75 @@ func_emit_lib_Makefile_am ()
       rm -f amsnippet.tmp
     fi
   done
+  echo
+  echo "# Makefile.am ends here"
+}
+
+# func_emit_tests_Makefile_am
+# emits the contents of tests/Makefile.am to standard output.
+# Input:
+# - modules         list of modules, including dependencies
+# - libname         library name
+# - libtool         true if libtool will be used, blank otherwise
+# - sourcebase      relative directory containing lib source code
+func_emit_tests_Makefile_am ()
+{
+  if test -n "$libtool"; then
+    libext=la
+  else
+    libext=a
+  fi
+  echo "## Process this file with automake to produce Makefile.in."
+  echo "# Copyright (C) 2004-2005 Free Software Foundation, Inc."
+  echo "#"
+  echo "# This file is free software, distributed under the terms of the GNU"
+  echo "# General Public License.  As a special exception to the GNU General"
+  echo "# Public License, this file may be distributed as part of a program"
+  echo "# that contains a configuration script generated by Automake, under"
+  echo "# the same distribution terms as the rest of that program."
+  echo "#"
+  echo "# Generated by gnulib-tool."
+  echo
+  # Generate dependencies here, since it eases the debugging of test failures.
+  echo "AUTOMAKE_OPTIONS = 1.5 foreign"
+  echo
+  echo "ACLOCAL_AMFLAGS = -I ../m4"
+  echo
+  echo "TESTS ="
+  echo "noinst_PROGRAMS ="
+  echo "EXTRA_DIST ="
+  echo "BUILT_SOURCES ="
+  echo "SUFFIXES ="
+  echo "MOSTLYCLEANFILES ="
+  echo "CLEANFILES ="
+  echo "DISTCLEANFILES ="
+  echo "MAINTAINERCLEANFILES ="
+  echo
+  echo "AM_CPPFLAGS = \\"
+  echo "  -I. -I\$(srcdir) \\"
+  echo "  -I.. -I\$(srcdir)/.. \\"
+  echo "  -I../${sourcebase-lib} -I\$(srcdir)/../${sourcebase-lib}"
+  echo
+  echo "LDADD = ../${sourcebase-lib}/${libname}.${libext}"
+  echo
+  for module in $modules; do
+    func_verify_tests_module
+    if test -n "$module"; then
+      func_get_automake_snippet "$module" > amsnippet.tmp
+      # Skip the contents if its entirely empty.
+      if grep '[^ 	]' amsnippet.tmp > /dev/null ; then
+        echo "## begin gnulib module $module"
+        echo
+        cat amsnippet.tmp
+        echo "## end   gnulib module $module"
+        echo
+      fi
+      rm -f amsnippet.tmp
+    fi
+  done
+  echo "# Clean up after Solaris cc."
+  echo "clean-local:"
+  echo "	rm -rf SunWS_cache"
   echo
   echo "# Makefile.am ends here"
 }
@@ -811,6 +954,7 @@ func_create_testdir ()
   ) > "$testdir/m4/Makefile.am"
 
   subdirs="lib m4"
+  subdirs_with_configure_ac=""
 
   if test -f "$testdir"/m4/gettext.m4; then
     # Avoid stupid error message from automake:
@@ -819,6 +963,58 @@ func_create_testdir ()
     (echo "## Process this file with automake to produce Makefile.in."
     ) > "$testdir/po/Makefile.am"
     subdirs="$subdirs po"
+  fi
+
+  if test -n "$inctests"; then
+    test -d "$testdir/tests" || mkdir "$testdir/tests"
+    # Create tests/Makefile.am.
+    sourcebase=lib
+    func_emit_tests_Makefile_am > "$testdir/tests/Makefile.am"
+    # Create tests/configure.ac.
+    (echo "# Process this file with autoconf to produce a configure script."
+     echo "AC_INIT([dummy], [0])"
+     echo "AC_CONFIG_AUX_DIR([../$auxdir])"
+     echo "AM_INIT_AUTOMAKE"
+     echo
+     echo "AM_CONFIG_HEADER([config.h])"
+     echo
+     echo "AC_PROG_CC"
+     echo "AC_PROG_INSTALL"
+     echo "AC_PROG_MAKE_SET"
+     echo "AC_PROG_RANLIB"
+     echo
+     if grep AC_GNU_SOURCE "$testdir"/m4/*.m4 > /dev/null; then
+       echo "AC_GNU_SOURCE"
+       echo
+     fi
+     if grep gl_USE_SYSTEM_EXTENSIONS "$testdir"/m4/*.m4 > /dev/null; then
+       echo "gl_USE_SYSTEM_EXTENSIONS"
+       echo
+     fi
+     # We don't have explicit ordering constraints between the various
+     # autoconf snippets. It's cleanest to put those of the library before
+     # those of the tests.
+     for module in $modules; do
+       func_verify_nontests_module
+       if test -n "$module"; then
+         func_get_autoconf_snippet "$module"
+       fi
+     done
+     for module in $modules; do
+       func_verify_tests_module
+       if test -n "$module"; then
+         func_get_autoconf_snippet "$module"
+       fi
+     done
+     echo
+     # Usually tests/config.h will be a superset of config.h. Verify this by
+     # "merging" config.h into tests/config.h; look out for gcc warnings.
+     echo "AH_TOP([#include \"../config.h\"])"
+     echo
+     echo "AC_OUTPUT([Makefile])"
+    ) > "$testdir/tests/configure.ac"
+    subdirs="$subdirs tests"
+    subdirs_with_configure_ac="$subdirs_with_configure_ac tests"
   fi
 
   # Create Makefile.am.
@@ -855,15 +1051,23 @@ func_create_testdir ()
      echo
    fi
    for module in $modules; do
-     func_verify_module
+     func_verify_nontests_module
      if test -n "$module"; then
        func_get_autoconf_snippet "$module"
      fi
    done
    echo
+   if test -n "$subdirs_with_configure_ac"; then
+     echo "AC_CONFIG_SUBDIRS(["`echo $subdirs_with_configure_ac`"])"
+   fi
    makefiles="Makefile"
    for d in $subdirs; do
-     makefiles="$makefiles $d/Makefile"
+     # For subdirs that have a configure.ac by their own, it's the subdir's
+     # configure.ac which creates the subdir's Makefile.am, not this one.
+     case " $subdirs_with_configure_ac " in
+       *" $d "*) ;;
+       *) makefiles="$makefiles $d/Makefile" ;;
+     esac
    done
    echo "AC_OUTPUT([$makefiles])"
   ) > "$testdir/configure.ac"
@@ -1173,6 +1377,16 @@ case $mode in
       func_verify_module
       if test -n "$module"; then
         func_get_maintainer "$module"
+      fi
+    done
+    ;;
+
+  extract-tests-module )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_tests_module "$module"
       fi
     done
     ;;
