@@ -1,5 +1,9 @@
 2005-08-24  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_version): Update.
+
+2005-08-24  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_create_megatestdir): Call autoreconf without the
 	option --force, because --force causes the aclocal.m4 of each
 	subdirectory to be newer than the corresponding config.h.in.
