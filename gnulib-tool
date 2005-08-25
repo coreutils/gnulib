@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-15 12:13:30 $'
+cvsdatestamp='$Date: 2005-08-25 11:56:57 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -711,25 +711,25 @@ func_import ()
           echo 'changequote(,)dnl'
           echo 'LTALLOCA=`echo "$ALLOCA" | sed '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
           echo 'changequote([, ])dnl'
-          echo 'AC_SUBST(LTALLOCA)'
+          echo 'AC_SUBST([LTALLOCA])'
         fi
       fi
     done
     echo "])"
     echo
-    echo "dnl Usage: gl_MODULES(module1 module2 ...)"
+    echo "dnl Usage: gl_MODULES([module1 module2 ...])"
     echo "AC_DEFUN([gl_MODULES], [])"
     echo
-    echo "dnl Usage: gl_AVOID(module1 module2 ...)"
+    echo "dnl Usage: gl_AVOID([module1 module2 ...])"
     echo "AC_DEFUN([gl_AVOID], [])"
     echo
-    echo "dnl Usage: gl_SOURCE_BASE(DIR)"
+    echo "dnl Usage: gl_SOURCE_BASE([DIR])"
     echo "AC_DEFUN([gl_SOURCE_BASE], [])"
     echo
-    echo "dnl Usage: gl_M4_BASE(DIR)"
+    echo "dnl Usage: gl_M4_BASE([DIR])"
     echo "AC_DEFUN([gl_M4_BASE], [])"
     echo
-    echo "dnl Usage: gl_LIB(LIBNAME)"
+    echo "dnl Usage: gl_LIB([LIBNAME])"
     echo "AC_DEFUN([gl_LIB], [])"
     echo
     echo "dnl Usage: gl_LGPL"
@@ -830,10 +830,10 @@ func_create_testdir ()
 
   # Create configure.ac.
   (echo "# Process this file with autoconf to produce a configure script."
-   echo "AC_INIT(dummy,0)"
+   echo "AC_INIT([dummy], [0])"
    echo "AM_INIT_AUTOMAKE"
    echo
-   echo "AM_CONFIG_HEADER(config.h)"
+   echo "AM_CONFIG_HEADER([config.h])"
    echo
    echo "AC_PROG_CC"
    echo "AC_PROG_INSTALL"
@@ -912,7 +912,7 @@ func_create_megatestdir ()
 
   # Create configure.ac.
   (echo "# Process this file with autoconf to produce a configure script."
-   echo "AC_INIT(dummy,0)"
+   echo "AC_INIT([dummy], [0])"
    echo "AM_INIT_AUTOMAKE"
    echo
    echo "AC_PROG_MAKE_SET"
