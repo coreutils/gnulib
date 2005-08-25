@@ -5,8 +5,11 @@
 
 2005-08-25  Bruno Haible  <bruno@clisp.org>
 
-	* minmax.m4 (gl_MINMAX_IN_HEADER): Add comments.
-	Patch from Stepan Kasal <kasal@ucw.cz>.
+	* minmax.m4: Require autoconf 2.52.
+	(gl_MINMAX_IN_HEADER): Add comments. Use m4_pushdef/m4_popdef instead
+	of define/undefine. Use AS_TR_SH and AS_TR_CPP as more robust
+	alternatives of translit over the alphabet.
+	Based on a patch from Stepan Kasal <kasal@ucw.cz>.
 
 2005-08-24  Paul Eggert  <eggert@cs.ucla.edu>
 
