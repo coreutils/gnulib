@@ -1,3 +1,8 @@
+2005-08-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/regex (Depends-on): Add malloc, since the code
+	assumes that !malloc(0) means failure.
+
 2005-08-24  Bruno Haible  <bruno@clisp.org>
 
 	* modules/tls-tests: New file.
