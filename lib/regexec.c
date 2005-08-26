@@ -1354,6 +1354,7 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx,
   struct re_fail_stack_t *fs;
   struct re_fail_stack_t fs_body = { 0, 2, NULL };
   regmatch_t *prev_idx_match;
+  int prev_idx_match_malloced = 0;
 
 #ifdef DEBUG
   assert (nmatch > 1);
@@ -1372,7 +1373,18 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx,
   cur_node = dfa->init_node;
   re_node_set_init_empty (&eps_via_nodes);
 
-  prev_idx_match = (regmatch_t *) alloca (sizeof (regmatch_t) * nmatch);
+  if (__libc_use_alloca (nmatch * sizeof (regmatch_t)))
+    prev_idx_match = (regmatch_t *) alloca (nmatch * sizeof (regmatch_t));
+  else
+    {
+      prev_idx_match = re_malloc (regmatch_t, nmatch);
+      if (prev_idx_match == NULL)
+	{
+	  free_fail_stack_return (fs);
+	  return REG_ESPACE;
+	}
+      prev_idx_match_malloced = 1;
+    }
   memcpy (prev_idx_match, pmatch, sizeof (regmatch_t) * nmatch);
 
   for (idx = pmatch[0].rm_so; idx <= pmatch[0].rm_eo ;)
@@ -1390,6 +1402,8 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx,
 	      if (reg_idx == nmatch)
 		{
 		  re_node_set_free (&eps_via_nodes);
+		  if (prev_idx_match_malloced)
+		    re_free (prev_idx_match);
 		  return free_fail_stack_return (fs);
 		}
 	      cur_node = pop_fail_stack (fs, &idx, nmatch, pmatch,
@@ -1398,6 +1412,8 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx,
 	  else
 	    {
 	      re_node_set_free (&eps_via_nodes);
+	      if (prev_idx_match_malloced)
+		re_free (prev_idx_match);
 	      return REG_NOERROR;
 	    }
 	}
@@ -1411,6 +1427,8 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx,
 	  if (BE (cur_node == -2, 0))
 	    {
 	      re_node_set_free (&eps_via_nodes);
+	      if (prev_idx_match_malloced)
+		re_free (prev_idx_match);
 	      free_fail_stack_return (fs);
 	      return REG_ESPACE;
 	    }
@@ -1420,11 +1438,15 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx,
 	  else
 	    {
 	      re_node_set_free (&eps_via_nodes);
+	      if (prev_idx_match_malloced)
+		re_free (prev_idx_match);
 	      return REG_NOMATCH;
 	    }
 	}
     }
   re_node_set_free (&eps_via_nodes);
+  if (prev_idx_match_malloced)
+    re_free (prev_idx_match);
   return free_fail_stack_return (fs);
 }
 
@@ -3235,12 +3257,10 @@ build_trtable (re_dfa_t *dfa, re_dfastate_t *state)
      from `state'.  `dests_node[i]' represents the nodes which i-th
      destination state contains, and `dests_ch[i]' represents the
      characters which i-th destination state accepts.  */
-#ifdef _LIBC
   if (__libc_use_alloca ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX))
     dests_node = (re_node_set *)
       alloca ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX);
   else
-#endif
     {
       dests_node = (re_node_set *)
 	malloc ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX);
@@ -3273,13 +3293,11 @@ build_trtable (re_dfa_t *dfa, re_dfastate_t *state)
   if (BE (err != REG_NOERROR, 0))
     goto out_free;
 
-#ifdef _LIBC
   if (__libc_use_alloca ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX
 			 + ndests * 3 * sizeof (re_dfastate_t *)))
     dest_states = (re_dfastate_t **)
       alloca (ndests * 3 * sizeof (re_dfastate_t *));
   else
-#endif
     {
       dest_states = (re_dfastate_t **)
 	malloc (ndests * 3 * sizeof (re_dfastate_t *));

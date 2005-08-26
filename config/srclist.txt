@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.86 2005-08-25 20:39:57 eggert Exp $
+# $Id: srclist.txt,v 1.87 2005-08-26 05:58:54 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -105,6 +105,7 @@ $LIBCSRC/stdlib/getsubopt.c		lib gpl
 #$LIBCSRC/posix/regcomp.c		lib gpl
 #
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1238
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1245
 #$LIBCSRC/posix/regex.c			lib gpl
 #
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1201
@@ -128,6 +129,7 @@ $LIBCSRC/stdlib/getsubopt.c		lib gpl
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1221
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1237
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1241
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1245
 #$LIBCSRC/posix/regex_internal.h		lib gpl
 #
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1216
@@ -137,6 +139,7 @@ $LIBCSRC/stdlib/getsubopt.c		lib gpl
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1231
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1237
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1241
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1245
 #$LIBCSRC/posix/regexec.c		lib gpl
 #
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl

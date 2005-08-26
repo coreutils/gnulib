@@ -1,3 +1,16 @@
+2005-08-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regexec.c (set_regs): Don't alloca with an unbounded size.
+
+	alloca modernization/simplification for regex.
+	* regex.c: Remove portability cruft for alloca.  This no longer
+	needs to be at the start of the file, and can be moved into
+	regex_internal.h and simplified.
+	* regex_internal.h: Include <alloca.h>.
+	(__libc_use_alloca) [!defined _LIBC]: New macro.
+	* regexec.c (build_trtable): Remove "#ifdef _LIBC", since the code
+	now works outside glibc.
+
 2005-08-24  Simon Josefsson  <jas@extundo.com>
 
 	* getpass.c: Add WIN32 implementation.  Conditionalize use of
