@@ -1,3 +1,8 @@
+2005-08-26  Simon Josefsson  <jas@extundo.com>
+
+	* getpass.c: Use _WIN32 instead of WIN32, suggested by Bruno
+	Haible <bruno@clisp.org>.
+
 2005-08-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regexec.c (set_regs): Don't alloca with an unbounded size.

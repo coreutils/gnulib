@@ -23,7 +23,7 @@
 
 #include <stdio.h>
 
-#if !defined WIN32
+#if !defined _WIN32
 
 #include <stdbool.h>
 
