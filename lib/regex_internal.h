@@ -433,7 +433,7 @@ static unsigned char re_string_fetch_byte_case (re_string_t *pstr)
 
 #include <alloca.h>
 
-#ifndef __LIBC
+#ifndef _LIBC
 # if HAVE_ALLOCA
 /* The OS usually guarantees only one guard page at the bottom of the stack,
    and a page size can be as small as 4096 bytes.  So we cannot safely
