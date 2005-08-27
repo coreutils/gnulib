@@ -1,5 +1,14 @@
 2005-08-27  Jim Meyering  <jim@meyering.net>
 
+	* fopen-safer.c: Merge minor changes from coreutils.
+	* dup-safer.c: Likewise.
+	* fd-safer.c: Likewise.
+
+	Merge from coreutils.
+	* stdio--.h: New file.
+	* stdlib--.h: New file.
+	* mkstemp-safer.c: New file.
+
 	GNU tar needs these.
 	* pipe-safer.c: New file.
 	* creat-safer.c: New file.
