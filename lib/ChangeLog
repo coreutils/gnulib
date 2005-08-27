@@ -5,6 +5,7 @@
 	* creat-safer.c: New file.
 	* fcntl--.h (creat): Define to creat_safer.
 	* fcntl-safer.h: Include <sys/types.h> and declare creat_safer.
+	* unistd--.h (pipe): Define to pipe_safer.
 	* unistd-safer.h: Declare pipe_safer.
 
 2005-08-26  Paul Eggert  <eggert@cs.ucla.edu>
