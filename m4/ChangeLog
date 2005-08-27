@@ -1,3 +1,9 @@
+2005-08-27  Jim Meyering  <jim@meyering.net>
+
+	* fcntl-safer.m4 (gl_FCNTL_SAFER): Add creat-safer.c to the
+	AC_LIBSOURCES list and arrange to compile it via AC_LIBOBJ.
+	* unistd-safer.m4 (gl_UNISTD_SAFER): Likewise, add pipe-safer.c.
+
 2005-08-24  Simon Josefsson  <jas@extundo.com>
 
 	* getpass.m4: Check for termios.h, tcgetattr, tcsetattr, and
