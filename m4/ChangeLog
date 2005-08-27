@@ -3,6 +3,7 @@
 	* fcntl-safer.m4 (gl_FCNTL_SAFER): Add creat-safer.c to the
 	AC_LIBSOURCES list and arrange to compile it via AC_LIBOBJ.
 	* unistd-safer.m4 (gl_UNISTD_SAFER): Likewise, add pipe-safer.c.
+	Add pipe-safer.c and unistd--.h to the AC_LIBSOURCES list.
 
 2005-08-24  Simon Josefsson  <jas@extundo.com>
 
