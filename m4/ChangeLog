@@ -1,5 +1,7 @@
 2005-08-27  Jim Meyering  <jim@meyering.net>
 
+	* stdlib-safer.m4: New file.  From coreutils.
+	* stdio-safer.m4 (gl_STDIO_SAFER): Add stdio--.h.
 	* fcntl-safer.m4 (gl_FCNTL_SAFER): Add creat-safer.c to the
 	AC_LIBSOURCES list and arrange to compile it via AC_LIBOBJ.
 	* unistd-safer.m4 (gl_UNISTD_SAFER): Likewise, add pipe-safer.c.
