@@ -2559,7 +2559,7 @@ variables.
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=unistd-safer"></A><A HREF="modules/unistd-safer">unistd-safer</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/unistd-safer.h">unistd-safer.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/dup-safer.c">dup-safer.c</A><BR><A HREF="lib/fd-safer.c">fd-safer.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/dup-safer.c">dup-safer.c</A><BR><A HREF="lib/fd-safer.c">fd-safer.c</A><BR><A HREF="lib/pipe-safer.c">pipe-safer.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/unistd-safer.m4">unistd-safer.m4</A><BR>gl_UNISTD_SAFER
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
@@ -2863,7 +2863,7 @@ variables.
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=fcntl-safer"></A><A HREF="modules/fcntl-safer">fcntl-safer</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fcntl-safer.h">fcntl-safer.h</A>"
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fcntl--.h">fcntl--.h</A><BR><A HREF="lib/open-safer.c">open-safer.c</A>
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fcntl--.h">fcntl--.h</A><BR><A HREF="lib/creat-safer.c">creat-safer.c</A><BR><A HREF="lib/open-safer.c">open-safer.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/fcntl-safer.m4">fcntl-safer.m4</A><BR>gl_FCNTL_SAFER
         <TD ALIGN=LEFT VALIGN=TOP>unistd-safer
       </TR>
@@ -3589,7 +3589,11 @@ variables.
     </TABLE>
     <H2>Lone files - please create new modules containing them</H2>
     <PRE>
+<A HREF="lib/mkstemp-safer.c">lib/mkstemp-safer.c</A>
 <A HREF="lib/progreloc.c">lib/progreloc.c</A>
+<A HREF="lib/stdio--.h">lib/stdio--.h</A>
+<A HREF="lib/stdlib--.h">lib/stdlib--.h</A>
+<A HREF="lib/unistd--.h">lib/unistd--.h</A>
 <A HREF="m4/host-os.m4">m4/host-os.m4</A>
 <A HREF="m4/jm-winsz1.m4">m4/jm-winsz1.m4</A>
 <A HREF="m4/jm-winsz2.m4">m4/jm-winsz2.m4</A>
@@ -3600,6 +3604,7 @@ variables.
 <A HREF="m4/readdir.m4">m4/readdir.m4</A>
 <A HREF="m4/rmdir-errno.m4">m4/rmdir-errno.m4</A>
 <A HREF="m4/st_dm_mode.m4">m4/st_dm_mode.m4</A>
+<A HREF="m4/stdlib-safer.m4">m4/stdlib-safer.m4</A>
 <A HREF="m4/uintptr_t.m4">m4/uintptr_t.m4</A>
 <A HREF="m4/unlink-busy.m4">m4/unlink-busy.m4</A>
 <A HREF="m4/uptime.m4">m4/uptime.m4</A>
@@ -3616,6 +3621,6 @@ variables.
       <LI>A POT file and some PO files
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 26 August 2005.
+    Generated from <CODE>MODULES.html.sh</CODE> on 28 August 2005.
   </BODY>
 </HTML>
