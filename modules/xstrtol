@@ -1,5 +1,5 @@
 Description:
-Convert string to 'long` or 'unsigned long', with error checking.
+Convert string to 'long' or 'unsigned long', with error checking.
 
 Files:
 lib/intprops.h
