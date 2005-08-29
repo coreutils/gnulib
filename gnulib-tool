@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-25 12:36:00 $'
+cvsdatestamp='$Date: 2005-08-29 19:59:56 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -789,7 +789,7 @@ func_import ()
     if test -z "$dry_run" && test -n "$lgpl" && test -n "$source"; then
       perl -pi -e 's/GNU General/GNU Lesser General/g;' \
                -e 's/version 2([ ,])/version 2.1\1/g' \
-               $destdir/$g
+               "$destdir/$g"
     fi
   done
 
@@ -808,18 +808,18 @@ func_import ()
   # Create lib/Makefile.am.
   echo "Creating $destdir/$sourcebase/Makefile.am..."
   if test -z "$dry_run"; then
-    func_emit_lib_Makefile_am > $destdir/$sourcebase/Makefile.am.new
+    func_emit_lib_Makefile_am > "$destdir"/$sourcebase/Makefile.am.new
   else
     func_emit_lib_Makefile_am
   fi
-  func_mv_if_changed $destdir/$sourcebase/Makefile.am.new \
-                     $destdir/$sourcebase/Makefile.am
+  func_mv_if_changed "$destdir"/$sourcebase/Makefile.am.new \
+                     "$destdir"/$sourcebase/Makefile.am
 
   # Create gnulib.m4.
   echo "Creating $destdir/$m4base/gnulib.m4..."
   (
     if test -z "$dry_run"; then
-      exec > $destdir/$m4base/gnulib.m4.new
+      exec > "$destdir"/$m4base/gnulib.m4.new
     else
       echo "# $destdir/$m4base/gnulib.m4"
     fi
@@ -881,7 +881,7 @@ func_import ()
     echo
     echo "# gnulib.m4 ends here"
   )
-  func_mv_if_changed $destdir/$m4base/gnulib.m4.new $destdir/$m4base/gnulib.m4
+  func_mv_if_changed "$destdir"/$m4base/gnulib.m4.new "$destdir"/$m4base/gnulib.m4
   echo "Finished."
   echo
   echo "You may need to add #include directives for the following .h files."
@@ -1160,8 +1160,8 @@ case $mode in
       || func_fatal_error "destination directory does not exist: $destdir"
 
     # Prefer configure.ac to configure.in
-    test -f $destdir/configure.in && configure_ac=$destdir/configure.in
-    test -f $destdir/configure.ac && configure_ac=$destdir/configure.ac
+    test -f "$destdir"/configure.in && configure_ac="$destdir/configure.in"
+    test -f "$destdir"/configure.ac && configure_ac="$destdir/configure.ac"
     test -f "$configure_ac" \
       || func_fatal_error "cannot find $destdir/configure.ac"
 
