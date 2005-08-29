@@ -1,3 +1,7 @@
+2005-07-30  Ben Pfaff  <blp@cs.stanford.edu>
+
+	* modules/byteswap (Makefile.am): Fix rule to not assume GNU make.
+
 2005-08-27  Jim Meyering  <jim@meyering.net>
 
 	* modules/unistd-safer (Files): Add pipe-safer.c.
