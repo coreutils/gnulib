@@ -14,7 +14,7 @@ use strict;
 use Getopt::Long;
 #use Coda;
 
-(my $VERSION = '$Revision: 1.2 $ ') =~ tr/[0-9].//cd;
+(my $VERSION = '$Revision: 1.3 $ ') =~ tr/[0-9].//cd;
 (my $ME = $0) =~ s|.*/||;
 
 use constant ST_INIT => 1;
@@ -144,17 +144,6 @@ sub find_included_lib_files ($)
       exists $inc{$line} && ! exists $special_non_dup{$line}
 	and warn "$ME: $file: duplicate inclusion of $line\n";
 
-      # Some known exceptions.
-      $file =~ /\bfull-write\.c$/ && $line eq 'full-read.h'
-	and next;
-      $file =~ /\bsafe-read.c$/ && $line eq 'safe-write.h'
-	and next;
-      $file =~ /\bhash\.c$/ && $line eq 'obstack.h'
-	and next;
-      $file =~ /\bfts\.c$/ &&
-	($line eq 'fts-cycle.c' || $line eq 'unistd-safer.h')
-	  and next;
-
       $inc{$line} = 1;
     }
   close FH;
@@ -162,22 +151,39 @@ sub find_included_lib_files ($)
   return \%inc;
 }
 
-{
-  GetOptions
-    (
-     help => sub { usage 0 },
-     version => sub { print "$ME version $VERSION\n"; exit },
-    ) or usage 1;
+my %exempt_header =
+  (
+   # Exempt headers like unlocked-io.h that are `#include'd
+   # but not necessarily used.
+   'unlocked-io.h' => 1,
 
-  @ARGV < 1
-    and (warn "$ME: missing FILE argument\n"), usage 1;
+   # Give gettext.h a free pass only when included from lib/error.c,
+   # since we've made that exception solely to make the error
+   # module easier to use -- at RMS's request.
+   'lib/error.c:gettext.h' => 1,
+
+   # The full-read module shares code with the full-write module.
+   'lib/full-write.c:full-read.h' => 1,
+
+   # The safe-write module shares code with the safe-read module.
+   'lib/safe-read.c:safe-write.h' => 1,
+
+   # The use of obstack.h in the hash module is conditional, off by default.
+   'lib/hash.c:obstack.h' => 1,
+
+   # The fts-lgpl module doesn't actually use fts-cycle.c and unistd-safer.h.
+   'lib/fts.c:fts-cycle.c' => 1,
+   'lib/fts.c:unistd-safer.h' => 1,
+  );
+
+sub check_module ($)
+{
+  my @m = @_;
 
   my %file;
   my %module_all_files;
   my %dep;
   my %seen_module;
-
-  my @m = $ARGV[0];
 
   while (@m)
     {
@@ -193,18 +199,6 @@ sub find_included_lib_files ($)
 	  $module_all_files{$f} = 1;
 	}
     }
-
-  my %exempt_header =
-    (
-     # Exempt headers like unlocked-io.h that are `#include'd
-     # but not necessarily used.
-     'unlocked-io.h' => 1,
-
-     # Give gettext.h a free pass only when included from lib/error.c,
-     # since we've made that exception solely to make the error
-     # module easier to use -- at RMS's request.
-     'lib/error.c:gettext.h' => 1,
-    );
 
   my @t = sort keys %module_all_files;
   # warn "ALL files: @t\n";
@@ -229,6 +223,22 @@ sub find_included_lib_files ($)
 	}
       #my @t = sort keys %$inc;
       #print "** $f: @t\n";
+    }
+}
+
+{
+  GetOptions
+    (
+     help => sub { usage 0 },
+     version => sub { print "$ME version $VERSION\n"; exit },
+    ) or usage 1;
+
+  @ARGV < 1
+    and (warn "$ME: missing FILE argument\n"), usage 1;
+
+  foreach my $module (@ARGV)
+    {
+      check_module $module;
     }
 
   exit 0;
