@@ -63,8 +63,54 @@ iconv_string (const char *str, const char *from_codeset,
   char *dest = NULL;
 #if HAVE_ICONV
   iconv_t cd;
-  char *outp;
+#endif
+
+  if (strcmp (to_codeset, from_codeset) == 0)
+    return strdup (str);
+
+#if HAVE_ICONV
+  cd = iconv_open (to_codeset, from_codeset);
+  if (cd == (iconv_t) -1)
+    return NULL;
+
+  dest = iconv_alloc(cd, str);
+
+  {
+    int save_errno = errno;
+
+    if (iconv_close (cd) < 0 && dest)
+      {
+	int save_errno2 = errno;
+	/* If we didn't have a real error before, make sure we restore
+	   the iconv_close error below. */
+	free (dest);
+	dest = NULL;
+	errno = save_errno2;
+      }
+    else
+      errno = save_errno;
+  }
+#else
+  errno = ENOSYS;
+#endif
+
+  return dest;
+}
+
+/* Convert a zero-terminated string STR using iconv descriptor CD.
+   The returned string is allocated using malloc, and must be
+   dellocated by the caller using free.  On failure, NULL is returned
+   and errno holds the error reason.  Note that if the target
+   character set uses \0 for anything but to terminate the string,
+   the caller of this function may have difficulties finding
+   out the length of the output string.  */
+#if HAVE_ICONV
+char *
+iconv_alloc (iconv_t cd, const char *str)
+{
+  char *dest;
   char *p = (char *) str;
+  char *outp;
   size_t inbytes_remaining = strlen (p);
   /* Guess the maximum length the output string can have.  */
   size_t outbuf_size = inbytes_remaining + 1;
@@ -79,24 +125,15 @@ iconv_string (const char *str, const char *from_codeset,
   if (outbuf_size <= approx_sqrt_SIZE_MAX / MB_LEN_MAX)
     outbuf_size *= MB_LEN_MAX;
   outbytes_remaining = outbuf_size - 1;
-#endif
-
-  if (strcmp (to_codeset, from_codeset) == 0)
-    return strdup (str);
-
-#if HAVE_ICONV
-  cd = iconv_open (to_codeset, from_codeset);
-  if (cd == (iconv_t) -1)
-    return NULL;
 
   outp = dest = (char *) malloc (outbuf_size);
   if (dest == NULL)
-    goto out;
+    return NULL;
 
 again:
   err = iconv (cd, &p, &inbytes_remaining, &outp, &outbytes_remaining);
 
-  if (err == (size_t) - 1)
+  if (err == (size_t) -1)
     {
       switch (errno)
 	{
@@ -145,27 +182,14 @@ again:
   *outp = '\0';
 
 out:
-  {
-    int save_errno = errno;
-
-    if (iconv_close (cd) < 0 && !have_error)
-      {
-	/* If we didn't have a real error before, make sure we restore
-	   the iconv_close error below. */
-	save_errno = errno;
-	have_error = 1;
-      }
-
-    if (have_error && dest)
-      {
-	free (dest);
-	dest = NULL;
-	errno = save_errno;
-      }
-  }
-#else
-  errno = ENOSYS;
-#endif
+  if (have_error && dest)
+    {
+      int save_errno = errno;
+      free(dest);
+      errno = save_errno;
+      dest = NULL;
+    }
 
   return dest;
 }
+#endif

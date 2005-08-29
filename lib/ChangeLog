@@ -1,3 +1,11 @@
+2005-08-29  Simon Josefsson  <jas@extundo.com>
+
+	* iconvme.c: Fix errno.
+
+2005-08-29  "Oskar Liljeblad" <oskar@osk.mine.nu>
+
+	* iconvme.c: Split iconv_string into iconv_alloc.
+
 2005-08-27  Jim Meyering  <jim@meyering.net>
 
 	* fopen-safer.c: Merge minor changes from coreutils.
