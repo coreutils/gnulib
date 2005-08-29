@@ -1,5 +1,9 @@
 2005-08-28  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (import): Avoid unnecessary spaces in $avoidlist.
+
+2005-08-28  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Emit more comments into gnulib.m4.
 	Emit more advice.
 
