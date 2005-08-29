@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-29 19:59:56 $'
+cvsdatestamp='$Date: 2005-08-29 20:02:25 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -835,6 +835,9 @@ func_import ()
     echo "# Invoked as: $cmd"
     echo "# Reproduce by: $actioncmd"
     echo
+    echo "# This macro should be invoked from $configure_ac, in the section"
+    echo "# \"Checks for programs\", right after AC_PROG_CC, and certainly before"
+    echo "# any checks for libraries, header files, types and library functions."
     echo "AC_DEFUN([gl_EARLY],"
     echo "["
     if grep AC_GNU_SOURCE "$destdir"/$m4base/*.m4 > /dev/null; then
@@ -845,6 +848,8 @@ func_import ()
     fi
     echo "])"
     echo
+    echo "# This macro should be invoked from $configure_ac, in the section"
+    echo "# \"Check for header files, types and library functions\"."
     echo "AC_DEFUN([gl_INIT],"
     echo "["
     for module in $modules; do
@@ -889,9 +894,14 @@ func_import ()
     func_get_include_directive "$module"
   done | LC_ALL=C sort -u | sed -e '/^$/d;' -e 's/^/  /'
   echo
-  echo "Don't forget to add \"$sourcebase/Makefile\""
-  echo "to AC_CONFIG_FILES in \"$configure_ac\" and to mention"
-  echo "\"`basename $sourcebase`\" in SUBDIRS in some Makefile.am."
+  echo "Don't forget to"
+  echo "  - add \"$sourcebase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
+  sourcebase_dir=`echo "$sourcebase" | sed -n -e 's,/[^/]*$,/,p'`
+  sourcebase_base=`basename "$sourcebase"`
+  echo "  - mention \"${sourcebase_base}\" in SUBDIRS in ${sourcebase_dir}Makefile.am,"
+  echo "  - mention \"-I ${m4base}\" in ACLOCAL_AMFLAGS in Makefile.am,"
+  echo "  - invoke gl_EARLY in $configure_ac, right after AC_PROG_CC,"
+  echo "  - invoke gl_INIT in $configure_ac."
 }
 
 # func_create_testdir testdir modules
