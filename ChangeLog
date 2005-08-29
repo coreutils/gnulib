@@ -1,3 +1,11 @@
+2005-07-11  Bruno Haible  <bruno@clisp.org>
+	and Stepan Kasal  <kasal@ucw.cz>
+
+	* check-module: If more parameters are given, check each of them
+	separately; add more exceptions, as noted by Jim Meyering.
+	(check_module): New procedure.
+	(%exempt_header): Now contains all exceptions.
+
 2005-07-30  Ben Pfaff  <blp@cs.stanford.edu>
 
 	* modules/byteswap (Makefile.am): Fix rule to not assume GNU make.
