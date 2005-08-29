@@ -133,7 +133,7 @@
 
 2005-07-25  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* regex.m4 (gl_INCLUDED_REGEX): Use AC_RUN_ELSE instead of the
+	* regex.m4 (gl_INCLUDED_REGEX): Use AC_RUN_IFELSE instead of the
 	obsolescent AC_TRY_RUN.  Include the default includes files, for 'exit'.
 
 2005-07-24  Bruno Haible  <bruno@clisp.org>
