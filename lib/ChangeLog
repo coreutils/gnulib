@@ -1,3 +1,7 @@
+2005-08-30  "Oskar Liljeblad" <oskar@osk.mine.nu>
+
+	* iconvme.h: Add prototype for iconv_alloc.
+
 2005-08-29  Simon Josefsson  <jas@extundo.com>
 
 	* iconvme.c: Fix errno.

@@ -22,4 +22,9 @@
 extern char *iconv_string (const char *string, const char *from_code,
 			   const char *to_code);
 
+#if HAVE_ICONV
+# include <iconv.h>
+extern char *iconv_alloc (iconv_t cd, const char *string);
+#endif
+
 #endif /* ICONVME_H */
