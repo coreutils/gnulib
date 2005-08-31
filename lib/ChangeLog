@@ -1,5 +1,8 @@
 2005-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* regexec.c (re_search_internal): Simplify update of rm_so and
+	rm_eo.
+
 	* regcomp.c (re_compile_fastmap_iter, init_dfa, init_word_char):
 	(optimize_subexps, lower_subexp):
 	Don't assume 1<<31 has defined behavior on hosts with 32-bit int,
@@ -7,6 +10,7 @@
 	* regex_internal.h (bitset_set, bitset_clear, bitset_contain): Likewise.
 	* regexec.c (check_dst_limits_calc_pos_1, check_subexp_matching_top):
 	Likewise.
+
 	* regcomp.c (optimize_subexps, lower_subexp):
 	Use CHAR_BIT rather than 8, for clarity.
 	* regexec.c (check_dst_limits_calc_pos_1):

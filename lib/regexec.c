@@ -856,14 +856,14 @@ re_search_internal (const regex_t *preg,
 #ifdef RE_ENABLE_I18N
 	    if (BE (mctx.input.offsets_needed != 0, 0))
 	      {
-		if (pmatch[reg_idx].rm_so == mctx.input.valid_len)
-		  pmatch[reg_idx].rm_so += mctx.input.valid_raw_len - mctx.input.valid_len;
-		else
-		  pmatch[reg_idx].rm_so = mctx.input.offsets[pmatch[reg_idx].rm_so];
-		if (pmatch[reg_idx].rm_eo == mctx.input.valid_len)
-		  pmatch[reg_idx].rm_eo += mctx.input.valid_raw_len - mctx.input.valid_len;
-		else
-		  pmatch[reg_idx].rm_eo = mctx.input.offsets[pmatch[reg_idx].rm_eo];
+		pmatch[reg_idx].rm_so =
+		  (pmatch[reg_idx].rm_so == mctx.input.valid_len
+		   ? mctx.input.valid_raw_len
+		   : mctx.input.offsets[pmatch[reg_idx].rm_so]);
+		pmatch[reg_idx].rm_eo =
+		  (pmatch[reg_idx].rm_eo == mctx.input.valid_len
+		   ? mctx.input.valid_raw_len
+		   : mctx.input.offsets[pmatch[reg_idx].rm_eo]);
 	      }
 #else
 	    assert (mctx.input.offsets_needed == 0);
