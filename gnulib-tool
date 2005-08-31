@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-29 20:03:02 $'
+cvsdatestamp='$Date: 2005-08-31 20:49:17 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -884,6 +884,9 @@ func_import ()
     echo "dnl Usage: gl_LGPL"
     echo "AC_DEFUN([gl_LGPL], [])"
     echo
+    echo "dnl Usage: gl_LIBTOOL"
+    echo "AC_DEFUN([gl_LIBTOOL], [])"
+    echo
     echo "# gnulib.m4 ends here"
   )
   func_mv_if_changed "$destdir"/$m4base/gnulib.m4.new "$destdir"/$m4base/gnulib.m4
@@ -1198,6 +1201,7 @@ case $mode in
       /A[CM]_PROG_LIBTOOL/ { s,^.*$,seen_libtool=:,; p; };
       /LT_INIT/            { s,^.*$,seen_libtool=:,; p; };
       /gl_LGPL/            { s,^.*$,lgpl=true,; p; };
+      /gl_LIBTOOL/         { s,^.*$,seen_libtool=:,; p; };
       d;'
     eval `cat $configure_ac | sed "$my_sed_traces"`
 

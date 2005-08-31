@@ -1,3 +1,8 @@
+2005-08-28  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Emit also a stub for gl_LIBTOOL.
+	(import): Set seen_libtool when we see gl_LIBTOOL.
+
 2005-08-31  Jim Meyering  <jim@meyering.net>
 
 	* check-module: Add a FIXME comment.
