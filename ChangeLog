@@ -1,5 +1,10 @@
 2005-08-28  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (import): Rename most ac_* variables to cached_*.
+	Also use new variables cached_lgpl, cached_libtool.
+
+2005-08-28  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Also copy m4/gnulib-tool.m4. Omit
 	declaration macro definitions from generated gnulib.m4.
 
