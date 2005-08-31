@@ -10,11 +10,18 @@
 
 # Written by Jim Meyering
 
+# FIXME:
+# for each .m4 file listed in the Files: section(s)
+# parse it for AC_LIBSOURCES directives, and accumulate the set
+# of files `required' via all AC_LIBSOURCES.
+# If this set is not empty, ensure that it contains
+# the same (.c and .h only?) files as are listed in the Files: sections.
+
 use strict;
 use Getopt::Long;
 #use Coda;
 
-(my $VERSION = '$Revision: 1.3 $ ') =~ tr/[0-9].//cd;
+(my $VERSION = '$Revision: 1.4 $ ') =~ tr/[0-9].//cd;
 (my $ME = $0) =~ s|.*/||;
 
 use constant ST_INIT => 1;
