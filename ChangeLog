@@ -1,3 +1,10 @@
+2005-08-30  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Read the previous cached settings
+	from gnulib-cache.m4 and gnulib-comp.m4. Remove files that were
+	earlier added by gnulib but are now dropped. Warn when a gnulib file
+	overwrites a non-gnulib file.
+
 2005-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Generate two files gnulib-cache.m4 and

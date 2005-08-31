@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-31 20:53:42 $'
+cvsdatestamp='$Date: 2005-08-31 20:54:49 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -756,11 +756,114 @@ func_emit_tests_Makefile_am ()
 # - supplied_opts   all options passed to gnulib-tool
 func_import ()
 {
-  modules="$1"
-  modules=`for m in $modules; do echo $m; done | sort | uniq`
-  specified_modules="$modules"
+  # Get the cached settings.
+  cached_specified_modules=
+  cached_avoidlist=
+  cached_sourcebase=
+  cached_m4base=
+  cached_libname=
+  cached_lgpl=
+  cached_libtool=
+  cached_macro_prefix=
+  cached_files=
+  if test -f "$destdir"/$m4base/gnulib-cache.m4; then
+    my_sed_traces='
+      s,#.*$,,
+      s,^dnl .*$,,
+      s, dnl .*$,,
+      /gl_MODULES(/ {
+        s,^.*gl_MODULES([[ ]*\([^])]*\).*$,cached_specified_modules="\1",p
+      }
+      /gl_AVOID(/ {
+        s,^.*gl_AVOID([[ ]*\([^])]*\).*$,cached_avoidlist="\1",p
+      }
+      /gl_SOURCE_BASE(/ {
+        s,^.*gl_SOURCE_BASE([[ ]*\([^])]*\).*$,cached_sourcebase="\1",p
+      }
+      /gl_M4_BASE(/ {
+        s,^.*gl_M4_BASE([[ ]*\([^])]*\).*$,cached_m4base="\1",p
+      }
+      /gl_LIB(/ {
+        s,^.*gl_LIB([[ ]*\([^])]*\).*$,cached_libname="\1",p
+      }
+      /gl_LGPL/ {
+        s,^.*$,cached_lgpl=true,p
+      }
+      /gl_LIBTOOL/ {
+        s,^.*$,cached_libtool=true,p
+      }
+      /gl_MACRO_PREFIX(/ {
+        s,^.*gl_MACRO_PREFIX([[ ]*\([^])]*\).*$,cached_macro_prefix="\1",p
+      }'
+    eval `sed -n -e "$my_sed_traces" < "$destdir"/$m4base/gnulib-cache.m4`
+    if test -f "$destdir"/$m4base/gnulib-comp.m4; then
+      my_sed_traces='
+        s,#.*$,,
+        s,^dnl .*$,,
+        s, dnl .*$,,
+        /AC_DEFUN(\['"${cached_macro_prefix}"'_FILE_LIST\], \[/ {
+          s,^.*$,cached_files=",p
+          n
+          ta
+          :a
+          s,^\]).*$,",
+          tb
+          p
+          n
+          ba
+          :b
+          p
+        }'
+      eval `sed -n -e "$my_sed_traces" < "$destdir"/$m4base/gnulib-comp.m4`
+    fi
+  fi
+
+  # Merge the cached settings with the specified ones.
+  # The m4base must be the same as expected from the pathname.
+  if test -n "$cached_m4base" && test "$cached_m4base" != "$m4base"; then
+    func_fatal_error "$m4base/gnulib-cache.m4 is expected to contain gl_M4_BASE([$m4base])"
+  fi
+  # Append the cached and the specified module names. So that
+  # "gnulib-tool --import foo" means to add the module foo.
+  specified_modules="$cached_specified_modules $1"
+  # Append the cached and the specified avoidlist. This is probably better
+  # than dropping the cached one when --avoid is specified at least once.
+  avoidlist=`echo $cached_avoidlist $avoidlist`
+  # The sourcebase defaults to the cached one.
+  if test -z "$sourcebase"; then
+    sourcebase="$cached_sourcebase"
+    if test -z "$sourcebase"; then
+      func_fatal_error "missing --source-base option"
+    fi
+  fi
+  # The libname defaults to the cached one.
+  if test -z "$libname"; then
+    libname="$cached_libname"
+    if test -z "$libname"; then
+      func_fatal_error "missing --lib option"
+    fi
+  fi
+  # Require LGPL if specified either way.
+  if test -z "$lgpl"; then
+    lgpl="$cached_lgpl"
+  fi
+  # Use libtool if specified either way.
+  if test -z "$libtool"; then
+    libtool="$cached_libtool"
+  fi
+  # The macro_prefix defaults to the cached one.
+  if test -z "$macro_prefix"; then
+    macro_prefix="$cached_macro_prefix"
+    if test -z "$macro_prefix"; then
+      func_fatal_error "missing --macro-prefix option"
+    fi
+  fi
+
+  # Canonicalize the list of specified modules.
+  specified_modules=`for m in $specified_modules; do echo $m; done | sort | uniq`
 
   # Determine final module list.
+  modules="$specified_modules"
   func_modules_transitive_closure
   echo "Module list with included dependencies:"
   echo "$modules" | sed -e 's/^/  /'
@@ -770,10 +873,8 @@ func_import ()
     for module in $modules; do
       license=`func_get_license $module`
       case $license in
-	LGPL | 'public domain' | 'unlimited') ;;
-	*)
-	  func_fatal_error \
-	    "incompatible license on module \`$module\`: $license" ;;
+        LGPL | 'public domain' | 'unlimited') ;;
+        *) func_fatal_error "incompatible license on module $module: $license" ;;
       esac
     done
   fi
@@ -786,56 +887,155 @@ func_import ()
   test -n "$files" \
     || func_fatal_error "refusing to do nothing"
 
-  # Copy files or make symbolic links.
-  for f in $files m4/gnulib-tool.m4; do
-    source=
-    case "$f" in
-      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
-      lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"`; source=true ;;
-      m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
-      *) g="$f" ;;
+  # Add m4/gnulib-tool.m4 to the file list. It is not part of any module.
+  new_files="$files m4/gnulib-tool.m4"
+  old_files="$cached_files"
+  if test -f "$destdir"/$m4base/gnulib-tool.m4; then
+    old_files="$old_files m4/gnulib-tool.m4"
+  fi
+
+  # Copy files or make symbolic links. Remove obsolete files.
+  for f1 in $old_files; do
+    case "$f1" in
+      build-aux/*) g1=`echo "$f1" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+      lib/*) g1=`echo "$f1" | sed -e "s,^lib/,$cached_sourcebase/,"` ;;
+      m4/*) g1=`echo "$f1" | sed -e "s,^m4/,$cached_m4base/,"` ;;
+      *) g1="$f1" ;;
     esac
-    if test -z "$symbolic"; then
-      func_cp_if_changed "$gnulib_dir/$f" "$destdir/$g"
-    else
-      func_ln_if_changed "$gnulib_dir/$f" "$destdir/$g"
+    still_present=
+    for f2 in $new_files; do
+      case "$f2" in
+        build-aux/*) g2=`echo "$f2" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+        lib/*) g2=`echo "$f2" | sed -e "s,^lib/,$sourcebase/,"` ;;
+        m4/*) g2=`echo "$f2" | sed -e "s,^m4/,$m4base/,"` ;;
+        *) g2="$f2" ;;
+      esac
+      if test "$g2" = "$g1"; then
+        still_present=true
+        break
+      fi
+    done
+    if test -z "$still_present"; then
+      # Remove the file. Do nothing if the user already removed it.
+      if test -f "$destdir/$g1"; then
+        echo "Removing file $g1 (backup in ${g1}~)"
+        test -n "$dry_run" && dry=echo
+        $dry mv -f "$destdir/$g1" "$destdir/${g1}~" || func_fatal_error "failed"
+      fi
     fi
-    # Update license.
-    if test -z "$dry_run" && test -n "$lgpl" && test -n "$source"; then
-      perl -pi -e 's/GNU General/GNU Lesser General/g;' \
-               -e 's/version 2([ ,])/version 2.1\1/g' \
-               "$destdir/$g"
+  done
+  for f2 in $new_files; do
+    case "$f2" in
+      build-aux/*) g2=`echo "$f2" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+      lib/*) g2=`echo "$f2" | sed -e "s,^lib/,$sourcebase/,"` ;;
+      m4/*) g2=`echo "$f2" | sed -e "s,^m4/,$m4base/,"` ;;
+      *) g2="$f2" ;;
+    esac
+    already_present=
+    for f1 in $old_files; do
+      case "$f1" in
+        build-aux/*) g1=`echo "$f1" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+        lib/*) g1=`echo "$f1" | sed -e "s,^lib/,$cached_sourcebase/,"` ;;
+        m4/*) g1=`echo "$f1" | sed -e "s,^m4/,$cached_m4base/,"` ;;
+        *) g1="$f1" ;;
+      esac
+      if test "$g1" = "$g2"; then
+        already_present=true
+        break
+      fi
+    done
+    cp "$gnulib_dir/$f2" "$destdir/$g2.tmp" || func_fatal_error "failed"
+    if test -n "$lgpl"; then
+      # Update license.
+      case "$f2" in
+        lib/*)
+          sed -e 's/GNU General/GNU Lesser General/g' \
+              -e 's/version 2\([ ,]\)/version 2.1\1/g' \
+            < "$gnulib_dir/$f2" > "$destdir/$g2.tmp" || func_fatal_error "failed"
+          ;;
+      esac
+    fi
+    if test -f "$destdir/$g2"; then
+      # The file already exists.
+      if cmp "$destdir/$g2" "$destdir/$g2.tmp" > /dev/null; then
+        : # The file has not changed.
+      else
+        # Replace the file.
+        if test -n "$already_present"; then
+          echo "Updating file $g2 (backup in ${g2}~)"
+        else
+          echo "Replacing file $g2 (non-gnulib code backuped in ${g2}~) !!"
+        fi
+        test -n "$dry_run" && dry=echo
+        $dry mv -f "$destdir/$g2" "$destdir/${g2}~" || func_fatal_error "failed"
+        if test -z "$symbolic" && cmp "$gnulib_dir/$f2" "$destdir/$g2.tmp"; then
+          func_ln_if_changed "$gnulib_dir/$f2" "$destdir/$g2"
+        else
+          $dry mv -f "$destdir/$g2.tmp" "$destdir/${g2}" || func_fatal_error "failed"
+        fi
+      fi
+    else
+      # Install the file.
+      # Don't protest if the file should be there but isn't: it happens
+      # frequently that developers don't put autogenerated files into CVS.
+      echo "Copying file $g2"
+      test -n "$dry_run" && dry=echo
+      if test -z "$symbolic" && cmp "$gnulib_dir/$f2" "$destdir/$g2.tmp"; then
+        func_ln_if_changed "$gnulib_dir/$f2" "$destdir/$g2"
+      else
+        $dry mv -f "$destdir/$g2.tmp" "$destdir/${g2}" || func_fatal_error "failed"
+      fi
     fi
   done
 
-  # Commands printed in a comment in generated files.
+  # Command-line invocation printed in various files.
   cmd="gnulib-tool $supplied_opts"
-  opt_libtool=
-  if test -n "$libtool"; then
-    opt_libtool="--libtool"
-  fi
-  opt_lgpl=
+
+  # Command-line invocation printed in a comment in generated gnulib-cache.m4.
+  actioncmd="gnulib-tool --import"
+  actioncmd="$actioncmd --dir=$destdir"
+  actioncmd="$actioncmd --lib=$libname"
+  actioncmd="$actioncmd --source-base=$sourcebase"
+  actioncmd="$actioncmd --m4-base=$m4base"
+  actioncmd="$actioncmd --aux-dir=$auxdir"
+  for module in $avoidlist; do
+    actioncmd="$actioncmd --avoid=$module"
+  done
   if test -n "$lgpl"; then
-    opt_lgpl="--lgpl"
+    actioncmd="$actioncmd --lgpl"
   fi
-  actioncmd="gnulib-tool --import --dir=$destdir --lib=$libname --source-base=$sourcebase --m4-base=$m4base --aux-dir=$auxdir $opt_libtool $opt_lgpl `echo $specified_modules`"
+  if test -n "$libtool"; then
+    actioncmd="$actioncmd --libtool"
+  fi
+  actioncmd="$actioncmd -macro-prefix=$macro_prefix"
+  actioncmd="$actioncmd `echo $specified_modules`"
 
   # Create lib/Makefile.am.
-  echo "Creating $destdir/$sourcebase/Makefile.am..."
   if test -z "$dry_run"; then
-    func_emit_lib_Makefile_am > "$destdir"/$sourcebase/Makefile.am.new
+    func_emit_lib_Makefile_am > "$destdir"/$sourcebase/Makefile.am.tmp
+    if test -f "$destdir"/$sourcebase/Makefile.am; then
+      if cmp "$destdir"/$sourcebase/Makefile.am "$destdir"/$sourcebase/Makefile.am.tmp > /dev/null; then
+        rm -f "$destdir"/$sourcebase/Makefile.am.tmp
+      else
+        echo "Updating $sourcebase/Makefile.am (backup in $sourcebase/Makefile.am~)"
+        mv -f "$destdir"/$sourcebase/Makefile.am "$destdir"/$sourcebase/Makefile.am~
+        mv -f "$destdir"/$sourcebase/Makefile.am.tmp "$destdir"/$sourcebase/Makefile.am
+      fi
+    else
+      echo "Creating $sourcebase/Makefile.am"
+      mv -f "$destdir"/$sourcebase/Makefile.am.tmp "$destdir"/$sourcebase/Makefile.am
+    fi
   else
+    echo "Creating $sourcebase/Makefile.am..."
     func_emit_lib_Makefile_am
   fi
-  func_mv_if_changed "$destdir"/$sourcebase/Makefile.am.new \
-                     "$destdir"/$sourcebase/Makefile.am
 
   # Create m4/gnulib-cache.m4.
-  echo "Creating $destdir/$m4base/gnulib-cache.m4..."
   (
     if test -z "$dry_run"; then
-      exec > "$destdir"/$m4base/gnulib-cache.m4.new
+      exec > "$destdir"/$m4base/gnulib-cache.m4.tmp
     else
+      echo "Creating $m4base/gnulib-cache.m4..."
       echo "# $destdir/$m4base/gnulib-cache.m4"
     fi
     echo "# Copyright (C) 2004 Free Software Foundation, Inc."
@@ -857,7 +1057,7 @@ func_import ()
     echo "#   $actioncmd"
     echo
     echo "# Specification in the form of a few gnulib-tool.m4 macro invocations:"
-    echo "gl_MODULES([$specified_modules])"
+    echo "gl_MODULES(["`echo $specified_modules`"])"
     echo "gl_AVOID([$avoidlist])"
     echo "gl_SOURCE_BASE([$sourcebase])"
     echo "gl_M4_BASE([$m4base])"
@@ -868,14 +1068,27 @@ func_import ()
     echo
     echo "# gnulib-cache.m4 ends here"
   )
-  func_mv_if_changed "$destdir"/$m4base/gnulib-cache.m4.new "$destdir"/$m4base/gnulib-cache.m4
+  if test -z "$dry_run"; then
+    if test -f "$destdir"/$m4base/gnulib-cache.m4; then
+      if cmp "$destdir"/$m4base/gnulib-cache.m4 "$destdir"/$m4base/gnulib-cache.m4.tmp > /dev/null; then
+        rm -f "$destdir"/$m4base/gnulib-cache.m4.tmp
+      else
+        echo "Updating $m4base/gnulib-cache.m4 (backup in $m4base/gnulib-cache.m4~)"
+        mv -f "$destdir"/$m4base/gnulib-cache.m4 "$destdir"/$m4base/gnulib-cache.m4~
+        mv -f "$destdir"/$m4base/gnulib-cache.m4.tmp "$destdir"/$m4base/gnulib-cache.m4
+      fi
+    else
+      echo "Creating $m4base/gnulib-cache.m4"
+      mv -f "$destdir"/$m4base/gnulib-cache.m4.tmp "$destdir"/$m4base/gnulib-cache.m4
+    fi
+  fi
 
   # Create m4/gnulib-comp.m4.
-  echo "Creating $destdir/$m4base/gnulib-comp.m4..."
   (
     if test -z "$dry_run"; then
-      exec > "$destdir"/$m4base/gnulib-comp.m4.new
+      exec > "$destdir"/$m4base/gnulib-comp.m4.tmp
     else
+      echo "Creating $m4base/gnulib-comp.m4..."
       echo "# $destdir/$m4base/gnulib-comp.m4"
     fi
     echo "# Copyright (C) 2004 Free Software Foundation, Inc."
@@ -932,7 +1145,21 @@ func_import ()
     echo
     echo "# gnulib-comp.m4 ends here"
   )
-  func_mv_if_changed "$destdir"/$m4base/gnulib-comp.m4.new "$destdir"/$m4base/gnulib-comp.m4
+  if test -z "$dry_run"; then
+    if test -f "$destdir"/$m4base/gnulib-comp.m4; then
+      if cmp "$destdir"/$m4base/gnulib-comp.m4 "$destdir"/$m4base/gnulib-comp.m4.tmp > /dev/null; then
+        rm -f "$destdir"/$m4base/gnulib-comp.m4.tmp
+      else
+        echo "Updating $m4base/gnulib-comp.m4 (backup in $m4base/gnulib-comp.m4~)"
+        mv -f "$destdir"/$m4base/gnulib-comp.m4 "$destdir"/$m4base/gnulib-comp.m4~
+        mv -f "$destdir"/$m4base/gnulib-comp.m4.tmp "$destdir"/$m4base/gnulib-comp.m4
+      fi
+    else
+      echo "Creating $m4base/gnulib-comp.m4"
+      mv -f "$destdir"/$m4base/gnulib-comp.m4.tmp "$destdir"/$m4base/gnulib-comp.m4
+    fi
+  fi
+
   echo "Finished."
   echo
   echo "You may need to add #include directives for the following .h files."
