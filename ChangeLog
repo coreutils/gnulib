@@ -1,5 +1,12 @@
 2005-08-30  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import): Fix defaulting of $libname and $libtool.
+	Create directories that shall be filled.
+	(import): Don't look for gl_* macros in configure.ac. Recurse across
+	all directories containing a gnulib-cache.m4 files, if meaningful.
+
+2005-08-30  Bruno Haible  <bruno@clisp.org>
+
 	Avoid unnecessary diffs in the generated lib/Makefile.am.
 	* gnulib-tool (func_emit_lib_Makefile_am): Don't write the cmd into
 	the generated files.

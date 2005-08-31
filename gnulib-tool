@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-31 20:55:19 $'
+cvsdatestamp='$Date: 2005-08-31 20:57:03 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -746,6 +746,7 @@ func_emit_tests_Makefile_am ()
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            true if library's license shall be LGPL, blank otherwise
 # - libtool         true if libtool will be used, blank otherwise
+# - guessed_libtool true if the configure.ac file uses libtool, blank otherwise
 # - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
 # - dry_run         true if actions shall only be printed, blank otherwise
 # - symbolic        true if files should be symlinked, copied otherwise
@@ -832,7 +833,7 @@ func_import ()
     fi
   fi
   # The libname defaults to the cached one.
-  if test -z "$libname"; then
+  if test -z "$supplied_libname"; then
     libname="$cached_libname"
     if test -z "$libname"; then
       func_fatal_error "missing --lib option"
@@ -842,9 +843,13 @@ func_import ()
   if test -z "$lgpl"; then
     lgpl="$cached_lgpl"
   fi
-  # Use libtool if specified either way.
+  # Use libtool if specified either way, or if guessed.
   if test -z "$libtool"; then
-    libtool="$cached_libtool"
+    if test -n "$cached_m4base"; then
+      libtool="$cached_libtool"
+    else
+      libtool="$guessed_libtool"
+    fi
   fi
   # The macro_prefix defaults to the cached one.
   if test -z "$macro_prefix"; then
@@ -888,6 +893,14 @@ func_import ()
   if test -f "$destdir"/$m4base/gnulib-tool.m4; then
     old_files="$old_files m4/gnulib-tool.m4"
   fi
+
+  # Create directories.
+  test -d "$destdir/$sourcebase" \
+    || { test -n "$dry_run" || mkdir "$destdir/$sourcebase" || func_fatal_error "failed"; }
+  test -d "$destdir/$m4base" \
+    || { test -n "$dry_run" || mkdir "$destdir/$m4base" || func_fatal_error "failed"; }
+  test -d "$destdir/$auxdir" \
+    || { test -n "$dry_run" || mkdir "$destdir/$auxdir" || func_fatal_error "failed"; }
 
   # Copy files or make symbolic links. Remove obsolete files.
   for f1 in $old_files; do
@@ -1434,93 +1447,99 @@ case $mode in
     test -d "$destdir" \
       || func_fatal_error "destination directory does not exist: $destdir"
 
-    # Prefer configure.ac to configure.in
-    test -f "$destdir"/configure.in && configure_ac="$destdir/configure.in"
-    test -f "$destdir"/configure.ac && configure_ac="$destdir/configure.ac"
-    test -f "$configure_ac" \
-      || func_fatal_error "cannot find $destdir/configure.ac"
-
-    # Get settings.
-    my_sed_traces='s,#.*$,,; s,^dnl .*$,,; s, dnl .*$,,;
-      /gl_MODULES[^_]/  {
-        s,^.*gl_MODULES([[   ]*\([^])]*\).*$,cached_modules="\1",; p;
-      };
-      /gl_AVOID[^_]/  {
-        s,^.*gl_AVOID([[   ]*\([^])]*\).*$,cached_avoidlist="\1",; p;
-      };
-      /gl_SOURCE_BASE/   {
-        s,^.*gl_SOURCE_BASE([[         ]*\([^])]*\).*$,cached_sourcebase="\1",; p;
-      };
-      /gl_M4_BASE/   {
-        s,^.*gl_M4_BASE([[         ]*\([^])]*\).*$,cached_m4base="\1",; p;
-      };
-      /gl_LIB/   {
-        s,^.*gl_LIB([[         ]*\([^])]*\).*$,cached_libname="\1",; p;
-      };
-      /AC_CONFIG_AUX_DIR/  {
-        s,^.*AC_CONFIG_AUX_DIR([[         ]*\([^])]*\).*$,ac_auxdir="\1",; p;
-      }
-      /A[CM]_PROG_LIBTOOL/ { s,^.*$,seen_libtool=:,; p; };
-      /LT_INIT/            { s,^.*$,seen_libtool=:,; p; };
-      /gl_LGPL/            { s,^.*$,cached_lgpl=true,; p; };
-      /gl_LIBTOOL/         { s,^.*$,cached_libtool=:,; p; };
-      /gl_MACRO_PREFIX/   {
-        s,^.*gl_MACRO_PREFIX([[         ]*\([^])]*\).*$,cached_macro_prefix="\1",; p;
-      };
-      d;'
-    eval `cat $configure_ac | sed "$my_sed_traces"`
-
-    # Override libname?
-    if test -z "$supplied_libname" && test -n "$cached_libname"; then
-      libname="$cached_libname"
-    fi
-
-    # Set up source base.
-    test -z "$sourcebase" && sourcebase="$cached_sourcebase"
-    test -z "$sourcebase" && sourcebase="lib"
-    test -d "$destdir/$sourcebase" \
-      || { test -z "$dry_run" && mkdir "$destdir/$sourcebase"; } \
-      || func_fatal_error "source base $destdir/$sourcebase doesn't exist"
-
-    # Set up m4 base.
-    test -z "$m4base" && m4base="$cached_m4base"
-    test -z "$m4base" && m4base="m4"
-    test -d "$destdir/$m4base" \
-      || { test -z "$dry_run" && mkdir "$destdir/$m4base"; } \
-      || func_fatal_error "m4 base $destdir/$m4base doesn't exist"
-
-    # Set up auxiliary directory.
-    test -z "$auxdir" && auxdir="$ac_auxdir"
-    test -z "$auxdir" && auxdir="build-aux"
-    test -d "$destdir/$auxdir" \
-      || { test -z "$dry_run" && mkdir "$destdir/$auxdir"; } \
-      || func_fatal_error "aux directory $destdir/$auxdir doesn't exist"
-
-    # Require LGPL?
-    if test -n "$cached_lgpl"; then
-      lgpl=true
-    fi
-
-    # Using libtool?
-    if test -n "$seen_libtool" || test -n "$cached_libtool"; then
-      libtool=true
-    fi
-
-    # Macro prefix
-    test -z "$macro_prefix" && macro_prefix="$cached_macro_prefix"
-    test -z "$macro_prefix" && macro_prefix="gl"
-
-    # What modules to extract.
-    if test $# = 0; then
-      modules="$cached_modules"
+    # Prefer configure.ac to configure.in.
+    if test -f "$destdir"/configure.ac; then
+      configure_ac="$destdir/configure.ac"
     else
-      modules="$*"
+      if test -f "$destdir"/configure.in; then
+        configure_ac="$destdir/configure.in"
+      else
+        func_fatal_error "cannot find $destdir/configure.ac"
+      fi
     fi
 
-    # Which modules to avoid?
-    avoidlist=`echo $avoidlist $cached_avoidlist`
+    test -f "$destdir"/Makefile.am \
+      || func_fatal_error "cannot find $destdir/Makefile.am"
 
-    func_import "$modules"
+    # Analyze configure.ac.
+    guessed_auxdir="."
+    guessed_libtool=
+    my_sed_traces='
+      s,#.*$,,
+      s,^dnl .*$,,
+      s, dnl .*$,,
+      /AC_CONFIG_AUX_DIR/ {
+        s,^.*AC_CONFIG_AUX_DIR([[ ]*\([^])]*\).*$,guessed_auxdir="\1",p
+      }
+      /A[CM]_PROG_LIBTOOL/ {
+        s,^.*$,guessed_libtool=true,p
+      }'
+    eval `sed -n -e "$my_sed_traces" < "$configure_ac"`
+
+    if test -z "$auxdir"; then
+      auxdir="$guessed_auxdir"
+    fi
+
+    # Determine where to apply func_import.
+    if test -n "$m4base"; then
+      # Apply func_import to a particular gnulib directory.
+      # Any number of additional modules can be given.
+      func_import "$*"
+    else
+      # Apply func_import to all gnulib directories.
+      # To get this list of directories, look at Makefile.am. (Not at
+      # configure, because it may be omitted from CVS. Also, don't run
+      # "find $destdir -name gnulib-cache.m4", as it might be too expensive.)
+      aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[ 	]*=' "$destdir"/Makefile.am | sed -e 's/^ACLOCAL_AMFLAGS[ 	]*=\(.*\)$/\1/'`
+      m4dirs=
+      m4dirs_count=0
+      m4dir_is_next=
+      for arg in $aclocal_amflags; do
+        if test -n "$m4dir_is_next"; then
+          # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
+          case "$arg" in
+            /*) ;;
+            *)
+              if test -f "$destdir/$arg"/gnulib-cache.m4; then
+                m4dirs="$m4dirs $arg"
+                m4dirs_count=`expr $m4dirs_count + 1`
+              fi
+              ;;
+          esac
+        else
+          if test "X$arg" = "X-I"; then
+            m4dir_is_next=yes
+          else
+            m4dir_is_next=
+          fi
+        fi
+      done
+      if test $m4dirs_count = 0; then
+        # First use of gnulib in a package.
+        # Any number of additional modules can be given.
+        m4base="m4"
+        func_import "$*"
+      else
+        if test $m4dirs_count = 1; then
+          # There's only one use of gnulib here. Assume the user means it.
+          # Any number of additional modules can be given.
+          for m4base in $m4dirs; do
+            func_import "$*"
+          done
+        else
+          # Ambiguous - guess what the user meant.
+          if test $# = 0; then
+            # No further arguments. Guess the user wants to update all of them.
+            for m4base in $m4dirs; do
+              func_import
+            done
+          else
+            # Really ambiguous.
+            func_fatal_error "Ambiguity: to which directory should the modules be added? Please specify at least --m4-base=..."
+          fi
+        fi
+      fi
+    fi
     ;;
 
   create-testdir )
