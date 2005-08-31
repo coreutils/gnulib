@@ -46,7 +46,7 @@ static reg_errcode_t calc_first (void *extra, bin_tree_t *node);
 static reg_errcode_t calc_next (void *extra, bin_tree_t *node);
 static reg_errcode_t link_nfa_nodes (void *extra, bin_tree_t *node);
 static Idx duplicate_node (re_dfa_t *dfa, Idx org_idx, unsigned int constraint);
-static Idx search_duplicated_node (re_dfa_t *dfa, Idx org_node,
+static Idx search_duplicated_node (const re_dfa_t *dfa, Idx org_node,
 				   unsigned int constraint);
 static reg_errcode_t calc_eclosure (re_dfa_t *dfa);
 static reg_errcode_t calc_eclosure_iter (re_node_set *new_set, re_dfa_t *dfa,
@@ -1506,7 +1506,7 @@ duplicate_node_closure (re_dfa_t *dfa, Idx top_org_node,
    satisfies the constraint CONSTRAINT.  */
 
 static Idx
-search_duplicated_node (re_dfa_t *dfa, Idx org_node,
+search_duplicated_node (const re_dfa_t *dfa, Idx org_node,
 			unsigned int constraint)
 {
   Idx idx;

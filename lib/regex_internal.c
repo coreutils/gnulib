@@ -21,10 +21,10 @@ static void re_string_construct_common (const char *str, Idx len,
 					re_string_t *pstr,
 					REG_TRANSLATE_TYPE trans, int icase,
 					const re_dfa_t *dfa) internal_function;
-static re_dfastate_t *create_ci_newstate (re_dfa_t *dfa,
+static re_dfastate_t *create_ci_newstate (const re_dfa_t *dfa,
 					  const re_node_set *nodes,
 					  re_hashval_t hash) internal_function;
-static re_dfastate_t *create_cd_newstate (re_dfa_t *dfa,
+static re_dfastate_t *create_cd_newstate (const re_dfa_t *dfa,
 					  const re_node_set *nodes,
 					  unsigned int context,
 					  re_hashval_t hash) internal_function;
@@ -1465,7 +1465,7 @@ re_acquire_state_context (reg_errcode_t *err, re_dfa_t *dfa,
 
 static reg_errcode_t
 internal_function
-register_state (re_dfa_t *dfa, re_dfastate_t *newstate, re_hashval_t hash)
+register_state (const re_dfa_t *dfa, re_dfastate_t *newstate, re_hashval_t hash)
 {
   struct re_state_table_entry *spot;
   reg_errcode_t err;
@@ -1502,7 +1502,8 @@ register_state (re_dfa_t *dfa, re_dfastate_t *newstate, re_hashval_t hash)
 
 static re_dfastate_t *
 internal_function
-create_ci_newstate (re_dfa_t *dfa, const re_node_set *nodes, re_hashval_t hash)
+create_ci_newstate (const re_dfa_t *dfa, const re_node_set *nodes,
+		    re_hashval_t hash)
 {
   Idx i;
   reg_errcode_t err;
@@ -1551,7 +1552,7 @@ create_ci_newstate (re_dfa_t *dfa, const re_node_set *nodes, re_hashval_t hash)
 
 static re_dfastate_t *
 internal_function
-create_cd_newstate (re_dfa_t *dfa, const re_node_set *nodes,
+create_cd_newstate (const re_dfa_t *dfa, const re_node_set *nodes,
 		    unsigned int context, re_hashval_t hash)
 {
   Idx i, nctx_nodes = 0;

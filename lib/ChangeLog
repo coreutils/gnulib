@@ -1,3 +1,13 @@
+2005-08-31  Jim Meyering  <jim@meyering.net>
+
+	* regcomp.c (search_duplicated_node): Make first pointer arg
+	a pointer-to-const.
+	* regex_internal.c (create_ci_newstate, create_cd_newstate):
+	(register_state): Likewise.
+	* regexec.c (search_cur_bkref_entry, check_dst_limits):
+	(check_dst_limits_calc_pos_1, check_dst_limits_calc_pos):
+	(group_nodes_into_DFAstates): Likewise.
+
 2005-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	On 64-bit hosts (where size_t is 64 bits and int is 32 bits), the
