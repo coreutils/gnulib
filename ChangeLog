@@ -1,5 +1,11 @@
 2005-08-28  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool: New option --macro-prefix.
+	(func_import): Use macro_prefix.
+	(import): Handle option --macro-prefix.
+
+2005-08-28  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Emit also a stub for gl_LIBTOOL.
 	(import): Set seen_libtool when we see gl_LIBTOOL.
 

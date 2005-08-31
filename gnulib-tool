@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-31 20:49:17 $'
+cvsdatestamp='$Date: 2005-08-31 20:49:31 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -102,6 +102,8 @@ Options:
       --lgpl                Abort if modules aren't available under the LGPL.
                             Also modify license template from GPL to LGPL.
       --libtool             Use libtool rules, for --import.
+      --macro-prefix=PREFIX  Specify the prefix of the macros 'gl_EARLY' and
+                            'gl_INIT'. Default is 'gl'.
       --no-changelog        don't update or create ChangeLog files
       --dry-run             For --import, only print what would have been done.
   -s, --symbolic, --symlink Make symbolic links instead of copying files.
@@ -210,6 +212,7 @@ func_ln_if_changed ()
   avoidlist=
   lgpl=
   libtool=
+  macro_prefix=
   do_changelog=:
   dry_run=
   symbolic=
@@ -319,6 +322,16 @@ func_ln_if_changed ()
         shift ;;
       --libtool )
         libtool=true
+        shift ;;
+      --macro-prefix )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --macro-prefix"
+        fi
+        macro_prefix="$1"
+        shift ;;
+      --macro-prefix=* )
+        macro_prefix=`echo "X$1" | sed -e 's/^X--macro-prefix=//'`
         shift ;;
       --no-changelog | --no-changelo | --no-changel | --no-change | --no-chang | --no-chan | --no-cha | --no-ch | --no-c )
         do_changelog=false
@@ -737,6 +750,7 @@ func_emit_tests_Makefile_am ()
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            true if library's license shall be LGPL, blank otherwise
 # - libtool         true if libtool will be used, blank otherwise
+# - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
 # - dry_run         true if actions shall only be printed, blank otherwise
 # - symbolic        true if files should be symlinked, copied otherwise
 # - supplied_opts   all options passed to gnulib-tool
@@ -838,7 +852,7 @@ func_import ()
     echo "# This macro should be invoked from $configure_ac, in the section"
     echo "# \"Checks for programs\", right after AC_PROG_CC, and certainly before"
     echo "# any checks for libraries, header files, types and library functions."
-    echo "AC_DEFUN([gl_EARLY],"
+    echo "AC_DEFUN([${macro_prefix}_EARLY],"
     echo "["
     if grep AC_GNU_SOURCE "$destdir"/$m4base/*.m4 > /dev/null; then
       echo "  AC_GNU_SOURCE"
@@ -850,7 +864,7 @@ func_import ()
     echo
     echo "# This macro should be invoked from $configure_ac, in the section"
     echo "# \"Check for header files, types and library functions\"."
-    echo "AC_DEFUN([gl_INIT],"
+    echo "AC_DEFUN([${macro_prefix}_INIT],"
     echo "["
     for module in $modules; do
       func_verify_module
@@ -887,6 +901,9 @@ func_import ()
     echo "dnl Usage: gl_LIBTOOL"
     echo "AC_DEFUN([gl_LIBTOOL], [])"
     echo
+    echo "dnl Usage: gl_MACRO_PREFIX([PREFIX])"
+    echo "AC_DEFUN([gl_MACRO_PREFIX], [])"
+    echo
     echo "# gnulib.m4 ends here"
   )
   func_mv_if_changed "$destdir"/$m4base/gnulib.m4.new "$destdir"/$m4base/gnulib.m4
@@ -903,8 +920,8 @@ func_import ()
   sourcebase_base=`basename "$sourcebase"`
   echo "  - mention \"${sourcebase_base}\" in SUBDIRS in ${sourcebase_dir}Makefile.am,"
   echo "  - mention \"-I ${m4base}\" in ACLOCAL_AMFLAGS in Makefile.am,"
-  echo "  - invoke gl_EARLY in $configure_ac, right after AC_PROG_CC,"
-  echo "  - invoke gl_INIT in $configure_ac."
+  echo "  - invoke ${macro_prefix}_EARLY in $configure_ac, right after AC_PROG_CC,"
+  echo "  - invoke ${macro_prefix}_INIT in $configure_ac."
 }
 
 # func_create_testdir testdir modules
@@ -1202,6 +1219,9 @@ case $mode in
       /LT_INIT/            { s,^.*$,seen_libtool=:,; p; };
       /gl_LGPL/            { s,^.*$,lgpl=true,; p; };
       /gl_LIBTOOL/         { s,^.*$,seen_libtool=:,; p; };
+      /gl_MACRO_PREFIX/   {
+        s,^.*gl_MACRO_PREFIX([[         ]*\([^])]*\).*$,ac_macro_prefix="\1",; p;
+      };
       d;'
     eval `cat $configure_ac | sed "$my_sed_traces"`
 
@@ -1235,6 +1255,10 @@ case $mode in
     if test -n "$seen_libtool"; then
       libtool=true
     fi
+
+    # Macro prefix
+    test -z "$macro_prefix" && macro_prefix="$ac_macro_prefix"
+    test -z "$macro_prefix" && macro_prefix="gl"
 
     # What modules to extract.
     if test $# = 0; then
