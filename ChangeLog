@@ -1,3 +1,7 @@
+2005-08-31  Jim Meyering  <jim@meyering.net>
+
+	* check-module: Add a FIXME comment.
+
 2005-08-31  Eric Blake  <ebb9@byu.net>
 
 	* modules/unistd-safer (Files): Add unistd--.h.
