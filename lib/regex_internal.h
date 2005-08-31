@@ -529,7 +529,6 @@ typedef struct
 {
   int str_idx;
   int node;
-  int next_last_offset;
   state_array_t *path;
   int alasts; /* Allocation size of LASTS.  */
   int nlasts; /* The number of LASTS.  */
@@ -620,7 +619,6 @@ struct re_dfa_t
 
   /* number of subexpressions `re_nsub' is in regex_t.  */
   unsigned int state_hash_mask;
-  int states_alloc;
   int init_node;
   int nbackref; /* The number of backreference in this dfa.  */
 

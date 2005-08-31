@@ -1,3 +1,10 @@
+2005-08-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regex_internal.h (re_sub_match_top_t): Remove unused member
+	next_last_offset.
+	(struct re_dfa_t): Remove unused member states_alloc.
+	* regcomp.c (init_dfa): Don't initialize unused members.
+
 2005-08-31  Bruno Haible  <bruno@clisp.org>
 
 	* strstr.c: Include <stddef.h>, for NULL.

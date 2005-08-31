@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.88 2005-08-26 21:47:51 eggert Exp $
+# $Id: srclist.txt,v 1.89 2005-08-31 18:08:34 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -102,6 +102,7 @@ $LIBCSRC/stdlib/getsubopt.c		lib gpl
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1237
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1240
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1241
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1273
 #$LIBCSRC/posix/regcomp.c		lib gpl
 #
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1238
@@ -132,6 +133,7 @@ $LIBCSRC/stdlib/getsubopt.c		lib gpl
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1241
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1245
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1248
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1273
 #$LIBCSRC/posix/regex_internal.h		lib gpl
 #
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1216

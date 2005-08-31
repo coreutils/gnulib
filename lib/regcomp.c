@@ -811,8 +811,6 @@ init_dfa (re_dfa_t *dfa, int pat_len)
   dfa->nodes_alloc = pat_len + 1;
   dfa->nodes = re_malloc (re_token_t, dfa->nodes_alloc);
 
-  dfa->states_alloc = pat_len + 1;
-
   /*  table_size = 2 ^ ceil(log pat_len) */
   for (table_size = 1; table_size > 0; table_size <<= 1)
     if (table_size > pat_len)
