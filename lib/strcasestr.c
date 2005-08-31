@@ -24,6 +24,7 @@
 #include "strcasestr.h"
 
 #include <ctype.h>
+#include <stddef.h>  /* for NULL */
 
 #if HAVE_MBRTOWC
 # include "mbuiter.h"
