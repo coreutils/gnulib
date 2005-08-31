@@ -336,7 +336,7 @@ re_compile_fastmap_iter (regex_t *bufp, const re_dfastate_t *init_state,
 	  int i, j, ch;
 	  for (i = 0, ch = 0; i < BITSET_UINTS; ++i)
 	    for (j = 0; j < UINT_BITS; ++j, ++ch)
-	      if (dfa->nodes[node].opr.sbcset[i] & (1 << j))
+	      if (dfa->nodes[node].opr.sbcset[i] & (1u << j))
 		re_set_fastmap (fastmap, icase, ch);
 	}
 #ifdef RE_ENABLE_I18N
@@ -798,7 +798,7 @@ re_compile_internal (regex_t *preg, const char * pattern, int length,
 static reg_errcode_t
 init_dfa (re_dfa_t *dfa, int pat_len)
 {
-  int table_size;
+  unsigned int table_size;
 #ifndef _LIBC
   char *codeset_name;
 #endif
@@ -812,7 +812,7 @@ init_dfa (re_dfa_t *dfa, int pat_len)
   dfa->nodes = re_malloc (re_token_t, dfa->nodes_alloc);
 
   /*  table_size = 2 ^ ceil(log pat_len) */
-  for (table_size = 1; table_size > 0; table_size <<= 1)
+  for (table_size = 1; ; table_size <<= 1)
     if (table_size > pat_len)
       break;
 
@@ -872,7 +872,7 @@ init_dfa (re_dfa_t *dfa, int pat_len)
 	      {
 		wint_t wch = __btowc (ch);
 		if (wch != WEOF)
-		  dfa->sb_char[i] |= 1 << j;
+		  dfa->sb_char[i] |= 1u << j;
 # ifndef _LIBC
 		if (isascii (ch) && wch != ch)
 		  dfa->map_notascii = 1;
@@ -899,7 +899,7 @@ init_word_char (re_dfa_t *dfa)
   for (i = 0, ch = 0; i < BITSET_UINTS; ++i)
     for (j = 0; j < UINT_BITS; ++j, ++ch)
       if (isalnum (ch) || ch == '_')
-	dfa->word_char[i] |= 1 << j;
+	dfa->word_char[i] |= 1u << j;
 }
 
 /* Free the work area which are only used while compiling.  */
@@ -1222,8 +1222,8 @@ optimize_subexps (void *extra, bin_tree_t *node)
         node->left->parent = node;
 
       dfa->subexp_map[other_idx] = dfa->subexp_map[node->token.opr.idx];
-      if (other_idx < 8 * sizeof (dfa->used_bkref_map))
-	dfa->used_bkref_map &= ~(1 << other_idx);
+      if (other_idx < CHAR_BIT * sizeof dfa->used_bkref_map)
+	dfa->used_bkref_map &= ~(1u << other_idx);
     }
 
   return REG_NOERROR;
@@ -1266,8 +1266,8 @@ lower_subexp (reg_errcode_t *err, regex_t *preg, bin_tree_t *node)
 	 very common, so we do not lose much.  An example that triggers
 	 this case is the sed "script" /\(\)/x.  */
       && node->left != NULL
-      && (node->token.opr.idx >= 8 * sizeof (dfa->used_bkref_map)
-	  || !(dfa->used_bkref_map & (1 << node->token.opr.idx))))
+      && (node->token.opr.idx >= CHAR_BIT * sizeof dfa->used_bkref_map
+	  || !(dfa->used_bkref_map & (1u << node->token.opr.idx))))
     return node->left;
 
   /* Convert the SUBEXP node to the concatenation of an
@@ -2380,7 +2380,9 @@ parse_sub_exp (re_string_t *regexp, regex_t *preg, re_token_t *token,
       if (BE (*err != REG_NOERROR, 0))
 	return NULL;
     }
-  dfa->completed_bkref_map |= 1 << cur_nsub;
+
+  if (cur_nsub <= '9' - '1')
+    dfa->completed_bkref_map |= 1 << cur_nsub;
 
   tree = create_tree (dfa, tree, NULL, SUBEXP);
   if (BE (tree == NULL, 0))

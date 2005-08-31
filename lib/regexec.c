@@ -1895,8 +1895,9 @@ check_dst_limits_calc_pos_1 (re_match_context_t *mctx, int boundaries,
 		  if (ent->node != node)
 		    continue;
 
-		  if (subexp_idx <= 8 * sizeof (ent->eps_reachable_subexps_map)
-		      && !(ent->eps_reachable_subexps_map & (1 << subexp_idx)))
+		  if (subexp_idx
+		      < CHAR_BIT * sizeof ent->eps_reachable_subexps_map
+		      && !(ent->eps_reachable_subexps_map & (1u << subexp_idx)))
 		    continue;
 
 		  /* Recurse trying to reach the OP_OPEN_SUBEXP and
@@ -1922,7 +1923,9 @@ check_dst_limits_calc_pos_1 (re_match_context_t *mctx, int boundaries,
 		  if (cpos == 0 && (boundaries & 2))
 		    return 0;
 
-		  ent->eps_reachable_subexps_map &= ~(1 << subexp_idx);
+		  if (subexp_idx
+		      < CHAR_BIT * sizeof ent->eps_reachable_subexps_map)
+		    ent->eps_reachable_subexps_map &= ~(1u << subexp_idx);
 	        }
 	      while (ent++->more);
 	    }
@@ -2376,8 +2379,8 @@ check_subexp_matching_top (re_match_context_t *mctx, re_node_set *cur_nodes,
     {
       int node = cur_nodes->elems[node_idx];
       if (dfa->nodes[node].type == OP_OPEN_SUBEXP
-	  && dfa->nodes[node].opr.idx < (8 * sizeof (dfa->used_bkref_map))
-	  && dfa->used_bkref_map & (1 << dfa->nodes[node].opr.idx))
+	  && dfa->nodes[node].opr.idx < CHAR_BIT * sizeof dfa->used_bkref_map
+	  && dfa->used_bkref_map & (1u << dfa->nodes[node].opr.idx))
 	{
 	  err = match_ctx_add_subtop (mctx, node, str_idx);
 	  if (BE (err != REG_NOERROR, 0))
@@ -4166,7 +4169,7 @@ match_ctx_add_entry (re_match_context_t *mctx, int node, int str_idx,
      A backreference does not epsilon-transition unless it is empty, so set
      to all zeros if FROM != TO.  */
   mctx->bkref_ents[mctx->nbkref_ents].eps_reachable_subexps_map
-    = (from == to ? ~0 : 0);
+    = (from == to ? -1 : 0);
 
   mctx->bkref_ents[mctx->nbkref_ents++].more = 0;
   if (mctx->max_mb_elem_len < to - from)

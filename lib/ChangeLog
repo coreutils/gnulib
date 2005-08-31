@@ -1,5 +1,29 @@
 2005-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* regcomp.c (re_compile_fastmap_iter, init_dfa, init_word_char):
+	(optimize_subexps, lower_subexp):
+	Don't assume 1<<31 has defined behavior on hosts with 32-bit int,
+	since the signed shift might overflow.  Use 1u<<31 instead.
+	* regex_internal.h (bitset_set, bitset_clear, bitset_contain): Likewise.
+	* regexec.c (check_dst_limits_calc_pos_1, check_subexp_matching_top):
+	Likewise.
+	* regcomp.c (optimize_subexps, lower_subexp):
+	Use CHAR_BIT rather than 8, for clarity.
+	* regexec.c (check_dst_limits_calc_pos_1):
+	(check_subexp_matching_top): Likewise.
+	* regcomp.c (init_dfa): Make table_size unsigned, so that we don't
+	have to worry about portability issues when shifting it left.
+	Remove no-longer-needed test for table_size > 0.
+	* regcomp.c (parse_sub_exp): Do not shift more bits than there are
+	in a word, as the resulting behavior is undefined.
+	* regexec.c (check_dst_limits_calc_pos_1): Likewise;
+	in one case, a <= should have been an <, and in another case the
+	whole test was missing.
+	* regex_internal.h (BYTE_BITS): Remove.  All uses changed to
+	the standard name CHAR_BIT.
+	* regexec.c (match_ctx_add_entry): Don't assume that ~0 == -1;
+	this is not true on one's complement and signed-magnitude hosts.
+
 	* regex_internal.h (re_sub_match_top_t): Remove unused member
 	next_last_offset.
 	(struct re_dfa_t): Remove unused member states_alloc.

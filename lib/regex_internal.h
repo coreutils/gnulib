@@ -90,8 +90,6 @@
 # define inline
 #endif
 
-/* Number of bits in a byte.  */
-#define BYTE_BITS 8
 /* Number of single byte character.  */
 #define SBC_MAX 256
 
@@ -124,16 +122,16 @@ extern const char __re_error_msgid[] attribute_hidden;
 extern const size_t __re_error_msgid_idx[] attribute_hidden;
 
 /* Number of bits in an unsinged int.  */
-#define UINT_BITS (sizeof (unsigned int) * BYTE_BITS)
+#define UINT_BITS (sizeof (unsigned int) * CHAR_BIT)
 /* Number of unsigned int in an bit_set.  */
 #define BITSET_UINTS ((SBC_MAX + UINT_BITS - 1) / UINT_BITS)
 typedef unsigned int bitset[BITSET_UINTS];
 typedef unsigned int *re_bitset_ptr_t;
 typedef const unsigned int *re_const_bitset_ptr_t;
 
-#define bitset_set(set,i) (set[i / UINT_BITS] |= 1 << i % UINT_BITS)
-#define bitset_clear(set,i) (set[i / UINT_BITS] &= ~(1 << i % UINT_BITS))
-#define bitset_contain(set,i) (set[i / UINT_BITS] & (1 << i % UINT_BITS))
+#define bitset_set(set,i) (set[i / UINT_BITS] |= 1u << i % UINT_BITS)
+#define bitset_clear(set,i) (set[i / UINT_BITS] &= ~(1u << i % UINT_BITS))
+#define bitset_contain(set,i) (set[i / UINT_BITS] & (1u << i % UINT_BITS))
 #define bitset_empty(set) memset (set, 0, sizeof (unsigned int) * BITSET_UINTS)
 #define bitset_set_all(set) \
   memset (set, 255, sizeof (unsigned int) * BITSET_UINTS)
