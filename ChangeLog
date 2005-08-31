@@ -1,5 +1,10 @@
 2005-08-28  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import): Require AC_GNU_SOURCE etc. instead of
+	always instantiating them.
+
+2005-08-28  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (import): Rename most ac_* variables to cached_*.
 	Also use new variables cached_lgpl, cached_libtool.
 
