@@ -43,6 +43,46 @@ extern "C" {
 # include <stddef.h>
 #endif
 
+#ifdef _REGEX_LARGE_OFFSETS
+
+/* Use types and values that are wide enough to represent signed and
+   unsigned byte offsets in memory.  This currently works only when
+   the regex code is used outside of the GNU C library; it is not yet
+   supported within glibc itself, and glibc users should not define
+   _REGEX_LARGE_OFFSETS.  */
+
+/* The type of the offset of a byte within a string.
+   For historical reasons POSIX 1003.1-2004 requires that regoff_t be
+   at least as wide as off_t.  This is a bit odd (and many common
+   POSIX platforms set it to the more-sensible ssize_t) but we might
+   as well conform.  We don't know of any hosts where ssize_t is wider
+   than off_t, so off_t is safe.  */
+typedef off_t regoff_t;
+
+/* The type of nonnegative object indexes.  Traditionally, GNU regex
+   uses 'int' for these.  Code that uses __re_idx_t should work
+   regardless of whether the type is signed.  */
+typedef size_t __re_idx_t;
+
+/* The type of object sizes.  */
+typedef size_t __re_size_t;
+
+/* The type of object sizes, in places where the traditional code
+   uses unsigned long int.  */
+typedef size_t __re_long_size_t;
+
+#else
+
+/* Use types that are binary-compatible with the traditional GNU regex
+   implementation, which mishandles strings longer than INT_MAX.  */
+
+typedef int regoff_t;
+typedef int __re_idx_t;
+typedef unsigned int __re_size_t;
+typedef unsigned long int __re_long_size_t;
+
+#endif
+
 /* The following two types have to be signed and unsigned integer type
    wide enough to hold a value of a pointer.  For most ANSI compilers
    ptrdiff_t and size_t should be likely OK.  Still size of these two
@@ -416,10 +456,10 @@ struct re_pattern_buffer
   unsigned char *_REG_RE_NAME (buffer);
 
 	/* Number of bytes to which `re_buffer' points.  */
-  unsigned long int _REG_RE_NAME (allocated);
+  __re_long_size_t _REG_RE_NAME (allocated);
 
 	/* Number of bytes actually used in `re_buffer'.  */
-  unsigned long int _REG_RE_NAME (used);
+  __re_long_size_t _REG_RE_NAME (used);
 
         /* Syntax setting with which the pattern was compiled.  */
   reg_syntax_t _REG_RE_NAME (syntax);
@@ -477,15 +517,11 @@ struct re_pattern_buffer
 
 typedef struct re_pattern_buffer regex_t;
 
-/* Type for byte offsets within the string.  POSIX mandates this.  */
-typedef int regoff_t;
-
-
 /* This is the structure we store register match data in.  See
    regex.texinfo for a full description of what registers match.  */
 struct re_registers
 {
-  unsigned int _REG_RM_NAME (num_regs);
+  __re_size_t _REG_RM_NAME (num_regs);
   regoff_t *_REG_RM_NAME (start);
   regoff_t *_REG_RM_NAME (end);
 };
@@ -532,31 +568,35 @@ extern int re_compile_fastmap (struct re_pattern_buffer *__buffer);
    characters.  Return the starting position of the match, -1 for no
    match, or -2 for an internal error.  Also return register
    information in REGS (if REGS and BUFFER->re_no_sub are nonzero).  */
-extern int re_search (struct re_pattern_buffer *__buffer, const char *__string,
-		      int __length, int __start, int __range,
-		      struct re_registers *__regs);
+extern regoff_t re_search (struct re_pattern_buffer *__buffer,
+			   const char *__string, __re_idx_t __length,
+			   __re_idx_t __start, regoff_t __range,
+			   struct re_registers *__regs);
 
 
 /* Like `re_search', but search in the concatenation of STRING1 and
    STRING2.  Also, stop searching at index START + STOP.  */
-extern int re_search_2 (struct re_pattern_buffer *__buffer,
-			const char *__string1, int __length1,
-			const char *__string2, int __length2,
-			int __start, int __range, struct re_registers *__regs,
-			int __stop);
+extern regoff_t re_search_2 (struct re_pattern_buffer *__buffer,
+			     const char *__string1, __re_idx_t __length1,
+			     const char *__string2, __re_idx_t __length2,
+			     __re_idx_t __start, regoff_t __range,
+			     struct re_registers *__regs,
+			     __re_idx_t __stop);
 
 
 /* Like `re_search', but return how many characters in STRING the regexp
    in BUFFER matched, starting at position START.  */
-extern int re_match (struct re_pattern_buffer *__buffer, const char *__string,
-		     int __length, int __start, struct re_registers *__regs);
+extern regoff_t re_match (struct re_pattern_buffer *__buffer,
+			  const char *__string, __re_idx_t __length,
+			  __re_idx_t __start, struct re_registers *__regs);
 
 
 /* Relates to `re_match' as `re_search_2' relates to `re_search'.  */
-extern int re_match_2 (struct re_pattern_buffer *__buffer,
-		       const char *__string1, int __length1,
-		       const char *__string2, int __length2,
-		       int __start, struct re_registers *__regs, int __stop);
+extern regoff_t re_match_2 (struct re_pattern_buffer *__buffer,
+			    const char *__string1, __re_idx_t __length1,
+			    const char *__string2, __re_idx_t __length2,
+			    __re_idx_t __start, struct re_registers *__regs,
+			    __re_idx_t __stop);
 
 
 /* Set REGS to hold NUM_REGS registers, storing them in STARTS and
@@ -573,7 +613,7 @@ extern int re_match_2 (struct re_pattern_buffer *__buffer,
    freeing the old data.  */
 extern void re_set_registers (struct re_pattern_buffer *__buffer,
 			      struct re_registers *__regs,
-			      unsigned int __num_regs,
+			      __re_size_t __num_regs,
 			      regoff_t *__starts, regoff_t *__ends);
 
 #if defined _REGEX_RE_COMP || defined _LIBC

@@ -1,5 +1,83 @@
 2005-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
+	On 64-bit hosts (where size_t is 64 bits and int is 32 bits), the
+	old glibc regex code mishandles strings longer than 2**31 bytes.
+	This patch fixes this when the regex code is used in gnulib
+	(i.e., outside glibc).
+
+	This patch should not affect the use of the regex code inside
+	glibc.  No doubt this problem also needs to be handled for glibc
+	as well, but the result will be an incompatible change to the
+	glibc ABI, and the old ABI will have to be supported too.  That
+	can be the the subject for another patch.
+
+	* regex.h (_REGEX_LARGE_OFFSETS): New feature-test macro,
+	governing whether the rest of this patch is active.  By default,
+	the macro is disabled and the patch has no effect.
+	(regoff_t) [defined _REGEX_LARGE_OFFSETS]: Define to off_t, not int.
+	(__re_idx_t, __re_size_t, __re_long_size_t): New types.
+	(struct re_pattern_buffer, re_search, re_search_2, re_match):
+	(re_match_2, re_set_registers): Use the new types.
+	* regex_internal.h (Idx, re_hashval_t): New types.
+	(REG_MISSING, REG_ERROR, REG_VALID_INDEX, REG_VALID_NONZERO_INDEX):
+	New macros.
+	(re_node_set, re_charset_t, re_token_t, re_string_realloc_buffers):
+	(re_string_context_at, bin_tree_t, re_dfastate_t):
+	(struct re_state_table_entry, state_array_t, re_sub_match_last_t):
+	(re_sub_match_top_t, re_match_context_t, re_sift_context_t):
+	(struct re_fail_stack_ent_t, struct re_fail_stack_t, struct re_dfa_t):
+	(re_string_char_size_at, re_string_wchar_at):
+	(re_string_elem_size_at):
+	Use the new types and macros to port to 64-bit hosts.
+	Use unsigned types for internal values, so that the code
+	mostly works even for arrays larger than SSIZE_MAX.
+	* regcomp.c (re_compile_internal, init_dfa, duplicate_node):
+	(search_duplicated_node, calc_eclosure_iter, fetch_number):
+	(parse_reg_exp, parse_branch, parse_expression, parse_sub_exp):
+	(build_equiv_class, build_charclass, re_compile_fastmap_iter):
+	(free_dfa_content, create_initial_state, optimize_utf8, analyze):
+	(optimize_subexps, calc_first, link_nfa_nodes, duplicate_node_closure):
+	(calc_inveclosure, parse_dup_op, build_range_exp):
+	(build_collating_symbol, parse_bracket_exp, build_charclass_op):
+	(fetch_number, create_token_tree, mark_opt_subexp):
+	Likewise.
+	* regex_internal.c (re_string_construct_common, create_ci_newstate):
+	(create_cd_newstate, re_string_allocate, re_string_construct):
+	(re_string_realloc_buffers, build_wcs_upper_buffer):
+	(re_string_skip_chars, build_upper_buffer, re_string_translate_buffer):
+	(re_string_reconstruct, re_string_peek_byte_case):
+	(re_string_fetch_byte_case, re_string_context_at):
+	(re_node_set_alloc, re_node_set_init_1, re_node_set_init_2):
+	(re_node_set_init_copy, re_node_set_add_intersect):
+	(re_node_set_init_union, re_node_set_merge, re_node_set_insert):
+	(re_node_set_insert_last, re_node_set_compare, re_node_set_contains):
+	(re_node_set_remove_at, re_dfa_add_node, calc_state_hash):
+	(re_acquire_state, re_acquire_state_context, register_state):
+	Likewise.
+	* regex.c (match_ctx_init, match_ctx_add_entry, search_cur_bkref_entry):
+	(match_ctx_add_subtop, match_ctx_add_sublast, sift_ctx_init):
+	(re_search_internal, re_search_2_stub, re_search_stub)
+	(re_copy_regs, check_matching, check_halt_state_context, update_regs):
+	(push_fail_stack, sift_states_iter_mb, build_sifted_states):
+	(update_cur_sifted_state, check_dst_limits):
+	(check_dst_limits_calc_pos_1, check_dst_limits_calc_pos):
+	(check_subexp_limits, sift_states_bkref, merge_state_array):
+	(check_subexp_matching_top, get_subexp, get_subexp_sub):
+	(find_subexp_node, check_arrival, check_arrival_add_next_nodes):
+	(check_arrival_expand_ecl, check_arrival_expand_ecl_sub):
+	(expand_bkref_cache, check_node_accept_bytes):
+	(group_nodes_into_DFAstates, check_node_accept, regexec, re_match):
+	(re_search, re_match_2, re_search_2, prune_impossible_nodes):
+	(acquire_init_state_context, check_halt_node_context):
+	(proceed_next_node, pop_fail_stack, set_regs, free_fail_stack_return):
+	(sift_states_backward, clean_state_log_if_needed):
+	(sub_epsilon_src_nodes, add_epsilone_src_nodes, merge_state_with_log):
+	(find_recover_state, transit_state_sb, transit_state_mb):
+	(transit_state_bkref, build_trtable, match_ctx_clean):
+	Likewise.
+	* regcomp.c (parse_dup_op): Add an extra test if Idx is unsigned,
+	to work around an assumption that REG_MISSING is negative.
+
 	* regcomp.c (re_comp) [defined _REGEX_RE_COMP || defined _LIBC]:
 	(seek_collating_symbol_entry) [defined _LIBC]:
 	(lookup_collation_sequence_value) [defined _LIBC]:
