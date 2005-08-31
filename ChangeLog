@@ -1,5 +1,12 @@
 2005-08-30  Bruno Haible  <bruno@clisp.org>
 
+	Avoid unnecessary diffs in the generated lib/Makefile.am.
+	* gnulib-tool (func_emit_lib_Makefile_am): Don't write the cmd into
+	the generated files.
+	(func_import): Don't set cmd.
+
+2005-08-30  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Read the previous cached settings
 	from gnulib-cache.m4 and gnulib-comp.m4. Remove files that were
 	earlier added by gnulib but are now dropped. Warn when a gnulib file
