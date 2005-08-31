@@ -1,3 +1,8 @@
+2005-08-31  Eric Blake  <ebb9@byu.net>
+
+	* modules/unistd-safer (Files): Add unistd--.h.
+	* modules/stdio-safer (Files): Add stdio--.h.
+
 2005-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (import): Avoid unnecessary spaces in $avoidlist.
