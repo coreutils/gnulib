@@ -2,6 +2,7 @@ Description:
 File descriptor functions that avoid clobbering STD{IN,OUT,ERR}_FILENO.
 
 Files:
+lib/unistd--.h
 lib/dup-safer.c
 lib/fd-safer.c
 lib/pipe-safer.c
