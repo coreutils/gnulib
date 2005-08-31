@@ -639,8 +639,7 @@ char *
    regcomp/regexec above without link errors.  */
 weak_function
 # endif
-re_comp (s)
-     const char *s;
+re_comp (const char *s)
 {
   reg_errcode_t ret;
   char *fastmap;
@@ -2692,9 +2691,7 @@ parse_bracket_exp (re_string_t *regexp, re_dfa_t *dfa, re_token_t *token,
 
   auto inline int32_t
   __attribute ((always_inline))
-  seek_collating_symbol_entry (name, name_len)
-	 const unsigned char *name;
-	 size_t name_len;
+  seek_collating_symbol_entry (const unsigned char *name, size_t name_len)
     {
       int32_t hash = elem_hash ((const char *) name, name_len);
       int32_t elem = hash % table_size;
@@ -2725,8 +2722,7 @@ parse_bracket_exp (re_string_t *regexp, re_dfa_t *dfa, re_token_t *token,
 
   auto inline unsigned int
   __attribute ((always_inline))
-  lookup_collation_sequence_value (br_elem)
-	 bracket_elem_t *br_elem;
+  lookup_collation_sequence_value (bracket_elem_t *br_elem)
     {
       if (br_elem->type == SB_CHAR)
 	{
@@ -2793,11 +2789,9 @@ parse_bracket_exp (re_string_t *regexp, re_dfa_t *dfa, re_token_t *token,
 
   auto inline reg_errcode_t
   __attribute ((always_inline))
-  build_range_exp (sbcset, mbcset, range_alloc, start_elem, end_elem)
-	 re_charset_t *mbcset;
-	 int *range_alloc;
-	 re_bitset_ptr_t sbcset;
-	 bracket_elem_t *start_elem, *end_elem;
+  build_range_exp (re_bitset_ptr_t sbcset, re_charset_t *mbcset,
+		   int *range_alloc,
+		   bracket_elem_t *start_elem, bracket_elem_t *end_elem)
     {
       unsigned int ch;
       uint32_t start_collseq;
@@ -2876,11 +2870,8 @@ parse_bracket_exp (re_string_t *regexp, re_dfa_t *dfa, re_token_t *token,
 
   auto inline reg_errcode_t
   __attribute ((always_inline))
-  build_collating_symbol (sbcset, mbcset, coll_sym_alloc, name)
-	 re_charset_t *mbcset;
-	 int *coll_sym_alloc;
-	 re_bitset_ptr_t sbcset;
-	 const unsigned char *name;
+  build_collating_symbol (re_bitset_ptr_t sbcset, re_charset_t *mbcset,
+			  int *coll_sym_alloc, const unsigned char *name)
     {
       int32_t elem, idx;
       size_t name_len = strlen ((const char *) name);

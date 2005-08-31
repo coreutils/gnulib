@@ -1,5 +1,14 @@
 2005-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* regcomp.c (re_comp) [defined _REGEX_RE_COMP || defined _LIBC]:
+	(seek_collating_symbol_entry) [defined _LIBC]:
+	(lookup_collation_sequence_value) [defined _LIBC]:
+	(build_range_exp, build_collating_symbol) [defined _LIBC]:
+	Use prototypes rather than old-style function definitions.
+	* regexec.c (re_exec) [defined _REGEX_RE_COMP || defined _LIBC]:
+	(transit_state_sb) [0]:
+	(find_collation_sequence_value) [defined _LIBC]: Likewise.
+
 	* regexec.c (re_search_internal): Simplify update of rm_so and
 	rm_eo.
 

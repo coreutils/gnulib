@@ -558,8 +558,7 @@ int
 # ifdef _LIBC
 weak_function
 # endif
-re_exec (s)
-     const char *s;
+re_exec (const char *s)
 {
   return 0 == regexec (&re_comp_buf, s, 0, NULL, 0);
 }
@@ -2395,10 +2394,8 @@ check_subexp_matching_top (re_match_context_t *mctx, re_node_set *cur_nodes,
    accepting the current input byte.  */
 
 static re_dfastate_t *
-transit_state_sb (err, mctx, state)
-     reg_errcode_t *err;
-     re_match_context_t *mctx;
-     re_dfastate_t *state;
+transit_state_sb (reg_errcode_t *err, re_match_context_t *mctx,
+		  re_dfastate_t *state)
 {
   re_dfa_t *const dfa = mctx->dfa;
   re_node_set next_nodes;
@@ -3886,9 +3883,7 @@ check_node_accept_bytes (re_dfa_t *dfa, int node_idx,
 
 # ifdef _LIBC
 static unsigned int
-find_collation_sequence_value (mbs, mbs_len)
-    const unsigned char *mbs;
-    size_t mbs_len;
+find_collation_sequence_value (const unsigned char *mbs, size_t mbs_len)
 {
   uint32_t nrules = _NL_CURRENT_WORD (LC_COLLATE, _NL_COLLATE_NRULES);
   if (nrules == 0)
