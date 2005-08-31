@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-31 20:49:31 $'
+cvsdatestamp='$Date: 2005-08-31 20:51:09 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -786,7 +786,7 @@ func_import ()
     || func_fatal_error "refusing to do nothing"
 
   # Copy files or make symbolic links.
-  for f in $files; do
+  for f in $files m4/gnulib-tool.m4; do
     source=
     case "$f" in
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
@@ -879,30 +879,6 @@ func_import ()
       fi
     done
     echo "])"
-    echo
-    echo "dnl Usage: gl_MODULES([module1 module2 ...])"
-    echo "AC_DEFUN([gl_MODULES], [])"
-    echo
-    echo "dnl Usage: gl_AVOID([module1 module2 ...])"
-    echo "AC_DEFUN([gl_AVOID], [])"
-    echo
-    echo "dnl Usage: gl_SOURCE_BASE([DIR])"
-    echo "AC_DEFUN([gl_SOURCE_BASE], [])"
-    echo
-    echo "dnl Usage: gl_M4_BASE([DIR])"
-    echo "AC_DEFUN([gl_M4_BASE], [])"
-    echo
-    echo "dnl Usage: gl_LIB([LIBNAME])"
-    echo "AC_DEFUN([gl_LIB], [])"
-    echo
-    echo "dnl Usage: gl_LGPL"
-    echo "AC_DEFUN([gl_LGPL], [])"
-    echo
-    echo "dnl Usage: gl_LIBTOOL"
-    echo "AC_DEFUN([gl_LIBTOOL], [])"
-    echo
-    echo "dnl Usage: gl_MACRO_PREFIX([PREFIX])"
-    echo "AC_DEFUN([gl_MACRO_PREFIX], [])"
     echo
     echo "# gnulib.m4 ends here"
   )
