@@ -1,6 +1,6 @@
 2005-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* srclist.txt: Add glibc bug 1273.
+	* srclist.txt: Add glibc bug 1273, 1277.
 
 2005-08-25  Paul Eggert  <eggert@cs.ucla.edu>
 
