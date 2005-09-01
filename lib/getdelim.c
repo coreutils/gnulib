@@ -46,7 +46,7 @@
 ssize_t
 getdelim (char **lineptr, size_t *n, int delimiter, FILE *fp)
 {
-  int result;
+  int result = 0;
   ssize_t cur_len = 0;
   ssize_t len;
 
@@ -76,7 +76,10 @@ getdelim (char **lineptr, size_t *n, int delimiter, FILE *fp)
 
       i = getc (fp);
       if (i == EOF)
+      {
+	result = -1;
 	break;
+      }
 
       /* Make enough space for len+1 (for final NUL) bytes.  */
       if (cur_len + 1 >= *n)
@@ -108,7 +111,7 @@ getdelim (char **lineptr, size_t *n, int delimiter, FILE *fp)
 	break;
     }
   (*lineptr)[cur_len] = '\0';
-  result = cur_len;
+  result = cur_len ? cur_len : result;
 
  unlock_return:
   funlockfile (fp);

@@ -1,3 +1,8 @@
+2005-08-31  Derek Price  <derek@ximbiot.com>
+
+	* getdelim.c (getdelim): Return EOF on EOF.
+	Reported by Larry Jones <lawrence.jones@ugs.com>.
+
 2005-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regex_internal.c (re_string_reconstruct): Don't assume buffer
