@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-01 12:18:03 $'
+cvsdatestamp='$Date: 2005-09-01 12:28:32 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1518,7 +1518,10 @@ case $mode in
       if test $m4dirs_count = 0; then
         # First use of gnulib in a package.
         # Any number of additional modules can be given.
+        test -n "$supplied_libname" || supplied_libname=true
+        test -n "$sourcebase" || sourcebase="lib"
         m4base="m4"
+        test -n "$macro_prefix" || macro_prefix="gl"
         func_import "$*"
       else
         if test $m4dirs_count = 1; then
