@@ -301,7 +301,7 @@ build_wcs_upper_buffer (re_string_t *pstr)
 	  mbclen = mbrtowc (&wc,
 			    ((const char *) pstr->raw_mbs + pstr->raw_mbs_idx
 			     + byte_idx), remain_len, &pstr->cur_state);
-	  if (BE (mbclen + 2 > 2, 1))
+	  if (BE ((size_t) (mbclen + 2) > 2, 1))
 	    {
 	      wchar_t wcu = wc;
 	      if (iswlower (wc))
@@ -369,7 +369,7 @@ build_wcs_upper_buffer (re_string_t *pstr)
 	else
 	  p = (const char *) pstr->raw_mbs + pstr->raw_mbs_idx + src_idx;
 	mbclen = mbrtowc (&wc, p, remain_len, &pstr->cur_state);
-	if (BE (mbclen + 2 > 2, 1))
+	if (BE ((size_t) (mbclen + 2) > 2, 1))
 	  {
 	    wchar_t wcu = wc;
 	    if (iswlower (wc))
@@ -642,6 +642,7 @@ re_string_reconstruct (re_string_t *pstr, Idx idx, int eflags)
 			wchar_t wc2;
 			Idx mlen = raw + pstr->len - p;
 			unsigned char buf[6];
+			size_t mbclen;
 
 			q = p;
 			if (BE (pstr->trans != NULL, 0))
@@ -654,14 +655,13 @@ re_string_reconstruct (re_string_t *pstr, Idx idx, int eflags)
 			/* XXX Don't use mbrtowc, we know which conversion
 			   to use (UTF-8 -> UCS4).  */
 			memset (&cur_state, 0, sizeof (cur_state));
-			mlen = (mbrtowc (&wc2, (const char *) p, mlen,
-					 &cur_state)
-				- (raw + offset - p));
-			if (mlen >= 0)
+			mbclen = mbrtowc (&wc2, (const char *) p, mlen,
+					  &cur_state);
+			if (raw + offset - p <= mbclen && mbclen < (size_t) -2)
 			  {
 			    memset (&pstr->cur_state, '\0',
 				    sizeof (mbstate_t));
-			    pstr->valid_len = mlen;
+			    pstr->valid_len = mbclen - (raw + offset - p);
 			    wc = wc2;
 			  }
 			break;

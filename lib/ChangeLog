@@ -1,5 +1,8 @@
 2005-09-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* regex_internal.c (build_wcs_upper_buffer): Fix portability
+	bugs in int versus size_t comparisons.
+
 	Use bool where appropriate.
 	* regcomp.c (re_set_fastmap): ICASE arg is bool, not int.
 	All callers changed.
