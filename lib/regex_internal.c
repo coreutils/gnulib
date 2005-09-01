@@ -843,10 +843,10 @@ re_string_context_at (const re_string_t *input, Idx idx, int eflags)
 	{
 #ifdef DEBUG
 	  /* It must not happen.  */
-	  assert (wc_idx >= 0);
+	  assert (REG_VALID_INDEX (wc_idx));
 #endif
 	  --wc_idx;
-	  if (wc_idx < 0)
+	  if (! REG_VALID_INDEX (wc_idx))
 	    return input->tip_context;
 	}
       wc = input->wcs[wc_idx];

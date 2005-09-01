@@ -2,6 +2,8 @@
 
 	* regex_internal.c (build_wcs_upper_buffer): Fix portability
 	bugs in int versus size_t comparisons.
+	(re_string_context_at): Fix bug where the code assumed that
+	Idx is signed.
 
 	Use bool where appropriate.
 	* regcomp.c (re_set_fastmap): ICASE arg is bool, not int.
