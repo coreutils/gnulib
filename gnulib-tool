@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-08-31 20:57:03 $'
+cvsdatestamp='$Date: 2005-09-01 12:18:03 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -994,6 +994,7 @@ func_import ()
         $dry mv -f "$destdir/$g2.tmp" "$destdir/${g2}" || func_fatal_error "failed"
       fi
     fi
+    rm -f "$destdir/$g2.tmp"
   done
 
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
