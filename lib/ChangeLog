@@ -1,3 +1,44 @@
+2005-09-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Use bool where appropriate.
+	* regcomp.c (re_set_fastmap): ICASE arg is bool, not int.
+	All callers changed.
+	(calc_eclosure_iter): Likewise, for ROOT arg.
+	(parse_bracket_element): Likewise, for ACCEPT_HYPHEN arg.
+	(build_charclass_op): Likewise, for NON_MATCH arg.
+	* regex_internal.c (re_string_allocate, re_string_construct):
+	(re_string_construct_common): Likewise, for ICASE arg.
+	* regexec.c (re_search_2_stub, re_search_stub):
+	Likewise, for RET_LEN arg.
+	(check_matching): Likewise, for FL_LONGEST_MATCH arg.
+	(set_regs): Likewise, for FL_BACKTRACK arg.
+	* regcomp.c (re_compile_fastmap_iter, optimize_utf8):
+	(duplicate_node_closure, calc_inveclosure, calc_eclosure):
+	(calc_eclosure_iter, parse_bracket_exp):
+	Use bool for internal variables that are booleans.
+	* regexec.c (re_search_internal, check_matching, proceed_next_node):
+	(set_regs, build_sifted_states, sift_states_bkref):
+	(check_arrival_add_next_nodes, check_arrival_expand_ecl_sub):
+	(expand_bkref_cache, build_trtable, group_nodes_into_DFAstates):
+	(find_collation_sequence_value):
+	Likewise.
+	* regex_internal.c (re_node_set_insert, re_node_set_insert_last):
+	(re_node_set_compare):
+	Return bool, not int. All callers changed.
+	* regexec.c (check_halt_node_context, check_dst_limits):
+	(build_trtable, check_node_accept): Likewise.
+	* regex_internal.h: Include stdbool.h.
+
+	Fix bugs uncovered when converting to bool.
+	* regcomp.c (calc_eclosure_iter): Check for storage allocation
+	failure instead of charging ahead blindly.
+	* regex_internal.c (register_state): Likewise.
+	* regexec.c (re_search_2_stub): Use simpler method than boolean
+	for freeing internal storage.
+	(group_nodes_into_DFA_states): Use unsigned int, not int, for
+	bitset pieces used as boolean, to avoid undefined behavior
+	on hosts that do int overflow checking.
+
 2005-08-31  Derek Price  <derek@ximbiot.com>
 
 	* getdelim.c (getdelim): Return EOF on EOF.

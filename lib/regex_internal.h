@@ -22,6 +22,7 @@
 
 #include <assert.h>
 #include <ctype.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -370,7 +371,7 @@ struct re_string_t
   unsigned REG_TRANSLATE_TYPE trans;
   /* Copy of re_dfa_t's word_char.  */
   re_const_bitset_ptr_t word_char;
-  /* 1 if REG_ICASE.  */
+  /* true if REG_ICASE.  */
   unsigned char icase;
   unsigned char is_utf8;
   unsigned char map_notascii;

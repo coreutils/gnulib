@@ -19,7 +19,7 @@
 
 static void re_string_construct_common (const char *str, Idx len,
 					re_string_t *pstr,
-					REG_TRANSLATE_TYPE trans, int icase,
+					REG_TRANSLATE_TYPE trans, bool icase,
 					const re_dfa_t *dfa) internal_function;
 static re_dfastate_t *create_ci_newstate (const re_dfa_t *dfa,
 					  const re_node_set *nodes,
@@ -37,7 +37,7 @@ static re_dfastate_t *create_cd_newstate (const re_dfa_t *dfa,
 static reg_errcode_t
 internal_function
 re_string_allocate (re_string_t *pstr, const char *str, Idx len, Idx init_len,
-		    REG_TRANSLATE_TYPE trans, int icase, const re_dfa_t *dfa)
+		    REG_TRANSLATE_TYPE trans, bool icase, const re_dfa_t *dfa)
 {
   reg_errcode_t ret;
   Idx init_buf_len;
@@ -65,7 +65,7 @@ re_string_allocate (re_string_t *pstr, const char *str, Idx len, Idx init_len,
 static reg_errcode_t
 internal_function
 re_string_construct (re_string_t *pstr, const char *str, Idx len,
-		     REG_TRANSLATE_TYPE trans, int icase, const re_dfa_t *dfa)
+		     REG_TRANSLATE_TYPE trans, bool icase, const re_dfa_t *dfa)
 {
   reg_errcode_t ret;
   memset (pstr, '\0', sizeof (re_string_t));
@@ -161,14 +161,14 @@ re_string_realloc_buffers (re_string_t *pstr, Idx new_buf_len)
 static void
 internal_function
 re_string_construct_common (const char *str, Idx len, re_string_t *pstr,
-			    REG_TRANSLATE_TYPE trans, int icase,
+			    REG_TRANSLATE_TYPE trans, bool icase,
 			    const re_dfa_t *dfa)
 {
   pstr->raw_mbs = (const unsigned char *) str;
   pstr->len = len;
   pstr->raw_len = len;
   pstr->trans = (unsigned REG_TRANSLATE_TYPE) trans;
-  pstr->icase = icase ? 1 : 0;
+  pstr->icase = icase;
   pstr->mbs_allocated = (trans != NULL || icase);
   pstr->mb_cur_max = dfa->mb_cur_max;
   pstr->is_utf8 = dfa->is_utf8;
@@ -1177,28 +1177,23 @@ re_node_set_merge (re_node_set *dest, const re_node_set *src)
 
 /* Insert the new element ELEM to the re_node_set* SET.
    SET should not already have ELEM.
-   return -1 if an error is occured, return 1 otherwise.  */
+   Return true if successful.  */
 
-static int
+static bool
 internal_function
 re_node_set_insert (re_node_set *set, Idx elem)
 {
   Idx idx;
   /* In case the set is empty.  */
   if (set->alloc == 0)
-    {
-      if (BE (re_node_set_init_1 (set, elem) == REG_NOERROR, 1))
-	return 1;
-      else
-	return -1;
-    }
+    return re_node_set_init_1 (set, elem) == REG_NOERROR;
 
   if (BE (set->nelem, 0) == 0)
     {
       /* We already guaranteed above that set->alloc != 0.  */
       set->elems[0] = elem;
       ++set->nelem;
-      return 1;
+      return true;
     }
 
   /* Realloc if we need.  */
@@ -1208,7 +1203,7 @@ re_node_set_insert (re_node_set *set, Idx elem)
       set->alloc = set->alloc * 2;
       new_elems = re_realloc (set->elems, Idx, set->alloc);
       if (BE (new_elems == NULL, 0))
-	return -1;
+	return false;
       set->elems = new_elems;
     }
 
@@ -1229,14 +1224,14 @@ re_node_set_insert (re_node_set *set, Idx elem)
   /* Insert the new element.  */
   set->elems[idx] = elem;
   ++set->nelem;
-  return 1;
+  return true;
 }
 
 /* Insert the new element ELEM to the re_node_set* SET.
    SET should not already have any element greater than or equal to ELEM.
-   Return -1 if an error is occured, return 1 otherwise.  */
+   Return true if successful.  */
 
-static int
+static bool
 internal_function
 re_node_set_insert_last (re_node_set *set, Idx elem)
 {
@@ -1247,29 +1242,29 @@ re_node_set_insert_last (re_node_set *set, Idx elem)
       set->alloc = (set->alloc + 1) * 2;
       new_elems = re_realloc (set->elems, Idx, set->alloc);
       if (BE (new_elems == NULL, 0))
-	return -1;
+	return false;
       set->elems = new_elems;
     }
 
   /* Insert the new element.  */
   set->elems[set->nelem++] = elem;
-  return 1;
+  return true;
 }
 
 /* Compare two node sets SET1 and SET2.
-   return 1 if SET1 and SET2 are equivalent, return 0 otherwise.  */
+   Return true if SET1 and SET2 are equivalent.  */
 
-static int
+static bool
 internal_function __attribute ((pure))
 re_node_set_compare (const re_node_set *set1, const re_node_set *set2)
 {
   Idx i;
   if (set1 == NULL || set2 == NULL || set1->nelem != set2->nelem)
-    return 0;
+    return false;
   for (i = set1->nelem ; REG_VALID_INDEX (--i) ; )
     if (set1->elems[i] != set2->elems[i])
-      return 0;
-  return 1;
+      return false;
+  return true;
 }
 
 /* Return (idx + 1) if SET contains the element ELEM, return 0 otherwise.  */
@@ -1482,7 +1477,11 @@ register_state (const re_dfa_t *dfa, re_dfastate_t *newstate, re_hashval_t hash)
     {
       Idx elem = newstate->nodes.elems[i];
       if (!IS_EPSILON_NODE (dfa->nodes[elem].type))
-        re_node_set_insert_last (&newstate->non_eps_nodes, elem);
+	{
+	  bool ok = re_node_set_insert_last (&newstate->non_eps_nodes, elem);
+	  if (BE (! ok, 0))
+	    return REG_ESPACE;
+	}
     }
 
   spot = dfa->state_table + (hash & dfa->state_hash_mask);
