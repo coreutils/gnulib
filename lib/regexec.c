@@ -37,7 +37,7 @@ static void sift_ctx_init (re_sift_context_t *sctx, re_dfastate_t **sifted_sts,
      internal_function;
 static reg_errcode_t re_search_internal (const regex_t *preg,
 					 const char *string, Idx length,
-					 Idx start, regoff_t range, Idx stop,
+					 Idx start, Idx last_start, Idx stop,
 					 size_t nmatch, regmatch_t pmatch[],
 					 int eflags) internal_function;
 static regoff_t re_search_2_stub (struct re_pattern_buffer *bufp,
@@ -221,10 +221,10 @@ regexec (const regex_t *__restrict preg, const char *__restrict string,
 
   __libc_lock_lock (dfa->lock);
   if (preg->re_no_sub)
-    err = re_search_internal (preg, string, length, start, length - start,
+    err = re_search_internal (preg, string, length, start, length,
 			      length, 0, NULL, eflags);
   else
-    err = re_search_internal (preg, string, length, start, length - start,
+    err = re_search_internal (preg, string, length, start, length,
 			      length, nmatch, pmatch, eflags);
   __libc_lock_unlock (dfa->lock);
   return err != REG_NOERROR;
@@ -338,7 +338,7 @@ re_search_2_stub (struct re_pattern_buffer *bufp,
   Idx len = length1 + length2;
   int free_str = 0;
 
-  if (BE (length1 < 0 || length2 < 0 || stop < 0, 0))
+  if (BE (length1 < 0 || length2 < 0 || stop < 0 || len < length1, 0))
     return -2;
 
   /* Concatenate the strings.  */
@@ -386,6 +386,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
 #ifdef _LIBC
   re_dfa_t *dfa = (re_dfa_t *) bufp->re_buffer;
 #endif
+  Idx last_start = start + range;
 
   /* Check for out-of-range.  */
   if (BE (start < 0 || start > length, 0))
@@ -395,16 +396,25 @@ re_search_stub (struct re_pattern_buffer *bufp,
       regoff_t length_offset = length;
       regoff_t start_offset = start;
       if (BE (length_offset - start_offset < range, 0))
-	range = length_offset - start_offset;
+	last_start = length;
       else if (BE (range < - start_offset, 0))
-	range = -start_offset;
+	last_start = 0;
     }
   else
     {
-      if (BE (start + range > length, 0))
-	range = length - start;
-      else if (BE (start + range < 0, 0))
-	range = -start;
+      if (BE ((last_start < start) != (range < 0), 0))
+	{
+	  /* Overflow occurred when computing last_start; substitute
+	     the extreme value.  */
+	  last_start = range < 0 ? 0 : length;
+	}
+      else
+	{
+	  if (BE (length < last_start, 0))
+	    last_start = length;
+	  else if (BE (last_start < 0, 0))
+	    last_start = 0;
+	}
     }
 
   __libc_lock_lock (dfa->lock);
@@ -413,7 +423,8 @@ re_search_stub (struct re_pattern_buffer *bufp,
   eflags |= (bufp->re_not_eol) ? REG_NOTEOL : 0;
 
   /* Compile fastmap if we haven't yet.  */
-  if (range > 0 && bufp->re_fastmap != NULL && !bufp->re_fastmap_accurate)
+  if (start < last_start && bufp->re_fastmap != NULL
+      && !bufp->re_fastmap_accurate)
     re_compile_fastmap (bufp);
 
   if (BE (bufp->re_no_sub, 0))
@@ -442,7 +453,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
       goto out;
     }
 
-  result = re_search_internal (bufp, string, length, start, range, stop,
+  result = re_search_internal (bufp, string, length, start, last_start, stop,
 			       nregs, pmatch, eflags);
 
   rval = 0;
@@ -584,18 +595,18 @@ re_exec (const char *s)
 
 /* Searches for a compiled pattern PREG in the string STRING, whose
    length is LENGTH.  NMATCH, PMATCH, and EFLAGS have the same
-   mingings with regexec.  START, and RANGE have the same meanings
-   with re_search.
+   meaning as with regexec.  LAST_START is START + RANGE, where
+   START and RANGE have the same meaning as with re_search.
    Return REG_NOERROR if we find a match, and REG_NOMATCH if not,
    otherwise return the error code.
    Note: We assume front end functions already check ranges.
-   (START + RANGE >= 0 && START + RANGE <= LENGTH)  */
+   (0 <= LAST_START && LAST_START <= LENGTH)  */
 
 static reg_errcode_t
 internal_function
 re_search_internal (const regex_t *preg,
 		    const char *string, Idx length,
-		    Idx start, regoff_t range, Idx stop,
+		    Idx start, Idx last_start, Idx stop,
 		    size_t nmatch, regmatch_t pmatch[],
 		    int eflags)
 {
@@ -612,8 +623,9 @@ re_search_internal (const regex_t *preg,
 #else
   re_match_context_t mctx;
 #endif
-  char *fastmap = (preg->re_fastmap != NULL && preg->re_fastmap_accurate
-		   && range && !preg->re_can_be_null) ? preg->re_fastmap : NULL;
+  char *fastmap = ((preg->re_fastmap != NULL && preg->re_fastmap_accurate
+		    && start != last_start && !preg->re_can_be_null)
+		   ? preg->re_fastmap : NULL);
   unsigned REG_TRANSLATE_TYPE t =
     (unsigned REG_TRANSLATE_TYPE) preg->re_translate;
 
@@ -633,7 +645,7 @@ re_search_internal (const regex_t *preg,
 
 #ifdef DEBUG
   /* We assume front-end functions already check them.  */
-  assert (start + range >= 0 && start + range <= length);
+  assert (0 <= last_start && last_start <= length);
 #endif
 
   /* If initial states with non-begbuf contexts have no elements,
@@ -644,9 +656,9 @@ re_search_internal (const regex_t *preg,
       && (dfa->init_state_nl->nodes.nelem == 0
 	  || !preg->re_newline_anchor))
     {
-      if (start != 0 && start + range != 0)
+      if (start != 0 && last_start != 0)
         return REG_NOMATCH;
-      start = range = 0;
+      start = last_start = 0;
     }
 
   /* We must check the longest matching, if nmatch > 0.  */
@@ -686,14 +698,14 @@ re_search_internal (const regex_t *preg,
 			   : CONTEXT_NEWLINE | CONTEXT_BEGBUF;
 
   /* Check incrementally whether of not the input string match.  */
-  incr = (range < 0) ? -1 : 1;
-  left_lim = (range < 0) ? start + range : start;
-  right_lim = (range < 0) ? start : start + range;
+  incr = (last_start < start) ? -1 : 1;
+  left_lim = (last_start < start) ? last_start : start;
+  right_lim = (last_start < start) ? start : last_start;
   sb = dfa->mb_cur_max == 1;
   match_kind =
     (fastmap
      ? ((sb || !(preg->re_syntax & REG_IGNORE_CASE || t) ? 4 : 0)
-	| (range >= 0 ? 2 : 0)
+	| (start <= last_start ? 2 : 0)
 	| (t != NULL ? 1 : 0))
      : 8);
 
@@ -803,7 +815,7 @@ re_search_internal (const regex_t *preg,
       /* We assume that the matching starts from 0.  */
       mctx.state_log_top = mctx.nbkref_ents = mctx.max_mb_elem_len = 0;
       match_last = check_matching (&mctx, fl_longest_match,
-				   range >= 0 ? &match_first : NULL);
+				   start <= last_start ? &match_first : NULL);
       if (match_last != REG_MISSING)
 	{
 	  if (BE (match_last == REG_ERROR, 0))

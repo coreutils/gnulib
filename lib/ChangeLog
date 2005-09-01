@@ -1,3 +1,17 @@
+2005-08-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regex_internal.c (re_string_reconstruct): Don't assume buffer
+	lengths fit in regoff_t; this isn't true if regoff_t is the same
+	width as size_t.
+	* regex.c (re_search_internal): 5th arg is LAST_START
+	(= START + RANGE) instead of RANGE.  This avoids overflow
+	problems when regoff_t is the same width as size_t.
+	All callers changed.
+	(re_search_2_stub): Check for overflow when adding the
+	sizes of the two strings.
+	(re_search_stub): Check for overflow when adding START
+	to RANGE; if it occurs, substitute the extreme value.
+
 2005-08-31  Jim Meyering  <jim@meyering.net>
 
 	* regcomp.c (search_duplicated_node): Make first pointer arg

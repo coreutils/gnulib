@@ -557,8 +557,11 @@ static reg_errcode_t
 internal_function
 re_string_reconstruct (re_string_t *pstr, Idx idx, int eflags)
 {
-  regoff_t offset = (regoff_t) idx - (regoff_t) pstr->raw_mbs_idx;
-  if (BE (offset < 0, 0))
+  Idx offset;
+
+  if (BE (pstr->raw_mbs_idx <= idx, 0))
+    offset = idx - pstr->raw_mbs_idx;
+  else
     {
       /* Reset buffer.  */
 #ifdef RE_ENABLE_I18N
