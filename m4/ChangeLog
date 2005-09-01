@@ -1,3 +1,8 @@
+2005-09-01  Jim Meyering  <jim@meyering.net>
+
+	* lchown.m4: Require gl_FUNC_CHOWN, for the definition of
+	CHOWN_MODIFIES_SYMLINK, which is used by lchown.c.
+
 2005-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regex.m4 (gl_REGEX): Require AC_SYS_LARGEFILE, Define
