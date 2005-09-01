@@ -1,5 +1,10 @@
 2005-09-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* glob.c (GET_LOGIN_NAME_MAX): Renamed from LOGIN_NAME_MAX,
+	to avoid a collision with bits/local_lim.h in glibc.
+	All uses changed.  Problem reported by Dmitry V. Levin in
+	<http://sources.redhat.com/bugzilla/show_bug.cgi?id=1060>.
+
 	* regex_internal.c (build_wcs_upper_buffer): Fix portability
 	bugs in int versus size_t comparisons.
 	(re_string_context_at): Fix bug where the code assumed that
