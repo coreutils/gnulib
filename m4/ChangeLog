@@ -1,3 +1,10 @@
+2005-08-27  Bruno Haible  <bruno@clisp.org>
+
+	Support for lib vs. lib64 distinction on biarch platforms.
+	* lib-prefix.m4 (AC_LIB_PREPARE_MULTILIB): New macro.
+	(AC_LIB_PREFIX): Require it. Use $acl_libdirstem instead of 'lib'.
+	* lib-link.m4 (AC_LIB_LINKFLAGS_BODY): Likewise.
+
 2005-09-01  Jim Meyering  <jim@meyering.net>
 
 	* lchown.m4: Require gl_FUNC_CHOWN, for the definition of
