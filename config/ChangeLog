@@ -1,3 +1,8 @@
+2005-09-02  Bruno Haible  <bruno@clisp.org>
+
+	* srclist.txt: lib-link.m4 and lib-prefix.m4 currently have patches
+	not yet found in the latest gettext release.
+
 2005-09-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Add glibc bugs 1285-1287.
