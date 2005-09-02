@@ -1,3 +1,14 @@
+2005-09-02  Simon Josefsson  <jas@extundo.com>
+
+	* modules/havelib: New module.
+
+	* modules/gettext, modules/iconv, modules/lock, modules/readline:
+	Use havelib.
+
+2005-08-31  Simon Josefsson  <jas@extundo.com>
+
+	* modules/socklen: New file.
+
 2005-09-01  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Fix handling of symbolic links.

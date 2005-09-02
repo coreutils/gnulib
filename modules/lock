@@ -5,12 +5,10 @@ Files:
 lib/lock.h
 lib/lock.c
 m4/lock.m4
-m4/lib-ld.m4
-m4/lib-link.m4
-m4/lib-prefix.m4
 build-aux/config.rpath
 
 Depends-on:
+havelib
 
 configure.ac:
 gl_LOCK

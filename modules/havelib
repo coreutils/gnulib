@@ -1,24 +1,21 @@
 Description:
-Character set conversion.
+Macros to search for libraries.
 
 Files:
-m4/iconv.m4
-build-aux/config.rpath
+m4/lib-ld.m4
+m4/lib-link.m4
+m4/lib-prefix.m4
 
 Depends-on:
-havelib
 
 configure.ac:
-AM_ICONV
 
 Makefile.am:
 
 Include:
-<iconv.h>
 
 License:
-LGPL
+unlimited
 
 Maintainer:
 Bruno Haible
-

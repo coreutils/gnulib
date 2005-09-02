@@ -5,10 +5,10 @@ Files:
 lib/readline.h
 lib/readline.c
 m4/readline.m4
-m4/lib-link.m4
 
 Depends-on:
 getline
+havelib
 
 configure.ac:
 gl_FUNC_READLINE
