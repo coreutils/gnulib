@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-02 11:18:48 $'
+cvsdatestamp='$Date: 2005-09-02 17:28:31 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1485,6 +1485,12 @@ case $mode in
     if test -n "$m4base"; then
       # Apply func_import to a particular gnulib directory.
       # Any number of additional modules can be given.
+      if test ! -f "$destdir/$m4base"/gnulib-cache.m4; then
+        # First use of gnulib in the given m4base.
+        test -n "$supplied_libname" || supplied_libname=true
+        test -n "$sourcebase" || sourcebase="lib"
+        test -n "$macro_prefix" || macro_prefix="gl"
+      fi
       func_import "$*"
     else
       # Apply func_import to all gnulib directories.

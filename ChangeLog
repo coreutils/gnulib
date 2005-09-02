@@ -1,3 +1,8 @@
+2005-09-02  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (import): In the other first-use case, provide defaults
+	as well.
+
 2005-09-02  Simon Josefsson  <jas@extundo.com>
 
 	* modules/havelib: New module.
