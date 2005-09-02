@@ -1,5 +1,9 @@
 2005-09-01  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import): Fix handling of symbolic links.
+
+2005-09-01  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (import): In the first-use case, provide defaults.
 
 2005-09-01  Bruno Haible  <bruno@clisp.org>

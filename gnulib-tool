@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-01 12:28:32 $'
+cvsdatestamp='$Date: 2005-09-02 11:18:48 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -976,7 +976,7 @@ func_import ()
         fi
         test -n "$dry_run" && dry=echo
         $dry mv -f "$destdir/$g2" "$destdir/${g2}~" || func_fatal_error "failed"
-        if test -z "$symbolic" && cmp "$gnulib_dir/$f2" "$destdir/$g2.tmp"; then
+        if test -n "$symbolic" && cmp "$gnulib_dir/$f2" "$destdir/$g2.tmp" > /dev/null; then
           func_ln_if_changed "$gnulib_dir/$f2" "$destdir/$g2"
         else
           $dry mv -f "$destdir/$g2.tmp" "$destdir/${g2}" || func_fatal_error "failed"
