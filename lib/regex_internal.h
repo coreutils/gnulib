@@ -442,9 +442,69 @@ static unsigned int re_string_context_at (const re_string_t *input,
 #endif
 
 #define re_malloc(t,n) ((t *) malloc ((n) * sizeof (t)))
+#define re_xmalloc(t,n) ((t *) re_xnmalloc (n, sizeof (t)))
 #define re_calloc(t,n) ((t *) calloc (n, sizeof (t)))
 #define re_realloc(p,t,n) ((t *) realloc (p, (n) * sizeof (t)))
+#define re_xrealloc(p,t,n) ((t *) re_xnrealloc (p, n, sizeof (t)))
+#define re_x2realloc(p,t,pn) ((t *) re_x2nrealloc (p, pn, sizeof (t)))
 #define re_free(p) free (p)
+
+#ifndef SIZE_MAX
+# define SIZE_MAX ((size_t) -1)
+#endif
+
+/* Return true if an array of N objects, each of size S, cannot exist
+   due to size arithmetic overflow.  S must be nonzero.  */
+static inline bool
+re_alloc_oversized (size_t n, size_t s)
+{
+  return BE (SIZE_MAX / s < n, 0);
+}
+
+/* Return true if an array of (2 * N + 1) objects, each of size S,
+   cannot exist due to size arithmetic overflow.  S must be nonzero.  */
+static inline bool
+re_x2alloc_oversized (size_t n, size_t s)
+{
+  return BE ((SIZE_MAX / s - 1) / 2 < n, 0);
+}
+
+/* Allocate an array of N objects, each with S bytes of memory,
+   dynamically, with error checking.  S must be nonzero.  */
+static inline void *
+re_xnmalloc (size_t n, size_t s)
+{
+  return re_alloc_oversized (n, s) ? NULL : malloc (n * s);
+}
+
+/* Change the size of an allocated block of memory P to an array of N
+   objects each of S bytes, with error checking.  S must be nonzero.  */
+static inline void *
+re_xnrealloc (void *p, size_t n, size_t s)
+{
+  return re_alloc_oversized (n, s) ? NULL : realloc (p, n * s);
+}
+
+/* Reallocate a block of memory P to an array of (2 * (*PN) + 1)
+   objects each of S bytes, with error checking.  S must be nonzero.
+   If the allocation is successful, set *PN to the new allocation
+   count and return the resulting pointer.  Otherwise, return
+   NULL.  */
+static inline void *
+re_x2nrealloc (void *p, size_t *pn, size_t s)
+{
+  if (re_x2alloc_oversized (*pn, s))
+    return NULL;
+  else
+    {
+      /* Add 1 in case *PN is zero.  */
+      size_t n1 = 2 * *pn + 1;
+      p = realloc (p, n1 * s);
+      if (BE (p != NULL, 1))
+	*pn = n1;
+      return p;
+    }
+}
 
 struct bin_tree_t
 {

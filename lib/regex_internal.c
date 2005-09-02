@@ -132,13 +132,13 @@ re_string_realloc_buffers (re_string_t *pstr, Idx new_buf_len)
 #ifdef RE_ENABLE_I18N
   if (pstr->mb_cur_max > 1)
     {
-      wint_t *new_wcs = re_realloc (pstr->wcs, wint_t, new_buf_len);
+      wint_t *new_wcs = re_xrealloc (pstr->wcs, wint_t, new_buf_len);
       if (BE (new_wcs == NULL, 0))
 	return REG_ESPACE;
       pstr->wcs = new_wcs;
       if (pstr->offsets != NULL)
 	{
-	  Idx *new_offsets = re_realloc (pstr->offsets, Idx, new_buf_len);
+	  Idx *new_offsets = re_xrealloc (pstr->offsets, Idx, new_buf_len);
 	  if (BE (new_offsets == NULL, 0))
 	    return REG_ESPACE;
 	  pstr->offsets = new_offsets;
@@ -392,7 +392,7 @@ build_wcs_upper_buffer (re_string_t *pstr)
 
 		    if (pstr->offsets == NULL)
 		      {
-			pstr->offsets = re_malloc (Idx, pstr->bufs_len);
+			pstr->offsets = re_xmalloc (Idx, pstr->bufs_len);
 
 			if (pstr->offsets == NULL)
 			  return REG_ESPACE;
@@ -873,7 +873,7 @@ re_node_set_alloc (re_node_set *set, Idx size)
 {
   set->alloc = size;
   set->nelem = 0;
-  set->elems = re_malloc (Idx, size);
+  set->elems = re_xmalloc (Idx, size);
   if (BE (set->elems == NULL, 0))
     return REG_ESPACE;
   return REG_NOERROR;
@@ -964,7 +964,12 @@ re_node_set_add_intersect (re_node_set *dest, const re_node_set *src1,
   if (src1->nelem + src2->nelem + dest->nelem > dest->alloc)
     {
       Idx new_alloc = src1->nelem + src2->nelem + dest->alloc;
-      Idx *new_elems = re_realloc (dest->elems, Idx, new_alloc);
+      Idx *new_elems;
+      if (sizeof (Idx) < 3
+	  && (new_alloc < dest->alloc
+	      || ((Idx) (src1->nelem + src2->nelem) < src1->nelem)))
+	return REG_ESPACE;
+      new_elems = re_xrealloc (dest->elems, Idx, new_alloc);
       if (BE (new_elems == NULL, 0))
         return REG_ESPACE;
       dest->elems = new_elems;
@@ -1050,7 +1055,9 @@ re_node_set_init_union (re_node_set *dest, const re_node_set *src1,
   if (src1 != NULL && src1->nelem > 0 && src2 != NULL && src2->nelem > 0)
     {
       dest->alloc = src1->nelem + src2->nelem;
-      dest->elems = re_malloc (Idx, dest->alloc);
+      if (sizeof (Idx) < 2 && dest->alloc < src1->nelem)
+	return REG_ESPACE;
+      dest->elems = re_xmalloc (Idx, dest->alloc);
       if (BE (dest->elems == NULL, 0))
 	return REG_ESPACE;
     }
@@ -1101,10 +1108,17 @@ re_node_set_merge (re_node_set *dest, const re_node_set *src)
   Idx is, id, sbase, delta;
   if (src == NULL || src->nelem == 0)
     return REG_NOERROR;
+  if (sizeof (Idx) < 3
+      && ((Idx) (2 * src->nelem) < src->nelem
+	  || (Idx) (2 * src->nelem + dest->nelem) < dest->nelem))
+    return REG_ESPACE;
   if (dest->alloc < 2 * src->nelem + dest->nelem)
     {
-      Idx new_alloc = 2 * (src->nelem + dest->alloc);
-      Idx *new_buffer = re_realloc (dest->elems, Idx, new_alloc);
+      Idx new_alloc = src->nelem + dest->alloc;
+      Idx *new_buffer;
+      if (sizeof (Idx) < 4 && new_alloc < dest->alloc)
+	return REG_ESPACE;
+      new_buffer = re_x2realloc (dest->elems, Idx, &new_alloc);
       if (BE (new_buffer == NULL, 0))
 	return REG_ESPACE;
       dest->elems = new_buffer;
@@ -1199,9 +1213,7 @@ re_node_set_insert (re_node_set *set, Idx elem)
   /* Realloc if we need.  */
   if (set->alloc == set->nelem)
     {
-      Idx *new_elems;
-      set->alloc = set->alloc * 2;
-      new_elems = re_realloc (set->elems, Idx, set->alloc);
+      Idx *new_elems = re_x2realloc (set->elems, Idx, &set->alloc);
       if (BE (new_elems == NULL, 0))
 	return false;
       set->elems = new_elems;
@@ -1239,8 +1251,7 @@ re_node_set_insert_last (re_node_set *set, Idx elem)
   if (set->alloc == set->nelem)
     {
       Idx *new_elems;
-      set->alloc = (set->alloc + 1) * 2;
-      new_elems = re_realloc (set->elems, Idx, set->alloc);
+      new_elems = re_x2realloc (set->elems, Idx, &set->alloc);
       if (BE (new_elems == NULL, 0))
 	return false;
       set->elems = new_elems;
@@ -1313,18 +1324,18 @@ re_dfa_add_node (re_dfa_t *dfa, re_token_t token)
   int type = token.type;
   if (BE (dfa->nodes_len >= dfa->nodes_alloc, 0))
     {
-      Idx new_nodes_alloc = dfa->nodes_alloc * 2;
+      Idx new_nodes_alloc = dfa->nodes_alloc;
       Idx *new_nexts, *new_indices;
       re_node_set *new_edests, *new_eclosures;
 
-      re_token_t *new_nodes = re_realloc (dfa->nodes, re_token_t,
-					  new_nodes_alloc);
+      re_token_t *new_nodes = re_x2realloc (dfa->nodes, re_token_t,
+					    &new_nodes_alloc);
       if (BE (new_nodes == NULL, 0))
 	return REG_MISSING;
       dfa->nodes = new_nodes;
       new_nexts = re_realloc (dfa->nexts, Idx, new_nodes_alloc);
       new_indices = re_realloc (dfa->org_indices, Idx, new_nodes_alloc);
-      new_edests = re_realloc (dfa->edests, re_node_set, new_nodes_alloc);
+      new_edests = re_xrealloc (dfa->edests, re_node_set, new_nodes_alloc);
       new_eclosures = re_realloc (dfa->eclosures, re_node_set, new_nodes_alloc);
       if (BE (new_nexts == NULL || new_indices == NULL
 	      || new_edests == NULL || new_eclosures == NULL, 0))
@@ -1487,9 +1498,9 @@ register_state (const re_dfa_t *dfa, re_dfastate_t *newstate, re_hashval_t hash)
   spot = dfa->state_table + (hash & dfa->state_hash_mask);
   if (BE (spot->alloc <= spot->num, 0))
     {
-      Idx new_alloc = 2 * spot->num + 2;
-      re_dfastate_t **new_array = re_realloc (spot->array, re_dfastate_t *,
-					      new_alloc);
+      Idx new_alloc = spot->num;
+      re_dfastate_t **new_array = re_x2realloc (spot->array, re_dfastate_t *,
+						&new_alloc);
       if (BE (new_array == NULL, 0))
 	return REG_ESPACE;
       spot->array = new_array;

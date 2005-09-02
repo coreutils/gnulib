@@ -434,7 +434,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
   if (regs == NULL)
     nregs = 1;
   else if (BE (bufp->re_regs_allocated == REG_FIXED
-	       && regs->rm_num_regs < bufp->re_nsub + 1, 0))
+	       && regs->rm_num_regs <= bufp->re_nsub, 0))
     {
       nregs = regs->rm_num_regs;
       if (BE (nregs < 1, 0))
@@ -446,7 +446,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
     }
   else
     nregs = bufp->re_nsub + 1;
-  pmatch = re_malloc (regmatch_t, nregs);
+  pmatch = re_xmalloc (regmatch_t, nregs);
   if (BE (pmatch == NULL, 0))
     {
       rval = -2;
@@ -500,7 +500,7 @@ re_copy_regs (struct re_registers *regs, regmatch_t *pmatch, Idx nregs,
   /* Have the register data arrays been allocated?  */
   if (regs_allocated == REG_UNALLOCATED)
     { /* No.  So allocate them with malloc.  */
-      regs->rm_start = re_malloc (regoff_t, need_regs);
+      regs->rm_start = re_xmalloc (regoff_t, need_regs);
       regs->rm_end = re_malloc (regoff_t, need_regs);
       if (BE (regs->rm_start == NULL, 0) || BE (regs->rm_end == NULL, 0))
 	return REG_UNALLOCATED;
@@ -513,7 +513,7 @@ re_copy_regs (struct re_registers *regs, regmatch_t *pmatch, Idx nregs,
       if (BE (need_regs > regs->rm_num_regs, 0))
 	{
 	  regoff_t *new_start =
-	    re_realloc (regs->rm_start, regoff_t, need_regs);
+	    re_xrealloc (regs->rm_start, regoff_t, need_regs);
 	  regoff_t *new_end = re_realloc (regs->rm_end, regoff_t, need_regs);
 	  if (BE (new_start == NULL, 0) || BE (new_end == NULL, 0))
 	    return REG_UNALLOCATED;
@@ -685,7 +685,7 @@ re_search_internal (const regex_t *preg,
      multi character collating element.  */
   if (nmatch > 1 || dfa->has_mb_node)
     {
-      mctx.state_log = re_malloc (re_dfastate_t *, mctx.input.bufs_len + 1);
+      mctx.state_log = re_xmalloc (re_dfastate_t *, mctx.input.bufs_len + 1);
       if (BE (mctx.state_log == NULL, 0))
 	{
 	  err = REG_ESPACE;
@@ -945,7 +945,7 @@ prune_impossible_nodes (re_match_context_t *mctx)
 #endif
   match_last = mctx->match_last;
   halt_node = mctx->last_node;
-  sifted_states = re_malloc (re_dfastate_t *, match_last + 1);
+  sifted_states = re_xmalloc (re_dfastate_t *, match_last + 1);
   if (BE (sifted_states == NULL, 0))
     {
       ret = REG_ESPACE;
@@ -953,7 +953,7 @@ prune_impossible_nodes (re_match_context_t *mctx)
     }
   if (dfa->nbackref)
     {
-      lim_states = re_malloc (re_dfastate_t *, match_last + 1);
+      lim_states = re_xmalloc (re_dfastate_t *, match_last + 1);
       if (BE (lim_states == NULL, 0))
 	{
 	  ret = REG_ESPACE;
@@ -1343,15 +1343,14 @@ push_fail_stack (struct re_fail_stack_t *fs, Idx str_idx, Idx dest_node,
   if (fs->num == fs->alloc)
     {
       struct re_fail_stack_ent_t *new_array =
-	re_realloc (fs->stack, struct re_fail_stack_ent_t, fs->alloc * 2);
+	re_x2realloc (fs->stack, struct re_fail_stack_ent_t, &fs->alloc);
       if (new_array == NULL)
 	return REG_ESPACE;
-      fs->alloc *= 2;
       fs->stack = new_array;
     }
   fs->stack[num].idx = str_idx;
   fs->stack[num].node = dest_node;
-  fs->stack[num].regs = re_malloc (regmatch_t, nregs);
+  fs->stack[num].regs = re_xmalloc (regmatch_t, nregs);
   if (fs->stack[num].regs == NULL)
     return REG_ESPACE;
   memcpy (fs->stack[num].regs, regs, sizeof (regmatch_t) * nregs);
@@ -1399,7 +1398,7 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx,
   if (fl_backtrack)
     {
       fs = &fs_body;
-      fs->stack = re_malloc (struct re_fail_stack_ent_t, fs->alloc);
+      fs->stack = re_xmalloc (struct re_fail_stack_ent_t, fs->alloc);
       if (fs->stack == NULL)
 	return REG_ESPACE;
     }
@@ -1409,6 +1408,11 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx,
   cur_node = dfa->init_node;
   re_node_set_init_empty (&eps_via_nodes);
 
+  if (re_alloc_oversized (nmatch, sizeof (regmatch_t)))
+    {
+      free_fail_stack_return (fs);
+      return REG_ESPACE;
+    }
   if (__libc_use_alloca (nmatch * sizeof (regmatch_t)))
     prev_idx_match = (regmatch_t *) alloca (nmatch * sizeof (regmatch_t));
   else
@@ -2872,16 +2876,16 @@ check_arrival (re_match_context_t *mctx, state_array_t *path,
     {
       re_dfastate_t **new_array;
       Idx old_alloc = path->alloc;
-      path->alloc += last_str + mctx->max_mb_elem_len + 1;
-      new_array = re_realloc (path->array, re_dfastate_t *, path->alloc);
-      if (new_array == NULL)
-	{
-	  path->alloc = old_alloc;
-	  return REG_ESPACE;
-	}
+      Idx new_alloc = old_alloc + last_str + mctx->max_mb_elem_len + 1;
+      if (BE (new_alloc < old_alloc, 0))
+	return REG_ESPACE;
+      new_array = re_xrealloc (path->array, re_dfastate_t *, new_alloc);
+      if (BE (new_array == NULL, 0))
+	return REG_ESPACE;
       path->array = new_array;
+      path->alloc = new_alloc;
       memset (new_array + old_alloc, '\0',
-	      sizeof (re_dfastate_t *) * (path->alloc - old_alloc));
+	      sizeof (re_dfastate_t *) * (new_alloc - old_alloc));
     }
 
   str_idx = path->next_idx == 0 ? top_str : path->next_idx;
@@ -3334,6 +3338,12 @@ build_trtable (re_dfa_t *dfa, re_dfastate_t *state)
 
   err = re_node_set_alloc (&follows, ndests + 1);
   if (BE (err != REG_NOERROR, 0))
+    goto out_free;
+
+  /* Avoid arithmetic overflow in size calculation.  */
+  if (BE (((SIZE_MAX - (sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX)
+	   / (3 * sizeof (re_dfastate_t *)))
+	  < ndests, 0))
     goto out_free;
 
   if (__libc_use_alloca ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX
@@ -4057,8 +4067,8 @@ extend_buffers (re_match_context_t *mctx)
       /* XXX We have no indication of the size of this buffer.  If this
 	 allocation fail we have no indication that the state_log array
 	 does not have the right size.  */
-      re_dfastate_t **new_array = re_realloc (mctx->state_log, re_dfastate_t *,
-					      pstr->bufs_len + 1);
+      re_dfastate_t **new_array = re_xrealloc (mctx->state_log, re_dfastate_t *,
+					       pstr->bufs_len + 1);
       if (BE (new_array == NULL, 0))
 	return REG_ESPACE;
       mctx->state_log = new_array;
@@ -4106,8 +4116,8 @@ match_ctx_init (re_match_context_t *mctx, int eflags, Idx n)
   mctx->match_last = REG_MISSING;
   if (n > 0)
     {
-      mctx->bkref_ents = re_malloc (struct re_backref_cache_entry, n);
-      mctx->sub_tops = re_malloc (re_sub_match_top_t *, n);
+      mctx->bkref_ents = re_xmalloc (struct re_backref_cache_entry, n);
+      mctx->sub_tops = re_xmalloc (re_sub_match_top_t *, n);
       if (BE (mctx->bkref_ents == NULL || mctx->sub_tops == NULL, 0))
 	return REG_ESPACE;
     }
@@ -4179,8 +4189,8 @@ match_ctx_add_entry (re_match_context_t *mctx, Idx node, Idx str_idx,
   if (mctx->nbkref_ents >= mctx->abkref_ents)
     {
       struct re_backref_cache_entry* new_entry;
-      new_entry = re_realloc (mctx->bkref_ents, struct re_backref_cache_entry,
-			      mctx->abkref_ents * 2);
+      new_entry = re_x2realloc (mctx->bkref_ents, struct re_backref_cache_entry,
+				&mctx->abkref_ents);
       if (BE (new_entry == NULL, 0))
 	{
 	  re_free (mctx->bkref_ents);
@@ -4188,8 +4198,8 @@ match_ctx_add_entry (re_match_context_t *mctx, Idx node, Idx str_idx,
 	}
       mctx->bkref_ents = new_entry;
       memset (mctx->bkref_ents + mctx->nbkref_ents, '\0',
-	      sizeof (struct re_backref_cache_entry) * mctx->abkref_ents);
-      mctx->abkref_ents *= 2;
+	      (sizeof (struct re_backref_cache_entry)
+	       * (mctx->abkref_ents - mctx->nbkref_ents)));
     }
   if (mctx->nbkref_ents > 0
       && mctx->bkref_ents[mctx->nbkref_ents - 1].str_idx == str_idx)
@@ -4253,10 +4263,10 @@ match_ctx_add_subtop (re_match_context_t *mctx, Idx node, Idx str_idx)
 #endif
   if (BE (mctx->nsub_tops == mctx->asub_tops, 0))
     {
-      Idx new_asub_tops = mctx->asub_tops * 2;
-      re_sub_match_top_t **new_array = re_realloc (mctx->sub_tops,
-						   re_sub_match_top_t *,
-						   new_asub_tops);
+      Idx new_asub_tops = mctx->asub_tops;
+      re_sub_match_top_t **new_array = re_x2realloc (mctx->sub_tops,
+						     re_sub_match_top_t *,
+						     &new_asub_tops);
       if (BE (new_array == NULL, 0))
 	return REG_ESPACE;
       mctx->sub_tops = new_array;
@@ -4280,10 +4290,10 @@ match_ctx_add_sublast (re_sub_match_top_t *subtop, Idx node, Idx str_idx)
   re_sub_match_last_t *new_entry;
   if (BE (subtop->nlasts == subtop->alasts, 0))
     {
-      Idx new_alasts = 2 * subtop->alasts + 1;
-      re_sub_match_last_t **new_array = re_realloc (subtop->lasts,
-						    re_sub_match_last_t *,
-						    new_alasts);
+      Idx new_alasts = subtop->alasts;
+      re_sub_match_last_t **new_array = re_x2realloc (subtop->lasts,
+						      re_sub_match_last_t *,
+						      &new_alasts);
       if (BE (new_array == NULL, 0))
 	return NULL;
       subtop->lasts = new_array;

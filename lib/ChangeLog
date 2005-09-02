@@ -1,3 +1,25 @@
+2005-09-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Check for arithmetic overflow when calculating sizes, to prevent
+	some buffer-overflow issues.  These patches are conservative, in the
+	sense that when I couldn't determine whether an overflow was possible,
+	I inserted a run-time check.
+	* regex_internal.h (re_xmalloc, re_xrealloc, re_x2realloc): New macros.
+	(SIZE_MAX) [!defined SIZE_MAX]: New macro.
+	(re_alloc_oversized, re_x2alloc_oversized, re_xnmalloc):
+	(re_xnrealloc, re_x2nrealloc): New inline functions.
+	* lib/regcomp.c (init_dfa, analyze, build_range_exp, parse_bracket_exp):
+	(build_equiv_class, build_charclass): Check for arithmetic overflow
+	in size expression calculations.
+	* lib/regex_internal.c (re_string_realloc_buffers):
+	(build_wcs_upper_buffer, re_node_set_add_intersect):
+	(re_node_set_init_union, re_node_set_insert, re_node_set_insert_last):
+	(re_dfa_add_node, register_state): Likewise.
+	* lib/regexec.c (re_search_stub, re_copy_regs, re_search_internal):
+	(prune_impossible_nodes, push_fail_stack, set_regs, check_arrival):
+	(build_trtable, extend_buffers, match_ctx_init, match_ctx_add_entry):
+	(match_ctx_add_subtop, match_ctx_add_sublast): Likewise.
+
 2005-09-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* glob.c (GET_LOGIN_NAME_MAX): Renamed from LOGIN_NAME_MAX,

@@ -808,7 +808,7 @@ init_dfa (re_dfa_t *dfa, Idx pat_len)
   dfa->str_tree_storage_idx = BIN_TREE_STORAGE_SIZE;
 
   dfa->nodes_alloc = pat_len + 1;
-  dfa->nodes = re_malloc (re_token_t, dfa->nodes_alloc);
+  dfa->nodes = re_xmalloc (re_token_t, dfa->nodes_alloc);
 
   /*  table_size = 2 ^ ceil(log pat_len) */
   for (table_size = 1; table_size <= pat_len; table_size <<= 1)
@@ -1083,13 +1083,13 @@ analyze (regex_t *preg)
   /* Allocate arrays.  */
   dfa->nexts = re_malloc (Idx, dfa->nodes_alloc);
   dfa->org_indices = re_malloc (Idx, dfa->nodes_alloc);
-  dfa->edests = re_malloc (re_node_set, dfa->nodes_alloc);
+  dfa->edests = re_xmalloc (re_node_set, dfa->nodes_alloc);
   dfa->eclosures = re_malloc (re_node_set, dfa->nodes_alloc);
   if (BE (dfa->nexts == NULL || dfa->org_indices == NULL || dfa->edests == NULL
 	  || dfa->eclosures == NULL, 0))
     return REG_ESPACE;
 
-  dfa->subexp_map = re_malloc (Idx, preg->re_nsub);
+  dfa->subexp_map = re_xmalloc (Idx, preg->re_nsub);
   if (dfa->subexp_map != NULL)
     {
       Idx i;
@@ -1125,7 +1125,7 @@ analyze (regex_t *preg)
   if ((!preg->re_no_sub && preg->re_nsub > 0 && dfa->has_plural_match)
       || dfa->nbackref)
     {
-      dfa->inveclosures = re_malloc (re_node_set, dfa->nodes_len);
+      dfa->inveclosures = re_xmalloc (re_node_set, dfa->nodes_len);
       if (BE (dfa->inveclosures == NULL, 0))
         return REG_ESPACE;
       ret = calc_inveclosure (dfa);
@@ -2608,12 +2608,11 @@ build_range_exp (re_bitset_ptr_t sbcset,
 	    wchar_t *new_array_start, *new_array_end;
 	    Idx new_nranges;
 
-	    /* +1 in case of mbcset->nranges is 0.  */
-	    new_nranges = 2 * mbcset->nranges + 1;
+	    new_nranges = mbcset->nranges;
 	    /* Use realloc since mbcset->range_starts and mbcset->range_ends
 	       are NULL if *range_alloc == 0.  */
-	    new_array_start = re_realloc (mbcset->range_starts, wchar_t,
-				          new_nranges);
+	    new_array_start = re_x2realloc (mbcset->range_starts, wchar_t,
+					    &new_nranges);
 	    new_array_end = re_realloc (mbcset->range_ends, wchar_t,
 				        new_nranges);
 
@@ -2840,10 +2839,9 @@ parse_bracket_exp (re_string_t *regexp, re_dfa_t *dfa, re_token_t *token,
 	      uint32_t *new_array_end;
 	      Idx new_nranges;
 
-	      /* +1 in case of mbcset->nranges is 0.  */
-	      new_nranges = 2 * mbcset->nranges + 1;
-	      new_array_start = re_realloc (mbcset->range_starts, uint32_t,
-					    new_nranges);
+	      new_nranges = mbcset->nranges;
+	      new_array_start = re_x2realloc (mbcset->range_starts, uint32_t,
+					      &new_nranges);
 	      new_array_end = re_realloc (mbcset->range_ends, uint32_t,
 				          new_nranges);
 
@@ -2914,12 +2912,11 @@ parse_bracket_exp (re_string_t *regexp, re_dfa_t *dfa, re_token_t *token,
 	  if (BE (*coll_sym_alloc == mbcset->ncoll_syms, 0))
 	    {
 	      /* Not enough, realloc it.  */
-	      /* +1 in case of mbcset->ncoll_syms is 0.  */
-	      Idx new_coll_sym_alloc = 2 * mbcset->ncoll_syms + 1;
+	      Idx new_coll_sym_alloc = mbcset->ncoll_syms;
 	      /* Use realloc since mbcset->coll_syms is NULL
 		 if *alloc == 0.  */
-	      int32_t *new_coll_syms = re_realloc (mbcset->coll_syms, int32_t,
-						   new_coll_sym_alloc);
+	      int32_t *new_coll_syms = re_x2realloc (mbcset->coll_syms, int32_t,
+						     &new_coll_sym_alloc);
 	      if (BE (new_coll_syms == NULL, 0))
 		return REG_ESPACE;
 	      mbcset->coll_syms = new_coll_syms;
@@ -3103,11 +3100,10 @@ parse_bracket_exp (re_string_t *regexp, re_dfa_t *dfa, re_token_t *token,
 		{
 		  wchar_t *new_mbchars;
 		  /* Not enough, realloc it.  */
-		  /* +1 in case of mbcset->nmbchars is 0.  */
-		  mbchar_alloc = 2 * mbcset->nmbchars + 1;
+		  mbchar_alloc = mbcset->nmbchars;
 		  /* Use realloc since array is NULL if *alloc == 0.  */
-		  new_mbchars = re_realloc (mbcset->mbchars, wchar_t,
-					    mbchar_alloc);
+		  new_mbchars = re_x2realloc (mbcset->mbchars, wchar_t,
+					      &mbchar_alloc);
 		  if (BE (new_mbchars == NULL, 0))
 		    goto parse_bracket_exp_espace;
 		  mbcset->mbchars = new_mbchars;
@@ -3381,12 +3377,11 @@ build_equiv_class (re_bitset_ptr_t sbcset,
       if (BE (*equiv_class_alloc == mbcset->nequiv_classes, 0))
 	{
 	  /* Not enough, realloc it.  */
-	  /* +1 in case of mbcset->nequiv_classes is 0.  */
-	  Idx new_equiv_class_alloc = 2 * mbcset->nequiv_classes + 1;
+	  Idx new_equiv_class_alloc = mbcset->nequiv_classes;
 	  /* Use realloc since the array is NULL if *alloc == 0.  */
-	  int32_t *new_equiv_classes = re_realloc (mbcset->equiv_classes,
-						   int32_t,
-						   new_equiv_class_alloc);
+	  int32_t *new_equiv_classes = re_x2realloc (mbcset->equiv_classes,
+						     int32_t,
+						     &new_equiv_class_alloc);
 	  if (BE (new_equiv_classes == NULL, 0))
 	    return REG_ESPACE;
 	  mbcset->equiv_classes = new_equiv_classes;
@@ -3431,11 +3426,10 @@ build_charclass (unsigned REG_TRANSLATE_TYPE trans, re_bitset_ptr_t sbcset,
   if (BE (*char_class_alloc == mbcset->nchar_classes, 0))
     {
       /* Not enough, realloc it.  */
-      /* +1 in case of mbcset->nchar_classes is 0.  */
-      Idx new_char_class_alloc = 2 * mbcset->nchar_classes + 1;
+      Idx new_char_class_alloc = mbcset->nchar_classes;
       /* Use realloc since array is NULL if *alloc == 0.  */
-      wctype_t *new_char_classes = re_realloc (mbcset->char_classes, wctype_t,
-					       new_char_class_alloc);
+      wctype_t *new_char_classes = re_x2realloc (mbcset->char_classes, wctype_t,
+						 &new_char_class_alloc);
       if (BE (new_char_classes == NULL, 0))
 	return REG_ESPACE;
       mbcset->char_classes = new_char_classes;
