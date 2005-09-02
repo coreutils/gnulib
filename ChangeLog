@@ -1,3 +1,8 @@
+2005-09-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/inttostr (Files): Add m4/inttypes_h.m4, m4/stdint_h.m4,
+	m4/ulonglong.m4.  Problem reported by Martin Lambers.
+
 2005-09-02  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (import): In the other first-use case, provide defaults
