@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.101 2005-09-02 22:54:59 eggert Exp $
+# $Id: srclist.txt,v 1.102 2005-09-03 09:05:55 jas Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -87,14 +87,16 @@ $LIBCSRC/argp/argp-pv.c			lib gpl
 #$LIBCSRC/argp/argp-pvh.c		lib gpl
 $LIBCSRC/argp/argp-xinl.c		lib gpl
 #$LIBCSRC/argp/argp.h			lib gpl
-$LIBCSRC/libidn/iconvme.h		lib gpl
-$LIBCSRC/libidn/iconvme.c		lib gpl
 $LIBCSRC/stdlib/getsubopt.c		lib gpl
 #$LIBCSRC/posix/getopt.c		lib gpl
 #$LIBCSRC/posix/getopt.h		lib gpl (getopt_.h in gnulib)
 #$LIBCSRC/posix/getopt1.c		lib gpl
 #$LIBCSRC/posix/getopt_int.h		lib gpl
 #
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1293
+#$LIBCSRC/libidn/iconvme.h		lib gpl
+#$LIBCSRC/libidn/iconvme.c		lib gpl
+
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1057
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1217
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=1220

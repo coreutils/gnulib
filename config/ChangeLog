@@ -1,3 +1,7 @@
+2005-09-03  Simon Josefsson  <jas@extundo.com>
+
+	* srclist.txt: Add glibc bugs 1293.
+
 2005-09-02  Bruno Haible  <bruno@clisp.org>
 
 	* srclist.txt: lib-link.m4 and lib-prefix.m4 currently have patches
