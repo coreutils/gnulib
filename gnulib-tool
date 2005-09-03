@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-02 17:28:31 $'
+cvsdatestamp='$Date: 2005-09-03 08:20:57 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1013,7 +1013,7 @@ func_import ()
   if test -n "$libtool"; then
     actioncmd="$actioncmd --libtool"
   fi
-  actioncmd="$actioncmd -macro-prefix=$macro_prefix"
+  actioncmd="$actioncmd --macro-prefix=$macro_prefix"
   actioncmd="$actioncmd `echo $specified_modules`"
 
   # Create lib/Makefile.am.
