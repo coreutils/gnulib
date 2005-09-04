@@ -11,6 +11,7 @@ configure.ac:
 gl_SIZE_MAX
 
 Makefile.am:
+lib_SOURCES += size_max.h
 
 Include:
 #include "size_max.h"

@@ -1,3 +1,7 @@
+2005-09-04  Martin Lambers <marlam@marlam.de>  (tiny change)
+
+	* modules/size_max (Makefile.am): Add size_max.h
+
 2005-09-04  Derek Price  <derek@ximbiot.com>
 
 	* gnulib-tool: Fix reversed $symbolic logic.
