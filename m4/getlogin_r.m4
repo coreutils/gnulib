@@ -21,7 +21,7 @@ AC_DEFUN([gl_GETLOGIN_R_SUBSTITUTE],
 AC_DEFUN([gl_GETLOGIN_R],
 [
   AC_REPLACE_FUNCS([getlogin_r])
-  if test $ac_cv_func_strcasecmp = no; then
+  if test $ac_cv_func_getlogin_r = no; then
     gl_GETLOGIN_R_SUBSTITUTE
   fi
 ])
