@@ -1,3 +1,7 @@
+2005-09-04  Derek Price  <derek@ximbiot.com>
+
+	* gnulib-tool: Fix reversed $symbolic logic.
+
 2005-09-03  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib-tool: Fix typo.
