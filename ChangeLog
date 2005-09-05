@@ -1,10 +1,15 @@
+2005-09-05  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Fix comparison in handling of symbolic
+	links.
+
 2005-09-04  Martin Lambers <marlam@marlam.de>  (tiny change)
 
 	* modules/size_max (Makefile.am): Add size_max.h
 
 2005-09-04  Derek Price  <derek@ximbiot.com>
 
-	* gnulib-tool: Fix reversed $symbolic logic.
+	* gnulib-tool (func_import): Fix reversed $symbolic logic.
 
 2005-09-03  Simon Josefsson  <jas@extundo.com>
 
