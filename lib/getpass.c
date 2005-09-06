@@ -158,7 +158,7 @@ getpass (const char *prompt)
     }
 
   /* Restore the original setting.  */
-#if TCSETATTR
+#if HAVE_TCSETATTR
   if (tty_changed)
     tcsetattr (fileno (in), TCSAFLUSH | TCSASOFT, &s);
 #endif

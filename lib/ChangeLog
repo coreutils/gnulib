@@ -1,3 +1,8 @@
+2005-09-06  Simon Josefsson  <jas@extundo.com>
+
+	* getpass.c (getpass): Fix typo, test for HAVE_TCSETATTR and not
+	TCSETATTR.  Reported by Derek Price <derek@ximbiot.com>.
+
 2005-09-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Change bitset word type from unsigned int to unsigned long int,
