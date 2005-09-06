@@ -833,7 +833,7 @@ bitset_not (bitset set)
     set[i] = ~set[i];
   if (SBC_MAX % BITSET_WORD_BITS != 0)
     set[BITSET_WORDS - 1] =
-      (((bitset_word) 1 << SBC_MAX % BITSET_WORD_BITS) - 1
+      ((((bitset_word) 1 << SBC_MAX % BITSET_WORD_BITS) - 1)
        & ~set[BITSET_WORDS - 1]);
 }
 
