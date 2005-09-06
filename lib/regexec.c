@@ -1936,9 +1936,9 @@ check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
 		  if (ent->node != node)
 		    continue;
 
-		  if (subexp_idx
-		      < CHAR_BIT * sizeof ent->eps_reachable_subexps_map
-		      && !(ent->eps_reachable_subexps_map & (1u << subexp_idx)))
+		  if (subexp_idx < BITSET_WORD_BITS
+		      && !(ent->eps_reachable_subexps_map
+			   & ((bitset_word) 1 << subexp_idx)))
 		    continue;
 
 		  /* Recurse trying to reach the OP_OPEN_SUBEXP and
@@ -1964,9 +1964,9 @@ check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
 		  if (cpos == 0 && (boundaries & 2))
 		    return 0;
 
-		  if (subexp_idx
-		      < CHAR_BIT * sizeof ent->eps_reachable_subexps_map)
-		    ent->eps_reachable_subexps_map &= ~(1u << subexp_idx);
+		  if (subexp_idx < BITSET_WORD_BITS)
+		    ent->eps_reachable_subexps_map &=
+		      ~ ((bitset_word) 1 << subexp_idx);
 	        }
 	      while (ent++->more);
 	    }
@@ -2422,8 +2422,9 @@ check_subexp_matching_top (re_match_context_t *mctx, re_node_set *cur_nodes,
     {
       Idx node = cur_nodes->elems[node_idx];
       if (dfa->nodes[node].type == OP_OPEN_SUBEXP
-	  && dfa->nodes[node].opr.idx < CHAR_BIT * sizeof dfa->used_bkref_map
-	  && dfa->used_bkref_map & (1u << dfa->nodes[node].opr.idx))
+	  && dfa->nodes[node].opr.idx < BITSET_WORD_BITS
+	  && (dfa->used_bkref_map
+	      & ((bitset_word) 1 << dfa->nodes[node].opr.idx)))
 	{
 	  err = match_ctx_add_subtop (mctx, node, str_idx);
 	  if (BE (err != REG_NOERROR, 0))
@@ -3292,7 +3293,7 @@ build_trtable (re_dfa_t *dfa, re_dfastate_t *state)
   Idx i, j;
   int ch;
   bool need_word_trtable = false;
-  unsigned int elem, mask;
+  bitset_word elem, mask;
   bool dests_node_malloced = false, dest_states_malloced = false;
   Idx ndests; /* Number of the destination states from `state'.  */
   re_dfastate_t **trtable;
@@ -3301,22 +3302,27 @@ build_trtable (re_dfa_t *dfa, re_dfastate_t *state)
   bitset *dests_ch;
   bitset acceptable;
 
+  struct dests_alloc
+  {
+    re_node_set dests_node[SBC_MAX];
+    bitset dests_ch[SBC_MAX];
+  } *dests_alloc;
+
   /* We build DFA states which corresponds to the destination nodes
      from `state'.  `dests_node[i]' represents the nodes which i-th
      destination state contains, and `dests_ch[i]' represents the
      characters which i-th destination state accepts.  */
-  if (__libc_use_alloca ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX))
-    dests_node = (re_node_set *)
-      alloca ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX);
+  if (__libc_use_alloca (sizeof (struct dests_alloc)))
+    dests_alloc = (struct dests_alloc *) alloca (sizeof dests_alloc[0]);
   else
     {
-      dests_node = (re_node_set *)
-	malloc ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX);
-      if (BE (dests_node == NULL, 0))
+      dests_alloc = re_malloc (struct dests_alloc, 1);
+      if (BE (dests_alloc == NULL, 0))
 	return false;
       dests_node_malloced = true;
     }
-  dests_ch = (bitset *) (dests_node + SBC_MAX);
+  dests_node = dests_alloc->dests_node;
+  dests_ch = dests_alloc->dests_ch;
 
   /* Initialize transiton table.  */
   state->word_trtable = state->trtable = NULL;
@@ -3327,7 +3333,7 @@ build_trtable (re_dfa_t *dfa, re_dfastate_t *state)
   if (BE (! REG_VALID_NONZERO_INDEX (ndests), 0))
     {
       if (dests_node_malloced)
-	free (dests_node);
+	free (dests_alloc);
       if (ndests == 0)
 	{
 	  state->trtable = re_calloc (re_dfastate_t *, SBC_MAX);
@@ -3363,7 +3369,7 @@ out_free:
 	  for (i = 0; i < ndests; ++i)
 	    re_node_set_free (dests_node + i);
 	  if (dests_node_malloced)
-	    free (dests_node);
+	    free (dests_alloc);
 	  return false;
 	}
       dest_states_malloced = true;
@@ -3427,8 +3433,8 @@ out_free:
 	goto out_free;
 
       /* For all characters ch...:  */
-      for (i = 0; i < BITSET_UINTS; ++i)
-	for (ch = i * UINT_BITS, elem = acceptable[i], mask = 1;
+      for (i = 0; i < BITSET_WORDS; ++i)
+	for (ch = i * BITSET_WORD_BITS, elem = acceptable[i], mask = 1;
 	     elem;
 	     mask <<= 1, elem >>= 1, ++ch)
 	  if (BE (elem & 1, 0))
@@ -3457,8 +3463,8 @@ out_free:
 	goto out_free;
 
       /* For all characters ch...:  */
-      for (i = 0; i < BITSET_UINTS; ++i)
-	for (ch = i * UINT_BITS, elem = acceptable[i], mask = 1;
+      for (i = 0; i < BITSET_WORDS; ++i)
+	for (ch = i * BITSET_WORD_BITS, elem = acceptable[i], mask = 1;
 	     elem;
 	     mask <<= 1, elem >>= 1, ++ch)
 	  if (BE (elem & 1, 0))
@@ -3499,7 +3505,7 @@ out_free:
     re_node_set_free (dests_node + i);
 
   if (dests_node_malloced)
-    free (dests_node);
+    free (dests_alloc);
 
   return true;
 }
@@ -3553,7 +3559,10 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 #ifdef RE_ENABLE_I18N
       else if (type == OP_UTF8_PERIOD)
         {
-	  memset (accepts, 255, sizeof (unsigned int) * BITSET_UINTS / 2);
+	  if (SBC_MAX / 2 % BITSET_WORD_BITS == 0)
+	    memset (accepts, -1, sizeof accepts / 2);
+	  else
+	    bitset_merge (accepts, utf8_sb_map);
 	  if (!(dfa->syntax & REG_DOT_NEWLINE))
 	    bitset_clear (accepts, '\n');
 	  if (dfa->syntax & REG_DOT_NOT_NULL)
@@ -3569,8 +3578,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 	{
 	  if (constraint & NEXT_NEWLINE_CONSTRAINT)
 	    {
-	      unsigned int accepts_newline =
-		bitset_contain (accepts, NEWLINE_CHAR);
+	      bool accepts_newline = bitset_contain (accepts, NEWLINE_CHAR);
 	      bitset_empty (accepts);
 	      if (accepts_newline)
 		bitset_set (accepts, NEWLINE_CHAR);
@@ -3585,7 +3593,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 
 	  if (constraint & NEXT_WORD_CONSTRAINT)
 	    {
-	      unsigned int any_set = 0;
+	      bitset_word any_set = 0;
 	      if (type == CHARACTER && !node->word_char)
 		{
 		  bitset_empty (accepts);
@@ -3593,18 +3601,18 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 		}
 #ifdef RE_ENABLE_I18N
 	      if (dfa->mb_cur_max > 1)
-		for (j = 0; j < BITSET_UINTS; ++j)
+		for (j = 0; j < BITSET_WORDS; ++j)
 		  any_set |= (accepts[j] &= (dfa->word_char[j] | ~dfa->sb_char[j]));
 	      else
 #endif
-		for (j = 0; j < BITSET_UINTS; ++j)
+		for (j = 0; j < BITSET_WORDS; ++j)
 		  any_set |= (accepts[j] &= dfa->word_char[j]);
 	      if (!any_set)
 		continue;
 	    }
 	  if (constraint & NEXT_NOTWORD_CONSTRAINT)
 	    {
-	      unsigned int any_set = 0;
+	      bitset_word any_set = 0;
 	      if (type == CHARACTER && node->word_char)
 		{
 		  bitset_empty (accepts);
@@ -3612,11 +3620,11 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 		}
 #ifdef RE_ENABLE_I18N
 	      if (dfa->mb_cur_max > 1)
-		for (j = 0; j < BITSET_UINTS; ++j)
+		for (j = 0; j < BITSET_WORDS; ++j)
 		  any_set |= (accepts[j] &= ~(dfa->word_char[j] & dfa->sb_char[j]));
 	      else
 #endif
-		for (j = 0; j < BITSET_UINTS; ++j)
+		for (j = 0; j < BITSET_WORDS; ++j)
 		  any_set |= (accepts[j] &= ~dfa->word_char[j]);
 	      if (!any_set)
 		continue;
@@ -3630,7 +3638,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 	  bitset intersec; /* Intersection sets, see below.  */
 	  bitset remains;
 	  /* Flags, see below.  */
-	  unsigned int has_intersec, not_subset, not_consumed;
+	  bitset_word has_intersec, not_subset, not_consumed;
 
 	  /* Optimization, skip if this state doesn't accept the character.  */
 	  if (type == CHARACTER && !bitset_contain (dests_ch[j], node->opr.c))
@@ -3638,7 +3646,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 
 	  /* Enumerate the intersection set of this state and `accepts'.  */
 	  has_intersec = 0;
-	  for (k = 0; k < BITSET_UINTS; ++k)
+	  for (k = 0; k < BITSET_WORDS; ++k)
 	    has_intersec |= intersec[k] = accepts[k] & dests_ch[j][k];
 	  /* And skip if the intersection set is empty.  */
 	  if (!has_intersec)
@@ -3646,7 +3654,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 
 	  /* Then check if this state is a subset of `accepts'.  */
 	  not_subset = not_consumed = 0;
-	  for (k = 0; k < BITSET_UINTS; ++k)
+	  for (k = 0; k < BITSET_WORDS; ++k)
 	    {
 	      not_subset |= remains[k] = ~accepts[k] & dests_ch[j][k];
 	      not_consumed |= accepts[k] = accepts[k] & ~dests_ch[j][k];

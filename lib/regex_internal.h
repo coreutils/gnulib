@@ -147,22 +147,48 @@ typedef __re_idx_t Idx;
 /* A hash value, suitable for computing hash tables.  */
 typedef __re_size_t re_hashval_t;
 
-/* Number of bits in an unsinged int.  */
-#define UINT_BITS (sizeof (unsigned int) * CHAR_BIT)
-/* Number of unsigned int in an bit_set.  */
-#define BITSET_UINTS ((SBC_MAX + UINT_BITS - 1) / UINT_BITS)
-typedef unsigned int bitset[BITSET_UINTS];
-typedef unsigned int *re_bitset_ptr_t;
-typedef const unsigned int *re_const_bitset_ptr_t;
+/* An integer used to represent a set of bits.  It must be unsigned,
+   and must be at least as wide as unsigned int.  */
+typedef unsigned long int bitset_word;
 
-#define bitset_set(set,i) (set[i / UINT_BITS] |= 1u << i % UINT_BITS)
-#define bitset_clear(set,i) (set[i / UINT_BITS] &= ~(1u << i % UINT_BITS))
-#define bitset_contain(set,i) (set[i / UINT_BITS] & (1u << i % UINT_BITS))
-#define bitset_empty(set) memset (set, 0, sizeof (unsigned int) * BITSET_UINTS)
-#define bitset_set_all(set) \
-  memset (set, 255, sizeof (unsigned int) * BITSET_UINTS)
-#define bitset_copy(dest,src) \
-  memcpy (dest, src, sizeof (unsigned int) * BITSET_UINTS)
+/* Maximum value of a bitset word.  It must be useful in preprocessor
+   contexts, and must be consistent with bitset_word.  */
+#define BITSET_WORD_MAX ULONG_MAX
+
+/* Number of bits in a bitset word.  Avoid greater-than-32-bit
+   integers and unconditional shifts by more than 31 bits, as they're
+   not portable.  */
+#if BITSET_WORD_MAX == 0xffffffff
+# define BITSET_WORD_BITS 32
+#elif BITSET_WORD_MAX >> 31 >> 5 == 1
+# define BITSET_WORD_BITS 36
+#elif BITSET_WORD_MAX >> 31 >> 16 == 1
+# define BITSET_WORD_BITS 48
+#elif BITSET_WORD_MAX >> 31 >> 28 == 1
+# define BITSET_WORD_BITS 60
+#elif BITSET_WORD_MAX >> 31 >> 31 >> 1 == 1
+# define BITSET_WORD_BITS 64
+#elif BITSET_WORD_MAX >> 31 >> 31 >> 9 == 1
+# define BITSET_WORD_BITS 72
+#elif BITSET_WORD_MAX >> 31 >> 31 >> 31 >> 31 >> 3 == 1
+# define BITSET_WORD_BITS 128
+#elif BITSET_WORD_MAX >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 7 == 1
+# define BITSET_WORD_BITS 256
+#elif BITSET_WORD_MAX >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 7 > 1
+# define BITSET_WORD_BITS 257 /* any value > SBC_MAX will do here */
+# if BITSET_WORD_BITS <= SBC_MAX
+#  error "Invalid SBC_MAX"
+# endif
+#else
+# error "Add case for new bitset_word size"
+#endif
+
+/* Number of bitset words in a bitset.  */
+#define BITSET_WORDS ((SBC_MAX + BITSET_WORD_BITS - 1) / BITSET_WORD_BITS)
+
+typedef bitset_word bitset[BITSET_WORDS];
+typedef bitset_word *re_bitset_ptr_t;
+typedef const bitset_word *re_const_bitset_ptr_t;
 
 #define PREV_WORD_CONSTRAINT 0x0001
 #define PREV_NOTWORD_CONSTRAINT 0x0002
@@ -707,8 +733,8 @@ struct re_dfa_t
   Idx nbackref; /* The number of backreference in this dfa.  */
 
   /* Bitmap expressing which backreference is used.  */
-  unsigned int used_bkref_map;
-  unsigned int completed_bkref_map;
+  bitset_word used_bkref_map;
+  bitset_word completed_bkref_map;
 
   unsigned int has_plural_match : 1;
   /* If this dfa has "multibyte node", which is a backreference or
@@ -759,36 +785,72 @@ typedef struct
 
 
 /* Inline functions for bitset operation.  */
+
+static inline void
+bitset_set (bitset set, Idx i)
+{
+  set[i / BITSET_WORD_BITS] |= (bitset_word) 1 << i % BITSET_WORD_BITS;
+}
+
+static inline void
+bitset_clear (bitset set, Idx i)
+{
+  set[i / BITSET_WORD_BITS] &= ~ ((bitset_word) 1 << i % BITSET_WORD_BITS);
+}
+
+static inline bool
+bitset_contain (const bitset set, Idx i)
+{
+  return (set[i / BITSET_WORD_BITS] >> i % BITSET_WORD_BITS) & 1;
+}
+
+static inline void
+bitset_empty (bitset set)
+{
+  memset (set, 0, sizeof (bitset));
+}
+
+static inline void
+bitset_set_all (bitset set)
+{
+  memset (set, -1, sizeof (bitset_word) * (SBC_MAX / BITSET_WORD_BITS));
+  if (SBC_MAX % BITSET_WORD_BITS != 0)
+    set[BITSET_WORDS - 1] =
+      ((bitset_word) 1 << SBC_MAX % BITSET_WORD_BITS) - 1;
+}
+
+static inline void
+bitset_copy (bitset dest, const bitset src)
+{
+  memcpy (dest, src, sizeof (bitset));
+}
+
 static inline void
 bitset_not (bitset set)
 {
-  int bitset_i;
-  for (bitset_i = 0; bitset_i < BITSET_UINTS; ++bitset_i)
-    set[bitset_i] = ~set[bitset_i];
+  int i;
+  for (i = 0; i < SBC_MAX / BITSET_WORD_BITS; ++i)
+    set[i] = ~set[i];
+  if (SBC_MAX % BITSET_WORD_BITS != 0)
+    set[BITSET_WORDS - 1] =
+      (((bitset_word) 1 << SBC_MAX % BITSET_WORD_BITS) - 1
+       & ~set[BITSET_WORDS - 1]);
 }
 
 static inline void
 bitset_merge (bitset dest, const bitset src)
 {
-  int bitset_i;
-  for (bitset_i = 0; bitset_i < BITSET_UINTS; ++bitset_i)
-    dest[bitset_i] |= src[bitset_i];
-}
-
-static inline void
-bitset_not_merge (bitset dest, const bitset src)
-{
   int i;
-  for (i = 0; i < BITSET_UINTS; ++i)
-    dest[i] |= ~src[i];
+  for (i = 0; i < BITSET_WORDS; ++i)
+    dest[i] |= src[i];
 }
 
 static inline void
 bitset_mask (bitset dest, const bitset src)
 {
-  int bitset_i;
-  for (bitset_i = 0; bitset_i < BITSET_UINTS; ++bitset_i)
-    dest[bitset_i] &= src[bitset_i];
+  int i;
+  for (i = 0; i < BITSET_WORDS; ++i)
+    dest[i] &= src[i];
 }
 
 #if defined RE_ENABLE_I18N

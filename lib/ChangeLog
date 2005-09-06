@@ -1,3 +1,52 @@
+2005-09-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Change bitset word type from unsigned int to unsigned long int,
+	as this has better performance on typical 64-bit hosts.
+	Port bitset code to hosts with unusual word sizes.
+	* regcomp.c (build_equiv_class, build_charclass, build_range_exp):
+	(build_collating_symbol):
+	Prefer bitset to re_bitset_ptr_t in prototypes, when the actual
+	argument is a bitset.  This is merely a style issue, but it makes
+	it clearer that an entire array is expected.
+	(re_compile_fastmap_iter, init_dfa, init_word_char, optimize_subexps):
+	* regcomp.c (lower_subexp, parse_bracket_exp, built_charclass_op):
+	Port to the case where bitset_word is not the same as unsigned int.
+	* regex_internal.h (bitset_set, bitset_clear, bitset_contain):
+	(bitset_not, bitset_merge, bitset_set_all, bitset_mask):
+	Likewise.
+	* regexec.c (check_dst_limits_calc_pos_1, check_subexp_matching_top):
+	(build_trtable, group_nodes_into_DFAstates):
+	Likewise.
+	* regcomp.c (re_compile_fastmap_iter, utf8_sb_map, optimize_utf8):
+	Don't assume that SBC_MAX is a multiple of BITSET_WORD_BITS.
+	* regex_internal.h (bitset_set_all, bitset_not): Likewise.
+	* regexec.c (group_nodes_into_DFAstates): Likewise.
+	* regcomp.c (utf8_sb_map): Don't assume UINT_MAX == 0xffffffff.
+	* regcomp.c (optimize_subexps, lower_subexp):
+	Work even if bitset_word has holes in its bitwise representation.
+	* regex_internal.h (BITSET_WORD_BITS): Likewise.
+	* regexec.c (check_dst_limits_calc_pos_1, check_subexp_matching_top):
+	Likewise.
+	* regex_internal.c (re_string_reconstruct):
+	Don't assume UCHAR_MAX == 255.
+	* regex_internal.h (bitset_set_all): Likewise.
+	* regex_internal.h (BITSET_WORD_BITS): Renamed from UINT_BITS.
+	All uses changed.
+	(BITSET_WORDS): Renamed from BITSET_UINTS.  All uses changed.
+	(bitset_word): New type, replacing 'unsigned int' for bitset uses.
+	All uses changed.
+	(BITSET_WORD_MAX): New macro.
+	(bitset_set, bitset_clear, bitset_contain, bitset_empty):
+	(bitset_set_all, bitset_copy):  Now inline functions, not macros.
+	(bitset_empty, bitset_copy):
+	Prefer sizeof (bitset) to multiplying it out ourselves.
+	(bitset_not_merge): Remove; unused.
+	(bitset_contain): Return bool, not unsigned int with one bit on.
+	All callers changed.
+	* regexec.c (build_trtable): Don't assume bitset has no stricter
+	alignment than re_node_set; do this by defining a new internal
+	type struct dests_alloc and using it to allocate memory.
+
 2005-09-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Check for arithmetic overflow when calculating sizes, to prevent

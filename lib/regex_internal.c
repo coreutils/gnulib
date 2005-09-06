@@ -675,7 +675,7 @@ re_string_reconstruct (re_string_t *pstr, Idx idx, int eflags)
 		  for (wcs_idx = 0; wcs_idx < pstr->valid_len; ++wcs_idx)
 		    pstr->wcs[wcs_idx] = WEOF;
 		  if (pstr->mbs_allocated)
-		    memset (pstr->mbs, 255, pstr->valid_len);
+		    memset (pstr->mbs, -1, pstr->valid_len);
 		}
 	      pstr->valid_raw_len = pstr->valid_len;
 	      pstr->tip_context = ((BE (pstr->word_ops_used != 0, 0)
