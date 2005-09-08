@@ -1,4 +1,4 @@
-/* Copyright (C) 1991-2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+/* Copyright (C) 1991-2002,2003,2004,2005 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -240,9 +240,11 @@ int
 #ifdef GLOB_ATTRIBUTE
 GLOB_ATTRIBUTE
 #endif
-glob (const char *pattern, int flags,
-      int (*errfunc) (const char *, int),
-      glob_t *pglob)
+glob (pattern, flags, errfunc, pglob)
+     const char *pattern;
+     int flags;
+     int (*errfunc) (const char *, int);
+     glob_t *pglob;
 {
   const char *filename;
   const char *dirname;
@@ -531,7 +533,7 @@ glob (const char *pattern, int flags,
 	    {
 	      int success;
 	      char *name;
-	      size_t buflen = GET_LOGIN_NAME_MAX() + 1;
+	      size_t buflen = GET_LOGIN_NAME_MAX () + 1;
 
 	      if (buflen == 0)
 		/* `sysconf' does not support _SC_LOGIN_NAME_MAX.  Try
@@ -888,7 +890,8 @@ libc_hidden_def (glob)
 
 /* Free storage allocated in PGLOB by a previous `glob' call.  */
 void
-globfree (register glob_t *pglob)
+globfree (pglob)
+     register glob_t *pglob;
 {
   if (pglob->gl_pathv != NULL)
     {
@@ -986,7 +989,9 @@ prefix_array (const char *dirname, char **array, size_t n)
 /* Return nonzero if PATTERN contains any metacharacters.
    Metacharacters can be quoted with backslashes if QUOTE is nonzero.  */
 int
-__glob_pattern_p (const char *pattern, int quote)
+__glob_pattern_p (pattern, quote)
+     const char *pattern;
+     int quote;
 {
   register const char *p;
   int open = 0;

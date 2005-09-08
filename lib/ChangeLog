@@ -1,3 +1,9 @@
+2005-09-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* glob.c (glob, globfree, __glob_pattern_p): Use old-style function
+	definitions, since that's the preferred style in glibc.
+	Fix a minor spacing issue, and update copyright notice to match glibc's.
+
 2005-09-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regex_internal.h (bitset_not): Add parens to avoid gcc -Wall warning.

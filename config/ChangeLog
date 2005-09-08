@@ -1,3 +1,7 @@
+2005-09-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Remove glibc bug 1061; it's been fixed.
+
 2005-09-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Add glibc bug 1302.
