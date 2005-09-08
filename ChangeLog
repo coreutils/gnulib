@@ -1,3 +1,9 @@
+2005-09-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/utimens (Files): Add m4/utimbuf.m4, since
+	m4/utimens.m4 requires gl_CHECK_TYPE_STRUCT_UTIMBUF.
+	Reported by Sergey Poznyakoff.
+
 2005-09-08  Simon Josefsson  <jas@extundo.com>
 
 	* modules/socklen: New file.
