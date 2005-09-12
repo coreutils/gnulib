@@ -16,13 +16,20 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#ifndef _LIBC
+# include "getaddrinfo.h"
+#endif
+
 #include <stdio.h>
 #include <netdb.h>
 
 #ifdef _LIBC
 # include <libintl.h>
 #else
-# include "getaddrinfo.h"
 # include "gettext.h"
 # define _(String) gettext (String)
 # define N_(String) String

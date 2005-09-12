@@ -1,3 +1,9 @@
+2005-09-12  Derek Price  <derek@ximbiot.com>
+
+	* gai_strerror.c: Include config.h when available.  Include
+	getaddrinfo.h before other headers to test interface.
+	Reported by Larry Jones <lawrence.jones@ugs.com>.
+
 2005-09-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* glob.c (glob, globfree, __glob_pattern_p): Use old-style function
