@@ -1,3 +1,24 @@
+2005-09-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merge glibc and coreutils changes into gnulib, plus a few
+	extra fixes.
+	* md5.c: Use #error rather than a string.
+	(CYCLIC): New macro, from glibc source.  Use it instead of rol.
+	* md5.h (__GNUC_PREREQ, __THROW): Define if not defined already.
+	(__attribute__): Define to empty for non recent-GCC.
+	(__md5_buffer, __md5_finish_ctx, __md5_init_ctx, __md5_process_block):
+	(__md5_process_bytes, __md5_read_ctx, __md5_stream):
+	Renamed from their non-__ counterparts, with new macros replacing
+	them if not _LIBC.  Add __THROW attribute.
+	(rol): Remove.
+	(struct md5_ctx): Align buffer if using GCC.
+	* sha1.h (struct sha1_ctx): Likewise.
+	* sha1.c (SWAP): Renamed from the NOTSWAP.  All uses changed.
+	The old name was backwards.
+	(NOTSWAP): Remove; not used.
+	(rol): New macro, moved here from md5.h.
+	(sha1_process_block): Remove a FIXME that doesn't make sense.
+
 2005-09-12  Derek Price  <derek@ximbiot.com>
 
 	* gai_strerror.c: Include config.h when available.  Include
