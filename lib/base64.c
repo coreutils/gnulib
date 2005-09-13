@@ -36,7 +36,7 @@
  *   FAIL: input too long
  * if (out == NULL)
  *   FAIL: memory allocation error
- * OK: data in OUT/LEN.
+ * OK: data in OUT/OUTLEN.
  *
  */
 
@@ -65,7 +65,7 @@ void
 base64_encode (const char *restrict in, size_t inlen,
 	       char *restrict out, size_t outlen)
 {
-  const char b64str[64] =
+  static const char b64str[64] =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
   while (inlen && outlen)
