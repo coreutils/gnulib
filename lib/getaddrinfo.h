@@ -25,7 +25,7 @@
 # include <sys/socket.h>
 # include <netdb.h>
 
-# if defined HAVE_GETADDRINFO && !HAVE_GETADDRINFO
+# if !HAVE_GETADDRINFO
 
 /* Structure to contain information about address of a service provider.  */
 struct addrinfo
@@ -90,6 +90,6 @@ extern void freeaddrinfo (struct addrinfo *ai);
    <http://www.opengroup.org/susv3xsh/gai_strerror.html>.  */
 extern const char *gai_strerror (int ecode);
 
-# endif
+# endif /* !HAVE_GETADDRINFO */
 
 #endif /* GETADDRINFO_H */

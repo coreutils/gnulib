@@ -1,4 +1,13 @@
 2005-09-12  Derek Price  <derek@ximbiot.com>
+
+	Make canon-host require getaddrinfo.
+	* canon-host.m4 (gl_CANON_HOST): Remove most dependencies.
+	AC_LIBSOURCE canon-host.h.  Call...
+	(gl_PREREQ_CANON_HOST): ...this new function, which requires
+	gl_GETADDRINFO.
+	* getaddrinfo.m4 (gl_GETADDRINFO): Compile gai_strerror when needed.
+
+2005-09-12  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/glob.m4 (gl_GLOB_SUBSTITUTE): AC_LIBSOURCES for glob.c,

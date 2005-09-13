@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 2
+# getaddrinfo.m4 serial 3
 dnl Copyright (C) 2004 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_GETADDRINFO],
 [
   AC_SEARCH_LIBS(getaddrinfo, nsl socket)
-  AC_REPLACE_FUNCS(getaddrinfo)
+  AC_REPLACE_FUNCS(getaddrinfo gai_strerror)
   gl_PREREQ_GETADDRINFO
 ])
 

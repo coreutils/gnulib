@@ -4,9 +4,11 @@ usually the host name including FQDN.
 
 Files:
 lib/canon-host.c
+lib/canon-host.h
 m4/canon-host.m4
 
 Depends-on:
+getaddrinfo
 strdup
 
 configure.ac:
@@ -15,9 +17,10 @@ gl_CANON_HOST
 Makefile.am:
 
 Include:
+#include "canon-host.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Jim Meyering

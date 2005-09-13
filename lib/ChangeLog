@@ -1,4 +1,18 @@
 2005-09-12  Derek Price  <derek@ximbiot.com>
+
+	Return usable errors from canon-host.
+	* canon-host.h: New file.
+	* canon-host.c (canon_host): Wrap...
+	(canon_host_r): ...this new function, which now relies exclusively on
+	getaddrinfo.
+	(ch_strerror): New function.
+	(last_cherror): New global.
+	* getaddrinfo.c: Move include of getaddrinfo.h first to test interface.
+	(getaddrinfo): Add AI_CANONNAME functionality.  Don't do arithmetic on
+	void *.
+	(freeaddrinfo): Free ai->ai_canonname when set.
+
+2005-09-12  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	* glob-libc.h: Renamed from glob_.h.  The new version is

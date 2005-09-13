@@ -1,4 +1,10 @@
 2005-09-12  Derek Price  <derek@ximbiot.com>
+
+	* modules/canon-host: Add canon-host.h.  Depend on getaddrinfo.  Make
+	LGPL.
+	* modules/getaddrinfo: Add link to opengroup spec.  Depend on strdup.
+
+2005-09-12  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/glob (Files): Add glob-libc.h.

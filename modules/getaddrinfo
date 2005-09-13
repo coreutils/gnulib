@@ -1,5 +1,5 @@
 Description:
-Get address information.
+getaddrinfo() function: Get address information.
 
 Files:
 lib/getaddrinfo.h
@@ -12,6 +12,7 @@ Depends-on:
 restrict
 gettext-h
 stdbool
+strdup
 
 configure.ac:
 gl_GETADDRINFO
