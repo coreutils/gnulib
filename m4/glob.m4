@@ -1,4 +1,4 @@
-# glob.m4 serial 2
+# glob.m4 serial 3
 dnl Copyright (C) 2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,10 +13,8 @@ AC_DEFUN([gl_GLOB_SUBSTITUTE],
   gl_PREREQ_GLOB
 
   GLOB_H=glob.h
+  AC_LIBSOURCES([glob.c, glob_.h, glob-libc.h])
   AC_LIBOBJ([glob])
-  AC_DEFINE([GLOB_PREFIX], [[rpl_]],
-    [Define to rpl_ if the glob replacement functions and variables
-     should be used.])
   AC_SUBST([GLOB_H])
 ])
 
@@ -75,19 +73,8 @@ if (glob ("conf*-globtest", 0, NULL, &found) == GLOB_NOMATCH) return 1;]]),
 # Prerequisites of lib/glob.*.
 AC_DEFUN([gl_PREREQ_GLOB],
 [ AC_REQUIRE([gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE])dnl
+  AC_REQUIRE([AC_GNU_SOURCE])dnl
   AC_REQUIRE([AC_HEADER_DIRENT])dnl
   AC_CHECK_HEADERS_ONCE([sys/cdefs.h unistd.h])dnl
   AC_CHECK_FUNCS_ONCE([getlogin_r getpwnam_r])dnl
-  AC_CHECK_HEADERS([sys/cdefs.h], [SYS_CDEFS_H=yes], [SYS_CDEFS_H=no])
-
-  dnl Note the reversal of the common HAVE_SYS_CDEFS_H idiom below.  In this
-  dnl way, #ifndef _SYS_CDEFS_H may be used to include <sys/cdefs.h> both when
-  dnl it has been checked for via the GNULIB configure test and found and when
-  dnl it has not been checked for, which we can presume means that the <glob.h>
-  dnl GNULIB shares with GLIBC is being included as a system header and not as
-  dnl part of GNULIB, in which case <sys/cdefs.h> may be assumed.
-  if test $SYS_CDEFS_H = no; then
-    AC_DEFINE(_SYS_CDEFS_H, 1,
-      [Define to `1' if <sys/cdefs.h> is *not* available on this system.])
-  fi
   :])

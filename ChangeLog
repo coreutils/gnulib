@@ -1,3 +1,8 @@
+2005-09-12  Derek Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/glob (Files): Add glob-libc.h.
+
 2005-09-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/utimens (Files): Add m4/utimbuf.m4, since

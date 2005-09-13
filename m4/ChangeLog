@@ -1,3 +1,10 @@
+2005-09-12  Derek Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/glob.m4 (gl_GLOB_SUBSTITUTE): AC_LIBSOURCES for glob.c,
+	glob_.h, glob-libc.h.
+	(gl_PREREQ_GLOB): Remove _SYS_CDEFS_H hack; no longer needed.
+
 2005-08-31  Simon Josefsson  <jas@extundo.com>
 
 	* socklen.m4: New file.

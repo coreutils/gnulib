@@ -4,6 +4,7 @@ pattern, with GNU extensions.
 
 Files:
 lib/glob_.h
+lib/glob-libc.h
 lib/glob.c
 m4/d-type.m4
 m4/glob.m4
@@ -24,7 +25,6 @@ gl_GLOB
 
 Makefile.am:
 BUILT_SOURCES += $(GLOB_H)
-EXTRA_DIST += glob_.h
 
 # We need the following in order to create <glob.h> when the system
 # doesn't have one that works with the given compiler.

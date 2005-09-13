@@ -1,3 +1,18 @@
+2005-09-12  Derek Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	* glob-libc.h: Renamed from glob_.h.  The new version is
+	taken from libc's glob.h, except with '#ifdef __GLOB_GNULIB'
+	protecting things that should be done only in gnulib contexts.
+	* glob_.h: New file, containing only the glob things needed for
+	gnulib.
+	(GLOB_PREFIX): Remove.  All uses changed to look for __GLOB_GNULIB.
+	(__GLOB_CONCAT, __GLOB_XCONCAT, __GLOB_ID): Remove; no longer needed.
+	(glob, globfree, glob_pattern_p): Now defined simply in terms of
+	rpl_glob, rpl_globfree, rpl_glob_pattern_p.
+	(__GLOB_GNULIB): New macro, to keep the glob.h changes clearer
+	and to respect the namespace rules better.
+
 2005-09-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge glibc and coreutils changes into gnulib, plus a few
