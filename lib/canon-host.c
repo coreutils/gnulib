@@ -1,7 +1,6 @@
 /* Host name canonicalization
 
-   Copyright (C) 2005 Free Software
-   Foundation, Inc.
+   Copyright (C) 2005 Free Software Foundation, Inc.
 
    Written by Derek Price <derek@ximbiot.com>.
 
@@ -28,29 +27,22 @@
 #include "getaddrinfo.h"
 #include "strdup.h"
 
-
-
 /* Store the last error for the single-threaded version of this function.  */
 static int last_cherror;
 
-
-
 /* Single-threaded of wrapper for canon_host_r.  After a NULL return, error
-   messages may be retrieved via ch_strerror().
- */
+   messages may be retrieved via ch_strerror().  */
 char *
 canon_host (const char *host)
 {
-    return canon_host_r (host, &last_cherror);
+  return canon_host_r (host, &last_cherror);
 }
 
-
-
-/* Returns a malloc'd string containing the canonical hostname associated with
-   HOST, or NULL if a canonical name cannot be determined.  On NULL return, if
-   CHERROR is not NULL, *CHERROR will be set to an error code as returned by
-   getaddrinfo().  Error codes from CHERROR may be converted to a string
-   suitable for error messages by ch_strerror_r() or gai_strerror().
+/* Return a malloc'd string containing the canonical hostname associated with
+   HOST, or NULL if a canonical name cannot be determined.  On NULL return,
+   if CHERROR is not NULL, set *CHERROR to an error code as returned by
+   getaddrinfo().  Use ch_strerror_r() or gai_strerror() to convert a *CHERROR
+   value to a string suitable for error messages.
 
    WARNINGS
      HOST must be a string representation of a resolvable name for this host.
@@ -66,34 +58,31 @@ canon_host (const char *host)
      getaddrinfo spec <http://www.opengroup.org/susv3xsh/getaddrinfo.html">,
      RFC 1034 <http://www.faqs.org/rfcs/rfc1034.html>, & RFC 2181
      <http://www.faqs.org/rfcs/rfc2181.html> for more on what this confusing
-     term really refers to.
- */
+     term really refers to. */
 char *
 canon_host_r (char const *host, int *cherror)
 {
-    char *retval = NULL;
-    static struct addrinfo hints;
-    struct addrinfo *res = NULL;
-    int status;
+  char *retval = NULL;
+  static struct addrinfo hints;
+  struct addrinfo *res = NULL;
+  int status;
 
-    hints.ai_flags = AI_CANONNAME;
-    status = getaddrinfo (host, NULL, &hints, &res);
-    if (!status)
+  hints.ai_flags = AI_CANONNAME;
+  status = getaddrinfo (host, NULL, &hints, &res);
+  if (!status)
     {
-	retval = strdup (res->ai_canonname);
-	freeaddrinfo (res);
+      retval = strdup (res->ai_canonname);
+      freeaddrinfo (res);
     }
-    else if (cherror)
-	*cherror = status;
+  else if (cherror)
+    *cherror = status;
 
-    return retval;
+  return retval;
 }
-
-
 
 /* Return a string describing the last error encountered by canon_host.  */
 const char *
 ch_strerror (void)
 {
-    return gai_strerror (last_cherror);
+  return gai_strerror (last_cherror);
 }
