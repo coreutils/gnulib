@@ -1,3 +1,8 @@
+2005-09-13  Jim Meyering  <jim@meyering.net>
+
+	* canon-host.c: Filter through gnu indent and reword comments slightly.
+	* canon-host.h (ch_strerror_r): Tweak cpp indentation and spacing.
+
 2005-09-12  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny change)
 
 	* lib/base64.c: Typo.
