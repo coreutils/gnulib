@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.16 2005-08-11 10:08:57 jas Exp $
+@comment $Id: gnulib.texi,v 1.17 2005-09-13 15:06:24 meyering Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2005-08-11 10:08:57 $
+@set UPDATED $Date: 2005-09-13 15:06:24 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -484,9 +484,9 @@ gl_INIT
 ...
 @end example
 
-@code{gl_INIT} will in turn call the macros related with the 
+@code{gl_INIT} will in turn call the macros related with the
 gnulib functions, be it specific gnulib macros, like @code{gl_FUNC_ALLOCA}
-or autoconf or automake macro like @code{AC_FUNC_ALLOCA} or 
+or autoconf or automake macro like @code{AC_FUNC_ALLOCA} or
 @code{AM_FUNC_GETLINE} so there is no need to call those macros yourself
 when you use the corresponding gnulib modules.
 
@@ -542,10 +542,10 @@ LIBADD = lib/libgnu.a
 Don't forget to @code{#include} the various header files.  In this
 example, you would need to make sure that @samp{#include "strdup.h"}
 is evaluated when compiling all source code files, that want to make
-use of @code{strdup}. 
+use of @code{strdup}.
 
 When an include file is provided by the gnulib
-you shouldn't try to include the corresponding system header files 
+you shouldn't try to include the corresponding system header files
 yourself but let the gnulib header file do it as the ordering
 of the definition for some symbols may be significant.
 
