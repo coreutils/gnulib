@@ -25,6 +25,6 @@ char *canon_host (char const *host);
 char *canon_host_r (char const *host, int *cherror);
 
 const char *ch_strerror (void);
-#define ch_strerror_r(cherror)		gai_strerror (cherror);
+# define ch_strerror_r(cherror) gai_strerror (cherror);
 
 #endif /* !CANON_HOST_H */
