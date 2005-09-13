@@ -1,3 +1,9 @@
+2005-09-13  Derek Price  <derek@ximbiot.com>
+
+	* canon-host.c (canon_host_r): Set *cherror on memory allocation
+	failure.
+	Reported by Jim Meyering  <jim@meyering.net>.
+
 2005-09-13  Jim Meyering  <jim@meyering.net>
 
 	* canon-host.c: Filter through gnu indent and reword comments slightly.

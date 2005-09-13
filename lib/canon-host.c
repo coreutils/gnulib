@@ -72,6 +72,8 @@ canon_host_r (char const *host, int *cherror)
   if (!status)
     {
       retval = strdup (res->ai_canonname);
+      if (!retval && cherror)
+	*cherror = EAI_MEMORY;
       freeaddrinfo (res);
     }
   else if (cherror)
