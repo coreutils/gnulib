@@ -1,4 +1,4 @@
-# strstr.m4 serial 3
+# strstr.m4 serial 4
 dnl Copyright (C) 2002-2003, 2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,6 @@ AC_DEFUN([gl_FUNC_STRSTR],
   dnl No known system has a strstr() function that works correctly in
   dnl multibyte locales. Therefore we use our version always.
   AC_LIBOBJ(strstr)
-  AC_DEFINE(strstr, rpl_strstr, [Define to rpl_strstr always.])
   gl_PREREQ_STRSTR
 ])
 

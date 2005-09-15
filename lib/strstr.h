@@ -15,9 +15,19 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+
+/* Include string.h: on glibc systems, it contains a macro definition of
+   strstr() that would collide with our definition if included afterwards.  */
+#include <string.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* No known system has a strstr() function that works correctly in
+   multibyte locales. Therefore we use our version always.  */
+#undef strstr
+#define strstr rpl_strstr
 
 /* Find the first occurrence of NEEDLE in HAYSTACK.  */
 extern char *strstr (const char *haystack, const char *needle);

@@ -1,3 +1,7 @@
+2005-09-15  Derek Price  <derek@ximbiot.com>
+
+	* strstr.m4 (gl_FUNC_STRSTR): Don't define strstr here.
+
 2005-09-12  Derek Price  <derek@ximbiot.com>
 
 	Make canon-host require getaddrinfo.

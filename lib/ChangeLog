@@ -1,3 +1,7 @@
+2005-09-15  Derek Price  <derek@ximbiot.com>
+
+	* strstr.h: Include string.h. Define strstr as a macro here.
+
 2005-09-13  Derek Price  <derek@ximbiot.com>
 
 	* canon-host.c (canon_host_r): Set *cherror on memory allocation
