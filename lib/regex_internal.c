@@ -17,6 +17,19 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. */
 
+#ifndef __GNUC_PREREQ
+# if defined __GNUC__ && defined __GNUC_MINOR__
+#  define __GNUC_PREREQ(maj, min) \
+	((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
+# else
+#  define __GNUC_PREREQ(maj, min) 0
+# endif
+#endif
+
+#if !__GNUC_PREREQ (3, 0)
+# define pure
+#endif
+
 static void re_string_construct_common (const char *str, Idx len,
 					re_string_t *pstr,
 					REG_TRANSLATE_TYPE trans, bool icase,

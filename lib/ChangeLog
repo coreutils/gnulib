@@ -1,5 +1,11 @@
 2005-09-15  Derek Price  <derek@ximbiot.com>
 
+	* regex_internal.h: Blank `pure' for GNUC < 3.
+	* regex_internal.c: Ditto, using this...
+	(__GNUC_PREREQ): ...new macro.
+	* regcomp.c, regexec.c: Blank `always_inline' for GNUC < 3.1 using...
+	(__GNUC_PREREQ): ...this new macro.
+
 	* strstr.h: Include string.h. Define strstr as a macro here.
 
 2005-09-13  Derek Price  <derek@ximbiot.com>

@@ -89,6 +89,7 @@
 #else
 # define BE(expr, val) (expr)
 # define inline
+# define pure
 #endif
 
 /* Number of single byte character.  */
