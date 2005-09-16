@@ -1,3 +1,11 @@
+2005-09-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* stat-time.h: New file.
+	* timespec.h (ST_TIME_CMP_NS, ST_TIME_CMP, ATIME_CMP, CTIME_CMP):
+	(MTIME_CMP, TIMESPEC_NS): Remove.  Now done by stat-time.h,
+	in a different way.
+	(timespec_cmp): New function.
+
 2005-09-15  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 

@@ -3,7 +3,6 @@ struct timespec.
 
 Files:
 lib/timespec.h
-m4/st_mtim.m4
 m4/timespec.m4
 
 Depends-on:

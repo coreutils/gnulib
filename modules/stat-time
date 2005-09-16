@@ -1,0 +1,23 @@
+Description:
+stat-related time functions
+
+Files:
+lib/stat-time.h
+m4/stat-time.m4
+
+Depends-on:
+timespec
+
+configure.ac:
+gl_STAT_TIME
+
+Makefile.am:
+
+Include:
+"stat-time.h"
+
+License:
+GPL
+
+Maintainer:
+Paul Eggert and Jim Meyering

@@ -1,3 +1,10 @@
+2005-09-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* st_mtim.m4: Remove.  Superseded by...
+	* stat-time.m4: New file.
+	* timespec.m4 (gl_TIMESPEC): Require AC_C_INLINE.
+	Do not invoke AC_STRUCT_ST_MTIM_NSEC; no longer needed.
+
 2005-09-15  Derek Price  <derek@ximbiot.com>
 
 	* strstr.m4 (gl_FUNC_STRSTR): Don't define strstr here.

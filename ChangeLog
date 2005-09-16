@@ -1,3 +1,10 @@
+2005-09-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh (File system functions): Add stat-time.
+	* modules/stat-time: New file.
+	* modules/timespec (Files): Remove m4/st_mtim.m4; this
+	is now done in a different way, by the stat-time module.
+
 2005-09-12  Derek Price  <derek@ximbiot.com>
 
 	* modules/canon-host: Add canon-host.h.  Depend on getaddrinfo.  Make
