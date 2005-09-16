@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.104 2005-09-08 20:18:48 eggert Exp $
+# $Id: srclist.txt,v 1.105 2005-09-16 21:37:31 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -183,9 +183,7 @@ $LIBCSRC/sysdeps/generic/strtoll.c	lib gpl
 $LIBCSRC/sysdeps/generic/strtoul.c	lib gpl
 $LIBCSRC/sysdeps/generic/strtok_r.c	lib gpl
 $LIBCSRC/sysdeps/generic/memmem.c	lib gpl
-#
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1033
-#$LIBCSRC/time/mktime.c			lib gpl
+$LIBCSRC/time/mktime.c			lib gpl
 
 #
 # These are close, but ...

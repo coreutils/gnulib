@@ -1,3 +1,7 @@
+2005-09-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Remove glibc bug 1033 and uncomment mktime.c.
+
 2005-09-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Remove glibc bug 1061; it's been fixed.
