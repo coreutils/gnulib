@@ -1,4 +1,11 @@
 2005-09-15  Derek Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regcomp.c, regexec.c, regex_internal.c: Back out previous
+	changes, consolidating in...
+	* regex_internal.h: ...this file.
+
+2005-09-15  Derek Price  <derek@ximbiot.com>
 
 	* regex_internal.h: Blank `pure' for GNUC < 3.
 	* regex_internal.c: Ditto, using this...

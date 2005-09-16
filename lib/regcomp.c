@@ -17,19 +17,6 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. */
 
-#ifndef __GNUC_PREREQ
-# if defined __GNUC__ && defined __GNUC_MINOR__
-#  define __GNUC_PREREQ(maj, min) \
-	((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
-# else
-#  define __GNUC_PREREQ(maj, min) 0
-# endif
-#endif
-
-#if !__GNUC_PREREQ (3, 1)
-# define always_inline
-#endif
-
 static reg_errcode_t re_compile_internal (regex_t *preg, const char * pattern,
 					  Idx length, reg_syntax_t syntax);
 static void re_compile_fastmap_iter (regex_t *bufp,
