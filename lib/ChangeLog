@@ -1,3 +1,42 @@
+2005-09-19  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Use a consistent style for including <config.h>.
+	* __fpending.c, acl.c, argmatch.c,
+	argp-help.c, argp-parse.c,
+	argp-pvh.c, backupfile.c, basename.c, c-stack.c,
+	calloc.c, check-version.c, cloexec.c, closeout.c, copy-file.c,
+	creat-safer.c, cycle-check.c, dirfd.c, dirname.c, dup-safer.c,
+	dup2.c, euidaccess.c, exclude.c, exitfail.c, fatal-signal.c,
+	fd-safer.c, file-type.c, fileblocks.c, filemode.c,
+	filenamecat.c, findprog.c, fnmatch.c, fopen-safer.c, free.c,
+	fsusage.c, ftruncate.c, full-write.c, fwriteerror.c,
+	getaddrinfo.c, getcwd.c, getdelim.c, getline.c, getlogin_r.c,
+	getndelim2.c, getnline.c, getopt1.c, getpass.c, group-member.c,
+	hard-locale.c, hash-pjw.c, hash.c, human.c, idcache.c,
+	inet_ntop.c, isdir.c, long-options.c, malloc.c, memcasecmp.c,
+	memcmp.c, memcoll.c, memcpy.c, memmove.c, mkdir-p.c,
+	modechange.c, mountlist.c, open-safer.c, physmem.c,
+	pipe-safer.c, pipe.c, poll.c, posixver.c, progname.c,
+	progreloc.c, putenv.c, quote.c, quotearg.c, readline.c,
+	readlink.c, realloc.c, regex.c, rename.c, rmdir.c, rpmatch.c,
+	safe-read.c, same.c, save-cwd.c, savedir.c, sig2str.c,
+	strcspn.c, strerror.c, stripslash.c, strncasecmp.c, strndup.c,
+	strnlen.c, strnlen1.c, strsep.c, strstr.c, strtod.c,
+	strtoimax.c, strtol.c, strverscmp.c, tempname.c, time_r.c,
+	userspec.c, utimecmp.c, version-etc-fsf.c,
+	version-etc.c, wait-process.c, xalloc-die.c, xgetcwd.c,
+	xmalloc.c, xmemcoll.c, xnanosleep.c, xreadlink.c, xsetenv.c,
+	xstrndup.c, xstrtoimax.c, xstrtol.c, xstrtoumax.c, yesno.c:
+	Standardize inclusion of config.h.
+	* __fpending.h, dirfd.h, getdate.h, human.h,
+	inttostr.h:  Removed inclusion of config.h from header files.
+	* inttostr.c:  Adjusted in-tree users.
+	* timespec.h: Remove superfluous warning to include config.h.
+	* atexit.c, chdir-long.c chown.c, fchown-stub.c, getgroups.c,
+	gettimeofday.c, lchown.c, lstat.c, mkdir.c, mkstemp.c,
+	nanosleep.c, openat.c, raise.c, readtokens0.c, readutmp.c,
+	unlinkdir.c: Guard inclusion of config.h with HAVE_CONFIG_H.
+
 2005-09-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* stat-time.h: New file.
