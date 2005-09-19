@@ -1,3 +1,7 @@
+2005-09-19  Simon Josefsson  <jas@extundo.com>
+
+	* socklen.m4: Fix typo.
+
 2005-09-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* st_mtim.m4: Remove.  Superseded by...

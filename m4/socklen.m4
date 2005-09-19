@@ -18,3 +18,4 @@ AC_DEFUN([gl_SOCKLEN_T],
 # include <sys/socket.h>
 #endif)
 ])
+])
