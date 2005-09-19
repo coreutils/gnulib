@@ -1,5 +1,15 @@
 2005-09-18  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool: Support --with-tests also with --import.
+	(func_emit_tests_Makefile_am): Use variables $m4base and $testsbase.
+	(func_import): Use variables $testsbase and $inctests. Emit a
+	gl_TESTS_BASE form into gnulib-cache.m4. Create $testsbase/Makefile.am.
+	Remind the user to add AC_CONFIG_FILES($testsdir/Makefile) and
+	SUBDIRS += $testsdir.
+	(func_create_testdir): Update.
+
+2005-09-18  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Comment out code that spits out the
 	new files with --dry-run.
 
