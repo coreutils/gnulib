@@ -1,5 +1,14 @@
 2005-09-18  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool: Revise --dry-run implementation. Use variable $doit
+	instead of $dry_run.
+	(func_cp_if_changed, func_mv_if_changed): Remove functions.
+	(func_ln_if_changed): Don't handle dry-run here.
+	(func_import): In dry-run mode, detect more precisely which actions
+	would be performed, and don't use "...ing" verbs.
+
+2005-09-18  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_tmpdir): New function, taken from GNU gettextize.
 	(func_import): Use join on two temporary files instead of three nested
 	loops, in order to determine which files are new or old.

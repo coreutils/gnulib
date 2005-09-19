@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-19 15:29:40 $'
+cvsdatestamp='$Date: 2005-09-19 15:31:11 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -162,56 +162,18 @@ func_fatal_error ()
   exit 1
 }
 
-# func_cp_if_changed SRC DEST
-# Like cp, but avoids munging timestamps if the file hasn't changed.
-# Uses also the variables
-# - dry_run         true if actions shall only be printed, blank otherwise
-func_cp_if_changed ()
-{
-  if test $# -ne 2; then
-    echo "usage: func_cp_if_changed SRC DEST" >&2
-  fi
-  test -n "$dry_run" && dry=echo
-  if cmp "$1" "$2" >/dev/null 2>&1; then
-    :
-  else
-    $dry cp -p "$1" "$2"
-  fi
-}
-
-# func_mv_if_changed SRC DEST
-# Like mv, but avoids munging timestamps if the file hasn't changed.
-# Removes SRC if it is not renamed.
-# Uses also the variables
-# - dry_run         true if actions shall only be printed, blank otherwise
-func_mv_if_changed ()
-{
-  if test $# -ne 2; then
-    echo "usage: func_mv_if_changed SRC DEST" >&2
-  fi
-  test -n "$dry_run" && dry=echo
-  if cmp "$1" "$2" >/dev/null 2>&1; then
-    $dry rm "$1"
-  else
-    $dry mv "$1" "$2"
-  fi
-}
-
 # func_ln_if_changed SRC DEST
 # Like ln -s, but avoids munging timestamps if the link is correct.
-# Uses also the variables
-# - dry_run         true if actions shall only be printed, blank otherwise
 func_ln_if_changed ()
 {
   if test $# -ne 2; then
     echo "usage: func_ln_if_changed SRC DEST" >&2
   fi
-  test -n "$dry_run" && dry=echo
-  if test -L "$2" -a "$1" = "`readlink "$2"`"; then
+  if test -L "$2" && test "$1" = "`readlink "$2"`"; then
     :
   else
-    $dry rm -f "$2"
-    $dry ln -s "$1" "$2"
+    rm -f "$2"
+    ln -s "$1" "$2"
   fi
 }
 
@@ -229,7 +191,7 @@ func_ln_if_changed ()
 # - lgpl            true if --lgpl was given, blank otherwise
 # - libtool         true if --libtool was given, blank otherwise
 # - do_changelog    false if --no-changelog was given, : otherwise
-# - dry_run         true if --dry-run was given, blank otherwise
+# - doit            : if actions shall be executed, false if only to be printed
 {
   mode=
   destdir=
@@ -245,7 +207,7 @@ func_ln_if_changed ()
   libtool=
   macro_prefix=
   do_changelog=:
-  dry_run=
+  doit=:
   symbolic=
 
   supplied_opts="$@"
@@ -368,7 +330,7 @@ func_ln_if_changed ()
         do_changelog=false
         shift ;;
       --dry-run )
-        dry_run=true
+        doit=false
         shift ;;
       -s | --symbolic | --symlink )
         symbolic=true
@@ -779,7 +741,7 @@ func_emit_tests_Makefile_am ()
 # - libtool         true if libtool will be used, blank otherwise
 # - guessed_libtool true if the configure.ac file uses libtool, blank otherwise
 # - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
-# - dry_run         true if actions shall only be printed, blank otherwise
+# - doit            : if actions shall be executed, false if only to be printed
 # - symbolic        true if files should be symlinked, copied otherwise
 func_import ()
 {
@@ -926,12 +888,30 @@ func_import ()
   fi
 
   # Create directories.
-  test -d "$destdir/$sourcebase" \
-    || { test -n "$dry_run" || mkdir "$destdir/$sourcebase" || func_fatal_error "failed"; }
-  test -d "$destdir/$m4base" \
-    || { test -n "$dry_run" || mkdir "$destdir/$m4base" || func_fatal_error "failed"; }
-  test -d "$destdir/$auxdir" \
-    || { test -n "$dry_run" || mkdir "$destdir/$auxdir" || func_fatal_error "failed"; }
+  if test ! -d "$destdir/$sourcebase"; then
+    if $doit; then
+      echo "Creating directory $destdir/$sourcebase"
+      mkdir "$destdir/$sourcebase" || func_fatal_error "failed"
+    else
+      echo "Create directory $destdir/$sourcebase"
+    fi
+  fi
+  if test ! -d "$destdir/$m4base"; then
+    if $doit; then
+      echo "Creating directory $destdir/$m4base"
+      mkdir "$destdir/$m4base" || func_fatal_error "failed"
+    else
+      echo "Create directory $destdir/$m4base"
+    fi
+  fi
+  if test ! -d "$destdir/$auxdir"; then
+    if $doit; then
+      echo "Creating directory $destdir/$auxdir"
+      mkdir "$destdir/$auxdir" || func_fatal_error "failed"
+    else
+      echo "Create directory $destdir/$auxdir"
+    fi
+  fi
 
   # Copy files or make symbolic links. Remove obsolete files.
   func_tmpdir
@@ -959,9 +939,12 @@ func_import ()
   for g in `LC_ALL=C join -t"$delimiter" -v1 "$tmp"/old-files "$tmp"/new-files | sed -e 's,'"$delimiter"'.*,,'`; do
     # Remove the file. Do nothing if the user already removed it.
     if test -f "$destdir/$g"; then
-      echo "Removing file $g (backup in ${g}~)"
-      test -n "$dry_run" && dry=echo
-      $dry mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
+      if $doit; then
+        echo "Removing file $g (backup in ${g}~)"
+        mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
+      else
+        echo "Remove file $g (backup in ${g}~)"
+      fi
     fi
   done
   # func_add_or_update handles a file that ought to be present afterwards.
@@ -985,29 +968,39 @@ func_import ()
         : # The file has not changed.
       else
         # Replace the file.
-        if test -n "$already_present"; then
-          echo "Updating file $g (backup in ${g}~)"
+        if $doit; then
+          if test -n "$already_present"; then
+            echo "Updating file $g (backup in ${g}~)"
+          else
+            echo "Replacing file $g (non-gnulib code backuped in ${g}~) !!"
+          fi
+          mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
+          if test -n "$symbolic" && cmp "$gnulib_dir/$f" "$destdir/$g.tmp" > /dev/null; then
+            func_ln_if_changed "$gnulib_dir/$f" "$destdir/$g"
+          else
+            mv -f "$destdir/$g.tmp" "$destdir/${g}" || func_fatal_error "failed"
+          fi
         else
-          echo "Replacing file $g (non-gnulib code backuped in ${g}~) !!"
-        fi
-        test -n "$dry_run" && dry=echo
-        $dry mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
-        if test -n "$symbolic" && cmp "$gnulib_dir/$f" "$destdir/$g.tmp" > /dev/null; then
-          func_ln_if_changed "$gnulib_dir/$f" "$destdir/$g"
-        else
-          $dry mv -f "$destdir/$g.tmp" "$destdir/${g}" || func_fatal_error "failed"
+          if test -n "$already_present"; then
+            echo "Update file $g (backup in ${g}~)"
+          else
+            echo "Replace file $g (non-gnulib code backuped in ${g}~) !!"
+          fi
         fi
       fi
     else
       # Install the file.
       # Don't protest if the file should be there but isn't: it happens
       # frequently that developers don't put autogenerated files into CVS.
-      echo "Copying file $g"
-      test -n "$dry_run" && dry=echo
-      if test -n "$symbolic" && cmp "$gnulib_dir/$f" "$destdir/$g.tmp" > /dev/null; then
-        func_ln_if_changed "$gnulib_dir/$f" "$destdir/$g"
+      if $doit; then
+        echo "Copying file $g"
+        if test -n "$symbolic" && cmp "$gnulib_dir/$f" "$destdir/$g.tmp" > /dev/null; then
+          func_ln_if_changed "$gnulib_dir/$f" "$destdir/$g"
+        else
+          mv -f "$destdir/$g.tmp" "$destdir/${g}" || func_fatal_error "failed"
+        fi
       else
-        $dry mv -f "$destdir/$g.tmp" "$destdir/${g}" || func_fatal_error "failed"
+        echo "Copy file $g"
       fi
     fi
     rm -f "$destdir/$g.tmp"
@@ -1057,33 +1050,32 @@ func_import ()
   actioncmd="$actioncmd `echo $specified_modules`"
 
   # Create lib/Makefile.am.
-  if test -z "$dry_run"; then
-    func_emit_lib_Makefile_am > "$destdir"/$sourcebase/Makefile.am.tmp
-    if test -f "$destdir"/$sourcebase/Makefile.am; then
-      if cmp "$destdir"/$sourcebase/Makefile.am "$destdir"/$sourcebase/Makefile.am.tmp > /dev/null; then
-        rm -f "$destdir"/$sourcebase/Makefile.am.tmp
-      else
+  func_emit_lib_Makefile_am > "$destdir"/$sourcebase/Makefile.am.tmp
+  if test -f "$destdir"/$sourcebase/Makefile.am; then
+    if cmp "$destdir"/$sourcebase/Makefile.am "$destdir"/$sourcebase/Makefile.am.tmp > /dev/null; then
+      rm -f "$destdir"/$sourcebase/Makefile.am.tmp
+    else
+      if $doit; then
         echo "Updating $sourcebase/Makefile.am (backup in $sourcebase/Makefile.am~)"
         mv -f "$destdir"/$sourcebase/Makefile.am "$destdir"/$sourcebase/Makefile.am~
         mv -f "$destdir"/$sourcebase/Makefile.am.tmp "$destdir"/$sourcebase/Makefile.am
+      else
+        echo "Update $sourcebase/Makefile.am (backup in $sourcebase/Makefile.am~)"
+        rm -f "$destdir"/$sourcebase/Makefile.am.tmp
       fi
-    else
-      echo "Creating $sourcebase/Makefile.am"
-      mv -f "$destdir"/$sourcebase/Makefile.am.tmp "$destdir"/$sourcebase/Makefile.am
     fi
   else
-    echo "Creating $sourcebase/Makefile.am..."
-    func_emit_lib_Makefile_am
+    if $doit; then
+      echo "Creating $sourcebase/Makefile.am"
+      mv -f "$destdir"/$sourcebase/Makefile.am.tmp "$destdir"/$sourcebase/Makefile.am
+    else
+      echo "Create $sourcebase/Makefile.am"
+      rm -f "$destdir"/$sourcebase/Makefile.am.tmp
+    fi
   fi
 
   # Create m4/gnulib-cache.m4.
   (
-    if test -z "$dry_run"; then
-      exec > "$destdir"/$m4base/gnulib-cache.m4.tmp
-    else
-      echo "Creating $m4base/gnulib-cache.m4..."
-      echo "# $destdir/$m4base/gnulib-cache.m4"
-    fi
     echo "# Copyright (C) 2004 Free Software Foundation, Inc."
     echo "# This file is free software, distributed under the terms of the GNU"
     echo "# General Public License.  As a special exception to the GNU General"
@@ -1113,30 +1105,34 @@ func_import ()
     echo "gl_MACRO_PREFIX([$macro_prefix])"
     echo
     echo "# gnulib-cache.m4 ends here"
-  )
-  if test -z "$dry_run"; then
-    if test -f "$destdir"/$m4base/gnulib-cache.m4; then
-      if cmp "$destdir"/$m4base/gnulib-cache.m4 "$destdir"/$m4base/gnulib-cache.m4.tmp > /dev/null; then
-        rm -f "$destdir"/$m4base/gnulib-cache.m4.tmp
-      else
+  ) > "$destdir"/$m4base/gnulib-cache.m4.tmp
+  if test -f "$destdir"/$m4base/gnulib-cache.m4; then
+    if cmp "$destdir"/$m4base/gnulib-cache.m4 "$destdir"/$m4base/gnulib-cache.m4.tmp > /dev/null; then
+      rm -f "$destdir"/$m4base/gnulib-cache.m4.tmp
+    else
+      if $doit; then
         echo "Updating $m4base/gnulib-cache.m4 (backup in $m4base/gnulib-cache.m4~)"
         mv -f "$destdir"/$m4base/gnulib-cache.m4 "$destdir"/$m4base/gnulib-cache.m4~
         mv -f "$destdir"/$m4base/gnulib-cache.m4.tmp "$destdir"/$m4base/gnulib-cache.m4
+      else
+        echo "Update $m4base/gnulib-cache.m4 (backup in $m4base/gnulib-cache.m4~)"
+        cat "$destdir"/$m4base/gnulib-cache.m4.tmp
+        rm -f "$destdir"/$m4base/gnulib-cache.m4.tmp
       fi
-    else
+    fi
+  else
+    if $doit; then
       echo "Creating $m4base/gnulib-cache.m4"
       mv -f "$destdir"/$m4base/gnulib-cache.m4.tmp "$destdir"/$m4base/gnulib-cache.m4
+    else
+      echo "Create $m4base/gnulib-cache.m4"
+      cat "$destdir"/$m4base/gnulib-cache.m4.tmp
+      rm -f "$destdir"/$m4base/gnulib-cache.m4.tmp
     fi
   fi
 
   # Create m4/gnulib-comp.m4.
   (
-    if test -z "$dry_run"; then
-      exec > "$destdir"/$m4base/gnulib-comp.m4.tmp
-    else
-      echo "Creating $m4base/gnulib-comp.m4..."
-      echo "# $destdir/$m4base/gnulib-comp.m4"
-    fi
     echo "# Copyright (C) 2004 Free Software Foundation, Inc."
     echo "# This file is free software, distributed under the terms of the GNU"
     echo "# General Public License.  As a special exception to the GNU General"
@@ -1191,18 +1187,28 @@ func_import ()
     echo
     echo "# gnulib-comp.m4 ends here"
   )
-  if test -z "$dry_run"; then
-    if test -f "$destdir"/$m4base/gnulib-comp.m4; then
-      if cmp "$destdir"/$m4base/gnulib-comp.m4 "$destdir"/$m4base/gnulib-comp.m4.tmp > /dev/null; then
-        rm -f "$destdir"/$m4base/gnulib-comp.m4.tmp
-      else
+  if test -f "$destdir"/$m4base/gnulib-comp.m4; then
+    if cmp "$destdir"/$m4base/gnulib-comp.m4 "$destdir"/$m4base/gnulib-comp.m4.tmp > /dev/null; then
+      rm -f "$destdir"/$m4base/gnulib-comp.m4.tmp
+    else
+      if $doit; then
         echo "Updating $m4base/gnulib-comp.m4 (backup in $m4base/gnulib-comp.m4~)"
         mv -f "$destdir"/$m4base/gnulib-comp.m4 "$destdir"/$m4base/gnulib-comp.m4~
         mv -f "$destdir"/$m4base/gnulib-comp.m4.tmp "$destdir"/$m4base/gnulib-comp.m4
+      else
+        echo "Update $m4base/gnulib-comp.m4 (backup in $m4base/gnulib-comp.m4~)"
+        cat "$destdir"/$m4base/gnulib-comp.m4.tmp
+        rm -f "$destdir"/$m4base/gnulib-comp.m4.tmp
       fi
-    else
+    fi
+  else
+    if $doit; then
       echo "Creating $m4base/gnulib-comp.m4"
       mv -f "$destdir"/$m4base/gnulib-comp.m4.tmp "$destdir"/$m4base/gnulib-comp.m4
+    else
+      echo "Create $m4base/gnulib-comp.m4"
+      cat "$destdir"/$m4base/gnulib-comp.m4.tmp
+      rm -f "$destdir"/$m4base/gnulib-comp.m4.tmp
     fi
   fi
 
