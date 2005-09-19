@@ -1,0 +1,35 @@
+@node Quoting
+@section Quoting
+
+@cindex Quoting
+@findex quote
+@findex quotearg
+
+Gnulib provides @samp{quote} and @samp{quotearg} modules to help with
+quoting text, such as file names, in messages to the user.  Here's an
+example of using @samp{quote}:
+
+@example
+#include <quote.h>
+ ...
+  error (0, errno, _("cannot change owner of %s"), quote (fname));
+@end example
+
+This differs from
+
+@example
+  error (0, errno, _("cannot change owner of `%s'"), fname);
+@end example
+
+@noindent in that @code{quote} escapes unusual characters in
+@code{fname}, e.g., @samp{'} and control characters like @samp{\n}.
+
+@findex quote_n
+However, a caveat: @code{quote} reuses the storage that it returns.
+Hence if you need more than one thing quoted at the same time, you
+need to use @code{quote_n}.
+
+@findex quotearg_alloc
+Also, the quote module is not suited for multithreaded applications.
+In that case, you have to use @code{quotearg_alloc}, defined in the
+@samp{quotearg} module, which is decidedly less convenient.
