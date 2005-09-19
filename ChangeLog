@@ -1,5 +1,10 @@
 2005-09-18  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import): Comment out code that spits out the
+	new files with --dry-run.
+
+2005-09-18  Bruno Haible  <bruno@clisp.org>
+
 	Portability fix.
 	* gnulib-tool (func_readlink): New function.
 	(func_ln_if_changed): Use it.

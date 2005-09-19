@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-19 15:32:08 $'
+cvsdatestamp='$Date: 2005-09-19 15:32:51 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1118,8 +1118,6 @@ func_import ()
     test -z "$lgpl" || echo "gl_LGPL"
     test -z "$libtool" || echo "gl_LIBTOOL"
     echo "gl_MACRO_PREFIX([$macro_prefix])"
-    echo
-    echo "# gnulib-cache.m4 ends here"
   ) > "$destdir"/$m4base/gnulib-cache.m4.tmp
   if test -f "$destdir"/$m4base/gnulib-cache.m4; then
     if cmp "$destdir"/$m4base/gnulib-cache.m4 "$destdir"/$m4base/gnulib-cache.m4.tmp > /dev/null; then
@@ -1131,7 +1129,11 @@ func_import ()
         mv -f "$destdir"/$m4base/gnulib-cache.m4.tmp "$destdir"/$m4base/gnulib-cache.m4
       else
         echo "Update $m4base/gnulib-cache.m4 (backup in $m4base/gnulib-cache.m4~)"
-        cat "$destdir"/$m4base/gnulib-cache.m4.tmp
+        if false; then
+          cat "$destdir"/$m4base/gnulib-cache.m4.tmp
+          echo
+          echo "# gnulib-cache.m4 ends here"
+        fi
         rm -f "$destdir"/$m4base/gnulib-cache.m4.tmp
       fi
     fi
@@ -1199,8 +1201,6 @@ func_import ()
     echo "AC_DEFUN([${macro_prefix}_FILE_LIST], ["
     echo "$files" | sed -e 's,^,  ,'
     echo "])"
-    echo
-    echo "# gnulib-comp.m4 ends here"
   ) > "$destdir"/$m4base/gnulib-comp.m4.tmp
   if test -f "$destdir"/$m4base/gnulib-comp.m4; then
     if cmp "$destdir"/$m4base/gnulib-comp.m4 "$destdir"/$m4base/gnulib-comp.m4.tmp > /dev/null; then
@@ -1212,7 +1212,11 @@ func_import ()
         mv -f "$destdir"/$m4base/gnulib-comp.m4.tmp "$destdir"/$m4base/gnulib-comp.m4
       else
         echo "Update $m4base/gnulib-comp.m4 (backup in $m4base/gnulib-comp.m4~)"
-        cat "$destdir"/$m4base/gnulib-comp.m4.tmp
+        if false; then
+          cat "$destdir"/$m4base/gnulib-comp.m4.tmp
+          echo
+          echo "# gnulib-comp.m4 ends here"
+        fi
         rm -f "$destdir"/$m4base/gnulib-comp.m4.tmp
       fi
     fi
