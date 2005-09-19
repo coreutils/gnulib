@@ -1,0 +1,21 @@
+@node ctime
+@section ctime
+@findex ctime
+
+The @code{ctime} function need not be reentrant, and consequently is
+not required to be thread safe.  Implementations of @code{ctime}
+typically write the time stamp into static buffer.  If two threads
+call @code{ctime} at roughly the same time, you might end up with the
+wrong date in one of the threads, or some undefined string.  There is
+a re-entrant interface @code{ctime_r}, that take a pre-allocated
+buffer and length of the buffer, and return @code{NULL} on errors.
+The input buffer should be at least 26 bytes in size.  The output
+string is locale-independent.  However, years can have more than 4
+digits if @code{time_t} is sufficiently wide, so the length of the
+required output buffer is not easy to determine.  Increasing the
+buffer size when @code{ctime_r} return @code{NULL} is not necessarily
+sufficient. The @code{NULL} return value could mean some other error
+condition, which will not go away by increasing the buffer size.
+
+A more flexible function is @code{strftime}.  However, note that it is
+locale dependent.
