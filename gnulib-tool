@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-05 11:40:42 $'
+cvsdatestamp='$Date: 2005-09-19 15:29:40 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -120,6 +120,37 @@ func_version ()
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
   echo "Written by" "Bruno Haible" "and" "Simon Josefsson"
+}
+
+# func_tmpdir
+# creates a temporary directory.
+# Sets variable
+# - tmp             pathname of freshly created temporary directory
+func_tmpdir ()
+{
+  # Use the environment variable TMPDIR, falling back to /tmp. This allows
+  # users to specify a different temporary directory, for example, if their
+  # /tmp is filled up or too small.
+  : ${TMPDIR=/tmp}
+  {
+    # Use the mktemp program if available. If not available, hide the error
+    # message.
+    tmp=`(umask 077 && mktemp -d -q "$TMPDIR/glXXXXXX") 2>/dev/null` &&
+    test -n "$tmp" && test -d "$tmp"
+  } ||
+  {
+    # Use a simple mkdir command. It is guaranteed to fail if the directory
+    # already exists.  $RANDOM is bash specific and expands to empty in shells
+    # other than bash, ksh and zsh.  Its use does not increase security;
+    # rather, it minimizes the probability of failure in a very cluttered /tmp
+    # directory.
+    tmp=$TMPDIR/gl$$-$RANDOM
+    (umask 077 && mkdir "$tmp")
+  } ||
+  {
+    echo "$0: cannot create a temporary directory in $TMPDIR" >&2
+    { (exit 1); exit 1; }
+  }
 }
 
 # func_fatal_error message
@@ -903,99 +934,108 @@ func_import ()
     || { test -n "$dry_run" || mkdir "$destdir/$auxdir" || func_fatal_error "failed"; }
 
   # Copy files or make symbolic links. Remove obsolete files.
-  for f1 in $old_files; do
-    case "$f1" in
-      build-aux/*) g1=`echo "$f1" | sed -e "s,^build-aux/,$auxdir/,"` ;;
-      lib/*) g1=`echo "$f1" | sed -e "s,^lib/,$cached_sourcebase/,"` ;;
-      m4/*) g1=`echo "$f1" | sed -e "s,^m4/,$cached_m4base/,"` ;;
-      *) g1="$f1" ;;
+  func_tmpdir
+  trap 'rm -rf "$tmp"' 0 1 2 3 15
+  delimiter='	'
+  for f in $old_files; do
+    case "$f" in
+      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+      lib/*) g=`echo "$f" | sed -e "s,^lib/,$cached_sourcebase/,"` ;;
+      m4/*) g=`echo "$f" | sed -e "s,^m4/,$cached_m4base/,"` ;;
+      *) g="$f" ;;
     esac
-    still_present=
-    for f2 in $new_files; do
-      case "$f2" in
-        build-aux/*) g2=`echo "$f2" | sed -e "s,^build-aux/,$auxdir/,"` ;;
-        lib/*) g2=`echo "$f2" | sed -e "s,^lib/,$sourcebase/,"` ;;
-        m4/*) g2=`echo "$f2" | sed -e "s,^m4/,$m4base/,"` ;;
-        *) g2="$f2" ;;
-      esac
-      if test "$g2" = "$g1"; then
-        still_present=true
-        break
-      fi
-    done
-    if test -z "$still_present"; then
-      # Remove the file. Do nothing if the user already removed it.
-      if test -f "$destdir/$g1"; then
-        echo "Removing file $g1 (backup in ${g1}~)"
-        test -n "$dry_run" && dry=echo
-        $dry mv -f "$destdir/$g1" "$destdir/${g1}~" || func_fatal_error "failed"
-      fi
+    echo "$g""$delimiter""$f"
+  done | LC_ALL=C sort > "$tmp"/old-files
+  for f in $new_files; do
+    case "$f" in
+      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+      lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
+      m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
+      *) g="$f" ;;
+    esac
+    echo "$g""$delimiter""$f"
+  done | LC_ALL=C sort > "$tmp"/new-files
+  # First the files that are in old-files, but not in new-files:
+  for g in `LC_ALL=C join -t"$delimiter" -v1 "$tmp"/old-files "$tmp"/new-files | sed -e 's,'"$delimiter"'.*,,'`; do
+    # Remove the file. Do nothing if the user already removed it.
+    if test -f "$destdir/$g"; then
+      echo "Removing file $g (backup in ${g}~)"
+      test -n "$dry_run" && dry=echo
+      $dry mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
     fi
   done
-  for f2 in $new_files; do
-    case "$f2" in
-      build-aux/*) g2=`echo "$f2" | sed -e "s,^build-aux/,$auxdir/,"` ;;
-      lib/*) g2=`echo "$f2" | sed -e "s,^lib/,$sourcebase/,"` ;;
-      m4/*) g2=`echo "$f2" | sed -e "s,^m4/,$m4base/,"` ;;
-      *) g2="$f2" ;;
-    esac
-    already_present=
-    for f1 in $old_files; do
-      case "$f1" in
-        build-aux/*) g1=`echo "$f1" | sed -e "s,^build-aux/,$auxdir/,"` ;;
-        lib/*) g1=`echo "$f1" | sed -e "s,^lib/,$cached_sourcebase/,"` ;;
-        m4/*) g1=`echo "$f1" | sed -e "s,^m4/,$cached_m4base/,"` ;;
-        *) g1="$f1" ;;
-      esac
-      if test "$g1" = "$g2"; then
-        already_present=true
-        break
-      fi
-    done
-    cp "$gnulib_dir/$f2" "$destdir/$g2.tmp" || func_fatal_error "failed"
+  # func_add_or_update handles a file that ought to be present afterwards.
+  # Uses parameters f, g, already_present.
+  func_add_or_update ()
+  {
+    cp "$gnulib_dir/$f" "$destdir/$g.tmp" || func_fatal_error "failed"
     if test -n "$lgpl"; then
       # Update license.
-      case "$f2" in
+      case "$f" in
         lib/*)
           sed -e 's/GNU General/GNU Lesser General/g' \
               -e 's/version 2\([ ,]\)/version 2.1\1/g' \
-            < "$gnulib_dir/$f2" > "$destdir/$g2.tmp" || func_fatal_error "failed"
+            < "$gnulib_dir/$f" > "$destdir/$g.tmp" || func_fatal_error "failed"
           ;;
       esac
     fi
-    if test -f "$destdir/$g2"; then
+    if test -f "$destdir/$g"; then
       # The file already exists.
-      if cmp "$destdir/$g2" "$destdir/$g2.tmp" > /dev/null; then
+      if cmp "$destdir/$g" "$destdir/$g.tmp" > /dev/null; then
         : # The file has not changed.
       else
         # Replace the file.
         if test -n "$already_present"; then
-          echo "Updating file $g2 (backup in ${g2}~)"
+          echo "Updating file $g (backup in ${g}~)"
         else
-          echo "Replacing file $g2 (non-gnulib code backuped in ${g2}~) !!"
+          echo "Replacing file $g (non-gnulib code backuped in ${g}~) !!"
         fi
         test -n "$dry_run" && dry=echo
-        $dry mv -f "$destdir/$g2" "$destdir/${g2}~" || func_fatal_error "failed"
-        if test -n "$symbolic" && cmp "$gnulib_dir/$f2" "$destdir/$g2.tmp" > /dev/null; then
-          func_ln_if_changed "$gnulib_dir/$f2" "$destdir/$g2"
+        $dry mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
+        if test -n "$symbolic" && cmp "$gnulib_dir/$f" "$destdir/$g.tmp" > /dev/null; then
+          func_ln_if_changed "$gnulib_dir/$f" "$destdir/$g"
         else
-          $dry mv -f "$destdir/$g2.tmp" "$destdir/${g2}" || func_fatal_error "failed"
+          $dry mv -f "$destdir/$g.tmp" "$destdir/${g}" || func_fatal_error "failed"
         fi
       fi
     else
       # Install the file.
       # Don't protest if the file should be there but isn't: it happens
       # frequently that developers don't put autogenerated files into CVS.
-      echo "Copying file $g2"
+      echo "Copying file $g"
       test -n "$dry_run" && dry=echo
-      if test -n "$symbolic" && cmp "$gnulib_dir/$f2" "$destdir/$g2.tmp" > /dev/null; then
-        func_ln_if_changed "$gnulib_dir/$f2" "$destdir/$g2"
+      if test -n "$symbolic" && cmp "$gnulib_dir/$f" "$destdir/$g.tmp" > /dev/null; then
+        func_ln_if_changed "$gnulib_dir/$f" "$destdir/$g"
       else
-        $dry mv -f "$destdir/$g2.tmp" "$destdir/${g2}" || func_fatal_error "failed"
+        $dry mv -f "$destdir/$g.tmp" "$destdir/${g}" || func_fatal_error "failed"
       fi
     fi
-    rm -f "$destdir/$g2.tmp"
+    rm -f "$destdir/$g.tmp"
+  }
+  # Then the files that are in new-files, but not in old-files:
+  already_present=
+  for f in `LC_ALL=C join -t"$delimiter" -v2 "$tmp"/old-files "$tmp"/new-files | sed -e 's,'^.*"$delimiter"',,'`; do
+    case "$f" in
+      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+      lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
+      m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
+      *) g="$f" ;;
+    esac
+    func_add_or_update
   done
+  # Then the files that are in new-files and in old-files:
+  already_present=true
+  for f in `LC_ALL=C join -t"$delimiter" "$tmp"/old-files "$tmp"/new-files | sed -e 's,'^.*"$delimiter"',,'`; do
+    case "$f" in
+      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+      lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
+      m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
+      *) g="$f" ;;
+    esac
+    func_add_or_update
+  done
+  rm -rf "$tmp"
+  trap - 0 1 2 3 15
 
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
   actioncmd="gnulib-tool --import"

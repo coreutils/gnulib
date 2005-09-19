@@ -1,3 +1,9 @@
+2005-09-18  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_tmpdir): New function, taken from GNU gettextize.
+	(func_import): Use join on two temporary files instead of three nested
+	loops, in order to determine which files are new or old.
+
 2005-09-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* MODULES.html.sh (File system functions): Add stat-time.
