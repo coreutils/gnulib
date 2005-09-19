@@ -1,5 +1,11 @@
 2005-09-18  Bruno Haible  <bruno@clisp.org>
 
+	Portability fix.
+	* gnulib-tool (func_readlink): New function.
+	(func_ln_if_changed): Use it.
+
+2005-09-18  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool: Revise --dry-run implementation. Use variable $doit
 	instead of $dry_run.
 	(func_cp_if_changed, func_mv_if_changed): Remove functions.
