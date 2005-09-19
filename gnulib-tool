@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-19 15:33:19 $'
+cvsdatestamp='$Date: 2005-09-19 20:51:45 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1618,6 +1618,7 @@ case $mode in
         # First use of gnulib in the given m4base.
         test -n "$supplied_libname" || supplied_libname=true
         test -n "$sourcebase" || sourcebase="lib"
+        test -n "$testsbase" || testsbase="tests"
         test -n "$macro_prefix" || macro_prefix="gl"
       fi
       func_import "$*"
@@ -1656,6 +1657,7 @@ case $mode in
         test -n "$supplied_libname" || supplied_libname=true
         test -n "$sourcebase" || sourcebase="lib"
         m4base="m4"
+        test -n "$testsbase" || testsbase="tests"
         test -n "$macro_prefix" || macro_prefix="gl"
         func_import "$*"
       else
