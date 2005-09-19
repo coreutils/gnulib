@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-19 15:31:11 $'
+cvsdatestamp='$Date: 2005-09-19 15:31:32 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1186,7 +1186,7 @@ func_import ()
     echo "])"
     echo
     echo "# gnulib-comp.m4 ends here"
-  )
+  ) > "$destdir"/$m4base/gnulib-comp.m4.tmp
   if test -f "$destdir"/$m4base/gnulib-comp.m4; then
     if cmp "$destdir"/$m4base/gnulib-comp.m4 "$destdir"/$m4base/gnulib-comp.m4.tmp > /dev/null; then
       rm -f "$destdir"/$m4base/gnulib-comp.m4.tmp
