@@ -1,3 +1,7 @@
+2005-09-19  Derek Price  <derek@ximbiot.com>
+
+	* srclist.txt: glibc's glob.h is now in lib/glob-libc.h.
+
 2005-09-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Remove glibc bug 1033 and uncomment mktime.c.
