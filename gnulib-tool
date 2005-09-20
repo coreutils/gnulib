@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-20 11:00:51 $'
+cvsdatestamp='$Date: 2005-09-20 11:48:17 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -359,7 +359,7 @@ func_ln_if_changed ()
         func_version
         exit 0 ;;
       -- )
-        # Stop option prcessing
+        # Stop option processing
         shift
         break ;;
       -* )
@@ -370,6 +370,22 @@ func_ln_if_changed ()
         break ;;
     esac
   done
+
+  # Remove trailing slashes from the directory names. This is necessary for
+  # m4base (to avoid an error in func_import) and optional for the others.
+  sed_trimtrailingslashes='s,\([^/]\)//*$,\1,'
+  case "$sourcebase" in
+    */ ) sourcebase=`echo "$sourcebase" | sed -e "$sed_trimtrailingslashes"` ;;
+  esac
+  case "$m4base" in
+    */ ) m4base=`echo "$m4base" | sed -e "$sed_trimtrailingslashes"` ;;
+  esac
+  case "$testsbase" in
+    */ ) testsbase=`echo "$testsbase" | sed -e "$sed_trimtrailingslashes"` ;;
+  esac
+  case "$auxdir" in
+    */ ) auxdir=`echo "$auxdir" | sed -e "$sed_trimtrailingslashes"` ;;
+  esac
 }
 
 case "$0" in
