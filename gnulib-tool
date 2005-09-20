@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-19 20:51:45 $'
+cvsdatestamp='$Date: 2005-09-20 11:00:51 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -174,7 +174,7 @@ else
   func_readlink ()
   {
     # Use two sed invocations. A single sed -n -e 's,^.* -> \(.*\)$,\1,p'
-    # would do the wrong link if the link target contains " -> ".
+    # would do the wrong thing if the link target contains " -> ".
     LC_ALL=C ls -l "$1" | sed -e 's, -> ,#%%#,' | sed -n -e 's,^.*#%%#\(.*\)$,\1,p'
   }
 fi
@@ -406,7 +406,7 @@ func_all_modules ()
   (cd "$gnulib_dir/modules" && ls -1) \
       | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^README$/d' -e '/^TEMPLATE$/d' -e '/^TEMPLATE-TESTS$/d' -e '/~$/d' \
       | sed -e '/-tests$/d' \
-      | sort
+      | LC_ALL=C sort
 }
 
 # func_verify_module
@@ -553,7 +553,7 @@ func_modules_transitive_closure ()
       func_verify_module
       if test -n "$module"; then
         # Duplicate dependencies are harmless, but Jim wants a warning.
-        duplicated_deps=`func_get_dependencies $module | sort | uniq -d`
+        duplicated_deps=`func_get_dependencies $module | LC_ALL=C sort | LC_ALL=C uniq -d`
         if test -n "$duplicated_deps"; then
           echo "warning: module $module has duplicated dependencies: "`echo $duplicated_deps` 1>&2
         fi
@@ -580,7 +580,7 @@ func_modules_transitive_closure ()
         fi
       fi
     done
-    xmodules=`for m in $xmodules; do echo $m; done | sort | uniq`
+    xmodules=`for m in $xmodules; do echo $m; done | LC_ALL=C sort | LC_ALL=C uniq`
     if test "$xmodules" = "$modules"; then
       break
     fi
@@ -602,7 +602,7 @@ func_modules_to_filelist ()
       files="$files "`func_get_filelist $module`
     fi
   done
-  files=`for f in $files; do echo $f; done | sort | uniq`
+  files=`for f in $files; do echo $f; done | LC_ALL=C sort | LC_ALL=C uniq`
 }
 
 # func_emit_lib_Makefile_am
@@ -884,7 +884,7 @@ func_import ()
   fi
 
   # Canonicalize the list of specified modules.
-  specified_modules=`for m in $specified_modules; do echo $m; done | sort | uniq`
+  specified_modules=`for m in $specified_modules; do echo $m; done | LC_ALL=C sort | LC_ALL=C uniq`
 
   # Determine final module list.
   modules="$specified_modules"
@@ -1317,7 +1317,7 @@ func_create_testdir ()
 {
   testdir="$1"
   modules="$2"
-  modules=`for m in $modules; do echo $m; done | sort | uniq`
+  modules=`for m in $modules; do echo $m; done | LC_ALL=C sort | LC_ALL=C uniq`
 
   # Determine final module list.
   func_modules_transitive_closure
