@@ -28,9 +28,6 @@
 /* Get memcpy. */
 #include <string.h>
 
-/* Get struct hostent. */
-#include <netdb.h>
-
 #include <stdbool.h>
 
 #include "gettext.h"

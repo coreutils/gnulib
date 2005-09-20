@@ -1,3 +1,7 @@
+2005-09-20  Derek Price  <derek@ximbiot.com>
+
+	* getaddrinfo.c: Don't include <netdb.h> included from getaddrinfo.h.
+
 2005-09-19  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Use a consistent style for including <config.h>.
