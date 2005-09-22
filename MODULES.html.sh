@@ -1424,6 +1424,16 @@ func_all_modules ()
   func_wrap H2
   func_echo "$element"
 
+  element="Diagnostics <assert.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap ansic_enh_assert_diagnostics
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module verify
+  func_end_table
+
   element="Memory management functions <stdlib.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap ansic_enh_stdlib_memory
