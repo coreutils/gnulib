@@ -28,9 +28,5 @@ bool make_dir_parents (char const *argname,
 		       uid_t owner,
 		       gid_t group,
 		       bool preserve_existing,
-		       char const *verbose_fmt_string);
-
-bool make_dir (char const *dir,
-	       char const *fulldir,
-	       mode_t mode,
-	       bool *created_dir_p);
+		       char const *verbose_fmt_string,
+		       int *cwd_errno);
