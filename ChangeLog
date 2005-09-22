@@ -1,3 +1,13 @@
+2005-09-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/openat (Files): Add lib/openat-die.c.
+	(Depends-on): Remove error, exitfail.
+	Add dirname.
+
+	* modules/verify: New file.
+	* MODULES.html.sh (Diagnostics <assert.h>): New section,
+	with "verify" module.
+
 2005-09-20  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool: Remove trailing slashes from the values specified for

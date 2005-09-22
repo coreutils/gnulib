@@ -1,3 +1,121 @@
+2005-09-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils.
+
+	* getdate.y (relative_time): New type.
+	(RELATIVE_TIME_0): New constant.
+	(parser_control): Use relative_time instead of doing it ourselves.
+	(%union): Add new relative_time rel member.
+	(tYEAR_UNIT, tMONTH_UNIT, tHOUR_UNIT, tMINUTE_UNIT, tSEC_UNIT):
+	Now typeless.
+	(relunit, relunit_snumber): Now of type rel.
+	(zone, rel, relunit, get_date): Adjust to above changes.
+
+	* getloadavg.c: Include fcntl--.h rather than fcntl.h.
+	Do not include unistd-safer.h.
+	(getloadavg): Don't call fd_safer; no longer needed
+	now that we include fcntl--.h.
+
+	* mkdir-p.c (ENOSYS): Define to EEXIST if not defined.
+	(make_dir_parents): Treat ENOSYS like EEXIST.
+
+	Improve quality of diagnostics on restore_cwd failure.
+	* mkdir-p.h (make_dir): Remove.  All uses replaced by mkdir.
+	(make_dir_parents): Last arg is now int * (for errno), not bool *.
+	* mkdir-p.c (make_dir, make_dir_parents): Likewise.
+	Rewrite "mkdir -p" algorithm to avoid the need for "stat"
+	each time through the loop.  Do not diagnose restore_cwd failure;
+	that is the caller's job (and perhaps the caller does not care).
+
+	* mkdir-p.c (CLEANUP_CWD, CLEANUP): Remove.
+	(make_dir_parents): Revamp to avoid need for CLEANUP_CWD, CLEANUP.
+	If the file already exists but is not a directory, don't bother
+	to try to make its parents.
+	Close potential file descriptor leak if we can't chdir("/") (!).
+	Don't always return true if chdir($PWD) fails; return true only
+	if the requested action was done successfully (except for the
+	chdir($PWD)).
+	Don't log final directory unless we actually made it.
+	Refactor to avoid duplicate code to fix up permissions.
+	Don't attempt to fix up parent permissions if chdir($PWD) fails.
+
+	* strftime.c (my_strftime): Rewrite the previous change slightly,
+	to make it a bit faster and (I hope) clearer.
+	* strftime.c (my_strftime): Add support for %:z, %::z, %:::z.
+	Fix bug in formats like %2N.
+
+	* verify.h: New file.
+
+2005-09-22  Jim Meyering  <jim@meyering.net>
+
+	Sync from coreutils.
+
+	* getdate.y (get_date): Undo part of the 2005-04-04 change, so that
+	the command "date -d'2005-03-27 +1 day'" succeeds once again, even
+	when run in a time zone for which daylight savings time is in effect
+	for the starting date.
+
+	* mkdir-p.c (make_dir_parents): Don't let a failed chdir($PWD)
+	stop us from restricting permissions of just-created absolute-named
+	directories.
+	* mkdir-p.c (CLEANUP_CWD): Return *true*, not false when failing
+	to restore initial working directory.
+	* mkdir-p.c (make_dir_parents): New parameter: different_working_dir,
+	to tell caller if/when we change the working directory and are
+	unable to return to the initial one.
+	* mkdir-p.h (make_dir_parents): Update prototype.
+	* mkdir-p.c (CLEANUP_CWD): Change one more `return 1' to
+	`return false'.  This fixes a bug introduced on 2004-07-30.
+
+	* openat.c (fdopendir): Be sure to close the supplied
+	file descriptor before returning.  This makes our replacement
+	implementation a little closer to Solaris's, where fdopendir
+	ties the file descriptor to the returned DIR* pointer.
+	* openat.c (unlinkat): New function.
+	* openat.h (unlinkat): Add prototype.
+	* openat-die.c (openat_save_fail): Rename from openat_save_die.
+	(openat_restore_fail): Rename from openat_restore_die.
+	* openat.c, openat.h: Reflect s/_die/_fail/ renaming.
+
+	Provide an alternative to exiting immediately upon save_cwd or
+	restore_cwd failure.  Now, an application can arrange e.g.,
+	to perform a longjump in that case.
+	* openat.c: Include dirname.h.
+	Use IS_ABSOLUTE_FILE_NAME rather than testing for leading slash.
+	(rpl_openat, fdopendir, fstatat): Call openat_save_die
+	and openat_restore_die rather than calling error directly.
+	Don't include "error.h" or "exitfail.h"; they're no longer needed.
+
+	* openat-die.c (openat_save_die, openat_restore_die): New file.
+	* openat.h (openat_save_die, openat_restore_die): Declare and define.
+
+	* strftime.c [FPRINTFTIME] (fprintftime): Provide a new interface:
+	size_t fprintftime (FILE *fp, char const *fmt, struct tm const *tm,
+			    int utc, int nanoseconds);
+	Background:
+	date should not have to allocate a megabyte of virtual memory to
+	handle a format argument like +%1048575T.  When implemented with
+	strftime, it must allocate such a buffer, use strftime to fill it
+	in, print it, then free it.
+	With fprintftime, it simply prints everything and exits.
+	With no need for memory allocation, that's one fewer way to fail.
+	* strftime.c (my_strftime): Parse the colons of %:::z *after* the
+	optional field width, not before, so we accept %9:z, not %:9z.
+	(my_strftime): Be sure to use L_('x') for literals.
+
+	* getloadavg.c, mkdir-p.c, openat.h:
+	Assume HAVE_UNISTD_H, i.e., include <unistd.h> unconditionally.
+	Assume HAVE_FCNTL_H (i.e., include <fcntl.h> unconditionally,
+	and don't include <sys/file.h>).
+
+2005-09-22  Eric Blake  <ebb9@byu.net>  (tiny change)
+
+	Sync from coreutils.
+
+	* getloadavg.c (getloadavg) [__CYGWIN__]: Port to cygwin.
+	[__linux__]: Allocate a big enough buffer for /proc/loadavg.
+	[!LDAV_DONE]: Avoid unused variable warning.
+
 2005-09-21  Bruno Haible  <bruno@clisp.org>
 
 	* unicodeio.h (unicode_to_mb): New declaration.
