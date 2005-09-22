@@ -24,9 +24,20 @@
 #include <dirent.h>
 #include <unistd.h>
 
+#ifndef __attribute__
+# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8) || __STRICT_ANSI__
+#  define __attribute__(x) /* empty */
+# endif
+#endif
+
+#ifndef ATTRIBUTE_NORETURN
+# define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+#endif
+
 #ifndef AT_FDCWD
-# define AT_FDCWD (-3041965) /* same value as Solaris 9 */
-# define AT_SYMLINK_NOFOLLOW 4096 /* same value as Solaris 9 */
+# define AT_FDCWD (-3041965)		/* same value as Solaris 9 */
+# define AT_SYMLINK_NOFOLLOW 4096	/* same value as Solaris 9 */
+# define AT_REMOVEDIR (0x1)		/* same value as Solaris 9 */
 
 # ifdef __OPENAT_PREFIX
 #  undef openat
@@ -39,6 +50,13 @@ int openat (int fd, char const *file, int flags, /* mode_t mode */ ...);
 DIR *fdopendir (int fd);
 #  define fstatat __OPENAT_ID (fstatat)
 int fstatat (int fd, char const *file, struct stat *st, int flag);
+#  define unlinkat __OPENAT_ID (unlinkat)
+int unlinkat (int fd, char const *file, int flag);
+void openat_restore_fail (int) ATTRIBUTE_NORETURN;
+void openat_save_fail (int) ATTRIBUTE_NORETURN;
+# else
+#  define openat_restore_fail(Errno) /* empty */
+#  define openat_save_fail(Errno) /* empty */
 # endif
 
 #endif

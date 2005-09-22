@@ -4,13 +4,13 @@ Open a file at a directory.
 Files:
 lib/openat.c
 lib/openat.h
+lib/openat-die.c
 m4/openat.m4
 
 Depends-on:
 save-cwd
 gettext-h
-error
-exitfail
+dirname
 extensions
 
 configure.ac:

@@ -29,8 +29,7 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#include "error.h"
-#include "exitfail.h"
+#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
 #include "save-cwd.h"
 
 #include "gettext.h"
@@ -64,12 +63,11 @@ rpl_openat (int fd, char const *file, int flags, ...)
       va_end (arg);
     }
 
-  if (fd == AT_FDCWD || *file == '/')
+  if (fd == AT_FDCWD || IS_ABSOLUTE_FILE_NAME (file))
     return open (file, flags, mode);
 
   if (save_cwd (&saved_cwd) != 0)
-    error (exit_failure, errno,
-	   _("openat: unable to record current working directory"));
+    openat_save_fail (errno);
 
   if (fchdir (fd) != 0)
     {
@@ -83,8 +81,7 @@ rpl_openat (int fd, char const *file, int flags, ...)
   saved_errno = errno;
 
   if (restore_cwd (&saved_cwd) != 0)
-    error (exit_failure, errno,
-	   _("openat: unable to restore working directory"));
+    openat_restore_fail (errno);
 
   free_cwd (&saved_cwd);
 
@@ -98,7 +95,12 @@ rpl_openat (int fd, char const *file, int flags, ...)
    If either the save_cwd or the restore_cwd fails (relatively unlikely,
    and usually indicative of a problem that deserves close attention),
    then give a diagnostic and exit nonzero.
-   Otherwise, this function works just like Solaris' fdopendir.  */
+   Otherwise, this function works just like Solaris' fdopendir.
+
+   W A R N I N G:
+   Unlike the other fd-related functions here, this one
+   effectively consumes its FD parameter.  The caller should not
+   close or otherwise manipulate FD after calling this function.  */
 DIR *
 fdopendir (int fd)
 {
@@ -110,13 +112,13 @@ fdopendir (int fd)
     return opendir (".");
 
   if (save_cwd (&saved_cwd) != 0)
-    error (exit_failure, errno,
-	   _("fdopendir: unable to record current working directory"));
+    openat_save_fail (errno);
 
   if (fchdir (fd) != 0)
     {
       saved_errno = errno;
       free_cwd (&saved_cwd);
+      close (fd);
       errno = saved_errno;
       return NULL;
     }
@@ -125,10 +127,10 @@ fdopendir (int fd)
   saved_errno = errno;
 
   if (restore_cwd (&saved_cwd) != 0)
-    error (exit_failure, errno,
-	   _("fdopendir: unable to restore working directory"));
+    openat_restore_fail (errno);
 
   free_cwd (&saved_cwd);
+  close (fd);
 
   errno = saved_errno;
   return dir;
@@ -154,8 +156,7 @@ fstatat (int fd, char const *file, struct stat *st, int flag)
 	    : stat (file, st));
 
   if (save_cwd (&saved_cwd) != 0)
-    error (exit_failure, errno,
-	   _("fstatat: unable to record current working directory"));
+    openat_save_fail (errno);
 
   if (fchdir (fd) != 0)
     {
@@ -171,8 +172,47 @@ fstatat (int fd, char const *file, struct stat *st, int flag)
   saved_errno = errno;
 
   if (restore_cwd (&saved_cwd) != 0)
-    error (exit_failure, errno,
-	   _("fstatat: unable to restore working directory"));
+    openat_restore_fail (errno);
+
+  free_cwd (&saved_cwd);
+
+  errno = saved_errno;
+  return err;
+}
+
+/* Replacement for Solaris' function by the same name.
+   <http://www.google.com/search?q=unlinkat+site:docs.sun.com>
+   Simulate it by doing save_cwd/fchdir/(unlink|rmdir)/restore_cwd.
+   If either the save_cwd or the restore_cwd fails (relatively unlikely,
+   and usually indicative of a problem that deserves close attention),
+   then give a diagnostic and exit nonzero.
+   Otherwise, this function works just like Solaris' unlinkat.  */
+int
+unlinkat (int fd, char const *file, int flag)
+{
+  struct saved_cwd saved_cwd;
+  int saved_errno;
+  int err;
+
+  if (fd == AT_FDCWD)
+    return (flag == AT_REMOVEDIR ? rmdir (file) : unlink (file));
+
+  if (save_cwd (&saved_cwd) != 0)
+    openat_save_fail (errno);
+
+  if (fchdir (fd) != 0)
+    {
+      saved_errno = errno;
+      free_cwd (&saved_cwd);
+      errno = saved_errno;
+      return -1;
+    }
+
+  err = (flag == AT_REMOVEDIR ? rmdir (file) : unlink (file));
+  saved_errno = errno;
+
+  if (restore_cwd (&saved_cwd) != 0)
+    openat_restore_fail (errno);
 
   free_cwd (&saved_cwd);
 
