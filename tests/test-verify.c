@@ -1,3 +1,4 @@
+#include "config.h"
 #include "verify.h"
 
 int x;
