@@ -18,8 +18,12 @@ md5.h
 obstack.h
 printf-args.h
 printf-parse.h
+regcomp.c
 regex.c
 regex.h
+regex_internal.c
+regex_internal.h
+stat-time.h
 stdbool_.h
 strdup.h
 strndup.h

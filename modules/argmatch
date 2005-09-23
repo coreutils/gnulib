@@ -12,6 +12,7 @@ quotearg
 quote
 exit
 exitfail
+verify
 stdbool
 
 configure.ac:

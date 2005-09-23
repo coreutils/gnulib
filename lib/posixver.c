@@ -1,6 +1,6 @@
 /* Which POSIX version to conform to, for utilities.
 
-   Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,9 +27,7 @@
 #include <limits.h>
 #include <stdlib.h>
 
-#if HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+#include <unistd.h>
 #ifndef _POSIX2_VERSION
 # define _POSIX2_VERSION 0
 #endif

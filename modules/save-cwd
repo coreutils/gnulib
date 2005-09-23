@@ -8,7 +8,7 @@ m4/save-cwd.m4
 
 Depends-on:
 chdir-long
-unistd-safer
+fcntl-safer
 xgetcwd
 stdbool
 

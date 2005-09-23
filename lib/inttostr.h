@@ -25,9 +25,7 @@
 # include <stdint.h>
 #endif
 
-#if HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
+#include <sys/types.h>
 
 #include "intprops.h"
 

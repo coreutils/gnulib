@@ -2,6 +2,22 @@
 
 	Sync from coreutils.
 
+	* .cppi-disable: Add regcomp.c, regex_internal.c, regex_internal.h,
+	stat-time.h.
+	* argmatch.h: Include verify.h
+	(ARGMATCH_VERIFY): Use verify rather than rolling our own.
+	(ARGMATCH_ASSERT): Remove; unused.
+	* canonicalize.c: Assume STDC_HEADERS.
+	* exclude.c: Include "strcase.h".
+	* regex_internal.h [!defined _LIBC]: Likewise.
+	* getusershell.c: Include stdio--.h rather than stdio.h
+	and stdio-safer.h.
+	(getusershell): Call fopen, not fopen_safer.
+	* save-cwd.c: Include fcntl--.h rather than fcntl.h.
+	Do not include unistd-safer.h.
+	(save_cwd): Don't call fd_safer; no longer needed
+	now that we include fcntl--.h.
+
 	* getdate.y (relative_time): New type.
 	(RELATIVE_TIME_0): New constant.
 	(parser_control): Use relative_time instead of doing it ourselves.
@@ -49,6 +65,15 @@
 2005-09-22  Jim Meyering  <jim@meyering.net>
 
 	Sync from coreutils.
+
+	* backupfile.c: Use ARGMATCH_VERIFY, just in case.
+
+	* posixtm.c (posixtime) [lint]: Initialize *all* of tm0, not just
+	the .tm_year member, since otherwise gcc-4.0 would now warn about
+	tm_zone, tm_gmtoff, tm_isdst, tm_yday, tm_wday.
+
+	* quotearg.c (quotearg_n_options): Change code to be suboptimal, in
+	order to avoid an unsuppressible warning from gcc on 64-bit systems.
 
 	* getdate.y (get_date): Undo part of the 2005-04-04 change, so that
 	the command "date -d'2005-03-27 +1 day'" succeeds once again, even
@@ -103,8 +128,18 @@
 	optional field width, not before, so we accept %9:z, not %:9z.
 	(my_strftime): Be sure to use L_('x') for literals.
 
-	* getloadavg.c, mkdir-p.c, openat.h:
+	* backupfile.c, canon-host.c, canonicalize.c, chown.c, cloexec.c:
+	* dup-safer.c, dup2.c, euidaccess.c, fd-safer.c, fileblocks.c:
+	* fopen-safer.c, fsusage.c, ftruncate.c, getcwd.c, getcwd.h:
+	* getloadavg.c, getopt_.h, getpagesize.h, getugroups.c, group-member.c:
+	* human.h, idcache.c, mkdir-p.c, mountlist.c, nanosleep.c, pathmax.h:
+	* physmem.c, posixver.c, putenv.c, raise.c, safe-read.c, same.c:
+	* save-cwd.c, setenv.c, settime.c, tempname.c, unlinkdir.c:
+	* unsetenv.c, userspec.c, xgethostname.c, xreadlink.c:
 	Assume HAVE_UNISTD_H, i.e., include <unistd.h> unconditionally.
+
+	* chown.c, cloexec.c, dup-safer.c, dup2.c, fsusage.c, getcwd.c:
+	* getloadavg.c, mountlist.c, openat.h, save-cwd.c, tempname.c:
 	Assume HAVE_FCNTL_H (i.e., include <fcntl.h> unconditionally,
 	and don't include <sys/file.h>).
 

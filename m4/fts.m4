@@ -1,4 +1,4 @@
-#serial 5
+#serial 6
 dnl Copyright (C) 2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,7 +31,4 @@ AC_DEFUN([gl_FUNC_FTS_CORE],
   # Checks for header files.
   AC_REQUIRE([AC_HEADER_DIRENT])
   AC_CHECK_HEADERS_ONCE([sys/param.h])
-
-  # Checks for library functions.
-  AC_REQUIRE([AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
 ])

@@ -1,6 +1,7 @@
 /* Convert file size to number of blocks on System V-like machines.
 
-   Copyright (C) 1990, 1997, 1998, 1999, 2004 Free Software Foundation, Inc.
+   Copyright (C) 1990, 1997, 1998, 1999, 2004, 2005 Free Software
+   Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,9 +31,7 @@
 
 #if !HAVE_STRUCT_STAT_ST_BLOCKS && !defined _POSIX_SOURCE && defined BSIZE
 
-# if HAVE_UNISTD_H
-#  include <unistd.h>
-# endif
+# include <unistd.h>
 
 # ifndef NINDIR
 

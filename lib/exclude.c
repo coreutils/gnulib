@@ -35,6 +35,7 @@
 
 #include "exclude.h"
 #include "fnmatch.h"
+#include "strcase.h"
 #include "xalloc.h"
 
 #if USE_UNLOCKED_IO

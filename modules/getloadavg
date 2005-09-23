@@ -10,7 +10,7 @@ cloexec
 xalloc
 c-strtod
 stdbool
-unistd-safer
+fcntl-safer
 
 configure.ac:
 AC_FUNC_GETLOADAVG

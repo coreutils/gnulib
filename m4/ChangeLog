@@ -2,6 +2,20 @@
 
 	Sync from coreutils.
 
+	* backupfile.m4, calloc.m4, chown.m4, cloexec.m4, dup2.m4:
+	* fileblocks.m4, free.m4, ftruncate.m4, getcwd.m4, getpagesize.m4:
+	* getugroups.m4, group-member.m4, idcache.m4, link-follow.m4:
+	* mkstemp.m4, mktime.m4, mountlist.m4, nanosleep.m4, pathmax.m4:
+	* physmem.m4, posixver.m4, putenv.m4, safe-read.m4, same.m4:
+	* save-cwd.m4, stdio-safer.m4, unistd-safer.m4, unlinkdir.m4:
+	* userspec.m4, xgetcwd.m4, xreadlink.m4:
+	Don't bother checking for string.h, stdlib.h, unistd.h.
+	* fts.m4 (gl_FUNC_FTS_CORE): Don't require
+	AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK; that's now the lstat
+	module's job.
+	* jm-macros.m4 (gl_MACROS): Likewise.
+	* prereq.m4 (gl_PREREQ): Add gl_FUNC_LSTAT.
+
 	* getdate.m4 (gl_C_COMPOUND_LITERALS): New macro.
 	(gl_GETDATE): Use it.
 
@@ -10,6 +24,12 @@
 2005-09-22  Jim Meyering  <jim@meyering.net>
 
 	Sync from coreutils.
+
+	* lstat.m4 (gl_FUNC_LSTAT):
+	Use AC_LIBSOURCES to require lstat.c and lstat.h.
+	Remove obsolete comment.
+	* xreadlink.m4: Use AC_LIBSOURCES and AC_LIBOBJ.
+	* xstrtod.m4: Likewise.
 
 	* openat.m4 (gl_FUNC_OPENAT): Add openat-die.c.
 

@@ -1,5 +1,12 @@
 2005-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Sync from coreutils.
+
+	* modules/argmatch (Depends-on): Add verify.
+	* modules/getloadavg (Depends-on): Depend on fcntl-safer, not
+	unistd-safer.
+	* modules/save-cwd (Depends-on): Likewise.
+
 	* modules/openat (Files): Add lib/openat-die.c.
 	(Depends-on): Remove error, exitfail.
 	Add dirname.
