@@ -4,6 +4,26 @@
 	so we can once again use a positive bitfield width of 1 -- now we
 	don't have to explain why we were using a bitfield width of 2.
 
+2005-09-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getaddrinfo.c [HAVE_NETINET_IN_H]: Include <netinet/in.h>.
+	Problem reported by Eric Blake.
+	(getaddrinfo): Initialize se so that it's not garbage.
+	Redo internal storage allocation so that it doesn't make unportable
+	assumptions about alignment.
+	Fix a memory leak.
+
+	* utimens.c (futimens): Use futimesat if available.
+	Prefer it to futimes since it doesn't have the futimes bug.
+
+	* verify.h (GL_CONCAT0, GL_CONCAT): Remove.
+	(verify): Don't use the __LINE__ trick, as it doesn't work in general.
+	Instead, declare a function that returns a pointer to an array,
+	and use verify_type__ to declare the size of the array.
+	Problem and germ of a solution reported by Bruno Haible.
+	(verify_type__): Use 2, not 1, for bitfield size, to avoid
+	a warning with Irix 6.5 cc.  Problem reported by Bruno Haible.
+
 2005-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.
