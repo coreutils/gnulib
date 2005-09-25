@@ -1,3 +1,8 @@
+2005-09-25  Jim Meyering  <jim@meyering.net>
+
+	* modules/inet_ntop (Depends-on): Add socklen, since inet_ntop.c
+	also uses socklen_t.
+
 2005-09-23  Jim Meyering  <jim@meyering.net>
 
 	* modules/getaddrinfo (Depends-on): Add socklen.
