@@ -1,5 +1,9 @@
 2005-09-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* utimens.c (ENOSYS): Define if not already defined.
+	(futimens): Support having a null PATH if the file descriptor
+	is nonnegative.
+
 	* regex_internal.h (__GNUC_PREREQ, always_inline, inline, pure):
 	Remove.
 	(__attribute): Define to empty unless GCC 3.1 or later.
