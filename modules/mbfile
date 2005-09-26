@@ -4,6 +4,7 @@ Multibyte character I/O.
 Files:
 lib/mbfile.h
 m4/mbfile.m4
+m4/mbrtowc.m4
 
 Depends-on:
 mbchar
@@ -16,7 +17,9 @@ Makefile.am:
 lib_SOURCES += mbfile.h
 
 Include:
-"mbfile.h"
+#if HAVE_MBRTOWC
+#include "mbfile.h"
+#endif
 
 License:
 LGPL

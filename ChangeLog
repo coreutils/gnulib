@@ -1,3 +1,13 @@
+2005-09-26  Bruno Haible  <bruno@clisp.org>
+
+	* modules/mbchar (Include): Mention that HAVE_WCHAR_H && HAVE_WCTYPE_H
+	is necessary.
+	(lib_SOURCES): Remove mbchar.c.
+	* modules/mbfile (Include): Mention that HAVE_MBRTOWC is necessary.
+	(Files): Add m4/mbrtowc.m4.
+	* modules/mbiter: Likewise.
+	* modules/mbuiter: Likewise.
+
 2005-09-25  Jim Meyering  <jim@meyering.net>
 
 	* modules/inet_ntop (Depends-on): Add socklen, since inet_ntop.c

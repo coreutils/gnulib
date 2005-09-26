@@ -13,10 +13,12 @@ configure.ac:
 gl_MBCHAR
 
 Makefile.am:
-lib_SOURCES += mbchar.h mbchar.c
+lib_SOURCES += mbchar.h
 
 Include:
-"mbchar.h"
+#if HAVE_WCHAR_H && HAVE_WCTYPE_H
+#include "mbchar.h"
+#endif
 
 License:
 LGPL

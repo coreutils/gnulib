@@ -4,6 +4,7 @@ Iterating through multibyte strings.
 Files:
 lib/mbuiter.h
 m4/mbiter.m4
+m4/mbrtowc.m4
 
 Depends-on:
 mbchar
@@ -17,7 +18,9 @@ Makefile.am:
 lib_SOURCES += mbuiter.h
 
 Include:
-"mbuiter.h"
+#if HAVE_MBRTOWC
+#include "mbuiter.h"
+#endif
 
 License:
 LGPL

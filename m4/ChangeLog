@@ -1,3 +1,13 @@
+2005-09-26  Bruno Haible  <bruno@clisp.org>
+
+	* mbchar.m4 (gl_MBCHAR): Check for wchar.h and wctype.h. Don't compile
+	mbchar.c if they are not both present.
+	* mbfile.m4 (gl_MBFILE): Require gl_FUNC_MBRTOWC.
+	* mbiter.m4 (gl_MBITER): Likewise.
+	* strstr.m4 (gl_PREREQ_STRSTR): Use AC_REQUIRE.
+	* strcasestr.m4 (gl_PREREQ_STRCASESTR): Likewise.
+	* strcase.m4 (gl_PREREQ_STRCASECMP): Likewise.
+
 2005-09-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regex.m4 (gl_REGEX): If replacing, define regcomp to rpl_regcomp,

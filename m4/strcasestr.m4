@@ -1,4 +1,4 @@
-# strcasestr.m4 serial 1
+# strcasestr.m4 serial 2
 dnl Copyright (C) 2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,5 +15,6 @@ AC_DEFUN([gl_FUNC_STRCASESTR],
 
 # Prerequisites of lib/strcasestr.c.
 AC_DEFUN([gl_PREREQ_STRCASESTR], [
-  gl_FUNC_MBRTOWC
+  AC_REQUIRE([gl_FUNC_MBRTOWC])
+  :
 ])
