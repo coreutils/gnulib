@@ -17,6 +17,7 @@ extensions
 gettext-h
 malloc
 restrict
+strcase
 
 configure.ac:
 gl_REGEX
