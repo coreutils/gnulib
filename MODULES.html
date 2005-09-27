@@ -2335,30 +2335,30 @@ variables.
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mbchar"></A><A HREF="modules/mbchar">mbchar</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mbchar.h">mbchar.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP>#if HAVE_WCHAR_H && HAVE_WCTYPE_H<BR>#include "<A HREF="lib/mbchar.h">mbchar.h</A>"<BR>#endif
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mbchar.c">mbchar.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbchar.m4">mbchar.m4</A><BR>gl_MBCHAR
         <TD ALIGN=LEFT VALIGN=TOP>stdbool
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mbiter"></A><A HREF="modules/mbiter">mbiter</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mbiter.h">mbiter.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP>#if HAVE_MBRTOWC<BR>#include "<A HREF="lib/mbiter.h">mbiter.h</A>"<BR>#endif
         <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbiter.m4">mbiter.m4</A><BR>gl_MBITER
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbiter.m4">mbiter.m4</A><BR><A HREF="m4/mbrtowc.m4">mbrtowc.m4</A><BR>gl_MBITER
         <TD ALIGN=LEFT VALIGN=TOP>mbchar<BR>stdbool
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mbuiter"></A><A HREF="modules/mbuiter">mbuiter</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mbuiter.h">mbuiter.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP>#if HAVE_MBRTOWC<BR>#include "<A HREF="lib/mbuiter.h">mbuiter.h</A>"<BR>#endif
         <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbiter.m4">mbiter.m4</A><BR>gl_MBITER
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbiter.m4">mbiter.m4</A><BR><A HREF="m4/mbrtowc.m4">mbrtowc.m4</A><BR>gl_MBITER
         <TD ALIGN=LEFT VALIGN=TOP>mbchar<BR>stdbool<BR>strnlen1
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mbfile"></A><A HREF="modules/mbfile">mbfile</A>
-        <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mbfile.h">mbfile.h</A>"
+        <TD ALIGN=LEFT VALIGN=TOP>#if HAVE_MBRTOWC<BR>#include "<A HREF="lib/mbfile.h">mbfile.h</A>"<BR>#endif
         <TD ALIGN=LEFT VALIGN=TOP>---
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbfile.m4">mbfile.m4</A><BR>gl_MBFILE
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbfile.m4">mbfile.m4</A><BR><A HREF="m4/mbrtowc.m4">mbrtowc.m4</A><BR>gl_MBFILE
         <TD ALIGN=LEFT VALIGN=TOP>mbchar<BR>stdbool
       </TR>
     </TABLE>
@@ -3676,6 +3676,6 @@ variables.
       <LI>A POT file and some PO files
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 26 September 2005.
+    Generated from <CODE>MODULES.html.sh</CODE> on 27 September 2005.
   </BODY>
 </HTML>
