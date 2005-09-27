@@ -1,3 +1,10 @@
+2005-09-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* verify.h (verify_expr): Remove, replacing with:
+	(verify_true): New macro that returns true instead of void.
+	(verify_type__): Remove.
+	(verify): Use verify_true rather than verify_type__.
+
 2005-09-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* utimens.c (ENOSYS): Define if not already defined.
