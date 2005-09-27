@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_GETADDRINFO],
 [
   AC_SEARCH_LIBS(getaddrinfo, nsl socket)
+  AC_SEARCH_LIBS(gethostbyname, [inet nsl])
   AC_REPLACE_FUNCS(getaddrinfo gai_strerror)
   gl_PREREQ_GETADDRINFO
 ])
