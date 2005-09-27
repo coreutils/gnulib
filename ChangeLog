@@ -1,5 +1,7 @@
 2005-09-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* modules/regex (Depends-on): Add strcase.
+
 	* modules/gethostname (Licence): Change from GPL to LGPL, since
 	gethostname.c is a trivial implementation of a standard library
 	function.
