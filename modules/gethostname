@@ -15,8 +15,7 @@ Makefile.am:
 Include:
 
 License:
-GPL
+LGPL
 
 Maintainer:
 all
-

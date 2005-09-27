@@ -1,3 +1,11 @@
+2005-09-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/gethostname (Licence): Change from GPL to LGPL, since
+	gethostname.c is a trivial implementation of a standard library
+	function.
+	* modules/poll (License): Change from GPL to LGPL, since it's
+	derived from LGPL code.
+
 2005-09-26  Bruno Haible  <bruno@clisp.org>
 
 	* modules/mbchar (Include): Mention that HAVE_WCHAR_H && HAVE_WCTYPE_H

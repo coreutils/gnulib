@@ -26,7 +26,7 @@ Include:
 #include <poll.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini  <bonzini@gnu.org>
