@@ -1,3 +1,11 @@
+2005-09-27  Jim Meyering  <jim@meyering.net>
+
+	* getcwd.c: Change #ifdef<TAB>HAVE_CONFIG_H to #ifdef HAVE_CONFIG_H.
+
+	* intprops.h (signed_type_or_expr__): Define.
+	(INT_STRLEN_BOUND) [__GNUC__]: Use a slightly tighter bound
+	for unsigned types.
+
 2005-09-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* verify.h (verify_expr): Remove, replacing with:
