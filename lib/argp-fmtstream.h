@@ -15,7 +15,7 @@
 
    You should have received a copy of the GNU General Public License along
    with this program; if not, write to the Free Software Foundation,
-   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. */
 
 /* This package emulates glibc `line_wrap_stream' semantics for systems that
    don't have that.  If the system does have it, it is just a wrapper for
@@ -24,10 +24,6 @@
 
 #ifndef _ARGP_FMTSTREAM_H
 #define _ARGP_FMTSTREAM_H
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include <stdio.h>
 #include <string.h>
