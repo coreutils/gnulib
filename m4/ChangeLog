@@ -1,3 +1,13 @@
+2005-10-01  Jim Meyering  <jim@meyering.net>
+
+	Sync from coreutils.
+
+	* getaddrinfo.m4 (gl_GETADDRINFO): Look for getservbyname in these
+	libraries [inet nsl socket xnet].  Nelson Beebe reported that with
+	native cc on Solaris 7, getaddrinfo.c requires -lsocket.
+	* getaddrinfo.m4 (gl_GETADDRINFO): Check for gethostbyname
+	in the inet and nsl libraries.  Required on Solaris 5.7.
+
 2005-09-24  Jim Meyering  <jim@meyering.net>
 
 	Sync from coreutils.
