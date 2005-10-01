@@ -1,3 +1,11 @@
+2005-10-01  Simon Josefsson  <jas@extundo.com>
+
+	* getaddrinfo.m4: Use AC_GNU_SOURCE, GNU only declare getaddrinfo
+	as an (POSIX) extension.  Check for sys/types.h, sys/socket.h, and
+	netdb.h too, needed by getaddrinfo.h.  Check if getaddrinfo,
+	freeaddrinfo and gai_strerror are declared by the POSIX headers.
+	Check if struct addrinfo is declared.
+
 2005-10-01  Jim Meyering  <jim@meyering.net>
 
 	Sync from coreutils.
