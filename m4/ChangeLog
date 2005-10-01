@@ -1,5 +1,8 @@
 2005-10-01  Simon Josefsson  <jas@extundo.com>
 
+	* getaddrinfo.m4: Include sys/types.h for sys/socket.h, on FreeBSD
+	and Darwin.
+
 	* getaddrinfo.m4: Use AC_GNU_SOURCE, GNU only declare getaddrinfo
 	as an (POSIX) extension.  Check for sys/types.h, sys/socket.h, and
 	netdb.h too, needed by getaddrinfo.h.  Check if getaddrinfo,
