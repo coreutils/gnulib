@@ -53,17 +53,15 @@ settime (struct timespec const *ts)
 #if HAVE_SETTIMEOFDAY
   {
     struct timeval tv;
-    int r;
 
     tv.tv_sec = ts->tv_sec;
     tv.tv_usec = ts->tv_nsec / 1000;
-    r = settimeofday (&tv, 0);
-    if (r == 0 || errno == EPERM)
-      return r;
+    return settimeofday (&tv, 0);
   }
-#endif
-
-#if HAVE_STIME
+#elif HAVE_STIME
+  /* This fails to compile on OSF1 V5.1, due to stime requiring
+     a `long int*' and tv_sec is `int'.  But that system does provide
+     settimeofday.  */
   return stime (&ts->tv_sec);
 #else
   errno = ENOSYS;
