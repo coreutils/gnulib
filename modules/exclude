@@ -11,6 +11,7 @@ xalloc
 strcase
 fnmatch-gnu
 stdbool
+verify
 
 configure.ac:
 gl_EXCLUDE

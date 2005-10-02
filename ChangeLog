@@ -1,3 +1,9 @@
+2005-10-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/exclude (Depends-on): Depend on verify.
+	* modules/strtoimax (Depends-on): Likewise.
+	* modules/utimecmp (Depends-on): Likewise.
+
 2005-09-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/regex (Depends-on): Add strcase.

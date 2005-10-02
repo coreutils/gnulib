@@ -11,6 +11,7 @@ m4/strtoimax.m4
 
 Depends-on:
 strtoll
+verify
 
 configure.ac:
 gl_FUNC_STRTOIMAX
@@ -24,4 +25,3 @@ GPL
 
 Maintainer:
 Paul Eggert
-

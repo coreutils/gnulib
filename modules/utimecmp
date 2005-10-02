@@ -14,6 +14,7 @@ timespec
 utimens
 xalloc
 stdbool
+verify
 
 configure.ac:
 gl_UTIMECMP
