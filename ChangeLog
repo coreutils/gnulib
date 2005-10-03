@@ -1,5 +1,8 @@
 2005-10-02  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* modules/xreadlink (Makefile.am): Remove lib_SOURCES.
+	From Ben Pfaff.
+
 	* modules/exclude (Depends-on): Depend on verify.
 	* modules/strtoimax (Depends-on): Likewise.
 	* modules/utimecmp (Depends-on): Likewise.
