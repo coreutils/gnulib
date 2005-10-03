@@ -1,3 +1,42 @@
+2005-10-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getdelim.c: Include getdelim.h first.  Include <limits.h>.
+	(SSIZE_MAX): New macro, if not already defined.
+	(getdelim): Fix buffer overrun on 64-bit hosts with lines longer
+	than 2 GiB.
+
+2005-10-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* exclude.c: Include verify.h.
+	(verify): Remove.  All callers changed to use verify.h's version.
+	* strtoimax.c: Likewise.
+	* utimecmp.c: Likewis.e
+
+	Sync from coreutils.
+	* .cppi-disable: Add getaddrinfo.h, getdelim.h, getline.h, getpass.c
+	mbchar.h, mbuiter.h, strcase.h, strnlen.h, strnlen1.h.
+	* .cvsignore: Add fts.h, search.h, t-fpending.
+	* settime.c (settime): Fix { typo in previous patch.  Also, don't
+	bother returning ENOSYS if settimeofday or stime fails; just let
+	them return whatever errno they want to return.
+	* utimens.c: Include unistd.h, for dup2.
+	(futimens): Fix typo: HAVE_FUTIMESAT was misspelled in an #if.
+	(futimens) [! HAVE_FUTIMESAT]: If !file, set errno before returning -1.
+
+2005-10-02  Jim Meyering  <jim@meyering.net>
+
+	Sync from coreutils.
+	* fts-cycle.c [HAVE_CONFIG_H]: Include <config.h>.
+	* openat-die.c: Use `#ifdef HAVE_CONFIG_H', not `#if HAVE_CONFIG_H'.
+	* openat.c (fdopendir): Do not define if HAVE_FDOPENDIR.
+	Remove AT_FDCWD test.
+	Do not consume the fd unless successful.
+	* openat.h (fdopendir): Do not define if HAVE_FDOPENDIR.
+	* settime.c (settime): Move the HAVE_STIME block `up' into an #elif
+	block, so that we don't even try to compile it if settimeofday is
+	available.  This works around a compilation failure on OSF1 V5.1,
+	due to stime requiring a `long int*' while tv_sec is `int'.
+
 2005-09-30  Eric Blake  <ebb9@byu.net>  (tiny change)
 
 	* getdelim.c (getdelim): Remove unused variables.
