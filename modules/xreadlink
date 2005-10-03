@@ -15,7 +15,6 @@ configure.ac:
 gl_XREADLINK
 
 Makefile.am:
-lib_SOURCES += xreadlink.h xreadlink.c
 
 Include:
 "xreadlink.h"
