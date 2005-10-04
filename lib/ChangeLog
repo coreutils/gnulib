@@ -1,3 +1,8 @@
+2005-10-04  Simon Josefsson  <jas@extundo.com>
+
+	* getaddrinfo.h: Move sys/types.h include first, reported by "Mark
+	D. Baushke" <mdb@gnu.org>.
+
 2005-10-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getdelim.c: Include getdelim.h first.  Include <limits.h>.
