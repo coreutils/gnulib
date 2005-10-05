@@ -19,14 +19,12 @@
 #ifndef GETADDRINFO_H
 # define GETADDRINFO_H
 
-/* Get all getaddrinfo related declarations, if available.  */
-# ifdef HAVE_SYS_TYPES_H
 /* sys/socket.h in i386-unknown-freebsd4.10 and
    powerpc-apple-darwin5.5 require sys/types.h, so include it first.
    Then we'll also get 'socklen_t' and 'struct sockaddr' which are
    used below. */
-#  include <sys/types.h>
-# endif
+# include <sys/types.h>
+/* Get all getaddrinfo related declarations, if available.  */
 # ifdef HAVE_SYS_SOCKET_H
 #  include <sys/socket.h>
 # endif
