@@ -24,25 +24,13 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   /* sys/types.h is not needed according to POSIX, but the
      sys/socket.h in i386-unknown-freebsd4.10 and
      powerpc-apple-darwin5.5 required it. */
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#ifdef HAVE_SYS_SOCKET_H
-# include <sys/socket.h>
-#endif
-#ifdef HAVE_NETDB_H
-# include <netdb.h>
-#endif
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
 ])
   AC_CHECK_TYPES([struct addrinfo],,,[
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#ifdef HAVE_SYS_SOCKET_H
-# include <sys/socket.h>
-#endif
-#ifdef HAVE_NETDB_H
-# include <netdb.h>
-#endif
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
 ])
 ])
