@@ -1,3 +1,9 @@
+2005-10-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getaddrinfo.m4 (gl_PREREQ_GETADDRINFO): Don't check for
+	sys/socket.h, netdb.h, sys/types.h; the checks areno longer
+	needed, since the source code now assumes these .h files.
+
 2005-10-05  Simon Josefsson  <jas@extundo.com>
 
 	* memxor.m4: New file.
