@@ -1,3 +1,7 @@
+2005-10-05  Derek Price  <derek@ximbiot.com>
+
+	* getdelim.c (SIZE_MAX): New macro, if not already defined.
+
 2005-10-05  Simon Josefsson  <jas@extundo.com>
 
 	* memxor.c (memxor): Fix compiler error.
