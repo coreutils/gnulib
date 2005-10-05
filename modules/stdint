@@ -28,7 +28,7 @@ Include:
 #include <stdint.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 all

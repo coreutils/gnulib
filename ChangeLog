@@ -1,3 +1,7 @@
+2005-10-05  Bruno Haible  <bruno@clisp.org>
+
+	* modules/stdint (License): Change to LGPL.
+
 2005-10-05  Simon Josefsson  <jas@extundo.com>
 
 	* modules/memxor: New file.
