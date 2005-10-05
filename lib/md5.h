@@ -64,6 +64,9 @@
 # define __md5_stream md5_stream
 #endif
 
+#define MD5_DIGEST_SIZE 16
+#define MD5_BLOCK_SIZE 64
+
 typedef uint32_t md5_uint32;
 
 /* Structure to save state of computation between the single steps.  */

@@ -1,5 +1,8 @@
 2005-10-05  Simon Josefsson  <jas@extundo.com>
 
+	* md5.h (MD5_DIGEST_SIZE, MD5_BLOCK_SIZE): Add, see also
+	<http://sourceware.org/bugzilla/show_bug.cgi?id=1423>.
+
 	* memxor.h, memxor.c: New files.
 
 	* getaddrinfo.h: Don't protect sys/types.h with HAVE_SYS_TYPES_H,
