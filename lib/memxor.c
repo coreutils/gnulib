@@ -30,7 +30,7 @@ memxor (void *restrict dest, const void *restrict src, size_t n)
   char *d = dest;
 
   for (; n > 0; n--)
-    *d++ ^= *src++;
+    *(char*)d++ ^= *(char*)src++;
 
   return dest;
 }

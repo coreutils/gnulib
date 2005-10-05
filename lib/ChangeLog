@@ -1,5 +1,7 @@
 2005-10-05  Simon Josefsson  <jas@extundo.com>
 
+	* memxor.c (memxor): Fix compiler error.
+
 	* md5.h (MD5_DIGEST_SIZE, MD5_BLOCK_SIZE): Add, see also
 	<http://sourceware.org/bugzilla/show_bug.cgi?id=1423>.
 
