@@ -26,9 +26,7 @@
 # include <sys/types.h>
 /* Get all getaddrinfo related declarations, if available.  */
 # include <sys/socket.h>
-# ifdef HAVE_NETDB_H
-#  include <netdb.h>
-# endif
+# include <netdb.h>
 
 # ifndef HAVE_STRUCT_ADDRINFO
 

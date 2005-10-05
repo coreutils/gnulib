@@ -4,7 +4,8 @@
 	we assume all systems have it, suggested by Jim Meyering
 	<jim@meyering.net>.  Remove HAVE_SYS_SOCKET_H test too, to see if
 	any systems lack sys/socket.h; mingw32 is known to lack it, but we
-	don't support it yet anyway.
+	don't support it yet anyway.  Also remove HAVE_NETDB_H test, for
+	same reasons.
 
 2005-10-04  Bruno Haible  <bruno@clisp.org>
 
