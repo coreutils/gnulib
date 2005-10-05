@@ -1,3 +1,10 @@
+2005-10-05  Simon Josefsson  <jas@extundo.com>
+
+	* modules/iconv (Files): Move config.rpath to havelib, it is used
+	there.
+
+	* modules/havelib (Files): Add config.rpath.
+
 2005-10-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/xreadlink (Makefile.am): Remove lib_SOURCES.

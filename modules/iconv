@@ -3,7 +3,6 @@ Character set conversion.
 
 Files:
 m4/iconv.m4
-build-aux/config.rpath
 
 Depends-on:
 havelib
