@@ -1,5 +1,7 @@
 2005-10-05  Simon Josefsson  <jas@extundo.com>
 
+	* modules/memxor: New file.
+
 	* modules/iconv (Files): Move config.rpath to havelib, it is used
 	there.
 
