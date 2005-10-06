@@ -1,0 +1,25 @@
+Description:
+Compute hashed message authentication codes with MD5.
+
+Files:
+lib/hmac.h
+lib/hmac-md5.c
+m4/hmac-md5.m4
+
+Depends-on:
+memxor
+md5
+
+configure.ac:
+gl_HMAC_MD5
+
+Makefile.am:
+
+Include:
+"hmac.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

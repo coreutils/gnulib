@@ -1,5 +1,7 @@
 2005-10-06  Simon Josefsson  <jas@extundo.com>
 
+	* hmac-md5.m4: New file.
+
 	* memxor.m4: Require gl_C_RESTRICT.
 
 2005-10-05  Paul Eggert  <eggert@cs.ucla.edu>

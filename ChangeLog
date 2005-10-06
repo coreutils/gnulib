@@ -1,3 +1,11 @@
+2005-10-06  Simon Josefsson  <jas@extundo.com>
+
+	* tests/test-hmac-md5.c: New file.
+
+	* modules/hmac-md5-tests: New file.
+
+	* modules/hmac-md5: New file.
+
 2005-10-05  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stdint (License): Change to LGPL.
