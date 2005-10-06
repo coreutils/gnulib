@@ -1,3 +1,7 @@
+2005-10-06  Simon Josefsson  <jas@extundo.com>
+
+	* memxor.m4: Require gl_C_RESTRICT.
+
 2005-10-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getaddrinfo.m4 (gl_PREREQ_GETADDRINFO): Don't check for
