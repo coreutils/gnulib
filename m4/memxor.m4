@@ -8,5 +8,4 @@ AC_DEFUN([gl_MEMXOR],
 [
   AC_LIBSOURCES([memxor.h, memxor.c])
   AC_LIBOBJ([memxor])
-  AC_REQUIRE([gl_C_RESTRICT])
 ])
