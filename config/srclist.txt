@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.107 2005-10-05 13:54:42 jas Exp $
+# $Id: srclist.txt,v 1.108 2005-10-08 11:05:24 jas Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -186,10 +186,10 @@ $LIBCSRC/sysdeps/generic/memmem.c	lib gpl
 $LIBCSRC/time/mktime.c			lib gpl
 
 #
-# These are close, but ...
+# http://sourceware.org/bugzilla/show_bug.cgi?id=1439
 #$LIBCSRC/crypt/md5.c			lib gpl
-# http://sourceware.org/bugzilla/show_bug.cgi?id=1423
 #$LIBCSRC/crypt/md5.h			lib gpl
+# These are close, but ...
 #$LIBCSRC/locale/programs/xmalloc.c	lib gpl
 #$LIBCSRC/locale/programs/xstrdup.c	lib gpl
 #$LIBCSRC/malloc/obstack.c		lib gpl

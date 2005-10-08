@@ -1,3 +1,7 @@
+2005-10-08  Simon Josefsson  <jas@extundo.com>
+
+	* srclist.txt: Bug 1423 is closed, but 1439 remains.
+
 2005-10-05  Simon Josefsson  <jas@extundo.com>
 
 	* srclist.txt: Add glibc bug 1423 for md5.h.
