@@ -94,6 +94,28 @@ gc_set_allocators (gc_malloc_t func_malloc,
 			       func_realloc, func_free);
 }
 
+/* Hashes. */
+
+int
+gc_hash_buffer (int hash, const void *in, size_t inlen, char *resbuf)
+{
+  int gcryalg;
+
+  switch (hash)
+    {
+    case GC_MD5:
+      gcryalg = GCRY_MD_MD5;
+      break;
+
+    default:
+      return GC_INVALID_HASH;
+    }
+
+  gcry_md_hash_buffer (gcryalg, resbuf, in, inlen);
+
+  return GC_OK;
+}
+
 /* One-call interface. */
 
 int

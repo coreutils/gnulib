@@ -24,8 +24,6 @@
 /* Get size_t. */
 # include <stddef.h>
 
-#define GC_MD5_DIGEST_SIZE 16
-
 enum Gc_rc
   {
     GC_OK = 0,
@@ -40,6 +38,16 @@ enum Gc_rc
   };
 typedef enum Gc_rc Gc_rc;
 
+/* Hash types. */
+enum Gc_hash
+  {
+    GC_MD5
+  };
+typedef enum Gc_hash Gc_hash;
+
+#define GC_MD5_DIGEST_SIZE 16
+
+/* Call before respectively after any other functions. */
 extern int gc_init (void);
 extern void gc_done (void);
 
@@ -53,6 +61,10 @@ extern void gc_set_allocators (gc_malloc_t func_malloc,
 			       gc_secure_check_t secure_check,
 			       gc_realloc_t func_realloc,
 			       gc_free_t func_free);
+
+/* Hashes. */
+extern int
+gc_hash_buffer (int hash, const void *in, size_t inlen, char *out);
 
 /* One-call interface. */
 extern int gc_md5 (const void *in, size_t inlen, void *resbuf);

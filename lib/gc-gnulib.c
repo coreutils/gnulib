@@ -24,10 +24,11 @@
 # include <config.h>
 #endif
 
-#include <stdlib.h>
-
 /* Get prototype. */
 #include <gc.h>
+
+#include <stdlib.h>
+#include <string.h>
 
 /* For randomize. */
 #include <unistd.h>
@@ -36,7 +37,8 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include <string.h>
+#include "md5.h"
+#include "hmac.h"
 
 int
 gc_init (void)
@@ -133,7 +135,23 @@ gc_set_allocators (gc_malloc_t func_malloc,
   return;
 }
 
-#include "md5.h"
+/* Hashes. */
+
+int
+gc_hash_buffer (int hash, const void *in, size_t inlen, char *resbuf)
+{
+  switch (hash)
+    {
+    case GC_MD5:
+      md5_buffer (in, inlen, resbuf);
+      break;
+
+    default:
+      return GC_INVALID_HASH;
+    }
+
+  return GC_OK;
+}
 
 int
 gc_md5 (const void *in, size_t inlen, void *resbuf)
@@ -141,8 +159,6 @@ gc_md5 (const void *in, size_t inlen, void *resbuf)
   md5_buffer (in, inlen, resbuf);
   return 0;
 }
-
-#include "hmac.h"
 
 int
 gc_hmac_md5 (const void *key, size_t keylen,
