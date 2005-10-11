@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2005-10-09.06}
+\def\texinfoversion{2005-10-10.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005 Free Software
@@ -2963,12 +2963,8 @@ where each line of input produces a line of output.}
     % #1 contains the command name as a string, e.g., `ifinfo'.
     %
     % Define a command to find the next `@end #1', which must be on a line
-    % by itself.  Ignore anything after the `#1'; this matters in
-    % verbatim environments, where otherwise the newline after an
-    % ignored conditional would result in a blank line in the output.
-    \long\def\doignoretext##1^^M@end #1##2^^M{%
-      \doignoretextyyy##1^^M@#1\_STOP_}%
-    %
+    % by itself.
+    \long\def\doignoretext##1^^M@end #1{\doignoretextyyy##1^^M@#1\_STOP_}%
     % And this command to find another #1 command, at the beginning of a
     % line.  (Otherwise, we would consider a line `@c @ifset', for
     % example, to count as an @ifset for nesting.)
