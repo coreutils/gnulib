@@ -68,7 +68,8 @@ extern void gc_set_allocators (gc_malloc_t func_malloc,
    algorithm HASH, placing the result in the pre-allocated buffer OUT.
    The required size of OUT depends on HASH, and is generally
    GC_<HASH>_DIGEST_SIZE.  For example, for GC_MD5 the output buffer
-   must be 16 bytes. */
+   must be 16 bytes.  The return value is 0 (GC_OK) on success, or
+   another Gc_rc error code. */
 extern int
 gc_hash_buffer (int hash, const void *in, size_t inlen, char *out);
 
