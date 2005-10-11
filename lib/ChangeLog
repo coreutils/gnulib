@@ -4,6 +4,14 @@
 
 	* gc.h (gc_hash_buffer): Add doc.
 
+2005-10-08  Simon Josefsson  <jas@extundo.com>
+
+	* gc.h: Add gc_hash and gc_hash_buffer.
+
+	* gc-gnulib.c (gc_hash_buffer): Add.  Reorder #include's.
+
+	* gc-libgcrypt.c (gc_hash_buffer): Add.
+
 2005-10-11  Bruno Haible  <bruno@clisp.org>
 
 	* strcasecmp.c: Include limits.h.
