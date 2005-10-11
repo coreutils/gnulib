@@ -1528,6 +1528,7 @@ func_all_modules ()
   func_module stpncpy
   func_module c-strcase
   func_module strcase
+  func_module c-strcasestr
   func_module strcasestr
   func_module strchrnul
   func_module strdup
