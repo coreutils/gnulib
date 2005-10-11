@@ -1,0 +1,11 @@
+Files:
+tests/test-crc.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-crc
+noinst_PROGRAMS += test-crc
+test_crc_SOURCES = test-crc.c

@@ -1,5 +1,7 @@
 2005-10-11  Simon Josefsson  <jas@extundo.com>
 
+	* crc.h, crc.c: New files.
+
 	* gc.h (gc_hash_buffer): Add doc.
 
 2005-10-11  Bruno Haible  <bruno@clisp.org>

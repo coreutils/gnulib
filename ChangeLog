@@ -1,3 +1,9 @@
+2005-10-11  Simon Josefsson  <jas@extundo.com>
+
+	* tests/test-crc.c: New file.
+
+	* modules/crc, modules/crc-tests: New files.
+
 2005-10-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/mempcpy (License): GPL -> LGPL.
