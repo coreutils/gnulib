@@ -1526,6 +1526,7 @@ func_all_modules ()
   func_module memrchr
   func_module stpcpy
   func_module stpncpy
+  func_module c-strcase
   func_module strcase
   func_module strcasestr
   func_module strchrnul
