@@ -63,6 +63,12 @@ extern void gc_set_allocators (gc_malloc_t func_malloc,
 			       gc_free_t func_free);
 
 /* Hashes. */
+
+/* Compute a hash value over buffer IN of INLEN bytes size using the
+   algorithm HASH, placing the result in the pre-allocated buffer OUT.
+   The required size of OUT depends on HASH, and is generally
+   GC_<HASH>_DIGEST_SIZE.  For example, for GC_MD5 the output buffer
+   must be 16 bytes. */
 extern int
 gc_hash_buffer (int hash, const void *in, size_t inlen, char *out);
 
