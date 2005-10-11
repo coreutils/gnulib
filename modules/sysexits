@@ -25,7 +25,7 @@ Include:
 #include <sysexits.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Simon Josefsson

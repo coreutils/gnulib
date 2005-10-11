@@ -17,7 +17,7 @@ Include:
 "mempcpy.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Simon Josefsson
