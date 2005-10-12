@@ -109,6 +109,12 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
       break;
 #endif
 
+#ifdef GC_USE_SHA1
+    case GC_SHA1:
+      gcryalg = GCRY_MD_SHA1;
+      break;
+#endif
+
     default:
       return GC_INVALID_HASH;
     }
@@ -138,6 +144,38 @@ gc_md5 (const void *in, size_t inlen, void *resbuf)
   gcry_md_write (hd, in, inlen);
 
   p = gcry_md_read (hd, GCRY_MD_MD5);
+  if (p == NULL)
+    {
+      gcry_md_close (hd);
+      return GC_INVALID_HASH;
+    }
+
+  memcpy (resbuf, p, outlen);
+
+  gcry_md_close (hd);
+
+  return GC_OK;
+}
+#endif
+
+#ifdef GC_USE_SHA1
+int
+gc_sha1 (const void *in, size_t inlen, void *resbuf)
+{
+  size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SHA1);
+  gcry_md_hd_t hd;
+  gpg_error_t err;
+  unsigned char *p;
+
+  assert (outlen == GC_SHA1_DIGEST_SIZE);
+
+  err = gcry_md_open (&hd, GCRY_MD_SHA1, 0);
+  if (err != GPG_ERR_NO_ERROR)
+    return GC_INVALID_HASH;
+
+  gcry_md_write (hd, in, inlen);
+
+  p = gcry_md_read (hd, GCRY_MD_SHA1);
   if (p == NULL)
     {
       gcry_md_close (hd);

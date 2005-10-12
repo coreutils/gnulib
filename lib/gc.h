@@ -41,11 +41,13 @@ typedef enum Gc_rc Gc_rc;
 /* Hash types. */
 enum Gc_hash
   {
-    GC_MD5
+    GC_MD5,
+    GC_SHA1
   };
 typedef enum Gc_hash Gc_hash;
 
 #define GC_MD5_DIGEST_SIZE 16
+#define GC_SHA1_DIGEST_SIZE 20
 
 /* Call before respectively after any other functions. */
 extern int gc_init (void);
@@ -75,9 +77,13 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *out);
 
 /* One-call interface. */
 extern int gc_md5 (const void *in, size_t inlen, void *resbuf);
+extern int gc_sha1 (const void *in, size_t inlen, void *resbuf);
 extern int gc_hmac_md5 (const void *key, size_t keylen,
 			const void *in, size_t inlen,
 			char *resbuf);
+extern int gc_hmac_sha1 (const void *key, size_t keylen,
+			 const void *in, size_t inlen,
+			 char *resbuf);
 
 /*
   TODO:

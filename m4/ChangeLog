@@ -1,5 +1,7 @@
 2005-10-12  Simon Josefsson  <jas@extundo.com>
 
+	* gc-sha1: New file.
+
 	* hmac-sha1.m4: New file.
 
 2005-10-12  Simon Josefsson  <jas@extundo.com>

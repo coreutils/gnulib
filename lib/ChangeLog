@@ -1,5 +1,9 @@
 2005-10-12  Simon Josefsson  <jas@extundo.com>
 
+	* gc.h, gc-gnulib.c, gc-libgcrypt.c: Support SHA-1.
+
+2005-10-12  Simon Josefsson  <jas@extundo.com>
+
 	* gc-gnulib.c: Condition MD5 and HMAC-MD5 use on GC_USE_MD5 and
 	GC_USE_HMAC_MD5, respectively.
 

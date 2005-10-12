@@ -40,6 +40,9 @@
 #ifdef GC_USE_MD5
 # include "md5.h"
 #endif
+#ifdef GC_USE_SHA1
+# include "sha1.h"
+#endif
 #ifdef GC_USE_HMAC_MD5
 # include "hmac.h"
 #endif
@@ -152,6 +155,12 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
       break;
 #endif
 
+#ifdef GC_USE_SHA1
+    case GC_SHA1:
+      sha1_buffer (in, inlen, resbuf);
+      break;
+#endif
+
     default:
       return GC_INVALID_HASH;
     }
@@ -164,6 +173,15 @@ int
 gc_md5 (const void *in, size_t inlen, void *resbuf)
 {
   md5_buffer (in, inlen, resbuf);
+  return 0;
+}
+#endif
+
+#ifdef GC_USE_SHA1
+int
+gc_sha1 (const void *in, size_t inlen, void *resbuf)
+{
+  sha1_buffer (in, inlen, resbuf);
   return 0;
 }
 #endif
