@@ -195,3 +195,13 @@ gc_hmac_md5 (const void *key, size_t keylen,
   return 0;
 }
 #endif
+
+#ifdef GC_USE_HMAC_SHA1
+int
+gc_hmac_sha1 (const void *key, size_t keylen,
+	      const void *in, size_t inlen, char *resbuf)
+{
+  hmac_sha1 (key, keylen, in, inlen, resbuf);
+  return 0;
+}
+#endif

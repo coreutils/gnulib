@@ -1,5 +1,11 @@
 2005-10-12  Simon Josefsson  <jas@extundo.com>
 
+	* gc-libgcrypt.c (gc_hmac_sha1): New function.
+
+	* gc-gnulib.c (gc_hmac_sha1): New function.
+
+2005-10-12  Simon Josefsson  <jas@extundo.com>
+
 	* gc.h, gc-gnulib.c, gc-libgcrypt.c: Support SHA-1.
 
 2005-10-12  Simon Josefsson  <jas@extundo.com>
