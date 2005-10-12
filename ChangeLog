@@ -1,5 +1,11 @@
 2005-10-12  Simon Josefsson  <jas@extundo.com>
 
+	* modules/gc-pbkdf2-sha1, modules/gc-pbkdf2-sha1-tests: New files.
+
+	* tests/test-gc-pbkdf2-sha1.c: New file.
+
+2005-10-12  Simon Josefsson  <jas@extundo.com>
+
 	* modules/gc-sha1: New file.
 
 2005-10-12  Simon Josefsson  <jas@extundo.com>

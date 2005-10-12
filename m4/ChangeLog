@@ -1,5 +1,7 @@
 2005-10-12  Simon Josefsson  <jas@extundo.com>
 
+	* gc-pbkdf2-sha1.m4: New file.
+
 	* gc-hmac-sha1.m4: New file.
 
 	* gc-sha1: New file.

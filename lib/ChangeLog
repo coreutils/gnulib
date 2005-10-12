@@ -1,5 +1,11 @@
 2005-10-12  Simon Josefsson  <jas@extundo.com>
 
+	* gc-pbkdf2-sha1.c: New file.
+
+	* gc.h: Add gc_pbkdf2_sha1 prototype.
+
+2005-10-12  Simon Josefsson  <jas@extundo.com>
+
 	* gc.h, gc-gnulib.c, gc-libgcrypt.c: Use Gc_rc for return types,
 	suggested by Bruno Haible <bruno@clisp.org>.
 
