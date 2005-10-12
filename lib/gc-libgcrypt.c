@@ -103,9 +103,11 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 
   switch (hash)
     {
+#ifdef GC_USE_MD5
     case GC_MD5:
       gcryalg = GCRY_MD_MD5;
       break;
+#endif
 
     default:
       return GC_INVALID_HASH;
@@ -118,6 +120,7 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 
 /* One-call interface. */
 
+#ifdef GC_USE_MD5
 int
 gc_md5 (const void *in, size_t inlen, void *resbuf)
 {
@@ -147,7 +150,9 @@ gc_md5 (const void *in, size_t inlen, void *resbuf)
 
   return GC_OK;
 }
+#endif
 
+#ifdef GC_USE_HMAC_MD5
 int
 gc_hmac_md5 (const void *key, size_t keylen,
 	     const void *in, size_t inlen, char *resbuf)
@@ -185,3 +190,4 @@ gc_hmac_md5 (const void *key, size_t keylen,
 
   return GC_OK;
 }
+#endif

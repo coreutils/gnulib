@@ -18,9 +18,6 @@ AC_DEFUN([gl_GC],
     AC_LIBOBJ([gc-libgcrypt])
   else
     AC_LIBOBJ([gc-gnulib])
-    gl_MD5
-    gl_MEMXOR
-    gl_HMAC_MD5
 
     # Devices with randomness.
     # FIXME: Are these the best defaults?

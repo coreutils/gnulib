@@ -1,0 +1,26 @@
+Description:
+Generic crypto wrappers for MD5 functions.
+
+Files:
+m4/gc-md5.m4
+lib/md5.h
+lib/md5.c
+m4/md5.m4
+
+Depends-on:
+stdint
+gc
+
+configure.ac:
+gl_GC_MD5
+
+Makefile.am:
+
+Include:
+"gc.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

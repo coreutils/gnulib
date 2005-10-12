@@ -1,5 +1,8 @@
 2005-10-12  Simon Josefsson  <jas@extundo.com>
 
+	* gc-gnulib.c: Condition MD5 and HMAC-MD5 use on GC_USE_MD5 and
+	GC_USE_HMAC_MD5, respectively.
+
 	* gc-libgcrypt.c (gc_md5): Fix assert call.
 	(gc_md5): Fix typo.
 

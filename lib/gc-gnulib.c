@@ -37,8 +37,12 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include "md5.h"
-#include "hmac.h"
+#ifdef GC_USE_MD5
+# include "md5.h"
+#endif
+#ifdef GC_USE_HMAC_MD5
+# include "hmac.h"
+#endif
 
 int
 gc_init (void)
@@ -142,9 +146,11 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 {
   switch (hash)
     {
+#ifdef GC_USE_MD5
     case GC_MD5:
       md5_buffer (in, inlen, resbuf);
       break;
+#endif
 
     default:
       return GC_INVALID_HASH;
@@ -153,13 +159,16 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
   return GC_OK;
 }
 
+#ifdef GC_USE_MD5
 int
 gc_md5 (const void *in, size_t inlen, void *resbuf)
 {
   md5_buffer (in, inlen, resbuf);
   return 0;
 }
+#endif
 
+#ifdef GC_USE_HMAC_MD5
 int
 gc_hmac_md5 (const void *key, size_t keylen,
 	     const void *in, size_t inlen, char *resbuf)
@@ -167,3 +176,4 @@ gc_hmac_md5 (const void *key, size_t keylen,
   hmac_md5 (key, keylen, in, inlen, resbuf);
   return 0;
 }
+#endif
