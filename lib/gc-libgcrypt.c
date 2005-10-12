@@ -34,7 +34,7 @@
 
 /* Initialization. */
 
-int
+Gc_rc
 gc_init (void)
 {
   gcry_error_t err;
@@ -61,21 +61,21 @@ gc_done (void)
 
 /* Randomness. */
 
-int
+Gc_rc
 gc_nonce (char *data, size_t datalen)
 {
   gcry_create_nonce ((unsigned char *) data, datalen);
   return GC_OK;
 }
 
-int
+Gc_rc
 gc_pseudo_random (char *data, size_t datalen)
 {
   gcry_randomize ((unsigned char *) data, datalen, GCRY_STRONG_RANDOM);
   return GC_OK;
 }
 
-int
+Gc_rc
 gc_random (char *data, size_t datalen)
 {
   gcry_randomize ((unsigned char *) data, datalen, GCRY_VERY_STRONG_RANDOM);
@@ -96,7 +96,7 @@ gc_set_allocators (gc_malloc_t func_malloc,
 
 /* Hashes. */
 
-int
+Gc_rc
 gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 {
   int gcryalg;
@@ -127,7 +127,7 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 /* One-call interface. */
 
 #ifdef GC_USE_MD5
-int
+Gc_rc
 gc_md5 (const void *in, size_t inlen, void *resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_MD5);
@@ -159,7 +159,7 @@ gc_md5 (const void *in, size_t inlen, void *resbuf)
 #endif
 
 #ifdef GC_USE_SHA1
-int
+Gc_rc
 gc_sha1 (const void *in, size_t inlen, void *resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SHA1);
@@ -191,7 +191,7 @@ gc_sha1 (const void *in, size_t inlen, void *resbuf)
 #endif
 
 #ifdef GC_USE_HMAC_MD5
-int
+Gc_rc
 gc_hmac_md5 (const void *key, size_t keylen,
 	     const void *in, size_t inlen, char *resbuf)
 {
@@ -231,7 +231,7 @@ gc_hmac_md5 (const void *key, size_t keylen,
 #endif
 
 #ifdef GC_USE_HMAC_SHA1
-int
+Gc_rc
 gc_hmac_sha1 (const void *key, size_t keylen,
 	      const void *in, size_t inlen, char *resbuf)
 {

@@ -47,10 +47,10 @@
 # include "hmac.h"
 #endif
 
-int
+Gc_rc
 gc_init (void)
 {
-  return 0;
+  return GC_OK;
 }
 
 void
@@ -61,7 +61,7 @@ gc_done (void)
 
 /* Randomness. */
 
-static int
+static Gc_rc
 randomize (int level, char *data, size_t datalen)
 {
   int fd;
@@ -113,19 +113,19 @@ randomize (int level, char *data, size_t datalen)
   return GC_OK;
 }
 
-int
+Gc_rc
 gc_nonce (char *data, size_t datalen)
 {
   return randomize (0, data, datalen);
 }
 
-int
+Gc_rc
 gc_pseudo_random (char *data, size_t datalen)
 {
   return randomize (1, data, datalen);
 }
 
-int
+Gc_rc
 gc_random (char *data, size_t datalen)
 {
   return randomize (2, data, datalen);
@@ -144,7 +144,7 @@ gc_set_allocators (gc_malloc_t func_malloc,
 
 /* Hashes. */
 
-int
+Gc_rc
 gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 {
   switch (hash)
@@ -169,39 +169,39 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 }
 
 #ifdef GC_USE_MD5
-int
+Gc_rc
 gc_md5 (const void *in, size_t inlen, void *resbuf)
 {
   md5_buffer (in, inlen, resbuf);
-  return 0;
+  return GC_OK;
 }
 #endif
 
 #ifdef GC_USE_SHA1
-int
+Gc_rc
 gc_sha1 (const void *in, size_t inlen, void *resbuf)
 {
   sha1_buffer (in, inlen, resbuf);
-  return 0;
+  return GC_OK;
 }
 #endif
 
 #ifdef GC_USE_HMAC_MD5
-int
+Gc_rc
 gc_hmac_md5 (const void *key, size_t keylen,
 	     const void *in, size_t inlen, char *resbuf)
 {
   hmac_md5 (key, keylen, in, inlen, resbuf);
-  return 0;
+  return GC_OK;
 }
 #endif
 
 #ifdef GC_USE_HMAC_SHA1
-int
+Gc_rc
 gc_hmac_sha1 (const void *key, size_t keylen,
 	      const void *in, size_t inlen, char *resbuf)
 {
   hmac_sha1 (key, keylen, in, inlen, resbuf);
-  return 0;
+  return GC_OK;
 }
 #endif

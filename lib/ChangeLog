@@ -1,5 +1,10 @@
 2005-10-12  Simon Josefsson  <jas@extundo.com>
 
+	* gc.h, gc-gnulib.c, gc-libgcrypt.c: Use Gc_rc for return types,
+	suggested by Bruno Haible <bruno@clisp.org>.
+
+2005-10-12  Simon Josefsson  <jas@extundo.com>
+
 	* gc-libgcrypt.c (gc_hmac_sha1): New function.
 
 	* gc-gnulib.c (gc_hmac_sha1): New function.

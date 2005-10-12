@@ -50,7 +50,7 @@ typedef enum Gc_hash Gc_hash;
 #define GC_SHA1_DIGEST_SIZE 20
 
 /* Call before respectively after any other functions. */
-extern int gc_init (void);
+extern Gc_rc gc_init (void);
 extern void gc_done (void);
 
 /* Memory allocation (avoid). */
@@ -72,18 +72,18 @@ extern void gc_set_allocators (gc_malloc_t func_malloc,
    GC_<HASH>_DIGEST_SIZE.  For example, for GC_MD5 the output buffer
    must be 16 bytes.  The return value is 0 (GC_OK) on success, or
    another Gc_rc error code. */
-extern int
+extern Gc_rc
 gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *out);
 
 /* One-call interface. */
-extern int gc_md5 (const void *in, size_t inlen, void *resbuf);
-extern int gc_sha1 (const void *in, size_t inlen, void *resbuf);
-extern int gc_hmac_md5 (const void *key, size_t keylen,
-			const void *in, size_t inlen,
-			char *resbuf);
-extern int gc_hmac_sha1 (const void *key, size_t keylen,
-			 const void *in, size_t inlen,
-			 char *resbuf);
+extern Gc_rc gc_md5 (const void *in, size_t inlen, void *resbuf);
+extern Gc_rc gc_sha1 (const void *in, size_t inlen, void *resbuf);
+extern Gc_rc gc_hmac_md5 (const void *key, size_t keylen,
+			  const void *in, size_t inlen,
+			  char *resbuf);
+extern Gc_rc gc_hmac_sha1 (const void *key, size_t keylen,
+			   const void *in, size_t inlen,
+			   char *resbuf);
 
 /*
   TODO:
