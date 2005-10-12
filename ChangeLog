@@ -1,5 +1,13 @@
 2005-10-12  Simon Josefsson  <jas@extundo.com>
 
+	* tests/test-hmac-sha1.c: New file.
+
+	* modules/hmac-sha1-tests: New file.
+
+	* modules/hmac-sha1: New file.
+
+2005-10-12  Simon Josefsson  <jas@extundo.com>
+
 	* modules/gc-md5, modules/gc-hmac-md5: New files.
 
 	* modules/gc (Files): Remove md5, memxor and hmac files.

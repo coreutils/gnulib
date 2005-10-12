@@ -1,5 +1,9 @@
 2005-10-12  Simon Josefsson  <jas@extundo.com>
 
+	* hmac-sha1.m4: New file.
+
+2005-10-12  Simon Josefsson  <jas@extundo.com>
+
 	* gc-md5.m4, gc-hmac-md5: New files.
 
 	* gc.m4: Don't call gl_MD5, gl_MEMXOR or gl_HMAC_MD5.

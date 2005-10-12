@@ -1,0 +1,25 @@
+Description:
+Compute hashed message authentication codes with SHA1.
+
+Files:
+lib/hmac.h
+lib/hmac-sha1.c
+m4/hmac-sha1.m4
+
+Depends-on:
+memxor
+sha1
+
+configure.ac:
+gl_HMAC_SHA1
+
+Makefile.am:
+
+Include:
+"hmac.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson
