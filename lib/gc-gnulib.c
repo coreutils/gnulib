@@ -138,7 +138,7 @@ gc_set_allocators (gc_malloc_t func_malloc,
 /* Hashes. */
 
 int
-gc_hash_buffer (int hash, const void *in, size_t inlen, char *resbuf)
+gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 {
   switch (hash)
     {

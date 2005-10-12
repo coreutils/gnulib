@@ -1,3 +1,14 @@
+2005-10-12  Simon Josefsson  <jas@extundo.com>
+
+	* gc-libgcrypt.c (gc_md5): Fix assert call.
+	(gc_md5): Fix typo.
+
+	* gc.h (gc_hash_buffer): Use gc_hash in prototype.
+
+	* gc-libgcrypt.c (gc_hash_buffer): Ditto.
+
+	* gc-gnulib.c (gc_hash_buffer): Ditto.
+
 2005-10-11  Bruno Haible  <bruno@clisp.org>
 
 	* c-strcasestr.h: New file, from GNU gettext.

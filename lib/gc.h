@@ -71,7 +71,7 @@ extern void gc_set_allocators (gc_malloc_t func_malloc,
    must be 16 bytes.  The return value is 0 (GC_OK) on success, or
    another Gc_rc error code. */
 extern int
-gc_hash_buffer (int hash, const void *in, size_t inlen, char *out);
+gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *out);
 
 /* One-call interface. */
 extern int gc_md5 (const void *in, size_t inlen, void *resbuf);

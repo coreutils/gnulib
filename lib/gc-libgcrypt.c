@@ -97,7 +97,7 @@ gc_set_allocators (gc_malloc_t func_malloc,
 /* Hashes. */
 
 int
-gc_hash_buffer (int hash, const void *in, size_t inlen, char *resbuf)
+gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 {
   int gcryalg;
 
@@ -126,7 +126,7 @@ gc_md5 (const void *in, size_t inlen, void *resbuf)
   gpg_error_t err;
   unsigned char *p;
 
-  assert (outlen == 16);
+  assert (outlen == GC_MD5_DIGEST_SIZE);
 
   err = gcry_md_open (&hd, GCRY_MD_MD5, 0);
   if (err != GPG_ERR_NO_ERROR)
@@ -137,7 +137,7 @@ gc_md5 (const void *in, size_t inlen, void *resbuf)
   p = gcry_md_read (hd, GCRY_MD_MD5);
   if (p == NULL)
     {
-      gcry_md_close (mdh);
+      gcry_md_close (hd);
       return GC_INVALID_HASH;
     }
 
