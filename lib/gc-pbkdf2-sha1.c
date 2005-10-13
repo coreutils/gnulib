@@ -68,6 +68,8 @@ gc_pbkdf2_sha1 (const char *P, size_t Plen,
   unsigned int i;
   unsigned int k;
   int rc;
+  char *tmp;
+  size_t tmplen = Slen + 4;
 
   if (c == 0)
     return GC_PKCS5_INVALID_ITERATION_COUNT;
@@ -98,9 +100,7 @@ gc_pbkdf2_sha1 (const char *P, size_t Plen,
    *        integer greater than, or equal to, x.
    */
 
-  l = dkLen / hLen;
-  if (dkLen % hLen)
-    l++;
+  l = ((dkLen - 1) / hLen) + 1;
   r = dkLen - (l - 1) * hLen;
 
   /*
@@ -145,6 +145,12 @@ gc_pbkdf2_sha1 (const char *P, size_t Plen,
    *
    */
 
+  tmp = malloc (tmplen);
+  if (tmp == NULL)
+    return GC_MALLOC_ERROR;
+
+  memcpy (tmp, S, Slen);
+
   for (i = 1; i <= l; i++)
     {
       memset (T, 0, hLen);
@@ -153,28 +159,21 @@ gc_pbkdf2_sha1 (const char *P, size_t Plen,
 	{
 	  if (u == 1)
 	    {
-	      char *tmp;
-	      size_t tmplen = Slen + 4;
-
-	      tmp = malloc (tmplen);
-	      if (tmp == NULL)
-		return GC_MALLOC_ERROR;
-
-	      memcpy (tmp, S, Slen);
 	      tmp[Slen + 0] = (i & 0xff000000) >> 24;
 	      tmp[Slen + 1] = (i & 0x00ff0000) >> 16;
 	      tmp[Slen + 2] = (i & 0x0000ff00) >> 8;
 	      tmp[Slen + 3] = (i & 0x000000ff) >> 0;
 
 	      rc = gc_hmac_sha1 (P, Plen, tmp, tmplen, U);
-
-	      free (tmp);
 	    }
 	  else
 	    rc = gc_hmac_sha1 (P, Plen, U, hLen, U);
 
 	  if (rc != GC_OK)
-	    return rc;
+	    {
+	      free (tmp);
+	      return rc;
+	    }
 
 	  for (k = 0; k < hLen; k++)
 	    T[k] ^= U[k];
@@ -182,6 +181,8 @@ gc_pbkdf2_sha1 (const char *P, size_t Plen,
 
       memcpy (DK + (i - 1) * hLen, T, i == l ? r : hLen);
     }
+
+  free (tmp);
 
   return GC_OK;
 }
