@@ -28,6 +28,9 @@ AC_DEFUN([AM_STDBOOL_H],
   AC_SUBST([HAVE__BOOL])
 ])
 
+# AM_STDBOOL_H will be renamed to gl_STDBOOL_H in the future.
+AC_DEFUN([gl_STDBOOL_H], [AM_STDBOOL_H])
+
 # This macro is only needed in autoconf <= 2.59.  Newer versions of autoconf
 # have this macro built-in.
 
