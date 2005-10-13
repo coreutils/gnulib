@@ -1,0 +1,11 @@
+Files:
+tests/test-gc-hmac-sha1.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-gc-hmac-sha1
+noinst_PROGRAMS += test-gc-hmac-sha1
+test_gc_hmac_sha1_SOURCES = test-gc-hmac-sha1.c

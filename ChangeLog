@@ -1,5 +1,9 @@
 2005-10-13  Simon Josefsson  <jas@extundo.com>
 
+	* modules/gc-hmac-md5-tests: New file.
+
+	* tests/test-gc-hmac-sha1.c: New file.
+
 	* tests/test-gc.c (main): Remove MD5 and HMAC-MD5 tests.
 
 	* modules/gc-hmac-md5-tests: New file.
