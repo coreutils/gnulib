@@ -29,7 +29,6 @@ int
 main (int argc, char *argv[])
 {
   Gc_rc rc;
-  char buf1[8], buf2[8];
 
   rc = gc_init ();
   if (rc != GC_OK)
@@ -37,6 +36,46 @@ main (int argc, char *argv[])
       printf ("gc_init() failed\n");
       return 1;
     }
+
+    /* Test vectors from RFC 2104. */
+
+  {
+    char *key =
+      "\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b";
+    size_t key_len = 16;
+    char *data = "Hi There";
+    size_t data_len = 8;
+    char *digest =
+      "\x92\x94\x72\x7a\x36\x38\xbb\x1c\x13\xf4\x8e\xf8\x15\x8b\xfc\x9d";
+    char out[16];
+
+    /*
+      key =         0x0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b
+      key_len =     16 bytes
+      data =        "Hi There"
+      data_len =    8  bytes
+      digest =      0x9294727a3638bb1c13f48ef8158bfc9d
+    */
+
+    if (gc_hmac_md5 (key, key_len, data, data_len, out) != 0)
+      {
+	printf ("call failure\n");
+	return 1;
+      }
+
+    if (memcmp (digest, out, 16) != 0)
+      {
+	size_t i;
+	printf ("hash 1 missmatch. expected:\n");
+	for (i = 0; i < 16; i++)
+	  printf ("%02x ", digest[i] & 0xFF);
+	printf ("\ncomputed:\n");
+	for (i = 0; i < 16; i++)
+	  printf ("%02x ", out[i] & 0xFF);
+	printf ("\n");
+	return 1;
+      }
+  }
 
   gc_done ();
 

@@ -1,0 +1,11 @@
+Files:
+tests/test-gc-hmac-md5.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-gc-hmac-md5
+noinst_PROGRAMS += test-gc-hmac-md5
+test_gc_hmac_md5_SOURCES = test-gc-hmac-md5.c

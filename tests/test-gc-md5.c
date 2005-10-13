@@ -29,7 +29,6 @@ int
 main (int argc, char *argv[])
 {
   Gc_rc rc;
-  char buf1[8], buf2[8];
 
   rc = gc_init ();
   if (rc != GC_OK)
@@ -37,6 +36,37 @@ main (int argc, char *argv[])
       printf ("gc_init() failed\n");
       return 1;
     }
+
+  /* Test vectors from RFC 1321. */
+
+  {
+    char *in = "abcdefghijklmnopqrstuvwxyz";
+    size_t inlen = strlen (in);
+    char *expect =
+      "\xc3\xfc\xd3\xd7\x61\x92\xe4\x00\x7d\xfb\x49\x6c\xca\x67\xe1\x3b";
+    char out[16];
+
+    /* MD5 ("abcdefghijklmnopqrstuvwxyz") = c3fcd3d76192e4007dfb496cca67e13b */
+
+    if (gc_md5 (in, inlen, out) != 0)
+      {
+	printf ("gc_md5 call failed\n");
+	return 1;
+      }
+
+    if (memcmp (out, expect, 16) != 0)
+      {
+	size_t i;
+	printf ("md5 1 missmatch. expected:\n");
+	for (i = 0; i < 16; i++)
+	  printf ("%02x ", expect[i] & 0xFF);
+	printf ("\ncomputed:\n");
+	for (i = 0; i < 16; i++)
+	  printf ("%02x ", out[i] & 0xFF);
+	printf ("\n");
+	return 1;
+      }
+  }
 
   gc_done ();
 
