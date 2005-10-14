@@ -1,3 +1,29 @@
+2005-10-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* obstack.c [defined _LIBC && defined USE_IN_LIBIO]: Don't
+	include <wchar.h>; no longer needed.
+
+2005-10-14  Jakub Jelinek  <jakub@redhat.com>
+       and  Ulrich Drepper  <drepper@redhat.com>
+
+	Import from libc.
+	* obstack.c (print_and_abort) [defined _LIBC]: Use __fxprintf
+	instead of inline stream orientation test and two separate
+	function calls.  Pay no attention to USE_IN_LIBIO.
+
+2005-10-14  Roland McGrath  <roland@redhat.com>
+
+	Import from libc.  [BZ #1331]
+	* obstack.h [!__STDC__] (obstack_int_grow_fast): Fix misnamed
+	macro argument.
+	Reported by Matej Vela <vela@debian.org>.
+
+2005-10-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* mkdir-p.c (make_dir_parents): Don't report an error if an
+	intermediate directory is in a read-only file system.  Problem
+	reported by Eric Blake.
+
 2005-10-13  Simon Josefsson  <jas@extundo.com>
 
 	* gc-pbkdf2-sha1.c (gc_pbkdf2_sha1): Optimize CEIL computation.
@@ -6760,7 +6786,7 @@
 	* exclude.c (bool): Declare, perhaps by including stdbool.h.
 	(<sys/types.h>): Include only if HAVE_SYS_TYPES_H.
 	(<stdlib.h>, <string.h>, <strings.h>, <inttypes.h>, <stdint.h>):
-	Include	if available.
+	Include if available.
 	(<xalloc.h>): Include
 	(SIZE_MAX): Define if <stdint.h> or <inttypes.h> doesn't.
 	(verify): New macro.  Use it to verify that EXCLUDE macros do not

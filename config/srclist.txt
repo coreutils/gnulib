@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.108 2005-10-08 11:05:24 jas Exp $
+# $Id: srclist.txt,v 1.109 2005-10-14 23:23:50 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -192,7 +192,11 @@ $LIBCSRC/time/mktime.c			lib gpl
 # These are close, but ...
 #$LIBCSRC/locale/programs/xmalloc.c	lib gpl
 #$LIBCSRC/locale/programs/xstrdup.c	lib gpl
+#
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=321
 #$LIBCSRC/malloc/obstack.c		lib gpl
+#
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=321
 #$LIBCSRC/malloc/obstack.h		lib gpl
 #$LIBCSRC/misc/error.c			lib gpl
 #$LIBCSRC/misc/error.h			lib gpl

@@ -1,3 +1,7 @@
+2005-10-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Add glibc bug 321 for obstack.c, obstack.h.
+
 2005-10-08  Simon Josefsson  <jas@extundo.com>
 
 	* srclist.txt: Bug 1423 is closed, but 1439 remains.
