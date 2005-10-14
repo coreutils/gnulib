@@ -16,7 +16,7 @@ Depends-on:
 gettext-h
 argmatch
 error
-xstrtol
+xstrtoumax
 stdbool
 
 configure.ac:
