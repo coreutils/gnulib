@@ -1,0 +1,11 @@
+Files:
+tests/test-rijndael.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-rijndael
+noinst_PROGRAMS += test-rijndael
+test_rijndael_SOURCES = test-rijndael.c

@@ -1,3 +1,9 @@
+2005-10-15  Simon Josefsson  <jas@extundo.com>
+
+	* modules/rijndael-tests: New file.
+
+	* modules/rijndael: New file.
+
 2005-10-14  Simon Josefsson  <jas@extundo.com>
 
 	* tests/test-arcfour.c: New file.
