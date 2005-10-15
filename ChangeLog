@@ -1,3 +1,9 @@
+2005-10-14  Simon Josefsson  <jas@extundo.com>
+
+	* tests/test-arcfour.c: New file.
+
+	* modules/arcfour, modules/arcfour-tests: New files.
+
 2005-10-13  Oskar Liljeblad  <oskar@osk.mine.nu>
 
         * modules/human (Depends-on): Depend on xstrtoumax, not xstrtol.

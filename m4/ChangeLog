@@ -1,3 +1,7 @@
+2005-10-14  Simon Josefsson  <jas@extundo.com>
+
+	* arcfour.m4: New file.
+
 2005-10-12  Bruno Haible  <bruno@clisp.org>
 
 	* stdbool.m4 (gl_STDBOOL_H): Define as an alias of AM_STDBOOL_H.

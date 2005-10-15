@@ -1,3 +1,7 @@
+2005-10-14  Simon Josefsson  <jas@extundo.com>
+
+	* arcfour.h, arcfour.c: New files.
+
 2005-10-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* obstack.c [defined _LIBC && defined USE_IN_LIBIO]: Don't
