@@ -1,0 +1,11 @@
+Files:
+tests/test-gc-sha1.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-gc-sha1
+noinst_PROGRAMS += test-gc-sha1
+test_gc_sha1_SOURCES = test-gc-sha1.c

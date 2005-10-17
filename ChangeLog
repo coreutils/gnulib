@@ -1,6 +1,14 @@
 2005-10-17  Simon Josefsson  <jas@extundo.com>
 
+	* modules/gc-sha1-tests: New file.
+
+	* tests/test-gc-sha1.c: New file.
+
+2005-10-17  Simon Josefsson  <jas@extundo.com>
+
 	* tests/test-rijndael.c: New file.
+
+2005-10-17  Simon Josefsson  <jas@extundo.com>
 
 	* modules/sha1: Depend on stdint instead of md5.
 
