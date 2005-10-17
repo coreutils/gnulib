@@ -1,5 +1,9 @@
 2005-10-17  Simon Josefsson  <jas@extundo.com>
 
+	* gc.h (gc_nonce, gc_pseudo_random, gc_random): Add prototypes.
+
+2005-10-17  Simon Josefsson  <jas@extundo.com>
+
 	* gc.h, gc-libgcrypt.c: Add more hash types/functions.
 
 2005-10-17  Simon Josefsson  <jas@extundo.com>
