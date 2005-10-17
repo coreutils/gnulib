@@ -1,3 +1,14 @@
+2005-10-17  Simon Josefsson  <jas@extundo.com>
+
+	* sha1.c: Use uint32_t instead of md5_uint32.t
+
+	* sha1.h: Use stdint.h and uint32_t instead of md5_uint32 from
+	md5.h.
+
+	* md5.c: Use uin32_t.  Fix non-gcc UNALIGNED_P macro.
+
+	* md5.h: Use stdint.h and uint32_t.  Doc fix.
+
 2005-10-15  Simon Josefsson  <jas@extundo.com>
 
 	* rijndael-api-fst.h, rijndael-api-fst.c: New files.

@@ -5,9 +5,9 @@ Files:
 lib/md5.h
 lib/md5.c
 m4/md5.m4
-m4/uint32_t.m4
 
 Depends-on:
+stdint
 
 configure.ac:
 gl_MD5

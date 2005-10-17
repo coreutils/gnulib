@@ -1,3 +1,9 @@
+2005-10-17  Simon Josefsson  <jas@extundo.com>
+
+	* modules/sha1: Depend on stdint instead of md5.
+
+	* modules/md5: Depend on stdint, remove uint32_t.
+
 2005-10-16  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_tests_Makefile_am): Also define

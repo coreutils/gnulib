@@ -7,7 +7,7 @@ lib/sha1.c
 m4/sha1.m4
 
 Depends-on:
-md5
+stdint
 
 configure.ac:
 gl_SHA1
