@@ -76,7 +76,8 @@ AC_DEFUN([AC_HEADER_STDBOOL],
 	  char p[-1 - (_Bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
 	],
 	[
-	  return (!a + !b + !c + !d + !e + !f + !g + !h + !i + !j + !k + !l
+	  /* Refer to every declared value, to avoid compiler optimizations.  */
+	  return (!a + !b + !c + !d + !e + !f + !g + !h + !i + !!j + !k + !!l
 		  + !m + !n + !o + !p);
 	],
 	[ac_cv_header_stdbool_h=yes],
