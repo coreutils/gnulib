@@ -1,5 +1,9 @@
 2005-10-17  Simon Josefsson  <jas@extundo.com>
 
+	* gc.h, gc-libgcrypt.c: Add ciphers.
+
+2005-10-17  Simon Josefsson  <jas@extundo.com>
+
 	* sha1.c: Use uint32_t instead of md5_uint32.t
 
 	* sha1.h: Use stdint.h and uint32_t instead of md5_uint32 from
