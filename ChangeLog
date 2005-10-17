@@ -1,3 +1,13 @@
+2005-10-16  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_tests_Makefile_am): Also define
+	TESTS_ENVIRONMENT, so that individual tests can augment it.
+
+	* gnulib-tool (func_create_testdir): Use an intermediate target for
+	building $(BUILT_SOURCES). Needed because BUILT_SOURCES can contain
+	macros, like $(ALLOCA_H), which cannot be passed through the command
+	line.
+
 2005-10-15  Simon Josefsson  <jas@extundo.com>
 
 	* modules/rijndael-tests: New file.

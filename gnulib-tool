@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-09-20 11:48:17 $'
+cvsdatestamp='$Date: 2005-10-17 10:27:37 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -725,6 +725,7 @@ func_emit_tests_Makefile_am ()
   echo "ACLOCAL_AMFLAGS = -I ${testsbase_inverse}/${m4base}"
   echo
   echo "TESTS ="
+  echo "TESTS_ENVIRONMENT ="
   echo "noinst_PROGRAMS ="
   echo "EXTRA_DIST ="
   echo "BUILT_SOURCES ="
@@ -1517,7 +1518,8 @@ func_create_testdir ()
        cd lib
        built_sources=`grep '^BUILT_SOURCES *=' Makefile.in | sed -e 's/^BUILT_SOURCES *=//'`
        if test -n "$built_sources"; then
-         make $built_sources
+         echo 'built_sources: $(BUILT_SOURCES)' >> Makefile
+         make built_sources
        fi
        cd ..
      make distclean
