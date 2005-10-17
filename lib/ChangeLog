@@ -1,5 +1,7 @@
 2005-10-17  Simon Josefsson  <jas@extundo.com>
 
+	* gc-libgcrypt.c (gc_hmac_sha1): Fix assert.
+
 	* gc.h (gc_nonce, gc_pseudo_random, gc_random): Add prototypes.
 
 2005-10-17  Simon Josefsson  <jas@extundo.com>

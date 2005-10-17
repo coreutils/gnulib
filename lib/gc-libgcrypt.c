@@ -476,7 +476,7 @@ gc_hmac_sha1 (const void *key, size_t keylen,
   unsigned char *hash;
   gpg_error_t err;
 
-  assert (hlen == 16);
+  assert (hlen == GC_SHA1_DIGEST_SIZE);
 
   err = gcry_md_open (&mdh, GCRY_MD_SHA1, GCRY_MD_FLAG_HMAC);
   if (err != GPG_ERR_NO_ERROR)
