@@ -1,3 +1,8 @@
+2005-10-17  Stepan Kasal  <kasal@ucw.cz>
+
+	* gnulib-tool (func_create_testdir): Omit the second check whether
+	BUILT_SOURCES in nonempty.
+
 2005-10-17  Simon Josefsson  <jas@extundo.com>
 
 	* modules/gc-sha1-tests: New file.

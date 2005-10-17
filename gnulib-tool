@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-10-17 10:27:37 $'
+cvsdatestamp='$Date: 2005-10-17 15:44:51 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1516,11 +1516,8 @@ func_create_testdir ()
     (cd "$testdir"
      ./configure
        cd lib
-       built_sources=`grep '^BUILT_SOURCES *=' Makefile.in | sed -e 's/^BUILT_SOURCES *=//'`
-       if test -n "$built_sources"; then
-         echo 'built_sources: $(BUILT_SOURCES)' >> Makefile
-         make built_sources
-       fi
+       echo 'built_sources: $(BUILT_SOURCES)' >> Makefile
+       make built_sources
        cd ..
      make distclean
     )
