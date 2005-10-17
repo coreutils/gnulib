@@ -42,9 +42,19 @@ typedef enum Gc_rc Gc_rc;
 enum Gc_hash
   {
     GC_MD5,
-    GC_SHA1
+    GC_SHA1,
+    GC_MD2,
+    GC_RMD160
   };
 typedef enum Gc_hash Gc_hash;
+
+enum Gc_hash_mode
+  {
+    GC_HMAC = 1
+  };
+typedef enum Gc_hash_mode Gc_hash_mode;
+
+typedef void *gc_hash_handle;
 
 #define GC_MD5_DIGEST_SIZE 16
 #define GC_SHA1_DIGEST_SIZE 20
@@ -101,6 +111,17 @@ extern Gc_rc gc_cipher_decrypt_inline (gc_cipher_handle handle,
 extern Gc_rc gc_cipher_close (gc_cipher_handle handle);
 
 /* Hashes. */
+
+extern Gc_rc gc_hash_open (Gc_hash hash, Gc_hash_mode mode,
+			   gc_hash_handle * outhandle);
+extern Gc_rc gc_hash_clone (gc_hash_handle handle, gc_hash_handle * outhandle);
+extern size_t gc_hash_digest_length (Gc_hash hash);
+extern void gc_hash_hmac_setkey (gc_hash_handle handle,
+				 size_t len, const char *key);
+extern void gc_hash_write (gc_hash_handle handle,
+			   size_t len, const char *data);
+extern const char *gc_hash_read (gc_hash_handle handle);
+extern void gc_hash_close (gc_hash_handle handle);
 
 /* Compute a hash value over buffer IN of INLEN bytes size using the
    algorithm HASH, placing the result in the pre-allocated buffer OUT.
