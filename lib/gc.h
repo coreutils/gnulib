@@ -169,7 +169,7 @@ gc_pbkdf2_sha1 (const char *P, size_t Plen,
 
   > Simon Josefsson <jas@extundo.com> writes:
   >
-  >> * Perhaps the /dev/*random reading should be separated into a separate
+  >> * Perhaps the /dev/?random reading should be separated into a separate
   >>   module?  It might be useful outside of the gc layer too.
   >
   > Absolutely.  I've been meaning to do that for months (for a "shuffle"
@@ -180,9 +180,9 @@ gc_pbkdf2_sha1 (const char *P, size_t Plen,
   I'll write a separate module for that part.
 
   I think we should even add a good PRNG that is re-seeded from
-  /dev/*random frequently.  GnuTLS can need a lot of random data on a
+  /dev/?random frequently.  GnuTLS can need a lot of random data on a
   big server, more than /dev/random can supply.  And /dev/urandom might
-  not be strong enough.  Further, the security of /dev/*random can also
+  not be strong enough.  Further, the security of /dev/?random can also
   be questionable.
 
   >>   I'm also not sure about the names of those functions, they suggest
@@ -220,12 +220,12 @@ gc_pbkdf2_sha1 (const char *P, size_t Plen,
   it isn't called too often.  You can guess what the next value will be,
   but it will always be different.
 
-  The problem is that /dev/*random doesn't offer any kind of semantic
+  The problem is that /dev/?random doesn't offer any kind of semantic
   guarantees.  But applications need an API that make that promise.
 
   I think we should do this in several steps:
 
-  1) Write a module that can read from /dev/*random.
+  1) Write a module that can read from /dev/?random.
 
   2) Add a module for a known-good PRNG suitable for random number
   generation, that can be continuously re-seeded.
