@@ -1,3 +1,7 @@
+2005-10-18  Simon Josefsson  <jas@extundo.com>
+
+	* md4.h, md4.c: New files, based on md5.?.
+
 2005-10-17  Simon Josefsson  <jas@extundo.com>
 
 	* gc-libgcrypt.c (gc_hmac_sha1): Fix assert.
