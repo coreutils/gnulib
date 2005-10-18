@@ -66,6 +66,25 @@ main (int argc, char *argv[])
 	printf ("\n");
 	return 1;
       }
+
+    if (gc_hash_buffer (GC_MD5, in, inlen, out) != 0)
+      {
+	printf ("gc_hash_buffer(MD5) call failed\n");
+	return 1;
+      }
+
+    if (memcmp (out, expect, 16) != 0)
+      {
+	size_t i;
+	printf ("md5 1 missmatch. expected:\n");
+	for (i = 0; i < 16; i++)
+	  printf ("%02x ", expect[i] & 0xFF);
+	printf ("\ncomputed:\n");
+	for (i = 0; i < 16; i++)
+	  printf ("%02x ", out[i] & 0xFF);
+	printf ("\n");
+	return 1;
+      }
   }
 
   gc_done ();

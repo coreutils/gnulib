@@ -1,5 +1,10 @@
 2005-10-19  Simon Josefsson  <jas@extundo.com>
 
+	* tests/test-gc-md4.c, tests/test-gc-md5.c: Test gc_hash_buffer
+	interface too.
+
+2005-10-19  Simon Josefsson  <jas@extundo.com>
+
 	* modules/gc-md4, modules/gc-md4-tests: New file.
 
 	* tests/test-gc-md4.c: New file.
