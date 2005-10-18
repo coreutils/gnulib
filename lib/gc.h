@@ -41,6 +41,7 @@ typedef enum Gc_rc Gc_rc;
 /* Hash types. */
 enum Gc_hash
 {
+  GC_MD4,
   GC_MD5,
   GC_SHA1,
   GC_MD2,
@@ -56,6 +57,7 @@ typedef enum Gc_hash_mode Gc_hash_mode;
 
 typedef void *gc_hash_handle;
 
+#define GC_MD4_DIGEST_SIZE 16
 #define GC_MD5_DIGEST_SIZE 16
 #define GC_SHA1_DIGEST_SIZE 20
 

@@ -1,0 +1,11 @@
+Files:
+tests/test-gc-md4.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-gc-md4
+noinst_PROGRAMS += test-gc-md4
+test_gc_md4_SOURCES = test-gc-md4.c

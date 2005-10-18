@@ -1,0 +1,26 @@
+Description:
+Generic crypto wrappers for MD4 functions.
+
+Files:
+m4/gc-md4.m4
+lib/md4.h
+lib/md4.c
+m4/md4.m4
+
+Depends-on:
+stdint
+gc
+
+configure.ac:
+gl_GC_MD4
+
+Makefile.am:
+
+Include:
+"gc.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

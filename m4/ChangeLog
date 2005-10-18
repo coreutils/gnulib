@@ -1,3 +1,7 @@
+2005-10-19  Simon Josefsson  <jas@extundo.com>
+
+	* gc-md4.m4: New file.
+
 2005-10-18  Simon Josefsson  <jas@extundo.com>
 
 	* md4.m4: New file.

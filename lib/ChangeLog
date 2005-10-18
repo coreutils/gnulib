@@ -1,3 +1,7 @@
+2005-10-19  Simon Josefsson  <jas@extundo.com>
+
+	* gc.h, gc-gnulib.c, gc-libgcrypt.c: Support MD4. 
+
 2005-10-18  Simon Josefsson  <jas@extundo.com>
 
 	* md4.h, md4.c: New files, based on md5.?.

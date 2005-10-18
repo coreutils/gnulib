@@ -222,6 +222,10 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
 
   switch (hash)
     {
+    case GC_MD4:
+      gcryalg = GCRY_MD_MD4;
+      break;
+
     case GC_MD5:
       gcryalg = GCRY_MD_MD5;
       break;
@@ -278,6 +282,10 @@ gc_hash_digest_length (Gc_hash hash)
 
   switch (hash)
     {
+    case GC_MD4:
+      gcryalg = GCRY_MD_MD4;
+      break;
+
     case GC_MD5:
       gcryalg = GCRY_MD_MD5;
       break;
@@ -333,6 +341,12 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 
   switch (hash)
     {
+#ifdef GC_USE_MD4
+    case GC_MD4:
+      gcryalg = GCRY_MD_MD4;
+      break;
+#endif
+
 #ifdef GC_USE_MD5
     case GC_MD5:
       gcryalg = GCRY_MD_MD5;
@@ -361,6 +375,38 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 }
 
 /* One-call interface. */
+
+#ifdef GC_USE_MD4
+Gc_rc
+gc_md4 (const void *in, size_t inlen, void *resbuf)
+{
+  size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_MD4);
+  gcry_md_hd_t hd;
+  gpg_error_t err;
+  unsigned char *p;
+
+  assert (outlen == GC_MD4_DIGEST_SIZE);
+
+  err = gcry_md_open (&hd, GCRY_MD_MD4, 0);
+  if (err != GPG_ERR_NO_ERROR)
+    return GC_INVALID_HASH;
+
+  gcry_md_write (hd, in, inlen);
+
+  p = gcry_md_read (hd, GCRY_MD_MD4);
+  if (p == NULL)
+    {
+      gcry_md_close (hd);
+      return GC_INVALID_HASH;
+    }
+
+  memcpy (resbuf, p, outlen);
+
+  gcry_md_close (hd);
+
+  return GC_OK;
+}
+#endif
 
 #ifdef GC_USE_MD5
 Gc_rc

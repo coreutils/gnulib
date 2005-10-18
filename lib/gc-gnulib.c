@@ -37,6 +37,9 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#ifdef GC_USE_MD4
+# include "md4.h"
+#endif
 #ifdef GC_USE_MD5
 # include "md5.h"
 #endif
@@ -149,6 +152,12 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 {
   switch (hash)
     {
+#ifdef GC_USE_MD4
+    case GC_MD4:
+      md4_buffer (in, inlen, resbuf);
+      break;
+#endif
+
 #ifdef GC_USE_MD5
     case GC_MD5:
       md5_buffer (in, inlen, resbuf);
@@ -167,6 +176,15 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 
   return GC_OK;
 }
+
+#ifdef GC_USE_MD4
+Gc_rc
+gc_md4 (const void *in, size_t inlen, void *resbuf)
+{
+  md4_buffer (in, inlen, resbuf);
+  return GC_OK;
+}
+#endif
 
 #ifdef GC_USE_MD5
 Gc_rc
