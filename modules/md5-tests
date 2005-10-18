@@ -1,0 +1,11 @@
+Files:
+tests/test-md5.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-md5
+noinst_PROGRAMS += test-md5
+test_md5_SOURCES = test-md5.c

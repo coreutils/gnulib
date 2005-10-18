@@ -1,3 +1,9 @@
+2005-10-18  Simon Josefsson  <jas@extundo.com>
+
+	* tests/test-md5.c: New file.
+
+	* modules/md5-tests: New file.
+
 2005-10-17  Stepan Kasal  <kasal@ucw.cz>
 
 	* gnulib-tool (func_create_testdir): Omit the second check whether
