@@ -1,5 +1,9 @@
 2005-10-19  Simon Josefsson  <jas@extundo.com>
 
+	* hmac-md5.c, hmac-sha1.c: Include memxor.h.
+
+2005-10-19  Simon Josefsson  <jas@extundo.com>
+
 	* gc.h, gc-gnulib.c, gc-libgcrypt.c: Support MD4. 
 
 2005-10-18  Simon Josefsson  <jas@extundo.com>
