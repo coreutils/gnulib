@@ -1,5 +1,10 @@
 2005-10-19  Simon Josefsson  <jas@extundo.com>
 
+	* gc-gnulib.c: Implement gc_cipher_* API, currently only with AES
+	support.
+
+	* gc.h: Add ECB enum type.
+
 	* hmac-md5.c, hmac-sha1.c: Include memxor.h.
 
 2005-10-19  Simon Josefsson  <jas@extundo.com>

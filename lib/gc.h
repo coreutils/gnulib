@@ -77,6 +77,7 @@ typedef enum Gc_cipher Gc_cipher;
 
 enum Gc_cipher_mode
 {
+  GC_ECB,
   GC_CBC,
   GC_STREAM
 };

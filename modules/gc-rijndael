@@ -1,0 +1,28 @@
+Description:
+Generic crypto wrappers for rijndael block cipher.
+
+Files:
+m4/gc-rijndael.m4
+lib/rijndael-alg-fst.c
+lib/rijndael-alg-fst.h
+lib/rijndael-api-fst.c
+lib/rijndael-api-fst.h
+m4/rijndael.m4
+
+Depends-on:
+stdint
+gc
+
+configure.ac:
+gl_GC_RIJNDAEL
+
+Makefile.am:
+
+Include:
+"gc.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

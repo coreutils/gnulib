@@ -49,6 +49,9 @@
 #ifdef GC_USE_HMAC_MD5
 # include "hmac.h"
 #endif
+#ifdef GC_USE_RIJNDAEL
+# include "rijndael-api-fst.h"
+#endif
 
 Gc_rc
 gc_init (void)
@@ -143,6 +146,217 @@ gc_set_allocators (gc_malloc_t func_malloc,
 		   gc_realloc_t func_realloc, gc_free_t func_free)
 {
   return;
+}
+/* Ciphers. */
+
+typedef struct _gc_cipher_ctx {
+  Gc_cipher alg;
+  Gc_cipher_mode mode;
+#ifdef GC_USE_RIJNDAEL
+  rijndaelKeyInstance aesEncKey;
+  rijndaelKeyInstance aesDecKey;
+  rijndaelCipherInstance aesContext;
+#endif
+} _gc_cipher_ctx;
+
+Gc_rc
+gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
+		gc_cipher_handle * outhandle)
+{
+  _gc_cipher_ctx *ctx;
+  Gc_rc rc = GC_OK;
+
+  ctx = calloc (sizeof (*ctx), 1);
+
+  ctx->alg = alg;
+  ctx->mode = mode;
+
+  switch (alg)
+    {
+#ifdef GC_USE_RIJNDAEL
+    case GC_AES128:
+    case GC_AES192:
+    case GC_AES256:
+      switch (mode)
+	{
+	case GC_ECB:
+	case GC_CBC:
+	  break;
+
+	default:
+	  rc = GC_INVALID_CIPHER;
+	}
+      break;
+#endif
+
+    default:
+      rc = GC_INVALID_CIPHER;
+    }
+
+  if (rc == GC_OK)
+    *outhandle = ctx;
+  else
+    free (ctx);
+
+  return rc;
+}
+
+Gc_rc
+gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
+{
+  _gc_cipher_ctx *ctx = handle;
+
+  switch (ctx->alg)
+    {
+#ifdef GC_USE_RIJNDAEL
+    case GC_AES128:
+    case GC_AES192:
+    case GC_AES256:
+      {
+	rijndael_rc rc;
+	size_t i;
+	char keyMaterial[RIJNDAEL_MAX_KEY_SIZE + 1];
+
+	for (i = 0; i < keylen; i++)
+	  sprintf (&keyMaterial[2*i], "%02x", key[i] & 0xFF);
+
+	rc = rijndaelMakeKey (&ctx->aesEncKey, RIJNDAEL_DIR_ENCRYPT,
+			      keylen * 8, keyMaterial);
+	if (rc < 0)
+	  return GC_INVALID_CIPHER;
+
+	rc = rijndaelMakeKey (&ctx->aesDecKey, RIJNDAEL_DIR_DECRYPT,
+			      keylen * 8, keyMaterial);
+	if (rc < 0)
+	  return GC_INVALID_CIPHER;
+
+	rc = rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_ECB, NULL);
+	if (rc < 0)
+	  return GC_INVALID_CIPHER;
+      }
+      break;
+#endif
+
+    default:
+      return GC_INVALID_CIPHER;
+    }
+
+  return GC_OK;
+}
+
+Gc_rc
+gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
+{
+  _gc_cipher_ctx *ctx = handle;
+
+  switch (ctx->alg)
+    {
+#ifdef GC_USE_RIJNDAEL
+    case GC_AES128:
+    case GC_AES192:
+    case GC_AES256:
+      switch (ctx->mode)
+	{
+	case GC_ECB:
+	  /* Doesn't use IV. */
+	  break;
+
+	case GC_CBC:
+	  {
+	    rijndael_rc rc;
+	    size_t i;
+	    char ivMaterial[2 * RIJNDAEL_MAX_IV_SIZE + 1];
+
+	    for (i = 0; i < ivlen; i++)
+	      sprintf (&ivMaterial[2*i], "%02x", iv[i] & 0xFF);
+
+	    rc = rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_CBC,
+				     ivMaterial);
+	    if (rc < 0)
+	      return GC_INVALID_CIPHER;
+	  }
+	  break;
+
+	default:
+	  return GC_INVALID_CIPHER;
+	}
+      break;
+#endif
+
+    default:
+      return GC_INVALID_CIPHER;
+    }
+
+  return GC_OK;
+}
+
+Gc_rc
+gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
+{
+  _gc_cipher_ctx *ctx = handle;
+
+  switch (ctx->alg)
+    {
+#ifdef GC_USE_RIJNDAEL
+    case GC_AES128:
+    case GC_AES192:
+    case GC_AES256:
+      {
+	int nblocks;
+
+	nblocks = rijndaelBlockEncrypt (&ctx->aesContext, &ctx->aesEncKey,
+					data, 8 * len, data);
+	if (nblocks < 0)
+	  return GC_INVALID_CIPHER;
+      }
+      break;
+#endif
+
+    default:
+      return GC_INVALID_CIPHER;
+    }
+
+  return GC_OK;
+}
+
+Gc_rc
+gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
+{
+  _gc_cipher_ctx *ctx = handle;
+
+  switch (ctx->alg)
+    {
+#ifdef GC_USE_RIJNDAEL
+    case GC_AES128:
+    case GC_AES192:
+    case GC_AES256:
+      {
+	int nblocks;
+
+	nblocks = rijndaelBlockDecrypt (&ctx->aesContext, &ctx->aesDecKey,
+					data, 8 * len, data);
+	if (nblocks < 0)
+	  return GC_INVALID_CIPHER;
+      }
+      break;
+#endif
+
+    default:
+      return GC_INVALID_CIPHER;
+    }
+
+  return GC_OK;
+}
+
+Gc_rc
+gc_cipher_close (gc_cipher_handle handle)
+{
+  _gc_cipher_ctx *ctx = handle;
+
+  if (ctx)
+    free (ctx);
+
+  return GC_OK;
 }
 
 /* Hashes. */

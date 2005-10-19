@@ -1,5 +1,9 @@
 2005-10-19  Simon Josefsson  <jas@extundo.com>
 
+	* gc-rijndael.m4: New file.
+
+2005-10-19  Simon Josefsson  <jas@extundo.com>
+
 	* m4/gc-hmac-md5.m4, m4/gc-hmac-sha1.m4, m4/gc-md4.m4,
 	m4/gc-md5.m4, m4/gc-sha1.m4: Fix typo, suggested by Stepan Kasal
 	<kasal@ucw.cz>.
