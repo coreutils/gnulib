@@ -1,5 +1,11 @@
 2005-10-19  Simon Josefsson  <jas@extundo.com>
 
+	* tests/test-gc-arcfour.c: New file.
+
+	* modules/gc-arcfour, modules/gc-arcfour-tests: New files.
+
+2005-10-19  Simon Josefsson  <jas@extundo.com>
+
 	* tests/test-gc-rijndael.c: New file.
 
 	* modules/gc-rijndael, modules/gc-rijndael-test: New files.

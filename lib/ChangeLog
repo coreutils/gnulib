@@ -1,5 +1,9 @@
 2005-10-19  Simon Josefsson  <jas@extundo.com>
 
+	* gc-gnulib.c: Support ARCFOUR.
+
+2005-10-19  Simon Josefsson  <jas@extundo.com>
+
 	* gc-gnulib.c: Implement gc_cipher_* API, currently only with AES
 	support.
 

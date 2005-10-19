@@ -1,0 +1,11 @@
+Files:
+tests/test-gc-arcfour.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-gc-arcfour
+noinst_PROGRAMS += test-gc-arcfour
+test_gc_arcfour_SOURCES = test-gc-arcfour.c

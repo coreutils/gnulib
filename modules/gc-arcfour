@@ -1,0 +1,26 @@
+Description:
+Generic crypto wrappers for ARCFOUR stream cipher.
+
+Files:
+m4/gc-arcfour.m4
+lib/arcfour.h
+lib/arcfour.c
+m4/arcfour.m4
+
+Depends-on:
+stdint
+gc
+
+configure.ac:
+gl_GC_ARCFOUR
+
+Makefile.am:
+
+Include:
+"gc.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

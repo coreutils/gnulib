@@ -1,5 +1,7 @@
 2005-10-19  Simon Josefsson  <jas@extundo.com>
 
+	* gc-arcfour.m4: New file.
+
 	* gc-rijndael.m4: New file.
 
 2005-10-19  Simon Josefsson  <jas@extundo.com>

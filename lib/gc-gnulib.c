@@ -37,6 +37,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
+/* Hashes. */
 #ifdef GC_USE_MD4
 # include "md4.h"
 #endif
@@ -48,6 +49,11 @@
 #endif
 #ifdef GC_USE_HMAC_MD5
 # include "hmac.h"
+#endif
+
+/* Ciphers. */
+#ifdef GC_USE_ARCFOUR
+# include "arcfour.h"
 #endif
 #ifdef GC_USE_RIJNDAEL
 # include "rijndael-api-fst.h"
@@ -152,6 +158,9 @@ gc_set_allocators (gc_malloc_t func_malloc,
 typedef struct _gc_cipher_ctx {
   Gc_cipher alg;
   Gc_cipher_mode mode;
+#ifdef GC_USE_ARCFOUR
+  arcfour_context arcfourContext;
+#endif
 #ifdef GC_USE_RIJNDAEL
   rijndaelKeyInstance aesEncKey;
   rijndaelKeyInstance aesDecKey;
@@ -173,6 +182,20 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
 
   switch (alg)
     {
+#ifdef GC_USE_ARCFOUR
+    case GC_ARCFOUR128:
+    case GC_ARCFOUR40:
+      switch (mode)
+	{
+	case GC_STREAM:
+	  break;
+
+	default:
+	  rc = GC_INVALID_CIPHER;
+	}
+      break;
+#endif
+
 #ifdef GC_USE_RIJNDAEL
     case GC_AES128:
     case GC_AES192:
@@ -208,6 +231,13 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
 
   switch (ctx->alg)
     {
+#ifdef GC_USE_ARCFOUR
+    case GC_ARCFOUR128:
+    case GC_ARCFOUR40:
+      arcfour_setkey (&ctx->arcfourContext, key, keylen);
+      break;
+#endif
+
 #ifdef GC_USE_RIJNDAEL
     case GC_AES128:
     case GC_AES192:
@@ -297,6 +327,13 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 
   switch (ctx->alg)
     {
+#ifdef GC_USE_ARCFOUR
+    case GC_ARCFOUR128:
+    case GC_ARCFOUR40:
+      arcfour_stream (&ctx->arcfourContext, data, data, len);
+      break;
+#endif
+
 #ifdef GC_USE_RIJNDAEL
     case GC_AES128:
     case GC_AES192:
@@ -326,6 +363,13 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 
   switch (ctx->alg)
     {
+#ifdef GC_USE_ARCFOUR
+    case GC_ARCFOUR128:
+    case GC_ARCFOUR40:
+      arcfour_stream (&ctx->arcfourContext, data, data, len);
+      break;
+#endif
+
 #ifdef GC_USE_RIJNDAEL
     case GC_AES128:
     case GC_AES192:
