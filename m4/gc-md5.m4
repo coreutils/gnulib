@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_GC_MD5],
 [
   AC_REQUIRE([gl_GC])
-  AC_DEFINE(GC_USE_MD5, 1, [Define to if you want to support MD5 through GC.])
+  AC_DEFINE(GC_USE_MD5, 1, [Define if you want to support MD5 through GC.])
   if test "$ac_cv_libgcrypt" != yes; then
     gl_MD5
   fi

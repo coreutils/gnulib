@@ -8,7 +8,7 @@ AC_DEFUN([gl_GC_SHA1],
 [
   AC_REQUIRE([gl_GC])
   AC_DEFINE(GC_USE_SHA1, 1,
-    [Define to if you want to support SHA-1 through GC.])
+    [Define if you want to support SHA-1 through GC.])
   if test "$ac_cv_libgcrypt" != yes; then
     gl_SHA1
   fi
