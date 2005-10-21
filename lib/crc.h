@@ -20,13 +20,7 @@
 #ifndef CRC_H
 # define CRC_H 1
 
-#include <stddef.h>
-#if HAVE_INTTYPES_H
-# include <inttypes.h>
-#endif
-#if HAVE_STDINT_H
-# include <stdint.h>
-#endif
+#include <stdint.h>
 
 /* Compute CRC-32 value of LEN bytes long BUF, and return it. */
 extern uint32_t crc32 (const char *buf, size_t len);
