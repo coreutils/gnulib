@@ -1,5 +1,8 @@
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
+	* crc.c (crc32_update): Actually use crc parameter, suggested by
+	Bruno Haible <bruno@clisp.org>.
+
 	* crc.h: Include stdint.h directly, suggested by Bruno Haible
 	<bruno@clisp.org>.
 
