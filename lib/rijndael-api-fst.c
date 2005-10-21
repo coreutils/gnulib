@@ -244,7 +244,7 @@ rijndaelBlockEncrypt (rijndaelCipherInstance *cipher,
 	  ((uint32_t *) block)[3] = ((uint32_t *) input)[3] ^
 	    ((uint32_t *) iv)[3];
 	  rijndaelEncrypt (key->rk, key->Nr, block, outBuffer);
-	  iv = outBuffer;
+	  memcpy (cipher->IV, outBuffer, 16);
 	  input += 16;
 	  outBuffer += 16;
 	}
@@ -327,7 +327,7 @@ rijndaelPadEncrypt (rijndaelCipherInstance *cipher,
 	  ((uint32_t *) block)[3] = ((uint32_t *) input)[3] ^
 	    ((uint32_t *) iv)[3];
 	  rijndaelEncrypt (key->rk, key->Nr, block, outBuffer);
-	  iv = outBuffer;
+	  memcpy (cipher->IV, outBuffer, 16);
 	  input += 16;
 	  outBuffer += 16;
 	}
@@ -342,6 +342,7 @@ rijndaelPadEncrypt (rijndaelCipherInstance *cipher,
 	  block[i] = (char) padLen ^ iv[i];
 	}
       rijndaelEncrypt (key->rk, key->Nr, block, outBuffer);
+      memcpy (cipher->IV, outBuffer, 16);
       break;
 
     default:

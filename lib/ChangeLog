@@ -1,5 +1,10 @@
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
+	* rijndael-api-fst.c: Fix bugs in CBC mode for more than one
+	block.
+
+2005-10-21  Simon Josefsson  <jas@extundo.com>
+
 	* gc-gnulib.c: Support ARCTWO in CBC mode.
 
 2005-10-21  Simon Josefsson  <jas@extundo.com>
