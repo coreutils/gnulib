@@ -1,5 +1,11 @@
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
+	* des.h, des.c: New files.
+
+	* gc-gnulib.c: Support DES.c
+
+2005-10-21  Simon Josefsson  <jas@extundo.com>
+
 	* arctwo.h, arctwo.c: New files.
 
 	* gc-gnulib.c: Support ARCTWO.

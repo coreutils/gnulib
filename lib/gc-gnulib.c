@@ -58,6 +58,9 @@
 #ifdef GC_USE_ARCTWO
 # include "arctwo.h"
 #endif
+#ifdef GC_USE_DES
+# include "des.h"
+#endif
 #ifdef GC_USE_RIJNDAEL
 # include "rijndael-api-fst.h"
 #endif
@@ -167,6 +170,9 @@ typedef struct _gc_cipher_ctx {
 #ifdef GC_USE_ARCFOUR
   arcfour_context arcfourContext;
 #endif
+#ifdef GC_USE_DES
+  des_ctx desContext;
+#endif
 #ifdef GC_USE_RIJNDAEL
   rijndaelKeyInstance aesEncKey;
   rijndaelKeyInstance aesDecKey;
@@ -207,6 +213,19 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
       switch (mode)
 	{
 	case GC_STREAM:
+	  break;
+
+	default:
+	  rc = GC_INVALID_CIPHER;
+	}
+      break;
+#endif
+
+#ifdef GC_USE_DES
+    case GC_DES:
+      switch (mode)
+	{
+	case GC_ECB:
 	  break;
 
 	default:
@@ -260,6 +279,14 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
     case GC_ARCFOUR128:
     case GC_ARCFOUR40:
       arcfour_setkey (&ctx->arcfourContext, key, keylen);
+      break;
+#endif
+
+#ifdef GC_USE_DES
+    case GC_DES:
+      if (keylen != 8)
+	return GC_INVALID_CIPHER;
+      des_setkey (&ctx->desContext, key);
       break;
 #endif
 
@@ -365,6 +392,13 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
       break;
 #endif
 
+#ifdef GC_USE_DES
+    case GC_DES:
+      for (; len >= 8; len -= 8, data += 8)
+	des_ecb_encrypt (&ctx->desContext, data, data);
+      break;
+#endif
+
 #ifdef GC_USE_RIJNDAEL
     case GC_AES128:
     case GC_AES192:
@@ -404,6 +438,13 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
     case GC_ARCFOUR128:
     case GC_ARCFOUR40:
       arcfour_stream (&ctx->arcfourContext, data, data, len);
+      break;
+#endif
+
+#ifdef GC_USE_DES
+    case GC_DES:
+      for (; len >= 8; len -= 8, data += 8)
+	des_ecb_decrypt (&ctx->desContext, data, data);
       break;
 #endif
 

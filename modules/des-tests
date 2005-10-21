@@ -1,0 +1,11 @@
+Files:
+tests/test-des.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-des
+noinst_PROGRAMS += test-des
+test_des_SOURCES = test-des.c

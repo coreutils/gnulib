@@ -1,5 +1,13 @@
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
+	* modules/des, modules/des-tests: New files.
+
+	* modules/gc-des, modules/gc-des-tests: New files.
+
+	* tests/test-des.c, tests/test-gc-des.c: New file.
+
+2005-10-21  Simon Josefsson  <jas@extundo.com>
+
 	* modules/arctwo, modules/arctwo-tests: New files.
 
 	* tests/test-arctwo.c: New file.
