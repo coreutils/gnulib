@@ -1,0 +1,26 @@
+Description:
+Generic crypto wrappers for ARCTWO block cipher.
+
+Files:
+m4/gc-arctwo.m4
+lib/arctwo.h
+lib/arctwo.c
+m4/arctwo.m4
+
+Depends-on:
+stdint
+gc
+
+configure.ac:
+gl_GC_ARCTWO
+
+Makefile.am:
+
+Include:
+"gc.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

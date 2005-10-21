@@ -55,6 +55,9 @@
 #ifdef GC_USE_ARCFOUR
 # include "arcfour.h"
 #endif
+#ifdef GC_USE_ARCTWO
+# include "arctwo.h"
+#endif
 #ifdef GC_USE_RIJNDAEL
 # include "rijndael-api-fst.h"
 #endif
@@ -158,6 +161,9 @@ gc_set_allocators (gc_malloc_t func_malloc,
 typedef struct _gc_cipher_ctx {
   Gc_cipher alg;
   Gc_cipher_mode mode;
+#ifdef GC_USE_ARCTWO
+  arctwo_context arctwoContext;
+#endif
 #ifdef GC_USE_ARCFOUR
   arcfour_context arcfourContext;
 #endif
@@ -182,6 +188,19 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
 
   switch (alg)
     {
+#ifdef GC_USE_ARCTWO
+    case GC_ARCTWO40:
+      switch (mode)
+	{
+	case GC_ECB:
+	  break;
+
+	default:
+	  rc = GC_INVALID_CIPHER;
+	}
+      break;
+#endif
+
 #ifdef GC_USE_ARCFOUR
     case GC_ARCFOUR128:
     case GC_ARCFOUR40:
@@ -231,6 +250,12 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
 
   switch (ctx->alg)
     {
+#ifdef GC_USE_ARCTWO
+    case GC_ARCTWO40:
+      arctwo_setkey (&ctx->arctwoContext, keylen, key);
+      break;
+#endif
+
 #ifdef GC_USE_ARCFOUR
     case GC_ARCFOUR128:
     case GC_ARCFOUR40:
@@ -327,6 +352,12 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 
   switch (ctx->alg)
     {
+#ifdef GC_USE_ARCTWO
+    case GC_ARCTWO40:
+      arctwo_encrypt (&ctx->arctwoContext, data, data, len);
+      break;
+#endif
+
 #ifdef GC_USE_ARCFOUR
     case GC_ARCFOUR128:
     case GC_ARCFOUR40:
@@ -363,6 +394,12 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 
   switch (ctx->alg)
     {
+#ifdef GC_USE_ARCTWO
+    case GC_ARCTWO40:
+      arctwo_decrypt (&ctx->arctwoContext, data, data, len);
+      break;
+#endif
+
 #ifdef GC_USE_ARCFOUR
     case GC_ARCFOUR128:
     case GC_ARCFOUR40:

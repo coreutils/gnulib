@@ -1,0 +1,24 @@
+Description:
+ARCTWO block cipher implementation
+
+Files:
+lib/arctwo.h
+lib/arctwo.c
+m4/arctwo.m4
+
+Depends-on:
+stdint
+
+configure.ac:
+gl_ARCTWO
+
+Makefile.am:
+
+Include:
+"arctwo.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

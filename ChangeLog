@@ -1,3 +1,13 @@
+2005-10-21  Simon Josefsson  <jas@extundo.com>
+
+	* modules/arctwo, modules/arctwo-tests: New files.
+
+	* tests/test-arctwo.c: New file.
+
+	* modules/gc-arctwo, modules/gc-arctwo-tests: New files.
+
+	* tests/test-gc-arctwo.c: New file.
+
 2005-10-19  Simon Josefsson  <jas@extundo.com>
 
 	* tests/test-gc-arcfour.c: New file.
