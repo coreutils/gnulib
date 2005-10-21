@@ -42,7 +42,7 @@ arctwo_setkey_ekb (arctwo_context *context,
 		   size_t keylen, const char *key, size_t effective_keylen);
 
 #define arctwo_setkey(context,keylen,key) \
-  arctwo_setkey_ekb (context, keylen, key, 8 * keylen)
+  arctwo_setkey_ekb (context, keylen, key, 8 * (keylen))
 
 /* Encrypt INBUF of size LENGTH into OUTBUF.  LENGTH must be a
    multiple of ARCTWO_BLOCK_SIZE.  CONTEXT hold the encryption key,

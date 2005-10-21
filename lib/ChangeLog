@@ -1,5 +1,10 @@
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
+	* arctwo.h (arctwo_setkey): Protect variable in CPP macro,
+	suggested by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
+2005-10-21  Simon Josefsson  <jas@extundo.com>
+
 	* rijndael-api-fst.c: Fix bugs in CBC mode for more than one
 	block.
 
