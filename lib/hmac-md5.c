@@ -41,6 +41,8 @@ hmac_md5 (const void *key, size_t keylen,
   char block[64];
   char innerhash[16];
 
+  /* Reduce the key's size, so that it becomes <= 64 bytes large.  */
+
   if (keylen > 64)
     {
       struct md5_ctx keyhash;
@@ -53,6 +55,8 @@ hmac_md5 (const void *key, size_t keylen,
       keylen = 16;
     }
 
+  /* Compute INNERHASH from KEY and IN.  */
+
   md5_init_ctx (&inner);
 
   memset (block, IPAD, sizeof (block));
@@ -62,6 +66,8 @@ hmac_md5 (const void *key, size_t keylen,
   md5_process_bytes (in, inlen, &inner);
 
   md5_finish_ctx (&inner, innerhash);
+
+  /* Compute result from KEY and INNERHASH.  */
 
   md5_init_ctx (&outer);
 

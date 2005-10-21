@@ -41,6 +41,8 @@ hmac_sha1 (const void *key, size_t keylen,
   char block[64];
   char innerhash[20];
 
+  /* Reduce the key's size, so that it becomes <= 64 bytes large.  */
+
   if (keylen > 64)
     {
       struct sha1_ctx keyhash;
@@ -53,6 +55,8 @@ hmac_sha1 (const void *key, size_t keylen,
       keylen = 20;
     }
 
+  /* Compute INNERHASH from KEY and IN.  */
+
   sha1_init_ctx (&inner);
 
   memset (block, IPAD, sizeof (block));
@@ -62,6 +66,8 @@ hmac_sha1 (const void *key, size_t keylen,
   sha1_process_bytes (in, inlen, &inner);
 
   sha1_finish_ctx (&inner, innerhash);
+
+  /* Compute result from KEY and INNERHASH.  */
 
   sha1_init_ctx (&outer);
 

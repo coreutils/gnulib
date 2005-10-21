@@ -1,5 +1,10 @@
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
+	* hmac-md5.c (hmac_md5): Add comments, suggested by Bruno Haible
+	<bruno@clisp.org>.
+
+	* hmac-sha1.c (hmac_sha1): Likewise.
+
 	* crc.c (crc32_update): Actually use crc parameter, suggested by
 	Bruno Haible <bruno@clisp.org>.
 
