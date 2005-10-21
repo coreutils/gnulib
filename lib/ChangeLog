@@ -1,3 +1,7 @@
+2005-10-21  Simon Josefsson  <jas@extundo.com>
+
+	* gc-libgcrypt.c (gc_cipher_open): Handle ECB.
+
 2005-10-19  Simon Josefsson  <jas@extundo.com>
 
 	* gc-gnulib.c: Support ARCFOUR.

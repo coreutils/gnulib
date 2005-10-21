@@ -140,6 +140,10 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
 
   switch (mode)
     {
+    case GC_ECB:
+      gcrymode = GCRY_CIPHER_MODE_ECB;
+      break;
+
     case GC_CBC:
       gcrymode = GCRY_CIPHER_MODE_CBC;
       break;
