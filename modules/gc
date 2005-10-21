@@ -15,7 +15,11 @@ configure.ac:
 gl_GC
 
 Makefile.am:
+if GL_COND_LIBTOOL
+lib_LIBADD += $(LTLIBGCRYPT)
+else
 lib_LIBADD += $(LIBGCRYPT)
+endif
 
 Include:
 "gc.h"

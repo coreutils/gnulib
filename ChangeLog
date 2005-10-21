@@ -1,5 +1,13 @@
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
+	* gnulib-tool: Define automake conditional GL_COND_LIBTOOL if
+	libtool is used (to be used by modules Makefile.am snippet),
+	suggested by Bruno Haible <bruno@clisp.org>.
+
+	* modules/gc (Makefile.am): Use it.
+
+2005-10-21  Simon Josefsson  <jas@extundo.com>
+
 	* modules/des, modules/des-tests: New files.
 
 	* modules/gc-des, modules/gc-des-tests: New files.
