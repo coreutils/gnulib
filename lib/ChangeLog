@@ -1,5 +1,9 @@
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
+	* gc-gnulib.c: Support ARCTWO in CBC mode.
+
+2005-10-21  Simon Josefsson  <jas@extundo.com>
+
 	* hmac-md5.c (hmac_md5): Add comments, suggested by Bruno Haible
 	<bruno@clisp.org>.
 

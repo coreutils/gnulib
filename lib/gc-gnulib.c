@@ -166,6 +166,7 @@ typedef struct _gc_cipher_ctx {
   Gc_cipher_mode mode;
 #ifdef GC_USE_ARCTWO
   arctwo_context arctwoContext;
+  char arctwoIV[ARCTWO_BLOCK_SIZE];
 #endif
 #ifdef GC_USE_ARCFOUR
   arcfour_context arcfourContext;
@@ -199,6 +200,7 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
       switch (mode)
 	{
 	case GC_ECB:
+	case GC_CBC:
 	  break;
 
 	default:
@@ -333,6 +335,14 @@ gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
 
   switch (ctx->alg)
     {
+#ifdef GC_USE_ARCTWO
+    case GC_ARCTWO40:
+      if (ivlen != ARCTWO_BLOCK_SIZE)
+	return GC_INVALID_CIPHER;
+      memcpy (ctx->arctwoIV, iv, ivlen);
+      break;
+#endif
+
 #ifdef GC_USE_RIJNDAEL
     case GC_AES128:
     case GC_AES192:
@@ -381,7 +391,28 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
     {
 #ifdef GC_USE_ARCTWO
     case GC_ARCTWO40:
-      arctwo_encrypt (&ctx->arctwoContext, data, data, len);
+      switch (ctx->mode)
+	{
+	case GC_ECB:
+	  arctwo_encrypt (&ctx->arctwoContext, data, data, len);
+	  break;
+
+	case GC_CBC:
+	  for (; len >= ARCTWO_BLOCK_SIZE; len -= ARCTWO_BLOCK_SIZE,
+		 data += ARCTWO_BLOCK_SIZE)
+	    {
+	      size_t i;
+	      for (i = 0; i < ARCTWO_BLOCK_SIZE; i++)
+		data[i] ^= ctx->arctwoIV[i];
+	      arctwo_encrypt (&ctx->arctwoContext, data, data,
+			      ARCTWO_BLOCK_SIZE);
+	      memcpy (ctx->arctwoIV, data, ARCTWO_BLOCK_SIZE);
+	    }
+	    break;
+
+	default:
+	  return GC_INVALID_CIPHER;
+	}
       break;
 #endif
 
@@ -430,7 +461,30 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
     {
 #ifdef GC_USE_ARCTWO
     case GC_ARCTWO40:
-      arctwo_decrypt (&ctx->arctwoContext, data, data, len);
+      switch (ctx->mode)
+	{
+	case GC_ECB:
+	  arctwo_decrypt (&ctx->arctwoContext, data, data, len);
+	  break;
+
+	case GC_CBC:
+	  for (; len >= ARCTWO_BLOCK_SIZE; len -= ARCTWO_BLOCK_SIZE,
+		 data += ARCTWO_BLOCK_SIZE)
+	    {
+	      char tmpIV[ARCTWO_BLOCK_SIZE];
+	      size_t i;
+	      memcpy (tmpIV, data, ARCTWO_BLOCK_SIZE);
+	      arctwo_decrypt (&ctx->arctwoContext, data, data,
+			      ARCTWO_BLOCK_SIZE);
+	      for (i = 0; i < ARCTWO_BLOCK_SIZE; i++)
+		data[i] ^= ctx->arctwoIV[i];
+	      memcpy (ctx->arctwoIV, tmpIV, ARCTWO_BLOCK_SIZE);
+	    }
+	  break;
+
+	default:
+	  return GC_INVALID_CIPHER;
+	}
       break;
 #endif
 
