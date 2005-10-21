@@ -1,5 +1,9 @@
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
+	* gc-des.m4: New file.
+
+2005-10-21  Simon Josefsson  <jas@extundo.com>
+
 	* arctwo.m4: New file.
 
 	* gc-arctwo.m4: New file.
