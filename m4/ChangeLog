@@ -1,5 +1,8 @@
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
+	* gc.m4: Don't use libgcrypt if gcrypt.h isn't found, suggested by
+	Bruno Haible <bruno@clisp.org>.
+
 	* gc-des.m4: New file.
 
 2005-10-21  Simon Josefsson  <jas@extundo.com>
