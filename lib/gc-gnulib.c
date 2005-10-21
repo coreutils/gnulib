@@ -25,7 +25,7 @@
 #endif
 
 /* Get prototype. */
-#include <gc.h>
+#include "gc.h"
 
 #include <stdlib.h>
 #include <string.h>
