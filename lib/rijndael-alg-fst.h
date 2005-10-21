@@ -1,4 +1,4 @@
-/* rijndael-alg-fst.c --- Rijndael cipher implementation.
+/* rijndael-alg-fst.h --- Rijndael cipher implementation.
  * Copyright (C) 2005 Free Software Foundation, Inc.
  *
  * This file is free software; you can redistribute it and/or modify
