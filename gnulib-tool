@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-10-21 13:14:35 $'
+cvsdatestamp='$Date: 2005-10-21 15:05:31 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1227,9 +1227,9 @@ func_import ()
     echo "AC_DEFUN([${macro_prefix}_INIT],"
     echo "["
     if test -z "$libtool"; then
-      echo "AM_CONDITIONAL(GL_COND_LIBTOOL, false)"
+      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
     else
-      echo "AM_CONDITIONAL(GL_COND_LIBTOOL, true)"
+      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
     fi
     for module in $modules; do
       func_verify_module
@@ -1432,9 +1432,9 @@ func_create_testdir ()
        echo
      fi
      if test -z "$libtool"; then
-       echo "AM_CONDITIONAL(GL_COND_LIBTOOL, false)"
+       echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
      else
-       echo "AM_CONDITIONAL(GL_COND_LIBTOOL, true)"
+       echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
      fi
      # We don't have explicit ordering constraints between the various
      # autoconf snippets. It's cleanest to put those of the library before
@@ -1496,9 +1496,9 @@ func_create_testdir ()
      echo
    fi
    if test -z "$libtool"; then
-     echo "AM_CONDITIONAL(GL_COND_LIBTOOL, false)"
+     echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
    else
-     echo "AM_CONDITIONAL(GL_COND_LIBTOOL, true)"
+     echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
    fi
    for module in $modules; do
      func_verify_nontests_module

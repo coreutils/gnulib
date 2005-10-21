@@ -1,7 +1,13 @@
+2005-10-21  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import, func_create_testdir): Add quoting to last
+	patch.
+
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
-	* gnulib-tool: Define automake conditional GL_COND_LIBTOOL if
-	libtool is used (to be used by modules Makefile.am snippet),
+	* gnulib-tool (func_import, func_create_testdir): Define automake
+	conditional GL_COND_LIBTOOL if libtool is used (to be used by modules
+	Makefile.am snippet),
 	suggested by Bruno Haible <bruno@clisp.org>.
 
 	* modules/gc (Makefile.am): Use it.
