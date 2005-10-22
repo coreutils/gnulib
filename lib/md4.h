@@ -22,7 +22,7 @@
 # include <stdio.h>
 # include <stdint.h>
 
-#define MD4_DIGEST_SIZE 16
+# define MD4_DIGEST_SIZE 16
 
 /* Structure to save state of computation between the single steps.  */
 struct md4_ctx
@@ -34,7 +34,7 @@ struct md4_ctx
 
   uint32_t total[2];
   uint32_t buflen;
-  char buffer[128] __attribute__ ((__aligned__ (__alignof__ (uint32_t))));
+  uint32_t buffer[128];
 };
 
 

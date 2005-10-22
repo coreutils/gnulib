@@ -1,5 +1,10 @@
 2005-10-22  Simon Josefsson  <jas@extundo.com>
 
+	* md4.c, md4.c: Simplify buffer handling visavi alignment,
+	suggested by Bruno Haible <bruno@clisp.org>.
+
+2005-10-22  Simon Josefsson  <jas@extundo.com>
+
 	* crc.h: Include stddef.h, for size_t.
 
 2005-10-21  Simon Josefsson  <jas@extundo.com>
