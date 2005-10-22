@@ -51,33 +51,30 @@ AC_DEFUN([gl_GC],
     AC_ARG_ENABLE(random-device,
   	AC_HELP_STRING([--enable-random-device],
   		[device with (strong) randomness (for Nettle)]),
-  	NAME_OF_RANDOM_DEVICE=$enableval)
+  	test "$enableval" != "no" && NAME_OF_RANDOM_DEVICE=$enableval)
     AC_MSG_RESULT($NAME_OF_RANDOM_DEVICE)
   
     AC_MSG_CHECKING([device with pseudo random data...])
     AC_ARG_ENABLE(pseudo-random-device,
   	AC_HELP_STRING([--enable-pseudo-random-device],
   		[device with pseudo randomness (for Nettle)]),
-  	NAME_OF_PSEUDO_RANDOM_DEVICE=$enableval)
+  	test "$enableval" != "no" && NAME_OF_PSEUDO_RANDOM_DEVICE=$enableval)
     AC_MSG_RESULT($NAME_OF_PSEUDO_RANDOM_DEVICE)
   
     AC_MSG_CHECKING([device with unpredictable data for nonces...])
     AC_ARG_ENABLE(nonce-device,
   	AC_HELP_STRING([--enable-nonce-device],
   		[device with unpredictable nonces (for Nettle)]),
-  	NAME_OF_NONCE_DEVICE=$enableval)
+  	test "$enableval" != "no" && NAME_OF_NONCE_DEVICE=$enableval)
     AC_MSG_RESULT($NAME_OF_NONCE_DEVICE)
   
     if test "$cross_compiling" != yes; then
-      AC_CHECK_FILE($NAME_OF_RANDOM_DEVICE,, AC_MSG_ERROR([[
-        *** Device for (strong) random data $NAME_OF_RANDOM_DEVICE does not exist
-      ]]))
-      AC_CHECK_FILE($NAME_OF_PSEUDO_RANDOM_DEVICE,, AC_MSG_ERROR([[
-        *** Device for pseudo-random data $NAME_OF_PSEUDO_RANDOM_DEVICE does not exist
-      ]]))
-      AC_CHECK_FILE($NAME_OF_NONCE_DEVICE,, AC_MSG_ERROR([[
-        *** Device for unpredictable nonces $NAME_OF_NONCE_DEVICE does not exist
-      ]]))
+      AC_CHECK_FILE($NAME_OF_RANDOM_DEVICE,,
+        AC_MSG_ERROR([[device for (strong) random data `$NAME_OF_RANDOM_DEVICE' does not exist]]))
+      AC_CHECK_FILE($NAME_OF_PSEUDO_RANDOM_DEVICE,,
+        AC_MSG_ERROR([[device for pseudo-random data `$NAME_OF_PSEUDO_RANDOM_DEVICE' does not exist]]))
+      AC_CHECK_FILE($NAME_OF_NONCE_DEVICE,,
+        AC_MSG_ERROR([[device for unpredictable nonces `$NAME_OF_NONCE_DEVICE' does not exist]]))
     else
       AC_MSG_NOTICE([[Cross compiling, assuming random devices exists...]])  
     fi
