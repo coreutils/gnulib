@@ -1,3 +1,7 @@
+2005-10-22  Simon Josefsson  <jas@extundo.com>
+
+	* crc.h: Include stddef.h, for size_t.
+
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
 	* arctwo.h (arctwo_setkey): Protect variable in CPP macro,

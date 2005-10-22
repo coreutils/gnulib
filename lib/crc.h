@@ -20,6 +20,7 @@
 #ifndef CRC_H
 # define CRC_H 1
 
+#include <stddef.h>
 #include <stdint.h>
 
 /* Compute CRC-32 value of LEN bytes long BUF, and return it. */
