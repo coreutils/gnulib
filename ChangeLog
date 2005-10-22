@@ -1,3 +1,7 @@
+2005-10-22  Simon Josefsson  <jas@extundo.com>
+
+	* modules/arcfour (Depends-on): Need stdint.
+
 2005-10-21  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import, func_create_testdir): Add quoting to last

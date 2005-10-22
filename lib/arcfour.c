@@ -36,16 +36,16 @@ void
 arcfour_stream (arcfour_context * context, const char *inbuf, char *outbuf,
 		size_t length)
 {
-  size_t i = context->idx_i;
-  size_t j = context->idx_j;
+  uint8_t i = context->idx_i;
+  uint8_t j = context->idx_j;
   char *sbox = context->sbox;
 
   for (; length > 0; length--)
     {
       char t;
 
-      i = (i + 1) % ARCFOUR_SBOX_SIZE;
-      j = (j + sbox[i]) % ARCFOUR_SBOX_SIZE;
+      i++;
+      j += sbox[i];
       t = sbox[i];
       sbox[i] = sbox[j];
       sbox[j] = t;

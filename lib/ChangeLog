@@ -1,5 +1,11 @@
 2005-10-22  Simon Josefsson  <jas@extundo.com>
 
+	* arcfour.h, arcfour.c: Use fixed size indices in the
+	arcfour_context struct (simplify test vector testing in GNU
+	Shishi).
+
+2005-10-22  Simon Josefsson  <jas@extundo.com>
+
 	* md4.c, md4.c: Simplify buffer handling visavi alignment,
 	suggested by Bruno Haible <bruno@clisp.org>.
 

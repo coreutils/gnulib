@@ -25,13 +25,14 @@
 # define ARCFOUR_H
 
 # include <stddef.h>
+# include <stdint.h>
 
 #define ARCFOUR_SBOX_SIZE 256
 
 typedef struct
 {
-  size_t idx_i, idx_j;
   char sbox[ARCFOUR_SBOX_SIZE];
+  uint8_t idx_i, idx_j;
 } arcfour_context;
 
 /* Apply ARCFOUR stream to INBUF placing the result in OUTBUF, both of
