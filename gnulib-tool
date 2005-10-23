@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-10-21 15:05:31 $'
+cvsdatestamp='$Date: 2005-10-23 17:31:48 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -980,6 +980,7 @@ func_import ()
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
       lib/*) g=`echo "$f" | sed -e "s,^lib/,$cached_sourcebase/,"` ;;
       m4/*) g=`echo "$f" | sed -e "s,^m4/,$cached_m4base/,"` ;;
+      tests/*) g=`echo "$f" | sed -e "s,^tests/,$cached_testsbase/,"` ;;
       *) g="$f" ;;
     esac
     echo "$g""$delimiter""$f"
@@ -989,6 +990,7 @@ func_import ()
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
       lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
       m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
+      tests/*) g=`echo "$f" | sed -e "s,^tests/,$testsbase/,"` ;;
       *) g="$f" ;;
     esac
     echo "$g""$delimiter""$f"
@@ -1070,6 +1072,7 @@ func_import ()
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
       lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
       m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
+      tests/*) g=`echo "$f" | sed -e "s,^tests/,$testsbase/,"` ;;
       *) g="$f" ;;
     esac
     func_add_or_update
@@ -1081,6 +1084,7 @@ func_import ()
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
       lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
       m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
+      tests/*) g=`echo "$f" | sed -e "s,^tests/,$testsbase/,"` ;;
       *) g="$f" ;;
     esac
     func_add_or_update
