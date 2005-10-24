@@ -18,7 +18,7 @@ Include:
 "sha1.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Jim Meyering
