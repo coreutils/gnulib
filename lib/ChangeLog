@@ -1,3 +1,7 @@
+2005-10-24  Simon Josefsson  <jas@extundo.com>
+
+	* md4.h: Shrink buffer size, now that we changed the type.
+
 2005-10-22  Simon Josefsson  <jas@extundo.com>
 
 	* arcfour.h, arcfour.c: Use fixed size indices in the

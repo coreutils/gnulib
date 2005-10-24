@@ -34,7 +34,7 @@ struct md4_ctx
 
   uint32_t total[2];
   uint32_t buflen;
-  uint32_t buffer[128];
+  uint32_t buffer[32];
 };
 
 
