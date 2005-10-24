@@ -4,7 +4,7 @@
 
 2005-10-23  Simon Josefsson  <jas@extundo.com>
 
-	* gnulib-tool: Fix --tests-base.
+	* gnulib-tool (func_import): Fix --tests-base.
 
 2005-10-22  Simon Josefsson  <jas@extundo.com>
 
