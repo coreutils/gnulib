@@ -1,3 +1,9 @@
+2005-10-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/verify (License): Change from GPL to LGPL.  This is a
+	tiny module and there are apparently near-equivalents that are
+	under the BSD license.
+
 2005-10-24  Simon Josefsson  <jas@extundo.com>
 
 	* modules/sha1: Relicense to LGPL.
