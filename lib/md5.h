@@ -70,7 +70,7 @@ struct md5_ctx
 
   uint32_t total[2];
   uint32_t buflen;
-  char buffer[128] __attribute__ ((__aligned__ (__alignof__ (uint32_t))));
+  uint32_t buffer[32];
 };
 
 /*

@@ -1,5 +1,8 @@
 2005-10-28  Simon Josefsson  <jas@extundo.com>
 
+	* md5.h, md5.c: Simplify buffer handling visavi alignment,
+	suggested by Bruno Haible <bruno@clisp.org>.
+
 	* gc-gnulib.c, gc-libgcrypt.c: Check calloc return value.
 
 	* gc.h: Add MD2 and RMD160 length defines.  Add prototypes.
@@ -23,7 +26,7 @@
 
 2005-10-22  Simon Josefsson  <jas@extundo.com>
 
-	* md4.c, md4.c: Simplify buffer handling visavi alignment,
+	* md4.h, md4.c: Simplify buffer handling visavi alignment,
 	suggested by Bruno Haible <bruno@clisp.org>.
 
 2005-10-22  Simon Josefsson  <jas@extundo.com>
