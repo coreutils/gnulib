@@ -29,6 +29,7 @@ int
 main (int argc, char *argv[])
 {
   Gc_rc rc;
+  gc_hash_handle h;
 
   rc = gc_init ();
   if (rc != GC_OK)
@@ -45,6 +46,7 @@ main (int argc, char *argv[])
     char *expect =
       "\xc3\xfc\xd3\xd7\x61\x92\xe4\x00\x7d\xfb\x49\x6c\xca\x67\xe1\x3b";
     char out[16];
+    const char *p;
 
     /* MD5 ("abcdefghijklmnopqrstuvwxyz") = c3fcd3d76192e4007dfb496cca67e13b */
 
@@ -76,7 +78,7 @@ main (int argc, char *argv[])
     if (memcmp (out, expect, 16) != 0)
       {
 	size_t i;
-	printf ("md5 1 missmatch. expected:\n");
+	printf ("md5 2 missmatch. expected:\n");
 	for (i = 0; i < 16; i++)
 	  printf ("%02x ", expect[i] & 0xFF);
 	printf ("\ncomputed:\n");
@@ -85,6 +87,43 @@ main (int argc, char *argv[])
 	printf ("\n");
 	return 1;
       }
+
+    if (gc_hash_digest_length (GC_MD5) != 16)
+      {
+	printf ("gc_hash_digest_length (GC_MD5) failed\n");
+	return 1;
+      }
+
+    if ((rc = gc_hash_open (GC_MD5, 0, &h)) != GC_OK)
+      {
+	printf ("gc_hash_open(GC_MD5) failed (%d)\n", rc);
+	return 1;
+      }
+
+    gc_hash_write (h, inlen, in);
+
+    p = gc_hash_read (h);
+
+    if (!p)
+      {
+	printf ("gc_hash_read failed\n");
+	return 1;
+      }
+
+    if (memcmp (p, expect, 16) != 0)
+	{
+	size_t i;
+	printf ("md5 3 missmatch. expected:\n");
+	for (i = 0; i < 16; i++)
+	  printf ("%02x ", expect[i] & 0xFF);
+	printf ("\ncomputed:\n");
+	for (i = 0; i < 16; i++)
+	  printf ("%02x ", p[i] & 0xFF);
+	printf ("\n");
+	return 1;
+      }
+
+    gc_hash_close (h);
   }
 
   gc_done ();

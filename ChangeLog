@@ -1,5 +1,8 @@
 2005-10-28  Simon Josefsson  <jas@extundo.com>
 
+	* tests/test-gc-md4.c, tests/test-gc-md5.c, tests/test-gc-sha1.c:
+	Test more.
+
 	* tests/test-gc-md2.c, tests/test-md2.c: New files.
 
 	* modules/md2, modules/md2-tests: New files.

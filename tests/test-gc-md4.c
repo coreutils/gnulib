@@ -29,6 +29,7 @@ int
 main (int argc, char *argv[])
 {
   Gc_rc rc;
+  gc_hash_handle h;
 
   rc = gc_init ();
   if (rc != GC_OK)
@@ -45,6 +46,7 @@ main (int argc, char *argv[])
     const char *expect =
       "\xa4\x48\x01\x7a\xaf\x21\xd8\x52\x5f\xc1\x0a\xe8\x7a\xa6\x72\x9d";
     char out[16];
+    const char *p;
 
     /* MD4 ("abcdefghijklmnopqrstuvwxyz") = c3fcd3d76192e4007dfb496cca67e13b */
 
@@ -85,6 +87,43 @@ main (int argc, char *argv[])
 	printf ("\n");
 	return 1;
       }
+
+    if (gc_hash_digest_length (GC_MD4) != 16)
+      {
+	printf ("gc_hash_digest_length (GC_MD4) failed\n");
+	return 1;
+      }
+
+    if ((rc = gc_hash_open (GC_MD4, 0, &h)) != GC_OK)
+      {
+	printf ("gc_hash_open(GC_MD4) failed (%d)\n", rc);
+	return 1;
+      }
+
+    gc_hash_write (h, inlen, in);
+
+    p = gc_hash_read (h);
+
+    if (!p)
+      {
+	printf ("gc_hash_read failed\n");
+	return 1;
+      }
+
+    if (memcmp (p, expect, 16) != 0)
+      {
+	size_t i;
+	printf ("md4 1 missmatch. expected:\n");
+	for (i = 0; i < 16; i++)
+	  printf ("%02x ", expect[i] & 0xFF);
+	printf ("\ncomputed:\n");
+	for (i = 0; i < 16; i++)
+	  printf ("%02x ", p[i] & 0xFF);
+	printf ("\n");
+	return 1;
+      }
+
+    gc_hash_close (h);
   }
 
   gc_done ();
