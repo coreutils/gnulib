@@ -12,5 +12,7 @@ AC_DEFUN([gl_INET_NTOP],
 
 # Prerequisites of lib/inet_ntop.h and lib/inet_ntop.c.
 AC_DEFUN([gl_PREREQ_INET_NTOP], [
+  AC_CHECK_HEADERS_ONCE(sys/types.h arpa/inet.h)
+  AC_CHECK_DECLS([inet_ntop],,,[#include <arpa/inet.h>])
   AC_REQUIRE([gl_SOCKET_FAMILIES])
 ])

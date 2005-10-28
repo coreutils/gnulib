@@ -16,9 +16,12 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#ifdef HAVE_SYS_SOCKET_H
+# include <sys/socket.h>
+#endif
+#ifdef HAVE_ARPA_INET_H
+# include <arpa/inet.h>
+#endif
 
 /* Converts an internet address from internal format to a printable,
    presentable format.
@@ -36,6 +39,7 @@
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/inet_ntop.html>.  */
 
-#if !HAVE_INET_NTOP /* not already defined and declared in <arpa/inet.h> ? */
-extern const char *inet_ntop(int af, const void *src, char *dst, socklen_t cnt);
+#ifndef HAVE_DECL_INET_NTOP
+extern const char *inet_ntop (int af, const void *restrict src,
+			      char *restrict dst, socklen_t cnt);
 #endif

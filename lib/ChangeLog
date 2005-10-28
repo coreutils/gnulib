@@ -1,5 +1,11 @@
 2005-10-28  Simon Josefsson  <jas@extundo.com>
 
+	* inet_ntop.h, inet_ntop.c: Make it work under mingw32: Add
+	"restrict" keywords, as per POSIX.  Protect the function
+	declaration around HAVE_DECL_INET_NTOP rather than HAVE_INET_NTOP.
+	Don't use K&R prototypes.  Check the sprintf return values.
+	Re-define EAFNOSUPPORT if not present.  Indent.
+
 	* md5.h, md5.c: Simplify buffer handling visavi alignment,
 	suggested by Bruno Haible <bruno@clisp.org>.
 
