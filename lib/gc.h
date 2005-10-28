@@ -57,8 +57,10 @@ typedef enum Gc_hash_mode Gc_hash_mode;
 
 typedef void *gc_hash_handle;
 
+#define GC_MD2_DIGEST_SIZE 16
 #define GC_MD4_DIGEST_SIZE 16
 #define GC_MD5_DIGEST_SIZE 16
+#define GC_RMD160_DIGEST_SIZE 20
 #define GC_SHA1_DIGEST_SIZE 20
 
 /* Cipher types. */
@@ -141,6 +143,8 @@ extern Gc_rc
 gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *out);
 
 /* One-call interface. */
+extern Gc_rc gc_md2 (const void *in, size_t inlen, void *resbuf);
+extern Gc_rc gc_md4 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_md5 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_sha1 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_hmac_md5 (const void *key, size_t keylen,

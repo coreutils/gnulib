@@ -1,3 +1,7 @@
+2005-10-28  Simon Josefsson  <jas@extundo.com>
+
+	* gc-md2.m4, md2.m4: New file.
+
 2005-10-22  Simon Josefsson  <jas@extundo.com>
 
 	* gc.m4: Don't be fooled by --disable-*random-device parameters,

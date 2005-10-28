@@ -1,3 +1,14 @@
+2005-10-28  Simon Josefsson  <jas@extundo.com>
+
+	* gc.h: Add MD2 and RMD160 length defines.  Add prototypes.
+
+	* gc-libgcrypt.c: Add MD2 (which is not available through
+	libgcrypt).
+
+	* gc-gnulib.c: Add MD2.  Implement gc_hash_* API.
+
+	* md2.h, md2.c: New files.
+
 2005-10-24  Simon Josefsson  <jas@extundo.com>
 
 	* md4.h: Shrink buffer size, now that we changed the type.

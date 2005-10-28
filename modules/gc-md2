@@ -1,0 +1,25 @@
+Description:
+Generic crypto wrappers for MD2 functions.
+
+Files:
+m4/gc-md2.m4
+
+Depends-on:
+stdint
+gc
+minmax
+md2
+
+configure.ac:
+gl_GC_MD2
+
+Makefile.am:
+
+Include:
+"gc.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

@@ -1,0 +1,11 @@
+Files:
+tests/test-md2.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-md2
+noinst_PROGRAMS += test-md2
+test_md2_SOURCES = test-md2.c
