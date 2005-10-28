@@ -1,3 +1,8 @@
+2005-10-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* savedir.c (savedir): Don't assume that xrealloc etc. leave
+	errno alone.  Problem reported by Frederic Jolliton.
+
 2005-10-28  Simon Josefsson  <jas@extundo.com>
 
 	* inet_ntop.h, inet_ntop.c: Make it work under mingw32: Add
@@ -97,7 +102,7 @@
 
 2005-10-19  Simon Josefsson  <jas@extundo.com>
 
-	* gc.h, gc-gnulib.c, gc-libgcrypt.c: Support MD4. 
+	* gc.h, gc-gnulib.c, gc-libgcrypt.c: Support MD4.
 
 2005-10-18  Simon Josefsson  <jas@extundo.com>
 
