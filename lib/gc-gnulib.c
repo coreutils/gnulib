@@ -192,6 +192,8 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
   Gc_rc rc = GC_OK;
 
   ctx = calloc (sizeof (*ctx), 1);
+  if (!ctx)
+    return GC_MALLOC_ERROR;
 
   ctx->alg = alg;
   ctx->mode = mode;

@@ -1,5 +1,7 @@
 2005-10-28  Simon Josefsson  <jas@extundo.com>
 
+	* gc-gnulib.c, gc-libgcrypt.c: Check calloc return value.
+
 	* gc.h: Add MD2 and RMD160 length defines.  Add prototypes.
 
 	* gc-libgcrypt.c: Add MD2 (which is not available through
