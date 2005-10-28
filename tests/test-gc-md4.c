@@ -59,7 +59,7 @@ main (int argc, char *argv[])
     if (memcmp (out, expect, 16) != 0)
       {
 	size_t i;
-	printf ("md4 1 missmatch. expected:\n");
+	printf ("md4 1 mismatch. expected:\n");
 	for (i = 0; i < 16; i++)
 	  printf ("%02x ", expect[i] & 0xFF);
 	printf ("\ncomputed:\n");
@@ -78,7 +78,7 @@ main (int argc, char *argv[])
     if (memcmp (out, expect, 16) != 0)
       {
 	size_t i;
-	printf ("md4 1 missmatch. expected:\n");
+	printf ("md4 1 mismatch. expected:\n");
 	for (i = 0; i < 16; i++)
 	  printf ("%02x ", expect[i] & 0xFF);
 	printf ("\ncomputed:\n");
@@ -113,7 +113,7 @@ main (int argc, char *argv[])
     if (memcmp (p, expect, 16) != 0)
       {
 	size_t i;
-	printf ("md4 1 missmatch. expected:\n");
+	printf ("md4 1 mismatch. expected:\n");
 	for (i = 0; i < 16; i++)
 	  printf ("%02x ", expect[i] & 0xFF);
 	printf ("\ncomputed:\n");

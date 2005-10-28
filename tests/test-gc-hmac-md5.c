@@ -66,7 +66,7 @@ main (int argc, char *argv[])
     if (memcmp (digest, out, 16) != 0)
       {
 	size_t i;
-	printf ("hash 1 missmatch. expected:\n");
+	printf ("hash 1 mismatch. expected:\n");
 	for (i = 0; i < 16; i++)
 	  printf ("%02x ", digest[i] & 0xFF);
 	printf ("\ncomputed:\n");

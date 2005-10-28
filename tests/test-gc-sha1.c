@@ -55,7 +55,7 @@ main (int argc, char *argv[])
     if (memcmp (out, expect, 20) != 0)
       {
 	size_t i;
-	printf ("sha1 missmatch. expected:\n");
+	printf ("sha1 mismatch. expected:\n");
 	for (i = 0; i < 16; i++)
 	  printf ("%02x ", expect[i] & 0xFF);
 	printf ("\ncomputed:\n");
@@ -75,7 +75,7 @@ main (int argc, char *argv[])
     if (memcmp (out, expect, 20) != 0)
       {
 	size_t i;
-	printf ("sha1' missmatch. expected:\n");
+	printf ("sha1' mismatch. expected:\n");
 	for (i = 0; i < 16; i++)
 	  printf ("%02x ", expect[i] & 0xFF);
 	printf ("\ncomputed:\n");
@@ -110,7 +110,7 @@ main (int argc, char *argv[])
     if (memcmp (p, expect, 20) != 0)
       {
 	size_t i;
-	printf ("sha1 1 missmatch. expected:\n");
+	printf ("sha1 1 mismatch. expected:\n");
 	for (i = 0; i < 20; i++)
 	  printf ("%02x ", expect[i] & 0xFF);
 	printf ("\ncomputed:\n");

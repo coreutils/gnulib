@@ -48,7 +48,7 @@ main (int argc, char *argv[])
     if (memcmp (digest, out, 20) != 0)
       {
 	size_t i;
-	printf ("hash 1 missmatch. expected:\n");
+	printf ("hash 1 mismatch. expected:\n");
 	for (i = 0; i < 20; i++)
 	  printf ("%02x ", digest[i] & 0xFF);
 	printf ("\ncomputed:\n");
@@ -77,7 +77,7 @@ main (int argc, char *argv[])
     if (memcmp (digest, out, 20) != 0)
       {
 	size_t i;
-	printf ("hash 2 missmatch. expected:\n");
+	printf ("hash 2 mismatch. expected:\n");
 	for (i = 0; i < 20; i++)
 	  printf ("%02x ", digest[i] & 0xFF);
 	printf ("\ncomputed:\n");
@@ -110,7 +110,7 @@ main (int argc, char *argv[])
     if (memcmp (digest, out, 20) != 0)
       {
 	size_t i;
-	printf ("hash 3 missmatch. expected:\n");
+	printf ("hash 3 mismatch. expected:\n");
 	for (i = 0; i < 20; i++)
 	  printf ("%02x ", digest[i] & 0xFF);
 	printf ("\ncomputed:\n");
