@@ -1,3 +1,9 @@
+2005-10-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Fix porting problem reported by Theodoros V. Kalamatianos.
+	* utimens.c (futimens) [HAVE_WORKING_UTIMES && HAVE_FUTIMES]:
+	Don't assume that futimes failing means we mustfail.
+
 2005-10-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getcwd.c (__getcwd): Don't assume that system calls after readdir
