@@ -2,7 +2,7 @@
 
 	Fix porting problem reported by Theodoros V. Kalamatianos.
 	* utimens.c (futimens) [HAVE_WORKING_UTIMES && HAVE_FUTIMES]:
-	Don't assume that futimes failing means we mustfail.
+	Don't assume that futimes failing means we must fail.
 
 2005-10-29  Paul Eggert  <eggert@cs.ucla.edu>
 
