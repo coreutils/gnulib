@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-10-23 17:31:48 $'
+cvsdatestamp='$Date: 2005-11-04 18:25:19 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -44,6 +44,7 @@ func_usage ()
   echo "\
 Usage: gnulib-tool --list
        gnulib-tool --import [module1 ... moduleN]
+       gnulib-tool --update
        gnulib-tool --create-testdir --dir=directory module1 ... moduleN
        gnulib-tool --create-megatestdir --dir=directory [module1 ... moduleN]
        gnulib-tool --test --dir=directory module1 ... moduleN
@@ -237,6 +238,9 @@ func_ln_if_changed ()
       --import | --impor | --impo | --imp | --im | --i )
         mode=import
         shift ;;
+      --update | --updat | --upda | --upd | --up | --u )
+        mode=update
+        shift ;;
       --create-testdir | --create-testdi | --create-testd | --create-test | --create-tes | --create-te | --create-t )
         mode=create-testdir
         shift ;;
@@ -349,7 +353,7 @@ func_ln_if_changed ()
       --dry-run )
         doit=false
         shift ;;
-      -s | --symbolic | --symlink )
+      -s | --symbolic | --symboli | --symbol | --symbo | --symb | --symlink | --symlin | --symli | --syml | --sym | --sy )
         symbolic=true
         shift ;;
       --help | --hel | --he | --h )
@@ -370,6 +374,26 @@ func_ln_if_changed ()
         break ;;
     esac
   done
+
+  if test "$mode" = update; then
+    if test $# != 0; then
+      echo "gnulib-tool: too many arguments in 'update' mode" 1>&2
+      echo "Try 'gnulib-tool --help' for more information." 1>&2
+      echo "If you really want to modify the gnulib configuration of your project," 1>&2
+      echo "you need to use 'gnulib --import' - at your own risk!" 1>&2
+      exit 1
+    fi
+    if test -n "$libname" || test -n "$sourcebase" || test -n "$m4base" \
+       || test -n "$testsbase" || test -n "$auxdir" || test -n "$inctests" \
+       || test -n "$avoidlist" || test -n "$lgpl" || test -n "$macro_prefix"; then
+      echo "gnulib-tool: invalid options for 'update' mode" 1>&2
+      echo "Try 'gnulib-tool --help' for more information." 1>&2
+      echo "If you really want to modify the gnulib configuration of your project," 1>&2
+      echo "you need to use 'gnulib --import' - at your own risk!" 1>&2
+      exit 1
+    fi
+    do_changelog=false
+  fi
 
   # Remove trailing slashes from the directory names. This is necessary for
   # m4base (to avoid an error in func_import) and optional for the others.
@@ -1603,7 +1627,8 @@ case $mode in
     func_all_modules
     ;;
 
-  import )
+  import | update )
+    
     # Where to import.
     if test -z "$destdir"; then
       destdir=.

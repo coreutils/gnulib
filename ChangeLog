@@ -1,3 +1,7 @@
+2005-11-04  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool: Implement --update mode.
+
 2005-10-28  Simon Josefsson  <jas@extundo.com>
 
 	* tests/test-gc-md4.c, tests/test-gc-md5.c, tests/test-gc-sha1.c:
