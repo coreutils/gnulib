@@ -39,7 +39,7 @@
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/inet_ntop.html>.  */
 
-#ifndef HAVE_DECL_INET_NTOP
+#if !HAVE_DECL_INET_NTOP
 extern const char *inet_ntop (int af, const void *restrict src,
 			      char *restrict dst, socklen_t cnt);
 #endif
