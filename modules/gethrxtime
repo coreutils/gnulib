@@ -10,6 +10,7 @@ m4/clock_time.m4
 m4/longlong.m4
 
 Depends-on:
+gettime
 extensions
 
 configure.ac:

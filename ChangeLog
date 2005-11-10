@@ -1,3 +1,7 @@
+2005-11-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/gethrxtime (Depends-on): Add gettime.
+
 2005-11-04  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool: Implement --update mode.
