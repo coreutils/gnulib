@@ -1,3 +1,7 @@
+2005-11-10  Simon Josefsson  <jas@extundo.com>
+
+	* readline.c: Remove EOL.
+
 2005-11-08  Eric Blake  <ebb9@byu.net>
 
 	* inet_ntop.h: Use #if !, not #ifndef, for AC_CHECK_DECLS.
