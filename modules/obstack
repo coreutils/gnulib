@@ -8,6 +8,7 @@ m4/inttypes_h.m4
 m4/obstack.m4
 m4/stdint_h.m4
 m4/uintmax_t.m4
+m4/ulonglong.m4
 
 Depends-on:
 gettext-h
@@ -27,4 +28,3 @@ LGPL
 
 Maintainer:
 all, glibc
-

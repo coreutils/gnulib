@@ -1,3 +1,8 @@
+2005-11-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/obstack (Files): Add m4/ulonglong.m4.
+	Problem reported by Davide Angelocola.
+
 2005-11-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/gethrxtime (Depends-on): Add gettime.
