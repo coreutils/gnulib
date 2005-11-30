@@ -1,5 +1,14 @@
 2005-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* stdint_.h (intmax_t) [defined intmax_t]: Do not declare.
+	(uintmax_t) [defined uintmax_t]: Do not declare.
+	(SIZE_MAX) [defined SIZE_MAX]: Do not define.
+	This works around a problem if intmax_t.m4 and/or uintmax_t.m4
+	and/or size_max.m4 are also used.  Problem reported by Mark D. Baushke.
+	(SIZE_MAX): Define to ((size_t) -1), not (~(size_t)0), for the
+	sake of portability to weird hosts that C allows (though we don't
+	know of any practical examples).
+
 	* savedir.h (fdsavedir): New decl.
 	* savedir.c (fdsavedir, savedirstream): New functions; the latter
 	contains most of the former guts of savedir.

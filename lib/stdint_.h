@@ -133,11 +133,19 @@ typedef unsigned long uintptr_t;
 /* 7.18.1.5. Greatest-width integer types */
 
 #ifdef _STDINT_H_HAVE_INT64
+# ifndef intmax_t
 typedef int64_t  intmax_t;
+# endif
+# ifndef uintmax_t
 typedef uint64_t uintmax_t;
+# endif
 #else
+# ifndef intmax_t
 typedef int32_t  intmax_t;
+# endif
+# ifndef uintmax_t
 typedef uint32_t uintmax_t;
+# endif
 #endif
 
 /* 7.18.2. Limits of specified-width integer types */
@@ -230,7 +238,9 @@ typedef uint32_t uintmax_t;
 #define SIG_ATOMIC_MIN 0
 #define SIG_ATOMIC_MAX 127
 
-#define SIZE_MAX (~(size_t)0)
+#ifndef SIZE_MAX
+# define SIZE_MAX ((size_t) -1)
+#endif
 
 /* wchar_t limits already defined in <stddef.h>.  */
 /* wint_t limits already defined in <wchar.h>.  */
