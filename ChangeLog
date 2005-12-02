@@ -1,3 +1,13 @@
+2005-12-02  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Accept GPLed build tool modules when
+	--lgpl is given.
+	* modules/csharpcomp-script: New file.
+	* modules/csharpcomp: Depend on it.
+	* modules/javacomp-script: New file.
+	* modules/javacomp: Depend on it.
+	Suggested by Simon Josefsson.
+
 2005-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/savedir (Depends-on): Add openat.
