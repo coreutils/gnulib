@@ -1,0 +1,21 @@
+Description:
+Script to compile a Java program.
+
+Files:
+lib/javacomp.sh.in
+m4/javacomp.m4
+
+Depends-on:
+
+configure.ac:
+gt_JAVACOMP
+
+Makefile.am:
+EXTRA_DIST += javacomp.sh.in
+
+License:
+GPLed build tool
+
+Maintainer:
+Bruno Haible
+
