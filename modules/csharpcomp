@@ -4,9 +4,6 @@ Compile a C# program.
 Files:
 lib/csharpcomp.h
 lib/csharpcomp.c
-lib/csharpcomp.sh.in
-m4/csharpcomp.m4
-m4/csharp.m4
 
 Depends-on:
 stdbool
@@ -19,13 +16,12 @@ sh-quote
 safe-read
 error
 gettext-h
+csharpcomp-script
 
 configure.ac:
-gt_CSHARPCOMP
 
 Makefile.am:
 lib_SOURCES += csharpcomp.h csharpcomp.c
-EXTRA_DIST += csharpcomp.sh.in
 
 Include:
 "csharpcomp.h"
