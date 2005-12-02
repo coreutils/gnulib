@@ -1,3 +1,9 @@
+2005-07-09  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.sh.in (options_csc): For -l option, add a .dll suffix.
+	* csharpcomp.c (compile_csharp_using_sscli): Likewise.
+	Reported by Mark Junker <mjscod@gmx.de>.
+
 2005-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* stdint_.h (intmax_t) [defined intmax_t]: Do not declare.

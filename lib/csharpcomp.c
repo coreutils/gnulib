@@ -404,9 +404,10 @@ compile_csharp_using_sscli (const char * const *sources,
 	}
       for (i = 0; i < libraries_count; i++)
 	{
-	  char *option = (char *) xallocsa (11 + strlen (libraries[i]) + 1);
+	  char *option = (char *) xallocsa (11 + strlen (libraries[i]) + 4 + 1);
 	  memcpy (option, "-reference:", 11);
-	  strcpy (option + 11, libraries[i]);
+	  memcpy (option + 11, libraries[i], strlen (libraries[i]));
+	  strcpy (option + 11 + strlen (libraries[i]), ".dll");
 	  *argp++ = option;
 	}
       if (optimize)

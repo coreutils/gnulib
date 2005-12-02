@@ -97,7 +97,7 @@ while test $# != 0; do
     -l)
       options_cscc="$options_cscc -l "`echo "$2" | sed -e "$sed_quote_subst"`
       options_mcs="$options_mcs -r "`echo "$2" | sed -e "$sed_quote_subst"`
-      options_csc="$options_csc -reference:"`echo "$2" | sed -e "$sed_quote_subst"`
+      options_csc="$options_csc -reference:"`echo "$2" | sed -e "$sed_quote_subst"`".dll"
       shift
       ;;
     -O)
