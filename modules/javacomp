@@ -4,8 +4,6 @@ Compile a Java program.
 Files:
 lib/javacomp.h
 lib/javacomp.c
-lib/javacomp.sh.in
-m4/javacomp.m4
 
 Depends-on:
 stdbool
@@ -20,13 +18,12 @@ safe-read
 xalloc
 error
 gettext-h
+javacomp-script
 
 configure.ac:
-gt_JAVACOMP
 
 Makefile.am:
 lib_SOURCES += javacomp.h javacomp.c
-EXTRA_DIST += javacomp.sh.in
 
 Include:
 "javacomp.h"
