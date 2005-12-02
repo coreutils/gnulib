@@ -1,3 +1,9 @@
+2005-12-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regex.m4 (gl_REGEX): Check whether off_t can be used in a switch
+	statement, to work around an HP-UX 10.20 compiler bug reported by
+	Peter O'Gorman.
+
 2005-11-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* gethrxtime.m4 (gl_PREREQ_GETHRXTIME): Don't require AC_HEADER_TIME
