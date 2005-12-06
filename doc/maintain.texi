@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 10, 2005
+@set lastupdate December 6, 2005
 @c %**end of header
 
 @dircategory GNU organization
@@ -423,18 +423,19 @@ they are considered a separate package, not part of GAS proper.
 Please keep these records in a file named @file{AUTHORS} in the source
 directory for the program itself.
 
+
 @node Copyright Notices
 @section Copyright Notices
 @cindex copyright notices in program files
 
-You should maintain a legally valid copyright notice and a license
-notice in each nontrivial file in the package.  (Any file more than ten
-lines long is nontrivial for this purpose.)  This includes header files
-and interface definitions
-building or running the program, documentation files, and any supporting
-files.  If a file has been explicitly placed in the public domain, then
-instead of a copyright notice, it should have a notice saying explicitly
-that it is in the public domain.
+You should maintain a proper copyright notice and a license notice in
+each nontrivial file in the package.  (Any file more than ten lines
+long is nontrivial for this purpose.)  This includes header files and
+interface definitions for building or running the program,
+documentation files, and any supporting files.  If a file has been
+explicitly placed in the public domain, then instead of a copyright
+notice, it should have a notice saying explicitly that it is in the
+public domain.
 
 Even image files and sound files should contain copyright notices and
 license notices, if they can.  Some formats do not have room for textual
@@ -446,9 +447,10 @@ the end, since new material is added at the beginning but the end
 remains the end.
 
 When a file is automatically generated from some other file in the
-distribution, it is useful to copy the copyright notice and permission
-notice of the file it is generated from, if you can.  Alternatively, put
-a notice at the beginning saying which file it is generated from.
+distribution, it is useful for the automatic procedure to copy the
+copyright notice and permission notice of the file it is generated
+from, if possible.  Alternatively, put a notice at the beginning saying
+which file it is generated from.
 
 A copyright notice looks like this:
 
@@ -468,42 +470,18 @@ message should use parenthesized @samp{C} by default, though message
 translations may use C-in-a-circle in locales where that symbol is
 known to work.
 
-The list of year numbers should include each year in which you finished
-preparing a version which was actually released, and which was an
-ancestor of the current version.
+To update the list of year numbers, add each year in which you change
+the package.  (Here we assume you're using a publicly accessible
+revision control server, so that every revision installed is also
+immediately and automatically published.)
 
-Please reread the paragraph above, slowly and carefully.  It is
-important to understand that rule precisely, much as you would
-understand a complicated C statement in order to hand-simulate it.
-
-This list is @emph{not} a list of years in which versions were
-@emph{released}.  It is a list of years in which versions, later
-released, were @emph{completed}.  So if you finish a version on Dec 31,
-1994 and release it on Jan 1, 1995, this version requires the inclusion
-of 1994, but doesn't require the inclusion of 1995.
+Don't delete old year numbers, though; they can indicate when older
+versions might theoretically go into the public domain.  If you copy a
+file into the package from some other program, keep the copyright
+years that come with the file.
 
 Do not abbreviate the year list using a range; for instance, do not
-write @samp{1996--1998}; instead, write @samp{1996, 1997, 1998}.  Do
-write each relevant year as a four-digit number.  In the normal course
-of maintenance, you may come across copyright notices which omit the
-century, as in @samp{1996, 97, 98}---change these to include the
-century.  However, there is no need to systematically change the
-notice in every old file.
-
-The versions that matter, for purposes of this list, are versions that
-were ancestors of the current version.  So if you made a temporary
-branch in maintenance, and worked on branches A and B in parallel, then
-each branch would have its own list of years, which is based on the
-versions released in that branch.  A version in branch A need not be
-reflected in the list of years for branch B, and vice versa.
-
-However, if you copy code from branch A into branch B, the years for
-branch A (or at least, for the parts that you copied into branch B) do
-need to appear in the list in branch B, because now they are ancestors
-of branch B.
-
-This rule is complicated.  If we were in charge of copyright law, we
-would probably change this (as well as many other aspects).
+write @samp{1996--1998}; instead, write @samp{1996, 1997, 1998}.
 
 For an FSF-copyrighted package, if you have followed the procedures to
 obtain legal papers, each file should have just one copyright holder:
@@ -512,16 +490,24 @@ copyright notice to list that name and only that name.
 
 But if contributors are not all assigning their copyrights to a single
 copyright holder, it can easily happen that one file has several
-copyright holders.  Each contributor of nontrivial amounts is a
-copyright holder.
+copyright holders.  Each contributor of nontrivial text is a copyright
+holder.
 
 In that case, you should always include a copyright notice in the name
 of main copyright holder of the file.  You can also include copyright
-notices for other copyright holders as well, and this is a good idea for
-those who have contributed a large amount and for those who specifically
-ask for notices in their names.  But you don't have to include a notice
-for everyone who contributed to the file, and that would be rather
-inconvenient.
+notices for other copyright holders as well, and this is a good idea
+for those who have contributed a large amount and for those who
+specifically ask for notices in their names.  (Sometimes the license
+on code that you copy in may require preserving certain copyright
+notices.)  But you don't have to include a notice for everyone who
+contributed to the file (which would be rather inconvenient).
+
+Sometimes a program has an overall copyright notice that refers to the
+whole program.  It might be in the @file{README} file, or it might be
+displayed when the program starts up.  This copyright notice should
+mention the year of completion of the most recent major version; it
+can mention years of completion of previous major versions, but that
+
 
 @node License Notices
 @section License Notices
