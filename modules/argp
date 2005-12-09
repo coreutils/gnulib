@@ -11,6 +11,7 @@ lib/argp-fs-xinl.c
 lib/argp-help.c
 lib/argp-namefrob.h
 lib/argp-parse.c
+lib/argp-pin.c
 lib/argp-pv.c
 lib/argp-pvh.c
 lib/argp-xinl.c
@@ -18,6 +19,7 @@ m4/argp.m4
 
 Depends-on:
 alloca
+dirname
 getopt
 strchrnul
 sysexits
@@ -34,7 +36,8 @@ gl_ARGP
 Makefile.am:
 lib_SOURCES += argp.h argp-ba.c argp-eexst.c \
            argp-fmtstream.c argp-fmtstream.h argp-fs-xinl.c argp-help.c \
-           argp-namefrob.h argp-parse.c argp-pv.c argp-pvh.c argp-xinl.c
+           argp-namefrob.h argp-parse.c argp-pin.c argp-pv.c argp-pvh.c \
+           argp-xinl.c
 
 Include:
 "argp.h"
