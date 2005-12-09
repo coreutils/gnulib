@@ -50,6 +50,7 @@
 #include "argp.h"
 #include "argp-fmtstream.h"
 #include "argp-namefrob.h"
+#include "dirname.h"
 
 #ifndef SIZE_MAX
 # define SIZE_MAX ((size_t) -1)
@@ -1678,13 +1679,21 @@ void __argp_help (const struct argp *argp, FILE *stream,
 weak_alias (__argp_help, argp_help)
 #endif
 
+char *
+__argp_base_name (char *name)
+{
+  char *p;
+  for (p = name + strlen (name); p > name && !ISSLASH (p[-1]); p--)
+    ;
+  return p;
+}
+     
 #if ! (defined _LIBC || HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME)
 char *
 __argp_short_program_name (void)
 {
 # if HAVE_DECL_PROGRAM_INVOCATION_NAME
-  char *name = strrchr (program_invocation_name, '/');
-  return name ? name + 1 : program_invocation_name;
+  return __argp_base_name (program_invocation_name);
 # else
   /* FIXME: What now? Miles suggests that it is better to use NULL,
      but currently the value is passed on directly to fputs_unlocked,
