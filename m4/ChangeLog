@@ -1,3 +1,9 @@
+2005-12-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* argp.m4:  Check if program_invocation_name and
+	program_invocation_short_name are declared and define appropriate
+	macros if they are not.
+
 2005-12-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* stat-time.m4 (gl_STAT_TIME): Add check for

@@ -1,3 +1,9 @@
+2005-12-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* modules/argp (Files): Add argp-pin.c
+	(Depends-on): dirname
+	(lib_SOURCES): Add argp-pin.c
+
 2005-12-02  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Accept GPLed build tool modules when

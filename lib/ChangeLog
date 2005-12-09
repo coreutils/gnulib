@@ -1,3 +1,15 @@
+2005-12-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* argp-help.c (__argp_base_name): New function
+	(__argp_short_program_name): Rewrite using __argp_base_name
+	* argp-namefrob.h: Define program_invocation_name and
+	program_invocation_short_name if requested
+	(__argp_base_name): Add prototype
+	* argp-parse.c (argp_def): Use gettext wrappers
+	(argp_default_parser): Use __argp_base_name
+	* argp-pin.c: New file. Defines program_invocation_name and
+	program_invocation_short_name on systems that lack them.
+
 2005-12-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* stat-time.h (STATE_TIMESPEC, STAT_TIMESPEC_NS): Add check for
