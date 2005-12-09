@@ -76,6 +76,20 @@
 #undef __argp_fmtstream_wmargin
 #define __argp_fmtstream_wmargin argp_fmtstream_wmargin
 
+/* GNULIB makes sure both program_invocation_name and
+   program_invocation_short_name are available */
+#ifdef GNULIB_PROGRAM_INVOCATION_NAME
+extern char *program_invocation_name;
+#undef HAVE_DECL_PROGRAM_INVOCATION_NAME
+#define HAVE_DECL_PROGRAM_INVOCATION_NAME 1
+#endif
+
+#ifdef GNULIB_PROGRAM_INVOCATION_SHORT_NAME
+extern char *program_invocation_short_name;
+#undef HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
+#define HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME 1
+#endif
+
 #include "mempcpy.h"
 #include "strcase.h"
 #include "strchrnul.h"
@@ -149,8 +163,11 @@ extern char *__argp_basename (char *name);
 #define __set_errno(e) (errno = (e))
 #endif
 
+char * __argp_base_name (char *name);
+
 #if defined _LIBC || HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
 # define __argp_short_program_name()	(program_invocation_short_name)
 #else
 extern char *__argp_short_program_name (void);
 #endif
+
