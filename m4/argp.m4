@@ -9,8 +9,38 @@ AC_DEFUN([gl_ARGP],
   AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gl_GETOPT_SUBSTITUTE])
-  AC_CHECK_DECLS([program_invocation_name, program_invocation_short_name],,,
-    [#include <errno.h>])
+
+  AC_CHECK_DECL([program_invocation_name],
+                :,
+	        [AC_DEFINE(GNULIB_PROGRAM_INVOCATION_NAME, 1,
+                           [Define to 1 to add extern declaration of program_invocation_name to argp-namefrob.h])],
+                [#include <errno.h>])
+  AC_CHECK_DECL([program_invocation_short_name],
+                :,
+	        [AC_DEFINE(GNULIB_PROGRAM_INVOCATION_SHORT_NAME, 1,
+                           [Define to 1 to add extern declaration of program_invocation_short_name to argp-namefrob.h])],
+                [#include <errno.h>])
+
+  # Check if program_invocation_name and program_invocation_short_name
+  # are defined elsewhere. It is improbable that only one of them will
+  # be defined and other not, I prefer to stay on the safe side and to
+  # test each one separately.
+  AC_MSG_CHECKING(whether program_invocation_name is defined)
+  AC_TRY_COMPILE([#include <argp.h>],
+                 [ program_invocation_name = "test"; ],
+                 [ AC_DEFINE(HAVE_PROGRAM_INVOCATION_NAME,1,
+                   [Define if program_invocation_name is defined])
+                   AC_MSG_RESULT(yes)],
+                 [ AC_MSG_RESULT(no)] )
+
+  AC_MSG_CHECKING(whether program_invocation_short_name is defined)
+  AC_TRY_COMPILE([#include <argp.h>],
+                 [ program_invocation_short_name = "test"; ],
+                 [ AC_DEFINE(HAVE_PROGRAM_INVOCATION_SHORT_NAME,1,
+                   [Define if program_invocation_short_name is defined])
+                   AC_MSG_RESULT(yes)],
+                 [ AC_MSG_RESULT(no)] )
+
   AC_CHECK_DECLS_ONCE(
      [clearerr_unlocked feof_unlocked ferror_unlocked
       fflush_unlocked fgets_unlocked fputc_unlocked fputs_unlocked
