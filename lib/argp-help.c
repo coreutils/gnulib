@@ -90,15 +90,15 @@ struct uparams
   int dup_args_note;
 
   /* Various output columns.  */
-  int short_opt_col;
-  int long_opt_col;
-  int doc_opt_col;
-  int opt_doc_col;
-  int header_col;
-  int usage_indent;
-  int rmargin;
+  int short_opt_col;      /* column in which short options start */   
+  int long_opt_col;       /* column in which long options start */ 
+  int doc_opt_col;        /* column in which doc options start */
+  int opt_doc_col;        /* column in which option text starts */
+  int header_col;         /* column in which group headers are printed */ 
+  int usage_indent;       /* indentation of wrapped usage lines */
+  int rmargin;            /* right margin used for wrapping */
 
-  int valid;			/* True when the values in here are valid.  */
+  int valid;		  /* True when the values in here are valid.  */
 };
 
 /* This is a global variable, as user options are only ever read once.  */
@@ -132,91 +132,126 @@ static const struct uparam_name uparam_names[] =
   { 0 }
 };
 
-/* Read user options from the environment, and fill in UPARAMS appropiately.  */
+static void
+validate_uparams (const struct argp_state *state, struct uparams *upptr)
+{
+  const struct uparam_name *up;
+
+  for (up = uparam_names; up->name; up++)
+    {
+      if (up->is_bool
+	  || up->uparams_offs == offsetof (struct uparams, rmargin))
+	continue;
+      if (*(int *)((char *)upptr + up->uparams_offs) >= upptr->rmargin)
+	{
+	  __argp_failure (state, 0, 0,
+			  dgettext (state->root_argp->argp_domain,
+				    "\
+ARGP_HELP_FMT: %s value is less then or equal to %s"),
+			  "rmargin", up->name);
+	  return;
+	}
+    }
+  uparams = *upptr;
+  uparams.valid = 1;
+}
+
+/* Read user options from the environment, and fill in UPARAMS appropiately. */
 static void
 fill_in_uparams (const struct argp_state *state)
 {
   const char *var = getenv ("ARGP_HELP_FMT");
-
+  struct uparams new_params = uparams;
+  
 #define SKIPWS(p) do { while (isspace (*p)) p++; } while (0);
 
   if (var)
-    /* Parse var. */
-    while (*var)
-      {
-	SKIPWS (var);
+    {
+      /* Parse var. */
+      while (*var)
+	{
+	  SKIPWS (var);
+	  
+	  if (isalpha (*var))
+	    {
+	      size_t var_len;
+	      const struct uparam_name *un;
+	      int unspec = 0, val = 0;
+	      const char *arg = var;
 
-	if (isalpha (*var))
-	  {
-	    size_t var_len;
-	    const struct uparam_name *un;
-	    int unspec = 0, val = 0;
-	    const char *arg = var;
-
-	    while (isalnum (*arg) || *arg == '-' || *arg == '_')
-	      arg++;
-	    var_len = arg - var;
-
-	    SKIPWS (arg);
-
-	    if (*arg == '\0' || *arg == ',')
-	      unspec = 1;
-	    else if (*arg == '=')
-	      {
+	      while (isalnum (*arg) || *arg == '-' || *arg == '_')
 		arg++;
-		SKIPWS (arg);
-	      }
-
-	    if (unspec)
-	      {
-		if (var[0] == 'n' && var[1] == 'o' && var[2] == '-')
-		  {
-		    val = 0;
-		    var += 3;
-		    var_len -= 3;
-		  }
-		else
-		  val = 1;
-	      }
-	    else if (isdigit (*arg))
-	      {
-		val = atoi (arg);
-		while (isdigit (*arg))
-		  arg++;
-		SKIPWS (arg);
-	      }
-
-	    for (un = uparam_names; un->name; un++)
-	      if (strlen (un->name) == var_len
-		  && strncmp (var, un->name, var_len) == 0)
+	      var_len = arg - var;
+	      
+	      SKIPWS (arg);
+	      
+	      if (*arg == '\0' || *arg == ',')
+		unspec = 1;
+	      else if (*arg == '=')
 		{
-		  if (unspec && !un->is_bool)
-		    __argp_failure (state, 0, 0,
-				    dgettext (state->root_argp->argp_domain, "\
-%.*s: ARGP_HELP_FMT parameter requires a value"),
-				    (int) var_len, var);
-		  else
-		    *(int *)((char *)&uparams + un->uparams_offs) = val;
-		  break;
+		  arg++;
+		  SKIPWS (arg);
 		}
-	    if (! un->name)
-	      __argp_failure (state, 0, 0,
-			      dgettext (state->root_argp->argp_domain, "\
+	      
+	      if (unspec)
+		{
+		  if (var[0] == 'n' && var[1] == 'o' && var[2] == '-')
+		    {
+		      val = 0;
+		      var += 3;
+		      var_len -= 3;
+		    }
+		  else
+		    val = 1;
+		}
+	      else if (isdigit (*arg))
+		{
+		  val = atoi (arg);
+		  while (isdigit (*arg))
+		    arg++;
+		  SKIPWS (arg);
+		}
+	      
+	      for (un = uparam_names; un->name; un++)
+		if (strlen (un->name) == var_len
+		    && strncmp (var, un->name, var_len) == 0)
+		  {
+		    if (unspec && !un->is_bool)
+		      __argp_failure (state, 0, 0,
+				      dgettext (state->root_argp->argp_domain,
+						"\
+%.*s: ARGP_HELP_FMT parameter requires a value"),
+				      (int) var_len, var);
+		    else if (val < 0)
+		      __argp_failure (state, 0, 0,
+				      dgettext (state->root_argp->argp_domain,
+						"\
+%.*s: ARGP_HELP_FMT parameter must be positive"),
+				      (int) var_len, var);
+		    else
+		      *(int *)((char *)&new_params + un->uparams_offs) = val;
+		    break;
+		  }
+	      if (! un->name)
+		__argp_failure (state, 0, 0,
+				dgettext (state->root_argp->argp_domain, "\
 %.*s: Unknown ARGP_HELP_FMT parameter"),
-			      (int) var_len, var);
+				(int) var_len, var);
 
-	    var = arg;
-	    if (*var == ',')
-	      var++;
-	  }
-	else if (*var)
-	  {
-	    __argp_failure (state, 0, 0,
-			    dgettext (state->root_argp->argp_domain,
-				      "Garbage in ARGP_HELP_FMT: %s"), var);
-	    break;
-	  }
-      }
+	      var = arg;
+	      if (*var == ',')
+		var++;
+	    }
+	  else if (*var)
+	    {
+	      __argp_failure (state, 0, 0,
+			      dgettext (state->root_argp->argp_domain,
+					"Garbage in ARGP_HELP_FMT: %s"), var);
+	      break;
+	    }
+	}
+      validate_uparams (state, &new_params);
+    }
 }
 
 /* Returns true if OPT hasn't been marked invisible.  Visibility only affects
