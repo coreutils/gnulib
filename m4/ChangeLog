@@ -1,3 +1,8 @@
+2005-12-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* argp.m4: Define HAVE_DECL_PROGRAM_INVOCATION_NAME and
+	HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
+
 2005-12-09  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* argp.m4:  Check if program_invocation_name and

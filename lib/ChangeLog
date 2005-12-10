@@ -1,3 +1,10 @@
+2005-12-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* argp-fmtstream.c (__argp_fmtstream_update): Fix coredump
+	* argp-help.c (fill_in_uparams): Check if the constructed
+	struct uparams is valid. Fall back to the default values if it is
+	not.
+
 2005-12-09  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* argp-help.c (__argp_base_name): New function
