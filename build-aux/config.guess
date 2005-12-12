@@ -3,7 +3,7 @@
 #   Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 #   2000, 2001, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
 
-timestamp='2005-12-09'
+timestamp='2005-12-11'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -1265,6 +1265,9 @@ EOF
 	exit ;;
     i*86:skyos:*:*)
 	echo ${UNAME_MACHINE}-pc-skyos`echo ${UNAME_RELEASE}` | sed -e 's/ .*$//'
+	exit ;;
+    i*86:rdos:*:*)
+	echo ${UNAME_MACHINE}-pc-rdos
 	exit ;;
 esac
 
