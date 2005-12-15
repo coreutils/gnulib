@@ -7,7 +7,7 @@ m4/socklen.m4
 Depends-on:
 
 configure.ac:
-gl_SOCKLEN_T
+gl_TYPE_SOCKLEN_T
 
 Makefile.am:
 
