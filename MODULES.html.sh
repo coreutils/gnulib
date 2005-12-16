@@ -1456,6 +1456,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module fprintftime
   func_module strftime
   func_end_table
 
