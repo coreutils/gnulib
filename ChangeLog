@@ -1,3 +1,8 @@
+2005-12-16  Jim Meyering  <jim@meyering.net>
+
+	* modules/fprintftime: New module.
+	* MODULES.html.sh (Date and time <time.h>): Add fprintftime.
+
 2005-12-15  Simon Josefsson  <jas@extundo.com>
 
 	* modules/socklen (configure.ac): Fix M4 macro name, to align with

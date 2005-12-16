@@ -1,3 +1,7 @@
+2005-12-16  Jim Meyering  <jim@meyering.net>
+
+	* fprintftime.m4: New file.
+
 2005-12-10  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* argp.m4: Define HAVE_DECL_PROGRAM_INVOCATION_NAME and
