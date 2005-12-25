@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 9, 2005
+@set lastupdate December 25, 2005
 @c %**end of header
 
 @dircategory GNU organization
@@ -485,6 +485,11 @@ years that come with the file.
 
 Do not abbreviate the year list using a range; for instance, do not
 write @samp{1996--1998}; instead, write @samp{1996, 1997, 1998}.
+
+The copyright statement may be split across multiple lines, both in
+source files and in any generated output.  This often happens for
+files with a long history, having many different years of
+publication.
 
 For an FSF-copyrighted package, if you have followed the procedures to
 obtain legal papers, each file should have just one copyright holder:

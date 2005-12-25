@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate August 18, 2005
+@set lastupdate December 25, 2005
 @c %**end of header
 
 @dircategory GNU organization
@@ -2154,13 +2154,13 @@ when writing GNU software.
 @cindex open brace
 @cindex braces, in C source
 It is important to put the open-brace that starts the body of a C
-function in column zero, and avoid putting any other open-brace or
-open-parenthesis or open-bracket in column zero.  Several tools look
-for open-braces in column zero to find the beginnings of C functions.
+function in column one, and avoid putting any other open-brace or
+open-parenthesis or open-bracket in column one.  Several tools look
+for open-braces in column one to find the beginnings of C functions.
 These tools will not work on code not formatted that way.
 
 It is also important for function definitions to start the name of the
-function in column zero.  This helps people to search for function
+function in column one.  This helps people to search for function
 definitions, and may also help certain tools recognize them.  Thus,
 using Standard C syntax, the format is this:
 
@@ -2178,9 +2178,9 @@ this:
 
 @example
 static char *
-concat (s1, s2)        /* Name starts in column zero here */
+concat (s1, s2)        /* Name starts in column one here */
      char *s1, *s2;
-@{                     /* Open brace in column zero here */
+@{                     /* Open brace in column one here */
   @dots{}
 @}
 @end example
@@ -2582,7 +2582,7 @@ constants.
 @cindex file-name limitations
 @pindex doschk
 You might want to make sure that none of the file names would conflict
-the files were loaded onto an MS-DOS file system which shortens the
+if the files were loaded onto an MS-DOS file system which shortens the
 names.  You can use the program @code{doschk} to test for this.
 
 Some GNU programs were designed to limit themselves to file names of 14
@@ -2673,7 +2673,7 @@ printf ("diff = %ld\n", (long) (pointer2 - pointer1));
 @end example
 
 1989 Standard C requires this to work, and we know of only one
-counterexample: 64-bit programs on Microsoft Windows IA-64.  We will
+counterexample: 64-bit programs on Microsoft Windows.  We will
 leave it to those who want to port GNU programs to that environment
 to figure out how to do it.
 
@@ -3021,13 +3021,13 @@ how it does quoting, if different than the preferred method of @samp{`}
 and @samp{'}.  This is especially important if the output of your
 program is ever likely to be parsed by another program.
 
-Quotation characters are a difficult area in the computing world at this
-time: there are no true left or right quote characters in ASCII, or even
-Latin1; the @samp{`} character we use was standardized as a grave
+Quotation characters are a difficult area in the computing world at
+this time: there are no true left or right quote characters in Latin1;
+the @samp{`} character we use was standardized there as a grave
 accent.  Moreover, Latin1 is still not universally usable.
 
 Unicode contains the unambiguous quote characters required, and its
-common encoding UTF-8 is upward compatible with ASCII@.  However,
+common encoding UTF-8 is upward compatible with Latin1.  However,
 Unicode and UTF-8 are not universally well-supported, either. 
 
 This may change over the next few years, and then we will revisit
