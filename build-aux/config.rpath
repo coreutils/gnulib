@@ -25,7 +25,7 @@
 #   known workaround is to choose shorter directory names for the build
 #   directory and/or the installation directory.
 
-# All known linkers require a `.a' archive for static linking (except MSVC,
+# All known linkers require a `.a' archive for static linking (except M$VC,
 # which needs '.lib').
 libext=a
 shrext=.so
@@ -35,17 +35,7 @@ host_cpu=`echo "$host" | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\1/'`
 host_vendor=`echo "$host" | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\2/'`
 host_os=`echo "$host" | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
 
-# Code taken from libtool.m4's _LT_CC_BASENAME.
-
-for cc_temp in $CC""; do
-  case $cc_temp in
-    compile | *[\\/]compile | ccache | *[\\/]ccache ) ;;
-    distcc | *[\\/]distcc | purify | *[\\/]purify ) ;;
-    \-*) ;;
-    *) break;;
-  esac
-done
-cc_basename=`echo "$cc_temp" | sed -e 's%^.*/%%'`
+cc_basename=`echo "$CC" | sed -e 's%^.*/%%'`
 
 # Code taken from libtool.m4's AC_LIBTOOL_PROG_COMPILER_PIC.
 
@@ -58,7 +48,7 @@ else
       wl='-Wl,'
       ;;
     darwin*)
-      case $cc_basename in
+      case "$cc_basename" in
         xlc*)
           wl='-Wl,'
           ;;
@@ -130,10 +120,6 @@ case "$host_os" in
       with_gnu_ld=no
     fi
     ;;
-  interix*)
-    # we just hope/assume this is gcc and not c89 (= MSVC++)
-    with_gnu_ld=yes
-    ;;
   openbsd*)
     with_gnu_ld=no
     ;;
@@ -141,12 +127,6 @@ esac
 
 ld_shlibs=yes
 if test "$with_gnu_ld" = yes; then
-  # Set some defaults for GNU ld with shared library support. These
-  # are reset later if shared libraries are not supported. Putting them
-  # here allows them to be overridden if necessary.
-  # Unlike libtool, we use -rpath here, not --rpath, since the documented
-  # option of GNU ld is called -rpath, not --rpath.
-  hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
   case "$host_os" in
     aix3* | aix4* | aix5*)
       # On AIX/PPC, the GNU linker is very broken
@@ -182,20 +162,9 @@ if test "$with_gnu_ld" = yes; then
         ld_shlibs=no
       fi
       ;;
-    interix3*)
-      hardcode_direct=no
-      hardcode_libdir_flag_spec='${wl}-rpath,$libdir'
-      ;;
-    linux*)
-      if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
-        :
-      else
-        ld_shlibs=no
-      fi
-      ;;
     netbsd*)
       ;;
-    solaris*)
+    solaris* | sysv5*)
       if $LD -v 2>&1 | grep 'BFD 2\.8' > /dev/null; then
         ld_shlibs=no
       elif $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
@@ -204,22 +173,15 @@ if test "$with_gnu_ld" = yes; then
         ld_shlibs=no
       fi
       ;;
-    sysv5* | sco3.2v5* | sco5v6* | unixware* | OpenUNIX*)
-      case `$LD -v 2>&1` in
-        *\ [01].* | *\ 2.[0-9].* | *\ 2.1[0-5].*)
-          ld_shlibs=no
-          ;;
-        *)
-          if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
-            hardcode_libdir_flag_spec='`test -z "$SCOABSPATH" && echo ${wl}-rpath,$libdir`'
-          else
-            ld_shlibs=no
-          fi
-          ;;
-      esac
-      ;;
     sunos4*)
       hardcode_direct=yes
+      ;;
+    linux*)
+      if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
+        :
+      else
+        ld_shlibs=no
+      fi
       ;;
     *)
       if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
@@ -229,8 +191,10 @@ if test "$with_gnu_ld" = yes; then
       fi
       ;;
   esac
-  if test "$ld_shlibs" = no; then
-    hardcode_libdir_flag_spec=
+  if test "$ld_shlibs" = yes; then
+    # Unlike libtool, we use -rpath here, not --rpath, since the documented
+    # option of GNU ld is called -rpath, not --rpath.
+    hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
   fi
 else
   case "$host_os" in
@@ -261,7 +225,6 @@ else
               break
             fi
           done
-          ;;
         esac
       fi
       hardcode_direct=yes
@@ -281,7 +244,6 @@ else
             hardcode_libdir_flag_spec='-L$libdir'
             hardcode_libdir_separator=
           fi
-          ;;
         esac
       fi
       # Begin _LT_AC_SYS_LIBPATH_AIX.
@@ -329,7 +291,7 @@ else
       if test "$GCC" = yes ; then
         :
       else
-        case $cc_basename in
+        case "$cc_basename" in
           xlc*)
             ;;
           *)
@@ -364,25 +326,24 @@ else
       # but as the default location of the library.
       hardcode_minus_L=yes
       ;;
-    hpux10*)
+    hpux10* | hpux11*)
       if test "$with_gnu_ld" = no; then
-        hardcode_libdir_flag_spec='${wl}+b ${wl}$libdir'
-        hardcode_libdir_separator=:
-        hardcode_direct=yes
-        # hardcode_minus_L: Not really in the search PATH,
-        # but as the default location of the library.
-        hardcode_minus_L=yes
-      fi
-      ;;
-    hpux11*)
-      if test "$with_gnu_ld" = no; then
-        hardcode_libdir_flag_spec='${wl}+b ${wl}$libdir'
-        hardcode_libdir_separator=:
-        case $host_cpu in
-          hppa*64*|ia64*)
+        case "$host_cpu" in
+          hppa*64*)
+            hardcode_libdir_flag_spec='${wl}+b ${wl}$libdir'
+            hardcode_libdir_separator=:
             hardcode_direct=no
             ;;
+          ia64*)
+            hardcode_libdir_flag_spec='-L$libdir'
+            hardcode_direct=no
+            # hardcode_minus_L: Not really in the search PATH,
+            # but as the default location of the library.
+            hardcode_minus_L=yes
+            ;;
           *)
+            hardcode_libdir_flag_spec='${wl}+b ${wl}$libdir'
+            hardcode_libdir_separator=:
             hardcode_direct=yes
             # hardcode_minus_L: Not really in the search PATH,
             # but as the default location of the library.
@@ -436,6 +397,8 @@ else
       fi
       hardcode_libdir_separator=:
       ;;
+    sco3.2v5*)
+      ;;
     solaris*)
       hardcode_libdir_flag_spec='-R$libdir'
       ;;
@@ -464,11 +427,14 @@ else
         ld_shlibs=yes
       fi
       ;;
-    sysv4*uw2* | sysv5OpenUNIX* | sysv5UnixWare7.[01].[10]* | unixware7*)
+    sysv4.2uw2*)
+      hardcode_direct=yes
+      hardcode_minus_L=no
       ;;
-    sysv5* | sco3.2v5* | sco5v6*)
-      hardcode_libdir_flag_spec='`test -z "$SCOABSPATH" && echo ${wl}-R,$libdir`'
-      hardcode_libdir_separator=':'
+    sysv5OpenUNIX8* | sysv5UnixWare7* |  sysv5uw[78]* | unixware7*)
+      ;;
+    sysv5*)
+      hardcode_libdir_flag_spec=
       ;;
     uts4*)
       hardcode_libdir_flag_spec='-L$libdir'
@@ -505,12 +471,12 @@ case "$host_os" in
     ;;
   kfreebsd*-gnu)
     ;;
-  freebsd* | dragonfly*)
+  freebsd*)
     ;;
   gnu*)
     ;;
   hpux9* | hpux10* | hpux11*)
-    case $host_cpu in
+    case "$host_cpu" in
       ia64*)
         shrext=.so
         ;;
@@ -521,8 +487,6 @@ case "$host_os" in
         shrext=.sl
         ;;
     esac
-    ;;
-  interix3*)
     ;;
   irix5* | irix6* | nonstopux*)
     case "$host_os" in
@@ -559,15 +523,15 @@ case "$host_os" in
     ;;
   osf3* | osf4* | osf5*)
     ;;
+  sco3.2v5*)
+    ;;
   solaris*)
     ;;
   sunos4*)
     ;;
-  sysv4 | sysv4.3*)
+  sysv4 | sysv4.2uw2* | sysv4.3* | sysv5*)
     ;;
   sysv4*MP*)
-    ;;
-  sysv5* | sco3.2v5* | sco5v6* | unixware* | OpenUNIX* | sysv4*uw2*)
     ;;
   uts4*)
     ;;
