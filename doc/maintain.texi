@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 25, 2005
+@set lastupdate December 30, 2005
 @c %**end of header
 
 @dircategory GNU organization
@@ -473,10 +473,15 @@ known to work.
 To update the list of year numbers, add each year in which you have
 made nontrivial changes to the package.  (Here we assume you're using
 a publicly accessible revision control server, so that every revision
-installed is also immediately and automatically published.)  Several
-trivial changes that add up to a nontrivial change do count as such.
-When you add the new year, you should add it in the copyright notice
-of each file of the package.
+installed is also immediately and automatically published.)  When you
+add the new year, it is not required to keep track which files have
+seen significant changes in the new year and which have not.  It is
+recommended and simpler to add the new year to all files in the
+package, and be done with it for the rest of the year.
+
+For files which are regularly copied from another project (such as
+@samp{gnulib}), the copyright notice should left as it is in the
+original.
 
 Don't delete old year numbers, though; they can indicate when older
 versions might theoretically go into the public domain.  If you copy a
