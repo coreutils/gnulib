@@ -1,3 +1,10 @@
+2006-01-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* xtime.h (xtime_make, xtime_nonnegative_nsec, xtime_nsec): Use
+	long int, not int, for nanosecond counts, so that people who are
+	used to POSIX struct timespec won't be surprised.  Reported by Jim
+	Meyering.
+
 2005-12-16  Jim Meyering  <jim@meyering.net>
 
 	* fprintftime.c, fprintftime.h: New files.
