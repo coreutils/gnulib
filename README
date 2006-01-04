@@ -4,7 +4,9 @@ Gnulib
 Gnulib is intended to be the canonical source for most of the important
 "portability" and/or common files for GNU projects.  These are files
 intended to be shared at the source level; Gnulib is not a library meant
-to be installed and linked against.
+to be installed and linked against.  Unlike most projects, Gnulib does
+not normally generate a source tarball distribution; instead, developers
+should just grab modules directly from the repository.
 
 While portability across operating systems is not one of GNU's primary
 goals, it has helped introduce many people to the GNU system, and is
@@ -195,7 +197,7 @@ http://savannah.gnu.org/projects/gnulib.
 
 
 -----
-Copyright (C) 2001, 2003, 2004, 2005 Free Software Foundation, Inc.
+Copyright (C) 2001, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
