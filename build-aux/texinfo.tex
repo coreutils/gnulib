@@ -3,11 +3,11 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2005-12-25.16}
+\def\texinfoversion{2006-01-08.14}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
-% 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005 Free Software
-% Foundation, Inc.
+% 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free
+% Software Foundation, Inc.
 %
 % This texinfo.tex file is free software; you can redistribute it and/or
 % modify it under the terms of the GNU General Public License as
@@ -293,6 +293,13 @@
     % before the \shipout runs.
     %
     \indexdummies         % don't expand commands in the output.
+    \normalturnoffactive  % \ in index entries must not stay \, e.g., if
+               % the page break happens to be in the middle of an example.
+               % We don't want .vr (or whatever) entries like this:
+               % \entry{{\tt \indexbackslash }acronym}{32}{\code {\acronym}}
+               % "\acronym" won't work when it's read back in;
+               % it needs to be 
+               % {\code {{\tt \backslashcurfont }acronym}
     \shipout\vbox{%
       % Do this early so pdf references go to the beginning of the page.
       \ifpdfmakepagedest \pdfdest name{\the\pageno} xyz\fi
@@ -7113,22 +7120,6 @@ should work if nowhere else does.}
 % \otherifyactive is called near the end of this file.
 \def\otherifyactive{\catcode`+=\other \catcode`\_=\other}
 
-% Same as @turnoffactive below, but backslash retains its normal definition.
-% (Before 2005-08-15, this macro explicitly assigned @let\=@normalbackslash,
-% but it doesn't seem to be necessary. --kasal)
-\def\normalturnoffactive{%
-  \let"=\normaldoublequote
-  \let~=\normaltilde
-  \let^=\normalcaret
-  \let_=\normalunderscore
-  \let|=\normalverticalbar
-  \let<=\normalless
-  \let>=\normalgreater
-  \let+=\normalplus
-  \let$=\normaldollar %$ font-lock fix
-  \unsepspaces
-}
-
 % Used sometimes to turn off (effectively) the active characters even after
 % parsing them.
 \def\turnoffactive{%
@@ -7159,6 +7150,23 @@ should work if nowhere else does.}
 % catcode other.
 @gdef@rawbackslash{@let\=@backslashcurfont}
 @gdef@otherbackslash{@let\=@realbackslash}
+
+% Same as @turnoffactive except outputs \ as {\tt\char`\\} instead of
+% the literal character `\'.
+% 
+@def@normalturnoffactive{%
+  @let\=@normalbackslash
+  @let"=@normaldoublequote
+  @let~=@normaltilde
+  @let^=@normalcaret
+  @let_=@normalunderscore
+  @let|=@normalverticalbar
+  @let<=@normalless
+  @let>=@normalgreater
+  @let+=@normalplus
+  @let$=@normaldollar %$ font-lock fix
+  @unsepspaces
+}
 
 % Make _ and + \other characters, temporarily.
 % This is canceled by @fixbackslash.
