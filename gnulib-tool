@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+# Copyright (C) 2002-2006 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2005-12-02 13:37:34 $'
+cvsdatestamp='$Date: 2006-01-09 13:27:12 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1242,6 +1242,7 @@ func_import ()
     echo "# any checks for libraries, header files, types and library functions."
     echo "AC_DEFUN([${macro_prefix}_EARLY],"
     echo "["
+    echo "  AC_REQUIRE([AC_PROG_RANLIB])"
     if grep AC_GNU_SOURCE "$destdir"/$m4base/*.m4 > /dev/null; then
       echo "  AC_REQUIRE([AC_GNU_SOURCE])"
     fi
@@ -1255,9 +1256,9 @@ func_import ()
     echo "AC_DEFUN([${macro_prefix}_INIT],"
     echo "["
     if test -z "$libtool"; then
-      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
+      echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
     else
-      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
+      echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
     fi
     for module in $modules; do
       func_verify_module
