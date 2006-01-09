@@ -1,3 +1,10 @@
+2006-01-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils.
+	* getdate.texi (General date syntax): Invalid dates are rejected.
+	(Time of day items): Mention the possibility of leap seconds.
+	Problem reported by Dr. David Alan Gilbert.
+
 2005-09-19  Bruno Haible  <bruno@clisp.org>
 
 	* quote.texi: New file, extracted from gnulib.texi.

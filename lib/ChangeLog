@@ -1,3 +1,166 @@
+2006-01-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils.
+	* chdir-long.c (cdb_free): Don't bother trying to open directory
+	for write access: POSIX says that must fail.
+	* fts.c (diropen): Likewise.
+	* save-cwd.c (save_cwd): Likewise.
+	* chdir-long.c (cdb_free): Open with O_NOCTTY | O_NONBLOCK as
+	well, for minor improvements on hosts that lack O_DIRECTORY.
+
+	* gettime.c (gettime) [!defined OK_TO_USE_1S_CLOCK]:
+	Report an error at compile-time if only a 1-second nominal clock
+	resolution is found.
+
+	* lchmod.h: New file.
+	* mkdir-p.c: Include lchmod.h, lchown.h.
+	(make_dir_parents): Use lchown rather than chown, and
+	lchmod rather than chmod.
+
+	* mountlist.c (ME_DUMMY): "none" and "proc" file systems are dummies
+	too.  Problem with "none" reported by Bob Proulx.  Problem with
+	"proc" reported by n0dalus.
+
+	* mountlist.c: Include <limits.h>.
+	(dev_from_mount_options)
+	[defined MOUNTED_GETMNTENT1 || defined MOUNTED_GETMNTENT2]:
+	New function.  It no longer assumes "dev=" has the System V meaning
+	on Linux (since it doesn't).  It also parses "dev=" more carefully.
+	(read_file_system_list)
+	[defined MOUNTED_GETMNTENT1 || defined MOUNTED_GETMNTENT2]: Use it.
+	MOUNTED_GETMNTENT2 is new here; the code didn't used to look for
+	dev= in that case.
+
+	* posixtm.h (PDS_PRE_2000): New macro.
+	* posixtm.c (year): Arg is now syntax_bits rather than allow_century.
+	All usages changed.  Reject dates outside the range 1969-1999 if
+	PDS_PRE_2000 is used.
+
+2006-01-09  Jim Meyering  <jim@meyering.net>
+
+	Sync from coreutils.
+
+	* version-etc.c (COPYRIGHT_YEAR): Update to 2006.
+
+	Rewrite fts.c not to change the current working directory,
+	by using openat, fstatat, fdopendir, etc..
+
+	* fts.c [! _LIBC]: Include "openat.h", "unistd--.h", and "fcntl--.h".
+	[_LIBC] (fchdir): Don't undef or define; no longer used.
+	(FCHDIR): Define in terms of cwd_advance_fd rather than fchdir.
+	Now, this `function' always succeeds, and consumes its file descriptor
+	parameter -- so callers must not close such FDs.  Update callers.
+	(diropen_fd, opendirat, cwd_advance_fd): New functions.
+	(diropen): Add parameter, SP.  Adjust all callers.
+	Implement using diropen_fd, rather than open.
+	(fts_open): Initialize new member, fts_cwd_fd.
+	Remove fts_rft-setting code.
+	(fts_close): Close fts_cwd_fd, if necessary.
+	(__opendir2): Define in terms of opendir or opendirat,
+	depending on whether the FST_NOCHDIR flag is set.
+	(fts_build): Since fts_safe_changedir consumes its FD, and since
+	this code must do `closedir(dirp)', dup the dirfd(dirp) argument,
+	and close the dup'd file descriptor upon failure.
+	(fts_stat): Use fstatat(...AT_SYMLINK_NOFOLLOW) in place of lstat.
+	(fts_safe_changedir): Tweak semantics to reflect that this function
+	now calls cwd_advance_fd and hence consumes its FD argument.
+	* fts_.h [struct FTS] (fts_cwd_fd): New member.
+	(fts_rft): Remove now-unused member.
+
+	* openat.c (fchownat): New function.
+	* openat.h (fchmodat, fchownat): Declare.
+	(chmodat, lchmodat): Define convenience functions.
+	(chownat, lchownat): Likewise.
+
+	* chdir-safer.h, chdir-safer.c: New files.
+
+	* modechange.c (mode_compile): Reject an invalid mode string
+	that starts with an octal digit.  From Andreas Gruenbacher.
+
+	* openat.c: Include "fcntl--.h" and "unistd--.h", to map open
+	and dup to open_safer and dup_safer, respectively.
+	(openat_permissive): Fix typo in comment.
+
+	* openat.c: Don't include <stdlib.h>, <unistd.h>, <fcntl.h>,
+	"gettext.h"; either no longer needed or are guaranteed by openat.h.
+	(_): Remove; no longer needed.
+	(openat): Renamed from rpl_openat; no need for rpl_openat
+	since openat.h renames openat for us.
+	Replace most of the body with a call to openat_permissive,
+	to avoid duplicate code.
+	Port to (probably hypothetical) environments were mode_t is
+	wider than int.
+	(openat_permissive): Require mode arg, so that we can check
+	types better.  Put it just after flags.  Change cwd failure
+	indicator from pointer-to-bool to pointer-to-errno-value.
+	All callers changed.
+	Invoke openat_save_fail and/or openat_restore_fail if
+	cwd_errno is null, so that openat can call us.
+	(openat_permissive, fdopendir, fstatat, unlinkat):
+	Simplify errno handling to avoid some duplicate code,
+	as it's OK to set errno on success.
+	* openat.h: Revamp code so that function macros depend on
+	__OPENAT_PREFIX only, not also on AT_FDCWD.
+	(openat_ro): Remove.  Caller changed to use openat_permissive.
+	(openat_permissive): Now a macro, if not a function.
+	(openat_restore_fail, openat_save_fail): Now always functions,
+	since mkdirat needs them even if __OPENAT_PREFIX is defined.
+
+	* openat-priv.h: New file, defining macros used by mkdirat.c
+	and openat.c.
+	* mkdirat.c: Include openat-priv.h.
+	Remove definitions of macros defined therein.
+	* openat.c: Likewise.
+
+	* mkdirat.c (mkdirat): New file and function.
+	* openat.h (mkdirat): Declare.
+
+	* openat.c (fdopendir): Don't change errno when returning non-NULL.
+
+	* openat.h (openat_permissive): Declare.
+	(openat_ro): Define.
+
+	* openat.c (EXPECTED_ERRNO): New macro.
+	(openat_permissive): New function -- used in remove.c rewrite.
+	(all functions): Set errno just before returning, only if there
+	was an actual failure.
+	Use EXPECTED_ERRNO rather than comparing against only ENOTDIR.
+
+	Emulate openat-family functions using Linux's procfs, if possible.
+	Idea and some code based on Ulrich Drepper's glibc changes.
+
+	* openat.c: (BUILD_PROC_NAME): New macro.
+	Include <stdio.h>, <string.h>, "alloca.h" and "intprops.h".
+	(rpl_openat): Emulate by trying to open /proc/self/fd/%d/%s,
+	before falling back on save_cwd and restore_cwd.
+	(fdopendir, fstatat, unlinkat): Likewise.
+
+	* openat.c (fstatat, unlinkat): Perform the syscall directly,
+	skipping the save_cwd...restore_cwd overhead, if FILE is absolute.
+
+	* openat.c (rpl_openat): Use the promoted type (int), not mode_t,
+	as second argument to va_arg.  Otherwise, some versions of gcc
+	warn that `if this code is reached, the program will abort'.
+
+2006-01-09  Andreas Gruenbacher  <agruen@suse.de>
+
+	Sync from coreutils.
+
+	Add POSIX ACL support
+	* acl.h (copy_acl, set_acl): Add declarations.
+	* acl.c (acl_entries): Add fallback implementation for POSIX ACL
+	systems other than Linux.
+	(chmod_or_fchmod): New function: use fchmod when possible,
+	and chmod otherwise.
+	(file_has_acl): Add a POSIX ACL implementation, with a
+	Linux-specific subcase.
+	(copy_acl): Add: copy an acl and S_ISUID, S_ISGID, and
+	S_ISVTX from one file to another.  Fall back to fchmod/chmod when
+	acls are unsupported.
+	(set_acl): Add: set a file's acl and S_ISUID, S_ISGID, and
+	S_ISVTX to a defined value.  Fall back to fchmod/chmod when acls
+	are unsupported.
+
 2006-01-09  Bruno Haible  <bruno@clisp.org>
 
 	* sysexit_.h (EX_OK): New macro.

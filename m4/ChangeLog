@@ -1,3 +1,21 @@
+2006-01-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils.
+	* lib-ignore.m4: New file.
+	* lchmod.m4: New file.
+
+2006-01-09  Jim Meyering  <jim@meyering.net>
+
+	Sync from coreutils.
+	* chdir-safer.m4: New file.
+	* openat.m4 (gl_FUNC_OPENAT): Require and compile mkdirat.c.
+	Require openat-priv.h.
+
+2006-01-09  Andreas Gruenbacher  <agruen@suse.de>
+
+	Sync from coreutils.
+	* acl.m4 (AC_FUNC_ACL): Add POSIX ACL and Linux-specific acl tests.
+
 2005-10-16  Bruno Haible  <bruno@clisp.org>
 
 	* stdint.m4 (gl_STDINT_H): Also test for <sys/bitypes.h>.

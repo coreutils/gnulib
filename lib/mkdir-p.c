@@ -1,6 +1,6 @@
 /* mkdir-p.c -- Ensure that a directory and its parents exist.
 
-   Copyright (C) 1990, 1997, 1998, 1999, 2000, 2002, 2003, 2004, 2005
+   Copyright (C) 1990, 1997, 1998, 1999, 2000, 2002, 2003, 2004, 2005, 2006
    Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -39,17 +39,14 @@
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 
-#include "save-cwd.h"
+#include "chdir-safer.h"
 #include "dirname.h"
 #include "error.h"
+#include "lchmod.h"
+#include "lchown.h"
 #include "quote.h"
+#include "save-cwd.h"
 #include "stat-macros.h"
-
-#ifndef ENOSYS
-# define ENOSYS EEXIST
-#endif
-
-#define WX_USR (S_IWUSR | S_IXUSR)
 
 /* Ensure that the directory ARG exists.
 
@@ -127,15 +124,15 @@ make_dir_parents (char const *arg,
       mode_t oldmask = umask (0);
 
       /* Make a copy of ARG that we can scribble NULs on.  */
-      dir = (char *) alloca (strlen (arg) + 1);
+      dir = alloca (strlen (arg) + 1);
       strcpy (dir, arg);
       strip_trailing_slashes (dir);
       full_dir = dir;
 
-      /* If leading directories shouldn't be writable or executable,
+      /* If leading directories shouldn't be readable, writable or executable,
 	 or should have set[ug]id or sticky bits set and we are setting
 	 their owners, we need to fix their permissions after making them.  */
-      if (((parent_mode & WX_USR) != WX_USR)
+      if (((parent_mode & S_IRWXU) != S_IRWXU)
 	  || ((owner != (uid_t) -1 || group != (gid_t) -1)
 	      && (parent_mode & (S_ISUID | S_ISGID | S_ISVTX)) != 0))
 	{
@@ -175,6 +172,9 @@ make_dir_parents (char const *arg,
 
       while (true)
 	{
+	  bool dir_known_to_exist;
+	  int mkdir_errno;
+
 	  /* slash points to the leftmost unprocessed component of dir.  */
 	  basename_dir = slash;
 
@@ -188,13 +188,16 @@ make_dir_parents (char const *arg,
 	    basename_dir = dir;
 
 	  *slash = '\0';
-	  if (mkdir (basename_dir, tmp_mode) == 0)
+	  dir_known_to_exist = (mkdir (basename_dir, tmp_mode) == 0);
+	  mkdir_errno = errno;
+
+	  if (dir_known_to_exist)
 	    {
 	      if (verbose_fmt_string)
 		error (0, 0, verbose_fmt_string, quote (dir));
 
 	      if ((owner != (uid_t) -1 || group != (gid_t) -1)
-		  && chown (basename_dir, owner, group)
+		  && lchown (basename_dir, owner, group)
 #if defined AFS && defined EPERM
 		  && errno != EPERM
 #endif
@@ -208,36 +211,43 @@ make_dir_parents (char const *arg,
 
 	      if (re_protect)
 		{
-		  struct ptr_list *new = (struct ptr_list *)
-		    alloca (sizeof *new);
+		  struct ptr_list *new = alloca (sizeof *new);
 		  new->dirname_end = slash;
 		  new->next = leading_dirs;
 		  leading_dirs = new;
 		}
-	    }
-	  else if (errno == EEXIST || errno == ENOSYS)
-	    {
-	      /* A file is already there.  Perhaps it is a directory.
-		 If not, it will be diagnosed later.
-
-		 The ENOSYS is for Solaris 8 NFS clients, which can
-		 fail with errno == ENOSYS if mkdir is invoked on an
-		 NFS mount point.  */
-	    }
-	  else
-	    {
-	      error (0, errno, _("cannot create directory %s"), quote (dir));
-	      retval = false;
-	      break;
 	    }
 
 	  /* If we were able to save the initial working directory,
 	     then we can use chdir to change into each directory before
 	     creating an entry in that directory.  This avoids making
 	     mkdir process O(n^2) file name components.  */
-	  if (do_chdir && chdir (basename_dir) < 0)
+	  if (do_chdir)
 	    {
-	      error (0, errno, _("cannot chdir to directory %s"),
+	      /* If we know that basename_dir is a directory (because we've
+		 just created it), then ensure that when we change to it,
+		 that final component is not a symlink.  Otherwise, we must
+		 accept the possibility that basename_dir is a preexisting
+		 symlink-to-directory and chdir through the symlink.  */
+	      if ((dir_known_to_exist
+		   ? chdir_no_follow (basename_dir)
+		   : chdir (basename_dir)) == 0)
+		dir_known_to_exist = true;
+	      else if (dir_known_to_exist)
+		{
+		  error (0, errno, _("cannot chdir to directory %s"),
+			 quote (dir));
+		  retval = false;
+		  break;
+		}
+	    }
+	  else if (!dir_known_to_exist)
+	    dir_known_to_exist = (stat (basename_dir, &stats) == 0
+				  && S_ISDIR (stats.st_mode));
+
+	  if (!dir_known_to_exist)
+	    {
+	      error (0, mkdir_errno, _("cannot create directory %s"),
 		     quote (dir));
 	      retval = false;
 	      break;
@@ -261,9 +271,18 @@ make_dir_parents (char const *arg,
 	 Create the final component of the file name.  */
       if (retval)
 	{
-	  if (mkdir (basename_dir, mode) != 0)
+	  bool dir_known_to_exist = (mkdir (basename_dir, mode) == 0);
+	  int mkdir_errno = errno;
+	  struct stat sbuf;
+
+	  if ( ! dir_known_to_exist)
+	    dir_known_to_exist = (stat (basename_dir, &sbuf) == 0
+				  && S_ISDIR (sbuf.st_mode));
+
+	  if ( ! dir_known_to_exist)
 	    {
-	      error (0, errno, _("cannot create directory %s"), quote (dir));
+	      error (0, mkdir_errno,
+		     _("cannot create directory %s"), quote (dir));
 	      retval = false;
 	    }
 	  else
@@ -285,7 +304,7 @@ make_dir_parents (char const *arg,
 
       if (owner != (uid_t) -1 || group != (gid_t) -1)
 	{
-	  if (chown (fixup_permissions_dir, owner, group) != 0
+	  if (lchown (fixup_permissions_dir, owner, group) != 0
 #ifdef AFS
 	      && errno != EPERM
 #endif
@@ -302,7 +321,7 @@ make_dir_parents (char const *arg,
 	 required to honor only the file permission bits.  In particular,
 	 it need not honor the `special' bits, so if MODE includes any
 	 special bits, set them here.  */
-      if ((mode & ~S_IRWXUGO) && chmod (fixup_permissions_dir, mode) != 0)
+      if ((mode & ~S_IRWXUGO) && lchmod (fixup_permissions_dir, mode) != 0)
 	{
 	  error (0, errno, _("cannot change permissions of %s"),
 		 quote (full_dir));
@@ -326,7 +345,7 @@ make_dir_parents (char const *arg,
     {
       leading_dirs->dirname_end[0] = '\0';
       if ((cwd_problem && *full_dir != '/')
-	  || chmod (full_dir, parent_mode) != 0)
+	  || lchmod (full_dir, parent_mode) != 0)
 	{
 	  error (0, (cwd_problem ? 0 : errno),
 		 _("cannot change permissions of %s"), quote (full_dir));

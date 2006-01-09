@@ -23,17 +23,15 @@
 
 #include "openat.h"
 
-#include <stdlib.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include <errno.h>
-#include <fcntl.h>
-
 #include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
+#include "fcntl--.h"
+#include "openat-priv.h"
 #include "save-cwd.h"
+#include "unistd--.h"
 
-#include "gettext.h"
-#define _(msgid) gettext (msgid)
+#include <stdarg.h>
+#include <stddef.h>
+#include <errno.h>
 
 /* Replacement for Solaris' openat function.
    <http://www.google.com/search?q=openat+site:docs.sun.com>
@@ -44,11 +42,8 @@
    Otherwise, upon failure, set errno and return -1, as openat does.
    Upon successful completion, return a file descriptor.  */
 int
-rpl_openat (int fd, char const *file, int flags, ...)
+openat (int fd, char const *file, int flags, ...)
 {
-  struct saved_cwd saved_cwd;
-  int saved_errno;
-  int new_fd;
   mode_t mode = 0;
 
   if (flags & O_CREAT)
@@ -56,37 +51,80 @@ rpl_openat (int fd, char const *file, int flags, ...)
       va_list arg;
       va_start (arg, flags);
 
-      /* Assume that mode_t is passed compatibly with mode_t's type
-	 after argument promotion.  */
-      mode = va_arg (arg, mode_t);
+      /* If mode_t is narrower than int, use the promoted type (int),
+         not mode_t.  Use sizeof to guess whether mode_t is nerrower;
+         we don't know of any practical counterexamples.  */
+      if (sizeof (mode_t) < sizeof (int))
+	mode = va_arg (arg, int);
+      else
+	mode = va_arg (arg, mode_t);
 
       va_end (arg);
     }
 
+  return openat_permissive (fd, file, flags, mode, NULL);
+}
+
+/* Like openat (FD, FILE, FLAGS, MODE), but if CWD_ERRNO is
+   nonnull, set *CWD_ERRNO to an errno value if unable to save
+   or restore the initial working directory.  This is needed only
+   the first time remove.c's remove_dir opens a command-line
+   directory argument.
+
+   If a previous attempt to restore the current working directory
+   failed, then we must not even try to access a `.'-relative name.
+   It is the caller's responsibility not to call this function
+   in that case.  */
+
+int
+openat_permissive (int fd, char const *file, int flags, mode_t mode,
+		   int *cwd_errno)
+{
+  struct saved_cwd saved_cwd;
+  int saved_errno;
+  int err;
+  bool save_ok;
+
   if (fd == AT_FDCWD || IS_ABSOLUTE_FILE_NAME (file))
     return open (file, flags, mode);
 
-  if (save_cwd (&saved_cwd) != 0)
-    openat_save_fail (errno);
+  {
+    char *proc_file;
+    BUILD_PROC_NAME (proc_file, fd, file);
+    err = open (proc_file, flags, mode);
+    /* If the syscall succeeds, or if it fails with an unexpected
+       errno value, then return right away.  Otherwise, fall through
+       and resort to using save_cwd/restore_cwd.  */
+    if (0 <= err || ! EXPECTED_ERRNO (errno))
+      return err;
+  }
 
-  if (fchdir (fd) != 0)
+  save_ok = (save_cwd (&saved_cwd) == 0);
+  if (! save_ok)
     {
-      saved_errno = errno;
-      free_cwd (&saved_cwd);
-      errno = saved_errno;
-      return -1;
+      if (! cwd_errno)
+	openat_save_fail (errno);
+      *cwd_errno = errno;
     }
 
-  new_fd = open (file, flags, mode);
+  err = fchdir (fd);
   saved_errno = errno;
 
-  if (restore_cwd (&saved_cwd) != 0)
-    openat_restore_fail (errno);
+  if (! err)
+    {
+      err = open (file, flags, mode);
+      saved_errno = errno;
+      if (save_ok && restore_cwd (&saved_cwd) != 0)
+	{
+	  if (! cwd_errno)
+	    openat_restore_fail (errno);
+	  *cwd_errno = errno;
+	}
+    }
 
   free_cwd (&saved_cwd);
-
   errno = saved_errno;
-  return new_fd;
+  return err;
 }
 
 #if !HAVE_FDOPENDIR
@@ -110,27 +148,37 @@ fdopendir (int fd)
   int saved_errno;
   DIR *dir;
 
-  if (save_cwd (&saved_cwd) != 0)
-    openat_save_fail (errno);
-
-  if (fchdir (fd) != 0)
-    {
-      saved_errno = errno;
-      free_cwd (&saved_cwd);
-      errno = saved_errno;
-      return NULL;
-    }
-
-  dir = opendir (".");
+  char *proc_file;
+  BUILD_PROC_NAME (proc_file, fd, ".");
+  dir = opendir (proc_file);
   saved_errno = errno;
 
-  if (restore_cwd (&saved_cwd) != 0)
-    openat_restore_fail (errno);
+  /* If the syscall fails with an expected errno value, resort to
+     save_cwd/restore_cwd.  */
+  if (! dir && EXPECTED_ERRNO (saved_errno))
+    {
+      if (save_cwd (&saved_cwd) != 0)
+	openat_save_fail (errno);
 
-  free_cwd (&saved_cwd);
+      if (fchdir (fd) != 0)
+	{
+	  dir = NULL;
+	  saved_errno = errno;
+	}
+      else
+	{
+	  dir = opendir (".");
+	  saved_errno = errno;
+
+	  if (restore_cwd (&saved_cwd) != 0)
+	    openat_restore_fail (errno);
+	}
+
+      free_cwd (&saved_cwd);
+    }
+
   if (dir)
     close (fd);
-
   errno = saved_errno;
   return dir;
 }
@@ -151,32 +199,42 @@ fstatat (int fd, char const *file, struct stat *st, int flag)
   int saved_errno;
   int err;
 
-  if (fd == AT_FDCWD)
+  if (fd == AT_FDCWD || IS_ABSOLUTE_FILE_NAME (file))
     return (flag == AT_SYMLINK_NOFOLLOW
 	    ? lstat (file, st)
 	    : stat (file, st));
 
+  {
+    char *proc_file;
+    BUILD_PROC_NAME (proc_file, fd, file);
+    err = (flag == AT_SYMLINK_NOFOLLOW
+	   ? lstat (proc_file, st)
+	   : stat (proc_file, st));
+    /* If the syscall succeeds, or if it fails with an unexpected
+       errno value, then return right away.  Otherwise, fall through
+       and resort to using save_cwd/restore_cwd.  */
+    if (0 <= err || ! EXPECTED_ERRNO (errno))
+      return err;
+  }
+
   if (save_cwd (&saved_cwd) != 0)
     openat_save_fail (errno);
 
-  if (fchdir (fd) != 0)
-    {
-      saved_errno = errno;
-      free_cwd (&saved_cwd);
-      errno = saved_errno;
-      return -1;
-    }
-
-  err = (flag == AT_SYMLINK_NOFOLLOW
-	 ? lstat (file, st)
-	 : stat (file, st));
+  err = fchdir (fd);
   saved_errno = errno;
 
-  if (restore_cwd (&saved_cwd) != 0)
-    openat_restore_fail (errno);
+  if (! err)
+    {
+      err = (flag == AT_SYMLINK_NOFOLLOW
+	     ? lstat (file, st)
+	     : stat (file, st));
+      saved_errno = errno;
+
+      if (restore_cwd (&saved_cwd) != 0)
+	openat_restore_fail (errno);
+    }
 
   free_cwd (&saved_cwd);
-
   errno = saved_errno;
   return err;
 }
@@ -195,28 +253,36 @@ unlinkat (int fd, char const *file, int flag)
   int saved_errno;
   int err;
 
-  if (fd == AT_FDCWD)
+  if (fd == AT_FDCWD || IS_ABSOLUTE_FILE_NAME (file))
     return (flag == AT_REMOVEDIR ? rmdir (file) : unlink (file));
+
+  {
+    char *proc_file;
+    BUILD_PROC_NAME (proc_file, fd, file);
+    err = (flag == AT_REMOVEDIR ? rmdir (proc_file) : unlink (proc_file));
+    /* If the syscall succeeds, or if it fails with an unexpected
+       errno value, then return right away.  Otherwise, fall through
+       and resort to using save_cwd/restore_cwd.  */
+    if (0 <= err || ! EXPECTED_ERRNO (errno))
+      return err;
+  }
 
   if (save_cwd (&saved_cwd) != 0)
     openat_save_fail (errno);
 
-  if (fchdir (fd) != 0)
-    {
-      saved_errno = errno;
-      free_cwd (&saved_cwd);
-      errno = saved_errno;
-      return -1;
-    }
-
-  err = (flag == AT_REMOVEDIR ? rmdir (file) : unlink (file));
+  err = fchdir (fd);
   saved_errno = errno;
 
-  if (restore_cwd (&saved_cwd) != 0)
-    openat_restore_fail (errno);
+  if (! err)
+    {
+      err = (flag == AT_REMOVEDIR ? rmdir (file) : unlink (file));
+      saved_errno = errno;
+
+      if (restore_cwd (&saved_cwd) != 0)
+	openat_restore_fail (errno);
+    }
 
   free_cwd (&saved_cwd);
-
   errno = saved_errno;
   return err;
 }

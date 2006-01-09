@@ -1,3 +1,10 @@
+2006-01-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils:
+	* modules/mkdir-p (Files): Add chdir-safer.c, chdir-safer.h, lchmod.h,
+	chdir-safer.m4, lchmod.m4.
+	* modules/openat: Add mkdirat.c, openat-priv.h.
+
 2006-01-09  Bruno Haible  <bruno@clisp.org>
 
 	* modules/strnlen (Include): Use strnlen.h.

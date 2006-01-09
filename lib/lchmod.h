@@ -1,6 +1,6 @@
-/* Parse dates for touch and date.
+/* Provide a replacement for lchmod on hosts that lack it.
 
-   Copyright (C) 1998, 2003, 2005 Free Software Foundation Inc.
+   Copyright (C) 2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,19 +16,20 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-/* Yacc-based version written by Jim Kingdon and David MacKenzie.
-   Rewritten by Jim Meyering.  */
+/* Written by Paul Eggert.  */
 
-#ifndef POSIXTM_H_
-# define POSIXTM_H_
+#include <sys/types.h>
+#include <sys/stat.h>
 
-/* POSIX Date Syntax flags.  */
-# define PDS_LEADING_YEAR 1
-# define PDS_TRAILING_YEAR 2
-# define PDS_CENTURY 4
-# define PDS_SECONDS 8
-# define PDS_PRE_2000 16
+#ifndef HAVE_LCHMOD
 
-bool posixtime (time_t *p, const char *s, unsigned int syntax_bits);
+/* The lchmod replacement follows symbolic links.  Callers should take
+   this into account; lchmod should be applied only to arguments that
+   are known to not be symbolic links.  On hosts that lack lchmod,
+   this can lead to race conditions between the check and the
+   invocation of lchmod, but we know of no workarounds that are
+   reliable in general.  You might try requesting support for lchmod
+   from your operating system supplier.  */
 
+# define lchmod chmod
 #endif

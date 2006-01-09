@@ -1,6 +1,6 @@
 /* Traverse a file hierarchy.
 
-   Copyright (C) 2004, 2005 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -203,10 +203,7 @@ static int
 internal_function
 diropen (char const *dir)
 {
-  int fd = open (dir, O_RDONLY | O_DIRECTORY);
-  if (fd < 0)
-    fd = open (dir, O_WRONLY | O_DIRECTORY);
-  return fd;
+  return open (dir, O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NONBLOCK);
 }
 
 FTS *
@@ -244,7 +241,8 @@ fts_open (char * const *argv,
 #ifndef MAXPATHLEN
 # define MAXPATHLEN 1024
 #endif
-	if (! fts_palloc(sp, MAX(fts_maxarglen(argv), MAXPATHLEN)))
+	size_t maxarglen = fts_maxarglen(argv);
+	if (! fts_palloc(sp, MAX(maxarglen, MAXPATHLEN)))
 		goto mem1;
 
 	/* Allocate/initialize root's parent. */
