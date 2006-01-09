@@ -1,3 +1,7 @@
+2006-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* modules/strnlen (Include): Use strnlen.h.
+
 2006-01-09  Simon Josefsson  <jas@extundo.com>
 
 	* modules/inet_ntop (Depends-on): Add restrict.

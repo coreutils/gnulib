@@ -14,6 +14,7 @@ gl_FUNC_STRNLEN
 Makefile.am:
 
 Include:
+"strnlen.h"
 
 License:
 LGPL
