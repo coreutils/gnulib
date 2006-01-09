@@ -7,6 +7,9 @@
 	* save-cwd.c (save_cwd): Likewise.
 	* chdir-long.c (cdb_free): Open with O_NOCTTY | O_NONBLOCK as
 	well, for minor improvements on hosts that lack O_DIRECTORY.
+	* chown.c (rpl_chown) [CHOWN_MODIFIES_SYMLINK]:
+	Don't try O_WRONLY unless O_RDONLY failed wth EACCES.
+	Fall back on chown if open failed with EACCES.
 
 	* gettime.c (gettime) [!defined OK_TO_USE_1S_CLOCK]:
 	Report an error at compile-time if only a 1-second nominal clock
