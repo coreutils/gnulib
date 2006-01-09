@@ -2,9 +2,9 @@ Description:
 Execute a Java program.
 
 Files:
+build-aux/javaexec.sh.in
 lib/javaexec.h
 lib/javaexec.c
-lib/javaexec.sh.in
 m4/javaexec.m4
 
 Depends-on:
@@ -21,11 +21,11 @@ gettext-h
 
 configure.ac:
 gt_JAVAEXEC
+AC_CONFIG_FILES([javaexec.sh:build-aux/javaexec.sh.in])
 
 Makefile.am:
 DEFS += -DEXEEXT=\"$(EXEEXT)\"
 lib_SOURCES += javaexec.h javaexec.c
-EXTRA_DIST += javaexec.sh.in
 
 Include:
 "javaexec.h"

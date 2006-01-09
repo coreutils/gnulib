@@ -2,16 +2,16 @@ Description:
 Script to compile a Java program.
 
 Files:
-lib/javacomp.sh.in
+build-aux/javacomp.sh.in
 m4/javacomp.m4
 
 Depends-on:
 
 configure.ac:
 gt_JAVACOMP
+AC_CONFIG_FILES([javacomp.sh:build-aux/javacomp.sh.in])
 
 Makefile.am:
-EXTRA_DIST += javacomp.sh.in
 
 License:
 GPLed build tool

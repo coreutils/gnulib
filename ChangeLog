@@ -1,3 +1,25 @@
+2006-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/javacomp.sh.in: New file, moved from lib/.
+	* modules/javacomp-script (Files): Update.
+	(configure.ac): Add AC_CONFIG_FILES invocation.
+	(EXTRA_DIST): Remove variable.
+
+	* build-aux/javaexec.sh.in: New file, moved from lib/.
+	* modules/javaexec (Files): Update.
+	(configure.ac): Add AC_CONFIG_FILES invocation.
+	(EXTRA_DIST): Remove javaexec.sh.in.
+
+	* build-aux/csharpcomp.sh.in: New file, moved from lib/.
+	* modules/csharpcomp-script (Files): Update.
+	(configure.ac): Add AC_CONFIG_FILES invocation.
+	(EXTRA_DIST): Remove variable.
+
+	* build-aux/csharpexec.sh.in: New file, moved from lib/.
+	* modules/csharpexec (Files): Update.
+	(configure.ac): Add AC_CONFIG_FILES invocation.
+	(EXTRA_DIST): Remove csharpexec.sh.in.
+
 2006-01-07  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Add an AC_PROG_RANLIB dependency to

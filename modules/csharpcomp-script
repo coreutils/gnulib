@@ -2,7 +2,7 @@ Description:
 Script to compile a C# program.
 
 Files:
-lib/csharpcomp.sh.in
+build-aux/csharpcomp.sh.in
 m4/csharpcomp.m4
 m4/csharp.m4
 
@@ -10,9 +10,9 @@ Depends-on:
 
 configure.ac:
 gt_CSHARPCOMP
+AC_CONFIG_FILES([csharpcomp.sh:build-aux/csharpcomp.sh.in])
 
 Makefile.am:
-EXTRA_DIST += csharpcomp.sh.in
 
 License:
 GPLed build tool

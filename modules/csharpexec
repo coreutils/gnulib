@@ -2,9 +2,9 @@ Description:
 Execute a C# program.
 
 Files:
+build-aux/csharpexec.sh.in
 lib/csharpexec.h
 lib/csharpexec.c
-lib/csharpexec.sh.in
 lib/classpath.h
 lib/classpath.c
 m4/csharpexec.m4
@@ -22,11 +22,12 @@ gettext-h
 
 configure.ac:
 gt_CSHARPEXEC
+AC_CONFIG_FILES([csharpexec.sh:build-aux/csharpexec.sh.in])
 
 Makefile.am:
 DEFS += -DEXEEXT=\"$(EXEEXT)\"
 lib_SOURCES += csharpexec.h csharpexec.c
-EXTRA_DIST += csharpexec.sh.in classpath.h classpath.c
+EXTRA_DIST += classpath.h classpath.c
 
 Include:
 "csharpexec.h"
