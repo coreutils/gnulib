@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) 2002-2005 Free Software Foundation, Inc.
+# Copyright (C) 2002-2006 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -2041,6 +2041,15 @@ func_all_modules ()
   func_module sig2str
   func_module sysexits
   func_module visibility
+  func_end_table
+
+  element="Support for building libraries and executables"
+  func_section_wrap build_lib
+  func_wrap H2
+  func_echo "$element"
+
+  func_begin_table
+  func_module lib-ignore
   func_end_table
 }
 

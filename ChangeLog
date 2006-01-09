@@ -1,6 +1,9 @@
 2006-01-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils:
+
+	* MODULES.html.sh (build_lib): New section, with new lib-ignore module.
+	* modules/lib-ignore: New file.
 	* modules/mkdir-p (Files): Add chdir-safer.c, chdir-safer.h, lchmod.h,
 	chdir-safer.m4, lchmod.m4.
 	* modules/openat: Add mkdirat.c, openat-priv.h.
