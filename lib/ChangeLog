@@ -1,5 +1,10 @@
 2006-01-09  Bruno Haible  <bruno@clisp.org>
 
+	* sysexit_.h (EX_OK): New macro.
+	Suggested by Martin Lambers <marlam@marlam.de>.
+
+2006-01-09  Bruno Haible  <bruno@clisp.org>
+
 	* javacomp.sh.in: Move to ../build-aux/javacomp.sh.in.
 	* javaexec.sh.in: Move to ../build-aux/javaexec.sh.in.
 	* csharpcomp.sh.in: Move to ../build-aux/csharpcomp.sh.in.
