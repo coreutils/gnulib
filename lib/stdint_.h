@@ -1,4 +1,4 @@
-/* Copyright (C) 2001-2002, 2004-2005 Free Software Foundation, Inc.
+/* Copyright (C) 2001-2002, 2004-2006 Free Software Foundation, Inc.
    Written by Bruno Haible, Sam Steingold, Peter Burwood.
    This file is part of gnulib.
 
@@ -244,8 +244,8 @@ typedef uint32_t uintmax_t;
 #define SIG_ATOMIC_MIN 0
 #define SIG_ATOMIC_MAX 127
 
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
+#ifndef SIZE_MAX /* SIZE_MAX may also be defined in config.h. */
+# define SIZE_MAX (size_t)~(size_t)0)
 #endif
 
 /* wchar_t limits already defined in <stddef.h>.  */
