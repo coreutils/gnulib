@@ -8,6 +8,7 @@ m4/inet_ntop.m4
 m4/sockpfaf.m4
 
 Depends-on:
+restrict
 socklen
 
 configure.ac:

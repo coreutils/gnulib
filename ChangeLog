@@ -1,5 +1,9 @@
 2006-01-09  Simon Josefsson  <jas@extundo.com>
 
+	* modules/inet_ntop (Depends-on): Add restrict.
+
+2006-01-09  Simon Josefsson  <jas@extundo.com>
+
 	* modules/gc-rijndael-tests (License): Likewise.
 
 	* modules/gc-des-tests (License): Likewise.
