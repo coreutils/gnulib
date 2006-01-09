@@ -1,3 +1,8 @@
+2005-10-16  Bruno Haible  <bruno@clisp.org>
+
+	* stdint_.h: On Linux libc4 and libc5, include <sys/bitypes.h> and
+	don't define _STDINT_H_NEED_SIGNED_INT_TYPES.
+
 2006-01-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* strftime.c (tzname): Don't declare if it is already #defined.

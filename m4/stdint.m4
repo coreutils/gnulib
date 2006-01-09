@@ -1,4 +1,4 @@
-# stdint.m4 serial 4
+# stdint.m4 serial 5
 dnl Copyright (C) 2001-2002, 2004-2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,6 +12,8 @@ AC_DEFUN([gl_STDINT_H],
 AC_REQUIRE([gt_HEADER_INTTYPES_H])
 dnl Check for <sys/inttypes.h>.
 AC_CHECK_HEADERS([sys/inttypes.h])
+dnl Check for <sys/bitypes.h> (used in Linux libc4 >= 4.6.7 and libc5).
+AC_CHECK_HEADERS([sys/bitypes.h])
 
 AC_MSG_CHECKING([for stdint.h])
 AC_CACHE_VAL(gl_cv_header_stdint_h, [
