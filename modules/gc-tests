@@ -9,3 +9,6 @@ Makefile.am:
 TESTS += test-gc
 noinst_PROGRAMS += test-gc
 test_gc_SOURCES = test-gc.c
+
+License:
+LGPL

@@ -1,3 +1,35 @@
+2006-01-09  Simon Josefsson  <jas@extundo.com>
+
+	* modules/gc-rijndael-tests (License): Likewise.
+
+	* modules/gc-des-tests (License): Likewise.
+
+	* modules/gc-arcfour-tests (License): Likewise.
+
+	* modules/gc-arctwo-tests (License): Likewise.
+
+	* modules/gc-pbkdf2-sha1-tests (License): Likewise.
+
+	* modules/gc-hmac-sha1-tests (Files): Likewise.
+
+	* modules/gc-hmac-md5-tests (License): Likewise.
+
+	* modules/gc-sha1-tests (License): Likewise.
+
+	* modules/gc-md5-tests (License): Likewise.
+
+	* modules/gc-md4-tests (License): Likewise.
+
+	* modules/gc-md2-tests (License): Likewise.
+
+	* modules/gc-tests (License): Likewise.
+
+	* modules/des-tests (License): Likewise.
+
+	* modules/md4-tests (License): Likewise.
+
+	* modules/md2-tests (License): Likewise.
+
 2006-01-09  Bruno Haible  <bruno@clisp.org>
 
 	* build-aux/javacomp.sh.in: New file, moved from lib/.

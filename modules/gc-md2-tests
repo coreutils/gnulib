@@ -9,3 +9,6 @@ Makefile.am:
 TESTS += test-gc-md2
 noinst_PROGRAMS += test-gc-md2
 test_gc_md2_SOURCES = test-gc-md2.c
+
+License:
+LGPL

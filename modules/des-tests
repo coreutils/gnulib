@@ -9,3 +9,6 @@ Makefile.am:
 TESTS += test-des
 noinst_PROGRAMS += test-des
 test_des_SOURCES = test-des.c
+
+License:
+LGPL

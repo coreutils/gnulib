@@ -9,3 +9,6 @@ Makefile.am:
 TESTS += test-md4
 noinst_PROGRAMS += test-md4
 test_md4_SOURCES = test-md4.c
+
+License:
+LGPL
