@@ -1,3 +1,7 @@
+2006-01-10  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c: Update from GNU gettext.
+
 2006-01-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.
