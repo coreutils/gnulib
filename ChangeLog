@@ -1,3 +1,8 @@
+2006-01-07  Bruno Haible  <bruno@clisp.org>
+
+	* modules/gettext (configure.ac): Add an invocation of
+	AM_GNU_GETTEXT_VERSION. Needed since autoreconf is used by gnulib-tool.
+
 2006-01-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils:
@@ -18,7 +23,7 @@
 
 2006-01-09  Simon Josefsson  <jas@extundo.com>
 
-	* modules/gc-rijndael-tests (License): Likewise.
+	* modules/gc-rijndael-tests (License): Put under LGPL.
 
 	* modules/gc-des-tests (License): Likewise.
 
