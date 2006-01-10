@@ -1,3 +1,15 @@
+2006-01-10  Jim Meyering  <jim@meyering.net>
+
+	* fpending.m4: Also include <stdio.h>, for Dragonfly.
+	Patch by Joerg Sonnenberger.
+
+2006-01-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* memcoll.m4 (gl_MEMCOLL): Don't require AC_FUNC_MEMCMP, undoing
+	the 2002-12-31 change.  Problem and fix reported by Bruno Haible.
+	People who are still concerned with buggy memcmp implementations
+	can invoke gl_FUNC_MEMCMP themselves.
+
 2006-01-10  Simon Josefsson  <jas@extundo.com>
 
 	* sys_socket_h.m4: New file.

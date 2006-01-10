@@ -1,4 +1,4 @@
-# memcoll.m4 serial 5
+# memcoll.m4 serial 6
 dnl Copyright (C) 2002, 2003, 2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,5 @@ AC_DEFUN([gl_MEMCOLL],
   AC_LIBOBJ([memcoll])
 
   dnl Prerequisites of lib/memcoll.c.
-  AC_REQUIRE([AC_FUNC_MEMCMP])
   AC_FUNC_STRCOLL
 ])

@@ -1,3 +1,16 @@
+2006-01-10  Jim Meyering  <jim@meyering.net>
+
+	Avoid the double-free (first in fts_read, second in fts_close) that
+	would occur when an `active' directory is made inaccessible (e.g.,
+	via chmod a-x) during a traversal.
+	* fts.c (fts_read): After a failed fchdir, update sp->fts_cur
+	before returning.  Reproduce this failure by
+	mkdir -p a/b; cd a; chmod a-x . b
+	Reported by Stavros Passas.
+
+	Sync from coreutils.
+	* sha1.c: Tweak grammar in a comment.
+
 2006-01-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regex_internal.h (BITSET_WORD_BITS):
