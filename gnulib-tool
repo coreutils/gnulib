@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-09 13:27:12 $'
+cvsdatestamp='$Date: 2006-01-10 13:37:12 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -748,6 +748,10 @@ func_emit_tests_Makefile_am ()
   echo
   echo "ACLOCAL_AMFLAGS = -I ${testsbase_inverse}/${m4base}"
   echo
+  # Nothing is being added to SUBDIRS; nevertheless the existence of this
+  # variable is needed to avoid an error from automake:
+  #   "AM_GNU_GETTEXT used but SUBDIRS not defined"
+  echo "SUBDIRS ="
   echo "TESTS ="
   echo "TESTS_ENVIRONMENT ="
   echo "noinst_PROGRAMS ="

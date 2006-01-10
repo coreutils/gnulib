@@ -1,5 +1,11 @@
 2006-01-07  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_emit_tests_Makefile_am): Emit an empty SUBDIR
+	variable.
+	Needed to avoid an automake error regarding the 'gettext' module.
+
+2006-01-07  Bruno Haible  <bruno@clisp.org>
+
 	* modules/gettext (configure.ac): Add an invocation of
 	AM_GNU_GETTEXT_VERSION. Needed since autoreconf is used by gnulib-tool.
 
