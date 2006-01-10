@@ -1,3 +1,7 @@
+2006-01-10  Simon Josefsson  <jas@extundo.com>
+
+	* sys_socket_h.m4: New file.
+
 2006-01-10  Bruno Haible  <bruno@clisp.org>
 
 	* localcharset.m4 (gl_LOCALCHARSET): Also test for getc_unlocked.

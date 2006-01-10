@@ -1,0 +1,35 @@
+Description:
+A <sys/socket.h> for systems lacking it.
+
+Files:
+lib/socket_.h
+m4/sys_socket_h.m4
+
+Depends-on:
+
+configure.ac:
+gl_HEADER_SYS_SOCKET
+
+Makefile.am:
+BUILT_SOURCES += $(SYS_SOCKET_H)
+EXTRA_DIST += socket_.h
+
+# We need the following in order to create <sys/socket.h> when the system
+# doesn't have one that works with the given compiler.
+sys/socket.h: socket_.h
+	test -d sys || mkdir sys
+	cp $(srcdir)/socket_.h $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += sys/socket.h sys/socket.h-t
+
+mostlyclean-local:
+	-rmdir sys 2>/dev/null
+
+Include:
+#include <sys/socket.h>
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

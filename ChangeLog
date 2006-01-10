@@ -1,3 +1,7 @@
+2006-01-10  Simon Josefsson  <jas@extundo.com>
+
+	* modules/sys_socket: New file.
+
 2006-01-07  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_tests_Makefile_am): Emit an empty SUBDIR
