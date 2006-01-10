@@ -8,6 +8,7 @@ m4/readutmp.m4
 
 Depends-on:
 xalloc
+free
 stdbool
 
 configure.ac:
