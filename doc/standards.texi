@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate December 25, 2005
+@set lastupdate January 9, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -33,7 +33,7 @@
 The GNU coding standards, last updated @value{lastupdate}.
 
 Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
-2001, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+2001, 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1
@@ -3862,7 +3862,9 @@ social and ethical problem, and the point of GNU is to solve that
 problem.
 
 The GNU definition of free software is found on the GNU web site at
-@url{http://www.gnu.org/philosophy/free-sw.html}.  A list of
+@url{http://www.gnu.org/philosophy/free-sw.html}, and the definition
+of free documentation is found at
+@url{http://www.gnu.org/philosophy/free-doc.html}.  A list of
 important licenses and whether they qualify as free is in
 @url{http://www.gnu.org/licenses/license-list.html}.  The terms
 ``free'' and ``non-free'', used in this document, refer to that
