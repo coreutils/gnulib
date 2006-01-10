@@ -1,3 +1,10 @@
+2006-01-10  Bruno Haible  <bruno@clisp.org>
+
+	* argp.h (__const): Remove macro. Use const instead.
+	* argp-fmtstream.h (__const): Likewise.
+	* glob_.h (__const): Remove macro.
+	* glob-libc.h: Use const instead of __const.
+
 2006-01-10  Jim Meyering  <jim@meyering.net>
 
 	Avoid the double-free (first in fts_read, second in fts_close) that

@@ -1,6 +1,6 @@
 /* glob_.h -- Find a path matching a pattern.
 
-   Copyright (C) 2005 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2006 Free Software Foundation, Inc.
 
    Written by Derek Price <derek@ximbiot.com> & Paul Eggert <eggert@CS.UCLA.EDU>
 
@@ -37,9 +37,6 @@
 
 #ifndef __size_t
 # define __size_t	size_t
-#endif
-#ifndef __const
-# define __const	const
 #endif
 #ifndef __restrict
 # define __restrict	restrict
