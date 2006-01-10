@@ -1,6 +1,11 @@
-2006-01-08  Bruno Haible  <bruno@clisp.org>
+2006-01-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/readutmp (Maintainer): Add myself.
+
+2006-01-10  Bruno Haible  <bruno@clisp.org>
 
 	* modules/readutmp: Depend on module free.
+	* modules/strtok_r: Depend on module restrict.
 
 2006-01-10  Simon Josefsson  <jas@extundo.com>
 
@@ -284,7 +289,7 @@
 
 2005-10-13  Oskar Liljeblad  <oskar@osk.mine.nu>
 
-        * modules/human (Depends-on): Depend on xstrtoumax, not xstrtol.
+	* modules/human (Depends-on): Depend on xstrtoumax, not xstrtol.
 
 2005-10-13  Simon Josefsson  <jas@extundo.com>
 
@@ -2212,7 +2217,7 @@
 	* modules/gettext: Add files m4/nls.m4 and m4/po.m4.
 	* config/config.rpath: Upgrade to gettext-0.12.1.
 
-2003-05-22    <karl@gnu.org>
+2003-05-22  Karl Berry  <karl@gnu.org>
 
 	* gnulib-tool (func_usage): =LIBRARY not =libRARY in help msg.
 
@@ -2365,7 +2370,7 @@
 	* gnulib-tool (func_all_modules): Ignore files ending in ~.
 	* MODULES.html.sh: Likewise.
 
-2003-01-09    <karl@gnu.org>
+2003-01-09  Karl Berry  <karl@gnu.org>
 
 	* MODULES.html.sh: include `dirname $0` in PATH, to find
 	gnulib-tool.
@@ -2381,7 +2386,7 @@
 	(func_module): Make it work with sed-3.02.
 	* MODULES.txt: Remove file.
 
-2003-01-01    <karl@gnu.org>
+2003-01-01  Karl Berry  <karl@gnu.org>
 
 	* gnulib-tool (func_verify_module): report module name $module in
 	error message, not $1.
