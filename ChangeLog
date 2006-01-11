@@ -1,5 +1,10 @@
 2006-01-08  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
+	Initialize also noinst_HEADERS to empty.
+
+2006-01-08  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (AUTOMAKEPATH, AUTOCONF, ACLOCAL, AUTOMAKE): New
 	variables.
 	(func_create_megatestdir): Call aclocal, autoconf, automake here, not

@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-11 12:56:40 $'
+cvsdatestamp='$Date: 2006-01-11 12:59:02 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -688,6 +688,7 @@ func_emit_lib_Makefile_am ()
   echo
   echo "${libname}_${libext}_SOURCES ="
   echo "${libname}_${libext}_LIBADD = @${perhapsLT}LIBOBJS@"
+  echo "noinst_HEADERS ="
   echo "EXTRA_DIST ="
   echo "BUILT_SOURCES ="
   echo "SUFFIXES ="
@@ -761,6 +762,7 @@ func_emit_tests_Makefile_am ()
   echo "TESTS ="
   echo "TESTS_ENVIRONMENT ="
   echo "noinst_PROGRAMS ="
+  echo "noinst_HEADERS ="
   echo "EXTRA_DIST ="
   echo "BUILT_SOURCES ="
   echo "SUFFIXES ="
