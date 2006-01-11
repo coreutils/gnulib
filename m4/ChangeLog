@@ -1,8 +1,3 @@
-2006-01-10  Bruno Haible  <bruno@clisp.org>
-
-	* m4/readutmp.m4 (gl_READUTMP): Don't require gl_FUNC_FREE. Use a
-	module dependency instead.
-
 2006-01-10  Jim Meyering  <jim@meyering.net>
 
 	* fpending.m4: Also include <stdio.h>, for Dragonfly.
