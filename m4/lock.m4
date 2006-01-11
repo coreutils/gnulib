@@ -1,4 +1,4 @@
-# lock.m4 serial 1 (gettext-0.15)
+# lock.m4 serial 2 (gettext-0.15)
 dnl Copyright (C) 2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,6 +20,13 @@ dnl Adds to CPPFLAGS the flag -D_REENTRANT or -D_THREAD_SAFE if needed for
 dnl multithread-safe programs.
 
 AC_DEFUN([gl_LOCK],
+[
+  AC_REQUIRE([gl_LOCK_BODY])
+])
+
+dnl The guts of gl_LOCK. Needs to be expanded only once.
+
+AC_DEFUN([gl_LOCK_BODY],
 [
   dnl Ordering constraints: This macro modifies CPPFLAGS in a way that
   dnl influences the result of the autoconf tests that test for *_unlocked

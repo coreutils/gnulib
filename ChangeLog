@@ -1,5 +1,11 @@
 2006-01-08  Bruno Haible  <bruno@clisp.org>
 
+	Ensure automatic ordering between gl_LOCK and gl_ARGP.
+	* gnulib-tool (func_import, func_create_testdir): Put gl_LOCK into
+	the "early" section as well.
+
+2006-01-08  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
 	Initialize also noinst_HEADERS to empty.
 

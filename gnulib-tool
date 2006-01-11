@@ -13,8 +13,8 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #
 
 # This program is meant for authors or maintainers which want to import
@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-11 12:59:02 $'
+cvsdatestamp='$Date: 2006-01-11 13:01:13 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1261,6 +1261,9 @@ func_import ()
     if grep gl_USE_SYSTEM_EXTENSIONS "$destdir"/$m4base/*.m4 > /dev/null; then
       echo "  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])"
     fi
+    if grep gl_LOCK "$destdir"/$m4base/*.m4 > /dev/null; then
+      echo "  AC_REQUIRE([gl_LOCK])"
+    fi
     echo "])"
     echo
     echo "# This macro should be invoked from $configure_ac, in the section"
@@ -1482,6 +1485,10 @@ func_create_testdir ()
        echo "gl_USE_SYSTEM_EXTENSIONS"
        echo
      fi
+     if grep gl_LOCK "$testdir"/m4/*.m4 > /dev/null; then
+       echo "gl_LOCK"
+       echo
+     fi
      if test -z "$libtool"; then
        echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
      else
@@ -1553,6 +1560,10 @@ func_create_testdir ()
    fi
    if grep gl_USE_SYSTEM_EXTENSIONS "$testdir"/m4/*.m4 > /dev/null; then
      echo "gl_USE_SYSTEM_EXTENSIONS"
+     echo
+   fi
+   if grep gl_LOCK "$testdir"/m4/*.m4 > /dev/null; then
+     echo "gl_LOCK"
      echo
    fi
    if test -z "$libtool"; then
