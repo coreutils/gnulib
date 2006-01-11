@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-11 13:03:25 $'
+cvsdatestamp='$Date: 2006-01-11 16:37:10 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -38,10 +38,20 @@ AUTOCONFPATH=
 # You can set AUTOMAKEPATH to empty if automake 1.9.x is already in your PATH.
 AUTOMAKEPATH=
 
-AUTOCONF="${AUTOCONFPATH}autoconf"
-ACLOCAL="${AUTOMAKEPATH}aclocal"
-AUTOMAKE="${AUTOMAKEPATH}automake"
-AUTORECONF="${AUTOCONFPATH}autoreconf"
+# If you didn't set AUTOCONFPATH and AUTOMAKEPATH, you can also set the
+# variables AUTOCONF, ACLOCAL, AUTOMAKE, AUTORECONF individually.
+if test -z "${AUTOCONF}" || test -n "${AUTOCONFPATH}"; then
+  AUTOCONF="${AUTOCONFPATH}autoconf"
+fi
+if test -z "${ACLOCAL}" || test -n "${AUTOMAKEPATH}"; then
+  ACLOCAL="${AUTOMAKEPATH}aclocal"
+fi
+if test -z "${AUTOMAKE}" || test -n "${AUTOMAKEPATH}"; then
+  AUTOMAKE="${AUTOMAKEPATH}automake"
+fi
+if test -z "${AUTORECONF}" || test -n "${AUTOCONFPATH}"; then
+  AUTORECONF="${AUTOCONFPATH}autoreconf"
+fi
 
 # func_usage
 # outputs to stdout the --help usage message.

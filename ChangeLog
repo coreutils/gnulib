@@ -1,3 +1,9 @@
+2006-01-11  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (AUTOCONF, ACLOCAL, AUTOMAKE, AUTORECONF): Make
+	overridable by the user.
+	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
 2006-01-08  Bruno Haible  <bruno@clisp.org>
 
 	Avoid "ar: no archive members specified" error on MacOS X.
