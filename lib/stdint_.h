@@ -245,7 +245,7 @@ typedef uint32_t uintmax_t;
 #define SIG_ATOMIC_MAX 127
 
 #ifndef SIZE_MAX /* SIZE_MAX may also be defined in config.h. */
-# define SIZE_MAX (size_t)~(size_t)0)
+# define SIZE_MAX ((size_t)~(size_t)0)
 #endif
 
 /* wchar_t limits already defined in <stddef.h>.  */

@@ -1,3 +1,7 @@
+2006-01-11  Simon Josefsson  <jas@extundo.com>
+
+	* stdint_.h (SIZE_MAX): Add missing (.
+
 2006-01-10  Bruno Haible  <bruno@clisp.org>
 
 	* argp.h (__const): Remove macro. Use const instead.
