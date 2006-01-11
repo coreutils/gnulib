@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-10 13:37:12 $'
+cvsdatestamp='$Date: 2006-01-11 12:24:28 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1264,10 +1264,20 @@ func_import ()
     else
       echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
     fi
+    sed_replace_build_aux='
+      :a
+      /AC_CONFIG_FILES(.*:build-aux\/.*)/{
+        s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
+        ba
+      }'
+    sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
     for module in $modules; do
       func_verify_module
       if test -n "$module"; then
-        func_get_autoconf_snippet "$module" | sed -e '/^$/d;' -e 's/^/  /' -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
+        func_get_autoconf_snippet "$module" \
+          | sed -e '/^$/d;' -e 's/^/  /' \
+                -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./' \
+                -e "$sed_replace_build_aux"
         if test "$module" = 'alloca' && test -n "$libtool"; then
           echo 'changequote(,)dnl'
           echo 'LTALLOCA=`echo "$ALLOCA" | sed '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
@@ -1469,19 +1479,28 @@ func_create_testdir ()
      else
        echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
      fi
+     sed_replace_build_aux='
+       :a
+       /AC_CONFIG_FILES(.*:build-aux\/.*)/{
+         s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:../'"$auxdir"'/\2)|
+         ba
+       }'
+     sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
      # We don't have explicit ordering constraints between the various
      # autoconf snippets. It's cleanest to put those of the library before
      # those of the tests.
      for module in $modules; do
        func_verify_nontests_module
        if test -n "$module"; then
-         func_get_autoconf_snippet "$module"
+         func_get_autoconf_snippet "$module" \
+           | sed -e "$sed_replace_build_aux"
        fi
      done
      for module in $modules; do
        func_verify_tests_module
        if test -n "$module"; then
-         func_get_autoconf_snippet "$module"
+         func_get_autoconf_snippet "$module" \
+           | sed -e "$sed_replace_build_aux"
        fi
      done
      echo
@@ -1533,10 +1552,18 @@ func_create_testdir ()
    else
      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
    fi
+   sed_replace_build_aux='
+     :a
+     /AC_CONFIG_FILES(.*:build-aux\/.*)/{
+       s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
+       ba
+     }'
+   sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
    for module in $modules; do
      func_verify_nontests_module
      if test -n "$module"; then
-       func_get_autoconf_snippet "$module"
+       func_get_autoconf_snippet "$module" \
+         | sed -e "$sed_replace_build_aux"
      fi
    done
    echo
