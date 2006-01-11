@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-11 13:01:13 $'
+cvsdatestamp='$Date: 2006-01-11 13:03:25 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -634,6 +634,40 @@ func_modules_transitive_closure ()
   done
 }
 
+# func_modules_add_dummy
+# Input:
+# - modules         list of modules, including dependencies
+# Output:
+# - modules         list of modules, including 'dummy' if needed
+func_modules_add_dummy ()
+{
+  have_lib_SOURCES=
+  sed_remove_backslash_newline=':a
+/\\$/{
+s/\\$//
+N
+s/\n//
+ba
+}'
+  for module in $modules; do
+    func_verify_nontests_module
+    if test -n "$module"; then
+      # Extract the value of "lib_SOURCES += ...".
+      for file in `func_get_automake_snippet "$module" | sed -e "$sed_remove_backslash_newline" | sed -n -e 's,^lib_SOURCES[ 	]*+=\([^#]*\).*$,\1,p'`; do
+        # Ignore .h files since they are not compiled.
+        case "$file" in
+          *.h) ;;
+          *) have_lib_SOURCES=yes ;;
+        esac
+      done
+    fi
+  done
+  # Add the dummy module, to make sure the library will be non-empty.
+  if test -z "$have_lib_SOURCES"; then
+    modules="$modules dummy"
+  fi
+}
+
 # func_modules_to_filelist
 # Input:
 # - modules         list of modules, including dependencies
@@ -944,6 +978,9 @@ func_import ()
   func_modules_transitive_closure
   echo "Module list with included dependencies:"
   echo "$modules" | sed -e 's/^/  /'
+
+  # Add the dummy module if needed.
+  func_modules_add_dummy
 
   # If --lgpl, check the license of modules are compatible.
   if test -n "$lgpl"; then
@@ -1399,6 +1436,9 @@ func_create_testdir ()
   func_modules_transitive_closure
   echo "Module list with included dependencies:"
   echo "$modules" | sed -e 's/^/  /'
+
+  # Add the dummy module if needed.
+  func_modules_add_dummy
 
   # Determine final file list.
   func_modules_to_filelist

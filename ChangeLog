@@ -1,5 +1,11 @@
 2006-01-08  Bruno Haible  <bruno@clisp.org>
 
+	Avoid "ar: no archive members specified" error on MacOS X.
+	* gnulib-tool (func_modules_add_dummy): New function.
+	(func_import, func_create_testdir): Invoke it.
+
+2006-01-08  Bruno Haible  <bruno@clisp.org>
+
 	Ensure automatic ordering between gl_LOCK and gl_ARGP.
 	* gnulib-tool (func_import, func_create_testdir): Put gl_LOCK into
 	the "early" section as well.
