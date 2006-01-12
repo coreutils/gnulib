@@ -1,3 +1,19 @@
+2006-01-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils.
+	* md5.c: Fix commentary typos.
+	(alignof, UNALIGNED_P): No need for a GCC-specific version.
+	* md5.h (__attribute__): Remove; unused.
+	* sha1.c: Fix commentary to match md5 better.
+	* sha1.h (struct sha1_ctx): Use a word buffer, not a byte buffer,
+	so that we don't need to worry about alignment.  All uses changed.
+	This merges the 2005-10-28 md5 change into sha1.
+
+2006-01-11  Jim Meyering  <jim@meyering.net>
+
+	Sync from coreutils.
+	* md5.c (OP): Fix spacing.
+
 2006-01-11  Simon Josefsson  <jas@extundo.com>
 
 	* stdint_.h (SIZE_MAX): Add missing (.
