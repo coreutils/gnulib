@@ -1,5 +1,5 @@
 /* base64.c -- Encode binary data using printable characters.
-   Copyright (C) 1999, 2000, 2001, 2004, 2005 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2000, 2001, 2004, 2005, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -49,6 +49,9 @@
 
 /* Get malloc. */
 #include <stdlib.h>
+
+/* Get UCHAR_MAX. */
+#include <limits.h>
 
 /* C89 compliant way to cast 'char' to 'unsigned char'. */
 static inline unsigned char
@@ -278,10 +281,16 @@ static const signed char b64[0x100] = {
   B64 (252), B64 (253), B64 (254), B64 (255)
 };
 
+#if UCHAR_MAX == 255
+# define uchar_in_range(c) true
+#else
+# define uchar_in_range(c) ((c) <= 255)
+#endif
+
 bool
 isbase64 (char ch)
 {
-  return to_uchar (ch) <= 255 && 0 <= b64[to_uchar (ch)];
+  return uchar_in_range (to_uchar (ch)) && 0 <= b64[to_uchar (ch)];
 }
 
 /* Decode base64 encoded input array IN of length INLEN to output
