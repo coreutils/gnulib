@@ -22,6 +22,7 @@ AC_DEFUN([gl_LDD],
   LDDPOSTPROC=
   dnl First try objdump, since it works when cross-compiling.
   AC_CHECK_TOOL([OBJDUMP], [objdump], [:])
+changequote(,)dnl
   if test "$OBJDUMP" != ":"; then
     LDDPROG="LC_ALL=C $OBJDUMP -p"
     dnl The output of "LC_ALL=C objdump -p program" of a program or library
@@ -196,6 +197,7 @@ AC_DEFUN([gl_LDD],
       esac
     fi
   fi
+changequote([,])dnl
   AC_SUBST([LDDPROG])
   AC_SUBST([LDDPOSTPROC])
 ])
