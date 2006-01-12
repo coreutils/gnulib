@@ -1,3 +1,7 @@
+2006-01-12  Bruno Haible  <bruno@clisp.org>
+
+	* ldd.m4: New file.
+
 2006-01-08  Bruno Haible  <bruno@clisp.org>
 
 	Ensure automatic ordering between gl_LOCK and gl_ARGP.

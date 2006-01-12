@@ -1,3 +1,10 @@
+2006-01-12  Bruno Haible  <bruno@clisp.org>
+
+	* modules/ldd: New file.
+	* build-aux/ldd.sh.in: New file.
+	* MODULES.html.sh (Support for building libraries and executables): Add
+	ldd.
+
 2006-01-11  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (AUTOCONF, ACLOCAL, AUTOMAKE, AUTORECONF): Make

@@ -2049,6 +2049,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module ldd
   func_module lib-ignore
   func_end_table
 }
