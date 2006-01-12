@@ -24,7 +24,7 @@ AC_DEFUN([gl_LDD],
   AC_CHECK_TOOL([OBJDUMP], [objdump], [false])
 changequote(,)dnl
   if test "$OBJDUMP" != "false"; then
-    LDDPROG="LC_ALL=C $OBJDUMP -p"
+    LDDPROG="$OBJDUMP -p"
     dnl The output of "LC_ALL=C objdump -p program" of a program or library
     dnl looks like this:
     dnl
@@ -62,7 +62,7 @@ changequote(,)dnl
       dnl Not cross-compiling. Try system dependent vendor tools.
       case "$host_os" in
         aix*)
-          LDDPROG="LC_ALL=C dump -H"
+          LDDPROG="dump -H"
           dnl The output of "LC_ALL=C dump -H program" looks like this:
           dnl
           dnl program:
@@ -91,7 +91,7 @@ changequote(,)dnl
           LDDPOSTPROC="2>/dev/null | sed -n -e 's,^	\\([^ 	]*\\).*\$,\\1,p' | sed -e 's,^.*/,,'"
           ;;
         hpux*)
-          LDDPROG="LC_ALL=C chatr"
+          LDDPROG="chatr"
           dnl The output of "LC_ALL=C chatr program" looks like this:
           dnl program: 
           dnl          shared executable 
@@ -166,14 +166,14 @@ changequote(,)dnl
           LDDPOSTPROC="2>/dev/null | sed -n -e 's,^[[][0-9]*[]].*	0x[^	]*	[^	][^	]*	\\([^	][^	]*\\).*\$,\\1,p' | sed -e 's,^.*/,,'"
           ;;
         linux* | gnu* | kfreebsd*-gnu | knetbsd*-gnu) # glibc-based systems
-          LDDPROG="LC_ALL=C ldd"
+          LDDPROG="ldd"
           dnl The output of "ldd program" looks like this:
           dnl         libc.so.6 => /lib/libc.so.6 (0x4002d000)
           dnl         /lib/ld-linux.so.2 (0x40000000)
           LDDPOSTPROC="2>/dev/null | sed -n -e 's,^	\\([^ 	][^ 	]*\\).*\$,\\1,p' | sed -e 's,^.*/,,'"
           ;;
         osf*)
-          LDDPROG="LC_ALL=C odump -Dl"
+          LDDPROG="odump -Dl"
           dnl The output of "odump -Dl program" looks like this:
           dnl
           dnl                         ***LIBRARY LIST SECTION***
@@ -184,7 +184,7 @@ changequote(,)dnl
           LDDPOSTPROC="2>/dev/null | sed -n -e 's,^	\\([^ 	][^ 	]*\\).*,\\1,p' | sed -e '/^Name\$/d' | sed -e 's,^.*/,,'"
           ;;
         solaris*)
-          LDDPROG="LC_ALL=C ldd"
+          LDDPROG="ldd"
           dnl The output of "ldd program" looks like this:
           dnl         libc.so.1 =>     /usr/lib/libc.so.1
           dnl         libdl.so.1 =>    /usr/lib/libdl.so.1
@@ -196,6 +196,10 @@ changequote(,)dnl
           ;;
       esac
     fi
+  fi
+  dnl Avoid locale dependencies.
+  if test "$LDDPROG" != ":"; then
+    LDDPROG="LC_ALL=C $LDDPROG"
   fi
 changequote([,])dnl
   AC_SUBST([LDDPROG])
