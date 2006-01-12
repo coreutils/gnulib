@@ -1,5 +1,10 @@
 2006-01-12  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import, func_create_testdir): Don't go into an
+	endless loop while replacing $auxdir with build-aux.
+
+2006-01-12  Bruno Haible  <bruno@clisp.org>
+
 	* modules/ldd: New file.
 	* build-aux/ldd.sh.in: New file.
 	* MODULES.html.sh (Support for building libraries and executables): Add

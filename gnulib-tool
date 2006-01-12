@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-11 16:37:10 $'
+cvsdatestamp='$Date: 2006-01-12 15:39:50 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1322,13 +1322,17 @@ func_import ()
     else
       echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
     fi
-    sed_replace_build_aux='
-      :a
-      /AC_CONFIG_FILES(.*:build-aux\/.*)/{
-        s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
-        ba
-      }'
-    sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
+    if test "$auxdir" != "build-aux"; then
+      sed_replace_build_aux='
+        :a
+        /AC_CONFIG_FILES(.*:build-aux\/.*)/{
+          s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
+          ba
+        }'
+      sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
+    else
+      sed_replace_build_aux=
+    fi
     for module in $modules; do
       func_verify_module
       if test -n "$module"; then
@@ -1544,13 +1548,17 @@ func_create_testdir ()
      else
        echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
      fi
-     sed_replace_build_aux='
-       :a
-       /AC_CONFIG_FILES(.*:build-aux\/.*)/{
-         s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:../'"$auxdir"'/\2)|
-         ba
-       }'
-     sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
+     if test "$auxdir" != "build-aux"; then
+       sed_replace_build_aux='
+         :a
+         /AC_CONFIG_FILES(.*:build-aux\/.*)/{
+           s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:../'"$auxdir"'/\2)|
+           ba
+         }'
+       sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
+     else
+       sed_replace_build_aux=
+     fi
      # We don't have explicit ordering constraints between the various
      # autoconf snippets. It's cleanest to put those of the library before
      # those of the tests.
@@ -1621,13 +1629,17 @@ func_create_testdir ()
    else
      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
    fi
-   sed_replace_build_aux='
-     :a
-     /AC_CONFIG_FILES(.*:build-aux\/.*)/{
-       s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
-       ba
-     }'
-   sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
+   if test "$auxdir" != "build-aux"; then
+     sed_replace_build_aux='
+       :a
+       /AC_CONFIG_FILES(.*:build-aux\/.*)/{
+         s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
+         ba
+       }'
+     sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
+   else
+     sed_replace_build_aux=
+   fi
    for module in $modules; do
      func_verify_nontests_module
      if test -n "$module"; then
