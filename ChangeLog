@@ -1,3 +1,7 @@
+2006-01-17  Bruno Haible  <bruno@clisp.org>
+
+	* modules/ssize_t (Include): Add <sys/types.h>.
+
 2006-01-17  Simon Josefsson  <jas@extundo.com>
 
 	* modules/socklen (Include): Need sys/socket.h.
