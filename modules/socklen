@@ -12,6 +12,7 @@ gl_TYPE_SOCKLEN_T
 Makefile.am:
 
 Include:
+#include <sys/socket.h>
 
 License:
 unlimited

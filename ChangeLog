@@ -1,3 +1,7 @@
+2006-01-17  Simon Josefsson  <jas@extundo.com>
+
+	* modules/socklen (Include): Need sys/socket.h.
+
 2006-01-12  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import, func_create_testdir): Don't go into an
