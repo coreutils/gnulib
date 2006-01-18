@@ -6,6 +6,6 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-hmac-md5
+TESTS += test-hmac-md5$(EXEEXT)
 noinst_PROGRAMS += test-hmac-md5
 test_hmac_md5_SOURCES = test-hmac-md5.c

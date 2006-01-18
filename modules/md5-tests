@@ -6,6 +6,6 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-md5
+TESTS += test-md5$(EXEEXT)
 noinst_PROGRAMS += test-md5
 test_md5_SOURCES = test-md5.c

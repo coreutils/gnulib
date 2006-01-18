@@ -6,6 +6,6 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-arcfour
+TESTS += test-arcfour$(EXEEXT)
 noinst_PROGRAMS += test-arcfour
 test_arcfour_SOURCES = test-arcfour.c

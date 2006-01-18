@@ -6,7 +6,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-des
+TESTS += test-des$(EXEEXT)
 noinst_PROGRAMS += test-des
 test_des_SOURCES = test-des.c
 

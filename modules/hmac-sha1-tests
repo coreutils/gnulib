@@ -6,6 +6,6 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-hmac-sha1
+TESTS += test-hmac-sha1$(EXEEXT)
 noinst_PROGRAMS += test-hmac-sha1
 test_hmac_sha1_SOURCES = test-hmac-sha1.c

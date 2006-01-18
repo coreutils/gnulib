@@ -6,7 +6,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-gc-sha1
+TESTS += test-gc-sha1$(EXEEXT)
 noinst_PROGRAMS += test-gc-sha1
 test_gc_sha1_SOURCES = test-gc-sha1.c
 

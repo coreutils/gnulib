@@ -1,5 +1,18 @@
 2006-01-18  Simon Josefsson  <jas@extundo.com>
 
+	* modules/arcfour-tests, modules/arctwo-tests, modules/crc-tests,
+	modules/des-tests, modules/gc-arcfour-tests,
+	modules/gc-arctwo-tests, modules/gc-des-tests,
+	modules/gc-hmac-md5-tests, modules/gc-hmac-sha1-tests,
+	modules/gc-md2-tests, modules/gc-md4-tests, modules/gc-md5-tests,
+	modules/gc-pbkdf2-sha1-tests, modules/gc-rijndael-tests,
+	modules/gc-sha1-tests, modules/gc-tests, modules/hmac-md5-tests,
+	modules/hmac-sha1-tests, modules/md2-tests, modules/md4-tests,
+	modules/md5-tests, modules/readline, modules/rijndael-tests: Add
+	$(EXEEXT) to automake TESTS variable, for mingw32.
+
+2006-01-18  Simon Josefsson  <jas@extundo.com>
+
 	* modules/socklen (Depends-on): Depend on sys_socket.
 
 2006-01-17  Bruno Haible  <bruno@clisp.org>
