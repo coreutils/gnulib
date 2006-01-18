@@ -5,6 +5,7 @@ Files:
 m4/socklen.m4
 
 Depends-on:
+sys_socket
 
 configure.ac:
 gl_TYPE_SOCKLEN_T
