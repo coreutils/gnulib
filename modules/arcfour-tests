@@ -7,5 +7,4 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-arcfour$(EXEEXT)
-noinst_PROGRAMS += test-arcfour
-test_arcfour_SOURCES = test-arcfour.c
+check_PROGRAMS += test-arcfour

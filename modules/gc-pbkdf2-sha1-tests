@@ -7,8 +7,7 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-gc-pbkdf2-sha1$(EXEEXT)
-noinst_PROGRAMS += test-gc-pbkdf2-sha1
-test_gc_pbkdf2_sha1_SOURCES = test-gc-pbkdf2-sha1.c
+check_PROGRAMS += test-gc-pbkdf2-sha1
 
 License:
 LGPL

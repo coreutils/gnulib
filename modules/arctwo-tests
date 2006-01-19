@@ -7,5 +7,4 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-arctwo$(EXEEXT)
-noinst_PROGRAMS += test-arctwo
-test_arctwo_SOURCES = test-arctwo.c
+check_PROGRAMS += test-arctwo

@@ -7,8 +7,7 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-gc$(EXEEXT)
-noinst_PROGRAMS += test-gc
-test_gc_SOURCES = test-gc.c
+check_PROGRAMS += test-gc
 
 License:
 LGPL

@@ -7,8 +7,7 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-gc-rijndael$(EXEEXT)
-noinst_PROGRAMS += test-gc-rijndael
-test_gc_rijndael_SOURCES = test-gc-rijndael.c
+check_PROGRAMS += test-gc-rijndael
 
 License:
 LGPL

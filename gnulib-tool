@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-12 15:39:50 $'
+cvsdatestamp='$Date: 2006-01-19 09:05:56 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -806,6 +806,7 @@ func_emit_tests_Makefile_am ()
   echo "TESTS ="
   echo "TESTS_ENVIRONMENT ="
   echo "noinst_PROGRAMS ="
+  echo "check_PROGRAMS ="
   echo "noinst_HEADERS ="
   echo "EXTRA_DIST ="
   echo "BUILT_SOURCES ="

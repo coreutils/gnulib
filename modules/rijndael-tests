@@ -7,5 +7,4 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-rijndael$(EXEEXT)
-noinst_PROGRAMS += test-rijndael
-test_rijndael_SOURCES = test-rijndael.c
+check_PROGRAMS += test-rijndael

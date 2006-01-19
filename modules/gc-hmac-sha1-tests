@@ -7,8 +7,7 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-gc-hmac-sha1$(EXEEXT)
-noinst_PROGRAMS += test-gc-hmac-sha1
-test_gc_hmac_sha1_SOURCES = test-gc-hmac-sha1.c
+check_PROGRAMS += test-gc-hmac-sha1
 
 License:
 LGPL

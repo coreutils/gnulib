@@ -7,5 +7,4 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-crc$(EXEEXT)
-noinst_PROGRAMS += test-crc
-test_crc_SOURCES = test-crc.c
+check_PROGRAMS += test-crc

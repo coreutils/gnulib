@@ -7,8 +7,7 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-gc-hmac-md5$(EXEEXT)
-noinst_PROGRAMS += test-gc-hmac-md5
-test_gc_hmac_md5_SOURCES = test-gc-hmac-md5.c
+check_PROGRAMS += test-gc-hmac-md5
 
 License:
 LGPL
