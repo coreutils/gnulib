@@ -1,3 +1,8 @@
+2006-01-20  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt (argp-fmtstream.h, localcharset.c): comment out
+	until changes propagate, I guess.
+
 2005-10-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Add glibc bug 321 for obstack.c, obstack.h.

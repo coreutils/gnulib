@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.110 2005-12-27 14:33:38 karl Exp $
+# $Id: srclist.txt,v 1.111 2006-01-20 21:18:53 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -36,10 +36,10 @@ $GETTEXT/gettext-runtime/libasprintf/vasnprintf.h	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/vasprintf.c	lib gpl
 
 $GETTEXT/gettext-runtime/intl/config.charset		lib gpl
+#$GETTEXT/gettext-runtime/intl/localcharset.c		lib gpl
 $GETTEXT/gettext-runtime/intl/localcharset.h		lib gpl
 $GETTEXT/gettext-runtime/intl/ref-add.sin		lib gpl
 $GETTEXT/gettext-runtime/intl/ref-del.sin		lib gpl
-$GETTEXT/gettext-runtime/intl/localcharset.c		lib gpl
 
 $GETTEXT/gettext-tools/lib/gettext.h			lib gpl
 $GETTEXT/gettext-tools/lib/mkdtemp.c			lib gpl
@@ -77,7 +77,7 @@ $GETTEXT/gettext-tools/m4/ssize_t.m4			m4
 $LIBCSRC/argp/argp-ba.c			lib gpl
 $LIBCSRC/argp/argp-eexst.c		lib gpl
 $LIBCSRC/argp/argp-fmtstream.c		lib gpl
-$LIBCSRC/argp/argp-fmtstream.h		lib gpl
+#$LIBCSRC/argp/argp-fmtstream.h		lib gpl
 $LIBCSRC/argp/argp-fs-xinl.c		lib gpl
 # The commented-out argp files are currently not quite the same.
 #$LIBCSRC/argp/argp-help.c		lib gpl
