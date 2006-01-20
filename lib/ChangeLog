@@ -1,3 +1,7 @@
+2006-01-20  Simon Josefsson  <jas@extundo.com>
+
+	* inet_ntop.h: Unconditionally include sys/socket.h.
+
 2006-01-19  Simon Josefsson  <jas@extundo.com>
 
 	* socket_.h: Map SHUT_RD, SHUT_WR, SHUT_RDWR correctly.

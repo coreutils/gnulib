@@ -10,6 +10,7 @@ m4/sockpfaf.m4
 Depends-on:
 restrict
 socklen
+sys_socket
 
 configure.ac:
 gl_INET_NTOP

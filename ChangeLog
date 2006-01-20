@@ -1,3 +1,7 @@
+2006-01-20  Simon Josefsson  <jas@extundo.com>
+
+	* modules/inet_ntop (Depends-on): Depend on sys_socket.
+
 2006-01-19  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib-tool: Set check_PROGRAMS.
