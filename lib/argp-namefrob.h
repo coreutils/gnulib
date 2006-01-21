@@ -141,12 +141,19 @@
 # define putchar_unlocked(x) putchar (x)
 # endif
 
-extern char *__argp_basename (char *name);
-
 #endif /* !_LIBC */
 
 #ifndef __set_errno
 #define __set_errno(e) (errno = (e))
+#endif
+
+#if defined GNULIB_ARGP_DISABLE_DIRNAME
+# define __argp_base_name(arg) arg
+#elif defined GNULIB_ARGP_EXTERN_BASENAME
+# extern char *__argp_base_name(const char *arg);
+#else
+# include "dirname.h"
+# define __argp_base_name base_name
 #endif
 
 #if defined _LIBC || HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
