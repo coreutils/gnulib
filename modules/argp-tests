@@ -1,0 +1,12 @@
+Files:
+tests/test-argp.c
+tests/test-argp-2.sh
+
+Depends-on:
+
+Makefile.am:
+TESTS += test-argp test-argp-2.sh
+noinst_PROGRAMS += test-argp 
+EXTRA_DIST += test-argp-2.sh
+test_argp_SOURCES = test-argp.c
+
