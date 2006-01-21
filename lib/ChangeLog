@@ -1,3 +1,12 @@
+2006-01-21  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* argp-help.c (usage_long_opt): Do not print DOC options.
+	(__argp_base_name): Removed
+	* argp-namefrob.h (__argp_basename): Removed definition. Was a
+	typo.
+	(__argp_base_name): Provide macro definition or extern declaration
+	depending on the configuration
+
 2006-01-20  Simon Josefsson  <jas@extundo.com>
 
 	* inet_ntop.h: Unconditionally include sys/socket.h.

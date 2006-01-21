@@ -1,3 +1,9 @@
+2006-01-21  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* modules/argp-tests: New module
+	* tests/test-argp.c: New file
+	* tests/test-argp-2.sh: New file
+
 2006-01-20  Simon Josefsson  <jas@extundo.com>
 
 	* modules/inet_ntop (Depends-on): Depend on sys_socket.
