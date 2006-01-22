@@ -1,3 +1,8 @@
+2006-01-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny change)
+
+	 * gnulib-tool, build-aux/csharpcomp.sh.in: Do not pass `-q' to mktemp.
+	 Reported by Bruce Korb <bkorb@gnu.org>.
+
 2006-01-21  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* modules/argp-tests: New module

@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-19 09:05:56 $'
+cvsdatestamp='$Date: 2006-01-22 08:31:53 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -152,7 +152,7 @@ func_tmpdir ()
   {
     # Use the mktemp program if available. If not available, hide the error
     # message.
-    tmp=`(umask 077 && mktemp -d -q "$TMPDIR/glXXXXXX") 2>/dev/null` &&
+    tmp=`(umask 077 && mktemp -d "$TMPDIR/glXXXXXX") 2>/dev/null` &&
     test -n "$tmp" && test -d "$tmp"
   } ||
   {

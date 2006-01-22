@@ -47,7 +47,7 @@ func_tmpdir ()
   {
     # Use the mktemp program if available. If not available, hide the error
     # message.
-    tmp=`(umask 077 && mktemp -d -q "$TMPDIR/gtXXXXXX") 2>/dev/null` &&
+    tmp=`(umask 077 && mktemp -d "$TMPDIR/gtXXXXXX") 2>/dev/null` &&
     test -n "$tmp" && test -d "$tmp"
   } ||
   {
