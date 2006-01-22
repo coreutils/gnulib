@@ -1,3 +1,8 @@
+2006-01-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* quotearg.c (quotearg_buffer_restyled): Add "default: break;"
+	to pacify gcc -Wswitch-default.
+
 2006-01-21  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* argp-help.c (usage_long_opt): Do not print DOC options.
