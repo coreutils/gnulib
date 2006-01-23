@@ -1,5 +1,5 @@
 /* vsprintf with automatic memory allocation.
-   Copyright (C) 1999, 2002-2005 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002-2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -334,28 +334,28 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			tmp_length =
 			  (unsigned int) (sizeof (unsigned long long) * CHAR_BIT
 					  * 0.30103 /* binary -> decimal */
-					  * 2 /* estimate for FLAG_GROUP */
 					 )
-			  + 1 /* turn floor into ceil */
-			  + 1; /* account for leading sign */
+			  + 1; /* turn floor into ceil */
 		      else
 # endif
 		      if (type == TYPE_LONGINT || type == TYPE_ULONGINT)
 			tmp_length =
 			  (unsigned int) (sizeof (unsigned long) * CHAR_BIT
 					  * 0.30103 /* binary -> decimal */
-					  * 2 /* estimate for FLAG_GROUP */
 					 )
-			  + 1 /* turn floor into ceil */
-			  + 1; /* account for leading sign */
+			  + 1; /* turn floor into ceil */
 		      else
 			tmp_length =
 			  (unsigned int) (sizeof (unsigned int) * CHAR_BIT
 					  * 0.30103 /* binary -> decimal */
-					  * 2 /* estimate for FLAG_GROUP */
 					 )
-			  + 1 /* turn floor into ceil */
-			  + 1; /* account for leading sign */
+			  + 1; /* turn floor into ceil */
+		      if (tmp_length < precision)
+			tmp_length = precision;
+		      /* Multiply by 2, as an estimate for FLAG_GROUP.  */
+		      tmp_length = xsum (tmp_length, tmp_length);
+		      /* Add 1, to account for a leading sign.  */
+		      tmp_length = xsum (tmp_length, 1);
 		      break;
 
 		    case 'o':
@@ -365,8 +365,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  (unsigned int) (sizeof (unsigned long long) * CHAR_BIT
 					  * 0.333334 /* binary -> octal */
 					 )
-			  + 1 /* turn floor into ceil */
-			  + 1; /* account for leading sign */
+			  + 1; /* turn floor into ceil */
 		      else
 # endif
 		      if (type == TYPE_LONGINT || type == TYPE_ULONGINT)
@@ -374,15 +373,17 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  (unsigned int) (sizeof (unsigned long) * CHAR_BIT
 					  * 0.333334 /* binary -> octal */
 					 )
-			  + 1 /* turn floor into ceil */
-			  + 1; /* account for leading sign */
+			  + 1; /* turn floor into ceil */
 		      else
 			tmp_length =
 			  (unsigned int) (sizeof (unsigned int) * CHAR_BIT
 					  * 0.333334 /* binary -> octal */
 					 )
-			  + 1 /* turn floor into ceil */
-			  + 1; /* account for leading sign */
+			  + 1; /* turn floor into ceil */
+		      if (tmp_length < precision)
+			tmp_length = precision;
+		      /* Add 1, to account for a leading sign.  */
+		      tmp_length = xsum (tmp_length, 1);
 		      break;
 
 		    case 'x': case 'X':
@@ -392,8 +393,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  (unsigned int) (sizeof (unsigned long long) * CHAR_BIT
 					  * 0.25 /* binary -> hexadecimal */
 					 )
-			  + 1 /* turn floor into ceil */
-			  + 2; /* account for leading sign or alternate form */
+			  + 1; /* turn floor into ceil */
 		      else
 # endif
 		      if (type == TYPE_LONGINT || type == TYPE_ULONGINT)
@@ -401,15 +401,17 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  (unsigned int) (sizeof (unsigned long) * CHAR_BIT
 					  * 0.25 /* binary -> hexadecimal */
 					 )
-			  + 1 /* turn floor into ceil */
-			  + 2; /* account for leading sign or alternate form */
+			  + 1; /* turn floor into ceil */
 		      else
 			tmp_length =
 			  (unsigned int) (sizeof (unsigned int) * CHAR_BIT
 					  * 0.25 /* binary -> hexadecimal */
 					 )
-			  + 1 /* turn floor into ceil */
-			  + 2; /* account for leading sign or alternate form */
+			  + 1; /* turn floor into ceil */
+		      if (tmp_length < precision)
+			tmp_length = precision;
+		      /* Add 2, to account for a leading sign or alternate form.  */
+		      tmp_length = xsum (tmp_length, 2);
 		      break;
 
 		    case 'f': case 'F':
