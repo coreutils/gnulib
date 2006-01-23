@@ -14,7 +14,6 @@ AC_SUBST([LIBSCHED])
 
 Makefile.am:
 TESTS += test-lock
-noinst_PROGRAMS += test-lock
-test_lock_SOURCES = test-lock.c
+check_PROGRAMS += test-lock
 test_lock_LDADD = @LIBMULTITHREAD@ @LIBSCHED@ $(LDADD)
 

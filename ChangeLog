@@ -1,3 +1,9 @@
+2006-01-19  Simon Josefsson  <jas@extundo.com>
+
+	* modules/lock-tests: Use check_PROGRAMS instead of noinst_PROGRAMS.
+	Remove the test_*_SOURCES variable: automake infers it by default.
+	* modules/tls-tests: Likewise.
+
 2006-01-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny change)
 
 	 * gnulib-tool, build-aux/csharpcomp.sh.in: Do not pass `-q' to mktemp.
