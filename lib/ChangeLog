@@ -1,3 +1,7 @@
+2006-01-24  Jim Meyering  <jim@meyering.net>
+
+	* socket_.h: Remove useless parentheses in uses of cpp `defined'.
+
 2006-01-24  Simon Josefsson  <jas@extundo.com>
 
 	* socket_.h (SHUT_WR, SHUT_RDWR): Don't hardcode, suggested by
