@@ -1,3 +1,9 @@
+2006-01-24  Bruno Haible  <bruno@clisp.org>
+
+	* stdbool_.h (_Bool) [HP-UX cc, AIX cc,xlc] : Define as 'signed char'
+	to avoid problems with the built-in _Bool type.
+	Reported by Paul Eggert on 2005-11-26.
+
 2006-01-24  Jim Meyering  <jim@meyering.net>
 
 	* socket_.h: Remove useless parentheses in uses of cpp `defined'.

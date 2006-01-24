@@ -1,4 +1,4 @@
-/* Copyright (C) 2001, 2002, 2003 Free Software Foundation, Inc.
+/* Copyright (C) 2001, 2002, 2003, 2006 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -71,7 +71,18 @@
    (see ISO C 99 6.3.1.1.(2)).  So we add a negative value to the
    enum; this ensures that '_Bool' promotes to 'int'.  */
 #if !(defined __cplusplus || defined __BEOS__)
-# if !@HAVE__BOOL@
+# if @HAVE__BOOL@
+#  if defined __HP_cc || defined __xlc__
+    /* Some HP-UX cc and AIX IBM C compiler versions have compiler bugs when
+       the built-in _Bool type is used.  See
+         http://gcc.gnu.org/ml/gcc-patches/2003-12/msg02303.html
+         http://lists.gnu.org/archive/html/bug-coreutils/2005-11/msg00161.html
+         http://lists.gnu.org/archive/html/bug-coreutils/2005-10/msg00086.html
+       Override it.  */
+#   define _Bool signed char
+enum { false = 0, true = 1 };
+#  endif
+# else
 #  if defined __SUNPRO_C && (__SUNPRO_C < 0x550 || __STDC__ == 1)
     /* Avoid stupid "warning: _Bool is a keyword in ISO C99".  */
 #   define _Bool signed char
