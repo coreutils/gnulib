@@ -1,3 +1,8 @@
+2006-01-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Adjust to reflect glibc reorganization.
+	This affects only comments.
+
 2006-01-20  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt (argp-fmtstream.h, localcharset.c): comment out
