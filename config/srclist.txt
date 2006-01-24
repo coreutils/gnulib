@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.112 2006-01-24 07:13:46 eggert Exp $
+# $Id: srclist.txt,v 1.113 2006-01-24 14:06:47 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -81,7 +81,7 @@ $LIBCSRC/argp/argp-fmtstream.c		lib gpl
 $LIBCSRC/argp/argp-fs-xinl.c		lib gpl
 # The commented-out argp files are currently not quite the same.
 #$LIBCSRC/argp/argp-help.c		lib gpl
-$LIBCSRC/argp/argp-namefrob.h		lib gpl
+#$LIBCSRC/argp/argp-namefrob.h		lib gpl
 #$LIBCSRC/argp/argp-parse.c		lib gpl
 $LIBCSRC/argp/argp-pv.c			lib gpl
 #$LIBCSRC/argp/argp-pvh.c		lib gpl
