@@ -2,6 +2,7 @@ Description:
 Open a file at a directory.
 
 Files:
+lib/intprops.h
 lib/mkdirat.c
 lib/openat.c
 lib/openat.h
