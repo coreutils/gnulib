@@ -70,7 +70,14 @@
    (see ISO C 99 6.7.2.2.(4)); however, '_Bool' must promote to 'int'
    (see ISO C 99 6.3.1.1.(2)).  So we add a negative value to the
    enum; this ensures that '_Bool' promotes to 'int'.  */
-#if !(defined __cplusplus || defined __BEOS__)
+#if defined __cplusplus || defined __BEOS__
+  /* A compiler known to have 'bool'.  */
+  /* If the compiler already has both 'bool' and '_Bool', we can assume they
+     are the same types.  */
+# if !@HAVE__BOOL@
+typedef bool _Bool;
+# endif
+#else
 # if @HAVE__BOOL@
 #  if defined __HP_cc || defined __xlc__
     /* Some HP-UX cc and AIX IBM C compiler versions have compiler bugs when
@@ -91,8 +98,6 @@ enum { false = 0, true = 1 };
 typedef enum { _Bool_must_promote_to_int = -1, false = 0, true = 1 } _Bool;
 #  endif
 # endif
-#else
-typedef bool _Bool;
 #endif
 #define bool _Bool
 
