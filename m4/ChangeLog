@@ -1,3 +1,8 @@
+2006-01-24  Bruno Haible  <bruno@clisp.org>
+
+	* stdbool.m4 (AC_HEADER_STDBOOL): Check for IBM and HP-UX bugs.
+	Patch by Paul Eggert.
+
 2006-01-24  Jim Meyering  <jim@meyering.net>
 
 	* openat.m4 (gl_FUNC_OPENAT): Add AC_LIBSOURCES([intprops.h]).
