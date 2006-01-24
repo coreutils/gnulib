@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-22 08:31:53 $'
+cvsdatestamp='$Date: 2006-01-24 19:18:45 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1080,7 +1080,8 @@ func_import ()
     echo "$g""$delimiter""$f"
   done | LC_ALL=C sort > "$tmp"/new-files
   # First the files that are in old-files, but not in new-files:
-  for g in `LC_ALL=C join -t"$delimiter" -v1 "$tmp"/old-files "$tmp"/new-files | sed -e 's,'"$delimiter"'.*,,'`; do
+  sed_take_first_column='s,'"$delimiter"'.*,,'
+  for g in `LC_ALL=C join -t"$delimiter" -v1 "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_first_column"`; do
     # Remove the file. Do nothing if the user already removed it.
     if test -f "$destdir/$g"; then
       if $doit; then
@@ -1150,8 +1151,9 @@ func_import ()
     rm -f "$destdir/$g.tmp"
   }
   # Then the files that are in new-files, but not in old-files:
+  sed_take_last_column='s,^.*'"$delimiter"',,'
   already_present=
-  for f in `LC_ALL=C join -t"$delimiter" -v2 "$tmp"/old-files "$tmp"/new-files | sed -e 's,'^.*"$delimiter"',,'`; do
+  for f in `LC_ALL=C join -t"$delimiter" -v2 "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_last_column"`; do
     case "$f" in
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
       lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
@@ -1163,7 +1165,7 @@ func_import ()
   done
   # Then the files that are in new-files and in old-files:
   already_present=true
-  for f in `LC_ALL=C join -t"$delimiter" "$tmp"/old-files "$tmp"/new-files | sed -e 's,'^.*"$delimiter"',,'`; do
+  for f in `LC_ALL=C join -t"$delimiter" "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_last_column"`; do
     case "$f" in
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
       lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
