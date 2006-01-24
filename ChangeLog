@@ -1,3 +1,8 @@
+2006-01-24  Jim Meyering  <jim@meyering.net>
+
+	* modules/openat (Files): Add lib/intprops.h.
+	From Mark D. Baushke.
+
 2006-01-19  Simon Josefsson  <jas@extundo.com>
 
 	* modules/lock-tests: Use check_PROGRAMS instead of noinst_PROGRAMS.
