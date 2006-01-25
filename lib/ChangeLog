@@ -1,3 +1,27 @@
+2006-01-21  Jim Meyering  <jim@meyering.net>
+
+	Sync from the stable (b5) branch of coreutils:
+
+	* fts.c (fts_children): Don't let close() clobber errno from
+	failed fchdir().
+
+	* fts.c (fts_stat): When following a symlink-to-directory,
+	don't necessarily interpret stat-fails+lstat-succeeds as indicating
+	a dangling symlink.  That can also happen at least for ELOOP.
+	The fix: return FTS_SLNONE only when the stat errno is ENOENT.
+	FYI, this bug predates the inclusion of fts.c in coreutils.
+
+	* fts.c (fts_open): Put new maxarglen declaration and uses
+	in their own block, so pre-c99 compilers don't object.
+
+	Avoid the double-free (first in fts_read, second in fts_close) that
+	would occur when an `active' directory is made inaccessible (e.g.,
+	via chmod a-x) during a traversal.
+	* fts.c (fts_read): After a failed fchdir, update sp->fts_cur
+	before returning.  Reproduce this failure by
+	mkdir -p a/b; cd a; chmod a-x . b
+	Reported by Stavros Passas.
+
 2006-01-25  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* argp-namefrob.h: Bugfix. Remove stray #
