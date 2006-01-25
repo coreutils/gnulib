@@ -57,7 +57,6 @@
 	* socket_.h (SHUT_WR, SHUT_RDWR): Don't hardcode, suggested by
 	Bruno.
 
->>>>>>> 1.1090
 2006-01-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Work around porting bugs reported by Dieter in
