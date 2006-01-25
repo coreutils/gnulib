@@ -1,3 +1,9 @@
+2006-01-24  Bruno Haible  <bruno@clisp.org>
+
+	* stdbool_.h (_Bool) [IRIX cc]: Define as 'signed char', to avoid
+	warnings.
+	Reported by Paul Eggert.
+
 2006-01-25  Jim Meyering  <jim@meyering.net>
 
 	* fileblocks.c: Remove more useless parentheses.
@@ -10,7 +16,7 @@
 	Report and patch by Albert Chin-A-Young  <china@thewrittenword.com> on
 	2005-11-26.
 
-	* stdbool_.h (_Bool) [HP-UX cc, AIX cc,xlc] : Define as 'signed char'
+	* stdbool_.h (_Bool) [HP-UX cc, AIX cc,xlc]: Define as 'signed char'
 	to avoid problems with the built-in _Bool type.
 	Reported by Paul Eggert on 2005-11-26.
 

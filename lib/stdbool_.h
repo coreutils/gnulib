@@ -90,8 +90,11 @@ typedef bool _Bool;
 enum { false = 0, true = 1 };
 #  endif
 # else
-#  if defined __SUNPRO_C && (__SUNPRO_C < 0x550 || __STDC__ == 1)
-    /* Avoid stupid "warning: _Bool is a keyword in ISO C99".  */
+#  if (defined __SUNPRO_C && (__SUNPRO_C < 0x550 || __STDC__ == 1)) || (defined __sgi && !defined __GNUC__)
+    /* With SunPRO C, avoid stupid
+         "warning: _Bool is a keyword in ISO C99".
+       With IRIX cc, avoid stupid
+         "warning(1185): enumerated type mixed with another type".  */
 #   define _Bool signed char
 enum { false = 0, true = 1 };
 #  else
