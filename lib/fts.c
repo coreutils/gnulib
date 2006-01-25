@@ -203,7 +203,10 @@ static int
 internal_function
 diropen (char const *dir)
 {
-  return open (dir, O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NONBLOCK);
+  int fd = open (dir, O_RDONLY | O_DIRECTORY);
+  if (fd < 0)
+    fd = open (dir, O_WRONLY | O_DIRECTORY);
+  return fd;
 }
 
 FTS *
@@ -241,9 +244,11 @@ fts_open (char * const *argv,
 #ifndef MAXPATHLEN
 # define MAXPATHLEN 1024
 #endif
-	size_t maxarglen = fts_maxarglen(argv);
-	if (! fts_palloc(sp, MAX(maxarglen, MAXPATHLEN)))
-		goto mem1;
+	{
+	  size_t maxarglen = fts_maxarglen(argv);
+	  if (! fts_palloc(sp, MAX(maxarglen, MAXPATHLEN)))
+		  goto mem1;
+	}
 
 	/* Allocate/initialize root's parent. */
 	if ((parent = fts_alloc(sp, "", 0)) == NULL)
@@ -693,7 +698,9 @@ fts_children (register FTS *sp, int instr)
 		return (sp->fts_child = NULL);
 	sp->fts_child = fts_build(sp, instr);
 	if (fchdir(fd)) {
+		int saved_errno = errno;
 		(void)close(fd);
+		__set_errno (saved_errno);
 		return (NULL);
 	}
 	(void)close(fd);
@@ -1066,7 +1073,8 @@ fts_stat(FTS *sp, register FTSENT *p, bool follow)
 	if (ISSET(FTS_LOGICAL) || follow) {
 		if (stat(p->fts_accpath, sbp)) {
 			saved_errno = errno;
-			if (!lstat(p->fts_accpath, sbp)) {
+			if (errno == ENOENT
+			    && lstat(p->fts_accpath, sbp) == 0) {
 				__set_errno (0);
 				return (FTS_SLNONE);
 			}
