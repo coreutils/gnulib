@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-24 19:18:45 $'
+cvsdatestamp='$Date: 2006-01-25 14:20:06 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1176,7 +1176,7 @@ func_import ()
     func_add_or_update
   done
   rm -rf "$tmp"
-  trap - 0 1 2 3 15
+  trap : 0 1 2 3 15
 
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
   actioncmd="gnulib-tool --import"
