@@ -1,6 +1,7 @@
 2006-01-25  Jim Meyering  <jim@meyering.net>
 
 	* fileblocks.c: Remove more useless parentheses.
+	* readutmp.h: Likewise.
 
 2006-01-24  Bruno Haible  <bruno@clisp.org>
 
