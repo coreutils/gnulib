@@ -1,5 +1,9 @@
 2006-01-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/strnlen (Maintainer): Change from glibc to all.
+
+2006-01-24  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Avoid constructing complicated sed
 	expressions inside backquote.
 	Report and solution by Mark D. Baushke <mdb@gnu.org>.
