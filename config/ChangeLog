@@ -1,3 +1,7 @@
+2006-01-25  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt (vasnprintf.c): sync lost.
+
 2006-01-24  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt (argp-namefrob.h): sync lost.
