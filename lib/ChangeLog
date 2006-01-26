@@ -1,3 +1,10 @@
+2006-01-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* fts.c (diropen): Open with O_NOCTTY | O_NONBLOCK too.  Don't
+	attempt to open for write; this always fails, at least on POSIX
+	hosts.  This reinstates the 2006-01-09 change, which was
+	inadvertently removed.
+
 2006-01-26  Bruno Haible  <bruno@clisp.org>
             Paul Eggert  <eggert@cs.ucla.edu>
 
