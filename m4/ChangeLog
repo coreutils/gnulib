@@ -1,3 +1,9 @@
+2006-01-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* stdbool.m4 (AC_HEADER_STDBOOL): Check for xlc bug if __GCC__ too,
+	so that we test the test.
+	Check for yet another HP-UX cc bug involving *bool |= bool.
+
 2006-01-24  Bruno Haible  <bruno@clisp.org>
 
 	* stdbool.m4 (AC_HEADER_STDBOOL): Check for IBM and HP-UX bugs.

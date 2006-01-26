@@ -74,7 +74,7 @@ AC_DEFUN([AC_HEADER_STDBOOL],
 	  _Bool n[m];
 	  char o[sizeof n == m * sizeof n[0] ? 1 : -1];
 	  char p[-1 - (_Bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
-	  #if defined __xlc__
+	  #if defined __xlc__ || defined __GNUC__
 	   /* Catch a bug in IBM AIX xlc compiler version 6.0.0.0
 	      reported by James Lemley on 2005-10-05; see
 	      http://lists.gnu.org/archive/html/bug-coreutils/2005-10/msg00086.html
@@ -86,7 +86,10 @@ AC_DEFUN([AC_HEADER_STDBOOL],
 	      Let us hope that IBM fixes the xlc bug, and also adds
 	      support for this kind of constant expression.  In the
 	      meantime, this test will reject xlc, which is OK, since
-	      our stdbool.h substitute should suffice.  */
+	      our stdbool.h substitute should suffice.  We also test
+	      this with GCC, where it should work, to detect more
+	      quickly whether someone messes up the test in the
+	      future.  */
 	   char digs[] = "0123456789";
 	   int xlcbug = 1 / (&(digs + 5)[-2 + (bool) 1] == &digs[4] ? 1 : -1);
 	  #endif
@@ -98,9 +101,11 @@ AC_DEFUN([AC_HEADER_STDBOOL],
 	  _Bool *pq = &q;
 	],
 	[
+	  *pq |= q;
+	  *pq |= ! q;
 	  /* Refer to every declared value, to avoid compiler optimizations.  */
 	  return (!a + !b + !c + !d + !e + !f + !g + !h + !i + !!j + !k + !!l
-		  + !m + !n + !o + !p);
+		  + !m + !n + !o + !p + !q + !pq);
 	],
 	[ac_cv_header_stdbool_h=yes],
 	[ac_cv_header_stdbool_h=no])])
