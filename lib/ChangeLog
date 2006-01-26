@@ -1,3 +1,16 @@
+2006-01-26  Bruno Haible  <bruno@clisp.org>
+            Paul Eggert  <eggert@cs.ucla.edu>
+
+	* stdbool_.h (_Bool)
+	[(! (defined __cplusplus || defined __BEOS__)
+	  && !defined __GNUC__
+	  && !(defined __HP_cc || defined __xlc__
+	       || (defined __SUNPRO_C && (__SUNPRO_C < 0x550 || __STDC__ == 1))
+	       || defined __sgi))]:
+	#define to signed char in these cases too; this simplifies
+	the code (so that we don't have to worry about HP-UX, AIX, SunPRO,
+	etc., separately) and makes it more conservative.
+
 2006-01-21  Jim Meyering  <jim@meyering.net>
 
 	Sync from the stable (b5) branch of coreutils:
