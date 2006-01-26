@@ -1,3 +1,8 @@
+2006-01-26  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Use "trap 'exit $?' instead of "trap :".
+	Reported by Paul Eggert.
+
 2006-01-25  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Use "trap :" instead of "trap -" to get

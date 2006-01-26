@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-25 14:20:06 $'
+cvsdatestamp='$Date: 2006-01-26 12:51:48 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1176,7 +1176,13 @@ func_import ()
     func_add_or_update
   done
   rm -rf "$tmp"
-  trap : 0 1 2 3 15
+  # Undo the effect of the previous 'trap' command. Some shellology:
+  # We cannot use "trap - 0 1 2 3 15", because Solaris sh would attempt to
+  # execute the command "-". "trap '' ..." is fine only for signal 0 (= normal
+  # exit); for the others we need to call 'exit' explicitly. The value of $? is
+  # 128 + signal number and is set before the trap-registered command is run.
+  trap '' 0
+  trap 'exit $?' 1 2 3 15
 
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
   actioncmd="gnulib-tool --import"
