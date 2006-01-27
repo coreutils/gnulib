@@ -1,3 +1,14 @@
+2006-01-25  Simon Josefsson  <jas@extundo.com>
+
+	* socket_.h: Set WINVER to 0x0501, to make sure getaddrinfo
+	prototype is visible on mingw32.
+
+	* getaddrinfo.h: Define EAI_ADDRFAMILY and EAI_SYSTEM if not set,
+	for mingw32.
+
+	* gai_strerror.c, getaddrinfo.h: Protect netdb.h #include (for
+	mingw32).
+
 2006-01-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* fts.c (diropen): Open with O_NOCTTY | O_NONBLOCK too.  Don't

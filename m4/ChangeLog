@@ -1,3 +1,9 @@
+2006-01-25  Simon Josefsson  <jas@extundo.com>
+
+	* getaddrinfo.m4: Look for getaddrinfo inside ws2tcip.h and
+	-lws2_32.  Protect sys/socket.h and netdb.h #include's.  Include
+	ws2tcpip.h with WINVER=0x0501.  All for mingw32.
+
 2006-01-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* stdbool.m4 (AC_HEADER_STDBOOL): Check for xlc bug if __GCC__ too,

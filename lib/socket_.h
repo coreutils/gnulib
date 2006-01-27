@@ -28,6 +28,22 @@
    we need. */
 
 #if HAVE_WINSOCK2_H
+/* The following define makes sure we get all the prototypes from the
+   header files.  getaddrinfo is only available if _WIN32_WINNT >=
+   0x0501 (that symbol is set indiriectly through WINVER).  This has
+   the following two (potential) problems:
+
+     1) winsock2.h must not have been included before this symbol
+        is set (I think).
+
+     2) There may be some _reason_ for all prototypes not being
+        available with the default settings.  Such as if some APIs are
+        not available on older Windows hosts.  However, getaddrinfo
+        (which need >= 0x0501) should be available on Windows 95 and
+        later, according to:
+        http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winsock/winsock/getaddrinfo_2.asp
+*/
+#define WINVER 0x0501
 # include <winsock2.h>
 #endif
 #if HAVE_WS2TCPIP_H
