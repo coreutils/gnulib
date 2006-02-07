@@ -1,3 +1,8 @@
+2006-02-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* argp-namefrob.h: Restore changes accidentally lost during the
+	"autoupdate" on 2005-12-12.
+
 2006-01-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* fnmatch.c (L_): Renamed from L, to work around a bug in
