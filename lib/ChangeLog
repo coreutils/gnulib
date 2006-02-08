@@ -1,3 +1,8 @@
+2006-02-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* closeout.c (close_stdout): Don't assume 'bool' converts nonzero
+	ints to 0 or 1, as this isn't true for the stdbool.h substitute.
+
 2006-02-07  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* argp-namefrob.h: Restore changes accidentally lost during the
