@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate January 9, 2006
+@set lastupdate February 8, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -518,6 +518,8 @@ software.  It also describes general standards for error messages, the
 command line interface, and how libraries should behave.
 
 @menu
+* Non-GNU Standards::           We consider standards such as POSIX;
+                                  we don't "obey" them.
 * Semantics::                   Writing robust programs
 * Libraries::                   Library behavior
 * Errors::                      Formatting error messages
@@ -528,6 +530,50 @@ command line interface, and how libraries should behave.
 * Memory Usage::                When and how to care about memory needs
 * File Usage::                  Which files to use, and where
 @end menu
+
+@node Non-GNU Standards
+@section Non-GNU Standards
+
+The GNU Project regards standards published by other organizations as
+suggestions, not orders.  We consider those standards, but we do not
+``obey'' them.  In developing a GNU program, you should implement
+an outside standard's specifications when that makes the GNU system
+better overall in an objective sense.  When it doesn't, you shouldn't.
+
+In most cases, following published standards is convenient for
+users---it means that their programs or scripts will work more
+portably.  For instance, GCC implements nearly all the features of
+Standard C as specified by that standard.  C program developers would
+be unhappy if it did not.  And GNU utilities mostly follow
+specifications of POSIX.2; shell script writers and users would be
+unhappy if our programs were incompatible.
+
+But we do not follow either of these specifications rigidly, and there
+are specific points on which we decided not to follow them, so as to
+make the GNU system better for users.
+
+For instance, Standard C says that nearly all extensions to C are
+prohibited.  How silly!  GCC implements many extensions, some of which
+were later adopted as part of the standard.  If you want these
+constructs to give an error message as ``required'' by the standard,
+you must specify @samp{--pedantic}, which was implemented only so that
+we can say ``GCC is a 100% implementation of the standard,'' not
+because there is any reason to actually use it.
+
+POSIX.2 specifies that @samp{df} and @samp{du} must output sizes by
+default in units of 512 bytes.  What users want is units of 1k, so
+that is what we do by default.  If you want the ridiculous behavior
+``required'' by POSIX, you must set the environment variable
+@samp{POSIXLY_CORRECT} (which was originally going to be named
+@samp{POSIX_ME_HARDER}).
+
+GNU utilities also depart from the letter of the POSIX.2 specification
+when they support long-named command-line options, and intermixing
+options with ordinary arguments.  This minor incompatibility with
+POSIX is never a problem in practice, and it is very useful.
+
+In particular, don't reject a new feature, or remove an old one,
+merely because a standard says it is ``forbidden'' or ``deprecated.''
 
 @node Semantics
 @section Writing Robust Programs
