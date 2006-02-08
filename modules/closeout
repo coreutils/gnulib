@@ -7,7 +7,6 @@ lib/closeout.c
 m4/closeout.m4
 
 Depends-on:
-atexit
 gettext-h
 error
 quotearg

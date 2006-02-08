@@ -1,3 +1,7 @@
+2006-02-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/closeout (Depends-on): Remove atexit.
+
 2006-01-26  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Use "trap 'exit $?' instead of "trap :".
