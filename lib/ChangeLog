@@ -1,3 +1,7 @@
+2006-02-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* argp-fmtstream.c: Restore another bugfix lost on 2005-12-12
+
 2006-02-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* closeout.c (close_stdout): Don't assume 'bool' converts nonzero
