@@ -246,9 +246,10 @@ __argp_fmtstream_update (argp_fmtstream_t fs)
 		 Oh well.  Put it on an overlong line by itself.  */
 	      p = buf + (r + 1 - fs->point_col);
 	      /* Find the end of the long word.  */
-	      do
-		++p;
-	      while (p < nl && !isblank (*p));
+	      if (p < nl)
+		do
+		  ++p;
+		while (p < nl && !isblank (*p));
 	      if (p == nl)
 		{
 		  /* It already ends a line.  No fussing required.  */
