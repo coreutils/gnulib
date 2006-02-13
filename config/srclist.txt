@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.115 2006-01-26 14:11:40 karl Exp $
+# $Id: srclist.txt,v 1.116 2006-02-13 21:58:43 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -74,20 +74,20 @@ $GETTEXT/gettext-tools/m4/signalblocking.m4		m4
 $GETTEXT/gettext-tools/m4/ssize_t.m4			m4
 
 
-$LIBCSRC/argp/argp-ba.c			lib gpl
-$LIBCSRC/argp/argp-eexst.c		lib gpl
-$LIBCSRC/argp/argp-fmtstream.c		lib gpl
+# new argp not in glibc yet --13feb06.
+#$LIBCSRC/argp/argp-ba.c			lib gpl
+#$LIBCSRC/argp/argp-eexst.c		lib gpl
+#$LIBCSRC/argp/argp-fmtstream.c		lib gpl
 #$LIBCSRC/argp/argp-fmtstream.h		lib gpl
-$LIBCSRC/argp/argp-fs-xinl.c		lib gpl
-# The commented-out argp files are currently not quite the same.
+#$LIBCSRC/argp/argp-fs-xinl.c		lib gpl
 #$LIBCSRC/argp/argp-help.c		lib gpl
 #$LIBCSRC/argp/argp-namefrob.h		lib gpl
 #$LIBCSRC/argp/argp-parse.c		lib gpl
-$LIBCSRC/argp/argp-pv.c			lib gpl
+#$LIBCSRC/argp/argp-pv.c			lib gpl
 #$LIBCSRC/argp/argp-pvh.c		lib gpl
-$LIBCSRC/argp/argp-xinl.c		lib gpl
+#$LIBCSRC/argp/argp-xinl.c		lib gpl
 #$LIBCSRC/argp/argp.h			lib gpl
-$LIBCSRC/stdlib/getsubopt.c		lib gpl
+#$LIBCSRC/stdlib/getsubopt.c		lib gpl
 #$LIBCSRC/posix/getopt.c		lib gpl
 #$LIBCSRC/posix/getopt.h		lib gpl (getopt_.h in gnulib)
 #$LIBCSRC/posix/getopt1.c		lib gpl
