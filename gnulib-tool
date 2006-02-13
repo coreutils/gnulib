@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-01-26 12:51:48 $'
+cvsdatestamp='$Date: 2006-02-13 15:40:25 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -77,7 +77,9 @@ Usage: gnulib-tool --list
 
 Operation modes:
       --list                print the available module names
-      --import              import the given modules into the current package
+      --import              import the given modules into the current package;
+                              if no modules are specified, update the
+                              current package.
       --create-testdir      create a scratch package with the given modules
       --create-megatestdir  create a mega scratch package with the given modules
                             one by one and all together
