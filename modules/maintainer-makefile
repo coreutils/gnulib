@@ -3,7 +3,7 @@ Helper GNUmakefile with syntax checks, build improvements, etc.
 
 Files:
 build-aux/GNUmakefile
-build-aux/Makefile.maint
+build-aux/maint.mk
 
 License:
 GPLed build tool
