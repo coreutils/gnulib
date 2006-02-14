@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate February 8, 2006
+@set lastupdate February 12, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -979,7 +979,8 @@ This copyright notice only needs to mention the most recent year in
 which changes were made---there's no need to list the years for previous
 versions' changes.  You don't have to mention the name of the program in
 these notices, if that is inconvenient, since it appeared in the first
-line.
+line.  (The rules are different for copyright notices in source files;
+see @ref{Copyright Notices,,,maintain,Information for GNU Maintainers}.)
 
 Translations of the above lines must preserve the validity of the
 copyright notices (@pxref{Internationalization}).  If the translation's
