@@ -1,3 +1,15 @@
+2006-02-14  Simon Josefsson  <jas@extundo.com>
+
+	* modules/maintainer-makefile: New module.
+
+	* build-aux/Makefile.maint: New file, from GNU CoreUtils, although
+	severaly stripped to make it possible to build it up from scratch
+	with reliable tests.
+
+	* build-aux/GNUmakefile: New file, from GNU CoreUtils with some
+	fixes to permit overriding the default actions when configure and
+	makefile are not available.
+
 2006-02-13  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib-tool (Usage): Fix --import, from
