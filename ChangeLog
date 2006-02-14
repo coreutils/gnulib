@@ -1,5 +1,11 @@
 2006-02-14  Simon Josefsson  <jas@extundo.com>
 
+	* build-aux/GNUmakefile: Rename Makefile.maint to maint.mk
+	and (the local) Makefile.cfg to maint-cfg.mk.
+
+	* build-aux/Makefile.maint, build-aux/maint.mk: Renamed the former
+	to the latter.
+
 	* modules/maintainer-makefile: New module.
 
 	* build-aux/Makefile.maint: New file, from GNU CoreUtils, although

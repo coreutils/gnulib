@@ -38,15 +38,15 @@ have-Makefile := $(shell test -f Makefile && echo yes)
 ifeq ($(have-Makefile),yes)
 
 include Makefile
--include $(srcdir)/Makefile.cfg
-include $(srcdir)/Makefile.maint
+-include $(srcdir)/maint-cfg.mk
+include $(srcdir)/maint.mk
 
 else
 
 .DEFAULT_GOAL := abort-due-to-no-makefile
 
--include ./Makefile.cfg
-include ./Makefile.maint
+-include ./maint-cfg.mk
+include ./maint.mk
 
 abort-due-to-no-makefile:
 	@echo There seems to be no Makefile in this directory.   1>&2
