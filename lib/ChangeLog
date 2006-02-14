@@ -1,3 +1,14 @@
+2006-02-14  Jim Meyering  <jim@meyering.net>
+
+	Sync from coreutils.
+
+	Eliminate the unwelcome (albeit unlikely) possibility of xmalloc
+	failure on deficient systems, and simplify gnulib lgpl dependencies.
+	* lstat.c (rpl_lstat): Rewrite to use stat() in place of the
+	xmalloc/lstat combination.  Based on a patch from Bruno Haible.
+
+	* xalloc-die.c: Remove unused definition of N_.
+
 2006-02-13  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* argp-fmtstream.c: Restore another bugfix lost on 2005-12-12

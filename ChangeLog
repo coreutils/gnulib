@@ -1,3 +1,10 @@
+2006-02-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Sync from coreutils.
+	* modules/lstat (Depends-on): Don't depend on xalloc.
+	(License): Change from GPL to LGPL, since this is now simply a
+	replacement for a libc function.
+
 2006-02-14  Simon Josefsson  <jas@extundo.com>
 
 	* modules/maintainer-makefile (Files): Rename.
