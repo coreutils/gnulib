@@ -19,6 +19,8 @@
 ## Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 ## 02110-1301, USA.
 
+ME := maint.mk
+
 # List of all C-like source code files that will be tested for
 # stylistic "errors".  You may want to define this to something 
 # more complex in Makefile.cfg.
@@ -42,3 +44,9 @@ sc_cast_of_argument_to_free:
 	@grep -nE '\<free *\( *\(' $(C_SOURCES) &&		\
 	  { echo '$(ME): don'\''t cast free argument' 1>&2;		\
 	    exit 1; } || :
+
+# Collect the names of rules starting with `sc_'.
+syntax-check-rules := $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p' $(ME))
+.PHONY: $(syntax-check-rules)
+
+syntax-check: $(syntax-check-rules)

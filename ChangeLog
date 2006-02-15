@@ -1,3 +1,7 @@
+2006-02-15  Simon Josefsson  <jas@extundo.com>
+
+	* build-aux/maint.mk: Add dsyntax-check rule.
+
 2006-02-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.
