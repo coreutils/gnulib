@@ -14,6 +14,7 @@ gettext-h
 socklen
 stdbool
 strdup
+sys_socket
 
 configure.ac:
 gl_GETADDRINFO
