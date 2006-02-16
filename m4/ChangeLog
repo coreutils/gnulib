@@ -1,3 +1,13 @@
+2006-02-15  Eric Blake  <ebb9@byu.net>
+
+	* sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Don't attempt using
+	winsock2.h or ws2tcpip.h when sys/socket.h is present. Fixes
+	'present but cannot compile' warnings on cygwin.
+	* socklen.m4 (gl_TYPE_SOCKLEN_T): Use gl_HEADER_SYS_SOCKET.  Don't
+	use ws2tcpip.h if sys/socket.h works.
+	* getaddrinfo.m4 (gl_PREREQ_GETADDRINFO): Use gl_HEADER_SYS_SOCKET.
+	(gl_GETADDRINFO): Don't use ws2tcpip.h when sys/socket.h is present.
+
 2006-02-14  Jim Meyering  <jim@meyering.net>
 
 	Sync from coreutils.
