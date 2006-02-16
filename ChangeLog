@@ -1,3 +1,7 @@
+2006-02-16  Simon Josefsson  <jas@extundo.com>
+
+	* modules/getaddrinfo (Depends-on): Add sys_socket.
+
 2006-02-15  Simon Josefsson  <jas@extundo.com>
 
 	* build-aux/maint.mk: Add dsyntax-check rule.
