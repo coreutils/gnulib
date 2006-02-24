@@ -60,7 +60,7 @@
 	inadvertently removed.
 
 2006-01-26  Bruno Haible  <bruno@clisp.org>
-            Paul Eggert  <eggert@cs.ucla.edu>
+	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	* stdbool_.h (_Bool)
 	[(! (defined __cplusplus || defined __BEOS__)
@@ -660,7 +660,7 @@
 	include <wchar.h>; no longer needed.
 
 2005-10-14  Jakub Jelinek  <jakub@redhat.com>
-       and  Ulrich Drepper  <drepper@redhat.com>
+	and  Ulrich Drepper  <drepper@redhat.com>
 
 	Import from libc.
 	* obstack.c (print_and_abort) [defined _LIBC]: Use __fxprintf
