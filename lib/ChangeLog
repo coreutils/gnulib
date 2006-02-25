@@ -1,3 +1,7 @@
+2006-02-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* glob.c: Say "invalid" rather than "illegal" in comments.
+
 2006-02-24  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* lib/mkdtemp.c, lib/setenv.c, lib/unsetenv.c: Normalize
