@@ -1,3 +1,12 @@
+2006-02-24  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny changes)
+
+	* modules/xstrtod: Omit xstrtod.h, xstrtod.c; they're in LIB_SOURCES.
+	* modules/lock-tests (TESTS): Use $(EXEEXT).
+	* modules/tls-tests: Likewise.
+        * modules/argp-tests: Likewise.
+	(check_PROGRAMS): New var, replacing...
+	(noinst_PROGRAMS, test_argp_SOURCES): Remove.
+
 2006-02-16  Simon Josefsson  <jas@extundo.com>
 
 	* modules/getaddrinfo (Depends-on): Add sys_socket.

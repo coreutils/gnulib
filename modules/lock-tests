@@ -13,7 +13,7 @@ fi
 AC_SUBST([LIBSCHED])
 
 Makefile.am:
-TESTS += test-lock
+TESTS += test-lock$(EXEEXT)
 check_PROGRAMS += test-lock
 test_lock_LDADD = @LIBMULTITHREAD@ @LIBSCHED@ $(LDADD)
 
