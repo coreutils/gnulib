@@ -2,7 +2,6 @@ Description:
 compare file time stamps
 
 Files:
-lib/intprops.h
 lib/utimecmp.h
 lib/utimecmp.c
 m4/utimecmp.m4
@@ -13,6 +12,7 @@ stat-time
 timespec
 utimens
 xalloc
+intprops
 stdbool
 verify
 

@@ -1,3 +1,19 @@
+2006-02-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/intprops: New file.
+	* MODULES.html.sh (Numeric conversion functions <stdlib.h>):
+	Add intprops.
+	* modules/getloadavg (Files): Remove lib/intprops.h.
+	(Depends-on): Add intprops.
+	* modules/human: Likewise.
+	* modules/inttostr: Likewise.
+	* modules/openat: Likewise.
+	* modules/sig2str: Likewise.
+	* modules/userspec: Likewise.
+	* modules/utimecmp: Likewise.
+	* modules/xnanosleep: Likewise.
+	* modules/xstrtol: Likewise.
+
 2006-02-24  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny changes)
 
 	* modules/xstrtod: Omit xstrtod.h, xstrtod.c; they're in LIB_SOURCES.

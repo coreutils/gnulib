@@ -1,0 +1,21 @@
+Description:
+Properties of integer types
+
+Files:
+lib/intprops.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+EXTRA_DIST += intprops.h
+
+Include:
+"intprops.h"
+
+License:
+GPL
+
+Maintainer:
+Paul Eggert

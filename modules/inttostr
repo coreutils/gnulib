@@ -3,7 +3,6 @@ Convert integers to printable strings.
 
 Files:
 lib/imaxtostr.c
-lib/intprops.h
 lib/inttostr.c
 lib/inttostr.h
 lib/offtostr.c
@@ -17,6 +16,7 @@ m4/uintmax_t.m4
 m4/ulonglong.m4
 
 Depends-on:
+intprops
 
 configure.ac:
 gl_INTTOSTR

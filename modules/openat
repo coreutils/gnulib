@@ -2,7 +2,6 @@ Description:
 Open a file at a directory.
 
 Files:
-lib/intprops.h
 lib/mkdirat.c
 lib/openat.c
 lib/openat.h
@@ -15,6 +14,7 @@ save-cwd
 gettext-h
 dirname
 extensions
+intprops
 
 configure.ac:
 gl_FUNC_OPENAT

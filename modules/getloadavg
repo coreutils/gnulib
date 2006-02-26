@@ -3,12 +3,12 @@ Return the current system load averages.
 
 Files:
 lib/getloadavg.c
-lib/intprops.h
 
 Depends-on:
 cloexec
 xalloc
 c-strtod
+intprops
 stdbool
 fcntl-safer
 
