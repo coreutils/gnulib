@@ -2,8 +2,8 @@
 
 	Revert the change of 2006-02-24, so these files can continue
 	to be sync'd from gettext.
-	* lib/mkdtemp.c, lib/setenv.c, lib/unsetenv.c: *Un*-normalize
-	inclusion of `config.h'.
+	* mkdtemp.c, setenv.c, unsetenv.c: *Un*-normalize inclusion
+	of `config.h'.
 
 2006-02-24  Paul Eggert  <eggert@cs.ucla.edu>
 
@@ -11,8 +11,7 @@
 
 2006-02-24  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
-	* lib/mkdtemp.c, lib/setenv.c, lib/unsetenv.c: Normalize
-	inclusion of `config.h'.
+	* mkdtemp.c, setenv.c, unsetenv.c: Normalize inclusion of `config.h'.
 
 2006-02-20  Paul Eggert  <eggert@cs.ucla.edu>
 
