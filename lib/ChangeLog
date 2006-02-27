@@ -1,3 +1,8 @@
+2006-02-27  Simon Josefsson  <jas@extundo.com>
+
+	* base64.h: Indent #define's.  From Jim Meyering
+	<jim@meyering.net>.
+
 2006-02-27  Jim Meyering  <jim@meyering.net>
 
 	Revert the change of 2006-02-24, so these files can continue

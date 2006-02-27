@@ -1,5 +1,5 @@
 /* base64.h -- Encode binary data using printable characters.
-   Copyright (C) 2004, 2005 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
    This program is free software; you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 # define BASE64_H
 
 /* Get size_t. */
-#include <stddef.h>
+# include <stddef.h>
 
 /* Get bool. */
-#include <stdbool.h>
+# include <stdbool.h>
 
 /* This uses that the expression (n+(k-1))/k means the smallest
    integer >= n/k, i.e., the ceiling of n/k.  */
-#define BASE64_LENGTH(inlen) ((((inlen) + 2) / 3) * 4)
+# define BASE64_LENGTH(inlen) ((((inlen) + 2) / 3) * 4)
 
 extern bool isbase64 (char ch);
 
