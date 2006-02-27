@@ -1,4 +1,4 @@
-/* Copyright (C) 1992,1995-1999,2000-2003 Free Software Foundation, Inc.
+/* Copyright (C) 1992,1995-1999,2000-2003,2005 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software; you can redistribute it and/or modify
@@ -15,7 +15,7 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifdef HAVE_CONFIG_H
+#if HAVE_CONFIG_H
 # include <config.h>
 #endif
 #include <alloca.h>
@@ -27,9 +27,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#if _LIBC || HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+#include <unistd.h>
 
 #if !_LIBC
 # include "allocsa.h"

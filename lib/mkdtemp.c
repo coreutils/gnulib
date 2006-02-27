@@ -18,7 +18,7 @@
 /* Extracted from misc/mkdtemp.c and sysdeps/posix/tempname.c.  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+# include "config.h"
 #endif
 
 /* Specification.  */
