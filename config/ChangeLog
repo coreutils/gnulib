@@ -1,3 +1,7 @@
+2006-03-01  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt (Copyright/*): new entries.
+
 2006-01-25  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt (vasnprintf.c): sync lost.

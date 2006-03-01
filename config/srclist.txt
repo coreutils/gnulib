@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.116 2006-02-13 21:58:43 karl Exp $
+# $Id: srclist.txt,v 1.117 2006-03-01 14:28:40 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -12,7 +12,7 @@ $AUTOMAKE/lib/missing		build-aux
 $AUTOMAKE/lib/mkinstalldirs	build-aux
 #
 $TEXINFOSRC/doc/texinfo.tex	build-aux
-
+#
 $AUTOCONF/INSTALL		doc
 #
 $GNUWWWLICENSES/fdl.texi	doc
@@ -24,7 +24,13 @@ $GNUWWWLICENSES/COPYING.LESSER	doc
 $GNUSTANDARDS/maintain.texi	doc
 $GNUSTANDARDS/standards.texi	doc
 $GNUSTANDARDS/make-stds.texi	doc
-
+#
+# The official forms for contributors to fill out, mentioned in maintain.
+$GNUORG/Copyright/request-assign.changes	doc/Copyright
+$GNUORG/Copyright/request-assign.future		doc/Copyright
+$GNUORG/Copyright/request-assign.program	doc/Copyright
+$GNUORG/Copyright/request-disclaim.changes	doc/Copyright
+#
 $GETTEXT/gettext-runtime/libasprintf/asnprintf.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/asprintf.c		lib gpl
 $GETTEXT/gettext-runtime/libasprintf/printf-args.c	lib gpl

@@ -1,3 +1,7 @@
+2006-03-01  Karl Berry  <karl@gnu.org>
+
+	* Copyright/request-*: new files, synced from gnuorg.
+
 2006-01-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.
