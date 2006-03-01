@@ -1,5 +1,5 @@
 /* readline.c --- Simple implementation of readline.
-   Copyright (C) 2005 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2006 Free Software Foundation, Inc.
    Written by Simon Josefsson
 
    This program is free software; you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 # include <config.h>
 #endif
 
-/* This module is intended to be used when the application only need
+/* This module is intended to be used when the application only needs
    the readline interface.  If you need more functions from the
    readline library, it is recommended to require the readline library
    (or improve this module) rather than #if-protect part of your
