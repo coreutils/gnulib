@@ -1,3 +1,14 @@
+2006-02-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Sync from coreutils.
+	* mkdir-p.m4 (gl_MKDIR_PARENTS): Require gl_FUNC_LCHMOD and
+	gl_CHDIR_SAFER.
+
+2006-02-22  Jim Meyering  <jim@meyering.net>
+
+	Sync from coreutils.
+	* chdir-safer.m4: New file.
+
 2006-02-17  Eric Blake  <address@hidden>
 
 	* getaddrinfo.m4 (gl_GETADDRINFO): Fix caching error.
@@ -113,7 +124,6 @@
 2006-01-09  Jim Meyering  <jim@meyering.net>
 
 	Sync from coreutils.
-	* chdir-safer.m4: New file.
 	* openat.m4 (gl_FUNC_OPENAT): Require and compile mkdirat.c.
 	Require openat-priv.h.
 
