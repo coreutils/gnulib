@@ -1,3 +1,12 @@
+2006-03-01  Simon Josefsson  <jas@extundo.com>
+
+	* readline.c: Fix typo, tiny patch from Stepan Kasal
+	<kasal@ucw.cz>.
+
+2006-02-28  Simon Josefsson  <jas@extundo.com>
+
+	* getopt.c: Protect #include of unistd.h, for MSVS.
+
 2006-02-27  Simon Josefsson  <jas@extundo.com>
 
 	* base64.h: Indent #define's.  From Jim Meyering
