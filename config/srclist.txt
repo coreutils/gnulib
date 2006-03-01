@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.117 2006-03-01 14:28:40 karl Exp $
+# $Id: srclist.txt,v 1.118 2006-03-01 14:54:25 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -26,10 +26,15 @@ $GNUSTANDARDS/standards.texi	doc
 $GNUSTANDARDS/make-stds.texi	doc
 #
 # The official forms for contributors to fill out, mentioned in maintain.
+$GNUORG/conditions.text				doc/Copyright
 $GNUORG/Copyright/request-assign.changes	doc/Copyright
 $GNUORG/Copyright/request-assign.future		doc/Copyright
 $GNUORG/Copyright/request-assign.program	doc/Copyright
 $GNUORG/Copyright/request-disclaim.changes	doc/Copyright
+$GNUORG/assign.manual				doc/Copyright
+$GNUORG/assign.translation.manual		doc/Copyright
+$GNUORG/disclaim.manual				doc/Copyright
+$GNUORG/disclaim.program			doc/Copyright
 #
 $GETTEXT/gettext-runtime/libasprintf/asnprintf.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/asprintf.c		lib gpl
