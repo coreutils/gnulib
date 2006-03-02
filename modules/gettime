@@ -9,6 +9,7 @@ m4/gettime.m4
 Depends-on:
 gettimeofday
 timespec
+extensions
 
 configure.ac:
 gl_GETTIME

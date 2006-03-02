@@ -8,6 +8,7 @@ m4/nanosleep.m4
 Depends-on:
 timespec
 stdbool
+extensions
 
 configure.ac:
 gl_FUNC_NANOSLEEP
