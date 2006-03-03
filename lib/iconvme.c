@@ -73,7 +73,7 @@ iconv_string (const char *str, const char *from_codeset,
   if (cd == (iconv_t) -1)
     return NULL;
 
-  dest = iconv_alloc(cd, str);
+  dest = iconv_alloc (cd, str);
 
   {
     int save_errno = errno;
@@ -185,7 +185,7 @@ out:
   if (have_error && dest)
     {
       int save_errno = errno;
-      free(dest);
+      free (dest);
       errno = save_errno;
       dest = NULL;
     }
