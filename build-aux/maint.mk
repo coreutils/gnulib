@@ -122,4 +122,4 @@ refresh-po:
 INDENT_SOURCES ?= $(C_SOURCES)
 .PHONY: indent
 indent:
-	indent $(C_SOURCES)
+	indent $(INDENT_SOURCES)
