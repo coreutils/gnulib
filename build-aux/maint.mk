@@ -50,3 +50,8 @@ syntax-check-rules := $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p' $(ME))
 .PHONY: $(syntax-check-rules)
 
 syntax-check: $(syntax-check-rules)
+
+INDENT_SOURCES ?= $(C_SOURCES)
+.PHONY: indent
+indent:
+	indent $(C_SOURCES)
