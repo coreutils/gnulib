@@ -1,5 +1,9 @@
 2006-03-03  Simon Josefsson  <jas@extundo.com>
 
+	* build-aux/maint.mk: Add several syntax checks from CoreUtils.
+
+2006-03-03  Simon Josefsson  <jas@extundo.com>
+
 	* build-aux/maint.mk: Add indent target.
 
 2006-03-01  Paul Eggert  <eggert@cs.ucla.edu>
