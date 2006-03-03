@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.118 2006-03-01 14:54:25 karl Exp $
+# $Id: srclist.txt,v 1.119 2006-03-03 00:02:44 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -32,8 +32,11 @@ $GNUORG/Copyright/request-assign.future		doc/Copyright
 $GNUORG/Copyright/request-assign.program	doc/Copyright
 $GNUORG/Copyright/request-disclaim.changes	doc/Copyright
 $GNUORG/assign.manual				doc/Copyright
+$GNUORG/assign.changes.manual			doc/Copyright
+$GNUORG/assign.future.manual			doc/Copyright
 $GNUORG/assign.translation.manual		doc/Copyright
 $GNUORG/disclaim.manual				doc/Copyright
+$GNUORG/disclaim.changes.manual			doc/Copyright
 $GNUORG/disclaim.program			doc/Copyright
 #
 $GETTEXT/gettext-runtime/libasprintf/asnprintf.c	lib gpl
