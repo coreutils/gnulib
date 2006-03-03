@@ -1,5 +1,10 @@
 2006-03-03  Simon Josefsson  <jas@extundo.com>
 
+	* build-aux/maint.mk: Add refresh-po rule, based on ideas from
+	libidn and bison.
+
+2006-03-03  Simon Josefsson  <jas@extundo.com>
+
 	* build-aux/maint.mk: Add several syntax checks from CoreUtils.
 
 2006-03-03  Simon Josefsson  <jas@extundo.com>
