@@ -1,5 +1,5 @@
-# poll.m4 serial 4
-dnl Copyright (c) 2003, 2005 Free Software Foundation, Inc.
+# poll.m4 serial 5
+dnl Copyright (c) 2003, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -57,6 +57,7 @@ This is MacOSX
   fi
 
   if test $gl_cv_func_poll = no; then
+    POLL_H=poll.h # Avoid differing declaration from a system header.
     AC_LIBOBJ(poll)
     AC_DEFINE(poll, rpl_poll,
       [Define to poll if the replacement function should be used.])
