@@ -1,3 +1,9 @@
+2006-03-03  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de> (tiny change)
+
+	* poll.m4 (gl_FUNC_POLL): If we deem poll(2) unacceptable, use
+	our replacement poll.h in any case, to avoid a differing
+	declaration from a system header.  Seen on AIX.
+
 2006-03-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* clock_time.m4 (gl_CLOCK_TIME): Require gl_USE_SYSTEM_EXTENSIONS,
