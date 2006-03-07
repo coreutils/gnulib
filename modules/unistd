@@ -14,7 +14,7 @@ Makefile.am:
 BUILT_SOURCES += $(UNISTD_H)
 EXTRA_DIST += unistd_.h
 
-# We need the following in order to create <byteswap.h> when the system
+# We need the following in order to create <unistd.h> when the system
 # doesn't have one.
 unistd.h: unistd_.h
 	cp $(srcdir)/unistd_.h $@-t
