@@ -1,3 +1,10 @@
+2006-03-07  Simon Josefsson  <jas@extundo.com>
+
+	* gc-random.m4: New file, mostly from gc.m4.  Warn instead of
+	error on missing devices (the functions will return an error).
+
+	* gc.m4: Move random stuff to gc-random.m4
+
 2006-03-03  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de> (tiny change)
 
 	* poll.m4 (gl_FUNC_POLL): If we deem poll(2) unacceptable, use

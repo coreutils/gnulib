@@ -1,3 +1,7 @@
+2006-03-07  Simon Josefsson  <jas@extundo.com>
+
+	* gc-libgcrypt.c, gc-gnulib.c: Use GC_USE_RANDOM.
+
 2006-03-01  Simon Josefsson  <jas@extundo.com>
 
 	* readline.c: Fix typo, tiny patch from Stepan Kasal

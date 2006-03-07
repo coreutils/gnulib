@@ -1,5 +1,5 @@
 /* gc-libgcrypt.c --- Crypto wrappers around Libgcrypt for GC.
- * Copyright (C) 2002, 2003, 2004, 2005  Simon Josefsson
+ * Copyright (C) 2002, 2003, 2004, 2005, 2006  Simon Josefsson
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -65,6 +65,8 @@ gc_done (void)
   return;
 }
 
+#ifdef GC_USE_RANDOM
+
 /* Randomness. */
 
 Gc_rc
@@ -87,6 +89,8 @@ gc_random (char *data, size_t datalen)
   gcry_randomize ((unsigned char *) data, datalen, GCRY_VERY_STRONG_RANDOM);
   return GC_OK;
 }
+
+#endif
 
 /* Memory allocation. */
 

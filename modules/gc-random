@@ -1,0 +1,22 @@
+Description:
+Generic crypto random number functions.
+
+Files:
+m4/gc-random.m4
+
+Depends-on:
+gc
+
+configure.ac:
+gl_GC_RANDOM
+
+Makefile.am:
+
+Include:
+"gc.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

@@ -1,5 +1,5 @@
-/* gc-gl-common.c --- Common gnulib internal crypto interface functions
- * Copyright (C) 2002, 2003, 2004, 2005  Simon Josefsson
+/* gc-gnulib.c --- Common gnulib internal crypto interface functions
+ * Copyright (C) 2002, 2003, 2004, 2005, 2006  Simon Josefsson
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -31,11 +31,13 @@
 #include <string.h>
 
 /* For randomize. */
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <errno.h>
+#ifdef GC_USE_RANDOM
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <errno.h>
+#endif
 
 /* Hashes. */
 #ifdef GC_USE_MD2
@@ -79,6 +81,8 @@ gc_done (void)
 {
   return;
 }
+
+#ifdef GC_USE_RANDOM
 
 /* Randomness. */
 
@@ -151,6 +155,8 @@ gc_random (char *data, size_t datalen)
 {
   return randomize (2, data, datalen);
 }
+
+#endif
 
 /* Memory allocation. */
 
