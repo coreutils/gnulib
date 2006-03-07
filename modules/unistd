@@ -1,0 +1,31 @@
+Description:
+A <unistd.h> for systems lacking it.
+
+Files:
+lib/unistd_.h
+m4/unistd_h.m4
+
+Depends-on:
+
+configure.ac:
+gl_HEADER_UNISTD
+
+Makefile.am:
+BUILT_SOURCES += $(UNISTD_H)
+EXTRA_DIST += unistd_.h
+
+# We need the following in order to create <byteswap.h> when the system
+# doesn't have one.
+unistd.h: unistd_.h
+	cp $(srcdir)/unistd_.h $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += unistd.h unistd.h-t
+
+Include:
+#include <unistd.h>
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

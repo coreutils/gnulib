@@ -1,5 +1,11 @@
 2006-03-07  Simon Josefsson  <jas@extundo.com>
 
+	* modules/getopt (Depends-on): Add unistd.
+
+	* modules/unistd: New file.
+
+2006-03-07  Simon Josefsson  <jas@extundo.com>
+
 	* modules/gc-random: New file.
 
 2006-03-03  Simon Josefsson  <jas@extundo.com>

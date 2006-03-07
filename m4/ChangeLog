@@ -1,5 +1,9 @@
 2006-03-07  Simon Josefsson  <jas@extundo.com>
 
+	* unistd_h.m4: New file.
+
+2006-03-07  Simon Josefsson  <jas@extundo.com>
+
 	* readline.m4 (gl_FUNC_READLINE): Rewrite the cached part of the
 	test to be side-effect free by storing the result in the cache
 	variable gl_cv_lib_readline, and moving the assignment of
