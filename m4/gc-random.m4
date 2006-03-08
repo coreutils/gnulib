@@ -67,9 +67,9 @@ AC_DEFUN([gl_GC_RANDOM],
       AC_CHECK_FILE($NAME_OF_PSEUDO_RANDOM_DEVICE,,
         AC_MSG_WARN([[Device `$NAME_OF_PSEUDO_RANDOM_DEVICE' does not exist, consider to use --enable-pseudo-random-device]]))
     fi
-    if test "$NAME_OF_NONCE_RANDOM_DEVICE" != "no"; then
+    if test "$NAME_OF_NONCE_DEVICE" != "no"; then
       AC_CHECK_FILE($NAME_OF_NONCE_DEVICE,,
-        AC_MSG_WARN([[Device `$NAME_OF_NONCE_RANDOM_DEVICE' does not exist, consider to use --enable-nonce-device]]))
+        AC_MSG_WARN([[Device `$NAME_OF_NONCE_DEVICE' does not exist, consider to use --enable-nonce-device]]))
     fi
   else
     AC_MSG_NOTICE([[Cross compiling, assuming random devices exists on the target host...]])  
