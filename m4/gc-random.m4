@@ -9,20 +9,22 @@ AC_DEFUN([gl_GC_RANDOM],
   # Devices with randomness.
   # FIXME: Are these the best defaults?
 
-  case "${target}" in
-    *-openbsd*)
+  AC_REQUIRE([AC_CANONICAL_HOST])dnl
+
+  case "$host_os" in
+    *openbsd*)
       NAME_OF_RANDOM_DEVICE="/dev/srandom"
       NAME_OF_PSEUDO_RANDOM_DEVICE="/dev/prandom"
       NAME_OF_NONCE_DEVICE="/dev/urandom"
       ;;
 
-    *-netbsd*)
+    *netbsd*)
       NAME_OF_RANDOM_DEVICE="/dev/srandom"
       NAME_OF_PSEUDO_RANDOM_DEVICE="/dev/urandom"
       NAME_OF_NONCE_DEVICE="/dev/urandom"
       ;;
 
-    *-solaris* | *-irix* | *-dec-osf* )
+    *solaris* | *irix* | *dec-osf* )
       NAME_OF_RANDOM_DEVICE="/dev/random"
       NAME_OF_PSEUDO_RANDOM_DEVICE="/dev/random"
       NAME_OF_NONCE_DEVICE="/dev/random"
