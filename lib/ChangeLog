@@ -1,3 +1,13 @@
+2006-03-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* c-stack.c: Include unistd.h unconditionally, since we now assume
+	the unistd module.
+	* getlogin_r.c: Likewise.
+	* getlogin_r.h: Likewise.
+	* glob.c: Likewise.
+	* pagealign_alloc.c: Likewise.
+	* unistd_.h: Remove; no longer needed.
+
 2006-03-07  Simon Josefsson  <jas@extundo.com>
 
 	* unistd_.h: New file.

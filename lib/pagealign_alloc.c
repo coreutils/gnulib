@@ -29,10 +29,7 @@
 #include <stdlib.h>
 
 #include <fcntl.h>
-
-#if HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+#include <unistd.h>
 
 #if HAVE_MMAP
 # include <sys/mman.h>

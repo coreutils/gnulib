@@ -1,3 +1,15 @@
+2006-03-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/c-stack (Depends-on): Add unistd.
+	* modules/getlogin_r: Likewise.
+	* modules/glob: Likewise.
+	* modules/pagealign_alloc: Likewise.
+	* modules/unistd (Files): Remove lib/unistd_.h.
+	(EXTRA_DIST): Remove.
+	(unistd.h): Create using 'echo' rather than 'cp', so that we don't
+	need unistd_.h.
+	(MOSTLYCLEANFILES): Remove unistd.h-t.
+
 2006-03-07  Simon Josefsson  <jas@extundo.com>
 
 	* modules/getopt (Depends-on): Add unistd.

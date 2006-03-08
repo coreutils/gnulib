@@ -19,6 +19,7 @@ restrict
 stat-macros
 stdbool
 strdup
+unistd
 
 configure.ac:
 gl_GLOB

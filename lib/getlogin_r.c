@@ -26,10 +26,7 @@
 
 #include <errno.h>
 #include <string.h>
-
-#if HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+#include <unistd.h>
 
 #if !HAVE_DECL_GETLOGIN
 char *getlogin (void);

@@ -19,10 +19,7 @@
 /* Written by Paul Eggert and Derek Price.  */
 
 #include <stddef.h>
-
-#if HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+#include <unistd.h>
 
 /* Copies the user's login name to NAME.
    The array pointed to by NAME has room for SIZE bytes.

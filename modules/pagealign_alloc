@@ -13,6 +13,7 @@ exit
 getpagesize
 gettext-h
 xalloc
+unistd
 
 configure.ac:
 gl_PAGEALIGN_ALLOC

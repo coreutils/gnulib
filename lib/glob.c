@@ -34,13 +34,10 @@
 #include <stdio.h>		/* Needed on stupid SunOS for assert.  */
 
 #if !defined _LIBC || !defined GLOB_ONLY_P
-#if defined HAVE_UNISTD_H || defined _LIBC
-# include <unistd.h>
-# ifndef POSIX
-#  ifdef _POSIX_VERSION
-#   define POSIX
-#  endif
-# endif
+
+#include <unistd.h>
+#if !defined POSIX && defined _POSIX_VERSION
+# define POSIX
 #endif
 
 #include <pwd.h>
