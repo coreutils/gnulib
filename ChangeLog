@@ -1,5 +1,7 @@
 2006-03-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* MODULES.html.sh (Support for systems lacking POSIX:2001):
+	Add unistd.
 	* modules/c-stack (Depends-on): Add unistd.
 	* modules/getlogin_r: Likewise.
 	* modules/glob: Likewise.

@@ -1798,6 +1798,7 @@ func_all_modules ()
   func_module rmdir
   func_module ssize_t
   func_module strtok_r
+  func_module unistd
   func_module utime
   func_end_table
 
