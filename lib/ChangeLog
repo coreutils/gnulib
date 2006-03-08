@@ -1,3 +1,8 @@
+2006-03-08  Simon Josefsson  <jas@extundo.com>
+
+	* gc-gnulib.c (randomize): Don't open files called 'no', they
+	signal that configure disabled the device.
+
 2006-03-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* c-stack.c: Include unistd.h unconditionally, since we now assume

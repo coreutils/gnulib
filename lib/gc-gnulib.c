@@ -109,6 +109,9 @@ randomize (int level, char *data, size_t datalen)
       break;
     }
 
+  if (strcmp (device, "no") == 0)
+    return GC_RANDOM_ERROR;
+
   fd = open (device, O_RDONLY);
   if (fd < 0)
     return GC_RANDOM_ERROR;

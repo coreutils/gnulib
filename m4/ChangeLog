@@ -1,5 +1,10 @@
 2006-03-08  Simon Josefsson  <jas@extundo.com>
 
+	* gc-random.m4: Permit 'no' as variable values and fix warnings,
+	suggested by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
+2006-03-08  Simon Josefsson  <jas@extundo.com>
+
 	* gc-random.m4: Call AC_CANONICAL_HOST and use $host_os instead of
 	$target, suggested by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
 
