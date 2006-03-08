@@ -1,3 +1,8 @@
+2006-03-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* unistd_h.m4 (gl_HEADER_UNISTD): Rename, to match modules file.
+	Problem reported by Juan Manuel Guerrero.
+
 2006-03-07  Simon Josefsson  <jas@extundo.com>
 
 	* unistd_h.m4: New file.
