@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate March 1, 2006
+@set lastupdate March 10, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -630,7 +630,7 @@ developing GNU and promoting software freedom.''
 @end smallexample
 
 If the FSF does not publish this manual on paper, then omit the last
-sentence in (b) that talks about copies from GNU Press.  If the FSF is
+sentence in (a) that talks about copies from GNU Press.  If the FSF is
 not the copyright holder, then replace @samp{FSF} with the appropriate
 name.
 
