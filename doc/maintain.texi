@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 30, 2005
+@set lastupdate March 1, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -25,7 +25,7 @@
 Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
-2001, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+2001, 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to make and distribute verbatim copies
@@ -204,11 +204,12 @@ expected papers arrive.
 @cindex @file{/gd/gnuorg} directory
 @c This paragraph intentionally duplicates information given
 @c near the beginning of the file--to make sure people don't miss it.
-The directory @file{/gd/gnuorg} is found on the GNU machines; if you are
-the maintainer of a GNU package, you should have an account on them.
-Contact @email{accounts@@gnu.org} if you don't have one.  (You can also
-ask for accounts for people who help you a large amount in working on
-the package.)
+The directory @file{/gd/gnuorg} is found on the GNU machines,
+currently @code{fencepost.gnu.org}; if you are the maintainer of a GNU
+package, you should have an account on them.  Contact
+@email{accounts@@gnu.org} if you don't have one.  (You can also ask
+for accounts for people who help you a large amount in working on the
+package.)
 
 In order for the contributor to know person should sign papers, you need
 to ask for the necessary papers.  If you don't know per well, and you
@@ -235,10 +236,12 @@ vs.@: disclaim) and their consequences.
 
 Once the conversation is under way and the contributor is ready for
 more details, you should send one of the templates that are found in
-the directory @file{/gd/gnuorg/Copyright/}.  This section explains
-which templates you should use in which circumstances.  @strong{Please
-don't use any of the templates except for those listed here, and
-please don't change the wording.}
+the directory @file{/gd/gnuorg/Copyright/}; they are also available
+from the @file{doc/Copyright/} directory of the @code{gnulib} project
+at @url{http://savannah.gnu.org/projects/gnulib}.  This section
+explains which templates you should use in which circumstances.
+@strong{Please don't use any of the templates except for those listed
+here, and please don't change the wording.}
 
 Once the conversation is under way, you can send the contributor the
 precise wording and instructions by email.  Before you do this, make
@@ -247,7 +250,8 @@ these templates occasionally---don't keep using an old version.
 
 For large changes, ask the contributor for an assignment.  Send per a
 copy of the file @file{request-assign.changes}.  (Like all the
-@samp{request-} files, it is in @file{/gd/gnuorg/Copyright}.)
+@samp{request-} files, it is in @file{/gd/gnuorg/Copyright} and in
+@code{gnulib}.)
 
 For medium to small changes, request a disclaimer by sending per the
 file @file{request-disclaim.changes}.
