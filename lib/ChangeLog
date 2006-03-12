@@ -1,3 +1,10 @@
+2006-03-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* time_r.h (asctime_r, ctime_r): Remove.  These functions can
+	overrun buffers and shouldn't be used (much as gets shouldn't be
+	used).
+	* time_r.c (asctime_r, ctime_r): Likewise.
+
 2006-03-08  Simon Josefsson  <jas@extundo.com>
 
 	* gc-gnulib.c (randomize): Don't open files called 'no', they
