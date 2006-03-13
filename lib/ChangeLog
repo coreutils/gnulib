@@ -1,3 +1,9 @@
+2006-03-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* argp-help.c (validate_uparams): Fix typo
+	* argp-parse.c (argp_default_options): Consistently begin help 
+	messages with a lowercase letter.
+
 2006-03-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* time_r.h (asctime_r, ctime_r): Remove.  These functions can
