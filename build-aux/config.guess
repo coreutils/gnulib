@@ -4,7 +4,7 @@
 #   2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software Foundation,
 #   Inc.
 
-timestamp='2006-02-27'
+timestamp='2006-03-13'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -779,9 +779,6 @@ EOF
 	echo ${UNAME_MACHINE}-pc-cygwin
 	exit ;;
     i*:MINGW*:*)
-	echo ${UNAME_MACHINE}-pc-mingw32
-	exit ;;
-    i*:MSYS_NT-*:*:*)
 	echo ${UNAME_MACHINE}-pc-mingw32
 	exit ;;
     i*:windows32*:*)
