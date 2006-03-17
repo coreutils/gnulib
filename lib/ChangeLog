@@ -1,7 +1,13 @@
+2006-03-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regex.h (regoff_t) [defined _REGEX_LARGE_OFFSETS]:
+	Typedef to long int, not to off_, as POSIX will likely change
+	in that direction.
+
 2006-03-13  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* argp-help.c (validate_uparams): Fix typo
-	* argp-parse.c (argp_default_options): Consistently begin help 
+	* argp-parse.c (argp_default_options): Consistently begin help
 	messages with a lowercase letter.
 
 2006-03-11  Paul Eggert  <eggert@cs.ucla.edu>
