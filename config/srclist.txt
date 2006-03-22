@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.119 2006-03-03 00:02:44 karl Exp $
+# $Id: srclist.txt,v 1.120 2006-03-22 22:08:32 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -57,8 +57,6 @@ $GETTEXT/gettext-runtime/intl/ref-del.sin		lib gpl
 
 $GETTEXT/gettext-tools/lib/gettext.h			lib gpl
 $GETTEXT/gettext-tools/lib/mkdtemp.c			lib gpl
-$GETTEXT/gettext-tools/lib/setenv.c			lib gpl
-$GETTEXT/gettext-tools/lib/unsetenv.c			lib gpl
 $GETTEXT/gettext-tools/lib/vasprintf.h			lib gpl
 
 $GETTEXT/autoconf-lib-link/config.rpath			build-aux
@@ -279,6 +277,10 @@ $LIBCSRC/time/mktime.c			lib gpl
 #$LIBCSRC/sysdeps/unix/mkdir.c			lib gpl
 #$LIBCSRC/sysdeps/unix/sysv/gethostname.c	lib gpl
 #$LIBCSRC/sysdeps/unix/utime.c			lib gpl
+
+$COREUTILS/lib/setenv.c				lib gpl
+$COREUTILS/lib/setenv.h				lib gpl
+$COREUTILS/lib/unsetenv.c			lib gpl
 
 $LIBTOOL/libltdl/argz.c				lib gpl
 $LIBTOOL/libltdl/argz_.h			lib gpl
