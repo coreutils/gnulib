@@ -1,3 +1,8 @@
+2006-03-22  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt (*setenv.[ch]): get from coreutils.
+	* srclistvars.sh (COREUTILS): new var.
+
 2006-03-01  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt (Copyright/*): new entries.
