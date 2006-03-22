@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate March 10, 2006
+@set lastupdate March 22, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -53,22 +53,22 @@ copyright notice and this permission notice are preserved.
 @end ifnottex
 
 @menu
-* Preface::                     
-* Stepping Down::               
-* Recruiting Developers::       
-* Legal Matters::               
-* Clean Ups::                   
-* Platforms::                   
-* Mail::                        
-* Old Versions::                
-* Distributions::               
-* Web Pages::                   
-* Ethical and Philosophical Consideration::  
-* Terminology::          
-* Hosting::                     
-* Free Software Directory::     
-* Using the Proofreaders List::  
-* Index::                       
+* Preface::
+* Stepping Down::
+* Recruiting Developers::
+* Legal Matters::
+* Clean Ups::
+* Platforms::
+* Mail::
+* Old Versions::
+* Distributions::
+* Web Pages::
+* Ethical and Philosophical Consideration::
+* Terminology::
+* Hosting::
+* Free Software Directory::
+* Using the Proofreaders List::
+* Index::
 @end menu
 
 @node Preface
@@ -171,12 +171,12 @@ This chapter describes procedures you should follow for legal reasons
 as you maintain the program, to avoid legal difficulties.
 
 @menu
-* Copyright Papers::            
+* Copyright Papers::
 * Legally Significant::
-* Recording Contributors::      
-* Copyright Notices::           
-* License Notices::             
-* External Libraries::          
+* Recording Contributors::
+* Copyright Notices::
+* License Notices::
+* External Libraries::
 @end menu
 
 @node Copyright Papers
@@ -551,7 +551,7 @@ You can use whichever is the most convenient for you.
 
 @item
 The directory @file{/gd/gnuorg} on the host
-@code{fencepost.gnu.org}.  (You can ask @email{accounts@@gnu.org} 
+@code{fencepost.gnu.org}.  (You can ask @email{accounts@@gnu.org}
 for an account there if you don't have one).
 
 @item
@@ -616,7 +616,7 @@ Texts,,,texinfo,Texinfo}, for a full example in a Texinfo manual.
 
 @smallexample
 Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.1 or
+under the terms of the GNU Free Documentation License, Version 1.2 or
 any later version published by the Free Software Foundation; with the
 Invariant Sections being "GNU General Public License", with the
 Front-Cover Texts being ``A GNU Manual,'' and with the Back-Cover Texts
@@ -904,12 +904,12 @@ It is important to follow the GNU conventions when making GNU software
 distributions.
 
 @menu
-* Distribution tar Files::      
-* Distribution Patches::        
-* Distribution on ftp.gnu.org::  
-* Test Releases::               
-* Automated FTP Uploads::               
-* Announcements::               
+* Distribution tar Files::
+* Distribution Patches::
+* Distribution on ftp.gnu.org::
+* Test Releases::
+* Automated FTP Uploads::
+* Announcements::
 @end menu
 
 @node Distribution tar Files
@@ -1425,8 +1425,8 @@ important for correcting two widespread and important misunderstandings
 about GNU.
 
 @menu
-* Free Software and Open Source::  
-* GNU and Linux::               
+* Free Software and Open Source::
+* GNU and Linux::
 @end menu
 
 @node Free Software and Open Source
