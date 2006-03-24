@@ -291,7 +291,8 @@ static const signed char b64[0x100] = {
 #endif
 
 /* Return true if CH is a character from the Base64 alphabet, and
-   false otherwise. */
+   false otherwise.  Note that '=' is padding and not considered to be
+   part of the alphabet.  */
 bool
 isbase64 (char ch)
 {
