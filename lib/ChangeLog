@@ -1,3 +1,9 @@
+2006-03-24  Simon Josefsson  <jas@extundo.com>
+
+	* base64.c: Fix problems reported by Eric Blake <ebb9@byu.net>,
+	including some doc fixes.
+	(base64_encode_alloc): Fix +1 bug on allocation failures.
+
 2006-03-24  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
 
 	* base64.c (base64_encode): Do not read past end of array with

@@ -109,8 +109,8 @@ base64_encode (const char *restrict in, size_t inlen,
    return, the OUT variable will hold a pointer to newly allocated
    memory that must be deallocated by the caller.  If output string
    length would overflow, 0 is returned and OUT is set to NULL.  If
-   memory allocation fail, OUT is set to NULL, and the return value
-   indicate length of the requested memory block, i.e.,
+   memory allocation failed, OUT is set to NULL, and the return value
+   indicates length of the requested memory block, i.e.,
    BASE64_LENGTH(inlen) + 1. */
 size_t
 base64_encode_alloc (const char *in, size_t inlen, char **out)
@@ -136,8 +136,10 @@ base64_encode_alloc (const char *in, size_t inlen, char **out)
     }
 
   *out = malloc (outlen);
-  if (*out)
-    base64_encode (in, inlen, *out, outlen);
+  if (!*out)
+    return outlen;
+
+  base64_encode (in, inlen, *out, outlen);
 
   return outlen - 1;
 }
@@ -288,6 +290,8 @@ static const signed char b64[0x100] = {
 # define uchar_in_range(c) ((c) <= 255)
 #endif
 
+/* Return true if CH is a character from the Base64 alphabet, and
+   false otherwise. */
 bool
 isbase64 (char ch)
 {
@@ -382,11 +386,11 @@ base64_decode (const char *restrict in, size_t inlen,
    size of the decoded data is stored in *OUTLEN.  OUTLEN may be NULL,
    if the caller is not interested in the decoded length.  *OUT may be
    NULL to indicate an out of memory error, in which case *OUTLEN
-   contain the size of the memory block needed.  The function return
+   contains the size of the memory block needed.  The function returns
    true on successful decoding and memory allocation errors.  (Use the
    *OUT and *OUTLEN parameters to differentiate between successful
-   decoding and memory error.)  The function return false if the input
-   was invalid, in which case *OUT is NULL and *OUTLEN is
+   decoding and memory error.)  The function returns false if the
+   input was invalid, in which case *OUT is NULL and *OUTLEN is
    undefined. */
 bool
 base64_decode_alloc (const char *in, size_t inlen, char **out,
