@@ -74,7 +74,7 @@ base64_encode (const char *restrict in, size_t inlen,
 
   while (inlen && outlen)
     {
-      *out++ = b64str[to_uchar (in[0]) >> 2];
+      *out++ = b64str[(to_uchar (in[0]) >> 2) & 0x3f];
       if (!--outlen)
 	break;
       *out++ = b64str[((to_uchar (in[0]) << 4)

@@ -1,3 +1,8 @@
+2006-03-24  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+
+	* base64.c (base64_encode): Do not read past end of array with
+	unsanitized input on systems with CHAR_BIT > 8.
+
 2006-03-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regex.h (regoff_t) [defined _REGEX_LARGE_OFFSETS]:
