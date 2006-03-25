@@ -1,3 +1,7 @@
+2006-03-24  Eric Blake  <ebb9@byu.net>
+
+	* time_r.c (copy_string_result): Remove, as it is no longer used.
+
 2006-03-24  Simon Josefsson  <jas@extundo.com>
 
 	* base64.c: Fix problems reported by Eric Blake <ebb9@byu.net>,
