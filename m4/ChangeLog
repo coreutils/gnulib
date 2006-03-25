@@ -1,3 +1,8 @@
+2006-03-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* argz.m4 (gl_FUNC_ARGZ): If we define `error_t', also define
+	`__error_t_defined', so argp.h will not typedef the former.
+
 2006-03-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regex.m4 (gl_REGEX): Don't insist on REG_SYNTAX_POSIX_EGREP,
