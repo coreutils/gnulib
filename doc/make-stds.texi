@@ -9,7 +9,7 @@
 @cindex standards for makefiles
 
 @c Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 2000, 2001,
-@c 2004, 2005 Free Software Foundation, Inc.
+@c 2004, 2005, 2006 Free Software Foundation, Inc.
 
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.1
@@ -273,7 +273,7 @@ $(INSTALL_DATA) libfoo.a $(libdir)/libfoo.a
 
 Optionally, you may prepend the value of @code{DESTDIR} to the target
 filename.  Doing this allows the installer to create a snapshot of the
-installation to be copied onto the real target filesystem later.  Do not
+installation to be copied onto the real target file system later.  Do not
 set the value of @code{DESTDIR} in your Makefile, and do not include it
 in any installed files.  With support for @code{DESTDIR}, the above
 examples become:
@@ -294,7 +294,7 @@ installed.
 Installation directories should always be named by variables, so it is
 easy to install in a nonstandard place.  The standard names for these
 variables and the values they should have in GNU packages are
-described below.  They are based on a standard filesystem layout;
+described below.  They are based on a standard file system layout;
 variants of it are used in GNU/Linux and other modern operating
 systems.
 
