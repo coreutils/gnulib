@@ -252,17 +252,17 @@ even if they occur as dependencies.  Corresponds to the @samp{--avoid}
 command line argument.
 
 @item gl_SOURCE_BASE
-The argument is the relative pathname of the directory containing the gnulib
+The argument is the relative file name of the directory containing the gnulib
 source files (mostly *.c and *.h files).  Corresponds to the
 @samp{--source-base} command line argument.
 
 @item gl_M4_BASE
-The argument is the relative pathname of the directory containing the gnulib
+The argument is the relative file name of the directory containing the gnulib
 M4 macros (*.m4 files).  Corresponds to the @samp{--m4-base} command line
 argument.
 
 @item gl_TESTS_BASE
-The argument is the relative pathname of the directory containing the gnulib
+The argument is the relative file name of the directory containing the gnulib
 unit test files.  Corresponds to the @samp{--tests-base} command line argument.
 
 @item gl_LIB
