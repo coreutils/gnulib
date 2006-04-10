@@ -18,6 +18,7 @@ gettext-h
 malloc
 restrict
 strcase
+ssize_t
 
 configure.ac:
 gl_REGEX
