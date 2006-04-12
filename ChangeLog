@@ -1,3 +1,8 @@
+2006-04-12  Eric Blake  <ebb9@byu.net>
+
+	* modules/time_r (Makefile.am): Remove lib_SOURCES line, as this
+	is now done automatically by the corresponding Autoconf macro.
+
 2006-04-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/regex (Depends-on): Add ssize_t.
@@ -71,7 +76,7 @@
 	* modules/xstrtod: Omit xstrtod.h, xstrtod.c; they're in LIB_SOURCES.
 	* modules/lock-tests (TESTS): Use $(EXEEXT).
 	* modules/tls-tests: Likewise.
-        * modules/argp-tests: Likewise.
+	* modules/argp-tests: Likewise.
 	(check_PROGRAMS): New var, replacing...
 	(noinst_PROGRAMS, test_argp_SOURCES): Remove.
 
