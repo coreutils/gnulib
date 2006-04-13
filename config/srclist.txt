@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.120 2006-03-22 22:08:32 karl Exp $
+# $Id: srclist.txt,v 1.121 2006-04-13 13:59:24 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -18,8 +18,8 @@ $AUTOCONF/INSTALL		doc
 $GNUWWWLICENSES/fdl.texi	doc
 $GNUWWWLICENSES/gpl.texi	doc
 $GNUWWWLICENSES/lgpl.texi	doc
-$GNUWWWLICENSES/COPYING		doc
-$GNUWWWLICENSES/COPYING.LESSER	doc
+$GNUWWWLICENSES/gpl.txt		doc
+$GNUWWWLICENSES/lgpl.txt	doc
 #
 $GNUSTANDARDS/maintain.texi	doc
 $GNUSTANDARDS/standards.texi	doc
