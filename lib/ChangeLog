@@ -1,3 +1,8 @@
+2006-04-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* utimens.c (futimens): glibc futimesat messes up if /proc
+	isn't mounted.  Problem reported by Kir Kolyshkin.
+
 2006-04-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regcomp.c (init_dfa): Don't use wchar_t or wctype_t if RE_ENABLE_I18N
