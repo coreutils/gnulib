@@ -1,3 +1,9 @@
+2006-04-18  Derek Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/inttypes: New file.
+	* modules/strtoimax, modules/strtoumax: Depend on inttypes.
+
 2006-04-12  Eric Blake  <ebb9@byu.net>
 
 	* modules/time_r (Makefile.am): Remove lib_SOURCES line, as this

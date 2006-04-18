@@ -1,3 +1,9 @@
+2006-04-18  Derek Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/inttypes.h: New file.
+	* lib/strtoimax.c: Assume <inttypes.h>.
+
 2006-04-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* utimens.c (futimens): glibc futimesat messes up if /proc

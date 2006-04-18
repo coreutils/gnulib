@@ -12,6 +12,7 @@ m4/strtoimax.m4
 Depends-on:
 strtoll
 verify
+inttypes
 
 configure.ac:
 gl_FUNC_STRTOIMAX

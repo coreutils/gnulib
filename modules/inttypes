@@ -1,0 +1,28 @@
+Description:
+A wrapper C99 <inttypes.h> header which will always include <stdint.h>
+(possibly the *almost* C99 compliant GNULIB <stdint.h>) and prototypes for the
+strtoimax & strtoumax functions.
+
+Files:
+lib/inttypes.h
+m4/include_next.m4
+m4/full-header-path.m4
+m4/_inttypes_h.m4
+
+Depends-on:
+stdint
+
+configure.ac:
+gl_INTTYPES_H
+
+Makefile.am:
+
+Include:
+#include <inttypes.h>
+
+License:
+LGPL
+
+Maintainer:
+Derek Price
+

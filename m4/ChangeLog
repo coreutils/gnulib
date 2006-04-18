@@ -1,3 +1,9 @@
+2006-04-18  Derek Price  <derek@ximbiot.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/_inttypes_h.m4, m4/full-header-path.m4, m4/include_next: New
+	files.
+
 2006-04-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* time_r.m4 (gl_TIME_R): Add AC_LIBSOURCES for time_r.c and time_r.h.
