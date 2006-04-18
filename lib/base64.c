@@ -305,7 +305,9 @@ isbase64 (char ch)
    otherwise.  If *OUTLEN is too small, as many bytes as possible will
    be written to OUT.  On return, *OUTLEN holds the length of decoded
    bytes in OUT.  Note that as soon as any non-alphabet characters are
-   encountered, decoding is stopped and false is returned. */
+   encountered, decoding is stopped and false is returned.  This means
+   that, when applicable, you must de-fold any CRLF that is part of
+   the data stream before calling this function.  */
 bool
 base64_decode (const char *restrict in, size_t inlen,
 	       char *restrict out, size_t *outlen)
