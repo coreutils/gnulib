@@ -11,9 +11,9 @@ dnl From Derek Price.
 # Find the full path to a header file, when the #include_next directive
 # doesn't work and the header exists in the first place.  If the header were
 # sys/inttypes.h (and it existed and #include_next didn't work), this macro
-# would define FULL_PATH_SYS_INTTYPES_H to the quoted full path to
+# would define FULL_PATH_SYS_INTTYPES_H to the `<>' quoted full path to
 # sys/inttypes.h in config.h
-# (e.g. `#define FULL_PATH_SYS_INTTYPES_H "/usr/include/sys/inttypes.h"').
+# (e.g. `#define FULL_PATH_SYS_INTTYPES_H </usr/include/sys/inttypes.h>').
 AC_DEFUN([gl_FULL_HEADER_PATH],
 [AC_LANG_PREPROC_REQUIRE()dnl
 AC_REQUIRE([gl_INCLUDE_NEXT])dnl
@@ -36,10 +36,8 @@ sed -n '\#/]m4_quote(m4_defn([gl_HEADER_NAME]))[#{s#.*"\(.*/]m4_quote(m4_defn([g
     fi
     AS_VAR_POPDEF([ac_header_exists])dnl
     ])dnl
-  AC_DEFINE_UNQUOTED([FULL_PATH_]m4_quote(translit(m4_defn([gl_HEADER_NAME]),
-                                                   [-./abcdefghijklmnopqrstuvwxyz],
-                                                   [___ABCDEFGHIJKLMNOPQRSTUVWXYZ])),
-                     ["AS_VAR_GET(gl_full_header_path)"],
+  AC_DEFINE_UNQUOTED(AS_TR_CPP([FULL_PATH_]m4_quote(m4_defn([gl_HEADER_NAME]))),
+                     [<AS_VAR_GET(gl_full_header_path)>],
                      [Define this to the full path to <]m4_quote(m4_defn([gl_HEADER_NAME]))[>.])
   AS_VAR_POPDEF([gl_full_header_path])dnl
 ])dnl

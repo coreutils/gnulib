@@ -1,8 +1,14 @@
+2006-04-19  Derek Price  <derek@ximbiot.com>
+	    Eric Blake  <ebb9@byu.net>
+
+	* full-header-path.m4 (gl_FULL_HEADER_PATH): Use </full/path.h> rather
+	than "/full/path.h".  Update comment to match.  Shorten & generalize
+	m4_translit call via AS_TR_CPP.
+
 2006-04-18  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
-	* m4/_inttypes_h.m4, m4/full-header-path.m4, m4/include_next: New
-	files.
+	* _inttypes_h.m4, full-header-path.m4, include_next: New files.
 
 2006-04-11  Paul Eggert  <eggert@cs.ucla.edu>
 
