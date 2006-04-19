@@ -1,8 +1,13 @@
+2006-04-19  Derek Price  <derek@ximbiot.com>
+	    Eric Blake  <ebb9@byu.net>
+
+	* inttypes.h: Correct grammar in comment.
+
 2006-04-18  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
-	* lib/inttypes.h: New file.
-	* lib/strtoimax.c: Assume <inttypes.h>.
+	* inttypes.h: New file.
+	* strtoimax.c: Assume <inttypes.h>.
 
 2006-04-15  Paul Eggert  <eggert@cs.ucla.edu>
 

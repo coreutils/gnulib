@@ -24,7 +24,7 @@
  * <http://www.opengroup.org/onlinepubs/007904975/basedefs/inttypes.h.html>
  *
  * Currently, if the system <inttypes.h> is missing or not C99 compliant, then
- * this header may only to provide the required <stdint.h> (which may be the
+ * this header may only provide the required <stdint.h> (which may be the
  * *almost* C99 compliant one from GNULIB) and prototypes for the strtoimax and
  * strtoumax functions.
  */
