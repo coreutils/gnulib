@@ -1,5 +1,5 @@
-# onceonly.m4 serial 3 (gettext-0.12)
-dnl Copyright (C) 2002, 2003 Free Software Foundation, Inc.
+# onceonly.m4 serial 4 (gettext-0.15)
+dnl Copyright (C) 2002-2003, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -18,6 +18,11 @@ dnl   if some_condition; then gl_CHECK_HEADERS(stdlib.h); fi
 dnl inside an AC_DEFUNed function, the gl_CHECK_HEADERS macro call expands to
 dnl empty, and the check will be inserted before the body of the AC_DEFUNed
 dnl function.
+
+dnl This file is only needed in autoconf <= 2.59.  Newer versions of autoconf
+dnl have this macro built-in.  But about AC_CHECK_DECLS_ONCE: note that in
+dnl autoconf >= 2.60 the symbol separator is a comma, whereas here it is
+dnl whitespace.
 
 dnl Autoconf version 2.57 or newer is recommended.
 AC_PREREQ(2.54)
