@@ -1,5 +1,5 @@
-# argp.m4 serial 5
-dnl Copyright (C) 2003-2005 Free Software Foundation, Inc.
+# argp.m4 serial 6
+dnl Copyright (C) 2003-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -43,11 +43,19 @@ AC_DEFUN([gl_ARGP],
                    AC_MSG_RESULT(yes)],
                  [ AC_MSG_RESULT(no)] )
 
-  AC_CHECK_DECLS_ONCE(
-     [clearerr_unlocked feof_unlocked ferror_unlocked
-      fflush_unlocked fgets_unlocked fputc_unlocked fputs_unlocked
-      fread_unlocked fwrite_unlocked getc_unlocked
-      getchar_unlocked putc_unlocked putchar_unlocked])
+  AC_CHECK_DECLS_ONCE([clearerr_unlocked])
+  AC_CHECK_DECLS_ONCE([feof_unlocked])
+  AC_CHECK_DECLS_ONCE([ferror_unlocked])
+  AC_CHECK_DECLS_ONCE([fflush_unlocked])
+  AC_CHECK_DECLS_ONCE([fgets_unlocked])
+  AC_CHECK_DECLS_ONCE([fputc_unlocked])
+  AC_CHECK_DECLS_ONCE([fputs_unlocked])
+  AC_CHECK_DECLS_ONCE([fread_unlocked])
+  AC_CHECK_DECLS_ONCE([fwrite_unlocked])
+  AC_CHECK_DECLS_ONCE([getc_unlocked])
+  AC_CHECK_DECLS_ONCE([getchar_unlocked])
+  AC_CHECK_DECLS_ONCE([putc_unlocked])
+  AC_CHECK_DECLS_ONCE([putchar_unlocked])
   AC_CHECK_FUNCS_ONCE([flockfile funlockfile])
   AC_CHECK_HEADERS_ONCE([features.h linewrap.h])
 ])

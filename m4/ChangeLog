@@ -1,3 +1,11 @@
+2006-04-20  Bruno Haible  <bruno@clisp.org>
+
+	* argp.m4 (gl_ARGP): Don't call AC_CHECK_DECLS_ONCE with more than
+	one argument, so that the code will be portable to Autoconf 2.60.
+	* getlogin_r.m4 (gl_PREREQ_GETLOGIN_R): Likewise.
+	* getpass.m4 (gl_PREREQ_GETPASS): Likewise.
+	* unlocked-io.m4 (gl_FUNC_GLIBC_UNLOCKED_IO): Likewise.
+
 2006-04-19  Derek Price  <derek@ximbiot.com>
 	    Eric Blake  <ebb9@byu.net>
 
