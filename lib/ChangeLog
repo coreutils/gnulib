@@ -1,5 +1,16 @@
 2006-04-23  Bruno Haible  <bruno@clisp.org>
 
+	* copy-file.c: Include <unistd.h> unconditionally.
+	* execute.c: Likewise.
+	* fatal-signal.c: Likewise.
+	* findprog.c: Likewise.
+	* mkdtemp.c: Likewise.
+	* pipe.h: Likewise.
+	* pipe.c: Likewise.
+	* wait-process.h: Likewise.
+
+2006-04-23  Bruno Haible  <bruno@clisp.org>
+
 	* fwriteerror.c (fwriteerror): Call fclose also when an error
 	condition was already detected.
 	Reported by Ben Pfaff <blp@cs.stanford.edu>.

@@ -11,6 +11,7 @@ m4/uintmax_t.m4
 m4/mkdtemp.m4
 
 Depends-on:
+unistd
 
 configure.ac:
 gt_FUNC_MKDTEMP

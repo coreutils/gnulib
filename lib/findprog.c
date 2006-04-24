@@ -1,5 +1,5 @@
 /* Locating a program in PATH.
-   Copyright (C) 2001-2004 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -27,10 +27,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifdef HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+#include <unistd.h>
 
 #include "xalloc.h"
 #include "pathname.h"

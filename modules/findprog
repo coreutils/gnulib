@@ -11,6 +11,7 @@ Depends-on:
 stdbool
 xalloc
 pathname
+unistd
 
 configure.ac:
 gl_FINDPROG

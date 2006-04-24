@@ -1,5 +1,5 @@
 /* Creation of subprocesses, communicating via pipes.
-   Copyright (C) 2001-2004 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -28,10 +28,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <signal.h>
-
-#ifdef HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+#include <unistd.h>
 
 #include "error.h"
 #include "exit.h"

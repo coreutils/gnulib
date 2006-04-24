@@ -15,6 +15,7 @@ fatal-signal
 gettext-h
 stdbool
 strpbrk
+unistd
 
 configure.ac:
 gl_PIPE

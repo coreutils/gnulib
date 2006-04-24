@@ -1,4 +1,4 @@
-/* Copyright (C) 1999, 2001-2003 Free Software Foundation, Inc.
+/* Copyright (C) 1999, 2001-2003, 2006 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software; you can redistribute it and/or modify
@@ -45,9 +45,7 @@
 # include <inttypes.h>
 #endif
 
-#if HAVE_UNISTD_H || _LIBC
-# include <unistd.h>
-#endif
+#include <unistd.h>
 
 #if HAVE_GETTIMEOFDAY || _LIBC
 # if HAVE_SYS_TIME_H || _LIBC

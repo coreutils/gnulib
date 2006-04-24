@@ -1,5 +1,5 @@
 /* Emergency actions in case of a fatal signal.
-   Copyright (C) 2003-2004 Free Software Foundation, Inc.
+   Copyright (C) 2003-2004, 2006 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -28,9 +28,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
-#if HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+#include <unistd.h>
 
 #include "xalloc.h"
 

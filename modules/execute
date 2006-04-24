@@ -15,6 +15,7 @@ wait-process
 gettext-h
 stdbool
 strpbrk
+unistd
 
 configure.ac:
 gl_EXECUTE

@@ -13,6 +13,7 @@ full-write
 binary-io
 exit
 gettext-h
+unistd
 
 configure.ac:
 gl_COPY_FILE
