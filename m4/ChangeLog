@@ -1,5 +1,10 @@
 2006-04-23  Bruno Haible  <bruno@clisp.org>
 
+	* poll.m4 (gl_FUNC_POLL): Rearrange code, so that POLL_H gets
+	assigned exactly once.
+
+2006-04-23  Bruno Haible  <bruno@clisp.org>
+
 	* poll.m4 (gl_FUNC_POLL): When cross-compiling, reject also the poll()
 	implementation in AIX.
 	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
