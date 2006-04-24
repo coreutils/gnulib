@@ -1,3 +1,7 @@
+2006-03-04  Eric Blake  <ebb9@byu.net>
+
+	* strerror_r.m4 (AC_FUNC_STRERROR_R): Avoid unused variable warning.
+
 2006-04-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* fsusage.m4 (gl_FILE_SYSTEM_USAGE): Use return, not exit.

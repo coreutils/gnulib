@@ -25,6 +25,7 @@ AC_CACHE_CHECK([whether strerror_r returns char *],
 	  char buf[100];
 	  char x = *strerror_r (0, buf, sizeof buf);
 	  char *p = strerror_r (0, buf, sizeof buf);
+	  return !p || x;
 	]])],
 			ac_cv_func_strerror_r_char_p=yes)
     else
