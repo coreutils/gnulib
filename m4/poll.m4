@@ -1,4 +1,4 @@
-# poll.m4 serial 5
+# poll.m4 serial 6
 dnl Copyright (c) 2003, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,7 +16,7 @@ AC_DEFUN([gl_FUNC_POLL],
 
   AC_CHECK_FUNC(poll,
     [# Check whether poll() works on special files (like /dev/null) and
-     # and ttys (like /dev/tty). On MacOS X 10.4.0, it doesn't.
+     # and ttys (like /dev/tty). On MacOS X 10.4.0 and AIX 5.3, it doesn't.
      AC_TRY_RUN([
 #include <fcntl.h>
 #include <poll.h>
@@ -25,7 +25,8 @@ AC_DEFUN([gl_FUNC_POLL],
          struct pollfd ufd;
          /* Try /dev/null for reading.  */
          ufd.fd = open ("/dev/null", O_RDONLY);
-         if (ufd.fd < 0) /* If /dev/null does not exist, it's not MacOS X. */
+         if (ufd.fd < 0)
+           /* If /dev/null does not exist, it's not MacOS X nor AIX. */
            return 0;
          ufd.events = POLLIN;
          ufd.revents = 0;
@@ -33,7 +34,8 @@ AC_DEFUN([gl_FUNC_POLL],
            return 1;
          /* Try /dev/null for writing.  */
          ufd.fd = open ("/dev/null", O_WRONLY);
-         if (ufd.fd < 0) /* If /dev/null does not exist, it's not MacOS X. */
+         if (ufd.fd < 0)
+           /* If /dev/null does not exist, it's not MacOS X nor AIX. */
            return 0;
          ufd.events = POLLOUT;
          ufd.revents = 0;
@@ -45,10 +47,10 @@ AC_DEFUN([gl_FUNC_POLL],
        [gl_cv_func_poll=yes],
        [gl_cv_func_poll=no],
        [# When cross-compiling, assume that poll() works everywhere except on
-        # MacOS X, regardless of its version.
+        # MacOS X or AIX, regardless of its version.
         AC_EGREP_CPP([MacOSX], [
-#if defined(__APPLE__) && defined(__MACH__)
-This is MacOSX
+#if (defined(__APPLE__) && defined(__MACH__)) || defined(_AIX)
+This is MacOSX or AIX
 #endif
 ], [gl_cv_func_poll=no], [gl_cv_func_poll=yes])])])
   if test $gl_cv_func_poll = yes; then

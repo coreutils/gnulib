@@ -1,3 +1,9 @@
+2006-04-23  Bruno Haible  <bruno@clisp.org>
+
+	* poll.m4 (gl_FUNC_POLL): When cross-compiling, reject also the poll()
+	implementation in AIX.
+	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
 2006-03-04  Eric Blake  <ebb9@byu.net>
 
 	* strerror_r.m4 (AC_FUNC_STRERROR_R): Avoid unused variable warning.
