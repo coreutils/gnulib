@@ -1,3 +1,7 @@
+2006-04-24  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt (longdouble.m4): sync lost.
+
 2006-03-22  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt (*setenv.[ch]): get from coreutils.

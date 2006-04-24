@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.121 2006-04-13 13:59:24 karl Exp $
+# $Id: srclist.txt,v 1.122 2006-04-24 13:21:32 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -61,9 +61,10 @@ $GETTEXT/gettext-tools/lib/vasprintf.h			lib gpl
 
 $GETTEXT/autoconf-lib-link/config.rpath			build-aux
 $GETTEXT/autoconf-lib-link/m4/lib-ld.m4			m4
-# Reenable when gettext-0.15 is released.
+# Reenable when next gettext is released, hopefully,
 #$GETTEXT/autoconf-lib-link/m4/lib-link.m4		m4
 #$GETTEXT/autoconf-lib-link/m4/lib-prefix.m4		m4
+#$GETTEXT/gettext-runtime/m4/longdouble.m4		m4
 
 $GETTEXT/gettext-runtime/m4/codeset.m4			m4
 $GETTEXT/gettext-runtime/m4/gettext.m4			m4
@@ -73,7 +74,6 @@ $GETTEXT/gettext-runtime/m4/intdiv0.m4			m4
 $GETTEXT/gettext-runtime/m4/intmax.m4			m4
 $GETTEXT/gettext-runtime/m4/inttypes-pri.m4		m4
 $GETTEXT/gettext-runtime/m4/lcmessage.m4		m4
-$GETTEXT/gettext-runtime/m4/longdouble.m4		m4
 $GETTEXT/gettext-runtime/m4/nls.m4			m4
 $GETTEXT/gettext-runtime/m4/po.m4			m4
 $GETTEXT/gettext-runtime/m4/printf-posix.m4		m4
