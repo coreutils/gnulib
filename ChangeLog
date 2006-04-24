@@ -1,3 +1,13 @@
+2006-04-23  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_usage): Fix --import description. Document --update.
+	(func_import): Create temporary file in a temporary directory, if
+	--dry-run is specified. Silence errors from 'grep' when there are no
+	m4 files in $m4dir.
+	(func_create_testdir): Silence errors from 'grep' when there are no
+	m4 files in $m4dir.
+	Reported by Karl Berry <karl@freefriends.org>.
+
 2006-04-18  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
