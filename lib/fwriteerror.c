@@ -1,5 +1,5 @@
 /* Detect write error on a stream.
-   Copyright (C) 2003-2005 Free Software Foundation, Inc.
+   Copyright (C) 2003-2006 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -47,18 +47,26 @@ fwriteerror (FILE *fp)
   if (ferror (fp))
     {
       if (fflush (fp))
-	return -1; /* errno is set here */
+	goto close_preserving_errno; /* errno is set here */
       /* The stream had an error earlier, but its errno was lost.  If the
 	 error was not temporary, we can get the same errno by writing and
 	 flushing one more byte.  We can do so because at this point the
 	 stream's contents is garbage anyway.  */
       if (fputc ('\0', fp) == EOF)
-	return -1; /* errno is set here */
+	goto close_preserving_errno; /* errno is set here */
       if (fflush (fp))
-	return -1; /* errno is set here */
+	goto close_preserving_errno; /* errno is set here */
       /* Give up on errno.  */
       errno = 0;
-      return -1;
+     close_preserving_errno:
+      /* There's an error.  Nevertheless call fclose(fp), for consistency
+	 with the other cases.  */
+      {
+	int saved_errno = errno;
+	fclose (fp);
+	errno = saved_errno;
+	return -1;
+      }
     }
 
   /* If we are closing stdout, don't attempt to do it later again.  */
