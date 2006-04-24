@@ -1,3 +1,10 @@
+2006-04-23  Claudio Fontana  <claudio@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	* modules/gettext (Makefile.am): Add a -I flag for <libintl.h>.
+	* gnulib-tool (func_emit_lib_Makefile_am): Emit empty default value
+	for AM_CPPFLAGS.
+
 2006-04-23  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_usage): Fix --import description. Document --update.
