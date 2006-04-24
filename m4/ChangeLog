@@ -1,3 +1,13 @@
+2006-04-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* unlink-busy.m4 (gl_FUNC_UNLINK_BUSY_TEXT): Use prototype
+	to define main with arguments, for C++.  Reported by Eric Blake.
+	* c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC):
+	Prefer 'int main ()' to 'int main (void)', for C++.
+	* getcwd-path-max.m4 (gl_FUNC_GETCWD_PATH_MAX): Likewise.
+	* fsusage.m4 (gl_FILE_SYSTEM_USAGE): Specify a return type
+	for 'main', for C99 and C++.
+
 2006-04-23  Bruno Haible  <bruno@clisp.org>
 
 	* poll.m4 (gl_FUNC_POLL): Rearrange code, so that POLL_H gets

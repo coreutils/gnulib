@@ -66,7 +66,7 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	 }
 
 	 static int
-	 c_stack_action (void)
+	 c_stack_action ()
 	 {
 	   stack_t st;
 	   struct sigaction act;
@@ -94,7 +94,7 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	 }
 
 	 int
-	 main (void)
+	 main ()
 	 {
 	   #if HAVE_SETRLIMIT && defined RLIMIT_STACK
 	   /* Before starting the endless recursion, try to be friendly
