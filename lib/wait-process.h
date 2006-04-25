@@ -34,11 +34,14 @@ extern "C" {
 
 /* Wait for a subprocess to finish.  Return its exit code.
    If it didn't terminate correctly, exit if exit_on_error is true, otherwise
-   return 127.
+   return 127 and set exitsignal if the child terminated because of a signal.
    Arguments:
    - child is the pid of the subprocess.
    - progname is the name of the program executed by the subprocess, used for
      error messages.
+   - exitsignal is an optional pointer to an int to hold the signal number of
+     any signal that caused the child to exit.  It will be set to zero if this
+     function exits with an error not caused by the child catching a signal.
    - If ignore_sigpipe is true, consider a subprocess termination due to
      SIGPIPE as equivalent to a success.  This is suitable for processes whose
      only purpose is to write to standard output.  This flag can be safely set
@@ -50,6 +53,7 @@ extern "C" {
    - If exit_on_error is true, any error will cause the main process to exit
      with an error status.  */
 extern int wait_subprocess (pid_t child, const char *progname,
+			    int *exitsignal,
 			    bool ignore_sigpipe, bool null_stderr,
 			    bool slave_process, bool exit_on_error);
 
