@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-04-24 11:35:07 $'
+cvsdatestamp='$Date: 2006-04-25 12:01:00 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1453,9 +1453,30 @@ func_import ()
   echo "Finished."
   echo
   echo "You may need to add #include directives for the following .h files."
-  for module in $modules; do
-    func_get_include_directive "$module"
-  done | LC_ALL=C sort -u | sed -e '/^$/d;' -e 's/^/  /'
+  (
+   # First the #include <...> directives without #ifs, sorted for convenience.
+   for module in $modules; do
+     if func_get_include_directive "$module" | grep '^#if' >/dev/null; then
+       :
+     else
+       func_get_include_directive "$module" | grep -v 'include "'
+     fi
+   done | LC_ALL=C sort -u
+   # Then the #include "..." directives without #ifs, sorted for convenience.
+   for module in $modules; do
+     if func_get_include_directive "$module" | grep '^#if' >/dev/null; then
+       :
+     else
+       func_get_include_directive "$module" | grep 'include "'
+     fi
+   done | LC_ALL=C sort -u
+   # Then the #include directives that are surrounded by #ifs. Not sorted.
+   for module in $modules; do
+     if func_get_include_directive "$module" | grep '^#if' >/dev/null; then
+       func_get_include_directive "$module"
+     fi
+   done
+  ) | sed -e '/^$/d;' -e 's/^/  /'
   echo
   echo "Don't forget to"
   echo "  - add \"$sourcebase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
