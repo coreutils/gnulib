@@ -1884,7 +1884,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/fatal-signal.h">fatal-signal.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/fatal-signal.c">fatal-signal.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/fatal-signal.m4">fatal-signal.m4</A><BR><A HREF="m4/signalblocking.m4">signalblocking.m4</A><BR><A HREF="m4/sig_atomic_t.m4">sig_atomic_t.m4</A><BR>gl_FATAL_SIGNAL
-        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>stdbool
+        <TD ALIGN=LEFT VALIGN=TOP>xalloc<BR>stdbool<BR>unistd
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=raise"></A><A HREF="modules/raise">raise</A>
@@ -2533,7 +2533,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mkdtemp.h">mkdtemp.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mkdtemp.c">mkdtemp.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/ulonglong.m4">ulonglong.m4</A><BR><A HREF="m4/stdint_h.m4">stdint_h.m4</A><BR><A HREF="m4/inttypes_h.m4">inttypes_h.m4</A><BR><A HREF="m4/uintmax_t.m4">uintmax_t.m4</A><BR><A HREF="m4/mkdtemp.m4">mkdtemp.m4</A><BR>gt_FUNC_MKDTEMP
-        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>unistd
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=poll"></A><A HREF="modules/poll">poll</A>
@@ -2767,7 +2767,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/copy-file.h">copy-file.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/copy-file.c">copy-file.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/copy-file.m4">copy-file.m4</A><BR>gl_COPY_FILE
-        <TD ALIGN=LEFT VALIGN=TOP>error<BR>safe-read<BR>full-write<BR>binary-io<BR>exit<BR>gettext-h
+        <TD ALIGN=LEFT VALIGN=TOP>error<BR>safe-read<BR>full-write<BR>binary-io<BR>exit<BR>gettext-h<BR>unistd
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=cycle-check"></A><A HREF="modules/cycle-check">cycle-check</A>
@@ -3386,28 +3386,28 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/findprog.h">findprog.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/findprog.c">findprog.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/findprog.m4">findprog.m4</A><BR><A HREF="m4/eaccess.m4">eaccess.m4</A><BR>gl_FINDPROG
-        <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>xalloc<BR>pathname
+        <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>xalloc<BR>pathname<BR>unistd
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=wait-process"></A><A HREF="modules/wait-process">wait-process</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/wait-process.h">wait-process.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/wait-process.c">wait-process.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/wait-process.m4">wait-process.m4</A><BR><A HREF="m4/sig_atomic_t.m4">sig_atomic_t.m4</A><BR>gl_WAIT_PROCESS
-        <TD ALIGN=LEFT VALIGN=TOP>fatal-signal<BR>error<BR>exit<BR>xalloc<BR>gettext-h<BR>stdbool
+        <TD ALIGN=LEFT VALIGN=TOP>fatal-signal<BR>error<BR>exit<BR>xalloc<BR>gettext-h<BR>stdbool<BR>unistd
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=execute"></A><A HREF="modules/execute">execute</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/execute.h">execute.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/execute.c">execute.c</A><BR><A HREF="lib/w32spawn.h">w32spawn.h</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/execute.m4">execute.m4</A><BR>gl_EXECUTE
-        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>fatal-signal<BR>wait-process<BR>gettext-h<BR>stdbool<BR>strpbrk
+        <TD ALIGN=LEFT VALIGN=TOP>error<BR>exit<BR>fatal-signal<BR>wait-process<BR>gettext-h<BR>stdbool<BR>strpbrk<BR>unistd
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=pipe"></A><A HREF="modules/pipe">pipe</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/pipe.h">pipe.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/pipe.c">pipe.c</A><BR><A HREF="lib/w32spawn.h">w32spawn.h</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/pipe.m4">pipe.m4</A><BR>gl_PIPE
-        <TD ALIGN=LEFT VALIGN=TOP>wait-process<BR>error<BR>exit<BR>fatal-signal<BR>gettext-h<BR>stdbool<BR>strpbrk
+        <TD ALIGN=LEFT VALIGN=TOP>wait-process<BR>error<BR>exit<BR>fatal-signal<BR>gettext-h<BR>stdbool<BR>strpbrk<BR>unistd
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=sh-quote"></A><A HREF="modules/sh-quote">sh-quote</A>
@@ -3970,6 +3970,6 @@ variables.
       <LI>A POT file and some PO files
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 22 April 2006.
+    Generated from <CODE>MODULES.html.sh</CODE> on 25 April 2006.
   </BODY>
 </HTML>
