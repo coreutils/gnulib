@@ -251,7 +251,7 @@ unregister_slave_subprocess (pid_t child)
    If it didn't terminate correctly, exit if exit_on_error is true, otherwise
    return 127.  */
 int
-wait_subprocess (pid_t child, const char *progname, int *exitsignal,
+wait_subprocess (pid_t child, const char *progname,
 		 bool ignore_sigpipe, bool null_stderr,
 		 bool slave_process, bool exit_on_error)
 {
@@ -345,7 +345,6 @@ wait_subprocess (pid_t child, const char *progname, int *exitsignal,
   WAIT_T status;
 
   *(int *) &status = 0;
-  if (exitsignal) *exitsignal = 0;
   for (;;)
     {
       int result = waitpid (child, &status, 0);
@@ -395,7 +394,6 @@ wait_subprocess (pid_t child, const char *progname, int *exitsignal,
 	error (exit_on_error ? EXIT_FAILURE : 0, 0,
 	       _("%s subprocess got fatal signal %d"),
 	       progname, (int) WTERMSIG (status));
-      if (exitsignal) *exitsignal = WTERMSIG (status);
       return 127;
     }
   if (WEXITSTATUS (status) == 127)

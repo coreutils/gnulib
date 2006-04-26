@@ -1,11 +1,3 @@
-2006-04-25  Derek Price  <derek@ximbiot.com>
-
-	* wait-process.h (wait_subprocess): Accept a new exitsignal argument.
-	* wait-process.c (wait_subprocess): Always set *exitsignal to 0 when
-	present and set it to the offending signal when the child exits due to
-	a signal.
-	* csharpcomp.c, execute.c, javacomp.c: Update all callers.
-
 2006-04-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getdate.y (get_date): When adding relative date, start with the

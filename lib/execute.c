@@ -308,7 +308,7 @@ execute (const char *progname,
       unblock_fatal_signals ();
     }
 
-  return wait_subprocess (child, progname, NULL, ignore_sigpipe, null_stderr,
+  return wait_subprocess (child, progname, ignore_sigpipe, null_stderr,
 			  slave_process, exit_on_error);
 
 #endif

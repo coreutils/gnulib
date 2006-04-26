@@ -295,8 +295,7 @@ compile_csharp_using_mono (const char * const *sources,
       fclose (fp);
 
       /* Remove zombie process from process list, and retrieve exit status.  */
-      exitstatus = wait_subprocess (child, "mcs", NULL, false, false, true,
-				    true);
+      exitstatus = wait_subprocess (child, "mcs", false, false, true, true);
 
       for (i = 0; i < sources_count; i++)
 	if (argv[argc - sources_count + i] != sources[i])
@@ -367,7 +366,7 @@ compile_csharp_using_sscli (const char * const *sources,
 	  /* Remove zombie process from process list, and retrieve exit
 	     status.  */
 	  exitstatus =
-	    wait_subprocess (child, "csc", NULL, false, true, true, false);
+	    wait_subprocess (child, "csc", false, true, true, false);
 	  if (exitstatus != 0)
 	    csc_present = false;
 	}
