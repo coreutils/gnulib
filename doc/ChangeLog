@@ -1,3 +1,8 @@
+2006-04-29  Bruno Haible  <bruno@clisp.org>
+
+	* gcd.texi: New file.
+	* gnulib.texi: Include it.
+
 2006-04-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* gnulib-tool.texi (Modified imports): pathname -> file name.
