@@ -1,5 +1,5 @@
 /* Arithmetic.
-   Copyright (C) 2001-2002 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002, 2006 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -16,14 +16,20 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+/* This file can also be used to define gcd functions for other unsigned
+   types, such as 'unsigned long long' or 'uintmax_t'.  */
+#ifndef WORD_T
 /* Specification.  */
-#include "gcd.h"
+# include "gcd.h"
+# define WORD_T unsigned long
+# define GCD gcd
+#endif
 
 #include <stdlib.h>
 
 /* Return the greatest common divisor of a > 0 and b > 0.  */
-unsigned long
-gcd (unsigned long a, unsigned long b)
+WORD_T
+GCD (WORD_T a, WORD_T b)
 {
   /* Why no division, as in Euclid's algorithm? Because in Euclid's algorithm
      the division result floor(a/b) or floor(b/a) is very often = 1 or = 2,
@@ -33,7 +39,7 @@ gcd (unsigned long a, unsigned long b)
      bit in a single instruction, and the algorithm uses fewer variables than
      Euclid's algorithm.  */
 
-  unsigned long c = a | b;
+  WORD_T c = a | b;
   c = c ^ (c - 1);
   /* c = largest power of 2 that divides a and b.  */
 
