@@ -1,5 +1,5 @@
 @node gcd
-@section gcd
+@section gcd: greatest common divisor
 @findex gcd
 
 The @code{gcd} function returns the greatest common divisor of two numbers
