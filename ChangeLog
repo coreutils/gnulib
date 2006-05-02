@@ -1,5 +1,9 @@
 2006-04-25  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool: Make --update option actually work.
+
+2006-04-25  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Output the include directives in three
 	blocks, sorted separately.
 	Reported by Ben Pfaff <blp@cs.stanford.edu>.
