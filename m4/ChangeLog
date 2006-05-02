@@ -1,3 +1,9 @@
+2006-05-02  Bruno Haible  <bruno@clisp.org>
+
+	* full-header-path.m4 (gl_FULL_HEADER_PATH): Move the include_next
+	test from here...
+	* _inttypes_h.m4 (gl_INTTYPES_H): ... to here.
+
 2006-04-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* unlink-busy.m4 (gl_FUNC_UNLINK_BUSY_TEXT): Use prototype
