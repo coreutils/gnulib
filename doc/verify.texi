@@ -1,0 +1,82 @@
+@c GNU verify module documentation
+
+@c Copyright (C) 2006 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.2
+@c or any later version published by the Free Software Foundation;
+@c with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+@c Texts.  A copy of the license is included in the ``GNU Free
+@c Documentation License'' file as part of this distribution.
+
+@node Compile-time Assertions
+@section Compile-time Assertions
+
+@cindex assertion
+@findex verify
+@findex verify_true
+
+The @samp{verify} module supports compile-time tests, as opposed to
+the standard @file{assert.h} header which supports only runtime tests.
+Since the tests occur at compile-time, they are more reliable, and
+they require no runtime overhead.
+
+This module provides a header file @file{verify.h} that defines two
+macros: @code{verify (@var{EXPRESSION})} and @code{verify_true
+(@var{EXPRESSION})}.  Both accept an integer constant expression
+argument and verify that it is nonzero.  If not, a compile-time error
+results.
+
+@code{verify (@var{EXPRESSION});} is a declaration; it can occur
+outside of functions.  In contrast, @code{verify_true
+(@var{EXPRESSION})} is an integer constant expression that always
+evaluates to 1; it can be used in macros that expand to
+expressions.
+
+@var{EXPRESSION} should be an integer constant expression in the sense
+of the C standard.  Its leaf operands should be integer, enumeration,
+or character constants; or @code{sizeof} expressions that return
+constants; or floating constants that are the immediate operands of
+casts.  Outside a @code{sizeof} subexpression, @var{EXPRESSION} should
+not contain any assignments, function calls, comma operators, casts to
+non-integer types, or subexpressions whose values are outside the
+representable ranges for their types.  If @var{EXPRESSION} is not an
+integer constant expression, then a compiler might reject a usage like
+@samp{verify (@var{EXPRESSION});} even when @var{EXPRESSION} is
+nonzero.
+
+Here are some example uses.
+
+@example
+#include <verify.h>
+
+#include <limits.h>
+#include <time.h>
+
+/* Verify that time_t is an integer type.  */
+verify ((time_t) 1.5 == 1);
+
+/* Verify that time_t is at least as wide as int.  */
+verify (INT_MIN == (time_t) INT_MIN);
+verify (INT_MAX == (time_t) INT_MAX);
+
+/* Verify that time_t is signed.  */
+verify ((time_t) -1 < 0);
+
+/* Verify that time_t uses two's complement representation.  */
+verify (~ (time_t) -1 == 0);
+
+/* Return the maximum value of the integer type T,
+   verifying that T is an unsigned integer type.  */
+#define MAX_UNSIGNED_VAL_WITH_COMMA(t) \
+   (verify_true (0 < (T) -1), (T) -1)
+
+/* Same as MAX_UNSIGNED_VAL_WITH_COMMA,
+   but expand to an integer constant expression,
+   which cannot contain a comma operator.
+   The cast to (T) is outside the conditional expression
+   so that the result is of type T
+   even when T is narrower than unsigned int.  */
+#define MAX_UNSIGNED_VAL(t) ((T) \
+   ((T) (verify_true (0 < (T) -1) ? -1 : 0))
+@end example

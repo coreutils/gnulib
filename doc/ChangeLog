@@ -1,3 +1,7 @@
+2006-05-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* verify.texi: New file, partly based on a proposal by Bruno Haible.
+
 2006-04-29  Bruno Haible  <bruno@clisp.org>
 
 	* gcd.texi: New file.
