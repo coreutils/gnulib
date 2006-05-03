@@ -21,7 +21,7 @@
 
 /*
  * A wrapper for the ISO C 99 <inttypes.h>.
- * <http://www.opengroup.org/onlinepubs/007904975/basedefs/inttypes.h.html>
+ * <http://www.opengroup.org/susv3xbd/inttypes.h.html>
  *
  * Currently, if the system <inttypes.h> is missing or not C99 compliant, then
  * this header may only provide the required <stdint.h> (which may be the

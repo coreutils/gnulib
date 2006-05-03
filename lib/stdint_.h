@@ -21,7 +21,7 @@
 
 /*
  * ISO C 99 <stdint.h> for platforms that lack it.
- * <http://www.opengroup.org/onlinepubs/007904975/basedefs/stdint.h.html>
+ * <http://www.opengroup.org/susv3xbd/stdint.h.html>
  */
 
 /* Get wchar_t, WCHAR_MIN, WCHAR_MAX.  */
