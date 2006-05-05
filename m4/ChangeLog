@@ -1,3 +1,7 @@
+2006-05-05  Jim Meyering  <jim@meyering.net>
+
+	* warning.m4: New file, derived from bison's file by the same name.
+
 2006-05-02  Bruno Haible  <bruno@clisp.org>
 
 	* full-header-path.m4 (gl_FULL_HEADER_PATH): Move the include_next
