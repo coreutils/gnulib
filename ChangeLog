@@ -1,8 +1,13 @@
+2006-05-08  Bruno Haible  <bruno@clisp.org>
+
+	* modules/stdarg: New file.
+	* MODULES.html.sh (func_all_modules): Add section for <stdarg.h>.
+
 2006-05-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/inttypes (Maintainer): Change from Derek Price to 'all'.
 
-2006-04-25  Bruno Haible  <bruno@clisp.org>
+2006-04-29  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool: Make --update option actually work.
 

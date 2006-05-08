@@ -1,0 +1,21 @@
+Description:
+An <stdarg.h> that conforms to C99.
+
+Files:
+m4/stdarg.m4
+
+Depends-on:
+
+configure.ac:
+gl_STDARG_H
+
+Makefile.am:
+
+Include:
+#include <stdarg.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
