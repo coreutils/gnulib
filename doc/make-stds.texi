@@ -36,11 +36,12 @@ Using Automake will help you write a Makefile that follows these
 conventions.
 
 @menu
-* Makefile Basics::             General Conventions for Makefiles
-* Utilities in Makefiles::      Utilities in Makefiles
-* Command Variables::           Variables for Specifying Commands
-* Directory Variables::         Variables for Installation Directories
-* Standard Targets::            Standard Targets for Users
+* Makefile Basics::             General conventions for Makefiles.
+* Utilities in Makefiles::      Utilities to be used in Makefiles.
+* Command Variables::           Variables for specifying commands.
+* Directory Variables::         Variables for installation directories.
+* DESTDIR::                     Supporting staged installs.
+* Standard Targets::            Standard targets for users.
 * Install Command Categories::  Three categories of commands in the `install'
                                   rule: normal, pre-install and post-install.
 @end menu
@@ -264,29 +265,78 @@ and @code{INSTALL_DATA}.  (The default for @code{INSTALL_PROGRAM} should
 be @code{$(INSTALL)}; the default for @code{INSTALL_DATA} should be
 @code{$@{INSTALL@} -m 644}.)  Then it should use those variables as the
 commands for actual installation, for executables and nonexecutables
-respectively.  Use these variables as follows:
+respectively.  Minimal use of these variables is as follows:
 
 @example
 $(INSTALL_PROGRAM) foo $(bindir)/foo
 $(INSTALL_DATA) libfoo.a $(libdir)/libfoo.a
 @end example
 
-Optionally, you may prepend the value of @code{DESTDIR} to the target
-filename.  Doing this allows the installer to create a snapshot of the
-installation to be copied onto the real target file system later.  Do not
-set the value of @code{DESTDIR} in your Makefile, and do not include it
-in any installed files.  With support for @code{DESTDIR}, the above
-examples become:
+However, it is preferable to support a @code{DESTDIR} prefix on the
+target files, as explained in the next section.
+
+@noindent
+Always use a file name, not a directory name, as the second argument of
+the installation commands.  Use a separate command for each file to be
+installed.
+
+
+@node DESTDIR
+@section @code{DESTDIR}: support for staged installs
+
+@vindex DESTDIR
+@cindex staged installs
+@cindex installations, staged
+
+@code{DESTDIR} is a variable prepended to each installed target file,
+like this:
 
 @example
 $(INSTALL_PROGRAM) foo $(DESTDIR)$(bindir)/foo
 $(INSTALL_DATA) libfoo.a $(DESTDIR)$(libdir)/libfoo.a
 @end example
 
+The @code{DESTDIR} variable is specified by the user, either to the
+@file{configure} script or, more commonly, on the @code{make} command
+line.  For example:
+
+@example
+make DESTDIR=/tmp/stage install
+@end example
+
 @noindent
-Always use a file name, not a directory name, as the second argument of
-the installation commands.  Use a separate command for each file to be
-installed.
+(Since the value of @code{DESTDIR} is only used during installation it
+is not necessary to provide it with other @code{make} commands.)
+
+If your installation step would normally install
+@file{/usr/local/bin/foo} and @file{/usr/local/lib/libfoo.a}, then an
+installation invoked as in the example above would install
+@file{/tmp/stage/usr/local/bin/foo} and
+@file{/tmp/stage/usr/local/lib/libfoo.a} instead.
+
+Prepending the variable @code{DESTDIR} to each target in this way
+provides for @dfn{staged installs}, where the installed files are not
+placed directly into their expected location but are instead copied
+into a temporary location (@code{DESTDIR}).  However, installed files
+maintain their relative directory structure and any embedded file names
+will not be modified.
+
+You should not set the value of @code{DESTDIR} in your @file{Makefile}
+at all; then the files are installed into their expected locations by
+default.  Also, specifying @code{DESTDIR} should not change the
+operation of the software in any way, so its value should not be
+included in any file contents.
+
+@code{DESTDIR} support is commonly used in package creation.  It is
+also helpful to users who want to understand what a given package will
+install where, and to allow users who don't normally have permissions
+to install into protected areas to build and install before gaining
+those permissions.  Finally, it can be useful with tools such as
+@code{stow}, where code is installed in one place but made to appear
+to be installed somewhere else using symbolic links or special mount
+operations.  So, we recommend GNU packages support @code{DESTDIR},
+though it is not an absolute requirement.
+
 
 @node Directory Variables
 @section Variables for Installation Directories
@@ -306,9 +356,10 @@ these variables on the system they are being installed onto: use the
 default settings specified here so that all GNU packages behave
 identically, allowing the installer to achieve any desired layout.
 
-These two variables set the root for the installation.  All the other
-installation directories should be subdirectories of one of these two,
-and nothing should be directly installed into these two directories.
+These first two variables set the root for the installation.  All the
+other installation directories should be subdirectories of one of
+these two, and nothing should be directly installed into these two
+directories.
 
 @table @code
 @item prefix
@@ -624,6 +675,15 @@ variable names for installation directories is to enable the user to
 specify the exact same values for several different GNU packages.  In
 order for this to be useful, all the packages must be designed so that
 they will work sensibly when the user does so.
+
+Not all of these variables may be implemented in the current release
+of Autoconf and/or Automake; right now, that includes at least
+@code{docdir}, @code{psdir}, @code{pdfdir}, @code{htmldir},
+@code{dvidir}.  In these cases, the descriptions here serve as
+specifications for what Autoconf will implement.  As a programmer, you
+can either use a development version of Autoconf or avoid using these
+variables until a stable release is made which supports them.
+
 
 @node Standard Targets
 @section Standard Targets for Users

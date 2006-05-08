@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate April 9, 2006
+@set lastupdate April 23, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -3137,20 +3137,26 @@ Nowadays some other formats such as Docbook and Sgmltexi can be
 converted automatically into Texinfo.  It is ok to produce the Texinfo
 documentation by conversion this way, as long as it gives good results.
 
-Programmers often find it most natural to structure the documentation
-following the structure of the implementation, which they know.  But
-this structure is not necessarily good for explaining how to use the
-program; it may be irrelevant and confusing for a user.
+Make sure your manual is clear to a reader who knows nothing about the
+topic and reads it straight through.  This means covering basic topics
+at the beginning, and advanced topics only later.  This also means
+defining every specialized term when it is first used.
 
-At every level, from the sentences in a paragraph to the grouping of
-topics into separate manuals, the right way to structure documentation
-is according to the concepts and questions that a user will have in mind
-when reading it.  Sometimes this structure of ideas matches the
+Programmers tend to carry over the structure of the program as the
+structure for its documentation.  But this structure is not
+necessarily good for explaining how to use the program; it may be
+irrelevant and confusing for a user.
+
+Instead, the right way to structure documentation is according to the
+concepts and questions that a user will have in mind when reading it.
+This principle applies at every level, from the lowest (ordering
+sentences in a paragraph) to the highest (ordering of chapter topics
+within the manual).  Sometimes this structure of ideas matches the
 structure of the implementation of the software being documented---but
-often they are different.  Often the most important part of learning to
-write good documentation is learning to notice when you are structuring
-the documentation like the implementation, and think about better
-alternatives.
+often they are different.  An important part of learning to write good
+documentation is to learn to notice when you have unthinkingly
+structured the documentation like the implementation, stop yourself,
+and look for better alternatives.
 
 For example, each program in the GNU system probably ought to be
 documented in one manual; but this does not mean each program should
@@ -3219,6 +3225,10 @@ documentation; use ``file name'' (two words) instead.  We use the term
 Please do not use the term ``illegal'' to refer to erroneous input to
 a computer program.  Please use ``invalid'' for this, and reserve the
 term ``illegal'' for activities prohibited by law.
+
+Please do not write @samp{()} after a function name just to indicate
+it is a function.  @code{foo ()} is not a function, it is a function
+call with no arguments.
 
 @node Doc Strings and Manuals
 @section Doc Strings and Manuals
