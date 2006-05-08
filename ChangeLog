@@ -1,3 +1,7 @@
+2006-05-05  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/config.rpath: Add support for Sun C 5.9 on Linux.
+
 2006-05-08  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stdarg: New file.
