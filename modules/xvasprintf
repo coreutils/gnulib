@@ -6,12 +6,16 @@ lib/xvasprintf.h
 lib/xvasprintf.c
 lib/xasprintf.c
 lib/xalloc.h
+m4/xvasprintf.m4
 
 Depends-on:
 vasprintf
 xalloc-die
+xsize
+stdarg
 
 configure.ac:
+gl_XVASPRINTF
 
 Makefile.am:
 lib_SOURCES += xvasprintf.h xvasprintf.c xasprintf.c

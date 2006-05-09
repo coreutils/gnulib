@@ -1,3 +1,9 @@
+2006-05-09  Bruno Haible  <bruno@clisp.org>
+
+	* modules/xvasprintf (Files): Add m4/xvasprintf.m4.
+	(Depends-on): Depend also on xsize, stdarg.
+	(configure.ac): Add gl_XVASPRINTF.
+
 2006-05-08  Eric Blake  <ebb9@byu.net>
 
 	* gnulib-tool (func_version): Base copyright year on CVS date.
