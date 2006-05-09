@@ -1,3 +1,11 @@
+2006-05-08  Eric Blake  <ebb9@byu.net>
+
+	* gnulib-tool (func_version): Base copyright year on CVS date.
+	(func_emit_copyright_notice): New function.
+	(func_emit_lib_Makefile_am): Use it.
+	(func_emit_tests_Makefile_am): Likewise.
+	(func_import): Likewise.
+
 2006-05-05  Bruno Haible  <bruno@clisp.org>
 
 	* build-aux/config.rpath: Add support for Sun C 5.9 on Linux.
