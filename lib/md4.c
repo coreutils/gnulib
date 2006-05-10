@@ -1,6 +1,6 @@
 /* Functions to compute MD4 message digest of files or memory blocks.
    according to the definition of MD4 in RFC 1320 from April 1992.
-   Copyright (C) 1995,1996,1997,1999,2000,2001,2002,2003,2005
+   Copyright (C) 1995,1996,1997,1999,2000,2001,2002,2003,2005,2006
    Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -179,7 +179,7 @@ process_partial_block:;
   return 0;
 }
 
-/* Compute MD5 message digest for LEN bytes beginning at BUFFER.  The
+/* Compute MD4 message digest for LEN bytes beginning at BUFFER.  The
    result is always in little endian byte order, so that a byte-wise
    output yields to the wanted ASCII representation of the message
    digest.  */
@@ -273,8 +273,8 @@ md4_process_bytes (const void *buffer, size_t len, struct md4_ctx *ctx)
 /* --- Code below is the primary difference between md5.c and md4.c --- */
 
 /* MD4 round constants */
-#define K1 0x5a827999L
-#define K2 0x6ed9eba1L
+#define K1 0x5a827999
+#define K2 0x6ed9eba1
 
 /* Round functions.  */
 #define F(x, y, z) ((z) ^ ((x) & ((y) ^ (z))))
