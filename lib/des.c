@@ -1,5 +1,5 @@
 /* des.c --- DES and Triple-DES encryption/decryption Algorithm
- * Copyright (C) 1998, 1999, 2001, 2002, 2003, 2004, 2005
+ * Copyright (C) 1998, 1999, 2001, 2002, 2003, 2004, 2005, 2006
  *    Free Software Foundation, Inc.
  *
  * This file is free software; you can redistribute it and/or modify
@@ -447,7 +447,7 @@ des_is_weak_key (const char * key)
 static void
 des_key_schedule (const char * _rawkey, uint32_t * subkey)
 {
-  const unsigned char *rawkey = _rawkey;
+  const unsigned char *rawkey = (const unsigned char *) _rawkey;
   uint32_t left, right, work;
   int round;
 
@@ -559,8 +559,8 @@ des_makekey (des_ctx *ctx, const char * key, size_t keylen)
 void
 des_ecb_crypt (des_ctx *ctx, const char * _from, char * _to, int mode)
 {
-  const unsigned char *from = _from;
-  unsigned char *to = _to;
+  const unsigned char *from = (const unsigned char *) _from;
+  unsigned char *to = (unsigned char *) _to;
   uint32_t left, right, work;
   uint32_t *keys;
 
@@ -632,8 +632,8 @@ tripledes_ecb_crypt (tripledes_ctx *ctx,
 		     const char * _from,
 		     char * _to, int mode)
 {
-  const unsigned char *from = _from;
-  unsigned char *to = _to;
+  const unsigned char *from = (const unsigned char *) _from;
+  unsigned char *to = (unsigned char *) _to;
   uint32_t left, right, work;
   uint32_t *keys;
 

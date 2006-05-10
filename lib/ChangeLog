@@ -1,3 +1,13 @@
+2006-05-10  Bruno Haible  <bruno@clisp.org>
+
+	* des.c: Cast to avoid warnings.
+
+2006-05-10  Simon Josefsson  <jas@extundo.com>
+
+	* md4.c: Typo fix, update copyright years.
+	(K1, K2): Don't use L because it turn computations into 64-bit on
+	64-bit platforms.
+
 2006-05-09  Bruno Haible  <bruno@clisp.org>
 
 	* xvasprintf.c: Include limits.h, string.h, xsize.h.
