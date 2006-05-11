@@ -1,6 +1,12 @@
 2006-05-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* crc.c (crc32_update): Remove unnecessary L suffix.
+	* md4.c (rol): Cast right-shift arg to uint32_t to prevent
+	unwanted sign propagation, e.g., on hosts with 64-bit int.
+	There still are some problems with reeelly weird theoretical hosts
+	(e.g., 33-bit int) but it's not worth worrying about now.
+	* sha1.c (rol): Likewise.
+	(K1, K2, K3, K4): Remove unnecessary L suffix.
 
 2006-05-10  Bruno Haible  <bruno@clisp.org>
 

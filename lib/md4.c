@@ -280,7 +280,7 @@ md4_process_bytes (const void *buffer, size_t len, struct md4_ctx *ctx)
 #define F(x, y, z) ((z) ^ ((x) & ((y) ^ (z))))
 #define G(x, y, z) (((x) & (y)) | ((x) & (z)) | ((y) & (z)))
 #define H(x, y, z) ((x) ^ (y) ^ (z))
-#define rol(x,n) ( ((x) << (n)) | ((x) >> (32-(n))) )
+#define rol(x, n) (((x) << (n)) | ((uint32_t) (x) >> (32 - (n))))
 #define R1(a,b,c,d,k,s) a=rol(a+F(b,c,d)+x[k],s);
 #define R2(a,b,c,d,k,s) a=rol(a+G(b,c,d)+x[k]+K1,s);
 #define R3(a,b,c,d,k,s) a=rol(a+H(b,c,d)+x[k]+K2,s);
