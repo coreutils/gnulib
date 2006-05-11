@@ -1,3 +1,7 @@
+2006-05-11  Simon Josefsson  <jas@extundo.com>
+
+	* xvasprintf.m4: Fix obvious typo.
+
 2006-05-09  Bruno Haible  <bruno@clisp.org>
 
 	* xvasprintf.m4: New file.
