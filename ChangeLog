@@ -1,3 +1,8 @@
+2006-05-15  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/config.rpath: Improve support for Sun C 5.9 on Linux, based
+	on libtool patch by Ralf Wildenhues.
+
 2006-05-09  Bruno Haible  <bruno@clisp.org>
 
 	* modules/xvasprintf (Files): Add m4/xvasprintf.m4.
