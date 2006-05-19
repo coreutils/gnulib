@@ -1,3 +1,7 @@
+2006-05-19  Jim Meyering  <jim@meyering.net>
+
+	* getugroups.c: Correct an outdated comment.  From Bruno Haible.
+
 2006-05-17  Bruno Haible  <bruno@clisp.org>
 
 	Cygwin portability.
