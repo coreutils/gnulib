@@ -29,7 +29,7 @@ invalid year is passed.
 glibc has two different functions @code{basename}: the POSIX version and
 the GNU version.
 
-@code{basename} assumes file names in POSIX syntax; it does not with file
+@code{basename} assumes file names in POSIX syntax; it does not work with file
 names in Windows syntax.
 
 @item bcmp
@@ -74,7 +74,7 @@ This function may put more than 26 bytes into the argument buffer if an
 invalid year is passed.
 
 @item dirname
-@code{dirname} assumes file names in POSIX syntax; it does not with file
+@code{dirname} assumes file names in POSIX syntax; it does not work with file
 names in Windows syntax.
 
 @item dlopen
@@ -123,9 +123,9 @@ This function is broken in some version of Solaris or glibc.
 On Windows systems (excluding Cygwin), this function does not set @code{errno}
 upon failure.
 
-On Windows, this function returns a file stream in "text" mode by default;
-this means that it translates '\n' to CR/LF by default.  Use the "b" flag
-if you need reliable binary I/O.
+On Windows, this function returns a file stream in ``text'' mode by default;
+this means that it translates @code{'\n'} to CR/LF by default.  Use the
+@code{"b"} flag if you need reliable binary I/O.
 
 @item fork
 On some systems, @code{fork} followed by a call of the @code{exec} family
@@ -139,9 +139,9 @@ On Windows systems (excluding Cygwin), this function is not implemented; use
 
 @item fprintf
 On NetBSD and Windows, this function doesn't support format directives that
-access arguments in an arbitrary order, such as "%2$s".  The fix is to include
-@file{<libintl.h>} from GNU gettext; it redefines this function so that it is
-POSIX compliant.
+access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
+include @file{<libintl.h>} from GNU gettext; it redefines this function so that
+it is POSIX compliant.
 
 On Windows, this function doesn't support the @code{'} flag and the @code{hh},
 @code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
@@ -179,8 +179,8 @@ On Windows systems (excluding Cygwin), this function does not set @code{errno}
 upon failure.
 
 @item fstat
-On platforms where @code{off_t} is a 32-bit type, @code{stat} may not report
-correctly the size of files or block devices larger than 2 GB.  The fix is to
+On platforms where @code{off_t} is a 32-bit type, @code{stat} may not correctly
+report the size of files or block devices larger than 2 GB.  The fix is to
 use the @code{AC_SYS_LARGEFILE} macro.
 
 On Cygwin, @code{fstat} applied to the file descriptors 0 and 1, returns
@@ -234,14 +234,14 @@ On Ultrix 4.3, @code{getgroups (0, 0)} always fails.  See macro
 
 @item gethostname
 If the given buffer is too small for the host name, some implementations
-fail with EINVAL, instead of returning a truncated host name.
+fail with @code{EINVAL}, instead of returning a truncated host name.
 
 @item getopt
-The glibc implementation of @code{getopt} by default allows mixing option and
-non-option arguments on the command line in any order.  Other implementations,
-such as the one in Cygwin, enfore strict POSIX compliance: they require that
-the option arguments precede the non-option arguments.  This is something to
-watch out in your program's testsuite.
+The default behaviour of the glibc implementation of @code{getopt} allows
+mixing option and non-option arguments on the command line in any order.
+Other implementations, such as the one in Cygwin, enforce strict POSIX
+compliance: they require that the option arguments precede the non-option
+arguments.  This is something to watch out in your program's testsuite.
 
 @item getpeername
 Some systems don't have a @code{socklen_t} type; in this case this function's
@@ -297,7 +297,7 @@ This function was not correctly implemented in glibc versions before 2.2.
 When @code{iconv} encounters an input character that is valid but that can
 not be converted to the output character set, glibc's and GNU libiconv's
 @code{iconv} stop the conversion.  Some other implementations put an
-implementation-defined character in the output buffer.
+implementation-defined character into the output buffer.
 
 @item iconv_open
 The set of supported encodings and conversions is system dependent.
@@ -315,7 +315,7 @@ Most @code{ioctl} requests are platform and hardware specific.
 
 @item isatty
 On Windows, @code{isatty} also returns true for character devices such as
-"NUL".
+@file{NUL}.
 
 @item iswalnum
 @itemx iswalpha
@@ -362,9 +362,9 @@ correctly with files larger than 2 GB.  The fix is to use the
 When the argument ends in a slash, some systems don't dereference the
 argument.
 
-On platforms where @code{off_t} is a 32-bit type, @code{lstat} may not report
-correctly the size of files or block devices larger than 2 GB.  The fix is to
-use the @code{AC_SYS_LARGEFILE} macro.
+On platforms where @code{off_t} is a 32-bit type, @code{lstat} may not
+correctly report the size of files or block devices larger than 2 GB.  The fix
+is to use the @code{AC_SYS_LARGEFILE} macro.
 
 @item mbrtowc
 @itemx mbsrtowcs
@@ -388,7 +388,7 @@ limit that it can create no more than 26 files from a given template.  On
 OSF/1 4.0f, it can create only 32 files per process.
 
 On systems other than glibc 2.0.7 or newer, @code{mkstemp} can create a
-world or group writable or readable file, if you haven't set the process'
+world or group writable or readable file, if you haven't set the process
 umask to 077.  This is a security risk.
 
 @item mktemp
@@ -445,16 +445,18 @@ like @file{/dev/null} and ttys like @file{/dev/tty}.
 
 @item printf
 On NetBSD and Windows, this function doesn't support format directives that
-access arguments in an arbitrary order, such as "%2$s".  The fix is to include
-@file{<libintl.h>} from GNU gettext; it redefines this function so that it is
-POSIX compliant.
+access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
+include @file{<libintl.h>} from GNU gettext; it redefines this function so that
+it is POSIX compliant.
 
 On Windows, this function doesn't support the @code{'} flag and the @code{hh},
 @code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
 
 @item pthread_create
 On Linux/glibc systems before the advent of NPTL, signals could only be
-executed in one particular thread, not by any thread of the process.
+sent to one particular thread.  In POSIX, signals are sent to the entire
+process and executed by any thread of the process that happens to have the
+particular signal currently unblocked.
 
 @item putc
 @itemx putchar
@@ -469,16 +471,17 @@ accomodate all Unicode characters.
 
 @item readlink
 When @code{readlink} is called on a directory: In the case of NFS mounted
-directories, Cygwin sets errno to ENOENT or EIO instead of EINVAL.  To avoid
-this problem, check for a directory before calling @code{readlink}.
+directories, Cygwin sets errno to @code{ENOENT} or @code{EIO} instead of
+@code{EINVAL}.  To avoid this problem, check for a directory before calling
+@code{readlink}.
 
 When @code{readlink} is called on a file that is not a symbolic link:
-Irix may set errno to ENXIO instead of EINVAL.  Cygwin may set errno to
-EACCES instead of EINVAL.
+Irix may set errno to @code{ENXIO} instead of @code{EINVAL}.  Cygwin may set
+errno to @code{EACCES} instead of {EINVAL}.
 
 @item realpath
 This function does not allow to determine the required size of output buffer;
-PATH_MAX - if it is defined - is nothing more than a guess.
+PATH_MAX --- if it is defined --- is nothing more than a guess.
 
 @item recvfrom
 Some systems don't have a @code{socklen_t} type; in this case this function's
@@ -522,7 +525,7 @@ called on descriptors created by the @code{socket} function, not on regular
 file descriptors.
 
 On Linux, when some file descriptor refers to a regular file, @code{select}
-may fail, setting errno to EBADF.
+may fail, setting errno to @code{EBADF}.
 
 @item setcontext
 The effects of this call are system and compiler optimization dependent,
@@ -554,7 +557,8 @@ upon failure.
 
 @item shmat
 Attempts to @code{shmat} into a previously malloc-ed region fail on SunOS 4,
-with errno set to EINVAL, even if there is an @code{munmap} call in between.
+with errno set to @code{EINVAL}, even if there is an @code{munmap} call in
+between.
 
 On Linux, the flag @code{SHM_REMAP} is needed in order to force @code{shmat}
 to replace existing memory mappings in the specify address range.  On other
@@ -599,7 +603,9 @@ does; other systems may not do the same.
 
 @item sigwait
 On Linux/glibc systems before the advent of NPTL, signals could only be
-executed in one particular thread, not by any thread of the process.
+sent to one particular thread.  In POSIX, signals are sent to the entire
+process and executed by any thread of the process that happens to have the
+particular signal currently unblocked.
 
 @item sleep
 According to POSIX, the @code{sleep} function may interfere with the program's
@@ -608,9 +614,9 @@ it may.
 
 @item snprintf
 On NetBSD and Windows, this function doesn't support format directives that
-access arguments in an arbitrary order, such as "%2$s".  The fix is to include
-@file{<libintl.h>} from GNU gettext; it redefines this function so that it is
-is POSIX compliant.
+access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
+include @file{<libintl.h>} from GNU gettext; it redefines this function so that
+it is POSIX compliant.
 
 On Windows, this function doesn't support the @code{'} flag and the @code{hh},
 @code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
@@ -622,9 +628,9 @@ in calls to @code{read}, @code{write}, and @code{close}; you have to use
 
 @item sprintf
 On NetBSD and Windows, this function doesn't support format directives that
-access arguments in an arbitrary order, such as "%2$s".  The fix is to include
-@file{<libintl.h>} from GNU gettext; it redefines this function so that it is
-is POSIX compliant.
+access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
+include @file{<libintl.h>} from GNU gettext; it redefines this function so that
+it is POSIX compliant.
 
 On Windows, this function doesn't support the @code{'} flag and the @code{hh},
 @code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
@@ -637,12 +643,12 @@ On Windows, this function doesn't support the @code{hh}, @code{ll}, @code{j},
 @code{t}, @code{z} size specifiers.
 
 @item stat
-On platforms where @code{off_t} is a 32-bit type, @code{stat} may not report
-correctly the size of files or block devices larger than 2 GB.  The fix is to
+On platforms where @code{off_t} is a 32-bit type, @code{stat} may not correctly
+report the size of files or block devices larger than 2 GB.  The fix is to
 use the @code{AC_SYS_LARGEFILE} macro.
 
-Cygwin's @code{stat} function sometimes sets errno to EACCES when ENOENT would
-be more appropriate.
+Cygwin's @code{stat} function sometimes sets errno to @code{EACCES} when
+@code{ENOENT} would be more appropriate.
 
 @item strcasecmp
 @itemx strcasestr
@@ -676,16 +682,17 @@ the rules for quoting shell arguments containing spaces, quote or other special
 characters are different.
 
 @item tcdrain
-On some systems, @code{tcdrain} on a non-tty fails with errno set to EINVAL
-or, on MacOS X, also EOPNOTSUPP or ENODEV, rather than ENOTTY.
+On some systems, @code{tcdrain} on a non-tty fails with errno set to
+@code{EINVAL} or, on MacOS X, also @code{EOPNOTSUPP} or @code{ENODEV}, rather
+than @code{ENOTTY}.
 
 @item tcflush
 On some systems, @code{tcflush} of @code{TCIFLUSH} on a non-tty fails with
-errno set to EINVAL rather than ENOTTY.
+errno set to @code{EINVAL} rather than @code{ENOTTY}.
 
 On some systems, @code{tcflush} of @code{TCOFLUSH} on a non-tty fails with
-errno set to EINVAL or, on IRIX, also ENOSYS, or, on MacOS X, also EOPNOTSUPP
-or ENODEV, rather than ENOTTY.
+errno set to @code{EINVAL} or, on IRIX, also @code{ENOSYS}, or, on MacOS X,
+also @code{EOPNOTSUPP} or @code{ENODEV}, rather than @code{ENOTTY}.
 
 @item tempnam
 This function is not appropriate for creating temporary files.  (It has
@@ -759,9 +766,9 @@ available instead, or otherwise an assignment or @code{memcpy} call.
 
 @item vfprintf
 On NetBSD and Windows, this function doesn't support format directives that
-access arguments in an arbitrary order, such as "%2$s".  The fix is to include
-@file{<libintl.h>} from GNU gettext; it redefines this function so that it is
-POSIX compliant.
+access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
+include @file{<libintl.h>} from GNU gettext; it redefines this function so that
+it is POSIX compliant.
 
 On Windows, this function doesn't support the @code{'} flag and the @code{hh},
 @code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
@@ -777,9 +784,9 @@ On Windows, this function doesn't support the @code{hh}, @code{ll}, @code{j},
 @itemx vsnprintf
 @itemx vsprintf
 On NetBSD and Windows, these functions don't support format directives that
-access arguments in an arbitrary order, such as "%2$s".  The fix is to include
-@file{<libintl.h>} from GNU gettext; it redefines these functions so that they
-are POSIX compliant.
+access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
+include @file{<libintl.h>} from GNU gettext; it redefines these functions so
+that they are POSIX compliant.
 
 On Windows, these functions don't support the @code{'} flag and the @code{hh},
 @code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
