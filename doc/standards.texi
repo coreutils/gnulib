@@ -2952,7 +2952,7 @@ Using GNU gettext in a package involves specifying a @dfn{text domain
 name} for the package.  The text domain name is used to separate the
 translations for this package from the translations for other packages.
 Normally, the text domain name should be the same as the name of the
-package---for example, @samp{fileutils} for the GNU file utilities.
+package---for example, @samp{coreutils} for the GNU core utilities.
 
 @cindex message text, and internationalization
 To enable gettext to work well, avoid writing code that makes
@@ -2965,43 +2965,29 @@ sentence framework.
 Here is an example of what not to do:
 
 @example
-printf ("%d file%s processed", nfiles,
-        nfiles != 1 ? "s" : "");
+printf ("%s is full", capacity > 5000000 ? "disk" : "floppy disk");
 @end example
 
-@noindent
-The problem with that example is that it assumes that plurals are made
-by adding `s'.  If you apply gettext to the format string, like this,
+If you apply gettext to all strings, like this,
 
 @example
-printf (gettext ("%d file%s processed"), nfiles,
-        nfiles != 1 ? "s" : "");
+printf (gettext ("%s is full"),
+        capacity > 5000000 ? gettext ("disk") : gettext ("floppy disk"));
 @end example
 
 @noindent
-the message can use different words, but it will still be forced to use
-`s' for the plural.  Here is a better way:
+the translator will hardly know that "disk" and "floppy disk" are meant to
+be substituted in the other string.  Worse, in some languages (like French)
+the construction will not work: the translation of the word "full" depends
+on the gender of the first part of the sentence; it happens to be not the
+same for "disk" as for "floppy disk".
+
+Complete sentences can be translated without problems:
 
 @example
-printf ((nfiles != 1 ? "%d files processed"
-         : "%d file processed"),
-        nfiles);
+printf (capacity > 5000000 ? gettext ("disk is full")
+        : gettext ("floppy disk is full"));
 @end example
-
-@noindent
-This way, you can apply gettext to each of the two strings
-independently:
-
-@example
-printf ((nfiles != 1 ? gettext ("%d files processed")
-         : gettext ("%d file processed")),
-        nfiles);
-@end example
-
-@noindent
-This can be any method of forming the plural of the word for ``file'', and
-also handles languages that require agreement in the word for
-``processed''.
 
 A similar problem appears at the level of sentence structure with this
 code:
@@ -3022,6 +3008,43 @@ out like this:
 printf (f->tried_implicit
         ? "#  Implicit rule search has been done.\n",
         : "#  Implicit rule search has not been done.\n");
+@end example
+
+Another example is this one:
+
+@example
+printf ("%d file%s processed", nfiles,
+        nfiles != 1 ? "s" : "");
+@end example
+
+@noindent
+The problem with this example is that it assumes that plurals are made
+by adding `s'.  If you apply gettext to the format string, like this,
+
+@example
+printf (gettext ("%d file%s processed"), nfiles,
+        nfiles != 1 ? "s" : "");
+@end example
+
+@noindent
+the message can use different words, but it will still be forced to use
+`s' for the plural.  Here is a better way, with gettext being applied to
+the two strings independently:
+
+@example
+printf ((nfiles != 1 ? gettext ("%d files processed")
+         : gettext ("%d file processed")),
+        nfiles);
+@end example
+
+@noindent
+But this still doesn't work for languages like Polish, which has three
+plural forms: one for nfiles == 1, one for nfiles == 2, 3, 4, 22, 23, 24, ...
+and one for the rest.  The GNU @code{ngettext} function solves this problem:
+
+@example
+printf (ngettext ("%d files processed", "%d file processed", nfiles),
+        nfiles);
 @end example
 
 
