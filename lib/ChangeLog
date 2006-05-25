@@ -1,3 +1,9 @@
+2006-05-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* exclude.c (exclude_fnmatch): New function.
+	(excluded_file_name): Call exclude_fnmatch.
+	* exclude.h (excluded_file_name): New prototype
+
 2006-05-24  Bruno Haible  <bruno@clisp.org>
 
 	* printf-args.c (printf_fetchargs): Turn NULL pointers for
