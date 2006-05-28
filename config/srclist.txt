@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.124 2006-05-08 19:55:10 haible Exp $
+# $Id: srclist.txt,v 1.125 2006-05-28 13:07:39 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -44,7 +44,7 @@ $GNUORG/disclaim.program			doc/Copyright
 # 
 $GETTEXT/gettext-runtime/libasprintf/asnprintf.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/asprintf.c		lib gpl
-$GETTEXT/gettext-runtime/libasprintf/printf-args.c	lib gpl
+#$GETTEXT/gettext-runtime/libasprintf/printf-args.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/printf-args.h	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/printf-parse.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/printf-parse.h	lib gpl
