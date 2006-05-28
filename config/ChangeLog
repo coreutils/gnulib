@@ -1,3 +1,7 @@
+2006-05-28  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt (printf-args.c): lose sync.
+
 2006-05-08  Bruno Haible  <bruno@clisp.org>
 
 	* srclist.txt (build-aux/config.rpath): different from latest release.
