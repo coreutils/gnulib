@@ -1,3 +1,8 @@
+2006-05-30  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+            Bruno Haible  <bruno@clisp.org>
+
+	* strndup.c (strndup) [!_LIBC]: Don't undefine macro definition.
+
 2006-05-26  Martin Lambers  <marlam@marlam.de>
 
 	* getpass.c: Updates the test for the native W32 API, and adds
