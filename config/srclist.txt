@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.125 2006-05-28 13:07:39 karl Exp $
+# $Id: srclist.txt,v 1.126 2006-05-30 23:56:35 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -62,8 +62,10 @@ $GETTEXT/gettext-tools/lib/gettext.h			lib gpl
 #$GETTEXT/gettext-tools/lib/mkdtemp.c			lib gpl
 $GETTEXT/gettext-tools/lib/vasprintf.h			lib gpl
 
+# These four files should kept in sync, e.g., gettoolize installs them
+# all together, gnulib-tool install all or none.
 #$GETTEXT/autoconf-lib-link/config.rpath		build-aux
-$GETTEXT/autoconf-lib-link/m4/lib-ld.m4			m4
+#$GETTEXT/autoconf-lib-link/m4/lib-ld.m4		m4
 #$GETTEXT/autoconf-lib-link/m4/lib-link.m4		m4
 #$GETTEXT/autoconf-lib-link/m4/lib-prefix.m4		m4
 
