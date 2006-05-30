@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_STRNDUP],
 
   AC_CHECK_DECLS_ONCE([strndup])
 
-  # AIX 5.1 fails to add the terminating '\0'.
+  # AIX 4.3.3, AIX 5.1 have a function that fails to add the terminating '\0'.
   AC_CACHE_CHECK([for working strndup], gl_cv_func_strndup,
     [AC_RUN_IFELSE([
        AC_LANG_PROGRAM([#include <string.h>], [[
