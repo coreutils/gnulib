@@ -1,3 +1,7 @@
+2006-06-15  Eric Blake  <ebb9@byu.net>
+
+	* m4/ssize_t.m4 (gt_TYPE_SSIZE_T): Work in spite of -Werror.
+
 2006-05-30  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
             Bruno Haible  <bruno@clisp.org>
 
