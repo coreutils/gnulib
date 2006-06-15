@@ -1,3 +1,7 @@
+2006-06-15  Eric Blake  <ebb9@byu.net>
+
+	* srclist.txt (ssize_t.m4): Lose sync.
+
 2006-05-28  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt (printf-args.c): lose sync.

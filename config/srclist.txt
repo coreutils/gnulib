@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.126 2006-05-30 23:56:35 karl Exp $
+# $Id: srclist.txt,v 1.127 2006-06-15 12:00:11 ericb Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -87,7 +87,7 @@ $GETTEXT/gettext-runtime/m4/wchar_t.m4			m4
 $GETTEXT/gettext-runtime/m4/wint_t.m4			m4
 $GETTEXT/gettext-tools/m4/sig_atomic_t.m4		m4
 $GETTEXT/gettext-tools/m4/signalblocking.m4		m4
-$GETTEXT/gettext-tools/m4/ssize_t.m4			m4
+#$GETTEXT/gettext-tools/m4/ssize_t.m4			m4
 
 
 # new argp not in glibc yet --13feb06.
