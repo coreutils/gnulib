@@ -1,0 +1,15 @@
+Files:
+tests/test-stdint.c
+
+Depends-on:
+verify
+intprops
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stdint$(EXEEXT)
+check_PROGRAMS += test-stdint
+
+License:
+LGPL
