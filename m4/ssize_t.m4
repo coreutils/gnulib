@@ -1,4 +1,4 @@
-# ssize_t.m4 serial 4
+# ssize_t.m4 serial 4 (gettext-0.15)
 dnl Copyright (C) 2001-2003, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
