@@ -1,3 +1,11 @@
+2006-06-15  Bruno Haible  <bruno@clisp.org>
+
+	* modules/stdint (Files): Include m4/full-header-path.m4,
+	m4/size_max.m4, m4/wchar_t.m4.
+	(Makefile.am): Many more substitutions.
+	* modules/stdint-tests: New file.
+	* tests/test-stdint.c: New file.
+
 2006-05-15  Bruno Haible  <bruno@clisp.org>
 
 	* build-aux/config.rpath: Improve support for Sun C 5.9 on Linux, based

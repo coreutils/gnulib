@@ -1,5 +1,13 @@
 2006-06-15  Bruno Haible  <bruno@clisp.org>
 
+	* stdint.m4 (gl_STDINT_H): Rewritten to produce a complete stdint.h.
+	(gl_HEADER_STDINT_H, gl_HEADER_INTTYPES_H, gl_STDINT_CHECK_TYPES,
+	gl_STDINT_MISSING_BOUND, gl_STDINT_MISSING_BOUNDS,
+	gl_STDINT_MISSING_BOUNDS2, gl_STDINT_BITSIZEOF, gl_CHECK_TYPES_SIGNED,
+	gl_CHECK_TYPE_SAME): New macros.
+
+2006-06-15  Bruno Haible  <bruno@clisp.org>
+
 	* size_max.m4 (gl_SIZE_MAX): Make it work also when cross-compiling.
 
 2006-06-15  Eric Blake  <ebb9@byu.net>
