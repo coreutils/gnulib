@@ -1,0 +1,23 @@
+Description:
+read_file() function: read the contents of a file into a string
+
+Files:
+lib/read-file.h
+lib/read-file.c
+m4/read-file.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_READ_FILE
+
+Makefile.am:
+
+Include:
+"read-file.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

@@ -1,0 +1,10 @@
+Files:
+tests/test-read-file.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-read-file$(EXEEXT)
+check_PROGRAMS += test-read-file
