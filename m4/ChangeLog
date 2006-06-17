@@ -1,3 +1,8 @@
+2006-06-16  Eric Blake  <ebb9@byu.net>
+
+	* rmdir-errno.m4 (gl_FUNC_FMDIR_NOTEMPTY): Assume errno.h declares
+	errno.
+
 2006-06-17  Bruno Haible  <bruno@clisp.org>
 
 	* setenv.m4 (gl_PREREQ_SETENV, gl_PREREQ_UNSETENV): Remove test
