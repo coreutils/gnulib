@@ -3,6 +3,7 @@
 	* unsetenv.c [!defined errno]: Assume errno.h declares errno.
 	* unicodeio.c [!defined errno]: Likewise.
 	* strtol.c [!defined errno]: Likewise.
+	* strtod.c [!defined errno]: Likewise.
 
 2006-06-15  Bruno Haible  <bruno@clisp.org>
 
