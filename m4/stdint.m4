@@ -87,7 +87,7 @@ typedef int array [2 * (POW63 != 0 && POW64 == 0) - 1];
   dnl created in the build directory.
   other_includes='
 /* Get those types that are already defined in other system include files.  */
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) && (__FreeBSD__ >= 3) && (__FreeBSD__ <= 4)
 # include <sys/inttypes.h>
 #endif
 #if defined(__OpenBSD__)

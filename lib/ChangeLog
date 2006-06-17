@@ -1,5 +1,9 @@
 2006-06-17  Bruno Haible  <bruno@clisp.org>
 
+	* stdint_.h [FreeBSD >= 5]: Don't include <sys/inttypes.h>.
+
+2006-06-17  Bruno Haible  <bruno@clisp.org>
+
 	* stdint_.h (_UINT8_T, _UINT32_T, _UINT64_T): New macros. Fixes a
 	problem on Solaris 2.5.1.
 

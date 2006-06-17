@@ -1,3 +1,8 @@
+2006-06-17  Bruno Haible  <bruno@clisp.org>
+
+	* stdint.m4 (gl_STDINT_H) [FreeBSD >= 5]: Don't include
+	<sys/inttypes.h>.
+
 2006-06-16  Eric Blake  <ebb9@byu.net>
 
 	* rmdir-errno.m4 (gl_FUNC_FMDIR_NOTEMPTY): Assume errno.h declares
