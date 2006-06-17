@@ -1,3 +1,9 @@
+2006-06-16  Eric Blake  <ebb9@byu.net>
+
+	* unsetenv.c [!defined errno]: Assume errno.h declares errno.
+	* unicodeio.c [!defined errno]: Likewise.
+	* strtol.c [!defined errno]: Likewise.
+
 2006-06-15  Bruno Haible  <bruno@clisp.org>
 
 	* stdint_.h: Rewritten to be fully auto-configured.
