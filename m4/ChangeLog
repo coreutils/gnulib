@@ -1,3 +1,8 @@
+2006-06-17  Bruno Haible  <bruno@clisp.org>
+
+	* setenv.m4 (gl_PREREQ_SETENV, gl_PREREQ_UNSETENV): Remove test
+	whether errno is declared. Assume <errno.h> declares errno.
+
 2006-06-15  Bruno Haible  <bruno@clisp.org>
 
 	* stdint.m4 (gl_STDINT_H): Rewritten to produce a complete stdint.h.
