@@ -76,8 +76,10 @@ inet_ntop (int af, const void *restrict src,
 {
   switch (af)
     {
+#if HAVE_IPV4
     case AF_INET:
       return (inet_ntop4 (src, dst, cnt));
+#endif
 
 #if HAVE_IPV6
     case AF_INET6:
