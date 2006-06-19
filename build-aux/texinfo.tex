@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2006-06-01.17}
+\def\texinfoversion{2006-06-19.13}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free
@@ -4005,9 +4005,9 @@ where each line of input produces a line of output.}
   \endgroup
 }
 
-% Like \dotfill except takes at least 1 em.
+% Like plain.tex's \dotfill, except uses up at least 1 em.
 \def\indexdotfill{\cleaders
-  \hbox{$\mathsurround=0pt \mkern1.5mu ${\it .}$ \mkern1.5mu$}\hskip 1em plus 1fill}
+  \hbox{$\mathsurround=0pt \mkern1.5mu.\mkern1.5mu$}\hskip 1em plus 1fill}
 
 \def\primary #1{\line{#1\hfil}}
 
