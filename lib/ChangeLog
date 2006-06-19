@@ -1,3 +1,7 @@
+2006-06-19  Simon Josefsson  <jas@extundo.com>
+
+	* inet_ntop.c: Always build inet_ntop4, since inet_ntop6 calls it.
+
 2006-06-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* alloca_.h (alloca) [defined alloca]: Don't define or declare.
