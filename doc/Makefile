@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.2 2006-02-24 00:19:55 karl Exp $
+# $Id: Makefile,v 1.3 2006-06-19 20:40:26 karl Exp $
 # Makefile for gnulib doc.  
 # Copyright (C) 2004, 2006 Free Software Foundation, Inc.
 #
@@ -13,6 +13,6 @@ TEXI2HTML = $(MAKEINFO) --no-split --html
 	$(TEXI2HTML) -o $@ $< 
 
 all: info html dvi
-info: $(doc).info 
+info: $(doc).info
 html: $(doc).html
-dvi: $(doc).dvi 
+dvi: $(doc).dvi

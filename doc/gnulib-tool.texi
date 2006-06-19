@@ -4,18 +4,19 @@
 @pindex gnulib-tool
 @cindex invoking @command{gnulib-tool}
 
-@command{gnulib-tool} is the way to import Gnulib modules.  It is also
-possible to borrow Gnulib modules in a package without using
-@command{gnulib-tool}, relying only on the metainformation stored in
-the @file{modules/*} files, but with a growing number of modules this
-becomes tedious.  @command{gnulib-tool} simplifies the management of
-source files, @file{Makefile.am}s and @file{configure.ac} in packages
-incorporating Gnulib modules.
+The @command{gnulib-tool} command is the recommended way to import
+Gnulib modules.  It is possible to borrow Gnulib modules in a package
+without using @command{gnulib-tool}, relying only on the
+metainformation stored in the @file{modules/*} files, but with a
+growing number of modules this becomes tedious.  @command{gnulib-tool}
+simplifies the management of source files, @file{Makefile.am}s and
+@file{configure.ac} in packages incorporating Gnulib modules.
 
-Run @samp{gnulib-tool --help}.  To get familiar with @command{gnulib-tool},
-you can also try some commands with the option @samp{--dry-run}; then
-@code{gnulib-tool} will only report which actions it would perform in a
-real run.
+Run @samp{gnulib-tool --help} for information.  To get familiar with
+@command{gnulib-tool} without affecting your sources, you can also try
+some commands with the option @samp{--dry-run}; then
+@code{gnulib-tool} will only report which actions it would perform in
+a real run without changing anything.
 
 @menu
 * Initial import::              First import of Gnulib modules.
@@ -119,9 +120,9 @@ as the removed module.
 A few manual steps are required to finish the initial import.
 @code{gnulib-tool} printed a summary of these steps.
 
-First, you need to make sure Autoconf can find the macro definitions
-in @file{gnulib-comp.m4}.  Use the @code{ACLOCAL_AMFLAGS} specifier in your
-top-level @file{Makefile.am} file, as in:
+First, you must ensure Autoconf can find the macro definitions in
+@file{gnulib-comp.m4}.  Use the @code{ACLOCAL_AMFLAGS} specifier in
+your top-level @file{Makefile.am} file, as in:
 
 @example
 ACLOCAL_AMFLAGS = -I m4
@@ -141,7 +142,9 @@ gl_EARLY
 
 The core part of the gnulib checks are done by the macro
 @code{gl_INIT}.  Place it further down in the file, typically where
-you normally check for header files or functions.  For example:
+you normally check for header files or functions.  It must come after
+other checks which may affect the compiler invocation, such as
+@code{AC_MINIX}.  For example:
 
 @example
 ...
@@ -189,7 +192,7 @@ as @file{top_srcdir/lib}.  For example:
 ...
 AM_CPPFLAGS = -I$(top_srcdir)/lib -I$(top_builddir)/lib
 ...
-LIBADD = lib/libgnu.a
+LDADD = lib/libgnu.a
 ...
 @end example
 
@@ -209,6 +212,17 @@ use include header file provided by the gnulib, and so
 @samp{#include "time_r.h"}, but you shouldn't explicitly
 @samp{#include <time.h>} as it is already done in @file{time_r.h}
 before the redefinition of some symbols.
+
+A final word of warning: Gnulib currently assumes it will be
+responsible for @emph{all} functions that end up in the Autoconf
+@code{@@LIBOBJS@@} variables (and/or @code{@@LTLIBOBJS@@} if using
+Libtool), e.g., those specified in @code{AC_REPLACE_FUNCS} in your
+@file{configure.ac}.  Therefore, if you have any functions which are
+not covered by Gnulib which need that treatment, you have to
+essentially reimplement AC_REPLACE_FUNCS using different names; for an
+example, see the Findutils sources.  Perhaps this will be improved in
+the future.
+
 
 @node Modified imports
 @section Modified imports
