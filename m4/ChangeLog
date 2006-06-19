@@ -1,3 +1,9 @@
+2006-06-19  Bruno Haible  <bruno@clisp.org>
+
+	* stdint.m4 (gl_STDINT_H): Enclose the values of FULL_PATH_STDINT_H
+	and FULL_PATH_INTTYPES_H in angle brackets.
+	Reported by Mark D. Baushke <mdb@gnu.org>.
+
 2006-06-17  Bruno Haible  <bruno@clisp.org>
 
 	* stdint.m4 (gl_STDINT_H) [FreeBSD >= 5]: Don't include
