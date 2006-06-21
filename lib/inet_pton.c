@@ -80,7 +80,7 @@ inet_pton (int af, const char *restrict src, void *restrict dst)
     case AF_INET:
       return (inet_pton4 (src, dst));
 
-#if HAVE_IPV4
+#if HAVE_IPV6
     case AF_INET6:
       return (inet_pton6 (src, dst));
 #endif
