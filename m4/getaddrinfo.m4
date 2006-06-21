@@ -17,7 +17,6 @@ AC_DEFUN([gl_GETADDRINFO],
       LIBS="$LIBS -lws2_32"
       AC_TRY_LINK([
 #ifdef HAVE_WS2TCPIP_H
-#define WINVER 0x0501
 #include <ws2tcpip.h>
 #endif
 ], [getaddrinfo(0, 0, 0, 0);], gl_cv_w32_getaddrinfo=yes)
@@ -37,6 +36,22 @@ AC_DEFUN([gl_GETADDRINFO],
 AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   AC_SEARCH_LIBS(gethostbyname, [inet nsl])
   AC_SEARCH_LIBS(getservbyname, [inet nsl socket xnet])
+  AC_CHECK_FUNCS(gethostbyname,, [
+    AC_CACHE_CHECK(for gethostbyname in winsock2.h and -lws2_32,
+		   gl_cv_w32_gethostbyname, [
+      gl_cv_w32_gethostbyname=no
+      am_save_LIBS="$LIBS"
+      LIBS="$LIBS -lws2_32"
+      AC_TRY_LINK([
+#ifdef HAVE_WINSOCK2_H
+#include <winsock2.h>
+#endif
+], [gethostbyname(0);], gl_cv_w32_gethostbyname=yes)
+    LIBS="$am_save_LIBS"])
+    if test "$gl_cv_w32_gethostbyname" = "yes"; then
+      LIBS="$LIBS -lws2_32"
+    fi
+    ])
   AC_REQUIRE([gl_C_RESTRICT])
   AC_REQUIRE([gl_SOCKET_FAMILIES])
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
@@ -55,7 +70,6 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
 #include <netdb.h>
 #endif
 #ifdef HAVE_WS2TCPIP_H
-#define WINVER 0x0501
 #include <ws2tcpip.h>
 #endif
 ])
@@ -68,7 +82,6 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
 #include <netdb.h>
 #endif
 #ifdef HAVE_WS2TCPIP_H
-#define WINVER 0x0501
 #include <ws2tcpip.h>
 #endif
 ])

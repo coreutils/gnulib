@@ -212,6 +212,7 @@ getaddrinfo (const char *restrict nodename,
   tmp->ai_protocol = (hints) ? hints->ai_protocol : 0;
   tmp->ai_socktype = (hints) ? hints->ai_socktype : 0;
   tmp->ai_addr->sa_family = he->h_addrtype;
+  tmp->ai_family = he->h_addrtype;
 
   /* FIXME: If more than one address, create linked list of addrinfo's. */
 

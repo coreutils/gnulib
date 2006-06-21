@@ -1,0 +1,14 @@
+Files:
+tests/test-getaddrinfo.c
+
+Depends-on:
+inet_ntop
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getaddrinfo$(EXEEXT)
+check_PROGRAMS += test-getaddrinfo
+
+License:
+LGPL

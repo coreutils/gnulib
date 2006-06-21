@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.22 2006-06-19 20:40:26 karl Exp $
+@comment $Id: gnulib.texi,v 1.23 2006-06-21 17:22:32 jas Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2006-06-19 20:40:26 $
+@set UPDATED $Date: 2006-06-21 17:22:32 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -89,6 +89,7 @@ Getting started:
 * Out of memory handling::
 * Library version handling::
 * Regular expressions::
+* Windows sockets::
 @end menu
 
 
@@ -293,6 +294,38 @@ generated automatically.
 
 @include regexprops-generic.texi
 
+
+@node Windows sockets
+@section Windows sockets
+
+There are several issues when building applications that should work
+under Windows.  The most problematic part is for applications that use
+sockets.
+
+Hopefully, we can add helpful notes to this section that will help you
+port your application to Windows using gnulib.
+
+@subsection Getaddrinfo and WINVER
+
+This was written for the getaddrinfo module, but may be applicable to
+other functions too.
+
+The getaddrinfo function exists in ws2tcpip.h and -lws2_32 on Windows
+XP.  The function declaration is present if @code{WINVER >= 0x0501}.
+Windows 2000 does not have getaddrinfo in its @file{WS2_32.dll}.
+
+Thus, if you want to assume Windows XP or later, you can add
+AC_DEFINE(WINVER, 0x0501) to avoid compiling to (partial) getaddrinfo
+implementation.
+
+If you want to support Windows 2000, don't do anything, but be aware
+that gnulib will use its own (partial) getaddrinfo implementation even
+on Windows XP.  Currently the code does not attempt to determine if
+the getaddrinfo function is available during runtime.
+
+Todo: Make getaddrinfo.c open the WS2_32.DLL and check for the
+getaddrinfo symbol and use it if present, otherwise fall back to our
+own implementation.
 
 @include gnulib-tool.texi
 
