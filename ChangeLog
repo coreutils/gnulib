@@ -1,5 +1,9 @@
 2006-06-21  Simon Josefsson  <jas@extundo.com>
 
+	* tests/test-getaddrinfo.c: New file.
+
+	* modules/getaddrinfo-tests: New file.
+
 	* MODULES.html.sh: Add inet_pton.
 
 	* modules/inet_pton: New file.
