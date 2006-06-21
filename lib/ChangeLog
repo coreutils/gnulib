@@ -1,5 +1,7 @@
 2006-06-21  Simon Josefsson  <jas@extundo.com>
 
+	* socket_.h: Don't define WINVER.
+
 	* inet_pton.h, inet_pton.c: New file, taken from glibc but
 	slightly modified to work in gnulib.
 

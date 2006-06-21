@@ -1,4 +1,4 @@
-/* Provide a sys/socket header file for systems lacking it (read: mingw32).
+/* Provide a sys/socket header file for systems lacking it (read: MinGW).
    Copyright (C) 2005, 2006 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
@@ -23,27 +23,23 @@
    sys/socket.h.  It is intended to provide definitions and prototypes
    needed by an application.
 
-   Currently only mingw32 is supported, which has the header files
-   winsock2.h and ws2tcpip.h that declare the sys/socket.h definitions
-   we need. */
+   Currently only MinGW is supported.  See the gnulib manual regarding
+   Windows sockets.  MinGW have the header files winsock2.h and
+   ws2tcpip.h that declare the sys/socket.h definitions we need.  Note
+   that you can influence which definitions you get by setting the
+   WINVER symbol before including these two files.  For example,
+   getaddrinfo is only available if _WIN32_WINNT >= 0x0501 (that
+   symbol is set indiriectly through WINVER).  You can set this by
+   adding AC_DEFIN(WINVER, 0x0501) to configure.ac.  Note that your
+   code may not run on older Windows releases then.  My Windows 2000
+   box was not able to run the code, for example.  The situation is
+   slightly confusing because:
+   http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winsock/winsock/getaddrinfo_2.asp
+   suggests that getaddrinfo should be available on all Windows
+   releases. */
+
 
 #if HAVE_WINSOCK2_H
-/* The following define makes sure we get all the prototypes from the
-   header files.  getaddrinfo is only available if _WIN32_WINNT >=
-   0x0501 (that symbol is set indiriectly through WINVER).  This has
-   the following two (potential) problems:
-
-     1) winsock2.h must not have been included before this symbol
-        is set (I think).
-
-     2) There may be some _reason_ for all prototypes not being
-        available with the default settings.  Such as if some APIs are
-        not available on older Windows hosts.  However, getaddrinfo
-        (which need >= 0x0501) should be available on Windows 95 and
-        later, according to:
-        http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winsock/winsock/getaddrinfo_2.asp
-*/
-#define WINVER 0x0501
 # include <winsock2.h>
 #endif
 #if HAVE_WS2TCPIP_H
