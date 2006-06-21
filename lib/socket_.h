@@ -24,13 +24,13 @@
    needed by an application.
 
    Currently only MinGW is supported.  See the gnulib manual regarding
-   Windows sockets.  MinGW have the header files winsock2.h and
+   Windows sockets.  MinGW has the header files winsock2.h and
    ws2tcpip.h that declare the sys/socket.h definitions we need.  Note
    that you can influence which definitions you get by setting the
    WINVER symbol before including these two files.  For example,
    getaddrinfo is only available if _WIN32_WINNT >= 0x0501 (that
    symbol is set indiriectly through WINVER).  You can set this by
-   adding AC_DEFIN(WINVER, 0x0501) to configure.ac.  Note that your
+   adding AC_DEFINE(WINVER, 0x0501) to configure.ac.  Note that your
    code may not run on older Windows releases then.  My Windows 2000
    box was not able to run the code, for example.  The situation is
    slightly confusing because:
