@@ -1,0 +1,28 @@
+Description:
+Convert internet address from presentation to internal, binary, format.
+
+Files:
+lib/inet_pton.h
+lib/inet_pton.c
+m4/inet_pton.m4
+m4/sockpfaf.m4
+
+Depends-on:
+restrict
+socklen
+sys_socket
+
+configure.ac:
+gl_INET_PTON
+
+Makefile.am:
+lib_SOURCES += inet_pton.h
+
+License:
+LGPL
+
+Include:
+"inet_pton.h"
+
+Maintainer:
+Simon Josefsson, glibc
