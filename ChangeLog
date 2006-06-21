@@ -1,5 +1,7 @@
 2006-06-21  Simon Josefsson  <jas@extundo.com>
 
+	* MODULES.html.sh: Add inet_pton.
+
 	* modules/inet_pton: New file.
 
 2006-06-19  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
