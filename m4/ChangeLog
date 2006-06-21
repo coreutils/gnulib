@@ -1,5 +1,9 @@
 2006-06-21  Simon Josefsson  <jas@extundo.com>
 
+	* getaddrinfo.m4: Don't define WINVER.  Look for gethostbyname in
+	-lws2_32 too.  Fixes getaddrinfo on Windows 2000, with the price
+	of using the (limited) gnulib implementation on Windows XP.
+
 	* inet_pton.m4: New file.
 
 2006-06-19  Bruno Haible  <bruno@clisp.org>

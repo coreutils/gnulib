@@ -1,3 +1,7 @@
+2006-06-21  Simon Josefsson  <jas@extundo.com>
+
+	* gnulib.texi (Windows sockets): Add.
+
 2006-05-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* verify.texi: New file, partly based on a proposal by Bruno Haible.
