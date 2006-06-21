@@ -36,16 +36,15 @@
 char *
 fread_file (FILE * stream, size_t * length)
 {
-  char *buf = malloc (1);
-  size_t alloc = 1;
+  char *buf = NULL;
+  size_t alloc = 0;
   size_t size = 0;
+  int save_errno;
 
-  if (!buf)
-    return NULL;
-
-  while (!feof (stream))
+  for (;;)
     {
       size_t count;
+      size_t requested;
 
       if (size + BUFSIZ + 1 > alloc)
 	{
@@ -58,32 +57,31 @@ fread_file (FILE * stream, size_t * length)
 	  new_buf = realloc (buf, alloc);
 	  if (!new_buf)
 	    {
-	      int save_errno = errno;
-	      free (buf);
-	      errno = save_errno;
-	      return NULL;
+	      save_errno = errno;
+	      break;
 	    }
 
 	  buf = new_buf;
 	}
 
-      count = fread (buf + size, 1, alloc - size - 1, stream);
+      requested = alloc - size - 1;
+      count = fread (buf + size, 1, requested, stream);
       size += count;
 
-      if (ferror (stream))
+      if (count != requested)
 	{
-	  int save_errno = errno;
-	  free (buf);
-	  errno = save_errno;
-	  return NULL;
+	  save_errno = errno;
+	  if (ferror (stream))
+	    break;
+	  buf[size] = '\0';
+	  *length = size;
+	  return buf;
 	}
     }
 
-  buf[size] = '\0';
-
-  *length = size;
-
-  return buf;
+  free (buf);
+  errno = save_errno;
+  return NULL;
 }
 
 static char *
@@ -92,7 +90,6 @@ internal_read_file (const char *filename, size_t * length, const char *mode)
   FILE *stream = fopen (filename, mode);
   char *out;
   int save_errno;
-  int rc;
 
   if (!stream)
     return NULL;

@@ -1,3 +1,11 @@
+2006-06-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* read-file.c (fread_file): Start with buffer allocation of
+	0 bytes rather than 1 byte; this simplifies the code.
+	Don't invoke feof; it's not needed.  Refactor to avoid duplicate
+	code to free buffer and save/restore errno.
+	(internal_read_file): Remove unused local.
+
 2006-06-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* openat.c (openat): Use ?:, not if, to work around GCC bug 4210
