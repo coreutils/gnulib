@@ -1,3 +1,8 @@
+2006-06-22  Simon Josefsson  <jas@extundo.com>
+
+	* sockpfaf.m4: Include winsock2.h too, to make it work under
+	MinGW.
+
 2006-06-21  Simon Josefsson  <jas@extundo.com>
 
 	* getaddrinfo.m4: Don't define WINVER.  Look for gethostbyname in
