@@ -1,3 +1,10 @@
+2006-06-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* glob.c (collated_compare): Remove 'const' uses that weren't needed.
+	Some compiler complained about some of them.  Problem reported by
+	Larry Jones in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2006-06/msg00172.html>.
+
 2006-06-21  Simon Josefsson  <jas@extundo.com>
 
 	* getaddrinfo.c (getaddrinfo): Set ai_family in the return

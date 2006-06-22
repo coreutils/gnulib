@@ -909,8 +909,8 @@ libc_hidden_def (globfree)
 static int
 collated_compare (const void *a, const void *b)
 {
-  const char *const s1 = *(const char *const * const) a;
-  const char *const s2 = *(const char *const * const) b;
+  char *const *ps1 = a; char *s1 = *ps1;
+  char *const *ps2 = b; char *s2 = *ps2;
 
   if (s1 == s2)
     return 0;
