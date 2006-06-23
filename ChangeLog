@@ -1,3 +1,11 @@
+2006-06-23  Simon Josefsson  <jas@extundo.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_lib_Makefile_am): Define MOSTLYCLEANDIRS.
+	Emit mostlyclean-local rule.
+	(func_emit_tests_Makefile_am): Likewise.
+	* modules/sys_socket (Makefile.am): Use MOSTLYCLEANDIRS.
+
 2006-06-23  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-stdint.c: Update to match ISO C 99 Technical

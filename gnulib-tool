@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-05-09 02:38:16 $'
+cvsdatestamp='$Date: 2006-06-23 19:27:17 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -749,6 +749,7 @@ func_emit_lib_Makefile_am ()
   echo "BUILT_SOURCES ="
   echo "SUFFIXES ="
   echo "MOSTLYCLEANFILES ="
+  echo "MOSTLYCLEANDIRS ="
   echo "CLEANFILES ="
   echo "DISTCLEANFILES ="
   echo "MAINTAINERCLEANFILES ="
@@ -776,6 +777,14 @@ func_emit_lib_Makefile_am ()
       rm -f amsnippet.tmp
     fi
   done
+  echo
+  echo "mostlyclean-local:"
+  echo "	@test -z \"\$(MOSTLYCLEANDIRS)\" || \\"
+  echo "	  for dir in \$(MOSTLYCLEANDIRS); do \\"
+  echo "	    if test -d \$\$dir; then \\"
+  echo "	      echo \"rmdir \$\$dir\"; rmdir \$\$dir; \\"
+  echo "	    fi; \\"
+  echo "	  done"
   echo
   echo "# Makefile.am ends here"
 }
@@ -818,6 +827,7 @@ func_emit_tests_Makefile_am ()
   echo "BUILT_SOURCES ="
   echo "SUFFIXES ="
   echo "MOSTLYCLEANFILES ="
+  echo "MOSTLYCLEANDIRS ="
   echo "CLEANFILES ="
   echo "DISTCLEANFILES ="
   echo "MAINTAINERCLEANFILES ="
@@ -847,6 +857,14 @@ func_emit_tests_Makefile_am ()
   echo "# Clean up after Solaris cc."
   echo "clean-local:"
   echo "	rm -rf SunWS_cache"
+  echo
+  echo "mostlyclean-local:"
+  echo "	@test -z \"\$(MOSTLYCLEANDIRS)\" || \\"
+  echo "	  for dir in \$(MOSTLYCLEANDIRS); do \\"
+  echo "	    if test -d \$\$dir; then \\"
+  echo "	      echo \"rmdir \$\$dir\"; rmdir \$\$dir; \\"
+  echo "	    fi; \\"
+  echo "	  done"
   echo
   echo "# Makefile.am ends here"
 }
