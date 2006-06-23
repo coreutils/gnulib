@@ -1,3 +1,8 @@
+2006-06-23  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-stdint.c: Update to match ISO C 99 Technical
+	Corrigendum 1.
+
 2006-06-21  Simon Josefsson  <jas@extundo.com>
 
 	* tests/test-getaddrinfo.c: New file.

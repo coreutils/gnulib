@@ -322,41 +322,33 @@ err or;
 /* 7.18.4. Macros for integer constants */
 
 verify (INT8_C (17) == 17);
-#if 0 /* The language in ISO C 99 7.18.4 is too strong. */
-verify_same_types (INT8_C (17), (int_least8_t)0);
-#endif
+verify_same_types (INT8_C (17), (int_least8_t)0 + 0);
 verify (UINT8_C (17) == 17);
-#if 0 /* The language in ISO C 99 7.18.4 is too strong. */
-verify_same_types (UINT8_C (17), (uint_least8_t)0);
-#endif
+verify_same_types (UINT8_C (17), (uint_least8_t)0 + 0);
 
 verify (INT16_C (17) == 17);
-#if 0 /* The language in ISO C 99 7.18.4 is too strong. */
-verify_same_types (INT16_C (17), (int_least16_t)0);
-#endif
+verify_same_types (INT16_C (17), (int_least16_t)0 + 0);
 verify (UINT16_C (17) == 17);
-#if 0 /* The language in ISO C 99 7.18.4 is too strong. */
-verify_same_types (UINT16_C (17), (uint_least16_t)0);
-#endif
+verify_same_types (UINT16_C (17), (uint_least16_t)0 + 0);
 
 verify (INT32_C (17) == 17);
-verify_same_types (INT32_C (17), (int_least32_t)0);
+verify_same_types (INT32_C (17), (int_least32_t)0 + 0);
 verify (UINT32_C (17) == 17);
-verify_same_types (UINT32_C (17), (uint_least32_t)0);
+verify_same_types (UINT32_C (17), (uint_least32_t)0 + 0);
 
 #if HAVE_INT_LEAST64_T_IN_STDINT_H || _STDINT_H_HAVE_INT64
 verify (INT64_C (17) == 17);
-verify_same_types (INT64_C (17), (int_least64_t)0);
+verify_same_types (INT64_C (17), (int_least64_t)0 + 0);
 #endif
 #if HAVE_UINT_LEAST64_T_IN_STDINT_H || _STDINT_H_HAVE_UINT64
 verify (UINT64_C (17) == 17);
-verify_same_types (UINT64_C (17), (uint_least64_t)0);
+verify_same_types (UINT64_C (17), (uint_least64_t)0 + 0);
 #endif
 
 verify (INTMAX_C (17) == 17);
-verify_same_types (INTMAX_C (17), (intmax_t)0);
+verify_same_types (INTMAX_C (17), (intmax_t)0 + 0);
 verify (UINTMAX_C (17) == 17);
-verify_same_types (UINTMAX_C (17), (uintmax_t)0);
+verify_same_types (UINTMAX_C (17), (uintmax_t)0 + 0);
 
 
 int

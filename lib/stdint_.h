@@ -924,21 +924,46 @@ typedef uint32_t uintmax_t;
 #if !defined(__cplusplus) || defined(__STDC_CONSTANT_MACROS)
 
 /* 7.18.4.1. Macros for minimum-width integer constants */
+/* According to ISO C 99 Technical Corrigendum 1 */
 
 #undef INT8_C
 #undef UINT8_C
 #define INT8_C(x) x
-#define UINT8_C(x) x##U
+#if @HAVE_UINT8_T@
+# if @BITSIZEOF_UINT8_T@ < @BITSIZEOF_UNSIGNED_INT@
+#  define UINT8_C(x) x
+# else
+#  define UINT8_C(x) x##U
+# endif
+#else
+# define UINT8_C(x) x
+#endif
 
 #undef INT16_C
 #undef UINT16_C
 #define INT16_C(x) x
-#define UINT16_C(x) x##U
+#if @HAVE_UINT16_T@
+# if @BITSIZEOF_UINT16_T@ < @BITSIZEOF_UNSIGNED_INT@
+#  define UINT16_C(x) x
+# else
+#  define UINT16_C(x) x##U
+# endif
+#else
+# define UINT16_C(x) x
+#endif
 
 #undef INT32_C
 #undef UINT32_C
 #define INT32_C(x) x
-#define UINT32_C(x) x##U
+#if @HAVE_UINT32_T@
+# if @BITSIZEOF_UINT32_T@ < @BITSIZEOF_UNSIGNED_INT@
+#  define UINT32_C(x) x
+# else
+#  define UINT32_C(x) x##U
+# endif
+#else
+# define UINT32_C(x) x
+#endif
 
 #undef INT64_C
 #undef UINT64_C

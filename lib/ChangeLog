@@ -1,3 +1,8 @@
+2006-06-23  Bruno Haible  <bruno@clisp.org>
+
+	* stdlib_.h (UINT8_C, UINT16_C, UINT32_C): Define according to
+	ISO C 99 Technical Corrigendum 1.
+
 2006-06-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* glob.c (collated_compare): Remove 'const' uses that weren't needed.
