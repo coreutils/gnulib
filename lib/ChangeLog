@@ -1,5 +1,9 @@
 2006-06-23  Bruno Haible  <bruno@clisp.org>
 
+	* stdlib_.h: Treat IRIX like OpenBSD.
+
+2006-06-23  Bruno Haible  <bruno@clisp.org>
+
 	* stdlib_.h (UINT8_C, UINT16_C, UINT32_C): Define according to
 	ISO C 99 Technical Corrigendum 1.
 
