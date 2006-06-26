@@ -1,3 +1,7 @@
+2006-06-26  Bruno Haible  <bruno@clisp.org>
+
+	* modules/stdint (Makefile.am): Also substitute HAVE_WCHAR_H.
+
 2006-06-23  Simon Josefsson  <jas@extundo.com>
             Bruno Haible  <bruno@clisp.org>
 

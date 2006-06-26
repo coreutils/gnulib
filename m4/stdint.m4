@@ -9,6 +9,15 @@ dnl Test whether <stdint.h> is supported or must be substituted.
 
 AC_DEFUN([gl_STDINT_H],
 [
+  dnl Check for <wchar.h>.
+  AC_CHECK_HEADERS_ONCE([wchar.h])
+  if test $ac_cv_header_wchar_h = yes; then
+    HAVE_WCHAR_H=1
+  else
+    HAVE_WCHAR_H=0
+  fi
+  AC_SUBST([HAVE_WCHAR_H])
+
   dnl Check for <stdint.h> that doesn't clash with <sys/types.h>.
   gl_HEADER_STDINT_H
   if test $gl_cv_header_stdint_h = yes; then
@@ -279,7 +288,7 @@ msvc compiler
     gl_STDINT_MISSING_BOUNDS2([SIG_ATOMIC_MIN SIG_ATOMIC_MAX],
       [#include <signal.h>])
     dnl Don't bother defining WCHAR_MIN and WCHAR_MAX, since they should
-    dnl already be defined in <stddef.h>.
+    dnl already be defined in <stddef.h> or <wchar.h>.
     dnl For wint_t we need <wchar.h>.
     dnl Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included
     dnl before <wchar.h>.
