@@ -1,3 +1,7 @@
+2006-06-23  Mark D. Baushke  <mdb@gnu.org>
+
+	* stdint.m4 (gl_STDINT_H): Treat BSD/OS like OpenBSD.
+
 2006-06-26  Simon Josefsson  <jas@extundo.com>
 
 	* inet_ntop.m4: Don't check for sys/types.h, we assume it is

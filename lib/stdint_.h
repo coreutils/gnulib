@@ -33,11 +33,12 @@
 #if defined(__FreeBSD__) && (__FreeBSD__ >= 3) && (__FreeBSD__ <= 4)
 # include <sys/inttypes.h>
 #endif
-#if defined(__OpenBSD__) || defined(__sgi)
+#if defined(__OpenBSD__) || defined(__bsdi__) || defined(__sgi)
   /* In OpenBSD 3.8, <sys/types.h> includes <machine/types.h>, which defines
      int{8,16,32,64}_t, uint{8,16,32,64}_t and __BIT_TYPES_DEFINED__.
      <inttypes.h> includes <machine/types.h> and also defines intptr_t and
      uintptr_t.  */
+  /* BSD/OS 4.2 is similar, but doesn't have <inttypes.h> */
   /* IRIX 6.5 has <inttypes.h>, and <sys/types.h> defines some of these
      types as well.  */
 # include <sys/types.h>
