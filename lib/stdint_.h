@@ -26,7 +26,7 @@
 
 /* Get wchar_t, WCHAR_MIN, WCHAR_MAX.  */
 #include <stddef.h>
-/* Some systems define WCHAR_MIN, WCHAR_MAX in <wchar.h>, not <stddef.h>.  */
+/* BSD/OS 4.2 defines WCHAR_MIN, WCHAR_MAX in <wchar.h>, not <stddef.h>.  */
 #if !(defined(WCHAR_MIN) && defined(WCHAR_MAX)) && @HAVE_WCHAR_H@
 # include <wchar.h>
 #endif
