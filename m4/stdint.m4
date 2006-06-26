@@ -114,7 +114,7 @@ typedef int array [2 * (POW63 != 0 && POW64 == 0) - 1];
 #if (defined(__hpux) || defined(_AIX)) && HAVE_INTTYPES_H
 # include FULL_PATH_INTTYPES_H
 #endif
-#if HAVE_STDINT_H && !(defined(__sgi) && HAVE_INTTYPES_H && !defined(_c99))
+#if HAVE_STDINT_H && !(defined(__sgi) && HAVE_INTTYPES_H && !defined(__c99))
 # include FULL_PATH_STDINT_H
 #endif
 '

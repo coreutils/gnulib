@@ -79,7 +79,7 @@
          a subset of the types and macros that are defined in <stdint.h>.
      So we rely only on <inttypes.h> (included above).  It means that in
      c89 mode, we shadow the contents of warning-spewing <stdint.h>.  */
-# if !(defined(__sgi) && @HAVE_INTTYPES_H@ && !defined(_c99))
+# if !(defined(__sgi) && @HAVE_INTTYPES_H@ && !defined(__c99))
 #  include @FULL_PATH_STDINT_H@
 # endif
 #endif
