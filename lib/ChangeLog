@@ -1,3 +1,9 @@
+2006-06-26  Bruno Haible  <bruno@clisp.org>
+
+	* stdlib_.h: Don't include <stdint.h> when using the SGI C compiler
+	in pre-C99 mode.
+	Suggested by Mark D. Baushke and Larry Jones.
+
 2006-06-23  Mark D. Baushke  <mdb@gnu.org>
 
 	* stdlib_.h: Treat BSD/OS like OpenBSD.

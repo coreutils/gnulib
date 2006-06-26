@@ -1,4 +1,4 @@
-# stdint.m4 serial 9
+# stdint.m4 serial 10
 dnl Copyright (C) 2001-2002, 2004-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -105,7 +105,7 @@ typedef int array [2 * (POW63 != 0 && POW64 == 0) - 1];
 #if (defined(__hpux) || defined(_AIX)) && HAVE_INTTYPES_H
 # include FULL_PATH_INTTYPES_H
 #endif
-#if HAVE_STDINT_H
+#if HAVE_STDINT_H && !(defined(__sgi) && HAVE_INTTYPES_H && !defined(_c99))
 # include FULL_PATH_STDINT_H
 #endif
 '
