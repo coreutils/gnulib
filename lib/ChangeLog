@@ -1,3 +1,7 @@
+2006-06-27  Bruno Haible  <bruno@clisp.org>
+
+	* stdlib_.h (intmax_t, uintmax_t): Undefine before typedef.
+
 2006-06-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* base64.c (B64): Use _ as the formal parameter, not x, to avoid
