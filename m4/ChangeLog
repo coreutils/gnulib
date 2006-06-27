@@ -1,3 +1,9 @@
+2006-06-27  Bruno Haible  <bruno@clisp.org>
+
+	* stdint.m4 (gl_STDINT_BITSIZEOF): For nonexistent types, set the
+	result to 0, not to empty.
+	Reported by Martin Neitzel <neitzel@sco.gaertner.de>.
+
 2006-06-26  Bruno Haible  <bruno@clisp.org>
 
 	* stdint.m4 (gl_STDINT_H): Test also for <wchar.h>.

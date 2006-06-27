@@ -1,4 +1,4 @@
-# stdint.m4 serial 10
+# stdint.m4 serial 11
 dnl Copyright (C) 2001-2002, 2004-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -614,10 +614,19 @@ AC_DEFUN([gl_STDINT_BITSIZEOF],
          eval gl_cv_bitsizeof_${gltype}=\$result
         ])
       eval result=\$gl_cv_bitsizeof_${gltype}
-      GLTYPE=`echo "$gltype" | tr 'abcdefghijklmnopqrstuvwxyz ' 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_'`
-      AC_DEFINE_UNQUOTED([BITSIZEOF_${GLTYPE}], [$result])
-      eval BITSIZEOF_${GLTYPE}=\$result
+    else
+      dnl Use a nonempty default, because some compilers, such as IRIX 5 cc,
+      dnl do a syntax check even on unused #if conditions and give an error
+      dnl on valid C code like this:
+      dnl   #if 0
+      dnl   # if  > 32
+      dnl   # endif
+      dnl   #endif
+      result=0
     fi
+    GLTYPE=`echo "$gltype" | tr 'abcdefghijklmnopqrstuvwxyz ' 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_'`
+    AC_DEFINE_UNQUOTED([BITSIZEOF_${GLTYPE}], [$result])
+    eval BITSIZEOF_${GLTYPE}=\$result
   done
   AC_FOREACH([gltype], [$1],
     [AC_SUBST([BITSIZEOF_]translit(gltype,[abcdefghijklmnopqrstuvwxyz ],[ABCDEFGHIJKLMNOPQRSTUVWXYZ_]))])
