@@ -1,3 +1,8 @@
+2006-06-27  Simon Josefsson  <jas@extundo.com>
+
+	* sys_select_h.m4: New file, suggested by Paul Eggert and Martin
+	Lambers.
+
 2006-06-27  Bruno Haible  <bruno@clisp.org>
 
 	* stdint.m4 (gl_STDINT_BITSIZEOF): For nonexistent types, set the

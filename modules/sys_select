@@ -1,0 +1,32 @@
+Description:
+A <sys/select.h> for systems lacking it (e.g., Mingw).
+
+Files:
+m4/sys_select_h.m4
+
+Depends-on:
+sys_socket
+
+configure.ac:
+gl_HEADER_SYS_SELECT
+
+Makefile.am:
+BUILT_SOURCES += $(SYS_SELECT_H)
+
+# We need the following in order to create <sys/select.h> when the system
+# doesn't have one that works with the given compiler.
+sys/select.h:
+	test -d sys || mkdir sys
+	echo '#include <sys/socket.h>' >$@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += sys/select.h sys/select.h-t
+MOSTLYCLEANDIRS += sys
+
+Include:
+#include <sys/select.h>
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

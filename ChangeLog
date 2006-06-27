@@ -1,3 +1,8 @@
+2006-06-27  Simon Josefsson  <jas@extundo.com>
+
+	* modules/sys_select: New file, suggested by Paul Eggert and
+	Martin Lambers.
+
 2006-06-26  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stdint (Makefile.am): Also substitute HAVE_WCHAR_H.
