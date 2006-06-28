@@ -1,3 +1,11 @@
+2006-06-28  Simon Josefsson  <jas@extundo.com>
+
+	* tests/test-getaddrinfo.c: Test getnameinfo too.  Call WSAStartup
+	on _WIN32.
+
+	* modules/getaddrinfo (Depends-on): Add inet_ntop, needed by
+	getnameinfo.
+
 2006-06-27  Simon Josefsson  <jas@extundo.com>
 
 	* modules/sys_select: New file, suggested by Paul Eggert and

@@ -1,3 +1,19 @@
+2006-06-28  Simon Josefsson  <jas@extundo.com>
+
+	* getaddrinfo.c: Try to load ws2_32.dll on Windows, to find the
+	functions there.  It will succeed on Windows XP, but on Windows
+	2000 and (presumably) earlier, it will fail, and use the internal
+	re-implementation.
+	(use_win32_p): New function.
+	(getaddrinfo): Use strtoul on servname, to support numeric ports.
+	Support AI_NUMERICSERV to disable getservbyname.
+	(getnameinfo): New function, only supports
+	NI_NUMERICHOST|NI_NUMERICSERV for now.
+
+	* getaddrinfo.h: Test and check for AI_* flags separately, MinGW
+	only have some of them.  Add AI_NUMERICSERV.  Add prototype for
+	getnameinfo.
+
 2006-06-27  Bruno Haible  <bruno@clisp.org>
 
 	* stdlib_.h (intmax_t, uintmax_t): Undefine before typedef.

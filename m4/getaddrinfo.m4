@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 9
+# getaddrinfo.m4 serial 10
 dnl Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,7 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_GETADDRINFO],
 [
-  AC_MSG_NOTICE([checking how to do getaddrinfo])
+  AC_MSG_NOTICE([checking how to do getaddrinfo, freeaddrinfo and getnameinfo])
 
   AC_SEARCH_LIBS(getaddrinfo, [nsl socket])
   AC_CHECK_FUNCS(getaddrinfo,, [
@@ -58,7 +58,7 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([AC_GNU_SOURCE])
   AC_CHECK_HEADERS_ONCE(netinet/in.h netdb.h)
-  AC_CHECK_DECLS([getaddrinfo, freeaddrinfo, gai_strerror],,,[
+  AC_CHECK_DECLS([getaddrinfo, freeaddrinfo, gai_strerror, getnameinfo],,,[
   /* sys/types.h is not needed according to POSIX, but the
      sys/socket.h in i386-unknown-freebsd4.10 and
      powerpc-apple-darwin5.5 required it. */

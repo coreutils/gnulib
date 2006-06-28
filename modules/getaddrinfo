@@ -15,6 +15,7 @@ socklen
 stdbool
 strdup
 sys_socket
+inet_ntop
 
 configure.ac:
 gl_GETADDRINFO
