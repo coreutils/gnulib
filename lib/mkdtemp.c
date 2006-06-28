@@ -84,9 +84,10 @@
 #endif
 
 #ifdef __MINGW32__
-/* mingw's mkdir() function has 1 argument, but we pass 2 arguments.
+# include <io.h>
+/* mingw's _mkdir() function has 1 argument, but we pass 2 arguments.
    Therefore we have to disable the argument count checking.  */
-# define mkdir ((int (*)()) mkdir)
+# define mkdir ((int (*)()) _mkdir)
 #endif
 
 #if !_LIBC

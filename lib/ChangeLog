@@ -1,3 +1,8 @@
+2006-05-12  Bruno Haible  <bruno@clisp.org>
+
+        * mkdtemp.c [MINGW]: Include <io.h>.
+        (mkdir): Define using _mkdir.
+
 2006-06-28  Bruno Haible  <bruno@clisp.org>
 
 	* wcwidth.h: Declare nothing if !HAVE_WCHAR_T. Provide a fallback
