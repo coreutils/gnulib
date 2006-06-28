@@ -1811,6 +1811,7 @@ func_all_modules ()
   func_module strtok_r
   func_module unistd
   func_module utime
+  func_module wcwidth
   func_end_table
 
   element="Enhancements for POSIX:2001 functions"

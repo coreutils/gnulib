@@ -1,3 +1,10 @@
+2006-06-28  Eric Blake  <ebb9@byu.net>
+
+	* modules/wcwidth: New file.
+	* modules/mbchar (Depends-on): Add wcwidth.
+	* modules/mbswidth (Depends-on): Add wcwidth.
+	* MODULES.html.sh: Add wcwidth.
+
 2006-06-28  Simon Josefsson  <jas@extundo.com>
 
 	* tests/test-getaddrinfo.c: Test getnameinfo too.  Call WSAStartup
@@ -16,7 +23,7 @@
 	* modules/stdint (Makefile.am): Also substitute HAVE_WCHAR_H.
 
 2006-06-23  Simon Josefsson  <jas@extundo.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am): Define MOSTLYCLEANDIRS.
 	Emit mostlyclean-local rule.
@@ -104,7 +111,7 @@
 	* modules/wait-process: Likewise.
 
 2006-04-23  Claudio Fontana  <claudio@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* modules/gettext (Makefile.am): Add a -I flag for <libintl.h>.
 	* gnulib-tool (func_emit_lib_Makefile_am): Emit empty default value
