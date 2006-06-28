@@ -1,4 +1,6 @@
-2006-06-28  Derek Price  <derek@ximbiot.com>
+2006-06-28  Derek R. Price  <derek@ximbiot.com>
+
+	* savedir.m4: Remove AC_FUNC_CLOSEDIR_VOID requirement.
 
 	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Don't require AC_C_CONST, since
 	it's obsolete.
