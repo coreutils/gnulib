@@ -1,4 +1,4 @@
-2006-06-28  Paul Eggert  <eggert@cs.ucla.edu>
+2006-06-28  Derek Price  <derek@ximbiot.com>
 
 	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Don't require AC_C_CONST, since
 	it's obsolete.
