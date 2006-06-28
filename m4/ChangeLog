@@ -1,3 +1,9 @@
+2006-06-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Don't require AC_C_CONST, since
+	it's obsolete.
+	* strftime.m4 (gl_FUNC_GNU_STRFTIME): Likewise.
+
 2006-06-28  Bruno Haible  <bruno@clisp.org>
 
 	* wcwidth.m4 (gl_FUNC_WCWIDTH): Also require AC_C_INLINE and
