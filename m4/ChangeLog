@@ -9,8 +9,8 @@
 
 2006-06-27  Simon Josefsson  <jas@extundo.com>
 
-	* sys_select_h.m4: New file, suggested by Paul Eggert and Martin
-	Lambers.
+	* sys_select_h.m4: New file, suggested by Bruno Haible, Paul
+	Eggert and Martin Lambers.
 
 2006-06-27  Bruno Haible  <bruno@clisp.org>
 
