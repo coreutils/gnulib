@@ -38,8 +38,8 @@
 extern "C" {
 #endif
 
-/* Write formatted output to a string dynamically allocated with malloc().
-   Upon [ENOMEM] memory allocation error, call xalloc_die.
+/* Write formatted output to a string dynamically allocated with malloc(),
+   and return it.  Upon [ENOMEM] memory allocation error, call xalloc_die.
    On some other error
      - [EOVERFLOW] resulting string length is > INT_MAX,
      - [EINVAL] invalid format string,
