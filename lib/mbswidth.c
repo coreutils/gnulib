@@ -1,5 +1,5 @@
 /* Determine the number of screen columns needed for a string.
-   Copyright (C) 2000-2005 Free Software Foundation, Inc.
+   Copyright (C) 2000-2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,23 +33,9 @@
 #include <ctype.h>
 
 /* Get mbstate_t, mbrtowc(), mbsinit(), wcwidth().  */
-#if HAVE_WCHAR_H
-/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
-   <wchar.h>.
-   BSD/OS 4.1 has a bug: <stdio.h> and <time.h> must be included before
-   <wchar.h>.  */
-# include <stdio.h>
-# include <time.h>
-# include <wchar.h>
-#endif
+#include "wcwidth.h"
 
-/* Get iswprint(), iswcntrl().  */
-#if HAVE_WCTYPE_H
-# include <wctype.h>
-#endif
-#if !defined iswprint && !HAVE_ISWPRINT
-# define iswprint(wc) 1
-#endif
+/* Get iswcntrl().  */
 #if !defined iswcntrl && !HAVE_ISWCNTRL
 # define iswcntrl(wc) 0
 #endif
@@ -57,21 +43,6 @@
 #ifndef mbsinit
 # if !HAVE_MBSINIT
 #  define mbsinit(ps) 1
-# endif
-#endif
-
-#ifndef HAVE_DECL_WCWIDTH
-"this configure-time declaration test was not run"
-#endif
-#if !HAVE_DECL_WCWIDTH
-int wcwidth ();
-#endif
-
-#ifndef wcwidth
-# if !HAVE_WCWIDTH
-/* wcwidth doesn't exist, so assume all printable characters have
-   width 1.  */
-#  define wcwidth(wc) ((wc) == 0 ? 0 : iswprint (wc) ? 1 : -1)
 # endif
 #endif
 

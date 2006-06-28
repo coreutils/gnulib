@@ -1,3 +1,9 @@
+2006-06-28  Eric Blake  <ebb9@byu.net>
+
+	* mbchar.h (wcwidth): Include wcwidth.h.
+	* mbswidth.c (wcwidth): Move from here...
+	* wcwidth.h: ...to this new file.
+
 2006-06-28  Simon Josefsson  <jas@extundo.com>
 
 	* getaddrinfo.c: Try to load ws2_32.dll on Windows, to find the
@@ -122,7 +128,7 @@
 	reported by Andreas Schwab.
 
 2006-05-30  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* strndup.c (strndup) [!_LIBC]: Don't undefine macro definition.
 
@@ -478,7 +484,7 @@
 	(re_acquire_state_context): Likewise.
 
 2006-03-29  Mark D. Baushke  <mdb@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* stdint_.h: On OpenBSD, don't redefine types already included in
 	<sys/types.h> and <inttypes.h>.
