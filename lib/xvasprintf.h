@@ -1,5 +1,5 @@
 /* vasprintf and asprintf with out-of-memory checking.
-   Copyright (C) 2002-2004 Free Software Foundation, Inc.
+   Copyright (C) 2002-2004, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -39,9 +39,7 @@ extern "C" {
 #endif
 
 /* Write formatted output to a string dynamically allocated with malloc().
-   If the memory allocation succeeds, store the address of the string in
-   *RESULT and return the number of resulting bytes, excluding the trailing
-   NUL.  Upon [ENOMEM] memory allocation error, call xalloc_die.
+   Upon [ENOMEM] memory allocation error, call xalloc_die.
    On some other error
      - [EOVERFLOW] resulting string length is > INT_MAX,
      - [EINVAL] invalid format string,

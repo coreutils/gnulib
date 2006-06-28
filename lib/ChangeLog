@@ -1,5 +1,9 @@
 2006-06-28  Eric Blake  <ebb9@byu.net>
 
+	* xvasprintf.h: Fix comments.
+
+2006-06-28  Eric Blake  <ebb9@byu.net>
+
 	* mbchar.h (wcwidth): Include wcwidth.h.
 	* mbswidth.c (wcwidth): Move from here...
 	* wcwidth.h: ...to this new file.
