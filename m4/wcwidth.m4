@@ -1,16 +1,19 @@
-# wcwidth.m4 serial 1
+# wcwidth.m4 serial 2
 dnl Copyright (C) 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-dnl autoconf tests required for use of mbswidth.c
-
 AC_DEFUN([gl_FUNC_WCWIDTH],
-[ AC_CHECK_HEADERS_ONCE([wchar.h wctype.h])
-  AC_CHECK_FUNCS_ONCE([iswprint wcwidth])
-
+[
+  dnl Persuade glibc <wchar.h> to declare wcwidth().
   AC_REQUIRE([AC_GNU_SOURCE])
+
+  AC_REQUIRE([AC_C_INLINE])
+  AC_REQUIRE([gt_TYPE_WCHAR_T])
+
+  AC_CHECK_HEADERS_ONCE([wchar.h wctype.h])
+  AC_CHECK_FUNCS_ONCE([iswprint wcwidth])
 
   AC_CACHE_CHECK([whether wcwidth is declared], [ac_cv_have_decl_wcwidth],
     [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([

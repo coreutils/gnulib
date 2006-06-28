@@ -1,3 +1,8 @@
+2006-06-28  Bruno Haible  <bruno@clisp.org>
+
+	* wcwidth.m4 (gl_FUNC_WCWIDTH): Also require AC_C_INLINE and
+	gt_TYPE_WCHAR_T.
+
 2006-06-28  Eric Blake  <ebb9@byu.net>
 
 	* mbswidth.m4 (gl_MBSDWIDTH): Move wcwidth from here...

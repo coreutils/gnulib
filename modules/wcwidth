@@ -4,6 +4,7 @@ Determine the number of screen columns needed for a character.
 Files:
 lib/wcwidth.h
 m4/wcwidth.m4
+m4/wchar_t.m4
 
 Depends-on:
 

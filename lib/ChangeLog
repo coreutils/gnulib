@@ -1,3 +1,9 @@
+2006-06-28  Bruno Haible  <bruno@clisp.org>
+
+	* wcwidth.h: Declare nothing if !HAVE_WCHAR_T. Provide a fallback
+	declaration for wcwidth.
+	* mbswidth.c: Restore the includes of <wchar.h> and <wctypes.h>.
+
 2006-06-28  Eric Blake  <ebb9@byu.net>
 
 	* xvasprintf.h: Fix comments.

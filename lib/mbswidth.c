@@ -32,10 +32,24 @@
 /* Get isprint().  */
 #include <ctype.h>
 
-/* Get mbstate_t, mbrtowc(), mbsinit(), wcwidth().  */
+/* Get mbstate_t, mbrtowc(), mbsinit().  */
+#if HAVE_WCHAR_H
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.1 has a bug: <stdio.h> and <time.h> must be included before
+   <wchar.h>.  */
+# include <stdio.h>
+# include <time.h>
+# include <wchar.h>
+#endif
+
+/* Get wcwidth().  */
 #include "wcwidth.h"
 
 /* Get iswcntrl().  */
+#if HAVE_WCTYPE_H
+# include <wctype.h>
+#endif
 #if !defined iswcntrl && !HAVE_ISWCNTRL
 # define iswcntrl(wc) 0
 #endif

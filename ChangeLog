@@ -1,3 +1,7 @@
+2006-06-28  Bruno Haible  <bruno@clisp.org>
+
+	* modules/wcwidth (Files): Add m4/wchar_t.m4.
+
 2006-06-28  Eric Blake  <ebb9@byu.net>
 
 	* modules/wcwidth: New file.
