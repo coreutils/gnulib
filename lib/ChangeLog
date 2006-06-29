@@ -1,3 +1,7 @@
+2006-06-29  Eric Blake  <ebb9@byu.net>
+
+	* stat_.h: New file.
+
 2006-06-29  Derek R. Price  <derek@ximbiot.com>
 
 	* strftime.c: Assume strftime() exists.
