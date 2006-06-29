@@ -1,3 +1,9 @@
+2006-06-29  Eric Blake  <ebb9@byu.net>
+
+	* MODULES.html.sh: Add sys_stat.
+	* modules/sys_stat: New module.
+	* modules/mkstemp (Depends-on): Add sys_stat.
+
 2006-06-29  Jim Meyering  <jim@meyering.net>
 
 	* modules/strftime (Maintainer): Add my name, since with the
