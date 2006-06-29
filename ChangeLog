@@ -1,3 +1,7 @@
+2006-06-29  Bruno Haible  <bruno@clisp.org>
+
+	* modules/wcwidth (License): Change to LGPL.
+
 2006-06-29  Derek Price  <derek@ximbiot.com>
 
 	* modules/c-bs-a: Removed - \a is C89.
