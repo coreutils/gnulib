@@ -1,3 +1,8 @@
+2006-06-29  Eric Blake  <ebb9@byu.net>
+
+	* functions.texi (Function Portability): Document missing lstat
+	on mingw.
+
 2006-06-21  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib.texi (Windows sockets): Add.

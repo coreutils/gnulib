@@ -366,6 +366,9 @@ On platforms where @code{off_t} is a 32-bit type, @code{lstat} may not
 correctly report the size of files or block devices larger than 2 GB.  The fix
 is to use the @code{AC_SYS_LARGEFILE} macro.
 
+On Windows systems (excluding Cygwin), symlinks are not supported, so
+@code{lstat} does not exist.  The fix is to define lstat to use stat.
+
 @item mbrtowc
 @itemx mbsrtowcs
 @itemx mbstowcs
