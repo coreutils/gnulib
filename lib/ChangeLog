@@ -1,3 +1,7 @@
+2006-06-29  Derek R. Price  <derek@ximbiot.com>
+
+	* strftime.c: Assume strftime() exists.
+
 2006-06-28  Bruno Haible  <bruno@clisp.org>
 
 	* getaddrinfo.h: Fix POSIX URL.

@@ -1,7 +1,7 @@
-2006-06-28  Derek R. Price  <derek@ximbiot.com>
+2006-06-29  Jim Meyering  <jim@meyering.net>
 
-	* lib/strftime.c: Assume strftime() exists.
-	* m4/strftime.m4: Don't call AC_FUNC_STRFTIME.
+	* modules/strftime (Maintainer): Add my name, since with the
+	FPRINTFTIME changes strftime.c has forked from glibc.
 
 2006-06-29  Bruno Haible  <bruno@clisp.org>
 
