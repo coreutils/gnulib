@@ -1,3 +1,7 @@
+2006-06-29  Eric Blake  <ebb9@byu.net>
+
+	* sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): New file.
+
 2006-06-29  Derek R. Price  <derek@ximbiot.com>
 
 	* strftime.m4: Don't call AC_FUNC_STRFTIME.
