@@ -1,3 +1,12 @@
+2006-06-28  Bruno Haible  <bruno@clisp.org>
+
+	* getaddrinfo.h: Fix POSIX URL.
+	* getaddrinfo.c (WIN32_NATIVE): New macro. Use it instead of _WIN32.
+	(use_win32_p): Make static.
+	(getaddrinfo): Reject service name if it is empty or does not consist
+	solely of decimal digits, or if its value is > 65535.
+	(getnameinfo): Remove useless casts.
+
 2006-06-28  Derek R. Price  <derek@ximbiot.com>
 
 	* savedir.c (CLOSEDIR): Remove.  All uses changed to closedir.
