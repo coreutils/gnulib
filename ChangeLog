@@ -1,3 +1,7 @@
+2006-06-29  Derek Price  <derek@ximbiot.com>
+
+	* modules/c-bs-a: Removed - \a is C89.
+
 2006-06-28  Bruno Haible  <bruno@clisp.org>
 
 	* modules/wcwidth (Files): Add m4/wchar_t.m4.

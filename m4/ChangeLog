@@ -1,3 +1,7 @@
+2006-06-29  Derek R. Price  <derek@ximbiot.com>
+
+	* c-bs-a.m4: Removed.
+
 2006-06-28  Derek R. Price  <derek@ximbiot.com>
 
 	* savedir.m4: Remove AC_FUNC_CLOSEDIR_VOID requirement.
