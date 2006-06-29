@@ -5,8 +5,8 @@
 
 2006-05-12  Bruno Haible  <bruno@clisp.org>
 
-        * mkdtemp.c [MINGW]: Include <io.h>.
-        (mkdir): Define using _mkdir.
+	* mkdtemp.c [MINGW]: Include <io.h>.
+	(mkdir): Define using _mkdir.
 
 2006-06-28  Bruno Haible  <bruno@clisp.org>
 
@@ -42,7 +42,7 @@
 
 2006-06-27  Bruno Haible  <bruno@clisp.org>
 
-	* stdlib_.h (intmax_t, uintmax_t): Undefine before typedef.
+	* stdint_.h (intmax_t, uintmax_t): Undefine before typedef.
 
 2006-06-26  Paul Eggert  <eggert@cs.ucla.edu>
 
@@ -52,27 +52,27 @@
 
 2006-06-26  Bruno Haible  <bruno@clisp.org>
 
-	* stdlib_.h: Include <wchar.h> if necessary for WCHAR_MIN or
+	* stdint_.h: Include <wchar.h> if necessary for WCHAR_MIN or
 	WCHAR_MAX.
 	Reported by Mark D. Baushke and Larry Jones.
 
 2006-06-26  Bruno Haible  <bruno@clisp.org>
 
-	* stdlib_.h: Don't include <stdint.h> when using the SGI C compiler
+	* stdint_.h: Don't include <stdint.h> when using the SGI C compiler
 	in pre-C99 mode.
 	Suggested by Mark D. Baushke and Larry Jones.
 
 2006-06-23  Mark D. Baushke  <mdb@gnu.org>
 
-	* stdlib_.h: Treat BSD/OS like OpenBSD.
+	* stdint_.h: Treat BSD/OS like OpenBSD.
 
 2006-06-23  Bruno Haible  <bruno@clisp.org>
 
-	* stdlib_.h: Treat IRIX like OpenBSD.
+	* stdint_.h: Treat IRIX like OpenBSD.
 
 2006-06-23  Bruno Haible  <bruno@clisp.org>
 
-	* stdlib_.h (UINT8_C, UINT16_C, UINT32_C): Define according to
+	* stdint_.h (UINT8_C, UINT16_C, UINT32_C): Define according to
 	ISO C 99 Technical Corrigendum 1.
 
 2006-06-22  Paul Eggert  <eggert@cs.ucla.edu>
