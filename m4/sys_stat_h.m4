@@ -22,6 +22,7 @@ AC_DEFUN([gl_HEADER_SYS_STAT_H],
     gl_FULL_HEADER_PATH([sys/stat.h])
     FULL_PATH_SYS_STAT_H='<'$gl_cv_full_path_sys_stat_h'>'
     AC_CHECK_HEADERS([io.h])
+    AC_REQUIRE([AC_C_INLINE])
     AC_SUBST([FULL_PATH_SYS_STAT_H])
     SYS_STAT_H='sys/stat.h'
   fi
