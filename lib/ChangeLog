@@ -1,5 +1,10 @@
 2006-06-29  Eric Blake  <ebb9@byu.net>
 
+	* stat_.h (rpl_mkdir): Declare inline, to avoid warnings about
+	unused static function.
+
+2006-06-29  Eric Blake  <ebb9@byu.net>
+
 	* stat_.h: New file.
 
 2006-06-29  Derek R. Price  <derek@ximbiot.com>

@@ -35,7 +35,13 @@
    alias mkdir), only in the nonstandard io.h.  */
 #if ! HAVE_DECL_MKDIR && HAVE_IO_H
 # include <io.h>
-static int rpl_mkdir (char const *name, mode_t mode) { return _mkdir (name); }
+
+static inline int
+rpl_mkdir (char const *name, mode_t mode)
+{
+  return _mkdir (name);
+}
+
 # define mkdir rpl_mkdir
 #endif
 
