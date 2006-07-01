@@ -167,7 +167,7 @@ getaddrinfo (const char *restrict nodename,
       if (!se)
 	{
 	  char *c;
-	  if (!(*servname >= '0' && *servname <= '9))
+	  if (!(*servname >= '0' && *servname <= '9'))
 	    return EAI_NONAME;
 	  port = strtoul (servname, &c, 10);
 	  if (*c || port > 0xffff)

@@ -1,3 +1,7 @@
+2006-06-30  Jim Hyslop <jhyslop@dreampossible.ca>  (tiny change)
+
+	* getaddrinfo.c: fixed typo
+
 2006-06-29  Eric Blake  <ebb9@byu.net>
 
 	* stat_.h (rpl_mkdir): Declare inline, to avoid warnings about
