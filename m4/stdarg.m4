@@ -32,7 +32,7 @@ error, bail out
         [Define as a macro for copying va_list variables.])
     else
       AH_VERBATIM([gl_VA_COPY], [/* A replacement for va_copy, if needed.  */
-#define gl_va_copy(a,b) (a) = (b)])
+#define gl_va_copy(a,b) ((a) = (b))])
       AC_DEFINE([va_copy], [gl_va_copy],
         [Define as a macro for copying va_list variables.])
     fi

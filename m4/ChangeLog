@@ -1,5 +1,9 @@
 2006-07-01  Eric Blake  <ebb9@byu.net>
 
+	* stdarg.m4 (gl_STDARG_H): Properly parenthesize gl_va_copy.
+
+2006-07-01  Eric Blake  <ebb9@byu.net>
+
 	* stdarg.m4 (gl_STDARG_H): Use proper AH_VERBATIM.
 	Reported by Andreas Buening.
 
