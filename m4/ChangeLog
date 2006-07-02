@@ -1,3 +1,57 @@
+2006-07-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* longlong.m4 (AC_TYPE_LONG_LONG_INT): Backport from Autoconf 2.60,
+	but fix a bug, by requiring at least 64 bits.
+	* ulonglong.m4 (AC_TYPE_UNSIGNED_LONG_LONG_INT): Likewise.
+	* longlong.m4 (gl_AC_TYPE_LONG_LONG): Now just call
+	AC_TYPE_LONG_LONG_INT.  This macro is obsolete and will go soon.
+	* ulonglong.m4 (gl_AC_TYPE_UNSIGNED_LONG_LONG) Likewise.
+
+	* stdint.m4 (gl_STDINT_H): Rewrite to accommodate stdint_.h
+	changes.  Make 2.59 a prerequisite.  Check and substitute for
+	HAVE_LONG_LONG_INT.  Rely on Autoconf to check for stdint.h and
+	inttypes.h.  Do not use special include files; just use the
+	defaults.  Check for sys/inttypes.h and sys/bitypes.h in the usual
+	way now.  Remove no-longer-needed tests for HAVE_LONG_64BIT,
+	HAVE_LONG_LONG_64BIT, int8_t, int16_t, int32_t, int64_t, uint8_t,
+	uint16_t, uint32_t uint64_t, int_least8_t, int_least16_t,
+	int_least32_t, int_least64_t, uint_least8_t, uint_least16_t,
+	uint_least32_t, uint_least64_t, int_fast8_t, int_fast16_t,
+	int_fast32_t, int_fast64_t, uint_fast8_t uint_fast16_t,
+	uint_fast32_t, uint_fast64_t, intptr_t, uintptr_t, intmax_t,
+	uintmax_t, INT8_MIN, INT8_MAX, UINT8_MAX, INT16_MIN, INT16_MAX,
+	UINT16_MAX, INT32_MIN, INT32_MAX, UINT32_MAX, INT64_MIN,
+	INT64_MAX, UINT64_MAX, INT_LEAST8_MIN, INT_LEAST8_MAX,
+	UINT_LEAST8_MAX, INT_LEAST16_MIN, INT_LEAST16_MAX,
+	UINT_LEAST16_MAX, INT_LEAST32_MIN, INT_LEAST32_MAX,
+	UINT_LEAST32_MAX, INT_LEAST64_MIN, INT_LEAST64_MAX,
+	UINT_LEAST64_MAX, INT_FAST8_MIN, INT_FAST8_MAX, UINT_FAST8_MAX,
+	INT_FAST16_MIN, INT_FAST16_MAX, UINT_FAST16_MAX, INT_FAST32_MIN,
+	INT_FAST32_MAX, UINT_FAST32_MAX, INT_FAST64_MIN, INT_FAST64_MAX,
+	UINT_FAST64_MAX, INTPTR_MIN, INTPTR_MAX, UINTPTR_MAX, INTMAX_MIN,
+	INTMAX_MAX, UINTMAX_MAX, PTRDIFF_MIN, PTRDIFF_MAX, SIG_ATOMIC_MIN,
+	SIG_ATOMIC_MAX, SIZE_MAX, WCHAR_MIN, WCHAR_MAX, WINT_MIN,
+	WINT_MAX.  Check for C99 conformance more strictly, by detecting
+	bugs in glibc 2.4, Solaris 10, and OpenBSD 3.9.  On the other hand do
+	not check for things that C99 does not require, e.g., int8_t.  If
+	a test isn't needed unless <stdint.h> isn't working, and is
+	unlikely to be needed for any other reason, then don't do it
+	unless <stdint.h> isn't working.  Do not check for ptrdiff_t or
+	size_t, since we assume C89 freestanding at least.  Do not check
+	for sig_atomic_t, wchar_t, or wint_t, since the code now does
+	the right thing even if the types are not defined.  Instead use:
+	(gl_STDINT_TYPE_PROPERTIES): New macro.
+	(gl_HEADER_STDINT_H, gl_HEADER_INTTYPES_H): Remove.  Don't bother
+	testing whether <sys/types.h> clashes, as Autoconf does this for
+	us now.  All uses removed.
+	(gl_STDINT_CHECK_TYPES, gl_STDINT_MISSING_BOUND):
+	(gl_STDINT_MISSING_BOUNDS, gl_STDINT_MISSING_BOUNDS2):
+	(gl_CHECK_TYPE_SAME):
+	Remove; no longer needed.
+	(gl_STDINT_BITSIZEOF): Don't bother to check whether the type
+	exists, since we'll return 0 anyway in that case.
+	(gl_INTEGER_TYPE_SUFFIX, gl_STDINT_INCLUDES): New macros.
+
 2006-07-01  Eric Blake  <ebb9@byu.net>
 
 	* stdarg.m4 (gl_STDARG_H): Properly parenthesize gl_va_copy.

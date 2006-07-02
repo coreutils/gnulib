@@ -38,7 +38,7 @@
 # define _verify_func(line) _verify_func2(line)
 # define _verify_func2(line) verify_func_ ## line
 #else
-# define verify_same_types(expr1,expr2)
+# define verify_same_types(expr1,expr2) extern void verify_func (int)
 #endif
 
 /* 7.18.1.1. Exact-width integer types */
@@ -62,7 +62,7 @@ verify (TYPE_MAXIMUM (int32_t) == INT32_MAX);
 verify_same_types (INT32_MIN, (int32_t) 0 + 0);
 verify_same_types (INT32_MAX, (int32_t) 0 + 0);
 
-#if HAVE_INT64_T_IN_STDINT_H || _STDINT_H_HAVE_INT64
+#ifdef INT64_MAX
 int64_t a4[3] = { INT64_C (17), INT64_MIN, INT64_MAX };
 verify (TYPE_MINIMUM (int64_t) == INT64_MIN);
 verify (TYPE_MAXIMUM (int64_t) == INT64_MAX);
@@ -82,7 +82,7 @@ uint32_t b3[2] = { UINT32_C (17), UINT32_MAX };
 verify (TYPE_MAXIMUM (uint32_t) == UINT32_MAX);
 verify_same_types (UINT32_MAX, (uint32_t) 0 + 0);
 
-#if HAVE_UINT64_T_IN_STDINT_H || _STDINT_H_HAVE_UINT64
+#ifdef UINT64_MAX
 uint64_t b4[2] = { UINT64_C (17), UINT64_MAX };
 verify (TYPE_MAXIMUM (uint64_t) == UINT64_MAX);
 verify_same_types (UINT64_MAX, (uint64_t) 0 + 0);
@@ -121,7 +121,7 @@ verify (TYPE_MAXIMUM (int_least32_t) == INT_LEAST32_MAX);
 verify_same_types (INT_LEAST32_MIN, (int_least32_t) 0 + 0);
 verify_same_types (INT_LEAST32_MAX, (int_least32_t) 0 + 0);
 
-#if HAVE_INT_LEAST64_T_IN_STDINT_H || _STDINT_H_HAVE_INT64
+#ifdef INT_LEAST64_MAX
 int_least64_t c4[3] = { 17, INT_LEAST64_MIN, INT_LEAST64_MAX };
 verify (TYPE_MINIMUM (int_least64_t) == INT_LEAST64_MIN);
 verify (TYPE_MAXIMUM (int_least64_t) == INT_LEAST64_MAX);
@@ -141,7 +141,7 @@ uint_least32_t d3[2] = { 17, UINT_LEAST32_MAX };
 verify (TYPE_MAXIMUM (uint_least32_t) == UINT_LEAST32_MAX);
 verify_same_types (UINT_LEAST32_MAX, (uint_least32_t) 0 + 0);
 
-#if HAVE_UINT_LEAST64_T_IN_STDINT_H || _STDINT_H_HAVE_UINT64
+#ifdef UINT_LEAST64_MAX
 uint_least64_t d4[2] = { 17, UINT_LEAST64_MAX };
 verify (TYPE_MAXIMUM (uint_least64_t) == UINT_LEAST64_MAX);
 verify_same_types (UINT_LEAST64_MAX, (uint_least64_t) 0 + 0);
@@ -180,7 +180,7 @@ verify (TYPE_MAXIMUM (int_fast32_t) == INT_FAST32_MAX);
 verify_same_types (INT_FAST32_MIN, (int_fast32_t) 0 + 0);
 verify_same_types (INT_FAST32_MAX, (int_fast32_t) 0 + 0);
 
-#if HAVE_INT_FAST64_T_IN_STDINT_H || _STDINT_H_HAVE_INT64
+#ifdef INT_FAST64_MAX
 int_fast64_t e4[3] = { 17, INT_FAST64_MIN, INT_FAST64_MAX };
 verify (TYPE_MINIMUM (int_fast64_t) == INT_FAST64_MIN);
 verify (TYPE_MAXIMUM (int_fast64_t) == INT_FAST64_MAX);
@@ -200,7 +200,7 @@ uint_fast32_t f3[2] = { 17, UINT_FAST32_MAX };
 verify (TYPE_MAXIMUM (uint_fast32_t) == UINT_FAST32_MAX);
 verify_same_types (UINT_FAST32_MAX, (uint_fast32_t) 0 + 0);
 
-#if HAVE_UINT_FAST64_T_IN_STDINT_H || _STDINT_H_HAVE_UINT64
+#ifdef UINT_FAST64_MAX
 uint_fast64_t f4[2] = { 17, UINT_FAST64_MAX };
 verify (TYPE_MAXIMUM (uint_fast64_t) == UINT_FAST64_MAX);
 verify_same_types (UINT_FAST64_MAX, (uint_fast64_t) 0 + 0);
@@ -293,30 +293,36 @@ verify_same_types (SIZE_MAX, (size_t) 0 + 0);
 err or;
 #endif
 
+#if HAVE_WCHAR_T
 verify (TYPE_MINIMUM (wchar_t) == WCHAR_MIN);
 verify (TYPE_MAXIMUM (wchar_t) == WCHAR_MAX);
 verify_same_types (WCHAR_MIN, (wchar_t) 0 + 0);
 verify_same_types (WCHAR_MAX, (wchar_t) 0 + 0);
 
-#if WCHAR_MIN != 17 && WCHAR_MAX
+# if WCHAR_MIN != 17 && WCHAR_MAX
 /* ok */
-#else
+# else
 err or;
+# endif
 #endif
 
-#include <stdio.h>
-#include <time.h>
-#include <wchar.h>
+#if HAVE_WINT_T
+# if HAVE_WCHAR_H
+#  include <stdio.h>
+#  include <time.h>
+#  include <wchar.h>
+# endif
 
 verify (TYPE_MINIMUM (wint_t) == WINT_MIN);
 verify (TYPE_MAXIMUM (wint_t) == WINT_MAX);
 verify_same_types (WINT_MIN, (wint_t) 0 + 0);
 verify_same_types (WINT_MAX, (wint_t) 0 + 0);
 
-#if WINT_MIN != 17 && WINT_MAX
+# if WINT_MIN != 17 && WINT_MAX
 /* ok */
-#else
+# else
 err or;
+# endif
 #endif
 
 /* 7.18.4. Macros for integer constants */
@@ -336,11 +342,11 @@ verify_same_types (INT32_C (17), (int_least32_t)0 + 0);
 verify (UINT32_C (17) == 17);
 verify_same_types (UINT32_C (17), (uint_least32_t)0 + 0);
 
-#if HAVE_INT_LEAST64_T_IN_STDINT_H || _STDINT_H_HAVE_INT64
+#ifdef INT64_C
 verify (INT64_C (17) == 17);
 verify_same_types (INT64_C (17), (int_least64_t)0 + 0);
 #endif
-#if HAVE_UINT_LEAST64_T_IN_STDINT_H || _STDINT_H_HAVE_UINT64
+#ifdef UINT64_C
 verify (UINT64_C (17) == 17);
 verify_same_types (UINT64_C (17), (uint_least64_t)0 + 0);
 #endif

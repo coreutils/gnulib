@@ -1,3 +1,64 @@
+2006-07-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* stdint_.h (_GL_STDINT_H): Renamed from _STDINT_H, to avoid
+	possible collision with system files.
+	(<stdio.h>, <time.h>, <wchar.h>) [defined __cplusplus && ! defined
+	__STDC_CONSTANT_MACROS)]: Do not include, since we don't need
+	WCHAR_MIN and WCHAR_MAX in this case.
+	(<stddef.h>): Do not include; no longer needed.
+	(<sys/types.h>): Include if @HAVE_SYS_TYPES_H@, not if
+	(defined(__OpenBSD__) || defined(__bsdi__) || defined(__sgi)).
+	(<sys/inttypes.h>): Include if @HAVE_SYS_INTTYPES_H@ &&
+	!@HAVE_INTTYPES_H@, not if (defined(__FreeBSD__)
+	&& (__FreeBSD__ >= 3) && (__FreeBSD__ <= 4)).
+	(__STDINT_H__) [@HAVE_STDINT_H@ && defined __sgi && ! defined
+	__c99]: Define, to work around IRIX <stdint.h> incompatibility.
+	(@FULL_PATH_STDINT_H@) [!(defined(__sgi) && @HAVE_INTTYPES_H@ &&
+	!defined(__c99))]: Include in this case too, since it's harmless
+	now.
+	(<inttypes.h>) [@HAVE_INTTYPES_H@]: Include, since it's no longer
+	dangerous to do so.
+	(@FULL_PATH_INTTYPES_H@) [(defined(__hpux) || defined(_AIX)) &&
+	@HAVE_INTTYPES_H@]: Do not include, since we now include <inttypes.h>.
+	(_STDINT_MIN, _STDINT_MAX): New macros.
+	(int8_t, uint8_t, int16_t, uint16_t, int32_t, uint32_t, int64_t):
+	(uint64_t, int_least8_t, uint_least8_t, int_least16_t):
+	(uint_least16_t, int_least32_t, uint_least32_t, int_least64_t):
+	(uint_least64_t, int_fast8_t, uint_fast8_t, int_fast16_t):
+	(uint_fast16_t, int_fast32_t, uint_fast32_t, int_fast64_t):
+	(uint_fast64_t, intptr_t, uintptr_t, intmax_t, uintmax_t): Now
+	macros, not typedefs; this simplifies things quite a bit.
+	Use long int for all types narrower than int64_t.
+	(intmax_t, uintmax_t, INTMAX_C, UINTMAX_C):
+	Define in terms of long long int or int64_t or long int,
+	not int64_t or int32_t.  This saves some compile-time testing.
+	(INT8_MIN, INT8_MAX, UINT8_MAX, INT16_MIN, INT16_MAX, UINT16_MAX):
+	(INT32_MIN, INT32_MAX, UINT32_MAX, INT64_MIN, INT64_MAX):
+	(UINT64_MAX, INT_LEAST8_MIN, INT_LEAST8_MAX, UINT_LEAST8_MAX):
+	(INT_LEAST16_MIN, INT_LEAST16_MAX, UINT_LEAST16_MAX):
+	(INT_LEAST32_MIN, INT_LEAST32_MAX, UINT_LEAST32_MAX):
+	(INT_LEAST64_MIN, INT_LEAST64_MAX, UINT_LEAST64_MAX, INT_FAST8_MIN):
+	(INT_FAST8_MAX, UINT_FAST8_MAX, INT_FAST16_MIN, INT_FAST16_MAX):
+	(UINT_FAST16_MAX, INT_FAST32_MIN, INT_FAST32_MAX, UINT_FAST32_MAX):
+	(INT_FAST64_MIN, INT_FAST64_MAX, UINT_FAST64_MAX, INTPTR_MIN):
+	(INTPTR_MAX, UINTPTR_MAX, INTMAX_MIN, INTMAX_MAX, UINTMAX_MAX):
+	(PTRDIFF_MIN, PTRDIFF_MAX, SIG_ATOMIC_MIN, SIG_ATOMIC_MAX):
+	(SIZE_MAX, WCHAR_MIN, WCHAR_MAX, WINT_MIN, WINT_MAX):
+	undef any previous version and define our own version, for
+	simplicity and consistency with the new macros for types.
+	(PTRDIFF_MIN, PTRDIFF_MAX, SIG_ATOMIC_MIN, SIG_ATOMIC_MAX):
+	(SIZE_MAX, WCHAR_MIN, WCHAR_MAX, WINT_MIN, WINT_MAX):
+	Simplify definitions by using _STDINT_MIN and _STDINT_MAX
+	where appropriate.  Rely on new symbols @PTRDIFF_T_SUFFIX@,
+	@SIG_ATOMIC_T_SUFFIX@, @SIZE_T_SUFFIX@, @WCHAR_T_SUFFIX@,
+	@WINT_T_SUFFIX@ to keep things simple here.
+	(UINT8_C, UINT16_C, UINT32_C, INT64_C, UINT64_C):
+	Simplify by assuming typical 8/16/32/64 host, since we're
+	already doing that elsewhere anyway.
+	Use (LONG_MAX >> 31 >> 31 == 1) rather than @HAVE_LONG_64BIT@,
+	and assume long long int is 64 bits if available.  This
+	speeds up 'configure'.
+
 2006-06-30  Jim Hyslop <jhyslop@dreampossible.ca>  (tiny change)
 
 	* getaddrinfo.c: fixed typo

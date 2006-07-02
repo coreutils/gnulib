@@ -1,14 +1,16 @@
 Description:
-An <stdint.h> that nearly conforms to C99.
-(Nearly: {uint,int}_{fast,least}{8,16,32,64}_t may not correspond
-to the fastest and smallest types available on the system.)
+A <stdint.h> that nearly conforms to C99.
+Assumes typical host with 8-bit bytes, two's complement
+representation, and no padding or trap representations, with int
+widths equal to 8, 16, 32, and 64 bits.  {uint,int}_fast{8,16,32,64}_t
+may not correspond to the fastest types available on the system.
+Macros are used instead of typedefs.
 
 Files:
 lib/stdint_.h
 m4/stdint.m4
 m4/full-header-path.m4
-m4/size_max.m4
-m4/wchar_t.m4
+m4/longlong.m4
 
 Depends-on:
 
@@ -24,88 +26,25 @@ EXTRA_DIST += stdint_.h
 stdint.h: stdint_.h
 	sed -e 's/@''HAVE_WCHAR_H''@/$(HAVE_WCHAR_H)/g' \
 	    -e 's/@''HAVE_STDINT_H''@/$(HAVE_STDINT_H)/g' \
+	    -e 's/@''HAVE_SYS_TYPES_H''@/$(HAVE_SYS_TYPES_H)/g' \
 	    -e 's|@''FULL_PATH_STDINT_H''@|$(FULL_PATH_STDINT_H)|g' \
 	    -e 's/@''HAVE_INTTYPES_H''@/$(HAVE_INTTYPES_H)/g' \
-	    -e 's|@''FULL_PATH_INTTYPES_H''@|$(FULL_PATH_INTTYPES_H)|g' \
 	    -e 's/@''HAVE_SYS_INTTYPES_H''@/$(HAVE_SYS_INTTYPES_H)/g' \
 	    -e 's/@''HAVE_SYS_BITYPES_H''@/$(HAVE_SYS_BITYPES_H)/g' \
-	    -e 's/@''HAVE_LONG_64BIT''@/$(HAVE_LONG_64BIT)/g' \
-	    -e 's/@''HAVE_LONG_LONG_64BIT''@/$(HAVE_LONG_LONG_64BIT)/g' \
-	    -e 's/@''HAVE_INT8_T''@/$(HAVE_INT8_T)/g' \
-	    -e 's/@''HAVE_INT16_T''@/$(HAVE_INT16_T)/g' \
-	    -e 's/@''HAVE_INT32_T''@/$(HAVE_INT32_T)/g' \
-	    -e 's/@''HAVE_INT64_T''@/$(HAVE_INT64_T)/g' \
-	    -e 's/@''HAVE_UINT8_T''@/$(HAVE_UINT8_T)/g' \
-	    -e 's/@''HAVE_UINT16_T''@/$(HAVE_UINT16_T)/g' \
-	    -e 's/@''HAVE_UINT32_T''@/$(HAVE_UINT32_T)/g' \
-	    -e 's/@''HAVE_UINT64_T''@/$(HAVE_UINT64_T)/g' \
-	    -e 's/@''HAVE_INT_LEAST8_T''@/$(HAVE_INT_LEAST8_T)/g' \
-	    -e 's/@''HAVE_INT_LEAST16_T''@/$(HAVE_INT_LEAST16_T)/g' \
-	    -e 's/@''HAVE_INT_LEAST32_T''@/$(HAVE_INT_LEAST32_T)/g' \
-	    -e 's/@''HAVE_INT_LEAST64_T''@/$(HAVE_INT_LEAST64_T)/g' \
-	    -e 's/@''HAVE_UINT_LEAST8_T''@/$(HAVE_UINT_LEAST8_T)/g' \
-	    -e 's/@''HAVE_UINT_LEAST16_T''@/$(HAVE_UINT_LEAST16_T)/g' \
-	    -e 's/@''HAVE_UINT_LEAST32_T''@/$(HAVE_UINT_LEAST32_T)/g' \
-	    -e 's/@''HAVE_UINT_LEAST64_T''@/$(HAVE_UINT_LEAST64_T)/g' \
-	    -e 's/@''HAVE_INT_FAST8_T''@/$(HAVE_INT_FAST8_T)/g' \
-	    -e 's/@''HAVE_INT_FAST16_T''@/$(HAVE_INT_FAST16_T)/g' \
-	    -e 's/@''HAVE_INT_FAST32_T''@/$(HAVE_INT_FAST32_T)/g' \
-	    -e 's/@''HAVE_INT_FAST64_T''@/$(HAVE_INT_FAST64_T)/g' \
-	    -e 's/@''HAVE_UINT_FAST8_T''@/$(HAVE_UINT_FAST8_T)/g' \
-	    -e 's/@''HAVE_UINT_FAST16_T''@/$(HAVE_UINT_FAST16_T)/g' \
-	    -e 's/@''HAVE_UINT_FAST32_T''@/$(HAVE_UINT_FAST32_T)/g' \
-	    -e 's/@''HAVE_UINT_FAST64_T''@/$(HAVE_UINT_FAST64_T)/g' \
-	    -e 's/@''HAVE_INTPTR_T''@/$(HAVE_INTPTR_T)/g' \
-	    -e 's/@''HAVE_UINTPTR_T''@/$(HAVE_UINTPTR_T)/g' \
-	    -e 's/@''HAVE_INTMAX_T''@/$(HAVE_INTMAX_T)/g' \
-	    -e 's/@''HAVE_UINTMAX_T''@/$(HAVE_UINTMAX_T)/g' \
-	    -e 's/@''BITSIZEOF_UNSIGNED_INT''@/$(BITSIZEOF_UNSIGNED_INT)/g' \
-	    -e 's/@''BITSIZEOF_LONG''@/$(BITSIZEOF_LONG)/g' \
-	    -e 's/@''BITSIZEOF_UNSIGNED_LONG''@/$(BITSIZEOF_UNSIGNED_LONG)/g' \
-	    -e 's/@''BITSIZEOF_INT8_T''@/$(BITSIZEOF_INT8_T)/g' \
-	    -e 's/@''BITSIZEOF_INT16_T''@/$(BITSIZEOF_INT16_T)/g' \
-	    -e 's/@''BITSIZEOF_INT32_T''@/$(BITSIZEOF_INT32_T)/g' \
-	    -e 's/@''BITSIZEOF_INT64_T''@/$(BITSIZEOF_INT64_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT8_T''@/$(BITSIZEOF_UINT8_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT16_T''@/$(BITSIZEOF_UINT16_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT32_T''@/$(BITSIZEOF_UINT32_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT64_T''@/$(BITSIZEOF_UINT64_T)/g' \
-	    -e 's/@''BITSIZEOF_INT_LEAST8_T''@/$(BITSIZEOF_INT_LEAST8_T)/g' \
-	    -e 's/@''BITSIZEOF_INT_LEAST16_T''@/$(BITSIZEOF_INT_LEAST16_T)/g' \
-	    -e 's/@''BITSIZEOF_INT_LEAST32_T''@/$(BITSIZEOF_INT_LEAST32_T)/g' \
-	    -e 's/@''BITSIZEOF_INT_LEAST64_T''@/$(BITSIZEOF_INT_LEAST64_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT_LEAST8_T''@/$(BITSIZEOF_UINT_LEAST8_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT_LEAST16_T''@/$(BITSIZEOF_UINT_LEAST16_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT_LEAST32_T''@/$(BITSIZEOF_UINT_LEAST32_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT_LEAST64_T''@/$(BITSIZEOF_UINT_LEAST64_T)/g' \
-	    -e 's/@''BITSIZEOF_INT_FAST8_T''@/$(BITSIZEOF_INT_FAST8_T)/g' \
-	    -e 's/@''BITSIZEOF_INT_FAST16_T''@/$(BITSIZEOF_INT_FAST16_T)/g' \
-	    -e 's/@''BITSIZEOF_INT_FAST32_T''@/$(BITSIZEOF_INT_FAST32_T)/g' \
-	    -e 's/@''BITSIZEOF_INT_FAST64_T''@/$(BITSIZEOF_INT_FAST64_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT_FAST8_T''@/$(BITSIZEOF_UINT_FAST8_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT_FAST16_T''@/$(BITSIZEOF_UINT_FAST16_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT_FAST32_T''@/$(BITSIZEOF_UINT_FAST32_T)/g' \
-	    -e 's/@''BITSIZEOF_UINT_FAST64_T''@/$(BITSIZEOF_UINT_FAST64_T)/g' \
-	    -e 's/@''BITSIZEOF_INTPTR_T''@/$(BITSIZEOF_INTPTR_T)/g' \
-	    -e 's/@''BITSIZEOF_UINTPTR_T''@/$(BITSIZEOF_UINTPTR_T)/g' \
-	    -e 's/@''BITSIZEOF_INTMAX_T''@/$(BITSIZEOF_INTMAX_T)/g' \
-	    -e 's/@''BITSIZEOF_UINTMAX_T''@/$(BITSIZEOF_UINTMAX_T)/g' \
+	    -e 's/@''HAVE_LONG_LONG_INT''@/$(HAVE_LONG_LONG_INT)/g' \
 	    -e 's/@''BITSIZEOF_PTRDIFF_T''@/$(BITSIZEOF_PTRDIFF_T)/g' \
-	    -e 's/@''SAME_TYPE_PTRDIFF_T_LONG''@/$(SAME_TYPE_PTRDIFF_T_LONG)/g' \
+	    -e 's/@''PTRDIFF_T_SUFFIX''@/$(PTRDIFF_T_SUFFIX)/g' \
 	    -e 's/@''BITSIZEOF_SIG_ATOMIC_T''@/$(BITSIZEOF_SIG_ATOMIC_T)/g' \
 	    -e 's/@''HAVE_SIGNED_SIG_ATOMIC_T''@/$(HAVE_SIGNED_SIG_ATOMIC_T)/g' \
-	    -e 's/@''SAME_TYPE_SIG_ATOMIC_T_LONG''@/$(SAME_TYPE_SIG_ATOMIC_T_LONG)/g' \
-	    -e 's/@''SAME_TYPE_SIG_ATOMIC_T_UNSIGNED_LONG''@/$(SAME_TYPE_SIG_ATOMIC_T_UNSIGNED_LONG)/g' \
+	    -e 's/@''SIG_ATOMIC_T_SUFFIX''@/$(SIG_ATOMIC_T_SUFFIX)/g' \
 	    -e 's/@''BITSIZEOF_SIZE_T''@/$(BITSIZEOF_SIZE_T)/g' \
-	    -e 's/@''SAME_TYPE_SIZE_T_UNSIGNED_LONG''@/$(SAME_TYPE_SIZE_T_UNSIGNED_LONG)/g' \
+	    -e 's/@''SIZE_T_SUFFIX''@/$(SIZE_T_SUFFIX)/g' \
 	    -e 's/@''BITSIZEOF_WCHAR_T''@/$(BITSIZEOF_WCHAR_T)/g' \
 	    -e 's/@''HAVE_SIGNED_WCHAR_T''@/$(HAVE_SIGNED_WCHAR_T)/g' \
-	    -e 's/@''SAME_TYPE_WCHAR_T_LONG''@/$(SAME_TYPE_WCHAR_T_LONG)/g' \
-	    -e 's/@''SAME_TYPE_WCHAR_T_UNSIGNED_LONG''@/$(SAME_TYPE_WCHAR_T_UNSIGNED_LONG)/g' \
+	    -e 's/@''WCHAR_T_SUFFIX''@/$(WCHAR_T_SUFFIX)/g' \
 	    -e 's/@''BITSIZEOF_WINT_T''@/$(BITSIZEOF_WINT_T)/g' \
 	    -e 's/@''HAVE_SIGNED_WINT_T''@/$(HAVE_SIGNED_WINT_T)/g' \
-	    -e 's/@''SAME_TYPE_WINT_T_LONG''@/$(SAME_TYPE_WINT_T_LONG)/g' \
-	    -e 's/@''SAME_TYPE_WINT_T_UNSIGNED_LONG''@/$(SAME_TYPE_WINT_T_UNSIGNED_LONG)/g' \
+	    -e 's/@''WINT_T_SUFFIX''@/$(WINT_T_SUFFIX)/g' \
 	    < $(srcdir)/stdint_.h > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += stdint.h stdint.h-t

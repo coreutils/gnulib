@@ -1,3 +1,19 @@
+2006-07-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/inttypes (Depends-on): No longer depends on stdint.
+	* modules/stdint (Description): Say more about assumptions.
+	Say that the fast types might differ.  Say macros are used.
+	(Files): Remove m4/size_max.m4, m4/wchar_t.m4.  Add m4/longlong.m4.
+	(Makefile.am): Revise list of substituted symbols to match
+	new stdint.m4.
+	* modules/stdint-tests (Files): Add m4/wchar_t.m4, m4/wint_t.m4.
+	(configure.ac): Add gt_TYPE_WCHAR_T, gt_TYPE_WINT_T.
+	* tests/test-stdint.c (verify_same_types)
+	[! (__GNUC__ >= 2 && DO_PEDANTIC)]: Put in a decl, so that
+	the code conforms to C99/C89.
+	Test for WCHAR_MIN and WCHAR_MAX only if HAVE_WCHAR_T.
+	Test for WINT_MIN and WINT_MAX only if HAVE_WINT_T.
+
 2006-06-29  Eric Blake  <ebb9@byu.net>
 
 	* MODULES.html.sh: Add sys_stat.
