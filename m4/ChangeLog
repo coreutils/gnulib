@@ -1,3 +1,7 @@
+2006-07-02  Eric Blake  <ebb9@byu.net>
+
+	* wcwidth.m4 (gl_FUNC_WCWIDTH): Simplify by using AC_CHECK_DECLS.
+
 2006-07-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* stdint.m4 (gl_STDINT_H): Use more-mnemonic identifiers for
