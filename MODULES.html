@@ -465,9 +465,12 @@ memory allocation.
     <TABLE>
       <TR WIDTH="100%">
         <TD ALIGN=LEFT VALIGN=TOP WIDTH="20%"><A HREF="#module=stdint">stdint</A>
-        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">An &lt;stdint.h&gt; that nearly conforms to C99.
-(Nearly: {uint,int}_{fast,least}{8,16,32,64}_t may not correspond
-to the fastest and smallest types available on the system.)
+        <TD ALIGN=LEFT VALIGN=TOP WIDTH="80%">A &lt;stdint.h&gt; that nearly conforms to C99.
+Assumes typical host with 8-bit bytes, two's complement
+representation, and no padding or trap representations, with int
+widths equal to 8, 16, 32, and 64 bits.  {uint,int}_fast{8,16,32,64}_t
+may not correspond to the fastest types available on the system.
+Macros are used instead of typedefs.
       </TR>
     </TABLE>
     <H3><A HREF="#isoc_sup_stdio">Input/output &lt;stdio.h&gt;</A></H3>
@@ -2224,7 +2227,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=stdint"></A><A HREF="modules/stdint">stdint</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/susv3xbd/stdint.h.html">stdint.h</A>&gt;
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/stdint_.h">stdint_.h</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/stdint.m4">stdint.m4</A><BR><A HREF="m4/full-header-path.m4">full-header-path.m4</A><BR><A HREF="m4/size_max.m4">size_max.m4</A><BR><A HREF="m4/wchar_t.m4">wchar_t.m4</A><BR>gl_STDINT_H
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/stdint.m4">stdint.m4</A><BR><A HREF="m4/full-header-path.m4">full-header-path.m4</A><BR><A HREF="m4/longlong.m4">longlong.m4</A><BR>gl_STDINT_H
         <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
     </TABLE>
@@ -3916,7 +3919,7 @@ variables.
         <TD ALIGN=LEFT VALIGN=TOP>#include &lt;<A HREF="http://www.opengroup.org/susv3xbd/inttypes.h.html">inttypes.h</A>&gt;
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/inttypes.h">inttypes.h</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/include_next.m4">include_next.m4</A><BR><A HREF="m4/full-header-path.m4">full-header-path.m4</A><BR><A HREF="m4/_inttypes_h.m4">_inttypes_h.m4</A><BR>gl_INTTYPES_H
-        <TD ALIGN=LEFT VALIGN=TOP>stdint
+        <TD ALIGN=LEFT VALIGN=TOP>---
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=javacomp-script"></A><A HREF="modules/javacomp-script">javacomp-script</A>
@@ -4038,6 +4041,6 @@ variables.
       <LI>A POT file and some PO files
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on  1 July 2006.
+    Generated from <CODE>MODULES.html.sh</CODE> on  2 July 2006.
   </BODY>
 </HTML>
