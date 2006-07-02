@@ -1,3 +1,8 @@
+2006-07-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* stdint.m4 (gl_STDINT_H): Use more-mnemonic identifiers for
+	test cases, so that config.log is a bit easier to follow.
+
 2006-07-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* longlong.m4 (AC_TYPE_LONG_LONG_INT): Backport from Autoconf 2.60,
