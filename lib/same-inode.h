@@ -1,6 +1,6 @@
-/* Error-checking interface to strtod-like functions.
+/* Determine whether two stat buffers refer to the same file.
 
-   Copyright (C) 1996, 1998, 2003, 2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,16 +16,11 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-/* Written by Jim Meyering.  */
+#ifndef SAME_INODE_H
+# define SAME_INODE_H 1
 
-#ifndef XSTRTOD_H
-# define XSTRTOD_H 1
+# define SAME_INODE(Stat_buf_1, Stat_buf_2) \
+   ((Stat_buf_1).st_ino == (Stat_buf_2).st_ino \
+    && (Stat_buf_1).st_dev == (Stat_buf_2).st_dev)
 
-# include <stdbool.h>
-
-bool xstrtod (const char *str, const char **ptr, double *result,
-	      double (*convert) (char const *, char **));
-bool xstrtold (const char *str, const char **ptr, long double *result,
-	       long double (*convert) (char const *, char **));
-
-#endif /* not XSTRTOD_H */
+#endif

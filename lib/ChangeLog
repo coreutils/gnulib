@@ -1,3 +1,108 @@
+2006-07-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merge from coreutils.
+
+	* .cppi-disable: Add stdint_.h.
+	* .cvsignore: Add stdint.h.
+
+	2006-06-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* xstrtod.c (XSTRTOD, DOUBLE): New macros, so that we can support
+	both double and long double versions.
+	(XSTRTOD): Renamed from xstrtod.  Use DOUBLE internally.
+	* xstrtold.c: New file.
+	* xstrtod.h (xstrtold): New decl.
+
+	2006-05-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* filemode.c (setst): Remove.
+	(strmode): Rewrite to avoid setst.  This makes the code shorter,
+	(arguably) clearer, and the generated code is a bit smaller on my
+	Debian GNU/Linux stable x86 host.
+
+	2006-04-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* filemode.c: Include "filemode.h" first, to test the interface.
+	Assume that filemode.h includes sys/types.h and sys/stat.h.
+	(HAVE_ST_DM_MODE): New macro, moved here from ls.c.
+	(ftypelet): Reorder to put common cases first, for efficiency.
+	Add 'P', 'w'.  Remove 'M', since it's now the caller's responsibility
+	to do 'M'.
+	(strmode): Renamed from mode_string, and now stores 12 bytes instead
+	of 10, for compatibility with FreeBSD.  All callers changed.
+	(filemodestring): Now stores 12 bytes instead of 10, and sets file types
+	that can't be deduced solely from st_mode.  First arg is now a const
+	pointer.
+	* filemode.h (HAVE_DECL_STRMODE): Include <string.h> for strmode.
+	(strmode): Renamed from mode_string.
+	(filemodestring): New decl.
+	* stat-macros.h: Don't undef S_ISDOOR, since it's never buggy.
+	(S_ISDOOR): Don't bother with S_IFDOOR, since that code is never needed.
+	(S_ISPORT, S_ISWHT): New macros, if not already defined.
+
+	2006-04-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* fsusage.c: Don't include <inttypes.h> or <stdint.h>, since
+	fsusage.h now does that.  Include fsusage.h first, to test interface.
+	Prefer statvfs if it works, since it's blessed by POSIX.  Attempt
+	at most one method (the old code could have generated decls that
+	didn't conform to C89, not that this was ever exercised).
+	* fsusage.h: Include <inttypes.h> and <stdint.h> if they exist.
+
+	2006-03-19  Jim Meyering  <jim@meyering.net>
+
+	Work even in a chroot where d_ino values for entries in "/"
+	don't match the stat.st_ino values for the same names.
+	* getcwd.c (__getcwd): When no d_ino value matches the target inode
+	number, iterate through all entries again, using lstat instead.
+	Reported by Kenshi Muto in http://bugs.debian.org/355810, and by
+	Zouhir Hafidi in https://bugzilla.redhat.com/bugzilla/190656.
+
+	* getcwd.c (__getcwd): Clarify a comment.
+	Use memcpy in place of a call to strcpy.
+
+	2006-03-12  Jim Meyering  <jim@meyering.net>
+
+	* fts-cycle.c (leave_dir): If cycle-check's saved dev-ino pair matches
+	that of the current directory (which we're about to chdir ".." out of),
+	then save the dev-ino of the parent, instead.
+
+	* same-inode.h (SAME_INODE): New file/macro.
+	* chdir-safer.c (SAME_INODE): Remove definition.
+	Include "same-inode.h", instead.
+	* same.c: Likewise.
+	* cycle-check.h: Include "same-inode.h".
+	(CYCLE_CHECK_REFLECT_CHDIR_UP): Define.
+	* cycle-check.c (SAME_INODE): Remove definition.
+	* root-dev-ino.h: Include "same-inode.h".
+
+	2006-03-11  Eric Blake  <ebb9@byu.net>
+
+	* same.c (same_name): s/base_name/last_component/
+	* backupfile.c (check_extension, numbered_backup): Likewise.
+	* filenamecat.c (file_name_concat): Likewise.
+
+	2006-03-11  Eric Blake  <ebb9@byu.net>,
+		    Paul Eggert  <eggert@cs.ucla.edu>
+
+	* dirname.h (FILE_SYSTEM_PREFIX_LEN): Move here from dos.m4.
+	[FILE_SYSTEM_ACCEPTS_DRIVE_LETTER_PREFIX]: Don't treat 1: as a
+	drive prefix.
+	(IS_ABSOLUTE_FILE_NAME): Treat all drive letters as absolute on
+	platforms like cygwin with FILE_SYSTEM_DRIVE_PREFIX_IS_ABSOLUTE.
+	(last_component): New method.
+	* dirname.c (dir_len): Determine when drive letters need a
+	subsequent slash.  Preserve // when it is special.
+	(dir_name): Don't append dot when drive letter is absolute.
+	[TEST_DIRNAME]: Move into a full-blown gnulib test.
+	* basename.c (base_name): New semantics - malloc the result.
+	Preserve // when it is special.  Preserve relative files that look
+	like drive letters.
+	(base_len): Preserve // when it is special.
+	(last_component): New method, similar to old base_name semantics.
+	* stripslash.c (strip_trailing_slashes): Use last_component, not
+	base_name.  Strip redundant slashes from ///.
+
 2006-07-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* stdint_.h (intmax_t, uintmax_t): Prefer long to long long if

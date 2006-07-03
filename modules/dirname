@@ -8,6 +8,7 @@ lib/basename.c
 lib/stripslash.c
 m4/dos.m4
 m4/dirname.m4
+m4/double-slash-root.m4
 
 Depends-on:
 xalloc

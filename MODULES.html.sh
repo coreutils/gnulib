@@ -1551,6 +1551,7 @@ func_all_modules ()
   func_module c-strtold
   func_module xstrtod
   func_module xstrtol
+  func_module xstrtold
   func_end_table
 
   element="Date and time <time.h>"

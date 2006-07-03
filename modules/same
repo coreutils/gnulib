@@ -1,10 +1,11 @@
 Description:
-Determine whether two pathnames refer to the same directory entry of the same
+Determine whether two file names refer to the same directory entry of the same
 directory.
 
 Files:
 lib/same.h
 lib/same.c
+lib/same-inode.h
 m4/same.m4
 
 Depends-on:

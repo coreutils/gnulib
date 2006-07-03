@@ -7,6 +7,7 @@ lib/chdir-safer.h
 lib/lchmod.h
 lib/mkdir-p.c
 lib/mkdir-p.h
+lib/same-inode.h
 m4/afs.m4
 m4/chdir-safer.m4
 m4/lchmod.m4
