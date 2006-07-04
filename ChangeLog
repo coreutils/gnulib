@@ -1,3 +1,9 @@
+2006-07-04  Eric Blake  <ebb9@byu.net>
+
+	* modules/dirname-tests: New test module.
+	* tests/test-dirname.c: New file, replacing dirname.c
+	TEST_DIRNAME section that was recently deleted.
+
 2006-07-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/cycle-check (lib_SOURCES): Add same-inode.h.
