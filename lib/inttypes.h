@@ -33,7 +33,7 @@
 # if HAVE_INCLUDE_NEXT
 #  include_next <inttypes.h>
 # else
-#  include FULL_PATH_INTTYPES_H
+#  include ABSOLUTE_INTTYPES_H
 # endif
 #endif
 #include <stdint.h>

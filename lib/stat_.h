@@ -22,7 +22,7 @@
 /* This file is supposed to be used on platforms where <sys/stat.h> is
    incomplete.  It is intended to provide definitions and prototypes
    needed by an application.  Start with what the system provides.  */
-#include @FULL_PATH_SYS_STAT_H@
+#include @ABSOLUTE_SYS_STAT_H@
 
 /* mingw does not support symlinks, therefore it does not have lstat.  But
    without links, stat does just fine.  */

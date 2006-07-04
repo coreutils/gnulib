@@ -6,7 +6,7 @@ strtoimax & strtoumax functions.
 Files:
 lib/inttypes.h
 m4/include_next.m4
-m4/full-header-path.m4
+m4/absolute-header.m4
 m4/_inttypes_h.m4
 
 Depends-on:

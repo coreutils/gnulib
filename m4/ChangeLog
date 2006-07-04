@@ -1,5 +1,16 @@
 2006-07-03  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* absolute-header.m4: Renamed from full-header-path.m4.
+	This is to keep the terminology clean; POSIX talks about
+	"absolute pathnames", not "full pathnames", but the GNU
+	Coding Standards say to use "path" for something else;
+	so use "absolute" to keep both sides happy.
+	(gl_ABSOLUTE_HEADER): Renamed from gl_FULL_HEADER_PATH.
+	Set gl_absolute_header, not gl_full_header_path.
+	Set gl_cv_absolute_<header>, not gl_full_path_<header>.
+	Define ABSOLUTE_<HEADER>, not FULL_PATH_<HEADER>.
+	All uses changed.
+
 	Merge from coreutils.
 
 	2006-06-30  Paul Eggert  <eggert@cs.ucla.edu>
