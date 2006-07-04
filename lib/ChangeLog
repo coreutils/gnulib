@@ -1,3 +1,9 @@
+2006-06-27  Bruno Haible  <bruno@clisp.org>
+
+	Assume ANSI C header files and <ctype.h> functions.
+	* mbswidth.c (IN_CTYPE_DOMAIN, ISPRINT, ISCNTRL): Remove macros.
+	(mbsnwidth): Use isprint, iscntrl instead.
+
 2006-07-03  Jim Meyering  <jim@meyering.net>
 
 	* cycle-check.h (CYCLE_CHECK_REFLECT_CHDIR_UP): Abort if this
