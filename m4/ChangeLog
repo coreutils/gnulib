@@ -1,3 +1,9 @@
+2006-07-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* absolute-header.m4 (gl_ABSOLUTE_HEADER): Prepend three slashes
+	to the absolute name, not just one, to bypass Sun C 5.8's
+	"warning: #include of /usr/include/... may be non-portable".
+
 2006-07-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* absolute-header.m4: Renamed from full-header-path.m4.
