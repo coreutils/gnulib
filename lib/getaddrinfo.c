@@ -38,6 +38,8 @@
 #define _(String) gettext (String)
 #define N_(String) String
 
+#include "inet_ntop.h"
+#include "snprintf.h"
 #include "strdup.h"
 
 #if defined _WIN32 || defined __WIN32__

@@ -1,3 +1,9 @@
+2006-07-05  Eric Blake  <ebb9@byu.net>
+
+	* getaddrinfo.h (NI_NUMERICHOST, NI_NUMERICSERV): Define if
+	missing from netdb.h.
+	* getaddrinfo.c (includes): Include inet_ntop and snprintf.
+
 2006-06-27  Bruno Haible  <bruno@clisp.org>
 
 	Assume ANSI C header files and <ctype.h> functions.
