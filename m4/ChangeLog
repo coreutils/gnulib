@@ -1,3 +1,9 @@
+2006-07-03  Bruno Haible  <bruno@clisp.org>
+
+	* strndup.m4 (gl_FUNC_STRNDUP): When cross-compiling, check whether
+	the function exists, before testing against AIX.
+	Reported by Martin Lambers <marlam@marlam.de>.
+
 2006-07-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* absolute-header.m4 (gl_ABSOLUTE_HEADER): Prepend three slashes
