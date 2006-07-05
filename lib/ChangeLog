@@ -1,3 +1,25 @@
+2006-07-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* memcasecmp.c: Include <limits.h>.
+	(memcasecmp): Don't assume UCHAR_MAX <= INT_MAX.
+	* strtod.c (strtod): Don't assume isspace works on negative chars.
+	Don't assume isdigit succeeds only on '0' through '9'.
+
+2006-07-05  Derek R. Price  <derek@ximbiot.com>
+
+	* exclude.c (IN_CTYPE_DOMAIN, is_space): Remove; no longer needed.
+	All uses of is_space replaced by isspace.
+	* fnmatch.c (ISASCII): Remove; no longer needed.  All uses removed.
+	(ISPRINT, ISDIGIT, ISALNUM, ISALPHA, ISCNTRL, ISLOWER, ISPUNCT):
+	(ISSPACE, ISUPPER, ISXDIGIT): Remove; no longer needed.  All uses
+	replaced by isprint etc.
+	* getdate.y (IN_CTYPE_DOMAIN, ISSPACE, ISALPHA, ISLOWER): Likewise.
+	* getusershell.c (IN_CTYPE_DOMAIN, ISSPACE): Likewise.
+	* memcasecmp.c (IN_CTYPE_DOMAIN, ISLOWER, TOUPPER): Likewise.
+	* strtod.c (IN_CTYPE_DOMAIN, ISSPACE, ISDIGIT, TOLOWER): Likewise.
+	* strtol.c (IN_CTYPE_DOMAIN): Likewise.
+	* xstrtol.c (IN_CTYPE_DOMAIN, ISSPACE): Likewise.
+
 2006-07-05  Eric Blake  <ebb9@byu.net>
 
 	* getaddrinfo.h (NI_NUMERICHOST, NI_NUMERICSERV): Define if
