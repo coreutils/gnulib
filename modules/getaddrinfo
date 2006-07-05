@@ -11,6 +11,7 @@ m4/sockpfaf.m4
 Depends-on:
 restrict
 gettext-h
+snprintf
 socklen
 stdbool
 strdup

@@ -1,3 +1,7 @@
+2006-07-05  Eric Blake  <ebb9@byu.net>
+
+	* modules/getaddrinfo (Depends-on): Add snprintf.
+
 2006-07-04  Eric Blake  <ebb9@byu.net>
 
 	* modules/dirname-tests: New test module.
