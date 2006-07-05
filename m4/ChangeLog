@@ -1,3 +1,8 @@
+2006-07-05  Eric Blake  <ebb9@byu.net>
+
+	* sockpfaf.m4 (gl_SOCKET_FAMILIES): Use gl_HEADER_SYS_SOCKET
+	to avoid 'header present but could not be compiled' on cygwin.
+
 2006-07-03  Bruno Haible  <bruno@clisp.org>
 
 	* strndup.m4 (gl_FUNC_STRNDUP): When cross-compiling, check whether
