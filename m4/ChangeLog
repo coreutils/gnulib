@@ -1,3 +1,11 @@
+2006-07-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Don't check for getenv decl;
+	no longer needed.  Check for isblank decl.
+	* mkstemp.m4 (gl_PREREQ_TEMPNAME): Don't check for getenv decl.
+	* regex.m4 (gl_PREREQ_REGEX): Dheck for isblank decl instead
+	of existence.
+
 2006-07-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* xstrtol.m4 (gl_PREREQ_XSTRTOL): Use AC_CHECK_DECLS_ONCE

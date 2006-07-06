@@ -70,8 +70,8 @@
 
 
 /* ISDIGIT differs from isdigit, as follows:
-   - Its arg may be any int or unsigned int; it need not be an unsigned char.
-   - It's guaranteed to evaluate its argument exactly once.
+   - Its arg may be any int or unsigned int; it need not be an unsigned char
+     or EOF.
    - It's typically faster.
    POSIX says that only '0' through '9' are digits.  Prefer ISDIGIT to
    isdigit unless it's important to use the locale's definition
@@ -887,8 +887,7 @@ lookup_word (parser_control const *pc, char *word)
   for (p = word; *p; p++)
     {
       unsigned char ch = *p;
-      if (islower (ch))
-	*p = toupper (ch);
+      *p = toupper (ch);
     }
 
   for (tp = meridian_table; tp->name; tp++)

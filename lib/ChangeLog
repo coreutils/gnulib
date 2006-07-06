@@ -1,3 +1,15 @@
+2006-07-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* .cppi-disable: Add wcwidth.
+	* fnmatch.c (ISBLANK): Remove.  All uses changed to isblank.
+	(isblank) [! (defined isblank || HAVE_DECL_ISBLANK)]: New macro.
+	(ISGRAPH): Remove.  All uses changed to isgraph.
+	(FOLD) [!defined _LIBC]: Remove special case.
+	* getdate.y (lookup_word): Remove no-longer-needed call to islower.
+	* regext_internal.h (isblank): Depend on HAVE_DECL_ISBLANK, not
+	HAVE_ISBLANK.
+	* strftime.c (TOLOWER, TOUPPER) [!defined _LIBC]: Remove special case.
+
 2006-07-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* strtod.c (strtod): cast the argument of tolower to unsigned char.

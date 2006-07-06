@@ -86,15 +86,8 @@ extern int fnmatch (const char *pattern, const char *string, int flags);
 #if defined _LIBC || !defined __GNU_LIBRARY__ || !HAVE_FNMATCH_GNU
 
 
-# ifdef isblank
-#  define ISBLANK(c) isblank (c)
-# else
-#  define ISBLANK(c) ((c) == ' ' || (c) == '\t')
-# endif
-# ifdef isgraph
-#  define ISGRAPH(c) isgraph (c)
-# else
-#  define ISGRAPH(c) (isprint (c) && !isspace (c))
+# if ! (defined isblank || HAVE_DECL_ISBLANK)
+#  define isblank(c) ((c) == ' ' || (c) == '\t')
 # endif
 
 # define STREQ(s1, s2) ((strcmp (s1, s2) == 0))
@@ -152,11 +145,7 @@ static int posixly_correct;
 # endif
 
 /* Note that this evaluates C many times.  */
-# ifdef _LIBC
-#  define FOLD(c) ((flags & FNM_CASEFOLD) ? tolower (c) : (c))
-# else
-#  define FOLD(c) ((flags & FNM_CASEFOLD) && ISUPPER (c) ? tolower (c) : (c))
-# endif
+# define FOLD(c) ((flags & FNM_CASEFOLD) ? tolower (c) : (c))
 # define CHAR	char
 # define UCHAR	unsigned char
 # define INT	int

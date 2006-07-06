@@ -290,10 +290,10 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
 #else
 		    if ((STREQ (str, L_("alnum")) && isalnum ((UCHAR) *n))
 			|| (STREQ (str, L_("alpha")) && isalpha ((UCHAR) *n))
-			|| (STREQ (str, L_("blank")) && ISBLANK ((UCHAR) *n))
+			|| (STREQ (str, L_("blank")) && isblank ((UCHAR) *n))
 			|| (STREQ (str, L_("cntrl")) && iscntrl ((UCHAR) *n))
 			|| (STREQ (str, L_("digit")) && isdigit ((UCHAR) *n))
-			|| (STREQ (str, L_("graph")) && ISGRAPH ((UCHAR) *n))
+			|| (STREQ (str, L_("graph")) && isgraph ((UCHAR) *n))
 			|| (STREQ (str, L_("lower")) && islower ((UCHAR) *n))
 			|| (STREQ (str, L_("print")) && isprint ((UCHAR) *n))
 			|| (STREQ (str, L_("punct")) && ispunct ((UCHAR) *n))
