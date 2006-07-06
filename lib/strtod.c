@@ -101,7 +101,7 @@ strtod (const char *nptr, char **endptr)
   if (!got_digit)
     goto noconv;
 
-  if (tolower (*s) == 'e')
+  if (tolower ((unsigned char) *s) == 'e')
     {
       /* Get the exponent specified after the `e' or `E'.  */
       int save = errno;

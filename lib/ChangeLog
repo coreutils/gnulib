@@ -1,3 +1,7 @@
+2006-07-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* strtod.c (strtod): cast the argument of tolower to unsigned char.
+
 2006-07-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* memcasecmp.c: Include <limits.h>.
