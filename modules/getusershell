@@ -10,7 +10,7 @@ stdio-safer
 xalloc
 
 configure.ac:
-gl_PREREQ_GETUSERSHELL
+gl_FUNC_GETUSERSHELL
 
 Makefile.am:
 

@@ -1,3 +1,8 @@
+2006-07-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny change)
+
+	* modules/getusershell (configure.ac): Use gl_FUNC_GETUSERSHELL,
+	not gl_PREREQ_GETUSERSHELL.
+
 2006-07-06  Simon Josefsson  <jas@extundo.com>
 
 	* modules/sys_socket (Files): Add m4/sockpfaf.m4 (this module is
