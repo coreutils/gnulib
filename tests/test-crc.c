@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 Free Software Foundation
+ * Copyright (C) 2005, 2006 Free Software Foundation
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ main (int argc, char *argv[])
     }
 
   p = crc32_update (42, "foo", 3);
-  if (p != 0x8c736521)
+  if (p != 0xb9a9a617)
     {
       printf ("cu got %lx\n", p);
       return 1;

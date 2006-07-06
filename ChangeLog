@@ -1,3 +1,8 @@
+2006-07-07  Simon Josefsson  <jas@extundo.com>
+
+	* tests/test-crc.c: Change expected crc value, the test vector
+	were probably computed using the old broken crc.c?
+
 2006-07-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny change)
 
 	* modules/getusershell (configure.ac): Use gl_FUNC_GETUSERSHELL,
