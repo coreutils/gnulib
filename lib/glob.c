@@ -53,18 +53,7 @@
 #else
 # define dirent direct
 # define NAMLEN(dirent) (dirent)->d_namlen
-# ifdef HAVE_SYS_NDIR_H
-#  include <sys/ndir.h>
-# endif
-# ifdef HAVE_SYS_DIR_H
-#  include <sys/dir.h>
-# endif
-# ifdef HAVE_NDIR_H
-#  include <ndir.h>
-# endif
-# ifdef HAVE_VMSDIR_H
-#  include "vmsdir.h"
-# endif /* HAVE_VMSDIR_H */
+# include <ndir.h>
 #endif
 
 
@@ -511,7 +500,6 @@ glob (pattern, flags, errfunc, pglob)
 
   oldcount = pglob->gl_pathc + pglob->gl_offs;
 
-#ifndef VMS
   if ((flags & (GLOB_TILDE|GLOB_TILDE_CHECK)) && dirname[0] == '~')
     {
       if (dirname[1] == '\0' || dirname[1] == '/')
@@ -679,7 +667,6 @@ glob (pattern, flags, errfunc, pglob)
 	}
 # endif	/* Not Amiga && not WINDOWS32.  */
     }
-#endif	/* Not VMS.  */
 
   /* Now test whether we looked for "~" or "~NAME".  In this case we
      can give the answer now.  */
@@ -1132,7 +1119,7 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
 	    {
 	      int fnm_flags = ((!(flags & GLOB_PERIOD) ? FNM_PERIOD : 0)
 			       | ((flags & GLOB_NOESCAPE) ? FNM_NOESCAPE : 0)
-#if defined _AMIGA || defined VMS
+#if defined _AMIGA || defined __VMS
 			       | FNM_CASEFOLD
 #endif
 			       );

@@ -47,21 +47,7 @@
 #else
 # define dirent direct
 # define NLENGTH(direct) ((size_t) (direct)->d_namlen)
-# if HAVE_SYS_NDIR_H
-#  include <sys/ndir.h>
-# endif
-# if HAVE_SYS_DIR_H
-#  include <sys/dir.h>
-# endif
-# if HAVE_NDIR_H
-#  include <ndir.h>
-# endif
-#endif
-
-#if HAVE_DIRENT_H || HAVE_NDIR_H || HAVE_SYS_DIR_H || HAVE_SYS_NDIR_H
-# define HAVE_DIR 1
-#else
-# define HAVE_DIR 0
+# include <ndir.h>
 #endif
 
 #if D_INO_IN_DIRENT
@@ -165,8 +151,6 @@ check_extension (char *file, size_t filelen, char e)
       base[baselen + 1] = '\0';
     }
 }
-
-#if HAVE_DIR
 
 /* Returned values for NUMBERED_BACKUP.  */
 
@@ -282,7 +266,6 @@ numbered_backup (char **buffer, size_t buffer_size, size_t filelen)
   *buffer = buf;
   return result;
 }
-#endif /* HAVE_DIR */
 
 /* Return the name of the new backup file for the existing file FILE,
    allocated with malloc.  Report an error and fail if out of memory.
@@ -301,14 +284,13 @@ find_backup_file_name (char const *file, enum backup_type backup_type)
   size_t simple_backup_suffix_size = strlen (simple_backup_suffix) + 1;
   size_t backup_suffix_size_guess = simple_backup_suffix_size;
   enum { GUESS = sizeof ".~12345~" };
-  if (HAVE_DIR && backup_suffix_size_guess < GUESS)
+  if (backup_suffix_size_guess < GUESS)
     backup_suffix_size_guess = GUESS;
 
   ssize = filelen + backup_suffix_size_guess + 1;
   s = xmalloc (ssize);
   memcpy (s, file, filelen + 1);
 
-#if HAVE_DIR
   if (backup_type != simple_backups)
     switch (numbered_backup (&s, ssize, filelen))
       {
@@ -323,7 +305,6 @@ find_backup_file_name (char const *file, enum backup_type backup_type)
 	simple = (backup_type == numbered_existing_backups);
 	break;
       }
-#endif
 
   if (simple)
     memcpy (s + filelen, simple_backup_suffix, simple_backup_suffix_size);

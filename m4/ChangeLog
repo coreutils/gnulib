@@ -1,3 +1,17 @@
+2006-07-06  Derek R. Price  <derek@ximbiot.com>
+	and Paul Eggert  <eggert@cs.ucla.edu>
+
+	* backupfile.m4 (gl_BACKUPFILE): Check for dirent.h, instead
+	of invoking obsolescent AC_HEADER_DIRENT macro.
+	* d-ino.m4 (gl_CHECK_TYPE_STRUCT_DIRENT_D_INO): Likewise.
+	* d-type.m4 (gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE): Likewise.
+	* dirfd.m4 (gl_FUNC_DIRFD): Likewise.
+	* fts.m4 (gl_FUNC_FTS_CORE): Likewise.
+	* getcwd.m4 (gl_PREREQ_GETCWD): Likewise.
+	* glob.m4 (gl_PREREQ_GLOB): Likewise.
+	* savedir.m4 (gl_SAVEDIR): Likewise.
+	* readdir.m4: Remove; no longer needed.
+
 2006-07-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* _inttypes_h.m4 (gl_INTTYPES_H): Use AC_CHECK_DECLS_ONCE

@@ -1,5 +1,27 @@
 2006-07-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* getloadavg.c: Use __VMS, not VMS.
+	* getopt.c: Likewise.
+	* getpagesize.h: Likewise.
+	* glob.c: Remove most VMS cruft; it hasn't been tested for a while and
+	probably does not work.
+
+2006-07-06  Derek R. Price  <derek@ximbiot.com>
+	and Paul Eggert  <eggert@cs.ucla.edu>
+
+	* backupfile.c [HAVE_DIRENT_H && ! HAVE_NDIR_H]:
+	Don't worry about this obsolete case any more.
+	(HAVE_DIR): Remove.  All uses removed; we now assume you can read
+	directories.
+	* dirfd.h [HAVE_DIRENT_H && ! HAVE_NDIR_H]: Don't
+	worry about this obsolete case any more.
+	* fts.c: Likewise.
+	* getcwd.c: Likewise.
+	* glob.h: Likewise.
+	* savedir.c: Likewise.
+
+2006-07-06  Paul Eggert  <eggert@cs.ucla.edu>
+
 	* .cppi-disable: Add wcwidth.
 	* fnmatch.c (ISBLANK): Remove.  All uses changed to isblank.
 	(isblank) [! (defined isblank || HAVE_DECL_ISBLANK)]: New macro.
