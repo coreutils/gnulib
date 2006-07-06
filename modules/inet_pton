@@ -5,7 +5,6 @@ Files:
 lib/inet_pton.h
 lib/inet_pton.c
 m4/inet_pton.m4
-m4/sockpfaf.m4
 
 Depends-on:
 restrict

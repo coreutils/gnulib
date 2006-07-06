@@ -1,3 +1,15 @@
+2006-07-06  Simon Josefsson  <jas@extundo.com>
+
+	* modules/sys_socket (Files): Add m4/sockpfaf.m4 (this module is
+	now the canonical place for the M4 file).
+
+	* modules/getaddrinfo (Files): Remove m4/sockpfaf.m4, we get it
+	from the sys_socket dependency now.
+
+	* modules/inet_pton (Files): Ditto.
+
+	* modules/inet_ntop (Files): Ditto.
+
 2006-07-05  Eric Blake  <ebb9@byu.net>
 
 	* modules/getaddrinfo (Depends-on): Add snprintf.
