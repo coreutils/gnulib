@@ -1,3 +1,11 @@
+2006-07-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* _inttypes_h.m4 (gl_INTTYPES_H): Use AC_CHECK_DECLS_ONCE
+	with only one argument, for Autoconf 2.60.
+	* fileblocks.m4 (gl_PREREQ_FILEBLOCKS): AC_CHECK_DECLS_ONCE may
+	expand to nothing, so add a shell command to avoid syntax error.
+	* getpass.m4 (gl_PREREQ_GETPASS): Likewise.
+
 2006-07-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Don't check for getenv decl;
