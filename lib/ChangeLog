@@ -9,6 +9,7 @@
 
 	* exclude.c (IN_CTYPE_DOMAIN, is_space): Remove; no longer needed.
 	All uses of is_space replaced by isspace.
+	* exit.h: Don't talk about STDC_HEADERS.
 	* fnmatch.c (ISASCII): Remove; no longer needed.  All uses removed.
 	(ISPRINT, ISDIGIT, ISALNUM, ISALPHA, ISCNTRL, ISLOWER, ISPUNCT):
 	(ISSPACE, ISUPPER, ISXDIGIT): Remove; no longer needed.  All uses
