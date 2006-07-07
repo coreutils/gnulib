@@ -1,3 +1,10 @@
+2006-07-06  Jim Hyslop  <jhyslop@dreampossible.ca>  (tiny change)
+
+	* lib/getaddrinfo.c: Changes to compile under MSVC6: changed
+	'#if WIN32_NATIVE' to '#ifdef' & moved WSAAPI macro inside
+	brackets.  Other minor changes to suppress some compiler
+	warnings.
+
 2006-07-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getloadavg.c: Use __VMS, not VMS.
