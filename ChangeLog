@@ -1,3 +1,10 @@
+2006-07-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* gnulib-tool (func_get_filelist): Don't echo m4/onceonly_2_57.m4,
+	for the benefit of people using Autoconf 2.60.  If you want to
+	support older Autoconf versions you can copy m4/onceonly_2_57.m4
+	(or m4/onceonly.m4, if pre-2.57) manually.
+
 2006-07-07  Simon Josefsson  <jas@extundo.com>
 
 	* tests/test-crc.c: Change expected crc value, the test vector

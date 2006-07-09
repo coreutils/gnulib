@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-06-23 19:27:17 $'
+cvsdatestamp='$Date: 2006-07-09 03:31:53 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -548,7 +548,7 @@ func_get_filelist ()
 {
   sed -n -e "/^Files$sed_extract_prog" < "$gnulib_dir/modules/$1"
   #echo m4/onceonly.m4
-  echo m4/onceonly_2_57.m4
+  #echo m4/onceonly_2_57.m4
 }
 
 # func_get_dependencies module
@@ -1813,7 +1813,7 @@ case $mode in
     ;;
 
   import | update )
-    
+
     # Where to import.
     if test -z "$destdir"; then
       destdir=.
