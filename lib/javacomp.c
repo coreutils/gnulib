@@ -1,5 +1,5 @@
 /* Compile a Java program.
-   Copyright (C) 2001-2003 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -97,7 +97,7 @@ compile_java_class (const char * const *java_sources,
       {
 	/* Because $JAVAC may consist of a command and options, we use the
 	   shell.  Because $JAVAC has been set by the user, we leave all
-	   all environment variables in place, including JAVA_HOME, and
+	   environment variables in place, including JAVA_HOME, and
 	   we don't erase the user's CLASSPATH.  */
 	char *old_classpath;
 	unsigned int command_length;

@@ -1,5 +1,5 @@
 /* check-version.h --- Check version string compatibility.
-   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005 Free
+   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free
    Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -30,12 +30,11 @@
 /* Get specification. */
 #include "check-version.h"
 
-/* Check that the the version of the library (i.e., the CPP symbol
- * VERSION) is at minimum the requested one in REQ_VERSION (typically
- * found in a header file) and return the version string.  Return NULL
- * if the condition is not satisfied.  If a NULL is passed to this
- * function, no check is done, but the version string is simply
- * returned.
+/* Check that the version of the library (i.e., the CPP symbol VERSION)
+ * is at minimum the requested one in REQ_VERSION (typically found in
+ * a header file) and return the version string.  Return NULL if the
+ * condition is not satisfied.  If a NULL is passed to this function,
+ * no check is done, but the version string is simply returned.
  */
 const char *
 check_version (const char *req_version)

@@ -5,7 +5,7 @@ dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 # The glob module assumes you want GNU glob, with glob_pattern_p etc,
-# rather than vanilla POSIX glob.  This means your your code should
+# rather than vanilla POSIX glob.  This means your code should
 # always include <glob.h> for the glob prototypes.
 
 AC_DEFUN([gl_GLOB_SUBSTITUTE],
