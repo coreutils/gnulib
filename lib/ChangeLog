@@ -1,3 +1,7 @@
+2006-07-08  Jim Meyering  <jim@meyering.net>
+
+	* getndelim2.h (getndelim2): Remove doubled "after" in comment.
+
 2006-07-06  Jim Hyslop  <jhyslop@dreampossible.ca>  (tiny change)
 
 	* lib/getaddrinfo.c: Changes to compile under MSVC6: changed

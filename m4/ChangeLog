@@ -1,3 +1,9 @@
+2006-07-08  Jim Meyering  <jim@meyering.net>
+
+	* link-follow.m4: Remove one of two adjacent "whether"s in a comment.
+	* getopt.m4: Remove one of two adjacent "your"s in a comment.
+	* regex.m4 (gl_REGEX): Remove one of two adjacent "the"s in a comment.
+
 2006-07-06  Derek R. Price  <derek@ximbiot.com>
 	and Paul Eggert  <eggert@cs.ucla.edu>
 
