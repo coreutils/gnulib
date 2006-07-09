@@ -1,3 +1,8 @@
+2006-07-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* maintain.texi, make-stds.texi: Sync from
+	<http://savannah.gnu.org/projects/gnustandards>.
+
 2006-06-29  Eric Blake  <ebb9@byu.net>
 
 	* functions.texi (Function Portability): Document missing lstat

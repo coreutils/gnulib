@@ -305,8 +305,9 @@ make DESTDIR=/tmp/stage install
 @end example
 
 @noindent
-(Since the value of @code{DESTDIR} is only used during installation it
-is not necessary to provide it with other @code{make} commands.)
+Since the value of @code{DESTDIR} is only used during installation, it
+should only be supported in the @code{install*} and @code{uninstall*}
+targets.
 
 If your installation step would normally install
 @file{/usr/local/bin/foo} and @file{/usr/local/lib/libfoo.a}, then an
@@ -564,8 +565,7 @@ write it as @samp{@@infodir@@}.)  @code{infodir} is separate from
 @itemx pdfdir
 @itemx psdir
 Directories for installing documentation files in the particular
-format.  (It is not required to support documentation in all these
-formats.)  They should all be set to @code{$(docdir)} by default.  (If
+format.  They should all be set to @code{$(docdir)} by default.  (If
 you are using Autoconf, write them as @samp{@@htmldir@@},
 @samp{@@dvidir@@}, etc.)  Packages which supply several translations
 of their documentation should install them in
@@ -694,8 +694,9 @@ All GNU programs should have the following targets in their Makefiles:
 @item all
 Compile the entire program.  This should be the default target.  This
 target need not rebuild any documentation files; Info files should
-normally be included in the distribution, and DVI files should be made
-only when explicitly asked for.
+normally be included in the distribution, and DVI (and other
+documentation format) files should be made only when explicitly asked
+for.
 
 By default, the Make rules should compile and link with @samp{-g}, so
 that executable programs have debugging symbols.  Users who don't mind
@@ -734,7 +735,7 @@ menu entry for the given Info file; it is part of the Texinfo package.
 Here is a sample rule to install an Info file:
 
 @comment This example has been carefully formatted for the Make manual.
-@comment Please do not reformat it without talking to roland@gnu.ai.mit.edu.
+@comment Please do not reformat it without talking to bug-make@gnu.org.
 @smallexample
 $(DESTDIR)$(infodir)/foo.info: foo.info
         $(POST_INSTALL)
@@ -776,6 +777,9 @@ manuals, and you wish to install HTML documentation with many files
 (such as the ``split'' mode output by @code{makeinfo --html}), you'll
 certainly want to use subdirectories, or two nodes with the same name
 in different manuals will overwrite each other.
+
+Please make these @code{install-@var{format}} targets depend on the
+correspond @var{format} target.
 
 @item uninstall
 Delete all the installed files---the copies that the @samp{install}
