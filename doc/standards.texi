@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate May 24, 2006
+@set lastupdate July 9, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -886,7 +886,7 @@ be input files only; any output files would be specified using options
 (preferably @samp{-o} or @samp{--output}).  Even if you allow an output
 file name as an ordinary argument for compatibility, try to provide an
 option as another way to specify it.  This will lead to more consistency
-among GNU utilities, and fewer idiosyncracies for users to remember.
+among GNU utilities, and fewer idiosyncrasies for users to remember.
 
 @cindex standard command-line options
 @cindex options, standard command-line
@@ -1943,7 +1943,7 @@ Every program accepting
 @item socket
 Specify a file descriptor for a network server to use for its socket,
 instead of opening and binding a new socket.  This provides a way to
-run, in a nonpriveledged process, a server that normally needs a
+run, in a non-privileged process, a server that normally needs a
 reserved port number.
 
 @item sort
@@ -3001,7 +3001,7 @@ printf ("#  Implicit rule search has%s been done.\n",
 Adding @code{gettext} calls to this code cannot give correct results for
 all languages, because negation in some languages requires adding words
 at more than one place in the sentence.  By contrast, adding
-@code{gettext} calls does the job straightfowardly if the code starts
+@code{gettext} calls does the job straightforwardly if the code starts
 out like this:
 
 @example
@@ -3274,7 +3274,7 @@ should often make some general points that apply to several functions or
 variables.  The previous descriptions of functions and variables in the
 section will also have given information about the topic.  A description
 written to stand alone would repeat some of that information; this
-redundance looks bad.  Meanwhile, the informality that is acceptable in
+redundancy looks bad.  Meanwhile, the informality that is acceptable in
 a documentation string is totally unacceptable in a manual.
 
 The only good way to use documentation strings in writing a good manual
