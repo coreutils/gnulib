@@ -7,7 +7,7 @@
 The @command{gnulib-tool} command is the recommended way to import
 Gnulib modules.  It is possible to borrow Gnulib modules in a package
 without using @command{gnulib-tool}, relying only on the
-metainformation stored in the @file{modules/*} files, but with a
+meta-information stored in the @file{modules/*} files, but with a
 growing number of modules this becomes tedious.  @command{gnulib-tool}
 simplifies the management of source files, @file{Makefile.am}s and
 @file{configure.ac} in packages incorporating Gnulib modules.
@@ -106,12 +106,12 @@ directory.
 
 Some Gnulib modules depend on other Gnulib modules.  @code{gnulib-tool}
 will automatically add the needed modules as well; you need not list
-them explicitly.  @code{gnulib-tool} will also memoize which dependent
+them explicitly.  @code{gnulib-tool} will also memorize which dependent
 modules it has added, so that when someday a dependency is dropped, the
 implicitly added module is dropped as well (unless you have explicitly
 requested that module).
 
-If you want to cut a dependency, i.e. not add a module although one of
+If you want to cut a dependency, i.e., not add a module although one of
 your requested modules depends on it, you may use the option
 @samp{--avoid=@var{module}} to do so.  Multiple uses of this option are
 possible.  Of course, you will then need to implement the same interface

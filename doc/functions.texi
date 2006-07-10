@@ -237,7 +237,7 @@ If the given buffer is too small for the host name, some implementations
 fail with @code{EINVAL}, instead of returning a truncated host name.
 
 @item getopt
-The default behaviour of the glibc implementation of @code{getopt} allows
+The default behavior of the glibc implementation of @code{getopt} allows
 mixing option and non-option arguments on the command line in any order.
 Other implementations, such as the one in Cygwin, enforce strict POSIX
 compliance: they require that the option arguments precede the non-option
@@ -588,7 +588,7 @@ void handle_child (int sigchld)
 except that @code{SIG_IGN} for @code{SIGCHLD} has the effect that the children
 execution times are not accounted in the @code{times} function.
 On some systems (BSD? SystemV? Linux?), you need to use the @code{sigaction}
-flag @code{SA_NOCLDWAIT} in order to obtain this behaviour.
+flag @code{SA_NOCLDWAIT} in order to obtain this behavior.
 
 @item sigaltstack
 @code{sigaltstack} doesn't work on HP-UX 11/IA-64 and OpenBSD 3.6/Sparc64.
@@ -601,7 +601,7 @@ if the signal is triggered twice and the signal handler was not quick enough
 reinstalling itself as a handler.  On BSD systems and glibc systems, on the
 other hand, when the signal is triggered, the kernel blocks the signal
 before invoking the handler.  This is saner, but POSIX still allows either
-behaviour.  To avoid this problem, use @code{sigaction} instead of
+behavior.  To avoid this problem, use @code{sigaction} instead of
 @code{signal}.
 
 @item sigtimedwait

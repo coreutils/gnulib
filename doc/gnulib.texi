@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.23 2006-06-21 17:22:32 jas Exp $
+@comment $Id: gnulib.texi,v 1.24 2006-07-10 06:37:33 rwild Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2006-06-21 17:22:32 $
+@set UPDATED $Date: 2006-07-10 06:37:33 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -210,7 +210,7 @@ for.  This is how the library behaves by default.
 However, we realize that some applications may not want to have the
 GSS library abort execution in any situation.  The GSS library support
 a hook to let the application regain control and perform its own
-cleanups when an out of memory situation has occured.  The application
+cleanups when an out of memory situation has occurred.  The application
 can define a function (having a @code{void} prototype, i.e., no return
 value and no parameters) and set the library variable
 @code{xalloc_fail_func} to that function.  The variable should be

@@ -1,3 +1,7 @@
+2006-07-10  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* functions.texi, gnulib-tool.texi, gnulib.texi: Fix some typos.
+
 2006-07-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* maintain.texi, make-stds.texi: Sync from
