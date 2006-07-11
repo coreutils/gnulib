@@ -46,10 +46,6 @@
 #endif
 
 
-#ifndef HAVE_DIRENT_H
-# define dirent direct
-#endif
-
 #define glob rpl_glob
 #define globfree rpl_globfree
 #define glob_pattern_p rpl_glob_pattern_p

@@ -47,20 +47,12 @@
 # define __set_errno(val) errno = (val)
 #endif
 
-#if defined HAVE_DIRENT_H || defined __GNU_LIBRARY__
-# include <dirent.h>
-# define NAMLEN(dirent) strlen((dirent)->d_name)
-#else
-# define dirent direct
-# define NAMLEN(dirent) (dirent)->d_namlen
-# include <ndir.h>
-#endif
+#include <dirent.h>
 
 
 /* In GNU systems, <dirent.h> defines this macro for us.  */
-#ifdef _D_NAMLEN
-# undef NAMLEN
-# define NAMLEN(d) _D_NAMLEN(d)
+#ifndef _D_EXACT_NAMLEN
+# define _D_EXACT_NAMLEN(dirent) strlen ((dirent)->d_name)
 #endif
 
 /* When used in the GNU libc the symbol _DIRENT_HAVE_D_TYPE is available
@@ -86,13 +78,6 @@
 
 /* If the system has the `struct dirent64' type we use it internally.  */
 #if defined _LIBC && !defined COMPILE_GLOB64
-# if defined HAVE_DIRENT_H || defined __GNU_LIBRARY__
-#  define CONVERT_D_NAMLEN(d64, d32)
-# else
-#  define CONVERT_D_NAMLEN(d64, d32) \
-  (d64)->d_namlen = (d32)->d_namlen;
-# endif
-
 # if (defined POSIX || defined WINDOWS32) && !defined __GNU_LIBRARY__
 #  define CONVERT_D_INO(d64, d32)
 # else
@@ -109,7 +94,6 @@
 
 # define CONVERT_DIRENT_DIRENT64(d64, d32) \
   memcpy ((d64)->d_name, (d32)->d_name, NAMLEN (d32) + 1);		      \
-  CONVERT_D_NAMLEN (d64, d32)						      \
   CONVERT_D_INO (d64, d32)						      \
   CONVERT_D_TYPE (d64, d32)
 #endif

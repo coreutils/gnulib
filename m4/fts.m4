@@ -1,4 +1,4 @@
-#serial 7
+#serial 9
 dnl Copyright (C) 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,5 +29,5 @@ AC_DEFUN([gl_FUNC_FTS_CORE],
   dnl Prerequisites of lib/fts.c.
 
   # Checks for header files.
-  AC_CHECK_HEADERS_ONCE([dirent.h sys/param.h])dnl
+  AC_CHECK_HEADERS_ONCE([sys/param.h])dnl
 ])
