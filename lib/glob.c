@@ -93,7 +93,7 @@
 # endif
 
 # define CONVERT_DIRENT_DIRENT64(d64, d32) \
-  memcpy ((d64)->d_name, (d32)->d_name, NAMLEN (d32) + 1);		      \
+  memcpy ((d64)->d_name, (d32)->d_name, _D_EXACT_NAMLEN (d32) + 1);	      \
   CONVERT_D_INO (d64, d32)						      \
   CONVERT_D_TYPE (d64, d32)
 #endif
@@ -1176,7 +1176,7 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
 			  struct globlink *new =
 			    __alloca (sizeof (struct globlink));
 			  char *p;
-			  len = NAMLEN (d);
+			  len = _D_EXACT_NAMLEN (d);
 			  new->name =
 			    malloc (len + 1 + ((flags & GLOB_MARK) && isdir));
 			  if (new->name == NULL)
