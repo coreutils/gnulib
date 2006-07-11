@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-11 12:58:27 $'
+cvsdatestamp='$Date: 2006-07-11 15:27:08 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -240,8 +240,8 @@ func_ln_if_changed ()
 # - libname, supplied_libname  from --lib
 # - sourcebase      from --source-base
 # - m4base          from --m4-base
-# - testsbase       from --tests-base
 # - docbase         from --doc-base
+# - testsbase       from --tests-base
 # - auxdir          from --aux-dir
 # - inctests        true if --with-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
@@ -256,6 +256,7 @@ func_ln_if_changed ()
   supplied_libname=
   sourcebase=
   m4base=
+  docbase=
   testsbase=
   auxdir=
   inctests=
@@ -337,16 +338,6 @@ func_ln_if_changed ()
       --m4-base=* )
         m4base=`echo "X$1" | sed -e 's/^X--m4-base=//'`
         shift ;;
-      --tests-base )
-        shift
-        if test $# = 0; then
-          func_fatal_error "missing argument for --tests-base"
-        fi
-        testsbase=$1
-        shift ;;
-      --tests-base=* )
-        testsbase=`echo "X$1" | sed -e 's/^X--tests-base=//'`
-        shift ;;
       --doc-base )
         shift
         if test $# = 0; then
@@ -356,6 +347,16 @@ func_ln_if_changed ()
         shift ;;
       --doc-base=* )
         docbase=`echo "X$1" | sed -e 's/^X--doc-base=//'`
+        shift ;;
+      --tests-base )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --tests-base"
+        fi
+        testsbase=$1
+        shift ;;
+      --tests-base=* )
+        testsbase=`echo "X$1" | sed -e 's/^X--tests-base=//'`
         shift ;;
       --aux-dir )
         shift
@@ -454,11 +455,11 @@ func_ln_if_changed ()
   case "$m4base" in
     */ ) m4base=`echo "$m4base" | sed -e "$sed_trimtrailingslashes"` ;;
   esac
-  case "$testsbase" in
-    */ ) testsbase=`echo "$testsbase" | sed -e "$sed_trimtrailingslashes"` ;;
-  esac
   case "$docbase" in
     */ ) docbase=`echo "$docbase" | sed -e "$sed_trimtrailingslashes"` ;;
+  esac
+  case "$testsbase" in
+    */ ) testsbase=`echo "$testsbase" | sed -e "$sed_trimtrailingslashes"` ;;
   esac
   case "$auxdir" in
     */ ) auxdir=`echo "$auxdir" | sed -e "$sed_trimtrailingslashes"` ;;
@@ -892,8 +893,8 @@ func_emit_tests_Makefile_am ()
 # - libname         library name
 # - sourcebase      directory relative to destdir where to place source code
 # - m4base          directory relative to destdir where to place *.m4 macros
-# - testsbase       directory relative to destdir where to place unit test code
 # - docbase         directory relative to destdir where to place doc files
+# - testsbase       directory relative to destdir where to place unit test code
 # - auxdir          directory relative to destdir where to place build aux files
 # - inctests        true if --with-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
@@ -910,8 +911,8 @@ func_import ()
   cached_avoidlist=
   cached_sourcebase=
   cached_m4base=
-  cached_testsbase=
   cached_docbase=
+  cached_testsbase=
   cached_libname=
   cached_lgpl=
   cached_libtool=
@@ -934,11 +935,11 @@ func_import ()
       /gl_M4_BASE(/ {
         s,^.*gl_M4_BASE([[ ]*\([^])]*\).*$,cached_m4base="\1",p
       }
-      /gl_TESTS_BASE(/ {
-        s,^.*gl_TESTS_BASE([[ ]*\([^])]*\).*$,cached_testsbase="\1",p
-      }
       /gl_DOC_BASE(/ {
         s,^.*gl_DOC_BASE([[ ]*\([^])]*\).*$,cached_docbase="\1",p
+      }
+      /gl_TESTS_BASE(/ {
+        s,^.*gl_TESTS_BASE([[ ]*\([^])]*\).*$,cached_testsbase="\1",p
       }
       /gl_LIB(/ {
         s,^.*gl_LIB([[ ]*\([^])]*\).*$,cached_libname="\1",p
@@ -993,18 +994,18 @@ func_import ()
       func_fatal_error "missing --source-base option"
     fi
   fi
-  # The testsbase defaults to the cached one.
-  if test -z "$testsbase"; then
-    testsbase="$cached_testsbase"
-    if test -z "$testsbase"; then
-      func_fatal_error "missing --tests-base option"
-    fi
-  fi
   # The docbase defaults to the cached one.
   if test -z "$docbase"; then
     docbase="$cached_docbase"
     if test -z "$docbase"; then
       func_fatal_error "missing --doc-base option"
+    fi
+  fi
+  # The testsbase defaults to the cached one.
+  if test -z "$testsbase"; then
+    testsbase="$cached_testsbase"
+    if test -z "$testsbase"; then
+      func_fatal_error "missing --tests-base option"
     fi
   fi
   # The libname defaults to the cached one.
@@ -1089,6 +1090,14 @@ func_import ()
       echo "Create directory $destdir/$m4base"
     fi
   fi
+  if test ! -d "$destdir/$docbase"; then
+    if $doit; then
+      echo "Creating directory $destdir/$docbase"
+      mkdir "$destdir/$docbase" || func_fatal_error "failed"
+    else
+      echo "Create directory $destdir/$docbase"
+    fi
+  fi
   if test -n "$inctests"; then
     if test ! -d "$destdir/$testsbase"; then
       if $doit; then
@@ -1097,14 +1106,6 @@ func_import ()
       else
         echo "Create directory $destdir/$testsbase"
       fi
-    fi
-  fi
-  if test ! -d "$destdir/$docbase"; then
-    if $doit; then
-      echo "Creating directory $destdir/$docbase"
-      mkdir "$destdir/$docbase" || func_fatal_error "failed"
-    else
-      echo "Create directory $destdir/$docbase"
     fi
   fi
   if test ! -d "$destdir/$auxdir"; then
@@ -1324,8 +1325,8 @@ func_import ()
     echo "gl_AVOID([$avoidlist])"
     echo "gl_SOURCE_BASE([$sourcebase])"
     echo "gl_M4_BASE([$m4base])"
-    echo "gl_TESTS_BASE([$testsbase])"
     echo "gl_DOC_BASE([$docbase])"
+    echo "gl_TESTS_BASE([$testsbase])"
     echo "gl_LIB([$libname])"
     test -z "$lgpl" || echo "gl_LGPL"
     test -z "$libtool" || echo "gl_LIBTOOL"
@@ -1905,8 +1906,8 @@ case $mode in
         # First use of gnulib in the given m4base.
         test -n "$supplied_libname" || supplied_libname=true
         test -n "$sourcebase" || sourcebase="lib"
-        test -n "$testsbase" || testsbase="tests"
         test -n "$docbase" || docbase="doc"
+        test -n "$testsbase" || testsbase="tests"
         test -n "$macro_prefix" || macro_prefix="gl"
       fi
       func_import "$*"
@@ -1945,8 +1946,8 @@ case $mode in
         test -n "$supplied_libname" || supplied_libname=true
         test -n "$sourcebase" || sourcebase="lib"
         m4base="m4"
-        test -n "$testsbase" || testsbase="tests"
         test -n "$docbase" || docbase="doc"
+        test -n "$testsbase" || testsbase="tests"
         test -n "$macro_prefix" || macro_prefix="gl"
         func_import "$*"
       else

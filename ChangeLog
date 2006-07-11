@@ -1,5 +1,9 @@
 2006-07-11  Eric Blake  <ebb9@byu.net>
 
+	* gnulib-tool: List --doc-base before --tests-base.
+
+2006-07-11  Eric Blake  <ebb9@byu.net>
+
 	* modules/fdl: New module, to install doc/fdl.texi.
 	* MODULES.html.sh: Add new section for documentation modules.
 	* gnulib-tool: Avoid space-tab.
