@@ -279,7 +279,7 @@
 # endif
 
 
-# ifndef	FSCALE
+# ifndef FSCALE
 
 /* SunOS and some others define FSCALE in sys/param.h.  */
 
