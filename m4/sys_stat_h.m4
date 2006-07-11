@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 2   -*- Autoconf -*-
+# sys_stat_h.m4 serial 3   -*- Autoconf -*-
 dnl Copyright (C) 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,11 +20,13 @@ AC_DEFUN([gl_HEADER_SYS_STAT_H],
   SYS_STAT_H=
   if test $ac_cv_func_lstat:$ac_cv_have_decl_mkdir != yes:yes ; then
     gl_ABSOLUTE_HEADER([sys/stat.h])
-    ABSOLUTE_SYS_STAT_H="<$gl_cv_absolute_sys_stat_h>"
+    ABSOLUTE_SYS_STAT_H=\"$gl_cv_absolute_sys_stat_h\"
     AC_CHECK_HEADERS([io.h])
     AC_REQUIRE([AC_C_INLINE])
-    AC_SUBST([ABSOLUTE_SYS_STAT_H])
     SYS_STAT_H='sys/stat.h'
+  else
+    ABSOLUTE_SYS_STAT_H=\"no/such/file/sys/stat.h\"
   fi
+  AC_SUBST([ABSOLUTE_SYS_STAT_H])
   AC_SUBST([SYS_STAT_H])
 ]) # gl_HEADER_SYS_STAT_H
