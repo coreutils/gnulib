@@ -1,3 +1,7 @@
+2006-07-11  Eric Blake  <ebb9@byu.net>
+
+	* absolute-header.m4: Fix comments to match recent change.
+
 2006-07-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Like today's change
