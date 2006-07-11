@@ -1,3 +1,7 @@
+2006-07-11  Bruno Haible  <bruno@clisp.org>
+
+	* README: Mention where to put documentation.
+
 2006-07-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* build-aux/depcomp, build-aux/install-sh: Sync from Automake.

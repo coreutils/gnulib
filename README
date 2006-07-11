@@ -59,6 +59,12 @@ How to add a new module
 * If the module needs configure-time checks, write an autoconf
   macro for it in m4/<module>.m4. See m4/README for details.
 * Write a module description modules/<module>, based on modules/TEMPLATE.
+* If the module contributes a section to the end-user documentation,
+  put this documentation in doc/<module>.texi and add it to the "Files"
+  section of modules/<module>.  Most modules don't do this; they have only
+  documentation for the programmer (= gnulib user).  Such documentation
+  usually goes into the lib/ source files.  It may also go into doc/;
+  but don't add it to the module description in this case.
 * Add the module to the list in MODULES.html.sh.
 
 You can test that a module builds correctly with:
