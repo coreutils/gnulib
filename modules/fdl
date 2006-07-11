@@ -1,0 +1,19 @@
+Description:
+Provide the Free Documentation License.
+
+Files:
+doc/fdl.texi
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+
+License:
+public domain
+
+Maintainer:
+all

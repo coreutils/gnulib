@@ -2067,6 +2067,14 @@ func_all_modules ()
   func_module ldd
   func_module lib-ignore
   func_end_table
+
+  element="Support for building documentation"
+  func_section_wrap build_lib
+  func_wrap H2
+  func_echo "$element"
+
+  func_module fdl
+  func_end_table
 }
 
 

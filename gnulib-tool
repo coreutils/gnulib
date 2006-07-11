@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-09 03:31:53 $'
+cvsdatestamp='$Date: 2006-07-11 12:58:27 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -114,6 +114,8 @@ Options:
       --tests-base=DIRECTORY
                             Directory relative --dir where unit tests are
                             placed (default \"tests\"), for --import.
+      --doc-base=DIRECTORY  Directory relative --dir where doc files are
+                            placed (default \"doc\"), for --import.
       --aux-dir=DIRECTORY   Directory relative --dir where auxiliary build
                             tools are placed (default \"build-aux\").
       --with-tests          Include unit tests for the included modules.
@@ -239,6 +241,7 @@ func_ln_if_changed ()
 # - sourcebase      from --source-base
 # - m4base          from --m4-base
 # - testsbase       from --tests-base
+# - docbase         from --doc-base
 # - auxdir          from --aux-dir
 # - inctests        true if --with-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
@@ -344,6 +347,16 @@ func_ln_if_changed ()
       --tests-base=* )
         testsbase=`echo "X$1" | sed -e 's/^X--tests-base=//'`
         shift ;;
+      --doc-base )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --doc-base"
+        fi
+        docbase=$1
+        shift ;;
+      --doc-base=* )
+        docbase=`echo "X$1" | sed -e 's/^X--doc-base=//'`
+        shift ;;
       --aux-dir )
         shift
         if test $# = 0; then
@@ -421,6 +434,7 @@ func_ln_if_changed ()
     fi
     if test -n "$supplied_libname" || test -n "$sourcebase" || test -n "$m4base" \
        || test -n "$testsbase" || test -n "$auxdir" || test -n "$inctests" \
+       || test -n "$docbase" \
        || test -n "$avoidlist" || test -n "$lgpl" || test -n "$macro_prefix"; then
       echo "gnulib-tool: invalid options for 'update' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
@@ -442,6 +456,9 @@ func_ln_if_changed ()
   esac
   case "$testsbase" in
     */ ) testsbase=`echo "$testsbase" | sed -e "$sed_trimtrailingslashes"` ;;
+  esac
+  case "$docbase" in
+    */ ) docbase=`echo "$docbase" | sed -e "$sed_trimtrailingslashes"` ;;
   esac
   case "$auxdir" in
     */ ) auxdir=`echo "$auxdir" | sed -e "$sed_trimtrailingslashes"` ;;
@@ -520,17 +537,17 @@ func_verify_tests_module ()
   esac
 }
 
-sed_extract_prog=':[ 	]*$/ {
+sed_extract_prog=':[	 ]*$/ {
   :a
     n
-    s/^Description:[ 	]*$//
-    s/^Files:[ 	]*$//
-    s/^Depends-on:[ 	]*$//
-    s/^configure\.ac:[ 	]*$//
-    s/^Makefile\.am:[ 	]*$//
-    s/^Include:[ 	]*$//
-    s/^License:[ 	]*$//
-    s/^Maintainer:[ 	]*$//
+    s/^Description:[	 ]*$//
+    s/^Files:[	 ]*$//
+    s/^Depends-on:[	 ]*$//
+    s/^configure\.ac:[	 ]*$//
+    s/^Makefile\.am:[	 ]*$//
+    s/^Include:[	 ]*$//
+    s/^License:[	 ]*$//
+    s/^Maintainer:[	 ]*$//
     tb
     p
     ba
@@ -683,7 +700,7 @@ ba
     func_verify_nontests_module
     if test -n "$module"; then
       # Extract the value of "lib_SOURCES += ...".
-      for file in `func_get_automake_snippet "$module" | sed -e "$sed_remove_backslash_newline" | sed -n -e 's,^lib_SOURCES[ 	]*+=\([^#]*\).*$,\1,p'`; do
+      for file in `func_get_automake_snippet "$module" | sed -e "$sed_remove_backslash_newline" | sed -n -e 's,^lib_SOURCES[	 ]*+=\([^#]*\).*$,\1,p'`; do
         # Ignore .h files since they are not compiled.
         case "$file" in
           *.h) ;;
@@ -767,7 +784,7 @@ func_emit_lib_Makefile_am ()
         fi
       } > amsnippet.tmp
       # Skip the contents if its entirely empty.
-      if grep '[^ 	]' amsnippet.tmp > /dev/null ; then
+      if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
         echo "## begin gnulib module $module"
         echo
         cat amsnippet.tmp
@@ -844,7 +861,7 @@ func_emit_tests_Makefile_am ()
     if test -n "$module"; then
       func_get_automake_snippet "$module" > amsnippet.tmp
       # Skip the contents if its entirely empty.
-      if grep '[^ 	]' amsnippet.tmp > /dev/null ; then
+      if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
         echo "## begin gnulib module $module"
         echo
         cat amsnippet.tmp
@@ -876,6 +893,7 @@ func_emit_tests_Makefile_am ()
 # - sourcebase      directory relative to destdir where to place source code
 # - m4base          directory relative to destdir where to place *.m4 macros
 # - testsbase       directory relative to destdir where to place unit test code
+# - docbase         directory relative to destdir where to place doc files
 # - auxdir          directory relative to destdir where to place build aux files
 # - inctests        true if --with-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
@@ -893,6 +911,7 @@ func_import ()
   cached_sourcebase=
   cached_m4base=
   cached_testsbase=
+  cached_docbase=
   cached_libname=
   cached_lgpl=
   cached_libtool=
@@ -917,6 +936,9 @@ func_import ()
       }
       /gl_TESTS_BASE(/ {
         s,^.*gl_TESTS_BASE([[ ]*\([^])]*\).*$,cached_testsbase="\1",p
+      }
+      /gl_DOC_BASE(/ {
+        s,^.*gl_DOC_BASE([[ ]*\([^])]*\).*$,cached_docbase="\1",p
       }
       /gl_LIB(/ {
         s,^.*gl_LIB([[ ]*\([^])]*\).*$,cached_libname="\1",p
@@ -976,6 +998,13 @@ func_import ()
     testsbase="$cached_testsbase"
     if test -z "$testsbase"; then
       func_fatal_error "missing --tests-base option"
+    fi
+  fi
+  # The docbase defaults to the cached one.
+  if test -z "$docbase"; then
+    docbase="$cached_docbase"
+    if test -z "$docbase"; then
+      func_fatal_error "missing --doc-base option"
     fi
   fi
   # The libname defaults to the cached one.
@@ -1070,6 +1099,14 @@ func_import ()
       fi
     fi
   fi
+  if test ! -d "$destdir/$docbase"; then
+    if $doit; then
+      echo "Creating directory $destdir/$docbase"
+      mkdir "$destdir/$docbase" || func_fatal_error "failed"
+    else
+      echo "Create directory $destdir/$docbase"
+    fi
+  fi
   if test ! -d "$destdir/$auxdir"; then
     if $doit; then
       echo "Creating directory $destdir/$auxdir"
@@ -1103,6 +1140,7 @@ func_import ()
   for f in $old_files; do
     case "$f" in
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+      doc/*) g=`echo "$f" | sed -e "s,^doc/,$cached_docbase/,"` ;;
       lib/*) g=`echo "$f" | sed -e "s,^lib/,$cached_sourcebase/,"` ;;
       m4/*) g=`echo "$f" | sed -e "s,^m4/,$cached_m4base/,"` ;;
       tests/*) g=`echo "$f" | sed -e "s,^tests/,$cached_testsbase/,"` ;;
@@ -1113,6 +1151,7 @@ func_import ()
   for f in $new_files; do
     case "$f" in
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+      doc/*) g=`echo "$f" | sed -e "s,^doc/,$docbase/,"` ;;
       lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
       m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
       tests/*) g=`echo "$f" | sed -e "s,^tests/,$testsbase/,"` ;;
@@ -1198,6 +1237,7 @@ func_import ()
   for f in `LC_ALL=C join -t"$delimiter" -v2 "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_last_column"`; do
     case "$f" in
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+      doc/*) g=`echo "$f" | sed -e "s,^doc/,$docbase/,"` ;;
       lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
       m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
       tests/*) g=`echo "$f" | sed -e "s,^tests/,$testsbase/,"` ;;
@@ -1210,6 +1250,7 @@ func_import ()
   for f in `LC_ALL=C join -t"$delimiter" "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_last_column"`; do
     case "$f" in
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+      doc/*) g=`echo "$f" | sed -e "s,^doc/,$docbase/,"` ;;
       lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
       m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
       tests/*) g=`echo "$f" | sed -e "s,^tests/,$testsbase/,"` ;;
@@ -1224,6 +1265,7 @@ func_import ()
   actioncmd="$actioncmd --lib=$libname"
   actioncmd="$actioncmd --source-base=$sourcebase"
   actioncmd="$actioncmd --m4-base=$m4base"
+  actioncmd="$actioncmd --doc-base=$docbase"
   actioncmd="$actioncmd --aux-dir=$auxdir"
   for module in $avoidlist; do
     actioncmd="$actioncmd --avoid=$module"
@@ -1283,6 +1325,7 @@ func_import ()
     echo "gl_SOURCE_BASE([$sourcebase])"
     echo "gl_M4_BASE([$m4base])"
     echo "gl_TESTS_BASE([$testsbase])"
+    echo "gl_DOC_BASE([$docbase])"
     echo "gl_LIB([$libname])"
     test -z "$lgpl" || echo "gl_LGPL"
     test -z "$libtool" || echo "gl_LIBTOOL"
@@ -1863,6 +1906,7 @@ case $mode in
         test -n "$supplied_libname" || supplied_libname=true
         test -n "$sourcebase" || sourcebase="lib"
         test -n "$testsbase" || testsbase="tests"
+        test -n "$docbase" || docbase="doc"
         test -n "$macro_prefix" || macro_prefix="gl"
       fi
       func_import "$*"
@@ -1871,7 +1915,7 @@ case $mode in
       # To get this list of directories, look at Makefile.am. (Not at
       # configure, because it may be omitted from CVS. Also, don't run
       # "find $destdir -name gnulib-cache.m4", as it might be too expensive.)
-      aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[ 	]*=' "$destdir"/Makefile.am | sed -e 's/^ACLOCAL_AMFLAGS[ 	]*=\(.*\)$/\1/'`
+      aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[	 ]*=' "$destdir"/Makefile.am | sed -e 's/^ACLOCAL_AMFLAGS[	 ]*=\(.*\)$/\1/'`
       m4dirs=
       m4dirs_count=0
       m4dir_is_next=
@@ -1902,6 +1946,7 @@ case $mode in
         test -n "$sourcebase" || sourcebase="lib"
         m4base="m4"
         test -n "$testsbase" || testsbase="tests"
+        test -n "$docbase" || docbase="doc"
         test -n "$macro_prefix" || macro_prefix="gl"
         func_import "$*"
       else
