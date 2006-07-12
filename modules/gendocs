@@ -1,0 +1,20 @@
+Description:
+Generate manuals in several formats from Texinfo sources,
+
+Files:
+build-aux/gendocs.sh
+doc/gendocs_template
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+
+License:
+GPL
+
+Maintainer:
+Karl Berry
