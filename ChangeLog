@@ -1,3 +1,7 @@
+2006-07-12  Simon Josefsson  <jas@extundo.com>
+
+	* modules/gendocs (License): Fix license, approved by Karl.
+
 2006-07-12  Eric Blake  <ebb9@byu.net>
 
 	* MODULES.html.sh: Add gendocs.
