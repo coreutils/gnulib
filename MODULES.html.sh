@@ -2074,6 +2074,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_module fdl
+  func_module gendocs
   func_end_table
 }
 
