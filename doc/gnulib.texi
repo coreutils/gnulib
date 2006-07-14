@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.24 2006-07-10 06:37:33 rwild Exp $
+@comment $Id: gnulib.texi,v 1.25 2006-07-14 09:32:13 jas Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2006-07-10 06:37:33 $
+@set UPDATED $Date: 2006-07-14 09:32:13 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -90,6 +90,7 @@ Getting started:
 * Library version handling::
 * Regular expressions::
 * Windows sockets::
+* Libtool and Windows::
 @end menu
 
 
@@ -326,6 +327,29 @@ the getaddrinfo function is available during runtime.
 Todo: Make getaddrinfo.c open the WS2_32.DLL and check for the
 getaddrinfo symbol and use it if present, otherwise fall back to our
 own implementation.
+
+@node Libtool and Windows
+@section Libtool and Windows
+
+If you want it to be possible to cross-compile your program to MinGW
+and you use Libtool, you need to put:
+
+@example
+AC_LIBTOOL_WIN32_DLL
+@end example
+
+in your @file{configure.ac}.
+
+The effect of this is that the names of the @code{OBJDUMP},
+@code{DLLTOOL}, and @code{AS} tools are set up correct.
+
+If you are building a library, you will also need to pass
+@code{-no-undefined} to make sure Libtool produce a DLL for your
+library.  From a @file{Makefile.am}:
+
+@example
+libgsasl_la_LDFLAGS += -no-undefined
+@end example
 
 @include gnulib-tool.texi
 
