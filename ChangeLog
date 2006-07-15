@@ -1,3 +1,7 @@
+2006-07-15  Karl Berry  <karl@gnu.org>
+
+	* gnulib-tool: help message wording/arrangement.
+
 2006-07-12  Simon Josefsson  <jas@extundo.com>
 
 	* modules/gendocs (License): Fix license, approved by Karl.
