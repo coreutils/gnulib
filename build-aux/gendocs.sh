@@ -1,8 +1,9 @@
 #!/bin/sh
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
-# $Id: gendocs.sh,v 1.1 2006-07-12 07:27:31 jas Exp $
-# 
+
+scriptversion=2006-07-15.08
+
 # Copyright (C) 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -39,10 +40,7 @@ templateurl="http://savannah.gnu.org/cgi-bin/viewcvs/~checkout~/texinfo/texinfo/
 : ${GENDOCS_TEMPLATE_DIR="."}
 unset CDPATH
 
-rcs_revision='$Revision: 1.1 $'
-rcs_version=`set - $rcs_revision; echo $2`
-program=`echo "$0" | sed -e 's!.*/!!'`
-version="gendocs.sh $rcs_version
+version="gendocs.sh $scriptversion
 
 Copyright (C) 2006 Free Software Foundation, Inc.
 There is NO warranty.  You may redistribute this software
@@ -283,3 +281,10 @@ sed \
 $GENDOCS_TEMPLATE_DIR/gendocs_template >$outdir/index.html
 
 echo "Done!  See $outdir/ subdirectory for new files."
+
+# Local variables:
+# eval: (add-hook 'write-file-hooks 'time-stamp)
+# time-stamp-start: "scriptversion="
+# time-stamp-format: "%:y-%02m-%02d.%02H"
+# time-stamp-end: "$"
+# End:
