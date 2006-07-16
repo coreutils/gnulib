@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2006-07-15.15}
+\def\texinfoversion{2006-07-16.16}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free
@@ -327,9 +327,9 @@
       \pagebody{#1}%
       \ifdim\ht\footlinebox > 0pt
         % Only leave this space if the footline is nonempty.
-        % (We lessened \vsize for it in \oddfootingxxx.)
+        % (We lessened \vsize for it in \oddfootingyyy.)
         % The \baselineskip=24pt in plain's \makefootline has no effect.
-        \vskip 2\baselineskip
+        \vskip 24pt
         \unvbox\footlinebox
       \fi
       %
@@ -2472,8 +2472,8 @@ where each line of input produces a line of output.}
   %
   % Leave some space for the footline.  Hopefully ok to assume
   % @evenfooting will not be used by itself.
-  \global\advance\pageheight by -\baselineskip
-  \global\advance\vsize by -\baselineskip
+  \global\advance\pageheight by -12pt
+  \global\advance\vsize by -12pt
 }
 
 \parseargdef\everyfooting{\oddfootingxxx{#1}\evenfootingxxx{#1}}
