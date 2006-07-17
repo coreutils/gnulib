@@ -2,24 +2,19 @@ Description:
 Ensure that a directory and its parents exist.
 
 Files:
-lib/chdir-safer.c
-lib/chdir-safer.h
+lib/dirchownmod.c
+lib/dirchownmod.h
 lib/lchmod.h
 lib/mkdir-p.c
 lib/mkdir-p.h
-lib/same-inode.h
-m4/afs.m4
-m4/chdir-safer.m4
 m4/lchmod.m4
 m4/mkdir-p.m4
 
 Depends-on:
-alloca
-chown
-gettext-h
-save-cwd
-dirname
 error
+gettext-h
+lchown
+mkancesdirs
 quote
 stat-macros
 stdbool
@@ -36,4 +31,4 @@ License:
 GPL
 
 Maintainer:
-Jim Meyering
+Paul Eggert, Jim Meyering

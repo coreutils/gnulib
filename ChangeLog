@@ -1,3 +1,16 @@
+2006-07-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh: Add mkancestors.
+	* modules/mkancesdirs: New module.
+	* modules/mkdir-p (Files): Remove lib/chdir-safer.c, lib/chdir-safer.h,
+	lib/same-inode.h, m4/afs.m4, m4/chdir-safer.m4.
+	The chdir-safer and afs files are now orphans; I'll remove them
+	unless someone speaks up.
+	Add lib/dirchownmod.c, lib/dirchownmod.h.
+	(Depends-on): Remove alloca, chown, save-cwd, dirname.
+	Add lchown, mkancesdirs.
+	(Maintainer): Add self.
+
 2006-07-15  Karl Berry  <karl@gnu.org>
 
 	* gnulib-tool: help message wording/arrangement.

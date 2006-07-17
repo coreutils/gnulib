@@ -1869,6 +1869,7 @@ func_all_modules ()
   func_module fts-lgpl
   func_module isdir
   func_module lchown
+  func_module mkancestors
   func_module mkdir-p
   func_module modechange
   func_module mountlist
