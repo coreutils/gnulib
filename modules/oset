@@ -1,0 +1,26 @@
+Description:
+Abstract ordered set data type.
+
+Files:
+lib/gl_oset.h
+lib/gl_oset.c
+m4/gl_list.m4
+
+Depends-on:
+stdbool
+
+configure.ac:
+gl_LIST
+
+Makefile.am:
+lib_SOURCES += gl_oset.h gl_oset.c
+
+Include:
+"gl_oset.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible
+
