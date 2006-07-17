@@ -1,0 +1,26 @@
+Description:
+Ordered set data type implemented by an array.
+
+Files:
+lib/gl_array_oset.h
+lib/gl_array_oset.c
+
+Depends-on:
+oset
+xalloc
+xsize
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += gl_array_oset.h gl_array_oset.c
+
+Include:
+"gl_array_oset.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible
+
