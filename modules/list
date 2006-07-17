@@ -1,0 +1,26 @@
+Description:
+Abstract sequential list data type.
+
+Files:
+lib/gl_list.h
+lib/gl_list.c
+m4/gl_list.m4
+
+Depends-on:
+stdbool
+
+configure.ac:
+gl_LIST
+
+Makefile.am:
+lib_SOURCES += gl_list.h gl_list.c
+
+Include:
+"gl_list.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible
+
