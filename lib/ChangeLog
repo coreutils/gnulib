@@ -1,3 +1,46 @@
+2006-07-17  Bruno Haible  <bruno@clisp.org>
+
+	* gl_list.h: New file.
+	* gl_list.c: New file.
+	* gl_array_list.h: New file.
+	* gl_array_list.c: New file.
+	* gl_carray_list.h: New file.
+	* gl_carray_list.c: New file.
+	* gl_linked_list.h: New file.
+	* gl_linked_list.c: New file.
+	* gl_anylinked_list1.h: New file.
+	* gl_anylinked_list2.h: New file.
+	* gl_avltree_list.h: New file.
+	* gl_avltree_list.c: New file.
+	* gl_anyavltree_list1.h: New file.
+	* gl_anyavltree_list2.h: New file.
+	* gl_rbtree_list.h: New file.
+	* gl_rbtree_list.c: New file.
+	* gl_anyrbtree_list1.h: New file.
+	* gl_anyrbtree_list2.h: New file.
+	* gl_anytree_list1.h: New file.
+	* gl_anytree_list2.h: New file.
+	* gl_linkedhash_list.h: New file.
+	* gl_linkedhash_list.c: New file.
+	* gl_anyhash_list1.h: New file.
+	* gl_anyhash_list2.h: New file.
+	* gl_avltreehash_list.h: New file.
+	* gl_avltreehash_list.c: New file.
+	* gl_rbtreehash_list.h: New file.
+	* gl_rbtreehash_list.c: New file.
+	* gl_anytreehash_list1.h: New file.
+	* gl_anytreehash_list2.h: New file.
+
+	* gl_oset.h: New file.
+	* gl_oset.c: New file.
+	* gl_array_oset.h: New file.
+	* gl_array_oset.c: New file.
+	* gl_avltree_oset.h: New file.
+	* gl_avltree_oset.c: New file.
+	* gl_rbtree_oset.h: New file.
+	* gl_rbtree_oset.c: New file.
+	* gl_anytree_oset.h: New file.
+
 2006-07-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* dirchownmod.c, dirchownmod.h, mkancesdirs.c, mkancesdirs.h:

@@ -1,3 +1,29 @@
+2006-07-17  Bruno Haible  <bruno@clisp.org>
+
+	* modules/list: New file.
+	* modules/array-list: New file.
+	* modules/carray-list, modules/carray-list-tests: New files.
+	* modules/linked-list, modules/linked-list-tests: New files.
+	* modules/avltree-list, modules/avltree-list-tests: New files.
+	* modules/rbtree-list, modules/rbtree-list-tests: New files.
+	* modules/linkedhash-list, modules/linkedhash-list-tests: New files.
+	* modules/avltreehash-list, modules/avltreehash-list-tests: New files.
+	* modules/rbtreehash-list, modules/rbtreehash-list-tests: New files.
+	* modules/oset: New file.
+	* modules/array-oset: New file.
+	* modules/avltree-oset, modules/avltree-oset-tests: New files.
+	* modules/rbtree-oset, rbtree-oset-tests: New files.
+	* tests/test-carray_list.c: New file.
+	* tests/test-linked_list.c: New file.
+	* tests/test-avltree_list.c: New file.
+	* tests/test-rbtree_list.c: New file.
+	* tests/test-linkedhash_list.c: New file.
+	* tests/test-avltreehash_list.c: New file.
+	* tests/test-rbtreehash_list.c: New file.
+	* tests/test-avltree_oset.c: New file.
+	* tests/test-rbtree_oset.c: New file.
+	* MODULES.html.sh (Container data structures): New section.
+
 2006-07-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* MODULES.html.sh: Add mkancestors.

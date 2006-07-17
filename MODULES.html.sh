@@ -1604,6 +1604,28 @@ func_all_modules ()
   func_module long-options
   func_end_table
 
+  element="Container data structures"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap ansic_ext_container
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module list
+  func_module array-list
+  func_module carray-list
+  func_module linked-list
+  func_module avltree-list
+  func_module rbtree-list
+  func_module linkedhash-list
+  func_module avltreehash-list
+  func_module rbtreehash-list
+  func_module oset
+  func_module array-oset
+  func_module avltree-oset
+  func_module rbtree-oset
+  func_end_table
+
   element="Cryptographic computations"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap ansic_ext_crypto
