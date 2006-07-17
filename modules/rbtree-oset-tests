@@ -1,0 +1,12 @@
+Files:
+tests/test-rbtree_oset.c
+
+Depends-on:
+array-oset
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-rbtree_oset$(EXEEXT)
+check_PROGRAMS += test-rbtree_oset
+

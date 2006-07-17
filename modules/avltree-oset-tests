@@ -1,0 +1,12 @@
+Files:
+tests/test-avltree_oset.c
+
+Depends-on:
+array-oset
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-avltree_oset$(EXEEXT)
+check_PROGRAMS += test-avltree_oset
+
