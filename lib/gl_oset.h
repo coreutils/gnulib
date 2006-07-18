@@ -56,9 +56,9 @@ extern "C" {
    Operation                  ARRAY     TREE
 
    gl_oset_size                O(1)     O(1)
-   gl_oset_add
-   gl_oset_remove
-   gl_oset_search
+   gl_oset_add                 O(n)   O(log n)
+   gl_oset_remove              O(n)   O(log n)
+   gl_oset_search            O(log n) O(log n)
    gl_oset_iterator            O(1)   O(log n)
    gl_oset_iterator_next       O(1)   O(log n)
  */
