@@ -21,7 +21,7 @@
 #endif
 
 /* Specification.  */
-#include "gl_linked_list.h"
+#include "gl_linkedhash_list.h"
 
 #include <stdlib.h>
 
