@@ -1,3 +1,8 @@
+2006-07-19  Derek Price  <derek@ximbiot.com>
+
+	* gnulib.texi (Libtool and Windows):  Eliminate passive voice.  Correct
+	grammar.
+
 2006-07-14  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib.texi (Libtool and Windows): New section.

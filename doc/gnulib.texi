@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.25 2006-07-14 09:32:13 jas Exp $
+@comment $Id: gnulib.texi,v 1.26 2006-07-19 21:48:14 dprice Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2006-07-14 09:32:13 $
+@set UPDATED $Date: 2006-07-19 21:48:14 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -338,13 +338,11 @@ and you use Libtool, you need to put:
 AC_LIBTOOL_WIN32_DLL
 @end example
 
-in your @file{configure.ac}.
-
-The effect of this is that the names of the @code{OBJDUMP},
-@code{DLLTOOL}, and @code{AS} tools are set up correct.
+in your @file{configure.ac}.  This sets the correct names for the
+@code{OBJDUMP}, @code{DLLTOOL}, and @code{AS} tools for the build.
 
 If you are building a library, you will also need to pass
-@code{-no-undefined} to make sure Libtool produce a DLL for your
+@code{-no-undefined} to make sure Libtool produces a DLL for your
 library.  From a @file{Makefile.am}:
 
 @example
