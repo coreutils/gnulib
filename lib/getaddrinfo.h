@@ -47,28 +47,26 @@ struct addrinfo
 # endif
 
 /* Possible values for `ai_flags' field in `addrinfo' structure.  */
-# ifndef AI_PASSIVE
-#  define AI_PASSIVE	 0x0001	/* Socket address is intended for `bind'.  */
-# endif
 # ifndef AI_CANONNAME
 #  define AI_CANONNAME	 0x0002	/* Request for canonical name.  */
 # endif
-# ifndef AI_NUMERICHOST
-#  define AI_NUMERICHOST 0x0004	/* Don't use name resolution.  */
-# endif
-# ifndef AI_V4MAPPED
-#  define AI_V4MAPPED	 0x0008	/* IPv4 mapped addresses are acceptable.  */
-# endif
-# ifndef AI_ALL
-#  define AI_ALL	 0x0010	/* Return IPv4 mapped and IPv6 addresses.  */
-# endif
-# ifndef AI_ADDRCONFIG
-#  define AI_ADDRCONFIG	 0x0020	/* Use configuration of this host to choose
-				   returned address type..  */
-#endif
 #ifndef AI_NUMERICSERV
 #  define AI_NUMERICSERV 0x0400	/* Don't use name resolution.  */
 # endif
+#if 0
+/* The commented out definitions below are not yet implemented in the
+   GNULIB getaddrinfo() replacement, so are not yet needed and may, in fact,
+   cause conflicts on systems with a getaddrinfo() function which does not
+   define them.
+
+   If they are restored, be sure to protect the definitions with #ifndef.  */
+#define AI_PASSIVE	0x0001	/* Socket address is intended for `bind'.  */
+#define AI_NUMERICHOST	0x0004	/* Don't use name resolution.  */
+#define AI_V4MAPPED	0x0008	/* IPv4 mapped addresses are acceptable.  */
+#define AI_ALL		0x0010	/* Return IPv4 mapped and IPv6 addresses.  */
+#define AI_ADDRCONFIG	0x0020	/* Use configuration of this host to choose
+				   returned address type..  */
+#endif /* 0 */
 
 /* Error values for `getaddrinfo' function.  */
 # ifndef EAI_BADFLAGS
