@@ -1,6 +1,7 @@
 2006-07-19  Derek R. Price  <derek@ximbiot.com>
 
 	* lib/getaddrinfo.h: Don't define unimplemented AI_* flags.
+	Reindent and repaginate.
 
 2006-07-17  Bruno Haible  <bruno@clisp.org>
 
