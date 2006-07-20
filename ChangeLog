@@ -1,3 +1,9 @@
+2006-07-20  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool: Recognize new option --assume-autoconf.
+	(autoconf_minversion): New variable.
+	(func_get_filelist): Use it to decide whether to add onceonly_2_57.m4.
+
 2006-07-17  Bruno Haible  <bruno@clisp.org>
 
 	* modules/list: New file.
