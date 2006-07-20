@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-20 14:51:57 $'
+cvsdatestamp='$Date: 2006-07-20 16:53:35 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -103,6 +103,8 @@ Operation modes:
 Options:
       --assume-autoconf=VERSION
                             Assume a given autoconf version (or newer).
+                            If VERSION is 'latest-stable', assume the latest
+                            stable version.
       --avoid=MODULE        Avoid including the given MODULE. Useful if you
                             have code that provides equivalent functionality.
                             This option can be repeated.

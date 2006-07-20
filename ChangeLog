@@ -1,3 +1,7 @@
+2006-07-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* gnulib-tool (func_usage): Document --assume-autoconf='latest-stable'.
+
 2006-07-20  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool: Recognize new option --assume-autoconf.
