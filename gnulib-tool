@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-15 23:07:01 $'
+cvsdatestamp='$Date: 2006-07-20 14:22:07 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -434,9 +434,9 @@ func_ln_if_changed ()
       exit 1
     fi
     if test -n "$supplied_libname" || test -n "$sourcebase" || test -n "$m4base" \
-       || test -n "$testsbase" || test -n "$auxdir" || test -n "$inctests" \
-       || test -n "$docbase" \
-       || test -n "$avoidlist" || test -n "$lgpl" || test -n "$macro_prefix"; then
+       || test -n "$docbase" || test -n "$testsbase" || test -n "$auxdir" \
+       || test -n "$inctests" || test -n "$avoidlist" || test -n "$lgpl" \
+       || test -n "$macro_prefix"; then
       echo "gnulib-tool: invalid options for 'update' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
       echo "If you really want to modify the gnulib configuration of your project," 1>&2
