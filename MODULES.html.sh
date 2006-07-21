@@ -1933,6 +1933,7 @@ func_all_modules ()
   func_module fpending
   func_module closeout
   func_module stdio-safer
+  func_module stdlib-safer
   func_module getpass
   func_module getpass-gnu
   func_end_table
@@ -2092,7 +2093,7 @@ func_all_modules ()
   func_end_table
 
   element="Support for building documentation"
-  func_section_wrap build_lib
+  func_section_wrap build_doc
   func_wrap H2
   func_echo "$element"
 

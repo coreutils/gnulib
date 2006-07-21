@@ -1,3 +1,9 @@
+2006-07-21  Eric Blake  <ebb9@byu.net>
+
+	* modules/stdlib-safer: New file.
+	* MODULES.html.sh (File stream based Input/Output): Add
+	stdlib-safer.
+
 2006-07-20  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh (func_all_modules): Add a missing func_begin_table.
