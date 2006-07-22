@@ -1,12 +1,14 @@
-# csharpcomp.m4 serial 5 (gettext-0.15)
+# csharpcomp.m4 serial 6 (gettext-0.15)
 dnl Copyright (C) 2003-2005 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 # Prerequisites of csharpcomp.sh.
+# Checks for a C# compiler.
+# Sets at most one of HAVE_CSCC, HAVE_MCS, HAVE_CSC.
 # Sets HAVE_CSHARPCOMP to nonempty if csharpcomp.sh will work.
-
+# Also sets CSHARPCOMPFLAGS.
 AC_DEFUN([gt_CSHARPCOMP],
 [
   AC_REQUIRE([gt_CSHARP_CHOICE])
@@ -67,4 +69,9 @@ AC_DEFUN([gt_CSHARPCOMP],
   AC_SUBST(HAVE_CSCC)
   AC_SUBST(HAVE_MCS)
   AC_SUBST(HAVE_CSC)
+  dnl Provide a default for CSHARPCOMPFLAGS.
+  if test -z "${CSHARPCOMPFLAGS+set}"; then
+    CSHARPCOMPFLAGS="-O -g"
+  fi
+  AC_SUBST(CSHARPCOMPFLAGS)
 ])

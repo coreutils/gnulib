@@ -1,3 +1,15 @@
+2006-06-21  Bruno Haible  <bruno@clisp.org>
+
+	Avoid warnings from recent versions of mcs.
+	* csharpcomp.c (compile_csharp_using_mono): Don't use options -o, -L,
+	-r any more. Use options documented since mcs-1.0 instead. Similarly
+	for -g.
+
+2005-07-09  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.c (compile_csharp_using_sscli): For -l option, add a .dll suffix.
+	Reported by Mark Junker <mjscod@gmx.de>.
+
 2006-06-17  Bruno Haible  <bruno@clisp.org>
 
 	* config.charset: Update for NetBSD 3.0.

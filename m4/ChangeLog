@@ -1,3 +1,7 @@
+2005-12-04  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.m4 (gt_CSHARPCOMP): Also set CSHARPCOMPFLAGS.
+
 2006-07-22  Bruno Haible  <bruno@clisp.org>
 
 	* gettext.m4: Update from GNU gettext-0.15.

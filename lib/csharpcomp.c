@@ -1,5 +1,5 @@
 /* Compile a C# program.
-   Copyright (C) 2003-2005 Free Software Foundation, Inc.
+   Copyright (C) 2003-2006 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -129,9 +129,9 @@ compile_csharp_using_pnet (const char * const *sources,
       for (i = 0; i < sources_count; i++)
 	{
 	  const char *source_file = sources[i];
-	  if (strlen (source_file) >= 9
-	      && memcmp (source_file + strlen (source_file) - 9, ".resource",
-			 9) == 0)
+	  if (strlen (source_file) >= 10
+	      && memcmp (source_file + strlen (source_file) - 10, ".resources",
+			 10) == 0)
 	    {
 	      char *option = (char *) xallocsa (12 + strlen (source_file) + 1);
 
@@ -214,34 +214,43 @@ compile_csharp_using_mono (const char * const *sources,
       unsigned int i;
 
       argc =
-	1 + (output_is_library ? 1 : 0) + 2 + 2 * libdirs_count
-	+ 2 * libraries_count + (debug ? 1 : 0) + sources_count;
+	1 + (output_is_library ? 1 : 0) + 1 + libdirs_count + libraries_count
+	+ (debug ? 1 : 0) + sources_count;
       argv = (char **) xallocsa ((argc + 1) * sizeof (char *));
 
       argp = argv;
       *argp++ = "mcs";
       if (output_is_library)
 	*argp++ = "-target:library";
-      *argp++ = "-o";
-      *argp++ = (char *) output_file;
+      {
+	char *option = (char *) xallocsa (5 + strlen (output_file) + 1);
+	memcpy (option, "-out:", 5);
+	strcpy (option + 5, output_file);
+	*argp++ = option;
+      }
       for (i = 0; i < libdirs_count; i++)
 	{
-	  *argp++ = "-L";
-	  *argp++ = (char *) libdirs[i];
+	  char *option = (char *) xallocsa (5 + strlen (libdirs[i]) + 1);
+	  memcpy (option, "-lib:", 5);
+	  strcpy (option + 5, libdirs[i]);
+	  *argp++ = option;
 	}
       for (i = 0; i < libraries_count; i++)
 	{
-	  *argp++ = "-r";
-	  *argp++ = (char *) libraries[i];
+	  char *option = (char *) xallocsa (11 + strlen (libraries[i]) + 4 + 1);
+	  memcpy (option, "-reference:", 11);
+	  memcpy (option + 11, libraries[i], strlen (libraries[i]));
+	  strcpy (option + 11 + strlen (libraries[i]), ".dll");
+	  *argp++ = option;
 	}
       if (debug)
-	*argp++ = "-g";
+	*argp++ = "-debug";
       for (i = 0; i < sources_count; i++)
 	{
 	  const char *source_file = sources[i];
-	  if (strlen (source_file) >= 9
-	      && memcmp (source_file + strlen (source_file) - 9, ".resource",
-			 9) == 0)
+	  if (strlen (source_file) >= 10
+	      && memcmp (source_file + strlen (source_file) - 10, ".resources",
+			 10) == 0)
 	    {
 	      char *option = (char *) xallocsa (10 + strlen (source_file) + 1);
 
@@ -297,6 +306,11 @@ compile_csharp_using_mono (const char * const *sources,
       /* Remove zombie process from process list, and retrieve exit status.  */
       exitstatus = wait_subprocess (child, "mcs", false, false, true, true);
 
+      for (i = 1 + (output_is_library ? 1 : 0);
+	   i < 1 + (output_is_library ? 1 : 0)
+	       + 1 + libdirs_count + libraries_count;
+	   i++)
+	freesa (argv[i]);
       for (i = 0; i < sources_count; i++)
 	if (argv[argc - sources_count + i] != sources[i])
 	  freesa (argv[argc - sources_count + i]);
@@ -417,9 +431,9 @@ compile_csharp_using_sscli (const char * const *sources,
       for (i = 0; i < sources_count; i++)
 	{
 	  const char *source_file = sources[i];
-	  if (strlen (source_file) >= 9
-	      && memcmp (source_file + strlen (source_file) - 9, ".resource",
-			 9) == 0)
+	  if (strlen (source_file) >= 10
+	      && memcmp (source_file + strlen (source_file) - 10, ".resources",
+			 10) == 0)
 	    {
 	      char *option = (char *) xallocsa (10 + strlen (source_file) + 1);
 
