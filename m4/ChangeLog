@@ -1,3 +1,26 @@
+2006-07-21  Bruno Haible  <bruno@clisp.org>
+
+	* javacomp.m4 (gt_JAVACOMP): Convert target_version "null" to "1.1".
+
+2006-05-09  Bruno Haible  <bruno@clisp.org>
+
+	* javacomp.m4 (gt_JAVACOMP): On Cygwin, set CLASSPATH_SEPARATOR to
+	a semicolon. Use CLASSPATH_SEPARATOR for the conftestver execution.
+
+2006-05-01  Bruno Haible  <bruno@clisp.org>
+
+	* javacomp.m4 (gt_JAVACOMP): Accept a source-version and an optional
+	target-version argument. Verify that the compiler groks source of the
+	specified source-version, or add -source option as necessary. Verify
+	that the compiler produces bytecode in the specified target-version,
+	or add -target and -source options as necessary. Make the result of
+	the test available as variable CONF_JAVAC. Also log error output in
+	config.log.
+
+2006-03-11  Bruno Haible  <bruno@clisp.org>
+
+	* javacomp.m4 (gt_JAVACOMP): Treat gcj-4.x like gcj-3.x.
+
 2006-05-09  Bruno Haible  <bruno@clisp.org>
 
 	* javaexec.m4 (gt_JAVAEXEC): On Cygwin, set CLASSPATH_SEPARATOR to a

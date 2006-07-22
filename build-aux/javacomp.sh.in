@@ -1,7 +1,7 @@
 #!/bin/sh
 # Compile a Java program.
 
-# Copyright (C) 2001-2002 Free Software Foundation, Inc.
+# Copyright (C) 2001-2002, 2006 Free Software Foundation, Inc.
 # Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -16,7 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software Foundation,
-# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 # This uses the same choices as javacomp.c, but instead of relying on the
 # environment settings at run time, it uses the environment variables
@@ -28,9 +28,9 @@
 # The extra CLASSPATH must have been set prior to calling this script.
 # Options that can be passed are -O, -g and "-d DIRECTORY".
 
-CONF_JAVAC='@JAVAC@'
+CONF_JAVAC='@CONF_JAVAC@'
 CONF_CLASSPATH='@CLASSPATH@'
-if test -n "$CONF_JAVAC"; then
+if test -n "@HAVE_JAVAC_ENVVAR@"; then
   # Combine given CLASSPATH and configured CLASSPATH.
   if test -n "$CLASSPATH"; then
     CLASSPATH="$CLASSPATH${CONF_CLASSPATH:+@CLASSPATH_SEPARATOR@$CONF_CLASSPATH}"
@@ -43,18 +43,21 @@ if test -n "$CONF_JAVAC"; then
 else
   unset JAVA_HOME
   if test -n "@HAVE_GCJ_C@"; then
+    # In this case, $CONF_JAVAC starts with "gcj -C".
     CLASSPATH="$CLASSPATH"
     export CLASSPATH
-    test -z "$JAVA_VERBOSE" || echo gcj -C "$@"
-    exec gcj -C "$@"
+    test -z "$JAVA_VERBOSE" || echo "$CONF_JAVAC $@"
+    exec $CONF_JAVAC "$@"
   else
     if test -n "@HAVE_JAVAC@"; then
+      # In this case, $CONF_JAVAC starts with "javac".
       CLASSPATH="$CLASSPATH"
       export CLASSPATH
-      test -z "$JAVA_VERBOSE" || echo javac "$@"
-      exec javac "$@"
+      test -z "$JAVA_VERBOSE" || echo "$CONF_JAVAC $@"
+      exec $CONF_JAVAC "$@"
     else
       if test -n "@HAVE_JIKES@"; then
+        # In this case, $CONF_JAVAC starts with "jikes".
         # Combine given CLASSPATH and configured CLASSPATH.
         if test -n "$CLASSPATH"; then
           CLASSPATH="$CLASSPATH${CONF_CLASSPATH:+@CLASSPATH_SEPARATOR@$CONF_CLASSPATH}"
@@ -62,8 +65,8 @@ else
           CLASSPATH="$CONF_CLASSPATH"
         fi
         export CLASSPATH
-        test -z "$JAVA_VERBOSE" || echo jikes "$@"
-        exec jikes "$@"
+        test -z "$JAVA_VERBOSE" || echo "$CONF_JAVAC $@"
+        exec $CONF_JAVAC "$@"
       else
         echo 'Java compiler not found, try installing gcj or set $JAVAC, then reconfigure' 1>&2
         exit 1
