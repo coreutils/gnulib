@@ -1,3 +1,8 @@
+2006-04-09  Bruno Haible  <bruno@clisp.org>
+
+	* fatal-signal.c: Don't include string.h.
+	(at_fatal_signal): Use a copying loop instead of memcpy.
+
 2005-12-04  Bruno Haible  <bruno@clisp.org>
 
 	* csharpexec.c: Add support for 'clix' launcher (untested).
