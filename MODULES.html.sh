@@ -2038,6 +2038,7 @@ func_all_modules ()
   func_module classpath
   func_module javacomp
   func_module javaexec
+  func_module javaversion
   #func_module gcj
   func_end_table
 

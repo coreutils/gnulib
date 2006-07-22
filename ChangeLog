@@ -1,3 +1,8 @@
+2006-07-22  Bruno Haible  <bruno@clisp.org>
+
+	* modules/javaversion: New file.
+	* MODULES.html.sh (Java): Add javaversion.
+
 2006-03-12  Bruno Haible  <bruno@clisp.org>
 
 	* build-aux/javaexec.sh.in: Update for changed javaexec.m4.
