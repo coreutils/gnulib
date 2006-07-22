@@ -1,3 +1,8 @@
+2006-06-27  Bruno Haible  <bruno@clisp.org>
+
+	Assume correct S_ISDIR macro.
+	* mkdtemp.c: Remove test of STAT_MACROS_BROKEN.
+
 2006-07-22  Bruno Haible  <bruno@clisp.org>
 
 	* javaversion.h: New file, from GNU gettext.
