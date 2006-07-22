@@ -1,3 +1,8 @@
+2005-07-05  Bruno Haible  <bruno@clisp.org>
+
+	* printf-args.c (printf_fetchargs): Work around broken definition of
+	wint_t on mingw.
+
 2005-02-12  Bruno Haible  <bruno@clisp.org>
 
 	* xallocsa.h: Add extern "C" for C++.

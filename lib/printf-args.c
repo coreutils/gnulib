@@ -1,5 +1,5 @@
 /* Decomposed printf argument list.
-   Copyright (C) 1999, 2002-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002-2003, 2005-2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -79,7 +79,13 @@ printf_fetchargs (va_list args, arguments *a)
 	break;
 #ifdef HAVE_WINT_T
       case TYPE_WIDE_CHAR:
-	ap->a.a_wide_char = va_arg (args, wint_t);
+	/* Although ISO C 99 7.24.1.(2) says that wint_t is "unchanged by
+	   default argument promotions", this is not the case in mingw32,
+	   where wint_t is 'unsigned short'.  */
+	ap->a.a_wide_char =
+	  (sizeof (wint_t) < sizeof (int)
+	   ? va_arg (args, int)
+	   : va_arg (args, wint_t));
 	break;
 #endif
       case TYPE_STRING:
