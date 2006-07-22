@@ -1,5 +1,5 @@
 /* Safe automatic memory allocation with out of memory checking.
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2005 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -21,6 +21,12 @@
 
 #include "allocsa.h"
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* xallocsa(N) is a checking safe variant of alloca(N).  It allocates N bytes
    of memory allocated on the stack, that must be freed using freesa() before
    the function returns.  Upon failure, it exits with an error message.  */
@@ -38,5 +44,11 @@ extern void * xmallocsa (size_t n);
 /* Maybe we should also define a variant
     xnallocsa (size_t n, size_t s) - behaves like xallocsa (n * s)
    If this would be useful in your application. please speak up.  */
+
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif /* _XALLOCSA_H */
