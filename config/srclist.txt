@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.129 2006-07-14 13:17:33 karl Exp $
+# $Id: srclist.txt,v 1.130 2006-07-22 17:03:06 haible Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -46,30 +46,30 @@ $GNUORG/disclaim.program			doc/Copyright
 # 
 $GETTEXT/gettext-runtime/libasprintf/asnprintf.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/asprintf.c		lib gpl
-#$GETTEXT/gettext-runtime/libasprintf/printf-args.c	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/printf-args.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/printf-args.h	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/printf-parse.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/printf-parse.h	lib gpl
-#$GETTEXT/gettext-runtime/libasprintf/vasnprintf.c	lib gpl
+$GETTEXT/gettext-runtime/libasprintf/vasnprintf.c	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/vasnprintf.h	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/vasprintf.c	lib gpl
 
 $GETTEXT/gettext-runtime/intl/config.charset		lib gpl
-#$GETTEXT/gettext-runtime/intl/localcharset.c		lib gpl
+$GETTEXT/gettext-runtime/intl/localcharset.c		lib gpl
 $GETTEXT/gettext-runtime/intl/localcharset.h		lib gpl
 $GETTEXT/gettext-runtime/intl/ref-add.sin		lib gpl
 $GETTEXT/gettext-runtime/intl/ref-del.sin		lib gpl
 
 $GETTEXT/gettext-tools/lib/gettext.h			lib gpl
-#$GETTEXT/gettext-tools/lib/mkdtemp.c			lib gpl
+$GETTEXT/gettext-tools/lib/mkdtemp.c			lib gpl
 $GETTEXT/gettext-tools/lib/vasprintf.h			lib gpl
 
 # These four files should kept in sync, e.g., gettoolize installs them
 # all together, gnulib-tool install all or none.
-#$GETTEXT/autoconf-lib-link/config.rpath		build-aux
-#$GETTEXT/autoconf-lib-link/m4/lib-ld.m4		m4
-#$GETTEXT/autoconf-lib-link/m4/lib-link.m4		m4
-#$GETTEXT/autoconf-lib-link/m4/lib-prefix.m4		m4
+$GETTEXT/autoconf-lib-link/config.rpath			build-aux
+$GETTEXT/autoconf-lib-link/m4/lib-ld.m4			m4
+$GETTEXT/autoconf-lib-link/m4/lib-link.m4		m4
+$GETTEXT/autoconf-lib-link/m4/lib-prefix.m4		m4
 
 $GETTEXT/gettext-runtime/m4/codeset.m4			m4
 $GETTEXT/gettext-runtime/m4/gettext.m4			m4
@@ -79,7 +79,7 @@ $GETTEXT/gettext-runtime/m4/intdiv0.m4			m4
 $GETTEXT/gettext-runtime/m4/intmax.m4			m4
 $GETTEXT/gettext-runtime/m4/inttypes-pri.m4		m4
 $GETTEXT/gettext-runtime/m4/lcmessage.m4		m4
-#$GETTEXT/gettext-runtime/m4/longdouble.m4		m4
+$GETTEXT/gettext-runtime/m4/longdouble.m4		m4
 $GETTEXT/gettext-runtime/m4/nls.m4			m4
 $GETTEXT/gettext-runtime/m4/po.m4			m4
 $GETTEXT/gettext-runtime/m4/printf-posix.m4		m4
@@ -89,7 +89,7 @@ $GETTEXT/gettext-runtime/m4/wchar_t.m4			m4
 $GETTEXT/gettext-runtime/m4/wint_t.m4			m4
 $GETTEXT/gettext-tools/m4/sig_atomic_t.m4		m4
 $GETTEXT/gettext-tools/m4/signalblocking.m4		m4
-#$GETTEXT/gettext-tools/m4/ssize_t.m4			m4
+$GETTEXT/gettext-tools/m4/ssize_t.m4			m4
 
 
 # new argp not in glibc yet --13feb06.
