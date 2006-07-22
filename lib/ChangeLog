@@ -1,3 +1,12 @@
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* allocsa.h: Add extern "C" for C++.
+
+2005-02-10  Bruno Haible  <bruno@clisp.org>
+
+	* allocsa.h (sa_alignof): Define differently with AIX xlc, to avoid
+	a bug of this compiler on AIX 3.2.5 dealing with enums.
+
 2006-07-22  Bruno Haible  <bruno@clisp.org>
 
 	* gettext.h: Update to GNU gettext-0.15.
