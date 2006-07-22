@@ -1,3 +1,9 @@
+2005-12-04  Bruno Haible  <bruno@clisp.org>
+
+	* csharpexec.c: Add support for 'clix' launcher (untested).
+	(execute_csharp_using_sscli): New function.
+	(execute_csharp_program): Call it.
+
 2006-06-21  Bruno Haible  <bruno@clisp.org>
 
 	Avoid warnings from recent versions of mcs.

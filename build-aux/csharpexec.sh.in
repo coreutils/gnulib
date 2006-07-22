@@ -1,7 +1,7 @@
 #!/bin/sh
 # Execute a C# program.
 
-# Copyright (C) 2003 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2005 Free Software Foundation, Inc.
 # Written by Bruno Haible <bruno@clisp.org>, 2003.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -78,7 +78,19 @@ else
     test -z "$CSHARP_VERBOSE" || echo mono "$@"
     exec mono "$@"
   else
-    echo 'C# virtual machine not found, try installing pnet, then reconfigure' 1>&2
-    exit 1
+    if test -n "@HAVE_CLIX@"; then
+      CONF_CLIX_PATH='@CLIX_PATH@'
+      if test -n "$libdirs_mono"; then
+        @CLIX_PATH_VAR@="$libdirs_mono${CONF_CLIX_PATH:+@MONO_PATH_SEPARATOR@$CONF_CLIX_PATH}"
+      else
+        @CLIX_PATH_VAR@="$CONF_CLIX_PATH"
+      fi
+      export @CLIX_PATH_VAR@
+      test -z "$CSHARP_VERBOSE" || echo clix "$@"
+      exec clix "$@"
+    else
+      echo 'C# virtual machine not found, try installing pnet, then reconfigure' 1>&2
+      exit 1
+    fi
   fi
 fi

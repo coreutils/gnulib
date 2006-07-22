@@ -1,5 +1,10 @@
 2005-12-04  Bruno Haible  <bruno@clisp.org>
 
+	* csharpexec.m4 (gt_CSHARPEXEC): Add support for 'clix' launcher
+	(untested).
+
+2005-12-04  Bruno Haible  <bruno@clisp.org>
+
 	* csharpcomp.m4 (gt_CSHARPCOMP): Also set CSHARPCOMPFLAGS.
 
 2006-07-22  Bruno Haible  <bruno@clisp.org>
