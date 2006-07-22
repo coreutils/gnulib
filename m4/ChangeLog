@@ -1,3 +1,12 @@
+2006-07-22  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.m4: Update from GNU gettext-0.15.
+	* nls.m4: Likewise.
+	* po.m4: Likewise.
+	* inttypes-pri.m4: Likewise.
+	* inttypes-h.m4: Renamed from inttypes.m4.
+	(gl_HEADER_INTTYPES_H): Renamed from gt_HEADER_INTTYPES_H.
+
 2006-07-17  Bruno Haible  <bruno@clisp.org>
 
 	* gl_list.m4: New file.
