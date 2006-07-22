@@ -1,3 +1,7 @@
+2006-07-22  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.h: Update to GNU gettext-0.15.
+
 2006-07-22  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
 	and Simon Josefsson <jas@extundo.com>
 
