@@ -1,5 +1,5 @@
-# javaexec.m4 serial 2 (gettext-0.13)
-dnl Copyright (C) 2001-2003 Free Software Foundation, Inc.
+# javaexec.m4 serial 4 (gettext-0.15)
+dnl Copyright (C) 2001-2003, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -12,13 +12,20 @@ AC_DEFUN([gt_JAVAEXEC],
 [
   AC_MSG_CHECKING([for Java virtual machine])
   AC_EGREP_CPP(yes, [
-#if defined _WIN32 || defined __WIN32__ || defined __EMX__ || defined __DJGPP__
+#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
   yes
 #endif
 ], CLASSPATH_SEPARATOR=';', CLASSPATH_SEPARATOR=':')
+  CONF_JAVA=
+  HAVE_JAVA_ENVVAR=
+  HAVE_GIJ=
+  HAVE_JAVA=
+  HAVE_JRE=
+  HAVE_JVIEW=
   HAVE_JAVAEXEC=1
   if test -n "$JAVA"; then
-    ac_result="$JAVA"
+    HAVE_JAVA_ENVVAR=1
+    CONF_JAVA="$JAVA"
   else
     pushdef([AC_MSG_CHECKING],[:])dnl
     pushdef([AC_CHECKING],[:])dnl
@@ -37,30 +44,41 @@ AC_DEFUN([gt_JAVAEXEC],
     export CLASSPATH
     if test -n "$HAVE_GIJ_IN_PATH" \
        && gij --version >/dev/null 2>/dev/null \
-       ifelse([$1], , , [&& gij $1 >/dev/null 2>/dev/null]); then
+       ifelse([$1], , , [&& {
+         echo "$as_me:__oline__: gij $1" >&AS_MESSAGE_LOG_FD
+         gij $1 >&AS_MESSAGE_LOG_FD 2>&1
+       }]); then
       HAVE_GIJ=1
-      ac_result="gij"
+      CONF_JAVA="gij"
     else
       if test -n "$HAVE_JAVA_IN_PATH" \
          && java -version >/dev/null 2>/dev/null \
-         ifelse([$1], , , [&& java $1 >/dev/null 2>/dev/null]); then
+         ifelse([$1], , , [&& {
+           echo "$as_me:__oline__: gij $1" >&AS_MESSAGE_LOG_FD
+           java $1 >&AS_MESSAGE_LOG_FD 2>&1
+         }]); then
         HAVE_JAVA=1
-        ac_result="java"
+        CONF_JAVA="java"
       else
         if test -n "$HAVE_JRE_IN_PATH" \
            && (jre >/dev/null 2>/dev/null || test $? = 1) \
-           ifelse([$1], , , [&& jre $1 >/dev/null 2>/dev/null]); then
+           ifelse([$1], , , [&& {
+             echo "$as_me:__oline__: gij $1" >&AS_MESSAGE_LOG_FD
+             jre $1 >&AS_MESSAGE_LOG_FD 2>&1
+           }]); then
           HAVE_JRE=1
-          ac_result="jre"
+          CONF_JAVA="jre"
         else
           if test -n "$HAVE_JVIEW_IN_PATH" \
              && (jview -? >/dev/null 2>/dev/null || test $? = 1) \
-             ifelse([$1], , , [&& jview $1 >/dev/null 2>/dev/null]); then
+             ifelse([$1], , , [&& {
+               echo "$as_me:__oline__: gij $1" >&AS_MESSAGE_LOG_FD
+               jview $1 >&AS_MESSAGE_LOG_FD 2>&1
+             }]); then
             HAVE_JVIEW=1
-            ac_result="jview"
+            CONF_JAVA="jview"
           else
             HAVE_JAVAEXEC=
-            ac_result="no"
           fi
         fi
       fi
@@ -69,10 +87,16 @@ AC_DEFUN([gt_JAVAEXEC],
       CLASSPATH="$save_CLASSPATH"
     ])
   fi
+  if test -n "$HAVE_JAVAEXEC"; then
+    ac_result="$CONF_JAVA"
+  else
+    ac_result="no"
+  fi
   AC_MSG_RESULT([$ac_result])
-  AC_SUBST(JAVA)
+  AC_SUBST(CONF_JAVA)
   AC_SUBST(CLASSPATH)
   AC_SUBST(CLASSPATH_SEPARATOR)
+  AC_SUBST(HAVE_JAVA_ENVVAR)
   AC_SUBST(HAVE_GIJ)
   AC_SUBST(HAVE_JAVA)
   AC_SUBST(HAVE_JRE)

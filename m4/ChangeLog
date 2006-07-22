@@ -1,3 +1,14 @@
+2006-05-09  Bruno Haible  <bruno@clisp.org>
+
+	* javaexec.m4 (gt_JAVAEXEC): On Cygwin, set CLASSPATH_SEPARATOR to a
+	semicolon.
+
+2006-03-12  Bruno Haible  <bruno@clisp.org>
+
+	* javaexec.m4 (gt_JAVAEXEC): Make the result of the test available as
+	variable CONF_JAVA, for subsequent autoconf tests. Also log error
+	output in config.log.
+
 2006-07-19  Bruno Haible  <bruno@clisp.org>
 
 	* getline.m4 (AM_FUNC_GETLINE): When cross-compiling, assume that
