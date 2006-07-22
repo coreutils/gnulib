@@ -1,3 +1,24 @@
+2006-06-17  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Update for NetBSD 3.0.
+
+2006-05-17  Bruno Haible  <bruno@clisp.org>
+
+	Cygwin portability.
+	* localcharset.c (WIN32_NATIVE): Renamed from WIN32.
+
+2006-05-16  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c [CYGWIN]: Include <windows.h>.
+	(get_charset_aliases): For Cygwin, return the same CPxxx aliases list
+	as under WIN32.
+	(locale_charset) [CYGWIN]: Try to retrieve the encoding from the
+	environment variables. Fall back to GetACP().
+
+2006-04-05  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Update Juan Manuel Guerrero's address.
+
 2005-02-12  Bruno Haible  <bruno@clisp.org>
 
 	* allocsa.h: Add extern "C" for C++.
