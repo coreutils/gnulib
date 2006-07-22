@@ -1,3 +1,29 @@
+2006-05-17  Bruno Haible  <bruno@clisp.org>
+
+	Cygwin portability.
+	* progreloc.c (WIN32_NATIVE): Renamed from WIN32.
+
+2006-04-30  Bruno Haible  <bruno@clisp.org>
+
+	* progreloc.c: Include <mach-o/dyld.h> if available.
+	(find_executable): Use _NSGetExecutablePath when possible.
+
+2006-05-06  Charles Wilson  <cygwin@cwilson.fastmail.fm>
+
+	* progreloc.c (maybe_executable) [CYGWIN]: Use the access() function.
+
+2005-12-29  Bruno Haible  <bruno@clisp.org>
+
+	* progreloc.c (set_program_name_and_installdir): Fix compilation error.
+
+2005-12-04  Bruno Haible  <bruno@clisp.org>
+
+	Cygwin portability.
+	* progreloc.c: Include <windows.h> also on Cygwin.
+	(find_executable): Add support for Cygwin.
+	(set_program_name_and_installdir): Handle also platforms with nonempty
+	EXEEXT.
+
 2006-07-11  Bruno Haible  <bruno@clisp.org>
 
 	* javacomp.c: Fix a comment.
