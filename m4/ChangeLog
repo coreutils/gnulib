@@ -1,3 +1,7 @@
+2006-03-25  Bruno Haible  <bruno@clisp.org>
+
+	* lib-link.m4 (AC_LIB_LINKFLAGS_FROM_LIBS): New macro.
+
 2006-07-21  Bruno Haible  <bruno@clisp.org>
 
 	* javacomp.m4 (gt_JAVACOMP): Convert target_version "null" to "1.1".
