@@ -1932,6 +1932,7 @@ func_all_modules ()
   func_begin_table
   func_module fpending
   func_module closeout
+  func_module close-stream
   func_module stdio-safer
   func_module stdlib-safer
   func_module getpass

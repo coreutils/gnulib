@@ -1,5 +1,5 @@
 Description:
-Close stdout, checking for errors.
+Close standard output, exiting with a diagnostic on error.
 
 Files:
 lib/closeout.h
@@ -7,12 +7,11 @@ lib/closeout.c
 m4/closeout.m4
 
 Depends-on:
+close-stream
 gettext-h
 error
 quotearg
-fpending
 exitfail
-stdbool
 
 configure.ac:
 gl_CLOSEOUT
