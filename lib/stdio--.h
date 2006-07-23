@@ -25,4 +25,4 @@
 #define fopen fopen_safer
 
 #undef tmpfile
-#define tmpfile tmpfile-safer
+#define tmpfile tmpfile_safer
