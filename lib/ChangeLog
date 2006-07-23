@@ -1,3 +1,9 @@
+2006-07-23  Eric Blake  <ebb9@byu.net>
+
+	* tmpfile-safer.c: New file.
+	* stdio-safer.h (fopen_safer): Add prototype.
+	* stdio--.h (tmpfile): Make safer.
+
 2006-07-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* close-stream.c, close-stream.h: New files.
