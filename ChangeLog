@@ -1,3 +1,8 @@
+2006-07-23  Eric Blake  <ebb9@byu.net>
+
+	* modules/stdio-safer (Files): Add tmpfile-safer.c.
+	(Depends-on): Add binary-io.
+
 2006-07-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/close-stream: New file.

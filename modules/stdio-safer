@@ -5,9 +5,11 @@ Files:
 lib/stdio--.h
 lib/stdio-safer.h
 lib/fopen-safer.c
+lib/tmpfile-safer.c
 m4/stdio-safer.m4
 
 Depends-on:
+binary-io
 unistd-safer
 
 configure.ac:
