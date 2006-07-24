@@ -7,16 +7,25 @@ lib/javacomp.c
 
 Depends-on:
 stdbool
-xallocsa
+unistd
+javaversion
 execute
 pipe
 wait-process
 classpath
 xsetenv
 sh-quote
+binary-io
 safe-read
 xalloc
+xallocsa
+getline
+pathname
+fwriteerror
+clean-temp
 error
+xvasprintf
+strstr
 gettext-h
 javacomp-script
 
