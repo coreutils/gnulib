@@ -1,5 +1,9 @@
 2006-07-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/clean-temp: New file.
+
+2006-07-24  Bruno Haible  <bruno@clisp.org>
+
 	* modules/tmpdir: New file.
 	* MODULES.html.sh (File system functions): Add it.
 
