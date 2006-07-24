@@ -1,3 +1,10 @@
+2006-07-23  Bruno Haible  <bruno@clisp.org>
+
+	* gl_anylinked_list2.h (ASYNCSAFE): New macro.
+	(gl_linked_add_first, gl_linked_add_last, gl_linked_add_before,
+	gl_linked_add_after, gl_linked_add_at, gl_linked_remove_node,
+	gl_linked_remove_at): Use it.
+
 2006-07-23  Eric Blake  <ebb9@byu.net>
 
 	* tmpfile-safer.c: New file.

@@ -18,6 +18,23 @@
 
 /* Common code of gl_linked_list.c and gl_linkedhash_list.c.  */
 
+/* If the symbol SIGNAL_SAFE_LIST is defined, the code is compiled in such
+   a way that a gl_list_t data structure may be used from within a signal
+   handler.  The operations allowed in the signal handler are:
+     gl_list_iterator, gl_list_iterator_next, gl_list_iterator_free.
+   The list and node fields that are therefore accessed from the signal handler
+   are:
+     list->root, node->next, node->value.
+   We are careful to make modifications to these fields only in an order
+   that maintains the consistency of the list data structure at any moment,
+   and we use 'volatile' assignments to prevent the compiler from reordering
+   such assignments.  */
+#ifdef SIGNAL_SAFE_LIST
+# define ASYNCSAFE(type) *(volatile type *)&
+#else
+# define ASYNCSAFE(type)
+#endif
+
 /* -------------------------- gl_list_t Data Type -------------------------- */
 
 static gl_list_t
@@ -396,7 +413,7 @@ gl_linked_add_first (gl_list_t list, const void *elt)
   gl_list_node_t node =
     (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
 
-  node->value = elt;
+  ASYNCSAFE(const void *) node->value = elt;
 #if WITH_HASHTABLE
   node->h.hashcode =
     (list->base.hashcode_fn != NULL
@@ -409,9 +426,9 @@ gl_linked_add_first (gl_list_t list, const void *elt)
 
   /* Add node to the list.  */
   node->prev = &list->root;
-  node->next = list->root.next;
+  ASYNCSAFE(gl_list_node_t) node->next = list->root.next;
   node->next->prev = node;
-  list->root.next = node;
+  ASYNCSAFE(gl_list_node_t) list->root.next = node;
   list->count++;
 
 #if WITH_HASHTABLE
@@ -427,7 +444,7 @@ gl_linked_add_last (gl_list_t list, const void *elt)
   gl_list_node_t node =
     (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
 
-  node->value = elt;
+  ASYNCSAFE(const void *) node->value = elt;
 #if WITH_HASHTABLE
   node->h.hashcode =
     (list->base.hashcode_fn != NULL
@@ -439,9 +456,9 @@ gl_linked_add_last (gl_list_t list, const void *elt)
 #endif
 
   /* Add node to the list.  */
-  node->next = &list->root;
+  ASYNCSAFE(gl_list_node_t) node->next = &list->root;
   node->prev = list->root.prev;
-  node->prev->next = node;
+  ASYNCSAFE(gl_list_node_t) node->prev->next = node;
   list->root.prev = node;
   list->count++;
 
@@ -458,7 +475,7 @@ gl_linked_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
   gl_list_node_t new_node =
     (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
 
-  new_node->value = elt;
+  ASYNCSAFE(const void *) new_node->value = elt;
 #if WITH_HASHTABLE
   new_node->h.hashcode =
     (list->base.hashcode_fn != NULL
@@ -470,9 +487,9 @@ gl_linked_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
 #endif
 
   /* Add new_node to the list.  */
-  new_node->next = node;
+  ASYNCSAFE(gl_list_node_t) new_node->next = node;
   new_node->prev = node->prev;
-  new_node->prev->next = new_node;
+  ASYNCSAFE(gl_list_node_t) new_node->prev->next = new_node;
   node->prev = new_node;
   list->count++;
 
@@ -489,7 +506,7 @@ gl_linked_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
   gl_list_node_t new_node =
     (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
 
-  new_node->value = elt;
+  ASYNCSAFE(const void *) new_node->value = elt;
 #if WITH_HASHTABLE
   new_node->h.hashcode =
     (list->base.hashcode_fn != NULL
@@ -502,9 +519,9 @@ gl_linked_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
 
   /* Add new_node to the list.  */
   new_node->prev = node;
-  new_node->next = node->next;
+  ASYNCSAFE(gl_list_node_t) new_node->next = node->next;
   new_node->next->prev = new_node;
-  node->next = new_node;
+  ASYNCSAFE(gl_list_node_t) node->next = new_node;
   list->count++;
 
 #if WITH_HASHTABLE
@@ -526,7 +543,7 @@ gl_linked_add_at (gl_list_t list, size_t position, const void *elt)
 
   new_node =
     (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
-  new_node->value = elt;
+  ASYNCSAFE(const void *) new_node->value = elt;
 #if WITH_HASHTABLE
   new_node->h.hashcode =
     (list->base.hashcode_fn != NULL
@@ -546,9 +563,9 @@ gl_linked_add_at (gl_list_t list, size_t position, const void *elt)
       for (; position > 0; position--)
 	node = node->next;
       new_node->prev = node;
-      new_node->next = node->next;
+      ASYNCSAFE(gl_list_node_t) new_node->next = node->next;
       new_node->next->prev = new_node;
-      node->next = new_node;
+      ASYNCSAFE(gl_list_node_t) node->next = new_node;
     }
   else
     {
@@ -558,9 +575,9 @@ gl_linked_add_at (gl_list_t list, size_t position, const void *elt)
       node = &list->root;
       for (; position > 0; position--)
 	node = node->prev;
-      new_node->next = node;
+      ASYNCSAFE(gl_list_node_t) new_node->next = node;
       new_node->prev = node->prev;
-      new_node->prev->next = new_node;
+      ASYNCSAFE(gl_list_node_t) new_node->prev->next = new_node;
       node->prev = new_node;
     }
   list->count++;
@@ -587,7 +604,7 @@ gl_linked_remove_node (gl_list_t list, gl_list_node_t node)
   prev = node->prev;
   next = node->next;
 
-  prev->next = next;
+  ASYNCSAFE(gl_list_node_t) prev->next = next;
   next->prev = prev;
   list->count--;
 
@@ -615,7 +632,7 @@ gl_linked_remove_at (gl_list_t list, size_t position)
 	node = node->next;
       removed_node = node->next;
       after_removed = node->next->next;
-      node->next = after_removed;
+      ASYNCSAFE(gl_list_node_t) node->next = after_removed;
       after_removed->prev = node;
     }
   else
@@ -630,7 +647,7 @@ gl_linked_remove_at (gl_list_t list, size_t position)
       removed_node = node->prev;
       before_removed = node->prev->prev;
       node->prev = before_removed;
-      before_removed->next = node;
+      ASYNCSAFE(gl_list_node_t) before_removed->next = node;
     }
 #if WITH_HASHTABLE
   remove_from_bucket (list, removed_node);
