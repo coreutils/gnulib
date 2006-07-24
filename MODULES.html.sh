@@ -1901,6 +1901,7 @@ func_all_modules ()
   func_module save-cwd
   func_module savedir
   func_module stat-time
+  func_module tmpdir
   func_module unlinkdir
   func_module utimecmp
   func_module utimens
