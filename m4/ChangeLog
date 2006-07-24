@@ -6,68 +6,75 @@
 
 	* close-stream.m4: New file.
 
-2006-03-25  Bruno Haible  <bruno@clisp.org>
-
-	* lib-link.m4 (AC_LIB_LINKFLAGS_FROM_LIBS): New macro.
-
-2006-07-21  Bruno Haible  <bruno@clisp.org>
-
-	* javacomp.m4 (gt_JAVACOMP): Convert target_version "null" to "1.1".
-
-2006-05-09  Bruno Haible  <bruno@clisp.org>
-
-	* javacomp.m4 (gt_JAVACOMP): On Cygwin, set CLASSPATH_SEPARATOR to
-	a semicolon. Use CLASSPATH_SEPARATOR for the conftestver execution.
-
-2006-05-01  Bruno Haible  <bruno@clisp.org>
-
-	* javacomp.m4 (gt_JAVACOMP): Accept a source-version and an optional
-	target-version argument. Verify that the compiler groks source of the
-	specified source-version, or add -source option as necessary. Verify
-	that the compiler produces bytecode in the specified target-version,
-	or add -target and -source options as necessary. Make the result of
-	the test available as variable CONF_JAVAC. Also log error output in
-	config.log.
-
-2006-03-11  Bruno Haible  <bruno@clisp.org>
-
-	* javacomp.m4 (gt_JAVACOMP): Treat gcj-4.x like gcj-3.x.
-
-2006-05-09  Bruno Haible  <bruno@clisp.org>
-
-	* javaexec.m4 (gt_JAVAEXEC): On Cygwin, set CLASSPATH_SEPARATOR to a
-	semicolon.
-
-2006-03-12  Bruno Haible  <bruno@clisp.org>
-
-	* javaexec.m4 (gt_JAVAEXEC): Make the result of the test available as
-	variable CONF_JAVA, for subsequent autoconf tests. Also log error
-	output in config.log.
-
-2006-07-19  Bruno Haible  <bruno@clisp.org>
-
-	* getline.m4 (AM_FUNC_GETLINE): When cross-compiling, assume that
-	getline works on glibc2 systems. Needed to avoid trouble in
-	relocatable.c.
-	Reported by Nils Magnus Larsgard <nmlarsgaard@atmel.no>.
-
-2005-12-04  Bruno Haible  <bruno@clisp.org>
-
-	* csharpexec.m4 (gt_CSHARPEXEC): Add support for 'clix' launcher
-	(untested).
-
-2005-12-04  Bruno Haible  <bruno@clisp.org>
-
-	* csharpcomp.m4 (gt_CSHARPCOMP): Also set CSHARPCOMPFLAGS.
-
 2006-07-22  Bruno Haible  <bruno@clisp.org>
 
-	* gettext.m4: Update from GNU gettext-0.15.
-	* nls.m4: Likewise.
-	* po.m4: Likewise.
-	* inttypes-pri.m4: Likewise.
-	* inttypes-h.m4: Renamed from inttypes.m4.
-	(gl_HEADER_INTTYPES_H): Renamed from gt_HEADER_INTTYPES_H.
+	Merge from GNU gettext 0.15.
+
+	2006-03-25  Bruno Haible  <bruno@clisp.org>
+
+		* lib-link.m4 (AC_LIB_LINKFLAGS_FROM_LIBS): New macro.
+
+	2006-07-21  Bruno Haible  <bruno@clisp.org>
+
+		* javacomp.m4 (gt_JAVACOMP): Convert target_version "null" to
+		"1.1".
+
+	2006-05-09  Bruno Haible  <bruno@clisp.org>
+
+		* javacomp.m4 (gt_JAVACOMP): On Cygwin, set
+		CLASSPATH_SEPARATOR to a semicolon. Use CLASSPATH_SEPARATOR
+		for the conftestver execution.
+
+	2006-05-01  Bruno Haible  <bruno@clisp.org>
+
+		* javacomp.m4 (gt_JAVACOMP): Accept a source-version and an
+		optional target-version argument. Verify that the compiler
+		groks source of the specified source-version, or add -source
+		option as necessary. Verify that the compiler produces
+		bytecode in the specified target-version, or add -target and
+		-source options as necessary. Make the result of the test
+		available as variable CONF_JAVAC. Also log error output in
+		config.log.
+
+	2006-03-11  Bruno Haible  <bruno@clisp.org>
+
+		* javacomp.m4 (gt_JAVACOMP): Treat gcj-4.x like gcj-3.x.
+
+	2006-05-09  Bruno Haible  <bruno@clisp.org>
+
+		* javaexec.m4 (gt_JAVAEXEC): On Cygwin, set
+		CLASSPATH_SEPARATOR to a semicolon.
+
+	2006-03-12  Bruno Haible  <bruno@clisp.org>
+
+		* javaexec.m4 (gt_JAVAEXEC): Make the result of the test
+		available as variable CONF_JAVA, for subsequent autoconf
+		tests. Also log error output in config.log.
+
+	2006-07-19  Bruno Haible  <bruno@clisp.org>
+
+		* getline.m4 (AM_FUNC_GETLINE): When cross-compiling, assume
+		that getline works on glibc2 systems. Needed to avoid trouble
+		in relocatable.c.
+		Reported by Nils Magnus Larsgard <nmlarsgaard@atmel.no>.
+
+	2005-12-04  Bruno Haible  <bruno@clisp.org>
+
+		* csharpexec.m4 (gt_CSHARPEXEC): Add support for 'clix'
+		launcher (untested).
+
+	2005-12-04  Bruno Haible  <bruno@clisp.org>
+
+		* csharpcomp.m4 (gt_CSHARPCOMP): Also set CSHARPCOMPFLAGS.
+
+	2006-07-22  Bruno Haible  <bruno@clisp.org>
+
+		* gettext.m4: Update from GNU gettext-0.15.
+		* nls.m4: Likewise.
+		* po.m4: Likewise.
+		* inttypes-pri.m4: Likewise.
+		* inttypes-h.m4: Renamed from inttypes.m4.
+		(gl_HEADER_INTTYPES_H): Renamed from gt_HEADER_INTTYPES_H.
 
 2006-07-17  Bruno Haible  <bruno@clisp.org>
 

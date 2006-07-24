@@ -11,47 +11,52 @@
 	(Depends-on): Add close-stream.  Remove fpending, stdbool.
 	* MODULES.html.sh (File stream based Input/Output): Add close-stream.
 
-2006-05-01  Bruno Haible  <bruno@clisp.org>
-
-	* build-aux/javacomp.sh.in: Update for changed javacomp.m4.
-
 2006-07-22  Bruno Haible  <bruno@clisp.org>
 
-	* modules/javaversion: New file.
-	* MODULES.html.sh (Java): Add javaversion.
+	Merge from GNU gettext 0.15.
 
-2006-03-12  Bruno Haible  <bruno@clisp.org>
+	2006-05-01  Bruno Haible  <bruno@clisp.org>
 
-	* build-aux/javaexec.sh.in: Update for changed javaexec.m4.
+		* build-aux/javacomp.sh.in: Update for changed javacomp.m4.
 
-2005-12-04  Bruno Haible  <bruno@clisp.org>
+	2006-07-22  Bruno Haible  <bruno@clisp.org>
 
-	* build-aux/csharpexec.sh.in: Add support for 'clix' launcher
-	(untested).
+		* modules/javaversion: New file.
+		* MODULES.html.sh (Java): Add javaversion.
 
-2006-06-21  Bruno Haible  <bruno@clisp.org>
+	2006-03-12  Bruno Haible  <bruno@clisp.org>
 
-	Avoid warnings from recent versions of mcs.
-	* build-aux/csharpcomp.sh.in (options_mcs): Don't use options -o, -L,
-	-r any more. Use options documented since mcs-1.0 instead. Similarly
-	for -g.
+		* build-aux/javaexec.sh.in: Update for changed javaexec.m4.
 
-2005-12-04  Bruno Haible  <bruno@clisp.org>
+	2005-12-04  Bruno Haible  <bruno@clisp.org>
 
-	* build-aux/csharpcomp.sh.in: Suffix for resources is .resources, not
-	.resource.
+		* build-aux/csharpexec.sh.in: Add support for 'clix' launcher
+		(untested).
 
-2005-07-09  Bruno Haible  <bruno@clisp.org>
+	2006-06-21  Bruno Haible  <bruno@clisp.org>
 
-	* build-aux/csharpcomp.sh.in (options_csc): For -l option, add a .dll
-	suffix.
-	Reported by Mark Junker <mjscod@gmx.de>.
+		Avoid warnings from recent versions of mcs.
+		* build-aux/csharpcomp.sh.in (options_mcs): Don't use options
+		-o, -L, -r any more. Use options documented since mcs-1.0
+		instead. Similarly for -g.
 
-2006-07-22  Bruno Haible  <bruno@clisp.org>
+	2005-12-04  Bruno Haible  <bruno@clisp.org>
 
-	* modules/gettext: Upgrade to gettext-0.15.
-	(Files): Remove m4/isc-posix.m4. Add m4/lock.m4, m4/visibility.m4.
-	Replace m4/inttypes.m4 with m4/inttypes-h.m4.
+		* build-aux/csharpcomp.sh.in: Suffix for resources is
+		.resources, not .resource.
+
+	2005-07-09  Bruno Haible  <bruno@clisp.org>
+
+		* build-aux/csharpcomp.sh.in (options_csc): For -l option,
+		add a .dll suffix.
+		Reported by Mark Junker <mjscod@gmx.de>.
+
+	2006-07-22  Bruno Haible  <bruno@clisp.org>
+
+		* modules/gettext: Upgrade to gettext-0.15.
+		(Files): Remove m4/isc-posix.m4. Add m4/lock.m4,
+		m4/visibility.m4.
+		Replace m4/inttypes.m4 with m4/inttypes-h.m4.
 
 2006-07-21  Eric Blake  <ebb9@byu.net>
 

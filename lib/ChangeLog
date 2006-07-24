@@ -8,128 +8,134 @@
 
 	* close-stream.c, close-stream.h: New files.
 
-2005-07-05  Bruno Haible  <bruno@clisp.org>
-
-	* printf-args.c (printf_fetchargs): Work around broken definition of
-	wint_t on mingw.
-
-2005-02-12  Bruno Haible  <bruno@clisp.org>
-
-	* xallocsa.h: Add extern "C" for C++.
-
-2006-05-17  Bruno Haible  <bruno@clisp.org>
-
-	Cygwin portability.
-	* progreloc.c (WIN32_NATIVE): Renamed from WIN32.
-
-2006-04-30  Bruno Haible  <bruno@clisp.org>
-
-	* progreloc.c: Include <mach-o/dyld.h> if available.
-	(find_executable): Use _NSGetExecutablePath when possible.
-
-2006-05-06  Charles Wilson  <cygwin@cwilson.fastmail.fm>
-
-	* progreloc.c (maybe_executable) [CYGWIN]: Use the access() function.
-
-2005-12-29  Bruno Haible  <bruno@clisp.org>
-
-	* progreloc.c (set_program_name_and_installdir): Fix compilation error.
-
-2005-12-04  Bruno Haible  <bruno@clisp.org>
-
-	Cygwin portability.
-	* progreloc.c: Include <windows.h> also on Cygwin.
-	(find_executable): Add support for Cygwin.
-	(set_program_name_and_installdir): Handle also platforms with nonempty
-	EXEEXT.
-
-2006-07-11  Bruno Haible  <bruno@clisp.org>
-
-	* javacomp.c: Fix a comment.
-	Reported by Jim Meyering.
-
-2006-04-30  Bruno Haible  <bruno@clisp.org>
-
-	* javacomp.h (compile_java_class): Add source_version, target_version
-	arguments.
-	* javacomp.c: Rewritten to choose only a compiler that respects the
-	specified source_version and target_version.
-
-2006-06-27  Bruno Haible  <bruno@clisp.org>
-
-	Assume correct S_ISDIR macro.
-	* mkdtemp.c: Remove test of STAT_MACROS_BROKEN.
-
 2006-07-22  Bruno Haible  <bruno@clisp.org>
 
-	* javaversion.h: New file, from GNU gettext.
-	* javaversion.c: New file, from GNU gettext.
-	* javaversion.java: New file, from GNU gettext.
-	* javaversion.class: New file, from GNU gettext.
+	Merge from GNU gettext 0.15.
 
-2006-05-17  Bruno Haible  <bruno@clisp.org>
+	2005-07-05  Bruno Haible  <bruno@clisp.org>
 
-	Cygwin portability.
-	* javaexec.c (execute_java_class): Test for jview program also on
-	Cygwin.
+		* printf-args.c (printf_fetchargs): Work around broken
+		definition of wint_t on mingw.
 
-2006-04-09  Bruno Haible  <bruno@clisp.org>
+	2005-02-12  Bruno Haible  <bruno@clisp.org>
 
-	* fatal-signal.c: Don't include string.h.
-	(at_fatal_signal): Use a copying loop instead of memcpy.
+		* xallocsa.h: Add extern "C" for C++.
 
-2005-12-04  Bruno Haible  <bruno@clisp.org>
+	2006-05-17  Bruno Haible  <bruno@clisp.org>
 
-	* csharpexec.c: Add support for 'clix' launcher (untested).
-	(execute_csharp_using_sscli): New function.
-	(execute_csharp_program): Call it.
+		Cygwin portability.
+		* progreloc.c (WIN32_NATIVE): Renamed from WIN32.
 
-2006-06-21  Bruno Haible  <bruno@clisp.org>
+	2006-04-30  Bruno Haible  <bruno@clisp.org>
 
-	Avoid warnings from recent versions of mcs.
-	* csharpcomp.c (compile_csharp_using_mono): Don't use options -o, -L,
-	-r any more. Use options documented since mcs-1.0 instead. Similarly
-	for -g.
+		* progreloc.c: Include <mach-o/dyld.h> if available.
+		(find_executable): Use _NSGetExecutablePath when possible.
 
-2005-07-09  Bruno Haible  <bruno@clisp.org>
+	2006-05-06  Charles Wilson  <cygwin@cwilson.fastmail.fm>
 
-	* csharpcomp.c (compile_csharp_using_sscli): For -l option, add a .dll
-	suffix.
-	Reported by Mark Junker <mjscod@gmx.de>.
+		* progreloc.c (maybe_executable) [CYGWIN]: Use the access()
+		function.
 
-2006-06-17  Bruno Haible  <bruno@clisp.org>
+	2005-12-29  Bruno Haible  <bruno@clisp.org>
 
-	* config.charset: Update for NetBSD 3.0.
+		* progreloc.c (set_program_name_and_installdir): Fix
+		compilation error.
 
-2006-05-17  Bruno Haible  <bruno@clisp.org>
+	2005-12-04  Bruno Haible  <bruno@clisp.org>
 
-	Cygwin portability.
-	* localcharset.c (WIN32_NATIVE): Renamed from WIN32.
+		Cygwin portability.
+		* progreloc.c: Include <windows.h> also on Cygwin.
+		(find_executable): Add support for Cygwin.
+		(set_program_name_and_installdir): Handle also platforms with
+		nonempty EXEEXT.
 
-2006-05-16  Bruno Haible  <bruno@clisp.org>
+	2006-07-11  Bruno Haible  <bruno@clisp.org>
 
-	* localcharset.c [CYGWIN]: Include <windows.h>.
-	(get_charset_aliases): For Cygwin, return the same CPxxx aliases list
-	as under WIN32.
-	(locale_charset) [CYGWIN]: Try to retrieve the encoding from the
-	environment variables. Fall back to GetACP().
+		* javacomp.c: Fix a comment.
+		Reported by Jim Meyering.
 
-2006-04-05  Bruno Haible  <bruno@clisp.org>
+	2006-04-30  Bruno Haible  <bruno@clisp.org>
 
-	* config.charset: Update Juan Manuel Guerrero's address.
+		* javacomp.h (compile_java_class): Add source_version,
+		target_version arguments.
+		* javacomp.c: Rewritten to choose only a compiler that
+		respects the specified source_version and target_version.
 
-2005-02-12  Bruno Haible  <bruno@clisp.org>
+	2006-06-27  Bruno Haible  <bruno@clisp.org>
 
-	* allocsa.h: Add extern "C" for C++.
+		Assume correct S_ISDIR macro.
+		* mkdtemp.c: Remove test of STAT_MACROS_BROKEN.
 
-2005-02-10  Bruno Haible  <bruno@clisp.org>
+	2006-07-22  Bruno Haible  <bruno@clisp.org>
 
-	* allocsa.h (sa_alignof): Define differently with AIX xlc, to avoid
-	a bug of this compiler on AIX 3.2.5 dealing with enums.
+		* javaversion.h: New file, from GNU gettext.
+		* javaversion.c: New file, from GNU gettext.
+		* javaversion.java: New file, from GNU gettext.
+		* javaversion.class: New file, from GNU gettext.
 
-2006-07-22  Bruno Haible  <bruno@clisp.org>
+	2006-05-17  Bruno Haible  <bruno@clisp.org>
 
-	* gettext.h: Update to GNU gettext-0.15.
+		Cygwin portability.
+		* javaexec.c (execute_java_class): Test for jview program
+		also on Cygwin.
+
+	2006-04-09  Bruno Haible  <bruno@clisp.org>
+
+		* fatal-signal.c: Don't include string.h.
+		(at_fatal_signal): Use a copying loop instead of memcpy.
+
+	2005-12-04  Bruno Haible  <bruno@clisp.org>
+
+		* csharpexec.c: Add support for 'clix' launcher (untested).
+		(execute_csharp_using_sscli): New function.
+		(execute_csharp_program): Call it.
+
+	2006-06-21  Bruno Haible  <bruno@clisp.org>
+
+		Avoid warnings from recent versions of mcs.
+		* csharpcomp.c (compile_csharp_using_mono): Don't use options
+		-o, -L, -r any more. Use options documented since mcs-1.0
+		instead. Similarly for -g.
+
+	2005-07-09  Bruno Haible  <bruno@clisp.org>
+
+		* csharpcomp.c (compile_csharp_using_sscli): For -l option,
+		add a .dll suffix.
+		Reported by Mark Junker <mjscod@gmx.de>.
+
+	2006-06-17  Bruno Haible  <bruno@clisp.org>
+
+		* config.charset: Update for NetBSD 3.0.
+
+	2006-05-17  Bruno Haible  <bruno@clisp.org>
+
+		Cygwin portability.
+		* localcharset.c (WIN32_NATIVE): Renamed from WIN32.
+
+	2006-05-16  Bruno Haible  <bruno@clisp.org>
+
+		* localcharset.c [CYGWIN]: Include <windows.h>.
+		(get_charset_aliases): For Cygwin, return the same CPxxx
+		aliases list as under WIN32.
+		(locale_charset) [CYGWIN]: Try to retrieve the encoding from
+		the environment variables. Fall back to GetACP().
+
+	2006-04-05  Bruno Haible  <bruno@clisp.org>
+
+		* config.charset: Update Juan Manuel Guerrero's address.
+
+	2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+		* allocsa.h: Add extern "C" for C++.
+
+	2005-02-10  Bruno Haible  <bruno@clisp.org>
+
+		* allocsa.h (sa_alignof): Define differently with AIX xlc, to
+		avoid a bug of this compiler on AIX 3.2.5 dealing with enums.
+
+	2006-07-22  Bruno Haible  <bruno@clisp.org>
+
+		* gettext.h: Update to GNU gettext-0.15.
 
 2006-07-22  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
 	and Simon Josefsson <jas@extundo.com>
