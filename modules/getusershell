@@ -6,7 +6,7 @@ lib/getusershell.c
 m4/getusershell.m4
 
 Depends-on:
-stdio-safer
+fopen-safer
 xalloc
 
 configure.ac:

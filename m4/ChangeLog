@@ -1,3 +1,8 @@
+2006-07-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* stdio-safer.m4 (gl_FOPEN_SAFER, gl_TMPFILE_SAFER): New macros.
+	(gl_STDIO_SAFER): Remove.
+
 2006-07-24  Bruno Haible  <bruno@clisp.org>
 
 	* tmpdir.m4: New file, from GNU gettext.

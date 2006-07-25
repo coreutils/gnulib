@@ -1,3 +1,11 @@
+2006-07-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh (File stream based Input/Output):
+	Add fopen-safer, tmpfile-safer; remove stdio-safer.
+	* modules/getusershell (Depends-on): Change stdio-safer to fopen-safer.
+	* modules/fopen-safer, modules/tmpfile-safer: New files.
+	* modules/stdio-safer: Remove.
+
 2006-07-24  Bruno Haible  <bruno@clisp.org>
 
 	* modules/javacomp (Depends-on): Add unistd, javaversion, binary-io,

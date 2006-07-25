@@ -1932,13 +1932,14 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module fpending
-  func_module closeout
   func_module close-stream
-  func_module stdio-safer
-  func_module stdlib-safer
+  func_module closeout
+  func_module fopen-safer
+  func_module fpending
   func_module getpass
   func_module getpass-gnu
+  func_module stdlib-safer
+  func_module tmpfile-safer
   func_end_table
 
   element="Users and groups"
