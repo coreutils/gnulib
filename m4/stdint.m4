@@ -1,4 +1,4 @@
-# stdint.m4 serial 15
+# stdint.m4 serial 16
 dnl Copyright (C) 2001-2002, 2004-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -296,7 +296,8 @@ AC_DEFUN([gl_INTEGER_TYPE_SUFFIX],
 	      extern $gltype foo;
 	      extern $gltype1 foo;])],
 	   [eval gl_cv_type_${gltype}_suffix=\$glsuf])
-	 eval test \"\$gl_cv_type_${gltype}_suffix\" != no && break
+	 eval result=\$gl_cv_type_${gltype}_suffix
+	 test "$result" != no && break
        done])
     GLTYPE=`echo $gltype | tr 'abcdefghijklmnopqrstuvwxyz ' 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_'`
     eval result=\$gl_cv_type_${gltype}_suffix
