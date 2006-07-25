@@ -1,3 +1,7 @@
+2006-07-25  Bruno Haible  <bruno@clisp.org>
+
+	* modules/version-etc (Depends-on): Add stdarg.
+
 2006-07-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* MODULES.html.sh (File stream based Input/Output):
