@@ -1,3 +1,9 @@
+2006-07-26  Bruno Haible  <bruno@clisp.org>
+
+	* stdint.m4 (gl_STDINT_H): Also verify the existence of the macros
+	INT*_MIN, INT_LEAST*_MAX, INT_LEAST*_MIN, UINT_LEAST*_MAX,
+	INT_FAST*_MIN, INTPTR_MIN.
+
 2006-07-25  Bruno Haible  <bruno@clisp.org>
 
 	* stdint.m4 (gl_INTEGER_TYPE_SUFFIX): Avoid 'eval' in front of complex
