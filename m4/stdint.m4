@@ -1,4 +1,4 @@
-# stdint.m4 serial 17
+# stdint.m4 serial 18
 dnl Copyright (C) 2001-2002, 2004-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -71,6 +71,7 @@ AC_DEFUN([gl_STDINT_H],
 	 AC_LANG_PROGRAM([[
 #include <stddef.h>
 #define __STDC_LIMIT_MACROS 1 /* to make it work also in C++ mode */
+#define __STDC_CONSTANT_MACROS 1 /* to make it work also in C++ mode */
 #include ABSOLUTE_STDINT_H
 #ifdef INT8_MAX
 int8_t a1 = INT8_MAX;

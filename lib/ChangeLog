@@ -1,10 +1,15 @@
+2006-07-27  Bruno Haible  <bruno@clisp.org>
+
+	* stdint_.h (INT*_C, UINT*_C) [C++]: Define these if
+	__STDC_CONSTANT_MACROS is defined, not if __STDC_LIMIT_MACROS is
+	defined.
+
 2006-07-26  Eric Blake  <ebb9@byu.net>
 
 	* mkstemp-safer.c [! HAVE_MKSTEMP]: Add prototype for platforms
 	like mingw that lack mkstemp.
 	* pipe-safer.c (pipe_safer) [!HAVE_FUNC_PIPE]: Provide fallback to
 	avoid compilation warning on mingw.
-
 
 2006-07-25  Bruno Haible  <bruno@clisp.org>
 
