@@ -28,7 +28,7 @@
 #include "unistd-safer.h"
 
 #if ! HAVE_MKSTEMP
-int mkstemp (char *)
+int mkstemp (char *);
 #endif
 
 /* Like mkstemp, but do not return STDIN_FILENO, STDOUT_FILENO, or
