@@ -1,3 +1,11 @@
+2006-07-26  Eric Blake  <ebb9@byu.net>
+
+	* mkstemp-safer.c [! HAVE_MKSTEMP]: Add prototype for platforms
+	like mingw that lack mkstemp.
+	* pipe-safer.c (pipe_safer) [!HAVE_FUNC_PIPE]: Provide fallback to
+	avoid compilation warning on mingw.
+
+
 2006-07-25  Bruno Haible  <bruno@clisp.org>
 
 	* version-etc.c (version_etc_va): Use va_copy, assumed to be defined in
