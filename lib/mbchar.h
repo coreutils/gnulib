@@ -160,7 +160,7 @@
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
    Assume all 12 functions are implemented the same way, or not at all.  */
 #if !defined iswalnum && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswalnum (wint_t wc)
 {
   return (wc >= 0 && wc < 128
@@ -170,7 +170,7 @@ iswalnum (wint_t wc)
 # define iswalnum iswalnum
 #endif
 #if !defined iswalpha && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswalpha (wint_t wc)
 {
   return (wc >= 0 && wc < 128
@@ -180,7 +180,7 @@ iswalpha (wint_t wc)
 # define iswalpha iswalpha
 #endif
 #if !defined iswblank && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswblank (wint_t wc)
 {
   return (wc >= 0 && wc < 128
@@ -190,7 +190,7 @@ iswblank (wint_t wc)
 # define iswblank iswblank
 #endif
 #if !defined iswcntrl && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswcntrl (wint_t wc)
 {
   return (wc >= 0 && wc < 128
@@ -200,7 +200,7 @@ iswcntrl (wint_t wc)
 # define iswcntrl iswcntrl
 #endif
 #if !defined iswdigit && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswdigit (wint_t wc)
 {
   return (wc >= '0' && wc <= '9');
@@ -208,7 +208,7 @@ iswdigit (wint_t wc)
 # define iswdigit iswdigit
 #endif
 #if !defined iswgraph && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswgraph (wint_t wc)
 {
   return (wc >= 0 && wc < 128
@@ -218,7 +218,7 @@ iswgraph (wint_t wc)
 # define iswgraph iswgraph
 #endif
 #if !defined iswlower && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswlower (wint_t wc)
 {
   return (wc >= 0 && wc < 128
@@ -228,7 +228,7 @@ iswlower (wint_t wc)
 # define iswlower iswlower
 #endif
 #if !defined iswprint && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswprint (wint_t wc)
 {
   return (wc >= 0 && wc < 128
@@ -238,7 +238,7 @@ iswprint (wint_t wc)
 # define iswprint iswprint
 #endif
 #if !defined iswpunct && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswpunct (wint_t wc)
 {
   return (wc >= 0 && wc < 128
@@ -250,7 +250,7 @@ iswpunct (wint_t wc)
 # define iswpunct iswpunct
 #endif
 #if !defined iswspace && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswspace (wint_t wc)
 {
   return (wc >= 0 && wc < 128
@@ -261,7 +261,7 @@ iswspace (wint_t wc)
 # define iswspace iswspace
 #endif
 #if !defined iswupper && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswupper (wint_t wc)
 {
   return (wc >= 0 && wc < 128
@@ -271,7 +271,7 @@ iswupper (wint_t wc)
 # define iswupper iswupper
 #endif
 #if !defined iswxdigit && !HAVE_ISWCNTRL
-ststic inline int
+static inline int
 iswxdigit (wint_t wc)
 {
   return (wc >= '0' && wc <= '9') || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'F');

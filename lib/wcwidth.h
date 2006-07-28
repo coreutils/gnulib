@@ -36,7 +36,7 @@
 #  include <wctype.h>
 # endif
 # if !defined iswprint && !HAVE_ISWPRINT
-ststic inline int
+static inline int
 iswprint (wint_t wc)
 {
   return (wc >= 0 && wc < 128
