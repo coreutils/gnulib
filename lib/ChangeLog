@@ -1,3 +1,15 @@
+2006-07-28  Bruno Haible  <bruno@clisp.org>
+
+	* mbchar.h (iswalnum, iswalpha, iswblank, iswcntrl, iswdigit, iswgraph,
+	iswlower, iswprint, iswpunct, iswspace, iswupper, iswxdigit): Define
+	fallbacks.
+	Avoids link error on FreeBSD 4.x.
+	Reported by Yoann Vandoorselaere <yoann.v@prelude-ids.com>.
+
+	* wcwidth.h (iswprint): Assume an ASCII compatible wide character
+	encoding.
+	* mbswidth.c (iswcntrl): Likewise.
+
 2006-07-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modechange.c (mode_compile): Numeric modes now affect setuid and

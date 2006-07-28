@@ -157,6 +157,115 @@
 #include <wchar.h>
 
 #include <wctype.h>
+/* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
+   Assume all 12 functions are implemented the same way, or not at all.  */
+#if !defined iswalnum && !HAVE_ISWCNTRL
+ststic inline int
+iswalnum (wint_t wc)
+{
+  return (wc >= 0 && wc < 128
+	  ? (wc >= '0' && wc <= '9') || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z')
+	  : 0);
+}
+#endif
+#if !defined iswalpha && !HAVE_ISWCNTRL
+ststic inline int
+iswalpha (wint_t wc)
+{
+  return (wc >= 0 && wc < 128
+	  ? (wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z'
+	  : 0);
+}
+#endif
+#if !defined iswblank && !HAVE_ISWCNTRL
+ststic inline int
+iswblank (wint_t wc)
+{
+  return (wc >= 0 && wc < 128
+	  ? wc == ' ' || wc == '\t'
+	  : 0);
+}
+#endif
+#if !defined iswcntrl && !HAVE_ISWCNTRL
+ststic inline int
+iswcntrl (wint_t wc)
+{
+  return (wc >= 0 && wc < 128
+	  ? (wc & ~0x1f) == 0 || wc == 0x7f
+	  : 0);
+}
+#endif
+#if !defined iswdigit && !HAVE_ISWCNTRL
+ststic inline int
+iswdigit (wint_t wc)
+{
+  return (wc >= '0' && wc <= '9');
+}
+#endif
+#if !defined iswgraph && !HAVE_ISWCNTRL
+ststic inline int
+iswgraph (wint_t wc)
+{
+  return (wc >= 0 && wc < 128
+	  ? wc >= '!' && wc <= '~'
+	  : 1);
+}
+#endif
+#if !defined iswlower && !HAVE_ISWCNTRL
+ststic inline int
+iswlower (wint_t wc)
+{
+  return (wc >= 0 && wc < 128
+	  ? wc >= 'a' && wc <= 'z'
+	  : 0);
+}
+#endif
+#if !defined iswprint && !HAVE_ISWCNTRL
+ststic inline int
+iswprint (wint_t wc)
+{
+  return (wc >= 0 && wc < 128
+	  ? wc >= ' ' && wc <= '~'
+	  : 1);
+}
+#endif
+#if !defined iswpunct && !HAVE_ISWCNTRL
+ststic inline int
+iswpunct (wint_t wc)
+{
+  return (wc >= 0 && wc < 128
+	  ? wc >= '!' && wc <= '~'
+	    && !((wc >= '0' && wc <= '9')
+		 || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z'))
+	  : 1);
+}
+#endif
+#if !defined iswspace && !HAVE_ISWCNTRL
+ststic inline int
+iswspace (wint_t wc)
+{
+  return (wc >= 0 && wc < 128
+	  ? wc == ' ' || wc == '\t'
+	    || wc == '\n' || wc == '\v' || wc == '\f' || wc == '\r'
+	  : 0);
+}
+#endif
+#if !defined iswupper && !HAVE_ISWCNTRL
+ststic inline int
+iswupper (wint_t wc)
+{
+  return (wc >= 0 && wc < 128
+	  ? wc >= 'A' && wc <= 'Z'
+	  : 0);
+}
+#endif
+#if !defined iswxdigit && !HAVE_ISWCNTRL
+ststic inline int
+iswxdigit (wint_t wc)
+{
+  return (wc >= '0' && wc <= '9') || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'F');
+}
+#endif
 
 #include "wcwidth.h"
 
