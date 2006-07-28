@@ -17,9 +17,7 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
-#if HAVE_NETINET_IN_H
-# include <netinet/in.h>
-#endif
+#include <netinet/in.h>
 #include <arpa/inet.h>
 
 #if !HAVE_DECL_INET_PTON

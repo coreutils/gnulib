@@ -11,6 +11,7 @@ restrict
 socklen
 sys_socket
 arpa_inet
+netinet_in
 
 configure.ac:
 gl_INET_NTOP

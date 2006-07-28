@@ -1,5 +1,10 @@
 2006-07-28  Simon Josefsson  <jas@extundo.com>
 
+	* inet_ntop.h, inet_pton.h: No need to guard netinet/in.h
+	#include's.
+
+2006-07-28  Simon Josefsson  <jas@extundo.com>
+
 	* inet_ntop.h, inet_pton.h: No need to guard arpa/inet.h
 	#include's.
 
