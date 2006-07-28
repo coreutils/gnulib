@@ -1,3 +1,9 @@
+2006-07-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modechange.c (mode_compile): Numeric modes now affect setuid and
+	setgid on directories only if they set these bits.
+	* modechange.h: Remove obsolete comment about masks.
+
 2006-07-27  Bruno Haible  <bruno@clisp.org>
 
 	* stdint_.h (INT*_C, UINT*_C) [C++]: Define these if
