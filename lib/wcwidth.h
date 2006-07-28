@@ -36,7 +36,13 @@
 #  include <wctype.h>
 # endif
 # if !defined iswprint && !HAVE_ISWPRINT
-#  define iswprint(wc) 1
+ststic inline int
+iswprint (wint_t wc)
+{
+  return (wc >= 0 && wc < 128
+	  ? wc >= ' ' && wc <= '~'
+	  : 1);
+}
 # endif
 
 # ifndef HAVE_DECL_WCWIDTH
