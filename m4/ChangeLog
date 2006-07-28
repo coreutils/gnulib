@@ -1,3 +1,7 @@
+2006-07-28  Simon Josefsson  <jas@extundo.com>
+
+	* netinet_in_h.m4: New file.
+
 2006-07-28  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
 
 	* inet_pton.m4, inet_ntop.m4: Check for netinet/in.h too.

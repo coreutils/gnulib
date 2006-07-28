@@ -1,0 +1,32 @@
+Description:
+A <netinet/in.h> for systems lacking it (e.g., Mingw).
+
+Files:
+m4/netinet_in_h.m4
+
+Depends-on:
+sys_socket
+
+configure.ac:
+gl_HEADER_NETINET_IN
+
+Makefile.am:
+BUILT_SOURCES += $(NETINET_IN_H)
+
+# We need the following in order to create <netinet/in.h> when the system
+# doesn't have one.
+netinet/in.h:
+	test -d netinet || mkdir netinet
+	echo '#include <sys/socket.h>' >$@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += netinet/in.h netinet/in.h-t
+MOSTLYCLEANDIRS += netinet
+
+Include:
+#include <netinet/in.h>
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson
