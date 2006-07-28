@@ -43,6 +43,7 @@ iswprint (wint_t wc)
 	  ? wc >= ' ' && wc <= '~'
 	  : 1);
 }
+#  define iswprint iswprint
 # endif
 
 # ifndef HAVE_DECL_WCWIDTH
