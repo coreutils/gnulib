@@ -12,7 +12,7 @@ AC_DEFUN([gl_INET_PTON],
 
 # Prerequisites of lib/inet_pton.h and lib/inet_pton.c.
 AC_DEFUN([gl_PREREQ_INET_PTON], [
-  AC_CHECK_HEADERS_ONCE(arpa/inet.h)
+  AC_CHECK_HEADERS_ONCE([netinet/in.h arpa/inet.h])
   AC_CHECK_DECLS([inet_pton],,,[#include <arpa/inet.h>])
   AC_REQUIRE([gl_SOCKET_FAMILIES])
 ])

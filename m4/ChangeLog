@@ -1,3 +1,7 @@
+2006-07-28  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+
+	* inet_pton.m4, inet_ntop.m4: Check for netinet/in.h too.
+
 2006-07-28  Bruno Haible  <bruno@clisp.org>
 
 	* mbchar.m4 (gl_MBCHAR): Also test for iswcntrl.
