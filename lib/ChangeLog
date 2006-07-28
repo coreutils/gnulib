@@ -1,3 +1,12 @@
+2006-07-28  Bruno Haible <bruno@clisp.org>
+
+	* inet_ntop.h, inet_pton.h: Use #if HAVE* instead of #ifdef HAVE*.
+
+2006-07-28  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+
+	* inet_ntop.h, inet_pton.h: Need to include netinet/in.h before
+	arpa/inet.h.
+
 2006-07-28  Bruno Haible  <bruno@clisp.org>
 
 	* mbchar.h (iswalnum, iswalpha, iswblank, iswcntrl, iswdigit, iswgraph,
