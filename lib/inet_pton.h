@@ -20,9 +20,7 @@
 #if HAVE_NETINET_IN_H
 # include <netinet/in.h>
 #endif
-#if HAVE_ARPA_INET_H
-# include <arpa/inet.h>
-#endif
+#include <arpa/inet.h>
 
 #if !HAVE_DECL_INET_PTON
 extern int inet_pton (int af, const char *restrict src, void *restrict dst);

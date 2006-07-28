@@ -20,9 +20,7 @@
 #if HAVE_NETINET_IN_H
 # include <netinet/in.h>
 #endif
-#if HAVE_ARPA_INET_H
-# include <arpa/inet.h>
-#endif
+#include <arpa/inet.h>
 
 /* Converts an internet address from internal format to a printable,
    presentable format.

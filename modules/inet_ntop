@@ -10,6 +10,7 @@ Depends-on:
 restrict
 socklen
 sys_socket
+arpa_inet
 
 configure.ac:
 gl_INET_NTOP
