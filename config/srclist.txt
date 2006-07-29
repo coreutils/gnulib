@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.130 2006-07-22 17:03:06 haible Exp $
+# $Id: srclist.txt,v 1.131 2006-07-29 14:38:53 haible Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -283,10 +283,6 @@ $LIBCSRC/time/mktime.c			lib gpl
 #$LIBCSRC/sysdeps/unix/mkdir.c			lib gpl
 #$LIBCSRC/sysdeps/unix/sysv/gethostname.c	lib gpl
 #$LIBCSRC/sysdeps/unix/utime.c			lib gpl
-
-$COREUTILS/lib/setenv.c				lib gpl
-$COREUTILS/lib/setenv.h				lib gpl
-$COREUTILS/lib/unsetenv.c			lib gpl
 
 $LIBTOOL/libltdl/argz.c				lib gpl
 $LIBTOOL/libltdl/argz_.h			lib gpl

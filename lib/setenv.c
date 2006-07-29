@@ -27,7 +27,9 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#if _LIBC || HAVE_UNISTD_H
+# include <unistd.h>
+#endif
 
 #if !_LIBC
 # include "allocsa.h"
