@@ -1,5 +1,10 @@
 2006-07-29  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import): Don't create the $docbase directory if
+	there is no file to store there.
+
+2006-07-29  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_usage): Revert most of the 2006-07-15 change.
 	Categorize the options by when they are useful.
 

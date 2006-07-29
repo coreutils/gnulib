@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-29 13:04:18 $'
+cvsdatestamp='$Date: 2006-07-29 13:10:38 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1133,12 +1133,15 @@ func_import ()
       echo "Create directory $destdir/$m4base"
     fi
   fi
-  if test ! -d "$destdir/$docbase"; then
-    if $doit; then
-      echo "Creating directory $destdir/$docbase"
-      mkdir "$destdir/$docbase" || func_fatal_error "failed"
-    else
-      echo "Create directory $destdir/$docbase"
+  docfiles=`echo "$files" | sed -n -e 's,^doc/,,p'`
+  if test -n "$docfiles"; then
+    if test ! -d "$destdir/$docbase"; then
+      if $doit; then
+        echo "Creating directory $destdir/$docbase"
+        mkdir "$destdir/$docbase" || func_fatal_error "failed"
+      else
+        echo "Create directory $destdir/$docbase"
+      fi
     fi
   fi
   if test -n "$inctests"; then
