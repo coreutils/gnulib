@@ -1,3 +1,8 @@
+2006-07-28  Eric Blake  <ebb9@byu.net>
+
+	* regex_internal.h (struct re_dfa_t) [!_LIBC]: Avoid invalid C89
+	macro expansion.
+
 2006-07-28  Simon Josefsson  <jas@extundo.com>
 
 	* inet_ntop.h, inet_pton.h: No need to guard netinet/in.h
