@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-20 16:53:35 $'
+cvsdatestamp='$Date: 2006-07-29 12:46:34 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1030,7 +1030,7 @@ func_import ()
   if test -z "$docbase"; then
     docbase="$cached_docbase"
     if test -z "$docbase"; then
-      func_fatal_error "missing --doc-base option"
+      func_fatal_error "missing --doc-base option. --doc-base has been introduced on 2006-07-11; if your last invocation of 'gnulib-tool --update' is before that date, you need to run 'gnulib-tool --update' once, with a --doc-base option."
     fi
   fi
   # The testsbase defaults to the cached one.

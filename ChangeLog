@@ -1,3 +1,8 @@
+2006-07-29  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Extend error message about missing
+	--doc-base.
+
 2006-07-28  Simon Josefsson  <jas@extundo.com>
 
 	* modules/inet_ntop (Depends-on): Depend on arpa_inet.
