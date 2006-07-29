@@ -1,5 +1,9 @@
 2006-07-29  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_usage): Revert most of the 2006-07-15 change.
+
+2006-07-29  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Extend error message about missing
 	--doc-base.
 

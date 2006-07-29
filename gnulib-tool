@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-29 12:46:34 $'
+cvsdatestamp='$Date: 2006-07-29 12:55:43 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -101,39 +101,39 @@ Operation modes:
       --extract-tests-module       report the unit test module, if it exists
 
 Options:
+      --dir=DIRECTORY       Specify the target directory.
+                            For --import, this specifies where your
+                            configure.ac can be found.  Defaults to current
+                            directory.
+      --lib=LIBRARY         Specify the library name.  Defaults to 'libgnu'.
+      --source-base=DIRECTORY
+                            Directory relative to --dir where source code is
+                            placed (default \"lib\"), for --import.
+      --m4-base=DIRECTORY   Directory relative to --dir where *.m4 macros are
+                            placed (default \"m4\"), for --import.
+      --tests-base=DIRECTORY
+                            Directory relative to --dir where unit tests are
+                            placed (default \"tests\"), for --import.
+      --doc-base=DIRECTORY  Directory relative to --dir where doc files are
+                            placed (default \"doc\"), for --import.
+      --aux-dir=DIRECTORY   Directory relative to --dir where auxiliary build
+                            tools are placed (default \"build-aux\").
+      --with-tests          Include unit tests for the included modules.
+      --avoid=MODULE        Avoid including the given MODULE. Useful if you
+                            have code that provides equivalent functionality.
+                            This option can be repeated.
+      --lgpl                Abort if modules aren't available under the LGPL.
+                            Also modify license template from GPL to LGPL.
+      --libtool             Use libtool rules, for --import.
+      --macro-prefix=PREFIX  Specify the prefix of the macros 'gl_EARLY' and
+                            'gl_INIT'. Default is 'gl'.
       --assume-autoconf=VERSION
                             Assume a given autoconf version (or newer).
                             If VERSION is 'latest-stable', assume the latest
                             stable version.
-      --avoid=MODULE        Avoid including the given MODULE. Useful if you
-                            have code that provides equivalent functionality.
-                            This option can be repeated.
-      --dry-run             For --import, only print what would have been done.
-      --lgpl                Abort if modules aren't available under the LGPL.
-                            Also modify license template from GPL to LGPL.
-      --lib=LIBRARY         Specify the library name.  Defaults to 'libgnu'.
-      --libtool             Use libtool rules, for --import.
-      --macro-prefix=PREFIX  Specify the prefix of the macros gl_EARLY and
-                             gl_INIT. Default is "gl".
       --no-changelog        don't update or create ChangeLog files
+      --dry-run             For --import, only print what would have been done.
   -s, --symbolic, --symlink Make symbolic links instead of copying files.
-      --with-tests          Include unit tests for the included modules.
-
-Directory options:
-      --dir=DIRECTORY       specify the target directory
-                            For --import, this specifies where your
-                            configure.ac can be found.  Defaults to current
-                            directory.
-      --aux-dir=DIRECTORY   Directory relative to --dir where auxiliary build
-                            tools are placed (default \"build-aux\").
-      --doc-base=DIRECTORY  Directory relative to --dir where doc files are
-                            placed (default \"doc\"), for --import.
-      --m4-base=DIRECTORY   Directory relative to --dir where *.m4 macros are
-                            placed (default \"m4\"), for --import.
-      --source-base=DIRECTORY  Directory relative to --dir where source code is
-                               placed (default \"lib\"), for --import.
-      --tests-base=DIRECTORY   Directory relative to --dir where unit tests are
-                               placed (default \"tests\"), for --import.
 
 Report bugs to <bug-gnulib@gnu.org>."
 }
