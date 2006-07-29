@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-29 13:18:04 $'
+cvsdatestamp='$Date: 2006-07-29 13:29:02 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -111,6 +111,8 @@ General options:
                             For --import, this specifies where your
                             configure.ac can be found.  Defaults to current
                             directory.
+      --local-dir=DIRECTORY  Specify a local override directory where to look
+                            up files before looking in gnulib's directory.
 
 Options for --import:
       --lib=LIBRARY         Specify the library name.  Defaults to 'libgnu'.
@@ -261,6 +263,8 @@ func_ln_if_changed ()
 # - autoconf_minversion  minimum supported autoconf version
 # - do_changelog    false if --no-changelog was given, : otherwise
 # - doit            : if actions shall be executed, false if only to be printed
+# - local_gnulib_dir  from --local-dir
+# - symbolic        true if --symbolic was given, blank otherwise
 {
   mode=
   destdir=
@@ -279,6 +283,7 @@ func_ln_if_changed ()
   autoconf_minversion=
   do_changelog=:
   doit=:
+  local_gnulib_dir=
   symbolic=
 
   supplied_opts="$@"
@@ -416,6 +421,16 @@ func_ln_if_changed ()
       --dry-run )
         doit=false
         shift ;;
+      --local-dir )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --local-dir"
+        fi
+        local_gnulib_dir=$1
+        shift ;;
+      --local-dir=* )
+        local_gnulib_dir=`echo "X$1" | sed -e 's/^X--local-dir=//'`
+        shift ;;
       -s | --symbolic | --symboli | --symbol | --symbo | --symb | --symlink | --symlin | --symli | --syml | --sym | --sy )
         symbolic=true
         shift ;;
@@ -518,23 +533,66 @@ while test -h "$self_abspathname"; do
 done
 gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
 
+func_tmpdir
+trap 'rm -rf "$tmp"' 0 1 2 3 15
+
+# func_lookup_file file
+# looks up a file in $local_gnulib_dir or $gnulib_dir, or combines it through
+# 'patch'.
+# Output:
+# - lookedup_file   name of the merged (combined) file
+# - lookedup_tmp    true if it is located in the tmp directory, blank otherwise
+func_lookup_file ()
+{
+  lkfile="$1"
+  if test -n "$local_gnulib_dir" && test -f "$local_gnulib_dir/$lkfile"; then
+    lookedup_file="$local_gnulib_dir/$lkfile"
+    lookedup_tmp=
+  else
+    if test -f "$gnulib_dir/$lkfile"; then
+      if test -n "$local_gnulib_dir" && test -f "$local_gnulib_dir/$lkfile.diff"; then
+        lkbase=`echo "$lkfile" | sed -e 's,^.*/,,'`
+        rm -f "$tmp/$lkbase"
+        cp "$gnulib_dir/$lkfile" "$tmp/$lkbase"
+        patch -s "$tmp/$lkbase" < "$local_gnulib_dir/$lkfile.diff" \
+          || func_fatal_error "patch file $local_gnulib_dir/$lkfile.diff didn't apply cleanly"
+        lookedup_file="$tmp/$lkbase"
+        lookedup_tmp=true
+      else
+        lookedup_file="$gnulib_dir/$lkfile"
+        lookedup_tmp=
+      fi
+    else
+      func_fatal_error "file $gnulib_dir/$lkfile not found"
+    fi
+  fi
+}
+
 # func_all_modules
 func_all_modules ()
 {
   # Filter out metainformation files like README, which are not modules.
   # Filter out unit test modules; they can be retrieved through
   # --extract-tests-module if desired.
-  (cd "$gnulib_dir/modules" && ls -1) \
+  {
+    (cd "$gnulib_dir/modules" && ls -1)
+    if test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules"; then
+      (cd "$local_gnulib_dir/modules" && ls -1 | sed -e 's,\.diff$,,')
+    fi
+  } \
       | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^README$/d' -e '/^TEMPLATE$/d' -e '/^TEMPLATE-TESTS$/d' -e '/~$/d' \
       | sed -e '/-tests$/d' \
-      | LC_ALL=C sort
+      | LC_ALL=C sort \
+      | LC_ALL=C uniq
 }
 
 # func_verify_module
 # verifies a module name
 func_verify_module ()
 {
-  if test ! -f "$gnulib_dir/modules/$module" \
+  if ! { test -f "$gnulib_dir/modules/$module" \
+         || { test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules" \
+              && test -f "$local_gnulib_dir/modules/$module"; }; } \
      || test "CVS" = "$module" \
      || test "ChangeLog" = "$module" \
      || test "README" = "$module" \
@@ -585,13 +643,15 @@ sed_extract_prog=':[	 ]*$/ {
 # func_get_description module
 func_get_description ()
 {
-  sed -n -e "/^Description$sed_extract_prog" < "$gnulib_dir/modules/$1"
+  func_lookup_file "modules/$1"
+  sed -n -e "/^Description$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_filelist module
 func_get_filelist ()
 {
-  sed -n -e "/^Files$sed_extract_prog" < "$gnulib_dir/modules/$1"
+  func_lookup_file "modules/$1"
+  sed -n -e "/^Files$sed_extract_prog" < "$lookedup_file"
   case "$autoconf_minversion" in
     2.59)
       #echo m4/onceonly.m4
@@ -606,38 +666,44 @@ func_get_dependencies ()
   # ${module}-tests always implicitly depends on ${module}.
   echo "$1" | sed -n -e 's/-tests//p'
   # Then the explicit dependencies listed in the module description.
-  sed -n -e "/^Depends-on$sed_extract_prog" < "$gnulib_dir/modules/$1"
+  func_lookup_file "modules/$1"
+  sed -n -e "/^Depends-on$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_autoconf_snippet module
 func_get_autoconf_snippet ()
 {
-  sed -n -e "/^configure\.ac$sed_extract_prog" < "$gnulib_dir/modules/$1"
+  func_lookup_file "modules/$1"
+  sed -n -e "/^configure\.ac$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_automake_snippet module
 func_get_automake_snippet ()
 {
-  sed -n -e "/^Makefile\.am$sed_extract_prog" < "$gnulib_dir/modules/$1"
+  func_lookup_file "modules/$1"
+  sed -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_include_directive module
 func_get_include_directive ()
 {
-  sed -n -e "/^Include$sed_extract_prog" < "$gnulib_dir/modules/$1" | \
+  func_lookup_file "modules/$1"
+  sed -n -e "/^Include$sed_extract_prog" < "$lookedup_file" | \
   sed -e 's/^\(["<]\)/#include \1/'
 }
 
 # func_get_license module
 func_get_license ()
 {
-  sed -n -e "/^License$sed_extract_prog" < "$gnulib_dir/modules/$1"
+  func_lookup_file "modules/$1"
+  sed -n -e "/^License$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_maintainer module
 func_get_maintainer ()
 {
-  sed -n -e "/^Maintainer$sed_extract_prog" < "$gnulib_dir/modules/$1"
+  func_lookup_file "modules/$1"
+  sed -n -e "/^Maintainer$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_tests_module module
@@ -1152,8 +1218,6 @@ func_import ()
     fi
   fi
 
-  func_tmpdir
-  trap 'rm -rf "$tmp"' 0 1 2 3 15
   # func_dest_tmpfilename file
   # determines the name of a temporary file (file is relative to destdir).
   # Sets variable:
@@ -1213,14 +1277,15 @@ func_import ()
   func_add_or_update ()
   {
     func_dest_tmpfilename "$g"
-    cp "$gnulib_dir/$f" "$tmpfile" || func_fatal_error "failed"
+    func_lookup_file "$f"
+    cp "$lookedup_file" "$tmpfile" || func_fatal_error "failed"
     if test -n "$lgpl"; then
       # Update license.
       case "$f" in
         lib/*)
           sed -e 's/GNU General/GNU Lesser General/g' \
               -e 's/version 2\([ ,]\)/version 2.1\1/g' \
-            < "$gnulib_dir/$f" > "$tmpfile" || func_fatal_error "failed"
+            < "$lookedup_file" > "$tmpfile" || func_fatal_error "failed"
           ;;
       esac
     fi
@@ -1237,8 +1302,9 @@ func_import ()
             echo "Replacing file $g (non-gnulib code backuped in ${g}~) !!"
           fi
           mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
-          if test -n "$symbolic" && cmp "$gnulib_dir/$f" "$tmpfile" > /dev/null; then
-            func_ln_if_changed "$gnulib_dir/$f" "$destdir/$g"
+          if test -n "$symbolic" && test -z "$lookedup_tmp" \
+             && cmp "$lookedup_file" "$tmpfile" > /dev/null; then
+            func_ln_if_changed "$lookedup_file" "$destdir/$g"
           else
             mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
           fi
@@ -1256,8 +1322,9 @@ func_import ()
       # frequently that developers don't put autogenerated files into CVS.
       if $doit; then
         echo "Copying file $g"
-        if test -n "$symbolic" && cmp "$gnulib_dir/$f" "$tmpfile" > /dev/null; then
-          func_ln_if_changed "$gnulib_dir/$f" "$destdir/$g"
+        if test -n "$symbolic" && test -z "$lookedup_tmp" \
+           && cmp "$lookedup_file" "$tmpfile" > /dev/null; then
+          func_ln_if_changed "$lookedup_file" "$destdir/$g"
         else
           mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
         fi
@@ -1524,15 +1591,6 @@ func_import ()
     fi
   fi
 
-  rm -rf "$tmp"
-  # Undo the effect of the previous 'trap' command. Some shellology:
-  # We cannot use "trap - 0 1 2 3 15", because Solaris sh would attempt to
-  # execute the command "-". "trap '' ..." is fine only for signal 0 (= normal
-  # exit); for the others we need to call 'exit' explicitly. The value of $? is
-  # 128 + signal number and is set before the trap-registered command is run.
-  trap '' 0
-  trap 'exit $?' 1 2 3 15
-
   echo "Finished."
   echo
   echo "You may need to add #include directives for the following .h files."
@@ -1612,15 +1670,20 @@ func_create_testdir ()
 
   # Copy files or make symbolic links.
   for f in $files; do
+    func_lookup_file "$f"
     case "$f" in
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
       *) g="$f" ;;
     esac
-    ln "$gnulib_dir/$f" "$testdir/$g" 2>/dev/null ||
-    if test -z "$symbolic"; then
-      cp -p "$gnulib_dir/$f" "$testdir/$g"
+    if test -n "$lookedup_tmp"; then
+      cp -p "$lookedup_file" "$testdir/$g"
     else
-      ln -s "$gnulib_dir/$f" "$testdir/$g"
+      ln "$lookedup_file" "$testdir/$g" 2>/dev/null ||
+      if test -z "$symbolic"; then
+        cp -p "$lookedup_file" "$testdir/$g"
+      else
+        ln -s "$lookedup_file" "$testdir/$g"
+      fi
     fi
   done
 
@@ -2175,5 +2238,14 @@ case $mode in
   * )
     func_fatal_error "unknown operation mode --$mode" ;;
 esac
+
+rm -rf "$tmp"
+# Undo the effect of the previous 'trap' command. Some shellology:
+# We cannot use "trap - 0 1 2 3 15", because Solaris sh would attempt to
+# execute the command "-". "trap '' ..." is fine only for signal 0 (= normal
+# exit); for the others we need to call 'exit' explicitly. The value of $? is
+# 128 + signal number and is set before the trap-registered command is run.
+trap '' 0
+trap 'exit $?' 1 2 3 15
 
 exit 0

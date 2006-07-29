@@ -1,5 +1,20 @@
 2006-07-29  Bruno Haible  <bruno@clisp.org>
 
+	Make it possible for gnulib-tool to work with locally modified or
+	augmented gnulib repositories.
+	* gnulib-tool (func_usage): Document --local-dir option.
+	(local_gnulib_dir): New variable.
+	Handle --local-dir option.
+	(func_lookup_file): New function.
+	(func_all_modules, func_verify_module): Look also in $local_gnulib_dir.
+	(func_get_description, func_get_filelist, func_get_description,
+	func_get_filelist, func_get_dependencies, func_get_autoconf_snippet,
+	func_get_automake_snippet, func_get_include_directive,
+	func_get_license, func_get_maintainer): Use func_lookup_file.
+	(func_import, func_create_testdir): Use func_lookup_file.
+
+2006-07-29  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (import, update): If there is no Makefile.am, look at
 	aclocal.m4, instead of bailing out.
 
