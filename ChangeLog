@@ -1,5 +1,9 @@
 2006-07-29  Bruno Haible  <bruno@clisp.org>
 
+	* modules/setenv (Depends-on): Add unistd.
+
+2006-07-29  Bruno Haible  <bruno@clisp.org>
+
 	Make it possible for gnulib-tool to work with locally modified or
 	augmented gnulib repositories.
 	* gnulib-tool (func_usage): Document --local-dir option.
