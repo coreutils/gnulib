@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-29 13:14:42 $'
+cvsdatestamp='$Date: 2006-07-29 13:18:04 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1911,9 +1911,6 @@ case $mode in
       fi
     fi
 
-    test -f "$destdir"/Makefile.am \
-      || func_fatal_error "cannot find $destdir/Makefile.am"
-
     # Analyze configure.ac.
     guessed_auxdir="."
     guessed_libtool=
@@ -1951,30 +1948,41 @@ case $mode in
       # To get this list of directories, look at Makefile.am. (Not at
       # configure, because it may be omitted from CVS. Also, don't run
       # "find $destdir -name gnulib-cache.m4", as it might be too expensive.)
-      aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[	 ]*=' "$destdir"/Makefile.am | sed -e 's/^ACLOCAL_AMFLAGS[	 ]*=\(.*\)$/\1/'`
       m4dirs=
       m4dirs_count=0
-      m4dir_is_next=
-      for arg in $aclocal_amflags; do
-        if test -n "$m4dir_is_next"; then
-          # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
-          case "$arg" in
-            /*) ;;
-            *)
-              if test -f "$destdir/$arg"/gnulib-cache.m4; then
-                m4dirs="$m4dirs $arg"
-                m4dirs_count=`expr $m4dirs_count + 1`
-              fi
-              ;;
-          esac
-        else
-          if test "X$arg" = "X-I"; then
-            m4dir_is_next=yes
+      if test -f "$destdir"/Makefile.am; then
+        aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[	 ]*=' "$destdir"/Makefile.am | sed -e 's/^ACLOCAL_AMFLAGS[	 ]*=\(.*\)$/\1/'`
+        m4dir_is_next=
+        for arg in $aclocal_amflags; do
+          if test -n "$m4dir_is_next"; then
+            # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
+            case "$arg" in
+              /*) ;;
+              *)
+                if test -f "$destdir/$arg"/gnulib-cache.m4; then
+                  m4dirs="$m4dirs $arg"
+                  m4dirs_count=`expr $m4dirs_count + 1`
+                fi
+                ;;
+            esac
           else
-            m4dir_is_next=
+            if test "X$arg" = "X-I"; then
+              m4dir_is_next=yes
+            else
+              m4dir_is_next=
+            fi
           fi
+        done
+      else
+        # No Makefile.am! Oh well. Look at the last generated aclocal.m4.
+        if test -f "$destdir"/aclocal.m4; then
+          sedexpr1='s,^m4_include(\[\(.*\)])$,\1,p'
+          sedexpr2='s,^[^/]*$,.,'
+          sedexpr3='s,/[^/]*$,,'
+          m4dirs=`sed -n -e "$sedexpr1" aclocal.m4 | sed -e "$sedexpr2" -e "$sedexpr3" | LC_ALL=C sort | LC_ALL=C uniq`
+          m4dirs_count=`echo "$m4dirs" | wc -l`
         fi
-      done
+      fi
       if test $m4dirs_count = 0; then
         # First use of gnulib in a package.
         # Any number of additional modules can be given.
