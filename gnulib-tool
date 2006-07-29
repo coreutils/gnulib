@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-29 13:10:38 $'
+cvsdatestamp='$Date: 2006-07-29 13:14:42 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -51,6 +51,12 @@ if test -z "${AUTOMAKE}" || test -n "${AUTOMAKEPATH}"; then
 fi
 if test -z "${AUTORECONF}" || test -n "${AUTOCONFPATH}"; then
   AUTORECONF="${AUTOCONFPATH}autoreconf"
+fi
+
+# GNU sort is needed. Set SORT to its location (not needed if it's called
+# 'sort' and already in the PATH).
+if test -z "$SORT"; then
+  SORT=sort
 fi
 
 # func_usage
@@ -105,10 +111,6 @@ General options:
                             For --import, this specifies where your
                             configure.ac can be found.  Defaults to current
                             directory.
-      --assume-autoconf=VERSION
-                            Assume a given autoconf version (or newer).
-                            If VERSION is 'latest-stable', assume the latest
-                            stable version.
 
 Options for --import:
       --lib=LIBRARY         Specify the library name.  Defaults to 'libgnu'.
@@ -408,16 +410,6 @@ func_ln_if_changed ()
       --macro-prefix=* )
         macro_prefix=`echo "X$1" | sed -e 's/^X--macro-prefix=//'`
         shift ;;
-      --assume-autoconf )
-        shift
-        if test $# = 0; then
-          func_fatal_error "missing argument for --assume-autoconf"
-        fi
-        autoconf_minversion="$1"
-        shift ;;
-      --assume-autoconf=* )
-        autoconf_minversion=`echo "X$1" | sed -e 's/^X--assume-autoconf=//'`
-        shift ;;
       --no-changelog | --no-changelo | --no-changel | --no-change | --no-chang | --no-chan | --no-cha | --no-ch | --no-c )
         do_changelog=false
         shift ;;
@@ -457,7 +449,7 @@ func_ln_if_changed ()
     if test -n "$supplied_libname" || test -n "$sourcebase" || test -n "$m4base" \
        || test -n "$docbase" || test -n "$testsbase" || test -n "$auxdir" \
        || test -n "$inctests" || test -n "$avoidlist" || test -n "$lgpl" \
-       || test -n "$macro_prefix" || test -n "$autoconf_minversion"; then
+       || test -n "$macro_prefix"; then
       echo "gnulib-tool: invalid options for 'update' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
       echo "If you really want to modify the gnulib configuration of your project," 1>&2
@@ -467,10 +459,18 @@ func_ln_if_changed ()
     do_changelog=false
   fi
 
+  # Determine the minimum supported autoconf version from the project's
+  # configure.ac.
   DEFAULT_AUTOCONF_MINVERSION="2.59"
+  if test -f configure.ac; then
+    autoconf_minversion=`$AUTOCONF --trace=AC_PREREQ:'$1' | $SORT -g | uniq | tail -1`
+  fi
+  if test -z "$autoconf_minversion"; then
+    autoconf_minversion=$DEFAULT_AUTOCONF_MINVERSION
+  fi
   case "$autoconf_minversion" in
     1.* | 2.[0-4]* | 2.5[0-8]*)
-      func_fatal_error "minimum supported autoconf version is 2.59" ;;
+      func_fatal_error "minimum supported autoconf version is 2.59. Try adding AC_PREREQ([$DEFAULT_AUTOCONF_MINVERSION]) to your configure.ac." ;;
   esac
 
   # Remove trailing slashes from the directory names. This is necessary for
@@ -949,7 +949,6 @@ func_import ()
   cached_lgpl=
   cached_libtool=
   cached_macro_prefix=
-  cached_autoconf_minversion=
   cached_files=
   if test -f "$destdir"/$m4base/gnulib-cache.m4; then
     my_sed_traces='
@@ -985,9 +984,6 @@ func_import ()
       }
       /gl_MACRO_PREFIX(/ {
         s,^.*gl_MACRO_PREFIX([[ ]*\([^])]*\).*$,cached_macro_prefix="\1",p
-      }
-      /gl_AUTOCONF_MINVERSION(/ {
-        s,^.*gl_AUTOCONF_MINVERSION([[ ]*\([^])]*\).*$,cached_autoconf_minversion="\1",p
       }'
     eval `sed -n -e "$my_sed_traces" < "$destdir"/$m4base/gnulib-cache.m4`
     if test -f "$destdir"/$m4base/gnulib-comp.m4; then
@@ -1068,13 +1064,6 @@ func_import ()
     macro_prefix="$cached_macro_prefix"
     if test -z "$macro_prefix"; then
       func_fatal_error "missing --macro-prefix option"
-    fi
-  fi
-  # The autoconf_minversion defaults to the cached one.
-  if test -z "$autoconf_minversion"; then
-    autoconf_minversion="$cached_autoconf_minversion"
-    if test -z "$autoconf_minversion"; then
-      autoconf_minversion="$DEFAULT_AUTOCONF_MINVERSION"
     fi
   fi
 
@@ -1324,7 +1313,6 @@ func_import ()
     actioncmd="$actioncmd --libtool"
   fi
   actioncmd="$actioncmd --macro-prefix=$macro_prefix"
-  actioncmd="$actioncmd --assume-autoconf=$autoconf_minversion"
   actioncmd="$actioncmd `echo $specified_modules`"
 
   # Create lib/Makefile.am.
@@ -1378,7 +1366,6 @@ func_import ()
     test -z "$lgpl" || echo "gl_LGPL"
     test -z "$libtool" || echo "gl_LIBTOOL"
     echo "gl_MACRO_PREFIX([$macro_prefix])"
-    echo "gl_AUTOCONF_MINVERSION([$autoconf_minversion])"
   ) > "$tmpfile"
   if test -f "$destdir"/$m4base/gnulib-cache.m4; then
     if cmp "$destdir"/$m4base/gnulib-cache.m4 "$tmpfile" > /dev/null; then
@@ -1957,7 +1944,6 @@ case $mode in
         test -n "$docbase" || docbase="doc"
         test -n "$testsbase" || testsbase="tests"
         test -n "$macro_prefix" || macro_prefix="gl"
-        test -n "$autoconf_minversion" || autoconf_minversion="$DEFAULT_AUTOCONF_MINVERSION"
       fi
       func_import "$*"
     else
@@ -1998,7 +1984,6 @@ case $mode in
         test -n "$docbase" || docbase="doc"
         test -n "$testsbase" || testsbase="tests"
         test -n "$macro_prefix" || macro_prefix="gl"
-        test -n "$autoconf_version" || autoconf_version="$DEFAULT_AUTOCONF_MINVERSION"
         func_import "$*"
       else
         if test $m4dirs_count = 1; then

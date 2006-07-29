@@ -1,5 +1,13 @@
 2006-07-29  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (SORT): New variable.
+	(func_usage): Undocument --assume-autoconf option.
+	Remove --assume-autoconf option handling.
+	(autoconf_minversion): Determine from the contents of configure.ac.
+	(func_import): Remove autoconf_minversion handling.
+
+2006-07-29  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Don't create the $docbase directory if
 	there is no file to store there.
 
