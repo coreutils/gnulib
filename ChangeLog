@@ -1,5 +1,11 @@
 2006-07-29  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (autoconf_minversion): If a --dir option is given and
+	relevant, look for configure.ac there, not in the current directory.
+	Also use a simple search for AC_PREREQ, not "autoconf --trace".
+
+2006-07-29  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_usage): Document option --no-libtool.
 	Handle option --no-libtool.
 	(func_emit_lib_Makefile_am, func_emit_tests_Makefile_am): Update

@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-31 11:35:20 $'
+cvsdatestamp='$Date: 2006-07-31 11:36:29 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -282,7 +282,6 @@ func_ln_if_changed ()
   lgpl=
   libtool=
   macro_prefix=
-  autoconf_minversion=
   do_changelog=:
   doit=:
   local_gnulib_dir=
@@ -482,8 +481,43 @@ func_ln_if_changed ()
   # Determine the minimum supported autoconf version from the project's
   # configure.ac.
   DEFAULT_AUTOCONF_MINVERSION="2.59"
-  if test -f configure.ac; then
-    autoconf_minversion=`$AUTOCONF --trace=AC_PREREQ:'$1' | $SORT -g | uniq | tail -1`
+  autoconf_minversion=
+  configure_ac=
+  if { test "$mode" = import || test "$mode" = update; } && test -n "$destdir"; then
+    if test -f "$destdir"/configure.ac; then
+      configure_ac="$destdir/configure.ac"
+    else
+      if test -f "$destdir"/configure.in; then
+        configure_ac="$destdir/configure.in"
+      fi
+    fi
+  else
+    if test -f configure.ac; then
+      configure_ac="configure.ac"
+    else
+      if test -f configure.in; then
+        configure_ac="configure.in"
+      fi
+    fi
+  fi
+  if test -n "$configure_ac"; then
+    # Use sed, not autoconf --trace, to look for the AC_PREREQ invocation,
+    # because when some m4 files are omitted from a CVS repository,
+    # "autoconf --trace=AC_PREREQ" fails with an error message like this:
+    #   m4: aclocal.m4:851: Cannot open m4/absolute-header.m4: No such file or directory
+    #   autom4te: m4 failed with exit status: 1
+    prereqs=
+    my_sed_traces='
+      s,#.*$,,
+      s,^dnl .*$,,
+      s, dnl .*$,,
+      /AC_PREREQ/ {
+        s,^.*AC_PREREQ([[ ]*\([^])]*\).*$,prereqs="$prereqs \1",p
+      }'
+    eval `sed -n -e "$my_sed_traces" < "$configure_ac"`
+    if test -n "$prereqs"; then
+      autoconf_minversion=`for version in $prereqs; do echo $version; done | $SORT -g | uniq | tail -1`
+    fi
   fi
   if test -z "$autoconf_minversion"; then
     autoconf_minversion=$DEFAULT_AUTOCONF_MINVERSION
