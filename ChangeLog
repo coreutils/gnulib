@@ -1,5 +1,9 @@
 2006-07-30  Bruno Haible  <bruno@clisp.org>
 
+	* modules/readlink (License): Change to LGPL.
+
+2006-07-30  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
 	Initialize MOSTLYCLEANFILES to core and *.stackdump, so that core dumps
 	get removed.
