@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-31 11:36:29 $'
+cvsdatestamp='$Date: 2006-07-31 11:37:23 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -902,7 +902,7 @@ func_emit_lib_Makefile_am ()
   echo "EXTRA_DIST ="
   echo "BUILT_SOURCES ="
   echo "SUFFIXES ="
-  echo "MOSTLYCLEANFILES ="
+  echo "MOSTLYCLEANFILES = core *.stackdump"
   echo "MOSTLYCLEANDIRS ="
   echo "CLEANFILES ="
   echo "DISTCLEANFILES ="
@@ -980,7 +980,7 @@ func_emit_tests_Makefile_am ()
   echo "EXTRA_DIST ="
   echo "BUILT_SOURCES ="
   echo "SUFFIXES ="
-  echo "MOSTLYCLEANFILES ="
+  echo "MOSTLYCLEANFILES = core *.stackdump"
   echo "MOSTLYCLEANDIRS ="
   echo "CLEANFILES ="
   echo "DISTCLEANFILES ="

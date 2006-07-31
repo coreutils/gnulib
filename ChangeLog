@@ -1,3 +1,9 @@
+2006-07-30  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
+	Initialize MOSTLYCLEANFILES to core and *.stackdump, so that core dumps
+	get removed.
+
 2006-07-29  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (autoconf_minversion): If a --dir option is given and
