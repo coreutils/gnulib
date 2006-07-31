@@ -1,5 +1,15 @@
 2006-07-29  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_usage): Document option --no-libtool.
+	Handle option --no-libtool.
+	(func_emit_lib_Makefile_am, func_emit_tests_Makefile_am): Update
+	for changed semantics of $libtool variable.
+	(func_import): Likewise. If libtool is not used, show this through
+	an option --no-libtool.
+	(func_create_testdir): Update.
+
+2006-07-29  Bruno Haible  <bruno@clisp.org>
+
 	* modules/setenv (Depends-on): Add unistd.
 
 2006-07-29  Bruno Haible  <bruno@clisp.org>

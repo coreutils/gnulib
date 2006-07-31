@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-29 15:56:45 $'
+cvsdatestamp='$Date: 2006-07-31 11:35:20 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -135,6 +135,7 @@ Options for --import:
       --lgpl                Abort if modules aren't available under the LGPL.
                             Also modify license template from GPL to LGPL.
       --libtool             Use libtool rules.
+      --no-libtool          Don't use libtool rules.
       --macro-prefix=PREFIX  Specify the prefix of the macros 'gl_EARLY' and
                             'gl_INIT'. Default is 'gl'.
       --no-changelog        don't update or create ChangeLog files
@@ -258,7 +259,8 @@ func_ln_if_changed ()
 # - inctests        true if --with-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            true if --lgpl was given, blank otherwise
-# - libtool         true if --libtool was given, blank otherwise
+# - libtool         true if --libtool was given, false if --no-libtool was
+#                   given, blank otherwise
 # - macro_prefix    from --macro-prefix
 # - autoconf_minversion  minimum supported autoconf version
 # - do_changelog    false if --no-changelog was given, : otherwise
@@ -404,6 +406,9 @@ func_ln_if_changed ()
         shift ;;
       --libtool )
         libtool=true
+        shift ;;
+      --no-libtool )
+        libtool=false
         shift ;;
       --macro-prefix )
         shift
@@ -835,11 +840,11 @@ func_modules_to_filelist ()
 # Input:
 # - modules         list of modules, including dependencies
 # - libname         library name
-# - libtool         true if libtool will be used, blank otherwise
+# - libtool         true if libtool will be used, false or blank otherwise
 # - actioncmd       (optional) command that will reproduce this invocation
 func_emit_lib_Makefile_am ()
 {
-  if test -n "$libtool"; then
+  if test "$libtool" = true; then
     libext=la
     perhapsLT=LT
   else
@@ -909,13 +914,13 @@ func_emit_lib_Makefile_am ()
 # Input:
 # - modules         list of modules, including dependencies
 # - libname         library name
-# - libtool         true if libtool will be used, blank otherwise
+# - libtool         true if libtool will be used, false or blank otherwise
 # - sourcebase      relative directory containing lib source code
 # - m4base          relative directory containing autoconf macros
 # - testsbase       relative directory containing unit test code
 func_emit_tests_Makefile_am ()
 {
-  if test -n "$libtool"; then
+  if test "$libtool" = true; then
     libext=la
   else
     libext=a
@@ -996,8 +1001,9 @@ func_emit_tests_Makefile_am ()
 # - inctests        true if --with-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            true if library's license shall be LGPL, blank otherwise
-# - libtool         true if libtool will be used, blank otherwise
-# - guessed_libtool true if the configure.ac file uses libtool, blank otherwise
+# - libtool         true if --libtool was given, false if --no-libtool was
+#                   given, blank otherwise
+# - guessed_libtool true if the configure.ac file uses libtool, false otherwise
 # - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
 # - autoconf_minversion  minimum supported autoconf version
 # - doit            : if actions shall be executed, false if only to be printed
@@ -1017,6 +1023,7 @@ func_import ()
   cached_macro_prefix=
   cached_files=
   if test -f "$destdir"/$m4base/gnulib-cache.m4; then
+    cached_libtool=false
     my_sed_traces='
       s,#.*$,,
       s,^dnl .*$,,
@@ -1376,8 +1383,10 @@ func_import ()
   if test -n "$lgpl"; then
     actioncmd="$actioncmd --lgpl"
   fi
-  if test -n "$libtool"; then
+  if test "$libtool" = true; then
     actioncmd="$actioncmd --libtool"
+  else
+    actioncmd="$actioncmd --no-libtool"
   fi
   actioncmd="$actioncmd --macro-prefix=$macro_prefix"
   actioncmd="$actioncmd `echo $specified_modules`"
@@ -1431,7 +1440,9 @@ func_import ()
     echo "gl_TESTS_BASE([$testsbase])"
     echo "gl_LIB([$libname])"
     test -z "$lgpl" || echo "gl_LGPL"
-    test -z "$libtool" || echo "gl_LIBTOOL"
+    if test "$libtool" = true; then
+      echo "gl_LIBTOOL"
+    fi
     echo "gl_MACRO_PREFIX([$macro_prefix])"
   ) > "$tmpfile"
   if test -f "$destdir"/$m4base/gnulib-cache.m4; then
@@ -1495,10 +1506,10 @@ func_import ()
     echo "# \"Check for header files, types and library functions\"."
     echo "AC_DEFUN([${macro_prefix}_INIT],"
     echo "["
-    if test -z "$libtool"; then
-      echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
-    else
+    if test "$libtool" = true; then
       echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
+    else
+      echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
     fi
     if test "$auxdir" != "build-aux"; then
       sed_replace_build_aux='
@@ -1518,7 +1529,7 @@ func_import ()
           | sed -e '/^$/d;' -e 's/^/  /' \
                 -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./' \
                 -e "$sed_replace_build_aux"
-        if test "$module" = 'alloca' && test -n "$libtool"; then
+        if test "$module" = 'alloca' && test "$libtool" = true; then
           echo 'changequote(,)dnl'
           echo 'LTALLOCA=`echo "$ALLOCA" | sed '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
           echo 'changequote([, ])dnl'
@@ -1748,10 +1759,10 @@ func_create_testdir ()
        echo "gl_LOCK"
        echo
      fi
-     if test -z "$libtool"; then
-       echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
-     else
+     if test "$libtool" = true; then
        echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
+     else
+       echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
      fi
      if test "$auxdir" != "build-aux"; then
        sed_replace_build_aux='
@@ -1829,10 +1840,10 @@ func_create_testdir ()
      echo "gl_LOCK"
      echo
    fi
-   if test -z "$libtool"; then
-     echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
-   else
+   if test "$libtool" = true; then
      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
+   else
+     echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
    fi
    if test "$auxdir" != "build-aux"; then
      sed_replace_build_aux='
@@ -1976,7 +1987,7 @@ case $mode in
 
     # Analyze configure.ac.
     guessed_auxdir="."
-    guessed_libtool=
+    guessed_libtool=false
     my_sed_traces='
       s,#.*$,,
       s,^dnl .*$,,

@@ -289,7 +289,8 @@ argument.  It takes no arguments.
 
 @item gl_LIBTOOL
 The presence of this macro corresponds to the @samp{--libtool} command line
-argument.  It takes no arguments.
+argument and to the absence of the @samp{--no-libtool} command line argument.
+It takes no arguments.
 
 @item gl_MACRO_PREFIX
 The argument is the prefix to use for macros in the @file{gnulib-comp.m4}

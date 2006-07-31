@@ -1,3 +1,7 @@
+2006-07-29  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool.texi (gl_LIBTOOL): Mention --no-libtool option.
+
 2006-07-19  Derek Price  <derek@ximbiot.com>
 
 	* gnulib.texi (Libtool and Windows):  Eliminate passive voice.  Correct
