@@ -25,19 +25,10 @@
 /* Specification.  */
 #include "localcharset.h"
 
-#if HAVE_STDDEF_H
-# include <stddef.h>
-#endif
-
+#include <stddef.h>
 #include <stdio.h>
-#if HAVE_STRING_H
-# include <string.h>
-#else
-# include <strings.h>
-#endif
-#if HAVE_STDLIB_H
-# include <stdlib.h>
-#endif
+#include <string.h>
+#include <stdlib.h>
 
 #if defined _WIN32 || defined __WIN32__
 # define WIN32_NATIVE
