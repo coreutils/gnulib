@@ -1,5 +1,11 @@
 2006-07-30  Bruno Haible  <bruno@clisp.org>
 
+	* modules/javaversion (Makefile.am): Distribute javaversion.java and
+	javaversion.class. Also install javaversion.class in $(pkgdatadir) and
+	set PKGDATADIR to point to it.
+
+2006-07-30  Bruno Haible  <bruno@clisp.org>
+
 	* modules/clean-temp (Depends-on): Add linkedhash-list, remove
 	linked-list.
 
