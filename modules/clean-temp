@@ -15,7 +15,7 @@ tmpdir
 mkdtemp
 xalloc
 xallocsa
-linked-list
+linkedhash-list
 gettext-h
 
 configure.ac:
