@@ -9,7 +9,7 @@ m4/csharp.m4
 Depends-on:
 
 configure.ac:
-gt_CSHARPCOMP
+AC_REQUIRE([gt_CSHARPCOMP])
 AC_CONFIG_FILES([csharpcomp.sh:build-aux/csharpcomp.sh.in])
 
 Makefile.am:

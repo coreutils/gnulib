@@ -1,5 +1,13 @@
 2006-07-30  Bruno Haible  <bruno@clisp.org>
 
+	* modules/csharpexec (configure.ac): Comment out macro invocation.
+	* modules/javaexec (configure.ac): Likewise.
+	* modules/javacomp-script (configure.ac): Likewise.
+
+	* modules/csharpcomp-script (configure.ac): Use AC_REQUIRE.
+
+2006-07-30  Bruno Haible  <bruno@clisp.org>
+
 	* modules/javaversion (Makefile.am): Distribute javaversion.java and
 	javaversion.class. Also install javaversion.class in $(pkgdatadir) and
 	set PKGDATADIR to point to it.

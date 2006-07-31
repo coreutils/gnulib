@@ -21,7 +21,7 @@ error
 gettext-h
 
 configure.ac:
-gt_CSHARPEXEC
+# You need to invoke gt_CSHARPEXEC yourself, possibly with arguments.
 AC_CONFIG_FILES([csharpexec.sh:build-aux/csharpexec.sh.in])
 
 Makefile.am:

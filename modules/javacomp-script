@@ -8,7 +8,7 @@ m4/javacomp.m4
 Depends-on:
 
 configure.ac:
-gt_JAVACOMP
+# You need to invoke gt_JAVACOMP yourself, possibly with arguments.
 AC_CONFIG_FILES([javacomp.sh:build-aux/javacomp.sh.in])
 
 Makefile.am:
