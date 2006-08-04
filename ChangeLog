@@ -1,3 +1,9 @@
+2006-08-04  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
+	Make the mostlyclean-local rule depend on mostlyclean-generic.
+	Reported by Jim Meyering. Solution suggested by Ralf Wildenhues.
+
 2006-07-30  Bruno Haible  <bruno@clisp.org>
 
 	* modules/csharpexec (configure.ac): Comment out macro invocation.

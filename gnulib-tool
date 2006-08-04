@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-07-31 11:37:23 $'
+cvsdatestamp='$Date: 2006-08-04 16:06:01 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -932,7 +932,7 @@ func_emit_lib_Makefile_am ()
     fi
   done
   echo
-  echo "mostlyclean-local:"
+  echo "mostlyclean-local: mostlyclean-generic"
   echo "	@test -z \"\$(MOSTLYCLEANDIRS)\" || \\"
   echo "	  for dir in \$(MOSTLYCLEANDIRS); do \\"
   echo "	    if test -d \$\$dir; then \\"
@@ -1012,7 +1012,7 @@ func_emit_tests_Makefile_am ()
   echo "clean-local:"
   echo "	rm -rf SunWS_cache"
   echo
-  echo "mostlyclean-local:"
+  echo "mostlyclean-local: mostlyclean-generic"
   echo "	@test -z \"\$(MOSTLYCLEANDIRS)\" || \\"
   echo "	  for dir in \$(MOSTLYCLEANDIRS); do \\"
   echo "	    if test -d \$\$dir; then \\"
