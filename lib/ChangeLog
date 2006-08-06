@@ -1,3 +1,8 @@
+2006-08-06  Eric Blake  <ebb9@byu.net>
+
+	* error.h: Fold in some upstream changes from glibc.
+	* error.c: Likewise.
+
 2006-07-29  Bruno Haible  <bruno@clisp.org>
 
 	* localcharset.c: Assume <stddef.h>, <stdlib.h>, <string.h> exist.
