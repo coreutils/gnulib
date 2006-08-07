@@ -1,3 +1,10 @@
+2006-08-06  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
+	Initialize pkgdata_DATA.
+	* modules/javaversion (Makefile.am): Add to pkgdata_DATA, rather than
+	overriding it.
+
 2006-08-04  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
