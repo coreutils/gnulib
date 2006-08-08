@@ -1,3 +1,7 @@
+2006-08-08  Eric Blake  <ebb9@byu.net>
+
+	* verror.h, verror.c: New files.
+
 2006-08-07  Bruno Haible  <bruno@clisp.org>
 
 	* allocsa.h (sa_alignof) [_AIX]: Also consider 'long long' in newer
