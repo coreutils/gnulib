@@ -59,7 +59,15 @@ verror_at_line (int status, int errnum, const char *file,
 {
   char *message = xvasprintf (format, args);
   if (message)
-    error_at_line (status, errnum, file, line_number, "%s", message);
+    {
+      /* Until http://sourceware.org/bugzilla/show_bug.cgi?id=2997 is fixed,
+	 glibc violates GNU Coding Standards when the file argument to
+	 error_at_line is NULL.  */
+      if (file)
+        error_at_line (status, errnum, file, line_number, "%s", message);
+      else
+        error (status, errnum, "%s", message);
+    }
   else
     {
       /* EOVERFLOW, EINVAL, and EILSEQ from xvasprintf are signs of

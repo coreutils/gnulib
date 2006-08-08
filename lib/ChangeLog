@@ -1,5 +1,11 @@
 2006-08-08  Eric Blake  <ebb9@byu.net>
 
+	* verror.c (verror_at_line): Work around glibc bug 2997, so that
+	verror_at_line output complies with GNU Coding Standards even when
+	file is NULL.
+
+2006-08-08  Eric Blake  <ebb9@byu.net>
+
 	* verror.h, verror.c: New files.
 
 2006-08-07  Bruno Haible  <bruno@clisp.org>
