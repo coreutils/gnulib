@@ -1,3 +1,9 @@
+2006-08-07  Bruno Haible  <bruno@clisp.org>
+
+	* allocsa.h (sa_alignof) [_AIX]: Also consider 'long long' in newer
+	versions of AIX.
+	Reported by Ralf Wildenhues.
+
 2006-08-06  Eric Blake  <ebb9@byu.net>
 
 	* error.h: Fold in some upstream changes from glibc.

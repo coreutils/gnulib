@@ -1,5 +1,5 @@
 /* Safe automatic memory allocation.
-   Copyright (C) 2003-2005 Free Software Foundation, Inc.
+   Copyright (C) 2003-2006 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -95,7 +95,7 @@ extern void freesa (void *p);
 #elif defined _AIX
   /* Work around an AIX 3.2.5 xlc bug with enums constants defined as offsetof
      values.  */
-# define sa_alignof(type) 4
+# define sa_alignof(type) (sizeof (type) <= 4 ? 4 : 8)
 #else
 # define sa_alignof(type) offsetof (struct { char __slot1; type __slot2; }, __slot2)
 #endif
