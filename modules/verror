@@ -1,0 +1,25 @@
+Description:
+verror() and verror_at_line() functions: Error reporting with va_list.
+
+Files:
+lib/verror.h
+lib/verror.c
+
+Depends-on:
+error
+xvasprintf
+
+configure.ac:
+gl_VERROR
+
+Makefile.am:
+lib_SOURCES += verror.h verror.c
+
+Include:
+"verror.h"
+
+License:
+GPL
+
+Maintainer:
+Eric Blake
