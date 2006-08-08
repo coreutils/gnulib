@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-07 12:17:26 $'
+cvsdatestamp='$Date: 2006-08-08 11:35:22 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1800,6 +1800,14 @@ func_create_testdir ()
      else
        echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
      fi
+     # Wrap the set of autoconf snippets into an autoconf macro that is then
+     # invoked. This is needed because autoconf does not support AC_REQUIRE
+     # at the top level:
+     #   error: AC_REQUIRE(gt_CSHARPCOMP): cannot be used outside of an AC_DEFUN'd macro
+     # but we want the AC_REQUIRE to have its normal meaning (provide one
+     # expansion of the required macro before the current point, and only one
+     # expansion total).
+     echo "AC_DEFUN([gl_INIT], ["
      if test "$auxdir" != "build-aux"; then
        sed_replace_build_aux='
          :a
@@ -1828,6 +1836,8 @@ func_create_testdir ()
            | sed -e "$sed_replace_build_aux"
        fi
      done
+     echo "])"
+     echo "gl_INIT"
      echo
      # Usually tests/config.h will be a superset of config.h. Verify this by
      # "merging" config.h into tests/config.h; look out for gcc warnings.
@@ -1881,6 +1891,14 @@ func_create_testdir ()
    else
      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
    fi
+   # Wrap the set of autoconf snippets into an autoconf macro that is then
+   # invoked. This is needed because autoconf does not support AC_REQUIRE
+   # at the top level:
+   #   error: AC_REQUIRE(gt_CSHARPCOMP): cannot be used outside of an AC_DEFUN'd macro
+   # but we want the AC_REQUIRE to have its normal meaning (provide one
+   # expansion of the required macro before the current point, and only one
+   # expansion total).
+   echo "AC_DEFUN([gl_INIT], ["
    if test "$auxdir" != "build-aux"; then
      sed_replace_build_aux='
        :a
@@ -1899,6 +1917,8 @@ func_create_testdir ()
          | sed -e "$sed_replace_build_aux"
      fi
    done
+   echo "])"
+   echo "gl_INIT"
    echo
    if test -n "$subdirs_with_configure_ac"; then
      echo "AC_CONFIG_SUBDIRS(["`echo $subdirs_with_configure_ac`"])"

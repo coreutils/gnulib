@@ -1,3 +1,9 @@
+2006-08-07  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_create_testdir): Wrap the set of autoconf snippets
+	in an AC_DEFUN. Needed so that the autoconf snippets can use
+	AC_REQUIRE.
+
 2006-08-06  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
 
 	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
