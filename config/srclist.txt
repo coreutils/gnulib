@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.131 2006-07-29 14:38:53 haible Exp $
+# $Id: srclist.txt,v 1.132 2006-08-09 20:19:52 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -55,14 +55,10 @@ $GETTEXT/gettext-runtime/libasprintf/vasnprintf.h	lib gpl
 $GETTEXT/gettext-runtime/libasprintf/vasprintf.c	lib gpl
 
 $GETTEXT/gettext-runtime/intl/config.charset		lib gpl
-$GETTEXT/gettext-runtime/intl/localcharset.c		lib gpl
+#$GETTEXT/gettext-runtime/intl/localcharset.c		lib gpl
 $GETTEXT/gettext-runtime/intl/localcharset.h		lib gpl
 $GETTEXT/gettext-runtime/intl/ref-add.sin		lib gpl
 $GETTEXT/gettext-runtime/intl/ref-del.sin		lib gpl
-
-$GETTEXT/gettext-tools/lib/gettext.h			lib gpl
-$GETTEXT/gettext-tools/lib/mkdtemp.c			lib gpl
-$GETTEXT/gettext-tools/lib/vasprintf.h			lib gpl
 
 # These four files should kept in sync, e.g., gettoolize installs them
 # all together, gnulib-tool install all or none.
