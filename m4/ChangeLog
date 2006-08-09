@@ -1,3 +1,11 @@
+2006-08-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merge from coreutils.
+	* regex.m4 (gl_PREREQ_REGEX): Require AC_C_RESTRICT, not
+	gl_C_RESTRICT, now that we assume Autoconf 2.59 or later.
+	* strtok_r.m4 (gl_FUNC_STRTOK_R): Likewise.
+	* time_r.m4 (gl_TIME_R): Likewise.
+
 2006-07-31  Bruno Haible  <bruno@clisp.org>
 
 	* localcharset.m4 (gl_LOCALCHARSET): Remove tests for <stddef.h>,

@@ -1,4 +1,4 @@
-# strtok_r.m4 serial 2
+# strtok_r.m4 serial 3
 dnl Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,5 +13,5 @@ AC_DEFUN([gl_FUNC_STRTOK_R],
 
 # Prerequisites of lib/strtok_r.h and lib/strtok_r.c.
 AC_DEFUN([gl_PREREQ_STRTOK_R], [
-  AC_REQUIRE([gl_C_RESTRICT])
+  AC_REQUIRE([AC_C_RESTRICT])
 ])
