@@ -1,5 +1,14 @@
 2006-08-09  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* argp.m4 (gl_ARGP): Require AC_C_RESTRICT.
+	* gc.m4 (gl_PREREQ_GC): Likewise.
+	* glob.m4 (gl_PREREQ_GLOB): Likewise.
+	* inet_ntop.m4 (gl_PREREQ_INET_NTOP): Likewise.
+	* inet_pton.m4 (gl_PREREQ_INET_PTON): Likewise.
+	* memxor.m4 (gl_MEMXOR): Likewise.
+	* restrict.m4: Remove; no longer needed.  All remaining uses of
+	gl_C_RESTRICT replaced by AC_C_RESTRICT.
+
 	Merge from coreutils.
 	* regex.m4 (gl_PREREQ_REGEX): Require AC_C_RESTRICT, not
 	gl_C_RESTRICT, now that we assume Autoconf 2.59 or later.

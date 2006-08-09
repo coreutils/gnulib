@@ -15,7 +15,6 @@ extensions
 fnmatch
 getlogin_r
 mempcpy
-restrict
 stat-macros
 stdbool
 strdup

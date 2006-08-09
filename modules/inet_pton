@@ -7,7 +7,6 @@ lib/inet_pton.c
 m4/inet_pton.m4
 
 Depends-on:
-restrict
 socklen
 sys_socket
 arpa_inet

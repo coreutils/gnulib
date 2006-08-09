@@ -8,7 +8,6 @@ lib/gai_strerror.c
 m4/getaddrinfo.m4
 
 Depends-on:
-restrict
 gettext-h
 snprintf
 socklen

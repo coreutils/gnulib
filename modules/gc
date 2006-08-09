@@ -9,7 +9,6 @@ m4/gc.m4
 
 Depends-on:
 havelib
-restrict
 
 configure.ac:
 gl_GC

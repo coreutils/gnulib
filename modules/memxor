@@ -7,7 +7,6 @@ lib/memxor.c
 m4/memxor.m4
 
 Depends-on:
-restrict
 
 configure.ac:
 gl_MEMXOR

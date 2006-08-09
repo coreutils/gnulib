@@ -8,7 +8,6 @@ m4/base64.m4
 
 Depends-on:
 stdbool
-restrict
 
 configure.ac:
 gl_FUNC_BASE64

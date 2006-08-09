@@ -1,4 +1,4 @@
-# glob.m4 serial 5
+# glob.m4 serial 6
 dnl Copyright (C) 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,6 +73,7 @@ if (glob ("conf*-globtest", 0, NULL, &found) == GLOB_NOMATCH) return 1;]]),
 # Prerequisites of lib/glob.*.
 AC_DEFUN([gl_PREREQ_GLOB],
 [ AC_REQUIRE([gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE])dnl
+  AC_REQUIRE([AC_C_RESTRICT])dnl
   AC_REQUIRE([AC_GNU_SOURCE])dnl
   AC_CHECK_HEADERS_ONCE([sys/cdefs.h unistd.h])dnl
   AC_CHECK_FUNCS_ONCE([getlogin_r getpwnam_r])dnl

@@ -16,7 +16,6 @@ alloca
 extensions
 gettext-h
 malloc
-restrict
 strcase
 ssize_t
 

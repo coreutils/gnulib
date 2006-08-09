@@ -1,3 +1,20 @@
+2006-08-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/restrict: Remove; no longer needed now that we assume
+	Autoconf 2.59 or later.
+	* MODULES.html.sh: Remove 'restrict'.
+	* modules/argp (Depends-on): Remove 'restrict'.
+	* modules/base64 (Depends-on): Likewise.
+	* modules/gc (Depends-on): Likewise.
+	* modules/getaddrinfo (Depends-on): Likewise.
+	* modules/glob (Depends-on): Likewise.
+	* modules/inet_ntop (Depends-on): Likewise.
+	* modules/inet_pton (Depends-on): Likewise.
+	* modules/memxor (Depends-on): Likewise.
+	* modules/regex (Depends-on): Likewise.
+	* modules/strtok_r (Depends-on): Likewise.
+	* modules/time_r (Depends-on): Likewise.
+
 2006-08-08  Eric Blake  <ebb9@byu.net>
 
 	* modules/verror: New module.
