@@ -1,6 +1,6 @@
 /* Formatted output to strings.
-   Copyright (C) 2004 Free Software Foundation, Inc.
-   Written by Simon Josefsson.
+   Copyright (C) 2004, 2006 Free Software Foundation, Inc.
+   Written by Simon Josefsson and Paul Eggert.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,12 +22,18 @@
 
 #include "snprintf.h"
 
+#include <errno.h>
+#include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "minmax.h"
 #include "vasnprintf.h"
+
+/* Some systems, like OSF/1 4.0 and Woe32, don't have EOVERFLOW.  */
+#ifndef EOVERFLOW
+# define EOVERFLOW E2BIG
+#endif
 
 /* Print formatted output to string STR.  Similar to sprintf, but
    additional length SIZE limit how much is written into STR.  Returns
@@ -49,12 +55,22 @@ snprintf (char *str, size_t size, const char *format, ...)
   if (!output)
     return -1;
 
-  if (str != NULL)
-    if (len > size - 1) /* equivalent to: (size > 0 && len >= size) */
-      str[size - 1] = '\0';
-
   if (output != str)
-    free (output);
+    {
+      if (size)
+	{
+	  memcpy (str, output, size - 1);
+	  str[size - 1] = '\0';
+	}
+
+      free (output);
+    }
+
+  if (INT_MAX < len)
+    {
+      errno = EOVERFLOW;
+      return -1;
+    }
 
   return len;
 }
