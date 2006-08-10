@@ -10,6 +10,25 @@
 	output.  Don't assume vasnprintf returns EOVERFLOW if the size
 	exceeds INT_MAX; do the check ourselves.
 
+	Import the following changes from libc:
+
+	2006-06-02  Jakub Jelinek  <jakub@redhat.com>
+
+	* posix/regex_internal.c (re_string_skip_chars): If no character has
+	been converted at all, set *last_wc to WEOF.  If mbrtowc failed, set wc
+	to the byte which couldn't be converted.
+	(re_string_reconstruct): Don't clear valid_raw_len before calling
+	re_string_skip_chars.  If wc is WEOF after re_string_skip_chars, set
+	tip_context using re_string_context_at.
+
+	2006-05-02  Ulrich Drepper  <drepper@redhat.com>
+
+	* posix/regex.h: g++ still cannot handled [restrict].
+
+	2006-04-21  Ulrich Drepper  <drepper@redhat.com>
+
+	* posix/regex.h: Remove special handling for VMS.
+
 2006-08-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.
@@ -410,7 +429,7 @@
 	(ISGRAPH): Remove.  All uses changed to isgraph.
 	(FOLD) [!defined _LIBC]: Remove special case.
 	* getdate.y (lookup_word): Remove no-longer-needed call to islower.
-	* regext_internal.h (isblank): Depend on HAVE_DECL_ISBLANK, not
+	* regex_internal.h (isblank): Depend on HAVE_DECL_ISBLANK, not
 	HAVE_ISBLANK.
 	* strftime.c (TOLOWER, TOUPPER) [!defined _LIBC]: Remove special case.
 
