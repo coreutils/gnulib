@@ -1,3 +1,7 @@
+2006-08-10  Jim Meyering  <jim@meyering.net>
+
+	* modules/chown (Depends-on): Add stat-macros.
+
 2006-08-10  Eric Blake  <ebb9@byu.net>
 
 	* modules/verror (Depends-on): Remove bogus gl_VERROR that snuck
