@@ -1,7 +1,7 @@
 2006-08-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/snprintf (Depends-on): Remove minmax.
-	(Maintainer): Add self.
+	(Maintainer): Add self and Bruno.
 
 2006-08-10  Bruno Haible  <bruno@clisp.org>
 
