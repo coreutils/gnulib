@@ -1,3 +1,8 @@
+2006-08-10  Eric Blake  <ebb9@byu.net>
+
+	* modules/verror (Depends-on): Remove bogus gl_VERROR that snuck
+	in from original proposal.
+
 2006-08-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/restrict: Remove; no longer needed now that we assume

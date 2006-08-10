@@ -10,7 +10,6 @@ error
 xvasprintf
 
 configure.ac:
-gl_VERROR
 
 Makefile.am:
 lib_SOURCES += verror.h verror.c
