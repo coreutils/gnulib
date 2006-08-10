@@ -1,3 +1,9 @@
+2006-08-10  Eric Blake  <ebb9@byu.net>
+	and Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (func_import): Detect unexpanded macros in gnulib
+	namespace.
+
 2006-08-10  Jim Meyering  <jim@meyering.net>
 
 	* modules/same-inode: New module.
