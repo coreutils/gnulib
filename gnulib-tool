@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-10 14:22:53 $'
+cvsdatestamp='$Date: 2006-08-10 15:05:20 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1874,6 +1874,10 @@ func_create_testdir ()
    echo "AC_PROG_CC"
    echo "AC_PROG_INSTALL"
    echo "AC_PROG_MAKE_SET"
+   echo
+   echo "m4_pattern_forbid([^gl_[A-Z]])dnl the gnulib macro namespace"
+   echo "m4_pattern_allow([^gl_ES$])dnl a valid locale name"
+   echo
    echo "AC_PROG_RANLIB"
    echo
    if grep AC_GNU_SOURCE "$testdir"/m4/*.m4 >/dev/null 2>/dev/null; then
