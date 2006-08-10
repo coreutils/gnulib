@@ -5,13 +5,13 @@ directory.
 Files:
 lib/same.h
 lib/same.c
-lib/same-inode.h
 m4/same.m4
 
 Depends-on:
 xalloc
 error
 dirname
+same-inode
 stdbool
 
 configure.ac:

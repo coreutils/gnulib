@@ -1,0 +1,22 @@
+Description:
+compare inodes
+
+Files:
+lib/same-inode.h
+m4/same-inode.m4
+
+Depends-on:
+
+configure.ac:
+gl_SAME_INODE
+
+Makefile.am:
+
+Include:
+"same-inode.h"
+
+License:
+LGPL
+
+Maintainer:
+Jim Meyering

@@ -1,22 +1,22 @@
 Description:
-help detect directory cycles efficiently
+like chdir, but safer
 
 Files:
-lib/cycle-check.c
-lib/cycle-check.h
-m4/cycle-check.m4
+lib/chdir-safer.h
+lib/chdir-safer.c
+m4/chdir-safer.m4
 
 Depends-on:
-dev-ino
 same-inode
 stdbool
 
 configure.ac:
+gl_CHDIR_SAFER
 
 Makefile.am:
 
 Include:
-"cycle-check.h"
+"chdir-safer.h"
 
 License:
 GPL

@@ -1,5 +1,15 @@
 2006-08-10  Jim Meyering  <jim@meyering.net>
 
+	* modules/same-inode: New module.
+	* modules/dev-ino: New module.
+	* modules/cycle-check: Depend on these modules, rather than simply
+	including their .h files.
+	(Makefile.am): Don't list cycle-check.[ch] here, now that they're
+	required via m4/cycle-check.m4.
+	* modules/same: Depend on new same-inode module, rather than
+	including same-inode.h.
+	* modules/chdir-safer: New file.
+
 	* modules/chown (Depends-on): Add stat-macros.
 
 2006-08-10  Eric Blake  <ebb9@byu.net>
