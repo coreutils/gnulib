@@ -1,5 +1,6 @@
 2006-08-10  Jim Meyering  <jim@meyering.net>
 
+	* cycle-check.m4: New file.
 	* dev-ino.m4, same-inode.m4: New files.
 
 2006-08-09  Paul Eggert  <eggert@cs.ucla.edu>
