@@ -8,7 +8,6 @@ The following packages appear to be using gnulib and gnulib-tool:
   gnutls         http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/gnutls/?root=GNU+TLS+Library
                  http://josefsson.org/cgi-bin/viewcvs.cgi/gnutls/?root=gnupg-mirror
   gpg            http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/
-                 http://josefsson.org/cgi-bin/viewcvs.cgi/libtasn1/?root=gnupg-mirror
   gsasl          http://josefsson.org/cgi-bin/viewcvs.cgi/gsasl/
   gss            http://josefsson.org/cgi-bin/viewcvs.cgi/gss/
   hello          http://cvs.savannah.gnu.org/viewcvs/hello/?root=hello
@@ -21,6 +20,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   libntlm        http://josefsson.org/cgi-bin/viewcvs.cgi/libntlm/
   libpreludedb   https://trac.prelude-ids.org/browser/trunk/libpreludedb/
   libtasn1       http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/libtasn1/?root=GNU+TLS+Library
+                 http://josefsson.org/cgi-bin/viewcvs.cgi/libtasn1/?root=gnupg-mirror
   m4             http://cvs.savannah.gnu.org/viewcvs/m4/?root=m4
   miktex         https://svn.sourceforge.net/svnroot/miktex/miktex/trunk
   msmtp          http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
