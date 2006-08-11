@@ -1,32 +1,33 @@
 The following packages appear to be using gnulib and gnulib-tool:
 
-  hello          http://cvs.savannah.gnu.org/viewcvs/hello/?root=hello
-  m4             http://cvs.savannah.gnu.org/viewcvs/m4/?root=m4
-  libidn         http://josefsson.org/cgi-bin/viewcvs.cgi/libidn/
-  shishi         http://josefsson.org/cgi-bin/viewcvs.cgi/shishi/
-  gsasl          http://josefsson.org/cgi-bin/viewcvs.cgi/gsasl/
+  Net::CDP       http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
+  OPeNDAP        http://scm.opendap.org:8090/svn/trunk/
+  cvs            http://cvs.savannah.gnu.org/viewcvs/cvs/ccvs/
+  findutils      http://cvs.savannah.gnu.org/viewcvs/findutils/?root=findutils
+  gettext        http://cvs.savannah.gnu.org/viewcvs/gettext/?root=gettext
   gnutls         http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/gnutls/?root=GNU+TLS+Library
                  http://josefsson.org/cgi-bin/viewcvs.cgi/gnutls/?root=gnupg-mirror
-  libtasn1       http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/libtasn1/?root=GNU+TLS+Library
-                 http://josefsson.org/cgi-bin/viewcvs.cgi/libtasn1/?root=gnupg-mirror
-  libksba        http://josefsson.org/cgi-bin/viewcvs.cgi/libksba/?root=gnupg-mirror
-  gss            http://josefsson.org/cgi-bin/viewcvs.cgi/gss/
-  libntlm        http://josefsson.org/cgi-bin/viewcvs.cgi/libntlm/
-  libiconv       http://libiconv.cvs.sourceforge.net/libiconv/libiconv/
-  gettext        http://cvs.savannah.gnu.org/viewcvs/gettext/?root=gettext
-  findutils      http://cvs.savannah.gnu.org/viewcvs/findutils/?root=findutils
-  cvs            http://cvs.savannah.gnu.org/viewcvs/cvs/ccvs/
-  inetutils      http://cvs.savannah.gnu.org/viewcvs/inetutils/?root=inetutils
   gpg            http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/
-  pspp           http://cvs.savannah.gnu.org/viewcvs/pspp/?root=pspp
-  msmtp          http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
-  libpreludedb   https://trac.prelude-ids.org/browser/trunk/libpreludedb/
+                 http://josefsson.org/cgi-bin/viewcvs.cgi/libtasn1/?root=gnupg-mirror
+  gsasl          http://josefsson.org/cgi-bin/viewcvs.cgi/gsasl/
+  gss            http://josefsson.org/cgi-bin/viewcvs.cgi/gss/
+  hello          http://cvs.savannah.gnu.org/viewcvs/hello/?root=hello
   icoutils       http://riva.ucam.org/svn/cjwatson/src/debian/icoutils/trunk/icoutils/
-  OPeNDAP        http://scm.opendap.org:8090/svn/trunk/
-  miktex         https://svn.sourceforge.net/svnroot/miktex/miktex/trunk
-  newts          http://svn.arete.cc/newts/trunk/
+  inetutils      http://cvs.savannah.gnu.org/viewcvs/inetutils/?root=inetutils
   libdap         http://scm.opendap.org:8090/svn/trunk/libdap/
-  Net::CDP       http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
+  libiconv       http://libiconv.cvs.sourceforge.net/libiconv/libiconv/
+  libidn         http://josefsson.org/cgi-bin/viewcvs.cgi/libidn/
+  libksba        http://josefsson.org/cgi-bin/viewcvs.cgi/libksba/?root=gnupg-mirror
+  libntlm        http://josefsson.org/cgi-bin/viewcvs.cgi/libntlm/
+  libpreludedb   https://trac.prelude-ids.org/browser/trunk/libpreludedb/
+  libtasn1       http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/libtasn1/?root=GNU+TLS+Library
+  m4             http://cvs.savannah.gnu.org/viewcvs/m4/?root=m4
+  miktex         https://svn.sourceforge.net/svnroot/miktex/miktex/trunk
+  msmtp          http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
+  newts          http://svn.arete.cc/newts/trunk/
+  pspp           http://cvs.savannah.gnu.org/viewcvs/pspp/?root=pspp
+  shishi         http://josefsson.org/cgi-bin/viewcvs.cgi/shishi/
+  tar            http://cvs.savannah.gnu.org/viewcvs/?root=tar
 
 The following packages appear to be using gnulib without gnulib-tool:
 
