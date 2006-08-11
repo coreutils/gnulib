@@ -4,12 +4,14 @@ The following packages appear to be using gnulib and gnulib-tool:
   m4             http://cvs.savannah.gnu.org/viewcvs/m4/?root=m4
   libidn         http://josefsson.org/cgi-bin/viewcvs.cgi/libidn/
   shishi         http://josefsson.org/cgi-bin/viewcvs.cgi/shishi/
-  sasl           http://josefsson.org/cgi-bin/viewcvs.cgi/gsasl/
+  gsasl          http://josefsson.org/cgi-bin/viewcvs.cgi/gsasl/
   gnutls         http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/gnutls/?root=GNU+TLS+Library
                  http://josefsson.org/cgi-bin/viewcvs.cgi/gnutls/?root=gnupg-mirror
   libtasn1       http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/libtasn1/?root=GNU+TLS+Library
                  http://josefsson.org/cgi-bin/viewcvs.cgi/libtasn1/?root=gnupg-mirror
   libksba        http://josefsson.org/cgi-bin/viewcvs.cgi/libksba/?root=gnupg-mirror
+  gss            http://josefsson.org/cgi-bin/viewcvs.cgi/gss/
+  libntlm        http://josefsson.org/cgi-bin/viewcvs.cgi/libntlm/
   libiconv       http://libiconv.cvs.sourceforge.net/libiconv/libiconv/
   gettext        http://cvs.savannah.gnu.org/viewcvs/gettext/?root=gettext
   findutils      http://cvs.savannah.gnu.org/viewcvs/findutils/?root=findutils
