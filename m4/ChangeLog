@@ -1,3 +1,8 @@
+2006-08-11  Bruno Haible  <bruno@clisp.org>
+
+	* wcwidth.m4 (gl_FUNC_WCWIDTH): Include <stdio.h> and <time.h> before
+	<wchar.h>. Needed for OSF/1 and BSD/OS.
+
 2006-08-10  Jim Meyering  <jim@meyering.net>
 
 	* cycle-check.m4: New file.
