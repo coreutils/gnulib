@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.3 2006-06-19 20:40:26 karl Exp $
+# $Id: Makefile,v 1.4 2006-08-11 06:39:41 rwild Exp $
 # Makefile for gnulib doc.  
 # Copyright (C) 2004, 2006 Free Software Foundation, Inc.
 #
@@ -16,3 +16,5 @@ all: info html dvi
 info: $(doc).info
 html: $(doc).html
 dvi: $(doc).dvi
+
+standards.info standards.html standards.dvi: standards.texi make-stds.texi
