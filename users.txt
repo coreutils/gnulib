@@ -28,6 +28,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   pspp           http://cvs.savannah.gnu.org/viewcvs/pspp/?root=pspp
   shishi         http://josefsson.org/cgi-bin/viewcvs.cgi/shishi/
   tar            http://cvs.savannah.gnu.org/viewcvs/tar/?root=tar
+  texinfo        http://cvs.savannah.gnu.org/viewcvs/tar/?root=texinfo
 
 The following packages appear to be using gnulib without gnulib-tool:
 
