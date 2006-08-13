@@ -30,7 +30,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   tar            http://cvs.savannah.gnu.org/viewcvs/tar/?root=tar
   texinfo        http://cvs.savannah.gnu.org/viewcvs/tar/?root=texinfo
 
-The following packages appear to be using gnulib without gnulib-tool:
+The following packages are using gnulib without gnulib-tool:
 
   coreutils
 
