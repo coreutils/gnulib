@@ -1,3 +1,11 @@
+2006-08-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* check-module: Add copyright notice.  Output a copyright
+	notice if "--version" is specified.
+	* modules/COPYING: New file.
+	* tests/test-getaddrinfo.c: Add copyright notice.
+	* tests/test-verify.c: Likewise.
+
 2006-08-11  Eric Blake  <ebb9@byu.net>
 
 	* users.txt: Sort.  Add tar.

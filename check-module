@@ -1,4 +1,24 @@
 #!/usr/bin/perl -w
+# Check a gnulib module.
+
+# Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+
+# This file is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
+# 02110-1301, USA.
+
+
 # Read a module description file and derive the set of files
 # included directly by any .c or .h file listed in the `Files:' section.
 # Take the union of all such sets for any dependent modules.
@@ -21,7 +41,12 @@ use strict;
 use Getopt::Long;
 #use Coda;
 
-(my $VERSION = '$Revision: 1.4 $ ') =~ tr/[0-9].//cd;
+my $COPYRIGHT_NOTICE = "Copyright (C) 2006 Free Software Foundation, Inc.\n".
+"This is free software.  You may redistribute copies of it under the terms of\n".
+"the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n".
+"There is NO WARRANTY, to the extent permitted by law.\n";
+
+(my $VERSION = '$Revision: 1.5 $ ') =~ tr/[0-9].//cd;
 (my $ME = $0) =~ s|.*/||;
 
 use constant ST_INIT => 1;
@@ -237,7 +262,7 @@ sub check_module ($)
   GetOptions
     (
      help => sub { usage 0 },
-     version => sub { print "$ME version $VERSION\n"; exit },
+     version => sub { print "$ME version $VERSION\n$COPYRIGHT_NOTICE"; exit },
     ) or usage 1;
 
   @ARGV < 1

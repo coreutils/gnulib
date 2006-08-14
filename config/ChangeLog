@@ -1,3 +1,7 @@
+2006-08-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclistvars.sh: Add copyright notice.
+
 2006-08-12  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt (ssize_t.m4, sig_atomic_t.m4, signalblocking.m4):

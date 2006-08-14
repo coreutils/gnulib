@@ -1,6 +1,24 @@
-# $Id: srclistvars.sh,v 1.26 2006-08-08 16:15:45 karl Exp $
+# $Id: srclistvars.sh,v 1.27 2006-08-14 18:28:31 eggert Exp $
 # Variables for srclist-update and srclist.txt.
 # Will change for each user.
+
+# Copyright (C) 2002, 2003, 2004 2005, 2006 Free Software Foundation,
+# Inc.
+
+# This file is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA
+# 02110-1301, USA.
 
 case $LOGNAME in
 jas | eggert)

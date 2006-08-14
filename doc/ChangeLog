@@ -1,5 +1,8 @@
 2006-08-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* getdate.texi: Update FDL version from 1.1 to 1.2.
+	* quote.texi: Add copyright notice.
+
 	* solaris-versions: Add SunOS 5.10, SunOS 1.x, SunOS 4.0, SunOS
 	4.0.x, SunOS 4.1.1.1, SunOS 4.1.1_U1, SunOS 4.1.3B.  SunOS 4.1.3
 	was Solaris 1.1A.  Remove space before B in Solaris 1.1.1B.
