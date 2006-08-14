@@ -1,5 +1,9 @@
 2006-08-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* users.txt: Add bison, diffutils, libprelude, prelude-lml,
+	prelude-manager.  User shorter URLs for GNU projects, without '?'.
+	Add copyright notice.
+
 	* check-module: Add copyright notice.  Output a copyright
 	notice if "--version" is specified.
 	* modules/COPYING: New file.
