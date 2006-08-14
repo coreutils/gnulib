@@ -1,3 +1,12 @@
+2006-08-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* solaris-versions: Add SunOS 5.10, SunOS 1.x, SunOS 4.0, SunOS
+	4.0.x, SunOS 4.1.1.1, SunOS 4.1.1_U1, SunOS 4.1.3B.  SunOS 4.1.3
+	was Solaris 1.1A.  Remove space before B in Solaris 1.1.1B.
+	Mention SunOS 5.11.  Mention that everything before SunOS 5.7
+	is now obsolete, and give a pointer to the Sun list.
+	Add copyright notice.
+
 2006-08-11  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* Makefile (standards.info standards.html standards.dvi):
