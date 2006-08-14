@@ -1,9 +1,9 @@
-\input texinfo @c -*-texinfo-*-
+x\input texinfo @c -*-texinfo-*-
 @c %**start of header
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate July 9, 2006
+@set lastupdate August 14, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -36,7 +36,7 @@ Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
 2001, 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.1
+under the terms of the GNU Free Documentation License, Version 1.2
 or any later version published by the Free Software Foundation;
 with no Invariant Sections, with no
 Front-Cover Texts, and with no Back-Cover Texts.
