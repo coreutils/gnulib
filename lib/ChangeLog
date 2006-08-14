@@ -1,3 +1,13 @@
+2006-08-14  Eric Blake  <ebb9@byu.net>
+
+	Import the following change from libc:
+
+	2006-08-12  Ulrich Drepper  <drepper@redhat.com>
+
+	Upstream bug 2997.
+	* misc/error.c: Add space between program name and message if file
+	name is missing.
+
 2006-08-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* pipe-safer.c (pipe_safer): Fix misspelling: HAVE_FUNC_PIPE ->
