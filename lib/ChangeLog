@@ -1,5 +1,15 @@
 2006-08-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Change copyright notice from LGPL 2 to GPL 2, since that's the
+	standard form used in the gnulib repository.
+	* lock.c: LGPL -> GPL.
+	* lock.h: Likewise.
+	* strnlen1.c: Likewise.
+	* strnlen1.h: Likewise.
+	* tls.c: Likewise.
+	* tls.h: Likewise.
+	* tmpdir.c: Likewise.
+
 	* TODO: Remove; this belongs only in coreutils.
 
 2006-08-14  Eric Blake  <ebb9@byu.net>

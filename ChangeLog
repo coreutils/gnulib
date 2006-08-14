@@ -1,5 +1,11 @@
 2006-08-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Change copyright notice from LGPL 2 to GPL 2, since that's the
+	standard form used in the gnulib repository.
+	* tests/test-lock.c: Likewise.
+	* tests/test-stdint.c: Likewise.
+	* tests/test-tls.c: Likewise.
+
 	* users.txt: Add bison, diffutils, libprelude, prelude-lml,
 	prelude-manager.  User shorter URLs for GNU projects, without '?'.
 	Add copyright notice.

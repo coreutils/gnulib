@@ -1,5 +1,17 @@
 2006-08-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Add copyright notices to long-enough files that lack them, since
+	otherwise the files aren't clearly free.  Use the same notice that
+	getdate.texi already uses.
+	* alloca-opt.texi: Add copyright notice.
+	* alloca.texi: Likewise.
+	* ctime.texi: Likewise.
+	* functions.texi: Likewise.
+	* gcd.texi: Likewise.
+	* gnulib-tool.texi: Likewise.
+	* inet_ntoa.texi: Likewise.
+	* visibility.texi: Likewise.
+
 	* getdate.texi: Update FDL version from 1.1 to 1.2.
 	* quote.texi: Add copyright notice.
 
