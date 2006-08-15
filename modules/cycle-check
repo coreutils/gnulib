@@ -12,6 +12,7 @@ same-inode
 stdbool
 
 configure.ac:
+gl_CYCLE_CHECK
 
 Makefile.am:
 
