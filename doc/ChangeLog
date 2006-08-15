@@ -1,3 +1,7 @@
+2006-08-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* regexprops-generic.texi: Add a copyright notice.
+
 2006-08-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Add copyright notices to long-enough files that lack them, since
