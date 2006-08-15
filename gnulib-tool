@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-10 15:05:20 $'
+cvsdatestamp='$Date: 2006-08-15 11:52:39 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -619,7 +619,7 @@ func_all_modules ()
       (cd "$local_gnulib_dir/modules" && ls -1 | sed -e 's,\.diff$,,')
     fi
   } \
-      | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^README$/d' -e '/^TEMPLATE$/d' -e '/^TEMPLATE-TESTS$/d' -e '/~$/d' \
+      | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^COPYING$/d' -e '/^README$/d' -e '/^TEMPLATE$/d' -e '/^TEMPLATE-TESTS$/d' -e '/~$/d' \
       | sed -e '/-tests$/d' \
       | LC_ALL=C sort \
       | LC_ALL=C uniq
@@ -634,6 +634,7 @@ func_verify_module ()
               && test -f "$local_gnulib_dir/modules/$module"; }; } \
      || test "CVS" = "$module" \
      || test "ChangeLog" = "$module" \
+     || test "COPYING" = "$module" \
      || test "README" = "$module" \
      || test "TEMPLATE" = "$module" \
      || test "TEMPLATE-TESTS" = "$module"; then
