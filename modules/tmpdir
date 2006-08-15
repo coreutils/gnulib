@@ -19,7 +19,7 @@ Include:
 "tmpdir.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Bruno Haible
