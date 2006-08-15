@@ -1,9 +1,9 @@
-x\input texinfo @c -*-texinfo-*-
+\input texinfo @c -*-texinfo-*-
 @c %**start of header
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate August 14, 2006
+@set lastupdate August 15, 2006
 @c %**end of header
 
 @dircategory GNU organization
