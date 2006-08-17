@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate August 15, 2006
+@set lastupdate August 17, 2006
 @c %**end of header
 
 @dircategory GNU organization
