@@ -2,6 +2,7 @@ Description:
 Open a file at a directory.
 
 Files:
+lib/at-func.c
 lib/mkdirat.c
 lib/openat.c
 lib/openat.h

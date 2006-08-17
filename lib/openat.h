@@ -75,14 +75,45 @@ DIR *fdopendir (int fd);
 int fstatat (int fd, char const *file, struct stat *st, int flag);
 # define unlinkat __OPENAT_ID (unlinkat)
 int unlinkat (int fd, char const *file, int flag);
+bool openat_needs_fchdir (void);
 
 #else
 
 # define openat_permissive(Fd, File, Flags, Mode, Cwd_errno) \
     openat (Fd, File, Flags, Mode)
+# define openat_needs_fchdir() false
 
 #endif
 
 int mkdirat (int fd, char const *file, mode_t mode);
 void openat_restore_fail (int) ATTRIBUTE_NORETURN;
 void openat_save_fail (int) ATTRIBUTE_NORETURN;
+int fchmodat (int fd, char const *file, mode_t mode, int flag);
+int fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag);
+
+/* Using these function names makes application code
+   slightly more readable than it would be with
+   fchownat (..., 0) or fchownat (..., AT_SYMLINK_NOFOLLOW).  */
+static inline int
+chownat (int fd, char const *file, uid_t owner, gid_t group)
+{
+  return fchownat (fd, file, owner, group, 0);
+}
+
+static inline int
+lchownat (int fd, char const *file, uid_t owner, gid_t group)
+{
+  return fchownat (fd, file, owner, group, AT_SYMLINK_NOFOLLOW);
+}
+
+static inline int
+chmodat (int fd, char const *file, mode_t mode)
+{
+  return fchmodat (fd, file, mode, 0);
+}
+
+static inline int
+lchmodat (int fd, char const *file, mode_t mode)
+{
+  return fchmodat (fd, file, mode, AT_SYMLINK_NOFOLLOW);
+}

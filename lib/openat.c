@@ -23,21 +23,20 @@
 
 #include "openat.h"
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
-#include "fcntl--.h"
-#include "openat-priv.h"
-#include "save-cwd.h"
-#include "unistd--.h"
-
 #include <stdarg.h>
 #include <stddef.h>
-#include <errno.h>
+
+#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
+#include "fcntl--.h"
+#include "lstat.h"
+#include "openat-priv.h"
+#include "save-cwd.h"
 
 /* Replacement for Solaris' openat function.
    <http://www.google.com/search?q=openat+site:docs.sun.com>
-   Simulate it by doing save_cwd/fchdir/open/restore_cwd.
-   If either the save_cwd or the restore_cwd fails (relatively unlikely,
-   and usually indicative of a problem that deserves close attention),
+   First, try to simulate it via open ("/proc/self/fd/FD/FILE").
+   Failing that, simulate it by doing save_cwd/fchdir/open/restore_cwd.
+   If either the save_cwd or the restore_cwd fails (relatively unlikely),
    then give a diagnostic and exit nonzero.
    Otherwise, upon failure, set errno and return -1, as openat does.
    Upon successful completion, return a file descriptor.  */
@@ -126,13 +125,33 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
   return err;
 }
 
+/* Return true if our openat implementation must resort to
+   using save_cwd and restore_cwd.  */
+bool
+openat_needs_fchdir (void)
+{
+  int fd2;
+  int fd = open ("/", O_RDONLY);
+  char *proc_file;
+
+  if (fd < 0)
+    return true;
+  BUILD_PROC_NAME (proc_file, fd, ".");
+  fd2 = open (proc_file, O_RDONLY);
+  close (fd);
+  if (0 <= fd2)
+    close (fd2);
+
+  return fd2 < 0;
+}
+
 #if !HAVE_FDOPENDIR
 
 /* Replacement for Solaris' function by the same name.
    <http://www.google.com/search?q=fdopendir+site:docs.sun.com>
-   Simulate it by doing save_cwd/fchdir/opendir(".")/restore_cwd.
-   If either the save_cwd or the restore_cwd fails (relatively unlikely,
-   and usually indicative of a problem that deserves close attention),
+   First, try to simulate it via opendir ("/proc/self/fd/FD").  Failing
+   that, simulate it by doing save_cwd/fchdir/opendir(".")/restore_cwd.
+   If either the save_cwd or the restore_cwd fails (relatively unlikely),
    then give a diagnostic and exit nonzero.
    Otherwise, this function works just like Solaris' fdopendir.
 
@@ -186,102 +205,60 @@ fdopendir (int fd)
 
 /* Replacement for Solaris' function by the same name.
    <http://www.google.com/search?q=fstatat+site:docs.sun.com>
-   Simulate it by doing save_cwd/fchdir/(stat|lstat)/restore_cwd.
-   If either the save_cwd or the restore_cwd fails (relatively unlikely,
-   and usually indicative of a problem that deserves close attention),
+   First, try to simulate it via l?stat ("/proc/self/fd/FD/FILE").
+   Failing that, simulate it via save_cwd/fchdir/(stat|lstat)/restore_cwd.
+   If either the save_cwd or the restore_cwd fails (relatively unlikely),
    then give a diagnostic and exit nonzero.
    Otherwise, this function works just like Solaris' fstatat.  */
-int
-fstatat (int fd, char const *file, struct stat *st, int flag)
-{
-  struct saved_cwd saved_cwd;
-  int saved_errno;
-  int err;
 
-  if (fd == AT_FDCWD || IS_ABSOLUTE_FILE_NAME (file))
-    return (flag == AT_SYMLINK_NOFOLLOW
-	    ? lstat (file, st)
-	    : stat (file, st));
-
-  {
-    char *proc_file;
-    BUILD_PROC_NAME (proc_file, fd, file);
-    err = (flag == AT_SYMLINK_NOFOLLOW
-	   ? lstat (proc_file, st)
-	   : stat (proc_file, st));
-    /* If the syscall succeeds, or if it fails with an unexpected
-       errno value, then return right away.  Otherwise, fall through
-       and resort to using save_cwd/restore_cwd.  */
-    if (0 <= err || ! EXPECTED_ERRNO (errno))
-      return err;
-  }
-
-  if (save_cwd (&saved_cwd) != 0)
-    openat_save_fail (errno);
-
-  err = fchdir (fd);
-  saved_errno = errno;
-
-  if (! err)
-    {
-      err = (flag == AT_SYMLINK_NOFOLLOW
-	     ? lstat (file, st)
-	     : stat (file, st));
-      saved_errno = errno;
-
-      if (restore_cwd (&saved_cwd) != 0)
-	openat_restore_fail (errno);
-    }
-
-  free_cwd (&saved_cwd);
-  errno = saved_errno;
-  return err;
-}
+#define AT_FUNC_NAME fstatat
+#define AT_FUNC_F1 lstat
+#define AT_FUNC_F2 stat
+#define AT_FUNC_USE_F1_COND flag == AT_SYMLINK_NOFOLLOW
+#define AT_FUNC_POST_FILE_PARAM_DECLS , struct stat *st, int flag
+#define AT_FUNC_POST_FILE_ARGS        , st
+#include "at-func.c"
+#undef AT_FUNC_NAME
+#undef AT_FUNC_F1
+#undef AT_FUNC_F2
+#undef AT_FUNC_USE_F1_COND
+#undef AT_FUNC_POST_FILE_PARAM_DECLS
+#undef AT_FUNC_POST_FILE_ARGS
 
 /* Replacement for Solaris' function by the same name.
    <http://www.google.com/search?q=unlinkat+site:docs.sun.com>
-   Simulate it by doing save_cwd/fchdir/(unlink|rmdir)/restore_cwd.
-   If either the save_cwd or the restore_cwd fails (relatively unlikely,
-   and usually indicative of a problem that deserves close attention),
+   First, try to simulate it via (unlink|rmdir) ("/proc/self/fd/FD/FILE").
+   Failing that, simulate it via save_cwd/fchdir/(unlink|rmdir)/restore_cwd.
+   If either the save_cwd or the restore_cwd fails (relatively unlikely),
    then give a diagnostic and exit nonzero.
    Otherwise, this function works just like Solaris' unlinkat.  */
-int
-unlinkat (int fd, char const *file, int flag)
-{
-  struct saved_cwd saved_cwd;
-  int saved_errno;
-  int err;
 
-  if (fd == AT_FDCWD || IS_ABSOLUTE_FILE_NAME (file))
-    return (flag == AT_REMOVEDIR ? rmdir (file) : unlink (file));
+#define AT_FUNC_NAME unlinkat
+#define AT_FUNC_F1 rmdir
+#define AT_FUNC_F2 unlink
+#define AT_FUNC_USE_F1_COND flag == AT_REMOVEDIR
+#define AT_FUNC_POST_FILE_PARAM_DECLS , int flag
+#define AT_FUNC_POST_FILE_ARGS        /* empty */
+#include "at-func.c"
+#undef AT_FUNC_NAME
+#undef AT_FUNC_F1
+#undef AT_FUNC_F2
+#undef AT_FUNC_USE_F1_COND
+#undef AT_FUNC_POST_FILE_PARAM_DECLS
+#undef AT_FUNC_POST_FILE_ARGS
 
-  {
-    char *proc_file;
-    BUILD_PROC_NAME (proc_file, fd, file);
-    err = (flag == AT_REMOVEDIR ? rmdir (proc_file) : unlink (proc_file));
-    /* If the syscall succeeds, or if it fails with an unexpected
-       errno value, then return right away.  Otherwise, fall through
-       and resort to using save_cwd/restore_cwd.  */
-    if (0 <= err || ! EXPECTED_ERRNO (errno))
-      return err;
-  }
+/* Replacement for Solaris' function by the same name.
+   Invoke chown or lchown on file, FILE, using OWNER and GROUP, in the
+   directory open on descriptor FD.  If FLAG is AT_SYMLINK_NOFOLLOW, then
+   use lchown, otherwise, use chown.  If possible, do it without changing
+   the working directory.  Otherwise, resort to using save_cwd/fchdir,
+   then mkdir/restore_cwd.  If either the save_cwd or the restore_cwd
+   fails, then give a diagnostic and exit nonzero.  */
 
-  if (save_cwd (&saved_cwd) != 0)
-    openat_save_fail (errno);
-
-  err = fchdir (fd);
-  saved_errno = errno;
-
-  if (! err)
-    {
-      err = (flag == AT_REMOVEDIR ? rmdir (file) : unlink (file));
-      saved_errno = errno;
-
-      if (restore_cwd (&saved_cwd) != 0)
-	openat_restore_fail (errno);
-    }
-
-  free_cwd (&saved_cwd);
-  errno = saved_errno;
-  return err;
-}
+#define AT_FUNC_NAME fchownat
+#define AT_FUNC_F1 lchown
+#define AT_FUNC_F2 chown
+#define AT_FUNC_USE_F1_COND flag == AT_SYMLINK_NOFOLLOW
+#define AT_FUNC_POST_FILE_PARAM_DECLS , uid_t owner, gid_t group, int flag
+#define AT_FUNC_POST_FILE_ARGS        , owner, group
+#include "at-func.c"

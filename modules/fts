@@ -12,8 +12,10 @@ cycle-check
 dirfd
 hash
 lstat
+openat
 stdbool
 fcntl-safer
+unistd-safer
 
 configure.ac:
 gl_FUNC_FTS

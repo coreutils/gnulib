@@ -1,3 +1,20 @@
+2006-08-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Update from coreutils.
+
+	2006-08-15  Jim Meyering  <jim@meyering.net>
+
+	* openat.m4 (gl_FUNC_OPENAT): Add at-func.c via AC_LIBSOURCES.
+
+	2006-01-17  Jim Meyering  <jim@meyering.net>
+
+	* fts.m4 (gl_FUNC_FTS_CORE): Depend on gl_FUNC_OPENAT.
+
+	2006-01-11  Jim Meyering  <jim@meyering.net>
+
+	* openat.m4 (gl_FUNC_OPENAT): Require and compile fchmodat.c.
+	Check for the lchmod function.
+
 2006-08-11  Bruno Haible  <bruno@clisp.org>
 
 	* wcwidth.m4 (gl_FUNC_WCWIDTH): Include <stdio.h> and <time.h> before

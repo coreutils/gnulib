@@ -1,6 +1,6 @@
 /* Traverse a file hierarchy.
 
-   Copyright (C) 2004, 2005 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -73,8 +73,10 @@ typedef struct {
 	dev_t fts_dev;			/* starting device # */
 	char *fts_path;			/* file name for this descent */
 	int fts_rfd;			/* fd for root */
+	int fts_cwd_fd;			/* the file descriptor on which the
+					   virtual cwd is open, or AT_FDCWD */
 	size_t fts_pathlen;		/* sizeof(path) */
-	size_t fts_nitems;			/* elements in the sort array */
+	size_t fts_nitems;		/* elements in the sort array */
 	int (*fts_compar) (struct _ftsent const **, struct _ftsent const **);
 					/* compare fn */
 
@@ -112,7 +114,16 @@ typedef struct {
      mode of cycle detection: FTS_TIGHT_CYCLE_CHECK.  */
 # define FTS_TIGHT_CYCLE_CHECK	0x0100
 
-# define FTS_OPTIONMASK	0x01ff		/* valid user option mask */
+  /* Use this flag to enable semantics with which the parent
+     application may be made both more efficient and more robust.
+     Whereas the default is to visit each directory in a recursive
+     traversal (via chdir), using this flag makes it so the initial
+     working directory is never changed.  Instead, these functions
+     perform the traversal via a virtual working directory, maintained
+     through the file descriptor member, fts_cwd_fd.  */
+# define FTS_CWDFD		0x0200
+
+# define FTS_OPTIONMASK	0x03ff		/* valid user option mask */
 
 # define FTS_NAMEONLY	0x1000		/* (private) child names only */
 # define FTS_STOP	0x2000		/* (private) unrecoverable error */
@@ -134,9 +145,10 @@ typedef struct {
 		   of thousands.  */
 		struct hash_table *ht;
 
-		/* This data structure uses lazy checking, as done by rm via
-	           cycle-check.c.  It's the default, but it's not appropriate
-	           for programs like du.  */
+		/* FIXME: rename these two members to have the fts_ prefix */
+		/* This data structure uses a lazy cycle-detection algorithm,
+		   as done by rm via cycle-check.c.  It's the default,
+		   but it's not appropriate for programs like du.  */
 		struct cycle_check_state *state;
 	} fts_cycle;
 # endif
