@@ -1,3 +1,9 @@
+2006-08-18  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	* bison-i18n.m4 (BISON_I18N): Also handle the case where yacc exists
+	and is a script that invokes bison. Tighten the code. Add comments.
+
 2006-08-18  Bruno Haible  <bruno@clisp.org>
 
 	* bison-i18n.m4: New file, from bison.
