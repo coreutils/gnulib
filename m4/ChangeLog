@@ -1,5 +1,9 @@
 2006-08-18  Bruno Haible  <bruno@clisp.org>
 
+	* bison-i18n.m4: New file, from bison.
+
+2006-08-18  Bruno Haible  <bruno@clisp.org>
+
 	* ls-mntd-fs.m4 (gl_LIST_MOUNTED_FILE_SYSTEMS): Also check for
 	sys/statvfs.h. When getmntinfo was found, check its declaration and
 	set either MOUNTED_GETMNTINFO or MOUNTED_GETMNTINFO2 depending on it.
