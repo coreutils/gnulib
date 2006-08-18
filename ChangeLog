@@ -1,3 +1,8 @@
+2006-08-18  Bruno Haible  <bruno@clisp.org>
+
+	* modules/bison-i18n: New file.
+	* MODULES.html.sh (Internationalization functions): Add it.
+
 2006-08-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/cycle-check (configure.ac): Add gl_CYCLE_CHECK.

@@ -2005,6 +2005,7 @@ func_all_modules ()
   func_module utf8-ucs4
   func_module utf16-ucs4
   func_module linebreak
+  func_module bison-i18n
   func_end_table
 
   element="Executing programs"
