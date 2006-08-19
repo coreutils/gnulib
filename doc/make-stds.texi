@@ -39,8 +39,8 @@ conventions.
 * Makefile Basics::             General conventions for Makefiles.
 * Utilities in Makefiles::      Utilities to be used in Makefiles.
 * Command Variables::           Variables for specifying commands.
-* Directory Variables::         Variables for installation directories.
 * DESTDIR::                     Supporting staged installs.
+* Directory Variables::         Variables for installation directories.
 * Standard Targets::            Standard targets for users.
 * Install Command Categories::  Three categories of commands in the `install'
                                   rule: normal, pre-install and post-install.
@@ -296,9 +296,8 @@ $(INSTALL_PROGRAM) foo $(DESTDIR)$(bindir)/foo
 $(INSTALL_DATA) libfoo.a $(DESTDIR)$(libdir)/libfoo.a
 @end example
 
-The @code{DESTDIR} variable is specified by the user, either to the
-@file{configure} script or, more commonly, on the @code{make} command
-line.  For example:
+The @code{DESTDIR} variable is specified by the user on the @code{make}
+command line.  For example:
 
 @example
 make DESTDIR=/tmp/stage install

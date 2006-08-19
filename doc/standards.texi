@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate August 17, 2006
+@set lastupdate August 19, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -2964,16 +2964,16 @@ sentence framework.
 
 Here is an example of what not to do:
 
-@example
+@smallexample
 printf ("%s is full", capacity > 5000000 ? "disk" : "floppy disk");
-@end example
+@end smallexample
 
 If you apply gettext to all strings, like this,
 
-@example
+@smallexample
 printf (gettext ("%s is full"),
         capacity > 5000000 ? gettext ("disk") : gettext ("floppy disk"));
-@end example
+@end smallexample
 
 @noindent
 the translator will hardly know that "disk" and "floppy disk" are meant to
@@ -3761,8 +3761,8 @@ the shell script
 
 @cindex optional features, configure-time
 Other options are permitted to specify in more detail the software
-or hardware present on the machine, and include or exclude optional
-parts of the package:
+or hardware present on the machine, to include or exclude optional parts
+of the package, or to adjust the name of some tools or arguments to them:
 
 @table @samp
 @item --enable-@var{feature}@r{[}=@var{parameter}@r{]}
@@ -3795,14 +3795,32 @@ and
 Do not use a @samp{--with} option to specify the file name to use to
 find certain files.  That is outside the scope of what @samp{--with}
 options are for.
+
+@item @var{variable}=@var{value}
+Set the value of the variable @var{variable} to @var{value}.  This is
+used to override the default values of commands or arguments in the
+build process.  For example, the user could issue @samp{configure
+CFLAGS=-g CXXFLAGS=-g} to build with debugging information and without
+the default optimization.
+
+Specifying variables as arguments to @code{configure}, like this:
+@example
+./configure CC=gcc
+@end example
+is preferable to setting them in environment variables:
+@example
+CC=gcc ./configure
+@end example
+as it helps to recreate the same configuration later with
+@file{config.status}.
 @end table
 
-All @code{configure} scripts should accept all of these ``detail''
-options, whether or not they make any difference to the particular
-package at hand.  In particular, they should accept any option that
-starts with @samp{--with-} or @samp{--enable-}.  This is so users will
-be able to configure an entire GNU source tree at once with a single set
-of options.
+All @code{configure} scripts should accept all of the ``detail''
+options and the variable settings, whether or not they make any
+difference to the particular package at hand.  In particular, they
+should accept any option that starts with @samp{--with-} or
+@samp{--enable-}.  This is so users will be able to configure an
+entire GNU source tree at once with a single set of options.
 
 You will note that the categories @samp{--with-} and @samp{--enable-}
 are narrow: they @strong{do not} provide a place for any sort of option
