@@ -3,6 +3,7 @@ Open a file at a directory.
 
 Files:
 lib/at-func.c
+lib/fchmodat.c
 lib/mkdirat.c
 lib/openat.c
 lib/openat.h

@@ -1,3 +1,8 @@
+2006-08-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/openat (Files): Add lib/fchmodat.c.
+	Fixes problem reported by Jay Youngman.
+
 2006-08-18  Bruno Haible  <bruno@clisp.org>
 
 	* modules/bison-i18n: New file.
