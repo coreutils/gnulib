@@ -12,11 +12,12 @@ lib/openat-priv.h
 m4/openat.m4
 
 Depends-on:
-save-cwd
 gettext-h
 dirname
 extensions
+lstat
 intprops
+save-cwd
 
 configure.ac:
 gl_FUNC_OPENAT

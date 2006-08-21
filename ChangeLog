@@ -1,3 +1,7 @@
+2006-08-21  Jim Meyering  <jim@meyering.net>
+
+	* modules/openat (Depends-on): Add lstat.  Alphabetize.
+
 2006-08-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Add and change modules to make it easier for coreutils to use
