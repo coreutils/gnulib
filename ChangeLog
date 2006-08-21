@@ -1,5 +1,8 @@
 2006-08-21  Jim Meyering  <jim@meyering.net>
 
+	* check-module (find_included_lib_files): Add at-func.c to the
+	ok-to-include-more-than-once white list.
+
 	* modules/openat (Depends-on): Add lstat.  Alphabetize.
 
 2006-08-20  Paul Eggert  <eggert@cs.ucla.edu>

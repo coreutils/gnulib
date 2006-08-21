@@ -46,7 +46,7 @@ my $COPYRIGHT_NOTICE = "Copyright (C) 2006 Free Software Foundation, Inc.\n".
 "the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n".
 "There is NO WARRANTY, to the extent permitted by law.\n";
 
-(my $VERSION = '$Revision: 1.5 $ ') =~ tr/[0-9].//cd;
+(my $VERSION = '$Revision: 1.6 $ ') =~ tr/[0-9].//cd;
 (my $ME = $0) =~ s|.*/||;
 
 use constant ST_INIT => 1;
@@ -156,7 +156,8 @@ sub find_included_lib_files ($)
   my ($file) = @_;
 
   # Special cases...
-  my %special_non_dup = ( 'fnmatch_loop.c' => 1, 'regex.c' => 1 );
+  my %special_non_dup = ( 'fnmatch_loop.c' => 1,
+			  'regex.c' => 1, 'at-func.c' => 1 );
 
   my %inc;
   open FH, '<', $file
