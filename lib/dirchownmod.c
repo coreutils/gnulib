@@ -40,6 +40,12 @@
 # define O_NOFOLLOW 0
 #endif
 
+#ifndef HAVE_FCHMOD
+# define HAVE_FCHMOD 0
+# undef fchmod
+# define fchmod(fd, mode) (-1)
+#endif
+
 /* Change the ownership and mode bits of the directory DIR.
 
    If MKDIR_MODE is not (mode_t) -1, mkdir (DIR, MKDIR_MODE) has just
@@ -134,7 +140,7 @@ dirchownmod (char const *dir, mode_t mkdir_mode,
 	    {
 	      mode_t chmod_mode =
 		mode | (dir_mode & CHMOD_MODE_BITS & ~mode_bits);
-	      result = (0 <= fd
+	      result = (HAVE_FCHMOD && 0 <= fd
 			? fchmod (fd, chmod_mode)
 			: mkdir_mode != (mode_t) -1
 			? lchmod (dir, chmod_mode)

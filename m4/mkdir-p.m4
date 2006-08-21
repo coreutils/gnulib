@@ -1,4 +1,4 @@
-# mkdir-p.m4 serial 12
+# mkdir-p.m4 serial 13
 dnl Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,4 +12,5 @@ AC_DEFUN([gl_MKDIR_PARENTS],
   dnl Prerequisites of lib/dirchownmod.c.
   AC_REQUIRE([gl_FUNC_LCHMOD])
   AC_REQUIRE([gl_FUNC_LCHOWN])
+  AC_CHECK_FUNCS_ONCE([fchmod])
 ])

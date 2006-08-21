@@ -1,5 +1,7 @@
 2006-08-21  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* mkdir-p.m4 (gl_MKDIR_PARENTS): Check for fchmod.
+
 	* argmatch.m4: New file, from coreutils with AC_LIBSOURCES removed.
 	* dev-ino.m4, same-inode.m4: Remove.
 

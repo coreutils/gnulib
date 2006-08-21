@@ -1,4 +1,10 @@
-2006-08-19  Bruno Haible  <bruno@clisp.org>
+2006-08-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	BeOS portability.
+	* dirchownmod.c (dirchownmod): Don't use fchmod if it doesn't exist.
+	Problem reported by Bruno Haible.
+
+2006-08-21  Bruno Haible  <bruno@clisp.org>
 
 	BeOS portability.
 	* mbchar.h: Include <wctype.h> only if it exists.
