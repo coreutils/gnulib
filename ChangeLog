@@ -1,3 +1,9 @@
+2006-08-21  Mark D. Baushke  <mdb@gnu.org>
+            Bruno Haible <bruno@clisp.org>
+
+	* gnulib-tool (func_verify_module): Work around Sun's non-POSIX 1003.2
+	/bin/sh understanding of '!' conditional negation.
+
 2006-08-21  Jim Meyering  <jim@meyering.net>
 
 	* modules/openat (Depends-on): Really alphabetize.

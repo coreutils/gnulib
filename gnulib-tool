@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-15 11:52:39 $'
+cvsdatestamp='$Date: 2006-08-21 13:30:55 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -629,15 +629,18 @@ func_all_modules ()
 # verifies a module name
 func_verify_module ()
 {
-  if ! { test -f "$gnulib_dir/modules/$module" \
-         || { test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules" \
-              && test -f "$local_gnulib_dir/modules/$module"; }; } \
-     || test "CVS" = "$module" \
-     || test "ChangeLog" = "$module" \
-     || test "COPYING" = "$module" \
-     || test "README" = "$module" \
-     || test "TEMPLATE" = "$module" \
-     || test "TEMPLATE-TESTS" = "$module"; then
+  if { test -f "$gnulib_dir/modules/$module" \
+       || { test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules" \
+            && test -f "$local_gnulib_dir/modules/$module"; }; } \
+     && test "CVS" != "$module" \
+     && test "ChangeLog" != "$module" \
+     && test "COPYING" != "$module" \
+     && test "README" != "$module" \
+     && test "TEMPLATE" != "$module" \
+     && test "TEMPLATE-TESTS" != "$module"; then
+    # OK, $module is a correct module name.
+    :
+  else
     echo "gnulib-tool: module $module doesn't exist" 1>&2
     module=
   fi
