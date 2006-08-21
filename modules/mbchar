@@ -17,7 +17,7 @@ Makefile.am:
 lib_SOURCES += mbchar.h
 
 Include:
-#if HAVE_WCHAR_H && HAVE_WCTYPE_H
+#if HAVE_WCHAR_H
 #include "mbchar.h"
 #endif
 

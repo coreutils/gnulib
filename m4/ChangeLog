@@ -1,3 +1,9 @@
+2006-08-19  Bruno Haible  <bruno@clisp.org>
+
+	BeOS portability.
+	* mbchar.m4 (gl_MBCHAR): Compile mbchar.c also if <wctype.h> doesn't
+	exist.
+
 2006-08-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Remove files that are no longer needed by their respective modules.

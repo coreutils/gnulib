@@ -156,7 +156,10 @@
 #include <time.h>
 #include <wchar.h>
 
-#include <wctype.h>
+/* BeOS 5 has the functions but no <wctype.h>.  */
+#if HAVE_WCTYPE_H
+# include <wctype.h>
+#endif
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
    Assume all 12 functions are implemented the same way, or not at all.  */
 #if !defined iswalnum && !HAVE_ISWCNTRL

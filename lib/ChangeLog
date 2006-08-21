@@ -1,3 +1,8 @@
+2006-08-19  Bruno Haible  <bruno@clisp.org>
+
+	BeOS portability.
+	* mbchar.h: Include <wctype.h> only if it exists.
+
 2006-08-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* cycle-check.h: Include <stdint.h> unconditionally, since we
