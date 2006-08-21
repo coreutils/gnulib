@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-21 13:30:55 $'
+cvsdatestamp='$Date: 2006-08-21 18:18:25 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -898,12 +898,37 @@ func_emit_lib_Makefile_am ()
   # No need to generate dependencies since the sources are in gnulib, not here.
   echo "AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies"
   echo
+  (
+    for module in $modules; do
+      func_verify_nontests_module
+      if test -n "$module"; then
+        {
+          func_get_automake_snippet "$module" |
+            sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g'
+          if test "$module" = 'alloca'; then
+            echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"
+          fi
+        } > amsnippet.tmp
+        # Skip the contents if its entirely empty.
+        if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
+          echo "## begin gnulib module $module"
+          echo
+          cat amsnippet.tmp
+          echo "## end   gnulib module $module"
+          echo
+        fi
+        rm -f amsnippet.tmp
+      fi
+    done
+  ) > allsnippets.tmp
   echo "noinst_${perhapsLT}LIBRARIES = $libname.$libext"
   echo
   echo "${libname}_${libext}_SOURCES ="
   echo "${libname}_${libext}_LIBADD = @${perhapsLT}LIBOBJS@"
   echo "noinst_HEADERS ="
-  echo "pkgdata_DATA ="
+  if grep '^pkgdata_DATA *+=' allsnippets.tmp > /dev/null; then
+    echo "pkgdata_DATA ="
+  fi
   echo "EXTRA_DIST ="
   echo "BUILT_SOURCES ="
   echo "SUFFIXES ="
@@ -915,27 +940,7 @@ func_emit_lib_Makefile_am ()
   echo
   echo "AM_CPPFLAGS ="
   echo
-  for module in $modules; do
-    func_verify_nontests_module
-    if test -n "$module"; then
-      {
-        func_get_automake_snippet "$module" |
-          sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g'
-        if test "$module" = 'alloca'; then
-          echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"
-        fi
-      } > amsnippet.tmp
-      # Skip the contents if its entirely empty.
-      if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
-        echo "## begin gnulib module $module"
-        echo
-        cat amsnippet.tmp
-        echo "## end   gnulib module $module"
-        echo
-      fi
-      rm -f amsnippet.tmp
-    fi
-  done
+  cat allsnippets.tmp
   echo
   echo "mostlyclean-local: mostlyclean-generic"
   echo "	@test -z \"\$(MOSTLYCLEANDIRS)\" || \\"
@@ -946,6 +951,7 @@ func_emit_lib_Makefile_am ()
   echo "	  done"
   echo
   echo "# Makefile.am ends here"
+  rm -f allsnippets.tmp
 }
 
 # func_emit_tests_Makefile_am
@@ -973,6 +979,23 @@ func_emit_tests_Makefile_am ()
   echo
   echo "ACLOCAL_AMFLAGS = -I ${testsbase_inverse}/${m4base}"
   echo
+  (
+    for module in $modules; do
+      func_verify_tests_module
+      if test -n "$module"; then
+        func_get_automake_snippet "$module" > amsnippet.tmp
+        # Skip the contents if its entirely empty.
+        if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
+          echo "## begin gnulib module $module"
+          echo
+          cat amsnippet.tmp
+          echo "## end   gnulib module $module"
+          echo
+        fi
+        rm -f amsnippet.tmp
+      fi
+    done
+  ) > allsnippets.tmp
   # Nothing is being added to SUBDIRS; nevertheless the existence of this
   # variable is needed to avoid an error from automake:
   #   "AM_GNU_GETTEXT used but SUBDIRS not defined"
@@ -982,7 +1005,9 @@ func_emit_tests_Makefile_am ()
   echo "noinst_PROGRAMS ="
   echo "check_PROGRAMS ="
   echo "noinst_HEADERS ="
-  echo "pkgdata_DATA ="
+  if grep '^pkgdata_DATA *+=' allsnippets.tmp > /dev/null; then
+    echo "pkgdata_DATA ="
+  fi
   echo "EXTRA_DIST ="
   echo "BUILT_SOURCES ="
   echo "SUFFIXES ="
@@ -999,21 +1024,7 @@ func_emit_tests_Makefile_am ()
   echo
   echo "LDADD = ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext}"
   echo
-  for module in $modules; do
-    func_verify_tests_module
-    if test -n "$module"; then
-      func_get_automake_snippet "$module" > amsnippet.tmp
-      # Skip the contents if its entirely empty.
-      if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
-        echo "## begin gnulib module $module"
-        echo
-        cat amsnippet.tmp
-        echo "## end   gnulib module $module"
-        echo
-      fi
-      rm -f amsnippet.tmp
-    fi
-  done
+  cat allsnippets.tmp
   echo "# Clean up after Solaris cc."
   echo "clean-local:"
   echo "	rm -rf SunWS_cache"
@@ -1027,6 +1038,7 @@ func_emit_tests_Makefile_am ()
   echo "	  done"
   echo
   echo "# Makefile.am ends here"
+  rm -f allsnippets.tmp
 }
 
 # func_import modules
