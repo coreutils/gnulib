@@ -1,5 +1,7 @@
 2006-08-21  Jim Meyering  <jim@meyering.net>
 
+	* modules/openat (Depends-on): Really alphabetize.
+
 	* modules/acl (Depends-on): Add error and quote.
 
 	* check-module (find_included_lib_files): Add at-func.c to the
