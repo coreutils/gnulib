@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-21 18:18:25 $'
+cvsdatestamp='$Date: 2006-08-21 18:49:51 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -921,7 +921,14 @@ func_emit_lib_Makefile_am ()
       fi
     done
   ) > allsnippets.tmp
-  echo "noinst_${perhapsLT}LIBRARIES = $libname.$libext"
+  if grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *= *$libname\\.$libext\$" allsnippets.tmp > /dev/null; then
+    # One of the snippets already specifies an installation location for the
+    # library. Don't confuse automake by saying it should not be installed.
+    :
+  else
+    # By default, the generated library should not be installed.
+    echo "noinst_${perhapsLT}LIBRARIES = $libname.$libext"
+  fi
   echo
   echo "${libname}_${libext}_SOURCES ="
   echo "${libname}_${libext}_LIBADD = @${perhapsLT}LIBOBJS@"
