@@ -26,7 +26,7 @@
 
 /* mingw does not support symlinks, therefore it does not have lstat.  But
    without links, stat does just fine.  */
-#if ! HAVE_FUNC_LSTAT
+#if ! HAVE_LSTAT
 # define lstat stat
 #endif
 

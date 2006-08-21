@@ -1,5 +1,5 @@
-# posixver.m4 serial 7
-dnl Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+# posixver.m4 serial 8
+dnl Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -15,7 +15,7 @@ AC_DEFUN([gl_POSIXVER],
 # Set the default level of POSIX conformance at configure-time.
 # Build with `./configure DEFAULT_POSIX2_VERSION=199209 ...' to
 # support the older version, thus preserving portability with
-# scripts that use sort +1, tail +32, head -1, etc.
+# scripts that use sort +1, tail +32, etc.
 # Note however, that this breaks tools that might run commands
 # like `sort +some-file' that conform with the newer standard.
 AC_DEFUN([gl_DEFAULT_POSIX2_VERSION],

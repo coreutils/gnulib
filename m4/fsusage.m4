@@ -12,8 +12,6 @@
 
 AC_DEFUN([gl_FSUSAGE],
 [
-  AC_LIBSOURCES([fsusage.c, fsusage.h])
-
   AC_CHECK_HEADERS_ONCE(sys/param.h)
   AC_CHECK_HEADERS_ONCE(sys/vfs.h sys/fs_types.h)
   AC_CHECK_HEADERS(sys/mount.h, [], [],
@@ -259,7 +257,6 @@ choke -- this is a workaround for a Sun-specific problem
 # Prerequisites of lib/fsusage.c not done by gl_FILE_SYSTEM_USAGE.
 AC_DEFUN([gl_PREREQ_FSUSAGE_EXTRA],
 [
-  AC_REQUIRE([gl_AC_TYPE_UINTMAX_T])
   AC_CHECK_HEADERS(dustat.h sys/fs/s5param.h sys/filsys.h sys/statfs.h sys/statvfs.h)
   gl_STATFS_TRUNCATES
 ])

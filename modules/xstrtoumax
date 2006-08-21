@@ -3,14 +3,12 @@ Convert string to 'uintmax_t', with error checking.
 
 Files:
 lib/xstrtoumax.c
-m4/xstrtoumax.m4
 
 Depends-on:
 xstrtol
 strtoumax
 
 configure.ac:
-gl_XSTRTOUMAX
 
 Makefile.am:
 lib_SOURCES += xstrtoumax.c
@@ -23,4 +21,3 @@ GPL
 
 Maintainer:
 Paul Eggert
-

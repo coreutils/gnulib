@@ -6,11 +6,11 @@ Files:
 lib/backupfile.h
 lib/backupfile.c
 m4/dos.m4
-m4/d-ino.m4
 m4/backupfile.m4
 
 Depends-on:
 argmatch
+d-ino
 dirname
 stdbool
 

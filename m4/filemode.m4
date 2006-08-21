@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FILEMODE],
 [
+  AC_REQUIRE([AC_STRUCT_ST_DM_MODE])
   AC_LIBSOURCES([filemode.c, filemode.h])
   AC_LIBOBJ([filemode])
   AC_CHECK_DECLS_ONCE([strmode])

@@ -4,15 +4,14 @@ Ensure that a directory and its parents exist.
 Files:
 lib/dirchownmod.c
 lib/dirchownmod.h
-lib/lchmod.h
 lib/mkdir-p.c
 lib/mkdir-p.h
-m4/lchmod.m4
 m4/mkdir-p.m4
 
 Depends-on:
 error
 gettext-h
+lchmod
 lchown
 mkancesdirs
 quote

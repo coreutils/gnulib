@@ -1,3 +1,54 @@
+2006-08-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Remove files that are no longer needed by their respective modules.
+	* obstack.m4: Remove.
+	* strerror_r.m4: Remove.
+	* uint32_t.m4: Remove.
+	* uintptr_t.m4: Remove.
+	* ullong_max.m4: Remove.
+	* xstrtoimax.m4: Remove.
+	* xstrtoumax.m4: Remove.
+
+	* cycle-check.m4 (gl_CYCLE_CHECK): Do not require gl_AC_TYPE_UINTMAX_T,
+	gl_STRUCT_DEV_INO, or gl_SAME_INODE, since gnulib dependencies now
+	capture this.
+
+	* cycle-check.m4 (gl_CYCLE_CHECK):
+	Do not use AC_LIBSOURCES, since gnulib modules now do this.
+	* fsusage.m4 (gl_FSUSAGE): Likewise.
+	* human.m4 (gl_HUMAN): Likewise.
+	* inttostr.m4 (gl_INTTOSTR): Likewise.
+	* xstrtol.m4 (gl_XSTRTOL): Likewise.
+
+	* filemode.m4 (gl_FILEMODE): Require AC_STRUCT_ST_DM_MODE.
+
+	* filemode.m4 (gl_PREREQ_FSUSAGE_EXTRA): Do not require
+	gl_AC_TYPE_INTMAX_T or gl_AC_TYPE_UINTMAX_T, since we now require
+	stdint.
+	* human.m4 (gl_HUMAN): Likewise.
+	* inttostr.m4 (gl_PREREQ_INTTOSTR): Likewise.
+	* mkstemp.m4 (gl_PREREQ_TEMPNAME): Likewise.
+	* strtoimax.m4 (gl_PREREQ_STRTOIMAX): Likewise.
+	* strtoumax.m4 (gl_PREREQ_STRTOUMAX): Likewise.
+	* xstrtol (gl_XSTRTOL): Likewise.
+
+	* gethrxtime.m4 (gl_XTIME): gl_AC_TYPE_LONG_LONG ->
+	AC_TYPE_LONG_LONG_INT.
+	* strtoimax.m4 (gl_PREREQ_STRTOIMAX): Likewise.
+	* strtoll.m4 (gl_FUNC_STRTOLL): Likewise.
+	* strtoull.m4 (gl_FUNC_STRTOULL): Likewise, for unsigned long.
+	* strtoumax.m4 (gl_PREREQ_STRTOUMAX): Likewise.
+
+	* human.m4 (gl_HUMAN): Do not require AM_STDBOOL_H since we depend
+	on stdbool.
+
+	* xstrtol.m4 (gl_PREREQ_XSTRTOL_H, gl_PREREQ_XSTRTOL): Remove.
+	(gl_PREREQ_XSTRTOUL): Remove.
+
+	* ls-mntd-fs.m4 (gl_LIST_MOUNTED_FILE_SYSTEMS): Check for hasmntopt.
+
+	* posixver.m4: Fix comment since head -1 now works even in POSIX mode.
+
 2006-08-18  Paul Eggert  <eggert@cs.ucla.edu>
             Bruno Haible  <bruno@clisp.org>
 
@@ -1016,8 +1067,8 @@
 
 2005-10-19  Simon Josefsson  <jas@extundo.com>
 
-	* m4/gc-hmac-md5.m4, m4/gc-hmac-sha1.m4, m4/gc-md4.m4,
-	m4/gc-md5.m4, m4/gc-sha1.m4: Fix typo, suggested by Stepan Kasal
+	* gc-hmac-md5.m4, gc-hmac-sha1.m4, gc-md4.m4,
+	gc-md5.m4, gc-sha1.m4: Fix typo, suggested by Stepan Kasal
 	<kasal@ucw.cz>.
 
 2005-10-19  Simon Josefsson  <jas@extundo.com>
@@ -1240,7 +1291,7 @@
 2005-09-12  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
-	* m4/glob.m4 (gl_GLOB_SUBSTITUTE): AC_LIBSOURCES for glob.c,
+	* glob.m4 (gl_GLOB_SUBSTITUTE): AC_LIBSOURCES for glob.c,
 	glob_.h, glob-libc.h.
 	(gl_PREREQ_GLOB): Remove _SYS_CDEFS_H hack; no longer needed.
 
@@ -2046,7 +2097,7 @@
 
 2004-11-01  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* m4/getpass.m4 (gl_PREREQ_GETPASS): Check for declarations of
+	* getpass.m4 (gl_PREREQ_GETPASS): Check for declarations of
 	fflush_unlocked, flockfile, funlockfile, funlockfile,
 	fputs_unlocked, putc_unlocked.
 

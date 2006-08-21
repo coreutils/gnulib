@@ -1397,8 +1397,6 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module assert
-  func_module dummy
   func_module exit
   func_module atexit
   func_module strtod
@@ -1430,6 +1428,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module assert
   func_module verify
   func_end_table
 
@@ -1673,7 +1672,6 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module ullong_max
   func_module size_max
   func_end_table
 
@@ -1827,6 +1825,20 @@ func_all_modules ()
   func_module wcwidth
   func_end_table
 
+  element="Compatibility checks for POSIX:2001 functions"
+  func_section_wrap posix_compat
+  func_wrap H2
+  func_echo "$element"
+
+  func_module d-ino
+  func_module d-type
+  func_module link-follow
+  func_module rmdir-errno
+  func_module unlink-busy
+  func_module winsz-ioctl
+  func_module winsz-termios
+  func_end_table
+
   element="Enhancements for POSIX:2001 functions"
   func_section_wrap posix_enh
   func_wrap H2
@@ -1881,6 +1893,7 @@ func_all_modules ()
   func_module fts
   func_module fts-lgpl
   func_module isdir
+  func_module lchmod
   func_module lchown
   func_module mkancesdirs
   func_module mkdir-p
@@ -2085,6 +2098,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module dummy
   func_module ldd
   func_module lib-ignore
   func_end_table
@@ -2097,6 +2111,17 @@ func_all_modules ()
   func_begin_table
   func_module fdl
   func_module gendocs
+  func_end_table
+
+  element="Misc"
+  func_section_wrap misc
+  func_wrap H2
+  func_echo "$element"
+
+  func_begin_table
+  func_module host-os
+  func_module perl
+  func_module uptime
   func_end_table
 }
 

@@ -25,7 +25,7 @@
    type that is a count of nanoseconds -- except for obsolescent hosts
    without sufficiently-wide integers, where it is a count of
    seconds.  */
-# if HAVE_LONG_LONG
+# if HAVE_LONG_LONG_INT
 typedef long long int xtime_t;
 #  define XTIME_PRECISION 1000000000
 # else

@@ -1,4 +1,4 @@
-# gethrxtime.m4 serial 4
+# gethrxtime.m4 serial 5
 dnl Copyright (C) 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,7 +43,7 @@ AC_DEFUN([gl_ARITHMETIC_HRTIME_T],
 AC_DEFUN([gl_XTIME],
 [
   AC_REQUIRE([AC_C_INLINE])
-  AC_REQUIRE([gl_AC_TYPE_LONG_LONG])
+  AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
   :
 ])
 

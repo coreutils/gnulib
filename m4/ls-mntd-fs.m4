@@ -1,4 +1,4 @@
-#serial 22
+#serial 23
 # How to list mounted file systems.
 
 # Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2006 Free Software
@@ -167,6 +167,7 @@ if test $ac_cv_func_getmntent = yes; then
       AC_DEFINE(MOUNTED_GETMNTENT2, 1,
         [Define if there is a function named getmntent for reading the list of
          mounted file systems, and that function takes two arguments.  (SVR4)])
+      AC_CHECK_FUNCS(hasmntopt)
     fi
   fi
 

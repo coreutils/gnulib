@@ -4,20 +4,18 @@ Return file system space usage info.
 Files:
 lib/fsusage.h
 lib/fsusage.c
-m4/ulonglong.m4
-m4/stdint_h.m4
-m4/inttypes_h.m4
-m4/uintmax_t.m4
 m4/fsusage.m4
 
 Depends-on:
 full-read
 stdbool
+stdint
 
 configure.ac:
 gl_FSUSAGE
 
 Makefile.am:
+lib_SOURCES += fsusage.h
 
 Include:
 "fsusage.h"

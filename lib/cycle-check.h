@@ -22,12 +22,7 @@
 #ifndef CYCLE_CHECK_H
 # define CYCLE_CHECK_H 1
 
-# if HAVE_INTTYPES_H
-#  include <inttypes.h>
-# endif
-# if HAVE_STDINT_H
-#  include <stdint.h>
-# endif
+# include <stdint.h>
 # include <stdbool.h>
 # include "dev-ino.h"
 # include "same-inode.h"

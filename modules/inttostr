@@ -7,22 +7,17 @@ lib/inttostr.c
 lib/inttostr.h
 lib/offtostr.c
 lib/umaxtostr.c
-m4/intmax_t.m4
 m4/inttostr.m4
-m4/inttypes_h.m4
-m4/longlong.m4
-m4/stdint_h.m4
-m4/uintmax_t.m4
-m4/ulonglong.m4
 
 Depends-on:
 intprops
+stdint
 
 configure.ac:
 gl_INTTOSTR
 
 Makefile.am:
-EXTRA_DIST += inttostr.c
+EXTRA_DIST += inttostr.c inttostr.h
 
 Include:
 "inttostr.h"

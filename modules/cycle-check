@@ -10,11 +10,13 @@ Depends-on:
 dev-ino
 same-inode
 stdbool
+stdint
 
 configure.ac:
 gl_CYCLE_CHECK
 
 Makefile.am:
+lib_SOURCES += cycle-check.h
 
 Include:
 "cycle-check.h"

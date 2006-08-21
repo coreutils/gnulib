@@ -2,16 +2,13 @@ Description:
 Convert string to 'intmax_t', with error checking.
 
 Files:
-
 lib/xstrtoimax.c
-m4/xstrtoimax.m4
 
 Depends-on:
 xstrtol
 strtoimax
 
 configure.ac:
-gl_XSTRTOIMAX
 
 Makefile.am:
 lib_SOURCES += xstrtoimax.c
@@ -24,4 +21,3 @@ GPL
 
 Maintainer:
 Paul Eggert
-

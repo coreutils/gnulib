@@ -1,0 +1,20 @@
+Description:
+rmdir errno for nonempty directories
+
+Files:
+m4/rmdir-errno.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_RMDIR_NOTEMPTY
+
+Makefile.am:
+
+Include:
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering

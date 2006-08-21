@@ -5,7 +5,6 @@ Files:
 lib/error.h
 lib/error.c
 m4/error.m4
-m4/strerror_r.m4
 
 Depends-on:
 

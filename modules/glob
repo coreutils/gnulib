@@ -6,11 +6,11 @@ Files:
 lib/glob_.h
 lib/glob-libc.h
 lib/glob.c
-m4/d-type.m4
 m4/glob.m4
 
 Depends-on:
 alloca
+d-type
 extensions
 fnmatch
 getlogin_r

@@ -22,12 +22,7 @@
 #if !defined FSUSAGE_H_
 # define FSUSAGE_H_
 
-# if HAVE_INTTYPES_H
-#  include <inttypes.h>
-# endif
-# if HAVE_STDINT_H
-#  include <stdint.h>
-# endif
+# include <stdint.h>
 # include <stdbool.h>
 
 struct fs_usage

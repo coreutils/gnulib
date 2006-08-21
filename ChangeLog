@@ -1,3 +1,79 @@
+2006-08-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Add and change modules to make it easier for coreutils to use
+	gnulib-tool.
+	* modules/backupfile (Files): Remove m4/d-ino.m4.
+	(Depends-on): Add d-ino.
+	* modules/cycle-check (Depends-on): Add stdint.
+	(lib_SOURCES): Add cycle-check.h.
+	* modules/d-ino: New module.
+	* modules/d-type: New module.
+	* modules/error (Files): Remove m4/strerror_r.m4.
+	* modules/filemode (Files): Add m4/st_dm_mode.m4.
+	* modules/fsuage (Files): Remove m4/ulonglong.m4, m4/stdint_h.m4,
+	m4/inttypes_h.m4, m4/uintmax_t.m4.
+	(Depends-on): Add stdint.
+	(lib_SOURCES): Add fsusage.h.
+	* modules/getcwd (Files): Remove d-ino.m4.
+	(Depends-on): Add d-ino.
+	* modules/getndelim2 (Depends-on): Add stdint.
+	* modules/glob (Files): Remove m4/d-type.m4.
+	(Depends-on): Add d-type.
+	* modules/host-os: New module.
+	* modules/human (Files):  Remove m4/ulonglong.m4, m4/stdint_h.m4,
+	m4/inttypes_h.m4, m4/uintmax_t.m4.
+	* Depends-on: Add stdint.
+	(lib_SOURCES): Add human.h.
+	* modules/inttostr (Files): Remove m4/intmax_t.m4,
+	m4/inttostr.m4, m4/inttypes_h.m4, m4/longlong.m4, m4/stdint_h.m4,
+	m4/uintmax_t.m4, m4/ulonglong.m4.
+	(Depends-on): Add stdint.
+	(EXTRA_DIST): Add inttostr.h.
+	* modules/lchmod: New module.
+	* modules/link-follow: New module.
+	* modules/mkdir-p (Files): Remove lib/lchmod.h, m4/lchmod.m4.
+	(Depends-on): Add lchmod.
+	* modules/mkstemp (Files): Remove m4/ulonglong.m4,
+	m4/stdint_h.m4, m4/inttypes_h.m4, m4/uintmax_t.m4.
+	(Depends-on): Add stdint.
+	* modules/obstack (Files): Remove m4/inttypes_h.m4, m4/obstack.m4,
+	m4/stdint_h.m4, m4/uintmax_t.m4, m4/ulonglong.m4.
+	(Depends-on): Add stdint.
+	(configure.ac): Change gl_OBSTACK to AC_FUNC_OBSTACK.
+	* modules/perl: New module.
+	* modules/regex (Depends-on): Add stdint.
+	* modules/rmdir-errno: New module.
+	* modules/strtoimax (Files): Remove m4/stdint_h.m4, m4/inttypes_h.m4,
+	m4/intmax_t.m4.
+	(Depends-on): Add stdint.
+	* modules/strtoumax (Files): Remove m4/stdint_h.m4, m4/inttypes_h.m4,
+	m4/uintmax_t.m4.
+	(Depends-on): Add stdint.
+	* modules/unlink-busy: New module.
+	* modules/utimecmp (Depends-on): Add stdint.
+	* modules/uptime: New module.
+	* modules/winsz-ioctl: New module.
+	* modules/winsz-termios: New module.
+	* modules/xnanosleep (Depends-on): Add nanosleep.
+	* modules/ullong_max: Remove.
+	* modules/xstrtoimax (Files): Remove m4/xstrtoimax.m4.
+	(configure.ac): Remove gl_XSTRTOIMAX; no action needed now.
+	* modules/xstrtol (Files): Remove m4/ulonglong.m4, m4/longlong.m4,
+	m4/stdint_h.m4, m4/inttypes_h.m4, m4/uintmax_t.m4, m4/intmax_t.m4.
+	(Depends-on): Add inttypes.
+	(lib_SOURCES): Add xstrtol.h.
+	* modules/xstrtoumax (Files): Remove m4/xstrtoumax.m4.
+	(configure.ac): Remove gl_XSTRTOUMAX; no action needed now.
+	* MODULES.html.sh: Move 'assert' into the assert section.
+	Move 'dummy' into the linking section.
+	Remove ullong_max.
+	Add section for compatibility checks for POSIX:2001 functions,
+	and put d-ino, d-type, link-follow, rmdir-errno, unlink-busy,
+	winsz-ioctl, and winsz-termios into it.
+	Add lchmod.
+	Add top-level Misc section and put host-os, perl, and uptime
+	into it.
+
 2006-08-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/openat (Files): Add lib/fchmodat.c.

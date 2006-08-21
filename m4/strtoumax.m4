@@ -1,5 +1,5 @@
-# strtoumax.m4 serial 5
-dnl Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
+# strtoumax.m4 serial 6
+dnl Copyright (C) 2002, 2003, 2004, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -29,7 +29,6 @@ AC_DEFUN([gl_FUNC_STRTOUMAX],
 
 # Prerequisites of lib/strtoumax.c.
 AC_DEFUN([gl_PREREQ_STRTOUMAX], [
-  gl_AC_TYPE_UINTMAX_T
   AC_CHECK_DECLS(strtoull)
-  AC_REQUIRE([gl_AC_TYPE_UNSIGNED_LONG_LONG])
+  AC_REQUIRE([AC_TYPE_UNSIGNED_LONG_LONG_INT])
 ])

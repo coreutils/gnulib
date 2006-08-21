@@ -43,9 +43,7 @@
 #if defined HAVE_WCTYPE_H || defined _LIBC
 # include <wctype.h>
 #endif /* HAVE_WCTYPE_H || _LIBC */
-#if defined HAVE_STDINT_H || defined _LIBC
-# include <stdint.h>
-#endif /* HAVE_STDINT_H || _LIBC */
+#include <stdint.h>
 #if defined _LIBC
 # include <bits/libc-lock.h>
 #else

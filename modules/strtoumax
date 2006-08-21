@@ -4,15 +4,13 @@ strtoumax() function: convert string to 'uintmax_t'.
 Files:
 lib/strtoumax.c
 m4/ulonglong.m4
-m4/stdint_h.m4
-m4/inttypes_h.m4
-m4/uintmax_t.m4
 m4/strtoumax.m4
 
 Depends-on:
 strtoimax
 strtoull
 inttypes
+stdint
 
 configure.ac:
 gl_FUNC_STRTOUMAX
@@ -26,4 +24,3 @@ GPL
 
 Maintainer:
 Paul Eggert
-

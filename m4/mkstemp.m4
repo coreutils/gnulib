@@ -67,5 +67,4 @@ AC_DEFUN([gl_PREREQ_TEMPNAME],
 [
   AC_CHECK_HEADERS_ONCE(sys/time.h)
   AC_CHECK_FUNCS(__secure_getenv gettimeofday)
-  AC_REQUIRE([gl_AC_TYPE_UINTMAX_T])
 ])

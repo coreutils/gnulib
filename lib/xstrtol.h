@@ -1,7 +1,7 @@
 /* A more useful interface to strtol.
 
-   Copyright (C) 1995, 1996, 1998, 1999, 2001, 2002, 2003, 2004 Free
-   Software Foundation, Inc.
+   Copyright (C) 1995, 1996, 1998, 1999, 2001, 2002, 2003, 2004, 2006
+   Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,12 +22,7 @@
 
 # include "exitfail.h"
 
-# if HAVE_INTTYPES_H
-#  include <inttypes.h>
-# endif
-# if HAVE_STDINT_H
-#  include <stdint.h>
-# endif
+# include <inttypes.h>
 
 # ifndef _STRTOL_ERROR
 enum strtol_error

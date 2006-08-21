@@ -1,0 +1,22 @@
+Description:
+lchmod that is actually chmod (!) on hosts lacking lchmod
+
+Files:
+lib/lchmod.h
+m4/lchmod.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_LCHMOD
+
+Makefile.am:
+
+Include:
+"lchown.h"
+
+License:
+GPL
+
+Maintainer:
+Paul Eggert, Jim Meyering
