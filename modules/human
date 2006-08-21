@@ -20,7 +20,7 @@ configure.ac:
 gl_HUMAN
 
 Makefile.am:
-lib_SOURCES += human.h
+EXTRA_DIST += human.h
 
 Include:
 "human.h"

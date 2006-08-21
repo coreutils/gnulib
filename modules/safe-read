@@ -13,6 +13,7 @@ configure.ac:
 gl_SAFE_READ
 
 Makefile.am:
+EXTRA_DIST += safe-read.h
 
 Include:
 "safe-read.h"

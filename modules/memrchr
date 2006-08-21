@@ -12,6 +12,7 @@ configure.ac:
 gl_FUNC_MEMRCHR
 
 Makefile.am:
+EXTRA_DIST += memrchr.h
 
 Include:
 "memrchr.h"

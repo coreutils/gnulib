@@ -17,6 +17,7 @@ configure.ac:
 gl_QUOTEARG
 
 Makefile.am:
+EXTRA_DIST += quotearg.h
 
 Include:
 "quotearg.h"

@@ -11,6 +11,7 @@ configure.ac:
 gl_STAT_MACROS
 
 Makefile.am:
+EXTRA_DIST += stat-macros.h
 
 Include:
 "stat-macros.h"

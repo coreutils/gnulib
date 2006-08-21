@@ -6,6 +6,5 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_MKANCESDIRS],
 [
-  AC_LIBSOURCES([mkancesdirs.c, mkancesdirs.h])
   AC_LIBOBJ([mkancesdirs])
 ])

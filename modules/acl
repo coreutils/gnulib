@@ -14,6 +14,7 @@ configure.ac:
 AC_FUNC_ACL
 
 Makefile.am:
+EXTRA_DIST += acl.h
 
 Include:
 "acl.h"

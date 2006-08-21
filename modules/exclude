@@ -17,6 +17,7 @@ configure.ac:
 gl_EXCLUDE
 
 Makefile.am:
+EXTRA_DIST += exclude.h
 
 Include:
 "exclude.h"

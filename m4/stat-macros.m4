@@ -1,6 +1,6 @@
-#serial 2
+#serial 3
 
-# Copyright (C) 2005 Free Software Foundation, Inc.
+# Copyright (C) 2005, 2006 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,5 @@
 
 AC_DEFUN([gl_STAT_MACROS],
 [
-  AC_LIBSOURCES([stat-macros.h])
-
   AC_REQUIRE([AC_HEADER_STAT])
 ])

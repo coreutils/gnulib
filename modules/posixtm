@@ -14,6 +14,7 @@ configure.ac:
 gl_POSIXTM
 
 Makefile.am:
+EXTRA_DIST += posixtm.h
 
 Include:
 "posixtm.h"

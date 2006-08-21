@@ -16,6 +16,7 @@ configure.ac:
 gl_FUNC_CHDIR_LONG
 
 Makefile.am:
+EXTRA_DIST += chdir-long.h
 
 Include:
 "chdir-long.h"

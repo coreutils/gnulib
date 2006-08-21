@@ -19,7 +19,7 @@ configure.ac:
 gl_DIRNAME
 
 Makefile.am:
-lib_SOURCES += basename.c stripslash.c
+EXTRA_DIST += dirname.h
 
 Include:
 "dirname.h"

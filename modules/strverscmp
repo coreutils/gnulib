@@ -12,6 +12,7 @@ configure.ac:
 gl_FUNC_STRVERSCMP
 
 Makefile.am:
+EXTRA_DIST += strverscmp.h
 
 Include:
 "strverscmp.h"

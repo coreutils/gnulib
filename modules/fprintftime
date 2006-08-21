@@ -13,6 +13,7 @@ configure.ac:
 gl_FPRINTFTIME
 
 Makefile.am:
+EXTRA_DIST += fprintftime.h
 
 Include:
 "fprintftime.h"

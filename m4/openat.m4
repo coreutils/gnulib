@@ -1,4 +1,4 @@
-#serial 9
+#serial 10
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
@@ -10,11 +10,6 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_OPENAT],
 [
-  AC_LIBSOURCES([openat.c, openat.h, openat-priv.h, openat-die.c, at-func.c])
-  AC_LIBSOURCES([intprops.h])
-  AC_LIBSOURCES([mkdirat.c])
-  AC_LIBSOURCES([fchmodat.c])
-
   # No system provides these functions; compile them unconditionally.
   AC_LIBOBJ([mkdirat])
   AC_LIBOBJ([fchmodat])

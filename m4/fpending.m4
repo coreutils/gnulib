@@ -1,4 +1,4 @@
-#serial 8
+#serial 9
 
 # Copyright (C) 2000, 2001, 2004, 2005, 2006 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -15,8 +15,6 @@ dnl we have to grub around in the FILE struct.
 
 AC_DEFUN([gl_FUNC_FPENDING],
 [
-  AC_LIBSOURCES([__fpending.c, __fpending.h])
-
   AC_CHECK_HEADERS(stdio_ext.h)
   AC_REPLACE_FUNCS([__fpending])
   fp_headers='

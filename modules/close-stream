@@ -14,6 +14,7 @@ configure.ac:
 gl_CLOSE_STREAM
 
 Makefile.am:
+EXTRA_DIST += close-stream.h
 
 Include:
 "close-stream.h"

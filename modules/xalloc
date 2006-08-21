@@ -13,6 +13,7 @@ configure.ac:
 gl_XALLOC
 
 Makefile.am:
+EXTRA_DIST += xalloc.h
 
 Include:
 "xalloc.h"

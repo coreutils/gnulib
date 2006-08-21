@@ -15,6 +15,7 @@ configure.ac:
 gl_TMPFILE_SAFER
 
 Makefile.am:
+EXTRA_DIST += stdio-safer.h stdio--.h
 
 Include:
 "stdio-safer.h"

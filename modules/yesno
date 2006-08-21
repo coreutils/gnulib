@@ -16,6 +16,7 @@ configure.ac:
 gl_YESNO
 
 Makefile.am:
+EXTRA_DIST += yesno.h
 
 Include:
 "yesno.h"

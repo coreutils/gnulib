@@ -13,6 +13,7 @@ configure.ac:
 gl_QUOTE
 
 Makefile.am:
+EXTRA_DIST += quote.h
 
 Include:
 "quote.h"

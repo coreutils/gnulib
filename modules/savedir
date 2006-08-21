@@ -14,6 +14,7 @@ configure.ac:
 gl_SAVEDIR
 
 Makefile.am:
+EXTRA_DIST += savedir.h
 
 Include:
 "savedir.h"

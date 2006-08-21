@@ -1,4 +1,4 @@
-#serial 17
+#serial 18
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -14,8 +14,6 @@ dnl
 
 AC_DEFUN([gl_FUNC_NANOSLEEP],
 [
- AC_LIBSOURCES([nanosleep.c])
-
  dnl Persuade glibc and Solaris <time.h> to declare nanosleep.
  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 

@@ -1,6 +1,8 @@
-#serial 8
+#serial 9
 
-dnl Copyright (C) 1998, 2001, 2003, 2004, 2005 Free Software Foundation, Inc.
+dnl Copyright (C) 1998, 2001, 2003, 2004, 2005, 2006 Free Software
+dnl Foundation, Inc.
+
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -10,7 +12,6 @@ dnl Provide lchown on systems that lack it.
 
 AC_DEFUN([gl_FUNC_LCHOWN],
 [
-  AC_LIBSOURCES([lchown.c, lchown.h])
   AC_REQUIRE([AC_TYPE_UID_T])
   AC_REQUIRE([gl_FUNC_CHOWN])
   AC_REQUIRE([gl_STAT_MACROS])

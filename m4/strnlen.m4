@@ -1,13 +1,11 @@
-# strnlen.m4 serial 5
-dnl Copyright (C) 2002-2003, 2005 Free Software Foundation, Inc.
+# strnlen.m4 serial 6
+dnl Copyright (C) 2002-2003, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_STRNLEN],
 [
-  AC_LIBSOURCES([strnlen.c, strnlen.h])
-
   dnl Persuade glibc <string.h> to declare strnlen().
   AC_REQUIRE([AC_GNU_SOURCE])
 

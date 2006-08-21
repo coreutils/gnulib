@@ -1,6 +1,6 @@
-#serial 3
+#serial 4
 
-# Copyright (C) 2005 Free Software Foundation, Inc.
+# Copyright (C) 2005, 2006 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,6 @@ AC_DEFUN([gl_UNLINKDIR],
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_HEADERS_ONCE(priv.h)
 
-  AC_LIBSOURCES([unlinkdir.c, unlinkdir.h])
   AC_LIBOBJ([unlinkdir])
 
   # The Hurd, the Linux kernel, the FreeBSD kernel version 2.2 and later,

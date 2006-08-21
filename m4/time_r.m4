@@ -9,7 +9,6 @@ dnl Written by Paul Eggert.
 
 AC_DEFUN([gl_TIME_R],
 [
-  AC_LIBSOURCES([time_r.c, time_r.h])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([AC_C_RESTRICT])
 

@@ -17,6 +17,7 @@ configure.ac:
 gl_CLOSEOUT
 
 Makefile.am:
+EXTRA_DIST += closeout.h
 
 Include:
 "closeout.h"

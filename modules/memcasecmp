@@ -12,6 +12,7 @@ configure.ac:
 gl_MEMCASECMP
 
 Makefile.am:
+EXTRA_DIST += memcasecmp.h
 
 Include:
 "memcasecmp.h"

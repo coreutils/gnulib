@@ -1,4 +1,4 @@
-# getdate.m4 serial 9
+# getdate.m4 serial 10
 dnl Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,6 @@ AC_DEFUN([gl_C_COMPOUND_LITERALS],
 
 AC_DEFUN([gl_GETDATE],
 [
-  AC_LIBSOURCES([getdate.h, getdate.y])
   AC_LIBOBJ([getdate])
 
   dnl Prerequisites of lib/getdate.h.

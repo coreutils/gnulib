@@ -14,6 +14,7 @@ configure.ac:
 gl_HASH
 
 Makefile.am:
+EXTRA_DIST += hash.h
 
 Include:
 "hash.h"

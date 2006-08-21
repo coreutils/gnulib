@@ -21,9 +21,10 @@ configure.ac:
 gl_GETDATE
 
 Makefile.am:
+lib_SOURCES += getdate.y
 BUILT_SOURCES += getdate.c
 MAINTAINERCLEANFILES += getdate.c
-EXTRA_DIST += getdate.c
+EXTRA_DIST += getdate.c getdate.h
 
 Include:
 "getdate.h"

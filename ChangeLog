@@ -1,3 +1,104 @@
+2006-08-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Avoid the need for AC_LIBSOURCES in m4 macros.
+	* modules/acl (EXTRA_DIST): Add acl.h.
+	* modules/argmatch (Files): Add m4/argmatch.m4.
+	(configure.ac): Add gl_ARGMATCH.
+	(EXTRA_DIST): Renamed from lib_SOURCES, for
+	consistency with the other modules.  Remove argmatch.c.
+	* modules/backupfile (EXTRA_DIST): Add backupfile.h.
+	* modules/c-strtod (EXTRA_DIST): Add c-strtod.h.
+	* modules/c-strtold (EXTRA_DIST): Add c-strtod.c, c-strtod.h.
+	* modules/canonhost (EXTRA_DIST): Add c-canonhost.h.
+	* modules/canonicalize (EXTRA_DIST): Add canonicalize.h.
+	* modules/chdir-long (EXTRA_DIST): Add chdir-long.h.
+	* modules/chdir-safer (EXTRA_DIST): Add chdir-safer.h.
+	* modules/cloexec (EXTRA_DIST): Add cloexec.h.
+	* modules/close-stream (EXTRA_DIST): Add close-stream.h.
+	* modules/closeout (EXTRA_DIST): Add closeout.h.
+	* modules/cycle-check (EXTRA_DIST): Add cycle-check.h.
+	* modules/dev-ino (EXTRA_DIST): Add dev-ino.h.
+	* modules/dirfd (EXTRA_DIST): Add dirfd.h.
+	* modules/dirname (EXTRA_DIST): Renamed from lib_SOURCES.  Add
+	dirname.h; remove basename.c and stripslash.c.
+	* modules/exclude (EXTRA_DIST): Add exclude.h.
+	* modules/exitfail (EXTRA_DIST): Add exitfail.h.
+	* modules/fcntl-safer (EXTRA_DIST): Add fcntl-safer.h fcntl--.h.
+	* modules/file-type (EXTRA_DIST): Add file-type.h.
+	* modules/filemode (EXTRA_DIST): Add filemode.h.
+	* modules/filenamecat (EXTRA_DIST): Add filenamecat.h.
+	* modules/fopen-safer (EXTRA_DIST): Add stdio-safer.h stdio--.h.
+	* modules/fpending (EXTRA_DIST): Add __fpending.h.
+	* modules/fprintftime (EXTRA_DIST): Add fprintftime.h.
+	* modules/fsusage (EXTRA_DIST): Add fsusage.h.
+	* modules/fts (EXTRA_DIST): Add fts_.h fts-cycle.c.
+	* modules/getcwd (EXTRA_DIST): Add getcwd.h.
+	* modules/getdate (EXTRA_DIST): Add getdate.c.
+	* modules/gethrxtime (EXTRA_DIST): Add gethrxtime.h xtime.h.
+	* modules/getpagesize (EXTRA_DIST): Add getpagesize.h.
+	* modules/getpass (EXTRA_DIST): Add getpass.h.
+	* modules/glob (EXTRA_DIST): Add glob_.h glob-libc.h.
+	* modules/group-member (EXTRA_DIST): Add group-member.h.
+	* modules/hard-locale (EXTRA_DIST): Add hard-locale.h.
+	* modules/hash (EXTRA_DIST): Add hash.h.
+	* modules/human (EXTRA_DIST): Add human.h.
+	* modules/inttypes (EXTRA_DIST): Add inttypes.h.
+	* modules/lchmod (EXTRA_DIST): Add lchmod.h.
+	* modules/lchown (EXTRA_DIST): Add lchown.h.
+	* modules/long-options (EXTRA_DIST): Add long-options.h.
+	* modules/lstat (EXTRA_DIST): Add lstat.h.
+	* modules/md5 (EXTRA_DIST): Add memcasecmp.h.
+	* modules/memcoll (EXTRA_DIST): Add memcoll.h.
+	* modules/mempcpy (EXTRA_DIST): Add mempcpy.h.
+	* modules/memrchr (EXTRA_DIST): Add memrchr.h.
+	* modules/memxor (EXTRA_DIST): Add memxor.h.
+	* modules/mkancesdirs (EXTRA_DIST): Add mkancesdirs.h.
+	* modules/mkdir-p (EXTRA_DIST): Add modechange.h.
+	* modules/mountlist (EXTRA_DIST): Add mountlist.h.
+	* modules/openat (EXTRA_DIST): Add at-func.c openat.h openat-priv.h.
+	* modules/pathmax (EXTRA_DIST): Add pathmax.h.
+	* modules/physmem (EXTRA_DIST): Add physmem.h.
+	* modules/posixtm (EXTRA_DIST): Add posixtm.h.
+	* modules/posixver (EXTRA_DIST): Add posixver.h.
+	* modules/quote (EXTRA_DIST): Add quote.h.
+	* modules/quotearg (EXTRA_DIST): Add quotearg.h.
+	* modules/readtokens (EXTRA_DIST): Add readtokens.h.
+	* modules/readutmp (EXTRA_DIST): Add readutmp.h.
+	* modules/regex (EXTRA_DIST): Add regcomp.c regex.h regex_internal.c regex_internal.h regexec.c.
+	* modules/safe-read (EXTRA_DIST): Add safe-read.h.
+	* modules/safe-write (EXTRA_DIST): Add safe-write.h.
+	* modules/same (EXTRA_DIST): Add same.h.
+	* modules/same-inode (EXTRA_DIST): Add same-inode.h.
+	* modules/save-cwd (EXTRA_DIST): Add save-cwd.h.
+	* modules/savedir (EXTRA_DIST): Add savedir.h.
+	* modules/sha1 (EXTRA_DIST): Add sha1.h.
+	* modules/sig2str (EXTRA_DIST): Add sig2str.h.
+	* modules/stat-macros (EXTRA_DIST): Add stat-macros.h.
+	* modules/stat-time (EXTRA_DIST): Add stat-time.h.
+	* modules/stdlib-safer (EXTRA_DIST): Add stdlib-safer.h stdlib--.h.
+	* modules/strdup (EXTRA_DIST): Add strdup.h.
+	* modules/strftime (EXTRA_DIST): Add strftime.h.
+	* modules/strndup (EXTRA_DIST): Add strndup.h.
+	* modules/strnlen (EXTRA_DIST): Add strnlen.h.
+	* modules/strverscmp (EXTRA_DIST): Add strverscmp.h.
+	* modules/time_r (EXTRA_DIST): Add time_r.h.
+	* modules/timespec (EXTRA_DIST): Add timespec.h.
+	* modules/tmpfile-safer (EXTRA_DIST): Add stdio-safer.h stdio--.h.
+	* modules/unistd-safer (EXTRA_DIST): Add unistd-safer.h unistd--.h.
+	* modules/unlinkdir (EXTRA_DIST): Add unlinkdir.h.
+	* modules/unlocked-io (EXTRA_DIST): Add unlocked-io.h.
+	* modules/userspec (EXTRA_DIST): Add userspec.h.
+	* modules/utimecmp (EXTRA_DIST): Add utimecmp.h.
+	* modules/utimens (EXTRA_DIST): Add utimens.h.
+	* modules/xalloc (EXTRA_DIST): Add xalloc.h.
+	* modules/xgetcwd (EXTRA_DIST): Add xgetcwd.h.
+	* modules/xnanosleep (EXTRA_DIST): Add xnanosleep.h.
+	* modules/xreadlink (EXTRA_DIST): Add xreadlink.h.
+	* modules/xstrtod (EXTRA_DIST): Add xstrtod.h.
+	* modules/xstrtol (EXTRA_DIST): Add xstrtol.h.
+	* modules/xstrtold (EXTRA_DIST): Add xstrtod.c xstrtod.h.
+	* modules/yesno (EXTRA_DIST): Add yesno.h.
+
 2006-08-21  Bruno Haible <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am): If the snippets already

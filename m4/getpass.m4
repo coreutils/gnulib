@@ -1,4 +1,4 @@
-# getpass.m4 serial 8
+# getpass.m4 serial 9
 dnl Copyright (C) 2002-2003, 2005-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,8 +7,6 @@ dnl with or without modifications, as long as this notice is preserved.
 # Provide a getpass() function if the system doesn't have it.
 AC_DEFUN([gl_FUNC_GETPASS],
 [
-  AC_LIBSOURCES([getpass.c, getpass.h])
-
   AC_REPLACE_FUNCS(getpass)
   AC_CHECK_DECLS_ONCE(getpass)
   if test $ac_cv_func_getpass = no; then
@@ -20,8 +18,6 @@ AC_DEFUN([gl_FUNC_GETPASS],
 # arbitrary length (not just 8 bytes as on HP-UX).
 AC_DEFUN([gl_FUNC_GETPASS_GNU],
 [
-  AC_LIBSOURCES([getpass.c, getpass.h])
-
   AC_CHECK_DECLS_ONCE(getpass)
   dnl TODO: Detect when GNU getpass() is already found in glibc.
   AC_LIBOBJ(getpass)

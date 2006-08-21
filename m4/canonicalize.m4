@@ -1,4 +1,4 @@
-#serial 9
+#serial 10
 
 # Copyright (C) 2003, 2004, 2005 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -9,7 +9,6 @@
 
 AC_DEFUN([AC_FUNC_CANONICALIZE_FILE_NAME],
   [
-    AC_LIBSOURCES([canonicalize.c, canonicalize.h])
     AC_LIBOBJ([canonicalize])
 
     AC_CHECK_HEADERS(sys/param.h)

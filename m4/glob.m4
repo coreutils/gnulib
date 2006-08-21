@@ -1,4 +1,4 @@
-# glob.m4 serial 6
+# glob.m4 serial 7
 dnl Copyright (C) 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,6 @@ AC_DEFUN([gl_GLOB_SUBSTITUTE],
   gl_PREREQ_GLOB
 
   GLOB_H=glob.h
-  AC_LIBSOURCES([glob.c, glob_.h, glob-libc.h])
   AC_LIBOBJ([glob])
   AC_SUBST([GLOB_H])
 ])

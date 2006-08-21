@@ -20,6 +20,7 @@ configure.ac:
 gl_USERSPEC
 
 Makefile.am:
+EXTRA_DIST += userspec.h
 
 Include:
 "userspec.h"

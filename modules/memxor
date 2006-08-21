@@ -12,6 +12,7 @@ configure.ac:
 gl_MEMXOR
 
 Makefile.am:
+EXTRA_DIST += memxor.h
 
 Include:
 "memxor.h"

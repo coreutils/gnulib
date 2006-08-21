@@ -1,4 +1,4 @@
-#serial 38
+#serial 39
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
 # 2006 Free Software Foundation, Inc.
@@ -14,10 +14,6 @@ AC_PREREQ([2.50])
 
 AC_DEFUN([gl_REGEX],
 [
-  AC_LIBSOURCES(
-    [regcomp.c, regex.c, regex.h,
-     regex_internal.c, regex_internal.h, regexec.c])
-
   AC_ARG_WITH([included-regex],
     [AC_HELP_STRING([--without-included-regex],
 		    [don't compile regex; this is the default on

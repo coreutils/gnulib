@@ -17,6 +17,7 @@ configure.ac:
 gl_GETHRXTIME
 
 Makefile.am:
+EXTRA_DIST += gethrxtime.h xtime.h
 
 Include:
 #include "xtime.h"

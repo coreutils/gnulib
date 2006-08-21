@@ -1,4 +1,4 @@
-#serial 10
+#serial 11
 dnl Copyright (C) 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,7 +7,6 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_FTS],
 [
   AC_REQUIRE([gl_FUNC_FTS_CORE])
-  AC_LIBSOURCES([fts-cycle.c])
 ])
 
 AC_DEFUN([gl_FUNC_FTS_LGPL],
@@ -20,8 +19,6 @@ AC_DEFUN([gl_FUNC_FTS_LGPL],
 
 AC_DEFUN([gl_FUNC_FTS_CORE],
 [
-  AC_LIBSOURCES([fts.c, fts_.h])
-
   dnl Use this version of fts unconditionally, since the GNU libc and
   dnl NetBSD versions have bugs and/or unnecessary limitations.
   AC_LIBOBJ([fts])

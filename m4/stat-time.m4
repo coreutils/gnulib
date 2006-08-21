@@ -1,6 +1,8 @@
 # Checks for stat-related time functions.
 
-# Copyright (C) 1998, 1999, 2001, 2003, 2005 Free Software Foundation, Inc.
+# Copyright (C) 1998, 1999, 2001, 2003, 2005, 2006 Free Software
+# Foundation, Inc.
+
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -15,8 +17,6 @@ dnl From Paul Eggert.
 
 AC_DEFUN([gl_STAT_TIME],
 [
-  AC_LIBSOURCES([stat-time.h])
-
   AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 

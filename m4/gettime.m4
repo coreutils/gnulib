@@ -1,12 +1,11 @@
-# gettime.m4 serial 5
-dnl Copyright (C) 2002, 2004, 2005 Free Software Foundation, Inc.
+# gettime.m4 serial 6
+dnl Copyright (C) 2002, 2004, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_GETTIME],
 [
-  AC_LIBSOURCES([gettime.c])
   AC_LIBOBJ([gettime])
 
   dnl Prerequisites of lib/gettime.c.

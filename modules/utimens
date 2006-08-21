@@ -15,6 +15,7 @@ configure.ac:
 gl_UTIMENS
 
 Makefile.am:
+EXTRA_DIST += utimens.h
 
 Include:
 "utimens.h"

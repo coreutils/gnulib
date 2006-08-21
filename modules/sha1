@@ -13,6 +13,7 @@ configure.ac:
 gl_SHA1
 
 Makefile.am:
+EXTRA_DIST += sha1.h
 
 Include:
 "sha1.h"

@@ -12,6 +12,7 @@ configure.ac:
 gl_STAT_TIME
 
 Makefile.am:
+EXTRA_DIST += stat-time.h
 
 Include:
 "stat-time.h"

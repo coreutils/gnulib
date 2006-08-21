@@ -11,8 +11,6 @@ dnl From Jim Meyering
 
 AC_DEFUN([gl_TIMESPEC],
 [
-  AC_LIBSOURCES([timespec.h])
-
   dnl Prerequisites of lib/timespec.h.
   AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([AC_HEADER_TIME])

@@ -15,6 +15,7 @@ configure.ac:
 gl_UNISTD_SAFER
 
 Makefile.am:
+EXTRA_DIST += unistd-safer.h unistd--.h
 
 Include:
 "unistd-safer.h"

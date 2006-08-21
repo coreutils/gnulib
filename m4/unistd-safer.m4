@@ -7,7 +7,6 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_UNISTD_SAFER],
 [
   AC_CHECK_FUNCS_ONCE([pipe])
-  AC_LIBSOURCES([dup-safer.c, fd-safer.c, pipe-safer.c, unistd-safer.h, unistd--.h])
   AC_LIBOBJ([dup-safer])
   AC_LIBOBJ([fd-safer])
   AC_LIBOBJ([pipe-safer])

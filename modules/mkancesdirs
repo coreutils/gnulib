@@ -14,6 +14,7 @@ configure.ac:
 gl_MKANCESDIRS
 
 Makefile.am:
+EXTRA_DIST += mkancesdirs.h
 
 Include:
 "mkancesdirs.h"
