@@ -1,3 +1,7 @@
+2006-07-14  Simon Josefsson  <jas@extundo.com>
+
+	* srclist.txt: Add gnupload.
+
 2006-08-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclistvars.sh: Add copyright notice.

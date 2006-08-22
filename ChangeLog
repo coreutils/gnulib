@@ -1,3 +1,10 @@
+2006-08-22  Simon Josefsson  <jas@extundo.com>
+
+	* MODULES.html.sh: Add "Support for maintaining and release
+	projects".
+
+	* build-aux/gnupload: New file, from coreutils.
+
 2006-08-22  Jim Meyering  <jim@meyering.net>
 
 	* modules/mkdir-p (Makefile.am): Fix typo: s/lib+SOURCES/lib_SOURCES/.

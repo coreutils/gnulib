@@ -2113,6 +2113,16 @@ func_all_modules ()
   func_module gendocs
   func_end_table
 
+  element="Support for maintaining and release projects"
+  func_section_wrap maintain
+  func_wrap H2
+  func_echo "$element"
+
+  func_begin_table
+  func_module gnupload
+  func_module maintainer-makefile
+  func_end_table
+
   element="Misc"
   func_section_wrap misc
   func_wrap H2

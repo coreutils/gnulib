@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.133 2006-08-12 22:37:45 karl Exp $
+# $Id: srclist.txt,v 1.134 2006-08-22 13:23:56 jas Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -275,6 +275,8 @@ $LIBCSRC/time/mktime.c			lib gpl
 #$LIBCSRC/sysdeps/unix/mkdir.c			lib gpl
 #$LIBCSRC/sysdeps/unix/sysv/gethostname.c	lib gpl
 #$LIBCSRC/sysdeps/unix/utime.c			lib gpl
+
+$COREUTILS/gnupload				build-aux
 
 $LIBTOOL/libltdl/argz.c				lib gpl
 $LIBTOOL/libltdl/argz_.h			lib gpl
