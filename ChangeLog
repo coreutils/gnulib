@@ -1,3 +1,8 @@
+2006-08-22  Bruno Haible <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_lib_Makefile_am): Don't treat lib_LIBRARIES
+	and lib_LTLIBRARIES like the other lib_* variables.
+
 2006-08-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Avoid the need for AC_LIBSOURCES in m4 macros.
@@ -146,8 +151,8 @@
 2006-08-21  Bruno Haible <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am): If the snippets already
-	specify an installation location, don't emit a noinst_[LT]LIBRARIES
-	assignment.
+	specify an installation location, don't emit a noinst_LIBRARIES or
+	noinst_LTLIBRARIES assignment.
 
 2006-08-19  Bruno Haible  <bruno@clisp.org>
 

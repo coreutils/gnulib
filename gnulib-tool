@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-21 18:49:51 $'
+cvsdatestamp='$Date: 2006-08-22 18:57:52 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -904,7 +904,11 @@ func_emit_lib_Makefile_am ()
       if test -n "$module"; then
         {
           func_get_automake_snippet "$module" |
-            sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g'
+            sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
+                -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' |
+            sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' |
+            sed -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
+                -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g'
           if test "$module" = 'alloca'; then
             echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"
           fi
