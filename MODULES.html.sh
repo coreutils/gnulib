@@ -2111,6 +2111,7 @@ func_all_modules ()
   func_begin_table
   func_module fdl
   func_module gendocs
+  func_module regexprops-generic
   func_end_table
 
   element="Support for maintaining and release projects"
