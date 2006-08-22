@@ -1,3 +1,9 @@
+2006-08-22  Jim Meyering  <jim@meyering.net>
+
+	* modules/mkdir-p (Makefile.am): Fix typo: s/lib+SOURCES/lib_SOURCES/.
+
+	* modules/getpass-gnu (Makefile.am): Add getpass.h to EXTRA_DIST.
+
 2006-08-22  Bruno Haible <bruno@clisp.org>
 
 	* build-aux/x-to-1.in: New file, from GNU gettext.
