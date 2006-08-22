@@ -1,3 +1,26 @@
+2006-08-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* rijndael.m4 (gl_ARCFOUR):
+	* arctwo.m4 (gl_ARCTWO):
+	* check-version.m4 (gl_CHECK_VERSION):
+	* crc.m4 (gl_CRC):
+	* des.m4 (gl_DES):
+	* gc-pbkdf2-sha1.m4 (gl_GC_PBKDF2_SHA1):
+	* gc.m4 (gl_GC):
+	* getdelim.m4 (gl_FUNC_GETDELIM):
+	* getline.m4 (gl_FUNC_GETLINE):
+	* getlogin_r.m4 (gl_GETLOGIN_R_SUBSTITUTE):
+	* hmac-md5.m4 (gl_HMAC_MD5):
+	* hmac-sha1.m4 (gl_HMAC_SHA1):
+	* md2.m4 (gl_MD2):
+	* md4.m4 (gl_MD4):
+	* pagealign_alloc.m4 (gl_PAGEALIGN_ALLOC):
+	* read-file.m4 (gl_FUNC_READ_FILE):
+	* readline.m4 (gl_FUNC_READLINE):
+	* rijndael.m4 (gl_RIJNDAEL):
+	Don't use AC_LIBSOURCES; instead, rely on the files in ../modules/
+	to get the necessary .h files and whatnot.
+
 2006-08-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* mkdir-p.m4 (gl_MKDIR_PARENTS): Check for fchmod.

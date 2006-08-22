@@ -1,4 +1,4 @@
-# getline.m4 serial 14
+# getline.m4 serial 15
 
 dnl Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2005, 2006 Free Software
 dnl Foundation, Inc.
@@ -15,8 +15,6 @@ dnl have a function by that name in -linet that doesn't have anything
 dnl to do with the function we need.
 AC_DEFUN([gl_FUNC_GETLINE],
 [
-  AC_LIBSOURCES([getline.c, getline.h])
-
   dnl Persuade glibc <stdio.h> to declare getline().
   AC_REQUIRE([AC_GNU_SOURCE])
 

@@ -14,6 +14,7 @@ configure.ac:
 gl_FUNC_READLINE
 
 Makefile.am:
+EXTRA_DIST += readline.h
 
 Include:
 "readline.h"

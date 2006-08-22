@@ -12,6 +12,7 @@ configure.ac:
 gl_FUNC_GETDELIM
 
 Makefile.am:
+EXTRA_DIST += getdelim.h
 
 Include:
 "getdelim.h"

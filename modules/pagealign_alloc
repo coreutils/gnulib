@@ -19,6 +19,7 @@ configure.ac:
 gl_PAGEALIGN_ALLOC
 
 Makefile.am:
+EXTRA_DIST += pagealign_alloc.h
 
 Include:
 #include "pagealign_alloc.h"

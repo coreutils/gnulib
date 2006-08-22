@@ -13,6 +13,7 @@ configure.ac:
 gl_FUNC_GETLINE
 
 Makefile.am:
+EXTRA_DIST += getline.h
 
 Include:
 "getline.h"

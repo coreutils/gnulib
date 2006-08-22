@@ -13,6 +13,7 @@ configure.ac:
 gl_MD4
 
 Makefile.am:
+EXTRA_DIST += md4.h
 
 Include:
 "md4.h"

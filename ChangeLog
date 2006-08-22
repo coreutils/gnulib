@@ -1,3 +1,25 @@
+2006-08-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Avoid the need for AC_LIBSOURCES in m4 macros.
+	* modules/arcfour (EXTRA_DIST): Add arcfour.h.
+	* modules/arctwo (EXTRA_DIST): Add arctwo.h.
+	* modules/check-version (EXTRA_DIST): Add check-version.h.
+	* modules/crc (EXTRA_DIST): Add crc.h.
+	* modules/des (EXTRA_DIST): Add des.h.
+	* modules/gc (EXTRA_DIST): Add gc.h.
+	* modules/getdelim (EXTRA_DIST): Add getdelim.h.
+	* modules/getline (EXTRA_DIST): Add getline.h.
+	* modules/getlogin_r (EXTRA_DIST): Add getlogin_r.h.
+	* modules/hmac-md5 (EXTRA_DIST): Add hmac.h.
+	* modules/hmac-sha1 (EXTRA_DIST): Add hmac.h.
+	* modules/md2 (EXTRA_DIST): Add md2.h.
+	* modules/md4 (EXTRA_DIST): Add md4.h.
+	* modules/pagealign_alloc (EXTRA_DIST): Add pagealign_alloc.h.
+	* modules/read-file (EXTRA_DIST): Add read-file.h.
+	* modules/readline (EXTRA_DIST): Add readline.h.
+	* modules/rijndael (EXTRA_DIST): Add rijndael-alg-fst.h,
+	rijndael-api-fst.h.
+
 2006-08-22  Simon Josefsson  <jas@extundo.com>
 
 	* MODULES.html.sh: Add "Support for maintaining and release

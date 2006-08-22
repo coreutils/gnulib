@@ -13,6 +13,7 @@ configure.ac:
 gl_MD2
 
 Makefile.am:
+EXTRA_DIST += md2.h
 
 Include:
 "md2.h"

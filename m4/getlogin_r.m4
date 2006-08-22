@@ -1,4 +1,4 @@
-#serial 2
+#serial 3
 
 # Copyright (C) 2005, 2006 Free Software Foundation, Inc.
 #
@@ -14,7 +14,6 @@ dnl
 AC_DEFUN([gl_GETLOGIN_R_SUBSTITUTE],
 [
   gl_PREREQ_GETLOGIN_R
-  AC_LIBSOURCE([getlogin_r.h])
   AC_LIBOBJ([getlogin_r])
 ])
 

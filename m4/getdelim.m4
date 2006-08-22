@@ -1,6 +1,6 @@
-# getdelim.m4 serial 1
+# getdelim.m4 serial 2
 
-dnl Copyright (C) 2005 Free Software dnl Foundation, Inc.
+dnl Copyright (C) 2005, 2006 Free Software dnl Foundation, Inc.
 dnl
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,6 @@ AC_PREREQ(2.52)
 
 AC_DEFUN([gl_FUNC_GETDELIM],
 [
-  AC_LIBSOURCES([getdelim.c, getdelim.h])
 
   dnl Persuade glibc <stdio.h> to declare getdelim().
   AC_REQUIRE([AC_GNU_SOURCE])
