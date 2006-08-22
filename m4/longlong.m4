@@ -1,4 +1,4 @@
-# longlong.m4 serial 6
+# longlong.m4 serial 7
 dnl Copyright (C) 1999-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,8 +22,8 @@ AC_DEFUN([AC_TYPE_LONG_LONG_INT],
 			   ? 1 : -1)];
 	    int i = 63;]],
 	  [[long long int llmax = 9223372036854775807ll;
-	    return (ll << 63 | ll >> 63 | ll < i | ll > i
-		    | llmax / ll | llmax % ll);]])],
+	    return ((ll << 63) | (ll >> 63) | (ll < i) | (ll > i)
+		    | (llmax / ll) | (llmax % ll));]])],
        [ac_cv_type_long_long_int=yes],
        [ac_cv_type_long_long_int=no])])
   if test $ac_cv_type_long_long_int = yes; then

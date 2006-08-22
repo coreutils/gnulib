@@ -1,3 +1,10 @@
+2006-08-22  Eric Blake  <ebb9@byu.net>
+
+	* stdint_h.m4 (gl_AC_HEADER_STDINT_H): Avoid compiler warning.
+	* inttypes_h.m4 (gl_AC_HEADER_INTTYPES_H): Likewise.
+	* longlong.m4 (AC_TYPE_LONG_LONG_INT): Likewise.
+	* intmax_t.m4 (gt_AC_TYPE_INTMAX_T): Likewise.
+
 2006-08-22  Bruno Haible  <bruno@clisp.org>
 
 	* readutmp.m4 (gl_READUTMP): Compile readutmp.c only if <utmp.h> or
