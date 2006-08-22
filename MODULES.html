@@ -2069,7 +2069,7 @@ variables.
       <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=argmatch"></A><A HREF="modules/argmatch">argmatch</A>
       <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/argmatch.h">argmatch.h</A>"
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/argmatch.c">argmatch.c</A>
-      <TD ALIGN=LEFT VALIGN=TOP>---
+      <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/argmatch.m4">argmatch.m4</A><BR>gl_ARGMATCH
       <TD ALIGN=LEFT VALIGN=TOP>gettext-h<BR>error<BR>quotearg<BR>quote<BR>exit<BR>exitfail<BR>verify<BR>stdbool
     </TR>
     <TR>
@@ -2650,7 +2650,7 @@ variables.
     </TR>
     <TR>
       <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mbchar"></A><A HREF="modules/mbchar">mbchar</A>
-      <TD ALIGN=LEFT VALIGN=TOP>#if HAVE_WCHAR_H && HAVE_WCTYPE_H<BR>#include "<A HREF="lib/mbchar.h">mbchar.h</A>"<BR>#endif
+      <TD ALIGN=LEFT VALIGN=TOP>#if HAVE_WCHAR_H<BR>#include "<A HREF="lib/mbchar.h">mbchar.h</A>"<BR>#endif
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mbchar.c">mbchar.c</A>
       <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbchar.m4">mbchar.m4</A><BR>gl_MBCHAR
       <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>wcwidth
@@ -3074,7 +3074,7 @@ variables.
     <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/acl.h">acl.h</A>"
     <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/acl.c">acl.c</A>
     <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/acl.m4">acl.m4</A><BR>AC_FUNC_ACL
-    <TD ALIGN=LEFT VALIGN=TOP>---
+    <TD ALIGN=LEFT VALIGN=TOP>error<BR>quote
   </TR>
   <TR>
     <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=backupfile"></A><A HREF="modules/backupfile">backupfile</A>
@@ -4231,7 +4231,7 @@ variables.
     <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=dev-ino"></A><A HREF="modules/dev-ino">dev-ino</A>
     <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/dev-ino.h">dev-ino.h</A>"
     <TD ALIGN=LEFT VALIGN=TOP>---
-    <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/dev-ino.m4">dev-ino.m4</A><BR>gl_STRUCT_DEV_INO
+    <TD ALIGN=LEFT VALIGN=TOP>---
     <TD ALIGN=LEFT VALIGN=TOP>---
   </TR>
   <TR>
@@ -4407,7 +4407,7 @@ variables.
     <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/openat.h">openat.h</A>"
     <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/at-func.c">at-func.c</A><BR><A HREF="lib/fchmodat.c">fchmodat.c</A><BR><A HREF="lib/mkdirat.c">mkdirat.c</A><BR><A HREF="lib/openat.c">openat.c</A><BR><A HREF="lib/openat-die.c">openat-die.c</A><BR><A HREF="lib/openat-priv.h">openat-priv.h</A>
     <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/openat.m4">openat.m4</A><BR>gl_FUNC_OPENAT
-    <TD ALIGN=LEFT VALIGN=TOP>gettext-h<BR>dirname<BR>extensions<BR>lstat<BR>intprops<BR>save-cwd
+    <TD ALIGN=LEFT VALIGN=TOP>dirname<BR>extensions<BR>gettext-h<BR>intprops<BR>lstat<BR>save-cwd
   </TR>
   <TR>
     <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=read-file"></A><A HREF="modules/read-file">read-file</A>
@@ -4427,7 +4427,7 @@ variables.
     <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=same-inode"></A><A HREF="modules/same-inode">same-inode</A>
     <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/same-inode.h">same-inode.h</A>"
     <TD ALIGN=LEFT VALIGN=TOP>---
-    <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/same-inode.m4">same-inode.m4</A><BR>gl_SAME_INODE
+    <TD ALIGN=LEFT VALIGN=TOP>---
     <TD ALIGN=LEFT VALIGN=TOP>---
   </TR>
   <TR>
@@ -4481,6 +4481,6 @@ Ideally a module could consist of:
   <LI>A POT file and some PO files
 </UL>
 <HR>
-Generated from <CODE>MODULES.html.sh</CODE> on 21 August 2006.
+Generated from <CODE>MODULES.html.sh</CODE> on 22 August 2006.
 </BODY>
 </HTML>
