@@ -1,3 +1,7 @@
+2006-08-22  Bruno Haible <bruno@clisp.org>
+
+	* build-aux/x-to-1.in: New file, from GNU gettext.
+
 2006-08-22  Simon Josefsson  <jas@extundo.com>
 
 	* modules/gc-md5 (Makefile.am): Need to add md5.h, after changes
