@@ -1,3 +1,8 @@
+2006-08-22  Simon Josefsson  <jas@extundo.com>
+
+	* modules/gc-md5 (Makefile.am): Need to add md5.h, after changes
+	to md5 module.
+
 2006-08-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Avoid the need for AC_LIBSOURCES in m4 macros.

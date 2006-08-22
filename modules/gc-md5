@@ -15,6 +15,7 @@ configure.ac:
 gl_GC_MD5
 
 Makefile.am:
+lib_SOURCES += md5.h
 
 Include:
 "gc.h"
