@@ -31,8 +31,8 @@
 #  undef HAVE_UTMPX_H
 # endif
 
-# ifdef HAVE_UTMPX_H
-#  ifdef HAVE_UTMP_H
+# if HAVE_UTMPX_H
+#  if HAVE_UTMP_H
     /* HPUX 10.20 needs utmp.h, for the definition of e.g., UTMP_FILE.  */
 #   include <utmp.h>
 #  endif
@@ -66,7 +66,8 @@
 #   endif
 #  endif
 
-# else
+# elif HAVE_UTMP_H
+
 #  include <utmp.h>
 #  if !HAVE_DECL_GETUTENT
     struct utmp *getutent();
@@ -103,7 +104,7 @@
 # endif
 
 /* Accessor macro for the member named ut_user or ut_name.  */
-# ifdef HAVE_UTMPX_H
+# if HAVE_UTMPX_H
 
 #  if HAVE_STRUCT_UTMPX_UT_USER
 #   define UT_USER(Utmp) ((Utmp)->ut_user)
@@ -113,7 +114,7 @@
 #   define UT_USER(Utmp) ((Utmp)->ut_name)
 #  endif
 
-# else
+# elif HAVE_UTMP_H
 
 #  if HAVE_STRUCT_UTMP_UT_USER
 #   define UT_USER(Utmp) ((Utmp)->ut_user)

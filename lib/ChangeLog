@@ -1,3 +1,8 @@
+2006-08-22  Bruno Haible  <bruno@clisp.org>
+
+	* readutmp.h: Skip most definitions if neither <utmp.h> nor
+	<utmpx.h> exists.
+
 2006-08-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	BeOS portability.

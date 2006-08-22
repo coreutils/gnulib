@@ -1,3 +1,8 @@
+2006-08-22  Bruno Haible  <bruno@clisp.org>
+
+	* readutmp.m4 (gl_READUTMP): Compile readutmp.c only if <utmp.h> or
+	<utmpx.h> exists.
+
 2006-08-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* rijndael.m4 (gl_ARCFOUR):
