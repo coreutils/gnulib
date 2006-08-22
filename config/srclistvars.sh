@@ -1,4 +1,4 @@
-# $Id: srclistvars.sh,v 1.27 2006-08-14 18:28:31 eggert Exp $
+# $Id: srclistvars.sh,v 1.28 2006-08-22 19:38:57 eggert Exp $
 # Variables for srclist-update and srclist.txt.
 # Will change for each user.
 
@@ -24,7 +24,6 @@ case $LOGNAME in
 jas | eggert)
   : ${AUTOCONF=../autoconf}
   : ${AUTOMAKE=../automake}
-  : ${COREUTILS=../coreutils}
   : ${GETTEXT=../gettext}
   : ${GNUCONFIG=../config}
   : ${GNUORG=../gnuorg}
@@ -42,7 +41,6 @@ karl)
   : ${TEXMFROOT=/usr/local/texmf/texmf-dist}
   : ${AUTOCONF=../autoconf}
   : ${AUTOMAKE=../automake}
-  : ${COREUTILS=../coreutils}
   : ${EMACSSRC=../emacs}
   : ${GETTEXT=../gettext}
   : ${GNUCONFIG=../config}

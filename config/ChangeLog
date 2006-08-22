@@ -1,3 +1,9 @@
+2006-08-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Remove gnupload, since coreutils now syncs from
+	gnulib rather than the other way around.
+	* srclistvars.sh (COREUTILS): Remove.
+
 2006-07-14  Simon Josefsson  <jas@extundo.com>
 
 	* srclist.txt: Add gnupload.
