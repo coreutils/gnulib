@@ -1,3 +1,8 @@
+2006-08-23  Bruno Haible <bruno@clisp.org>
+
+	* gnulib-tool (func_import, func_create_testdir): Emit an invocation
+	of gl_LOCK_EARLY instead of gl_LOCK.
+
 2006-08-22  Eric Blake  <ebb9@byu.net>
 
 	* modules/regexprops-generic: New file.

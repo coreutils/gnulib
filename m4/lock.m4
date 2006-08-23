@@ -1,5 +1,5 @@
-# lock.m4 serial 2 (gettext-0.15)
-dnl Copyright (C) 2005 Free Software Foundation, Inc.
+# lock.m4 serial 3 (gettext-0.15.1)
+dnl Copyright (C) 2005-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -19,12 +19,12 @@ dnl symbols, typically LIBTHREAD="" whereas LIBMULTITHREAD="-lpthread".
 dnl Adds to CPPFLAGS the flag -D_REENTRANT or -D_THREAD_SAFE if needed for
 dnl multithread-safe programs.
 
-AC_DEFUN([gl_LOCK],
+AC_DEFUN([gl_LOCK_EARLY],
 [
   AC_REQUIRE([gl_LOCK_BODY])
 ])
 
-dnl The guts of gl_LOCK. Needs to be expanded only once.
+dnl The guts of gl_LOCK_EARLY. Needs to be expanded only once.
 
 AC_DEFUN([gl_LOCK_BODY],
 [
@@ -227,6 +227,11 @@ int x = (int)PTHREAD_MUTEX_RECURSIVE;
   AC_SUBST(LTLIBTHREAD)
   AC_SUBST(LIBMULTITHREAD)
   AC_SUBST(LTLIBMULTITHREAD)
+])
+
+AC_DEFUN([gl_LOCK],
+[
+  AC_REQUIRE([gl_LOCK_EARLY])
   gl_PREREQ_LOCK
 ])
 

@@ -1,3 +1,9 @@
+2006-08-23  Bruno Haible  <bruno@clisp.org>
+
+	* lock.m4 (gl_LOCK_EARLY): Renamed from gl_LOCK.
+	(gl_LOCK_BODY): Remove gl_PREREQ_LOCK invocation.
+	(gl_LOCK): New macro.
+
 2006-08-22  Eric Blake  <ebb9@byu.net>
 
 	* stdint_h.m4 (gl_AC_HEADER_STDINT_H): Avoid compiler warning.

@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-22 18:57:52 $'
+cvsdatestamp='$Date: 2006-08-23 12:04:46 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1563,7 +1563,7 @@ func_import ()
       echo "  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])"
     fi
     if grep gl_LOCK "$destdir"/$m4base/*.m4 >/dev/null 2>/dev/null; then
-      echo "  AC_REQUIRE([gl_LOCK])"
+      echo "  AC_REQUIRE([gl_LOCK_EARLY])"
     fi
     echo "])"
     echo
@@ -1821,7 +1821,7 @@ func_create_testdir ()
        echo
      fi
      if grep gl_LOCK "$testdir"/m4/*.m4 >/dev/null 2>/dev/null; then
-       echo "gl_LOCK"
+       echo "gl_LOCK_EARLY"
        echo
      fi
      if test "$libtool" = true; then
@@ -1916,7 +1916,7 @@ func_create_testdir ()
      echo
    fi
    if grep gl_LOCK "$testdir"/m4/*.m4 >/dev/null 2>/dev/null; then
-     echo "gl_LOCK"
+     echo "gl_LOCK_EARLY"
      echo
    fi
    if test "$libtool" = true; then
