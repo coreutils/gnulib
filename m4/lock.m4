@@ -1,4 +1,4 @@
-# lock.m4 serial 3 (gettext-0.15.1)
+# lock.m4 serial 4 (gettext-0.15.1)
 dnl Copyright (C) 2005-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,7 +40,15 @@ AC_DEFUN([gl_LOCK_BODY],
   AC_ARG_ENABLE(threads,
 AC_HELP_STRING([--enable-threads={posix|solaris|pth|win32}], [specify multithreading API])
 AC_HELP_STRING([--disable-threads], [build without multithread safety]),
-    gl_use_threads=$enableval, gl_use_threads=yes)
+    [gl_use_threads=$enableval],
+    [case "$host_os" in
+       dnl Disable multithreading by default on OSF/1, because it interferes
+       dnl with fork()/exec(): When msgexec is linked with -lpthread, its child
+       dnl process gets an endless segmentation fault inside execvp().
+       osf*) gl_use_threads=no ;;
+       *)    gl_use_threads=yes ;;
+     esac
+    ])
   gl_threads_api=none
   LIBTHREAD=
   LTLIBTHREAD=

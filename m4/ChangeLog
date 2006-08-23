@@ -4,6 +4,12 @@
 	(gl_LOCK_BODY): Remove gl_PREREQ_LOCK invocation.
 	(gl_LOCK): New macro.
 
+2006-08-18  Bruno Haible  <bruno@clisp.org>
+
+	* lock.m4 (gl_LOCK_BODY): Change the default value of gl_use_threads
+	on OSF/1 to no.
+	Reported by Stephen Cartwright <sgcartwr@ucalgary.ca>.
+
 2006-08-22  Eric Blake  <ebb9@byu.net>
 
 	* stdint_h.m4 (gl_AC_HEADER_STDINT_H): Avoid compiler warning.
