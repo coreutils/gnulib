@@ -1,4 +1,4 @@
-#serial 18
+#serial 19
 # Obtaining file system usage information.
 
 # Copyright (C) 1997, 1998, 2000, 2001, 2003, 2004, 2005, 2006 Free Software
@@ -48,10 +48,12 @@ if test $ac_fsusage_space = no; then
   # SVR4
   AC_CACHE_CHECK([for statvfs function (SVR4)], fu_cv_sys_stat_statvfs,
 		 [AC_TRY_LINK([#include <sys/types.h>
-#ifdef __GLIBC__
+#if defined __GLIBC__ && !defined __BEOS__
 Do not use statvfs on systems with GNU libc, because that function stats
 all preceding entries in /proc/mounts, and that makes df hang if even
 one of the corresponding file systems is hard-mounted, but not available.
+statvfs in GNU libc on BeOS operates differently: it only makes a system
+call.
 #endif
 #include <sys/statvfs.h>],
 			      [struct statvfs fsd; statvfs (0, &fsd);],

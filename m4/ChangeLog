@@ -1,5 +1,8 @@
 2006-08-23  Bruno Haible  <bruno@clisp.org>
 
+	* fsusage.m4 (gl_FILE_SYSTEM_USAGE): Don't consider BeOS statvfs
+	as unusable.
+
 	* lock.m4 (gl_LOCK_EARLY): Renamed from gl_LOCK.
 	(gl_LOCK_BODY): Remove gl_PREREQ_LOCK invocation.
 	(gl_LOCK): New macro.
