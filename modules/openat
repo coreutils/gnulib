@@ -16,6 +16,7 @@ dirname
 extensions
 gettext-h
 intprops
+lchown
 lstat
 save-cwd
 

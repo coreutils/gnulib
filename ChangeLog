@@ -1,3 +1,7 @@
+2006-08-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/openat (Depends-on): Add lstat.
+
 2006-08-23  Bruno Haible <bruno@clisp.org>
 
 	* gnulib-tool (func_import, func_create_testdir): Emit an invocation
