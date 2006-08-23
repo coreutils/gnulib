@@ -3,6 +3,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   Net::CDP        http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
   OPeNDAP         http://scm.opendap.org:8090/svn/trunk/
   bison           http://cvs.sv.gnu.org/viewcvs/bison/bison/
+  coreutils       http://cvs.sv.gnu.org/viewcvs/coreutils/coreutils/
   cvs             http://cvs.sv.gnu.org/viewcvs/cvs/ccvs/
   diffutils       http://cvs.sv.gnu.org/viewcvs/diffutils/diffutils/
   findutils       http://cvs.sv.gnu.org/viewcvs/findutils/findutils/
@@ -38,7 +39,7 @@ The following packages appear to be using gnulib and gnulib-tool:
 
 The following packages are using gnulib without gnulib-tool:
 
-  coreutils       http://cvs.sv.gnu.org/viewcvs/coreutils/coreutils/
+  ---
 
 
 Articles:
