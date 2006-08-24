@@ -1,3 +1,8 @@
+2006-08-24  Bruno Haible <bruno@clisp.org>
+
+	* MODULES.html.sh (Compatibility checks for POSIX:2001 functions: Fix
+	HTML structure.
+
 2006-08-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/openat (Depends-on): Add lchown.
