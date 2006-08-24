@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.135 2006-08-22 19:38:57 eggert Exp $
+# $Id: srclist.txt,v 1.136 2006-08-24 20:15:12 eggert Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -6,6 +6,7 @@ $GNUCONFIG/config.guess		build-aux
 $GNUCONFIG/config.sub		build-aux
 #
 $AUTOMAKE/lib/depcomp		build-aux
+$AUTOMAKE/lib/elisp-comp	build-aux
 $AUTOMAKE/lib/install-sh	build-aux
 $AUTOMAKE/lib/mdate-sh		build-aux
 $AUTOMAKE/lib/missing		build-aux

@@ -2100,6 +2100,7 @@ func_all_modules ()
 
   func_begin_table
   func_module dummy
+  func_module elisp-comp
   func_module ldd
   func_module lib-ignore
   func_end_table
