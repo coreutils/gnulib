@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-23 12:04:46 $'
+cvsdatestamp='$Date: 2006-08-24 13:48:29 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1722,6 +1722,11 @@ func_create_testdir ()
   modules="$2"
   modules=`for m in $modules; do echo $m; done | LC_ALL=C sort | LC_ALL=C uniq`
 
+  # Subdirectory names.
+  sourcebase=gllib
+  m4base=glm4
+  testsbase=gltests
+
   # Determine final module list.
   func_modules_transitive_closure
   echo "Module list with included dependencies:"
@@ -1737,11 +1742,13 @@ func_create_testdir ()
 
   # Create directories.
   for d in `echo "$files" | sed -n -e 's,^\(.*\)/[^/]*,\1,p'`; do
-    if test "$d" = build-aux; then
-      mkdir -p "$testdir/$auxdir"
-    else
-      mkdir -p "$testdir/$d"
-    fi
+    case "$d" in
+      build-aux) mkdir -p "$testdir/$auxdir" ;;
+      lib)       mkdir -p "$testdir/$sourcebase" ;;
+      m4)        mkdir -p "$testdir/$m4base" ;;
+      tests)     mkdir -p "$testdir/$testsbase" ;;
+      *)         mkdir -p "$testdir/$d" ;;
+    esac
   done
 
   # Copy files or make symbolic links.
@@ -1749,6 +1756,9 @@ func_create_testdir ()
     func_lookup_file "$f"
     case "$f" in
       build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
+      lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
+      m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
+      tests/*) g=`echo "$f" | sed -e "s,^tests/,$testsbase/,"` ;;
       *) g="$f" ;;
     esac
     if test -n "$lookedup_tmp"; then
@@ -1763,12 +1773,12 @@ func_create_testdir ()
     fi
   done
 
-  # Create lib/Makefile.am.
-  mkdir -p "$testdir/lib"
-  func_emit_lib_Makefile_am > "$testdir/lib/Makefile.am"
+  # Create $sourcebase/Makefile.am.
+  mkdir -p "$testdir/$sourcebase"
+  func_emit_lib_Makefile_am > "$testdir/$sourcebase/Makefile.am"
 
-  # Create m4/Makefile.am.
-  mkdir -p "$testdir/m4"
+  # Create $m4base/Makefile.am.
+  mkdir -p "$testdir/$m4base"
   (echo "## Process this file with automake to produce Makefile.in."
    echo
    echo "EXTRA_DIST ="
@@ -1778,12 +1788,12 @@ func_create_testdir ()
          echo "EXTRA_DIST += "`echo "$f" | sed -e 's,^m4/,,'` ;;
      esac
    done
-  ) > "$testdir/m4/Makefile.am"
+  ) > "$testdir/$m4base/Makefile.am"
 
-  subdirs="lib m4"
+  subdirs="$sourcebase $m4base"
   subdirs_with_configure_ac=""
 
-  if test -f "$testdir"/m4/gettext.m4; then
+  if test -f "$testdir"/$m4base/gettext.m4; then
     # Avoid stupid error message from automake:
     # "AM_GNU_GETTEXT used but `po' not in SUBDIRS"
     mkdir -p "$testdir/po"
@@ -1793,13 +1803,10 @@ func_create_testdir ()
   fi
 
   if test -n "$inctests"; then
-    test -d "$testdir/tests" || mkdir "$testdir/tests"
-    # Create tests/Makefile.am.
-    sourcebase=lib
-    m4base=m4
-    testsbase=tests
-    func_emit_tests_Makefile_am > "$testdir/tests/Makefile.am"
-    # Create tests/configure.ac.
+    test -d "$testdir/$testsbase" || mkdir "$testdir/$testsbase"
+    # Create $testsbase/Makefile.am.
+    func_emit_tests_Makefile_am > "$testdir/$testsbase/Makefile.am"
+    # Create $testsbase/configure.ac.
     (echo "# Process this file with autoconf to produce a configure script."
      echo "AC_INIT([dummy], [0])"
      echo "AC_CONFIG_AUX_DIR([../$auxdir])"
@@ -1812,15 +1819,15 @@ func_create_testdir ()
      echo "AC_PROG_MAKE_SET"
      echo "AC_PROG_RANLIB"
      echo
-     if grep AC_GNU_SOURCE "$testdir"/m4/*.m4 >/dev/null 2>/dev/null; then
+     if grep AC_GNU_SOURCE "$testdir/$m4base"/*.m4 >/dev/null 2>/dev/null; then
        echo "AC_GNU_SOURCE"
        echo
      fi
-     if grep gl_USE_SYSTEM_EXTENSIONS "$testdir"/m4/*.m4 >/dev/null 2>/dev/null; then
+     if grep gl_USE_SYSTEM_EXTENSIONS "$testdir/$m4base"/*.m4 >/dev/null 2>/dev/null; then
        echo "gl_USE_SYSTEM_EXTENSIONS"
        echo
      fi
-     if grep gl_LOCK "$testdir"/m4/*.m4 >/dev/null 2>/dev/null; then
+     if grep gl_LOCK "$testdir/$m4base"/*.m4 >/dev/null 2>/dev/null; then
        echo "gl_LOCK_EARLY"
        echo
      fi
@@ -1868,14 +1875,14 @@ func_create_testdir ()
      echo "])"
      echo "gl_INIT"
      echo
-     # Usually tests/config.h will be a superset of config.h. Verify this by
-     # "merging" config.h into tests/config.h; look out for gcc warnings.
+     # Usually $testsbase/config.h will be a superset of config.h. Verify this
+     # by "merging" config.h into $testsbase/config.h; look out for gcc warnings.
      echo "AH_TOP([#include \"../config.h\"])"
      echo
      echo "AC_OUTPUT([Makefile])"
-    ) > "$testdir/tests/configure.ac"
-    subdirs="$subdirs tests"
-    subdirs_with_configure_ac="$subdirs_with_configure_ac tests"
+    ) > "$testdir/$testsbase/configure.ac"
+    subdirs="$subdirs $testsbase"
+    subdirs_with_configure_ac="$subdirs_with_configure_ac $testsbase"
   fi
 
   # Create Makefile.am.
@@ -1885,7 +1892,7 @@ func_create_testdir ()
    echo
    echo "SUBDIRS = $subdirs"
    echo
-   echo "ACLOCAL_AMFLAGS = -I m4"
+   echo "ACLOCAL_AMFLAGS = -I $m4base"
   ) > "$testdir/Makefile.am"
 
   # Create configure.ac.
@@ -1907,15 +1914,15 @@ func_create_testdir ()
    echo
    echo "AC_PROG_RANLIB"
    echo
-   if grep AC_GNU_SOURCE "$testdir"/m4/*.m4 >/dev/null 2>/dev/null; then
+   if grep AC_GNU_SOURCE "$testdir/$m4base"/*.m4 >/dev/null 2>/dev/null; then
      echo "AC_GNU_SOURCE"
      echo
    fi
-   if grep gl_USE_SYSTEM_EXTENSIONS "$testdir"/m4/*.m4 >/dev/null 2>/dev/null; then
+   if grep gl_USE_SYSTEM_EXTENSIONS "$testdir/$m4base"/*.m4 >/dev/null 2>/dev/null; then
      echo "gl_USE_SYSTEM_EXTENSIONS"
      echo
    fi
-   if grep gl_LOCK "$testdir"/m4/*.m4 >/dev/null 2>/dev/null; then
+   if grep gl_LOCK "$testdir/$m4base"/*.m4 >/dev/null 2>/dev/null; then
      echo "gl_LOCK_EARLY"
      echo
    fi
@@ -1973,10 +1980,10 @@ func_create_testdir ()
    echo "executing ${AUTORECONF} --force --install"
    ${AUTORECONF} --force --install
   )
-  if grep '^BUILT_SOURCES *+=' "$testdir/lib/Makefile.am" > /dev/null; then
+  if grep '^BUILT_SOURCES *+=' "$testdir/$sourcebase/Makefile.am" > /dev/null; then
     (cd "$testdir"
      ./configure
-       cd lib
+       cd "$sourcebase"
        echo 'built_sources: $(BUILT_SOURCES)' >> Makefile
        make built_sources
        cd ..

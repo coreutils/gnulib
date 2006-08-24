@@ -1,5 +1,10 @@
 2006-08-24  Bruno Haible <bruno@clisp.org>
 
+	* gnulib-tool (func_create_testdir): Use non-default values of
+	sourcebase and m4base.
+
+2006-08-24  Bruno Haible <bruno@clisp.org>
+
 	* MODULES.html.sh (Compatibility checks for POSIX:2001 functions: Fix
 	HTML structure.
 
