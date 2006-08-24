@@ -1,6 +1,6 @@
 2006-08-23  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* modules/openat (Depends-on): Add lstat.
+	* modules/openat (Depends-on): Add lchown.
 
 2006-08-23  Bruno Haible <bruno@clisp.org>
 
