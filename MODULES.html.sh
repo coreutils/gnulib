@@ -2099,6 +2099,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module configmake
   func_module dummy
   func_module elisp-comp
   func_module ldd

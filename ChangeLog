@@ -1,3 +1,11 @@
+2006-08-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	New configmake module, so that "make" output needn't be cluttered
+	by fluff like '-DLIBDIR=\"/usr/local/lib\"'.
+	* MODULES.html.sh (Support for building libraries and executables):
+	Add configmake.
+	* modules/configmake: New file.
+
 2006-08-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* MODULES.html.sh (Support for building libraries and executables):

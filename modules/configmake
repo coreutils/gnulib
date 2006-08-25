@@ -1,0 +1,49 @@
+Description:
+Variables set by "configure" or "make".
+
+Files:
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+# Listed in the same order as the GNU makefile conventions.
+configmake.h:
+	( \
+	  echo '#define CONFIGMAKE_PREFIX "$(prefix)"'; \
+	  echo '#define CONFIGMAKE_EXEC_PREFIX "$(exec_prefix)"'; \
+	  echo '#define CONFIGMAKE_BINDIR "$(bindir)"'; \
+	  echo '#define CONFIGMAKE_SBINDIR "$(sbindir)"'; \
+	  echo '#define CONFIGMAKE_LIBEXECDIR "$(libexecdir)"'; \
+	  echo '#define CONFIGMAKE_DATAROOTDIR "$(datarootdir)"'; \
+	  echo '#define CONFIGMAKE_DATADIR "$(datadir)"'; \
+	  echo '#define CONFIGMAKE_SYSCONFDIR "$(sysconfdir)"'; \
+	  echo '#define CONFIGMAKE_SHAREDSTATEDIR "$(sharedstatedir)"'; \
+	  echo '#define CONFIGMAKE_LOCALSTATEDIR "$(localstatedir)"'; \
+	  echo '#define CONFIGMAKE_INCLUDEDIR "$(includedir)"'; \
+	  echo '#define CONFIGMAKE_OLDINCLUDEDIR "$(oldincludedir)"'; \
+	  echo '#define CONFIGMAKE_DOCDIR "$(docdir)"'; \
+	  echo '#define CONFIGMAKE_INFODIR "$(infodir)"'; \
+	  echo '#define CONFIGMAKE_HTMLDIR "$(htmldir)"'; \
+	  echo '#define CONFIGMAKE_DVIDIR "$(dvidir)"'; \
+	  echo '#define CONFIGMAKE_PDFDIR "$(pdfdir)"'; \
+	  echo '#define CONFIGMAKE_PSDIR "$(psdir)"'; \
+	  echo '#define CONFIGMAKE_LIBDIR "$(libdir)"'; \
+	  echo '#define CONFIGMAKE_LISPDIR "$(lispdir)"'; \
+	  echo '#define CONFIGMAKE_LOCALEDIR "$(localedir)"'; \
+	  echo '#define CONFIGMAKE_MANDIR "$(mandir)"'; \
+	  echo '#define CONFIGMAKE_MANEXT "$(manext)"'; \
+	:) | sed '/""/d' >$@-t
+	mv $@-t $@
+BUILT_SOURCES += configmake.h
+CLEANFILES += configmake.h configmake.h-t
+
+Include:
+"configmake.h"
+
+License:
+LGPL
+
+Maintainer:
+all
