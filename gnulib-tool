@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-24 13:48:29 $'
+cvsdatestamp='$Date: 2006-08-26 06:39:32 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -58,6 +58,9 @@ fi
 if test -z "$SORT"; then
   SORT=sort
 fi
+
+nl='
+'
 
 # func_usage
 # outputs to stdout the --help usage message.
@@ -1226,6 +1229,23 @@ func_import ()
     done
   fi
 
+  # Determine script to apply to imported library files.
+  sed_transform_lib_file=
+  case $nl$modules$nl in
+    *"${nl}config-h$nl"*)
+      # Assume config.h exists, and that -DHAVE_CONFIG_H is omitted.
+      sed_transform_lib_file=$sed_transform_lib_file'
+	s/^#ifdef[	 ]*HAVE_CONFIG_H[	 ]*$/#if 1/
+      ' ;;
+  esac
+  if test -n "$lgpl"; then
+    # Update license.
+    sed_transform_lib_file=$sed_transform_lib_file'
+      s/GNU General/GNU Lesser General/g
+      s/version 2\([ ,]\)/version 2.1\1/g
+    '
+  fi
+
   # Determine final file list.
   func_modules_to_filelist
   echo "File list:"
@@ -1349,12 +1369,10 @@ func_import ()
     func_dest_tmpfilename "$g"
     func_lookup_file "$f"
     cp "$lookedup_file" "$tmpfile" || func_fatal_error "failed"
-    if test -n "$lgpl"; then
-      # Update license.
+    if test -n "sed_transform_lib_file"; then
       case "$f" in
         lib/*)
-          sed -e 's/GNU General/GNU Lesser General/g' \
-              -e 's/version 2\([ ,]\)/version 2.1\1/g' \
+          sed -e "$sed_transform_lib_file" \
             < "$lookedup_file" > "$tmpfile" || func_fatal_error "failed"
           ;;
       esac

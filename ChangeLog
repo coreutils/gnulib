@@ -1,5 +1,14 @@
 2006-08-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	New config-h module, so that "make" output needn't be cluttered
+	by -DHAVE_CONFIG_H.
+	* MODULES.html.sh (Support for building libraries and executables):
+	Add config-h.
+	* modules/config-h: New file.
+	* gnulib-tool (nl, sed_transform_lib_file): New vars.
+	(func_import): Turn "#ifdef HAVE_CONFIG_H" to "#if 1" if
+	the config-h module is used.
+
 	New configmake module, so that "make" output needn't be cluttered
 	by fluff like '-DLIBDIR=\"/usr/local/lib\"'.
 	* MODULES.html.sh (Support for building libraries and executables):

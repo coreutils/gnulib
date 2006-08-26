@@ -1,3 +1,7 @@
+2006-08-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* config-h.m4: New file.
+
 2006-08-23  Bruno Haible  <bruno@clisp.org>
 
 	* fsusage.m4 (gl_FILE_SYSTEM_USAGE): Don't consider BeOS statvfs
