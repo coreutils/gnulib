@@ -1,3 +1,7 @@
+2006-08-27  Jim Meyering  <jim@meyering.net>
+
+	* visibility.texi: Remove duplicate word: "pointer".
+
 2006-08-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regexprops-generic.texi: Add a copyright notice.

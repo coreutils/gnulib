@@ -42,7 +42,7 @@ with @code{LD_PRELOAD}.) Whereas a call to a function for which the compiler
 can assume that it is in the same shared library is just a direct "call"
 instructions. Similarly for variables: A reference to a global variable
 fetches a pointer in the so-called GOT (global offset table); this pointer
-pointer to the variable's memory. So the code to access it is two memory
+to the variable's memory. So the code to access it is two memory
 load instructions. Whereas for a variable which is known to reside in the
 same shared library, it is just a direct memory access: one memory load
 instruction.
