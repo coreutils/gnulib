@@ -1,5 +1,10 @@
 2006-08-28  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* modules/fcntl: New file.
+	* modules/chdir-safer (Depends-on): Add fcntl.
+	* modules/fts: Likewise.
+	* modules/mkdir-p: Likewise.
+
 	* modules/stdint (Makefile.am): Do not substitute ABSOLUTE_INTTYPES_H.
 	This undoes the most recent change, since we're not addressing the
 	problem in a different way.

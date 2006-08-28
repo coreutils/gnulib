@@ -1,5 +1,11 @@
 2006-08-28  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* fcntl_.h: New file.
+	* chdir-safer.c (O_DIRECTORY, O_NOFOLLOW): Remove, now that we have
+	the fcntl module.
+	* dirchownmod.c: Likewise.
+	* fts.c: Likewise.
+
 	* inttypes_.h [defined _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H]:
 	Include @ABSOLUTE_INTTYPES_H@ if available, but do nothing else.
 	* stdint_.h (_GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H): Define

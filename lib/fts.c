@@ -115,10 +115,6 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 # define ATTRIBUTE_UNUSED __attribute__ ((__unused__))
 #endif
 
-#if !defined O_NOFOLLOW
-# define O_NOFOLLOW 0
-#endif
-
 /* If this host provides the openat function, then we can avoid
    attempting to open "." in some initialization code below.  */
 #ifdef HAVE_OPENAT

@@ -33,13 +33,6 @@
 #include "lchmod.h"
 #include "stat-macros.h"
 
-#ifndef O_DIRECTORY
-# define O_DIRECTORY 0
-#endif
-#ifndef O_NOFOLLOW
-# define O_NOFOLLOW 0
-#endif
-
 #ifndef HAVE_FCHMOD
 # define HAVE_FCHMOD 0
 # undef fchmod

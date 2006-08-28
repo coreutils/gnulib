@@ -10,6 +10,7 @@ m4/fts.m4
 Depends-on:
 cycle-check
 dirfd
+fcntl
 hash
 lstat
 openat

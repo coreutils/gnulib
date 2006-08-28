@@ -1,3 +1,7 @@
+2006-08-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* fcntl_h.m4: New file.
+
 2006-08-28  Eric Blake  <ebb9@byu.net>
 
 	* inttypes.m4 (gl_INTTYPES_H): Fix missing #endif.

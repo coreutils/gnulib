@@ -1,0 +1,34 @@
+Description:
+Like <fcntl.h>, but with non-working flags defined to 0.
+
+Files:
+lib/fcntl_.h
+m4/absolute-header.m4
+m4/fcntl_h.m4
+
+Depends-on:
+unistd
+
+configure.ac:
+gl_FCNTL_H
+
+Makefile.am:
+BUILT_SOURCES += $(FCNTL_H)
+EXTRA_DIST += fcntl_.h
+
+# We need the following in order to create <fcntl.h> when the system
+# doesn't have one that works with the given compiler.
+fcntl.h: fcntl_.h
+	sed -e 's|@''ABSOLUTE_FCNTL_H''@|$(ABSOLUTE_FCNTL_H)|g' \
+	    < $(srcdir)/fcntl_.h > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += fcntl.h fcntl.h-t
+
+Include:
+#include <fcntl.h>
+
+License:
+LGPL
+
+Maintainer:
+all

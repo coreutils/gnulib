@@ -32,14 +32,6 @@
 #include <sys/stat.h>
 #include "same-inode.h"
 
-#ifndef O_DIRECTORY
-# define O_DIRECTORY 0
-#endif
-
-#ifndef O_NOFOLLOW
-# define O_NOFOLLOW 0
-#endif
-
 /* Like chdir, but fail if DIR is a symbolic link to a directory (or
    similar funny business), or if DIR is not readable.  This avoids a
    minor race condition between when a directory is created or statted

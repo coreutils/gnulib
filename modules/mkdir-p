@@ -10,6 +10,7 @@ m4/mkdir-p.m4
 
 Depends-on:
 error
+fcntl
 gettext-h
 lchmod
 lchown
