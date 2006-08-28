@@ -1,4 +1,16 @@
 2006-08-26  Bruno Haible  <bruno@clisp.org>
+
+	* vasnprintf.c (EOVERFLOW): Remove definition.
+	(VASNPRINTF): Return a string of length > INT_MAX without failing.
+	* vasprintf.c: Include errno.h, limits.h.
+	(EOVERFLOW): New fallback definition.
+	(vasprintf): Test here whether the string length is > INT_MAX.
+	* vsnprintf.c: Include errno.h, limits.h.
+	(EOVERFLOW): New fallback definition.
+	(vsnprintf): Fix bug when generated string was too long for the buffer.
+	Test here whether the string length is > INT_MAX.
+
+2006-08-26  Bruno Haible  <bruno@clisp.org>
             Simon Josefsson  <jas@extundo.com>
 
 	BeOS portability.

@@ -1,5 +1,5 @@
 /* Formatted output to strings.
-   Copyright (C) 2004 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006 Free Software Foundation, Inc.
    Written by Simon Josefsson and Yoann Vandoorselaere <yoann@prelude-ids.org>.
 
    This program is free software; you can redistribute it and/or modify
@@ -23,12 +23,19 @@
 /* Specification.  */
 #include "vsnprintf.h"
 
+#include <errno.h>
+#include <limits.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "vasnprintf.h"
+
+/* Some systems, like OSF/1 4.0 and Woe32, don't have EOVERFLOW.  */
+#ifndef EOVERFLOW
+# define EOVERFLOW E2BIG
+#endif
 
 /* Print formatted output to string STR.  Similar to vsprintf, but
    additional length SIZE limit how much is written into STR.  Returns
@@ -40,19 +47,31 @@ vsnprintf (char *str, size_t size, const char *format, va_list args)
 {
   char *output;
   size_t len;
+  size_t lenbuf = size;
 
-  len = size;
-  output = vasnprintf (str, &len, format, args);
+  output = vasnprintf (str, &lenbuf, format, args);
+  len = lenbuf;
 
   if (!output)
     return -1;
 
-  if (str != NULL)
-    if (len > size - 1) /* equivalent to: (size > 0 && len >= size) */
-      str[size - 1] = '\0';
-
   if (output != str)
-    free (output);
+    {
+      if (size)
+	{
+	  size_t pruned_len = (len < size ? len : size - 1);
+	  memcpy (str, output, pruned_len);
+	  str[pruned_len] = '\0';
+	}
+
+      free (output);
+    }
+
+  if (len > INT_MAX)
+    {
+      errno = EOVERFLOW;
+      return -1;
+    }
 
   return len;
 }

@@ -40,7 +40,7 @@
 #include <stdlib.h>	/* abort(), malloc(), realloc(), free() */
 #include <string.h>	/* memcpy(), strlen() */
 #include <errno.h>	/* errno */
-#include <limits.h>	/* CHAR_BIT, INT_MAX */
+#include <limits.h>	/* CHAR_BIT */
 #include <float.h>	/* DBL_MAX_EXP, LDBL_MAX_EXP */
 #if WIDE_CHAR_VERSION
 # include "wprintf-parse.h"
@@ -50,11 +50,6 @@
 
 /* Checked size_t computations.  */
 #include "xsize.h"
-
-/* Some systems, like OSF/1 4.0 and Woe32, don't have EOVERFLOW.  */
-#ifndef EOVERFLOW
-# define EOVERFLOW E2BIG
-#endif
 
 #ifdef HAVE_WCHAR_T
 # ifdef HAVE_WCSLEN
@@ -869,18 +864,11 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
       free (buf_malloced);
     CLEANUP ();
     *lengthp = length;
-    if (length > INT_MAX)
-      goto length_overflow;
+    /* Note that we can produce a big string of a length > INT_MAX.  POSIX
+       says that snprintf() fails with errno = EOVERFLOW in this case, but
+       that's only because snprintf() returns an 'int'.  This function does
+       not have this limitation.  */
     return result;
-
-  length_overflow:
-    /* We could produce such a big string, but its length doesn't fit into
-       an 'int'.  POSIX says that snprintf() fails with errno = EOVERFLOW in
-       this case.  */
-    if (result != resultbuf)
-      free (result);
-    errno = EOVERFLOW;
-    return NULL;
 
   out_of_memory:
     if (!(result == resultbuf || result == NULL))
