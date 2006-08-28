@@ -1,5 +1,13 @@
 2006-08-26  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_relativize, func_relconcat): New functions.
+	Give an error if --local-dir is given with --update.
+	Remove trailing slashes from $local_gnulib_dir.
+	(func_import): Store the relativized $local_gnulib_dir in
+	gnulib-cache.m4, and read it from there if not specified explicitly.
+
+2006-08-26  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_verify_module): Check against misapplying patch.
 
 2006-08-28  Bruno Haible  <bruno@clisp.org>

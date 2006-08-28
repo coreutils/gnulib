@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-28 15:12:52 $'
+cvsdatestamp='$Date: 2006-08-28 15:14:35 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -249,6 +249,99 @@ func_ln_if_changed ()
   fi
 }
 
+# func_relativize DIR1 DIR2
+# computes a relative pathname RELDIR such that DIR1/RELDIR = DIR2.
+# Input:
+# - DIR1            relative pathname, relative to the current directory
+# - DIR2            relative pathname, relative to the current directory
+# Output:
+# - reldir          relative pathname of DIR2, relative to DIR1
+func_relativize ()
+{
+  dir0=`pwd`
+  dir1="$1"
+  dir2="$2"
+  sed_first='s,^\([^/]*\)/.*$,\1,'
+  sed_rest='s,^[^/]*/*,,'
+  sed_last='s,^.*/\([^/]*\)$,\1,'
+  sed_butlast='s,/*[^/]*$,,'
+  while test -n "$dir1"; do
+    first=`echo "$dir1" | sed -e "$sed_first"`
+    if test "$first" != "."; then
+      if test "$first" = ".."; then
+        dir2=`echo "$dir0" | sed -e "$sed_last"`/"$dir2"
+        dir0=`echo "$dir0" | sed -e "$sed_butlast"`
+      else
+        first2=`echo "$dir2" | sed -e "$sed_first"`
+        if test "$first2" = "$first"; then
+          dir2=`echo "$dir2" | sed -e "$sed_rest"`
+        else
+          dir2="../$dir2"
+        fi
+        dir0="$dir0"/"$first"
+      fi
+    fi
+    dir1=`echo "$dir1" | sed -e "$sed_rest"`
+  done
+  reldir="$dir2"
+}
+
+# func_relconcat DIR1 DIR2
+# computes a relative pathname DIR1/DIR2, with obvious simplifications.
+# Input:
+# - DIR1            relative pathname, relative to the current directory
+# - DIR2            relative pathname, relative to DIR1
+# Output:
+# - relconcat       DIR1/DIR2, relative to the current directory
+func_relconcat ()
+{
+  dir1="$1"
+  dir2="$2"
+  sed_first='s,^\([^/]*\)/.*$,\1,'
+  sed_rest='s,^[^/]*/*,,'
+  sed_last='s,^.*/\([^/]*\)$,\1,'
+  sed_butlast='s,/*[^/]*$,,'
+  while true; do
+    first=`echo "$dir2" | sed -e "$sed_first"`
+    if test "$first" = "."; then
+      dir2=`echo "$dir2" | sed -e "$sed_rest"`
+      if test -z "$dir2"; then
+        relconcat="$dir1"
+        break
+      fi
+    else
+      last=`echo "$dir1" | sed -e "$sed_last"`
+      while test "$last" = "."; do
+        dir1=`echo "$dir1" | sed -e "$sed_butlast"`
+        last=`echo "$dir1" | sed -e "$sed_last"`
+      done
+      if test -z "$dir1"; then
+        relconcat="$dir2"
+        break
+      fi
+      if test "$first" = ".."; then
+        if test "$last" = ".."; then
+          relconcat="$dir1/$dir2"
+          break
+        fi
+        dir1=`echo "$dir1" | sed -e "$sed_butlast"`
+        dir2=`echo "$dir2" | sed -e "$sed_rest"`
+        if test -z "$dir1"; then
+          relconcat="$dir2"
+          break
+        fi
+        if test -z "$dir2"; then
+          relconcat="$dir1"
+          break
+        fi
+      else
+        relconcat="$dir1/$dir2"
+        break
+      fi
+    fi
+  done
+}
+
 # Command-line option processing.
 # Removes the OPTIONS from the arguments. Sets the variables:
 # - mode            list or import or create-testdir or create-megatestdir
@@ -468,7 +561,8 @@ func_ln_if_changed ()
       echo "you need to use 'gnulib --import' - at your own risk!" 1>&2
       exit 1
     fi
-    if test -n "$supplied_libname" || test -n "$sourcebase" || test -n "$m4base" \
+    if test -n "$local_gnulib_dir" || test -n "$supplied_libname" \
+       || test -n "$sourcebase" || test -n "$m4base" \
        || test -n "$docbase" || test -n "$testsbase" || test -n "$auxdir" \
        || test -n "$inctests" || test -n "$avoidlist" || test -n "$lgpl" \
        || test -n "$macro_prefix"; then
@@ -533,6 +627,9 @@ func_ln_if_changed ()
   # Remove trailing slashes from the directory names. This is necessary for
   # m4base (to avoid an error in func_import) and optional for the others.
   sed_trimtrailingslashes='s,\([^/]\)//*$,\1,'
+  case "$local_gnulib_dir" in
+    */ ) sourcebase=`echo "$local_gnulib_dir" | sed -e "$sed_trimtrailingslashes"` ;;
+  esac
   case "$sourcebase" in
     */ ) sourcebase=`echo "$sourcebase" | sed -e "$sed_trimtrailingslashes"` ;;
   esac
@@ -1078,6 +1175,7 @@ func_emit_tests_Makefile_am ()
 func_import ()
 {
   # Get the cached settings.
+  cached_local_gnulib_dir=
   cached_specified_modules=
   cached_avoidlist=
   cached_sourcebase=
@@ -1095,6 +1193,9 @@ func_import ()
       s,#.*$,,
       s,^dnl .*$,,
       s, dnl .*$,,
+      /gl_LOCAL_DIR(/ {
+        s,^.*gl_LOCAL_DIR([[ ]*\([^])]*\).*$,cached_local_gnulib_dir="\1",p
+      }
       /gl_MODULES(/ {
         s,^.*gl_MODULES([[ ]*\([^])]*\).*$,cached_specified_modules="\1",p
       }
@@ -1152,6 +1253,24 @@ func_import ()
   # The m4base must be the same as expected from the pathname.
   if test -n "$cached_m4base" && test "$cached_m4base" != "$m4base"; then
     func_fatal_error "$m4base/gnulib-cache.m4 is expected to contain gl_M4_BASE([$m4base])"
+  fi
+  # The local_gnulib_dir defaults to the cached one. Recall that the cached one
+  # is relative to $destdir, whereas the one we use is relative to . or absolute.
+  if test -z "$local_gnulib_dir"; then
+    if test -n "$cached_local_gnulib_dir"; then
+      case "$destdir" in
+        /*)
+          local_gnulib_dir="$destdir/$cached_local_gnulib_dir" ;;
+        *)
+          case "$cached_local_gnulib_dir" in
+            /*)
+              local_gnulib_dir="$destdir/$cached_local_gnulib_dir" ;;
+            *)
+              func_relconcat "$destdir" "$cached_local_gnulib_dir"
+              local_gnulib_dir="$relconcat" ;;
+          esac ;;
+      esac
+    fi
   fi
   # Append the cached and the specified module names. So that
   # "gnulib-tool --import foo" means to add the module foo.
@@ -1454,6 +1573,9 @@ func_import ()
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
   actioncmd="gnulib-tool --import"
   actioncmd="$actioncmd --dir=$destdir"
+  if test -n "$local_gnulib_dir"; then
+    actioncmd="$actioncmd --local-dir=$local_gnulib_dir"
+  fi
   actioncmd="$actioncmd --lib=$libname"
   actioncmd="$actioncmd --source-base=$sourcebase"
   actioncmd="$actioncmd --m4-base=$m4base"
@@ -1514,6 +1636,20 @@ func_import ()
     echo "#   $actioncmd"
     echo
     echo "# Specification in the form of a few gnulib-tool.m4 macro invocations:"
+    # Store the local_gnulib_dir relative to destdir.
+    case "$local_gnulib_dir" in
+      "" | /*)
+        relative_local_gnulib_dir="$local_gnulib_dir" ;;
+      * )
+        case "$destdir" in
+          /*) relative_local_gnulib_dir="$local_gnulib_dir" ;;
+          *)
+            # destdir, local_gnulib_dir are both relative.
+            func_relativize "$destdir" "$local_gnulib_dir"
+            relative_local_gnulib_dir="$reldir" ;;
+        esac ;;
+    esac
+    echo "gl_LOCAL_DIR([$relative_local_gnulib_dir])"
     echo "gl_MODULES(["`echo $specified_modules`"])"
     echo "gl_AVOID([$avoidlist])"
     echo "gl_SOURCE_BASE([$sourcebase])"
