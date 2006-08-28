@@ -1,3 +1,8 @@
+2006-08-28  Bruno Haible  <bruno@clisp.org>
+
+	* c-strstr.h: New file, from GNU gettext.
+	* c-strstr.c: New file, from GNU gettext.
+
 2006-08-26  Bruno Haible  <bruno@clisp.org>
 
 	* inttypes_.h: New file.
