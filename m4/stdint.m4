@@ -1,4 +1,4 @@
-# stdint.m4 serial 19
+# stdint.m4 serial 18
 dnl Copyright (C) 2001-2002, 2004-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,14 +32,10 @@ AC_DEFUN([gl_STDINT_H],
   dnl Check for <inttypes.h>.
   dnl AC_INCLUDES_DEFAULT defines $ac_cv_header_inttypes_h.
   if test $ac_cv_header_inttypes_h = yes; then
-    gl_ABSOLUTE_HEADER([inttypes.h])
-    ABSOLUTE_INTTYPES_H=\"$gl_cv_absolute_inttypes_h\"
     HAVE_INTTYPES_H=1
   else
-    ABSOLUTE_INTTYPES_H=\"no/such/file/inttypes.h\"
     HAVE_INTTYPES_H=0
   fi
-  AC_SUBST([ABSOLUTE_INTTYPES_H])
   AC_SUBST([HAVE_INTTYPES_H])
 
   dnl Check for <sys/types.h>.

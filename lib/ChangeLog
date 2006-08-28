@@ -1,3 +1,10 @@
+2006-08-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* inttypes_.h [defined _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H]:
+	Include @ABSOLUTE_INTTYPES_H@ if available, but do nothing else.
+	* stdint_.h (_GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H): Define
+	just before including <inttypes.h>, to avoid circular inclusion.
+
 2006-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* inttypes_.h (SCNX*): Remove definitions.

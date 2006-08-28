@@ -1,5 +1,9 @@
 2006-08-28  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* modules/stdint (Makefile.am): Do not substitute ABSOLUTE_INTTYPES_H.
+	This undoes the most recent change, since we're not addressing the
+	problem in a different way.
+
 	* gnulib-tool (emit_lib_Makefile_am): Don't put $makefile_name
 	into output, since the output might be called Makefile.am even
 	if $makefile_name is something different.

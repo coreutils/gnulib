@@ -16,7 +16,16 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef INTTYPES_H
+/* Include the original <inttypes.h> if it exists, and if this file
+   has not been included yet or if this file includes gnulib stdint.h
+   which in turn includes this file.  */
+#if ! defined INTTYPES_H || defined _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H
+# if @HAVE_INTTYPES_H@
+#  include @ABSOLUTE_INTTYPES_H@
+# endif
+#endif
+
+#if ! defined INTTYPES_H && ! defined _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H
 #define INTTYPES_H
 
 /*
@@ -24,10 +33,6 @@
  * <http://www.opengroup.org/susv3xbd/inttypes.h.html>
  */
 
-/* Include the original <inttypes.h> if it exists.  */
-#if @HAVE_INTTYPES_H@
-# include @ABSOLUTE_INTTYPES_H@
-#endif
 /* Include <stdint.h> or the gnulib replacement.  */
 #include <stdint.h>
 /* Get CHAR_BIT.  */

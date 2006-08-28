@@ -1,4 +1,4 @@
-# inttypes.m4 serial 2
+# inttypes.m4 serial 3
 dnl Copyright (C) 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -134,6 +134,15 @@ const char *l = /* implicit string concatenation */
     dnl Use the existing <inttypes.h>.
     INTTYPES_H=''
   else
+
+    dnl AC_INCLUDES_DEFAULT defines $ac_cv_header_inttypes_h.
+    if test $ac_cv_header_inttypes_h = yes; then
+      gl_ABSOLUTE_HEADER([inttypes.h])
+      ABSOLUTE_INTTYPES_H=\"$gl_cv_absolute_inttypes_h\"
+    else
+      ABSOLUTE_INTTYPES_H=\"no/such/file/inttypes.h\"
+    fi
+    AC_SUBST([ABSOLUTE_INTTYPES_H])
 
     PRIPTR_PREFIX=
     if test -n "$STDINT_H"; then
