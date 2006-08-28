@@ -582,12 +582,6 @@
 #   define SCNx8 "hhx"
 #  endif
 # endif
-# if !defined SCNX8 || @PRI_MACROS_BROKEN@
-#  undef SCNX8
-#  ifdef UINT8_MAX
-#   define SCNX8 "hhX"
-#  endif
-# endif
 # if !defined SCNd16 || @PRI_MACROS_BROKEN@
 #  undef SCNd16
 #  ifdef INT16_MAX
@@ -618,12 +612,6 @@
 #   define SCNx16 "hx"
 #  endif
 # endif
-# if !defined SCNX16 || @PRI_MACROS_BROKEN@
-#  undef SCNX16
-#  ifdef UINT16_MAX
-#   define SCNX16 "hX"
-#  endif
-# endif
 # if !defined SCNd32 || @PRI_MACROS_BROKEN@
 #  undef SCNd32
 #  ifdef INT32_MAX
@@ -652,12 +640,6 @@
 #  undef SCNx32
 #  ifdef UINT32_MAX
 #   define SCNx32 "x"
-#  endif
-# endif
-# if !defined SCNX32 || @PRI_MACROS_BROKEN@
-#  undef SCNX32
-#  ifdef UINT32_MAX
-#   define SCNX32 "X"
 #  endif
 # endif
 # ifdef INT64_MAX
@@ -697,10 +679,6 @@
 #   undef SCNx64
 #   define SCNx64 _SCNu64_PREFIX "x"
 #  endif
-#  if !defined SCNX64 || @PRI_MACROS_BROKEN@
-#   undef SCNX64
-#   define SCNX64 _SCNu64_PREFIX "X"
-#  endif
 # endif
 
 # if !defined SCNdLEAST8 || @PRI_MACROS_BROKEN@
@@ -723,10 +701,6 @@
 #  undef SCNxLEAST8
 #  define SCNxLEAST8 "hhx"
 # endif
-# if !defined SCNXLEAST8 || @PRI_MACROS_BROKEN@
-#  undef SCNXLEAST8
-#  define SCNXLEAST8 "hhX"
-# endif
 # if !defined SCNdLEAST16 || @PRI_MACROS_BROKEN@
 #  undef SCNdLEAST16
 #  define SCNdLEAST16 "hd"
@@ -747,10 +721,6 @@
 #  undef SCNxLEAST16
 #  define SCNxLEAST16 "hx"
 # endif
-# if !defined SCNXLEAST16 || @PRI_MACROS_BROKEN@
-#  undef SCNXLEAST16
-#  define SCNXLEAST16 "hX"
-# endif
 # if !defined SCNdLEAST32 || @PRI_MACROS_BROKEN@
 #  undef SCNdLEAST32
 #  define SCNdLEAST32 "d"
@@ -770,10 +740,6 @@
 # if !defined SCNxLEAST32 || @PRI_MACROS_BROKEN@
 #  undef SCNxLEAST32
 #  define SCNxLEAST32 "x"
-# endif
-# if !defined SCNXLEAST32 || @PRI_MACROS_BROKEN@
-#  undef SCNXLEAST32
-#  define SCNXLEAST32 "X"
 # endif
 # ifdef INT64_MAX
 #  if !defined SCNdLEAST64 || @PRI_MACROS_BROKEN@
@@ -797,10 +763,6 @@
 #  if !defined SCNxLEAST64 || @PRI_MACROS_BROKEN@
 #   undef SCNxLEAST64
 #   define SCNxLEAST64 SCNx64
-#  endif
-#  if !defined SCNXLEAST64 || @PRI_MACROS_BROKEN@
-#   undef SCNXLEAST64
-#   define SCNXLEAST64 SCNX64
 #  endif
 # endif
 
@@ -864,18 +826,6 @@
 #   define SCNxFAST8 "x"
 #  endif
 # endif
-# if !defined SCNXFAST8 || @PRI_MACROS_BROKEN@
-#  undef SCNXFAST8
-#  if UINT_FAST8_MAX > UINT32_MAX
-#   define SCNXFAST8 SCNX64
-#  elif UINT_FAST8_MAX == 0xffff
-#   define SCNXFAST8 "hX"
-#  elif UINT_FAST8_MAX == 0xff
-#   define SCNXFAST8 "hhX"
-#  else
-#   define SCNXFAST8 "X"
-#  endif
-# endif
 # if !defined SCNdFAST16 || @PRI_MACROS_BROKEN@
 #  undef SCNdFAST16
 #  if INT_FAST16_MAX > INT32_MAX
@@ -926,16 +876,6 @@
 #   define SCNxFAST16 "x"
 #  endif
 # endif
-# if !defined SCNXFAST16 || @PRI_MACROS_BROKEN@
-#  undef SCNXFAST16
-#  if UINT_FAST16_MAX > UINT32_MAX
-#   define SCNXFAST16 SCNX64
-#  elif UINT_FAST16_MAX == 0xffff
-#   define SCNXFAST16 "hX"
-#  else
-#   define SCNXFAST16 "X"
-#  endif
-# endif
 # if !defined SCNdFAST32 || @PRI_MACROS_BROKEN@
 #  undef SCNdFAST32
 #  if INT_FAST32_MAX > INT32_MAX
@@ -976,14 +916,6 @@
 #   define SCNxFAST32 "x"
 #  endif
 # endif
-# if !defined SCNXFAST32 || @PRI_MACROS_BROKEN@
-#  undef SCNXFAST32
-#  if UINT_FAST32_MAX > UINT32_MAX
-#   define SCNXFAST32 SCNX64
-#  else
-#   define SCNXFAST32 "X"
-#  endif
-# endif
 # ifdef INT64_MAX
 #  if !defined SCNdFAST64 || @PRI_MACROS_BROKEN@
 #   undef SCNdFAST64
@@ -1006,10 +938,6 @@
 #  if !defined SCNxFAST64 || @PRI_MACROS_BROKEN@
 #   undef SCNxFAST64
 #   define SCNxFAST64 SCNx64
-#  endif
-#  if !defined SCNXFAST64 || @PRI_MACROS_BROKEN@
-#   undef SCNXFAST64
-#   define SCNXFAST64 SCNX64
 #  endif
 # endif
 
@@ -1053,14 +981,6 @@
 #   define SCNxMAX "lx"
 #  endif
 # endif
-# if !defined SCNXMAX || @PRI_MACROS_BROKEN@
-#  undef SCNXMAX
-#  if UINTMAX_MAX > UINT32_MAX
-#   define SCNXMAX SCNX64
-#  else
-#   define SCNXMAX "lX"
-#  endif
-# endif
 
 # if !defined SCNdPTR || @PRI_MACROS_BROKEN@
 #  undef SCNdPTR
@@ -1090,12 +1010,6 @@
 #  undef SCNxPTR
 #  ifdef UINTPTR_MAX
 #   define SCNxPTR @PRIPTR_PREFIX@ "x"
-#  endif
-# endif
-# if !defined SCNXPTR || @PRI_MACROS_BROKEN@
-#  undef SCNXPTR
-#  ifdef UINTPTR_MAX
-#   define SCNXPTR @PRIPTR_PREFIX@ "X"
 #  endif
 # endif
 
