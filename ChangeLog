@@ -1,3 +1,7 @@
+2006-08-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/inttypes (Files): Add m4/inttypes-h.m4.
+
 2006-08-28  Eric Blake  <ebb9@byu.net>
 
 	* modules/inttypes (Makefile.am): Fix sed error when inttypes.h
