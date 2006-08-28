@@ -1,5 +1,14 @@
 2006-08-27  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool: New option --makefile-name.
+	(func_emit_lib_Makefile_am, func_emit_tests_Makefile_am): Use
+	$makefile_name.
+	(func_import): Write $makefile_name to the cache file, and read it from
+	there unless explicitly specified. Use $makefile_name as file name
+	instead of Makefile.am. Adjust the recommendations accordingly.
+
+2006-08-27  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool: Reorder some statements.
 
 2006-08-27  Bruno Haible  <bruno@clisp.org>

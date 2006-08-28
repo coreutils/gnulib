@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-28 15:21:25 $'
+cvsdatestamp='$Date: 2006-08-28 15:22:55 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -137,6 +137,9 @@ Options for --import:
                             This option can be repeated.
       --lgpl                Abort if modules aren't available under the LGPL.
                             Also modify license template from GPL to LGPL.
+      --makefile-name=NAME  Name of makefile in automake syntax in the
+                            source-base and tests-base directories
+                            (default \"Makefile.am\").
       --libtool             Use libtool rules.
       --no-libtool          Don't use libtool rules.
       --macro-prefix=PREFIX  Specify the prefix of the macros 'gl_EARLY' and
@@ -356,6 +359,7 @@ func_relconcat ()
 # - inctests        true if --with-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            true if --lgpl was given, blank otherwise
+# - makefile_name   from --makefile-name
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
 # - macro_prefix    from --macro-prefix
@@ -377,6 +381,7 @@ func_relconcat ()
   inctests=
   avoidlist=
   lgpl=
+  makefile_name=
   libtool=
   macro_prefix=
   do_changelog=:
@@ -509,6 +514,16 @@ func_relconcat ()
       --lgpl )
         lgpl=true
         shift ;;
+      --makefile-name )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --makefile-name"
+        fi
+        makefile_name="$1"
+        shift ;;
+      --makefile-name=* )
+        makefile_name=`echo "X$1" | sed -e 's/^X--makefile-name=//'`
+        shift ;;
       --libtool )
         libtool=true
         shift ;;
@@ -565,7 +580,7 @@ func_relconcat ()
        || test -n "$sourcebase" || test -n "$m4base" \
        || test -n "$docbase" || test -n "$testsbase" || test -n "$auxdir" \
        || test -n "$inctests" || test -n "$avoidlist" || test -n "$lgpl" \
-       || test -n "$macro_prefix"; then
+       || test -n "$makefile_name" || test -n "$macro_prefix"; then
       echo "gnulib-tool: invalid options for 'update' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
       echo "If you really want to modify the gnulib configuration of your project," 1>&2
@@ -1016,6 +1031,7 @@ func_modules_to_filelist ()
 # - local_gnulib_dir  from --local-dir
 # - modules         list of modules, including dependencies
 # - libname         library name
+# - makefile_name   from --makefile-name
 # - libtool         true if libtool will be used, false or blank otherwise
 # - actioncmd       (optional) command that will reproduce this invocation
 func_emit_lib_Makefile_am ()
@@ -1099,7 +1115,7 @@ func_emit_lib_Makefile_am ()
   echo "	    fi; \\"
   echo "	  done"
   echo
-  echo "# Makefile.am ends here"
+  echo "# ${makefile_name-Makefile.am} ends here"
   rm -f allsnippets.tmp
 }
 
@@ -1109,6 +1125,7 @@ func_emit_lib_Makefile_am ()
 # - local_gnulib_dir  from --local-dir
 # - modules         list of modules, including dependencies
 # - libname         library name
+# - makefile_name   from --makefile-name
 # - libtool         true if libtool will be used, false or blank otherwise
 # - sourcebase      relative directory containing lib source code
 # - m4base          relative directory containing autoconf macros
@@ -1187,7 +1204,7 @@ func_emit_tests_Makefile_am ()
   echo "	    fi; \\"
   echo "	  done"
   echo
-  echo "# Makefile.am ends here"
+  echo "# ${makefile_name-Makefile.am} ends here"
   rm -f allsnippets.tmp
 }
 
@@ -1204,6 +1221,7 @@ func_emit_tests_Makefile_am ()
 # - inctests        true if --with-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            true if library's license shall be LGPL, blank otherwise
+# - makefile_name   from --makefile-name
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
 # - guessed_libtool true if the configure.ac file uses libtool, false otherwise
@@ -1223,6 +1241,7 @@ func_import ()
   cached_testsbase=
   cached_libname=
   cached_lgpl=
+  cached_makefile_name=
   cached_libtool=
   cached_macro_prefix=
   cached_files=
@@ -1258,6 +1277,9 @@ func_import ()
       }
       /gl_LGPL/ {
         s,^.*$,cached_lgpl=true,p
+      }
+      /gl_MAKEFILE_NAME(/ {
+        s,^.*gl_MAKEFILE_NAME([[ ]*\([^])]*\).*$,cached_makefile_name="\1",p
       }
       /gl_LIBTOOL/ {
         s,^.*$,cached_libtool=true,p
@@ -1348,6 +1370,10 @@ func_import ()
   # Require LGPL if specified either way.
   if test -z "$lgpl"; then
     lgpl="$cached_lgpl"
+  fi
+  # The makefile_name defaults to the cached one.
+  if test -z "$makefile_name"; then
+    makefile_name="$cached_makefile_name"
   fi
   # Use libtool if specified either way, or if guessed.
   if test -z "$libtool"; then
@@ -1626,6 +1652,9 @@ func_import ()
   if test -n "$lgpl"; then
     actioncmd="$actioncmd --lgpl"
   fi
+  if test -n "$makefile_name"; then
+    actioncmd="$actioncmd --makefile_name=$makefile_name"
+  fi
   if test "$libtool" = true; then
     actioncmd="$actioncmd --libtool"
   else
@@ -1635,27 +1664,28 @@ func_import ()
   actioncmd="$actioncmd `echo $specified_modules`"
 
   # Create lib/Makefile.am.
-  func_dest_tmpfilename $sourcebase/Makefile.am
+  makefile_am=${makefile_name-Makefile.am}
+  func_dest_tmpfilename $sourcebase/$makefile_am
   func_emit_lib_Makefile_am > "$tmpfile"
-  if test -f "$destdir"/$sourcebase/Makefile.am; then
-    if cmp "$destdir"/$sourcebase/Makefile.am "$tmpfile" > /dev/null; then
+  if test -f "$destdir"/$sourcebase/$makefile_am; then
+    if cmp "$destdir"/$sourcebase/$makefile_am "$tmpfile" > /dev/null; then
       rm -f "$tmpfile"
     else
       if $doit; then
-        echo "Updating $sourcebase/Makefile.am (backup in $sourcebase/Makefile.am~)"
-        mv -f "$destdir"/$sourcebase/Makefile.am "$destdir"/$sourcebase/Makefile.am~
-        mv -f "$tmpfile" "$destdir"/$sourcebase/Makefile.am
+        echo "Updating $sourcebase/$makefile_am (backup in $sourcebase/$makefile_am~)"
+        mv -f "$destdir"/$sourcebase/$makefile_am "$destdir"/$sourcebase/$makefile_am~
+        mv -f "$tmpfile" "$destdir"/$sourcebase/$makefile_am
       else
-        echo "Update $sourcebase/Makefile.am (backup in $sourcebase/Makefile.am~)"
+        echo "Update $sourcebase/$makefile_am (backup in $sourcebase/$makefile_am~)"
         rm -f "$tmpfile"
       fi
     fi
   else
     if $doit; then
-      echo "Creating $sourcebase/Makefile.am"
-      mv -f "$tmpfile" "$destdir"/$sourcebase/Makefile.am
+      echo "Creating $sourcebase/$makefile_am"
+      mv -f "$tmpfile" "$destdir"/$sourcebase/$makefile_am
     else
-      echo "Create $sourcebase/Makefile.am"
+      echo "Create $sourcebase/$makefile_am"
       rm -f "$tmpfile"
     fi
   fi
@@ -1697,6 +1727,7 @@ func_import ()
     echo "gl_TESTS_BASE([$testsbase])"
     echo "gl_LIB([$libname])"
     test -z "$lgpl" || echo "gl_LGPL"
+    echo "gl_MAKEFILE_NAME([$makefile_name])"
     if test "$libtool" = true; then
       echo "gl_LIBTOOL"
     fi
@@ -1835,27 +1866,28 @@ func_import ()
 
   if test -n "$inctests"; then
     # Create tests/Makefile.am.
-    func_dest_tmpfilename $testsbase/Makefile.am
+    makefile_am=${makefile_name-Makefile.am}
+    func_dest_tmpfilename $testsbase/$makefile_am
     func_emit_tests_Makefile_am > "$tmpfile"
-    if test -f "$destdir"/$testsbase/Makefile.am; then
-      if cmp "$destdir"/$testsbase/Makefile.am "$tmpfile" > /dev/null; then
+    if test -f "$destdir"/$testsbase/$makefile_am; then
+      if cmp "$destdir"/$testsbase/$makefile_am "$tmpfile" > /dev/null; then
         rm -f "$tmpfile"
       else
         if $doit; then
-          echo "Updating $testsbase/Makefile.am (backup in $testsbase/Makefile.am~)"
-          mv -f "$destdir"/$testsbase/Makefile.am "$destdir"/$testsbase/Makefile.am~
-          mv -f "$tmpfile" "$destdir"/$testsbase/Makefile.am
+          echo "Updating $testsbase/$makefile_am (backup in $testsbase/$makefile_am~)"
+          mv -f "$destdir"/$testsbase/$makefile_am "$destdir"/$testsbase/$makefile_am~
+          mv -f "$tmpfile" "$destdir"/$testsbase/$makefile_am
         else
-          echo "Update $testsbase/Makefile.am (backup in $testsbase/Makefile.am~)"
+          echo "Update $testsbase/$makefile_am (backup in $testsbase/$makefile_am~)"
           rm -f "$tmpfile"
         fi
       fi
     else
       if $doit; then
-        echo "Creating $testsbase/Makefile.am"
-        mv -f "$tmpfile" "$destdir"/$testsbase/Makefile.am
+        echo "Creating $testsbase/$makefile_am"
+        mv -f "$tmpfile" "$destdir"/$testsbase/$makefile_am
       else
-        echo "Create $testsbase/Makefile.am"
+        echo "Create $testsbase/$makefile_am"
         rm -f "$tmpfile"
       fi
     fi
@@ -1890,17 +1922,29 @@ func_import ()
   ) | sed -e '/^$/d;' -e 's/^/  /'
   echo
   echo "Don't forget to"
-  echo "  - add \"$sourcebase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
-  if test -n "$inctests"; then
-    echo "  - add \"$testsbase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
+  if test "${makefile_name-Makefile.am}" = Makefile.am; then
+    echo "  - add \"$sourcebase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
+  else
+    echo "  - \"include $makefile_name\" from within \"$sourcebase/Makefile.am\","
   fi
-  sourcebase_dir=`echo "$sourcebase" | sed -n -e 's,/[^/]*$,/,p'`
-  sourcebase_base=`basename "$sourcebase"`
-  echo "  - mention \"${sourcebase_base}\" in SUBDIRS in ${sourcebase_dir}Makefile.am,"
   if test -n "$inctests"; then
-    testsbase_dir=`echo "$testsbase" | sed -n -e 's,/[^/]*$,/,p'`
-    testsbase_base=`basename "$testsbase"`
-    echo "  - mention \"${testsbase_base}\" in SUBDIRS in ${testsbase_dir}Makefile.am,"
+    if test "${makefile_name-Makefile.am}" = Makefile.am; then
+      echo "  - add \"$testsbase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
+    else
+      echo "  - \"include $makefile_name\" from within \"$testsbase/Makefile.am\","
+    fi
+  fi
+  if test "${makefile_name-Makefile.am}" = Makefile.am; then
+    sourcebase_dir=`echo "$sourcebase" | sed -n -e 's,/[^/]*$,/,p'`
+    sourcebase_base=`basename "$sourcebase"`
+    echo "  - mention \"${sourcebase_base}\" in SUBDIRS in ${sourcebase_dir}Makefile.am,"
+  fi
+  if test -n "$inctests"; then
+    if test "${makefile_name-Makefile.am}" = Makefile.am; then
+      testsbase_dir=`echo "$testsbase" | sed -n -e 's,/[^/]*$,/,p'`
+      testsbase_base=`basename "$testsbase"`
+      echo "  - mention \"${testsbase_base}\" in SUBDIRS in ${testsbase_dir}Makefile.am,"
+    fi
   fi
   echo "  - mention \"-I ${m4base}\" in ACLOCAL_AMFLAGS in Makefile.am,"
   echo "  - invoke ${macro_prefix}_EARLY in $configure_ac, right after AC_PROG_CC,"
