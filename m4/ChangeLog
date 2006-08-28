@@ -1,3 +1,7 @@
+2006-08-28  Eric Blake  <ebb9@byu.net>
+
+	* inttypes.m4 (gl_INTTYPES_H): Fix missing #endif.
+
 2006-08-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* inttypes.m4 (gl_INTTYPES_H): Move ABSOLUTE_INTTYPES_H code here...
@@ -237,7 +241,7 @@
 	* posixver.m4: Fix comment since head -1 now works even in POSIX mode.
 
 2006-08-18  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* bison-i18n.m4 (BISON_I18N): Also handle the case where yacc exists
 	and is a script that invokes bison. Tighten the code. Add comments.

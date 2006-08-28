@@ -1,4 +1,4 @@
-# inttypes.m4 serial 3
+# inttypes.m4 serial 4
 dnl Copyright (C) 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,6 +60,7 @@ const char *k = /* implicit string concatenation */
 #endif
 #ifdef UINT32_MAX
   PRIo32 PRIu32 PRIx32 PRIX32
+#endif
 #ifdef INT64_MAX
   PRId64 PRIi64
 #endif
