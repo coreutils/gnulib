@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-28 15:14:35 $'
+cvsdatestamp='$Date: 2006-08-28 15:20:22 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -678,6 +678,8 @@ trap 'rm -rf "$tmp"' 0 1 2 3 15
 # func_lookup_file file
 # looks up a file in $local_gnulib_dir or $gnulib_dir, or combines it through
 # 'patch'.
+# Input:
+# - local_gnulib_dir  from --local-dir
 # Output:
 # - lookedup_file   name of the merged (combined) file
 # - lookedup_tmp    true if it is located in the tmp directory, blank otherwise
@@ -708,6 +710,8 @@ func_lookup_file ()
 }
 
 # func_all_modules
+# Input:
+# - local_gnulib_dir  from --local-dir
 func_all_modules ()
 {
   # Filter out metainformation files like README, which are not modules.
@@ -727,6 +731,9 @@ func_all_modules ()
 
 # func_verify_module
 # verifies a module name
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - module          module name argument
 func_verify_module ()
 {
   if { test -f "$gnulib_dir/modules/$module" \
@@ -749,6 +756,9 @@ func_verify_module ()
 
 # func_verify_nontests_module
 # verifies a module name, excluding tests modules
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - module          module name argument
 func_verify_nontests_module ()
 {
   case "$module" in
@@ -759,6 +769,9 @@ func_verify_nontests_module ()
 
 # func_verify_tests_module
 # verifies a module name, considering only tests modules
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - module          module name argument
 func_verify_tests_module ()
 {
   case "$module" in
@@ -785,6 +798,8 @@ sed_extract_prog=':[	 ]*$/ {
 }'
 
 # func_get_description module
+# Input:
+# - local_gnulib_dir  from --local-dir
 func_get_description ()
 {
   func_lookup_file "modules/$1"
@@ -792,6 +807,8 @@ func_get_description ()
 }
 
 # func_get_filelist module
+# Input:
+# - local_gnulib_dir  from --local-dir
 func_get_filelist ()
 {
   func_lookup_file "modules/$1"
@@ -805,6 +822,8 @@ func_get_filelist ()
 }
 
 # func_get_dependencies module
+# Input:
+# - local_gnulib_dir  from --local-dir
 func_get_dependencies ()
 {
   # ${module}-tests always implicitly depends on ${module}.
@@ -815,6 +834,8 @@ func_get_dependencies ()
 }
 
 # func_get_autoconf_snippet module
+# Input:
+# - local_gnulib_dir  from --local-dir
 func_get_autoconf_snippet ()
 {
   func_lookup_file "modules/$1"
@@ -822,6 +843,8 @@ func_get_autoconf_snippet ()
 }
 
 # func_get_automake_snippet module
+# Input:
+# - local_gnulib_dir  from --local-dir
 func_get_automake_snippet ()
 {
   func_lookup_file "modules/$1"
@@ -829,6 +852,8 @@ func_get_automake_snippet ()
 }
 
 # func_get_include_directive module
+# Input:
+# - local_gnulib_dir  from --local-dir
 func_get_include_directive ()
 {
   func_lookup_file "modules/$1"
@@ -837,6 +862,8 @@ func_get_include_directive ()
 }
 
 # func_get_license module
+# Input:
+# - local_gnulib_dir  from --local-dir
 func_get_license ()
 {
   func_lookup_file "modules/$1"
@@ -844,6 +871,8 @@ func_get_license ()
 }
 
 # func_get_maintainer module
+# Input:
+# - local_gnulib_dir  from --local-dir
 func_get_maintainer ()
 {
   func_lookup_file "modules/$1"
@@ -851,10 +880,14 @@ func_get_maintainer ()
 }
 
 # func_get_tests_module module
+# Input:
+# - local_gnulib_dir  from --local-dir
 func_get_tests_module ()
 {
   # The naming convention for tests modules is hardwired: ${module}-tests.
-  if test -f modules/"$1"-tests; then
+  if test -f "$gnulib_dir/modules/$1"-tests \
+     || { test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules" \
+          && test -f "$local_gnulib_dir/modules/$1"-tests; }; then
     echo "$1"-tests
   fi
 }
@@ -875,6 +908,7 @@ func_acceptable ()
 
 # func_modules_transitive_closure
 # Input:
+# - local_gnulib_dir  from --local-dir
 # - modules         list of specified modules
 # - inctests        true if tests should be included, blank otherwise
 # - avoidlist       list of modules to avoid
@@ -925,6 +959,7 @@ func_modules_transitive_closure ()
 
 # func_modules_add_dummy
 # Input:
+# - local_gnulib_dir  from --local-dir
 # - modules         list of modules, including dependencies
 # Output:
 # - modules         list of modules, including 'dummy' if needed
@@ -959,6 +994,7 @@ ba
 
 # func_modules_to_filelist
 # Input:
+# - local_gnulib_dir  from --local-dir
 # - modules         list of modules, including dependencies
 # Output:
 # - files           list of files
@@ -977,6 +1013,7 @@ func_modules_to_filelist ()
 # func_emit_lib_Makefile_am
 # emits the contents of lib/Makefile.am to standard output.
 # Input:
+# - local_gnulib_dir  from --local-dir
 # - modules         list of modules, including dependencies
 # - libname         library name
 # - libtool         true if libtool will be used, false or blank otherwise
@@ -1069,6 +1106,7 @@ func_emit_lib_Makefile_am ()
 # func_emit_tests_Makefile_am
 # emits the contents of tests/Makefile.am to standard output.
 # Input:
+# - local_gnulib_dir  from --local-dir
 # - modules         list of modules, including dependencies
 # - libname         library name
 # - libtool         true if libtool will be used, false or blank otherwise
@@ -1156,6 +1194,7 @@ func_emit_tests_Makefile_am ()
 # func_import modules
 # Uses also the variables
 # - destdir         target directory
+# - local_gnulib_dir  from --local-dir
 # - libname         library name
 # - sourcebase      directory relative to destdir where to place source code
 # - m4base          directory relative to destdir where to place *.m4 macros
@@ -1870,6 +1909,7 @@ func_import ()
 
 # func_create_testdir testdir modules
 # Input:
+# - local_gnulib_dir  from --local-dir
 # - auxdir          directory relative to destdir where to place build aux files
 func_create_testdir ()
 {
@@ -2149,6 +2189,7 @@ func_create_testdir ()
 
 # func_create_megatestdir megatestdir allmodules
 # Input:
+# - local_gnulib_dir  from --local-dir
 # - auxdir          directory relative to destdir where to place build aux files
 func_create_megatestdir ()
 {
