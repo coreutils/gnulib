@@ -1,3 +1,9 @@
+2006-08-26  Bruno Haible  <bruno@clisp.org>
+            Simon Josefsson  <jas@extundo.com>
+
+	BeOS portability.
+	* getaddrinfo.c (PF_INET, PF_UNSPEC): New macros.
+
 2006-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* c-strstr.h: New file, from GNU gettext.

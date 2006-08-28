@@ -42,6 +42,15 @@
 #include "snprintf.h"
 #include "strdup.h"
 
+/* BeOS has AF_INET, but not PF_INET.  */
+#ifndef PF_INET
+# define PF_INET AF_INET
+#endif
+/* BeOS also lacks PF_UNSPEC.  */
+#ifndef PF_UNSPEC
+# define PF_UNSPEC 0
+#endif
+
 #if defined _WIN32 || defined __WIN32__
 # define WIN32_NATIVE
 #endif
