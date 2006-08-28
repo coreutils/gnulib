@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-26 06:39:32 $'
+cvsdatestamp='$Date: 2006-08-28 15:12:52 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -642,7 +642,8 @@ func_verify_module ()
      && test "TEMPLATE" != "$module" \
      && test "TEMPLATE-TESTS" != "$module"; then
     # OK, $module is a correct module name.
-    :
+    # Verify that building the module description with 'patch' succeeds.
+    func_lookup_file "modules/$module"
   else
     echo "gnulib-tool: module $module doesn't exist" 1>&2
     module=

@@ -1,3 +1,7 @@
+2006-08-26  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_verify_module): Check against misapplying patch.
+
 2006-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* modules/c-strstr: New file, from GNU gettext.
