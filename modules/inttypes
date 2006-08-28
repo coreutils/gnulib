@@ -1,21 +1,37 @@
 Description:
-A wrapper C99 <inttypes.h> header which will always include <stdint.h>
-(possibly the *almost* C99 compliant GNULIB <stdint.h>) and prototypes for the
-strtoimax & strtoumax functions.
+An <inttypes.h> that nearly conforms to C99.
 
 Files:
-lib/inttypes.h
-m4/include_next.m4
+lib/inttypes_.h
 m4/absolute-header.m4
-m4/_inttypes_h.m4
+m4/inttypes-pri.m4
+m4/inttypes.m4
 
 Depends-on:
+stdint
 
 configure.ac:
 gl_INTTYPES_H
 
 Makefile.am:
-EXTRA_DIST += inttypes.h
+BUILT_SOURCES += $(INTTYPES_H)
+EXTRA_DIST += inttypes_.h
+
+# We need the following in order to create <inttypes.h> when the system
+# doesn't have one that works with the given compiler.
+inttypes.h: inttypes_.h
+	sed -e 's/@''HAVE_INTTYPES_H''@/$(HAVE_INTTYPES_H)/g' \
+	    -e 's/@''ABSOLUTE_INTTYPES_H''@/$(ABSOLUTE_INTTYPES_H)/g' \
+	    -e 's/@''PRI_MACROS_BROKEN''@/$(PRI_MACROS_BROKEN)/g' \
+	    -e 's/@''HAVE_LONG_LONG_INT''@/$(HAVE_LONG_LONG_INT)/g' \
+	    -e 's/@''PRIPTR_PREFIX''@/$(PRIPTR_PREFIX)/g' \
+	    -e 's/@''HAVE_DECL_IMAXABS''@/$(HAVE_DECL_IMAXABS)/g' \
+	    -e 's/@''HAVE_DECL_IMAXDIV''@/$(HAVE_DECL_IMAXDIV)/g' \
+	    -e 's/@''HAVE_DECL_STRTOIMAX''@/$(HAVE_DECL_STRTOIMAX)/g' \
+	    -e 's/@''HAVE_DECL_STRTOUMAX''@/$(HAVE_DECL_STRTOUMAX)/g' \
+	    < $(srcdir)/inttypes_.h > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += inttypes.h inttypes.h-t
 
 Include:
 #include <inttypes.h>

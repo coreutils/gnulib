@@ -1,3 +1,13 @@
+2006-08-26  Bruno Haible  <bruno@clisp.org>
+
+	* inttypes_.h: New file.
+	* inttypes.h: Remove file.
+	* stdint_.h: Include <inttypes.h> through its absolute filename.
+
+	* imaxabs.c: New file.
+
+	* imaxdiv.c: New file.
+
 2006-08-22  Bruno Haible  <bruno@clisp.org>
 
 	* readutmp.h: Skip most definitions if neither <utmp.h> nor

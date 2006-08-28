@@ -1,4 +1,4 @@
-# inttypes-pri.m4 serial 2 (gettext-0.15)
+# inttypes-pri.m4 serial 3 (gettext-0.15.1)
 dnl Copyright (C) 1997-2002, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,5 +26,9 @@ char *p = PRId32;
   if test "$gt_cv_inttypes_pri_broken" = yes; then
     AC_DEFINE_UNQUOTED(PRI_MACROS_BROKEN, 1,
       [Define if <inttypes.h> exists and defines unusable PRI* macros.])
+    PRI_MACROS_BROKEN=1
+  else
+    PRI_MACROS_BROKEN=0
   fi
+  AC_SUBST([PRI_MACROS_BROKEN])
 ])
