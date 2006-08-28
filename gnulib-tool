@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-28 15:22:55 $'
+cvsdatestamp='$Date: 2006-08-28 19:39:49 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -102,7 +102,7 @@ Operation modes:
       --extract-filelist           extract the list of files
       --extract-dependencies       extract the dependencies
       --extract-autoconf-snippet   extract the snippet for configure.ac
-      --extract-automake-snippet   extract the snippet for lib/Makefile.am
+      --extract-automake-snippet   extract the snippet for library makefile
       --extract-include-directive  extract the #include directive
       --extract-license            report the license terms of the source files
                                    under lib/
@@ -1026,7 +1026,7 @@ func_modules_to_filelist ()
 }
 
 # func_emit_lib_Makefile_am
-# emits the contents of lib/Makefile.am to standard output.
+# emits the contents of library makefile to standard output.
 # Input:
 # - local_gnulib_dir  from --local-dir
 # - modules         list of modules, including dependencies
@@ -1114,13 +1114,11 @@ func_emit_lib_Makefile_am ()
   echo "	      echo \"rmdir \$\$dir\"; rmdir \$\$dir; \\"
   echo "	    fi; \\"
   echo "	  done"
-  echo
-  echo "# ${makefile_name-Makefile.am} ends here"
   rm -f allsnippets.tmp
 }
 
 # func_emit_tests_Makefile_am
-# emits the contents of tests/Makefile.am to standard output.
+# emits the contents of tests makefile to standard output.
 # Input:
 # - local_gnulib_dir  from --local-dir
 # - modules         list of modules, including dependencies
@@ -1203,8 +1201,6 @@ func_emit_tests_Makefile_am ()
   echo "	      echo \"rmdir \$\$dir\"; rmdir \$\$dir; \\"
   echo "	    fi; \\"
   echo "	  done"
-  echo
-  echo "# ${makefile_name-Makefile.am} ends here"
   rm -f allsnippets.tmp
 }
 
@@ -1663,8 +1659,14 @@ func_import ()
   actioncmd="$actioncmd --macro-prefix=$macro_prefix"
   actioncmd="$actioncmd `echo $specified_modules`"
 
-  # Create lib/Makefile.am.
-  makefile_am=${makefile_name-Makefile.am}
+  # Default the makefile name to Makefile.am.
+  if test -n "$makefile_name"; then
+    makefile_am=$makefile_name
+  else
+    makefile_am=Makefile.am
+  fi
+
+  # Create library makefile.
   func_dest_tmpfilename $sourcebase/$makefile_am
   func_emit_lib_Makefile_am > "$tmpfile"
   if test -f "$destdir"/$sourcebase/$makefile_am; then
@@ -1865,8 +1867,7 @@ func_import ()
   fi
 
   if test -n "$inctests"; then
-    # Create tests/Makefile.am.
-    makefile_am=${makefile_name-Makefile.am}
+    # Create tests makefile.
     func_dest_tmpfilename $testsbase/$makefile_am
     func_emit_tests_Makefile_am > "$tmpfile"
     if test -f "$destdir"/$testsbase/$makefile_am; then
@@ -1922,25 +1923,25 @@ func_import ()
   ) | sed -e '/^$/d;' -e 's/^/  /'
   echo
   echo "Don't forget to"
-  if test "${makefile_name-Makefile.am}" = Makefile.am; then
+  if test "$makefile_am" = Makefile.am; then
     echo "  - add \"$sourcebase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
   else
     echo "  - \"include $makefile_name\" from within \"$sourcebase/Makefile.am\","
   fi
   if test -n "$inctests"; then
-    if test "${makefile_name-Makefile.am}" = Makefile.am; then
+    if test "$makefile_am" = Makefile.am; then
       echo "  - add \"$testsbase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
     else
       echo "  - \"include $makefile_name\" from within \"$testsbase/Makefile.am\","
     fi
   fi
-  if test "${makefile_name-Makefile.am}" = Makefile.am; then
+  if test "$makefile_am" = Makefile.am; then
     sourcebase_dir=`echo "$sourcebase" | sed -n -e 's,/[^/]*$,/,p'`
     sourcebase_base=`basename "$sourcebase"`
     echo "  - mention \"${sourcebase_base}\" in SUBDIRS in ${sourcebase_dir}Makefile.am,"
   fi
   if test -n "$inctests"; then
-    if test "${makefile_name-Makefile.am}" = Makefile.am; then
+    if test "$makefile_am" = Makefile.am; then
       testsbase_dir=`echo "$testsbase" | sed -n -e 's,/[^/]*$,/,p'`
       testsbase_base=`basename "$testsbase"`
       echo "  - mention \"${testsbase_base}\" in SUBDIRS in ${testsbase_dir}Makefile.am,"

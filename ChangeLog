@@ -1,5 +1,12 @@
 2006-08-28  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* gnulib-tool (emit_lib_Makefile_am): Don't put $makefile_name
+	into output, since the output might be called Makefile.am even
+	if $makefile_name is something different.
+	(func_import): Use $makefile_am rather than
+	${makefile_name-Makefile.am}, to fix a bug where makefile_name was
+	empty.
+
 	* modules/inttypes (Files): Add m4/inttypes-h.m4.
 
 2006-08-28  Eric Blake  <ebb9@byu.net>
