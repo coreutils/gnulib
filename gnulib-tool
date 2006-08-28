@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-28 15:20:22 $'
+cvsdatestamp='$Date: 2006-08-28 15:21:25 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -346,6 +346,7 @@ func_relconcat ()
 # Removes the OPTIONS from the arguments. Sets the variables:
 # - mode            list or import or create-testdir or create-megatestdir
 # - destdir         from --dir
+# - local_gnulib_dir  from --local-dir
 # - libname, supplied_libname  from --lib
 # - sourcebase      from --source-base
 # - m4base          from --m4-base
@@ -361,11 +362,11 @@ func_relconcat ()
 # - autoconf_minversion  minimum supported autoconf version
 # - do_changelog    false if --no-changelog was given, : otherwise
 # - doit            : if actions shall be executed, false if only to be printed
-# - local_gnulib_dir  from --local-dir
 # - symbolic        true if --symbolic was given, blank otherwise
 {
   mode=
   destdir=
+  local_gnulib_dir=
   libname=libgnu
   supplied_libname=
   sourcebase=
@@ -380,7 +381,6 @@ func_relconcat ()
   macro_prefix=
   do_changelog=:
   doit=:
-  local_gnulib_dir=
   symbolic=
 
   supplied_opts="$@"
@@ -420,6 +420,16 @@ func_relconcat ()
         shift ;;
       --dir=* )
         destdir=`echo "X$1" | sed -e 's/^X--dir=//'`
+        shift ;;
+      --local-dir )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --local-dir"
+        fi
+        local_gnulib_dir=$1
+        shift ;;
+      --local-dir=* )
+        local_gnulib_dir=`echo "X$1" | sed -e 's/^X--local-dir=//'`
         shift ;;
       --lib )
         shift
@@ -520,16 +530,6 @@ func_relconcat ()
         shift ;;
       --dry-run )
         doit=false
-        shift ;;
-      --local-dir )
-        shift
-        if test $# = 0; then
-          func_fatal_error "missing argument for --local-dir"
-        fi
-        local_gnulib_dir=$1
-        shift ;;
-      --local-dir=* )
-        local_gnulib_dir=`echo "X$1" | sed -e 's/^X--local-dir=//'`
         shift ;;
       -s | --symbolic | --symboli | --symbol | --symbo | --symb | --symlink | --symlin | --symli | --syml | --sym | --sy )
         symbolic=true
