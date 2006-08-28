@@ -1,3 +1,8 @@
+2006-08-28  Eric Blake  <ebb9@byu.net>
+
+	* modules/inttypes (Depends-on): Fix sed error when inttypes.h
+	needs wrapper.
+
 2006-08-27  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool: New option --makefile-name.
@@ -261,7 +266,7 @@
 	Reported by Martin Lambers <marlam@marlam.de>.
 
 2006-08-21  Mark D. Baushke  <mdb@gnu.org>
-            Bruno Haible <bruno@clisp.org>
+	    Bruno Haible <bruno@clisp.org>
 
 	* gnulib-tool (func_verify_module): Work around Sun's non-POSIX 1003.2
 	/bin/sh understanding of '!' conditional negation.

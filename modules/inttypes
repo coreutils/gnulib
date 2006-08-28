@@ -21,7 +21,7 @@ EXTRA_DIST += inttypes_.h
 # doesn't have one that works with the given compiler.
 inttypes.h: inttypes_.h
 	sed -e 's/@''HAVE_INTTYPES_H''@/$(HAVE_INTTYPES_H)/g' \
-	    -e 's/@''ABSOLUTE_INTTYPES_H''@/$(ABSOLUTE_INTTYPES_H)/g' \
+	    -e 's|@''ABSOLUTE_INTTYPES_H''@|$(ABSOLUTE_INTTYPES_H)|g' \
 	    -e 's/@''PRI_MACROS_BROKEN''@/$(PRI_MACROS_BROKEN)/g' \
 	    -e 's/@''HAVE_LONG_LONG_INT''@/$(HAVE_LONG_LONG_INT)/g' \
 	    -e 's/@''PRIPTR_PREFIX''@/$(PRIPTR_PREFIX)/g' \
