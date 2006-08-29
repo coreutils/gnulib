@@ -92,23 +92,19 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 char *strerror_r ();
 # endif
 
-# ifndef SIZE_MAX
-#  define SIZE_MAX ((size_t) -1)
-# endif
-
 /* The calling program should define program_name and set it to the
    name of the executing program.  */
 extern char *program_name;
 
 # if HAVE_STRERROR_R || defined strerror_r
 #  define __strerror_r strerror_r
-# endif
+# endif	/* HAVE_STRERROR_R || defined strerror_r */
 #endif	/* not _LIBC */
 
 static void
 print_errno_message (int errnum)
 {
-  char const *s = NULL;
+  char const *s;
 
 #if defined HAVE_STRERROR_R || _LIBC
   char errbuf[1024];
@@ -117,11 +113,15 @@ print_errno_message (int errnum)
 # else
   if (__strerror_r (errnum, errbuf, sizeof errbuf) == 0)
     s = errbuf;
+  else
+    s = 0;
 # endif
+#else
+  s = strerror (errnum);
 #endif
 
 #if !_LIBC
-  if (! s && ! (s = strerror (errnum)))
+  if (! s)
     s = _("Unknown system error");
 #endif
 
@@ -312,10 +312,10 @@ error_at_line (int status, int errnum, const char *file_name,
 
 #if _LIBC
   __fxprintf (NULL, file_name != NULL ? "%s:%d: " : " ",
-              file_name, line_number);
+	      file_name, line_number);
 #else
   fprintf (stderr, file_name != NULL ? "%s:%d: " : " ",
-           file_name, line_number);
+	   file_name, line_number);
 #endif
 
   va_start (args, message);
