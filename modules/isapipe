@@ -1,0 +1,27 @@
+Description:
+Test whether a file descriptor is a pipe.
+
+Files:
+lib/isapipe.c
+lib/isapipe.h
+m4/isapipe.m4
+
+Depends-on:
+stat-macros
+stdbool
+unistd
+
+configure.ac:
+gl_ISAPIPE
+
+Makefile.am:
+EXTRA_DIST += isapipe.h
+
+Include:
+"isapipe.h"
+
+License:
+LGPL
+
+Maintainer:
+Paul Eggert, Jim Meyering

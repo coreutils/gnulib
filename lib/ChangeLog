@@ -1,3 +1,7 @@
+2006-08-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* isapipe.c, isapipe.h: New files.
+
 2006-08-29  Eric Blake  <ebb9@byu.net>
 
 	* error.c (error_at_line, print_errno_message): Match libc, after
