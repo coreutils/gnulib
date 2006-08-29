@@ -6,7 +6,7 @@
 	* modules/mkdir-p: Likewise.
 
 	* modules/stdint (Makefile.am): Do not substitute ABSOLUTE_INTTYPES_H.
-	This undoes the most recent change, since we're not addressing the
+	This undoes the most recent change, since we're now addressing the
 	problem in a different way.
 
 	* gnulib-tool (emit_lib_Makefile_am): Don't put $makefile_name
