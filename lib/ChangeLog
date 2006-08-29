@@ -1,3 +1,12 @@
+2006-08-29  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Sync from Libtool:
+
+	2006-08-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* libltdl/argz.c: Use `#ifdef HAVE_CONFIG_H', to facilitate code
+	sharing with gnulib.  Report by Eric Blake.
+
 2006-08-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* fcntl_.h: New file.
@@ -29,7 +38,7 @@
 	Test here whether the string length is > INT_MAX.
 
 2006-08-26  Bruno Haible  <bruno@clisp.org>
-            Simon Josefsson  <jas@extundo.com>
+	    Simon Josefsson  <jas@extundo.com>
 
 	BeOS portability.
 	* getaddrinfo.c (PF_INET, PF_UNSPEC): New macros.

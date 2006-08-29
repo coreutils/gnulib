@@ -1,5 +1,5 @@
 /* argz.c -- argz implementation for non-glibc systems
-   Copyright (C) 2004 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006 Free Software Foundation, Inc.
    Originally by Gary V. Vaughan  <gary@gnu.org>
 
    NOTE: The canonical source of this file is maintained with the
@@ -19,7 +19,7 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. */
 
-#if defined(HAVE_CONFIG_H)
+#ifdef HAVE_CONFIG_H
 #  if defined(LTDL) && defined LT_CONFIG_H
 #    include LT_CONFIG_H
 #  else
