@@ -12,6 +12,7 @@ m4/glibc21.m4
 m4/localcharset.m4
 
 Depends-on:
+configmake
 
 configure.ac:
 gl_LOCALCHARSET
@@ -19,7 +20,6 @@ gl_LOCALCHARSET
 Makefile.am:
 lib_SOURCES += localcharset.h localcharset.c
 EXTRA_DIST += config.charset ref-add.sin ref-del.sin
-DEFS += -DLIBDIR=\"$(libdir)\"
 
 # We need the following in order to install a simple file in $(libdir)
 # which is shared with other installed packages. We use a list of referencing

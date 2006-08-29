@@ -1,3 +1,8 @@
+2006-08-29  Bruno Haible  <bruno@clisp.org>
+
+	* modules/localcharset (Depends-on): Add configmake.
+	(Makefile.am): Remove setting of LIBDIR through DEFS.
+
 2006-08-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/configmake (Makefile.am): Add a comment, and omit
