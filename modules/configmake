@@ -8,32 +8,46 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
+# Retrieve values of the variables through 'configure' followed by
+# 'make', not directly through 'configure', so that a user who
+# sets some of these variables consistently on the 'make' command
+# line gets correct results.
+#
+# One advantage of this approach, compared to the classical
+# approach of adding -DLIBDIR=\"$(libdir)\" etc. to AM_CPPFLAGS,
+# is that it protects against the use of undefined variables.
+# If, say, $(libdir) is not set in the Makefile, LIBDIR is not
+# defined by this module, and code using LIBDIR gives a
+# compilation error.
+#
+# Another advantage is that 'make' output is shorter.
+#
 # Listed in the same order as the GNU makefile conventions.
 configmake.h:
 	( \
-	  echo '#define CONFIGMAKE_PREFIX "$(prefix)"'; \
-	  echo '#define CONFIGMAKE_EXEC_PREFIX "$(exec_prefix)"'; \
-	  echo '#define CONFIGMAKE_BINDIR "$(bindir)"'; \
-	  echo '#define CONFIGMAKE_SBINDIR "$(sbindir)"'; \
-	  echo '#define CONFIGMAKE_LIBEXECDIR "$(libexecdir)"'; \
-	  echo '#define CONFIGMAKE_DATAROOTDIR "$(datarootdir)"'; \
-	  echo '#define CONFIGMAKE_DATADIR "$(datadir)"'; \
-	  echo '#define CONFIGMAKE_SYSCONFDIR "$(sysconfdir)"'; \
-	  echo '#define CONFIGMAKE_SHAREDSTATEDIR "$(sharedstatedir)"'; \
-	  echo '#define CONFIGMAKE_LOCALSTATEDIR "$(localstatedir)"'; \
-	  echo '#define CONFIGMAKE_INCLUDEDIR "$(includedir)"'; \
-	  echo '#define CONFIGMAKE_OLDINCLUDEDIR "$(oldincludedir)"'; \
-	  echo '#define CONFIGMAKE_DOCDIR "$(docdir)"'; \
-	  echo '#define CONFIGMAKE_INFODIR "$(infodir)"'; \
-	  echo '#define CONFIGMAKE_HTMLDIR "$(htmldir)"'; \
-	  echo '#define CONFIGMAKE_DVIDIR "$(dvidir)"'; \
-	  echo '#define CONFIGMAKE_PDFDIR "$(pdfdir)"'; \
-	  echo '#define CONFIGMAKE_PSDIR "$(psdir)"'; \
-	  echo '#define CONFIGMAKE_LIBDIR "$(libdir)"'; \
-	  echo '#define CONFIGMAKE_LISPDIR "$(lispdir)"'; \
-	  echo '#define CONFIGMAKE_LOCALEDIR "$(localedir)"'; \
-	  echo '#define CONFIGMAKE_MANDIR "$(mandir)"'; \
-	  echo '#define CONFIGMAKE_MANEXT "$(manext)"'; \
+	  echo '#define PREFIX "$(prefix)"'; \
+	  echo '#define EXEC_PREFIX "$(exec_prefix)"'; \
+	  echo '#define BINDIR "$(bindir)"'; \
+	  echo '#define SBINDIR "$(sbindir)"'; \
+	  echo '#define LIBEXECDIR "$(libexecdir)"'; \
+	  echo '#define DATAROOTDIR "$(datarootdir)"'; \
+	  echo '#define DATADIR "$(datadir)"'; \
+	  echo '#define SYSCONFDIR "$(sysconfdir)"'; \
+	  echo '#define SHAREDSTATEDIR "$(sharedstatedir)"'; \
+	  echo '#define LOCALSTATEDIR "$(localstatedir)"'; \
+	  echo '#define INCLUDEDIR "$(includedir)"'; \
+	  echo '#define OLDINCLUDEDIR "$(oldincludedir)"'; \
+	  echo '#define DOCDIR "$(docdir)"'; \
+	  echo '#define INFODIR "$(infodir)"'; \
+	  echo '#define HTMLDIR "$(htmldir)"'; \
+	  echo '#define DVIDIR "$(dvidir)"'; \
+	  echo '#define PDFDIR "$(pdfdir)"'; \
+	  echo '#define PSDIR "$(psdir)"'; \
+	  echo '#define LIBDIR "$(libdir)"'; \
+	  echo '#define LISPDIR "$(lispdir)"'; \
+	  echo '#define LOCALEDIR "$(localedir)"'; \
+	  echo '#define MANDIR "$(mandir)"'; \
+	  echo '#define MANEXT "$(manext)"'; \
 	:) | sed '/""/d' >$@-t
 	mv $@-t $@
 BUILT_SOURCES += configmake.h

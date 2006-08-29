@@ -1,3 +1,9 @@
+2006-08-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/configmake (Makefile.am): Add a comment, and omit
+	the CONFIGMAKE_ prefix from generated macro names.  Suggested
+	by Bruno Haible.
+
 2006-08-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/fcntl: New file.
