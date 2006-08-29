@@ -23,7 +23,7 @@ Makefile.am:
 # Another advantage is that 'make' output is shorter.
 #
 # Listed in the same order as the GNU makefile conventions.
-configmake.h:
+configmake.h: Makefile
 	( \
 	  echo '#define PREFIX "$(prefix)"'; \
 	  echo '#define EXEC_PREFIX "$(exec_prefix)"'; \

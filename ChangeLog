@@ -1,3 +1,8 @@
+2006-08-29  Jim Meyering  <jim@meyering.net>
+
+	* modules/configmake (Makefile.am): Make configmake.h depend on
+	Makefile.  Otherwise, a stale configmake.h could hang around.
+
 2006-08-29  Bruno Haible  <bruno@clisp.org>
 
 	* modules/localcharset (Depends-on): Add configmake.
