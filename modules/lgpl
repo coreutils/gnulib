@@ -1,8 +1,8 @@
 Description:
-Provide the GNU Free Documentation License in Texinfo format.
+Provide the GNU Lesser General Public License in Texinfo format.
 
 Files:
-doc/fdl.texi
+doc/lgpl.texi
 
 Depends-on:
 

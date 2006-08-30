@@ -1,3 +1,13 @@
+2006-08-30  Paul Eggert  <eggert@cs.ucla.edu>
+	and Simon Josefsson  <jas@extundo.com>
+	and Oskar Liljeblad  <oskar@osk.mine.nu>
+
+	* MODULES.html.sh (Support for building documentation): Add gpl, lgpl.
+	* gnulib-tool (func_import): New license type 'unmodifiable license
+	text'.
+	* modules/fdl: Use it.  Longer description.
+	* module/gpl, module/lgpl: New files.
+
 2006-08-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/isapipe: New file.
