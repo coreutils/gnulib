@@ -1,5 +1,10 @@
 2006-08-31  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_emit_lib_Makefile_am): When --makefile-name was
+	specified, augment Makefile.am variables instead of assigning them.
+
+2006-08-31  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool: When calling func_import more than once, do it in a
 	subshell.
 	Reported by Eric Blake <ebb9@byu.net>.

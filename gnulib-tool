@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-31 13:11:23 $'
+cvsdatestamp='$Date: 2006-08-31 13:40:57 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1036,6 +1036,13 @@ func_modules_to_filelist ()
 # - actioncmd       (optional) command that will reproduce this invocation
 func_emit_lib_Makefile_am ()
 {
+  # When creating an includable Makefile.am snippet, augment variables with
+  # += instead of assigning them.
+  if test -n "$makefile_name"; then
+    assign='+='
+  else
+    assign='='
+  fi
   if test "$libtool" = true; then
     libext=la
     perhapsLT=LT
@@ -1049,8 +1056,10 @@ func_emit_lib_Makefile_am ()
     echo "# Reproduce by: $actioncmd"
   fi
   echo
-  # No need to generate dependencies since the sources are in gnulib, not here.
-  echo "AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies"
+  if test -n "$makefile_name"; then
+    # No need to generate dependencies since the sources are in gnulib, not here.
+    echo "AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies"
+  fi
   echo
   (
     for module in $modules; do
@@ -1085,25 +1094,29 @@ func_emit_lib_Makefile_am ()
     :
   else
     # By default, the generated library should not be installed.
-    echo "noinst_${perhapsLT}LIBRARIES = $libname.$libext"
+    echo "noinst_${perhapsLT}LIBRARIES $assign $libname.$libext"
   fi
   echo
   echo "${libname}_${libext}_SOURCES ="
   echo "${libname}_${libext}_LIBADD = @${perhapsLT}LIBOBJS@"
-  echo "noinst_HEADERS ="
-  if grep '^pkgdata_DATA *+=' allsnippets.tmp > /dev/null; then
-    echo "pkgdata_DATA ="
+  if test -n "$makefile_name"; then
+    echo "noinst_HEADERS ="
+    if grep '^pkgdata_DATA *+=' allsnippets.tmp > /dev/null; then
+      echo "pkgdata_DATA ="
+    fi
+    echo "EXTRA_DIST ="
+    echo "BUILT_SOURCES ="
+    echo "SUFFIXES ="
   fi
-  echo "EXTRA_DIST ="
-  echo "BUILT_SOURCES ="
-  echo "SUFFIXES ="
-  echo "MOSTLYCLEANFILES = core *.stackdump"
-  echo "MOSTLYCLEANDIRS ="
-  echo "CLEANFILES ="
-  echo "DISTCLEANFILES ="
-  echo "MAINTAINERCLEANFILES ="
-  echo
-  echo "AM_CPPFLAGS ="
+  echo "MOSTLYCLEANFILES $assign core *.stackdump"
+  if test -n "$makefile_name"; then
+    echo "MOSTLYCLEANDIRS ="
+    echo "CLEANFILES ="
+    echo "DISTCLEANFILES ="
+    echo "MAINTAINERCLEANFILES ="
+    echo
+    echo "AM_CPPFLAGS ="
+  fi
   echo
   cat allsnippets.tmp
   echo
