@@ -1,3 +1,7 @@
+2006-08-31  Eric Blake  <ebb9@byu.net>
+
+	* gnulib-tool: Don't let emacs change spaces to TAB.
+
 2006-08-31  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am): When --makefile-name was
