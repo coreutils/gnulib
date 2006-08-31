@@ -71,17 +71,17 @@ isapipe (int fd)
 	 && PIPE_LINK_COUNT_MAX != (nlink_t) -1)
       && (S_ISFIFO (st.st_mode) | S_ISSOCK (st.st_mode)))
     {
-      int fd[2];
-      int pipe_result = pipe (fd);
+      int fd_pair[2];
+      int pipe_result = pipe (fd_pair);
       if (pipe_result != 0)
 	return pipe_result;
       else
 	{
 	  struct stat pipe_st;
-	  int fstat_pipe_result = fstat (fd[0], &pipe_st);
+	  int fstat_pipe_result = fstat (fd_pair[0], &pipe_st);
 	  int fstat_pipe_errno = errno;
-	  close (fd[0]);
-	  close (fd[1]);
+	  close (fd_pair[0]);
+	  close (fd_pair[1]);
 	  if (fstat_pipe_result != 0)
 	    {
 	      errno = fstat_pipe_errno;

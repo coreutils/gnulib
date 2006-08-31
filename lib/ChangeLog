@@ -1,3 +1,8 @@
+2006-08-30  Jim Meyering  <jim@meyering.net>
+
+	* isapipe.c (isapipe): Rename local s/fd/fd_pair/ to avoid shadowing
+	the parameter.
+
 2006-08-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* isapipe.c, isapipe.h: New files.
