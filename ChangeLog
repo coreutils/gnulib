@@ -1,3 +1,11 @@
+2006-08-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/getloadavg (Files): Add m4/getloadavg.m4.
+	(configure.ac): AC_FUNC_GETLOADAVG -> gl_GETLOADAVG, as
+	the former is now obsolescent.
+
+	* modules/chdir-long (Depends-on): Add fcntl.
+
 2006-08-31  Eric Blake  <ebb9@byu.net>
 
 	* gnulib-tool: Don't let emacs change spaces to TAB.

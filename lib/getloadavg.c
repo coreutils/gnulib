@@ -1,7 +1,8 @@
 /* Get the system load averages.
 
    Copyright (C) 1985, 1986, 1987, 1988, 1989, 1991, 1992, 1993, 1994,
-   1995, 1997, 1999, 2000, 2003, 2004, 2005 Free Software Foundation, Inc.
+   1995, 1997, 1999, 2000, 2003, 2004, 2005, 2006 Free Software
+   Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with gnulib.
    Bugs can be reported to bug-gnulib@gnu.org.
@@ -80,13 +81,20 @@
    We also #define LDAV_PRIVILEGED if a program will require
    special installation to be able to call getloadavg.  */
 
-/* This should always be first.  */
+/* "configure" defines gl_GETLOADAVG to sidestep problems with
+   partially-configured source directories.  */
+
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+# ifndef gl_GETLOADAVG
+#  include <config.h>
+# endif
+#endif
+
+#ifndef gl_GETLOADAVG
+# include <stdbool.h>
 #endif
 
 #include <errno.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 

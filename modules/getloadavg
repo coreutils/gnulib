@@ -3,6 +3,7 @@ Return the current system load averages.
 
 Files:
 lib/getloadavg.c
+m4/getloadavg.m4
 
 Depends-on:
 cloexec
@@ -13,7 +14,7 @@ stdbool
 fcntl-safer
 
 configure.ac:
-AC_FUNC_GETLOADAVG
+gl_GETLOADAVG
 
 Makefile.am:
 
