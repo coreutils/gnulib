@@ -1,3 +1,13 @@
+2006-08-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Work around a bug in both the Linux and SunOS 64-bit kernels:
+	nanosleep mishandles sleeps for longer than 2**31 seconds.
+	Problem reported by Frank v Waveren in
+	<http://lists.gnu.org/archive/html/bug-coreutils/2006-08/msg00298.html>.
+	* nanosleep.c (BILLION): New constant.
+	(getnow) [HAVE_BUG_BIG_NANOSLEEP]: New functions.
+	(rpl_nanosleep) [HAVE_BUG_BIG_NANOSLEEP]: Completely new implementation.
+
 2006-08-30  Jim Meyering  <jim@meyering.net>
 
 	* isapipe.c (isapipe): Rename local s/fd/fd_pair/ to avoid shadowing

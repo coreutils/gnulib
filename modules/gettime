@@ -7,6 +7,7 @@ m4/clock_time.m4
 m4/gettime.m4
 
 Depends-on:
+gettime
 gettimeofday
 timespec
 extensions

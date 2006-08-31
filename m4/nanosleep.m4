@@ -1,4 +1,4 @@
-#serial 18
+#serial 19
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -18,6 +18,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
  AC_REQUIRE([AC_HEADER_TIME])
+ AC_REQUIRE([gl_CLOCK_TIME])
  AC_CHECK_HEADERS_ONCE(sys/time.h)
 
  nanosleep_save_libs=$LIBS
@@ -27,42 +28,81 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
  AC_SEARCH_LIBS([nanosleep], [rt posix4],
                 [test "$ac_cv_search_nanosleep" = "none required" ||
 	         LIB_NANOSLEEP=$ac_cv_search_nanosleep])
- AC_SUBST([LIB_NANOSLEEP])
 
- AC_CACHE_CHECK([for nanosleep],
+ AC_CACHE_CHECK([for working nanosleep],
   [gl_cv_func_nanosleep],
   [
-   AC_LINK_IFELSE([AC_LANG_SOURCE([[
-#   if TIME_WITH_SYS_TIME
-#    include <sys/time.h>
-#    include <time.h>
-#   else
-#    if HAVE_SYS_TIME_H
-#     include <sys/time.h>
-#    else
-#     include <time.h>
-#    endif
-#   endif
+   AC_RUN_IFELSE(
+     [AC_LANG_SOURCE([[
+	#if TIME_WITH_SYS_TIME
+	 #include <sys/time.h>
+	 #include <time.h>
+	#else
+	 #if HAVE_SYS_TIME_H
+	  #include <sys/time.h>
+	 #else
+	  #include <time.h>
+	 #endif
+	#endif
+	#include <errno.h>
+	#include <limits.h>
+	#include <signal.h>
+	#include <unistd.h>
+	#define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
+	#define TYPE_MAXIMUM(t) \
+	  ((t) (! TYPE_SIGNED (t) \
+		? (t) -1 \
+		: ~ (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))))
 
-    int
-    main ()
-    {
-      struct timespec ts_sleep, ts_remaining;
-      ts_sleep.tv_sec = 0;
-      ts_sleep.tv_nsec = 1;
-      return nanosleep (&ts_sleep, &ts_remaining) < 0;
-    }
-      ]])],
+	static void
+	check_for_SIGALRM (int sig)
+	{
+	  if (sig != SIGALRM)
+	    _exit (1);
+	}
+
+	int
+	main ()
+	{
+	  static struct timespec ts_sleep;
+	  static struct timespec ts_remaining;
+	  static struct sigaction act;
+	  act.sa_handler = check_for_SIGALRM;
+          sigemptyset (&act.sa_mask);
+	  sigaction (SIGALRM, &act, NULL);
+	  ts_sleep.tv_sec = TYPE_MAXIMUM (time_t);
+	  ts_sleep.tv_nsec = 999999999;
+	  alarm (1);
+	  if (nanosleep (&ts_sleep, &ts_remaining) == -1 && errno == EINTR
+	      && TYPE_MAXIMUM (time_t) - 10 < ts_remaining.tv_sec)
+	    return 0;
+	  return 119;
+	}]])],
      [gl_cv_func_nanosleep=yes],
-     [gl_cv_func_nanosleep=no])
+     [case $? in dnl (
+      119) gl_cv_func_nanosleep='no (mishandles large arguments)';; dnl (
+      *)   gl_cv_func_nanosleep=no;;
+      esac],
+     [gl_cv_func_nanosleep=cross-compiling])
   ])
-  if test $gl_cv_func_nanosleep = no; then
+  if test "$gl_cv_func_nanosleep" != yes; then
+    if test "$gl_cv_func_nanosleep" = 'no (mishandles large arguments)'; then
+      AC_DEFINE([HAVE_BUG_BIG_NANOSLEEP], 1,
+	[Define to 1 if nanosleep mishandle large arguments.])
+      for ac_lib in $LIB_CLOCK_GETTIME; do
+	case " $LIB_NANOSLEEP " in
+	*" $ac_lib "*) ;;
+	*) LIB_NANOSLEEP="$LIB_NANOSLEEP $ac_lib";;
+	esac
+      done
+    fi
     AC_LIBOBJ(nanosleep)
     AC_DEFINE(nanosleep, rpl_nanosleep,
       [Define to rpl_nanosleep if the replacement function should be used.])
     gl_PREREQ_NANOSLEEP
   fi
 
+ AC_SUBST([LIB_NANOSLEEP])
  LIBS=$nanosleep_save_libs
 ])
 

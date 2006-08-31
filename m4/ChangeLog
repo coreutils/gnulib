@@ -1,3 +1,13 @@
+2006-08-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Work around a bug in both the Linux and SunOS 64-bit kernels:
+	nanosleep mishandles sleeps for longer than 2**31 seconds.
+	Problem reported by Frank v Waveren in
+	<http://lists.gnu.org/archive/html/bug-coreutils/2006-08/msg00298.html>.
+	* nanosleep.m4 (gl_FUNC_NANOSLEEP): Require gl_CLOCK_TIME.
+	Check for nanosleep bug.
+	(LIB_NANOSLEEP): Append clock_gettime library if needed.
+
 2006-08-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* isapipe.m4: New file.
