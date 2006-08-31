@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-30 18:13:34 $'
+cvsdatestamp='$Date: 2006-08-31 13:11:23 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -2417,7 +2417,12 @@ case $mode in
           if test $# = 0; then
             # No further arguments. Guess the user wants to update all of them.
             for m4base in $m4dirs; do
-              func_import
+              # Perform func_import in a subshell, so that variable values
+              # such as
+              #   local_gnulib_dir, avoidlist, sourcebase, m4base, docbase,
+              #   testsbase, libname, lgpl, makefile_name, libtool, macro_prefix
+              # don't propagate from one directory to another.
+              (func_import) || exit 1
             done
           else
             # Really ambiguous.
