@@ -10,59 +10,8 @@
 # Autoconf defines AC_FUNC_GETLOADAVG, but that is obsolescent.
 # New applications should use gl_GETLOADAVG instead.
 
-# gl_PREREQ_GETLOADAVG
-# --------------------
-# Set up the AC_LIBOBJ replacement of `getloadavg'.
-m4_define([gl_PREREQ_GETLOADAVG],
-[AC_LIBOBJ(getloadavg)
-AC_DEFINE(C_GETLOADAVG, 1, [Define to 1 if using `getloadavg.c'.])
-# Figure out what our getloadavg.c needs.
-gl_have_func=no
-AC_CHECK_HEADER(sys/dg_sys_info.h,
-[gl_have_func=yes
- AC_DEFINE(DGUX, 1, [Define to 1 for DGUX with <sys/dg_sys_info.h>.])
- AC_CHECK_LIB(dgc, dg_sys_info)])
-
-# We cannot check for <dwarf.h>, because Solaris 2 does not use dwarf (it
-# uses stabs), but it is still SVR4.  We cannot check for <elf.h> because
-# Irix 4.0.5F has the header but not the library.
-if test $gl_have_func = no && test "$ac_cv_lib_elf_elf_begin" = yes; then
-  gl_have_func=yes
-  AC_DEFINE(SVR4, 1, [Define to 1 on System V Release 4.])
-fi
-
-if test $gl_have_func = no; then
-  AC_CHECK_HEADER(inq_stats/cpustats.h,
-  [gl_have_func=yes
-   AC_DEFINE(UMAX, 1, [Define to 1 for Encore UMAX.])
-   AC_DEFINE(UMAX4_3, 1,
-	     [Define to 1 for Encore UMAX 4.3 that has <inq_status/cpustats.h>
-	      instead of <sys/cpustats.h>.])])
-fi
-
-if test $gl_have_func = no; then
-  AC_CHECK_HEADER(sys/cpustats.h,
-  [gl_have_func=yes; AC_DEFINE(UMAX)])
-fi
-
-if test $gl_have_func = no; then
-  AC_CHECK_HEADERS(mach/mach.h)
-fi
-
-AC_CHECK_HEADERS(nlist.h,
-[AC_CHECK_MEMBERS([struct nlist.n_un.n_name],
-		  [AC_DEFINE(NLIST_NAME_UNION, 1,
-			     [Define to 1 if your `struct nlist' has an
-			      `n_un' member.  Obsolete, depend on
-			      `HAVE_STRUCT_NLIST_N_UN_N_NAME])], [],
-		  [@%:@include <nlist.h>])
-])dnl
-])# gl_PREREQ_GETLOADAVG
-
-
 # gl_GETLOADAVG
 # -------------
-AN_FUNCTION([getloadavg], [gl_GETLOADAVG])
 AC_DEFUN([gl_GETLOADAVG],
 [gl_have_func=no # yes means we've found a way to get the load average.
 
@@ -114,7 +63,7 @@ AC_CHECK_FUNCS(getloadavg, [],
 AC_CACHE_CHECK(whether getloadavg requires setgid,
 	       gl_cv_func_getloadavg_setgid,
 [AC_EGREP_CPP([Yowza Am I SETGID yet],
-[#define gl_GETLOADAVG
+[#define CONFIGURING_GETLOADAVG
 #include "$srcdir/$ac_config_libobj_dir/getloadavg.c"
 #ifdef LDAV_PRIVILEGED
 Yowza Am I SETGID yet
@@ -139,9 +88,9 @@ if test $gl_cv_func_getloadavg_setgid = yes; then
   # If we got an error (system does not support symlinks), try without -L.
   test -z "$ac_ls_output" && ac_ls_output=`ls -lg /dev/kmem`
   gl_cv_group_kmem=`echo $ac_ls_output \
-    | sed -ne ['s/[	 ][	 ]*/ /g;
-	       s/^.[sSrwx-]* *[0-9]* *\([^0-9]*\)  *.*/\1/;
-	       / /s/.* //;p;']`
+    | sed -ne ['s/[	 ][	 ]*/ /g
+	       s/^.[sSrwx-]* *[0-9]* *\([^0-9]*\)  *.*/\1/
+	       / /s/.* //;p']`
 ])
   AC_SUBST(KMEM_GROUP, $gl_cv_group_kmem)dnl
 fi
@@ -154,3 +103,53 @@ LIBS=$gl_save_LIBS
 
 AC_SUBST(GETLOADAVG_LIBS)dnl
 ])# gl_GETLOADAVG
+
+
+# gl_PREREQ_GETLOADAVG
+# --------------------
+# Set up the AC_LIBOBJ replacement of `getloadavg'.
+AC_DEFUN([gl_PREREQ_GETLOADAVG],
+[AC_LIBOBJ(getloadavg)
+AC_DEFINE(C_GETLOADAVG, 1, [Define to 1 if using `getloadavg.c'.])
+# Figure out what our getloadavg.c needs.
+gl_have_func=no
+AC_CHECK_HEADER(sys/dg_sys_info.h,
+[gl_have_func=yes
+ AC_DEFINE(DGUX, 1, [Define to 1 for DGUX with <sys/dg_sys_info.h>.])
+ AC_CHECK_LIB(dgc, dg_sys_info)])
+
+# We cannot check for <dwarf.h>, because Solaris 2 does not use dwarf (it
+# uses stabs), but it is still SVR4.  We cannot check for <elf.h> because
+# Irix 4.0.5F has the header but not the library.
+if test $gl_have_func = no && test "$ac_cv_lib_elf_elf_begin" = yes; then
+  gl_have_func=yes
+  AC_DEFINE(SVR4, 1, [Define to 1 on System V Release 4.])
+fi
+
+if test $gl_have_func = no; then
+  AC_CHECK_HEADER(inq_stats/cpustats.h,
+  [gl_have_func=yes
+   AC_DEFINE(UMAX, 1, [Define to 1 for Encore UMAX.])
+   AC_DEFINE(UMAX4_3, 1,
+	     [Define to 1 for Encore UMAX 4.3 that has <inq_status/cpustats.h>
+	      instead of <sys/cpustats.h>.])])
+fi
+
+if test $gl_have_func = no; then
+  AC_CHECK_HEADER(sys/cpustats.h,
+  [gl_have_func=yes; AC_DEFINE(UMAX)])
+fi
+
+if test $gl_have_func = no; then
+  AC_CHECK_HEADERS(mach/mach.h)
+fi
+
+AC_CHECK_HEADERS(nlist.h,
+[AC_CHECK_MEMBERS([struct nlist.n_un.n_name],
+		  [AC_DEFINE(NLIST_NAME_UNION, 1,
+			     [Define to 1 if your `struct nlist' has an
+			      `n_un' member.  Obsolete, depend on
+			      `HAVE_STRUCT_NLIST_N_UN_N_NAME])], [],
+		  [@%:@include <nlist.h>])
+])dnl
+])# gl_PREREQ_GETLOADAVG

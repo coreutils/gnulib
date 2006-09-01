@@ -1,5 +1,12 @@
 2006-09-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* getloadavg.m4 (gl_GETLOADAVG): Use CONFIGURING_GETLOADAVG,
+	not gl_GETLOADAVG.  Omit unneeded semicolons.
+	Problems reported by Ralf Wildenhues in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2006-09/msg00000.html>.
+	(gl_PREREQ_GETLOADAVG): Use AC_DEFUN, not m4_define.  Put
+	at the end, which is the usual gnulib style.
+
 	* fstypename.m4 (gl_FSTYPENAME): Use AC_CHECK_MEMBERS instead
 	of doing all the work ourselves.
 	* fsusage.m4 (gl_PREREQ_FSUSAGE_EXTRA): Don't check for

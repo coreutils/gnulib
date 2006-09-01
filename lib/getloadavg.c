@@ -81,16 +81,16 @@
    We also #define LDAV_PRIVILEGED if a program will require
    special installation to be able to call getloadavg.  */
 
-/* "configure" defines gl_GETLOADAVG to sidestep problems with
-   partially-configured source directories.  */
+/* "configure" defines CONFIGURING_GETLOADAVG to sidestep problems
+   with partially-configured source directories.  */
 
 #ifdef HAVE_CONFIG_H
-# ifndef gl_GETLOADAVG
+# ifndef CONFIGURING_GETLOADAVG
 #  include <config.h>
 # endif
 #endif
 
-#ifndef gl_GETLOADAVG
+#ifndef CONFIGURING_GETLOADAVG
 # include <stdbool.h>
 #endif
 
