@@ -1,3 +1,10 @@
+2006-09-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* fstypename.m4 (gl_FSTYPENAME): Use AC_CHECK_MEMBERS instead
+	of doing all the work ourselves.
+	* fsusage.m4 (gl_PREREQ_FSUSAGE_EXTRA): Don't check for
+	sys/statvfs.h since the code doesn't use HAVE_SYS_STATVFS_H.
+
 2006-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* fnmatch.m4: Add comment that Autoconf AC_FUNC_FNMATCH is

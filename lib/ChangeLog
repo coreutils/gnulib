@@ -1,3 +1,8 @@
+2006-09-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* mountlist.c: All uses of HAVE_F_FSTYPENAME_IN_STATFS replaced by
+	HAVE_STRUCT_STATFS_F_FSTYPENAME.
+
 2006-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getloadavg.c [defined gl_GETLOADAVG]: Don't include config.h

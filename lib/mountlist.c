@@ -170,7 +170,7 @@ char *strstr ();
 
 #if MOUNTED_GETMNTINFO
 
-# if ! HAVE_F_FSTYPENAME_IN_STATFS
+# if ! HAVE_STRUCT_STATFS_F_FSTYPENAME
 static char *
 fstype_to_string (short int t)
 {
@@ -264,12 +264,12 @@ fstype_to_string (short int t)
       return "?";
     }
 }
-# endif /* ! HAVE_F_FSTYPENAME_IN_STATFS */
+# endif
 
 static char *
 fsp_to_string (const struct statfs *fsp)
 {
-# if defined HAVE_F_FSTYPENAME_IN_STATFS
+# if HAVE_STRUCT_STATFS_F_FSTYPENAME
   return (char *) (fsp->f_fstypename);
 # else
   return fstype_to_string (fsp->f_type);
