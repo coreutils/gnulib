@@ -1,3 +1,9 @@
+2006-08-31  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (nl): Remove variable.
+	(sed_transform_lib_file): Use more robust test for config-h module.
+	(func_import): Fix typo in 2006-08-25 patch.
+
 2006-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/getloadavg (Files): Add m4/getloadavg.m4.

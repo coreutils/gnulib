@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-08-31 14:36:39 $'
+cvsdatestamp='$Date: 2006-09-01 11:57:26 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -58,9 +58,6 @@ fi
 if test -z "$SORT"; then
   SORT=sort
 fi
-
-nl='
-'
 
 # func_usage
 # outputs to stdout the --help usage message.
@@ -1418,7 +1415,7 @@ func_import ()
       license=`func_get_license $module`
       case $license in
         LGPL | 'GPLed build tool') ;;
-	'public domain' | 'unlimited' | 'unmodifiable license text') ;;
+        'public domain' | 'unlimited' | 'unmodifiable license text') ;;
         *) func_fatal_error "incompatible license on module $module: $license" ;;
       esac
     done
@@ -1426,13 +1423,15 @@ func_import ()
 
   # Determine script to apply to imported library files.
   sed_transform_lib_file=
-  case $nl$modules$nl in
-    *"${nl}config-h$nl"*)
+  for module in $modules; do
+    if test $module = config-h; then
       # Assume config.h exists, and that -DHAVE_CONFIG_H is omitted.
       sed_transform_lib_file=$sed_transform_lib_file'
-	s/^#ifdef[	 ]*HAVE_CONFIG_H[	 ]*$/#if 1/
-      ' ;;
-  esac
+        s/^#ifdef[	 ]*HAVE_CONFIG_H[	 ]*$/#if 1/
+      '
+      break
+    fi
+  done
   if test -n "$lgpl"; then
     # Update license.
     sed_transform_lib_file=$sed_transform_lib_file'
@@ -1564,7 +1563,7 @@ func_import ()
     func_dest_tmpfilename "$g"
     func_lookup_file "$f"
     cp "$lookedup_file" "$tmpfile" || func_fatal_error "failed"
-    if test -n "sed_transform_lib_file"; then
+    if test -n "$sed_transform_lib_file"; then
       case "$f" in
         lib/*)
           sed -e "$sed_transform_lib_file" \
