@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.136 2006-08-24 20:15:12 eggert Exp $
+# $Id: srclist.txt,v 1.137 2006-09-04 12:45:56 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -69,7 +69,9 @@ $GETTEXT/autoconf-lib-link/m4/lib-link.m4		m4
 $GETTEXT/autoconf-lib-link/m4/lib-prefix.m4		m4
 
 $GETTEXT/gettext-runtime/m4/codeset.m4			m4
-$GETTEXT/gettext-runtime/m4/gettext.m4			m4
+# restore after 0.15.1
+#$GETTEXT/gettext-runtime/m4/signed.m4			m4
+#$GETTEXT/gettext-runtime/m4/gettext.m4			m4
 $GETTEXT/gettext-runtime/m4/glibc21.m4			m4
 $GETTEXT/gettext-runtime/m4/iconv.m4			m4
 $GETTEXT/gettext-runtime/m4/intdiv0.m4			m4
@@ -81,7 +83,6 @@ $GETTEXT/gettext-runtime/m4/nls.m4			m4
 $GETTEXT/gettext-runtime/m4/po.m4			m4
 $GETTEXT/gettext-runtime/m4/printf-posix.m4		m4
 $GETTEXT/gettext-runtime/m4/progtest.m4			m4
-$GETTEXT/gettext-runtime/m4/signed.m4			m4
 $GETTEXT/gettext-runtime/m4/wchar_t.m4			m4
 $GETTEXT/gettext-runtime/m4/wint_t.m4			m4
 
