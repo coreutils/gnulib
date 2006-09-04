@@ -1,3 +1,8 @@
+2006-09-03  Bruno Haible  <bruno@clisp.org>
+
+	* lib-link.m4 (AC_LIB_LINKFLAGS_BODY): Locate mingw shared libraries
+	correctly.
+
 2006-09-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getloadavg.m4 (gl_GETLOADAVG): Use CONFIGURING_GETLOADAVG,
@@ -52,6 +57,7 @@
 
 	* inttypes.m4 (gl_INTTYPES_H): Don't test for the existence of SCNX*
 	macros.
+	Reported by Eric Blake.
 
 2006-08-22  Eric Blake  <ebb9@byu.net>
 
