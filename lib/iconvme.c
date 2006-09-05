@@ -136,6 +136,13 @@ iconv_alloc (iconv_t cd, const char *str)
       return NULL;
     }
 
+  /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
+# if defined _LIBICONV_VERSION \
+    || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+  /* Set to the initial state.  */
+  iconv (cd, NULL, NULL, NULL, NULL);
+# endif
+
 again:
   err = iconv (cd, &p, &inbytes_remaining, &outp, &outbytes_remaining);
 
