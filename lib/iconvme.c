@@ -75,21 +75,24 @@ iconv_string (const char *str, const char *from_codeset,
 
   dest = iconv_alloc (cd, str);
 
-  {
-    int save_errno = errno;
-
-    if (iconv_close (cd) < 0 && dest)
-      {
-	int save_errno2 = errno;
-	/* If we didn't have a real error before, make sure we restore
-	   the iconv_close error below. */
-	free (dest);
-	dest = NULL;
-	errno = save_errno2;
-      }
-    else
-      errno = save_errno;
-  }
+  if (dest == NULL)
+    {
+      int saved_errno = errno;
+      iconv_close (cd);
+      errno = saved_errno;
+    }
+  else
+    {
+      if (iconv_close (cd) < 0)
+	{
+	  int saved_errno2 = errno;
+	  /* If we didn't have a real error before, make sure we restore
+	     the iconv_close error below. */
+	  free (dest);
+	  dest = NULL;
+	  errno = saved_errno2;
+	}
+    }
 #else
   errno = ENOSYS;
 #endif
