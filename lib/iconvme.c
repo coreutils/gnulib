@@ -189,7 +189,7 @@ again:
   *outp = '\0';
 
 out:
-  if (have_error && dest)
+  if (have_error)
     {
       int save_errno = errno;
       free (dest);
