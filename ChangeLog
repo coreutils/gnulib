@@ -1,3 +1,11 @@
+2006-09-05  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh (String handling): Add trim.
+
+2006-09-05  Davide Angelocola <davide.angelocola@tiscali.it>
+
+	* modules/trim: New file.
+
 2006-09-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* gnulib-tool (func_emit_lib_Makefile_am): Fix typos in

@@ -1536,6 +1536,7 @@ func_all_modules ()
   func_module strndup
   func_module strsep
   func_module c-strstr
+  func_module trim
   #func_module fstrcmp
   func_module xstrndup
   func_end_table

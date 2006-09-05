@@ -1,0 +1,24 @@
+Description:
+trim() removes leading and/or trailing whitespaces
+
+Files:
+lib/trim.c
+lib/trim.h
+
+Depends-on:
+xalloc
+mbiter
+
+configure.ac:
+
+Makefile.am:
+EXTRA_DIST += trim.h
+
+Include:
+#include "trim.h"
+
+License:
+GPL
+
+Maintainer:
+Davide Angelocola
