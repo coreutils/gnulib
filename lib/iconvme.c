@@ -193,6 +193,48 @@ again:
 	}
     }
 
+again2:
+  err = iconv (cd, NULL, NULL, &outp, &outbytes_remaining);
+
+  if (err == (size_t) -1)
+    {
+      switch (errno)
+	{
+	case E2BIG:
+	  {
+	    size_t used = outp - dest;
+	    size_t newsize = outbuf_size * 2;
+	    char *newdest;
+
+	    if (newsize <= outbuf_size)
+	      {
+		errno = ENOMEM;
+		have_error = 1;
+		goto out;
+	      }
+	    newdest = (char *) realloc (dest, newsize);
+	    if (newdest == NULL)
+	      {
+		errno = ENOMEM;
+		have_error = 1;
+		goto out;
+	      }
+	    dest = newdest;
+	    outbuf_size = newsize;
+
+	    outp = dest + used;
+	    outbytes_remaining = outbuf_size - used - 1;	/* -1 for NUL */
+
+	    goto again2;
+	  }
+	  break;
+
+	default:
+	  have_error = 1;
+	  break;
+	}
+    }
+
   *outp = '\0';
 
 out:
