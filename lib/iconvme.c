@@ -131,7 +131,10 @@ iconv_alloc (iconv_t cd, const char *str)
 
   outp = dest = (char *) malloc (outbuf_size);
   if (dest == NULL)
-    return NULL;
+    {
+      errno = ENOMEM;
+      return NULL;
+    }
 
 again:
   err = iconv (cd, &p, &inbytes_remaining, &outp, &outbytes_remaining);
@@ -159,6 +162,7 @@ again:
 	    newdest = (char *) realloc (dest, newsize);
 	    if (newdest == NULL)
 	      {
+		errno = ENOMEM;
 		have_error = 1;
 		goto out;
 	      }
