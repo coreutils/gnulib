@@ -192,6 +192,15 @@ again:
 	  break;
 	}
     }
+# if !defined _LIBICONV_VERSION && (defined sgi || defined __sgi)
+  /* Irix iconv() inserts a NUL byte if it cannot convert.  */
+  else if (err > 0)
+    {
+      errno = EILSEQ;
+      have_error = 1;
+      goto out;
+    }
+# endif
 
 again2:
   err = iconv (cd, NULL, NULL, &outp, &outbytes_remaining);
@@ -234,6 +243,15 @@ again2:
 	  break;
 	}
     }
+# if !defined _LIBICONV_VERSION && (defined sgi || defined __sgi)
+  /* Irix iconv() inserts a NUL byte if it cannot convert.  */
+  else if (err > 0)
+    {
+      errno = EILSEQ;
+      have_error = 1;
+      goto out;
+    }
+# endif
 
   *outp = '\0';
 
