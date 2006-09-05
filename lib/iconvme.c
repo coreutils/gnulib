@@ -253,7 +253,16 @@ again2:
     }
 # endif
 
-  *outp = '\0';
+  *outp++ = '\0';
+
+  /* Give away unused memory.  */
+  if (outp - dest < outbuf_size)
+    {
+      char *newdest = (char *) realloc (dest, outp - dest);
+
+      if (newdest != NULL)
+	dest = newdest;
+    }
 
 out:
   if (have_error)
