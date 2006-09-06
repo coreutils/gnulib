@@ -1,3 +1,8 @@
+2006-09-04  Karl Berry  <karl@gnu.org>
+
+	* srclist.txt (signed.m4, gettext.m4): changes not propagated
+	until next release.
+
 2006-08-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Add elisp-comp.
