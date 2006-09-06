@@ -1,3 +1,32 @@
+2006-09-06  Jim Meyering  <jim@meyering.net>
+
+	Make generated files be read-only.
+	* modules/alloca-opt (Makefile.am): Work also when $@ is read-only.
+	Ensure that each generated file is now read-only.
+	* modules/argz: Likewise.
+	* modules/arpa_inet: Likewise.
+	* modules/byteswap: Likewise.
+	* modules/configmake: Likewise.
+	* modules/fcntl: Likewise.
+	* modules/fnmatch: Likewise.
+	* modules/getopt: Likewise.
+	* modules/glob: Likewise.
+	* modules/inttypes: Likewise.
+	* modules/netinet_in: Likewise.
+	* modules/poll: Likewise.
+	* modules/stdbool: Likewise.
+	* modules/stdint: Likewise.
+	* modules/sys_select: Likewise.
+	* modules/sys_socket: Likewise.
+	* modules/sys_stat: Likewise.
+	* modules/sysexits: Likewise.
+	* modules/localcharset: Same as above, but continue using temporary
+	file named "t-$@" (why different?) rather than the "$@-t" used
+	everywhere else.
+
+	* modules/sysexits (Makefile.am): Replace literal occurrences
+	of "sysexit.h" more readable, and more consistent, "$@".
+
 2006-09-05  Bruno Haible  <bruno@clisp.org>
 
 	* modules/gc (Makefile.am): Augment lib_LDFLAGS, not lib_LIBADD.

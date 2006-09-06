@@ -18,7 +18,9 @@ EXTRA_DIST += argz_.h
 # We need the following in order to create <argz.h> when the system
 # doesn't have one that works with the given compiler.
 argz.h: argz_.h
+	rm -f $@-t $@
 	cp $(srcdir)/argz_.h $@-t
+	chmod a-x $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += argz.h argz.h-t
 

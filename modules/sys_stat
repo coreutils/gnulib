@@ -19,8 +19,10 @@ EXTRA_DIST += stat_.h
 # has one that is incomplete.
 sys/stat.h: stat_.h
 	test -d sys || mkdir sys
+	rm -f $@-t $@
 	sed -e 's|@''ABSOLUTE_SYS_STAT_H''@|$(ABSOLUTE_SYS_STAT_H)|g' \
 	    < $(srcdir)/stat_.h > $@-t
+	chmod a-x $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += sys/stat.h sys/stat.h-t
 MOSTLYCLEANDIRS += sys

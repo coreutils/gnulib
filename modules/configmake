@@ -24,6 +24,7 @@ Makefile.am:
 #
 # Listed in the same order as the GNU makefile conventions.
 configmake.h: Makefile
+	rm -f $@-t $@
 	( \
 	  echo '#define PREFIX "$(prefix)"'; \
 	  echo '#define EXEC_PREFIX "$(exec_prefix)"'; \
@@ -49,6 +50,7 @@ configmake.h: Makefile
 	  echo '#define MANDIR "$(mandir)"'; \
 	  echo '#define MANEXT "$(manext)"'; \
 	:) | sed '/""/d' >$@-t
+	chmod a-x $@-t
 	mv $@-t $@
 BUILT_SOURCES += configmake.h
 CLEANFILES += configmake.h configmake.h-t

@@ -59,12 +59,16 @@ uninstall-local: all-local
 	fi
 
 charset.alias: config.charset
+	rm -f t-$@ $@
 	$(SHELL) $(srcdir)/config.charset '$(host)' > t-$@
+	chmod a-x t-$@
 	mv t-$@ $@
 
 SUFFIXES += .sed .sin
 .sin.sed:
+	rm -f t-$@ $@
 	sed -e '/^#/d' -e 's/@''PACKAGE''@/$(PACKAGE)/g' $< > t-$@
+	chmod a-x t-$@
 	mv t-$@ $@
 
 CLEANFILES += charset.alias ref-add.sed ref-del.sed
