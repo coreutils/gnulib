@@ -1,5 +1,11 @@
 2006-09-05  Bruno Haible  <bruno@clisp.org>
 
+	* modules/gc (Makefile.am): Augment lib_LDFLAGS, not lib_LIBADD.
+	* modules/iconvme (Makefile.am): Likewise. Also handle the case of
+	not using libtool correctly.
+
+2006-09-05  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_lib_Makefile_am): Initialize also
 	lib_..._LDFLAGS.
 

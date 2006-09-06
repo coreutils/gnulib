@@ -15,7 +15,11 @@ gl_ICONVME
 
 Makefile.am:
 lib_SOURCES += iconvme.h iconvme.c
-lib_LIBADD += $(LTLIBICONV)
+if GL_COND_LIBTOOL
+lib_LDFLAGS += $(LTLIBICONV)
+else
+lib_LDFLAGS += $(LIBICONV)
+endif
 
 Include:
 "iconvme.h"

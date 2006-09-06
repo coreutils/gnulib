@@ -16,9 +16,9 @@ gl_GC
 Makefile.am:
 EXTRA_DIST += gc.h
 if GL_COND_LIBTOOL
-lib_LIBADD += $(LTLIBGCRYPT)
+lib_LDFLAGS += $(LTLIBGCRYPT)
 else
-lib_LIBADD += $(LIBGCRYPT)
+lib_LDFLAGS += $(LIBGCRYPT)
 endif
 
 Include:
