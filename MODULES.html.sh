@@ -2007,6 +2007,8 @@ func_all_modules ()
   func_module gettext
   func_module gettext-h
   func_module iconv
+  func_module striconv
+  func_module xstriconv
   func_module iconvme
   func_module localcharset
   func_module hard-locale

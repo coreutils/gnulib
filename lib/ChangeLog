@@ -1,3 +1,11 @@
+2006-09-06  Bruno Haible  <bruno@clisp.org>
+
+	* striconv.h: New file.
+	* striconv.c: New file, merging iconvme.c with GNU gettext's
+	iconvstring.c.
+	* xstriconv.h: New file.
+	* xstriconv.c: New file.
+
 2006-09-05  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
 
 	* argz_.h: Sync from Libtool.
