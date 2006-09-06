@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-01 15:17:11 $'
+cvsdatestamp='$Date: 2006-09-06 12:35:43 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1096,6 +1096,7 @@ func_emit_lib_Makefile_am ()
   echo
   echo "${libname}_${libext}_SOURCES ="
   echo "${libname}_${libext}_LIBADD = @${perhapsLT}LIBOBJS@"
+  echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
   if test -z "$makefile_name"; then
     echo "noinst_HEADERS ="
     if grep '^pkgdata_DATA *+=' allsnippets.tmp > /dev/null; then

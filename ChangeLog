@@ -1,3 +1,8 @@
+2006-09-05  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_lib_Makefile_am): Initialize also
+	lib_..._LDFLAGS.
+
 2006-09-06  Bruno Haible  <bruno@clisp.org>
 
 	* modules/striconv: New file.
