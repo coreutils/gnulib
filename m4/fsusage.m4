@@ -1,4 +1,4 @@
-#serial 20
+#serial 21
 # Obtaining file system usage information.
 
 # Copyright (C) 1997, 1998, 2000, 2001, 2003, 2004, 2005, 2006 Free Software
@@ -35,7 +35,7 @@ AC_DEFUN([gl_FSUSAGE],
 AC_DEFUN([gl_FILE_SYSTEM_USAGE],
 [
 
-echo "checking how to get file system space usage..."
+AC_MSG_CHECKING([how to get file system space usage])
 ac_fsusage_space=no
 
 # Perform only the link test since it seems there are no variants of the

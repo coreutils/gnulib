@@ -1,3 +1,7 @@
+2006-09-07  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* fsusage.m4 (gl_FILE_SYSTEM_USAGE): Don't use plain echo.
+
 2006-09-03  Bruno Haible  <bruno@clisp.org>
 
 	* lib-link.m4 (AC_LIB_LINKFLAGS_BODY): Locate mingw shared libraries
