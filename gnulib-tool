@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-06 12:35:43 $'
+cvsdatestamp='$Date: 2006-09-07 13:00:56 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1099,6 +1099,8 @@ func_emit_lib_Makefile_am ()
   echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
   if test -z "$makefile_name"; then
     echo "noinst_HEADERS ="
+    # Automake versions < 1.9b create an empty pkgdatadir at installation time
+    # if you specify pkgdata_DATA to empty. This is a workaround.
     if grep '^pkgdata_DATA *+=' allsnippets.tmp > /dev/null; then
       echo "pkgdata_DATA ="
     fi
