@@ -19,7 +19,7 @@ netinet/in.h:
 	test -d netinet || mkdir netinet
 	rm -f $@-t $@
 	echo '#include <sys/socket.h>' >$@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += netinet/in.h netinet/in.h-t
 MOSTLYCLEANDIRS += netinet

@@ -32,7 +32,7 @@ inttypes.h: inttypes_.h
 	    -e 's/@''HAVE_DECL_STRTOIMAX''@/$(HAVE_DECL_STRTOIMAX)/g' \
 	    -e 's/@''HAVE_DECL_STRTOUMAX''@/$(HAVE_DECL_STRTOUMAX)/g' \
 	    < $(srcdir)/inttypes_.h > $@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += inttypes.h inttypes.h-t
 

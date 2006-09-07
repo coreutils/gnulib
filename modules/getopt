@@ -24,7 +24,7 @@ EXTRA_DIST += getopt_.h getopt_int.h
 getopt.h: getopt_.h
 	rm -f $@-t $@
 	cp $(srcdir)/getopt_.h $@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += getopt.h getopt.h-t
 

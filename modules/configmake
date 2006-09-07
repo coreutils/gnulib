@@ -50,7 +50,7 @@ configmake.h: Makefile
 	  echo '#define MANDIR "$(mandir)"'; \
 	  echo '#define MANEXT "$(manext)"'; \
 	:) | sed '/""/d' >$@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 BUILT_SOURCES += configmake.h
 CLEANFILES += configmake.h configmake.h-t

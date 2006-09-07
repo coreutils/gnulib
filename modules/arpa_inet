@@ -19,7 +19,7 @@ arpa/inet.h:
 	test -d arpa || mkdir arpa
 	rm -f $@-t $@
 	echo '#include <sys/socket.h>' >$@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += arpa/inet.h arpa/inet.h-t
 MOSTLYCLEANDIRS += arpa

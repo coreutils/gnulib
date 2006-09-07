@@ -19,7 +19,7 @@ EXTRA_DIST += sysexit_.h
 sysexits.h: sysexit_.h
 	rm -f $@-t $@
 	cp $(srcdir)/sysexit_.h $@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += sysexits.h sysexits.h-t
 

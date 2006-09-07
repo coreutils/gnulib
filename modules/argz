@@ -20,7 +20,7 @@ EXTRA_DIST += argz_.h
 argz.h: argz_.h
 	rm -f $@-t $@
 	cp $(srcdir)/argz_.h $@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += argz.h argz.h-t
 

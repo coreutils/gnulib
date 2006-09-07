@@ -20,7 +20,7 @@ EXTRA_DIST += poll_.h
 poll.h: poll_.h
 	rm -f $@-t $@
 	cp $(srcdir)/poll_.h $@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += poll.h poll.h-t
 

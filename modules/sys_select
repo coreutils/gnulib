@@ -19,7 +19,7 @@ sys/select.h:
 	test -d sys || mkdir sys
 	rm -f $@-t $@
 	echo '#include <sys/socket.h>' >$@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += sys/select.h sys/select.h-t
 MOSTLYCLEANDIRS += sys

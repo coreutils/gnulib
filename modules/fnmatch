@@ -24,7 +24,7 @@ EXTRA_DIST += fnmatch_.h fnmatch_loop.c
 fnmatch.h: fnmatch_.h
 	rm -f $@-t $@
 	cp $(srcdir)/fnmatch_.h $@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += fnmatch.h fnmatch.h-t
 

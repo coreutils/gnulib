@@ -19,7 +19,7 @@ EXTRA_DIST += byteswap_.h
 byteswap.h: byteswap_.h
 	rm -f $@-t $@
 	cp $(srcdir)/byteswap_.h $@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += byteswap.h byteswap.h-t
 

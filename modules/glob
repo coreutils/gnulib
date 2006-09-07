@@ -32,7 +32,7 @@ EXTRA_DIST += glob_.h glob-libc.h
 glob.h: glob_.h
 	rm -f $@-t $@
 	cp $(srcdir)/glob_.h $@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += glob.h glob.h-t
 

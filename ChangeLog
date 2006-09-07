@@ -1,3 +1,14 @@
+2006-09-07  Jim Meyering  <jim@meyering.net>
+
+	Fix global typo in last change: use chmod u-w, not chmod u-x.
+	Spotted by Paul Eggert and Bruce Korb.
+	* modules/alloca-opt, modules/argz, modules/arpa_inet:
+	* modules/byteswap, modules/configmake, modules/fcntl:
+	* modules/fnmatch, modules/getopt, modules/glob, modules/inttypes:
+	* modules/localcharset, modules/netinet_in, modules/poll:
+	* modules/stdbool, modules/stdint, modules/sys_select:
+	* modules/sys_socket, modules/sys_stat, modules/sysexits:
+
 2006-09-06  Jim Meyering  <jim@meyering.net>
 
 	Make generated files be read-only.

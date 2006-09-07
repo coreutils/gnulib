@@ -21,7 +21,7 @@ sys/socket.h: socket_.h
 	test -d sys || mkdir sys
 	rm -f $@-t $@
 	cp $(srcdir)/socket_.h $@-t
-	chmod a-x $@-t
+	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += sys/socket.h sys/socket.h-t
 MOSTLYCLEANDIRS += sys
