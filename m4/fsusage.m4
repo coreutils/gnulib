@@ -35,7 +35,7 @@ AC_DEFUN([gl_FSUSAGE],
 AC_DEFUN([gl_FILE_SYSTEM_USAGE],
 [
 
-AC_MSG_CHECKING([how to get file system space usage])
+AC_MSG_NOTICE([checking how to get file system space usage])
 ac_fsusage_space=no
 
 # Perform only the link test since it seems there are no variants of the
