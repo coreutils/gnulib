@@ -1,3 +1,19 @@
+2006-09-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* mktime.m4 (AC_FUNC_MKTIME): Sync from Autoconf.
+	Check for unistd.h too, since Autoconf doesn't assume POSIX.
+	Also:
+
+	2006-09-08  Paul Eggert  <eggert@cs.ucla.edu>
+	Add year_2050_test to catch glibc bug 2821
+	<http://sourceware.org/bugzilla/show_bug.cgi?id=2821>.
+
+	2006-08-15  Paul Eggert  <eggert@cs.ucla.edu>
+	Prefer #ifdef to #if.
+
+	2006-04-02  Paul Eggert  <eggert@cs.ucla.edu>
+	Return from 'main' instead of calling 'exit'.
+
 2006-09-08  Jim Meyering  <jim@meyering.net>
 
 	Avoid new build failure on FreeBSD 6.0.
