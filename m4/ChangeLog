@@ -1,3 +1,10 @@
+2006-09-08  Jim Meyering  <jim@meyering.net>
+
+	Avoid new build failure on FreeBSD 6.0.
+	* ls-mntd-fs.m4 (gl_LIST_MOUNTED_FILE_SYSTEMS): Include <sys/param.h>
+	when testing whether getmntinfo uses statvfs.  Patch by Pavel Tsekov,
+	in <http://savannah.gnu.org/bugs/?17643>.
+
 2006-09-07  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* fsusage.m4 (gl_FILE_SYSTEM_USAGE): Don't use plain echo.

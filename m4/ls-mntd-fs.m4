@@ -1,4 +1,4 @@
-#serial 23
+#serial 24
 # How to list mounted file systems.
 
 # Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2006 Free Software
@@ -237,6 +237,9 @@ if test -z "$ac_list_mounted_fs"; then
     AC_CACHE_VAL(fu_cv_sys_mounted_getmntinfo2,
       [
         AC_TRY_COMPILE([
+#if HAVE_SYS_PARAM_H
+# include <sys/param.h>
+#endif
 #include <sys/types.h>
 #if HAVE_SYS_MOUNT_H
 # include <sys/mount.h>
