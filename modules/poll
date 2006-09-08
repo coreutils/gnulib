@@ -18,10 +18,8 @@ EXTRA_DIST += poll_.h
 # We need the following in order to create <poll.h> when the system
 # doesn't have one.
 poll.h: poll_.h
-	rm -f $@-t $@
-	cp $(srcdir)/poll_.h $@-t
-	chmod a-w $@-t
-	mv $@-t $@
+	cp -f $(srcdir)/poll_.h $@-t
+	mv -f $@-t $@
 MOSTLYCLEANFILES += poll.h poll.h-t
 
 Include:

@@ -22,10 +22,8 @@ EXTRA_DIST += getopt_.h getopt_int.h
 # We need the following in order to create <getopt.h> when the system
 # doesn't have one that works with the given compiler.
 getopt.h: getopt_.h
-	rm -f $@-t $@
-	cp $(srcdir)/getopt_.h $@-t
-	chmod a-w $@-t
-	mv $@-t $@
+	cp -f $(srcdir)/getopt_.h $@-t
+	mv -f $@-t $@
 MOSTLYCLEANFILES += getopt.h getopt.h-t
 
 Include:

@@ -47,7 +47,6 @@ stdint.h: stdint_.h
 	    -e 's/@''HAVE_SIGNED_WINT_T''@/$(HAVE_SIGNED_WINT_T)/g' \
 	    -e 's/@''WINT_T_SUFFIX''@/$(WINT_T_SUFFIX)/g' \
 	    < $(srcdir)/stdint_.h > $@-t
-	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += stdint.h stdint.h-t
 

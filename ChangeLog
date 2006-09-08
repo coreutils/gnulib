@@ -1,3 +1,17 @@
+2006-09-08  Jim Meyering  <jim@meyering.net>
+
+	Don't make generated files read-only.  That would bother too many
+	people.  However, do retain the ability to work when targets are
+	read-only: remove the destination and temporary files before writing
+	them (when generated via sed or echo), or by using the -f option for
+	both cp and mv commands.  Suggestion to use -f from Paul Eggert.
+	* modules/alloca-opt, modules/argz, modules/arpa_inet:
+	* modules/byteswap, modules/configmake, modules/fcntl:
+	* modules/fnmatch, modules/getopt, modules/glob, modules/inttypes:
+	* modules/localcharset, modules/netinet_in, modules/poll:
+	* modules/stdbool, modules/stdint, modules/sys_select:
+	* modules/sys_socket, modules/sys_stat, modules/sysexits:
+
 2006-09-07  Jim Meyering  <jim@meyering.net>
 
 	Fix global typo in last change: use chmod u-w, not chmod u-x.

@@ -22,7 +22,6 @@ fcntl.h: fcntl_.h
 	rm -f $@-t $@
 	sed -e 's|@''ABSOLUTE_FCNTL_H''@|$(ABSOLUTE_FCNTL_H)|g' \
 	    < $(srcdir)/fcntl_.h > $@-t
-	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += fcntl.h fcntl.h-t
 

@@ -30,10 +30,8 @@ EXTRA_DIST += glob_.h glob-libc.h
 # We need the following in order to create <glob.h> when the system
 # doesn't have one that works with the given compiler.
 glob.h: glob_.h
-	rm -f $@-t $@
-	cp $(srcdir)/glob_.h $@-t
-	chmod a-w $@-t
-	mv $@-t $@
+	cp -f $(srcdir)/glob_.h $@-t
+	mv -f $@-t $@
 MOSTLYCLEANFILES += glob.h glob.h-t
 
 Include:

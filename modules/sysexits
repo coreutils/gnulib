@@ -17,10 +17,8 @@ EXTRA_DIST += sysexit_.h
 # We need the following in order to create <sysexits.h> when the system
 # doesn't have one that works with the given compiler.
 sysexits.h: sysexit_.h
-	rm -f $@-t $@
-	cp $(srcdir)/sysexit_.h $@-t
-	chmod a-w $@-t
-	mv $@-t $@
+	cp -f $(srcdir)/sysexit_.h $@-t
+	mv -f $@-t $@
 MOSTLYCLEANFILES += sysexits.h sysexits.h-t
 
 Include:

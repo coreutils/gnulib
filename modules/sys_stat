@@ -22,7 +22,6 @@ sys/stat.h: stat_.h
 	rm -f $@-t $@
 	sed -e 's|@''ABSOLUTE_SYS_STAT_H''@|$(ABSOLUTE_SYS_STAT_H)|g' \
 	    < $(srcdir)/stat_.h > $@-t
-	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += sys/stat.h sys/stat.h-t
 MOSTLYCLEANDIRS += sys

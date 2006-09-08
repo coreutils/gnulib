@@ -20,7 +20,6 @@ EXTRA_DIST += stdbool_.h
 stdbool.h: stdbool_.h
 	rm -f $@-t $@
 	sed -e 's/@''HAVE__BOOL''@/$(HAVE__BOOL)/g' < $(srcdir)/stdbool_.h > $@-t
-	chmod a-w $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += stdbool.h stdbool.h-t
 

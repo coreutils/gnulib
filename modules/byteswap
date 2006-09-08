@@ -17,10 +17,8 @@ EXTRA_DIST += byteswap_.h
 # We need the following in order to create <byteswap.h> when the system
 # doesn't have one.
 byteswap.h: byteswap_.h
-	rm -f $@-t $@
-	cp $(srcdir)/byteswap_.h $@-t
-	chmod a-w $@-t
-	mv $@-t $@
+	cp -f $(srcdir)/byteswap_.h $@-t
+	mv -f $@-t $@
 MOSTLYCLEANFILES += byteswap.h byteswap.h-t
 
 Include:

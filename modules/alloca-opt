@@ -19,10 +19,8 @@ EXTRA_DIST += alloca_.h
 # We need the following in order to create <alloca.h> when the system
 # doesn't have one that works with the given compiler.
 alloca.h: alloca_.h
-	rm -f $@-t $@
-	cp $(srcdir)/alloca_.h $@-t
-	chmod a-w $@-t
-	mv $@-t $@
+	cp -f $(srcdir)/alloca_.h $@-t
+	mv -f $@-t $@
 MOSTLYCLEANFILES += alloca.h alloca.h-t
 
 Include:
