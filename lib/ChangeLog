@@ -1,3 +1,10 @@
+2006-09-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* isapipe.h (HAVE_FIFO_PIPES) [!defined HAVE_FIFO_PIPES]:
+	Moved to here ...
+	* isapipe.c (HAVE_FIFO_PIPES) [!defined HAVE_FIFO_PIPES]:
+	... from here.
+
 2006-09-06  Bruno Haible  <bruno@clisp.org>
 
 	* striconv.h: New file.
@@ -9,10 +16,10 @@
 2006-09-05  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
 
 	* argz_.h: Sync from Libtool.
-	
+
 	2006-09-04  George Bosilca <bosilca@cs.utk.edu>
 		and Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-	
+
 	* libltdl/argz_.h: It's __cplusplus, not _cplusplus.
 
 2006-09-05  Davide Angelocola <davide.angelocola@tiscali.it>

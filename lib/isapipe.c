@@ -30,11 +30,6 @@
 
 #include "stat-macros.h"
 
-/* Whether pipes are FIFOs; -1 if not known.  */
-#ifndef HAVE_FIFO_PIPES
-# define HAVE_FIFO_PIPES (-1)
-#endif
-
 /* The maximum link count for pipes; (nlink_t) -1 if not known.  */
 #ifndef PIPE_LINK_COUNT_MAX
 # define PIPE_LINK_COUNT_MAX ((nlink_t) (-1))
