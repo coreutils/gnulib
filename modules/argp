@@ -23,6 +23,7 @@ dirname
 getopt
 strchrnul
 sysexits
+malloc
 mempcpy
 strndup
 strcase
