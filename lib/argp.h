@@ -94,7 +94,10 @@ struct argp_option
   /* The doc string for this option.  If both NAME and KEY are 0, This string
      will be printed outdented from the normal option column, making it
      useful as a group header (it will be the first thing printed in its
-     group); in this usage, it's conventional to end the string with a `:'.  */
+     group); in this usage, it's conventional to end the string with a `:'.
+
+     Write the initial value as N_("TEXT") if you want xgettext to collect
+     it into a POT file.  */
   const char *doc;
 
   /* The group this option is in.  In a long help message, options are sorted
