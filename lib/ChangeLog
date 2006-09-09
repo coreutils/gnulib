@@ -2,6 +2,7 @@
 
 	* argp.h (struct argp): Document the N_("..") "\v" N_("..")
 	convention.  Text proposed by Bruno Haible.
+	(struct argp_option): Document the use of N_() wrappers.
 
 	* argp-help.c (argp_doc): Split the untranslated doc string on '\v',
 	and translate the two parts separately, instead of feeding
