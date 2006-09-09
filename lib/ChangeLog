@@ -1,5 +1,8 @@
 2006-09-09  Sergey Poznyakoff  <gray@gnu.org.ua>
 
+	* argp.h (struct argp): Document the N_("..") "\v" N_("..")
+	convention.  Text proposed by Bruno Haible.
+
 	* argp-help.c (argp_doc): Split the untranslated doc string on '\v',
 	and translate the two parts separately, instead of feeding
 	the whole string to gettext.  This allows to exclude
