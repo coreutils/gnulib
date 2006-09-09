@@ -1476,6 +1476,7 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
   const char *text;
   const char *inp_text;
   size_t inp_text_len = 0;
+  const char *trans_text;
   void *input = 0;
   int anything = 0;
   const struct argp_child *child = argp->children;
@@ -1494,10 +1495,11 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
 	    }
 	}
       else
-	inp_text = dgettext (argp->argp_domain, post ? 0 : argp->doc);
+	inp_text = post ? 0 : argp->doc;
+      trans_text = dgettext (argp->argp_domain, inp_text);
     }
   else
-    inp_text = 0;
+    trans_text = inp_text = 0;
 
   if (argp->help_filter)
     /* We have to filter the doc strings.  */
@@ -1507,10 +1509,10 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
 	(*argp->help_filter) (post
 			      ? ARGP_KEY_HELP_POST_DOC
 			      : ARGP_KEY_HELP_PRE_DOC,
-			      inp_text, input);
+			      trans_text, input);
     }
   else
-    text = (const char *) inp_text;
+    text = (const char *) trans_text;
 
   if (text)
     {
@@ -1525,7 +1527,7 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
       anything = 1;
     }
 
-  if (text && text != inp_text)
+  if (text && text != trans_text)
     free ((char *) text);	/* Free TEXT returned from the help filter.  */
 
   if (inp_text && inp_text_len)
