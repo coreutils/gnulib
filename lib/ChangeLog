@@ -1,3 +1,11 @@
+2006-09-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* argp-help.c (argp_doc): Split the untranslated doc string on '\v',
+	and translate the two parts separately, instead of feeding
+	the whole string to gettext.  This allows to exclude
+	'\v' from the strings visible to the translator by writing doc
+	strings as N_("..") "\v" N_("..").  
+
 2006-09-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* mktime.c (guess_time_tm): Fix bug where mktime
