@@ -243,7 +243,9 @@ struct argp
 
   /* If non-NULL, a string containing extra text to be printed before and
      after the options in a long help message (separated by a vertical tab
-     `\v' character).  */
+     `\v' character).
+     Write the initial value as N_("BEFORE-TEXT") "\v" N_("AFTER-TEXT") if
+     you want xgettext to collect the two pieces of text into a POT file.  */
   const char *doc;
 
   /* A vector of argp_children structures, terminated by a member with a 0
