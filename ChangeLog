@@ -1,3 +1,18 @@
+2006-09-09  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_lib_Makefile_am): Eliminate lib_LDFLAGS
+	assignments if building a library without libtool.
+	(func_emit_tests_Makefile_am): Likewise. Handle lib_* variables as
+	in func_emit_lib_Makefile_am.
+	(func_import): When building a static library libfoo.a, arrange to
+	define variables LIBFOO_LIBDEPS and LIBFOO_LTLIBDEPS.
+	(func_create_testdir): Likewise.
+	* modules/gc (configure.ac, Makefile.am): If building statically,
+	augment gl_libdeps and gl_ltlibdeps instead of lib_LDFLAGS.
+	* modules/iconvme (configure.ac, Makefile.am): Likewise.
+	* modules/striconv (configure.ac, Makefile.am): Likewise.
+	Based on a suggestion by Ralf Wildenhues.
+
 2006-09-08  Jim Meyering  <jim@meyering.net>
 
 	Don't make generated files read-only.  That would bother too many

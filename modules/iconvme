@@ -12,13 +12,15 @@ strdup
 
 configure.ac:
 gl_ICONVME
+if test $gl_cond_libtool = false; then
+  gl_ltlibdeps="$gl_ltlibdeps $LTLIBICONV"
+  gl_libdeps="$gl_libdeps $LIBICONV"
+fi
 
 Makefile.am:
 lib_SOURCES += iconvme.h iconvme.c
 if GL_COND_LIBTOOL
 lib_LDFLAGS += $(LTLIBICONV)
-else
-lib_LDFLAGS += $(LIBICONV)
 endif
 
 Include:

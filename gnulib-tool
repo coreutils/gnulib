@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-07 13:00:56 $'
+cvsdatestamp='$Date: 2006-09-09 19:02:08 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1043,9 +1043,11 @@ func_emit_lib_Makefile_am ()
   if test "$libtool" = true; then
     libext=la
     perhapsLT=LT
+    sed_eliminate_LDFLAGS=
   else
     libext=a
     perhapsLT=
+    sed_eliminate_LDFLAGS='/^lib_LDFLAGS[ 	]*+=/d'
   fi
   echo "## Process this file with automake to produce Makefile.in."
   func_emit_copyright_notice
@@ -1066,6 +1068,7 @@ func_emit_lib_Makefile_am ()
           func_get_automake_snippet "$module" |
             sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' |
+            sed -e "$sed_eliminate_LDFLAGS" |
             sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' |
             sed -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g'
@@ -1096,7 +1099,9 @@ func_emit_lib_Makefile_am ()
   echo
   echo "${libname}_${libext}_SOURCES ="
   echo "${libname}_${libext}_LIBADD = @${perhapsLT}LIBOBJS@"
-  echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
+  if test "$libtool" = true; then
+    echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
+  fi
   if test -z "$makefile_name"; then
     echo "noinst_HEADERS ="
     # Automake versions < 1.9b create an empty pkgdatadir at installation time
@@ -1148,6 +1153,13 @@ func_emit_tests_Makefile_am ()
   else
     libext=a
   fi
+  if test "$libtool" = true; then
+    libext=la
+    sed_eliminate_LDFLAGS=
+  else
+    libext=a
+    sed_eliminate_LDFLAGS='/^lib_LDFLAGS[ 	]*+=/d'
+  fi
   testsbase_inverse=`echo "$testsbase" | sed -e 's,/$,,' | sed -e 's,[^/][^/]*,..,g'`
   echo "## Process this file with automake to produce Makefile.in."
   func_emit_copyright_notice
@@ -1161,7 +1173,15 @@ func_emit_tests_Makefile_am ()
     for module in $modules; do
       func_verify_tests_module
       if test -n "$module"; then
-        func_get_automake_snippet "$module" > amsnippet.tmp
+        {
+          func_get_automake_snippet "$module" |
+            sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
+                -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' |
+            sed -e "$sed_eliminate_LDFLAGS" |
+            sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' |
+            sed -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
+                -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g'
+        } > amsnippet.tmp
         # Skip the contents if its entirely empty.
         if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
           echo "## begin gnulib module $module"
@@ -1816,8 +1836,12 @@ func_import ()
     echo "["
     if test "$libtool" = true; then
       echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
+      echo "  gl_cond_libtool=true"
     else
       echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
+      echo "  gl_cond_libtool=false"
+      echo "  gl_libdeps="
+      echo "  gl_ltlibdeps="
     fi
     if test "$auxdir" != "build-aux"; then
       sed_replace_build_aux='
@@ -1845,6 +1869,15 @@ func_import ()
         fi
       fi
     done
+    # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
+    # created using libtool, because libtool already handles the dependencies.
+    if test "$libtool" != true; then
+      libname_upper=`echo "$libname" | tr 'a-z' 'A-Z'`
+      echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
+      echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
+      echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
+      echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
+    fi
     echo "])"
     echo
     echo "# This macro records the list of files which have been installed by"
@@ -2089,8 +2122,12 @@ func_create_testdir ()
      fi
      if test "$libtool" = true; then
        echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
+       echo "gl_cond_libtool=true"
      else
        echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
+       echo "gl_cond_libtool=false"
+       echo "gl_libdeps="
+       echo "gl_ltlibdeps="
      fi
      # Wrap the set of autoconf snippets into an autoconf macro that is then
      # invoked. This is needed because autoconf does not support AC_REQUIRE
@@ -2128,6 +2165,15 @@ func_create_testdir ()
            | sed -e "$sed_replace_build_aux"
        fi
      done
+     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
+     # created using libtool, because libtool already handles the dependencies.
+     if test "$libtool" != true; then
+       libname_upper=`echo "$libname" | tr 'a-z' 'A-Z'`
+       echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
+       echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
+       echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
+       echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
+     fi
      echo "])"
      echo "gl_INIT"
      echo
@@ -2184,8 +2230,12 @@ func_create_testdir ()
    fi
    if test "$libtool" = true; then
      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
+     echo "gl_cond_libtool=true"
    else
      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
+     echo "gl_cond_libtool=false"
+     echo "gl_libdeps="
+     echo "gl_ltlibdeps="
    fi
    # Wrap the set of autoconf snippets into an autoconf macro that is then
    # invoked. This is needed because autoconf does not support AC_REQUIRE
@@ -2213,6 +2263,15 @@ func_create_testdir ()
          | sed -e "$sed_replace_build_aux"
      fi
    done
+   # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
+   # created using libtool, because libtool already handles the dependencies.
+   if test "$libtool" != true; then
+     libname_upper=`echo "$libname" | tr 'a-z' 'A-Z'`
+     echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
+     echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
+     echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
+     echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
+   fi
    echo "])"
    echo "gl_INIT"
    echo

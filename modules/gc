@@ -12,13 +12,15 @@ havelib
 
 configure.ac:
 gl_GC
+if test $gl_cond_libtool = false; then
+  gl_ltlibdeps="$gl_ltlibdeps $LTLIBGCRYPT"
+  gl_libdeps="$gl_libdeps $LIBGCRYPT"
+fi
 
 Makefile.am:
 EXTRA_DIST += gc.h
 if GL_COND_LIBTOOL
 lib_LDFLAGS += $(LTLIBGCRYPT)
-else
-lib_LDFLAGS += $(LIBGCRYPT)
 endif
 
 Include:
