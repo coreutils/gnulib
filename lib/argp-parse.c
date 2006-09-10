@@ -877,6 +877,20 @@ __argp_parse (const struct argp *argp, int argc, char **argv, unsigned flags,
      to be parsed (which in some cases isn't actually an error).  */
   int arg_ebadkey = 0;
 
+#ifndef _LIBC
+  if (!(flags & ARGP_PARSE_ARGV0))
+    {
+#ifdef HAVE_DECL_PROGRAM_INVOCATION_NAME
+      if (!program_invocation_name)
+	program_invocation_name = argv[0];
+#endif
+#ifdef HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
+      if (!program_invocation_short_name)
+	program_invocation_short_name = __argp_base_name (argv[0]);
+#endif
+    }
+#endif
+	
   if (! (flags & ARGP_NO_HELP))
     /* Add our own options.  */
     {
