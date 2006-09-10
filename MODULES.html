@@ -3728,7 +3728,7 @@ for more information.
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=striconv"></A><A HREF="modules/striconv">striconv</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/striconv.h">striconv.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/striconv.c">striconv.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>if test $gl_cond_libtool = false; then<BR>  gl_ltlibdeps="$gl_ltlibdeps $LTLIBICONV"<BR>  gl_libdeps="$gl_libdeps $LIBICONV"<BR>fi
         <TD ALIGN=LEFT VALIGN=TOP>iconv<BR>strdup<BR>c-strcase
       </TR>
       <TR>
@@ -3742,7 +3742,7 @@ for more information.
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=iconvme"></A><A HREF="modules/iconvme">iconvme</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/iconvme.h">iconvme.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/iconvme.c">iconvme.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/iconvme.m4">iconvme.m4</A><BR>gl_ICONVME
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/iconvme.m4">iconvme.m4</A><BR>gl_ICONVME<BR>if test $gl_cond_libtool = false; then<BR>  gl_ltlibdeps="$gl_ltlibdeps $LTLIBICONV"<BR>  gl_libdeps="$gl_libdeps $LIBICONV"<BR>fi
         <TD ALIGN=LEFT VALIGN=TOP>iconv<BR>strdup
       </TR>
       <TR>
@@ -4427,7 +4427,7 @@ for more information.
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=gc"></A><A HREF="modules/gc">gc</A>
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/gc.h">gc.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/gc-libgcrypt.c">gc-libgcrypt.c</A><BR><A HREF="lib/gc-gnulib.c">gc-gnulib.c</A>
-        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/gc.m4">gc.m4</A><BR>gl_GC
+        <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/gc.m4">gc.m4</A><BR>gl_GC<BR>if test $gl_cond_libtool = false; then<BR>  gl_ltlibdeps="$gl_ltlibdeps $LTLIBGCRYPT"<BR>  gl_libdeps="$gl_libdeps $LIBGCRYPT"<BR>fi
         <TD ALIGN=LEFT VALIGN=TOP>havelib
       </TR>
       <TR>
@@ -4678,6 +4678,6 @@ for more information.
       <LI>A POT file and some PO files
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on  9 September 2006.
+    Generated from <CODE>MODULES.html.sh</CODE> on 10 September 2006.
   </BODY>
 </HTML>
