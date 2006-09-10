@@ -1,3 +1,13 @@
+2006-09-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* argp-parse.c (__argp_parse) [!_LIBC]: Make sure
+	program_invocation_name and program_invocation_short_name are
+	initialized.
+	* argp-namefrob.h: Move declarations of program_invocation_name
+	and program_invocation_short_name to argp.h, so they are visible
+	to user programs.
+	* argp.h: Likewise
+
 2006-09-09  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* argp.h (struct argp): Document the N_("..") "\v" N_("..")
