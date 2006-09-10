@@ -141,20 +141,6 @@
 # define putchar_unlocked(x) putchar (x)
 # endif
 
-/* GNULIB makes sure both program_invocation_name and
-   program_invocation_short_name are available */
-#ifdef GNULIB_PROGRAM_INVOCATION_NAME
-extern char *program_invocation_name;
-# undef HAVE_DECL_PROGRAM_INVOCATION_NAME
-# define HAVE_DECL_PROGRAM_INVOCATION_NAME 1
-#endif
-
-#ifdef GNULIB_PROGRAM_INVOCATION_SHORT_NAME
-extern char *program_invocation_short_name;
-# undef HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
-# define HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME 1
-#endif
-
 #endif /* !_LIBC */
 
 #ifndef __set_errno
