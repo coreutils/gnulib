@@ -30,19 +30,13 @@
 #endif
 
 #include <stddef.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <stdio.h>
 #ifndef TMP_MAX
 # define TMP_MAX 238328
-#endif
-
-#if HAVE_STDINT_H || _LIBC
-# include <stdint.h>
-#endif
-#if HAVE_INTTYPES_H
-# include <inttypes.h>
 #endif
 
 #include <unistd.h>

@@ -1,3 +1,8 @@
+2006-09-10  Bruno Haible  <bruno@clisp.org>
+
+	* modules/mkdtemp (Files): Remove m4/ulonglong.m4, m4/stdint_h.m4,
+	m4/inttypes_h.m4, m4/uintmax_t.m4.
+
 2006-09-09  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am): Eliminate lib_LDFLAGS

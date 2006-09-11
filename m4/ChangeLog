@@ -1,3 +1,7 @@
+2006-09-10  Bruno Haible  <bruno@clisp.org>
+
+	* mkdtemp.m4 (gl_PREREQ_MKDTEMP): Don't require gl_AC_TYPE_UINTMAX_T.
+
 2006-09-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* mktime.m4 (AC_FUNC_MKTIME): Sync from Autoconf.
