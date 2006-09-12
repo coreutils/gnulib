@@ -1496,7 +1496,7 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
 	}
       else
 	inp_text = post ? 0 : argp->doc;
-      trans_text = dgettext (argp->argp_domain, inp_text);
+      trans_text = inp_text ? dgettext (argp->argp_domain, inp_text) : NULL;
     }
   else
     trans_text = inp_text = 0;
