@@ -1,3 +1,9 @@
+2006-09-12  Jim Meyering  <jim@meyering.net>
+
+	* nanosleep.c: Include <sys/types.h> before sys/select.h, to avoid
+	compilation failure (due to use of pid_t in latter) on NetBSD 1.6.
+	Reported by Nelson H. F. Beebe.
+
 2006-09-12  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* argp-help.c (argp_doc): Make sure NULL is not passed to
@@ -27,7 +33,7 @@
 	and translate the two parts separately, instead of feeding
 	the whole string to gettext.  This allows to exclude
 	'\v' from the strings visible to the translator by writing doc
-	strings as N_("..") "\v" N_("..").  
+	strings as N_("..") "\v" N_("..").
 
 2006-09-08  Paul Eggert  <eggert@cs.ucla.edu>
 

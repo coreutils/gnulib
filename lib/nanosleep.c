@@ -29,10 +29,10 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <sys/types.h>
 #if HAVE_SYS_SELECT_H
 # include <sys/select.h>
 #endif
-#include <sys/types.h>
 #include <signal.h>
 
 #if TIME_WITH_SYS_TIME
