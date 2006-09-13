@@ -1,3 +1,9 @@
+2009-09-13  Simon Josefsson  <jas@extundo.com>
+
+	* gnulib-tool (func_emit_lib_Makefile_am): Use $(LIBOBJS), not
+	@LIBOBJS@.
+	Suggested by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
 2006-09-10  Bruno Haible  <bruno@clisp.org>
 
 	* modules/mkdtemp (Files): Remove m4/ulonglong.m4, m4/stdint_h.m4,
