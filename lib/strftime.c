@@ -18,10 +18,6 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #ifdef _LIBC
 # define HAVE_MBLEN 1
 # define HAVE_MBRLEN 1
@@ -32,6 +28,8 @@
 # define HAVE_TZSET 1
 # define MULTIBYTE_IS_FORMAT_SAFE 1
 # include "../locale/localeinfo.h"
+#else
+# include <config.h>
 #endif
 
 #include <ctype.h>

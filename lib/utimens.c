@@ -20,9 +20,7 @@
 
 /* derived from a function in touch.c */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "utimens.h"
 

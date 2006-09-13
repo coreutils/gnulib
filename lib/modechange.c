@@ -26,9 +26,7 @@
    changing the mode of many files, this probably results in a
    performance gain.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "modechange.h"
 #include <sys/stat.h>

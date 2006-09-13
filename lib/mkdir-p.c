@@ -19,9 +19,7 @@
 
 /* Written by Paul Eggert, David MacKenzie, and Jim Meyering.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "mkdir-p.h"
 

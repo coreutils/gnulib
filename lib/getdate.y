@@ -32,9 +32,7 @@
 /* FIXME: Check for arithmetic overflow in all cases, not just
    some of them.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "getdate.h"
 

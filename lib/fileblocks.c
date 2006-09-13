@@ -18,10 +18,8 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 /* Written by Brian L. Matthews, blm@6sceng.UUCP. */
-
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+
+#include <config.h>
 
 #include <sys/types.h>
 

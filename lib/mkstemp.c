@@ -1,4 +1,4 @@
-/* Copyright (C) 1998, 1999, 2001, 2005 Free Software Foundation, Inc.
+/* Copyright (C) 1998, 1999, 2001, 2005, 2006 Free Software Foundation, Inc.
    This file is derived from the one in the GNU C Library.
 
    This program is free software; you can redistribute it and/or modify
@@ -15,9 +15,7 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 /* Disable the definition of mkstemp to rpl_mkstemp (from config.h) in this
    file.  Otherwise, we'd get conflicting prototypes for rpl_mkstemp on

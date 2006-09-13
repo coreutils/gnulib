@@ -23,9 +23,7 @@
       Robert Klep <robert@ilse.nl>  -- Expansion function fix
 */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "sha1.h"
 

@@ -1,6 +1,6 @@
 /* sig2str.c -- convert between signal names and numbers
 
-   Copyright (C) 2002, 2004 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2004, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,9 +18,7 @@
 
 /* Written by Paul Eggert.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include <limits.h>
 #include <signal.h>

@@ -1,3 +1,43 @@
+2006-09-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* _fpending.c: Include <config.h> unconditionally, since we no
+	longer worry about uses that don't define HAVE_CONFIG_H.
+	* acl.c, alloca.c, argmatch.c, atexit.c, backupfile.c:
+	* basename.c, c-stack.c, c-strtod.c, calloc.c, canon-host.c:
+	* canonicalize.c, chdir-long.c, chdir-safer.c, chown.c:
+	* cloexec.c, close-stream.c, closeout.c, creat-safer.c:
+	* cycle-check.c, diacrit.c, dirchownmod.c, dirfd.c, dirname.c:
+	* dup-safer.c, dup2.c, error.c, euidaccess.c, exclude.c:
+	* exitfail.c, fchmodat.c, fchown-stub.c, fd-safer.c:
+	* file-type.c, fileblocks.c, filemode.c, filenamecat.c:
+	* fnmatch.c, fopen-safer.c, fprintftime.c, free.c, fsusage.c:
+	* ftruncate.c, fts-cycle.c, fts.c, full-write.c, gai_strerror.c:
+	* getcwd.c, getdate.y, getdomainname.c, getgroups.c:
+	* gethostname.c, gethrxtime.c, getloadavg.c, getlogin_r.c:
+	* getndelim2.c, getnline.c, getopt.c, getopt1.c, getpass.c:
+	* gettime.c, gettimeofday.c, getugroups.c, getusershell.c:
+	* glob.c, group-member.c, hard-locale.c, hash-pjw.c, hash.c:
+	* human.c, idcache.c, inet_ntop.c, inet_pton.c, inttostr.c:
+	* isdir.c, lchown.c, linebuffer.c, long-options.c, lstat.c:
+	* malloc.c, md5.c, memcasecmp.c, memchr.c, memcmp.c, memcoll.c:
+	* memcpy.c, memmove.c, memrchr.c, mkancesdirs.c, mkdir-p.c:
+	* mkdir.c, mkdirat.c, mkstemp-safer.c, mkstemp.c, modechange.c:
+	* mountlist.c, nanosleep.c, obstack.c, open-safer.c:
+	* openat-die.c, openat.c, pagealign_alloc.c, physmem.c:
+	* pipe-safer.c, posixtm.c, posixver.c, putenv.c, quote.c:
+	* quotearg.c, raise.c, readtokens.c, readtokens0.c, readutmp.c:
+	* realloc.c, regex.c, rename.c, rmdir.c, rpmatch.c, safe-read.c:
+	* same.c, save-cwd.c, savedir.c, setenv.c, settime.c, sha1.c:
+	* sig2str.c, snprintf.c, strdup.c, strerror.c, strftime.c:
+	* stripslash.c, strndup.c, strnlen.c, strpbrk.c, strtod.c:
+	* strtoimax.c, strtol.c, strverscmp.c, tempname.c, time_r.c:
+	* timegm.c, tmpfile-safer.c, unlinkdir.c, userspec.c, utime.c:
+	* utimecmp.c, utimens.c, version-etc-fsf.c, version-etc.c:
+	* xalloc-die.c, xgetcwd.c, xgethostname.c, xmalloc.c:
+	* xmemcoll.c, xnanosleep.c, xreadlink.c, xstrtod.c:
+	* xstrtoimax.c, xstrtol.c, xstrtoumax.c, yesno.c:
+	Likewise.
+
 2006-09-12  Jim Meyering  <jim@meyering.net>
 
 	* nanosleep.c: Include <sys/types.h> before sys/select.h, to avoid

@@ -20,9 +20,7 @@
 
 /* Originally written by Jan Brittenson, bson@gnu.ai.mit.edu.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "getndelim2.h"
 

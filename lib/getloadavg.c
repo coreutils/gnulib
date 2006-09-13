@@ -84,13 +84,8 @@
 /* "configure" defines CONFIGURING_GETLOADAVG to sidestep problems
    with partially-configured source directories.  */
 
-#ifdef HAVE_CONFIG_H
-# ifndef CONFIGURING_GETLOADAVG
-#  include <config.h>
-# endif
-#endif
-
 #ifndef CONFIGURING_GETLOADAVG
+# include <config.h>
 # include <stdbool.h>
 #endif
 

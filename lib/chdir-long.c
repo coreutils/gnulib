@@ -17,9 +17,7 @@
 
 /* written by Jim Meyering */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "chdir-long.h"
 
@@ -263,6 +261,6 @@ main (int argc, char *argv[])
 
 /*
 Local Variables:
-compile-command: "gcc -DTEST_CHDIR=1 -DHAVE_CONFIG_H -I.. -g -O -W -Wall chdir-long.c libcoreutils.a"
+compile-command: "gcc -DTEST_CHDIR=1 -g -O -W -Wall chdir-long.c libcoreutils.a"
 End:
 */

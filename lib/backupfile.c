@@ -22,9 +22,7 @@
 /* Written by Paul Eggert and David MacKenzie.
    Some algorithms adapted from GNU Emacs.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "backupfile.h"
 

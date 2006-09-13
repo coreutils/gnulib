@@ -1,6 +1,7 @@
 /* provide consistent interface to chown for systems that don't interpret
    an ID of -1 as meaning `don't change the corresponding ID'.
-   Copyright (C) 1997, 2004, 2005 Free Software Foundation, Inc.
+
+   Copyright (C) 1997, 2004, 2005, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,9 +19,7 @@
 
 /* written by Jim Meyering */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 /* Disable the definition of chown to rpl_chown (from config.h) in this
    file.  Otherwise, we'd get conflicting prototypes for rpl_chown on

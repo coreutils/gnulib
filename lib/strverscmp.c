@@ -1,5 +1,5 @@
 /* Compare strings while treating digits characters numerically.
-   Copyright (C) 1997, 2000, 2002, 2004 Free Software Foundation, Inc.
+   Copyright (C) 1997, 2000, 2002, 2004, 2006 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Jean-François Bignolles <bignolle@ecoledoc.ibp.fr>, 1997.
 
@@ -17,7 +17,7 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifdef HAVE_CONFIG_H
+#if !_LIBC
 # include <config.h>
 #endif
 

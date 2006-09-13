@@ -34,9 +34,7 @@
 
    No attempt has been made to deal with multithreaded applications.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #ifndef __attribute__
 # if __GNUC__ < 3 || __STRICT_ANSI__
@@ -304,6 +302,6 @@ main (int argc __attribute__ ((unused)), char **argv)
 
 /*
 Local Variables:
-compile-command: "gcc -DDEBUG -DHAVE_CONFIG_H -I.. -g -O -Wall -W c-stack.c"
+compile-command: "gcc -DDEBUG -g -O -Wall -W c-stack.c"
 End:
 */

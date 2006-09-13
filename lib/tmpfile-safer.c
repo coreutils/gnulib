@@ -17,9 +17,7 @@
 
 /* Written by Eric Blake, based on ideas from Paul Eggert.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "stdio-safer.h"
 

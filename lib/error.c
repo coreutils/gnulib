@@ -18,7 +18,7 @@
 
 /* Written by David MacKenzie <djm@gnu.ai.mit.edu>.  */
 
-#ifdef HAVE_CONFIG_H
+#if !_LIBC
 # include <config.h>
 #endif
 
