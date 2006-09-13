@@ -1,3 +1,9 @@
+2006-09-13  Simon Josefsson  <jas@extundo.com>
+
+	* getdate.m4: Don't AC_LIBOBJ([getdate]), automake takes care of
+	that internally, suggested by Ralf Wildenhues
+	<Ralf.Wildenhues@gmx.de>.
+
 2006-09-10  Bruno Haible  <bruno@clisp.org>
 
 	* mkdtemp.m4 (gl_PREREQ_MKDTEMP): Don't require gl_AC_TYPE_UINTMAX_T.
