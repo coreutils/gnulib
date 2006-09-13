@@ -1,3 +1,7 @@
+2006-09-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* srclist.txt: Undo latest change; the bug was fixed.
+
 2006-09-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* srclist.txt: Temporarily comment out mktime.c until glibc bug
