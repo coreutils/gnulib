@@ -1,3 +1,7 @@
+2006-09-13  Eric Blake  <ebb9@byu.net>
+
+	* getopt.c: Fix typo in last commit.
+
 2006-09-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* _fpending.c: Include <config.h> unconditionally, since we no
