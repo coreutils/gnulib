@@ -1,5 +1,5 @@
 /* Construct a full pathname from a directory and a filename.
-   Copyright (C) 2001-2004 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -18,9 +18,7 @@
 
 /* Written by Bruno Haible <haible@clisp.cons.org>.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 /* Specification.  */
 #include "pathname.h"

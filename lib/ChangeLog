@@ -1,3 +1,74 @@
+2006-09-14  Bruno Haible  <bruno@clisp.org>
+
+	* allocsa.c: Include <config.h> unconditionally.
+	* asnprintf.c: Likewise.
+	* asprintf.c: Likewise.
+	* c-strcasecmp.c: Likewise.
+	* c-strcasestr.c: Likewise.
+	* c-strncasecmp.c: Likewise.
+	* c-strstr.c: Likewise.
+	* classpath.c: Likewise.
+	* clean-temp.c: Likewise.
+	* concatpath.c: Likewise.
+	* copy-file.c: Likewise.
+	* csharpcomp.c: Likewise.
+	* csharpexec.c: Likewise.
+	* execute.c: Likewise.
+	* fatal-signal.c: Likewise.
+	* findprog.c: Likewise.
+	* fwriteerror.c: Likewise.
+	* gl_array_list.c: Likewise.
+	* gl_array_oset.c: Likewise.
+	* gl_avltree_list.c: Likewise.
+	* gl_avltree_oset.c: Likewise.
+	* gl_avltreehash_list.c: Likewise.
+	* gl_carray_list.c: Likewise.
+	* gl_linked_list.c: Likewise.
+	* gl_linkedhash_list.c: Likewise.
+	* gl_list.c: Likewise.
+	* gl_oset.c: Likewise.
+	* gl_rbtree_list.c: Likewise.
+	* gl_rbtree_oset.c: Likewise.
+	* gl_rbtreehash_list.c: Likewise.
+	* imaxabs.c: Likewise.
+	* imaxdiv.c: Likewise.
+	* javacomp.c: Likewise.
+	* javaexec.c: Likewise.
+	* javaversion.c: Likewise.
+	* linebreak.c: Likewise.
+	* localcharset.c: Likewise.
+	* lock.c: Likewise.
+	* mbchar.c: Likewise.
+	* mbswidth.c: Likewise.
+	* mkdtemp.c: Likewise.
+	* pipe.c: Likewise.
+	* printf-args.c: Likewise.
+	* printf-parse.c: Likewise.
+	* progname.c: Likewise.
+	* progreloc.c: Likewise.
+	* readlink.c: Likewise.
+	* sh-quote.c: Likewise.
+	* stpcpy.c: Likewise.
+	* stpncpy.c: Likewise.
+	* strcasecmp.c: Likewise.
+	* strcasestr.c: Likewise.
+	* strcspn.c: Likewise.
+	* striconv.c: Likewise.
+	* strncasecmp.c: Likewise.
+	* strnlen1.c: Likewise.
+	* strstr.c: Likewise.
+	* strtok_r.c: Likewise.
+	* tls.c: Likewise.
+	* tmpdir.c: Likewise.
+	* unicodeio.c: Likewise.
+	* unsetenv.c: Likewise.
+	* vasnprintf.c: Likewise.
+	* vasprintf.c: Likewise.
+	* wait-process.c: Likewise.
+	* xallocsa.c: Likewise.
+	* xsetenv.c: Likewise.
+	* xstriconv.c: Likewise.
+
 2006-09-13  Eric Blake  <ebb9@byu.net>
 
 	* getopt.c: Fix typo in last commit.
@@ -405,7 +476,7 @@
 
 	2006-07-19  Mike Frysinger  <vapier@gentoo.org>
 
-	* lib/mountlist.c [ME_REMOTE]: Filter out cifs.
+	* mountlist.c [ME_REMOTE]: Filter out cifs.
 	Reported by Toralf Förster in <http://bugs.gentoo.org/141012>.
 
 2006-08-08  Eric Blake  <ebb9@byu.net>
@@ -764,7 +835,7 @@
 
 2006-07-06  Jim Hyslop  <jhyslop@dreampossible.ca>  (tiny change)
 
-	* lib/getaddrinfo.c: Changes to compile under MSVC6: changed
+	* getaddrinfo.c: Changes to compile under MSVC6: changed
 	'#if WIN32_NATIVE' to '#ifdef' & moved WSAAPI macro inside
 	brackets.  Other minor changes to suppress some compiler
 	warnings.
@@ -2793,7 +2864,7 @@
 
 2005-09-12  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny change)
 
-	* lib/base64.c: Typo.
+	* base64.c: Typo.
 	(base64_encode): Put b64str in initialized data section.
 
 2005-09-12  Derek Price  <derek@ximbiot.com>
@@ -2926,14 +2997,14 @@
 	(SIZE_MAX) [!defined SIZE_MAX]: New macro.
 	(re_alloc_oversized, re_x2alloc_oversized, re_xnmalloc):
 	(re_xnrealloc, re_x2nrealloc): New inline functions.
-	* lib/regcomp.c (init_dfa, analyze, build_range_exp, parse_bracket_exp):
+	* regcomp.c (init_dfa, analyze, build_range_exp, parse_bracket_exp):
 	(build_equiv_class, build_charclass): Check for arithmetic overflow
 	in size expression calculations.
-	* lib/regex_internal.c (re_string_realloc_buffers):
+	* regex_internal.c (re_string_realloc_buffers):
 	(build_wcs_upper_buffer, re_node_set_add_intersect):
 	(re_node_set_init_union, re_node_set_insert, re_node_set_insert_last):
 	(re_dfa_add_node, register_state): Likewise.
-	* lib/regexec.c (re_search_stub, re_copy_regs, re_search_internal):
+	* regexec.c (re_search_stub, re_copy_regs, re_search_internal):
 	(prune_impossible_nodes, push_fail_stack, set_regs, check_arrival):
 	(build_trtable, extend_buffers, match_ctx_init, match_ctx_add_entry):
 	(match_ctx_add_subtop, match_ctx_add_sublast): Likewise.
@@ -3196,7 +3267,7 @@
 	(re_string_char_size_at, re_string_wchar_at, re_string_elem_size_at):
 	Put __attribute at function definition,
 	now that the function decl has been removed.
-	* lib/regex_internal.c (re_string_peek_byte_case):
+	* regex_internal.c (re_string_peek_byte_case):
 	(re_string_fetch_byte_case, re_node_set_compare, re_node_set_contains):
 	Likewise.
 

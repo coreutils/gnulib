@@ -1,4 +1,4 @@
-/* Copyright (C) 1993, 1995-1997, 2002-2003, 2005 Free Software Foundation, Inc.
+/* Copyright (C) 1993, 1995-1997, 2002-2003, 2005-2006 Free Software Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C Library.
    Bugs can be reported to bug-glibc@gnu.org.
@@ -19,9 +19,7 @@
 
 /* This is almost copied from strncpy.c, written by Torbjorn Granlund.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 /* Specification.  */
 #include "stpncpy.h"

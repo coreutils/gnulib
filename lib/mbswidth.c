@@ -17,9 +17,7 @@
 
 /* Written by Bruno Haible <haible@clisp.cons.org>.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 /* Specification.  */
 #include "mbswidth.h"
