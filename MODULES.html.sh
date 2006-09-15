@@ -1836,6 +1836,7 @@ func_all_modules ()
   func_module d-ino
   func_module d-type
   func_module link-follow
+  func_module rename-dest-slash
   func_module rmdir-errno
   func_module unlink-busy
   func_module winsz-ioctl

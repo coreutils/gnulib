@@ -1,5 +1,7 @@
 2006-09-15  Jim Meyering  <jim@meyering.net>
 
+	* rename-dest-slash.m4 (gl_FUNC_RENAME_TRAILING_DEST_SLASH): New file.
+
 	* rename.m4 (gl_FUNC_RENAME): Rename from vb_FUNC_RENAME.
 
 2006-09-13  Simon Josefsson  <jas@extundo.com>
