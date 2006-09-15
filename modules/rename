@@ -10,7 +10,7 @@ xalloc
 dirname
 
 configure.ac:
-vb_FUNC_RENAME
+gl_FUNC_RENAME
 
 Makefile.am:
 
@@ -22,4 +22,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-
