@@ -1,5 +1,9 @@
 2006-09-15  Jim Meyering  <jim@meyering.net>
 
+	Avoid a warning about an unused variable.
+	* regex_internal.c (re_dfa_add_node): Move declaration of "type"
+	into the #ifdef block where it's used.
+
 	* rename-dest-slash.c: New file.
 
 2006-09-14  Bruno Haible  <bruno@clisp.org>

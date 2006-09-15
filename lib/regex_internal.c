@@ -1340,7 +1340,6 @@ static Idx
 internal_function
 re_dfa_add_node (re_dfa_t *dfa, re_token_t token)
 {
-  int type = token.type;
   if (BE (dfa->nodes_len >= dfa->nodes_alloc, 0))
     {
       size_t new_nodes_alloc = dfa->nodes_alloc * 2;
@@ -1376,8 +1375,11 @@ re_dfa_add_node (re_dfa_t *dfa, re_token_t token)
   dfa->nodes[dfa->nodes_len] = token;
   dfa->nodes[dfa->nodes_len].constraint = 0;
 #ifdef RE_ENABLE_I18N
+  {
+  int type = token.type;
   dfa->nodes[dfa->nodes_len].accept_mb =
     (type == OP_PERIOD && dfa->mb_cur_max > 1) || type == COMPLEX_BRACKET;
+  }
 #endif
   dfa->nexts[dfa->nodes_len] = REG_MISSING;
   re_node_set_init_empty (dfa->edests + dfa->nodes_len);
