@@ -42,7 +42,7 @@ static inline bool
 has_trailing_slash (char const *file, size_t len)
 {
   /* Don't count "/" as having a trailing slash.  */
-  if (len <= 1)
+  if (len <= FILE_SYSTEM_PREFIX_LEN (file) + 1)
     return false;
 
   char last = file[len - 1];
@@ -64,17 +64,17 @@ rpl_rename_dest_slash (char const *src, char const *dst)
   if (ret_val == 0 || errno != ENOENT)
     return ret_val;
 
+  /* Don't call rename again if there are no trailing slashes.  */
+  d_len = strlen (dst);
+  if ( ! has_trailing_slash (dst, d_len))
+    return ret_val;
+
   {
     /* Fail now, unless SRC is a directory.  */
     struct stat sb;
     if (lstat (src, &sb) != 0 || ! S_ISDIR (sb.st_mode))
       return ret_val;
   }
-
-  /* Don't call rename again if there are no trailing slashes.  */
-  d_len = strlen (dst);
-  if ( ! has_trailing_slash (dst, d_len))
-    return ret_val;
 
   {
     char *dst_temp;

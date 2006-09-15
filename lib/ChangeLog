@@ -1,5 +1,11 @@
 2006-09-15  Jim Meyering  <jim@meyering.net>
 
+	* rename-dest-slash.c (has_trailing_slash): Use
+	FILE_SYSTEM_PREFIX_LEN, for non-POSIX systems.
+	(rpl_rename_dest_slash): Perform the cheaper trailing slash
+	test before testing whether SRC is a directory.
+	Suggestions from Bruno Haible.
+
 	Avoid a warning about an unused variable.
 	* regex_internal.c (re_dfa_add_node): Move declaration of "type"
 	into the #ifdef block where it's used.
