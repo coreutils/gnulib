@@ -23,6 +23,8 @@ Makefile.am:
 # Another advantage is that 'make' output is shorter.
 #
 # Listed in the same order as the GNU makefile conventions.
+# The Automake-defined pkg* macros are appended, in the order
+# listed in the Automake documentation.
 configmake.h: Makefile
 	rm -f $@-t $@
 	( \
@@ -49,6 +51,9 @@ configmake.h: Makefile
 	  echo '#define LOCALEDIR "$(localedir)"'; \
 	  echo '#define MANDIR "$(mandir)"'; \
 	  echo '#define MANEXT "$(manext)"'; \
+	  echo '#define PKGLIBDIR "$(pkglibdir)"'; \
+	  echo '#define PKGINCLUDEDIR "$(pkgincludedir)"'; \
+	  echo '#define PKGDATADIR "$(pkgdatadir)"'; \
 	:) | sed '/""/d' >$@-t
 	mv $@-t $@
 BUILT_SOURCES += configmake.h
