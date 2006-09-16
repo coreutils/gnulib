@@ -1,12 +1,11 @@
-@node Library Copying
-@appendixsec GNU LESSER GENERAL PUBLIC LICENSE
-
-@cindex LGPL, Lesser General Public License
+@node GNU LGPL
+@appendixsec GNU Lesser General Public License
+@cindex LGPL, GNU Lesser General Public License
 @center Version 2.1, February 1999
 
 @display
 Copyright @copyright{} 1991, 1999 Free Software Foundation, Inc.
-51 Franklin St -- Fifth Floor, Boston, MA 02110-1301, USA
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 
 Everyone is permitted to copy and distribute verbatim copies
 of this license document, but changing it is not allowed.
@@ -475,6 +474,7 @@ and reuse of software generally.
 @end iftex
 @ifinfo
 @center NO WARRANTY
+
 @end ifinfo
 
 @item
@@ -506,6 +506,7 @@ DAMAGES.
 @end iftex
 @ifinfo
 @center END OF TERMS AND CONDITIONS
+
 @end ifinfo
 
 @page

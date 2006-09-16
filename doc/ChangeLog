@@ -1,3 +1,13 @@
+2006-09-16  Karl Berry  <karl@gnu.org>
+
+	* fdl.texi (ADDENDUM): switch to @heading from @appendixsubsec,
+	to avoid sectioning errors.
+	* lgpl.texi, gpl.texi (Copying): downcase @unnumbered title.
+	[ifinfo]: blank line after @center-ed titles.
+	* lgpl.texi (Library Copying): Rename main node to GNU LGPL.
+	Spell FSF address consistently with others.
+	(These changes approved by rms.)
+
 2006-08-28  Jim Meyering  <jim@meyering.net>
 
 	* visibility.texi: Actually read and correct the grammar of the
