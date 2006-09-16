@@ -8,6 +8,7 @@ m4/mkancesdirs.m4
 
 Depends-on:
 dirname
+fcntl
 stat-macros
 
 configure.ac:

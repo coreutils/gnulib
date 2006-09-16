@@ -1,3 +1,29 @@
+2006-09-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* dirchownmod.c: Don't include fcntl.h; no longer needed.
+	(dirchownmod): New arg FD.  All callers changed.
+	Use FD rather than opening the directory ourself, as opening is
+	now the caller's responsibility.
+	* dirchownmod.h: Likewise.
+	* mkancesdirs.c: Include <sys/types.h>, for portability to older
+	hosts that require <sys/types.h> before <sys/stat.h>.  Include
+	fcntl.h, savewd.h, and unistd.h, not dirname.h and stat-macros.h.
+	(test_dir): Remove.
+	(mkancesdirs): Return length of prefix of FILE that has already
+	been made, or -2 if there is a child doing the work.  Redo
+	algorithm so that it is O(N) rather than O(N**2).  Optimize away
+	".", and treat ".." specially since it might stray back into
+	already-created areas.  Use a subprocess if necessary.  New arg
+	WD; all users changed.  MAKE_DIR function should now return 1
+	if it creates a directory that is not readable.  Return -2 if
+	a child process is spun off.
+	* mkancesdirs.h: Include <stddef.h>, for ptrdiff_t.
+	Adjust signature to match code.
+	* mkdir-p.c: Include dirname.h, for IS_ABSOLUTE_FILE_NAME.
+	(make_dir_parents): Use a subprocess if necessary.  New arg WD;
+	all users changed.
+	* savewd.c, savewd.h: New files.
+
 2006-09-15  Jim Meyering  <jim@meyering.net>
 
 	* rename-dest-slash.c (has_trailing_slash): Use

@@ -22,94 +22,71 @@
 
 #include "mkancesdirs.h"
 
-#include <errno.h>
+#include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
+
+#include <errno.h>
+#include <unistd.h>
 
 #include "dirname.h"
-#include "stat-macros.h"
-
-/* Return 0 if FILE is a directory, otherwise -1 (setting errno).  */
-
-static int
-test_dir (char const *file)
-{
-  struct stat st;
-  if (stat (file, &st) == 0)
-    {
-      if (S_ISDIR (st.st_mode))
-	return 0;
-      errno = ENOTDIR;
-    }
-  return -1;
-}
+#include "savewd.h"
 
 /* Ensure that the ancestor directories of FILE exist, using an
    algorithm that should work even if two processes execute this
-   function in parallel.  Temporarily modify FILE by storing '\0'
-   bytes into it, to access the ancestor directories.
+   function in parallel.  Modify FILE as necessary to access the
+   ancestor directories, but restore FILE to an equivalent value
+   if successful.
+
+   WD points to the working directory, using the conventions of
+   savewd.
 
    Create any ancestor directories that don't already exist, by
-   invoking MAKE_DIR (ANCESTOR, MAKE_DIR_ARG).  This function should
-   return zero if successful, -1 (setting errno) otherwise.
+   invoking MAKE_DIR (COMPONENT, MAKE_DIR_ARG).  This function should
+   return 0 if successful and the resulting directory is readable, 1
+   if successful but the resulting directory might not be readable, -1
+   (setting errno) otherwise.  If COMPONENT is relative, it is
+   relative to the temporary working directory, which may differ from
+   *WD.
 
-   If successful, return 0 with FILE set back to its original value;
-   otherwise, return -1 (setting errno), storing a '\0' into *FILE so
-   that it names the ancestor directory that had problems.  */
+   Ordinarily MAKE_DIR is executed with the working directory changed
+   to reflect the already-made prefix, and mkancesdirs returns with
+   the working directory changed a prefix of FILE.  However, if the
+   initial working directory cannot be saved in a file descriptor,
+   MAKE_DIR is invoked in a subprocess and this function returns in
+   both the parent and child process, so the caller should not assume
+   any changed state survives other than the EXITMAX component of WD,
+   and the caller should take care that the parent does not attempt to
+   do the work that the child is doing.
 
-int
-mkancesdirs (char *file,
+   If successful and if this process can go ahead and create FILE,
+   return the length of the prefix of FILE that has already been made.
+   If successful so far but a child process is doing the actual work,
+   return -2.  If unsuccessful, return -1 and set errno.  */
+
+ptrdiff_t
+mkancesdirs (char *file, struct savewd *wd,
 	     int (*make_dir) (char const *, void *),
 	     void *make_dir_arg)
 {
-  /* This algorithm is O(N**2) but in typical practice the fancier
-     O(N) algorithms are slower.  */
-
   /* Address of the previous directory separator that follows an
      ordinary byte in a file name in the left-to-right scan, or NULL
      if no such separator precedes the current location P.  */
   char *sep = NULL;
 
-  char const *prefix_end = file + FILE_SYSTEM_PREFIX_LEN (file);
-  char *p;
+  /* Address of the leftmost file name component that has not yet
+     been processed.  */
+  char *component = file;
+
+  char *p = file + FILE_SYSTEM_PREFIX_LEN (file);
   char c;
+  bool made_dir = false;
 
-  /* Search backward through FILE using mkdir to create the
-     furthest-away ancestor that is needed.  This loop isn't needed
-     for correctness, but typically ancestors already exist so this
-     loop speeds things up a bit.
-
-     This loop runs a bit faster if errno initially contains an error
-     number corresponding to a failed access to FILE.  However, things
-     work correctly regardless of errno's initial value.  */
-
-  for (p = last_component (file); prefix_end < p; p--)
-    if (ISSLASH (*p) && ! ISSLASH (p[-1]))
-      {
-	*p = '\0';
-
-	if (errno == ENOENT && make_dir (file, make_dir_arg) == 0)
-	  {
-	    *p = '/';
-	    break;
-	  }
-
-	if (errno != ENOENT)
-	  {
-	    if (test_dir (file) == 0)
-	      {
-		*p = '/';
-		break;
-	      }
-	    if (errno != ENOENT)
-	      return -1;
-	  }
-
-	*p = '/';
-      }
-
-  /* Scan forward through FILE, creating directories along the way.
-     Try mkdir before stat, so that the procedure works even when two
-     or more processes are executing it in parallel.  */
+  /* Scan forward through FILE, creating and chdiring into directories
+     along the way.  Try MAKE_DIR before chdir, so that the procedure
+     works even when two or more processes are executing it in
+     parallel.  Isolate each file name component by having COMPONENT
+     point to its start and SEP point just after its end.  */
 
   while ((c = *p++))
     if (ISSLASH (*p))
@@ -119,12 +96,59 @@ mkancesdirs (char *file,
       }
     else if (ISSLASH (c) && *p && sep)
       {
-	*sep = '\0';
-	if (make_dir (file, make_dir_arg) != 0 && test_dir (file) != 0)
-	  return -1;
-	*sep = '/';
+	/* Don't bother to make or test for "." since it does not
+	   affect the algorithm.  */
+	if (! (sep - component == 1 && component[0] == '.'))
+	  {
+	    int make_dir_errno = 0;
+	    int savewd_chdir_options = 0;
+	    int chdir_result;
+
+	    /* Temporarily modify FILE to isolate this file name
+	       component.  */
+	    *sep = '\0';
+
+	    /* Invoke MAKE_DIR on this component, except don't bother
+	       with ".." since it must exist if its "parent" does.  */
+	    if (sep - component == 2
+		&& component[0] == '.' && component[1] == '.')
+	      made_dir = false;
+	    else
+	      switch (make_dir (component, make_dir_arg))
+		{
+		case -1:
+		  make_dir_errno = errno;
+		  break;
+
+		case 0:
+		  savewd_chdir_options |= SAVEWD_CHDIR_READABLE;
+		  /* Fall through.  */
+		case 1:
+		  made_dir = true;
+		  break;
+		}
+
+	    if (made_dir)
+	      savewd_chdir_options |= SAVEWD_CHDIR_NOFOLLOW;
+
+	    chdir_result =
+	      savewd_chdir (wd, component, savewd_chdir_options, NULL);
+
+	    /* Undo the temporary modification to FILE, unless there
+	       was a failure.  */
+	    if (chdir_result != -1)
+	      *sep = '/';
+
+	    if (chdir_result != 0)
+	      {
+		if (make_dir_errno != 0 && errno == ENOENT)
+		  errno = make_dir_errno;
+		return chdir_result;
+	      }
+	  }
+
+	component = p;
       }
 
-
-  return 0;
+  return component - file;
 }

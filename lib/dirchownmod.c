@@ -25,7 +25,6 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <fcntl.h>
 #include <unistd.h>
 
 #include "lchmod.h"
@@ -37,7 +36,10 @@
 # define fchmod(fd, mode) (-1)
 #endif
 
-/* Change the ownership and mode bits of the directory DIR.
+/* Change the ownership and mode bits of a directory.  If FD is
+   nonnegative, it should be a file descriptor associated with the
+   directory; close it before returning.  DIR is the name of the
+   directory.
 
    If MKDIR_MODE is not (mode_t) -1, mkdir (DIR, MKDIR_MODE) has just
    been executed successfully with umask zero, so DIR should be a
@@ -58,27 +60,12 @@
    calls may do the chown but not the chmod.  */
 
 int
-dirchownmod (char const *dir, mode_t mkdir_mode,
+dirchownmod (int fd, char const *dir, mode_t mkdir_mode,
 	     uid_t owner, gid_t group,
 	     mode_t mode, mode_t mode_bits)
 {
   struct stat st;
-  int result;
-
-  /* Manipulate DIR via a file descriptor if possible, to avoid some races.  */
-  int open_flags = O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NOFOLLOW | O_NONBLOCK;
-  int fd = open (dir, open_flags);
-
-  /* Fail if the directory is unreadable, the directory previously
-     existed or was created without read permission.  Otherwise, get
-     the file's status.  */
-  if (0 <= fd)
-    result = fstat (fd, &st);
-  else if (errno != EACCES
-	   || (mkdir_mode != (mode_t) -1 && mkdir_mode & S_IRUSR))
-    return fd;
-  else
-    result = stat (dir, &st);
+  int result = (fd < 0 ? stat (dir, &st) : fstat (fd, &st));
 
   if (result == 0)
     {

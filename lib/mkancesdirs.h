@@ -1,1 +1,4 @@
-int mkancesdirs (char *, int (*) (char const *, void *), void *);
+#include <stddef.h>
+struct savewd;
+ptrdiff_t mkancesdirs (char *, struct savewd *,
+		       int (*) (char const *, void *), void *);

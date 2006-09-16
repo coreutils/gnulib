@@ -30,12 +30,16 @@
 #define _(msgid) gettext (msgid)
 
 #include "dirchownmod.c"
+#include "dirname.h"
 #include "error.h"
 #include "quote.h"
 #include "mkancesdirs.h"
+#include "savewd.h"
 #include "stat-macros.h"
 
 /* Ensure that the directory DIR exists.
+
+   WD is the working directory, as in savewd.c.
 
    If MAKE_ANCESTOR is not null, create any ancestor directories that
    don't already exist, by invoking MAKE_ANCESTOR (ANCESTOR, OPTIONS).
@@ -46,7 +50,7 @@
    created.
 
    Create DIR as a new directory with using mkdir with permissions
-   MODE.  It is also OK if MAKE_ANCESTOR_DIR is not null and a
+   MODE.  It is also OK if MAKE_ANCESTOR is not null and a
    directory DIR already exists.
 
    Call ANNOUNCE (DIR, OPTIONS) just after successfully making DIR,
@@ -69,12 +73,15 @@
    This implementation assumes the current umask is zero.
 
    Return true if DIR exists as a directory with the proper ownership
-   and file mode bits when done.  Report a diagnostic and return false
-   on failure, storing '\0' into *DIR if an ancestor directory had
-   problems.  */
+   and file mode bits when done, or if a child process has been
+   dispatched to do the real work (though the child process may not
+   have finished yet -- it is the caller's responsibility to handle
+   this).  Report a diagnostic and return false on failure, storing
+   '\0' into *DIR if an ancestor directory had problems.  */
 
 bool
 make_dir_parents (char *dir,
+		  struct savewd *wd,
 		  int (*make_ancestor) (char const *, void *),
 		  void *options,
 		  mode_t mode,
@@ -84,51 +91,101 @@ make_dir_parents (char *dir,
 		  gid_t group,
 		  bool preserve_existing)
 {
-  bool made_dir = (mkdir (dir, mode) == 0);
+  int mkdir_errno = (IS_ABSOLUTE_FILE_NAME (dir) ? 0 : savewd_errno (wd));
 
-  if (!made_dir && make_ancestor && errno == ENOENT)
+  if (mkdir_errno == 0)
     {
-      if (mkancesdirs (dir, make_ancestor, options) == 0)
-	made_dir = (mkdir (dir, mode) == 0);
-      else
+      ptrdiff_t prefix_len = 0;
+      int savewd_chdir_options = (HAVE_FCHMOD ? SAVEWD_CHDIR_SKIP_READABLE : 0);
+
+      if (make_ancestor)
 	{
-	  /* mkancestdirs updated DIR for a better-looking
-	     diagnostic, so don't try to stat DIR below.  */
-	  make_ancestor = NULL;
+	  prefix_len = mkancesdirs (dir, wd, make_ancestor, options);
+	  if (prefix_len < 0)
+	    {
+	      if (prefix_len < -1)
+		return true;
+	      mkdir_errno = errno;
+	    }
+	}
+
+      if (0 <= prefix_len)
+	{
+	  if (mkdir (dir + prefix_len, mode) == 0)
+	    {
+	      announce (dir, options);
+	      preserve_existing =
+		(owner == (uid_t) -1 && group == (gid_t) -1
+		 && ! ((mode_bits & (S_ISUID | S_ISGID)) | (mode & S_ISVTX)));
+	      savewd_chdir_options |=
+		(SAVEWD_CHDIR_NOFOLLOW
+		 | (mode & S_IRUSR ? SAVEWD_CHDIR_READABLE : 0));
+	    }
+	  else
+	    mkdir_errno = errno;
+
+	  if (preserve_existing)
+	    {
+	      struct stat st;
+	      if (mkdir_errno == 0
+		  || (mkdir_errno != ENOENT && make_ancestor
+		      && stat (dir + prefix_len, &st) == 0
+		      && S_ISDIR (st.st_mode)))
+		return true;
+	    }
+	  else
+	    {
+	      int open_result[2];
+	      int chdir_result =
+		savewd_chdir (wd, dir + prefix_len,
+			      savewd_chdir_options, open_result);
+	      if (chdir_result < -1)
+		return true;
+	      else
+		{
+		  bool chdir_ok = (chdir_result == 0);
+		  int chdir_errno = errno;
+		  int fd = open_result[0];
+		  bool chdir_failed_unexpectedly =
+		    (mkdir_errno == 0
+		     && ((! chdir_ok && (mode & S_IXUSR))
+			 || (fd < 0 && (mode & S_IRUSR))));
+
+		  if (chdir_failed_unexpectedly)
+		    {
+		      /* No need to save errno here; it's irrelevant.  */
+		      if (0 <= fd)
+			close (fd);
+		    }
+		  else
+		    {
+		      mode_t mkdir_mode = (mkdir_errno == 0 ? mode : -1);
+		      char const *subdir = (chdir_ok ? "." : dir + prefix_len);
+		      if (dirchownmod (fd, subdir, mkdir_mode, owner, group,
+				       mode, mode_bits)
+			  == 0)
+			return true;
+		    }
+
+		  if (mkdir_errno == 0
+		      || (mkdir_errno != ENOENT && make_ancestor
+			  && errno != ENOTDIR))
+		    {
+		      error (0,
+			     (! chdir_failed_unexpectedly ? errno
+			      : ! chdir_ok && (mode & S_IXUSR) ? chdir_errno
+			      : open_result[1]),
+			     _(owner == (uid_t) -1 && group == (gid_t) -1
+			       ? "cannot change permissions of %s"
+			       : "cannot change owner and permissions of %s"),
+			     quote (dir));
+		      return false;
+		    }
+		}
+	    }
 	}
     }
 
-  if (made_dir)
-    {
-      announce (dir, options);
-      preserve_existing =
-	(owner == (uid_t) -1 && group == (gid_t) -1
-	 && ! ((mode_bits & (S_ISUID | S_ISGID)) | (mode & S_ISVTX)));
-    }
-  else
-    {
-      int mkdir_errno = errno;
-      struct stat st;
-      if (! (make_ancestor && mkdir_errno != ENOENT
-	     && stat (dir, &st) == 0 && S_ISDIR (st.st_mode)))
-	{
-	  error (0, mkdir_errno, _("cannot create directory %s"), quote (dir));
-	  return false;
-	}
-    }
-
-  if (! preserve_existing
-      && (dirchownmod (dir, (made_dir ? mode : (mode_t) -1),
-		       owner, group, mode, mode_bits)
-	  != 0))
-    {
-      error (0, errno,
-	     _(owner == (uid_t) -1 && group == (gid_t) -1
-	       ? "cannot change permissions of %s"
-	       : "cannot change owner and permissions of %s"),
-	     quote (dir));
-      return false;
-    }
-
-  return true;
+  error (0, mkdir_errno, _("cannot create directory %s"), quote (dir));
+  return false;
 }

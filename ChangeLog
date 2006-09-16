@@ -1,5 +1,9 @@
 2006-09-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* modules/mkancesdirs (Depends-on): Add fcntl.
+	* modules/savewd: New file.
+	* MODULES.html.sh (File system functions): Add savewd.
+
 	* modules/configmake (Makefile.am): Add support for the
 	Automake-supplied PKGLIBDIR, PKGINCLUDEDIR, PKGDATADIR.
 
