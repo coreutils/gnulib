@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-18 12:54:13 $'
+cvsdatestamp='$Date: 2006-09-18 12:55:35 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -923,49 +923,50 @@ func_acceptable ()
 # - modules         list of specified modules
 # - inctests        true if tests should be included, blank otherwise
 # - avoidlist       list of modules to avoid
+# - tmp             pathname of a temporary directory
 # Output:
 # - modules         list of modules, including dependencies
 func_modules_transitive_closure ()
 {
-  while true; do
-    xmodules=
-    for module in $modules; do
+  # In order to process every module only once (for speed), process an "input
+  # list" of modules, producing an "output list" of modules. During each round,
+  # more modules can be queued in the input list. Once a module on the input
+  # list has been processed, it is added to the "handled list", so we can avoid
+  # to process it again.
+  handledmodules=
+  inmodules="$modules"
+  outmodules=
+  while test -n "$inmodules"; do
+    inmodules_this_round="$inmodules"
+    inmodules=                    # Accumulator, queue for next round
+    for module in $inmodules_this_round; do
       func_verify_module
       if test -n "$module"; then
-        # Duplicate dependencies are harmless, but Jim wants a warning.
-        duplicated_deps=`func_get_dependencies $module | LC_ALL=C sort | LC_ALL=C uniq -d`
-        if test -n "$duplicated_deps"; then
-          echo "warning: module $module has duplicated dependencies: "`echo $duplicated_deps` 1>&2
-        fi
         if func_acceptable $module; then
-          xmodules="$xmodules $module"
-          for depmodule in `func_get_dependencies $module`; do
-            if func_acceptable $depmodule; then
-              xmodules="$xmodules $depmodule"
-            fi
-          done
+          outmodules="$outmodules $module"
+          deps=`func_get_dependencies $module`
+          # Duplicate dependencies are harmless, but Jim wants a warning.
+          duplicated_deps=`echo "$deps" | LC_ALL=C sort | LC_ALL=C uniq -d`
+          if test -n "$duplicated_deps"; then
+            echo "warning: module $module has duplicated dependencies: "`echo $duplicated_deps` 1>&2
+          fi
+          inmodules="$inmodules $deps"
           if test -n "$inctests"; then
             testsmodule=`func_get_tests_module $module`
             if test -n "$testsmodule"; then
-              if func_acceptable $testsmodule; then
-                xmodules="$xmodules $testsmodule"
-                for depmodule in `func_get_dependencies $testsmodule`; do
-                  if func_acceptable $depmodule; then
-                    xmodules="$xmodules $depmodule"
-                  fi
-                done
-              fi
+              inmodules="$inmodules $testsmodule"
             fi
           fi
         fi
       fi
     done
-    xmodules=`for m in $xmodules; do echo $m; done | LC_ALL=C sort | LC_ALL=C uniq`
-    if test "$xmodules" = "$modules"; then
-      break
-    fi
-    modules="$xmodules"
+    handledmodules=`for m in $handledmodules $inmodules_this_round; do echo $m; done | LC_ALL=C sort -u`
+    # Remove $handledmodules from $inmodules.
+    for m in $inmodules; do echo $m; done | LC_ALL=C sort -u > "$tmp"/queued-modules
+    inmodules=`echo "$handledmodules" | LC_ALL=C join -v 2 - "$tmp"/queued-modules`
   done
+  modules=`for m in $outmodules; do echo $m; done | LC_ALL=C sort -u`
+  rm -f "$tmp"/queued-modules
 }
 
 # func_modules_add_dummy
