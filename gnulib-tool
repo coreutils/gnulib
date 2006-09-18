@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-18 12:55:35 $'
+cvsdatestamp='$Date: 2006-09-18 13:03:14 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -1546,28 +1546,30 @@ func_import ()
 
   # Copy files or make symbolic links. Remove obsolete files.
   delimiter='	'
-  for f in $old_files; do
-    case "$f" in
-      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
-      doc/*) g=`echo "$f" | sed -e "s,^doc/,$cached_docbase/,"` ;;
-      lib/*) g=`echo "$f" | sed -e "s,^lib/,$cached_sourcebase/,"` ;;
-      m4/*) g=`echo "$f" | sed -e "s,^m4/,$cached_m4base/,"` ;;
-      tests/*) g=`echo "$f" | sed -e "s,^tests/,$cached_testsbase/,"` ;;
-      *) g="$f" ;;
-    esac
-    echo "$g""$delimiter""$f"
-  done | LC_ALL=C sort > "$tmp"/old-files
-  for f in $new_files; do
-    case "$f" in
-      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
-      doc/*) g=`echo "$f" | sed -e "s,^doc/,$docbase/,"` ;;
-      lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
-      m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
-      tests/*) g=`echo "$f" | sed -e "s,^tests/,$testsbase/,"` ;;
-      *) g="$f" ;;
-    esac
-    echo "$g""$delimiter""$f"
-  done | LC_ALL=C sort > "$tmp"/new-files
+  sed_rewrite_old_files="\
+    s,^build-aux/,$auxdir/,
+    s,^doc/,$cached_docbase/,
+    s,^lib/,$cached_sourcebase/,
+    s,^m4/,$cached_m4base/,
+    s,^tests/,$cached_testsbase/,"
+  sed_rewrite_new_files="\
+    s,^build-aux/,$auxdir/,
+    s,^doc/,$docbase/,
+    s,^lib/,$sourcebase/,
+    s,^m4/,$m4base/,
+    s,^tests/,$testsbase/,"
+  # Construct a table with 2 columns: rewritten-file-name original-file-name,
+  # representing the files according to the last gnulib-tool invocation.
+  for f in $old_files; do echo $f; done \
+    | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_old_files" \
+    | LC_ALL=C sort \
+    > "$tmp"/old-files
+  # Construct a table with 2 columns: rewritten-file-name original-file-name,
+  # representing the files after this gnulib-tool invocation.
+  for f in $new_files; do echo $f; done \
+    | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" \
+    | LC_ALL=C sort \
+    > "$tmp"/new-files
   # First the files that are in old-files, but not in new-files:
   sed_take_first_column='s,'"$delimiter"'.*,,'
   for g in `LC_ALL=C join -t"$delimiter" -v1 "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_first_column"`; do
@@ -1582,7 +1584,10 @@ func_import ()
     fi
   done
   # func_add_or_update handles a file that ought to be present afterwards.
-  # Uses parameters f, g, already_present.
+  # Uses parameters
+  # - f             the original file name
+  # - g             the rewritten file name
+  # - already_present  nonempty if the file already exists, empty otherwise
   func_add_or_update ()
   {
     func_dest_tmpfilename "$g"
@@ -1644,30 +1649,20 @@ func_import ()
   # Then the files that are in new-files, but not in old-files:
   sed_take_last_column='s,^.*'"$delimiter"',,'
   already_present=
-  for f in `LC_ALL=C join -t"$delimiter" -v2 "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_last_column"`; do
-    case "$f" in
-      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
-      doc/*) g=`echo "$f" | sed -e "s,^doc/,$docbase/,"` ;;
-      lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
-      m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
-      tests/*) g=`echo "$f" | sed -e "s,^tests/,$testsbase/,"` ;;
-      *) g="$f" ;;
-    esac
+  LC_ALL=C join -t"$delimiter" -v2 "$tmp"/old-files "$tmp"/new-files \
+    | sed -e "$sed_take_last_column" \
+    | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/added-files
+  while read g f; do
     func_add_or_update
-  done
+  done < "$tmp"/added-files
   # Then the files that are in new-files and in old-files:
   already_present=true
-  for f in `LC_ALL=C join -t"$delimiter" "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_last_column"`; do
-    case "$f" in
-      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
-      doc/*) g=`echo "$f" | sed -e "s,^doc/,$docbase/,"` ;;
-      lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
-      m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
-      tests/*) g=`echo "$f" | sed -e "s,^tests/,$testsbase/,"` ;;
-      *) g="$f" ;;
-    esac
+  LC_ALL=C join -t"$delimiter" "$tmp"/old-files "$tmp"/new-files \
+    | sed -e "$sed_take_last_column" \
+    | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/kept-files
+  while read g f; do
     func_add_or_update
-  done
+  done < "$tmp"/kept-files
 
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
   actioncmd="gnulib-tool --import"
@@ -2016,6 +2011,7 @@ func_create_testdir ()
   # Subdirectory names.
   sourcebase=gllib
   m4base=glm4
+  docbase=gldoc
   testsbase=gltests
 
   # Determine final module list.
@@ -2035,6 +2031,7 @@ func_create_testdir ()
   for d in `echo "$files" | sed -n -e 's,^\(.*\)/[^/]*,\1,p'`; do
     case "$d" in
       build-aux) mkdir -p "$testdir/$auxdir" ;;
+      doc)       mkdir -p "$testdir/$docbase" ;;
       lib)       mkdir -p "$testdir/$sourcebase" ;;
       m4)        mkdir -p "$testdir/$m4base" ;;
       tests)     mkdir -p "$testdir/$testsbase" ;;
@@ -2043,15 +2040,19 @@ func_create_testdir ()
   done
 
   # Copy files or make symbolic links.
-  for f in $files; do
+  delimiter='	'
+  sed_rewrite_files="\
+    s,^build-aux/,$auxdir/,
+    s,^doc/,$docbase/,
+    s,^lib/,$sourcebase/,
+    s,^m4/,$m4base/,
+    s,^tests/,$testsbase/,"
+  for f in $files; do echo $f; done \
+    | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_files" \
+    | LC_ALL=C sort \
+    > "$tmp"/files
+  while read g f; do
     func_lookup_file "$f"
-    case "$f" in
-      build-aux/*) g=`echo "$f" | sed -e "s,^build-aux/,$auxdir/,"` ;;
-      lib/*) g=`echo "$f" | sed -e "s,^lib/,$sourcebase/,"` ;;
-      m4/*) g=`echo "$f" | sed -e "s,^m4/,$m4base/,"` ;;
-      tests/*) g=`echo "$f" | sed -e "s,^tests/,$testsbase/,"` ;;
-      *) g="$f" ;;
-    esac
     if test -n "$lookedup_tmp"; then
       cp -p "$lookedup_file" "$testdir/$g"
     else
@@ -2062,7 +2063,7 @@ func_create_testdir ()
         ln -s "$lookedup_file" "$testdir/$g"
       fi
     fi
-  done
+  done < "$tmp"/files
 
   # Create $sourcebase/Makefile.am.
   mkdir -p "$testdir/$sourcebase"

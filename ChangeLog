@@ -1,3 +1,13 @@
+2006-09-17  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_create_testdir): Rewrite all files at once.
+
+2006-09-15  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Speed up by a factor of 1.13.
+	* gnulib-tool (func_import): Rewrite all old_files at once; likewise
+	for new_files, and the input to func_add_or_update.
+
 2006-09-15  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Speed up by a factor of 1.61.
