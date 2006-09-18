@@ -31,6 +31,9 @@
 # define relocate(pathname) (pathname)
 #endif
 
+/* Get PKGDATADIR.  */
+#include "configmake.h"
+
 #include "javaexec.h"
 #include "pipe.h"
 #include "wait-process.h"

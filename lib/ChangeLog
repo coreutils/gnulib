@@ -1,3 +1,7 @@
+2006-09-18  Bruno Haible  <bruno@clisp.org>
+
+	* javaversion.c: Include configmake.h.
+
 2006-09-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* getaddrinfo.c (getaddrinfo) [defined HAVE_IPV6]: Fix typo
