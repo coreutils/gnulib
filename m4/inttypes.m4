@@ -1,4 +1,4 @@
-# inttypes.m4 serial 4
+# inttypes.m4 serial 5
 dnl Copyright (C) 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,8 +23,8 @@ AC_DEFUN([gl_INTTYPES_H],
   dnl   - that imaxabs, imaxdiv, strtoimax, strtoumax are declared,
   dnl   - some additional tests.
   gl_cv_header_working_inttypes_h=no
-  if test $gl_cv_header_working_stdint_h = yes \
-     && test $gl_cv_header_inttypes_h = yes \
+  if test "$gl_cv_header_working_stdint_h" = yes \
+     && test "$gl_cv_header_inttypes_h" = yes \
      && test "$ac_cv_have_decl_imaxabs" = yes \
      && test "$ac_cv_have_decl_imaxdiv" = yes \
      && test "$ac_cv_have_decl_strtoimax" = yes \
