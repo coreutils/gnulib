@@ -1,3 +1,9 @@
+2006-09-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* getaddrinfo.c (getaddrinfo) [defined HAVE_IPV6]: Fix typo
+	that prevented coreutils 6.1 from building.  Problem reported
+	by Petter Reinholdtsen.
+
 2006-09-18  Jim Meyering  <jim@meyering.net>
 
 	* savewd.c (savewd_restore): Don't shadow: s/status/child_status/.

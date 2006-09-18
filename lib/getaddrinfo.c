@@ -167,7 +167,7 @@ getaddrinfo (const char *restrict nodename,
 	return EAI_NONAME;
 
 #ifdef HAVE_IPV6
-      nodename = (hint->ai_family == AF_INET6) ? "::" : "0.0.0.0";
+      nodename = (hints->ai_family == AF_INET6) ? "::" : "0.0.0.0";
 #else
       nodename = "0.0.0.0";
 #endif
