@@ -1,3 +1,10 @@
+2006-09-15  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Speed up by a factor of 1.12.
+	* gnulib-tool (nl): New variable.
+	(func_import): Rewrite include directive extraction to only read each
+	directive once.
+
 2006-09-17  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_create_testdir): Rewrite all files at once.
