@@ -1,3 +1,8 @@
+2006-09-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* gnulib-tool (avoidlist): Fix typo that broke options like
+	--avoid=lock that are used by coreutils bootstrap.
+
 2006-09-18  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import, func_create_testdir): Use exec tricks to
