@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-18 13:04:17 $'
+cvsdatestamp='$Date: 2006-09-18 13:07:37 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -209,6 +209,22 @@ func_tmpdir ()
     { (exit 1); exit 1; }
   }
 }
+
+# func_append var value
+# appends the given value to the shell variable var.
+if ( foo=bar; foo+=baz && test "$foo" = barbaz ) >/dev/null 2>&1; then
+  # Use bash's += operator. It reduces complexity of appending repeatedly to
+  # a single variable from O(n^2) to O(n).
+  func_append ()
+  {
+    eval "$1+=\"\$2\""
+  }
+else
+  func_append ()
+  {
+    eval "$1=\"\$$1\$2\""
+  }
+fi
 
 # func_fatal_error message
 # outputs to stderr a fatal error message, and terminates the program.
@@ -505,10 +521,11 @@ func_relconcat ()
         if test $# = 0; then
           func_fatal_error "missing argument for --avoid"
         fi
-        avoidlist="$avoidlist $1"
+        func_append avoidlist " $1"
         shift ;;
       --avoid=* )
-        avoidlist="$avoidlist "`echo "X$1" | sed -e 's/^X--avoid=//'`
+        arg=`echo "X$1" | sed -e 's/^X--avoid=//'`
+        func_append " $arg"
         shift ;;
       --lgpl )
         lgpl=true
@@ -945,18 +962,18 @@ func_modules_transitive_closure ()
       func_verify_module
       if test -n "$module"; then
         if func_acceptable $module; then
-          outmodules="$outmodules $module"
+          func_append outmodules " $module"
           deps=`func_get_dependencies $module`
           # Duplicate dependencies are harmless, but Jim wants a warning.
           duplicated_deps=`echo "$deps" | LC_ALL=C sort | LC_ALL=C uniq -d`
           if test -n "$duplicated_deps"; then
             echo "warning: module $module has duplicated dependencies: "`echo $duplicated_deps` 1>&2
           fi
-          inmodules="$inmodules $deps"
+          func_append inmodules " $deps"
           if test -n "$inctests"; then
             testsmodule=`func_get_tests_module $module`
             if test -n "$testsmodule"; then
-              inmodules="$inmodules $testsmodule"
+              func_append inmodules " $testsmodule"
             fi
           fi
         fi
@@ -1002,7 +1019,7 @@ ba
   done
   # Add the dummy module, to make sure the library will be non-empty.
   if test -z "$have_lib_SOURCES"; then
-    modules="$modules dummy"
+    func_append modules " dummy"
   fi
 }
 
@@ -1018,7 +1035,8 @@ func_modules_to_filelist ()
   for module in $modules; do
     func_verify_module
     if test -n "$module"; then
-      files="$files "`func_get_filelist $module`
+      fs=`func_get_filelist $module`
+      func_append files " $fs"
     fi
   done
   files=`for f in $files; do echo $f; done | LC_ALL=C sort -u`
@@ -1479,7 +1497,7 @@ func_import ()
   new_files="$files m4/gnulib-tool.m4"
   old_files="$cached_files"
   if test -f "$destdir"/$m4base/gnulib-tool.m4; then
-    old_files="$old_files m4/gnulib-tool.m4"
+    func_append old_files " m4/gnulib-tool.m4"
   fi
 
   # Create directories.
@@ -1668,31 +1686,31 @@ func_import ()
 
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
   actioncmd="gnulib-tool --import"
-  actioncmd="$actioncmd --dir=$destdir"
+  func_append actioncmd " --dir=$destdir"
   if test -n "$local_gnulib_dir"; then
-    actioncmd="$actioncmd --local-dir=$local_gnulib_dir"
+    func_append actioncmd " --local-dir=$local_gnulib_dir"
   fi
-  actioncmd="$actioncmd --lib=$libname"
-  actioncmd="$actioncmd --source-base=$sourcebase"
-  actioncmd="$actioncmd --m4-base=$m4base"
-  actioncmd="$actioncmd --doc-base=$docbase"
-  actioncmd="$actioncmd --aux-dir=$auxdir"
+  func_append actioncmd " --lib=$libname"
+  func_append actioncmd " --source-base=$sourcebase"
+  func_append actioncmd " --m4-base=$m4base"
+  func_append actioncmd " --doc-base=$docbase"
+  func_append actioncmd " --aux-dir=$auxdir"
   for module in $avoidlist; do
-    actioncmd="$actioncmd --avoid=$module"
+    func_append actioncmd " --avoid=$module"
   done
   if test -n "$lgpl"; then
-    actioncmd="$actioncmd --lgpl"
+    func_append actioncmd " --lgpl"
   fi
   if test -n "$makefile_name"; then
-    actioncmd="$actioncmd --makefile_name=$makefile_name"
+    func_append actioncmd " --makefile_name=$makefile_name"
   fi
   if test "$libtool" = true; then
-    actioncmd="$actioncmd --libtool"
+    func_append actioncmd " --libtool"
   else
-    actioncmd="$actioncmd --no-libtool"
+    func_append actioncmd " --no-libtool"
   fi
-  actioncmd="$actioncmd --macro-prefix=$macro_prefix"
-  actioncmd="$actioncmd `echo $specified_modules`"
+  func_append actioncmd " --macro-prefix=$macro_prefix"
+  func_append actioncmd " `echo $specified_modules`"
 
   # Default the makefile name to Makefile.am.
   if test -n "$makefile_name"; then
@@ -2091,7 +2109,7 @@ func_create_testdir ()
     mkdir -p "$testdir/po"
     (echo "## Process this file with automake to produce Makefile.in."
     ) > "$testdir/po/Makefile.am"
-    subdirs="$subdirs po"
+    func_append subdirs " po"
   fi
 
   if test -n "$inctests"; then
@@ -2186,7 +2204,7 @@ func_create_testdir ()
      echo
      echo "AC_OUTPUT([Makefile])"
     ) > "$testdir/$testsbase/configure.ac"
-    subdirs="$subdirs $testsbase"
+    func_append subdirs " $testsbase"
     subdirs_with_configure_ac="$subdirs_with_configure_ac $testsbase"
   fi
 
@@ -2287,7 +2305,7 @@ func_create_testdir ()
      # configure.ac which creates the subdir's Makefile.am, not this one.
      case " $subdirs_with_configure_ac " in
        *" $d "*) ;;
-       *) makefiles="$makefiles $d/Makefile" ;;
+       *) func_append makefiles " $d/Makefile" ;;
      esac
    done
    echo "AC_OUTPUT([$makefiles])"
@@ -2326,13 +2344,13 @@ func_create_megatestdir ()
   # First, all modules one by one.
   for onemodule in $allmodules; do
     func_create_testdir "$megatestdir/$onemodule" $onemodule
-    megasubdirs="${megasubdirs}$onemodule "
+    func_append megasubdirs "$onemodule "
   done
   # Then, all modules all together.
   # Except fnmatch-posix, which conflicts with fnmatch-gnu. FIXME.
   allmodules=`for m in $allmodules; do if test $m != fnmatch-posix; then echo $m; fi; done`
   func_create_testdir "$megatestdir/ALL" "$allmodules"
-  megasubdirs="${megasubdirs}ALL"
+  func_append megasubdirs "ALL"
 
   # Create Makefile.am.
   (echo "## Process this file with automake to produce Makefile.in."
@@ -2449,7 +2467,7 @@ case $mode in
               /*) ;;
               *)
                 if test -f "$destdir/$arg"/gnulib-cache.m4; then
-                  m4dirs="$m4dirs $arg"
+                  func_append m4dirs " $arg"
                   m4dirs_count=`expr $m4dirs_count + 1`
                 fi
                 ;;

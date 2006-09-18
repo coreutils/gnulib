@@ -1,3 +1,11 @@
+2006-09-17  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_append): New function, stolen from libtool.m4.
+	(func_modules_transitive_closure, func_modules_add_dummy,
+	func_modules_to_filelist, func_import, func_create_testdir,
+	func_create_megatestdir, ...): Use it wherever possible.
+	Suggested by Ralf Wildenhues.
+
 2006-09-15  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Speed up by a factor of 1.12.
