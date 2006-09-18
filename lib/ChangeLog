@@ -1,3 +1,7 @@
+2006-09-18  Jim Meyering  <jim@meyering.net>
+
+	* savewd.c (savewd_restore): Don't shadow: s/status/child_status/.
+
 2006-09-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* dirchownmod.c: Don't include fcntl.h; no longer needed.

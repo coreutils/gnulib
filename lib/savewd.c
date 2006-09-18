@@ -201,13 +201,13 @@ savewd_restore (struct savewd *wd, int status)
 	  _exit (status);
 	if (0 < child)
 	  {
-	    int status;
-	    while (waitpid (child, &status, 0) < 0)
+	    int child_status;
+	    while (waitpid (child, &child_status, 0) < 0)
 	      assert (errno == EINTR);
 	    wd->val.child = -1;
-	    if (! WIFEXITED (status))
-	      raise (WTERMSIG (status));
-	    return WEXITSTATUS (status);
+	    if (! WIFEXITED (child_status))
+	      raise (WTERMSIG (child_status));
+	    return WEXITSTATUS (child_status);
 	  }
       }
       break;
