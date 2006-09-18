@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-13 15:00:47 $'
+cvsdatestamp='$Date: 2006-09-18 12:54:13 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -625,7 +625,7 @@ func_relconcat ()
       }'
     eval `sed -n -e "$my_sed_traces" < "$configure_ac"`
     if test -n "$prereqs"; then
-      autoconf_minversion=`for version in $prereqs; do echo $version; done | $SORT -g | uniq | tail -1`
+      autoconf_minversion=`for version in $prereqs; do echo $version; done | $SORT -g -u | tail -1`
     fi
   fi
   if test -z "$autoconf_minversion"; then
@@ -737,8 +737,7 @@ func_all_modules ()
   } \
       | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^COPYING$/d' -e '/^README$/d' -e '/^TEMPLATE$/d' -e '/^TEMPLATE-TESTS$/d' -e '/~$/d' \
       | sed -e '/-tests$/d' \
-      | LC_ALL=C sort \
-      | LC_ALL=C uniq
+      | LC_ALL=C sort -u
 }
 
 # func_verify_module
@@ -1019,7 +1018,7 @@ func_modules_to_filelist ()
       files="$files "`func_get_filelist $module`
     fi
   done
-  files=`for f in $files; do echo $f; done | LC_ALL=C sort | LC_ALL=C uniq`
+  files=`for f in $files; do echo $f; done | LC_ALL=C sort -u`
 }
 
 # func_emit_lib_Makefile_am
@@ -1423,7 +1422,7 @@ func_import ()
   fi
 
   # Canonicalize the list of specified modules.
-  specified_modules=`for m in $specified_modules; do echo $m; done | LC_ALL=C sort | LC_ALL=C uniq`
+  specified_modules=`for m in $specified_modules; do echo $m; done | LC_ALL=C sort -u`
 
   # Determine final module list.
   modules="$specified_modules"
@@ -2011,7 +2010,7 @@ func_create_testdir ()
 {
   testdir="$1"
   modules="$2"
-  modules=`for m in $modules; do echo $m; done | LC_ALL=C sort | LC_ALL=C uniq`
+  modules=`for m in $modules; do echo $m; done | LC_ALL=C sort -u`
 
   # Subdirectory names.
   sourcebase=gllib
@@ -2467,7 +2466,7 @@ case $mode in
           sedexpr1='s,^m4_include(\[\(.*\)])$,\1,p'
           sedexpr2='s,^[^/]*$,.,'
           sedexpr3='s,/[^/]*$,,'
-          m4dirs=`sed -n -e "$sedexpr1" aclocal.m4 | sed -e "$sedexpr2" -e "$sedexpr3" | LC_ALL=C sort | LC_ALL=C uniq`
+          m4dirs=`sed -n -e "$sedexpr1" aclocal.m4 | sed -e "$sedexpr2" -e "$sedexpr3" | LC_ALL=C sort -u`
           m4dirs_count=`echo "$m4dirs" | wc -l`
         fi
       fi

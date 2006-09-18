@@ -1,3 +1,8 @@
+2006-09-15  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (func_all_modules, func_modules_to_filelist, func_import,
+	func_create_testdir, ...): Change 'sort | uniq' to 'sort -u'.
+
 2006-09-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/mkancesdirs (Depends-on): Add fcntl.
