@@ -1337,7 +1337,11 @@ func_module ()
     element='<A HREF="#module='$1'">'$1'</A>'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=\"20%\">$element"
 
-    element=`gnulib-tool --extract-description $1 | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" | sed -e 's,^, ,' | sed -e 's,\([^a-zA-Z]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A>(),g' | sed -e 's,^ ,,'`
+    element=`gnulib-tool --extract-description $1 \
+             | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" \
+             | sed -e 's,^, ,' \
+             | sed -e 's,\([^a-zA-Z]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A>(),g' \
+             | sed -e 's,^ ,,'`
     func_echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=\"80%\">$element"
 
     func_end TR
@@ -1349,23 +1353,43 @@ func_module ()
     element='<A NAME="module='$1'"></A><A HREF="modules/'$1'">'$1'</A>'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
-    element=`gnulib-tool --extract-include-directive $1 | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" | sed -e 's,^#include "\(.*\)"$,#include "<A HREF="lib/\1">\1</A>",' -e 's,^#include &lt;'"${posix_headers}"'\.h&gt;$,#include \&lt;<A HREF="'"$POSIX2001_URL"'xbd/\1.h.html">\1.h</A>\&gt;,' | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
+    element=`gnulib-tool --extract-include-directive $1 \
+             | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" \
+             | sed -e 's,^#include "\(.*\)"$,#include "<A HREF="lib/\1">\1</A>",' \
+                    -e 's,^#include &lt;'"${posix_headers}"'\.h&gt;$,#include \&lt;<A HREF="'"$POSIX2001_URL"'xbd/\1.h.html">\1.h</A>\&gt;,' \
+             | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
     sed_choose_unconditional_nonstandard_include='s,^#include "\(.*\)"$,\1,p'
-    includefile=`gnulib-tool --extract-include-directive $1 | sed -n -e "$sed_choose_unconditional_nonstandard_include" | sed -e "$sed_escape_dot" | tr -d "$trnl"`
+    includefile=`gnulib-tool --extract-include-directive $1 \
+                 | sed -n -e "$sed_choose_unconditional_nonstandard_include" \
+                 | sed -e "$sed_escape_dot" | tr -d "$trnl"`
     sed_choose_lib_files='s,^lib/\(.*\)$,\1,p'
-    element=`gnulib-tool --extract-filelist $1 | sed -e '/^$/d' | sed -n -e "$sed_choose_lib_files" | sed -e '/^'"${includefile}"'$/d' | sed -e 's,^\(.*\)$,<A HREF="lib/\1">\1</A>,' | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
+    element=`gnulib-tool --extract-filelist $1 \
+             | sed -e '/^$/d' \
+             | sed -n -e "$sed_choose_lib_files" \
+             | sed -e '/^'"${includefile}"'$/d' \
+             | sed -e 's,^\(.*\)$,<A HREF="lib/\1">\1</A>,' \
+             | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
     sed_choose_m4_files='s,^m4/\(.*\)$,\1,p'
-    element=`(gnulib-tool --extract-filelist $1 | sed -e "$sed_remove_trailing_empty_line" | sed -n -e "$sed_choose_m4_files" | sed -e '/^onceonly/d' | sed -e 's,^\(.*\)$,<A HREF="m4/\1">\1</A>,'; gnulib-tool --extract-autoconf-snippet $1 | sed -e "$sed_remove_trailing_empty_line") | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
+    element=`(gnulib-tool --extract-filelist $1 \
+              | sed -e "$sed_remove_trailing_empty_line" \
+              | sed -n -e "$sed_choose_m4_files" \
+              | sed -e '/^onceonly/d' \
+              | sed -e 's,^\(.*\)$,<A HREF="m4/\1">\1</A>,'; \
+              gnulib-tool --extract-autoconf-snippet $1 \
+              | sed -e "$sed_remove_trailing_empty_line") \
+              | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
-    element=`gnulib-tool --extract-dependencies $1 | sed -e "$sed_remove_trailing_empty_line" | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
+    element=`gnulib-tool --extract-dependencies $1 \
+             | sed -e "$sed_remove_trailing_empty_line" \
+             | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
@@ -1376,7 +1400,13 @@ func_module ()
     files=`gnulib-tool --extract-filelist $1`
     sed_removal_prefix='s,^,/^,'
     sed_removal_suffix='s,$,\$/d,'
-    sed_remove_files=`echo '{'; for file in $files; do echo $file | sed -e "$sed_escape_dot" -e "$sed_escape_slash" | sed -e "$sed_removal_prefix" -e "$sed_removal_suffix"; done; echo '}'`
+    sed_remove_files=`echo '{'; \
+                      for file in $files; do \
+                        echo $file \
+                        | sed -e "$sed_escape_dot" -e "$sed_escape_slash" \
+                        | sed -e "$sed_removal_prefix" -e "$sed_removal_suffix"; \
+                      done; \
+                      echo '}'`
     missed_files=`echo "$missed_files" | sed -e "$sed_remove_files"`
 
   fi

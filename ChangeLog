@@ -1,3 +1,8 @@
+2006-09-18  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh (func_module): Break long lines.
+	Suggested by Bruce Korb <bkorb@gnu.org>.
+
 2006-09-17  Bruno Haible  <bruno@clisp.org>
 
 	* modules/javaversion (Makefile.am): Remove DEFS setting.
