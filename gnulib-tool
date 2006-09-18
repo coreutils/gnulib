@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-18 13:07:37 $'
+cvsdatestamp='$Date: 2006-09-18 15:14:26 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1672,17 +1672,27 @@ func_import ()
   LC_ALL=C join -t"$delimiter" -v2 "$tmp"/old-files "$tmp"/new-files \
     | sed -e "$sed_take_last_column" \
     | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/added-files
-  while read g f; do
-    func_add_or_update
-  done < "$tmp"/added-files
+  { # Rearrange file descriptors. Needed because "while ... done < ..."
+    # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
+    exec 5<&1 < "$tmp"/added-files
+    while read g f; do
+      func_add_or_update
+    done
+    exec 1<&5 5<&-
+  }
   # Then the files that are in new-files and in old-files:
   already_present=true
   LC_ALL=C join -t"$delimiter" "$tmp"/old-files "$tmp"/new-files \
     | sed -e "$sed_take_last_column" \
     | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/kept-files
-  while read g f; do
-    func_add_or_update
-  done < "$tmp"/kept-files
+  { # Rearrange file descriptors. Needed because "while ... done < ..."
+    # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
+    exec 5<&1 < "$tmp"/kept-files
+    while read g f; do
+      func_add_or_update
+    done
+    exec 1<&5 5<&-
+  }
 
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
   actioncmd="gnulib-tool --import"
@@ -2069,19 +2079,24 @@ func_create_testdir ()
     | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_files" \
     | LC_ALL=C sort \
     > "$tmp"/files
-  while read g f; do
-    func_lookup_file "$f"
-    if test -n "$lookedup_tmp"; then
-      cp -p "$lookedup_file" "$testdir/$g"
-    else
-      ln "$lookedup_file" "$testdir/$g" 2>/dev/null ||
-      if test -z "$symbolic"; then
+  { # Rearrange file descriptors. Needed because "while ... done < ..."
+    # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
+    exec 5<&1 < "$tmp"/files
+    while read g f; do
+      func_lookup_file "$f"
+      if test -n "$lookedup_tmp"; then
         cp -p "$lookedup_file" "$testdir/$g"
       else
-        ln -s "$lookedup_file" "$testdir/$g"
+        ln "$lookedup_file" "$testdir/$g" 2>/dev/null ||
+        if test -z "$symbolic"; then
+          cp -p "$lookedup_file" "$testdir/$g"
+        else
+          ln -s "$lookedup_file" "$testdir/$g"
+        fi
       fi
-    fi
-  done < "$tmp"/files
+    done
+    exec 1<&5 5<&-
+  }
 
   # Create $sourcebase/Makefile.am.
   mkdir -p "$testdir/$sourcebase"

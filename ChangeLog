@@ -1,5 +1,10 @@
 2006-09-18  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import, func_create_testdir): Use exec tricks to
+	avoid that the while loops be executed in a subshell.
+
+2006-09-18  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh (func_module): Break long lines.
 	Suggested by Bruce Korb <bkorb@gnu.org>.
 
