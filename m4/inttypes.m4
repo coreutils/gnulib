@@ -24,7 +24,7 @@ AC_DEFUN([gl_INTTYPES_H],
   dnl   - some additional tests.
   gl_cv_header_working_inttypes_h=no
   if test "$gl_cv_header_working_stdint_h" = yes \
-     && test "$gl_cv_header_inttypes_h" = yes \
+     && test $ac_cv_header_inttypes_h = yes \
      && test "$ac_cv_have_decl_imaxabs" = yes \
      && test "$ac_cv_have_decl_imaxdiv" = yes \
      && test "$ac_cv_have_decl_strtoimax" = yes \

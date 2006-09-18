@@ -4,7 +4,6 @@ An <inttypes.h> that nearly conforms to C99.
 Files:
 lib/inttypes_.h
 m4/absolute-header.m4
-m4/inttypes-h.m4
 m4/inttypes-pri.m4
 m4/inttypes.m4
 

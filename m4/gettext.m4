@@ -1,4 +1,4 @@
-# gettext.m4 serial 53 (gettext-0.15)
+# gettext.m4 serial 53.1
 dnl Copyright (C) 1995-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,6 +16,8 @@ dnl They are *not* in the public domain.
 dnl Authors:
 dnl   Ulrich Drepper <drepper@cygnus.com>, 1995-2000.
 dnl   Bruno Haible <haible@clisp.cons.org>, 2000-2005.
+
+AC_PREREQ(2.52)
 
 dnl Macro to add for using GNU gettext.
 
@@ -497,7 +499,6 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
   AC_REQUIRE([AC_FUNC_MMAP])dnl
   AC_REQUIRE([gt_INTDIV0])dnl
   AC_REQUIRE([gl_AC_TYPE_UINTMAX_T])dnl
-  AC_REQUIRE([gl_HEADER_INTTYPES_H])dnl
   AC_REQUIRE([gt_INTTYPES_PRI])dnl
   AC_REQUIRE([gl_LOCK])dnl
 
@@ -507,7 +508,7 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
     [AC_DEFINE([HAVE_BUILTIN_EXPECT], 1,
        [Define to 1 if the compiler understands __builtin_expect.])])
 
-  AC_CHECK_HEADERS([argz.h limits.h unistd.h sys/param.h])
+  AC_CHECK_HEADERS([argz.h inttypes.h limits.h unistd.h sys/param.h])
   AC_CHECK_FUNCS([getcwd getegid geteuid getgid getuid mempcpy munmap \
     stpcpy strcasecmp strdup strtoul tsearch argz_count argz_stringify \
     argz_next __fsetlocking])

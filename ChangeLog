@@ -1,3 +1,7 @@
+2006-09-18  Bruno Haible  <bruno@clisp.org>
+
+	* modules/inttypes (Files): Remove m4/inttypes-h.m4.
+
 2006-09-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* gnulib-tool (avoidlist): Fix typo that broke options like

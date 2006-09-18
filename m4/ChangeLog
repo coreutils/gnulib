@@ -1,3 +1,14 @@
+2006-09-18  Bruno Haible  <bruno@clisp.org>
+
+	* inttypes-h.m4 (gl_HEADER_INTTYPES_H): Remove macro.
+	* inttypes-pri.m4: Require autoconf >= 2.52.
+	(gt_INTTYPES_PRI): Invoke AC_CHECK_HEADERS on inttypes.h. Test
+	ac_cv_header_inttypes_h instead of gl_cv_header_inttypes_h.
+	* gettext.m4: Require autoconf >= 2.52.
+	(gt_INTL_SUBDIR_CORE): Invoke AC_CHECK_HEADERS on inttypes.h.
+	* inttypes.m4 (gl_INTTYPES_H): Test ac_cv_header_inttypes_h instead
+	of gl_cv_header_inttypes_h.
+
 2006-09-18  Mark D. Baushke  <mdb@gnu.org>
 
 	* inttypes.m4 (gl_INTTYPES_H): Quote "test" args
