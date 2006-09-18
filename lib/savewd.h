@@ -131,7 +131,7 @@ void savewd_finish (struct savewd *wd);
 /* Process N_FILES file names, FILE[0] through FILE[N_FILES - 1].
    For each file name F, call ACT (F, WD, OPTIONS); ACT should invoke
    savewd_chdir as needed, and should return an exit status.  WD
-   represents thw working directory; it may be in an error state when
+   represents the working directory; it may be in an error state when
    ACT is called.
 
    Save and restore the working directory as needed by the file name
