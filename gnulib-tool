@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-19 06:03:02 $'
+cvsdatestamp='$Date: 2006-09-19 14:07:28 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1083,7 +1083,7 @@ func_emit_lib_Makefile_am ()
   else
     libext=a
     perhapsLT=
-    sed_eliminate_LDFLAGS='/^lib_LDFLAGS[ 	]*+=/d'
+    sed_eliminate_LDFLAGS='/^lib_LDFLAGS[	 ]*+=/d'
   fi
   echo "## Process this file with automake to produce Makefile.in."
   func_emit_copyright_notice
@@ -1196,7 +1196,7 @@ func_emit_tests_Makefile_am ()
     sed_eliminate_LDFLAGS=
   else
     libext=a
-    sed_eliminate_LDFLAGS='/^lib_LDFLAGS[ 	]*+=/d'
+    sed_eliminate_LDFLAGS='/^lib_LDFLAGS[	 ]*+=/d'
   fi
   testsbase_inverse=`echo "$testsbase" | sed -e 's,/$,,' | sed -e 's,[^/][^/]*,..,g'`
   echo "## Process this file with automake to produce Makefile.in."

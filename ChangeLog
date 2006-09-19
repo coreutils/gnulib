@@ -1,3 +1,7 @@
+2006-09-19  Eric Blake  <ebb9@byu.net>
+
+	* gnulib-tool: Avoid space-tab.
+
 2006-09-19  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* gnulib-tool (func_exit): New function, to allow to pass the
