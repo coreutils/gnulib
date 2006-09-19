@@ -1,3 +1,11 @@
+2006-09-19  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (func_exit): New function, to allow to pass the
+	exit status portably through the trap.  Use everywhere.
+	(--help, --version): Signal a write error.
+	(trap): catch SIGPIPE, for write errors.
+	Exit at the end of the trap, with the correct exit status.
+
 2006-09-18  Bruno Haible  <bruno@clisp.org>
 
 	* modules/inttypes (Files): Remove m4/inttypes-h.m4.
