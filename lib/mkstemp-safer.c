@@ -22,7 +22,6 @@
 
 #include "stdlib-safer.h"
 
-#include <stdlib.h>
 #include "mkstemp.h"
 #include "unistd-safer.h"
 

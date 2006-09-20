@@ -6,7 +6,7 @@
 	Include "mkstemp.h".
 	Make the _LIBC code resemble glibc original more,
 	e.g., use K&R style.
-	* mkstemp-safer.c: Include "mkstemp.h".
+	* mkstemp-safer.c: Include "mkstemp.h" instead of <stdlib.h>.
 	(mkstemp): Remove, since mkstemp.h does this for us.
 	* stdlib--.h: Include mkstemp.h.
 
