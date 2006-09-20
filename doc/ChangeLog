@@ -1,3 +1,7 @@
+2006-09-19  Karl Berry  <karl@gnu.org>
+
+	* gnulib.texi: note about the license texinfo files.
+
 2006-09-16  Karl Berry  <karl@gnu.org>
 
 	* fdl.texi (ADDENDUM): switch to @heading from @appendixsubsec,
