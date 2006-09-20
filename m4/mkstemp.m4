@@ -1,4 +1,4 @@
-#serial 13
+#serial 14
 
 # Copyright (C) 2001, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -12,46 +12,41 @@
 # only 32 files per process.
 # On systems like the above, arrange to use the replacement function.
 AC_DEFUN([gl_FUNC_MKSTEMP],
-[dnl
-  AC_REPLACE_FUNCS(mkstemp)
-  if test $ac_cv_func_mkstemp = no; then
-    gl_cv_func_mkstemp_limitations=yes
-  else
-    AC_CACHE_CHECK([for mkstemp limitations],
-      gl_cv_func_mkstemp_limitations,
-      [
-        mkdir conftest.mkstemp
-	AC_TRY_RUN([
-#           include <stdlib.h>
-#           include <unistd.h>
-	    int main ()
-	    {
-	      int i;
-	      for (i = 0; i < 70; i++)
-		{
-		  char template[] = "conftest.mkstemp/coXXXXXX";
-		  int fd = mkstemp (template);
-		  if (fd == -1)
-		    exit (1);
-		  close (fd);
-		}
-	      exit (0);
-	    }
-	    ],
-	  gl_cv_func_mkstemp_limitations=no,
-	  gl_cv_func_mkstemp_limitations=yes,
-	  gl_cv_func_mkstemp_limitations=yes
-	  )
-        rm -rf conftest.mkstemp
-      ]
-    )
-  fi
+[
+  AC_REQUIRE([AC_SYS_LARGEFILE])
 
-  if test $gl_cv_func_mkstemp_limitations = yes; then
+  AC_CACHE_CHECK([for working mkstemp],
+    [gl_cv_func_working_mkstemp],
+    [
+      mkdir conftest.mkstemp
+      AC_RUN_IFELSE(
+	[AC_LANG_PROGRAM(
+	  [AC_INCLUDES_DEFAULT],
+	  [[int i;
+	    off_t large = (off_t) 4294967295u;
+	    if (large < 0)
+	      large = 2147483647;
+	    for (i = 0; i < 70; i++)
+	      {
+		char template[] = "conftest.mkstemp/coXXXXXX";
+		int (*mkstemp_function) (char *) = mkstemp;
+		int fd = mkstemp_function (template);
+		if (fd < 0 || lseek (fd, large, SEEK_SET) != large)
+		  return 1;
+		close (fd);
+	      }
+	    return 0;]])],
+	[gl_cv_func_working_mkstemp=yes],
+	[gl_cv_func_working_mkstemp=no],
+	[gl_cv_func_working_mkstemp=no])
+      rm -rf conftest.mkstemp
+    ])
+
+  if test $gl_cv_func_working_mkstemp != yes; then
+    AC_DEFINE([__MKSTEMP_PREFIX], [[rpl_]],
+      [Define to rpl_ if the mkstemp replacement function should be used.])
     AC_LIBOBJ(mkstemp)
     AC_LIBOBJ(tempname)
-    AC_DEFINE(mkstemp, rpl_mkstemp,
-      [Define to rpl_mkstemp if the replacement function should be used.])
     gl_PREREQ_MKSTEMP
     gl_PREREQ_TEMPNAME
   fi

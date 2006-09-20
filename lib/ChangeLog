@@ -1,5 +1,13 @@
 2006-09-20  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* mkstemp.h: New file, since some standard headers
+	#define mkstemp.
+	* mkstemp.c: Revamp to put the !_LIBC code together.
+	Include "mkstemp.h".
+	Make the _LIBC code resemble glibc original more,
+	e.g., use K&R style.
+	* stdlib--.h: Include mkstemp.h.
+
 	Import this patch from libc:
 
 	2006-04-07  Ulrich Drepper  <drepper@redhat.com>

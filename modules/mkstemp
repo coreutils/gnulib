@@ -7,6 +7,7 @@ lib/tempname.c
 m4/mkstemp.m4
 
 Depends-on:
+extensions
 stat-macros
 stdint
 sys_stat
@@ -15,6 +16,7 @@ configure.ac:
 gl_FUNC_MKSTEMP
 
 Makefile.am:
+EXTRA_DIST += mkstemp.h
 
 Include:
 <stdlib.h>

@@ -1,3 +1,11 @@
+2006-09-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* mkstemp.m4 (gl_FUNC_MKSTEMP): Require AC_SYS_LARGEFILE.
+	Check that large offsets work.  Modernize Autoconf usages.
+	Prefer "yes" to mean a good thing rather than a bad.
+	Don't put "#define mkstemp" in config.h, as this might interfere
+	with standard system headers that "#define mkstemp mkstemp64".
+
 2006-09-18  Bruno Haible  <bruno@clisp.org>
 
 	* inttypes-h.m4 (gl_HEADER_INTTYPES_H): Remove macro.

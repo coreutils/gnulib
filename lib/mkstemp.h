@@ -1,6 +1,6 @@
-/* Like stdlib.h, but redefine some names to avoid glitches.
+/* Create a unique temporary file.
 
-   Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,11 +16,15 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-/* Written by Paul Eggert.  */
+/* written by Jim Meyering */
 
 #include <stdlib.h>
-#include "stdlib-safer.h"
 
-#include "mkstemp.h"
-#undef mkstemp
-#define mkstemp mkstemp_safer
+#ifdef __MKSTEMP_PREFIX
+# define _GL_CONCAT(x, y) x ## y
+# define _GL_XCONCAT(x, y) _GL_CONCAT (x, y)
+# define __MKSTEMP_ID(y) _GL_XCONCAT (__MKSTEMP_PREFIX, y)
+# undef mkstemp
+# define mkstemp __MKSTEMP_ID (mkstemp)
+int mkstemp (char *);
+#endif

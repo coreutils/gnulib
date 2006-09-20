@@ -15,12 +15,11 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#include <config.h>
-
-/* Disable the definition of mkstemp to rpl_mkstemp (from config.h) in this
-   file.  Otherwise, we'd get conflicting prototypes for rpl_mkstemp on
-   most systems.  */
-#undef mkstemp
+#if !_LIBC
+# include <config.h>
+# include "mkstemp.h"
+int __gen_tempname ();
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,14 +28,13 @@
 # define __GT_FILE 0
 #endif
 
-int __gen_tempname ();
-
 /* Generate a unique temporary file name from TEMPLATE.
    The last six characters of TEMPLATE must be "XXXXXX";
    they are replaced with a string that makes the file name unique.
    Then open the file and return a fd. */
 int
-rpl_mkstemp (char *template)
+mkstemp (template)
+     char *template;
 {
   return __gen_tempname (template, __GT_FILE);
 }
