@@ -23,11 +23,8 @@
 #include "stdlib-safer.h"
 
 #include <stdlib.h>
+#include "mkstemp.h"
 #include "unistd-safer.h"
-
-#if ! HAVE_MKSTEMP
-int mkstemp (char *);
-#endif
 
 /* Like mkstemp, but do not return STDIN_FILENO, STDOUT_FILENO, or
    STDERR_FILENO.  */
