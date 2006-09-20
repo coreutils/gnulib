@@ -1,3 +1,14 @@
+2006-09-20  Bruno Haible  <bruno@clisp.org>
+
+	* mkdtemp.c: Import from libc.
+	2006-04-07  Ulrich Drepper  <drepper@redhat.com>
+		* sysdeps/posix/tempname.c (__gen_tempname): Change
+		attempts_min into a macro.  Use preprocessor to decide how to
+		initialize attempts [Coverity CID 67].
+	2001-11-27  Paul Eggert  <eggert@twinsun.com>
+		* sysdeps/posix/tempname.c (__gen_tempname): Try at least
+		ATTEMPTS_MIN or TMP_MAX times, whichever is greater.
+
 2006-09-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* mkstemp.h: New file, since some standard headers

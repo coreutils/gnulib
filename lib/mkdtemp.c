@@ -114,8 +114,25 @@ gen_tempname (char *tmpl)
   char *XXXXXX;
   static uint64_t value;
   uint64_t random_time_bits;
-  int count, fd = -1;
+  unsigned int count;
+  int fd = -1;
   int save_errno = errno;
+
+  /* A lower bound on the number of temporary files to attempt to
+     generate.  The maximum total number of temporary file names that
+     can exist for a given template is 62**6.  It should never be
+     necessary to try all these combinations.  Instead if a reasonable
+     number of names is tried (we define reasonable as 62**3) fail to
+     give the system administrator the chance to remove the problems.  */
+#define ATTEMPTS_MIN (62 * 62 * 62)
+
+  /* The number of times to attempt to generate a temporary file.  To
+     conform to POSIX, this must be no smaller than TMP_MAX.  */
+#if ATTEMPTS_MIN < TMP_MAX
+  unsigned int attempts = TMP_MAX;
+#else
+  unsigned int attempts = ATTEMPTS_MIN;
+#endif
 
   len = strlen (tmpl);
   if (len < 6 || strcmp (&tmpl[len - 6], "XXXXXX"))
@@ -143,7 +160,7 @@ gen_tempname (char *tmpl)
 #endif
   value += random_time_bits ^ __getpid ();
 
-  for (count = 0; count < TMP_MAX; value += 7777, ++count)
+  for (count = 0; count < attempts; value += 7777, ++count)
     {
       uint64_t v = value;
 
