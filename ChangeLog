@@ -4,6 +4,7 @@
 	mkstemp is visible on some platforms.
 	(Makefile.am): Add mkstemp.h to EXTRA_DIST.
 	(Include): Change to "mkstemp.h" from <stdlib.h>.
+	(Files): Add mkstemp.h.
 
 2006-09-19  Eric Blake  <ebb9@byu.net>
 

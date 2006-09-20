@@ -2,6 +2,7 @@ Description:
 mkstemp() function: create a private temporary file.
 
 Files:
+lib/mkstemp.h
 lib/mkstemp.c
 lib/tempname.c
 m4/mkstemp.m4
