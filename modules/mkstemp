@@ -19,7 +19,7 @@ Makefile.am:
 EXTRA_DIST += mkstemp.h
 
 Include:
-<stdlib.h>
+"mkstemp.h"
 
 License:
 GPL

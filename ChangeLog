@@ -3,6 +3,7 @@
 	* modules/mkstemp (Depends-on): Add extensions, so that
 	mkstemp is visible on some platforms.
 	(Makefile.am): Add mkstemp.h to EXTRA_DIST.
+	(Include): Change to "mkstemp.h" from <stdlib.h>.
 
 2006-09-19  Eric Blake  <ebb9@byu.net>
 
