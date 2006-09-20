@@ -213,11 +213,15 @@ __gen_tempname (char *tmpl, int kind)
      necessary to try all these combinations.  Instead if a reasonable
      number of names is tried (we define reasonable as 62**3) fail to
      give the system administrator the chance to remove the problems.  */
-  unsigned int attempts_min = 62 * 62 * 62;
+#define ATTEMPTS_MIN (62 * 62 * 62)
 
   /* The number of times to attempt to generate a temporary file.  To
      conform to POSIX, this must be no smaller than TMP_MAX.  */
-  unsigned int attempts = attempts_min < TMP_MAX ? TMP_MAX : attempts_min;
+#if ATTEMPTS_MIN < TMP_MAX
+  unsigned int attempts = TMP_MAX;
+#else
+  unsigned int attempts = ATTEMPTS_MIN;
+#endif
 
   len = strlen (tmpl);
   if (len < 6 || strcmp (&tmpl[len - 6], "XXXXXX"))

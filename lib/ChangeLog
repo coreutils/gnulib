@@ -1,3 +1,13 @@
+2006-09-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Import this patch from libc:
+
+	2006-04-07  Ulrich Drepper  <drepper@redhat.com>
+
+	* tempname.c (__gen_tempname): Change attempts_min
+	into a macro.  Use preprocessor to decide how to initialize
+	attempts [Coverity CID 67].
+
 2006-09-18  Bruno Haible  <bruno@clisp.org>
 
 	* javaversion.c: Include configmake.h.
