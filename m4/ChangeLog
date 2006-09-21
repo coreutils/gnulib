@@ -1,5 +1,12 @@
 2006-09-20  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* regex.m4 (gl_REGEX): Check for locale.h, since the test
+	now requires it.
+	(gl_PREREQ_REGEX): Don't check for locale.h any more, since
+	gl_REGEX now does it for us.
+	(gl_REGEX): Add test taken from
+	http://sourceware.org/ml/libc-hacker/2006-09/msg00008.html.
+
 	* mkstemp.m4 (gl_FUNC_MKSTEMP): Require AC_SYS_LARGEFILE.
 	Check that large offsets work.  Modernize Autoconf usages.
 	Prefer "yes" to mean a good thing rather than a bad.

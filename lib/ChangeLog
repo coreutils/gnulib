@@ -1,3 +1,15 @@
+2006-09-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Import this patch from libc:
+
+	2006-09-06  Jakub Jelinek  <jakub@redhat.com>
+
+	* regex_internal.c (re_string_reconstruct): Handle
+	offset < pstr->valid_raw_len && pstr->offsets_needed case.
+	Ensure no bytes read before raw_mbs array.  Pass a saved copy of
+	pstr->valid_len - 1 rather than pstr->valid_raw_len - 1 to
+	re_string_context_at.
+
 2006-09-20  Bruno Haible  <bruno@clisp.org>
 
 	* mkdtemp.c: Import from libc.

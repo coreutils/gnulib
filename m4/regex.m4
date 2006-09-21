@@ -1,4 +1,4 @@
-#serial 39
+#serial 40
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
 # 2006 Free Software Foundation, Inc.
@@ -14,6 +14,8 @@ AC_PREREQ([2.50])
 
 AC_DEFUN([gl_REGEX],
 [
+  AC_CHECK_HEADERS_ONCE([locale.h])
+
   AC_ARG_WITH([included-regex],
     [AC_HELP_STRING([--without-included-regex],
 		    [don't compile regex; this is the default on
@@ -34,6 +36,9 @@ AC_DEFUN([gl_REGEX],
       [AC_RUN_IFELSE(
 	[AC_LANG_PROGRAM(
 	  [AC_INCLUDES_DEFAULT
+	   #if HAVE_LOCALE_H
+	    #include <locale.h>
+	   #endif
 	   #include <limits.h>
 	   #include <regex.h>
 	   ],
@@ -42,6 +47,33 @@ AC_DEFUN([gl_REGEX],
 	    int i;
 	    const char *s;
 	    struct re_registers regs;
+
+	    #if HAVE_LOCALE_H
+	      /* http://sourceware.org/ml/libc-hacker/2006-09/msg00008.html
+		 This test needs valgrind to catch the bug on Debian
+		 GNU/Linux 3.1 x86, but it might catch the bug better
+		 on other platforms and it shouldn't hurt to try the
+		 test here.  */
+	      if (setlocale (LC_ALL, "en_US.UTF-8"))
+		{
+		  static char const pat[] = "insert into";
+		  static char const data[] =
+		    "\xFF\0\x12\xA2\xAA\xC4\xB1,K\x12\xC4\xB1*\xACK";
+		  re_set_syntax (RE_SYNTAX_GREP | RE_HAT_LISTS_NOT_NEWLINE
+				 | RE_ICASE);
+		  memset (&regex, 0, sizeof regex);
+		  s = re_compile_pattern (pat, sizeof pat - 1, &regex);
+		  if (s)
+		    return 1;
+		  if (re_search (&regex, data, sizeof data - 1,
+				 0, sizeof data - 1, &regs)
+		      != -1)
+		    return 1;
+		  if (! setlocale (LC_ALL, "C"))
+		    return 1;
+		}
+	    #endif
+
 	    re_set_syntax (RE_SYNTAX_POSIX_EGREP);
 	    memset (&regex, 0, sizeof (regex));
 	    for (i = 0; i <= UCHAR_MAX; i++)
@@ -161,7 +193,7 @@ AC_DEFUN([gl_PREREQ_REGEX],
   AC_REQUIRE([AC_GNU_SOURCE])
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([AM_LANGINFO_CODESET])
-  AC_CHECK_HEADERS_ONCE([locale.h wchar.h wctype.h])
+  AC_CHECK_HEADERS_ONCE([wchar.h wctype.h])
   AC_CHECK_FUNCS_ONCE([mbrtowc mempcpy wcrtomb wcscoll])
   AC_CHECK_DECLS([isblank], [], [], [#include <ctype.h>])
 ])
