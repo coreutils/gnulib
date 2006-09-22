@@ -1,3 +1,8 @@
+2006-09-17  Bruno Haible  <bruno@clisp.org>
+
+	* getloadavg.m4 (gl_GETLOADAVG): Expect the directory of getloadavg.c
+	as first argument.
+
 2006-09-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* regex.m4 (gl_REGEX): Check for locale.h, since the test

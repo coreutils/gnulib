@@ -10,13 +10,13 @@
 # Autoconf defines AC_FUNC_GETLOADAVG, but that is obsolescent.
 # New applications should use gl_GETLOADAVG instead.
 
-# gl_GETLOADAVG
-# -------------
+# gl_GETLOADAVG(LIBOBJDIR)
+# ------------------------
 AC_DEFUN([gl_GETLOADAVG],
 [gl_have_func=no # yes means we've found a way to get the load average.
 
 # Make sure getloadavg.c is where it belongs, at configure-time.
-test -f "$srcdir/$ac_config_libobj_dir/getloadavg.c" ||
+test -f "$srcdir/$1/getloadavg.c" ||
   AC_MSG_ERROR([$srcdir/$ac_config_libobj_dir/getloadavg.c is missing])
 
 gl_save_LIBS=$LIBS
@@ -64,7 +64,7 @@ AC_CACHE_CHECK(whether getloadavg requires setgid,
 	       gl_cv_func_getloadavg_setgid,
 [AC_EGREP_CPP([Yowza Am I SETGID yet],
 [#define CONFIGURING_GETLOADAVG
-#include "$srcdir/$ac_config_libobj_dir/getloadavg.c"
+#include "$srcdir/$1/getloadavg.c"
 #ifdef LDAV_PRIVILEGED
 Yowza Am I SETGID yet
 #endif

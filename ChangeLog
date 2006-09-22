@@ -1,3 +1,10 @@
+2006-09-17  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import, func_create_testdir): Set gl_source_base
+	at the beginning of the gl_INIT macro.
+	* modules/getloadavg (configure.ac): Pass $gl_source_base to
+	gl_GETLOADAVG.
+
 2006-09-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* gnulib-tool (func_version): Create output all at once.  This

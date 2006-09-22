@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-22 03:10:42 $'
+cvsdatestamp='$Date: 2006-09-22 12:47:54 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1887,6 +1887,7 @@ func_import ()
       echo "  gl_libdeps="
       echo "  gl_ltlibdeps="
     fi
+    echo "  gl_source_base='$sourcebase'"
     if test "$auxdir" != "build-aux"; then
       sed_replace_build_aux='
         :a
@@ -2182,6 +2183,7 @@ func_create_testdir ()
        echo "gl_libdeps="
        echo "gl_ltlibdeps="
      fi
+     echo "gl_source_base='$testsbase'"
      # Wrap the set of autoconf snippets into an autoconf macro that is then
      # invoked. This is needed because autoconf does not support AC_REQUIRE
      # at the top level:
@@ -2290,6 +2292,7 @@ func_create_testdir ()
      echo "gl_libdeps="
      echo "gl_ltlibdeps="
    fi
+   echo "gl_source_base='$sourcebase'"
    # Wrap the set of autoconf snippets into an autoconf macro that is then
    # invoked. This is needed because autoconf does not support AC_REQUIRE
    # at the top level:

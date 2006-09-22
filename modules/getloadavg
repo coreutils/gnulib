@@ -14,7 +14,7 @@ stdbool
 fcntl-safer
 
 configure.ac:
-gl_GETLOADAVG
+gl_GETLOADAVG([$gl_source_base])
 
 Makefile.am:
 
