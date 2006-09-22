@@ -1,4 +1,4 @@
-# sockpfaf.m4 serial 4
+# sockpfaf.m4 serial 5
 dnl Copyright (C) 2004, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,7 +28,8 @@ AC_DEFUN([gl_SOCKET_FAMILIES],
 #ifdef HAVE_WINSOCK2_H
 #include <winsock2.h>
 #endif],
-[int x = AF_INET; struct in_addr y; struct sockaddr_in z;],
+[int x = AF_INET; struct in_addr y; struct sockaddr_in z;
+ if (&x && &y && &z) return 0;],
        gl_cv_socket_ipv4=yes, gl_cv_socket_ipv4=no)])
   AC_MSG_RESULT($gl_cv_socket_ipv4)
   if test $gl_cv_socket_ipv4 = yes; then
@@ -47,7 +48,8 @@ AC_DEFUN([gl_SOCKET_FAMILIES],
 #ifdef HAVE_WINSOCK2_H
 #include <winsock2.h>
 #endif],
-[int x = AF_INET6; struct in6_addr y; struct sockaddr_in6 z;],
+[int x = AF_INET6; struct in6_addr y; struct sockaddr_in6 z;
+ if (&x && &y && &z) return 0;],
        gl_cv_socket_ipv6=yes, gl_cv_socket_ipv6=no)])
   AC_MSG_RESULT($gl_cv_socket_ipv6)
   if test $gl_cv_socket_ipv6 = yes; then

@@ -1,3 +1,7 @@
+2006-09-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* sockpfaf.m4 (gl_SOCKET_FAMILIES): Avoid gcc -Wall warnings.
+
 2006-09-17  Bruno Haible  <bruno@clisp.org>
 
 	* getloadavg.m4 (gl_GETLOADAVG): Expect the directory of getloadavg.c
