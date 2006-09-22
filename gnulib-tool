@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-22 12:47:54 $'
+cvsdatestamp='$Date: 2006-09-22 15:43:18 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2382,8 +2382,9 @@ func_create_megatestdir ()
     func_append megasubdirs "$onemodule "
   done
   # Then, all modules all together.
+  # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
   # Except fnmatch-posix, which conflicts with fnmatch-gnu. FIXME.
-  allmodules=`for m in $allmodules; do if test $m != fnmatch-posix; then echo $m; fi; done`
+  allmodules=`for m in $allmodules; do if test $m != config-h && test $m != fnmatch-posix; then echo $m; fi; done`
   func_create_testdir "$megatestdir/ALL" "$allmodules"
   func_append megasubdirs "ALL"
 

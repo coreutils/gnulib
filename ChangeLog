@@ -1,3 +1,9 @@
+2006-09-22  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_create_megatestdir): Don't include the config-h
+	module.
+	Suggested by Ralf Wildenhues.
+
 2006-09-22  Simon Josefsson  <jas@extundo.com>
 
 	* modules/gc-sha1:
