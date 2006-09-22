@@ -1,4 +1,4 @@
-# mbswidth.m4 serial 12
+# mbswidth.m4 serial 13
 dnl Copyright (C) 2000-2002, 2004, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,6 +24,7 @@ AC_DEFUN([gl_MBSWIDTH],
 #endif
 ], [
   char *p = (char *) mbswidth;
+  return !p;
 ], ac_cv_have_decl_mbswidth=yes, ac_cv_have_decl_mbswidth=no)])
   if test $ac_cv_have_decl_mbswidth = yes; then
     ac_val=1

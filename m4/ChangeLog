@@ -1,4 +1,14 @@
 2006-09-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lock.m4 (gl_LOCK_BODY): Avoid unused variables warning.
+	* mbswidth.m4 (gl_MBSWIDTH): Likewise.
+	* signed.m4 (bh_C_SIGNED): Likewise.
+
+	* vasprintf.m4 (gl_PREREQ_VASPRINTF_H): New macro.
+	(gl_FUNC_VASPRINTF): Invoke it.
+
+2006-09-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* fsusage.m4 (gl_STATFS_TRUNCATES): Avoid unused variable.
 	* getdate.m4 (gl_C_COMPOUND_LITERALS): Likewise.

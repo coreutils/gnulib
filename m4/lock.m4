@@ -1,4 +1,4 @@
-# lock.m4 serial 4 (gettext-0.15.1)
+# lock.m4 serial 5 (gettext-0.15.1)
 dnl Copyright (C) 2005-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -147,6 +147,7 @@ AC_HELP_STRING([--disable-threads], [build without multithread safety]),
 error "No, in FreeBSD 4.0 recursive mutexes actually don't work."
 #else
 int x = (int)PTHREAD_MUTEX_RECURSIVE;
+return !x;
 #endif],
             [AC_DEFINE([HAVE_PTHREAD_MUTEX_RECURSIVE], 1,
                [Define if the <pthread.h> defines PTHREAD_MUTEX_RECURSIVE.])])
