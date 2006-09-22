@@ -5,6 +5,7 @@ Files:
 m4/bison-i18n.m4
 
 Depends-on:
+gettext
 
 configure.ac:
 BISON_I18N
