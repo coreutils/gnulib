@@ -1,6 +1,6 @@
-#serial 8
+#serial 9
 
-# Copyright (C) 1996, 1999, 2001, 2002, 2004 Free Software Foundation, Inc.
+# Copyright (C) 1996, 1999, 2001, 2002, 2004, 2006 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -30,13 +30,15 @@ AC_DEFUN([gl_WINSIZE_IN_PTEM],
      jm_cv_sys_struct_winsize_needs_sys_ptem_h,
      [jm_cv_sys_struct_winsize_needs_sys_ptem_h=yes
       if test $ac_cv_sys_posix_termios = yes; then
-	AC_TRY_COMPILE([#include <termios.h>]
-	  [struct winsize x;],
+	AC_TRY_COMPILE([#include <termios.h>],
+	  [struct winsize x;
+	   if (sizeof x > 0) return 0;],
           [jm_cv_sys_struct_winsize_needs_sys_ptem_h=no])
       fi
       if test $jm_cv_sys_struct_winsize_needs_sys_ptem_h = yes; then
 	AC_TRY_COMPILE([#include <sys/ptem.h>],
-	  [struct winsize x;],
+	  [struct winsize x;
+	   if (sizeof x > 0) return 0;],
 	  [], [jm_cv_sys_struct_winsize_needs_sys_ptem_h=no])
       fi])
    if test $jm_cv_sys_struct_winsize_needs_sys_ptem_h = yes; then

@@ -1,5 +1,25 @@
 2006-09-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	* fsusage.m4 (gl_STATFS_TRUNCATES): Avoid unused variable.
+	* getdate.m4 (gl_C_COMPOUND_LITERALS): Likewise.
+	* jm-winsz1.m4 (gl_HEADER_TIOCGWINSZ_IN_TERMIOS_H): Likewise;
+	also add missing comma that caused broken test.
+	* link-follow.m4 (gl_AC_FUNC_LINK_FOLLOWS_SYMLINK): Include
+	stdlib.h, for `abort'.
+	* ls-mntd-fs.m4 (gl_LIST_MOUNTED_FILE_SYSTEMS): Avoid unused
+	variables.
+	* mkdir-slash.m4 (gl_FUNC_MKDIR_TRAILING_SLASH): Check for and
+	include unistd.h if present, for `rmdir'.
+	* physmem.m4 (gl_SYS__SYSTEM_CONFIGURATION): Avoid unused
+	variables.
+	* putenv.m4 (gl_FUNC_PUTENV): Rewrite using AC_RUN_IFELSE, and
+	in the process include standard headers for prototypes.
+	* readutmp.m4 (gl_READUTMP): Require AC_GNU_SOURCE, so utmpxname
+	gets declared on GNU/Linux.
+	* rmdir-errno.m4 (gl_FUNC_RMDIR_NOTEMPTY): Check for and include
+	unistd.h, for `rmdir'.
+	* time_r.m4 (gl_TIME_R): Avoid unused variables.
+
 	* fnmatch.m4 (_AC_FUNC_FNMATCH_IF): Avoid expression that is
 	always true.
 	* strndup.m4 (gl_FUNC_STRNDUP): include stdlib.h, for `free'.

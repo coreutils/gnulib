@@ -1,4 +1,4 @@
-# readutmp.m4 serial 11
+# readutmp.m4 serial 12
 dnl Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,9 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_READUTMP],
 [
+  dnl Persuade utmpx.h to declare utmpxname
+  AC_REQUIRE([AC_GNU_SOURCE])
+
   AC_CHECK_HEADERS_ONCE(utmp.h utmpx.h)
   if test $ac_cv_header_utmp_h = yes || test $ac_cv_header_utmpx_h = yes; then
     AC_LIBOBJ([readutmp])

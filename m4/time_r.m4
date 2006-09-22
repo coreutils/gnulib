@@ -19,7 +19,8 @@ AC_DEFUN([gl_TIME_R],
        [/* We don't need to append 'restrict's to the argument types,
 	   even though the POSIX signature has the 'restrict's,
 	   since C99 says they can't affect type compatibility.  */
-	struct tm * (*ptr) (time_t const *, struct tm *) = localtime_r;],
+	struct tm * (*ptr) (time_t const *, struct tm *) = localtime_r;
+        if (ptr) return 0;],
        [gl_cv_time_r_posix=yes],
        [gl_cv_time_r_posix=no])])
   if test $gl_cv_time_r_posix = yes; then
