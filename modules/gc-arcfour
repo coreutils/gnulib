@@ -15,6 +15,7 @@ configure.ac:
 gl_GC_ARCFOUR
 
 Makefile.am:
+EXTRA_DIST += arcfour.h
 
 Include:
 "gc.h"

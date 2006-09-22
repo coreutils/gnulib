@@ -1,3 +1,12 @@
+2006-09-22  Simon Josefsson  <jas@extundo.com>
+
+	* modules/gc-sha1:
+	* modules/gc-md4:
+	* modules/gc-hmac-sha1:
+	* modules/gc-hmac-md5:
+	* modules/gc-des:
+	* modules/gc-arcfour: Distribute more files.
+
 2006-09-17  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import, func_create_testdir): Set gl_source_base
