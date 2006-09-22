@@ -1,5 +1,9 @@
 2006-09-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	* fnmatch.m4 (_AC_FUNC_FNMATCH_IF): Avoid expression that is
+	always true.
+	* strndup.m4 (gl_FUNC_STRNDUP): include stdlib.h, for `free'.
+
 	* sockpfaf.m4 (gl_SOCKET_FAMILIES): Avoid gcc -Wall warnings.
 
 2006-09-17  Bruno Haible  <bruno@clisp.org>

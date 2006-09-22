@@ -35,7 +35,7 @@ AC_DEFUN([_AC_FUNC_FNMATCH_IF],
 	   }
          ],
 	 [exit
-	   (!((fnm ? fnm : fnmatch) ("a*", "", 0) == FNM_NOMATCH
+	   (!(fnm ("a*", "", 0) == FNM_NOMATCH
 	      && y ("a*", "abc", 0)
 	      && n ("d*/*1", "d/s/1", FNM_PATHNAME)
 	      && y ("a\\\\bc", "abc", 0)
