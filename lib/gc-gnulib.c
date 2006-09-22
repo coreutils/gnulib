@@ -52,7 +52,7 @@
 #ifdef GC_USE_SHA1
 # include "sha1.h"
 #endif
-#ifdef GC_USE_HMAC_MD5
+#if defined(GC_USE_HMAC_MD5) || defined(GC_USE_HMAC_SHA1)
 # include "hmac.h"
 #endif
 

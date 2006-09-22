@@ -1,5 +1,5 @@
 /* rijndael-api-fst.c --- Rijndael cipher implementation.
- * Copyright (C) 2005 Free Software Foundation, Inc.
+ * Copyright (C) 2005, 2006 Free Software Foundation, Inc.
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -361,10 +361,10 @@ rijndaelBlockDecrypt (rijndaelCipherInstance *cipher,
   size_t i, k, t, numBlocks;
   char block[16], *iv;
 
-  if (cipher == NULL ||
-      key == NULL ||
-      cipher->mode != RIJNDAEL_MODE_CFB1
-      && key->direction == RIJNDAEL_DIR_ENCRYPT)
+  if (cipher == NULL
+      || key == NULL
+      || (cipher->mode != RIJNDAEL_MODE_CFB1
+          && key->direction == RIJNDAEL_DIR_ENCRYPT))
     {
       return RIJNDAEL_BAD_CIPHER_STATE;
     }

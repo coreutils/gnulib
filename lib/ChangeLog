@@ -1,3 +1,10 @@
+2006-09-22  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+
+	* gc-gnulib.c [GC_USE_HMAC_SHA1]: include hmac.h for hmac_sha1.
+	* md4.c (md4_process_block): Remove unused variable.
+	* rijndael-api-fst.c (rijndaelBlockDecrypt): GCC suggests
+	parentheses for clarity.
+
 2006-09-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Import this patch from libc:
