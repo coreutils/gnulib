@@ -229,6 +229,10 @@ gl_array_iterator (gl_oset_t set)
   result.count = set->count;
   result.p = set->elements + 0;
   result.q = set->elements + set->count;
+#ifdef lint
+  result.i = 0;
+  result.j = 0;
+#endif
 
   return result;
 }

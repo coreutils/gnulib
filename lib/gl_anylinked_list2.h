@@ -697,6 +697,11 @@ gl_linked_iterator (gl_list_t list)
   result.list = list;
   result.p = list->root.next;
   result.q = &list->root;
+#ifdef lint
+  result.i = 0;
+  result.j = 0;
+  result.count = 0;
+#endif
 
   return result;
 }
@@ -762,6 +767,12 @@ gl_linked_iterator_from_to (gl_list_t list,
 	node = node->next;
       result.q = node;
     }
+
+#ifdef lint
+  result.i = 0;
+  result.j = 0;
+  result.count = 0;
+#endif
 
   return result;
 }

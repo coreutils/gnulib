@@ -528,6 +528,10 @@ gl_carray_iterator (gl_list_t list)
   result.count = list->count;
   result.i = 0;
   result.j = list->count;
+#ifdef lint
+  result.p = 0;
+  result.q = 0;
+#endif
 
   return result;
 }
@@ -545,6 +549,10 @@ gl_carray_iterator_from_to (gl_list_t list, size_t start_index, size_t end_index
   result.count = list->count;
   result.i = start_index;
   result.j = end_index;
+#ifdef lint
+  result.p = 0;
+  result.q = 0;
+#endif
 
   return result;
 }

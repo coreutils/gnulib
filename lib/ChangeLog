@@ -1,5 +1,16 @@
 2006-09-22  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
 
+	* gl_anylinked_list2.h [lint] (gl_linked_iterator)
+	(gl_linked_iterator_from_to): Initialize struct completely.
+	* gl_anytree_list2.h [lint] (gl_tree_iterator): Likewise.
+	(gl_tree_iterator_from_to): Likewise
+	* gl_anytree_oset.h [lint] (gl_tree_iterator): Likewise.
+	* gl_array_list.c [lint] (gl_array_iterator)
+	(gl_array_iterator_from_to): Likewise.
+	* gl_array_oset.c [lint] (gl_array_iterator): Likewise.
+	* gl_carray_list.c [lint] (gl_carray_iterator)
+	(gl_carray_iterator_from_to): Likewise.
+
 	* gc-gnulib.c [GC_USE_HMAC_SHA1]: include hmac.h for hmac_sha1.
 	* md4.c (md4_process_block): Remove unused variable.
 	* rijndael-api-fst.c (rijndaelBlockDecrypt): GCC suggests

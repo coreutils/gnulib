@@ -211,6 +211,11 @@ gl_tree_iterator (gl_oset_t set)
   result.p = node;
   /* End point is past the rightmost node.  */
   result.q = NULL;
+#ifdef lint
+  result.i = 0;
+  result.j = 0;
+  result.count = 0;
+#endif
 
   return result;
 }
