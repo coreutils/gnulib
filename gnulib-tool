@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-19 14:07:28 $'
+cvsdatestamp='$Date: 2006-09-22 03:10:42 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -157,11 +157,12 @@ Report bugs to <bug-gnulib@gnu.org>."
 func_version ()
 {
   year=`echo "$last_checkin_date" | sed -e 's,/.*$,,'`
-  echo "$progname (GNU $package) $version"
-  echo "Copyright (C) $year Free Software Foundation, Inc.
+  echo "\
+$progname (GNU $package) $version
+Copyright (C) $year Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
-  echo "Written by" "Bruno Haible" "and" "Simon Josefsson"
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Written by" "Bruno Haible" "and" "Simon Josefsson"
 }
 
 # func_emit_copyright_notice

@@ -1,3 +1,9 @@
+2006-09-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (func_version): Create output all at once.  This
+	may help avoid triggering unnecessary SIGPIPEs, and at any
+	rate it doesn't hurt.
+
 2006-09-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/mkstemp (Depends-on): Add extensions, so that
