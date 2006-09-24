@@ -5,7 +5,7 @@
 	at least HP-UX's hpcc.
 
 2006-09-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lock.m4 (gl_LOCK_BODY): Avoid unused variables warning.
 	* mbswidth.m4 (gl_MBSWIDTH): Likewise.
