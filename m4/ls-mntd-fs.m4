@@ -1,4 +1,4 @@
-#serial 25
+#serial 26
 # How to list mounted file systems.
 
 # Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2006 Free Software
@@ -142,7 +142,7 @@ if test $ac_cv_func_getmntent = yes; then
 #endif
 ],
                     [ struct mntent *mnt = 0; char *table = MOUNTED;
-		      if (sizeof mnt > 0 && table > 0) return 0;],
+		      if (sizeof mnt && sizeof table) return 0;],
 		    fu_cv_sys_mounted_getmntent1=yes,
 		    fu_cv_sys_mounted_getmntent1=no)])
     AC_MSG_RESULT($fu_cv_sys_mounted_getmntent1)
