@@ -81,7 +81,7 @@
 # define acl_from_mode(mode) (NULL)
 #endif
 
-/* We detect presence of POSIX 1003.1e (draft 17 -- abandoned) support
+/* We detect the presence of POSIX 1003.1e (draft 17 -- abandoned) support
    by checking for HAVE_ACL_GET_FILE, HAVE_ACL_SET_FILE, and HAVE_ACL_FREE.
    Systems that have acl_get_file, acl_set_file, and acl_free must also
    have acl_to_text, acl_from_text, and acl_delete_def_file (all defined
