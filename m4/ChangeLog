@@ -1,3 +1,8 @@
+2006-09-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+	    Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.m4 (gl_FUNC_STPNCPY): Include <string.h>.
+
 2006-09-25  Jim Meyering  <jim@meyering.net>
 
 	* fcntl_h.m4 (gl_FCNTL_H): Fix typo in test for failed open.

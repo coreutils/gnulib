@@ -1,5 +1,5 @@
-# stpncpy.m4 serial 3
-dnl Copyright (C) 2002-2003, 2005 Free Software Foundation, Inc.
+# stpncpy.m4 serial 4
+dnl Copyright (C) 2002-2003, 2005-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -22,6 +22,8 @@ AC_DEFUN([gl_FUNC_STPNCPY],
   AC_CACHE_CHECK([for working stpncpy], gl_cv_func_stpncpy, [
     AC_TRY_RUN([
 #include <stdlib.h>
+#include <string.h> /* for strcpy */
+/* The stpncpy prototype is missing in <string.h> on AIX 4.  */
 extern char *stpncpy (char *dest, const char *src, size_t n);
 int main () {
   const char *src = "Hello";
