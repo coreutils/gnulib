@@ -29,7 +29,7 @@ AC_DEFUN([gl_FCNTL_H],
 	      {
 		if (symlink (".", sym) != 0)
 		  return 1;
-		if (open (sym, O_RDONLY | O_NOFOLLOW) == 0)
+		if (0 <= open (sym, O_RDONLY | O_NOFOLLOW))
 		  return 1;
 	      }
 	    return !constants;]])],
