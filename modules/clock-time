@@ -1,0 +1,21 @@
+Description:
+Check for clock_gettime and clock_settime.
+
+Files:
+m4/clock_time.m4
+
+Depends-on:
+extensions
+
+configure.ac:
+gl_CLOCK_TIME
+
+Makefile.am:
+
+Include:
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering

@@ -1,5 +1,11 @@
 2006-09-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	* modules/clock-time: New module.
+	* modules/nanosleep (Depends-on): Add clock-time.
+	* modules/gethrxtime (Depends-on): Likewise.
+	* modules/gettime (Depends-on): Likewise.
+	* modules/settime (Depends-on): Likewise.
+
 	* modules/fts-lgpl: Depend on openat.
 	* modules/mkancesdirs: Depend on savewd.
 	* modules/mkdir-p: Likewise.

@@ -3,12 +3,12 @@ Set the current time, with nanosecond resolution.
 
 Files:
 lib/settime.c
-m4/clock_time.m4
 m4/settime.m4
 
 Depends-on:
-timespec
+clock-time
 extensions
+timespec
 
 configure.ac:
 gl_SETTIME

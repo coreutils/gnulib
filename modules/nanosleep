@@ -6,6 +6,7 @@ lib/nanosleep.c
 m4/nanosleep.m4
 
 Depends-on:
+clock-time
 timespec
 stdbool
 extensions
