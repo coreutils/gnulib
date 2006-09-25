@@ -9,6 +9,7 @@ m4/mkancesdirs.m4
 Depends-on:
 dirname
 fcntl
+savewd
 stat-macros
 
 configure.ac:

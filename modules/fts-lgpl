@@ -8,6 +8,7 @@ m4/fts.m4
 
 Depends-on:
 dirfd
+openat
 stdbool
 
 configure.ac:

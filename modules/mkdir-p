@@ -16,6 +16,7 @@ lchmod
 lchown
 mkancesdirs
 quote
+savewd
 stat-macros
 stdbool
 

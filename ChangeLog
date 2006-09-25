@@ -1,3 +1,9 @@
+2006-09-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* modules/fts-lgpl: Depend on openat.
+	* modules/mkancesdirs: Depend on savewd.
+	* modules/mkdir-p: Likewise.
+
 2006-09-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* modules/bison-i18n (Depends-on): Add gettext.
