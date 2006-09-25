@@ -1,3 +1,8 @@
+2006-09-25  Bruno Haible  <bruno@clisp.org>
+
+	* getloadavg.m4 (gl_GETLOADAVG): Fix directory in error message.
+	Reported by Jim Meyering.
+
 2006-09-24  Jim Meyering  <jim@meyering.net>
 
 	* ls-mntd-fs.m4 (gl_LIST_MOUNTED_FILE_SYSTEMS): Don't use '>' to

@@ -17,7 +17,7 @@ AC_DEFUN([gl_GETLOADAVG],
 
 # Make sure getloadavg.c is where it belongs, at configure-time.
 test -f "$srcdir/$1/getloadavg.c" ||
-  AC_MSG_ERROR([$srcdir/$ac_config_libobj_dir/getloadavg.c is missing])
+  AC_MSG_ERROR([$srcdir/$1/getloadavg.c is missing])
 
 gl_save_LIBS=$LIBS
 
