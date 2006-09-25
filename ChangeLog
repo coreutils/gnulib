@@ -1,3 +1,8 @@
+2006-09-25  Eric Blake  <ebb9@byu.net>
+
+	* gnulib-tool (func_import, func_create_testdir): Fix typos in
+	exec's in 2006-09-18 patch when shuffling fds.
+
 2006-09-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* modules/clock-time: New module.

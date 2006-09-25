@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-22 15:43:18 $'
+cvsdatestamp='$Date: 2006-09-25 21:20:54 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1691,11 +1691,11 @@ func_import ()
     | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/added-files
   { # Rearrange file descriptors. Needed because "while ... done < ..."
     # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
-    exec 5<&1 < "$tmp"/added-files
+    exec 5<&0 < "$tmp"/added-files
     while read g f; do
       func_add_or_update
     done
-    exec 1<&5 5<&-
+    exec <&5 5<&-
   }
   # Then the files that are in new-files and in old-files:
   already_present=true
@@ -1704,11 +1704,11 @@ func_import ()
     | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/kept-files
   { # Rearrange file descriptors. Needed because "while ... done < ..."
     # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
-    exec 5<&1 < "$tmp"/kept-files
+    exec 5<&0 < "$tmp"/kept-files
     while read g f; do
       func_add_or_update
     done
-    exec 1<&5 5<&-
+    exec <&5 5<&-
   }
 
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
@@ -2099,7 +2099,7 @@ func_create_testdir ()
     > "$tmp"/files
   { # Rearrange file descriptors. Needed because "while ... done < ..."
     # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
-    exec 5<&1 < "$tmp"/files
+    exec 5<&0 < "$tmp"/files
     while read g f; do
       func_lookup_file "$f"
       if test -n "$lookedup_tmp"; then
@@ -2113,7 +2113,7 @@ func_create_testdir ()
         fi
       fi
     done
-    exec 1<&5 5<&-
+    exec <&5 5<&-
   }
 
   # Create $sourcebase/Makefile.am.
