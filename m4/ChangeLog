@@ -1,4 +1,11 @@
 2006-09-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* chdir-long.m4 (gl_FUNC_CHDIR_LONG): Rename cache variable from
+	`gl_have_arbitrary_file_name_length_limit' to
+	`gl_cv_have_arbitrary_file_name_length_limit', so that caching
+	actually works between configure runs.
+
+2006-09-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 	    Bruno Haible  <bruno@clisp.org>
 
 	* stpncpy.m4 (gl_FUNC_STPNCPY): Include <string.h>.
