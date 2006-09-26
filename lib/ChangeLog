@@ -1,3 +1,7 @@
+2006-09-26  Eric Blake  <ebb9@byu.net>
+
+	* verror.c: Include <config.h> unconditionally.
+
 2006-09-22  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
 
 	* gl_anylinked_list2.h [lint] (gl_linked_iterator)
