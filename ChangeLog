@@ -1,3 +1,7 @@
+2006-09-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/savewd (Depends-on): Add 'raise'.
+
 2006-09-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/clock-time (Maintainer): Add self.

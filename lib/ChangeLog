@@ -1,3 +1,7 @@
+2006-09-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* savewd.c: Include <signal.h>, for 'raise'.
+
 2006-09-26  Eric Blake  <ebb9@byu.net>
 
 	* verror.c: Include <config.h> unconditionally.

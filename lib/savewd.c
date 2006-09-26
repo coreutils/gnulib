@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <stdbool.h>
 #include <sys/types.h>
 #include <sys/wait.h>
