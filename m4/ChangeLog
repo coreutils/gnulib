@@ -1,3 +1,11 @@
+2006-09-26  Jim Meyering  <jim@meyering.net>
+
+	* acl.m4 (AC_FUNC_ACL): Disable ACL support altogether
+	when we detect Darwin 8.7.0's acl_get_file bug.
+	Rearrange to perform the new (below) run-test while $LIBS
+	contains any acl-related library.  Set USE_ACL at the end.
+	(gl_ACL_GET_FILE): New function.
+
 2006-09-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* host-os.m4 (gl_HOST_OS): Require AC_CANONICAL_HOST.
