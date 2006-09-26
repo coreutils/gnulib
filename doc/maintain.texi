@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate July 9, 2006
+@set lastupdate September 26, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -777,16 +777,17 @@ because these are the most important platforms for a GNU package.  If
 you don't have access to one of these platforms, please ask
 @email{maintainers@@gnu.org} to help you out.
 
-Supporting other platforms is optional---we do it when that seems like a
-good idea, but we don't consider it obligatory.  If the users don't take
-care of a certain platform, you may have to desupport it unless and
-until users come forward to help.  Conversely, if a user offers changes
-to support an additional platform, you will probably want to install
-them, but you don't have to.  If you feel the changes are complex and
-ugly, if you think that they will increase the burden of future
-maintenance, you can and should reject them.  This includes both free
-platforms such as NetBSD or FreeBSD and non-free platforms such as
-Windows.
+Supporting other platforms is optional---we do it when that seems like
+a good idea, but we don't consider it obligatory.  If the users don't
+take care of a certain platform, you may have to desupport it unless
+and until users come forward to help.  Conversely, if a user offers
+changes to support an additional platform, you will probably want to
+install them, but you don't have to.  If you feel the changes are
+complex and ugly, if you think that they will increase the burden of
+future maintenance, you can and should reject them.  This includes
+both free or mainly-free platforms such as OpenBSD, FreeBSD, and
+NetBSD, and non-free platforms such as Windows.
+
 
 @node Mail
 @chapter Dealing With Mail
