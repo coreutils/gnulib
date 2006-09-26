@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-25 21:20:54 $'
+cvsdatestamp='$Date: 2006-09-26 21:01:42 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1695,7 +1695,7 @@ func_import ()
     while read g f; do
       func_add_or_update
     done
-    exec <&5 5<&-
+    exec 0<&5 5<&-
   }
   # Then the files that are in new-files and in old-files:
   already_present=true
@@ -1708,7 +1708,7 @@ func_import ()
     while read g f; do
       func_add_or_update
     done
-    exec <&5 5<&-
+    exec 0<&5 5<&-
   }
 
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
@@ -2113,7 +2113,7 @@ func_create_testdir ()
         fi
       fi
     done
-    exec <&5 5<&-
+    exec 0<&5 5<&-
   }
 
   # Create $sourcebase/Makefile.am.
