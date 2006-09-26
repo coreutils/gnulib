@@ -1,6 +1,6 @@
-#serial 5
+#serial 6
 
-# Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2004, 2006 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -12,6 +12,7 @@ dnl From Paul Eggert.
 # Define HOST_OPERATING_SYSTEM to a name for the host operating system.
 AC_DEFUN([gl_HOST_OS],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST])dnl
   AC_CACHE_CHECK([host operating system],
     gl_cv_host_operating_system,
 

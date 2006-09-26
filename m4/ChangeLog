@@ -1,5 +1,7 @@
 2006-09-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	* host-os.m4 (gl_HOST_OS): Require AC_CANONICAL_HOST.
+
 	* chdir-long.m4 (gl_FUNC_CHDIR_LONG): Rename cache variable from
 	`gl_have_arbitrary_file_name_length_limit' to
 	`gl_cv_have_arbitrary_file_name_length_limit', so that caching
