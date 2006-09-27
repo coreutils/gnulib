@@ -29,10 +29,11 @@
 
 #include <stdbool.h>
 
-#if HAVE_STDIO_EXT_H
-# include <stdio_ext.h>
-#endif
-#if !HAVE___FSETLOCKING
+#if HAVE_DECL___FSETLOCKING && HAVE___FSETLOCKING
+# if HAVE_STDIO_EXT_H
+#  include <stdio_ext.h>
+# endif
+#else
 # define __fsetlocking(stream, type)	/* empty */
 #endif
 

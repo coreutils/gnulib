@@ -1,3 +1,8 @@
+2006-09-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* fpending.m4 (gl_FUNC_FPENDING): Check for stdio_ext at most once.
+	* getpass.m4 (gl_PREREQ_GETPASS): Check for __fsetlocking's declaration.
+
 2006-09-26  Jim Meyering  <jim@meyering.net>
 
 	* acl.m4 (AC_FUNC_ACL): Disable ACL support altogether

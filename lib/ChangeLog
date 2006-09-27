@@ -1,3 +1,12 @@
+2006-09-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* __fpending.h: Don't include <stdio_ext.h> unless
+	HAVE_DECL___FPENDING.  This avoids a bug with lsbcc, where
+	it causes <stdio_ext.h> to cause a compile-time error.
+	Problem reported by Nelson H. F. Beebe.
+	* getpass.c: Likewise, except for HAVE_DECL___FSETLOCKING instead
+	of HAVE_DECL___PENDING.
+
 2006-09-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* savewd.c: Include <signal.h>, for 'raise'.
