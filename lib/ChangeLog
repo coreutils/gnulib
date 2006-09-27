@@ -1,5 +1,8 @@
 2006-09-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* canon-host.c (canon_host_r): Work around bug in Darwin 7.9.0
+	getaddrinfo.
+
 	* __fpending.h: Don't include <stdio_ext.h> unless
 	HAVE_DECL___FPENDING.  This avoids a bug with lsbcc, where
 	it causes <stdio_ext.h> to cause a compile-time error.
