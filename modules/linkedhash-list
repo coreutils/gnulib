@@ -11,7 +11,7 @@ lib/gl_anylinked_list2.h
 
 Depends-on:
 list
-size_max
+stdint
 xalloc
 xsize
 

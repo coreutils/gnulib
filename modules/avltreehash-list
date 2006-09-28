@@ -16,7 +16,7 @@ lib/gl_anytreehash_list2.h
 Depends-on:
 list
 avltree-oset
-size_max
+stdint
 xalloc
 xsize
 

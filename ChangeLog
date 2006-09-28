@@ -1,3 +1,9 @@
+2006-09-28  Bruno Haible  <bruno@clisp.org>
+
+	* modules/avltreehash-list (Depends-on): Add stdint, remove size_max.
+	* modules/linkedhash-list (Depends-on): Likewise.
+	* modules/rbtreehash-list (Depends-on): Likewise.
+
 2006-09-28  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/poll.c (rpl_poll) [__APPLE__]: Use FIONREAD instead of MSG_PEEK.

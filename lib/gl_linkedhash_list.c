@@ -21,11 +21,11 @@
 /* Specification.  */
 #include "gl_linkedhash_list.h"
 
+#include <stdint.h> /* for SIZE_MAX */
 #include <stdlib.h>
 
 #include "xalloc.h"
 #include "xsize.h"
-#include "size_max.h"
 
 #ifndef uintptr_t
 # define uintptr_t unsigned long

@@ -21,12 +21,12 @@
 /* Specification.  */
 #include "gl_rbtreehash_list.h"
 
+#include <stdint.h> /* for SIZE_MAX */
 #include <stdlib.h>
 
 #include "gl_rbtree_oset.h"
 #include "xalloc.h"
 #include "xsize.h"
-#include "size_max.h"
 
 #ifndef uintptr_t
 # define uintptr_t unsigned long
