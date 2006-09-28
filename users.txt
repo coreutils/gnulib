@@ -32,6 +32,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   prelude-lml     https://trac.prelude-ids.org/browser/trunk/prelude-lml/
   prelude-manager https://trac.prelude-ids.org/browser/trunk/prelude-manager/
   pspp            http://cvs.sv.gnu.org/viewcvs/pspp/pspp/
+  sed             http://cvs.savannah.gnu.org/viewcvs/sed/?root=sed
   shishi          http://josefsson.org/cgi-bin/viewcvs.cgi/shishi/
   tar             http://cvs.sv.gnu.org/viewcvs/tar/tar/
   texinfo         http://cvs.sv.gnu.org/viewcvs/texinfo/texinfo/
