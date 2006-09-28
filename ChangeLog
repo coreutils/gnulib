@@ -1,3 +1,8 @@
+2006-09-28  Paolo Bonzini  <bonzini@gnu.org>
+
+	* lib/poll.c (rpl_poll) [__APPLE__]: Use FIONREAD instead of MSG_PEEK.
+	* m4/poll.m4: Look for sys/ioctl.h and sys/filio.h.
+
 2006-09-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/savewd (Depends-on): Add 'raise'.

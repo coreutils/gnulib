@@ -68,5 +68,5 @@ This is MacOSX or AIX
 AC_DEFUN([gl_PREREQ_POLL],
 [
   AC_REQUIRE([AC_HEADER_TIME])
-  AC_CHECK_HEADERS_ONCE(sys/time.h)
+  AC_CHECK_HEADERS_ONCE(sys/time.h sys/ioctl.h sys/filio.h)
 ])

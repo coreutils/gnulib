@@ -1,7 +1,7 @@
 /* Emulation for poll(2)
    Contributed by Paolo Bonzini.
 
-   Copyright 2001, 2002, 2003 Free Software Foundation, Inc.
+   Copyright 2001, 2002, 2003, 2006 Free Software Foundation, Inc.
 
    This file is part of gnulib.
 
@@ -19,9 +19,7 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include "config.h"
 
 #include <sys/types.h>
 #include "poll.h"
@@ -30,6 +28,13 @@
 #include <sys/socket.h>
 #include <sys/select.h>
 #include <unistd.h>
+
+#ifdef HAVE_SYS_IOCTL_H
+#include <sys/ioctl.h>
+#endif
+#ifdef HAVE_SYS_FILIO_H
+#include <sys/filio.h>
+#endif
 
 #if TIME_WITH_SYS_TIME
 # include <sys/time.h>
@@ -60,7 +65,6 @@ poll (pfd, nfd, timeout)
   struct timeval tv, *ptv;
   int maxfd, rc, happened;
   nfds_t i;
-  char data[64];
 
 #ifdef _SC_OPEN_MAX
   if (nfd > sysconf (_SC_OPEN_MAX))
@@ -153,14 +157,39 @@ poll (pfd, nfd, timeout)
 	  happened = 0;
 	  if (FD_ISSET (pfd[i].fd, &rfds))
 	    {
-	      /* support for POLLHUP.  An hung up descriptor does not
-		 increase the return value! */
-	      if (recv (pfd[i].fd, data, 64, MSG_PEEK) == -1)
+	      int r;
+	      long avail = -1;
+	      /* support for POLLHUP.  */
+#if defined __MACH__ && defined __APPLE__
+	      /* There is a bug in Mac OS X that causes it to ignore MSG_PEEK for
+		 some kinds of descriptors.  Use FIONREAD to emulate POLLHUP.
+		 It is still not completely POSIX compliant (it does not fully
+		 work on TTYs), but at least it does not delete data!  For other
+		 platforms, we still use MSG_PEEK because it was proved to be
+		 reliable, and I a leery of changing it.  */
+	      do
+		r = ioctl (pfd[i].fd, FIONREAD, &avail);
+	      while (r == -1 && (errno == EAGAIN || errno == EINTR));
+	      if (avail < 0)
+	        avail = 0;
+#else
+	      char data[64];
+	      r = recv (pfd[i].fd, data, 64, MSG_PEEK);
+	      if (r == -1)
 		{
-		  if (errno == ESHUTDOWN || errno == ECONNRESET
-		      || errno == ECONNABORTED || errno == ENETRESET)
-		    pfd[i].revents |= POLLHUP;
+		  avail = (errno == ESHUTDOWN || errno == ECONNRESET ||
+	                   errno == ECONNABORTED || errno == ENETRESET) ? 0 : -1;
+		  errno = 0;
 		}
+	      else
+	        avail = r;
+#endif
+
+	      /* An hung up descriptor does not increase the return value! */
+	      if (avail == 0)
+		pfd[i].revents |= POLLHUP;
+	      else if (avail == -1)
+		pfd[i].revents |= POLLERR;
 	      else
 		happened |= POLLIN | POLLRDNORM;
 	    }
