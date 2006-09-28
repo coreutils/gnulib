@@ -15,16 +15,17 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#include <string.h>
+/* Get size_t.  */
 #include <stddef.h>
+/* If HAVE_STRNDUP, get the strndup declaration.
+   If !HAVE_STRNDUP, include <string.h> now so that it doesn't cause
+   trouble if included later.  */
+#include <string.h>
 
-#ifdef __STRNDUP_PREFIX
-# define _GL_CONCAT(x, y) x ## y
-# define _GL_XCONCAT(x, y) _GL_CONCAT (x, y)
-# define __STRNDUP_ID(y) _GL_XCONCAT (__STRNDUP_PREFIX, y)
+#if !HAVE_STRNDUP
 # undef strndup
-# define strndup __STRNDUP_ID (strndup)
-# if !HAVE_DECL_STRNDUP
+# define strndup rpl_strndup
+# if !HAVE_DECL_STRNDUP  /* Don't risk conflicting declarations.  */
 /* Return a newly allocated copy of at most N bytes of STRING.  */
 extern char *strndup (const char *string, size_t n);
 # endif

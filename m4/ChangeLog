@@ -1,3 +1,7 @@
+2006-09-28  Bruno Haible  <bruno@clisp.org>
+
+	* strndup.m4 (gl_FUNC_STRNDUP): Don't define __STRNDUP_PREFIX.
+
 2006-09-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* intmax.m4 (gt_TYPE_INTMAX_T): Avoid unused variables warning.

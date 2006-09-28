@@ -1,5 +1,10 @@
 2006-09-28  Bruno Haible  <bruno@clisp.org>
 
+	* strndup.h: Simplify the redefinition of strndup.
+	(_GL_CONCAT, _GL_XCONCAT, __STRNDUP_ID): Remove macros.
+
+2006-09-28  Bruno Haible  <bruno@clisp.org>
+
 	* gl_avltreehash_list.c: Include <stdint.h> instead of size_max.h.
 	* gl_linkedhash_list.c: Likewise.
 	* gl_rbtreehash_list.c: Likewise.
