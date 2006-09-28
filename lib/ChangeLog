@@ -5,7 +5,7 @@
 
 2006-09-27  Jim Meyering  <jim@meyering.net>
 
-	This function could end up with a definition for a function
+	This file could end up with a definition for a function
 	named __strndup, rather than rpl_strndup on a system with
 	incomplete weak_alias support.
 	* strndup.c (strndup): Rename from __strndup.
