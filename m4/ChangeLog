@@ -1,3 +1,7 @@
+2006-09-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* intmax.m4 (gt_TYPE_INTMAX_T): Avoid unused variables warning.
+
 2006-09-27  Jim Meyering  <jim@meyering.net>
 
 	* strndup.m4: Modernize.
