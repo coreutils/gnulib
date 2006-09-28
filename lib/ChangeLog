@@ -1,3 +1,14 @@
+2006-09-27  Jim Meyering  <jim@meyering.net>
+
+	This function could end up with a definition for a function
+	named __strndup, rather than rpl_strndup on a system with
+	incomplete weak_alias support.
+	* strndup.c (strndup): Rename from __strndup.
+	Remove #defines that used to map __strndup to strndup.
+	Don't use K&R prototypes.
+	Remove LIBC-related code, since this file is not sync'd with glibc.
+	* strndup.h: Revamp, accordingly.
+
 2006-09-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* canon-host.c (canon_host_r): Work around bug in Darwin 7.9.0

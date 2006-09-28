@@ -1,8 +1,7 @@
-/* Copyright (C) 1996, 1997, 1998, 2001, 2002, 2003, 2005, 2006 Free
-   Software Foundation, Inc.
+/* A replacement function, for systems that lack strndup.
 
-   NOTE: The canonical source of this file is maintained with the GNU C Library.
-   Bugs can be reported to bug-glibc@prep.ai.mit.edu.
+   Copyright (C) 1996, 1997, 1998, 2001, 2002, 2003, 2005, 2006 Free
+   Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -18,36 +17,18 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#if !_LIBC
-# include <config.h>
-# include "strndup.h"
-#endif
+#include <config.h>
+#include "strndup.h"
 
 #include <stdlib.h>
 #include <string.h>
 
-#if !_LIBC
-# include "strnlen.h"
-# ifndef __strnlen
-#  define __strnlen strnlen
-# endif
-#endif
-
-#undef __strndup
-#if _LIBC
-# undef strndup
-#endif
-
-#ifndef weak_alias
-# define __strndup strndup
-#endif
+#include "strnlen.h"
 
 char *
-__strndup (s, n)
-     const char *s;
-     size_t n;
+strndup (char const *s, size_t n)
 {
-  size_t len = __strnlen (s, n);
+  size_t len = strnlen (s, n);
   char *new = malloc (len + 1);
 
   if (new == NULL)
@@ -56,9 +37,3 @@ __strndup (s, n)
   new[len] = '\0';
   return memcpy (new, s, len);
 }
-#ifdef libc_hidden_def
-libc_hidden_def (__strndup)
-#endif
-#ifdef weak_alias
-weak_alias (__strndup, strndup)
-#endif
