@@ -25,11 +25,12 @@
 
 #include <errno.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 
-#include "dirchownmod.c"
+#include "dirchownmod.h"
 #include "dirname.h"
 #include "error.h"
 #include "quote.h"
