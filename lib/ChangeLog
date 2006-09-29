@@ -1,3 +1,10 @@
+2006-09-29  Bruno Haible  <bruno@clisp.org>
+
+	* fwriteerror.h (fwriteerror_no_ebadf): New declaration.
+	* (do_fwriteerror): Renamed from fwriteerror. Add ignore_ebadf
+	argument. Set stdout_closed before testing for ferror, not after.
+	(fwriteerror, fwriteerror_no_ebadf): New functions.
+
 2006-09-28  Bruno Haible  <bruno@clisp.org>
 
 	* strndup.h: Simplify the redefinition of strndup.

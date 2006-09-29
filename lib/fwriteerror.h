@@ -1,5 +1,5 @@
 /* Detect write error on a stream.
-   Copyright (C) 2003, 2005 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2005-2006 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -49,3 +49,7 @@
    For any given stream FP other than stdout, fwriteerror (FP) may only be
    called once.  */
 extern int fwriteerror (FILE *fp);
+
+/* Likewise, but don't consider it an error if FP has an invalid file
+   descriptor and no output was done to FP.  */
+extern int fwriteerror_no_ebadf (FILE *fp);

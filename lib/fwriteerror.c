@@ -24,14 +24,20 @@
 #include <errno.h>
 #include <stdbool.h>
 
-int
-fwriteerror (FILE *fp)
+static int
+do_fwriteerror (FILE *fp, bool ignore_ebadf)
 {
   /* State to allow multiple calls to fwriteerror (stdout).  */
   static bool stdout_closed = false;
 
-  if (fp == stdout && stdout_closed)
-    return 0;
+  if (fp == stdout)
+    {
+      if (stdout_closed)
+	return 0;
+
+      /* If we are closing stdout, don't attempt to do it later again.  */
+      stdout_closed = true;
+    }
 
   /* Need to
      1. test the error indicator of the stream,
@@ -56,25 +62,47 @@ fwriteerror (FILE *fp)
 	goto close_preserving_errno; /* errno is set here */
       /* Give up on errno.  */
       errno = 0;
-     close_preserving_errno:
-      /* There's an error.  Nevertheless call fclose(fp), for consistency
-	 with the other cases.  */
-      {
-	int saved_errno = errno;
-	fclose (fp);
-	errno = saved_errno;
-	return -1;
-      }
+      goto close_preserving_errno;
     }
 
-  /* If we are closing stdout, don't attempt to do it later again.  */
-  if (fp == stdout)
-    stdout_closed = true;
-
-  if (fclose (fp))
-    return -1; /* errno is set here */
+  if (ignore_ebadf)
+    {
+      /* We need an explicit fflush to tell whether some output was already
+	 done on FP.  */
+      if (fflush (fp))
+	goto close_preserving_errno; /* errno is set here */
+      if (fclose (fp) && errno != EBADF)
+	return -1; /* errno is set here */
+    }
+  else
+    {
+      if (fclose (fp))
+	return -1; /* errno is set here */
+    }
 
   return 0;
+
+ close_preserving_errno:
+  /* There's an error.  Nevertheless call fclose(fp), for consistency
+     with the other cases.  */
+  {
+    int saved_errno = errno;
+    fclose (fp);
+    errno = saved_errno;
+    return -1;
+  }
+}
+
+int
+fwriteerror (FILE *fp)
+{
+  return do_fwriteerror (fp, false);
+}
+
+int
+fwriteerror_no_ebadf (FILE *fp)
+{
+  return do_fwriteerror (fp, true);
 }
 
 
