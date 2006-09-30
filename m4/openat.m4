@@ -1,4 +1,4 @@
-#serial 10
+#serial 11
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
@@ -15,6 +15,7 @@ AC_DEFUN([gl_FUNC_OPENAT],
   AC_LIBOBJ([fchmodat])
 
   AC_LIBOBJ([openat-die])
+  AC_LIBOBJ([openat-proc])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([lchmod])
   AC_CHECK_FUNCS_ONCE([fdopendir])

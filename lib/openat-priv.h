@@ -1,5 +1,6 @@
-/* macros used by openat-like functions
-   Copyright (C) 2005 Free Software Foundation, Inc.
+/* Internals for openat-like functions.
+
+   Copyright (C) 2005, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,30 +18,11 @@
 
 /* written by Jim Meyering */
 
-#include <stdio.h>
-#include <string.h>
 #include <errno.h>
-#include "alloca.h"
-#include "intprops.h"
+#include <stdlib.h>
 
-/* Set PROC_FD_FILENAME to the expansion of "/proc/self/fd/%d/%s" in
-   alloca'd memory, using FD and FILE, respectively for %d and %s. */
-#define BUILD_PROC_NAME(Proc_fd_filename, Fd, File)			\
-  do									\
-    {									\
-      size_t filelen = strlen (File);					\
-      static const char procfd[] = "/proc/self/fd/%d/%s";		\
-      /* Buffer for the file name we are going to use.  It consists of	\
-	 - the string /proc/self/fd/					\
-	 - the file descriptor number					\
-	 - the file name provided.					\
-	 The final NUL is included in the sizeof.			\
-	 Subtract 4 to account for %d and %s.  */			\
-      size_t buflen = sizeof (procfd) - 4 + INT_STRLEN_BOUND (Fd) + filelen; \
-      (Proc_fd_filename) = alloca (buflen);				\
-      snprintf ((Proc_fd_filename), buflen, procfd, (Fd), (File));	\
-    }									\
-  while (0)
+#define OPENAT_BUFFER_SIZE 512
+char *openat_proc_name (char buf[OPENAT_BUFFER_SIZE], int fd, char const *file);
 
 /* Some systems don't have ENOSYS.  */
 #ifndef ENOSYS

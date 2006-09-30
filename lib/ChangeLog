@@ -1,3 +1,20 @@
+2006-09-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Work around bug in Solaris 10 /proc file system:
+	/proc/self/fd/NNN/.. isn't the parent directory of
+	the directory whose file descriptor is NNN.  This needs to
+	be worked around at run time, not compile time, since a
+	program might be built on Solaris 8, where things work, and
+	run on Solaris 10.
+	* openat-priv.h (BUILD_PROC_NAME): Remove.  All callers changed
+	to use the following interface instead:
+	(OPENAT_BUFFER_SIZE): New macro.
+	(openat_proc_name): New function.
+	* at-func.c (AT_FUNC_NAME): Adjust to above changes.
+	* openat.c (openat_permissive, openat_needs_fchdir, fdopendir):
+	Likewise.
+	* openat-proc.c: New file.
+
 2006-09-29  Bruno Haible  <bruno@clisp.org>
 
 	* fwriteerror.h (fwriteerror_no_ebadf): New declaration.

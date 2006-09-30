@@ -39,14 +39,25 @@ AT_FUNC_NAME (int fd, char const *file AT_FUNC_POST_FILE_PARAM_DECLS)
     return CALL_FUNC (file);
 
   {
-    char *proc_file;
-    BUILD_PROC_NAME (proc_file, fd, file);
-    err = CALL_FUNC (proc_file);
-    /* If the syscall succeeds, or if it fails with an unexpected
-       errno value, then return right away.  Otherwise, fall through
-       and resort to using save_cwd/restore_cwd.  */
-    if (0 <= err || ! EXPECTED_ERRNO (errno))
-      return err;
+    char buf[OPENAT_BUFFER_SIZE];
+    char *proc_file = openat_proc_name (buf, fd, file);
+    if (proc_file)
+      {
+	int proc_result = CALL_FUNC (proc_file);
+	int proc_errno = errno;
+	if (proc_file != buf)
+	  free (proc_file);
+	/* If the syscall succeeds, or if it fails with an unexpected
+	   errno value, then return right away.  Otherwise, fall through
+	   and resort to using save_cwd/restore_cwd.  */
+	if (0 <= proc_result)
+	  return proc_result;
+	if (! EXPECTED_ERRNO (proc_errno))
+	  {
+	    errno = proc_errno;
+	    return proc_result;
+	  }
+      }
   }
 
   if (save_cwd (&saved_cwd) != 0)

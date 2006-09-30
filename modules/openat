@@ -9,6 +9,7 @@ lib/openat.c
 lib/openat.h
 lib/openat-die.c
 lib/openat-priv.h
+lib/openat-proc.c
 m4/openat.m4
 
 Depends-on:
@@ -18,7 +19,9 @@ gettext-h
 intprops
 lchown
 lstat
+same-inode
 save-cwd
+stdbool
 
 configure.ac:
 gl_FUNC_OPENAT
