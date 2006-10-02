@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-09-26 21:01:42 $'
+cvsdatestamp='$Date: 2006-10-02 11:40:10 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1093,8 +1093,7 @@ func_emit_lib_Makefile_am ()
   fi
   echo
   if test -z "$makefile_name"; then
-    # No need to generate dependencies since the sources are in gnulib, not here.
-    echo "AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies"
+    echo "AUTOMAKE_OPTIONS = 1.5 gnits"
   fi
   echo
   (

@@ -1,3 +1,9 @@
+2006-10-02  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_lib_Makefile_am): Don't add no-dependencies
+	to the AUTOMAKE_OPTIONS.
+	Reported by Jim Meyering.
+
 2006-09-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/openat (Files): Add lib/openat-proc.c.
