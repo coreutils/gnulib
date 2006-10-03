@@ -1,3 +1,8 @@
+2006-10-02  Eric Blake  <ebb9@byu.net>
+
+	* extensions.m4 (gl_USE_SYSTEM_EXTENSIONS): Use autoconf's
+	definition in 2.60+.
+
 2006-09-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* openat.m4 (gl_FUNC_OPENAT): Add AC_LIBOBJ(openat-proc).
