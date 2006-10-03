@@ -1,3 +1,7 @@
+2006-10-02  Paolo Bonzini  <bonzini@gnu.org>  (tiny change)
+
+	* quotearg.c (mbstate_t) [!HAVE_MBRTOWC]: #define to int.
+
 2006-09-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Work around bug in Solaris 10 /proc file system:

@@ -51,6 +51,8 @@
    syntax.  */
 # undef MB_CUR_MAX
 # define MB_CUR_MAX 1
+# undef mbstate_t
+# define mbstate_t int
 # define mbrtowc(pwc, s, n, ps) ((*(pwc) = *(s)) != 0)
 # define iswprint(wc) isprint ((unsigned char) (wc))
 # undef HAVE_MBSINIT
