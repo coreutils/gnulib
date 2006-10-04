@@ -84,7 +84,7 @@ gl_array_indexof (gl_oset_t set, const void *elt)
 	  int cmp = (compar != NULL
 		     ? compar (set->elements[mid], elt)
 		     : (set->elements[mid] > elt ? 1 :
-		        set->elements[mid] < elt ? -1 : 0));
+			set->elements[mid] < elt ? -1 : 0));
 
 	  if (cmp < 0)
 	    low = mid + 1;
