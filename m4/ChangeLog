@@ -1,3 +1,13 @@
+2006-10-01  Bruno Haible  <bruno@clisp.org>
+
+	Make it possible to invoke AC_GNU_SOURCE after gl_LOCK_EARLY.
+	* lock.m4 (gl_LOCK_EARLY_BODY): New macro, extracted code from
+	gl_LOCK_BODY.
+	(gl_LOCK_EARLY): Require gl_LOCK_EARLY_BODY, not gl_LOCK_BODY.
+	(gl_LOCK_BODY): Remove settings of CPPFLAGS, now done in
+	gl_LOCK_EARLY_BODY.
+	(gl_LOCK): Require gl_LOCK_BODY.
+
 2006-10-02  Eric Blake  <ebb9@byu.net>
 
 	* extensions.m4 (gl_USE_SYSTEM_EXTENSIONS): Use autoconf's
