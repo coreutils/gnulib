@@ -1,3 +1,16 @@
+2006-10-03  Bruno Haible  <bruno@clisp.org>
+
+	* gl_oset.h (gl_setelement_threshold_fn): New type.
+	(gl_oset_search_atleast): New declaration.
+	(struct gl_oset_implementation): Add field 'search_atleast'.
+	(gl_oset_search_atleast): New inline function.
+	* gl_oset.c (gl_oset_search_atleast): New function.
+	* gl_array_oset.c (gl_array_search_atleast): New function.
+	(gl_array_oset_implementation): Update.
+	* gl_anytree_oset.h (gl_tree_search_atleast): New function.
+	* gl_avltree_oset.c (gl_avltree_oset_implementation): Update.
+	* gl_rbtree_oset.c (gl_rbtree_oset_implementation): Update.
+
 2006-10-04  Jim Meyering  <jim@meyering.net>
 
 	* fts.c (fts_open): Tiny comment change.

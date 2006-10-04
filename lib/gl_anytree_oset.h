@@ -73,6 +73,41 @@ gl_tree_search (gl_oset_t set, const void *elt)
   return false;
 }
 
+static bool
+gl_tree_search_atleast (gl_oset_t set,
+			gl_setelement_threshold_fn threshold_fn,
+			const void *threshold,
+			const void **eltp)
+{
+  gl_oset_node_t node;
+
+  for (node = set->root; node != NULL; )
+    {
+      if (! threshold_fn (node->value, threshold))
+	node = node->right;
+      else
+	{
+	  /* We have an element >= VALUE.  But we need the leftmost such
+	     element.  */
+	  gl_oset_node_t found = node;
+	  node = node->left;
+	  for (; node != NULL; )
+	    {
+	      if (! threshold_fn (node->value, threshold))
+		node = node->right;
+	      else
+		{
+		  found = node;
+		  node = node->left;
+		}
+	    }
+	  *eltp = found;
+	  return true;
+	}
+    }
+  return false;
+}
+
 static gl_oset_node_t
 gl_tree_search_node (gl_oset_t set, const void *elt)
 {

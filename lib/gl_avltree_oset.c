@@ -565,6 +565,7 @@ const struct gl_oset_implementation gl_avltree_oset_implementation =
     gl_tree_create_empty,
     gl_tree_size,
     gl_tree_search,
+    gl_tree_search_atleast,
     gl_tree_add,
     gl_tree_remove,
     gl_tree_oset_free,

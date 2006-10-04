@@ -105,6 +105,56 @@ gl_array_search (gl_oset_t set, const void *elt)
   return gl_array_indexof (set, elt) != (size_t)(-1);
 }
 
+static bool
+gl_array_search_atleast (gl_oset_t set,
+			 gl_setelement_threshold_fn threshold_fn,
+			 const void *threshold,
+			 const void **eltp)
+{
+  size_t count = set->count;
+
+  if (count > 0)
+    {
+      size_t low = 0;
+      size_t high = count;
+
+      /* At each loop iteration, low < high; for indices < low the values are
+	 smaller than THRESHOLD; for indices >= high the values are nonexistent.
+	 So, if an element >= THRESHOLD occurs in the list, it is at
+	 low <= position < high.  */
+      do
+	{
+	  size_t mid = low + (high - low) / 2; /* low <= mid < high */
+
+	  if (! threshold_fn (set->elements[mid], threshold))
+	    low = mid + 1;
+	  else
+	    {
+	      /* We have an element >= THRESHOLD at index MID.  But we need the
+		 minimal such index.  */
+	      high = mid;
+	      /* At each loop iteration, low <= high and
+		   compar (list->elements[high], value) >= 0,
+		 and we know that the first occurrence of the element is at
+		 low <= position <= high.  */
+	      while (low < high)
+		{
+		  size_t mid2 = low + (high - low) / 2; /* low <= mid2 < high */
+
+		  if (! threshold_fn (set->elements[mid2], threshold))
+		    low = mid2 + 1;
+		  else
+		    high = mid2;
+		}
+	      *eltp = set->elements[low];
+	      return true;
+	    }
+	}
+      while (low < high);
+    }
+  return false;
+}
+
 /* Ensure that set->allocated > set->count.  */
 static void
 grow (gl_oset_t set)
@@ -273,6 +323,7 @@ const struct gl_oset_implementation gl_array_oset_implementation =
     gl_array_create_empty,
     gl_array_size,
     gl_array_search,
+    gl_array_search_atleast,
     gl_array_add,
     gl_array_remove,
     gl_array_free,

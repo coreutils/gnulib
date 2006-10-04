@@ -59,6 +59,7 @@ extern "C" {
    gl_oset_add                 O(n)   O(log n)
    gl_oset_remove              O(n)   O(log n)
    gl_oset_search            O(log n) O(log n)
+   gl_oset_search_atleast    O(log n) O(log n)
    gl_oset_iterator            O(1)   O(log n)
    gl_oset_iterator_next       O(1)   O(log n)
  */
@@ -68,6 +69,10 @@ extern "C" {
 /* Type of function used to compare two elements.  Same as for qsort().
    NULL denotes pointer comparison.  */
 typedef int (*gl_setelement_compar_fn) (const void *elt1, const void *elt2);
+
+/* Type of function used to compare an element with a threshold.
+   Return true if the element is greater or equal than the threshold.  */
+typedef bool (*gl_setelement_threshold_fn) (const void *elt, const void *threshold);
 
 struct gl_oset_impl;
 /* Type representing an entire ordered set.  */
@@ -89,6 +94,16 @@ extern size_t gl_oset_size (gl_oset_t set);
 /* Search whether an element is already in the ordered set.
    Return true if found, or false if not present in the set.  */
 extern bool gl_oset_search (gl_oset_t set, const void *elt);
+
+/* Search the least element in the ordered set that compares greater or equal
+   to the given THRESHOLD.  The representation of the THRESHOLD is defined
+   by the THRESHOLD_FN.
+   Return true and store the found element in *ELTP if found, otherwise return
+   false.  */
+extern bool gl_oset_search_atleast (gl_oset_t set,
+				    gl_setelement_threshold_fn threshold_fn,
+				    const void *threshold,
+				    const void **eltp);
 
 /* Add an element to an ordered set.
    Return true if it was not already in the set and added.  */
@@ -143,6 +158,9 @@ struct gl_oset_implementation
 			     gl_setelement_compar_fn compar_fn);
   size_t (*size) (gl_oset_t set);
   bool (*search) (gl_oset_t set, const void *elt);
+  bool (*search_atleast) (gl_oset_t set,
+			  gl_setelement_threshold_fn threshold_fn,
+			  const void *threshold, const void **eltp);
   bool (*add) (gl_oset_t set, const void *elt);
   bool (*remove) (gl_oset_t set, const void *elt);
   void (*oset_free) (gl_oset_t set);
@@ -184,6 +202,16 @@ static inline bool
 gl_oset_search (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable->search (set, elt);
+}
+
+# define gl_oset_search_atleast gl_oset_search_atleast_inline
+static inline bool
+gl_oset_search_atleast (gl_oset_t set,
+			gl_setelement_threshold_fn threshold_fn,
+			const void *threshold, const void **eltp)
+{
+  return ((const struct gl_oset_impl_base *) set)->vtable
+	 ->search_atleast (set, threshold_fn, threshold, eltp);
 }
 
 # define gl_oset_add gl_oset_add_inline

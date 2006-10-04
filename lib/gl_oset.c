@@ -47,6 +47,15 @@ gl_oset_search (gl_oset_t set, const void *elt)
 }
 
 bool
+gl_oset_search_atleast (gl_oset_t set,
+			gl_setelement_threshold_fn threshold_fn,
+			const void *threshold, const void **eltp)
+{
+  return ((const struct gl_oset_impl_base *) set)->vtable
+	 ->search_atleast (set, threshold_fn, threshold, eltp);
+}
+
+bool
 gl_oset_add (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable->add (set, elt);
