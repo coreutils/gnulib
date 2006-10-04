@@ -471,7 +471,7 @@ gl_array_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
 
       /* At each loop iteration, low < high; for indices < low the values
 	 are smaller than ELT; for indices >= high the values are greater
-	 than ELT.  So, if the element occurs in the list, is at
+	 than ELT.  So, if the element occurs in the list, it is at
 	 low <= position < high.  */
       do
 	{
@@ -493,7 +493,7 @@ gl_array_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
 		 low <= position <= high.  */
 	      while (low < high)
 		{
-		  size_t mid2 = low + (high - low) / 2; /* low <= mid < high */
+		  size_t mid2 = low + (high - low) / 2; /* low <= mid2 < high */
 		  int cmp2 = compar (list->elements[mid2], elt);
 
 		  if (cmp2 < 0)

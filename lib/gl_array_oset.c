@@ -76,7 +76,7 @@ gl_array_indexof (gl_oset_t set, const void *elt)
 
       /* At each loop iteration, low < high; for indices < low the values
 	 are smaller than ELT; for indices >= high the values are greater
-	 than ELT.  So, if the element occurs in the list, is at
+	 than ELT.  So, if the element occurs in the list, it is at
 	 low <= position < high.  */
       do
 	{
@@ -173,7 +173,7 @@ gl_array_add (gl_oset_t set, const void *elt)
 
       /* At each loop iteration, low < high; for indices < low the values
 	 are smaller than ELT; for indices >= high the values are greater
-	 than ELT.  So, if the element occurs in the list, is at
+	 than ELT.  So, if the element occurs in the list, it is at
 	 low <= position < high.  */
       do
 	{
