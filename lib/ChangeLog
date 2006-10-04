@@ -1,3 +1,7 @@
+2006-10-04  Jim Meyering  <jim@meyering.net>
+
+	* fts.c (fts_open): Tiny comment change.
+
 2006-10-03  Bruno Haible  <bruno@clisp.org>
 
 	* gl_rbtreehash_list.c (gl_rbtreehash_list_implementation): Renamed

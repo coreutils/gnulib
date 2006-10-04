@@ -303,7 +303,7 @@ fts_open (char * const *argv,
 		   openat via /proc, this technique can still fail, but
 		   only in extreme conditions, e.g., when the working
 		   directory cannot be saved (i.e. save_cwd fails) --
-		   and that happens only on Linux only when "." is unreadable
+		   and that happens on Linux only when "." is unreadable
 		   and the CWD would be longer than PATH_MAX.
 		   FIXME: once Linux kernel openat support is well established,
 		   replace the above open call and this entire if/else block
