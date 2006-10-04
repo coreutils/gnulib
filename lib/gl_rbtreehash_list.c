@@ -95,7 +95,7 @@ gl_rbtreehash_list_check_invariants (gl_list_t list)
 }
 
 
-const struct gl_list_implementation gl_avltreehash_list_implementation =
+const struct gl_list_implementation gl_rbtreehash_list_implementation =
   {
     gl_tree_create_empty,
     gl_tree_create,
