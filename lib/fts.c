@@ -459,8 +459,7 @@ fts_close (FTS *sp)
 	/* Free up child linked list, sort array, file name buffer. */
 	if (sp->fts_child)
 		fts_lfree(sp->fts_child);
-	if (sp->fts_array)
-		free(sp->fts_array);
+	free(sp->fts_array);
 	free(sp->fts_path);
 
 	if (ISSET(FTS_CWDFD))
@@ -957,8 +956,7 @@ fts_build (register FTS *sp, int type)
 				 * structures already allocated.
 				 */
 mem1:				saved_errno = errno;
-				if (p)
-					free(p);
+				free(p);
 				fts_lfree(head);
 				closedir(dirp);
 				cur->fts_info = FTS_ERR;
@@ -1335,10 +1333,7 @@ fts_palloc (FTS *sp, size_t more)
 	 * See if fts_pathlen would overflow.
 	 */
 	if (new_len < sp->fts_pathlen) {
-		if (sp->fts_path) {
-			free(sp->fts_path);
-			sp->fts_path = NULL;
-		}
+		free(sp->fts_path);
 		sp->fts_path = NULL;
 		__set_errno (ENAMETOOLONG);
 		return false;

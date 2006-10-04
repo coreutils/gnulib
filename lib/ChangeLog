@@ -1,3 +1,7 @@
+2006-10-02  Dmitry V. Levin  <ldv@altlinux.org>
+
+	* fts.c (fts_close, fts_build, fts_palloc): Remove redundant checks.
+
 2006-10-02  Paolo Bonzini  <bonzini@gnu.org>  (tiny change)
 
 	* quotearg.c (mbstate_t) [!HAVE_MBRTOWC]: #define to int.
