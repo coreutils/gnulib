@@ -1,3 +1,7 @@
+2006-10-03  Bruno Haible  <bruno@clisp.org>
+
+	* gl_oset.c (gl_oset_add): Fix return type.
+
 2006-10-02  Dmitry V. Levin  <ldv@altlinux.org>
 
 	* fts.c (fts_close, fts_build, fts_palloc): Remove redundant checks.

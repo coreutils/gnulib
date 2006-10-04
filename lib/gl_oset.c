@@ -46,7 +46,7 @@ gl_oset_search (gl_oset_t set, const void *elt)
   return ((const struct gl_oset_impl_base *) set)->vtable->search (set, elt);
 }
 
-void
+bool
 gl_oset_add (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable->add (set, elt);
