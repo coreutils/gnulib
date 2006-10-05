@@ -1,5 +1,12 @@
 2006-10-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* fcntl_.h (O_NOFOLLOW): Don't depend on O_NOFOLLOW_IS_INEFFECTIVE;
+	we now test for that separately.
+	* fts.c (fts_safe_changedir): Inspect HAVE_WORKING_O_NOFOLLOW
+	rather than O_NOFOLLOW, when testing whether it's possible to
+	avoid a race condition reliably.
+	* savewd.c (savewd_chdir): Likewise.
+
 	Remove macros that are no longer needed now that stdint.h is
 	reliable.
 	* fsusage.c (UINTMAX_MAX): Remove.

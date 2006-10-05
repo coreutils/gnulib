@@ -103,7 +103,8 @@ savewd_chdir (struct savewd *wd, char const *dir, int options,
 
   /* Open the directory if requested, or if avoiding a race condition
      is requested and possible.  */
-  if (open_result || (options & (O_NOFOLLOW ? SAVEWD_CHDIR_NOFOLLOW : 0)))
+  if (open_result
+      || (options & (HAVE_WORKING_O_NOFOLLOW ? SAVEWD_CHDIR_NOFOLLOW : 0)))
     {
       fd = open (dir,
 		 (O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NONBLOCK

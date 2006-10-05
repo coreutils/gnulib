@@ -59,9 +59,6 @@
 # define O_NOCTTY 0
 #endif
 
-#ifdef O_NOFOLLOW_IS_INEFFECTIVE
-# undef O_NOFOLLOW
-#endif
 #ifndef O_NOFOLLOW
 # define O_NOFOLLOW 0
 #endif

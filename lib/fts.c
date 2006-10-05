@@ -1421,7 +1421,7 @@ fts_safe_changedir (FTS *sp, FTSENT *p, int fd, char const *dir)
 	   general (when the target is not ".."), diropen's use of
 	   O_NOFOLLOW ensures we don't mistakenly follow a symlink,
 	   so we can avoid the expense of this fstat.  */
-	if (ISSET(FTS_LOGICAL) || O_NOFOLLOW == 0
+	if (ISSET(FTS_LOGICAL) || ! HAVE_WORKING_O_NOFOLLOW
 	    || (dir && STREQ (dir, "..")))
 	  {
 	    struct stat sb;
