@@ -72,6 +72,10 @@ static int fatal_signals[] =
 #ifdef SIGXFSZ
     SIGXFSZ,
 #endif
+    /* Woe32 signals.  */
+#ifdef SIGBREAK
+    SIGBREAK,
+#endif
     0
   };
 
