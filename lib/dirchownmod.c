@@ -28,6 +28,7 @@
 #include <unistd.h>
 
 #include "lchmod.h"
+#include "lchown.h"
 #include "stat-macros.h"
 
 #ifndef HAVE_FCHMOD

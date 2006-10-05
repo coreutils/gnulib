@@ -21,16 +21,9 @@
 
 #include <config.h>
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <errno.h>
-
 #include "lchown.h"
-#include "stat-macros.h"
 
-/* Declare chown to avoid a warning.  Don't include unistd.h,
-   because it may have a conflicting prototype for lchown.  */
-int chown ();
+#include "stat-macros.h"
 
 /* Work just like chown, except when FILE is a symbolic link.
    In that case, set errno to EOPNOTSUPP and return -1.

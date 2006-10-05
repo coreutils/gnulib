@@ -1,5 +1,7 @@
 2006-10-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lchown.m4 (gl_FUNC_LCHOWN): Check whether lchown is declared.
+
 	* fcntl_h.m4 (gl_FCNTL_H): Define HAVE_WORKING_O_NOFOLLOW instead
 	of O_NOFOLLOW_IS_INEFFECTIVE.  Define HAVE_WORKING_O_NOATIME if
 	O_NOATIME works.

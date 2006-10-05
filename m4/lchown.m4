@@ -1,4 +1,4 @@
-#serial 9
+#serial 10
 
 dnl Copyright (C) 1998, 2001, 2003, 2004, 2005, 2006 Free Software
 dnl Foundation, Inc.
@@ -15,5 +15,6 @@ AC_DEFUN([gl_FUNC_LCHOWN],
   AC_REQUIRE([AC_TYPE_UID_T])
   AC_REQUIRE([gl_FUNC_CHOWN])
   AC_REQUIRE([gl_STAT_MACROS])
+  AC_CHECK_DECLS_ONCE([lchown])
   AC_REPLACE_FUNCS(lchown)
 ])

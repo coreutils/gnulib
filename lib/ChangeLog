@@ -1,5 +1,17 @@
 2006-10-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Fix some Darwin-7.9.0 porting problems reported by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-coreutils/2006-10/msg00063.html>.
+	* dirchownmod.c: Include lchown.h.
+	* lchown.c: Don't include files that lchown.h now includes.
+	Don't declare chown, since lchown.h now does that.
+	* lchown.h: Include errno.h, sys/types.h, unistd.h.
+	(lchown): Define to rpl_chown if lchown is declared but
+	does not exist.  Declare using a prototype if lchown is not
+	declared.  Add a copyright notice.
+	* mkstemp.h: Include <unistd.h>.
+	* openat.c: Include lchown.h.
+
 	* fcntl_.h (O_NOFOLLOW): Don't depend on O_NOFOLLOW_IS_INEFFECTIVE;
 	we now test for that separately.
 	* fts.c (fts_safe_changedir): Inspect HAVE_WORKING_O_NOFOLLOW

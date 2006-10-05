@@ -19,6 +19,7 @@
 /* written by Jim Meyering */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #ifdef __MKSTEMP_PREFIX
 # define _GL_CONCAT(x, y) x ## y
