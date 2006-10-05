@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2006-08-26.17}
+\def\texinfoversion{2006-10-04.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free
@@ -156,6 +156,18 @@
 % Since the category of space is not known, we have to be careful.
 \chardef\spacecat = 10
 \def\spaceisspace{\catcode`\ =\spacecat}
+
+% sometimes characters are active, so we need control sequences.
+\chardef\colonChar = `\:
+\chardef\commaChar = `\,
+\chardef\dashChar  = `\-
+\chardef\dotChar   = `\.
+\chardef\exclamChar= `\!
+\chardef\lquoteChar= `\`
+\chardef\questChar = `\?
+\chardef\rquoteChar= `\'
+\chardef\semiChar  = `\;
+\chardef\underChar = `\_
 
 % Ignore a token.
 %
@@ -1976,13 +1988,6 @@ where each line of input produces a line of output.}
 % Can't use plain's \frenchspacing because it uses the `\x notation, and
 % sometimes \x has an active definition that messes things up.
 %
-\chardef\colonChar = `\:
-\chardef\commaChar = `\,
-\chardef\dotChar   = `\.
-\chardef\exclamChar= `\!
-\chardef\questChar = `\?
-\chardef\semiChar  = `\;
-%
 \catcode`@=11
   \def\plainfrenchspacing{%
     \sfcode\dotChar  =\@m \sfcode\questChar=\@m \sfcode\exclamChar=\@m
@@ -2051,11 +2056,14 @@ where each line of input produces a line of output.}
 % and arrange explicitly to hyphenate at a dash.
 %  -- rms.
 {
-  \catcode`\-=\active \catcode`\_=\active \catcode`\'=\active
+  \catcode`\-=\active \catcode`\_=\active
+  \catcode`\'=\active \catcode`\`=\active
   %
   \global\def\code{\begingroup
-    \catcode`\-=\active  \catcode`\_=\active \catcode`\'=\active
-    \let'\singlequotechar
+    \catcode\rquoteChar=\active \catcode\lquoteChar=\active
+    \let'\codequoteright \let`\codequoteleft
+    %
+    \catcode\dashChar=\active  \catcode\underChar=\active
     \ifallowcodebreaks
      \let-\codedash
      \let_\codeunder
@@ -5410,11 +5418,23 @@ where each line of input produces a line of output.}
 % evince), the lilypond developers report.  xpdf does work with the
 % regular 0x27.  
 % 
-\def\singlequotechar{%
+\def\codequoteright{%
   \expandafter\ifx\csname SETcodequoteundirected\endcsname\relax
     '%
   \else
     \char'15
+  \fi
+}
+%
+% and a similar option for the left quote char vs. a grave accent.
+% Modern fonts display ASCII 0x60 as a grave accent, so some people like
+% the code environments to do likewise.
+% 
+\def\codequoteleft{%
+  \expandafter\ifx\csname SETcodequotebacktick\endcsname\relax
+    `%
+  \else
+    \char'22
   \fi
 }
 %
@@ -5431,12 +5451,15 @@ where each line of input produces a line of output.}
     }%
   }
   \catcode`\'=\active
-  \gdef\quoteexpand{%
-    \catcode`\'=\active
-    \def'{\singlequotechar}
-  }%
+  \gdef\rquoteexpand{\catcode\rquoteChar=\active \def'{\codequoteright}}%
+  %
+  \catcode`\`=\active
+  \gdef\lquoteexpand{\catcode\lquoteChar=\active \def`{\codequoteleft}}%
+  %
+  \gdef\quoteexpand{\rquoteexpand \lquoteexpand}%
 \endgroup
-%
+
+% start the verbatim environment.
 \def\setupverbatim{%
   \let\nonarrowing = t%
   \nonfillstart
