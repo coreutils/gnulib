@@ -215,196 +215,283 @@ gl_linked_set_at (gl_list_t list, size_t position, const void *elt)
 }
 
 static gl_list_node_t
-gl_linked_search (gl_list_t list, const void *elt)
+gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			  const void *elt)
 {
+  size_t count = list->count;
+
+  if (!(start_index <= end_index && end_index <= count))
+    /* Invalid arguments.  */
+    abort ();
+  {
 #if WITH_HASHTABLE
-  size_t hashcode =
-    (list->base.hashcode_fn != NULL
-     ? list->base.hashcode_fn (elt)
-     : (size_t)(uintptr_t) elt);
-  size_t index = hashcode % list->table_size;
-  gl_listelement_equals_fn equals = list->base.equals_fn;
+    size_t hashcode =
+      (list->base.hashcode_fn != NULL
+       ? list->base.hashcode_fn (elt)
+       : (size_t)(uintptr_t) elt);
+    size_t index = hashcode % list->table_size;
+    gl_listelement_equals_fn equals = list->base.equals_fn;
 
-  if (!list->base.allow_duplicates)
-    {
-      /* Look for the first match in the hash bucket.  */
-      gl_list_node_t node;
+    if (!list->base.allow_duplicates)
+      {
+	/* Look for the first match in the hash bucket.  */
+	gl_list_node_t found = NULL;
+	gl_list_node_t node;
 
-      for (node = (gl_list_node_t) list->table[index];
-	   node != NULL;
-	   node = (gl_list_node_t) node->h.hash_next)
-	if (node->h.hashcode == hashcode
-	    && (equals != NULL
-		? equals (elt, node->value)
-		: elt == node->value))
-	  return node;
-      return NULL;
-    }
-  else
-    {
-      /* Look whether there is more than one match in the hash bucket.  */
-      bool multiple_matches = false;
-      gl_list_node_t first_match = NULL;
-      gl_list_node_t node;
-
-      for (node = (gl_list_node_t) list->table[index];
-	   node != NULL;
-	   node = (gl_list_node_t) node->h.hash_next)
-	if (node->h.hashcode == hashcode
-	    && (equals != NULL
-		? equals (elt, node->value)
-		: elt == node->value))
-	  {
-	    if (first_match == NULL)
-	      first_match = node;
-	    else
-	      {
-		multiple_matches = true;
+	for (node = (gl_list_node_t) list->table[index];
+	     node != NULL;
+	     node = (gl_list_node_t) node->h.hash_next)
+	  if (node->h.hashcode == hashcode
+	      && (equals != NULL
+		  ? equals (elt, node->value)
+		  : elt == node->value))
+	    {
+	      found = node;
+	      break;
+	    }
+	if (start_index > 0)
+	  /* Look whether found's index is < start_index.  */
+	  for (node = list->root.next; ; node = node->next)
+	    {
+	      if (node == found)
+		return NULL;
+	      if (--start_index == 0)
 		break;
+	    }
+	if (end_index < count)
+	  /* Look whether found's index is >= end_index.  */
+	  {
+	    end_index = count - end_index;
+	    for (node = list->root.prev; ; node = node->prev)
+	      {
+		if (node == found)
+		  return NULL;
+		if (--end_index == 0)
+		  break;
 	      }
 	  }
-      if (!multiple_matches)
-	return first_match;
-      else
-	{
-	  /* We need the match with the smallest index.  But we don't have
-	     a fast mapping node -> index.  So we have to walk the list.  */
-	  for (node = list->root.next; node != &list->root; node = node->next)
-	    if (node->h.hashcode == hashcode
-		&& (equals != NULL
-		    ? equals (elt, node->value)
-		    : elt == node->value))
-	      return node;
-	  /* We know there are at least two matches.  */
-	  abort ();
-	}
-    }
-#else
-  gl_listelement_equals_fn equals = list->base.equals_fn;
-  gl_list_node_t node;
+	return found;
+      }
+    else
+      {
+	/* Look whether there is more than one match in the hash bucket.  */
+	bool multiple_matches = false;
+	gl_list_node_t first_match = NULL;
+	gl_list_node_t node;
 
-  if (equals != NULL)
-    {
-      for (node = list->root.next; node != &list->root; node = node->next)
-	if (equals (elt, node->value))
-	  return node;
-    }
-  else
-    {
-      for (node = list->root.next; node != &list->root; node = node->next)
-	if (elt == node->value)
-	  return node;
-    }
-  return NULL;
+	for (node = (gl_list_node_t) list->table[index];
+	     node != NULL;
+	     node = (gl_list_node_t) node->h.hash_next)
+	  if (node->h.hashcode == hashcode
+	      && (equals != NULL
+		  ? equals (elt, node->value)
+		  : elt == node->value))
+	    {
+	      if (first_match == NULL)
+		first_match = node;
+	      else
+		{
+		  multiple_matches = true;
+		  break;
+		}
+	    }
+	if (multiple_matches)
+	  {
+	    /* We need the match with the smallest index.  But we don't have
+	       a fast mapping node -> index.  So we have to walk the list.  */
+	    end_index -= start_index;
+	    node = list->root.next;
+	    for (; start_index > 0; start_index--)
+	      node = node->next;
+
+	    for (;
+		 end_index > 0;
+		 node = node->next, end_index--)
+	      if (node->h.hashcode == hashcode
+		  && (equals != NULL
+		      ? equals (elt, node->value)
+		      : elt == node->value))
+		return node;
+	    /* The matches must have all been at indices < start_index or
+	       >= end_index.  */
+	    return NULL;
+	  }
+	else
+	  {
+	    if (start_index > 0)
+	      /* Look whether first_match's index is < start_index.  */
+	      for (node = list->root.next; node != &list->root; node = node->next)
+		{
+		  if (node == first_match)
+		    return NULL;
+		  if (--start_index == 0)
+		    break;
+		}
+	    if (end_index < list->count)
+	      /* Look whether first_match's index is >= end_index.  */
+	      {
+		end_index = list->count - end_index;
+		for (node = list->root.prev; ; node = node->prev)
+		  {
+		    if (node == first_match)
+		      return NULL;
+		    if (--end_index == 0)
+		      break;
+		  }
+	      }
+	    return first_match;
+	  }
+      }
+#else
+    gl_listelement_equals_fn equals = list->base.equals_fn;
+    gl_list_node_t node = list->root.next;
+
+    end_index -= start_index;
+    for (; start_index > 0; start_index--)
+      node = node->next;
+
+    if (equals != NULL)
+      {
+	for (; end_index > 0; node = node->next, end_index--)
+	  if (equals (elt, node->value))
+	    return node;
+      }
+    else
+      {
+	for (; end_index > 0; node = node->next, end_index--)
+	  if (elt == node->value)
+	    return node;
+      }
+    return NULL;
 #endif
+  }
 }
 
 static size_t
-gl_linked_indexof (gl_list_t list, const void *elt)
+gl_linked_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			   const void *elt)
 {
+  size_t count = list->count;
+
+  if (!(start_index <= end_index && end_index <= count))
+    /* Invalid arguments.  */
+    abort ();
+  {
 #if WITH_HASHTABLE
-  /* Here the hash table doesn't help much.  It only allows us to minimize
-     the number of equals() calls, by looking up first the node and then
-     its index.  */
-  size_t hashcode =
-    (list->base.hashcode_fn != NULL
-     ? list->base.hashcode_fn (elt)
-     : (size_t)(uintptr_t) elt);
-  size_t index = hashcode % list->table_size;
-  gl_listelement_equals_fn equals = list->base.equals_fn;
-  gl_list_node_t node;
+    /* Here the hash table doesn't help much.  It only allows us to minimize
+       the number of equals() calls, by looking up first the node and then
+       its index.  */
+    size_t hashcode =
+      (list->base.hashcode_fn != NULL
+       ? list->base.hashcode_fn (elt)
+       : (size_t)(uintptr_t) elt);
+    size_t index = hashcode % list->table_size;
+    gl_listelement_equals_fn equals = list->base.equals_fn;
+    gl_list_node_t node;
 
-  /* First step: Look up the node.  */
-  if (!list->base.allow_duplicates)
-    {
-      /* Look for the first match in the hash bucket.  */
-      for (node = (gl_list_node_t) list->table[index];
-	   node != NULL;
-	   node = (gl_list_node_t) node->h.hash_next)
-	if (node->h.hashcode == hashcode
-	    && (equals != NULL
-		? equals (elt, node->value)
-		: elt == node->value))
-	  break;
-    }
-  else
-    {
-      /* Look whether there is more than one match in the hash bucket.  */
-      bool multiple_matches = false;
-      gl_list_node_t first_match = NULL;
+    /* First step: Look up the node.  */
+    if (!list->base.allow_duplicates)
+      {
+	/* Look for the first match in the hash bucket.  */
+	for (node = (gl_list_node_t) list->table[index];
+	     node != NULL;
+	     node = (gl_list_node_t) node->h.hash_next)
+	  if (node->h.hashcode == hashcode
+	      && (equals != NULL
+		  ? equals (elt, node->value)
+		  : elt == node->value))
+	    break;
+      }
+    else
+      {
+	/* Look whether there is more than one match in the hash bucket.  */
+	bool multiple_matches = false;
+	gl_list_node_t first_match = NULL;
 
-      for (node = (gl_list_node_t) list->table[index];
-	   node != NULL;
-	   node = (gl_list_node_t) node->h.hash_next)
-	if (node->h.hashcode == hashcode
-	    && (equals != NULL
-		? equals (elt, node->value)
-		: elt == node->value))
+	for (node = (gl_list_node_t) list->table[index];
+	     node != NULL;
+	     node = (gl_list_node_t) node->h.hash_next)
+	  if (node->h.hashcode == hashcode
+	      && (equals != NULL
+		  ? equals (elt, node->value)
+		  : elt == node->value))
+	    {
+	      if (first_match == NULL)
+		first_match = node;
+	      else
+		{
+		  multiple_matches = true;
+		  break;
+		}
+	    }
+	if (multiple_matches)
 	  {
-	    if (first_match == NULL)
-	      first_match = node;
-	    else
-	      {
-		multiple_matches = true;
-		break;
-	      }
+	    /* We need the match with the smallest index.  But we don't have
+	       a fast mapping node -> index.  So we have to walk the list.  */
+	    size_t index;
+
+	    index = start_index;
+	    node = list->root.next;
+	    for (; start_index > 0; start_index--)
+	      node = node->next;
+
+	    for (;
+		 index < end_index;
+		 node = node->next, index++)
+	      if (node->h.hashcode == hashcode
+		  && (equals != NULL
+		      ? equals (elt, node->value)
+		      : elt == node->value))
+		return index;
+	    /* The matches must have all been at indices < start_index or
+	       >= end_index.  */
+	    return (size_t)(-1);
 	  }
-      if (multiple_matches)
-	{
-	  /* We need the match with the smallest index.  But we don't have
-	     a fast mapping node -> index.  So we have to walk the list.  */
-	  size_t index;
+	node = first_match;
+      }
 
-	  for (node = list->root.next, index = 0;
-	       node != &list->root;
-	       node = node->next, index++)
-	    if (node->h.hashcode == hashcode
-		&& (equals != NULL
-		    ? equals (elt, node->value)
-		    : elt == node->value))
-	      return index;
-	  /* We know there are at least two matches.  */
-	  abort ();
-	}
-      node = first_match;
-    }
+    /* Second step: Look up the index of the node.  */
+    if (node == NULL)
+      return (size_t)(-1);
+    else
+      {
+	size_t index = 0;
 
-  /* Second step: Look up the index of the node.  */
-  if (node == NULL)
-    return (size_t)(-1);
-  else
-    {
-      size_t index = 0;
+	for (; node->prev != &list->root; node = node->prev)
+	  index++;
 
-      for (; node->prev != &list->root; node = node->prev)
-	index++;
-
-      return index;
-    }
+	if (index >= start_index && index < end_index)
+	  return index;
+	else
+	  return (size_t)(-1);
+      }
 #else
-  gl_listelement_equals_fn equals = list->base.equals_fn;
-  gl_list_node_t node;
+    gl_listelement_equals_fn equals = list->base.equals_fn;
+    size_t index = start_index;
+    gl_list_node_t node = list->root.next;
 
-  if (equals != NULL)
-    {
-      size_t index;
-      for (node = list->root.next, index = 0;
-	   node != &list->root;
-	   node = node->next, index++)
-	if (equals (elt, node->value))
-	  return index;
-    }
-  else
-    {
-      size_t index;
-      for (node = list->root.next, index = 0;
-	   node != &list->root;
-	   node = node->next, index++)
-	if (elt == node->value)
-	  return index;
-    }
-  return (size_t)(-1);
+    for (; start_index > 0; start_index--)
+      node = node->next;
+
+    if (equals != NULL)
+      {
+	for (;
+	     index < end_index;
+	     node = node->next, index++)
+	  if (equals (elt, node->value))
+	    return index;
+      }
+    else
+      {
+	for (;
+	     index < end_index;
+	     node = node->next, index++)
+	  if (elt == node->value)
+	    return index;
+      }
+    return (size_t)(-1);
 #endif
+  }
 }
 
 static gl_list_node_t
@@ -661,7 +748,7 @@ gl_linked_remove_at (gl_list_t list, size_t position)
 static bool
 gl_linked_remove (gl_list_t list, const void *elt)
 {
-  gl_list_node_t node = gl_linked_search (list, elt);
+  gl_list_node_t node = gl_linked_search_from_to (list, 0, list->count, elt);
 
   if (node != NULL)
     return gl_linked_remove_node (list, node);

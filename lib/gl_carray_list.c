@@ -185,16 +185,22 @@ gl_carray_set_at (gl_list_t list, size_t position, const void *elt)
 }
 
 static size_t
-gl_carray_indexof (gl_list_t list, const void *elt)
+gl_carray_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			   const void *elt)
 {
   size_t count = list->count;
-  if (count > 0)
+
+  if (!(start_index <= end_index && end_index <= count))
+    /* Invalid arguments.  */
+    abort ();
+
+  if (start_index < end_index)
     {
       gl_listelement_equals_fn equals = list->base.equals_fn;
       size_t allocated = list->allocated;
       size_t i_end;
 
-      i_end = list->offset + list->count;
+      i_end = list->offset + end_index;
       if (i_end >= allocated)
 	i_end -= allocated;
 
@@ -202,7 +208,11 @@ gl_carray_indexof (gl_list_t list, const void *elt)
 	{
 	  size_t i;
 
-	  for (i = list->offset;;)
+	  i = list->offset + start_index;
+	  if (i >= allocated) /* can only happen if start_index > 0 */
+	    i -= allocated;
+
+	  for (;;)
 	    {
 	      if (equals (elt, list->elements[i]))
 		return (i >= list->offset ? i : i + allocated) - list->offset;
@@ -217,7 +227,11 @@ gl_carray_indexof (gl_list_t list, const void *elt)
 	{
 	  size_t i;
 
-	  for (i = list->offset;;)
+	  i = list->offset + start_index;
+	  if (i >= allocated) /* can only happen if start_index > 0 */
+	    i -= allocated;
+
+	  for (;;)
 	    {
 	      if (elt == list->elements[i])
 		return (i >= list->offset ? i : i + allocated) - list->offset;
@@ -233,9 +247,10 @@ gl_carray_indexof (gl_list_t list, const void *elt)
 }
 
 static gl_list_node_t
-gl_carray_search (gl_list_t list, const void *elt)
+gl_carray_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			  const void *elt)
 {
-  size_t index = gl_carray_indexof (list, elt);
+  size_t index = gl_carray_indexof_from_to (list, start_index, end_index, elt);
   return INDEX_TO_NODE (index);
 }
 
@@ -501,7 +516,7 @@ gl_carray_remove_node (gl_list_t list, gl_list_node_t node)
 static bool
 gl_carray_remove (gl_list_t list, const void *elt)
 {
-  size_t position = gl_carray_indexof (list, elt);
+  size_t position = gl_carray_indexof_from_to (list, 0, list->count, elt);
   if (position == (size_t)(-1))
     return false;
   else
@@ -732,8 +747,8 @@ const struct gl_list_implementation gl_carray_list_implementation =
     gl_carray_previous_node,
     gl_carray_get_at,
     gl_carray_set_at,
-    gl_carray_search,
-    gl_carray_indexof,
+    gl_carray_search_from_to,
+    gl_carray_indexof_from_to,
     gl_carray_add_first,
     gl_carray_add_last,
     gl_carray_add_before,

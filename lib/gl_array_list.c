@@ -167,22 +167,28 @@ gl_array_set_at (gl_list_t list, size_t position, const void *elt)
 }
 
 static size_t
-gl_array_indexof (gl_list_t list, const void *elt)
+gl_array_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			  const void *elt)
 {
   size_t count = list->count;
-  if (count > 0)
+
+  if (!(start_index <= end_index && end_index <= count))
+    /* Invalid arguments.  */
+    abort ();
+
+  if (start_index < end_index)
     {
       gl_listelement_equals_fn equals = list->base.equals_fn;
       if (equals != NULL)
 	{
 	  size_t i;
 
-	  for (i = 0;;)
+	  for (i = start_index;;)
 	    {
 	      if (equals (elt, list->elements[i]))
 		return i;
 	      i++;
-	      if (i == count)
+	      if (i == end_index)
 		break;
 	    }
 	}
@@ -190,12 +196,12 @@ gl_array_indexof (gl_list_t list, const void *elt)
 	{
 	  size_t i;
 
-	  for (i = 0;;)
+	  for (i = start_index;;)
 	    {
 	      if (elt == list->elements[i])
 		return i;
 	      i++;
-	      if (i == count)
+	      if (i == end_index)
 		break;
 	    }
 	}
@@ -204,9 +210,10 @@ gl_array_indexof (gl_list_t list, const void *elt)
 }
 
 static gl_list_node_t
-gl_array_search (gl_list_t list, const void *elt)
+gl_array_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			 const void *elt)
 {
-  size_t index = gl_array_indexof (list, elt);
+  size_t index = gl_array_indexof_from_to (list, start_index, end_index, elt);
   return INDEX_TO_NODE (index);
 }
 
@@ -367,7 +374,7 @@ gl_array_remove_at (gl_list_t list, size_t position)
 static bool
 gl_array_remove (gl_list_t list, const void *elt)
 {
-  size_t position = gl_array_indexof (list, elt);
+  size_t position = gl_array_indexof_from_to (list, 0, list->count, elt);
   if (position == (size_t)(-1))
     return false;
   else
@@ -575,8 +582,8 @@ const struct gl_list_implementation gl_array_list_implementation =
     gl_array_previous_node,
     gl_array_get_at,
     gl_array_set_at,
-    gl_array_search,
-    gl_array_indexof,
+    gl_array_search_from_to,
+    gl_array_indexof_from_to,
     gl_array_add_first,
     gl_array_add_last,
     gl_array_add_before,

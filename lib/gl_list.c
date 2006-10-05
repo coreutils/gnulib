@@ -93,15 +93,47 @@ gl_list_set_at (gl_list_t list, size_t position, const void *elt)
 gl_list_node_t
 gl_list_search (gl_list_t list, const void *elt)
 {
+  size_t size = ((const struct gl_list_impl_base *) list)->vtable->size (list);
   return ((const struct gl_list_impl_base *) list)->vtable
-	 ->search (list, elt);
+	 ->search_from_to (list, 0, size, elt);
+}
+
+gl_list_node_t
+gl_list_search_from (gl_list_t list, size_t start_index, const void *elt)
+{
+  size_t size = ((const struct gl_list_impl_base *) list)->vtable->size (list);
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->search_from_to (list, start_index, size, elt);
+}
+
+gl_list_node_t
+gl_list_search_from_to (gl_list_t list, size_t start_index, size_t end_index, const void *elt)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->search_from_to (list, start_index, end_index, elt);
 }
 
 size_t
 gl_list_indexof (gl_list_t list, const void *elt)
 {
+  size_t size = ((const struct gl_list_impl_base *) list)->vtable->size (list);
   return ((const struct gl_list_impl_base *) list)->vtable
-	 ->indexof (list, elt);
+	 ->indexof_from_to (list, 0, size, elt);
+}
+
+size_t
+gl_list_indexof_from (gl_list_t list, size_t start_index, const void *elt)
+{
+  size_t size = ((const struct gl_list_impl_base *) list)->vtable->size (list);
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->indexof_from_to (list, start_index, size, elt);
+}
+
+size_t
+gl_list_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index, const void *elt)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->indexof_from_to (list, start_index, end_index, elt);
 }
 
 gl_list_node_t

@@ -23,7 +23,7 @@
 typedef struct
 {
   gl_list_node_t node;
-  bool rightp;
+  size_t rightp;
 } iterstack_item_t;
 
 /* A stack used for iterating across the elements.  */

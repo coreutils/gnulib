@@ -19,61 +19,121 @@
 /* Common code of gl_avltreehash_list.c and gl_rbtreehash_list.c.  */
 
 static gl_list_node_t
-gl_tree_search (gl_list_t list, const void *elt)
+gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			const void *elt)
 {
-  size_t hashcode =
-    (list->base.hashcode_fn != NULL
-     ? list->base.hashcode_fn (elt)
-     : (size_t)(uintptr_t) elt);
-  size_t index = hashcode % list->table_size;
-  gl_listelement_equals_fn equals = list->base.equals_fn;
-  gl_hash_entry_t entry;
+  if (!(start_index <= end_index
+	&& end_index <= (list->root != NULL ? list->root->branch_size : 0)))
+    /* Invalid arguments.  */
+    abort ();
+  {
+    size_t hashcode =
+      (list->base.hashcode_fn != NULL
+       ? list->base.hashcode_fn (elt)
+       : (size_t)(uintptr_t) elt);
+    size_t index = hashcode % list->table_size;
+    gl_listelement_equals_fn equals = list->base.equals_fn;
+    gl_hash_entry_t entry;
 
-  if (list->base.allow_duplicates)
-    {
-      for (entry = list->table[index]; entry != NULL; entry = entry->hash_next)
-	if (entry->hashcode == hashcode)
-	  {
-	    if (((struct gl_multiple_nodes *) entry)->magic == MULTIPLE_NODES_MAGIC)
-	      {
-		/* An entry representing multiple nodes.  */
-		gl_oset_t nodes = ((struct gl_multiple_nodes *) entry)->nodes;
-		/* Only the first node is interesting.  */
-		gl_list_node_t node = gl_oset_first (nodes);
-		if (equals != NULL ? equals (elt, node->value) : elt == node->value)
-		  /* All nodes in the entry are equal to the given ELT.
-		     But we have to return only the one at the minimal position,
-		     and this is the first one in the ordered set.  */
-		  return node;
-	      }
-	    else
-	      {
-		/* An entry representing a single node.  */
-		gl_list_node_t node = (struct gl_list_node_impl *) entry;
-		if (equals != NULL ? equals (elt, node->value) : elt == node->value)
-		  return node;
-	      }
-	  }
-    }
-  else
-    {
-      /* If no duplicates are allowed, multiple nodes are not needed.  */
-      for (entry = list->table[index]; entry != NULL; entry = entry->hash_next)
-	if (entry->hashcode == hashcode)
-	  {
-	    gl_list_node_t node = (struct gl_list_node_impl *) entry;
-	    if (equals != NULL ? equals (elt, node->value) : elt == node->value)
-	      return node;
-	  }
-    }
+    if (list->base.allow_duplicates)
+      {
+	for (entry = list->table[index]; entry != NULL; entry = entry->hash_next)
+	  if (entry->hashcode == hashcode)
+	    {
+	      if (((struct gl_multiple_nodes *) entry)->magic == MULTIPLE_NODES_MAGIC)
+		{
+		  /* An entry representing multiple nodes.  */
+		  gl_oset_t nodes = ((struct gl_multiple_nodes *) entry)->nodes;
+		  /* The first node is interesting.  */
+		  gl_list_node_t node = gl_oset_first (nodes);
+		  if (equals != NULL ? equals (elt, node->value) : elt == node->value)
+		    {
+		      /* All nodes in the entry are equal to the given ELT.  */
+		      if (start_index == 0)
+			{
+			  /* We have to return only the one at the minimal
+			     position, and this is the first one in the ordered
+			     set.  */
+			  if (end_index == list->root->branch_size
+			      || node_position (node) < end_index)
+			    return node;
+			}
+		      else
+			{
+			  /* We have to return only the one at the minimal
+			     position >= start_index.  */
+			  const void *elt;
+			  if (gl_oset_search_atleast (nodes,
+						      compare_position_threshold,
+						      (void *)(uintptr_t)start_index,
+						      &elt))
+			    {
+			      node = (gl_list_node_t) elt;
+			      if (end_index == list->root->branch_size
+				  || node_position (node) < end_index)
+				return node;
+			    }
+			}
+		      break;
+		    }
+		}
+	      else
+		{
+		  /* An entry representing a single node.  */
+		  gl_list_node_t node = (struct gl_list_node_impl *) entry;
+		  if (equals != NULL ? equals (elt, node->value) : elt == node->value)
+		    {
+		      bool position_in_bounds;
+		      if (start_index == 0 && end_index == list->root->branch_size)
+			position_in_bounds = true;
+		      else
+			{
+			  size_t position = node_position (node);
+			  position_in_bounds =
+			    (position >= start_index && position < end_index);
+			}
+		      if (position_in_bounds)
+			return node;
+		      break;
+		    }
+		}
+	    }
+      }
+    else
+      {
+	/* If no duplicates are allowed, multiple nodes are not needed.  */
+	for (entry = list->table[index]; entry != NULL; entry = entry->hash_next)
+	  if (entry->hashcode == hashcode)
+	    {
+	      gl_list_node_t node = (struct gl_list_node_impl *) entry;
+	      if (equals != NULL ? equals (elt, node->value) : elt == node->value)
+		{
+		  bool position_in_bounds;
+		  if (start_index == 0 && end_index == list->root->branch_size)
+		    position_in_bounds = true;
+		  else
+		    {
+		      size_t position = node_position (node);
+		      position_in_bounds =
+			(position >= start_index && position < end_index);
+		    }
+		  if (position_in_bounds)
+		    return node;
+		  break;
+		}
+	    }
+      }
 
-  return NULL;
+    return NULL;
+  }
 }
 
 static size_t
-gl_tree_indexof (gl_list_t list, const void *elt)
+gl_tree_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			 const void *elt)
 {
-  gl_list_node_t node = gl_tree_search (list, elt);
+  gl_list_node_t node =
+    gl_tree_search_from_to (list, start_index, end_index, elt);
 
   if (node != NULL)
     return node_position (node);

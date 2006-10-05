@@ -78,6 +78,15 @@ compare_by_position (const void *x1, const void *x2)
 	  position1 < position2 ? -1 : 0);
 }
 
+/* Compares a node's position in the tree with a given threshold.  */
+static bool
+compare_position_threshold (const void *x, const void *threshold)
+{
+  gl_list_node_t node = (gl_list_node_t) x;
+  size_t position = node_position (node);
+  return (position >= (uintptr_t)threshold);
+}
+
 /* Return the first element of a non-empty ordered set of nodes.  */
 static inline gl_list_node_t
 gl_oset_first (gl_oset_t set)

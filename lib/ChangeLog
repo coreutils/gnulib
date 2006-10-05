@@ -1,3 +1,51 @@
+2006-10-03  Bruno Haible  <bruno@clisp.org>
+
+	* gl_list.h (gl_list_search_from, gl_list_search_from_to,
+	gl_list_indexof_from, gl_list_indexof_from_to): New declarations.
+	(struct gl_list_implementation): Add fields search_from_to,
+	indexof_from_to. Remove fields search, indexof.
+	(gl_list_search): Use the search_from_to method.
+	(gl_list_search_from, gl_list_search_from_to): New functions.
+	(gl_list_indexof): Use the indexof_from_to method.
+	(gl_list_indexof_from, gl_list_indexof_from_to): New functions.
+	* gl_list.c (gl_list_search): Use the search_from_to method.
+	(gl_list_search_from, gl_list_search_from_to): New functions.
+	(gl_list_indexof): Use the indexof_from_to method.
+	(gl_list_indexof_from, gl_list_indexof_from_to): New functions.
+	* gl_array_list.c (gl_array_indexof_from_to): Renamed from
+	gl_array_indexof. Add start_index, end_index arguments.
+	(gl_array_search_from_to): Renamed from gl_array_search. Add
+	start_index, end_index arguments.
+	(gl_array_remove, gl_array_list_implementation): Update.
+	* gl_carray_list.c (gl_carray_indexof_from_to): Renamed from
+	gl_carray_indexof. Add start_index, end_index arguments.
+	(gl_carray_search_from_to): Renamed from gl_carray_search. Add
+	start_index, end_index arguments.
+	(gl_carray_remove, gl_carray_list_implementation): Update.
+	* gl_anylinked_list2.h (gl_linked_search_from_to): Renamed from
+	gl_linked_search. Add start_index, end_index arguments.
+	(gl_linked_indexof_from_to): Renamed from gl_linked_indexof. Add
+	start_index, end_index arguments.
+	(gl_linked_remove): Update.
+	* gl_linked_list.c (gl_linked_list_implementation): Update.
+	* gl_linkedhash_list.c (gl_linkedhash_list_implementation): Update.
+	* gl_anytree_list1.h (iterstack_item_t): Change type of 'rightp' field
+	to 'size_t'.
+	* gl_anytree_list2.h (gl_tree_search_from_to): Renamed from
+	gl_tree_search. Add start_index, end_index arguments.
+	(gl_tree_indexof_from_to): Renamed from gl_tree_indexof. Add
+	start_index, end_index arguments.
+	(gl_tree_remove): Update.
+	* gl_avltree_list.c (gl_avltree_list_implementation): Update.
+	* gl_rbtree_list.c (gl_rbtree_list_implementation): Update.
+	* gl_anytreehash_list1.h (compare_position_threshold): New function.
+	* gl_anytreehash_list2.h (gl_tree_search_from_to): Renamed from
+	gl_tree_search. Add start_index, end_index arguments.
+	(gl_tree_indexof_from_to): Renamed from gl_tree_indexof. Add
+	start_index, end_index arguments.
+	* gl_avltreehash_list.c (gl_avltreehash_list_implementation): Update.
+	* gl_rbtreehash_list.c (gl_rbtreehash_list_implementation): Update.
+
 2006-10-04  Bruno Haible  <bruno@clisp.org>
 
 	* fatal-signal.c (fatal_signals) [WOE32]: Add the SIGBREAK signal.

@@ -68,7 +68,11 @@ extern "C" {
    gl_list_get_at              O(1)     O(n)   O(log n)    O(n)       O(log n)
    gl_list_set_at              O(1)     O(n)   O(log n)    O(n)    O((log n)²)/O(log n)
    gl_list_search              O(n)     O(n)     O(n)    O(n)/O(1)    O(log n)/O(1)
+   gl_list_search_from         O(n)     O(n)     O(n)    O(n)/O(1) O((log n)²)/O(log n)
+   gl_list_search_from_to      O(n)     O(n)     O(n)    O(n)/O(1) O((log n)²)/O(log n)
    gl_list_indexof             O(n)     O(n)     O(n)      O(n)       O(log n)
+   gl_list_indexof_from        O(n)     O(n)     O(n)      O(n)    O((log n)²)/O(log n)
+   gl_list_indexof_from_to     O(n)     O(n)     O(n)      O(n)    O((log n)²)/O(log n)
    gl_list_add_first         O(n)/O(1)  O(1)   O(log n)    O(1)    O((log n)²)/O(log n)
    gl_list_add_last            O(1)     O(1)   O(log n)    O(1)    O((log n)²)/O(log n)
    gl_list_add_before          O(n)     O(1)   O(log n)    O(1)    O((log n)²)/O(log n)
@@ -167,9 +171,36 @@ extern gl_list_node_t gl_list_set_at (gl_list_t list, size_t position,
    Return its node if found, or NULL if not present in the list.  */
 extern gl_list_node_t gl_list_search (gl_list_t list, const void *elt);
 
+/* Search whether an element is already in the list,
+   at a position >= START_INDEX.
+   Return its node if found, or NULL if not present in the list.  */
+extern gl_list_node_t gl_list_search_from (gl_list_t list, size_t start_index,
+					   const void *elt);
+
+/* Search whether an element is already in the list,
+   at a position >= START_INDEX and < END_INDEX.
+   Return its node if found, or NULL if not present in the list.  */
+extern gl_list_node_t gl_list_search_from_to (gl_list_t list,
+					      size_t start_index,
+					      size_t end_index,
+					      const void *elt);
+
 /* Search whether an element is already in the list.
    Return its position if found, or (size_t)(-1) if not present in the list.  */
 extern size_t gl_list_indexof (gl_list_t list, const void *elt);
+
+/* Search whether an element is already in the list,
+   at a position >= START_INDEX.
+   Return its position if found, or (size_t)(-1) if not present in the list.  */
+extern size_t gl_list_indexof_from (gl_list_t list, size_t start_index,
+				    const void *elt);
+
+/* Search whether an element is already in the list,
+   at a position >= START_INDEX and < END_INDEX.
+   Return its position if found, or (size_t)(-1) if not present in the list.  */
+extern size_t gl_list_indexof_from_to (gl_list_t list,
+				       size_t start_index, size_t end_index,
+				       const void *elt);
 
 /* Add an element as the first element of the list.
    Return its node.  */
@@ -315,8 +346,10 @@ struct gl_list_implementation
   gl_list_node_t (*previous_node) (gl_list_t list, gl_list_node_t node);
   const void * (*get_at) (gl_list_t list, size_t position);
   gl_list_node_t (*set_at) (gl_list_t list, size_t position, const void *elt);
-  gl_list_node_t (*search) (gl_list_t list, const void *elt);
-  size_t (*indexof) (gl_list_t list, const void *elt);
+  gl_list_node_t (*search_from_to) (gl_list_t list, size_t start_index,
+				    size_t end_index, const void *elt);
+  size_t (*indexof_from_to) (gl_list_t list, size_t start_index,
+			     size_t end_index, const void *elt);
   gl_list_node_t (*add_first) (gl_list_t list, const void *elt);
   gl_list_node_t (*add_last) (gl_list_t list, const void *elt);
   gl_list_node_t (*add_before) (gl_list_t list, gl_list_node_t node,
@@ -441,16 +474,54 @@ gl_list_set_at (gl_list_t list, size_t position, const void *elt)
 static inline gl_list_node_t
 gl_list_search (gl_list_t list, const void *elt)
 {
+  size_t size = ((const struct gl_list_impl_base *) list)->vtable->size (list);
   return ((const struct gl_list_impl_base *) list)->vtable
-	 ->search (list, elt);
+	 ->search_from_to (list, 0, size, elt);
+}
+
+# define gl_list_search_from gl_list_search_from_inline
+static inline gl_list_node_t
+gl_list_search_from (gl_list_t list, size_t start_index, const void *elt)
+{
+  size_t size = ((const struct gl_list_impl_base *) list)->vtable->size (list);
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->search_from_to (list, start_index, size, elt);
+}
+
+# define gl_list_search_from_to gl_list_search_from_to_inline
+static inline gl_list_node_t
+gl_list_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			const void *elt)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->search_from_to (list, start_index, end_index, elt);
 }
 
 # define gl_list_indexof gl_list_indexof_inline
 static inline size_t
 gl_list_indexof (gl_list_t list, const void *elt)
 {
+  size_t size = ((const struct gl_list_impl_base *) list)->vtable->size (list);
   return ((const struct gl_list_impl_base *) list)->vtable
-	 ->indexof (list, elt);
+	 ->indexof_from_to (list, 0, size, elt);
+}
+
+# define gl_list_indexof_from gl_list_indexof_from_inline
+static inline size_t
+gl_list_indexof_from (gl_list_t list, size_t start_index, const void *elt)
+{
+  size_t size = ((const struct gl_list_impl_base *) list)->vtable->size (list);
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->indexof_from_to (list, start_index, size, elt);
+}
+
+# define gl_list_indexof_from_to gl_list_indexof_from_to_inline
+static inline size_t
+gl_list_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			 const void *elt)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->indexof_from_to (list, start_index, end_index, elt);
 }
 
 # define gl_list_add_first gl_list_add_first_inline

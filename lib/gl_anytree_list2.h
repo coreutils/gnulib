@@ -164,87 +164,225 @@ gl_tree_set_at (gl_list_t list, size_t position, const void *elt)
 #if !WITH_HASHTABLE
 
 static gl_list_node_t
-gl_tree_search (gl_list_t list, const void *elt)
+gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			const void *elt)
 {
-  gl_listelement_equals_fn equals = list->base.equals_fn;
-  /* Iterate across all elements.  */
-  gl_list_node_t node = list->root;
-  iterstack_t stack;
-  iterstack_item_t *stack_ptr = &stack[0];
+  if (!(start_index <= end_index
+	&& end_index <= (list->root != NULL ? list->root->branch_size : 0)))
+    /* Invalid arguments.  */
+    abort ();
+  {
+    gl_listelement_equals_fn equals = list->base.equals_fn;
+    /* Iterate across all elements.  */
+    gl_list_node_t node = list->root;
+    iterstack_t stack;
+    iterstack_item_t *stack_ptr = &stack[0];
+    size_t index = 0;
 
-  for (;;)
-    {
-      /* Descend on left branch.  */
-      for (;;)
-	{
-	  if (node == NULL)
-	    break;
-	  stack_ptr->node = node;
-	  stack_ptr->rightp = false;
-	  node = node->left;
-	  stack_ptr++;
-	}
-      /* Climb up again.  */
-      for (;;)
-	{
-	  if (stack_ptr == &stack[0])
-	    return NULL;
-	  stack_ptr--;
-	  if (!stack_ptr->rightp)
-	    break;
-	}
-      node = stack_ptr->node;
-      /* Test against current element.  */
-      if (equals != NULL ? equals (elt, node->value) : elt == node->value)
-	return node;
-      /* Descend on right branch.  */
-      stack_ptr->rightp = true;
-      node = node->right;
-      stack_ptr++;
-    }
+    if (start_index == 0)
+      {
+	/* Consider all elements.  */
+	for (;;)
+	  {
+	    /* Descend on left branch.  */
+	    for (;;)
+	      {
+		if (node == NULL)
+		  break;
+		stack_ptr->node = node;
+		stack_ptr->rightp = 0;
+		node = node->left;
+		stack_ptr++;
+	      }
+	    /* Climb up again.  */
+	    for (;;)
+	      {
+		if (stack_ptr == &stack[0])
+		  return NULL;
+		stack_ptr--;
+		if (!stack_ptr->rightp)
+		  break;
+	      }
+	    node = stack_ptr->node;
+	    /* Test against current element.  */
+	    if (equals != NULL ? equals (elt, node->value) : elt == node->value)
+	      return node;
+	    index++;
+	    if (index >= end_index)
+	      return NULL;
+	    /* Descend on right branch.  */
+	    stack_ptr->rightp = 1;
+	    node = node->right;
+	    stack_ptr++;
+	  }
+      }
+    else
+      {
+	/* Consider only elements at indices >= start_index.
+	   In this case, rightp contains the difference between the start_index
+	   for the parent node and the one for the child node (0 when the child
+	   node is the parent's left child, > 0 when the child is the parent's
+	   right child).  */
+	for (;;)
+	  {
+	    /* Descend on left branch.  */
+	    for (;;)
+	      {
+		if (node == NULL)
+		  break;
+		if (node->branch_size <= start_index)
+		  break;
+		stack_ptr->node = node;
+		stack_ptr->rightp = 0;
+		node = node->left;
+		stack_ptr++;
+	      }
+	    /* Climb up again.  */
+	    for (;;)
+	      {
+		if (stack_ptr == &stack[0])
+		  return NULL;
+		stack_ptr--;
+		if (!stack_ptr->rightp)
+		  break;
+		start_index += stack_ptr->rightp;
+	      }
+	    node = stack_ptr->node;
+	    {
+	      size_t left_branch_size1 =
+		(node->left != NULL ? node->left->branch_size : 0) + 1;
+	      if (start_index < left_branch_size1)
+		{
+		  /* Test against current element.  */
+		  if (equals != NULL ? equals (elt, node->value) : elt == node->value)
+		    return node;
+		  /* Now that we have considered all indices < left_branch_size1,
+		     we can increment start_index.  */
+		  start_index = left_branch_size1;
+		}
+	      index++;
+	      if (index >= end_index)
+		return NULL;
+	      /* Descend on right branch.  */
+	      start_index -= left_branch_size1;
+	      stack_ptr->rightp = left_branch_size1;
+	    }
+	    node = node->right;
+	    stack_ptr++;
+	  }
+      }
+  }
 }
 
 static size_t
-gl_tree_indexof (gl_list_t list, const void *elt)
+gl_tree_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
+			 const void *elt)
 {
-  gl_listelement_equals_fn equals = list->base.equals_fn;
-  /* Iterate across all elements.  */
-  gl_list_node_t node = list->root;
-  iterstack_t stack;
-  iterstack_item_t *stack_ptr = &stack[0];
-  size_t index = 0;
+  if (!(start_index <= end_index
+	&& end_index <= (list->root != NULL ? list->root->branch_size : 0)))
+    /* Invalid arguments.  */
+    abort ();
+  {
+    gl_listelement_equals_fn equals = list->base.equals_fn;
+    /* Iterate across all elements.  */
+    gl_list_node_t node = list->root;
+    iterstack_t stack;
+    iterstack_item_t *stack_ptr = &stack[0];
+    size_t index = 0;
 
-  for (;;)
-    {
-      /* Descend on left branch.  */
-      for (;;)
-	{
-	  if (node == NULL)
-	    break;
-	  stack_ptr->node = node;
-	  stack_ptr->rightp = false;
-	  node = node->left;
-	  stack_ptr++;
-	}
-      /* Climb up again.  */
-      for (;;)
-	{
-	  if (stack_ptr == &stack[0])
-	    return (size_t)(-1);
-	  stack_ptr--;
-	  if (!stack_ptr->rightp)
-	    break;
-	}
-      node = stack_ptr->node;
-      /* Test against current element.  */
-      if (equals != NULL ? equals (elt, node->value) : elt == node->value)
-	return index;
-      index++;
-      /* Descend on right branch.  */
-      stack_ptr->rightp = true;
-      node = node->right;
-      stack_ptr++;
-    }
+    if (start_index == 0)
+      {
+	/* Consider all elements.  */
+	for (;;)
+	  {
+	    /* Descend on left branch.  */
+	    for (;;)
+	      {
+		if (node == NULL)
+		  break;
+		stack_ptr->node = node;
+		stack_ptr->rightp = 0;
+		node = node->left;
+		stack_ptr++;
+	      }
+	    /* Climb up again.  */
+	    for (;;)
+	      {
+		if (stack_ptr == &stack[0])
+		  return (size_t)(-1);
+		stack_ptr--;
+		if (!stack_ptr->rightp)
+		  break;
+	      }
+	    node = stack_ptr->node;
+	    /* Test against current element.  */
+	    if (equals != NULL ? equals (elt, node->value) : elt == node->value)
+	      return index;
+	    index++;
+	    if (index >= end_index)
+	      return (size_t)(-1);
+	    /* Descend on right branch.  */
+	    stack_ptr->rightp = 1;
+	    node = node->right;
+	    stack_ptr++;
+	  }
+      }
+    else
+      {
+	/* Consider only elements at indices >= start_index.
+	   In this case, rightp contains the difference between the start_index
+	   for the parent node and the one for the child node (0 when the child
+	   node is the parent's left child, > 0 when the child is the parent's
+	   right child).  */
+	for (;;)
+	  {
+	    /* Descend on left branch.  */
+	    for (;;)
+	      {
+		if (node == NULL)
+		  break;
+		if (node->branch_size <= start_index)
+		  break;
+		stack_ptr->node = node;
+		stack_ptr->rightp = 0;
+		node = node->left;
+		stack_ptr++;
+	      }
+	    /* Climb up again.  */
+	    for (;;)
+	      {
+		if (stack_ptr == &stack[0])
+		  return (size_t)(-1);
+		stack_ptr--;
+		if (!stack_ptr->rightp)
+		  break;
+		start_index += stack_ptr->rightp;
+	      }
+	    node = stack_ptr->node;
+	    {
+	      size_t left_branch_size1 =
+		(node->left != NULL ? node->left->branch_size : 0) + 1;
+	      if (start_index < left_branch_size1)
+		{
+		  /* Test against current element.  */
+		  if (equals != NULL ? equals (elt, node->value) : elt == node->value)
+		    return index;
+		  /* Now that we have considered all indices < left_branch_size1,
+		     we can increment start_index.  */
+		  start_index = left_branch_size1;
+		}
+	      index++;
+	      if (index >= end_index)
+		return (size_t)(-1);
+	      /* Descend on right branch.  */
+	      start_index -= left_branch_size1;
+	      stack_ptr->rightp = left_branch_size1;
+	    }
+	    node = node->right;
+	    stack_ptr++;
+	  }
+      }
+  }
 }
 
 #endif
@@ -278,12 +416,15 @@ gl_tree_remove_at (gl_list_t list, size_t position)
 static bool
 gl_tree_remove (gl_list_t list, const void *elt)
 {
-  gl_list_node_t node = gl_tree_search (list, elt);
+  if (list->root != NULL)
+    {
+      gl_list_node_t node =
+	gl_tree_search_from_to (list, 0, list->root->branch_size, elt);
 
-  if (node != NULL)
-    return gl_tree_remove_node (list, node);
-  else
-    return false;
+      if (node != NULL)
+	return gl_tree_remove_node (list, node);
+    }
+  return false;
 }
 
 #if !WITH_HASHTABLE
