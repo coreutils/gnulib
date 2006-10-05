@@ -36,13 +36,6 @@
 #include <intprops.h>
 #include <xstrtol.h>
 
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
-#ifndef UINTMAX_MAX
-# define UINTMAX_MAX ((uintmax_t) -1)
-#endif
-
 /* The maximum length of a suffix like "KiB".  */
 #define HUMAN_READABLE_SUFFIX_LENGTH_MAX 3
 

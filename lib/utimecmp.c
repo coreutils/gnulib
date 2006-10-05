@@ -38,10 +38,6 @@
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
 #endif
 
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
-
 enum { BILLION = 1000 * 1000 * 1000 };
 
 /* Best possible resolution that utimens can set and stat can return,

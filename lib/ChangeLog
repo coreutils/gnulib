@@ -1,3 +1,11 @@
+2006-10-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Remove macros that are no longer needed now that stdint.h is
+	reliable.
+	* fsusage.c (UINTMAX_MAX): Remove.
+	* human.c (SIZE_MAX, UINTMAX_MAX): Remove.
+	* utimecmp.c (SIZE_MAX): Remove.
+
 2006-10-03  Bruno Haible  <bruno@clisp.org>
 
 	* gl_list.h (gl_list_search_from, gl_list_search_from_to,
