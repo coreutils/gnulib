@@ -1,5 +1,15 @@
 2006-10-06  Bruno Haible  <bruno@clisp.org>
 
+	* clean-temp.h (cleanup_temp_file, cleanup_temp_subdir,
+	cleanup_temp_dir_contents, cleanup_temp_dir): Change return type to
+	int.
+	* clean-temp.c (do_unlink, do_rmdir, cleanup_temp_file,
+	cleanup_temp_subdir, cleanup_temp_dir_contents, cleanup_temp_dir):
+	Return an error indicator.
+	Suggested by Eric Blake.
+
+2006-10-06  Bruno Haible  <bruno@clisp.org>
+
 	* clean-temp.c (PATH_MAX): Provide a fallback for GNU Hurd.
 	Reported by Eric Blake.
 

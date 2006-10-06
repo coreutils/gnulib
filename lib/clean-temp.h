@@ -89,20 +89,24 @@ extern void register_temp_subdir (struct temp_dir *dir,
 extern void unregister_temp_subdir (struct temp_dir *dir,
 				    const char *absolute_dir_name);
 
-/* Remove the given ABSOLUTE_FILE_NAME and unregister it.  */
-extern void cleanup_temp_file (struct temp_dir *dir,
-			       const char *absolute_file_name);
+/* Remove the given ABSOLUTE_FILE_NAME and unregister it.
+   Return 0 upon success, or -1 if there was some problem.  */
+extern int cleanup_temp_file (struct temp_dir *dir,
+			      const char *absolute_file_name);
 
-/* Remove the given ABSOLUTE_DIR_NAME and unregister it.  */
-extern void cleanup_temp_subdir (struct temp_dir *dir,
-				 const char *absolute_dir_name);
+/* Remove the given ABSOLUTE_DIR_NAME and unregister it.
+   Return 0 upon success, or -1 if there was some problem.  */
+extern int cleanup_temp_subdir (struct temp_dir *dir,
+				const char *absolute_dir_name);
 
-/* Remove all registered files and subdirectories inside DIR.  */
-extern void cleanup_temp_dir_contents (struct temp_dir *dir);
+/* Remove all registered files and subdirectories inside DIR.
+   Return 0 upon success, or -1 if there was some problem.  */
+extern int cleanup_temp_dir_contents (struct temp_dir *dir);
 
 /* Remove all registered files and subdirectories inside DIR and DIR itself.
-   DIR cannot be used any more after this call.  */
-extern void cleanup_temp_dir (struct temp_dir *dir);
+   DIR cannot be used any more after this call.
+   Return 0 upon success, or -1 if there was some problem.  */
+extern int cleanup_temp_dir (struct temp_dir *dir);
 
 /* Open a temporary file in a temporary directory.
    Registers the resulting file descriptor to be closed.  */

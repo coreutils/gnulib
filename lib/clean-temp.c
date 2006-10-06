@@ -408,48 +408,70 @@ unregister_temp_subdir (struct temp_dir *dir,
     }
 }
 
-/* Remove a file, with optional error message.  */
-static void
+/* Remove a file, with optional error message.
+   Return 0 upon success, or -1 if there was some problem.  */
+static int
 do_unlink (struct temp_dir *dir, const char *absolute_file_name)
 {
   if (unlink (absolute_file_name) < 0 && dir->cleanup_verbose
       && errno != ENOENT)
-    error (0, errno, _("cannot remove temporary file %s"), absolute_file_name);
+    {
+      error (0, errno, _("cannot remove temporary file %s"), absolute_file_name);
+      return -1;
+    }
+  return 0;
 }
 
-/* Remove a directory, with optional error message.  */
-static void
+/* Remove a directory, with optional error message.
+   Return 0 upon success, or -1 if there was some problem.  */
+static int
 do_rmdir (struct temp_dir *dir, const char *absolute_dir_name)
 {
   if (rmdir (absolute_dir_name) < 0 && dir->cleanup_verbose
       && errno != ENOENT)
-    error (0, errno,
-	   _("cannot remove temporary directory %s"), absolute_dir_name);
+    {
+      error (0, errno,
+	     _("cannot remove temporary directory %s"), absolute_dir_name);
+      return -1;
+    }
+  return 0;
 }
 
-/* Remove the given ABSOLUTE_FILE_NAME and unregister it.  */
-void
+/* Remove the given ABSOLUTE_FILE_NAME and unregister it.
+   Return 0 upon success, or -1 if there was some problem.  */
+int
 cleanup_temp_file (struct temp_dir *dir,
 		   const char *absolute_file_name)
 {
-  do_unlink (dir, absolute_file_name);
+  int err;
+
+  err = do_unlink (dir, absolute_file_name);
   unregister_temp_file (dir, absolute_file_name);
+
+  return err;
 }
 
-/* Remove the given ABSOLUTE_DIR_NAME and unregister it.  */
-void
+/* Remove the given ABSOLUTE_DIR_NAME and unregister it.
+   Return 0 upon success, or -1 if there was some problem.  */
+int
 cleanup_temp_subdir (struct temp_dir *dir,
 		     const char *absolute_dir_name)
 {
-  do_rmdir (dir, absolute_dir_name);
+  int err;
+
+  err = do_rmdir (dir, absolute_dir_name);
   unregister_temp_subdir (dir, absolute_dir_name);
+
+  return err;
 }
 
-/* Remove all registered files and subdirectories inside DIR.  */
-void
+/* Remove all registered files and subdirectories inside DIR.
+   Return 0 upon success, or -1 if there was some problem.  */
+int
 cleanup_temp_dir_contents (struct temp_dir *dir)
 {
   struct tempdir *tmpdir = (struct tempdir *)dir;
+  int err = 0;
   gl_list_t list;
   gl_list_iterator_t iter;
   const void *element;
@@ -462,7 +484,7 @@ cleanup_temp_dir_contents (struct temp_dir *dir)
     {
       char *file = (char *) element;
 
-      do_unlink (dir, file);
+      err |= do_unlink (dir, file);
       gl_list_remove_node (list, node);
       /* Now only we can free file.  */
       free (file);
@@ -476,24 +498,28 @@ cleanup_temp_dir_contents (struct temp_dir *dir)
     {
       char *subdir = (char *) element;
 
-      do_rmdir (dir, subdir);
+      err |= do_rmdir (dir, subdir);
       gl_list_remove_node (list, node);
       /* Now only we can free subdir.  */
       free (subdir);
     }
   gl_list_iterator_free (&iter);
+
+  return err;
 }
 
 /* Remove all registered files and subdirectories inside DIR and DIR itself.
-   DIR cannot be used any more after this call.  */
-void
+   DIR cannot be used any more after this call.
+   Return 0 upon success, or -1 if there was some problem.  */
+int
 cleanup_temp_dir (struct temp_dir *dir)
 {
   struct tempdir *tmpdir = (struct tempdir *)dir;
+  int err = 0;
   size_t i;
 
-  cleanup_temp_dir_contents (dir);
-  do_rmdir (dir, tmpdir->dirname);
+  err |= cleanup_temp_dir_contents (dir);
+  err |= do_rmdir (dir, tmpdir->dirname);
 
   for (i = 0; i < cleanup_list.tempdir_count; i++)
     if (cleanup_list.tempdir_list[i] == tmpdir)
@@ -510,7 +536,7 @@ cleanup_temp_dir (struct temp_dir *dir)
 	/* Now only we can free the tmpdir->dirname and tmpdir itself.  */
 	free (tmpdir->dirname);
 	free (tmpdir);
-	return;
+	return err;
       }
 
   /* The user passed an invalid DIR argument.  */
