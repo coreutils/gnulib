@@ -1,4 +1,4 @@
-/* Close standard output, exiting with a diagnostic on error.
+/* Close standard output and standard error, exiting with a diagnostic on error.
 
    Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2006 Free
    Software Foundation, Inc.
@@ -46,6 +46,8 @@ close_stdout_set_file_name (const char *file)
 /* Close standard output.  On error, issue a diagnostic and _exit
    with status 'exit_failure'.
 
+   Also close standard error.  On error, _exit with status 'exit_failure'.
+
    Since close_stdout is commonly registered via 'atexit', POSIX
    and the C standard both say that it should not call 'exit',
    because the behavior is undefined if 'exit' is called more than
@@ -78,4 +80,7 @@ close_stdout (void)
 
       _exit (exit_failure);
     }
+
+   if (close_stream (stderr) != 0)
+     _exit (exit_failure);
 }

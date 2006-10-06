@@ -1,3 +1,7 @@
+2006-09-29  Bruno Haible  <bruno@clisp.org>
+
+	* modules/closeout (Description): Mention stderr too.
+
 2006-10-05  Bruno Haible  <bruno@clisp.org>
 
 	* modules/fwriteerror (configure.ac): Define GNULIB_FWRITEERROR.

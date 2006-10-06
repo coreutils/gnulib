@@ -1,3 +1,9 @@
+2006-09-29  Bruno Haible  <bruno@clisp.org>
+	and Paul Eggert  <eggert@cs.ucla.edu>
+
+	* closeout.c (close_stdout): Also close stderr.
+	* closeout.h: Update comment.
+
 2006-10-06  Bruno Haible  <bruno@clisp.org>
 
 	* javacomp.c (write_temp_file): Use fopen_temp, fwriteerror_temp

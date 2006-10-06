@@ -1,5 +1,5 @@
 Description:
-Close standard output, exiting with a diagnostic on error.
+Close standard output and standard error, exiting with a diagnostic on error.
 
 Files:
 lib/closeout.h
