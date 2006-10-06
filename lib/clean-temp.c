@@ -41,6 +41,15 @@
 
 #define _(str) gettext (str)
 
+/* GNU Hurd doesn't have PATH_MAX.  */
+#ifndef PATH_MAX
+# ifdef MAXPATHLEN
+#  define PATH_MAX MAXPATHLEN
+# else
+#  define PATH_MAX 1024
+# endif
+#endif
+
 #ifndef uintptr_t
 # define uintptr_t unsigned long
 #endif
