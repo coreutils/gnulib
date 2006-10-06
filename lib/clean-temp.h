@@ -122,6 +122,10 @@ extern int fclose_temp (FILE *fp);
    Unregisters the previously registered file descriptor.  */
 extern int fwriteerror_temp (FILE *fp);
 
+/* Like close_stream.
+   Unregisters the previously registered file descriptor.  */
+extern int close_stream_temp (FILE *fp);
+
 
 #ifdef __cplusplus
 }

@@ -1,3 +1,10 @@
+2006-10-06  Eric Blake  <ebb9@byu.net>
+
+	* clean-temp.h (close_stream_temp): New declaration.
+	* clean-temp.c (includes): Pull in headers according to what
+	other modules are in use.
+	(close_stream_temp) [GNULIB_CLOSE_STREAM]: New function.
+
 2006-10-06  Bruno Haible  <bruno@clisp.org>
 
 	* clean-temp.h (cleanup_temp_file, cleanup_temp_subdir,

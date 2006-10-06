@@ -23,6 +23,7 @@
 #include "clean-temp.h"
 
 #include <errno.h>
+#include <fcntl.h>
 #include <limits.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -38,6 +39,15 @@
 #include "xallocsa.h"
 #include "gl_linkedhash_list.h"
 #include "gettext.h"
+#if GNULIB_CLOSE_STREAM
+# include "close-stream.h"
+#endif
+#if GNULIB_FCNTL_SAFER
+# include "fcntl--.h"
+#endif
+#if GNULIB_FOPEN_SAFER
+# include "stdio--.h"
+#endif
 
 #define _(str) gettext (str)
 
@@ -668,6 +678,28 @@ fwriteerror_temp (FILE *fp)
   /* No blocking of signals is needed here, since a double close of a
      file descriptor is harmless.  */
   int result = fwriteerror (fp);
+  int saved_errno = errno;
+
+  /* No race condition here: we assume a single-threaded program, hence
+     fd cannot be re-opened here.  */
+
+  unregister_fd (fd);
+
+  errno = saved_errno;
+  return result;
+}
+#endif
+
+#if GNULIB_CLOSE_STREAM
+/* Like close_stream.
+   Unregisters the previously registered file descriptor.  */
+int
+close_stream_temp (FILE *fp)
+{
+  int fd = fileno (fp);
+  /* No blocking of signals is needed here, since a double close of a
+     file descriptor is harmless.  */
+  int result = close_stream (fp);
   int saved_errno = errno;
 
   /* No race condition here: we assume a single-threaded program, hence
