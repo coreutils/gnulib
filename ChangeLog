@@ -1,3 +1,7 @@
+2006-10-05  Bruno Haible  <bruno@clisp.org>
+
+	* modules/fwriteerror (configure.ac): Define GNULIB_FWRITEERROR.
+
 2006-10-02  Eric Blake  <ebb9@byu.net>
 
 	* modules/strnlen (Depends-on): Add extensions.

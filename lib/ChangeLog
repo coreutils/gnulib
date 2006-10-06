@@ -1,3 +1,13 @@
+2006-10-05  Bruno Haible  <bruno@clisp.org>
+
+	* clean-temp.h (open_temp, fopen_temp, close_temp, fclose_temp,
+	fwriteerror_temp): New declarations.
+	* clean-temp.c (uintptr_t): Provide fallback definition.
+	(descriptors): New variable.
+	(cleanup): First, close the descriptors.
+	(register_fd, unregister_fd, open_temp, fopen_temp, close_temp,
+	fclose_temp, fwriteerror_temp): New functions.
+
 2006-10-03  Bruno Haible
 
 	* gl_list.h (gl_sortedlist_search_from_to,

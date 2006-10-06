@@ -41,6 +41,10 @@
 
 #define _(str) gettext (str)
 
+#ifndef uintptr_t
+# define uintptr_t unsigned long
+#endif
+
 
 /* The use of 'volatile' in the types below (and ISO C 99 section 5.1.2.3.(5))
    ensure that while constructing or modifying the data structures, the field
@@ -69,6 +73,9 @@ static struct
   size_t volatile tempdir_count;
   size_t tempdir_allocated;
 } cleanup_list /* = { NULL, 0, 0 } */;
+
+/* List of all open file descriptors to temporary files.  */
+static gl_list_t /* <int> */ volatile descriptors;
 
 
 /* For the subdirs and for the files, we use a gl_list_t of type LINKEDHASH.
@@ -153,6 +160,25 @@ static void
 cleanup ()
 {
   size_t i;
+
+  /* First close all file descriptors to temporary files.  */
+  {
+    gl_list_t fds = descriptors;
+
+    if (fds != NULL)
+      {
+	gl_list_iterator_t iter;
+	const void *element;
+
+	iter = gl_list_iterator (fds);
+	while (gl_list_iterator_next (&iter, &element, NULL))
+	  {
+	    int fd = (int) (uintptr_t) element;
+	    close (fd);
+	  }
+	gl_list_iterator_free (&iter);
+      }
+  }
 
   for (i = 0; i < cleanup_list.tempdir_count; i++)
     {
@@ -481,3 +507,140 @@ cleanup_temp_dir (struct temp_dir *dir)
   /* The user passed an invalid DIR argument.  */
   abort ();
 }
+
+
+/* Register a file descriptor to be closed.  */
+static void
+register_fd (int fd)
+{
+  if (descriptors == NULL)
+    descriptors = gl_list_create_empty (GL_LINKEDHASH_LIST, NULL, NULL, false);
+  gl_list_add_first (descriptors, (void *) (uintptr_t) fd);
+}
+
+/* Unregister a file descriptor to be closed.  */
+static void
+unregister_fd (int fd)
+{
+  gl_list_t fds = descriptors;
+  gl_list_node_t node;
+
+  if (fds == NULL)
+    /* descriptors should already contain fd.  */
+    abort ();
+  node = gl_list_search (fds, (void *) (uintptr_t) fd);
+  if (node == NULL)
+    /* descriptors should already contain fd.  */
+    abort ();
+  gl_list_remove_node (fds, node);
+}
+
+/* Open a temporary file in a temporary directory.
+   Registers the resulting file descriptor to be closed.  */
+int
+open_temp (const char *file_name, int flags, mode_t mode)
+{
+  int fd;
+  int saved_errno;
+
+  block_fatal_signals ();
+  fd = open (file_name, flags, mode);
+  saved_errno = errno;
+  if (fd >= 0)
+    register_fd (fd);
+  unblock_fatal_signals ();
+  errno = saved_errno;
+  return fd;
+}
+
+/* Open a temporary file in a temporary directory.
+   Registers the resulting file descriptor to be closed.  */
+FILE *
+fopen_temp (const char *file_name, const char *mode)
+{
+  FILE *fp;
+  int saved_errno;
+
+  block_fatal_signals ();
+  fp = fopen (file_name, mode);
+  saved_errno = errno;
+  if (fp != NULL)
+    {
+      /* It is sufficient to register fileno (fp) instead of the entire fp,
+	 because at cleanup time there is no need to do an fflush (fp); a
+	 close (fileno (fp)) will be enough.  */
+      int fd = fileno (fp);
+      if (!(fd >= 0))
+	abort ();
+      register_fd (fd);
+    }
+  unblock_fatal_signals ();
+  errno = saved_errno;
+  return fp;
+}
+
+/* Close a temporary file in a temporary directory.
+   Unregisters the previously registered file descriptor.  */
+int
+close_temp (int fd)
+{
+  if (fd >= 0)
+    {
+      /* No blocking of signals is needed here, since a double close of a
+	 file descriptor is harmless.  */
+      int result = close (fd);
+      int saved_errno = errno;
+
+      /* No race condition here: we assume a single-threaded program, hence
+	 fd cannot be re-opened here.  */
+
+      unregister_fd (fd);
+
+      errno = saved_errno;
+      return result;
+    }
+  else
+    return close (fd);
+}
+
+/* Close a temporary file in a temporary directory.
+   Unregisters the previously registered file descriptor.  */
+int
+fclose_temp (FILE *fp)
+{
+  int fd = fileno (fp);
+  /* No blocking of signals is needed here, since a double close of a
+     file descriptor is harmless.  */
+  int result = fclose (fp);
+  int saved_errno = errno;
+
+  /* No race condition here: we assume a single-threaded program, hence
+     fd cannot be re-opened here.  */
+
+  unregister_fd (fd);
+
+  errno = saved_errno;
+  return result;
+}
+
+#if GNULIB_FWRITEERROR
+/* Like fwriteerror.
+   Unregisters the previously registered file descriptor.  */
+int
+fwriteerror_temp (FILE *fp)
+{
+  int fd = fileno (fp);
+  /* No blocking of signals is needed here, since a double close of a
+     file descriptor is harmless.  */
+  int result = fwriteerror (fp);
+  int saved_errno = errno;
+
+  /* No race condition here: we assume a single-threaded program, hence
+     fd cannot be re-opened here.  */
+
+  unregister_fd (fd);
+
+  errno = saved_errno;
+  return result;
+}
+#endif

@@ -20,6 +20,8 @@
 #define _CLEAN_TEMP_H
 
 #include <stdbool.h>
+#include <stdio.h>
+#include <sys/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -31,6 +33,10 @@ extern "C" {
    rely on the "unlink before close" idiom, because it works only on Unix and
    also - if no signal blocking is used - leaves a time window where a fatal
    signal would not clean up the temporary file.
+
+   Also, open file descriptors need to be closed before the temporary files
+   and the temporary directories can be removed, because only on Unix
+   (excluding Cygwin) one can remove directories containing open files.
 
    This module provides support for temporary directories and temporary files
    inside these temporary directories.  Temporary files without temporary
@@ -97,6 +103,20 @@ extern void cleanup_temp_dir_contents (struct temp_dir *dir);
 /* Remove all registered files and subdirectories inside DIR and DIR itself.
    DIR cannot be used any more after this call.  */
 extern void cleanup_temp_dir (struct temp_dir *dir);
+
+/* Open a temporary file in a temporary directory.
+   Registers the resulting file descriptor to be closed.  */
+extern int open_temp (const char *file_name, int flags, mode_t mode);
+extern FILE * fopen_temp (const char *file_name, const char *mode);
+
+/* Close a temporary file in a temporary directory.
+   Unregisters the previously registered file descriptor.  */
+extern int close_temp (int fd);
+extern int fclose_temp (FILE *fp);
+
+/* Like fwriteerror.
+   Unregisters the previously registered file descriptor.  */
+extern int fwriteerror_temp (FILE *fp);
 
 
 #ifdef __cplusplus

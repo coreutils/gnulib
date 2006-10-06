@@ -9,6 +9,8 @@ Depends-on:
 stdbool
 
 configure.ac:
+AC_DEFINE([GNULIB_FWRITEERROR], 1,
+  [Define to 1 when using the gnulib fwriteerror module.])
 
 Makefile.am:
 lib_SOURCES += fwriteerror.h fwriteerror.c
