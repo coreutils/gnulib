@@ -58,7 +58,9 @@ const struct gl_list_implementation gl_linked_list_implementation =
     gl_linked_iterator_next,
     gl_linked_iterator_free,
     gl_linked_sortedlist_search,
+    gl_linked_sortedlist_search_from_to,
     gl_linked_sortedlist_indexof,
+    gl_linked_sortedlist_indexof_from_to,
     gl_linked_sortedlist_add,
     gl_linked_sortedlist_remove
   };

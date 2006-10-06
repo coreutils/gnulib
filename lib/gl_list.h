@@ -85,7 +85,9 @@ extern "C" {
    gl_list_iterator_from_to    O(1)     O(n)   O(log n)    O(n)       O(log n)
    gl_list_iterator_next       O(1)     O(1)   O(log n)    O(1)       O(log n)
    gl_sortedlist_search      O(log n)   O(n)   O(log n)    O(n)       O(log n)
+   gl_sortedlist_search_from O(log n)   O(n)   O(log n)    O(n)       O(log n)
    gl_sortedlist_indexof     O(log n)   O(n)   O(log n)    O(n)       O(log n)
+   gl_sortedlist_indexof_fro O(log n)   O(n)   O(log n)    O(n)       O(log n)
    gl_sortedlist_add           O(n)     O(n)   O(log n)    O(n)    O((log n)²)/O(log n)
    gl_sortedlist_remove        O(n)     O(n)   O(log n)    O(n)    O((log n)²)/O(log n)
  */
@@ -303,12 +305,40 @@ extern gl_list_node_t gl_sortedlist_search (gl_list_t list,
 
 /* Search whether an element is already in the list.
    The list is assumed to be sorted with COMPAR.
+   Only list elements with indices >= START_INDEX and < END_INDEX are
+   considered; the implementation uses these bounds to minimize the number
+   of COMPAR invocations.
+   Return its node if found, or NULL if not present in the list.
+   If the list contains several copies of ELT, the node of the leftmost one is
+   returned.  */
+extern gl_list_node_t gl_sortedlist_search_from_to (gl_list_t list,
+						    gl_listelement_compar_fn compar,
+						    size_t start_index,
+						    size_t end_index,
+						    const void *elt);
+
+/* Search whether an element is already in the list.
+   The list is assumed to be sorted with COMPAR.
    Return its position if found, or (size_t)(-1) if not present in the list.
    If the list contains several copies of ELT, the position of the leftmost one
    is returned.  */
 extern size_t gl_sortedlist_indexof (gl_list_t list,
 				     gl_listelement_compar_fn compar,
 				     const void *elt);
+
+/* Search whether an element is already in the list.
+   The list is assumed to be sorted with COMPAR.
+   Only list elements with indices >= START_INDEX and < END_INDEX are
+   considered; the implementation uses these bounds to minimize the number
+   of COMPAR invocations.
+   Return its position if found, or (size_t)(-1) if not present in the list.
+   If the list contains several copies of ELT, the position of the leftmost one
+   is returned.  */
+extern size_t gl_sortedlist_indexof_from_to (gl_list_t list,
+					     gl_listelement_compar_fn compar,
+					     size_t start_index,
+					     size_t end_index,
+					     const void *elt);
 
 /* Add an element at the appropriate position in the list.
    The list is assumed to be sorted with COMPAR.
@@ -374,9 +404,18 @@ struct gl_list_implementation
   gl_list_node_t (*sortedlist_search) (gl_list_t list,
 				       gl_listelement_compar_fn compar,
 				       const void *elt);
+  gl_list_node_t (*sortedlist_search_from_to) (gl_list_t list,
+					       gl_listelement_compar_fn compar,
+					       size_t start_index,
+					       size_t end_index,
+					       const void *elt);
   size_t (*sortedlist_indexof) (gl_list_t list,
 				gl_listelement_compar_fn compar,
 				const void *elt);
+  size_t (*sortedlist_indexof_from_to) (gl_list_t list,
+					gl_listelement_compar_fn compar,
+					size_t start_index, size_t end_index,
+					const void *elt);
   gl_list_node_t (*sortedlist_add) (gl_list_t list,
 				    gl_listelement_compar_fn compar,
 				    const void *elt);
@@ -634,12 +673,30 @@ gl_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar, const voi
 	 ->sortedlist_search (list, compar, elt);
 }
 
+# define gl_sortedlist_search_from_to gl_sortedlist_search_from_to_inline
+static inline gl_list_node_t
+gl_sortedlist_search_from_to (gl_list_t list, gl_listelement_compar_fn compar, size_t start_index, size_t end_index, const void *elt)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->sortedlist_search_from_to (list, compar, start_index, end_index,
+				      elt);
+}
+
 # define gl_sortedlist_indexof gl_sortedlist_indexof_inline
 static inline size_t
 gl_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar, const void *elt)
 {
   return ((const struct gl_list_impl_base *) list)->vtable
 	 ->sortedlist_indexof (list, compar, elt);
+}
+
+# define gl_sortedlist_indexof_from_to gl_sortedlist_indexof_from_to_inline
+static inline size_t
+gl_sortedlist_indexof_from_to (gl_list_t list, gl_listelement_compar_fn compar, size_t start_index, size_t end_index, const void *elt)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->sortedlist_indexof_from_to (list, compar, start_index, end_index,
+				       elt);
 }
 
 # define gl_sortedlist_add gl_sortedlist_add_inline

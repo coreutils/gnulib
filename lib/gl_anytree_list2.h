@@ -601,6 +601,88 @@ gl_tree_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
   return NULL;
 }
 
+static gl_list_node_t
+gl_tree_sortedlist_search_from_to (gl_list_t list,
+				   gl_listelement_compar_fn compar,
+				   size_t low, size_t high,
+				   const void *elt)
+{
+  gl_list_node_t node;
+
+  if (!(low <= high
+	&& high <= (list->root != NULL ? list->root->branch_size : 0)))
+    /* Invalid arguments.  */
+    abort ();
+
+  for (node = list->root; node != NULL; )
+    {
+      size_t left_branch_size =
+	(node->left != NULL ? node->left->branch_size : 0);
+
+      if (low > left_branch_size)
+	{
+	  low -= left_branch_size + 1;
+	  high -= left_branch_size + 1;
+	  node = node->right;
+	}
+      else if (high <= left_branch_size)
+	node = node->left;
+      else
+	{
+	  /* Here low <= left_branch_size < high.  */
+	  int cmp = compar (node->value, elt);
+
+	  if (cmp < 0)
+	    {
+	      low = 0;
+	      high -= left_branch_size + 1;
+	      node = node->right;
+	    }
+	  else if (cmp > 0)
+	    node = node->left;
+	  else /* cmp == 0 */
+	    {
+	      /* We have an element equal to ELT.  But we need the leftmost
+		 such element.  */
+	      gl_list_node_t found = node;
+	      node = node->left;
+	      for (; node != NULL; )
+		{
+		  size_t left_branch_size2 =
+		    (node->left != NULL ? node->left->branch_size : 0);
+
+		  if (low > left_branch_size2)
+		    {
+		      low -= left_branch_size2 + 1;
+		      node = node->right;
+		    }
+		  else
+		    {
+		      /* Here low <= left_branch_size2.  */
+		      int cmp2 = compar (node->value, elt);
+
+		      if (cmp2 < 0)
+			{
+			  low = 0;
+			  node = node->right;
+			}
+		      else if (cmp2 > 0)
+			/* The list was not sorted.  */
+			abort ();
+		      else /* cmp2 == 0 */
+			{
+			  found = node;
+			  node = node->left;
+			}
+		    }
+		}
+	      return found;
+	    }
+	}
+    }
+  return NULL;
+}
+
 static size_t
 gl_tree_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
 			    const void *elt)
@@ -651,6 +733,92 @@ gl_tree_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
 		}
 	    }
 	  return found_position;
+	}
+    }
+  return (size_t)(-1);
+}
+
+static size_t
+gl_tree_sortedlist_indexof_from_to (gl_list_t list,
+				    gl_listelement_compar_fn compar,
+				    size_t low, size_t high,
+				    const void *elt)
+{
+  gl_list_node_t node;
+  size_t position;
+
+  if (!(low <= high
+	&& high <= (list->root != NULL ? list->root->branch_size : 0)))
+    /* Invalid arguments.  */
+    abort ();
+
+  for (node = list->root, position = 0; node != NULL; )
+    {
+      size_t left_branch_size =
+	(node->left != NULL ? node->left->branch_size : 0);
+
+      if (low > left_branch_size)
+	{
+	  low -= left_branch_size + 1;
+	  high -= left_branch_size + 1;
+	  position += left_branch_size + 1;
+	  node = node->right;
+	}
+      else if (high <= left_branch_size)
+	node = node->left;
+      else
+	{
+	  /* Here low <= left_branch_size < high.  */
+	  int cmp = compar (node->value, elt);
+
+	  if (cmp < 0)
+	    {
+	      low = 0;
+	      high -= left_branch_size + 1;
+	      position += left_branch_size + 1;
+	      node = node->right;
+	    }
+	  else if (cmp > 0)
+	    node = node->left;
+	  else /* cmp == 0 */
+	    {
+	      /* We have an element equal to ELT.  But we need the leftmost
+		 such element.  */
+	      size_t found_position =
+		position + (node->left != NULL ? node->left->branch_size : 0);
+	      node = node->left;
+	      for (; node != NULL; )
+		{
+		  size_t left_branch_size2 =
+		    (node->left != NULL ? node->left->branch_size : 0);
+
+		  if (low > left_branch_size2)
+		    {
+		      low -= left_branch_size2 + 1;
+		      node = node->right;
+		    }
+		  else
+		    {
+		      /* Here low <= left_branch_size2.  */
+		      int cmp2 = compar (node->value, elt);
+
+		      if (cmp2 < 0)
+			{
+			  position += left_branch_size2 + 1;
+			  node = node->right;
+			}
+		      else if (cmp2 > 0)
+			/* The list was not sorted.  */
+			abort ();
+		      else /* cmp2 == 0 */
+			{
+			  found_position = position + left_branch_size2;
+			  node = node->left;
+			}
+		    }
+		}
+	      return found_position;
+	    }
 	}
     }
   return (size_t)(-1);

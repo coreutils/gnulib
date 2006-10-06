@@ -906,6 +906,54 @@ gl_linked_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
   return NULL;
 }
 
+static gl_list_node_t
+gl_linked_sortedlist_search_from_to (gl_list_t list,
+				     gl_listelement_compar_fn compar,
+				     size_t low, size_t high,
+				     const void *elt)
+{
+  size_t count = list->count;
+
+  if (!(low <= high && high <= list->count))
+    /* Invalid arguments.  */
+    abort ();
+
+  high -= low;
+  if (high > 0)
+    {
+      /* Here we know low < count.  */
+      size_t position = low;
+      gl_list_node_t node;
+
+      if (position <= ((count - 1) / 2))
+	{
+	  node = list->root.next;
+	  for (; position > 0; position--)
+	    node = node->next;
+	}
+      else
+	{
+	  position = count - 1 - position;
+	  node = list->root.prev;
+	  for (; position > 0; position--)
+	    node = node->prev;
+	}
+
+      do
+	{
+	  int cmp = compar (node->value, elt);
+
+	  if (cmp > 0)
+	    break;
+	  if (cmp == 0)
+	    return node;
+	  node = node->next;
+	}
+      while (--high > 0);
+    }
+  return NULL;
+}
+
 static size_t
 gl_linked_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
 			      const void *elt)
@@ -923,6 +971,56 @@ gl_linked_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
 	break;
       if (cmp == 0)
 	return index;
+    }
+  return (size_t)(-1);
+}
+
+static size_t
+gl_linked_sortedlist_indexof_from_to (gl_list_t list,
+				      gl_listelement_compar_fn compar,
+				      size_t low, size_t high,
+				      const void *elt)
+{
+  size_t count = list->count;
+
+  if (!(low <= high && high <= list->count))
+    /* Invalid arguments.  */
+    abort ();
+
+  high -= low;
+  if (high > 0)
+    {
+      /* Here we know low < count.  */
+      size_t index = low;
+      size_t position = low;
+      gl_list_node_t node;
+
+      if (position <= ((count - 1) / 2))
+	{
+	  node = list->root.next;
+	  for (; position > 0; position--)
+	    node = node->next;
+	}
+      else
+	{
+	  position = count - 1 - position;
+	  node = list->root.prev;
+	  for (; position > 0; position--)
+	    node = node->prev;
+	}
+
+      do
+	{
+	  int cmp = compar (node->value, elt);
+
+	  if (cmp > 0)
+	    break;
+	  if (cmp == 0)
+	    return index;
+	  node = node->next;
+	  index++;
+	}
+      while (--high > 0);
     }
   return (size_t)(-1);
 }

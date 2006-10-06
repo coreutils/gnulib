@@ -466,16 +466,16 @@ gl_array_iterator_free (gl_list_iterator_t *iterator)
 /* ---------------------- Sorted gl_list_t Data Type ---------------------- */
 
 static size_t
-gl_array_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
-			     const void *elt)
+gl_array_sortedlist_indexof_from_to (gl_list_t list,
+				     gl_listelement_compar_fn compar,
+				     size_t low, size_t high,
+				     const void *elt)
 {
-  size_t count = list->count;
-
-  if (count > 0)
+  if (!(low <= high && high <= list->count))
+    /* Invalid arguments.  */
+    abort ();
+  if (low < high)
     {
-      size_t low = 0;
-      size_t high = count;
-
       /* At each loop iteration, low < high; for indices < low the values
 	 are smaller than ELT; for indices >= high the values are greater
 	 than ELT.  So, if the element occurs in the list, it is at
@@ -524,11 +524,31 @@ gl_array_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
   return (size_t)(-1);
 }
 
+static size_t
+gl_array_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
+			     const void *elt)
+{
+  return gl_array_sortedlist_indexof_from_to (list, compar, 0, list->count,
+					      elt);
+}
+
+static gl_list_node_t
+gl_array_sortedlist_search_from_to (gl_list_t list,
+				    gl_listelement_compar_fn compar,
+				    size_t low, size_t high,
+				    const void *elt)
+{
+  size_t index =
+    gl_array_sortedlist_indexof_from_to (list, compar, low, high, elt);
+  return INDEX_TO_NODE (index);
+}
+
 static gl_list_node_t
 gl_array_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
 			    const void *elt)
 {
-  size_t index = gl_array_sortedlist_indexof (list, compar, elt);
+  size_t index =
+    gl_array_sortedlist_indexof_from_to (list, compar, 0, list->count, elt);
   return INDEX_TO_NODE (index);
 }
 
@@ -598,7 +618,9 @@ const struct gl_list_implementation gl_array_list_implementation =
     gl_array_iterator_next,
     gl_array_iterator_free,
     gl_array_sortedlist_search,
+    gl_array_sortedlist_search_from_to,
     gl_array_sortedlist_indexof,
+    gl_array_sortedlist_indexof_from_to,
     gl_array_sortedlist_add,
     gl_array_sortedlist_remove
   };

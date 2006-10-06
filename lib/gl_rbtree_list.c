@@ -92,7 +92,9 @@ const struct gl_list_implementation gl_rbtree_list_implementation =
     gl_tree_iterator_next,
     gl_tree_iterator_free,
     gl_tree_sortedlist_search,
+    gl_tree_sortedlist_search_from_to,
     gl_tree_sortedlist_indexof,
+    gl_tree_sortedlist_indexof_from_to,
     gl_tree_sortedlist_add,
     gl_tree_sortedlist_remove
   };

@@ -232,11 +232,27 @@ gl_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar, const voi
 	 ->sortedlist_search (list, compar, elt);
 }
 
+gl_list_node_t
+gl_sortedlist_search_from_to (gl_list_t list, gl_listelement_compar_fn compar, size_t start_index, size_t end_index, const void *elt)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->sortedlist_search_from_to (list, compar, start_index, end_index,
+				      elt);
+}
+
 size_t
 gl_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar, const void *elt)
 {
   return ((const struct gl_list_impl_base *) list)->vtable
 	 ->sortedlist_indexof (list, compar, elt);
+}
+
+size_t
+gl_sortedlist_indexof_from_to (gl_list_t list, gl_listelement_compar_fn compar, size_t start_index, size_t end_index, const void *elt)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+	 ->sortedlist_indexof_from_to (list, compar, start_index, end_index,
+				       elt);
 }
 
 gl_list_node_t

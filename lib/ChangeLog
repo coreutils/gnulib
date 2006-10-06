@@ -1,3 +1,32 @@
+2006-10-03  Bruno Haible
+
+	* gl_list.h (gl_sortedlist_search_from_to,
+	gl_sortedlist_indexof_from_to): New declarations.
+	(gl_list_implementation): New fields sortedlist_search_from_to,
+	sortedlist_indexof_from_to.
+	(gl_sortedlist_search_from_to, gl_sortedlist_indexof_from_to): New
+	inline functions.
+	* gl_list.c (gl_sortedlist_search_from_to,
+	gl_sortedlist_indexof_from_to): New functions.
+	* gl_array_list.c (gl_array_sortedlist_indexof_from_to): New function.
+	(gl_array_sortedlist_indexof, gl_array_sortedlist_search): Use it.
+	(gl_array_sortedlist_search_from_to): New function.
+	(gl_array_list_implementation): Update.
+	* gl_carray_list.c (gl_carray_sortedlist_indexof_from_to): New function.
+	(gl_carray_sortedlist_indexof, gl_carray_sortedlist_search): Use it.
+	(gl_carray_sortedlist_search_from_to): New function.
+	(gl_carray_list_implementation): Update.
+	* gl_anylinked_list2.h (gl_linked_sortedlist_search_from_to,
+	gl_linked_sortedlist_indexof_from_to): New functions.
+	* gl_linked_list.c (gl_linked_list_implementation): Update.
+	* gl_linkedhash_list.c (gl_linkedhash_list_implementation): Update.
+	* gl_anytree_list2.h (gl_tree_sortedlist_search_from_to,
+	gl_tree_sortedlist_indexof_from_to): New functions.
+	* gl_avltree_list.c (gl_avltree_list_implementation): Update.
+	* gl_avltreehash_list.c (gl_avltreehash_list_implementation): Update.
+	* gl_rbtree_list.c (gl_rbtree_list_implementation): Update.
+	* gl_rbtreehash_list.c (gl_avltreehash_list_implementation): Update.
+
 2006-10-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Fix some Darwin-7.9.0 porting problems reported by Bruno Haible in
