@@ -1,3 +1,8 @@
+2006-10-06  Bruno Haible  <bruno@clisp.org>
+
+	* javacomp.c (write_temp_file): Use fopen_temp, fwriteerror_temp
+	instead of fopen, fwriteerror.
+
 2006-10-05  Bruno Haible  <bruno@clisp.org>
 
 	* clean-temp.h (open_temp, fopen_temp, close_temp, fclose_temp,

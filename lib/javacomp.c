@@ -467,7 +467,7 @@ write_temp_file (struct temp_dir *tmpdir, const char *file_name,
   FILE *fp;
 
   register_temp_file (tmpdir, file_name);
-  fp = fopen (file_name, "w");
+  fp = fopen_temp (file_name, "w");
   if (fp == NULL)
     {
       error (0, errno, _("failed to create \"%s\""), file_name);
@@ -475,7 +475,7 @@ write_temp_file (struct temp_dir *tmpdir, const char *file_name,
       return true;
     }
   fputs (contents, fp);
-  if (fwriteerror (fp))
+  if (fwriteerror_temp (fp))
     {
       error (0, errno, _("error while writing \"%s\" file"), file_name);
       return true;
