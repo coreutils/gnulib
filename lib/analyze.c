@@ -465,7 +465,6 @@ briefly_report (int changes, struct file_data const filevec[])
 int
 diff_2_files (struct comparison *cmp)
 {
-  lin diags;
   int f;
   struct change *e, *p;
   struct change *script;
@@ -535,6 +534,10 @@ diff_2_files (struct comparison *cmp)
     }
   else
     {
+      struct context ctxt;
+      lin diags;
+      OFFSET too_expensive;
+
       /* Allocate vectors for the results of comparison:
 	 a flag for each line of each file, saying whether that line
 	 is an insertion or deletion.
@@ -554,31 +557,31 @@ diff_2_files (struct comparison *cmp)
       /* Now do the main comparison algorithm, considering just the
 	 undiscarded lines.  */
 
-      xvec = cmp->file[0].undiscarded;
-      yvec = cmp->file[1].undiscarded;
+      ctxt.xvec = cmp->file[0].undiscarded;
+      ctxt.yvec = cmp->file[1].undiscarded;
       diags = (cmp->file[0].nondiscarded_lines
 	       + cmp->file[1].nondiscarded_lines + 3);
-      fdiag = xmalloc (diags * (2 * sizeof *fdiag));
-      bdiag = fdiag + diags;
-      fdiag += cmp->file[1].nondiscarded_lines + 1;
-      bdiag += cmp->file[1].nondiscarded_lines + 1;
+      ctxt.fdiag = xmalloc (diags * (2 * sizeof *fdiag));
+      ctxt.bdiag = fdiag + diags;
+      ctxt.fdiag += cmp->file[1].nondiscarded_lines + 1;
+      ctxt.bdiag += cmp->file[1].nondiscarded_lines + 1;
 
-      heuristic = speed_large_files;
+      ctxt.heuristic = speed_large_files;
 
       /* Set TOO_EXPENSIVE to be approximate square root of input size,
 	 bounded below by 256.  */
       too_expensive = 1;
       for (;  diags != 0;  diags >>= 2)
 	too_expensive <<= 1;
-      too_expensive = MAX (256, too_expensive);
+      ctxt.too_expensive = MAX (256, too_expensive);
 
       files[0] = cmp->file[0];
       files[1] = cmp->file[1];
 
       compareseq (0, cmp->file[0].nondiscarded_lines,
-		  0, cmp->file[1].nondiscarded_lines, minimal);
+		  0, cmp->file[1].nondiscarded_lines, minimal, &ctxt);
 
-      free (fdiag - (cmp->file[1].nondiscarded_lines + 1));
+      free (ctxt.fdiag - (cmp->file[1].nondiscarded_lines + 1));
 
       /* Modify the results slightly to make them prettier
 	 in cases where that can validly be done.  */

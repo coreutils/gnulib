@@ -52,33 +52,38 @@
 #define OFFSET_MAX \
   ((((OFFSET)1 << (sizeof (OFFSET_MAX) * CHAR_BIT - 2)) - 1) * 2 + 1)
 
-/* Vectors being compared. */
-static const ELEMENT *xvec, *yvec;
+/*
+ * Context of comparison operation.
+ */
+struct context
+{
+  /* Vectors being compared. */
+  const ELEMENT *xvec;
+  const ELEMENT *yvec;
 
-/* Vector, indexed by diagonal, containing 1 + the X coordinate of the point
-   furthest along the given diagonal in the forward search of the edit
-   matrix. */
-static OFFSET *fdiag;
+  /* Vector, indexed by diagonal, containing 1 + the X coordinate of the point
+     furthest along the given diagonal in the forward search of the edit
+     matrix. */
+  OFFSET *fdiag;
 
-/* Vector, indexed by diagonal, containing the X coordinate of the point
-   furthest along the given diagonal in the backward search of the edit
-   matrix. */
-static OFFSET *bdiag;
+  /* Vector, indexed by diagonal, containing the X coordinate of the point
+     furthest along the given diagonal in the backward search of the edit
+     matrix. */
+  OFFSET *bdiag;
 
-#ifdef USE_HEURISTIC
-/* This corresponds to the diff -H flag.  With this heuristic, for
-   vectors with a constant small density of changes, the algorithm is
-   linear in the vectors size.  This is unlikely in typical uses of
-   fstrcmp, and so is usually compiled out.  Besides, there is no
-   interface to set it true.  */
-int heuristic;
-#endif
+  #ifdef USE_HEURISTIC
+  /* This corresponds to the diff -H flag.  With this heuristic, for
+     vectors with a constant small density of changes, the algorithm is
+     linear in the vectors size.  */
+  int heuristic;
+  #endif
 
-/* Edit scripts longer than this are too expensive to compute.  */
-static OFFSET too_expensive;
+  /* Edit scripts longer than this are too expensive to compute.  */
+  OFFSET too_expensive;
 
-/* Snakes bigger than this are considered `big'.  */
-#define SNAKE_LIMIT 20
+  /* Snakes bigger than this are considered `big'.  */
+  #define SNAKE_LIMIT 20
+};
 
 struct partition
 {
@@ -119,12 +124,12 @@ struct partition
 
 static void
 diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
-      struct partition *part)
+      struct partition *part, struct context *ctxt)
 {
-  OFFSET *const fd = fdiag;	/* Give the compiler a chance. */
-  OFFSET *const bd = bdiag;	/* Additional help for the compiler. */
-  const ELEMENT *const xv = xvec;	/* Still more help for the compiler. */
-  const ELEMENT *const yv = yvec;	/* And more and more . . . */
+  OFFSET *const fd = ctxt->fdiag;	/* Give the compiler a chance. */
+  OFFSET *const bd = ctxt->bdiag;	/* Additional help for the compiler. */
+  const ELEMENT *const xv = ctxt->xvec;	/* Still more help for the compiler. */
+  const ELEMENT *const yv = ctxt->yvec;	/* And more and more . . . */
   const OFFSET dmin = xoff - ylim;	/* Minimum valid diagonal. */
   const OFFSET dmax = xlim - yoff;	/* Maximum valid diagonal. */
   const OFFSET fmid = xoff - yoff;	/* Center diagonal of top-down search. */
@@ -227,7 +232,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	 With this heuristic, for vectors with a constant small density
 	 of changes, the algorithm is linear in the vector size.  */
 
-      if (c > 200 && big_snake && heuristic)
+      if (c > 200 && big_snake && ctxt->heuristic)
 	{
 	  OFFSET best = 0;
 
@@ -304,7 +309,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 
       /* Heuristic: if we've gone well beyond the call of duty,
 	 give up and report halfway between our best results so far.  */
-      if (c >= too_expensive)
+      if (c >= ctxt->too_expensive)
 	{
 	  OFFSET fxybest;
 	  OFFSET bxybest;
@@ -376,10 +381,11 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
    expensive it is.  */
 
 static void
-compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal)
+compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
+	    bool find_minimal, struct context *ctxt)
 {
-  const ELEMENT *xv = xvec; /* Help the compiler.  */
-  const ELEMENT *yv = yvec;
+  const ELEMENT *xv = ctxt->xvec; /* Help the compiler.  */
+  const ELEMENT *yv = ctxt->yvec;
 
   /* Slide down the bottom initial diagonal. */
   while (xoff < xlim && yoff < ylim && xv[xoff] == yv[yoff])
@@ -406,11 +412,11 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minima
       struct partition part IF_LINT (= {0});
 
       /* Find a point of correspondence in the middle of the vectors.  */
-      diag (xoff, xlim, yoff, ylim, find_minimal, &part);
+      diag (xoff, xlim, yoff, ylim, find_minimal, &part, ctxt);
 
       /* Use the partitions to split this problem into subproblems.  */
-      compareseq (xoff, part.xmid, yoff, part.ymid, part.lo_minimal);
-      compareseq (part.xmid, xlim, part.ymid, ylim, part.hi_minimal);
+      compareseq (xoff, part.xmid, yoff, part.ymid, part.lo_minimal, ctxt);
+      compareseq (part.xmid, xlim, part.ymid, ylim, part.hi_minimal, ctxt);
     }
 }
 
