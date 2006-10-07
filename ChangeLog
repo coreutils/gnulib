@@ -1,6 +1,6 @@
 2006-10-07  Bruno Haible  <bruno@clisp.org>
 
-	* modules/alloca-opt (alloca.h): Add a "BO NOT EDIT" comment.
+	* modules/alloca-opt (alloca.h): Add a "DO NOT EDIT" comment.
 	* modules/argz (argz.h): Likewise.
 	* modules/arpa_inet (arpa/inet.h): Likewise.
 	* modules/byteswap (byteswap.h): Likewise.
@@ -20,7 +20,7 @@
 	* modules/sysexits (sysexits.h): Likewise.
 	* modules/unistd (unistd.h): Likewise.
 	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
-	Add a "BO NOT EDIT" comment to the generated file.
+	Add a "DO NOT EDIT" comment to the generated file.
 	(func_import): Likewise for gnulib-comp.m4.
 
 2006-10-03  Bruno Haible  <bruno@clisp.org>
