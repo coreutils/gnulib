@@ -18,8 +18,8 @@
 
    Derived from GNU diff 2.7, analyze.c et al.
 
-   The basic idea is to consider two sequences as similar if, when
-   transforming the first sequence into the second sequence through a
+   The basic idea is to consider two vectors as similar if, when
+   transforming the first vector into the second vector through a
    sequence of edits (inserts and deletes of one character each),
    this sequence is short - or equivalently, if the ordered list
    of elements that are untouched by these edits is long.  For a
@@ -67,12 +67,14 @@
    fstrcmp().  */
 
 /* Before including this file, you need to define:
-     ELEMENT                 The element type of the sequences being compared.
+     ELEMENT                 The element type of the vectors being compared.
      EQUAL                   A two-argument macro that tests two elements for
                              equality.
      OFFSET                  A signed integer type sufficient to hold the
                              difference between two indices. Usually
-                             something like ssize_t.  */
+                             something like ssize_t.
+     USE_HEURISTIC           (Optional) Define if you want to support the
+                             heuristic for large vectors.  */
 
 /* Maximum value of type OFFSET.  */
 #define OFFSET_MAX \
@@ -99,9 +101,9 @@ struct context
   }
   string[2];
 
-  /* Vector, indexed by diagonal, containing 1 + the X coordinate of the
-     point furthest along the given diagonal in the forward search of the
-     edit matrix.  */
+  /* Vector, indexed by diagonal, containing 1 + the X coordinate of the point
+     furthest along the given diagonal in the forward search of the edit
+     matrix.  */
   OFFSET *fdiag;
 
   /* Vector, indexed by diagonal, containing the X coordinate of the point
@@ -126,7 +128,8 @@ struct context
 struct partition
 {
   /* Midpoints of this partition.  */
-  int xmid, ymid;
+  OFFSET xmid;
+  OFFSET ymid;
 
   /* True if low half will be analyzed minimally.  */
   bool lo_minimal;
@@ -136,49 +139,36 @@ struct partition
 };
 
 
-/* NAME
-	diag - find diagonal path
+/* Find the midpoint of the shortest edit script for a specified portion
+   of the two vectors.
 
-   SYNOPSIS
-	int diag(int xoff, int xlim, int yoff, int ylim, bool find_minimal,
-		 struct partition *part, struct context *ctxt);
+   Scan from the beginnings of the vectors, and simultaneously from the ends,
+   doing a breadth-first search through the space of edit-sequence.
+   When the two searches meet, we have found the midpoint of the shortest
+   edit sequence.
 
-   DESCRIPTION
-	Find the midpoint of the shortest edit script for a specified
-	portion of the two vectors.
+   If FIND_MINIMAL is true, find the minimal edit script regardless
+   of expense.  Otherwise, if the search is too expensive, use
+   heuristics to stop the search and report a suboptimal answer.
 
-	Scan from the beginnings of the vectors, and simultaneously from
-	the ends, doing a breadth-first search through the space of
-	edit-sequence.  When the two searches meet, we have found the
-	midpoint of the shortest edit sequence.
+   Set PART->(xmid,ymid) to the midpoint (XMID,YMID).  The diagonal number
+   XMID - YMID equals the number of inserted elements minus the number
+   of deleted elements (counting only elements before the midpoint).
 
-	If FIND_MINIMAL is true, find the minimal edit script regardless
-	of expense.  Otherwise, if the search is too expensive, use
-	heuristics to stop the search and report a suboptimal answer.
+   Set PART->lo_minimal to true iff the minimal edit script for the
+   left half of the partition is known; similarly for PART->hi_minimal.
 
-   RETURNS
-	Set PART->(XMID,YMID) to the midpoint (XMID,YMID).  The diagonal
-	number XMID - YMID equals the number of inserted elements
-	minus the number of deleted elements (counting only elements
-	before the midpoint).  Return the approximate edit cost; this is
-	the total number of elements inserted or deleted (counting
-	only elements before the midpoint), unless a heuristic is used
-	to terminate the search prematurely.
+   Return the approximate edit cost; this is the total number of elements
+   inserted or deleted (counting only elements before the midpoint), unless
+   a heuristic is used to terminate the search prematurely.
 
-	Set PART->lo_minimal to nonzero iff the minimal edit script
-	for the left half of the partition is known; similarly for
-	PART->hi_minimal.
+   This function assumes that the first elements of the specified portions
+   of the two vectors do not match, and likewise that the last elements do not
+   match.  The caller must trim matching elements from the beginning and end
+   of the portions it is going to specify.
 
-   CAVEAT
-	This function assumes that the first elements of the specified
-	portions of the two vectors do not match, and likewise that the
-	last elements do not match.  The caller must trim matching
-	elements from the beginning and end of the portions it is
-	going to specify.
-
-	If we return the "wrong" partitions, the worst this can do is
-	cause suboptimal diff output.  It cannot cause incorrect diff
-	output.  */
+   If we return the "wrong" partitions, the worst this can do is cause
+   suboptimal diff output.  It cannot cause incorrect diff output.  */
 
 static OFFSET
 diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
@@ -197,20 +187,17 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
   OFFSET bmin = bmid;
   OFFSET bmax = bmid;		/* Limits of bottom-up search. */
   OFFSET c;			/* Cost. */
-  bool odd = (fmid - bmid) & 1;
+  bool odd = (fmid - bmid) & 1;	/* True if southeast corner is on an odd
+				   diagonal with respect to the northwest. */
 
-  /*
-   * True if southeast corner is on an odd diagonal with respect
-   * to the northwest.
-   */
   fd[fmid] = xoff;
   bd[bmid] = xlim;
+
   for (c = 1;; ++c)
     {
       OFFSET d;			/* Active diagonal. */
-      bool big_snake;
+      bool big_snake = false;
 
-      big_snake = false;
       /* Extend the top-down search by an edit step in each diagonal. */
       if (fmin > dmin)
 	fd[--fmin - 1] = -1;
@@ -225,11 +212,8 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	  OFFSET x;
 	  OFFSET y;
 	  OFFSET oldx;
-	  OFFSET tlo;
-	  OFFSET thi;
-
-	  tlo = fd[d - 1];
-	  thi = fd[d + 1];
+	  OFFSET tlo = fd[d - 1];
+	  OFFSET thi = fd[d + 1];
 
 	  if (tlo >= thi)
 	    x = tlo + 1;
@@ -267,11 +251,8 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	  OFFSET x;
 	  OFFSET y;
 	  OFFSET oldx;
-	  OFFSET tlo;
-	  OFFSET thi;
-
-	  tlo = bd[d - 1];
-	  thi = bd[d + 1];
+	  OFFSET tlo = bd[d - 1];
+	  OFFSET thi = bd[d + 1];
 
 	  if (tlo < thi)
 	    x = tlo;
@@ -301,12 +282,13 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 
 #ifdef USE_HEURISTIC
       /* Heuristic: check occasionally for a diagonal that has made lots
-         of progress compared with the edit distance.  If we have any
-         such, find the one that has made the most progress and return
-         it as if it had succeeded.
+	 of progress compared with the edit distance.  If we have any
+	 such, find the one that has made the most progress and return it
+	 as if it had succeeded.
 
-         With this heuristic, for vectors with a constant small density
-         of changes, the algorithm is linear in the vector size.  */
+	 With this heuristic, for vectors with a constant small density
+	 of changes, the algorithm is linear in the vector size.  */
+
       if (c > 200 && big_snake && ctxt->heuristic)
 	{
 	  OFFSET best;
@@ -314,37 +296,29 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	  best = 0;
 	  for (d = fmax; d >= fmin; d -= 2)
 	    {
-	      OFFSET dd;
-	      OFFSET x;
-	      OFFSET y;
-	      OFFSET v;
-
-	      dd = d - fmid;
-	      x = fd[d];
-	      y = x - d;
-	      v = (x - xoff) * 2 - dd;
+	      OFFSET dd = d - fmid;
+	      OFFSET x = fd[d];
+	      OFFSET y = x - d;
+	      OFFSET v = (x - xoff) * 2 - dd;
 
 	      if (v > 12 * (c + (dd < 0 ? -dd : dd)))
 		{
 		  if (v > best
 		      && xoff + SNAKE_LIMIT <= x && x < xlim
-		      && yoff + SNAKE_LIMIT <= y && y < ylim
-		    )
+		      && yoff + SNAKE_LIMIT <= y && y < ylim)
 		    {
 		      /* We have a good enough best diagonal; now insist
 			 that it end with a significant snake.  */
 		      int k;
 
 		      for (k = 1; xv[x - k] == yv[y - k]; k++)
-			{
-			  if (k == SNAKE_LIMIT)
-			    {
-			      best = v;
-			      part->xmid = x;
-			      part->ymid = y;
-			      break;
-			    }
-			}
+			if (k == SNAKE_LIMIT)
+			  {
+			    best = v;
+			    part->xmid = x;
+			    part->ymid = y;
+			    break;
+			  }
 		    }
 		}
 	    }
@@ -354,38 +328,33 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	      part->hi_minimal = false;
 	      return 2 * c - 1;
 	    }
+
 	  best = 0;
 	  for (d = bmax; d >= bmin; d -= 2)
 	    {
-	      OFFSET dd;
-	      OFFSET x;
-	      OFFSET y;
-	      OFFSET v;
-
-	      dd = d - bmid;
-	      x = bd[d];
-	      y = x - d;
-	      v = (xlim - x) * 2 + dd;
+	      OFFSET dd = d - bmid;
+	      OFFSET x = bd[d];
+	      OFFSET y = x - d;
+	      OFFSET v = (xlim - x) * 2 + dd;
 
 	      if (v > 12 * (c + (dd < 0 ? -dd : dd)))
 		{
-		  if (v > best && xoff < x && x <= xlim - SNAKE_LIMIT &&
-		      yoff < y && y <= ylim - SNAKE_LIMIT)
+		  if (v > best
+		      && xoff < x && x <= xlim - SNAKE_LIMIT
+		      && yoff < y && y <= ylim - SNAKE_LIMIT)
 		    {
 		      /* We have a good enough best diagonal; now insist
 			 that it end with a significant snake.  */
 		      int k;
 
 		      for (k = 0; xv[x + k] == yv[y + k]; k++)
-			{
-			  if (k == SNAKE_LIMIT - 1)
-			    {
-			      best = v;
-			      part->xmid = x;
-			      part->ymid = y;
-			      break;
-			    }
-			}
+			if (k == SNAKE_LIMIT - 1)
+			  {
+			    best = v;
+			    part->xmid = x;
+			    part->ymid = y;
+			    break;
+			  }
 		    }
 		}
 	    }
@@ -420,7 +389,6 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 
 	      x = fd[d] < xlim ? fd[d] : xlim;
 	      y = x - d;
-
 	      if (ylim < y)
 		{
 		  x = ylim + d;
@@ -432,6 +400,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 		  fxbest = x;
 		}
 	    }
+
 	  /* Find backward diagonal that minimizes X + Y.  */
 	  bxybest = OFFSET_MAX;
 	  for (d = bmax; d >= bmin; d -= 2)
@@ -441,7 +410,6 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 
 	      x = xoff > bd[d] ? xoff : bd[d];
 	      y = x - d;
-
 	      if (y < yoff)
 		{
 		  x = yoff + d;
@@ -453,6 +421,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 		  bxbest = x;
 		}
 	    }
+
 	  /* Use the better of the two diagonals.  */
 	  if ((xlim + ylim) - bxybest < fxybest - (xoff + yoff))
 	    {
@@ -473,26 +442,19 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
     }
 }
 
+/* Compare in detail contiguous subsequences of the two vectors
+   which are known, as a whole, to match each other.
 
-/* NAME
-	compareseq - find edit sequence
+   The subsequence of vector 0 is [XOFF, XLIM) and likewise for vector 1.
 
-   SYNOPSIS
-	void compareseq(int xoff, int xlim, int yoff, int ylim, bool find_minimal,
-			struct context *ctxt);
+   Note that XLIM, YLIM are exclusive bounds.  All indices into the vectors
+   are origin-0.
 
-   DESCRIPTION
-	Compare in detail contiguous subsequences of the two vectors
-	which are known, as a whole, to match each other.
+   If FIND_MINIMAL, find a minimal difference no matter how
+   expensive it is.
 
-	The subsequence of vector 0 is [XOFF, XLIM) and likewise for
-	vector 1.
-
-	Note that XLIM, YLIM are exclusive bounds.  All character
-	numbers are origin-0.
-
-	If FIND_MINIMAL is nonzero, find a minimal difference no matter how
-	expensive it is.  */
+   The results are recorded in the vectors files[N].changed, by storing 1
+   in the element for each line that is an insertion or deletion.  */
 
 static void
 compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
