@@ -63,6 +63,8 @@
 #define ELEMENT char
 #define EQUAL(x,y) ((x) == (y))
 #define OFFSET int
+/* We don't need USE_HEURISTIC, since it is unlikely in typical uses of
+   fstrcmp().  */
 
 /* Before including this file, you need to define:
      ELEMENT                 The element type of the sequences being compared.
@@ -110,9 +112,7 @@ struct context
   #ifdef USE_HEURISTIC
   /* This corresponds to the diff -H flag.  With this heuristic, for
      vectors with a constant small density of changes, the algorithm is
-     linear in the vectors size.  This is unlikely in typical uses of
-     fstrcmp, and so is usually compiled out.  Besides, there is no
-     interface to set it true.  */
+     linear in the vectors size.  */
   int heuristic;
   #endif
 
