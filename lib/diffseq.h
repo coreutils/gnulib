@@ -332,13 +332,13 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	}
 #endif /* USE_HEURISTIC */
 
-      /* Heuristic: if we've gone well beyond the call of duty,
-	 give up and report halfway between our best results so far.  */
+      /* Heuristic: if we've gone well beyond the call of duty, give up
+	 and report halfway between our best results so far.  */
       if (c >= ctxt->too_expensive)
 	{
 	  OFFSET fxybest;
-	  OFFSET bxybest;
 	  OFFSET fxbest IF_LINT (= 0);
+	  OFFSET bxybest;
 	  OFFSET bxbest IF_LINT (= 0);
 
 	  /* Find forward diagonal that maximizes X + Y.  */
