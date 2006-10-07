@@ -67,6 +67,10 @@
 #define EQUAL(x,y) ((x) == (y))
 #define OFFSET int
 
+/* Maximum value of type OFFSET.  */
+#define OFFSET_MAX \
+  ((((OFFSET)1 << (sizeof (OFFSET_MAX) * CHAR_BIT - 2)) - 1) * 2 + 1)
+
 /* Before including this file, you need to define:
      ELEMENT                 The element type of the sequences being compared.
      EQUAL                   A two-argument macro that tests two elements for
@@ -256,11 +260,11 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	}
       /* Similarly extend the bottom-up search.  */
       if (bmin > dmin)
-	bd[--bmin - 1] = INT_MAX;
+	bd[--bmin - 1] = OFFSET_MAX;
       else
 	++bmin;
       if (bmax < dmax)
-	bd[++bmax + 1] = INT_MAX;
+	bd[++bmax + 1] = OFFSET_MAX;
       else
 	--bmax;
       for (d = bmax; d >= bmin; d -= 2)
@@ -434,7 +438,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 		}
 	    }
 	  /* Find backward diagonal that minimizes X + Y.  */
-	  bxybest = INT_MAX;
+	  bxybest = OFFSET_MAX;
 	  for (d = bmax; d >= bmin; d -= 2)
 	    {
 	      OFFSET x;
