@@ -88,9 +88,12 @@ struct context
 struct partition
 {
   /* Midpoints of this partition.  */
-  OFFSET xmid, ymid;
+  OFFSET xmid;
+  OFFSET ymid;
+
   /* True if low half will be analyzed minimally.  */
   bool lo_minimal;
+
   /* Likewise for high half.  */
   bool hi_minimal;
 };
@@ -134,8 +137,10 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
   const OFFSET dmax = xlim - yoff;	/* Maximum valid diagonal. */
   const OFFSET fmid = xoff - yoff;	/* Center diagonal of top-down search. */
   const OFFSET bmid = xlim - ylim;	/* Center diagonal of bottom-up search. */
-  OFFSET fmin = fmid, fmax = fmid;	/* Limits of top-down search. */
-  OFFSET bmin = bmid, bmax = bmid;	/* Limits of bottom-up search. */
+  OFFSET fmin = fmid;
+  OFFSET fmax = fmid;		/* Limits of top-down search. */
+  OFFSET bmin = bmid;
+  OFFSET bmax = bmid;		/* Limits of bottom-up search. */
   OFFSET c;			/* Cost. */
   bool odd = (fmid - bmid) & 1;	/* True if southeast corner is on an odd
 				   diagonal with respect to the northwest. */
@@ -159,7 +164,11 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	--fmax;
       for (d = fmax; d >= fmin; d -= 2)
 	{
-	  OFFSET x, y, oldx, tlo = fd[d - 1], thi = fd[d + 1];
+	  OFFSET x;
+	  OFFSET y;
+	  OFFSET oldx;
+	  OFFSET tlo = fd[d - 1];
+	  OFFSET thi = fd[d + 1];
 
 	  if (tlo >= thi)
 	    x = tlo + 1;
@@ -195,7 +204,11 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	--bmax;
       for (d = bmax; d >= bmin; d -= 2)
 	{
-	  OFFSET x, y, oldx, tlo = bd[d - 1], thi = bd[d + 1];
+	  OFFSET x;
+	  OFFSET y;
+	  OFFSET oldx;
+	  OFFSET tlo = bd[d - 1];
+	  OFFSET thi = bd[d + 1];
 
 	  if (tlo < thi)
 	    x = tlo;
@@ -224,32 +237,34 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	continue;
 
 #ifdef USE_HEURISTIC
-      /* Heuristic: check occasionally for a diagonal that has made
-	 lots of progress compared with the edit distance.
-	 If we have any such, find the one that has made the most
-	 progress and return it as if it had succeeded.
+      /* Heuristic: check occasionally for a diagonal that has made lots
+	 of progress compared with the edit distance.  If we have any
+	 such, find the one that has made the most progress and return it
+	 as if it had succeeded.
 
 	 With this heuristic, for vectors with a constant small density
 	 of changes, the algorithm is linear in the vector size.  */
 
       if (c > 200 && big_snake && ctxt->heuristic)
 	{
-	  OFFSET best = 0;
+	  OFFSET best;
 
+	  best = 0;
 	  for (d = fmax; d >= fmin; d -= 2)
 	    {
 	      OFFSET dd = d - fmid;
 	      OFFSET x = fd[d];
 	      OFFSET y = x - d;
 	      OFFSET v = (x - xoff) * 2 - dd;
+
 	      if (v > 12 * (c + (dd < 0 ? -dd : dd)))
 		{
 		  if (v > best
 		      && xoff + SNAKE_LIMIT <= x && x < xlim
 		      && yoff + SNAKE_LIMIT <= y && y < ylim)
 		    {
-		      /* We have a good enough best diagonal;
-			 now insist that it end with a significant snake.  */
+		      /* We have a good enough best diagonal; now insist
+			 that it end with a significant snake.  */
 		      int k;
 
 		      for (k = 1; xv[x - k] == yv[y - k]; k++)
@@ -277,14 +292,15 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	      OFFSET x = bd[d];
 	      OFFSET y = x - d;
 	      OFFSET v = (xlim - x) * 2 + dd;
+
 	      if (v > 12 * (c + (dd < 0 ? -dd : dd)))
 		{
 		  if (v > best
 		      && xoff < x && x <= xlim - SNAKE_LIMIT
 		      && yoff < y && y <= ylim - SNAKE_LIMIT)
 		    {
-		      /* We have a good enough best diagonal;
-			 now insist that it end with a significant snake.  */
+		      /* We have a good enough best diagonal; now insist
+			 that it end with a significant snake.  */
 		      int k;
 
 		      for (k = 0; xv[x + k] == yv[y + k]; k++)
@@ -320,10 +336,16 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	  fxybest = -1;
 	  for (d = fmax; d >= fmin; d -= 2)
 	    {
-	      OFFSET x = MIN (fd[d], xlim);
-	      OFFSET y = x - d;
+	      OFFSET x;
+	      OFFSET y;
+
+	      x = MIN (fd[d], xlim);
+	      y = x - d;
 	      if (ylim < y)
-		x = ylim + d, y = ylim;
+		{
+		  x = ylim + d;
+		  y = ylim;
+		}
 	      if (fxybest < x + y)
 		{
 		  fxybest = x + y;
@@ -335,10 +357,16 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	  bxybest = OFFSET_MAX;
 	  for (d = bmax; d >= bmin; d -= 2)
 	    {
-	      OFFSET x = MAX (xoff, bd[d]);
-	      OFFSET y = x - d;
+	      OFFSET x;
+	      OFFSET y;
+
+	      x = MAX (xoff, bd[d]);
+	      y = x - d;
 	      if (y < yoff)
-		x = yoff + d, y = yoff;
+		{
+		  x = yoff + d;
+		  y = yoff;
+		}
 	      if (x + y < bxybest)
 		{
 		  bxybest = x + y;
@@ -369,23 +397,23 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 /* Compare in detail contiguous subsequences of the two vectors
    which are known, as a whole, to match each other.
 
-   The results are recorded in the vectors files[N].changed, by
-   storing 1 in the element for each line that is an insertion or deletion.
-
    The subsequence of vector 0 is [XOFF, XLIM) and likewise for vector 1.
 
-   Note that XLIM, YLIM are exclusive bounds.
-   All line numbers are origin-0 and discarded elements are not counted.
+   Note that XLIM, YLIM are exclusive bounds.  All indices into the vectors
+   are origin-0.
 
    If FIND_MINIMAL, find a minimal difference no matter how
-   expensive it is.  */
+   expensive it is.
+
+   The results are recorded in the vectors files[N].changed, by storing 1
+   in the element for each line that is an insertion or deletion.  */
 
 static void
 compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
 	    bool find_minimal, struct context *ctxt)
 {
-  const ELEMENT *xv = ctxt->xvec; /* Help the compiler.  */
-  const ELEMENT *yv = ctxt->yvec;
+  const ELEMENT *const xv = ctxt->xvec; /* Help the compiler.  */
+  const ELEMENT *const yv = ctxt->yvec;
 
   /* Slide down the bottom initial diagonal. */
   while (xoff < xlim && yoff < ylim && xv[xoff] == yv[yoff])
