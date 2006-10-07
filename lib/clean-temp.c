@@ -589,7 +589,7 @@ open_temp (const char *file_name, int flags, mode_t mode)
   int saved_errno;
 
   block_fatal_signals ();
-  fd = open (file_name, flags, mode);
+  fd = open (file_name, flags, mode); /* actually open or open_safer */
   saved_errno = errno;
   if (fd >= 0)
     register_fd (fd);
@@ -607,7 +607,7 @@ fopen_temp (const char *file_name, const char *mode)
   int saved_errno;
 
   block_fatal_signals ();
-  fp = fopen (file_name, mode);
+  fp = fopen (file_name, mode); /* actually fopen or fopen_safer */
   saved_errno = errno;
   if (fp != NULL)
     {

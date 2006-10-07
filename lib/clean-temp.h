@@ -36,7 +36,7 @@ extern "C" {
 
    Also, open file descriptors need to be closed before the temporary files
    and the temporary directories can be removed, because only on Unix
-   (excluding Cygwin) one can remove directories containing open files.
+   (excluding Cygwin) can one remove directories containing open files.
 
    This module provides support for temporary directories and temporary files
    inside these temporary directories.  Temporary files without temporary
