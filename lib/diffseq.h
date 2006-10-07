@@ -37,25 +37,33 @@
                              difference between two indices. Usually
                              something like ssize_t.  */
 
-static const ELEMENT *xvec, *yvec; /* Vectors being compared. */
-static OFFSET *fdiag;		/* Vector, indexed by diagonal, containing
-				   1 + the X coordinate of the point furthest
-				   along the given diagonal in the forward
-				   search of the edit matrix. */
-static OFFSET *bdiag;		/* Vector, indexed by diagonal, containing
-				   the X coordinate of the point furthest
-				   along the given diagonal in the backward
-				   search of the edit matrix. */
-static OFFSET too_expensive;	/* Edit scripts longer than this are too
-				   expensive to compute.  */
+/* Vectors being compared. */
+static const ELEMENT *xvec, *yvec;
 
-#define SNAKE_LIMIT 20	/* Snakes bigger than this are considered `big'.  */
+/* Vector, indexed by diagonal, containing 1 + the X coordinate of the point
+   furthest along the given diagonal in the forward search of the edit
+   matrix. */
+static OFFSET *fdiag;
+
+/* Vector, indexed by diagonal, containing the X coordinate of the point
+   furthest along the given diagonal in the backward search of the edit
+   matrix. */
+static OFFSET *bdiag;
+
+/* Edit scripts longer than this are too expensive to compute.  */
+static OFFSET too_expensive;
+
+/* Snakes bigger than this are considered `big'.  */
+#define SNAKE_LIMIT 20
 
 struct partition
 {
-  OFFSET xmid, ymid;	/* Midpoints of this partition.  */
-  bool lo_minimal;	/* True if low half will be analyzed minimally.  */
-  bool hi_minimal;	/* Likewise for high half.  */
+  /* Midpoints of this partition.  */
+  OFFSET xmid, ymid;
+  /* True if low half will be analyzed minimally.  */
+  bool lo_minimal;
+  /* Likewise for high half.  */
+  bool hi_minimal;
 };
 
 /* Find the midpoint of the shortest edit script for a specified
@@ -113,8 +121,14 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
       bool big_snake = false;
 
       /* Extend the top-down search by an edit step in each diagonal. */
-      fmin > dmin ? fd[--fmin - 1] = -1 : ++fmin;
-      fmax < dmax ? fd[++fmax + 1] = -1 : --fmax;
+      if (fmin > dmin)
+	fd[--fmin - 1] = -1;
+      else
+	++fmin;
+      if (fmax < dmax)
+	fd[++fmax + 1] = -1;
+      else
+	--fmax;
       for (d = fmax; d >= fmin; d -= 2)
 	{
 	  OFFSET x, y, oldx, tlo = fd[d - 1], thi = fd[d + 1];
@@ -126,7 +140,10 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	  oldx = x;
 	  y = x - d;
 	  while (x < xlim && y < ylim && xv[x] == yv[y])
-	    ++x, ++y;
+	    {
+	      ++x;
+	      ++y;
+	    }
 	  if (x - oldx > SNAKE_LIMIT)
 	    big_snake = true;
 	  fd[d] = x;
@@ -140,8 +157,14 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	}
 
       /* Similarly extend the bottom-up search.  */
-      bmin > dmin ? bd[--bmin - 1] = LIN_MAX : ++bmin;
-      bmax < dmax ? bd[++bmax + 1] = LIN_MAX : --bmax;
+      if (bmin > dmin)
+	bd[--bmin - 1] = LIN_MAX;
+      else
+	++bmin;
+      if (bmax < dmax)
+	bd[++bmax + 1] = LIN_MAX;
+      else
+	--bmax;
       for (d = bmax; d >= bmin; d -= 2)
 	{
 	  OFFSET x, y, oldx, tlo = bd[d - 1], thi = bd[d + 1];
@@ -153,7 +176,10 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	  oldx = x;
 	  y = x - d;
 	  while (x > xoff && y > yoff && xv[x - 1] == yv[y - 1])
-	    --x, --y;
+	    {
+	      --x;
+	      --y;
+	    }
 	  if (oldx - x > SNAKE_LIMIT)
 	    big_snake = true;
 	  bd[d] = x;
@@ -177,7 +203,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	 With this heuristic, for files with a constant small density
 	 of changes, the algorithm is linear in the file size.  */
 
-      if (200 < c && big_snake && speed_large_files)
+      if (c > 200 && big_snake && speed_large_files)
 	{
 	  OFFSET best = 0;
 
@@ -332,10 +358,16 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minima
 
   /* Slide down the bottom initial diagonal. */
   while (xoff < xlim && yoff < ylim && xv[xoff] == yv[yoff])
-    ++xoff, ++yoff;
+    {
+      ++xoff;
+      ++yoff;
+    }
   /* Slide up the top initial diagonal. */
   while (xlim > xoff && ylim > yoff && xv[xlim - 1] == yv[ylim - 1])
-    --xlim, --ylim;
+    {
+      --xlim;
+      --ylim;
+    }
 
   /* Handle simple cases. */
   if (xoff == xlim)

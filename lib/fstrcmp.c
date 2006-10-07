@@ -229,8 +229,8 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	  OFFSET tlo;
 	  OFFSET thi;
 
-	  tlo = fd[d - 1],
-	    thi = fd[d + 1];
+	  tlo = fd[d - 1];
+	  thi = fd[d + 1];
 
 	  if (tlo >= thi)
 	    x = tlo + 1;
@@ -271,8 +271,9 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	  OFFSET tlo;
 	  OFFSET thi;
 
-	  tlo = bd[d - 1],
-	    thi = bd[d + 1];
+	  tlo = bd[d - 1];
+	  thi = bd[d + 1];
+
 	  if (tlo < thi)
 	    x = tlo;
 	  else
@@ -326,17 +327,9 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 
 	      if (v > 12 * (c + (dd < 0 ? -dd : dd)))
 		{
-		  if
-		    (
-		      v > best
-		      &&
-		      xoff + SNAKE_LIMIT <= x
-		      &&
-		      x < xlim
-		      &&
-		      yoff + SNAKE_LIMIT <= y
-		      &&
-		      y < ylim
+		  if (v > best
+		      && xoff + SNAKE_LIMIT <= x && x < xlim
+		      && yoff + SNAKE_LIMIT <= y && y < ylim
 		    )
 		    {
 		      /* We have a good enough best diagonal; now insist
