@@ -27,7 +27,7 @@ Makefile.am:
 # listed in the Automake documentation.
 configmake.h: Makefile
 	rm -f $@-t $@
-	( \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  echo '#define PREFIX "$(prefix)"'; \
 	  echo '#define EXEC_PREFIX "$(exec_prefix)"'; \
 	  echo '#define BINDIR "$(bindir)"'; \
@@ -54,7 +54,7 @@ configmake.h: Makefile
 	  echo '#define PKGLIBDIR "$(pkglibdir)"'; \
 	  echo '#define PKGINCLUDEDIR "$(pkgincludedir)"'; \
 	  echo '#define PKGDATADIR "$(pkgdatadir)"'; \
-	:) | sed '/""/d' >$@-t
+	} | sed '/""/d' > $@-t
 	mv $@-t $@
 BUILT_SOURCES += configmake.h
 CLEANFILES += configmake.h configmake.h-t

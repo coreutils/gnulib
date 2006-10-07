@@ -17,7 +17,9 @@ EXTRA_DIST += byteswap_.h
 # We need the following in order to create <byteswap.h> when the system
 # doesn't have one.
 byteswap.h: byteswap_.h
-	cp -f $(srcdir)/byteswap_.h $@-t
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  cat $(srcdir)/byteswap_.h; \
+	} > $@-t
 	mv -f $@-t $@
 MOSTLYCLEANFILES += byteswap.h byteswap.h-t
 

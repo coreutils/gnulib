@@ -1,3 +1,28 @@
+2006-10-07  Bruno Haible  <bruno@clisp.org>
+
+	* modules/alloca-opt (alloca.h): Add a "BO NOT EDIT" comment.
+	* modules/argz (argz.h): Likewise.
+	* modules/arpa_inet (arpa/inet.h): Likewise.
+	* modules/byteswap (byteswap.h): Likewise.
+	* modules/configmake (configmake.h): Likewise.
+	* modules/fcntl (fcntl.h): Likewise.
+	* modules/fnmatch (fnmatch.h): Likewise.
+	* modules/getopt (getopt.h): Likewise.
+	* modules/glob (glob.h): Likewise.
+	* modules/inttypes (inttypes.h): Likewise.
+	* modules/netinet_in (netinet/in.h): Likewise.
+	* modules/poll (poll.h): Likewise.
+	* modules/stdbool (stdbool.h): Likewise.
+	* modules/stdint (stdint.h): Likewise.
+	* modules/sys_select (sys/select.h): Likewise.
+	* modules/sys_socket (sys/socket.h): Likewise.
+	* modules/sys_stat (sys/stat.h): Likewise.
+	* modules/sysexits (sysexits.h): Likewise.
+	* modules/unistd (unistd.h): Likewise.
+	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
+	Add a "BO NOT EDIT" comment to the generated file.
+	(func_import): Likewise for gnulib-comp.m4.
+
 2006-10-03  Bruno Haible  <bruno@clisp.org>
 
 	* modules/sublist: New file.

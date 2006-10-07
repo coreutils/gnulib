@@ -21,16 +21,18 @@ EXTRA_DIST += inttypes_.h
 # doesn't have one that works with the given compiler.
 inttypes.h: inttypes_.h
 	rm -f $@-t $@
-	sed -e 's/@''HAVE_INTTYPES_H''@/$(HAVE_INTTYPES_H)/g' \
-	    -e 's|@''ABSOLUTE_INTTYPES_H''@|$(ABSOLUTE_INTTYPES_H)|g' \
-	    -e 's/@''PRI_MACROS_BROKEN''@/$(PRI_MACROS_BROKEN)/g' \
-	    -e 's/@''HAVE_LONG_LONG_INT''@/$(HAVE_LONG_LONG_INT)/g' \
-	    -e 's/@''PRIPTR_PREFIX''@/$(PRIPTR_PREFIX)/g' \
-	    -e 's/@''HAVE_DECL_IMAXABS''@/$(HAVE_DECL_IMAXABS)/g' \
-	    -e 's/@''HAVE_DECL_IMAXDIV''@/$(HAVE_DECL_IMAXDIV)/g' \
-	    -e 's/@''HAVE_DECL_STRTOIMAX''@/$(HAVE_DECL_STRTOIMAX)/g' \
-	    -e 's/@''HAVE_DECL_STRTOUMAX''@/$(HAVE_DECL_STRTOUMAX)/g' \
-	    < $(srcdir)/inttypes_.h > $@-t
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's/@''HAVE_INTTYPES_H''@/$(HAVE_INTTYPES_H)/g' \
+	      -e 's/@''ABSOLUTE_INTTYPES_H''@/$(ABSOLUTE_INTTYPES_H)/g' \
+	      -e 's/@''PRI_MACROS_BROKEN''@/$(PRI_MACROS_BROKEN)/g' \
+	      -e 's/@''HAVE_LONG_LONG_INT''@/$(HAVE_LONG_LONG_INT)/g' \
+	      -e 's/@''PRIPTR_PREFIX''@/$(PRIPTR_PREFIX)/g' \
+	      -e 's/@''HAVE_DECL_IMAXABS''@/$(HAVE_DECL_IMAXABS)/g' \
+	      -e 's/@''HAVE_DECL_IMAXDIV''@/$(HAVE_DECL_IMAXDIV)/g' \
+	      -e 's/@''HAVE_DECL_STRTOIMAX''@/$(HAVE_DECL_STRTOIMAX)/g' \
+	      -e 's/@''HAVE_DECL_STRTOUMAX''@/$(HAVE_DECL_STRTOUMAX)/g' \
+	      < $(srcdir)/inttypes_.h; \
+	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += inttypes.h inttypes.h-t
 

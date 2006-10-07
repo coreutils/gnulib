@@ -20,8 +20,10 @@ EXTRA_DIST += fcntl_.h
 # doesn't have one that works with the given compiler.
 fcntl.h: fcntl_.h
 	rm -f $@-t $@
-	sed -e 's|@''ABSOLUTE_FCNTL_H''@|$(ABSOLUTE_FCNTL_H)|g' \
-	    < $(srcdir)/fcntl_.h > $@-t
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''ABSOLUTE_FCNTL_H''@|$(ABSOLUTE_FCNTL_H)|g' \
+	      < $(srcdir)/fcntl_.h; \
+	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += fcntl.h fcntl.h-t
 

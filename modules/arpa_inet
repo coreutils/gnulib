@@ -18,7 +18,9 @@ BUILT_SOURCES += $(ARPA_INET_H)
 arpa/inet.h:
 	test -d arpa || mkdir arpa
 	rm -f $@-t $@
-	echo '#include <sys/socket.h>' >$@-t
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  echo '#include <sys/socket.h>'; \
+	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += arpa/inet.h arpa/inet.h-t
 MOSTLYCLEANDIRS += arpa

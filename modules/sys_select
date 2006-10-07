@@ -18,7 +18,9 @@ BUILT_SOURCES += $(SYS_SELECT_H)
 sys/select.h:
 	test -d sys || mkdir sys
 	rm -f $@-t $@
-	echo '#include <sys/socket.h>' >$@-t
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  echo '#include <sys/socket.h>'; \
+	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += sys/select.h sys/select.h-t
 MOSTLYCLEANDIRS += sys
