@@ -30,6 +30,7 @@
 #define ELEMENT lin
 #define EQUAL(x,y) ((x) == (y))
 #define OFFSET lin
+#define USE_HEURISTIC 1
 #include "diffseq.h"
 
 /* Discard lines from one file that have no matches in the other file.
@@ -561,6 +562,8 @@ diff_2_files (struct comparison *cmp)
       bdiag = fdiag + diags;
       fdiag += cmp->file[1].nondiscarded_lines + 1;
       bdiag += cmp->file[1].nondiscarded_lines + 1;
+
+      heuristic = speed_large_files;
 
       /* Set TOO_EXPENSIVE to be approximate square root of input size,
 	 bounded below by 256.  */

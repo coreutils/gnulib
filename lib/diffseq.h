@@ -44,7 +44,9 @@
                              equality.
      OFFSET                  A signed integer type sufficient to hold the
                              difference between two indices. Usually
-                             something like ssize_t.  */
+                             something like ssize_t.
+     USE_HEURISTIC           (Optional) Define if you want to support the
+                             heuristic for large vectors.  */
 
 /* Maximum value of type OFFSET.  */
 #define OFFSET_MAX \
@@ -62,6 +64,15 @@ static OFFSET *fdiag;
    furthest along the given diagonal in the backward search of the edit
    matrix. */
 static OFFSET *bdiag;
+
+#ifdef USE_HEURISTIC
+/* This corresponds to the diff -H flag.  With this heuristic, for
+   vectors with a constant small density of changes, the algorithm is
+   linear in the vectors size.  This is unlikely in typical uses of
+   fstrcmp, and so is usually compiled out.  Besides, there is no
+   interface to set it true.  */
+int heuristic;
+#endif
 
 /* Edit scripts longer than this are too expensive to compute.  */
 static OFFSET too_expensive;
@@ -207,6 +218,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
       if (find_minimal)
 	continue;
 
+#ifdef USE_HEURISTIC
       /* Heuristic: check occasionally for a diagonal that has made
 	 lots of progress compared with the edit distance.
 	 If we have any such, find the one that has made the most
@@ -215,7 +227,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	 With this heuristic, for vectors with a constant small density
 	 of changes, the algorithm is linear in the vector size.  */
 
-      if (c > 200 && big_snake && speed_large_files)
+      if (c > 200 && big_snake && heuristic)
 	{
 	  OFFSET best = 0;
 
@@ -288,6 +300,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	      return;
 	    }
 	}
+#endif /* USE_HEURISTIC */
 
       /* Heuristic: if we've gone well beyond the call of duty,
 	 give up and report halfway between our best results so far.  */
