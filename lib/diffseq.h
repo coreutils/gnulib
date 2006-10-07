@@ -54,7 +54,7 @@ static OFFSET too_expensive;	/* Edit scripts longer than this are too
 struct partition
 {
   OFFSET xmid, ymid;	/* Midpoints of this partition.  */
-  bool lo_minimal;	/* Nonzero if low half will be analyzed minimally.  */
+  bool lo_minimal;	/* True if low half will be analyzed minimally.  */
   bool hi_minimal;	/* Likewise for high half.  */
 };
 
@@ -66,7 +66,7 @@ struct partition
    When the two searches meet, we have found the midpoint of the shortest
    edit sequence.
 
-   If FIND_MINIMAL is nonzero, find the minimal edit script regardless
+   If FIND_MINIMAL is true, find the minimal edit script regardless
    of expense.  Otherwise, if the search is too expensive, use
    heuristics to stop the search and report a suboptimal answer.
 
