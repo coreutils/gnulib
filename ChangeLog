@@ -1,3 +1,7 @@
+2006-10-03  Bruno Haible  <bruno@clisp.org>
+
+	* modules/sublist: New file.
+
 2006-09-29  Bruno Haible  <bruno@clisp.org>
 
 	* modules/closeout (Description): Mention stderr too.

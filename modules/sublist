@@ -1,0 +1,25 @@
+Description:
+Sequential list data type backed by another list.
+
+Files:
+lib/gl_sublist.h
+lib/gl_sublist.c
+
+Depends-on:
+list
+xalloc
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += gl_sublist.h gl_sublist.c
+
+Include:
+"gl_sublist.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible
+
