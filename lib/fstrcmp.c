@@ -80,6 +80,15 @@
 #define OFFSET_MAX \
   ((((OFFSET)1 << (sizeof (OFFSET_MAX) * CHAR_BIT - 2)) - 1) * 2 + 1)
 
+/* Use this to suppress gcc's `...may be used before initialized' warnings. */
+#ifndef IF_LINT
+# ifdef lint
+#  define IF_LINT(Code) Code
+# else
+#  define IF_LINT(Code) /* empty */
+# endif
+#endif
+
 /*
  * Context of comparison operation.
  */
