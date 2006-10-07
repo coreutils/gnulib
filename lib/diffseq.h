@@ -52,6 +52,15 @@
 #define OFFSET_MAX \
   ((((OFFSET)1 << (sizeof (OFFSET_MAX) * CHAR_BIT - 2)) - 1) * 2 + 1)
 
+/* Use this to suppress gcc's `...may be used before initialized' warnings. */
+#ifndef IF_LINT
+# ifdef lint
+#  define IF_LINT(Code) Code
+# else
+#  define IF_LINT(Code) /* empty */
+# endif
+#endif
+
 /*
  * Context of comparison operation.
  */
@@ -437,7 +446,7 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
       files[0].changed[files[0].realindexes[xoff++]] = 1;
   else
     {
-      struct partition part IF_LINT (= {0});
+      struct partition part;
 
       /* Find a point of correspondence in the middle of the vectors.  */
       diag (xoff, xlim, yoff, ylim, find_minimal, &part, ctxt);
