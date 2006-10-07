@@ -1,3 +1,9 @@
+2006-10-07  Jim Meyering  <jim@meyering.net>
+
+	* modules/inttypes (inttypes.h): Revert what seems to have been
+	an inadvertent part of today's change: use "|", not "/" in the
+	substitution for the "/"-containing string, $(ABSOLUTE_INTTYPES_H).
+
 2006-10-07  Bruno Haible  <bruno@clisp.org>
 
 	* modules/alloca-opt (alloca.h): Add a "DO NOT EDIT" comment.
