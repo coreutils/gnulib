@@ -25,6 +25,7 @@
 #include <error.h>
 #include <file-type.h>
 #include <xalloc.h>
+#include "minmax.h"
 
 /* The core of the Diff algorithm.  */
 #define ELEMENT lin
