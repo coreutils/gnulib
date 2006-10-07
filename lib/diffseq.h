@@ -1,4 +1,4 @@
-/* Analyze differences between two sequences.
+/* Analyze differences between two vectors.
    Copyright (C) 1988-1989, 1992-1995, 2001-2004, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -16,21 +16,30 @@
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 
-/* The basic algorithm is described in:
+/* The basic idea is to consider two vectors as similar if, when
+   transforming the first vector into the second vector through a
+   sequence of edits (inserts and deletes of one character each),
+   this sequence is short - or equivalently, if the ordered list
+   of elements that are untouched by these edits is long.  For a
+   good introduction to the subject, read about the "Levenshtein
+   distance" in Wikipedia.
+
+   The basic algorithm is described in:
    "An O(ND) Difference Algorithm and its Variations", Eugene Myers,
    Algorithmica Vol. 1 No. 2, 1986, pp. 251-266;
    see especially section 4.2, which describes the variation used below.
-   Unless the --minimal option is specified, this code uses the TOO_EXPENSIVE
-   heuristic, by Paul Eggert, to limit the cost to O(N**1.5 log N)
-   at the price of producing suboptimal output for large inputs with
-   many differences.
 
    The basic algorithm was independently discovered as described in:
    "Algorithms for Approximate String Matching", E. Ukkonen,
-   Information and Control Vol. 64, 1985, pp. 100-118.  */
+   Information and Control Vol. 64, 1985, pp. 100-118.
+
+   Unless the 'find_minimal' flag is set, this code uses the TOO_EXPENSIVE
+   heuristic, by Paul Eggert, to limit the cost to O(N**1.5 log N)
+   at the price of producing suboptimal output for large inputs with
+   many differences.  */
 
 /* Before including this file, you need to define:
-     ELEMENT                 The element type of the sequences being compared.
+     ELEMENT                 The element type of the vectors being compared.
      EQUAL                   A two-argument macro that tests two elements for
                              equality.
      OFFSET                  A signed integer type sufficient to hold the
@@ -70,10 +79,10 @@ struct partition
   bool hi_minimal;
 };
 
-/* Find the midpoint of the shortest edit script for a specified
-   portion of the two files.
+/* Find the midpoint of the shortest edit script for a specified portion
+   of the two vectors.
 
-   Scan from the beginnings of the files, and simultaneously from the ends,
+   Scan from the beginnings of the vectors, and simultaneously from the ends,
    doing a breadth-first search through the space of edit-sequence.
    When the two searches meet, we have found the midpoint of the shortest
    edit sequence.
@@ -83,20 +92,19 @@ struct partition
    heuristics to stop the search and report a suboptimal answer.
 
    Set PART->(xmid,ymid) to the midpoint (XMID,YMID).  The diagonal number
-   XMID - YMID equals the number of inserted lines minus the number
-   of deleted lines (counting only lines before the midpoint).
+   XMID - YMID equals the number of inserted elements minus the number
+   of deleted elements (counting only elements before the midpoint).
 
    Set PART->lo_minimal to true iff the minimal edit script for the
    left half of the partition is known; similarly for PART->hi_minimal.
 
-   This function assumes that the first lines of the specified portions
-   of the two files do not match, and likewise that the last lines do not
-   match.  The caller must trim matching lines from the beginning and end
+   This function assumes that the first elements of the specified portions
+   of the two vectors do not match, and likewise that the last elements do not
+   match.  The caller must trim matching elements from the beginning and end
    of the portions it is going to specify.
 
-   If we return the "wrong" partitions,
-   the worst this can do is cause suboptimal diff output.
-   It cannot cause incorrect diff output.  */
+   If we return the "wrong" partitions, the worst this can do is cause
+   suboptimal diff output.  It cannot cause incorrect diff output.  */
 
 static void
 diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
@@ -204,8 +212,8 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	 If we have any such, find the one that has made the most
 	 progress and return it as if it had succeeded.
 
-	 With this heuristic, for files with a constant small density
-	 of changes, the algorithm is linear in the file size.  */
+	 With this heuristic, for vectors with a constant small density
+	 of changes, the algorithm is linear in the vector size.  */
 
       if (c > 200 && big_snake && speed_large_files)
 	{
@@ -340,16 +348,16 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
     }
 }
 
-/* Compare in detail contiguous subsequences of the two files
+/* Compare in detail contiguous subsequences of the two vectors
    which are known, as a whole, to match each other.
 
    The results are recorded in the vectors files[N].changed, by
    storing 1 in the element for each line that is an insertion or deletion.
 
-   The subsequence of file 0 is [XOFF, XLIM) and likewise for file 1.
+   The subsequence of vector 0 is [XOFF, XLIM) and likewise for vector 1.
 
    Note that XLIM, YLIM are exclusive bounds.
-   All line numbers are origin-0 and discarded lines are not counted.
+   All line numbers are origin-0 and discarded elements are not counted.
 
    If FIND_MINIMAL, find a minimal difference no matter how
    expensive it is.  */
@@ -384,7 +392,7 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minima
     {
       struct partition part IF_LINT (= {0});
 
-      /* Find a point of correspondence in the middle of the files.  */
+      /* Find a point of correspondence in the middle of the vectors.  */
       diag (xoff, xlim, yoff, ylim, find_minimal, &part);
 
       /* Use the partitions to split this problem into subproblems.  */
