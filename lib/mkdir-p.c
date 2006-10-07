@@ -43,7 +43,7 @@
    WD is the working directory, as in savewd.c.
 
    If MAKE_ANCESTOR is not null, create any ancestor directories that
-   don't already exist, by invoking MAKE_ANCESTOR (ANCESTOR, OPTIONS).
+   don't already exist, by invoking MAKE_ANCESTOR (DIR, ANCESTOR, OPTIONS).
    This function should return zero if successful, -1 (setting errno)
    otherwise.  In this case, DIR may be modified by storing '\0' bytes
    into it, to access the ancestor directories, and this modification
@@ -83,7 +83,7 @@
 bool
 make_dir_parents (char *dir,
 		  struct savewd *wd,
-		  int (*make_ancestor) (char const *, void *),
+		  int (*make_ancestor) (char const *, char const *, void *),
 		  void *options,
 		  mode_t mode,
 		  void (*announce) (char const *, void *),

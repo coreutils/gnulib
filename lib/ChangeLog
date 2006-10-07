@@ -1,3 +1,13 @@
+2006-10-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* mkancesdirs.c (mkancesdirs): Pass to MAKE_DIR both the full file
+	name (relative to the original working directory) and the file
+	name component (relative to the temporary working directory).  All
+	callers changed.
+	* mkancesdirs.h (mkancesdirs): Adjust prototype to match.
+	* mkdir-p.c (make_dir_parents): Likewise.
+	* mkdir-p.h (make_dir_parents): Likewise.
+
 2006-10-06  Eric Blake  <ebb9@byu.net>
 
 	* clean-temp.h (close_stream_temp): New declaration.
@@ -20,7 +30,7 @@
 	* clean-temp.c (PATH_MAX): Provide a fallback for GNU Hurd.
 	Reported by Eric Blake.
 
-2006-09-29  Bruno Haible  <bruno@clisp.org>
+2006-10-06  Bruno Haible  <bruno@clisp.org>
 	and Paul Eggert  <eggert@cs.ucla.edu>
 
 	* closeout.c (close_stdout): Also close stderr.

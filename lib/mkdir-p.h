@@ -25,7 +25,8 @@
 struct savewd;
 bool make_dir_parents (char *dir,
 		       struct savewd *wd,
-		       int (*make_ancestor) (char const *, void *),
+		       int (*make_ancestor) (char const *, char const *,
+					     void *),
 		       void *options,
 		       mode_t mode,
 		       void (*announce) (char const *, void *),
