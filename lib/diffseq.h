@@ -29,23 +29,31 @@
    "Algorithms for Approximate String Matching", E. Ukkonen,
    Information and Control Vol. 64, 1985, pp. 100-118.  */
 
-static lin *xvec, *yvec;	/* Vectors being compared. */
-static lin *fdiag;		/* Vector, indexed by diagonal, containing
+/* Before including this file, you need to define:
+     ELEMENT                 The element type of the sequences being compared.
+     EQUAL                   A two-argument macro that tests two elements for
+                             equality.
+     OFFSET                  A signed integer type sufficient to hold the
+                             difference between two indices. Usually
+                             something like ssize_t.  */
+
+static const ELEMENT *xvec, *yvec; /* Vectors being compared. */
+static OFFSET *fdiag;		/* Vector, indexed by diagonal, containing
 				   1 + the X coordinate of the point furthest
 				   along the given diagonal in the forward
 				   search of the edit matrix. */
-static lin *bdiag;		/* Vector, indexed by diagonal, containing
+static OFFSET *bdiag;		/* Vector, indexed by diagonal, containing
 				   the X coordinate of the point furthest
 				   along the given diagonal in the backward
 				   search of the edit matrix. */
-static lin too_expensive;	/* Edit scripts longer than this are too
+static OFFSET too_expensive;	/* Edit scripts longer than this are too
 				   expensive to compute.  */
 
 #define SNAKE_LIMIT 20	/* Snakes bigger than this are considered `big'.  */
 
 struct partition
 {
-  lin xmid, ymid;	/* Midpoints of this partition.  */
+  OFFSET xmid, ymid;	/* Midpoints of this partition.  */
   bool lo_minimal;	/* Nonzero if low half will be analyzed minimally.  */
   bool hi_minimal;	/* Likewise for high half.  */
 };
@@ -79,20 +87,20 @@ struct partition
    It cannot cause incorrect diff output.  */
 
 static void
-diag (lin xoff, lin xlim, lin yoff, lin ylim, bool find_minimal,
+diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
       struct partition *part)
 {
-  lin *const fd = fdiag;	/* Give the compiler a chance. */
-  lin *const bd = bdiag;	/* Additional help for the compiler. */
-  lin const *const xv = xvec;	/* Still more help for the compiler. */
-  lin const *const yv = yvec;	/* And more and more . . . */
-  lin const dmin = xoff - ylim;	/* Minimum valid diagonal. */
-  lin const dmax = xlim - yoff;	/* Maximum valid diagonal. */
-  lin const fmid = xoff - yoff;	/* Center diagonal of top-down search. */
-  lin const bmid = xlim - ylim;	/* Center diagonal of bottom-up search. */
-  lin fmin = fmid, fmax = fmid;	/* Limits of top-down search. */
-  lin bmin = bmid, bmax = bmid;	/* Limits of bottom-up search. */
-  lin c;			/* Cost. */
+  OFFSET *const fd = fdiag;	/* Give the compiler a chance. */
+  OFFSET *const bd = bdiag;	/* Additional help for the compiler. */
+  const ELEMENT *const xv = xvec;	/* Still more help for the compiler. */
+  const ELEMENT *const yv = yvec;	/* And more and more . . . */
+  const OFFSET dmin = xoff - ylim;	/* Minimum valid diagonal. */
+  const OFFSET dmax = xlim - yoff;	/* Maximum valid diagonal. */
+  const OFFSET fmid = xoff - yoff;	/* Center diagonal of top-down search. */
+  const OFFSET bmid = xlim - ylim;	/* Center diagonal of bottom-up search. */
+  OFFSET fmin = fmid, fmax = fmid;	/* Limits of top-down search. */
+  OFFSET bmin = bmid, bmax = bmid;	/* Limits of bottom-up search. */
+  OFFSET c;			/* Cost. */
   bool odd = (fmid - bmid) & 1;	/* True if southeast corner is on an odd
 				   diagonal with respect to the northwest. */
 
@@ -101,7 +109,7 @@ diag (lin xoff, lin xlim, lin yoff, lin ylim, bool find_minimal,
 
   for (c = 1;; ++c)
     {
-      lin d;			/* Active diagonal. */
+      OFFSET d;			/* Active diagonal. */
       bool big_snake = false;
 
       /* Extend the top-down search by an edit step in each diagonal. */
@@ -109,7 +117,7 @@ diag (lin xoff, lin xlim, lin yoff, lin ylim, bool find_minimal,
       fmax < dmax ? fd[++fmax + 1] = -1 : --fmax;
       for (d = fmax; d >= fmin; d -= 2)
 	{
-	  lin x, y, oldx, tlo = fd[d - 1], thi = fd[d + 1];
+	  OFFSET x, y, oldx, tlo = fd[d - 1], thi = fd[d + 1];
 
 	  if (tlo >= thi)
 	    x = tlo + 1;
@@ -136,7 +144,7 @@ diag (lin xoff, lin xlim, lin yoff, lin ylim, bool find_minimal,
       bmax < dmax ? bd[++bmax + 1] = LIN_MAX : --bmax;
       for (d = bmax; d >= bmin; d -= 2)
 	{
-	  lin x, y, oldx, tlo = bd[d - 1], thi = bd[d + 1];
+	  OFFSET x, y, oldx, tlo = bd[d - 1], thi = bd[d + 1];
 
 	  if (tlo < thi)
 	    x = tlo;
@@ -171,14 +179,14 @@ diag (lin xoff, lin xlim, lin yoff, lin ylim, bool find_minimal,
 
       if (200 < c && big_snake && speed_large_files)
 	{
-	  lin best = 0;
+	  OFFSET best = 0;
 
 	  for (d = fmax; d >= fmin; d -= 2)
 	    {
-	      lin dd = d - fmid;
-	      lin x = fd[d];
-	      lin y = x - d;
-	      lin v = (x - xoff) * 2 - dd;
+	      OFFSET dd = d - fmid;
+	      OFFSET x = fd[d];
+	      OFFSET y = x - d;
+	      OFFSET v = (x - xoff) * 2 - dd;
 	      if (v > 12 * (c + (dd < 0 ? -dd : dd)))
 		{
 		  if (v > best
@@ -210,10 +218,10 @@ diag (lin xoff, lin xlim, lin yoff, lin ylim, bool find_minimal,
 	  best = 0;
 	  for (d = bmax; d >= bmin; d -= 2)
 	    {
-	      lin dd = d - bmid;
-	      lin x = bd[d];
-	      lin y = x - d;
-	      lin v = (xlim - x) * 2 + dd;
+	      OFFSET dd = d - bmid;
+	      OFFSET x = bd[d];
+	      OFFSET y = x - d;
+	      OFFSET v = (xlim - x) * 2 + dd;
 	      if (v > 12 * (c + (dd < 0 ? -dd : dd)))
 		{
 		  if (v > best
@@ -247,17 +255,17 @@ diag (lin xoff, lin xlim, lin yoff, lin ylim, bool find_minimal,
 	 give up and report halfway between our best results so far.  */
       if (c >= too_expensive)
 	{
-	  lin fxybest;
-	  lin bxybest;
-	  lin fxbest IF_LINT (= 0);
-	  lin bxbest IF_LINT (= 0);
+	  OFFSET fxybest;
+	  OFFSET bxybest;
+	  OFFSET fxbest IF_LINT (= 0);
+	  OFFSET bxbest IF_LINT (= 0);
 
 	  /* Find forward diagonal that maximizes X + Y.  */
 	  fxybest = -1;
 	  for (d = fmax; d >= fmin; d -= 2)
 	    {
-	      lin x = MIN (fd[d], xlim);
-	      lin y = x - d;
+	      OFFSET x = MIN (fd[d], xlim);
+	      OFFSET y = x - d;
 	      if (ylim < y)
 		x = ylim + d, y = ylim;
 	      if (fxybest < x + y)
@@ -271,8 +279,8 @@ diag (lin xoff, lin xlim, lin yoff, lin ylim, bool find_minimal,
 	  bxybest = LIN_MAX;
 	  for (d = bmax; d >= bmin; d -= 2)
 	    {
-	      lin x = MAX (xoff, bd[d]);
-	      lin y = x - d;
+	      OFFSET x = MAX (xoff, bd[d]);
+	      OFFSET y = x - d;
 	      if (y < yoff)
 		x = yoff + d, y = yoff;
 	      if (x + y < bxybest)
@@ -317,10 +325,10 @@ diag (lin xoff, lin xlim, lin yoff, lin ylim, bool find_minimal,
    expensive it is.  */
 
 static void
-compareseq (lin xoff, lin xlim, lin yoff, lin ylim, bool find_minimal)
+compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal)
 {
-  lin const *xv = xvec; /* Help the compiler.  */
-  lin const *yv = yvec;
+  const ELEMENT *xv = xvec; /* Help the compiler.  */
+  const ELEMENT *yv = yvec;
 
   /* Slide down the bottom initial diagonal. */
   while (xoff < xlim && yoff < ylim && xv[xoff] == yv[yoff])
@@ -348,3 +356,8 @@ compareseq (lin xoff, lin xlim, lin yoff, lin ylim, bool find_minimal)
       compareseq (part.xmid, xlim, part.ymid, ylim, part.hi_minimal);
     }
 }
+
+#undef ELEMENT
+#undef EQUAL
+#undef OFFSET
+#

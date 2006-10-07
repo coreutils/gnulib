@@ -27,6 +27,9 @@
 #include <xalloc.h>
 
 /* The core of the Diff algorithm.  */
+#define ELEMENT lin
+#define EQUAL(x,y) ((x) == (y))
+#define OFFSET lin
 #include "diffseq.h"
 
 /* Discard lines from one file that have no matches in the other file.
