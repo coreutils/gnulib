@@ -222,6 +222,10 @@
 	argument. Set stdout_closed before testing for ferror, not after.
 	(fwriteerror, fwriteerror_no_ebadf): New functions.
 
+2006-09-28  Paolo Bonzini  <bonzini@gnu.org>
+
+	* poll.c (rpl_poll) [__APPLE__]: Use FIONREAD instead of MSG_PEEK.
+
 2006-09-28  Bruno Haible  <bruno@clisp.org>
 
 	* strndup.h: Simplify the redefinition of strndup.

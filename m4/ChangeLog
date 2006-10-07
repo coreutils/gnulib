@@ -32,6 +32,10 @@
 
 	* openat.m4 (gl_FUNC_OPENAT): Add AC_LIBOBJ(openat-proc).
 
+2006-09-28  Paolo Bonzini  <bonzini@gnu.org>
+
+	* poll.m4: Look for sys/ioctl.h and sys/filio.h.
+
 2006-09-28  Bruno Haible  <bruno@clisp.org>
 
 	* strndup.m4 (gl_FUNC_STRNDUP): Don't define __STRNDUP_PREFIX.
