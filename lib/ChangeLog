@@ -1,4 +1,22 @@
-2006-10-03  Bruno Haible  <bruno@clisp.org>
+2006-10-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Don't include <config.h> twice; this doesn't work in some cases,
+	e.g., when config.h has "#define intmax_t long long int" and
+	we include <config.h>, <inttypes.h>, <config.h> in that order.
+	* fprintftime.c: Don't include config.h or fprintftime.h.
+	* fts-cycle.c: Don't include config.h.
+	* strftime.c: Include fprintftime.h if FPRINTFTIME is defined.
+	* xstrtoimax.c: Remove copyright notice since it's short tnow.
+	Don't include config.h or xstrtol.h.  Define STRTOL_T_MINIMUM
+	and STRTOL_T_MAXIMUM unconditionally, since we now assume gnulib
+	inttypes.h.
+	* xstrtoumax.c: Likewise.
+	* xstrtol.c: Include config.h and xstrtol.h after defining
+	__strtol and the like, so that this module is more like its siblings.
+	(STRTOL_T_MINIMUM, STRTOL_T_MAXIMUM) [! defined STRTOL_T_MINIMUM]:
+	Remove; no longer needed now that we assume gnulib inttypes.h.
+
+2006-10-07  Bruno Haible  <bruno@clisp.org>
 
 	* gl_sublist.h: New file.
 	* gl_sublist.c: New file.

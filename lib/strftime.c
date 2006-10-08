@@ -30,6 +30,9 @@
 # include "../locale/localeinfo.h"
 #else
 # include <config.h>
+# if FPRINTFTIME
+#  include "fprintftime.h"
+# endif
 #endif
 
 #include <ctype.h>

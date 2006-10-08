@@ -19,10 +19,6 @@
 
 /* Written by Jim Meyering. */
 
-#include <config.h>
-
-#include "xstrtol.h"
-
 #ifndef __strtol
 # define __strtol strtol
 # define __strtol_t long int
@@ -30,6 +26,10 @@
 # define STRTOL_T_MINIMUM LONG_MIN
 # define STRTOL_T_MAXIMUM LONG_MAX
 #endif
+
+#include <config.h>
+
+#include "xstrtol.h"
 
 /* Some pre-ANSI implementations (e.g. SunOS 4)
    need stderr defined if assertion checking is enabled.  */
@@ -43,19 +43,6 @@
 #include <string.h>
 
 #include "intprops.h"
-
-#ifndef STRTOL_T_MINIMUM
-# define STRTOL_T_MINIMUM TYPE_MINIMUM (__strtol_t)
-# define STRTOL_T_MAXIMUM TYPE_MAXIMUM (__strtol_t)
-#endif
-
-#if !HAVE_DECL_STRTOIMAX && !defined strtoimax
-intmax_t strtoimax ();
-#endif
-
-#if !HAVE_DECL_STRTOUMAX && !defined strtoumax
-uintmax_t strtoumax ();
-#endif
 
 static strtol_error
 bkm_scale (__strtol_t *x, int scale_factor)
