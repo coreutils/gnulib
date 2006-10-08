@@ -3,6 +3,8 @@
 	Don't include <config.h> twice; this doesn't work in some cases,
 	e.g., when config.h has "#define intmax_t long long int" and
 	we include <config.h>, <inttypes.h>, <config.h> in that order.
+	Problem reported by Matthew Woehlke in:
+	http://lists.gnu.org/archive/html/bug-coreutils/2006-10/msg00073.html
 	* fprintftime.c: Don't include config.h or fprintftime.h.
 	* fts-cycle.c: Don't include config.h.
 	* strftime.c: Include fprintftime.h if FPRINTFTIME is defined.
