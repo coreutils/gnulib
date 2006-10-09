@@ -1,5 +1,11 @@
 2006-10-09  Jim Meyering  <jim@meyering.net>
 
+	* fts-cycle.c (leave_dir): When "leaving" a top level directory due
+	to FTS_SKIP, don't copy the parent's uninitialized dev/ino values.
+	Trigger with e.g., mkdir d && valgrind ./chmod u+rwx d d
+
+2006-10-09  Jim Meyering  <jim@meyering.net>
+
 	* lchown.c: Include <sys/stat.h> before "stat-macros.h".
 	Patch from Bruno Haible.
 

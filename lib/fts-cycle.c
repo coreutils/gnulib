@@ -140,7 +140,7 @@ leave_dir (FTS *fts, FTSENT *ent)
   else
     {
       FTSENT *parent = ent->fts_parent;
-      if (parent != NULL)
+      if (parent != NULL && 0 <= parent->fts_level)
 	CYCLE_CHECK_REFLECT_CHDIR_UP (fts->fts_cycle.state,
 				      *(parent->fts_statp), *st);
     }
