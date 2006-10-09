@@ -23,6 +23,7 @@
 
 #include "lchown.h"
 
+#include <sys/stat.h>
 #include "stat-macros.h"
 
 /* Work just like chown, except when FILE is a symbolic link.
