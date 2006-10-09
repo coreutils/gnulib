@@ -1,3 +1,8 @@
+2006-10-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/filemode.h [HAVE_DECL_STRMODE]: Include unistd.h too,
+	for NetBSD.  Problem reported by Bruno Haible.
+
 2006-10-09  Jim Meyering  <jim@meyering.net>
 
 	* lib/lchown.c: Include <sys/stat.h> before "stat-macros.h".

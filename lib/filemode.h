@@ -22,7 +22,8 @@
 # include <sys/stat.h>
 
 # if HAVE_DECL_STRMODE
-#  include <string.h>
+#  include <string.h> /* FreeBSD, OpenBSD */
+#  include <unistd.h> /* NetBSD */
 # else
 void strmode (mode_t mode, char *str);
 # endif
