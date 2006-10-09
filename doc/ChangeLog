@@ -204,11 +204,11 @@
 
 	* COPYING.DOC, fdl.texi: Sync with latest FSF version.
 
-2003-01-02    <karl@gnu.org>
+2003-01-02  Karl Berry  <karl@gnu.org>
 
 	* COPYING.DOC: belatedly updated to 1.2.
 
-2002-12-21    <karl@gnu.org>
+2002-12-21  Karl Berry  <karl@gnu.org>
 
 	* fdl.texi: update to version 1.2.
 

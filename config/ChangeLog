@@ -22,7 +22,7 @@
 	gnulib rather than the other way around.
 	* srclistvars.sh (COREUTILS): Remove.
 
-2006-07-14  Simon Josefsson  <jas@extundo.com>
+2006-08-14  Simon Josefsson  <jas@extundo.com>
 
 	* srclist.txt: Add gnupload.
 
@@ -441,23 +441,23 @@
 
 	* depcomp: update from automake.
 
-2003-07-24    <karl@gnu.org>
+2003-07-24  Karl Berry  <karl@gnu.org>
 
 	* missing: update from automake.
 
-2003-07-23    <karl@gnu.org>
+2003-07-23  Karl Berry  <karl@gnu.org>
 
 	* config.sub: update from prep.
 
-2003-07-19    <karl@gnu.org>
+2003-07-19  Karl Berry  <karl@gnu.org>
 
 	* config.sub: update from prep.
 
-2003-07-17    <karl@gnu.org>
+2003-07-17  Karl Berry  <karl@gnu.org>
 
 	* config.sub: update from prep.
 
-2003-07-16    <karl@gnu.org>
+2003-07-16  Karl Berry  <karl@gnu.org>
 
 	* srclist-update: was running fixlicense twice, which caused
 		texinfo.tex to be nullified for some reason.  Simplify,
@@ -472,7 +472,7 @@
 	previous fix didn't work (there was another trailing $).  Use
 	'[$]' to escape the $s.
 
-2003-07-15    <karl@gnu.org>
+2003-07-15  Karl Berry  <karl@gnu.org>
 
 	* srclist-update (fixfile): Change grep pattern, since 'Id'
 	gets expanded when surrounded by '$'.
@@ -500,29 +500,29 @@
 	and sweeter "eval x=$x".
 	* srclist.txt: Get lib/argp* from glibc.
 
-2003-07-06    <karl@gnu.org>
+2003-07-06  Karl Berry  <karl@gnu.org>
 
 	* depcomp: update from automake.
 	* config.sub: update from prep.
 
-2003-07-03    <karl@gnu.org>
+2003-07-03  Karl Berry  <karl@gnu.org>
 
 	* config.guess: update from prep.
 
-2003-06-26    <karl@gnu.org>
+2003-06-26  Karl Berry  <karl@gnu.org>
 
 	* depcomp: update from automake.
 
-2003-06-22    <karl@gnu.org>
+2003-06-22  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt: update mkinstalldirs from automake.
 	* mkinstalldirs: update.
 
-2003-06-18    <karl@gnu.org>
+2003-06-18  Karl Berry  <karl@gnu.org>
 
 	* config.{guess,sub}: update from prep.
 
-2003-06-07    <karl@gnu.org>
+2003-06-07  Karl Berry  <karl@gnu.org>
 
 	* config.{guess,sub}: update from prep.
 
@@ -531,56 +531,56 @@
 	* srclist.txt ($LIBCSRC/time/mktime.c lib gpl): Comment out for now,
 	as glibc mktime is buggy on non-glibc systems.
 
-2003-06-03    <karl@gnu.org>
+2003-06-03  Karl Berry  <karl@gnu.org>
 
 	* config.sub: update from prep.
 
-2003-06-02    <karl@gnu.org>
+2003-06-02  Karl Berry  <karl@gnu.org>
 
 	* mkinstalldirs (version): new variable.
 	(--version): new option.
 	(usage): improve message.
 
-2003-05-29    <karl@gnu.org>
+2003-05-29  Karl Berry  <karl@gnu.org>
 
 	* config.rpath: update from gettext.
 
-2003-05-24    <karl@gnu.org>
+2003-05-24  Karl Berry  <karl@gnu.org>
 
 	* config.guess: update from prep.
 
-2003-05-20    <karl@gnu.org>
+2003-05-20  Karl Berry  <karl@gnu.org>
 
 	* config.guess: update from prep.
 
-2003-05-18    <karl@gnu.org>
+2003-05-18  Karl Berry  <karl@gnu.org>
 
 	* srclistvars.sh (TEXMF): use TEXMFROOT instead, since TEXMF might
 		actually be set by the user.
 
 	* depcomp, install-sh, mdate-sh: update from automake.
 
-2003-05-11    <karl@gnu.org>
+2003-05-11  Karl Berry  <karl@gnu.org>
 
 	* config.{guess,sub}: update from prep.
 
-2003-01-03    <karl@gnu.org>
+2003-01-03  Karl Berry  <karl@gnu.org>
 
 	* config.{guess,sub}: update from prep.
 
-2002-12-24    <karl@gnu.org>
+2002-12-24  Karl Berry  <karl@gnu.org>
 
 	* config.guess: update from prep.
 
-2002-12-19    <karl@gnu.org>
+2002-12-19  Karl Berry  <karl@gnu.org>
 
 	* config.guess: update from prep.
 
-2002-12-12    <karl@gnu.org>
+2002-12-12  Karl Berry  <karl@gnu.org>
 
 	* config.guess: update from prep.
 
-2002-11-25    <karl@gnu.org>
+2002-11-25  Karl Berry  <karl@gnu.org>
 
 	* install-sh: update from automake for variable quoting, $0 in
 	error msgs, etc.
@@ -589,16 +589,16 @@
 	* srclist.txt ($LIBCSRC/sysdeps/generic/strtoll.c lib gpl): new
 	entry.
 
-2002-11-14    <karl@gnu.org>
+2002-11-14  Karl Berry  <karl@gnu.org>
 
 	* mkinstalldirs: `do' on separate line, instead of `for var; do'.
 
-2002-09-28    <karl@gnu.org>
+2002-09-28  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt: can't copy install-sh/mkinstalldirs from installed
 	automake until the next release, since changes have been made.
 
-2002-09-25    <karl@gnu.org>
+2002-09-25  Karl Berry  <karl@gnu.org>
 
 	* srclist.txt: enable gettext.h check.
 	* config.{guess,sub}: update from prep.

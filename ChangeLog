@@ -29,11 +29,11 @@
 	Add a "DO NOT EDIT" comment to the generated file.
 	(func_import): Likewise for gnulib-comp.m4.
 
-2006-10-03  Bruno Haible  <bruno@clisp.org>
+2006-10-07  Bruno Haible  <bruno@clisp.org>
 
 	* modules/sublist: New file.
 
-2006-09-29  Bruno Haible  <bruno@clisp.org>
+2006-10-06  Bruno Haible  <bruno@clisp.org>
 
 	* modules/closeout (Description): Mention stderr too.
 
@@ -107,7 +107,7 @@
 	* modules/gc-des:
 	* modules/gc-arcfour: Distribute more files.
 
-2006-09-17  Bruno Haible  <bruno@clisp.org>
+2006-09-22  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import, func_create_testdir): Set gl_source_base
 	at the beginning of the gl_INIT macro.
@@ -172,7 +172,7 @@
 	func_create_megatestdir, ...): Use it wherever possible.
 	Suggested by Ralf Wildenhues.
 
-2006-09-15  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+2006-09-17  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Speed up by a factor of 1.12.
 	* gnulib-tool (nl): New variable.
@@ -216,7 +216,7 @@
 
 	* modules/rename: Reflect vb_FUNC_RENAME -> gl_FUNC_RENAME change.
 
-2009-09-13  Simon Josefsson  <jas@extundo.com>
+2006-09-13  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib-tool (func_emit_lib_Makefile_am): Use $(LIBOBJS), not
 	@LIBOBJS@.
@@ -296,13 +296,13 @@
 	* modules/sysexits (Makefile.am): Replace literal occurrences
 	of "sysexit.h" more readable, and more consistent, "$@".
 
-2006-09-05  Bruno Haible  <bruno@clisp.org>
+2006-09-06  Bruno Haible  <bruno@clisp.org>
 
 	* modules/gc (Makefile.am): Augment lib_LDFLAGS, not lib_LIBADD.
 	* modules/iconvme (Makefile.am): Likewise. Also handle the case of
 	not using libtool correctly.
 
-2006-09-05  Bruno Haible  <bruno@clisp.org>
+2006-09-06  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am): Initialize also
 	lib_..._LDFLAGS.
@@ -416,7 +416,7 @@
 	* modules/inttypes (Makefile.am): Fix sed error when inttypes.h
 	needs wrapper.
 
-2006-08-27  Bruno Haible  <bruno@clisp.org>
+2006-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool: New option --makefile-name.
 	(func_emit_lib_Makefile_am, func_emit_tests_Makefile_am): Use
@@ -425,16 +425,16 @@
 	there unless explicitly specified. Use $makefile_name as file name
 	instead of Makefile.am. Adjust the recommendations accordingly.
 
-2006-08-27  Bruno Haible  <bruno@clisp.org>
+2006-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool: Reorder some statements.
 
-2006-08-27  Bruno Haible  <bruno@clisp.org>
+2006-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_get_tests_module): Don't assume that $gnulib_dir
 	is the current directory. Respect also $local_gnulib_dir.
 
-2006-08-26  Bruno Haible  <bruno@clisp.org>
+2006-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_relativize, func_relconcat): New functions.
 	Give an error if --local-dir is given with --update.
@@ -442,7 +442,7 @@
 	(func_import): Store the relativized $local_gnulib_dir in
 	gnulib-cache.m4, and read it from there if not specified explicitly.
 
-2006-08-26  Bruno Haible  <bruno@clisp.org>
+2006-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_verify_module): Check against misapplying patch.
 
@@ -666,7 +666,7 @@
 	specify an installation location, don't emit a noinst_LIBRARIES or
 	noinst_LTLIBRARIES assignment.
 
-2006-08-19  Bruno Haible  <bruno@clisp.org>
+2006-08-21  Bruno Haible  <bruno@clisp.org>
 
 	BeOS portability.
 	* modules/mbchar (Include): Don't test HAVE_WCTYPE_H any more, since
@@ -1348,7 +1348,7 @@
 	(func_emit_tests_Makefile_am): Likewise.
 	(func_import): Likewise.
 
-2006-05-05  Bruno Haible  <bruno@clisp.org>
+2006-05-08  Bruno Haible  <bruno@clisp.org>
 
 	* build-aux/config.rpath: Add support for Sun C 5.9 on Linux.
 
@@ -1556,7 +1556,7 @@
 	* modules/openat (Files): Add lib/intprops.h.
 	From Mark D. Baushke.
 
-2006-01-19  Simon Josefsson  <jas@extundo.com>
+2006-01-23  Simon Josefsson  <jas@extundo.com>
 
 	* modules/lock-tests: Use check_PROGRAMS instead of noinst_PROGRAMS.
 	Remove the test_*_SOURCES variable: automake infers it by default.
@@ -1636,24 +1636,24 @@
 	overridable by the user.
 	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
 
-2006-01-08  Bruno Haible  <bruno@clisp.org>
+2006-01-11  Bruno Haible  <bruno@clisp.org>
 
 	Avoid "ar: no archive members specified" error on MacOS X.
 	* gnulib-tool (func_modules_add_dummy): New function.
 	(func_import, func_create_testdir): Invoke it.
 
-2006-01-08  Bruno Haible  <bruno@clisp.org>
+2006-01-11  Bruno Haible  <bruno@clisp.org>
 
 	Ensure automatic ordering between gl_LOCK and gl_ARGP.
 	* gnulib-tool (func_import, func_create_testdir): Put gl_LOCK into
 	the "early" section as well.
 
-2006-01-08  Bruno Haible  <bruno@clisp.org>
+2006-01-11  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
 	Initialize also noinst_HEADERS to empty.
 
-2006-01-08  Bruno Haible  <bruno@clisp.org>
+2006-01-11  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (AUTOMAKEPATH, AUTOCONF, ACLOCAL, AUTOMAKE): New
 	variables.
@@ -1678,13 +1678,13 @@
 
 	* modules/sys_socket: New file.
 
-2006-01-07  Bruno Haible  <bruno@clisp.org>
+2006-01-10  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_tests_Makefile_am): Emit an empty SUBDIR
 	variable.
 	Needed to avoid an automake error regarding the 'gettext' module.
 
-2006-01-07  Bruno Haible  <bruno@clisp.org>
+2006-01-10  Bruno Haible  <bruno@clisp.org>
 
 	* modules/gettext (configure.ac): Add an invocation of
 	AM_GNU_GETTEXT_VERSION. Needed since autoreconf is used by gnulib-tool.
@@ -2218,7 +2218,7 @@
 	* modules/gettext, modules/iconv, modules/lock, modules/readline:
 	Use havelib.
 
-2005-08-31  Simon Josefsson  <jas@extundo.com>
+2005-09-02  Simon Josefsson  <jas@extundo.com>
 
 	* modules/socklen: New file.
 
@@ -2234,56 +2234,56 @@
 
 	* gnulib-tool (func_import): Remove the .tmp files.
 
-2005-08-30  Bruno Haible  <bruno@clisp.org>
+2005-08-31  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Fix defaulting of $libname and $libtool.
 	Create directories that shall be filled.
 	(import): Don't look for gl_* macros in configure.ac. Recurse across
 	all directories containing a gnulib-cache.m4 files, if meaningful.
 
-2005-08-30  Bruno Haible  <bruno@clisp.org>
+2005-08-31  Bruno Haible  <bruno@clisp.org>
 
 	Avoid unnecessary diffs in the generated lib/Makefile.am.
 	* gnulib-tool (func_emit_lib_Makefile_am): Don't write the cmd into
 	the generated files.
 	(func_import): Don't set cmd.
 
-2005-08-30  Bruno Haible  <bruno@clisp.org>
+2005-08-31  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Read the previous cached settings
 	from gnulib-cache.m4 and gnulib-comp.m4. Remove files that were
 	earlier added by gnulib but are now dropped. Warn when a gnulib file
 	overwrites a non-gnulib file.
 
-2005-08-28  Bruno Haible  <bruno@clisp.org>
+2005-08-31  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Generate two files gnulib-cache.m4 and
 	gnulib-comp.m4 instead of a single gnulib.m4, to make it easy for
 	projects that don't keep autogenerated files in CVS. Put into
 	actioncmd only the specified modules, not the transitive closure.
 
-2005-08-28  Bruno Haible  <bruno@clisp.org>
+2005-08-31  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Require AC_GNU_SOURCE etc. instead of
 	always instantiating them.
 
-2005-08-28  Bruno Haible  <bruno@clisp.org>
+2005-08-31  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (import): Rename most ac_* variables to cached_*.
 	Also use new variables cached_lgpl, cached_libtool.
 
-2005-08-28  Bruno Haible  <bruno@clisp.org>
+2005-08-31  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Also copy m4/gnulib-tool.m4. Omit
 	declaration macro definitions from generated gnulib.m4.
 
-2005-08-28  Bruno Haible  <bruno@clisp.org>
+2005-08-31  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool: New option --macro-prefix.
 	(func_import): Use macro_prefix.
 	(import): Handle option --macro-prefix.
 
-2005-08-28  Bruno Haible  <bruno@clisp.org>
+2005-08-31  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Emit also a stub for gl_LIBTOOL.
 	(import): Set seen_libtool when we see gl_LIBTOOL.
@@ -2297,21 +2297,21 @@
 	* modules/unistd-safer (Files): Add unistd--.h.
 	* modules/stdio-safer (Files): Add stdio--.h.
 
-2005-08-28  Bruno Haible  <bruno@clisp.org>
+2005-08-29  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (import): Avoid unnecessary spaces in $avoidlist.
 
-2005-08-28  Bruno Haible  <bruno@clisp.org>
+2005-08-29  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Emit more comments into gnulib.m4.
 	Emit more advice.
 
-2005-08-28  Bruno Haible  <bruno@clisp.org>
+2005-08-29  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool: Enclose all occurrences of $destdir in "...", so
 	that it works when the directory contains spaces.
 
-2005-07-11  Bruno Haible  <bruno@clisp.org>
+2005-08-29  Bruno Haible  <bruno@clisp.org>
 	and Stepan Kasal  <kasal@ucw.cz>
 
 	* check-module: If more parameters are given, check each of them
@@ -2319,7 +2319,7 @@
 	(check_module): New procedure.
 	(%exempt_header): Now contains all exceptions.
 
-2005-07-30  Ben Pfaff  <blp@cs.stanford.edu>
+2005-08-29  Ben Pfaff  <blp@cs.stanford.edu>
 
 	* modules/byteswap (Makefile.am): Fix rule to not assume GNU make.
 
@@ -2514,7 +2514,7 @@
 
 	* modules/getline: Rewrite, don't use getndelim2.
 
-2005-07-16  Simon Josefsson  <jas@extundo.com>
+2005-08-02  Simon Josefsson  <jas@extundo.com>
 
 	* modules/readline: New file.
 
@@ -2567,7 +2567,7 @@
 
 	* modules/xsize: Depend on size_max module for size_max.m4.
 
-2005-07-09  Bruno Haible  <bruno@clisp.org>
+2005-07-11  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_usage): Document option --avoid.
 	(Command line options): Handle --avoid.
@@ -2699,15 +2699,15 @@
 
 	* modules/getlogin_r: New files.
 
+2005-05-23  Derek Price  <derek@ximbiot.com>
+
+	* modules/minmax (Files): Add m4/minmax.m4.
+	(configure.ac): Add gl_MINMAX.
+
 2005-05-21  Jim Meyering  <jim@meyering.net>
 
 	* modules/fts (Files): Add m4/inttypes-pri.m4.
 	(Depends-on): Add lstat and remove gettext.  Alphabetize.
-
-2005-05-18  Derek Price  <derek@ximbiot.com>
-
-	* modules/minmax (Files): Add m4/minmax.m4.
-	(configure.ac): Add gl_MINMAX.
 
 2005-05-20  Paul Eggert  <eggert@cs.ucla.edu>
 
@@ -2833,7 +2833,7 @@
 
 	* gnulib-tool (Options): Make --symlink mean --symbolic.
 
-2005-03-14  Simon Josefsson  <jas@extundo.com>
+2005-04-16  Simon Josefsson  <jas@extundo.com>
 
 	* modules/getpass-gnu (Makefile.am): Don't mention getpass.h.
 
@@ -3126,7 +3126,7 @@
 	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
 	strtok_r.
 
-2004-11-08  Simon Josefsson  <jas@extundo.com>
+2004-11-10  Simon Josefsson  <jas@extundo.com>
 
 	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
 	getaddrinfo.
@@ -3241,15 +3241,6 @@
 	* modules/argp (Maintainer): Replace Simon Josefsson
 	by Sergey Poznyakoff.
 
-2004-10-01  Simon Josefsson  <jas@extundo.com>
-
-	* MODULES.html.sh (Extra functions based on ANSI C 89): Add
-	memmem.
-
-	* tests/test-memmem.c: New file.
-
-	* modules/memmem: New file.
-
 2004-09-29  Bruno Haible  <bruno@clisp.org>
 
 	* modules/alloca-opt: New file, derived from modules/alloca.
@@ -3262,7 +3253,7 @@
 
 	* modules/dummy: Change license to LGPL.
 
-2004-09-29  Simon Josefsson  <jas@extundo.com>
+2004-09-28  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib-tool: New parameter --lgpl, to asseert that modules are
 	LGPL, and to replace license template from GPL to LGPL.
@@ -3274,17 +3265,6 @@
 2004-09-23  Simon Josefsson  <jas@extundo.com>
 
 	* gnulib-tool (--import): Typo.
-
-2004-09-21  Simon Josefsson  <jas@extundo.com>
-
-	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
-	snprintf.
-
-	* modules/snprintf: New file.
-
-2004-09-05  Simon Josefsson  <jas@extundo.com>
-
-	* modules/getaddrinfo: Add.
 
 2004-09-23  Simon Josefsson  <jas@extundo.com>
 
@@ -3417,11 +3397,11 @@
 	modules/filemode, modules/lchown, modules/makepath,
 	modules/rmdir, modules/stat: Likewise.
 
-2004-08-03  Simon Josefsson  <jas@extundo.com>
+2004-08-06  Simon Josefsson  <jas@extundo.com>
 
 	* modules/progname (Depends-on): Don't depend on stdbool.
 
-2004-08-02  Simon Josefsson  <jas@extundo.com>
+2004-08-06  Simon Josefsson  <jas@extundo.com>
 
 	* modules/getsubopt: New file.
 	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
@@ -3987,12 +3967,12 @@
 	* MODULES.html.sh: Add a table of contents. Add the module name as
 	leftmost column. Add hyperlinks.
 
-2003-01-11  Bruno Haible  <bruno@clisp.org>
+2003-01-13  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stpcpy: Distribute lib/stpcpy.h.
 	* modules/setenv: Depend on alloca. Distribute lib/setenv.h.
 
-2003-01-11  Bruno Haible  <bruno@clisp.org>
+2003-01-13  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_create_testdir): Store config/* files in the main
 	directory.
@@ -4001,14 +3981,14 @@
 	* modules/gettext: Contains config/config.rpath, not config.rpath.
 	* modules/iconv: Likewise.
 
-2003-01-11  Bruno Haible  <bruno@clisp.org>
+2003-01-13  Bruno Haible  <bruno@clisp.org>
 
 	* modules/*: Add a description.
 	* modules/strpbrk: Fix Makefile.am snippet.
 	* modules/strtoimax: Fix dependencies.
 	* modules/strtoumax: Likewise.
 
-2003-01-11  Bruno Haible  <bruno@clisp.org>
+2003-01-13  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_create_testdir): Substitute lib_OBJECTS.
 	* modules/alloca (Makefile.am): All object files depend on alloca.h.

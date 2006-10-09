@@ -13,7 +13,7 @@
 	of O_NOFOLLOW_IS_INEFFECTIVE.  Define HAVE_WORKING_O_NOATIME if
 	O_NOATIME works.
 
-2006-10-01  Bruno Haible  <bruno@clisp.org>
+2006-10-04  Bruno Haible  <bruno@clisp.org>
 
 	Make it possible to invoke AC_GNU_SOURCE after gl_LOCK_EARLY.
 	* lock.m4 (gl_LOCK_EARLY_BODY): New macro, extracted code from
@@ -129,7 +129,7 @@
 
 	* sockpfaf.m4 (gl_SOCKET_FAMILIES): Avoid gcc -Wall warnings.
 
-2006-09-17  Bruno Haible  <bruno@clisp.org>
+2006-09-22  Bruno Haible  <bruno@clisp.org>
 
 	* getloadavg.m4 (gl_GETLOADAVG): Expect the directory of getloadavg.c
 	as first argument.
@@ -273,7 +273,7 @@
 	macros.
 	Reported by Eric Blake.
 
-2006-08-22  Eric Blake  <ebb9@byu.net>
+2006-08-28  Eric Blake  <ebb9@byu.net>
 
 	* codeset.m4 (AM_LANGINFO_CODESET): Avoid compiler warning.
 
@@ -301,7 +301,7 @@
 	(gl_LOCK_BODY): Remove gl_PREREQ_LOCK invocation.
 	(gl_LOCK): New macro.
 
-2006-08-18  Bruno Haible  <bruno@clisp.org>
+2006-08-23  Bruno Haible  <bruno@clisp.org>
 
 	* lock.m4 (gl_LOCK_BODY): Change the default value of gl_use_threads
 	on OSF/1 to no.
@@ -442,7 +442,7 @@
 	Don't use AC_LIBSOURCES; instead, rely on the files in ../modules/
 	to get the necessary .h files and whatnot.
 
-2006-08-19  Bruno Haible  <bruno@clisp.org>
+2006-08-21  Bruno Haible  <bruno@clisp.org>
 
 	BeOS portability.
 	* mbchar.m4 (gl_MBCHAR): Compile mbchar.c also if <wctype.h> doesn't
@@ -813,7 +813,7 @@
 	* sockpfaf.m4 (gl_SOCKET_FAMILIES): Use gl_HEADER_SYS_SOCKET
 	to avoid 'header present but could not be compiled' on cygwin.
 
-2006-07-03  Bruno Haible  <bruno@clisp.org>
+2006-07-05  Bruno Haible  <bruno@clisp.org>
 
 	* strndup.m4 (gl_FUNC_STRNDUP): When cross-compiling, check whether
 	the function exists, before testing against AIX.
@@ -1025,7 +1025,7 @@
 	SGI C compiler in pre-C99 mode.
 	Suggested by Mark D. Baushke and Larry Jones.
 
-2006-06-23  Mark D. Baushke  <mdb@gnu.org>
+2006-06-26  Mark D. Baushke  <mdb@gnu.org>
 
 	* stdint.m4 (gl_STDINT_H): Treat BSD/OS like OpenBSD.
 
@@ -1062,7 +1062,7 @@
 	* stdint.m4 (gl_STDINT_H) [FreeBSD >= 5]: Don't include
 	<sys/inttypes.h>.
 
-2006-06-16  Eric Blake  <ebb9@byu.net>
+2006-06-17  Eric Blake  <ebb9@byu.net>
 
 	* rmdir-errno.m4 (gl_FUNC_FMDIR_NOTEMPTY): Assume errno.h declares
 	errno.
@@ -1149,18 +1149,18 @@
 	* fsusage.m4 (gl_FILE_SYSTEM_USAGE): Specify a return type
 	for 'main', for C99 and C++.
 
-2006-04-23  Bruno Haible  <bruno@clisp.org>
+2006-04-24  Bruno Haible  <bruno@clisp.org>
 
 	* poll.m4 (gl_FUNC_POLL): Rearrange code, so that POLL_H gets
 	assigned exactly once.
 
-2006-04-23  Bruno Haible  <bruno@clisp.org>
+2006-04-24  Bruno Haible  <bruno@clisp.org>
 
 	* poll.m4 (gl_FUNC_POLL): When cross-compiling, reject also the poll()
 	implementation in AIX.
 	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
 
-2006-03-04  Eric Blake  <ebb9@byu.net>
+2006-04-24  Eric Blake  <ebb9@byu.net>
 
 	* strerror_r.m4 (AC_FUNC_STRERROR_R): Avoid unused variable warning.
 
@@ -1385,7 +1385,7 @@
 
 	* ldd.m4: New file.
 
-2006-01-08  Bruno Haible  <bruno@clisp.org>
+2006-01-11  Bruno Haible  <bruno@clisp.org>
 
 	Ensure automatic ordering between gl_LOCK and gl_ARGP.
 	* lock.m4 (gl_LOCK_BODY): Renamed from gl_LOCK.
@@ -1429,7 +1429,7 @@
 	Sync from coreutils.
 	* acl.m4 (AC_FUNC_ACL): Add POSIX ACL and Linux-specific acl tests.
 
-2005-10-16  Bruno Haible  <bruno@clisp.org>
+2006-01-09  Bruno Haible  <bruno@clisp.org>
 
 	* stdint.m4 (gl_STDINT_H): Also test for <sys/bitypes.h>.
 
@@ -1534,7 +1534,7 @@
 	* stdbool.m4 (AC_HEADER_STDBOOL): Change the return statement so that
 	it can also be used in a test.
 
-2005-10-11  Simon Josefsson  <jas@extundo.com>
+2005-10-17  Simon Josefsson  <jas@extundo.com>
 
 	* md5.m4: Remove call to uint32_t.m4.
 
@@ -1638,7 +1638,7 @@
 	* getaddrinfo.m4 (gl_GETADDRINFO): Check for gethostbyname
 	in the inet and nsl libraries.  Required on Solaris 5.7.
 
-2005-09-24  Jim Meyering  <jim@meyering.net>
+2005-10-01  Jim Meyering  <jim@meyering.net>
 
 	Sync from coreutils.
 	* getaddrinfo.m4 (gl_GETADDRINFO): Check for gethostbyname
@@ -1745,7 +1745,7 @@
 	glob_.h, glob-libc.h.
 	(gl_PREREQ_GLOB): Remove _SYS_CDEFS_H hack; no longer needed.
 
-2005-08-31  Simon Josefsson  <jas@extundo.com>
+2005-09-08  Simon Josefsson  <jas@extundo.com>
 
 	* socklen.m4: New file.
 
@@ -1754,7 +1754,7 @@
 	* getlogin_r (gl_GETLOGIN_R): Fix cut & paste error.
 	From Larry Jones <lawrence.jones@ugs.com>.
 
-2005-08-27  Bruno Haible  <bruno@clisp.org>
+2005-09-02  Bruno Haible  <bruno@clisp.org>
 
 	Support for lib vs. lib64 distinction on biarch platforms.
 	* lib-prefix.m4 (AC_LIB_PREPARE_MULTILIB): New macro.
@@ -1786,7 +1786,7 @@
 	* unistd-safer.m4 (gl_UNISTD_SAFER): Likewise, add pipe-safer.c.
 	Add pipe-safer.c and unistd--.h to the AC_LIBSOURCES list.
 
-2005-08-24  Simon Josefsson  <jas@extundo.com>
+2005-08-25  Simon Josefsson  <jas@extundo.com>
 
 	* getpass.m4: Check for termios.h, tcgetattr, tcsetattr, and
 	__fsetlocking.
@@ -1923,7 +1923,7 @@
 
 	* lock.m4: New file, from GNU gettext.
 
-2005-06-01  Bruno Haible  <bruno@clisp.org>
+2005-07-15  Bruno Haible  <bruno@clisp.org>
 
 	* poll.m4 (gl_FUNC_POLL): Check against MacOS X 10.4 poll() bug.
 	When using lib/poll.c, define poll as rpl_poll.
@@ -2163,7 +2163,7 @@
 
 	* byteswap.m4: New file.
 
-2005-04-25  karl
+2005-04-25  Karl Berry  <karl@gnu.org>
 
 	* gettext.m4: Update from GNU gettext 0.14.4.
 
@@ -2232,7 +2232,7 @@
 	* mmap-anon.m4: New file.
 	* pagealign_alloc.m4: New file.
 
-2005-01-28  Bruno Haible  <bruno@clisp.org>
+2005-03-02  Bruno Haible  <bruno@clisp.org>
 
 	* stpncpy.m4 (gl_FUNC_STPNCPY): Undo the replacement here. Because of
 	AIX, the replacement has to be done only after <string.h> is included,
@@ -2257,7 +2257,7 @@
 	Update from GNU gettext 0.14.2.
 	* glibc2.m4: New file, from GNU gettext 0.14.2.
 
-2005-02-22  Simon Josefsson  <jas@extundo.com>
+2005-02-23  Simon Josefsson  <jas@extundo.com>
 
 	* iconvme.m4: New file.
 
@@ -2508,7 +2508,7 @@
 
 	* jm-macros.m4 (gl_MACROS): Don't require gl_FUNC_FPENDING.
 
-2004-11-08  Simon Josefsson  <jas@extundo.com>
+2004-11-10  Simon Josefsson  <jas@extundo.com>
 
 	* getaddrinfo.m4: New file.
 
@@ -2671,11 +2671,11 @@
 	prerequisite modules now handle the DOS stuff.
 	Don't check for unistd.h.
 
-2004-08-03  Simon Josefsson  <jas@extundo.com>
+2004-08-05  Simon Josefsson  <jas@extundo.com>
 
 	* strdup.m4: Always run gl_PREREQ_STRDUP, since strdup.h need it.
 
-2004-08-02  Simon Josefsson  <jas@extundo.com>
+2004-08-05  Simon Josefsson  <jas@extundo.com>
 
 	* getsubopt.m4: New file.
 
@@ -2860,7 +2860,7 @@
 	a bug first reported by Jason Andrade in
 	<http://mail.gnu.org/archive/html/bug-textutils/2003-03/msg00027.html>.
 
-2004-01-18  Simon Josefsson  <jas@extundo.com>
+2004-02-25  Simon Josefsson  <jas@extundo.com>
 
 	* strdup.m4 (gl_PREREQ_STRDUP): Check whether strdup is declared.
 
@@ -2881,11 +2881,11 @@
 
 	* execute.m4: New file, from GNU gettext.
 
-2003-11-24  Bruno Haible  <bruno@clisp.org>
+2004-01-20  Bruno Haible  <bruno@clisp.org>
 
 	* allocsa.m4: New file, from GNU gettext.
 
-2003-11-24  Bruno Haible  <bruno@clisp.org>
+2004-01-20  Bruno Haible  <bruno@clisp.org>
 
 	* eealloc.m4: New file, from GNU gettext.
 
@@ -3199,7 +3199,7 @@
 
 	* timegm.m4: New file.
 
-2003-08-26  Bruno Haible  <bruno@clisp.org>
+2003-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Remove AC_DEFINE of fnmatch here.
 	This avoids havoc on compilers for which '#define fnmatch rpl_fnmatch'
@@ -3661,17 +3661,17 @@
 	* regex.m4: The `regex' struct is both input and output.
 	Initialize it before each use.  Patch by Tim Waugh.
 
-2003-01-11  Bruno Haible  <bruno@clisp.org>
+2003-01-15  Bruno Haible  <bruno@clisp.org>
 
 	* longlong.m4 (jm_AC_TYPE_LONG_LONG): Also test the LL suffix.
 	* ulonglong.m4 (jm_AC_TYPE_UNSIGNED_LONG_LONG): Also test the ULL
 	suffix.
 
-2003-01-11  Bruno Haible  <bruno@clisp.org>
+2003-01-15  Bruno Haible  <bruno@clisp.org>
 
 	* md5.m4 (gl_MD5): Require AC_C_INLINE.
 
-2003-01-11  Bruno Haible  <bruno@clisp.org>
+2003-01-15  Bruno Haible  <bruno@clisp.org>
 
 	* alloca.m4 (gl_FUNC_ALLOCA): Invoke AC_EGREP_CPP prerequisites.
 
@@ -4216,7 +4216,7 @@
 	* README: Don't mention Makefile.am.in.
 	Outline how I've tested changes to .m4 files.  Yep, it's a pain.
 
-2002-06-11  Paul Eggert  <eggert@twinsun.com>
+2002-06-26  Paul Eggert  <eggert@twinsun.com>
 
 	* fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Check for btowc.
 
@@ -4253,7 +4253,7 @@
 	* jm-macros.m4 (jm_CHECK_ALL_HEADERS): Check for hurd.h.
 	From Alfred M. Szmidt.
 
-2002-05-19  Paul Eggert  <eggert@twinsun.com>
+2002-06-15  Paul Eggert  <eggert@twinsun.com>
 
 	* jm-macros.m4 (jm_CHECK_ALL_TYPES): Check for st_author.
 
@@ -4296,7 +4296,7 @@
 	Do not check for alloca.h (no longer used) or stdbool.h (was never
 	used?).  Add AM_C_PROTOTYPES since hard-locale.h uses it.
 
-2002-04-28  Paul Eggert  <eggert@twinsun.com>
+2002-04-29  Paul Eggert  <eggert@twinsun.com>
 
 	* prereq.m4 (jm_PREREQ_SIG2STR): Remove; all callers changed.
 
@@ -4424,12 +4424,12 @@
 	* jm-macros.m4 (jm_MACROS): Don't test for mkstemp here.
 	Instead, require UTILS_FUNC_MKSTEMP.
 
-2001-11-11  Jim Meyering  <meyering@lucent.com>
+2001-11-17  Jim Meyering  <meyering@lucent.com>
 
 	* jm-macros.m4 (jm_MACROS): Remove code to set POW_LIBM.
 	Now, that's done as part of AC_FUNC_STRTOD.
 
-2001-10-22  Paul Eggert  <eggert@twinsun.com>
+2001-11-17 Paul Eggert  <eggert@twinsun.com>
 
 	* jm-winsz1.m4 (jm_WINSIZE_IN_PTEM): Do not define
 	WINSIZE_IN_PTEM if <termios.h> defines struct winsize.
@@ -4636,7 +4636,7 @@
 	* xstrtoumax.m4: Add comments explaining why we
 	AC_REPLACE_FUNCS(strtol).
 
-2001-06-20  Paul Eggert  <eggert@twinsun.com>
+2001-08-18  Paul Eggert  <eggert@twinsun.com>
 
 	* inttypes.m4: Add AC_PREREQ(2.13).
 	(jm_AC_HEADER_INTTYPES_H): Test for intmax_t, too.
@@ -4768,11 +4768,11 @@
 	* regex.m4: Change a couple backticks to single quotes to avoid shell
 	syntax errors.
 
-2001-05-19  Alexandre Duret-Lutz  <duret_g@epita.fr>
+2001-05-21  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* dos.m4 (jm_AC_DOS): Check for _WIN32, __WIN32__, and __MSDOS__.
 
-2001-05-11  Paul Eggert  <eggert@twinsun.com>
+2001-05-20  Paul Eggert  <eggert@twinsun.com>
 
 	* strftime.m4 (jm_FUNC_GNU_STRFTIME):
 	Don't bother to check library strftime, since
@@ -4788,7 +4788,7 @@
 
 	* jm-macros.m4 (major_t, minor_t): Define to unsigned int if undefined.
 
-2000-11-26  Paul Eggert  <eggert@twinsun.com>
+2001-05-09  Paul Eggert  <eggert@twinsun.com>
 
 	* jm-macros.m4 (jm_MACROS): Do not check for fseeko; no longer used.
 
@@ -4823,7 +4823,7 @@
 	* prereq.m4 (jm_PREREQ): Add jm_PREREQ_TEMPNAME.
 	(jm_PREREQ_TEMPNAME): New function.
 
-2001-02-25  Paul Eggert  <eggert@twinsun.com>
+2001-03-01  Paul Eggert  <eggert@twinsun.com>
 
 	* jm-macros.m4 (jm_MACROS): Use mkstemp replacement if the system
 	lacks mkstemp.  Compile our own tempname.c if we compile our own
@@ -4890,7 +4890,7 @@
 	* prereq.m4 (jm_PREREQ_QUOTEARG): Check for stddef.h, now that
 	quotearg.c includes it.
 
-2001-01-15  Bruno Haible  <haible@clisp.cons.org>
+2001-01-21  Bruno Haible  <haible@clisp.cons.org>
 
 	* iconv.m4 (jm_ICONV): Also check whether the iconv declaration
 	has const.
@@ -4946,7 +4946,7 @@
 	(_jm_DECL_HEADERS): Check for grp.h and pwd.h.
 	Reported by Andreas Jaeger.
 
-2000-12-25  Alexandre Duret-Lutz  <duret_g@epita.fr>
+2000-12-31  Alexandre Duret-Lutz  <duret_g@epita.fr>
 
 	* libintl.m4 (AM_WITH_NLS): When using AC_CONFIG_AUX_DIR,
 	prepend $(top_srcdir) to the value of MKINSTALLDIRS so that it
@@ -4989,7 +4989,7 @@
 
 	* getloadavg.m4: s/ifval/m4_ifval/ to accommodate new autoconf.
 
-2000-11-03  Bruno Haible  <haible@clisp.cons.org>
+2000-11-08  Bruno Haible  <haible@clisp.cons.org>
 
 	* jm-macros.m4 (jm_MACROS): Add test for wcrtomb.
 
@@ -5141,7 +5141,7 @@
 	* ls-mntd-fs.m4: Remove a `FIXME' comment and fix the associated
 	problem.
 
-2000-06-17  Bruno Haible  <haible@clisp.cons.org>
+2000-07-01  Bruno Haible  <haible@clisp.cons.org>
 
 	* ls-mntd-fs.m4 (jm_LIST_MOUNTED_FILESYSTEMS): Rename BeOS specific
 	macro from MOUNTED_NEXT_DEV to MOUNTED_FS_STAT_DEV.
@@ -5155,7 +5155,7 @@
 	* mbstate_t.m4: Use stdlib.h, not stdio.h.  The latter is not included
 	by quotearg.c, for which we perform this test.  From Bruno Haible.
 
-2000-06-17  Bruno Haible  <haible@clisp.cons.org>
+2000-06-27  Bruno Haible  <haible@clisp.cons.org>
 
 	* check-decl.m4 (_jm_DECL_HEADERS): Check for utmp.h as well.
 	* prereq.m4 (jm_PREREQ_READUTMP): Likewise. If either <utmp.h> or
@@ -5175,7 +5175,7 @@
 	strerror_r doesn't work, then resort to a `run'-test that works on
 	BeOS and segfaults on DEC Unix.
 
-2000-06-19  Paul Eggert  <eggert@twinsun.com>
+2000-06-23  Paul Eggert  <eggert@twinsun.com>
 
 	* mbstate_t.m4: New file, defining AC_MBSTATE_T_OBJECT.
 	* prereq.m4 (jm_PREREQ_QUOTEARG): Use it.  Add check for iswprint.
@@ -5242,7 +5242,7 @@
 	#undefs.  E.g., #undef HAVE_DECL_FERROR_UNLOCKED.
 	Use []-quoted list in AC_CHECK_DECLS, now that autoconf requires that.
 
-2000-05-26  Bruno Haible  <haible@clisp.cons.org>
+2000-06-03  Bruno Haible  <haible@clisp.cons.org>
 
 	* glibc21.m4: New file.
 	* jm-macros.m4 (jm_MACROS): Call jm_GLIBC21.
@@ -5300,7 +5300,7 @@
 	AC_SEARCH_LIBS call for nanosleep.
 	(LIB_NANOSLEEP): Set and AC_SUBST.
 
-2000-05-03  Paul Eggert  <eggert@twinsun.com>
+2000-05-06  Paul Eggert  <eggert@twinsun.com>
 
 	* largefile.m4 (AC_SYS_LARGEFILE): Define _XOPEN_SOURCE to
 	be 500, instead of _GNU_SOURCE to be 1, to work around glibc
@@ -5419,7 +5419,7 @@
 	* lib-check.m4: Look for getspnam in -lgen, too.
 	From Marco Franzen.
 
-2000-02-02  Bruno Haible  <haible@clisp.cons.org>
+2000-03-04  Bruno Haible  <haible@clisp.cons.org>
 
 	* codeset.m4: New file.
 	* iconv.m4: New file.
@@ -5793,26 +5793,26 @@
 	compatible with future autoconf versions.  Also, some minor m4
 	quoting problems have been fixed.
 
-1999-07-16  Paul Eggert  <eggert@twinsun.com>
+1999-08-01  Paul Eggert  <eggert@twinsun.com>
 
 	* ulonglong.m4 (jm_AC_TYPE_UNSIGNED_LONG_LONG): Make sure
 	that we can shift, multiply and divide unsigned long long
 	values; Ultrix cc can't do it.
 
-1999-07-14  Paul Eggert  <eggert@twinsun.com>
+1999-08-01  Paul Eggert  <eggert@twinsun.com>
 
 	* xstrtoumax.m4 (jm_AC_PREREQ_XSTRTOUMAX): Check whether
 	<inttypes.h> defines strtoumax as a macro (and not as a
 	function).
 
-1999-07-05  Paul Eggert  <eggert@twinsun.com>
+1999-08-01  Paul Eggert  <eggert@twinsun.com>
 
 	* gettext.m4 (AM_WITH_NLS): Remove unnecessary lines.
 	Fix typo: $nls_cv_header_intl was misspelled as $nsl_cv_header_intl.
 	(AM_GNU_GETTEXT): Fix problem with brackets and m4 quoting,
 	and simplify the shell code.
 
-1999-07-03  Paul Eggert  <eggert@twinsun.com>
+1999-08-01  Paul Eggert  <eggert@twinsun.com>
 
 	* mktime.m4: New file, which is a preview of what should appear
 	in the next public autoconf release.
@@ -6156,7 +6156,7 @@
 	* regex.m4: Use syscmd, ifelse, and sysval.  Mainly as an exercise
 	to prove that this macro can be used in packages without regex.c.
 
-1998-07-02  Andreas Schwab  <schwab@issan.informatik.uni-dortmund.de>
+1998-07-04  Andreas Schwab  <schwab@issan.informatik.uni-dortmund.de>
 
 	* gettext.m4 (AM_WITH_NLS): Remove intl/libintl.h if <libintl.h>
 	is to be used.

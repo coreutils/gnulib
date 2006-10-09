@@ -87,7 +87,7 @@
 	(register_fd, unregister_fd, open_temp, fopen_temp, close_temp,
 	fclose_temp, fwriteerror_temp): New functions.
 
-2006-10-03  Bruno Haible
+2006-10-05  Bruno Haible  <bruno@clisp.org>
 
 	* gl_list.h (gl_sortedlist_search_from_to,
 	gl_sortedlist_indexof_from_to): New declarations.
@@ -143,7 +143,7 @@
 	* human.c (SIZE_MAX, UINTMAX_MAX): Remove.
 	* utimecmp.c (SIZE_MAX): Remove.
 
-2006-10-03  Bruno Haible  <bruno@clisp.org>
+2006-10-05  Bruno Haible  <bruno@clisp.org>
 
 	* gl_list.h (gl_list_search_from, gl_list_search_from_to,
 	gl_list_indexof_from, gl_list_indexof_from_to): New declarations.
@@ -195,7 +195,7 @@
 
 	* fatal-signal.c (fatal_signals) [WOE32]: Add the SIGBREAK signal.
 
-2006-10-03  Bruno Haible  <bruno@clisp.org>
+2006-10-04  Bruno Haible  <bruno@clisp.org>
 
 	* gl_oset.h (gl_setelement_threshold_fn): New type.
 	(gl_oset_search_atleast): New declaration.
@@ -679,7 +679,7 @@
 	* inttypes_.h (SCNX*): Remove definitions.
 	Reported by Eric Blake.
 
-2006-08-26  Bruno Haible  <bruno@clisp.org>
+2006-08-28  Bruno Haible  <bruno@clisp.org>
 
 	* vasnprintf.c (EOVERFLOW): Remove definition.
 	(VASNPRINTF): Return a string of length > INT_MAX without failing.
@@ -691,7 +691,7 @@
 	(vsnprintf): Fix bug when generated string was too long for the buffer.
 	Test here whether the string length is > INT_MAX.
 
-2006-08-26  Bruno Haible  <bruno@clisp.org>
+2006-08-28  Bruno Haible  <bruno@clisp.org>
 	    Simon Josefsson  <jas@extundo.com>
 
 	BeOS portability.
@@ -1328,7 +1328,7 @@
 	missing from netdb.h.
 	* getaddrinfo.c (includes): Include inet_ntop and snprintf.
 
-2006-06-27  Bruno Haible  <bruno@clisp.org>
+2006-07-04  Bruno Haible  <bruno@clisp.org>
 
 	Assume ANSI C header files and <ctype.h> functions.
 	* mbswidth.c (IN_CTYPE_DOMAIN, ISPRINT, ISCNTRL): Remove macros.
@@ -1550,7 +1550,7 @@
 	* savedir.c (CLOSEDIR): Remove.  All uses changed to closedir.
 	Autoconf 2.60 says this stuff was obsolete.
 
-2006-05-12  Bruno Haible  <bruno@clisp.org>
+2006-06-28  Bruno Haible  <bruno@clisp.org>
 
 	* mkdtemp.c [MINGW]: Include <io.h>.
 	(mkdir): Define using _mkdir.
@@ -1639,7 +1639,7 @@
 	* inet_pton.h, inet_pton.c: New file, taken from glibc but
 	slightly modified to work in gnulib.
 
-2006-06-19  Paul Eggert  <eggert@cs.ucla.edu>
+2006-06-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* read-file.c (fread_file): Start with buffer allocation of
 	0 bytes rather than 1 byte; this simplifies the code.
@@ -1776,7 +1776,7 @@
 	(xstrcat): New function.
 	(xvasprintf): Recognize the special case of a string concatenation.
 
-2006-05-01  Bruno Haible  <bruno@clisp.org>
+2006-05-03  Bruno Haible  <bruno@clisp.org>
 
 	* stdint_.h: Shorter URL.
 	* inttypes.h: Likewise.
@@ -2211,7 +2211,7 @@
 	the code (so that we don't have to worry about HP-UX, AIX, SunPRO,
 	etc., separately) and makes it more conservative.
 
-2006-01-21  Jim Meyering  <jim@meyering.net>
+2006-01-25  Jim Meyering  <jim@meyering.net>
 
 	Sync from the stable (b5) branch of coreutils:
 
@@ -2536,7 +2536,7 @@
 	* stdint_.h (SIZE_MAX): Write the value without involving negative
 	numbers.
 
-2005-10-16  Bruno Haible  <bruno@clisp.org>
+2006-01-09  Bruno Haible  <bruno@clisp.org>
 
 	* stdint_.h: On Linux libc4 and libc5, include <sys/bitypes.h> and
 	don't define _STDINT_H_NEED_SIGNED_INT_TYPES.
@@ -2583,7 +2583,7 @@
 	porting problem reported by Georg Schwarz in
 	<http://lists.gnu.org/archive/html/bug-coreutils/2005-12/msg00083.html>.
 
-2005-07-09  Bruno Haible  <bruno@clisp.org>
+2005-12-05  Bruno Haible  <bruno@clisp.org>
 
 	* csharpcomp.sh.in (options_csc): For -l option, add a .dll suffix.
 	* csharpcomp.c (compile_csharp_using_sscli): Likewise.
@@ -2876,7 +2876,7 @@
 
 	* gc.h (gc_hash_buffer): Add doc.
 
-2005-10-08  Simon Josefsson  <jas@extundo.com>
+2005-10-11  Simon Josefsson  <jas@extundo.com>
 
 	* gc.h: Add gc_hash and gc_hash_buffer.
 
@@ -2970,7 +2970,7 @@
 	available.  This works around a compilation failure on OSF1 V5.1,
 	due to stime requiring a `long int*' while tv_sec is `int'.
 
-2005-09-30  Eric Blake  <ebb9@byu.net>  (tiny change)
+2005-10-01  Eric Blake  <ebb9@byu.net>  (tiny change)
 
 	* getdelim.c (getdelim): Remove unused variables.
 
@@ -3710,7 +3710,7 @@
 	* regexec.c (build_trtable): Remove "#ifdef _LIBC", since the code
 	now works outside glibc.
 
-2005-08-24  Simon Josefsson  <jas@extundo.com>
+2005-08-25  Simon Josefsson  <jas@extundo.com>
 
 	* getpass.c: Add WIN32 implementation.  Conditionalize use of
 	termios.h, tcgetattr, tcsetattr and __fsetlocking.  Remove some
@@ -3891,7 +3891,7 @@
 	Sync from coreutils.
 	* fcntl--.h, fcntl-safer.h, open-safer.c: New files.
 
-2005-08-21  Bruno Haible  <bruno@clisp.org>
+2005-08-24  Bruno Haible  <bruno@clisp.org>
 
 	* lock.h: Add multiple inclusion guard.
 	* tls.h: Add multiple inclusion guard.
@@ -4821,7 +4821,7 @@
 	reliably distinguish strftime failure from empty output on POSIX
 	hosts.
 
-2005-03-08  Paul Eggert  <eggert@cs.ucla.edu>
+2005-03-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* iconvme.c (SIZE_MAX): New macro, if not already defined.
 	(iconv_string): Don't guess a size-zero buffer, as that might cause
@@ -4914,7 +4914,7 @@
 	* pagealign_alloc.h: New file.
 	* pagealign_alloc.c: New file.
 
-2005-01-28  Bruno Haible  <bruno@clisp.org>
+2005-03-02  Bruno Haible  <bruno@clisp.org>
 
 	* stpncpy.h (stpncpy): Define as a macro without arguments, so that
 	stpncpy.c uses it.
@@ -4929,7 +4929,7 @@
 	(NANOSLEEP_BUG_WORKAROUND): Remove.
 	(xnanosleep): Remove the workaround.
 
-2005-02-12  Bruno Haible  <bruno@clisp.org>
+2005-03-01  Bruno Haible  <bruno@clisp.org>
 
 	* vasnprintf.c (EOVERFLOW): Define to a fallback if needed.
 
@@ -5105,27 +5105,27 @@
 	offsetof() macro construct to avoid compile failure with native HP-UX
 	11.0 ANSI C compiler.
 
-2005-01-06  Bruno Haible  <bruno@clisp.org>
+2005-01-17  Bruno Haible  <bruno@clisp.org>
 
 	* stpncpy.c: Remove HAVE_STPNCPY and gnu_stpncpy renaming, redundant
 	because stpncpy.m4 takes care of it.
 
-2004-01-24  Bruno Haible  <bruno@clisp.org>
+2005-01-17  Bruno Haible  <bruno@clisp.org>
 
 	* progreloc.c (xstrdup): Define as strdup if no xmalloc should be used.
 
-2003-10-09  Bruno Haible  <bruno@clisp.org>
+2005-01-17  Bruno Haible  <bruno@clisp.org>
 
 	* progreloc.c: Include xalloc.h instead of xmalloc.h.
 
-2005-01-06  Bruno Haible  <bruno@clisp.org>
+2005-01-17  Bruno Haible  <bruno@clisp.org>
 
 	* fwriteerror.h (fwriteerror): Change specification to include fclose.
 	* fwriteerror.c: Include <stdbool.h>.
 	(fwriteerror): At the end, close the file stream. Record whether
 	stdout was already closed.
 
-2004-05-27  Bruno Haible  <bruno@clisp.org>
+2005-01-17  Bruno Haible  <bruno@clisp.org>
 
 	* execute.c (environ): Declare if needed.
 	* pipe.c (environ): Likewise.
@@ -5948,7 +5948,7 @@
 
 	* argz.c, argz_.h: New files, which are autoupdated from libtool.
 
-2004-06-01  Jim Meyering  <jim@meyering.net>
+2004-06-10  Jim Meyering  <jim@meyering.net>
 
 	* calloc.c: New file.
 
@@ -6018,7 +6018,7 @@
 
 	* argp-help.c, argp-parse.c: Assume <alloca.h> rather than freecoding.
 
-2004-05-14  Bruno Haible  <bruno@clisp.org>
+2004-05-17  Bruno Haible  <bruno@clisp.org>
 
 	* vasnprintf.c (VASNPRINTF): Correctly handle the case of a precision
 	that consists of a '.' followed by an empty digit string.
@@ -6280,7 +6280,7 @@
 	first reported by Jason Andrade in
 	<http://mail.gnu.org/archive/html/bug-textutils/2003-03/msg00027.html>.
 
-2004-01-18  Simon Josefsson  <jas@extundo.com>
+2004-02-25  Simon Josefsson  <jas@extundo.com>
 
 	* strdup.h: New file.
 	* strdup.c: Include it.
@@ -6314,7 +6314,7 @@
 	* execute.c: New file, from GNU gettext.
 	* w32spawn.h: New file, from GNU gettext.
 
-2004-01-23  Paul Eggert  <eggert@twinsun.com>
+2004-01-24  Paul Eggert  <eggert@twinsun.com>
 
 	Exit-status fix from coreutils.
 
@@ -6334,15 +6334,7 @@
 	for usage function arg.  Pass it EXIT_SUCCESS rather than 0,
 	for clarity.
 
-2004-01-21  Jim Meyering  <jim@meyering.net>
-
-	* mktime.c (__mktime_internal) [!_LIBC]: Define to mktime_internal
-	so as not to conflict with a different-sized __mktime_internal
-	function in GNU libc.
-	* timegm.c (__mktime_internal) [!_LIBC]: Likewise.
-	Problem building statically-linked `ls' reported by Michael Brunnbauer.
-
-2004-01-18  Paul Eggert  <eggert@twinsun.com>
+2004-01-24  Paul Eggert  <eggert@twinsun.com>
 
 	Merge from diffutils.
 
@@ -6359,7 +6351,15 @@
 	See Debian bug 136249 (still outstanding) for more info about why
 	HAVE_XSI_STACK_OVERFLOW_HEURISTIC fails on Linux kernels.
 
-2003-11-30  Bruno Haible  <bruno@clisp.org>
+2004-01-21  Jim Meyering  <jim@meyering.net>
+
+	* mktime.c (__mktime_internal) [!_LIBC]: Define to mktime_internal
+	so as not to conflict with a different-sized __mktime_internal
+	function in GNU libc.
+	* timegm.c (__mktime_internal) [!_LIBC]: Likewise.
+	Problem building statically-linked `ls' reported by Michael Brunnbauer.
+
+2004-01-20  Bruno Haible  <bruno@clisp.org>
 
 	Safer stack allocation.
 	* setenv.c: Include allocsa.h.
@@ -6368,38 +6368,38 @@
 	(__add_to_environ) [!_LIBC]: Use allocsa instead of alloca. Use freesa
 	instead of freea.
 
-2003-10-17  Bruno Haible  <bruno@clisp.org>
+2004-01-20  Bruno Haible  <bruno@clisp.org>
 
 	* binary-io.h: Avoid warnings on Cygwin.
 
-2003-12-28  Bruno Haible  <bruno@clisp.org>
+2004-01-20  Bruno Haible  <bruno@clisp.org>
 
 	* wait-process.c (wait_subprocess): Add ignore_sigpipe argument.
 	* wait-process.c (wait_subprocess): Likewise. Handle SIGPIPE specially.
 
-2003-11-28  Bruno Haible  <bruno@clisp.org>
+2004-01-20  Bruno Haible  <bruno@clisp.org>
 
 	* wait-process.c (cleanup_slaves): Use ANSI C declaration.
 
-2003-11-27  Bruno Haible  <bruno@clisp.org>
+2004-01-20  Bruno Haible  <bruno@clisp.org>
 
 	* wait-process.c: On Windows, include windows.h. Needed on mingw.
 
-2003-11-17  Bruno Haible  <bruno@clisp.org>
+2004-01-20  Bruno Haible  <bruno@clisp.org>
 
 	* wait-process.c (wait_process): Disable the 2003-10-31 waitid() patch.
 
-2003-11-24  Bruno Haible  <bruno@clisp.org>
+2004-01-20  Bruno Haible  <bruno@clisp.org>
 
 	* xallocsa.h: New file, from GNU gettext.
 	* xallocsa.c: New file, from GNU gettext.
 
-2003-11-24  Bruno Haible  <bruno@clisp.org>
+2004-01-20  Bruno Haible  <bruno@clisp.org>
 
 	* allocsa.h: New file, from GNU gettext.
 	* allocsa.c: New file, from GNU gettext.
 
-2003-11-24  Bruno Haible  <bruno@clisp.org>
+2004-01-20  Bruno Haible  <bruno@clisp.org>
 
 	* eealloc.h: New file.
 
@@ -6462,7 +6462,7 @@
 
 	* argp-{help.c,parse.c,namefrob.h}, argp.h: update from libc.
 
-2003-11-23  Paul Eggert  <eggert@twinsun.com>
+2003-11-25  Paul Eggert  <eggert@twinsun.com>
 	    Bruno Haible  <bruno@clisp.org>
 
 	* printf-parse.h: Don't include sys/types.h.
@@ -6595,7 +6595,7 @@
 	argument for overflow.
 	Suggested by Paul Eggert.
 
-2003-10-31  Bruno Haible  <bruno@clisp.org>
+2003-11-03  Bruno Haible  <bruno@clisp.org>
 
 	* wait-process.c (wait_process): Use waitid with WNOWAIT if available,
 	to avoid (extremely rare) race condition.
@@ -6892,7 +6892,7 @@
 	* version-etc-2.h: Remove file.
 	* version-etc-2.c: Remove file.
 
-2003-09-25  Jim Meyering  <jim@meyering.net>
+2003-10-06  Jim Meyering  <jim@meyering.net>
 	    Bruno Haible  <bruno@clisp.org>
 
 	This lets translators provide better translations for the
@@ -7756,7 +7756,7 @@
 	(getdelim2): Moved out to getndelim2.c.
 	(getline, getdelim): Update.
 
-2003-07-15    <karl@gnu.org>
+2003-07-15  Karl Berry  <karl@gnu.org>
 
 	* vasnprintf.c: update from gettext.
 
@@ -7913,7 +7913,7 @@
 
 	* sysexit_.h: New file.
 
-2003-05-20  Derek Price  <derek@ximbiot.com>
+2003-06-11  Derek Price  <derek@ximbiot.com>
 
 	* stat.c [LSTAT]: Compile/use slash_aware_lstat only if it is necessary.
 
@@ -8093,7 +8093,7 @@
 	posixtime failures better.
 	Improve the test data (in comments only).
 
-2003-05-30    <karl@gnu.org>
+2003-05-30  Karl Berry  <karl@gnu.org>
 
 	* mktime.c: update from libc.
 
@@ -8131,7 +8131,7 @@
 	* mktime.c (__mktime_internal): Do not reject negative timestamps
 	arbitrarily.
 
-2003-05-10  Bruno Haible  <bruno@clisp.org>
+2003-05-12  Bruno Haible  <bruno@clisp.org>
 
 	* linebreak.c (iconv_string_length): Don't return -1 just because the
 	string is longer than 4 KB.
@@ -8349,7 +8349,7 @@
 
 	* exit.h: New file, from GNU gettext.
 
-2003-01-11  Bruno Haible  <bruno@clisp.org>
+2003-01-15  Bruno Haible  <bruno@clisp.org>
 
 	* stpcpy.h (stpcpy): Use ANSI C function declarations.
 	* strcase.h (strcasecmp, strncasecmp): Likewise.
@@ -8358,17 +8358,17 @@
 
 	* same.c (same_name): Tweak a comment.
 
-2003-01-11  Bruno Haible  <bruno@clisp.org>
+2003-01-14  Bruno Haible  <bruno@clisp.org>
 
 	* same.c (same_name): Reorder tests so as to avoid calling stat()
 	when a string comparison is sufficient.
 
-2003-01-11  Bruno Haible  <bruno@clisp.org>
+2003-01-14  Bruno Haible  <bruno@clisp.org>
 
 	* readtokens.c (readtoken): Cast character to 'unsigned char', not
 	'unsigned int'.
 
-2003-01-11  Bruno Haible  <bruno@clisp.org>
+2003-01-14  Bruno Haible  <bruno@clisp.org>
 
 	* hash-pjw.c: Add comment about low quality of this function.
 
@@ -8421,11 +8421,7 @@
 	* full-write.c: Rework so that it may serve to define full_read, too.
 	* full-read.c: Simply #define FULL_READ and include full-write.c.
 
-2003-01-06  Jim Meyering  <jim@meyering.net>
-
-	* version-etc.c: Update year in translatable copyright string.
-
-2002-12-25  Bruno Haible  <bruno@clisp.org>
+2003-01-07  Bruno Haible  <bruno@clisp.org>
 
 	* strtoimax.c: Include <stdint.h> as an alternative to <inttypes.h>.
 	* xstrtol.h: Likewise.
@@ -8436,37 +8432,41 @@
 	* tempname.c: Include <inttypes.h> too. Avoids a compilation error
 	on systems that have <inttypes.h> but not <stdint.h>.
 
+2003-01-06  Jim Meyering  <jim@meyering.net>
+
+	* version-etc.c: Update year in translatable copyright string.
+
 2002-12-31  Paul Eggert  <eggert@twinsun.com>
 
 	* memcoll.c (memcoll): Fall back on a simple algorithm using
 	memcmp if strcoll doesn't work.
 
-2002-12-23  Bruno Haible  <bruno@clisp.org>
+2002-12-31  Bruno Haible  <bruno@clisp.org>
 
 	* localcharset.h: New file.
 	* localcharset.c: Include it.
 	* unicodeio.c: Likewise.
 
-2002-12-22  Bruno Haible  <bruno@clisp.org>
+2002-12-31  Bruno Haible  <bruno@clisp.org>
 
 	* utime.c (utime_null): No need to call ftruncate if the file was
 	nonempty.
 
-2002-12-23  Bruno Haible  <bruno@clisp.org>
+2002-12-31  Bruno Haible  <bruno@clisp.org>
 
 	* memcoll.c (STRCOLL): New macro.
 	(memcoll): Use it.
 
-2002-12-22  Bruno Haible  <bruno@clisp.org>
+2002-12-31  Bruno Haible  <bruno@clisp.org>
 
 	* getstr.h (getstr): Define, to avoid clash with libcurses.
 	* linebuffer.h (readline): Define, to avoid clash with libreadline.
 
-2002-12-22  Bruno Haible  <bruno@clisp.org>
+2002-12-31  Bruno Haible  <bruno@clisp.org>
 
 	* getdate.y (get_date): Test HAVE_STRUCT_TM_TM_ZONE, not HAVE_TM_ZONE.
 
-2002-12-23  Bruno Haible  <bruno@clisp.org>
+2002-12-31  Bruno Haible  <bruno@clisp.org>
 
 	* getline.h: Include <stddef.h>, for size_t.
 
@@ -8632,12 +8632,12 @@
 	hash_rehash): Replace `if (limit <= value) abort ();' with
 	`if (! (value < limit)) abort ();', for readability.
 
-2002-11-26    <karl@gnu.org>
+2002-11-26  Karl Berry  <karl@gnu.org>
 
 	* strdup.c: copy from libc again, with jim's ok.
 	* .cppi-disable: re-add strdup.c
 
-2002-11-25    <karl@gnu.org>
+2002-11-25  Karl Berry  <karl@gnu.org>
 
 	* strtoll.c: copy from libc, meaning we now #include <strtol.c>
 	instead of "strtol.c".
@@ -8646,7 +8646,7 @@
 
 	* mktime.c: Sync from libc, now that it has the latest fix.
 
-2002-11-24    <karl@gnu.org>
+2002-11-24  Karl Berry  <karl@gnu.org>
 
 	* error.c, getopt.c, getopt.h, getopt1.c, obstack.c, regex.c,
 	regex.h, strdup.c, strtoll.c, tempname.c: change license to gpl.
@@ -8854,42 +8854,42 @@
 	* strstr.h: New file, from GNU gettext-0.11.5.
 	* xgetcwd.h: New file, from GNU gettext-0.11.5.
 
-2002-05-09  Bruno Haible  <bruno@clisp.org>
+2002-11-04  Bruno Haible  <bruno@clisp.org>
 
 	* config.charset: Update for newest glibc. Add canonical names
 	ISO-8859-14, KOI8-T, TCVN5712-1, GEORGIAN-PS.
 
-2002-05-09  Bruno Haible  <bruno@clisp.org>
+2002-11-04  Bruno Haible  <bruno@clisp.org>
 
 	* localcharset.c (get_charset_aliases): Add more Windows specific
 	aliases.
 
-2002-05-08  Owen Taylor  <otaylor@redhat.com>
+2002-11-04  Owen Taylor  <otaylor@redhat.com>
 
 	* config.charset: A few additions for Solaris.
 
-2001-12-05  Bruno Haible  <bruno@clisp.org>
+2002-11-04  Bruno Haible  <bruno@clisp.org>
 
 	* localcharset.c (locale_charset): Don't return an empty string.
 
-2001-10-23  Bruno Haible  <haible@clisp.cons.org>
+2002-11-04  Bruno Haible  <haible@clisp.cons.org>
 
 	* config.charset: msdos in uk_UA uses CP1125.
 
-2001-08-05  Bruno Haible  <haible@clisp.cons.org>
+2002-11-04  Bruno Haible  <haible@clisp.cons.org>
 
 	Make it possible to build libcharset with CC=gcc CFLAGS="-x c++".
 	* localcharset.c (locale_charset): Declare as extern "C".
 
-2002-02-15  Bruno Haible  <bruno@clisp.org>
+2002-11-04  Bruno Haible  <bruno@clisp.org>
 
 	* config.charset [msdosdjgpp]: For Russian, use CP866.
 
-2002-02-11  Bruno Haible  <bruno@clisp.org>
+2002-11-04  Bruno Haible  <bruno@clisp.org>
 
 	* config.charset: Add support for NetBSD.
 
-2002-09-25    <karl@gnu.org>
+2002-09-25  Karl Berry  <karl@gnu.org>
 
 	* strdup.c: copy from libc/string (via ../config/srclist*).
 	* getopt*: copy from libc/posix.
@@ -8901,7 +8901,7 @@
 	* c-stack.c: Include sys/time.h.
 	From Volker Borchert.
 
-2002-06-11  Paul Eggert  <eggert@twinsun.com>
+2002-06-26  Paul Eggert  <eggert@twinsun.com>
 
 	* fnmatch.c, fnmatch_loop.c (WIDE_CHAR_SUPPORT):
 	New macro.  Use it uniformly instead of
@@ -8951,7 +8951,7 @@
 	For GNU libc 2.2 and newer, ensure that <sys/types.h> and <sys/stat.h>
 	have been included before this file.
 
-2002-06-13  Richard Dawe  <richdawe@bigfoot.com>
+2002-06-15  Richard Dawe  <richdawe@bigfoot.com>
 
 	* Makefile.am (lstat.c, stat.c, .sin.sed): Use t-$@, rather than $@-t,
 	so that each temporary file name is unique and valid in the first
@@ -9099,7 +9099,7 @@
 	Otherwise, some versions of automake would omit the rule that makes
 	Makefile from Makefile.in.
 
-2001-01-21  Paul Eggert  <eggert@twinsun.com>
+2002-01-21  Paul Eggert  <eggert@twinsun.com>
 
 	* xmemcoll.h, xmemcoll.c: New files.
 	* Makefile.am (libfetish_a_SOURCES): Add them.
@@ -9122,7 +9122,7 @@
 	* getdate.y: Add three semicolons, each just before a closing brace.
 	Bison (as of version 1.31) no longer papers over that mistake.
 
-2002-02-14  Paul Eggert  <eggert@twinsun.com>
+2002-01-16  Paul Eggert  <eggert@twinsun.com>
 
 	* backupfile.c (ISDIGIT): Comment fix.
 	* getdate.y (ISDIGIT): Likewise.
@@ -9134,7 +9134,7 @@
 
 	* version-etc.c (version_etc_copyright): Update copyright year.
 
-2001-01-19  Paul Eggert  <eggert@twinsun.com>
+2001-12-19  Paul Eggert  <eggert@twinsun.com>
 
 	* closeout.c (close_stdout_status): If ferror (stdout), do
 	not silently exit merely because the output buffer happens to
@@ -9413,7 +9413,7 @@
 	have their own, conflicting declaration of strtoimax in sys/inttypes.h.
 	(strtoumax): Likewise, for completeness (it wasn't necessary).
 
-2001-09-06  Paul Eggert  <eggert@twinsun.com>
+2001-09-17  Paul Eggert  <eggert@twinsun.com>
 
 	* strtoimax.c (HAVE_LONG_LONG):
 	Redefine to HAVE_UNSIGNED_LONG_LONG if unsigned.
@@ -9497,7 +9497,7 @@
 	Use an initial, malloc'd, buffer of length 128 rather than
 	a statically allocated one of length 1024.
 
-2001-08-30  Paul Eggert  <eggert@twinsun.com>
+2001-08-31  Paul Eggert  <eggert@twinsun.com>
 
 	* xgetcwd.c: Don't include pathmax.h.
 	Include stdlib.h and unistd.h if available.
@@ -9507,7 +9507,7 @@
 	Check for overflow when computing sizes.
 	Simplify reallocation code.
 
-2001-08-28  Paul Eggert  <eggert@twinsun.com>
+2001-08-31  Paul Eggert  <eggert@twinsun.com>
 
 	* Makefile.am (libfetish_a_SOURCES): Remove strtoxmax.c.
 
@@ -9531,7 +9531,7 @@
 
 	* strtoumax.c: Include strtoimax.c, not strtouxmax.c.
 
-2001-08-30  Paul Eggert  <eggert@twinsun.com>
+2001-08-31  Paul Eggert  <eggert@twinsun.com>
 
 	* savedir.c (savedir): Remove size parameter, as POSIX says that
 	a directory's st_size can have an arbitrary value, so the old
@@ -9539,11 +9539,11 @@
 	changed.
 	* savedir.h: Update prototype.
 
-2001-08-30  Paul Eggert  <eggert@twinsun.com>
+2001-08-31  Paul Eggert  <eggert@twinsun.com>
 
 	* xstrtol.c (strtoimax): New decl.
 
-2001-08-28  Paul Eggert  <eggert@twinsun.com>
+2001-08-31  Paul Eggert  <eggert@twinsun.com>
 
 	* xstrtol.h: Add copyright notice.
 	(_DECLARE_XSTRTOL): Improve quality of diagnostic for
@@ -9837,7 +9837,7 @@
 	Required at least for Vax Ultrix4.3, which doesn't define uint64_t.
 	Reported by John David Anglin.
 
-2001-03-10  Bruno Haible  <haible@clisp.cons.org>
+2001-03-15  Bruno Haible  <haible@clisp.cons.org>
 
 	* localcharset.c (locale_charset): Allow wildcard syntax. Also resolve
 	alias if codeset is empty.
@@ -9910,7 +9910,7 @@
 
 	* strftime.c: Update from GNU libc (the only changes were to comments).
 
-2001-02-13  Bruno Haible  <haible@clisp.cons.org>
+2001-02-17  Bruno Haible  <haible@clisp.cons.org>
 
 	* mbswidth.h (mbswidth): Also define as macro, to avoid prototype clash.
 
@@ -9946,7 +9946,7 @@
 	[HAVE_DONE_WORKING_REALLOC_CHECK]: Likewise.
 	Reported by Axel Kittenberger.
 
-2001-01-15  Bruno Haible  <haible@clisp.cons.org>
+2001-01-21  Bruno Haible  <haible@clisp.cons.org>
 
 	* unicodeio.c (print_unicode_char): Cast the second iconv() arg,
 	to avoid a warning.  Add back 'const' to inptr.
@@ -9994,7 +9994,7 @@
 	(hash_get_first): Return NULL to appease Irix5.6's 89.
 	Reported by Nelson Beebe.
 
-2000-10-31  Bruno Haible  <haible@clisp.cons.org>
+2000-12-19  Bruno Haible  <haible@clisp.cons.org>
 
 	* localcharset.c (locale_charset): Add support for Win32.
 
@@ -10028,7 +10028,7 @@
 
 	* userspec.c (parse_user_spec): Fix typo: s/u/g/.
 
-2000-10-31  Bruno Haible  <haible@clisp.cons.org>
+2000-12-16  Bruno Haible  <haible@clisp.cons.org>
 
 	* config.charset: Add ISO-8859-3, BIG5HKSCS, GB18030, JOHAB, VISCII,
 	CP874, CP949, CP950, CP1250, CP1253, CP1254, CP1255, CP1256, CP1257
@@ -10385,7 +10385,7 @@
 	* dirname.c (dir_name) [MSDOS]: Declare `lim' to be const.
 	(dir_name): Assert that there are no trailing slashes.
 
-2000-07-18  Bruno Haible  <haible@clisp.cons.org>
+2000-07-29  Bruno Haible  <haible@clisp.cons.org>
 
 	* mbswidth.h (mbswidth): Add a flags argument.
 	(mbswidth): New declaration.
@@ -10427,12 +10427,12 @@
 
 	* basename.c (base_name): Add an assertion.
 
-2000-07-15  Bruno Haible  <clisp.cons.org>
+2000-07-23  Bruno Haible  <clisp.cons.org>
 
 	* quotearg.c: When the system forces us to redefine mbstate_t,
 	shadow its mbsinit function.
 
-2000-07-16  Bruno Haible  <haible@clisp.cons.org>
+2000-07-17  Bruno Haible  <haible@clisp.cons.org>
 
 	* mbswidth.h: New file.
 	* mbswidth.c: New file.
@@ -10458,7 +10458,7 @@
 	from tar's src/misc.c.
 	* quote.h: New file.  Prototypes for same.
 
-2000-07-10  Paul Eggert  <eggert@twinsun.com>
+2000-07-14  Paul Eggert  <eggert@twinsun.com>
 
 	From a suggestion by Bruno Haible.
 	* quotearg.c (mbrtowc): Do not use HAVE_WCHAR_H in the definition.
@@ -10476,7 +10476,7 @@
 	locale_quoting_style behavior, and undo the "{LEFT QUOTATION MARK}"
 	and "{RIGHT QUOTATION MARK}" msgids.
 
-2000-07-05  Paul Eggert  <eggert@twinsun.com>
+2000-07-09  Paul Eggert  <eggert@twinsun.com>
 
 	The old behavior of quoting `like this' doesn't look good with
 	newer, ISO-style fonts.  See:
@@ -10520,7 +10520,7 @@
 	* quotearg.c (struct quoting_options): Simplify quote_these_too
 	dimension.
 
-2000-07-03  Jim Meyering  <meyering@lucent.com>
+2000-07-04  Jim Meyering  <meyering@lucent.com>
 
 	* strndup.c: [!HAVE_DECL_STRNLEN]: Declare strnlen.
 	Reported by Bruno Haible.
@@ -10552,7 +10552,7 @@
 
 	* nanosleep.c (SIGCONT): Define if not already defined.
 
-2000-06-17  Bruno Haible  <haible@clisp.cons.org>
+2000-07-01  Bruno Haible  <haible@clisp.cons.org>
 
 	* mountlist.c: Use MOUNTED_FS_STAT_DEV instead of MOUNTED_NEXT_DEV,
 	per change in ../m4/ls-mntd-fs.m4.
@@ -10568,7 +10568,7 @@
 	* mountlist.c (fsp_to_string) [HAVE_F_FSTYPENAME_IN_STATFS]:
 	Avoid warning by casting result to `char *' to remove `const'.
 
-2000-06-17  Bruno Haible  <haible@clisp.cons.org>
+2000-06-27  Bruno Haible  <haible@clisp.cons.org>
 
 	* Makefile.am (libfetish_a_SOURCES): Remove readutmp.c.
 
@@ -10598,13 +10598,13 @@
 
 	* posixtm.c [HAVE_STDLIB_H]: Include stdlib.h, for decl of abort.
 
-2000-06-17  Bruno Haible  <haible@clisp.cons.org>
+2000-06-25  Bruno Haible  <haible@clisp.cons.org>
 
 	* getusershell.c (xmalloc, xrealloc): Remove functions.
 	Include xalloc.h.
 	Don't include <stdlib.h>.  Don't declare malloc, realloc.
 
-2000-06-23  Bruno Haible  <haible@clisp.cons.org>
+2000-06-25  Bruno Haible  <haible@clisp.cons.org>
 
 	* unicodeio.c (print_unicode_char): Work around ansi2knr deficiency.
 
@@ -10612,11 +10612,11 @@
 
 	* error.c [!HAVE_DECL_STRERROR_R]: Declare strerror_r.
 
-2000-06-21  Jim Meyering  <meyering@lucent.com>
+2000-06-23  Jim Meyering  <meyering@lucent.com>
 
 	* getpass.c: New file, from Bruno Haible.  Required for BeOS.
 
-2000-06-19  Paul Eggert  <eggert@twinsun.com>
+2000-06-23  Paul Eggert  <eggert@twinsun.com>
 
 	* quotearg.c: Include <wctype.h> after <wchar.h>, for Solaris 2.5.
 	(mbrtowc, mbstate_t): Define substitutes if
@@ -10624,7 +10624,7 @@
 	(iswprint): Define to 1 if !defined iswprint && !HAVE_ISWPRINT,
 	not if ! (HAVE_MBRTOWC && HAVE_WCHAR_H).
 
-2000-06-17  Bruno Haible  <haible@clisp.cons.org>
+2000-06-21  Bruno Haible  <haible@clisp.cons.org>
 
 	* xgetcwd.c (xgetcwd): If the required pathname length is smaller
 	than 1024, return a memory chunk of least possible size, instead
@@ -10632,12 +10632,12 @@
 	Use free/xmalloc instead of xrealloc to avoid copying for very long
 	paths.
 
-2000-06-17  Bruno Haible  <haible@clisp.cons.org>
+2000-06-21  Bruno Haible  <haible@clisp.cons.org>
 
 	* canon-host.c (canon_host): Use malloc and memcpy to copy an
 	address, not strdup.  Include <stdlib.h> and don't declare free().
 
-2000-06-17  Bruno Haible  <haible@clisp.cons.org>
+2000-06-21  Bruno Haible  <haible@clisp.cons.org>
 
 	* path-concat.c (path_concat): Don't access dir[-1] if dir is
 	the empty string.
@@ -10706,7 +10706,7 @@
 
 	* strnlen.c [!HAVE_DECL_MEMCHR]: Declare memchr.
 
-2000-05-26  Bruno Haible  <haible@clisp.cons.org>
+2000-06-03  Bruno Haible  <haible@clisp.cons.org>
 
 	* Makefile.am (install-exec-local): On systems with glibc-2.1 or
 	newer, don't install charset.alias.
@@ -10857,7 +10857,7 @@
 	* Makefile.am (charset.alias): Use t-$@, not $@-t so the DOS 8.3
 	names don't conflict.  Reported by Eli Zaretskii.
 
-2000-03-28  Bruno Haible  <haible@clisp.cons.org>
+2000-04-07  Bruno Haible  <haible@clisp.cons.org>
 
 	* unicodeio.c (print_unicode_char): Avoid triggering Solaris iconv
 	bug.  Deal with the different error behavior of Irix iconv.
@@ -10968,7 +10968,7 @@
 	* localcharset.c: Guard some #includes with `#if HAVE_...'.
 	* unicodeio.c: Likewise.
 
-2000-02-02  Bruno Haible  <haible@clisp.cons.org>
+2000-03-01  Bruno Haible  <haible@clisp.cons.org>
 
 	* config.charset: New file.
 	* localcharset.c: New file.
