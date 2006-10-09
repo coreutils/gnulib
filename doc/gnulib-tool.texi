@@ -90,8 +90,14 @@ are copied into the directory specified by @samp{AC_CONFIG_AUX_DIR} in
 neither is specified, the current directory is assumed.
 
 @code{gnulib-tool} can make symbolic links instead of copying the
-source files.  Use the @samp{--symbolic} (or @samp{-s} for short) option
-to do this.
+source files.  The option to specify for this is @samp{--symlink}, or
+@samp{-s} for short.  This can be useful to save a few kilobytes of disk
+space.  But it is likely to introduce bugs when @code{gnulib} is updated;
+it is more reliable to use @samp{gnulib-tool --update} (see below)
+to update to newer versions of @code{gnulib}.  Furthermore it requires
+extra effort to create self-contained tarballs, and it may disturb some
+mechanism the maintainer applies to the sources.  For these reasons,
+this option is generally discouraged.
 
 @code{gnulib-tool} will overwrite any pre-existing files, in
 particular @file{Makefile.am}.  Unfortunately, separating the
