@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate September 26, 2006
+@set lastupdate October 9, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -173,10 +173,11 @@ as you maintain the program, to avoid legal difficulties.
 @menu
 * Copyright Papers::
 * Legally Significant::
-* Recording Contributors::
-* Copyright Notices::
-* License Notices::
-* External Libraries::
+* Recording Contributors::      
+* Copying from Other Packages::
+* Copyright Notices::           
+* License Notices::             
+* External Libraries::          
 @end menu
 
 @node Copyright Papers
@@ -409,7 +410,7 @@ package are really a separate program.
 
 Only the contributions that are legally significant for copyright
 purposes (@pxref{Legally Significant}) need to be listed.  Small
-contributions, ideas, etc., can be omitted.
+contributions, bug reports, ideas, etc., can be omitted.
 
 For example, this would describe an early version of GAS:
 
@@ -427,6 +428,40 @@ they are considered a separate package, not part of GAS proper.
 Please keep these records in a file named @file{AUTHORS} in the source
 directory for the program itself.
 
+You can use the change log as the basis for these records, if you
+wish.  Just make sure to record the correct author for each change
+(the person who wrote the change, @emph{not} the person who installed
+it), and add @samp{(tiny change)} for those changes that are too
+trivial to matter for copyright purposes.  Later on you can update the
+@file{AUTHORS} file from the change log.  This can even be done
+automatically, if you are careful about the formatting of the change
+log entries.
+
+@node Copying from Other Packages
+@section Copying from Other Packages
+
+When you copy legally significant code from another free software
+package with a GPL-compatible license, you should look in the
+package's records to find out the authors of the part you are copying,
+and list them as the contributors of the code that you copied.  If all
+you did was copy it, not write it, then for copyright purposes you are
+@emph{not} one of the contributors of @emph{this} code.
+
+If you are maintaining an FSF-copyrighted package, please verify we
+have papers for the code you are copying, @emph{before} copying it.
+If you are copying from another FSF-copyrighted package, then we
+presumably have papers for that package's own code, but you must check
+whether the code you are copying is part of an external library; if
+that is the case, we don't have papers for it, so you should not copy
+it.  It can't hurt in any case to double-check with the developer of
+that package.
+
+When you are copying code for which we do not already have papers, you
+need to get papers for it.  It may be difficult to get the papers if
+the code was not written as a contribution to your package, but that
+doesn't mean it is ok to do without them.  If you cannot get papers
+for the code, you can only use it as an external library
+(@pxref{External Libraries}).
 
 @node Copyright Notices
 @section Copyright Notices
