@@ -109,7 +109,7 @@ gl_oset_first (gl_oset_t set)
 static void
 add_to_bucket (gl_list_t list, gl_list_node_t new_node)
 {
-  size_t index = new_node->h.hashcode % list->table_size;
+  size_t bucket = new_node->h.hashcode % list->table_size;
 
   /* If no duplicates are allowed, multiple nodes are not needed.  */
   if (list->base.allow_duplicates)
@@ -119,7 +119,7 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
       gl_listelement_equals_fn equals = list->base.equals_fn;
       gl_hash_entry_t *entryp;
 
-      for (entryp = &list->table[index]; *entryp != NULL; entryp = &(*entryp)->hash_next)
+      for (entryp = &list->table[bucket]; *entryp != NULL; entryp = &(*entryp)->hash_next)
 	{
 	  gl_hash_entry_t entry = *entryp;
 
@@ -171,8 +171,8 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
 	}
     }
   /* If no duplicates are allowed, multiple nodes are not needed.  */
-  new_node->h.hash_next = list->table[index];
-  list->table[index] = &new_node->h;
+  new_node->h.hash_next = list->table[bucket];
+  list->table[bucket] = &new_node->h;
 }
 
 /* Remove a node from the hash table structure.
@@ -184,7 +184,7 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
 static void
 remove_from_bucket (gl_list_t list, gl_list_node_t old_node)
 {
-  size_t index = old_node->h.hashcode % list->table_size;
+  size_t bucket = old_node->h.hashcode % list->table_size;
 
   if (list->base.allow_duplicates)
     {
@@ -193,7 +193,7 @@ remove_from_bucket (gl_list_t list, gl_list_node_t old_node)
       gl_listelement_equals_fn equals = list->base.equals_fn;
       gl_hash_entry_t *entryp;
 
-      for (entryp = &list->table[index]; ; entryp = &(*entryp)->hash_next)
+      for (entryp = &list->table[bucket]; ; entryp = &(*entryp)->hash_next)
 	{
 	  gl_hash_entry_t entry = *entryp;
 
@@ -239,7 +239,7 @@ remove_from_bucket (gl_list_t list, gl_list_node_t old_node)
       /* If no duplicates are allowed, multiple nodes are not needed.  */
       gl_hash_entry_t *entryp;
 
-      for (entryp = &list->table[index]; ; entryp = &(*entryp)->hash_next)
+      for (entryp = &list->table[bucket]; ; entryp = &(*entryp)->hash_next)
 	{
 	  if (*entryp == &old_node->h)
 	    {

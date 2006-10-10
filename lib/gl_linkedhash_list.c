@@ -58,20 +58,20 @@ hash_resize_after_add (gl_list_t list)
 static inline void
 add_to_bucket (gl_list_t list, gl_list_node_t node)
 {
-  size_t index = node->h.hashcode % list->table_size;
+  size_t bucket = node->h.hashcode % list->table_size;
 
-  node->h.hash_next = list->table[index];
-  list->table[index] = &node->h;
+  node->h.hash_next = list->table[bucket];
+  list->table[bucket] = &node->h;
 }
 
 /* Remove a node from the hash table structure.  */
 static inline void
 remove_from_bucket (gl_list_t list, gl_list_node_t node)
 {
-  size_t index = node->h.hashcode % list->table_size;
+  size_t bucket = node->h.hashcode % list->table_size;
   gl_hash_entry_t *p;
 
-  for (p = &list->table[index]; ; p = &(*p)->hash_next)
+  for (p = &list->table[bucket]; ; p = &(*p)->hash_next)
     {
       if (*p == &node->h)
 	{

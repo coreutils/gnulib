@@ -113,9 +113,9 @@ hash_resize (gl_list_t list, size_t estimate)
 	    {
 	      gl_hash_entry_t next = node->hash_next;
 	      /* Add the entry to the new table.  */
-	      size_t index = node->hashcode % new_size;
-	      node->hash_next = new_table[index];
-	      new_table[index] = node;
+	      size_t bucket = node->hashcode % new_size;
+	      node->hash_next = new_table[bucket];
+	      new_table[bucket] = node;
 
 	      node = next;
 	    }

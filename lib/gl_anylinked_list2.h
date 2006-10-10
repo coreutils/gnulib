@@ -229,7 +229,7 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
       (list->base.hashcode_fn != NULL
        ? list->base.hashcode_fn (elt)
        : (size_t)(uintptr_t) elt);
-    size_t index = hashcode % list->table_size;
+    size_t bucket = hashcode % list->table_size;
     gl_listelement_equals_fn equals = list->base.equals_fn;
 
     if (!list->base.allow_duplicates)
@@ -238,7 +238,7 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
 	gl_list_node_t found = NULL;
 	gl_list_node_t node;
 
-	for (node = (gl_list_node_t) list->table[index];
+	for (node = (gl_list_node_t) list->table[bucket];
 	     node != NULL;
 	     node = (gl_list_node_t) node->h.hash_next)
 	  if (node->h.hashcode == hashcode
@@ -279,7 +279,7 @@ gl_linked_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
 	gl_list_node_t first_match = NULL;
 	gl_list_node_t node;
 
-	for (node = (gl_list_node_t) list->table[index];
+	for (node = (gl_list_node_t) list->table[bucket];
 	     node != NULL;
 	     node = (gl_list_node_t) node->h.hash_next)
 	  if (node->h.hashcode == hashcode
@@ -385,7 +385,7 @@ gl_linked_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
       (list->base.hashcode_fn != NULL
        ? list->base.hashcode_fn (elt)
        : (size_t)(uintptr_t) elt);
-    size_t index = hashcode % list->table_size;
+    size_t bucket = hashcode % list->table_size;
     gl_listelement_equals_fn equals = list->base.equals_fn;
     gl_list_node_t node;
 
@@ -393,7 +393,7 @@ gl_linked_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
     if (!list->base.allow_duplicates)
       {
 	/* Look for the first match in the hash bucket.  */
-	for (node = (gl_list_node_t) list->table[index];
+	for (node = (gl_list_node_t) list->table[bucket];
 	     node != NULL;
 	     node = (gl_list_node_t) node->h.hash_next)
 	  if (node->h.hashcode == hashcode
@@ -408,7 +408,7 @@ gl_linked_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
 	bool multiple_matches = false;
 	gl_list_node_t first_match = NULL;
 
-	for (node = (gl_list_node_t) list->table[index];
+	for (node = (gl_list_node_t) list->table[bucket];
 	     node != NULL;
 	     node = (gl_list_node_t) node->h.hash_next)
 	  if (node->h.hashcode == hashcode

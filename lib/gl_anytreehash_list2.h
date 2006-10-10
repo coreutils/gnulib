@@ -31,13 +31,13 @@ gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
       (list->base.hashcode_fn != NULL
        ? list->base.hashcode_fn (elt)
        : (size_t)(uintptr_t) elt);
-    size_t index = hashcode % list->table_size;
+    size_t bucket = hashcode % list->table_size;
     gl_listelement_equals_fn equals = list->base.equals_fn;
     gl_hash_entry_t entry;
 
     if (list->base.allow_duplicates)
       {
-	for (entry = list->table[index]; entry != NULL; entry = entry->hash_next)
+	for (entry = list->table[bucket]; entry != NULL; entry = entry->hash_next)
 	  if (entry->hashcode == hashcode)
 	    {
 	      if (((struct gl_multiple_nodes *) entry)->magic == MULTIPLE_NODES_MAGIC)
@@ -102,7 +102,7 @@ gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
     else
       {
 	/* If no duplicates are allowed, multiple nodes are not needed.  */
-	for (entry = list->table[index]; entry != NULL; entry = entry->hash_next)
+	for (entry = list->table[bucket]; entry != NULL; entry = entry->hash_next)
 	  if (entry->hashcode == hashcode)
 	    {
 	      gl_list_node_t node = (struct gl_list_node_impl *) entry;

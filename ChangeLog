@@ -1,3 +1,17 @@
+2006-10-10  Bruno Haible  <bruno@clisp.org>
+
+	Fix a gcc -Wshadow warning.
+	* lib/gl_anyhash_list2.h (hash_resize): Rename local variable 'index'
+	to 'bucket'.
+	* lib/gl_anylinked_list2.h (gl_linked_search_from_to,
+	gl_linked_indexof_from_to): Likewise.
+	* lib/gl_linkedhash_list.c (add_to_bucket, remove_from_bucket):
+	Likewise.
+	* lib/gl_anytreehash_list1.h (add_to_bucket, remove_from_bucket):
+	Likewise.
+	* lib/gl_anytreehash_list2.h (gl_tree_search_from_to): Likewise.
+	Reported by Eric Blake.
+
 2006-10-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/filemode.h [HAVE_DECL_STRMODE]: Include unistd.h too,
