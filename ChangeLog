@@ -313,7 +313,7 @@
 
 	* lib/gl_oset.c (gl_oset_add): Fix return type.
 
-2006-10-02  Paolo Bonzini  <bonzini@gnu.org>
+2006-10-02  Paolo Bonzini  <bonzini@gnu.org>  (tiny change)
 
 	* lib/quotearg.c (mbstate_t) [!HAVE_MBRTOWC]: #define to int.
 
@@ -3347,7 +3347,7 @@
 
 	* modules/inet_ntop (Files): Ditto.
 
-2006-07-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+2006-07-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny change)
 
 	* modules/getusershell (configure.ac): Use gl_FUNC_GETUSERSHELL,
 	not gl_PREREQ_GETUSERSHELL.
@@ -3393,7 +3393,7 @@
 	* lib/strftime.c (TOLOWER, TOUPPER) [!defined _LIBC]: Remove special
 	case.
 
-2006-07-06  Jim Hyslop  <jhyslop@dreampossible.ca>
+2006-07-06  Jim Hyslop  <jhyslop@dreampossible.ca>  (tiny change)
 
 	* lib/getaddrinfo.c: Changes to compile under MSVC6: changed
 	'#if WIN32_NATIVE' to '#ifdef' & moved WSAAPI macro inside
@@ -3887,7 +3887,7 @@
 
 	* m4/stdarg.m4 (gl_STDARG_H): Properly parenthesize gl_va_copy.
 
-2006-06-30  Jim Hyslop <jhyslop@dreampossible.ca>
+2006-06-30  Jim Hyslop <jhyslop@dreampossible.ca>  (tiny change)
 
 	* lib/getaddrinfo.c: fixed typo
 
@@ -5055,7 +5055,7 @@
 
 	* build-aux/maint.mk: Add indent target.
 
-2006-03-03  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+2006-03-03  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de> (tiny change)
 
 	* m4/poll.m4 (gl_FUNC_POLL): If we deem poll(2) unacceptable, use
 	our replacement poll.h in any case, to avoid a differing
@@ -5123,7 +5123,7 @@
 	* modules/xnanosleep: Likewise.
 	* modules/xstrtol: Likewise.
 
-2006-02-24  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+2006-02-24  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny changes)
 
 	* modules/xstrtod: Omit xstrtod.h, xstrtod.c; they're in LIB_SOURCES.
 	* modules/lock-tests (TESTS): Use $(EXEEXT).
@@ -5450,7 +5450,7 @@
 	* config/srclist.txt: Adjust to reflect glibc reorganization.
 	This affects only comments.
 
-2006-01-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+2006-01-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny change)
 
 	 * gnulib-tool, build-aux/csharpcomp.sh.in: Do not pass `-q' to mktemp.
 	 Reported by Bruce Korb <bkorb@gnu.org>.
@@ -6924,7 +6924,7 @@
 	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Check for gethostbyname
 	in the inet and nsl libraries.  Required on Solaris 5.7.
 
-2005-10-01  Eric Blake  <ebb9@byu.net>
+2005-10-01  Eric Blake  <ebb9@byu.net>  (tiny change)
 
 	* lib/getdelim.c (getdelim): Remove unused variables.
 
@@ -7262,7 +7262,7 @@
 	Assume HAVE_FCNTL_H (i.e., include <fcntl.h> unconditionally,
 	and don't include <sys/file.h>).
 
-2005-09-22  Eric Blake  <ebb9@byu.net>
+2005-09-22  Eric Blake  <ebb9@byu.net>  (tiny change)
 
 	Sync from coreutils.
 
@@ -7465,7 +7465,7 @@
 	failure.
 	Reported by Jim Meyering  <jim@meyering.net>.
 
-2005-09-12  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+2005-09-12  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny change)
 
 	* lib/base64.c: Typo.
 	(base64_encode): Put b64str in initialized data section.
@@ -7649,7 +7649,7 @@
 	* gnulib-tool (func_import): Fix comparison in handling of symbolic
 	links.
 
-2005-09-04  Martin Lambers <marlam@marlam.de>
+2005-09-04  Martin Lambers <marlam@marlam.de>  (tiny change)
 
 	* modules/size_max (Makefile.am): Add size_max.h
 
@@ -8900,7 +8900,7 @@
 
 	* lib/strnlen.h: New file.
 
-2005-08-08  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+2005-08-08  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>  (tiny change)
 
 	* README: Typos.
 
@@ -9118,7 +9118,7 @@
 	* config/srclist.txt: Comment out regcomp.c, since we have a porting
 	fix now.
 
-2005-07-08  Eric Blake  <ebb9@byu.net>
+2005-07-08  Eric Blake  <ebb9@byu.net>  (tiny change)
        and  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/regcomp.c (init_dfa, build_range_exp): Store __btowc value
@@ -9673,12 +9673,12 @@
 	* lib/unlinkdir.h (cannot_unlink_dir) [UNLINK_CANNOT_UNLINK_DIR]:
 	Now a macro, to pacify GCC.
 
-2005-05-20  Eric Blake  <ebb9@byu.net>
+2005-05-20  Eric Blake  <ebb9@byu.net>  (tiny change)
 
 	* m4/chown.m4 (gl_FUNC_CHOWN): Correct sense of test for honoring IDs
 	of -1.
 
-2005-05-20  Eric Blake  <ebb9@byu.net>
+2005-05-20  Eric Blake  <ebb9@byu.net>  (tiny change)
 
 	* lib/chown.c (rpl_chown): Return -1 on failure.
 
@@ -9888,7 +9888,7 @@
 
 	* modules/getdate (Makefile.am): Add getdate.c to EXTRA_DIST
 
-2005-05-12  Eric Blake  <ebb9@byu.net>
+2005-05-12  Eric Blake  <ebb9@byu.net>  (tiny change)
 
 	* gnulib-tool (func_import): Sort and uniquify recommended includes.
 
@@ -10253,7 +10253,7 @@
 	* lib/getaddrinfo.h: Fix OpenBSD compilation failure, inspired by tiny
 	patch from Yoann Vandoorselaere <yoann@prelude-ids.org>.
 
-2005-03-28  Eric Blake  <ebb9@byu.net>
+2005-03-28  Eric Blake  <ebb9@byu.net>  (tiny change)
 
 	* m4/getcwd-path-max.m4: Return success on systems such as Cygwin
 	where no absolute path name can be longer than PATH_MAX.
