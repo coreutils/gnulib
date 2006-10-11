@@ -1,3 +1,28 @@
+2006-10-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Port to Tandem NSK OSS, which has 64-bit signed int but at most
+	32-bit unsigned int.  Problem reported by Matthew Woehlke in:
+	http://lists.gnu.org/archive/html/bug-coreutils/2006-10/msg00062.html
+	More generally, don't assume that 64-bit signed int is available
+	if unsigned int is, and vice versa.
+	* lib/inttypes_.h (_PRIu64_PREFIX, _SCNu64_PREFIX): Depend on
+	unsigned symbols, not on their signed counterparts.
+	* lib/stdint_.h (uint64_t, uint_least64_t, uint_fast64_t, uintmax_t):
+	(UINT64_MAX, UINT_LEAST64_MAX, UINT_FAST64_MAX, UINTMAX_MAX):
+	(UINT64_C, UINTMAX_C):
+	Likewise.
+	* lib/strtoimax.c (strtoll): Depend on signed symbols, not their
+	unsigned counterparts.
+	(Have_long_long, Unsigned): New macros.
+	(Int): Renamed from INT.
+	(strtoimax): Use the new macros.
+	* m4/stdint.m4 (gl_STDINT_H): Require AC_TYPE_UNSIGNED_LONG_LONG_INT
+	and substitute HAVE_UNSIGNED_LONG_LONG_INT.
+	* modules/inttypes (inttypes.h): Substitute
+	HAVE_UNSIGNED_LONG_LONG_INT.
+	* modules/stdint (stdint.h): Likewise.
+	(Files): Add m4/ulonglong.m4.
+
 2006-10-10  Bruno Haible  <bruno@clisp.org>
 
 	Fix a gcc -Wshadow warning.

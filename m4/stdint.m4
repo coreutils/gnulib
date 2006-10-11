@@ -1,4 +1,4 @@
-# stdint.m4 serial 18
+# stdint.m4 serial 19
 dnl Copyright (C) 2001-2002, 2004-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ AC_DEFUN([gl_STDINT_H],
 [
   AC_PREREQ(2.59)dnl
 
-  dnl Check for long long int.
+  dnl Check for long long int and unsigned long long int.
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
   if test $ac_cv_type_long_long_int = yes; then
     HAVE_LONG_LONG_INT=1
@@ -19,6 +19,13 @@ AC_DEFUN([gl_STDINT_H],
     HAVE_LONG_LONG_INT=0
   fi
   AC_SUBST([HAVE_LONG_LONG_INT])
+  AC_REQUIRE([AC_TYPE_UNSIGNED_LONG_LONG_INT])
+  if test $ac_cv_type_unsigned_long_long_int = yes; then
+    HAVE_UNSIGNED_LONG_LONG_INT=1
+  else
+    HAVE_UNSIGNED_LONG_LONG_INT=0
+  fi
+  AC_SUBST([HAVE_UNSIGNED_LONG_LONG_INT])
 
   dnl Check for <wchar.h>.
   AC_CHECK_HEADERS_ONCE([wchar.h])

@@ -33,7 +33,7 @@
 "this configure-time declaration test was not run"
 # endif
 # if !HAVE_DECL_STRTOULL && HAVE_UNSIGNED_LONG_LONG_INT
-unsigned long long strtoull (char const *, char **, int);
+unsigned long long int strtoull (char const *, char **, int);
 # endif
 
 #else
@@ -41,33 +41,35 @@ unsigned long long strtoull (char const *, char **, int);
 # ifndef HAVE_DECL_STRTOLL
 "this configure-time declaration test was not run"
 # endif
-# if !HAVE_DECL_STRTOLL && HAVE_UNSIGNED_LONG_LONG_INT
-long long strtoll (char const *, char **, int);
+# if !HAVE_DECL_STRTOLL && HAVE_LONG_LONG_INT
+long long int strtoll (char const *, char **, int);
 # endif
 #endif
 
 #ifdef UNSIGNED
-# undef HAVE_LONG_LONG_INT
-# define HAVE_LONG_LONG_INT HAVE_UNSIGNED_LONG_LONG_INT
-# define INT uintmax_t
+# define Have_long_long HAVE_UNSIGNED_LONG_LONG_INT
+# define Int uintmax_t
+# define Unsigned unsigned
 # define strtoimax strtoumax
 # define strtol strtoul
 # define strtoll strtoull
 #else
-# define INT intmax_t
+# define Have_long_long HAVE_LONG_LONG_INT
+# define Int intmax_t
+# define Unsigned
 #endif
 
-INT
+Int
 strtoimax (char const *ptr, char **endptr, int base)
 {
-#if HAVE_LONG_LONG_INT
-  verify (sizeof (INT) == sizeof (long int)
-	  || sizeof (INT) == sizeof (long long int));
+#if Have_long_long
+  verify (sizeof (Int) == sizeof (Unsigned long int)
+	  || sizeof (Int) == sizeof (Unsigned long long int));
 
-  if (sizeof (INT) != sizeof (long int))
+  if (sizeof (Int) != sizeof (Unsigned long int))
     return strtoll (ptr, endptr, base);
 #else
-  verify (sizeof (INT) == sizeof (long int));
+  verify (sizeof (Int) == sizeof (Unsigned long int));
 #endif
 
   return strtol (ptr, endptr, base);

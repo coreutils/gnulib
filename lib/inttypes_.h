@@ -172,11 +172,11 @@
 #  endif
 # endif
 # ifdef UINT64_MAX
-#  if INT64_MAX == LONG_MAX
+#  if UINT64_MAX == ULONG_MAX
 #   define _PRIu64_PREFIX "l"
 #  elif defined _MSC_VER || defined __MINGW32__
 #   define _PRIu64_PREFIX "I64"
-#  elif @HAVE_LONG_LONG_INT@ && LONG_MAX >> 30 == 1
+#  elif @HAVE_UNSIGNED_LONG_LONG_INT@ && ULONG_MAX >> 31 == 1
 #   define _PRIu64_PREFIX "ll"
 #  endif
 #  if !defined PRIo64 || @PRI_MACROS_BROKEN@
@@ -665,11 +665,11 @@
 #  endif
 # endif
 # ifdef UINT64_MAX
-#  if INT64_MAX == LONG_MAX
+#  if UINT64_MAX == ULONG_MAX
 #   define _SCNu64_PREFIX "l"
 #  elif defined _MSC_VER || defined __MINGW32__
 #   define _SCNu64_PREFIX "I64"
-#  elif @HAVE_LONG_LONG_INT@ && LONG_MAX >> 30 == 1
+#  elif @HAVE_UNSIGNED_LONG_LONG_INT@ && ULONG_MAX >> 31 == 1
 #   define _SCNu64_PREFIX "ll"
 #  endif
 #  if !defined SCNo64 || @PRI_MACROS_BROKEN@

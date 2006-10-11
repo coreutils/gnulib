@@ -124,15 +124,20 @@
 #define uint32_t unsigned int
 
 #undef int64_t
-#undef uint64_t
 #if LONG_MAX >> 31 >> 31 == 1
 # define int64_t long int
-# define uint64_t unsigned long int
 #elif defined _MSC_VER
 # define int64_t __int64
-# define uint64_t unsigned __int64
 #elif @HAVE_LONG_LONG_INT@
 # define int64_t long long int
+#endif
+
+#undef uint64_t
+#if ULONG_MAX >> 31 >> 31 >> 1 == 1
+# define uint64_t unsigned long int
+#elif defined _MSC_VER
+# define uint64_t unsigned __int64
+#elif @HAVE_UNSIGNED_LONG_LONG_INT@
 # define uint64_t unsigned long long int
 #endif
 
@@ -164,6 +169,8 @@
 #define uint_least32_t uint32_t
 #ifdef int64_t
 # define int_least64_t int64_t
+#endif
+#ifdef uint64_t
 # define uint_least64_t uint64_t
 #endif
 
@@ -193,6 +200,8 @@
 #define uint_fast32_t unsigned int_fast32_t
 #ifdef int64_t
 # define int_fast64_t int64_t
+#endif
+#ifdef uint64_t
 # define uint_fast64_t uint64_t
 #endif
 
@@ -209,15 +218,20 @@
    public header files. */
 
 #undef intmax_t
-#undef uintmax_t
 #if @HAVE_LONG_LONG_INT@ && LONG_MAX >> 30 == 1
 # define intmax_t long long int
-# define uintmax_t unsigned long long int
 #elif defined int64_t
 # define intmax_t int64_t
-# define uintmax_t uint64_t
 #else
 # define intmax_t long int
+#endif
+
+#undef uintmax_t
+#if @HAVE_UNSIGNED_LONG_LONG_INT@ && ULONG_MAX >> 31 == 1
+# define uintmax_t unsigned long long int
+#elif defined int64_t
+# define uintmax_t uint64_t
+#else
 # define uintmax_t unsigned long int
 #endif
 
@@ -253,10 +267,13 @@
 
 #undef INT64_MIN
 #undef INT64_MAX
-#undef UINT64_MAX
 #ifdef int64_t
 # define INT64_MIN  (~ INT64_MAX)
 # define INT64_MAX  INTMAX_C (9223372036854775807)
+#endif
+
+#undef UINT64_MAX
+#ifdef uint64_t
 # define UINT64_MAX  UINTMAX_C (18446744073709551615)
 #endif
 
@@ -289,10 +306,13 @@
 
 #undef INT_LEAST64_MIN
 #undef INT_LEAST64_MAX
-#undef UINT_LEAST64_MAX
 #ifdef int64_t
 # define INT_LEAST64_MIN  INT64_MIN
 # define INT_LEAST64_MAX  INT64_MAX
+#endif
+
+#undef UINT_LEAST64_MAX
+#ifdef uint64_t
 # define UINT_LEAST64_MAX  UINT64_MAX
 #endif
 
@@ -325,10 +345,13 @@
 
 #undef INT_FAST64_MIN
 #undef INT_FAST64_MAX
-#undef UINT_FAST64_MAX
 #ifdef int64_t
 # define INT_FAST64_MIN  INT64_MIN
 # define INT_FAST64_MAX  INT64_MAX
+#endif
+
+#undef UINT_FAST64_MAX
+#ifdef uint64_t
 # define UINT_FAST64_MAX  UINT64_MAX
 #endif
 
@@ -345,13 +368,17 @@
 
 #undef INTMAX_MIN
 #undef INTMAX_MAX
-#undef UINTMAX_MAX
 #define INTMAX_MIN  (~ INTMAX_MAX)
 #ifdef INT64_MAX
 # define INTMAX_MAX  INT64_MAX
-# define UINTMAX_MAX  UINT64_MAX
 #else
 # define INTMAX_MAX  INT32_MAX
+#endif
+
+#undef UINTMAX_MAX
+#ifdef UINT64_MAX
+# define UINTMAX_MAX  UINT64_MAX
+#else
 # define UINTMAX_MAX  UINT32_MAX
 #endif
 
@@ -427,27 +454,36 @@
 #undef UINT64_C
 #if LONG_MAX >> 31 >> 31 == 1
 # define INT64_C(x) x##L
-# define UINT64_C(x) x##UL
 #elif defined _MSC_VER
 # define INT64_C(x) x##i64
-# define UINT64_C(x) x##ui64
 #elif @HAVE_LONG_LONG_INT@
 # define INT64_C(x) x##LL
+#endif
+#if ULONG_MAX >> 31 >> 31 >> 1 == 1
+# define UINT64_C(x) x##UL
+#elif defined _MSC_VER
+# define UINT64_C(x) x##ui64
+#elif @HAVE_UNSIGNED_LONG_LONG_INT@
 # define UINT64_C(x) x##ULL
 #endif
 
 /* 7.18.4.2. Macros for greatest-width integer constants */
 
 #undef INTMAX_C
-#undef UINTMAX_C
 #if @HAVE_LONG_LONG_INT@ && LONG_MAX >> 30 == 1
 # define INTMAX_C(x)   x##LL
-# define UINTMAX_C(x)  x##ULL
 #elif defined int64_t
 # define INTMAX_C(x)   INT64_C(x)
-# define UINTMAX_C(x)  UINT64_C(x)
 #else
 # define INTMAX_C(x)   x##L
+#endif
+
+#undef UINTMAX_C
+#if @HAVE_UNSIGNED_LONG_LONG_INT@ && ULONG_MAX >> 31 == 1
+# define UINTMAX_C(x)  x##ULL
+#elif defined uint64_t
+# define UINTMAX_C(x)  UINT64_C(x)
+#else
 # define UINTMAX_C(x)  x##UL
 #endif
 
