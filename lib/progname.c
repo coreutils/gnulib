@@ -20,11 +20,10 @@
 #include <config.h>
 
 /* Specification.  */
+#undef ENABLE_RELOCATABLE /* avoid defining set_program_name as a macro */
 #include "progname.h"
 
 #include <string.h>
-
-#undef set_program_name
 
 
 /* String containing name the program is called with.

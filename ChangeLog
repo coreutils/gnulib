@@ -1,3 +1,9 @@
+2006-10-10  Bruno Haible  <bruno@clisp.org>
+
+	Make it possible to #define set_program_name to an alias.
+	* lib/progname.c: Don't undefine set_program_name; instead, undefine
+	ENABLE_RELOCATABLE early.
+
 2006-10-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Port to Tandem NSK OSS, which has 64-bit signed int but at most
