@@ -1,4 +1,4 @@
-# ulonglong.m4 serial 5
+# ulonglong.m4 serial 6
 dnl Copyright (C) 1999-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,11 @@ dnl From Paul Eggert.
 # Define HAVE_UNSIGNED_LONG_LONG_INT if 'unsigned long long int' works.
 # This fixes a bug in Autoconf 2.60, but can be removed once we
 # assume 2.61 everywhere.
+
+# Note: If the type 'unsigned long long int' exists but is only 32 bits
+# large (as on some very old compilers), AC_TYPE_UNSIGNED_LONG_LONG_INT
+# will not be defined. In this case you can treat 'unsigned long long int'
+# like 'unsigned long int'.
 
 AC_DEFUN([AC_TYPE_UNSIGNED_LONG_LONG_INT],
 [

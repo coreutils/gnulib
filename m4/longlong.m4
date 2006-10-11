@@ -1,4 +1,4 @@
-# longlong.m4 serial 7
+# longlong.m4 serial 8
 dnl Copyright (C) 1999-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,10 @@ dnl From Paul Eggert.
 # Define HAVE_LONG_LONG_INT if 'long long int' works.
 # This fixes a bug in Autoconf 2.60, but can be removed once we
 # assume 2.61 everywhere.
+
+# Note: If the type 'long long int' exists but is only 32 bits large
+# (as on some very old compilers), AC_TYPE_LONG_LONG_INT will not be
+# defined. In this case you can treat 'long long int' like 'long int'.
 
 AC_DEFUN([AC_TYPE_LONG_LONG_INT],
 [
