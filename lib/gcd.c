@@ -16,6 +16,8 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#include <config.h>
+
 /* This file can also be used to define gcd functions for other unsigned
    types, such as 'unsigned long long' or 'uintmax_t'.  */
 #ifndef WORD_T
