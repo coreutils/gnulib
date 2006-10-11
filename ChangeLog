@@ -1,3 +1,20 @@
+2006-10-11  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/allocsa.h (sa_alignment_longlong, sa_alignment_max): Test
+	HAVE_LONG_LONG_INT instead of HAVE_LONG_LONG.
+	* m4/allocsa.m4 (gl_ALLOCSA): Invoke AC_TYPE_LONG_LONG_INT instead of
+	gl_AC_TYPE_LONG_LONG.
+
+	* lib/printf-args.h (arg_type, argument): Test HAVE_LONG_LONG_INT
+	instead of HAVE_LONG_LONG.
+	* lib/printf-args.c (printf_fetchargs): Likewise.
+	* lib/printf-parse.c (PRINTF_PARSE): Likewise.
+	* lib/vasnprintf.c (VASNPRINTF): Likewise.
+	* m4/vasnprintf.m4 (gl_PREREQ_PRINTF_ARGS, gl_PREREQ_PRINTF_PARSE,
+	gl_PREREQ_VASNPRINTF): Invoke AC_TYPE_LONG_LONG_INT instead of
+	gl_AC_TYPE_LONG_LONG.
+
 2006-10-11  Bruno Haible  <bruno@clisp.org>
 
 	* m4/longlong.m4: Add comments.
