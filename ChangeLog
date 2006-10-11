@@ -1,5 +1,11 @@
 2006-10-10  Bruno Haible  <bruno@clisp.org>
 
+	Make it possible to #define stpcpy, strdup to aliases.
+	* lib/stpcpy.c (stpcpy) [!_LIBC]: Don't undefine.
+	* lib/strdup.c (strdup) [!_LIBC]: Don't undefine.
+
+2006-10-10  Bruno Haible  <bruno@clisp.org>
+
 	Make it possible to #define gcd to an alias.
 	* lib/gcd.c: Include config.h.
 

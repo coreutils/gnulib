@@ -23,7 +23,9 @@
 #include <string.h>
 
 #undef __stpcpy
-#undef stpcpy
+#ifdef _LIBC
+# undef stpcpy
+#endif
 
 #ifndef weak_alias
 # define __stpcpy stpcpy

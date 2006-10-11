@@ -27,7 +27,9 @@
 #include <string.h>
 
 #undef __strdup
-#undef strdup
+#ifdef _LIBC
+# undef strdup
+#endif
 
 #ifndef weak_alias
 # define __strdup strdup
