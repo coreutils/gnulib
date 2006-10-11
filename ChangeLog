@@ -1,4 +1,10 @@
 2006-10-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/extensions.m4 (gl_USE_SYSTEM_EXTENSIONS): Undo previous
+	change, since Autoconf's version may no longer be appropriate now
+	that we are using CVS Autoconf's version.  Add support for Tandem.
+
+2006-10-11  Paul Eggert  <eggert@cs.ucla.edu>
             Bruno Haible  <bruno@clisp.org>
 
 	* lib/allocsa.h (sa_alignment_longlong, sa_alignment_max): Test
