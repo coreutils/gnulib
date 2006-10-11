@@ -1,5 +1,14 @@
 2006-10-10  Bruno Haible  <bruno@clisp.org>
 
+	Make it possible to #define c_isascii to an alias.
+	* lib/c-ctype.h: Don't define the macros if NO_C_CTYPE_MACROS is
+	defined. Undefine the macros before defining them, to avoid gcc
+	warnings.
+	* lib/c-ctype.c: Include config.h. Don't undefine the macros; instead,
+	define NO_C_CTYPE_MACROS early.
+
+2006-10-10  Bruno Haible  <bruno@clisp.org>
+
 	Make it possible to #define set_program_name to an alias.
 	* lib/progname.c: Don't undefine set_program_name; instead, undefine
 	ENABLE_RELOCATABLE early.

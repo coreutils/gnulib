@@ -5,7 +5,7 @@
    <ctype.h> functions' behaviour depends on the current locale set via
    setlocale.
 
-   Copyright (C) 2000-2003 Free Software Foundation, Inc.
+   Copyright (C) 2000-2003, 2006 Free Software Foundation, Inc.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -117,10 +117,11 @@ extern int c_tolower (int c);
 extern int c_toupper (int c);
 
 
-#if defined __GNUC__ && defined __OPTIMIZE__ && !defined __OPTIMIZE_SIZE__
+#if defined __GNUC__ && defined __OPTIMIZE__ && !defined __OPTIMIZE_SIZE__ && !defined NO_C_CTYPE_MACROS
 
 /* ASCII optimizations. */
 
+#undef c_isascii
 #define c_isascii(c) \
   ({ int __c = (c); \
      (__c >= 0x00 && __c <= 0x7f); \
@@ -129,12 +130,14 @@ extern int c_toupper (int c);
 #if C_CTYPE_CONSECUTIVE_DIGITS \
     && C_CTYPE_CONSECUTIVE_UPPERCASE && C_CTYPE_CONSECUTIVE_LOWERCASE
 #if C_CTYPE_ASCII
+#undef c_isalnum
 #define c_isalnum(c) \
   ({ int __c = (c); \
      ((__c >= '0' && __c <= '9') \
       || ((__c & ~0x20) >= 'A' && (__c & ~0x20) <= 'Z')); \
    })
 #else
+#undef c_isalnum
 #define c_isalnum(c) \
   ({ int __c = (c); \
      ((__c >= '0' && __c <= '9') \
@@ -146,11 +149,13 @@ extern int c_toupper (int c);
 
 #if C_CTYPE_CONSECUTIVE_UPPERCASE && C_CTYPE_CONSECUTIVE_LOWERCASE
 #if C_CTYPE_ASCII
+#undef c_isalpha
 #define c_isalpha(c) \
   ({ int __c = (c); \
      ((__c & ~0x20) >= 'A' && (__c & ~0x20) <= 'Z'); \
    })
 #else
+#undef c_isalpha
 #define c_isalpha(c) \
   ({ int __c = (c); \
      ((__c >= 'A' && __c <= 'Z') || (__c >= 'a' && __c <= 'z')); \
@@ -158,12 +163,14 @@ extern int c_toupper (int c);
 #endif
 #endif
 
+#undef c_isblank
 #define c_isblank(c) \
   ({ int __c = (c); \
      (__c == ' ' || __c == '\t'); \
    })
 
 #if C_CTYPE_ASCII
+#undef c_iscntrl
 #define c_iscntrl(c) \
   ({ int __c = (c); \
      ((__c & ~0x1f) == 0 || __c == 0x7f); \
@@ -171,6 +178,7 @@ extern int c_toupper (int c);
 #endif
 
 #if C_CTYPE_CONSECUTIVE_DIGITS
+#undef c_isdigit
 #define c_isdigit(c) \
   ({ int __c = (c); \
      (__c >= '0' && __c <= '9'); \
@@ -178,6 +186,7 @@ extern int c_toupper (int c);
 #endif
 
 #if C_CTYPE_CONSECUTIVE_LOWERCASE
+#undef c_islower
 #define c_islower(c) \
   ({ int __c = (c); \
      (__c >= 'a' && __c <= 'z'); \
@@ -185,6 +194,7 @@ extern int c_toupper (int c);
 #endif
 
 #if C_CTYPE_ASCII
+#undef c_isgraph
 #define c_isgraph(c) \
   ({ int __c = (c); \
      (__c >= '!' && __c <= '~'); \
@@ -192,6 +202,7 @@ extern int c_toupper (int c);
 #endif
 
 #if C_CTYPE_ASCII
+#undef c_isprint
 #define c_isprint(c) \
   ({ int __c = (c); \
      (__c >= ' ' && __c <= '~'); \
@@ -199,12 +210,14 @@ extern int c_toupper (int c);
 #endif
 
 #if C_CTYPE_ASCII
+#undef c_ispunct
 #define c_ispunct(c) \
   ({ int _c = (c); \
      (c_isgraph (_c) && ! c_isalnum (_c)); \
    })
 #endif
 
+#undef c_isspace
 #define c_isspace(c) \
   ({ int __c = (c); \
      (__c == ' ' || __c == '\t' \
@@ -212,6 +225,7 @@ extern int c_toupper (int c);
    })
 
 #if C_CTYPE_CONSECUTIVE_UPPERCASE
+#undef c_isupper
 #define c_isupper(c) \
   ({ int __c = (c); \
      (__c >= 'A' && __c <= 'Z'); \
@@ -221,12 +235,14 @@ extern int c_toupper (int c);
 #if C_CTYPE_CONSECUTIVE_DIGITS \
     && C_CTYPE_CONSECUTIVE_UPPERCASE && C_CTYPE_CONSECUTIVE_LOWERCASE
 #if C_CTYPE_ASCII
+#undef c_isxdigit
 #define c_isxdigit(c) \
   ({ int __c = (c); \
      ((__c >= '0' && __c <= '9') \
       || ((__c & ~0x20) >= 'A' && (__c & ~0x20) <= 'F')); \
    })
 #else
+#undef c_isxdigit
 #define c_isxdigit(c) \
   ({ int __c = (c); \
      ((__c >= '0' && __c <= '9') \
@@ -237,10 +253,12 @@ extern int c_toupper (int c);
 #endif
 
 #if C_CTYPE_CONSECUTIVE_UPPERCASE && C_CTYPE_CONSECUTIVE_LOWERCASE
+#undef c_tolower
 #define c_tolower(c) \
   ({ int __c = (c); \
      (__c >= 'A' && __c <= 'Z' ? __c - 'A' + 'a' : __c); \
    })
+#undef c_toupper
 #define c_toupper(c) \
   ({ int __c = (c); \
      (__c >= 'a' && __c <= 'z' ? __c - 'a' + 'A' : __c); \

@@ -1,6 +1,6 @@
 /* Character handling in C locale.
 
-   Copyright 2000-2003 Free Software Foundation, Inc.
+   Copyright 2000-2003, 2006 Free Software Foundation, Inc.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,24 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software Foundation,
 Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-/* Specification.  */
-#include "c-ctype.h"
+#include <config.h>
 
-#undef c_isalnum
-#undef c_isalpha
-#undef c_isascii
-#undef c_isblank
-#undef c_iscntrl
-#undef c_isdigit
-#undef c_islower
-#undef c_isgraph
-#undef c_isprint
-#undef c_ispunct
-#undef c_isspace
-#undef c_isupper
-#undef c_isxdigit
-#undef c_tolower
-#undef c_toupper
+/* Specification.  */
+#define NO_C_CTYPE_MACROS
+#include "c-ctype.h"
 
 /* The function isascii is not locale dependent. Its use in EBCDIC is
    questionable. */
