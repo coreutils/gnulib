@@ -1,3 +1,8 @@
+2006-10-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/error (Makefile.am): Distribute files through
+	EXTRA_DIST, not lib_SOURCES.
+
 2006-10-12  Eric Blake  <ebb9@byu.net>
 
 	* modules/error (Makefile.am): Distribute files in /lib.

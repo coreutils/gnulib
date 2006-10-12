@@ -12,7 +12,7 @@ configure.ac:
 gl_ERROR
 
 Makefile.am:
-lib_SOURCES += error.h error.c
+EXTRA_DIST += error.h error.c
 
 Include:
 "error.h"
