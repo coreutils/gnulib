@@ -1,3 +1,10 @@
+2006-10-11  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_usage): Make module names after --create-testdir
+	optional.
+	(func_create_testdir): If no module was specified, use nearly all
+	modules.
+
 2006-10-12  Jim Meyering  <jim@meyering.net>
 
 	Big performance improvement for fts-based tools that use FTS_NOSTAT.

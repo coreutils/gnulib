@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-10-07 14:54:51 $'
+cvsdatestamp='$Date: 2006-10-12 11:43:46 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -69,7 +69,7 @@ func_usage ()
 Usage: gnulib-tool --list
        gnulib-tool --import [module1 ... moduleN]
        gnulib-tool --update
-       gnulib-tool --create-testdir --dir=directory module1 ... moduleN
+       gnulib-tool --create-testdir --dir=directory [module1 ... moduleN]
        gnulib-tool --create-megatestdir --dir=directory [module1 ... moduleN]
        gnulib-tool --test --dir=directory module1 ... moduleN
        gnulib-tool --megatest --dir=directory [module1 ... moduleN]
@@ -2054,6 +2054,13 @@ func_create_testdir ()
 {
   testdir="$1"
   modules="$2"
+  if test -z "$modules"; then
+    # All modules together.
+    # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
+    # Except fnmatch-posix, which conflicts with fnmatch-gnu. FIXME.
+    modules=`func_all_modules`
+    modules=`for m in $modules; do if test $m != config-h && test $m != fnmatch-posix; then echo $m; fi; done`
+  fi
   modules=`for m in $modules; do echo $m; done | LC_ALL=C sort -u`
 
   # Subdirectory names.
