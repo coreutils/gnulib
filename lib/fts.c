@@ -433,7 +433,7 @@ fts_open (char * const *argv,
 	sp->fts_cur->fts_link = root;
 	sp->fts_cur->fts_info = FTS_INIT;
 	if (! setup_dir (sp))
-	  goto mem3;
+		goto mem3;
 
 	/*
 	 * If using chdir(2), grab a file descriptor pointing to dot to ensure

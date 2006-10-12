@@ -22,6 +22,8 @@
 	Thanks to Miklos Szeredi for his tenacity and for the initial
 	bug report about "find" failing on a FUSE-based file system.
 
+	* lib/fts.c (fts_open): Use consistent indentation.
+
 2006-10-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS): Renamed from
