@@ -46,9 +46,7 @@
 
 #if ! defined __cplusplus || defined __STDC_FORMAT_MACROS
 
-# if defined _MSC_VER || defined __MINGW32__
-#  define _LONG_LONG_FORMAT_PREFIX "I64"
-# elif defined _TNS_R_TARGET
+# if defined _TNS_R_TARGET
    /* Tandem NonStop R series and compatible platforms released before
       July 2005 support %Ld but not %lld.  */
 #  define _LONG_LONG_FORMAT_PREFIX "L"
@@ -167,6 +165,8 @@
 # ifdef INT64_MAX
 #  if INT64_MAX == LONG_MAX
 #   define _PRI64_PREFIX "l"
+#  elif defined _MSC_VER || defined __MINGW32__
+#   define _PRI64_PREFIX "I64"
 #  elif @HAVE_LONG_LONG_INT@ && LONG_MAX >> 30 == 1
 #   define _PRI64_PREFIX _LONG_LONG_FORMAT_PREFIX
 #  endif
@@ -182,6 +182,8 @@
 # ifdef UINT64_MAX
 #  if UINT64_MAX == ULONG_MAX
 #   define _PRIu64_PREFIX "l"
+#  elif defined _MSC_VER || defined __MINGW32__
+#   define _PRIu64_PREFIX "I64"
 #  elif @HAVE_UNSIGNED_LONG_LONG_INT@ && ULONG_MAX >> 31 == 1
 #   define _PRIu64_PREFIX _LONG_LONG_FORMAT_PREFIX
 #  endif
@@ -656,6 +658,8 @@
 # ifdef INT64_MAX
 #  if INT64_MAX == LONG_MAX
 #   define _SCN64_PREFIX "l"
+#  elif defined _MSC_VER || defined __MINGW32__
+#   define _SCN64_PREFIX "I64"
 #  elif @HAVE_LONG_LONG_INT@ && LONG_MAX >> 30 == 1
 #   define _SCN64_PREFIX _LONG_LONG_FORMAT_PREFIX
 #  endif
@@ -671,6 +675,8 @@
 # ifdef UINT64_MAX
 #  if UINT64_MAX == ULONG_MAX
 #   define _SCNu64_PREFIX "l"
+#  elif defined _MSC_VER || defined __MINGW32__
+#   define _SCNu64_PREFIX "I64"
 #  elif @HAVE_UNSIGNED_LONG_LONG_INT@ && ULONG_MAX >> 31 == 1
 #   define _SCNu64_PREFIX _LONG_LONG_FORMAT_PREFIX
 #  endif

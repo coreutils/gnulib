@@ -1,3 +1,10 @@
+2006-10-12  Bruno Haible  <bruno@clisp.org>
+
+	* lib/inttypes_.h (_LONG_LONG_FORMAT_PREFIX): Don't define for MSVC or
+	mingw.
+	(_PRI64_PREFIX, _PRIu64_PREFIX, _SCN64_PREFIX, _SCNu64_PREFIX): Handle
+	MSVC and mingw explicitly.
+
 2006-10-11  Simon Josefsson  <jas@extundo.com>
             Bruno Haible  <bruno@clisp.org>
 
