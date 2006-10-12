@@ -16,7 +16,7 @@ AC_DEFUN([gl_GETLOADAVG],
 [gl_have_func=no # yes means we've found a way to get the load average.
 
 # Make sure getloadavg.c is where it belongs, at configure-time.
-test -f "$srcdir/$1/getloadavg.c" ||
+ls -L "$srcdir/$1/getloadavg.c" >/dev/null ||
   AC_MSG_ERROR([$srcdir/$1/getloadavg.c is missing])
 
 gl_save_LIBS=$LIBS
