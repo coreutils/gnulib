@@ -1,5 +1,17 @@
 2006-10-11  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/rename-dest-slash.c: Include stdbool.h but not string.h.
+	(has_trailing_slash): Omit size arg; all callers changed.
+	Omit 'inline', since it doesn't help performance and we'd
+	need to configure it.
+	Don't count //, ///, etc. as having a trailing slash.
+	As a side effect, this removes a C99ism reported by Matthew Woehlke.
+	(rpl_rename_dest_slash): On failure, use rename's errno rather
+	than (in some cases) an incorrect or junk errno.
+	Simplify code by removing need to compute length; this does
+	cause it to make two passes instead of one over the file name,
+	but it's worth it.
+
 	* m4/extensions.m4 (gl_USE_SYSTEM_EXTENSIONS): Undo previous
 	change, since Autoconf's version may no longer be appropriate now
 	that we are using CVS Autoconf's version.  Add support for Tandem.

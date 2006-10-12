@@ -31,22 +31,27 @@
 #include <sys/stat.h>
 #include <errno.h>
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "dirname.h"
 #include "xalloc.h"
 
-static inline bool
-has_trailing_slash (char const *file, size_t len)
+static bool
+has_trailing_slash (char const *file)
 {
-  /* Don't count "/" as having a trailing slash.  */
-  if (len <= FILE_SYSTEM_PREFIX_LEN (file) + 1)
-    return false;
+  /* Don't count "/", "//", etc., as having a trailing slash.  */
+  bool has_non_slash = false;
+  bool ends_in_slash = false;
 
-  char last = file[len - 1];
-  return ISSLASH (last);
+  for (file += FILE_SYSTEM_PREFIX_LEN (file); *file; file++)
+    {
+      ends_in_slash = ISSLASH (*file);
+      has_non_slash |= ~ ends_in_slash;
+    }
+
+  return has_non_slash & ends_in_slash;
 }
 
 /* This is a rename wrapper for systems where the rename syscall
@@ -59,31 +64,25 @@ has_trailing_slash (char const *file, size_t len)
 int
 rpl_rename_dest_slash (char const *src, char const *dst)
 {
-  size_t d_len;
   int ret_val = rename (src, dst);
-  if (ret_val == 0 || errno != ENOENT)
-    return ret_val;
 
-  /* Don't call rename again if there are no trailing slashes.  */
-  d_len = strlen (dst);
-  if ( ! has_trailing_slash (dst, d_len))
-    return ret_val;
+  if (ret_val != 0 && errno == ENOENT && has_trailing_slash (dst))
+    {
+      int rename_errno = ENOENT;
 
-  {
-    /* Fail now, unless SRC is a directory.  */
-    struct stat sb;
-    if (lstat (src, &sb) != 0 || ! S_ISDIR (sb.st_mode))
-      return ret_val;
-  }
+      /* Fail now, unless SRC is a directory.  */
+      struct stat sb;
+      if (lstat (src, &sb) == 0 && S_ISDIR (sb.st_mode))
+	{
+	  char *dst_temp = xstrdup (dst);
+	  strip_trailing_slashes (dst_temp);
+	  ret_val = rename (src, dst_temp);
+	  rename_errno = errno;
+	  free (dst_temp);
+	}
 
-  {
-    char *dst_temp;
-    dst_temp = xmemdup (dst, d_len + 1);
-    strip_trailing_slashes (dst_temp);
-
-    ret_val = rename (src, dst_temp);
-    free (dst_temp);
-  }
+      errno = rename_errno;
+    }
 
   return ret_val;
 }
