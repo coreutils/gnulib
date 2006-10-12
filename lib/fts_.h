@@ -123,7 +123,19 @@ typedef struct {
      through the file descriptor member, fts_cwd_fd.  */
 # define FTS_CWDFD		0x0200
 
-# define FTS_OPTIONMASK	0x03ff		/* valid user option mask */
+  /* Historically, for each directory that fts initially encounters, it would
+     open it, read all entries, and stat each entry, storing the results, and
+     then it would process the first entry.  But that behavior is bad for
+     locality of reference, and also causes trouble with inode-simulating
+     file systems like FAT, CIFS, FUSE-based ones, etc., when entries from
+     their name/inode cache are flushed too early.
+     Use this flag to make fts_open and fts_read defer the stat/lstat/fststat
+     of each entry until it actually processed.  However, note that if you use
+     this option and also specify a comparison function, that function may not
+     examine any data via fts_statp.  */
+# define FTS_DEFER_STAT		0x0400
+
+# define FTS_OPTIONMASK	0x07ff		/* valid user option mask */
 
 # define FTS_NAMEONLY	0x1000		/* (private) child names only */
 # define FTS_STOP	0x2000		/* (private) unrecoverable error */

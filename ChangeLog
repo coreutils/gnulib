@@ -1,3 +1,27 @@
+2006-10-12  Jim Meyering  <jim@meyering.net>
+
+	Big performance improvement for fts-based tools that use FTS_NOSTAT.
+	Avoid spurious inode-mismatch problems on non-POSIX file systems.
+	Details: http://article.gmane.org/gmane.comp.lib.gnulib.bugs/7416
+	* lib/fts_.h (FTS_DEFER_STAT): Define new flag.
+	(FTS_OPTIONMASK): Extend the mask to reflect this addition.
+	* lib/fts.c (DT_IS_KNOWN, DT_MUST_BE): Define.
+	(FTS_NO_STAT_REQUIRED, FTS_STAT_REQUIRED): Define.
+	(fts_set_stat_required): New function.
+	(fts_open): Defer the calls to fts_stat, if possible or requested.
+	Move the code that maps a command-line fts_info value FTS_DOT to FTS_D
+	into fts_stat itself.
+	(fts_read): Perform any required (deferred) fts_stat call.
+	(fts_build): Likewise, for the directory we're about to open and read.
+	In the readdir loop, carefully decide whether each entry will require
+	an eventual call to fts_stat, using dirent.d_type info if available.
+	(fts_stat): Move the test for whether to honor FTS_COMFOLLOW on
+	a command line argument into this function.  Update all callers.
+	Map a return value of FTS_DOT to FTS_D for a command line argument.
+	* modules/fts (Depends-on): Add d-type.  Alphabetize.
+	Thanks to Miklos Szeredi for his tenacity and for the initial
+	bug report about "find" failing on a FUSE-based file system.
+
 2006-10-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS): Renamed from

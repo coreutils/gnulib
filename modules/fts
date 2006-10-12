@@ -9,13 +9,14 @@ m4/fts.m4
 
 Depends-on:
 cycle-check
+d-type
 dirfd
 fcntl
+fcntl-safer
 hash
 lstat
 openat
 stdbool
-fcntl-safer
 unistd-safer
 
 configure.ac:
