@@ -1,5 +1,7 @@
 2006-10-12  Jim Meyering  <jim@meyering.net>
 
+	* m4/getloadavg.m4: Revert the change below.
+
 	* m4/getloadavg.m4 (gl_GETLOADAVG): Test for the existence of
 	lib/getloadavg.c using "ls -L", not "test -f".  The latter would
 	fail with a symlink, which is what coreutils' ./bootstrap now
