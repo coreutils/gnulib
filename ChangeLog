@@ -1,5 +1,10 @@
 2006-10-11  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/inttypes_.h (_LONG_LONG_FORMAT_PREFIX): New macro.
+	Add support for Tandem NonStop R series.
+	(_PRI64_PREFIX, _PRIu64_PREFIX, _SCN64_PREFIX, _SCNu64_PREFIX):
+	Use new macro.
+
 	* lib/rename-dest-slash.c: Include stdbool.h but not string.h.
 	(has_trailing_slash): Omit size arg; all callers changed.
 	Omit 'inline', since it doesn't help performance and we'd
