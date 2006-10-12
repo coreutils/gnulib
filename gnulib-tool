@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-10-12 11:45:25 $'
+cvsdatestamp='$Date: 2006-10-12 12:33:50 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1078,6 +1078,7 @@ func_modules_to_filelist ()
 # - libname         library name
 # - makefile_name   from --makefile-name
 # - libtool         true if libtool will be used, false or blank otherwise
+# - macro_prefix    prefix of gl_LIBOBJS macros to use
 # - actioncmd       (optional) command that will reproduce this invocation
 func_emit_lib_Makefile_am ()
 {
@@ -1122,6 +1123,7 @@ func_emit_lib_Makefile_am ()
                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g'
           if test "$module" = 'alloca'; then
             echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"
+            echo "${libname}_${libext}_DEPENDENCIES += @${perhapsLT}ALLOCA@"
           fi
         } > amsnippet.tmp
         # Skip the contents if its entirely empty.
@@ -1148,7 +1150,8 @@ func_emit_lib_Makefile_am ()
   echo "${libname}_${libext}_SOURCES ="
   # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
   # automake during its analyses looks for $(LIBOBJS), not for @LIBOBJS@.
-  echo "${libname}_${libext}_LIBADD = \$(${perhapsLT}LIBOBJS)"
+  echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
+  echo "${libname}_${libext}_DEPENDENCIES = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
   if test "$libtool" = true; then
     echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
   fi
@@ -1286,6 +1289,56 @@ func_emit_tests_Makefile_am ()
   echo "	    fi; \\"
   echo "	  done"
   rm -f allsnippets.tmp
+}
+
+# func_emit_initmacro_start
+# emits the first few statements of the gl_INIT macro to standard output.
+# - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
+func_emit_initmacro_start ()
+{
+  echo "  m4_pushdef([AC_LIBOBJ], m4_defn([${macro_prefix}_LIBOBJ]))"
+  echo "  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([${macro_prefix}_REPLACE_FUNCS]))"
+}
+
+# func_emit_initmacro_end
+# emits the last few statements of the gl_INIT macro to standard output.
+# - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
+func_emit_initmacro_end ()
+{
+  echo "  m4_popdef([AC_REPLACE_FUNCS])"
+  echo "  m4_popdef([AC_LIBOBJ])"
+  echo "  AC_CONFIG_COMMANDS_PRE(["
+  echo "    ${macro_prefix}_libobjs="
+  echo "    ${macro_prefix}_ltlibobjs="
+  echo "    if test -n \"\$${macro_prefix}_LIBOBJS\"; then"
+  echo "      for i in \$${macro_prefix}_LIBOBJS; do"
+  echo "        # Remove the extension."
+  echo "        sed_drop_objext='s/\\.o\$//;s/\\.obj\$//'"
+  echo "        i=\`echo \"\$i\" | sed \"\$sed_drop_objext\"\`"
+  echo "        ${macro_prefix}_libobjs=\"\$${macro_prefix}_libobjs \$i.\$ac_objext\""
+  echo "        ${macro_prefix}_ltlibobjs=\"\$${macro_prefix}_ltlibobjs \$i.lo\""
+  echo "      done"
+  echo "    fi"
+  echo "    AC_SUBST([${macro_prefix}_LIBOBJS], [\$${macro_prefix}_libobjs])"
+  echo "    AC_SUBST([${macro_prefix}_LTLIBOBJS], [\$${macro_prefix}_ltlibobjs])"
+  echo "  ])"
+}
+
+# func_emit_initmacro_done
+# emits a few statements after the gl_INIT macro to standard output.
+# - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
+func_emit_initmacro_done ()
+{
+  echo
+  echo "# Like AC_LIBOBJ, except that the module name goes"
+  echo "# into ${macro_prefix}_LIBOBJS instead of into LIBOBJS."
+  echo "AC_DEFUN([${macro_prefix}_LIBOBJ],"
+  echo "  [${macro_prefix}_LIBOBJS=\"\$${macro_prefix}_LIBOBJS \$1.\$ac_objext\"])"
+  echo
+  echo "# Like AC_REPLACE_FUNCS, except that the module name goes"
+  echo "# into ${macro_prefix}_LIBOBJS instead of into LIBOBJS."
+  echo "AC_DEFUN([${macro_prefix}_REPLACE_FUNCS],"
+  echo "  [AC_CHECK_FUNCS([\$1], , [${macro_prefix}_LIBOBJ(\$ac_func)])])"
 }
 
 # func_import modules
@@ -1874,7 +1927,9 @@ func_import ()
     echo "AC_DEFUN([${macro_prefix}_EARLY],"
     echo "["
     echo "  m4_pattern_forbid([^gl_[A-Z]])dnl the gnulib macro namespace"
-    echo "  m4_pattern_allow([^gl_ES$])dnl a valid locale name"
+    echo "  m4_pattern_allow([^gl_ES\$])dnl a valid locale name"
+    echo "  m4_pattern_allow([^gl_LIBOBJS\$])dnl a variable"
+    echo "  m4_pattern_allow([^gl_LTLIBOBJS\$])dnl a variable"
     echo "  AC_REQUIRE([AC_PROG_RANLIB])"
     if grep AC_GNU_SOURCE "$destdir"/$m4base/*.m4 >/dev/null 2>/dev/null; then
       echo "  AC_REQUIRE([AC_GNU_SOURCE])"
@@ -1891,6 +1946,7 @@ func_import ()
     echo "# \"Check for header files, types and library functions\"."
     echo "AC_DEFUN([${macro_prefix}_INIT],"
     echo "["
+    func_emit_initmacro_start
     if test "$libtool" = true; then
       echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
       echo "  gl_cond_libtool=true"
@@ -1936,7 +1992,9 @@ func_import ()
       echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
       echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
     fi
+    func_emit_initmacro_end
     echo "])"
+    func_emit_initmacro_done
     echo
     echo "# This macro records the list of files which have been installed by"
     echo "# gnulib-tool and may be removed by future gnulib-tool invocations."
@@ -2079,6 +2137,7 @@ func_create_testdir ()
   m4base=glm4
   docbase=gldoc
   testsbase=gltests
+  macro_prefix=gl
 
   # Determine final module list.
   func_modules_transitive_closure
@@ -2212,6 +2271,7 @@ func_create_testdir ()
      # expansion of the required macro before the current point, and only one
      # expansion total).
      echo "AC_DEFUN([gl_INIT], ["
+     func_emit_initmacro_start
      if test "$auxdir" != "build-aux"; then
        sed_replace_build_aux='
          :a
@@ -2249,7 +2309,10 @@ func_create_testdir ()
        echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
        echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
      fi
+     func_emit_initmacro_end
      echo "])"
+     func_emit_initmacro_done
+     echo
      echo "gl_INIT"
      echo
      # Usually $testsbase/config.h will be a superset of config.h. Verify this
@@ -2287,7 +2350,9 @@ func_create_testdir ()
    echo "AC_PROG_MAKE_SET"
    echo
    echo "m4_pattern_forbid([^gl_[A-Z]])dnl the gnulib macro namespace"
-   echo "m4_pattern_allow([^gl_ES$])dnl a valid locale name"
+   echo "m4_pattern_allow([^gl_ES\$])dnl a valid locale name"
+   echo "m4_pattern_allow([^gl_LIBOBJS\$])dnl a variable"
+   echo "m4_pattern_allow([^gl_LTLIBOBJS\$])dnl a variable"
    echo
    echo "AC_PROG_RANLIB"
    echo
@@ -2321,6 +2386,7 @@ func_create_testdir ()
    # expansion of the required macro before the current point, and only one
    # expansion total).
    echo "AC_DEFUN([gl_INIT], ["
+   func_emit_initmacro_start
    if test "$auxdir" != "build-aux"; then
      sed_replace_build_aux='
        :a
@@ -2348,7 +2414,10 @@ func_create_testdir ()
      echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
      echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
    fi
+   func_emit_initmacro_end
    echo "])"
+   func_emit_initmacro_done
+   echo
    echo "gl_INIT"
    echo
    if test -n "$subdirs_with_configure_ac"; then

@@ -1,3 +1,16 @@
+2006-10-11  Simon Josefsson  <jas@extundo.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	Add support for multiple gnulib-tool invocations in the scope of a
+	single configure.ac file.
+	* gnulib-tool (func_emit_lib_Makefile_am): In the _LIBADD variable,
+	use a private [LT]LIBOBJS variant. Define a _DEPENDENCIES variable
+	with the same contents as the _LIBADD variable.
+	(func_emit_initmacro_start, func_emit_initmacro_end,
+	func_emit_initmacro_done): New functions.
+	(func_import, func_create_testdir): Invoke them. Allow the identifiers
+	gl_LIBOBJS and gl_LTLIBOBJS.
+
 2006-10-11  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (GETTEXTPATH, AUTOHEADER, AUTOPOINT): New variables.
