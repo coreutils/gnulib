@@ -1,4 +1,4 @@
-#serial 1
+#serial 2
 
 # Copyright (C) 2006 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -12,7 +12,7 @@
 
 AC_DEFUN([gl_FUNC_RENAME_TRAILING_DEST_SLASH],
 [
- AC_CACHE_CHECK([whether rename is broken with respect to destintation slashes],
+ AC_CACHE_CHECK([whether rename is broken with respect to destination slashes],
   gl_cv_func_rename_trailing_dest_slash_bug,
   [
     rm -rf conftest.d1 conftest.d2
