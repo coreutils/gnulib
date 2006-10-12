@@ -1,5 +1,12 @@
 2006-10-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS): Renamed from
+	gl_USE_SYSTEM_EXTENSIONS, to fix a coreutils bootstrap failure
+	reported by Jim Meyering.  All uses of cache variables renamed
+	to match Autoconf's.
+	(gl_USE_SYSTEM_EXTENSIONS): New macro, which simply requires
+	the other one.
+
 	* m4/rename-dest-slash.m4 (gl_FUNC_RENAME_TRAILING_DEST_SLASH):
 	Fix misspelling in diagnostic.
 
