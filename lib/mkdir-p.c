@@ -38,6 +38,10 @@
 #include "savewd.h"
 #include "stat-macros.h"
 
+#ifndef HAVE_FCHMOD
+# define HAVE_FCHMOD false
+#endif
+
 /* Ensure that the directory DIR exists.
 
    WD is the working directory, as in savewd.c.

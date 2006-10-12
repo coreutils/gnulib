@@ -1,5 +1,8 @@
 2006-10-11  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/mkdir-p.c (HAVE_FCHMOD): Define to false if not already
+	defined.  Problem reported by Matthew Woehlke.
+
 	* lib/inttypes_.h (_LONG_LONG_FORMAT_PREFIX): New macro.
 	Add support for Tandem NonStop R series.
 	(_PRI64_PREFIX, _PRIu64_PREFIX, _SCN64_PREFIX, _SCNu64_PREFIX):
