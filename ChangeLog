@@ -5,7 +5,7 @@
 
 2006-10-12  Bruno Haible  <bruno@clisp.org>
 
-	* modules/acl (Makefile.am): Destribute all files in lib/ through
+	* modules/acl (Makefile.am): Distribute all files in lib/ through
 	EXTRA_DIST.
 	* modules/arcfour (Makefile.am): Likewise.
 	* modules/arctwo (Makefile.am): Likewise.
