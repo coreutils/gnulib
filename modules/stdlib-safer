@@ -15,7 +15,7 @@ configure.ac:
 gl_STDLIB_SAFER
 
 Makefile.am:
-EXTRA_DIST += stdlib-safer.h stdlib--.h
+EXTRA_DIST += stdlib--.h stdlib-safer.h mkstemp-safer.c
 
 Include:
 "stdlib-safer.h"

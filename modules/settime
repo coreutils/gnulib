@@ -14,6 +14,7 @@ configure.ac:
 gl_SETTIME
 
 Makefile.am:
+EXTRA_DIST += settime.c
 
 Include:
 

@@ -16,7 +16,7 @@ configure.ac:
 gl_XNANOSLEEP
 
 Makefile.am:
-EXTRA_DIST += xnanosleep.h
+EXTRA_DIST += xnanosleep.h xnanosleep.c
 
 Include:
 "xnanosleep.h"

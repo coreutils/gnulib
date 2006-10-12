@@ -13,7 +13,7 @@ configure.ac:
 gl_UNLINKDIR
 
 Makefile.am:
-EXTRA_DIST += unlinkdir.h
+EXTRA_DIST += unlinkdir.h unlinkdir.c
 
 Include:
 "unlinkdir.h"

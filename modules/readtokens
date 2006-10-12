@@ -14,7 +14,7 @@ configure.ac:
 gl_READTOKENS
 
 Makefile.am:
-EXTRA_DIST += readtokens.h
+EXTRA_DIST += readtokens.h readtokens.c
 
 Include:
 "readtokens.h"

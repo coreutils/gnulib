@@ -14,7 +14,7 @@ configure.ac:
 gl_GETLOGIN_R
 
 Makefile.am:
-EXTRA_DIST += getlogin_r.h
+EXTRA_DIST += getlogin_r.h getlogin_r.c
 
 Include:
 "getlogin_r.h"

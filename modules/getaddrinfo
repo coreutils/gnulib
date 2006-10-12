@@ -20,7 +20,7 @@ configure.ac:
 gl_GETADDRINFO
 
 Makefile.am:
-lib_SOURCES += getaddrinfo.h
+EXTRA_DIST += getaddrinfo.h getaddrinfo.c gai_strerror.c
 
 Include:
 "getaddrinfo.h"

@@ -13,7 +13,7 @@ configure.ac:
 gl_ARCTWO
 
 Makefile.am:
-EXTRA_DIST += arctwo.h
+EXTRA_DIST += arctwo.h arctwo.c
 
 Include:
 "arctwo.h"

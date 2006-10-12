@@ -12,7 +12,7 @@ configure.ac:
 gl_FUNC_STRCHRNUL
 
 Makefile.am:
-lib_SOURCES += strchrnul.h
+EXTRA_DIST += strchrnul.h strchrnul.c
 
 Include:
 "strchrnul.h"

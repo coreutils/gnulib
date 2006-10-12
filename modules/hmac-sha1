@@ -14,7 +14,7 @@ configure.ac:
 gl_HMAC_SHA1
 
 Makefile.am:
-EXTRA_DIST += hmac.h
+EXTRA_DIST += hmac.h hmac-sha1.c
 
 Include:
 "hmac.h"

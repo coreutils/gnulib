@@ -16,7 +16,7 @@ configure.ac:
 gl_MOUNTLIST
 
 Makefile.am:
-EXTRA_DIST += mountlist.h
+EXTRA_DIST += mountlist.h mountlist.c
 
 Include:
 "mountlist.h"

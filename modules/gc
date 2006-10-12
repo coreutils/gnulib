@@ -18,7 +18,7 @@ if test $gl_cond_libtool = false; then
 fi
 
 Makefile.am:
-EXTRA_DIST += gc.h
+EXTRA_DIST += gc.h gc-libgcrypt.c gc-gnulib.c
 if GL_COND_LIBTOOL
 lib_LDFLAGS += $(LTLIBGCRYPT)
 endif

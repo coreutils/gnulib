@@ -13,7 +13,7 @@ configure.ac:
 gl_EXITFAIL
 
 Makefile.am:
-EXTRA_DIST += exitfail.h
+EXTRA_DIST += exitfail.h exitfail.c
 
 Include:
 "exitfail.h"

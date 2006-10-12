@@ -12,7 +12,7 @@ configure.ac:
 gl_FUNC_STRPBRK
 
 Makefile.am:
-lib_SOURCES += strpbrk.h
+EXTRA_DIST += strpbrk.h strpbrk.c
 
 Include:
 "strpbrk.h"

@@ -21,7 +21,7 @@ configure.ac:
 gl_UTIMECMP
 
 Makefile.am:
-EXTRA_DIST += utimecmp.h
+EXTRA_DIST += utimecmp.h utimecmp.c
 
 Include:
 "utimecmp.h"

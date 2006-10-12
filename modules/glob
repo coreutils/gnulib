@@ -25,7 +25,7 @@ gl_GLOB
 
 Makefile.am:
 BUILT_SOURCES += $(GLOB_H)
-EXTRA_DIST += glob_.h glob-libc.h
+EXTRA_DIST += glob_.h glob-libc.h glob.c
 
 # We need the following in order to create <glob.h> when the system
 # doesn't have one that works with the given compiler.

@@ -13,7 +13,7 @@ gl_FUNC_POLL
 
 Makefile.am:
 BUILT_SOURCES += $(POLL_H)
-EXTRA_DIST += poll_.h
+EXTRA_DIST += poll_.h poll.c
 
 # We need the following in order to create <poll.h> when the system
 # doesn't have one.

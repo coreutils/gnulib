@@ -12,7 +12,7 @@ configure.ac:
 gl_PHYSMEM
 
 Makefile.am:
-EXTRA_DIST += physmem.h
+EXTRA_DIST += physmem.h physmem.c
 
 Include:
 "physmem.h"

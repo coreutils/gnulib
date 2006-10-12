@@ -12,7 +12,7 @@ configure.ac:
 gl_FUNC_FPENDING
 
 Makefile.am:
-EXTRA_DIST += __fpending.h
+EXTRA_DIST += __fpending.h __fpending.c
 
 Include:
 "__fpending.h"

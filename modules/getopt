@@ -17,7 +17,7 @@ gl_GETOPT
 
 Makefile.am:
 BUILT_SOURCES += $(GETOPT_H)
-EXTRA_DIST += getopt_.h getopt_int.h
+EXTRA_DIST += getopt_.h getopt.c getopt1.c getopt_int.h
 
 # We need the following in order to create <getopt.h> when the system
 # doesn't have one that works with the given compiler.

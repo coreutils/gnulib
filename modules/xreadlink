@@ -15,7 +15,7 @@ configure.ac:
 gl_XREADLINK
 
 Makefile.am:
-EXTRA_DIST += xreadlink.h
+EXTRA_DIST += xreadlink.h xreadlink.c
 
 Include:
 "xreadlink.h"

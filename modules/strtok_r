@@ -12,7 +12,7 @@ configure.ac:
 gl_FUNC_STRTOK_R
 
 Makefile.am:
-lib_SOURCES += strtok_r.h
+EXTRA_DIST += strtok_r.h strtok_r.c
 
 Include:
 "strtok_r.h"

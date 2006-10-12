@@ -15,7 +15,7 @@ configure.ac:
 gl_FUNC_VSNPRINTF
 
 Makefile.am:
-lib_SOURCES += vsnprintf.h
+EXTRA_DIST += vsnprintf.h vsnprintf.c
 
 Include:
 "vsnprintf.h"

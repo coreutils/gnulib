@@ -12,6 +12,7 @@ configure.ac:
 gl_FUNC_MKTIME
 
 Makefile.am:
+EXTRA_DIST += mktime.c
 
 Include:
 <time.h>

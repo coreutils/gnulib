@@ -16,7 +16,7 @@ configure.ac:
 gl_SAVE_CWD
 
 Makefile.am:
-EXTRA_DIST += save-cwd.h
+EXTRA_DIST += save-cwd.h save-cwd.c
 
 Include:
 "save-cwd.h"

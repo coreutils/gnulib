@@ -14,7 +14,7 @@ configure.ac:
 gl_HARD_LOCALE
 
 Makefile.am:
-EXTRA_DIST += hard-locale.h
+EXTRA_DIST += hard-locale.h hard-locale.c
 
 Include:
 "hard-locale.h"

@@ -15,7 +15,7 @@ configure.ac:
 gl_FCNTL_SAFER
 
 Makefile.am:
-EXTRA_DIST += fcntl-safer.h fcntl--.h
+EXTRA_DIST += fcntl--.h creat-safer.c fcntl-safer.h open-safer.c
 
 Include:
 "fcntl-safer.h"

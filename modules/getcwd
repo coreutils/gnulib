@@ -18,7 +18,7 @@ configure.ac:
 gl_FUNC_GETCWD
 
 Makefile.am:
-EXTRA_DIST += getcwd.h
+EXTRA_DIST += getcwd.h getcwd.c
 
 Include:
 "getcwd.h"

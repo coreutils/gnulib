@@ -11,6 +11,7 @@ configure.ac:
 AC_FUNC_GETTIMEOFDAY_CLOBBER
 
 Makefile.am:
+EXTRA_DIST += gettimeofday.c
 
 Include:
 <sys/time.h>

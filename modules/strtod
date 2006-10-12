@@ -12,6 +12,7 @@ gl_FUNC_STRTOD
 
 Makefile.am:
 LIBS += $(POW_LIB)
+EXTRA_DIST += strtod.c
 
 Include:
 <stdlib.h>

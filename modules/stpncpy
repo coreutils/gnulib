@@ -12,7 +12,7 @@ configure.ac:
 gl_FUNC_STPNCPY
 
 Makefile.am:
-lib_SOURCES += stpncpy.h
+EXTRA_DIST += stpncpy.h stpncpy.c
 
 Include:
 "stpncpy.h"

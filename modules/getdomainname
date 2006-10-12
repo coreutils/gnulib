@@ -12,7 +12,7 @@ configure.ac:
 gl_FUNC_GETDOMAINNAME
 
 Makefile.am:
-lib_SOURCES += getdomainname.h
+EXTRA_DIST += getdomainname.h getdomainname.c
 
 Include:
 "getdomainname.h"

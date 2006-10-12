@@ -13,7 +13,7 @@ configure.ac:
 gl_FUNC_STRSEP
 
 Makefile.am:
-lib_SOURCES += strsep.h
+EXTRA_DIST += strsep.h strsep.c
 
 Include:
 "strsep.h"

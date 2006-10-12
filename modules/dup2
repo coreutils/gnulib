@@ -11,6 +11,7 @@ configure.ac:
 gl_FUNC_DUP2
 
 Makefile.am:
+EXTRA_DIST += dup2.c
 
 Include:
 <unistd.h>

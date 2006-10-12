@@ -15,7 +15,7 @@ configure.ac:
 gl_CHDIR_SAFER
 
 Makefile.am:
-EXTRA_DIST += chdir-safer.h
+EXTRA_DIST += chdir-safer.h chdir-safer.c
 
 Include:
 "chdir-safer.h"

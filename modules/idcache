@@ -12,6 +12,7 @@ configure.ac:
 gl_IDCACHE
 
 Makefile.am:
+EXTRA_DIST += idcache.c
 
 Include:
 

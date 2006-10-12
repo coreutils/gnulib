@@ -15,7 +15,7 @@ configure.ac:
 gl_FSUSAGE
 
 Makefile.am:
-EXTRA_DIST += fsusage.h
+EXTRA_DIST += fsusage.h fsusage.c
 
 Include:
 "fsusage.h"

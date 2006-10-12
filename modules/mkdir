@@ -13,6 +13,7 @@ configure.ac:
 gl_FUNC_MKDIR_TRAILING_SLASH
 
 Makefile.am:
+EXTRA_DIST += mkdir.c
 
 Include:
 <sys/stat.h>

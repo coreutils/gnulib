@@ -13,7 +13,7 @@ configure.ac:
 gl_CHECK_VERSION
 
 Makefile.am:
-EXTRA_DIST += check-version.h
+EXTRA_DIST += check-version.h check-version.c
 
 Include:
 "check-version.h"

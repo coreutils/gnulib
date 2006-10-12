@@ -14,7 +14,7 @@ configure.ac:
 gl_FUNC_STRCASESTR
 
 Makefile.am:
-lib_SOURCES += strcasestr.h
+EXTRA_DIST += strcasestr.h strcasestr.c
 
 Include:
 "strcasestr.h"

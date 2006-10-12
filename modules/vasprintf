@@ -14,7 +14,7 @@ configure.ac:
 gl_FUNC_VASPRINTF
 
 Makefile.am:
-lib_SOURCES += vasprintf.h
+EXTRA_DIST += vasprintf.h vasprintf.c asprintf.c
 
 Include:
 "vasprintf.h"

@@ -13,7 +13,7 @@ configure.ac:
 gl_FUNC_SNPRINTF
 
 Makefile.am:
-lib_SOURCES += snprintf.h
+EXTRA_DIST += snprintf.h snprintf.c
 
 Include:
 "snprintf.h"

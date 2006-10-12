@@ -14,7 +14,7 @@ configure.ac:
 gl_FUNC_LCHOWN
 
 Makefile.am:
-EXTRA_DIST += lchown.h
+EXTRA_DIST += lchown.h lchown.c
 
 Include:
 "lchown.h"

@@ -14,7 +14,7 @@ configure.ac:
 gl_MBCHAR
 
 Makefile.am:
-lib_SOURCES += mbchar.h
+EXTRA_DIST += mbchar.h mbchar.c
 
 Include:
 #if HAVE_WCHAR_H

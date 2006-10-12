@@ -17,7 +17,7 @@ configure.ac:
 gl_INTTOSTR
 
 Makefile.am:
-EXTRA_DIST += inttostr.c inttostr.h
+EXTRA_DIST += imaxtostr.c inttostr.c inttostr.h offtostr.c umaxtostr.c
 
 Include:
 "inttostr.h"

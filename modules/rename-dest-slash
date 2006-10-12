@@ -13,6 +13,7 @@ configure.ac:
 gl_FUNC_RENAME_TRAILING_DEST_SLASH
 
 Makefile.am:
+EXTRA_DIST += rename-dest-slash.c
 
 Include:
 <stdio.h>

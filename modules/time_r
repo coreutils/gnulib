@@ -13,7 +13,7 @@ configure.ac:
 gl_TIME_R
 
 Makefile.am:
-EXTRA_DIST += time_r.h
+EXTRA_DIST += time_r.h time_r.c
 
 Include:
 "time_r.h"

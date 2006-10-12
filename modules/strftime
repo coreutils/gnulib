@@ -16,7 +16,7 @@ configure.ac:
 gl_FUNC_GNU_STRFTIME
 
 Makefile.am:
-EXTRA_DIST += strftime.h
+EXTRA_DIST += strftime.h strftime.c
 
 Include:
 "strftime.h"

@@ -12,7 +12,7 @@ configure.ac:
 gl_FUNC_STRDUP
 
 Makefile.am:
-EXTRA_DIST += strdup.h
+EXTRA_DIST += strdup.h strdup.c
 
 Include:
 "strdup.h"

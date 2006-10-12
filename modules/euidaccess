@@ -14,7 +14,7 @@ configure.ac:
 gl_FUNC_EUIDACCESS
 
 Makefile.am:
-lib_SOURCES += euidaccess.h
+EXTRA_DIST += euidaccess.h euidaccess.c
 
 Include:
 "euidaccess.h"

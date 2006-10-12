@@ -13,7 +13,7 @@ configure.ac:
 gl_CLOEXEC
 
 Makefile.am:
-EXTRA_DIST += cloexec.h
+EXTRA_DIST += cloexec.h cloexec.c
 
 Include:
 "cloexec.h"

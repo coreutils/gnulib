@@ -20,7 +20,7 @@ configure.ac:
 gl_ARGMATCH
 
 Makefile.am:
-EXTRA_DIST += argmatch.h
+EXTRA_DIST += argmatch.h argmatch.c
 
 Include:
 "argmatch.h"
