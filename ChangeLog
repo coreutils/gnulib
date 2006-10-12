@@ -6,7 +6,7 @@
 	MSVC and mingw explicitly.
 
 2006-10-11  Simon Josefsson  <jas@extundo.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Add support for multiple gnulib-tool invocations in the scope of a
 	single configure.ac file.
@@ -97,7 +97,7 @@
 	that we are using CVS Autoconf's version.  Add support for Tandem.
 
 2006-10-11  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/allocsa.h (sa_alignment_longlong, sa_alignment_max): Test
 	HAVE_LONG_LONG_INT instead of HAVE_LONG_LONG.
@@ -9290,7 +9290,7 @@
 	fix now.
 
 2005-07-08  Eric Blake  <ebb9@byu.net>  (tiny change)
-       and  Paul Eggert  <eggert@cs.ucla.edu>
+	and Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/regcomp.c (init_dfa, build_range_exp): Store __btowc value
 	in wint_t, not wchar_t.  Remove now-unnecessary cast.
