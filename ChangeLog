@@ -17327,11 +17327,11 @@
 
 	* MODULES.html.sh (func_all_modules): Add poll.
 
-2003-02-19  Paolo Bonzino  <bonzini@gnu.org>
+2003-02-19  Paolo Bonzini  <bonzini@gnu.org>
 
 	* modules/poll: New file.
 
-2003-02-19  Paolo Bonzino  <bonzini@gnu.org>
+2003-02-19  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/poll_.h: New file.
 	* lib/poll.c: New file.
@@ -17340,11 +17340,11 @@
 
 	* m4/poll.m4: New file.
 
-2003-02-18  Paolo Bonzino  <bonzini@gnu.org>
+2003-02-18  Paolo Bonzini  <bonzini@gnu.org>
 
 	* modules/mathl: New file.
 
-2003-02-18  Paolo Bonzino  <bonzini@gnu.org>
+2003-02-18  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/mathl.h: New file.
 	* lib/acosl.c: New file.
