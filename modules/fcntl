@@ -14,7 +14,6 @@ gl_FCNTL_H
 
 Makefile.am:
 BUILT_SOURCES += $(FCNTL_H)
-EXTRA_DIST += fcntl_.h
 
 # We need the following in order to create <fcntl.h> when the system
 # doesn't have one that works with the given compiler.

@@ -14,7 +14,6 @@ configure.ac:
 gl_FUNC_GROUP_MEMBER
 
 Makefile.am:
-EXTRA_DIST += group-member.h group-member.c
 
 Include:
 "group-member.h"

@@ -11,7 +11,6 @@ configure.ac:
 gl_FUNC_MEMMOVE
 
 Makefile.am:
-EXTRA_DIST += memmove.c
 
 Include:
 <string.h>

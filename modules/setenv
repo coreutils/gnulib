@@ -17,7 +17,6 @@ configure.ac:
 gt_FUNC_SETENV
 
 Makefile.am:
-EXTRA_DIST += setenv.h setenv.c unsetenv.c
 
 Include:
 "setenv.h"

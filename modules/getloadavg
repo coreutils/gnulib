@@ -17,7 +17,6 @@ configure.ac:
 gl_GETLOADAVG([$gl_source_base])
 
 Makefile.am:
-EXTRA_DIST += getloadavg.c
 
 Include:
 

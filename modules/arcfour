@@ -13,7 +13,6 @@ configure.ac:
 gl_ARCFOUR
 
 Makefile.am:
-EXTRA_DIST += arcfour.h arcfour.c
 
 Include:
 "arcfour.h"

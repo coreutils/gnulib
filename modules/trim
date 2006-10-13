@@ -12,7 +12,6 @@ mbiter
 configure.ac:
 
 Makefile.am:
-EXTRA_DIST += trim.h
 
 Include:
 #include "trim.h"

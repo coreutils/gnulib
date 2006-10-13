@@ -11,7 +11,6 @@ configure.ac:
 gl_FUNC_STRTOL
 
 Makefile.am:
-EXTRA_DIST += strtol.c
 
 Include:
 <stdlib.h>

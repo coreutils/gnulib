@@ -16,7 +16,6 @@ configure.ac:
 gl_GETTIME
 
 Makefile.am:
-EXTRA_DIST += gettime.c
 
 Include:
 #include "timespec.h"

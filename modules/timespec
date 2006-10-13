@@ -12,7 +12,6 @@ configure.ac:
 gl_TIMESPEC
 
 Makefile.am:
-EXTRA_DIST += timespec.h
 
 Include:
 "timespec.h"

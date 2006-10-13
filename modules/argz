@@ -13,7 +13,6 @@ gl_FUNC_ARGZ
 
 Makefile.am:
 BUILT_SOURCES += $(ARGZ_H)
-EXTRA_DIST += argz_.h argz.c
 
 # We need the following in order to create <argz.h> when the system
 # doesn't have one that works with the given compiler.

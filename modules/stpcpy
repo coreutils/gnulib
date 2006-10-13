@@ -12,7 +12,6 @@ configure.ac:
 gl_FUNC_STPCPY
 
 Makefile.am:
-EXTRA_DIST += stpcpy.h stpcpy.c
 
 Include:
 "stpcpy.h"

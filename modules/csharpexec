@@ -27,7 +27,6 @@ AC_CONFIG_FILES([csharpexec.sh:build-aux/csharpexec.sh.in])
 Makefile.am:
 DEFS += -DEXEEXT=\"$(EXEEXT)\"
 lib_SOURCES += csharpexec.h csharpexec.c
-EXTRA_DIST += classpath.h classpath.c
 
 Include:
 "csharpexec.h"

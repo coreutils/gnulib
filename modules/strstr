@@ -14,7 +14,6 @@ configure.ac:
 gl_FUNC_STRSTR
 
 Makefile.am:
-EXTRA_DIST += strstr.h strstr.c
 
 Include:
 "strstr.h"

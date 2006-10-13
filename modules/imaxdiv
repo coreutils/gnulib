@@ -12,7 +12,6 @@ configure.ac:
 gl_FUNC_IMAXDIV
 
 Makefile.am:
-EXTRA_DIST += imaxdiv.c
 
 Include:
 <inttypes.h>

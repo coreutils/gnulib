@@ -11,7 +11,6 @@ configure.ac:
 gl_PATHMAX
 
 Makefile.am:
-EXTRA_DIST += pathmax.h
 
 Include:
 "pathmax.h"

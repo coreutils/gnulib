@@ -15,7 +15,6 @@ configure.ac:
 gl_RIJNDAEL
 
 Makefile.am:
-EXTRA_DIST += rijndael-alg-fst.c rijndael-alg-fst.h rijndael-api-fst.c rijndael-api-fst.h
 
 Include:
 "rijndael-alg-fst.h"

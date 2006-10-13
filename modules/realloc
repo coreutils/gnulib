@@ -10,7 +10,6 @@ configure.ac:
 AC_FUNC_REALLOC
 
 Makefile.am:
-EXTRA_DIST += realloc.c
 
 Include:
 <stdlib.h>

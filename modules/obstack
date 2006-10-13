@@ -16,7 +16,6 @@ AC_FUNC_OBSTACK
 dnl Note: AC_FUNC_OBSTACK does AC_LIBSOURCES([obstack.h, obstack.c]).
 
 Makefile.am:
-EXTRA_DIST += obstack.h obstack.c
 
 Include:
 "obstack.h"

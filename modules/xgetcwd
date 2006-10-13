@@ -15,7 +15,6 @@ configure.ac:
 gl_XGETCWD
 
 Makefile.am:
-EXTRA_DIST += xgetcwd.h xgetcwd.c
 
 Include:
 "xgetcwd.h"

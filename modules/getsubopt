@@ -13,7 +13,6 @@ configure.ac:
 gl_FUNC_GETSUBOPT
 
 Makefile.am:
-EXTRA_DIST += getsubopt.h getsubopt.c
 
 Include:
 "getsubopt.h"

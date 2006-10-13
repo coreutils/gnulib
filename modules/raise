@@ -10,7 +10,6 @@ configure.ac:
 AC_REPLACE_FUNCS(raise)
 
 Makefile.am:
-EXTRA_DIST += raise.c
 
 Include:
 

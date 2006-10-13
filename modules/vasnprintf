@@ -28,8 +28,6 @@ configure.ac:
 gl_FUNC_VASNPRINTF
 
 Makefile.am:
-EXTRA_DIST += printf-args.h printf-args.c printf-parse.h printf-parse.c \
-              vasnprintf.h vasnprintf.c asnprintf.c
 
 Include:
 "vasnprintf.h"

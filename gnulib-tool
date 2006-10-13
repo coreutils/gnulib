@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-10-12 12:33:50 $'
+cvsdatestamp='$Date: 2006-10-13 12:40:22 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -907,6 +907,41 @@ func_get_automake_snippet ()
 {
   func_lookup_file "modules/$1"
   sed -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file"
+  case "$1" in
+    *-tests)
+      # *-tests module live in tests/, not lib/.
+      ;;
+    *)
+      # Synthesize an EXTRA_DIST augmentation.
+      sed_combine_lines='/\\$/{
+        :a
+        N
+        s/\\\
+//
+        s/\\$/\\/
+        ta
+      }'
+      sed_extract_mentioned_files='s/^lib_SOURCES[ 	]*+=[ 	]*//p'
+      already_mentioned_files=` \
+        sed -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file" \
+        | sed -e "$sed_combine_lines" \
+        | sed -n -e "$sed_extract_mentioned_files" | sed -e 's/#.*//'`
+      all_files=`func_get_filelist $1`
+      lib_files=`for f in $all_files; do \
+                   case $f in \
+                     lib/*) echo $f ;; \
+                   esac; \
+                 done | sed -e 's,^lib/,,'`
+      # Remove $already_mentioned_files from $lib_files.
+      echo "$lib_files" | LC_ALL=C sort -u > "$tmp"/lib-files
+      extra_files=`for f in $already_mentioned_files; do echo $f; done \
+                   | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/lib-files`
+      if test -n "$extra_files"; then
+        echo "EXTRA_DIST +=" $extra_files
+        echo
+      fi
+      ;;
+  esac
 }
 
 # func_get_include_directive module

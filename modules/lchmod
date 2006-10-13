@@ -11,7 +11,6 @@ configure.ac:
 gl_FUNC_LCHMOD
 
 Makefile.am:
-EXTRA_DIST += lchmod.h
 
 Include:
 "lchown.h"

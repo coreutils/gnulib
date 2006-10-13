@@ -10,7 +10,6 @@ configure.ac:
 AC_FUNC_MALLOC
 
 Makefile.am:
-EXTRA_DIST += malloc.c
 
 Include:
 <stdlib.h>

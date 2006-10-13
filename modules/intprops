@@ -9,7 +9,6 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-EXTRA_DIST += intprops.h
 
 Include:
 "intprops.h"

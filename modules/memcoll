@@ -12,7 +12,6 @@ configure.ac:
 gl_MEMCOLL
 
 Makefile.am:
-EXTRA_DIST += memcoll.h memcoll.c
 
 Include:
 "memcoll.h"

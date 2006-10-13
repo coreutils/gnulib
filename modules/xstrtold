@@ -14,7 +14,6 @@ configure.ac:
 gl_XSTRTOLD
 
 Makefile.am:
-EXTRA_DIST += xstrtod.h xstrtod.c xstrtold.c
 
 Include:
 "xstrtod.h"

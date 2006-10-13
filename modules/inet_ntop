@@ -16,7 +16,6 @@ configure.ac:
 gl_INET_NTOP
 
 Makefile.am:
-EXTRA_DIST += inet_ntop.h inet_ntop.c
 
 License:
 LGPL

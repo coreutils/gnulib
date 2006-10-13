@@ -13,7 +13,6 @@ configure.ac:
 gl_POSIXVER
 
 Makefile.am:
-EXTRA_DIST += posixver.h posixver.c
 
 Include:
 "posixver.h"

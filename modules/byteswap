@@ -12,7 +12,6 @@ gl_BYTESWAP
 
 Makefile.am:
 BUILT_SOURCES += $(BYTESWAP_H)
-EXTRA_DIST += byteswap_.h
 
 # We need the following in order to create <byteswap.h> when the system
 # doesn't have one.

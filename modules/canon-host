@@ -15,7 +15,6 @@ configure.ac:
 gl_CANON_HOST
 
 Makefile.am:
-EXTRA_DIST += canon-host.h canon-host.c
 
 Include:
 #include "canon-host.h"

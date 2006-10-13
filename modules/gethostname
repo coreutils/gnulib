@@ -11,7 +11,6 @@ configure.ac:
 gl_FUNC_GETHOSTNAME
 
 Makefile.am:
-EXTRA_DIST += gethostname.c
 
 Include:
 

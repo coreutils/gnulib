@@ -13,7 +13,6 @@ configure.ac:
 gl_LONG_OPTIONS
 
 Makefile.am:
-EXTRA_DIST += long-options.h long-options.c
 
 Include:
 "long-options.h"

@@ -28,8 +28,6 @@ gl_FUNC_LONG_DOUBLE_MATH
 
 Makefile.am:
 noinst_HEADERS += mathl.h trigl.h trigl.c sincosl.c
-EXTRA_DIST += floorl.c ceill.c sqrtl.c frexpl.c ldexpl.c asinl.c acosl.c atanl.c \
-              logl.c expl.c tanl.c sinl.c cosl.c
 
 Include:
 "mathl.h"

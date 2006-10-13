@@ -24,7 +24,7 @@ Makefile.am:
 lib_SOURCES += getdate.y
 BUILT_SOURCES += getdate.c
 MAINTAINERCLEANFILES += getdate.c
-EXTRA_DIST += getdate.c getdate.h
+EXTRA_DIST += getdate.c
 
 Include:
 "getdate.h"

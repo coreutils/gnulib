@@ -15,7 +15,6 @@ configure.ac:
 gl_FUNC_NANOSLEEP
 
 Makefile.am:
-EXTRA_DIST += nanosleep.c
 
 Include:
 <time.h>

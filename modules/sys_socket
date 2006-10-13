@@ -13,7 +13,6 @@ gl_HEADER_SYS_SOCKET
 
 Makefile.am:
 BUILT_SOURCES += $(SYS_SOCKET_H)
-EXTRA_DIST += socket_.h
 
 # We need the following in order to create <sys/socket.h> when the system
 # doesn't have one that works with the given compiler.

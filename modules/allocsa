@@ -18,7 +18,6 @@ gl_ALLOCSA
 
 Makefile.am:
 lib_SOURCES += allocsa.h allocsa.c
-EXTRA_DIST += allocsa.valgrind
 
 Include:
 #include "allocsa.h"

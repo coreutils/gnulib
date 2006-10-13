@@ -13,7 +13,6 @@ configure.ac:
 gl_SAFE_WRITE
 
 Makefile.am:
-EXTRA_DIST += safe-write.h safe-write.c
 
 Include:
 "safe-write.h"

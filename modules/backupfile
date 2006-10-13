@@ -18,7 +18,6 @@ configure.ac:
 gl_BACKUPFILE
 
 Makefile.am:
-EXTRA_DIST += backupfile.h backupfile.c
 
 Include:
 "backupfile.h"

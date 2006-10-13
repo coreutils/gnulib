@@ -24,7 +24,6 @@ configure.ac:
 gl_REGEX
 
 Makefile.am:
-EXTRA_DIST += regex.h regex.c regex_internal.c regex_internal.h regexec.c regcomp.c
 
 Include:
 "regex.h"

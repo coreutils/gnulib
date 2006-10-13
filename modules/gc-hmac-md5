@@ -21,7 +21,6 @@ configure.ac:
 gl_GC_HMAC_MD5
 
 Makefile.am:
-EXTRA_DIST += memxor.h hmac.h md5.h
 
 Include:
 "gc.h"

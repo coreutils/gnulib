@@ -13,7 +13,6 @@ AM_STDBOOL_H
 
 Makefile.am:
 BUILT_SOURCES += $(STDBOOL_H)
-EXTRA_DIST += stdbool_.h
 
 # We need the following in order to create <stdbool.h> when the system
 # doesn't have one that works.

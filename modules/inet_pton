@@ -16,7 +16,6 @@ configure.ac:
 gl_INET_PTON
 
 Makefile.am:
-EXTRA_DIST += inet_pton.h inet_pton.c
 
 License:
 LGPL

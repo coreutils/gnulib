@@ -11,7 +11,6 @@ configure.ac:
 gl_FUNC_STRERROR
 
 Makefile.am:
-EXTRA_DIST += strerror.c
 
 Include:
 <string.h>

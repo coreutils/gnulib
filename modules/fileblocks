@@ -11,7 +11,6 @@ configure.ac:
 gl_FILEBLOCKS
 
 Makefile.am:
-EXTRA_DIST += fileblocks.c
 
 Include:
 

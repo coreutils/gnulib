@@ -14,7 +14,6 @@ configure.ac:
 gl_FILE_TYPE
 
 Makefile.am:
-EXTRA_DIST += file-type.h file-type.c
 
 Include:
 "file-type.h"

@@ -12,7 +12,6 @@ configure.ac:
 gl_FUNC_DIRFD
 
 Makefile.am:
-EXTRA_DIST += dirfd.h dirfd.c
 
 Include:
 "dirfd.h"

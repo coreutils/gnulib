@@ -19,7 +19,6 @@ configure.ac:
 AC_FUNC_CANONICALIZE_FILE_NAME
 
 Makefile.am:
-EXTRA_DIST += canonicalize.h canonicalize.c pathmax.h
 
 Include:
 "canonicalize.h"

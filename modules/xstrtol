@@ -17,7 +17,6 @@ configure.ac:
 gl_XSTRTOL
 
 Makefile.am:
-EXTRA_DIST += xstrtol.h xstrtol.c xstrtoul.c
 
 Include:
 "xstrtol.h"

@@ -20,7 +20,6 @@ configure.ac:
 
 Makefile.am:
 lib_SOURCES += javaversion.h javaversion.c
-EXTRA_DIST += javaversion.java javaversion.class
 pkgdata_DATA += javaversion.class
 
 Include:

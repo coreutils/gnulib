@@ -17,7 +17,6 @@ configure.ac:
 gl_FUNC_MKSTEMP
 
 Makefile.am:
-EXTRA_DIST += mkstemp.h mkstemp.c tempname.c
 
 Include:
 "mkstemp.h"

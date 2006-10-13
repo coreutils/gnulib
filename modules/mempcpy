@@ -12,7 +12,6 @@ configure.ac:
 gl_FUNC_MEMPCPY
 
 Makefile.am:
-EXTRA_DIST += mempcpy.h mempcpy.c
 
 Include:
 "mempcpy.h"

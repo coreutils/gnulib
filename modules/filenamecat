@@ -15,7 +15,6 @@ configure.ac:
 gl_FILE_NAME_CONCAT
 
 Makefile.am:
-EXTRA_DIST += filenamecat.h filenamecat.c
 
 Include:
 "filenamecat.h"

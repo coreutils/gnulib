@@ -13,7 +13,6 @@ configure.ac:
 gl_CRC
 
 Makefile.am:
-EXTRA_DIST += crc.h crc.c
 
 Include:
 "crc.h"

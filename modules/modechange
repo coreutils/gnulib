@@ -15,7 +15,6 @@ configure.ac:
 gl_MODECHANGE
 
 Makefile.am:
-EXTRA_DIST += modechange.h modechange.c
 
 Include:
 "modechange.h"

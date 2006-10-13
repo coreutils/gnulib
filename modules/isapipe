@@ -15,7 +15,6 @@ configure.ac:
 gl_ISAPIPE
 
 Makefile.am:
-EXTRA_DIST += isapipe.h isapipe.c
 
 Include:
 "isapipe.h"

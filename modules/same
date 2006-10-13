@@ -18,7 +18,6 @@ configure.ac:
 gl_SAME
 
 Makefile.am:
-EXTRA_DIST += same.h same.c
 
 Include:
 "same.h"

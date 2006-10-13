@@ -14,7 +14,6 @@ configure.ac:
 gl_FUNC_TIMEGM
 
 Makefile.am:
-EXTRA_DIST += timegm.h timegm.c
 
 Include:
 "timegm.h"

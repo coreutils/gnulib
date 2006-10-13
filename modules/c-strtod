@@ -14,7 +14,6 @@ configure.ac:
 gl_C_STRTOD
 
 Makefile.am:
-EXTRA_DIST += c-strtod.h c-strtod.c
 
 Include:
 "c-strtod.h"

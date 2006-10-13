@@ -15,7 +15,6 @@ configure.ac:
 gl_READUTMP
 
 Makefile.am:
-EXTRA_DIST += readutmp.h readutmp.c
 
 Include:
 "readutmp.h"

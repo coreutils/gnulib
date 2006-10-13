@@ -16,7 +16,6 @@ configure.ac:
 gl_CYCLE_CHECK
 
 Makefile.am:
-EXTRA_DIST += cycle-check.h cycle-check.c
 
 Include:
 "cycle-check.h"

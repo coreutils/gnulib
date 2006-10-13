@@ -20,7 +20,6 @@ gl_STDINT_H
 
 Makefile.am:
 BUILT_SOURCES += $(STDINT_H)
-EXTRA_DIST += stdint_.h
 
 # We need the following in order to create <stdint.h> when the system
 # doesn't have one that works with the given compiler.

@@ -13,7 +13,6 @@ gl_HEADER_SYS_STAT_H
 
 Makefile.am:
 BUILT_SOURCES += $(SYS_STAT_H)
-EXTRA_DIST += stat_.h
 
 # We need the following in order to create <sys/stat.h> when the system
 # has one that is incomplete.

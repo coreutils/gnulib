@@ -12,7 +12,6 @@ configure.ac:
 gl_FUNC_GLIBC_UNLOCKED_IO
 
 Makefile.am:
-EXTRA_DIST += unlocked-io.h
 
 Include:
 "unlocked-io.h"
