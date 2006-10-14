@@ -1,3 +1,11 @@
+2006-10-13  Jim Meyering  <jim@meyering.net>
+
+	Fix a bug in yesterday's change.
+	* lib/fts.c (fts_open): When using FTS_XDEV|FTS_NOSTAT,
+	p->fts_statp->st_dev would be used uninitialized.
+	Ensures that we always call fts_stat on the very first entry.
+	Miklos Szeredi reported that find -xdev stopped working.
+
 2006-10-12  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_get_automake_snippet): Append an automatically

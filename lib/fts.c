@@ -396,7 +396,10 @@ fts_open (char * const *argv,
 		p->fts_level = FTS_ROOTLEVEL;
 		p->fts_parent = parent;
 		p->fts_accpath = p->fts_name;
-		if (defer_stat) {
+		/* Even when defer_stat is true, be sure to stat the first
+		   command line argument, since fts_read (at least with
+		   FTS_XDEV) requires that.  */
+		if (defer_stat && root != NULL) {
 			p->fts_info = FTS_NSOK;
 			fts_set_stat_required(p, true);
 		} else {
