@@ -1,3 +1,8 @@
+2006-10-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/fsusage.c (PROPAGATE_ALL_ONES): Don't assume uintmax_t is
+	at least as wide as intmax_t.
+
 2006-10-16  Alexandre Duret-Lutz  <adl@gnu.org>
 
 	(Imported from Automake.)

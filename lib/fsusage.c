@@ -61,11 +61,11 @@
    a uintmax_t value that is all 1 bits if X is all 1 bits, even if X
    is unsigned and narrower than uintmax_t.  */
 #define PROPAGATE_ALL_ONES(x) \
-  ((sizeof (x) < sizeof (uintmax_t) \
+  ((sizeof (x) != sizeof (uintmax_t) \
     && (~ (x) == (sizeof (x) < sizeof (int) \
 		  ? - (1 << (sizeof (x) * CHAR_BIT)) \
 		  : 0))) \
-   ? UINTMAX_MAX : (x))
+   ? UINTMAX_MAX : (uintmax_t) (x))
 
 /* Extract the top bit of X as an uintmax_t value.  */
 #define EXTRACT_TOP_BIT(x) ((x) \
