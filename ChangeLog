@@ -1,3 +1,8 @@
+2006-10-16  Alexandre Duret-Lutz  <adl@gnu.org>
+
+	(Imported from Automake.)
+	* build-aux/gnupload: Update to version 1.1 of directive file.
+
 2006-10-16  Eric Blake  <ebb9@byu.net>
 
 	* modules/configmake (Makefile.am): Add pkglibexecdir support, to
