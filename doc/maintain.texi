@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 9, 2006
+@set lastupdate October 15, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -1180,8 +1180,8 @@ A clearsigned @dfn{directive file}, made using @samp{gpg --clearsign}
 The names of the files are important. The signature file must have the
 same name as the file to be distributed, with an additional
 @file{.sig} extension. The directive file must have the same name as
-the file to be distributed, with an additional @file{.directive.asc
-extension}. If you do not follow this naming convention, the upload
+the file to be distributed, with an additional @file{.directive.asc}
+extension. If you do not follow this naming convention, the upload
 @emph{will not be processed}.
 
 Since v1.1 of the upload script, it is also possible to upload a

@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2006-10-04.17}
+\def\texinfoversion{2006-10-15.13}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free
@@ -2015,6 +2015,7 @@ where each line of input produces a line of output.}
      \hbox{\raise0.4pt\hbox{\vphantom{\angleleft}}#1}}%
     \kern-0.4pt\hrule}%
   \kern-.06em\raise0.4pt\hbox{\angleright}}}}
+\def\key #1{{\nohyphenation \uppercase{#1}}\null}
 % The old definition, with no lozenge:
 %\def\key #1{{\ttsl \nohyphenation \uppercase{#1}}\null}
 \def\ctrl #1{{\tt \rawbackslash \hat}#1}
