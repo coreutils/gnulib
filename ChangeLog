@@ -1,3 +1,22 @@
+2006-10-14  Bruno Haible  <bruno@clisp.org>
+
+	* modules/sigprocmask: New file.
+	* lib/sigprocmask.h: New file.
+	* lib/sigprocmask.c: New file.
+	* m4/signalblocking.m4 (gl_SIGNALBLOCKING): Renamed from
+	gt_SIGNALBLOCKING. When not defining HAVE_POSIX_SIGNALBLOCKING,
+	request sigprocmask.o.
+	(gl_PREREQ_SIGPROCMASK): New macro.
+	* modules/fatal-signal (Files): Remove m4/signalblocking.m4.
+	(Depends-on): Add sigprocmask.
+	* m4/fatal-signal.m4 (gl_FATAL_SIGNAL): Don't require
+	gt_SIGNALBLOCKING. Test for 'raise' only once.
+	* lib/fatal-signal.c: Include sigprocmask.h.
+	(fatal_signal_set, init_fatal_signal_set, block_fatal_signals,
+	unblock_fatal_signals): Define always.
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
+	sigprocmask.
+
 2006-10-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from Automake.

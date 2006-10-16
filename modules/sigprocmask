@@ -1,0 +1,26 @@
+Description:
+POSIX compatible signal blocking.
+
+Files:
+lib/sigprocmask.h
+lib/sigprocmask.c
+m4/signalblocking.m4
+
+Depends-on:
+verify
+stdint
+
+configure.ac:
+gl_SIGNALBLOCKING
+
+Makefile.am:
+
+Include:
+"sigprocmask.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

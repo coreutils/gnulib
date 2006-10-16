@@ -27,6 +27,7 @@
 #include <signal.h>
 #include <unistd.h>
 
+#include "sigprocmask.h"
 #include "xalloc.h"
 
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
@@ -231,8 +232,6 @@ at_fatal_signal (action_t action)
 /* ========================================================================= */
 
 
-#if HAVE_POSIX_SIGNALBLOCKING
-
 static sigset_t fatal_signal_set;
 
 static void
@@ -269,20 +268,3 @@ unblock_fatal_signals ()
   init_fatal_signal_set ();
   sigprocmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
 }
-
-#else
-
-/* Don't bother caring about the old systems which don't have POSIX signal
-   blocking.  */
-
-void
-block_fatal_signals ()
-{
-}
-
-void
-unblock_fatal_signals ()
-{
-}
-
-#endif

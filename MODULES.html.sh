@@ -1849,6 +1849,7 @@ func_all_modules ()
   func_module regex
   func_module rename
   func_module rmdir
+  func_module sigprocmask
   func_module ssize_t
   func_module strtok_r
   func_module sys_stat
