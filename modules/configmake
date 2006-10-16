@@ -24,7 +24,7 @@ Makefile.am:
 #
 # Listed in the same order as the GNU makefile conventions.
 # The Automake-defined pkg* macros are appended, in the order
-# listed in the Automake documentation.
+# listed in the Automake 1.10a+ documentation.
 configmake.h: Makefile
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -51,9 +51,10 @@ configmake.h: Makefile
 	  echo '#define LOCALEDIR "$(localedir)"'; \
 	  echo '#define MANDIR "$(mandir)"'; \
 	  echo '#define MANEXT "$(manext)"'; \
-	  echo '#define PKGLIBDIR "$(pkglibdir)"'; \
-	  echo '#define PKGINCLUDEDIR "$(pkgincludedir)"'; \
 	  echo '#define PKGDATADIR "$(pkgdatadir)"'; \
+	  echo '#define PKGINCLUDEDIR "$(pkgincludedir)"'; \
+	  echo '#define PKGLIBDIR "$(pkglibdir)"'; \
+	  echo '#define PKGLIBEXECDIR "$(pkglibexecdir)"'; \
 	} | sed '/""/d' > $@-t
 	mv $@-t $@
 BUILT_SOURCES += configmake.h
