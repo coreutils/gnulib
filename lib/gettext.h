@@ -24,6 +24,18 @@
 /* Get declarations of GNU message catalog functions.  */
 # include <libintl.h>
 
+/* You can set the DEFAULT_TEXT_DOMAIN macro to specify the domain used by
+   the gettext() and ngettext() macros.  This is an alternative to calling
+   textdomain(), and is useful for libraries.  */
+# ifdef DEFAULT_TEXT_DOMAIN
+#  undef gettext
+#  define gettext(Msgid) \
+     dgettext (DEFAULT_TEXT_DOMAIN, Msgid)
+#  undef ngettext
+#  define ngettext(Msgid1, Msgid2, N) \
+     dngettext (DEFAULT_TEXT_DOMAIN, Msgid1, Msgid2, N)
+# endif
+
 #else
 
 /* Solaris /usr/include/locale.h includes /usr/include/libintl.h, which
@@ -82,14 +94,24 @@
    MSGID.  MSGCTXT and MSGID must be string literals.  MSGCTXT should be
    short and rarely need to change.
    The letter 'p' stands for 'particular' or 'special'.  */
-#define pgettext(Msgctxt, Msgid) \
-  pgettext_aux (NULL, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, LC_MESSAGES)
+#ifdef DEFAULT_TEXT_DOMAIN
+# define pgettext(Msgctxt, Msgid) \
+   pgettext_aux (DEFAULT_TEXT_DOMAIN, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, LC_MESSAGES)
+#else
+# define pgettext(Msgctxt, Msgid) \
+   pgettext_aux (NULL, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, LC_MESSAGES)
+#endif
 #define dpgettext(Domainname, Msgctxt, Msgid) \
   pgettext_aux (Domainname, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, LC_MESSAGES)
 #define dcpgettext(Domainname, Msgctxt, Msgid, Category) \
   pgettext_aux (Domainname, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, Category)
-#define npgettext(Msgctxt, Msgid, MsgidPlural, N) \
-  npgettext_aux (NULL, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, MsgidPlural, N, LC_MESSAGES)
+#ifdef DEFAULT_TEXT_DOMAIN
+# define npgettext(Msgctxt, Msgid, MsgidPlural, N) \
+   npgettext_aux (DEFAULT_TEXT_DOMAIN, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, MsgidPlural, N, LC_MESSAGES)
+#else
+# define npgettext(Msgctxt, Msgid, MsgidPlural, N) \
+   npgettext_aux (NULL, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, MsgidPlural, N, LC_MESSAGES)
+#endif
 #define dnpgettext(Domainname, Msgctxt, Msgid, MsgidPlural, N) \
   npgettext_aux (Domainname, Msgctxt GETTEXT_CONTEXT_GLUE Msgid, Msgid, MsgidPlural, N, LC_MESSAGES)
 #define dcnpgettext(Domainname, Msgctxt, Msgid, MsgidPlural, N, Category) \
