@@ -20,6 +20,9 @@
 
 #if ! HAVE_POSIX_SIGNALBLOCKING
 
+/* Mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
+# include <sys/types.h>
+
 # include "verify.h"
 
 /* Maximum signal number + 1.  */
@@ -31,7 +34,9 @@
 verify (NSIG <= 32);
 
 /* A set or mask of signals.  */
+# if !HAVE_SIGSET_T
 typedef unsigned int sigset_t;
+# endif
 
 /* Test whether a given signal is contained in a signal set.  */
 extern int sigismember (const sigset_t *set, int sig);

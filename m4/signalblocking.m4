@@ -1,4 +1,4 @@
-# signalblocking.m4 serial 2 (gettext-0.15.1)
+# signalblocking.m4 serial 3 (gettext-0.15.1)
 dnl Copyright (C) 2001-2002, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,7 +25,16 @@ AC_DEFUN([gl_SIGNALBLOCKING],
   fi
 ])
 
-# Prerequisites of lib/sigprocmask.c.
+# Prerequisites of lib/sigprocmask.h and lib/sigprocmask.c.
 AC_DEFUN([gl_PREREQ_SIGPROCMASK], [
+  AC_CHECK_TYPES([sigset_t],
+    [gl_cv_type_sigset_t=yes], [gl_cv_type_sigset_t=no],
+    [#include <signal.h>
+/* Mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
+#include <sys/types.h>])
+  if test $gl_cv_type_sigset_t = yes; then
+    AC_DEFUN([HAVE_SIGSET_T],
+      [Define to 1 if you lack the sigprocmask function but have the sigset_t type.])
+  fi
   AC_CHECK_FUNCS_ONCE(raise)
 ])
