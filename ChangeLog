@@ -1,3 +1,8 @@
+2006-10-17  Eric Blake  <ebb9@byu.net>
+
+	* lib/xvasprintf.c (includes): Assume config.h.
+	* lib/xasprintf.c (includes): Likewise.
+
 2006-10-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/fsusage.c (PROPAGATE_ALL_ONES): Don't assume uintmax_t is
