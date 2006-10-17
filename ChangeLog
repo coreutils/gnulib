@@ -1,5 +1,9 @@
 2006-10-16  Bruno Haible  <bruno@clisp.org>
 
+	* lib/clean-temp.c: Include fwriteerror.h.
+
+2006-10-16  Bruno Haible  <bruno@clisp.org>
+
 	* getndelim2.m4 (gl_GETNDELIM2): Remove 2003-10-23 hack.
 
 2006-10-16  Bruno Haible  <bruno@clisp.org>

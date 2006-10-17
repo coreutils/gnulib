@@ -39,6 +39,9 @@
 #include "xallocsa.h"
 #include "gl_linkedhash_list.h"
 #include "gettext.h"
+#if GNULIB_FWRITEERROR
+# include "fwriteerror.h"
+#endif
 #if GNULIB_CLOSE_STREAM
 # include "close-stream.h"
 #endif
