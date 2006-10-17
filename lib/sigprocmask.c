@@ -178,7 +178,7 @@ sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
 	      received[sig] = 0;
 
 	  for (sig = 0; sig < NSIG; sig++)
-	    if (received[NSIG])
+	    if (received[sig])
 	      {
 		#if HAVE_RAISE
 		raise (sig);

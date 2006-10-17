@@ -1,5 +1,7 @@
 2006-10-17  Eric Blake  <ebb9@byu.net>
 
+	* lib/sigprocmask.c (sigprocmask): Fix typo.
+
 	* m4/signalblocking.m4 (gl_PREREQ_SIGPROCMASK): Fix typo.
 
 	* modules/clean-temp (Makefile.am): Don't add to make output...
