@@ -1,5 +1,9 @@
 2006-10-16  Bruno Haible  <bruno@clisp.org>
 
+	* getndelim2.m4 (gl_GETNDELIM2): Remove 2003-10-23 hack.
+
+2006-10-16  Bruno Haible  <bruno@clisp.org>
+
 	* m4/signalblocking.m4 (gl_PREREQ_SIGPROCMASK): Also test for sigset_t.
 	* lib/sigprocmask.h: Include <sys/types.h>.
 	(sigset_t): Use the system's definition if present.
