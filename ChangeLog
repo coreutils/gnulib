@@ -1,3 +1,9 @@
+2006-10-17  Eric Blake  <ebb9@byu.net>
+
+	* modules/clean-temp (Makefile.am): Don't add to make output...
+	(configure.ac): ...instead define SIGNAL_SAFE_LIST inside
+	config.h.
+
 2006-10-17  Bruno Haible  <bruno@clisp.org>
 
 	* lib/gettext.h (gettext, ngettext, pgettext, npgettext): Define

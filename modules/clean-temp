@@ -19,9 +19,9 @@ linkedhash-list
 gettext-h
 
 configure.ac:
+AC_DEFINE([SIGNAL_SAFE_LIST], [1], [Define if lists must be signal-safe.])
 
 Makefile.am:
-DEFS += -DSIGNAL_SAFE_LIST
 lib_SOURCES += clean-temp.h clean-temp.c
 
 Include:
