@@ -202,7 +202,8 @@ enum { UT_USER_SIZE = sizeof UT_USER ((STRUCT_UTMP *) 0) };
 /* Options for read_utmp.  */
 enum
   {
-    READ_UTMP_CHECK_PIDS = 1
+    READ_UTMP_CHECK_PIDS = 1,
+    READ_UTMP_USER_PROCESS = 2
   };
 
 char *extract_trimmed_name (const STRUCT_UTMP *ut);
