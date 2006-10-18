@@ -69,11 +69,11 @@ extract_trimmed_name (const STRUCT_UTMP *ut)
 static inline bool
 desirable_utmp_entry (STRUCT_UTMP const *u, int options)
 {
-  int up = IS_USER_PROCESS (u);
-  if ((options & READ_UTMP_USER_PROCESS) && !up)
+  bool user_proc = IS_USER_PROCESS (u);
+  if ((options & READ_UTMP_USER_PROCESS) && !user_proc)
     return false;
   if ((options & READ_UTMP_CHECK_PIDS)
-      && up
+      && user_proc
       && (UT_PID (u) <= 0
 	  || (kill (UT_PID (u), 0) < 0 && errno == ESRCH)))
     return false;
