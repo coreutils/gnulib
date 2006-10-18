@@ -1,3 +1,8 @@
+2006-10-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/localcharset.c: Do not check HAVE_SETLOCALE.
+	* m4/localcharset.m4 (gl_LOCALCHARSET): Don't check for setlocale.
+
 2006-10-17  Eric Blake  <ebb9@byu.net>
 
 	* lib/sigprocmask.c (sigprocmask): Fix typo.
