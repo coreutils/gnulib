@@ -1,5 +1,5 @@
 /* Locking in multithreaded situations.
-   Copyright (C) 2005 Free Software Foundation, Inc.
+   Copyright (C) 2005-2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -69,6 +69,10 @@
 
 # include <pthread.h>
 # include <stdlib.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
 
 # if PTHREAD_IN_USE_DETECTION_HARD
 
@@ -355,6 +359,10 @@ typedef pthread_once_t gl_once_t;
     while (0)
 extern int glthread_once_singlethreaded (pthread_once_t *once_control);
 
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 /* ========================================================================= */
@@ -365,6 +373,10 @@ extern int glthread_once_singlethreaded (pthread_once_t *once_control);
 
 # include <pth.h>
 # include <stdlib.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
 
 # if USE_PTH_THREADS_WEAK
 
@@ -468,6 +480,10 @@ typedef pth_once_t gl_once_t;
 extern void glthread_once_call (void *arg);
 extern int glthread_once_singlethreaded (pth_once_t *once_control);
 
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 /* ========================================================================= */
@@ -479,6 +495,10 @@ extern int glthread_once_singlethreaded (pth_once_t *once_control);
 # include <thread.h>
 # include <synch.h>
 # include <stdlib.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
 
 # if USE_SOLARIS_THREADS_WEAK
 
@@ -600,6 +620,10 @@ typedef struct
 extern void glthread_once (gl_once_t *once_control, void (*initfunction) (void));
 extern int glthread_once_singlethreaded (gl_once_t *once_control);
 
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 /* ========================================================================= */
@@ -607,6 +631,10 @@ extern int glthread_once_singlethreaded (gl_once_t *once_control);
 #if USE_WIN32_THREADS
 
 # include <windows.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
 
 /* We can use CRITICAL_SECTION directly, rather than the Win32 Event, Mutex,
    Semaphore types, because
@@ -740,6 +768,10 @@ typedef struct
 # define gl_once(NAME, INITFUNCTION) \
     glthread_once (&NAME, INITFUNCTION)
 extern void glthread_once (gl_once_t *once_control, void (*initfunction) (void));
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif
 

@@ -1,5 +1,9 @@
 2006-10-18  Bruno Haible  <bruno@clisp.org>
 
+	* lib/lock.h [C++]: Wrap definitions in extern "C".
+
+2006-10-18  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_initmacro_end): Remove duplicates from the
 	gl_LIBOBJS list.
 
