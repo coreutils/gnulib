@@ -1,9 +1,9 @@
-2006-10-19  Paul Eggert  <eggert@cs.ucla.edu>
+2006-10-19  Paul Eggert  <eggert@cs.ucla.edu>  (tiny change)
 
 	* lib/strftime.c (advance): New macro.
-	(add): Use it to avoid adding 0 to a FILE *.  FILE can be
-	an incomplete type, so you can't add 0 to it.  Problem reported
-	by Eelco Dolstra for dietlibc.
+	(add): Use it to avoid adding 0 to a FILE *.  FILE can be an
+	incomplete type, so you can't add 0 to it.  Problem and patch
+	reported by Eelco Dolstra for dietlibc.
 
 2006-10-18  Jim Meyering  <jim@meyering.net>
 
