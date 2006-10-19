@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-10-19 12:23:41 $'
+cvsdatestamp='$Date: 2006-10-19 13:24:55 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -678,7 +678,7 @@ func_relconcat ()
   # m4base (to avoid an error in func_import) and optional for the others.
   sed_trimtrailingslashes='s,\([^/]\)//*$,\1,'
   case "$local_gnulib_dir" in
-    */ ) sourcebase=`echo "$local_gnulib_dir" | sed -e "$sed_trimtrailingslashes"` ;;
+    */ ) local_gnulib_dir=`echo "$local_gnulib_dir" | sed -e "$sed_trimtrailingslashes"` ;;
   esac
   case "$sourcebase" in
     */ ) sourcebase=`echo "$sourcebase" | sed -e "$sed_trimtrailingslashes"` ;;

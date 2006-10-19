@@ -1,3 +1,8 @@
+2006-10-18  Charles Wilson  <cygwin@cwilson.fastmail.fm>
+
+	* gnulib-tool: Don't clobber $sourcebase when $local_gnulib_dir ends
+	in a slash.
+
 2006-10-18  Bruno Haible  <bruno@clisp.org>
 
 	* lib/lock.h [C++]: Wrap definitions in extern "C".
