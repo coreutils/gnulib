@@ -24,6 +24,8 @@
 
 # include <inttypes.h>
 
+# include "gettext.h"
+
 # ifndef _STRTOL_ERROR
 enum strtol_error
   {
@@ -57,18 +59,19 @@ _DECLARE_XSTRTOL (xstrtoumax, uintmax_t)
 	  abort ();							\
 									\
 	case LONGINT_INVALID:						\
-	  error ((Exit_code), 0, "invalid %s `%s'",			\
+	  error ((Exit_code), 0, gettext ("invalid %s `%s'"),		\
 		 (Argument_type_string), (Str));			\
 	  break;							\
 									\
 	case LONGINT_INVALID_SUFFIX_CHAR:				\
 	case LONGINT_INVALID_SUFFIX_CHAR | LONGINT_OVERFLOW:		\
-	  error ((Exit_code), 0, "invalid character following %s in `%s'", \
+	  error ((Exit_code), 0,					\
+		 gettext ("invalid character following %s in `%s'"),	\
 		 (Argument_type_string), (Str));			\
 	  break;							\
 									\
 	case LONGINT_OVERFLOW:						\
-	  error ((Exit_code), 0, "%s `%s' too large",			\
+	  error ((Exit_code), 0, gettext ("%s `%s' too large"),		\
 		 (Argument_type_string), (Str));			\
 	  break;							\
 	}								\

@@ -1,3 +1,10 @@
+2006-10-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/xstrtol.h: Include gettext.h.
+	(_STRTOL_ERROR): Wrap English-language formats inside gettext.
+	Problem reported by Eric Blake.
+	* modules/xstrtol (Depends-on): Add gettext-h.
+
 2006-10-19  Paul Eggert  <eggert@cs.ucla.edu>  (tiny change)
 
 	* lib/strftime.c (advance): New macro.
