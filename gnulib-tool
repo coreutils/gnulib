@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-10-13 12:40:22 $'
+cvsdatestamp='$Date: 2006-10-19 12:23:41 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1346,10 +1346,9 @@ func_emit_initmacro_end ()
   echo "    ${macro_prefix}_libobjs="
   echo "    ${macro_prefix}_ltlibobjs="
   echo "    if test -n \"\$${macro_prefix}_LIBOBJS\"; then"
-  echo "      for i in \$${macro_prefix}_LIBOBJS; do"
-  echo "        # Remove the extension."
-  echo "        sed_drop_objext='s/\\.o\$//;s/\\.obj\$//'"
-  echo "        i=\`echo \"\$i\" | sed \"\$sed_drop_objext\"\`"
+  echo "      # Remove the extension."
+  echo "      sed_drop_objext='s/\\.o\$//;s/\\.obj\$//'"
+  echo "      for i in \`for i in \$${macro_prefix}_LIBOBJS; do echo \"\$i\"; done | sed \"\$sed_drop_objext\" | sort | uniq\`; do"
   echo "        ${macro_prefix}_libobjs=\"\$${macro_prefix}_libobjs \$i.\$ac_objext\""
   echo "        ${macro_prefix}_ltlibobjs=\"\$${macro_prefix}_ltlibobjs \$i.lo\""
   echo "      done"
