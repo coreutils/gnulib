@@ -181,6 +181,12 @@ extern char *tzname[];
 # define memset_zero(P, Len) (memset (P, '0', Len), (P) += (Len))
 #endif
 
+#if FPRINTFTIME
+# define advance(P, N)
+#else
+# define advance(P, N) ((P) += (N))
+#endif
+
 #define add(n, f)							      \
   do									      \
     {									      \
@@ -199,7 +205,7 @@ extern char *tzname[];
 		memset_space (p, _delta);				      \
 	    }								      \
 	  f;								      \
-	  p += FPRINTFTIME ? 0 : _n;					      \
+	  advance (p, _n);						      \
 	}								      \
       i += _incr;							      \
     } while (0)

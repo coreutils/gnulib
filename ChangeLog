@@ -1,3 +1,10 @@
+2006-10-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/strftime.c (advance): New macro.
+	(add): Use it to avoid adding 0 to a FILE *.  FILE can be
+	an incomplete type, so you can't add 0 to it.  Problem reported
+	by Eelco Dolstra for dietlibc.
+
 2006-10-18  Jim Meyering  <jim@meyering.net>
 
 	* lib/readutmp.c (desirable_utmp_entry): Use "bool" as the
