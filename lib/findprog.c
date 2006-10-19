@@ -42,7 +42,7 @@ find_in_path (const char *progname)
 #else
   /* Unix */
   char *path;
-  char *dir;
+  char *path_rest;
   char *cp;
 
   if (strchr (progname, '/') != NULL)
@@ -58,13 +58,15 @@ find_in_path (const char *progname)
 
   /* Make a copy, to prepare for destructive modifications.  */
   path = xstrdup (path);
-  for (dir = path; ; dir = cp + 1)
+  for (path_rest = path; ; path_rest = cp + 1)
     {
+      const char *dir;
       bool last;
       char *progpathname;
 
       /* Extract next directory in PATH.  */
-      for (cp = dir; *cp != '\0' && *cp != ':'; cp++)
+      dir = path_rest;
+      for (cp = path_rest; *cp != '\0' && *cp != ':'; cp++)
 	;
       last = (*cp == '\0');
       *cp = '\0';
