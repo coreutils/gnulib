@@ -1,5 +1,10 @@
 2006-10-19  Bruno Haible  <bruno@clisp.org>
 
+	* m4/alloca.m4 (gl_FUNC_ALLOCA): Cache the result of the AC_EGREP_CPP
+	invocation.
+
+2006-10-19  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_create_testdir): Don't include ftruncate and
 	mountlist by default.
 
