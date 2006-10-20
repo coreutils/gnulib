@@ -1,4 +1,4 @@
-# allocsa.m4 serial 4
+# allocsa.m4 serial 5
 dnl Copyright (C) 2003-2004, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,7 @@ AC_DEFUN([gl_ALLOCSA],
 [
   dnl Use the autoconf tests for alloca(), but not the AC_SUBSTed variables
   dnl @ALLOCA@ and @LTALLOCA@.
-  AC_REQUIRE([gl_FUNC_ALLOCA])
+  gl_FUNC_ALLOCA
   AC_REQUIRE([gl_EEMALLOC])
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
   AC_REQUIRE([gt_TYPE_LONGDOUBLE])
