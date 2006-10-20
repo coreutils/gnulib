@@ -34,6 +34,11 @@
 #include <limits.h>
 #include <stdint.h>
 
+/* Mingw doesn't have SSIZE_MAX.  */
+#ifndef SSIZE_MAX
+# define SSIZE_MAX ((((ssize_t)1 << (sizeof (ssize_t) * CHAR_BIT - 2)) - 1) * 2 + 1)
+#endif
+
 /* The maximum value that getndelim2 can return without suffering from
    overflow problems, either internally (because of pointer
    subtraction overflow) or due to the API (because of ssize_t).  */
