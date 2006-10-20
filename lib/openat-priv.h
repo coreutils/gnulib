@@ -34,6 +34,16 @@ char *openat_proc_name (char buf[OPENAT_BUFFER_SIZE], int fd, char const *file);
 # endif
 #endif
 
+/* Some systems don't have EOPNOTSUPP.  */
+#ifndef EOPNOTSUPP
+# ifdef ENOTSUP
+#  define EOPNOTSUPP ENOTSUP
+# else
+/* Some systems don't have ENOTSUP either.  */
+#  define EOPNOTSUPP EINVAL
+# endif
+#endif
+
 /* Trying to access a BUILD_PROC_NAME file will fail on systems without
    /proc support, and even on systems *with* ProcFS support.  Return
    nonzero if the failure may be legitimate, e.g., because /proc is not
