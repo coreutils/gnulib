@@ -1,3 +1,7 @@
+2006-10-16  Bruno Haible  <bruno@clisp.org>
+
+	* lib/c-strstr.c: Include c-strstr.h.
+
 2006-10-18  Charles Wilson  <cygwin@cwilson.fastmail.fm>
 
 	* gnulib-tool: Don't clobber $sourcebase when $local_gnulib_dir ends
