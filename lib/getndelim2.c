@@ -34,9 +34,8 @@
 #include <limits.h>
 #include <stdint.h>
 
-/* Mingw doesn't have SSIZE_MAX.  */
 #ifndef SSIZE_MAX
-# define SSIZE_MAX ((((ssize_t)1 << (sizeof (ssize_t) * CHAR_BIT - 2)) - 1) * 2 + 1)
+# define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
 
 /* The maximum value that getndelim2 can return without suffering from

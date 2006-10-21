@@ -1,3 +1,8 @@
+2006-10-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/getndelim2.c (SSIZE_MAX): Use same defn that getdelim.c
+	uses.
+
 2006-10-19  Bruno Haible  <bruno@clisp.org>
 
 	* lib/getndelim2.c (SSIZE_MAX): Provide fallback definition. Needed
