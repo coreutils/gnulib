@@ -1,4 +1,7 @@
-2006-10-21  Paul Eggert  <eggert@cs.ucla.edu>
+b2006-10-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/stdint_.h [defined _AIX]: Don't include <sys/types.h>.
+	Problem reported by Perry Smith and Ville Laurikari.
 
 	* lib/getndelim2.c (SSIZE_MAX): Use same defn that getdelim.c
 	uses.
