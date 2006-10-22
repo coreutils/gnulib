@@ -1,3 +1,9 @@
+2006-10-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/canonicalize.c (ELOOP): Define if not already defined.
+	Problem reported by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2006-10/msg00282.html>.
+
 b2006-10-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/stdint_.h [defined _AIX]: Don't include <sys/types.h>.

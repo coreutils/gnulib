@@ -40,6 +40,9 @@
 #include "xalloc.h"
 #include "xgetcwd.h"
 
+#ifndef ELOOP
+# define ELOOP 0
+#endif
 #ifndef __set_errno
 # define __set_errno(Val) errno = (Val)
 #endif
