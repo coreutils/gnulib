@@ -1,0 +1,251 @@
+@node Library vs. Reusable Code
+@section Library vs. Reusable Code
+
+Classical libraries are installed as binary object code.  Gnulib is
+different: It is used as a source code library.  Each package that uses
+Gnulib thus ships with part of the Gnulib source code.  The used portion
+of Gnulib is tailored to the package: A build tool, called
+@code{gnulib-tool}, is provided that copies a tailored subset of Gnulib
+into the package.
+
+@node Portability and Application Code
+@section Portability and Application Code
+
+One of the goals of Gnulib is to make portable programming easy, on the
+basis of the standards relevant for Unix.  The objective behind that is to
+avoid a fragmentation of the user community into disjoint user communities
+according to the operating system, and instead allow synergies between
+users on different operating systems.
+
+Another goal of Gnulib is to provide application code that can be shared
+between several applications.  Some people wonder: "What? glibc doesn't
+have a function to copy a file?"  Indeed, the scope of a system's libc is
+to implement the relevant standards (ISO C99, POSIX:2001) and to provide
+access functions to the kernel's system calls, and little more.
+
+There is no clear borderline between both areas.
+
+For example, Gnulib has a facility for generating the name of backup
+files.  While this task is an applicative one -- no standard specifies an
+API for it --, the na@"ive code has some portability problems because on
+some platforms the length of file name components is limited to 30
+characters or so.  Gnulib handles that.
+
+Similarly, Gnulib has a facility for executing a command in a subprocess.
+It is at the same time a portability enhancement (it works on Unix and
+Windows, compared to the classical @code{fork()}/@code{exec()} which is
+not portable to Windows), as well as an application aid: it takes care of
+redirecting stdin and/or stdout if desired, and emits an error message if
+the subprocess failed.
+
+@node Modules
+@section Modules
+
+Gnulib is divided into modules.  Every module implements a single
+facility.  Modules can depend on other modules. 
+
+A module consists of a number of files and a module description.  The
+files are copied by @code{gnulib-tool} into the package that will use it,
+usually verbatim, without changes.  Source code files (.h, .c files)
+reside in the @file{lib/} subdirectory.  Autoconf macro files reside in
+the @file{m4/} subdirectory.  Build scripts reside in the
+@file{build-aux/} subdirectory.
+
+The module description contains the list of files -- @code{gnulib-tool}
+copies these files.  It contains the module's dependencies --
+@code{gnulib-tool} installs them as well.  It also contains the autoconf
+macro invocation (usually a single line or nothing at all) --
+@code{gnulib-tool} ensures this is invoked from the package's
+@file{configure.ac} file.  And also a @file{Makefile.am} snippet --
+@code{gnulib-tool} collects these into a @file{Makefile.am} for the
+tailored Gnulib part.  The module description and include file
+specification are for documentation purposes; they are combined into
+@file{MODULES.html}.
+
+The module system serves two purposes:
+
+@enumerate
+@item
+It ensures consistency of the used autoconf macros and @file{Makefile.am}
+rules with the source code.  For example, source code which uses the
+@code{getopt_long} function -- this is a common way to implement parsing
+of command line options in a way that complies with the GNU standards --
+needs the source code (@file{lib/getopt.c} and others), the autoconf macro
+which detects whether the system's libc already has this function (in
+@file{m4/getopt.m4}), and a few @file{Makefile.am} lines that create the
+substitute @file{getopt.h} if not.  These three pieces belong together.
+They cannot be used without each other.  The module description and
+@code{gnulib-tool} ensure that they are copied altogether into the
+destination package.
+
+@item
+It allows for scalability.  It is well-known since the inception of the
+MODULA-2 language around 1978 that dissection into modules with
+dependencies allows for building large sets of code in a maintainable way.
+The maintainability comes from the facts that:
+
+@itemize @bullet
+@item
+Every module has a single purpose; you don't worry about other parts of
+the program while creating, reading or modifying the code of a module.
+
+@item
+The code you have to read in order to understand a module is limited to
+the source of the module and the .h files of the modules listed as
+dependencies.  It is for this reason also that we recommend to put the
+comments describing the functions exported by a module into its .h file.
+@end itemize
+
+In other words, the module is the elementary unit of code in Gnulib,
+comparable to a class in object-oriented languages like Java or C#.
+@end enumerate
+
+The module system is the basis of @code{gnulib-tool}.  When
+@code{gnulib-tool} copies a part of Gnulib into a package, it first
+compiles a module list, starting with the requested modules and adding all
+the dependencies, and then collects the files, @file{configure.ac}
+snippets and @file{Makefile.am} snippets.
+
+@node Various Kinds of Modules
+@section Various Kinds of Modules
+
+There are modules of various kinds in Gnulib.  For a complete list of the
+modules, see in @file{MODULES.html}.
+
+@subsection Support for ISO C or POSIX functions.
+
+When a function is not implemented by a system, the Gnulib module provides
+an implementation under the same name.  Examples are the @samp{snprintf}
+and @samp{readlink} modules.
+
+Similarly, when a function is not correctly implemented by a system,
+Gnulib provides a replacement.  For functions, we use the pattern
+
+@smallexample
+#if !HAVE_WORKING_FOO
+# define foo rpl_foo
+#endif
+@end smallexample
+
+@noindent
+and implement the @code{foo} function under the name @code{rpl_foo}.  This
+renaming is needed to avoid conflicts at compile time (in case the system
+header files declare @code{foo}) and at link/run time (because the code
+making use of @code{foo} could end up residing in a shared library, and
+the executable program using this library could be defining @code{foo}
+itself).
+
+For header files, such as @code{stdbool.h} or @code{stdint.h}, we provide
+the substitute only if the system doesn't provide a correct one.  The
+template of this replacement is distributed in a slightly different name,
+with an added underscore, so that on systems which do provide a correct
+header file the system's one is used.
+
+@subsection Enhancements of ISO C or POSIX functions
+
+These are sometimes POSIX functions with GNU extensions also found in
+glibc -- examples: @samp{getopt}, @samp{fnmatch} --, and often new APIs
+-- for example, for all functions that allocate memory in one way or the
+other, we have variants which also include the error checking against the
+out-of-memory condition.
+
+@subsection Portable general use facilities
+
+Examples are a module for copying a file -- the portability problems
+relate to the copying of the file's modification time, access rights, and
+extended attributes -- or a module for extracting the tail component of a
+file name -- here the portability to Woe32 requires a different API than
+the classical POSIX @code{basename} function.
+
+@subsection Reusable application code
+
+Examples are an error reporting function, a module that allows output of
+numbers with K/M/G suffixes, or cryptographic facilities.
+
+@subsection Object oriented classes
+
+Examples are data structures like @samp{list}, or abstract output stream
+classes that work around the fact that an application cannot implement an
+stdio @code{FILE} with its logic.  Here, while staying in C, we use
+implementation techniques like tables of function pointers, known from the
+C++ language or from the Linux kernel.
+
+@subsection Interfaces to external libraries
+
+Examples are the @samp{iconv} module, which interfaces to the
+@code{iconv()} facility, regardless whether it is contained in libc or in
+an external @code{libiconv}.  Or the @samp{readline} module, which
+interfaces to the GNU readline library.
+
+@subsection Build / maintenance infrastructure
+
+An example is the @samp{maintainer-makefile} module, which provides extra
+Makefile tags for maintaining a package.
+
+@node Collaborative Development
+@section Collaborative Development
+
+Gnulib is maintained collaboratively.  The mailing list is
+@code{<bug-gnulib at gnu dot org>}.  Be warned that some people on the
+list may be very active at some times and unresponsive at other times.
+
+Every module has one or more maintainers.  While issues are discussed
+collaboratively on the list, the maintainer of a module nevertheless has
+a veto right regarding changes in his module.
+
+All patches should be posted the list, regardless whether they are
+proposed patches or whether they are committed immediately by the
+maintainer of the particular module.  The purpose is not only to inform
+the other users of the module, but mainly to allow peer review.  It is not
+uncommon that several people contribute comments or spot bugs after a
+patch was proposed.
+
+Conversely, if you are using Gnulib, and a patch is posted that affects
+one of the modules that your package uses, you have an interest in
+proofreading the patch.
+
+@node Copyright
+@section Copyright
+
+Most modules are under the GPL.  Some -- mostly modules which can
+reasonably be used in libraries -- are under LGPL.  The source files
+always say "GPL", but the real license specification is in the module
+description file.
+
+If you want to use some Gnulib modules under LGPL, you can do so by
+passing the option --lgpl to @code{gnulib-tool}.  This will replace the
+GPL header with an LGPL header while copying the source files to your
+package.
+
+Keep in mind that when you submit patches to files in Gnulib, you should
+license them under a compatible license.  This means that sometimes the
+contribution will have to be LGPL, if the original file is available
+under LGPL.  You can find out about it by looking for a "License: LGPL"
+information in the corresponding module description.
+
+@node Steady Development
+@section Steady Development
+
+Gnulib modules are continually adapted, to match new practices, to be
+consistent with newly added modules, or simply as a response to build
+failure reports.  We don't make releases, but instead recommend to use the
+newest version of Gnulib from the CVS, except in periods of major changes.
+
+@node Openness
+@section Openness
+
+Gnulib is open in the sense that we gladly accept contributions if they
+are generally useful, well engineered, and if the contributors have signed
+the obligatory papers with the FSF.
+
+The module system is open in the sense that a package using Gnulib can
+@enumerate
+@item
+locally patch or override files in Gnulib,
+@item
+locally add modules that are treated like Gnulib modules by
+@code{gnulib-tool}.
+@end enumerate
+
+This is achieved by the @samp{--local-dir} option of @code{gnulib-tool}.
+
