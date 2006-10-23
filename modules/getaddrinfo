@@ -9,12 +9,12 @@ m4/getaddrinfo.m4
 
 Depends-on:
 gettext-h
-snprintf
+inet_ntop
+inttostr
 socklen
 stdbool
 strdup
 sys_socket
-inet_ntop
 
 configure.ac:
 gl_GETADDRINFO

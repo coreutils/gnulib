@@ -27,3 +27,4 @@
 char *offtostr (off_t, char *);
 char *imaxtostr (intmax_t, char *);
 char *umaxtostr (uintmax_t, char *);
+char *uinttostr (unsigned int, char *);

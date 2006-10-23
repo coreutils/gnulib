@@ -7,6 +7,7 @@ lib/inttostr.c
 lib/inttostr.h
 lib/offtostr.c
 lib/umaxtostr.c
+lib/uinttostr.c
 m4/inttostr.m4
 
 Depends-on:

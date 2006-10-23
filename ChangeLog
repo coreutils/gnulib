@@ -1,3 +1,16 @@
+2006-10-23  Jim Meyering  <jim@meyering.net>
+
+	* lib/getaddrinfo.c (getnameinfo): Use new lightweight uinttostr,
+	in place of snprintf.
+
+	* modules/inttostr (Files): Add lib/uinttostr.c.
+	* lib/uinttostr.c (inttostr): New file/function.
+	* lib/inttostr.h (uinttostr): Declare.
+	* m4/inttostr.m4: Add AC_LIBOBJ([uinttostr]).
+	* MODULES.html.sh (Numeric conversion functions <stdlib.h>):
+	Add uinttostr.
+	* modules/getaddrinfo (Depends-on): Remove snprintf.  Add inttostr.
+
 2006-10-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/canonicalize.c (ELOOP): Define if not already defined.

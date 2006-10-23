@@ -1,4 +1,4 @@
-#serial 6
+#serial 7
 dnl Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,11 +9,13 @@ AC_DEFUN([gl_INTTOSTR],
   AC_LIBOBJ([imaxtostr])
   AC_LIBOBJ([offtostr])
   AC_LIBOBJ([umaxtostr])
+  AC_LIBOBJ([uinttostr])
 
   gl_PREREQ_INTTOSTR
   gl_PREREQ_IMAXTOSTR
   gl_PREREQ_OFFTOSTR
   gl_PREREQ_UMAXTOSTR
+  gl_PREREQ_UINTTOSTR
 ])
 
 # Prerequisites of lib/inttostr.h.
@@ -30,3 +32,6 @@ AC_DEFUN([gl_PREREQ_OFFTOSTR], [:])
 
 # Prerequisites of lib/umaxtostr.c.
 AC_DEFUN([gl_PREREQ_UMAXTOSTR], [:])
+
+# Prerequisites of lib/uinttostr.c.
+AC_DEFUN([gl_PREREQ_UINTTOSTR], [:])

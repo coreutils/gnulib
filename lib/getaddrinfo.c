@@ -39,7 +39,7 @@
 #define N_(String) String
 
 #include "inet_ntop.h"
-#include "snprintf.h"
+#include "intprops.h"
 #include "strdup.h"
 
 /* BeOS has AF_INET, but not PF_INET.  */
@@ -405,10 +405,15 @@ int getnameinfo(const struct sockaddr *restrict sa, socklen_t salen,
 #if HAVE_IPV6
       case AF_INET6:
 #endif
-	if (snprintf (service, servicelen, "%d",
-		      ntohs (((const struct sockaddr_in *) sa)->sin_port))
-	    + 1 > servicelen)
-	  return EAI_OVERFLOW;
+	{
+	  unsigned short int port
+	    = ntohs (((const struct sockaddr_in *) sa)->sin_port);
+	  char buf[INT_BUFSIZE_BOUND (port)];
+	  char const *s = uinttostr (port, buf);
+	  if (strlen (s) + 1 > servicelen)
+	    return EAI_OVERFLOW;
+	  memcpy (service, s, strlen (s) + 1);
+	}
 	break;
       }
 

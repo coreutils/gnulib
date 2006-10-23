@@ -1802,6 +1802,7 @@ func_all_modules ()
   func_begin_table
   func_module intprops
   func_module inttostr
+  func_module uinttostr
   func_module xstrtoimax
   func_module xstrtoumax
   func_end_table
