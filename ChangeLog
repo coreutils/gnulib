@@ -1,3 +1,9 @@
+2006-10-21  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
+	Change mostlyclean-local rule to avoid sh syntax error from bash
+	versions 2.00..2.05 when $(MOSTLYCLEANDIRS) is empty.
+
 2006-10-23  Jim Meyering  <jim@meyering.net>
 
 	* lib/getaddrinfo.c (getnameinfo): Use new lightweight uinttostr,

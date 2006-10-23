@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-10-20 13:42:39 $'
+cvsdatestamp='$Date: 2006-10-23 11:25:20 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1214,12 +1214,11 @@ func_emit_lib_Makefile_am ()
   cat allsnippets.tmp
   echo
   echo "mostlyclean-local: mostlyclean-generic"
-  echo "	@test -z \"\$(MOSTLYCLEANDIRS)\" || \\"
-  echo "	  for dir in \$(MOSTLYCLEANDIRS); do \\"
-  echo "	    if test -d \$\$dir; then \\"
-  echo "	      echo \"rmdir \$\$dir\"; rmdir \$\$dir; \\"
-  echo "	    fi; \\"
-  echo "	  done"
+  echo "	@for dir in '' \$(MOSTLYCLEANDIRS); do \\"
+  echo "	  if test -n \"\$\$dir\" && test -d \$\$dir; then \\"
+  echo "	    echo \"rmdir \$\$dir\"; rmdir \$\$dir; \\"
+  echo "	  fi; \\"
+  echo "	done"
   rm -f allsnippets.tmp
 }
 
@@ -1317,12 +1316,11 @@ func_emit_tests_Makefile_am ()
   echo "	rm -rf SunWS_cache"
   echo
   echo "mostlyclean-local: mostlyclean-generic"
-  echo "	@test -z \"\$(MOSTLYCLEANDIRS)\" || \\"
-  echo "	  for dir in \$(MOSTLYCLEANDIRS); do \\"
-  echo "	    if test -d \$\$dir; then \\"
-  echo "	      echo \"rmdir \$\$dir\"; rmdir \$\$dir; \\"
-  echo "	    fi; \\"
-  echo "	  done"
+  echo "	@for dir in '' \$(MOSTLYCLEANDIRS); do \\"
+  echo "	  if test -n \"\$\$dir\" && test -d \$\$dir; then \\"
+  echo "	    echo \"rmdir \$\$dir\"; rmdir \$\$dir; \\"
+  echo "	  fi; \\"
+  echo "	done"
   rm -f allsnippets.tmp
 }
 
