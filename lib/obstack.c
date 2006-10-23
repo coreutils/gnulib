@@ -342,7 +342,7 @@ _obstack_allocated_p (struct obstack *h, void *obj)
 # undef obstack_free
 
 void
-obstack_free (struct obstack *h, void *obj)
+__obstack_free (struct obstack *h, void *obj)
 {
   register struct _obstack_chunk *lp;	/* below addr of any objects in this chunk */
   register struct _obstack_chunk *plp;	/* point to previous chunk if any */
