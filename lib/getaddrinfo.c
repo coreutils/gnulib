@@ -40,6 +40,7 @@
 
 #include "inet_ntop.h"
 #include "intprops.h"
+#include "inttostr.h"
 #include "strdup.h"
 
 /* BeOS has AF_INET, but not PF_INET.  */

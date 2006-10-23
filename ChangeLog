@@ -1,5 +1,9 @@
+2006-10-23  Eric Blake  <ebb9@byu.net>
+
+	* lib/getaddrinfo.c (includes): Add missing include.
+
 2006-10-23  Bruno Haible  <bruno@clisp.org>
-            Paul Eggert  <eggert@cs.ucla.edu>
+	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	Ability to rename obstack_free.
 	* lib/obstack.h (__obstack_free): New macro. Declare instead of
@@ -8,7 +12,7 @@
 	* lib/obstack.c (obstack_free): Use __obstack_free macro.
 
 2006-10-23  Bruno Haible  <bruno@clisp.org>
-            Paul Eggert  <eggert@cs.ucla.edu>
+	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/argp.h (argp_parse, __argp_parse): Comment out the identifiers
 	__argc, __argv from the declaration. (They are defined as macros on
