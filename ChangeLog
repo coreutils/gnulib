@@ -1,5 +1,10 @@
 2006-10-21  Bruno Haible  <bruno@clisp.org>
 
+	* doc/gnulib.texi: Split the chapter "Gnulib" into 3 chapters
+	"Introduction", "Miscellanous Notes", "Particular Modules".
+
+2006-10-21  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
 	Change mostlyclean-local rule to avoid sh syntax error from bash
 	versions 2.00..2.05 when $(MOSTLYCLEANDIRS) is empty.

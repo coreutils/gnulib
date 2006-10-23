@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.27 2006-09-19 13:42:41 karl Exp $
+@comment $Id: gnulib.texi,v 1.28 2006-10-23 11:26:25 haible Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2006-09-19 13:42:41 $
+@set UPDATED $Date: 2006-10-23 11:26:25 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -55,19 +55,17 @@ Software Foundation raise funds for GNU development.''
 @end ifnottex
 
 @menu
-* Gnulib::
+* Introduction::
 * Invoking gnulib-tool::
+* Miscellanous Notes::
+* Particular Modules::          Documentation of Individual Modules
 * Copying This Manual::
 * Index::
 @end menu
 
 
-@node Gnulib
-@chapter Gnulib
-
-This manual contains some bare-bones documentation, but not much more.
-It's mostly a place to store notes until someone (you?)@ gets around
-to writing a coherent manual.
+@node Introduction
+@chapter Introduction
 
 Getting started:
 
@@ -79,16 +77,18 @@ Getting started:
       @url{http://www.gnu.org/software/gnulib/}.
 @end itemize
 
+
+@include gnulib-tool.texi
+
+
+@node Miscellanous Notes
+@chapter Miscellanous Notes
+
 @menu
 * Comments::
 * Header files::
-* Quoting::
-* ctime::
-* inet_ntoa::
-* gcd::
 * Out of memory handling::
 * Library version handling::
-* Regular expressions::
 * Windows sockets::
 * Libtool and Windows::
 * License Texinfo sources::
@@ -179,15 +179,6 @@ in arbitrary order.
 @item Then come all the #include "..." of gnulib and private headers, in
 arbitrary order.
 @end itemize
-
-
-@include quote.texi
-
-@include ctime.texi
-
-@include gcd.texi
-
-@include inet_ntoa.texi
 
 
 @node Out of memory handling
@@ -286,17 +277,6 @@ Typical uses look like:
 @end example
 
 
-@node Regular expressions
-@section Regular expressions
-
-Gnulib supports many different types of regular expressions; although
-the underlying features are the same or identical, the syntax used
-varies.  The descriptions given here for the different types are
-generated automatically.
-
-@include regexprops-generic.texi
-
-
 @node Windows sockets
 @section Windows sockets
 
@@ -328,6 +308,7 @@ the getaddrinfo function is available during runtime.
 Todo: Make getaddrinfo.c open the WS2_32.DLL and check for the
 getaddrinfo symbol and use it if present, otherwise fall back to our
 own implementation.
+
 
 @node Libtool and Windows
 @section Libtool and Windows
@@ -365,7 +346,34 @@ option to @command{gnulib-tool}.
 Of course the license texts themselves should not be changed at all.
 
 
-@include gnulib-tool.texi
+@node Particular Modules
+@chapter Particular Modules
+
+@menu
+* Quoting::
+* ctime::
+* gcd::
+* inet_ntoa::
+* Regular expressions::
+@end menu
+
+@include quote.texi
+
+@include ctime.texi
+
+@include gcd.texi
+
+@include inet_ntoa.texi
+
+@node Regular expressions
+@section Regular expressions
+
+Gnulib supports many different types of regular expressions; although
+the underlying features are the same or identical, the syntax used
+varies.  The descriptions given here for the different types are
+generated automatically.
+
+@include regexprops-generic.texi
 
 
 @node Copying This Manual
