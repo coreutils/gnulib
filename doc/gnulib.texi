@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.28 2006-10-23 11:26:25 haible Exp $
+@comment $Id: gnulib.texi,v 1.29 2006-10-23 11:27:37 haible Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2006-10-23 11:26:25 $
+@set UPDATED $Date: 2006-10-23 11:27:37 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -67,7 +67,11 @@ Software Foundation raise funds for GNU development.''
 @node Introduction
 @chapter Introduction
 
-Getting started:
+Gnulib is a source code library. It provides basic functionalities to
+programs and libraries.  Currently (as of October 2006) more than 30
+packages make use of Gnulib.
+
+Resources:
 
 @itemize
 @item Gnulib is hosted at Savannah:
@@ -76,6 +80,19 @@ Getting started:
 @item The Gnulib home page:
       @url{http://www.gnu.org/software/gnulib/}.
 @end itemize
+
+@menu
+* Library vs. Reusable Code::
+* Portability and Application Code::
+* Modules::
+* Various Kinds of Modules::
+* Collaborative Development::
+* Copyright::
+* Steady Development::
+* Openness::
+@end menu
+
+@include gnulib-intro.texi
 
 
 @include gnulib-tool.texi
