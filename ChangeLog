@@ -1,5 +1,7 @@
 2006-10-24  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	* users.txt: Add Libtool.
+
 	Sync from Libtool:
 
 	2006-10-24  Paul Eggert  <eggert@cs.ucla.edu>
