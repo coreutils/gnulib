@@ -1,3 +1,8 @@
+2006-10-24  Jim Meyering  <jim@meyering.net>
+
+	* MODULES.html.sh: Remove uinttostr.  It's not a module.
+	Reported by Karl Berry.
+
 2006-10-23  Bruno Haible  <bruno@clisp.org>
 
 	* lib/fts.c (fts_build): Move variable declaration, for C89 compliance.
