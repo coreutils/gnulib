@@ -1008,6 +1008,8 @@ fts_build (register FTS *sp, int type)
 	/* Read the directory, attaching each entry to the `link' pointer. */
 	doadjust = false;
 	for (head = tail = NULL, nitems = 0; dirp && (dp = readdir(dirp));) {
+		bool is_dir;
+
 		if (!ISSET(FTS_SEEDOT) && ISDOT(dp->d_name))
 			continue;
 
@@ -1073,7 +1075,6 @@ mem1:				saved_errno = errno;
 		} else
 			p->fts_accpath = p->fts_name;
 
-		bool is_dir;
 		if (sp->fts_compar == NULL || ISSET(FTS_DEFER_STAT)) {
 			/* Record what fts_read will have to do with this
 			   entry. In many cases, it will simply fts_stat it,
