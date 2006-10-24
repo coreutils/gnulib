@@ -1,3 +1,12 @@
+2006-10-24  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Sync from Libtool:
+
+	2006-10-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/argz.c: Remove check for HAVE_CONFIG_H, to conform
+	to gnulib's policy of including config.h unconditionally.
+
 2006-10-24  Bruno Haible  <bruno@clisp.org>
 
 	* modules/wcwidth (Files): Add m4/wint_t.m4.
