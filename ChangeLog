@@ -1,3 +1,7 @@
+2006-10-23  Bruno Haible  <bruno@clisp.org>
+
+	* lib/fts.c (fts_build): Move variable declaration, for C89 compliance.
+
 2006-10-24  Bruno Haible  <bruno@clisp.org>
 
 	* lib/gl_list.h: Use C comment style, not C++ comment style.
