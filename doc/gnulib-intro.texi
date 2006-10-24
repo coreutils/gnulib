@@ -26,8 +26,8 @@ access functions to the kernel's system calls, and little more.
 There is no clear borderline between both areas.
 
 For example, Gnulib has a facility for generating the name of backup
-files.  While this task is entirely at the application level---no
-standard specifies an API for it---the na@"{@dotless{i}}ve code has
+files.  While this task is entirely at the application level --- no
+standard specifies an API for it --- the na@"{@dotless{i}}ve code has
 some portability problems because on some platforms the length of file
 name components is limited to 30 characters or so.  Gnulib handles
 that.
@@ -44,7 +44,7 @@ failed.
 @section Modules
 
 Gnulib is divided into modules.  Every module implements a single
-facility.  Modules can depend on other modules. 
+facility.  Modules can depend on other modules.
 
 A module consists of a number of files and a module description.  The
 files are copied by @code{gnulib-tool} into the package that will use it,
@@ -53,13 +53,13 @@ reside in the @file{lib/} subdirectory.  Autoconf macro files reside in
 the @file{m4/} subdirectory.  Build scripts reside in the
 @file{build-aux/} subdirectory.
 
-The module description contains the list of files---@code{gnulib-tool}
+The module description contains the list of files --- @code{gnulib-tool}
 copies these files.  It contains the module's
-dependencies---@code{gnulib-tool} installs them as well.  It also
+dependencies --- @code{gnulib-tool} installs them as well.  It also
 contains the autoconf macro invocation (usually a single line or
-nothing at all)---@code{gnulib-tool} ensures this is invoked from the
+nothing at all) --- @code{gnulib-tool} ensures this is invoked from the
 package's @file{configure.ac} file.  And also a @file{Makefile.am}
-snippet---@code{gnulib-tool} collects these into a @file{Makefile.am}
+snippet --- @code{gnulib-tool} collects these into a @file{Makefile.am}
 for the tailored Gnulib part.  The module description and include file
 specification are for documentation purposes; they are combined into
 @file{MODULES.html}.
@@ -70,8 +70,8 @@ The module system serves two purposes:
 @item
 It ensures consistency of the used autoconf macros and @file{Makefile.am}
 rules with the source code.  For example, source code which uses the
-@code{getopt_long} function---this is a common way to implement parsing
-of command line options in a way that complies with the GNU standards---
+@code{getopt_long} function --- this is a common way to implement parsing
+of command line options in a way that complies with the GNU standards ---
 needs the source code (@file{lib/getopt.c} and others), the autoconf macro
 which detects whether the system's libc already has this function (in
 @file{m4/getopt.m4}), and a few @file{Makefile.am} lines that create the
@@ -146,17 +146,17 @@ header file the system's one is used.
 @subsection Enhancements of ISO C or POSIX functions
 
 These are sometimes POSIX functions with GNU extensions also found in
-glibc--examples: @samp{getopt}, @samp{fnmatch}---and often new
-APIs---for example, for all functions that allocate memory in one way
+glibc --- examples: @samp{getopt}, @samp{fnmatch} --- and often new
+APIs --- for example, for all functions that allocate memory in one way
 or the other, we have variants which also include the error checking
 against the out-of-memory condition.
 
 @subsection Portable general use facilities
 
-Examples are a module for copying a file---the portability problems
+Examples are a module for copying a file --- the portability problems
 relate to the copying of the file's modification time, access rights,
-and extended attributes---or a module for extracting the tail
-component of a file name---here the portability to Woe32 requires a
+and extended attributes --- or a module for extracting the tail
+component of a file name --- here the portability to Woe32 requires a
 different API than the classical POSIX @code{basename} function.
 
 @subsection Reusable application code
