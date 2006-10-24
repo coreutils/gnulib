@@ -360,7 +360,7 @@ extern bool gl_sortedlist_remove (gl_list_t list,
 
 struct gl_list_implementation
 {
-  // gl_list_t functions.
+  /* gl_list_t functions.  */
   gl_list_t (*create_empty) (gl_list_implementation_t implementation,
 			     gl_listelement_equals_fn equals_fn,
 			     gl_listelement_hashcode_fn hashcode_fn,
@@ -392,7 +392,7 @@ struct gl_list_implementation
   bool (*remove_at) (gl_list_t list, size_t position);
   bool (*remove) (gl_list_t list, const void *elt);
   void (*list_free) (gl_list_t list);
-  // gl_list_iterator_t functions.
+  /* gl_list_iterator_t functions.  */
   gl_list_iterator_t (*iterator) (gl_list_t list);
   gl_list_iterator_t (*iterator_from_to) (gl_list_t list,
 					  size_t start_index,
@@ -400,7 +400,7 @@ struct gl_list_implementation
   bool (*iterator_next) (gl_list_iterator_t *iterator,
 			 const void **eltp, gl_list_node_t *nodep);
   void (*iterator_free) (gl_list_iterator_t *iterator);
-  // Sorted gl_list_t functions.
+  /* Sorted gl_list_t functions.  */
   gl_list_node_t (*sortedlist_search) (gl_list_t list,
 				       gl_listelement_compar_fn compar,
 				       const void *elt);

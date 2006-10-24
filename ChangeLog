@@ -1,3 +1,7 @@
+2006-10-24  Bruno Haible  <bruno@clisp.org>
+
+	* lib/gl_list.h: Use C comment style, not C++ comment style.
+
 2006-10-23  Eric Blake  <ebb9@byu.net>
 
 	* lib/getaddrinfo.c (includes): Add missing include.
