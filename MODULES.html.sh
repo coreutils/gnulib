@@ -1697,6 +1697,16 @@ func_all_modules ()
   func_wrap H2
   func_echo "$element"
 
+  element="Core language properties"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap isoc_core_properties
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module vararrays
+  func_end_table
+
   element="Sizes of integer types <limits.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap isoc_sup_limits

@@ -1,3 +1,9 @@
+2006-10-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/vararrays: New file.
+	* m4/vararrays.m4: New file.
+	* MODULES.html.sh: New module vararrays.
+
 2006-10-24  Karl Berry  <karl@gnu.org>
 
 	* doc/gnulib-intro.texi: --- instead of --; non-naive naive.
