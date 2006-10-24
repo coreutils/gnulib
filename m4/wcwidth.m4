@@ -1,4 +1,4 @@
-# wcwidth.m4 serial 5
+# wcwidth.m4 serial 6
 dnl Copyright (C) 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,7 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
 
   AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([gt_TYPE_WCHAR_T])
+  AC_REQUIRE([gt_TYPE_WINT_T])
 
   AC_CHECK_HEADERS_ONCE([wchar.h wctype.h])
   AC_CHECK_FUNCS_ONCE([iswprint wcwidth])

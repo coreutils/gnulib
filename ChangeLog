@@ -1,3 +1,9 @@
+2006-10-24  Bruno Haible  <bruno@clisp.org>
+
+	* modules/wcwidth (Files): Add m4/wint_t.m4.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Require gt_TYPE_WINT_T.
+	* lib/wcwidth.h (iswprint): Use 'int' if 'wint_t' is not defined.
+
 2006-10-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/getdate.y (yyerror): Make the arguments pointer-to-const,

@@ -5,6 +5,7 @@ Files:
 lib/wcwidth.h
 m4/wcwidth.m4
 m4/wchar_t.m4
+m4/wint_t.m4
 
 Depends-on:
 

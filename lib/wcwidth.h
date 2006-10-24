@@ -37,7 +37,11 @@
 # endif
 # if !defined iswprint && !HAVE_ISWPRINT
 static inline int
+#  if HAVE_WINT_T
 iswprint (wint_t wc)
+#  else
+iswprint (int wc)
+#  endif
 {
   return (wc >= 0 && wc < 128
 	  ? wc >= ' ' && wc <= '~'
