@@ -195,7 +195,7 @@ typedef struct
 
 union YYSTYPE;
 static int yylex (union YYSTYPE *, parser_control *);
-static int yyerror (parser_control *, char *);
+static int yyerror (parser_control const *, char const *);
 static long int time_zone_hhmm (textint, long int);
 
 %}
@@ -1106,7 +1106,8 @@ yylex (YYSTYPE *lvalp, parser_control *pc)
 
 /* Do nothing if the parser reports an error.  */
 static int
-yyerror (parser_control *pc ATTRIBUTE_UNUSED, char *s ATTRIBUTE_UNUSED)
+yyerror (parser_control const *pc ATTRIBUTE_UNUSED,
+	 char const *s ATTRIBUTE_UNUSED)
 {
   return 0;
 }
