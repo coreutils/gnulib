@@ -163,9 +163,6 @@ npgettext_aux (const char *domain,
 
 #include <string.h>
 
-/* GCC supports variable-size arrays in C and C++ mode.
-   ISO C++ supports variable-size arrays, but some older PGI and Sun compilers
-   don't.  */
 #define _LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS \
   (__GNUC__ >= 3 || (defined __cplusplus && defined __GNUC__))
 
