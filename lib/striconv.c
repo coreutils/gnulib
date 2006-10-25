@@ -80,8 +80,11 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
 	    else
 	      return -1;
 	  }
-# if !defined _LIBICONV_VERSION && (defined sgi || defined __sgi)
-	/* Irix iconv() inserts a NUL byte if it cannot convert.  */
+# if !defined _LIBICONV_VERSION && !defined __GLIBC__
+	/* Irix iconv() inserts a NUL byte if it cannot convert.
+	   NetBSD iconv() inserts a question mark if it cannot convert.
+	   Only GNU libiconv and GNU libc are known to prefer to fail rather
+	   than doing a lossy conversion.  */
 	else if (res > 0)
 	  {
 	    errno = EILSEQ;
@@ -147,8 +150,11 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
 	    else
 	      return -1;
 	  }
-# if !defined _LIBICONV_VERSION && (defined sgi || defined __sgi)
-	/* Irix iconv() inserts a NUL byte if it cannot convert.  */
+# if !defined _LIBICONV_VERSION && !defined __GLIBC__
+	/* Irix iconv() inserts a NUL byte if it cannot convert.
+	   NetBSD iconv() inserts a question mark if it cannot convert.
+	   Only GNU libiconv and GNU libc are known to prefer to fail rather
+	   than doing a lossy conversion.  */
 	else if (res > 0)
 	  {
 	    errno = EILSEQ;
@@ -288,8 +294,11 @@ str_cd_iconv (const char *src, iconv_t cd)
 	    else
 	      goto failed;
 	  }
-# if !defined _LIBICONV_VERSION && (defined sgi || defined __sgi)
-	/* Irix iconv() inserts a NUL byte if it cannot convert.  */
+# if !defined _LIBICONV_VERSION && !defined __GLIBC__
+	/* Irix iconv() inserts a NUL byte if it cannot convert.
+	   NetBSD iconv() inserts a question mark if it cannot convert.
+	   Only GNU libiconv and GNU libc are known to prefer to fail rather
+	   than doing a lossy conversion.  */
 	else if (res > 0)
 	  {
 	    errno = EILSEQ;

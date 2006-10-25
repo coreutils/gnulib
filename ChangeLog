@@ -1,3 +1,8 @@
+2006-10-24  Bruno Haible  <bruno@clisp.org>
+
+	* lib/striconv.c (mem_cd_iconv, str_cd_iconv): Treat all non-GNU
+	iconv implementations like Irix iconv.
+
 2006-10-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/vararrays: New file.
