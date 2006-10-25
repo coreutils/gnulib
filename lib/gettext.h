@@ -164,7 +164,7 @@ npgettext_aux (const char *domain,
 #include <string.h>
 
 #define _LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS \
-  (__GNUC__ >= 3 || (defined __cplusplus && defined __GNUC__))
+  (__GNUC__ >= 3 || __GNUG__ >= 2 /* || __STDC_VERSION__ >= 199901L */ )
 
 #if !_LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS
 #include <stdlib.h>
