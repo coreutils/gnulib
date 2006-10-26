@@ -430,7 +430,7 @@ mb_copy (mbchar_t *new, const mbchar_t *old)
 /* The character set is ISO-646, not EBCDIC. */
 # define IS_BASIC_ASCII 1
 
-extern unsigned int is_basic_table[];
+extern const unsigned int is_basic_table[];
 
 static inline bool
 is_basic (char c)
