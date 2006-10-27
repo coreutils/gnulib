@@ -1,4 +1,4 @@
-# lib-link.m4 serial 9 (gettext-0.15.1)
+# lib-link.m4 serial 9 (gettext-0.16)
 dnl Copyright (C) 2001-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

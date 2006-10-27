@@ -1,4 +1,4 @@
-# lock.m4 serial 6 (gettext-0.15.1)
+# lock.m4 serial 6 (gettext-0.16)
 dnl Copyright (C) 2005-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
