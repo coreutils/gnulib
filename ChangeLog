@@ -13,6 +13,7 @@
 	* m4/gettext.m4: Update to GNU gettext 0.16.
 	* m4/intl.m4: New file, from GNU gettext.
 	* m4/intldir.m4: New file, from GNU gettext.
+	* config/srclist.txt: Update
 
 2006-10-27  Eric Blake  <ebb9@byu.net>
 
