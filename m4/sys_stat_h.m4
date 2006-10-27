@@ -17,8 +17,12 @@ AC_DEFUN([gl_HEADER_SYS_STAT_H],
   dnl instead.
   AC_CHECK_DECLS([mkdir], [], [], [#include <sys/stat.h>])
 
+  dnl Check for broken stat macros.
+  AC_REQUIRE([AC_HEADER_STAT])
+
   SYS_STAT_H=
-  if test $ac_cv_func_lstat:$ac_cv_have_decl_mkdir != yes:yes ; then
+  if test $ac_cv_func_lstat:$ac_cv_have_decl_mkdir:$ac_cv_header_stat_broken \
+      != yes:yes:no ; then
     gl_ABSOLUTE_HEADER([sys/stat.h])
     ABSOLUTE_SYS_STAT_H=\"$gl_cv_absolute_sys_stat_h\"
     AC_CHECK_HEADERS([io.h])

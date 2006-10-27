@@ -1848,11 +1848,12 @@ func_all_modules ()
   func_module inet_ntop
   func_module inet_pton
   func_module mkdir
-  func_module mkstemp
   func_module mkdtemp
+  func_module mkstemp
   func_module poll
   func_module readlink
   func_module lstat
+  func_module tempname
   func_module time_r
   func_module timespec
   func_module nanosleep

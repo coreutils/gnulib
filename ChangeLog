@@ -1,3 +1,24 @@
+2006-10-27  Eric Blake  <ebb9@byu.net>
+
+	* MODULES.html.sh: Document tempname.
+	* modules/mkstemp (Depends-on): Add tempname, and drop transitive
+	dependencies.
+	(Files): Move lib/tempname.c...
+	* modules/tempname: ...to this new module.
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Remove tempname checks.
+	(gl_PREREQ_TEMPNAME): Move...
+	* m4/tempname.m4: ...to this new file.
+	* lib/mkstemp.c (includes) [!_LIBC]: Use tempname.h.
+	* modules/sys_stat (Depends-on): Add stat-macros.
+	* lib/stat_.h (includes): Pick up stat macros.
+	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Replace <sys/stat.h>
+	if stat macros are broken.
+	* lib/tempname.c (includes): No need to include "stat-macros.h".
+	(__gen_tempname) [!_LIBC]: Expose as gen_tempname.
+	(direxists, __path_search) [!_LIBC]: Don't compile these in
+	gnulib; the tmpdir module covers that.
+	* lib/tempname.h: New file.
+
 2006-10-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* COPYING: Explain how gnulib-tool converts licence headers.

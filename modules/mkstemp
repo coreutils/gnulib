@@ -4,14 +4,11 @@ mkstemp() function: create a private temporary file.
 Files:
 lib/mkstemp.h
 lib/mkstemp.c
-lib/tempname.c
 m4/mkstemp.m4
 
 Depends-on:
 extensions
-stat-macros
-stdint
-sys_stat
+tempname
 
 configure.ac:
 gl_FUNC_MKSTEMP

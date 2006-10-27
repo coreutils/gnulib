@@ -17,8 +17,11 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+/* Extracted from glibc sysdeps/posix/tempname.c.  See also tmpdir.c.  */
+
 #if !_LIBC
 # include <config.h>
+# include "tempname.h"
 #endif
 
 #include <sys/types.h>
@@ -63,10 +66,10 @@
 # define small_open __open
 # define large_open __open64
 #else
-# include "stat-macros.h"
 # define struct_stat64 struct stat
 # define small_open open
 # define large_open open
+# define __gen_tempname gen_tempname
 # define __getpid getpid
 # define __gettimeofday gettimeofday
 # define __mkdir mkdir
@@ -106,6 +109,7 @@
 # define uint64_t uintmax_t
 #endif
 
+#if _LIBC
 /* Return nonzero if DIR is an existent directory.  */
 static int
 direxists (const char *dir)
@@ -176,6 +180,7 @@ __path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
   sprintf (tmpl, "%.*s/%.*sXXXXXX", (int) dlen, dir, (int) plen, pfx);
   return 0;
 }
+#endif /* _LIBC */
 
 /* These are the characters used in temporary file names.  */
 static const char letters[] =
@@ -195,6 +200,7 @@ static const char letters[] =
    __GT_DIR:		create a directory, which will be mode 0700.
 
    We use a clever algorithm to get hard-to-predict names. */
+#if _LIBC || !HAVE___GEN_TEMPNAME
 int
 __gen_tempname (char *tmpl, int kind)
 {
@@ -315,3 +321,15 @@ __gen_tempname (char *tmpl, int kind)
   __set_errno (EEXIST);
   return -1;
 }
+
+#else /* !_LIBC && HAVE___GEN_TEMPNAME */
+
+# undef __gen_tempname
+extern int __gen_tempname (char *, int);
+int
+gen_tempname (char *tmpl, int kind)
+{
+  return __gen_tempname (tmpl, kind);
+}
+
+#endif /* !_LIBC && HAVE___GEN_TEMPNAME */

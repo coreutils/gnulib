@@ -1,4 +1,4 @@
-/* Provide a complete sys/stat header file.
+/* Provide a more complete sys/stat header file.
    Copyright (C) 2006 Free Software Foundation, Inc.
    Written by Eric Blake.
 
@@ -23,6 +23,8 @@
    incomplete.  It is intended to provide definitions and prototypes
    needed by an application.  Start with what the system provides.  */
 #include @ABSOLUTE_SYS_STAT_H@
+
+#include "stat-macros.h"
 
 /* mingw does not support symlinks, therefore it does not have lstat.  But
    without links, stat does just fine.  */

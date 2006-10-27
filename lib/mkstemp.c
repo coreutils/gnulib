@@ -18,7 +18,9 @@
 #if !_LIBC
 # include <config.h>
 # include "mkstemp.h"
-int __gen_tempname ();
+# include "tempname.h"
+# define __gen_tempname gen_tempname
+# define __GT_FILE GT_FILE
 #endif
 
 #include <stdio.h>
