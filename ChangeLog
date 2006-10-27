@@ -1,3 +1,12 @@
+2006-10-27  Bruno Haible  <bruno@clisp.org>
+
+	Update to GNU gettext 0.16.
+	* modules/gettext (Files): Add m4/intl.m4, m4/intldir.m4. Remove
+	m4/inttypes-h.m4, m4/signed.m4.
+	* m4/gettext.m4: Update to GNU gettext 0.16.
+	* m4/intl.m4: New file, from GNU gettext.
+	* m4/intldir.m4: New file, from GNU gettext.
+
 2006-10-27  Eric Blake  <ebb9@byu.net>
 
 	* MODULES.html.sh: Document tempname.
