@@ -21587,7 +21587,7 @@
 
 	* lib/basename.c (base_name): Add an assertion.
 
-2000-07-23  Bruno Haible  <clisp.cons.org>
+2000-07-23  Bruno Haible  <haible@clisp.cons.org>
 
 	* lib/quotearg.c: When the system forces us to redefine mbstate_t,
 	shadow its mbsinit function.
