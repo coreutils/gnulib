@@ -1,5 +1,12 @@
 2006-10-27  Bruno Haible  <bruno@clisp.org>
 
+	* m4/signed.m4: Remove file.
+	* m4/vasnprintf.m4 (gl_PREREQ_PRINTF_ARGS_: Remove bh_C_SIGNED
+	invocation.
+	* modules/vasnprintf (Files): Remove m4/signed.m4.
+
+2006-10-27  Bruno Haible  <bruno@clisp.org>
+
 	Update to GNU gettext 0.16.
 	* modules/gettext (Files): Add m4/intl.m4, m4/intldir.m4. Remove
 	m4/inttypes-h.m4, m4/signed.m4.
