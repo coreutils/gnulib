@@ -28,8 +28,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "stat-macros.h"
-
 /* The maximum link count for pipes; (nlink_t) -1 if not known.  */
 #ifndef PIPE_LINK_COUNT_MAX
 # define PIPE_LINK_COUNT_MAX ((nlink_t) (-1))

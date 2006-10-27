@@ -31,8 +31,6 @@
 #include <string.h>
 #include <errno.h>
 
-#include "stat-macros.h"
-
 /* lstat works differently on Linux and Solaris systems.  POSIX (see
    `pathname resolution' in the glossary) requires that programs like
    `ls' take into consideration the fact that FILE has a trailing slash

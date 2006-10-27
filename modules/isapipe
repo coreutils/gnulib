@@ -7,8 +7,8 @@ lib/isapipe.h
 m4/isapipe.m4
 
 Depends-on:
-stat-macros
 stdbool
+sys_stat
 unistd
 
 configure.ac:

@@ -7,7 +7,7 @@ lib/fchown-stub.c
 m4/chown.m4
 
 Depends-on:
-stat-macros
+sys_stat
 
 configure.ac:
 gl_FUNC_CHOWN

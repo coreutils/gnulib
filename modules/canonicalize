@@ -10,7 +10,7 @@ m4/canonicalize.m4
 Depends-on:
 cycle-check
 filenamecat
-stat-macros
+sys_stat
 xalloc
 xgetcwd
 xreadlink

@@ -11,6 +11,7 @@ dirname
 fcntl
 savewd
 stat-macros
+sys_stat
 
 configure.ac:
 gl_MKANCESDIRS

@@ -8,7 +8,7 @@ m4/euidaccess.m4
 
 Depends-on:
 group-member
-stat-macros
+sys_stat
 
 configure.ac:
 gl_FUNC_EUIDACCESS

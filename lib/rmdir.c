@@ -23,8 +23,6 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-#include "stat-macros.h"
-
 /* rmdir adapted from GNU tar.  */
 
 /* Remove directory DIR.

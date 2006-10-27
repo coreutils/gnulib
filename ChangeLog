@@ -1,3 +1,52 @@
+2006-10-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Move stat.h-substitute stuff from lib/stat-macros.h to lib/stat_.h.
+	stat-macros.h is now for our own macros, whereas stat_h is for
+	macros in the <sys/stat.h> name space.
+	* lib/stat-macros.h: Remove copyright notice, as this file is now tiny.
+	(STAT_MACROS_H): Remove.
+	(S_IFMT, S_ISBLK, S_ISCHR, S_ISDIR, S_ISFIFO, S_ISLNK, S_ISNAM):
+	(S_ISMPB, S_ISMPC, S_ISNWK, S_ISREG, S_ISSOCK, S_ISDOOR, S_ISPORT):
+	(S_TYPEISMQ, S_TYPEISTMO, S_TYPEISSEM, S_TYPEISSHM, S_ISCTG, S_ISOFD):
+	(S_ISOFL, S_ISWHT, S_ISUID, S_ISGID, S_ISVTX, S_IRUSR, S_IRGRP):
+	(S_IROTH, S_IWUSR, S_IWGRP, S_IWOTH, S_IXUSR, S_IXGRP, S_IXOTH):
+	(S_IRWXU, S_IRWXG, S_IRWXO, S_IXUGO, S_IRWXUGO):
+	Move these macros to ...
+	* lib/stat_.h: here.  Don't include stat-macros.h.
+	* lib/canonicalize.c: Don't include stat-macros.h.
+	* lib/chown.c: Likewise.
+	* lib/euidaccess.c: Likewise.
+	* lib/file-type.c: Likewise.
+	* lib/filemode.c: Likewise.
+	* lib/glob.c: Likewise.
+	* lib/isapipe.c: Likewise.
+	* lib/lchown.c: Likewise.
+	* lib/lstat.c: Likewise.
+	* lib/mkdir-p.c: Likewise.
+	* lib/rmdir.c: Likewise.
+	* m4/lchown.m4 (gl_FUNC_LCHOWN): Don't require gl_STAT_MACROS.
+	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Don't check for io.h
+	unless mkdir isn't declared, to speed up 'configure'.
+	Always create sys/stat.h, since it's unlikely any real sys/stat.h
+	would define all the S_* symbols.
+	* modules/canonicalize (Depends-on):
+	Depend on sys_stat, not stat-macros.
+	* modules/chown: Likewise.
+	* modules/euidaccess: Likewise.
+	* modules/filemode: Likewise.
+	* modules/file-type: Likewise.
+	* modules/glob: Likewise.
+	* modules/isapipe: Likewise.
+	* modules/lchown: Likewise.
+	* modules/lstat: Likewise.
+	* modules/mkancesdirs: Likewise.
+	* modules/rmdir: Likewise.
+	* modules/mkdir-p (Depends-on): Also depend on sys_stat.
+	* modules/modechange: Likewise.
+	* modules/stat-macros (Files): Remove m4/stat-macros.m4.
+	(configure.ac): Remove gl_STAT_MACROS.
+	* modules/sys_stat (Depends-on): Remove stat-macros.
+
 2006-10-27  Bruno Haible  <bruno@clisp.org>
 
 	* m4/signed.m4: Remove file.

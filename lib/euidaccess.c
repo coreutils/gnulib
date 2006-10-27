@@ -67,7 +67,6 @@
 #else
 
 # include "group-member.h"
-# include "stat-macros.h"
 
 #endif
 

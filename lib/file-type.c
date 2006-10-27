@@ -23,8 +23,6 @@
 
 #include "file-type.h"
 
-#include "stat-macros.h"
-
 #include <gettext.h>
 #define _(text) gettext (text)
 

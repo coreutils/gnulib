@@ -3,12 +3,10 @@ stat-related macros
 
 Files:
 lib/stat-macros.h
-m4/stat-macros.m4
 
 Depends-on:
 
 configure.ac:
-gl_STAT_MACROS
 
 Makefile.am:
 

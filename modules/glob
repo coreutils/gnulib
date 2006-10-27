@@ -15,9 +15,9 @@ extensions
 fnmatch
 getlogin_r
 mempcpy
-stat-macros
 stdbool
 strdup
+sys_stat
 unistd
 
 configure.ac:

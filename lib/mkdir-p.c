@@ -36,7 +36,6 @@
 #include "quote.h"
 #include "mkancesdirs.h"
 #include "savewd.h"
-#include "stat-macros.h"
 
 #ifndef HAVE_FCHMOD
 # define HAVE_FCHMOD false

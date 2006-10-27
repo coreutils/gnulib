@@ -6,7 +6,7 @@ lib/rmdir.c
 m4/rmdir.m4
 
 Depends-on:
-stat-macros
+sys_stat
 
 configure.ac:
 gl_FUNC_RMDIR

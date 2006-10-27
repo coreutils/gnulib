@@ -21,8 +21,6 @@
 
 #include "filemode.h"
 
-#include "stat-macros.h"
-
 /* The following is for Cray DMF (Data Migration Facility), which is a
    HSM file system.  A migrated file has a `st_dm_mode' that is
    different from the normal `st_mode', so any tests for migrated

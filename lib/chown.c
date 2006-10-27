@@ -33,8 +33,6 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include "stat-macros.h"
-
 /* Provide a more-closely POSIX-conforming version of chown on
    systems with one or both of the following problems:
    - chown doesn't treat an ID of -1 as meaning

@@ -36,7 +36,6 @@
 
 #include "cycle-check.h"
 #include "filenamecat.h"
-#include "stat-macros.h"
 #include "xalloc.h"
 #include "xgetcwd.h"
 

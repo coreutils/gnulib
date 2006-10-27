@@ -134,7 +134,6 @@
 #else /* !_LIBC */
 # include "getlogin_r.h"
 # include "mempcpy.h"
-# include "stat-macros.h"
 # include "strdup.h"
 # define __stat64(fname, buf)	stat (fname, buf)
 # define struct_stat64		struct stat

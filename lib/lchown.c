@@ -24,7 +24,6 @@
 #include "lchown.h"
 
 #include <sys/stat.h>
-#include "stat-macros.h"
 
 /* Work just like chown, except when FILE is a symbolic link.
    In that case, set errno to EOPNOTSUPP and return -1.
