@@ -1,3 +1,7 @@
+2006-10-28  Eric Blake  <ebb9@byu.net>
+
+	* lib/xstrndup.c: Assume config.h.
+
 2006-10-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Move stat.h-substitute stuff from lib/stat-macros.h to lib/stat_.h.
