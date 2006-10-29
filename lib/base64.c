@@ -41,9 +41,7 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 /* Get prototype. */
 #include "base64.h"

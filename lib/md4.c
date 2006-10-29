@@ -20,9 +20,7 @@
 /* Adapted by Simon Josefsson from gnulib md5.? and Libgcrypt
    cipher/md4.c . */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "md4.h"
 

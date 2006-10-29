@@ -1,5 +1,5 @@
 /* arctwo.c --- The RC2 cipher as described in RFC 2268.
- * Copyright (C) 2003, 2004, 2005 Free Software Foundation, Inc.
+ * Copyright (C) 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -27,9 +27,7 @@
  * The implementation here is based on Peter Gutmann's RRC.2 paper.
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "arctwo.h"
 

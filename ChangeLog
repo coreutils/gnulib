@@ -1,3 +1,29 @@
+2006-10-29  Eric Blake  <ebb9@byu.net>
+
+	* lib/arcfour.c: Assume config.h.
+	* lib/arctwo.c: Likewise.
+	* lib/base64.c: Likewise.
+	* lib/check-version.c: Likewise.
+	* lib/crc.c: Likewise.
+	* lib/des.c: Likewise.
+	* lib/gc-gnulib.c: Likewise.
+	* lib/gc-libgcrypt.c: Likewise.
+	* lib/gc-pbkdf2-sha1.c: Likewise.
+	* lib/getaddrinfo.c: Likewise.
+	* lib/getdelim.c: Likewise.
+	* lib/getline.c: Likewise.
+	* lib/hmac-md5.c: Likewise.
+	* lib/hmac-sha1.c: Likewise.
+	* lib/iconvme.c: Likewise.
+	* lib/md2.c: Likewise.
+	* lib/md4.c: Likewise.
+	* lib/memxor.c: Likewise.
+	* lib/read-file.c: Likewise.
+	* lib/readline.c: Likewise.
+	* lib/rijndael-alg-fst.c: Likewise.
+	* lib/rijndael-api-fst.c: Likewise.
+	* lib/xgetdomainname.c: Likewise.
+
 2006-10-28  Eric Blake  <ebb9@byu.net>
 
 	* lib/xstrndup.c: Assume config.h.

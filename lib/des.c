@@ -94,9 +94,7 @@
  */
 
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "des.h"
 
@@ -420,7 +418,7 @@ des_is_weak_key (const char * key)
     right = (data[4] << 24) | (data[5] << 16) | (data[6] << 8) | data[7];
 
 #define WRITE_64BIT_DATA(data, left, right)				   \
-    data[0] = (left >> 24) &0xff; data[1] = (left >> 16) &0xff; 	   \
+    data[0] = (left >> 24) &0xff; data[1] = (left >> 16) &0xff;	   \
     data[2] = (left >> 8) &0xff; data[3] = left &0xff;			   \
     data[4] = (right >> 24) &0xff; data[5] = (right >> 16) &0xff;	   \
     data[6] = (right >> 8) &0xff; data[7] = right &0xff;

@@ -20,9 +20,7 @@
 
 /* Note: This file is only built if GC uses internal functions. */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 /* Get prototype. */
 #include "gc.h"

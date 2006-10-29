@@ -1,6 +1,6 @@
 /* Functions to compute MD2 message digest of files or memory blocks.
    according to the definition of MD2 in RFC 1319 from April 1992.
-   Copyright (C) 1995,1996,1997,1999,2000,2001,2002,2003,2005
+   Copyright (C) 1995,1996,1997,1999,2000,2001,2002,2003,2005,2006
    Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -20,9 +20,7 @@
 /* Adapted by Simon Josefsson from public domain Libtomcrypt 1.06 by
    Tom St Denis. */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "md2.h"
 

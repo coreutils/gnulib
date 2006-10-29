@@ -1,5 +1,5 @@
 /* rijndael-alg-fst.c --- Rijndael cipher implementation.
- * Copyright (C) 2005 Free Software Foundation, Inc.
+ * Copyright (C) 2005, 2006 Free Software Foundation, Inc.
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -25,9 +25,7 @@
  * http://www.iaik.tu-graz.ac.at/research/krypto/AES/old/~rijmen/rijndael/rijndael-fst-3.0.zip
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 /**
  * rijndael-alg-fst.c

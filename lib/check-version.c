@@ -20,9 +20,7 @@
    gcry_check_version from Werner Koch's Libgcrypt.  Paul Eggert
    suggested the use of strverscmp to simplify implementation. */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include <stddef.h>
 #include <strverscmp.h>
