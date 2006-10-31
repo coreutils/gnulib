@@ -122,8 +122,8 @@ struct quoting_options *
 clone_quoting_options (struct quoting_options *o)
 {
   int e = errno;
-  struct quoting_options *p = xmalloc (sizeof *p);
-  *p = *(o ? o : &default_quoting_options);
+  struct quoting_options *p = xmemdup (o ? o : &default_quoting_options,
+				       sizeof *o);
   errno = e;
   return p;
 }
@@ -554,11 +554,18 @@ quotearg_alloc (char const *arg, size_t argsize,
 {
   int e = errno;
   size_t bufsize = quotearg_buffer (0, 0, arg, argsize, o) + 1;
-  char *buf = xmalloc (bufsize);
+  char *buf = xcharalloc (bufsize);
   quotearg_buffer (buf, bufsize, arg, argsize, o);
   errno = e;
   return buf;
 }
+
+/* A storage slot with size and pointer to a value.  */
+struct slotvec
+{
+  size_t size;
+  char *val;
+};
 
 /* Use storage slot N to return a quoted version of argument ARG.
    ARG is of size ARGSIZE, but if that is SIZE_MAX, ARG is a
@@ -579,13 +586,9 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
   static char slot0[256];
   static unsigned int nslots = 1;
   unsigned int n0 = n;
-  struct slotvec
-    {
-      size_t size;
-      char *val;
-    };
   static struct slotvec slotvec0 = {sizeof slot0, slot0};
   static struct slotvec *slotvec = &slotvec0;
+  struct slotvec *sv = slotvec;
 
   if (n < 0)
     abort ();
@@ -598,31 +601,29 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
 	 revert to the original type, so that the test in xalloc_oversized
 	 is once again performed only at compile time.  */
       size_t n1 = n0 + 1;
+      bool preallocated = (sv == &slotvec0);
 
-      if (xalloc_oversized (n1, sizeof *slotvec))
+      if (xalloc_oversized (n1, sizeof *sv))
 	xalloc_die ();
 
-      if (slotvec == &slotvec0)
-	{
-	  slotvec = xmalloc (sizeof *slotvec);
-	  *slotvec = slotvec0;
-	}
-      slotvec = xrealloc (slotvec, n1 * sizeof *slotvec);
-      memset (slotvec + nslots, 0, (n1 - nslots) * sizeof *slotvec);
+      slotvec = sv = xrealloc (preallocated ? NULL : sv, n1 * sizeof *sv);
+      if (preallocated)
+	*sv = slotvec0;
+      memset (sv + nslots, 0, (n1 - nslots) * sizeof *sv);
       nslots = n1;
     }
 
   {
-    size_t size = slotvec[n].size;
-    char *val = slotvec[n].val;
+    size_t size = sv[n].size;
+    char *val = sv[n].val;
     size_t qsize = quotearg_buffer (val, size, arg, argsize, options);
 
     if (size <= qsize)
       {
-	slotvec[n].size = size = qsize + 1;
+	sv[n].size = size = qsize + 1;
 	if (val != slot0)
 	  free (val);
-	slotvec[n].val = val = xmalloc (size);
+	sv[n].val = val = xcharalloc (size);
 	quotearg_buffer (val, size, arg, argsize, options);
       }
 

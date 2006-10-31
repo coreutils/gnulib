@@ -1,3 +1,16 @@
+2006-10-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Avoid some C++ diagnostics reported by Bruno Haible.
+	* lib/quotearg.c (clone_quoting_options): Use xmemdup rather than
+	xmalloc.
+	(quotearg_alloc): Use xcharalloc rather than xmalloc.
+	(struct slotvec): Move to top level.
+	(quotearg_n_options): Rewrite to avoid xmalloc.
+	* lib/xalloc.h (xcharalloc): New function.
+	* (xrealloc, xnrealloc, x2realloc, x2nrealloc, xmemdup):
+	[defined __cplusplus]: Add function template that provides result
+	type propagation.  This part of the change is from Bruno Haible.
+
 2006-10-29  Bruno Haible  <bruno@clisp.org>
 
 	Make it compile in C++ mode.

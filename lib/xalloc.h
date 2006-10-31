@@ -71,8 +71,51 @@ char *xstrdup (char const *str);
 # define xalloc_oversized(n, s) \
     ((size_t) (sizeof (ptrdiff_t) <= sizeof (size_t) ? -1 : -2) / (s) < (n))
 
+/* Return a pointer to a new buffer of S bytes.  This is like xmalloc,
+   except it returns char *.  */
+static inline char *
+xcharalloc (size_t s)
+{
+  return (char *) xmalloc (s);
+}
+
 # ifdef __cplusplus
 }
+
+/* C++ does not allow conversions from void * to other pointer types
+   without a cast.  Use templates to work around the problem when
+   possible.  */
+
+template <typename T> inline T *
+xrealloc (T *p, size_t s)
+{
+  return (T *) xrealloc ((void *) p, s);
+}
+
+template <typename T> inline T *
+xnrealloc (T *p, size_t n, size_t s)
+{
+  return (T *) xnrealloc ((void *) p, n, s);
+}
+
+template <typename T> inline T *
+x2realloc (T *p, size_t *pn)
+{
+  return (T *) x2realloc ((void *) p, pn);
+}
+
+template <typename T> inline T *
+x2nrealloc (T *p, size_t *pn, size_t s)
+{
+  return (T *) x2nrealloc ((void *) p, pn, s);
+}
+
+template <typename T> inline T *
+xmemdup (T const *p, size_t s)
+{
+  return (T *) xmemdup ((void const *) p, s);
+}
+
 # endif
 
 
