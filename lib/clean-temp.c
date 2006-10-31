@@ -154,8 +154,8 @@ static gl_list_t /* <int> */ volatile descriptors;
 static bool
 string_equals (const void *x1, const void *x2)
 {
-  const char *s1 = x1;
-  const char *s2 = x2;
+  const char *s1 = (const char *) x1;
+  const char *s2 = (const char *) x2;
   return strcmp (s1, s2) == 0;
 }
 
@@ -167,7 +167,7 @@ string_equals (const void *x1, const void *x2)
 static size_t
 string_hash (const void *x)
 {
-  const char *s = x;
+  const char *s = (const char *) x;
   size_t h = 0;
 
   for (; *s; s++)
@@ -251,7 +251,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
   struct tempdir * volatile *tmpdirp = NULL;
   struct tempdir *tmpdir;
   size_t i;
-  char *template;
+  char *xtemplate;
   char *tmpdirname;
 
   /* See whether it can take the slot of an earlier temporary directory
@@ -315,15 +315,15 @@ create_temp_dir (const char *prefix, const char *parentdir,
 					string_equals, string_hash, false);
 
   /* Create the temporary directory.  */
-  template = (char *) xallocsa (PATH_MAX);
-  if (path_search (template, PATH_MAX, parentdir, prefix, parentdir == NULL))
+  xtemplate = (char *) xallocsa (PATH_MAX);
+  if (path_search (xtemplate, PATH_MAX, parentdir, prefix, parentdir == NULL))
     {
       error (0, errno,
 	     _("cannot find a temporary directory, try setting $TMPDIR"));
       goto quit;
     }
   block_fatal_signals ();
-  tmpdirname = mkdtemp (template);
+  tmpdirname = mkdtemp (xtemplate);
   if (tmpdirname != NULL)
     {
       tmpdir->dirname = tmpdirname;
@@ -334,7 +334,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
     {
       error (0, errno,
 	     _("cannot create a temporary directory using template \"%s\""),
-	     template);
+	     xtemplate);
       goto quit;
     }
   /* Replace tmpdir->dirname with a copy that has indefinite extent.
@@ -342,11 +342,11 @@ create_temp_dir (const char *prefix, const char *parentdir,
      block because then the cleanup handler would not remove the directory
      if xstrdup fails.  */
   tmpdir->dirname = xstrdup (tmpdirname);
-  freesa (template);
+  freesa (xtemplate);
   return (struct temp_dir *) tmpdir;
 
  quit:
-  freesa (template);
+  freesa (xtemplate);
   return NULL;
 }
 

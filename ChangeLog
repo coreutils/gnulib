@@ -1,3 +1,17 @@
+2006-10-29  Bruno Haible  <bruno@clisp.org>
+
+	Make it compile in C++ mode.
+	* lib/striconv.c (mem_cd_iconv): Cast malloc/realloc result.
+	* lib/strnlen1.c (strnlen1): Cast memchr result.
+	* lib/mbchar.h (mb_copy): Rename arguments to 'new_mbc', 'old_mbc'.
+	* lib/clean-temp.c (string_equals, string_hash): Add casts.
+	(create_temp_dir): Rename local variable 'template'.
+	(compile_csharp_using_sscli): Add cast.
+	* lib/fatal-signal.c (at_fatal_signal): Cast xmalloc result.
+	* lib/findprog.c (find_in_path): Likewise.
+	* lib/linebreak.c (mbs_width_linebreaks): Cast malloc result.
+	* lib/wait-process.c (register_slave_subprocess): Likewise.
+
 2006-10-22  Bruno Haible  <bruno@clisp.org>
 
 	* modules/tsearch: New file.

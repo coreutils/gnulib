@@ -206,6 +206,7 @@ at_fatal_signal (action_t action)
       size_t old_actions_allocated = actions_allocated;
       size_t new_actions_allocated = 2 * actions_allocated;
       actions_entry_t *new_actions =
+	(actions_entry_t *)
 	xmalloc (new_actions_allocated * sizeof (actions_entry_t));
       size_t k;
 

@@ -114,7 +114,8 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
       *lengthp = 0;
       return 0;
     }
-  result = (*resultp != NULL ? realloc (*resultp, length) : malloc (length));
+  result =
+    (char *) (*resultp != NULL ? realloc (*resultp, length) : malloc (length));
   if (result == NULL)
     {
       errno = ENOMEM;

@@ -400,7 +400,8 @@ compile_csharp_using_sscli (const char * const *sources,
 
       argp = argv;
       *argp++ = "csc";
-      *argp++ = (output_is_library ? "-target:library" : "-target:exe");
+      *argp++ =
+	(char *) (output_is_library ? "-target:library" : "-target:exe");
       {
 	char *option = (char *) xallocsa (5 + strlen (output_file) + 1);
 	memcpy (option, "-out:", 5);

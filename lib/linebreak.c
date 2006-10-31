@@ -1617,6 +1617,7 @@ mbs_width_linebreaks (const char *s, size_t n,
 		xsum4 (xtimes (n, sizeof (size_t)), m, m,
 		       (o != NULL ? m : 0));
 	      char *memory =
+		(char *)
 		(size_in_bounds_p (memory_size) ? malloc (memory_size) : NULL);
               if (memory != NULL)
                 {

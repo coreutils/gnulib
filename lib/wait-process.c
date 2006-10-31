@@ -203,6 +203,7 @@ register_slave_subprocess (pid_t child)
       slaves_entry_t *old_slaves = slaves;
       size_t new_slaves_allocated = 2 * slaves_allocated;
       slaves_entry_t *new_slaves =
+	(slaves_entry_t *)
 	malloc (new_slaves_allocated * sizeof (slaves_entry_t));
       if (new_slaves == NULL)
 	{

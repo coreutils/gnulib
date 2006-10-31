@@ -92,7 +92,7 @@ find_in_path (const char *progname)
 	      /* Add the "./" prefix for real, that concatenated_pathname()
 		 optimized away.  This avoids a second PATH search when the
 		 caller uses execlp/execvp.  */
-	      progpathname = xmalloc (2 + strlen (progname) + 1);
+	      progpathname = (char *) xmalloc (2 + strlen (progname) + 1);
 	      progpathname[0] = '.';
 	      progpathname[1] = '/';
 	      memcpy (progpathname + 2, progname, strlen (progname) + 1);
