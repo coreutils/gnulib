@@ -1,3 +1,11 @@
+2006-10-22  Bruno Haible  <bruno@clisp.org>
+
+	* modules/tsearch: New file.
+	* lib/tsearch.h: New file.
+	* lib/tsearch.c: New file, from glibc-2.5 with small modifications.
+	* m4/tsearch.m4: New file.
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add tsearch.
+
 2006-10-29  Eric Blake  <ebb9@byu.net>
 
 	* lib/arcfour.c: Assume config.h.

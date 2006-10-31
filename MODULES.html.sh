@@ -1864,6 +1864,7 @@ func_all_modules ()
   func_module ssize_t
   func_module strtok_r
   func_module sys_stat
+  func_module tsearch
   func_module unistd
   func_module utime
   func_module wcwidth
