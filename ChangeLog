@@ -1,5 +1,11 @@
 2006-11-01  Bruno Haible  <bruno@clisp.org>
 
+	* m4/strcase.m4 (gl_FUNC_STRCASECMP): Don't define strcasecmp here.
+	* lib/strcase.h: Include <string.h>.
+	(strcasecmp): Define to rpl_strcasecmp here.
+
+2006-11-01  Bruno Haible  <bruno@clisp.org>
+
 	* lib/printf-parse.c (PRINTF_PARSE): Cast malloc/realloc results.
 
 2006-11-01  Eric Blake  <ebb9@byu.net>
