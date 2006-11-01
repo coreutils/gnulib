@@ -29,7 +29,7 @@
    STDERR_FILENO.  */
 
 int
-mkstemp_safer (char *template)
+mkstemp_safer (char *templ)
 {
-  return fd_safer (mkstemp (template));
+  return fd_safer (mkstemp (templ));
 }
