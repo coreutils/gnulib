@@ -60,7 +60,7 @@ size_t
 full_rw (int fd, const void *buf, size_t count)
 {
   size_t total = 0;
-  const char *ptr = buf;
+  const char *ptr = (const char *) buf;
 
   while (count > 0)
     {
