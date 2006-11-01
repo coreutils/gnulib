@@ -1,3 +1,12 @@
+2006-10-31  Eric Blake  <ebb9@byu.net>
+
+	* modules/tmpdir (Depends-on): Add sys_stat.
+	* modules/mkdtemp (Depends-on): Add tempname, drop unistd.
+	* lib/mkdtemp.c (gen_tempname): Remove; tempname covers this.
+	* lib/tmpdir.c (S_ISDIR): Simplify, thanks to sys_stat.
+	* m4/mkdtemp.m4 (gl_PREREQ_MKDTEMP): Simplify, thanks to
+	tempname.
+
 2006-10-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Avoid some C++ diagnostics reported by Bruno Haible.

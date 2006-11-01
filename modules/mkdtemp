@@ -8,7 +8,7 @@ m4/mkdtemp.m4
 
 Depends-on:
 stdint
-unistd
+tempname
 
 configure.ac:
 gt_FUNC_MKDTEMP

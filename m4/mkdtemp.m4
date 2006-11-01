@@ -14,9 +14,5 @@ AC_DEFUN([gt_FUNC_MKDTEMP],
 
 # Prerequisites of lib/mkdtemp.c
 AC_DEFUN([gl_PREREQ_MKDTEMP],
-[
-  AC_REQUIRE([AC_HEADER_STAT])
-  AC_CHECK_HEADERS_ONCE(sys/time.h unistd.h)
-  AC_CHECK_HEADERS(time.h)
-  AC_CHECK_FUNCS(gettimeofday)
+[:
 ])
