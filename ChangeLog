@@ -1,3 +1,7 @@
+2006-11-01  Eric Blake  <ebb9@byu.net>
+
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Allow C++ configuration.
+
 2006-10-29  Bruno Haible  <bruno@clisp.org>
 
 	Make it compile in C++ mode.

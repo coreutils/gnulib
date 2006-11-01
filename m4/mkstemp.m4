@@ -1,4 +1,4 @@
-#serial 15
+#serial 16
 
 # Copyright (C) 2001, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -28,9 +28,9 @@ AC_DEFUN([gl_FUNC_MKSTEMP],
 	      large = 2147483647;
 	    for (i = 0; i < 70; i++)
 	      {
-		char template[] = "conftest.mkstemp/coXXXXXX";
+		char templ[] = "conftest.mkstemp/coXXXXXX";
 		int (*mkstemp_function) (char *) = mkstemp;
-		int fd = mkstemp_function (template);
+		int fd = mkstemp_function (templ);
 		if (fd < 0 || lseek (fd, large, SEEK_SET) != large)
 		  return 1;
 		close (fd);
