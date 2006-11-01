@@ -1,3 +1,7 @@
+2006-11-01  Eric Blake  <ebb9@byu.net>
+
+	* lib/getopt_.h: Fix comments.
+
 2006-10-31  Eric Blake  <ebb9@byu.net>
 
 	* modules/tmpdir (Depends-on): Add sys_stat.
