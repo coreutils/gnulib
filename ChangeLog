@@ -1,3 +1,7 @@
+2006-11-01  Bruno Haible  <bruno@clisp.org>
+
+	* lib/printf-parse.c (PRINTF_PARSE): Cast malloc/realloc results.
+
 2006-11-01  Eric Blake  <ebb9@byu.net>
 
 	* lib/mkstemp-safer.c (mkstemp_safer): Allow C++ compilation.

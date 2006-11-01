@@ -68,7 +68,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 
   d->count = 0;
   d_allocated = 1;
-  d->dir = malloc (d_allocated * sizeof (DIRECTIVE));
+  d->dir = (DIRECTIVE *) malloc (d_allocated * sizeof (DIRECTIVE));
   if (d->dir == NULL)
     /* Out of memory.  */
     return -1;
@@ -92,9 +92,9 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 	if (size_overflow_p (memory_size))				\
 	  /* Overflow, would lead to out of memory.  */			\
 	  goto error;							\
-	memory = (a->arg						\
-		  ? realloc (a->arg, memory_size)			\
-		  : malloc (memory_size));				\
+	memory = (argument *) (a->arg					\
+			       ? realloc (a->arg, memory_size)		\
+			       : malloc (memory_size));			\
 	if (memory == NULL)						\
 	  /* Out of memory.  */						\
 	  goto error;							\
@@ -515,7 +515,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 	      if (size_overflow_p (memory_size))
 		/* Overflow, would lead to out of memory.  */
 		goto error;
-	      memory = realloc (d->dir, memory_size);
+	      memory = (DIRECTIVE *) realloc (d->dir, memory_size);
 	      if (memory == NULL)
 		/* Out of memory.  */
 		goto error;
