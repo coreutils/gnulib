@@ -43,7 +43,9 @@ extern int strcasecmp (const char *s1, const char *s2);
    returning less than, equal to or greater than zero if S1 is
    lexicographically less than, equal to or greater than S2.
    Note: This function can not work correctly in multibyte locales.  */
+#if ! HAVE_DECL_STRNCASECMP
 extern int strncasecmp (const char *s1, const char *s2, size_t n);
+#endif
 
 
 #ifdef __cplusplus

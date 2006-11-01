@@ -21,6 +21,7 @@ AC_DEFUN([gl_FUNC_STRCASECMP],
 AC_DEFUN([gl_FUNC_STRNCASECMP],
 [
   AC_REPLACE_FUNCS(strncasecmp)
+  AC_CHECK_DECLS(strncasecmp)
   if test $ac_cv_func_strncasecmp = no; then
     gl_PREREQ_STRNCASECMP
   fi
