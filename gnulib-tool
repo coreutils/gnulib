@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-10-23 11:25:20 $'
+cvsdatestamp='$Date: 2006-11-01 13:20:07 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -916,8 +916,7 @@ func_get_automake_snippet ()
       sed_combine_lines='/\\$/{
         :a
         N
-        s/\\\
-//
+        s/\\\n//
         s/\\$/\\/
         ta
       }'
