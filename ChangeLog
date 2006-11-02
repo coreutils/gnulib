@@ -1,3 +1,10 @@
+2006-11-02  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_get_automake_snippet): Interpret a backslash-
+	newline sequence in the Makefile.am snippet as a space, like "make"
+	does.
+	Reported by Roger Persson <perrog@gmail.com>.
+
 2006-11-01  Bruno Haible  <bruno@clisp.org>
 
 	* m4/strcase.m4 (gl_FUNC_STRNCASECMP): Check whether strncasecmp is
