@@ -1,3 +1,13 @@
+2006-11-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/canonicalize.h: (canonicalize_mode_t, CAN_EXISTING):
+	(CAN_ALL_BUT_LAST, CAN_MISSING, canonicalize_filename_mode):
+	Define only if PROVIDE_CANONICALIZE_FILENAME_MODE is defined.
+	* m4/canonicalize.m4 (AC_FUNC_CANONICALIZE_FILE_NAME):
+	Check for functions and headers just once.
+	Check for declaration of canonicalize_file_name.
+	Define PROVIDE_CANONICALIZE_FILENAME_MODE.
+
 2006-11-02  Charles Wilson  <cygwin@cwilson.fastmail.fm>
 
 	* gnulib-tool (func_import): Fix typo in actioncmd.
