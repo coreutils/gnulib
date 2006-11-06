@@ -21,6 +21,9 @@
 	now call us.
 	(x2realloc): Invoke x2realloc, not x2realloc_inline, to accommodate
 	renaming described above.
+	* m4/xalloc.m4 (gl_PREREQ_XMALLOC): Remove AC_C_INLINE since
+	xmalloc.c no longer uses inline directly.  gl_PREREQ_XALLOC now
+	captures the dependency in AC_C_INLINE.
 
 	New module canonicalize-lgpl, proposed by Charles Wilson in
 	<http://lists.gnu.org/archive/html/bug-gnulib/2006-11/msg00020.html>
