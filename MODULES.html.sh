@@ -1704,6 +1704,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module flexmember
   func_module vararrays
   func_end_table
 

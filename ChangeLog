@@ -1,5 +1,8 @@
 2006-11-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* MODULES.html.sh (Core language properties): New module flexmember.
+	* modules/flexmember, m4/flexmember.m4: New files.
+
 	* lib/xalloc.h (xnmalloc, xnrealloc, x2nrealloc): Now static
 	inline functions that are identical with the old xnmalloc_inline,
 	xnrealloc_inline, x2nrealloc_inline of lib/xmalloc.c.  This is so
