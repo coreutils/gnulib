@@ -58,8 +58,7 @@ gl_array_create_empty (gl_list_implementation_t implementation,
 		       gl_listelement_hashcode_fn hashcode_fn,
 		       bool allow_duplicates)
 {
-  struct gl_list_impl *list =
-    (struct gl_list_impl *) xmalloc (sizeof (struct gl_list_impl));
+  struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
 
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
@@ -79,8 +78,7 @@ gl_array_create (gl_list_implementation_t implementation,
 		 bool allow_duplicates,
 		 size_t count, const void **contents)
 {
-  struct gl_list_impl *list =
-    (struct gl_list_impl *) xmalloc (sizeof (struct gl_list_impl));
+  struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
 
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
@@ -88,8 +86,7 @@ gl_array_create (gl_list_implementation_t implementation,
   list->base.allow_duplicates = allow_duplicates;
   if (count > 0)
     {
-      list->elements =
-	(const void **) xmalloc (count * sizeof (const void *));
+      list->elements = XNMALLOC (count, const void *);
       memcpy (list->elements, contents, count * sizeof (const void *));
     }
   else

@@ -88,7 +88,7 @@ shell_quote_argv (char **argv)
 	    break;
 	}
 
-      command = (char *) xmalloc (length);
+      command = XNMALLOC (length, char);
 
       p = command;
       for (argp = argv; ; )

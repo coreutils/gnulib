@@ -64,7 +64,7 @@ xstrcat (size_t argcount, va_list args)
     }
 
   /* Allocate and fill the result string.  */
-  result = (char *) xmalloc (totalsize + 1);
+  result = XNMALLOC (totalsize + 1, char);
   p = result;
   for (i = argcount; i > 0; i--)
     {

@@ -273,8 +273,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
 	  size_t old_allocated = cleanup_list.tempdir_allocated;
 	  size_t new_allocated = 2 * cleanup_list.tempdir_allocated + 1;
 	  struct tempdir * volatile *new_array =
-	    (struct tempdir * volatile *)
-	    xmalloc (new_allocated * sizeof (struct tempdir * volatile));
+	    XNMALLOC (new_allocated, struct tempdir * volatile);
 
 	  if (old_allocated == 0)
 	    /* First use of this facility.  Register the cleanup handler.  */
@@ -306,7 +305,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
     }
 
   /* Initialize a 'struct tempdir'.  */
-  tmpdir = (struct tempdir *) xmalloc (sizeof (struct tempdir));
+  tmpdir = XMALLOC (struct tempdir);
   tmpdir->dirname = NULL;
   tmpdir->cleanup_verbose = cleanup_verbose;
   tmpdir->subdirs = gl_list_create_empty (GL_LINKEDHASH_LIST,

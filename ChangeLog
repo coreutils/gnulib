@@ -1,5 +1,35 @@
 2006-11-03  Bruno Haible  <bruno@clisp.org>
 
+	Simplify xmalloc expressions. Add overflow check in xmalloc arguments.
+	* m4/xalloc.m4 (gl_PREREQ_XALLOC): Require AC_C_INLINE.
+	* lib/xalloc.h (XMALLOC, XNMALLOC, XZALLOC, XCALLOC): New macros.
+	(xnboundedmalloc): New inline function.
+	* lib/classpath.c (new_classpath): Use XNMALLOC instead of xmalloc.
+	* lib/clean-temp.c (create_temp_dir): Use XNMALLOC, XMALLOC instead of
+	xmalloc.
+	* lib/concatpath.c (concatenated_pathname): Use XNMALLOC instead of
+	xmalloc.
+	* lib/fatal-signal.c (at_fatal_signal): Use XNMALLOC instead of xmalloc.
+	* lib/findprog.c (find_in_path): Use XNMALLOC instead of xmalloc.
+	* lib/gl_array_list.c (gl_array_create_empty): Use XMALLOC instead of
+	xmalloc.
+	(gl_array_create): Use XNMALLOC, XMALLOC instead of xmalloc.
+	* lib/gl_array_oset.c (gl_array_create_empty): Use XNMALLOC instead of
+	xmalloc.
+	* lib/gl_avltree_oset.c (gl_tree_add_first, gl_tree_add_before,
+	gl_tree_add_after): Use XMALLOC instead of xmalloc.
+	* lib/gl_carray_list.c (gl_carray_create_empty): Use XMALLOC instead of
+	xmalloc.
+	(gl_carray_create): Use XNMALLOC, XMALLOC instead of xmalloc.
+	* lib/gl_rbtree_oset.c (gl_tree_add_first, gl_tree_add_before,
+	gl_tree_add_after): Use XMALLOC instead of xmalloc.
+	* lib/gl_sublist.c (gl_sublist_create): Use XMALLOC instead of xmalloc.
+	* lib/pagealign_alloc.c (new_memnode): Use XMALLOC instead of xmalloc.
+	* lib/sh-quote.c (shell_quote_argv): Use XNMALLOC instead of xmalloc.
+	* lib/xvasprintf.c (xstrcat): Use XNMALLOC instead of xmalloc.
+
+2006-11-03  Bruno Haible  <bruno@clisp.org>
+
 	* lib/c-ctype.h [C++]: Define functions without name mangling.
 	* lib/fwriteerror.h [C++]: Likewise.
 	* lib/gcd.h [C++]: Likewise.

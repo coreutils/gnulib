@@ -71,12 +71,57 @@ char *xstrdup (char const *str);
 # define xalloc_oversized(n, s) \
     ((size_t) (sizeof (ptrdiff_t) <= sizeof (size_t) ? -1 : -2) / (s) < (n))
 
-/* Return a pointer to a new buffer of S bytes.  This is like xmalloc,
-   except it returns char *.  */
-static inline char *
-xcharalloc (size_t s)
+/* In the following macros, T must be an elementary or structure/union or
+   typedef'ed type, or a pointer to such a type.  To apply one of the
+   following macros to a function pointer or array type, you need to typedef
+   it first and use the typedef name.  */
+
+/* Allocate an object of type T dynamically, with error checking.  */
+/* extern T *XMALLOC (typename T); */
+#define XMALLOC(T) \
+  ((T *) xmalloc (sizeof (T)))
+
+/* Allocate memory for NMEMB elements of type T, with error checking.  */
+/* extern T *XNMALLOC (size_t nmemb, typename T); */
+#if HAVE_INLINE
+/* xnmalloc performs a division and multiplication by sizeof (T).  Arrange to
+   perform the division at compile-time and the multiplication with a factor
+   known at compile-time.  */
+# define XNMALLOC(N,T) \
+   ((T *) (sizeof (T) == 1 \
+	   ? xmalloc (N) \
+	   : xnboundedmalloc(N, (size_t) (sizeof (ptrdiff_t) <= sizeof (size_t) ? -1 : -2) / sizeof (T), sizeof (T))))
+static inline void *
+xnboundedmalloc (size_t n, size_t bound, size_t s)
 {
-  return (char *) xmalloc (s);
+  if (n > bound)
+    xalloc_die ();
+  return xmalloc (n * s);
+}
+#else
+# define XNMALLOC(N,T) \
+   ((T *) (sizeof (T) == 1 ? xmalloc (N) : xnmalloc (N, sizeof (T))))
+#endif
+
+/* Allocate an object of type T dynamically, with error checking,
+   and zero it.  */
+/* extern T *XZALLOC (typename T); */
+#define XZALLOC(T) \
+  ((T *) xzalloc (sizeof (T)))
+
+/* Allocate memory for NMEMB elements of type T, with error checking,
+   and zero it.  */
+/* extern T *XCALLOC (size_t nmemb, typename T); */
+#define XCALLOC(N,T) \
+  ((T *) xcalloc (N, sizeof (T)))
+
+/* Return a pointer to a new buffer of N bytes.  This is like xmalloc,
+   except it returns char *.
+   xcharalloc (N) is equivalent to XNMALLOC (N, char).  */
+static inline char *
+xcharalloc (size_t n)
+{
+  return (char *) xmalloc (n);
 }
 
 # ifdef __cplusplus

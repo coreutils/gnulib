@@ -81,7 +81,7 @@ static memnode_t *memnode_table = NULL;
 static void
 new_memnode (void *aligned_ptr, info_t info)
 {
-  memnode_t *new_node = (memnode_t *) xmalloc (sizeof (memnode_t));
+  memnode_t *new_node = XMALLOC (memnode_t);
   new_node->aligned_ptr = aligned_ptr;
   new_node->info = info;
   new_node->next = memnode_table;

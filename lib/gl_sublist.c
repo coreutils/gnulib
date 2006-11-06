@@ -430,8 +430,7 @@ gl_sublist_create (gl_list_t whole_list, size_t start_index, size_t end_index)
     /* Invalid arguments.  */
     abort ();
   {
-    struct gl_list_impl *list =
-      (struct gl_list_impl *) xmalloc (sizeof (struct gl_list_impl));
+    struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
 
     list->base.vtable = &gl_sublist_list_implementation;
     list->base.equals_fn = whole_list->base.equals_fn; /* actually unused */

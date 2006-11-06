@@ -42,9 +42,10 @@ concatenated_pathname (const char *directory, const char *filename,
   if (strcmp (directory, ".") == 0)
     {
       /* No need to prepend the directory.  */
-      result = (char *) xmalloc (strlen (filename)
-				 + (suffix != NULL ? strlen (suffix) : 0)
-				 + 1);
+      result = XNMALLOC (strlen (filename)
+			 + (suffix != NULL ? strlen (suffix) : 0)
+			 + 1,
+			 char);
       p = result;
     }
   else
@@ -53,10 +54,11 @@ concatenated_pathname (const char *directory, const char *filename,
       int need_slash =
 	(directory_len > FILE_SYSTEM_PREFIX_LEN (directory)
 	 && !ISSLASH (directory[directory_len - 1]));
-      result = (char *) xmalloc (directory_len + need_slash
-				 + strlen (filename)
-				 + (suffix != NULL ? strlen (suffix) : 0)
-				 + 1);
+      result = XNMALLOC (directory_len + need_slash
+			 + strlen (filename)
+			 + (suffix != NULL ? strlen (suffix) : 0)
+			 + 1,
+			 char);
       memcpy (result, directory, directory_len);
       p = result + directory_len;
       if (need_slash)

@@ -66,7 +66,7 @@ new_classpath (const char * const *classpaths, unsigned int classpaths_count,
   if (classpaths_count > 0 && old_classpath[0] == '\0')
     length--;
 
-  result = (char *) xmalloc (length + 1);
+  result = XNMALLOC (length + 1, char);
   p = result;
   for (i = 0; i < classpaths_count; i++)
     {

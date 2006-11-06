@@ -542,8 +542,7 @@ static gl_oset_node_t
 gl_tree_add_first (gl_oset_t set, const void *elt)
 {
   /* Create new node.  */
-  gl_oset_node_t new_node =
-    (struct gl_oset_node_impl *) xmalloc (sizeof (struct gl_oset_node_impl));
+  gl_oset_node_t new_node = XMALLOC (struct gl_oset_node_impl);
 
   new_node->left = NULL;
   new_node->right = NULL;
@@ -578,8 +577,7 @@ static gl_oset_node_t
 gl_tree_add_before (gl_oset_t set, gl_oset_node_t node, const void *elt)
 {
   /* Create new node.  */
-  gl_oset_node_t new_node =
-    (struct gl_oset_node_impl *) xmalloc (sizeof (struct gl_oset_node_impl));
+  gl_oset_node_t new_node = XMALLOC (struct gl_oset_node_impl);
 
   new_node->left = NULL;
   new_node->right = NULL;
@@ -607,8 +605,7 @@ static gl_oset_node_t
 gl_tree_add_after (gl_oset_t set, gl_oset_node_t node, const void *elt)
 {
   /* Create new node.  */
-  gl_oset_node_t new_node =
-    (struct gl_oset_node_impl *) xmalloc (sizeof (struct gl_oset_node_impl));
+  gl_oset_node_t new_node = XMALLOC (struct gl_oset_node_impl);
 
   new_node->left = NULL;
   new_node->right = NULL;

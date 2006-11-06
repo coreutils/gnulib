@@ -45,8 +45,7 @@ static gl_oset_t
 gl_array_create_empty (gl_oset_implementation_t implementation,
 		       gl_setelement_compar_fn compar_fn)
 {
-  struct gl_oset_impl *set =
-    (struct gl_oset_impl *) xmalloc (sizeof (struct gl_oset_impl));
+  struct gl_oset_impl *set = XMALLOC (struct gl_oset_impl);
 
   set->base.vtable = implementation;
   set->base.compar_fn = compar_fn;
