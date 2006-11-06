@@ -1,3 +1,12 @@
+2006-11-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh (File system functions): New module
+	canonicalize-lgpl.
+	* lib/canonicalize.h: Add comments for canonicalize_filename_mode
+	and canonicalize_file_name.
+	* lib/canonicalize-lgpl.c, m4/canonicalize-lgpl.m4:
+	* modules/canonicalize-lgpl: New files.
+
 2006-11-05  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import, func_create_testdir): Create directories
@@ -1974,7 +1983,7 @@
 	* lib/mkdir-p.c: Include dirname.h, for IS_ABSOLUTE_FILE_NAME.
 	(make_dir_parents): Use a subprocess if necessary.  New arg WD;
 	all users changed.
-	* lib/savewd.c, savewd.h: New files.
+	* lib/savewd.c, lib/savewd.h: New files.
 
 2006-09-15  Jim Meyering  <jim@meyering.net>
 
@@ -2500,7 +2509,7 @@
 
 2006-08-29  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* lib/isapipe.c, isapipe.h: New files.
+	* lib/isapipe.c, lib/isapipe.h: New files.
 
 2006-08-29  Jim Meyering  <jim@meyering.net>
 
@@ -3566,7 +3575,7 @@
 
 	* m4/cycle-check.m4: New file.
 	Require gl_STRUCT_DEV_INO and gl_SAME_INODE.
-	* m4/dev-ino.m4, same-inode.m4: New files.
+	* m4/dev-ino.m4, m4/same-inode.m4: New files.
 
 2006-08-10  Eric Blake  <ebb9@byu.net>
 
@@ -3638,7 +3647,7 @@
 
 2006-08-08  Eric Blake  <ebb9@byu.net>
 
-	* lib/verror.h, verror.c: New files.
+	* lib/verror.h, lib/verror.c: New files.
 
 2006-08-08  Eric Blake  <ebb9@byu.net>
 
@@ -3979,7 +3988,7 @@
 
 2006-07-22  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* lib/close-stream.c, close-stream.h: New files.
+	* lib/close-stream.c, lib/close-stream.h: New files.
 
 2006-07-22  Bruno Haible  <bruno@clisp.org>
 
@@ -4282,7 +4291,7 @@
 	* modules/oset: New file.
 	* modules/array-oset: New file.
 	* modules/avltree-oset, modules/avltree-oset-tests: New files.
-	* modules/rbtree-oset, rbtree-oset-tests: New files.
+	* modules/rbtree-oset, modules/rbtree-oset-tests: New files.
 	* tests/test-carray_list.c: New file.
 	* tests/test-linked_list.c: New file.
 	* tests/test-avltree_list.c: New file.
@@ -4351,8 +4360,8 @@
 
 2006-07-16  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* lib/dirchownmod.c, dirchownmod.h, mkancesdirs.c, mkancesdirs.h:
-	New files.
+	* lib/dirchownmod.c, lib/dirchownmod.h, lib/mkancesdirs.c:
+	* lib/mkancesdirs.h: New files.
 	* lib/mkdir-p.c: Don't include alloca.h, stdio.h, sys/types.h,
 	unistd.h, string.h, chdir-safer.h, dirname.h, lchmod.h, lchown.h,
 	save-cwd.h.  Instead, include dirchownmod.h and mkancesdirs.h.
@@ -5790,7 +5799,8 @@
 2006-04-18  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
-	* m4/_inttypes_h.m4, full-header-path.m4, include_next: New files.
+	* m4/_inttypes_h.m4, m4/full-header-path.m4, m4/include_next.m4:
+	New files.
 
 2006-04-18  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
@@ -7001,7 +7011,7 @@
 
 	* lib/version-etc.c (COPYRIGHT_YEAR): Update to 2006.
 
-	* lib/chdir-safer.h, chdir-safer.c: New files.
+	* lib/chdir-safer.h, lib/chdir-safer.c: New files.
 
 	* lib/modechange.c (mode_compile): Reject an invalid mode string
 	that starts with an octal digit.  From Andreas Gruenbacher.
@@ -7189,7 +7199,7 @@
 
 2005-12-16  Jim Meyering  <jim@meyering.net>
 
-	* lib/fprintftime.c, fprintftime.h: New files.
+	* lib/fprintftime.c, lib/fprintftime.h: New files.
 
 2005-12-15  Simon Josefsson  <jas@extundo.com>
 
@@ -7403,7 +7413,7 @@
 
 	* lib/gc-gnulib.c: Add MD2.  Implement gc_hash_* API.
 
-	* lib/md2.h, md2.c: New files.
+	* lib/md2.h, lib/md2.c: New files.
 
 2005-10-28  Paul Eggert  <eggert@cs.ucla.edu>
 
@@ -7511,13 +7521,13 @@
 
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
-	* lib/des.h, des.c: New files.
+	* lib/des.h, lib/des.c: New files.
 
 	* lib/gc-gnulib.c: Support DES.c
 
 2005-10-21  Simon Josefsson  <jas@extundo.com>
 
-	* lib/arctwo.h, arctwo.c: New files.
+	* lib/arctwo.h, lib/arctwo.c: New files.
 
 	* lib/gc-gnulib.c: Support ARCTWO.
 
@@ -7614,7 +7624,7 @@
 
 2005-10-18  Simon Josefsson  <jas@extundo.com>
 
-	* lib/md4.h, md4.c: New files, based on md5.?.
+	* lib/md4.h, lib/md4.c: New files, based on md5.?.
 
 2005-10-17  Stepan Kasal  <kasal@ucw.cz>
 
@@ -7693,9 +7703,9 @@
 
 2005-10-15  Simon Josefsson  <jas@extundo.com>
 
-	* lib/rijndael-api-fst.h, rijndael-api-fst.c: New files.
+	* lib/rijndael-api-fst.h, lib/rijndael-api-fst.c: New files.
 
-	* lib/rijndael-alg-fst.h, rijndael-alg-fst.c: New files.
+	* lib/rijndael-alg-fst.h, lib/rijndael-alg-fst.c: New files.
 
 2005-10-14  Simon Josefsson  <jas@extundo.com>
 
@@ -7709,7 +7719,7 @@
 
 2005-10-14  Simon Josefsson  <jas@extundo.com>
 
-	* lib/arcfour.h, arcfour.c: New files.
+	* lib/arcfour.h, lib/arcfour.c: New files.
 
 2005-10-14  Roland McGrath  <roland@redhat.com>
 
@@ -7800,7 +7810,7 @@
 
 2005-10-12  Simon Josefsson  <jas@extundo.com>
 
-	* m4/gc-md5.m4, gc-hmac-md5: New files.
+	* m4/gc-md5.m4, m4/gc-hmac-md5.m4: New files.
 
 	* m4/gc.m4: Don't call gl_MD5, gl_MEMXOR or gl_HMAC_MD5.
 
@@ -7864,7 +7874,7 @@
 
 2005-10-11  Simon Josefsson  <jas@extundo.com>
 
-	* lib/crc.h, crc.c: New files.
+	* lib/crc.h, lib/crc.c: New files.
 
 	* lib/gc.h (gc_hash_buffer): Add doc.
 
@@ -7961,7 +7971,7 @@
 	* lib/md5.h (MD5_DIGEST_SIZE, MD5_BLOCK_SIZE): Add, see also
 	<http://sourceware.org/bugzilla/show_bug.cgi?id=1423>.
 
-	* lib/memxor.h, memxor.c: New files.
+	* lib/memxor.h, lib/memxor.c: New files.
 
 	* lib/getaddrinfo.h: Don't protect sys/types.h with HAVE_SYS_TYPES_H,
 	we assume all systems have it, suggested by Jim Meyering
@@ -9554,7 +9564,7 @@
 2005-08-24  Jim Meyering  <jim@meyering.net>
 
 	Sync from coreutils.
-	* lib/fcntl--.h, fcntl-safer.h, open-safer.c: New files.
+	* lib/fcntl--.h, lib/fcntl-safer.h, lib/open-safer.c: New files.
 
 2005-08-24  Jim Meyering  <jim@meyering.net>
 
@@ -10099,7 +10109,7 @@
 
 	* lib/getline.h, getline.c: Rewrite.
 
-	* lib/getdelim.h, getdelim.c: New files, ported from glibc.
+	* lib/getdelim.h, lib/getdelim.c: New files, ported from glibc.
 
 2005-07-31  Bruno Haible  <bruno@clisp.org>
 
@@ -10331,7 +10341,8 @@
 2005-07-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/regex.c, regex.h: Sync from libc.
-	* lib/regcomp.c, regexec_internal.c, regex_internal.h, regexec.c:
+	* lib/regcomp.c, lib/regexec_internal.c, lib/regex_internal.h:
+	* lib/regexec.c:
 	New files, synced from libc, except that regex_internal.h
 	currently has a small porting fix.
 
@@ -10440,7 +10451,7 @@
 
 2005-06-28  Simon Josefsson  <jas@extundo.com>
 
-	* lib/check-version.h, check-version.c: New files.
+	* lib/check-version.h, lib/check-version.c: New files.
 
 2005-06-28  Simon Josefsson  <jas@extundo.com>
 
@@ -10710,7 +10721,7 @@
 2005-05-29  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
-	* lib/glob_.h, glob.c: New files.
+	* lib/glob_.h, lib/glob.c: New files.
 
 2005-05-27  Paul Eggert  <eggert@cs.ucla.edu>
 
@@ -10747,16 +10758,7 @@
 2005-05-25  Derek Price  <derek@ximbiot.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
-	* modules/getlogin_r: New files.
-
-2005-05-25  Derek Price  <derek@ximbiot.com>
-	    Paul Eggert  <eggert@cs.ucla.edu>
-
-	* m4/getlogin_r.m4: New files.
-
-2005-05-25  Derek Price  <derek@ximbiot.com>
-	    Paul Eggert  <eggert@cs.ucla.edu>
-
+	* modules/getlogin_r, m4/getlogin_r.m4: New files.
 	* lib/getlogin_r.c, getlogin_r.h: New files.
 
 2005-05-25  Bruno Haible  <bruno@clisp.org>
@@ -10906,7 +10908,7 @@
 
 2005-05-17  Jim Meyering  <jim@meyering.net>
 
-	* lib/fts.c, fts_.h: New files, from coreutils.
+	* lib/fts.c, lib/fts_.h: New files, from coreutils.
 
 2005-05-14  Paul Eggert  <eggert@cs.ucla.edu>
 
@@ -10916,7 +10918,7 @@
 2005-05-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Sync from coreutils.
-	* lib/unlinkdir.c, unlinkdir.h: New files.
+	* lib/unlinkdir.c, lib/unlinkdir.h: New files.
 	* lib/gethrxtime.c, lib/gethrxtime.h, lib/getpass.h, lib/mountlist.h,
 	lib/path-concat.c, lib/regex.h, lib/unlocked-io.h, lib/xtime.h:
 	White space changes only.
@@ -11788,12 +11790,12 @@
 
 2005-02-25  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* m4/gethrxtime.m4, xnanosleep.m4: New files.
+	* m4/gethrxtime.m4, m4/xnanosleep.m4: New files.
 	* m4/gettime.m4 (gl_GETTIME): Check for nanotime.
 
 2005-02-25  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* lib/gethrxtime.h, gethrxtime.c, xtime.h: New files.
+	* lib/gethrxtime.h, lib/gethrxtime.c, lib/xtime.h: New files.
 	* lib/timespec.h (gettime): Return void, since it always
 	succeeds now.  All uses changed.
 	* lib/gettime.c (gettime) Likewise.
@@ -11846,7 +11848,7 @@
 
 2005-02-22  Simon Josefsson  <jas@extundo.com>
 
-	* lib/iconvme.h, iconvme.c: New files, from libc.
+	* lib/iconvme.h, lib/iconvme.c: New files, from libc.
 
 2005-02-22  Simon Josefsson  <jas@extundo.com>
 
@@ -12123,7 +12125,7 @@
 2005-01-18  Jim Meyering  <jim@meyering.net>
 
 	Merge from coreutils.
-	* m4/chdir-long.m4, openat.m4: New files.
+	* m4/chdir-long.m4, m4/openat.m4: New files.
 	* m4/save-cwd.m4 (gl_SAVE_CWD): Add AC_LIBSOURCES for save-cwd.c,
 	save-cwd.h.  Add AC_LIBOBJ for save-cwd.
 	* m4/chown.m4 (gl_FUNC_CHOWN): When cross-compiling, assume that chown
@@ -12760,7 +12762,7 @@
 
 2004-11-10  Simon Josefsson  <jas@extundo.com>
 
-	* lib/getaddrinfo.h, getaddrinfo.c: New files.
+	* lib/getaddrinfo.h, lib/getaddrinfo.c: New files.
 
 2004-11-10  Simon Josefsson  <jas@extundo.com>
 
@@ -13202,7 +13204,7 @@
 
 2004-09-30  Simon Josefsson  <jas@extundo.com>
 
-	* lib/snprintf.h, snprintf.c: New files.
+	* lib/snprintf.h, lib/snprintf.c: New files.
 
 2004-09-30  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
 
@@ -13517,7 +13519,7 @@
 
 2004-08-09  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* m4/uint32_t.m4, uintptr_t.m4: New files.
+	* m4/uint32_t.m4, m4/uintptr_t.m4: New files.
 	* m4/sha1.m4: Renamed from sha.m4.
 	(gl_SHA1): Renamed from gl_SHA.  All uses changed.
 
@@ -13555,7 +13557,7 @@
 
 2004-08-08  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* lib/xalloc-die.c: New files.
+	* lib/xalloc-die.c: New file.
 	* lib/xalloc.h (xalloc_fail_func, xalloc_msg_memory_exhausted): Remove.
 	All uses removed.
 	* lib/xmalloc.c (xalloc_fail_func, xalloc_msg_memory_exhausted):
@@ -13600,7 +13602,7 @@
 
 	More merge from coreutils.
 
-	* m4/utimens.m4, utimecmp.m4: New files.
+	* m4/utimens.m4, m4/utimecmp.m4: New files.
 	* m4/backupfile.m4, euidacces.m4, acl.m4, afs.m4, calloc.m4, dirfd.m4,
 	fsusage.m4, jm-macros.m4, ls-mntd-fs.m4, md5.m4, mountlist.m4,
 	prereq.m4, sha.m4: Import changes from coreutils.
@@ -13608,8 +13610,8 @@
 2004-08-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	More merge from coreutils.
-	* modules/raise, modules/readtokens0, modules/utimens,
-	modules/utimecmp, module/xnanosleep: New files.
+	* modules/raise, modules/readtokens0, modules/utimens:
+	* modules/utimecmp, module/xnanosleep: New files.
 	* modules/strftime: Add lib/strftime.h.
 	Change include from <time.h> to "strftime.h".
 	* modules/yesno: Add lib/yesno.h.
@@ -13629,9 +13631,9 @@
 	we don't compile these functions for tar.
 
 	More merges from coreutils.
-	* lib/raise.c, lib/readtokens0.h, lib/readtokens0.c, lib/strftime.h,
-	lib/utimens.h, lib/utimens.c, lib/utimecmp.h, lib/utimecmp.c,
-	lib/xnanosleep.h, lib/xnanosleep.c, lib/yesno.h: New files.
+	* lib/raise.c, lib/readtokens0.h, lib/readtokens0.c, lib/strftime.h:
+	* lib/utimens.h, lib/utimens.c, lib/utimecmp.h, lib/utimecmp.c:
+	* lib/xnanosleep.h, lib/xnanosleep.c, lib/yesno.h: New files.
 	* lib/addext.c: Remove; no longer needed.
 	* lib/yesno.c, lib/argmatch.h, lib/argmatch.c, lib/backupfile.h,
 	lib/backupfile.c, lib/euidaccess.c, lib/filemode.c, lib/closeout.c,
@@ -13664,8 +13666,8 @@
 
 	Merge from coreutils.
 
-	* m4/c-strtod.m4, canonicalize.m4, fcntl-safer.m4, getcwd-path-max.m4:
-	New files.
+	* m4/c-strtod.m4, m4/canonicalize.m4, m4/fcntl-safer.m4:
+	* m4/getcwd-path-max.m4: New files.
 
 	* m4/dos.m4 (gl_AC_DOS): filesystem -> file system renaming.
 	FILESYSTEM_PREFIX_LEN ->
@@ -13685,9 +13687,10 @@
 
 	* lib/.gdb-history: Remove; this doesn't belong here.
 
-	* lib/c-strtod.c, c-strtod.h, c-strtold.c, cycle-check.c,
-	cycle-check.h, dev-ino.h, canonicalize.h, canonicalize.c,
-	fcntl-safer.h, fcntl-safer.c, getcwd.c: New files.
+	* lib/c-strtod.c, lib/c-strtod.h, lib/c-strtold.c, lib/cycle-check.c:
+	* lib/cycle-check.h, lib/dev-ino.h, lib/canonicalize.h:
+	* lib/canonicalize.c, lib/fcntl-safer.h, lib/fcntl-safer.c:
+	* lib/getcwd.c: New files.
 
 	* lib/dirname.h: Include <stdbool.h>.
 	(FILE_SYSTEM_PREFIX_LEN): Renamed from FILESYSTEM_PREFIX_LEN,
@@ -13724,8 +13727,8 @@
 2004-08-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge from coreutils.
-	* modules/c-strtod, modules/c-strtold, modules/canonicalize,
-	modules/cycle-check, modules/fcntl-safer, modules/getcwd: New files.
+	* modules/c-strtod, modules/c-strtold, modules/canonicalize:
+	* modules/cycle-check, modules/fcntl-safer, modules/getcwd: New files.
 	* modules/path-concat: Don't depend on strdup.
 
 2004-08-03  Simon Josefsson  <jas@extundo.com>
@@ -13822,7 +13825,8 @@
 
 2004-06-22  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* lib/argz.c, argz_.h: New files, which are autoupdated from libtool.
+	* lib/argz.c, lib/argz_.h: New files, which are autoupdated from
+	libtool.
 
 2004-06-22  Paul Eggert  <eggert@cs.ucla.edu>
 
@@ -14221,8 +14225,8 @@
 
 	Merge from coreutils.
 
-	* lib/imaxtostr.c, inttostr.c, inttostr.h, offtostr.c, umaxtostr.c:
-	New files.
+	* lib/imaxtostr.c, lib/inttostr.c, lib/inttostr.h, lib/offtostr.c:
+	* lib/umaxtostr.c: New files.
 
 	* lib/getdate.h: Include stdbool.h, and timespec.h instead of
 	the usual <time.h> dance.
@@ -14327,7 +14331,7 @@
 	Include cloexec.h and xalloc.h.
 	(getloadavg): Restore LC_NUMERIC locale after setting it temporarily.
 	Use set_cloexec_flag rather than rolling our own.
-	* lib/cloexec.c, cloexec.h: New files.
+	* lib/cloexec.c, lib/cloexec.h: New files.
 
 2004-03-29  Paul Eggert  <eggert@twinsun.com>
 
@@ -14392,7 +14396,7 @@
 
 2004-02-23  Karl Berry  <karl@gnu.org>
 
-	* doc/maintain.texi, standards.texi, make-stds.texi: new files
+	* doc/maintain.texi, doc/standards.texi, doc/make-stds.texi: new files
 	(from fencepost.gnu.org:/gd/gnuorg).
 
 2004-02-23  Karl Berry  <karl@gnu.org>
@@ -14555,7 +14559,7 @@
 
 2004-01-18  Karl Berry  <karl@gnu.org>
 
-	* doc/gpl.texi, lgpl.texi: new files.
+	* doc/gpl.texi, doc/lgpl.texi: new files.
 
 2004-01-18  Karl Berry  <karl@gnu.org>
 
@@ -16161,7 +16165,7 @@
 
 2003-09-06  Paul Eggert  <eggert@twinsun.com>
 
-	* lib/time_r.c, time_r.h: New files.
+	* lib/time_r.c, lib/time_r.h: New files.
 
 	* lib/mktime.c (my_mktime_localtime_r): Remove; all uses changed to
 	__localtime_r.
@@ -19412,7 +19416,7 @@
 
 2002-06-22  Jim Meyering  <meyering@lucent.com>
 
-	* lib/c-stack.c, c-stack.h: New files, from diffutils-2.8.2.
+	* lib/c-stack.c, lib/c-stack.h: New files, from diffutils-2.8.2.
 
 	* lib/exitfail.c, exitfail.h: Likewise.
 	* lib/Makefile.am (libfetish_a_SOURCES): Add exitfail.c and exitfail.h.
@@ -19563,7 +19567,7 @@
 
 2002-04-28  Paul Eggert  <eggert@twinsun.com>
 
-	* lib/sig2str.h, sig2str.c: New files.
+	* lib/sig2str.h, lib/sig2str.c: New files.
 	* lib/Makefile.am (libfetish_a_SOURCES): Add sig2str.h.
 
 2002-04-28  Paul Eggert  <eggert@twinsun.com>
@@ -19670,7 +19674,7 @@
 
 2002-02-25  Paul Eggert  <eggert@twinsun.com>
 
-	* lib/acl.c, acl.h: New files.
+	* lib/acl.c, lib/acl.h: New files.
 	* lib/Makefile.am (libfetish_a_SOURCES): Add acl.h, acl.c.
 
 2002-02-24  Jim Meyering  <meyering@lucent.com>
@@ -19713,7 +19717,7 @@
 
 2002-02-15  Paul Eggert  <eggert@twinsun.com>
 
-	* lib/posixver.c, posixver.h: New files.
+	* lib/posixver.c, lib/posixver.h: New files.
 	* lib/Makefile.am (libfetish_a_SOURCES): Add them.
 
 2002-02-02  Paul Eggert  <eggert@twinsun.com>
@@ -19749,7 +19753,7 @@
 
 2002-01-21  Paul Eggert  <eggert@twinsun.com>
 
-	* lib/xmemcoll.h, xmemcoll.c: New files.
+	* lib/xmemcoll.h, lib/xmemcoll.c: New files.
 	* lib/Makefile.am (libfetish_a_SOURCES): Add them.
 	* lib/memcoll.c: Include errno.h, and declare errno if not defined.
 	(memcoll): Set errno to zero if there is no error.
@@ -20041,7 +20045,7 @@
 
 2001-11-01  Jim Meyering  <meyering@lucent.com>
 
-	* lib/dirfd.c, dirfd.h: New files.
+	* lib/dirfd.c, lib/dirfd.h: New files.
 	* lib/Makefile.am (libfetish_a_SOURCES): Add dirfd.h.
 
 	* lib/hash.c (hash_print) [TESTING]: Clean up.
@@ -20985,8 +20989,8 @@
 	Add dup-safer.c, fopen-safer.c.
 	(noinst_HEADERS): Add stdio-safer.h, unistd-safer.h.
 
-	* lib/dup-safer.c, lib/fopen-safer.c, lib/stdio-safer.h,
-	lib/unistd-safer.h: New files.
+	* lib/dup-safer.c, lib/fopen-safer.c, lib/stdio-safer.h:
+	* lib/unistd-safer.h: New files.
 
 2001-02-25  Paul Eggert  <eggert@twinsun.com>
 
@@ -21019,7 +21023,7 @@
 
 	* lib/mkstemp.c (__GT_FILE): Define to zero if not defined.
 
-	* lib/mkstemp.c, tempname.c: New files, taken from glibc 2.2.2.
+	* lib/mkstemp.c, lib/tempname.c: New files, taken from glibc 2.2.2.
 
 2001-02-18  Paul Eggert  <eggert@twinsun.com>
 
@@ -21253,7 +21257,7 @@
 
 2000-12-18  Paul Eggert  <eggert@twinsun.com>
 
-	* lib/physmem.h, physmem.c: New files.
+	* lib/physmem.h, lib/physmem.c: New files.
 
 	* lib/Makefile.am (libfetish_a_SOURCES): Add physmem.c.
 	(noinst_HEADERS): Add physmem.h.
@@ -22690,7 +22694,7 @@
 
 	* lib/config.charset: Output a line containing "Packages using this
 	file".
-	* lib/ref-add.sed.in, ref-del.sed.in: New files.
+	* lib/ref-add.sed.in, lib/ref-del.sed.in: New files.
 	* lib/Makefile.am (install-exec-local, uninstall-local, ref-add.sed,
 	ref-del.sed): New rules.
 
@@ -22784,7 +22788,7 @@
 
 	* lib/config.charset: New file.
 	* lib/localcharset.c: New file.
-	* lib/unicodeio.h, unicodeio.c: New files.
+	* lib/unicodeio.h, lib/unicodeio.c: New files.
 	* lib/Makefile.am (DEFS): Add -DLIBDIR=...
 	(libfetish_a_SOURCES): Add localcharset.c and unicodeio.c.
 	(noinst_HEADERS): Add unicodeio.h.

@@ -33,12 +33,21 @@ enum canonicalize_mode_t
   };
 typedef enum canonicalize_mode_t canonicalize_mode_t;
 
+/* Return a malloc'd string containing the canonical absolute name of
+   the named file.  This acts like canonicalize_file_name, except that
+   whether components must exist depends on the canonicalize_mode_t
+   argument.  */
 char *canonicalize_filename_mode (const char *, canonicalize_mode_t);
 # endif
 
 # if HAVE_DECL_CANONICALIZE_FILE_NAME
 #  include <stdlib.h>
 # else
+/* Return a malloc'd string containing the canonical absolute name of
+   the named file.  If any file name component does not exist or is a
+   symlink to a nonexistent file, return NULL.  A canonical name does
+   not contain any `.', `..' components nor any repeated file name
+   separators ('/') or symlinks.  */
 char *canonicalize_file_name (const char *);
 # endif
 

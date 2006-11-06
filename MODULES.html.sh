@@ -1927,6 +1927,7 @@ func_all_modules ()
   func_module acl
   func_module backupfile
   func_module canonicalize
+  func_module canonicalize-lgpl
   func_module clean-temp
   func_module copy-file
   func_module cycle-check
