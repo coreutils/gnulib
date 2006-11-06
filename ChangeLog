@@ -1,3 +1,8 @@
+2006-11-05  Bruno Haible  <bruno@clisp.org>
+
+	* lib/gl_array_list.c (gl_array_iterator_next): Make pointer decrement
+	ANSI C compliant.
+
 2006-11-03  Bruno Haible  <bruno@clisp.org>
 
 	Simplify xmalloc expressions. Add overflow check in xmalloc arguments.

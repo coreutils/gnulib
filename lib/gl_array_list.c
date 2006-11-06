@@ -439,8 +439,8 @@ gl_array_iterator_next (gl_list_iterator_t *iterator,
 	abort ();
       /* The last returned element was removed.  */
       iterator->count--;
-      iterator->p--;
-      iterator->q--;
+      iterator->p = (const void **) iterator->p - 1;
+      iterator->q = (const void **) iterator->q - 1;
     }
   if (iterator->p < iterator->q)
     {
