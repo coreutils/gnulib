@@ -1,5 +1,27 @@
 2006-11-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/xalloc.h (xnmalloc, xnrealloc, x2nrealloc): Now static
+	inline functions that are identical with the old xnmalloc_inline,
+	xnrealloc_inline, x2nrealloc_inline of lib/xmalloc.c.  This is so
+	that we can avoid some unnecessary integer multiplications and
+	divisions in the common case where the element size is known at
+	compile time.
+	(XNMALLOC) [HAVE_INLINE]: Remove special case, which is no longer
+	needed.
+	(xnboundedmalloc): Remove.
+	(XMALLOC, XNMALLOC, XZALLOC, XCALLOC): Use lower-case letters for
+	arguments, for consistency with rest of this header.
+	(xcharalloc): Rewrite using XNMALLOC.
+	* lib/xmalloc.c (xnmalloc_inline, xnmalloc, xnrealloc_inline):
+	(xnrealloc, x2nrealloc_inline, x2nrealloc): Remove.  The *_inline
+	versions have been moved to lib/xalloc.h and renamed to be the
+	non-*_inline versions.
+	(xmalloc, xrealloc): Implement without reference to the xnmalloc
+	and xnrealloc functions, since those functions are now inline and
+	now call us.
+	(x2realloc): Invoke x2realloc, not x2realloc_inline, to accommodate
+	renaming described above.
+
 	New module canonicalize-lgpl, proposed by Charles Wilson in
 	<http://lists.gnu.org/archive/html/bug-gnulib/2006-11/msg00020.html>
 	with a few small changes afterwards.
