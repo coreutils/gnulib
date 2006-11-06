@@ -1,3 +1,10 @@
+2006-11-03  Bruno Haible  <bruno@clisp.org>
+
+	* lib/c-ctype.h [C++]: Define functions without name mangling.
+	* lib/fwriteerror.h [C++]: Likewise.
+	* lib/gcd.h [C++]: Likewise.
+	* lib/linebreak.h [C++]: Likewise.
+
 2006-11-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/canonicalize.h: (canonicalize_mode_t, CAN_EXISTING):

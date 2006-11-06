@@ -27,6 +27,11 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 #include <stdbool.h>
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /* The functions defined in this file assume the "C" locale and a character
    set without diacritics (ASCII-US or EBCDIC-US or something like that).
    Even if the "C" locale on a particular system is an extension of the ASCII
@@ -266,5 +271,10 @@ extern int c_toupper (int c);
 #endif
 
 #endif /* optimizing for speed */
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* C_CTYPE_H */

@@ -40,6 +40,10 @@
 
 #include <stdio.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Write out the not yet written buffered contents of the stream FP, close
    the stream FP, and test whether some error occurred on the stream FP.
    FP must be a stream opened for writing.
@@ -53,3 +57,7 @@ extern int fwriteerror (FILE *fp);
 /* Likewise, but don't consider it an error if FP has an invalid file
    descriptor and no output was done to FP.  */
 extern int fwriteerror_no_ebadf (FILE *fp);
+
+#ifdef __cplusplus
+}
+#endif
