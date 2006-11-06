@@ -1,5 +1,8 @@
 2006-11-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	New module canonicalize-lgpl, proposed by Charles Wilson in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2006-11/msg00020.html>
+	with a few small changes afterwards.
 	* MODULES.html.sh (File system functions): New module
 	canonicalize-lgpl.
 	* lib/canonicalize.h: Add comments for canonicalize_filename_mode
