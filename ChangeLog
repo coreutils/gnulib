@@ -1,5 +1,10 @@
 2006-11-05  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import, func_create_testdir): Create directories
+	also for files in subdirectories of lib/.
+
+2006-11-05  Bruno Haible  <bruno@clisp.org>
+
 	* lib/gl_array_list.c (gl_array_iterator_next): Make pointer decrement
 	ANSI C compliant.
 

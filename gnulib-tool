@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-11-02 14:47:36 $'
+cvsdatestamp='$Date: 2006-11-06 13:04:37 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1613,52 +1613,50 @@ func_import ()
     func_append old_files " m4/gnulib-tool.m4"
   fi
 
+  sed_rewrite_old_files="\
+    s,^build-aux/,$auxdir/,
+    s,^doc/,$cached_docbase/,
+    s,^lib/,$cached_sourcebase/,
+    s,^m4/,$cached_m4base/,
+    s,^tests/,$cached_testsbase/,"
+  sed_rewrite_new_files="\
+    s,^build-aux/,$auxdir/,
+    s,^doc/,$docbase/,
+    s,^lib/,$sourcebase/,
+    s,^m4/,$m4base/,
+    s,^tests/,$testsbase/,"
+
   # Create directories.
-  if test ! -d "$destdir/$sourcebase"; then
-    if $doit; then
-      echo "Creating directory $destdir/$sourcebase"
-      mkdir "$destdir/$sourcebase" || func_fatal_error "failed"
-    else
-      echo "Create directory $destdir/$sourcebase"
+  { echo "$sourcebase"
+    echo "$m4base"
+    docfiles=`echo "$files" | sed -n -e 's,^doc/,,p'`
+    if test -n "$docfiles"; then
+      echo "$docbase"
     fi
-  fi
-  if test ! -d "$destdir/$m4base"; then
-    if $doit; then
-      echo "Creating directory $destdir/$m4base"
-      mkdir "$destdir/$m4base" || func_fatal_error "failed"
-    else
-      echo "Create directory $destdir/$m4base"
+    if test -n "$inctests"; then
+      echo "$testsbase"
     fi
-  fi
-  docfiles=`echo "$files" | sed -n -e 's,^doc/,,p'`
-  if test -n "$docfiles"; then
-    if test ! -d "$destdir/$docbase"; then
-      if $doit; then
-        echo "Creating directory $destdir/$docbase"
-        mkdir "$destdir/$docbase" || func_fatal_error "failed"
-      else
-        echo "Create directory $destdir/$docbase"
+    echo "$auxdir"
+    for f in $files; do echo $f; done \
+      | sed -e "$sed_rewrite_new_files" \
+      | sed -n -e 's,^\(.*\)/[^/]*,\1,p' \
+      | LC_ALL=C sort -u
+  } > "$tmp"/dirs
+  { # Rearrange file descriptors. Needed because "while ... done < ..."
+    # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
+    exec 5<&0 < "$tmp"/dirs
+    while read d; do
+      if test ! -d "$destdir/$d"; then
+        if $doit; then
+          echo "Creating directory $destdir/$d"
+          mkdir -p "$destdir/$d" || func_fatal_error "failed"
+        else
+          echo "Create directory $destdir/$d"
+        fi
       fi
-    fi
-  fi
-  if test -n "$inctests"; then
-    if test ! -d "$destdir/$testsbase"; then
-      if $doit; then
-        echo "Creating directory $destdir/$testsbase"
-        mkdir "$destdir/$testsbase" || func_fatal_error "failed"
-      else
-        echo "Create directory $destdir/$testsbase"
-      fi
-    fi
-  fi
-  if test ! -d "$destdir/$auxdir"; then
-    if $doit; then
-      echo "Creating directory $destdir/$auxdir"
-      mkdir "$destdir/$auxdir" || func_fatal_error "failed"
-    else
-      echo "Create directory $destdir/$auxdir"
-    fi
-  fi
+    done
+    exec 0<&5 5<&-
+  }
 
   # func_dest_tmpfilename file
   # determines the name of a temporary file (file is relative to destdir).
@@ -1679,18 +1677,6 @@ func_import ()
 
   # Copy files or make symbolic links. Remove obsolete files.
   delimiter='	'
-  sed_rewrite_old_files="\
-    s,^build-aux/,$auxdir/,
-    s,^doc/,$cached_docbase/,
-    s,^lib/,$cached_sourcebase/,
-    s,^m4/,$cached_m4base/,
-    s,^tests/,$cached_testsbase/,"
-  sed_rewrite_new_files="\
-    s,^build-aux/,$auxdir/,
-    s,^doc/,$docbase/,
-    s,^lib/,$sourcebase/,
-    s,^m4/,$m4base/,
-    s,^tests/,$testsbase/,"
   # Construct a table with 2 columns: rewritten-file-name original-file-name,
   # representing the files according to the last gnulib-tool invocation.
   for f in $old_files; do echo $f; done \
@@ -2184,26 +2170,30 @@ func_create_testdir ()
   echo "File list:"
   echo "$files" | sed -e 's/^/  /'
 
-  # Create directories.
-  for d in `echo "$files" | sed -n -e 's,^\(.*\)/[^/]*,\1,p'`; do
-    case "$d" in
-      build-aux) mkdir -p "$testdir/$auxdir" ;;
-      doc)       mkdir -p "$testdir/$docbase" ;;
-      lib)       mkdir -p "$testdir/$sourcebase" ;;
-      m4)        mkdir -p "$testdir/$m4base" ;;
-      tests)     mkdir -p "$testdir/$testsbase" ;;
-      *)         mkdir -p "$testdir/$d" ;;
-    esac
-  done
-
-  # Copy files or make symbolic links.
-  delimiter='	'
   sed_rewrite_files="\
     s,^build-aux/,$auxdir/,
     s,^doc/,$docbase/,
     s,^lib/,$sourcebase/,
     s,^m4/,$m4base/,
     s,^tests/,$testsbase/,"
+
+  # Create directories.
+  for f in $files; do echo $f; done \
+    | sed -e "$sed_rewrite_files" \
+    | sed -n -e 's,^\(.*\)/[^/]*,\1,p' \
+    | LC_ALL=C sort -u \
+    > "$tmp"/dirs
+  { # Rearrange file descriptors. Needed because "while ... done < ..."
+    # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
+    exec 5<&0 < "$tmp"/dirs
+    while read d; do
+      mkdir -p "$testdir/$d"
+    done
+    exec 0<&5 5<&-
+  }
+
+  # Copy files or make symbolic links.
+  delimiter='	'
   for f in $files; do echo $f; done \
     | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_files" \
     | LC_ALL=C sort \
