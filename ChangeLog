@@ -1,5 +1,10 @@
 2006-11-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/idcache.c: Include <stddef.h>, for offsetof.
+	(struct userid.name): Change from char * to a flexible array member.
+	All uses changed.
+	* modules/idcache (Depends-on): Add flexmember.
+
 	* MODULES.html.sh (Core language properties): New module flexmember.
 	* modules/flexmember, m4/flexmember.m4: New files.
 

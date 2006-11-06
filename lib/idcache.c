@@ -19,6 +19,7 @@
 
 #include <config.h>
 
+#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -40,8 +41,8 @@ struct userid
       uid_t u;
       gid_t g;
     } id;
-  char *name;
   struct userid *next;
+  char name[FLEXIBLE_ARRAY_MEMBER];
 };
 
 static struct userid *user_alist;
@@ -56,15 +57,17 @@ getuser (uid_t uid)
 {
   register struct userid *tail;
   struct passwd *pwent;
+  char const *name;
 
   for (tail = user_alist; tail; tail = tail->next)
     if (tail->id.u == uid)
       return tail->name;
 
   pwent = getpwuid (uid);
-  tail = xmalloc (sizeof *tail);
+  name = pwent ? pwent->pw_name : "";
+  tail = xmalloc (offsetof (struct userid, name) + strlen (name) + 1);
   tail->id.u = uid;
-  tail->name = pwent ? xstrdup (pwent->pw_name) : NULL;
+  strcpy (tail->name, name);
 
   /* Add to the head of the list, so most recently used is first.  */
   tail->next = user_alist;
@@ -104,8 +107,8 @@ getuidbyname (const char *user)
     }
 #endif
 
-  tail = xmalloc (sizeof *tail);
-  tail->name = xstrdup (user);
+  tail = xmalloc (offsetof (struct userid, name) + strlen (user) + 1);
+  strcpy (tail->name, user);
 
   /* Add to the head of the list, so most recently used is first.  */
   if (pwent)
@@ -132,15 +135,17 @@ getgroup (gid_t gid)
 {
   register struct userid *tail;
   struct group *grent;
+  char const *name;
 
   for (tail = group_alist; tail; tail = tail->next)
     if (tail->id.g == gid)
       return tail->name;
 
   grent = getgrgid (gid);
-  tail = xmalloc (sizeof *tail);
+  name = grent ? grent->gr_name : NULL;
+  tail = xmalloc (offsetof (struct userid, name) + strlen (name) + 1);
   tail->id.g = gid;
-  tail->name = grent ? xstrdup (grent->gr_name) : NULL;
+  strcpy (tail->name, name);
 
   /* Add to the head of the list, so most recently used is first.  */
   tail->next = group_alist;
@@ -180,8 +185,8 @@ getgidbyname (const char *group)
     }
 #endif
 
-  tail = xmalloc (sizeof *tail);
-  tail->name = xstrdup (group);
+  tail = xmalloc (offsetof (struct userid, name) + strlen (group) + 1);
+  strcpy (tail->name, group);
 
   /* Add to the head of the list, so most recently used is first.  */
   if (grent)
