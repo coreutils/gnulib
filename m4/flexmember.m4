@@ -41,7 +41,11 @@ AC_DEFUN([AC_C_FLEXIBLE_ARRAY_MEMBER],
       [Define to nothing if C supports flexible array members, and to
        1 if it does not.  That way, with a declaration like `struct s
        { int n; double d@<:@FLEXIBLE_ARRAY_MEMBER@:>@; };', the struct hack
-       can be used with pre-C99 compilers.])
+       can be used with pre-C99 compilers.
+       When computing the size of such an object, don't use 'sizeof (struct s)'
+       as it overestimates the size.  Use 'offsetof (struct s, d)' instead.
+       Don't use 'offsetof (struct s, d@<:@0@:>@)', as this doesn't work with
+       MSVC and with C++ compilers.])
   else
     AC_DEFINE([FLEXIBLE_ARRAY_MEMBER], 1)
   fi

@@ -1,3 +1,9 @@
+2006-11-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/flexmember.m4 (AC_C_FLEXIBLE_ARRAY_MEMBER):
+	Mention that offsetof should be used instead of sizeof.
+	From Bruno Haible.
+
 2006-11-07  Bruno Haible  <bruno@clisp.org>
 
 	* lib/w32spawn.h (prepare_spawn): Use XNMALLOC instead of xmalloc.
