@@ -1,3 +1,7 @@
+2006-11-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* lib/gl_oset.h: Use C comment style, not C++ comment style.
+
 2006-11-06  Bruno Haible  <bruno@clisp.org>
 
 	* m4/inline.m4: New file.

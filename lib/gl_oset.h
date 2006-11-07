@@ -153,7 +153,7 @@ extern void gl_oset_iterator_free (gl_oset_iterator_t *iterator);
 
 struct gl_oset_implementation
 {
-  // gl_oset_t functions.
+  /* gl_oset_t functions.  */
   gl_oset_t (*create_empty) (gl_oset_implementation_t implementation,
 			     gl_setelement_compar_fn compar_fn);
   size_t (*size) (gl_oset_t set);
@@ -164,7 +164,7 @@ struct gl_oset_implementation
   bool (*add) (gl_oset_t set, const void *elt);
   bool (*remove) (gl_oset_t set, const void *elt);
   void (*oset_free) (gl_oset_t set);
-  // gl_oset_iterator_t functions.
+  /* gl_oset_iterator_t functions.  */
   gl_oset_iterator_t (*iterator) (gl_oset_t set);
   bool (*iterator_next) (gl_oset_iterator_t *iterator, const void **eltp);
   void (*iterator_free) (gl_oset_iterator_t *iterator);
