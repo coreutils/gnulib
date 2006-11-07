@@ -5,6 +5,7 @@ Files:
 lib/gl_list.h
 lib/gl_list.c
 m4/gl_list.m4
+m4/inline.m4
 
 Depends-on:
 stdbool

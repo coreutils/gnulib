@@ -5,6 +5,7 @@ Files:
 lib/gl_oset.h
 lib/gl_oset.c
 m4/gl_list.m4
+m4/inline.m4
 
 Depends-on:
 stdbool
