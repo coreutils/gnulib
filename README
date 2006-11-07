@@ -195,7 +195,7 @@ Gnulib is available for anonymous checkout.  In any Bourne-shell the
 following should work:
 
 $ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib login
-(Just hit Enter or Return when prompt for a password)
+(Just hit Enter or Return when prompted for a password)
 $ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib checkout gnulib
 
 Gnulib is hosted on savannah.gnu.org.  The project page is
