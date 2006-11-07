@@ -100,8 +100,7 @@ hash_resize (gl_list_t list, size_t estimate)
     {
       gl_hash_entry_t *old_table = list->table;
       /* Allocate the new table.  */
-      gl_hash_entry_t *new_table =
-	(gl_hash_entry_t *) xzalloc (new_size * sizeof (gl_hash_entry_t));
+      gl_hash_entry_t *new_table = XCALLOC (new_size, gl_hash_entry_t);
       size_t i;
 
       /* Iterate through the entries of the old table.  */

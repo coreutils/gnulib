@@ -1,5 +1,5 @@
 /* Auxiliary functions for the creation of subprocesses.  Native Woe32 API.
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2006 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -92,7 +92,7 @@ prepare_spawn (char **argv)
     ;
 
   /* Allocate new argument vector.  */
-  new_argv = (char **) xmalloc ((argc + 1) * sizeof (char *));
+  new_argv = XNMALLOC (argc + 1, char *);
 
   /* Put quoted arguments into the new argument vector.  */
   for (i = 0; i < argc; i++)

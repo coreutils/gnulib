@@ -25,8 +25,7 @@ gl_tree_create_empty (gl_list_implementation_t implementation,
 		      gl_listelement_hashcode_fn hashcode_fn,
 		      bool allow_duplicates)
 {
-  struct gl_list_impl *list =
-    (struct gl_list_impl *) xmalloc (sizeof (struct gl_list_impl));
+  struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
 
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
@@ -34,8 +33,7 @@ gl_tree_create_empty (gl_list_implementation_t implementation,
   list->base.allow_duplicates = allow_duplicates;
 #if WITH_HASHTABLE
   list->table_size = 11;
-  list->table =
-    (gl_hash_entry_t *) xzalloc (list->table_size * sizeof (gl_hash_entry_t));
+  list->table = XCALLOC (list->table_size, gl_hash_entry_t);
 #endif
   list->root = NULL;
 

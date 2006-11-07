@@ -28,8 +28,7 @@ create_subtree_with_contents (size_t count, const void **contents)
   size_t half1 = (count - 1) / 2;
   size_t half2 = count / 2;
   /* Note: half1 + half2 = count - 1.  */
-  gl_list_node_t node =
-    (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
+  gl_list_node_t node = XMALLOC (struct gl_list_node_impl);
 
   if (half1 > 0)
     {
@@ -67,8 +66,7 @@ gl_tree_create (gl_list_implementation_t implementation,
 		bool allow_duplicates,
 		size_t count, const void **contents)
 {
-  struct gl_list_impl *list =
-    (struct gl_list_impl *) xmalloc (sizeof (struct gl_list_impl));
+  struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
 
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
@@ -80,8 +78,7 @@ gl_tree_create (gl_list_implementation_t implementation,
     if (estimate < 10)
       estimate = 10;
     list->table_size = next_prime (estimate);
-    list->table =
-      (gl_hash_entry_t *) xzalloc (list->table_size * sizeof (gl_hash_entry_t));
+    list->table = XCALLOC (list->table_size, gl_hash_entry_t);
   }
 #endif
   if (count > 0)
@@ -374,8 +371,7 @@ static gl_list_node_t
 gl_tree_add_first (gl_list_t list, const void *elt)
 {
   /* Create new node.  */
-  gl_list_node_t new_node =
-    (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
+  gl_list_node_t new_node = XMALLOC (struct gl_list_node_impl);
 
   new_node->left = NULL;
   new_node->right = NULL;
@@ -434,8 +430,7 @@ static gl_list_node_t
 gl_tree_add_last (gl_list_t list, const void *elt)
 {
   /* Create new node.  */
-  gl_list_node_t new_node =
-    (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
+  gl_list_node_t new_node = XMALLOC (struct gl_list_node_impl);
 
   new_node->left = NULL;
   new_node->right = NULL;
@@ -494,8 +489,7 @@ static gl_list_node_t
 gl_tree_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
 {
   /* Create new node.  */
-  gl_list_node_t new_node =
-    (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
+  gl_list_node_t new_node = XMALLOC (struct gl_list_node_impl);
   bool height_inc;
 
   new_node->left = NULL;
@@ -554,8 +548,7 @@ static gl_list_node_t
 gl_tree_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
 {
   /* Create new node.  */
-  gl_list_node_t new_node =
-    (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
+  gl_list_node_t new_node = XMALLOC (struct gl_list_node_impl);
   bool height_inc;
 
   new_node->left = NULL;

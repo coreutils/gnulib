@@ -1,3 +1,25 @@
+2006-11-07  Bruno Haible  <bruno@clisp.org>
+
+	* lib/w32spawn.h (prepare_spawn): Use XNMALLOC instead of xmalloc.
+
+2006-11-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Simplify xmalloc expressions. Add overflow check in xmalloc arguments.
+	* lib/gl_anyavltree_list2.h (create_subtree_with_contents):
+	(gl_tree_create, gl_tree_add_first, gl_tree_add_last):
+	(gl_tree_add_before, gl_tree_add_after):
+	Use XMALLOC instead of xmalloc, and XCALLOC instead of xzalloc.
+	* lib/gl_anyhash_list2.h (hash_resize): Likewise.
+	* lib/gl_anylinked_list2.h (gl_linked_create_empty, gl_linked_create):
+	(gl_linked_add_first, gl_linked_add_last, gl_linked_add_before):
+	(gl_linked_add_after, gl_linked_add_at): Likewise.
+	* lib/gl_anyrbtree_list2.h (create_subtree_with_contents):
+	(gl_tree_create, gl_tree_add_first, gl_tree_add_last):
+	(gl_tree_add_before, gl_tree_add_after): Likewise.
+	* lib/gl_anytree_list2.h (gl_tree_create_empty): Likewise.
+	* lib/gl_anytree_oset.h (gl_tree_create_empty): Likewise.
+	* lib/gl_anytreehash_list1.h (add_to_bucket): Likewise.
+
 2006-11-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* lib/gl_oset.h: Use C comment style, not C++ comment style.

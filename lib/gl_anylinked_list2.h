@@ -43,8 +43,7 @@ gl_linked_create_empty (gl_list_implementation_t implementation,
 			gl_listelement_hashcode_fn hashcode_fn,
 			bool allow_duplicates)
 {
-  struct gl_list_impl *list =
-    (struct gl_list_impl *) xmalloc (sizeof (struct gl_list_impl));
+  struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
 
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
@@ -52,8 +51,7 @@ gl_linked_create_empty (gl_list_implementation_t implementation,
   list->base.allow_duplicates = allow_duplicates;
 #if WITH_HASHTABLE
   list->table_size = 11;
-  list->table =
-    (gl_hash_entry_t *) xzalloc (list->table_size * sizeof (gl_hash_entry_t));
+  list->table = XCALLOC (list->table_size, gl_hash_entry_t);
 #endif
   list->root.next = &list->root;
   list->root.prev = &list->root;
@@ -69,8 +67,7 @@ gl_linked_create (gl_list_implementation_t implementation,
 		  bool allow_duplicates,
 		  size_t count, const void **contents)
 {
-  struct gl_list_impl *list =
-    (struct gl_list_impl *) xmalloc (sizeof (struct gl_list_impl));
+  struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
   gl_list_node_t tail;
 
   list->base.vtable = implementation;
@@ -83,17 +80,14 @@ gl_linked_create (gl_list_implementation_t implementation,
     if (estimate < 10)
       estimate = 10;
     list->table_size = next_prime (estimate);
-    list->table =
-      (gl_hash_entry_t *) xzalloc (list->table_size * sizeof (gl_hash_entry_t));
+    list->table = XCALLOC (list->table_size, gl_hash_entry_t);
   }
 #endif
   list->count = count;
   tail = &list->root;
   for (; count > 0; contents++, count--)
     {
-      gl_list_node_t node =
-	(struct gl_list_node_impl *)
-	xmalloc (sizeof (struct gl_list_node_impl));
+      gl_list_node_t node = XMALLOC (struct gl_list_node_impl);
 
       node->value = *contents;
 #if WITH_HASHTABLE
@@ -497,8 +491,7 @@ gl_linked_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
 static gl_list_node_t
 gl_linked_add_first (gl_list_t list, const void *elt)
 {
-  gl_list_node_t node =
-    (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
+  gl_list_node_t node = XMALLOC (struct gl_list_node_impl);
 
   ASYNCSAFE(const void *) node->value = elt;
 #if WITH_HASHTABLE
@@ -528,8 +521,7 @@ gl_linked_add_first (gl_list_t list, const void *elt)
 static gl_list_node_t
 gl_linked_add_last (gl_list_t list, const void *elt)
 {
-  gl_list_node_t node =
-    (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
+  gl_list_node_t node = XMALLOC (struct gl_list_node_impl);
 
   ASYNCSAFE(const void *) node->value = elt;
 #if WITH_HASHTABLE
@@ -559,8 +551,7 @@ gl_linked_add_last (gl_list_t list, const void *elt)
 static gl_list_node_t
 gl_linked_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
 {
-  gl_list_node_t new_node =
-    (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
+  gl_list_node_t new_node = XMALLOC (struct gl_list_node_impl);
 
   ASYNCSAFE(const void *) new_node->value = elt;
 #if WITH_HASHTABLE
@@ -590,8 +581,7 @@ gl_linked_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
 static gl_list_node_t
 gl_linked_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
 {
-  gl_list_node_t new_node =
-    (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
+  gl_list_node_t new_node = XMALLOC (struct gl_list_node_impl);
 
   ASYNCSAFE(const void *) new_node->value = elt;
 #if WITH_HASHTABLE
@@ -628,8 +618,7 @@ gl_linked_add_at (gl_list_t list, size_t position, const void *elt)
     /* Invalid argument.  */
     abort ();
 
-  new_node =
-    (struct gl_list_node_impl *) xmalloc (sizeof (struct gl_list_node_impl));
+  new_node = XMALLOC (struct gl_list_node_impl);
   ASYNCSAFE(const void *) new_node->value = elt;
 #if WITH_HASHTABLE
   new_node->h.hashcode =

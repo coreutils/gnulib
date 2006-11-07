@@ -157,8 +157,7 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
 		      gl_oset_add (nodes, node);
 		      gl_oset_add (nodes, new_node);
 
-		      multi_entry =
-			(struct gl_multiple_nodes *) xmalloc (sizeof (struct gl_multiple_nodes));
+		      multi_entry = XMALLOC (struct gl_multiple_nodes);
 		      multi_entry->h.hash_next = entry->hash_next;
 		      multi_entry->h.hashcode = entry->hashcode;
 		      multi_entry->magic = MULTIPLE_NODES_MAGIC;
