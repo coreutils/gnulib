@@ -1,3 +1,8 @@
+2006-11-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/inline.m4 (gl_INLINE): Also test __NO_INLINE__.
+	Suggested by Paul Eggert.
+
 2006-11-08  Jim Meyering  <jim@meyering.net>
 
 	* lib/fts.c [!_LGPL_PACKAGE]: Don't include fcntl--.h twice.
