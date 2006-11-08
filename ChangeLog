@@ -1,5 +1,9 @@
 2006-11-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT): Detect bug in
+	Tandem NonStop Kernel (OSS) cc -O circa 2004, reported by
+	Matthew Woehlke.
+
 	* lib/xalloc.h (XMALLOC, XNMALLOC, XZALLOC, XCALLOC): Move
 	definitions up, to avoid colliding with change below.
 	(static_inline) [HAVE_INLINE]: New macro.
