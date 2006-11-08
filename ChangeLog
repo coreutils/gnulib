@@ -1,3 +1,8 @@
+2006-11-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT): Set ac_cv_type_long_long_int
+	to 'yes' instead of 'cross-compiling'.
+
 2006-11-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/quotearg.h (quotearg_free): New decl.
