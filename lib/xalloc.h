@@ -68,10 +68,48 @@ char *xstrdup (char const *str);
 # define xalloc_oversized(n, s) \
     ((size_t) (sizeof (ptrdiff_t) <= sizeof (size_t) ? -1 : -2) / (s) < (n))
 
+
+/* In the following macros, T must be an elementary or structure/union or
+   typedef'ed type, or a pointer to such a type.  To apply one of the
+   following macros to a function pointer or array type, you need to typedef
+   it first and use the typedef name.  */
+
+/* Allocate an object of type T dynamically, with error checking.  */
+/* extern t *XMALLOC (typename t); */
+# define XMALLOC(t) ((t *) xmalloc (sizeof (t)))
+
+/* Allocate memory for N elements of type T, with error checking.  */
+/* extern t *XNMALLOC (size_t n, typename t); */
+# define XNMALLOC(n, t) \
+    ((t *) (sizeof (t) == 1 ? xmalloc (n) : xnmalloc (n, sizeof (t))))
+
+/* Allocate an object of type T dynamically, with error checking,
+   and zero it.  */
+/* extern t *XZALLOC (typename t); */
+# define XZALLOC(t) ((t *) xzalloc (sizeof (t)))
+
+/* Allocate memory for N elements of type T, with error checking,
+   and zero it.  */
+/* extern t *XCALLOC (size_t n, typename t); */
+# define XCALLOC(n, t) \
+    ((t *) (sizeof (t) == 1 ? xzalloc (n) : xcalloc (n, sizeof (t))))
+
+
+# if HAVE_INLINE
+#  define static_inline static inline
+# else
+   void *xnmalloc (size_t n, size_t s);
+   void *xnrealloc (void *p, size_t n, size_t s);
+   void *x2nrealloc (void *p, size_t *pn, size_t s);
+   char *xcharalloc (size_t n);
+# endif
+
+# ifdef static_inline
+
 /* Allocate an array of N objects, each with S bytes of memory,
    dynamically, with error checking.  S must be nonzero.  */
 
-static inline void *
+static_inline void *
 xnmalloc (size_t n, size_t s)
 {
   if (xalloc_oversized (n, s))
@@ -82,7 +120,7 @@ xnmalloc (size_t n, size_t s)
 /* Change the size of an allocated block of memory P to an array of N
    objects each of S bytes, with error checking.  S must be nonzero.  */
 
-static inline void *
+static_inline void *
 xnrealloc (void *p, size_t n, size_t s)
 {
   if (xalloc_oversized (n, s))
@@ -145,7 +183,7 @@ xnrealloc (void *p, size_t n, size_t s)
 
    */
 
-static inline void *
+static_inline void *
 x2nrealloc (void *p, size_t *pn, size_t s)
 {
   size_t n = *pn;
@@ -175,36 +213,16 @@ x2nrealloc (void *p, size_t *pn, size_t s)
   return xrealloc (p, n * s);
 }
 
-/* In the following macros, T must be an elementary or structure/union or
-   typedef'ed type, or a pointer to such a type.  To apply one of the
-   following macros to a function pointer or array type, you need to typedef
-   it first and use the typedef name.  */
-
-/* Allocate an object of type T dynamically, with error checking.  */
-/* extern t *XMALLOC (typename t); */
-#define XMALLOC(t) ((t *) xmalloc (sizeof (t)))
-
-/* Allocate memory for N elements of type T, with error checking.  */
-/* extern t *XNMALLOC (size_t n, typename t); */
-#define XNMALLOC(n, t) ((t *) xnmalloc (n, sizeof (t)))
-
-/* Allocate an object of type T dynamically, with error checking,
-   and zero it.  */
-/* extern t *XZALLOC (typename t); */
-#define XZALLOC(t) ((t *) xzalloc (sizeof (t)))
-
-/* Allocate memory for N elements of type T, with error checking,
-   and zero it.  */
-/* extern t *XCALLOC (size_t n, typename t); */
-#define XCALLOC(n, t) ((t *) xcalloc (n, sizeof (t)))
-
 /* Return a pointer to a new buffer of N bytes.  This is like xmalloc,
    except it returns char *.  */
-static inline char *
+
+static_inline char *
 xcharalloc (size_t n)
 {
   return XNMALLOC (n, char);
 }
+
+# endif
 
 # ifdef __cplusplus
 }

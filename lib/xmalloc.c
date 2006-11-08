@@ -20,7 +20,11 @@
 
 #include <config.h>
 
+#if ! HAVE_INLINE
+# define static_inline
+#endif
 #include "xalloc.h"
+#undef static_inline
 
 #include <stdlib.h>
 #include <string.h>

@@ -1,4 +1,4 @@
-# xalloc.m4 serial 15
+# xalloc.m4 serial 16
 dnl Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,7 +14,7 @@ AC_DEFUN([gl_XALLOC],
 
 # Prerequisites of lib/xalloc.h.
 AC_DEFUN([gl_PREREQ_XALLOC], [
-  AC_REQUIRE([AC_C_INLINE])
+  AC_REQUIRE([gl_INLINE])
   :
 ])
 

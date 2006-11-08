@@ -1,3 +1,22 @@
+2006-11-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/xalloc.h (XMALLOC, XNMALLOC, XZALLOC, XCALLOC): Move
+	definitions up, to avoid colliding with change below.
+	(static_inline) [HAVE_INLINE]: New macro.
+	(xnmalloc, xnrealloc, x2nrealloc, xcharalloc):
+	Provide extern decls when !HAVE_INLINE.  Do not define unless
+	static_inline is defined, either by us or by xmalloc.c.  Use
+	static_inline rather than static inline.
+	(XCALLOC): Optimize sizeof(T) = 1 case.
+	* lib/xmalloc.c (static_inline) [!HAVE_INLINE]: New macro.
+
+2006-11-07  Bruno Haible  <bruno@clisp.org>
+
+	* lib/xalloc.h (XNMALLOC): Restore optimization of sizeof(T) = 1 case.
+	* m4/xalloc.m4 (gl_PREREQ_XALLOC): Require gl_INLINE instead of
+	AC_C_INLINE.
+	* modules/xalloc (Files): Add m4/inline.m4.
+
 2006-11-07  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* README: Fix typo.
