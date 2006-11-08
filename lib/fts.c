@@ -1505,6 +1505,11 @@ fts_safe_changedir (FTS *sp, FTSENT *p, int fd, char const *dir)
 	int ret;
 
 	int newfd = fd;
+
+	/* This clause handles the unusual case in which FTS_NOCHDIR
+	   is specified, along with FTS_CWDFD.  In that case, there is
+	   no need to change even the virtual cwd file descriptor.
+	   However, if FD is non-negative, we do close it here.  */
 	if (ISSET(FTS_NOCHDIR)) {
 		if (ISSET(FTS_CWDFD) && 0 <= fd)
 			close (fd);
