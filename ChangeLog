@@ -1,3 +1,9 @@
+2006-11-08  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Sync from Automake.
+	* build-aux/gnupload: Add missing 'gnu' to example URL.
+	Report by Karl Berry.
+
 2006-11-08  Bruno Haible  <bruno@clisp.org>
 
 	* m4/inline.m4 (gl_INLINE): Also test __NO_INLINE__.
