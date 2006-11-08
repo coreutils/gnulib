@@ -155,7 +155,6 @@ static void leave_dir (FTS *fts, FTSENT *ent) {}
 static bool setup_dir (FTS *fts) { return true; }
 static void free_dir (FTS *fts) {}
 #else
-# include "fcntl--.h"
 # include "fts-cycle.c"
 #endif
 

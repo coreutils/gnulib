@@ -1,3 +1,8 @@
+2006-11-08  Jim Meyering  <jim@meyering.net>
+
+	* lib/fts.c [!_LGPL_PACKAGE]: Don't include fcntl--.h twice.
+	It's already included if !_LIBC.
+
 2006-11-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT): Detect bug in
