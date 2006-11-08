@@ -1,3 +1,10 @@
+2006-11-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/quotearg.h (quotearg_free): New decl.
+	* lib/quotearg.c (quotearg_free): New function.
+	(slot0, nslots, slotvec0, slotvec):
+	Now file-scope so that quotearg_free can get at them.
+
 2006-11-08  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Sync from Automake.

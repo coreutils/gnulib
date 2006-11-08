@@ -567,6 +567,34 @@ struct slotvec
   char *val;
 };
 
+/* Preallocate a slot 0 buffer, so that the caller can always quote
+   one small component of a "memory exhausted" message in slot 0.  */
+static char slot0[256];
+static unsigned int nslots = 1;
+static struct slotvec slotvec0 = {sizeof slot0, slot0};
+static struct slotvec *slotvec = &slotvec0;
+
+void
+quotearg_free (void)
+{
+  struct slotvec *sv = slotvec;
+  unsigned int i;
+  for (i = 1; i < nslots; i++)
+    free (sv[i].val);
+  if (sv[0].val != slot0)
+    {
+      free (sv[0].val);
+      slotvec0.size = sizeof slot0;
+      slotvec0.val = slot0;
+    }
+  if (sv != &slotvec0)
+    {
+      free (sv);
+      slotvec = &slotvec0;
+    }
+  nslots = 1;
+}
+
 /* Use storage slot N to return a quoted version of argument ARG.
    ARG is of size ARGSIZE, but if that is SIZE_MAX, ARG is a
    null-terminated string.
@@ -581,13 +609,7 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
 {
   int e = errno;
 
-  /* Preallocate a slot 0 buffer, so that the caller can always quote
-     one small component of a "memory exhausted" message in slot 0.  */
-  static char slot0[256];
-  static unsigned int nslots = 1;
   unsigned int n0 = n;
-  static struct slotvec slotvec0 = {sizeof slot0, slot0};
-  static struct slotvec *slotvec = &slotvec0;
   struct slotvec *sv = slotvec;
 
   if (n < 0)
