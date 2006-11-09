@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2006-10-15.13}
+\def\texinfoversion{2006-11-08.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free
@@ -1255,6 +1255,11 @@ where each line of input produces a line of output.}
   \HyPsdSubst{)}{\realbackslash)}{#1}%
 }
 
+\newhelp\nopdfimagehelp{Texinfo supports .png, .jpg, .jpeg, and .pdf images
+with PDF output, and none of those formats could be found.  (.eps cannot
+be supported due to the design of the PDF format; use regular TeX (DVI
+output) for that.)}
+
 \ifpdf
   \input pdfcolor
   \pdfcatalog{/PageMode /UseOutlines}%
@@ -1262,6 +1267,36 @@ where each line of input produces a line of output.}
   \def\dopdfimage#1#2#3{%
     \def\imagewidth{#2}\setbox0 = \hbox{\ignorespaces #2}%
     \def\imageheight{#3}\setbox2 = \hbox{\ignorespaces #3}%
+    %
+    % pdftex (and the PDF format) support .png, .jpg, .pdf (among
+    % others).  Let's try in that order.
+    \let\pdfimgext=\empty
+    \begingroup
+      \openin 1 #1.png \ifeof 1
+        \openin 1 #1.jpg \ifeof 1
+          \openin 1 #1.jpeg \ifeof 1
+            \openin 1 #1.JPG \ifeof 1
+              \openin 1 #1.pdf \ifeof 1
+                \errhelp = \nopdfimagehelp
+                \errmessage{Could not find image file #1 for pdf}%
+              \else
+                \gdef\pdfimgext{pdf}%
+              \fi
+            \else
+              \gdef\pdfimgext{JPG}%
+            \fi
+          \else
+            \gdef\pdfimgext{jpeg}%
+          \fi
+        \else
+          \gdef\pdfimgext{jpg}%
+        \fi
+      \else
+        \gdef\pdfimgext{png}%
+      \fi
+      \closein 1
+    \endgroup
+    %
     % without \immediate, pdftex seg faults when the same image is
     % included twice.  (Version 3.14159-pre-1.0-unofficial-20010704.)
     \ifnum\pdftexversion < 14
@@ -1272,9 +1307,9 @@ where each line of input produces a line of output.}
       \ifdim \wd0 >0pt width \imagewidth \fi
       \ifdim \wd2 >0pt height \imageheight \fi
       \ifnum\pdftexversion<13
-         #1.pdf%
+         #1.\pdfimgext
        \else
-         {#1.pdf}%
+         {#1.\pdfimgext}%
        \fi
     \ifnum\pdftexversion < 14 \else
       \pdfrefximage \pdflastximage
