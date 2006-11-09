@@ -1,4 +1,4 @@
-#serial 1
+#serial 2
 
 # Copyright (C) 2006 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -10,7 +10,6 @@
 AC_DEFUN([gl_FUNC_GEN_TEMPNAME],
 [
   AC_REQUIRE([AC_SYS_LARGEFILE])
-  AC_CHECK_FUNCS_ONCE([__gen_tempname])
 
   AC_LIBOBJ([tempname])
   gl_PREREQ_TEMPNAME

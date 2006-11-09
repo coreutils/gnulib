@@ -200,7 +200,6 @@ static const char letters[] =
    __GT_DIR:		create a directory, which will be mode 0700.
 
    We use a clever algorithm to get hard-to-predict names. */
-#if _LIBC || !HAVE___GEN_TEMPNAME
 int
 __gen_tempname (char *tmpl, int kind)
 {
@@ -321,15 +320,3 @@ __gen_tempname (char *tmpl, int kind)
   __set_errno (EEXIST);
   return -1;
 }
-
-#else /* !_LIBC && HAVE___GEN_TEMPNAME */
-
-# undef __gen_tempname
-extern int __gen_tempname (char *, int);
-int
-gen_tempname (char *tmpl, int kind)
-{
-  return __gen_tempname (tmpl, kind);
-}
-
-#endif /* !_LIBC && HAVE___GEN_TEMPNAME */

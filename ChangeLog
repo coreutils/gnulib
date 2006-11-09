@@ -1,3 +1,10 @@
+2006-11-09  Bruno Haible  <bruno@clisp.org>
+
+	* lib/tempname.c (gen_tempname): Remove variant that invokes
+	__gen_tempname.
+	* m4/tempname.m4 (gl_FUNC_GEN_TEMPNAME): Don't test for
+	__gen_tempname.
+
 2006-11-08  Bruno Haible  <bruno@clisp.org>
 
 	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT): Set ac_cv_type_long_long_int
