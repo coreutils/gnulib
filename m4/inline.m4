@@ -1,4 +1,4 @@
-# inline.m4 serial 2
+# inline.m4 serial 3
 dnl Copyright (C) 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,11 +19,16 @@ AC_DEFUN([gl_INLINE],
      else
        dnl GCC defines __NO_INLINE__ if not optimizing or if -fno-inline is
        dnl specified.
-       AC_EGREP_CPP([bummer], [
-         #ifdef __NO_INLINE__
-         bummer
-         #endif
-       ], [gl_cv_c_inline_effective=no], [gl_cv_c_inline_effective=yes])
+       dnl Use AC_COMPILE_IFELSE here, not AC_EGREP_CPP, because the result
+       dnl depends on optimization flags, which can be in CFLAGS.
+       dnl (AC_EGREP_CPP looks only at the CPPFLAGS.)
+       AC_COMPILE_IFELSE(
+         [AC_LANG_PROGRAM([[]],
+           [[#ifdef __NO_INLINE__
+               #error "inline is not effective"
+             #endif]])],
+         [gl_cv_c_inline_effective=yes],
+         [gl_cv_c_inline_effective=no])
      fi
     ])
   if test $gl_cv_c_inline_effective = yes; then

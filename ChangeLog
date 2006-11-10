@@ -1,5 +1,11 @@
 2006-11-10  Jim Meyering  <jim@meyering.net>
 
+	* m4/inline.m4 (gl_INLINE): Check with the compiler, not cpp, so that
+	relevant options in CFLAGS (like -O, -fno-inline) are taken into
+	account.
+
+2006-11-10  Jim Meyering  <jim@meyering.net>
+
 	* modules/inline: New file/module.
 	* modules/xalloc (Files): Remove m4/inline.m4.
 	(Depends-on): Add inline, instead.
