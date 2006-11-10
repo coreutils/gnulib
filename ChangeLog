@@ -1,3 +1,8 @@
+2006-11-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/stdint_.h (uintmax_t): Fix typo: int64_t -> uint64_t.
+	Problem reported by Matthew Woehlke.
+
 2006-11-09  Bruno Haible  <bruno@clisp.org>
 
 	* lib/tempname.c (gen_tempname): Remove variant that invokes

@@ -230,7 +230,7 @@
 #undef uintmax_t
 #if @HAVE_UNSIGNED_LONG_LONG_INT@ && ULONG_MAX >> 31 == 1
 # define uintmax_t unsigned long long int
-#elif defined int64_t
+#elif defined uint64_t
 # define uintmax_t uint64_t
 #else
 # define uintmax_t unsigned long int
