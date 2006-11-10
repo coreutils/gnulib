@@ -1,3 +1,7 @@
+2006-11-10  Jim Meyering  <jim@meyering.net>
+
+	* lib/fts.c [FTS_DEBUG]: Don't try to print a pointer via %s.
+
 2006-11-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/gettext.h (dgettext, dcgettext, ngettext) [! ENABLE_NLS]:

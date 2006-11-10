@@ -707,7 +707,7 @@ check_for_dir:
 		sp->fts_cur = p;
 		if (p->fts_info == FTS_D)
 		  {
-		    Dprintf (("  %s-entering: %s\n", sp, p->fts_path));
+		    Dprintf (("  entering: %s\n", p->fts_path));
 		    if (! enter_dir (sp, p))
 		      {
 			__set_errno (ENOMEM);
