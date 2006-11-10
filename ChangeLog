@@ -1,3 +1,13 @@
+2006-11-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/gettext.h (dgettext, dcgettext, ngettext) [! ENABLE_NLS]:
+	(dngettext, dcngettext, bindtextdomain) [! ENABLE_NLS]:
+	(bind_textdomain_codeset) [! ENABLE_NLS]:
+	Evaluate all the arguments.  That way, callers get compatible behavior
+	if the arguments have side effects.  Also, it avoids some GCC
+	diagnostics in some cases; Joel E. Denny reported problems when Bison
+	was configured with --enable-gcc-warnigs.
+
 2006-11-10  Jim Meyering  <jim@meyering.net>
 
 	* m4/inline.m4 (gl_INLINE): Check with the compiler, not cpp, so that
