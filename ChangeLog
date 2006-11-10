@@ -1,3 +1,11 @@
+2006-11-10  Jim Meyering  <jim@meyering.net>
+
+	* modules/inline: New file/module.
+	* modules/xalloc (Files): Remove m4/inline.m4.
+	(Depends-on): Add inline, instead.
+	* modules/oset: Likewise.
+	* modules/list: Likewise.
+
 2006-11-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/stdint_.h (uintmax_t): Fix typo: int64_t -> uint64_t.

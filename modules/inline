@@ -1,0 +1,20 @@
+Description:
+Test for the 'inline' keyword or equivalent.
+
+Files:
+m4/inline.m4
+
+Depends-on:
+
+configure.ac:
+gl_INLINE
+
+Makefile.am:
+
+Include:
+
+License:
+GPL
+
+Maintainer:
+all

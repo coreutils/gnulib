@@ -5,9 +5,9 @@ Files:
 lib/xalloc.h
 lib/xmalloc.c
 m4/xalloc.m4
-m4/inline.m4
 
 Depends-on:
+inline
 xalloc-die
 
 configure.ac:

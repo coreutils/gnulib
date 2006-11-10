@@ -5,9 +5,9 @@ Files:
 lib/gl_list.h
 lib/gl_list.c
 m4/gl_list.m4
-m4/inline.m4
 
 Depends-on:
+inline
 stdbool
 
 configure.ac:
@@ -24,4 +24,3 @@ GPL
 
 Maintainer:
 Bruno Haible
-
