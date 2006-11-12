@@ -1,5 +1,13 @@
 2006-11-12  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	* gnulib-tool (func_create_testdir): Fix replacement of
+	`build-aux' in configure.ac.  Run autotools in gltests
+	subdirectory.
+	(func_create_testdir, func_create_megatestdir, test): There is
+	no need for '--force' in most autotool invocations in a new
+	tree.  Actually fail the whole test if any of the tools, or the
+	configure or make stages fail.
+
 	Sync from Automake.
 	* build-aux/gnupload: Revert last change.  Add pointer to upload
 	instructions of the GNU Maintenance Instructions.
