@@ -74,6 +74,7 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 # include "lstat.h"
 # include "openat.h"
 # include "unistd--.h"
+# include "same-inode.h"
 #endif
 
 #include <dirent.h>
@@ -177,17 +178,21 @@ static void free_dir (FTS *fts) {}
 #define ISSET(opt)	(sp->fts_options & (opt))
 #define SET(opt)	(sp->fts_options |= (opt))
 
-#define RESTORE_INITIAL_CWD(sp)	FCHDIR (sp, (ISSET (FTS_CWDFD) \
-					     ? AT_FDCWD	       \
-					     : sp->fts_rfd))
+/* FIXME: make this a function */
+#define RESTORE_INITIAL_CWD(sp)			\
+  (fd_ring_clear (&((sp)->fts_fd_ring)),	\
+   FCHDIR ((sp), (ISSET (FTS_CWDFD) ? AT_FDCWD : (sp)->fts_rfd)))
 
-#define FCHDIR(sp, fd)	(!ISSET(FTS_NOCHDIR)		    \
-			 && (ISSET(FTS_CWDFD)		    \
-                             ? (cwd_advance_fd (sp, fd), 0) \
-			     : fchdir(fd)))
+/* FIXME: FTS_NOCHDIR is now misnamed.
+   Call it FTS_USE_FULL_RELATIVE_FILE_NAMES instead. */
+#define FCHDIR(sp, fd)					\
+  (!ISSET(FTS_NOCHDIR) && (ISSET(FTS_CWDFD)		\
+			   ? (cwd_advance_fd ((sp), (fd), true), 0) \
+			   : fchdir (fd)))
 
 
 /* fts_build flags */
+/* FIXME: make this an enum */
 #define BCHILD		1		/* fts_children */
 #define BNAMES		2		/* fts_children, names only */
 #define BREAD		3		/* fts_read */
@@ -196,10 +201,13 @@ static void free_dir (FTS *fts) {}
 # include <inttypes.h>
 # include <stdint.h>
 # include <stdio.h>
+# include "getcwdat.h"
 bool fts_debug = false;
-# define Dprintf(x) do { if (fts_debug) printf x; } while (0)
+# define Dprintf(x) do { if (fts_debug) printf x; } while (false)
 #else
 # define Dprintf(x)
+# define fd_ring_check(x)
+# define fd_ring_print(a, b, c)
 #endif
 
 #define LEAVE_DIR(Fts, Ent, Tag)				\
@@ -207,8 +215,20 @@ bool fts_debug = false;
     {								\
       Dprintf (("  %s-leaving: %s\n", Tag, (Ent)->fts_path));	\
       leave_dir (Fts, Ent);					\
+      fd_ring_check (Fts);					\
     }								\
   while (false)
+
+static void
+fd_ring_clear (I_ring *fd_ring)
+{
+  while ( ! i_ring_empty (fd_ring))
+    {
+      int fd = i_ring_pop (fd_ring);
+      if (0 <= fd)
+	close (fd);
+    }
+}
 
 /* Overload the fts_statp->st_size member (otherwise unused, when
    fts_info is FTS_NSOK) to indicate whether fts_read should stat
@@ -244,19 +264,35 @@ opendirat (int fd, char const *dir)
   return dirp;
 }
 
-/* Virtual fchdir.  Advance SP's working directory
-   file descriptor, SP->fts_cwd_fd, to FD, and close
-   the previous one, ignoring any error.  */
+/* Virtual fchdir.  Advance SP's working directory file descriptor,
+   SP->fts_cwd_fd, to FD, and push the previous value onto the fd_ring.
+   CHDIR_DOWN_ONE is true if FD corresponds to an entry in the directory
+   open on sp->fts_cwd_fd; i.e., to move the working directory one level
+   down.  */
 static void
 internal_function
-cwd_advance_fd (FTS *sp, int fd)
+cwd_advance_fd (FTS *sp, int fd, bool chdir_down_one)
 {
   int old = sp->fts_cwd_fd;
   if (old == fd && old != AT_FDCWD)
     abort ();
+
+  if (chdir_down_one)
+    {
+      /* Push "old" onto the ring.
+	 If the displaced file descriptor is non-negative, close it.  */
+      int prev_fd_in_slot = i_ring_push (&sp->fts_fd_ring, old);
+      fd_ring_print (sp, stderr, "post-push");
+      if (0 <= prev_fd_in_slot)
+	close (prev_fd_in_slot); /* ignore any close failure */
+    }
+  else if ( ! ISSET (FTS_NOCHDIR))
+    {
+      if (0 <= old)
+	close (old); /* ignore any close failure */
+    }
+
   sp->fts_cwd_fd = fd;
-  if (0 <= old)
-    close (old); /* ignore any close failure */
 }
 
 /* Open the directory DIR if possible, and return a file
@@ -448,6 +484,7 @@ fts_open (char * const *argv,
 	    && (sp->fts_rfd = diropen (sp, ".")) < 0)
 		SET(FTS_NOCHDIR);
 
+	i_ring_init (&sp->fts_fd_ring, -1);
 	return (sp);
 
 mem3:	fts_lfree(root);
@@ -521,6 +558,7 @@ fts_close (FTS *sp)
 	    close(sp->fts_rfd);
 	  }
 
+	fd_ring_clear (&sp->fts_fd_ring);
 	free_dir (sp);
 
 	/* Free up the stream pointer. */
@@ -850,7 +888,7 @@ fts_children (register FTS *sp, int instr)
 	sp->fts_child = fts_build(sp, instr);
 	if (ISSET(FTS_CWDFD))
 	  {
-	    cwd_advance_fd (sp, fd);
+	    cwd_advance_fd (sp, fd, true);
 	  }
 	else
 	  {
@@ -1228,6 +1266,87 @@ fts_cross_check (FTS const *sp)
 	}
     }
 }
+
+static bool
+same_fd (int fd1, int fd2)
+{
+  struct stat sb1, sb2;
+  return (fstat (fd1, &sb1) == 0
+	  && fstat (fd2, &sb2) == 0
+	  && SAME_INODE (sb1, sb2));
+}
+
+static void
+fd_ring_print (FTS const *sp, FILE *stream, char const *msg)
+{
+  I_ring const *fd_ring = &sp->fts_fd_ring;
+  unsigned int i = fd_ring->fts_front;
+  char *cwd = getcwdat (sp->fts_cwd_fd, NULL, 0);
+  fprintf (stream, "=== %s ========== %s\n", msg, cwd);
+  free (cwd);
+  if (i_ring_empty (fd_ring))
+    return;
+
+  while (true)
+    {
+      int fd = fd_ring->fts_fd_ring[i];
+      if (fd < 0)
+	fprintf (stream, "%d: %d:\n", i, fd);
+      else
+	{
+	  char *wd = getcwdat (fd, NULL, 0);
+	  fprintf (stream, "%d: %d: %s\n", i, fd, wd);
+	  free (wd);
+	}
+      if (i == fd_ring->fts_back)
+	break;
+      i = (i + I_RING_SIZE - 1) % I_RING_SIZE;
+    }
+}
+
+/* Ensure that each file descriptor on the fd_ring matches a
+   parent, grandparent, etc. of the current working directory.  */
+static void
+fd_ring_check (FTS const *sp)
+{
+  if (!fts_debug)
+    return;
+
+  /* Make a writable copy.  */
+  I_ring fd_w = sp->fts_fd_ring;
+
+  int cwd_fd = sp->fts_cwd_fd;
+  cwd_fd = dup (cwd_fd);
+  char *dot = getcwdat (cwd_fd, NULL, 0);
+  error (0, 0, "===== check ===== cwd: %s", dot);
+  free (dot);
+  while ( ! i_ring_empty (&fd_w))
+    {
+      int fd = i_ring_pop (&fd_w);
+      if (0 <= fd)
+	{
+	  int parent_fd = openat (cwd_fd, "..", O_RDONLY);
+	  if (parent_fd < 0)
+	    {
+	      // Warn?
+	      break;
+	    }
+	  if (!same_fd (fd, parent_fd))
+	    {
+	      char *cwd = getcwdat (fd, NULL, 0);
+	      error (0, errno, "ring  : %s", cwd);
+	      char *c2 = getcwdat (parent_fd, NULL, 0);
+	      error (0, errno, "parent: %s", c2);
+	      free (cwd);
+	      free (c2);
+	      abort ();
+	    }
+	  close (cwd_fd);
+	  cwd_fd = parent_fd;
+	}
+    }
+  close (cwd_fd);
+}
 #endif
 
 static unsigned short int
@@ -1503,28 +1622,51 @@ internal_function
 fts_safe_changedir (FTS *sp, FTSENT *p, int fd, char const *dir)
 {
 	int ret;
-
-	int newfd = fd;
+	bool is_dotdot = dir && STREQ (dir, "..");
+	int newfd;
 
 	/* This clause handles the unusual case in which FTS_NOCHDIR
 	   is specified, along with FTS_CWDFD.  In that case, there is
 	   no need to change even the virtual cwd file descriptor.
 	   However, if FD is non-negative, we do close it here.  */
-	if (ISSET(FTS_NOCHDIR)) {
-		if (ISSET(FTS_CWDFD) && 0 <= fd)
-			close (fd);
-		return (0);
-	}
-	if (fd < 0 && (newfd = diropen (sp, dir)) < 0)
-		return (-1);
+	if (ISSET (FTS_NOCHDIR))
+	  {
+	    if (ISSET (FTS_CWDFD) && 0 <= fd)
+	      close (fd);
+	    return 0;
+	  }
 
-	/* The following dev/inode check is necessary if we're doing
-	   a `logical' traversal (through symlinks, a la chown -L),
-	   if the system lacks O_NOFOLLOW support, or if we're changing
-	   to "..".  In the latter case, O_NOFOLLOW can't help.  In
-	   general (when the target is not ".."), diropen's use of
-	   O_NOFOLLOW ensures we don't mistakenly follow a symlink,
-	   so we can avoid the expense of this fstat.  */
+	if (fd < 0 && is_dotdot && ISSET (FTS_CWDFD))
+	  {
+	    /* When possible, skip the diropen and subsequent fstat+dev/ino
+	       comparison.  I.e., when changing to parent directory
+	       (chdir ("..")), use a file descriptor from the ring and
+	       save the overhead of diropen+fstat, as well as avoiding
+	       failure when we lack "x" access to the virtual cwd.  */
+	    if ( ! i_ring_empty (&sp->fts_fd_ring))
+	      {
+		fd_ring_print (sp, stderr, "pre-pop");
+		int parent_fd = i_ring_pop (&sp->fts_fd_ring);
+		is_dotdot = true;
+		if (0 <= parent_fd)
+		  {
+		    fd = parent_fd;
+		    dir = NULL;
+		  }
+	      }
+	  }
+
+	newfd = fd;
+	if (fd < 0 && (newfd = diropen (sp, dir)) < 0)
+	  return -1;
+
+	/* The following dev/inode check is necessary if we're doing a
+	   `logical' traversal (through symlinks, a la chown -L), if the
+	   system lacks O_NOFOLLOW support, or if we're changing to ".."
+	   (but not via a popped file descriptor).  When changing to the
+	   name "..", O_NOFOLLOW can't help.  In general, when the target is
+	   not "..", diropen's use of O_NOFOLLOW ensures we don't mistakenly
+	   follow a symlink, so we can avoid the expense of this fstat.  */
 	if (ISSET(FTS_LOGICAL) || ! HAVE_WORKING_O_NOFOLLOW
 	    || (dir && STREQ (dir, "..")))
 	  {
@@ -1545,7 +1687,7 @@ fts_safe_changedir (FTS *sp, FTSENT *p, int fd, char const *dir)
 
 	if (ISSET(FTS_CWDFD))
 	  {
-	    cwd_advance_fd (sp, newfd);
+	    cwd_advance_fd (sp, newfd, ! is_dotdot);
 	    return 0;
 	  }
 
@@ -1557,5 +1699,5 @@ bail:
 	    (void)close(newfd);
 	    __set_errno (oerrno);
 	  }
-	return (ret);
+	return ret;
 }

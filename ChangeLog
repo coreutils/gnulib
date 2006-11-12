@@ -1,3 +1,28 @@
+2006-11-12  Jim Meyering  <jim@meyering.net>
+
+	Make fts (in FTS_CWDFD mode) more efficient by caching a few open
+	file descriptors.  This also averts a failure on systems with
+	native openat support when a traversed directory lacks "x" access.
+	* lib/fts_.h: Include "i-ring.h"
+	(struct FTS) [fts_fd_ring]: New member.
+	* lib/fts.c (RESTORE_INITIAL_CWD): Also call fd_ring_clear.
+	(FCHDIR): Add parentheses.
+	(fd_ring_check, fd_ring_print) [!FTS_DEBUG]: Define away.
+	(cwd_advance_fd): Add a 3rd parameter.  Adjust all callers.
+	When descending, rather than simply closing the previous
+	fts_cwd_fd value, push that file descriptor onto the ring.
+	(same_fd, fd_ring_print, fd_ring_check) [FTS_DEBUG]: New functions.
+	(fts_open): Initialize the new fd_ring member.
+	(fts_close): Clear the ring.
+	(fts_safe_changedir): When possible, use our new fd_ring to skip
+	the diropen and fstat and dev/ino comparison that would normally
+	accompany a virtual `chdir ("..")'.
+
+	* modules/fts (Depends-on): Add i-ring.
+	* modules/i-ring: New module.
+	* lib/i-ring.c, lib/i-ring.h, lib/i-ring-test.c: New files.
+	* m4/i-ring.m4: New file.
+
 2006-11-12  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* gnulib-tool (func_create_testdir): Fix replacement of

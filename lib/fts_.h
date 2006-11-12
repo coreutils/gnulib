@@ -65,6 +65,7 @@
 # include <stddef.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include "i-ring.h"
 
 typedef struct {
 	struct _ftsent *fts_cur;	/* current node */
@@ -163,7 +164,12 @@ typedef struct {
 		   but it's not appropriate for programs like du.  */
 		struct cycle_check_state *state;
 	} fts_cycle;
+
 # endif
+	/* A stack of the file descriptors corresponding to the
+	   most-recently traversed parent directories.
+	   Currently used only in FTS_CWDFD mode.  */
+	I_ring fts_fd_ring;
 } FTS;
 
 typedef struct _ftsent {
