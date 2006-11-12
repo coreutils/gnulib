@@ -1,3 +1,10 @@
+2006-11-12  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Sync from Automake.
+	* build-aux/gnupload: Revert last change.  Add pointer to upload
+	instructions of the GNU Maintenance Instructions.
+	Suggestion by Karl Berry.
+
 2006-11-10  Jim Meyering  <jim@meyering.net>
 
 	* lib/fts.c [FTS_DEBUG]: Don't try to print a pointer via %s.
