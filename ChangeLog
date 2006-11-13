@@ -1,5 +1,14 @@
 2006-11-12  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool: New option --local-symlink.
+	(func_usage): Document it.
+	(lsymbolic): New variable.
+	(func_import, func_create_testdir): If --symlink was not specified,
+	test whether --local-symlink was specified and the file comes from
+	the local_gnulib_dir.
+
+2006-11-12  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_ln): New function.
 	(func_ln_if_changed, func_create_testdir): Use it instead of "ln -s".
 
