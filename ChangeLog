@@ -1,5 +1,10 @@
 2006-11-12  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_emit_lib_Makefile_am): Replace occurrences of
+	'$(top_srcdir)/build-aux/', taking into account the real auxdir.
+
+2006-11-12  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool: New option --local-symlink.
 	(func_usage): Document it.
 	(lsymbolic): New variable.

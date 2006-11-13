@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-11-13 12:35:01 $'
+cvsdatestamp='$Date: 2006-11-13 12:35:41 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1158,6 +1158,7 @@ func_modules_to_filelist ()
 # - local_gnulib_dir  from --local-dir
 # - modules         list of modules, including dependencies
 # - libname         library name
+# - auxdir          directory relative to destdir where to place build aux files
 # - makefile_name   from --makefile-name
 # - libtool         true if libtool will be used, false or blank otherwise
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
@@ -1274,7 +1275,8 @@ func_emit_lib_Makefile_am ()
     echo "AM_CPPFLAGS ="
   fi
   echo
-  cat allsnippets.tmp
+  cat allsnippets.tmp \
+    | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
   echo
   echo "mostlyclean-local: mostlyclean-generic"
   echo "	@for dir in '' \$(MOSTLYCLEANDIRS); do \\"
