@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-11-12 09:53:16 $'
+cvsdatestamp='$Date: 2006-11-13 12:33:07 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -939,6 +939,23 @@ func_get_automake_snippet ()
         echo "EXTRA_DIST +=" $extra_files
         echo
       fi
+      # Synthesize also an EXTRA_lib_SOURCES augmentation.
+      # This is necessary so that automake can generate the right list of
+      # dependency rules.
+      # A possible approach would be to use autom4te --trace of the redefined
+      # AC_LIBOBJ and AC_REPLACE_FUNCS macros when creating the Makefile.am
+      # (use autom4te --trace, not just grep, so that AC_LIBOBJ invocations
+      # inside autoconf's built-in macros are not missed).
+      # But it's simpler and more robust to do it here, based on the file list.
+      # If some .c file exists and is not used with AC_LIBOBJ - for example,
+      # a .c file is preprocessed into another .c file for BUILT_SOURCES -,
+      # automake will generate a useless dependency; this is harmless.
+      sed_extract_c_files='/\.c$/p'
+      extra_files=`echo "$extra_files" | sed -n -e "$sed_extract_c_files"`
+      if test -n "$extra_files"; then
+        echo "EXTRA_lib_SOURCES +=" $extra_files
+        echo
+      fi
       ;;
   esac
 }
@@ -1186,6 +1203,7 @@ func_emit_lib_Makefile_am ()
   # automake during its analyses looks for $(LIBOBJS), not for @LIBOBJS@.
   echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
   echo "${libname}_${libext}_DEPENDENCIES = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
+  echo "EXTRA_${libname}_${libext}_SOURCES ="
   if test "$libtool" = true; then
     echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
   fi

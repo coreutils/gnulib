@@ -1,3 +1,9 @@
+2006-11-12  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_get_automake_snippet): Synthesize also an
+	EXTRA_lib_SOURCES augmentation.
+	(func_emit_lib_Makefile_am): Initialize EXTRA_lib..._SOURCES to empty.
+
 2006-11-12  Jim Meyering  <jim@meyering.net>
 
 	Make fts (in FTS_CWDFD mode) more efficient by caching a few open
