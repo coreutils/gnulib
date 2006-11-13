@@ -100,7 +100,7 @@ gl_tree_search_atleast (gl_oset_t set,
 		  node = node->left;
 		}
 	    }
-	  *eltp = found;
+	  *eltp = found->value;
 	  return true;
 	}
     }
