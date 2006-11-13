@@ -1,5 +1,10 @@
 2006-11-12  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_ln): New function.
+	(func_ln_if_changed, func_create_testdir): Use it instead of "ln -s".
+
+2006-11-12  Bruno Haible  <bruno@clisp.org>
+
 	Finish support for source files in subdirectories.
 	* gnulib-tool (func_emit_lib_Makefile_am): If some of the source files
 	are in subdirectories, set uses_subdirs and add 'subdir-objects' to

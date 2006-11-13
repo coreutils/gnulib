@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-11-13 12:33:43 $'
+cvsdatestamp='$Date: 2006-11-13 12:34:33 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -271,21 +271,6 @@ else
   }
 fi
 
-# func_ln_if_changed SRC DEST
-# Like ln -s, but avoids munging timestamps if the link is correct.
-func_ln_if_changed ()
-{
-  if test $# -ne 2; then
-    echo "usage: func_ln_if_changed SRC DEST" >&2
-  fi
-  if test -L "$2" && test "$1" = "`func_readlink "$2"`"; then
-    :
-  else
-    rm -f "$2"
-    ln -s "$1" "$2"
-  fi
-}
-
 # func_relativize DIR1 DIR2
 # computes a relative pathname RELDIR such that DIR1/RELDIR = DIR2.
 # Input:
@@ -377,6 +362,45 @@ func_relconcat ()
       fi
     fi
   done
+}
+
+# func_ln SRC DEST
+# Like ln -s, except that SRC is given relative to the current directory (or
+# absolute), not given relative to the directory of DEST.
+func_ln ()
+{
+  case "$1" in
+    /*)
+      ln -s "$1" "$2" ;;
+    *) # SRC is relative.
+      case "$2" in
+        /*)
+          ln -s "`pwd`/$1" "$2" ;;
+        *) # DEST is relative too.
+          ln_destdir=`echo "$2" | sed -e 's,[^/]*$,,'`
+          test -n "$ln_destdir" || ln_destdir="."
+          func_relativize "$ln_destdir" "$1"
+          ln -s "$reldir" "$2"
+          ;;
+      esac
+      ;;
+  esac
+}
+
+# func_ln_if_changed SRC DEST
+# Like func_ln, but avoids munging timestamps if the link is correct.
+func_ln_if_changed ()
+{
+  if test $# -ne 2; then
+    echo "usage: func_ln_if_changed SRC DEST" >&2
+  fi
+  ln_target=`func_readlink "$2"`
+  if test -L "$2" && test "$1" = "$ln_target"; then
+    :
+  else
+    rm -f "$2"
+    func_ln "$1" "$2"
+  fi
 }
 
 # Command-line option processing.
@@ -2246,7 +2270,7 @@ func_create_testdir ()
         if test -z "$symbolic"; then
           cp -p "$lookedup_file" "$testdir/$g"
         else
-          ln -s "$lookedup_file" "$testdir/$g"
+          func_ln "$lookedup_file" "$testdir/$g"
         fi
       fi
     done
