@@ -1,3 +1,10 @@
+2006-11-13  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_initmacro_start): Also override AC_LIBSOURCES.
+	(func_emit_initmacro_end): Undo the override here.
+	(func_emit_initmacro_done): Emit a definition for gl_LIBSOURCES.
+	Works around the famous automake error in coreutils.
+
 2006-11-13  Eric Blake  <ebb9@byu.net>
 
 	* lib/gl_anytree_oset.h (gl_tree_search_atleast): Return the

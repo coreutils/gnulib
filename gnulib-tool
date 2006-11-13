@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-11-13 12:35:41 $'
+cvsdatestamp='$Date: 2006-11-13 19:07:29 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1394,8 +1394,22 @@ func_emit_tests_Makefile_am ()
 # - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
 func_emit_initmacro_start ()
 {
+  # Overriding AC_LIBOBJ and AC_REPLACE_FUNCS has the effect of storing
+  # platform-dependent object files in ${macro_prefix}_LIBOBJS instead of
+  # LIBOBJS.  The purpose is to allow several gnulib instantiations under
+  # a single configure.ac file.  (AC_CONFIG_LIBOBJ_DIR does not allow this
+  # flexibility.)
+  # Furthermore it avoids an automake error like this when a Makefile.am
+  # that uses pieces of gnulib also uses $(LIBOBJ):
+  #   automatically discovered file `error.c' should not be explicitly mentioned
   echo "  m4_pushdef([AC_LIBOBJ], m4_defn([${macro_prefix}_LIBOBJ]))"
   echo "  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([${macro_prefix}_REPLACE_FUNCS]))"
+  # Overriding AC_LIBSOURCES has the same purpose of avoiding the automake
+  # error when a Makefile.am that uses pieces of gnulib also uses $(LIBOBJ):
+  #   automatically discovered file `error.c' should not be explicitly mentioned
+  # We let automake know about the files to be distributed through the
+  # EXTRA_lib_SOURCES variable.
+  echo "  m4_pushdef([AC_LIBSOURCES], m4_defn([${macro_prefix}_LIBSOURCES]))"
 }
 
 # func_emit_initmacro_end
@@ -1403,6 +1417,7 @@ func_emit_initmacro_start ()
 # - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
 func_emit_initmacro_end ()
 {
+  echo "  m4_popdef([AC_LIBSOURCES])"
   echo "  m4_popdef([AC_REPLACE_FUNCS])"
   echo "  m4_popdef([AC_LIBOBJ])"
   echo "  AC_CONFIG_COMMANDS_PRE(["
@@ -1436,6 +1451,11 @@ func_emit_initmacro_done ()
   echo "# into ${macro_prefix}_LIBOBJS instead of into LIBOBJS."
   echo "AC_DEFUN([${macro_prefix}_REPLACE_FUNCS],"
   echo "  [AC_CHECK_FUNCS([\$1], , [${macro_prefix}_LIBOBJ(\$ac_func)])])"
+  echo
+  echo "# Like AC_LIBSOURCES, except that it does nothing."
+  echo "# We rely on EXTRA_lib..._SOURCES instead."
+  echo "AC_DEFUN([${macro_prefix}_LIBSOURCES],"
+  echo "  [])"
 }
 
 # func_import modules
