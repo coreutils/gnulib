@@ -1,5 +1,13 @@
 2006-11-12  Bruno Haible  <bruno@clisp.org>
 
+	Finish support for source files in subdirectories.
+	* gnulib-tool (func_emit_lib_Makefile_am): If some of the source files
+	are in subdirectories, set uses_subdirs and add 'subdir-objects' to
+	AUTOMAKE_OPTIONS.
+	(func_import, func_create_testdir): Invoke AM_PROG_CC_C_O in this case.
+
+2006-11-12  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_get_automake_snippet): Synthesize also an
 	EXTRA_lib_SOURCES augmentation.
 	(func_emit_lib_Makefile_am): Initialize EXTRA_lib..._SOURCES to empty.

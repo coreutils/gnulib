@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-11-13 12:33:07 $'
+cvsdatestamp='$Date: 2006-11-13 12:33:43 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1131,6 +1131,8 @@ func_modules_to_filelist ()
 # - libtool         true if libtool will be used, false or blank otherwise
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
 # - actioncmd       (optional) command that will reproduce this invocation
+# Output:
+# - uses_subdirs    nonempty if object files in subdirs exist
 func_emit_lib_Makefile_am ()
 {
   # When creating an includable Makefile.am snippet, augment variables with
@@ -1156,11 +1158,8 @@ func_emit_lib_Makefile_am ()
     echo "# Reproduce by: $actioncmd"
   fi
   echo
-  if test -z "$makefile_name"; then
-    echo "AUTOMAKE_OPTIONS = 1.5 gnits"
-  fi
-  echo
-  (
+  uses_subdirs=
+  {
     for module in $modules; do
       func_verify_nontests_module
       if test -n "$module"; then
@@ -1186,9 +1185,25 @@ func_emit_lib_Makefile_am ()
           echo
         fi
         rm -f amsnippet.tmp
+        # Test whether there are some source files in subdirectories.
+        for f in `func_get_filelist "$module"`; do
+          case $f in
+            lib/*/*.c) uses_subdirs=yes ;;
+          esac
+        done
       fi
     done
-  ) > allsnippets.tmp
+  } > allsnippets.tmp
+  if test -z "$makefile_name"; then
+    # If there are source files in subdirectories, prevent collision of the
+    # object files (example: hash.c and libxml/hash.c).
+    subdir_options=
+    if test -n "$uses_subdirs"; then
+      subdir_options=' subdir-objects'
+    fi
+    echo "AUTOMAKE_OPTIONS = 1.5 gnits${subdir_options}"
+  fi
+  echo
   if grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *= *$libname\\.$libext\$" allsnippets.tmp > /dev/null; then
     # One of the snippets already specifies an installation location for the
     # library. Don't confuse automake by saying it should not be installed.
@@ -1966,6 +1981,9 @@ func_import ()
     echo "  m4_pattern_allow([^gl_LIBOBJS\$])dnl a variable"
     echo "  m4_pattern_allow([^gl_LTLIBOBJS\$])dnl a variable"
     echo "  AC_REQUIRE([AC_PROG_RANLIB])"
+    if test -n "$uses_subdirs"; then
+      echo "  AC_REQUIRE([AM_PROG_CC_C_O])"
+    fi
     if grep AC_GNU_SOURCE "$destdir"/$m4base/*.m4 >/dev/null 2>/dev/null; then
       echo "  AC_REQUIRE([AC_GNU_SOURCE])"
     fi
@@ -2392,6 +2410,10 @@ func_create_testdir ()
    echo
    echo "AC_PROG_RANLIB"
    echo
+   if test -n "$uses_subdirs"; then
+     echo "AM_PROG_CC_C_O"
+     echo
+   fi
    if grep AC_GNU_SOURCE "$testdir/$m4base"/*.m4 >/dev/null 2>/dev/null; then
      echo "AC_GNU_SOURCE"
      echo
