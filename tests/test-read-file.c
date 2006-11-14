@@ -24,6 +24,7 @@
 #include "read-file.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #define FILE1 "/etc/resolv.conf"
 #define FILE2 "/dev/null"

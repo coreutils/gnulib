@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 Free Software Foundation
+ * Copyright (C) 2005, 2006 Free Software Foundation
  * Written by Simon Josefsson
  *
  * This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,6 @@ int
 main (int argc, char *argv[])
 {
   Gc_rc rc;
-  char buf1[8], buf2[8];
 
   rc = gc_init ();
   if (rc != GC_OK)
