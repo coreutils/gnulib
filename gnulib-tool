@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-11-13 19:07:29 $'
+cvsdatestamp='$Date: 2006-11-14 09:37:20 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2383,7 +2383,6 @@ func_create_testdir ()
        echo "gl_libdeps="
        echo "gl_ltlibdeps="
      fi
-     echo "gl_source_base='$testsbase'"
      # Wrap the set of autoconf snippets into an autoconf macro that is then
      # invoked. This is needed because autoconf does not support AC_REQUIRE
      # at the top level:
@@ -2403,6 +2402,7 @@ func_create_testdir ()
      # We don't have explicit ordering constraints between the various
      # autoconf snippets. It's cleanest to put those of the library before
      # those of the tests.
+     echo "gl_source_base='../$sourcebase'"
      for module in $modules; do
        func_verify_nontests_module
        if test -n "$module"; then
@@ -2410,6 +2410,7 @@ func_create_testdir ()
            | sed -e "$sed_replace_build_aux"
        fi
      done
+     echo "gl_source_base='.'"
      for module in $modules; do
        func_verify_tests_module
        if test -n "$module"; then
