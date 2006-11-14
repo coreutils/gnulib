@@ -23,7 +23,7 @@ Include:
 "inttostr.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paul Eggert

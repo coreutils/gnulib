@@ -1,3 +1,7 @@
+2006-11-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/inttostr (License): Change to LGPL.
+
 2006-11-14  Eric Blake  <ebb9@byu.net>
 
 	* modules/tempname (License): Change to LGPL.
