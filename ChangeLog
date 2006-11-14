@@ -1,3 +1,8 @@
+2006-11-14  Eric Blake  <ebb9@byu.net>
+
+	* doc/functions.texi (Function Portability): *printf functions on
+	Cygwin now understand all POSIX size specifiers.
+
 2006-11-14  Bruno Haible  <bruno@clisp.org>
 
 	* modules/c-ctype (License): Change to LGPL.

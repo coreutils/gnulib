@@ -152,8 +152,9 @@ access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
 include @file{<libintl.h>} from GNU gettext; it redefines this function so that
 it is POSIX compliant.
 
-On Windows, this function doesn't support the @code{'} flag and the @code{hh},
-@code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
+On Windows systems (excluding Cygwin), this function doesn't support
+the @code{'} flag and the @code{hh}, @code{ll}, @code{j}, @code{t},
+@code{z} size specifiers.
 
 @item fputc
 @itemx fputs
@@ -465,8 +466,9 @@ access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
 include @file{<libintl.h>} from GNU gettext; it redefines this function so that
 it is POSIX compliant.
 
-On Windows, this function doesn't support the @code{'} flag and the @code{hh},
-@code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
+On Windows systems (excluding Cygwin), this function doesn't support
+the @code{'} flag and the @code{hh}, @code{ll}, @code{j}, @code{t},
+@code{z} size specifiers.
 
 @item pthread_create
 On Linux/glibc systems before the advent of NPTL, signals could only be
@@ -634,8 +636,9 @@ access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
 include @file{<libintl.h>} from GNU gettext; it redefines this function so that
 it is POSIX compliant.
 
-On Windows, this function doesn't support the @code{'} flag and the @code{hh},
-@code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
+On Windows systems (excluding Cygwin), this function doesn't support
+the @code{'} flag and the @code{hh}, @code{ll}, @code{j}, @code{t},
+@code{z} size specifiers.
 
 @item socket
 On BeOS, the descriptors returned by the @code{socket} function can not be used
@@ -648,8 +651,9 @@ access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
 include @file{<libintl.h>} from GNU gettext; it redefines this function so that
 it is POSIX compliant.
 
-On Windows, this function doesn't support the @code{'} flag and the @code{hh},
-@code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
+On Windows systems (excluding Cygwin), this function doesn't support
+the @code{'} flag and the @code{hh}, @code{ll}, @code{j}, @code{t},
+@code{z} size specifiers.
 
 @item sscanf
 On Windows systems (excluding Cygwin), this function does not set @code{errno}
@@ -786,8 +790,9 @@ access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
 include @file{<libintl.h>} from GNU gettext; it redefines this function so that
 it is POSIX compliant.
 
-On Windows, this function doesn't support the @code{'} flag and the @code{hh},
-@code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
+On Windows systems (excluding Cygwin), this function doesn't support
+the @code{'} flag and the @code{hh}, @code{ll}, @code{j}, @code{t},
+@code{z} size specifiers.
 
 @item vfscanf
 On Windows systems (excluding Cygwin), this function does not set @code{errno}
@@ -804,8 +809,9 @@ access arguments in an arbitrary order, such as @code{"%2$s"}.  The fix is to
 include @file{<libintl.h>} from GNU gettext; it redefines these functions so
 that they are POSIX compliant.
 
-On Windows, these functions don't support the @code{'} flag and the @code{hh},
-@code{ll}, @code{j}, @code{t}, @code{z} size specifiers.
+On Windows systems (excluding Cygwin), this function doesn't support
+the @code{'} flag and the @code{hh}, @code{ll}, @code{j}, @code{t},
+@code{z} size specifiers.
 
 @item vscanf
 @item vsscanf
