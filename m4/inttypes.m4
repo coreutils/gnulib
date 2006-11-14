@@ -1,4 +1,4 @@
-# inttypes.m4 serial 6
+# inttypes.m4 serial 7
 dnl Copyright (C) 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,17 +23,16 @@ AC_DEFUN([gl_INTTYPES_H],
   dnl   - that imaxabs, imaxdiv, strtoimax, strtoumax are declared,
   dnl   - some additional tests.
   AC_CACHE_CHECK([whether inttypes.h conforms to C99],
-                 [gl_cv_header_working_inttypes_h],
-  [
-    gl_cv_header_working_inttypes_h=no
-    if test "$gl_cv_header_working_stdint_h" = yes \
-       && test $ac_cv_header_inttypes_h = yes \
-       && test "$ac_cv_have_decl_imaxabs" = yes \
-       && test "$ac_cv_have_decl_imaxdiv" = yes \
-       && test "$ac_cv_have_decl_strtoimax" = yes \
-       && test "$ac_cv_have_decl_strtoumax" = yes; then
-      AC_COMPILE_IFELSE([
-        AC_LANG_PROGRAM([
+    [gl_cv_header_working_inttypes_h],
+    [gl_cv_header_working_inttypes_h=no
+     if test "$gl_cv_header_working_stdint_h" = yes \
+	&& test $ac_cv_header_inttypes_h = yes \
+	&& test "$ac_cv_have_decl_imaxabs" = yes \
+	&& test "$ac_cv_have_decl_imaxdiv" = yes \
+	&& test "$ac_cv_have_decl_strtoimax" = yes \
+	&& test "$ac_cv_have_decl_strtoumax" = yes; then
+       AC_COMPILE_IFELSE([
+	 AC_LANG_PROGRAM([
 #include <stddef.h>
 #define __STDC_LIMIT_MACROS 1 /* to make it work also in C++ mode */
 #define __STDC_CONSTANT_MACROS 1 /* to make it work also in C++ mode */
@@ -131,9 +130,9 @@ const char *l = /* implicit string concatenation */
   SCNoPTR SCNuPTR SCNxPTR
 #endif
   ;
-        ])],
-        [gl_cv_header_working_inttypes_h=yes])
-    fi])
+	 ])],
+	 [gl_cv_header_working_inttypes_h=yes])
+     fi])
   if test $gl_cv_header_working_inttypes_h = yes; then
     dnl Use the existing <inttypes.h>.
     INTTYPES_H=''
