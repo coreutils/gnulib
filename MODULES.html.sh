@@ -1243,8 +1243,62 @@ yn
 ' | sed -e "$sed_alt1" | tr -d "$trnl" | sed -e "$sed_alt2" -e "$sed_alt3"`
 
 indent=""
-missed_modules=`gnulib-tool --list`
-missed_files=`ls -d lib/* m4/* | sed -e /CVS/d -e /README/d -e /ChangeLog/d -e /Makefile/d -e /TODO/d -e '/~$/d'`
+seen_modules=
+seen_files=
+
+# func_exit STATUS
+# exit with status
+func_exit ()
+{
+  (exit $1); exit $1
+}
+
+# func_tmpdir
+# creates a temporary directory.
+# Sets variable
+# - tmp             pathname of freshly created temporary directory
+func_tmpdir ()
+{
+  # Use the environment variable TMPDIR, falling back to /tmp. This allows
+  # users to specify a different temporary directory, for example, if their
+  # /tmp is filled up or too small.
+  : ${TMPDIR=/tmp}
+  {
+    # Use the mktemp program if available. If not available, hide the error
+    # message.
+    tmp=`(umask 077 && mktemp -d "$TMPDIR/MDXXXXXX") 2>/dev/null` &&
+    test -n "$tmp" && test -d "$tmp"
+  } ||
+  {
+    # Use a simple mkdir command. It is guaranteed to fail if the directory
+    # already exists.  $RANDOM is bash specific and expands to empty in shells
+    # other than bash, ksh and zsh.  Its use does not increase security;
+    # rather, it minimizes the probability of failure in a very cluttered /tmp
+    # directory.
+    tmp=$TMPDIR/MD$$-$RANDOM
+    (umask 077 && mkdir "$tmp")
+  } ||
+  {
+    echo "$0: cannot create a temporary directory in $TMPDIR" >&2
+    func_exit 1
+  }
+}
+
+# func_append var value
+# appends the given value to the shell variable var.
+if ( foo=bar; foo+=baz && test "$foo" = barbaz ) >/dev/null 2>&1; then
+  # Use bash's += operator. It reduces complexity of appending repeatedly to
+  # a single variable from O(n^2) to O(n).
+  func_append ()
+  {
+    eval "$1+=\"\$2\""
+  }
+else
+  func_append ()
+  {
+    eval "$1=\"\$$1\$2\""
+  }
+fi
 
 # func_echo line
 # outputs line with indentation.
@@ -1339,9 +1393,9 @@ func_module ()
 
     element=`gnulib-tool --extract-description $1 \
              | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" \
-             | sed -e 's,^, ,' \
-             | sed -e 's,\([^a-zA-Z]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A>(),g' \
-             | sed -e 's,^ ,,'`
+                   -e 's,^, ,' \
+                   -e 's,\([^a-zA-Z]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A>(),g' \
+                   -e 's,^ ,,'`
     func_echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=\"80%\">$element"
 
     func_end TR
@@ -1353,34 +1407,36 @@ func_module ()
     element='<A NAME="module='$1'"></A><A HREF="modules/'$1'">'$1'</A>'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
-    element=`gnulib-tool --extract-include-directive $1 \
+    includes=`gnulib-tool --extract-include-directive $1`
+    files=`gnulib-tool --extract-filelist $1`
+    element=`echo "$includes" \
              | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" \
-             | sed -e 's,^#include "\(.*\)"$,#include "<A HREF="lib/\1">\1</A>",' \
-                    -e 's,^#include &lt;'"${posix_headers}"'\.h&gt;$,#include \&lt;<A HREF="'"$POSIX2001_URL"'xbd/\1.h.html">\1.h</A>\&gt;,' \
-             | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
+                   -e 's,^#include "\(.*\)"$,#include "<A HREF="lib/\1">\1</A>",' \
+                   -e 's,^#include &lt;'"${posix_headers}"'\.h&gt;$,#include \&lt;<A HREF="'"$POSIX2001_URL"'xbd/\1.h.html">\1.h</A>\&gt;,' \
+                   -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
     sed_choose_unconditional_nonstandard_include='s,^#include "\(.*\)"$,\1,p'
-    includefile=`gnulib-tool --extract-include-directive $1 \
+    includefile=`echo "$includes" \
                  | sed -n -e "$sed_choose_unconditional_nonstandard_include" \
                  | sed -e "$sed_escape_dot" | tr -d "$trnl"`
     sed_choose_lib_files='s,^lib/\(.*\)$,\1,p'
-    element=`gnulib-tool --extract-filelist $1 \
+    element=`echo "$files" \
              | sed -e '/^$/d' \
              | sed -n -e "$sed_choose_lib_files" \
              | sed -e '/^'"${includefile}"'$/d' \
-             | sed -e 's,^\(.*\)$,<A HREF="lib/\1">\1</A>,' \
-             | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
+                   -e 's,^\(.*\)$,<A HREF="lib/\1">\1</A>,' \
+                   -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
     sed_choose_m4_files='s,^m4/\(.*\)$,\1,p'
-    element=`(gnulib-tool --extract-filelist $1 \
+    element=`(echo "$files" \
               | sed -e "$sed_remove_trailing_empty_line" \
               | sed -n -e "$sed_choose_m4_files" \
               | sed -e '/^onceonly/d' \
-              | sed -e 's,^\(.*\)$,<A HREF="m4/\1">\1</A>,'; \
+                    -e 's,^\(.*\)$,<A HREF="m4/\1">\1</A>,'; \
               gnulib-tool --extract-autoconf-snippet $1 \
               | sed -e "$sed_remove_trailing_empty_line") \
               | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
@@ -1389,26 +1445,14 @@ func_module ()
 
     element=`gnulib-tool --extract-dependencies $1 \
              | sed -e "$sed_remove_trailing_empty_line" \
-             | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
+                   -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
     func_end TR
 
-    missed_modules=`echo "$missed_modules" | sed -e '/^'"$1"'$/d'`
-
-    files=`gnulib-tool --extract-filelist $1`
-    sed_removal_prefix='s,^,/^,'
-    sed_removal_suffix='s,$,\$/d,'
-    sed_remove_files=`echo '{'; \
-                      for file in $files; do \
-                        echo $file \
-                        | sed -e "$sed_escape_dot" -e "$sed_escape_slash" \
-                        | sed -e "$sed_removal_prefix" -e "$sed_removal_suffix"; \
-                      done; \
-                      echo '}'`
-    missed_files=`echo "$missed_files" | sed -e "$sed_remove_files"`
-
+    func_append seen_modules " $1"
+    func_append seen_files " $files"
   fi
 }
 
@@ -2193,7 +2237,19 @@ func_all_modules ()
   func_module uptime
   func_end_table
 }
+ 
 
+func_tmpdir
+trap 'exit_status=$?
+      if test "$signal" != 0; then
+        echo "caught signal $signal" >&2
+      fi
+      rm -rf "$tmp"
+      exit $exit_status' 0
+for signal in 1 2 3 13 15; do
+  trap '{ signal='$signal'; func_exit 1; }' $signal
+done
+signal=0
 
 echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">'
 func_begin HTML
@@ -2224,6 +2280,12 @@ func_all_modules
 in_toc=
 func_all_modules
 
+
+gnulib-tool --list > "$tmp/all-modules"
+missed_modules=`for module in $seen_modules; do echo $module; done \
+		  | LC_ALL=C sort -u \
+		  | LC_ALL=C join -v 2 - "$tmp/all-modules"`
+
 if test -n "$missed_modules"; then
 
   element="Unclassified modules - please update MODULES.html.sh"
@@ -2238,6 +2300,11 @@ if test -n "$missed_modules"; then
   func_end_table
 
 fi
+
+LC_ALL=C ls -d lib/* m4/* | sed -e /CVS/d -e /README/d -e /ChangeLog/d -e /Makefile/d -e /TODO/d -e '/tags$/d' -e '/TAGS$/d' -e '/~$/d' > "$tmp/all-files"
+missed_files=`for file in $seen_files; do echo $file; done \
+		| LC_ALL=C sort -u \
+		| LC_ALL=C join -v 2 - "$tmp/all-files"`
 
 if test -n "$missed_files"; then
 
@@ -2274,3 +2341,10 @@ func_echo 'Generated from <CODE>MODULES.html.sh</CODE> on '`LC_ALL=C date +"%e %
 func_end BODY
 
 func_end HTML
+
+rm -rf "$tmp"
+# Undo the effect of the previous 'trap' command.
+trap '' 0
+trap 'func_exit $?' 1 2 3 13 15
+
+exit 0

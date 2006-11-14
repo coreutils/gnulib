@@ -1,5 +1,12 @@
 2006-11-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	* MODULES.html.sh (seen_modules, seen_files): New variables.
+	(func_module): Rewrite to use a few less gnulib-tool and sed
+	invocations.  Avoid a couple of quadratic algorithms for ...
+	(missed_modules, missed_files): ... these, with ...
+	(func_append, func_tmpdir): ... these new functions, from
+	gnulib-tool.  Analogously, install traps for cleanup.
+
 	* tests/test-gc.c (main): Remove unused variables.
 	* tests/test-read-file.c: Include stdlib.h, for 'free'.
 
