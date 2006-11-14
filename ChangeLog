@@ -1,3 +1,7 @@
+2006-11-14  Bruno Haible  <bruno@clisp.org>
+
+	* modules/c-ctype (License): Change to LGPL.
+
 2006-11-12  Bruno Haible  <bruno@clisp.org>
 
 	* m4/lib-link.m4 (AC_LIB_LINKFLAGS, AC_LIB_HAVE_LINKFLAGS,

@@ -17,7 +17,7 @@ Include:
 "c-ctype.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Bruno Haible
