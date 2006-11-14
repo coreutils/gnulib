@@ -1,3 +1,9 @@
+2006-11-12  Bruno Haible  <bruno@clisp.org>
+
+	* m4/lib-link.m4: Require at least autoconf-2.54.
+	(AC_LIB_LINKFLAGS_BODY) [autoconf < 2.61]: Turn dots into the library
+	name to underscores for the --with option.
+
 2006-11-13  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_create_testdir): Set gl_source_base correctly in
