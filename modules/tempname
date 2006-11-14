@@ -20,7 +20,7 @@ Include:
 "tempname.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Eric Blake and Jim Meyering
