@@ -1,4 +1,4 @@
-# lib-link.m4 serial 9 (gettext-0.16)
+# lib-link.m4 serial 10 (gettext-0.16.1)
 dnl Copyright (C) 2001-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,6 +12,8 @@ dnl AC_LIB_LINKFLAGS(name [, dependencies]) searches for libname and
 dnl the libraries corresponding to explicit and implicit dependencies.
 dnl Sets and AC_SUBSTs the LIB${NAME} and LTLIB${NAME} variables and
 dnl augments the CPPFLAGS variable.
+dnl Sets and AC_SUBSTs the LIB${NAME}_PREFIX variable to nonempty if libname
+dnl was found in ${LIB${NAME}_PREFIX}/$acl_libdirstem.
 AC_DEFUN([AC_LIB_LINKFLAGS],
 [
   AC_REQUIRE([AC_LIB_PREPARE_PREFIX])
@@ -24,13 +26,16 @@ AC_DEFUN([AC_LIB_LINKFLAGS],
     ac_cv_lib[]Name[]_libs="$LIB[]NAME"
     ac_cv_lib[]Name[]_ltlibs="$LTLIB[]NAME"
     ac_cv_lib[]Name[]_cppflags="$INC[]NAME"
+    ac_cv_lib[]Name[]_prefix="$LIB[]NAME[]_PREFIX"
   ])
   LIB[]NAME="$ac_cv_lib[]Name[]_libs"
   LTLIB[]NAME="$ac_cv_lib[]Name[]_ltlibs"
   INC[]NAME="$ac_cv_lib[]Name[]_cppflags"
+  LIB[]NAME[]_PREFIX="$ac_cv_lib[]Name[]_prefix"
   AC_LIB_APPENDTOVAR([CPPFLAGS], [$INC]NAME)
   AC_SUBST([LIB]NAME)
   AC_SUBST([LTLIB]NAME)
+  AC_SUBST([LIB]NAME[_PREFIX])
   dnl Also set HAVE_LIB[]NAME so that AC_LIB_HAVE_LINKFLAGS can reuse the
   dnl results of this search when this library appears as a dependency.
   HAVE_LIB[]NAME=yes
@@ -46,6 +51,8 @@ dnl sets and AC_SUBSTs HAVE_LIB${NAME}=yes and the LIB${NAME} and
 dnl LTLIB${NAME} variables and augments the CPPFLAGS variable, and
 dnl #defines HAVE_LIB${NAME} to 1. Otherwise, it sets and AC_SUBSTs
 dnl HAVE_LIB${NAME}=no and LIB${NAME} and LTLIB${NAME} to empty.
+dnl Sets and AC_SUBSTs the LIB${NAME}_PREFIX variable to nonempty if libname
+dnl was found in ${LIB${NAME}_PREFIX}/$acl_libdirstem.
 AC_DEFUN([AC_LIB_HAVE_LINKFLAGS],
 [
   AC_REQUIRE([AC_LIB_PREPARE_PREFIX])
@@ -82,10 +89,12 @@ AC_DEFUN([AC_LIB_HAVE_LINKFLAGS],
     CPPFLAGS="$ac_save_CPPFLAGS"
     LIB[]NAME=
     LTLIB[]NAME=
+    LIB[]NAME[]_PREFIX=
   fi
   AC_SUBST([HAVE_LIB]NAME)
   AC_SUBST([LIB]NAME)
   AC_SUBST([LTLIB]NAME)
+  AC_SUBST([LIB]NAME[_PREFIX])
   undefine([Name])
   undefine([NAME])
 ])
@@ -124,6 +133,8 @@ AC_DEFUN([AC_LIB_RPATH],
 dnl AC_LIB_LINKFLAGS_BODY(name [, dependencies]) searches for libname and
 dnl the libraries corresponding to explicit and implicit dependencies.
 dnl Sets the LIB${NAME}, LTLIB${NAME} and INC${NAME} variables.
+dnl Also, sets the LIB${NAME}_PREFIX variable to nonempty if libname was found
+dnl in ${LIB${NAME}_PREFIX}/$acl_libdirstem.
 AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
 [
   AC_REQUIRE([AC_LIB_PREPARE_MULTILIB])
@@ -160,6 +171,7 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
   LIB[]NAME=
   LTLIB[]NAME=
   INC[]NAME=
+  LIB[]NAME[]_PREFIX=
   rpathdirs=
   ltrpathdirs=
   names_already_handled=
@@ -353,6 +365,7 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
             case "$found_dir" in
               */$acl_libdirstem | */$acl_libdirstem/)
                 basedir=`echo "X$found_dir" | sed -e 's,^X,,' -e "s,/$acl_libdirstem/"'*$,,'`
+                LIB[]NAME[]_PREFIX="$basedir"
                 additional_includedir="$basedir/include"
                 ;;
             esac
