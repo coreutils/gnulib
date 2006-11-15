@@ -1,3 +1,8 @@
+2006-11-15  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_create_testdir): Add license consistency check.
+
 2006-11-15  Eric Blake  <ebb9@byu.net>
 
 	* m4/alloca.m4 (gl_FUNC_ALLOCA): Use AC_CACHE_CHECK to avoid a

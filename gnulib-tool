@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-11-14 09:37:20 $'
+cvsdatestamp='$Date: 2006-11-15 20:47:09 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2246,6 +2246,30 @@ func_create_testdir ()
     modules=`for m in $modules; do case $m in config-h | fnmatch-posix | ftruncate | mountlist) ;; *) echo $m;; esac; done`
   fi
   modules=`for m in $modules; do echo $m; done | LC_ALL=C sort -u`
+
+  # Check that the license of every module is consistent with the license of
+  # its dependencies.
+  saved_modules="$modules"
+  for requested_module in $saved_modules; do
+    requested_license=`func_get_license "$requested_module"`
+    if test "$requested_license" != GPL; then
+      # Here we use func_modules_transitive_closure, not just
+      # func_get_dependencies, so that we also detect weird situations like
+      # an LGPL module which depends on a GPLed build tool module which depends
+      # on a GPL module.
+      modules="$requested_module"
+      func_modules_transitive_closure
+      for module in $modules; do
+        license=`func_get_license "$module"`
+        case $license in
+          LGPL | 'GPLed build tool') ;;
+          'public domain' | 'unlimited' | 'unmodifiable license text') ;;
+          *) echo "warning: module $requested_module depends on a module with an incompatible license: $module" 1>&2 ;;
+        esac
+      done
+    fi
+  done
+  modules="$saved_modules"
 
   # Subdirectory names.
   sourcebase=gllib
