@@ -1,3 +1,7 @@
+2006-11-15  Bruno Haible  <bruno@clisp.org>
+
+	* m4/alloca.m4 (gl_FUNC_ALLOCA): Fix the AC_CACHE_CHECK message.
+
 2006-11-15  Eric Blake  <ebb9@byu.net>
 
 	* m4/allocsa.m4 (gl_ALLOCSA): Don't invoke macro already picked up by
