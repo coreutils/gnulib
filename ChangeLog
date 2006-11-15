@@ -1,3 +1,8 @@
+2006-11-15  Eric Blake  <ebb9@byu.net>
+
+	* m4/allocsa.m4 (gl_ALLOCSA): Don't invoke macro already picked up by
+	the module dependency.
+
 2006-11-15  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
             Bruno Haible  <bruno@clisp.org>
 
