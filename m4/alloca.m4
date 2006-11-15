@@ -1,4 +1,4 @@
-# alloca.m4 serial 6
+# alloca.m4 serial 7
 dnl Copyright (C) 2002-2004, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,17 +17,17 @@ AC_DEFUN([gl_FUNC_ALLOCA],
 
   # Define an additional variable used in the Makefile substitution.
   if test $ac_cv_working_alloca_h = yes; then
-    AC_CACHE_VAL([gl_cv_rpl_alloca], [
+    AC_CACHE_CHECK([whether alloca must be replaced], [gl_cv_rpl_alloca], [
       AC_EGREP_CPP([Need own alloca], [
 #if defined __GNUC__ || defined _AIX || defined _MSC_VER
-          Need own alloca
+	  Need own alloca
 #endif
-        ], [gl_cv_rpl_alloca=yes], [gl_cv_rpl_alloca=no])
+	], [gl_cv_rpl_alloca=yes], [gl_cv_rpl_alloca=no])
     ])
     if test $gl_cv_rpl_alloca = yes; then
       AC_DEFINE([HAVE_ALLOCA], 1,
-        [Define to 1 if you have `alloca' after including <alloca.h>,
-         a header that may be supplied by this distribution.])
+	[Define to 1 if you have `alloca' after including <alloca.h>,
+	 a header that may be supplied by this distribution.])
       ALLOCA_H=alloca.h
     else
       ALLOCA_H=

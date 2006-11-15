@@ -1,3 +1,8 @@
+2006-11-15  Eric Blake  <ebb9@byu.net>
+
+	* m4/alloca.m4 (gl_FUNC_ALLOCA): Use AC_CACHE_CHECK to avoid a
+	random "(cached)" in configure output.
+
 2006-11-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* m4/inttypes.m4 (gl_INTTYPES_H): Use AC_CACHE_CHECK so that the
