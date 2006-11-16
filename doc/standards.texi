@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate August 19, 2006
+@set lastupdate November 15, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -149,7 +149,7 @@ irrelevant and dissimilar to your results.
 
 For example, Unix utilities were generally optimized to minimize
 memory use; if you go for speed instead, your program will be very
-different.  You could keep the entire input file in core and scan it
+different.  You could keep the entire input file in memory and scan it
 there instead of using stdio.  Use a smarter algorithm discovered more
 recently than the Unix program.  Eliminate use of temporary files.  Do
 it in one pass instead of two (we did this in the assembler).
@@ -2144,7 +2144,7 @@ Print the version number.
 If a program typically uses just a few meg of memory, don't bother making any
 effort to reduce memory usage.  For example, if it is impractical for
 other reasons to operate on files more than a few meg long, it is
-reasonable to read entire input files into core to operate on them.
+reasonable to read entire input files into memory to operate on them.
 
 However, for programs such as @code{cat} or @code{tail}, that can
 usefully operate on very large files, it is important to avoid using a
@@ -2152,10 +2152,10 @@ technique that would artificially limit the size of files it can handle.
 If a program works by lines and could be applied to arbitrary
 user-supplied input files, it should keep only a line in memory, because
 this is not very hard and users will want to be able to operate on input
-files that are bigger than will fit in core all at once.
+files that are bigger than will fit in memory all at once.
 
 If your program creates complicated data structures, just make them in
-core and give a fatal error if @code{malloc} returns zero.
+memory and give a fatal error if @code{malloc} returns zero.
 
 @node File Usage
 @section File Usage
@@ -2563,8 +2563,9 @@ Don't declare both a structure tag and variables or typedefs in the
 same declaration.  Instead, declare the structure tag separately
 and then use it to declare the variables or typedefs.
 
-Try to avoid assignments inside @code{if}-conditions.  For example,
-don't write this:
+Try to avoid assignments inside @code{if}-conditions (assignments
+inside @code{while}-conditions are ok).  For example, don't write
+this:
 
 @example
 if ((foo = (char *) malloc (sizeof *foo)) == 0)
@@ -2736,8 +2737,21 @@ machines.  Thus, don't make the following mistake:
 @example
 int c;
 @dots{}
-while ((c = getchar()) != EOF)
-  write(file_descriptor, &c, 1);
+while ((c = getchar ()) != EOF)
+  write (file_descriptor, &c, 1);
+@end example
+
+@noindent Instead, use @code{unsigned char} as follows.  (The @code{unsigned}
+is for portability to unusual systems where @code{char} is signed and
+where there is integer overflow checking.)
+
+@example
+int c;
+while ((c = getchar ()) != EOF)
+  @{
+    unsigned char u = c;
+    write (file_descriptor, &u, 1);
+  @}
 @end example
 
 It used to be ok to not worry about the difference between pointers
