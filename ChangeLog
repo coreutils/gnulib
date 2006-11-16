@@ -1,3 +1,7 @@
+2006-11-17  Jim Meyering  <jim@meyering.net>
+
+	* modules/d-type (License): Switch to LGPL.
+
 2006-11-15  Bruno Haible  <bruno@clisp.org>
 
 	* m4/alloca.m4 (gl_FUNC_ALLOCA): Fix the AC_CACHE_CHECK message.
