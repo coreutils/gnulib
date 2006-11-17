@@ -1,3 +1,10 @@
+2006-11-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/getaddinfo (Depends-on): Remove inttostr; add snprintf.
+	* lib/getaddrinfo.c: Include snprintf.h rather than intprops.h
+	and inttostr.h.  Use snprintf rather than uinttostr, so that
+	LGPLed code doesn't depend on GPLed.
+
 2006-11-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/inline (License): Change from GPL to LGPL.

@@ -10,7 +10,7 @@ m4/getaddrinfo.m4
 Depends-on:
 gettext-h
 inet_ntop
-inttostr
+snprintf
 socklen
 stdbool
 strdup

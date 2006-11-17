@@ -38,8 +38,7 @@
 #define N_(String) String
 
 #include "inet_ntop.h"
-#include "intprops.h"
-#include "inttostr.h"
+#include "snprintf.h"
 #include "strdup.h"
 
 /* BeOS has AF_INET, but not PF_INET.  */
@@ -408,11 +407,8 @@ int getnameinfo(const struct sockaddr *restrict sa, socklen_t salen,
 	{
 	  unsigned short int port
 	    = ntohs (((const struct sockaddr_in *) sa)->sin_port);
-	  char buf[INT_BUFSIZE_BOUND (port)];
-	  char const *s = uinttostr (port, buf);
-	  if (strlen (s) + 1 > servicelen)
+	  if (servicelen <= snprintf (service, servicelen, "%u", port))
 	    return EAI_OVERFLOW;
-	  memcpy (service, s, strlen (s) + 1);
 	}
 	break;
       }
