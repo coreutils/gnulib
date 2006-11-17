@@ -1,3 +1,7 @@
+2006-11-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/inline (License): Change from GPL to LGPL.
+
 2006-11-17  Jim Meyering  <jim@meyering.net>
 
 	* modules/d-type (License): Switch to LGPL.
