@@ -46,7 +46,7 @@ my $COPYRIGHT_NOTICE = "Copyright (C) 2006 Free Software Foundation, Inc.\n".
 "the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n".
 "There is NO WARRANTY, to the extent permitted by law.\n";
 
-(my $VERSION = '$Revision: 1.6 $ ') =~ tr/[0-9].//cd;
+(my $VERSION = '$Revision: 1.7 $ ') =~ tr/[0-9].//cd;
 (my $ME = $0) =~ s|.*/||;
 
 use constant ST_INIT => 1;
@@ -203,6 +203,19 @@ my %exempt_header =
 
    # The use of obstack.h in the hash module is conditional, off by default.
    'lib/hash.c:obstack.h' => 1,
+
+   # C files in the gc module have conditional includes.
+   'lib/gc-gnulib.c:des.h' => 1,
+   'lib/gc-gnulib.c:arcfour.h' => 1,
+   'lib/gc-gnulib.c:arctwo.h' => 1,
+   'lib/gc-gnulib.c:md2.h' => 1,
+   'lib/gc-gnulib.c:md4.h' => 1,
+   'lib/gc-gnulib.c:md5.h' => 1,
+   'lib/gc-gnulib.c:rijndael.h' => 1,
+   'lib/gc-gnulib.c:sha1.h' => 1,
+   'lib/gc-gnulib.c:rijndael-api-fst.h' => 1,
+   'lib/gc-gnulib.c:hmac.h' => 1,
+   'lib/gc-libgcrypt.c:md2.h' => 1,
 
    # The fts-lgpl module doesn't actually use fts-cycle.c and unistd-safer.h.
    'lib/fts.c:fts-cycle.c' => 1,

@@ -1,5 +1,8 @@
 2006-11-18  Jim Meyering  <jim@meyering.net>
 
+	* check-module (%exempt_header): Add exception for some
+	conditionally-included headers.
+
 	* modules/i-ring (Depends-on): Add verify.
 	(License): Change to LGPL.
 
