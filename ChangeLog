@@ -1,3 +1,8 @@
+2006-11-18  Jim Meyering  <jim@meyering.net>
+
+	* modules/i-ring (Depends-on): Add verify.
+	(License): Change to LGPL.
+
 2006-11-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/getaddinfo (Depends-on): Remove inttostr; add snprintf.

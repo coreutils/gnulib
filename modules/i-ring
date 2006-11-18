@@ -7,6 +7,7 @@ lib/i-ring.c
 m4/i-ring.m4
 
 Depends-on:
+verify
 
 configure.ac:
 gl_I_RING
@@ -17,7 +18,7 @@ Include:
 "i-ring.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Jim Meyering
