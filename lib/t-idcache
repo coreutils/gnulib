@@ -1,0 +1,52 @@
+#!/bin/sh
+# Compare the two halves (user and group) of idcache.c.
+# Once xformed, they'd better be the same:
+
+pwd=`pwd`
+t0=`echo "$0"|sed 's,.*/,,'`.tmp; tmp=$t0/$$
+trap 'status=$?; cd "$pwd" && chmod -R u+rwx $t0 && rm -rf $t0 && exit $status' 0
+trap '(exit $?); exit $?' 1 2 13 15
+
+srcdir=../..
+framework_failure=0
+mkdir -p $tmp || framework_failure=1
+cd $tmp || framework_failure=1
+
+if test $framework_failure = 1; then
+  echo "$0: failure in testing framework" 1>&2
+  (exit 1); exit 1
+fi
+
+# Extract user-oriented functions.
+perl -ne \
+  'print if /^static struct.*user_alist/ .. /^static struct.*group_alist/' \
+  $srcdir/idcache.c | head -n -3 > u
+# Extract group-oriented functions.
+perl -ne 'print if /^static struct.*group_alist/ .. eof' $srcdir/idcache.c > g
+
+# Convert user-specific strings of "u" into corresponding group-specific strings
+subst='
+s/user_/group_/g;
+s/\buser\b/group/g;
+s/USER/GROUP/g;
+s/\bu\b/g/g;
+s/passwd/group/g;
+s/pw_uid/gr_gid/g;
+s/pwnam/grnam/g;
+s/pwent/grent/g;
+s/getpw/getgr/g;
+s/pw_/gr_/g;
+s/UID/GID/g;
+s/uid/gid/g;
+s/getuser/getgroup/;
+s/login name/group name/;
+s/to be the/to belong to/;
+s/pwd fun/grp fun/;
+'
+
+fail=0
+# Ensure that the transformed "u" is the same as g.
+# Any differences here constitute an error.
+perl -pe "$subst" u | diff -u - g || fail=1
+
+exit $fail

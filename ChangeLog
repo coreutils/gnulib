@@ -17,6 +17,11 @@
 
 2006-11-20  Jim Meyering  <jim@meyering.net>
 
+	The beginnings of syntax-related checks for gnulib.
+	* lib/Makefile: New file.
+	* lib/t-idcache: New script.  Ensure that the two halves of
+	idcache.c stay in sync.
+
 	* lib/idcache.c: Adjust comments in user- and group- portions to
 	be more accurate, and to be consistent with one another.
 
