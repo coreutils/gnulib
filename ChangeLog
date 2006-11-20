@@ -1,3 +1,9 @@
+2006-11-20  Andreas Schwab  <schwab@suse.de>  (tiny change)
+
+	Avoid syntax error in test program.
+	* m4/gettext.m4 (AM_GNU_GETTEXT): When inside a [...] context,
+	quote with "[...]", not "[[...]]".
+
 2006-11-20  Jim Meyering  <jim@meyering.net>
 
 	* lib/idcache.c: Restore most of the 2006-11-06 patch, so as to
