@@ -1,3 +1,14 @@
+2006-11-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/openat.h (rpl_fstatat): New macro, if
+	[HAVE_OPENAT && ! LSTAT_FOLLOWS_SLASHED_SYMLINK.
+	(fstatat): Define to rpl_fstatat under the same conditions,
+	unless COMPILING_FSTATAT.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Compile fstatat.c too, if fstatat
+	seems to have the bug.
+	* lib/fstatat.c: New file.
+	* modules/openat (Files): Add it.
+
 2006-11-20  Bruno Haible  <bruno@clisp.org>
 
 	* Makefile: New file.

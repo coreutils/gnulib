@@ -85,6 +85,14 @@ bool openat_needs_fchdir (void);
 
 #endif
 
+#if HAVE_OPENAT && ! LSTAT_FOLLOWS_SLASHED_SYMLINK
+int rpl_fstatat (int fd, char const *file, struct stat *st, int flag);
+# if !COMPILING_FSTATAT
+#  undef fstatat
+#  define fstatat rpl_fstatat
+# endif
+#endif
+
 int mkdirat (int fd, char const *file, mode_t mode);
 void openat_restore_fail (int) ATTRIBUTE_NORETURN;
 void openat_save_fail (int) ATTRIBUTE_NORETURN;
