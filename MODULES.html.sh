@@ -1992,6 +1992,7 @@ func_all_modules ()
   func_module mkdir-p
   func_module modechange
   func_module mountlist
+  func_module openat
   func_module pathname
   func_module pathmax
   func_module same
@@ -2237,7 +2238,7 @@ func_all_modules ()
   func_module uptime
   func_end_table
 }
- 
+
 
 func_tmpdir
 trap 'exit_status=$?
