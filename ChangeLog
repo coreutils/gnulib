@@ -1,3 +1,8 @@
+2006-11-20  Jim Meyering  <jim@meyering.net>
+
+	Use cleaner syntax: NULL rather than 0.
+	* lib/idcache.c (getuidbyname, getgidbyname): Return NULL, not 0.
+
 2006-11-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/idcache.c: Undo most recent patch, dated 2006-11-06.

@@ -91,7 +91,7 @@ getuidbyname (const char *user)
   for (tail = nouser_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
     if (*tail->name == *user && !strcmp (tail->name, user))
-      return 0;
+      return NULL;
 
   pwent = getpwnam (user);
 #ifdef __DJGPP__
@@ -118,7 +118,7 @@ getuidbyname (const char *user)
 
   tail->next = nouser_alist;
   nouser_alist = tail;
-  return 0;
+  return NULL;
 }
 
 /* Use the same struct as for userids.  */
@@ -167,7 +167,7 @@ getgidbyname (const char *group)
   for (tail = nogroup_alist; tail; tail = tail->next)
     /* Avoid a function call for the most common case.  */
     if (*tail->name == *group && !strcmp (tail->name, group))
-      return 0;
+      return NULL;
 
   grent = getgrnam (group);
 #ifdef __DJGPP__
@@ -194,5 +194,5 @@ getgidbyname (const char *group)
 
   tail->next = nogroup_alist;
   nogroup_alist = tail;
-  return 0;
+  return NULL;
 }
