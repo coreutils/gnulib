@@ -1,5 +1,8 @@
 2006-11-20  Jim Meyering  <jim@meyering.net>
 
+	* lib/idcache.c (getuser): Remove all uses of the register keyword.
+	(getuidbyname, getgroup, getgidbyname): Likewise.
+
 	Use cleaner syntax: NULL rather than 0.
 	* lib/idcache.c (getuidbyname, getgidbyname): Return NULL, not 0.
 

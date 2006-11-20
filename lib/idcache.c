@@ -54,7 +54,7 @@ static struct userid *nouser_alist;
 char *
 getuser (uid_t uid)
 {
-  register struct userid *tail;
+  struct userid *tail;
   struct passwd *pwent;
 
   for (tail = user_alist; tail; tail = tail->next)
@@ -80,7 +80,7 @@ getuser (uid_t uid)
 uid_t *
 getuidbyname (const char *user)
 {
-  register struct userid *tail;
+  struct userid *tail;
   struct passwd *pwent;
 
   for (tail = user_alist; tail; tail = tail->next)
@@ -130,7 +130,7 @@ static struct userid *nogroup_alist;
 char *
 getgroup (gid_t gid)
 {
-  register struct userid *tail;
+  struct userid *tail;
   struct group *grent;
 
   for (tail = group_alist; tail; tail = tail->next)
@@ -156,7 +156,7 @@ getgroup (gid_t gid)
 gid_t *
 getgidbyname (const char *group)
 {
-  register struct userid *tail;
+  struct userid *tail;
   struct group *grent;
 
   for (tail = group_alist; tail; tail = tail->next)
