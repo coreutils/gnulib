@@ -1,3 +1,10 @@
+2006-11-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/idcache.c: Undo most recent patch, dated 2006-11-06.
+	It mishandled the case where the group was missing.
+	Problem reported by Greg Schafer.
+	* modules/idcache: Likewise.
+
 2006-11-18  Jim Meyering  <jim@meyering.net>
 
 	* check-module (%exempt_header): Add exception for some
