@@ -47,7 +47,7 @@ struct userid
 
 static struct userid *user_alist;
 
-/* The members of this list have names not in the local passwd file.  */
+/* Each entry on list is a user name for which the first lookup failed.  */
 static struct userid *nouser_alist;
 
 /* Translate UID to a login name, with cache, or NULL if unresolved.  */
@@ -134,6 +134,8 @@ getuidbyname (const char *user)
 
 /* Use the same struct as for userids.  */
 static struct userid *group_alist;
+
+/* Each entry on list is a group name for which the first lookup failed.  */
 static struct userid *nogroup_alist;
 
 /* Translate GID to a group name, with cache, or NULL if unresolved.  */
