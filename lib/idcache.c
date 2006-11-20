@@ -19,6 +19,7 @@
 
 #include <config.h>
 
+#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -40,8 +41,8 @@ struct userid
       uid_t u;
       gid_t g;
     } id;
-  char *name;
   struct userid *next;
+  char name[FLEXIBLE_ARRAY_MEMBER];
 };
 
 static struct userid *user_alist;
@@ -55,21 +56,31 @@ char *
 getuser (uid_t uid)
 {
   struct userid *tail;
-  struct passwd *pwent;
+  struct userid *match = NULL;
 
   for (tail = user_alist; tail; tail = tail->next)
-    if (tail->id.u == uid)
-      return tail->name;
+    {
+      if (tail->id.u == uid)
+	{
+	  match = tail;
+	  break;
+	}
+    }
 
-  pwent = getpwuid (uid);
-  tail = xmalloc (sizeof *tail);
-  tail->id.u = uid;
-  tail->name = pwent ? xstrdup (pwent->pw_name) : NULL;
+  if (match == NULL)
+    {
+      struct passwd *pwent = getpwuid (uid);
+      char const *name = pwent ? pwent->pw_name : "";
+      match = xmalloc (offsetof (struct userid, name) + strlen (name) + 1);
+      match->id.u = uid;
+      strcpy (match->name, name);
 
-  /* Add to the head of the list, so most recently used is first.  */
-  tail->next = user_alist;
-  user_alist = tail;
-  return tail->name;
+      /* Add to the head of the list, so most recently used is first.  */
+      match->next = user_alist;
+      user_alist = match;
+    }
+
+  return match->name[0] ? match->name : NULL;
 }
 
 /* Translate USER to a UID, with cache.
@@ -104,8 +115,8 @@ getuidbyname (const char *user)
     }
 #endif
 
-  tail = xmalloc (sizeof *tail);
-  tail->name = xstrdup (user);
+  tail = xmalloc (offsetof (struct userid, name) + strlen (user) + 1);
+  strcpy (tail->name, user);
 
   /* Add to the head of the list, so most recently used is first.  */
   if (pwent)
@@ -131,21 +142,31 @@ char *
 getgroup (gid_t gid)
 {
   struct userid *tail;
-  struct group *grent;
+  struct userid *match = NULL;
 
   for (tail = group_alist; tail; tail = tail->next)
-    if (tail->id.g == gid)
-      return tail->name;
+    {
+      if (tail->id.g == gid)
+	{
+	  match = tail;
+	  break;
+	}
+    }
 
-  grent = getgrgid (gid);
-  tail = xmalloc (sizeof *tail);
-  tail->id.g = gid;
-  tail->name = grent ? xstrdup (grent->gr_name) : NULL;
+  if (match == NULL)
+    {
+      struct group *grent = getgrgid (gid);
+      char const *name = grent ? grent->gr_name : "";
+      match = xmalloc (offsetof (struct userid, name) + strlen (name) + 1);
+      match->id.g = gid;
+      strcpy (match->name, name);
 
-  /* Add to the head of the list, so most recently used is first.  */
-  tail->next = group_alist;
-  group_alist = tail;
-  return tail->name;
+      /* Add to the head of the list, so most recently used is first.  */
+      match->next = group_alist;
+      group_alist = match;
+    }
+
+  return match->name[0] ? match->name : NULL;
 }
 
 /* Translate GROUP to a GID, with cache.
@@ -172,7 +193,7 @@ getgidbyname (const char *group)
   grent = getgrnam (group);
 #ifdef __DJGPP__
   /* We need to pretend to belong to group GROUP, to make
-     grp functions know about any arbitrary group name.  */
+     grp functions know about an arbitrary group name.  */
   if (!grent && strspn (group, digits) < strlen (group))
     {
       setenv ("GROUP", group, 1);
@@ -180,8 +201,8 @@ getgidbyname (const char *group)
     }
 #endif
 
-  tail = xmalloc (sizeof *tail);
-  tail->name = xstrdup (group);
+  tail = xmalloc (offsetof (struct userid, name) + strlen (group) + 1);
+  strcpy (tail->name, group);
 
   /* Add to the head of the list, so most recently used is first.  */
   if (grent)

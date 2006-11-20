@@ -1,5 +1,12 @@
 2006-11-20  Jim Meyering  <jim@meyering.net>
 
+	* lib/idcache.c: Restore most of the 2006-11-06 patch, so as to
+	continue using the flexible array member (thus, this module performs
+	half as many malloc calls), with the addition that...
+	(getgroup, getuser): Consistently record a non-match via an empty
+	"name" string, and map an empty string match to a NULL return value.
+	* modules/idcache (Depends-on): Re-add flexmember.
+
 	* lib/idcache.c (getuser): Remove all uses of the register keyword.
 	(getuidbyname, getgroup, getgidbyname): Likewise.
 

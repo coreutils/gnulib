@@ -6,6 +6,7 @@ lib/idcache.c
 m4/idcache.m4
 
 Depends-on:
+flexmember
 xalloc
 
 configure.ac:
