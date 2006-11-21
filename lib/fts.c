@@ -1645,8 +1645,9 @@ fts_safe_changedir (FTS *sp, FTSENT *p, int fd, char const *dir)
 	       failure when we lack "x" access to the virtual cwd.  */
 	    if ( ! i_ring_empty (&sp->fts_fd_ring))
 	      {
+		int parent_fd;
 		fd_ring_print (sp, stderr, "pre-pop");
-		int parent_fd = i_ring_pop (&sp->fts_fd_ring);
+		parent_fd = i_ring_pop (&sp->fts_fd_ring);
 		is_dotdot = true;
 		if (0 <= parent_fd)
 		  {
