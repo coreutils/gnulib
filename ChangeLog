@@ -1,3 +1,9 @@
+2006-11-20  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.m4 (AM_GNU_GETTEXT): Revert 2005-07-28 patch: Use
+	changequote instead of pairs of brackets.
+	Reported by Andreas Schwab <schwab@suse.de>.
+
 2006-11-21  Jim Meyering  <jim@meyering.net>
 
 	* lib/fts.c (fts_safe_changedir): Move a declaration "up",
@@ -30,12 +36,6 @@
 
 	* lib/idcache.c: Adjust comments in user- and group- portions to
 	be more accurate, and to be consistent with one another.
-
-2006-11-20  Andreas Schwab  <schwab@suse.de>  (tiny change)
-
-	Avoid syntax error in test program.
-	* m4/gettext.m4 (AM_GNU_GETTEXT): When inside a [...] context,
-	quote with "[...]", not "[[...]]".
 
 2006-11-20  Jim Meyering  <jim@meyering.net>
 

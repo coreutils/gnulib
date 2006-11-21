@@ -1,4 +1,4 @@
-# gettext.m4 serial 58 (gettext-0.16)
+# gettext.m4 serial 59 (gettext-0.16.1)
 dnl Copyright (C) 1995-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -137,12 +137,14 @@ AC_DEFUN([AM_GNU_GETTEXT],
         dnl to fall back to GNU NLS library.
 
         if test $gt_api_version -ge 3; then
-          gt_revision_test_code='[[
+          gt_revision_test_code='
 #ifndef __GNU_GETTEXT_SUPPORTED_REVISION
 #define __GNU_GETTEXT_SUPPORTED_REVISION(major) ((major) == 0 ? 0 : -1)
 #endif
+changequote(,)dnl
 typedef int array [2 * (__GNU_GETTEXT_SUPPORTED_REVISION(0) >= 1) - 1];
-]]'
+changequote([,])dnl
+'
         else
           gt_revision_test_code=
         fi
