@@ -92,7 +92,7 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 # define DT_MUST_BE(d, t) false
 #endif
 
-enum
+enum Fts_stat
 {
   FTS_NO_STAT_REQUIRED = 1,
   FTS_STAT_REQUIRED = 2
@@ -731,7 +731,8 @@ name:		t = sp->fts_path + NAPPEND(p->fts_parent);
 check_for_dir:
 		if (p->fts_info == FTS_NSOK)
 		  {
-		    switch (p->fts_statp->st_size)
+		    enum Fts_stat need_stat = p->fts_statp->st_size;
+		    switch (need_stat)
 		      {
 		      case FTS_STAT_REQUIRED:
 			p->fts_info = fts_stat(sp, p, false);

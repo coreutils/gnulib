@@ -1,5 +1,10 @@
 2006-11-22  Jim Meyering  <jim@meyering.net>
 
+	Work around a compile-time error from the HP-UX 11.00 /bin/cc.
+	* lib/fts.c (enum Fts_stat): Give this previously-anon enum a name.
+	(fts_read): Use a temporary to narrow the overused st_size member
+	before using it in a switch statement.  Reported by Matthew Woehlke.
+
 	* m4/clock_time.m4 (gl_CLOCK_TIME): Quote AC_SUBST argument.
 	* m4/euidaccess.m4 (gl_PREREQ_EUIDACCESS): Likewise.
 
