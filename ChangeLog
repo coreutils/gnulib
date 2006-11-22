@@ -1,3 +1,8 @@
+2006-11-22  Jim Meyering  <jim@meyering.net>
+
+	* m4/clock_time.m4 (gl_CLOCK_TIME): Quote AC_SUBST argument.
+	* m4/euidaccess.m4 (gl_PREREQ_EUIDACCESS): Likewise.
+
 2006-11-20  Bruno Haible  <bruno@clisp.org>
 
 	* gettext.m4 (AM_GNU_GETTEXT): Revert 2005-07-28 patch: Use
