@@ -1,3 +1,7 @@
+2006-11-22  Robinson Mittmann <bob@hoplon.com>  (tiny change)
+
+	* lib/sincosl.c (kernel_sinl): Fix typo in threshold.
+
 2006-11-23  Jim Meyering  <jim@meyering.net>
 
 	* build-aux/announce-gen: New file.  From coreutils.

@@ -1,5 +1,5 @@
 /* Quad-precision floating point trigonometric functions on <-pi/4,pi/4>.
-   Copyright (C) 1999 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2006 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Jakub Jelinek <jj@ultra.linux.cz>
 
@@ -113,7 +113,7 @@ kernel_sinl (long double x, long double y, int iy)
       sign = -1;
     }
 
-  if (x < 0.148375L)		/* |x| < 0.1484375 */
+  if (x < 0.1484375L)		/* |x| < 0.1484375 */
     {
       /* Argument is small enough to approximate it by a Chebyshev
          polynomial of degree 17.  */
