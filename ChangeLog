@@ -1,3 +1,7 @@
+2006-11-23  Jim Meyering  <jim@meyering.net>
+
+	* build-aux/announce-gen: New file.  From coreutils.
+
 2006-11-22  Jim Meyering  <jim@meyering.net>
 
 	Work around a compile-time error from the HP-UX 11.00 /bin/cc.
