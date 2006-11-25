@@ -1,3 +1,9 @@
+2006-11-25  Nix  <nix@esperi.org.uk>  (tiny change)
+
+	* m4/fcntl_h.m4 (gl_FCNTL_H): Test the atime, not the mtime.
+	Don't close an fd more than once. Identical atimes indicate
+	success, not failure.
+
 2006-11-22  Robinson Mittmann <bob@hoplon.com>  (tiny change)
 
 	* lib/sincosl.c (kernel_sinl): Fix typo in threshold.

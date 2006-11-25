@@ -46,8 +46,7 @@ AC_DEFUN([gl_FCNTL_H],
 		  || read (fd, &c, 1) != 1
 		  || close (fd) != 0
 		  || stat (file, &st1) != 0
-		  || st1.st_mtime <= st0.st_mtime
-		  || close (fd) != 0)
+		  || st0.st_atime != st1.st_atime)
 		status |= 64;
 	    }
 	    return status;]])],
