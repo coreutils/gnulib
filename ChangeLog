@@ -115,8 +115,8 @@
 	* m4/allocsa.m4 (gl_ALLOCSA): Don't invoke macro already picked up by
 	the module dependency.
 
-2006-11-15  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
-            Bruno Haible  <bruno@clisp.org>
+2006-11-15  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_create_testdir): Add license consistency check.
 
@@ -2122,7 +2122,7 @@
 	* modules/gc-des:
 	* modules/gc-arcfour: Distribute more files.
 
-2006-09-22  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+2006-09-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* lib/gl_anylinked_list2.h [lint] (gl_linked_iterator)
 	(gl_linked_iterator_from_to): Initialize struct completely.
@@ -2773,7 +2773,7 @@
 	* gnulib-tool (func_emit_lib_Makefile_am): Initialize also
 	lib_..._LDFLAGS.
 
-2006-09-05  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+2006-09-05  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* lib/argz_.h: Sync from Libtool.
 
@@ -2782,11 +2782,11 @@
 
 	* lib/libltdl/argz_.h: It's __cplusplus, not _cplusplus.
 
-2006-09-05  Davide Angelocola <davide.angelocola@tiscali.it>
+2006-09-05  Davide Angelocola  <davide.angelocola@tiscali.it>
 
 	* modules/trim: New file.
 
-2006-09-05  Davide Angelocola <davide.angelocola@tiscali.it>
+2006-09-05  Davide Angelocola  <davide.angelocola@tiscali.it>
 
 	* lib/trim.h: New file.
 	* lib/trim.c: New file.
@@ -3167,12 +3167,12 @@
 	* build-aux/elisp-comp: New file.
 	* modules/elisp-comp: New file.
 
-2006-08-24  Bruno Haible <bruno@clisp.org>
+2006-08-24  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_create_testdir): Use non-default values of
 	sourcebase and m4base.
 
-2006-08-24  Bruno Haible <bruno@clisp.org>
+2006-08-24  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh (Compatibility checks for POSIX:2001 functions: Fix
 	HTML structure.
@@ -3181,7 +3181,7 @@
 
 	* modules/openat (Depends-on): Add lchown.
 
-2006-08-23  Bruno Haible <bruno@clisp.org>
+2006-08-23  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import, func_create_testdir): Emit an invocation
 	of gl_LOCK_EARLY instead of gl_LOCK.
@@ -3282,12 +3282,12 @@
 	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT): Likewise.
 	* m4/intmax_t.m4 (gt_AC_TYPE_INTMAX_T): Likewise.
 
-2006-08-22  Bruno Haible <bruno@clisp.org>
+2006-08-22  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am): Don't treat lib_LIBRARIES
 	and lib_LTLIBRARIES like the other lib_* variables.
 
-2006-08-22  Bruno Haible <bruno@clisp.org>
+2006-08-22  Bruno Haible  <bruno@clisp.org>
 
 	* build-aux/x-to-1.in: New file, from GNU gettext.
 
@@ -3511,7 +3511,7 @@
 	to get the necessary .h files and whatnot.
 
 2006-08-21  Mark D. Baushke  <mdb@gnu.org>
-	    Bruno Haible <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_verify_module): Work around Sun's non-POSIX 1003.2
 	/bin/sh understanding of '!' conditional negation.
@@ -3527,13 +3527,13 @@
 
 	* modules/openat (Depends-on): Add lstat.  Alphabetize.
 
-2006-08-21  Bruno Haible <bruno@clisp.org>
+2006-08-21  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
 	Emit a pkgdata_DATA variable only if some snippets add contents to it.
 	Reported by Martin Lambers <marlam@marlam.de>.
 
-2006-08-21  Bruno Haible <bruno@clisp.org>
+2006-08-21  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am): If the snippets already
 	specify an installation location, don't emit a noinst_LIBRARIES or
@@ -4103,7 +4103,7 @@
 	in an AC_DEFUN. Needed so that the autoconf snippets can use
 	AC_REQUIRE.
 
-2006-08-06  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+2006-08-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
 	Initialize pkgdata_DATA.
@@ -4239,11 +4239,11 @@
 
 	* config/srclist.txt (*setenv.[ch]): Remove rules.
 
-2006-07-28  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+2006-07-28  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
 	* m4/inet_pton.m4, inet_ntop.m4: Check for netinet/in.h too.
 
-2006-07-28  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+2006-07-28  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
 	* lib/inet_ntop.h, inet_pton.h: Need to include netinet/in.h before
 	arpa/inet.h.
@@ -4278,7 +4278,7 @@
 	* lib/regex_internal.h (struct re_dfa_t) [!_LIBC]: Avoid invalid C89
 	macro expansion.
 
-2006-07-28  Bruno Haible <bruno@clisp.org>
+2006-07-28  Bruno Haible  <bruno@clisp.org>
 
 	* lib/inet_ntop.h, inet_pton.h: Use #if HAVE* instead of #ifdef HAVE*.
 
@@ -4403,7 +4403,7 @@
 	gl_linked_add_after, gl_linked_add_at, gl_linked_remove_node,
 	gl_linked_remove_at): Use it.
 
-2006-07-22  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+2006-07-22  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 	and Simon Josefsson <jas@extundo.com>
 
 	* lib/getaddrinfo.h (AI_PASSIVE): Make sure it is defined.
@@ -5507,7 +5507,7 @@
 
 	* m4/stdarg.m4 (gl_STDARG_H): Properly parenthesize gl_va_copy.
 
-2006-06-30  Jim Hyslop <jhyslop@dreampossible.ca>  (tiny change)
+2006-06-30  Jim Hyslop  <jhyslop@dreampossible.ca>  (tiny change)
 
 	* lib/getaddrinfo.c: fixed typo
 
@@ -5808,7 +5808,7 @@
 	Problem reported by Denis Excoffier in
 	<http://lists.gnu.org/archive/html/bug-tar/2006-06/msg00023.html>.
 
-2006-06-19  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+2006-06-19  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
 	* modules/sys_socket, modules/socklen: Include sys/types since
 	FreeBSD 4.x's sys/socket.h needs it.
@@ -6524,7 +6524,7 @@
 	including some doc fixes.
 	(base64_encode_alloc): Fix +1 bug on allocation failures.
 
-2006-03-24  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+2006-03-24  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* lib/base64.c (base64_encode): Do not read past end of array with
 	unsanitized input on systems with CHAR_BIT > 8.
@@ -9270,7 +9270,7 @@
 	* gnulib-tool (func_import): Fix comparison in handling of symbolic
 	links.
 
-2005-09-04  Martin Lambers <marlam@marlam.de>  (tiny change)
+2005-09-04  Martin Lambers  <marlam@marlam.de>  (tiny change)
 
 	* modules/size_max (Makefile.am): Add size_max.h
 
@@ -9655,7 +9655,7 @@
 	* gnulib-tool (func_import): Also copy m4/gnulib-tool.m4. Omit
 	declaration macro definitions from generated gnulib.m4.
 
-2005-08-30  "Oskar Liljeblad" <oskar@osk.mine.nu>
+2005-08-30  "Oskar Liljeblad"  <oskar@osk.mine.nu>
 
 	* lib/iconvme.h: Add prototype for iconv_alloc.
 
@@ -9689,7 +9689,7 @@
 
 	* modules/byteswap (Makefile.am): Fix rule to not assume GNU make.
 
-2005-08-29  "Oskar Liljeblad" <oskar@osk.mine.nu>
+2005-08-29  "Oskar Liljeblad"  <oskar@osk.mine.nu>
 
 	* lib/iconvme.c: Split iconv_string into iconv_alloc.
 
@@ -10521,7 +10521,7 @@
 
 	* lib/strnlen.h: New file.
 
-2005-08-08  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>  (tiny change)
+2005-08-08  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>  (tiny change)
 
 	* README: Typos.
 
@@ -11511,7 +11511,7 @@
 	date --iso-8601=ns generates acceptable dates; it doesn't yet.
 	Problem reported by Nic Ferrier.
 
-2005-05-10  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+2005-05-10  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
 	* lib/getaddrinfo.c: Don't fail when SOCK_STREAM or SOCK_DGRAM are
 	specified in ai_socktype. Fix invalid ai_protocol
@@ -11545,19 +11545,19 @@
 	* m4/getopt.m4 (gl_GETOPT): Check for Solaris 10 bug, not decl, when
 	possible.
 
-2005-05-09  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+2005-05-09  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 	    Bruno Haible  <bruno@clisp.org>
 
 	* modules/inet_ntop: New file.
 	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
 	inet_ntop.
 
-2005-05-09  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+2005-05-09  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 	    Bruno Haible  <bruno@clisp.org>
 
 	* m4/inet_ntop.m4: New file.
 
-2005-05-09  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+2005-05-09  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/inet_ntop.h: New file.
@@ -11791,7 +11791,7 @@
 
 	* gnulib-tool (Options): Make --symlink mean --symbolic.
 
-2005-04-18  Oskar Liljeblad <oskar@osk.mine.nu>
+2005-04-18  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* doc/gnulib.texi (Initial import): Fix.  Mention --aux-dir.
 
@@ -11807,7 +11807,7 @@
 
 	* gnulib-tool: Rename --symlink to --symbolic.
 
-2005-04-15  Oskar Liljeblad <oskar@osk.mine.nu>
+2005-04-15  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* gnulib-tool: Add -s, --symlink option to gnulib-tool to make
 	symbolic links to files instead of copying/moving.  Add --aux-dir,
@@ -13282,7 +13282,7 @@
 	with errno == ERANGE if the buffer is too small.
 	Problem reported by Mark D. Baushke.
 
-2004-11-03  Albert Chin <china@thewrittenword.com>
+2004-11-03  Albert Chin  <china@thewrittenword.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/uint32_t.m4 (gl_AC_TYPE_UINT32_T): When determining uint32_t
@@ -13599,15 +13599,15 @@
 
 	* lib/dirfd.h, getpagesize.h: Add copyright notice.
 
-2004-10-01  Yoann Vandoorselaere <yoann@prelude-ids.org>
+2004-10-01  Yoann Vandoorselaere  <yoann@prelude-ids.org>
 
 	* modules/strsep: New file.
 
-2004-10-01  Yoann Vandoorselaere <yoann@prelude-ids.org>
+2004-10-01  Yoann Vandoorselaere  <yoann@prelude-ids.org>
 
 	* m4/strsep.m4: New file.
 
-2004-10-01  Yoann Vandoorselaere <yoann@prelude-ids.org>
+2004-10-01  Yoann Vandoorselaere  <yoann@prelude-ids.org>
 
 	* lib/strsep.h: New file.
 	* lib/strsep.c: New file.
@@ -17207,7 +17207,7 @@
 	* modules/extensions, modules/gnu-source: New files.
 	* modules/timespec, modules/unlocked-io: Depend on extensions.
 
-2003-08-07 Paul Eggert  <eggert@twinsun.com>
+2003-08-07  Paul Eggert  <eggert@twinsun.com>
 
 	* modules/restrict: New file.
 	* MODULES.html.sh (func_all_modules): Add restrict.
@@ -17263,7 +17263,7 @@
 	Combine two mostly-identical uses of alloca into one.
 	Thanks to the Cray-Cyber project for access to a Cray Y-MP.
 
-2003-08-04  Dave Love <d.love@dl.ac.uk>
+2003-08-04  Dave Love  <d.love@dl.ac.uk>
 
 	[From Emacs.]
 
@@ -17739,7 +17739,7 @@
 
 	* m4/sysexits.m4: New file.
 
-2003-06-10  Simon Josefsson <jas@extundo.com>
+2003-06-10  Simon Josefsson  <jas@extundo.com>
 
 	* lib/argp.h: New file, from glibc.
 	* lib/argp-ba.c: New file, from glibc.
@@ -20377,7 +20377,7 @@
 	* lib/Makefile.am (Makefile): Depend on $(BUILT_SOURCES), so those
 	files will be created before anything else.
 
-2001-11-17 Paul Eggert  <eggert@twinsun.com>
+2001-11-17  Paul Eggert  <eggert@twinsun.com>
 
 	* m4/jm-winsz1.m4 (jm_WINSIZE_IN_PTEM): Do not define
 	WINSIZE_IN_PTEM if <termios.h> defines struct winsize.
