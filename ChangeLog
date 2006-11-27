@@ -1,3 +1,15 @@
+2006-11-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Fix some incompatibilities with gcc -ansi -pedantic.
+	* lib/regex.h (__restrict_arr): Don't use the [restrict] syntax
+	if compiling pedantically with GCC, unless it's C99 or later.
+	Don't trust sys/cdefs.h's definition of __restrict_arr, either, as
+	it mishandles gcc -ansi -pedantic as well.
+	* lib/regex_internal.h (re_token_t): Don't use enum bitfields
+	if gcc -pedantic.
+	* lib/regexec.c (check_node_accept_bytes): Don't use auto
+	initializers for struct if -pedantic, unless it's C99 or later.
+
 2006-11-25  Nix  <nix@esperi.org.uk>  (tiny change)
 
 	* m4/fcntl_h.m4 (gl_FCNTL_H): Test the atime, not the mtime.
