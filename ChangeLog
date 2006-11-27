@@ -1,4 +1,10 @@
 2006-11-27  Bruno Haible  <bruno@clisp.org>
+
+	* m4/stdint.m4 (gl_STDINT_BITSIZEOF): Use AC_COMPUTE_INT instead of
+	_AC_COMPUTE_INT.
+	(AC_COMPUTE_INT): Add fallback definition for autoconf < 2.61.
+
+2006-11-27  Bruno Haible  <bruno@clisp.org>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/regex.h (__restrict_arr): Redo logic of #if, for clarity.

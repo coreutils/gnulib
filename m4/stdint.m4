@@ -1,4 +1,4 @@
-# stdint.m4 serial 19
+# stdint.m4 serial 20
 dnl Copyright (C) 2001-2002, 2004-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -229,7 +229,7 @@ AC_DEFUN([gl_STDINT_BITSIZEOF],
        [Define to the number of bits in type ']gltype['.])])
   for gltype in $1 ; do
     AC_CACHE_CHECK([for bit size of $gltype], [gl_cv_bitsizeof_${gltype}],
-      [_AC_COMPUTE_INT([sizeof ($gltype) * CHAR_BIT], result,
+      [AC_COMPUTE_INT([result], [sizeof ($gltype) * CHAR_BIT],
 	 [$2
 #include <limits.h>], [result=unknown])
        eval gl_cv_bitsizeof_${gltype}=\$result
@@ -365,4 +365,10 @@ AC_DEFUN([gl_STDINT_TYPE_PROPERTIES],
   gl_cv_type_size_t_signed=no
   gl_INTEGER_TYPE_SUFFIX([ptrdiff_t sig_atomic_t size_t wchar_t wint_t],
     [gl_STDINT_INCLUDES])
+])
+
+dnl Autoconf >= 2.61 has AC_COMPUTE_INT built-in.
+dnl Remove this when we can assume autoconf >= 2.61.
+m4_ifdef([AC_COMPUTE_INT], [], [
+  AC_DEFUN([AC_COMPUTE_INT], [_AC_COMPUTE_INT([$2],[$1],[$3],[$4])])
 ])
