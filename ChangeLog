@@ -1,3 +1,8 @@
+2006-11-26  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_lib_Makefile_am): Initialize also
+	noinst_LTLIBRARIES.
+
 2006-11-27  Paul Eggert  <eggert@cs.ucla.edu>
             Bruno Haible  <bruno@clisp.org>
 
