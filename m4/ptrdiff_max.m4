@@ -1,5 +1,5 @@
-# ptrdiff_max.m4 serial 1
-dnl Copyright (C) 2003 Free Software Foundation, Inc.
+# ptrdiff_max.m4 serial 2
+dnl Copyright (C) 2003, 2006 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -30,15 +30,15 @@ Found it
   if test -z "$result"; then
     dnl Define it ourselves. Here we assume that the type 'ptrdiff_t' is not
     dnl wider than the type 'long'.
-    dnl The _AC_COMPUTE_INT macro works up to LONG_MAX, since it uses 'expr',
+    dnl The AC_COMPUTE_INT macro works up to LONG_MAX, since it uses 'expr',
     dnl which is guaranteed to work from LONG_MIN to LONG_MAX.
-    _AC_COMPUTE_INT([STYPE_MAXIMUM (ptrdiff_t)], res, [
+    AC_COMPUTE_INT([res], [STYPE_MAXIMUM (ptrdiff_t)], [
 #include <stddef.h>
 #include <limits.h>
 #define STYPE_MINIMUM(t) (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))
 #define STYPE_MAXIMUM(t) ((t) (~ (t) 0 - STYPE_MINIMUM (t)))
 ], result=?)
-    _AC_COMPUTE_INT([sizeof (ptrdiff_t) <= sizeof (int)], fits_in_int,
+    AC_COMPUTE_INT([fits_in_int], [sizeof (ptrdiff_t) <= sizeof (int)],
       [#include <stddef.h>], result=?)
     if test "$fits_in_int" = 1; then
       dnl Even though PTRDIFF_MAX fits in an int, it must be of type
@@ -64,4 +64,10 @@ Found it
     AC_DEFINE_UNQUOTED([PTRDIFF_MAX], [$result],
       [Define as the maximum value of type 'ptrdiff_t', if the system doesn't define it.])
   fi
+])
+
+dnl Autoconf >= 2.61 has AC_COMPUTE_INT built-in.
+dnl Remove this when we can assume autoconf >= 2.61.
+m4_ifdef([AC_COMPUTE_INT], [], [
+  AC_DEFUN([AC_COMPUTE_INT], [_AC_COMPUTE_INT([$2],[$1],[$3],[$4])])
 ])

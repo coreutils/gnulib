@@ -1,5 +1,5 @@
-# eoverflow.m4 serial 1
-dnl Copyright (C) 2004 Free Software Foundation, Inc.
+# eoverflow.m4 serial 2
+dnl Copyright (C) 2004, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -40,7 +40,7 @@ yes
       if test -n "$have_eoverflow"; then
         dnl EOVERFLOW exists but is hidden.
         dnl Define it to the same value.
-        _AC_COMPUTE_INT([EOVERFLOW], ac_cv_decl_EOVERFLOW, [
+        AC_COMPUTE_INT([ac_cv_decl_EOVERFLOW], [EOVERFLOW], [
 #define _XOPEN_SOURCE_EXTENDED 1
 #include <errno.h>
 /* The following two lines are a workaround against an autoconf-2.52 bug.  */
@@ -61,4 +61,10 @@ yes
     EOVERFLOW="$ac_cv_decl_EOVERFLOW"
     AC_SUBST(EOVERFLOW)
   fi
+])
+
+dnl Autoconf >= 2.61 has AC_COMPUTE_INT built-in.
+dnl Remove this when we can assume autoconf >= 2.61.
+m4_ifdef([AC_COMPUTE_INT], [], [
+  AC_DEFUN([AC_COMPUTE_INT], [_AC_COMPUTE_INT([$2],[$1],[$3],[$4])])
 ])
