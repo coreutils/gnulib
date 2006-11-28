@@ -20,7 +20,7 @@
 	noinst_LTLIBRARIES.
 
 2006-11-27  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/gettext.h (_LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS): Define to 0
 	if compiling with "gcc -ansi".
