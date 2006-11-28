@@ -1,3 +1,8 @@
+2006-11-28  Jim Meyering  <jim@meyering.net>
+
+	* lib/regcomp.c (parse_branch): Rename local, exp->expr, to avoid
+	warning from "gcc -Wshadow" about shadowing the builtin.
+
 2006-11-27  Bruno Haible  <bruno@clisp.org>
 
 	* m4/stdint.m4 (gl_STDINT_BITSIZEOF): Use AC_COMPUTE_INT instead of
