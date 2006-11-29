@@ -201,6 +201,20 @@ $ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib checkout gnulib
 Gnulib is hosted on savannah.gnu.org.  The project page is
 http://savannah.gnu.org/projects/gnulib.
 
+Keeping Up-to-date
+==================
+
+The best way to work with Gnulib is to check it out of CVS.
+Subscribing to the bug-gnulib@gnu.org mailing list will help you to
+plan when to update your local copy of Gnulib (which you use to
+maintain your software) from CVS.  You can use "cvs update -dP" to
+synchronize.
+
+Sometimes, using an updated version of Gnulib will require you to use
+newer versions of GNU Automake or Autoconf.  You may find it helpful
+to join the autotools-announce mailing list to be advised of such
+changes.
+
 
 -----
 Copyright (C) 2001, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
