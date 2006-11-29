@@ -1,6 +1,6 @@
 2006-11-28  James Youngman <jay@gnu.org>
 
-	* README: Advise users that they might find the bug-gnulig@gnu.org
+	* README: Advise users that they might find the bug-gnulib@gnu.org
 	and autotools-announce@gnu.org mailing lists useful.
 
 2006-11-28  Bruno Haible  <bruno@clisp.org>
