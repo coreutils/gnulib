@@ -1,3 +1,10 @@
+2006-11-29  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_lib_Makefile_am): Initialize also
+	noinst_LIBRARIES. Augment noinst_LIBRARIES and noinst_LTLIBRARIES
+	using +=.
+	Reported by Simon Josefsson <simon@josefsson.org>.
+
 2006-11-28  James Youngman <jay@gnu.org>
 
 	* README: Advise users that they might find the bug-gnulib@gnu.org

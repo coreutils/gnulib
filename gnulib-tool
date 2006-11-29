@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-11-27 14:22:11 $'
+cvsdatestamp='$Date: 2006-11-29 14:30:01 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1236,26 +1236,9 @@ func_emit_lib_Makefile_am ()
     echo "AUTOMAKE_OPTIONS = 1.5 gnits${subdir_options}"
   fi
   echo
-  if grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *= *$libname\\.$libext\$" allsnippets.tmp > /dev/null; then
-    # One of the snippets already specifies an installation location for the
-    # library. Don't confuse automake by saying it should not be installed.
-    :
-  else
-    # By default, the generated library should not be installed.
-    echo "noinst_${perhapsLT}LIBRARIES $assign $libname.$libext"
-  fi
-  echo
-  echo "${libname}_${libext}_SOURCES ="
-  # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
-  # automake during its analyses looks for $(LIBOBJS), not for @LIBOBJS@.
-  echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
-  echo "${libname}_${libext}_DEPENDENCIES = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
-  echo "EXTRA_${libname}_${libext}_SOURCES ="
-  if test "$libtool" = true; then
-    echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
-  fi
   if test -z "$makefile_name"; then
     echo "noinst_HEADERS ="
+    echo "noinst_LIBRARIES ="
     echo "noinst_LTLIBRARIES ="
     # Automake versions < 1.9b create an empty pkgdatadir at installation time
     # if you specify pkgdata_DATA to empty. This is a workaround.
@@ -1274,6 +1257,25 @@ func_emit_lib_Makefile_am ()
     echo "MAINTAINERCLEANFILES ="
     echo
     echo "AM_CPPFLAGS ="
+  fi
+  echo
+  if grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *= *$libname\\.$libext\$" allsnippets.tmp > /dev/null; then
+    # One of the snippets already specifies an installation location for the
+    # library. Don't confuse automake by saying it should not be installed.
+    :
+  else
+    # By default, the generated library should not be installed.
+    echo "noinst_${perhapsLT}LIBRARIES += $libname.$libext"
+  fi
+  echo
+  echo "${libname}_${libext}_SOURCES ="
+  # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
+  # automake during its analyses looks for $(LIBOBJS), not for @LIBOBJS@.
+  echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
+  echo "${libname}_${libext}_DEPENDENCIES = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
+  echo "EXTRA_${libname}_${libext}_SOURCES ="
+  if test "$libtool" = true; then
+    echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
   fi
   echo
   cat allsnippets.tmp \
