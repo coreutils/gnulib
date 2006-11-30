@@ -1,3 +1,10 @@
+2006-11-30  Jim Meyering  <jim@meyering.net>
+
+	* m4/warning.m4: Use the all-permissive copyright notice
+	recommended by RMS (rather than LGPL).
+	* m4/vararrays.m4: Likewise.
+	* m4/flexmember.m4: Likewise.
+
 2006-11-29  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_lib_Makefile_am): Initialize also
