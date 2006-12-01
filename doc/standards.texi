@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate November 15, 2006
+@set lastupdate November 30, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -2201,10 +2201,14 @@ when writing GNU software.
 @cindex open brace
 @cindex braces, in C source
 It is important to put the open-brace that starts the body of a C
-function in column one, and avoid putting any other open-brace or
-open-parenthesis or open-bracket in column one.  Several tools look
-for open-braces in column one to find the beginnings of C functions.
-These tools will not work on code not formatted that way.
+function in column one, so that they will start a defun.  Several
+tools look for open-braces in column one to find the beginnings of C
+functions.  These tools will not work on code not formatted that way.
+
+Avoid putting open-brace, open-parenthesis or open-bracket in column
+one when they are inside a function, so that they won't start a defun.
+The open-brace that starts a @code{struct} body can go in column one
+if you find it useful to treat that definition as a defun.
 
 It is also important for function definitions to start the name of the
 function in column one.  This helps people to search for function
