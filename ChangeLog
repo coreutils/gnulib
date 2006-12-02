@@ -1,3 +1,9 @@
+2006-12-01  Jim Meyering  <jim@meyering.net>
+
+	* modules/savewd (Depends-on): Add fcntl_h to avoid self-test
+	build failure due to missing definition of HAVE_WORKING_O_NOFOLLOW.
+	Reported by Simon Josefsson.
+
 2006-11-30  Jim Meyering  <jim@meyering.net>
 
 	* m4/warning.m4: Use the all-permissive copyright notice
