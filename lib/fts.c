@@ -516,7 +516,6 @@ fts_load (FTS *sp, register FTSENT *p)
 		p->fts_namelen = len;
 	}
 	p->fts_accpath = p->fts_path = sp->fts_path;
-	sp->fts_dev = p->fts_statp->st_dev;
 }
 
 int
@@ -743,9 +742,15 @@ check_for_dir:
 			abort ();
 		      }
 		  }
+
 		sp->fts_cur = p;
 		if (p->fts_info == FTS_D)
 		  {
+		    /* Now that P->fts_statp is guaranteed to be valid,
+		       if this is a command-line directory, record its
+		       device number, to be used for FTS_XDEV.  */
+		    if (p->fts_level == FTS_ROOTLEVEL)
+		      sp->fts_dev = p->fts_statp->st_dev;
 		    Dprintf (("  entering: %s\n", p->fts_path));
 		    if (! enter_dir (sp, p))
 		      {
