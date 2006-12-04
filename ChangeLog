@@ -1,3 +1,10 @@
+2006-12-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/fnmatch.c (WIDE_CHAR_SUPPORT): Require HAVE_ISWCTYPE, too.
+	* lib/regex_internal.h (RE_ENABLE_I18N): Likewise.
+	* m4/fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Check for iswctype, too.
+	* m4/regex.m4 (gl_PREREQ_REGEX): Likewise.
+
 2006-12-03  Jim Meyering  <jim@meyering.net>
 
 	* lib/fts.c (fts_load): Don't set sp->fts_dev here, since

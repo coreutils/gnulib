@@ -40,7 +40,7 @@
 #include <string.h>
 
 #define WIDE_CHAR_SUPPORT \
-  (HAVE_WCTYPE_H && HAVE_WCHAR_H && HAVE_BTOWC \
+  (HAVE_WCTYPE_H && HAVE_WCHAR_H && HAVE_BTOWC && HAVE_ISWCTYPE \
    && HAVE_WMEMCHR && (HAVE_WMEMCPY || HAVE_WMEMPCPY))
 
 /* For platform which support the ISO C amendement 1 functionality we
