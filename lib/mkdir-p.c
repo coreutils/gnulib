@@ -115,7 +115,14 @@ make_dir_parents (char *dir,
 
       if (0 <= prefix_len)
 	{
-	  if (mkdir (dir + prefix_len, mode) == 0)
+	  /* If the ownership will change, create the directory with
+	     more restrictive permissions at first, so unauthorized
+	     users cannot nip in before the directory is ready.  */
+	  mode_t mkdir_mode = mode;
+	  if (! (owner == (uid_t) -1 && group == (gid_t) -1))
+	    mkdir_mode &= S_IRWXU;
+
+	  if (mkdir (dir + prefix_len, mkdir_mode) == 0)
 	    {
 	      announce (dir, options);
 	      preserve_existing =
@@ -126,7 +133,10 @@ make_dir_parents (char *dir,
 		 | (mode & S_IRUSR ? SAVEWD_CHDIR_READABLE : 0));
 	    }
 	  else
-	    mkdir_errno = errno;
+	    {
+	      mkdir_errno = errno;
+	      mkdir_mode = -1;
+	    }
 
 	  if (preserve_existing)
 	    {
@@ -163,7 +173,6 @@ make_dir_parents (char *dir,
 		    }
 		  else
 		    {
-		      mode_t mkdir_mode = (mkdir_errno == 0 ? mode : -1);
 		      char const *subdir = (chdir_ok ? "." : dir + prefix_len);
 		      if (dirchownmod (fd, subdir, mkdir_mode, owner, group,
 				       mode, mode_bits)

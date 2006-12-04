@@ -1,5 +1,12 @@
 2006-12-03  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/mkdir-p.c (make_dir_parents): Fix race condition when making
+	a directory that is about to be chowned.  Such a directory's
+	initial file permissions should permit the owner only and this
+	should not be changed until after the chown, since the group and
+	other bits would be incorrect if they granted permission before
+	the chown.
+
 	Fix porting problem for iswctype reported by Georg Schwarz in:
 	http://lists.gnu.org/archive/html/bug-coreutils/2006-12/msg00017.html
 	* lib/fnmatch.c (WIDE_CHAR_SUPPORT): Require HAVE_ISWCTYPE, too.
