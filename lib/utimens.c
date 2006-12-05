@@ -76,6 +76,23 @@ int
 futimens (int fd ATTRIBUTE_UNUSED,
 	  char const *file, struct timespec const timespec[2])
 {
+  /* Some Linux-based NFS clients are buggy, and mishandle time stamps
+     of files in NFS file systems in some cases.  We have no
+     configure-time test for this, but please see
+     <http://bugs.gentoo.org/show_bug.cgi?id=132673> for references to
+     some of the problems with Linux 2.6.16.  If this affects you,
+     compile with -DHAVE_BUGGY_NFS_TIME_STAMPS; this is reported to
+     help in some cases, albeit at a cost in performance.  But you
+     really should upgrade your kernel to a fixed version, since the
+     problem affects many applications.  */
+
+#if HAVE_BUGGY_NFS_TIME_STAMPS
+  if (0 <= fd)
+    fsync (fd);
+  else
+    sync ();
+#endif
+
   /* There's currently no interface to set file timestamps with
      nanosecond resolution, so do the best we can, discarding any
      fractional part of the timestamp.  */

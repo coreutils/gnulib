@@ -1,3 +1,9 @@
+2006-12-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/utimens.c (futimens) [HAVE_BUGGY_NFS_TIME_STAMPS]: Add a
+	workaround for this case.  It is not autoconfigured now; offhand
+	it's hard to see how to autoconfigure it.
+
 2006-12-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/mkdir-p.c (make_dir_parents): Fix race condition when making
