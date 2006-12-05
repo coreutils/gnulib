@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2006-11-08.17}
+\def\texinfoversion{2006-12-05.11}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free
@@ -7126,11 +7126,305 @@ output) for that.)}
 is empty.  Maybe you need to install it?  In the current directory
 should work if nowhere else does.}
 
+% Set the catcode of characters 128 through 255 to the specified number.
+%
+\def\setnonasciicharscatcode#1{
+   \count255=128
+   \loop\ifnum\count255<256
+      \global\catcode\count255=#1
+      \advance\count255 by 1
+   \repeat
+}
 
-% @documentencoding should change something in TeX eventually, most
-% likely, but for now just recognize it.
-\let\documentencoding = \comment
+% @documentencoding sets the definition of non-ASCII characters
+% according to the specified encoding.
+%
+\parseargdef\documentencoding{%
+  % Encoding being declared for the document.
+  \def\declaredencoding{\csname #1.enc\endcsname}%
+  %
+  % Supported encodings: names converted to tokens in order to be able
+  % to compare them with \ifx.
+  \def\latone{\csname ISO-8859-1.enc\endcsname}%
+  \def\latnine{\csname ISO-8859-15.enc\endcsname}%
+  \def\lattwo{\csname ISO-8859-2.enc\endcsname}%
+  \def\ascii{\csname US-ASCII.enc\endcsname}%
+  %
+  \ifx \declaredencoding \ascii
+     \asciichardefs
+  %
+  \else \ifx \declaredencoding \lattwo
+     \setnonasciicharscatcode\active
+     \lattwochardefs
+  %
+  \else \ifx \declaredencoding \latone 
+     \setnonasciicharscatcode\active
+     \latonechardefs
+  %
+  \else \ifx \declaredencoding \latnine
+     \setnonasciicharscatcode\active
+     \latninechardefs
+  %
+  \else 
+    \message{Unknown document encoding #1, ignoring.}%
+  %
+  \fi % latnine
+  \fi % latone
+  \fi % lattwo
+  \fi % ascii
+}
 
+% A message to be logged when using a character that isn't available
+% the default font encoding (OT1).
+% 
+\def\missingcharmsg#1{\message{Character missing in OT1 encoding: #1.}}
+
+% Take account of \c (plain) vs. \, (Texinfo) difference.
+\def\cedilla#1{\ifx\c\ptexc\c{#1}\else\,{#1}\fi}
+
+% First, make active non-ASCII characters in order for them to be
+% correctly categorized when TeX reads the replacement text of
+% macros containing the character definitions.
+\setnonasciicharscatcode\active
+%
+% Latin1 (ISO-8859-1) character definitions.
+\def\latonechardefs{%
+    \gdef^^a0{~} 
+    \gdef^^a1{\exclamdown}
+    \gdef^^a2{\missingcharmsg{CENT SIGN}} 
+    \gdef^^a3{{\pounds}}
+    \gdef^^a4{\missingcharmsg{CURRENCY SIGN}}
+    \gdef^^a5{\missingcharmsg{YEN SIGN}}
+    \gdef^^a6{\missingcharmsg{BROKEN BAR}} 
+    \gdef^^a7{\S}
+    \gdef^^a8{\"{}} 
+    \gdef^^a9{\copyright} 
+    \gdef^^aa{\ordf}
+    \gdef^^ab{\missingcharmsg{LEFT-POINTING DOUBLE ANGLE QUOTATION MARK}} 
+    \gdef^^ac{$\lnot$}
+    \gdef^^ad{\-} 
+    \gdef^^ae{\registeredsymbol} 
+    \gdef^^af{\={}}
+    %
+    \gdef^^b0{\textdegree}
+    \gdef^^b1{$\pm$}
+    \gdef^^b2{$^2$}
+    \gdef^^b3{$^3$}
+    \gdef^^b4{\'{}}
+    \gdef^^b5{$\mu$}
+    \gdef^^b6{\P}
+    %
+    \gdef^^b7{$^.$}
+    \gdef^^b8{\cedilla\ }
+    \gdef^^b9{$^1$}
+    \gdef^^ba{\ordm}
+    %
+    \gdef^^bb{\missingcharmsg{RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK}}
+    \gdef^^bc{$1\over4$}
+    \gdef^^bd{$1\over2$}
+    \gdef^^be{$3\over4$}
+    \gdef^^bf{\questiondown}
+    %
+    \gdef^^c0{\`A}
+    \gdef^^c1{\'A}
+    \gdef^^c2{\^A}
+    \gdef^^c3{\~A}
+    \gdef^^c4{\"A}
+    \gdef^^c5{\ringaccent A} 
+    \gdef^^c6{\AE}
+    \gdef^^c7{\cedilla C}
+    \gdef^^c8{\`E}
+    \gdef^^c9{\'E}
+    \gdef^^ca{\^E}
+    \gdef^^cb{\"E}
+    \gdef^^cc{\`I}
+    \gdef^^cd{\'I}
+    \gdef^^ce{\^I}
+    \gdef^^cf{\"I}
+    %
+    \gdef^^d0{\missingcharmsg{LATIN CAPITAL LETTER ETH}}
+    \gdef^^d1{\~N}
+    \gdef^^d2{\`O}
+    \gdef^^d3{\'O}
+    \gdef^^d4{\^O}
+    \gdef^^d5{\~O}
+    \gdef^^d6{\"O}
+    \gdef^^d7{$\times$}
+    \gdef^^d8{\O}
+    \gdef^^d9{\`U}
+    \gdef^^da{\'U}
+    \gdef^^db{\^U}
+    \gdef^^dc{\"U}
+    \gdef^^dd{\'Y}
+    \gdef^^de{\missingcharmsg{LATIN CAPITAL LETTER THORN}}
+    \gdef^^df{\ss}
+    %
+    \gdef^^e0{\`a}
+    \gdef^^e1{\'a}
+    \gdef^^e2{\^a}
+    \gdef^^e3{\~a}
+    \gdef^^e4{\"a}
+    \gdef^^e5{\ringaccent a}
+    \gdef^^e6{\ae}
+    \gdef^^e7{\cedilla c}
+    \gdef^^e8{\`e}
+    \gdef^^e9{\'e}
+    \gdef^^ea{\^e}
+    \gdef^^eb{\"e}
+    \gdef^^ec{\`{\dotless i}}
+    \gdef^^ed{\'{\dotless i}}
+    \gdef^^ee{\^{\dotless i}}
+    \gdef^^ef{\"{\dotless i}}
+    %
+    \gdef^^f0{\missingcharmsg{LATIN SMALL LETTER ETH}}
+    \gdef^^f1{\~n}
+    \gdef^^f2{\`o}
+    \gdef^^f3{\'o}
+    \gdef^^f4{\^o}
+    \gdef^^f5{\~o}
+    \gdef^^f6{\"o}
+    \gdef^^f7{$\div$}
+    \gdef^^f8{\o}
+    \gdef^^f9{\`u}
+    \gdef^^fa{\'u}
+    \gdef^^fb{\^u}
+    \gdef^^fc{\"u}
+    \gdef^^fd{\'y}
+    \gdef^^fe{\missingcharmsg{LATIN SMALL LETTER THORN}}
+    \gdef^^ff{\"y}
+}
+
+% Latin9 (ISO-8859-15) encoding character definitions.
+\def\latninechardefs{%
+   % Encoding is almost identical to Latin1.
+   \latonechardefs
+   %
+   \gdef^^a4{\euro}
+   \gdef^^a6{\v S}
+   \gdef^^a8{\v s}
+   \gdef^^b4{\v Z}
+   \gdef^^b8{\v z}
+   \gdef^^bc{\OE}
+   \gdef^^bd{\oe}
+   \gdef^^be{\"Y}
+}
+
+% Latin2 (ISO-8859-2) character definitions.
+\def\lattwochardefs{%
+   \gdef^^a0{~}
+   \gdef^^a1{\missingcharmsg{LATIN CAPITAL LETTER A WITH OGONEK}}
+   \gdef^^a2{\u{}}
+   \gdef^^a3{\L}
+   \gdef^^a4{\missingcharmsg{CURRENCY SIGN}}
+   \gdef^^a5{\v L}
+   \gdef^^a6{\'S}
+   \gdef^^a7{\S}
+   \gdef^^a8{\"{}}
+   \gdef^^a9{\v S}
+   \gdef^^aa{\cedilla S}
+   \gdef^^ab{\v T}
+   \gdef^^ac{\'Z}
+   \gdef^^ad{\-}
+   \gdef^^ae{\v Z}
+   \gdef^^af{\dotaccent Z}
+   %
+   \gdef^^b0{\textdegree}
+   \gdef^^b1{\missingcharmsg{LATIN SMALL LETTER A WITH OGONEK}}
+   \gdef^^b2{\missingcharmsg{OGONEK}}
+   \gdef^^b3{\l}
+   \gdef^^b4{\'{}}
+   \gdef^^b5{\v l}
+   \gdef^^b6{\'s}
+   \gdef^^b7{\v{}}
+   \gdef^^b8{\cedilla\ }
+   \gdef^^b9{\v s}
+   \gdef^^ba{\cedilla s}
+   \gdef^^bb{\v t}
+   \gdef^^bc{\'z}
+   \gdef^^bd{\H{}}
+   \gdef^^be{\v z}
+   \gdef^^bf{\dotaccent z}
+   %
+   \gdef^^c0{\'R}
+   \gdef^^c1{\'A}
+   \gdef^^c2{\^A}
+   \gdef^^c3{\u A}
+   \gdef^^c4{\"A}
+   \gdef^^c5{\'L}
+   \gdef^^c6{\'C}
+   \gdef^^c7{\cedilla C}
+   \gdef^^c8{\v C}
+   \gdef^^c9{\'E}
+   \gdef^^ca{\missingcharmsg{LATIN CAPITAL LETTER E WITH OGONEK}}
+   \gdef^^cb{\"E}
+   \gdef^^cc{\v E}
+   \gdef^^cd{\'I}
+   \gdef^^ce{\^I}
+   \gdef^^cf{\v D}
+   %
+   \gdef^^d0{\missingcharmsg{LATIN CAPITAL LETTER D WITH STROKE}}
+   \gdef^^d1{\'N}
+   \gdef^^d2{\v N}
+   \gdef^^d3{\'O}
+   \gdef^^d4{\^O}
+   \gdef^^d5{\H O}
+   \gdef^^d6{\"O}
+   \gdef^^d7{$\times$}
+   \gdef^^d8{\v R}
+   \gdef^^d9{\ringaccent U} 
+   \gdef^^da{\'U}
+   \gdef^^db{\H U}
+   \gdef^^dc{\"U}
+   \gdef^^dd{\'Y}
+   \gdef^^de{\cedilla T}
+   \gdef^^df{\ss}
+   %
+   \gdef^^e0{\'r}
+   \gdef^^e1{\'a}
+   \gdef^^e2{\^a}
+   \gdef^^e3{\u a}
+   \gdef^^e4{\"a}
+   \gdef^^e5{\'l}
+   \gdef^^e6{\'c}
+   \gdef^^e7{\cedilla c}
+   \gdef^^e8{\v c}
+   \gdef^^e9{\'e}
+   \gdef^^ea{\missingcharmsg{LATIN SMALL LETTER E WITH OGONEK}}
+   \gdef^^eb{\"e}
+   \gdef^^ec{\v e}
+   \gdef^^ed{\'\i}
+   \gdef^^ee{\^\i}
+   \gdef^^ef{\v d}
+   %
+   \gdef^^f0{\missingcharmsg{LATIN SMALL LETTER D WITH STROKE}}
+   \gdef^^f1{\'n}
+   \gdef^^f2{\v n}
+   \gdef^^f3{\'o}
+   \gdef^^f4{\^o}
+   \gdef^^f5{\H o}
+   \gdef^^f6{\"o}
+   \gdef^^f7{$\div$}
+   \gdef^^f8{\v r}
+   \gdef^^f9{\ringaccent u}
+   \gdef^^fa{\'u}
+   \gdef^^fb{\H u}
+   \gdef^^fc{\"u}
+   \gdef^^fd{\'y}
+   \gdef^^fe{\cedilla t}
+   \gdef^^ff{\dotaccent{}}
+}
+
+% US-ASCII character definitions.
+\def\asciichardefs{%
+    % Nothing needs to be done
+   \relax
+}
+
+% Make non-ASCII characters printable again for compatibility with
+% existing Texinfo documents that may use them, even without declaring a
+% document encoding.
+%
+\setnonasciicharscatcode \other
 
 % Page size parameters.
 %
