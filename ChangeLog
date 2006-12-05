@@ -1,3 +1,8 @@
+2006-12-05  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* tests/test-argp-2.sh: Fix test to match actual output.
+	(func_compare): Fix sed script to be portable.
+
 2006-12-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/utimens.c (futimens) [HAVE_BUGGY_NFS_TIME_STAMPS]: Add a

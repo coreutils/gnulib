@@ -24,7 +24,9 @@ ERR=0
 
 func_compare() {
 # If argp was compiled without base_name, it will display full program name
-  sed '1{s,: [^ ]*/test-argp,: test-argp,;}' | cmp - $TMP
+  sed '1{
+         s,: [^ ]*/test-argp,: test-argp,
+        }' | cmp - $TMP
 }  
 
 ####
@@ -70,9 +72,9 @@ documentation string
   one                        one unit
   two                        two units
 
-  -?, --help                 Give this help list
-      --usage                Give a short usage message
-  -V, --version              Print program version
+  -?, --help                 give this help list
+      --usage                give a short usage message
+  -V, --version              print program version
 
 Mandatory or optional arguments to long options are also mandatory or optional
 for any corresponding short options.
