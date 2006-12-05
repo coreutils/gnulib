@@ -87,10 +87,10 @@ futimens (int fd ATTRIBUTE_UNUSED,
      problem affects many applications.  */
 
 #if HAVE_BUGGY_NFS_TIME_STAMPS
-  if (0 <= fd)
-    fsync (fd);
-  else
+  if (fd < 0)
     sync ();
+  else
+    fsync (fd);
 #endif
 
   /* There's currently no interface to set file timestamps with
