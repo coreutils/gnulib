@@ -24,8 +24,9 @@ use strict;
 use Getopt::Long;
 use Digest::MD5;
 use Digest::SHA1;
+use POSIX qw(strftime);
 
-(my $VERSION = '$Revision: 1.1 $ ') =~ tr/[0-9].//cd;
+(my $VERSION = '$Revision: 1.2 $ ') =~ tr/[0-9].//cd;
 (my $ME = $0) =~ s|.*/||;
 
 my %valid_release_types = map {$_ => 1} qw (alpha beta major);
@@ -73,7 +74,7 @@ OPTIONS:
 
   Generate an announcement message.
 
-  FIXME: describe the following
+These options must be specified:
 
    --release-type=TYPE          TYPE must be one of @types
    --package-name=PACKAGE_NAME
@@ -81,7 +82,16 @@ OPTIONS:
    --current-version=VER
    --gpg-key-id=ID         The GnuPG ID of the key used to sign the tarballs
    --url-directory=URL_DIR
-   --news=NEWS_FILE             optional
+
+The following are optional:
+
+   --news=NEWS_FILE
+   --bootstrap-tools=TOOL_LIST  a comma-separated list of tools, e.g.,
+                                autoconf,automake,bison,gnulib
+   --gnulib-snapshot-date=DATE  if gnulib is in the bootstrap tool list,
+                                then report this as the snapshot date.
+                                If not specified, use the current date/time.
+                                If you specify a date here, be sure it's UTC.
 
    --help             display this help and exit
    --version          output version information and exit
@@ -311,6 +321,49 @@ sub print_changelog_deltas ($$)
     or warn "$ME: warning: `cmd' had unexpected exit code or signal ($?)\n";
 }
 
+sub get_tool_versions ($$)
+{
+  my ($bootstrap_tools, $gnulib_snapshot_timestamp) = @_;
+  defined $bootstrap_tools
+    or return ();
+
+  defined $gnulib_snapshot_timestamp
+    or $gnulib_snapshot_timestamp = strftime '%Y-%m-%d %T UTC', gmtime;
+
+  my $fail;
+  my @tool_list = split ',', $bootstrap_tools;
+  my @tool_version_pair;
+  foreach my $t (@tool_list)
+    {
+      if ($t eq 'gnulib')
+	{
+	  push @tool_version_pair,
+	    "CVS Gnulib sources from $gnulib_snapshot_timestamp";
+	  next;
+	}
+      # Assume that the last "word" on the first line of
+      # `tool --version` output is the version string.
+      my ($first_line, undef) = split ("\n", `$t --version`);
+      if ($first_line =~ /.* (\d[\w.-]+)$/)
+	{
+	  $t = ucfirst $t;
+	  push @tool_version_pair, "$t $1";
+	}
+      else
+	{
+	  defined $first_line
+	    and $first_line = '';
+	  warn "$ME: $t: unexpected --version output\n:$first_line";
+	  $fail = 1;
+	}
+    }
+
+  $fail
+    and exit 1;
+
+  return @tool_version_pair;
+}
+
 {
   # Neutralize the locale, so that, for instance, "du" does not
   # issue "1,2" instead of "1.2", what confuses our regexps.
@@ -323,6 +376,8 @@ sub print_changelog_deltas ($$)
   my $gpg_key_id;
   my @url_dir_list;
   my @news_file;
+  my $bootstrap_tools;
+  my $gnulib_snapshot_timestamp;
 
   GetOptions
     (
@@ -333,6 +388,8 @@ sub print_changelog_deltas ($$)
      'gpg-key-id=s'       => \$gpg_key_id,
      'url-directory=s'    => \@url_dir_list,
      'news=s'             => \@news_file,
+     'bootstrap-tools=s'  => \$bootstrap_tools,
+     'gnulib-snapshot-time-stamp=s' => \$gnulib_snapshot_timestamp,
 
      help => sub { usage 0 },
      version => sub { print "$ME version $VERSION\n"; exit },
@@ -407,6 +464,12 @@ then run this command to import it:
 
 and rerun the \`gpg --verify' command.
 EOF
+
+  my @tool_versions = get_tool_versions ($bootstrap_tools,
+                                         $gnulib_snapshot_timestamp);
+  @tool_versions
+    and print "\nThis release was bootstrapped with the following tools:",
+      join ('', map {"\n  $_"} @tool_versions), "\n";
 
   print_news_deltas ($_, $prev_version, $curr_version)
     foreach @news_file;
