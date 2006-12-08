@@ -4,7 +4,7 @@
 #   2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software Foundation,
 #   Inc.
 
-timestamp='2006-11-30'
+timestamp='2006-12-08'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -950,6 +950,9 @@ EOF
 	exit ;;
     x86_64:Linux:*:*)
 	echo x86_64-unknown-linux-gnu
+	exit ;;
+    xtensa:Linux:*:*)
+    	echo xtensa-unknown-linux-gnu
 	exit ;;
     i*86:Linux:*:*)
 	# The BFD linker knows what the default object file format is, so
