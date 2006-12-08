@@ -1,5 +1,8 @@
 2006-12-08  Jim Meyering  <jim@meyering.net>
 
+	* build-aux/announce-gen ($VERSION): Don't use of $Revision...$.
+	Instead, use Emacs' time-stamp write hook.
+
 	* build-aux/announce-gen: Add two new options, both optional:
 	--bootstrap-tools=TOOL_LIST
 	      a comma-separated list of tools, e.g.,
