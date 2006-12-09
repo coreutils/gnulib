@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 15, 2006
+@set lastupdate December 5, 2006
 @c %**end of header
 
 @dircategory GNU organization
@@ -1349,7 +1349,7 @@ worth announcing.  If you use @email{info-gnu@@gnu.org}, please do not
 announce pretest releases, only real releases.  But real releases do
 include releases made just to fix bugs.
 
-@node  Web Pages
+@node Web Pages
 @chapter Web Pages
 @cindex web pages
 
@@ -1377,15 +1377,17 @@ databases (including mail logs and bug tracking) are an exception; set
 them up on whatever site is convenient for you, and make the pages on
 @code{www.gnu.org} link to that site.
 
-Web pages for GNU packages should not include GIF images, since the GNU
-project avoids GIFs due to patent problems.  @xref{Ethical and
-Philosophical Consideration}.
+Historically, web pages for GNU packages did not include GIF images,
+because of patent problems (@pxref{Ethical and Philosophical
+Consideration}).  Although the GIF patents expired in 2006, using GIF
+images is still not recommended, as the PNG and JPEG formats are
+generally superior.  See @url{http://www.gnu.org/philosophy/gif.html}.
 
 The web pages for the package should include its manuals, in HTML,
-DVI, Info, PostScript, PDF, plain ASCII, and Texinfo format (source).  (All
-of these can be generated automatically from the Texinfo source using
-Makeinfo and other programs.)  When there is only one manual, put it
-in a subdirectory called @file{manual}; the file
+DVI, Info, PostScript, PDF, plain ASCII, and Texinfo format (source).
+(All of these can be generated automatically from the Texinfo source
+using Makeinfo and other programs.)  When there is only one manual,
+put it in a subdirectory called @file{manual}; the file
 @file{manual/index.html} should have a link to the manual in each of
 its forms.
 
@@ -1408,8 +1410,8 @@ so based on the contents of your @file{manual} directory.
 * CVS Keywords in Web Pages::
 @end menu
 
-@node  Invoking gendocs.sh
-@section  Invoking @command{gendocs.sh}
+@node Invoking gendocs.sh
+@section Invoking @command{gendocs.sh}
 @pindex gendocs.sh
 @cindex generating documentation output
 
@@ -1517,7 +1519,7 @@ itself.  Also, @code{makeinfo} notices the @code{@@w} and generates
 output avoiding the literal keyword string.
 
 
-@node   Ethical and Philosophical Consideration
+@node Ethical and Philosophical Consideration
 @chapter Ethical and Philosophical Consideration
 @cindex ethics
 @cindex philosophy
@@ -1649,7 +1651,7 @@ When referring to the collection of servers that is the higher level
 of the GNU kernel, please call it ``the Hurd'' or ``the GNU Hurd.''
 Note that this uses a space, not a slash.
 
-@node  Hosting
+@node Hosting
 @chapter Hosting
 @cindex CVS repository
 @cindex repository
