@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-11-29 14:30:01 $'
+cvsdatestamp='$Date: 2006-12-11 12:41:09 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2179,10 +2179,17 @@ func_import ()
   echo "Finished."
   echo
   echo "You may need to add #include directives for the following .h files."
+  # Intersect $specified_modules and $modules
+  # (since $specified_modules is not necessarily of subset of $modules - some
+  # may have been skipped through --avoid, and since the elements of $modules
+  # but not in $specified_modules can go away without explicit notice - through
+  # changes in the module dependencies).
+  echo "$specified_modules" > "$tmp"/modules1 # a sorted list, one module per line
+  echo "$modules" > "$tmp"/modules2 # also a sorted list, one module per line
   # First the #include <...> directives without #ifs, sorted for convenience,
   # then the #include "..." directives without #ifs, sorted for convenience,
   # then the #include directives that are surrounded by #ifs. Not sorted.
-  for module in $modules; do
+  for module in `join "$tmp"/modules1 "$tmp"/modules2`; do
     include_directive=`func_get_include_directive "$module"`
     case "$nl$include_directive" in
       *"$nl#if"*)
