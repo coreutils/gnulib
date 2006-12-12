@@ -1,3 +1,9 @@
+2006-12-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/openat.m4 (gl_FUNC_OPENAT): Don't compile mkdirat
+	and fchmodat unconditionally, since glibc 2.4 has them.
+	Problem reported by Arkadiusz Miskiewicz.
+
 2006-12-10  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Show the include files only for those
