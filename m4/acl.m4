@@ -53,7 +53,7 @@ AC_DEFUN([gl_ACL_GET_FILE],
 	   #include <errno.h>
 	  ]],
 	  [[return !! (!acl_get_file (".", ACL_TYPE_ACCESS)
-		       || errno == ENOENT);]])],
+		       && errno == ENOENT);]])],
        [gl_cv_func_working_acl_get_file=yes],
        [gl_cv_func_working_acl_get_file=no],
        [gl_cv_func_working_acl_get_file=cross-compiling])])

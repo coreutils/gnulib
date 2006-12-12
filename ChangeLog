@@ -1,3 +1,8 @@
+2006-12-12  Jim Meyering  <jim@meyering.net>
+
+	* m4/acl.m4 (gl_ACL_GET_FILE): Fix logic error.
+	Reported by Andreas Schwab <schwab@suse.de>.
+
 2006-12-12  Bruno Haible  <bruno@clisp.org>
 
 	Merge these changes.
