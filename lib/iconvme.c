@@ -73,21 +73,24 @@ iconv_string (const char *str, const char *from_codeset,
 
   dest = iconv_alloc (cd, str);
 
-  {
-    int save_errno = errno;
-
-    if (iconv_close (cd) < 0 && dest)
-      {
-	int save_errno2 = errno;
-	/* If we didn't have a real error before, make sure we restore
-	   the iconv_close error below. */
-	free (dest);
-	dest = NULL;
-	errno = save_errno2;
-      }
-    else
-      errno = save_errno;
-  }
+  if (dest == NULL)
+    {
+      int saved_errno = errno;
+      iconv_close (cd);
+      errno = saved_errno;
+    }
+  else
+    {
+      if (iconv_close (cd) < 0)
+	{
+	  int saved_errno2 = errno;
+	  /* If we didn't have a real error before, make sure we restore
+	     the iconv_close error below. */
+	  free (dest);
+	  dest = NULL;
+	  errno = saved_errno2;
+	}
+    }
 #else
   errno = ENOSYS;
 #endif
@@ -126,7 +129,17 @@ iconv_alloc (iconv_t cd, const char *str)
 
   outp = dest = (char *) malloc (outbuf_size);
   if (dest == NULL)
-    return NULL;
+    {
+      errno = ENOMEM;
+      return NULL;
+    }
+
+  /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
+# if defined _LIBICONV_VERSION \
+    || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+  /* Set to the initial state.  */
+  iconv (cd, NULL, NULL, NULL, NULL);
+# endif
 
 again:
   err = iconv (cd, &p, &inbytes_remaining, &outp, &outbytes_remaining);
@@ -154,6 +167,7 @@ again:
 	    newdest = (char *) realloc (dest, newsize);
 	    if (newdest == NULL)
 	      {
+		errno = ENOMEM;
 		have_error = 1;
 		goto out;
 	      }
@@ -176,11 +190,80 @@ again:
 	  break;
 	}
     }
+# if !defined _LIBICONV_VERSION && (defined sgi || defined __sgi)
+  /* Irix iconv() inserts a NUL byte if it cannot convert.  */
+  else if (err > 0)
+    {
+      errno = EILSEQ;
+      have_error = 1;
+      goto out;
+    }
+# endif
 
-  *outp = '\0';
+again2:
+  err = iconv (cd, NULL, NULL, &outp, &outbytes_remaining);
+
+  if (err == (size_t) -1)
+    {
+      switch (errno)
+	{
+	case E2BIG:
+	  {
+	    size_t used = outp - dest;
+	    size_t newsize = outbuf_size * 2;
+	    char *newdest;
+
+	    if (newsize <= outbuf_size)
+	      {
+		errno = ENOMEM;
+		have_error = 1;
+		goto out;
+	      }
+	    newdest = (char *) realloc (dest, newsize);
+	    if (newdest == NULL)
+	      {
+		errno = ENOMEM;
+		have_error = 1;
+		goto out;
+	      }
+	    dest = newdest;
+	    outbuf_size = newsize;
+
+	    outp = dest + used;
+	    outbytes_remaining = outbuf_size - used - 1;	/* -1 for NUL */
+
+	    goto again2;
+	  }
+	  break;
+
+	default:
+	  have_error = 1;
+	  break;
+	}
+    }
+# if !defined _LIBICONV_VERSION && (defined sgi || defined __sgi)
+  /* Irix iconv() inserts a NUL byte if it cannot convert.  */
+  else if (err > 0)
+    {
+      errno = EILSEQ;
+      have_error = 1;
+      goto out;
+    }
+# endif
+
+  *outp++ = '\0';
+
+  /* Give away unused memory.  */
+  if (outp - dest < outbuf_size)
+    {
+      char *newdest = (char *) realloc (dest, outp - dest);
+
+      if (newdest != NULL)
+	dest = newdest;
+    }
 
 out:
-  if (have_error && dest)
+  if (have_error)
     {
       int save_errno = errno;
       free (dest);

@@ -1,3 +1,17 @@
+2006-12-12  Bruno Haible  <bruno@clisp.org>
+
+	Merge these changes.
+	2006-09-05  Bruno Haible  <bruno@clisp.org>
+	* lib/iconvme.c (iconv_string): No need to save and restore errno when
+	iconv_alloc succeeded.
+	(iconv_alloc): Don't assume that malloc() or realloc(), when failing,
+	sets errno to ENOMEM. (malloc on GNU/kFreeBSD doesn't.) No need to
+	test for " && dest " at the end - dest is always != NULL there. Call
+	iconv with 4xNULL arguments initially, to reset the state. Call iconv
+	with 2xNULL arguments, also to flush the state storage. Handle the
+	IRIX iconv behaviour. Realloc the final result, to throw away unused
+	memory.
+
 2006-12-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/openat.m4 (gl_FUNC_OPENAT): Don't compile mkdirat
