@@ -1,4 +1,4 @@
-# stdint.m4 serial 20
+# stdint.m4 serial 21
 dnl Copyright (C) 2001-2002, 2004-2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -192,8 +192,9 @@ struct s {
 	 ]])],
          [gl_cv_header_working_stdint_h=yes])])
   fi
-  if test "$gl_cv_header_working_stdint_h" != yes; then
-
+  if test "$gl_cv_header_working_stdint_h" = yes; then
+    STDINT_H=
+  else
     dnl Check for <sys/inttypes.h>, and for
     dnl <sys/bitypes.h> (used in Linux libc4 >= 4.6.7 and libc5).
     AC_CHECK_HEADERS([sys/inttypes.h sys/bitypes.h])
