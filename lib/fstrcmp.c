@@ -64,6 +64,12 @@
 #define ELEMENT char
 #define EQUAL(x,y) ((x) == (y))
 #define OFFSET int
+#define EXTRA_CONTEXT_FIELDS \
+  /* The number of elements inserted or deleted. */ \
+  int xvec_edit_count; \
+  int yvec_edit_count;
+#define NOTE_DELETE(ctxt, xoff) ctxt->xvec_edit_count++
+#define NOTE_INSERT(ctxt, yoff) ctxt->yvec_edit_count++
 /* We don't need USE_HEURISTIC, since it is unlikely in typical uses of
    fstrcmp().  */
 
@@ -74,6 +80,9 @@
      OFFSET                  A signed integer type sufficient to hold the
                              difference between two indices. Usually
                              something like ssize_t.
+     EXTRA_CONTEXT_FIELDS    Declarations of fields for 'struct context'.
+     NOTE_DELETE(ctxt, xoff) Record the removal of the object xvec[xoff].
+     NOTE_INSERT(ctxt, yoff) Record the insertion of the object yvec[yoff].
      USE_HEURISTIC           (Optional) Define if you want to support the
                              heuristic for large vectors.  */
 
@@ -95,21 +104,13 @@
  */
 struct context
 {
-  /*
-   * Data on one input string being compared.
-   */
-  struct string_data
-  {
-    /* The string to be compared. */
-    const ELEMENT *data;
+  /* Vectors being compared. */
+  const ELEMENT *xvec;
+  const ELEMENT *yvec;
 
-    /* The length of the string to be compared. */
-    int data_length;
-
-    /* The number of elements inserted or deleted. */
-    int edit_count;
-  }
-  string[2];
+  /* The number of elements inserted or deleted. */
+  int xvec_edit_count;
+  int yvec_edit_count;
 
   /* Vector, indexed by diagonal, containing 1 + the X coordinate of the point
      furthest along the given diagonal in the forward search of the edit
@@ -182,8 +183,8 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 {
   OFFSET *const fd = ctxt->fdiag;	/* Give the compiler a chance. */
   OFFSET *const bd = ctxt->bdiag;	/* Additional help for the compiler. */
-  const ELEMENT *const xv = ctxt->string[0].data;	/* Still more help for the compiler. */
-  const ELEMENT *const yv = ctxt->string[1].data;	/* And more and more . . . */
+  const ELEMENT *const xv = ctxt->xvec;	/* Still more help for the compiler. */
+  const ELEMENT *const yv = ctxt->yvec;	/* And more and more . . . */
   const OFFSET dmin = xoff - ylim;	/* Minimum valid diagonal. */
   const OFFSET dmax = xlim - yoff;	/* Maximum valid diagonal. */
   const OFFSET fmid = xoff - yoff;	/* Center diagonal of top-down search. */
@@ -462,8 +463,8 @@ static void
 compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
 	    bool find_minimal, struct context *ctxt)
 {
-  const ELEMENT *const xv = ctxt->string[0].data;	/* Help the compiler.  */
-  const ELEMENT *const yv = ctxt->string[1].data;
+  const ELEMENT *const xv = ctxt->xvec;	/* Help the compiler.  */
+  const ELEMENT *const yv = ctxt->yvec;
 
   /* Slide down the bottom initial diagonal. */
   while (xoff < xlim && yoff < ylim && xv[xoff] == yv[yoff])
@@ -481,21 +482,17 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
 
   /* Handle simple cases. */
   if (xoff == xlim)
-    {
-      while (yoff < ylim)
-	{
-	  ctxt->string[1].edit_count++;
-	  ++yoff;
-	}
-    }
+    while (yoff < ylim)
+      {
+	NOTE_INSERT (ctxt, yoff);
+	yoff++;
+      }
   else if (yoff == ylim)
-    {
-      while (xoff < xlim)
-	{
-	  ctxt->string[0].edit_count++;
-	  ++xoff;
-	}
-    }
+    while (xoff < xlim)
+      {
+	NOTE_DELETE (ctxt, xoff);
+	xoff++;
+      }
   else
     {
       struct partition part;
@@ -553,6 +550,8 @@ double
 fstrcmp (const char *string1, const char *string2)
 {
   struct context ctxt;
+  int xvec_length;
+  int yvec_length;
   int i;
 
   size_t fdiag_len;
@@ -560,21 +559,21 @@ fstrcmp (const char *string1, const char *string2)
   size_t bufmax;
 
   /* set the info for each string.  */
-  ctxt.string[0].data = string1;
-  ctxt.string[0].data_length = strlen (string1);
-  ctxt.string[1].data = string2;
-  ctxt.string[1].data_length = strlen (string2);
+  ctxt.xvec = string1;
+  xvec_length = strlen (string1);
+  ctxt.yvec = string2;
+  yvec_length = strlen (string2);
 
   /* short-circuit obvious comparisons */
-  if (ctxt.string[0].data_length == 0 && ctxt.string[1].data_length == 0)
+  if (xvec_length == 0 && yvec_length == 0)
     return 1.0;
-  if (ctxt.string[0].data_length == 0 || ctxt.string[1].data_length == 0)
+  if (xvec_length == 0 || yvec_length == 0)
     return 0.0;
 
   /* Set TOO_EXPENSIVE to be approximate square root of input size,
      bounded below by 256.  */
   ctxt.too_expensive = 1;
-  for (i = ctxt.string[0].data_length + ctxt.string[1].data_length;
+  for (i = xvec_length + yvec_length;
        i != 0;
        i >>= 2)
     ctxt.too_expensive <<= 1;
@@ -582,7 +581,7 @@ fstrcmp (const char *string1, const char *string2)
     ctxt.too_expensive = 256;
 
   /* Allocate memory for fdiag and bdiag from a thread-local pool.  */
-  fdiag_len = ctxt.string[0].data_length + ctxt.string[1].data_length + 3;
+  fdiag_len = xvec_length + yvec_length + 3;
   gl_once (keys_init_once, keys_init);
   buffer = (int *) gl_tls_get (buffer_key);
   bufmax = (size_t) (uintptr_t) gl_tls_get (bufmax_key);
@@ -600,20 +599,20 @@ fstrcmp (const char *string1, const char *string2)
       gl_tls_set (buffer_key, buffer);
       gl_tls_set (bufmax_key, (void *) (uintptr_t) bufmax);
     }
-  ctxt.fdiag = buffer + ctxt.string[1].data_length + 1;
+  ctxt.fdiag = buffer + yvec_length + 1;
   ctxt.bdiag = ctxt.fdiag + fdiag_len;
 
   /* Now do the main comparison algorithm */
-  ctxt.string[0].edit_count = 0;
-  ctxt.string[1].edit_count = 0;
-  compareseq (0, ctxt.string[0].data_length, 0, ctxt.string[1].data_length, 0,
+  ctxt.xvec_edit_count = 0;
+  ctxt.yvec_edit_count = 0;
+  compareseq (0, xvec_length, 0, yvec_length, 0,
 	      &ctxt);
 
   /* The result is
 	((number of chars in common) / (average length of the strings)).
      This is admittedly biased towards finding that the strings are
      similar, however it does produce meaningful results.  */
-  return ((double) (ctxt.string[0].data_length + ctxt.string[1].data_length
-		    - ctxt.string[1].edit_count - ctxt.string[0].edit_count)
-	  / (ctxt.string[0].data_length + ctxt.string[1].data_length));
+  return ((double) (xvec_length + yvec_length
+		    - ctxt.yvec_edit_count - ctxt.xvec_edit_count)
+	  / (xvec_length + yvec_length));
 }

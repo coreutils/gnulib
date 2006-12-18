@@ -31,6 +31,9 @@
 #define ELEMENT lin
 #define EQUAL(x,y) ((x) == (y))
 #define OFFSET lin
+#define EXTRA_CONTEXT_FIELDS /* none */
+#define NOTE_DELETE(ctxt, xoff) files[0].changed[files[0].realindexes[xoff]] = 1
+#define NOTE_INSERT(ctxt, yoff) files[1].changed[files[1].realindexes[yoff]] = 1
 #define USE_HEURISTIC 1
 #include "diffseq.h"
 

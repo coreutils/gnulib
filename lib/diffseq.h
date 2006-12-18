@@ -18,7 +18,7 @@
 
 /* The basic idea is to consider two vectors as similar if, when
    transforming the first vector into the second vector through a
-   sequence of edits (inserts and deletes of one character each),
+   sequence of edits (inserts and deletes of one element each),
    this sequence is short - or equivalently, if the ordered list
    of elements that are untouched by these edits is long.  For a
    good introduction to the subject, read about the "Levenshtein
@@ -45,6 +45,9 @@
      OFFSET                  A signed integer type sufficient to hold the
                              difference between two indices. Usually
                              something like ssize_t.
+     EXTRA_CONTEXT_FIELDS    Declarations of fields for 'struct context'.
+     NOTE_DELETE(ctxt, xoff) Record the removal of the object xvec[xoff].
+     NOTE_INSERT(ctxt, yoff) Record the insertion of the object yvec[yoff].
      USE_HEURISTIC           (Optional) Define if you want to support the
                              heuristic for large vectors.  */
 
@@ -69,6 +72,9 @@ struct context
   /* Vectors being compared. */
   const ELEMENT *xvec;
   const ELEMENT *yvec;
+
+  /* Extra fields. */
+  EXTRA_CONTEXT_FIELDS
 
   /* Vector, indexed by diagonal, containing 1 + the X coordinate of the point
      furthest along the given diagonal in the forward search of the edit
@@ -440,10 +446,16 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
   /* Handle simple cases. */
   if (xoff == xlim)
     while (yoff < ylim)
-      files[1].changed[files[1].realindexes[yoff++]] = 1;
+      {
+	NOTE_INSERT (ctxt, yoff);
+	yoff++;
+      }
   else if (yoff == ylim)
     while (xoff < xlim)
-      files[0].changed[files[0].realindexes[xoff++]] = 1;
+      {
+	NOTE_DELETE (ctxt, xoff);
+	xoff++;
+      }
   else
     {
       struct partition part;
@@ -461,3 +473,6 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
 #undef EQUAL
 #undef OFFSET
 #undef OFFSET_MAX
+#undef EXTRA_CONTEXT_FIELDS
+#undef NOTE_DELETE
+#undef NOTE_INSERT
