@@ -50,7 +50,7 @@
 
 /* Maximum value of type OFFSET.  */
 #define OFFSET_MAX \
-  ((((OFFSET)1 << (sizeof (OFFSET_MAX) * CHAR_BIT - 2)) - 1) * 2 + 1)
+  ((((OFFSET)1 << (sizeof (OFFSET) * CHAR_BIT - 2)) - 1) * 2 + 1)
 
 /* Use this to suppress gcc's `...may be used before initialized' warnings. */
 #ifndef IF_LINT

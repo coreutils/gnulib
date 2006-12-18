@@ -382,9 +382,9 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
       if (c >= ctxt->too_expensive)
 	{
 	  OFFSET fxybest;
-	  OFFSET fxbest IF_LINT (= 0;
+	  OFFSET fxbest IF_LINT (= 0);
 	  OFFSET bxybest;
-	  OFFSET bxbest IF_LINT (= 0;
+	  OFFSET bxbest IF_LINT (= 0);
 
 	  /* Find forward diagonal that maximizes X + Y.  */
 	  fxybest = -1;
