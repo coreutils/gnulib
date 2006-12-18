@@ -1978,6 +1978,7 @@ func_all_modules ()
   func_module cycle-check
   func_module fsusage
   func_module dirfd
+  func_module double-slash-root
   func_module euidaccess
   func_module file-type
   func_module fileblocks

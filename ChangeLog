@@ -1,3 +1,18 @@
+2006-12-18  Paul Eggert  <eggert@cs.ucla.edu>
+	and Eric Blake  <ebb9@byu.net>
+
+	* lib/dirname.h (DOUBLE_SLASH_IS_DISTINCT_ROOT): Default to 0, not 1.
+	This is more consistent with the other defines here.
+	* m4/double-slash-root.m4 (gl_DOUBLE_SLASH_ROOT):
+	Port to z/OS.  Problem reported by Paul Gilmartin.
+	Change local vars to use gl_ prefix rather than ac_.
+	Don't define DOUBLE_SLASH_IS_DISTINCT_ROOT to 0, for consistency
+	with other defines.
+	* modules/double-slash-root: New module.
+	* modules/dirname (Files): Remove m4/double-slash-root.m4.
+	(Depends-on): Add double-slash-root.
+	* MODULES.html.sh (File system functions): Mention new module.
+
 2006-12-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/yesno.c [!ENABLE_NLS]: Don't include getline.h.

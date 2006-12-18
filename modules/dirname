@@ -6,11 +6,11 @@ lib/dirname.h
 lib/dirname.c
 lib/basename.c
 lib/stripslash.c
-m4/dos.m4
 m4/dirname.m4
-m4/double-slash-root.m4
+m4/dos.m4
 
 Depends-on:
+double-slash-root
 stdbool
 xalloc
 xstrndup
