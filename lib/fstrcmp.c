@@ -20,7 +20,7 @@
 
    The basic idea is to consider two vectors as similar if, when
    transforming the first vector into the second vector through a
-   sequence of edits (inserts and deletes of one character each),
+   sequence of edits (inserts and deletes of one element each),
    this sequence is short - or equivalently, if the ordered list
    of elements that are untouched by these edits is long.  For a
    good introduction to the subject, read about the "Levenshtein
