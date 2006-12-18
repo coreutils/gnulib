@@ -553,7 +553,7 @@ keys_init (void)
 }
 
 /* Ensure that keys_init is called once only.  */
-gl_once_define(static, keys_init_once);
+gl_once_define(static, keys_init_once)
 
 
 /* NAME
@@ -620,7 +620,7 @@ fstrcmp (const char *string1, const char *string2)
 	 to be preserved.  */
       if (buffer != NULL)
 	free (buffer);
-      buffer = (int *) xmalloc (bufmax * (2 * sizeof (int)));
+      buffer = (int *) xnmalloc (bufmax, 2 * sizeof (int));
       gl_tls_set (buffer_key, buffer);
       gl_tls_set (bufmax_key, (void *) (uintptr_t) bufmax);
     }
