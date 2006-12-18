@@ -168,10 +168,6 @@ struct partition
    Set PART->lo_minimal to true iff the minimal edit script for the
    left half of the partition is known; similarly for PART->hi_minimal.
 
-   Return the approximate edit cost; this is the total number of elements
-   inserted or deleted (counting only elements before the midpoint), unless
-   a heuristic is used to terminate the search prematurely.
-
    This function assumes that the first elements of the specified portions
    of the two vectors do not match, and likewise that the last elements do not
    match.  The caller must trim matching elements from the beginning and end
@@ -180,7 +176,7 @@ struct partition
    If we return the "wrong" partitions, the worst this can do is cause
    suboptimal diff output.  It cannot cause incorrect diff output.  */
 
-static OFFSET
+static void
 diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
       struct partition *part, struct context *ctxt)
 {
@@ -244,7 +240,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	      part->xmid = x;
 	      part->ymid = y;
 	      part->lo_minimal = part->hi_minimal = true;
-	      return 2 * c - 1;
+	      return;
 	    }
 	}
       /* Similarly extend the bottom-up search.  */
@@ -283,7 +279,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	      part->xmid = x;
 	      part->ymid = y;
 	      part->lo_minimal = part->hi_minimal = true;
-	      return 2 * c;
+	      return;
 	    }
 	}
 
@@ -336,7 +332,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	    {
 	      part->lo_minimal = true;
 	      part->hi_minimal = false;
-	      return 2 * c - 1;
+	      return;
 	    }
 
 	  best = 0;
@@ -372,7 +368,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	    {
 	      part->lo_minimal = false;
 	      part->hi_minimal = true;
-	      return 2 * c - 1;
+	      return;
 	    }
 	}
 #endif /* USE_HEURISTIC */
@@ -443,7 +439,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	      part->lo_minimal = false;
 	      part->hi_minimal = true;
 	    }
-	  return 2 * c - 1;
+	  return;
 	}
     }
 }
@@ -463,8 +459,8 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
    in the element for each line that is an insertion or deletion.  */
 
 static void
-compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
-	    struct context *ctxt)
+compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
+	    bool find_minimal, struct context *ctxt)
 {
   const ELEMENT *const xv = ctxt->string[0].data;	/* Help the compiler.  */
   const ELEMENT *const yv = ctxt->string[1].data;
@@ -502,34 +498,14 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minima
     }
   else
     {
-      OFFSET c;
       struct partition part;
 
       /* Find a point of correspondence in the middle of the vectors.  */
-      c = diag (xoff, xlim, yoff, ylim, find_minimal, &part, ctxt);
-      if (c == 1)
-	{
-#if 0
-	  /* This should be impossible, because it implies that one of
-	     the two subsequences is empty, and that case was handled
-	     above without calling `diag'.  Let's verify that this is
-	     true.  */
-	  abort ();
-#else
-	  /* The two subsequences differ by a single insert or delete;
-	     record it and we are done.  */
-	  if (part.xmid - part.ymid < xoff - yoff)
-	    ctxt->string[1].edit_count++;
-	  else
-	    ctxt->string[0].edit_count++;
-#endif
-	}
-      else
-	{
-	  /* Use the partitions to split this problem into subproblems.  */
-	  compareseq (xoff, part.xmid, yoff, part.ymid, part.lo_minimal, ctxt);
-	  compareseq (part.xmid, xlim, part.ymid, ylim, part.hi_minimal, ctxt);
-	}
+      diag (xoff, xlim, yoff, ylim, find_minimal, &part, ctxt);
+
+      /* Use the partitions to split this problem into subproblems.  */
+      compareseq (xoff, part.xmid, yoff, part.ymid, part.lo_minimal, ctxt);
+      compareseq (part.xmid, xlim, part.ymid, ylim, part.hi_minimal, ctxt);
     }
 }
 
