@@ -1,3 +1,7 @@
+2006-12-19  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* modules/savewd (Depends-on): Fix dependency on fcntl.
+
 2006-12-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/stdint.m4 (gl_STDINT_H): Set STDINT_H to empty if stdint.h

@@ -10,7 +10,7 @@ Depends-on:
 dirname
 exit
 fcntl-safer
-fcntl_h
+fcntl
 raise
 stdbool
 xalloc
