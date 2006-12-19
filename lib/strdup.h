@@ -1,5 +1,5 @@
 /* strdup.h -- duplicate a string
-   Copyright (C) 2004 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,9 +21,19 @@
 /* Get strdup declaration, if available.  */
 #include <string.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #if defined HAVE_DECL_STRDUP && !HAVE_DECL_STRDUP && !defined strdup
 /* Duplicate S, returning an identical malloc'd string.  */
 extern char *strdup (const char *s);
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* STRDUP_H_ */
