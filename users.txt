@@ -13,6 +13,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   gpg             http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/
   gsasl           http://josefsson.org/cgi-bin/viewcvs.cgi/gsasl/
   gss             http://josefsson.org/cgi-bin/viewcvs.cgi/gss/
+  gzip            http://cvs.sv.gnu.org/viewcvs/gzip/gzip/
   hello           http://cvs.sv.gnu.org/viewcvs/hello/hello/
   icoutils        http://riva.ucam.org/svn/cjwatson/src/debian/icoutils/trunk/icoutils/
   inetutils       http://cvs.sv.gnu.org/viewcvs/inetutils/inetutils/
