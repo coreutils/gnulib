@@ -1,3 +1,10 @@
+2006-12-22  Bruno Haible  <bruno@clisp.org>
+
+	* modules/no-c++: New file.
+	* m4/no-c++.m4: New file.
+	* MODULES.html.sh (Support for building libraries and executables):
+	Add no-c++.
+
 2006-12-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/mktime.m4 (AC_FUNC_MKTIME): Sync from Autoconf.
