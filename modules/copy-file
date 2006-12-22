@@ -10,6 +10,7 @@ Depends-on:
 error
 safe-read
 full-write
+acl
 binary-io
 exit
 gettext-h

@@ -39,6 +39,7 @@
 #include "error.h"
 #include "safe-read.h"
 #include "full-write.h"
+#include "acl.h"
 #include "binary-io.h"
 #include "exit.h"
 #include "gettext.h"
@@ -80,10 +81,12 @@ copy_file_preserving (const char *src_filename, const char *dest_filename)
 	error (EXIT_FAILURE, errno, _("error writing \"%s\""), dest_filename);
     }
 
+#if !USE_ACL
   if (close (dest_fd) < 0)
     error (EXIT_FAILURE, errno, _("error writing \"%s\""), dest_filename);
   if (close (src_fd) < 0)
     error (EXIT_FAILURE, errno, _("error after reading \"%s\""), src_filename);
+#endif
 
   /* Preserve the access and modification times.  */
 #if HAVE_UTIME
@@ -110,5 +113,17 @@ copy_file_preserving (const char *src_filename, const char *dest_filename)
 #endif
 
   /* Preserve the access permissions.  */
+#if USE_ACL
+  if (copy_acl (src_filename, src_fd, dest_filename, dest_fd, mode))
+    exit (EXIT_FAILURE);
+#else
   chmod (dest_filename, mode);
+#endif
+
+#if USE_ACL
+  if (close (dest_fd) < 0)
+    error (EXIT_FAILURE, errno, _("error writing \"%s\""), dest_filename);
+  if (close (src_fd) < 0)
+    error (EXIT_FAILURE, errno, _("error after reading \"%s\""), src_filename);
+#endif
 }

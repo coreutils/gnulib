@@ -1,5 +1,12 @@
 2006-12-22  Bruno Haible  <bruno@clisp.org>
 
+	* lib/copy-file.c: Include acl.h.
+	(copy_file_preserving) [USE_ACL]: Use copy_acl instead of chmod.
+	Close the file descriptors only after being done with copy_acl.
+	* modules/copy-file (Depends-on): Add acl.
+
+2006-12-22  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (SED): New variable.
 	Use $SED instead of sed everywhere.
 
