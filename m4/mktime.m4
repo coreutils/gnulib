@@ -1,4 +1,4 @@
-#serial 8
+#serial 9
 dnl Copyright (C) 2002, 2003, 2005, 2006 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,10 +6,10 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Jim Meyering.
 
-# Redefine AC_FUNC_MKTIME, to fix a bug in Autoconf 2.60a and earlier.
+# Redefine AC_FUNC_MKTIME, to fix a bug in Autoconf 2.61a and earlier.
 # This redefinition can be removed once a new version of Autoconf is assumed.
 # The redefinition is taken from
-# <http://cvs.sv.gnu.org/viewcvs/*checkout*/autoconf/lib/autoconf/functions.m4?rev=1.108&root=autoconf>.
+# <http://cvs.sv.gnu.org/viewcvs/*checkout*/autoconf/autoconf/lib/autoconf/functions.m4?rev=1.119>.
 # AC_FUNC_MKTIME
 # --------------
 AC_DEFUN([AC_FUNC_MKTIME],
@@ -30,6 +30,7 @@ AC_CACHE_CHECK([for working mktime], ac_cv_func_working_mktime,
 # endif
 #endif
 
+#include <limits.h>
 #include <stdlib.h>
 
 #ifdef HAVE_UNISTD_H
@@ -178,12 +179,15 @@ main ()
      isn't worth using anyway.  */
   alarm (60);
 
-  for (time_t_max = 1; 0 < time_t_max; time_t_max *= 2)
-    continue;
-  time_t_max--;
-  if ((time_t) -1 < 0)
-    for (time_t_min = -1; (time_t) (time_t_min * 2) < 0; time_t_min *= 2)
-      continue;
+  for (;;)
+    {
+      t = (time_t_max << 1) + 1;
+      if (t <= time_t_max)
+	break;
+      time_t_max = t;
+    }
+  time_t_min = - ((time_t) ~ (time_t) 0 == (time_t) -1) - time_t_max;
+
   delta = time_t_max / 997; /* a suitable prime number */
   for (i = 0; i < N_STRINGS; i++)
     {
@@ -198,10 +202,12 @@ main ()
 	     && mktime_test ((time_t) (60 * 60 * 24))))
 	return 1;
 
-      for (j = 1; 0 < j; j *= 2)
+      for (j = 1; ; j <<= 1)
 	if (! bigtime_test (j))
 	  return 1;
-      if (! bigtime_test (j - 1))
+	else if (INT_MAX / 2 < j)
+	  break;
+      if (! bigtime_test (INT_MAX))
 	return 1;
     }
   return ! (irix_6_4_bug () && spring_forward_gap () && year_2050_test ());
