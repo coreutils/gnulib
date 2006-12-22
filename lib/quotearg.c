@@ -62,14 +62,7 @@
 # define mbsinit(ps) 1
 #endif
 
-#ifndef iswprint
-# if HAVE_WCTYPE_H
-#  include <wctype.h>
-# endif
-# if !defined iswprint && !HAVE_ISWPRINT
-#  define iswprint(wc) 1
-# endif
-#endif
+#include <wctype.h>
 
 #ifndef SIZE_MAX
 # define SIZE_MAX ((size_t) -1)

@@ -1,3 +1,19 @@
+2006-12-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh: New module wctype.
+	* lib/wctype_.h, m4/wctype.m4, modules/wctype: New files.
+	* lib/fnmatch.c: Don't bother to include <wchar.h> before
+	<wctype.h>, since the new wctype module should fix this.
+	* lib/quotearg.c: Include <wctype.h> unconditionally, since
+	the wctype module should arrange for it.
+	* lib/regex_internal.h: Likewise.
+	* m4/quotearg.m4 (gl_QUOTEARG): Don't check for wctype.h or iswprint,
+	since the wctype module should handle this now.
+	* m4/regex.m4 (gl_PREREQ_REGEX): Don't check for wctype.h.
+	* modules/fnmatch (Depends-on): Add wctype.
+	* modules/quotearg (Depends-on): Likewise.
+	* modules/regex (Depends-on): Likewise.
+
 2006-12-19  Bruno Haible  <bruno@clisp.org>
 
 	* lib/strdup.h [C++]: Wrap definitions in extern "C".

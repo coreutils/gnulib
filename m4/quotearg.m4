@@ -9,8 +9,8 @@ AC_DEFUN([gl_QUOTEARG],
   AC_LIBOBJ([quotearg])
 
   dnl Prerequisites of lib/quotearg.c.
-  AC_CHECK_HEADERS_ONCE(wchar.h wctype.h)
-  AC_CHECK_FUNCS_ONCE(iswprint mbsinit)
+  AC_CHECK_HEADERS_ONCE([wchar.h])
+  AC_CHECK_FUNCS_ONCE([mbsinit])
   AC_TYPE_MBSTATE_T
   gl_FUNC_MBRTOWC
 ])

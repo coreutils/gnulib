@@ -19,6 +19,7 @@ malloc
 stdint
 strcase
 ssize_t
+wctype
 
 configure.ac:
 gl_REGEX

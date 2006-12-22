@@ -1,0 +1,36 @@
+Description:
+A <wctype.h> that conforms better to C99.
+
+Files:
+lib/wctype_.h
+m4/wctype.m4
+
+Depends-on:
+
+configure.ac:
+gl_WCTYPE_H
+
+Makefile.am:
+BUILT_SOURCES += $(WCTYPE_H)
+
+# We need the following in order to create <wctype.h> when the system
+# doesn't have one that works with the given compiler.
+wctype.h: wctype_.h
+	rm -f $@-t $@
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's/@''HAVE_WCTYPE_H''@/$(HAVE_WCTYPE_H)/g' \
+	      -e 's|@''ABSOLUTE_WCTYPE_H''@|$(ABSOLUTE_WCTYPE_H)|g' \
+	      -e 's/@''HAVE_WCTYPE_CTMP_BUG''@/$(HAVE_WCTYPE_CTMP_BUG)/g' \
+	      < $(srcdir)/wctype_.h; \
+	} > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += wctype.h wctype.h-t
+
+Include:
+#include <wctype.h>
+
+License:
+LGPL
+
+Maintainer:
+all

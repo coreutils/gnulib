@@ -193,7 +193,7 @@ AC_DEFUN([gl_PREREQ_REGEX],
   AC_REQUIRE([AC_GNU_SOURCE])
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([AM_LANGINFO_CODESET])
-  AC_CHECK_HEADERS_ONCE([wchar.h wctype.h])
+  AC_CHECK_HEADERS_ONCE([wchar.h])
   AC_CHECK_FUNCS_ONCE([iswctype mbrtowc mempcpy wcrtomb wcscoll])
   AC_CHECK_DECLS([isblank], [], [], [#include <ctype.h>])
 ])

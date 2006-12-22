@@ -12,6 +12,7 @@ Depends-on:
 xalloc
 gettext-h
 stdbool
+wctype
 
 configure.ac:
 gl_QUOTEARG

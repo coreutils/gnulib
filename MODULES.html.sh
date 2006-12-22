@@ -1814,6 +1814,16 @@ func_all_modules ()
   func_module strtoull
   func_end_table
 
+  element="Wide character classification and mapping utilities <wctype.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap isoc_sup_wctype
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module wctype
+  func_end_table
+
   element="Functions for greatest-width integer types <inttypes.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap isoc_sup_inttypes

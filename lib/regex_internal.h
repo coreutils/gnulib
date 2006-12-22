@@ -40,9 +40,7 @@
 #if defined HAVE_WCHAR_H || defined _LIBC
 # include <wchar.h>
 #endif /* HAVE_WCHAR_H || _LIBC */
-#if defined HAVE_WCTYPE_H || defined _LIBC
-# include <wctype.h>
-#endif /* HAVE_WCTYPE_H || _LIBC */
+#include <wctype.h>
 #include <stdint.h>
 #if defined _LIBC
 # include <bits/libc-lock.h>
