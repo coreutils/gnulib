@@ -18,13 +18,19 @@
 
 /* Written by Bruno Haible and Paul Eggert.  */
 
-/* iswctype, towctrans, towlower, towupper, wctrans, wctype,
-   wctrans_t, and wctype_t are not yet implemented.  */
+/*
+ * ISO C 99 <wctype.h> for platforms that lack it.
+ * <http://www.opengroup.org/susv3xbd/wctype.h.html>
+ *
+ * iswctype, towctrans, towlower, towupper, wctrans, wctype,
+ * wctrans_t, and wctype_t are not yet implemented.
+ */
 
 #ifndef _GL_WCTYPE_H
 #define _GL_WCTYPE_H
 
-/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+/* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.
+   Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
    <wchar.h>.
    BSD/OS 4.1 has a bug: <stdio.h> and <time.h> must be included before
    <wchar.h>.  */
@@ -32,10 +38,14 @@
 #include <time.h>
 #include <wchar.h>
 
+/* Include the original <wctype.h> if it exists.
+   BeOS 5 has the functions but no <wctype.h>.  */
 #if @HAVE_WCTYPE_H@
 # include @ABSOLUTE_WCTYPE_H@
 #endif
 
+/* IRIX 5.3 has a bug: its isw* macros reference an undefined variable
+   _ctmp_.  */
 #if @HAVE_WCTYPE_CTMP_BUG@
 static wint_t _ctmp_;
 #endif

@@ -27,6 +27,8 @@ AC_DEFUN([gl_WCTYPE_H],
   WCTYPE_H=wctype.h
   HAVE_WCTYPE_CTMP_BUG=0
   if test $ac_cv_header_wctype_h = yes; then
+    dnl IRIX 5.3 has a bug: its isw* macros reference an undefined variable
+    dnl _ctmp_. Test against this bug.
     AC_CACHE_CHECK([whether wctype macros need _ctmp_ declared],
       [gl_cv_wctype_ctmp_bug],
       [gl_cv_wctype_ctmp_bug=no
