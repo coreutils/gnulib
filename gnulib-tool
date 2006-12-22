@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-12-11 18:19:59 $'
+cvsdatestamp='$Date: 2006-12-22 12:49:38 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -70,6 +70,16 @@ fi
 # 'sort' and already in the PATH).
 if test -z "$SORT"; then
   SORT=sort
+fi
+
+# A sed program is needed. When using GNU sed, turn off a maximum of GNU
+# extensions, to minimize the risk of accidentally using non-portable features
+# of GNU sed.
+if test -z "$SED"; then
+  SED=sed
+fi
+if echo | $SED --posix d >/dev/null 2>&1; then
+  SED="$SED --posix"
 fi
 
 # func_usage
@@ -169,7 +179,7 @@ Report bugs to <bug-gnulib@gnu.org>."
 # outputs to stdout the --version message.
 func_version ()
 {
-  year=`echo "$last_checkin_date" | sed -e 's,/.*$,,'`
+  year=`echo "$last_checkin_date" | $SED -e 's,/.*$,,'`
   echo "\
 $progname (GNU $package) $version
 Copyright (C) $year Free Software Foundation, Inc.
@@ -269,7 +279,7 @@ else
   {
     # Use two sed invocations. A single sed -n -e 's,^.* -> \(.*\)$,\1,p'
     # would do the wrong thing if the link target contains " -> ".
-    LC_ALL=C ls -l "$1" | sed -e 's, -> ,#%%#,' | sed -n -e 's,^.*#%%#\(.*\)$,\1,p'
+    LC_ALL=C ls -l "$1" | $SED -e 's, -> ,#%%#,' | $SED -n -e 's,^.*#%%#\(.*\)$,\1,p'
   }
 fi
 
@@ -290,22 +300,22 @@ func_relativize ()
   sed_last='s,^.*/\([^/]*\)$,\1,'
   sed_butlast='s,/*[^/]*$,,'
   while test -n "$dir1"; do
-    first=`echo "$dir1" | sed -e "$sed_first"`
+    first=`echo "$dir1" | $SED -e "$sed_first"`
     if test "$first" != "."; then
       if test "$first" = ".."; then
-        dir2=`echo "$dir0" | sed -e "$sed_last"`/"$dir2"
-        dir0=`echo "$dir0" | sed -e "$sed_butlast"`
+        dir2=`echo "$dir0" | $SED -e "$sed_last"`/"$dir2"
+        dir0=`echo "$dir0" | $SED -e "$sed_butlast"`
       else
-        first2=`echo "$dir2" | sed -e "$sed_first"`
+        first2=`echo "$dir2" | $SED -e "$sed_first"`
         if test "$first2" = "$first"; then
-          dir2=`echo "$dir2" | sed -e "$sed_rest"`
+          dir2=`echo "$dir2" | $SED -e "$sed_rest"`
         else
           dir2="../$dir2"
         fi
         dir0="$dir0"/"$first"
       fi
     fi
-    dir1=`echo "$dir1" | sed -e "$sed_rest"`
+    dir1=`echo "$dir1" | $SED -e "$sed_rest"`
   done
   reldir="$dir2"
 }
@@ -326,18 +336,18 @@ func_relconcat ()
   sed_last='s,^.*/\([^/]*\)$,\1,'
   sed_butlast='s,/*[^/]*$,,'
   while true; do
-    first=`echo "$dir2" | sed -e "$sed_first"`
+    first=`echo "$dir2" | $SED -e "$sed_first"`
     if test "$first" = "."; then
-      dir2=`echo "$dir2" | sed -e "$sed_rest"`
+      dir2=`echo "$dir2" | $SED -e "$sed_rest"`
       if test -z "$dir2"; then
         relconcat="$dir1"
         break
       fi
     else
-      last=`echo "$dir1" | sed -e "$sed_last"`
+      last=`echo "$dir1" | $SED -e "$sed_last"`
       while test "$last" = "."; do
-        dir1=`echo "$dir1" | sed -e "$sed_butlast"`
-        last=`echo "$dir1" | sed -e "$sed_last"`
+        dir1=`echo "$dir1" | $SED -e "$sed_butlast"`
+        last=`echo "$dir1" | $SED -e "$sed_last"`
       done
       if test -z "$dir1"; then
         relconcat="$dir2"
@@ -348,8 +358,8 @@ func_relconcat ()
           relconcat="$dir1/$dir2"
           break
         fi
-        dir1=`echo "$dir1" | sed -e "$sed_butlast"`
-        dir2=`echo "$dir2" | sed -e "$sed_rest"`
+        dir1=`echo "$dir1" | $SED -e "$sed_butlast"`
+        dir2=`echo "$dir2" | $SED -e "$sed_rest"`
         if test -z "$dir1"; then
           relconcat="$dir2"
           break
@@ -379,7 +389,7 @@ func_ln ()
         /*)
           ln -s "`pwd`/$1" "$2" ;;
         *) # DEST is relative too.
-          ln_destdir=`echo "$2" | sed -e 's,[^/]*$,,'`
+          ln_destdir=`echo "$2" | $SED -e 's,[^/]*$,,'`
           test -n "$ln_destdir" || ln_destdir="."
           func_relativize "$ln_destdir" "$1"
           ln -s "$reldir" "$2"
@@ -476,7 +486,7 @@ func_ln_if_changed ()
         mode=megatest
         shift ;;
       --extract-* )
-        mode=`echo "X$1" | sed -e 's/^X--//'`
+        mode=`echo "X$1" | $SED -e 's/^X--//'`
         shift ;;
       --dir )
         shift
@@ -486,7 +496,7 @@ func_ln_if_changed ()
         destdir=$1
         shift ;;
       --dir=* )
-        destdir=`echo "X$1" | sed -e 's/^X--dir=//'`
+        destdir=`echo "X$1" | $SED -e 's/^X--dir=//'`
         shift ;;
       --local-dir )
         shift
@@ -496,7 +506,7 @@ func_ln_if_changed ()
         local_gnulib_dir=$1
         shift ;;
       --local-dir=* )
-        local_gnulib_dir=`echo "X$1" | sed -e 's/^X--local-dir=//'`
+        local_gnulib_dir=`echo "X$1" | $SED -e 's/^X--local-dir=//'`
         shift ;;
       --lib )
         shift
@@ -507,7 +517,7 @@ func_ln_if_changed ()
         supplied_libname=true
         shift ;;
       --lib=* )
-        libname=`echo "X$1" | sed -e 's/^X--lib=//'`
+        libname=`echo "X$1" | $SED -e 's/^X--lib=//'`
         supplied_libname=true
         shift ;;
       --source-base )
@@ -518,7 +528,7 @@ func_ln_if_changed ()
         sourcebase=$1
         shift ;;
       --source-base=* )
-        sourcebase=`echo "X$1" | sed -e 's/^X--source-base=//'`
+        sourcebase=`echo "X$1" | $SED -e 's/^X--source-base=//'`
         shift ;;
       --m4-base )
         shift
@@ -528,7 +538,7 @@ func_ln_if_changed ()
         m4base=$1
         shift ;;
       --m4-base=* )
-        m4base=`echo "X$1" | sed -e 's/^X--m4-base=//'`
+        m4base=`echo "X$1" | $SED -e 's/^X--m4-base=//'`
         shift ;;
       --doc-base )
         shift
@@ -538,7 +548,7 @@ func_ln_if_changed ()
         docbase=$1
         shift ;;
       --doc-base=* )
-        docbase=`echo "X$1" | sed -e 's/^X--doc-base=//'`
+        docbase=`echo "X$1" | $SED -e 's/^X--doc-base=//'`
         shift ;;
       --tests-base )
         shift
@@ -548,7 +558,7 @@ func_ln_if_changed ()
         testsbase=$1
         shift ;;
       --tests-base=* )
-        testsbase=`echo "X$1" | sed -e 's/^X--tests-base=//'`
+        testsbase=`echo "X$1" | $SED -e 's/^X--tests-base=//'`
         shift ;;
       --aux-dir )
         shift
@@ -558,7 +568,7 @@ func_ln_if_changed ()
         auxdir=$1
         shift ;;
       --aux-dir=* )
-        auxdir=`echo "X$1" | sed -e 's/^X--aux-dir=//'`
+        auxdir=`echo "X$1" | $SED -e 's/^X--aux-dir=//'`
         shift ;;
       --with-tests )
         inctests=true
@@ -571,7 +581,7 @@ func_ln_if_changed ()
         func_append avoidlist " $1"
         shift ;;
       --avoid=* )
-        arg=`echo "X$1" | sed -e 's/^X--avoid=//'`
+        arg=`echo "X$1" | $SED -e 's/^X--avoid=//'`
         func_append avoidlist " $arg"
         shift ;;
       --lgpl )
@@ -585,7 +595,7 @@ func_ln_if_changed ()
         makefile_name="$1"
         shift ;;
       --makefile-name=* )
-        makefile_name=`echo "X$1" | sed -e 's/^X--makefile-name=//'`
+        makefile_name=`echo "X$1" | $SED -e 's/^X--makefile-name=//'`
         shift ;;
       --libtool )
         libtool=true
@@ -601,7 +611,7 @@ func_ln_if_changed ()
         macro_prefix="$1"
         shift ;;
       --macro-prefix=* )
-        macro_prefix=`echo "X$1" | sed -e 's/^X--macro-prefix=//'`
+        macro_prefix=`echo "X$1" | $SED -e 's/^X--macro-prefix=//'`
         shift ;;
       --no-changelog | --no-changelo | --no-changel | --no-change | --no-chang | --no-chan | --no-cha | --no-ch | --no-c )
         do_changelog=false
@@ -692,7 +702,7 @@ func_ln_if_changed ()
       /AC_PREREQ/ {
         s,^.*AC_PREREQ([[ ]*\([^])]*\).*$,prereqs="$prereqs \1",p
       }'
-    eval `sed -n -e "$my_sed_traces" < "$configure_ac"`
+    eval `$SED -n -e "$my_sed_traces" < "$configure_ac"`
     if test -n "$prereqs"; then
       autoconf_minversion=`for version in $prereqs; do echo $version; done | $SORT -g -u | tail -1`
     fi
@@ -709,29 +719,29 @@ func_ln_if_changed ()
   # m4base (to avoid an error in func_import) and optional for the others.
   sed_trimtrailingslashes='s,\([^/]\)//*$,\1,'
   case "$local_gnulib_dir" in
-    */ ) local_gnulib_dir=`echo "$local_gnulib_dir" | sed -e "$sed_trimtrailingslashes"` ;;
+    */ ) local_gnulib_dir=`echo "$local_gnulib_dir" | $SED -e "$sed_trimtrailingslashes"` ;;
   esac
   case "$sourcebase" in
-    */ ) sourcebase=`echo "$sourcebase" | sed -e "$sed_trimtrailingslashes"` ;;
+    */ ) sourcebase=`echo "$sourcebase" | $SED -e "$sed_trimtrailingslashes"` ;;
   esac
   case "$m4base" in
-    */ ) m4base=`echo "$m4base" | sed -e "$sed_trimtrailingslashes"` ;;
+    */ ) m4base=`echo "$m4base" | $SED -e "$sed_trimtrailingslashes"` ;;
   esac
   case "$docbase" in
-    */ ) docbase=`echo "$docbase" | sed -e "$sed_trimtrailingslashes"` ;;
+    */ ) docbase=`echo "$docbase" | $SED -e "$sed_trimtrailingslashes"` ;;
   esac
   case "$testsbase" in
-    */ ) testsbase=`echo "$testsbase" | sed -e "$sed_trimtrailingslashes"` ;;
+    */ ) testsbase=`echo "$testsbase" | $SED -e "$sed_trimtrailingslashes"` ;;
   esac
   case "$auxdir" in
-    */ ) auxdir=`echo "$auxdir" | sed -e "$sed_trimtrailingslashes"` ;;
+    */ ) auxdir=`echo "$auxdir" | $SED -e "$sed_trimtrailingslashes"` ;;
   esac
 }
 
 case "$0" in
   /*) self_abspathname="$0" ;;
   */*) self_abspathname=`pwd`/"$0" ;;
-  *) for d in `echo ":$PATH:" | sed -e 's/:::*/:.:/g' | sed -e 's/:/ /g'`; do
+  *) for d in `echo ":$PATH:" | $SED -e 's/:::*/:.:/g' | $SED -e 's/:/ /g'`; do
        if test -x "$d/$0" && test ! -d "$d/$0"; then
          self_abspathname="$d/$0"
          break
@@ -748,10 +758,10 @@ while test -h "$self_abspathname"; do
   test -n "$linkval" || break
   case "$linkval" in
     /* ) self_abspathname="$linkval" ;;
-    * ) self_abspathname=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`/"$linkval" ;;
+    * ) self_abspathname=`echo "$self_abspathname" | $SED -e 's,/[^/]*$,,'`/"$linkval" ;;
   esac
 done
-gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
+gnulib_dir=`echo "$self_abspathname" | $SED -e 's,/[^/]*$,,'`
 
 func_tmpdir
 trap 'exit_status=$?
@@ -782,7 +792,7 @@ func_lookup_file ()
   else
     if test -f "$gnulib_dir/$lkfile"; then
       if test -n "$local_gnulib_dir" && test -f "$local_gnulib_dir/$lkfile.diff"; then
-        lkbase=`echo "$lkfile" | sed -e 's,^.*/,,'`
+        lkbase=`echo "$lkfile" | $SED -e 's,^.*/,,'`
         rm -f "$tmp/$lkbase"
         cp "$gnulib_dir/$lkfile" "$tmp/$lkbase"
         patch -s "$tmp/$lkbase" < "$local_gnulib_dir/$lkfile.diff" \
@@ -810,11 +820,11 @@ func_all_modules ()
   {
     (cd "$gnulib_dir/modules" && ls -1)
     if test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules"; then
-      (cd "$local_gnulib_dir/modules" && ls -1 | sed -e 's,\.diff$,,')
+      (cd "$local_gnulib_dir/modules" && ls -1 | $SED -e 's,\.diff$,,')
     fi
   } \
-      | sed -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^COPYING$/d' -e '/^README$/d' -e '/^TEMPLATE$/d' -e '/^TEMPLATE-TESTS$/d' -e '/~$/d' \
-      | sed -e '/-tests$/d' \
+      | $SED -e '/^CVS$/d' -e '/^ChangeLog$/d' -e '/^COPYING$/d' -e '/^README$/d' -e '/^TEMPLATE$/d' -e '/^TEMPLATE-TESTS$/d' -e '/~$/d' \
+      | $SED -e '/-tests$/d' \
       | LC_ALL=C sort -u
 }
 
@@ -892,7 +902,7 @@ sed_extract_prog=':[	 ]*$/ {
 func_get_description ()
 {
   func_lookup_file "modules/$1"
-  sed -n -e "/^Description$sed_extract_prog" < "$lookedup_file"
+  $SED -n -e "/^Description$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_filelist module
@@ -901,7 +911,7 @@ func_get_description ()
 func_get_filelist ()
 {
   func_lookup_file "modules/$1"
-  sed -n -e "/^Files$sed_extract_prog" < "$lookedup_file"
+  $SED -n -e "/^Files$sed_extract_prog" < "$lookedup_file"
   case "$autoconf_minversion" in
     2.59)
       #echo m4/onceonly.m4
@@ -916,10 +926,10 @@ func_get_filelist ()
 func_get_dependencies ()
 {
   # ${module}-tests always implicitly depends on ${module}.
-  echo "$1" | sed -n -e 's/-tests//p'
+  echo "$1" | $SED -n -e 's/-tests//p'
   # Then the explicit dependencies listed in the module description.
   func_lookup_file "modules/$1"
-  sed -n -e "/^Depends-on$sed_extract_prog" < "$lookedup_file"
+  $SED -n -e "/^Depends-on$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_autoconf_snippet module
@@ -928,7 +938,7 @@ func_get_dependencies ()
 func_get_autoconf_snippet ()
 {
   func_lookup_file "modules/$1"
-  sed -n -e "/^configure\.ac$sed_extract_prog" < "$lookedup_file"
+  $SED -n -e "/^configure\.ac$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_automake_snippet module
@@ -937,7 +947,7 @@ func_get_autoconf_snippet ()
 func_get_automake_snippet ()
 {
   func_lookup_file "modules/$1"
-  sed -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file"
+  $SED -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file"
   case "$1" in
     *-tests)
       # *-tests module live in tests/, not lib/.
@@ -953,15 +963,15 @@ func_get_automake_snippet ()
       }'
       sed_extract_mentioned_files='s/^lib_SOURCES[ 	]*+=[ 	]*//p'
       already_mentioned_files=` \
-        sed -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file" \
-        | sed -e "$sed_combine_lines" \
-        | sed -n -e "$sed_extract_mentioned_files" | sed -e 's/#.*//'`
+        $SED -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file" \
+        | $SED -e "$sed_combine_lines" \
+        | $SED -n -e "$sed_extract_mentioned_files" | $SED -e 's/#.*//'`
       all_files=`func_get_filelist $1`
       lib_files=`for f in $all_files; do \
                    case $f in \
                      lib/*) echo $f ;; \
                    esac; \
-                 done | sed -e 's,^lib/,,'`
+                 done | $SED -e 's,^lib/,,'`
       # Remove $already_mentioned_files from $lib_files.
       echo "$lib_files" | LC_ALL=C sort -u > "$tmp"/lib-files
       extra_files=`for f in $already_mentioned_files; do echo $f; done \
@@ -982,7 +992,7 @@ func_get_automake_snippet ()
       # a .c file is preprocessed into another .c file for BUILT_SOURCES -,
       # automake will generate a useless dependency; this is harmless.
       sed_extract_c_files='/\.c$/p'
-      extra_files=`echo "$extra_files" | sed -n -e "$sed_extract_c_files"`
+      extra_files=`echo "$extra_files" | $SED -n -e "$sed_extract_c_files"`
       if test -n "$extra_files"; then
         echo "EXTRA_lib_SOURCES +=" $extra_files
         echo
@@ -997,8 +1007,8 @@ func_get_automake_snippet ()
 func_get_include_directive ()
 {
   func_lookup_file "modules/$1"
-  sed -n -e "/^Include$sed_extract_prog" < "$lookedup_file" | \
-  sed -e 's/^\(["<]\)/#include \1/'
+  $SED -n -e "/^Include$sed_extract_prog" < "$lookedup_file" | \
+  $SED -e 's/^\(["<]\)/#include \1/'
 }
 
 # func_get_license module
@@ -1007,7 +1017,7 @@ func_get_include_directive ()
 func_get_license ()
 {
   func_lookup_file "modules/$1"
-  sed -n -e "/^License$sed_extract_prog" < "$lookedup_file"
+  $SED -n -e "/^License$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_maintainer module
@@ -1016,7 +1026,7 @@ func_get_license ()
 func_get_maintainer ()
 {
   func_lookup_file "modules/$1"
-  sed -n -e "/^Maintainer$sed_extract_prog" < "$lookedup_file"
+  $SED -n -e "/^Maintainer$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_tests_module module
@@ -1118,7 +1128,7 @@ ba
     func_verify_nontests_module
     if test -n "$module"; then
       # Extract the value of "lib_SOURCES += ...".
-      for file in `func_get_automake_snippet "$module" | sed -e "$sed_remove_backslash_newline" | sed -n -e 's,^lib_SOURCES[	 ]*+=\([^#]*\).*$,\1,p'`; do
+      for file in `func_get_automake_snippet "$module" | $SED -e "$sed_remove_backslash_newline" | $SED -n -e 's,^lib_SOURCES[	 ]*+=\([^#]*\).*$,\1,p'`; do
         # Ignore .h files since they are not compiled.
         case "$file" in
           *.h) ;;
@@ -1197,12 +1207,12 @@ func_emit_lib_Makefile_am ()
       if test -n "$module"; then
         {
           func_get_automake_snippet "$module" |
-            sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
-                -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' |
-            sed -e "$sed_eliminate_LDFLAGS" |
-            sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' |
-            sed -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
-                -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g'
+            $SED -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
+                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' |
+            $SED -e "$sed_eliminate_LDFLAGS" |
+            $SED -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' |
+            $SED -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
+                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g'
           if test "$module" = 'alloca'; then
             echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"
             echo "${libname}_${libext}_DEPENDENCIES += @${perhapsLT}ALLOCA@"
@@ -1279,7 +1289,7 @@ func_emit_lib_Makefile_am ()
   fi
   echo
   cat allsnippets.tmp \
-    | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
+    | $SED -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
   echo
   echo "mostlyclean-local: mostlyclean-generic"
   echo "	@for dir in '' \$(MOSTLYCLEANDIRS); do \\"
@@ -1315,7 +1325,7 @@ func_emit_tests_Makefile_am ()
     libext=a
     sed_eliminate_LDFLAGS='/^lib_LDFLAGS[	 ]*+=/d'
   fi
-  testsbase_inverse=`echo "$testsbase" | sed -e 's,/$,,' | sed -e 's,[^/][^/]*,..,g'`
+  testsbase_inverse=`echo "$testsbase" | $SED -e 's,/$,,' | $SED -e 's,[^/][^/]*,..,g'`
   echo "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
   echo "## Process this file with automake to produce Makefile.in."
   func_emit_copyright_notice
@@ -1331,12 +1341,12 @@ func_emit_tests_Makefile_am ()
       if test -n "$module"; then
         {
           func_get_automake_snippet "$module" |
-            sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
-                -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' |
-            sed -e "$sed_eliminate_LDFLAGS" |
-            sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' |
-            sed -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
-                -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g'
+            $SED -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
+                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' |
+            $SED -e "$sed_eliminate_LDFLAGS" |
+            $SED -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' |
+            $SED -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
+                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g'
         } > amsnippet.tmp
         # Skip the contents if its entirely empty.
         if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
@@ -1429,7 +1439,7 @@ func_emit_initmacro_end ()
   echo "    if test -n \"\$${macro_prefix}_LIBOBJS\"; then"
   echo "      # Remove the extension."
   echo "      sed_drop_objext='s/\\.o\$//;s/\\.obj\$//'"
-  echo "      for i in \`for i in \$${macro_prefix}_LIBOBJS; do echo \"\$i\"; done | sed \"\$sed_drop_objext\" | sort | uniq\`; do"
+  echo "      for i in \`for i in \$${macro_prefix}_LIBOBJS; do echo \"\$i\"; done | $SED \"\$sed_drop_objext\" | sort | uniq\`; do"
   echo "        ${macro_prefix}_libobjs=\"\$${macro_prefix}_libobjs \$i.\$ac_objext\""
   echo "        ${macro_prefix}_ltlibobjs=\"\$${macro_prefix}_ltlibobjs \$i.lo\""
   echo "      done"
@@ -1542,7 +1552,7 @@ func_import ()
       /gl_MACRO_PREFIX(/ {
         s,^.*gl_MACRO_PREFIX([[ ]*\([^])]*\).*$,cached_macro_prefix="\1",p
       }'
-    eval `sed -n -e "$my_sed_traces" < "$destdir"/$m4base/gnulib-cache.m4`
+    eval `$SED -n -e "$my_sed_traces" < "$destdir"/$m4base/gnulib-cache.m4`
     if test -f "$destdir"/$m4base/gnulib-comp.m4; then
       my_sed_traces='
         s,#.*$,,
@@ -1561,7 +1571,7 @@ func_import ()
           :b
           p
         }'
-      eval `sed -n -e "$my_sed_traces" < "$destdir"/$m4base/gnulib-comp.m4`
+      eval `$SED -n -e "$my_sed_traces" < "$destdir"/$m4base/gnulib-comp.m4`
     fi
   fi
 
@@ -1653,7 +1663,7 @@ func_import ()
   modules="$specified_modules"
   func_modules_transitive_closure
   echo "Module list with included dependencies:"
-  echo "$modules" | sed -e 's/^/  /'
+  echo "$modules" | $SED -e 's/^/  /'
 
   # Add the dummy module if needed.
   func_modules_add_dummy
@@ -1692,7 +1702,7 @@ func_import ()
   # Determine final file list.
   func_modules_to_filelist
   echo "File list:"
-  echo "$files" | sed -e 's/^/  /'
+  echo "$files" | $SED -e 's/^/  /'
 
   test -n "$files" \
     || func_fatal_error "refusing to do nothing"
@@ -1720,7 +1730,7 @@ func_import ()
   # Create directories.
   { echo "$sourcebase"
     echo "$m4base"
-    docfiles=`echo "$files" | sed -n -e 's,^doc/,,p'`
+    docfiles=`echo "$files" | $SED -n -e 's,^doc/,,p'`
     if test -n "$docfiles"; then
       echo "$docbase"
     fi
@@ -1729,8 +1739,8 @@ func_import ()
     fi
     echo "$auxdir"
     for f in $files; do echo $f; done \
-      | sed -e "$sed_rewrite_new_files" \
-      | sed -n -e 's,^\(.*\)/[^/]*,\1,p' \
+      | $SED -e "$sed_rewrite_new_files" \
+      | $SED -n -e 's,^\(.*\)/[^/]*,\1,p' \
       | LC_ALL=C sort -u
   } > "$tmp"/dirs
   { # Rearrange file descriptors. Needed because "while ... done < ..."
@@ -1771,18 +1781,18 @@ func_import ()
   # Construct a table with 2 columns: rewritten-file-name original-file-name,
   # representing the files according to the last gnulib-tool invocation.
   for f in $old_files; do echo $f; done \
-    | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_old_files" \
+    | $SED -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_old_files" \
     | LC_ALL=C sort \
     > "$tmp"/old-files
   # Construct a table with 2 columns: rewritten-file-name original-file-name,
   # representing the files after this gnulib-tool invocation.
   for f in $new_files; do echo $f; done \
-    | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" \
+    | $SED -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" \
     | LC_ALL=C sort \
     > "$tmp"/new-files
   # First the files that are in old-files, but not in new-files:
   sed_take_first_column='s,'"$delimiter"'.*,,'
-  for g in `LC_ALL=C join -t"$delimiter" -v1 "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_first_column"`; do
+  for g in `LC_ALL=C join -t"$delimiter" -v1 "$tmp"/old-files "$tmp"/new-files | $SED -e "$sed_take_first_column"`; do
     # Remove the file. Do nothing if the user already removed it.
     if test -f "$destdir/$g"; then
       if $doit; then
@@ -1806,7 +1816,7 @@ func_import ()
     if test -n "$sed_transform_lib_file"; then
       case "$f" in
         lib/*)
-          sed -e "$sed_transform_lib_file" \
+          $SED -e "$sed_transform_lib_file" \
             < "$lookedup_file" > "$tmpfile" || func_fatal_error "failed"
           ;;
       esac
@@ -1866,8 +1876,8 @@ func_import ()
   sed_take_last_column='s,^.*'"$delimiter"',,'
   already_present=
   LC_ALL=C join -t"$delimiter" -v2 "$tmp"/old-files "$tmp"/new-files \
-    | sed -e "$sed_take_last_column" \
-    | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/added-files
+    | $SED -e "$sed_take_last_column" \
+    | $SED -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/added-files
   { # Rearrange file descriptors. Needed because "while ... done < ..."
     # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
     exec 5<&0 < "$tmp"/added-files
@@ -1879,8 +1889,8 @@ func_import ()
   # Then the files that are in new-files and in old-files:
   already_present=true
   LC_ALL=C join -t"$delimiter" "$tmp"/old-files "$tmp"/new-files \
-    | sed -e "$sed_take_last_column" \
-    | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/kept-files
+    | $SED -e "$sed_take_last_column" \
+    | $SED -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_new_files" > "$tmp"/kept-files
   { # Rearrange file descriptors. Needed because "while ... done < ..."
     # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
     exec 5<&0 < "$tmp"/kept-files
@@ -2081,7 +2091,7 @@ func_import ()
           s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
           ba
         }'
-      sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
+      sed_replace_build_aux=`echo "$sed_replace_build_aux" | $SED -e 1d -e 's/^ *//'`
     else
       sed_replace_build_aux=
     fi
@@ -2089,12 +2099,12 @@ func_import ()
       func_verify_module
       if test -n "$module"; then
         func_get_autoconf_snippet "$module" \
-          | sed -e '/^$/d;' -e 's/^/  /' \
-                -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./' \
-                -e "$sed_replace_build_aux"
+          | $SED -e '/^$/d;' -e 's/^/  /' \
+                 -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./' \
+                 -e "$sed_replace_build_aux"
         if test "$module" = 'alloca' && test "$libtool" = true; then
           echo 'changequote(,)dnl'
-          echo 'LTALLOCA=`echo "$ALLOCA" | sed '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
+          echo 'LTALLOCA=`echo "$ALLOCA" | $SED '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
           echo 'changequote([, ])dnl'
           echo 'AC_SUBST([LTALLOCA])'
         fi
@@ -2116,7 +2126,7 @@ func_import ()
     echo "# This macro records the list of files which have been installed by"
     echo "# gnulib-tool and may be removed by future gnulib-tool invocations."
     echo "AC_DEFUN([${macro_prefix}_FILE_LIST], ["
-    echo "$files" | sed -e 's,^,  ,'
+    echo "$files" | $SED -e 's,^,  ,'
     echo "])"
   ) > "$tmpfile"
   if test -f "$destdir"/$m4base/gnulib-comp.m4; then
@@ -2205,7 +2215,7 @@ func_import ()
    LC_ALL=C sort -u "$tmp"/include-angles
    LC_ALL=C sort -u "$tmp"/include-quotes
    cat "$tmp"/include-if
-  ) | sed -e '/^$/d' -e 's/^/  /'
+  ) | $SED -e '/^$/d' -e 's/^/  /'
   rm -f "$tmp"/include-angles "$tmp"/include-quotes "$tmp"/include-if
 
   echo
@@ -2223,13 +2233,13 @@ func_import ()
     fi
   fi
   if test "$makefile_am" = Makefile.am; then
-    sourcebase_dir=`echo "$sourcebase" | sed -n -e 's,/[^/]*$,/,p'`
+    sourcebase_dir=`echo "$sourcebase" | $SED -n -e 's,/[^/]*$,/,p'`
     sourcebase_base=`basename "$sourcebase"`
     echo "  - mention \"${sourcebase_base}\" in SUBDIRS in ${sourcebase_dir}Makefile.am,"
   fi
   if test -n "$inctests"; then
     if test "$makefile_am" = Makefile.am; then
-      testsbase_dir=`echo "$testsbase" | sed -n -e 's,/[^/]*$,/,p'`
+      testsbase_dir=`echo "$testsbase" | $SED -n -e 's,/[^/]*$,/,p'`
       testsbase_base=`basename "$testsbase"`
       echo "  - mention \"${testsbase_base}\" in SUBDIRS in ${testsbase_dir}Makefile.am,"
     fi
@@ -2291,7 +2301,7 @@ func_create_testdir ()
   # Determine final module list.
   func_modules_transitive_closure
   echo "Module list with included dependencies:"
-  echo "$modules" | sed -e 's/^/  /'
+  echo "$modules" | $SED -e 's/^/  /'
 
   # Add the dummy module if needed.
   func_modules_add_dummy
@@ -2299,7 +2309,7 @@ func_create_testdir ()
   # Determine final file list.
   func_modules_to_filelist
   echo "File list:"
-  echo "$files" | sed -e 's/^/  /'
+  echo "$files" | $SED -e 's/^/  /'
 
   sed_rewrite_files="\
     s,^build-aux/,$auxdir/,
@@ -2310,8 +2320,8 @@ func_create_testdir ()
 
   # Create directories.
   for f in $files; do echo $f; done \
-    | sed -e "$sed_rewrite_files" \
-    | sed -n -e 's,^\(.*\)/[^/]*,\1,p' \
+    | $SED -e "$sed_rewrite_files" \
+    | $SED -n -e 's,^\(.*\)/[^/]*,\1,p' \
     | LC_ALL=C sort -u \
     > "$tmp"/dirs
   { # Rearrange file descriptors. Needed because "while ... done < ..."
@@ -2326,7 +2336,7 @@ func_create_testdir ()
   # Copy files or make symbolic links.
   delimiter='	'
   for f in $files; do echo $f; done \
-    | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_files" \
+    | $SED -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_files" \
     | LC_ALL=C sort \
     > "$tmp"/files
   { # Rearrange file descriptors. Needed because "while ... done < ..."
@@ -2362,7 +2372,7 @@ func_create_testdir ()
    for f in $files; do
      case "$f" in
        m4/* )
-         echo "EXTRA_DIST += "`echo "$f" | sed -e 's,^m4/,,'` ;;
+         echo "EXTRA_DIST += "`echo "$f" | $SED -e 's,^m4/,,'` ;;
      esac
    done
   ) > "$testdir/$m4base/Makefile.am"
@@ -2429,10 +2439,10 @@ func_create_testdir ()
      sed_replace_build_aux='
        :a
        /AC_CONFIG_FILES(.*:build-aux\/.*)/{
-	 s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:../'"$auxdir"'/\2)|
-	 ba
+         s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:../'"$auxdir"'/\2)|
+         ba
        }'
-     sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
+     sed_replace_build_aux=`echo "$sed_replace_build_aux" | $SED -e 1d -e 's/^ *//'`
      # We don't have explicit ordering constraints between the various
      # autoconf snippets. It's cleanest to put those of the library before
      # those of the tests.
@@ -2441,7 +2451,7 @@ func_create_testdir ()
        func_verify_nontests_module
        if test -n "$module"; then
          func_get_autoconf_snippet "$module" \
-           | sed -e "$sed_replace_build_aux"
+           | $SED -e "$sed_replace_build_aux"
        fi
      done
      echo "gl_source_base='.'"
@@ -2449,7 +2459,7 @@ func_create_testdir ()
        func_verify_tests_module
        if test -n "$module"; then
          func_get_autoconf_snippet "$module" \
-           | sed -e "$sed_replace_build_aux"
+           | $SED -e "$sed_replace_build_aux"
        fi
      done
      # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
@@ -2550,7 +2560,7 @@ func_create_testdir ()
          s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
          ba
        }'
-     sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
+     sed_replace_build_aux=`echo "$sed_replace_build_aux" | $SED -e 1d -e 's/^ *//'`
    else
      sed_replace_build_aux=
    fi
@@ -2558,7 +2568,7 @@ func_create_testdir ()
      func_verify_nontests_module
      if test -n "$module"; then
        func_get_autoconf_snippet "$module" \
-         | sed -e "$sed_replace_build_aux"
+         | $SED -e "$sed_replace_build_aux"
      fi
    done
    # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
@@ -2599,7 +2609,7 @@ func_create_testdir ()
      echo "executing ${AUTOPOINT} --force"
      ${AUTOPOINT} --force || func_exit 1
      for f in $m4base/*.m4~; do
-       mv -f $f `echo $f | sed -e 's,~$,,'` || func_exit 1
+       mv -f $f `echo $f | $SED -e 's,~$,,'` || func_exit 1
      done
    fi
    echo "executing ${ACLOCAL} -I $m4base"
@@ -2624,7 +2634,7 @@ func_create_testdir ()
        echo "executing ${AUTOPOINT} --force"
        ${AUTOPOINT} --force || func_exit 1
        for f in ../$m4base/*.m4~; do
-	 mv -f $f `echo $f | sed -e 's,~$,,'` || func_exit 1
+         mv -f $f `echo $f | $SED -e 's,~$,,'` || func_exit 1
        done
      fi
      echo "executing ${ACLOCAL} -I ../$m4base"
@@ -2757,7 +2767,7 @@ case $mode in
       /A[CM]_PROG_LIBTOOL/ {
         s,^.*$,guessed_libtool=true,p
       }'
-    eval `sed -n -e "$my_sed_traces" < "$configure_ac"`
+    eval `$SED -n -e "$my_sed_traces" < "$configure_ac"`
 
     if test -z "$auxdir"; then
       auxdir="$guessed_auxdir"
@@ -2784,7 +2794,7 @@ case $mode in
       m4dirs=
       m4dirs_count=0
       if test -f "$destdir"/Makefile.am; then
-        aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[	 ]*=' "$destdir"/Makefile.am | sed -e 's/^ACLOCAL_AMFLAGS[	 ]*=\(.*\)$/\1/'`
+        aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[	 ]*=' "$destdir"/Makefile.am | $SED -e 's/^ACLOCAL_AMFLAGS[	 ]*=\(.*\)$/\1/'`
         m4dir_is_next=
         for arg in $aclocal_amflags; do
           if test -n "$m4dir_is_next"; then
@@ -2812,7 +2822,7 @@ case $mode in
           sedexpr1='s,^m4_include(\[\(.*\)])$,\1,p'
           sedexpr2='s,^[^/]*$,.,'
           sedexpr3='s,/[^/]*$,,'
-          m4dirs=`sed -n -e "$sedexpr1" aclocal.m4 | sed -e "$sedexpr2" -e "$sedexpr3" | LC_ALL=C sort -u`
+          m4dirs=`$SED -n -e "$sedexpr1" aclocal.m4 | $SED -e "$sedexpr2" -e "$sedexpr3" | LC_ALL=C sort -u`
           m4dirs_count=`echo "$m4dirs" | wc -l`
         fi
       fi
