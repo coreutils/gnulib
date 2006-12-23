@@ -1,5 +1,9 @@
 2006-12-23  Bruno Haible  <bruno@clisp.org>
 
+	* lib/safe-read.h [C++]: Wrap declarations in extern "C".
+
+2006-12-23  Bruno Haible  <bruno@clisp.org>
+
 	* lib/canonicalize-lgpl.c (__realpath): Test HAVE_READLINK instead of
 	S_ISLNK.
 	Needed because gnulib's sys/stat.h replacement defines S_ISLNK on
