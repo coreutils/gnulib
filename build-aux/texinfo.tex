@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2006-12-22.09}
+\def\texinfoversion{2006-12-23.12}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free
@@ -1262,7 +1262,8 @@ output) for that.)}
 
 \ifpdf
   \input pdfcolor
-  \pdfcatalog{/PageMode /UseOutlines}%
+  \pdfcatalog{/PageMode /UseOutlines}
+  %
   % #1 is image name, #2 width (might be empty/whitespace), #3 height (ditto).
   \def\dopdfimage#1#2#3{%
     \def\imagewidth{#2}\setbox0 = \hbox{\ignorespaces #2}%
@@ -1279,20 +1280,15 @@ output) for that.)}
               \openin 1 #1.pdf \ifeof 1
                 \errhelp = \nopdfimagehelp
                 \errmessage{Could not find image file #1 for pdf}%
-              \else
-                \gdef\pdfimgext{pdf}%
+              \else \gdef\pdfimgext{pdf}%
               \fi
-            \else
-              \gdef\pdfimgext{JPG}%
+            \else \gdef\pdfimgext{JPG}%
             \fi
-          \else
-            \gdef\pdfimgext{jpeg}%
+          \else \gdef\pdfimgext{jpeg}%
           \fi
-        \else
-          \gdef\pdfimgext{jpg}%
+        \else \gdef\pdfimgext{jpg}%
         \fi
-      \else
-        \gdef\pdfimgext{png}%
+      \else \gdef\pdfimgext{png}%
       \fi
       \closein 1
     \endgroup
@@ -1314,21 +1310,24 @@ output) for that.)}
     \ifnum\pdftexversion < 14 \else
       \pdfrefximage \pdflastximage
     \fi}
+  %
   \def\pdfmkdest#1{{%
     % We have to set dummies so commands such as @code, and characters
     % such as \, aren't expanded when present in a section title.
-    \atdummies
+    \indexnofonts
+    \turnoffactive
     \activebackslashdouble
     \def\pdfdestname{#1}%
     \backslashparens\pdfdestname
     \pdfdest name{\pdfdestname} xyz%
-  }}%
+  }}
   %
   % used to mark target names; must be expandable.
-  \def\pdfmkpgn#1{#1}%
+  \def\pdfmkpgn#1{#1}
   %
   \let\linkcolor = \Blue  % was Cyan, but that seems light?
   \def\endlink{\Black\pdfendlink}
+  %
   % Adding outlines to PDF; macros for calculating structure of outlines
   % come from Petr Olsak
   \def\expnumber#1{\expandafter\ifx\csname#1\endcsname\relax 0%
@@ -6364,7 +6363,8 @@ output) for that.)}
   \ifpdf
     \leavevmode
     \getfilename{#4}%
-    {\turnoffactive
+    {\indexnofonts
+     \turnoffactive
      % See comments at \activebackslashdouble.
      {\activebackslashdouble \xdef\pdfxrefdest{#1}%
       \backslashparens\pdfxrefdest}%
@@ -6511,10 +6511,18 @@ output) for that.)}
 % collisions).  But if this is a float type, we have more work to do.
 %
 \def\xrdef#1#2{%
-  \expandafter\gdef\csname XR#1\endcsname{#2}% remember this xref value.
+  {% The node name might contain 8-bit characters, which in our current
+   % implementation are changed to commands like @'e.  Don't let these
+   % mess up the control sequence name.
+    \indexnofonts
+    \turnoffactive
+    \xdef\safexrefname{#1}%
+  }%
+  %
+  \expandafter\gdef\csname XR\safexrefname\endcsname{#2}% remember this xref
   %
   % Was that xref control sequence that we just defined for a float?
-  \expandafter\iffloat\csname XR#1\endcsname
+  \expandafter\iffloat\csname XR\safexrefname\endcsname
     % it was a float, and we have the (safe) float type in \iffloattype.
     \expandafter\let\expandafter\floatlist
       \csname floatlist\iffloattype\endcsname
@@ -6529,7 +6537,8 @@ output) for that.)}
     %
     % Remember this xref in the control sequence \floatlistFLOATTYPE,
     % for later use in \listoffloats.
-    \expandafter\xdef\csname floatlist\iffloattype\endcsname{\the\toks0{#1}}%
+    \expandafter\xdef\csname floatlist\iffloattype\endcsname{\the\toks0
+      {\safexrefname}}%
   \fi
 }
 
