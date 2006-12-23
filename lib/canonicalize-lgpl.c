@@ -101,7 +101,7 @@ __realpath (const char *name, char *resolved)
   char *rpath, *dest, *extra_buf = NULL;
   const char *start, *end, *rpath_limit;
   long int path_max;
-#ifdef S_ISLNK
+#if HAVE_READLINK
   int num_links = 0;
 #endif
 
@@ -231,7 +231,7 @@ __realpath (const char *name, char *resolved)
 #endif
 	    goto error;
 
-#ifdef S_ISLNK
+#if HAVE_READLINK
 	  if (S_ISLNK (st.st_mode))
 	    {
 	      char *buf;
