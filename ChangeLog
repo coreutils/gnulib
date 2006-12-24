@@ -1,3 +1,16 @@
+2006-12-24  Jim Meyering  <jim@meyering.net>
+
+	Work around an fchownat bug in glibc-2.4:
+	http://lists.ubuntu.com/archives/ubuntu-users/2006-September/093218.html
+	This bug would cause "chown -RP ... DIR" to follow symlinks in DIR,
+	in spite of the -P option.
+	* m4/openat.m4 (gl_FUNC_FCHOWNAT, gl_FUNC_FCHOWNAT_DEREF_BUG):
+	New macros.
+	(gl_PREREQ_OPENAT): Require gl_FUNC_FCHOWNAT.
+	* modules/openat (Files): Add lib/fchownat.c.
+	* lib/openat.c (fchownat): Don't define here.  Move to...
+	* lib/fchownat.c: ...this new file.
+
 2006-12-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Fix bug reported by Bruno Haible in
