@@ -4,6 +4,7 @@ A <wctype.h> that conforms better to C99.
 Files:
 lib/wctype_.h
 m4/wctype.m4
+m4/wint_t.m4
 
 Depends-on:
 
@@ -21,6 +22,7 @@ wctype.h: wctype_.h
 	  sed -e 's/@''HAVE_WCTYPE_H''@/$(HAVE_WCTYPE_H)/g' \
 	      -e 's|@''ABSOLUTE_WCTYPE_H''@|$(ABSOLUTE_WCTYPE_H)|g' \
 	      -e 's/@''HAVE_WCTYPE_CTMP_BUG''@/$(HAVE_WCTYPE_CTMP_BUG)/g' \
+	      -e 's/@''HAVE_WINT_T''@/$(HAVE_WINT_T)/g' \
 	      < $(srcdir)/wctype_.h; \
 	} > $@-t
 	mv $@-t $@

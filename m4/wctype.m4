@@ -13,6 +13,9 @@ AC_DEFUN([gl_WCTYPE_H],
   AC_CHECK_HEADERS_ONCE([wctype.h])
   AC_REQUIRE([AC_C_INLINE])
 
+  AC_REQUIRE([gt_TYPE_WINT_T])
+  AC_SUBST([HAVE_WINT_T])
+
   if test $ac_cv_header_wctype_h = yes; then
     gl_ABSOLUTE_HEADER([wctype.h])
     ABSOLUTE_WCTYPE_H=\"$gl_cv_absolute_wctype_h\"

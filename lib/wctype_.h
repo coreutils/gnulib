@@ -29,14 +29,19 @@
 #ifndef _GL_WCTYPE_H
 #define _GL_WCTYPE_H
 
+#if @HAVE_WINT_T@ - 0
 /* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.
    Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
    <wchar.h>.
    BSD/OS 4.1 has a bug: <stdio.h> and <time.h> must be included before
    <wchar.h>.  */
-#include <stdio.h>
-#include <time.h>
-#include <wchar.h>
+# include <stdio.h>
+# include <time.h>
+# include <wchar.h>
+typedef wint_t __wctype_wint_t;
+#else
+typedef int __wctype_wint_t;
+#endif
 
 /* Include the original <wctype.h> if it exists.
    BeOS 5 has the functions but no <wctype.h>.  */
@@ -55,7 +60,7 @@ static wint_t _ctmp_;
 
 #if !defined iswalnum && !HAVE_ISWCNTRL
 static inline int
-iswalnum (wint_t wc)
+iswalnum (__wctype_wint_t wc)
 {
   return ((wc >= '0' && wc <= '9')
 	  || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z'));
@@ -65,7 +70,7 @@ iswalnum (wint_t wc)
 
 #if !defined iswalpha && !HAVE_ISWCNTRL
 static inline int
-iswalpha (wint_t wc)
+iswalpha (__wctype_wint_t wc)
 {
   return (wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z';
 }
@@ -74,7 +79,7 @@ iswalpha (wint_t wc)
 
 #if !defined iswblank && !HAVE_ISWCNTRL
 static inline int
-iswblank (wint_t wc)
+iswblank (__wctype_wint_t wc)
 {
   return wc == ' ' || wc == '\t';
 }
@@ -83,7 +88,7 @@ iswblank (wint_t wc)
 
 #if !defined iswcntrl && !HAVE_ISWCNTRL
 static inline int
-iswcntrl (wint_t wc)
+iswcntrl (__wctype_wint_t wc)
 {
   return (wc & ~0x1f) == 0 || wc == 0x7f;
 }
@@ -92,7 +97,7 @@ iswcntrl (wint_t wc)
 
 #if !defined iswdigit && !HAVE_ISWCNTRL
 static inline int
-iswdigit (wint_t wc)
+iswdigit (__wctype_wint_t wc)
 {
   return wc >= '0' && wc <= '9';
 }
@@ -101,7 +106,7 @@ iswdigit (wint_t wc)
 
 #if !defined iswgraph && !HAVE_ISWCNTRL
 static inline int
-iswgraph (wint_t wc)
+iswgraph (__wctype_wint_t wc)
 {
   return wc >= '!' && wc <= '~';
 }
@@ -110,7 +115,7 @@ iswgraph (wint_t wc)
 
 #if !defined iswlower && !HAVE_ISWCNTRL
 static inline int
-iswlower (wint_t wc)
+iswlower (__wctype_wint_t wc)
 {
   return wc >= 'a' && wc <= 'z';
 }
@@ -119,7 +124,7 @@ iswlower (wint_t wc)
 
 #if !defined iswprint && !HAVE_ISWCNTRL
 static inline int
-iswprint (wint_t wc)
+iswprint (__wctype_wint_t wc)
 {
   return wc >= ' ' && wc <= '~';
 }
@@ -128,7 +133,7 @@ iswprint (wint_t wc)
 
 #if !defined iswpunct && !HAVE_ISWCNTRL
 static inline int
-iswpunct (wint_t wc)
+iswpunct (__wctype_wint_t wc)
 {
   return (wc >= '!' && wc <= '~'
 	  && !((wc >= '0' && wc <= '9')
@@ -139,7 +144,7 @@ iswpunct (wint_t wc)
 
 #if !defined iswspace && !HAVE_ISWCNTRL
 static inline int
-iswspace (wint_t wc)
+iswspace (__wctype_wint_t wc)
 {
   return (wc == ' ' || wc == '\t'
 	  || wc == '\n' || wc == '\v' || wc == '\f' || wc == '\r');
@@ -149,7 +154,7 @@ iswspace (wint_t wc)
 
 #if !defined iswupper && !HAVE_ISWCNTRL
 static inline int
-iswupper (wint_t wc)
+iswupper (__wctype_wint_t wc)
 {
   return wc >= 'A' && wc <= 'Z';
 }
@@ -158,7 +163,7 @@ iswupper (wint_t wc)
 
 #if !defined iswxdigit && !HAVE_ISWCNTRL
 static inline int
-iswxdigit (wint_t wc)
+iswxdigit (__wctype_wint_t wc)
 {
   return ((wc >= '0' && wc <= '9')
 	  || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'F'));
