@@ -2207,6 +2207,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module absolute-header
   func_module config-h
   func_module configmake
   func_module dummy
@@ -2361,3 +2362,8 @@ trap '' 0
 trap 'func_exit $?' 1 2 3 13 15
 
 exit 0
+
+# Local Variables:
+# indent-tabs-mode: nil
+# whitespace-check-buffer-indent: nil
+# End:

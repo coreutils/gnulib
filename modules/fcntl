@@ -3,10 +3,10 @@ Like <fcntl.h>, but with non-working flags defined to 0.
 
 Files:
 lib/fcntl_.h
-m4/absolute-header.m4
 m4/fcntl_h.m4
 
 Depends-on:
+absolute-header
 unistd
 
 configure.ac:

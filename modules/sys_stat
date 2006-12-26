@@ -3,10 +3,10 @@ A <sys/stat.h> for systems with missing declarations.
 
 Files:
 lib/stat_.h
-m4/absolute-header.m4
 m4/sys_stat_h.m4
 
 Depends-on:
+absolute-header
 
 configure.ac:
 gl_HEADER_SYS_STAT_H

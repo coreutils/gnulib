@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2006-12-26 01:51:36 $'
+cvsdatestamp='$Date: 2006-12-26 18:42:09 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -960,7 +960,7 @@ func_get_automake_snippet ()
         s/\\$/\\/
         ta
       }'
-      sed_extract_mentioned_files='s/^lib_SOURCES[ 	]*+=[ 	]*//p'
+      sed_extract_mentioned_files='s/^lib_SOURCES[	 ]*+=[	 ]*//p'
       already_mentioned_files=` \
         sed -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file" \
         | sed -e "$sed_combine_lines" \

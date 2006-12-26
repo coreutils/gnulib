@@ -9,11 +9,11 @@ Macros are used instead of typedefs.
 Files:
 lib/stdint_.h
 m4/stdint.m4
-m4/absolute-header.m4
 m4/longlong.m4
 m4/ulonglong.m4
 
 Depends-on:
+absolute-header
 
 configure.ac:
 gl_STDINT_H
