@@ -1,7 +1,7 @@
 #!/bin/sh
 # install - install a program, script, or datafile
 
-scriptversion=2006-12-24.16
+scriptversion=2006-12-25.00
 
 # This originates from X11R5 (mit/util/scripts/install.sh), which was
 # later released in X11R6 (xc/config/util/install.sh) with the
@@ -61,13 +61,24 @@ fi
 chgrpprog=${CHGRPPROG-chgrp}
 chmodprog=${CHMODPROG-chmod}
 chownprog=${CHOWNPROG-chown}
+cmpprog=${CMPPROG-cmp}
 cpprog=${CPPROG-cp}
 mkdirprog=${MKDIRPROG-mkdir}
 mvprog=${MVPROG-mv}
 rmprog=${RMPROG-rm}
 stripprog=${STRIPPROG-strip}
 
-posix_glob=
+posix_glob='?'
+initialize_posix_glob='
+  test "$posix_glob" != "?" || {
+    if (set -f) 2>/dev/null; then
+      posix_glob=
+    else
+      posix_glob=:
+    fi
+  }
+'
+
 posix_mkdir=
 
 # Desired mode of installed file.
@@ -85,6 +96,7 @@ dst=
 dir_arg=
 dst_arg=
 
+copy_on_change=false
 no_target_directory=
 
 usage="\
@@ -102,6 +114,7 @@ Options:
      --version  display version info and exit.
 
   -c            (ignored)
+  -C            install only if different (preserve the last data modification time)
   -d            create directories instead of installing files.
   -g GROUP      $chgrpprog installed files to GROUP.
   -m MODE       $chmodprog installed files to MODE.
@@ -111,12 +124,15 @@ Options:
   -T            report an error if DSTFILE is a directory.
 
 Environment variables override the default commands:
-  CHGRPPROG CHMODPROG CHOWNPROG CPPROG MKDIRPROG MVPROG RMPROG STRIPPROG
+  CHGRPPROG CHMODPROG CHOWNPROG CMPPROG CPPROG MKDIRPROG MVPROG
+  RMPROG STRIPPROG
 "
 
 while test $# -ne 0; do
   case $1 in
     -c) ;;
+
+    -C) copy_on_change=true;;
 
     -d) dir_arg=true;;
 
@@ -373,21 +389,14 @@ do
 	*)  prefix='';;
       esac
 
-      case $posix_glob in
-	'')
-	  if (set -f) 2>/dev/null; then
-	    posix_glob=true
-	  else
-	    posix_glob=false
-	  fi;;
-      esac
+      eval "$initialize_posix_glob"
 
       oIFS=$IFS
       IFS=/
-      $posix_glob && set -f
+      $posix_glob set -f
       set fnord $dstdir
       shift
-      $posix_glob && set +f
+      $posix_glob set +f
       IFS=$oIFS
 
       prefixes=
@@ -454,32 +463,49 @@ do
     { test -z "$stripcmd" || $doit $stripcmd "$dsttmp"; } &&
     { test -z "$chmodcmd" || $doit $chmodcmd $mode "$dsttmp"; } &&
 
-    # Now rename the file to the real destination.
-    { $doit $mvcmd -f "$dsttmp" "$dst" 2>/dev/null || {
-	   # The rename failed, perhaps because mv can't rename something else
-	   # to itself, or perhaps because mv is so ancient that it does not
-	   # support -f.
+    # If -C, don't bother to copy if it wouldn't change the file.
+    if $copy_on_change &&
+       old=`LC_ALL=C ls -dlL "$dst"	2>/dev/null` &&
+       new=`LC_ALL=C ls -dlL "$dsttmp"	2>/dev/null` &&
 
-	   # Now remove or move aside any old file at destination location.
-	   # We try this two ways since rm can't unlink itself on some
-	   # systems and the destination file might be busy for other
-	   # reasons.  In this case, the final cleanup might fail but the new
-	   # file should still install successfully.
-	   {
-	     test ! -f "$dst" ||
-	     $doit $rmcmd -f "$dst" 2>/dev/null ||
-	     { $doit $mvcmd -f "$dst" "$rmtmp" 2>/dev/null &&
-	       { $doit $rmcmd -f "$rmtmp" 2>/dev/null; :; }
-	     } ||
-	     { echo "$0: cannot unlink or rename $dst" >&2
-	       (exit 1); exit 1
-	     }
-	   } &&
+       eval "$initialize_posix_glob" &&
+       $posix_glob set -f &&
+       set X $old && old=:$2:$4:$5:$6 &&
+       set X $new && new=:$2:$4:$5:$6 &&
+       $posix_glob set +f &&
 
-	   # Now rename the file to the real destination.
-	   $doit $mvcmd "$dsttmp" "$dst"
-	 }
-    } || exit 1
+       test "$old" = "$new" &&
+       $cmpprog "$dst" "$dsttmp" >/dev/null 2>&1
+    then
+      rm -f "$dsttmp"
+    else
+      # Rename the file to the real destination.
+      $doit $mvcmd -f "$dsttmp" "$dst" 2>/dev/null ||
+
+      # The rename failed, perhaps because mv can't rename something else
+      # to itself, or perhaps because mv is so ancient that it does not
+      # support -f.
+      {
+	# Now remove or move aside any old file at destination location.
+	# We try this two ways since rm can't unlink itself on some
+	# systems and the destination file might be busy for other
+	# reasons.  In this case, the final cleanup might fail but the new
+	# file should still install successfully.
+	{
+	  test ! -f "$dst" ||
+	  $doit $rmcmd -f "$dst" 2>/dev/null ||
+	  { $doit $mvcmd -f "$dst" "$rmtmp" 2>/dev/null &&
+	    { $doit $rmcmd -f "$rmtmp" 2>/dev/null; :; }
+	  } ||
+	  { echo "$0: cannot unlink or rename $dst" >&2
+	    (exit 1); exit 1
+	  }
+	} &&
+
+	# Now rename the file to the real destination.
+	$doit $mvcmd "$dsttmp" "$dst"
+      }
+    fi || exit 1
 
     trap '' 0
   fi
