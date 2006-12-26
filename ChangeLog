@@ -1,3 +1,10 @@
+2006-12-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* gnulib-tool (SED): Remove, undoing previous change.
+	The problem was that it broke coreutils on Solaris, because
+	"sed --posix" leaked into a makefile.
+	(sed): New alias, if 'alias' and GNU sed.
+
 2006-12-24  Jim Meyering  <jim@meyering.net>
 
 	Work around an fchownat bug in glibc-2.4:
