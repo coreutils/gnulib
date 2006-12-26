@@ -1,5 +1,9 @@
 2006-12-26  Eric Blake  <ebb9@byu.net>
 
+	* gnulib-tool (sed_extract_prog): Avoid space-tab.
+
+2006-12-26  Eric Blake  <ebb9@byu.net>
+
 	* modules/absolute-header: New module.
 	* modules/fcntl (Depends-on): Depend on it.
 	* modules/inttypes (Depends-on): Likewise.
