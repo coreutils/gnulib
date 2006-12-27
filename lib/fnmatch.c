@@ -47,6 +47,7 @@
    support user defined character classes.  */
 #if defined _LIBC || WIDE_CHAR_SUPPORT
 # include <wctype.h>
+# include <wchar.h>
 #endif
 
 /* We need some of the locale data (the collation sequence information)
