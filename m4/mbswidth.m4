@@ -9,9 +9,8 @@ dnl From Bruno Haible.
 
 AC_DEFUN([gl_MBSWIDTH],
 [
-  AC_CHECK_HEADERS_ONCE([wchar.h wctype.h])
+  AC_CHECK_HEADERS_ONCE([wchar.h])
   AC_CHECK_FUNCS_ONCE([isascii mbsinit])
-  AC_CHECK_FUNCS([iswcntrl])
   gl_FUNC_MBRTOWC
 
   dnl UnixWare 7.1.1 <wchar.h> has a declaration of a function mbswidth()

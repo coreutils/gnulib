@@ -1,3 +1,17 @@
+2006-12-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/mbchar.h: Just include <wctype.h>; the wctype module
+	handles its gotchas now.
+	* lib/mbswidth.c: Likewise.
+	* lib/wcwidth.h: Likewise.
+	* m4/mbchar.m4 (gl_MBCHAR): Don't bother checking for wctype.h
+	and iswcntrl; the wctype module does this stuff now.
+	* m4/mbswidth.m4 (gl_MBSWIDTH): Likewise.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Likewise.
+	* modules/mbchar (Depends-on): Add wctype.
+	* modules/mbswidth (Depends-on): Likewise.
+	* modules/wcwidth (Depends-on): Likewise.
+
 2006-12-27  Eric Blake  <ebb9@byu.net>
 
 	* lib/fnmatch.c: Reinstate inclusion of <wchar.h>, since this

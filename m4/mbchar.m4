@@ -16,8 +16,5 @@ AC_DEFUN([gl_MBCHAR],
   dnl Compile mbchar.c only if HAVE_WCHAR_H.
   if test $ac_cv_header_wchar_h = yes; then
     AC_LIBOBJ([mbchar])
-    dnl Prerequisites of mbchar.h and mbchar.c.
-    AC_CHECK_HEADERS_ONCE([wctype.h])
-    AC_CHECK_FUNCS([iswcntrl])
   fi
 ])

@@ -13,8 +13,8 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
 
-  AC_CHECK_HEADERS_ONCE([wchar.h wctype.h])
-  AC_CHECK_FUNCS_ONCE([iswprint wcwidth])
+  AC_CHECK_HEADERS_ONCE([wchar.h])
+  AC_CHECK_FUNCS_ONCE([wcwidth])
 
   AC_CHECK_DECLS([wcwidth], [], [], [
 /* AIX 3.2.5 declares wcwidth in <string.h>. */

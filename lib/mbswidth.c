@@ -45,12 +45,7 @@
 #include "wcwidth.h"
 
 /* Get iswcntrl().  */
-#if HAVE_WCTYPE_H
-# include <wctype.h>
-#endif
-#if !defined iswcntrl && !HAVE_ISWCNTRL
-# define iswcntrl(wc) (((wc) & ~0x1f) == 0 || (wc) == 0x7f)
-#endif
+#include <wctype.h>
 
 #ifndef mbsinit
 # if !HAVE_MBSINIT

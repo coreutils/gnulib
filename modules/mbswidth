@@ -9,6 +9,7 @@ m4/mbrtowc.m4
 m4/mbswidth.m4
 
 Depends-on:
+wctype
 wcwidth
 
 configure.ac:
@@ -25,4 +26,3 @@ GPL
 
 Maintainer:
 Bruno Haible
-

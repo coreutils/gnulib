@@ -32,23 +32,7 @@
 # endif
 
 /* Get iswprint.  */
-# if HAVE_WCTYPE_H
-#  include <wctype.h>
-# endif
-# if !defined iswprint && !HAVE_ISWPRINT
-static inline int
-#  if HAVE_WINT_T
-iswprint (wint_t wc)
-#  else
-iswprint (int wc)
-#  endif
-{
-  return (wc >= 0 && wc < 128
-	  ? wc >= ' ' && wc <= '~'
-	  : 1);
-}
-#  define iswprint iswprint
-# endif
+# include <wctype.h>
 
 # ifndef HAVE_DECL_WCWIDTH
 "this configure-time declaration test was not run"
