@@ -1,3 +1,7 @@
+2006-12-28  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/announce-gen: New file.
+
 2006-12-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/mbchar.h: Just include <wctype.h>; the wctype module
