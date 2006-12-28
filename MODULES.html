@@ -2839,7 +2839,7 @@ for more information.
         <TD ALIGN=LEFT VALIGN=TOP>#if HAVE_WCHAR_H<BR>#include "<A HREF="lib/mbchar.h">mbchar.h</A>"<BR>#endif
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mbchar.c">mbchar.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbchar.m4">mbchar.m4</A><BR>gl_MBCHAR
-        <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>wcwidth
+        <TD ALIGN=LEFT VALIGN=TOP>stdbool<BR>wctype<BR>wcwidth
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=mbiter"></A><A HREF="modules/mbiter">mbiter</A>
@@ -3108,7 +3108,7 @@ for more information.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/wcwidth.h">wcwidth.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP>---
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/wcwidth.m4">wcwidth.m4</A><BR><A HREF="m4/wchar_t.m4">wchar_t.m4</A><BR><A HREF="m4/wint_t.m4">wint_t.m4</A><BR>gl_FUNC_WCWIDTH
-        <TD ALIGN=LEFT VALIGN=TOP>---
+        <TD ALIGN=LEFT VALIGN=TOP>wctype
       </TR>
     </TABLE>
     <H2><A NAME="posix_compat">Compatibility checks for POSIX:2001 functions</A></H2>
@@ -3933,7 +3933,7 @@ for more information.
         <TD ALIGN=LEFT VALIGN=TOP>#include "<A HREF="lib/mbswidth.h">mbswidth.h</A>"
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="lib/mbswidth.c">mbswidth.c</A>
         <TD ALIGN=LEFT VALIGN=TOP><A HREF="m4/mbstate_t.m4">mbstate_t.m4</A><BR><A HREF="m4/mbrtowc.m4">mbrtowc.m4</A><BR><A HREF="m4/mbswidth.m4">mbswidth.m4</A><BR>gl_MBSWIDTH
-        <TD ALIGN=LEFT VALIGN=TOP>wcwidth
+        <TD ALIGN=LEFT VALIGN=TOP>wctype<BR>wcwidth
       </TR>
       <TR>
         <TD ALIGN=LEFT VALIGN=TOP><A NAME="module=memcasecmp"></A><A HREF="modules/memcasecmp">memcasecmp</A>
@@ -4885,6 +4885,6 @@ for more information.
       <LI>A POT file and some PO files
     </UL>
     <HR>
-    Generated from <CODE>MODULES.html.sh</CODE> on 27 December 2006.
+    Generated from <CODE>MODULES.html.sh</CODE> on 28 December 2006.
   </BODY>
 </HTML>
