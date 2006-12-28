@@ -1,3 +1,9 @@
+2006-12-28  Jim Meyering  <jim@meyering.net>
+
+	* build-aux/announce-gen: Do not assume that the package
+	builds any of tar.gz, tar.bz2, and .xdelta files.
+	Suggestion from Simon Josefsson.
+
 2006-12-28  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/announce-gen: New file.

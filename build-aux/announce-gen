@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2006-12-08 17:35'; # UTC
+my $VERSION = '2006-12-28 19:19'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -96,7 +96,7 @@ The following are optional:
    --gnulib-snapshot-date=DATE  if gnulib is in the bootstrap tool list,
                                 then report this as the snapshot date.
                                 If not specified, use the current date/time.
-                                If you specify a date here, be sure it's UTC.
+                                If you specify a date here, be sure it is UTC.
 
    --help             display this help and exit
    --version          output version information and exit
@@ -428,7 +428,11 @@ sub get_tool_versions ($$)
   my $tbz = "$my_distdir.tar.bz2";
   my $xd = "$package_name-$prev_version-$curr_version.xdelta";
 
-  my %size = sizes ($tgz, $tbz, $xd);
+  my @tarballs = grep {-f $_} ($tgz, $tbz);
+  my @sizable = @tarballs;
+  -f $xd
+    and push @sizable, $xd;
+  my %size = sizes (@sizable);
   %size
     or exit 1;
 
@@ -444,14 +448,14 @@ FIXME: put comments here
 
 EOF
 
-  print_locations ("compressed sources", @url_dir_list, %size,
-		   $tgz, $tbz);
-  print_locations ("xdelta-style diffs", @url_dir_list, %size,
-		   $xd);
+  print_locations ("compressed sources", @url_dir_list, %size, @tarballs);
+  -f $xd
+    and print_locations ("xdelta-style diffs", @url_dir_list, %size, $xd);
+  my @sig_files = map { "$_.sig" } @tarballs;
   print_locations ("GPG detached signatures[*]", @url_dir_list, %size,
-		   "$tgz.sig", "$tbz.sig");
+		   @sig_files);
 
-  print_checksums ($tgz, $tbz, $xd);
+  print_checksums (@sizable);
 
   print <<EOF;
 
