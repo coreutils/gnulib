@@ -582,7 +582,7 @@ extern void *__argp_input (const struct argp *__restrict __argp,
 # endif
 
 ARGP_EI void
-__NTH (__argp_usage (const struct argp_state *__state))
+__argp_usage (const struct argp_state *__state)
 {
   __argp_state_help (__state, stderr, ARGP_HELP_STD_USAGE);
 }
