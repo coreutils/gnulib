@@ -20,11 +20,11 @@
 
 #include <config.h>
 
+#include "acl.h"
+
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #ifndef S_ISLNK
 # define S_ISLNK(Mode) 0
 #endif
@@ -33,7 +33,6 @@
 # include <acl/libacl.h>
 #endif
 
-#include "acl.h"
 #include "error.h"
 #include "quote.h"
 

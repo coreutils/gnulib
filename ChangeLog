@@ -1,3 +1,10 @@
+2006-12-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/acl.h: Include sys/types.h and sys/stat.h, for mode_t and
+	struct stat.  Problem reported by Henning Nielsen Lund.
+	* lib/acl.c: Include acl.h first, to check interface.  Don't
+	bother to include sys/types.h and sys/stat.h again.
+
 2006-12-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Import the following change from libc; problem reported by
