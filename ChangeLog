@@ -1,3 +1,9 @@
+2006-12-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/getpagesize.h (getpagesize) [defined __amigaos4__]:
+	Define.  Trivial patch from Henning Nielsen Lund, originally
+	sent to bug-grep@gnu.org today.
+
 2006-12-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/acl.h: Include sys/types.h and sys/stat.h, for mode_t and
