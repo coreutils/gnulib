@@ -1,3 +1,7 @@
+2007-01-01  Eric Blake  <ebb9@byu.net>
+
+	* lib/version-etc.c (COPYRIGHT_YEAR): Bump for new year.
+
 2006-12-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* gnulib-tool (SORT): Remove, since we no longer assume GNU sort.
