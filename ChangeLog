@@ -1,4 +1,9 @@
-2006-12-24  Bruno Haible  <bruno@clisp.org>
+2007-01-02  Bruno Haible  <bruno@clisp.org>
+
+	* modules/settime (Include): Require timespec.h.
+	* modules/nanosleep (Include): Likewise.
+
+2007-01-01  Bruno Haible  <bruno@clisp.org>
 
 	Improve support for OpenBSD.
 	* build-aux/config.rpath (libname_spec): Export.
@@ -24602,7 +24607,7 @@
 	* m4/uintmax_t.m4: New file.
 	* m4/Makefile.am (EXTRA_DIST): Add inttypes_h.m4 and uintmax_t.m4.
 
-Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006
+Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007
   Free Software Foundation, Inc.
 Copying and distribution of this file, with or without modification,
 are permitted provided the copyright notice and this notice are preserved.

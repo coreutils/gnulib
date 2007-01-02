@@ -16,6 +16,7 @@ gl_SETTIME
 Makefile.am:
 
 Include:
+#include "timespec.h"
 
 License:
 GPL

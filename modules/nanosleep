@@ -17,7 +17,7 @@ gl_FUNC_NANOSLEEP
 Makefile.am:
 
 Include:
-<time.h>
+"timespec.h"
 
 License:
 GPL
