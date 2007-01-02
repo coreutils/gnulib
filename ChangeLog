@@ -1,3 +1,12 @@
+2006-12-24  Bruno Haible  <bruno@clisp.org>
+
+	Improve support for OpenBSD.
+	* build-aux/config.rpath (libname_spec): Export.
+	(library_names_spec): New variable. Export.
+	* m4/lib-link.m4 (AC_LIB_LINKFLAGS_BODY): Extract libname_spec and
+	library_names_spec from the config.rpath output. Locate shared library
+	through the name pattern in library_names_spec.
+
 2007-01-01  Eric Blake  <ebb9@byu.net>
 
 	* lib/version-etc.c (COPYRIGHT_YEAR): Bump for new year.
