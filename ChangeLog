@@ -1,3 +1,7 @@
+2007-01-03  Jim Meyering  <jim@meyering.net>
+
+	* modules/fts-lgpl (Depends-on): Add i-ring.  Reported by Bruno Haible.
+
 2007-01-02  Bruno Haible  <bruno@clisp.org>
 
 	* modules/settime (Include): Require timespec.h.
