@@ -1,7 +1,7 @@
 /* Emulation for poll(2)
    Contributed by Paolo Bonzini.
 
-   Copyright 2001, 2002, 2003, 2006 Free Software Foundation, Inc.
+   Copyright 2001, 2002, 2003, 2006, 2007 Free Software Foundation, Inc.
 
    This file is part of gnulib.
 
@@ -63,7 +63,7 @@ poll (pfd, nfd, timeout)
 {
   fd_set rfds, wfds, efds;
   struct timeval tv, *ptv;
-  int maxfd, rc, happened;
+  int maxfd, rc;
   nfds_t i;
 
 #ifdef _SC_OPEN_MAX
@@ -143,67 +143,62 @@ poll (pfd, nfd, timeout)
 
   /* examine fd sets */
   rc = select (maxfd + 1, &rfds, &wfds, &efds, ptv);
+  if (rc < 0)
+    return rc;
 
   /* establish results */
-  if (rc > 0)
-    {
-      rc = 0;
-      for (i = 0; i < nfd; i++)
-	{
-	  pfd[i].revents = 0;
-	  if (pfd[i].fd < 0)
-	    continue;
-
-	  happened = 0;
-	  if (FD_ISSET (pfd[i].fd, &rfds))
-	    {
-	      int r;
-	      long avail = -1;
-	      /* support for POLLHUP.  */
+  rc = 0;
+  for (i = 0; i < nfd; i++)
+    if (pfd[i].fd < 0)
+      pfd[i].revents = 0;
+    else
+      {
+	int happened = 0, sought = pfd[i].events;
+	if (FD_ISSET (pfd[i].fd, &rfds))
+	  {
+	    int r;
+	    
 #if defined __MACH__ && defined __APPLE__
-	      /* There is a bug in Mac OS X that causes it to ignore MSG_PEEK for
-		 some kinds of descriptors.  Use FIONREAD to emulate POLLHUP.
-		 It is still not completely POSIX compliant (it does not fully
-		 work on TTYs), but at least it does not delete data!  For other
-		 platforms, we still use MSG_PEEK because it was proved to be
-		 reliable, and I a leery of changing it.  */
-	      do
-		r = ioctl (pfd[i].fd, FIONREAD, &avail);
-	      while (r == -1 && (errno == EAGAIN || errno == EINTR));
-	      if (avail < 0)
-	        avail = 0;
+	    /* There is a bug in Mac OS X that causes it to ignore MSG_PEEK
+	       for some kinds of descriptors.  Detect if this descriptor is a
+	       connected socket, a server socket, or something else using a
+	       0-byte recv, and use ioctl(2) to detect POLLHUP.  */
+	    r = recv (pfd[i].fd, NULL, 0, MSG_PEEK);
+	    if (r == 0 || errno == ENOTSOCK)
+	      ioctl(pfd[i].fd, FIONREAD, &r);
 #else
-	      char data[64];
-	      r = recv (pfd[i].fd, data, 64, MSG_PEEK);
-	      if (r == -1)
-		{
-		  avail = (errno == ESHUTDOWN || errno == ECONNRESET ||
-	                   errno == ECONNABORTED || errno == ENETRESET) ? 0 : -1;
-		  errno = 0;
-		}
-	      else
-	        avail = r;
+	    char data[64];
+	    r = recv (pfd[i].fd, data, sizeof (data), MSG_PEEK);
 #endif
-
-	      /* An hung up descriptor does not increase the return value! */
-	      if (avail == 0)
-		pfd[i].revents |= POLLHUP;
-	      else if (avail == -1)
-		pfd[i].revents |= POLLERR;
-	      else
-		happened |= POLLIN | POLLRDNORM;
-	    }
-
-	  if (FD_ISSET (pfd[i].fd, &wfds))
-	    happened |= POLLOUT | POLLWRNORM | POLLWRBAND;
-
-	  if (FD_ISSET (pfd[i].fd, &efds))
-	    happened |= POLLPRI | POLLRDBAND;
-
-	  pfd[i].revents |= pfd[i].events & happened;
-	  rc += (happened > 0);
-	}
-    }
+	    if (r == 0)
+	      happened |= POLLHUP;
+	    
+	    /* If the event happened on an unconnected server socket,
+	       that's fine. */
+	    else if (r > 0 || ( /* (r == -1) && */ errno == ENOTCONN))
+	      happened |= (POLLIN | POLLRDNORM) & sought;
+	    
+	    /* Distinguish hung-up sockets from other errors.  */
+	    else if (errno == ESHUTDOWN || errno == ECONNRESET
+		     || errno == ECONNABORTED || errno == ENETRESET)
+	      happened |= POLLHUP;
+	    
+	    else
+	      happened |= POLLERR;
+	  }
+	
+	if (FD_ISSET (pfd[i].fd, &wfds))
+	  happened |= (POLLOUT | POLLWRNORM | POLLWRBAND) & sought;
+	
+	if (FD_ISSET (pfd[i].fd, &efds))
+	  happened |= (POLLPRI | POLLRDBAND) & sought;
+	
+	if (happened)
+	  {
+	    pfd[i].revents = happened;
+	    rc++;
+	  }
+      }
 
   return rc;
 }

@@ -1,3 +1,12 @@
+2007-01-03  Paolo Bonzini  <bonzini@gnu.org>
+	    Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+
+	* lib/poll.c (poll): Use recv on Mac OS X to distinguish connected
+	sockets, server sockets, and other file descriptors.  Count errors
+	to compute the return value.  Reorder the code a bit to be easier
+	to follow.  Don't set event bits that were not requested (except
+	POLLERR and POLLHUP).
+
 2007-01-01  Bruno Haible  <bruno@clisp.org>
 
 	* modules/lchmod (Include): Require lchmod.h, not lchown.h.
