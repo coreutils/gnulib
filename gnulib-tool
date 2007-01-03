@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-01-02 20:59:11 $'
+cvsdatestamp='$Date: 2007-01-03 12:19:04 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2509,6 +2509,10 @@ func_create_testdir ()
    echo "AC_PROG_CC"
    echo "AC_PROG_INSTALL"
    echo "AC_PROG_MAKE_SET"
+   echo
+   echo "# For autobuild."
+   echo "AC_CANONICAL_BUILD"
+   echo "AC_CANONICAL_HOST"
    echo
    echo "m4_pattern_forbid([^gl_[A-Z]])dnl the gnulib macro namespace"
    echo "m4_pattern_allow([^gl_ES\$])dnl a valid locale name"

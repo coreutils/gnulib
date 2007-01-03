@@ -1,3 +1,8 @@
+2007-01-03  Simon Josefsson  <simon@josefsson.org>
+
+	* gnulib-tool (func_create_testdir): Run AC_CANONICAL_BUILD and
+	AC_CANONICAL_HOST, to improve autobuild outputs.
+
 2007-01-03  Paolo Bonzini  <bonzini@gnu.org>
 	    Yoann Vandoorselaere <yoann.v@prelude-ids.com>
 
