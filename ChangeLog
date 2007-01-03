@@ -1,3 +1,8 @@
+2007-01-03  Karl Berry  <karl@gnu.org>
+
+	* doc/error.texi: new file, explaining interaction with progname.
+	* doc/gnulib.texi: include it.  Update copyright.
+
 2007-01-03  Simon Josefsson  <simon@josefsson.org>
 
 	* gnulib-tool (func_create_testdir): Run AC_CANONICAL_BUILD and

@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.30 2006-11-07 19:51:40 rwild Exp $
+@comment $Id: gnulib.texi,v 1.31 2007-01-03 18:51:20 karl Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,28 +7,21 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2006-11-07 19:51:40 $
+@set UPDATED $Date: 2007-01-03 18:51:20 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
 which is a library of common routines intended to be shared at the
 source level.
 
-Copyright @copyright{} 2004, 2005, 2006 Free Software Foundation, Inc.
+Copyright @copyright{} 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 
-@quotation
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
 any later version published by the Free Software Foundation; with no
-Invariant Sections, with the Front-Cover Texts being ``A GNU Manual,''
-and with the Back-Cover Texts as in (a) below.  A copy of the
-license is included in the section entitled ``GNU Free Documentation
-License.''
-
-(a) The FSF's Back-Cover Text is: ``You have freedom to copy and modify
-this GNU Manual, like GNU software.  Copies published by the Free
-Software Foundation raise funds for GNU development.''
-@end quotation
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled
+``GNU Free Documentation License.''
 @end copying
 
 @dircategory Software development
@@ -62,7 +55,6 @@ Software Foundation raise funds for GNU development.''
 * Copying This Manual::
 * Index::
 @end menu
-
 
 @node Introduction
 @chapter Introduction
@@ -369,17 +361,16 @@ Of course the license texts themselves should not be changed at all.
 @menu
 * Quoting::
 * ctime::
+* error and progname::
 * gcd::
 * inet_ntoa::
 * Regular expressions::
 @end menu
 
 @include quote.texi
-
+@include error.texi
 @include ctime.texi
-
 @include gcd.texi
-
 @include inet_ntoa.texi
 
 @node Regular expressions

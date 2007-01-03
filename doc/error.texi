@@ -1,0 +1,22 @@
+@node error and progname
+@section error and progname
+@findex error
+@findex progname
+@vindex program_name
+
+@c Copyright (C) 2007 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.2 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+@c Texts.  A copy of the license is included in the ``GNU Free
+@c Documentation License'' file as part of this distribution.
+
+The @code{error} function uses the @code{program_name} variable, but
+does not depend on the @code{progname} module.  Why?  Because
+@code{error} is released under the LGPL, whereas @code{progname} is
+GPL.  RMS does not want additional baggage accompanying the
+@code{error} module, so an LGPL user must provide their own
+replacement @code{program_name}, and a GPL user should manually 
+specify using the @code{progname} module.
