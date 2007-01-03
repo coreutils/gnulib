@@ -1,3 +1,7 @@
+2007-01-01  Bruno Haible  <bruno@clisp.org>
+
+	* modules/lchmod (Include): Require lchmod.h, not lchown.h.
+
 2007-01-03  Jim Meyering  <jim@meyering.net>
 
 	* modules/fts-lgpl (Depends-on): Add i-ring.  Reported by Bruno Haible.

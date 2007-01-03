@@ -13,7 +13,7 @@ gl_FUNC_LCHMOD
 Makefile.am:
 
 Include:
-"lchown.h"
+"lchmod.h"
 
 License:
 GPL
