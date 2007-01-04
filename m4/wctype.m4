@@ -44,7 +44,8 @@ AC_DEFUN([gl_WCTYPE_H],
 	 [AC_COMPILE_IFELSE(
 	    [AC_LANG_PROGRAM(
 	       [[#include <wctype.h>
-		 static wint_t _ctmp_;]],
+		 #include <ctype.h>
+		 wchar_t _ctmp_;]],
 	       [[return iswprint (0);]])],
 	    [gl_cv_wctype_ctmp_bug=yes])])])
     case $gl_cv_wctype_ctmp_bug,$ac_cv_func_iswcntrl in #(

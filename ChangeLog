@@ -1,5 +1,10 @@
 2007-01-04  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/wctype_.h (_ctmp_) [HAVE_WCTYPE_CTMP_BUG]: Now of type wchar_t,
+	not wint_t.  Also, include <ctype.h>, to fix another IRIX bug.
+	* m4/wctype.m4 (gl_WCTYPE_H): Likewise.
+	Problems reported by Georg Schwarz for IRIX 5.3.
+
 	* gnulib-tool (autoconf_minversion): Take the maximum version number
 	found, not the minimum.  Problem reported by James Youngman.
 

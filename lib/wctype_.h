@@ -49,10 +49,11 @@ typedef int __wctype_wint_t;
 # include @ABSOLUTE_WCTYPE_H@
 #endif
 
-/* IRIX 5.3 has a bug: its isw* macros reference an undefined variable
-   _ctmp_.  */
+/* IRIX 5.3 has bugs: its isw* macros refer to an undefined variable
+   _ctmp_ and to <ctype.h> macros like _P.  */
 #if @HAVE_WCTYPE_CTMP_BUG@
-static wint_t _ctmp_;
+# include <ctype.h>
+wchar_t _ctmp_;
 #endif
 
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
