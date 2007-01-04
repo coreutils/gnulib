@@ -42,7 +42,7 @@ The following packages appear to be using gnulib and gnulib-tool:
 The following packages are using gnulib without gnulib-tool:
 
   libtool         http://cvs.sv.gnu.org/viewcvs/libtool/libtool/
-
+  libgcrypt	  http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/?root=Libgcrypt
 
 Articles:
 
