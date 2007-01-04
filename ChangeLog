@@ -1,3 +1,8 @@
+2007-01-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* gnulib-tool (autoconf_minversion): Take the maximum version number
+	found, not the minimum.  Problem reported by James Youngman.
+
 2007-01-03  Karl Berry  <karl@gnu.org>
 
 	* doc/error.texi: new file, explaining interaction with progname.

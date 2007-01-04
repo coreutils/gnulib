@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-01-03 12:19:04 $'
+cvsdatestamp='$Date: 2007-01-04 18:10:42 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -699,7 +699,7 @@ func_ln_if_changed ()
     if test -n "$prereqs"; then
       autoconf_minversion=`
         for version in $prereqs; do echo $version; done |
-        LC_ALL=C sort -nu | sed 1q
+        LC_ALL=C sort -nru | sed 1q
       `
     fi
   fi
