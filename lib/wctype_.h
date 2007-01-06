@@ -49,90 +49,77 @@ typedef int __wctype_wint_t;
 # include @ABSOLUTE_WCTYPE_H@
 #endif
 
-/* IRIX 5.3 has bugs: its isw* macros refer to an undefined variable
-   _ctmp_ and to <ctype.h> macros like _P.  */
-#if @HAVE_WCTYPE_CTMP_BUG@
-# include <ctype.h>
-wchar_t _ctmp_;
-#endif
-
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
    Assume all 12 functions are implemented the same way, or not at all.  */
+#if ! HAVE_ISWCNTRL
 
-#if !defined iswalnum && !HAVE_ISWCNTRL
+/* IRIX 5.3 has macros but no functions, its isw* macros refer to an
+   undefined variable _ctmp_ and to <ctype.h> macros like _P, and they
+   refer to system functions like _iswctype that are not in the
+   standard C library.  Rather than try to get ancient buggy
+   implementations like this to work, just disable them.  */
+#  undef iswalnum
+#  undef iswalpha
+#  undef iswblank
+#  undef iswcntrl
+#  undef iswdigit
+#  undef iswgraph
+#  undef iswlower
+#  undef iswprint
+#  undef iswpunct
+#  undef iswspace
+#  undef iswupper
+#  undef iswxdigit
+
 static inline int
 iswalnum (__wctype_wint_t wc)
 {
   return ((wc >= '0' && wc <= '9')
 	  || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z'));
 }
-# define iswalnum iswalnum
-#endif
 
-#if !defined iswalpha && !HAVE_ISWCNTRL
 static inline int
 iswalpha (__wctype_wint_t wc)
 {
   return (wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z';
 }
-# define iswalpha iswalpha
-#endif
 
-#if !defined iswblank && !HAVE_ISWCNTRL
 static inline int
 iswblank (__wctype_wint_t wc)
 {
   return wc == ' ' || wc == '\t';
 }
-# define iswblank iswblank
-#endif
 
-#if !defined iswcntrl && !HAVE_ISWCNTRL
 static inline int
 iswcntrl (__wctype_wint_t wc)
 {
   return (wc & ~0x1f) == 0 || wc == 0x7f;
 }
-# define iswcntrl iswcntrl
-#endif
 
-#if !defined iswdigit && !HAVE_ISWCNTRL
 static inline int
 iswdigit (__wctype_wint_t wc)
 {
   return wc >= '0' && wc <= '9';
 }
-# define iswdigit iswdigit
-#endif
 
-#if !defined iswgraph && !HAVE_ISWCNTRL
 static inline int
 iswgraph (__wctype_wint_t wc)
 {
   return wc >= '!' && wc <= '~';
 }
-# define iswgraph iswgraph
-#endif
 
-#if !defined iswlower && !HAVE_ISWCNTRL
 static inline int
 iswlower (__wctype_wint_t wc)
 {
   return wc >= 'a' && wc <= 'z';
 }
-# define iswlower iswlower
-#endif
 
-#if !defined iswprint && !HAVE_ISWCNTRL
 static inline int
 iswprint (__wctype_wint_t wc)
 {
   return wc >= ' ' && wc <= '~';
 }
-# define iswprint iswprint
-#endif
 
-#if !defined iswpunct && !HAVE_ISWCNTRL
 static inline int
 iswpunct (__wctype_wint_t wc)
 {
@@ -140,37 +127,27 @@ iswpunct (__wctype_wint_t wc)
 	  && !((wc >= '0' && wc <= '9')
 	       || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z')));
 }
-# define iswpunct iswpunct
-#endif
 
-#if !defined iswspace && !HAVE_ISWCNTRL
 static inline int
 iswspace (__wctype_wint_t wc)
 {
   return (wc == ' ' || wc == '\t'
 	  || wc == '\n' || wc == '\v' || wc == '\f' || wc == '\r');
 }
-# define iswspace iswspace
-#endif
 
-#if !defined iswupper && !HAVE_ISWCNTRL
 static inline int
 iswupper (__wctype_wint_t wc)
 {
   return wc >= 'A' && wc <= 'Z';
 }
-# define iswupper iswupper
-#endif
 
-#if !defined iswxdigit && !HAVE_ISWCNTRL
 static inline int
 iswxdigit (__wctype_wint_t wc)
 {
   return ((wc >= '0' && wc <= '9')
 	  || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'F'));
 }
-# define iswxdigit iswxdigit
-#endif
 
+# endif /* ! HAVE_ISWCNTRL */
 
 #endif /* _GL_WCTYPE_H */
