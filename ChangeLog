@@ -1,5 +1,13 @@
 2007-01-08  Bruno Haible  <bruno@clisp.org>
 
+	* m4/canonicalize.m4 (AC_FUNC_CANONICALIZE_FILE_NAME): Remove
+	PROVIDE_CANONICALIZE_FILENAME_MODE macro definition.
+	* lib/canonicalize.h: Test GNULIB_CANONICALIZE instead of
+	PROVIDE_CANONICALIZE_FILENAME_MODE.
+	* modules/canonicalize (configure.ac): Use gl_MODULE_INDICATOR.
+
+2007-01-08  Bruno Haible  <bruno@clisp.org>
+
 	* m4/fts.m4 (gl_FUNC_FTS_LGPL): Remove _LGPL_PACKAGE macro definition.
 	* lib/fts_.h (_LGPL_PACKAGE): Remove macro.
 	Use !GNULIB_FTS instead of _LGPL_PACKAGE.

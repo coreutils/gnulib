@@ -17,6 +17,7 @@ xreadlink
 
 configure.ac:
 AC_FUNC_CANONICALIZE_FILE_NAME
+gl_MODULE_INDICATOR([canonicalize])
 
 Makefile.am:
 
