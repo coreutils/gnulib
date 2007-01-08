@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-01-04 18:10:42 $'
+cvsdatestamp='$Date: 2007-01-08 19:20:07 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -908,6 +908,7 @@ func_get_filelist ()
 {
   func_lookup_file "modules/$1"
   sed -n -e "/^Files$sed_extract_prog" < "$lookedup_file"
+  echo m4/gnulib-common.m4
   case "$autoconf_minversion" in
     2.59)
       #echo m4/onceonly.m4
@@ -935,9 +936,6 @@ func_get_autoconf_snippet ()
 {
   func_lookup_file "modules/$1"
   sed -n -e "/^configure\.ac$sed_extract_prog" < "$lookedup_file"
-  # Define a C macro indicating the presence of the given module.
-  echo "  AC_DEFINE([GNULIB_"`echo "$1" | LC_ALL=C tr 'a-z' 'A-Z' | sed -e 's,[-./],_,g'`"], [1],"
-  echo "    [Define to 1 when using the gnulib module $1.])"
 }
 
 # func_get_automake_snippet module

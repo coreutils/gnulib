@@ -1,5 +1,11 @@
 2007-01-08  Bruno Haible  <bruno@clisp.org>
 
+	* m4/gnulib-common.m4: New file.
+	* gnulib-tool (func_get_autoconf_snippet): Undo last change.
+	(func_get_filelist): Add m4/gnulib-common.m4.
+
+2007-01-08  Bruno Haible  <bruno@clisp.org>
+
 	* m4/lib-link.m4 (AC_LIB_LINKFLAGS_BODY): Simplify the sorting
 	command.
 
@@ -71,6 +77,11 @@
 
 	* modules/settime (Include): Require timespec.h.
 	* modules/nanosleep (Include): Likewise.
+
+2007-01-01  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_copyright_notice): Bump year.
+	(func_get_autoconf_snippet): Emit a GNULIB_<modulename> macro.
 
 2007-01-01  Bruno Haible  <bruno@clisp.org>
 
