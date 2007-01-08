@@ -13,6 +13,7 @@ gc
 
 configure.ac:
 gl_GC_DES
+gl_MODULE_INDICATOR([gc-des])
 
 Makefile.am:
 

@@ -15,6 +15,7 @@ gc
 
 configure.ac:
 gl_GC_RIJNDAEL
+gl_MODULE_INDICATOR([gc-rijndael])
 
 Makefile.am:
 

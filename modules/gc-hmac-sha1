@@ -19,6 +19,7 @@ gc
 
 configure.ac:
 gl_GC_HMAC_SHA1
+gl_MODULE_INDICATOR([gc-hmac-sha1])
 
 Makefile.am:
 

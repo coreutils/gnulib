@@ -1,5 +1,5 @@
 /* gc-libgcrypt.c --- Crypto wrappers around Libgcrypt for GC.
- * Copyright (C) 2002, 2003, 2004, 2005, 2006  Simon Josefsson
+ * Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007  Simon Josefsson
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -30,7 +30,7 @@
 
 /* Get libgcrypt API. */
 #include <gcrypt.h>
-#ifdef GC_USE_MD2
+#ifdef GNULIB_GC_MD2
 # include "md2.h"
 #endif
 
@@ -63,7 +63,7 @@ gc_done (void)
   return;
 }
 
-#ifdef GC_USE_RANDOM
+#ifdef GNULIB_GC_RANDOM
 
 /* Randomness. */
 
@@ -230,7 +230,7 @@ typedef struct _gc_hash_ctx {
   Gc_hash alg;
   Gc_hash_mode mode;
   gcry_md_hd_t gch;
-#ifdef GC_USE_MD2
+#ifdef GNULIB_GC_MD2
   char hash[GC_MD2_DIGEST_SIZE];
   struct md2_ctx md2Context;
 #endif
@@ -367,7 +367,7 @@ void
 gc_hash_hmac_setkey (gc_hash_handle handle, size_t len, const char *key)
 {
   _gc_hash_ctx *ctx = handle;
-#ifdef GC_USE_MD2
+#ifdef GNULIB_GC_MD2
   if (ctx->alg != GC_MD2)
 #endif
     gcry_md_setkey (ctx->gch, key, len);
@@ -378,7 +378,7 @@ gc_hash_write (gc_hash_handle handle, size_t len, const char *data)
 {
   _gc_hash_ctx *ctx = handle;
 
-#ifdef GC_USE_MD2
+#ifdef GNULIB_GC_MD2
   if (ctx->alg == GC_MD2)
     md2_process_bytes (data, len, &ctx->md2Context);
   else
@@ -392,7 +392,7 @@ gc_hash_read (gc_hash_handle handle)
   _gc_hash_ctx *ctx = handle;
   const char *digest;
 
-#ifdef GC_USE_MD2
+#ifdef GNULIB_GC_MD2
   if (ctx->alg == GC_MD2)
     {
       md2_finish_ctx (&ctx->md2Context, ctx->hash);
@@ -413,7 +413,7 @@ gc_hash_close (gc_hash_handle handle)
 {
   _gc_hash_ctx *ctx = handle;
 
-#ifdef GC_USE_MD2
+#ifdef GNULIB_GC_MD2
   if (ctx->alg != GC_MD2)
 #endif
     gcry_md_close (ctx->gch);
@@ -428,32 +428,32 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 
   switch (hash)
     {
-#ifdef GC_USE_MD2
+#ifdef GNULIB_GC_MD2
     case GC_MD2:
       md2_buffer (in, inlen, resbuf);
       return GC_OK;
       break;
 #endif
 
-#ifdef GC_USE_MD4
+#ifdef GNULIB_GC_MD4
     case GC_MD4:
       gcryalg = GCRY_MD_MD4;
       break;
 #endif
 
-#ifdef GC_USE_MD5
+#ifdef GNULIB_GC_MD5
     case GC_MD5:
       gcryalg = GCRY_MD_MD5;
       break;
 #endif
 
-#ifdef GC_USE_SHA1
+#ifdef GNULIB_GC_SHA1
     case GC_SHA1:
       gcryalg = GCRY_MD_SHA1;
       break;
 #endif
 
-#ifdef GC_USE_RMD160
+#ifdef GNULIB_GC_RMD160
     case GC_RMD160:
       gcryalg = GCRY_MD_RMD160;
       break;
@@ -470,7 +470,7 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 
 /* One-call interface. */
 
-#ifdef GC_USE_MD2
+#ifdef GNULIB_GC_MD2
 Gc_rc
 gc_md2 (const void *in, size_t inlen, void *resbuf)
 {
@@ -479,7 +479,7 @@ gc_md2 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GC_USE_MD4
+#ifdef GNULIB_GC_MD4
 Gc_rc
 gc_md4 (const void *in, size_t inlen, void *resbuf)
 {
@@ -511,7 +511,7 @@ gc_md4 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GC_USE_MD5
+#ifdef GNULIB_GC_MD5
 Gc_rc
 gc_md5 (const void *in, size_t inlen, void *resbuf)
 {
@@ -543,7 +543,7 @@ gc_md5 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GC_USE_SHA1
+#ifdef GNULIB_GC_SHA1
 Gc_rc
 gc_sha1 (const void *in, size_t inlen, void *resbuf)
 {
@@ -575,7 +575,7 @@ gc_sha1 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GC_USE_HMAC_MD5
+#ifdef GNULIB_GC_HMAC_MD5
 Gc_rc
 gc_hmac_md5 (const void *key, size_t keylen,
 	     const void *in, size_t inlen, char *resbuf)
@@ -615,7 +615,7 @@ gc_hmac_md5 (const void *key, size_t keylen,
 }
 #endif
 
-#ifdef GC_USE_HMAC_SHA1
+#ifdef GNULIB_GC_HMAC_SHA1
 Gc_rc
 gc_hmac_sha1 (const void *key, size_t keylen,
 	      const void *in, size_t inlen, char *resbuf)

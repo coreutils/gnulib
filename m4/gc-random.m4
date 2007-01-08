@@ -1,5 +1,5 @@
-# gc-random.m4 serial 1
-dnl Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+# gc-random.m4 serial 2
+dnl Copyright (C) 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -84,6 +84,4 @@ AC_DEFUN([gl_GC_RANDOM],
                    [defined to the name of the pseudo random device])
   AC_DEFINE_UNQUOTED(NAME_OF_NONCE_DEVICE, "$NAME_OF_NONCE_DEVICE",
                    [defined to the name of the unpredictable nonce device])
-
-  AC_DEFINE(GC_USE_RANDOM, 1, [Define if you want to support RNG through GC.])
 ])

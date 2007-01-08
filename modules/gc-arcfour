@@ -13,6 +13,7 @@ gc
 
 configure.ac:
 gl_GC_ARCFOUR
+gl_MODULE_INDICATOR([gc-arcfour])
 
 Makefile.am:
 

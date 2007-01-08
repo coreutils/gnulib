@@ -13,6 +13,7 @@ gc
 
 configure.ac:
 gl_GC_ARCTWO
+gl_MODULE_INDICATOR([gc-arctwo])
 
 Makefile.am:
 

@@ -13,6 +13,7 @@ gc
 
 configure.ac:
 gl_GC_SHA1
+gl_MODULE_INDICATOR([gc-sha1])
 
 Makefile.am:
 

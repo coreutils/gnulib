@@ -12,6 +12,7 @@ md2
 
 configure.ac:
 gl_GC_MD2
+gl_MODULE_INDICATOR([gc-md2])
 
 Makefile.am:
 

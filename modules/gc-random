@@ -9,6 +9,7 @@ gc
 
 configure.ac:
 gl_GC_RANDOM
+gl_MODULE_INDICATOR([gc-random])
 
 Makefile.am:
 
