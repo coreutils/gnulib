@@ -740,17 +740,10 @@ name:		t = sp->fts_path + NAPPEND(p->fts_parent);
 check_for_dir:
 		if (p->fts_info == FTS_NSOK)
 		  {
-		    enum Fts_stat need_stat = p->fts_statp->st_size;
-		    switch (need_stat)
-		      {
-		      case FTS_STAT_REQUIRED:
-			p->fts_info = fts_stat(sp, p, false);
-			break;
-		      case FTS_NO_STAT_REQUIRED:
-			break;
-		      default:
-			fts_assert (0);
-		      }
+		    if (p->fts_statp->st_size == FTS_STAT_REQUIRED)
+		      p->fts_info = fts_stat(sp, p, false);
+		    else
+		      fts_assert (p->fts_statp->st_size == FTS_NO_STAT_REQUIRED);
 		  }
 
 		sp->fts_cur = p;

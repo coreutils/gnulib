@@ -1,5 +1,12 @@
 2007-01-08  Jim Meyering  <jim@meyering.net>
 
+	Use a more robust test for a "can't happen" condition.
+	* lib/fts.c (fts_read): Revert the change of 2006-11-22, since it
+	narrowed the st_size value.  Presuming the "can't happen" condition
+	is true, that narrowing could conceivably convert an invalid st_size
+	value into a valid one.  Instead, use a change based on Matthew
+	Woehlke's original patch.
+
 	Slight readability improvement: use an assert-like macro
 	in place of literal "abort ()" uses.
 	* lib/fts.c (fts_assert): Define.
