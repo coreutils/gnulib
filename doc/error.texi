@@ -20,3 +20,7 @@ GPL.  RMS does not want additional baggage accompanying the
 @code{error} module, so an LGPL user must provide their own
 replacement @code{program_name}, and a GPL user should manually 
 specify using the @code{progname} module.
+
+Additionally, using the @code{progname} module is not something that
+can be done implicitly. It requires that every @code{main()} function
+be modified to set @code{program_name} as one of its first actions.

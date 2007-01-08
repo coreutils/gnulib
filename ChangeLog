@@ -1,3 +1,8 @@
+2007-01-08  Karl Berry  <karl@gnu.org>
+
+	* doc/error.texi: mention that main() fns must set program_name
+	when progname is used.
+
 2007-01-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/wctype.m4 (gl_WCTYPE_H): Compute ABSOLUTE_WCTYPE_H even if
