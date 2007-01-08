@@ -1,3 +1,11 @@
+2007-01-08  Jim Meyering  <jim@meyering.net>
+
+	Slight readability improvement: use an assert-like macro
+	in place of literal "abort ()" uses.
+	* lib/fts.c (fts_assert): Define.
+	(fts_set_stat_required, cwd_advance_fd, fts_read, fd_ring_check):
+	Use this macro instead of a bare 'abort'.
+
 2007-01-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Don't worry about using IRIX 5.3's wctype.h broken definitions;

@@ -1,6 +1,6 @@
 /* Traverse a file hierarchy.
 
-   Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -138,6 +138,18 @@ enum Fts_stat
 # define HAVE_OPENAT_SUPPORT 0
 #endif
 
+#ifdef NDEBUG
+# define fts_assert(expr) ((void) 0)
+#else
+# define fts_assert(expr)	\
+    do				\
+      {				\
+	if (!(expr))		\
+	  abort ();		\
+      }				\
+    while (false)
+#endif
+
 static FTSENT	*fts_alloc (FTS *, const char *, size_t) internal_function;
 static FTSENT	*fts_build (FTS *, int) internal_function;
 static void	 fts_lfree (FTSENT *) internal_function;
@@ -236,8 +248,7 @@ fd_ring_clear (I_ring *fd_ring)
 static void
 fts_set_stat_required (FTSENT *p, bool required)
 {
-  if (p->fts_info != FTS_NSOK)
-    abort ();
+  fts_assert (p->fts_info == FTS_NSOK);
   p->fts_statp->st_size = (required
 			   ? FTS_STAT_REQUIRED
 			   : FTS_NO_STAT_REQUIRED);
@@ -274,8 +285,7 @@ internal_function
 cwd_advance_fd (FTS *sp, int fd, bool chdir_down_one)
 {
   int old = sp->fts_cwd_fd;
-  if (old == fd && old != AT_FDCWD)
-    abort ();
+  fts_assert (old != fd || old == AT_FDCWD);
 
   if (chdir_down_one)
     {
@@ -739,7 +749,7 @@ check_for_dir:
 		      case FTS_NO_STAT_REQUIRED:
 			break;
 		      default:
-			abort ();
+			fts_assert (0);
 		      }
 		  }
 
@@ -775,8 +785,7 @@ check_for_dir:
 		return (sp->fts_cur = NULL);
 	}
 
-	if (p->fts_info == FTS_NSOK)
-	  abort ();
+	fts_assert (p->fts_info != FTS_NSOK);
 
 	/* NUL terminate the file name.  */
 	sp->fts_path[p->fts_pathlen] = '\0';
@@ -1345,7 +1354,7 @@ fd_ring_check (FTS const *sp)
 	      error (0, errno, "parent: %s", c2);
 	      free (cwd);
 	      free (c2);
-	      abort ();
+	      fts_assert (0);
 	    }
 	  close (cwd_fd);
 	  cwd_fd = parent_fd;
