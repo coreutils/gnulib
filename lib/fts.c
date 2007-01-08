@@ -162,13 +162,13 @@ static unsigned short int fts_stat (FTS *, FTSENT *, bool) internal_function;
 static int      fts_safe_changedir (FTS *, FTSENT *, int, const char *)
      internal_function;
 
-#if _LGPL_PACKAGE
+#if GNULIB_FTS
+# include "fts-cycle.c"
+#else
 static bool enter_dir (FTS *fts, FTSENT *ent) { return true; }
 static void leave_dir (FTS *fts, FTSENT *ent) {}
 static bool setup_dir (FTS *fts) { return true; }
 static void free_dir (FTS *fts) {}
-#else
-# include "fts-cycle.c"
 #endif
 
 #ifndef MAX
@@ -1405,7 +1405,7 @@ err:		memset(sbp, 0, sizeof(struct stat));
 			return (p->fts_level == FTS_ROOTLEVEL ? FTS_D : FTS_DOT);
 		}
 
-#if _LGPL_PACKAGE
+#if !GNULIB_FTS
 		{
 		  /*
 		   * Cycle detection is done by brute force when the directory

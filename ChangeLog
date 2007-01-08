@@ -1,3 +1,11 @@
+2007-01-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/fts.m4 (gl_FUNC_FTS_LGPL): Remove _LGPL_PACKAGE macro definition.
+	* lib/fts_.h (_LGPL_PACKAGE): Remove macro.
+	Use !GNULIB_FTS instead of _LGPL_PACKAGE.
+	* lib/fts.c: Likewise.
+	* modules/fts (configure.ac): Use gl_MODULE_INDICATOR.
+
 2006-12-25  Bruno Haible  <bruno@clisp.org>
 
 	* modules/utf8-ucs4-safe: New file.
