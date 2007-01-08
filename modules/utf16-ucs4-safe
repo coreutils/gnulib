@@ -7,6 +7,7 @@ lib/unistr/utf16-ucs4-safe.c
 m4/utf-ucs4.m4
 
 Depends-on:
+unitypes
 
 configure.ac:
 gl_UTF_UCS4
