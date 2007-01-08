@@ -1,5 +1,49 @@
 2007-01-08  Bruno Haible  <bruno@clisp.org>
 
+	Avoid variable names that conflict with those from libtool.
+	* m4/lib-link.m4 (AC_LIB_RPATH, AC_LIB_LINKFLAGS_BODY,
+	AC_LIB_LINKFLAGS_FROM_LIBS): Rename libext to acl_libext,
+	shlibext to acl_shlibext, libname_spec to acl_libname_spec,
+	library_names_spec to acl_library_names_spec, hardcode_* to
+	acl_hardcode_*.
+	Reported by Ralf Wildenhues.
+
+2007-01-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/gc-arcfour.m4 (gl_GC_ARCFOUR): Remove GC_USE_ARCFOUR macro
+	definition.
+	* m4/gc-arctwo.m4 (gl_GC_ARCTWO): Remove GC_USE_ARCTWO macro
+	definition.
+	* m4/gc-des.m4 (gl_GC_DES): Remove GC_USE_DES macro definition.
+	* m4/gc-hmac-md5.m4 (gl_GC_HMAC_MD5): Remove GC_USE_HMAC_MD5 macro
+	definition.
+	* m4/gc-hmac-sha1.m4 (gl_GC_HMAC_SHA1): Remove GC_USE_HMAC_SHA1 macro
+	definition.
+	* m4/gc-md2.m4 (gl_GC_MD2): Remove GC_USE_MD2 macro definition.
+	* m4/gc-md4.m4 (gl_GC_MD4): Remove GC_USE_MD4 macro definition.
+	* m4/gc-md5.m4 (gl_GC_MD5): Remove GC_USE_MD5 macro definition.
+	* m4/gc-random.m4 (gl_GC_RANDOM): Remove GC_USE_RANDOM macro
+	definition.
+	* m4/gc-rijndael.m4 (gl_GC_RIJNDAEL): Remove GC_USE_RIJNDAEL macro
+	definition.
+	* m4/gc-sha1.m4 (gl_GC_SHA1): Remove GC_USE_SHA1 macro definition.
+	* lib/gc-gnulib.c: Use GNULIB_GC_<algorithm> instead of
+	GC_USE_<algorithm>.
+	* lib/gc-libgcrypt.c: Likewise.
+	* modules/gc-arcfour (configure.ac): Use gl_MODULE_INDICATOR.
+	* modules/gc-arctwo (configure.ac): Likewise.
+	* modules/gc-des (configure.ac): Likewise.
+	* modules/gc-hmac-md5 (configure.ac): Likewise.
+	* modules/gc-hmac-sha1 (configure.ac): Likewise.
+	* modules/gc-md2 (configure.ac): Likewise.
+	* modules/gc-md4 (configure.ac): Likewise.
+	* modules/gc-md5 (configure.ac): Likewise.
+	* modules/gc-random (configure.ac): Likewise.
+	* modules/gc-rijndael (configure.ac): Likewise.
+	* modules/gc-sha1 (configure.ac): Likewise.
+
+2007-01-08  Bruno Haible  <bruno@clisp.org>
+
 	* m4/close-stream.m4 (gl_CLOSE_STREAM): Remove GNULIB_CLOSE_STREAM
 	macro definition.
 	* m4/fcntl-safer.m4 (gl_FCNTL_SAFER): Remove GNULIB_FCNTL_SAFER macro
