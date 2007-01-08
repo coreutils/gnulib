@@ -1,6 +1,6 @@
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
-dnl Copyright (C) 2006 Free Software Foundation, Inc.
+dnl Copyright (C) 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -20,11 +20,11 @@ AC_DEFUN([gl_WCTYPE_H],
   if test $ac_cv_header_wctype_h = yes; then
     if test "$ac_cv_func_iswcntrl" = yes; then
       WCTYPE_H=
-      ABSOLUTE_WCTYPE_H=\"does/not/matter.h\"
-    else
-      gl_ABSOLUTE_HEADER([wctype.h])
-      ABSOLUTE_WCTYPE_H=\"$gl_cv_absolute_wctype_h\"
     fi
+    dnl Compute ABSOLUTE_WCTYPE_H even if WCTYPE_H is empty,
+    dnl for the benefit of builds from non-distclean directories.
+    gl_ABSOLUTE_HEADER([wctype.h])
+    ABSOLUTE_WCTYPE_H=\"$gl_cv_absolute_wctype_h\"
     HAVE_WCTYPE_H=1
   else
     ABSOLUTE_WCTYPE_H=\"no/such/file/wctype.h\"

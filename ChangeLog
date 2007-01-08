@@ -1,3 +1,10 @@
+2007-01-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/wctype.m4 (gl_WCTYPE_H): Compute ABSOLUTE_WCTYPE_H even if
+	WCTYPE_H is empty, for the benefit of builds from non-distclean
+	directories.  Problem reported by Eric Blake in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2007-01/msg00157.html>.
+
 2007-01-08  Bruno Haible  <bruno@clisp.org>
 
 	* m4/canonicalize.m4 (AC_FUNC_CANONICALIZE_FILE_NAME): Remove
