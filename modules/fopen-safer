@@ -12,6 +12,7 @@ unistd-safer
 
 configure.ac:
 gl_FOPEN_SAFER
+gl_MODULE_INDICATOR([fopen-safer])
 
 Makefile.am:
 

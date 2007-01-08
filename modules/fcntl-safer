@@ -13,6 +13,7 @@ unistd-safer
 
 configure.ac:
 gl_FCNTL_SAFER
+gl_MODULE_INDICATOR([fcntl-safer])
 
 Makefile.am:
 

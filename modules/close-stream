@@ -12,6 +12,7 @@ stdbool
 
 configure.ac:
 gl_CLOSE_STREAM
+gl_MODULE_INDICATOR([close-stream])
 
 Makefile.am:
 

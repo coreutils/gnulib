@@ -1,5 +1,19 @@
 2007-01-08  Bruno Haible  <bruno@clisp.org>
 
+	* m4/close-stream.m4 (gl_CLOSE_STREAM): Remove GNULIB_CLOSE_STREAM
+	macro definition.
+	* m4/fcntl-safer.m4 (gl_FCNTL_SAFER): Remove GNULIB_FCNTL_SAFER macro
+	definition.
+	* m4/stdio-safer.m4 (gl_FOPEN_SAFER): Remove GNULIB_FOPEN_SAFER macro
+	definition.
+	* modules/close-stream (configure.ac): Invoke gl_MODULE_INDICATOR.
+	* modules/fcntl-safer (configure.ac): Likewise.
+	* modules/fopen-safer (configure.ac): Likewise.
+	* modules/fwriteerror (configure.ac): Likewise. Remove explicit
+	GNULIB_FWRITEERROR macro definition.
+
+2007-01-08  Bruno Haible  <bruno@clisp.org>
+
 	* m4/gnulib-common.m4: New file.
 	* gnulib-tool (func_get_autoconf_snippet): Undo last change.
 	(func_get_filelist): Add m4/gnulib-common.m4.
