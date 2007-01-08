@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) 2002-2006 Free Software Foundation, Inc.
+# Copyright (C) 2002-2007 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -2122,12 +2122,22 @@ func_all_modules ()
   func_module unicodeio
   func_module rpmatch
   func_module yesno
+  func_module linebreak
+  func_module bison-i18n
+  func_end_table
+
+  element="Unicode string functions"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap posix_ext_unicode
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module unitypes
   func_module ucs4-utf8
   func_module ucs4-utf16
   func_module utf8-ucs4
   func_module utf16-ucs4
-  func_module linebreak
-  func_module bison-i18n
   func_end_table
 
   element="Executing programs"

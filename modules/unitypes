@@ -1,0 +1,22 @@
+Description:
+Base types for Unicode string functions.
+
+Files:
+lib/unitypes.h
+
+Depends-on:
+stdint
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"unitypes.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
