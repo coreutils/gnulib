@@ -1,3 +1,8 @@
+2007-01-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/lib-link.m4 (AC_LIB_LINKFLAGS_BODY): Simplify the sorting
+	command.
+
 2007-01-08  Jim Meyering  <jim@meyering.net>
 
 	Use a more robust test for a "can't happen" condition.

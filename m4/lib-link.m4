@@ -1,5 +1,5 @@
-# lib-link.m4 serial 11 (gettext-0.16.2)
-dnl Copyright (C) 2001-2006 Free Software Foundation, Inc.
+# lib-link.m4 serial 12 (gettext-0.16.2)
+dnl Copyright (C) 2001-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -232,7 +232,7 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
                   ver=`(cd "$dir" && \
                         for f in "$libname$shrext".*; do echo "$f"; done \
                         | sed -e "s,^$libname$shrext\\\\.,," \
-                        | tr '.' ' ' | sort -n -r -k1 -k2 -k3 -k4 -k5 | tr ' ' '.' \
+                        | sort -t '.' -n -r -k1,1 -k2,2 -k3,3 -k4,4 -k5,5 \
                         | sed 1q ) 2>/dev/null`
                   if test -n "$ver" && test -f "$dir/$libname$shrext.$ver"; then
                     found_dir="$dir"
@@ -279,7 +279,7 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
                         ver=`(cd "$dir" && \
                               for f in "$libname$shrext".*; do echo "$f"; done \
                               | sed -e "s,^$libname$shrext\\\\.,," \
-                              | tr '.' ' ' | sort -n -r -k1 -k2 -k3 -k4 -k5 | tr ' ' '.' \
+                              | sort -t '.' -n -r -k1,1 -k2,2 -k3,3 -k4,4 -k5,5 \
                               | sed 1q ) 2>/dev/null`
                         if test -n "$ver" && test -f "$dir/$libname$shrext.$ver"; then
                           found_dir="$dir"
