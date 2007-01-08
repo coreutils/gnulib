@@ -1,5 +1,35 @@
 2007-01-08  Bruno Haible  <bruno@clisp.org>
 
+	* modules/utf8-ucs4 (Files, lib_SOURCES): Add unistr/utf8-ucs4.c.
+	(Depends-on): Add unitypes.
+	* lib/utf8-ucs4.h: Add double-inclusion guard. Include unitypes.h.
+	(u8_mbtouc_aux): Move out to separate file.
+	(u8_mbtouc): Use ucs4_t, uint8_t types.
+	* lib/unistr/utf8-ucs4.c: New file.
+
+	* modules/utf16-ucs4 (Files, lib_SOURCES): Add unistr/utf16-ucs4.c.
+	(Depends-on): Add unitypes.
+	* lib/utf16-ucs4.h: Add double-inclusion guard. Include unitypes.h.
+	(u16_mbtouc_aux): Move out to separate file.
+	(u16_mbtouc): Use ucs4_t, uint16_t types.
+	* lib/unistr/utf16-ucs4.c: New file.
+
+	* modules/ucs4-utf8 (Files, lib_SOURCES): Add unistr/ucs4-utf8.c.
+	(Depends-on): Add unitypes.
+	* lib/ucs4-utf8.h: Add double-inclusion guard. Include unitypes.h.
+	(u8_uctomb_aux): Move out to separate file.
+	(u8_uctomb): Use ucs4_t, uint8_t types.
+	* lib/unistr/ucs4-utf8.c: New file.
+
+	* modules/ucs4-utf16 (Files, lib_SOURCES): Add unistr/ucs4-utf16.c.
+	(Depends-on): Add unitypes.
+	* lib/ucs4-utf16.h: Add double-inclusion guard. Include unitypes.h.
+	(u16_uctomb_aux): Move out to separate file.
+	(u16_uctomb): Use ucs4_t, uint16_t types.
+	* lib/unistr/ucs4-utf16.c: New file.
+
+2007-01-08  Bruno Haible  <bruno@clisp.org>
+
 	Avoid variable names that conflict with those from libtool.
 	* m4/lib-link.m4 (AC_LIB_RPATH, AC_LIB_LINKFLAGS_BODY,
 	AC_LIB_LINKFLAGS_FROM_LIBS): Rename libext to acl_libext,

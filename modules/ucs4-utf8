@@ -3,15 +3,17 @@ Conversion UCS-4 to UTF-8.
 
 Files:
 lib/ucs4-utf8.h
+lib/unistr/ucs4-utf8.c
 m4/ucs4-utf.m4
 
 Depends-on:
+unitypes
 
 configure.ac:
 gl_UCS4_UTF
 
 Makefile.am:
-lib_SOURCES += ucs4-utf8.h
+lib_SOURCES += ucs4-utf8.h unistr/ucs4-utf8.c
 
 Include:
 

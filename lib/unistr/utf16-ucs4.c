@@ -1,5 +1,5 @@
 /* Conversion UTF-16 to UCS-4.
-   Copyright (C) 2001-2002, 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify it
@@ -17,29 +17,37 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
    USA.  */
 
-#ifndef _UTF16_UCS4_H
-#define _UTF16_UCS4_H
+#include <config.h>
 
-#include <stddef.h>
-#include "unitypes.h"
+/* Specification.  */
+#include "utf16-ucs4.h"
 
-extern int u16_mbtouc_aux (ucs4_t *puc, const uint16_t *s, size_t n);
-
-/* Return the length (number of units) of the first character in S, putting
-   its 'ucs4_t' representation in *PUC.
-   The number of available units, N, must be > 0.  */
-static inline int
-u16_mbtouc (ucs4_t *puc, const uint16_t *s, size_t n)
+int
+u16_mbtouc_aux (ucs4_t *puc, const uint16_t *s, size_t n)
 {
   uint16_t c = *s;
 
-  if (c < 0xd800 || c >= 0xe000)
+#if CONFIG_UNICODE_SAFETY
+  if (c < 0xdc00)
+#endif
     {
-      *puc = c;
-      return 1;
+      if (n >= 2)
+	{
+#if CONFIG_UNICODE_SAFETY
+	  if (s[1] >= 0xdc00 && s[1] < 0xe000)
+#endif
+	    {
+	      *puc = 0x10000 + ((c - 0xd800) << 10) + (s[1] - 0xdc00);
+	      return 2;
+	    }
+	  /* invalid multibyte character */
+	}
+      else
+	{
+	  /* incomplete multibyte character */
+	}
     }
-  else
-    return u16_mbtouc_aux (puc, s, n);
+  /* invalid multibyte character */
+  *puc = 0xfffd;
+  return 1;
 }
-
-#endif /* _UTF16_UCS4_H */
