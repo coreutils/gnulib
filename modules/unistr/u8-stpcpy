@@ -1,0 +1,25 @@
+Description:
+Copy UTF-8 string.
+
+Files:
+lib/unistr/u8-stpcpy.c
+lib/unistr/u-stpcpy.h
+
+Depends-on:
+unistr/base
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([stpcpy])
+
+Makefile.am:
+lib_SOURCES += unistr/u8-stpcpy.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
