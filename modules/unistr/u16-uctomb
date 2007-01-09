@@ -1,0 +1,24 @@
+Description:
+Store a character in UTF-16 string.
+
+Files:
+lib/unistr/u16-uctomb.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+gl_MODULE_INDICATOR([unistr/u16-uctomb])
+
+Makefile.am:
+lib_SOURCES += unistr/u16-uctomb.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
