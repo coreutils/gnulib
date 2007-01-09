@@ -1,0 +1,26 @@
+Description:
+Tokenize UTF-32 string.
+
+Files:
+lib/unistr/u32-strtok.c
+lib/unistr/u-strtok.h
+
+Depends-on:
+unistr/base
+unistr/u32-strspn
+unistr/u32-strpbrk
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u32-strtok.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
