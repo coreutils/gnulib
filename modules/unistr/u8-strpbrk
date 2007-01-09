@@ -1,0 +1,26 @@
+Description:
+Search for some characters in UTF-8 string.
+
+Files:
+lib/unistr/u8-strpbrk.c
+lib/unistr/u-strpbrk.h
+
+Depends-on:
+unistr/base
+unistr/u8-strmbtouc
+unistr/u8-strchr
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u8-strpbrk.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
