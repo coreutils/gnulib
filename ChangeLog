@@ -10252,7 +10252,7 @@
 	* gnulib-tool (func_import): Also copy m4/gnulib-tool.m4. Omit
 	declaration macro definitions from generated gnulib.m4.
 
-2005-08-30  "Oskar Liljeblad"  <oskar@osk.mine.nu>
+2005-08-30  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* lib/iconvme.h: Add prototype for iconv_alloc.
 
@@ -10286,7 +10286,7 @@
 
 	* modules/byteswap (Makefile.am): Fix rule to not assume GNU make.
 
-2005-08-29  "Oskar Liljeblad"  <oskar@osk.mine.nu>
+2005-08-29  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* lib/iconvme.c: Split iconv_string into iconv_alloc.
 
