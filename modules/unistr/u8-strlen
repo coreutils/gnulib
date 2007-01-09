@@ -1,0 +1,23 @@
+Description:
+Determine length of UTF-8 string.
+
+Files:
+lib/unistr/u8-strlen.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u8-strlen.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

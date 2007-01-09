@@ -1,0 +1,24 @@
+Description:
+Determine length of UTF-16 string.
+
+Files:
+lib/unistr/u16-strlen.c
+lib/unistr/u-strlen.h
+
+Depends-on:
+unistr/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u16-strlen.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
