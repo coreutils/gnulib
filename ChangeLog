@@ -1,3 +1,9 @@
+2007-01-08  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_all_modules): Use find, not ls, to traverse the
+	modules directory. Filter out CVS, ChangeLog, COPYING, README also from
+	subdirectories.
+
 2007-01-08  Karl Berry  <karl@gnu.org>
 
 	* doc/error.texi: mention that main() fns must set program_name
