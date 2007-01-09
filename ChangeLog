@@ -1,3 +1,293 @@
+2007-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* modules/unistr/base: New file.
+	* lib/unistr.h: New file.
+
+	* modules/unistr/u8-to-u16: New file.
+	* lib/unistr/u8-to-u16.c: New file.
+
+	* modules/unistr/u8-to-u32: New file.
+	* lib/unistr/u8-to-u32.c: New file.
+
+	* modules/unistr/u16-to-u8: New file.
+	* lib/unistr/u16-to-u8.c: New file.
+
+	* modules/unistr/u16-to-u32: New file.
+	* lib/unistr/u16-to-u32.c: New file.
+
+	* modules/unistr/u32-to-u8: New file.
+	* lib/unistr/u32-to-u8.c: New file.
+
+	* modules/unistr/u32-to-u16: New file.
+	* lib/unistr/u32-to-u16.c: New file.
+
+	* modules/unistr/u8-check: New file.
+	* modules/unistr/u16-check: New file.
+	* modules/unistr/u32-check: New file.
+	* lib/unistr/u8-check.c: New file.
+	* lib/unistr/u16-check.c: New file.
+	* lib/unistr/u32-check.c: New file.
+
+	* modules/unistr/u8-chr: New file.
+	* modules/unistr/u16-chr: New file.
+	* modules/unistr/u32-chr: New file.
+	* lib/unistr/u8-chr.c: New file.
+	* lib/unistr/u16-chr.c: New file.
+	* lib/unistr/u32-chr.c: New file.
+
+	* modules/unistr/u8-cmp: New file.
+	* modules/unistr/u16-cmp: New file.
+	* modules/unistr/u32-cmp: New file.
+	* lib/unistr/u8-cmp.c: New file.
+	* lib/unistr/u16-cmp.c: New file.
+	* lib/unistr/u32-cmp.c: New file.
+
+	* modules/unistr/u8-cpy: New file.
+	* modules/unistr/u16-cpy: New file.
+	* modules/unistr/u32-cpy: New file.
+	* lib/unistr/u8-cpy.c: New file.
+	* lib/unistr/u16-cpy.c: New file.
+	* lib/unistr/u32-cpy.c: New file.
+	* lib/unistr/u-cpy.h: New file.
+
+	* modules/unistr/u8-cpy-alloc: New file.
+	* modules/unistr/u16-cpy-alloc: New file.
+	* modules/unistr/u32-cpy-alloc: New file.
+	* lib/unistr/u8-cpy-alloc.c: New file.
+	* lib/unistr/u16-cpy-alloc.c: New file.
+	* lib/unistr/u32-cpy-alloc.c: New file.
+	* lib/unistr/u-cpy-alloc.h: New file.
+
+	* modules/unistr/u8-endswith: New file.
+	* modules/unistr/u16-endswith: New file.
+	* modules/unistr/u32-endswith: New file.
+	* lib/unistr/u8-endswith.c: New file.
+	* lib/unistr/u16-endswith.c: New file.
+	* lib/unistr/u32-endswith.c: New file.
+	* lib/unistr/u-endswith.h: New file.
+
+	* modules/unistr/u8-mblen: New file.
+	* modules/unistr/u16-mblen: New file.
+	* modules/unistr/u32-mblen: New file.
+	* lib/unistr/u8-mblen.c: New file.
+	* lib/unistr/u16-mblen.c: New file.
+	* lib/unistr/u32-mblen.c: New file.
+
+	* modules/unistr/u8-mbtouc: New file.
+	* modules/unistr/u16-mbtouc: New file.
+	* modules/unistr/u32-mbtouc: New file.
+	* lib/unistr/u8-mbtouc.c: New file.
+	* lib/unistr/u16-mbtouc.c: New file.
+	* lib/unistr/u32-mbtouc.c: New file.
+
+	* modules/unistr/u8-mbtouc-safe: New file.
+	* modules/unistr/u16-mbtouc-safe: New file.
+	* modules/unistr/u32-mbtouc-safe: New file.
+	* lib/unistr/u8-mbtouc-safe.c: New file.
+	* lib/unistr/u16-mbtouc-safe.c: New file.
+	* lib/unistr/u32-mbtouc-safe.c: New file.
+
+	* modules/unistr/u8-move: New file.
+	* modules/unistr/u16-move: New file.
+	* modules/unistr/u32-move: New file.
+	* lib/unistr/u8-move.c: New file.
+	* lib/unistr/u16-move.c: New file.
+	* lib/unistr/u32-move.c: New file.
+	* lib/unistr/u-move.h: New file.
+
+	* modules/unistr/u8-next: New file.
+	* modules/unistr/u16-next: New file.
+	* modules/unistr/u32-next: New file.
+	* lib/unistr/u8-next.c: New file.
+	* lib/unistr/u16-next.c: New file.
+	* lib/unistr/u32-next.c: New file.
+
+	* modules/unistr/u8-prev: New file.
+	* modules/unistr/u16-prev: New file.
+	* modules/unistr/u32-prev: New file.
+	* lib/unistr/u8-prev.c: New file.
+	* lib/unistr/u16-prev.c: New file.
+	* lib/unistr/u32-prev.c: New file.
+
+	* modules/unistr/u8-set: New file.
+	* modules/unistr/u16-set: New file.
+	* modules/unistr/u32-set: New file.
+	* lib/unistr/u8-set.c: New file.
+	* lib/unistr/u16-set.c: New file.
+	* lib/unistr/u32-set.c: New file.
+	* lib/unistr/u-set.h: New file.
+
+	* modules/unistr/u8-startswith: New file.
+	* modules/unistr/u16-startswith: New file.
+	* modules/unistr/u32-startswith: New file.
+	* lib/unistr/u8-startswith.c: New file.
+	* lib/unistr/u16-startswith.c: New file.
+	* lib/unistr/u32-startswith.c: New file.
+	* lib/unistr/u-startswith.h: New file.
+
+	* modules/unistr/u8-stpcpy: New file.
+	* modules/unistr/u16-stpcpy: New file.
+	* modules/unistr/u32-stpcpy: New file.
+	* lib/unistr/u8-stpcpy.c: New file.
+	* lib/unistr/u16-stpcpy.c: New file.
+	* lib/unistr/u32-stpcpy.c: New file.
+	* lib/unistr/u-stpcpy.h: New file.
+
+	* modules/unistr/u8-stpncpy: New file.
+	* modules/unistr/u16-stpncpy: New file.
+	* modules/unistr/u32-stpncpy: New file.
+	* lib/unistr/u8-stpncpy.c: New file.
+	* lib/unistr/u16-stpncpy.c: New file.
+	* lib/unistr/u32-stpncpy.c: New file.
+	* lib/unistr/u-stpncpy.h: New file.
+
+	* modules/unistr/u8-strcat: New file.
+	* modules/unistr/u16-strcat: New file.
+	* modules/unistr/u32-strcat: New file.
+	* lib/unistr/u8-strcat.c: New file.
+	* lib/unistr/u16-strcat.c: New file.
+	* lib/unistr/u32-strcat.c: New file.
+	* lib/unistr/u-strcat.h: New file.
+
+	* modules/unistr/u8-strchr: New file.
+	* modules/unistr/u16-strchr: New file.
+	* modules/unistr/u32-strchr: New file.
+	* lib/unistr/u8-strchr.c: New file.
+	* lib/unistr/u16-strchr.c: New file.
+	* lib/unistr/u32-strchr.c: New file.
+
+	* modules/unistr/u8-strcmp: New file.
+	* modules/unistr/u16-strcmp: New file.
+	* modules/unistr/u32-strcmp: New file.
+	* lib/unistr/u8-strcmp.c: New file.
+	* lib/unistr/u16-strcmp.c: New file.
+	* lib/unistr/u32-strcmp.c: New file.
+
+	* modules/unistr/u8-strcpy: New file.
+	* modules/unistr/u16-strcpy: New file.
+	* modules/unistr/u32-strcpy: New file.
+	* lib/unistr/u8-strcpy.c: New file.
+	* lib/unistr/u16-strcpy.c: New file.
+	* lib/unistr/u32-strcpy.c: New file.
+	* lib/unistr/u-strcpy.h: New file.
+
+	* modules/unistr/u8-strcspn: New file.
+	* modules/unistr/u16-strcspn: New file.
+	* modules/unistr/u32-strcspn: New file.
+	* lib/unistr/u8-strcspn.c: New file.
+	* lib/unistr/u16-strcspn.c: New file.
+	* lib/unistr/u32-strcspn.c: New file.
+	* lib/unistr/u-strcspn.h: New file.
+
+	* modules/unistr/u8-strdup: New file.
+	* modules/unistr/u16-strdup: New file.
+	* modules/unistr/u32-strdup: New file.
+	* lib/unistr/u8-strdup.c: New file.
+	* lib/unistr/u16-strdup.c: New file.
+	* lib/unistr/u32-strdup.c: New file.
+	* lib/unistr/u-strdup.h: New file.
+
+	* modules/unistr/u8-strlen: New file.
+	* modules/unistr/u16-strlen: New file.
+	* modules/unistr/u32-strlen: New file.
+	* lib/unistr/u8-strlen.c: New file.
+	* lib/unistr/u16-strlen.c: New file.
+	* lib/unistr/u32-strlen.c: New file.
+	* lib/unistr/u-strlen.h: New file.
+
+	* modules/unistr/u8-strmblen: New file.
+	* modules/unistr/u16-strmblen: New file.
+	* modules/unistr/u32-strmblen: New file.
+	* lib/unistr/u8-strmblen.c: New file.
+	* lib/unistr/u16-strmblen.c: New file.
+	* lib/unistr/u32-strmblen.c: New file.
+
+	* modules/unistr/u8-strmbtouc: New file.
+	* modules/unistr/u16-strmbtouc: New file.
+	* modules/unistr/u32-strmbtouc: New file.
+	* lib/unistr/u8-strmbtouc.c: New file.
+	* lib/unistr/u16-strmbtouc.c: New file.
+	* lib/unistr/u32-strmbtouc.c: New file.
+
+	* modules/unistr/u8-strncat: New file.
+	* modules/unistr/u16-strncat: New file.
+	* modules/unistr/u32-strncat: New file.
+	* lib/unistr/u8-strncat.c: New file.
+	* lib/unistr/u16-strncat.c: New file.
+	* lib/unistr/u32-strncat.c: New file.
+	* lib/unistr/u-strncat.h: New file.
+
+	* modules/unistr/u8-strncmp: New file.
+	* modules/unistr/u16-strncmp: New file.
+	* modules/unistr/u32-strncmp: New file.
+	* lib/unistr/u8-strncmp.c: New file.
+	* lib/unistr/u16-strncmp.c: New file.
+	* lib/unistr/u32-strncmp.c: New file.
+
+	* modules/unistr/u8-strncpy: New file.
+	* modules/unistr/u16-strncpy: New file.
+	* modules/unistr/u32-strncpy: New file.
+	* lib/unistr/u8-strncpy.c: New file.
+	* lib/unistr/u16-strncpy.c: New file.
+	* lib/unistr/u32-strncpy.c: New file.
+	* lib/unistr/u-strncpy.h: New file.
+
+	* modules/unistr/u8-strnlen: New file.
+	* modules/unistr/u16-strnlen: New file.
+	* modules/unistr/u32-strnlen: New file.
+	* lib/unistr/u8-strnlen.c: New file.
+	* lib/unistr/u16-strnlen.c: New file.
+	* lib/unistr/u32-strnlen.c: New file.
+	* lib/unistr/u-strnlen.h: New file.
+
+	* modules/unistr/u8-strpbrk: New file.
+	* modules/unistr/u16-strpbrk: New file.
+	* modules/unistr/u32-strpbrk: New file.
+	* lib/unistr/u8-strpbrk.c: New file.
+	* lib/unistr/u16-strpbrk.c: New file.
+	* lib/unistr/u32-strpbrk.c: New file.
+	* lib/unistr/u-strpbrk.h: New file.
+
+	* modules/unistr/u8-strrchr: New file.
+	* modules/unistr/u16-strrchr: New file.
+	* modules/unistr/u32-strrchr: New file.
+	* lib/unistr/u8-strrchr.c: New file.
+	* lib/unistr/u16-strrchr.c: New file.
+	* lib/unistr/u32-strrchr.c: New file.
+
+	* modules/unistr/u8-strspn: New file.
+	* modules/unistr/u16-strspn: New file.
+	* modules/unistr/u32-strspn: New file.
+	* lib/unistr/u8-strspn.c: New file.
+	* lib/unistr/u16-strspn.c: New file.
+	* lib/unistr/u32-strspn.c: New file.
+	* lib/unistr/u-strspn.h: New file.
+
+	* modules/unistr/u8-strstr: New file.
+	* modules/unistr/u16-strstr: New file.
+	* modules/unistr/u32-strstr: New file.
+	* lib/unistr/u8-strstr.c: New file.
+	* lib/unistr/u16-strstr.c: New file.
+	* lib/unistr/u32-strstr.c: New file.
+	* lib/unistr/u-strstr.h: New file.
+
+	* modules/unistr/u8-strtok: New file.
+	* modules/unistr/u16-strtok: New file.
+	* modules/unistr/u32-strtok: New file.
+	* lib/unistr/u8-strtok.c: New file.
+	* lib/unistr/u16-strtok.c: New file.
+	* lib/unistr/u32-strtok.c: New file.
+	* lib/unistr/u-strtok.h: New file.
+
+	* modules/unistr/u8-uctomb: New file.
+	* modules/unistr/u16-uctomb: New file.
+	* modules/unistr/u32-uctomb: New file.
+	* lib/unistr/u8-uctomb.c: New file.
+	* lib/unistr/u16-uctomb.c: New file.
+	* lib/unistr/u32-uctomb.c: New file.
+
+	* MODULES.html.sh (Unicode string functions): Add the new modules.
+
 2007-01-08  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_all_modules): Use find, not ls, to traverse the
