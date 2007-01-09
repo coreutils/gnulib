@@ -1,0 +1,23 @@
+Description:
+Iterate over next character in UTF-8 string.
+
+Files:
+lib/unistr/u8-next.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u8-next.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
