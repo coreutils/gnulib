@@ -1,0 +1,25 @@
+Description:
+Concatenate UTF-32 strings.
+
+Files:
+lib/unistr/u32-strcat.c
+lib/unistr/u-strcat.h
+
+Depends-on:
+unistr/base
+unistr/u32-strlen
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u32-strcat.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
