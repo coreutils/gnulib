@@ -1,0 +1,23 @@
+Description:
+Search character in UTF-32 string.
+
+Files:
+lib/unistr/u32-strrchr.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u32-strrchr.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
