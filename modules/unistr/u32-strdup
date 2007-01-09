@@ -1,0 +1,25 @@
+Description:
+Copy UTF-32 string.
+
+Files:
+lib/unistr/u32-strdup.c
+lib/unistr/u-strdup.h
+
+Depends-on:
+unistr/base
+unistr/u32-strlen
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u32-strdup.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
