@@ -1,0 +1,26 @@
+Description:
+Substring test for UTF-8 strings.
+
+Files:
+lib/unistr/u8-endswith.c
+lib/unistr/u-endswith.h
+
+Depends-on:
+unistr/base
+unistr/u8-strlen
+unistr/u8-cmp
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u8-endswith.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

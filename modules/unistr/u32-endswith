@@ -1,0 +1,26 @@
+Description:
+Substring test for UTF-32 strings.
+
+Files:
+lib/unistr/u32-endswith.c
+lib/unistr/u-endswith.h
+
+Depends-on:
+unistr/base
+unistr/u32-strlen
+unistr/u32-cmp
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u32-endswith.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
