@@ -1,0 +1,24 @@
+Description:
+Substring test for UTF-32 strings.
+
+Files:
+lib/unistr/u32-strstr.c
+lib/unistr/u-strstr.h
+
+Depends-on:
+unistr/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u32-strstr.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
