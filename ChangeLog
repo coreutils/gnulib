@@ -1,5 +1,12 @@
 2007-01-09  Bruno Haible  <bruno@clisp.org>
 
+	* MODULES.html.sh: Accept options --cvs-urls, --git-urls.
+	(repo_url_prefix, repo_url_suffix, repo_url_suffix_repl): New
+	variables.
+	(func_module): Use them.
+
+2007-01-09  Bruno Haible  <bruno@clisp.org>
+
 	* modules/unistr/base: New file.
 	* lib/unistr.h: New file.
 

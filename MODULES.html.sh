@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #
 
-# Usage: MODULES.html.sh > MODULES.html
+# Usage: MODULES.html.sh [--cvs-urls|--git-urls] > MODULES.html
 
 # Extend the PATH so that gnulib-tool is found.
 PATH=`dirname "$0"`:$PATH; export PATH
@@ -27,6 +27,25 @@ case $USER in
   bruno )
     POSIX2001_URL='file:/packages/www/www.opengroup.org/susv3' ;;
 esac
+
+repo_url_prefix=
+repo_url_suffix=
+if test $# != 0; then
+  case "$1" in
+    --cvs-urls)
+      # Generate URLs to the official gnulib CVS repository.
+      repo_url_prefix='http://cvs.sv.gnu.org/viewcvs/*checkout*/gnulib/'
+      repo_url_suffix='?root=gnulib&content-type=text/plain'
+      ;;
+    --git-urls)
+      # Generate URLs to the official gnulib git repository.
+      repo_url_prefix='http://git.sv.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f='
+      repo_url_suffix=''
+      ;;
+  esac
+fi
+# For sed replacements: Escape the '&'.
+repo_url_suffix_repl=`echo "$repo_url_suffix" | sed -e 's,[&],\\\&,'`
 
 sed_lt='s,<,\&lt;,g'
 sed_gt='s,>,\&gt;,g'
@@ -1404,14 +1423,14 @@ func_module ()
 
     func_begin TR
 
-    element='<A NAME="module='$1'"></A><A HREF="modules/'$1'">'$1'</A>'
+    element='<A NAME="module='$1'"></A><A HREF="'$repo_url_prefix'modules/'$1$repo_url_suffix'">'$1'</A>'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
     includes=`gnulib-tool --extract-include-directive $1`
     files=`gnulib-tool --extract-filelist $1`
     element=`echo "$includes" \
              | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" \
-                   -e 's,^#include "\(.*\)"$,#include "<A HREF="lib/\1">\1</A>",' \
+                   -e 's,^#include "\(.*\)"$,#include "<A HREF="'$repo_url_prefix'lib/\1'$repo_url_suffix_repl'">\1</A>",' \
                    -e 's,^#include &lt;'"${posix_headers}"'\.h&gt;$,#include \&lt;<A HREF="'"$POSIX2001_URL"'xbd/\1.h.html">\1.h</A>\&gt;,' \
                    -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'
@@ -1426,7 +1445,7 @@ func_module ()
              | sed -e '/^$/d' \
              | sed -n -e "$sed_choose_lib_files" \
              | sed -e '/^'"${includefile}"'$/d' \
-                   -e 's,^\(.*\)$,<A HREF="lib/\1">\1</A>,' \
+                   -e 's,^\(.*\)$,<A HREF="'$repo_url_prefix'lib/\1'$repo_url_suffix_repl'">\1</A>,' \
                    -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
@@ -1436,7 +1455,7 @@ func_module ()
               | sed -e "$sed_remove_trailing_empty_line" \
               | sed -n -e "$sed_choose_m4_files" \
               | sed -e '/^onceonly/d' \
-                    -e 's,^\(.*\)$,<A HREF="m4/\1">\1</A>,'; \
+                    -e 's,^\(.*\)$,<A HREF="'$repo_url_prefix'm4/\1'$repo_url_suffix_repl'">\1</A>,'; \
               gnulib-tool --extract-autoconf-snippet $1 \
               | sed -e "$sed_remove_trailing_empty_line") \
               | sed -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
@@ -2452,7 +2471,7 @@ if test -n "$missed_files"; then
   func_echo "$element"
 
   func_echo '<PRE>'
-  echo "$missed_files" | sed -e 's,^\(.*\)$,<A HREF="\1">\1</A>,'
+  echo "$missed_files" | sed -e 's,^\(.*\)$,<A HREF="'$repo_url_prefix'\1'$repo_url_suffix_repl'">\1</A>,'
   echo '</PRE>'
 
 fi
