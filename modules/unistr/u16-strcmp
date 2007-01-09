@@ -1,0 +1,23 @@
+Description:
+Compare UTF-16 strings.
+
+Files:
+lib/unistr/u16-strcmp.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u16-strcmp.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
