@@ -1,0 +1,23 @@
+Description:
+Check UTF-32 string.
+
+Files:
+lib/unistr/u32-check.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u32-check.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
