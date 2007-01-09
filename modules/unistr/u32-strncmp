@@ -1,0 +1,23 @@
+Description:
+Compare UTF-32 strings.
+
+Files:
+lib/unistr/u32-strncmp.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u32-strncmp.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
