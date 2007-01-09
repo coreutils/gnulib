@@ -1,0 +1,25 @@
+Description:
+Search for some characters in UTF-32 string.
+
+Files:
+lib/unistr/u32-strcspn.c
+
+Depends-on:
+unistr/base
+unistr/u32-strlen
+unistr/u32-strchr
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u32-strcspn.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
