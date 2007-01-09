@@ -1,3 +1,8 @@
+2007-01-09  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (func_all_modules): Use POSIX conforming escaping
+	in sed script.
+
 2007-01-09  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh: Accept options --cvs-urls, --git-urls.
