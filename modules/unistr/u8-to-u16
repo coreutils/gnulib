@@ -1,0 +1,23 @@
+Description:
+Convert UTF-8 string to UTF-16 string.
+
+Files:
+lib/unistr/u8-to-u16.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u8-to-u16.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
