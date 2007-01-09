@@ -1,0 +1,23 @@
+Description:
+Compare pieces of UTF-8 strings.
+
+Files:
+lib/unistr/u8-cmp.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u8-cmp.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
