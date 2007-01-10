@@ -7,6 +7,8 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Paul Eggert.
 
+# wctype.m4 serial 2
+
 AC_DEFUN([gl_WCTYPE_H],
 [
   AC_CHECK_FUNCS_ONCE([iswcntrl])
@@ -14,7 +16,6 @@ AC_DEFUN([gl_WCTYPE_H],
   AC_REQUIRE([AC_C_INLINE])
 
   AC_REQUIRE([gt_TYPE_WINT_T])
-  AC_SUBST([HAVE_WINT_T])
 
   WCTYPE_H=wctype.h
   if test $ac_cv_header_wctype_h = yes; then

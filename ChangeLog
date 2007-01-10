@@ -1,3 +1,10 @@
+2007-01-10  Eric Blake  <ebb9@byu.net>
+
+	* lib/wctype_.h [HAVE_WINT_T]: Rely on AC_DEFINE.
+	* m4/wctype.m4 (gl_WCTYPE_H): No need to AC_SUBST(HAVE_WINT_T).
+	* modules/wctype (Makefile.am): Likewise.
+	Reported by Chris McGuire.
+
 2007-01-10  Jim Meyering  <jim@meyering.net>
 
 	fts.c: a small readability/maintainability improvement
