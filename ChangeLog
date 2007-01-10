@@ -1,3 +1,11 @@
+2007-01-10  Eric Blake  <ebb9@byu.net>
+
+	* lib/wctype_.h [HAVE_WINT_T]: Include <stddef.h> before
+	<wchar.h>, to work around BSDI bug in BSD/OS 4.0.1.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Likewise.
+	* m4/wint_t.m4 (gt_TYPE_WINT_T): Likewise.
+	Reported by Chris McGuire.
+
 2007-01-09  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* gnulib-tool (func_all_modules): Use POSIX conforming escaping
