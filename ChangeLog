@@ -1,3 +1,12 @@
+2007-01-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Use @...@ consistently in lib/wctype_.h.
+	* lib/wctype_.h [HAVE_WINT_T]: Go back to using @...@, but rely
+	on it being set to 1 or 0.
+	* m4/wctype.m4 (gl_WCTYPE_H): Set HAVE_WINT_T to 1 or 0, and
+	go back to AC_SUBSTing it.
+	* modules/wctype (Makefile.am): Undo previous change.
+
 2007-01-10  Eric Blake  <ebb9@byu.net>
 
 	* lib/wctype_.h [HAVE_WINT_T]: Rely on AC_DEFINE.
