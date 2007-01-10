@@ -698,6 +698,7 @@ fts_read (register FTS *sp)
 	/* Move to the next node on this level. */
 next:	tmp = p;
 	if ((p = p->fts_link) != NULL) {
+		sp->fts_cur = p;
 		free(tmp);
 
 		/*
@@ -708,7 +709,6 @@ next:	tmp = p;
 		if (p->fts_level == FTS_ROOTLEVEL) {
 			if (RESTORE_INITIAL_CWD(sp)) {
 				SET(FTS_STOP);
-				sp->fts_cur = p;
 				return (NULL);
 			}
 			fts_load(sp, p);
@@ -738,6 +738,7 @@ name:		t = sp->fts_path + NAPPEND(p->fts_parent);
 		*t++ = '/';
 		memmove(t, p->fts_name, p->fts_namelen + 1);
 check_for_dir:
+		sp->fts_cur = p;
 		if (p->fts_info == FTS_NSOK)
 		  {
 		    if (p->fts_statp->st_size == FTS_STAT_REQUIRED)
@@ -746,7 +747,6 @@ check_for_dir:
 		      fts_assert (p->fts_statp->st_size == FTS_NO_STAT_REQUIRED);
 		  }
 
-		sp->fts_cur = p;
 		if (p->fts_info == FTS_D)
 		  {
 		    /* Now that P->fts_statp is guaranteed to be valid,
@@ -766,6 +766,7 @@ check_for_dir:
 
 	/* Move up to the parent node. */
 	p = tmp->fts_parent;
+	sp->fts_cur = p;
 	free(tmp);
 
 	if (p->fts_level == FTS_ROOTPARENTLEVEL) {
@@ -811,7 +812,6 @@ check_for_dir:
 	p->fts_info = p->fts_errno ? FTS_ERR : FTS_DP;
 	if (p->fts_errno == 0)
 		LEAVE_DIR (sp, p, "3");
-	sp->fts_cur = p;
 	return ISSET(FTS_STOP) ? NULL : p;
 }
 

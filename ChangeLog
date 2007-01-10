@@ -1,3 +1,11 @@
+2007-01-10  Jim Meyering  <jim@meyering.net>
+
+	fts.c: a small readability/maintainability improvement
+	* lib/fts.c (fts_read): Make this code slightly more readable and
+	maintainable by hoisting the "sp->fts_cur = p" assignments to
+	immediately follow the statements that set P.  Derived from
+	the patch by Miloslav Trmac in http://bugzilla.redhat.com/222089.
+
 2007-01-10  Eric Blake  <ebb9@byu.net>
 
 	* lib/wctype_.h [HAVE_WINT_T]: Include <stddef.h> before
