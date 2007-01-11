@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-01-11 13:12:56 $'
+cvsdatestamp='$Date: 2007-01-11 13:28:50 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -825,6 +825,7 @@ func_all_modules ()
             -e '/^README$/d' -e '/\/README$/d' \
             -e '/^TEMPLATE$/d' \
             -e '/^TEMPLATE-TESTS$/d' \
+            -e '/^\..*/d' \
             -e '/~$/d' \
       | sed -e '/-tests$/d' \
       | LC_ALL=C sort -u

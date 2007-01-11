@@ -1,3 +1,8 @@
+2007-01-11  Simon Josefsson  <simon@josefsson.org>
+
+	* gnulib-tool (func_all_modules): Exclude all .* files (e.g.,
+	Emacs .#* auto-save files).
+
 2007-01-11  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_all_modules): Exclude all files inside the CVS
