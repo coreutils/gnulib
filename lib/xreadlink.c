@@ -38,6 +38,13 @@
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
 
+/* SYMLINK_MAX is used only for an initial memory-allocation sanity
+   check, so it's OK to guess too small on hosts where there is no
+   arbitrary limit to symbolic link length.  */
+#ifndef SYMLINK_MAX
+# define SYMLINK_MAX 1024
+#endif
+
 #define MAXSIZE (SIZE_MAX < SSIZE_MAX ? SIZE_MAX : SSIZE_MAX)
 
 #include "xalloc.h"
@@ -53,9 +60,17 @@
 char *
 xreadlink (char const *file, size_t size)
 {
-  /* The initial buffer size for the link value.  A power of 2
-     detects arithmetic overflow earlier, but is not required.  */
-  size_t buf_size = size < MAXSIZE ? size + 1 : MAXSIZE;
+  /* Some buggy file systems report garbage in st_size.  Defend
+     against them by ignoring outlandish st_size values in the initial
+     memory allocation.  */
+  size_t symlink_max = SYMLINK_MAX;
+  size_t INITIAL_LIMIT_BOUND = 8 * 1024;
+  size_t initial_limit = (symlink_max < INITIAL_LIMIT_BOUND
+			  ? symlink_max + 1
+			  : INITIAL_LIMIT_BOUND);
+
+  /* The initial buffer size for the link value.  */
+  size_t buf_size = size < initial_limit ? size + 1 : initial_limit;
 
   while (1)
     {

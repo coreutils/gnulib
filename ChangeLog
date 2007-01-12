@@ -1,3 +1,11 @@
+2007-01-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/xreadlink.c (SYMLINK_MAX) [!defined SYMLINK_MAX]: Define
+	to a reasonable default for memory allocation.
+	(xreadlink): Don't allocate a huge buffer, to work around a buggy
+	file system that reports garbage st_size values for symlinks.
+	Problem reported by Liyang Hu.
+
 2007-01-11  Simon Josefsson  <simon@josefsson.org>
 
 	* gnulib-tool (func_all_modules): Exclude all .* files (e.g.,
