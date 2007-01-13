@@ -51,7 +51,7 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
 
   /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
 # if defined _LIBICONV_VERSION \
-    || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+     || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
   /* Set to the initial state.  */
   iconv (cd, NULL, NULL, NULL, NULL);
 # endif
@@ -98,7 +98,7 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
       }
     /* Avoid glibc-2.1 bug and Solaris 2.7 bug.  */
 # if defined _LIBICONV_VERSION \
-    || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+     || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
     {
       char *outptr = tmpbuf;
       size_t outsize = tmpbufsize;
@@ -130,7 +130,7 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
 
   /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
 # if defined _LIBICONV_VERSION \
-    || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+     || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
   /* Return to the initial state.  */
   iconv (cd, NULL, NULL, NULL, NULL);
 # endif
@@ -169,7 +169,7 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
       }
     /* Avoid glibc-2.1 bug and Solaris 2.7 bug.  */
 # if defined _LIBICONV_VERSION \
-    || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+     || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
     {
       size_t res = iconv (cd, NULL, NULL, &outptr, &outsize);
 
@@ -252,7 +252,7 @@ str_cd_iconv (const char *src, iconv_t cd)
 
   /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
 # if defined _LIBICONV_VERSION \
-    || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+     || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
   /* Set to the initial state.  */
   iconv (cd, NULL, NULL, NULL, NULL);
 # endif
@@ -315,7 +315,7 @@ str_cd_iconv (const char *src, iconv_t cd)
       }
     /* Avoid glibc-2.1 bug and Solaris 2.7 bug.  */
 # if defined _LIBICONV_VERSION \
-    || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+     || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
     for (;;)
       {
 	/* Here outptr + outbytes_remaining = result + result_size - 1.  */
