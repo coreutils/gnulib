@@ -1,5 +1,5 @@
 /* Charset conversion.
-   Copyright (C) 2001-2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2007 Free Software Foundation, Inc.
    Written by Bruno Haible and Simon Josefsson.
 
    This program is free software; you can redistribute it and/or modify
@@ -59,7 +59,10 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
   /* Determine the length we need.  */
   {
     size_t count = 0;
-    char tmpbuf[tmpbufsize];
+    /* The alignment is needed when converting e.g. to glibc's WCHAR_T or
+       libiconv's UCS-4-INTERNAL encoding.  */
+    union { unsigned int align; char buf[tmpbufsize]; } tmp;
+# define tmpbuf tmp.buf
     const char *inptr = src;
     size_t insize = srclen;
 
@@ -107,6 +110,7 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
     }
 # endif
     length = count;
+# undef tmpbuf
   }
 
   if (length == 0)
