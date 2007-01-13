@@ -1,3 +1,15 @@
+2007-01-12  Eric Blake  <ebb9@byu.net>
+
+	Provide a robust <wchar.h>.  Further simplifications are now
+	possible in other modules, but not included here.
+	* modules/wchar: New module.
+	* m4/wchar.m4: New file.
+	* lib/wchar_.h: Likewise.
+	* modules/mbchar (Depends-on): Depend on wchar, as the first use
+	of the new module.
+	* MODULES.html.sh (Extended multibyte and wide character utilities):
+	New section.
+
 2007-01-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/xreadlink.c (SYMLINK_MAX) [!defined SYMLINK_MAX]: Define

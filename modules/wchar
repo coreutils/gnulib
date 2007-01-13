@@ -1,0 +1,35 @@
+Description:
+A <wchar.h> that works around platform issues.
+
+Files:
+lib/wchar_.h
+m4/wchar.m4
+
+Depends-on:
+absolute-header
+
+configure.ac:
+gl_WCHAR_H
+
+Makefile.am:
+BUILT_SOURCES += $(WCHAR_H)
+
+# We need the following in order to create <wchar.h> when the system
+# version does not work standalone.
+wchar.h: wchar_.h
+	rm -f $@-t $@
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''ABSOLUTE_WCHAR_H''@|$(ABSOLUTE_WCHAR_H)|g' \
+	    < $(srcdir)/wchar_.h; \
+	} > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += wchar.h wchar.h-t
+
+Include:
+#include <wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+all

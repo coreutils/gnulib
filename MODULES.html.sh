@@ -1844,6 +1844,16 @@ func_all_modules ()
   func_module strtoumax
   func_end_table
 
+  element="Extended multibyte and wide character utilities <wchar.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap isoc_sup_wchar
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module wchar
+  func_end_table
+
   element="Wide character classification and mapping utilities <wctype.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap isoc_sup_wctype
