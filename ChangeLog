@@ -1,5 +1,10 @@
 2007-01-14  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_get_license): For test modules, use the license of
+	the main module.
+
+2007-01-14  Bruno Haible  <bruno@clisp.org>
+
 	* modules/iconv (Include): Clarify that <iconv.h> can only be included
 	if iconv is found to exist.
 

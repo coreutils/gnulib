@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-01-14 20:45:45 $'
+cvsdatestamp='$Date: 2007-01-14 23:00:12 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1020,7 +1020,9 @@ func_get_include_directive ()
 # - local_gnulib_dir  from --local-dir
 func_get_license ()
 {
-  func_lookup_file "modules/$1"
+  # ${module}-tests always implicitly has the same license as ${module}.
+  sed_drop_tests_suffix='s/-tests$//'
+  func_lookup_file "modules/"`echo "$1" | sed -e "$sed_drop_tests_suffix"`
   sed -n -e "/^License$sed_extract_prog" < "$lookedup_file"
 }
 
