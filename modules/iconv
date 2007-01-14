@@ -13,7 +13,9 @@ AM_ICONV
 Makefile.am:
 
 Include:
-<iconv.h>
+#if HAVE_ICONV
+# include <iconv.h>
+#endif
 
 License:
 LGPL
