@@ -1,0 +1,41 @@
+Description:
+fchdir() function: change current directory, given an open file descriptor.
+
+Files:
+lib/fchdir.c
+lib/dirent_.h
+m4/fchdir.m4
+
+Depends-on:
+fcntl
+unistd
+canonicalize-lgpl
+dirfd
+strdup
+
+configure.ac:
+gl_FUNC_FCHDIR
+
+Makefile.am:
+BUILT_SOURCES += $(DIRENT_H) $(UNISTD_H2)
+
+# We need the following in order to create <dirent.h> when the system
+# doesn't have one that works with the given compiler.
+dirent.h: dirent_.h
+	rm -f $@-t $@
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''ABSOLUTE_DIRENT_H''@|$(ABSOLUTE_DIRENT_H)|g' \
+	      < $(srcdir)/dirent_.h; \
+	} > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += dirent.h dirent.h-t
+
+Include:
+#include <unistd.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

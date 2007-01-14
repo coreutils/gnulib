@@ -46,6 +46,12 @@
 
 #define _(str) gettext (str)
 
+/* The results of open() in this file are not used with fchdir,
+   therefore save some unnecessary work in fchdir.c.  */
+#undef open
+#undef close
+
+
 void
 copy_file_preserving (const char *src_filename, const char *dest_filename)
 {

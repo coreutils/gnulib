@@ -97,6 +97,11 @@
 # define __opendir opendir
 # define __readdir readdir
 #endif
+
+/* The results of opendir() in this file are not used with dirfd and fchdir,
+   therefore save some unnecessary recursion in fchdir.c.  */
+#undef opendir
+#undef closedir
 
 /* Get the name of the current working directory, and put it in SIZE
    bytes of BUF.  Returns NULL if the directory couldn't be determined or

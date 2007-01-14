@@ -1,3 +1,36 @@
+2006-12-30  Bruno Haible  <bruno@clisp.org>
+
+	* modules/fchdir: New file.
+	* modules/unistd (Files): Add lib/unistd_.h.
+	(Makefile.am): Generate unistd.h from unistd_.h.
+	* lib/fchdir.c: New file.
+	* lib/dirent_.h: New file.
+	* lib/unistd_.h: New file.
+	* lib/fcntl_.h (open) [FCHDIR_REPLACEMENT]: New replacement.
+	* m4/fchdir.m4: New file.
+	* m4/unistd_h.m4 (gl_PREREQ_UNISTD): New macro.
+	(gl_HEADER_UNISTD): Invoke it.
+	* lib/dup-safer.c (dup_safer) [FCHDIR_REPLACEMENT]: Use the dup
+	function.
+	* lib/backupfile.c (opendir, closedir): Undefine.
+	* lib/chown.c (open, close): Undefine.
+	* lib/clean-temp.c (open, close): Undefine.
+	* lib/copy-file.c (open, close): Undefine.
+	* lib/execute.c (open, close): Undefine.
+	* lib/fsusage.c (open, close): Undefine.
+	* lib/gc-gnulib.c (open, close): Undefine.
+	* lib/getcwd.c (opendir, closedir): Undefine.
+	* lib/glob.c (opendir, closedir): Undefine.
+	* lib/javacomp.c (open, close): Undefine.
+	* lib/mountlist.c (open, close, opendir, closedir): Undefine.
+	* lib/openat-proc.c (open, close): Undefine.
+	* lib/pagealign_alloc.c (open, close): Undefine.
+	* lib/pipe.c (open, close): Undefine.
+	* lib/progreloc.c (open, close): Undefine.
+	* lib/savedir.c (opendir, closedir): Undefine.
+	* lib/utime.c (open, close): Undefine.
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add fchdir.
+
 2007-01-10  Bruno Haible  <bruno@clisp.org>
 
 	* lib/striconv.c (mem_cd_iconv): Align the temporary buffer.

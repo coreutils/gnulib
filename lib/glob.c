@@ -162,6 +162,11 @@ static const char *next_brace_sub (const char *begin, int flags) __THROW;
 
 #endif /* !defined _LIBC || !defined GLOB_ONLY_P */
 
+/* The results of opendir() in this file are not used with dirfd and fchdir,
+   therefore save some unnecessary work in fchdir.c.  */
+#undef opendir
+#undef closedir
+
 static int glob_in_dir (const char *pattern, const char *directory,
 			int flags, int (*errfunc) (const char *, int),
 			glob_t *pglob);

@@ -77,6 +77,11 @@
 # define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
 
+/* The results of open() in this file are not used with fchdir,
+   therefore save some unnecessary work in fchdir.c.  */
+#undef open
+#undef close
+
 #undef set_program_name
 
 

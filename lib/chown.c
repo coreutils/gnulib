@@ -33,6 +33,11 @@
 #include <fcntl.h>
 #include <errno.h>
 
+/* The results of open() in this file are not used with fchdir,
+   therefore save some unnecessary work in fchdir.c.  */
+#undef open
+#undef close
+
 /* Provide a more-closely POSIX-conforming version of chown on
    systems with one or both of the following problems:
    - chown doesn't treat an ID of -1 as meaning

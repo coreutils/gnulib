@@ -1921,6 +1921,7 @@ func_all_modules ()
   func_begin_table
   func_module chown
   func_module dup2
+  func_module fchdir
   func_module ftruncate
   func_module getaddrinfo
   func_module getcwd

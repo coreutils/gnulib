@@ -1,6 +1,5 @@
-/* Invoke dup, but avoid some glitches.
-
-   Copyright (C) 2001, 2004, 2005, 2006 Free Software Foundation, Inc.
+/* Substitute for and wrapper around <unistd.h>.
+   Copyright (C) 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,30 +15,38 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-/* Written by Paul Eggert.  */
+#ifndef _GL_UNISTD_H
+#define _GL_UNISTD_H
 
-#include <config.h>
-
-#include "unistd-safer.h"
-
-#include <fcntl.h>
-
-#include <unistd.h>
-#ifndef STDERR_FILENO
-# define STDERR_FILENO 2
+#if HAVE_UNISTD_H
+# include @ABSOLUTE_UNISTD_H@
 #endif
 
-/* Like dup, but do not return STDIN_FILENO, STDOUT_FILENO, or
-   STDERR_FILENO.  */
 
-int
-dup_safer (int fd)
-{
-#if defined F_DUPFD && !defined FCHDIR_REPLACEMENT
-  return fcntl (fd, F_DUPFD, STDERR_FILENO + 1);
-#else
-  /* fd_safer calls us back, but eventually the recursion unwinds and
-     does the right thing.  */
-  return fd_safer (dup (fd));
+/* Declare overridden functions.  */
+
+#ifdef __cplusplus
+extern "C" {
 #endif
+
+#ifdef FCHDIR_REPLACEMENT
+
+/* Change the process' current working directory to the directory on which
+   the given file descriptor is open.  */
+extern int fchdir (int /*fd*/);
+
+# define close rpl_close
+extern int close (int);
+# define dup rpl_dup
+extern int dup (int);
+# define dup2 rpl_dup2
+extern int dup2 (int, int);
+
+#endif
+
+#ifdef __cplusplus
 }
+#endif
+
+
+#endif /* _GL_UNISTD_H */
