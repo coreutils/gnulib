@@ -1,5 +1,12 @@
 2007-01-14  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_create_testdir): Don't unnecessarily run configure
+	and make.
+	Reported by Simon Josefsson in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2007-01/msg00139.html>
+
+2007-01-14  Bruno Haible  <bruno@clisp.org>
+
 	* modules/allocsa-tests: New file.
 	* tests/test-allocsa.c: New file.
 
