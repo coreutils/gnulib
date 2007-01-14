@@ -7,6 +7,7 @@ lib/dirent_.h
 m4/fchdir.m4
 
 Depends-on:
+absolute-header
 fcntl
 unistd
 canonicalize-lgpl

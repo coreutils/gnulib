@@ -6,6 +6,7 @@ m4/unistd_h.m4
 lib/unistd_.h
 
 Depends-on:
+absolute-header
 
 configure.ac:
 gl_HEADER_UNISTD
