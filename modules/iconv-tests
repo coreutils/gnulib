@@ -1,0 +1,12 @@
+Files:
+tests/test-iconv.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-iconv
+check_PROGRAMS += test-iconv
+test_iconv_LDADD = @LIBICONV@ $(LDADD)
+
