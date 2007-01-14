@@ -1,0 +1,11 @@
+Files:
+tests/test-c-ctype.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-c-ctype
+check_PROGRAMS += test-c-ctype
+
