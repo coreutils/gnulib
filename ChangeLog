@@ -1,3 +1,8 @@
+2007-01-15  Bruno Haible  <bruno@clisp.org>
+
+	* doc/gnulib-intro.texi (Copyright): Explain the different license
+	terms for module descriptions, autoconf macros, tests, documentation.
+
 2007-01-14  Bruno Haible  <bruno@clisp.org>
 
 	* modules/striconv-tests: New file.
