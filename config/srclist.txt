@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.141 2006-10-27 17:16:25 haible Exp $
+# $Id: srclist.txt,v 1.142 2007-01-15 14:43:20 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -85,7 +85,7 @@ $GETTEXT/gettext-runtime/m4/po.m4			m4
 $GETTEXT/gettext-runtime/m4/printf-posix.m4		m4
 $GETTEXT/gettext-runtime/m4/progtest.m4			m4
 $GETTEXT/gettext-runtime/m4/wchar_t.m4			m4
-$GETTEXT/gettext-runtime/m4/wint_t.m4			m4
+#$GETTEXT/gettext-runtime/m4/wint_t.m4			m4
 
 # new argp not in glibc yet --13feb06.
 #$LIBCSRC/argp/argp-ba.c			lib gpl
