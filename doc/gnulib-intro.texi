@@ -214,7 +214,7 @@ reasonably be used in libraries, are under LGPL.  The source files
 always say "GPL", but the real license specification is in the module
 description file.
 
-More precisely, the license specification is in the module description
+More precisely, the license specification in the module description
 file applies to the files in @file{lib/} and @file{build-aux/}.  Different
 licenses apply to files in special directories:
 
