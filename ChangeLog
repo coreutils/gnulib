@@ -1,5 +1,12 @@
 2007-01-15  Bruno Haible  <bruno@clisp.org>
 
+	* modules/striconveh: New file.
+	* lib/striconveh.h: New file.
+	* lib/striconveh.c: New file.
+	* MODULES.html.sh (Internationalization functions): Add striconveh.
+
+2007-01-15  Bruno Haible  <bruno@clisp.org>
+
 	* lib/striconv.c (str_cd_iconv): Use the first algorithm if iconv is
 	not from GNU libiconv or GNU libc.
 
