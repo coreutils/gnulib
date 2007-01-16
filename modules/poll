@@ -7,6 +7,7 @@ lib/poll_.h
 m4/poll.m4
 
 Depends-on:
+sys_select
 
 configure.ac:
 gl_FUNC_POLL

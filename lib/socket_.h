@@ -57,4 +57,14 @@
 # define SHUT_RDWR SD_BOTH
 #endif
 
+#if defined _WIN32 || defined __WIN32__
+# define ENOTSOCK                WSAENOTSOCK
+# define EADDRINUSE              WSAEADDRINUSE
+# define ENETRESET               WSAENETRESET
+# define ECONNABORTED            WSAECONNABORTED
+# define ECONNRESET              WSAECONNRESET
+# define ENOTCONN                WSAENOTCONN
+# define ESHUTDOWN               WSAESHUTDOWN
+#endif
+
 #endif /* _SYS_SOCKET_H */

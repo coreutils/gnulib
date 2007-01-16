@@ -2,10 +2,8 @@ Description:
 Execute a Java program.
 
 Files:
-build-aux/javaexec.sh.in
 lib/javaexec.h
 lib/javaexec.c
-m4/javaexec.m4
 
 Depends-on:
 stdbool
@@ -18,10 +16,9 @@ xalloc
 xallocsa
 error
 gettext-h
+javaexec-script
 
 configure.ac:
-# You need to invoke gt_JAVAEXEC yourself, possibly with arguments.
-AC_CONFIG_FILES([javaexec.sh:build-aux/javaexec.sh.in])
 
 Makefile.am:
 DEFS += -DEXEEXT=\"$(EXEEXT)\"

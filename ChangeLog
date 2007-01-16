@@ -1,3 +1,12 @@
+2007-01-16  Paolo Bonzini  <bonzini@gnu.org>
+
+	* modules/javaexec-script: New, created from...
+	* modules/javaexec: ... this.
+
+2007-01-16  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+
+	* modules/poll (Dependencies): Add sys_select.
+
 2007-01-15  Jim Meyering  <jim@meyering.net>
 
 	* m4/readutmp.m4 (gl_READUTMP): Work around AIX 4.3 struct-
