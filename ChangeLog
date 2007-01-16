@@ -1,3 +1,10 @@
+2007-01-15  Jim Meyering  <jim@meyering.net>
+
+	* m4/readutmp.m4 (gl_READUTMP): Work around AIX 4.3 struct-
+	redefinition bug when using both <utmp.h> and <utmpx.h> headers.
+	* lib/readutmp.h: Likewise.  Reported by Daniel Richard G. in
+	<http://article.gmane.org/gmane.comp.gnu.core-utils.bugs/9415>.
+
 2007-01-15  Bruno Haible  <bruno@clisp.org>
 
 	* modules/striconveh: New file.

@@ -1,5 +1,5 @@
-# readutmp.m4 serial 12
-dnl Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# readutmp.m4 serial 13
+dnl Copyright (C) 2002-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -28,6 +28,11 @@ $ac_includes_default
 # include <utmpx.h>
 #endif
 #ifdef HAVE_UTMP_H
+# if defined _THREAD_SAFE && defined UTMP_DATA_INIT
+   /* When including both utmp.h and utmpx.h on AIX 4.3, with _THREAD_SAFE
+      defined, work around the duplicate struct utmp_data declaration.  */
+#  define utmp_data gl_aix_4_3_workaround_utmp_data
+# endif
 # include <utmp.h>
 #endif
 "
