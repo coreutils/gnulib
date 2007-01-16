@@ -192,7 +192,14 @@ str_cd_iconv (const char *src, iconv_t cd)
      to a trailing NUL byte in the output.  But not for UTF-7.  So that this
      function is usable for UTF-7, we have to exclude the NUL byte from the
      conversion and add it by hand afterwards.  */
-# if PROBABLY_SLOWER
+# if !defined _LIBICONV_VERSION && !defined __GLIBC__
+  /* Irix iconv() inserts a NUL byte if it cannot convert.
+     NetBSD iconv() inserts a question mark if it cannot convert.
+     Only GNU libiconv and GNU libc are known to prefer to fail rather
+     than doing a lossy conversion.  For other iconv() implementations,
+     we have to look at the number of irreversible conversions returned;
+     but this information is lost when iconv() returns for an E2BIG reason.
+     Therefore we cannot use the second, faster algorithm.  */
 
   char *result = NULL;
   size_t length;
@@ -225,7 +232,10 @@ str_cd_iconv (const char *src, iconv_t cd)
   return final_result;
 
 # else
-
+  /* This algorithm is likely faster than the one above.  But it may produce
+     iconv() returns for an E2BIG reason, when the output size guess is too
+     small.  Therefore it can only be used when we don't need the number of
+     irreversible conversions performed.  */
   char *result;
   size_t result_size;
   size_t length;
@@ -299,17 +309,6 @@ str_cd_iconv (const char *src, iconv_t cd)
 	    else
 	      goto failed;
 	  }
-# if !defined _LIBICONV_VERSION && !defined __GLIBC__
-	/* Irix iconv() inserts a NUL byte if it cannot convert.
-	   NetBSD iconv() inserts a question mark if it cannot convert.
-	   Only GNU libiconv and GNU libc are known to prefer to fail rather
-	   than doing a lossy conversion.  */
-	else if (res > 0)
-	  {
-	    errno = EILSEQ;
-	    goto failed;
-	  }
-# endif
 	else
 	  break;
       }
