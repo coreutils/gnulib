@@ -2,13 +2,10 @@ Description:
 Execute a C# program.
 
 Files:
-build-aux/csharpexec.sh.in
 lib/csharpexec.h
 lib/csharpexec.c
 lib/classpath.h
 lib/classpath.c
-m4/csharpexec.m4
-m4/csharp.m4
 
 Depends-on:
 stdbool
@@ -19,10 +16,9 @@ xalloc
 xallocsa
 error
 gettext-h
+csharpexec-script
 
 configure.ac:
-# You need to invoke gt_CSHARPEXEC yourself, possibly with arguments.
-AC_CONFIG_FILES([csharpexec.sh:build-aux/csharpexec.sh.in])
 
 Makefile.am:
 DEFS += -DEXEEXT=\"$(EXEEXT)\"
