@@ -1,4 +1,4 @@
-/* Copyright (C) 1991,1992,1993,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006
+/* Copyright (C) 1991,1992,1993,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007
 	Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -40,7 +40,7 @@
 #include <string.h>
 
 #define WIDE_CHAR_SUPPORT \
-  (HAVE_WCTYPE_H && HAVE_WCHAR_H && HAVE_BTOWC && HAVE_ISWCTYPE \
+  (HAVE_WCTYPE_H && HAVE_BTOWC && HAVE_ISWCTYPE \
    && HAVE_WMEMCHR && (HAVE_WMEMCPY || HAVE_WMEMPCPY))
 
 /* For platform which support the ISO C amendement 1 functionality we

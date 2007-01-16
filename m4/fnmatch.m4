@@ -1,6 +1,6 @@
 # Check for fnmatch.
 
-# Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software
+# Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
 # Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ AC_DEFUN([_AC_FUNC_FNMATCH_IF],
 	   {
 	     return fnmatch (pattern, string, flags);
 	   }
-         ],
+	 ],
 	 [exit
 	   (!(fnm ("a*", "", 0) == FNM_NOMATCH
 	      && y ("a*", "abc", 0)
@@ -65,7 +65,7 @@ AC_DEFUN([_AC_LIBOBJ_FNMATCH],
 AC_REQUIRE([AC_TYPE_MBSTATE_T])dnl
 AC_CHECK_DECLS([isblank], [], [], [#include <ctype.h>])
 AC_CHECK_FUNCS([btowc iswctype mbsrtowcs mempcpy wmemchr wmemcpy wmempcpy])
-AC_CHECK_HEADERS([wchar.h wctype.h])
+AC_CHECK_HEADERS([wctype.h])
 AC_LIBOBJ([fnmatch])
 FNMATCH_H=fnmatch.h
 ])# _AC_LIBOBJ_FNMATCH
@@ -75,8 +75,8 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
 [
   FNMATCH_H=
   _AC_FUNC_FNMATCH_IF([POSIX], [ac_cv_func_fnmatch_posix],
-                      [rm -f lib/fnmatch.h],
-                      [_AC_LIBOBJ_FNMATCH])
+		      [rm -f lib/fnmatch.h],
+		      [_AC_LIBOBJ_FNMATCH])
   if test $ac_cv_func_fnmatch_posix != yes; then
     dnl We must choose a different name for our function, since on ELF systems
     dnl a broken fnmatch() in libc.so would override our fnmatch() if it is
@@ -95,8 +95,8 @@ AC_DEFUN([gl_FUNC_FNMATCH_GNU],
 
   FNMATCH_H=
   _AC_FUNC_FNMATCH_IF([GNU], [ac_cv_func_fnmatch_gnu],
-                      [rm -f lib/fnmatch.h],
-                      [_AC_LIBOBJ_FNMATCH])
+		      [rm -f lib/fnmatch.h],
+		      [_AC_LIBOBJ_FNMATCH])
   if test $ac_cv_func_fnmatch_gnu != yes; then
     dnl We must choose a different name for our function, since on ELF systems
     dnl a broken fnmatch() in libc.so would override our fnmatch() if it is

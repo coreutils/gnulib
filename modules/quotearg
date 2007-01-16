@@ -9,10 +9,11 @@ m4/mbrtowc.m4
 m4/quotearg.m4
 
 Depends-on:
-xalloc
 gettext-h
 stdbool
+wchar
 wctype
+xalloc
 
 configure.ac:
 gl_QUOTEARG

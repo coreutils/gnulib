@@ -1,3 +1,31 @@
+2007-01-16  Eric Blake  <ebb9@byu.net>
+
+	* modules/fnmatch (Depends-on): Depend on wchar.
+	* lib/fnmatch.c (WIDE_CHAR_SUPPORT): Assume <wchar.h>.
+	* m4/fnmatch.m4: Likewise.
+	* modules/mbchar (Makefile.am): Assume <wchar.h>.
+	* m4/mbchar.m4: Likewise.
+	* modules/mbswidth (Depends-on): Depend on wchar.
+	* lib/mbswidth.c: Assume <wchar.h>.
+	* m4/mbswidth.m4: Likewise.
+	* modules/quotearg (Depends-on): Depend on wchar.
+	* lib/quotearg.c: Assume <wchar.h>.
+	* m4/quotearg.m4: Likewise.
+	* modules/regex (Depends-on): Depend on wchar.
+	* lib/regex_internal.h: Assume <wchar.h>.
+	* m4/regex.m4: Likewise.
+	* modules/stdint (Depends-on): Depend on wchar.
+	* lib/stdint_.h [!defined WCHAR_MIN]: Assume <wchar.h>.
+	* m4/stdint.m4: Likewise.
+	* tests/test-stdint.c [HAVE_WINT_T]: Likewise.
+	* modules/strftime (Depends-on): Depend on wchar.
+	* lib/strftime.c (DO_MULTIBYTE): Assume <wchar.h>.
+	* modules/strtol (Depends-on): Depend on wchar.
+	* lib/strtol.c: Assume <wchar.h>.
+	* modules/wcwidth (Depends-on): Depend on wchar.
+	* lib/wcwidth.h: Assume <wchar.h>.
+	* m4/wcwidth.m4: Likewise.
+
 2007-01-16  Bruno Haible  <bruno@clisp.org>
 
 	* modules/csharpexec-script: New, created from...

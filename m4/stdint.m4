@@ -1,5 +1,5 @@
-# stdint.m4 serial 21
-dnl Copyright (C) 2001-2002, 2004-2006 Free Software Foundation, Inc.
+# stdint.m4 serial 22
+dnl Copyright (C) 2001-2002, 2004-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -26,15 +26,6 @@ AC_DEFUN([gl_STDINT_H],
     HAVE_UNSIGNED_LONG_LONG_INT=0
   fi
   AC_SUBST([HAVE_UNSIGNED_LONG_LONG_INT])
-
-  dnl Check for <wchar.h>.
-  AC_CHECK_HEADERS_ONCE([wchar.h])
-  if test $ac_cv_header_wchar_h = yes; then
-    HAVE_WCHAR_H=1
-  else
-    HAVE_WCHAR_H=0
-  fi
-  AC_SUBST([HAVE_WCHAR_H])
 
   dnl Check for <inttypes.h>.
   dnl AC_INCLUDES_DEFAULT defines $ac_cv_header_inttypes_h.
@@ -190,7 +181,7 @@ struct s {
   int check_size: (size_t) -1 == SIZE_MAX ? 1 : -1;
 };
 	 ]])],
-         [gl_cv_header_working_stdint_h=yes])])
+	 [gl_cv_header_working_stdint_h=yes])])
   fi
   if test "$gl_cv_header_working_stdint_h" = yes; then
     STDINT_H=
@@ -269,9 +260,9 @@ AC_DEFUN([gl_CHECK_TYPES_SIGNED],
   for gltype in $1 ; do
     AC_CACHE_CHECK([whether $gltype is signed], [gl_cv_type_${gltype}_signed],
       [AC_COMPILE_IFELSE(
-         [AC_LANG_PROGRAM([$2[
-            int verify[2 * (($gltype) -1 < ($gltype) 0) - 1];]])],
-         result=yes, result=no)
+	 [AC_LANG_PROGRAM([$2[
+	    int verify[2 * (($gltype) -1 < ($gltype) 0) - 1];]])],
+	 result=yes, result=no)
        eval gl_cv_type_${gltype}_signed=\$result
       ])
     eval result=\$gl_cv_type_${gltype}_signed
@@ -342,15 +333,13 @@ AC_DEFUN([gl_INTEGER_TYPE_SUFFIX],
 dnl gl_STDINT_INCLUDES
 AC_DEFUN([gl_STDINT_INCLUDES],
 [[
+  /* BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+     included before <wchar.h>.  */
   #include <stddef.h>
   #include <signal.h>
-  #if HAVE_WCHAR_H
-    /* BSD/OS 4.1 has a bug: <stdio.h> and <time.h> must be included before
-       <wchar.h>.  */
-  # include <stdio.h>
-  # include <time.h>
-  # include <wchar.h>
-  #endif
+  #include <stdio.h>
+  #include <time.h>
+  #include <wchar.h>
 ]])
 
 dnl gl_STDINT_TYPE_PROPERTIES

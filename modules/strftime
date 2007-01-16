@@ -9,8 +9,9 @@ m4/tm_gmtoff.m4
 m4/strftime.m4
 
 Depends-on:
-time_r
 stdbool
+time_r
+wchar
 
 configure.ac:
 gl_FUNC_GNU_STRFTIME

@@ -1,5 +1,5 @@
 /* Test of <stdint.h> substitute.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -306,11 +306,7 @@ err or;
 #endif
 
 #if HAVE_WINT_T
-# if HAVE_WCHAR_H
-#  include <stdio.h>
-#  include <time.h>
-#  include <wchar.h>
-# endif
+# include <wchar.h>
 
 verify (TYPE_MINIMUM (wint_t) == WINT_MIN);
 verify (TYPE_MAXIMUM (wint_t) == WINT_MAX);

@@ -8,6 +8,7 @@ m4/wchar_t.m4
 m4/wint_t.m4
 
 Depends-on:
+wchar
 wctype
 
 configure.ac:

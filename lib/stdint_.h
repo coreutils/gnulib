@@ -1,4 +1,4 @@
-/* Copyright (C) 2001-2002, 2004-2006 Free Software Foundation, Inc.
+/* Copyright (C) 2001-2002, 2004-2007 Free Software Foundation, Inc.
    Written by Paul Eggert, Bruno Haible, Sam Steingold, Peter Burwood.
    This file is part of gnulib.
 
@@ -82,11 +82,7 @@
 #if ! defined __cplusplus || defined __STDC_CONSTANT_MACROS
 
 /* Get WCHAR_MIN, WCHAR_MAX.  */
-# if @HAVE_WCHAR_H@ && ! (defined WCHAR_MIN && defined WCHAR_MAX)
-   /* BSD/OS 4.1 has a bug: <stdio.h> and <time.h> must be included before
-      <wchar.h>.  */
-#  include <stdio.h>
-#  include <time.h>
+# if ! (defined WCHAR_MIN && defined WCHAR_MAX)
 #  include <wchar.h>
 # endif
 

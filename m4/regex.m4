@@ -1,7 +1,7 @@
-#serial 41
+#serial 42
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
-# 2006 Free Software Foundation, Inc.
+# 2006, 2007 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -193,7 +193,6 @@ AC_DEFUN([gl_PREREQ_REGEX],
   AC_REQUIRE([AC_GNU_SOURCE])
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([AM_LANGINFO_CODESET])
-  AC_CHECK_HEADERS_ONCE([wchar.h])
   AC_CHECK_FUNCS_ONCE([iswctype mbrtowc mempcpy wcrtomb wcscoll])
   AC_CHECK_DECLS([isblank], [], [], [#include <ctype.h>])
 ])

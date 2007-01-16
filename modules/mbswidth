@@ -9,6 +9,7 @@ m4/mbrtowc.m4
 m4/mbswidth.m4
 
 Depends-on:
+wchar
 wctype
 wcwidth
 

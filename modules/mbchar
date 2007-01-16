@@ -18,9 +18,7 @@ gl_MBCHAR
 Makefile.am:
 
 Include:
-#if HAVE_WCHAR_H
 #include "mbchar.h"
-#endif
 
 License:
 LGPL

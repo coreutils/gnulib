@@ -19,6 +19,7 @@ malloc
 stdint
 strcase
 ssize_t
+wchar
 wctype
 
 configure.ac:

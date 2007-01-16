@@ -1,5 +1,5 @@
-# mbswidth.m4 serial 13
-dnl Copyright (C) 2000-2002, 2004, 2006 Free Software Foundation, Inc.
+# mbswidth.m4 serial 14
+dnl Copyright (C) 2000-2002, 2004, 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -18,9 +18,14 @@ AC_DEFUN([gl_MBSWIDTH],
   AC_CACHE_CHECK([whether mbswidth is declared in <wchar.h>],
     ac_cv_have_decl_mbswidth,
     [AC_TRY_COMPILE([
-#if HAVE_WCHAR_H
-# include <wchar.h>
-#endif
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be included
+   before <wchar.h>.  */
+#include <stddef.h>
+#include <stdio.h>
+#include <time.h>
+#include <wchar.h>
 ], [
   char *p = (char *) mbswidth;
   return !p;
