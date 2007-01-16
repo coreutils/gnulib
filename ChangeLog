@@ -5,6 +5,9 @@
 	* lib/striconveh.c: New file.
 	* MODULES.html.sh (Internationalization functions): Add striconveh.
 
+	* modules/striconveh-tests: New file.
+	* tests/test-striconveh.c: New file.
+
 2007-01-15  Bruno Haible  <bruno@clisp.org>
 
 	* lib/striconv.c (str_cd_iconv): Use the first algorithm if iconv is

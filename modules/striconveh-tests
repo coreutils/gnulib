@@ -1,0 +1,12 @@
+Files:
+tests/test-striconveh.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-striconveh
+check_PROGRAMS += test-striconveh
+test_striconveh_LDADD = @LIBICONV@ $(LDADD)
+
