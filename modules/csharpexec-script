@@ -10,7 +10,7 @@ Depends-on:
 
 configure.ac:
 # You need to invoke gt_CSHARPEXEC yourself, possibly with arguments.
-AC_CONFIG_FILES([csharpexec.sh:build-aux/csharpexec.sh.in])
+AC_CONFIG_FILES([csharpexec.sh:build-aux/csharpexec.sh.in], [chmod +x csharpexec.sh])
 
 Makefile.am:
 

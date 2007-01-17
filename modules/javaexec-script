@@ -9,7 +9,7 @@ Depends-on:
 
 configure.ac:
 # You need to invoke gt_JAVAEXEC yourself, possibly with arguments.
-AC_CONFIG_FILES([javaexec.sh:build-aux/javaexec.sh.in])
+AC_CONFIG_FILES([javaexec.sh:build-aux/javaexec.sh.in], [chmod +x javaexec.sh])
 
 Makefile.am:
 

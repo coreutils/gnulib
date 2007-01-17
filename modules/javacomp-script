@@ -9,7 +9,7 @@ Depends-on:
 
 configure.ac:
 # You need to invoke gt_JAVACOMP yourself, possibly with arguments.
-AC_CONFIG_FILES([javacomp.sh:build-aux/javacomp.sh.in])
+AC_CONFIG_FILES([javacomp.sh:build-aux/javacomp.sh.in], [chmod +x javacomp.sh])
 
 Makefile.am:
 
