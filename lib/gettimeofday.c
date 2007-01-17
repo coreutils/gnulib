@@ -98,8 +98,8 @@ tzset (void)
 
 #endif
 
-/* This is a wrapper for gettimeofday.  
-   It is used only on systems that lack this function, or for whose 
+/* This is a wrapper for gettimeofday.
+   It is used only on systems that lack this function, or for whose
    implementation of this function causes problems. */
 
 int
@@ -107,9 +107,9 @@ gettimeofday (struct timeval *restrict tv, void *restrict tz)
 #undef gettimeofday
 {
 #if HAVE_GETTIMEOFDAY
+  extern int gettimeofday (/* unspecified arguments */);
 # if GETTIMEOFDAY_CLOBBERS_LOCALTIME
   extern struct tm *localtime (const time_t *);
-  extern int gettimeofday (/* unspecified arguments */);
 
   /* Save and restore the contents of the buffer used for localtime's result
      around the call to gettimeofday. */
@@ -128,26 +128,37 @@ gettimeofday (struct timeval *restrict tv, void *restrict tz)
 
   return result;
 
+# else
+
+  return gettimeofday (tv, tz);
+
 # endif
 #else
+
+  /* The clock does not have microsecond resolution, so get the maximum
+     possible value for the current time that is consistent with the
+     reported clock.  That way, files are not considered to be in the
+     future merely because their time stamps have higher resolution
+     than the clock resolution.  */
+
 # if HAVE__FTIME
 
   struct _timeb timebuf;
-  
+
   _ftime (&timebuf);
   tv->tv_sec = timebuf.time;
-  tv->tv_usec = timebuf.millitm * 1000;
+  tv->tv_usec = timebuf.millitm * 1000 + 999;
 
   return 0;
 
 # else
 
   time_t t = time (NULL);
-  
+
   if (t == (time_t) -1)
     return -1;
   tv->tv_sec = t;
-  tv->tv_usec = 0;
+  tv->tv_usec = 999999;
 
   return 0;
 
