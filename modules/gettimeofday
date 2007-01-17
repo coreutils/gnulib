@@ -3,17 +3,20 @@ gettimeofday() function: return current time.
 
 Files:
 lib/gettimeofday.c
+lib/gettimeofday.h
 m4/gettimeofday.m4
 
 Depends-on:
+restrict
 
 configure.ac:
-AC_FUNC_GETTIMEOFDAY_CLOBBER
+gl_FUNC_GETTIMEOFDAY
 
 Makefile.am:
 
 Include:
 <sys/time.h>
+"gettimeofday.h"
 
 License:
 GPL

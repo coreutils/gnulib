@@ -1,9 +1,83 @@
-#serial 7
+#serial 8
 
 # Copyright (C) 2001, 2002, 2003, 2005 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
+
+AC_DEFUN([gl_FUNC_GETTIMEOFDAY],
+[
+  AC_LIBSOURCES([gettimeofday.c, gettimeofday.h])
+  AC_REQUIRE([gl_C_RESTRICT])
+  AC_CHECK_FUNCS([gettimeofday])
+  
+  AC_CHECK_TYPE([suseconds_t], ,
+    [AC_DEFINE([suseconds_t], [int],
+       [Define to `int' if `suseconds_t' is missing.])
+    ],
+    [
+#    if TIME_WITH_SYS_TIME
+#     include <sys/time.h>
+#     include <time.h>
+#    else
+#     if HAVE_SYS_TIME_H
+#      include <sys/time.h>
+#     else
+#      include <time.h>
+#     endif
+#    endif
+    ])
+
+  AC_CACHE_CHECK([for struct timeval], fu_cv_sys_struct_timeval,
+    [AC_TRY_COMPILE(
+      [
+#      if TIME_WITH_SYS_TIME
+#       include <sys/time.h>
+#       include <time.h>
+#      else
+#       if HAVE_SYS_TIME_H
+#        include <sys/time.h>
+#       else
+#        include <time.h>
+#       endif
+#      endif
+      ],
+      [static struct timeval x; x.tv_sec = x.tv_usec;],
+      fu_cv_sys_struct_timeval=yes,
+      fu_cv_sys_struct_timeval=no)
+    ])
+
+  if test $fu_cv_sys_struct_timeval = yes; then
+    AC_DEFINE(HAVE_STRUCT_TIMEVAL, 1,
+      [Define if struct timeval is declared in <time.h> or <sys/time.h>. ])
+  fi
+  
+  AC_CACHE_CHECK([for gettimeofday whose signature conforms to POSIX],
+    [ac_cv_func_gettimeofday_posix_signature],
+    AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM(
+         [[#include <sys/time.h>
+	   time_t a;
+	   suseconds_t b;
+	   struct timeval c;
+	 ]],
+	 [[
+	   int x = gettimeofday (&c, 0);
+	   int (*f) (struct timeval *restrict, void *restrict) = gettimeofday;
+	   return !(x | c.tv_sec | c.tv_usec);
+	 ]])],
+       [ac_cv_func_gettimeofday_posix_signature=yes],
+       [ac_cv_func_gettimeofday_posix_signature=no]))
+  if test $ac_cv_func_gettimeofday_posix_signature = yes; then
+    AC_DEFINE([HAVE_GETTIMEOFDAY_POSIX_SIGNATURE], 1,
+      [Define if gettimeofday's signature conforms to POSIX.])
+    AC_FUNC_GETTIMEOFDAY_CLOBBER
+  fi
+  if test $ac_cv_func_gettimeofday_posix_signature != yes; then
+    gl_PREREQ_GETTIMEOFDAY
+    AC_LIBOBJ([gettimeofday])
+  fi
+])
 
 dnl From Jim Meyering.
 dnl
@@ -62,11 +136,13 @@ main ()
 
     AC_DEFINE(gettimeofday, rpl_gettimeofday,
       [Define to rpl_gettimeofday if the replacement function should be used.])
-    gl_PREREQ_GETTIMEOFDAY
   fi
 ])
 
 AC_DEFUN([gl_GETTIMEOFDAY_REPLACE_LOCALTIME], [
+  gl_PREREQ_GETTIMEOFDAY
+  AC_DEFINE(GETTIMEOFDAY_CLOBBERS_LOCALTIME, 1,
+    [Define if gettimeofday clobbers the localtime buffer.])
   AC_LIBOBJ(gettimeofday)
   AC_DEFINE(gmtime, rpl_gmtime,
     [Define to rpl_gmtime if the replacement function should be used.])
@@ -77,4 +153,6 @@ AC_DEFUN([gl_GETTIMEOFDAY_REPLACE_LOCALTIME], [
 # Prerequisites of lib/gettimeofday.c.
 AC_DEFUN([gl_PREREQ_GETTIMEOFDAY], [
   AC_REQUIRE([AC_HEADER_TIME])
+  AC_CHECK_HEADERS([sys/timeb.h])
+  AC_CHECK_FUNCS([_ftime])
 ])
