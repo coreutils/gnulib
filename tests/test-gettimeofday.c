@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 Free Software Foundation
+ * Copyright (C) 2005, 2007 Free Software Foundation
  * Written by Jim Meyering.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,30 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include <stdio.h>
 #include <string.h>
 
-#if TIME_WITH_SYS_TIME
-# include <sys/time.h>
-# include <time.h>
-#else
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# else
-#  include <time.h>
-# endif
-#endif
-
 #include "gettimeofday.h"
+
+suseconds_t dummy = 0;	/* just to test if this type is available */
 
 int
 main (int argc, char *argv[])
 {
-  suseconds_t dummy = 0;	/* just to test if this type is available */
   time_t t = 0;
   struct tm *lt;
   struct tm saved_lt;

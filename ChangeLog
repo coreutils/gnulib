@@ -1,3 +1,26 @@
+2005-10-08  Martin Lambers  <marlam@marlam.de>
+2005-10-08  Paul Eggert  <eggert@cs.ucla.edu>
+2007-01-16  Bruno Haible  <bruno@clisp.org>
+
+	* modules/gettimeofday (Files): Add lib/gettimeofday.h.
+	(configure.ac): Remove AC_FUNC_GETTIMEOFDAY_CLOBBER. Add
+	gl_FUNC_GETTIMEOFDAY.
+	(Include): Add gettimeofday.h.
+	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY): New macro.
+	(AC_FUNC_GETTIMEOFDAY_CLOBBER): Don't invoke gl_PREREQ_GETTIMEOFDAY.
+	(gl_GETTIMEOFDAY_REPLACE_LOCALTIME): Define
+	GETTIMEOFDAY_CLOBBERS_LOCALTIME. Invoke gl_PREREQ_GETTIMEOFDAY here.
+	(gl_PREREQ_GETTIMEOFDAY): Check for <sys/timeb.h> and _ftime.
+	* lib/gettimeofday.h: New file.
+	* lib/gettimeofday.c: Include <sys/timeb.h>.
+	(localtime_buffer_addr, rpl_localtime, rpl_gmtime, rpl_tzset): Define
+	only if GETTIMEOFDAY_CLOBBERS_LOCALTIME.
+	(rpl_gettimeofday) [!HAVE_GETTIMEOFDAY]: Use _ftime() when available;
+	fall back on time().
+
+	* tests/test-gettimeofday.c: New file.
+	* modules/gettimeofday-tests: New file.
+
 2007-01-16  Eric Blake  <ebb9@byu.net>
 
 	* modules/fnmatch (Depends-on): Depend on wchar.
