@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-01-14 23:00:12 $'
+cvsdatestamp='$Date: 2007-01-17 23:46:34 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1020,10 +1020,11 @@ func_get_include_directive ()
 # - local_gnulib_dir  from --local-dir
 func_get_license ()
 {
-  # ${module}-tests always implicitly has the same license as ${module}.
-  sed_drop_tests_suffix='s/-tests$//'
-  func_lookup_file "modules/"`echo "$1" | sed -e "$sed_drop_tests_suffix"`
-  sed -n -e "/^License$sed_extract_prog" < "$lookedup_file"
+  func_lookup_file "modules/$1"
+  { sed -n -e "/^License$sed_extract_prog" < "$lookedup_file"
+    # The default is GPL.
+    echo "GPL"
+  } | sed -e 's,^ *$,,' | sed -e 1q
 }
 
 # func_get_maintainer module
@@ -2276,6 +2277,11 @@ func_create_testdir ()
   # Check that the license of every module is consistent with the license of
   # its dependencies.
   saved_modules="$modules"
+  saved_inctests="$inctests"
+  # When computing transitive closures, don't consider $module to depend on
+  # $module-tests. Need this becauses tests are implicitly GPL and may depend
+  # on GPL modules - therefore we don't want a warning in this case.
+  inctests=""
   for requested_module in $saved_modules; do
     requested_license=`func_get_license "$requested_module"`
     if test "$requested_license" != GPL; then
@@ -2296,6 +2302,7 @@ func_create_testdir ()
     fi
   done
   modules="$saved_modules"
+  inctests="$saved_inctests"
 
   # Subdirectory names.
   sourcebase=gllib

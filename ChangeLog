@@ -1,5 +1,12 @@
 2007-01-17  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_get_license): Revert last patch. Instead, let
+	the license default to GPL.
+	(func_create_testdir): Don't complain if a module is LGPL and its
+	tests module depends on GPLed modules.
+
+2007-01-17  Bruno Haible  <bruno@clisp.org>
+
 	* lib/gettimeofday.c (gettimeofday): Add code for the case
 	HAVE_GETTIMEOFDAY && !GETTIMEOFDAY_CLOBBERS_LOCALTIME. Use the
 	maximum possible value for tv->tv_usec, rather than the minimum one.
