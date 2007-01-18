@@ -19,10 +19,10 @@
 
 #include <config.h>
 
+#include <sys/time.h>
+
 #include <stdio.h>
 #include <string.h>
-
-#include "gettimeofday.h"
 
 suseconds_t dummy = 0;	/* just to test if this type is available */
 

@@ -1,6 +1,6 @@
-#serial 2
+#serial 3
 
-# Copyright (C) 2003 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -15,21 +15,12 @@
 
 AC_DEFUN([gl_FUNC_TZSET_CLOBBER],
 [
-  AC_REQUIRE([AC_HEADER_TIME])
+  AC_REQUIRE([gl_HEADER_SYS_TIME_H])
   AC_CACHE_CHECK([whether tzset clobbers localtime buffer],
                  gl_cv_func_tzset_clobber,
   [
   AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#if TIME_WITH_SYS_TIME
-# include <sys/time.h>
-# include <time.h>
-#else
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# else
-#  include <time.h>
-# endif
-#endif
+#include <time.h>
 #include <stdlib.h>
 
 int
@@ -42,12 +33,12 @@ main ()
   s = *p;
   putenv ("TZ=EST+3EDT+2,M10.1.0/00:00:00,M2.3.0/00:00:00");
   tzset ();
-  exit (p->tm_year != s.tm_year
-        || p->tm_mon != s.tm_mon
-        || p->tm_mday != s.tm_mday
-        || p->tm_hour != s.tm_hour
-        || p->tm_min != s.tm_min
-        || p->tm_sec != s.tm_sec);
+  return (p->tm_year != s.tm_year
+	  || p->tm_mon != s.tm_mon
+	  || p->tm_mday != s.tm_mday
+	  || p->tm_hour != s.tm_hour
+	  || p->tm_min != s.tm_min
+	  || p->tm_sec != s.tm_sec);
 }
   ]])],
        [gl_cv_func_tzset_clobber=no],
@@ -62,7 +53,7 @@ main ()
 
     AC_DEFINE(tzset, rpl_tzset,
       [Define to rpl_tzset if the wrapper function should be used.])
-    AC_DEFINE(TZSET_CLOBBERS_LOCALTIME_BUFFER, 1,
+    AC_DEFINE([TZSET_CLOBBERS_LOCALTIME], 1,
       [Define if tzset clobbers localtime's static buffer.])
   fi
 ])

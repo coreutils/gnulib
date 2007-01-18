@@ -1,6 +1,6 @@
 /* timespec -- System time interface
 
-   Copyright (C) 2000, 2002, 2004, 2005 Free Software Foundation, Inc.
+   Copyright (C) 2000, 2002, 2004, 2005, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,24 +19,17 @@
 #if ! defined TIMESPEC_H
 # define TIMESPEC_H
 
-# include <sys/types.h>
-# if TIME_WITH_SYS_TIME
+# if HAVE_SYS_TIME_H
 #  include <sys/time.h>
-#  include <time.h>
-# else
-#  if HAVE_SYS_TIME_H
-#   include <sys/time.h>
-#  else
-#   include <time.h>
-#  endif
 # endif
+# include <time.h>
 
 # if ! HAVE_STRUCT_TIMESPEC
 /* Some systems don't define this struct, e.g., AIX 4.1, Ultrix 4.3.  */
 struct timespec
 {
   time_t tv_sec;
-  long tv_nsec;
+  long int tv_nsec;
 };
 # endif
 

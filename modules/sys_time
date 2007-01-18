@@ -1,0 +1,40 @@
+Description:
+A <sys/time.h> that conforms better to POSIX.
+
+Files:
+lib/sys_time_.h
+m4/sys_time_h.m4
+
+Depends-on:
+absolute-header
+
+configure.ac:
+gl_HEADER_SYS_TIME_H
+
+Makefile.am:
+BUILT_SOURCES += sys/time.h
+
+# We need the following in order to create <sys/time.h> when the system
+# doesn't have one that works with the given compiler.
+sys/time.h: sys_time_.h
+	test -d sys || mkdir sys
+	rm -f $@-t $@
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's/@''HAVE_SYS_TIME_H''@/$(HAVE_SYS_TIME_H)/g' \
+	      -e 's|@''ABSOLUTE_SYS_TIME_H''@|$(ABSOLUTE_SYS_TIME_H)|g' \
+	      -e 's/@''GETTIMEOFDAY_CLOBBERS_LOCALTIME''@/$(GETTIMEOFDAY_CLOBBERS_LOCALTIME)/g' \
+	      -e 's/@''HAVE_GETTIMEOFDAY_POSIX_SIGNATURE''@/$(HAVE_GETTIMEOFDAY_POSIX_SIGNATURE)/g' \
+	      -e 's/@''HAVE_STRUCT_TIMEVAL''@/$(HAVE_STRUCT_TIMEVAL)/g' \
+	      < $(srcdir)/sys_time_.h; \
+	} > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += sys/time.h sys/time.h-t
+
+Include:
+#include <sys/time.h>
+
+License:
+LGPL
+
+Maintainer:
+all

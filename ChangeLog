@@ -1,3 +1,94 @@
+2007-01-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): New
+	module sys_time.
+	* lib/gethrxtime.c: Include <sys/time.h>, since we can no longer
+	assume timespec.h defines struct timeval.
+	* lib/settime.c: Likewise.
+	* lib/utimens.c: Likewise.
+	* lib/gettime.c (gettime): Remove test against HAVE_GETTIMEOFDAY,
+	since we now assume the gettimeofday module.
+	* lib/tempname.c (__gen_tempname): Likewise.
+	* lib/gettimeofday.h: Remove.
+	* lib/gettimeofday.c: Include <sys/time.h> instead of "gettimeofday.h".
+	Don't include <sys/types.h> and <stdlib.h>; shouldn't be needed.
+	Include <time.h>, for 'time()'.
+	(localtime_buffer_addr): Also use this workaround if
+	TZSET_CLOBBERS_LOCALTIME.  Set to a dummy static variable by default,
+	to simplify the uses.  All uses changed.
+	(localtime, gmtime, tzset, gettimeofday): Reformat slightly so
+	that #undef is inside {}, and 'const' follows type name consistently.
+	(tzset): Define replacement only if TZSET_CLOBBERS_LOCALTIME.
+	(gettimeofday): Do not use the maximum possible value for
+	tv->tv_usec, since that might break usages other than ls.c.
+	Instead, we'll leave ls.c alone.  This undoes today's patch
+	by Bruno.  Add a compile-time warning for 1s-clock resolution;
+	we've never observed the problem but might as well keep the
+	canary.
+	* lib/nanosleep.c: Include timespec.h first, for interface check.
+	* lib/nanosleep.c: Include <sys/time.h> unconditionally, since we
+	now assume the sys_time module.
+	* lib/tempname.c: Likewise.
+	* lib/timespec.h: Likewise.
+	* lib/nanosleep.c: Don't worry about TIME_WITH_SYS_TIME; no longer
+	needed.
+	* lib/strftime.c: Likewise.
+	* lib/timespec.h: Likewise.
+	* lib/posixtm.c: Include posixtm.h first, for interface check.
+	Don't worry about TM_IN_SYS_TIME; that's wayyy obsolete.
+	* lib/posixtm.h: Include stdbool.h and time.h, for proper interface.
+	* lib/strftime.c: Don't include <sys/types.h>; shouldn't be needed.
+	* lib/sys_time_.h: New file.
+	* lib/timespec.h (struct timespec): Use long int, not long.
+	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY):
+	(gl_FUNC_GETTIMEOFDAY_CLOBBER, gl_PREREQ_GETTIMEOFDAY):
+	Remove obsolescent call to AC_HEADER_TIME.
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Likewise.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Likewise.
+	* m4/strftime.m4 (gl_FUNC_STRFTIME): Likewise.
+	* m4/timespec.m4 (gl_TIMESPEC, gl_CHECK_TYPE_STRUCT_TIMESPEC):
+	Likewise.
+	* m4/tzset.m4 (gl_FUNC_TZSET_CLOBBER): Likewise.
+	* m4/utimbuf.m4 (gl_CHECK_TYPE_STRUCT_UTIMBUF): Likewise.
+	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY): Move sys/time.h tests
+	into the sys_time module.  Check for gettimeofday just once.
+	Prefix our variables with gl_, not with ac_ or jm_.  Tighten test
+	for gettimeofday signature to just check the signature.  Merely
+	compile it, since linking doesn't test signature.  Improve test for
+	whether gettimeofday.o is actually needed.
+	(gl_FUNC_GETTIMEOFDAY_CLOBBER): Renamed from
+	AC_FUNC_GETTIMEOFDAY_CLOBBER.  All uses changed.  Use
+	AC_RUN_IFELSE rather than AC_TRY_RUN.  If clobbering, set
+	and define GETTIMEOFDAY_CLOBBERS_LOCALTIME.
+	(gl_GETTIMEOFDAY_REPLACE_LOCALTIME): Don't define
+	GETTIMEOFDAY_CLOBBERS_LOCALTIME; that's gl_FUNC_GETTIMEOFDAY_CLOBBER's
+	job.  Don't define tzset; that's gl_FUNC_TZSET_CLOBBER's job.
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Just include <time.h> rather
+	than worrying about sys/time.h.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP):
+	Don't bother worrying about TIME_WITH_SYS_TIME.
+	* m4/stat-time.m4 (gl_STAT_TIME): Likewise.
+	* m4/posixtm.m4 (gl_POSIXTM): Remove obsolescent call to AC_STRUCT_TM.
+	* m4/sys_time_h.m4: New file.
+	* m4/tzset.m4 (gl_FUNC_TZSET_CLOBBER): Require gl_HEADER_SYS_TIME_H.
+	Don't include sys/time.h.  Return from main rather than exiting.
+	Define TZSET_CLOBBERS_LOCALTIME, for consistency with other names;
+	all uses changed.
+	* modules/gethrxtime (Depends-on): Add sys_time.
+	* modules/gettime (Depends-on): Likewise.
+	* modules/gettimeofday (Depends-on): Likewise.
+	* modules/nanosleep (Depends-on): Likewise.
+	* modules/settime (Depends-on): Likewise.
+	* modules/tempname (Depends-on): Likewise.
+	* modules/utimens (Depends-on): Likewise.
+	* modules/gettimeofday (Files): Remove lib/gettimeofday.h.
+	(Include:) Change back to <sys/time.h>.
+	(Maintainer:) Add self.
+	* modules/sys_time: New file.
+	* modules/tempname (Depends-on): Add gettimeofday.
+	* tests/test-gettimeofday.c: Include <sys/time.h>
+	rather than gettimeofday.h.
+
 2007-01-17  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_get_license): Revert last patch. Instead, let

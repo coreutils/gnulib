@@ -1,12 +1,12 @@
-#serial 19
+#serial 20
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
 dnl If not found, use the supplied replacement.
 dnl
 
-# Copyright (C) 1999, 2000, 2001, 2003, 2004, 2005, 2006 Free Software
-# Foundation, Inc.
+# Copyright (C) 1999, 2000, 2001, 2003, 2004, 2005, 2006, 2007 Free
+# Software Foundation, Inc.
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,6 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
  dnl Persuade glibc and Solaris <time.h> to declare nanosleep.
  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
- AC_REQUIRE([AC_HEADER_TIME])
  AC_REQUIRE([gl_CLOCK_TIME])
  AC_CHECK_HEADERS_ONCE(sys/time.h)
 
@@ -34,19 +33,13 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
   [
    AC_RUN_IFELSE(
      [AC_LANG_SOURCE([[
-	#if TIME_WITH_SYS_TIME
-	 #include <sys/time.h>
-	 #include <time.h>
-	#else
-	 #if HAVE_SYS_TIME_H
-	  #include <sys/time.h>
-	 #else
-	  #include <time.h>
-	 #endif
-	#endif
 	#include <errno.h>
 	#include <limits.h>
 	#include <signal.h>
+	#if HAVE_SYS_TIME_H
+	 #include <sys/time.h>
+	#endif
+	#include <time.h>
 	#include <unistd.h>
 	#define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
 	#define TYPE_MAXIMUM(t) \

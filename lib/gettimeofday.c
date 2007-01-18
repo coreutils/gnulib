@@ -1,12 +1,7 @@
-/* Provide gettimeofday
-   1. for systems that don't have it,
-   2. for some systems where gettimeofday clobbers the static buffer that
-      localtime uses for it's return value.  The gettimeofday function from
-      Mac OS X 10.0.4, i.e. Darwin 1.3.7 has this problem.
-      The tzset replacement is necessary for at least Solaris 2.5, 2.5.1, and
-      2.6.
+/* Provide gettimeofday for systems that don't have it or for which it's broken.
 
-   Copyright (C) 2001, 2002, 2003, 2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2002, 2003, 2005, 2006, 2007 Free Software
+   Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,18 +22,24 @@
 #include <config.h>
 
 /* Specification.  */
-#include "gettimeofday.h"
+#include <sys/time.h>
 
-#include <sys/types.h>
-#include <stdlib.h>
+#include <time.h>
 
 #if HAVE_SYS_TIMEB_H
 # include <sys/timeb.h>
 #endif
 
-#if GETTIMEOFDAY_CLOBBERS_LOCALTIME
+#if GETTIMEOFDAY_CLOBBERS_LOCALTIME || TZSET_CLOBBERS_LOCALTIME
 
-static struct tm *localtime_buffer_addr;
+/* Work around the bug in some systems whereby gettimeofday clobbers
+   the static buffer that localtime uses for its return value.  The
+   gettimeofday function from Mac OS X 10.0.4 (i.e., Darwin 1.3.7) has
+   this problem.  The tzset replacement is necessary for at least
+   Solaris 2.5, 2.5.1, and 2.6.  */
+
+static struct tm tm_zero_buffer;
+static struct tm *localtime_buffer_addr = &tm_zero_buffer;
 
 /* This is a wrapper for localtime.  It is used only on systems for which
    gettimeofday clobbers the static buffer used for localtime's result.
@@ -47,13 +48,13 @@ static struct tm *localtime_buffer_addr;
    localtime uses for its result.  */
 
 struct tm *
-localtime (const time_t *timep)
-#undef localtime
+localtime (time_t const *timep)
 {
-  extern struct tm *localtime (const time_t *);
+#undef localtime
+  extern struct tm *localtime (time_t const *);
   struct tm *tm = localtime (timep);
 
-  if (! localtime_buffer_addr)
+  if (localtime_buffer_addr == &tm_zero_buffer)
     localtime_buffer_addr = tm;
 
   return tm;
@@ -61,107 +62,83 @@ localtime (const time_t *timep)
 
 /* Same as above, since gmtime and localtime use the same buffer.  */
 struct tm *
-gmtime (const time_t *timep)
-#undef gmtime
+gmtime (time_t const *timep)
 {
-  extern struct tm *gmtime (const time_t *);
+#undef gmtime
+  extern struct tm *gmtime (time_t const *);
   struct tm *tm = gmtime (timep);
 
-  if (! localtime_buffer_addr)
+  if (localtime_buffer_addr == &tm_zero_buffer)
     localtime_buffer_addr = tm;
 
   return tm;
 }
 
-/* This is a wrapper for tzset. It is used only on systems for which
-   tzset may clobber the static buffer used for localtime's result.
-   Save and restore the contents of the buffer used for localtime's
-   result around the call to tzset.  */
+#endif /* GETTIMEOFDAY_CLOBBERS_LOCALTIME || TZSET_CLOBBERS_LOCALTIME */
+
+#if TZSET_CLOBBERS_LOCALTIME
+/* This is a wrapper for tzset, for systems on which tzset may clobber
+   the static buffer used for localtime's result.  */
 void
 tzset (void)
-#undef tzset
 {
-  extern struct tm *localtime (const time_t *);
+#undef tzset
   extern void tzset (void);
-  struct tm save;
 
-  if (! localtime_buffer_addr)
-    {
-      time_t t = 0;
-      localtime_buffer_addr = localtime (&t);
-    }
-
-  save = *localtime_buffer_addr;
+  /* Save and restore the contents of the buffer used for localtime's
+     result around the call to tzset.  */
+  struct tm save = *localtime_buffer_addr;
   tzset ();
   *localtime_buffer_addr = save;
 }
-
 #endif
 
-/* This is a wrapper for gettimeofday.
-   It is used only on systems that lack this function, or for whose
-   implementation of this function causes problems. */
+/* This is a wrapper for gettimeofday.  It is used only on systems
+   that lack this function, or whose implementation of this function
+   causes problems.  */
 
 int
 gettimeofday (struct timeval *restrict tv, void *restrict tz)
-#undef gettimeofday
 {
+#undef gettimeofday
 #if HAVE_GETTIMEOFDAY
   extern int gettimeofday (/* unspecified arguments */);
+
 # if GETTIMEOFDAY_CLOBBERS_LOCALTIME
-  extern struct tm *localtime (const time_t *);
+  /* Save and restore the contents of the buffer used for localtime's
+     result around the call to gettimeofday.  */
+  struct tm save = *localtime_buffer_addr;
+# endif
 
-  /* Save and restore the contents of the buffer used for localtime's result
-     around the call to gettimeofday. */
-  struct tm save;
-  int result;
+  int result = gettimeofday (tv, tz);
 
-  if (! localtime_buffer_addr)
-    {
-      time_t t = 0;
-      localtime_buffer_addr = localtime (&t);
-    }
-
-  save = *localtime_buffer_addr;
-  result = gettimeofday (tv, tz);
+# if GETTIMEOFDAY_CLOBBERS_LOCALTIME
   *localtime_buffer_addr = save;
+# endif
 
   return result;
 
-# else
-
-  return gettimeofday (tv, tz);
-
-# endif
 #else
-
-  /* The clock does not have microsecond resolution, so get the maximum
-     possible value for the current time that is consistent with the
-     reported clock.  That way, files are not considered to be in the
-     future merely because their time stamps have higher resolution
-     than the clock resolution.  */
 
 # if HAVE__FTIME
 
   struct _timeb timebuf;
-
   _ftime (&timebuf);
   tv->tv_sec = timebuf.time;
-  tv->tv_usec = timebuf.millitm * 1000 + 999;
-
-  return 0;
+  tv->tv_usec = timebuf.millitm * 1000;
 
 # else
 
-  time_t t = time (NULL);
+#  if !defined OK_TO_USE_1S_CLOCK
+#   error "Only 1-second nominal clock resolution found.  Is that intended?" \
+          "If so, compile with the -DOK_TO_USE_1S_CLOCK option."
+#  endif
+  tv->tv_sec = time (NULL);
+  tv->tv_usec = 0;
 
-  if (t == (time_t) -1)
-    return -1;
-  tv->tv_sec = t;
-  tv->tv_usec = 999999;
+# endif
 
   return 0;
 
-# endif
 #endif
 }

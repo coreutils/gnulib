@@ -1,6 +1,6 @@
-/* gettime -- get the system clock
+/* Provide a more complete sys/time.h.
 
-   Copyright (C) 2002, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,32 +18,27 @@
 
 /* Written by Paul Eggert.  */
 
-#include <config.h>
+#ifndef _gl_SYS_TIME_H
+#define _gl_SYS_TIME_H
 
-#include "timespec.h"
-
-#include <sys/time.h>
-
-/* Get the system time into *TS.  */
-
-void
-gettime (struct timespec *ts)
-{
-#if HAVE_NANOTIME
-  nanotime (ts);
+#if @HAVE_SYS_TIME_H@
+# include @ABSOLUTE_SYS_TIME_H@
 #else
-
-# if defined CLOCK_REALTIME && HAVE_CLOCK_GETTIME
-  if (clock_gettime (CLOCK_REALTIME, ts) == 0)
-    return;
-# endif
-
-  {
-    struct timeval tv;
-    gettimeofday (&tv, NULL);
-    ts->tv_sec = tv.tv_sec;
-    ts->tv_nsec = tv.tv_usec * 1000;
-  }
-
+# include <time.h>
 #endif
-}
+
+#if ! @HAVE_STRUCT_TIMEVAL@
+struct timeval
+{
+  time_t tv_sec;
+  long int tv_usec;
+};
+#endif
+
+#if ! @HAVE_GETTIMEOFDAY_POSIX_SIGNATURE@ || @GETTIMEOFDAY_CLOBBERS_LOCALTIME@
+# undef gettimeofday
+# define gettimeofday rpl_gettimeofday
+int gettimeofday (struct timeval *restrict, void *restrict);
+#endif
+
+#endif /* _gl_SYS_TIME_H */

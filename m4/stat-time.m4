@@ -1,6 +1,6 @@
 # Checks for stat-related time functions.
 
-# Copyright (C) 1998, 1999, 2001, 2003, 2005, 2006 Free Software
+# Copyright (C) 1998, 1999, 2001, 2003, 2005, 2006, 2007 Free Software
 # Foundation, Inc.
 
 # This file is free software; the Free Software Foundation
@@ -19,6 +19,7 @@ AC_DEFUN([gl_STAT_TIME],
 [
   AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  AC_CHECK_HEADERS_ONCE([sys/time.h])
 
   AC_CHECK_MEMBERS([struct stat.st_atim.tv_nsec],
     [AC_CACHE_CHECK([whether struct stat.st_atim is of type struct timespec],
@@ -26,17 +27,11 @@ AC_DEFUN([gl_STAT_TIME],
        [AC_TRY_COMPILE(
 	  [
 	    #include <sys/types.h>
-	    #if TIME_WITH_SYS_TIME
-	    # include <sys/time.h>
-	    # include <time.h>
-	    #else
-	    # if HAVE_SYS_TIME_H
-	    #  include <sys/time.h>
-	    # else
-	    #  include <time.h>
-	    # endif
-	    #endif
 	    #include <sys/stat.h>
+	    #if HAVE_SYS_TIME_H
+	    # include <sys/time.h>
+	    #endif
+	    #include <time.h>
 	    struct timespec ts;
 	    struct stat st;
 	  ],

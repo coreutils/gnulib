@@ -8,6 +8,7 @@ m4/settime.m4
 Depends-on:
 clock-time
 extensions
+sys_time
 timespec
 
 configure.ac:

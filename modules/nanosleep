@@ -7,9 +7,10 @@ m4/nanosleep.m4
 
 Depends-on:
 clock-time
-timespec
-stdbool
 extensions
+stdbool
+sys_time
+timespec
 
 configure.ac:
 gl_FUNC_NANOSLEEP

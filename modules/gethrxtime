@@ -10,8 +10,9 @@ m4/longlong.m4
 
 Depends-on:
 clock-time
-gettime
 extensions
+gettime
+sys_time
 
 configure.ac:
 gl_GETHRXTIME

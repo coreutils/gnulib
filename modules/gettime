@@ -9,6 +9,7 @@ Depends-on:
 clock-time
 gettime
 gettimeofday
+sys_time
 timespec
 extensions
 
