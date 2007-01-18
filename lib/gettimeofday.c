@@ -98,7 +98,7 @@ tzset (void)
    causes problems.  */
 
 int
-gettimeofday (struct timeval *restrict tv, void *restrict tz)
+rpl_gettimeofday (struct timeval *restrict tv, void *restrict tz)
 {
 #undef gettimeofday
 #if HAVE_GETTIMEOFDAY
