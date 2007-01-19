@@ -9,6 +9,14 @@
 
 AC_DEFUN([gl_HEADER_SYS_TIME_H],
 [
+  dnl Use AC_REQUIRE here, so that the GETTIMEOFDAY_REPLACEMENT=0 statement
+  dnl below is expanded once only, before all GETTIMEOFDAY_REPLACEMENT=1
+  dnl statements that occur in other macros.
+  AC_REQUIRE([gl_HEADER_SYS_TIME_H_BODY])
+])
+
+AC_DEFUN([gl_HEADER_SYS_TIME_H_BODY],
+[
   AC_REQUIRE([AC_C_RESTRICT])
   AC_CHECK_HEADERS_ONCE([sys/time.h])
 
