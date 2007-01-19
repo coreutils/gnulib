@@ -1,5 +1,8 @@
 2007-01-18  Bruno Haible  <bruno@clisp.org>
 
+	* m4/tempname.m4 (gl_PREREQ_TEMPNAME): Remove tests for sys/time.h and
+	gettimeofday.
+
 	* tests/test-gettimeofday.c: Include <time.h>.
 	(dummy): Remove variable.
 
