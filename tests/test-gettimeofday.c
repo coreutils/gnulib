@@ -20,11 +20,10 @@
 #include <config.h>
 
 #include <sys/time.h>
+#include <time.h>
 
 #include <stdio.h>
 #include <string.h>
-
-suseconds_t dummy = 0;	/* just to test if this type is available */
 
 int
 main (int argc, char *argv[])
