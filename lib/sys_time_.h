@@ -35,7 +35,7 @@ struct timeval
 };
 #endif
 
-#if ! @HAVE_GETTIMEOFDAY_POSIX_SIGNATURE@ || @GETTIMEOFDAY_CLOBBERS_LOCALTIME@
+#if @GETTIMEOFDAY_REPLACEMENT@
 # undef gettimeofday
 # define gettimeofday rpl_gettimeofday
 int gettimeofday (struct timeval *restrict, void *restrict);
