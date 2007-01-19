@@ -1,4 +1,4 @@
-#serial 10
+#serial 11
 dnl Copyright (C) 2002, 2003, 2005, 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ dnl From Jim Meyering.
 # AC_FUNC_MKTIME
 # --------------
 AC_DEFUN([AC_FUNC_MKTIME],
-[AC_CHECK_HEADERS_ONCE(sys/time.h unistd.h)
+[AC_CHECK_HEADERS_ONCE(unistd.h)
 AC_CHECK_FUNCS_ONCE(alarm)
 AC_CACHE_CHECK([for working mktime], ac_cv_func_working_mktime,
 [AC_RUN_IFELSE([AC_LANG_SOURCE(

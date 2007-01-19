@@ -1,5 +1,8 @@
 2007-01-18  Bruno Haible  <bruno@clisp.org>
 
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Remove test for <sys/time.h>.
+	* m4/strftime.m4 (gl_FUNC_STRFTIME): Likewise.
+
 	* m4/tempname.m4 (gl_PREREQ_TEMPNAME): Remove tests for sys/time.h and
 	gettimeofday.
 

@@ -25,7 +25,7 @@ AC_DEFUN([gl_FUNC_STRFTIME],
  AC_REQUIRE([gl_TM_GMTOFF])
 
  AC_CHECK_FUNCS_ONCE(mblen mbrlen mempcpy tzset)
- AC_CHECK_HEADERS_ONCE(sys/time.h wchar.h)
+ AC_CHECK_HEADERS_ONCE(wchar.h)
 
  AC_DEFINE([my_strftime], [nstrftime],
    [Define to the name of the strftime replacement function.])
