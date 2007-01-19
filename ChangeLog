@@ -1,3 +1,9 @@
+2007-01-18  Bruno Haible  <bruno@clisp.org>
+
+	* m4/gettimeofday.m4 (gl_GETTIMEOFDAY_REPLACE_LOCALTIME): Undo the
+	last change; it caused a compilation error when cross-compiling to
+	Cygwin.
+
 2007-01-18  Jim Meyering  <jim@meyering.net>
 
 	Use "$(MKDIR_P) sys", not race-prone "test -d sys || mkdir sys".

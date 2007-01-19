@@ -90,8 +90,6 @@ AC_DEFUN([gl_GETTIMEOFDAY_REPLACE_LOCALTIME], [
     [Define to rpl_gmtime if the replacement function should be used.])
   AC_DEFINE([localtime], [rpl_localtime],
     [Define to rpl_localtime if the replacement function should be used.])
-  AC_DEFINE([gettimeofday], [rpl_gettimeofday],
-    [Define to rpl_gettimeofday if the replacement function should be used.])
 ])
 
 # Prerequisites of lib/gettimeofday.c.
