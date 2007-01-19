@@ -1,5 +1,8 @@
 2007-01-18  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-gettimeofday.c: Include <time.h>.
+	(dummy): Remove variable.
+
 	* m4/sys_time_h.m4 (gl_HEADER_SYS_TIME_H_BODY): Renamed from
 	gl_HEADER_SYS_TIME_H.
 	(gl_HEADER_SYS_TIME_H): New macro.
