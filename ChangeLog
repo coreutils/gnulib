@@ -1,3 +1,9 @@
+2007-01-20  Jim Meyering  <jim@meyering.net>
+
+	* lib/userspec.c (parse_with_separator): If a user or group string
+	starts with "+", skip the corresponding name-to-ID look-up, since
+	such a look-up must fail: user and group names may not include "+".
+
 2007-01-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/poll.c: Include sys/time.h and time.h unconditionally,

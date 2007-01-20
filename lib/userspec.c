@@ -1,5 +1,5 @@
 /* userspec.c -- Parse a user and group string.
-   Copyright (C) 1989-1992, 1997-1998, 2000, 2002-2006 Free Software
+   Copyright (C) 1989-1992, 1997-1998, 2000, 2002-2007 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -156,7 +156,8 @@ parse_with_separator (char const *spec, char const *separator,
 
   if (u != NULL)
     {
-      pwd = getpwnam (u);
+      /* If it starts with "+", skip the look-up.  */
+      pwd = (*u == '+' ? NULL : getpwnam (u));
       if (pwd == NULL)
 	{
 	  bool use_login_group = (separator != NULL && g == NULL);
@@ -196,7 +197,8 @@ parse_with_separator (char const *spec, char const *separator,
   if (g != NULL && error_msg == NULL)
     {
       /* Explicit group.  */
-      grp = getgrnam (g);
+      /* If it starts with "+", skip the look-up.  */
+      grp = (*g == '+' ? NULL : getgrnam (g));
       if (grp == NULL)
 	{
 	  unsigned long int tmp;
