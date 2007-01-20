@@ -1,3 +1,11 @@
+2007-01-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/poll.c: Include sys/time.h and time.h unconditionally,
+	since we now assume the sys_time module.
+	* m4/poll.m4 (gl_PREREQ_POLL): Don't require AC_HEADER_TIME or
+	check for sys/time.h; no longer needed.
+	* modules/poll (Depends-on): Depend on sys_time.
+
 2007-01-18  Bruno Haible  <bruno@clisp.org>
 
 	* m4/mktime.m4 (AC_FUNC_MKTIME): Remove test for <sys/time.h>.

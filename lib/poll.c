@@ -36,16 +36,8 @@
 #include <sys/filio.h>
 #endif
 
-#if TIME_WITH_SYS_TIME
-# include <sys/time.h>
-# include <time.h>
-#else
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# else
-#  include <time.h>
-# endif
-#endif
+#include <sys/time.h>
+#include <time.h>
 
 #ifndef INFTIM
 #define INFTIM (-1)
@@ -157,7 +149,7 @@ poll (pfd, nfd, timeout)
 	if (FD_ISSET (pfd[i].fd, &rfds))
 	  {
 	    int r;
-	    
+
 #if defined __MACH__ && defined __APPLE__
 	    /* There is a bug in Mac OS X that causes it to ignore MSG_PEEK
 	       for some kinds of descriptors.  Detect if this descriptor is a
@@ -172,27 +164,27 @@ poll (pfd, nfd, timeout)
 #endif
 	    if (r == 0)
 	      happened |= POLLHUP;
-	    
+
 	    /* If the event happened on an unconnected server socket,
 	       that's fine. */
 	    else if (r > 0 || ( /* (r == -1) && */ errno == ENOTCONN))
 	      happened |= (POLLIN | POLLRDNORM) & sought;
-	    
+
 	    /* Distinguish hung-up sockets from other errors.  */
 	    else if (errno == ESHUTDOWN || errno == ECONNRESET
 		     || errno == ECONNABORTED || errno == ENETRESET)
 	      happened |= POLLHUP;
-	    
+
 	    else
 	      happened |= POLLERR;
 	  }
-	
+
 	if (FD_ISSET (pfd[i].fd, &wfds))
 	  happened |= (POLLOUT | POLLWRNORM | POLLWRBAND) & sought;
-	
+
 	if (FD_ISSET (pfd[i].fd, &efds))
 	  happened |= (POLLPRI | POLLRDBAND) & sought;
-	
+
 	if (happened)
 	  {
 	    pfd[i].revents = happened;

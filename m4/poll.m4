@@ -1,5 +1,5 @@
-# poll.m4 serial 6
-dnl Copyright (c) 2003, 2005, 2006 Free Software Foundation, Inc.
+# poll.m4 serial 7
+dnl Copyright (c) 2003, 2005, 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -67,6 +67,5 @@ This is MacOSX or AIX
 # Prerequisites of lib/poll.c.
 AC_DEFUN([gl_PREREQ_POLL],
 [
-  AC_REQUIRE([AC_HEADER_TIME])
-  AC_CHECK_HEADERS_ONCE(sys/time.h sys/ioctl.h sys/filio.h)
+  AC_CHECK_HEADERS_ONCE(sys/ioctl.h sys/filio.h)
 ])
