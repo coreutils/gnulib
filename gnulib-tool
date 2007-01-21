@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-01-17 23:46:34 $'
+cvsdatestamp='$Date: 2007-01-21 20:07:09 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -71,7 +71,7 @@ fi
 # However, do this only for gnulib-tool itself, not for the code that
 # gnulib-tool generates, since we don't want "sed --posix" to leak
 # into makefiles.
-if (alias) > /dev/null 2>&1 && echo | sed --posix d >/dev/null 2>&1; then
+if (alias) > /dev/null 2>&1 && echo | sed --posix -e d >/dev/null 2>&1; then
   alias sed='sed --posix'
 fi
 

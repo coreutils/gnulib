@@ -1,3 +1,7 @@
+2007-01-21  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool: Fix test whether sed is GNU sed supporting --posix.
+
 2007-01-20  Jim Meyering  <jim@meyering.net>
 
 	* lib/userspec.c (parse_with_separator): If a user or group string
