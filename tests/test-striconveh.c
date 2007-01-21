@@ -67,7 +67,7 @@ main ()
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       char *result = NULL;
-      size_t length;
+      size_t length = 0;
       int retval = mem_cd_iconveh (input, strlen (input),
 				   cd_88592_to_88591,
 				   cd_88592_to_utf8, cd_utf8_to_88591,
@@ -85,7 +85,7 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
       char *result = NULL;
-      size_t length;
+      size_t length = 0;
       int retval = mem_cd_iconveh (input, strlen (input),
 				   cd_88592_to_88591,
 				   cd_88592_to_utf8, cd_utf8_to_88591,
@@ -125,7 +125,7 @@ main ()
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       static const char expected[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
       char *result = NULL;
-      size_t length;
+      size_t length = 0;
       int retval = mem_cd_iconveh (input, strlen (input),
 				   cd_88591_to_utf8,
 				   cd_88591_to_utf8, (iconv_t)(-1),
@@ -144,7 +144,7 @@ main ()
       static const char input[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
       static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       char *result = NULL;
-      size_t length;
+      size_t length = 0;
       int retval = mem_cd_iconveh (input, strlen (input),
 				   cd_utf8_to_88591,
 				   (iconv_t)(-1), cd_utf8_to_88591,
@@ -162,7 +162,7 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\305\202 Maszkowski"; /* Rafał Maszkowski */
       char *result = NULL;
-      size_t length;
+      size_t length = 0;
       int retval = mem_cd_iconveh (input, strlen (input),
 				   cd_utf8_to_88591,
 				   (iconv_t)(-1), cd_utf8_to_88591,
@@ -201,7 +201,7 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\342";
       char *result = NULL;
-      size_t length;
+      size_t length = 0;
       int retval = mem_cd_iconveh (input, strlen (input),
 				   cd_utf8_to_88591,
 				   (iconv_t)(-1), cd_utf8_to_88591,

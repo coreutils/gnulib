@@ -137,9 +137,23 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
   union { unsigned int align; char buf[tmpbufsize]; } tmp;
 # define tmpbuf tmp.buf
 
-  char *result = tmpbuf;
-  size_t allocated = sizeof (tmpbuf);
-  size_t length = 0;
+  char *initial_result;
+  char *result;
+  size_t allocated;
+  size_t length;
+
+  if (*lengthp >= sizeof (tmpbuf))
+    {
+      initial_result = *resultp;
+      allocated = *lengthp;
+    }
+  else
+    {
+      initial_result = tmpbuf;
+      allocated = sizeof (tmpbuf);
+    }
+  result = initial_result;
+  length = 0;
 
   /* First, try a direct conversion, and see whether a conversion error
      occurs at all.  */
@@ -194,19 +208,19 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 			allocated = 2 * allocated;
 			if (length + 1 + extra_alloc > allocated)
 			  abort ();
-			if (result == tmpbuf)
+			if (result == initial_result)
 			  memory = (char *) malloc (allocated);
 			else
 			  memory = (char *) realloc (result, allocated);
 			if (memory == NULL)
 			  {
-			    if (result != tmpbuf)
+			    if (result != initial_result)
 			      free (result);
 			    errno = ENOMEM;
 			    return -1;
 			  }
-			if (result == tmpbuf)
-			  memcpy (memory, tmpbuf, length);
+			if (result == initial_result)
+			  memcpy (memory, initial_result, length);
 			result = memory;
 			grow = false;
 		      }
@@ -227,7 +241,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 	      }
 	    else
 	      {
-		if (result != tmpbuf)
+		if (result != initial_result)
 		  {
 		    int saved_errno = errno;
 		    free (result);
@@ -243,19 +257,19 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 	    char *memory;
 
 	    allocated = 2 * allocated;
-	    if (result == tmpbuf)
+	    if (result == initial_result)
 	      memory = (char *) malloc (allocated);
 	    else
 	      memory = (char *) realloc (result, allocated);
 	    if (memory == NULL)
 	      {
-		if (result != tmpbuf)
+		if (result != initial_result)
 		  free (result);
 		errno = ENOMEM;
 		return -1;
 	      }
-	    if (result == tmpbuf)
-	      memcpy (memory, tmpbuf, length);
+	    if (result == initial_result)
+	      memcpy (memory, initial_result, length);
 	    result = memory;
 	  }
       }
@@ -280,24 +294,24 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 	      char *memory;
 
 	      allocated = 2 * allocated;
-	      if (result == tmpbuf)
+	      if (result == initial_result)
 		memory = (char *) malloc (allocated);
 	      else
 		memory = (char *) realloc (result, allocated);
 	      if (memory == NULL)
 		{
-		  if (result != tmpbuf)
+		  if (result != initial_result)
 		    free (result);
 		  errno = ENOMEM;
 		  return -1;
 		}
-	      if (result == tmpbuf)
-		memcpy (memory, tmpbuf, length);
+	      if (result == initial_result)
+		memcpy (memory, initial_result, length);
 	      result = memory;
 	    }
 	  else
 	    {
-	      if (result != tmpbuf)
+	      if (result != initial_result)
 		{
 		  int saved_errno = errno;
 		  free (result);
@@ -429,7 +443,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 	if (res1 == (size_t)(-1)
 	    && !(errno == E2BIG || errno == EINVAL || errno == EILSEQ))
 	  {
-	    if (result != tmpbuf)
+	    if (result != initial_result)
 	      {
 		int saved_errno = errno;
 		free (result);
@@ -569,19 +583,19 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 			    allocated = 2 * allocated;
 			    if (length + 1 + extra_alloc > allocated)
 			      abort ();
-			    if (result == tmpbuf)
+			    if (result == initial_result)
 			      memory = (char *) malloc (allocated);
 			    else
 			      memory = (char *) realloc (result, allocated);
 			    if (memory == NULL)
 			      {
-				if (result != tmpbuf)
+				if (result != initial_result)
 				  free (result);
 				errno = ENOMEM;
 				return -1;
 			      }
-			    if (result == tmpbuf)
-			      memcpy (memory, tmpbuf, length);
+			    if (result == initial_result)
+			      memcpy (memory, initial_result, length);
 			    result = memory;
 			    grow = false;
 
@@ -607,7 +621,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 			if (res == (size_t)(-1))
 			  {
 			    /* Failure converting the ASCII replacement.  */
-			    if (result != tmpbuf)
+			    if (result != initial_result)
 			      {
 				int saved_errno = errno;
 				free (result);
@@ -618,7 +632,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 		      }
 		    else
 		      {
-			if (result != tmpbuf)
+			if (result != initial_result)
 			  {
 			    int saved_errno = errno;
 			    free (result);
@@ -635,19 +649,19 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 		    char *memory;
 
 		    allocated = 2 * allocated;
-		    if (result == tmpbuf)
+		    if (result == initial_result)
 		      memory = (char *) malloc (allocated);
 		    else
 		      memory = (char *) realloc (result, allocated);
 		    if (memory == NULL)
 		      {
-			if (result != tmpbuf)
+			if (result != initial_result)
 			  free (result);
 			errno = ENOMEM;
 			return -1;
 		      }
-		    if (result == tmpbuf)
-		      memcpy (memory, tmpbuf, length);
+		    if (result == initial_result)
+		      memcpy (memory, initial_result, length);
 		    result = memory;
 		  }
 	      }
@@ -664,7 +678,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 	      in1size = 0;
 	    else if (errno1 == EILSEQ)
 	      {
-		if (result != tmpbuf)
+		if (result != initial_result)
 		  free (result);
 		errno = errno1;
 		return -1;
@@ -676,42 +690,33 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 
  done:
   /* Now the final memory allocation.  */
-  if (resultp != NULL)
+  if (result == tmpbuf)
     {
-      if (result == tmpbuf)
-	{
-	  char *memory;
+      char *memory;
 
-	  memory = (char *) malloc (length + extra_alloc);
-	  if (memory != NULL)
-	    {
-	      memcpy (memory, tmpbuf, length);
-	      result = memory;
-	    }
-	  else
-	    {
-	      errno = ENOMEM;
-	      return -1;
-	    }
-	}
-      else if (length + extra_alloc < allocated)
+      memory = (char *) malloc (length + extra_alloc);
+      if (memory != NULL)
 	{
-	  /* Shrink the allocated memory if possible.  */
-	  char *memory;
-
-	  memory = (char *) realloc (result, length + extra_alloc);
-	  if (memory != NULL)
-	    result = memory;
+	  memcpy (memory, tmpbuf, length);
+	  result = memory;
 	}
-      *resultp = result;
+      else
+	{
+	  errno = ENOMEM;
+	  return -1;
+        }
     }
-  else
+  else if (result != *resultp && length + extra_alloc < allocated)
     {
-      if (result != tmpbuf)
-	free (result);
+      /* Shrink the allocated memory if possible.  */
+      char *memory;
+
+      memory = (char *) realloc (result, length + extra_alloc);
+      if (memory != NULL)
+	result = memory;
     }
-  if (lengthp != NULL)
-    *lengthp = length;
+  *resultp = result;
+  *lengthp = length;
   return 0;
 # undef tmpbuf
 # undef tmpbufsize
@@ -737,7 +742,7 @@ str_cd_iconveh (const char *src,
      function is usable for UTF-7, we have to exclude the NUL byte from the
      conversion and add it by hand afterwards.  */
   char *result = NULL;
-  size_t length;
+  size_t length = 0;
   int retval = mem_cd_iconveh_internal (src, strlen (src),
 					cd, cd1, cd2, handler, 1,
 					&result, &length);

@@ -47,12 +47,13 @@ enum iconv_ilseq_handler
    (iconv_t)(-1) if FROM_CODESET is UTF-8).
    CD2 is the conversion descriptor from UTF-8 to TO_CODESET (or (iconv_t)(-1)
    if TO_CODESET is UTF-8).
-   *RESULTP should initially contain NULL or a malloced memory block.
-   May change the size of the allocated memory block in *RESULTP, storing
-   its new address in *RESULTP and its new length in *LENGTHP.
+   *RESULTP and *LENGTH should initially be a scratch buffer and its size,
+   or *RESULTP can initially be NULL.
+   May erase the contents of the memory at *RESULTP.
    Return value: 0 if successful, otherwise -1 and errno set.
-   If successful, the resulting string is stored in *RESULTP and its length
-   in *LENGTHP.  */
+   If successful: The resulting string is stored in *RESULTP and its length
+   in *LENGTHP.  *RESULTP is set to a freshly allocated memory block, or is
+   unchanged if no dynamic memory allocation was necessary.  */
 extern int
        mem_cd_iconveh (const char *src, size_t srclen,
 		       iconv_t cd, iconv_t cd1, iconv_t cd2,
