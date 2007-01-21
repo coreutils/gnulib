@@ -1,5 +1,15 @@
 2007-01-21  Bruno Haible  <bruno@clisp.org>
 
+	* modules/striconveha: New file.
+	* lib/striconveha.h: New file.
+	* lib/striconveha.c: New file.
+	* MODULES.html.sh (Internationalization functions): Add striconveha.
+	* lib/striconv.c (str_iconv): Optimize the case of an empty input
+	string.
+	* lib/striconveh.c (mem_iconveh, str_iconveh): Likewise.
+
+2007-01-21  Bruno Haible  <bruno@clisp.org>
+
 	* lib/striconv.c (str_iconv): Guarantee errno is set when strdup fails.
 	* lib/striconveh.c (str_iconveh): Likewise.
 

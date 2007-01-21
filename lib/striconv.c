@@ -397,7 +397,7 @@ str_cd_iconv (const char *src, iconv_t cd)
 char *
 str_iconv (const char *src, const char *from_codeset, const char *to_codeset)
 {
-  if (c_strcasecmp (from_codeset, to_codeset) == 0)
+  if (*src == '\0' || c_strcasecmp (from_codeset, to_codeset) == 0)
     {
       char *result = strdup (src);
 

@@ -772,7 +772,13 @@ mem_iconveh (const char *src, size_t srclen,
 	     enum iconv_ilseq_handler handler,
 	     char **resultp, size_t *lengthp)
 {
-  if (c_strcasecmp (from_codeset, to_codeset) == 0)
+  if (srclen == 0)
+    {
+      /* Nothing to convert.  */
+      *lengthp = 0;
+      return 0;
+    }
+  else if (c_strcasecmp (from_codeset, to_codeset) == 0)
     {
       char *result;
 
@@ -919,7 +925,7 @@ str_iconveh (const char *src,
 	     const char *from_codeset, const char *to_codeset,
 	     enum iconv_ilseq_handler handler)
 {
-  if (c_strcasecmp (from_codeset, to_codeset) == 0)
+  if (*src == '\0' || c_strcasecmp (from_codeset, to_codeset) == 0)
     {
       char *result = strdup (src);
 
