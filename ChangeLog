@@ -1,5 +1,7 @@
 2007-01-21  Bruno Haible  <bruno@clisp.org>
 
+	* lib/xstriconv.h: Update.
+
 	* lib/striconv.h (mem_cd_iconv): Change specification.
 	* lib/striconv.c (mem_cd_iconv): Don't free the user-supplied original
 	result buffer.
