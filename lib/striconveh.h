@@ -81,8 +81,6 @@ extern char *
 
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is at [SRC,...,SRC+SRCLEN-1].
-   Both the "from" and the "to" encoding must use a single NUL byte at the
-   end of the string (i.e. not UCS-2, UCS-4, UTF-16, UTF-32).
    *RESULTP and *LENGTH should initially be a scratch buffer and its size,
    or *RESULTP can initially be NULL.
    May erase the contents of the memory at *RESULTP.
