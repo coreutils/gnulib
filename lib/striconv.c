@@ -118,15 +118,17 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
       *lengthp = 0;
       return 0;
     }
-  result =
-    (char *) (*resultp != NULL ? realloc (*resultp, length) : malloc (length));
-  if (result == NULL)
+  if (*resultp != NULL && *lengthp >= length)
+    result = *resultp;
+  else
     {
-      errno = ENOMEM;
-      return -1;
+      result = (char *) malloc (length);
+      if (result == NULL)
+	{
+	  errno = ENOMEM;
+	  return -1;
+	}
     }
-  *resultp = result;
-  *lengthp = length;
 
   /* Avoid glibc-2.1 bug and Solaris 2.7-2.9 bug.  */
 # if defined _LIBICONV_VERSION \
@@ -153,7 +155,7 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
 	    if (errno == EINVAL)
 	      break;
 	    else
-	      return -1;
+	      goto fail;
 	  }
 # if !defined _LIBICONV_VERSION && !defined __GLIBC__
 	/* Irix iconv() inserts a NUL byte if it cannot convert.
@@ -163,7 +165,7 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
 	else if (res > 0)
 	  {
 	    errno = EILSEQ;
-	    return -1;
+	    goto fail;
 	  }
 # endif
       }
@@ -174,14 +176,28 @@ mem_cd_iconv (const char *src, size_t srclen, iconv_t cd,
       size_t res = iconv (cd, NULL, NULL, &outptr, &outsize);
 
       if (res == (size_t)(-1))
-	return -1;
+	goto fail;
     }
 # endif
     if (outsize != 0)
       abort ();
   }
 
+  *resultp = result;
+  *lengthp = length;
+
   return 0;
+
+ fail:
+  {
+    if (result != *resultp)
+      {
+	int saved_errno = errno;
+	free (result);
+	errno = saved_errno;
+      }
+    return -1;
+  }
 # undef tmpbufsize
 }
 
@@ -202,18 +218,14 @@ str_cd_iconv (const char *src, iconv_t cd)
      Therefore we cannot use the second, faster algorithm.  */
 
   char *result = NULL;
-  size_t length;
+  size_t length = 0;
   int retval = mem_cd_iconv (src, strlen (src), cd, &result, &length);
   char *final_result;
 
   if (retval < 0)
     {
       if (result != NULL)
-	{
-	  int saved_errno = errno;
-	  free (result);
-	  errno = saved_errno;
-	}
+	abort ();
       return NULL;
     }
 
