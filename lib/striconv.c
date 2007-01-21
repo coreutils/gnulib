@@ -398,7 +398,13 @@ char *
 str_iconv (const char *src, const char *from_codeset, const char *to_codeset)
 {
   if (c_strcasecmp (from_codeset, to_codeset) == 0)
-    return strdup (src);
+    {
+      char *result = strdup (src);
+
+      if (result == NULL)
+	errno = ENOMEM;
+      return result;
+    }
   else
     {
 #if HAVE_ICONV

@@ -920,7 +920,13 @@ str_iconveh (const char *src,
 	     enum iconv_ilseq_handler handler)
 {
   if (c_strcasecmp (from_codeset, to_codeset) == 0)
-    return strdup (src);
+    {
+      char *result = strdup (src);
+
+      if (result == NULL)
+	errno = ENOMEM;
+      return result;
+    }
   else
     {
 #if HAVE_ICONV
