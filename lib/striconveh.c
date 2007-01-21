@@ -766,6 +766,154 @@ str_cd_iconveh (const char *src,
 
 #endif
 
+int
+mem_iconveh (const char *src, size_t srclen,
+	     const char *from_codeset, const char *to_codeset,
+	     enum iconv_ilseq_handler handler,
+	     char **resultp, size_t *lengthp)
+{
+  if (c_strcasecmp (from_codeset, to_codeset) == 0)
+    {
+      char *result;
+
+      if (*resultp != NULL && *lengthp >= srclen)
+	result = *resultp;
+      else
+	{
+	  result = (char *) malloc (srclen);
+	  if (result == NULL)
+	    {
+	      errno = ENOMEM;
+	      return -1;
+	    }
+	}
+      memcpy (result, src, srclen);
+      *resultp = result;
+      *lengthp = srclen;
+      return 0;
+    }
+  else
+    {
+#if HAVE_ICONV
+      iconv_t cd;
+      iconv_t cd1;
+      iconv_t cd2;
+      char *result;
+      size_t length;
+      int retval;
+
+      /* Avoid glibc-2.1 bug with EUC-KR.  */
+# if (__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) && !defined _LIBICONV_VERSION
+      if (c_strcasecmp (from_codeset, "EUC-KR") == 0
+	  || c_strcasecmp (to_codeset, "EUC-KR") == 0)
+	{
+	  errno = EINVAL;
+	  return -1;
+	}
+# endif
+
+      cd = iconv_open (to_codeset, from_codeset);
+      if (cd == (iconv_t)(-1))
+	return -1;
+
+      if (c_strcasecmp (from_codeset, "UTF-8") == 0)
+	cd1 = (iconv_t)(-1);
+      else
+	{
+	  cd1 = iconv_open ("UTF-8", from_codeset);
+	  if (cd1 == (iconv_t)(-1))
+	    {
+	      int saved_errno = errno;
+	      iconv_close (cd);
+	      errno = saved_errno;
+	      return -1;
+	    }
+	}
+
+      if (c_strcasecmp (to_codeset, "UTF-8") == 0)
+	cd2 = (iconv_t)(-1);
+      else
+	{
+	  cd2 = iconv_open (to_codeset, "UTF-8");
+	  if (cd2 == (iconv_t)(-1))
+	    {
+	      int saved_errno = errno;
+	      if (cd1 != (iconv_t)(-1))
+		iconv_close (cd1);
+	      iconv_close (cd);
+	      errno = saved_errno;
+	      return -1;
+	    }
+	}
+
+      result = *resultp;
+      length = *lengthp;
+      retval =
+	mem_cd_iconveh (src, srclen, cd, cd1, cd2, handler, &result, &length);
+
+      if (retval < 0)
+	{
+	  /* Close cd, cd1, cd2, but preserve the errno from str_cd_iconv.  */
+	  int saved_errno = errno;
+	  if (cd2 != (iconv_t)(-1))
+	    iconv_close (cd2);
+	  if (cd1 != (iconv_t)(-1))
+	    iconv_close (cd1);
+	  iconv_close (cd);
+	  errno = saved_errno;
+	}
+      else
+	{
+	  if (cd2 != (iconv_t)(-1) && iconv_close (cd2) < 0)
+	    {
+	      /* Return -1, but free the allocated memory, and while doing
+		 that, preserve the errno from iconv_close.  */
+	      int saved_errno = errno;
+	      if (cd1 != (iconv_t)(-1))
+		iconv_close (cd1);
+	      iconv_close (cd);
+	      if (result != *resultp && result != NULL)
+		free (result);
+	      errno = saved_errno;
+	      return -1;
+	    }
+	  if (cd1 != (iconv_t)(-1) && iconv_close (cd1) < 0)
+	    {
+	      /* Return -1, but free the allocated memory, and while doing
+		 that, preserve the errno from iconv_close.  */
+	      int saved_errno = errno;
+	      iconv_close (cd);
+	      if (result != *resultp && result != NULL)
+		free (result);
+	      errno = saved_errno;
+	      return -1;
+	    }
+	  if (iconv_close (cd) < 0)
+	    {
+	      /* Return -1, but free the allocated memory, and while doing
+		 that, preserve the errno from iconv_close.  */
+	      int saved_errno = errno;
+	      if (result != *resultp && result != NULL)
+		free (result);
+	      errno = saved_errno;
+	      return -1;
+	    }
+	  *resultp = result;
+	  *lengthp = length;
+	}
+      return retval;
+#else
+      /* This is a different error code than if iconv_open existed but didn't
+	 support from_codeset and to_codeset, so that the caller can emit
+	 an error message such as
+	   "iconv() is not supported. Installing GNU libiconv and
+	    then reinstalling this package would fix this."  */
+      errno = ENOSYS;
+      return -1;
+#endif
+    }
+}
+
 char *
 str_iconveh (const char *src,
 	     const char *from_codeset, const char *to_codeset,

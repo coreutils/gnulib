@@ -347,6 +347,155 @@ main ()
   iconv_close (cd_88592_to_utf8);
   iconv_close (cd_utf8_to_88592);
 
+  /* ------------------------- Test mem_iconveh() ------------------------- */
+
+  /* Test conversion from ISO-8859-2 to ISO-8859-1 with no errors.  */
+  for (h = 0; h < SIZEOF (handlers); h++)
+    {
+      enum iconv_ilseq_handler handler = handlers[h];
+      static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
+      static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
+      char *result = NULL;
+      size_t length = 0;
+      int retval = mem_iconveh (input, strlen (input),
+				"ISO-8859-2", "ISO-8859-1",
+				handler,
+				&result, &length);
+      ASSERT (retval == 0);
+      ASSERT (length == strlen (expected));
+      ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+      free (result);
+    }
+
+  /* Test conversion from ISO-8859-2 to ISO-8859-1 with EILSEQ.  */
+  for (h = 0; h < SIZEOF (handlers); h++)
+    {
+      enum iconv_ilseq_handler handler = handlers[h];
+      static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
+      char *result = NULL;
+      size_t length = 0;
+      int retval = mem_iconveh (input, strlen (input),
+				"ISO-8859-2", "ISO-8859-1",
+				handler,
+				&result, &length);
+      switch (handler)
+	{
+	case iconveh_error:
+	  ASSERT (retval == -1 && errno == EILSEQ);
+	  ASSERT (result == NULL);
+	  break;
+	case iconveh_question_mark:
+	  {
+	    static const char expected[] = "Rafa? Maszkowski";
+	    ASSERT (retval == 0);
+	    ASSERT (length == strlen (expected));
+	    ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+	    free (result);
+	  }
+	  break;
+	case iconveh_escape_sequence:
+	  {
+	    static const char expected[] = "Rafa\\u0142 Maszkowski";
+	    ASSERT (retval == 0);
+	    ASSERT (length == strlen (expected));
+	    ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+	    free (result);
+	  }
+	  break;
+	}
+    }
+
+  /* Test conversion from ISO-8859-1 to UTF-8 with no errors.  */
+  for (h = 0; h < SIZEOF (handlers); h++)
+    {
+      enum iconv_ilseq_handler handler = handlers[h];
+      static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
+      static const char expected[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
+      char *result = NULL;
+      size_t length = 0;
+      int retval = mem_iconveh (input, strlen (input),
+				"ISO-8859-1", "UTF-8",
+				handler,
+				&result, &length);
+      ASSERT (retval == 0);
+      ASSERT (length == strlen (expected));
+      ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+      free (result);
+    }
+
+  /* Test conversion from UTF-8 to ISO-8859-1 with no errors.  */
+  for (h = 0; h < SIZEOF (handlers); h++)
+    {
+      enum iconv_ilseq_handler handler = handlers[h];
+      static const char input[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
+      static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
+      char *result = NULL;
+      size_t length = 0;
+      int retval = mem_iconveh (input, strlen (input),
+				"UTF-8", "ISO-8859-1",
+				handler,
+				&result, &length);
+      ASSERT (retval == 0);
+      ASSERT (length == strlen (expected));
+      ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+      free (result);
+    }
+
+  /* Test conversion from UTF-8 to ISO-8859-1 with EILSEQ.  */
+  for (h = 0; h < SIZEOF (handlers); h++)
+    {
+      enum iconv_ilseq_handler handler = handlers[h];
+      static const char input[] = "Rafa\305\202 Maszkowski"; /* Rafał Maszkowski */
+      char *result = NULL;
+      size_t length = 0;
+      int retval = mem_iconveh (input, strlen (input),
+				"UTF-8", "ISO-8859-1",
+				handler,
+				&result, &length);
+      switch (handler)
+	{
+	case iconveh_error:
+	  ASSERT (retval == -1 && errno == EILSEQ);
+	  ASSERT (result == NULL);
+	  break;
+	case iconveh_question_mark:
+	  {
+	    static const char expected[] = "Rafa? Maszkowski";
+	    ASSERT (retval == 0);
+	    ASSERT (length == strlen (expected));
+	    ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+	    free (result);
+	  }
+	  break;
+	case iconveh_escape_sequence:
+	  {
+	    static const char expected[] = "Rafa\\u0142 Maszkowski";
+	    ASSERT (retval == 0);
+	    ASSERT (length == strlen (expected));
+	    ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+	    free (result);
+	  }
+	  break;
+	}
+    }
+
+  /* Test conversion from UTF-8 to ISO-8859-1 with EINVAL.  */
+  for (h = 0; h < SIZEOF (handlers); h++)
+    {
+      enum iconv_ilseq_handler handler = handlers[h];
+      static const char input[] = "\342";
+      char *result = NULL;
+      size_t length = 0;
+      int retval = mem_iconveh (input, strlen (input),
+				"UTF-8", "ISO-8859-1",
+				handler,
+				&result, &length);
+      ASSERT (retval == 0);
+      ASSERT (length == 0);
+      if (result != NULL)
+	free (result);
+    }
+
   /* ------------------------- Test str_iconveh() ------------------------- */
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with no errors.  */

@@ -80,6 +80,23 @@ extern char *
 #endif
 
 /* Convert an entire string from one encoding to another, using iconv.
+   The original string is at [SRC,...,SRC+SRCLEN-1].
+   Both the "from" and the "to" encoding must use a single NUL byte at the
+   end of the string (i.e. not UCS-2, UCS-4, UTF-16, UTF-32).
+   *RESULTP and *LENGTH should initially be a scratch buffer and its size,
+   or *RESULTP can initially be NULL.
+   May erase the contents of the memory at *RESULTP.
+   Return value: 0 if successful, otherwise -1 and errno set.
+   If successful: The resulting string is stored in *RESULTP and its length
+   in *LENGTHP.  *RESULTP is set to a freshly allocated memory block, or is
+   unchanged if no dynamic memory allocation was necessary.  */
+extern int
+       mem_iconveh (const char *src, size_t srclen,
+		    const char *from_codeset, const char *to_codeset,
+		    enum iconv_ilseq_handler handler,
+		    char **resultp, size_t *lengthp);
+
+/* Convert an entire string from one encoding to another, using iconv.
    The original string is the NUL-terminated string starting at SRC.
    Both the "from" and the "to" encoding must use a single NUL byte at the
    end of the string (i.e. not UCS-2, UCS-4, UTF-16, UTF-32).
