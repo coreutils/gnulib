@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 5, 2006
+@set lastupdate January 15, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -24,8 +24,9 @@
 @copying
 Information for maintainers of GNU software, last updated @value{lastupdate}.
 
-Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
-2001, 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
+2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
+Foundation, Inc.
 
 @quotation
 Permission is granted to make and distribute verbatim copies
@@ -1536,22 +1537,12 @@ enforced, or we have a suitable patent license allowing release of free
 software.
 
 Beyond that, sometimes the GNU project takes a strong stand against a
-particular patented technology in order to encourage everyone to reject
-it.
-
-For example, the GIF file format is covered by the LZW software patent
-in the USA.  A patent holder has threatened lawsuits against not only
-developers of software to produce GIFs, but even web sites that
-contain them.
-
-For this reason, you should not include GIFs in the web pages for your
-package, nor in the distribution of the package itself.  It is ok for
-a GNU package to support displaying GIFs which will come into play if
-a user asks it to operate on one.  However, it is essential to provide
-equal or better support for the competing PNG and JPG
-formats---otherwise, the GNU package would be @emph{pressuring} users
-to use GIF format, and that it must not do.  More about our stand on
-GIF is available at @uref{http://www.gnu.org/philosophy/gif.html}.
+particular patented technology in order to encourage everyone to
+reject it.  For example, until the GIF patents expired in 2006, we
+specified that GNU packages and web pages should not include GIF image
+files, and that equal or better support for other image formats such
+as PNG and JPEG was crucial.  (These other formats remain superior, so
+there is still no particular reason to use GIF's.)
 
 Software patents are not the only matter for ethical concern.  A GNU
 package should not recommend use of any non-free program, nor should it

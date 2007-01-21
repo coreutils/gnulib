@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate November 30, 2006
+@set lastupdate January 21, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -32,8 +32,9 @@
 @copying
 The GNU coding standards, last updated @value{lastupdate}.
 
-Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
-2001, 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
+2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
+Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.2
@@ -4014,11 +4015,25 @@ the users of Foobar if the users of Foobar are few.)
 
 Sometimes a program is free software in itself but depends on a
 non-free platform in order to run.  For instance, many Java programs
-depend on Sun's Java implementation, and won't run on the GNU Java
-Compiler (which does not yet have all the features) or won't run with
-the GNU Java libraries.  To recommend that program is inherently to
-recommend the non-free platform as well; if you should not do the
-latter, then don't do the former.
+depend on the parts of Sun's Java implementation which are not yet
+freely available, and won't run on the GNU Java Compiler (which does
+not yet have all the features) or won't run with the GNU Java
+libraries.  We hope this particular problem will be gone in a few
+months, when Sun makes the standard Java libraries freely available,
+but of course the general principle remains: you should not recommend
+programs that depend on non-free software to run.
+
+Some free programs encourage the use of non-free software.  A typical
+example is @command{mplayer}.  It is free software in itself, and the
+free code can handle some kinds of files.  However, @command{mplayer}
+recommends use of non-free codecs for other kinds of files, and users
+that install @command{mplayer} are very likely to install those codecs
+along with it.  To recommend @command{mplayer} is, in effect, to
+recommend the non-free codecs.  We must not do that, so we cannot
+recommend @command{mplayer} either.
+
+In general, you should also not recommend programs that themselves
+strongly recommend the use of non-free software.
 
 A GNU package should not refer the user to any non-free documentation
 for free software.  Free documentation that can be included in free
@@ -4032,7 +4047,7 @@ documentation.
 By contrast, it is ok to refer to journal articles and textbooks in
 the comments of a program for explanation of how it functions, even
 though they be non-free.  This is because we don't include such things
-in the GNU system even if we are allowed to--they are outside the
+in the GNU system even if we are allowed to---they are outside the
 scope of an operating system project.
 
 Referring to a web site that describes or recommends a non-free
