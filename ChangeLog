@@ -1,6 +1,18 @@
 2007-01-21  Bruno Haible  <bruno@clisp.org>
 
-	* lib/xstriconv.h: Update.
+	* lib/striconveh.h (mem_iconveh): New declaration.
+	* lib/striconveh.c (mem_iconveh): New function.
+	* tests/test-striconveh.c (main): Add tests for mem_iconveh.
+
+2007-01-21  Bruno Haible  <bruno@clisp.org>
+
+	* lib/xstriconv.h (xmem_cd_iconv): Change specification.
+
+	* lib/striconveh.h (mem_cd_iconveh): Change specification.
+	* lib/striconveh.c (mem_cd_iconveh): Don't free the user-supplied
+	original result buffer.
+	(str_cd_iconveh): Update.
+	* tests/test-striconveh.c (main): Update.
 
 	* lib/striconv.h (mem_cd_iconv): Change specification.
 	* lib/striconv.c (mem_cd_iconv): Don't free the user-supplied original
