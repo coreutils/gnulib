@@ -1,3 +1,8 @@
+2007-01-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/gettimeofday (License): Change from GPL to LGPL, since
+	gettimeofday is a library function.
+
 2007-01-22  James Youngman  <jay@gnu.org>
 
 	* m4/gnulib-common.m4 (AC_PROG_MKDIR_P): If AC_PROG_MKDIR_P is already
