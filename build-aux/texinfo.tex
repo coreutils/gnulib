@@ -3,11 +3,11 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2006-12-30.10}
+\def\texinfoversion{2007-01-02.19}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
-% 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free
-% Software Foundation, Inc.
+% 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
+% 2007 Free Software Foundation, Inc.
 %
 % This texinfo.tex file is free software; you can redistribute it and/or
 % modify it under the terms of the GNU General Public License as
@@ -7557,381 +7557,378 @@ should work if nowhere else does.}
 \endgroup
 
 \def\utfeightchardefs{%
+  \DeclareUnicodeCharacter{00A0}{\tie}
+  \DeclareUnicodeCharacter{00A1}{\exclamdown}
+  \DeclareUnicodeCharacter{00A3}{\pounds}
+  \DeclareUnicodeCharacter{00A8}{\"{ }}
+  \DeclareUnicodeCharacter{00A9}{\copyright}
+  \DeclareUnicodeCharacter{00AA}{\ordf}
+  \DeclareUnicodeCharacter{00AD}{\-}
+  \DeclareUnicodeCharacter{00AE}{\registeredsymbol}
+  \DeclareUnicodeCharacter{00AF}{\={ }}
 
-\DeclareUnicodeCharacter{00A0}{\tie}
-\DeclareUnicodeCharacter{00A1}{hello? \exclamdown}
-\DeclareUnicodeCharacter{00A3}{\pounds}
-\DeclareUnicodeCharacter{00A8}{\"{ }}
-\DeclareUnicodeCharacter{00A9}{\copyright}
-\DeclareUnicodeCharacter{00AA}{\ordf}
-\DeclareUnicodeCharacter{00AD}{\-}
-\DeclareUnicodeCharacter{00AE}{\registeredsymbol}
-\DeclareUnicodeCharacter{00AF}{\={ }}
+  \DeclareUnicodeCharacter{00B0}{\ringaccent{ }}
+  \DeclareUnicodeCharacter{00B4}{\'{ }}
+  \DeclareUnicodeCharacter{00B8}{\cedilla{ }}
+  \DeclareUnicodeCharacter{00BA}{\ordm}
+  \DeclareUnicodeCharacter{00BF}{\questiondown}
 
-\DeclareUnicodeCharacter{00B0}{\ringaccent{ }}
-\DeclareUnicodeCharacter{00B4}{\'{ }}
-\DeclareUnicodeCharacter{00B8}{\cedilla{ }}
-\DeclareUnicodeCharacter{00BA}{\ordm}
-\DeclareUnicodeCharacter{00BF}{\questiondown}
+  \DeclareUnicodeCharacter{00C0}{\`A}
+  \DeclareUnicodeCharacter{00C1}{\'A}
+  \DeclareUnicodeCharacter{00C2}{\^A}
+  \DeclareUnicodeCharacter{00C3}{\~A}
+  \DeclareUnicodeCharacter{00C4}{\"A}
+  \DeclareUnicodeCharacter{00C5}{\AA}
+  \DeclareUnicodeCharacter{00C6}{\AE}
+  \DeclareUnicodeCharacter{00C7}{\cedilla{C}}
+  \DeclareUnicodeCharacter{00C8}{\`E}
+  \DeclareUnicodeCharacter{00C9}{\'E}
+  \DeclareUnicodeCharacter{00CA}{\^E}
+  \DeclareUnicodeCharacter{00CB}{\"E}
+  \DeclareUnicodeCharacter{00CC}{\`I}
+  \DeclareUnicodeCharacter{00CD}{\'I}
+  \DeclareUnicodeCharacter{00CE}{\^I}
+  \DeclareUnicodeCharacter{00CF}{\"I}
 
-\DeclareUnicodeCharacter{00C0}{\`A}
-\DeclareUnicodeCharacter{00C1}{\'A}
-\DeclareUnicodeCharacter{00C2}{\^A}
-\DeclareUnicodeCharacter{00C3}{\~A}
-\DeclareUnicodeCharacter{00C4}{\"A}
-\DeclareUnicodeCharacter{00C5}{\AA}
-\DeclareUnicodeCharacter{00C6}{\AE}
-\DeclareUnicodeCharacter{00C7}{\cedilla{C}}
-\DeclareUnicodeCharacter{00C8}{\`E}
-\DeclareUnicodeCharacter{00C9}{\'E}
-\DeclareUnicodeCharacter{00CA}{\^E}
-\DeclareUnicodeCharacter{00CB}{\"E}
-\DeclareUnicodeCharacter{00CC}{\`I}
-\DeclareUnicodeCharacter{00CD}{\'I}
-\DeclareUnicodeCharacter{00CE}{\^I}
-\DeclareUnicodeCharacter{00CF}{\"I}
+  \DeclareUnicodeCharacter{00D1}{\~N}
+  \DeclareUnicodeCharacter{00D2}{\`O}
+  \DeclareUnicodeCharacter{00D3}{\'O}
+  \DeclareUnicodeCharacter{00D4}{\^O}
+  \DeclareUnicodeCharacter{00D5}{\~O}
+  \DeclareUnicodeCharacter{00D6}{\"O}
+  \DeclareUnicodeCharacter{00D8}{\O}
+  \DeclareUnicodeCharacter{00D9}{\`U}
+  \DeclareUnicodeCharacter{00DA}{\'U}
+  \DeclareUnicodeCharacter{00DB}{\^U}
+  \DeclareUnicodeCharacter{00DC}{\"U}
+  \DeclareUnicodeCharacter{00DD}{\'Y}
+  \DeclareUnicodeCharacter{00DF}{\ss}
 
-\DeclareUnicodeCharacter{00D1}{\~N}
-\DeclareUnicodeCharacter{00D2}{\`O}
-\DeclareUnicodeCharacter{00D3}{\'O}
-\DeclareUnicodeCharacter{00D4}{\^O}
-\DeclareUnicodeCharacter{00D5}{\~O}
-\DeclareUnicodeCharacter{00D6}{\"O}
-\DeclareUnicodeCharacter{00D8}{\O}
-\DeclareUnicodeCharacter{00D9}{\`U}
-\DeclareUnicodeCharacter{00DA}{\'U}
-\DeclareUnicodeCharacter{00DB}{\^U}
-\DeclareUnicodeCharacter{00DC}{\"U}
-\DeclareUnicodeCharacter{00DD}{\'Y}
-\DeclareUnicodeCharacter{00DF}{\ss}
+  \DeclareUnicodeCharacter{00E0}{\`a}
+  \DeclareUnicodeCharacter{00E1}{\'a}
+  \DeclareUnicodeCharacter{00E2}{\^a}
+  \DeclareUnicodeCharacter{00E3}{\~a}
+  \DeclareUnicodeCharacter{00E4}{\"a}
+  \DeclareUnicodeCharacter{00E5}{\aa}
+  \DeclareUnicodeCharacter{00E6}{\ae}
+  \DeclareUnicodeCharacter{00E7}{\cedilla{c}}
+  \DeclareUnicodeCharacter{00E8}{\`e}
+  \DeclareUnicodeCharacter{00E9}{\'e}
+  \DeclareUnicodeCharacter{00EA}{\^e}
+  \DeclareUnicodeCharacter{00EB}{\"e}
+  \DeclareUnicodeCharacter{00EC}{\`{\dotless{i}}}
+  \DeclareUnicodeCharacter{00ED}{\'{\dotless{i}}}
+  \DeclareUnicodeCharacter{00EE}{\^{\dotless{i}}}
+  \DeclareUnicodeCharacter{00EF}{\"{\dotless{i}}}
 
-\DeclareUnicodeCharacter{00E0}{\`a}
-\DeclareUnicodeCharacter{00E1}{\'a}
-\DeclareUnicodeCharacter{00E2}{\^a}
-\DeclareUnicodeCharacter{00E3}{\~a}
-\DeclareUnicodeCharacter{00E4}{\"a}
-\DeclareUnicodeCharacter{00E5}{\aa}
-\DeclareUnicodeCharacter{00E6}{\ae}
-\DeclareUnicodeCharacter{00E7}{\cedilla{c}}
-\DeclareUnicodeCharacter{00E8}{\`e}
-\DeclareUnicodeCharacter{00E9}{\'e}
-\DeclareUnicodeCharacter{00EA}{\^e}
-\DeclareUnicodeCharacter{00EB}{\"e}
-\DeclareUnicodeCharacter{00EC}{\`{\dotless{i}}}
-\DeclareUnicodeCharacter{00ED}{\'{\dotless{i}}}
-\DeclareUnicodeCharacter{00EE}{\^{\dotless{i}}}
-\DeclareUnicodeCharacter{00EF}{\"{\dotless{i}}}
+  \DeclareUnicodeCharacter{00F1}{\~n}
+  \DeclareUnicodeCharacter{00F2}{\`o}
+  \DeclareUnicodeCharacter{00F3}{\'o}
+  \DeclareUnicodeCharacter{00F4}{\^o}
+  \DeclareUnicodeCharacter{00F5}{\~o}
+  \DeclareUnicodeCharacter{00F6}{\"o}
+  \DeclareUnicodeCharacter{00F8}{\o}
+  \DeclareUnicodeCharacter{00F9}{\`u}
+  \DeclareUnicodeCharacter{00FA}{\'u}
+  \DeclareUnicodeCharacter{00FB}{\^u}
+  \DeclareUnicodeCharacter{00FC}{\"u}
+  \DeclareUnicodeCharacter{00FD}{\'y}
+  \DeclareUnicodeCharacter{00FF}{\"y}
 
-\DeclareUnicodeCharacter{00F1}{\~n}
-\DeclareUnicodeCharacter{00F2}{\`o}
-\DeclareUnicodeCharacter{00F3}{\'o}
-\DeclareUnicodeCharacter{00F4}{\^o}
-\DeclareUnicodeCharacter{00F5}{\~o}
-\DeclareUnicodeCharacter{00F6}{\"o}
-\DeclareUnicodeCharacter{00F8}{\o}
-\DeclareUnicodeCharacter{00F9}{\`u}
-\DeclareUnicodeCharacter{00FA}{\'u}
-\DeclareUnicodeCharacter{00FB}{\^u}
-\DeclareUnicodeCharacter{00FC}{\"u}
-\DeclareUnicodeCharacter{00FD}{\'y}
-\DeclareUnicodeCharacter{00FF}{\"y}
+  \DeclareUnicodeCharacter{0100}{\=A}
+  \DeclareUnicodeCharacter{0101}{\=a}
+  \DeclareUnicodeCharacter{0102}{\u{A}}
+  \DeclareUnicodeCharacter{0103}{\u{a}}
+  \DeclareUnicodeCharacter{0106}{\'C}
+  \DeclareUnicodeCharacter{0107}{\'c}
+  \DeclareUnicodeCharacter{0108}{\^C}
+  \DeclareUnicodeCharacter{0109}{\^c}
+  \DeclareUnicodeCharacter{010A}{\dotaccent{C}}
+  \DeclareUnicodeCharacter{010B}{\dotaccent{c}}
+  \DeclareUnicodeCharacter{010C}{\v{C}}
+  \DeclareUnicodeCharacter{010D}{\v{c}}
+  \DeclareUnicodeCharacter{010E}{\v{D}}
 
-\DeclareUnicodeCharacter{0100}{\=A}
-\DeclareUnicodeCharacter{0101}{\=a}
-\DeclareUnicodeCharacter{0102}{\u{A}}
-\DeclareUnicodeCharacter{0103}{\u{a}}
-\DeclareUnicodeCharacter{0106}{\'C}
-\DeclareUnicodeCharacter{0107}{\'c}
-\DeclareUnicodeCharacter{0108}{\^C}
-\DeclareUnicodeCharacter{0109}{\^c}
-\DeclareUnicodeCharacter{010A}{\dotaccent{C}}
-\DeclareUnicodeCharacter{010B}{\dotaccent{c}}
-\DeclareUnicodeCharacter{010C}{\v{C}}
-\DeclareUnicodeCharacter{010D}{\v{c}}
-\DeclareUnicodeCharacter{010E}{\v{D}}
+  \DeclareUnicodeCharacter{0112}{\=E}
+  \DeclareUnicodeCharacter{0113}{\=e}
+  \DeclareUnicodeCharacter{0114}{\u{E}}
+  \DeclareUnicodeCharacter{0115}{\u{e}}
+  \DeclareUnicodeCharacter{0116}{\dotaccent{E}}
+  \DeclareUnicodeCharacter{0117}{\dotaccent{e}}
+  \DeclareUnicodeCharacter{011A}{\v{E}}
+  \DeclareUnicodeCharacter{011B}{\v{e}}
+  \DeclareUnicodeCharacter{011C}{\^G}
+  \DeclareUnicodeCharacter{011D}{\^g}
+  \DeclareUnicodeCharacter{011E}{\u{G}}
+  \DeclareUnicodeCharacter{011F}{\u{g}}
 
+  \DeclareUnicodeCharacter{0120}{\dotaccent{G}}
+  \DeclareUnicodeCharacter{0121}{\dotaccent{g}}
+  \DeclareUnicodeCharacter{0124}{\^H}
+  \DeclareUnicodeCharacter{0125}{\^h}
+  \DeclareUnicodeCharacter{0128}{\~I}
+  \DeclareUnicodeCharacter{0129}{\~{\dotless{i}}}
+  \DeclareUnicodeCharacter{012A}{\=I}
+  \DeclareUnicodeCharacter{012B}{\={\dotless{i}}}
+  \DeclareUnicodeCharacter{012C}{\u{I}}
+  \DeclareUnicodeCharacter{012D}{\u{\dotless{i}}}
 
-\DeclareUnicodeCharacter{0112}{\=E}
-\DeclareUnicodeCharacter{0113}{\=e}
-\DeclareUnicodeCharacter{0114}{\u{E}}
-\DeclareUnicodeCharacter{0115}{\u{e}}
-\DeclareUnicodeCharacter{0116}{\dotaccent{E}}
-\DeclareUnicodeCharacter{0117}{\dotaccent{e}}
-\DeclareUnicodeCharacter{011A}{\v{E}}
-\DeclareUnicodeCharacter{011B}{\v{e}}
-\DeclareUnicodeCharacter{011C}{\^G}
-\DeclareUnicodeCharacter{011D}{\^g}
-\DeclareUnicodeCharacter{011E}{\u{G}}
-\DeclareUnicodeCharacter{011F}{\u{g}}
+  \DeclareUnicodeCharacter{0130}{\dotaccent{I}}
+  \DeclareUnicodeCharacter{0131}{\dotless{i}}
+  \DeclareUnicodeCharacter{0132}{IJ}
+  \DeclareUnicodeCharacter{0133}{ij}
+  \DeclareUnicodeCharacter{0134}{\^J}
+  \DeclareUnicodeCharacter{0135}{\^{\dotless{j}}}
+  \DeclareUnicodeCharacter{0139}{\'L}
+  \DeclareUnicodeCharacter{013A}{\'l}
 
-\DeclareUnicodeCharacter{0120}{\dotaccent{G}}
-\DeclareUnicodeCharacter{0121}{\dotaccent{g}}
-\DeclareUnicodeCharacter{0124}{\^H}
-\DeclareUnicodeCharacter{0125}{\^h}
-\DeclareUnicodeCharacter{0128}{\~I}
-\DeclareUnicodeCharacter{0129}{\~{\dotless{i}}}
-\DeclareUnicodeCharacter{012A}{\=I}
-\DeclareUnicodeCharacter{012B}{\={\dotless{i}}}
-\DeclareUnicodeCharacter{012C}{\u{I}}
-\DeclareUnicodeCharacter{012D}{\u{\dotless{i}}}
+  \DeclareUnicodeCharacter{0141}{\L}
+  \DeclareUnicodeCharacter{0142}{\l}
+  \DeclareUnicodeCharacter{0143}{\'N}
+  \DeclareUnicodeCharacter{0144}{\'n}
+  \DeclareUnicodeCharacter{0147}{\v{N}}
+  \DeclareUnicodeCharacter{0148}{\v{n}}
+  \DeclareUnicodeCharacter{014C}{\=O}
+  \DeclareUnicodeCharacter{014D}{\=o}
+  \DeclareUnicodeCharacter{014E}{\u{O}}
+  \DeclareUnicodeCharacter{014F}{\u{o}}
 
-\DeclareUnicodeCharacter{0130}{\dotaccent{I}}
-\DeclareUnicodeCharacter{0131}{\dotless{i}}
-\DeclareUnicodeCharacter{0132}{IJ}
-\DeclareUnicodeCharacter{0133}{ij}
-\DeclareUnicodeCharacter{0134}{\^J}
-\DeclareUnicodeCharacter{0135}{\^{\dotless{j}}}
-\DeclareUnicodeCharacter{0139}{\'L}
-\DeclareUnicodeCharacter{013A}{\'l}
+  \DeclareUnicodeCharacter{0150}{\H{O}}
+  \DeclareUnicodeCharacter{0151}{\H{o}}
+  \DeclareUnicodeCharacter{0152}{\OE}
+  \DeclareUnicodeCharacter{0153}{\oe}
+  \DeclareUnicodeCharacter{0154}{\'R}
+  \DeclareUnicodeCharacter{0155}{\'r}
+  \DeclareUnicodeCharacter{0158}{\v{R}}
+  \DeclareUnicodeCharacter{0159}{\v{r}}
+  \DeclareUnicodeCharacter{015A}{\'S}
+  \DeclareUnicodeCharacter{015B}{\'s}
+  \DeclareUnicodeCharacter{015C}{\^S}
+  \DeclareUnicodeCharacter{015D}{\^s}
+  \DeclareUnicodeCharacter{015E}{\cedilla{S}}
+  \DeclareUnicodeCharacter{015F}{\cedilla{s}}
 
-\DeclareUnicodeCharacter{0141}{\L}
-\DeclareUnicodeCharacter{0142}{\l}
-\DeclareUnicodeCharacter{0143}{\'N}
-\DeclareUnicodeCharacter{0144}{\'n}
-\DeclareUnicodeCharacter{0147}{\v{N}}
-\DeclareUnicodeCharacter{0148}{\v{n}}
-\DeclareUnicodeCharacter{014C}{\=O}
-\DeclareUnicodeCharacter{014D}{\=o}
-\DeclareUnicodeCharacter{014E}{\u{O}}
-\DeclareUnicodeCharacter{014F}{\u{o}}
+  \DeclareUnicodeCharacter{0160}{\v{S}}
+  \DeclareUnicodeCharacter{0161}{\v{s}}
+  \DeclareUnicodeCharacter{0162}{\cedilla{t}}
+  \DeclareUnicodeCharacter{0163}{\cedilla{T}}
+  \DeclareUnicodeCharacter{0164}{\v{T}}
 
-\DeclareUnicodeCharacter{0150}{\H{O}}
-\DeclareUnicodeCharacter{0151}{\H{o}}
-\DeclareUnicodeCharacter{0152}{\OE}
-\DeclareUnicodeCharacter{0153}{\oe}
-\DeclareUnicodeCharacter{0154}{\'R}
-\DeclareUnicodeCharacter{0155}{\'r}
-\DeclareUnicodeCharacter{0158}{\v{R}}
-\DeclareUnicodeCharacter{0159}{\v{r}}
-\DeclareUnicodeCharacter{015A}{\'S}
-\DeclareUnicodeCharacter{015B}{\'s}
-\DeclareUnicodeCharacter{015C}{\^S}
-\DeclareUnicodeCharacter{015D}{\^s}
-\DeclareUnicodeCharacter{015E}{\cedilla{S}}
-\DeclareUnicodeCharacter{015F}{\cedilla{s}}
+  \DeclareUnicodeCharacter{0168}{\~U}
+  \DeclareUnicodeCharacter{0169}{\~u}
+  \DeclareUnicodeCharacter{016A}{\=U}
+  \DeclareUnicodeCharacter{016B}{\=u}
+  \DeclareUnicodeCharacter{016C}{\u{U}}
+  \DeclareUnicodeCharacter{016D}{\u{u}}
+  \DeclareUnicodeCharacter{016E}{\ringaccent{U}}
+  \DeclareUnicodeCharacter{016F}{\ringaccent{u}}
 
-\DeclareUnicodeCharacter{0160}{\v{S}}
-\DeclareUnicodeCharacter{0161}{\v{s}}
-\DeclareUnicodeCharacter{0162}{\cedilla{t}}
-\DeclareUnicodeCharacter{0163}{\cedilla{T}}
-\DeclareUnicodeCharacter{0164}{\v{T}}
+  \DeclareUnicodeCharacter{0170}{\H{U}}
+  \DeclareUnicodeCharacter{0171}{\H{u}}
+  \DeclareUnicodeCharacter{0174}{\^W}
+  \DeclareUnicodeCharacter{0175}{\^w}
+  \DeclareUnicodeCharacter{0176}{\^Y}
+  \DeclareUnicodeCharacter{0177}{\^y}
+  \DeclareUnicodeCharacter{0178}{\"Y}
+  \DeclareUnicodeCharacter{0179}{\'Z}
+  \DeclareUnicodeCharacter{017A}{\'z}
+  \DeclareUnicodeCharacter{017B}{\dotaccent{Z}}
+  \DeclareUnicodeCharacter{017C}{\dotaccent{z}}
+  \DeclareUnicodeCharacter{017D}{\v{Z}}
+  \DeclareUnicodeCharacter{017E}{\v{z}}
 
-\DeclareUnicodeCharacter{0168}{\~U}
-\DeclareUnicodeCharacter{0169}{\~u}
-\DeclareUnicodeCharacter{016A}{\=U}
-\DeclareUnicodeCharacter{016B}{\=u}
-\DeclareUnicodeCharacter{016C}{\u{U}}
-\DeclareUnicodeCharacter{016D}{\u{u}}
-\DeclareUnicodeCharacter{016E}{\ringaccent{U}}
-\DeclareUnicodeCharacter{016F}{\ringaccent{u}}
+  \DeclareUnicodeCharacter{01C4}{D\v{Z}}
+  \DeclareUnicodeCharacter{01C5}{D\v{z}}
+  \DeclareUnicodeCharacter{01C6}{d\v{z}}
+  \DeclareUnicodeCharacter{01C7}{LJ}
+  \DeclareUnicodeCharacter{01C8}{Lj}
+  \DeclareUnicodeCharacter{01C9}{lj}
+  \DeclareUnicodeCharacter{01CA}{NJ}
+  \DeclareUnicodeCharacter{01CB}{Nj}
+  \DeclareUnicodeCharacter{01CC}{nj}
+  \DeclareUnicodeCharacter{01CD}{\v{A}}
+  \DeclareUnicodeCharacter{01CE}{\v{a}}
+  \DeclareUnicodeCharacter{01CF}{\v{I}}
 
-\DeclareUnicodeCharacter{0170}{\H{U}}
-\DeclareUnicodeCharacter{0171}{\H{u}}
-\DeclareUnicodeCharacter{0174}{\^W}
-\DeclareUnicodeCharacter{0175}{\^w}
-\DeclareUnicodeCharacter{0176}{\^Y}
-\DeclareUnicodeCharacter{0177}{\^y}
-\DeclareUnicodeCharacter{0178}{\"Y}
-\DeclareUnicodeCharacter{0179}{\'Z}
-\DeclareUnicodeCharacter{017A}{\'z}
-\DeclareUnicodeCharacter{017B}{\dotaccent{Z}}
-\DeclareUnicodeCharacter{017C}{\dotaccent{z}}
-\DeclareUnicodeCharacter{017D}{\v{Z}}
-\DeclareUnicodeCharacter{017E}{\v{z}}
+  \DeclareUnicodeCharacter{01D0}{\v{\dotless{i}}}
+  \DeclareUnicodeCharacter{01D1}{\v{O}}
+  \DeclareUnicodeCharacter{01D2}{\v{o}}
+  \DeclareUnicodeCharacter{01D3}{\v{U}}
+  \DeclareUnicodeCharacter{01D4}{\v{u}}
 
-\DeclareUnicodeCharacter{01C4}{D\v{Z}}
-\DeclareUnicodeCharacter{01C5}{D\v{z}}
-\DeclareUnicodeCharacter{01C6}{d\v{z}}
-\DeclareUnicodeCharacter{01C7}{LJ}
-\DeclareUnicodeCharacter{01C8}{Lj}
-\DeclareUnicodeCharacter{01C9}{lj}
-\DeclareUnicodeCharacter{01CA}{NJ}
-\DeclareUnicodeCharacter{01CB}{Nj}
-\DeclareUnicodeCharacter{01CC}{nj}
-\DeclareUnicodeCharacter{01CD}{\v{A}}
-\DeclareUnicodeCharacter{01CE}{\v{a}}
-\DeclareUnicodeCharacter{01CF}{\v{I}}
+  \DeclareUnicodeCharacter{01E2}{\={\AE}}
+  \DeclareUnicodeCharacter{01E3}{\={\ae}}
+  \DeclareUnicodeCharacter{01E6}{\v{G}}
+  \DeclareUnicodeCharacter{01E7}{\v{g}}
+  \DeclareUnicodeCharacter{01E8}{\v{K}}
+  \DeclareUnicodeCharacter{01E9}{\v{k}}
 
-\DeclareUnicodeCharacter{01D0}{\v{\dotless{i}}}
-\DeclareUnicodeCharacter{01D1}{\v{O}}
-\DeclareUnicodeCharacter{01D2}{\v{o}}
-\DeclareUnicodeCharacter{01D3}{\v{U}}
-\DeclareUnicodeCharacter{01D4}{\v{u}}
+  \DeclareUnicodeCharacter{01F0}{\v{\dotless{j}}}
+  \DeclareUnicodeCharacter{01F1}{DZ}
+  \DeclareUnicodeCharacter{01F2}{Dz}
+  \DeclareUnicodeCharacter{01F3}{dz}
+  \DeclareUnicodeCharacter{01F4}{\'G}
+  \DeclareUnicodeCharacter{01F5}{\'g}
+  \DeclareUnicodeCharacter{01F8}{\`N}
+  \DeclareUnicodeCharacter{01F9}{\`n}
+  \DeclareUnicodeCharacter{01FC}{\'{\AE}}
+  \DeclareUnicodeCharacter{01FD}{\'{\ae}}
+  \DeclareUnicodeCharacter{01FE}{\'{\O}}
+  \DeclareUnicodeCharacter{01FF}{\'{\o}}
 
-\DeclareUnicodeCharacter{01E2}{\={\AE}}
-\DeclareUnicodeCharacter{01E3}{\={\ae}}
-\DeclareUnicodeCharacter{01E6}{\v{G}}
-\DeclareUnicodeCharacter{01E7}{\v{g}}
-\DeclareUnicodeCharacter{01E8}{\v{K}}
-\DeclareUnicodeCharacter{01E9}{\v{k}}
+  \DeclareUnicodeCharacter{021E}{\v{H}}
+  \DeclareUnicodeCharacter{021F}{\v{h}}
 
-\DeclareUnicodeCharacter{01F0}{\v{\dotless{j}}}
-\DeclareUnicodeCharacter{01F1}{DZ}
-\DeclareUnicodeCharacter{01F2}{Dz}
-\DeclareUnicodeCharacter{01F3}{dz}
-\DeclareUnicodeCharacter{01F4}{\'G}
-\DeclareUnicodeCharacter{01F5}{\'g}
-\DeclareUnicodeCharacter{01F8}{\`N}
-\DeclareUnicodeCharacter{01F9}{\`n}
-\DeclareUnicodeCharacter{01FC}{\'{\AE}}
-\DeclareUnicodeCharacter{01FD}{\'{\ae}}
-\DeclareUnicodeCharacter{01FE}{\'{\O}}
-\DeclareUnicodeCharacter{01FF}{\'{\o}}
+  \DeclareUnicodeCharacter{0226}{\dotaccent{A}}
+  \DeclareUnicodeCharacter{0227}{\dotaccent{a}}
+  \DeclareUnicodeCharacter{0228}{\cedilla{E}}
+  \DeclareUnicodeCharacter{0229}{\cedilla{e}}
+  \DeclareUnicodeCharacter{022E}{\dotaccent{O}}
+  \DeclareUnicodeCharacter{022F}{\dotaccent{o}}
 
-\DeclareUnicodeCharacter{021E}{\v{H}}
-\DeclareUnicodeCharacter{021F}{\v{h}}
+  \DeclareUnicodeCharacter{0232}{\=Y}
+  \DeclareUnicodeCharacter{0233}{\=y}
+  \DeclareUnicodeCharacter{0237}{\dotless{j}}
 
-\DeclareUnicodeCharacter{0226}{\dotaccent{A}}
-\DeclareUnicodeCharacter{0227}{\dotaccent{a}}
-\DeclareUnicodeCharacter{0228}{\cedilla{E}}
-\DeclareUnicodeCharacter{0229}{\cedilla{e}}
-\DeclareUnicodeCharacter{022E}{\dotaccent{O}}
-\DeclareUnicodeCharacter{022F}{\dotaccent{o}}
+  \DeclareUnicodeCharacter{1E02}{\dotaccent{B}}
+  \DeclareUnicodeCharacter{1E03}{\dotaccent{b}}
+  \DeclareUnicodeCharacter{1E04}{\udotaccent{B}}
+  \DeclareUnicodeCharacter{1E05}{\udotaccent{b}}
+  \DeclareUnicodeCharacter{1E06}{\ubaraccent{B}}
+  \DeclareUnicodeCharacter{1E07}{\ubaraccent{b}}
+  \DeclareUnicodeCharacter{1E0A}{\dotaccent{D}}
+  \DeclareUnicodeCharacter{1E0B}{\dotaccent{d}}
+  \DeclareUnicodeCharacter{1E0C}{\udotaccent{D}}
+  \DeclareUnicodeCharacter{1E0D}{\udotaccent{d}}
+  \DeclareUnicodeCharacter{1E0E}{\ubaraccent{D}}
+  \DeclareUnicodeCharacter{1E0F}{\ubaraccent{d}}
 
-\DeclareUnicodeCharacter{0232}{\=Y}
-\DeclareUnicodeCharacter{0233}{\=y}
-\DeclareUnicodeCharacter{0237}{\dotless{j}}
+  \DeclareUnicodeCharacter{1E1E}{\dotaccent{F}}
+  \DeclareUnicodeCharacter{1E1F}{\dotaccent{f}}
 
-\DeclareUnicodeCharacter{1E02}{\dotaccent{B}}
-\DeclareUnicodeCharacter{1E03}{\dotaccent{b}}
-\DeclareUnicodeCharacter{1E04}{\udotaccent{B}}
-\DeclareUnicodeCharacter{1E05}{\udotaccent{b}}
-\DeclareUnicodeCharacter{1E06}{\ubaraccent{B}}
-\DeclareUnicodeCharacter{1E07}{\ubaraccent{b}}
-\DeclareUnicodeCharacter{1E0A}{\dotaccent{D}}
-\DeclareUnicodeCharacter{1E0B}{\dotaccent{d}}
-\DeclareUnicodeCharacter{1E0C}{\udotaccent{D}}
-\DeclareUnicodeCharacter{1E0D}{\udotaccent{d}}
-\DeclareUnicodeCharacter{1E0E}{\ubaraccent{D}}
-\DeclareUnicodeCharacter{1E0F}{\ubaraccent{d}}
+  \DeclareUnicodeCharacter{1E20}{\=G}
+  \DeclareUnicodeCharacter{1E21}{\=g}
+  \DeclareUnicodeCharacter{1E22}{\dotaccent{H}}
+  \DeclareUnicodeCharacter{1E23}{\dotaccent{h}}
+  \DeclareUnicodeCharacter{1E24}{\udotaccent{H}}
+  \DeclareUnicodeCharacter{1E25}{\udotaccent{h}}
+  \DeclareUnicodeCharacter{1E26}{\"H}
+  \DeclareUnicodeCharacter{1E27}{\"h}
 
-\DeclareUnicodeCharacter{1E1E}{\dotaccent{F}}
-\DeclareUnicodeCharacter{1E1F}{\dotaccent{f}}
+  \DeclareUnicodeCharacter{1E30}{\'K}
+  \DeclareUnicodeCharacter{1E31}{\'k}
+  \DeclareUnicodeCharacter{1E32}{\udotaccent{K}}
+  \DeclareUnicodeCharacter{1E33}{\udotaccent{k}}
+  \DeclareUnicodeCharacter{1E34}{\ubaraccent{K}}
+  \DeclareUnicodeCharacter{1E35}{\ubaraccent{k}}
+  \DeclareUnicodeCharacter{1E36}{\udotaccent{L}}
+  \DeclareUnicodeCharacter{1E37}{\udotaccent{l}}
+  \DeclareUnicodeCharacter{1E3A}{\ubaraccent{L}}
+  \DeclareUnicodeCharacter{1E3B}{\ubaraccent{l}}
+  \DeclareUnicodeCharacter{1E3E}{\'M}
+  \DeclareUnicodeCharacter{1E3F}{\'m}
 
-\DeclareUnicodeCharacter{1E20}{\=G}
-\DeclareUnicodeCharacter{1E21}{\=g}
-\DeclareUnicodeCharacter{1E22}{\dotaccent{H}}
-\DeclareUnicodeCharacter{1E23}{\dotaccent{h}}
-\DeclareUnicodeCharacter{1E24}{\udotaccent{H}}
-\DeclareUnicodeCharacter{1E25}{\udotaccent{h}}
-\DeclareUnicodeCharacter{1E26}{\"H}
-\DeclareUnicodeCharacter{1E27}{\"h}
+  \DeclareUnicodeCharacter{1E40}{\dotaccent{M}}
+  \DeclareUnicodeCharacter{1E41}{\dotaccent{m}}
+  \DeclareUnicodeCharacter{1E42}{\udotaccent{M}}
+  \DeclareUnicodeCharacter{1E43}{\udotaccent{m}}
+  \DeclareUnicodeCharacter{1E44}{\dotaccent{N}}
+  \DeclareUnicodeCharacter{1E45}{\dotaccent{n}}
+  \DeclareUnicodeCharacter{1E46}{\udotaccent{N}}
+  \DeclareUnicodeCharacter{1E47}{\udotaccent{n}}
+  \DeclareUnicodeCharacter{1E48}{\ubaraccent{N}}
+  \DeclareUnicodeCharacter{1E49}{\ubaraccent{n}}
 
-\DeclareUnicodeCharacter{1E30}{\'K}
-\DeclareUnicodeCharacter{1E31}{\'k}
-\DeclareUnicodeCharacter{1E32}{\udotaccent{K}}
-\DeclareUnicodeCharacter{1E33}{\udotaccent{k}}
-\DeclareUnicodeCharacter{1E34}{\ubaraccent{K}}
-\DeclareUnicodeCharacter{1E35}{\ubaraccent{k}}
-\DeclareUnicodeCharacter{1E36}{\udotaccent{L}}
-\DeclareUnicodeCharacter{1E37}{\udotaccent{l}}
-\DeclareUnicodeCharacter{1E3A}{\ubaraccent{L}}
-\DeclareUnicodeCharacter{1E3B}{\ubaraccent{l}}
-\DeclareUnicodeCharacter{1E3E}{\'M}
-\DeclareUnicodeCharacter{1E3F}{\'m}
+  \DeclareUnicodeCharacter{1E54}{\'P}
+  \DeclareUnicodeCharacter{1E55}{\'p}
+  \DeclareUnicodeCharacter{1E56}{\dotaccent{P}}
+  \DeclareUnicodeCharacter{1E57}{\dotaccent{p}}
+  \DeclareUnicodeCharacter{1E58}{\dotaccent{R}}
+  \DeclareUnicodeCharacter{1E59}{\dotaccent{r}}
+  \DeclareUnicodeCharacter{1E5A}{\udotaccent{R}}
+  \DeclareUnicodeCharacter{1E5B}{\udotaccent{r}}
+  \DeclareUnicodeCharacter{1E5E}{\ubaraccent{R}}
+  \DeclareUnicodeCharacter{1E5F}{\ubaraccent{r}}
 
-\DeclareUnicodeCharacter{1E40}{\dotaccent{M}}
-\DeclareUnicodeCharacter{1E41}{\dotaccent{m}}
-\DeclareUnicodeCharacter{1E42}{\udotaccent{M}}
-\DeclareUnicodeCharacter{1E43}{\udotaccent{m}}
-\DeclareUnicodeCharacter{1E44}{\dotaccent{N}}
-\DeclareUnicodeCharacter{1E45}{\dotaccent{n}}
-\DeclareUnicodeCharacter{1E46}{\udotaccent{N}}
-\DeclareUnicodeCharacter{1E47}{\udotaccent{n}}
-\DeclareUnicodeCharacter{1E48}{\ubaraccent{N}}
-\DeclareUnicodeCharacter{1E49}{\ubaraccent{n}}
+  \DeclareUnicodeCharacter{1E60}{\dotaccent{S}}
+  \DeclareUnicodeCharacter{1E61}{\dotaccent{s}}
+  \DeclareUnicodeCharacter{1E62}{\udotaccent{S}}
+  \DeclareUnicodeCharacter{1E63}{\udotaccent{s}}
+  \DeclareUnicodeCharacter{1E6A}{\dotaccent{T}}
+  \DeclareUnicodeCharacter{1E6B}{\dotaccent{t}}
+  \DeclareUnicodeCharacter{1E6C}{\udotaccent{T}}
+  \DeclareUnicodeCharacter{1E6D}{\udotaccent{t}}
+  \DeclareUnicodeCharacter{1E6E}{\ubaraccent{T}}
+  \DeclareUnicodeCharacter{1E6F}{\ubaraccent{t}}
 
-\DeclareUnicodeCharacter{1E54}{\'P}
-\DeclareUnicodeCharacter{1E55}{\'p}
-\DeclareUnicodeCharacter{1E56}{\dotaccent{P}}
-\DeclareUnicodeCharacter{1E57}{\dotaccent{p}}
-\DeclareUnicodeCharacter{1E58}{\dotaccent{R}}
-\DeclareUnicodeCharacter{1E59}{\dotaccent{r}}
-\DeclareUnicodeCharacter{1E5A}{\udotaccent{R}}
-\DeclareUnicodeCharacter{1E5B}{\udotaccent{r}}
-\DeclareUnicodeCharacter{1E5E}{\ubaraccent{R}}
-\DeclareUnicodeCharacter{1E5F}{\ubaraccent{r}}
+  \DeclareUnicodeCharacter{1E7C}{\~V}
+  \DeclareUnicodeCharacter{1E7D}{\~v}
+  \DeclareUnicodeCharacter{1E7E}{\udotaccent{V}}
+  \DeclareUnicodeCharacter{1E7F}{\udotaccent{v}}
 
-\DeclareUnicodeCharacter{1E60}{\dotaccent{S}}
-\DeclareUnicodeCharacter{1E61}{\dotaccent{s}}
-\DeclareUnicodeCharacter{1E62}{\udotaccent{S}}
-\DeclareUnicodeCharacter{1E63}{\udotaccent{s}}
-\DeclareUnicodeCharacter{1E6A}{\dotaccent{T}}
-\DeclareUnicodeCharacter{1E6B}{\dotaccent{t}}
-\DeclareUnicodeCharacter{1E6C}{\udotaccent{T}}
-\DeclareUnicodeCharacter{1E6D}{\udotaccent{t}}
-\DeclareUnicodeCharacter{1E6E}{\ubaraccent{T}}
-\DeclareUnicodeCharacter{1E6F}{\ubaraccent{t}}
+  \DeclareUnicodeCharacter{1E80}{\`W}
+  \DeclareUnicodeCharacter{1E81}{\`w}
+  \DeclareUnicodeCharacter{1E82}{\'W}
+  \DeclareUnicodeCharacter{1E83}{\'w}
+  \DeclareUnicodeCharacter{1E84}{\"W}
+  \DeclareUnicodeCharacter{1E85}{\"w}
+  \DeclareUnicodeCharacter{1E86}{\dotaccent{W}}
+  \DeclareUnicodeCharacter{1E87}{\dotaccent{w}}
+  \DeclareUnicodeCharacter{1E88}{\udotaccent{W}}
+  \DeclareUnicodeCharacter{1E89}{\udotaccent{w}}
+  \DeclareUnicodeCharacter{1E8A}{\dotaccent{X}}
+  \DeclareUnicodeCharacter{1E8B}{\dotaccent{x}}
+  \DeclareUnicodeCharacter{1E8C}{\"X}
+  \DeclareUnicodeCharacter{1E8D}{\"x}
+  \DeclareUnicodeCharacter{1E8E}{\dotaccent{Y}}
+  \DeclareUnicodeCharacter{1E8F}{\dotaccent{y}}
 
-\DeclareUnicodeCharacter{1E7C}{\~V}
-\DeclareUnicodeCharacter{1E7D}{\~v}
-\DeclareUnicodeCharacter{1E7E}{\udotaccent{V}}
-\DeclareUnicodeCharacter{1E7F}{\udotaccent{v}}
+  \DeclareUnicodeCharacter{1E90}{\^Z}
+  \DeclareUnicodeCharacter{1E91}{\^z}
+  \DeclareUnicodeCharacter{1E92}{\udotaccent{Z}}
+  \DeclareUnicodeCharacter{1E93}{\udotaccent{z}}
+  \DeclareUnicodeCharacter{1E94}{\ubaraccent{Z}}
+  \DeclareUnicodeCharacter{1E95}{\ubaraccent{z}}
+  \DeclareUnicodeCharacter{1E96}{\ubaraccent{h}}
+  \DeclareUnicodeCharacter{1E97}{\"t}
+  \DeclareUnicodeCharacter{1E98}{\ringaccent{w}}
+  \DeclareUnicodeCharacter{1E99}{\ringaccent{y}}
 
-\DeclareUnicodeCharacter{1E80}{\`W}
-\DeclareUnicodeCharacter{1E81}{\`w}
-\DeclareUnicodeCharacter{1E82}{\'W}
-\DeclareUnicodeCharacter{1E83}{\'w}
-\DeclareUnicodeCharacter{1E84}{\"W}
-\DeclareUnicodeCharacter{1E85}{\"w}
-\DeclareUnicodeCharacter{1E86}{\dotaccent{W}}
-\DeclareUnicodeCharacter{1E87}{\dotaccent{w}}
-\DeclareUnicodeCharacter{1E88}{\udotaccent{W}}
-\DeclareUnicodeCharacter{1E89}{\udotaccent{w}}
-\DeclareUnicodeCharacter{1E8A}{\dotaccent{X}}
-\DeclareUnicodeCharacter{1E8B}{\dotaccent{x}}
-\DeclareUnicodeCharacter{1E8C}{\"X}
-\DeclareUnicodeCharacter{1E8D}{\"x}
-\DeclareUnicodeCharacter{1E8E}{\dotaccent{Y}}
-\DeclareUnicodeCharacter{1E8F}{\dotaccent{y}}
+  \DeclareUnicodeCharacter{1EA0}{\udotaccent{A}}
+  \DeclareUnicodeCharacter{1EA1}{\udotaccent{a}}
 
-\DeclareUnicodeCharacter{1E90}{\^Z}
-\DeclareUnicodeCharacter{1E91}{\^z}
-\DeclareUnicodeCharacter{1E92}{\udotaccent{Z}}
-\DeclareUnicodeCharacter{1E93}{\udotaccent{z}}
-\DeclareUnicodeCharacter{1E94}{\ubaraccent{Z}}
-\DeclareUnicodeCharacter{1E95}{\ubaraccent{z}}
-\DeclareUnicodeCharacter{1E96}{\ubaraccent{h}}
-\DeclareUnicodeCharacter{1E97}{\"t}
-\DeclareUnicodeCharacter{1E98}{\ringaccent{w}}
-\DeclareUnicodeCharacter{1E99}{\ringaccent{y}}
+  \DeclareUnicodeCharacter{1EB8}{\udotaccent{E}}
+  \DeclareUnicodeCharacter{1EB9}{\udotaccent{e}}
+  \DeclareUnicodeCharacter{1EBC}{\~E}
+  \DeclareUnicodeCharacter{1EBD}{\~e}
 
-\DeclareUnicodeCharacter{1EA0}{\udotaccent{A}}
-\DeclareUnicodeCharacter{1EA1}{\udotaccent{a}}
+  \DeclareUnicodeCharacter{1ECA}{\udotaccent{I}}
+  \DeclareUnicodeCharacter{1ECB}{\udotaccent{i}}
+  \DeclareUnicodeCharacter{1ECC}{\udotaccent{O}}
+  \DeclareUnicodeCharacter{1ECD}{\udotaccent{o}}
 
-\DeclareUnicodeCharacter{1EB8}{\udotaccent{E}}
-\DeclareUnicodeCharacter{1EB9}{\udotaccent{e}}
-\DeclareUnicodeCharacter{1EBC}{\~E}
-\DeclareUnicodeCharacter{1EBD}{\~e}
+  \DeclareUnicodeCharacter{1EE4}{\udotaccent{U}}
+  \DeclareUnicodeCharacter{1EE5}{\udotaccent{u}}
 
-\DeclareUnicodeCharacter{1ECA}{\udotaccent{I}}
-\DeclareUnicodeCharacter{1ECB}{\udotaccent{i}}
-\DeclareUnicodeCharacter{1ECC}{\udotaccent{O}}
-\DeclareUnicodeCharacter{1ECD}{\udotaccent{o}}
+  \DeclareUnicodeCharacter{1EF2}{\`Y}
+  \DeclareUnicodeCharacter{1EF3}{\`y}
+  \DeclareUnicodeCharacter{1EF4}{\udotaccent{Y}}
 
-\DeclareUnicodeCharacter{1EE4}{\udotaccent{U}}
-\DeclareUnicodeCharacter{1EE5}{\udotaccent{u}}
+  \DeclareUnicodeCharacter{1EF8}{\~Y}
+  \DeclareUnicodeCharacter{1EF9}{\~y}
 
-\DeclareUnicodeCharacter{1EF2}{\`Y}
-\DeclareUnicodeCharacter{1EF3}{\`y}
-\DeclareUnicodeCharacter{1EF4}{\udotaccent{Y}}
+  \DeclareUnicodeCharacter{2013}{--}
+  \DeclareUnicodeCharacter{2014}{---}
+  \DeclareUnicodeCharacter{2022}{\bullet}
+  \DeclareUnicodeCharacter{2026}{\dots}
+  \DeclareUnicodeCharacter{20AC}{\euro}
 
-\DeclareUnicodeCharacter{1EF8}{\~Y}
-\DeclareUnicodeCharacter{1EF9}{\~y}
+  \DeclareUnicodeCharacter{2192}{\expansion}
+  \DeclareUnicodeCharacter{21D2}{\result}
 
-\DeclareUnicodeCharacter{2013}{--}
-\DeclareUnicodeCharacter{2014}{---}
-\DeclareUnicodeCharacter{2022}{\bullet}
-\DeclareUnicodeCharacter{2026}{\dots}
-\DeclareUnicodeCharacter{20AC}{\euro}
-
-\DeclareUnicodeCharacter{2192}{\expansion}
-\DeclareUnicodeCharacter{21D2}{\result}
-
-\DeclareUnicodeCharacter{2212}{\minus}
-\DeclareUnicodeCharacter{2217}{\point}
-\DeclareUnicodeCharacter{2261}{\equiv}
-
+  \DeclareUnicodeCharacter{2212}{\minus}
+  \DeclareUnicodeCharacter{2217}{\point}
+  \DeclareUnicodeCharacter{2261}{\equiv}
 }% end of \utfeightchardefs
 
 
