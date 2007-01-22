@@ -17,7 +17,7 @@ BUILT_SOURCES += $(SYS_SELECT_H)
 # We need the following in order to create <sys/select.h> when the system
 # doesn't have one that works with the given compiler.
 sys/select.h:
-	$(MKDIR_P) sys
+	@MKDIR_P@ sys
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  echo '#include <sys/socket.h>'; \
