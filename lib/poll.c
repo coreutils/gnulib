@@ -125,11 +125,16 @@ poll (pfd, nfd, timeout)
 			       | POLLWRNORM | POLLWRBAND)))
 	{
 	  maxfd = pfd[i].fd;
+
+	  /* Windows use a linear array of sockets (of size FD_SETSIZE). The
+	     descriptor value is not used to address the array.  */ 
+#if defined __CYGWIN__ || (!defined _WIN32 && !defined __WIN32__)
 	  if (maxfd > FD_SETSIZE)
 	    {
 	      errno = EOVERFLOW;
 	      return -1;
 	    }
+#endif
 	}
     }
 
