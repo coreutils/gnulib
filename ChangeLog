@@ -1,5 +1,9 @@
 2007-01-21  Bruno Haible  <bruno@clisp.org>
 
+	* m4/gnulib-common.m4 (AC_PROG_MKDIR_P): New macro.
+
+2007-01-21  Bruno Haible  <bruno@clisp.org>
+
 	* modules/striconveha: New file.
 	* lib/striconveha.h: New file.
 	* lib/striconveha.c: New file.
