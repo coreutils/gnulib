@@ -1,3 +1,9 @@
+2007-01-22  James Youngman  <jay@gnu.org>
+
+	* m4/gnulib-common.m4 (AC_PROG_MKDIR_P): If AC_PROG_MKDIR_P is already
+	provided, call AC_SUBST on MKDIR_P anyway, since the version of
+	AC_PROG_MKDIR_P in Autoconf-2.61 (at least) doesn't do that.
+
 2007-01-22  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
 	* lib/poll.c (rpl_poll): Don't check against FD_SETSIZE under Win32.
