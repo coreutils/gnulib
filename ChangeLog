@@ -1,5 +1,19 @@
 2007-01-22  Bruno Haible  <bruno@clisp.org>
 
+	* lib/striconveh.h (mem_cd_iconveh, mem_iconveh): Add 'offsets'
+	argument.
+	* lib/striconveh.c (iconv_carefully_1): New function.
+	(mem_cd_iconveh_internal, mem_cd_iconveh, mem_iconveh): Add 'offsets'
+	argument.
+	(str_cd_iconveh): Update.
+	* lib/striconveha.h (mem_iconveha): Add 'offsets' argument.
+	* lib/striconveha.c (mem_iconveha): Add 'offsets' argument.
+	* tests/test-striconveh.c (MAGIC): New macro.
+	(new_offsets): New function.
+	(main): Test call with and without offsets.
+
+2007-01-22  Bruno Haible  <bruno@clisp.org>
+
 	* modules/sys_stat (Makefile.am): Use @MKDIR_P@ instead of $(MKDIR_P).
 	* modules/sys_select (Makefile.am): Likewise.
 	* modules/sys_socket (Makefile.am): Likewise.

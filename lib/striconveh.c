@@ -119,11 +119,68 @@ iconv_carefully (iconv_t cd,
       iconv (cd, (ICONV_CONST char **) (inbuf), inbytesleft, outbuf, outbytesleft))
 # endif
 
+/* iconv_carefully_1 is like iconv_carefully, except that it stops after
+   converting one character.  */
+static size_t
+iconv_carefully_1 (iconv_t cd,
+		   const char **inbuf, size_t *inbytesleft,
+		   char **outbuf, size_t *outbytesleft,
+		   bool *incremented)
+{
+  const char *inptr = *inbuf;
+  const char *inptr_end = inptr + *inbytesleft;
+  char *outptr = *outbuf;
+  size_t outsize = *outbytesleft;
+  const char *inptr_before = inptr;
+  size_t res = (size_t)(-1);
+  size_t insize;
+
+  for (insize = 1; inptr + insize <= inptr_end; insize++)
+    {
+      res = iconv (cd,
+		   (ICONV_CONST char **) &inptr, &insize,
+		   &outptr, &outsize);
+      if (!(res == (size_t)(-1) && errno == EINVAL))
+	break;
+      /* We expect that no input bytes have been consumed so far.  */
+      if (inptr != inptr_before)
+	abort ();
+    }
+
+  *inbuf = inptr;
+  *inbytesleft = inptr_end - inptr;
+# if !defined _LIBICONV_VERSION && !defined __GLIBC__
+  /* Irix iconv() inserts a NUL byte if it cannot convert.
+     NetBSD iconv() inserts a question mark if it cannot convert.
+     Only GNU libiconv and GNU libc are known to prefer to fail rather
+     than doing a lossy conversion.  */
+  if (res != (size_t)(-1) && res > 0)
+    {
+      /* iconv() has already incremented INPTR.  We cannot go back to a
+	 previous INPTR, otherwise the state inside CD would become invalid,
+	 if FROM_CODESET is a stateful encoding.  So, tell the caller that
+	 *INBUF has already been incremented.  */
+      *incremented = (inptr > inptr_before);
+      errno = EILSEQ;
+      return (size_t)(-1);
+    }
+# endif
+
+  if (res != (size_t)(-1))
+    {
+      *outbuf = outptr;
+      *outbytesleft = outsize;
+    }
+  *incremented = false;
+  return res;
+}
+
 static int
 mem_cd_iconveh_internal (const char *src, size_t srclen,
 			 iconv_t cd, iconv_t cd1, iconv_t cd2,
 			 enum iconv_ilseq_handler handler,
 			 size_t extra_alloc,
+			 size_t *offsets,
 			 char **resultp, size_t *lengthp)
 {
   /* When a conversion error occurs, we cannot start using CD1 and CD2 at
@@ -141,6 +198,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
   char *result;
   size_t allocated;
   size_t length;
+  size_t last_length = (size_t)(-1); /* only needed if offsets != NULL */
 
   if (*lengthp >= sizeof (tmpbuf))
     {
@@ -153,6 +211,16 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
       allocated = sizeof (tmpbuf);
     }
   result = initial_result;
+
+  if (offsets != NULL)
+    {
+      size_t i;
+
+      for (i = 0; i < srclen; i++)
+	offsets[i] = (size_t)(-1);
+
+      last_length = (size_t)(-1);
+    }
   length = 0;
 
   /* First, try a direct conversion, and see whether a conversion error
@@ -176,16 +244,29 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 	size_t res;
 	bool grow;
 
-	/* Use iconv_carefully instead of iconv here, because:
-	   - If TO_CODESET is UTF-8, we can do the error handling in this loop,
-	     no need for a second loop,
-	   - With iconv() implementations other than GNU libiconv and GNU libc,
-	     if we use iconv() in a big swoop, checking for an E2BIG return,
-	     we lose the number of irreversible conversions.  */
-	res = iconv_carefully (cd,
-			       &inptr, &insize,
-			       &outptr, &outsize,
-			       &incremented);
+	if (offsets != NULL)
+	  {
+	    if (length != last_length) /* ensure that offset[] be increasing */
+	      {
+		offsets[inptr - src] = length;
+		last_length = length;
+	      }
+	    res = iconv_carefully_1 (cd,
+				     &inptr, &insize,
+				     &outptr, &outsize,
+				     &incremented);
+	  }
+	else
+	  /* Use iconv_carefully instead of iconv here, because:
+	     - If TO_CODESET is UTF-8, we can do the error handling in this
+	       loop, no need for a second loop,
+	     - With iconv() implementations other than GNU libiconv and GNU
+	       libc, if we use iconv() in a big swoop, checking for an E2BIG
+	       return, we lose the number of irreversible conversions.  */
+	  res = iconv_carefully (cd,
+				 &inptr, &insize,
+				 &outptr, &outsize,
+				 &incremented);
 
 	length = outptr - result;
 	grow = (length + extra_alloc > allocated / 2);
@@ -332,6 +413,15 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
   /* The direct conversion failed, handler != iconveh_error,
      and cd2 != (iconv_t)(-1).
      Use a conversion through UTF-8.  */
+  if (offsets != NULL)
+    {
+      size_t i;
+
+      for (i = 0; i < srclen; i++)
+	offsets[i] = (size_t)(-1);
+
+      last_length = (size_t)(-1);
+    }
   length = 0;
   {
 # define utf8bufsize 4096 /* may also be smaller or larger than tmpbufsize */
@@ -362,11 +452,25 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 	/* Conversion step 1: from FROM_CODESET to UTF-8.  */
 	if (in1size > 0)
 	  {
+	    if (offsets != NULL
+		&& length != last_length) /* ensure that offset[] be increasing */
+	      {
+		offsets[in1ptr - src] = length;
+		last_length = length;
+	      }
 	    if (cd1 != (iconv_t)(-1))
-	      res1 = iconv_carefully (cd1,
-				      (ICONV_CONST char **) &in1ptr, &in1size,
-				      &out1ptr, &out1size,
-				      &incremented1);
+	      {
+		if (offsets != NULL)
+		  res1 = iconv_carefully_1 (cd1,
+					    &in1ptr, &in1size,
+					    &out1ptr, &out1size,
+					    &incremented1);
+		else
+		  res1 = iconv_carefully (cd1,
+					  &in1ptr, &in1size,
+					  &out1ptr, &out1size,
+					  &incremented1);
+	      }
 	    else
 	      {
 		/* FROM_CODESET is UTF-8.  */
@@ -418,7 +522,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 		    out1ptr += m;
 		    out1size -= m;
 		  }
-		while (in1size > 0);
+		while (offsets == NULL && in1size > 0);
 	      }
 	  }
 	else if (do_final_flush1)
@@ -469,7 +573,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 	errno1 = errno;
 	utf8len = out1ptr - utf8buf;
 
-	if (in1size == 0
+	if (offsets != NULL
+	    || in1size == 0
 	    || utf8len > utf8bufsize / 2
 	    || (res1 == (size_t)(-1) && errno1 == E2BIG))
 	  {
@@ -726,10 +831,11 @@ int
 mem_cd_iconveh (const char *src, size_t srclen,
 		iconv_t cd, iconv_t cd1, iconv_t cd2,
 		enum iconv_ilseq_handler handler,
+		size_t *offsets,
 		char **resultp, size_t *lengthp)
 {
   return mem_cd_iconveh_internal (src, srclen, cd, cd1, cd2, handler, 0,
-				  resultp, lengthp);
+				  offsets, resultp, lengthp);
 }
 
 char *
@@ -744,7 +850,7 @@ str_cd_iconveh (const char *src,
   char *result = NULL;
   size_t length = 0;
   int retval = mem_cd_iconveh_internal (src, strlen (src),
-					cd, cd1, cd2, handler, 1,
+					cd, cd1, cd2, handler, 1, NULL,
 					&result, &length);
 
   if (retval < 0)
@@ -770,6 +876,7 @@ int
 mem_iconveh (const char *src, size_t srclen,
 	     const char *from_codeset, const char *to_codeset,
 	     enum iconv_ilseq_handler handler,
+	     size_t *offsets,
 	     char **resultp, size_t *lengthp)
 {
   if (srclen == 0)
@@ -778,7 +885,7 @@ mem_iconveh (const char *src, size_t srclen,
       *lengthp = 0;
       return 0;
     }
-  else if (c_strcasecmp (from_codeset, to_codeset) == 0)
+  else if (offsets == NULL && c_strcasecmp (from_codeset, to_codeset) == 0)
     {
       char *result;
 
@@ -854,8 +961,8 @@ mem_iconveh (const char *src, size_t srclen,
 
       result = *resultp;
       length = *lengthp;
-      retval =
-	mem_cd_iconveh (src, srclen, cd, cd1, cd2, handler, &result, &length);
+      retval = mem_cd_iconveh (src, srclen, cd, cd1, cd2, handler, offsets,
+			       &result, &length);
 
       if (retval < 0)
 	{

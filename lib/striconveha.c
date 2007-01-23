@@ -147,10 +147,11 @@ int
 mem_iconveha (const char *src, size_t srclen,
 	      const char *from_codeset, const char *to_codeset,
 	      enum iconv_ilseq_handler handler,
+	      size_t *offsets,
 	      char **resultp, size_t *lengthp)
 {
   int retval = mem_iconveh (src, srclen, from_codeset, to_codeset, handler,
-			    resultp, lengthp);
+			    offsets, resultp, lengthp);
   if (retval >= 0 || errno != EINVAL)
     return retval;
   else
@@ -168,7 +169,7 @@ mem_iconveha (const char *src, size_t srclen,
 	      {
 		retval = mem_iconveha (src, srclen,
 				       from_codeset, to_codeset, handler,
-				       resultp, lengthp);
+				       offsets, resultp, lengthp);
 		if (!(retval < 0 && errno == EILSEQ))
 		  return retval;
 		encodings++;

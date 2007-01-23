@@ -47,6 +47,10 @@ enum iconv_ilseq_handler
    (iconv_t)(-1) if FROM_CODESET is UTF-8).
    CD2 is the conversion descriptor from UTF-8 to TO_CODESET (or (iconv_t)(-1)
    if TO_CODESET is UTF-8).
+   If OFFSET is not NULL, it should point to an array of SRCLEN integers; this
+   array is filled with offsets into the result, i.e. the character starting
+   at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
+   and other offsets are set to (size_t)(-1).
    *RESULTP and *LENGTH should initially be a scratch buffer and its size,
    or *RESULTP can initially be NULL.
    May erase the contents of the memory at *RESULTP.
@@ -58,6 +62,7 @@ extern int
        mem_cd_iconveh (const char *src, size_t srclen,
 		       iconv_t cd, iconv_t cd1, iconv_t cd2,
 		       enum iconv_ilseq_handler handler,
+		       size_t *offsets,
 		       char **resultp, size_t *lengthp);
 
 /* Convert an entire string from one encoding to another, using iconv.
@@ -81,6 +86,10 @@ extern char *
 
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is at [SRC,...,SRC+SRCLEN-1].
+   If OFFSET is not NULL, it should point to an array of SRCLEN integers; this
+   array is filled with offsets into the result, i.e. the character starting
+   at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
+   and other offsets are set to (size_t)(-1).
    *RESULTP and *LENGTH should initially be a scratch buffer and its size,
    or *RESULTP can initially be NULL.
    May erase the contents of the memory at *RESULTP.
@@ -92,6 +101,7 @@ extern int
        mem_iconveh (const char *src, size_t srclen,
 		    const char *from_codeset, const char *to_codeset,
 		    enum iconv_ilseq_handler handler,
+		    size_t *offsets,
 		    char **resultp, size_t *lengthp);
 
 /* Convert an entire string from one encoding to another, using iconv.

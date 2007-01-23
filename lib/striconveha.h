@@ -30,6 +30,10 @@ extern "C" {
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is at [SRC,...,SRC+SRCLEN-1].
    The "from" encoding can also be a name defined for autodetection.
+   If OFFSET is not NULL, it should point to an array of SRCLEN integers; this
+   array is filled with offsets into the result, i.e. the character starting
+   at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
+   and other offsets are set to (size_t)(-1).
    *RESULTP and *LENGTH should initially be a scratch buffer and its size,
    or *RESULTP can initially be NULL.
    May erase the contents of the memory at *RESULTP.
@@ -41,6 +45,7 @@ extern int
        mem_iconveha (const char *src, size_t srclen,
 		     const char *from_codeset, const char *to_codeset,
 		     enum iconv_ilseq_handler handler,
+		     size_t *offsets,
 		     char **resultp, size_t *lengthp);
 
 /* Convert an entire string from one encoding to another, using iconv.
