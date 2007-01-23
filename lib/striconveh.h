@@ -47,7 +47,7 @@ enum iconv_ilseq_handler
    (iconv_t)(-1) if FROM_CODESET is UTF-8).
    CD2 is the conversion descriptor from UTF-8 to TO_CODESET (or (iconv_t)(-1)
    if TO_CODESET is UTF-8).
-   If OFFSET is not NULL, it should point to an array of SRCLEN integers; this
+   If OFFSETS is not NULL, it should point to an array of SRCLEN integers; this
    array is filled with offsets into the result, i.e. the character starting
    at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
    and other offsets are set to (size_t)(-1).
@@ -86,7 +86,7 @@ extern char *
 
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is at [SRC,...,SRC+SRCLEN-1].
-   If OFFSET is not NULL, it should point to an array of SRCLEN integers; this
+   If OFFSETS is not NULL, it should point to an array of SRCLEN integers; this
    array is filled with offsets into the result, i.e. the character starting
    at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
    and other offsets are set to (size_t)(-1).

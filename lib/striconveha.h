@@ -30,7 +30,7 @@ extern "C" {
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is at [SRC,...,SRC+SRCLEN-1].
    The "from" encoding can also be a name defined for autodetection.
-   If OFFSET is not NULL, it should point to an array of SRCLEN integers; this
+   If OFFSETS is not NULL, it should point to an array of SRCLEN integers; this
    array is filled with offsets into the result, i.e. the character starting
    at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
    and other offsets are set to (size_t)(-1).
