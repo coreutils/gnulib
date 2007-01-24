@@ -19,6 +19,8 @@
 #ifndef _STRICONVEHA_H
 #define _STRICONVEHA_H
 
+#include <stdbool.h>
+
 #include "striconveh.h"
 
 
@@ -30,6 +32,9 @@ extern "C" {
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is at [SRC,...,SRC+SRCLEN-1].
    The "from" encoding can also be a name defined for autodetection.
+   If TRANSLITERATE is true, transliteration will attempted to avoid conversion
+   errors, for iconv implementations that support this.  Usually you'll choose
+   TRANSLITERATE = true if HANDLER != iconveh_error.
    If OFFSETS is not NULL, it should point to an array of SRCLEN integers; this
    array is filled with offsets into the result, i.e. the character starting
    at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
@@ -44,6 +49,7 @@ extern "C" {
 extern int
        mem_iconveha (const char *src, size_t srclen,
 		     const char *from_codeset, const char *to_codeset,
+		     bool transliterate,
 		     enum iconv_ilseq_handler handler,
 		     size_t *offsets,
 		     char **resultp, size_t *lengthp);
@@ -53,12 +59,16 @@ extern int
    Both the "from" and the "to" encoding must use a single NUL byte at the
    end of the string (i.e. not UCS-2, UCS-4, UTF-16, UTF-32).
    The "from" encoding can also be a name defined for autodetection.
+   If TRANSLITERATE is true, transliteration will attempted to avoid conversion
+   errors, for iconv implementations that support this.  Usually you'll choose
+   TRANSLITERATE = true if HANDLER != iconveh_error.
    Allocate a malloced memory block for the result.
    Return value: the freshly allocated resulting NUL-terminated string if
    successful, otherwise NULL and errno set.  */
 extern char *
        str_iconveha (const char *src,
 		     const char *from_codeset, const char *to_codeset,
+		     bool transliterate,
 		     enum iconv_ilseq_handler handler);
 
 

@@ -1,5 +1,17 @@
 2007-01-23  Bruno Haible  <bruno@clisp.org>
 
+	* lib/striconveha.h: Include <stdbool.h>.
+	(mem_iconveha, str_iconveha): Add 'transliterate' argument.
+	* lib/striconveha.c: Include allocsa.h, strdup.h, c-strcase.h.
+	(mem_iconveha_notranslit): Renamed from mem_iconveha.
+	(mem_iconveha): New function.
+	(str_iconveha_notranslit): Renamed from str_iconveha.
+	(str_iconveha): New function.
+	* modules/striconveha (Depends-on): Add stdbool, allocsa, strdup,
+	c-strcase.
+
+2007-01-23  Bruno Haible  <bruno@clisp.org>
+
 	* lib/striconveha.c (mem_iconveha): Fix endless recursion. Try all
 	encodings without forgiving before trying any encoding with handler.
 	(str_iconveha): Try all encodings without forgiving before trying any

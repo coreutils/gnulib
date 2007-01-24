@@ -25,6 +25,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "allocsa.h"
+#include "strdup.h"
+#include "c-strcase.h"
+
 #define SIZEOF(a) (sizeof(a)/sizeof(a[0]))
 
 
@@ -143,12 +147,13 @@ uniconv_register_autodetect (const char *name,
     }
 }
 
-int
-mem_iconveha (const char *src, size_t srclen,
-	      const char *from_codeset, const char *to_codeset,
-	      enum iconv_ilseq_handler handler,
-	      size_t *offsets,
-	      char **resultp, size_t *lengthp)
+/* Like mem_iconveha, except no handling of transliteration.  */
+static int
+mem_iconveha_notranslit (const char *src, size_t srclen,
+			 const char *from_codeset, const char *to_codeset,
+			 enum iconv_ilseq_handler handler,
+			 size_t *offsets,
+			 char **resultp, size_t *lengthp)
 {
   int retval = mem_iconveh (src, srclen, from_codeset, to_codeset, handler,
 			    offsets, resultp, lengthp);
@@ -171,10 +176,10 @@ mem_iconveha (const char *src, size_t srclen,
 		encodings = alias->encodings_to_try;
 		do
 		  {
-		    retval = mem_iconveha (src, srclen,
-					   *encodings, to_codeset,
-					   iconveh_error, offsets,
-					   resultp, lengthp);
+		    retval = mem_iconveha_notranslit (src, srclen,
+						      *encodings, to_codeset,
+						      iconveh_error, offsets,
+						      resultp, lengthp);
 		    if (!(retval < 0 && errno == EILSEQ))
 		      return retval;
 		    encodings++;
@@ -185,10 +190,10 @@ mem_iconveha (const char *src, size_t srclen,
 	    encodings = alias->encodings_to_try;
 	    do
 	      {
-		retval = mem_iconveha (src, srclen,
-				       *encodings, to_codeset,
-				       handler, offsets,
-				       resultp, lengthp);
+		retval = mem_iconveha_notranslit (src, srclen,
+						  *encodings, to_codeset,
+						  handler, offsets,
+						  resultp, lengthp);
 		if (!(retval < 0 && errno == EILSEQ))
 		  return retval;
 		encodings++;
@@ -205,10 +210,52 @@ mem_iconveha (const char *src, size_t srclen,
     }
 }
 
-char *
-str_iconveha (const char *src,
+int
+mem_iconveha (const char *src, size_t srclen,
 	      const char *from_codeset, const char *to_codeset,
-	      enum iconv_ilseq_handler handler)
+	      bool transliterate,
+	      enum iconv_ilseq_handler handler,
+	      size_t *offsets,
+	      char **resultp, size_t *lengthp)
+{
+  if (srclen == 0)
+    {
+      /* Nothing to convert.  */
+      *lengthp = 0;
+      return 0;
+    }
+
+  /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5,
+     we want to use transliteration.  */
+#if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
+  if (transliterate)
+    {
+      int retval;
+      size_t len = strlen (to_codeset);
+      char *to_codeset_suffixed = (char *) allocsa (len + 10 + 1);
+      memcpy (to_codeset_suffixed, to_codeset, len);
+      memcpy (to_codeset_suffixed + len, "//TRANSLIT", 10 + 1);
+
+      retval = mem_iconveha_notranslit (src, srclen,
+					from_codeset, to_codeset_suffixed,
+					handler, offsets, resultp, lengthp);
+
+      freesa (to_codeset_suffixed);
+
+      return retval;
+    }
+  else
+#endif
+    return mem_iconveha_notranslit (src, srclen,
+				    from_codeset, to_codeset,
+				    handler, offsets, resultp, lengthp);
+}
+
+/* Like str_iconveha, except no handling of transliteration.  */
+static char *
+str_iconveha_notranslit (const char *src,
+			 const char *from_codeset, const char *to_codeset,
+			 enum iconv_ilseq_handler handler)
 {
   char *result = str_iconveh (src, from_codeset, to_codeset, handler);
 
@@ -231,9 +278,9 @@ str_iconveha (const char *src,
 		encodings = alias->encodings_to_try;
 		do
 		  {
-		    result = str_iconveha (src,
-					   *encodings, to_codeset,
-					   iconveh_error);
+		    result = str_iconveha_notranslit (src,
+						      *encodings, to_codeset,
+						      iconveh_error);
 		    if (!(result == NULL && errno == EILSEQ))
 		      return result;
 		    encodings++;
@@ -244,9 +291,9 @@ str_iconveha (const char *src,
 	    encodings = alias->encodings_to_try;
 	    do
 	      {
-		result = str_iconveha (src,
-				       *encodings, to_codeset,
-				       handler);
+		result = str_iconveha_notranslit (src,
+						  *encodings, to_codeset,
+						  handler);
 		if (!(result == NULL && errno == EILSEQ))
 		  return result;
 		encodings++;
@@ -261,4 +308,42 @@ str_iconveha (const char *src,
       errno = EINVAL;
       return NULL;
     }
+}
+
+char *
+str_iconveha (const char *src,
+	      const char *from_codeset, const char *to_codeset,
+	      bool transliterate,
+	      enum iconv_ilseq_handler handler)
+{
+  if (*src == '\0' || c_strcasecmp (from_codeset, to_codeset) == 0)
+    {
+      char *result = strdup (src);
+
+      if (result == NULL)
+	errno = ENOMEM;
+      return result;
+    }
+
+  /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5,
+     we want to use transliteration.  */
+#if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
+  if (transliterate)
+    {
+      char *result;
+      size_t len = strlen (to_codeset);
+      char *to_codeset_suffixed = (char *) allocsa (len + 10 + 1);
+      memcpy (to_codeset_suffixed, to_codeset, len);
+      memcpy (to_codeset_suffixed + len, "//TRANSLIT", 10 + 1);
+
+      result = str_iconveha_notranslit (src, from_codeset, to_codeset_suffixed,
+					handler);
+
+      freesa (to_codeset_suffixed);
+
+      return result;
+    }
+  else
+#endif
+    return str_iconveha_notranslit (src, from_codeset, to_codeset, handler);
 }

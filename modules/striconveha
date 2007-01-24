@@ -7,7 +7,11 @@ lib/striconveha.h
 lib/striconveha.c
 
 Depends-on:
+stdbool
 striconveh
+allocsa
+strdup
+c-strcase
 
 configure.ac:
 
