@@ -163,13 +163,32 @@ mem_iconveha (const char *src, size_t srclen,
       for (alias = autodetect_list; alias != NULL; alias = alias->next)
 	if (strcmp (from_codeset, alias->name) == 0)
 	  {
-	    const char * const *encodings = alias->encodings_to_try;
+	    const char * const *encodings;
 
+	    if (handler != iconveh_error)
+	      {
+		/* First try all encodings without any forgiving.  */
+		encodings = alias->encodings_to_try;
+		do
+		  {
+		    retval = mem_iconveha (src, srclen,
+					   *encodings, to_codeset,
+					   iconveh_error, offsets,
+					   resultp, lengthp);
+		    if (!(retval < 0 && errno == EILSEQ))
+		      return retval;
+		    encodings++;
+		  }
+		while (*encodings != NULL);
+	      }
+
+	    encodings = alias->encodings_to_try;
 	    do
 	      {
 		retval = mem_iconveha (src, srclen,
-				       from_codeset, to_codeset, handler,
-				       offsets, resultp, lengthp);
+				       *encodings, to_codeset,
+				       handler, offsets,
+				       resultp, lengthp);
 		if (!(retval < 0 && errno == EILSEQ))
 		  return retval;
 		encodings++;
@@ -204,11 +223,30 @@ str_iconveha (const char *src,
       for (alias = autodetect_list; alias != NULL; alias = alias->next)
 	if (strcmp (from_codeset, alias->name) == 0)
 	  {
-	    const char * const *encodings = alias->encodings_to_try;
+	    const char * const *encodings;
 
+	    if (handler != iconveh_error)
+	      {
+		/* First try all encodings without any forgiving.  */
+		encodings = alias->encodings_to_try;
+		do
+		  {
+		    result = str_iconveha (src,
+					   *encodings, to_codeset,
+					   iconveh_error);
+		    if (!(result == NULL && errno == EILSEQ))
+		      return result;
+		    encodings++;
+		  }
+		while (*encodings != NULL);
+	      }
+
+	    encodings = alias->encodings_to_try;
 	    do
 	      {
-		result = str_iconveha (src, *encodings, to_codeset, handler);
+		result = str_iconveha (src,
+				       *encodings, to_codeset,
+				       handler);
 		if (!(result == NULL && errno == EILSEQ))
 		  return result;
 		encodings++;

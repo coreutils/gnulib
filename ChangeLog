@@ -1,3 +1,10 @@
+2007-01-23  Bruno Haible  <bruno@clisp.org>
+
+	* lib/striconveha.c (mem_iconveha): Fix endless recursion. Try all
+	encodings without forgiving before trying any encoding with handler.
+	(str_iconveha): Try all encodings without forgiving before trying any
+	encoding with handler.
+
 2007-01-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Import the following changes from libc.
