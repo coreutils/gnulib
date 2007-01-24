@@ -1,0 +1,23 @@
+Description:
+Optimized case-insensitive string comparison in C locale.
+
+Files:
+lib/c-strcaseeq.h
+
+Depends-on:
+c-strcase
+c-ctype
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"c-strcaseeq.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
