@@ -1,5 +1,8 @@
 2007-01-23  Bruno Haible  <bruno@clisp.org>
 
+	* modules/striconveha-tests: New file.
+	* tests/test-striconveha.c: New file.
+
 	* lib/striconveha.h: Include <stdbool.h>.
 	(mem_iconveha, str_iconveha): Add 'transliterate' argument.
 	* lib/striconveha.c: Include allocsa.h, strdup.h, c-strcase.h.
