@@ -1,0 +1,21 @@
+Description:
+Optimized string comparison.
+
+Files:
+lib/streq.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"streq.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
