@@ -1,3 +1,9 @@
+2007-01-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/fnmatch_loop.c (internal_fnmatch) [!_LIBC]: #if-out the
+	2004-12-01 change by Jakub Jelinek, since this code won't compile
+	if !LIBC.  Problem reported by Bob Proulx.
+
 2007-01-23  Bruno Haible  <bruno@clisp.org>
 
 	* lib/striconveh.c: Include c-strcaseeq.h.

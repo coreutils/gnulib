@@ -599,9 +599,12 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
 			if (!is_range && c == fn)
 			  goto matched;
 
+#if _LIBC
 			/* This is needed if we goto normal_bracket; from
 			   outside of is_seqval's scope.  */
 			is_seqval = false;
+#endif
+
 			cold = c;
 			c = *p++;
 		      }
