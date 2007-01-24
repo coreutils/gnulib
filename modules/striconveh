@@ -14,6 +14,7 @@ unistr/u8-prev
 unistr/u8-mbtouc
 strdup
 c-strcase
+c-strcaseeq
 
 configure.ac:
 if test $gl_cond_libtool = false; then

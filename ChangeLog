@@ -1,5 +1,11 @@
 2007-01-23  Bruno Haible  <bruno@clisp.org>
 
+	* lib/striconveh.c: Include c-strcaseeq.h.
+	(mem_iconveh, str_iconveh): Use STRCASEEQ instead of c_strcasecmp.
+	* modules/striconveh (Depends-on): Add c-strcaseeq.
+
+2007-01-23  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh (String handling): Add streq, c-strcaseeq.
 
 	* modules/c-strcaseeq: New file.

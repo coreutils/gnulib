@@ -35,6 +35,7 @@
 
 #include "strdup.h"
 #include "c-strcase.h"
+#include "c-strcaseeq.h"
 
 #ifndef SIZE_MAX
 # define SIZE_MAX ((size_t) -1)
@@ -929,7 +930,7 @@ mem_iconveh (const char *src, size_t srclen,
       if (cd == (iconv_t)(-1))
 	return -1;
 
-      if (c_strcasecmp (from_codeset, "UTF-8") == 0)
+      if (STRCASEEQ (from_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0))
 	cd1 = (iconv_t)(-1);
       else
 	{
@@ -943,7 +944,7 @@ mem_iconveh (const char *src, size_t srclen,
 	    }
 	}
 
-      if (c_strcasecmp (to_codeset, "UTF-8") == 0)
+      if (STRCASEEQ (to_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0))
 	cd2 = (iconv_t)(-1);
       else
 	{
@@ -1062,7 +1063,7 @@ str_iconveh (const char *src,
       if (cd == (iconv_t)(-1))
 	return NULL;
 
-      if (c_strcasecmp (from_codeset, "UTF-8") == 0)
+      if (STRCASEEQ (from_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0))
 	cd1 = (iconv_t)(-1);
       else
 	{
@@ -1076,7 +1077,7 @@ str_iconveh (const char *src,
 	    }
 	}
 
-      if (c_strcasecmp (to_codeset, "UTF-8") == 0)
+      if (STRCASEEQ (to_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0))
 	cd2 = (iconv_t)(-1);
       else
 	{
