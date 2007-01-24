@@ -1,5 +1,15 @@
 2007-01-23  Bruno Haible  <bruno@clisp.org>
 
+	* MODULES.html.sh (String handling): Add streq, c-strcaseeq.
+
+	* modules/c-strcaseeq: New file.
+	* lib/c-strcaseeq.h: New file.
+
+	* modules/streq: New file.
+	* lib/streq.h: New file.
+
+2007-01-23  Bruno Haible  <bruno@clisp.org>
+
 	* modules/striconveha-tests: New file.
 	* tests/test-striconveha.c: New file.
 
