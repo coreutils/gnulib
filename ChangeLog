@@ -1,3 +1,22 @@
+2007-01-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Import the following changes from libc.
+
+	2005-10-14  Ulrich Drepper  <drepper@redhat.com>
+
+	* lib/fnmatch_loop.c: Adjust for changed secondary hash function.
+
+	2004-12-01  Jakub Jelinek  <jakub@redhat.com>
+
+	* lib/fnmatch_loop.c (internal_fnmatch): Clear is_seqval after
+	normal_bracket label.
+
+	2004-09-01  Jakub Jelinek  <jakub@redhat.com>
+
+	[BZ #361]
+	* lib/fnmatch_loop.c (FCT): For backslash between brackets, branch
+	to normal_bracket after fetching the next character.
+
 2007-01-22  Bruno Haible  <bruno@clisp.org>
 
 	* lib/striconveh.h (mem_cd_iconveh, mem_iconveh): Add 'offsets'
