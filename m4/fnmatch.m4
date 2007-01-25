@@ -23,33 +23,52 @@ AC_DEFUN([_AC_FUNC_FNMATCH_IF],
    dnl Thanks to John Oleynick, François Pinard, and Paul Eggert for this test.
    AC_RUN_IFELSE(
       [AC_LANG_PROGRAM(
-	 [
-#	   include <stdlib.h>
-#	   include <fnmatch.h>
-#	   define y(a, b, c) (fnmatch (a, b, c) == 0)
-#	   define n(a, b, c) (fnmatch (a, b, c) == FNM_NOMATCH)
+	 [[#include <fnmatch.h>
 	   static int
-	   fnm (char const *pattern, char const *string, int flags)
+	   y (char const *pattern, char const *string, int flags)
 	   {
-	     return fnmatch (pattern, string, flags);
+	     return fnmatch (pattern, string, flags) == 0;
 	   }
-	 ],
-	 [exit
-	   (!(fnm ("a*", "", 0) == FNM_NOMATCH
+	   static int
+	   n (char const *pattern, char const *string, int flags)
+	   {
+	     return fnmatch (pattern, string, flags) == FNM_NOMATCH;
+	   }
+	 ]],
+	 [[char const *Apat = 'A' < '\\\\' ? "[A-\\\\\\\\]" : "[\\\\\\\\-A]";
+	   char const *apat = 'a' < '\\\\' ? "[a-\\\\\\\\]" : "[\\\\\\\\-a]";
+	   static char const A_1[] = { 'A' - 1, 0 };
+	   static char const A01[] = { 'A' + 1, 0 };
+	   static char const a_1[] = { 'a' - 1, 0 };
+	   static char const a01[] = { 'a' + 1, 0 };
+	   static char const bs_1[] = { '\\\\' - 1, 0 };
+	   static char const bs01[] = { '\\\\' + 1, 0 };
+	   return
+	    !(n ("a*", "", 0)
 	      && y ("a*", "abc", 0)
 	      && n ("d*/*1", "d/s/1", FNM_PATHNAME)
 	      && y ("a\\\\bc", "abc", 0)
 	      && n ("a\\\\bc", "abc", FNM_NOESCAPE)
 	      && y ("*x", ".x", 0)
 	      && n ("*x", ".x", FNM_PERIOD)
-	      && m4_if([$1], [GNU],
+	      && y (Apat, "\\\\", 0) && y (Apat, "A", 0)
+	      && y (apat, "\\\\", 0) && y (apat, "a", 0)
+	      && n (Apat, A_1, 0) == ('A' < '\\\\')
+	      && n (apat, a_1, 0) == ('a' < '\\\\')
+	      && y (Apat, A01, 0) == ('A' < '\\\\')
+	      && y (apat, a01, 0) == ('a' < '\\\\')
+	      && y (Apat, bs_1, 0) == ('A' < '\\\\')
+	      && y (apat, bs_1, 0) == ('a' < '\\\\')
+	      && n (Apat, bs01, 0) == ('A' < '\\\\')
+	      && n (apat, bs01, 0) == ('a' < '\\\\')
+	      && ]m4_if([$1], [GNU],
 		   [y ("xxXX", "xXxX", FNM_CASEFOLD)
 		    && y ("a++(x|yy)b", "a+xyyyyxb", FNM_EXTMATCH)
 		    && n ("d*/*1", "d/s/1", FNM_FILE_NAME)
 		    && y ("*", "x", FNM_FILE_NAME | FNM_LEADING_DIR)
 		    && y ("x*", "x/y/z", FNM_FILE_NAME | FNM_LEADING_DIR)
 		    && y ("*c*", "c/x", FNM_FILE_NAME | FNM_LEADING_DIR)],
-		   1)));])],
+		   1))[;]])],
       [$2=yes],
       [$2=no],
       [$2=cross])])
