@@ -1,5 +1,5 @@
-# argp.m4 serial 7
-dnl Copyright (C) 2003-2006 Free Software Foundation, Inc.
+# argp.m4 serial 8
+dnl Copyright (C) 2003-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -9,7 +9,10 @@ AC_DEFUN([gl_ARGP],
   AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_REQUIRE([gl_GETOPT_SUBSTITUTE])
+  dnl argp-parse.c depends on GNU getopt internals, therefore use GNU getopt
+  dnl always.
+  gl_GETOPT_SUBSTITUTE
+  dnl Note: gl_GETOPT_SUBSTITUTE does AC_LIBOBJ(getopt), AC_LIBOBJ(getopt1).
 
   AC_CHECK_DECL([program_invocation_name],
                 [AC_DEFINE(HAVE_DECL_PROGRAM_INVOCATION_NAME, 1,

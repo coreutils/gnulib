@@ -1,4 +1,4 @@
-#serial 14
+#serial 15
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
@@ -24,7 +24,7 @@ AC_DEFUN([gl_FUNC_OPENAT],
       [Define to rpl_ if the openat replacement function should be used.])
     gl_PREREQ_OPENAT;;
   esac
-  AC_REQUIRE([gl_FUNC_FCHOWNAT])
+  gl_FUNC_FCHOWNAT
 ])
 
 # gl_FUNC_FCHOWNAT_DEREF_BUG([ACTION-IF-BUGGY[, ACTION-IF-NOT_BUGGY]])

@@ -1,6 +1,6 @@
-#serial 15
+#serial 16
 
-# Copyright (C) 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2006
+# Copyright (C) 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2006, 2007
 # Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
@@ -11,7 +11,7 @@ dnl From Jim Meyering.
 
 AC_DEFUN([gl_FUNC_LSTAT],
 [
-  AC_REQUIRE([AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
+  AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
   dnl Note: AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK does AC_LIBOBJ(lstat).
   :
 ])

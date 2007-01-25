@@ -1,4 +1,4 @@
-#serial 11
+#serial 12
 dnl Copyright (C) 2002, 2003, 2005, 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -211,7 +211,8 @@ fi
 
 AC_DEFUN([gl_FUNC_MKTIME],
 [
-  AC_REQUIRE([AC_FUNC_MKTIME])
+  AC_FUNC_MKTIME
+  dnl Note: AC_FUNC_MKTIME does AC_LIBOBJ(mktime).
   if test $ac_cv_func_working_mktime = no; then
     AC_DEFINE(mktime, rpl_mktime,
       [Define to rpl_mktime if the replacement function should be used.])

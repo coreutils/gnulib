@@ -1,4 +1,4 @@
-#serial 28
+#serial 29
 
 # Copyright (C) 1996, 1997, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
 # 2006, 2007 Free Software Foundation, Inc.
@@ -10,7 +10,8 @@
 # Written by Jim Meyering and Paul Eggert.
 
 AC_DEFUN([gl_FUNC_GNU_STRFTIME],
-[AC_REQUIRE([gl_FUNC_STRFTIME])dnl
+[
+  gl_FUNC_STRFTIME
 ])
 
 # These are the prerequisite macros for GNU's strftime.c replacement.

@@ -1,5 +1,24 @@
 2007-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Don't AC_REQUIRE autoconf macros that invoke AC_LIBOBJ. See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2006-10/msg00279.html>.
+	* m4/argp.m4 (gl_ARGP): Invoke, don't require, gl_GETOPT_SUBSTITUTE.
+	* m4/fts.m4 (gl_FUNC_FTS, gl_FUNC_FTS_LGPL): Invoke, don't require,
+	gl_FUNC_FTS_CORE.
+	(gl_FUNC_FTS_CORE): Invoke, don't require, gl_FUNC_OPENAT.
+	* m4/lstat.m4 (gl_FUNC_LSTAT): Invoke, don't require,
+	AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK.
+	* m4/memcmp.m4 (gl_FUNC_MEMCMP): Invoke, don't require, AC_FUNC_MEMCMP.
+	* m4/mktime.m4 (gl_FUNC_MKTIME): Invoke, don't require, AC_FUNC_MKTIME.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Invoke, don't require,
+	gl_FUNC_FCHOWNAT.
+	* m4/strftime.m4 (gl_FUNC_GNU_STRFTIME): Invoke, don't require,
+	gl_FUNC_STRFTIME.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Invoke, don't require, AC_FUNC_STRTOD.
+	Reported by Ralf Wildenhues.
+
+2007-01-24  Bruno Haible  <bruno@clisp.org>
+
 	Drop AC_REQUIRE calls that are redundant with the module dependencies.
 	* m4/canon-host.m4 (gl_PREREQ_CANON_HOST): Don't require
 	gl_GETADDRINFO.
