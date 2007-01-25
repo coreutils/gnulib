@@ -1,4 +1,4 @@
-#serial 9
+#serial 10
 
 # Use Gnulib's robust chdir function.
 # It can handle arbitrarily long directory names, which means
@@ -6,7 +6,7 @@
 # never fails with ENAMETOOLONG.
 # Arrange to compile chdir-long.c only on systems that define PATH_MAX.
 
-dnl Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
+dnl Copyright (C) 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -34,8 +34,5 @@ have_arbitrary_file_name_length_limit
 
 AC_DEFUN([gl_PREREQ_CHDIR_LONG],
 [
-  AM_STDBOOL_H
-  gl_FUNC_MEMPCPY
-  gl_FUNC_OPENAT
-  gl_FUNC_MEMRCHR
+  :
 ])

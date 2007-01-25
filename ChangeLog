@@ -1,3 +1,12 @@
+2007-01-24  Bruno Haible  <bruno@clisp.org>
+
+	Drop AC_REQUIRE calls that are redundant with the module dependencies.
+	* m4/canon-host.m4 (gl_PREREQ_CANON_HOST): Don't require
+	gl_GETADDRINFO.
+	* m4/chdir-long.m4 (gl_PREREQ_CHDIR_LONG): Don't require AM_STDBOOL_H,
+	gl_FUNC_MEMPCPY, gl_FUNC_OPENAT, gl_FUNC_MEMRCHR.
+	* m4/openat.m4 (gl_PREREQ_OPENAT): Don't require gl_SAVE_CWD.
+
 2007-01-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/fnmatch.m4 (_AC_FUNC_FNMATCH_IF): Add test for glibc bug 361.
