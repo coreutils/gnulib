@@ -2,6 +2,7 @@
 
 	* m4/fnmatch.m4 (_AC_FUNC_FNMATCH_IF): Add test for glibc bug 361.
 	Don't use 'exit'; just return from 'main'.
+	(_AC_LIBOBJ_FNMATCH): Check for headers and functions just once.
 
 	* lib/fnmatch_.h: Readjust white space and comments to match
 	glibc, to avoid spurious diffs.
