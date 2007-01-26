@@ -41,7 +41,6 @@
 
 #include "intprops.h"
 #include "inttostr.h"
-#include "strdup.h"
 #include "xalloc.h"
 #include "xstrtol.h"
 

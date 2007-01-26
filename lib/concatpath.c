@@ -1,5 +1,5 @@
 /* Construct a full pathname from a directory and a filename.
-   Copyright (C) 2001-2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -26,7 +26,6 @@
 #include <string.h>
 
 #include "xalloc.h"
-#include "stpcpy.h"
 
 /* Concatenate a directory pathname, a relative pathname and an optional
    suffix.  The directory may end with the directory separator.  The second

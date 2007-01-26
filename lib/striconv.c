@@ -31,7 +31,6 @@
 # include <limits.h>
 #endif
 
-#include "strdup.h"
 #include "c-strcase.h"
 
 #ifndef SIZE_MAX

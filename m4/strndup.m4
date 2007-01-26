@@ -1,5 +1,5 @@
-# strndup.m4 serial 11
-dnl Copyright (C) 2002-2003, 2005-2006 Free Software Foundation, Inc.
+# strndup.m4 serial 12
+dnl Copyright (C) 2002-2003, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -10,6 +10,9 @@ AC_DEFUN([gl_FUNC_STRNDUP],
   AC_REQUIRE([AC_GNU_SOURCE])
 
   AC_CHECK_DECLS_ONCE([strndup])
+  if test $ac_cv_have_decl_strndup = no; then
+    HAVE_DECL_STRNDUP=0
+  fi
 
   # AIX 4.3.3, AIX 5.1 have a function that fails to add the terminating '\0'.
   AC_CACHE_CHECK([for working strndup], gl_cv_func_strndup,
@@ -39,6 +42,7 @@ AC_DEFUN([gl_FUNC_STRNDUP],
     AC_DEFINE([HAVE_STRNDUP], 1,
       [Define if you have the strndup() function and it works.])
   else
+    HAVE_STRNDUP=0
     AC_LIBOBJ([strndup])
     gl_PREREQ_STRNDUP
   fi

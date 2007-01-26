@@ -2,11 +2,11 @@ Description:
 strpbrk() function: search a string for any of a set of characters.
 
 Files:
-lib/strpbrk.h
 lib/strpbrk.c
 m4/strpbrk.m4
 
 Depends-on:
+string
 
 configure.ac:
 gl_FUNC_STRPBRK
@@ -14,11 +14,10 @@ gl_FUNC_STRPBRK
 Makefile.am:
 
 Include:
-"strpbrk.h"
+<string.h>
 
 License:
 LGPL
 
 Maintainer:
 Bruno Haible, glibc
-

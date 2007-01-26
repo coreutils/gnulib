@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Free Software Foundation
+ * Copyright (C) 2004, 2007 Free Software Foundation
  * Written by Simon Josefsson
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "memmem.h"
 
 int
 main (int argc, char *argv[])

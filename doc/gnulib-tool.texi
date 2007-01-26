@@ -1,7 +1,7 @@
 @node Invoking gnulib-tool
 @chapter Invoking gnulib-tool
 
-@c Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+@c Copyright (C) 2005, 2006, 2007 Free Software Foundation, Inc.
 
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.2 or
@@ -48,29 +48,42 @@ Gnulib is used.
 
 Our example will be a library that uses Autoconf, Automake and
 Libtool.  It calls @code{strdup}, and you wish to use gnulib to make
-the package portable to C89 (which doesn't have @code{strdup}).
+the package portable to C89 and C99 (which don't have @code{strdup}).
 
 @example
 ~/src/libfoo$ gnulib-tool --import strdup
 Module list with included dependencies:
+  absolute-header
+  extensions
   strdup
+  string
 File list:
+  lib/dummy.c
   lib/strdup.c
-  lib/strdup.h
-  m4/onceonly_2_57.m4
+  lib/string_.h
+  m4/absolute-header.m4
+  m4/extensions.m4
+  m4/gnulib-common.m4
   m4/strdup.m4
-Copying file m4/gnulib-tool.m4
-Copying file m4/onceonly_2_57.m4
+  m4/string_h.m4
+Creating directory ./lib
+Creating directory ./m4
+Copying file lib/dummy.c
 Copying file lib/strdup.c
-Copying file lib/strdup.h
+Copying file lib/string_.h
+Copying file m4/absolute-header.m4
+Copying file m4/extensions.m4
+Copying file m4/gnulib-common.m4
+Copying file m4/gnulib-tool.m4
 Copying file m4/strdup.m4
+Copying file m4/string_h.m4
 Creating lib/Makefile.am
 Creating m4/gnulib-cache.m4
 Creating m4/gnulib-comp.m4
 Finished.
 
 You may need to add #include directives for the following .h files.
-  #include "strdup.h"
+  #include <string.h>
 
 Don't forget to
   - add "lib/Makefile" to AC_CONFIG_FILES in ./configure.ac,
@@ -212,7 +225,7 @@ LDADD = lib/libgnu.a
 @end example
 
 Don't forget to @code{#include} the various header files.  In this
-example, you would need to make sure that @samp{#include "strdup.h"}
+example, you would need to make sure that @samp{#include <string.h>}
 is evaluated when compiling all source code files, that want to make
 use of @code{strdup}.
 

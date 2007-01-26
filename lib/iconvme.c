@@ -23,7 +23,7 @@
 /* Get malloc. */
 #include <stdlib.h>
 
-/* Get strcmp. */
+/* Get strcmp, strdup. */
 #include <string.h>
 
 /* Get errno. */
@@ -31,9 +31,6 @@
 
 #ifdef _LIBC
 # define HAVE_ICONV 1
-#else
-/* Get strdup. */
-# include "strdup.h"
 #endif
 
 #if HAVE_ICONV

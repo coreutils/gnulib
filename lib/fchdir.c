@@ -1,5 +1,5 @@
 /* fchdir replacement.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include <fcntl.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -28,7 +29,6 @@
 
 #include "canonicalize.h"
 #include "dirfd.h"
-#include "strdup.h"
 
 /* This replacement assumes that a directory is not renamed while opened
    through a file descriptor.  */

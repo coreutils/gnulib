@@ -3,10 +3,10 @@ memrchr() function: scan memory for a byte, from the right end.
 
 Files:
 lib/memrchr.c
-lib/memrchr.h
 m4/memrchr.m4
 
 Depends-on:
+string
 
 configure.ac:
 gl_FUNC_MEMRCHR
@@ -14,7 +14,7 @@ gl_FUNC_MEMRCHR
 Makefile.am:
 
 Include:
-"memrchr.h"
+<string.h>
 
 License:
 LGPL

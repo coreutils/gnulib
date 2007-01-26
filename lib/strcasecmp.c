@@ -1,5 +1,5 @@
 /* Case-insensitive string comparison function.
-   Copyright (C) 1998-1999, 2005-2006 Free Software Foundation, Inc.
+   Copyright (C) 1998-1999, 2005-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2005,
    based on earlier glibc code.
 
@@ -20,7 +20,7 @@
 #include <config.h>
 
 /* Specification.  */
-#include "strcase.h"
+#include <string.h>
 
 #include <ctype.h>
 #include <limits.h>

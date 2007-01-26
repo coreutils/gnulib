@@ -26,7 +26,6 @@
 #include <string.h>
 
 #include "allocsa.h"
-#include "strdup.h"
 #include "c-strcase.h"
 
 #define SIZEOF(a) (sizeof(a)/sizeof(a[0]))

@@ -2,11 +2,11 @@ Description:
 memmem() function: locate first substring in a buffer.
 
 Files:
-lib/memmem.h
 lib/memmem.c
 m4/memmem.m4
 
 Depends-on:
+string
 
 configure.ac:
 gl_FUNC_MEMMEM
@@ -14,7 +14,7 @@ gl_FUNC_MEMMEM
 Makefile.am:
 
 Include:
-"memmem.h"
+<string.h>
 
 License:
 LGPL

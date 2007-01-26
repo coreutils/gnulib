@@ -1,5 +1,5 @@
-# memrchr.m4 serial 5
-dnl Copyright (C) 2002, 2003, 2005, 2006 Free Software Foundation, Inc.
+# memrchr.m4 serial 6
+dnl Copyright (C) 2002, 2003, 2005, 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -10,6 +10,9 @@ AC_DEFUN([gl_FUNC_MEMRCHR],
   AC_REQUIRE([AC_GNU_SOURCE])
 
   AC_CHECK_DECLS_ONCE([memrchr])
+  if test $ac_cv_have_decl_memrchr = no; then
+    HAVE_DECL_MEMRCHR=0
+  fi
 
   AC_REPLACE_FUNCS(memrchr)
   if test $ac_cv_func_memrchr = no; then

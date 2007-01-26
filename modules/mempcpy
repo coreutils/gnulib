@@ -2,11 +2,11 @@ Description:
 mempcpy() function: copy memory area, return point after last written byte.
 
 Files:
-lib/mempcpy.h
 lib/mempcpy.c
 m4/mempcpy.m4
 
 Depends-on:
+string
 
 configure.ac:
 gl_FUNC_MEMPCPY
@@ -14,7 +14,7 @@ gl_FUNC_MEMPCPY
 Makefile.am:
 
 Include:
-"mempcpy.h"
+<string.h>
 
 License:
 LGPL

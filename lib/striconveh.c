@@ -33,7 +33,6 @@
 # include "unistr.h"
 #endif
 
-#include "strdup.h"
 #include "c-strcase.h"
 #include "c-strcaseeq.h"
 

@@ -10,6 +10,7 @@ AC_DEFUN([gl_FUNC_STRSTR],
   dnl multibyte locales. Therefore we use our version always.
   AC_LIBOBJ(strstr)
   gl_PREREQ_STRSTR
+  REPLACE_STRSTR=1
 ])
 
 # Prerequisites of lib/strstr.c.

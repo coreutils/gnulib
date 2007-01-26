@@ -1,5 +1,5 @@
 /* Auxiliary functions for the creation of subprocesses.  Native Woe32 API.
-   Copyright (C) 2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2006, 2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -24,9 +24,9 @@
 #include <io.h>
 
 #include <stdbool.h>
+#include <string.h>
 #include <errno.h>
 
-#include "strpbrk.h"
 #include "xalloc.h"
 
 /* Duplicates a file handle, making the copy uninheritable.  */

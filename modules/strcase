@@ -2,7 +2,6 @@ Description:
 Case-insensitive string comparison functions.
 
 Files:
-lib/strcase.h
 lib/strcasecmp.c
 lib/strncasecmp.c
 m4/strcase.m4
@@ -10,6 +9,7 @@ m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
+string
 
 configure.ac:
 gl_STRCASE
@@ -17,11 +17,10 @@ gl_STRCASE
 Makefile.am:
 
 Include:
-"strcase.h"
+<string.h>
 
 License:
 LGPL
 
 Maintainer:
 Bruno Haible
-

@@ -2,11 +2,11 @@ Description:
 strsep() function: extract token from string.
 
 Files:
-lib/strsep.h
 lib/strsep.c
 m4/strsep.m4
 
 Depends-on:
+string
 strpbrk
 
 configure.ac:
@@ -15,7 +15,7 @@ gl_FUNC_STRSEP
 Makefile.am:
 
 Include:
-"strsep.h"
+<string.h>
 
 License:
 LGPL

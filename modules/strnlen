@@ -2,12 +2,12 @@ Description:
 strnlen() function: determine the length of a size-bounded string.
 
 Files:
-lib/strnlen.h
 lib/strnlen.c
 m4/strnlen.m4
 
 Depends-on:
 extensions
+string
 
 configure.ac:
 gl_FUNC_STRNLEN
@@ -15,7 +15,7 @@ gl_FUNC_STRNLEN
 Makefile.am:
 
 Include:
-"strnlen.h"
+<string.h>
 
 License:
 LGPL

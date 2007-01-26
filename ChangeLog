@@ -1,3 +1,103 @@
+2007-01-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* doc/gnulib-tool.texi (Initial import): Update to match current
+	behavior with strdup module.
+	* lib/.cppi-disable: Remove strcase.h, strdup.h, strndup.h, strnlen.h.
+	* lib/memmem.h: Remove; all uses removed.  This is now done
+	by <string.h>.
+	* lib/mempcpy.h: Likewise.
+	* lib/memrchr.h: Likewise.
+	* lib/stpcpy.h: Likewise.
+	* lib/stpncpy.h: Likewise.
+	* lib/strcase.h: Likewise.
+	* lib/strchrnul.h: Likewise.
+	* lib/strdup.h: Likewise.
+	* lib/strndup.h: Likewise.
+	* lib/strnlen.h: Likewise.
+	* lib/strpbrk.h: Likewise.
+	* lib/strsep.h: Likewise.
+	* lib/strstr.h: Likewise.
+	* lib/strtok_r.h: Likewise.
+	* lib/string_.h: New file.
+	* lib/argp-namefrob.h: Don't include no-longer-existent include files.
+	Rely on <string.h> instead.
+	* lib/canon-host.c: Likewise.
+	* lib/chdir-long.c: Likewise.
+	* lib/concatpath.c: Likewise.
+	* lib/exclude.c: Likewise.
+	* lib/fchdir.c: Likewise.
+	* lib/getaddrinfo.c: Likewise.
+	* lib/getcwd.c: Likewise.
+	* lib/getsubopt.c: Likewise.
+	* lib/glob.c: Likewise.
+	* lib/hard-locale.c: Likewise.
+	* lib/iconvme.c: Likewise.
+	* lib/javacomp.c: Likewise.
+	* lib/mempcpy.c: Likewise.
+	* lib/memrchr.c: Likewise.
+	* lib/regex_internal.h: Likewise.
+	* lib/stpncpy.c: Likewise.
+	* lib/strcasecmp.c: Likewise.
+	* lib/strchrnul.c: Likewise.
+	* lib/strdup.c: Likewise.
+	* lib/striconv.c: Likewise.
+	* lib/striconveh.c: Likewise.
+	* lib/striconveha.c: Likewise.
+	* lib/strncasecmp.c: Likewise.
+	* lib/strndup.c: Likewise.
+	* lib/strnlen.c: Likewise.
+	* lib/strsep.c: Likewise.
+	* lib/strstr.c: Likewise.
+	* lib/strtok_r.c: Likewise.
+	* lib/userspec.c: Likewise.
+	* lib/w32spawn.h: Likewise.
+	* lib/xstrndup.c: Likewise.
+	* lib/mountlist.c (strstr): Remove decl.
+	* m4/string_h.m4: New file.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Set HAVE_DECL_MEMMEM if necessary.
+	* m4/mempcpy.m4 (gl_FUNC_MEMPCPY): Set HAVE_MEMPCPY if necessary.
+	* m4/memrchr.m4 (gl_FUNC_MEMRCHR): Set HAVE_MEMRCHR
+	* m4/stpcpy.m4 (gl_FUNC_STPCPY): Set HAVE_STPCPY if necessary.
+	* m4/stpncpy.m4 (gl_PREREQ_STPNCPY): Set HAVE_STPNCPY if necessary.
+	* m4/strcase.m4 (gl_FUNC_STRCASECMP):
+	Set REPLACE_STRCASECMP if necessary.
+	(gl_FUNC_STRNCASECMP): Set HAVE_DECL_STRNCASECMP if necessary.
+	* m4/strchrnul.m4 (gl_FUNC_STRCHRNUL): Set HAVE_STRCHRNUL if necessary.
+	* m4/strdup.m4 (gl_FUNC_STRDUP): Set HAVE_DECL_STRDUP if necessary.
+	* m4/strndup.m4 (gl_FUNC_STRNDUP): Set HAVE_DECL_STRNLEN and
+	HAVE_DECL_STRDUP if necessary.
+	(gl_PREREQ_STRNLEN): Don't bother to check for strnlen decl,
+	since gl_FUNC_STRNDUP does that now.
+	* m4/strnlen.m4 (gl_FUNC_STRNLEN): Set HAVE_DECL_STRNLEN if necessary.
+	Check for decl here...
+	(gl_PREREQ_STRNLEN): ... not here.
+	* m4/strpbrk.m4 (gl_FUNC_STRPBRK): Set HAVE_STRPBRK if necessary.
+	* m4/strsep.m4 (gl_FUNC_STRSEP): Set HAVE_STRSEP if necessary.
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Set REPLACE_STRSTR if necessary.
+	* m4/strtok_r.m4 (gl_FUNC_STRTOK_R): Set HAVE_DECL_STRTOK_R if
+	necessary.
+	* modules/string: New file.
+	* modules/memmem (Files): Remove special-purpose include file.
+	(Depends-on): Add string.
+	(Include): Include <string.h>, not the removed file.
+	* modules/mempcpy: Likewise.
+	* modules/memrchr: Likewise.
+	* modules/stpcpy: Likewise.
+	* modules/stpncpy: Likewise.
+	* modules/strcase: Likewise.
+	* modules/strchrnul: Likewise.
+	* modules/strdup: Likewise.
+	* modules/strndup: Likewise.
+	* modules/strnlen: Likewise.
+	* modules/strpbrk: Likewise.
+	* modules/strsep: Likewise.
+	* modules/strstr: Likewise.
+	* modules/strtok_r: Likewise.
+	* tests/test-dirname.c: Don't include "stdup.h", since
+	<string.h> now suffices.
+	* tests/test-memmem.c: Don't include "memmem.h", since
+	<string.h> now suffices.
+
 2007-01-25  Bruno Haible  <bruno@clisp.org>
 
 	* lib/striconveh.c (mem_cd_iconveh_internal): Ignore *lengthp if

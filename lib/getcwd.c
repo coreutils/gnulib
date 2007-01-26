@@ -1,4 +1,4 @@
-/* Copyright (C) 1991,92,93,94,95,96,97,98,99,2004,2005,2006 Free Software
+/* Copyright (C) 1991,92,93,94,95,96,97,98,99,2004,2005,2006,2007 Free Software
    Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -49,8 +49,6 @@
 # ifndef mempcpy
 #  define mempcpy __mempcpy
 # endif
-#else
-# include "mempcpy.h"
 #endif
 
 #include <limits.h>

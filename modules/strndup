@@ -2,11 +2,11 @@ Description:
 strndup() function: duplicate a size-bounded string.
 
 Files:
-lib/strndup.h
 lib/strndup.c
 m4/strndup.m4
 
 Depends-on:
+string
 strnlen
 
 configure.ac:
@@ -15,7 +15,7 @@ gl_FUNC_STRNDUP
 Makefile.am:
 
 Include:
-"strndup.h"
+<string.h>
 
 License:
 LGPL

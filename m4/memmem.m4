@@ -1,5 +1,5 @@
-# memmem.m4 serial 2
-dnl Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
+# memmem.m4 serial 3
+dnl Copyright (C) 2002, 2003, 2004, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -11,6 +11,9 @@ AC_DEFUN([gl_FUNC_MEMMEM],
 
   AC_REPLACE_FUNCS(memmem)
   AC_CHECK_DECLS_ONCE(memmem)
+  if test $ac_cv_have_decl_memmem = no; then
+    HAVE_DECL_MEMMEM=0
+  fi
   gl_PREREQ_MEMMEM
 ])
 

@@ -1,4 +1,4 @@
-/* Copyright (C) 1991-2002,2003,2004,2005,2006 Free Software Foundation, Inc.
+/* Copyright (C) 1991-2002,2003,2004,2005,2006,2007 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -133,8 +133,6 @@
 # define struct_stat64		struct stat64
 #else /* !_LIBC */
 # include "getlogin_r.h"
-# include "mempcpy.h"
-# include "strdup.h"
 # define __stat64(fname, buf)	stat (fname, buf)
 # define struct_stat64		struct stat
 # define __stat(fname, buf)	stat (fname, buf)

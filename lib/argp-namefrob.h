@@ -1,5 +1,5 @@
 /* Name frobnication for compiling argp outside of glibc
-   Copyright (C) 1997, 2003 Free Software Foundation, Inc.
+   Copyright (C) 1997, 2003, 2007 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Written by Miles Bader <miles@gnu.ai.mit.edu>.
 
@@ -75,11 +75,6 @@
 #define __argp_fmtstream_rmargin argp_fmtstream_rmargin
 #undef __argp_fmtstream_wmargin
 #define __argp_fmtstream_wmargin argp_fmtstream_wmargin
-
-#include "mempcpy.h"
-#include "strcase.h"
-#include "strchrnul.h"
-#include "strndup.h"
 
 /* normal libc functions we call */
 #undef __flockfile

@@ -1,5 +1,5 @@
 /* Searching in a string.
-   Copyright (C) 2005-2006 Free Software Foundation, Inc.
+   Copyright (C) 2005-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2005.
 
    This program is free software; you can redistribute it and/or modify
@@ -19,9 +19,9 @@
 #include <config.h>
 
 /* Specification.  */
-#include "strstr.h"
+#include <string.h>
 
-#include <stddef.h>  /* for NULL */
+#include <stddef.h>  /* for NULL, in case a nonstandard string.h lacks it */
 
 #if HAVE_MBRTOWC
 # include "mbuiter.h"

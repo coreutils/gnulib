@@ -3,10 +3,10 @@ strtok_r() function: split string into tokens, thread safe.
 
 Files:
 lib/strtok_r.c
-lib/strtok_r.h
 m4/strtok_r.m4
 
 Depends-on:
+string
 
 configure.ac:
 gl_FUNC_STRTOK_R
@@ -14,7 +14,7 @@ gl_FUNC_STRTOK_R
 Makefile.am:
 
 Include:
-"strtok_r.h"
+<string.h>
 
 License:
 LGPL

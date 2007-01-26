@@ -2,11 +2,11 @@ Description:
 stpcpy() function: copy a string, returning a pointer to its end.
 
 Files:
-lib/stpcpy.h
 lib/stpcpy.c
 m4/stpcpy.m4
 
 Depends-on:
+string
 
 configure.ac:
 gl_FUNC_STPCPY
@@ -14,11 +14,10 @@ gl_FUNC_STPCPY
 Makefile.am:
 
 Include:
-"stpcpy.h"
+<string.h>
 
 License:
 LGPL
 
 Maintainer:
 Bruno Haible, glibc
-

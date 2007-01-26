@@ -34,10 +34,6 @@ socket_.h
 stat-time.h
 stdbool_.h
 stdint_.h
-strcase.h
-strdup.h
-strndup.h
-strnlen.h
 strnlen1.h
 strtoul.c
 time_r.h

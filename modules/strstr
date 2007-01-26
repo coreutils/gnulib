@@ -2,13 +2,13 @@ Description:
 strstr() function: search for a substring in a string.
 
 Files:
-lib/strstr.h
 lib/strstr.c
 m4/strstr.m4
 m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
+string
 
 configure.ac:
 gl_FUNC_STRSTR
@@ -16,11 +16,10 @@ gl_FUNC_STRSTR
 Makefile.am:
 
 Include:
-"strstr.h"
+<string.h>
 
 License:
 LGPL
 
 Maintainer:
 Bruno Haible, glibc
-
