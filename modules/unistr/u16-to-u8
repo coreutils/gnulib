@@ -6,6 +6,8 @@ lib/unistr/u16-to-u8.c
 
 Depends-on:
 unistr/base
+unistr/u16-mbtouc-safe
+unistr/u8-uctomb
 
 configure.ac:
 

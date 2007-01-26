@@ -1,5 +1,5 @@
 /* Convert UTF-32 string to UTF-16 string.
-   Copyright (C) 2002, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software; you can redistribute it and/or modify it
@@ -65,7 +65,7 @@ FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
 	 u16_uctomb will verify uc anyway.  */
 
       /* Store it in the output string.  */
-      count = u16_uctomb (result, uc, allocated - length);
+      count = u16_uctomb (result + length, uc, allocated - length);
       if (count == -1)
 	{
 	  if (!(result == resultbuf || result == NULL))
@@ -97,7 +97,7 @@ FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
 	    memcpy ((char *) memory, (char *) result,
 		    length * sizeof (DST_UNIT));
 	  result = memory;
-	  count = u16_uctomb (result, uc, allocated - length);
+	  count = u16_uctomb (result + length, uc, allocated - length);
 	  if (count < 0)
 	    abort ();
 	}

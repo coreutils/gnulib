@@ -201,7 +201,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
   size_t length;
   size_t last_length = (size_t)(-1); /* only needed if offsets != NULL */
 
-  if (*lengthp >= sizeof (tmpbuf))
+  if (*resultp != NULL && *lengthp >= sizeof (tmpbuf))
     {
       initial_result = *resultp;
       allocated = *lengthp;

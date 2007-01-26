@@ -1,3 +1,20 @@
+2007-01-25  Bruno Haible  <bruno@clisp.org>
+
+	* lib/striconveh.c (mem_cd_iconveh_internal): Ignore *lengthp if
+	*resultp is 0.
+
+	* lib/unistr/u16-to-u8.c (u16_to_u8): Fix u8_uctomb invocation.
+	* lib/unistr/u32-to-u8.c (u32_to_u8): Likewise.
+	* lib/unistr/u8-to-u16.c (u8_to_u16): Fix u16_uctomb invocation.
+	* lib/unistr/u32-to-u16.c (u32_to_u16): Likewise.
+
+	* modules/unistr/u8-to-u16 (Depends-on): Add missing modules.
+	* modules/unistr/u8-to-u32 (Depends-on): Add missing modules.
+	* modules/unistr/u16-to-u8 (Depends-on): Add missing modules.
+	* modules/unistr/u16-to-u32 (Depends-on): Add missing modules.
+	* modules/unistr/u32-to-u8 (Depends-on): Add missing modules.
+	* modules/unistr/u32-to-u16 (Depends-on): Add missing modules.
+
 2007-01-24  Bruno Haible  <bruno@clisp.org>
 
 	Don't AC_REQUIRE autoconf macros that invoke AC_LIBOBJ. See
