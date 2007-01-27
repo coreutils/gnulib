@@ -1,5 +1,5 @@
 /* argz.c -- argz implementation for non-glibc systems
-   Copyright (C) 2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006, 2007 Free Software Foundation, Inc.
    Originally by Gary V. Vaughan  <gary@gnu.org>
 
    NOTE: The canonical source of this file is maintained with the
