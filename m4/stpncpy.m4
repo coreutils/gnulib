@@ -1,4 +1,4 @@
-# stpncpy.m4 serial 5
+# stpncpy.m4 serial 6
 dnl Copyright (C) 2002-2003, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,8 @@ AC_DEFUN([gl_FUNC_STPNCPY],
 [
   dnl Persuade glibc <string.h> to declare stpncpy().
   AC_REQUIRE([AC_GNU_SOURCE])
+
+  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
 
   dnl Both glibc and AIX (4.3.3, 5.1) have an stpncpy() function
   dnl declared in <string.h>. Its side effects are the same as those

@@ -1,4 +1,4 @@
-# strcase.m4 serial 5
+# strcase.m4 serial 6
 dnl Copyright (C) 2002, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,15 +12,17 @@ AC_DEFUN([gl_STRCASE],
 
 AC_DEFUN([gl_FUNC_STRCASECMP],
 [
+  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   dnl No known system has a strcasecmp() function that works correctly in
   dnl multibyte locales. Therefore we use our version always.
   AC_LIBOBJ(strcasecmp)
-  gl_PREREQ_STRCASECMP
   REPLACE_STRCASECMP=1
+  gl_PREREQ_STRCASECMP
 ])
 
 AC_DEFUN([gl_FUNC_STRNCASECMP],
 [
+  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   AC_REPLACE_FUNCS(strncasecmp)
   if test $ac_cv_func_strncasecmp = no; then
     gl_PREREQ_STRNCASECMP

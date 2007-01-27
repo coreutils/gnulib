@@ -1,4 +1,4 @@
-# strchrnul.m4 serial 4
+# strchrnul.m4 serial 5
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,7 @@ AC_DEFUN([gl_FUNC_STRCHRNUL],
   dnl Persuade glibc <string.h> to declare strchrnul().
   AC_REQUIRE([AC_GNU_SOURCE])
 
+  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   AC_REPLACE_FUNCS(strchrnul)
   if test $ac_cv_func_strchrnul = no; then
     HAVE_STRCHRNUL=0

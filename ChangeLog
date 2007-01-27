@@ -1,5 +1,26 @@
 2007-01-27  Bruno Haible  <bruno@clisp.org>
 
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): New macro, extracted
+	from gl_HEADER_STRING_H_BODY.
+	(gl_HEADER_STRING_H_BODY): Require it.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Require gl_HEADER_STRING_H_DEFAULTS.
+	* m4/mempcpy.m4 (gl_FUNC_MEMPCPY): Likewise.
+	* m4/memrchr.m4 (gl_FUNC_MEMRCHR): Likewise.
+	* m4/stpcpy.m4 (gl_FUNC_STPCPY): Likewise.
+	* m4/stpncpy.m4 (gl_FUNC_STPNCPY): Likewise.
+	* m4/strcase.m4 (gl_FUNC_STRCASECMP, gl_FUNC_STRNCASECMP): Likewise.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Likewise.
+	* m4/strchrnul.m4 (gl_FUNC_STRCHRNUL): Likewise.
+	* m4/strdup.m4 (gl_FUNC_STRDUP): Likewise.
+	* m4/strndup.m4 (gl_FUNC_STRNDUP): Likewise.
+	* m4/strnlen.m4 (gl_FUNC_STRNLEN): Likewise.
+	* m4/strpbrk.m4 (gl_FUNC_STRPBRK): Likewise.
+	* m4/strsep.m4 (gl_FUNC_STRSEP): Likewise.
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Likewise.
+	* m4/strtok_r.m4 (gl_FUNC_STRTOK_R): Likewise.
+
+2007-01-27  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_lib_Makefile_am): If $for_test is true, turn
 	check_PROGRAMS into noinst_PROGRAMS.
 	(func_emit_tests_Makefile_am): Likewise. Also don't initialize

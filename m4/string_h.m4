@@ -17,10 +17,14 @@ AC_DEFUN([gl_HEADER_STRING_H],
 AC_DEFUN([gl_HEADER_STRING_H_BODY],
 [
   AC_REQUIRE([AC_C_RESTRICT])
+  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   gl_ABSOLUTE_HEADER([string.h])
   ABSOLUTE_STRING_H=\"$gl_cv_absolute_string_h\"
   AC_SUBST([ABSOLUTE_STRING_H])
+])
 
+AC_DEFUN([gl_HEADER_STRING_H_DEFAULTS],
+[
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_MEMMEM=1;		AC_SUBST([HAVE_DECL_MEMMEM])
   HAVE_MEMPCPY=1;		AC_SUBST([HAVE_MEMPCPY])
