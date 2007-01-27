@@ -2,13 +2,13 @@ Description:
 strcasestr() function: case-insensitive search for a substring in a string.
 
 Files:
-lib/strcasestr.h
 lib/strcasestr.c
 m4/strcasestr.m4
 m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
+string
 
 configure.ac:
 gl_FUNC_STRCASESTR
@@ -16,7 +16,7 @@ gl_FUNC_STRCASESTR
 Makefile.am:
 
 Include:
-"strcasestr.h"
+<string.h>
 
 License:
 LGPL

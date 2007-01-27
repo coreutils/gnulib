@@ -1,3 +1,20 @@
+2007-01-27  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* modules/strcasestr (Files): Remove lib/strcasestr.h.
+	(Depends-on): Add string.
+	(Includes): Use <string.h> instead of strcasestr.h.
+	* modules/string (Makefile.am): Also substitute the value of
+	REPLACE_STRCASESTR.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Don't define strcasestr here;
+	assume strcasestr is declared in <string.h> not <strings.h>. Also
+	set REPLACE_STRCASESTR.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_BODY): Provide a default value for
+	REPLACE_STRCASESTR.
+	* lib/strcasestr.h: Remove file.
+	* lib/strcasestr.c: Include <string.h> instead of strcasestr.h.
+	* lib/string_.h (strcasestr): New declaration.
+
 2007-01-27  Bruno Haible  <bruno@clisp.org>
 
 	* lib/string_.h: Use 'extern'.

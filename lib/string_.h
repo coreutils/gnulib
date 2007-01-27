@@ -138,6 +138,16 @@ extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 extern char *strstr (char const *__haystack, char const *__needle);
 #endif
 
+/* Find the first occurrence of NEEDLE in HAYSTACK, using case-insensitive
+   comparison.
+   Note: This function may, in multibyte locales, return success even if
+   strlen (haystack) < strlen (needle) !  */
+#if @REPLACE_STRCASESTR@
+# undef strcasestr
+# define strcasestr rpl_strcasestr
+extern char *strcasestr (const char *haystack, const char *needle);
+#endif
+
 /* Parse S into tokens separated by characters in DELIM.
    If S is NULL, the saved pointer in SAVE_PTR is used as
    the next starting point.  For example:
