@@ -1,0 +1,29 @@
+Description:
+Conversion from UTF-16 to legacy encodings.
+
+Files:
+lib/uniconv/u16-strconv-to-enc.c
+lib/uniconv/u-strconv-to-enc.h
+
+Depends-on:
+uniconv/base
+striconveha
+uniconv/u8-strconv-to-enc
+unistr/u16-to-u8
+unistr/u16-strlen
+
+configure.ac:
+AC_REQUIRE([AC_C_BIGENDIAN])
+
+Makefile.am:
+lib_SOURCES += uniconv/u16-strconv-to-enc.c
+
+Include:
+"uniconv.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
