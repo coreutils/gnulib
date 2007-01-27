@@ -1,3 +1,9 @@
+2007-01-27  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Sync from Libtool.
+	* lib/argz.c: Do not include strings.h nor memory.h, include
+	string.h unconditionally.  Patch by Simon Josefsson.
+
 2007-01-27  Bruno Haible  <bruno@clisp.org>
 
 	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): New macro, extracted

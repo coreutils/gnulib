@@ -32,15 +32,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <errno.h>
-
-#if defined(HAVE_STRING_H)
-#  include <string.h>
-#elif defined(HAVE_STRINGS_H)
-#  include <strings.h>
-#endif
-#if defined(HAVE_MEMORY_H)
-#  include <memory.h>
-#endif
+#include <string.h>
 
 #define EOS_CHAR '\0'
 
