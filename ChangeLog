@@ -1,5 +1,12 @@
 2007-01-26  Bruno Haible  <bruno@clisp.org>
 
+	Small optimization.
+	* lib/javacomp.c: Include c-strstr.h.
+	 (is_envjavac_gcj): Use c_strstr instead of strstr.
+	* modules/javacomp (Depends-on): Add c-strstr, remove strstr.
+
+2007-01-26  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh (Unicode string functions): Add the new modules.
 
 	* modules/uniconv/u32-strconv-to-locale: New file.

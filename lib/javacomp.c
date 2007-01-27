@@ -1,5 +1,5 @@
 /* Compile a Java program.
-   Copyright (C) 2001-2003, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -48,6 +48,7 @@
 #include "clean-temp.h"
 #include "error.h"
 #include "xvasprintf.h"
+#include "c-strstr.h"
 #include "gettext.h"
 
 #define _(str) gettext (str)
@@ -572,7 +573,9 @@ is_envjavac_gcj (const char *javac)
 	  fclose (fp);
 	  goto failed;
 	}
-      envjavac_gcj = (strstr (line, "gcj") != NULL);
+      /* It is safe to call c_strstr() instead of strstr() here; see the
+	 comments in c-strstr.h.  */
+      envjavac_gcj = (c_strstr (line, "gcj") != NULL);
 
       fclose (fp);
 
