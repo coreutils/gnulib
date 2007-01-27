@@ -1,3 +1,9 @@
+2007-01-27  Jim Meyering  <jim@meyering.net>
+
+	* lib/mempcpy.c: Include <config.h> before <string.h>.
+	This fixes a compilation error on HP-UX, due to the system's
+	"restrict"-using mempcpy prototype.
+
 2007-01-26  Bruno Haible  <bruno@clisp.org>
 
 	Small optimization.
