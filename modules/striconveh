@@ -11,7 +11,7 @@ iconv
 utf8-ucs4-safe
 ucs4-utf8
 unistr/u8-prev
-unistr/u8-mbtouc
+unistr/u8-mbtouc-unsafe
 strdup
 c-strcase
 c-strcaseeq

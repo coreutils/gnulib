@@ -1,5 +1,5 @@
 /* linebreak.c - line breaking of Unicode strings
-   Copyright (C) 2001-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
 This program is free software; you can redistribute it and/or modify
@@ -26,7 +26,7 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 #include "c-ctype.h"
 #include "xsize.h"
 
-#include "utf8-ucs4.h"
+#include "utf8-ucs4-unsafe.h"
 
 #include "utf16-ucs4.h"
 
@@ -472,7 +472,7 @@ u8_width (const unsigned char *s, size_t n, const char *encoding)
       unsigned int uc;
       int w;
 
-      s += u8_mbtouc (&uc, s, s_end - s);
+      s += u8_mbtouc_unsafe (&uc, s, s_end - s);
 
       if (uc == 0)
         break; /* end of string reached */
@@ -642,7 +642,7 @@ u8_possible_linebreaks (const unsigned char *s, size_t n, const char *encoding, 
   while (s < s_end)
     {
       unsigned int uc;
-      int count = u8_mbtouc (&uc, s, s_end - s);
+      int count = u8_mbtouc_unsafe (&uc, s, s_end - s);
       int prop = lbrkprop_lookup (uc);
 
       if (prop == LBP_BK)
@@ -983,7 +983,7 @@ u8_width_linebreaks (const unsigned char *s, size_t n,
   while (s < s_end)
     {
       unsigned int uc;
-      int count = u8_mbtouc (&uc, s, s_end - s);
+      int count = u8_mbtouc_unsafe (&uc, s, s_end - s);
 
       /* Respect the override.  */
       if (o != NULL && *o != UC_BREAK_UNDEFINED)

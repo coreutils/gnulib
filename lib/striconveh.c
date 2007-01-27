@@ -643,8 +643,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 			    int n;
 			    if (in2size == 0)
 			      abort ();
-			    n = u8_mbtouc (&uc, (const uint8_t *) in2ptr,
-					   in2size);
+			    n = u8_mbtouc_unsafe (&uc, (const uint8_t *) in2ptr,
+						  in2size);
 			    in2ptr += n;
 			    in2size -= n;
 			  }

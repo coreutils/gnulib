@@ -132,12 +132,12 @@ extern int
 /* The variants with _safe suffix are safe, even if the library is compiled
    without --enable-safety.  */
 
-#ifdef GNULIB_UNISTR_U8_MBTOUC
+#ifdef GNULIB_UNISTR_U8_MBTOUC_UNSAFE
 # if !HAVE_INLINE
 extern int
-       u8_mbtouc (ucs4_t *puc, const uint8_t *s, size_t n);
+       u8_mbtouc_unsafe (ucs4_t *puc, const uint8_t *s, size_t n);
 # else
-#  include "utf8-ucs4.h"
+#  include "utf8-ucs4-unsafe.h"
 # endif
 #endif
 
