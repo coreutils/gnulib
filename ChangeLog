@@ -182,7 +182,7 @@
 	* modules/strsep: Likewise.
 	* modules/strstr: Likewise.
 	* modules/strtok_r: Likewise.
-	* tests/test-dirname.c: Don't include "stdup.h", since
+	* tests/test-dirname.c: Don't include "strdup.h", since
 	<string.h> now suffices.
 	* tests/test-memmem.c: Don't include "memmem.h", since
 	<string.h> now suffices.
