@@ -1,0 +1,25 @@
+Description:
+Base layer for conversion from/to legacy encodings.
+
+Files:
+lib/uniconv.h
+lib/striconveh.h
+lib/striconveha.h
+lib/localcharset.h
+
+Depends-on:
+unitypes
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"uniconv.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
