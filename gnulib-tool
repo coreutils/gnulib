@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-01-21 20:07:09 $'
+cvsdatestamp='$Date: 2007-01-27 13:53:54 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1180,6 +1180,7 @@ func_modules_to_filelist ()
 # - libtool         true if libtool will be used, false or blank otherwise
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
 # - actioncmd       (optional) command that will reproduce this invocation
+# - for_test        true if creating a package for testing, false otherwise
 # Output:
 # - uses_subdirs    nonempty if object files in subdirs exist
 func_emit_lib_Makefile_am ()
@@ -1200,6 +1201,15 @@ func_emit_lib_Makefile_am ()
     perhapsLT=
     sed_eliminate_LDFLAGS='/^lib_LDFLAGS[	 ]*+=/d'
   fi
+  if $for_test; then
+    # When creating a package for testing: Attempt to provoke failures,
+    # especially link errors, already during "make" rather than during
+    # "make check", because "make check" is not possible in a cross-compiling
+    # situation. Turn check_PROGRAMS into noinst_PROGRAMS.
+    sed_transform_check_PROGRAMS='s,check_PROGRAMS,noinst_PROGRAMS,g'
+  else
+    sed_transform_check_PROGRAMS=
+  fi
   echo "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
   echo "## Process this file with automake to produce Makefile.in."
   func_emit_copyright_notice
@@ -1219,7 +1229,8 @@ func_emit_lib_Makefile_am ()
             sed -e "$sed_eliminate_LDFLAGS" |
             sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' |
             sed -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
-                -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g'
+                -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g' |
+            sed -e "$sed_transform_check_PROGRAMS"
           if test "$module" = 'alloca'; then
             echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"
             echo "${libname}_${libext}_DEPENDENCIES += @${perhapsLT}ALLOCA@"
@@ -1318,6 +1329,7 @@ func_emit_lib_Makefile_am ()
 # - sourcebase      relative directory containing lib source code
 # - m4base          relative directory containing autoconf macros
 # - testsbase       relative directory containing unit test code
+# - for_test        true if creating a package for testing, false otherwise
 func_emit_tests_Makefile_am ()
 {
   if test "$libtool" = true; then
@@ -1331,6 +1343,15 @@ func_emit_tests_Makefile_am ()
   else
     libext=a
     sed_eliminate_LDFLAGS='/^lib_LDFLAGS[	 ]*+=/d'
+  fi
+  if $for_test; then
+    # When creating a package for testing: Attempt to provoke failures,
+    # especially link errors, already during "make" rather than during
+    # "make check", because "make check" is not possible in a cross-compiling
+    # situation. Turn check_PROGRAMS into noinst_PROGRAMS.
+    sed_transform_check_PROGRAMS='s,check_PROGRAMS,noinst_PROGRAMS,g'
+  else
+    sed_transform_check_PROGRAMS=
   fi
   testsbase_inverse=`echo "$testsbase" | sed -e 's,/$,,' | sed -e 's,[^/][^/]*,..,g'`
   echo "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
@@ -1353,7 +1374,8 @@ func_emit_tests_Makefile_am ()
             sed -e "$sed_eliminate_LDFLAGS" |
             sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' |
             sed -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
-                -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g'
+                -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g' |
+            sed -e "$sed_transform_check_PROGRAMS"
         } > amsnippet.tmp
         # Skip the contents if its entirely empty.
         if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
@@ -1374,7 +1396,9 @@ func_emit_tests_Makefile_am ()
   echo "TESTS ="
   echo "TESTS_ENVIRONMENT ="
   echo "noinst_PROGRAMS ="
-  echo "check_PROGRAMS ="
+  if ! $for_test; then
+    echo "check_PROGRAMS ="
+  fi
   echo "noinst_HEADERS ="
   if grep '^pkgdata_DATA *+=' allsnippets.tmp > /dev/null; then
     echo "pkgdata_DATA ="
@@ -1942,6 +1966,9 @@ func_import ()
     makefile_am=Makefile.am
   fi
 
+  # Create normal Makefile.ams.
+  for_test=false
+
   # Create library makefile.
   func_dest_tmpfilename $sourcebase/$makefile_am
   func_emit_lib_Makefile_am > "$tmpfile"
@@ -2372,6 +2399,9 @@ func_create_testdir ()
     done
     exec 0<&5 5<&-
   }
+
+  # Create Makefile.ams that are for testing.
+  for_test=true
 
   # Create $sourcebase/Makefile.am.
   mkdir -p "$testdir/$sourcebase"

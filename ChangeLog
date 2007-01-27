@@ -1,3 +1,12 @@
+2007-01-27  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_lib_Makefile_am): If $for_test is true, turn
+	check_PROGRAMS into noinst_PROGRAMS.
+	(func_emit_tests_Makefile_am): Likewise. Also don't initialize
+	check_PROGRAMS in this case.
+	(func_import): Set for_test to false.
+	(func_create_testdir): Set for_test to true.
+
 2007-01-27  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
             Bruno Haible  <bruno@clisp.org>
 
