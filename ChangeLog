@@ -1,3 +1,76 @@
+2007-01-26  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh (Unicode string functions): Add the new modules.
+
+	* modules/uniconv/u32-strconv-to-locale: New file.
+	* lib/uniconv/u32-strconv-to-locale.c: New file.
+
+	* modules/uniconv/u16-strconv-to-locale: New file.
+	* lib/uniconv/u16-strconv-to-locale.c: New file.
+
+	* modules/uniconv/u8-strconv-to-locale: New file.
+	* lib/uniconv/u8-strconv-to-locale.c: New file.
+
+	* modules/uniconv/u32-strconv-from-locale: New file.
+	* lib/uniconv/u32-strconv-from-locale.c: New file.
+
+	* modules/uniconv/u16-strconv-from-locale: New file.
+	* lib/uniconv/u16-strconv-from-locale.c: New file.
+
+	* modules/uniconv/u8-strconv-from-locale: New file.
+	* lib/uniconv/u8-strconv-from-locale.c: New file.
+
+	* modules/uniconv/u32-strconv-to-enc: New file.
+	* lib/uniconv/u32-strconv-to-enc.c: New file.
+	* modules/uniconv/u32-strconv-to-enc-tests: New file.
+	* tests/uniconv/test-u32-strconv-to-enc.c: New file.
+
+	* modules/uniconv/u16-strconv-to-enc: New file.
+	* lib/uniconv/u16-strconv-to-enc.c: New file.
+	* lib/uniconv/u-strconv-to-enc.h: New file.
+	* modules/uniconv/u16-strconv-to-enc-tests: New file.
+	* tests/uniconv/test-u16-strconv-to-enc.c: New file.
+
+	* modules/uniconv/u8-strconv-to-enc: New file.
+	* lib/uniconv/u8-strconv-to-enc.c: New file.
+	* modules/uniconv/u8-strconv-to-enc-tests: New file.
+	* tests/uniconv/test-u8-strconv-to-enc.c: New file.
+
+	* modules/uniconv/u32-strconv-from-enc: New file.
+	* lib/uniconv/u32-strconv-from-enc.c: New file.
+	* modules/uniconv/u32-strconv-from-enc-tests: New file.
+	* tests/uniconv/test-u32-strconv-from-enc.c: New file.
+
+	* modules/uniconv/u16-strconv-from-enc: New file.
+	* lib/uniconv/u16-strconv-from-enc.c: New file.
+	* modules/uniconv/u16-strconv-from-enc-tests: New file.
+	* tests/uniconv/test-u16-strconv-from-enc.c: New file.
+
+	* modules/uniconv/u8-strconv-from-enc: New file.
+	* lib/uniconv/u8-strconv-from-enc.c: New file.
+	* lib/uniconv/u-strconv-from-enc.h: New file.
+	* modules/uniconv/u8-strconv-from-enc-tests: New file.
+	* tests/uniconv/test-u8-strconv-from-enc.c: New file.
+
+	* modules/uniconv/u32-conv-from-enc: New file.
+	* lib/uniconv/u32-conv-from-enc.c: New file.
+	* modules/uniconv/u32-conv-from-enc-tests: New file.
+	* tests/uniconv/test-u32-conv-from-enc.c: New file.
+
+	* modules/uniconv/u16-conv-from-enc: New file.
+	* lib/uniconv/u16-conv-from-enc.c: New file.
+	* lib/uniconv/u-conv-from-enc.h: New file.
+	* modules/uniconv/u16-conv-from-enc-tests: New file.
+	* tests/uniconv/test-u16-conv-from-enc.c: New file.
+
+	* modules/uniconv/u8-conv-from-enc: New file.
+	* lib/uniconv/u8-conv-from-enc.c: New file.
+	* modules/uniconv/u8-conv-from-enc-tests: New file.
+	* tests/uniconv/test-u8-conv-from-enc.c: New file.
+
+	* modules/uniconv/base: New file.
+	* lib/uniconv.h: New file.
+
 2007-01-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* doc/gnulib-tool.texi (Initial import): Update to match current

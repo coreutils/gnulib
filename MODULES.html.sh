@@ -2287,6 +2287,22 @@ func_all_modules ()
   func_module unistr/u8-uctomb
   func_module unistr/u16-uctomb
   func_module unistr/u32-uctomb
+  func_module uniconv/base
+  func_module uniconv/u8-conv-from-enc
+  func_module uniconv/u16-conv-from-enc
+  func_module uniconv/u32-conv-from-enc
+  func_module uniconv/u8-strconv-from-enc
+  func_module uniconv/u16-strconv-from-enc
+  func_module uniconv/u32-strconv-from-enc
+  func_module uniconv/u8-strconv-to-enc
+  func_module uniconv/u16-strconv-to-enc
+  func_module uniconv/u32-strconv-to-enc
+  func_module uniconv/u8-strconv-from-locale
+  func_module uniconv/u16-strconv-from-locale
+  func_module uniconv/u32-strconv-from-locale
+  func_module uniconv/u8-strconv-to-locale
+  func_module uniconv/u16-strconv-to-locale
+  func_module uniconv/u32-strconv-to-locale
   func_end_table
 
   element="Executing programs"
