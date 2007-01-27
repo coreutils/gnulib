@@ -1,0 +1,25 @@
+Description:
+Conversion from UTF-32 to the locale encoding.
+
+Files:
+lib/uniconv/u32-strconv-to-locale.c
+
+Depends-on:
+uniconv/base
+uniconv/u32-strconv-to-enc
+localcharset
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uniconv/u32-strconv-to-locale.c
+
+Include:
+"uniconv.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
