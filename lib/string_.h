@@ -1,6 +1,6 @@
 /* A GNU-like <string.h>.
 
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 1995-1996, 2001-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,32 +27,33 @@ extern "C" {
 
 /* Return the first occurrence of NEEDLE in HAYSTACK.  */
 #if ! @HAVE_DECL_MEMMEM@
-void *
-memmem (void const *__haystack, size_t __haystack_len,
-	void const *__needle, size_t __needle_len);
+extern void *memmem (void const *__haystack, size_t __haystack_len,
+		     void const *__needle, size_t __needle_len);
 #endif
 
 /* Copy N bytes of SRC to DEST, return pointer to bytes after the
    last written byte.  */
 #if ! @HAVE_MEMPCPY@
-void *mempcpy (void *restrict __dest, void const *restrict __src, size_t __n);
+extern void *mempcpy (void *restrict __dest, void const *restrict __src,
+		      size_t __n);
 #endif
 
 /* Search backwards through a block for a byte (specified as an int).  */
 #if ! @HAVE_DECL_MEMRCHR@
-void *memrchr (void const *, int, size_t);
+extern void *memrchr (void const *, int, size_t);
 #endif
 
 /* Copy SRC to DST, returning the address of the terminating '\0' in DST.  */
 #if ! @HAVE_STPCPY@
-char *stpcpy (char *restrict __dst, char const *restrict __src);
+extern char *stpcpy (char *restrict __dst, char const *restrict __src);
 #endif
 
 /* Copy no more than N bytes of SRC to DST, returning a pointer past the
    last non-NUL byte written into DST.  */
 #if ! @HAVE_STPNCPY@
 # define stpncpy gnu_stpncpy
-char *stpncpy (char *restrict __dst, char const *restrict __src, size_t __n);
+extern char *stpncpy (char *restrict __dst, char const *restrict __src,
+		      size_t __n);
 #endif
 
 /* Compare strings S1 and S2, ignoring case, returning less than, equal to or
@@ -65,7 +66,7 @@ char *stpncpy (char *restrict __dst, char const *restrict __src, size_t __n);
    strcase module is available.  */
 #if @REPLACE_STRCASECMP@
 # define strcasecmp rpl_strcasecmp
-int strcasecmp (char const *__s1, char const *__s2);
+extern int strcasecmp (char const *__s1, char const *__s2);
 #endif
 
 /* Compare no more than N bytes of strings S1 and S2, ignoring case,
@@ -73,17 +74,17 @@ int strcasecmp (char const *__s1, char const *__s2);
    lexicographically less than, equal to or greater than S2.
    Note: This function cannot work correctly in multibyte locales.  */
 #if ! @HAVE_DECL_STRNCASECMP@
-int strncasecmp (char const *__s1, char const *__s2, size_t __n);
+extern int strncasecmp (char const *__s1, char const *__s2, size_t __n);
 #endif
 
 /* Find the first occurrence of C in S or the final NUL byte.  */
 #if ! @HAVE_STRCHRNUL@
-char *strchrnul (char const *__s, int __c_in);
+extern char *strchrnul (char const *__s, int __c_in);
 #endif
 
 /* Duplicate S, returning an identical malloc'd string.  */
 #if ! @HAVE_DECL_STRDUP@ && ! defined strdup
-char *strdup (char const *__s);
+extern char *strdup (char const *__s);
 #endif
 
 /* Return a newly allocated copy of at most N bytes of STRING.  */
@@ -91,7 +92,7 @@ char *strdup (char const *__s);
 # undef strndup
 # define strndup rpl_strndup
 # if ! @HAVE_DECL_STRNDUP@
-char *strndup (char const *__string, size_t __n);
+extern char *strndup (char const *__string, size_t __n);
 # endif
 #endif
 
@@ -99,12 +100,12 @@ char *strndup (char const *__string, size_t __n);
    MAXLEN bytes.  If no '\0' terminator is found in that many bytes,
    return MAXLEN.  */
 #if ! @HAVE_DECL_STRNLEN@
-size_t strnlen (char const *__string, size_t __maxlen);
+extern size_t strnlen (char const *__string, size_t __maxlen);
 #endif
 
 /* Find the first occurrence in S of any character in ACCEPT.  */
 #if ! @HAVE_STRPBRK@
-char *strpbrk (char const *__s, char const *__accept);
+extern char *strpbrk (char const *__s, char const *__accept);
 #endif
 
 /* Search the next delimiter (char listed in DELIM) starting at *STRINGP.
@@ -124,7 +125,7 @@ char *strpbrk (char const *__s, char const *__accept);
 
    See also strtok_r().  */
 #if ! @HAVE_STRSEP@
-char *strsep (char **restrict __stringp, char const *restrict __delim);
+extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 #endif
 
 /* Find the first occurrence of NEEDLE in HAYSTACK.
@@ -134,7 +135,7 @@ char *strsep (char **restrict __stringp, char const *restrict __delim);
 #if @REPLACE_STRSTR@
 # undef strstr
 # define strstr rpl_strstr
-char *strstr (char const *__haystack, char const *__needle);
+extern char *strstr (char const *__haystack, char const *__needle);
 #endif
 
 /* Parse S into tokens separated by characters in DELIM.
@@ -160,8 +161,8 @@ char *strstr (char const *__haystack, char const *__needle);
 
    See also strsep().  */
 #if ! @HAVE_DECL_STRTOK_R@
-char *strtok_r (char *restrict __s, char const *restrict __sep,
-		char **restrict __lasts);
+extern char *strtok_r (char *restrict __s, char const *restrict __sep,
+		       char **restrict __lasts);
 #endif
 
 #ifdef __cplusplus

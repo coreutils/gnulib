@@ -1,3 +1,7 @@
+2007-01-27  Bruno Haible  <bruno@clisp.org>
+
+	* lib/string_.h: Use 'extern'.
+
 2007-01-27  Jim Meyering  <jim@meyering.net>
 
 	* lib/regex_internal.c (re_string_reconstruct): Remove declaration
