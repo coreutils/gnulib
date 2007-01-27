@@ -1,0 +1,27 @@
+Description:
+Conversion to UTF-8 from legacy encodings.
+
+Files:
+lib/uniconv/u8-conv-from-enc.c
+
+Depends-on:
+uniconv/base
+c-strcaseeq
+striconveha
+unistr/u8-check
+unistr/u8-mblen
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uniconv/u8-conv-from-enc.c
+
+Include:
+"uniconv.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
