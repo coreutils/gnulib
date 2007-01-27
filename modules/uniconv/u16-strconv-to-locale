@@ -1,0 +1,25 @@
+Description:
+Conversion from UTF-16 to the locale encoding.
+
+Files:
+lib/uniconv/u16-strconv-to-locale.c
+
+Depends-on:
+uniconv/base
+uniconv/u16-strconv-to-enc
+localcharset
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uniconv/u16-strconv-to-locale.c
+
+Include:
+"uniconv.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
