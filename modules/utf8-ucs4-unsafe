@@ -1,0 +1,26 @@
+Description:
+Conversion UTF-8 to UCS-4.
+
+Files:
+lib/utf8-ucs4-unsafe.h
+lib/unistr/utf8-ucs4-unsafe.c
+m4/utf-ucs4.m4
+
+Depends-on:
+unitypes
+
+configure.ac:
+gl_UTF_UCS4
+
+Makefile.am:
+lib_SOURCES += utf8-ucs4-unsafe.h unistr/utf8-ucs4-unsafe.c
+
+Include:
+"utf8-ucs4-unsafe.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
