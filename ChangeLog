@@ -1,5 +1,8 @@
 2007-01-27  Jim Meyering  <jim@meyering.net>
 
+	* lib/regex_internal.c (re_string_reconstruct): Remove declaration
+	of set-but-not-used local, "q".
+
 	* lib/mempcpy.c: Include <config.h> before <string.h>.
 	This fixes a compilation error on HP-UX, due to the system's
 	"restrict"-using mempcpy prototype.
