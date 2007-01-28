@@ -1,5 +1,5 @@
 /* Convert UTF-16 string to UTF-32 string.
-   Copyright (C) 2002, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software; you can redistribute it and/or modify it
@@ -60,7 +60,7 @@ FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
       int count;
 
       /* Fetch a Unicode character from the input string.  */
-      count = u16_mbtouc_safe (&uc, s, s_end - s);
+      count = u16_mbtouc (&uc, s, s_end - s);
       if (count < 0)
 	{
 	  if (!(result == resultbuf || result == NULL))

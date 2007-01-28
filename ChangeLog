@@ -11,6 +11,17 @@
 	* lib/unistr.h: Update.
 	* lib/linebreak.c: Update.
 	* modules/linebreak: Update.
+	* modules/utf16-ucs4: Renamed from modules/utf16-ucs4-safe.
+	* lib/utf16-ucs4.h: Renamed from lib/utf16-ucs4-safe.h.
+	* lib/unistr/utf16-ucs4.c: Renamed from lib/unistr/utf16-ucs4-safe.c.
+	* modules/unistr/u16-mbtouc: Renamed from
+	modules/unistr/u16-mbtouc-safe.
+	* lib/unistr/u16-mbtouc.c: Renamed from lib/unistr/u16-mbtouc-safe.c.
+	* lib/unistr.h: Update.
+	* lib/unistr/u16-to-u8.c: Update.
+	* modules/unistr/u16-to-u8: Update.
+	* lib/unistr/u16-to-u32.c: Update.
+	* modules/unistr/u16-to-u32: Update.
 
 2007-01-27  Bruno Haible  <bruno@clisp.org>
 

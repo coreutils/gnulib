@@ -60,7 +60,7 @@ FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
       int count;
 
       /* Fetch a Unicode character from the input string.  */
-      count = u16_mbtouc_safe (&uc, s, s_end - s);
+      count = u16_mbtouc (&uc, s, s_end - s);
       if (count < 0)
 	{
 	  if (!(result == resultbuf || result == NULL))
