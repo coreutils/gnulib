@@ -61,7 +61,7 @@ FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
 
       /* Fetch a Unicode character from the input string.  */
       uc = *s++;
-      /* No need to call the safe variant u32_mbtouc_safe, because
+      /* No need to call the safe variant u32_mbtouc, because
 	 u8_uctomb will verify uc anyway.  */
 
       /* Store it in the output string.  */

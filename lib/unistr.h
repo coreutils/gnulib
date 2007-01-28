@@ -192,13 +192,13 @@ extern int
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U32_MBTOUC_SAFE
+#ifdef GNULIB_UNISTR_U32_MBTOUC
 # if !HAVE_INLINE
 extern int
-       u32_mbtouc_safe (ucs4_t *puc, const uint32_t *s, size_t n);
+       u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n);
 # else
 static inline int
-u32_mbtouc_safe (ucs4_t *puc, const uint32_t *s, size_t n)
+u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n)
 {
   uint32_t c = *s;
 

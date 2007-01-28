@@ -6,6 +6,13 @@
 	modules/unistr/u32-mbtouc.
 	* lib/unistr/u32-mbtouc-unsafe.c: Renamed from lib/unistr/u32-mbtouc.c.
 	* lib/unistr.h: Update.
+	* lib/linebreak.c: Update.
+	* modules/unistr/u32-mbtouc: Renamed from
+	modules/unistr/u32-mbtouc-safe.
+	* lib/unistr/u32-mbtouc.c: Renamed from lib/unistr/u32-mbtouc-safe.c.
+	* lib/unistr.h: Update.
+	* lib/unistr/u32-to-u8.c: Update.
+	* lib/unistr/u32-to-u16.c: Update.
 
 2007-01-27  Bruno Haible  <bruno@clisp.org>
 
