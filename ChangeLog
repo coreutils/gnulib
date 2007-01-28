@@ -1,5 +1,19 @@
 2007-01-27  Bruno Haible  <bruno@clisp.org>
 
+	Rename utf16-ucs4 -> utf16-ucs4-unsafe, utf16-ucs4-safe -> utf16-ucs4,
+	u16_mbtouc -> u16_mbtouc_unsafe, u16_mbtouc_safe -> u16_mbtouc.
+	* modules/utf16-ucs4-unsafe: Renamed from modules/utf16-ucs4.
+	* lib/utf16-ucs4-unsafe.h: Renamed from lib/utf16-ucs4.h.
+	* lib/unistr/utf16-ucs4-unsafe.c: Renamed from lib/unistr/utf16-ucs4.c.
+	* modules/unistr/u16-mbtouc-unsafe: Renamed from
+	modules/unistr/u16-mbtouc.
+	* lib/unistr/u16-mbtouc-unsafe.c: Renamed from lib/unistr/u16-mbtouc.c.
+	* lib/unistr.h: Update.
+	* lib/linebreak.c: Update.
+	* modules/linebreak: Update.
+
+2007-01-27  Bruno Haible  <bruno@clisp.org>
+
 	Rename utf8-ucs4 -> utf8-ucs4-unsafe, utf8-ucs4-safe -> utf8-ucs4,
 	u8_mbtouc -> u8_mbtouc_unsafe, u8_mbtouc_safe -> u8_mbtouc.
 	* modules/utf8-ucs4-unsafe: Renamed from modules/utf8-ucs4.

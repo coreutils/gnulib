@@ -28,7 +28,7 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #include "utf8-ucs4-unsafe.h"
 
-#include "utf16-ucs4.h"
+#include "utf16-ucs4-unsafe.h"
 
 #ifdef unused
 static inline int
@@ -496,7 +496,7 @@ u16_width (const unsigned short *s, size_t n, const char *encoding)
       unsigned int uc;
       int w;
 
-      s += u16_mbtouc (&uc, s, s_end - s);
+      s += u16_mbtouc_unsafe (&uc, s, s_end - s);
 
       if (uc == 0)
         break; /* end of string reached */
@@ -754,7 +754,7 @@ u16_possible_linebreaks (const unsigned short *s, size_t n, const char *encoding
   while (s < s_end)
     {
       unsigned int uc;
-      int count = u16_mbtouc (&uc, s, s_end - s);
+      int count = u16_mbtouc_unsafe (&uc, s, s_end - s);
       int prop = lbrkprop_lookup (uc);
 
       if (prop == LBP_BK)
@@ -1067,7 +1067,7 @@ u16_width_linebreaks (const unsigned short *s, size_t n,
   while (s < s_end)
     {
       unsigned int uc;
-      int count = u16_mbtouc (&uc, s, s_end - s);
+      int count = u16_mbtouc_unsafe (&uc, s, s_end - s);
 
       /* Respect the override.  */
       if (o != NULL && *o != UC_BREAK_UNDEFINED)

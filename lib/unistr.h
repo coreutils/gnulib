@@ -141,12 +141,12 @@ extern int
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U16_MBTOUC
+#ifdef GNULIB_UNISTR_U16_MBTOUC_UNSAFE
 # if !HAVE_INLINE
 extern int
-       u16_mbtouc (ucs4_t *puc, const uint16_t *s, size_t n);
+       u16_mbtouc_unsafe (ucs4_t *puc, const uint16_t *s, size_t n);
 # else
-#  include "utf16-ucs4.h"
+#  include "utf16-ucs4-unsafe.h"
 # endif
 #endif
 
