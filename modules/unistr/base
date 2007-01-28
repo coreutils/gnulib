@@ -8,10 +8,10 @@ Depends-on:
 unitypes
 stdbool
 inline
+utf8-ucs4-unsafe
+utf16-ucs4-unsafe
 utf8-ucs4
 utf16-ucs4
-utf8-ucs4-safe
-utf16-ucs4-safe
 ucs4-utf8
 ucs4-utf16
 

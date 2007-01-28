@@ -1,5 +1,9 @@
 2007-01-27  Bruno Haible  <bruno@clisp.org>
 
+	* modules/unistr/base: Update.
+
+2007-01-27  Bruno Haible  <bruno@clisp.org>
+
 	Rename u32-mbtouc -> u32-mbtouc-unsafe, u32-mbtouc-safe -> u32-mbtouc,
 	u32_mbtouc -> u32_mbtouc_unsafe, u32_mbtouc_safe -> u32_mbtouc.
 	* modules/unistr/u32-mbtouc-unsafe: Renamed from
