@@ -1,9 +1,15 @@
+2007-01-28  Jim Meyering  <jim@meyering.net>
+
+	* modules/sys_time (Makefile.am) [MOSTLYCLEANFILES]: Do use
+	sys/time.h here, reverting that part of the previous patch:
+	<http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/8959>.
+
 2007-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* modules/sys_time (Makefile.am): Build sys/time.h only when it's the
 	value of $(SYS_TIME_H).
 	[MOSTLYCLEANFILES]: Now that sys/time.h is created only when needed,
-	remove it conditionally, too.
+	remove it conditionally, too. [added by Jim Meyering]
 	* m4/sys_time_h.m4 (gl_HEADER_SYS_TIME_H_BODY): Set SYS_TIME_H.
 	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY):
 	(gl_FUNC_GETTIMEOFDAY_CLOBBER): Set SYS_TIME_H when setting

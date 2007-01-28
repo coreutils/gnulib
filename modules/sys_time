@@ -28,7 +28,7 @@ sys/time.h: sys_time_.h
 	      < $(srcdir)/sys_time_.h; \
 	} > $@-t
 	mv $@-t $@
-MOSTLYCLEANFILES += $(SYS_TIME_H) sys/time.h-t
+MOSTLYCLEANFILES += sys/time.h sys/time.h-t
 
 Include:
 #include <sys/time.h>
