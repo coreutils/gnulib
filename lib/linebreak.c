@@ -32,7 +32,7 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #ifdef unused
 static inline int
-u32_mbtouc (unsigned int *puc, const unsigned int *s, size_t n)
+u32_mbtouc_unsafe (unsigned int *puc, const unsigned int *s, size_t n)
 {
   *puc = *s;
   return 1;

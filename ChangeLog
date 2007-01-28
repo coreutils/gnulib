@@ -1,5 +1,14 @@
 2007-01-27  Bruno Haible  <bruno@clisp.org>
 
+	Rename u32-mbtouc -> u32-mbtouc-unsafe, u32-mbtouc-safe -> u32-mbtouc,
+	u32_mbtouc -> u32_mbtouc_unsafe, u32_mbtouc_safe -> u32_mbtouc.
+	* modules/unistr/u32-mbtouc-unsafe: Renamed from
+	modules/unistr/u32-mbtouc.
+	* lib/unistr/u32-mbtouc-unsafe.c: Renamed from lib/unistr/u32-mbtouc.c.
+	* lib/unistr.h: Update.
+
+2007-01-27  Bruno Haible  <bruno@clisp.org>
+
 	Rename utf16-ucs4 -> utf16-ucs4-unsafe, utf16-ucs4-safe -> utf16-ucs4,
 	u16_mbtouc -> u16_mbtouc_unsafe, u16_mbtouc_safe -> u16_mbtouc.
 	* modules/utf16-ucs4-unsafe: Renamed from modules/utf16-ucs4.
