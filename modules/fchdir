@@ -18,7 +18,7 @@ configure.ac:
 gl_FUNC_FCHDIR
 
 Makefile.am:
-BUILT_SOURCES += $(DIRENT_H) $(UNISTD_H2)
+BUILT_SOURCES += $(DIRENT_H)
 
 # We need the following in order to create <dirent.h> when the system
 # doesn't have one that works with the given compiler.

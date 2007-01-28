@@ -1,11 +1,12 @@
-# fchdir.m4 serial 1
-dnl Copyright (C) 2006 Free Software Foundation, Inc.
+# fchdir.m4 serial 2
+dnl Copyright (C) 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_FCHDIR],
 [
+  AC_REQUIRE([gl_HEADER_UNISTD_DEFAULTS])
   AC_CHECK_FUNCS_ONCE([fchdir])
   if test $ac_cv_func_fchdir = no; then
     AC_LIBOBJ([fchdir])
@@ -15,14 +16,12 @@ AC_DEFUN([gl_FUNC_FCHDIR],
     gl_ABSOLUTE_HEADER([dirent.h])
     ABSOLUTE_DIRENT_H=\"$gl_cv_absolute_dirent_h\"
     DIRENT_H='dirent.h'
-    UNISTD_H2='unistd.h'
+    UNISTD_H='unistd.h'
   else
     DIRENT_H=
-    UNISTD_H2=
   fi
   AC_SUBST([ABSOLUTE_DIRENT_H])
   AC_SUBST([DIRENT_H])
-  AC_SUBST([UNISTD_H2])
 ])
 
 # Prerequisites of lib/fchdir.c.

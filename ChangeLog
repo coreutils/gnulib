@@ -1,5 +1,13 @@
 2007-01-28  Bruno Haible  <bruno@clisp.org>
 
+	* m4/unistd_h.m4 (gl_HEADER_UNISTD_DEFAULTS): New macro.
+	(gl_HEADER_UNISTD): Require it. Don't set UNISTD_H to empty here.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Require gl_HEADER_UNISTD_DEFAULTS.
+	Set UNISTD_H instead of UNISTD_H2.
+	* modules/fchdir (BUILT_SOURCES): Drop $(UNISTD_H2).
+
+2007-01-28  Bruno Haible  <bruno@clisp.org>
+
 	* modules/mbchar (Makefile.am): Add mbchar.c to lib_SOURCES.
 	* m4/mbchar.m4 (gl_MBCHAR): Remove AC_LIBOBJ invocation.
 
