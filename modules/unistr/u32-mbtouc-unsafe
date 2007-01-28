@@ -1,0 +1,24 @@
+Description:
+Look at first character in UTF-32 string.
+
+Files:
+lib/unistr/u32-mbtouc-unsafe.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+gl_MODULE_INDICATOR([unistr/u32-mbtouc-unsafe])
+
+Makefile.am:
+lib_SOURCES += unistr/u32-mbtouc-unsafe.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
