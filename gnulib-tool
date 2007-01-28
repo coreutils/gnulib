@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-01-27 13:53:54 $'
+cvsdatestamp='$Date: 2007-01-28 13:58:02 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1287,7 +1287,7 @@ func_emit_lib_Makefile_am ()
     echo "AM_CPPFLAGS ="
   fi
   echo
-  if grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *= *$libname\\.$libext\$" allsnippets.tmp > /dev/null; then
+  if LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *= *$libname\\.$libext\$" allsnippets.tmp > /dev/null; then
     # One of the snippets already specifies an installation location for the
     # library. Don't confuse automake by saying it should not be installed.
     :
@@ -2147,7 +2147,7 @@ func_import ()
     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
     # created using libtool, because libtool already handles the dependencies.
     if test "$libtool" != true; then
-      libname_upper=`echo "$libname" | tr 'a-z' 'A-Z'`
+      libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z' 'A-Z'`
       echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
       echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
       echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
@@ -2508,7 +2508,7 @@ func_create_testdir ()
      # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
      # created using libtool, because libtool already handles the dependencies.
      if test "$libtool" != true; then
-       libname_upper=`echo "$libname" | tr 'a-z' 'A-Z'`
+       libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z' 'A-Z'`
        echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
        echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
        echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
@@ -2621,7 +2621,7 @@ func_create_testdir ()
    # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
    # created using libtool, because libtool already handles the dependencies.
    if test "$libtool" != true; then
-     libname_upper=`echo "$libname" | tr 'a-z' 'A-Z'`
+     libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z' 'A-Z'`
      echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
      echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
      echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
@@ -2859,7 +2859,7 @@ case $mode in
       m4dirs=
       m4dirs_count=0
       if test -f "$destdir"/Makefile.am; then
-        aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[	 ]*=' "$destdir"/Makefile.am | sed -e 's/^ACLOCAL_AMFLAGS[	 ]*=\(.*\)$/\1/'`
+        aclocal_amflags=`sed -n 's/^ACLOCAL_AMFLAGS[	 ]*=\(.*\)$/\1/p' "$destdir"/Makefile.am`
         m4dir_is_next=
         for arg in $aclocal_amflags; do
           if test -n "$m4dir_is_next"; then
@@ -2873,6 +2873,7 @@ case $mode in
                 fi
                 ;;
             esac
+            m4dir_is_next=
           else
             if test "X$arg" = "X-I"; then
               m4dir_is_next=yes

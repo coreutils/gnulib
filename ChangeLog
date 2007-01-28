@@ -1,3 +1,11 @@
+2007-01-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (func_emit_lib_Makefile_am, func_add_or_update)
+	(func_create_testdir): Ensure C locale for `grep' and `tr'
+	character ranges.
+	(func_create_megatestdir): Avoid one `grep'.  Fix bug in
+	ACLOCAL_AMFLAGS parsing state machine.
+
 2007-01-27  Bruno Haible  <bruno@clisp.org>
 
 	* modules/unistr/base: Update.
