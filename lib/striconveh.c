@@ -28,7 +28,7 @@
 
 #if HAVE_ICONV
 # include <iconv.h>
-# include "utf8-ucs4-safe.h"
+# include "utf8-ucs4.h"
 # include "ucs4-utf8.h"
 # include "unistr.h"
 #endif
@@ -481,7 +481,7 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 		    int n;
 		    int m;
 
-		    n = u8_mbtouc_safe (&uc, (const uint8_t *) in1ptr, in1size);
+		    n = u8_mbtouc (&uc, (const uint8_t *) in1ptr, in1size);
 		    if (uc == 0xfffd
 			&& !(n >= 3
 			     && (uint8_t)in1ptr[0] == 0xEF

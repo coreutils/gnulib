@@ -174,12 +174,12 @@ u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U8_MBTOUC_SAFE
+#ifdef GNULIB_UNISTR_U8_MBTOUC
 # if !HAVE_INLINE
 extern int
-       u8_mbtouc_safe (ucs4_t *puc, const uint8_t *s, size_t n);
+       u8_mbtouc (ucs4_t *puc, const uint8_t *s, size_t n);
 # else
-#  include "utf8-ucs4-safe.h"
+#  include "utf8-ucs4.h"
 # endif
 #endif
 

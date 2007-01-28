@@ -1,7 +1,7 @@
 2007-01-27  Bruno Haible  <bruno@clisp.org>
 
-	Rename utf8-ucs4-safe -> utf8-ucs4, utf8-ucs4 -> utf8-ucs4-unsafe,
-	u8_mbtouc -> u8_mbtouc_unsafe, u8_mbtouc_safe ->u8_mbtouc.
+	Rename utf8-ucs4 -> utf8-ucs4-unsafe, utf8-ucs4-safe -> utf8-ucs4,
+	u8_mbtouc -> u8_mbtouc_unsafe, u8_mbtouc_safe -> u8_mbtouc.
 	* modules/utf8-ucs4-unsafe: Renamed from modules/utf8-ucs4.
 	* lib/utf8-ucs4-unsafe.h: Renamed from lib/utf8-ucs4.h.
 	* lib/unistr/utf8-ucs4-unsafe.c: Renamed from lib/unistr/utf8-ucs4.c.
@@ -13,6 +13,18 @@
 	* modules/striconveh: Update.
 	* lib/linebreak.c: Update.
 	* modules/linebreak: Update.
+	* modules/utf8-ucs4: Renamed from modules/utf8-ucs4-safe.
+	* lib/utf8-ucs4.h: Renamed from lib/utf8-ucs4-safe.h.
+	* lib/unistr/utf8-ucs4.c: Renamed from lib/unistr/utf8-ucs4-safe.c.
+	* modules/unistr/u8-mbtouc: Renamed from modules/unistr/u8-mbtouc-safe.
+	* lib/unistr/u8-mbtouc.c: Renamed from lib/unistr/u8-mbtouc-safe.c.
+	* lib/unistr.h: Update.
+	* lib/striconveh.c: Update.
+	* modules/striconveh: Update.
+	* lib/unistr/u8-to-u16.c: Update.
+	* modules/unistr/u8-to-u16: Update.
+	* lib/unistr/u8-to-u32.c: Update.
+	* modules/unistr/u8-to-u32: Update.
 
 2007-01-27  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 

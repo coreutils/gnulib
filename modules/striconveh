@@ -8,7 +8,7 @@ lib/striconveh.c
 Depends-on:
 stdbool
 iconv
-utf8-ucs4-safe
+utf8-ucs4
 ucs4-utf8
 unistr/u8-prev
 unistr/u8-mbtouc-unsafe
