@@ -52,4 +52,10 @@ AC_DEFUN([gl_HEADER_SYS_TIME_H_BODY],
   dnl Assume POSIX behavior unless another module says otherwise.
   GETTIMEOFDAY_REPLACEMENT=0
   AC_SUBST([GETTIMEOFDAY_REPLACEMENT])
+  if test $HAVE_SYS_TIME_H = 0 || test $HAVE_STRUCT_TIMEVAL = 0; then
+    SYS_TIME_H=sys/time.h
+  else
+    SYS_TIME_H=
+  fi
+  AC_SUBST([SYS_TIME_H])
 ])
