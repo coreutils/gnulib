@@ -23,7 +23,8 @@
 #if ! HAVE_STRPTIME
 /* See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/strptime.html>.  */
-extern char *strptime (const char *s, const char *format, struct tm *tm);
+extern char *strptime (const char *restrict s, const char *restrict format,
+		       struct tm *restrict tm);
 #endif
 
 #endif /* GNULIB_STRPTIME_H_ */

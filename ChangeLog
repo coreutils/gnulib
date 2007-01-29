@@ -1,3 +1,28 @@
+2007-01-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/strptime.h (strptime): Use 'restrict' for args where
+	POSIX requires this.
+	* lib/strptime.c (strptime): Likewise.
+	Change license notice from LGPL to GPL, since gnulib-tool will
+	change this as needed.
+	Include <config.h> if _LIBC is not defined, not if HAVE_CONFIG_H is
+	defined.
+	Include "strptime.h" first, to check interface.
+	Do not #undef _LIBC and _NL_CURRENT.
+	Do not include <stdlib.h>; no longer needed.
+	Include "time_r.h" and declare ptime_locale_status
+	only if _LIBC is not defined.
+	(__P): Remove unused macro.
+	(match_string): Bring back glibc version, but use it only if _LIBC
+	is defined.
+	(__strptime_internal): Compile tm_gmtoff code if _LIBC is defined, too.
+	Remove unnecessary assertion and abort() call.
+	Use #ifdef _NL_CURRENT rather than #if 0, for benefit of glibc.
+	* m4/strptime.m4: Fix serial number comment.
+	(gl_FUNC_STRPTIME): Require AC_C_RESTRICT, gl_TM_GMTOFF.
+	* modules/strptime (Files): Add m4/tm_gmtoff.m4.
+	(Depends-on): Add time_r.
+
 2007-01-29  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add

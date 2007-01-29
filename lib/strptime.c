@@ -1,29 +1,25 @@
-/* Copyright (C) 2002, 2004, 2005 Free Software Foundation, Inc.
+/* Copyright (C) 2002, 2004, 2005, 2007 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
 
-   The GNU C Library is distributed in the hope that it will be useful,
+   This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-   You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-   02111-1307 USA.  */
+   You should have received a copy of the GNU General Public License along
+   with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifdef HAVE_CONFIG_H
+#ifndef _LIBC
 # include <config.h>
+# include "strptime.h"
 #endif
 
-#undef _LIBC
-#undef _NL_CURRENT
-
-#include <sys/time.h>
 #include <assert.h>
 #include <ctype.h>
 #ifdef _LIBC
@@ -38,29 +34,25 @@
 # include "../locale/localeinfo.h"
 #endif
 
-#include <stdlib.h>
-#include "strptime.h"
-#include "time_r.h"
-
-
+#ifndef _LIBC
+# include "time_r.h"
 enum ptime_locale_status { not, loc, raw };
-
-
-#ifndef __P
-# if defined __GNUC__ || (defined __STDC__ && __STDC__)
-#  define __P(args) args
-# else
-#  define __P(args) ()
-# endif  /* GCC.  */
-#endif  /* Not __P.  */
+#endif
 
 
 
 #define match_char(ch1, ch2) if (ch1 != ch2) return NULL
-
+#if defined _LIBC && defined __GNUC__ && __GNUC__ >= 2
+# define match_string(cs1, s2) \
+  ({ size_t len = strlen (cs1);						      \
+     int result = __strncasecmp_l ((cs1), (s2), len, locale) == 0;	      \
+     if (result) (s2) += len;						      \
+     result; })
+#else
+/* Oh come on.  Get a reasonable compiler.  */
 # define match_string(cs1, s2) \
   (strncasecmp ((cs1), (s2), strlen (cs1)) ? 0 : ((s2) += strlen (cs1), 1))
-
+#endif
 /* We intentionally do not use isdigit() for testing because this will
    lead to problems with the wide character version.  */
 #define get_number(from, to, n) \
@@ -271,7 +263,7 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
 
   have_wday = want_xday = have_yday = have_mon = have_mday = have_uweek = 0;
   have_wweek = 0;
-  
+
   while (*fmt != '\0')
     {
       /* A white space in the format string matches 0 more or white
@@ -703,11 +695,11 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
 	      }
 	    if (val > 1200)
 	      return NULL;
-#ifdef HAVE_TM_GMTOFF	      
+#if defined _LIBC || HAVE_TM_GMTOFF
 	    tm->tm_gmtoff = (val * 3600) / 100;
 	    if (neg)
 	      tm->tm_gmtoff = -tm->tm_gmtoff;
-#endif	      
+#endif
 	  }
 	  break;
 	case 'E':
@@ -1036,11 +1028,9 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
 	tm->tm_year = (century - 19) * 100;
     }
 
-  assert(era_cnt == -1);
   if (era_cnt != -1)
     {
-      abort();
-#if 0
+#ifdef _NL_CURRENT
       era = _nl_select_era_entry (era_cnt HELPER_LOCALE_ARG);
       if (era == NULL)
 	return NULL;
@@ -1126,9 +1116,9 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
 
 char *
 strptime (buf, format, tm LOCALE_PARAM)
-     const char *buf;
-     const char *format;
-     struct tm *tm;
+     const char *restrict buf;
+     const char *restrict format;
+     struct tm *restrict tm;
      LOCALE_PARAM_DECL
 {
   enum ptime_locale_status decided;
@@ -1144,4 +1134,3 @@ strptime (buf, format, tm LOCALE_PARAM)
 #ifdef _LIBC
 weak_alias (__strptime_l, strptime_l)
 #endif
-

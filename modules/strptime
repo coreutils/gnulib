@@ -5,12 +5,14 @@ Files:
 lib/strptime.h
 lib/strptime.c
 m4/strptime.m4
+m4/tm_gmtoff.m4
 
 Depends-on:
 sys_time
 string
 strcase
 stdbool
+time_r
 
 configure.ac:
 gl_FUNC_STRPTIME
@@ -25,4 +27,3 @@ LGPL
 
 Maintainer:
 glibc
-
