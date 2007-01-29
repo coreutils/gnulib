@@ -1,5 +1,8 @@
 2007-01-28  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* MODULES.html.sh: New module mpsort.
+	* lib/mpsort.c, lib/mpsort.h, m4/mpsort.m4, modules/mpsort: New files.
+
 	* lib/regex.h (_Restrict_): Renamed from __restrict, to avoid
 	a circularity problem with HP-UX ia64 reported by Bob Proulx in
 	<http://lists.gnu.org/archive/html/bug-gnulib/2007-01/msg00394.html>.

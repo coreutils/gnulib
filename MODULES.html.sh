@@ -1540,6 +1540,16 @@ func_all_modules ()
   func_module pagealign_alloc
   func_end_table
 
+  element="Sorting functions <stdlib.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap ansic_enh_stdlib_sorting
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module mpsort
+  func_end_table
+
   element="Date and time <time.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap ansic_enh_time_datetime
