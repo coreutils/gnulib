@@ -1,15 +1,16 @@
 Description:
-convert a string representation of time to a time tm structure
+Convert a string representation of time to a tm structure.
 
 Files:
-lib/strptime.c
 lib/strptime.h
+lib/strptime.c
 m4/strptime.m4
 
 Depends-on:
 sys_time
 string
 strcase
+stdbool
 
 configure.ac:
 gl_FUNC_STRPTIME

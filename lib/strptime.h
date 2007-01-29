@@ -1,5 +1,5 @@
-/* Searching in a string.
-   Copyright (C) 2001-2003, 2005 Free Software Foundation, Inc.
+/* Convert a string representation of time to a tm structure.
+   Copyright (C) 2001-2003, 2005, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,10 +18,12 @@
 #ifndef GNULIB_STRPTIME_H_
 #define GNULIB_STRPTIME_H_
 
-#if HAVE_STRPTIME
-# include <time.h>
-#else
-extern char *strptime(const char *s, const char *format, struct tm *tm);
+#include <time.h>
+
+#if ! HAVE_STRPTIME
+/* See the POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/strptime.html>.  */
+extern char *strptime (const char *s, const char *format, struct tm *tm);
 #endif
 
-#endif
+#endif /* GNULIB_STRPTIME_H_ */

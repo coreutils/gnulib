@@ -1,3 +1,10 @@
+2007-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
+	strptime.
+	* modules/strptime (Depends-on): Add stdbool.
+	* lib/strptime.h: Include <time.h> always. Add comments.
+
 2007-01-29  Yoann Vandoorselaere  <yoann@prelude-ids.org>
 
 	* modules/strptime: New file.

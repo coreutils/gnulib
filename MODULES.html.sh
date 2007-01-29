@@ -1959,6 +1959,7 @@ func_all_modules ()
   func_module rmdir
   func_module sigprocmask
   func_module ssize_t
+  func_module strptime
   func_module strtok_r
   func_module sys_stat
   func_module sys_time
