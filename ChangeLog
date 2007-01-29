@@ -1,3 +1,10 @@
+2007-01-29  Yoann Vandoorselaere  <yoann@prelude-ids.org>
+
+	* modules/strptime: New file.
+	* lib/strptime.h: New file.
+	* lib/strptime.c: New file.
+	* m4/strptime.m4: New file.
+
 2007-01-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* MODULES.html.sh: New module mpsort.

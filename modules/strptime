@@ -1,0 +1,27 @@
+Description:
+convert a string representation of time to a time tm structure
+
+Files:
+lib/strptime.c
+lib/strptime.h
+m4/strptime.m4
+
+Depends-on:
+sys_time
+string
+strcase
+
+configure.ac:
+gl_FUNC_STRPTIME
+
+Makefile.am:
+
+Include:
+"strptime.h"
+
+License:
+LGPL
+
+Maintainer:
+glibc
+
