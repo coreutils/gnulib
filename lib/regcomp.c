@@ -451,8 +451,8 @@ re_compile_fastmap_iter (regex_t *bufp, const re_dfastate_t *init_state,
 
 int
 regcomp (preg, pattern, cflags)
-    regex_t *__restrict preg;
-    const char *__restrict pattern;
+    regex_t *_Restrict_ preg;
+    const char *_Restrict_ pattern;
     int cflags;
 {
   reg_errcode_t ret;
@@ -515,13 +515,13 @@ weak_alias (__regcomp, regcomp)
 size_t
 regerror (errcode, preg, errbuf, errbuf_size)
     int errcode;
-    const regex_t *__restrict preg;
-    char *__restrict errbuf;
+    const regex_t *_Restrict_ preg;
+    char *_Restrict_ errbuf;
     size_t errbuf_size;
 #else /* size_t might promote */
 size_t
-regerror (int errcode, const regex_t *__restrict preg,
-	  char *__restrict errbuf, size_t errbuf_size)
+regerror (int errcode, const regex_t *_Restrict_ preg,
+	  char *_Restrict_ errbuf, size_t errbuf_size)
 #endif
 {
   const char *msg;

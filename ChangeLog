@@ -1,3 +1,16 @@
+2007-01-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/regex.h (_Restrict_): Renamed from __restrict, to avoid
+	a circularity problem with HP-UX ia64 reported by Bob Proulx in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2007-01/msg00394.html>.
+	All uses changed.
+	(_Restrict_arr_): Renamed from __restrict_arr, for similar reasons.
+	All uses changed.
+	* lib/regcomp.c, lib/regexec.c: Change all uses from __restrict
+	to _Restrict_.
+	* lib/regexec.c (regexec): Declare pmatch with _Restrict_arr_, so that
+	the parameter matches the prototype.
+
 2007-01-28  Jim Meyering  <jim@meyering.net>
 
 	* modules/sys_time (Makefile.am) [MOSTLYCLEANFILES]: Do use
