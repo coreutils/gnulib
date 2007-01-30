@@ -1,3 +1,7 @@
+2007-01-30  Jim Meyering  <jim@meyering.net>
+
+	* lib/mpsort.c (mpsort): Remove spurious "return" in void function.
+
 2007-01-29  Bruno Haible  <bruno@clisp.org>
 
 	* lib/allocsa.h: Use '#if HAVE_*' instead of '#ifdef HAVE_*'.

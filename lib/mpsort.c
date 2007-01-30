@@ -153,5 +153,5 @@ mpsort_with_tmp (void const **restrict base, size_t n,
 void
 mpsort (void const **base, size_t n, comparison_function cmp)
 {
-  return mpsort_with_tmp (base, n, base + n, cmp);
+  mpsort_with_tmp (base, n, base + n, cmp);
 }
