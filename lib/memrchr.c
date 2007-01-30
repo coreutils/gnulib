@@ -24,13 +24,13 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #if defined _LIBC
-# include <string.h>
 # include <memcopy.h>
 #else
 # include <config.h>
 # define reg_char char
 #endif
 
+#include <string.h>
 #include <limits.h>
 
 #undef __memrchr

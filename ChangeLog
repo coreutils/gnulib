@@ -1,3 +1,8 @@
+2007-01-29  Eric Blake  <ebb9@byu.net>
+
+	* lib/memrchr.c: Assume <string.h> unconditionally, to pull in
+	declaration.
+
 2007-01-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/strptime.h (strptime): Use 'restrict' for args where
@@ -201,7 +206,7 @@
 	(func_create_testdir): Set for_test to true.
 
 2007-01-27  Yoann Vandoorselaere <yoann.v@prelude-ids.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* modules/strcasestr (Files): Remove lib/strcasestr.h.
 	(Depends-on): Add string.
