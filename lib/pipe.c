@@ -1,5 +1,5 @@
 /* Creation of subprocesses, communicating via pipes.
-   Copyright (C) 2001-2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -45,17 +45,17 @@
 #else
 
 /* Unix API.  */
-# ifdef HAVE_POSIX_SPAWN
+# if HAVE_POSIX_SPAWN
 #  include <spawn.h>
 # else
-#  ifdef HAVE_VFORK_H
+#  if HAVE_VFORK_H
 #   include <vfork.h>
 #  endif
 # endif
 
 #endif
 
-#ifndef HAVE_ENVIRON_DECL
+#if ! HAVE_ENVIRON_DECL
 extern char **environ;
 #endif
 

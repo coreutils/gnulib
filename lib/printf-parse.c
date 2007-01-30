@@ -1,5 +1,5 @@
 /* Formatted output to strings.
-   Copyright (C) 1999-2000, 2002-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1999-2000, 2002-2003, 2006-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -326,7 +326,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		      flags += 8;
 		      cp++;
 		    }
-#ifdef HAVE_INTMAX_T
+#if HAVE_INTMAX_T
 		  else if (*cp == 'j')
 		    {
 		      if (sizeof (intmax_t) > sizeof (long))
@@ -382,7 +382,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 	      switch (c)
 		{
 		case 'd': case 'i':
-#ifdef HAVE_LONG_LONG_INT
+#if HAVE_LONG_LONG_INT
 		  /* If 'long long' exists and is larger than 'long':  */
 		  if (flags >= 16 || (flags & 4))
 		    type = TYPE_LONGLONGINT;
@@ -400,7 +400,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		    type = TYPE_INT;
 		  break;
 		case 'o': case 'u': case 'x': case 'X':
-#ifdef HAVE_LONG_LONG_INT
+#if HAVE_LONG_LONG_INT
 		  /* If 'long long' exists and is larger than 'long':  */
 		  if (flags >= 16 || (flags & 4))
 		    type = TYPE_ULONGLONGINT;
@@ -419,7 +419,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		  break;
 		case 'f': case 'F': case 'e': case 'E': case 'g': case 'G':
 		case 'a': case 'A':
-#ifdef HAVE_LONG_DOUBLE
+#if HAVE_LONG_DOUBLE
 		  if (flags >= 16 || (flags & 4))
 		    type = TYPE_LONGDOUBLE;
 		  else
@@ -428,7 +428,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		  break;
 		case 'c':
 		  if (flags >= 8)
-#ifdef HAVE_WINT_T
+#if HAVE_WINT_T
 		    type = TYPE_WIDE_CHAR;
 #else
 		    goto error;
@@ -436,7 +436,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		  else
 		    type = TYPE_CHAR;
 		  break;
-#ifdef HAVE_WINT_T
+#if HAVE_WINT_T
 		case 'C':
 		  type = TYPE_WIDE_CHAR;
 		  c = 'c';
@@ -444,7 +444,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 #endif
 		case 's':
 		  if (flags >= 8)
-#ifdef HAVE_WCHAR_T
+#if HAVE_WCHAR_T
 		    type = TYPE_WIDE_STRING;
 #else
 		    goto error;
@@ -452,7 +452,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		  else
 		    type = TYPE_STRING;
 		  break;
-#ifdef HAVE_WCHAR_T
+#if HAVE_WCHAR_T
 		case 'S':
 		  type = TYPE_WIDE_STRING;
 		  c = 's';
@@ -462,7 +462,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		  type = TYPE_POINTER;
 		  break;
 		case 'n':
-#ifdef HAVE_LONG_LONG_INT
+#if HAVE_LONG_LONG_INT
 		  /* If 'long long' exists and is larger than 'long':  */
 		  if (flags >= 16 || (flags & 4))
 		    type = TYPE_COUNT_LONGLONGINT_POINTER;

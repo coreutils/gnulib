@@ -1,3 +1,13 @@
+2007-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* lib/allocsa.h: Use '#if HAVE_*' instead of '#ifdef HAVE_*'.
+	* lib/execute.c: Likewise.
+	* lib/pipe.c: Likewise.
+	* lib/printf-args.h: Likewise.
+	* lib/printf-args.c: Likewise.
+	* lib/printf-parse.c: Likewise.
+	* lib/vasnprintf.c: Likewise.
+
 2007-01-29  Eric Blake  <ebb9@byu.net>
 
 	* lib/memrchr.c: Assume <string.h> unconditionally, to pull in
