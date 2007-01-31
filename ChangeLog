@@ -1,3 +1,7 @@
+2007-01-31  Jean-Louis Martineau <martineau@zmanda.com>  (tiny change)
+
+	* lib/gai_strerror.c (values): Add EAI_OVERFLOW.
+
 2007-01-30  Jim Meyering  <jim@meyering.net>
 
 	* lib/mpsort.c (mpsort): Remove spurious "return" in void function.
