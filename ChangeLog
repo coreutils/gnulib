@@ -1,3 +1,10 @@
+2007-01-31  Eric Blake  <ebb9@byu.net>
+
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR): Correct m4 usage
+	bug.
+	* modules/string (Makefile.am): Remove redundant replacement.
+	* modules/regex (Depends-on): Add mempcpy.
+
 2007-01-31  Bruno Haible  <bruno@clisp.org>
 
 	New module description field 'Link'.

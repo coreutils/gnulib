@@ -50,7 +50,7 @@ AC_DEFUN([gl_STRING_MODULE_INDICATOR],
 [
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_STRING_MODULE_INDICATOR_DEFAULTS])
-  GNULIB_]translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])[=1
+  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
 ])
 
 AC_DEFUN([gl_STRING_MODULE_INDICATOR_DEFAULTS],

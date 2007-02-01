@@ -27,7 +27,6 @@ string.h: string_.h
 	      -e 's|@''GNULIB_STPCPY''@|$(GNULIB_STPCPY)|g' \
 	      -e 's|@''GNULIB_STPNCPY''@|$(GNULIB_STPNCPY)|g' \
 	      -e 's|@''GNULIB_STRCASE''@|$(GNULIB_STRCASE)|g' \
-	      -e 's|@''GNULIB_STRCASE''@|$(GNULIB_STRCASE)|g' \
 	      -e 's|@''GNULIB_STRCHRNUL''@|$(GNULIB_STRCHRNUL)|g' \
 	      -e 's|@''GNULIB_STRDUP''@|$(GNULIB_STRDUP)|g' \
 	      -e 's|@''GNULIB_STRNDUP''@|$(GNULIB_STRNDUP)|g' \
