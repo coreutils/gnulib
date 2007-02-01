@@ -1,3 +1,8 @@
+2007-02-01  Jim Meyering  <jim@meyering.net>
+
+	Give tools a better chance to allocate space for very large buffers.
+	* lib/xalloc.h (x2nrealloc): Use 3/2, not 2, as buffer size factor.
+
 2007-02-01  Karl Berry  <karl@gnu.org>
 
 	* config/srclist.txt (strtok_r.c): lose sync, no more strtok_r.h.
