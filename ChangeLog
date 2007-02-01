@@ -1,5 +1,7 @@
 2007-01-31  Eric Blake  <ebb9@byu.net>
 
+	* modules/mountlist (Depends-on): Add strstr
+
 	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR): Correct m4 usage
 	bug.
 	* modules/string (Makefile.am): Remove redundant replacement.
