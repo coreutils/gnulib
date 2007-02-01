@@ -2182,10 +2182,10 @@ func_all_modules ()
   func_module unitypes
   func_module ucs4-utf8
   func_module ucs4-utf16
+  func_module utf8-ucs4-unsafe
+  func_module utf16-ucs4-unsafe
   func_module utf8-ucs4
   func_module utf16-ucs4
-  func_module utf8-ucs4-safe
-  func_module utf16-ucs4-safe
   func_module unistr/base
   func_module unistr/u8-to-u16
   func_module unistr/u8-to-u32
@@ -2214,12 +2214,12 @@ func_all_modules ()
   func_module unistr/u8-mblen
   func_module unistr/u16-mblen
   func_module unistr/u32-mblen
+  func_module unistr/u8-mbtouc-unsafe
+  func_module unistr/u16-mbtouc-unsafe
+  func_module unistr/u32-mbtouc-unsafe
   func_module unistr/u8-mbtouc
   func_module unistr/u16-mbtouc
   func_module unistr/u32-mbtouc
-  func_module unistr/u8-mbtouc-safe
-  func_module unistr/u16-mbtouc-safe
-  func_module unistr/u32-mbtouc-safe
   func_module unistr/u8-move
   func_module unistr/u16-move
   func_module unistr/u32-move
