@@ -1,3 +1,10 @@
+2007-02-01  Eric Blake  <ebb9@byu.net>
+
+	* modules/regex (Depends-on): Revert dependence on mempcpy.
+	* lib/regex_internal.h [! _LIBC && !__mempcpy]: Undo string
+	module's definition of mempcpy.
+	Reported by Paul Eggert.
+
 2007-02-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/string_.h: If the gnulib module XYZ is not present, undefine
@@ -16,7 +23,7 @@
 
 2007-01-31  Eric Blake  <ebb9@byu.net>
 
-	* modules/mountlist (Depends-on): Add strstr
+	* modules/mountlist (Depends-on): Add strstr.
 
 	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR): Correct m4 usage
 	bug.
