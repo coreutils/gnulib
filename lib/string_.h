@@ -32,6 +32,7 @@ extern void *memmem (void const *__haystack, size_t __haystack_len,
 		     void const *__needle, size_t __needle_len);
 # endif
 #else
+# undef memmem
 # define memmem memmem_is_unportable__use_gnulib_module_memmem_for_portability
 #endif
 
@@ -43,6 +44,7 @@ extern void *mempcpy (void *restrict __dest, void const *restrict __src,
 		      size_t __n);
 # endif
 #else
+# undef mempcpy
 # define mempcpy mempcpy_is_unportable__use_gnulib_module_mempcpy_for_portability
 #endif
 
@@ -52,6 +54,7 @@ extern void *mempcpy (void *restrict __dest, void const *restrict __src,
 extern void *memrchr (void const *, int, size_t);
 # endif
 #else
+# undef memrchr
 # define memrchr memrchr_is_unportable__use_gnulib_module_memrchr_for_portability
 #endif
 
@@ -61,6 +64,7 @@ extern void *memrchr (void const *, int, size_t);
 extern char *stpcpy (char *restrict __dst, char const *restrict __src);
 # endif
 #else
+# undef stpcpy
 # define stpcpy stpcpy_is_unportable__use_gnulib_module_stpcpy_for_portability
 #endif
 
@@ -73,6 +77,7 @@ extern char *stpncpy (char *restrict __dst, char const *restrict __src,
 		      size_t __n);
 # endif
 #else
+# undef stpncpy
 # define stpncpy stpncpy_is_unportable__use_gnulib_module_stpncpy_for_portability
 #endif
 
@@ -90,6 +95,7 @@ extern char *stpncpy (char *restrict __dst, char const *restrict __src,
 extern int strcasecmp (char const *__s1, char const *__s2);
 # endif
 #else
+# undef strcasecmp
 # define strcasecmp strcasecmp_is_unportable__use_gnulib_module_strcase_for_portability
 #endif
 
@@ -102,6 +108,7 @@ extern int strcasecmp (char const *__s1, char const *__s2);
 extern int strncasecmp (char const *__s1, char const *__s2, size_t __n);
 # endif
 #else
+# undef strncasecmp
 # define strncasecmp strncasecmp_is_unportable__use_gnulib_module_strcase_for_portability
 #endif
 
@@ -111,6 +118,7 @@ extern int strncasecmp (char const *__s1, char const *__s2, size_t __n);
 extern char *strchrnul (char const *__s, int __c_in);
 # endif
 #else
+# undef strchrnul
 # define strchrnul strchrnul_is_unportable__use_gnulib_module_strchrnul_for_portability
 #endif
 
@@ -120,6 +128,7 @@ extern char *strchrnul (char const *__s, int __c_in);
 extern char *strdup (char const *__s);
 # endif
 #else
+# undef strdup
 # define strdup strdup_is_unportable__use_gnulib_module_strdup_for_portability
 #endif
 
@@ -133,6 +142,7 @@ extern char *strndup (char const *__string, size_t __n);
 #  endif
 # endif
 #else
+# undef strndup
 # define strndup strndup_is_unportable__use_gnulib_module_strndup_for_portability
 #endif
 
@@ -144,6 +154,7 @@ extern char *strndup (char const *__string, size_t __n);
 extern size_t strnlen (char const *__string, size_t __maxlen);
 # endif
 #else
+# undef strnlen
 # define strnlen strnlen_is_unportable__use_gnulib_module_strnlen_for_portability
 #endif
 
@@ -153,6 +164,7 @@ extern size_t strnlen (char const *__string, size_t __maxlen);
 extern char *strpbrk (char const *__s, char const *__accept);
 # endif
 #else
+# undef strpbrk
 # define strpbrk strpbrk_is_unportable__use_gnulib_module_strpbrk_for_portability
 #endif
 
@@ -177,6 +189,7 @@ extern char *strpbrk (char const *__s, char const *__accept);
 extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 # endif
 #else
+# undef strsep
 # define strsep strsep_is_unportable__use_gnulib_module_strsep_for_portability
 #endif
 
@@ -191,6 +204,7 @@ extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 extern char *strstr (char const *__haystack, char const *__needle);
 # endif
 #else
+# undef strstr
 # define strstr strstr_is_unportable__use_gnulib_module_strstr_for_portability
 #endif
 
@@ -205,6 +219,7 @@ extern char *strstr (char const *__haystack, char const *__needle);
 extern char *strcasestr (const char *haystack, const char *needle);
 # endif
 #else
+# undef strcasestr
 # define strcasestr strcasestr_is_unportable__use_gnulib_module_strcasestr_for_portability
 #endif
 
@@ -236,6 +251,7 @@ extern char *strtok_r (char *restrict __s, char const *restrict __sep,
 		       char **restrict __lasts);
 # endif
 #else
+# undef strtok_r
 # define strtok_r strtok_r_is_unportable__use_gnulib_module_strtok_r_for_portability
 #endif
 

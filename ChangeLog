@@ -1,3 +1,10 @@
+2007-02-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/string_.h: If the gnulib module XYZ is not present, undefine
+	the symbol XYZ before redefining it.  This fixes a problem with
+	programs that don't use XYZ, when compiled on systems that define
+	XYZ to something else.
+
 2007-01-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/mkdir-p.c (make_dir_parents): Close a race condition that
