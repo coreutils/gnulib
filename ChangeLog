@@ -1,3 +1,12 @@
+2007-01-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/mkdir-p.c (make_dir_parents): Close a race condition that
+	occurs when "mkdir -m foo" creates a setgid directory that is (1)
+	writeable to group or other and (2) is intended to have a special
+	mode bit that is set or cleared.  In such a case, the directory
+	should be neither group- nor other-writeable until the special
+	mode bits are right.
+
 2007-01-31  Eric Blake  <ebb9@byu.net>
 
 	* modules/mountlist (Depends-on): Add strstr
