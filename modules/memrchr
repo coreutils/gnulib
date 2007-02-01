@@ -10,6 +10,7 @@ string
 
 configure.ac:
 gl_FUNC_MEMRCHR
+gl_STRING_MODULE_INDICATOR([memrchr])
 
 Makefile.am:
 

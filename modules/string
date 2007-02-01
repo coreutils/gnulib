@@ -21,6 +21,22 @@ string.h: string_.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''ABSOLUTE_STRING_H''@|$(ABSOLUTE_STRING_H)|g' \
+	      -e 's|@''GNULIB_MEMMEM''@|$(GNULIB_MEMMEM)|g' \
+	      -e 's|@''GNULIB_MEMPCPY''@|$(GNULIB_MEMPCPY)|g' \
+	      -e 's|@''GNULIB_MEMRCHR''@|$(GNULIB_MEMRCHR)|g' \
+	      -e 's|@''GNULIB_STPCPY''@|$(GNULIB_STPCPY)|g' \
+	      -e 's|@''GNULIB_STPNCPY''@|$(GNULIB_STPNCPY)|g' \
+	      -e 's|@''GNULIB_STRCASE''@|$(GNULIB_STRCASE)|g' \
+	      -e 's|@''GNULIB_STRCASE''@|$(GNULIB_STRCASE)|g' \
+	      -e 's|@''GNULIB_STRCHRNUL''@|$(GNULIB_STRCHRNUL)|g' \
+	      -e 's|@''GNULIB_STRDUP''@|$(GNULIB_STRDUP)|g' \
+	      -e 's|@''GNULIB_STRNDUP''@|$(GNULIB_STRNDUP)|g' \
+	      -e 's|@''GNULIB_STRNLEN''@|$(GNULIB_STRNLEN)|g' \
+	      -e 's|@''GNULIB_STRPBRK''@|$(GNULIB_STRPBRK)|g' \
+	      -e 's|@''GNULIB_STRSEP''@|$(GNULIB_STRSEP)|g' \
+	      -e 's|@''GNULIB_STRSTR''@|$(GNULIB_STRSTR)|g' \
+	      -e 's|@''GNULIB_STRCASESTR''@|$(GNULIB_STRCASESTR)|g' \
+	      -e 's|@''GNULIB_STRTOK_R''@|$(GNULIB_STRTOK_R)|g' \
 	      -e 's|@''HAVE_DECL_MEMMEM''@|$(HAVE_DECL_MEMMEM)|g' \
 	      -e 's|@''HAVE_MEMPCPY''@|$(HAVE_MEMPCPY)|g' \
 	      -e 's|@''HAVE_DECL_MEMRCHR''@|$(HAVE_DECL_MEMRCHR)|g' \

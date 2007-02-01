@@ -1,4 +1,29 @@
-2007-01-31  Jean-Louis Martineau <martineau@zmanda.com>  (tiny change)
+2007-01-27  Bruno Haible  <bruno@clisp.org>
+
+	Enforce the use of gnulib modules for unportable <string.h> functions.
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR): New macro.
+	(gl_STRING_MODULE_INDICATOR_DEFAULTS): New macro.
+	(gl_HEADER_STRING_H_BODY): Require it.
+	* lib/string_.h: If the gnulib module XYZ is not present, redefine
+	the symbol XYZ to one that gives a link error.
+	* modules/string (Makefile.am): Also substitute the GNULIB_* variables.
+	* modules/memmem (configure.ac): Invoke gl_STRING_MODULE_INDICATOR.
+	* modules/mempcpy (configure.ac): Likewise.
+	* modules/memrchr (configure.ac): Likewise.
+	* modules/stpcpy (configure.ac): Likewise.
+	* modules/stpncpy (configure.ac): Likewise.
+	* modules/strcase (configure.ac): Likewise.
+	* modules/strcasestr (configure.ac): Likewise.
+	* modules/strchrnul (configure.ac): Likewise.
+	* modules/strdup (configure.ac): Likewise.
+	* modules/strndup (configure.ac): Likewise.
+	* modules/strnlen (configure.ac): Likewise.
+	* modules/strpbrk (configure.ac): Likewise.
+	* modules/strsep (configure.ac): Likewise.
+	* modules/strstr (configure.ac): Likewise.
+	* modules/strtok_r (configure.ac): Likewise.
+
+2007-01-31  Jean-Louis Martineau  <martineau@zmanda.com>  (tiny change)
 
 	* lib/gai_strerror.c (values): Add EAI_OVERFLOW.
 

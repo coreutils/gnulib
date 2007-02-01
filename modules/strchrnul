@@ -10,6 +10,7 @@ string
 
 configure.ac:
 gl_FUNC_STRCHRNUL
+gl_STRING_MODULE_INDICATOR([strchrnul])
 
 Makefile.am:
 
