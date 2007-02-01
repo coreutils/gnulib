@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.142 2007-01-15 14:43:20 karl Exp $
+# $Id: srclist.txt,v 1.143 2007-02-01 21:36:19 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -194,7 +194,7 @@ $GETTEXT/gettext-runtime/m4/wchar_t.m4			m4
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
 $LIBCSRC/stdlib/strtoll.c		lib gpl
 $LIBCSRC/stdlib/strtoul.c		lib gpl
-$LIBCSRC/string/strtok_r.c		lib gpl
+# (no more strtok_r.h) $LIBCSRC/string/strtok_r.c		lib gpl
 $LIBCSRC/string/memmem.c		lib gpl
 $LIBCSRC/time/mktime.c			lib gpl
 
