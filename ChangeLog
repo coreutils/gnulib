@@ -1,3 +1,20 @@
+2007-01-31  Bruno Haible  <bruno@clisp.org>
+
+	New module description field 'Link'.
+	* gnulib-tool (func_usage): Document --extract-link-directive.
+	(sed_extract_prog): Recognize 'Link' directive.
+	(func_get_link_directive): New function.
+	(func_import): Show summary of link directives.
+	Handle --extract-link-directive option.
+	* modules/acl (Link): New section.
+	* modules/clock-time (Link): New section.
+	* modules/euidaccess (Link): New section.
+	* modules/gettext (Link): New section.
+	* modules/iconv (Link): New section.
+	* modules/lock (Link): New section.
+	* modules/nanosleep (Link): New section.
+	* modules/readline (Link): New section.
+
 2007-01-27  Bruno Haible  <bruno@clisp.org>
 
 	Enforce the use of gnulib modules for unportable <string.h> functions.

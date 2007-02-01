@@ -17,6 +17,9 @@ Include:
 # include <iconv.h>
 #endif
 
+Link:
+$(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
+
 License:
 LGPL
 

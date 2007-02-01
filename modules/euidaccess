@@ -18,6 +18,9 @@ Makefile.am:
 Include:
 "euidaccess.h"
 
+Link:
+$(LIB_EACCESS)
+
 License:
 LGPL
 

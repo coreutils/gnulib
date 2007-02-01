@@ -18,6 +18,9 @@ Makefile.am:
 Include:
 "acl.h"
 
+Link:
+$(LIB_ACL)
+
 License:
 GPL
 

@@ -19,6 +19,9 @@ lib_SOURCES += lock.h lock.c
 Include:
 "lock.h"
 
+Link:
+$(LTLIBTHREAD) when linking with libtool, $(LIBTHREAD) otherwise
+
 License:
 LGPL
 

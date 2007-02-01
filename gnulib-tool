@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-01-28 13:58:02 $'
+cvsdatestamp='$Date: 2007-02-01 01:52:34 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -93,6 +93,7 @@ Usage: gnulib-tool --list
        gnulib-tool --extract-autoconf-snippet module
        gnulib-tool --extract-automake-snippet module
        gnulib-tool --extract-include-directive module
+       gnulib-tool --extract-link-directive module
        gnulib-tool --extract-license module
        gnulib-tool --extract-maintainer module
        gnulib-tool --extract-tests-module module
@@ -117,6 +118,7 @@ Operation modes:
       --extract-autoconf-snippet   extract the snippet for configure.ac
       --extract-automake-snippet   extract the snippet for library makefile
       --extract-include-directive  extract the #include directive
+      --extract-link-directive     extract the linker directive
       --extract-license            report the license terms of the source files
                                    under lib/
       --extract-maintainer         report the maintainer(s) inside gnulib
@@ -891,6 +893,7 @@ sed_extract_prog=':[	 ]*$/ {
     s/^configure\.ac:[	 ]*$//
     s/^Makefile\.am:[	 ]*$//
     s/^Include:[	 ]*$//
+    s/^Link:[	 ]*$//
     s/^License:[	 ]*$//
     s/^Maintainer:[	 ]*$//
     tb
@@ -1013,6 +1016,15 @@ func_get_include_directive ()
   func_lookup_file "modules/$1"
   sed -n -e "/^Include$sed_extract_prog" < "$lookedup_file" | \
   sed -e 's/^\(["<]\)/#include \1/'
+}
+
+# func_get_link_directive module
+# Input:
+# - local_gnulib_dir  from --local-dir
+func_get_link_directive ()
+{
+  func_lookup_file "modules/$1"
+  sed -n -e "/^Link$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_license module
@@ -2252,6 +2264,19 @@ func_import ()
   ) | sed -e '/^$/d' -e 's/^/  /'
   rm -f "$tmp"/include-angles "$tmp"/include-quotes "$tmp"/include-if
 
+  for module in $modules; do
+    func_get_link_directive "$module"
+  done \
+    | LC_ALL=C sort -u | sed -e '/^$/d' -e 's/^/  /' > "$tmp"/link
+  if test `wc -l < "$tmp"/link` != 0; then
+    echo
+    echo "You may need to use the following Makefile variables when linking."
+    echo "Use them in <program>_LDADD when linking a program, or"
+    echo "in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library."
+    cat "$tmp"/link
+  fi
+  rm -f "$tmp"/link
+
   echo
   echo "Don't forget to"
   if test "$makefile_am" = Makefile.am; then
@@ -3052,6 +3077,16 @@ case $mode in
       func_verify_module
       if test -n "$module"; then
         func_get_include_directive "$module"
+      fi
+    done
+    ;;
+
+  extract-link-directive )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_link_directive "$module"
       fi
     done
     ;;

@@ -53,6 +53,9 @@ AM_CPPFLAGS += -I$(top_builddir)/intl
 Include:
 "gettext.h"
 
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
+
 License:
 LGPL
 

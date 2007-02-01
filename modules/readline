@@ -18,6 +18,9 @@ Makefile.am:
 Include:
 "readline.h"
 
+Link:
+$(LTLIBREADLINE) when linking with libtool, $(LIBREADLINE) otherwise
+
 License:
 GPL
 
