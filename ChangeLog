@@ -1,3 +1,8 @@
+2007-02-02  Eric Blake  <ebb9@byu.net>
+
+	* modules/arpa_inet (Makefile.am): Use MKDIR_P to avoid races.
+	* modules/netinet_in (Makefile.am): Likewise.
+
 2007-02-01  Bruno Haible  <bruno@clisp.org>
 
 	* lib/string_.h (GL_LINK_WARNING): New macro.

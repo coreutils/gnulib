@@ -12,11 +12,12 @@ gl_HEADER_ARPA_INET
 
 Makefile.am:
 BUILT_SOURCES += $(ARPA_INET_H)
+AC_PROG_MKDIR_P
 
 # We need the following in order to create <arpa/inet.h> when the system
 # doesn't have one.
 arpa/inet.h:
-	test -d arpa || mkdir arpa
+	@MKDIR_P@ arpa
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  echo '#include <sys/socket.h>'; \

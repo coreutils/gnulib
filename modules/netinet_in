@@ -9,6 +9,7 @@ sys_socket
 
 configure.ac:
 gl_HEADER_NETINET_IN
+AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += $(NETINET_IN_H)
@@ -16,7 +17,7 @@ BUILT_SOURCES += $(NETINET_IN_H)
 # We need the following in order to create <netinet/in.h> when the system
 # doesn't have one.
 netinet/in.h:
-	test -d netinet || mkdir netinet
+	@MKDIR_P@ netinet
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  echo '#include <sys/socket.h>'; \
