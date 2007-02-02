@@ -542,17 +542,13 @@ regerror (int errcode, const regex_t *_Restrict_ preg,
 
   if (BE (errbuf_size != 0, 1))
     {
+      size_t cpy_size = msg_size;
       if (BE (msg_size > errbuf_size, 0))
 	{
-#if defined HAVE_MEMPCPY || defined _LIBC
-	  *((char *) __mempcpy (errbuf, msg, errbuf_size - 1)) = '\0';
-#else
-	  memcpy (errbuf, msg, errbuf_size - 1);
-	  errbuf[errbuf_size - 1] = 0;
-#endif
+	  cpy_size = errbuf_size - 1;
+	  errbuf[cpy_size] = '\0';
 	}
-      else
-	memcpy (errbuf, msg, msg_size);
+      memcpy (errbuf, msg, cpy_size);
     }
 
   return msg_size;
