@@ -1,5 +1,5 @@
-# socklen.m4 serial 4
-dnl Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+# socklen.m4 serial 5
+dnl Copyright (C) 2005, 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -19,7 +19,7 @@ AC_DEFUN([gl_TYPE_SOCKLEN_T],
   [AC_REQUIRE([gl_HEADER_SYS_SOCKET])dnl
    AC_CHECK_TYPE([socklen_t], ,
      [AC_MSG_CHECKING([for socklen_t equivalent])
-      AC_CACHE_VAL([gl_cv_gl_cv_socklen_t_equiv],
+      AC_CACHE_VAL([gl_cv_socklen_t_equiv],
 	[# Systems have either "struct sockaddr *" or
 	 # "void *" as the second argument to getpeername
 	 gl_cv_socklen_t_equiv=
