@@ -21,6 +21,37 @@
 
 #include @ABSOLUTE_STRING_H@
 
+
+/* GL_LINK_WARNING("literal string") arranges to emit the literal string as
+   a linker warning on most glibc systems.
+   We use a linker warning rather than a preprocessor warning, because
+   #warning cannot be used inside macros.  */
+#ifndef GL_LINK_WARNING
+  /* This works on platforms with GNU ld and ELF object format.
+     Testing __GLIBC__ is sufficient for asserting that GNU ld is in use.
+     Testing __ELF__ guarantees the ELF object format.
+     Testing __GNUC__ is necessary for the compound expression syntax.  */
+# if defined __GLIBC__ && defined __ELF__ && defined __GNUC__
+#  define GL_LINK_WARNING(message) \
+     GL_LINK_WARNING1 (__FILE__, __LINE__, message)
+#  define GL_LINK_WARNING1(file, line, message) \
+     GL_LINK_WARNING2 (file, line, message)  /* macroexpand file and line */
+#  define GL_LINK_WARNING2(file, line, message) \
+     GL_LINK_WARNING3 (file ":" #line ": " message)
+#  define GL_LINK_WARNING3(message) \
+     ({ static const char warning[sizeof (message)]		\
+          __attribute__ ((__unused__,				\
+                          __section__ (".gnu.warning"),		\
+                          __aligned__ (1)))			\
+          = message "\n";					\
+        (void)0;						\
+     })
+# else
+#  define GL_LINK_WARNING(message) ((void) 0)
+# endif
+#endif
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -94,9 +125,11 @@ extern char *stpncpy (char *restrict __dst, char const *restrict __src,
 #  define strcasecmp rpl_strcasecmp
 extern int strcasecmp (char const *__s1, char const *__s2);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef strcasecmp
-# define strcasecmp strcasecmp_is_unportable__use_gnulib_module_strcase_for_portability
+# define strcasecmp(a,b) \
+    (GL_LINK_WARNING ("strcasecmp is often incorrectly implemented for multibyte locales - use gnulib module 'strcase' for correct and portable internationalization"), \
+     strcasecmp (a, b))
 #endif
 
 /* Compare no more than N bytes of strings S1 and S2, ignoring case,
@@ -107,9 +140,12 @@ extern int strcasecmp (char const *__s1, char const *__s2);
 # if ! @HAVE_DECL_STRNCASECMP@
 extern int strncasecmp (char const *__s1, char const *__s2, size_t __n);
 # endif
-#else
+#endif
+#if defined GNULIB_POSIXCHECK
 # undef strncasecmp
-# define strncasecmp strncasecmp_is_unportable__use_gnulib_module_strcase_for_portability
+# define strncasecmp(a,b) \
+    (GL_LINK_WARNING ("strncasecmp cannot work correctly in multibyte locales - don't use it if you care about internationalization"), \
+     strncasecmp (a, b))
 #endif
 
 /* Find the first occurrence of C in S or the final NUL byte.  */
@@ -203,9 +239,11 @@ extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 #  define strstr rpl_strstr
 extern char *strstr (char const *__haystack, char const *__needle);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef strstr
-# define strstr strstr_is_unportable__use_gnulib_module_strstr_for_portability
+# define strstr(a,b) \
+    (GL_LINK_WARNING ("strstr is often incorrectly implemented for multibyte locales - use gnulib module 'strstr' for correct and portable internationalization"), \
+     strstr (a, b))
 #endif
 
 /* Find the first occurrence of NEEDLE in HAYSTACK, using case-insensitive
@@ -218,9 +256,11 @@ extern char *strstr (char const *__haystack, char const *__needle);
 #  define strcasestr rpl_strcasestr
 extern char *strcasestr (const char *haystack, const char *needle);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef strcasestr
-# define strcasestr strcasestr_is_unportable__use_gnulib_module_strcasestr_for_portability
+# define strcasestr(a,b) \
+    (GL_LINK_WARNING ("strcasestr is often incorrectly implemented for multibyte locales - use gnulib module 'strcasestr' for correct and portable internationalization"), \
+     strcasestr (a, b))
 #endif
 
 /* Parse S into tokens separated by characters in DELIM.
