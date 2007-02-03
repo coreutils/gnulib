@@ -140,13 +140,18 @@ __getcwd (char *buf, size_t size)
   size_t allocated = size;
   size_t used;
 
-#if HAVE_PARTLY_WORKING_GETCWD && !defined AT_FDCWD
+#if HAVE_PARTLY_WORKING_GETCWD
   /* The system getcwd works, except it sometimes fails when it
      shouldn't, setting errno to ERANGE, ENAMETOOLONG, or ENOENT.  If
      AT_FDCWD is not defined, the algorithm below is O(N**2) and this
      is much slower than the system getcwd (at least on GNU/Linux).
      So trust the system getcwd's results unless they look
-     suspicious.  */
+     suspicious.
+
+     Use the system getcwd even if we have openat support, since the
+     system getcwd works even when a parent is unreadable, while the
+     openat-based approach does not.  */
+
 # undef getcwd
   dir = getcwd (buf, size);
   if (dir || (errno != ERANGE && !is_ENAMETOOLONG (errno) && errno != ENOENT))
