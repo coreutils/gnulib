@@ -62,7 +62,7 @@ extern "C" {
 extern void *memmem (void const *__haystack, size_t __haystack_len,
 		     void const *__needle, size_t __needle_len);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef memmem
 # define memmem memmem_is_unportable__use_gnulib_module_memmem_for_portability
 #endif
@@ -74,7 +74,7 @@ extern void *memmem (void const *__haystack, size_t __haystack_len,
 extern void *mempcpy (void *restrict __dest, void const *restrict __src,
 		      size_t __n);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef mempcpy
 # define mempcpy mempcpy_is_unportable__use_gnulib_module_mempcpy_for_portability
 #endif
@@ -84,7 +84,7 @@ extern void *mempcpy (void *restrict __dest, void const *restrict __src,
 # if ! @HAVE_DECL_MEMRCHR@
 extern void *memrchr (void const *, int, size_t);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef memrchr
 # define memrchr memrchr_is_unportable__use_gnulib_module_memrchr_for_portability
 #endif
@@ -94,7 +94,7 @@ extern void *memrchr (void const *, int, size_t);
 # if ! @HAVE_STPCPY@
 extern char *stpcpy (char *restrict __dst, char const *restrict __src);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef stpcpy
 # define stpcpy stpcpy_is_unportable__use_gnulib_module_stpcpy_for_portability
 #endif
@@ -107,7 +107,7 @@ extern char *stpcpy (char *restrict __dst, char const *restrict __src);
 extern char *stpncpy (char *restrict __dst, char const *restrict __src,
 		      size_t __n);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef stpncpy
 # define stpncpy stpncpy_is_unportable__use_gnulib_module_stpncpy_for_portability
 #endif
@@ -153,7 +153,7 @@ extern int strncasecmp (char const *__s1, char const *__s2, size_t __n);
 # if ! @HAVE_STRCHRNUL@
 extern char *strchrnul (char const *__s, int __c_in);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef strchrnul
 # define strchrnul strchrnul_is_unportable__use_gnulib_module_strchrnul_for_portability
 #endif
@@ -163,7 +163,7 @@ extern char *strchrnul (char const *__s, int __c_in);
 # if ! @HAVE_DECL_STRDUP@ && ! defined strdup
 extern char *strdup (char const *__s);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef strdup
 # define strdup strdup_is_unportable__use_gnulib_module_strdup_for_portability
 #endif
@@ -177,7 +177,7 @@ extern char *strdup (char const *__s);
 extern char *strndup (char const *__string, size_t __n);
 #  endif
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef strndup
 # define strndup strndup_is_unportable__use_gnulib_module_strndup_for_portability
 #endif
@@ -189,7 +189,7 @@ extern char *strndup (char const *__string, size_t __n);
 # if ! @HAVE_DECL_STRNLEN@
 extern size_t strnlen (char const *__string, size_t __maxlen);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef strnlen
 # define strnlen strnlen_is_unportable__use_gnulib_module_strnlen_for_portability
 #endif
@@ -199,7 +199,7 @@ extern size_t strnlen (char const *__string, size_t __maxlen);
 # if ! @HAVE_STRPBRK@
 extern char *strpbrk (char const *__s, char const *__accept);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef strpbrk
 # define strpbrk strpbrk_is_unportable__use_gnulib_module_strpbrk_for_portability
 #endif
@@ -224,7 +224,7 @@ extern char *strpbrk (char const *__s, char const *__accept);
 # if ! @HAVE_STRSEP@
 extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef strsep
 # define strsep strsep_is_unportable__use_gnulib_module_strsep_for_portability
 #endif
@@ -290,7 +290,7 @@ extern char *strcasestr (const char *haystack, const char *needle);
 extern char *strtok_r (char *restrict __s, char const *restrict __sep,
 		       char **restrict __lasts);
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef strtok_r
 # define strtok_r strtok_r_is_unportable__use_gnulib_module_strtok_r_for_portability
 #endif
