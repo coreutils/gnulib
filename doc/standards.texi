@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate January 21, 2007
+@set lastupdate January 22, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -4016,12 +4016,12 @@ the users of Foobar if the users of Foobar are few.)
 Sometimes a program is free software in itself but depends on a
 non-free platform in order to run.  For instance, many Java programs
 depend on the parts of Sun's Java implementation which are not yet
-freely available, and won't run on the GNU Java Compiler (which does
-not yet have all the features) or won't run with the GNU Java
-libraries.  We hope this particular problem will be gone in a few
-months, when Sun makes the standard Java libraries freely available,
-but of course the general principle remains: you should not recommend
-programs that depend on non-free software to run.
+free software, and won't run on the GNU Java Compiler (which does not
+yet have all the features) or won't run with the GNU Java libraries.
+We hope this particular problem will be gone in a few months, when Sun
+makes the standard Java libraries free software, but of course the
+general principle remains: you should not recommend programs that
+depend on non-free software to run.
 
 Some free programs encourage the use of non-free software.  A typical
 example is @command{mplayer}.  It is free software in itself, and the
