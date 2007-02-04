@@ -10,6 +10,9 @@ build-aux/config.rpath
 Depends-on:
 havelib
 
+configure.ac-early:
+AC_REQUIRE([gl_LOCK_EARLY])
+
 configure.ac:
 gl_LOCK
 
