@@ -141,7 +141,7 @@ xnrealloc (void *p, size_t n, size_t s)
 
    In the following implementation, nonzero sizes are increased by a
    factor of approximately 1.5 so that repeated reallocations have
-   O(N log N) overall cost rather than O(N**2) cost, but the
+   O(N) overall cost rather than O(N**2) cost, but the
    specification for this function does not guarantee that rate.
 
    Here is an example of use:
@@ -204,9 +204,13 @@ x2nrealloc (void *p, size_t *pn, size_t s)
     }
   else
     {
-      if ((2 * (((size_t) -1 - 1) / 3)) / s < n)
+      /* Set N = ceil (1.5 * N) so that progress is made if N == 1.
+	 Check for overflow, so that N * S stays in size_t range.
+	 The check is slightly conservative, but an exact check isn't
+	 worth the trouble.  */
+      if ((size_t) -1 / 3 * 2 / s <= n)
 	xalloc_die ();
-      n = n + n / 2 + 1;
+      n += (n + 1) / 2;
     }
 
   *pn = n;
