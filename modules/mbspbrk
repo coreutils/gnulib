@@ -1,0 +1,30 @@
+Description:
+mbspbrk() function: search a string for any of a set of characters.
+
+Files:
+lib/mbspbrk.c
+m4/mbspbrk.m4
+m4/mbrtowc.m4
+
+Depends-on:
+mbuiter
+string
+mbschr
+strpbrk
+
+configure.ac:
+gl_FUNC_MBSPBRK
+gl_STRING_MODULE_INDICATOR([mbspbrk])
+
+Makefile.am:
+lib_SOURCES += mbspbrk.c
+
+Include:
+<string.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

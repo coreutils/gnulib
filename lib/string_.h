@@ -217,6 +217,16 @@ extern size_t strnlen (char const *__string, size_t __maxlen);
 # if ! @HAVE_STRPBRK@
 extern char *strpbrk (char const *__s, char const *__accept);
 # endif
+# if defined GNULIB_POSIXCHECK
+/* strpbrk() assumes the second argument is a list of single-byte characters.
+   Even in this simple case, it does not work with multibyte strings if the
+   locale encoding is GB18030 and one of the characters to be searched is a
+   digit.  */
+#  undef strpbrk
+#  define strpbrk(s,a) \
+     (GL_LINK_WARNING ("strpbrk cannot work correctly on character strings in multibyte locales - use mbspbrk if you care about internationalization"), \
+      strpbrk (s, a))
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef strpbrk
 # define strpbrk strpbrk_is_unportable__use_gnulib_module_strpbrk_for_portability
@@ -370,6 +380,15 @@ extern char * mbscasestr (const char *haystack, const char *needle);
    if none exists.
    Unlike strcspn(), this function works correctly in multibyte locales.  */
 extern size_t mbscspn (const char *string, const char *accept);
+#endif
+
+#if @GNULIB_MBSPBRK@
+/* Find the first occurrence in the character string STRING of any character
+   in the character string ACCEPT.  Return the pointer to it, or NULL if none
+   exists.
+   Unlike strpbrk(), this function works correctly in multibyte locales.  */
+# define mbspbrk rpl_mbspbrk /* avoid collision with HP-UX function */
+extern char * mbspbrk (const char *string, const char *accept);
 #endif
 
 

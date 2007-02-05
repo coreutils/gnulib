@@ -2166,6 +2166,7 @@ func_all_modules ()
   func_module mbscasecmp
   func_module mbscasestr
   func_module mbscspn
+  func_module mbspbrk
   func_module mbswidth
   func_module memcasecmp
   func_module memcoll
