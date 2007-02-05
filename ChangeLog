@@ -10,9 +10,13 @@
 	Change the conditional link warning.
 	(mbscasecmp): New declaration.
 	* m4/mbscasecmp.m4: New file.
+	* m4/strcase.m4 (gl_FUNC_STRCASECMP): Enable the replacement only if
+	the system lacks strcasecmp. Set HAVE_STRCASECMP instead of
+	REPLACE_STRCASECMP.
 	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR_DEFAULTS): Initialize
 	GNULIB_MBSCASECMP.
 	* modules/string (string.h): Also substitute GNULIB_MBSCASECMP.
+	Substitute HAVE_STRCASECMP instead of REPLACE_STRCASECMP.
 	* MODULES.html.sh (Internationalization functions): Add mbscasecmp.
 
 2007-02-04  Bruno Haible  <bruno@clisp.org>
