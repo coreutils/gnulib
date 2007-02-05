@@ -3,8 +3,9 @@
 	Simplify handling of strncasecmp.
 	* lib/string_.h (strncasecmp): Remove test for GNULIB_STRCASE. Change
 	the conditional link warning.
-	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR_DEFAULTS): Don't
-	initialize GNULIB_STRCASE.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Initialize
+	HAVE_STRCASECMP, not REPLACE_STRCASECMP.
+	(gl_STRING_MODULE_INDICATOR_DEFAULTS): Don't initialize GNULIB_STRCASE.
 	* modules/strcase (configure.ac): Don't invoke
 	gl_STRING_MODULE_INDICATOR.
 	* modules/string (string.h): Don't substitute GNULIB_STRCASE.
