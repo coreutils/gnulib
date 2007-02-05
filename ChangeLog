@@ -1,5 +1,16 @@
 2007-02-04  Bruno Haible  <bruno@clisp.org>
 
+	Simplify handling of strncasecmp.
+	* lib/string_.h (strncasecmp): Remove test for GNULIB_STRCASE. Change
+	the conditional link warning.
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR_DEFAULTS): Don't
+	initialize GNULIB_STRCASE.
+	* modules/strcase (configure.ac): Don't invoke
+	gl_STRING_MODULE_INDICATOR.
+	* modules/string (string.h): Don't substitute GNULIB_STRCASE.
+
+2007-02-04  Bruno Haible  <bruno@clisp.org>
+
 	New module mbscasecmp, reduced goal of strcasecmp.
 	* modules/mbscasecmp: New file.
 	* lib/mbscasecmp.c: New file, copied from lib/strcasecmp.c.

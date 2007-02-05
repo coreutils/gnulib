@@ -133,15 +133,16 @@ extern int strcasecmp (char const *s1, char const *s2);
    returning less than, equal to or greater than zero if S1 is
    lexicographically less than, equal to or greater than S2.
    Note: This function cannot work correctly in multibyte locales.  */
-#if @GNULIB_STRCASE@
-# if ! @HAVE_DECL_STRNCASECMP@
-extern int strncasecmp (char const *__s1, char const *__s2, size_t __n);
-# endif
+#if ! @HAVE_DECL_STRNCASECMP@
+extern int strncasecmp (char const *s1, char const *s2, size_t n);
 #endif
 #if defined GNULIB_POSIXCHECK
+/* strncasecmp() does not work with multibyte strings:
+   POSIX says that it operates on "strings", and "string" in POSIX is defined
+   as a sequence of bytes, not of characters.  */
 # undef strncasecmp
 # define strncasecmp(a,b) \
-    (GL_LINK_WARNING ("strncasecmp cannot work correctly in multibyte locales - don't use it if you care about internationalization"), \
+    (GL_LINK_WARNING ("strncasecmp cannot work correctly on character strings in multibyte locales - don't use it if you care about internationalization; use c_strncasecmp (from gnulib module c-strcase) if you want a locale independent function"), \
      strncasecmp (a, b))
 #endif
 
