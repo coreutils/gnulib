@@ -1,5 +1,18 @@
 2007-02-04  Bruno Haible  <bruno@clisp.org>
 
+	New module mbsspn.
+	* modules/mbsspn: New file.
+	* lib/mbsspn.c: New file.
+	* lib/string_.h (strspn): Add a conditional link warning.
+	(mbsspn): New declaration.
+	* m4/mbsspn.m4: New file.
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR_DEFAULTS): Initialize
+	GNULIB_MBSCSPN.
+	* modules/string (string.h): Also substitute GNULIB_MBSSPN.
+	* MODULES.html.sh (Internationalization functions): Add mbsspn.
+
+2007-02-04  Bruno Haible  <bruno@clisp.org>
+
 	New module mbspbrk.
 	* modules/mbspbrk: New file.
 	* lib/mbspbrk.c: New file.

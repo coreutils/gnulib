@@ -233,6 +233,15 @@ extern char *strpbrk (char const *__s, char const *__accept);
 #endif
 
 #if defined GNULIB_POSIXCHECK
+/* strspn() assumes the second argument is a list of single-byte characters.
+   Even in this simple case, it cannot work with multibyte strings.  */
+# undef strspn
+# define strspn(s,a) \
+    (GL_LINK_WARNING ("strspn cannot work correctly on character strings in multibyte locales - use mbsspn if you care about internationalization"), \
+     strspn (s, a))
+#endif
+
+#if defined GNULIB_POSIXCHECK
 /* strrchr() does not work with multibyte strings if the locale encoding is
    GB18030 and the character to be searched is a digit.  */
 # undef strrchr
@@ -389,6 +398,15 @@ extern size_t mbscspn (const char *string, const char *accept);
    Unlike strpbrk(), this function works correctly in multibyte locales.  */
 # define mbspbrk rpl_mbspbrk /* avoid collision with HP-UX function */
 extern char * mbspbrk (const char *string, const char *accept);
+#endif
+
+#if @GNULIB_MBSSPN@
+/* Find the first occurrence in the character string STRING of any character
+   not in the character string REJECT.  Return the number of bytes from the
+   beginning of the string to this occurrence, or to the end of the string
+   if none exists.
+   Unlike strspn(), this function works correctly in multibyte locales.  */
+extern size_t mbsspn (const char *string, const char *reject);
 #endif
 
 
