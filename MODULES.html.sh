@@ -2162,6 +2162,7 @@ func_all_modules ()
   func_module localcharset
   func_module hard-locale
   func_module mbschr
+  func_module mbsrchr
   func_module mbswidth
   func_module memcasecmp
   func_module memcoll

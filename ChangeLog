@@ -1,5 +1,18 @@
 2007-02-04  Bruno Haible  <bruno@clisp.org>
 
+	New module mbsrchr.
+	* modules/mbsrchr: New file.
+	* lib/mbsrchr.c: New file.
+	* lib/string_.h (strrchr): Add a conditional link warning.
+	(mbsrchr): New declaration.
+	* m4/mbsrchr.m4: New file.
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR_DEFAULTS): Initialize
+	GNULIB_MBSRCHR.
+	* modules/string (string.h): Also substitute GNULIB_MBSRCHR.
+	* MODULES.html.sh (Internationalization functions): Add mbsrchr.
+
+2007-02-04  Bruno Haible  <bruno@clisp.org>
+
 	New module mbschr.
 	* modules/mbschr: New file.
 	* lib/mbschr.c: New file.

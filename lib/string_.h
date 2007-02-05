@@ -213,6 +213,15 @@ extern char *strpbrk (char const *__s, char const *__accept);
 # define strpbrk strpbrk_is_unportable__use_gnulib_module_strpbrk_for_portability
 #endif
 
+#if defined GNULIB_POSIXCHECK
+/* strrchr() does not work with multibyte strings if the locale encoding is
+   GB18030 and the character to be searched is a digit.  */
+# undef strrchr
+# define strrchr(s,c) \
+    (GL_LINK_WARNING ("strrchr cannot work correctly on character strings in some multibyte locales - use mbsrchr if you care about internationalization"), \
+     strrchr (s, c))
+#endif
+
 /* Search the next delimiter (char listed in DELIM) starting at *STRINGP.
    If one is found, overwrite it with a NUL, and advance *STRINGP
    to point to the next char after it.  Otherwise, set *STRINGP to NULL.
@@ -315,6 +324,15 @@ extern char *strtok_r (char *restrict __s, char const *restrict __sep,
    encodings such as GB18030.  */
 # define mbschr rpl_mbschr /* avoid collision with HP-UX function */
 extern char * mbschr (const char *string, int c);
+#endif
+
+#if @GNULIB_MBSRCHR@
+/* Locate the last single-byte character C in the character string STRING,
+   and return a pointer to it.  Return NULL if C is not found in STRING.
+   Unlike strrchr(), this function works correctly in multibyte locales with
+   encodings such as GB18030.  */
+# define mbsrchr rpl_mbsrchr /* avoid collision with HP-UX function */
+extern char * mbsrchr (const char *string, int c);
 #endif
 
 
