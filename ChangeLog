@@ -1,5 +1,9 @@
 2007-02-05  Paolo Bonzini  <bonzini@gnu.org>
 
+	* lib/acl.h: Include sys/types.h before sys/acl.h.
+
+2007-02-05  Paolo Bonzini  <bonzini@gnu.org>
+
 	Merge upstream fix for glibc bugzilla #3957:
 
 	2007-02-05  Jakub Jelinek  <jakub@redhat.com>

@@ -18,6 +18,8 @@
 
    Written by Paul Eggert.  */
 
+#include <sys/types.h>
+
 #if HAVE_SYS_ACL_H
 # include <sys/acl.h>
 #endif
@@ -25,7 +27,6 @@
 # define GETACLCNT ACL_CNT
 #endif
 
-#include <sys/types.h>
 #include <sys/stat.h>
 
 int file_has_acl (char const *, struct stat const *);
