@@ -25,10 +25,10 @@
 
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
 
-/* Compare no more than N bytes of strings S1 and S2,
-   ignoring case, returning less than, equal to or
-   greater than zero if S1 is lexicographically less
-   than, equal to or greater than S2.  */
+/* Compare no more than N bytes of strings S1 and S2, ignoring case,
+   returning less than, equal to or greater than zero if S1 is
+   lexicographically less than, equal to or greater than S2.
+   Note: This function cannot work correctly in multibyte locales.  */
 
 int
 strncasecmp (const char *s1, const char *s2, size_t n)
