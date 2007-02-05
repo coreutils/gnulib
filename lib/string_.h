@@ -148,6 +148,15 @@ extern int strncasecmp (char const *__s1, char const *__s2, size_t __n);
      strncasecmp (a, b))
 #endif
 
+#if defined GNULIB_POSIXCHECK
+/* strchr() does not work with multibyte strings if the locale encoding is
+   GB18030 and the character to be searched is a digit.  */
+# undef strchr
+# define strchr(s,c) \
+    (GL_LINK_WARNING ("strchr cannot work correctly on character strings in some multibyte locales - use mbschr if you care about internationalization"), \
+     strchr (s, c))
+#endif
+
 /* Find the first occurrence of C in S or the final NUL byte.  */
 #if @GNULIB_STRCHRNUL@
 # if ! @HAVE_STRCHRNUL@
@@ -294,6 +303,20 @@ extern char *strtok_r (char *restrict __s, char const *restrict __sep,
 # undef strtok_r
 # define strtok_r strtok_r_is_unportable__use_gnulib_module_strtok_r_for_portability
 #endif
+
+
+/* The following functions are not specified by POSIX.  They are gnulib
+   extensions.  */
+
+#if @GNULIB_MBSCHR@
+/* Locate the first single-byte character C in the character string STRING,
+   and return a pointer to it.  Return NULL if C is not found in STRING.
+   Unlike strchr(), this function works correctly in multibyte locales with
+   encodings such as GB18030.  */
+# define mbschr rpl_mbschr /* avoid collision with HP-UX function */
+extern char * mbschr (const char *string, int c);
+#endif
+
 
 #ifdef __cplusplus
 }
