@@ -1,3 +1,8 @@
+2007-02-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/getsubopt.c [!_LIBC]: Include config.h and getsubopt.h.
+	* lib/memmem.c [!defined _LIBC]: Include config.h.
+
 2007-02-04  Bruno Haible  <bruno@clisp.org>
 
 	* lib/string_.h (GL_LINK_WARNING2): Put the word "warning:" into the
