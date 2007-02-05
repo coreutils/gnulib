@@ -1,5 +1,22 @@
 2007-02-04  Bruno Haible  <bruno@clisp.org>
 
+	New module mbscasecmp, reduced goal of strcasecmp.
+	* modules/mbscasecmp: New file.
+	* lib/mbscasecmp.c: New file, copied from lib/strcasecmp.c.
+	(mbscasecmp): Renamed from strcasecmp.
+	* lib/strcasecmp.c: Don't include mbuiter.h.
+	(strcasecmp): Remove support for multibyte locales.
+	* lib/string_.h (strcasecmp): Don`t rename. Declare only if missing.
+	Change the conditional link warning.
+	(mbscasecmp): New declaration.
+	* m4/mbscasecmp.m4: New file.
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR_DEFAULTS): Initialize
+	GNULIB_MBSCASECMP.
+	* modules/string (string.h): Also substitute GNULIB_MBSCASECMP.
+	* MODULES.html.sh (Internationalization functions): Add mbscasecmp.
+
+2007-02-04  Bruno Haible  <bruno@clisp.org>
+
 	New module mbsstr. Remove module strstr.
 	* modules/mbsstr: New file.
 	* modules/strstr: Remove file.

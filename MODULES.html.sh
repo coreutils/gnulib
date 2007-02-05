@@ -2163,6 +2163,7 @@ func_all_modules ()
   func_module mbschr
   func_module mbsrchr
   func_module mbsstr
+  func_module mbscasecmp
   func_module mbswidth
   func_module memcasecmp
   func_module memcoll

@@ -115,20 +115,17 @@ extern char *stpncpy (char *restrict __dst, char const *restrict __src,
 /* Compare strings S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than, equal to or greater
    than S2.
-   Note: This function may, in multibyte locales, return 0 for strings of
-   different lengths!
-   No known system has a strcasecmp() function that works correctly in
-   multibyte locales.  Therefore use our version always, if the
-   strcase module is available.  */
-#if @GNULIB_STRCASE@
-# if @REPLACE_STRCASECMP@
-#  define strcasecmp rpl_strcasecmp
-extern int strcasecmp (char const *__s1, char const *__s2);
-# endif
-#elif defined GNULIB_POSIXCHECK
+   Note: This function does not work in multibyte locales.  */
+#if ! @HAVE_STRCASECMP@
+extern int strcasecmp (char const *s1, char const *s2);
+#endif
+#if defined GNULIB_POSIXCHECK
+/* strcasecmp() does not work with multibyte strings:
+   POSIX says that it operates on "strings", and "string" in POSIX is defined
+   as a sequence of bytes, not of characters.   */
 # undef strcasecmp
 # define strcasecmp(a,b) \
-    (GL_LINK_WARNING ("strcasecmp is often incorrectly implemented for multibyte locales - use gnulib module 'strcase' for correct and portable internationalization"), \
+    (GL_LINK_WARNING ("strcasecmp cannot work correctly on character strings in multibyte locales - use mbscasecmp if you care about internationalization, or use c_strcasecmp (from gnulib module c-strcase) if you want a locale independent function"), \
      strcasecmp (a, b))
 #endif
 
@@ -335,6 +332,16 @@ extern char * mbsrchr (const char *string, int c);
    Unlike strstr(), this function works correctly in multibyte locales with
    encodings different from UTF-8.  */
 extern char * mbsstr (const char *haystack, const char *needle);
+#endif
+
+#if @GNULIB_MBSCASECMP@
+/* Compare the character strings S1 and S2, ignoring case, returning less than,
+   equal to or greater than zero if S1 is lexicographically less than, equal to
+   or greater than S2.
+   Note: This function may, in multibyte locales, return 0 for strings of
+   different lengths!
+   Unlike strcasecmp(), this function works correctly in multibyte locales.  */
+extern int mbscasecmp (const char *s1, const char *s2);
 #endif
 
 
