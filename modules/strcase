@@ -5,10 +5,8 @@ Files:
 lib/strcasecmp.c
 lib/strncasecmp.c
 m4/strcase.m4
-m4/mbrtowc.m4
 
 Depends-on:
-mbuiter
 string
 
 configure.ac:
