@@ -37,7 +37,7 @@
 #  define GL_LINK_WARNING1(file, line, message) \
      GL_LINK_WARNING2 (file, line, message)  /* macroexpand file and line */
 #  define GL_LINK_WARNING2(file, line, message) \
-     GL_LINK_WARNING3 (file ":" #line ": " message)
+     GL_LINK_WARNING3 (file ":" #line ": warning: " message)
 #  define GL_LINK_WARNING3(message) \
      ({ static const char warning[sizeof (message)]		\
           __attribute__ ((__unused__,				\
