@@ -325,8 +325,14 @@ extern char *strcasestr (const char *haystack, const char *needle);
    See also strsep().  */
 #if @GNULIB_STRTOK_R@
 # if ! @HAVE_DECL_STRTOK_R@
-extern char *strtok_r (char *restrict __s, char const *restrict __sep,
-		       char **restrict __lasts);
+extern char *strtok_r (char *restrict s, char const *restrict delim,
+		       char **restrict save_ptr);
+# endif
+# if defined GNULIB_POSIXCHECK
+#  undef strtok_r
+#  define strtok_r(s,d,p) \
+     (GL_LINK_WARNING ("strtok_r cannot work correctly on character strings in multibyte locales - use mbstok_r if you care about internationalization"), \
+      strtok_r (s, d, p))
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtok_r
@@ -407,6 +413,24 @@ extern char * mbspbrk (const char *string, const char *accept);
    if none exists.
    Unlike strspn(), this function works correctly in multibyte locales.  */
 extern size_t mbsspn (const char *string, const char *reject);
+#endif
+
+#if @GNULIB_MBSTOK_R@
+/* Parse the character string STRING into tokens separated by characters in
+   the character string DELIM.
+   If STRING is NULL, the saved pointer in SAVE_PTR is used as
+   the next starting point.  For example:
+	char s[] = "-abc-=-def";
+	char *sp;
+	x = mbstok_r(s, "-", &sp);	// x = "abc", sp = "=-def"
+	x = mbstok_r(NULL, "-=", &sp);	// x = "def", sp = NULL
+	x = mbstok_r(NULL, "=", &sp);	// x = NULL
+		// s = "abc\0-def\0"
+
+   Caveat: It modifies the original string.
+   Caveat: These functions cannot be used on constant strings.
+   Caveat: The identity of the delimiting character is lost.  */
+extern char * mbstok_r (char *string, const char *delim, char **save_ptr);
 #endif
 
 
