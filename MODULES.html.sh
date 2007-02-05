@@ -1502,7 +1502,6 @@ func_all_modules ()
   func_module memset
   func_module strcspn
   func_module strpbrk
-  func_module strstr
   func_module strerror
   func_module mktime
   func_end_table
@@ -2163,6 +2162,7 @@ func_all_modules ()
   func_module hard-locale
   func_module mbschr
   func_module mbsrchr
+  func_module mbsstr
   func_module mbswidth
   func_module memcasecmp
   func_module memcoll

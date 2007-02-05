@@ -247,20 +247,14 @@ extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 # define strsep strsep_is_unportable__use_gnulib_module_strsep_for_portability
 #endif
 
-/* Find the first occurrence of NEEDLE in HAYSTACK.
-   No known system has a strstr() function that works correctly in
-   multibyte locales.  Therefore use our version always, if the strstr
-   module is available.  */
-#if @GNULIB_STRSTR@
-# if @REPLACE_STRSTR@
-#  undef strstr
-#  define strstr rpl_strstr
-extern char *strstr (char const *__haystack, char const *__needle);
-# endif
-#elif defined GNULIB_POSIXCHECK
+#if defined GNULIB_POSIXCHECK
+/* strstr() does not work with multibyte strings if the locale encoding is
+   different from UTF-8:
+   POSIX says that it operates on "strings", and "string" in POSIX is defined
+   as a sequence of bytes, not of characters.  */
 # undef strstr
 # define strstr(a,b) \
-    (GL_LINK_WARNING ("strstr is often incorrectly implemented for multibyte locales - use gnulib module 'strstr' for correct and portable internationalization"), \
+    (GL_LINK_WARNING ("strstr cannot work correctly on character strings in most multibyte locales - use mbsstr if you care about internationalization"), \
      strstr (a, b))
 #endif
 
@@ -333,6 +327,14 @@ extern char * mbschr (const char *string, int c);
    encodings such as GB18030.  */
 # define mbsrchr rpl_mbsrchr /* avoid collision with HP-UX function */
 extern char * mbsrchr (const char *string, int c);
+#endif
+
+#if @GNULIB_MBSSTR@
+/* Find the first occurrence of the character string NEEDLE in the character
+   string HAYSTACK.  Return NULL if NEEDLE is not found in HAYSTACK.
+   Unlike strstr(), this function works correctly in multibyte locales with
+   encodings different from UTF-8.  */
+extern char * mbsstr (const char *haystack, const char *needle);
 #endif
 
 

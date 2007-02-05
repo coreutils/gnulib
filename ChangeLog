@@ -1,5 +1,26 @@
 2007-02-04  Bruno Haible  <bruno@clisp.org>
 
+	New module mbsstr. Remove module strstr.
+	* modules/mbsstr: New file.
+	* modules/strstr: Remove file.
+	* lib/mbsstr.c: Renamed from lib/strstr.c.
+	(mbsstr): Renamed from strstr.
+	* lib/string_.h (strstr): Remove declaration. Change the conditional
+	link warning.
+	(mbsstr): New declaration.
+	* m4/mbsstr.m4: New file.
+	* m4/strstr.m4: Remove file.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Don't initialize
+	REPLACE_STRSTR.
+	(gl_STRING_MODULE_INDICATOR_DEFAULTS): Initialize GNULIB_MBSSTR.
+	Don't initialize GNULIB_STRSTR.
+	* modules/string (string.h): Also substitute GNULIB_MBSSTR. Don't
+	substitute GNULIB_STRSTR and REPLACE_STRSTR.
+	* MODULES.html.sh (Internationalization functions): Add mbsstr.
+	(Support for systems lacking ANSI C 89): Remove strstr.
+
+2007-02-04  Bruno Haible  <bruno@clisp.org>
+
 	New module mbsrchr.
 	* modules/mbsrchr: New file.
 	* lib/mbsrchr.c: New file.

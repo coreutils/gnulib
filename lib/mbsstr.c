@@ -27,9 +27,10 @@
 # include "mbuiter.h"
 #endif
 
-/* Find the first occurrence of NEEDLE in HAYSTACK.  */
+/* Find the first occurrence of the character string NEEDLE in the character
+   string HAYSTACK.  Return NULL if NEEDLE is not found in HAYSTACK.  */
 char *
-strstr (const char *haystack, const char *needle)
+mbsstr (const char *haystack, const char *needle)
 {
   /* Be careful not to look at the entire extent of haystack or needle
      until needed.  This is useful because of these two cases:
