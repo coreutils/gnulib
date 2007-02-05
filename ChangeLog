@@ -1,5 +1,7 @@
 2007-02-04  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/stdbool_.h: Mention that bool bit-fields aren't supported.
+
 	* modules/stdarg (configure.ac-early): Require AC_PROG_CC_STDC.
 
 2007-02-04  Bruno Haible  <bruno@clisp.org>
