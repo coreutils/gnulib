@@ -201,6 +201,17 @@ extern size_t strnlen (char const *__string, size_t __maxlen);
 # define strnlen strnlen_is_unportable__use_gnulib_module_strnlen_for_portability
 #endif
 
+#if defined GNULIB_POSIXCHECK
+/* strcspn() assumes the second argument is a list of single-byte characters.
+   Even in this simple case, it does not work with multibyte strings if the
+   locale encoding is GB18030 and one of the characters to be searched is a
+   digit.  */
+# undef strcspn
+# define strcspn(s,a) \
+    (GL_LINK_WARNING ("strcspn cannot work correctly on character strings in multibyte locales - use mbscspn if you care about internationalization"), \
+     strcspn (s, a))
+#endif
+
 /* Find the first occurrence in S of any character in ACCEPT.  */
 #if @GNULIB_STRPBRK@
 # if ! @HAVE_STRPBRK@
@@ -350,6 +361,15 @@ extern int mbscasecmp (const char *s1, const char *s2);
    strlen (haystack) < strlen (needle) !
    Unlike strcasestr(), this function works correctly in multibyte locales.  */
 extern char * mbscasestr (const char *haystack, const char *needle);
+#endif
+
+#if @GNULIB_MBSCSPN@
+/* Find the first occurrence in the character string STRING of any character
+   in the character string ACCEPT.  Return the number of bytes from the
+   beginning of the string to this occurrence, or to the end of the string
+   if none exists.
+   Unlike strcspn(), this function works correctly in multibyte locales.  */
+extern size_t mbscspn (const char *string, const char *accept);
 #endif
 
 
