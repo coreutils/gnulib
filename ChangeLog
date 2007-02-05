@@ -13,11 +13,14 @@
 	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Enable the replacement only if
 	the system does not have strcasestr. Set HAVE_STRCASESTR instead of
 	REPLACE_STRCASESTR.
+	(gl_PREREQ_STRCASESTR): Don't require gl_FUNC_MBRTOWC.
 	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Initialize
 	HAVE_STRCASESTR instead of REPLACE_STRCASESTR.
 	(gl_STRING_MODULE_INDICATOR_DEFAULTS): Initialize GNULIB_MBSCASESTR.
 	* modules/string (string.h): Also substitute GNULIB_MBSCASESTR.
 	Substitute HAVE_STRCASESTR instead of REPLACE_STRCASESTR.
+	* modules/strcasestr (Files): Remove m4/mbrtowc.m4.
+	(Depends-on): Remove mbuiter.
 	* MODULES.html.sh (Internationalization functions): Add mbscasestr.
 
 2007-02-04  Bruno Haible  <bruno@clisp.org>
@@ -47,10 +50,13 @@
 	* m4/strcase.m4 (gl_FUNC_STRCASECMP): Enable the replacement only if
 	the system lacks strcasecmp. Set HAVE_STRCASECMP instead of
 	REPLACE_STRCASECMP.
+	(gl_PREREQ_STRCASECMP): Don't require gl_FUNC_MBRTOWC.
 	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR_DEFAULTS): Initialize
 	GNULIB_MBSCASECMP.
 	* modules/string (string.h): Also substitute GNULIB_MBSCASECMP.
 	Substitute HAVE_STRCASECMP instead of REPLACE_STRCASECMP.
+	* modules/strcase (Files): Remove m4/mbrtowc.m4.
+	(Depends-on): Remove mbuiter.
 	* MODULES.html.sh (Internationalization functions): Add mbscasecmp.
 
 2007-02-04  Bruno Haible  <bruno@clisp.org>
