@@ -269,6 +269,18 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
       gcryalg = GCRY_MD_SHA1;
       break;
 
+    case GC_SHA256:
+      gcryalg = GCRY_MD_SHA256;
+      break;
+
+    case GC_SHA384:
+      gcryalg = GCRY_MD_SHA384;
+      break;
+
+    case GC_SHA512:
+      gcryalg = GCRY_MD_SHA512;
+      break;
+
     case GC_RMD160:
       gcryalg = GCRY_MD_RMD160;
       break;
@@ -354,6 +366,18 @@ gc_hash_digest_length (Gc_hash hash)
 
     case GC_SHA1:
       len = GC_SHA1_DIGEST_SIZE;
+      break;
+
+    case GC_SHA256:
+      len = GC_SHA256_DIGEST_SIZE;
+      break;
+
+    case GC_SHA384:
+      len = GC_SHA384_DIGEST_SIZE;
+      break;
+
+    case GC_SHA512:
+      len = GC_SHA512_DIGEST_SIZE;
       break;
 
     default:
@@ -450,6 +474,24 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 #ifdef GNULIB_GC_SHA1
     case GC_SHA1:
       gcryalg = GCRY_MD_SHA1;
+      break;
+#endif
+
+#ifdef GNULIB_GC_SHA256
+    case GC_SHA256:
+      gcryalg = GCRY_MD_SHA256;
+      break;
+#endif
+
+#ifdef GNULIB_GC_SHA384
+    case GC_SHA384:
+      gcryalg = GCRY_MD_SHA384;
+      break;
+#endif
+
+#ifdef GNULIB_GC_SHA512
+    case GC_SHA512:
+      gcryalg = GCRY_MD_SHA512;
       break;
 #endif
 

@@ -1,3 +1,7 @@
+2007-02-05  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gc.h, lib/gc-libgcrypt.c: Support SHA-256/384/512.
+
 2007-02-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/getsubopt.c [!_LIBC]: Include config.h and getsubopt.h.
