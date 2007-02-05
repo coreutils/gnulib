@@ -257,19 +257,17 @@ extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 #endif
 
 /* Find the first occurrence of NEEDLE in HAYSTACK, using case-insensitive
-   comparison.
-   Note: This function may, in multibyte locales, return success even if
-   strlen (haystack) < strlen (needle) !  */
-#if @GNULIB_STRCASESTR@
-# if @REPLACE_STRCASESTR@
-#  undef strcasestr
-#  define strcasestr rpl_strcasestr
+   comparison.  */
+#if ! @HAVE_STRCASESTR@
 extern char *strcasestr (const char *haystack, const char *needle);
-# endif
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if defined GNULIB_POSIXCHECK
+/* strcasestr() does not work with multibyte strings:
+   It is a glibc extension, and glibc implements it only for unibyte
+   locales.  */
 # undef strcasestr
 # define strcasestr(a,b) \
-    (GL_LINK_WARNING ("strcasestr is often incorrectly implemented for multibyte locales - use gnulib module 'strcasestr' for correct and portable internationalization"), \
+    (GL_LINK_WARNING ("strcasestr does work correctly on character strings in multibyte locales - use mbscasestr if you care about internationalization, or use c-strcasestr if you want a locale independent function"), \
      strcasestr (a, b))
 #endif
 
@@ -343,6 +341,15 @@ extern char * mbsstr (const char *haystack, const char *needle);
    different lengths!
    Unlike strcasecmp(), this function works correctly in multibyte locales.  */
 extern int mbscasecmp (const char *s1, const char *s2);
+#endif
+
+#if @GNULIB_MBSCASESTR@
+/* Find the first occurrence of the character string NEEDLE in the character
+   string HAYSTACK, using case-insensitive comparison.
+   Note: This function may, in multibyte locales, return success even if
+   strlen (haystack) < strlen (needle) !
+   Unlike strcasestr(), this function works correctly in multibyte locales.  */
+extern char * mbscasestr (const char *haystack, const char *needle);
 #endif
 
 

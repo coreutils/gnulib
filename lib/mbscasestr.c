@@ -30,12 +30,12 @@
 
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
 
-/* Find the first occurrence of NEEDLE in HAYSTACK, using case-insensitive
-   comparison.
+/* Find the first occurrence of the character string NEEDLE in the character
+   string HAYSTACK, using case-insensitive comparison.
    Note: This function may, in multibyte locales, return success even if
    strlen (haystack) < strlen (needle) !  */
 char *
-strcasestr (const char *haystack, const char *needle)
+mbscasestr (const char *haystack, const char *needle)
 {
   /* Be careful not to look at the entire extent of haystack or needle
      until needed.  This is useful because of these two cases:

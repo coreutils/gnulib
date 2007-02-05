@@ -1,5 +1,27 @@
 2007-02-04  Bruno Haible  <bruno@clisp.org>
 
+	New module mbscasestr, reduced goal of strcasestr.
+	* modules/mbscasestr: New file.
+	* lib/mbscasestr.c: New file, copied from lib/strcasestr.c.
+	(mbscasestr): Renamed from strcasestr.
+	* lib/strcasestr.c: Don't include mbuiter.h.
+	(strcasestr): Remove support for multibyte locales.
+	* lib/string_.h (strcasestr): Don`t rename. Declare only if missing.
+	Change the conditional link warning.
+	(mbscasestr): New declaration.
+	* m4/mbscasestr.m4: New file.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Enable the replacement only if
+	the system does not have strcasestr. Set HAVE_STRCASESTR instead of
+	REPLACE_STRCASESTR.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Initialize
+	HAVE_STRCASESTR instead of REPLACE_STRCASESTR.
+	(gl_STRING_MODULE_INDICATOR_DEFAULTS): Initialize GNULIB_MBSCASESTR.
+	* modules/string (string.h): Also substitute GNULIB_MBSCASESTR.
+	Substitute HAVE_STRCASESTR instead of REPLACE_STRCASESTR.
+	* MODULES.html.sh (Internationalization functions): Add mbscasestr.
+
+2007-02-04  Bruno Haible  <bruno@clisp.org>
+
 	Simplify handling of strncasecmp.
 	* lib/string_.h (strncasecmp): Remove test for GNULIB_STRCASE. Change
 	the conditional link warning.
