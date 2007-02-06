@@ -17,6 +17,11 @@
 	* modules/string (string.h): Also substitute GNULIB_MBSSEP.
 	* MODULES.html.sh (Internationalization functions): Add mbssep.
 
+2007-02-05  Bruno Haible  <bruno@clisp.org>
+
+	* lib/strsep.c (strsep): Fix actions in case of no delimiters.
+	Optimize search in case of 1 delimiter.
+
 2007-02-05  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/acl.h: Include sys/types.h before sys/acl.h.
