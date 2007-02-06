@@ -1,3 +1,16 @@
+2007-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module mbssep.
+	* modules/mbssep: New file.
+	* lib/mbssep.c: New file.
+	* lib/string_.h (strsep): Add a conditional link warning.
+	(mbssep): New declaration.
+	* m4/mbssep.m4: New file.
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR_DEFAULTS): Initialize
+	GNULIB_MBSSEP.
+	* modules/string (string.h): Also substitute GNULIB_MBSSEP.
+	* MODULES.html.sh (Internationalization functions): Add mbssep.
+
 2007-02-05  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/acl.h: Include sys/types.h before sys/acl.h.

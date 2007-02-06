@@ -270,6 +270,12 @@ extern char *strpbrk (char const *__s, char const *__accept);
 # if ! @HAVE_STRSEP@
 extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 # endif
+# if defined GNULIB_POSIXCHECK
+#  undef strsep
+#  define strsep(s,d) \
+     (GL_LINK_WARNING ("strsep cannot work correctly on character strings in multibyte locales - use mbssep if you care about internationalization"), \
+      strsep (s, d))
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef strsep
 # define strsep strsep_is_unportable__use_gnulib_module_strsep_for_portability
@@ -415,6 +421,24 @@ extern char * mbspbrk (const char *string, const char *accept);
 extern size_t mbsspn (const char *string, const char *reject);
 #endif
 
+#if @GNULIB_MBSSEP@
+/* Search the next delimiter (multibyte character listed in the character
+   string DELIM) starting at the character string *STRINGP.
+   If one is found, overwrite it with a NUL, and advance *STRINGP to point
+   to the next multibyte character after it.  Otherwise, set *STRINGP to NULL.
+   If *STRINGP was already NULL, nothing happens.
+   Return the old value of *STRINGP.
+
+   This is a variant of mbstok_r() that supports empty fields.
+
+   Caveat: It modifies the original string.
+   Caveat: These functions cannot be used on constant strings.
+   Caveat: The identity of the delimiting character is lost.
+
+   See also mbstok_r().  */
+extern char * mbssep (char **stringp, const char *delim);
+#endif
+
 #if @GNULIB_MBSTOK_R@
 /* Parse the character string STRING into tokens separated by characters in
    the character string DELIM.
@@ -429,7 +453,9 @@ extern size_t mbsspn (const char *string, const char *reject);
 
    Caveat: It modifies the original string.
    Caveat: These functions cannot be used on constant strings.
-   Caveat: The identity of the delimiting character is lost.  */
+   Caveat: The identity of the delimiting character is lost.
+
+   See also mbssep().  */
 extern char * mbstok_r (char *string, const char *delim, char **save_ptr);
 #endif
 
