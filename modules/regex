@@ -16,6 +16,7 @@ alloca
 extensions
 gettext-h
 malloc
+stdbool
 stdint
 strcase
 ssize_t
