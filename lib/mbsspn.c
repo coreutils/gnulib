@@ -47,8 +47,8 @@ mbsspn (const char *string, const char *reject)
 	  for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
 	    if (!(mb_len (mbui_cur (iter)) == 1
 		  && (unsigned char) * mbui_cur_ptr (iter) == uc))
-	      return mbui_cur_ptr (iter) - string;
-	  return strlen (string);
+	      break;
+	  return mbui_cur_ptr (iter) - string;
 	}
       else
 #endif
@@ -71,25 +71,24 @@ mbsspn (const char *string, const char *reject)
 	{
 	  if (mb_len (mbui_cur (iter)) == 1)
 	    {
-	      if (mbschr (reject, (unsigned char) * mbui_cur_ptr (iter)) == NULL)
-		return mbui_cur_ptr (iter) - string;
+	      if (mbschr (reject, * mbui_cur_ptr (iter)) == NULL)
+		goto found;
 	    }
 	  else
 	    {
 	      mbui_iterator_t aiter;
 
-	      for (mbui_init (aiter, reject);
-		   mbui_avail (aiter);
-		   mbui_advance (aiter))
+	      for (mbui_init (aiter, reject);; mbui_advance (aiter))
 		{
 		  if (!mbui_avail (aiter))
-		    return mbui_cur_ptr (iter) - string;
+		    goto found;
 		  if (mb_equal (mbui_cur (aiter), mbui_cur (iter)))
 		    break;
 		}
 	    }
 	}
-      return strlen (string);
+     found:
+      return mbui_cur_ptr (iter) - string;
     }
   else
 #endif
