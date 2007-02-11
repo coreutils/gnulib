@@ -21,10 +21,210 @@
 /* Specification.  */
 #include <string.h>
 
+#include <stdbool.h>
 #include <stddef.h>  /* for NULL, in case a nonstandard string.h lacks it */
 
 #if HAVE_MBRTOWC
 # include "mbuiter.h"
+#endif
+
+/* Knuth-Morris-Pratt algorithm.
+   See http://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
+   Return a boolean indicating success.  */
+
+static bool
+knuth_morris_pratt_unibyte (const char *haystack, const char *needle,
+			    const char **resultp)
+{
+  size_t m = strlen (needle);
+
+  /* Allocate the table.  */
+  size_t *table = (size_t *) malloc (m * sizeof (size_t));
+  if (table == NULL)
+    return false;
+  /* Fill the table.
+     For 0 < i < m:
+       0 < table[i] <= i is defined such that
+       rhaystack[0..i-1] == needle[0..i-1] and rhaystack[i] != needle[i]
+       implies
+       forall 0 <= x < table[i]: rhaystack[x..x+m-1] != needle[0..m-1],
+       and table[i] is as large as possible with this property.
+     table[0] remains uninitialized.  */
+  {
+    size_t i, j;
+
+    table[1] = 1;
+    j = 0;
+    for (i = 2; i < m; i++)
+      {
+	unsigned char b = (unsigned char) needle[i - 1];
+
+	for (;;)
+	  {
+	    if (b == (unsigned char) needle[j])
+	      {
+		table[i] = i - ++j;
+		break;
+	      }
+	    if (j == 0)
+	      {
+		table[i] = i;
+		break;
+	      }
+	    j = j - table[j];
+	  }
+      }
+  }
+
+  /* Search, using the table to accelerate the processing.  */
+  {
+    size_t j;
+    const char *rhaystack;
+    const char *phaystack;
+
+    *resultp = NULL;
+    j = 0;
+    rhaystack = haystack;
+    phaystack = haystack;
+    /* Invariant: phaystack = rhaystack + j.  */
+    while (*phaystack != '\0')
+      if ((unsigned char) needle[j] == (unsigned char) *phaystack)
+	{
+	  j++;
+	  phaystack++;
+	  if (j == m)
+	    {
+	      /* The entire needle has been found.  */
+	      *resultp = rhaystack;
+	      break;
+	    }
+	}
+      else if (j > 0)
+	{
+	  /* Found a match of needle[0..j-1], mismatch at needle[j].  */
+	  rhaystack += table[j];
+	  j -= table[j];
+	}
+      else
+	{
+	  /* Found a mismatch at needle[0] already.  */
+	  rhaystack++;
+	  phaystack++;
+	}
+  }
+
+  free (table);
+  return true;
+}
+
+#if HAVE_MBRTOWC
+static bool
+knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
+			      const char **resultp)
+{
+  size_t m = mbslen (needle);
+  mbchar_t *needle_mbchars;
+  size_t *table;
+
+  /* Allocate room for needle_mbchars and the table.  */
+  char *memory = (char *) malloc (m * (sizeof (mbchar_t) + sizeof (size_t)));
+  if (memory == NULL)
+    return false;
+  needle_mbchars = (mbchar_t *) memory;
+  table = (size_t *) (memory + m * sizeof (mbchar_t));
+
+  /* Fill needle_mbchars.  */
+  {
+    mbui_iterator_t iter;
+    size_t j;
+
+    j = 0;
+    for (mbui_init (iter, needle); mbui_avail (iter); mbui_advance (iter), j++)
+      mb_copy (&needle_mbchars[j], &mbui_cur (iter));
+  }
+
+  /* Fill the table.
+     For 0 < i < m:
+       0 < table[i] <= i is defined such that
+       rhaystack[0..i-1] == needle[0..i-1] and rhaystack[i] != needle[i]
+       implies
+       forall 0 <= x < table[i]: rhaystack[x..x+m-1] != needle[0..m-1],
+       and table[i] is as large as possible with this property.
+     table[0] remains uninitialized.  */
+  {
+    size_t i, j;
+
+    table[1] = 1;
+    j = 0;
+    for (i = 2; i < m; i++)
+      {
+	mbchar_t *b = &needle_mbchars[i - 1];
+
+	for (;;)
+	  {
+	    if (mb_equal (*b, needle_mbchars[j]))
+	      {
+		table[i] = i - ++j;
+		break;
+	      }
+	    if (j == 0)
+	      {
+		table[i] = i;
+		break;
+	      }
+	    j = j - table[j];
+	  }
+      }
+  }
+
+  /* Search, using the table to accelerate the processing.  */
+  {
+    size_t j;
+    mbui_iterator_t rhaystack;
+    mbui_iterator_t phaystack;
+
+    *resultp = NULL;
+    j = 0;
+    mbui_init (rhaystack, haystack);
+    mbui_init (phaystack, haystack);
+    /* Invariant: phaystack = rhaystack + j.  */
+    while (mbui_avail (phaystack))
+      if (mb_equal (needle_mbchars[j], mbui_cur (phaystack)))
+	{
+	  j++;
+	  mbui_advance (phaystack);
+	  if (j == m)
+	    {
+	      /* The entire needle has been found.  */
+	      *resultp = mbui_cur_ptr (rhaystack);
+	      break;
+	    }
+	}
+      else if (j > 0)
+	{
+	  /* Found a match of needle[0..j-1], mismatch at needle[j].  */
+	  size_t count = table[j];
+	  j -= count;
+	  for (; count > 0; count--)
+	    {
+	      if (!mbui_avail (rhaystack))
+		abort ();
+	      mbui_advance (rhaystack);
+	    }
+	}
+      else
+	{
+	  /* Found a mismatch at needle[0] already.  */
+	  if (!mbui_avail (rhaystack))
+	    abort ();
+	  mbui_advance (rhaystack);
+	  mbui_advance (phaystack);
+	}
+  }
+
+  free (memory);
+  return true;
+}
 #endif
 
 /* Find the first occurrence of the character string NEEDLE in the character
@@ -45,8 +245,29 @@ mbsstr (const char *haystack, const char *needle)
       mbui_init (iter_needle, needle);
       if (mbui_avail (iter_needle))
 	{
+	  /* Minimizing the worst-case complexity:
+	     Let n = mbslen(haystack), m = mbslen(needle).
+	     The naïve algorithm is O(n*m) worst-case.
+	     The Knuth-Morris-Pratt algorithm is O(n) worst-case but it needs a
+	     memory allocation.
+	     To achieve linear complexity and yet amortize the cost of the
+	     memory allocation, we activate the Knuth-Morris-Pratt algorithm
+	     only once the naïve algorithm has already run for some time; more
+	     precisely, when
+	       - the outer loop count is >= 10,
+	       - the average number of comparisons per outer loop is >= 5,
+	       - the total number of comparisons is >= m.
+	     But we try it only once.  If the memory allocation attempt failed,
+	     we don't retry it.  */
+	  bool try_kmp = true;
+	  size_t outer_loop_count = 0;
+	  size_t comparison_count = 0;
+	  size_t last_ccount = 0;		   /* last comparison count */
+	  mbui_iterator_t iter_needle_last_ccount; /* = needle + last_ccount */
+
 	  mbui_iterator_t iter_haystack;
 
+	  mbui_init (iter_needle_last_ccount, needle);
 	  mbui_init (iter_haystack, haystack);
 	  for (;; mbui_advance (iter_haystack))
 	    {
@@ -54,6 +275,35 @@ mbsstr (const char *haystack, const char *needle)
 		/* No match.  */
 		return NULL;
 
+	      /* See whether it's advisable to use an asymptotically faster
+		 algorithm.  */
+	      if (try_kmp
+		  && outer_loop_count >= 10
+		  && comparison_count >= 5 * outer_loop_count)
+		{
+		  /* See if needle + comparison_count now reaches the end of
+		     needle.  */
+		  size_t count = comparison_count - last_ccount;
+		  for (;
+		       count > 0 && mbui_avail (iter_needle_last_ccount);
+		       count--)
+		    mbui_advance (iter_needle_last_ccount);
+		  last_ccount = comparison_count;
+		  if (!mbui_avail (iter_needle_last_ccount))
+		    {
+		      /* Try the Knuth-Morris-Pratt algorithm.  */
+		      const char *result;
+		      bool success =
+			knuth_morris_pratt_multibyte (haystack, needle,
+						      &result);
+		      if (success)
+			return (char *) result;
+		      try_kmp = false;
+		    }
+		}
+
+	      outer_loop_count++;
+	      comparison_count++;
 	      if (mb_equal (mbui_cur (iter_haystack), mbui_cur (iter_needle)))
 		/* The first character matches.  */
 		{
@@ -76,6 +326,7 @@ mbsstr (const char *haystack, const char *needle)
 		      if (!mbui_avail (rhaystack))
 			/* No match.  */
 			return NULL;
+		      comparison_count++;
 		      if (!mb_equal (mbui_cur (rhaystack), mbui_cur (rneedle)))
 			/* Nothing in this round.  */
 			break;
@@ -91,6 +342,26 @@ mbsstr (const char *haystack, const char *needle)
     {
       if (*needle != '\0')
 	{
+	  /* Minimizing the worst-case complexity:
+	     Let n = strlen(haystack), m = strlen(needle).
+	     The naïve algorithm is O(n*m) worst-case.
+	     The Knuth-Morris-Pratt algorithm is O(n) worst-case but it needs a
+	     memory allocation.
+	     To achieve linear complexity and yet amortize the cost of the
+	     memory allocation, we activate the Knuth-Morris-Pratt algorithm
+	     only once the naïve algorithm has already run for some time; more
+	     precisely, when
+	       - the outer loop count is >= 10,
+	       - the average number of comparisons per outer loop is >= 5,
+	       - the total number of comparisons is >= m.
+	     But we try it only once.  If the memory allocation attempt failed,
+	     we don't retry it.  */
+	  bool try_kmp = true;
+	  size_t outer_loop_count = 0;
+	  size_t comparison_count = 0;
+	  size_t last_ccount = 0;		   /* last comparison count */
+	  const char *needle_last_ccount = needle; /* = needle + last_ccount */
+
 	  /* Speed up the following searches of needle by caching its first
 	     character.  */
 	  char b = *needle++;
@@ -100,6 +371,39 @@ mbsstr (const char *haystack, const char *needle)
 	      if (*haystack == '\0')
 		/* No match.  */
 		return NULL;
+
+	      /* See whether it's advisable to use an asymptotically faster
+		 algorithm.  */
+	      if (try_kmp
+		  && outer_loop_count >= 10
+		  && comparison_count >= 5 * outer_loop_count)
+		{
+		  /* See if needle + comparison_count now reaches the end of
+		     needle.  */
+		  if (needle_last_ccount != NULL)
+		    {
+		      needle_last_ccount +=
+			strnlen (needle_last_ccount,
+				 comparison_count - last_ccount);
+		      if (*needle_last_ccount == '\0')
+			needle_last_ccount = NULL;
+		      last_ccount = comparison_count;
+		    }
+		  if (needle_last_ccount == NULL)
+		    {
+		      /* Try the Knuth-Morris-Pratt algorithm.  */
+		      const char *result;
+		      bool success =
+			knuth_morris_pratt_unibyte (haystack, needle - 1,
+						    &result);
+		      if (success)
+			return (char *) result;
+		      try_kmp = false;
+		    }
+		}
+
+	      outer_loop_count++;
+	      comparison_count++;
 	      if (*haystack == b)
 		/* The first character matches.  */
 		{
@@ -114,6 +418,7 @@ mbsstr (const char *haystack, const char *needle)
 		      if (*rhaystack == '\0')
 			/* No match.  */
 			return NULL;
+		      comparison_count++;
 		      if (*rhaystack != *rneedle)
 			/* Nothing in this round.  */
 			break;

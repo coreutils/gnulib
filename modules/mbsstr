@@ -8,7 +8,10 @@ m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
+stdbool
 string
+mbslen
+strnlen
 
 configure.ac:
 gl_FUNC_MBSSTR
