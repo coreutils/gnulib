@@ -1,0 +1,11 @@
+Files:
+tests/test-c-strstr.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-c-strstr
+check_PROGRAMS += test-c-strstr
+
