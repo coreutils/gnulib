@@ -26,8 +26,9 @@
 
 2007-02-11  Bruno Haible  <bruno@clisp.org>
 
-	* m4/javacomp.m4 (gt_JAVACOMP): Work around a 'tr' bug in coreutils.
-	Reported by Joel E. Denny <jdenny@ces.clemson.edu>,
+	* m4/javacomp.m4 (gt_JAVACOMP): Work around a 'tr' bug in coreutils
+	5.2.1 and earlier, whereby \055 was treated just like the range
+	delimiter '-'.  Reported by Joel E. Denny <jdenny@ces.clemson.edu>.
 
 2007-02-08  Bruno Haible  <bruno@clisp.org>
 
