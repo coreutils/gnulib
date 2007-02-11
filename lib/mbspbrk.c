@@ -46,7 +46,7 @@ mbspbrk (const char *string, const char *accept)
 	{
 	  if (mb_len (mbui_cur (iter)) == 1)
 	    {
-	      if (mbschr (accept, (unsigned char) * mbui_cur_ptr (iter)))
+	      if (mbschr (accept, * mbui_cur_ptr (iter)))
 		return (char *) mbui_cur_ptr (iter);
 	    }
 	  else
