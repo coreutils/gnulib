@@ -40,13 +40,11 @@ mbsrchr (const char *string, int c)
       const char *result = NULL;
       mbui_iterator_t iter;
 
-      for (mbui_init (iter, string);; mbui_advance (iter))
+      for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
 	{
 	  if (mb_len (mbui_cur (iter)) == 1
 	      && (unsigned char) * mbui_cur_ptr (iter) == (unsigned char) c)
 	    result = mbui_cur_ptr (iter);
-	  if (!mbui_avail (iter))
-	    break;
 	}
       return (char *) result;
     }

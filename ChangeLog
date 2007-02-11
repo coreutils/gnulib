@@ -1,5 +1,13 @@
 2007-02-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/mbsrchr.c (mbsrchr): Fix bug.
+
+	* modules/mbsrchr-tests: New file.
+	* tests/test-mbsrchr.sh: New file.
+	* tests/test-mbsrchr.c: New file.
+
+2007-02-11  Bruno Haible  <bruno@clisp.org>
+
 	* lib/mbschr.c (mbschr): Fix bug.
 
 	* modules/mbschr-tests: New file.
