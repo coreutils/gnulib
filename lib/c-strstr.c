@@ -1,118 +1,70 @@
-/* Copyright (C) 1994, 1999, 2002-2003, 2005-2006 Free Software Foundation, Inc.
-This file is part of the GNU C Library.
+/* c-strstr.c -- substring search in C locale
+   Copyright (C) 2005-2007 Free Software Foundation, Inc.
+   Written by Bruno Haible <bruno@clisp.org>, 2005, 2007.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software Foundation,
-Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
-
-/*
- * My personal strstr() implementation that beats most other algorithms.
- * Until someone tells me otherwise, I assume that this is the
- * fastest implementation of strstr() in C.
- * I deliberately chose not to comment it.  You should have at least
- * as much fun trying to understand it, as I had to write it :-).
- *
- * Stephen R. van den Berg, berg@pool.informatik.rwth-aachen.de	*/
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #include <config.h>
 
 /* Specification.  */
 #include "c-strstr.h"
 
-#include <string.h>
+#include <stddef.h>
 
-typedef unsigned chartype;
-
+/* Find the first occurrence of NEEDLE in HAYSTACK.  */
 char *
-c_strstr (const char *phaystack, const char *pneedle)
+c_strstr (const char *haystack, const char *needle)
 {
-  register const unsigned char *haystack, *needle;
-  register chartype b, c;
-
-  haystack = (const unsigned char *) phaystack;
-  needle = (const unsigned char *) pneedle;
-
-  b = *needle;
-  if (b != '\0')
+  /* Be careful not to look at the entire extent of haystack or needle
+     until needed.  This is useful because of these two cases:
+       - haystack may be very long, and a match of needle found early,
+       - needle may be very long, and not even a short initial segment of
+         needle may be found in haystack.  */
+  if (*needle != '\0')
     {
-      haystack--;				/* possible ANSI violation */
-      do
+      /* Speed up the following searches of needle by caching its first
+	 character.  */
+      unsigned char b = (unsigned char) *needle;
+
+      needle++;
+      for (;; haystack++)
 	{
-	  c = *++haystack;
-	  if (c == '\0')
-	    goto ret0;
-	}
-      while (c != b);
-
-      c = *++needle;
-      if (c == '\0')
-	goto foundneedle;
-      ++needle;
-      goto jin;
-
-      for (;;)
-        {
-          register chartype a;
-	  register const unsigned char *rhaystack, *rneedle;
-
-	  do
+	  if (*haystack == '\0')
+	    /* No match.  */
+	    return NULL;
+	  if ((unsigned char) *haystack == b)
+	    /* The first character matches.  */
 	    {
-	      a = *++haystack;
-	      if (a == '\0')
-		goto ret0;
-	      if (a == b)
-		break;
-	      a = *++haystack;
-	      if (a == '\0')
-		goto ret0;
-shloop:;    }
-          while (a != b);
+	      const char *rhaystack = haystack + 1;
+	      const char *rneedle = needle;
 
-jin:	  a = *++haystack;
-	  if (a == '\0')
-	    goto ret0;
-
-	  if (a != c)
-	    goto shloop;
-
-	  rhaystack = haystack-- + 1;
-	  rneedle = needle;
-	  a = *rneedle;
-
-	  if (*rhaystack == a)
-	    do
-	      {
-		if (a == '\0')
-		  goto foundneedle;
-		++rhaystack;
-		a = *++needle;
-		if (*rhaystack != a)
-		  break;
-		if (a == '\0')
-		  goto foundneedle;
-		++rhaystack;
-		a = *++needle;
-	      }
-	    while (*rhaystack == a);
-
-	  needle = rneedle;		   /* took the register-poor approach */
-
-	  if (a == '\0')
-	    break;
-        }
+	      for (;; rhaystack++, rneedle++)
+		{
+		  if (*rneedle == '\0')
+		    /* Found a match.  */
+		    return (char *) haystack;
+		  if (*rhaystack == '\0')
+		    /* No match.  */
+		    return NULL;
+		  if ((unsigned char) *rhaystack != (unsigned char) *rneedle)
+		    /* Nothing in this round.  */
+		    break;
+		}
+	    }
+	}
     }
-foundneedle:
-  return (char *) haystack;
-ret0:
-  return 0;
+  else
+    return (char *) haystack;
 }
