@@ -6,6 +6,8 @@ lib/c-strstr.h
 lib/c-strstr.c
 
 Depends-on:
+stdbool
+strnlen
 
 configure.ac:
 

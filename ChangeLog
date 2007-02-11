@@ -1,5 +1,12 @@
 2007-02-11  Bruno Haible  <bruno@clisp.org>
 
+	Ensure O(n) worst-case complexity of c_strstr.
+	* lib/c-strstr.c: Include stdbool.h, string.h.
+	(knuth_morris_pratt): New function.
+	(c_strstr): Add some bookkeeping. Invoke knuth_morris_pratt when the
+	bookkeeping indicates that it's worth it.
+	* modules/c-strstr (Depends-on): Add stdbool, strnlen.
+
 	* lib/c-strstr.c: Complete rewrite for maintainability.
 
 	* modules/c-strstr-tests: New file.
