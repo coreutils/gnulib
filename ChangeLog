@@ -1,5 +1,11 @@
 2007-02-11  Bruno Haible  <bruno@clisp.org>
 
+	* modules/mbscasecmp-tests: New file.
+	* tests/test-mbscasecmp.sh: New file.
+	* tests/test-mbscasecmp.c: New file.
+
+2007-02-11  Bruno Haible  <bruno@clisp.org>
+
 	Ensure O(n) worst-case complexity of mbscasestr.
 	* lib/mbscasestr.c: Include stdbool.h.
 	(knuth_morris_pratt_unibyte, knuth_morris_pratt_multibyte): New
