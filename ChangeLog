@@ -1,5 +1,14 @@
 2007-02-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/mbschr.c (mbschr): Fix bug.
+
+	* modules/mbschr-tests: New file.
+	* tests/test-mbschr.sh: New file.
+	* tests/test-mbschr.c: New file.
+	* m4/locale-zh.m4: New file.
+
+2007-02-11  Bruno Haible  <bruno@clisp.org>
+
 	Support for copying multibyte string iterators.
 	* lib/mbiter.h: Include <string.h>.
 	(mbiter_multi_copy): New function.

@@ -41,11 +41,11 @@ mbschr (const char *string, int c)
 
       for (mbui_init (iter, string);; mbui_advance (iter))
 	{
+	  if (!mbui_avail (iter))
+	    goto notfound;
 	  if (mb_len (mbui_cur (iter)) == 1
 	      && (unsigned char) * mbui_cur_ptr (iter) == (unsigned char) c)
 	    break;
-	  if (!mbui_avail (iter))
-	    goto notfound;
 	}
       return (char *) mbui_cur_ptr (iter);
      notfound:
