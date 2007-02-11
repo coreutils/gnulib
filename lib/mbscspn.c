@@ -50,8 +50,8 @@ mbscspn (const char *string, const char *accept)
 	{
 	  if (mb_len (mbui_cur (iter)) == 1)
 	    {
-	      if (mbschr (accept, (unsigned char) * mbui_cur_ptr (iter)))
-		return mbui_cur_ptr (iter) - string;
+	      if (mbschr (accept, * mbui_cur_ptr (iter)))
+		goto found;
 	    }
 	  else
 	    {
@@ -61,10 +61,11 @@ mbscspn (const char *string, const char *accept)
 		   mbui_avail (aiter);
 		   mbui_advance (aiter))
 		if (mb_equal (mbui_cur (aiter), mbui_cur (iter)))
-		  return mbui_cur_ptr (iter) - string;
+		  goto found;
 	    }
 	}
-      return strlen (string);
+     found:
+      return mbui_cur_ptr (iter) - string;
     }
   else
 #endif

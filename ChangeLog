@@ -1,5 +1,8 @@
 2007-02-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/mbscspn.c (mbscspn): Remove unnecessary strlen call and
+	unneeded cast.
+
 	* modules/mbscspn-tests: New file.
 	* tests/test-mbscspn.sh: New file.
 	* tests/test-mbscspn.c: New file.
