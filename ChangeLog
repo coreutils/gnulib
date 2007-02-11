@@ -1,5 +1,17 @@
 2007-02-11  Bruno Haible  <bruno@clisp.org>
 
+	Ensure O(n) worst-case complexity of strcasestr substitute.
+	* lib/strcasestr.c: Include stdbool.h.
+	(knuth_morris_pratt): New function.
+	(strcasestr): Add some bookkeeping. Invoke knuth_morris_pratt when the
+	bookkeeping indicates that it's worth it.
+	* modules/strcasestr (Depends-on): Add stdbool, strnlen.
+
+	* modules/strcasestr-tests: New file.
+	* tests/test-strcasestr.c: New file.
+
+2007-02-11  Bruno Haible  <bruno@clisp.org>
+
 	Ensure O(n) worst-case complexity of c_strcasestr.
 	* lib/c-strcasestr.c: Include stdbool.h, string.h.
 	(knuth_morris_pratt): New function.
