@@ -1,5 +1,11 @@
 2007-02-11  Bruno Haible  <bruno@clisp.org>
 
+	* modules/mbscspn-tests: New file.
+	* tests/test-mbscspn.sh: New file.
+	* tests/test-mbscspn.c: New file.
+
+2007-02-11  Bruno Haible  <bruno@clisp.org>
+
 	* modules/mbscasecmp-tests: New file.
 	* tests/test-mbscasecmp.sh: New file.
 	* tests/test-mbscasecmp.c: New file.
