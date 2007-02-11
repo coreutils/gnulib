@@ -1,0 +1,11 @@
+Files:
+tests/test-strcasestr.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-strcasestr
+check_PROGRAMS += test-strcasestr
+
