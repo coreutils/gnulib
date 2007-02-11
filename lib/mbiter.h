@@ -1,5 +1,5 @@
 /* Iterating through multibyte strings: macros for multi-byte encodings.
-   Copyright (C) 2001, 2005 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2005, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -65,6 +65,9 @@
    mbi_reloc (iter, ptrdiff)
      relocates iterator when the string is moved by ptrdiff bytes.
 
+   mbi_copy (&destiter, &srciter)
+     copies srciter to destiter.
+
    Here are the function prototypes of the macros.
 
    extern void		mbi_init (mbi_iterator_t iter,
@@ -74,6 +77,7 @@
    extern mbchar_t	mbi_cur (mbi_iterator_t iter);
    extern const char *	mbi_cur_ptr (mbi_iterator_t iter);
    extern void		mbi_reloc (mbi_iterator_t iter, ptrdiff_t ptrdiff);
+   extern void		mbi_copy (mbi_iterator_t *new, const mbi_iterator_t *old);
  */
 
 #ifndef _MBITER_H
@@ -81,6 +85,7 @@
 
 #include <assert.h>
 #include <stdbool.h>
+#include <string.h>
 
 /* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
    <wchar.h>.
@@ -174,6 +179,18 @@ mbiter_multi_reloc (struct mbiter_multi *iter, ptrdiff_t ptrdiff)
   iter->limit += ptrdiff;
 }
 
+static inline void
+mbiter_multi_copy (struct mbiter_multi *new_iter, const struct mbiter_multi *old_iter)
+{
+  new_iter->limit = old_iter->limit;
+  if ((new_iter->in_shift = old_iter->in_shift))
+    memcpy (&new_iter->state, &old_iter->state, sizeof (mbstate_t));
+  else
+    memset (&new_iter->state, 0, sizeof (mbstate_t));
+  new_iter->next_done = old_iter->next_done;
+  mb_copy (&new_iter->cur, &old_iter->cur);
+}
+
 /* Iteration macros.  */
 typedef struct mbiter_multi mbi_iterator_t;
 #define mbi_init(iter, startptr, length) \
@@ -191,5 +208,8 @@ typedef struct mbiter_multi mbi_iterator_t;
 
 /* Relocation.  */
 #define mbi_reloc(iter, ptrdiff) mbiter_multi_reloc (&iter, ptrdiff)
+
+/* Copying an iterator.  */
+#define mbi_copy mbiter_multi_copy
 
 #endif /* _MBITER_H */

@@ -1,5 +1,15 @@
 2007-02-11  Bruno Haible  <bruno@clisp.org>
 
+	Support for copying multibyte string iterators.
+	* lib/mbiter.h: Include <string.h>.
+	(mbiter_multi_copy): New function.
+	(mbi_copy): New macro.
+	* lib/mbuiter.h: Include <string.h>.
+	(mbuiter_multi_copy): New function.
+	(mbui_copy): New macro.
+
+2007-02-11  Bruno Haible  <bruno@clisp.org>
+
 	New module mbslen.
 	* modules/mbslen: New file.
 	* lib/mbslen.c: New file.
