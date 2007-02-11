@@ -1,0 +1,61 @@
+/* Test of searching a string for a character outside a given set of characters.
+   Copyright (C) 2007 Free Software Foundation, Inc.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+/* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
+
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#include <string.h>
+
+#include <locale.h>
+#include <stdlib.h>
+
+#define ASSERT(expr) if (!(expr)) abort ();
+
+int
+main ()
+{
+  /* configure should already have checked that the locale is supported.  */
+  if (setlocale (LC_ALL, "") == NULL)
+    return 1;
+
+  ASSERT (mbsspn ("Some text", "") == 0);
+
+  ASSERT (mbsspn ("A long sentence", " ") == 0);
+  ASSERT (mbsspn ("  xy", "aei ou") == 2);
+  ASSERT (mbsspn ("eau", "aeiou") == 3);
+
+  /* The following tests shows how mbsspn() is different from strspn().  */
+
+  {
+    const char input[] = "\303\266\303\274"; /* "öü" */
+    ASSERT (mbsspn (input, "\303\266") == 2); /* "ö" */
+    ASSERT (mbsspn (input, "\303\244") == 0); /* "ä" */
+    ASSERT (mbsspn (input, "\303\274\303\266") == 4); /* "üö" */
+    ASSERT (mbsspn (input, "\303\244\303\274") == 0); /* "äü" */
+    ASSERT (mbsspn (input, "\303\244\303\266") == 2); /* "äö" */
+  }
+
+  {
+    const char input[] = "\303\266\303\274"; /* "öü" */
+    ASSERT (mbsspn (input, "\303") == 0); /* invalid multibyte sequence */
+  }
+
+  return 0;
+}
