@@ -349,6 +349,12 @@ extern char *strtok_r (char *restrict s, char const *restrict delim,
 /* The following functions are not specified by POSIX.  They are gnulib
    extensions.  */
 
+#if @GNULIB_MBSLEN@
+/* Return the number of multibyte characters in the character string STRING.
+   This considers multibyte characters, unlike strlen, which counts bytes.  */
+extern size_t mbslen (const char *string);
+#endif
+
 #if @GNULIB_MBSCHR@
 /* Locate the first single-byte character C in the character string STRING,
    and return a pointer to it.  Return NULL if C is not found in STRING.

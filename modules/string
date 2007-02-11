@@ -21,6 +21,7 @@ string.h: string_.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''ABSOLUTE_STRING_H''@|$(ABSOLUTE_STRING_H)|g' \
+	      -e 's|@''GNULIB_MBSLEN''@|$(GNULIB_MBSLEN)|g' \
 	      -e 's|@''GNULIB_MBSCHR''@|$(GNULIB_MBSCHR)|g' \
 	      -e 's|@''GNULIB_MBSRCHR''@|$(GNULIB_MBSRCHR)|g' \
 	      -e 's|@''GNULIB_MBSSTR''@|$(GNULIB_MBSSTR)|g' \
