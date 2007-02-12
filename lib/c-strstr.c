@@ -25,6 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "allocsa.h"
+
 /* Knuth-Morris-Pratt algorithm.
    See http://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
    Return a boolean indicating success.  */
@@ -35,7 +37,7 @@ knuth_morris_pratt (const char *haystack, const char *needle,
   size_t m = strlen (needle);
 
   /* Allocate the table.  */
-  size_t *table = (size_t *) malloc (m * sizeof (size_t));
+  size_t *table = (size_t *) allocsa (m * sizeof (size_t));
   if (table == NULL)
     return false;
   /* Fill the table.
@@ -109,7 +111,7 @@ knuth_morris_pratt (const char *haystack, const char *needle,
 	}
   }
 
-  free (table);
+  freesa (table);
   return true;
 }
 

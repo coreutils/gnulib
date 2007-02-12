@@ -7,6 +7,7 @@ lib/c-strstr.c
 
 Depends-on:
 stdbool
+allocsa
 strnlen
 
 configure.ac:

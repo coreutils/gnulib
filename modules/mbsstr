@@ -11,6 +11,7 @@ mbuiter
 stdbool
 string
 mbslen
+allocsa
 strnlen
 
 configure.ac:

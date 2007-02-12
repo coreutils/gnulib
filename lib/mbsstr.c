@@ -24,6 +24,7 @@
 #include <stdbool.h>
 #include <stddef.h>  /* for NULL, in case a nonstandard string.h lacks it */
 
+#include "allocsa.h"
 #if HAVE_MBRTOWC
 # include "mbuiter.h"
 #endif
@@ -39,7 +40,7 @@ knuth_morris_pratt_unibyte (const char *haystack, const char *needle,
   size_t m = strlen (needle);
 
   /* Allocate the table.  */
-  size_t *table = (size_t *) malloc (m * sizeof (size_t));
+  size_t *table = (size_t *) allocsa (m * sizeof (size_t));
   if (table == NULL)
     return false;
   /* Fill the table.
@@ -113,7 +114,7 @@ knuth_morris_pratt_unibyte (const char *haystack, const char *needle,
 	}
   }
 
-  free (table);
+  freesa (table);
   return true;
 }
 
@@ -127,7 +128,7 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
   size_t *table;
 
   /* Allocate room for needle_mbchars and the table.  */
-  char *memory = (char *) malloc (m * (sizeof (mbchar_t) + sizeof (size_t)));
+  char *memory = (char *) allocsa (m * (sizeof (mbchar_t) + sizeof (size_t)));
   if (memory == NULL)
     return false;
   needle_mbchars = (mbchar_t *) memory;
@@ -222,7 +223,7 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
 	}
   }
 
-  free (memory);
+  freesa (memory);
   return true;
 }
 #endif
