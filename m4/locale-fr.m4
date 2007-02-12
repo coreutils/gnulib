@@ -1,5 +1,5 @@
-# locale-fr.m4 serial 3 (gettext-0.15)
-dnl Copyright (C) 2003, 2005-2006 Free Software Foundation, Inc.
+# locale-fr.m4 serial 4 (gettext-0.16.2)
+dnl Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -13,10 +13,12 @@ AC_DEFUN([gt_LOCALE_FR],
   AC_REQUIRE([AM_LANGINFO_CODESET])
   AC_CACHE_CHECK([for a traditional french locale], gt_cv_locale_fr, [
     macosx=
+changequote(,)dnl
     case "$host_os" in
       darwin[56]*) ;;
       darwin*) macosx=yes;;
     esac
+changequote([,])dnl
     if test -n "$macosx"; then
       # On Darwin 7 (MacOS X), the libc supports some locales in non-UTF-8
       # encodings, but the kernel does not support them. The documentation

@@ -1,4 +1,4 @@
-# locale-zh.m4 serial 1
+# locale-zh.m4 serial 2
 dnl Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,10 +13,12 @@ AC_DEFUN([gt_LOCALE_ZH_CN],
   AC_REQUIRE([AM_LANGINFO_CODESET])
   AC_CACHE_CHECK([for a transitional chinese locale], gt_cv_locale_zh_CN, [
     macosx=
+changequote(,)dnl
     case "$host_os" in
       darwin[56]*) ;;
       darwin*) macosx=yes;;
     esac
+changequote([,])dnl
     if test -n "$macosx"; then
       # On Darwin 7 (MacOS X), the libc supports some locales in non-UTF-8
       # encodings, but the kernel does not support them. The documentation
