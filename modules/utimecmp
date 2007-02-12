@@ -9,7 +9,7 @@ m4/utimecmp.m4
 Depends-on:
 hash
 stat-time
-timespec
+time
 utimens
 xalloc
 intprops

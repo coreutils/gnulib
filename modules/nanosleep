@@ -10,7 +10,7 @@ clock-time
 extensions
 stdbool
 sys_time
-timespec
+time
 
 configure.ac:
 gl_FUNC_NANOSLEEP
@@ -18,7 +18,7 @@ gl_FUNC_NANOSLEEP
 Makefile.am:
 
 Include:
-"timespec.h"
+<time.h>
 
 Link:
 $(LIB_NANOSLEEP)

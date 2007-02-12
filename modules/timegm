@@ -2,12 +2,12 @@ Description:
 Convert calendar time to simple time, inverse of mktime.
 
 Files:
-lib/timegm.h
 lib/timegm.c
 m4/timegm.m4
 
 Depends-on:
 mktime
+time
 time_r
 
 configure.ac:
@@ -16,7 +16,7 @@ gl_FUNC_TIMEGM
 Makefile.am:
 
 Include:
-"timegm.h"
+<time.h>
 
 License:
 LGPL

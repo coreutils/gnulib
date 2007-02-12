@@ -17,8 +17,9 @@
 
 #ifndef _LIBC
 # include <config.h>
-# include "strptime.h"
 #endif
+
+#include <time.h>
 
 #include <assert.h>
 #include <ctype.h>
@@ -27,7 +28,6 @@
 #endif
 #include <limits.h>
 #include <string.h>
-#include <time.h>
 #include <stdbool.h>
 
 #ifdef _LIBC
@@ -35,7 +35,6 @@
 #endif
 
 #ifndef _LIBC
-# include "time_r.h"
 enum ptime_locale_status { not, loc, raw };
 #endif
 

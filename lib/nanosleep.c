@@ -21,9 +21,7 @@
 
 #include <config.h>
 
-/* Undefine nanosleep here so any prototype is not redefined to be a
-   prototype for rpl_nanosleep. (they'd conflict e.g., on alpha-dec-osf3.2)  */
-#undef nanosleep
+#include <time.h>
 
 #include "timespec.h"
 
@@ -36,11 +34,11 @@
 #include <signal.h>
 
 #include <sys/time.h>
-#include <time.h>
-
 #include <errno.h>
 
 #include <unistd.h>
+
+#undef nanosleep
 
 enum { BILLION = 1000 * 1000 * 1000 };
 

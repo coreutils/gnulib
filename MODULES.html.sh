@@ -1950,6 +1950,7 @@ func_all_modules ()
   func_module readlink
   func_module lstat
   func_module tempname
+  func_module time
   func_module time_r
   func_module timespec
   func_module nanosleep

@@ -8,7 +8,7 @@ m4/xnanosleep.m4
 
 Depends-on:
 nanosleep
-timespec
+time
 intprops
 stdbool
 

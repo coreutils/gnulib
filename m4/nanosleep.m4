@@ -1,4 +1,4 @@
-#serial 20
+#serial 21
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -67,6 +67,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
 	  ts_sleep.tv_nsec = 999999999;
 	  alarm (1);
 	  if (nanosleep (&ts_sleep, &ts_remaining) == -1 && errno == EINTR
+	      && nanosleep
 	      && TYPE_MAXIMUM (time_t) - 10 < ts_remaining.tv_sec)
 	    return 0;
 	  return 119;
@@ -78,7 +79,10 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
       esac],
      [gl_cv_func_nanosleep=cross-compiling])
   ])
-  if test "$gl_cv_func_nanosleep" != yes; then
+  if test "$gl_cv_func_nanosleep" = yes; then
+    REPLACE_NANOSLEEP=0
+  else
+    REPLACE_NANOSLEEP=1
     if test "$gl_cv_func_nanosleep" = 'no (mishandles large arguments)'; then
       AC_DEFINE([HAVE_BUG_BIG_NANOSLEEP], 1,
 	[Define to 1 if nanosleep mishandle large arguments.])
@@ -90,8 +94,6 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
       done
     fi
     AC_LIBOBJ(nanosleep)
-    AC_DEFINE(nanosleep, rpl_nanosleep,
-      [Define to rpl_nanosleep if the replacement function should be used.])
     gl_PREREQ_NANOSLEEP
   fi
 

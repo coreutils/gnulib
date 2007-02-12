@@ -6,7 +6,7 @@ lib/stat-time.h
 m4/stat-time.m4
 
 Depends-on:
-timespec
+time
 
 configure.ac:
 gl_STAT_TIME

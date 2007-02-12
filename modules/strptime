@@ -2,16 +2,17 @@ Description:
 Convert a string representation of time to a tm structure.
 
 Files:
-lib/strptime.h
 lib/strptime.c
 m4/strptime.m4
 m4/tm_gmtoff.m4
 
 Depends-on:
+extensions
 sys_time
 string
 strcase
 stdbool
+time
 time_r
 
 configure.ac:
@@ -20,7 +21,7 @@ gl_FUNC_STRPTIME
 Makefile.am:
 
 Include:
-"strptime.h"
+<time.h>
 
 License:
 LGPL

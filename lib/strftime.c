@@ -134,11 +134,10 @@ extern char *tzname[];
 #endif
 
 #if !HAVE_TM_GMTOFF
-/* Portable standalone applications should supply a "time_r.h" that
+/* Portable standalone applications should supply a "time.h" that
    declares a POSIX-compliant localtime_r, for the benefit of older
    implementations that lack localtime_r or have a nonstandard one.
    See the gnulib time_r module for one way to implement this.  */
-# include "time_r.h"
 # undef __gmtime_r
 # undef __localtime_r
 # define __gmtime_r gmtime_r

@@ -1,12 +1,12 @@
 Description:
-struct timespec.
+timespec-related declarations
 
 Files:
 lib/timespec.h
 m4/timespec.m4
 
 Depends-on:
-extensions
+time
 
 configure.ac:
 gl_TIMESPEC
@@ -20,4 +20,4 @@ License:
 GPL
 
 Maintainer:
-Jim Meyering
+Paul Eggert and Jim Meyering

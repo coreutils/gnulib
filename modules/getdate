@@ -10,11 +10,11 @@ m4/tm_gmtoff.m4
 m4/getdate.m4
 
 Depends-on:
-timespec
 stdbool
 gettime
 mktime
 setenv
+time
 xalloc
 
 configure.ac:

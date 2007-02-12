@@ -229,17 +229,15 @@ example, you would need to make sure that @samp{#include <string.h>}
 is evaluated when compiling all source code files, that want to make
 use of @code{strdup}.
 
-When an include file is provided by Gnulib
-you shouldn't try to include the corresponding system header files
-yourself, but let the gnulib header file do it.  The ordering
-of the definition for some symbols may be significant; the Gnulib
-header files take care of that.
+In the usual case where Autoconf is creating a @file{config.h} file,
+you should include @file{config.h} first, before any other include
+file.  That way, for example, if @file{config.h} defines
+@samp{restrict} to be the empty string on a pre-C99 host, the
+definition is consistent for all include files.
 
-For example, to use the @code{time_r} gnulib module you should
-use include header file provided by the gnulib, and so
-@samp{#include "time_r.h"}, but you shouldn't explicitly
-@samp{#include <time.h>} as it is already done in @file{time_r.h}
-before the redefinition of some symbols.
+You should include Gnulib-provided headers before system headers,
+so that Gnulib-provided headers can adjust how a system header
+behaves.
 
 A final word of warning: Gnulib currently assumes it will be
 responsible for @emph{all} functions that end up in the Autoconf

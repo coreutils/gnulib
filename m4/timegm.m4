@@ -1,5 +1,5 @@
-# timegm.m4 serial 3
-dnl Copyright (C) 2003 Free Software Foundation, Inc.
+# timegm.m4 serial 4
+dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -14,11 +14,13 @@ AC_DEFUN([gl_FUNC_TIMEGM],
   else
     AC_REPLACE_FUNCS(timegm)
   fi
-  if test $ac_cv_func_timegm = no; then
+  REPLACE_TIMEGM=1
+  if test $ac_cv_func_timegm = yes; then
+    AC_CHECK_DECLS([timegm], [REPLACE_TIMEGM=0], [], [#include <time.h>])
+  fi
+  if test $REPLACE_TIMEGM = 1; then
     gl_PREREQ_TIMEGM
   fi
-
-  AC_CHECK_DECLS([timegm], , , [#include <time.h>])
 ])
 
 # Prerequisites of lib/timegm.c.
