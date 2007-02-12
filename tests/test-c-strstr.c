@@ -24,6 +24,7 @@
 #include "c-strstr.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #define ASSERT(expr) if (!(expr)) abort ();
 
