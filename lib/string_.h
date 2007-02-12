@@ -141,9 +141,9 @@ extern int strncasecmp (char const *s1, char const *s2, size_t n);
    POSIX says that it operates on "strings", and "string" in POSIX is defined
    as a sequence of bytes, not of characters.  */
 # undef strncasecmp
-# define strncasecmp(a,b) \
+# define strncasecmp(a,b,n) \
     (GL_LINK_WARNING ("strncasecmp cannot work correctly on character strings in multibyte locales - don't use it if you care about internationalization; use c_strncasecmp (from gnulib module c-strcase) if you want a locale independent function"), \
-     strncasecmp (a, b))
+     strncasecmp (a, b, n))
 #endif
 
 #if defined GNULIB_POSIXCHECK

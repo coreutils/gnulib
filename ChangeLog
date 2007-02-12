@@ -1,5 +1,10 @@
 2007-02-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/string_.h (strncasecmp): Fix typo: this macro takes 3
+	args, not 2.
+
+2007-02-12  Paul Eggert  <eggert@cs.ucla.edu>
+
 	New module 'time', so that apps can include <time.h> as per
 	POSIX and GNU instead of separate include files like time_r.h
 	and timegm.h.  This implementation tries out a simpler approach
