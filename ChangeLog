@@ -136,6 +136,7 @@
 	* tests/test-mbscasestr3.c: New file.
 	* tests/test-mbscasestr4.sh: New file.
 	* tests/test-mbscasestr4.c: New file.
+	* m4/locale-tr.m4: New file.
 
 2007-02-11  Bruno Haible  <bruno@clisp.org>
 
