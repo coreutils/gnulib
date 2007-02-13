@@ -64,7 +64,9 @@ extern void *memmem (void const *__haystack, size_t __haystack_len,
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef memmem
-# define memmem memmem_is_unportable__use_gnulib_module_memmem_for_portability
+# define memmem(a,al,b,bl) \
+    (GL_LINK_WARNING ("memmem is unportable - use gnulib module memmem for portability"), \
+     memmem (a, al, b, bl))
 #endif
 
 /* Copy N bytes of SRC to DEST, return pointer to bytes after the
@@ -76,7 +78,9 @@ extern void *mempcpy (void *restrict __dest, void const *restrict __src,
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mempcpy
-# define mempcpy mempcpy_is_unportable__use_gnulib_module_mempcpy_for_portability
+# define mempcpy(a,b,n) \
+    (GL_LINK_WARNING ("mempcpy is unportable - use gnulib module mempcpy for portability"), \
+     mempcpy (a, b, n))
 #endif
 
 /* Search backwards through a block for a byte (specified as an int).  */
@@ -86,7 +90,9 @@ extern void *memrchr (void const *, int, size_t);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef memrchr
-# define memrchr memrchr_is_unportable__use_gnulib_module_memrchr_for_portability
+# define memrchr(a,b,c) \
+    (GL_LINK_WARNING ("memrchr is unportable - use gnulib module memrchr for portability"), \
+     memrchr (a, b, c))
 #endif
 
 /* Copy SRC to DST, returning the address of the terminating '\0' in DST.  */
@@ -96,7 +102,9 @@ extern char *stpcpy (char *restrict __dst, char const *restrict __src);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef stpcpy
-# define stpcpy stpcpy_is_unportable__use_gnulib_module_stpcpy_for_portability
+# define stpcpy(a,b) \
+    (GL_LINK_WARNING ("stpcpy is unportable - use gnulib module stpcpy for portability"), \
+     stpcpy (a, b))
 #endif
 
 /* Copy no more than N bytes of SRC to DST, returning a pointer past the
@@ -109,7 +117,9 @@ extern char *stpncpy (char *restrict __dst, char const *restrict __src,
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef stpncpy
-# define stpncpy stpncpy_is_unportable__use_gnulib_module_stpncpy_for_portability
+# define stpncpy(a,b,n) \
+    (GL_LINK_WARNING ("stpncpy is unportable - use gnulib module stpncpy for portability"), \
+     stpncpy (a, b, n))
 #endif
 
 /* Compare strings S1 and S2, ignoring case, returning less than, equal to or
@@ -162,7 +172,9 @@ extern char *strchrnul (char const *__s, int __c_in);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strchrnul
-# define strchrnul strchrnul_is_unportable__use_gnulib_module_strchrnul_for_portability
+# define strchrnul(a,b) \
+    (GL_LINK_WARNING ("strchrnul is unportable - use gnulib module strchrnul for portability"), \
+     strchrnul (a, b))
 #endif
 
 /* Duplicate S, returning an identical malloc'd string.  */
@@ -172,7 +184,9 @@ extern char *strdup (char const *__s);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strdup
-# define strdup strdup_is_unportable__use_gnulib_module_strdup_for_portability
+# define strdup(a) \
+    (GL_LINK_WARNING ("strdup is unportable - use gnulib module strdup for portability"), \
+     strdup (a))
 #endif
 
 /* Return a newly allocated copy of at most N bytes of STRING.  */
@@ -186,7 +200,9 @@ extern char *strndup (char const *__string, size_t __n);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strndup
-# define strndup strndup_is_unportable__use_gnulib_module_strndup_for_portability
+# define strndup(a,n) \
+    (GL_LINK_WARNING ("strndup is unportable - use gnulib module strndup for portability"), \
+     strndup (a, n))
 #endif
 
 /* Find the length (number of bytes) of STRING, but scan at most
@@ -198,7 +214,9 @@ extern size_t strnlen (char const *__string, size_t __maxlen);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strnlen
-# define strnlen strnlen_is_unportable__use_gnulib_module_strnlen_for_portability
+# define strnlen(a,n) \
+    (GL_LINK_WARNING ("strnlen is unportable - use gnulib module strnlen for portability"), \
+     strnlen (a, n))
 #endif
 
 #if defined GNULIB_POSIXCHECK
@@ -229,7 +247,9 @@ extern char *strpbrk (char const *__s, char const *__accept);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strpbrk
-# define strpbrk strpbrk_is_unportable__use_gnulib_module_strpbrk_for_portability
+# define strpbrk(s,a) \
+    (GL_LINK_WARNING ("strpbrk is unportable - use gnulib module strpbrk for portability"), \
+     strpbrk (s, a))
 #endif
 
 #if defined GNULIB_POSIXCHECK
@@ -278,7 +298,9 @@ extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strsep
-# define strsep strsep_is_unportable__use_gnulib_module_strsep_for_portability
+# define strsep(s,d) \
+    (GL_LINK_WARNING ("strsep is unportable - use gnulib module strsep for portability"), \
+     strsep (s, d))
 #endif
 
 #if defined GNULIB_POSIXCHECK
@@ -342,7 +364,9 @@ extern char *strtok_r (char *restrict s, char const *restrict delim,
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtok_r
-# define strtok_r strtok_r_is_unportable__use_gnulib_module_strtok_r_for_portability
+# define strtok_r(s,d,p) \
+    (GL_LINK_WARNING ("strtok_r is unportable - use gnulib module strtok_r for portability"), \
+     strtok_r (s, d, p))
 #endif
 
 

@@ -1,5 +1,12 @@
 2007-02-12  Bruno Haible  <bruno@clisp.org>
 
+	* lib/string_.h (memmem, mempcpy, memrchr, stpcpy, stpncpy, strchrnul,
+	strdup, strndup, strnlen, strpbrk, strsep, strtok_r): If
+	GNULIB_POSIXCHECK and the gnulib module not enabled, provoke a link-
+	time warning rather than a link error.
+
+2007-02-12  Bruno Haible  <bruno@clisp.org>
+
 	* m4/locale-fr.m4 (gt_LOCALE_FR): Fix m4 quoting bug.
 	* m4/locale-zh.m4 (gt_LOCALE_ZH_CN): Likewise.
 	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
