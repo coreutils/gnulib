@@ -1,5 +1,5 @@
-# intdiv0.m4 serial 1 (gettext-0.11.3)
-dnl Copyright (C) 2002 Free Software Foundation, Inc.
+# intdiv0.m4 serial 2 (gettext-0.16.2)
+dnl Copyright (C) 2002, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -19,11 +19,7 @@ AC_DEFUN([gt_INTDIV0],
 #include <signal.h>
 
 static void
-#ifdef __cplusplus
 sigfpe_handler (int sig)
-#else
-sigfpe_handler (sig) int sig;
-#endif
 {
   /* Exit with code 0 if SIGFPE, with code 1 if any other signal.  */
   exit (sig != SIGFPE);
@@ -53,12 +49,14 @@ int main ()
 ], gt_cv_int_divbyzero_sigfpe=yes, gt_cv_int_divbyzero_sigfpe=no,
         [
           # Guess based on the CPU.
+changequote(,)dnl
           case "$host_cpu" in
             alpha* | i[34567]86 | m68k | s390*)
               gt_cv_int_divbyzero_sigfpe="guessing yes";;
             *)
               gt_cv_int_divbyzero_sigfpe="guessing no";;
           esac
+changequote([,])dnl
         ])
     ])
   case "$gt_cv_int_divbyzero_sigfpe" in
