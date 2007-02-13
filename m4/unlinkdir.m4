@@ -1,6 +1,6 @@
-#serial 4
+#serial 5
 
-# Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2005, 2006, 2007 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -23,9 +23,9 @@ AC_DEFUN([gl_UNLINKDIR],
   # and might create garbage in the file system,
   # so the code below simply relies on the kernel name and version number.
   case $host in
-  *-*-gnu[0-9]* | \
+  *-*-gnu[[0-9]]* | \
   *-*-linux-* | *-*-linux | \
-  *-*-freebsd2.2* | *-*-freebsd[3-9]* | *-*-freebsd[1-9][0-9]* | \
+  *-*-freebsd2.2* | *-*-freebsd[[3-9]]* | *-*-freebsd[[1-9]][[0-9]]* | \
   *-cygwin)
     AC_DEFINE([UNLINK_CANNOT_UNLINK_DIR], 1,
       [Define to 1 if unlink (dir) cannot possibly succeed.]);;

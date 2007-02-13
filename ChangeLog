@@ -1,3 +1,8 @@
+2007-02-13  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* m4/unlinkdir.m4 (gl_UNLINKDIR): Fix m4 quoting bug.
+	* m4/unlink-busy.m4 (gl_FUNC_UNLINK_BUSY_TEXT): Likewise.
+
 2007-02-13  Bruno Haible  <bruno@clisp.org>
 
 	* m4/intdiv0.m4 (gt_INTDIV0): Assume ANSI C. Fix underquoting bug.
