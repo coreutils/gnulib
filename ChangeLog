@@ -1,3 +1,14 @@
+2007-02-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Fix regex code so it doesn't rely on strcasecmp.
+	* lib/regex_internal.h: Include <langinfo.h> only if _LIBC is defined.
+	Otherwise, include gnulib's langinfo.h.
+	* lib/regcomp.c (init_dfa): Don't use strcasecmp, as it can have
+	undesirable behavior in non-C locales.  Instead, rely on locale_charset.
+	* m4/regex.m4 (gl_PREREQ_REGEX): Don't require AM_LANGINFO_CODESET.
+	* modules/regex (FILES): Remove m4/codeset.m4.
+	(Depends-on): Add localcharset.  Remove strcase.
+
 2007-02-13  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* m4/unlinkdir.m4 (gl_UNLINKDIR): Fix m4 quoting bug.

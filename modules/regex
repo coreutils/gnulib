@@ -8,17 +8,16 @@ lib/regex_internal.c
 lib/regex_internal.h
 lib/regexec.c
 lib/regcomp.c
-m4/codeset.m4
 m4/regex.m4
 
 Depends-on:
 alloca
 extensions
 gettext-h
+localcharset
 malloc
 stdbool
 stdint
-strcase
 ssize_t
 wchar
 wctype

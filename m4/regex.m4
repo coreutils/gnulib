@@ -1,4 +1,4 @@
-#serial 44
+#serial 45
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
 # 2006, 2007 Free Software Foundation, Inc.
@@ -203,7 +203,6 @@ AC_DEFUN([gl_PREREQ_REGEX],
 [
   AC_REQUIRE([AC_GNU_SOURCE])
   AC_REQUIRE([AC_C_RESTRICT])
-  AC_REQUIRE([AM_LANGINFO_CODESET])
   AC_CHECK_FUNCS_ONCE([iswctype mbrtowc wcrtomb wcscoll])
   AC_CHECK_DECLS([isblank], [], [], [#include <ctype.h>])
 ])

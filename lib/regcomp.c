@@ -829,9 +829,6 @@ static reg_errcode_t
 init_dfa (re_dfa_t *dfa, size_t pat_len)
 {
   __re_size_t table_size;
-#ifndef _LIBC
-  char *codeset_name;
-#endif
 #ifdef RE_ENABLE_I18N
   size_t max_i18n_object_size = MAX (sizeof (wchar_t), sizeof (wctype_t));
 #else
@@ -875,22 +872,7 @@ init_dfa (re_dfa_t *dfa, size_t pat_len)
   dfa->map_notascii = (_NL_CURRENT_WORD (LC_CTYPE, _NL_CTYPE_MAP_TO_NONASCII)
 		       != 0);
 #else
-# ifdef HAVE_LANGINFO_CODESET
-  codeset_name = nl_langinfo (CODESET);
-# else
-  codeset_name = getenv ("LC_ALL");
-  if (codeset_name == NULL || codeset_name[0] == '\0')
-    codeset_name = getenv ("LC_CTYPE");
-  if (codeset_name == NULL || codeset_name[0] == '\0')
-    codeset_name = getenv ("LANG");
-  if (codeset_name == NULL)
-    codeset_name = "";
-  else if (strchr (codeset_name, '.') !=  NULL)
-    codeset_name = strchr (codeset_name, '.') + 1;
-# endif
-
-  if (strcasecmp (codeset_name, "UTF-8") == 0
-      || strcasecmp (codeset_name, "UTF8") == 0)
+  if (strcmp (locale_charset (), "UTF-8") == 0)
     dfa->is_utf8 = 1;
 
   /* We check exhaustively in the loop below if this charset is a
