@@ -1,4 +1,8 @@
-2007-02-11  Bruno Haible  <bruno@clisp.org>
+2007-02-14  Bruno Haible  <bruno@clisp.org>
+
+	* modules/mbsncasecmp-tests: New file.
+	* tests/test-mbsncasecmp.sh: New file.
+	* tests/test-mbsncasecmp.c: New file.
 
 	New module mbsncasecmp.
 	* modules/mbsncasecmp: New file.
