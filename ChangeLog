@@ -1,5 +1,9 @@
 2007-02-14  Bruno Haible  <bruno@clisp.org>
 
+	* modules/mbspcasecmp-tests: New file.
+	* tests/test-mbspcasecmp.sh: New file.
+	* tests/test-mbspcasecmp.c: New file.
+
 	New module mbspcasecmp.
 	* modules/mbspcasecmp: New file.
 	* lib/mbspcasecmp.c: New file.
