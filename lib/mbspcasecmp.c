@@ -1,0 +1,100 @@
+/* Case-insensitive string comparison function.
+   Copyright (C) 1998-1999, 2005-2007 Free Software Foundation, Inc.
+   Written by Bruno Haible <bruno@clisp.org>, 2007.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+#include <config.h>
+
+/* Specification.  */
+#include <string.h>
+
+#include <ctype.h>
+
+#if HAVE_MBRTOWC
+# include "mbuiter.h"
+#endif
+
+#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
+
+/* Compare the initial segment of the character string STRING consisting of
+   at most mbslen (PREFIX) characters with the character string PREFIX,
+   ignoring case, returning less than, equal to or greater than zero if this
+   initial segment is lexicographically less than, equal to or greater than
+   PREFIX.
+   Note: This function may, in multibyte locales, return 0 if STRING is of
+   smaller length than PREFIX!  */
+char *
+mbspcasecmp (const char *string, const char *prefix)
+{
+  /* This is essentially the same as
+       mbsncasecmp (string, prefix, mbslen (prefix))
+     just with small optimizations.  */
+  if (string == prefix)
+    return (char *) (string + strlen (string));
+
+  /* Be careful not to look at the entire extent of STRING or PREFIX until
+     needed.  This is useful because when two strings differ, the difference is
+     most often already in the very few first characters.  */
+#if HAVE_MBRTOWC
+  if (MB_CUR_MAX > 1)
+    {
+      mbui_iterator_t iter1;
+      mbui_iterator_t iter2;
+
+      mbui_init (iter1, string);
+      mbui_init (iter2, prefix);
+
+      while (mbui_avail (iter1) && mbui_avail (iter2))
+	{
+	  int cmp = mb_casecmp (mbui_cur (iter1), mbui_cur (iter2));
+
+	  if (cmp != 0)
+	    return NULL;
+
+	  mbui_advance (iter1);
+	  mbui_advance (iter2);
+	}
+      if (!mbui_avail (iter2))
+	/* PREFIX equals STRING or is terminated before STRING.  */
+	return (char *) mbui_cur_ptr (iter1);
+      else
+	/* STRING terminated before PREFIX.  */
+	return NULL;
+    }
+  else
+#endif
+    {
+      const unsigned char *p1 = (const unsigned char *) string;
+      const unsigned char *p2 = (const unsigned char *) prefix;
+      unsigned char c1, c2;
+
+      for (; ; p1++, p2++)
+	{
+	  c1 = TOLOWER (*p1);
+	  c2 = TOLOWER (*p2);
+
+	  if (c2 == '\0' || c1 != c2)
+	    break;
+	}
+
+      if (c2 == '\0')
+	/* PREFIX equals STRING or is terminated before STRING.  */
+	return (char *) p1;
+      else
+	/* STRING terminated before PREFIX.  */
+	return NULL;
+    }
+}

@@ -152,7 +152,7 @@ extern int strncasecmp (char const *s1, char const *s2, size_t n);
    as a sequence of bytes, not of characters.  */
 # undef strncasecmp
 # define strncasecmp(a,b,n) \
-    (GL_LINK_WARNING ("strncasecmp cannot work correctly on character strings in multibyte locales - don't use it if you care about internationalization; use c_strncasecmp (from gnulib module c-strcase) if you want a locale independent function"), \
+    (GL_LINK_WARNING ("strncasecmp cannot work correctly on character strings in multibyte locales - use mbsncasecmp or mbspcasecmp if you care about internationalization, or use c_strncasecmp (from gnulib module c-strcase) if you want a locale independent function"), \
      strncasecmp (a, b, n))
 #endif
 
@@ -426,6 +426,19 @@ extern int mbscasecmp (const char *s1, const char *s2);
    Unlike strncasecmp(), this function works correctly in multibyte locales.
    But beware that N is not a byte count but a character count!  */
 extern int mbsncasecmp (const char *s1, const char *s2, size_t n);
+#endif
+
+#if @GNULIB_MBSPCASECMP@
+/* Compare the initial segment of the character string STRING consisting of
+   at most mbslen (PREFIX) characters with the character string PREFIX,
+   ignoring case, returning less than, equal to or greater than zero if this
+   initial segment is lexicographically less than, equal to or greater than
+   PREFIX.
+   Note: This function may, in multibyte locales, return 0 if STRING is of
+   smaller length than PREFIX!
+   Unlike strncasecmp(), this function works correctly in multibyte
+   locales.  */
+extern char * mbspcasecmp (const char *string, const char *prefix);
 #endif
 
 #if @GNULIB_MBSCASESTR@

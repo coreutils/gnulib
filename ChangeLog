@@ -1,5 +1,18 @@
 2007-02-14  Bruno Haible  <bruno@clisp.org>
 
+	New module mbspcasecmp.
+	* modules/mbspcasecmp: New file.
+	* lib/mbspcasecmp.c: New file.
+	* lib/string_.h (strncasecmp): Change warning message.
+	(mbspcasecmp): New declaration.
+	* m4/mbspcasecmp.m4: New file.
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR_DEFAULTS): Initialize
+	GNULIB_MBSPCASECMP.
+	* modules/string (string.h): Also substitute GNULIB_MBSPCASECMP.
+	* MODULES.html.sh (Internationalization functions): Add mbspcasecmp.
+
+2007-02-14  Bruno Haible  <bruno@clisp.org>
+
 	* modules/mbsncasecmp-tests: New file.
 	* tests/test-mbsncasecmp.sh: New file.
 	* tests/test-mbsncasecmp.c: New file.
