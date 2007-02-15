@@ -4,7 +4,7 @@
 	* lib/regex_internal.h: Include <langinfo.h> only if _LIBC is defined.
 	Otherwise, include gnulib's langinfo.h.
 	* lib/regcomp.c (init_dfa): Don't use strcasecmp, as it can have
-	undesirable behavior in non-C locales.  Instead, rely on locale_charset.
+	undesirable behavior in non-C locales.  Instead, rely on localecharset.
 	* m4/regex.m4 (gl_PREREQ_REGEX): Don't require AM_LANGINFO_CODESET.
 	* modules/regex (FILES): Remove m4/codeset.m4.
 	(Depends-on): Add localcharset.  Remove strcase.
