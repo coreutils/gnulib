@@ -1,3 +1,15 @@
+2007-02-11  Bruno Haible  <bruno@clisp.org>
+
+	New module mbsncasecmp.
+	* modules/mbsncasecmp: New file.
+	* lib/mbsncasecmp.c: New file.
+	* lib/string_.h (mbsncasecmp): New declaration.
+	* m4/mbsncasecmp.m4: New file.
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR_DEFAULTS): Initialize
+	GNULIB_MBSNCASECMP.
+	* modules/string (string.h): Also substitute GNULIB_MBSNCASECMP.
+	* MODULES.html.sh (Internationalization functions): Add mbsncasecmp.
+
 2007-02-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/exclude.c (FNM_EXTMATCH): Define if system does not.

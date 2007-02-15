@@ -415,6 +415,19 @@ extern char * mbsstr (const char *haystack, const char *needle);
 extern int mbscasecmp (const char *s1, const char *s2);
 #endif
 
+#if @GNULIB_MBSNCASECMP@
+/* Compare the initial segment of the character string S1 consisting of at most
+   N characters with the initial segment of the character string S2 consisting
+   of at most N characters, ignoring case, returning less than, equal to or
+   greater than zero if the initial segment of S1 is lexicographically less
+   than, equal to or greater than the initial segment of S2.
+   Note: This function may, in multibyte locales, return 0 for initial segments
+   of different lengths!
+   Unlike strncasecmp(), this function works correctly in multibyte locales.
+   But beware that N is not a byte count but a character count!  */
+extern int mbsncasecmp (const char *s1, const char *s2, size_t n);
+#endif
+
 #if @GNULIB_MBSCASESTR@
 /* Find the first occurrence of the character string NEEDLE in the character
    string HAYSTACK, using case-insensitive comparison.
