@@ -7,11 +7,11 @@ lib/exclude.c
 m4/exclude.m4
 
 Depends-on:
-xalloc
-strcase
-fnmatch-gnu
+fnmatch
+mbscasecmp
 stdbool
 verify
+xalloc
 
 configure.ac:
 gl_EXCLUDE

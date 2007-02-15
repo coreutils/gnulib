@@ -44,13 +44,16 @@
 #ifndef FNM_CASEFOLD
 # define FNM_CASEFOLD 0
 #endif
+#ifndef FNM_EXTMATCH
+# define FNM_EXTMATCH 0
+#endif
 #ifndef FNM_LEADING_DIR
 # define FNM_LEADING_DIR 0
 #endif
 
 verify (((EXCLUDE_ANCHORED | EXCLUDE_INCLUDE | EXCLUDE_WILDCARDS)
 	 & (FNM_PATHNAME | FNM_NOESCAPE | FNM_PERIOD | FNM_LEADING_DIR
-	    | FNM_CASEFOLD))
+	    | FNM_CASEFOLD | FNM_EXTMATCH))
 	== 0);
 
 /* An exclude pattern-options pair.  The options are fnmatch options
@@ -96,20 +99,42 @@ fnmatch_no_wildcards (char const *pattern, char const *f, int options)
 {
   if (! (options & FNM_LEADING_DIR))
     return ((options & FNM_CASEFOLD)
-	    ? strcasecmp (pattern, f)
+	    ? mbscasecmp (pattern, f)
 	    : strcmp (pattern, f));
-  else
+  else if (! (options & FNM_CASEFOLD))
     {
       size_t patlen = strlen (pattern);
-      int r = ((options & FNM_CASEFOLD)
-		? strncasecmp (pattern, f, patlen)
-		: strncmp (pattern, f, patlen));
+      int r = strncmp (pattern, f, patlen);
       if (! r)
 	{
 	  r = f[patlen];
 	  if (r == '/')
 	    r = 0;
 	}
+      return r;
+    }
+  else
+    {
+      /* Walk through a copy of F, seeing whether P matches any prefix
+	 of F.
+
+	 FIXME: This is an O(N**2) algorithm; it should be O(N).
+	 Also, the copy should not be necessary.  However, fixing this
+	 will probably involve a change to the mbs* API.  */
+
+      char *fcopy = xstrdup (f);
+      char *p;
+      int r;
+      for (p = fcopy; ; *p++ = '/')
+	{
+	  p = strchr (p, '/');
+	  if (p)
+	    *p = '\0';
+	  r = mbscasecmp (pattern, fcopy);
+	  if (!p || r <= 0)
+	    break;
+	}
+      free (fcopy);
       return r;
     }
 }
