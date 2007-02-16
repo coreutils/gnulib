@@ -1,5 +1,5 @@
 /* Temporary directories and temporary files with automatic cleanup.
-   Copyright (C) 2001, 2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2003, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -29,6 +29,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# define WIN32_LEAN_AND_MEAN  /* avoid including junk */
+# include <windows.h>
+#endif
 
 #include "error.h"
 #include "fatal-signal.h"
@@ -563,6 +568,33 @@ cleanup_temp_dir (struct temp_dir *dir)
 }
 
 
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+
+/* On Windows, opening a file with _O_TEMPORARY has the effect of passing
+   the FILE_FLAG_DELETE_ON_CLOSE flag to CreateFile(), which has the effect
+   of deleting the file when it is closed - even when the program crashes.
+   But (according to the Cygwin sources) it works only on Windows NT or newer.
+   So we cache the info whether we are running on Windows NT or newer.  */
+
+static bool
+supports_delete_on_close ()
+{
+  static int known; /* 1 = yes, -1 = no, 0 = unknown */
+  if (!known)
+    {
+      OSVERSIONINFO v;
+
+      if (GetVersionEx (&v))
+	known = (v.dwPlatformId == VER_PLATFORM_WIN32_NT ? 1 : -1);
+      else
+	known = -1;
+    }
+  return (known > 0);
+}
+
+#endif
+
+
 /* Register a file descriptor to be closed.  */
 static void
 register_fd (int fd)
@@ -598,7 +630,15 @@ open_temp (const char *file_name, int flags, mode_t mode)
   int saved_errno;
 
   block_fatal_signals ();
-  fd = open (file_name, flags, mode); /* actually open or open_safer */
+  /* Note: 'open' here is actually open() or open_safer().  */
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  /* Use _O_TEMPORARY when possible, to increase the chances that the
+     temporary file is removed when the process crashes.  */
+  if (supports_delete_on_close ())
+    fd = open (file_name, flags | _O_TEMPORARY, mode);
+  else
+#endif
+    fd = open (file_name, flags, mode);
   saved_errno = errno;
   if (fd >= 0)
     register_fd (fd);
@@ -616,8 +656,28 @@ fopen_temp (const char *file_name, const char *mode)
   int saved_errno;
 
   block_fatal_signals ();
-  fp = fopen (file_name, mode); /* actually fopen or fopen_safer */
-  saved_errno = errno;
+  /* Note: 'fopen' here is actually fopen() or fopen_safer().  */
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  /* Use _O_TEMPORARY when possible, to increase the chances that the
+     temporary file is removed when the process crashes.  */
+  if (supports_delete_on_close ())
+    {
+      size_t mode_len = strlen (mode);
+      char *augmented_mode = (char *) xallocsa (mode_len + 2);
+      memcpy (augmented_mode, mode, mode_len);
+      memcpy (augmented_mode + mode_len, "D", 2);
+
+      fp = fopen (file_name, augmented_mode);
+      saved_errno = errno;
+
+      freesa (augmented_mode);
+    }
+  else
+#endif
+    {
+      fp = fopen (file_name, mode);
+      saved_errno = errno;
+    }
   if (fp != NULL)
     {
       /* It is sufficient to register fileno (fp) instead of the entire fp,
