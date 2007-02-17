@@ -1,3 +1,10 @@
+2007-02-17  Bruno Haible  <bruno@clisp.org>
+
+	* lib/string_.h (memmem, mempcpy, memrchr, stpcpy, stpncpy, strcasecmp,
+	strncasecmp, strchr, strchrnul, strdup, strndup, strnlen, strcspn,
+	strpbrk, strspn, strrchr, strsep, strstr, strcasestr, strtok_r): Break
+	long lines.
+
 2007-02-17  Ben Pfaff  <blp@cs.stanford.edu>
             Bruno Haible  <bruno@clisp.org>
 
