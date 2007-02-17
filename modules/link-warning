@@ -1,0 +1,21 @@
+Description:
+A C macro for emitting link time warnings.
+
+Files:
+build-aux/link-warning.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+LINK_WARNING_H=$(top_srcdir)/build-aux/link-warning.h
+
+Include:
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
