@@ -1,0 +1,25 @@
+Description:
+tmpfile() function: create a temporary file.
+
+Files:
+lib/tmpfile.c
+m4/tmpfile.m4
+
+Depends-on:
+pathmax
+tempname
+tmpdir
+
+configure.ac:
+gl_TMPFILE
+
+Makefile.am:
+
+Include:
+#include <stdio.h>
+
+License:
+GPL
+
+Maintainer:
+Ben Pfaff

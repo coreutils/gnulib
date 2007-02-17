@@ -1524,6 +1524,16 @@ func_all_modules ()
   func_module verify
   func_end_table
 
+  element="Input/output <stdio.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap ansic_enh_stdio
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module tmpfile
+  func_end_table
+
   element="Memory management functions <stdlib.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap ansic_enh_stdlib_memory
