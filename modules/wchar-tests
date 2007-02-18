@@ -1,0 +1,13 @@
+Files:
+tests/test-wchar.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-wchar
+check_PROGRAMS += test-wchar
+
+License:
+LGPL

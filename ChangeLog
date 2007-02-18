@@ -1,5 +1,8 @@
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/wchar-tests: New file.
+	* tests/test-wchar.c: New file.
+
 	* modules/unistd-tests: New file.
 	* tests/test-unistd.c: New file.
 
