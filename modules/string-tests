@@ -1,0 +1,13 @@
+Files:
+tests/test-string.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-string
+check_PROGRAMS += test-string
+
+License:
+LGPL

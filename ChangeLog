@@ -1,5 +1,8 @@
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/string-tests: New file.
+	* tests/test-string.c: New file.
+
 	* modules/stdbool-tests: New file.
 	* tests/test-stdbool.c: New file.
 
