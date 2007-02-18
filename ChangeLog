@@ -1,5 +1,8 @@
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/netinet_in-tests: New file.
+	* tests/test-netinet_in.c: New file.
+
 	* modules/inttypes-tests: New file.
 	* tests/test-inttypes.c: New file.
 
