@@ -1,5 +1,8 @@
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fcntl-tests: New file.
+	* tests/test-fcntl.c: New file.
+
 	* modules/byteswap-tests: New file.
 	* tests/test-byteswap.c: New file.
 
