@@ -1,0 +1,38 @@
+Description:
+A GNU-like <math.h>.
+
+Files:
+lib/math_.h
+m4/math_h.m4
+
+Depends-on:
+absolute-header
+link-warning
+
+configure.ac:
+gl_MATH_H
+
+Makefile.am:
+BUILT_SOURCES += math.h
+
+# We need the following in order to create <math.h> when the system
+# doesn't have one that works with the given compiler.
+math.h: math_.h
+	rm -f $@-t $@
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e 's|@''ABSOLUTE_MATH_H''@|$(ABSOLUTE_MATH_H)|g' \
+	      -e 's|@''GNULIB_MATHL''@|$(GNULIB_MATHL)|g' \
+	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
+	      < $(srcdir)/math_.h; \
+	} > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += math.h math.h-t
+
+Include:
+<math.h>
+
+License:
+LGPL
+
+Maintainer:
+all

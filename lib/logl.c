@@ -1,3 +1,25 @@
+/* Copyright 2001 by Stephen L. Moshier <moshier@na-net.ornl.gov>
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; see the file COPYING.
+   If not, write to the Free Software Foundation,
+   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+#include <config.h>
+
+/* Specification.  */
+#include <math.h>
+
 /*							logll.c
  *
  * Natural logarithm for 128-bit long double precision.
@@ -41,27 +63,6 @@
  * structure assumed.
  *
  */
-
-#include <math.h>
-
-#include "mathl.h"
-
-/* Copyright 2001 by Stephen L. Moshier <moshier@na-net.ornl.gov>
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
-   any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.
-   If not, write to the Free Software Foundation,
-   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 /* log(1+x) = x - .5 x^2 + x^3 l(x)
    -.0078125 <= x <= +.0078125

@@ -1,7 +1,7 @@
 /* Emulation for expl.
    Contributed by Paolo Bonzini
 
-   Copyright 2002, 2003 Free Software Foundation, Inc.
+   Copyright 2002, 2003, 2007 Free Software Foundation, Inc.
 
    This file is part of gnulib.
 
@@ -19,10 +19,12 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#include <float.h>
+#include <config.h>
+
+/* Specification.  */
 #include <math.h>
 
-#include "mathl.h"
+#include <float.h>
 
 static const long double C[] = {
 /* Chebyshev polynom coeficients for (exp(x)-1)/x */

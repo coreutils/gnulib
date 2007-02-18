@@ -9,7 +9,10 @@
  * ====================================================
  */
 
-#include "mathl.h"
+#include <config.h>
+
+/* Specification.  */
+#include <math.h>
 
 /*
   Long double expansions contributed by
@@ -32,8 +35,6 @@
  *
  */
 
-
-#include <math.h>
 
 static const long double
   one = 1.0L,

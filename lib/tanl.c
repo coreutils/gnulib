@@ -14,6 +14,11 @@
  * ====================================================
  */
 
+#include <config.h>
+
+/* Specification.  */
+#include <math.h>
+
 /* tanl(x)
  * Return tangent function of x.
  *
@@ -43,10 +48,6 @@
  * Accuracy:
  *	TRIG(x) returns trig(x) nearly rounded
  */
-
-#include <math.h>
-
-#include "mathl.h"
 
 #include "trigl.h"
 #ifdef HAVE_SINL
