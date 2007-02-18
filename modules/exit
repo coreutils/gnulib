@@ -2,17 +2,16 @@ Description:
 exit() function: program termination.
 
 Files:
-lib/exit.h
 
 Depends-on:
+stdlib
 
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += exit.h
 
 Include:
-"exit.h"
+<stdlib.h>
 
 License:
 GPL
