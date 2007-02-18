@@ -1,5 +1,8 @@
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/stdbool-tests: New file.
+	* tests/test-stdbool.c: New file.
+
 	* modules/netinet_in-tests: New file.
 	* tests/test-netinet_in.c: New file.
 
