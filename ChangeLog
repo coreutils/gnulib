@@ -1,5 +1,8 @@
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/sys_stat-tests: New file.
+	* tests/test-sys_stat.c: New file.
+
 	* modules/sys_socket-tests: New file.
 	* tests/test-sys_socket.c: New file.
 
