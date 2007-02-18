@@ -10,7 +10,8 @@
 	(gl_INTTYPES_MODULE_INDICATOR, gl_INTTYPES_H_DEFAULTS): New macros.
 	* modules/inttypes (Depends-on): Add link-warning.
 	(Makefile.am): Copy the contents of build-aux/link-warning.h into
-	inttypes.h.
+	inttypes.h. Substitute also GNULIB_IMAXABS, GNULIB_IMAXDIV,
+	GNULIB_STRTOIMAX, GNULIB_STRTOUMAX.
 	* modules/imaxabs (configure.ac): Invoke gl_INTTYPES_MODULE_INDICATOR.
 	* modules/imaxdiv (configure.ac): Likewise.
 	* modules/strtoimax (configure.ac): Likewise.
