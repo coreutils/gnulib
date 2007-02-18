@@ -1,5 +1,8 @@
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/byteswap-tests: New file.
+	* tests/test-byteswap.c: New file.
+
 	* modules/arpa_inet-tests: New file.
 	* tests/test-arpa_inet.c: New file.
 
