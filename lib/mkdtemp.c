@@ -1,4 +1,4 @@
-/* Copyright (C) 1999, 2001-2003, 2006 Free Software Foundation, Inc.
+/* Copyright (C) 1999, 2001-2003, 2006-2007 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software; you can redistribute it and/or modify
@@ -20,10 +20,9 @@
 #include <config.h>
 
 /* Specification.  */
-#include "mkdtemp.h"
+#include <stdlib.h>
 
 #include "tempname.h"
-#include <stdlib.h>
 
 /* Generate a unique temporary directory from TEMPLATE.
    The last six characters of TEMPLATE must be "XXXXXX";

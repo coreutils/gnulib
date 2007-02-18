@@ -39,7 +39,6 @@
 #include "fatal-signal.h"
 #include "pathmax.h"
 #include "tmpdir.h"
-#include "mkdtemp.h"
 #include "xalloc.h"
 #include "xallocsa.h"
 #include "gl_linkedhash_list.h"

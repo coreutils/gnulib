@@ -2,21 +2,22 @@ Description:
 mkdtemp() function: create a private temporary directory.
 
 Files:
-lib/mkdtemp.h
 lib/mkdtemp.c
 m4/mkdtemp.m4
 
 Depends-on:
 stdint
+stdlib
 tempname
 
 configure.ac:
 gt_FUNC_MKDTEMP
+gl_STDLIB_MODULE_INDICATOR([mkdtemp])
 
 Makefile.am:
 
 Include:
-"mkdtemp.h"
+<stdlib.h>
 
 License:
 LGPL
