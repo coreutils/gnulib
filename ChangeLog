@@ -31,6 +31,7 @@
 	* lib/mkdtemp.h: Remove file.
 	* lib/mkstemp.h: Remove file.
 	* m4/stdlib_h.m4: New file.
+	* MODULES.html.sh (Support for systems lacking ANSI C 89): Add stdlib.
 
 2007-02-18  Bruno Haible  <bruno@clisp.org>
 

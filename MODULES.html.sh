@@ -1490,6 +1490,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module stdlib
   func_module exit
   func_module atexit
   func_module strtod
