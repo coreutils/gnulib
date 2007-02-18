@@ -1,5 +1,8 @@
 2007-02-18  Bruno Haible  <bruno@clisp.org>
 
+	* modules/stdlib-tests: New file.
+	* tests/test-stdlib.c: New file.
+
 	* modules/mkstemp (Files): Remove lib/mkstemp.h.
 	(Depends-on): Add stdlib.
 	(configure.ac): Invoke gl_STDLIB_MODULE_INDICATOR.

@@ -1,0 +1,13 @@
+Files:
+tests/test-stdlib.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stdlib
+check_PROGRAMS += test-stdlib
+
+License:
+LGPL
