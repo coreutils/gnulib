@@ -2423,6 +2423,7 @@ func_all_modules ()
   func_module elisp-comp
   func_module ldd
   func_module lib-ignore
+  func_module link-warning
   func_module no-c++
   func_end_table
 

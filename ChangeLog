@@ -13,6 +13,8 @@
 	* modules/string (Depends-on): Add link-warning.
 	(Makefile.am): Copy the contents of build-aux/link-warning.h into
 	string.h.
+	* MODULES.html.sh (Support for building libraries and executables): Add
+	link-warning.
 
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
