@@ -1,0 +1,13 @@
+Files:
+tests/test-math.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-math
+check_PROGRAMS += test-math
+
+License:
+LGPL

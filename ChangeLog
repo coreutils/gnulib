@@ -1,5 +1,8 @@
 2007-02-18  Bruno Haible  <bruno@clisp.org>
 
+	* modules/math-tests: New file.
+	* tests/test-math.c: New file.
+
 	* modules/math: New file.
 	* modules/mathl (Files): Remove lib/mathl.h.
 	(Depends-on): Add math.
