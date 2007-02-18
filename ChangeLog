@@ -1,5 +1,8 @@
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/unistd-tests: New file.
+	* tests/test-unistd.c: New file.
+
 	* modules/time-tests: New file.
 	* tests/test-time.c: New file.
 

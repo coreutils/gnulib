@@ -1,0 +1,13 @@
+Files:
+tests/test-unistd.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-unistd
+check_PROGRAMS += test-unistd
+
+License:
+LGPL
