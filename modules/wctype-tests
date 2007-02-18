@@ -1,0 +1,13 @@
+Files:
+tests/test-wctype.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-wctype
+check_PROGRAMS += test-wctype
+
+License:
+LGPL

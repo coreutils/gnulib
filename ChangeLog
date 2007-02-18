@@ -1,5 +1,8 @@
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/wctype-tests: New file.
+	* tests/test-wctype.c: New file.
+
 	* modules/wchar-tests: New file.
 	* tests/test-wchar.c: New file.
 
