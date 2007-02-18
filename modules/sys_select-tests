@@ -1,0 +1,13 @@
+Files:
+tests/test-sys_select.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_select
+check_PROGRAMS += test-sys_select
+
+License:
+LGPL
