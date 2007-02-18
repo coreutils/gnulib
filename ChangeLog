@@ -1,5 +1,9 @@
 2007-02-18  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fchdir (Depends-on): Add dup2.
+
+2007-02-18  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdlib_.h: Handle glibc's special invocation convention
 	specially.
 
