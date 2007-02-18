@@ -1,5 +1,5 @@
-# inttypes.m4 serial 7
-dnl Copyright (C) 2006 Free Software Foundation, Inc.
+# inttypes.m4 serial 8
+dnl Copyright (C) 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -133,11 +133,14 @@ const char *l = /* implicit string concatenation */
 	 ])],
 	 [gl_cv_header_working_inttypes_h=yes])
      fi])
-  if test $gl_cv_header_working_inttypes_h = yes; then
+
+  dnl Override <inttypes.h> always, so that the portability warnings work.
+  if false && test $gl_cv_header_working_inttypes_h = yes; then
     dnl Use the existing <inttypes.h>.
     INTTYPES_H=''
   else
 
+    AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
     dnl AC_INCLUDES_DEFAULT defines $ac_cv_header_inttypes_h.
     if test $ac_cv_header_inttypes_h = yes; then
       gl_ABSOLUTE_HEADER([inttypes.h])
@@ -175,30 +178,46 @@ const char *l = /* implicit string concatenation */
     else
       HAVE_DECL_IMAXABS=0
     fi
-    AC_SUBST([HAVE_DECL_IMAXABS])
 
     if test "$ac_cv_have_decl_imaxdiv" = yes; then
       HAVE_DECL_IMAXDIV=1
     else
       HAVE_DECL_IMAXDIV=0
     fi
-    AC_SUBST([HAVE_DECL_IMAXDIV])
 
     if test "$ac_cv_have_decl_strtoimax" = yes; then
       HAVE_DECL_STRTOIMAX=1
     else
       HAVE_DECL_STRTOIMAX=0
     fi
-    AC_SUBST([HAVE_DECL_STRTOIMAX])
 
     if test "$ac_cv_have_decl_strtoumax" = yes; then
       HAVE_DECL_STRTOUMAX=1
     else
       HAVE_DECL_STRTOUMAX=0
     fi
-    AC_SUBST([HAVE_DECL_STRTOUMAX])
 
     INTTYPES_H='inttypes.h'
   fi
   AC_SUBST(INTTYPES_H)
+])
+
+AC_DEFUN([gl_INTTYPES_MODULE_INDICATOR],
+[
+  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
+  AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
+  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+])
+
+AC_DEFUN([gl_INTTYPES_H_DEFAULTS],
+[
+  GNULIB_IMAXABS=0;      AC_SUBST([GNULIB_IMAXABS])
+  GNULIB_IMAXDIV=0;      AC_SUBST([GNULIB_IMAXDIV])
+  GNULIB_STRTOIMAX=0;    AC_SUBST([GNULIB_STRTOIMAX])
+  GNULIB_STRTOUMAX=0;    AC_SUBST([GNULIB_STRTOUMAX])
+  dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_DECL_IMAXABS=1;   AC_SUBST([HAVE_DECL_IMAXABS])
+  HAVE_DECL_IMAXDIV=1;   AC_SUBST([HAVE_DECL_IMAXDIV])
+  HAVE_DECL_STRTOIMAX=1; AC_SUBST([HAVE_DECL_STRTOIMAX])
+  HAVE_DECL_STRTOUMAX=1; AC_SUBST([HAVE_DECL_STRTOUMAX])
 ])

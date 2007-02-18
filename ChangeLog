@@ -54,7 +54,7 @@
 	(imaxabs, imaxdiv, strtoimax, strtoumax): Don't declare the function
 	if the corresponding module is not enabled. Emit link warnings if
 	the function is used nevertheless.
-	* m4/inttypes_h.m4 (gl_INTTYPES_H): Never use the existing <inttypes.h>.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Never use the existing <inttypes.h>.
 	Don't AC_SUBST HAVE_DECL_IMAXABS, HAVE_DECL_IMAXDIV,
 	HAVE_DECL_STRTOIMAX, HAVE_DECL_STRTOUMAX.
 	(gl_INTTYPES_MODULE_INDICATOR, gl_INTTYPES_H_DEFAULTS): New macros.
