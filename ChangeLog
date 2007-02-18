@@ -1,5 +1,39 @@
 2007-02-18  Bruno Haible  <bruno@clisp.org>
 
+	* modules/mkstemp (Files): Remove lib/mkstemp.h.
+	(Depends-on): Add stdlib.
+	(configure.ac): Invoke gl_STDLIB_MODULE_INDICATOR.
+	(Includes): Use <stdlib.h> instead of mkstemp.h.
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Require gl_STDLIB_H_DEFAULTS. Set
+	REPLACE_MKSTEMP. Remove definition of __MKSTEMP_PREFIX.
+	* lib/mkstemp.c: Don't include mkstemp.h.
+	* lib/mkstemp-safer.c: Include <stdlib.h> instead of mkstemp.h.
+	* lib/stdlib--.h: Don't include mkstemp.h.
+
+	* modules/mkdtemp (Files): Remove lib/mkdtemp.h.
+	(Depends-on): Add stdlib.
+	(configure.ac): Invoke gl_STDLIB_MODULE_INDICATOR.
+	(Includes): Use <stdlib.h> instead of mkdtemp.h.
+	* m4/mkdtemp.m4 (gt_FUNC_MKDTEMP): Require gl_STDLIB_H_DEFAULTS. Set
+	HAVE_MKDTEMP.
+	* lib/mkdtemp.c: Don't include mkdtemp.h.
+	* lib/clean-temp.c: Don't include mkdtemp.h.
+
+	* modules/exit (Files): Remove lib/exit.h.
+	(Depends-on): Add stdlib.
+	(Makefile.am): Remove lib_SOURCES.
+	(Include): Use <stdlib.h> instead of exit.h.
+
+	* modules/stdlib: New file.
+	* lib/stdlib_.h: New file, incorporating exit.h, mkdtemp.h, mkstemp.h
+	and extra comments about mkstemp().
+	* lib/exit.h: Remove file.
+	* lib/mkdtemp.h: Remove file.
+	* lib/mkstemp.h: Remove file.
+	* m4/stdlib_h.m4: New file.
+
+2007-02-18  Bruno Haible  <bruno@clisp.org>
+
 	* modules/math-tests: New file.
 	* tests/test-math.c: New file.
 
