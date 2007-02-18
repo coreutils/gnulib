@@ -1,0 +1,13 @@
+Files:
+tests/test-time.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-time
+check_PROGRAMS += test-time
+
+License:
+LGPL
