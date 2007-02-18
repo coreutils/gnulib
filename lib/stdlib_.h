@@ -16,6 +16,11 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#if defined __need_malloc_and_calloc
+/* Special invocation convention inside glibc header files.  */
+#include @ABSOLUTE_STDLIB_H@
+#else
+/* Normal invocation convention.  */
 #ifndef _GL_STDLIB_H
 #define _GL_STDLIB_H
 
@@ -83,4 +88,5 @@ extern int mkstemp (char *template);
 }
 #endif
 
+#endif /* _GL_STDLIB_H */
 #endif
