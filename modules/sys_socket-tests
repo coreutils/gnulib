@@ -1,0 +1,13 @@
+Files:
+tests/test-sys_socket.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_socket
+check_PROGRAMS += test-sys_socket
+
+License:
+LGPL
