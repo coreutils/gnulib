@@ -29,7 +29,6 @@
 #include <unistd.h>
 
 #include "error.h"
-#include "exit.h"
 #include "fatal-signal.h"
 #include "wait-process.h"
 #include "gettext.h"

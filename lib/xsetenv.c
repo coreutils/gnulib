@@ -1,5 +1,5 @@
 /* Setting environment variables, with out-of-memory checking.
-   Copyright (C) 2001-2002, 2005-2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002, 2005-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,9 +20,10 @@
 /* Specification.  */
 #include "xsetenv.h"
 
+#include <stdlib.h>
+
 #include "setenv.h"
 #include "error.h"
-#include "exit.h"
 #include "gettext.h"
 
 #define _(str) gettext (str)

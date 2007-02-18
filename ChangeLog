@@ -31,6 +31,16 @@
 	(Depends-on): Add stdlib.
 	(Makefile.am): Remove lib_SOURCES.
 	(Include): Use <stdlib.h> instead of exit.h.
+	* lib/argmatch.c: Don't include exit.h.
+	* lib/execute.c: Likewise.
+	* lib/pagealign_alloc.c: Likewise.
+	* lib/pipe.c: Likewise.
+	* lib/wait-process.c: Likewise.
+	* lib/copy-file.c: Include <stdlib.h> instead of exit.h.
+	* lib/exitfail.c: Likewise.
+	* lib/savewd.c: Likewise.
+	* lib/xsetenv.c: Likewise.
+
 
 	* modules/stdlib: New file.
 	* lib/stdlib_.h: New file, incorporating exit.h, mkdtemp.h, mkstemp.h
