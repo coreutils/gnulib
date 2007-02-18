@@ -27,6 +27,7 @@
 	* lib/tanl.c: Likewise.
 	* lib/trigl.c: Likewise.
 	* m4/math_h.m4: New file.
+	* MODULES.html.sh (Mathematics): Add math.
 
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 

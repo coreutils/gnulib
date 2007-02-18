@@ -1892,6 +1892,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module math
   func_module mathl
   func_end_table
 
