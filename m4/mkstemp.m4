@@ -1,6 +1,6 @@
-#serial 16
+#serial 17
 
-# Copyright (C) 2001, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -13,6 +13,7 @@
 # On systems like the above, arrange to use the replacement function.
 AC_DEFUN([gl_FUNC_MKSTEMP],
 [
+  AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_REQUIRE([AC_SYS_LARGEFILE])
 
   AC_CACHE_CHECK([for working mkstemp],
@@ -43,8 +44,7 @@ AC_DEFUN([gl_FUNC_MKSTEMP],
     ])
 
   if test $gl_cv_func_working_mkstemp != yes; then
-    AC_DEFINE([__MKSTEMP_PREFIX], [[rpl_]],
-      [Define to rpl_ if the mkstemp replacement function should be used.])
+    REPLACE_MKSTEMP=1
     AC_LIBOBJ([mkstemp])
     gl_PREREQ_MKSTEMP
   fi
