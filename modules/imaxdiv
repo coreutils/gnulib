@@ -10,6 +10,7 @@ inttypes
 
 configure.ac:
 gl_FUNC_IMAXDIV
+gl_INTTYPES_MODULE_INDICATOR([imaxdiv])
 
 Makefile.am:
 

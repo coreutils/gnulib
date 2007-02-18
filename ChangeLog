@@ -1,5 +1,23 @@
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
+	* lib/inttypes_.h: Add definition for GL_LINK_WARNING.
+	(imaxabs, imaxdiv, strtoimax, strtoumax): Don't declare the function
+	if the corresponding module is not enabled. Emit link warnings if
+	the function is used nevertheless.
+	* m4/inttypes_h.m4 (gl_INTTYPES_H): Never use the existing <inttypes.h>.
+	Don't AC_SUBST HAVE_DECL_IMAXABS, HAVE_DECL_IMAXDIV,
+	HAVE_DECL_STRTOIMAX, HAVE_DECL_STRTOUMAX.
+	(gl_INTTYPES_MODULE_INDICATOR, gl_INTTYPES_H_DEFAULTS): New macros.
+	* modules/inttypes (Depends-on): Add link-warning.
+	(Makefile.am): Copy the contents of build-aux/link-warning.h into
+	inttypes.h.
+	* modules/imaxabs (configure.ac): Invoke gl_INTTYPES_MODULE_INDICATOR.
+	* modules/imaxdiv (configure.ac): Likewise.
+	* modules/strtoimax (configure.ac): Likewise.
+	* modules/strtoumax (configure.ac): Likewise.
+	
+2007-02-17  Bruno Haible  <bruno@clisp.org>
+
 	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Include the contents of
 	gl_STRING_MODULE_INDICATOR_DEFAULTS.
 	(gl_STRING_MODULE_INDICATOR_DEFAULTS): Remove macro.

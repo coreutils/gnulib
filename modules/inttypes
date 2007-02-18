@@ -8,6 +8,7 @@ m4/inttypes.m4
 
 Depends-on:
 absolute-header
+link-warning
 stdint
 
 configure.ac:
@@ -31,6 +32,7 @@ inttypes.h: inttypes_.h
 	      -e 's/@''HAVE_DECL_IMAXDIV''@/$(HAVE_DECL_IMAXDIV)/g' \
 	      -e 's/@''HAVE_DECL_STRTOIMAX''@/$(HAVE_DECL_STRTOIMAX)/g' \
 	      -e 's/@''HAVE_DECL_STRTOUMAX''@/$(HAVE_DECL_STRTOUMAX)/g' \
+	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/inttypes_.h; \
 	} > $@-t
 	mv $@-t $@
