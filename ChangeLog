@@ -1,3 +1,8 @@
+2007-02-19  Jim Meyering  <jim@meyering.net>
+
+	* m4/ftruncate.m4: Adjust comment to give this module a 3-year reprieve.
+	Prompted by a report from Bruno Haible that mingw lacks ftruncate.
+
 2007-02-18  Bruno Haible  <bruno@clisp.org>
 
 	* lib/readlink.c: Include <unistd.h>.
@@ -243,7 +248,7 @@
 	* modules/imaxdiv (configure.ac): Likewise.
 	* modules/strtoimax (configure.ac): Likewise.
 	* modules/strtoumax (configure.ac): Likewise.
-	
+
 2007-02-17  Bruno Haible  <bruno@clisp.org>
 
 	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Include the contents of
