@@ -44,6 +44,30 @@ extern "C" {
 #endif
 
 
+#if @GNULIB_GETSUBOPT@
+/* Assuming *OPTIONP is a comma separated list of elements of the form
+   "token" or "token=value", getsubopt parses the first of these elements.
+   If the first element refers to a "token" that is member of the given
+   NULL-terminated array of tokens:
+     - It replaces the comma with a NUL byte, updates *OPTIONP to point past
+       the first option and the comma, sets *VALUEP to the value of the
+       element (or NULL if it doesn't contain an "=" sign),
+     - It returns the index of the "token" in the given array of tokens.
+   Otherwise it returns -1, and *OPTIONP and *VALUEP are undefined.
+   For more details see the POSIX:2001 specification.
+   http://www.opengroup.org/susv3xsh/getsubopt.html */
+# if !@HAVE_GETSUBOPT@
+extern int getsubopt (char **optionp, char *const *tokens, char **valuep);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef getsubopt
+# define getsubopt(o,t,v) \
+    (GL_LINK_WARNING ("getsubopt is unportable - "\
+                      "use gnulib module getsubopt for portability"), \
+     getsubopt (o, t, v))
+#endif
+
+
 #if @GNULIB_MKDTEMP@
 # if !@HAVE_MKDTEMP@
 /* Create a unique temporary directory from TEMPLATE.
@@ -60,6 +84,7 @@ extern char * mkdtemp (char *template);
                       "use gnulib module mkdtemp for portability"), \
      mkdtemp (t))
 #endif
+
 
 #if @GNULIB_MKSTEMP@
 # if @REPLACE_MKSTEMP@

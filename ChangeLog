@@ -1,5 +1,21 @@
 2007-02-18  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdlib_.h (getsubopt): New declaration, copied from getsubopt.h.
+	* modules/stdlib (stdlib.h): Also substitute GNULIB_GETSUBOPT and
+	HAVE_GETSUBOPT.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Also initialize
+	GNULIB_GETSUBOPT and HAVE_GETSUBOPT.
+	* lib/getsubopt.h: Remove file.
+	* modules/getsubopt (Files): Remove lib/getsubopt.h.
+	(Depends-on): Add stdlib.
+	(configure.ac): Invoke gl_STDLIB_MODULE_INDICATOR.
+	(Includes): Use <stdlib.h> instead of getsubopt.h.
+	* m4/getsubopt.m4 (gl_FUNC_GETSUBOPT): Require gl_STDLIB_H_DEFAULTS.
+	Set HAVE_GETSUBOPT.
+	* lib/getsubopt.c: Don't include getsubopt.h.
+
+2007-02-18  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fchdir (Depends-on): Add dup2.
 
 2007-02-18  Bruno Haible  <bruno@clisp.org>

@@ -1,21 +1,22 @@
 Description:
-getsubopt: Parse comma separate list into words.
+getsubopt: Parse comma separated list into words.
 
 Files:
-lib/getsubopt.h
 lib/getsubopt.c
 m4/getsubopt.m4
 
 Depends-on:
 strchrnul
+stdlib
 
 configure.ac:
 gl_FUNC_GETSUBOPT
+gl_STDLIB_MODULE_INDICATOR([getsubopt])
 
 Makefile.am:
 
 Include:
-"getsubopt.h"
+<stdlib.h>
 
 License:
 LGPL
