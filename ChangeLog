@@ -1,5 +1,79 @@
 2007-02-18  Bruno Haible  <bruno@clisp.org>
 
+	* lib/readlink.c: Include <unistd.h>.
+	* m4/readlink.m4 (gl_FUNC_READLINK): Require gl_UNISTD_H_DEFAULTS. Set
+	HAVE_READLINK.
+	* modules/readlink (Depends-on): Add unistd.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+	(Include): Add <unistd.h>.
+
+	* lib/getlogin_r.h: Remove file.
+	* lib/getlogin_r.c: Include <unistd.h> instead of getlogin_r.h.
+	* m4/getlogin_r.m4 (gl_GETLOGIN_R_SUBSTITUTE): Remove macro.
+	(gl_GETLOGIN_R): Inline it here. Require gl_UNISTD_H_DEFAULTS. Set
+	HAVE_DECL_GETLOGIN_R.
+	* modules/getlogin_r (Files): Remove lib/getlogin_r.h.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+	(Include): Use <unistd.h> instead of getlogin_r.h.
+
+	* lib/getcwd.h: Remove file.
+	* lib/getcwd.c: Include <unistd.h> instead of getcwd.h.
+	* lib/xgetcwd.c: Likewise.
+	* m4/getcwd.m4 (gl_FUNC_GETCWD): Require gl_UNISTD_H_DEFAULTS. Set
+	REPLACE_GETCWD. Don't define __GETCWD_PREFIX.
+	* modules/getcwd (Files): Remove lib/getcwd.h.
+	(Depends-on): Add unistd.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+	(Include): Use <unistd.h> instad of getcwd.h.
+
+	* lib/ftruncate.c: Include <unistd.h> first.
+	* m4/ftruncate.m4 (gl_FUNC_FTRUNCATE): Require gl_UNISTD_H_DEFAULTS.
+	Set HAVE_FTRUNCATE.
+	* modules/ftruncate (Depends-on): Add unistd.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+
+	* lib/fchdir.c: Include <unistd.h> first.
+	* lib/dirent_.h: Test REPLACE_FCHDIR, not FCHDIR_REPLACEMENT.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Require gl_UNISTD_H_DEFAULTS instead
+	of gl_HEADER_UNISTD_DEFAULTS. Set REPLACE_FCHDIR. Don't set UNISTD_H.
+	* modules/fchdir (configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+	(Makefile.am): Substitute also REPLACE_FCHDIR into dirent.h.
+
+	* lib/dup2.c: Include <unistd.h> first.
+	* m4/dup2.m4 (gl_FUNC_DUP2): Require gl_UNISTD_H_DEFAULTS. Set
+	HAVE_DUP2.
+	* modules/dup2 (Depends-on): Add unistd.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+
+	* lib/chown.c: Include <unistd.h> first. Undefine chown later.
+	* m4/chown.m4 (gl_FUNC_CHOWN): Require gl_UNISTD_H_DEFAULTS. Set
+	REPLACE_CHOWN. Don't define chown as a macro here.
+	* modules/chown (Depends-on): Add unistd.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+
+	* lib/unistd_.h: Test HAVE_UNISTD_H determined at configure time.
+	Add definition for GL_LINK_WARNING.
+	(chown, dup2): New declarations.
+	(fchdir): Test REPLACE_FCHDIR, not FCHDIR_REPLACEMENT. Provide optional
+	link warning.
+	(ftruncate): New declaration.
+	(getcwd): New declaration, taken from old getcwd.h.
+	(getlogin_r): New declaration, taken from old getlogin_r.h.
+	(readlink): New declaration.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Renamed from gl_HEADER_UNISTD. Don't
+	set UNISTD_H. Inline gl_PREREQ_UNISTD. Set HAVE_UNISTD_H.
+	(gl_PREREQ_UNISTD): Remove macro.
+	(gl_UNISTD_MODULE_INDICATOR): New macro.
+	(gl_UNISTD_H_DEFAULTS): Renamed from gl_HEADER_UNISTD_DEFAULTS. Set
+	many new variables. Don't set UNISTD_H.
+	* modules/unistd (Description): Change.
+	(Depends-on): Add link-warning.
+	(configure.ac): Update.
+	(Makefile.am): Create unistd.h always. Substitute many new variables
+	into it.
+
+2007-02-18  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdlib_.h (getsubopt): New declaration, copied from getsubopt.h.
 	* modules/stdlib (stdlib.h): Also substitute GNULIB_GETSUBOPT and
 	HAVE_GETSUBOPT.
@@ -60,7 +134,6 @@
 	* lib/exitfail.c: Likewise.
 	* lib/savewd.c: Likewise.
 	* lib/xsetenv.c: Likewise.
-
 
 	* modules/stdlib: New file.
 	* lib/stdlib_.h: New file, incorporating exit.h, mkdtemp.h, mkstemp.h

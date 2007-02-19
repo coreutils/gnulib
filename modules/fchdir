@@ -17,6 +17,7 @@ strdup
 
 configure.ac:
 gl_FUNC_FCHDIR
+gl_UNISTD_MODULE_INDICATOR([fchdir])
 
 Makefile.am:
 BUILT_SOURCES += $(DIRENT_H)
@@ -27,6 +28,7 @@ dirent.h: dirent_.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''ABSOLUTE_DIRENT_H''@|$(ABSOLUTE_DIRENT_H)|g' \
+	      -e 's|@''REPLACE_FCHDIR''@|$(REPLACE_FCHDIR)|g' \
 	      < $(srcdir)/dirent_.h; \
 	} > $@-t
 	mv $@-t $@

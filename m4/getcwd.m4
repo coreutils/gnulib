@@ -1,6 +1,6 @@
 # getcwd.m4 - check for working getcwd that is compatible with glibc
 
-# Copyright (C) 2001, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -36,6 +36,7 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
 
 AC_DEFUN([gl_FUNC_GETCWD],
 [
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_GETCWD_NULL])
 
   gl_abort_bug=no
@@ -48,9 +49,8 @@ AC_DEFUN([gl_FUNC_GETCWD],
   case $gl_cv_func_getcwd_null,$gl_cv_func_getcwd_path_max,$gl_abort_bug in
   yes,yes,no) ;;
   *)
+    REPLACE_GETCWD=1
     AC_LIBOBJ([getcwd])
-    AC_DEFINE([__GETCWD_PREFIX], [[rpl_]],
-      [Define to rpl_ if the getcwd replacement function should be used.])
     gl_PREREQ_GETCWD;;
   esac
 ])

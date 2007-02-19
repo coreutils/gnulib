@@ -1,7 +1,7 @@
-#serial 16
+#serial 17
 # Determine whether we need the chown wrapper.
 
-dnl Copyright (C) 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005 Free
+dnl Copyright (C) 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2007 Free
 dnl Software Foundation, Inc.
 
 dnl This file is free software; the Free Software Foundation
@@ -16,6 +16,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_CHOWN],
 [
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([AC_TYPE_UID_T])
   AC_REQUIRE([AC_FUNC_CHOWN])
   AC_REQUIRE([gl_FUNC_CHOWN_FOLLOWS_SYMLINK])
@@ -29,9 +30,8 @@ AC_DEFUN([gl_FUNC_CHOWN],
   if test $ac_cv_func_chown_works$gl_cv_func_chown_follows_symlink = yesyes; then
     : # no wrapper needed
   else
+    REPLACE_CHOWN=1
     AC_LIBOBJ(chown)
-    AC_DEFINE(chown, rpl_chown,
-      [Define to rpl_chown if the replacement function should be used.])
     gl_PREREQ_CHOWN
   fi
 ])

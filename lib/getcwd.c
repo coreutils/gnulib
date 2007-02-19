@@ -18,7 +18,7 @@
 
 #if !_LIBC
 # include <config.h>
-# include "getcwd.h"
+# include <unistd.h>
 #endif
 
 #include <errno.h>

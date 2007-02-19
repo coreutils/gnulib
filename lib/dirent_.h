@@ -1,5 +1,5 @@
 /* Wrapper around <dirent.h>.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 extern "C" {
 #endif
 
-#ifdef FCHDIR_REPLACEMENT
+#if @REPLACE_FCHDIR@
 # define opendir rpl_opendir
 extern DIR * opendir (const char *);
 # define closedir rpl_closedir

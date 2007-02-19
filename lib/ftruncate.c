@@ -3,6 +3,9 @@
 
 #include <config.h>
 
+/* Specification.  */
+#include <unistd.h>
+
 #include <sys/types.h>
 #include <fcntl.h>
 
@@ -21,7 +24,6 @@ ftruncate (int fd, off_t length)
 
 #  include <sys/stat.h>
 #  include <errno.h>
-#  include <unistd.h>
 
 int
 ftruncate (int fd, off_t length)

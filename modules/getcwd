@@ -2,7 +2,6 @@ Description:
 Return the current working directory.
 
 Files:
-lib/getcwd.h
 lib/getcwd.c
 m4/getcwd-abort-bug.m4
 m4/getcwd-path-max.m4
@@ -13,14 +12,16 @@ mempcpy
 d-ino
 extensions
 stdbool
+unistd
 
 configure.ac:
 gl_FUNC_GETCWD
+gl_UNISTD_MODULE_INDICATOR([getcwd])
 
 Makefile.am:
 
 Include:
-"getcwd.h"
+<unistd.h>
 
 License:
 GPL

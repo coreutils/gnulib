@@ -1,6 +1,6 @@
 /* Provide a working getlogin_r for systems which lack it.
 
-   Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,11 +20,11 @@
 
 #include <config.h>
 
-#include "getlogin_r.h"
+/* Specification.  */
+#include <unistd.h>
 
 #include <errno.h>
 #include <string.h>
-#include <unistd.h>
 
 #if !HAVE_DECL_GETLOGIN
 char *getlogin (void);

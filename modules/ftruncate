@@ -6,9 +6,11 @@ lib/ftruncate.c
 m4/ftruncate.m4
 
 Depends-on:
+unistd
 
 configure.ac:
 gl_FUNC_FTRUNCATE
+gl_UNISTD_MODULE_INDICATOR([ftruncate])
 
 Makefile.am:
 

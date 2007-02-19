@@ -1,8 +1,8 @@
-#serial 10
+#serial 11
 
 # See if we need to emulate a missing ftruncate function using fcntl or chsize.
 
-# Copyright (C) 2000, 2001, 2003-2006 Free Software Foundation, Inc.
+# Copyright (C) 2000, 2001, 2003-2007 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -12,8 +12,11 @@
 
 AC_DEFUN([gl_FUNC_FTRUNCATE],
 [
-  AC_REPLACE_FUNCS(ftruncate)
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_CHECK_FUNCS_ONCE([ftruncate])
   if test $ac_cv_func_ftruncate = no; then
+    HAVE_FTRUNCATE=0
+    AC_LIBOBJ([ftruncate])
     gl_PREREQ_FTRUNCATE
     # If someone lacks ftruncate, make configure fail, and request
     # a bug report to inform us about it.

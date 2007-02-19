@@ -7,10 +7,12 @@ lib/fchown-stub.c
 m4/chown.m4
 
 Depends-on:
+unistd
 sys_stat
 
 configure.ac:
 gl_FUNC_CHOWN
+gl_UNISTD_MODULE_INDICATOR([chown])
 
 Makefile.am:
 
