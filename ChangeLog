@@ -1,3 +1,9 @@
+2007-02-19  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdlib_.h: Use "#pragma GCC system_header" to suppress some gcc
+	warnings.
+	Reported by Paul Eggert.
+
 2007-02-19  Jim Meyering  <jim@meyering.net>
 
 	Don't use FD after a successful "fdopendir (fd)".
@@ -608,7 +614,8 @@
 
 	* m4/javacomp.m4 (gt_JAVACOMP): Work around a 'tr' bug in coreutils
 	5.2.1 and earlier, whereby \055 was treated just like the range
-	delimiter '-'.  Reported by Joel E. Denny <jdenny@ces.clemson.edu>.
+	delimiter '-'.
+	Reported by Joel E. Denny <jdenny@ces.clemson.edu>.
 
 2007-02-08  Bruno Haible  <bruno@clisp.org>
 
