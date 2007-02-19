@@ -2,7 +2,7 @@
 
 	* lib/stdlib_.h: Use "#pragma GCC system_header" to suppress some gcc
 	warnings.
-	Reported by Paul Eggert.
+	Reported by Joel E. Denny <jdenny@ces.clemson.edu> via Paul Eggert.
 
 2007-02-19  Jim Meyering  <jim@meyering.net>
 
