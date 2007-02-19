@@ -1,5 +1,9 @@
 2007-02-19  Jim Meyering  <jim@meyering.net>
 
+	Don't use FD after a successful "fdopendir (fd)".
+	* lib/getcwd.c (__getcwd) [AT_FDCWD]: fdopendir (fd) usually closes fd.
+	Reset it by calling dirfd on the just-obtained DIR*.
+
 	* m4/ftruncate.m4: Adjust comment to give this module a 3-year reprieve.
 	Prompted by a report from Bruno Haible that mingw lacks ftruncate.
 
