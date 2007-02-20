@@ -66,7 +66,7 @@ ftruncate (int fd, off_t length)
 }
 
 # else /* not F_CHSIZE nor F_FREESP */
-#  if HAVE_CHSIZE
+#  if HAVE_CHSIZE                      /* native Windows, e.g. mingw */
 
 int
 ftruncate (int fd, off_t length)
