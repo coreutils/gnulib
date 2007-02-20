@@ -19,6 +19,12 @@
 #ifndef _GL_STRING_H
 #define _GL_STRING_H
 
+/* This #pragma avoids a warning with "gcc -Wmissing-prototypes" on some
+   mingw systems.  */
+#ifdef __GNUC__
+# pragma GCC system_header
+#endif
+
 #include @ABSOLUTE_STRING_H@
 
 
