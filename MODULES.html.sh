@@ -1840,6 +1840,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module stdio
   func_module snprintf
   func_module vsnprintf
   func_end_table

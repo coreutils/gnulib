@@ -1,0 +1,41 @@
+Description:
+A GNU-like <stdio.h>.
+
+Files:
+lib/stdio_.h
+m4/stdio_h.m4
+
+Depends-on:
+absolute-header
+link-warning
+
+configure.ac:
+gl_STDIO_H
+
+Makefile.am:
+BUILT_SOURCES += stdio.h
+
+# We need the following in order to create <stdio.h> when the system
+# doesn't have one that works with the given compiler.
+stdio.h: stdio_.h
+	rm -f $@-t $@
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e 's|@''ABSOLUTE_STDIO_H''@|$(ABSOLUTE_STDIO_H)|g' \
+	      -e 's|@''GNULIB_SNPRINTF''@|$(GNULIB_SNPRINTF)|g' \
+	      -e 's|@''GNULIB_VSNPRINTF''@|$(GNULIB_VSNPRINTF)|g' \
+	      -e 's|@''HAVE_DECL_SNPRINTF''@|$(HAVE_DECL_SNPRINTF)|g' \
+	      -e 's|@''HAVE_DECL_VSNPRINTF''@|$(HAVE_DECL_VSNPRINTF)|g' \
+	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
+	      < $(srcdir)/stdio_.h; \
+	} > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += stdio.h stdio.h-t
+
+Include:
+#include <stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+all
