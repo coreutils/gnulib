@@ -19,6 +19,7 @@
 #if !_LIBC
 # include <config.h>
 # include <unistd.h>
+# include "dirfd.h"
 #endif
 
 #include <errno.h>

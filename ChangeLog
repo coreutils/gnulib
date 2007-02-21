@@ -1,3 +1,12 @@
+2007-02-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Minor fixups to port to Solaris 10 with Sun C 5.8.
+	* lib/getcwd.c [!_LIBC]: Include dirfd.h, since we use dirfd.
+	* modules/getcwd (Depends-on): Add dirfd.
+	* lib/putenv.c (putenv): #undef it.
+	(rpl_putenv): New decl.
+	(malloc, free): Include <stdlib.h> rather than prototyping separately.
+
 2007-02-20  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stdio-tests: New file.
