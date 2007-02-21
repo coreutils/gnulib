@@ -1,5 +1,5 @@
 /* Formatted output to strings.
-   Copyright (C) 2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006-2007 Free Software Foundation, Inc.
    Written by Simon Josefsson and Paul Eggert.
 
    This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,8 @@
 
 #include <config.h>
 
-#include "snprintf.h"
+/* Specification.  */
+#include <stdio.h>
 
 #include <errno.h>
 #include <limits.h>

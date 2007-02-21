@@ -31,6 +31,9 @@
 /* Get memcpy, strdup. */
 #include <string.h>
 
+/* Get snprintf. */
+#include <stdio.h>
+
 #include <stdbool.h>
 
 #include "gettext.h"
@@ -38,7 +41,6 @@
 #define N_(String) String
 
 #include "inet_ntop.h"
-#include "snprintf.h"
 
 /* BeOS has AF_INET, but not PF_INET.  */
 #ifndef PF_INET

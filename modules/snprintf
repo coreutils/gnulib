@@ -2,20 +2,21 @@ Description:
 snprintf() function: print formatted output to a fixed length string
 
 Files:
-lib/snprintf.h
 lib/snprintf.c
 m4/snprintf.m4
 
 Depends-on:
+stdio
 vasnprintf
 
 configure.ac:
 gl_FUNC_SNPRINTF
+gl_STDIO_MODULE_INDICATOR([snprintf])
 
 Makefile.am:
 
 Include:
-"snprintf.h"
+<stdio.h>
 
 License:
 LGPL
