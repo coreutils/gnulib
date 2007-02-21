@@ -1,3 +1,10 @@
+2007-02-21  Jim Meyering  <jim@meyering.net>
+
+	* lib/gettimeofday.c (rpl_gettimeofday): Remove declaration
+	of gettimeofday.  It would conflict with the one now always
+	provided via sys_time_.h.  Reported by Matthew Woehlke, as
+	an IRIX 6.5 build failure.
+
 2007-02-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Minor fixups to port to Solaris 10 with Sun C 5.8.

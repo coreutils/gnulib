@@ -102,8 +102,6 @@ rpl_gettimeofday (struct timeval *restrict tv, void *restrict tz)
 {
 #undef gettimeofday
 #if HAVE_GETTIMEOFDAY
-  extern int gettimeofday (/* unspecified arguments */);
-
 # if GETTIMEOFDAY_CLOBBERS_LOCALTIME
   /* Save and restore the contents of the buffer used for localtime's
      result around the call to gettimeofday.  */
