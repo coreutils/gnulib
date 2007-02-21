@@ -1,5 +1,13 @@
 2007-02-20  Bruno Haible  <bruno@clisp.org>
 
+	* modules/vsnprintf (Files): Remove lib/vsnprintf.h.
+	(Depends-on): Add stdio.
+	(configure.ac): Invoke gl_STDIO_MODULE_INDICATOR.
+	(Include): Use <stdio.h> instead of vsnprintf.h.
+	* m4/vsnprintf.m4 (gl_FUNC_VSNPRINTF): Require gl_STDIO_H_DEFAULTS. Set
+	HAVE_DECL_VSNPRINTF.
+	* lib/vsnprintf.c: Include <stdio.h> instead of vsnprintf.h.
+
 	* modules/snprintf (Files): Remove lib/snprintf.h.
 	(Depends-on): Add stdio.
 	(configure.ac): Invoke gl_STDIO_MODULE_INDICATOR.

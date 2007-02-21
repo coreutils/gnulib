@@ -1,5 +1,5 @@
 /* Formatted output to strings.
-   Copyright (C) 2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006-2007 Free Software Foundation, Inc.
    Written by Simon Josefsson and Yoann Vandoorselaere <yoann@prelude-ids.org>.
 
    This program is free software; you can redistribute it and/or modify
@@ -21,12 +21,11 @@
 #endif
 
 /* Specification.  */
-#include "vsnprintf.h"
+#include <stdio.h>
 
 #include <errno.h>
 #include <limits.h>
 #include <stdarg.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
