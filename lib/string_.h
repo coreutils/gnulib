@@ -44,7 +44,7 @@ extern void *memmem (void const *__haystack, size_t __haystack_len,
 #elif defined GNULIB_POSIXCHECK
 # undef memmem
 # define memmem(a,al,b,bl) \
-    (GL_LINK_WARNING ("memmem is unportable - "\
+    (GL_LINK_WARNING ("memmem is unportable - " \
                       "use gnulib module memmem for portability"), \
      memmem (a, al, b, bl))
 #endif
@@ -59,7 +59,7 @@ extern void *mempcpy (void *restrict __dest, void const *restrict __src,
 #elif defined GNULIB_POSIXCHECK
 # undef mempcpy
 # define mempcpy(a,b,n) \
-    (GL_LINK_WARNING ("mempcpy is unportable - "\
+    (GL_LINK_WARNING ("mempcpy is unportable - " \
                       "use gnulib module mempcpy for portability"), \
      mempcpy (a, b, n))
 #endif
@@ -72,7 +72,7 @@ extern void *memrchr (void const *, int, size_t);
 #elif defined GNULIB_POSIXCHECK
 # undef memrchr
 # define memrchr(a,b,c) \
-    (GL_LINK_WARNING ("memrchr is unportable - "\
+    (GL_LINK_WARNING ("memrchr is unportable - " \
                       "use gnulib module memrchr for portability"), \
      memrchr (a, b, c))
 #endif
@@ -85,7 +85,7 @@ extern char *stpcpy (char *restrict __dst, char const *restrict __src);
 #elif defined GNULIB_POSIXCHECK
 # undef stpcpy
 # define stpcpy(a,b) \
-    (GL_LINK_WARNING ("stpcpy is unportable - "\
+    (GL_LINK_WARNING ("stpcpy is unportable - " \
                       "use gnulib module stpcpy for portability"), \
      stpcpy (a, b))
 #endif
@@ -101,7 +101,7 @@ extern char *stpncpy (char *restrict __dst, char const *restrict __src,
 #elif defined GNULIB_POSIXCHECK
 # undef stpncpy
 # define stpncpy(a,b,n) \
-    (GL_LINK_WARNING ("stpncpy is unportable - "\
+    (GL_LINK_WARNING ("stpncpy is unportable - " \
                       "use gnulib module stpncpy for portability"), \
      stpncpy (a, b, n))
 #endif
@@ -120,7 +120,7 @@ extern int strcasecmp (char const *s1, char const *s2);
 # undef strcasecmp
 # define strcasecmp(a,b) \
     (GL_LINK_WARNING ("strcasecmp cannot work correctly on character strings " \
-                      "in multibyte locales - "\
+                      "in multibyte locales - " \
                       "use mbscasecmp if you care about " \
                       "internationalization, or use c_strcasecmp (from " \
                       "gnulib module c-strcase) if you want a locale " \
@@ -142,7 +142,7 @@ extern int strncasecmp (char const *s1, char const *s2, size_t n);
 # undef strncasecmp
 # define strncasecmp(a,b,n) \
     (GL_LINK_WARNING ("strncasecmp cannot work correctly on character " \
-                      "strings in multibyte locales - "\
+                      "strings in multibyte locales - " \
                       "use mbsncasecmp or mbspcasecmp if you care about " \
                       "internationalization, or use c_strncasecmp (from " \
                       "gnulib module c-strcase) if you want a locale " \
@@ -156,7 +156,7 @@ extern int strncasecmp (char const *s1, char const *s2, size_t n);
 # undef strchr
 # define strchr(s,c) \
     (GL_LINK_WARNING ("strchr cannot work correctly on character strings " \
-                      "in some multibyte locales - "\
+                      "in some multibyte locales - " \
                       "use mbschr if you care about internationalization"), \
      strchr (s, c))
 #endif
@@ -169,7 +169,7 @@ extern char *strchrnul (char const *__s, int __c_in);
 #elif defined GNULIB_POSIXCHECK
 # undef strchrnul
 # define strchrnul(a,b) \
-    (GL_LINK_WARNING ("strchrnul is unportable - "\
+    (GL_LINK_WARNING ("strchrnul is unportable - " \
                       "use gnulib module strchrnul for portability"), \
      strchrnul (a, b))
 #endif
@@ -182,7 +182,7 @@ extern char *strdup (char const *__s);
 #elif defined GNULIB_POSIXCHECK
 # undef strdup
 # define strdup(a) \
-    (GL_LINK_WARNING ("strdup is unportable - "\
+    (GL_LINK_WARNING ("strdup is unportable - " \
                       "use gnulib module strdup for portability"), \
      strdup (a))
 #endif
@@ -199,7 +199,7 @@ extern char *strndup (char const *__string, size_t __n);
 #elif defined GNULIB_POSIXCHECK
 # undef strndup
 # define strndup(a,n) \
-    (GL_LINK_WARNING ("strndup is unportable - "\
+    (GL_LINK_WARNING ("strndup is unportable - " \
                       "use gnulib module strndup for portability"), \
      strndup (a, n))
 #endif
@@ -214,7 +214,7 @@ extern size_t strnlen (char const *__string, size_t __maxlen);
 #elif defined GNULIB_POSIXCHECK
 # undef strnlen
 # define strnlen(a,n) \
-    (GL_LINK_WARNING ("strnlen is unportable - "\
+    (GL_LINK_WARNING ("strnlen is unportable - " \
                       "use gnulib module strnlen for portability"), \
      strnlen (a, n))
 #endif
@@ -227,7 +227,7 @@ extern size_t strnlen (char const *__string, size_t __maxlen);
 # undef strcspn
 # define strcspn(s,a) \
     (GL_LINK_WARNING ("strcspn cannot work correctly on character strings " \
-                      "in multibyte locales - "\
+                      "in multibyte locales - " \
                       "use mbscspn if you care about internationalization"), \
      strcspn (s, a))
 #endif
@@ -245,14 +245,14 @@ extern char *strpbrk (char const *__s, char const *__accept);
 #  undef strpbrk
 #  define strpbrk(s,a) \
      (GL_LINK_WARNING ("strpbrk cannot work correctly on character strings " \
-                       "in multibyte locales - "\
+                       "in multibyte locales - " \
                        "use mbspbrk if you care about internationalization"), \
       strpbrk (s, a))
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strpbrk
 # define strpbrk(s,a) \
-    (GL_LINK_WARNING ("strpbrk is unportable - "\
+    (GL_LINK_WARNING ("strpbrk is unportable - " \
                       "use gnulib module strpbrk for portability"), \
      strpbrk (s, a))
 #endif
@@ -263,7 +263,7 @@ extern char *strpbrk (char const *__s, char const *__accept);
 # undef strspn
 # define strspn(s,a) \
     (GL_LINK_WARNING ("strspn cannot work correctly on character strings " \
-                      "in multibyte locales - "\
+                      "in multibyte locales - " \
                       "use mbsspn if you care about internationalization"), \
      strspn (s, a))
 #endif
@@ -274,7 +274,7 @@ extern char *strpbrk (char const *__s, char const *__accept);
 # undef strrchr
 # define strrchr(s,c) \
     (GL_LINK_WARNING ("strrchr cannot work correctly on character strings " \
-                      "in some multibyte locales - "\
+                      "in some multibyte locales - " \
                       "use mbsrchr if you care about internationalization"), \
      strrchr (s, c))
 #endif
@@ -303,14 +303,14 @@ extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 #  undef strsep
 #  define strsep(s,d) \
      (GL_LINK_WARNING ("strsep cannot work correctly on character strings " \
-                       "in multibyte locales - "\
+                       "in multibyte locales - " \
                        "use mbssep if you care about internationalization"), \
       strsep (s, d))
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strsep
 # define strsep(s,d) \
-    (GL_LINK_WARNING ("strsep is unportable - "\
+    (GL_LINK_WARNING ("strsep is unportable - " \
                       "use gnulib module strsep for portability"), \
      strsep (s, d))
 #endif
@@ -323,7 +323,7 @@ extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 # undef strstr
 # define strstr(a,b) \
     (GL_LINK_WARNING ("strstr cannot work correctly on character strings " \
-                      "in most multibyte locales - "\
+                      "in most multibyte locales - " \
                       "use mbsstr if you care about internationalization"), \
      strstr (a, b))
 #endif
@@ -340,7 +340,7 @@ extern char *strcasestr (const char *haystack, const char *needle);
 # undef strcasestr
 # define strcasestr(a,b) \
     (GL_LINK_WARNING ("strcasestr does work correctly on character strings " \
-                      "in multibyte locales - "\
+                      "in multibyte locales - " \
                       "use mbscasestr if you care about " \
                       "internationalization, or use c-strcasestr if you want " \
                       "a locale independent function"), \
@@ -378,14 +378,14 @@ extern char *strtok_r (char *restrict s, char const *restrict delim,
 #  undef strtok_r
 #  define strtok_r(s,d,p) \
      (GL_LINK_WARNING ("strtok_r cannot work correctly on character strings " \
-                       "in multibyte locales - "\
+                       "in multibyte locales - " \
                        "use mbstok_r if you care about internationalization"), \
       strtok_r (s, d, p))
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtok_r
 # define strtok_r(s,d,p) \
-    (GL_LINK_WARNING ("strtok_r is unportable - "\
+    (GL_LINK_WARNING ("strtok_r is unportable - " \
                       "use gnulib module strtok_r for portability"), \
      strtok_r (s, d, p))
 #endif

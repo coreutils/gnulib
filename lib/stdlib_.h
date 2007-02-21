@@ -78,7 +78,7 @@ extern int getsubopt (char **optionp, char *const *tokens, char **valuep);
 #elif defined GNULIB_POSIXCHECK
 # undef getsubopt
 # define getsubopt(o,t,v) \
-    (GL_LINK_WARNING ("getsubopt is unportable - "\
+    (GL_LINK_WARNING ("getsubopt is unportable - " \
                       "use gnulib module getsubopt for portability"), \
      getsubopt (o, t, v))
 #endif
@@ -96,7 +96,7 @@ extern char * mkdtemp (char *template);
 #elif defined GNULIB_POSIXCHECK
 # undef mkdtemp
 # define mkdtemp(t) \
-    (GL_LINK_WARNING ("mkdtemp is unportable - "\
+    (GL_LINK_WARNING ("mkdtemp is unportable - " \
                       "use gnulib module mkdtemp for portability"), \
      mkdtemp (t))
 #endif
@@ -119,7 +119,7 @@ extern int mkstemp (char *template);
 #elif defined GNULIB_POSIXCHECK
 # undef mkstemp
 # define mkstemp(t) \
-    (GL_LINK_WARNING ("mkstemp is unportable - "\
+    (GL_LINK_WARNING ("mkstemp is unportable - " \
                       "use gnulib module mkstemp for portability"), \
      mkstemp (t))
 #endif

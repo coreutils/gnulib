@@ -1043,7 +1043,7 @@ extern intmax_t imaxabs (intmax_t);
 #elif defined GNULIB_POSIXCHECK
 # undef imaxabs
 # define imaxabs(a) \
-    (GL_LINK_WARNING ("imaxabs is unportable - "\
+    (GL_LINK_WARNING ("imaxabs is unportable - " \
                       "use gnulib module imaxabs for portability"), \
      imaxabs (a))
 #endif
@@ -1056,7 +1056,7 @@ extern imaxdiv_t imaxdiv (intmax_t, intmax_t);
 #elif defined GNULIB_POSIXCHECK
 # undef imaxdiv
 # define imaxdiv(a,b) \
-    (GL_LINK_WARNING ("imaxdiv is unportable - "\
+    (GL_LINK_WARNING ("imaxdiv is unportable - " \
                       "use gnulib module imaxdiv for portability"), \
      imaxdiv (a, b))
 #endif
@@ -1068,7 +1068,7 @@ extern intmax_t strtoimax (const char *, char **, int);
 #elif defined GNULIB_POSIXCHECK
 # undef strtoimax
 # define strtoimax(p,e,b) \
-    (GL_LINK_WARNING ("strtoimax is unportable - "\
+    (GL_LINK_WARNING ("strtoimax is unportable - " \
                       "use gnulib module strtoimax for portability"), \
      strtoimax (p, e, b))
 #endif
@@ -1080,7 +1080,7 @@ extern uintmax_t strtoumax (const char *, char **, int);
 #elif defined GNULIB_POSIXCHECK
 # undef strtoumax
 # define strtoumax(p,e,b) \
-    (GL_LINK_WARNING ("strtoumax is unportable - "\
+    (GL_LINK_WARNING ("strtoumax is unportable - " \
                       "use gnulib module strtoumax for portability"), \
      strtoumax (p, e, b))
 #endif
