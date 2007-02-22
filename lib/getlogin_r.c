@@ -30,7 +30,7 @@
 char *getlogin (void);
 #endif
 
-/* See getlogin_r.h for documentation.  */
+/* See unistd_.h for documentation.  */
 int
 getlogin_r (char *name, size_t size)
 {
