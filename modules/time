@@ -8,6 +8,7 @@ m4/time_h.m4
 Depends-on:
 absolute-header
 extensions
+restrict
 
 configure.ac:
 gl_HEADER_TIME_H
