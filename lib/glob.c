@@ -132,7 +132,6 @@
 # endif
 # define struct_stat64		struct stat64
 #else /* !_LIBC */
-# include "getlogin_r.h"
 # define __stat64(fname, buf)	stat (fname, buf)
 # define struct_stat64		struct stat
 # define __stat(fname, buf)	stat (fname, buf)
