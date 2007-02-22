@@ -11,6 +11,7 @@ m4/utimes.m4
 Depends-on:
 sys_time
 time
+timespec
 
 configure.ac:
 gl_UTIMENS
