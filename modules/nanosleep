@@ -8,6 +8,7 @@ m4/nanosleep.m4
 Depends-on:
 clock-time
 extensions
+gettime
 stdbool
 sys_time
 time
