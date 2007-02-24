@@ -1,3 +1,9 @@
+2007-02-24  Jim Meyering  <jim@meyering.net>
+
+	* m4/regex.m4: Update the description of the configure-time option,
+	--without-included-regex, to state accurately what the defaults are,
+	and perhaps to give people an idea why using this option is risky.
+
 2007-02-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Check for a nanosleep that
