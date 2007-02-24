@@ -1,5 +1,12 @@
 2007-02-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/isnan-nolibm: New file.
+	* lib/isnan.h: New file.
+	* lib/isnan.c: New file.
+	* m4/isnan.m4: New file.
+
+2007-02-24  Bruno Haible  <bruno@clisp.org>
+
 	* lib/frexpl.c (frexpl): Correct return values for x = 1.0L. Don't
 	assume that an exponent fits in 20 bits.
 
