@@ -1,0 +1,12 @@
+Files:
+tests/test-isnan.c
+
+Depends-on:
+
+configure.ac:
+gl_DOUBLE_EXPONENT_LOCATION
+
+Makefile.am:
+TESTS += test-isnan
+check_PROGRAMS += test-isnan
+
