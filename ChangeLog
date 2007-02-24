@@ -1,3 +1,8 @@
+2007-02-23  Karl Berry  <karl@gnu.org>
+
+	* doc/gnulib-tool.texi (CVS Issues): mention that when foo_.h
+	exists, foo.h should be cvs-ignored, not committed.
+
 2007-02-23  Eric Blake  <ebb9@byu.net>
 
 	* lib/getdate.h (includes):  Include <time.h>, not "timespec.h".
