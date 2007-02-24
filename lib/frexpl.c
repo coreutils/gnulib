@@ -30,11 +30,14 @@
 long double
 frexpl(long double x, int *exp)
 {
-  long double exponents[20], *next;
+  /* Since the exponent is an 'int', it fits in 64 bits.  Therefore the
+     loops are executed no more than 64 times.  */
+  long double exponents[64];
+  long double *next;
   int exponent, bit;
 
   /* Check for zero, nan and infinity. */
-  if (x != x || x + x == x )
+  if (x != x || x + x == x)
     {
       *exp = 0;
       return x;
@@ -44,7 +47,7 @@ frexpl(long double x, int *exp)
     return -frexpl(-x, exp);
 
   exponent = 0;
-  if (x > 1.0)
+  if (x >= 1.0)
     {
       for (next = exponents, exponents[0] = 2.0L, bit = 1;
 	   *next <= x + x;
@@ -90,6 +93,7 @@ main (void)
   x = frexpl(-1.0L / 0.0L, &y); printf ("%.6Lg %d\n", x, y);
   x = frexpl(0.5L, &y); printf ("%.6Lg %d\n", x, y);
   x = frexpl(0.75L, &y); printf ("%.6Lg %d\n", x, y);
+  x = frexpl(1.0L, &y); printf ("%.6Lg %d\n", x, y);
   x = frexpl(3.6L, &y); printf ("%.6Lg %d\n", x, y);
   x = frexpl(17.8L, &y); printf ("%.6Lg %d\n", x, y);
   x = frexpl(8.0L, &y); printf ("%.6Lg %d\n", x, y);
