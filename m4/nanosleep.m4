@@ -60,14 +60,20 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
 	  static struct timespec ts_sleep;
 	  static struct timespec ts_remaining;
 	  static struct sigaction act;
+	  if (! nanosleep)
+	    return 1;
 	  act.sa_handler = check_for_SIGALRM;
-          sigemptyset (&act.sa_mask);
+	  sigemptyset (&act.sa_mask);
 	  sigaction (SIGALRM, &act, NULL);
+	  ts_sleep.tv_sec = 0;
+	  ts_sleep.tv_nsec = 1;
+	  alarm (1);
+	  if (nanosleep (&ts_sleep, NULL) != 0)
+	    return 1;
 	  ts_sleep.tv_sec = TYPE_MAXIMUM (time_t);
 	  ts_sleep.tv_nsec = 999999999;
 	  alarm (1);
 	  if (nanosleep (&ts_sleep, &ts_remaining) == -1 && errno == EINTR
-	      && nanosleep
 	      && TYPE_MAXIMUM (time_t) - 10 < ts_remaining.tv_sec)
 	    return 0;
 	  return 119;

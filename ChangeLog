@@ -1,3 +1,10 @@
+2007-02-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Check for a nanosleep that
+	loops on small arguments.  This attempts to avoid the problem
+	Bruno Haible reported for AIX 4.3.2 in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2007-02/msg00309.html>.
+
 2007-02-23  Bruno Haible  <bruno@clisp.org>
 
 	* m4/perl.m4 (gl_PERL): Require version 5.005, not 5.003.
