@@ -1,0 +1,12 @@
+Files:
+tests/test-isnanl.c
+
+Depends-on:
+
+configure.ac:
+gl_LONG_DOUBLE_EXPONENT_LOCATION
+
+Makefile.am:
+TESTS += test-isnanl
+check_PROGRAMS += test-isnanl
+

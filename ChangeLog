@@ -1,5 +1,8 @@
 2007-02-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/isnanl-nolibm-tests: New file.
+	* tests/test-isnanl.c: New file.
+
 	* modules/isnanl-nolibm: New file.
 	* lib/isnanl.h: New file.
 	* lib/isnanl.c: New file.
