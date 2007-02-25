@@ -2764,7 +2764,8 @@
 	simply work around them.
 	* lib/wctype_.h: Remove test for HAVE_WCTYPE_CTMP_BUG.
 	(iswalnum, iswalpha, iswblank, iswcntrl, iswdigit, iswgraph, iswlower):
-	(iswprint, iswpunct, iswspace, iswupper, iswxdigit): Undef before declaring.
+	(iswprint, iswpunct, iswspace, iswupper, iswxdigit): Undef before
+	declaring.
 	Don't bother to define as macros, since the standard doesn't require it.
 	* m4/wctype.m4 (WCTYPE_H, ABSOLUTE_WCTYPE_H): Simplify, since we no
 	longer worry about IRIX 5.3.
