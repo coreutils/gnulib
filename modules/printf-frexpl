@@ -10,7 +10,6 @@ m4/printf-frexpl.m4
 m4/longdouble.m4
 
 Depends-on:
-verify
 
 configure.ac:
 gl_FUNC_PRINTF_FREXPL

@@ -8,7 +8,6 @@ lib/printf-frexp.c
 m4/printf-frexp.m4
 
 Depends-on:
-verify
 
 configure.ac:
 gl_FUNC_PRINTF_FREXP

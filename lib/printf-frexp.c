@@ -28,10 +28,6 @@
 
 # include <float.h>
 # include <math.h>
-# include "verify.h"
-
-/* This file assumes FLT_RADIX is 2.  */
-verify (FLT_RADIX == 2);
 
 # ifdef USE_LONG_DOUBLE
 #  define FUNC printf_frexpl
