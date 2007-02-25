@@ -8,12 +8,18 @@ dnl Check how to get or define isnan() without linking with libm.
 
 AC_DEFUN([gl_FUNC_ISNAN_NO_LIBM],
 [
-  AC_CHECK_FUNC([isnan],
-    [gl_cv_func_isnan_no_libm=yes],
-    [gl_cv_func_isnan_no_libm=no])
+  AC_CACHE_CHECK([whether isnan(double) can be used without linking with libm],
+    [gl_cv_func_isnan_no_libm],
+    [
+      AC_TRY_LINK([#include <math.h>
+                   double x;],
+                  [return isnan (x);],
+        [gl_cv_func_isnan_no_libm=yes],
+        [gl_cv_func_isnan_no_libm=no])
+    ])
   if test $gl_cv_func_isnan_no_libm = yes; then
     AC_DEFINE([HAVE_ISNAN_IN_LIBC], 1,
-      [Define if the isnan() function is available in libc.])
+      [Define if the isnan(double) function is available in libc.])
   else
     AC_LIBOBJ([isnan])
     gl_DOUBLE_EXPONENT_LOCATION

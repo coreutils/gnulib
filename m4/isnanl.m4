@@ -8,12 +8,22 @@ AC_DEFUN([gl_FUNC_ISNANL_NO_LIBM],
 [
   AC_REQUIRE([gt_TYPE_LONGDOUBLE])
   if test $gt_cv_c_long_double = yes; then
-    AC_CHECK_FUNC([isnanl],
-      [gl_cv_func_isnanl_no_libm=yes],
-      [gl_cv_func_isnanl_no_libm=no])
+    AC_CACHE_CHECK([whether isnan(long double) can be used without linking with libm],
+      [gl_cv_func_isnanl_no_libm],
+      [
+        AC_TRY_LINK([#include <math.h>
+                     #ifdef isnan
+                     # undef isnanl
+                     # define isnanl(x) isnan ((long double)(x))
+                     #endif
+                     long double x;],
+                    [return isnanl (x);],
+          [gl_cv_func_isnanl_no_libm=yes],
+          [gl_cv_func_isnanl_no_libm=no])
+      ])
     if test $gl_cv_func_isnanl_no_libm = yes; then
       AC_DEFINE([HAVE_ISNANL_IN_LIBC], 1,
-        [Define if the isnanl() function is available in libc.])
+        [Define if the isnan(long double) function is available in libc.])
     else
       AC_LIBOBJ([isnanl])
       gl_LONG_DOUBLE_EXPONENT_LOCATION

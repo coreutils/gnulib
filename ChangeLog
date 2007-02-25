@@ -1,5 +1,15 @@
 2007-02-24  Bruno Haible  <bruno@clisp.org>
 
+	* lib/isnanl.h (isnanl): Define through isnan if isnan is a macro.
+	* m4/isnan.m4 (gl_FUNC_ISNAN_NO_LIBM): Don't check for isnan as a
+	function; instead check whether isnan with a double argument links.
+	* m4/isnanl.m4 (gl_FUNC_ISNANL_NO_LIBM): Don't check for isnanl as a
+	function; instead check whether isnan with a 'long double' argument
+	links.
+	Reported by Eric Blake <ebb9@byu.net>.
+
+2007-02-24  Bruno Haible  <bruno@clisp.org>
+
 	* lib/isnan.c: Support the 'long double' case if USE_LONG_DOUBLE is
 	defined.
 	* lib/isnanl.c: Remove all code. Just include isnan.c.

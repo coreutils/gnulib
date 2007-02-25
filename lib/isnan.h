@@ -16,7 +16,7 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #if HAVE_ISNAN_IN_LIBC
-/* Get declaration of isnan.  */
+/* Get declaration of isnan macro.  */
 # include <math.h>
 #else
 /* Test whether X is a NaN.  */

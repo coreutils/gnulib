@@ -16,8 +16,12 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #if HAVE_ISNANL_IN_LIBC
-/* Get declaration of isnanl.  */
+/* Get declaration of isnan macro or (older) isnanl function.  */
 # include <math.h>
+# ifdef isnan
+#  undef isnanl
+#  define isnanl(x) isnan ((long double)(x))
+# endif
 #else
 /* Test whether X is a NaN.  */
 # undef isnanl
