@@ -430,10 +430,30 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      break;
 
 		    case 'e': case 'E': case 'g': case 'G':
-		    case 'a': case 'A':
 		      tmp_length =
 			12; /* sign, decimal point, exponent etc. */
 		      tmp_length = xsum (tmp_length, precision);
+		      break;
+
+		    case 'a': case 'A':
+# if HAVE_LONG_DOUBLE
+		      if (type == TYPE_LONGDOUBLE)
+			tmp_length =
+			  (unsigned int) (LDBL_DIG
+					  * 0.831 /* decimal -> hexadecimal */
+					 )
+			  + 1; /* turn floor into ceil */
+		      else
+# endif
+			tmp_length =
+			  (unsigned int) (DBL_DIG
+					  * 0.831 /* decimal -> hexadecimal */
+					 )
+			  + 1; /* turn floor into ceil */
+		      if (tmp_length < precision)
+			tmp_length = precision;
+		      /* Account for sign, decimal point etc. */
+		      tmp_length = xsum (tmp_length, 12);
 		      break;
 
 		    case 'c':

@@ -1,5 +1,10 @@
 2007-02-25  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (VASNPRINTF): Fix estimate of size needed for a
+	'a' or 'A' conversion.
+
+2007-02-25  Bruno Haible  <bruno@clisp.org>
+
 	* modules/filename: Renamed from modules/pathname.
 	(Files): Replace lib/pathname.h with lib/filename.h. Replace
 	lib/concatpath.c with lib/concat-filename.c.
