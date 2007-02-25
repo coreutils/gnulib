@@ -1,4 +1,4 @@
-/* Copyright (C) 1991, 1994, 1997, 1998, 2000, 2003, 2004, 2005, 2006
+/* Copyright (C) 1991, 1994, 1997, 1998, 2000, 2003, 2004, 2005, 2006, 2007
    Free Software Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C
@@ -57,7 +57,7 @@ __libc_lock_define_initialized (static, envlock)
 #endif
 
 static int
-unsetenv (const char *name)
+_unsetenv (const char *name)
 {
   size_t len;
   char **ep;
@@ -105,7 +105,7 @@ rpl_putenv (const char *string)
   if (name_end == NULL)
     {
       /* Remove the variable from the environment.  */
-      return unsetenv (string);
+      return _unsetenv (string);
     }
 
   size = 0;

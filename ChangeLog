@@ -1,3 +1,10 @@
+2007-02-25  Jim Meyering  <jim@meyering.net>
+
+	Avoid conflicting types for 'unsetenv' on FreeBSD.
+	* lib/putenv.c (_unsetenv): Rename from "unsetenv", to avoid
+	conflicting with FreeBSD's (5.0 and 6.1) function declaration
+	in stdlib.h.
+
 2007-02-24  Bruno Haible  <bruno@clisp.org>
 
 	* modules/isnanl-nolibm-tests: New file.
