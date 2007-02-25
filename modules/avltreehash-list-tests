@@ -7,6 +7,6 @@ array-list
 configure.ac:
 
 Makefile.am:
-TESTS += test-avltreehash_list$(EXEEXT)
+TESTS += test-avltreehash_list
 check_PROGRAMS += test-avltreehash_list
 

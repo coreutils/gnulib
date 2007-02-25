@@ -6,7 +6,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-md2$(EXEEXT)
+TESTS += test-md2
 check_PROGRAMS += test-md2
 
 License:

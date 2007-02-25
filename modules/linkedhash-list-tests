@@ -7,6 +7,6 @@ array-list
 configure.ac:
 
 Makefile.am:
-TESTS += test-linkedhash_list$(EXEEXT)
+TESTS += test-linkedhash_list
 check_PROGRAMS += test-linkedhash_list
 

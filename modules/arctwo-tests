@@ -6,5 +6,5 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-arctwo$(EXEEXT)
+TESTS += test-arctwo
 check_PROGRAMS += test-arctwo

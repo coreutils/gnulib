@@ -6,7 +6,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-gc-arcfour$(EXEEXT)
+TESTS += test-gc-arcfour
 check_PROGRAMS += test-gc-arcfour
 
 License:

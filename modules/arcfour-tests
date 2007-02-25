@@ -6,5 +6,5 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-arcfour$(EXEEXT)
+TESTS += test-arcfour
 check_PROGRAMS += test-arcfour

@@ -7,6 +7,6 @@ array-oset
 configure.ac:
 
 Makefile.am:
-TESTS += test-rbtree_oset$(EXEEXT)
+TESTS += test-rbtree_oset
 check_PROGRAMS += test-rbtree_oset
 

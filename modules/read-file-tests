@@ -6,5 +6,5 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-read-file$(EXEEXT)
+TESTS += test-read-file
 check_PROGRAMS += test-read-file

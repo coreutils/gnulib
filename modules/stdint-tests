@@ -12,7 +12,7 @@ gt_TYPE_WCHAR_T
 gt_TYPE_WINT_T
 
 Makefile.am:
-TESTS += test-stdint$(EXEEXT)
+TESTS += test-stdint
 check_PROGRAMS += test-stdint
 
 License:

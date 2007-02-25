@@ -7,7 +7,7 @@ inet_ntop
 configure.ac:
 
 Makefile.am:
-TESTS += test-getaddrinfo$(EXEEXT)
+TESTS += test-getaddrinfo
 check_PROGRAMS += test-getaddrinfo
 
 License:

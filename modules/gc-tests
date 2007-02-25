@@ -6,7 +6,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-gc$(EXEEXT)
+TESTS += test-gc
 check_PROGRAMS += test-gc
 
 License:

@@ -5,6 +5,6 @@ tests/test-argp-2.sh
 Depends-on:
 
 Makefile.am:
-TESTS += test-argp$(EXEEXT) test-argp-2.sh
+TESTS += test-argp test-argp-2.sh
 check_PROGRAMS += test-argp 
 EXTRA_DIST += test-argp-2.sh

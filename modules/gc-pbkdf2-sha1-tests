@@ -6,7 +6,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-gc-pbkdf2-sha1$(EXEEXT)
+TESTS += test-gc-pbkdf2-sha1
 check_PROGRAMS += test-gc-pbkdf2-sha1
 
 License:

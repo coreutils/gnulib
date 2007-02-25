@@ -7,6 +7,6 @@ array-list
 configure.ac:
 
 Makefile.am:
-TESTS += test-rbtreehash_list$(EXEEXT)
+TESTS += test-rbtreehash_list
 check_PROGRAMS += test-rbtreehash_list
 

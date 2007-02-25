@@ -7,6 +7,6 @@ array-list
 configure.ac:
 
 Makefile.am:
-TESTS += test-carray_list$(EXEEXT)
+TESTS += test-carray_list
 check_PROGRAMS += test-carray_list
 

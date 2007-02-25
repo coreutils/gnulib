@@ -6,7 +6,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-des$(EXEEXT)
+TESTS += test-des
 check_PROGRAMS += test-des
 
 License:

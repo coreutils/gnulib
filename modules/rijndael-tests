@@ -6,5 +6,5 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-rijndael$(EXEEXT)
+TESTS += test-rijndael
 check_PROGRAMS += test-rijndael

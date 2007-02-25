@@ -1,3 +1,44 @@
+2007-02-25  Bruno Haible  <bruno@clisp.org>
+
+	Assume automake >= 1.10 for the tests.
+	* modules/arcfour-tests (TESTS): Remove $(EXEEXT) suffix.
+	* modules/arctwo-tests: Likewise.
+	* modules/argp-tests: Likewise.
+	* modules/avltree-list-tests: Likewise.
+	* modules/avltree-oset-tests: Likewise.
+	* modules/avltreehash-list-tests: Likewise.
+	* modules/carray-list-tests: Likewise.
+	* modules/crc-tests: Likewise.
+	* modules/des-tests: Likewise.
+	* modules/gc-arcfour-tests: Likewise.
+	* modules/gc-arctwo-tests: Likewise.
+	* modules/gc-des-tests: Likewise.
+	* modules/gc-hmac-md5-tests: Likewise.
+	* modules/gc-hmac-sha1-tests: Likewise.
+	* modules/gc-md2-tests: Likewise.
+	* modules/gc-md4-tests: Likewise.
+	* modules/gc-md5-tests: Likewise.
+	* modules/gc-pbkdf2-sha1-tests: Likewise.
+	* modules/gc-rijndael-tests: Likewise.
+	* modules/gc-sha1-tests: Likewise.
+	* modules/gc-tests: Likewise.
+	* modules/getaddrinfo-tests: Likewise.
+	* modules/hmac-md5-tests: Likewise.
+	* modules/hmac-sha1-tests: Likewise.
+	* modules/linked-list-tests: Likewise.
+	* modules/linkedhash-list-tests: Likewise.
+	* modules/lock-tests: Likewise.
+	* modules/md2-tests: Likewise.
+	* modules/md4-tests: Likewise.
+	* modules/md5-tests: Likewise.
+	* modules/rbtree-list-tests: Likewise.
+	* modules/rbtree-oset-tests: Likewise.
+	* modules/rbtreehash-list-tests: Likewise.
+	* modules/read-file-tests: Likewise.
+	* modules/rijndael-tests: Likewise.
+	* modules/stdint-tests: Likewise.
+	* modules/tls-tests: Likewise.
+
 2007-02-24  Bruno Haible  <bruno@clisp.org>
 
 	* lib/isnanl.h (isnanl): Define through isnan if isnan is a macro.

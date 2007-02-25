@@ -6,7 +6,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-gc-arctwo$(EXEEXT)
+TESTS += test-gc-arctwo
 check_PROGRAMS += test-gc-arctwo
 
 License:
