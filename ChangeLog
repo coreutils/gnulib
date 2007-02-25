@@ -1,5 +1,12 @@
 2007-02-25  Bruno Haible  <bruno@clisp.org>
 
+	* modules/printf-frexp: New file.
+	* lib/printf-frexp.h: New file.
+	* lib/printf-frexp.c: New file.
+	* m4/printf-frexp.m4: New file.
+
+2007-02-25  Bruno Haible  <bruno@clisp.org>
+
 	Assume automake >= 1.10 for the tests.
 	* modules/arcfour-tests (TESTS): Remove $(EXEEXT) suffix.
 	* modules/arctwo-tests: Likewise.
