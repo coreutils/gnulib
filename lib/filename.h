@@ -1,5 +1,5 @@
 /* Pathname support.
-   Copyright (C) 2001-2004 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _PATHNAME_H
-#define _PATHNAME_H
+#ifndef _FILENAME_H
+#define _FILENAME_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,13 +47,13 @@ extern "C" {
 # define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
 
-/* Concatenate a directory pathname, a relative pathname and an optional
-   suffix.  Return a freshly allocated pathname.  */
-extern char *concatenated_pathname (const char *directory,
+/* Concatenate a directory filename, a relative filename and an optional
+   suffix.  Return a freshly allocated filename.  */
+extern char *concatenated_filename (const char *directory,
 				    const char *filename, const char *suffix);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _PATHNAME_H */
+#endif /* _FILENAME_H */

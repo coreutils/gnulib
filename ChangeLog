@@ -1,5 +1,31 @@
 2007-02-25  Bruno Haible  <bruno@clisp.org>
 
+	* modules/filename: Renamed from modules/pathname.
+	(Files): Replace lib/pathname.h with lib/filename.h. Replace
+	lib/concatpath.c with lib/concat-filename.c.
+	(Makefile.am): Update.
+	(Include): Replace pathname.h with filename.h.
+	* lib/filename.h: Renamed from lib/pathname.h.
+	(concatenated_filename): Renamed from concatenated_pathname.
+	* lib/concat-filename.c: Renamed from lib/concatpath.c.
+	(concatenated_filename): Renamed from concatenated_pathname.
+	* lib/findprog.c: Include filename.h instead of pathname.h.
+	(find_in_path): Update.
+	* lib/javacomp.c: Include filename.h instead of pathname.h.
+	(is_envjavac_gcj43_usable, is_envjavac_oldgcj_14_14_usable,
+	is_envjavac_oldgcj_14_13_usable, is_envjavac_nongcj_usable,
+	is_gcj_present, is_gcj43_usable, is_oldgcj_14_14_usable,
+	is_oldgcj_14_13_usable, is_javac_usable): Update.
+	* lib/javaexec.c: Include filename.h instead of pathname.h.
+	(execute_java_class): Update.
+	* modules/findprog: Update.
+	* modules/javacomp: Update.
+	* modules/javaexec: Update.
+	* MODULES.html.sh (File system functions): Add 'filename', remove
+	'pathname'.
+
+2007-02-25  Bruno Haible  <bruno@clisp.org>
+
 	* modules/printf-frexpl-tests: New file.
 	* tests/test-printf-frexpl.c: New file.
 

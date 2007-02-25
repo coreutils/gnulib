@@ -1,5 +1,5 @@
 /* Locating a program in PATH.
-   Copyright (C) 2001-2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,7 @@
 #include <unistd.h>
 
 #include "xalloc.h"
-#include "pathname.h"
+#include "filename.h"
 
 
 const char *
@@ -76,7 +76,7 @@ find_in_path (const char *progname)
 	dir = ".";
 
       /* Concatenate dir and progname.  */
-      progpathname = concatenated_pathname (dir, progname, NULL);
+      progpathname = concatenated_filename (dir, progname, NULL);
 
       /* On systems which have the eaccess() system call, let's use it.
 	 On other systems, let's hope that this program is not installed
@@ -89,7 +89,7 @@ find_in_path (const char *progname)
 	    {
 	      free (progpathname);
 
-	      /* Add the "./" prefix for real, that concatenated_pathname()
+	      /* Add the "./" prefix for real, that concatenated_filename()
 		 optimized away.  This avoids a second PATH search when the
 		 caller uses execlp/execvp.  */
 	      progpathname = XNMALLOC (2 + strlen (progname) + 1, char);

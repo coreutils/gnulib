@@ -20,7 +20,7 @@ safe-read
 xalloc
 xallocsa
 getline
-pathname
+filename
 fwriteerror
 clean-temp
 error

@@ -1,5 +1,5 @@
 /* Execute a Java program.
-   Copyright (C) 2001-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -30,7 +30,7 @@
 #include "classpath.h"
 #include "xsetenv.h"
 #include "sh-quote.h"
-#include "pathname.h"
+#include "filename.h"
 #include "xalloc.h"
 #include "xallocsa.h"
 #include "error.h"
@@ -95,7 +95,7 @@ execute_java_class (const char *class_name,
   /* First, try a class compiled to a native code executable.  */
   if (exe_dir != NULL)
     {
-      char *exe_pathname = concatenated_pathname (exe_dir, class_name, EXEEXT);
+      char *exe_pathname = concatenated_filename (exe_dir, class_name, EXEEXT);
       char *old_classpath;
       char **argv = (char **) xallocsa ((1 + nargs + 1) * sizeof (char *));
       unsigned int i;

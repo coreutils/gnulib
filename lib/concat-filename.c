@@ -1,5 +1,5 @@
 /* Construct a full pathname from a directory and a filename.
-   Copyright (C) 2001-2004, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -21,18 +21,18 @@
 #include <config.h>
 
 /* Specification.  */
-#include "pathname.h"
+#include "filename.h"
 
 #include <string.h>
 
 #include "xalloc.h"
 
-/* Concatenate a directory pathname, a relative pathname and an optional
+/* Concatenate a directory filename, a relative filename and an optional
    suffix.  The directory may end with the directory separator.  The second
    argument may not start with the directory separator (it is relative).
-   Return a freshly allocated pathname.  */
+   Return a freshly allocated filename.  */
 char *
-concatenated_pathname (const char *directory, const char *filename,
+concatenated_filename (const char *directory, const char *filename,
 		       const char *suffix)
 {
   char *result;
