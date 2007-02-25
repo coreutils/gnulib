@@ -92,14 +92,17 @@ int main ()
         [gl_cv_cc_double_expbit0=`cat conftest.out`],
         [gl_cv_cc_double_expbit0="unknown"],
         [
-          dnl On ARM, integer types are stored in little-endian byte order,
-          dnl but floats are stored in big-endian word order.
+          dnl On ARM, there are two 'double' floating-point formats, used by
+          dnl different sets of instructions: The older FPA instructions assume
+          dnl that they are stored in big-endian word order, while the words
+          dnl (like integer types) are stored in little-endian byte order.
+          dnl The newer VFP instructions assume little-endian order consistenly.
           AC_EGREP_CPP([mixed_endianness], [
 #if defined arm || defined __arm || defined __arm__
   mixed_endianness
 #endif
             ],
-            [gl_cv_cc_double_expbit0="word 0 bit 20"],
+            [gl_cv_cc_double_expbit0="unknown"],
             [
               AC_C_BIGENDIAN(
                 [gl_cv_cc_double_expbit0="word 0 bit 20"],
