@@ -29,6 +29,10 @@
 # include <float.h>
 # include <math.h>
 
+/* This file assumes FLT_RADIX = 2.  If FLT_RADIX is a power of 2 greater
+   than 2, or not even a power of 2, some rounding errors can occur, so that
+   then the returned mantissa is only guaranteed to be <= 2.0, not < 2.0.  */
+
 # ifdef USE_LONG_DOUBLE
 #  define FUNC printf_frexpl
 #  define DOUBLE long double
