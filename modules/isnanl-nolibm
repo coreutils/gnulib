@@ -4,6 +4,7 @@ isnanl() function: test for NaN, without requiring libm.
 Files:
 lib/isnanl.h
 lib/isnanl.c
+lib/isnan.c
 m4/isnanl.m4
 m4/longdouble.m4
 

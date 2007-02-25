@@ -22,32 +22,55 @@
 #include <float.h>
 #include <string.h>
 
-#define DBL_EXP_MASK ((DBL_MAX_EXP - DBL_MIN_EXP) | 7)
+#ifdef USE_LONG_DOUBLE
+# define FUNC rpl_isnanl
+# define DOUBLE long double
+# define MAX_EXP LDBL_MAX_EXP
+# define MIN_EXP LDBL_MIN_EXP
+# if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT
+#  define KNOWN_EXPBIT0_LOCATION
+#  define EXPBIT0_WORD LDBL_EXPBIT0_WORD
+#  define EXPBIT0_BIT LDBL_EXPBIT0_BIT
+# endif
+# define L_(literal) literal##L
+#else
+# define FUNC rpl_isnan
+# define DOUBLE double
+# define MAX_EXP DBL_MAX_EXP
+# define MIN_EXP DBL_MIN_EXP
+# if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
+#  define KNOWN_EXPBIT0_LOCATION
+#  define EXPBIT0_WORD DBL_EXPBIT0_WORD
+#  define EXPBIT0_BIT DBL_EXPBIT0_BIT
+# endif
+# define L_(literal) literal
+#endif
+
+#define EXP_MASK ((MAX_EXP - MIN_EXP) | 7)
 
 #define NWORDS \
-  ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-typedef union { double value; unsigned int word[NWORDS]; } memory_double;
+  ((sizeof (DOUBLE) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+typedef union { DOUBLE value; unsigned int word[NWORDS]; } memory_double;
 
 int
-rpl_isnan (double x)
+FUNC (DOUBLE x)
 {
-#if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
+#ifdef KNOWN_EXPBIT0_LOCATION
   /* Be careful to not do any floating-point operation on x, such as x == x,
      because x may be a signaling NaN.  */
-  static memory_double nan = { 0.0 / 0.0 };
-  static double plus_inf = 1.0 / 0.0;
-  static double minus_inf = -1.0 / 0.0;
+  static memory_double nan = { L_(0.0) / L_(0.0) };
+  static DOUBLE plus_inf = L_(1.0) / L_(0.0);
+  static DOUBLE minus_inf = -L_(1.0) / L_(0.0);
   memory_double m;
 
   /* A NaN can be recognized through its exponent.  But exclude +Infinity and
      -Infinity, which have the same exponent.  */
   m.value = x;
-  if ((((m.word[DBL_EXPBIT0_WORD] >> DBL_EXPBIT0_BIT)
-	^ (nan.word[DBL_EXPBIT0_WORD] >> DBL_EXPBIT0_BIT))
-       & DBL_EXP_MASK)
+  if (((m.word[EXPBIT0_WORD] ^ nan.word[EXPBIT0_WORD])
+       & (EXP_MASK << EXPBIT0_BIT))
       == 0)
-    return (memcmp (&m.value, &plus_inf, sizeof (double)) != 0
-	    && memcmp (&m.value, &minus_inf, sizeof (double)) != 0);
+    return (memcmp (&m.value, &plus_inf, sizeof (DOUBLE)) != 0
+	    && memcmp (&m.value, &minus_inf, sizeof (DOUBLE)) != 0);
   else
     return 0;
 #else
