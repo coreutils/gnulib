@@ -1,13 +1,13 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2006-12-28 19:19'; # UTC
+my $VERSION = '2007-02-25 16:41'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
 # do its job.  Otherwise, update this string manually.
 
-# Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2002-2007 Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -419,7 +419,8 @@ sub get_tool_versions ($$)
     or (warn "$ME: `$release_type': invalid release type\n"), $fail = 1;
 
   @ARGV
-    and (warn "$ME: too many arguments\n"), $fail = 1;
+    and (warn "$ME: too many arguments:\n", join ("\n", @ARGV), "\n"),
+      $fail = 1;
   $fail
     and usage 1;
 
