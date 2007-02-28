@@ -1,0 +1,26 @@
+Description:
+Return the contents of a symbolic link, without size limitations.
+
+Files:
+lib/xreadlink.h
+lib/xreadlink.c
+m4/xreadlink.m4
+
+Depends-on:
+xalloc
+readlink
+ssize_t
+
+configure.ac:
+gl_XREADLINK
+
+Makefile.am:
+
+Include:
+"xreadlink.h"
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering
