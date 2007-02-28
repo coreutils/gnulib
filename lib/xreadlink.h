@@ -1,6 +1,6 @@
 /* readlink wrapper to return the link name in malloc'd storage
 
-   Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2003, 2004, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,4 +20,4 @@
 /* Written by Jim Meyering <jim@meyering.net>  */
 
 #include <stddef.h>
-char *xreadlink (char const *, size_t);
+char *xreadlink_with_size (char const *, size_t);

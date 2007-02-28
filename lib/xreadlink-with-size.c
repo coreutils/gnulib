@@ -1,6 +1,6 @@
 /* xreadlink.c -- readlink wrapper to return the link name in malloc'd storage
 
-   Copyright (C) 2001, 2003, 2004, 2005, 2006 Free Software
+   Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -58,7 +58,7 @@
    give a diagnostic and exit.  */
 
 char *
-xreadlink (char const *file, size_t size)
+xreadlink_with_size (char const *file, size_t size)
 {
   /* Some buggy file systems report garbage in st_size.  Defend
      against them by ignoring outlandish st_size values in the initial
