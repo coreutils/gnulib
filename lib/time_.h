@@ -86,7 +86,7 @@ char *strptime (char const *restrict __buf, char const *restrict __format,
 time_t timegm (struct tm *__tm);
 #endif
 
-/* Encourage applications to avoid unsafe functions that can overrrun
+/* Encourage applications to avoid unsafe functions that can overrun
    buffers when given outlandish struct tm values.  Portable
    applications should use strftime (or even sprintf) instead.  */
 # if GNULIB_PORTCHECK

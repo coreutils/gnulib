@@ -1,3 +1,16 @@
+2007-03-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Followup to the 2007-02-12 patch, using suggestions from Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2007-02/msg00136.html>.
+	* doc/gnulib-tool.texi (Initial import): Mention _FILE_OFFSET_BITS
+	as another example.
+	* lib/time_.h: Fix misspelling.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP):
+	Require gl_HEADER_TIME_H_DEFAULTS.
+	* m4/strptime.m4 (gl_FUNC_STRPTIME): Likewise.
+	* m4/time_r.m4 (gl_TIME_R): Likewise.
+	* m4/timegm.m4 (gl_FUNC_TIMEGM): Likewise.
+
 2007-03-01  Bruno Haible  <bruno@clisp.org>
 
 	* m4/utimecmp.m4 (gl_UTIMECMP): Don't require gl_TIMESPEC.
