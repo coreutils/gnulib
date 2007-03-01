@@ -1,0 +1,43 @@
+Description:
+Help make programs relocatable, that is, to allow them to function
+properly when copied to an arbitrary directory.
+
+Files:
+build-aux/config.libpath
+build-aux/install-reloc
+build-aux/reloc-ldflags
+doc/relocatable.texi
+lib/relocatable.h
+lib/relocatable.c
+lib/progreloc.c
+lib/relocwrapper.c
+m4/relocatable.m4
+m4/relocatable-lib.m4
+
+Depends-on:
+relocatable-lib
+canonicalize
+c-ctype
+progname
+setenv
+strerror
+unistd
+xalloc
+
+configure.ac:
+gl_RELOCATABLE([$gl_source_base])
+
+Makefile.am:
+DEFS += -DEXEEXT=\"$(EXEEXT)\"
+lib_SOURCES += relocatable.c progreloc.c
+
+Include:
+#include "relocatable.h"
+#include "progname.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible, Ben Pfaff
+
