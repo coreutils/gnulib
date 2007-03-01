@@ -1,3 +1,8 @@
+2007-03-01  Bruno Haible  <bruno@clisp.org>
+
+	* m4/utimecmp.m4 (gl_UTIMECMP): Don't require gl_TIMESPEC.
+	* m4/utimens.m4 (gl_UTIMENS): Likewise.
+
 2007-03-01  Jim Meyering  <jim@meyering.net>
 
 	* modules/xreadlink (Maintainer): Add my name.
