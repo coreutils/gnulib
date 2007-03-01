@@ -15,7 +15,6 @@ m4/relocatable.m4
 m4/relocatable-lib.m4
 
 Depends-on:
-relocatable-lib
 canonicalize
 c-ctype
 progname
