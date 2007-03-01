@@ -1,5 +1,16 @@
 2007-02-28  Bruno Haible  <bruno@clisp.org>
 
+	Import --enable-relocatable infrastructure.
+	* build-aux/config.libpath: New file, from GNU gettext.
+	* build-aux/install-reloc: New file, from GNU gettext.
+	* build-aux/reloc-ldflags: New file, from GNU gettext.
+	* lib/relocatable.h: New file, from GNU gettext.
+	* lib/relocatable.c: New file, from GNU gettext.
+	* lib/relocwrapper.c: New file, from GNU gettext.
+	* m4/relocatable.m4: New file, from GNU gettext.
+
+2007-02-28  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh (File system functions): Add xreadlink-with-size.
 
 	* modules/xreadlink: New file, from GNU gettext with modifications.
