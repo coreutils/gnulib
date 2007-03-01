@@ -1,3 +1,29 @@
+2007-02-26  Ben Pfaff  <blp@cs.stanford.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/install-reloc: Compile also c-ctype.c.
+	* build-aux/relocatable.sh.in: New file.
+	* doc/relocatable.texi: New file.
+	* doc/relocatable-maint.texi: New file.
+	* doc/gnulib.texi: Include relocatable-maint.texi.
+	* lib/progreloc.c: Include unistd.h unconditionally.
+	* lib/relocwrapper.c: Include unistd.h unconditionally.
+	Include c-ctype.h.
+	(add_dotbin): Use c_tolower.
+	* m4/relocatable-lib.m4: New file, extracted from m4/relocatable.m4.
+	(gl_RELOCATABLE_LIBRARY): Renamed from AC_RELOCATABLE_LIBRARY.
+	(gl_RELOCATABLE_NOP): Renamed from AC_RELOCATABLE_NOP.
+	* m4/relocatable.m4 (AC_RELOCATABLE_LIBRARY, AC_RELOCATABLE_NOP): Move
+	to m4/relocatable-lib.m4.
+	(gl_RELOCATABLE): Renamed from AC_RELOCATABLE. Set also
+	RELOCATABLE_CONFIG_H_DIR, RELOCATABLE_SRC_DIR, RELOCATABLE_BUILD_DIR.
+	(gl_RELOCATABLE_BODY): Renamed from AC_RELOCATABLE_BODY. Don't
+	require obsolete macro AC_EXEEXT. Don't check for unistd.h. Don't set
+	SET_RELOCATABLE. Instead set RELOCATABLE_LDFLAGS, INSTALL_PROGRAM_ENV.
+	* modules/relocatable: New file.
+	* modules/relocatable-lib: New file.
+	* modules/relocatable-script: New file.
+
 2007-02-28  Bruno Haible  <bruno@clisp.org>
 
 	Import --enable-relocatable infrastructure.

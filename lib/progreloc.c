@@ -27,9 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-#if HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+#include <unistd.h>
 #include <sys/stat.h>
 
 /* Get declaration of _NSGetExecutablePath on MacOS X 10.2 or newer.  */

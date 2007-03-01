@@ -1,5 +1,5 @@
 /* Relocating wrapper program.
-   Copyright (C) 2003, 2005-2006 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -28,6 +28,7 @@
     -> setenv
        -> allocsa
     -> strerror
+    -> c-ctype
 
    Macros that need to be set while compiling this file:
      - ENABLE_RELOCATABLE 1
@@ -47,14 +48,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#if HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+#include <unistd.h>
 #include <errno.h>
 
 #include "progname.h"
 #include "relocatable.h"
 #include "setenv.h"
+#include "c-ctype.h"
 
 /* Return a copy of the filename, with an extra ".bin" at the end.
    More generally, it replaces "${EXEEXT}" at the end with ".bin${EXEEXT}".  */
@@ -83,8 +83,7 @@ add_dotbin (const char *filename)
 		{
 		  unsigned char c1 = *s1;
 		  unsigned char c2 = *s2;
-		  if ((c1 >= 'A' && c1 <= 'Z' ? c1 - 'A' + 'a' : c1)
-		      != (c2 >= 'A' && c2 <= 'Z' ? c2 - 'A' + 'a' : c2))
+		  if (c_tolower (c1) != c_tolower (c2))
 		    goto simple_append;
 		}
 	      /* Insert ".bin" before EXEEXT or its equivalent.  */

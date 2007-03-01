@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.31 2007-01-03 18:51:20 karl Exp $
+@comment $Id: gnulib.texi,v 1.32 2007-03-01 02:14:04 haible Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2007-01-03 18:51:20 $
+@set UPDATED $Date: 2007-03-01 02:14:04 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -365,6 +365,7 @@ Of course the license texts themselves should not be changed at all.
 * gcd::
 * inet_ntoa::
 * Regular expressions::
+* Supporting Relocation::
 @end menu
 
 @include quote.texi
@@ -372,6 +373,7 @@ Of course the license texts themselves should not be changed at all.
 @include ctime.texi
 @include gcd.texi
 @include inet_ntoa.texi
+@include relocatable-maint.texi
 
 @node Regular expressions
 @section Regular expressions
