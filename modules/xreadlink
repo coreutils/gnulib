@@ -1,0 +1,26 @@
+Description:
+Reading symbolic links without size limitation.
+
+Files:
+lib/xreadlink.h
+lib/xreadlink.c
+
+Depends-on:
+readlink
+ssize_t
+xalloc
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += xreadlink.c
+
+Include:
+"xreadlink.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible
+

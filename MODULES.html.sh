@@ -2074,6 +2074,7 @@ func_all_modules ()
   func_module utimens
   func_module xgetcwd
   func_module xreadlink
+  func_module xreadlink-with-size
   func_end_table
 
   element="File descriptor based Input/Output"
