@@ -1,3 +1,9 @@
+2007-03-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* doc/gnulib-tool.texi (Initial import): Reword description of
+	_FILE_OFFSET_BITS and _GNU_SOURCE, since they sometimes have a
+	limited effect even if defined after the first system include.
+
 2007-03-01  Bruno Haible  <bruno@clisp.org>
 
 	* build-aux/config.libpath: Update to libtool-1.5.22.

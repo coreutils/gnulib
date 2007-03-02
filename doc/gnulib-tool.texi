@@ -235,10 +235,9 @@ file.  That way, for example, if @file{config.h} defines
 @samp{restrict} to be the empty string on a pre-C99 host, or a macro
 like @samp{_FILE_OFFSET_BITS} that affects the layout of data
 structures, the definition is consistent for all include files.
-Another reason why @file{config.h} must be included before any other
-include file is that it may define macros like @samp{_GNU_SOURCE}
-or @samp{_FILE_OFFSET_BITS} which, on glibc systems, have an effect only
-if defined before the first system header file is included.
+Also, on some platforms macros like @samp{_FILE_OFFSET_BITS} and
+@samp{_GNU_SOURCE} may be ineffective, or may have only a limited
+effect, if defined after the first system header file is included.
 
 A final word of warning: Gnulib currently assumes it will be
 responsible for @emph{all} functions that end up in the Autoconf
