@@ -1,5 +1,11 @@
 2007-03-01  Bruno Haible  <bruno@clisp.org>
 
+	* doc/relocatable-maint.texi: Recommend to set foo_CPPFLAGS, not
+	foo_CFLAGS.
+	Reported by Ralf Wildenhues.
+
+2007-03-01  Bruno Haible  <bruno@clisp.org>
+
 	* build-aux/install-reloc: Remove object files left over by some
 	compilers.
 	Reported by Ralf Wildenhues.

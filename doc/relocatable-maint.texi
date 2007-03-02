@@ -116,7 +116,7 @@ In your @file{Makefile.am}, for every program @command{foo} that gets
 installed in, say, @file{$(bindir)}, you add:
 
 @example
-foo_CFLAGS = -DINSTALLDIR=\"$(bindir)\"
+foo_CPPFLAGS = -DINSTALLDIR=\"$(bindir)\"
 if RELOCATABLE_VIA_LD
 foo_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(bindir)`
 endif
