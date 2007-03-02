@@ -33,7 +33,9 @@ directory.
 
 Installation with @option{--enable-relocatable} will not work for
 setuid or setgid executables, because such executables search only
-system library paths for security reasons.
+system library paths for security reasons.  Also, installation with
+@option{--enable-relocatable} might not work not OpenBSD, when the
+package contains shared libraries and libtool versions 1.5.xx are used.
 
 The runtime penalty and size penalty are negligible on GNU/Linux (just
 one system call more when an executable is launched), and small on

@@ -1,5 +1,10 @@
 2007-03-01  Bruno Haible  <bruno@clisp.org>
 
+	* doc/relocatable.texi: Document that it may not work on OpenBSD.
+	Reported by Ralf Wildenhues.
+
+2007-03-01  Bruno Haible  <bruno@clisp.org>
+
 	* doc/gnulib-tool.texi (Initial import): Remove paragraph about
 	include ordering constraints.
 
