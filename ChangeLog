@@ -1,5 +1,10 @@
 2007-03-01  Bruno Haible  <bruno@clisp.org>
 
+	* build-aux/config.libpath: Update to libtool-1.5.22.
+	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
+
+2007-03-01  Bruno Haible  <bruno@clisp.org>
+
 	* doc/relocatable-maint.texi: Recommend to set foo_CPPFLAGS, not
 	foo_CFLAGS.
 	Reported by Ralf Wildenhues.
