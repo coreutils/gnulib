@@ -1,6 +1,6 @@
 #!/bin/sh
 # install-reloc - install a program including a relocating wrapper
-# Copyright (C) 2003, 2005-2006 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
 # Written by Bruno Haible <bruno@clisp.org>, 2003.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,9 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 # Usage:
-#   install-reloc library_path_var library_path_value prefix compile_command srcdir config_h_dir exeext install_command... destprog
+#   install-reloc library_path_var library_path_value prefix \
+#                 compile_command srcdir config_h_dir exeext \
+#                 install_command... destprog
 # where
 #   - library_path_var is the platform dependent runtime library path variable
 #   - library_path_value is a colon separated list of directories that contain
@@ -70,7 +72,9 @@ else
     shift
     shift
   else
-    echo "Usage: $0 library_path_var library_path_value prefix compile_command srcdir builddir config_h_dir exeext install_command... destprog" 1>&2
+    echo "Usage: $0 library_path_var library_path_value prefix" \
+         "compile_command srcdir builddir config_h_dir exeext" \
+         "install_command... destprog" 1>&2
     exit 1
   fi
 fi
@@ -119,11 +123,30 @@ test -n "$libdirs" || exit 0
 
 # Compile wrapper.
 installdir=`echo "$destprog" | sed -e 's,/[^/]*$,,'`
-func_verbose $compile_command -I"$builddir" -I"$srcdir" -I"$config_h_dir" -DHAVE_CONFIG_H -DIN_RELOCWRAPPER -DNO_XMALLOC -D"INSTALLPREFIX=\"$prefix\"" -D"INSTALLDIR=\"$installdir\"" -D"LIBPATHVAR=\"$library_path_var\"" -D"LIBDIRS=$libdirs" -D"EXEEXT=\"$exeext\"" "$srcdir"/relocwrapper.c "$srcdir"/progname.c "$srcdir"/progreloc.c "$srcdir"/xreadlink.c "$srcdir"/readlink.c "$srcdir"/canonicalize-lgpl.c "$srcdir"/allocsa.c "$srcdir"/relocatable.c "$srcdir"/setenv.c "$srcdir"/strerror.c "$srcdir"/c-ctype.c -o "$destprog.wrapper$exeext" || exit $?
+func_verbose $compile_command \
+             -I"$builddir" -I"$srcdir" -I"$config_h_dir" \
+             -DHAVE_CONFIG_H -DIN_RELOCWRAPPER -DNO_XMALLOC \
+             -D"INSTALLPREFIX=\"$prefix\"" -D"INSTALLDIR=\"$installdir\"" \
+             -D"LIBPATHVAR=\"$library_path_var\"" -D"LIBDIRS=$libdirs" \
+             -D"EXEEXT=\"$exeext\"" \
+             "$srcdir"/relocwrapper.c \
+             "$srcdir"/progname.c \
+             "$srcdir"/progreloc.c \
+             "$srcdir"/xreadlink.c \
+             "$srcdir"/readlink.c \
+             "$srcdir"/canonicalize-lgpl.c \
+             "$srcdir"/allocsa.c \
+             "$srcdir"/relocatable.c \
+             "$srcdir"/setenv.c \
+             "$srcdir"/strerror.c \
+             "$srcdir"/c-ctype.c \
+             -o "$destprog.wrapper$exeext" \
+  || exit $?
 
 # Rename $destprog.wrapper -> $destprog -> $destprog.bin.
 ln -f "$destprog$exeext" "$destprog.bin$exeext" \
-  || { rm -f "$destprog.bin$exeext" && cp -p "$destprog$exeext" "$destprog.bin$exeext"; } \
+  || { rm -f "$destprog.bin$exeext" \
+       && cp -p "$destprog$exeext" "$destprog.bin$exeext"; } \
   || exit 1
 mv "$destprog.wrapper$exeext" "$destprog$exeext" || exit 1
 
