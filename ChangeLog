@@ -1,5 +1,11 @@
 2007-03-01  Bruno Haible  <bruno@clisp.org>
 
+	* build-aux/install-reloc: Remove object files left over by some
+	compilers.
+	Reported by Ralf Wildenhues.
+
+2007-03-01  Bruno Haible  <bruno@clisp.org>
+
 	* build-aux/install-reloc: Break long lines.
 
 2007-03-01  Bruno Haible  <bruno@clisp.org>

@@ -140,8 +140,21 @@ func_verbose $compile_command \
              "$srcdir"/setenv.c \
              "$srcdir"/strerror.c \
              "$srcdir"/c-ctype.c \
-             -o "$destprog.wrapper$exeext" \
-  || exit $?
+             -o "$destprog.wrapper$exeext"
+rc=$?
+# Clean up object files left over in the current directory by the native C
+# compilers on Solaris, HP-UX, OSF/1, IRIX.
+rm -f relocwrapper.o \
+      progname.o \
+      progreloc.o \
+      xreadlink.o \
+      canonicalize-lgpl.o \
+      allocsa.o \
+      relocatable.o \
+      setenv.o \
+      strerror.o \
+      c-ctype.o
+test $rc = 0 || exit $?
 
 # Rename $destprog.wrapper -> $destprog -> $destprog.bin.
 ln -f "$destprog$exeext" "$destprog.bin$exeext" \
