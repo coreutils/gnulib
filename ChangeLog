@@ -1,5 +1,9 @@
 2007-03-03  Bruno Haible  <bruno@clisp.org>
 
+	* m4/canonicalize-lgpl.m4 (gl_CANONICALIZE_LGPL_SEPARATE): New macro.
+
+2007-03-03  Bruno Haible  <bruno@clisp.org>
+
 	* lib/xreadlink.c: Include <unistd.h> unconditionally.
 	* modules/xreadlink (Depends-on): Add unistd.
 	* modules/xreadlink-with-size (Depends-on): Likewise.
