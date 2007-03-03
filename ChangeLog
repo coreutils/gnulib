@@ -1,5 +1,9 @@
 2007-03-02  Bruno Haible  <bruno@clisp.org>
 
+	* modules/array-oset-tests (Depends-on): Add progname.
+	* tests/test-array_oset.c: Include progname.h.
+	(main): Call set_program_name.
+
 	* modules/array-list-tests (Depends-on): Add progname.
 	* tests/test-array_list.c: Include progname.h.
 	(main): Call set_program_name.
