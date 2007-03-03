@@ -1,5 +1,10 @@
 2007-03-03  Bruno Haible  <bruno@clisp.org>
 
+	* modules/relocatable-prog-wrapper: New file.
+	* modules/relocatable (Depends-on): Add it. Remove all other
+	dependencies except progname.
+	(Files): Remove build-aux/install-reloc, lib/relocwrapper.c.
+
 	* m4/strerror.m4 (gl_FUNC_STRERROR_SEPARATE): New macro.
 	(gl_FUNC_STRERROR): Nop.
 	* lib/strerror.c: Compile the file only if !HAVE_STRERROR.

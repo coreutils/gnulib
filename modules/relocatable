@@ -4,24 +4,17 @@ properly when copied to an arbitrary directory.
 
 Files:
 build-aux/config.libpath
-build-aux/install-reloc
 build-aux/reloc-ldflags
 doc/relocatable.texi
 lib/relocatable.h
 lib/relocatable.c
 lib/progreloc.c
-lib/relocwrapper.c
 m4/relocatable.m4
 m4/relocatable-lib.m4
 
 Depends-on:
-canonicalize
-c-ctype
+relocatable-prog-wrapper
 progname
-setenv
-strerror
-unistd
-xalloc
 
 configure.ac:
 gl_RELOCATABLE([$gl_source_base])
