@@ -22,7 +22,7 @@
     -> progreloc
         -> xreadlink
            -> readlink
-        -> canonicalize
+        -> canonicalize-lgpl
            -> allocsa
     -> relocatable
     -> setenv
