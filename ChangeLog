@@ -5,6 +5,10 @@
 
 2007-03-02  Bruno Haible  <bruno@clisp.org>
 
+	* modules/linkedhash-list-tests (Depends-on): Add progname.
+	* tests/test-linkedhash_list.c: Include progname.h.
+	(main): Call set_program_name.
+
 	* modules/carray-list-tests (Depends-on): Add progname.
 	* tests/test-carray_list.c: Include progname.h.
 	(main): Call set_program_name.
