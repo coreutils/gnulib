@@ -1,5 +1,10 @@
 2007-03-03  Bruno Haible  <bruno@clisp.org>
 
+	* modules/relocatable-prog: Renamed from modules/relocatable.
+	* doc/relocatable-maint.texi: Talk about module 'relocatable-prog'.
+
+2007-03-03  Bruno Haible  <bruno@clisp.org>
+
 	* modules/relocatable-script (Files): Add doc/relocatable.texi,
 	m4/relocatable-lib.m4.
 	(Depends-on): Remove 'relocatable'.

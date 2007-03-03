@@ -20,17 +20,17 @@ and moved programs, and invoke them through the symlink. It is
 possible to do the same thing with a hard link @emph{only} if the hard
 link file is in the same directory as the real program.
 
-The @code{relocatable} module aims to ease the process of making a GNU
-program relocatable.  It helps overcome two obstacles.  First, it aids
+The @code{relocatable-prog} module aims to ease the process of making a
+GNU program relocatable.  It helps overcome two obstacles.  First, it aids
 with relocating the hard-coded references to absolute file names that
 GNU programs often contain.  These references must be fixed up at
 runtime if a program is to be successfully relocated.  The
-@code{relocatable} module provides a function @code{relocate} that
+@code{relocatable-prog} module provides a function @code{relocate} that
 does this job.
 
 Second, the loader must be able to find shared libraries linked to
 relocatable executables or referenced by other shared libraries linked
-to relocatable executables.  The @code{relocatable} module helps out
+to relocatable executables.  The @code{relocatable-prog} module helps out
 here in a platform-specific way:
 
 @itemize
@@ -58,7 +58,7 @@ You can make your program relocatable by following these steps:
 
 @enumerate
 @item
-Import the @code{relocatable} module.
+Import the @code{relocatable-prog} module.
 
 @item
 In every program, add to @code{main} as the first statement (even
