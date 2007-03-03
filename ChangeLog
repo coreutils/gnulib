@@ -1,9 +1,5 @@
 2007-03-02  Bruno Haible  <bruno@clisp.org>
 
-	* modules/avltree-oset-tests (Depends-on): Add progname.
-	* tests/test-avltree_oset.c: Include progname.h.
-	(main): Call set_program_name.
-
 	* modules/avltree-list-tests (Depends-on): Add progname.
 	* tests/test-avltree_list.c: Include progname.h.
 	(main): Call set_program_name.
