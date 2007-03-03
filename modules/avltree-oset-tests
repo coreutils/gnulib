@@ -3,6 +3,7 @@ tests/test-avltree_oset.c
 
 Depends-on:
 array-oset
+progname
 
 configure.ac:
 

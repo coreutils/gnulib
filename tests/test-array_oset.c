@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include "gl_array_list.h"
+#include "progname.h"
 
 static const char *objects[30] =
   {
@@ -74,6 +75,8 @@ main (int argc, char *argv[])
 {
   gl_oset_t set1;
   gl_list_t set2;
+
+  set_program_name (argv[0]);
 
   /* Allow the user to provide a non-default random seed on the command line.  */
   if (argc > 1)
