@@ -9,18 +9,18 @@ lib/relocatable.c
 m4/relocatable-lib.m4
 
 Depends-on:
+xalloc
 
 configure.ac:
 
 Makefile.am:
-DEFS += -DNO_XMALLOC
 lib_SOURCES += relocatable.c
 
 Include:
 "relocatable.h"
 
 License:
-LGPL
+GPL
 
 Maintainer:
 Bruno Haible, Ben Pfaff
