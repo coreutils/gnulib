@@ -14,7 +14,8 @@ alloca-opt
 unistd
 
 configure.ac:
-gt_FUNC_SETENV
+gl_FUNC_SETENV
+gl_FUNC_UNSETENV
 
 Makefile.am:
 
