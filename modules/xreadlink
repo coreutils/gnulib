@@ -8,6 +8,7 @@ lib/xreadlink.c
 Depends-on:
 readlink
 ssize_t
+unistd
 xalloc
 
 configure.ac:

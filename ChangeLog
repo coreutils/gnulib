@@ -1,5 +1,11 @@
 2007-03-03  Bruno Haible  <bruno@clisp.org>
 
+	* lib/xreadlink.c: Include <unistd.h> unconditionally.
+	* modules/xreadlink (Depends-on): Add unistd.
+	* modules/xreadlink-with-size (Depends-on): Likewise.
+
+2007-03-03  Bruno Haible  <bruno@clisp.org>
+
 	* m4/setenv.m4 (gl_FUNC_SETENV, gl_FUNC_UNSETENV): New macros,
 	extracted from gt_FUNC_SETENV.
 	(gt_FUNC_SETENV): Remove macro.
