@@ -1,5 +1,10 @@
 2007-03-03  Bruno Haible  <bruno@clisp.org>
 
+	* modules/relocatable-prog (Depends-on): Add back progreloc's
+	dependencies: canonicalize-lgpl, xalloc, xreadlink, stdbool, unistd.
+
+2007-03-03  Bruno Haible  <bruno@clisp.org>
+
 	* modules/relocatable-lib-lgpl: Renamed from modules/relocatable-lib.
 	* modules/relocatable-lib: New file.
 

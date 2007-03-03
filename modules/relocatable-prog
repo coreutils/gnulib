@@ -15,6 +15,11 @@ m4/relocatable-lib.m4
 Depends-on:
 relocatable-prog-wrapper
 progname
+canonicalize-lgpl
+xalloc
+xreadlink
+stdbool
+unistd
 
 configure.ac:
 gl_RELOCATABLE([$gl_source_base])
