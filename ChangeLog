@@ -1,4 +1,10 @@
-2007-03-02  Bruno Haible  <bruno@clisp.org>
+2007-03-03  Bruno Haible  <bruno@clisp.org>
+
+	* m4/relocatable-lib.m4 (gl_RELOCATABLE_LIBRARY): Define
+	ENABLE_RELOCATABLE here.
+	* m4/relocatable.m4 (gl_RELOCATABLE_BODY): Don't define it here.
+
+2007-03-03  Bruno Haible  <bruno@clisp.org>
 
 	* modules/rbtreehash-list-tests (Depends-on): Add progname.
 	* tests/test-rbtreehash_list.c: Include progname.h.

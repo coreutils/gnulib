@@ -1,5 +1,5 @@
-# relocatable-lib.m4 serial 1
-dnl Copyright (C) 2003, 2005-2006, 2007 Free Software Foundation, Inc.
+# relocatable-lib.m4 serial 2
+dnl Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -18,6 +18,10 @@ AC_DEFUN([gl_RELOCATABLE_LIBRARY],
   fi
   AC_DEFINE_UNQUOTED([INSTALLPREFIX], ["${reloc_final_prefix}"],
     [Define to the value of ${prefix}, as a string.])
+  if test $RELOCATABLE = yes; then
+    AC_DEFINE([ENABLE_RELOCATABLE], 1,
+      [Define to 1 if the package shall run at any location in the filesystem.])
+  fi
 ])
 
 dnl Support for relocatable packages for which it is a nop.
