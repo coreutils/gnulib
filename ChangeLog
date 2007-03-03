@@ -1,3 +1,9 @@
+2007-03-02  Bruno Haible  <bruno@clisp.org>
+
+	* modules/linked-list-tests (Depends-on): Add progname.
+	* tests/test-linked_list.c: Include progname.h.
+	(main): Call set_program_name.
+
 2007-03-03  Bruno Haible  <bruno@clisp.org>
 
 	* lib/glob-libc.h (_Restrict_): New macro, copied from lib/regex.h.
