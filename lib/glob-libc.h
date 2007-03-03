@@ -1,4 +1,4 @@
-/* Copyright (C) 1991,92,95-98,2000,2001,2004-2006 Free Software Foundation, Inc.
+/* Copyright (C) 1991,92,95-98,2000,2001,2004-2007 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -21,6 +21,21 @@
 
 #ifndef __GLOB_GNULIB
 # include <sys/cdefs.h>
+#endif
+
+/* GCC 2.95 and later have "__restrict"; C99 compilers have
+   "restrict", and "configure" may have defined "restrict".
+   Other compilers use __restrict, __restrict__, and _Restrict, and
+   'configure' might #define 'restrict' to those words, so pick a
+   different name.  */
+#ifndef _Restrict_
+# if 199901L <= __STDC_VERSION__
+#  define _Restrict_ restrict
+# elif 2 < __GNUC__ || (2 == __GNUC__ && 95 <= __GNUC_MINOR__)
+#  define _Restrict_ __restrict
+# else
+#  define _Restrict_
+# endif
 #endif
 
 __BEGIN_DECLS
@@ -106,11 +121,11 @@ typedef struct
 #endif
     void *(*gl_opendir) (const char *);
 #ifdef __USE_GNU
-    int (*gl_lstat) (const char *__restrict, struct stat *__restrict);
-    int (*gl_stat) (const char *__restrict, struct stat *__restrict);
+    int (*gl_lstat) (const char *_Restrict_, struct stat *_Restrict_);
+    int (*gl_stat) (const char *_Restrict_, struct stat *_Restrict_);
 #else
-    int (*gl_lstat) (const char *__restrict, void *__restrict);
-    int (*gl_stat) (const char *__restrict, void *__restrict);
+    int (*gl_lstat) (const char *_Restrict_, void *_Restrict_);
+    int (*gl_stat) (const char *_Restrict_, void *_Restrict_);
 #endif
   } glob_t;
 
@@ -135,11 +150,11 @@ typedef struct
 # endif
     void *(*gl_opendir) (const char *);
 # ifdef __USE_GNU
-    int (*gl_lstat) (const char *__restrict, struct stat64 *__restrict);
-    int (*gl_stat) (const char *__restrict, struct stat64 *__restrict);
+    int (*gl_lstat) (const char *_Restrict_, struct stat64 *_Restrict_);
+    int (*gl_stat) (const char *_Restrict_, struct stat64 *_Restrict_);
 # else
-    int (*gl_lstat) (const char *__restrict, void *__restrict);
-    int (*gl_stat) (const char *__restrict, void *__restrict);
+    int (*gl_lstat) (const char *_Restrict_, void *_Restrict_);
+    int (*gl_stat) (const char *_Restrict_, void *_Restrict_);
 # endif
   } glob64_t;
 #endif
@@ -158,25 +173,25 @@ typedef struct
    If memory cannot be allocated for PGLOB, GLOB_NOSPACE is returned.
    Otherwise, `glob' returns zero.  */
 #if !defined __USE_FILE_OFFSET64 || __GNUC__ < 2 || defined __GLOB_GNULIB
-extern int glob (const char *__restrict __pattern, int __flags,
+extern int glob (const char *_Restrict_ __pattern, int __flags,
 		 int (*__errfunc) (const char *, int),
-		 glob_t *__restrict __pglob) __THROW;
+		 glob_t *_Restrict_ __pglob) __THROW;
 
 /* Free storage allocated in PGLOB by a previous `glob' call.  */
 extern void globfree (glob_t *__pglob) __THROW;
 #else
-extern int __REDIRECT_NTH (glob, (const char *__restrict __pattern,
+extern int __REDIRECT_NTH (glob, (const char *_Restrict_ __pattern,
 				  int __flags,
 				  int (*__errfunc) (const char *, int),
-				  glob_t *__restrict __pglob), glob64);
+				  glob_t *_Restrict_ __pglob), glob64);
 
 extern void __REDIRECT_NTH (globfree, (glob_t *__pglob), globfree64);
 #endif
 
 #if defined __USE_LARGEFILE64 && !defined __GLOB_GNULIB
-extern int glob64 (const char *__restrict __pattern, int __flags,
+extern int glob64 (const char *_Restrict_ __pattern, int __flags,
 		   int (*__errfunc) (const char *, int),
-		   glob64_t *__restrict __pglob) __THROW;
+		   glob64_t *_Restrict_ __pglob) __THROW;
 
 extern void globfree64 (glob64_t *__pglob) __THROW;
 #endif
