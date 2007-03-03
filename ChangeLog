@@ -1,5 +1,10 @@
 2007-03-02  Bruno Haible  <bruno@clisp.org>
 
+	* modules/gettext (configure.ac): Require gettext infrastructure
+	from version 0.16.1.
+
+2007-03-02  Bruno Haible  <bruno@clisp.org>
+
 	* modules/avltreehash-list-tests (Depends-on): Add progname.
 	* tests/test-avltreehash_list.c: Include progname.h.
 	(main): Call set_program_name.
