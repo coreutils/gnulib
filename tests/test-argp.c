@@ -1,5 +1,5 @@
 /* Test suite for argp.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    This file is part of the GNUlib Library.
 
    This program is free software; you can redistribute it and/or modify
@@ -20,6 +20,8 @@
 # include <config.h>
 #endif
 
+#include "argp.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #if HAVE_STRING_H
@@ -29,7 +31,7 @@
 # include <strings.h>
 #endif
 
-#include "argp.h"
+#include "progname.h"
 
 struct test_args
 {
@@ -355,7 +357,9 @@ main (int argc, char **argv)
 {
   struct argp_child argp_children[3];
   test_fp *fun;
-  
+
+  set_program_name (argv[0]);
+
   argp_children[0] = group1_child;
   argp_children[1] = group2_child;
   argp_children[2].argp = NULL;
