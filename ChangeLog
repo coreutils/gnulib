@@ -1,5 +1,8 @@
 2007-03-03  Bruno Haible  <bruno@clisp.org>
 
+	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): New macro.
+	* lib/setenv.c: Compile the file only if _LIBC || !HAVE_SETENV.
+
 	* m4/readlink.m4 (gl_FUNC_READLINK_SEPARATE): New macro.
 	(gl_FUNC_READLINK): Update.
 

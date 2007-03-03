@@ -1,4 +1,4 @@
-# setenv.m4 serial 7
+# setenv.m4 serial 8
 dnl Copyright (C) 2001-2004, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,13 @@ AC_DEFUN([gl_FUNC_SETENV],
     AC_LIBOBJ([setenv])
     gl_PREREQ_SETENV
   fi
+])
+
+# Like gl_FUNC_SETENV, except prepare for separate compilation (no AC_LIBOBJ).
+AC_DEFUN([gl_FUNC_SETENV_SEPARATE],
+[
+  AC_CHECK_FUNCS_ONCE([setenv])
+  gl_PREREQ_SETENV
 ])
 
 AC_DEFUN([gl_FUNC_UNSETENV],
