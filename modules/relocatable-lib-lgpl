@@ -1,0 +1,27 @@
+Description:
+Help make libraries relocatable, that is, to allow them to function
+properly when copied to an arbitrary directory.
+
+Files:
+doc/relocatable.texi
+lib/relocatable.h
+lib/relocatable.c
+m4/relocatable-lib.m4
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+DEFS += -DNO_XMALLOC
+lib_SOURCES += relocatable.c
+
+Include:
+"relocatable.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible, Ben Pfaff
+
