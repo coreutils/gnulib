@@ -1,5 +1,8 @@
 2007-03-03  Bruno Haible  <bruno@clisp.org>
 
+	* m4/readlink.m4 (gl_FUNC_READLINK_SEPARATE): New macro.
+	(gl_FUNC_READLINK): Update.
+
 	* m4/canonicalize-lgpl.m4 (gl_CANONICALIZE_LGPL_SEPARATE): New macro.
 
 2007-03-03  Bruno Haible  <bruno@clisp.org>
