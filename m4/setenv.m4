@@ -1,16 +1,23 @@
-# setenv.m4 serial 6
-dnl Copyright (C) 2001-2004, 2006 Free Software Foundation, Inc.
+# setenv.m4 serial 7
+dnl Copyright (C) 2001-2004, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_DEFUN([gt_FUNC_SETENV],
+AC_DEFUN([gl_FUNC_SETENV],
 [
-  AC_REPLACE_FUNCS(setenv unsetenv)
+  AC_CHECK_FUNCS_ONCE([setenv])
   if test $ac_cv_func_setenv = no; then
+    AC_LIBOBJ([setenv])
     gl_PREREQ_SETENV
   fi
+])
+
+AC_DEFUN([gl_FUNC_UNSETENV],
+[
+  AC_CHECK_FUNCS([unsetenv])
   if test $ac_cv_func_unsetenv = no; then
+    AC_LIBOBJ([unsetenv])
     gl_PREREQ_UNSETENV
   else
     AC_CACHE_CHECK([for unsetenv() return type], gt_cv_func_unsetenv_ret,

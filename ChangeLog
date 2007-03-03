@@ -1,5 +1,13 @@
 2007-03-03  Bruno Haible  <bruno@clisp.org>
 
+	* m4/setenv.m4 (gl_FUNC_SETENV, gl_FUNC_UNSETENV): New macros,
+	extracted from gt_FUNC_SETENV.
+	(gt_FUNC_SETENV): Remove macro.
+	* modules/setenv (configure.ac): Add gl_FUNC_SETENV, gl_FUNC_UNSETENV,
+	remove gt_FUNC_SETENV.
+
+2007-03-03  Bruno Haible  <bruno@clisp.org>
+
 	* m4/relocatable-lib.m4 (gl_RELOCATABLE_LIBRARY): Define
 	ENABLE_RELOCATABLE here.
 	* m4/relocatable.m4 (gl_RELOCATABLE_BODY): Don't define it here.
