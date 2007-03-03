@@ -20,9 +20,10 @@
 # include <config.h>
 #endif
 
+#include "gl_array_list.h"
+
 #include <stdlib.h>
 
-#include "gl_array_list.h"
 #include "progname.h"
 
 static const char *objects[15] =
