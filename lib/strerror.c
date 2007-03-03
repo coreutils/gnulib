@@ -1,6 +1,6 @@
 /* strerror.c --- ANSI C compatible system error routine
 
-   Copyright (C) 1986, 1988, 1989, 1991, 2002, 2003, 2006 Free
+   Copyright (C) 1986, 1988, 1989, 1991, 2002, 2003, 2006, 2007 Free
    Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -20,6 +20,8 @@
 #include <config.h>
 
 #include <limits.h>
+
+#if !HAVE_STRERROR
 
 /* Don't include <stdio.h>, since it may or may not declare
    sys_errlist and its declarations may collide with ours.  Just
@@ -45,3 +47,5 @@ strerror (int n)
   else
     return sys_errlist[n];
 }
+
+#endif /* !HAVE_STRERROR */
