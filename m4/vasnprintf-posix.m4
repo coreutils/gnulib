@@ -19,6 +19,10 @@ AC_DEFUN([gl_FUNC_VASNPRINTF_POSIX],
      && test $ac_cv_func_vasnprintf = yes; then
     : # vasnprintf exists and is already POSIX compliant.
   else
+    if test $ac_cv_func_vasnprintf = yes; then
+      AC_DEFINE([REPLACE_VASNPRINTF], 1,
+        [Define if vasnprintf exists but is overridden by gnulib.])
+    fi
     if ! expr "$gl_cv_func_printf_directive_a" : ".*yes" > /dev/null; then
       AC_DEFINE([NEED_PRINTF_DIRECTIVE_A], 1,
         [Define if the vasnprintf implementation needs special code for
