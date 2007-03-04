@@ -1,0 +1,12 @@
+Files:
+tests/test-xvasprintf.c
+
+Depends-on:
+progname
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-xvasprintf
+check_PROGRAMS += test-xvasprintf
+
