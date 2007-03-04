@@ -1,5 +1,7 @@
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-allocsa.c (main): Halve the number of loop runs.
+
 	* modules/alloca-opt-tests: New file.
 	* tests/test-alloca-opt.c: New file.
 

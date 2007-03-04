@@ -1,5 +1,5 @@
 /* Test of safe automatic memory allocation.
-   Copyright (C) 2005 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ main ()
   int i;
 
   /* Repeat a lot of times, to make sure there's no memory leak.  */
-  for (i = 0; i < 100000; i++)
+  for (i = 0; i < 50000; i++)
     {
       /* Try various values.
          n = 0 gave a crash on Alpha with gcc-2.5.8.
