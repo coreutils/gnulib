@@ -1,5 +1,8 @@
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/vasnprintf-posix-tests: New file.
+	* tests/test-vasnprintf-posix.c: New file.
+
 	* modules/vasnprintf-posix: New file.
 	* lib/vasnprintf.c: Include isnan.h, isnanl.h, printf-frexp.h,
 	printf-frexpl.h.

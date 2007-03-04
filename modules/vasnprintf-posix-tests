@@ -1,0 +1,14 @@
+Files:
+tests/test-vasnprintf-posix.c
+m4/longdouble.m4
+
+Depends-on:
+stdint
+
+configure.ac:
+AC_REQUIRE([gt_TYPE_LONGDOUBLE])
+
+Makefile.am:
+TESTS += test-vasnprintf-posix
+check_PROGRAMS += test-vasnprintf-posix
+
