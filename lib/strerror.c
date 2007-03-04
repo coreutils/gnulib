@@ -19,9 +19,9 @@
 
 #include <config.h>
 
-#include <limits.h>
-
 #if !HAVE_STRERROR
+
+#include <limits.h>
 
 /* Don't include <stdio.h>, since it may or may not declare
    sys_errlist and its declarations may collide with ours.  Just
@@ -48,4 +48,10 @@ strerror (int n)
     return sys_errlist[n];
 }
 
-#endif /* !HAVE_STRERROR */
+#else
+
+/* This declaration is solely to ensure that after preprocessing
+   this file is never empty.  */
+typedef int dummy;
+
+#endif
