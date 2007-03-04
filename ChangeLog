@@ -1,3 +1,8 @@
+2007-03-04  Bruno Haible  <bruno@clisp.org>
+
+	* modules/alloca-opt-tests: New file.
+	* tests/test-alloca-opt.c: New file.
+
 2007-03-04  Jim Meyering  <jim@meyering.net>
 
 	Work around difference between Linux ACLs and Solaris 10 ZFS.
