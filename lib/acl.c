@@ -80,6 +80,9 @@
 # define acl_from_mode(mode) (NULL)
 #endif
 
+#define ACL_NOT_WELL_SUPPORTED(Errno) \
+  (Errno == ENOTSUP || Errno == ENOSYS || Errno == EINVAL)
+
 /* We detect the presence of POSIX 1003.1e (draft 17 -- abandoned) support
    by checking for HAVE_ACL_GET_FILE, HAVE_ACL_SET_FILE, and HAVE_ACL_FREE.
    Systems that have acl_get_file, acl_set_file, and acl_free must also
@@ -177,7 +180,7 @@ file_has_acl (char const *name, struct stat const *sb)
 	    ret = -1;
 	}
       if (ret < 0)
-	return (errno == ENOSYS || errno == ENOTSUP) ? 0 : -1;
+	return ACL_NOT_WELL_SUPPORTED (errno) ? 0 : -1;
       return ret;
     }
 #endif
@@ -213,7 +216,7 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
     acl = acl_get_file (src_name, ACL_TYPE_ACCESS);
   if (acl == NULL)
     {
-      if (errno == ENOSYS || errno == ENOTSUP)
+      if (ACL_NOT_WELL_SUPPORTED (errno))
 	return set_acl (dst_name, dest_desc, mode);
       else
         {
@@ -230,7 +233,7 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
     {
       int saved_errno = errno;
 
-      if (errno == ENOSYS || errno == ENOTSUP)
+      if (ACL_NOT_WELL_SUPPORTED (errno))
         {
 	  int n = acl_entries (acl);
 
@@ -366,7 +369,7 @@ set_acl (char const *name, int desc, mode_t mode)
       int saved_errno = errno;
       acl_free (acl);
 
-      if (errno == ENOTSUP || errno == ENOSYS || errno == EINVAL)
+      if (ACL_NOT_WELL_SUPPORTED (errno))
 	{
 	  if (chmod_or_fchmod (name, desc, mode) != 0)
 	    saved_errno = errno;

@@ -1,3 +1,8 @@
+2007-03-04  Jim Meyering  <jim@meyering.net>
+
+	* lib/acl.c (ACL_NOT_WELL_SUPPORTED): New macro.
+	Use it consistently, rather than enumerating errno constants.
+
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
 	* modules/xvasprintf-tests: New file.
