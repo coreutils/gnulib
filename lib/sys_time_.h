@@ -35,7 +35,7 @@ struct timeval
 };
 #endif
 
-#if @GETTIMEOFDAY_REPLACEMENT@
+#if @REPLACE_GETTIMEOFDAY@
 # undef gettimeofday
 # define gettimeofday rpl_gettimeofday
 int gettimeofday (struct timeval *restrict, void *restrict);

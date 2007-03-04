@@ -1,5 +1,13 @@
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
+	* lib/sys_time_.h: Rename GETTIMEOFDAY_REPLACEMENT to
+	REPLACE_GETTIMEOFDAY.
+	* modules/sys_time (Makefile.am): Likewise.
+	* m4/sys_time_h.m4: Likewise.
+	* m4/gettimeofday.m4: Likewise.
+
+2007-03-04  Bruno Haible  <bruno@clisp.org>
+
 	* modules/vasnprintf-posix-tests: New file.
 	* tests/test-vasnprintf-posix.c: New file.
 

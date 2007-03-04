@@ -9,8 +9,8 @@
 
 AC_DEFUN([gl_HEADER_SYS_TIME_H],
 [
-  dnl Use AC_REQUIRE here, so that the GETTIMEOFDAY_REPLACEMENT=0 statement
-  dnl below is expanded once only, before all GETTIMEOFDAY_REPLACEMENT=1
+  dnl Use AC_REQUIRE here, so that the REPLACE_GETTIMEOFDAY=0 statement
+  dnl below is expanded once only, before all REPLACE_GETTIMEOFDAY=1
   dnl statements that occur in other macros.
   AC_REQUIRE([gl_HEADER_SYS_TIME_H_BODY])
 ])
@@ -50,8 +50,8 @@ AC_DEFUN([gl_HEADER_SYS_TIME_H_BODY],
   AC_SUBST([HAVE_STRUCT_TIMEVAL])
 
   dnl Assume POSIX behavior unless another module says otherwise.
-  GETTIMEOFDAY_REPLACEMENT=0
-  AC_SUBST([GETTIMEOFDAY_REPLACEMENT])
+  REPLACE_GETTIMEOFDAY=0
+  AC_SUBST([REPLACE_GETTIMEOFDAY])
   if test $HAVE_SYS_TIME_H = 0 || test $HAVE_STRUCT_TIMEVAL = 0; then
     SYS_TIME_H=sys/time.h
   else
