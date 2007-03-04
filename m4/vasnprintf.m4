@@ -1,5 +1,5 @@
-# vasnprintf.m4 serial 7
-dnl Copyright (C) 2002-2004, 2006 Free Software Foundation, Inc.
+# vasnprintf.m4 serial 8
+dnl Copyright (C) 2002-2004, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -7,16 +7,22 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_VASNPRINTF],
 [
   AC_REQUIRE([gl_EOVERFLOW])
-  AC_REPLACE_FUNCS(vasnprintf)
+  AC_CHECK_FUNCS([vasnprintf])
   if test $ac_cv_func_vasnprintf = no; then
-    AC_LIBOBJ(printf-args)
-    AC_LIBOBJ(printf-parse)
-    AC_LIBOBJ(asnprintf)
-    gl_PREREQ_PRINTF_ARGS
-    gl_PREREQ_PRINTF_PARSE
-    gl_PREREQ_VASNPRINTF
-    gl_PREREQ_ASNPRINTF
+    gl_REPLACE_VASNPRINTF
   fi
+])
+
+AC_DEFUN([gl_REPLACE_VASNPRINTF],
+[
+  AC_LIBOBJ([vasnprintf])
+  AC_LIBOBJ([printf-args])
+  AC_LIBOBJ([printf-parse])
+  AC_LIBOBJ([asnprintf])
+  gl_PREREQ_PRINTF_ARGS
+  gl_PREREQ_PRINTF_PARSE
+  gl_PREREQ_VASNPRINTF
+  gl_PREREQ_ASNPRINTF
 ])
 
 # Prequisites of lib/printf-args.h, lib/printf-args.c.

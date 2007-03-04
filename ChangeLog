@@ -1,5 +1,17 @@
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/vasnprintf-posix: New file.
+	* lib/vasnprintf.c: Include isnan.h, isnanl.h, printf-frexp.h,
+	printf-frexpl.h.
+	(VASNPRINTF): Handle the 'a' and 'A' directives here, if needed.
+	* m4/vasnprintf.m4 (gl_REPLACE_VASNPRINTF): New macro, extracted from
+	gl_FUNC_VASNPRINTF.
+	(gl_FUNC_VASNPRINTF): Invoke it.
+	* m4/vasnprintf-posix.m4: New file.
+	* m4/printf.m4: New file.
+
+2007-03-04  Bruno Haible  <bruno@clisp.org>
+
 	Compile progreloc.c only if --enable-relocatable is specified.
 	* m4/relocatable.m4 (gl_RELOCATABLE): Arrange to compile progreloc.c
 	if --enable-relocatable was specified.
