@@ -25,8 +25,6 @@
 
 #include <stdlib.h>
 
-#define ASSERT(expr) if (!(expr)) abort ();
-
 static void
 do_allocation (int n)
 {
