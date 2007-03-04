@@ -1,0 +1,11 @@
+Files:
+tests/test-snprintf.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-snprintf
+check_PROGRAMS += test-snprintf
+
