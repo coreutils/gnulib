@@ -12,9 +12,9 @@ Depends-on:
 xalloc
 
 configure.ac:
+gl_RELOCATABLE_LIBRARY
 
 Makefile.am:
-lib_SOURCES += relocatable.c
 
 Include:
 "relocatable.h"

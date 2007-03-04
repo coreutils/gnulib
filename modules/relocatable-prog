@@ -26,7 +26,7 @@ gl_RELOCATABLE([$gl_source_base])
 
 Makefile.am:
 DEFS += -DEXEEXT=\"$(EXEEXT)\"
-lib_SOURCES += relocatable.c progreloc.c
+lib_SOURCES += progreloc.c
 
 Include:
 #include "relocatable.h"

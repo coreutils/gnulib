@@ -1,4 +1,4 @@
-# relocatable-lib.m4 serial 2
+# relocatable-lib.m4 serial 3
 dnl Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,13 @@ dnl From Bruno Haible.
 
 dnl Support for relocatable libraries.
 AC_DEFUN([gl_RELOCATABLE_LIBRARY],
+[
+  AC_REQUIRE([gl_RELOCATABLE_LIBRARY_BODY])
+  if test $RELOCATABLE = yes; then
+    AC_LIBOBJ([relocatable])
+  fi
+])
+AC_DEFUN([gl_RELOCATABLE_LIBRARY_BODY],
 [
   AC_REQUIRE([gl_RELOCATABLE_NOP])
   dnl Easier to put this here once, instead of into the DEFS of each Makefile.
@@ -22,6 +29,13 @@ AC_DEFUN([gl_RELOCATABLE_LIBRARY],
     AC_DEFINE([ENABLE_RELOCATABLE], 1,
       [Define to 1 if the package shall run at any location in the filesystem.])
   fi
+])
+
+dnl Like gl_RELOCATABLE_LIBRARY, except prepare for separate compilation
+dnl (no AC_LIBOBJ).
+AC_DEFUN([gl_RELOCATABLE_LIBRARY_SEPARATE],
+[
+  AC_REQUIRE([gl_RELOCATABLE_LIBRARY_BODY])
 ])
 
 dnl Support for relocatable packages for which it is a nop.

@@ -1,4 +1,4 @@
-# relocatable.m4 serial 9
+# relocatable.m4 serial 10
 dnl Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,9 +13,7 @@ dnl Supply RELOCWRAPPER-DIR as the directory where relocwrapper.c may be found.
 AC_DEFUN([gl_RELOCATABLE],
 [
   AC_REQUIRE([gl_RELOCATABLE_BODY])
-  if test $RELOCATABLE = yes; then
-    AC_LIBOBJ([relocatable])
-  fi
+  gl_RELOCATABLE_LIBRARY
   : ${RELOCATABLE_CONFIG_H_DIR='$(top_builddir)'}
   RELOCATABLE_SRC_DIR="\$(top_srcdir)/$gl_source_base"
   RELOCATABLE_BUILD_DIR="\$(top_builddir)/$gl_source_base"
@@ -32,7 +30,7 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
   dnl macro's setting of INSTALL_PROGRAM to persist.
   AC_BEFORE([AC_PROG_INSTALL],[gl_RELOCATABLE_BODY])
   AC_REQUIRE([AC_LIB_LIBPATH])
-  AC_REQUIRE([gl_RELOCATABLE_LIBRARY])
+  AC_REQUIRE([gl_RELOCATABLE_LIBRARY_BODY])
   is_noop=no
   use_elf_origin_trick=no
   if test $RELOCATABLE = yes; then

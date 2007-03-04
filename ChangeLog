@@ -1,5 +1,24 @@
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
+	Compile relocatable.c only if --enable-relocatable is specified.
+	* m4/relocatable-lib.m4 (gl_RELOCATABLE_LIBRARY_BODY): Renamed from
+	gl_RELOCATABLE_LIBRARY.
+	(gl_RELOCATABLE_LIBRARY, gl_RELOCATABLE_LIBRARY_SEPARATE): New macros.
+	* m4/relocatable.m4 (gl_RELOCATABLE): Invoke gl_RELOCATABLE_LIBRARY.
+	(gl_RELOCATABLE_BODY): Require gl_RELOCATABLE_LIBRARY_BODY instead of
+	gl_RELOCATABLE_LIBRARY.
+	* modules/relocatable-lib (configure.ac): Invoke gl_RELOCATABLE_LIBRARY.
+	(Makefile.am): Remove lib_SOURCES.
+	* modules/relocatable-lib-lgpl (configure.ac): Invoke
+	gl_RELOCATABLE_LIBRARY.
+	(Makefile.am): Remove lib_SOURCES.
+	* modules/relocatable-prog (Makefile.am): Don't compile relocatable.c
+	always.
+	* modules/relocatable-prog-wrapper (configure.ac): Invoke
+	gl_RELOCATABLE_LIBRARY_SEPARATE instead of gl_RELOCATABLE_LIBRARY.
+
+2007-03-04  Bruno Haible  <bruno@clisp.org>
+
 	* modules/argmatch-tests: New file.
 	* tests/test-argmatch.c: New file.
 

@@ -11,10 +11,10 @@ m4/relocatable-lib.m4
 Depends-on:
 
 configure.ac:
+gl_RELOCATABLE_LIBRARY
 
 Makefile.am:
 DEFS += -DNO_XMALLOC
-lib_SOURCES += relocatable.c
 
 Include:
 "relocatable.h"
