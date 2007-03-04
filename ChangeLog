@@ -1,5 +1,8 @@
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/vasnprintf-tests: New file.
+	* tests/test-vasnprintf.c: New file.
+
 	* modules/vsnprintf-tests: New file.
 	* tests/test-vsnprintf.c: New file.
 

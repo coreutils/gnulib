@@ -1,0 +1,11 @@
+Files:
+tests/test-vasnprintf.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vasnprintf
+check_PROGRAMS += test-vasnprintf
+
