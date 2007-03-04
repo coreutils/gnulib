@@ -1,5 +1,8 @@
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/argmatch-tests: New file.
+	* tests/test-argmatch.c: New file.
+
 	* tests/test-allocsa.c (main): Halve the number of loop runs.
 
 	* modules/alloca-opt-tests: New file.
