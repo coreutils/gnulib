@@ -1,6 +1,6 @@
 /* acl.c - access control lists
 
-   Copyright (C) 2002, 2003, 2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2003, 2005, 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -366,7 +366,7 @@ set_acl (char const *name, int desc, mode_t mode)
       int saved_errno = errno;
       acl_free (acl);
 
-      if (errno == ENOTSUP || errno == ENOSYS)
+      if (errno == ENOTSUP || errno == ENOSYS || errno == EINVAL)
 	{
 	  if (chmod_or_fchmod (name, desc, mode) != 0)
 	    saved_errno = errno;

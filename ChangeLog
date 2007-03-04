@@ -1,3 +1,9 @@
+2007-03-04  Jim Meyering  <jim@meyering.net>
+
+	Work around difference between Linux ACLs and Solaris 10 ZFS.
+	* lib/acl.c (set_acl): Revert to using chmod_or_fchmod also
+	for EINVAL.
+
 2007-03-03  Bruno Haible  <bruno@clisp.org>
 
 	* modules/relocatable-prog (Depends-on): Add back progreloc's
