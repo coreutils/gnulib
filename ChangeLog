@@ -1,6 +1,7 @@
 2007-03-05  Bruno Haible  <bruno@clisp.org>
 
-	* m4/printf.m4: Update with info about OpenBSD.
+	* m4/printf.m4: Update with info about OpenBSD 3.9, HP-UX 10.20,
+	from Ralf Wildenhues.
 
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 

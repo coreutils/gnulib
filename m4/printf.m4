@@ -187,7 +187,6 @@ int main ()
       [
 changequote(,)dnl
        case "$host_os" in
-         hpux*) gl_cv_func_printf_directive_n="guessing no";;
          *)     gl_cv_func_printf_directive_n="guessing yes";;
        esac
 changequote([,])dnl
@@ -381,23 +380,22 @@ dnl 7 = checking whether snprintf returns a byte count as in C99...
 dnl
 dnl . = yes, # = no.
 dnl
-dnl                                   1  2  3  4  5  6  7
-dnl   glibc 2.3.6                     .  #  .  .  .  .  .
-dnl   FreeBSD 5.4, 6.1                .  .  .  .  .  .  .
-dnl   MacOS X 10.3.9                  .  #  .  .  .  .  .
-dnl   OpenBSD 3.9                     .  #  .  .  .  .  .
-dnl   Cygwin 2007                     .  #  .  .  .  .  .
-dnl   Cygwin 2006                     #  #  .  .  .  .  .
-dnl   Solaris 10                      .  #  .  .  .  .  .
-dnl   Solaris 2.6 ... 9               #  #  .  .  .  .  .
-dnl   Solaris 2.5.1                   #  #  .  .  #  #  #
-dnl   AIX 4.3.2, 5.1                  #  #  .  .  .  .  .
-dnl   HP-UX 11.31                     .  #  .  .  .  .  #
-dnl   HP-UX 11.00, 11.11, 11.23       #  #  .  .  .  .  #
-dnl   HP-UX 10.20                     #  #  #  ?  .  ?  #
-dnl   IRIX 6.5                        #  #  .  .  .  .  #
-dnl   OSF/1 5.1                       #  #  .  .  .  .  #
-dnl   OSF/1 4.0d                      #  #  .  .  #  #  #
-dnl   NetBSD 3.0                      .  #  .  #  .  .  .
-dnl   BeOS                            #  #  .  #  .  .  .
-dnl   mingw                           #  #  .  #  .  #  #
+dnl                                        1  2  3  4  5  6  7
+dnl   glibc 2.3.6                          .  #  .  .  .  .  .
+dnl   FreeBSD 5.4, 6.1                     .  .  .  .  .  .  .
+dnl   MacOS X 10.3.9                       .  #  .  .  .  .  .
+dnl   OpenBSD 3.9                          .  #  .  .  .  .  .
+dnl   Cygwin 2007                          .  #  .  .  .  .  .
+dnl   Cygwin 2006                          #  #  .  .  .  .  .
+dnl   Solaris 10                           .  #  .  .  .  .  .
+dnl   Solaris 2.6 ... 9                    #  #  .  .  .  .  .
+dnl   Solaris 2.5.1                        #  #  .  .  #  #  #
+dnl   AIX 4.3.2, 5.1                       #  #  .  .  .  .  .
+dnl   HP-UX 11.31                          .  #  .  .  .  .  #
+dnl   HP-UX 10.20, 11.00, 11.11, 11.23     #  #  .  .  .  .  #
+dnl   IRIX 6.5                             #  #  .  .  .  .  #
+dnl   OSF/1 5.1                            #  #  .  .  .  .  #
+dnl   OSF/1 4.0d                           #  #  .  .  #  #  #
+dnl   NetBSD 3.0                           .  #  .  #  .  .  .
+dnl   BeOS                                 #  #  .  #  .  .  .
+dnl   mingw                                #  #  .  #  .  #  #
