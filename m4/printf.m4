@@ -87,6 +87,7 @@ dnl Result is gl_cv_func_printf_directive_a.
 AC_DEFUN([gl_PRINTF_DIRECTIVE_A],
 [
   AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([gt_TYPE_LONGDOUBLE])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether printf supports the 'a' and 'A' directives],
     [gl_cv_func_printf_directive_a], 
@@ -98,24 +99,55 @@ static char buf[100];
 int main ()
 {
   if (sprintf (buf, "%a %d", 3.1416015625, 33, 44, 55) < 0
-      || strcmp (buf, "0x1.922p+1 33") != 0)
+      || (strcmp (buf, "0x1.922p+1 33") != 0
+          && strcmp (buf, "0x3.244p+0 33") != 0
+          && strcmp (buf, "0x6.488p-1 33") != 0
+          && strcmp (buf, "0xc.91p-2 33") != 0))
     return 1;
   if (sprintf (buf, "%A %d", -3.1416015625, 33, 44, 55) < 0
-      || strcmp (buf, "-0X1.922P+1 33") != 0)
+      || (strcmp (buf, "-0X1.922P+1 33") != 0
+          && strcmp (buf, "-0X3.244P+0 33") != 0
+          && strcmp (buf, "-0X6.488P-1 33") != 0
+          && strcmp (buf, "-0XC.91P-2 33") != 0))
     return 1;
+  /* This catches a MacOS X 10.3.9 (Darwin 7.9) bug.  */
+  if (sprintf (buf, "%.1a", 1.999) < 0
+      || (strcmp (buf, "0x1.0p+1") != 0
+          && strcmp (buf, "0x2.0p+0") != 0
+          && strcmp (buf, "0x4.0p-1") != 0
+          && strcmp (buf, "0x8.0p-2") != 0))
+    return 1;
+#if HAVE_LONG_DOUBLE
+  /* This catches the same MacOS X 10.3.9 (Darwin 7.9) bug and also a
+     glibc 2.4 bug <http://sourceware.org/bugzilla/show_bug.cgi?id=2908>.  */
+  if (sprintf (buf, "%.1La", 1.999L) < 0
+      || (strcmp (buf, "0x1.0p+1") != 0
+          && strcmp (buf, "0x2.0p+0") != 0
+          && strcmp (buf, "0x4.0p-1") != 0
+          && strcmp (buf, "0x8.0p-2") != 0))
+    return 1;
+#endif
   return 0;
 }], [gl_cv_func_printf_directive_a=yes], [gl_cv_func_printf_directive_a=no],
       [
-changequote(,)dnl
        case "$host_os" in
-                               dnl Guess yes on glibc systems.
-         *-gnu*)               gl_cv_func_printf_directive_a="guessing yes";;
+                               dnl Guess yes on glibc >= 2.5 systems.
+         *-gnu*)
+           AC_EGREP_CPP([BZ2908], [
+             #include <features.h>
+             #ifdef __GNU_LIBRARY__
+              #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 5) || (__GLIBC__ > 2)
+               BZ2908
+              #endif
+             #endif
+             ],
+             [gl_cv_func_printf_directive_a="guessing yes"],
+             [gl_cv_func_printf_directive_a="guessing no"])
+           ;;
+changequote(,)dnl
                                dnl Guess yes on FreeBSD >= 5.
          freebsd[1-4]*)        gl_cv_func_printf_directive_a="guessing no";;
          freebsd* | kfreebsd*) gl_cv_func_printf_directive_a="guessing yes";;
-                               dnl Gusss yes on MacOS X >= 10.3.
-         darwin[1-6].*)        gl_cv_func_printf_directive_a="guessing no";;
-         darwin*)              gl_cv_func_printf_directive_a="guessing yes";;
                                dnl If we don't know, assume the worst.
          *)                    gl_cv_func_printf_directive_a="guessing no";;
        esac
@@ -338,9 +370,9 @@ dnl
 dnl . = yes, # = no.
 dnl
 dnl                                   1  2  3  4  5  6  7
-dnl   glibc 2.3.6                     .  .  .  .  .  .  .
+dnl   glibc 2.3.6                     .  #  .  .  .  .  .
 dnl   FreeBSD 5.4, 6.1                .  .  .  .  .  .  .
-dnl   MacOS X 10.3.9                  .  .  .  .  .  .  .
+dnl   MacOS X 10.3.9                  .  #  .  .  .  .  .
 dnl   Cygwin 2007                     .  #  .  .  .  .  .
 dnl   Solaris 10                      .  #  .  .  .  .  .
 dnl   Solaris 2.6 ... 9               #  #  .  .  .  .  .

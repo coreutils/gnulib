@@ -267,6 +267,20 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
+  { /* Rounding can turn a ...FFF into a ...000.
+       This shows a MacOS X 10.3.9 (Darwin 7.9) bug.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.1a %d", 1.999, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0x1.0p+1 33") == 0
+	    || strcmp (result, "0x2.0p+0 33") == 0
+	    || strcmp (result, "0x4.0p-1 33") == 0
+	    || strcmp (result, "0x8.0p-2 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
   { /* Width.  */
     size_t length;
     char *result =
@@ -556,6 +570,21 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
 	    || strcmp (result, "0x3.000p-1 33") == 0
 	    || strcmp (result, "0x6.000p-2 33") == 0
 	    || strcmp (result, "0xc.000p-3 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Rounding can turn a ...FFF into a ...000.
+       This shows a MacOS X 10.3.9 (Darwin 7.9) bug and a
+       glibc 2.4 bug <http://sourceware.org/bugzilla/show_bug.cgi?id=2908>.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.1La %d", 1.999L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0x1.0p+1 33") == 0
+	    || strcmp (result, "0x2.0p+0 33") == 0
+	    || strcmp (result, "0x4.0p-1 33") == 0
+	    || strcmp (result, "0x8.0p-2 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
