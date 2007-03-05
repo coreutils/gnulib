@@ -1,0 +1,29 @@
+Description:
+POSIX compatible vsprintf with automatic memory allocation.
+
+Files:
+m4/vasprintf-posix.m4
+m4/printf.m4
+
+Depends-on:
+vasprintf
+vasnprintf
+isnan-nolibm
+isnanl-nolibm
+printf-frexp
+printf-frexpl
+
+configure.ac:
+gl_FUNC_VASPRINTF_POSIX
+
+Makefile.am:
+
+Include:
+"vasprintf.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

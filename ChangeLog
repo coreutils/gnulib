@@ -1,5 +1,18 @@
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/vasprintf-posix: New file.
+	* lib/vasprintf.h (asprintf, vasprintf): Rename if REPLACE_VASPRINTF is
+	defined.
+	* m4/vasprintf-posix.m4: New file.
+	* m4/vasprintf.m4 (gl_REPLACE_VASPRINTF): New macro, extracted from
+	gl_FUNC_VASPRINTF.
+	(gl_FUNC_VASPRINTF): Invoke it.
+	* m4/vasnprintf.m4 (gl_REPLACE_VASNPRINTF): Define REPLACE_VASNPRINTF
+	here.
+	* m4/vasnprintf-posix.m4 (gl_FUNC_VASNPRINTF_POSIX): Not here.
+
+2007-03-04  Bruno Haible  <bruno@clisp.org>
+
 	* lib/sys_time_.h: Rename GETTIMEOFDAY_REPLACEMENT to
 	REPLACE_GETTIMEOFDAY.
 	* modules/sys_time (Makefile.am): Likewise.
