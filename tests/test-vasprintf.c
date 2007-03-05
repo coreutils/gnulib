@@ -44,7 +44,6 @@ my_asprintf (char **result, const char *format, ...)
 static void
 test_vasprintf ()
 {
-  char buf[8];
   int repeat;
 
   for (repeat = 0; repeat <= 8; repeat++)
@@ -61,7 +60,6 @@ test_vasprintf ()
 static void
 test_asprintf ()
 {
-  char buf[8];
   int repeat;
 
   for (repeat = 0; repeat <= 8; repeat++)
