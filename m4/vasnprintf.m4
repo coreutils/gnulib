@@ -19,6 +19,10 @@ AC_DEFUN([gl_REPLACE_VASNPRINTF],
   AC_LIBOBJ([printf-args])
   AC_LIBOBJ([printf-parse])
   AC_LIBOBJ([asnprintf])
+  if test $ac_cv_func_vasnprintf = yes; then
+    AC_DEFINE([REPLACE_VASNPRINTF], 1,
+      [Define if vasnprintf exists but is overridden by gnulib.])
+  fi
   gl_PREREQ_PRINTF_ARGS
   gl_PREREQ_PRINTF_PARSE
   gl_PREREQ_VASNPRINTF
