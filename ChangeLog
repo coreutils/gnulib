@@ -1,5 +1,8 @@
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/vasprintf-posix-tests: New file.
+	* tests/test-vasprintf-posix.c: New file.
+
 	* modules/vasprintf-posix: New file.
 	* lib/vasprintf.h (asprintf, vasprintf): Rename if REPLACE_VASPRINTF is
 	defined.
