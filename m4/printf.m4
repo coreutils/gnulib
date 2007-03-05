@@ -152,6 +152,9 @@ changequote(,)dnl
                                dnl Guess yes on FreeBSD >= 5.
          freebsd[1-4]*)        gl_cv_func_printf_directive_a="guessing no";;
          freebsd* | kfreebsd*) gl_cv_func_printf_directive_a="guessing yes";;
+                               dnl Guess yes on NetBSD >= 4.
+         netbsd[1-3]*)         gl_cv_func_printf_directive_a="guessing no";;
+         netbsd*)              gl_cv_func_printf_directive_a="guessing yes";;
                                dnl If we don't know, assume the worst.
          *)                    gl_cv_func_printf_directive_a="guessing no";;
        esac
@@ -220,7 +223,7 @@ int main ()
       [
 changequote(,)dnl
        case "$host_os" in
-         netbsd*)      gl_cv_func_printf_positions="guessing no";;
+         netbsd[1-3]*) gl_cv_func_printf_positions="guessing no";;
          beos*)        gl_cv_func_printf_positions="guessing no";;
          mingw* | pw*) gl_cv_func_printf_positions="guessing no";;
          *)            gl_cv_func_printf_positions="guessing yes";;
@@ -292,7 +295,7 @@ changequote(,)dnl
          osf*)                 gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                dnl Guess yes on NetBSD >= 3.
          netbsd[1-2]*)         gl_cv_func_snprintf_truncation_c99="guessing no";;
-         netbsd*)              gl_cv_func_snprintf_truncation_c99="guessing yes";;
+         netbsd*           )   gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                dnl Guess yes on BeOS.
          beos*)                gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                dnl If we don't know, assume the worst.
@@ -396,6 +399,7 @@ dnl   HP-UX 10.20, 11.00, 11.11, 11.23     #  #  .  .  .  .  #
 dnl   IRIX 6.5                             #  #  .  .  .  .  #
 dnl   OSF/1 5.1                            #  #  .  .  .  .  #
 dnl   OSF/1 4.0d                           #  #  .  .  #  #  #
+dnl   NetBSD 4.0                           .  .  .  .  .  .  .
 dnl   NetBSD 3.0                           .  #  .  #  .  .  .
 dnl   BeOS                                 #  #  .  #  .  .  .
 dnl   mingw                                #  #  .  #  .  #  #
