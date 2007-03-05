@@ -429,7 +429,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			else if (flags & FLAG_SPACE)
 			  *p++ = ' ';
 
-			if (x > 0.0L && x + x == x)
+			if (arg > 0.0L && arg + arg == arg)
 			  {
 			    if (dp->conversion == 'A')
 			      {
@@ -445,7 +445,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			    int exponent;
 			    long double mantissa;
 
-			    if (x > 0.0L)
+			    if (arg > 0.0L)
 			      mantissa = printf_frexpl (arg, &exponent);
 			    else
 			      {
@@ -457,7 +457,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 				&& precision < (unsigned int) ((LDBL_DIG + 1) * 0.831) + 1)
 			      {
 				/* Round the mantissa.  */
-				long double tail = arg;
+				long double tail = mantissa;
 				size_t q;
 
 				for (q = precision; ; q--)
@@ -469,15 +469,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 					if (digit & 1 ? tail >= 0.5L : tail > 0.5L)
 					  tail = 1 - tail;
 					else
-					  tail = 0;
+					  tail = - tail;
 					break;
 				      }
 				    tail *= 16.0L;
 				  }
-				if (tail > 0.0L)
+				if (tail != 0.0L)
 				  for (q = precision; q > 0; q--)
 				    tail *= 0.0625L;
-				arg += tail;
+				mantissa += tail;
 			      }
 
 			    *p++ = '0';
@@ -486,19 +486,20 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			    {
 			      int digit;
 
-			      digit = (int) arg;
-			      arg -= digit;
+			      digit = (int) mantissa;
+			      mantissa -= digit;
 			      *p++ = '0' + digit;
-			      if ((flags & FLAG_ALT) || arg > 0.0L)
+			      if ((flags & FLAG_ALT)
+				  || mantissa > 0.0L || precision > 0)
 				{
 				  *p++ = '.';
 				  /* This loop terminates because we assume
 				     that FLT_RADIX is a power of 2.  */
-				  while (arg > 0.0L)
+				  while (mantissa > 0.0L)
 				    {
-				      arg *= 16.0L;
-				      digit = (int) arg;
-				      arg -= digit;
+				      mantissa *= 16.0L;
+				      digit = (int) mantissa;
+				      mantissa -= digit;
 				      *p++ = digit
 					     + (digit < 10
 						? '0'
@@ -517,11 +518,11 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 #  if WIDE_CHAR_VERSION
 			      {
 				static const wchar_t decimal_format[] =
-				  { '%', 'd', '\0' };
+				  { '%', '+', 'd', '\0' };
 				SNPRINTF (p, 6 + 1, decimal_format, exponent);
 			      }
 #  else
-			      sprintf (p, "%d", exponent);
+			      sprintf (p, "%+d", exponent);
 #  endif
 			      while (*p != '\0')
 				p++;
@@ -572,7 +573,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			else if (flags & FLAG_SPACE)
 			  *p++ = ' ';
 
-			if (x > 0.0 && x + x == x)
+			if (arg > 0.0 && arg + arg == arg)
 			  {
 			    if (dp->conversion == 'A')
 			      {
@@ -588,7 +589,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			    int exponent;
 			    double mantissa;
 
-			    if (x > 0.0)
+			    if (arg > 0.0)
 			      mantissa = printf_frexp (arg, &exponent);
 			    else
 			      {
@@ -600,7 +601,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 				&& precision < (unsigned int) ((DBL_DIG + 1) * 0.831) + 1)
 			      {
 				/* Round the mantissa.  */
-				double tail = arg;
+				double tail = mantissa;
 				size_t q;
 
 				for (q = precision; ; q--)
@@ -612,15 +613,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 					if (digit & 1 ? tail >= 0.5 : tail > 0.5)
 					  tail = 1 - tail;
 					else
-					  tail = 0;
+					  tail = - tail;
 					break;
 				      }
 				    tail *= 16.0;
 				  }
-				if (tail > 0.0)
+				if (tail != 0.0)
 				  for (q = precision; q > 0; q--)
 				    tail *= 0.0625;
-				arg += tail;
+				mantissa += tail;
 			      }
 
 			    *p++ = '0';
@@ -629,19 +630,20 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			    {
 			      int digit;
 
-			      digit = (int) arg;
-			      arg -= digit;
+			      digit = (int) mantissa;
+			      mantissa -= digit;
 			      *p++ = '0' + digit;
-			      if ((flags & FLAG_ALT) || arg > 0.0)
+			      if ((flags & FLAG_ALT)
+				  || mantissa > 0.0 || precision > 0)
 				{
 				  *p++ = '.';
 				  /* This loop terminates because we assume
 				     that FLT_RADIX is a power of 2.  */
-				  while (arg > 0.0)
+				  while (mantissa > 0.0)
 				    {
-				      arg *= 16.0;
-				      digit = (int) arg;
-				      arg -= digit;
+				      mantissa *= 16.0;
+				      digit = (int) mantissa;
+				      mantissa -= digit;
 				      *p++ = digit
 					     + (digit < 10
 						? '0'
@@ -660,11 +662,11 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 # if WIDE_CHAR_VERSION
 			      {
 				static const wchar_t decimal_format[] =
-				  { '%', 'd', '\0' };
+				  { '%', '+', 'd', '\0' };
 				SNPRINTF (p, 6 + 1, decimal_format, exponent);
 			      }
 # else
-			      sprintf (p, "%d", exponent);
+			      sprintf (p, "%+d", exponent);
 # endif
 			      while (*p != '\0')
 				p++;
