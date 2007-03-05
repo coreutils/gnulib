@@ -62,9 +62,13 @@ changequote(,)dnl
                                dnl Guess yes on FreeBSD >= 5.
          freebsd[1-4]*)        gl_cv_func_printf_sizes_c99="guessing no";;
          freebsd* | kfreebsd*) gl_cv_func_printf_sizes_c99="guessing yes";;
-                               dnl Gusss yes on MacOS X >= 10.3.
+                               dnl Guess yes on MacOS X >= 10.3.
          darwin[1-6].*)        gl_cv_func_printf_sizes_c99="guessing no";;
          darwin*)              gl_cv_func_printf_sizes_c99="guessing yes";;
+                               dnl Guess yes on OpenBSD >= 3.9.
+         openbsd[1-2].* | openbsd3.[0-8] | openbsd3.[0-8].*)
+                               gl_cv_func_printf_sizes_c99="guessing no";;
+         openbsd*)             gl_cv_func_printf_sizes_c99="guessing yes";;
                                dnl Guess yes on Solaris >= 2.10.
          solaris2.[0-9]*)      gl_cv_func_printf_sizes_c99="guessing no";;
          solaris*)             gl_cv_func_printf_sizes_c99="guessing yes";;
@@ -266,9 +270,13 @@ changequote(,)dnl
                                dnl Guess yes on FreeBSD >= 5.
          freebsd[1-4]*)        gl_cv_func_snprintf_truncation_c99="guessing no";;
          freebsd* | kfreebsd*) gl_cv_func_snprintf_truncation_c99="guessing yes";;
-                               dnl Gusss yes on MacOS X >= 10.3.
+                               dnl Guess yes on MacOS X >= 10.3.
          darwin[1-6].*)        gl_cv_func_snprintf_truncation_c99="guessing no";;
          darwin*)              gl_cv_func_snprintf_truncation_c99="guessing yes";;
+                               dnl Guess yes on OpenBSD >= 3.9.
+         openbsd[1-2].* | openbsd3.[0-8] | openbsd3.[0-8].*)
+                               gl_cv_func_snprintf_truncation_c99="guessing no";;
+         openbsd*)             gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                dnl Guess yes on Solaris >= 2.6.
          solaris2.[0-5]*)      gl_cv_func_snprintf_truncation_c99="guessing no";;
          solaris*)             gl_cv_func_snprintf_truncation_c99="guessing yes";;
@@ -327,9 +335,13 @@ changequote(,)dnl
                                dnl Guess yes on FreeBSD >= 5.
          freebsd[1-4]*)        gl_cv_func_printf_retval_c99="guessing no";;
          freebsd* | kfreebsd*) gl_cv_func_printf_retval_c99="guessing yes";;
-                               dnl Gusss yes on MacOS X >= 10.3.
+                               dnl Guess yes on MacOS X >= 10.3.
          darwin[1-6].*)        gl_cv_func_printf_retval_c99="guessing no";;
          darwin*)              gl_cv_func_printf_retval_c99="guessing yes";;
+                               dnl Guess yes on OpenBSD >= 3.9.
+         openbsd[1-2].* | openbsd3.[0-8] | openbsd3.[0-8].*)
+                               gl_cv_func_printf_retval_c99="guessing no";;
+         openbsd*)             gl_cv_func_printf_retval_c99="guessing yes";;
                                dnl Guess yes on Solaris >= 2.6.
          solaris2.[0-5]*)      gl_cv_func_printf_retval_c99="guessing no";;
          solaris*)             gl_cv_func_printf_retval_c99="guessing yes";;
@@ -373,6 +385,7 @@ dnl                                   1  2  3  4  5  6  7
 dnl   glibc 2.3.6                     .  #  .  .  .  .  .
 dnl   FreeBSD 5.4, 6.1                .  .  .  .  .  .  .
 dnl   MacOS X 10.3.9                  .  #  .  .  .  .  .
+dnl   OpenBSD 3.9                     .  #  .  .  .  .  .
 dnl   Cygwin 2007                     .  #  .  .  .  .  .
 dnl   Cygwin 2006                     #  #  .  .  .  .  .
 dnl   Solaris 10                      .  #  .  .  .  .  .

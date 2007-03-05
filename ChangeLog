@@ -1,3 +1,7 @@
+2007-03-05  Bruno Haible  <bruno@clisp.org>
+
+	* m4/printf.m4: Update with info about OpenBSD.
+
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
 	* lib/vasprintf.h: Update #if logic for the case when the functions
