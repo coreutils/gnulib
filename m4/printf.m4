@@ -374,6 +374,7 @@ dnl   glibc 2.3.6                     .  #  .  .  .  .  .
 dnl   FreeBSD 5.4, 6.1                .  .  .  .  .  .  .
 dnl   MacOS X 10.3.9                  .  #  .  .  .  .  .
 dnl   Cygwin 2007                     .  #  .  .  .  .  .
+dnl   Cygwin 2006                     #  #  .  .  .  .  .
 dnl   Solaris 10                      .  #  .  .  .  .  .
 dnl   Solaris 2.6 ... 9               #  #  .  .  .  .  .
 dnl   Solaris 2.5.1                   #  #  .  .  #  #  #
