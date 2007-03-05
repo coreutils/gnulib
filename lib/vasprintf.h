@@ -23,7 +23,9 @@
 /* Get asprintf(), vasprintf() declarations.  */
 #include <stdio.h>
 
-#else
+#endif
+
+#if !HAVE_VASPRINTF || REPLACE_VASPRINTF
 
 /* Get va_list.  */
 #include <stdarg.h>

@@ -1,5 +1,18 @@
 2007-03-04  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasprintf.h: Update #if logic for the case when the functions
+	exist but are overridden.
+
+2007-03-04  Bruno Haible  <bruno@clisp.org>
+
+	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_A): Exclude two buggy
+	implementations: glibc-2.4 and MacOS X 10.3.
+	* tests/test-vasnprintf-posix.c (test_function): Test also the case
+	that exhibits the bugs in glibc-2.4 and MacOS X 10.3.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+
+2007-03-04  Bruno Haible  <bruno@clisp.org>
+
 	* modules/vasprintf-posix-tests: New file.
 	* tests/test-vasprintf-posix.c: New file.
 
