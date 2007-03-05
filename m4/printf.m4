@@ -73,7 +73,8 @@ changequote(,)dnl
          solaris2.[0-9]*)      gl_cv_func_printf_sizes_c99="guessing no";;
          solaris*)             gl_cv_func_printf_sizes_c99="guessing yes";;
                                dnl Guess yes on NetBSD >= 3.
-         netbsd[1-2]*)         gl_cv_func_printf_sizes_c99="guessing no";;
+         netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
+                               gl_cv_func_printf_sizes_c99="guessing no";;
          netbsd*)              gl_cv_func_printf_sizes_c99="guessing yes";;
                                dnl If we don't know, assume the worst.
          *)                    gl_cv_func_printf_sizes_c99="guessing no";;
@@ -153,7 +154,8 @@ changequote(,)dnl
          freebsd[1-4]*)        gl_cv_func_printf_directive_a="guessing no";;
          freebsd* | kfreebsd*) gl_cv_func_printf_directive_a="guessing yes";;
                                dnl Guess yes on NetBSD >= 4.
-         netbsd[1-3]*)         gl_cv_func_printf_directive_a="guessing no";;
+         netbsd[1-3]* | netbsdelf[1-3]* | netbsdaout[1-3]* | netbsdcoff[1-3]*)
+                               gl_cv_func_printf_directive_a="guessing no";;
          netbsd*)              gl_cv_func_printf_directive_a="guessing yes";;
                                dnl If we don't know, assume the worst.
          *)                    gl_cv_func_printf_directive_a="guessing no";;
@@ -223,7 +225,8 @@ int main ()
       [
 changequote(,)dnl
        case "$host_os" in
-         netbsd[1-3]*) gl_cv_func_printf_positions="guessing no";;
+         netbsd[1-3]* | netbsdelf[1-3]* | netbsdaout[1-3]* | netbsdcoff[1-3]*)
+                       gl_cv_func_printf_positions="guessing no";;
          beos*)        gl_cv_func_printf_positions="guessing no";;
          mingw* | pw*) gl_cv_func_printf_positions="guessing no";;
          *)            gl_cv_func_printf_positions="guessing yes";;
@@ -294,8 +297,9 @@ changequote(,)dnl
          osf[3-4]*)            gl_cv_func_snprintf_truncation_c99="guessing no";;
          osf*)                 gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                dnl Guess yes on NetBSD >= 3.
-         netbsd[1-2]*)         gl_cv_func_snprintf_truncation_c99="guessing no";;
-         netbsd*           )   gl_cv_func_snprintf_truncation_c99="guessing yes";;
+         netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
+                               gl_cv_func_snprintf_truncation_c99="guessing no";;
+         netbsd*)              gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                dnl Guess yes on BeOS.
          beos*)                gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                dnl If we don't know, assume the worst.
@@ -351,7 +355,8 @@ changequote(,)dnl
          aix[1-3]*)            gl_cv_func_printf_retval_c99="guessing no";;
          aix*)                 gl_cv_func_printf_retval_c99="guessing yes";;
                                dnl Guess yes on NetBSD >= 3.
-         netbsd[1-2]*)         gl_cv_func_printf_retval_c99="guessing no";;
+         netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
+                               gl_cv_func_printf_retval_c99="guessing no";;
          netbsd*)              gl_cv_func_printf_retval_c99="guessing yes";;
                                dnl Guess yes on BeOS.
          beos*)                gl_cv_func_printf_retval_c99="guessing yes";;
