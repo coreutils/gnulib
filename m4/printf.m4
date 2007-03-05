@@ -389,6 +389,7 @@ dnl
 dnl . = yes, # = no.
 dnl
 dnl                                        1  2  3  4  5  6  7
+dnl   glibc 2.5                            .  .  .  .  .  .  .
 dnl   glibc 2.3.6                          .  #  .  .  .  .  .
 dnl   FreeBSD 5.4, 6.1                     .  .  .  .  .  .  .
 dnl   MacOS X 10.3.9                       .  #  .  .  .  .  .
