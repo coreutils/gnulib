@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-02-04 19:09:25 $'
+cvsdatestamp='$Date: 2007-03-06 03:38:30 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1008,12 +1008,17 @@ func_get_automake_snippet ()
       # If some .c file exists and is not used with AC_LIBOBJ - for example,
       # a .c file is preprocessed into another .c file for BUILT_SOURCES -,
       # automake will generate a useless dependency; this is harmless.
-      sed_extract_c_files='/\.c$/p'
-      extra_files=`echo "$extra_files" | sed -n -e "$sed_extract_c_files"`
-      if test -n "$extra_files"; then
-        echo "EXTRA_lib_SOURCES +=" $extra_files
-        echo
-      fi
+      case "$1" in
+        relocatable-prog-wrapper) ;;
+        *)
+          sed_extract_c_files='/\.c$/p'
+          extra_files=`echo "$extra_files" | sed -n -e "$sed_extract_c_files"`
+          if test -n "$extra_files"; then
+            echo "EXTRA_lib_SOURCES +=" $extra_files
+            echo
+          fi
+          ;;
+      esac
       ;;
   esac
 }

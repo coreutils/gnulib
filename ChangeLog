@@ -1,5 +1,10 @@
 2007-03-05  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_get_automake_snippet): Don't synthesize an
+	EXTRA_lib_SOURCES augmentation for the relocatable-prog-wrapper module.
+
+2007-03-05  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdio_.h: Include <stddef.h>.
 
 2007-03-05  Bruno Haible  <bruno@clisp.org>
