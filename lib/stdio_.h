@@ -29,6 +29,7 @@
 #include @ABSOLUTE_STDIO_H@
 
 #include <stdarg.h>
+#include <stddef.h>
 
 
 /* The definition of GL_LINK_WARNING is copied here.  */
