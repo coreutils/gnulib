@@ -313,14 +313,14 @@ changequote([,])dnl
 dnl Test whether the return value of the snprintf function is the number
 dnl of bytes (excluding the terminating NUL) that would have been produced
 dnl if the buffer had been large enough. (ISO C99, POSIX:2001)
-dnl Result is gl_cv_func_printf_retval_c99.
+dnl Result is gl_cv_func_snprintf_retval_c99.
 
 AC_DEFUN([gl_SNPRINTF_RETVAL_C99],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether snprintf returns a byte count as in C99],
-    [gl_cv_func_printf_retval_c99], 
+    [gl_cv_func_snprintf_retval_c99], 
     [
       AC_TRY_RUN([
 #include <stdio.h>
@@ -332,36 +332,36 @@ int main ()
   if (snprintf (buf, 3, "%d %d", 4567, 89) != 7)
     return 1;
   return 0;
-}], [gl_cv_func_printf_retval_c99=yes], [gl_cv_func_printf_retval_c99=no],
+}], [gl_cv_func_snprintf_retval_c99=yes], [gl_cv_func_snprintf_retval_c99=no],
       [
 changequote(,)dnl
        case "$host_os" in
                                dnl Guess yes on glibc systems.
-         *-gnu*)               gl_cv_func_printf_retval_c99="guessing yes";;
+         *-gnu*)               gl_cv_func_snprintf_retval_c99="guessing yes";;
                                dnl Guess yes on FreeBSD >= 5.
-         freebsd[1-4]*)        gl_cv_func_printf_retval_c99="guessing no";;
-         freebsd* | kfreebsd*) gl_cv_func_printf_retval_c99="guessing yes";;
+         freebsd[1-4]*)        gl_cv_func_snprintf_retval_c99="guessing no";;
+         freebsd* | kfreebsd*) gl_cv_func_snprintf_retval_c99="guessing yes";;
                                dnl Guess yes on MacOS X >= 10.3.
-         darwin[1-6].*)        gl_cv_func_printf_retval_c99="guessing no";;
-         darwin*)              gl_cv_func_printf_retval_c99="guessing yes";;
+         darwin[1-6].*)        gl_cv_func_snprintf_retval_c99="guessing no";;
+         darwin*)              gl_cv_func_snprintf_retval_c99="guessing yes";;
                                dnl Guess yes on OpenBSD >= 3.9.
          openbsd[1-2].* | openbsd3.[0-8] | openbsd3.[0-8].*)
-                               gl_cv_func_printf_retval_c99="guessing no";;
-         openbsd*)             gl_cv_func_printf_retval_c99="guessing yes";;
+                               gl_cv_func_snprintf_retval_c99="guessing no";;
+         openbsd*)             gl_cv_func_snprintf_retval_c99="guessing yes";;
                                dnl Guess yes on Solaris >= 2.6.
-         solaris2.[0-5]*)      gl_cv_func_printf_retval_c99="guessing no";;
-         solaris*)             gl_cv_func_printf_retval_c99="guessing yes";;
+         solaris2.[0-5]*)      gl_cv_func_snprintf_retval_c99="guessing no";;
+         solaris*)             gl_cv_func_snprintf_retval_c99="guessing yes";;
                                dnl Guess yes on AIX >= 4.
-         aix[1-3]*)            gl_cv_func_printf_retval_c99="guessing no";;
-         aix*)                 gl_cv_func_printf_retval_c99="guessing yes";;
+         aix[1-3]*)            gl_cv_func_snprintf_retval_c99="guessing no";;
+         aix*)                 gl_cv_func_snprintf_retval_c99="guessing yes";;
                                dnl Guess yes on NetBSD >= 3.
          netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
-                               gl_cv_func_printf_retval_c99="guessing no";;
-         netbsd*)              gl_cv_func_printf_retval_c99="guessing yes";;
+                               gl_cv_func_snprintf_retval_c99="guessing no";;
+         netbsd*)              gl_cv_func_snprintf_retval_c99="guessing yes";;
                                dnl Guess yes on BeOS.
-         beos*)                gl_cv_func_printf_retval_c99="guessing yes";;
+         beos*)                gl_cv_func_snprintf_retval_c99="guessing yes";;
                                dnl If we don't know, assume the worst.
-         *)                    gl_cv_func_printf_retval_c99="guessing no";;
+         *)                    gl_cv_func_snprintf_retval_c99="guessing no";;
        esac
 changequote([,])dnl
       ])
