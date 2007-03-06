@@ -1,4 +1,4 @@
-# printf-frexpl.m4 serial 1
+# printf-frexpl.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,6 +23,9 @@ AC_DEFUN([gl_FUNC_PRINTF_FREXPL],
     if test $gl_cv_func_frexpl_no_libm = yes; then
       AC_DEFINE([HAVE_FREXPL_IN_LIBC], 1,
         [Define if the frexpl function is available in libc.])
+      dnl Also check whether it's declared. glibc (2.3..2.5 at least) and
+      dnl MacOS X 10.3 have frexpl() in libc but don't declare it in <math.h>.
+      AC_CHECK_DECLS([frexpl])
     fi
 
     AC_CACHE_CHECK([whether ldexpl can be used without linking with libm],
@@ -38,6 +41,9 @@ AC_DEFUN([gl_FUNC_PRINTF_FREXPL],
     if test $gl_cv_func_ldexpl_no_libm = yes; then
       AC_DEFINE([HAVE_LDEXPL_IN_LIBC], 1,
         [Define if the ldexpl function is available in libc.])
+      dnl Also check whether it's declared. glibc (2.3..2.5 at least) and
+      dnl MacOS X 10.3 have ldexpl() in libc but don't declare it in <math.h>.
+      AC_CHECK_DECLS([ldexpl])
     fi
   fi
 ])

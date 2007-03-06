@@ -1,5 +1,11 @@
 2007-03-05  Bruno Haible  <bruno@clisp.org>
 
+	* m4/printf-frexpl.m4 (gl_FUNC_PRINTF_FREXPL): Also test whether
+	frexpl and ldexpl are declared.
+	* lib/printf-frexp.c (frexpl, ldexpl): Provide fallback declarations.
+
+2007-03-05  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_get_automake_snippet): Don't synthesize an
 	EXTRA_lib_SOURCES augmentation for the relocatable-prog-wrapper module.
 

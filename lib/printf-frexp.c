@@ -41,6 +41,14 @@
 #   define USE_FREXP_LDEXP
 #   define FREXP frexpl
 #   define LDEXP ldexpl
+    /* glibc (2.3..2.5 at least) and MacOS X 10.3 have frexpl and ldexpl in
+       libc, but don't declare them.  */
+#   if !HAVE_DECL_FREXPL
+extern long double frexpl (long double, int *);
+#   endif
+#   if !HAVE_DECL_LDEXPL
+extern long double ldexpl (long double, int);
+#   endif
 #  endif
 #  define L_(literal) literal##L
 # else
