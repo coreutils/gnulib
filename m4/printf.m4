@@ -1,4 +1,4 @@
-# printf.m4 serial 1
+# printf.m4 serial 2
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -368,6 +368,65 @@ changequote([,])dnl
     ])
 ])
 
+dnl Test whether the snprintf function supports the %n format directive
+dnl also in truncated portions of the format string. (ISO C99, POSIX:2001)
+dnl Result is gl_cv_func_snprintf_directive_n.
+
+AC_DEFUN([gl_SNPRINTF_DIRECTIVE_N],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether snprintf fully supports the 'n' directive],
+    [gl_cv_func_snprintf_directive_n], 
+    [
+      AC_TRY_RUN([
+#include <stdio.h>
+#include <string.h>
+static char buf[100];
+int main ()
+{
+  int count = -1;
+  snprintf (buf, 4, "%d %n", 12345, &count, 33, 44, 55);
+  if (count != 6)
+    return 1;
+  return 0;
+}], [gl_cv_func_snprintf_directive_n=yes], [gl_cv_func_snprintf_directive_n=no],
+      [
+changequote(,)dnl
+       case "$host_os" in
+                               dnl Guess yes on glibc systems.
+         *-gnu*)               gl_cv_func_snprintf_directive_n="guessing yes";;
+                               dnl Guess yes on FreeBSD >= 5.
+         freebsd[1-4]*)        gl_cv_func_snprintf_directive_n="guessing no";;
+         freebsd* | kfreebsd*) gl_cv_func_snprintf_directive_n="guessing yes";;
+                               dnl Guess yes on MacOS X >= 10.3.
+         darwin[1-6].*)        gl_cv_func_snprintf_directive_n="guessing no";;
+         darwin*)              gl_cv_func_snprintf_directive_n="guessing yes";;
+                               dnl Guess yes on Solaris >= 2.6.
+         solaris2.[0-5]*)      gl_cv_func_snprintf_directive_n="guessing no";;
+         solaris*)             gl_cv_func_snprintf_directive_n="guessing yes";;
+                               dnl Guess yes on AIX >= 4.
+         aix[1-3]*)            gl_cv_func_snprintf_directive_n="guessing no";;
+         aix*)                 gl_cv_func_snprintf_directive_n="guessing yes";;
+                               dnl Guess yes on IRIX >= 6.5.
+         irix6.5)              gl_cv_func_snprintf_directive_n="guessing yes";;
+                               dnl Guess yes on OSF/1 >= 5.
+         osf[3-4]*)            gl_cv_func_snprintf_directive_n="guessing no";;
+         osf*)                 gl_cv_func_snprintf_directive_n="guessing yes";;
+                               dnl Guess yes on NetBSD >= 3.
+         netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
+                               gl_cv_func_snprintf_directive_n="guessing no";;
+         netbsd*)              gl_cv_func_snprintf_directive_n="guessing yes";;
+                               dnl Guess yes on BeOS.
+         beos*)                gl_cv_func_snprintf_directive_n="guessing yes";;
+                               dnl If we don't know, assume the worst.
+         *)                    gl_cv_func_snprintf_directive_n="guessing no";;
+       esac
+changequote([,])dnl
+      ])
+    ])
+])
+
 dnl The results of these tests on various platforms are:
 dnl
 dnl 1 = gl_PRINTF_SIZES_C99
@@ -377,6 +436,7 @@ dnl 4 = gl_PRINTF_POSITIONS
 dnl 5 = gl_SNPRINTF_PRESENCE
 dnl 6 = gl_SNPRINTF_TRUNCATION_C99
 dnl 7 = gl_SNPRINTF_RETVAL_C99
+dnl 8 = gl_SNPRINTF_DIRECTIVE_N
 dnl
 dnl 1 = checking whether printf supports size specifiers as in C99...
 dnl 2 = checking whether printf supports the 'a' and 'A' directives...
@@ -385,27 +445,28 @@ dnl 4 = checking whether printf supports POSIX/XSI format strings with positions
 dnl 5 = checking for snprintf...
 dnl 6 = checking whether snprintf truncates the result as in C99...
 dnl 7 = checking whether snprintf returns a byte count as in C99...
+dnl 8 = checking whether snprintf fully supports the 'n' directive...
 dnl
 dnl . = yes, # = no.
 dnl
-dnl                                        1  2  3  4  5  6  7
-dnl   glibc 2.5                            .  .  .  .  .  .  .
-dnl   glibc 2.3.6                          .  #  .  .  .  .  .
-dnl   FreeBSD 5.4, 6.1                     .  .  .  .  .  .  .
-dnl   MacOS X 10.3.9                       .  #  .  .  .  .  .
-dnl   OpenBSD 3.9                          .  #  .  .  .  .  .
-dnl   Cygwin 2007                          .  #  .  .  .  .  .
-dnl   Cygwin 2006                          #  #  .  .  .  .  .
-dnl   Solaris 10                           .  #  .  .  .  .  .
-dnl   Solaris 2.6 ... 9                    #  #  .  .  .  .  .
-dnl   Solaris 2.5.1                        #  #  .  .  #  #  #
-dnl   AIX 4.3.2, 5.1                       #  #  .  .  .  .  .
-dnl   HP-UX 11.31                          .  #  .  .  .  .  #
-dnl   HP-UX 10.20, 11.00, 11.11, 11.23     #  #  .  .  .  .  #
-dnl   IRIX 6.5                             #  #  .  .  .  .  #
-dnl   OSF/1 5.1                            #  #  .  .  .  .  #
-dnl   OSF/1 4.0d                           #  #  .  .  #  #  #
-dnl   NetBSD 4.0                           .  .  .  .  .  .  .
-dnl   NetBSD 3.0                           .  #  .  #  .  .  .
-dnl   BeOS                                 #  #  .  #  .  .  .
-dnl   mingw                                #  #  .  #  .  #  #
+dnl                                        1  2  3  4  5  6  7  8
+dnl   glibc 2.5                            .  .  .  .  .  .  .  .
+dnl   glibc 2.3.6                          .  #  .  .  .  .  .  .
+dnl   FreeBSD 5.4, 6.1                     .  .  .  .  .  .  .  .
+dnl   MacOS X 10.3.9                       .  #  .  .  .  .  .  .
+dnl   OpenBSD 3.9                          .  #  .  .  .  .  .  ?
+dnl   Cygwin 2007                          .  #  .  .  .  .  .  ?
+dnl   Cygwin 2006                          #  #  .  .  .  .  .  ?
+dnl   Solaris 10                           .  #  .  .  .  .  .  .
+dnl   Solaris 2.6 ... 9                    #  #  .  .  .  .  .  .
+dnl   Solaris 2.5.1                        #  #  .  .  #  #  #  #
+dnl   AIX 4.3.2, 5.1                       #  #  .  .  .  .  .  .
+dnl   HP-UX 11.31                          .  #  .  .  .  .  #  #
+dnl   HP-UX 10.20, 11.00, 11.11, 11.23     #  #  .  .  .  .  #  #
+dnl   IRIX 6.5                             #  #  .  .  .  .  #  .
+dnl   OSF/1 5.1                            #  #  .  .  .  .  #  .
+dnl   OSF/1 4.0d                           #  #  .  .  #  #  #  #
+dnl   NetBSD 4.0                           .  .  .  .  .  .  .  ?
+dnl   NetBSD 3.0                           .  #  .  #  .  .  .  .
+dnl   BeOS                                 #  #  .  #  .  .  .  .
+dnl   mingw                                #  #  .  #  .  #  #  #
