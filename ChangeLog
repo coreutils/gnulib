@@ -23,6 +23,7 @@
 	* m4/printf-frexpl.m4 (gl_FUNC_PRINTF_FREXPL): Fix tests for the
 	declaration of frexpl, ldexpl.
 	* modules/printf-frexpl (Depends-on): Add math.
+	* lib/printf-frexp.c (frexpl, ldexpl): Undo last change.
 
 2007-03-05  Bruno Haible  <bruno@clisp.org>
 
