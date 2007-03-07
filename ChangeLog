@@ -1,5 +1,9 @@
 2007-03-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/vsprintf-posix-tests: New file.
+	* tests/test-vsprintf-posix.c: New file.
+	* tests/test-sprintf-posix.h: New file.
+
 	* modules/vsprintf-posix: New file.
 	* lib/vsprintf.c: New file.
 	* m4/vsprintf-posix.m4: New file.
