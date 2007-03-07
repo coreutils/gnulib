@@ -1,5 +1,8 @@
 2007-03-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/snprintf-posix-tests: New file.
+	* tests/test-snprintf-posix.c: New file.
+
 	* modules/snprintf-posix: New file.
 	* m4/snprintf-posix.m4: New file.
 	* m4/snprintf.m4 (gl_REPLACE_SNPRINTF): New macro, extracted from
