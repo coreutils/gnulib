@@ -19,6 +19,7 @@ AC_DEFUN([gl_FUNC_SNPRINTF],
 
 AC_DEFUN([gl_REPLACE_SNPRINTF],
 [
+  AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_LIBOBJ([snprintf])
   if test $ac_cv_func_snprintf = yes; then
     REPLACE_SNPRINTF=1
