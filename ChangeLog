@@ -1,5 +1,18 @@
 2007-03-02  Bruno Haible  <bruno@clisp.org>
 
+	* lib/socket_.h: If sys/socket.h exists, include that and <sys/types.h>
+	before it. Turn HAVE_WINSOCK2_H and HAVE_WS2TCPIP_H into configute-time
+	values.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Test also whether
+	<sys/socket.h> is self-contained. Set ABSOLUTE_SYS_SOCKET_H,
+	HAVE_SYS_SOCKET_H, HAVE_WINSOCK2_H, HAVE_WS2TCPIP_H.
+	* modules/sys_socket (Depends-on): Add absolute-header.
+	(Makefile.am): Substitute ABSOLUTE_SYS_SOCKET_H, HAVE_SYS_SOCKET_H,
+	HAVE_WINSOCK2_H, HAVE_WS2TCPIP_H into sys/socket.h.
+	(Include): Remove requirement of inclusion of <sys/types.h>.
+
+2007-03-02  Bruno Haible  <bruno@clisp.org>
+
 	* lib/byteswap_.h (bswap_32): Fix formula.
 
 2007-03-06  Bruno Haible  <bruno@clisp.org>

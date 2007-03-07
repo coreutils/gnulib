@@ -7,6 +7,7 @@ m4/sys_socket_h.m4
 m4/sockpfaf.m4
 
 Depends-on:
+absolute-header
 
 configure.ac:
 gl_HEADER_SYS_SOCKET
@@ -20,14 +21,17 @@ BUILT_SOURCES += $(SYS_SOCKET_H)
 sys/socket.h: socket_.h
 	@MKDIR_P@ sys
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/socket_.h; \
+	  sed -e 's|@''ABSOLUTE_SYS_SOCKET_H''@|$(ABSOLUTE_SYS_SOCKET_H)|g' \
+	      -e 's|@''HAVE_SYS_SOCKET_H''@|$(HAVE_SYS_SOCKET_H)|g' \
+	      -e 's|@''HAVE_WINSOCK2_H''@|$(HAVE_WINSOCK2_H)|g' \
+	      -e 's|@''HAVE_WS2TCPIP_H''@|$(HAVE_WS2TCPIP_H)|g' \
+	      < $(srcdir)/socket_.h; \
 	} > $@-t
 	mv -f $@-t $@
 MOSTLYCLEANFILES += sys/socket.h sys/socket.h-t
 MOSTLYCLEANDIRS += sys
 
 Include:
-#include <sys/types.h>
 #include <sys/socket.h>
 
 License:
