@@ -1,0 +1,31 @@
+Description:
+POSIX compatible vsprintf() function: print formatted output to a string
+
+Files:
+lib/vsprintf.c
+m4/vsprintf-posix.m4
+m4/printf.m4
+
+Depends-on:
+stdio
+vasnprintf
+isnan-nolibm
+isnanl-nolibm
+printf-frexp
+printf-frexpl
+
+configure.ac:
+gl_FUNC_VSPRINTF_POSIX
+gl_STDIO_MODULE_INDICATOR([vsprintf-posix])
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

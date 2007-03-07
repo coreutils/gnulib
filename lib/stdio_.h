@@ -70,6 +70,20 @@ extern int vsnprintf (char *str, size_t size, const char *format, va_list args);
      vsnprintf (b, s, f, a))
 #endif
 
+#if @GNULIB_VSPRINTF_POSIX@
+# if @REPLACE_VSPRINTF@
+#  define vsprintf rpl_vsprintf
+extern int vsprintf (char *str, const char *format, va_list args);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef vsprintf
+# define vsprintf(b,f,a) \
+    (GL_LINK_WARNING ("vsprintf is not always POSIX compliant - " \
+                      "use gnulib module vsprintf-posix for portable " \
+                      "POSIX compliance"), \
+     vsprintf (b, f, a))
+#endif
+
 
 #ifdef __cplusplus
 }

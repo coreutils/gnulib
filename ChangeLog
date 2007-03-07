@@ -1,5 +1,20 @@
 2007-03-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/vsprintf-posix: New file.
+	* lib/vsprintf.c: New file.
+	* m4/vsprintf-posix.m4: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also GNULIB_VSPRINTF_POSIX,
+	REPLACE_VSPRINTF.
+	* lib/stdio_.h (vsprintf): New declaration.
+	* modules/stdio (Makefile.am): Substitute also GNULIB_VSPRINTF_POSIX,
+	REPLACE_VSPRINTF.
+
+2007-03-06  Bruno Haible  <bruno@clisp.org>
+
+	* modules/vsnprintf (Depend-on): Remove minmax.
+
+2007-03-06  Bruno Haible  <bruno@clisp.org>
+
 	* modules/snprintf-posix-tests: New file.
 	* tests/test-snprintf-posix.c: New file.
 
