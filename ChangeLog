@@ -1,5 +1,16 @@
 2007-03-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/sprintf-posix: New file.
+	* lib/sprintf.c: New file.
+	* m4/sprintf-posix.m4: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also GNULIB_SPRINTF_POSIX,
+	REPLACE_SPRINTF.
+	* lib/stdio_.h (sprintf): New declaration.
+	* modules/stdio (Makefile.am): Substitute also GNULIB_SPRINTF_POSIX,
+	REPLACE_SPRINTF.
+
+2007-03-06  Bruno Haible  <bruno@clisp.org>
+
 	* modules/vsprintf-posix-tests: New file.
 	* tests/test-vsprintf-posix.c: New file.
 	* tests/test-sprintf-posix.h: New file.

@@ -1,0 +1,31 @@
+Description:
+POSIX compatible sprintf() function: print formatted output to a string
+
+Files:
+lib/sprintf.c
+m4/sprintf-posix.m4
+m4/printf.m4
+
+Depends-on:
+stdio
+vasnprintf
+isnan-nolibm
+isnanl-nolibm
+printf-frexp
+printf-frexpl
+
+configure.ac:
+gl_FUNC_SPRINTF_POSIX
+gl_STDIO_MODULE_INDICATOR([sprintf-posix])
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

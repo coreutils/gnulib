@@ -70,6 +70,20 @@ extern int vsnprintf (char *str, size_t size, const char *format, va_list args);
      vsnprintf (b, s, f, a))
 #endif
 
+#if @GNULIB_SPRINTF_POSIX@
+# if @REPLACE_SPRINTF@
+#  define sprintf rpl_sprintf
+extern int sprintf (char *str, const char *format, ...);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef sprintf
+# define sprintf \
+    (GL_LINK_WARNING ("sprintf is not always POSIX compliant - " \
+                      "use gnulib module sprintf-posix for portable " \
+                      "POSIX compliance"), \
+     sprintf)
+#endif
+
 #if @GNULIB_VSPRINTF_POSIX@
 # if @REPLACE_VSPRINTF@
 #  define vsprintf rpl_vsprintf
