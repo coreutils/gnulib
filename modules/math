@@ -22,6 +22,19 @@ math.h: math_.h
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''ABSOLUTE_MATH_H''@|$(ABSOLUTE_MATH_H)|g' \
 	      -e 's|@''GNULIB_MATHL''@|$(GNULIB_MATHL)|g' \
+	      -e 's|@''HAVE_DECL_ACOSL''@|$(HAVE_DECL_ACOSL)|g' \
+	      -e 's|@''HAVE_DECL_ASINL''@|$(HAVE_DECL_ASINL)|g' \
+	      -e 's|@''HAVE_DECL_ATANL''@|$(HAVE_DECL_ATANL)|g' \
+	      -e 's|@''HAVE_DECL_CEILL''@|$(HAVE_DECL_CEILL)|g' \
+	      -e 's|@''HAVE_DECL_COSL''@|$(HAVE_DECL_COSL)|g' \
+	      -e 's|@''HAVE_DECL_EXPL''@|$(HAVE_DECL_EXPL)|g' \
+	      -e 's|@''HAVE_DECL_FLOORL''@|$(HAVE_DECL_FLOORL)|g' \
+	      -e 's|@''HAVE_DECL_FREXPL''@|$(HAVE_DECL_FREXPL)|g' \
+	      -e 's|@''HAVE_DECL_LDEXPL''@|$(HAVE_DECL_LDEXPL)|g' \
+	      -e 's|@''HAVE_DECL_LOGL''@|$(HAVE_DECL_LOGL)|g' \
+	      -e 's|@''HAVE_DECL_SINL''@|$(HAVE_DECL_SINL)|g' \
+	      -e 's|@''HAVE_DECL_SQRTL''@|$(HAVE_DECL_SQRTL)|g' \
+	      -e 's|@''HAVE_DECL_TANL''@|$(HAVE_DECL_TANL)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/math_.h; \
 	} > $@-t

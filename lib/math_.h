@@ -30,9 +30,10 @@ extern "C" {
 #endif
 
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_ACOSL@
 extern long double acosl (long double x);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef acosl
 # define acosl(x) \
     (GL_LINK_WARNING ("acosl is unportable - " \
@@ -40,9 +41,10 @@ extern long double acosl (long double x);
      acosl (x))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_ASINL@
 extern long double asinl (long double x);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef asinl
 # define asinl(x) \
     (GL_LINK_WARNING ("asinl is unportable - " \
@@ -50,9 +52,10 @@ extern long double asinl (long double x);
      asinl (x))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_ATANL@
 extern long double atanl (long double x);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef atanl
 # define atanl(x) \
     (GL_LINK_WARNING ("atanl is unportable - " \
@@ -60,9 +63,10 @@ extern long double atanl (long double x);
      atanl (x))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_CEILL@
 extern long double ceill (long double x);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef ceill
 # define ceill(x) \
     (GL_LINK_WARNING ("ceill is unportable - " \
@@ -70,9 +74,10 @@ extern long double ceill (long double x);
      ceill (x))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_COSL@
 extern long double cosl (long double x);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef cosl
 # define cosl(x) \
     (GL_LINK_WARNING ("cosl is unportable - " \
@@ -80,9 +85,10 @@ extern long double cosl (long double x);
      cosl (x))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_EXPL@
 extern long double expl (long double x);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef expl
 # define expl(x) \
     (GL_LINK_WARNING ("expl is unportable - " \
@@ -90,9 +96,10 @@ extern long double expl (long double x);
      expl (x))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_FLOORL@
 extern long double floorl (long double x);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef floorl
 # define floorl(x) \
     (GL_LINK_WARNING ("floorl is unportable - " \
@@ -100,9 +107,10 @@ extern long double floorl (long double x);
      floorl (x))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_FREXPL@
 extern long double frexpl (long double x, int *exp);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef frexpl
 # define frexpl(x,e) \
     (GL_LINK_WARNING ("frexpl is unportable - " \
@@ -110,9 +118,10 @@ extern long double frexpl (long double x, int *exp);
      frexpl (x, e))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_LDEXPL@
 extern long double ldexpl (long double x, int exp);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef ldexpl
 # define ldexpl(x,e) \
     (GL_LINK_WARNING ("ldexpl is unportable - " \
@@ -120,9 +129,10 @@ extern long double ldexpl (long double x, int exp);
      ldexpl (x, e))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_LOGL@
 extern long double logl (long double x);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef logl
 # define logl(x) \
     (GL_LINK_WARNING ("logl is unportable - " \
@@ -130,9 +140,10 @@ extern long double logl (long double x);
      logl (x))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_SINL@
 extern long double sinl (long double x);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef sinl
 # define sinl(x) \
     (GL_LINK_WARNING ("sinl is unportable - " \
@@ -140,9 +151,10 @@ extern long double sinl (long double x);
      sinl (x))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_SQRTL@
 extern long double sqrtl (long double x);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef sqrtl
 # define sqrtl(x) \
     (GL_LINK_WARNING ("sqrtl is unportable - " \
@@ -150,9 +162,10 @@ extern long double sqrtl (long double x);
      sqrtl (x))
 #endif
 
-#if @GNULIB_MATHL@
+#if @GNULIB_MATHL@ || !@HAVE_DECL_TANL@
 extern long double tanl (long double x);
-#elif defined GNULIB_POSIXCHECK
+#endif
+#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
 # undef tanl
 # define tanl(x) \
     (GL_LINK_WARNING ("tanl is unportable - " \
