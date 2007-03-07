@@ -53,7 +53,10 @@ extern int snprintf (char *str, size_t size, const char *format, ...);
 #endif
 
 #if @GNULIB_VSNPRINTF@
-# if !@HAVE_DECL_VSNPRINTF@
+# if @REPLACE_VSNPRINTF@
+#  define vsnprintf rpl_vsnprintf
+# endif
+# if @REPLACE_VSNPRINTF@ || !@HAVE_DECL_VSNPRINTF@
 extern int vsnprintf (char *str, size_t size, const char *format, va_list args);
 # endif
 #elif defined GNULIB_POSIXCHECK

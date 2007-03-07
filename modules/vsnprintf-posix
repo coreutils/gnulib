@@ -1,0 +1,30 @@
+Description:
+POSIX compatible vsnprintf() function: print formatted output to a fixed length
+string
+
+Files:
+m4/vsnprintf-posix.m4
+m4/printf.m4
+
+Depends-on:
+vsnprintf
+vasnprintf
+isnan-nolibm
+isnanl-nolibm
+printf-frexp
+printf-frexpl
+
+configure.ac:
+gl_FUNC_VSNPRINTF_POSIX
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

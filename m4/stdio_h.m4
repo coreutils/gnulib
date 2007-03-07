@@ -1,4 +1,4 @@
-# stdio_h.m4 serial 1
+# stdio_h.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,5 +25,6 @@ AC_DEFUN([gl_STDIO_H_DEFAULTS],
   GNULIB_VSNPRINTF=0;    AC_SUBST([GNULIB_VSNPRINTF])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_SNPRINTF=1;  AC_SUBST([HAVE_DECL_SNPRINTF])
+  REPLACE_VSNPRINTF=0;   AC_SUBST([REPLACE_VSNPRINTF])
   HAVE_DECL_VSNPRINTF=1; AC_SUBST([HAVE_DECL_VSNPRINTF])
 ])
