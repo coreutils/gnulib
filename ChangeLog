@@ -1,3 +1,13 @@
+2007-03-03  Bruno Haible  <bruno@clisp.org>
+
+	* lib/sys_select_.h: New file.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SELECT): Test whether sys/select.h
+	is self-contained. Set ABSOLUTE_SYS_SELECT_H, HAVE_SYS_SELECT_H.
+	* modules/sys_select (Files): Add lib/sys_select_.h.
+	(Depends-on): Add absolute-header.
+	(Makefile.am): Substitute ABSOLUTE_SYS_SELECT_H, HAVE_SYS_SELECT_H
+	into sys/select.h.
+
 2007-03-02  Bruno Haible  <bruno@clisp.org>
 
 	* lib/socket_.h: If sys/socket.h exists, include that and <sys/types.h>

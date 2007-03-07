@@ -1,10 +1,12 @@
 Description:
-A <sys/select.h> for systems lacking it (e.g., Mingw).
+A <sys/select.h> for systems lacking it.
 
 Files:
+lib/sys_select_.h
 m4/sys_select_h.m4
 
 Depends-on:
+absolute-header
 sys_socket
 
 configure.ac:
@@ -20,7 +22,9 @@ sys/select.h:
 	@MKDIR_P@ sys
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  echo '#include <sys/socket.h>'; \
+	  sed -e 's|@''ABSOLUTE_SYS_SELECT_H''@|$(ABSOLUTE_SYS_SELECT_H)|g' \
+	      -e 's|@''HAVE_SYS_SELECT_H''@|$(HAVE_SYS_SELECT_H)|g' \
+	      < $(srcdir)/sys_select_.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += sys/select.h sys/select.h-t
