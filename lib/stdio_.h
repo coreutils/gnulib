@@ -41,7 +41,10 @@ extern "C" {
 
 
 #if @GNULIB_SNPRINTF@
-# if !@HAVE_DECL_SNPRINTF@
+# if @REPLACE_SNPRINTF@
+#  define snprintf rpl_snprintf
+# endif
+# if @REPLACE_SNPRINTF@ || !@HAVE_DECL_SNPRINTF@
 extern int snprintf (char *str, size_t size, const char *format, ...);
 # endif
 #elif defined GNULIB_POSIXCHECK

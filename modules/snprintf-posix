@@ -1,0 +1,30 @@
+Description:
+POSIX compatible snprintf() function: print formatted output to a fixed length
+string
+
+Files:
+m4/snprintf-posix.m4
+m4/printf.m4
+
+Depends-on:
+snprintf
+vasnprintf
+isnan-nolibm
+isnanl-nolibm
+printf-frexp
+printf-frexpl
+
+configure.ac:
+gl_FUNC_SNPRINTF_POSIX
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

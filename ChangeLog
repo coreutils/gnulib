@@ -1,5 +1,17 @@
 2007-03-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/snprintf-posix: New file.
+	* m4/snprintf-posix.m4: New file.
+	* m4/snprintf.m4 (gl_REPLACE_SNPRINTF): New macro, extracted from
+	gl_FUNC_SNPRINTF.
+	(gl_FUNC_SNPRINTF): Invoke it.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also REPLACE_SNPRINTF.
+	* lib/stdio_.h (snprintf): Define as a replacement if REPLACE_SNPRINTF
+	is set.
+	* modules/stdio (Makefile.am): Substitute also REPLACE_SNPRINTF.
+
+2007-03-06  Bruno Haible  <bruno@clisp.org>
+
 	* modules/vsnprintf-posix-tests: New file.
 	* tests/test-vsnprintf-posix.c: New file.
 	* tests/test-snprintf-posix.h: New file.
