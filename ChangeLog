@@ -1,3 +1,24 @@
+2007-03-06  Bruno Haible  <bruno@clisp.org>
+
+	* lib/math_.h (acosl): Declare also if HAVE_DECL_ACOSL is set.
+	(asinl): Declare also if HAVE_DECL_ASINL is set.
+	(atanl): Declare also if HAVE_DECL_ATANL is set.
+	(ceill): Declare also if HAVE_DECL_CEILL is set.
+	(cosl): Declare also if HAVE_DECL_COSL is set.
+	(expl): Declare also if HAVE_DECL_EXPL is set.
+	(floorl): Declare also if HAVE_DECL_FLOORL is set.
+	(frexpl): Declare also if HAVE_DECL_FREXPL is set.
+	(ldexpl): Declare also if HAVE_DECL_LDEXPL is set.
+	(logl): Declare also if HAVE_DECL_LOGL is set.
+	(sinl): Declare also if HAVE_DECL_SINL is set.
+	(sqrtl): Declare also if HAVE_DECL_SQRTL is set.
+	(tanl): Declare also if HAVE_DECL_TANL is set.
+	* modules/math (Makefile.am): Substitute the values of HAVE_DECL_*.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Set HAVE_DECL_* to 1.
+	* m4/printf-frexpl.m4 (gl_FUNC_PRINTF_FREXPL): Fix tests for the
+	declaration of frexpl, ldexpl.
+	* modules/printf-frexpl (Depends-on): Add math.
+
 2007-03-05  Bruno Haible  <bruno@clisp.org>
 
 	* m4/printf-frexpl.m4 (gl_FUNC_PRINTF_FREXPL): Also test whether
