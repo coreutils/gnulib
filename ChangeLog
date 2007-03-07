@@ -1,5 +1,8 @@
 2007-03-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/sprintf-posix-tests: New file.
+	* tests/test-sprintf-posix.c: New file.
+
 	* modules/sprintf-posix: New file.
 	* lib/sprintf.c: New file.
 	* m4/sprintf-posix.m4: New file.

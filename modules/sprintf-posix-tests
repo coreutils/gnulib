@@ -1,0 +1,15 @@
+Files:
+tests/test-sprintf-posix.c
+tests/test-sprintf-posix.h
+m4/longdouble.m4
+
+Depends-on:
+stdint
+
+configure.ac:
+AC_REQUIRE([gt_TYPE_LONGDOUBLE])
+
+Makefile.am:
+TESTS += test-sprintf-posix
+check_PROGRAMS += test-sprintf-posix
+
