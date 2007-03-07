@@ -9,7 +9,6 @@ m4/vsnprintf.m4
 Depends-on:
 stdio
 vasnprintf
-minmax
 
 configure.ac:
 gl_FUNC_VSNPRINTF
