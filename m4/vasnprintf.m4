@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 8
+# vasnprintf.m4 serial 9
 dnl Copyright (C) 2002-2004, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_VASNPRINTF],
 [
   AC_REQUIRE([gl_EOVERFLOW])
-  AC_CHECK_FUNCS([vasnprintf])
+  AC_CHECK_FUNCS_ONCE([vasnprintf])
   if test $ac_cv_func_vasnprintf = no; then
     gl_REPLACE_VASNPRINTF
   fi
@@ -15,6 +15,7 @@ AC_DEFUN([gl_FUNC_VASNPRINTF],
 
 AC_DEFUN([gl_REPLACE_VASNPRINTF],
 [
+  AC_CHECK_FUNCS_ONCE([vasnprintf])
   AC_LIBOBJ([vasnprintf])
   AC_LIBOBJ([printf-args])
   AC_LIBOBJ([printf-parse])

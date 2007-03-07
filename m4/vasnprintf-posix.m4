@@ -1,4 +1,4 @@
-# vasnprintf-posix.m4 serial 1
+# vasnprintf-posix.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ AC_DEFUN([gl_FUNC_VASNPRINTF_POSIX],
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_A])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_N])
   AC_REQUIRE([gl_PRINTF_POSITIONS])
-  AC_CHECK_FUNCS([vasnprintf])
+  AC_CHECK_FUNCS_ONCE([vasnprintf])
   if expr "$gl_cv_func_printf_sizes_c99" : ".*yes" > /dev/null \
      && expr "$gl_cv_func_printf_directive_a" : ".*yes" > /dev/null \
      && expr "$gl_cv_func_printf_directive_n" : ".*yes" > /dev/null \

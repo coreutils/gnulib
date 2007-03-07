@@ -1,5 +1,10 @@
 2007-03-06  Bruno Haible  <bruno@clisp.org>
 
+	* m4/vasnprintf.m4 (gl_REPLACE_VASNPRINTF): Test for vasnprintf here.
+	* m4/vasprintf-posix.m4 (gl_FUNC_VASPRINTF_POSIX): ... not here.
+
+2007-03-06  Bruno Haible  <bruno@clisp.org>
+
 	* lib/math_.h (acosl): Declare also if HAVE_DECL_ACOSL is set.
 	(asinl): Declare also if HAVE_DECL_ASINL is set.
 	(atanl): Declare also if HAVE_DECL_ATANL is set.

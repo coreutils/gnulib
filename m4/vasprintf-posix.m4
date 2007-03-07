@@ -1,4 +1,4 @@
-# vasprintf-posix.m4 serial 1
+# vasprintf-posix.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,6 @@ AC_DEFUN([gl_FUNC_VASPRINTF_POSIX],
      && test $ac_cv_func_vasprintf = yes; then
     : # vasprintf exists and is already POSIX compliant.
   else
-    AC_CHECK_FUNCS([vasnprintf])
     if ! expr "$gl_cv_func_printf_directive_a" : ".*yes" > /dev/null; then
       AC_DEFINE([NEED_PRINTF_DIRECTIVE_A], 1,
         [Define if the vasnprintf implementation needs special code for
