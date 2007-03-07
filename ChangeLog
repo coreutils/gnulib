@@ -1,3 +1,7 @@
+2007-03-02  Bruno Haible  <bruno@clisp.org>
+
+	* lib/byteswap_.h (bswap_32): Fix formula.
+
 2007-03-06  Bruno Haible  <bruno@clisp.org>
 
 	* modules/sprintf-posix-tests: New file.

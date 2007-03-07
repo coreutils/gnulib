@@ -1,5 +1,5 @@
 /* byteswap.h - Byte swapping
-   Copyright (C) 2005 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2007 Free Software Foundation, Inc.
    Written by Oskar Liljeblad <oskar@osk.mine.nu>, 2005.
 
    This program is free software; you can redistribute it and/or modify
@@ -27,7 +27,7 @@
    X with reversed byte order.  */
 #define bswap_32(x) ((((x) & 0x000000FF) << 24) | \
 		     (((x) & 0x0000FF00) << 8) | \
-		     (((x) & 0x00FF0000) << 8) | \
+		     (((x) & 0x00FF0000) >> 8) | \
 		     (((x) & 0xFF000000) >> 24))
 
 /* Given an unsigned 64-bit argument X, return the value corresponding to
