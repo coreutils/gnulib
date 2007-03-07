@@ -1,10 +1,12 @@
 Description:
-A <netinet/in.h> for systems lacking it (e.g., Mingw).
+A <netinet/in.h> for systems lacking it.
 
 Files:
+lib/netinet_in_.h
 m4/netinet_in_h.m4
 
 Depends-on:
+absolute-header
 sys_socket
 
 configure.ac:
@@ -20,7 +22,9 @@ netinet/in.h:
 	@MKDIR_P@ netinet
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  echo '#include <sys/socket.h>'; \
+	  sed -e 's|@''ABSOLUTE_NETINET_IN_H''@|$(ABSOLUTE_NETINET_IN_H)|g' \
+	      -e 's|@''HAVE_NETINET_IN_H''@|$(HAVE_NETINET_IN_H)|g' \
+	      < $(srcdir)/netinet_in_.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += netinet/in.h netinet/in.h-t

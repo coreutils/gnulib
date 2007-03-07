@@ -1,3 +1,13 @@
+2007-03-02  Bruno Haible  <bruno@clisp.org>
+
+	* lib/netinet_in_.h: New file.
+	* m4/netinet_in_h.m4 (gl_HEADER_NETINET_IN): Test whether netinet/in.h
+	is self-contained. Set ABSOLUTE_NETINET_IN_H, HAVE_NETINET_IN_H.
+	* modules/netinet_in (Files): Add lib/netinet_in_.h.
+	(Depends-on): Add absolute-header.
+	(Makefile.am): Substitute ABSOLUTE_NETINET_IN_H, HAVE_NETINET_IN_H
+	into netinet/in.h.
+
 2007-03-03  Bruno Haible  <bruno@clisp.org>
 
 	* lib/sys_select_.h: New file.
