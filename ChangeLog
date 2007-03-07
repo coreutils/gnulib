@@ -1,5 +1,9 @@
 2007-03-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/vsnprintf-posix-tests: New file.
+	* tests/test-vsnprintf-posix.c: New file.
+	* tests/test-snprintf-posix.h: New file.
+
 	* modules/vsnprintf-posix: New file.
 	* m4/vsnprintf-posix.m4: New file.
 	* m4/vsnprintf.m4 (gl_REPLACE_VSNPRINTF): New macro, extracted from
