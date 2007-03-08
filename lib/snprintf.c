@@ -38,7 +38,7 @@
    additional length SIZE limit how much is written into STR.  Returns
    string length of formatted string (which may be larger than SIZE).
    STR may be NULL, in which case nothing will be written.  On error,
-   return a negative value. */
+   return a negative value.  */
 int
 snprintf (char *str, size_t size, const char *format, ...)
 {

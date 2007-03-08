@@ -40,7 +40,7 @@
 
 /* Print formatted output to string STR.
    Return string length of formatted string.  On error, return a negative
-   value. */
+   value.  */
 int
 vsprintf (char *str, const char *format, va_list args)
 {
