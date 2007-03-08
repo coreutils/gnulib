@@ -1,5 +1,7 @@
 2007-03-08  Jim Meyering  <jim@meyering.net>
 
+	* users.txt: Add parted.
+
 	* ChangeLog: Restore 1500 lines mistakenly removed from the end.
 
 2007-03-07  Bruno Haible  <bruno@clisp.org>
