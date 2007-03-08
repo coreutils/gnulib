@@ -1,3 +1,7 @@
+2007-03-07  Bruno Haible  <bruno@clisp.org>
+
+	* m4/printf.m4: Make the shell script snippets copy&pastable.
+
 2007-03-02  Bruno Haible  <bruno@clisp.org>
 
 	* lib/netinet_in_.h: New file.
