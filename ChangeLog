@@ -1,5 +1,16 @@
 2007-03-08  Bruno Haible  <bruno@clisp.org>
 
+	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Use 'case' statements
+	instead of 'expr' invocations.
+	* m4/sprintf-posix.m4 (gl_FUNC_SPRINTF_POSIX): Likewise.
+	* m4/vasnprintf-posix.m4 (gl_FUNC_VASNPRINTF_POSIX): Likewise.
+	* m4/vasprintf-posix.m4 (gl_FUNC_VASPRINTF_POSIX): Likewise.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX): Likewise.
+	* m4/vsprintf-posix.m4 (gl_FUNC_VSPRINTF_POSIX): Likewise.
+	Suggested by Paul Eggert.
+
+2007-03-08  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fseterr-tests: New file.
 	* tests/test-fseterr.c: New file.
 

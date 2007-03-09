@@ -17,16 +17,37 @@ AC_DEFUN([gl_FUNC_SNPRINTF_POSIX],
     gl_SNPRINTF_TRUNCATION_C99
     gl_SNPRINTF_RETVAL_C99
     gl_SNPRINTF_DIRECTIVE_N
-    if expr "$gl_cv_func_printf_sizes_c99" : ".*yes" > /dev/null \
-       && expr "$gl_cv_func_printf_directive_a" : ".*yes" > /dev/null \
-       && expr "$gl_cv_func_printf_directive_n" : ".*yes" > /dev/null \
-       && expr "$gl_cv_func_printf_positions" : ".*yes" > /dev/null \
-       && expr "$gl_cv_func_snprintf_truncation_c99" : ".*yes" > /dev/null \
-       && expr "$gl_cv_func_snprintf_retval_c99" : ".*yes" > /dev/null \
-       && expr "$gl_cv_func_snprintf_directive_n" : ".*yes" > /dev/null; then
-      # snprintf exists and is already POSIX compliant.
-      gl_cv_func_snprintf_posix=yes
-    fi
+    case "$gl_cv_func_printf_sizes_c99" in
+      *yes)
+        case "$gl_cv_func_printf_directive_a" in
+          *yes)
+            case "$gl_cv_func_printf_directive_n" in
+              *yes)
+                case "$gl_cv_func_printf_positions" in
+                  *yes)
+                    case "$gl_cv_func_snprintf_truncation_c99" in
+                      *yes)
+                        case "$gl_cv_func_snprintf_retval_c99" in
+                          *yes)
+                            case "$gl_cv_func_snprintf_directive_n" in
+                              *yes)
+                                # snprintf exists and is already POSIX
+                                # compliant.
+                                gl_cv_func_snprintf_posix=yes
+                                ;;
+                            esac
+                            ;;
+                        esac
+                        ;;
+                    esac
+                    ;;
+                esac
+                ;;
+            esac
+            ;;
+        esac
+        ;;
+    esac
   fi
   if test $gl_cv_func_snprintf_posix = no; then
     if ! expr "$gl_cv_func_printf_directive_a" : ".*yes" > /dev/null; then
