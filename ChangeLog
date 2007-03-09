@@ -1,5 +1,9 @@
 2007-03-08  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdio_.h: Treat __need___FILE like __need_FILE.
+
+2007-03-08  Bruno Haible  <bruno@clisp.org>
+
 	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Use 'case' statements
 	instead of 'expr' invocations.
 	* m4/sprintf-posix.m4 (gl_FUNC_SPRINTF_POSIX): Likewise.
