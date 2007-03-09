@@ -1,3 +1,8 @@
+2007-03-09  Eric Blake  <ebb9@byu.net>
+
+	* lib/stdlib_.h (EXIT_FAILURE): GNU code expects this to be 1, in
+	spite of platforms like Tandem/NSK that define it to -1.
+
 2007-03-08  Bruno Haible  <bruno@clisp.org>
 
 	* modules/vprintf-posix-tests: New file.

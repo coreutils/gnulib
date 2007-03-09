@@ -50,7 +50,12 @@
 #ifndef EXIT_SUCCESS
 # define EXIT_SUCCESS 0
 #endif
+/* Tandem/NSK and other platforms that define EXIT_FAILURE as -1 interfere
+   with proper operation of xargs.  */
 #ifndef EXIT_FAILURE
+# define EXIT_FAILURE 1
+#elif EXIT_FAILURE != 1
+# undef EXIT_FAILURE
 # define EXIT_FAILURE 1
 #endif
 
