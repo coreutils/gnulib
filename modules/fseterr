@@ -1,0 +1,23 @@
+Description:
+Set the error indicator of a stream.
+
+Files:
+lib/fseterr.h
+lib/fseterr.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += fseterr.c
+
+Include:
+"fseterr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

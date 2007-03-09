@@ -1,5 +1,11 @@
 2007-03-08  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fseterr: New file.
+	* lib/fseterr.h: New file.
+	* lib/fseterr.c: New file.
+
+2007-03-08  Bruno Haible  <bruno@clisp.org>
+
 	* lib/fnmatch_.h: Convert tabs in the middle of lines to spaces.
 	* lib/getopt_.h: Likewise.
 	* lib/mbswidth.h: Likewise.
