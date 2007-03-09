@@ -1,5 +1,16 @@
 2007-03-08  Bruno Haible  <bruno@clisp.org>
 
+	* modules/vfprintf-posix: New file.
+	* lib/vfprintf.c: New file.
+	* m4/vfprintf-posix.m4: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also GNULIB_VFPRINTF_POSIX,
+	REPLACE_VFPRINTF.
+	* lib/stdio_.h (vfprintf): New declaration.
+	* modules/stdio (Makefile.am): Substitute also GNULIB_VFPRINTF_POSIX,
+	REPLACE_VFPRINTF.
+
+2007-03-08  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdio_.h: Treat __need___FILE like __need_FILE.
 
 2007-03-08  Bruno Haible  <bruno@clisp.org>

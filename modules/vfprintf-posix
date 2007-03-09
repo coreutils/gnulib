@@ -1,0 +1,32 @@
+Description:
+POSIX compatible vfprintf() function: print formatted output to a stream
+
+Files:
+lib/vfprintf.c
+m4/vfprintf-posix.m4
+m4/printf.m4
+
+Depends-on:
+stdio
+fseterr
+vasnprintf
+isnan-nolibm
+isnanl-nolibm
+printf-frexp
+printf-frexpl
+
+configure.ac:
+gl_FUNC_VFPRINTF_POSIX
+gl_STDIO_MODULE_INDICATOR([vfprintf-posix])
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

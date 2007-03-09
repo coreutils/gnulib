@@ -40,6 +40,20 @@ extern "C" {
 #endif
 
 
+#if @GNULIB_VFPRINTF_POSIX@
+# if @REPLACE_VFPRINTF@
+#  define vfprintf rpl_vfprintf
+extern int vfprintf (FILE *fp, const char *format, va_list args);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef vfprintf
+# define vfprintf(s,f,a) \
+    (GL_LINK_WARNING ("vfprintf is not always POSIX compliant - " \
+                      "use gnulib module vfprintf-posix for portable " \
+                      "POSIX compliance"), \
+     vfprintf (s, f, a))
+#endif
+
 #if @GNULIB_SNPRINTF@
 # if @REPLACE_SNPRINTF@
 #  define snprintf rpl_snprintf
