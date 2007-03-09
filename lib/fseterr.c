@@ -20,6 +20,8 @@
 /* Specification.  */
 #include "fseterr.h"
 
+#include <errno.h>
+
 void
 fseterr (FILE *fp)
 {
@@ -35,9 +37,11 @@ fseterr (FILE *fp)
 #else                               /* unknown  */
   /* Portable fallback, based on an idea by Rich Felker.
      Wow! 6 system calls for something that is just a bit operation!  */
+  int saved_errno;
   int fd;
   int fd2;
 
+  saved_errno = errno;
   fflush (fp);
   fd = fileno (fp);
   fd2 = dup (fd);
@@ -51,5 +55,6 @@ fseterr (FILE *fp)
 	abort ();
       close (fd2);
     }
+  errno = saved_errno;
 #endif
 }
