@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate January 15, 2007
+@set lastupdate March 8, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -104,9 +104,7 @@ currently @code{fencepost.gnu.org}; if you are the maintainer of a GNU
 package, you should have an account there.  Contact
 @email{accounts@@gnu.org} if you don't have one.  (You can also ask
 for accounts for people who help you a large amount in working on the
-package.)  @file{/gd/gnuorg/maintain.tar.gz} is a tar file containing
-all of these files in that directory which are mentioned in this file;
-it is updated daily.
+package.)  
 
 This release of the GNU Maintenance Instructions was last updated
 @value{lastupdate}.
