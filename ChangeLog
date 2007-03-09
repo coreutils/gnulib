@@ -1,5 +1,9 @@
 2007-03-08  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fprintf-posix-tests: New file.
+	* tests/test-fprintf-posix.sh: New file.
+	* tests/test-fprintf-posix.c: New file.
+
 	* modules/fprintf-posix: New file.
 	* lib/fprintf.c: New file.
 	* m4/fprintf-posix.m4: New file.
