@@ -1,0 +1,32 @@
+Description:
+POSIX compatible fprintf() function: print formatted output to a stream
+
+Files:
+lib/fprintf.c
+m4/fprintf-posix.m4
+m4/printf.m4
+
+Depends-on:
+stdio
+fseterr
+vasnprintf
+isnan-nolibm
+isnanl-nolibm
+printf-frexp
+printf-frexpl
+
+configure.ac:
+gl_FUNC_FPRINTF_POSIX
+gl_STDIO_MODULE_INDICATOR([fprintf-posix])
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -40,6 +40,20 @@ extern "C" {
 #endif
 
 
+#if @GNULIB_FPRINTF_POSIX@
+# if @REPLACE_FPRINTF@
+#  define fprintf rpl_fprintf
+extern int fprintf (FILE *fp, const char *format, ...);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef fprintf
+# define fprintf \
+    (GL_LINK_WARNING ("fprintf is not always POSIX compliant - " \
+                      "use gnulib module fprintf-posix for portable " \
+                      "POSIX compliance"), \
+     fprintf)
+#endif
+
 #if @GNULIB_VFPRINTF_POSIX@
 # if @REPLACE_VFPRINTF@
 #  define vfprintf rpl_vfprintf

@@ -1,5 +1,16 @@
 2007-03-08  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fprintf-posix: New file.
+	* lib/fprintf.c: New file.
+	* m4/fprintf-posix.m4: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also GNULIB_FPRINTF_POSIX,
+	REPLACE_FPRINTF.
+	* lib/stdio_.h (fprintf): New declaration.
+	* modules/stdio (Makefile.am): Substitute also GNULIB_FPRINTF_POSIX,
+	REPLACE_FPRINTF.
+
+2007-03-08  Bruno Haible  <bruno@clisp.org>
+
 	* modules/vfprintf-posix-tests: New file.
 	* tests/test-vfprintf-posix.sh: New file.
 	* tests/test-vfprintf-posix.c: New file.
