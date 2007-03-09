@@ -1,5 +1,8 @@
 2007-03-08  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fseterr-tests: New file.
+	* tests/test-fseterr.c: New file.
+
 	* modules/fseterr: New file.
 	* lib/fseterr.h: New file.
 	* lib/fseterr.c: New file.
