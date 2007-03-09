@@ -1,3 +1,15 @@
+2007-03-08  Bruno Haible  <bruno@clisp.org>
+
+	* lib/fnmatch_.h: Convert tabs in the middle of lines to spaces.
+	* lib/getopt_.h: Likewise.
+	* lib/mbswidth.h: Likewise.
+	* lib/setenv.h: Likewise.
+	* lib/vasnprintf.h: Likewise.
+	* lib/vasprintf.h: Likewise.
+	* lib/verror.h: Likewise.
+	* lib/xsetenv.h: Likewise.
+	* lib/xvasprintf.h: Likewise.
+
 2007-03-08  Jim Meyering  <jim@meyering.net>
 
 	* users.txt: Add parted.

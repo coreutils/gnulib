@@ -1,5 +1,5 @@
 /* Copyright (C) 1991, 1992, 1993, 1996, 1997, 1998, 1999, 2001, 2002, 2003,
-   2005 Free Software Foundation, Inc.
+   2005, 2007 Free Software Foundation, Inc.
 
    This file is part of the GNU C Library.
 
@@ -20,7 +20,7 @@
 #ifndef	_FNMATCH_H
 #define	_FNMATCH_H	1
 
-#ifdef	__cplusplus
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -58,7 +58,7 @@ extern "C" {
 extern int fnmatch (const char *__pattern, const char *__name,
 		    int __flags);
 
-#ifdef	__cplusplus
+#ifdef __cplusplus
 }
 #endif
 

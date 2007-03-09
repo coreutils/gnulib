@@ -1,5 +1,5 @@
 /* Declaration for va_list error-reporting function
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #include "error.h"
 #include <stdarg.h>
 
-#ifdef	__cplusplus
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -47,7 +47,7 @@ extern void verror_at_line (int __status, int __errnum, const char *__fname,
                             va_list __args)
      __attribute__ ((__format__ (__printf__, 5, 0)));
 
-#ifdef	__cplusplus
+#ifdef __cplusplus
 }
 #endif
 

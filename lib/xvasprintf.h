@@ -1,5 +1,5 @@
 /* vasprintf and asprintf with out-of-memory checking.
-   Copyright (C) 2002-2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2002-2004, 2006-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
 # endif
 #endif
 
-#ifdef	__cplusplus
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -50,7 +50,7 @@ extern char *xasprintf (const char *format, ...)
 extern char *xvasprintf (const char *format, va_list args)
        __attribute__ ((__format__ (__printf__, 1, 0)));
 
-#ifdef	__cplusplus
+#ifdef __cplusplus
 }
 #endif
 

@@ -1,5 +1,5 @@
 /* Setting environment variables, with out-of-memory checking.
-   Copyright (C) 2001-2002 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 /* Get unsetenv().  It can be used without error checking.  */
 #include "setenv.h"
 
-#ifdef	__cplusplus
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -27,6 +27,6 @@ extern "C" {
    With error checking.  */
 extern void xsetenv (const char *name, const char *value, int replace);
 
-#ifdef	__cplusplus
+#ifdef __cplusplus
 }
 #endif
