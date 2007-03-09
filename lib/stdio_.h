@@ -68,6 +68,20 @@ extern int vfprintf (FILE *fp, const char *format, va_list args);
      vfprintf (s, f, a))
 #endif
 
+#if @GNULIB_VPRINTF_POSIX@
+# if @REPLACE_VPRINTF@
+#  define vprintf rpl_vprintf
+extern int vprintf (const char *format, va_list args);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef vprintf
+# define vprintf(f,a) \
+    (GL_LINK_WARNING ("vprintf is not always POSIX compliant - " \
+                      "use gnulib module vprintf-posix for portable " \
+                      "POSIX compliance"), \
+     vprintf (f, a))
+#endif
+
 #if @GNULIB_SNPRINTF@
 # if @REPLACE_SNPRINTF@
 #  define snprintf rpl_snprintf
