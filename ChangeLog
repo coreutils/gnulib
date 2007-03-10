@@ -1,5 +1,9 @@
 2007-03-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdint_.h (uint_least64_t): Fix typo in last patch.
+
+2007-03-10  Bruno Haible  <bruno@clisp.org>
+
 	* modules/snprintf-posix-tests (EXTRA_DIST): New variable. Needed for
 	"make distcheck".
 	* modules/sprintf-posix-tests (EXTRA_DIST): Likewise.

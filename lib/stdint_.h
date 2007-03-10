@@ -179,7 +179,7 @@
 #ifdef GL_INT64_T
 # define int_least64_t int64_t
 #endif
-#ifdef GL_UIN64_T
+#ifdef GL_UINT64_T
 # define uint_least64_t uint64_t
 #endif
 
