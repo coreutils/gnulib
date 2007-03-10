@@ -1,5 +1,11 @@
 2007-03-10  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_create_testdir): Treat MOSTLYCLEANFILES like
+	CLEANFILES. Put spaces in each line of $cleaned_files, not only the
+	first and the last.
+
+2007-03-10  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdint_.h (uint_least64_t): Fix typo in last patch.
 
 2007-03-10  Bruno Haible  <bruno@clisp.org>

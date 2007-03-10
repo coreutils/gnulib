@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-03-06 03:38:30 $'
+cvsdatestamp='$Date: 2007-03-10 15:20:28 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2739,10 +2739,10 @@ func_create_testdir ()
   fi
   # Need to run configure and make once, to create built files that are to be
   # distributed (such as getdate.c).
-  # Extract the value of "CLEANFILES += ...".
+  # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
   cleaned_files=`sed -e "$sed_remove_backslash_newline" < "$testdir/$sourcebase/Makefile.am" \
-                 | sed -n -e 's,^CLEANFILES[ 	]*+=\([^#]*\).*$,\1,p'`
-  cleaned_files=" "`for file in $cleaned_files; do echo "$file"; done`" "
+                 | sed -n -e 's,^CLEANFILES[ 	]*+=\([^#]*\).*$,\1,p' -e 's,^MOSTLYCLEANFILES[ 	]*+=\([^#]*\).*$,\1,p'`
+  cleaned_files=`for file in $cleaned_files; do echo " $file "; done`
   # Extract the value of "BUILT_SOURCES += ...". Remove variable references
   # such $(FOO_H) because they don't refer to distributed files.
   sed_remove_make_variables='s,[$]([A-Za-z0-9_]*),,g'
