@@ -31,6 +31,19 @@
 #include <stdarg.h>
 #include <stddef.h>
 
+#ifndef __attribute__
+/* This feature is available in gcc versions 2.5 and later.  */
+# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5) || __STRICT_ANSI__
+#  define __attribute__(Spec) /* empty */
+# endif
+/* The __-protected variants of `format' and `printf' attributes
+   are accepted by gcc versions 2.6.4 (effectively 2.7) and later.  */
+# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 7)
+#  define __format__ format
+#  define __printf__ printf
+# endif
+#endif
+
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
@@ -43,7 +56,8 @@ extern "C" {
 #if @GNULIB_FPRINTF_POSIX@
 # if @REPLACE_FPRINTF@
 #  define fprintf rpl_fprintf
-extern int fprintf (FILE *fp, const char *format, ...);
+extern int fprintf (FILE *fp, const char *format, ...)
+       __attribute__ ((__format__ (__printf__, 2, 3)));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef fprintf
@@ -57,7 +71,8 @@ extern int fprintf (FILE *fp, const char *format, ...);
 #if @GNULIB_VFPRINTF_POSIX@
 # if @REPLACE_VFPRINTF@
 #  define vfprintf rpl_vfprintf
-extern int vfprintf (FILE *fp, const char *format, va_list args);
+extern int vfprintf (FILE *fp, const char *format, va_list args)
+       __attribute__ ((__format__ (__printf__, 2, 0)));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef vfprintf
@@ -72,7 +87,8 @@ extern int vfprintf (FILE *fp, const char *format, va_list args);
 # if @REPLACE_PRINTF@
 /* Don't break __attribute__((format(printf,M,N))).  */
 #  define printf __printf__
-extern int printf (const char *format, ...);
+extern int printf (const char *format, ...)
+       __attribute__ ((__format__ (__printf__, 1, 2)));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef printf
@@ -93,7 +109,8 @@ extern int printf (const char *format, ...);
 #if @GNULIB_VPRINTF_POSIX@
 # if @REPLACE_VPRINTF@
 #  define vprintf rpl_vprintf
-extern int vprintf (const char *format, va_list args);
+extern int vprintf (const char *format, va_list args)
+       __attribute__ ((__format__ (__printf__, 1, 0)));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef vprintf
@@ -109,7 +126,8 @@ extern int vprintf (const char *format, va_list args);
 #  define snprintf rpl_snprintf
 # endif
 # if @REPLACE_SNPRINTF@ || !@HAVE_DECL_SNPRINTF@
-extern int snprintf (char *str, size_t size, const char *format, ...);
+extern int snprintf (char *str, size_t size, const char *format, ...)
+       __attribute__ ((__format__ (__printf__, 3, 4)));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef snprintf
@@ -124,7 +142,8 @@ extern int snprintf (char *str, size_t size, const char *format, ...);
 #  define vsnprintf rpl_vsnprintf
 # endif
 # if @REPLACE_VSNPRINTF@ || !@HAVE_DECL_VSNPRINTF@
-extern int vsnprintf (char *str, size_t size, const char *format, va_list args);
+extern int vsnprintf (char *str, size_t size, const char *format, va_list args)
+       __attribute__ ((__format__ (__printf__, 3, 0)));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef vsnprintf
@@ -137,7 +156,8 @@ extern int vsnprintf (char *str, size_t size, const char *format, va_list args);
 #if @GNULIB_SPRINTF_POSIX@
 # if @REPLACE_SPRINTF@
 #  define sprintf rpl_sprintf
-extern int sprintf (char *str, const char *format, ...);
+extern int sprintf (char *str, const char *format, ...)
+       __attribute__ ((__format__ (__printf__, 2, 3)));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef sprintf
@@ -151,7 +171,8 @@ extern int sprintf (char *str, const char *format, ...);
 #if @GNULIB_VSPRINTF_POSIX@
 # if @REPLACE_VSPRINTF@
 #  define vsprintf rpl_vsprintf
-extern int vsprintf (char *str, const char *format, va_list args);
+extern int vsprintf (char *str, const char *format, va_list args)
+       __attribute__ ((__format__ (__printf__, 2, 0)));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef vsprintf

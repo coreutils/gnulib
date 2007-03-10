@@ -1,3 +1,10 @@
+2007-03-10  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdio_.h (__attribute__): New macro.
+	(fprintf, vfprintf, printf, vprintf, snprintf, vsnprintf, sprintf,
+	vsprintf): Specify __attribute__ __format__ for GCC.
+	Suggested by Eric Blake.
+
 2007-03-09  Bruno Haible  <bruno@clisp.org>
 
 	* modules/printf-posix-tests: New file.
