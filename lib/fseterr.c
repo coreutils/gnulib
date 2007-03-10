@@ -33,10 +33,17 @@ fseterr (FILE *fp)
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   fp->_flags |= __SERR;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
+# if defined __sun && defined __sparc && defined _LP64 /* Solaris/SPARC 64-bit */
+  ((unsigned int *) fp) [9] |= 0x20;
+# else
   fp->_flag |= _IOERR;
-#else                               /* unknown  */
+# endif
+#elif 0                             /* unknown  */
   /* Portable fallback, based on an idea by Rich Felker.
-     Wow! 6 system calls for something that is just a bit operation!  */
+     Wow! 6 system calls for something that is just a bit operation!
+     Not activated on any system, because there is no way to repair FP when
+     the sequence of system calls fails, and library code should not call
+     abort().  */
   int saved_errno;
   int fd;
   int fd2;
@@ -56,5 +63,7 @@ fseterr (FILE *fp)
       close (fd2);
     }
   errno = saved_errno;
+#else
+ #error "Please port gnulib fseterr.c to your platform! Look at the definitions of ferror and clearerr on your system, then report this to bug-gnulib."
 #endif
 }

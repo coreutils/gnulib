@@ -1,5 +1,11 @@
 2007-03-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/fseterr.c (fseterr): Port to Solaris/SPARC64. Deactivate the
+	fallback; use #error instead.
+	Suggested by Simon Josefsson.
+
+2007-03-10  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_create_testdir): Treat MOSTLYCLEANFILES like
 	CLEANFILES. Put spaces in each line of $cleaned_files, not only the
 	first and the last.
