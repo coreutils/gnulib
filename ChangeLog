@@ -1,3 +1,8 @@
+2007-03-09  Bruno Haible  <bruno@clisp.org>
+
+	* lib/vasnprintf.c (VASNPRINTF): For the 'a' and 'A' directives, use
+	a locale dependent decimal point, rather than always '.'.
+
 2007-03-09  Eric Blake  <ebb9@byu.net>
 
 	* lib/stdlib_.h (EXIT_FAILURE): GNU code expects this to be 1, in

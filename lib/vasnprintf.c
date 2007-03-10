@@ -34,6 +34,7 @@
 # include "vasnprintf.h"
 #endif
 
+#include <locale.h>	/* localeconv() */
 #include <stdio.h>	/* snprintf(), sprintf() */
 #include <stdlib.h>	/* abort(), malloc(), realloc(), free() */
 #include <string.h>	/* memcpy(), strlen() */
@@ -492,7 +493,11 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			      if ((flags & FLAG_ALT)
 				  || mantissa > 0.0L || precision > 0)
 				{
-				  *p++ = '.';
+				  const char *point =
+				    localeconv () -> decimal_point;
+				  /* The decimal point is always a single byte:
+				     either '.' or ','.  */
+				  *p++ = (point[0] != '\0' ? point[0] : '.');
 				  /* This loop terminates because we assume
 				     that FLT_RADIX is a power of 2.  */
 				  while (mantissa > 0.0L)
@@ -636,7 +641,11 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			      if ((flags & FLAG_ALT)
 				  || mantissa > 0.0 || precision > 0)
 				{
-				  *p++ = '.';
+				  const char *point =
+				    localeconv () -> decimal_point;
+				  /* The decimal point is always a single byte:
+				     either '.' or ','.  */
+				  *p++ = (point[0] != '\0' ? point[0] : '.');
 				  /* This loop terminates because we assume
 				     that FLT_RADIX is a power of 2.  */
 				  while (mantissa > 0.0)
