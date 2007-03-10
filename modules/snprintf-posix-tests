@@ -12,4 +12,5 @@ AC_REQUIRE([gt_TYPE_LONGDOUBLE])
 Makefile.am:
 TESTS += test-snprintf-posix
 check_PROGRAMS += test-snprintf-posix
+EXTRA_DIST += test-snprintf-posix.h
 
