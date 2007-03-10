@@ -120,22 +120,34 @@
 #define int32_t int
 #define uint32_t unsigned int
 
-#undef int64_t
+/* Do not undefine int64_t if gnulib is not being used with 64-bit
+   types, since otherwise it breaks platforms like Tandem/NSK.  */
 #if LONG_MAX >> 31 >> 31 == 1
+# undef int64_t
 # define int64_t long int
+# define GL_INT64_T
 #elif defined _MSC_VER
+# undef int64_t
 # define int64_t __int64
+# define GL_INT64_T
 #elif @HAVE_LONG_LONG_INT@
+# undef int64_t
 # define int64_t long long int
+# define GL_INT64_T
 #endif
 
-#undef uint64_t
 #if ULONG_MAX >> 31 >> 31 >> 1 == 1
+# undef uint64_t
 # define uint64_t unsigned long int
+# define GL_UINT64_T
 #elif defined _MSC_VER
+# undef uint64_t
 # define uint64_t unsigned __int64
+# define GL_UINT64_T
 #elif @HAVE_UNSIGNED_LONG_LONG_INT@
+# undef uint64_t
 # define uint64_t unsigned long long int
+# define GL_UINT64_T
 #endif
 
 /* Avoid collision with Solaris 2.5.1 <pthread.h> etc.  */
@@ -164,10 +176,10 @@
 #define uint_least16_t uint16_t
 #define int_least32_t int32_t
 #define uint_least32_t uint32_t
-#ifdef int64_t
+#ifdef GL_INT64_T
 # define int_least64_t int64_t
 #endif
-#ifdef uint64_t
+#ifdef GL_UIN64_T
 # define uint_least64_t uint64_t
 #endif
 
@@ -195,10 +207,10 @@
 #define uint_fast16_t unsigned int_fast16_t
 #define int_fast32_t long int
 #define uint_fast32_t unsigned int_fast32_t
-#ifdef int64_t
+#ifdef GL_INT64_T
 # define int_fast64_t int64_t
 #endif
-#ifdef uint64_t
+#ifdef GL_UINT64_T
 # define uint_fast64_t uint64_t
 #endif
 
@@ -217,7 +229,7 @@
 #undef intmax_t
 #if @HAVE_LONG_LONG_INT@ && LONG_MAX >> 30 == 1
 # define intmax_t long long int
-#elif defined int64_t
+#elif defined GL_INT64_T
 # define intmax_t int64_t
 #else
 # define intmax_t long int
@@ -226,7 +238,7 @@
 #undef uintmax_t
 #if @HAVE_UNSIGNED_LONG_LONG_INT@ && ULONG_MAX >> 31 == 1
 # define uintmax_t unsigned long long int
-#elif defined uint64_t
+#elif defined GL_UINT64_T
 # define uintmax_t uint64_t
 #else
 # define uintmax_t unsigned long int
@@ -264,13 +276,13 @@
 
 #undef INT64_MIN
 #undef INT64_MAX
-#ifdef int64_t
+#ifdef GL_INT64_T
 # define INT64_MIN  (~ INT64_MAX)
 # define INT64_MAX  INTMAX_C (9223372036854775807)
 #endif
 
 #undef UINT64_MAX
-#ifdef uint64_t
+#ifdef GL_UINT64_T
 # define UINT64_MAX  UINTMAX_C (18446744073709551615)
 #endif
 
@@ -303,13 +315,13 @@
 
 #undef INT_LEAST64_MIN
 #undef INT_LEAST64_MAX
-#ifdef int64_t
+#ifdef GL_INT64_T
 # define INT_LEAST64_MIN  INT64_MIN
 # define INT_LEAST64_MAX  INT64_MAX
 #endif
 
 #undef UINT_LEAST64_MAX
-#ifdef uint64_t
+#ifdef GL_UINT64_T
 # define UINT_LEAST64_MAX  UINT64_MAX
 #endif
 
@@ -342,13 +354,13 @@
 
 #undef INT_FAST64_MIN
 #undef INT_FAST64_MAX
-#ifdef int64_t
+#ifdef GL_INT64_T
 # define INT_FAST64_MIN  INT64_MIN
 # define INT_FAST64_MAX  INT64_MAX
 #endif
 
 #undef UINT_FAST64_MAX
-#ifdef uint64_t
+#ifdef GL_UINT64_T
 # define UINT_FAST64_MAX  UINT64_MAX
 #endif
 
@@ -469,7 +481,7 @@
 #undef INTMAX_C
 #if @HAVE_LONG_LONG_INT@ && LONG_MAX >> 30 == 1
 # define INTMAX_C(x)   x##LL
-#elif defined int64_t
+#elif defined GL_INT64_T
 # define INTMAX_C(x)   INT64_C(x)
 #else
 # define INTMAX_C(x)   x##L
@@ -478,7 +490,7 @@
 #undef UINTMAX_C
 #if @HAVE_UNSIGNED_LONG_LONG_INT@ && ULONG_MAX >> 31 == 1
 # define UINTMAX_C(x)  x##ULL
-#elif defined uint64_t
+#elif defined GL_UINT64_T
 # define UINTMAX_C(x)  UINT64_C(x)
 #else
 # define UINTMAX_C(x)  x##UL

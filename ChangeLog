@@ -1,3 +1,11 @@
+2007-03-09  Eric Blake  <ebb9@byu.net>
+	and Matthew Woehlke  <mw_triad@users.sourceforge.net>  (tiny change)
+
+	* lib/stdint_.h (int64_t, uint64_t): Don't undefine if 64-bit
+	types are not being provided by gnulib.
+	(GL_INT64_T, GL_UINT64_T): New witnesses of whether gnulib 64-bit
+	types are supported.
+
 2007-03-10  Bruno Haible  <bruno@clisp.org>
 
 	* lib/stdio_.h (__attribute__): New macro.
