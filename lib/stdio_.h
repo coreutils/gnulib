@@ -86,6 +86,8 @@ extern int printf (const char *format, ...);
 # define __format__(kind,m,n) __format__ (__##kind##__, m, n)
 # define ____printf____ __printf__
 # define ____scanf____ __scanf__
+# define ____strftime____ __strftime__
+# define ____strfmon____ __strfmon__
 #endif
 
 #if @GNULIB_VPRINTF_POSIX@

@@ -10,7 +10,8 @@
 	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also GNULIB_PRINTF_POSIX,
 	REPLACE_PRINTF.
 	* lib/stdio_.h (printf): New declaration.
-	(format, __format__, ____printf____, ____scanf____): New macros.
+	(format, __format__, ____printf____, ____scanf____, ____strftime____,
+	____strfmon____): New macros.
 	* modules/stdio (Makefile.am): Substitute also GNULIB_PRINTF_POSIX,
 	REPLACE_PRINTF.
 
