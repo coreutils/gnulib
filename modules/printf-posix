@@ -1,0 +1,27 @@
+Description:
+POSIX compatible printf() function: print formatted output to standard output
+
+Files:
+lib/printf.c
+m4/printf-posix-rpl.m4
+m4/printf.m4
+
+Depends-on:
+stdio
+vfprintf-posix
+
+configure.ac:
+gl_FUNC_PRINTF_POSIX
+gl_STDIO_MODULE_INDICATOR([printf-posix])
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

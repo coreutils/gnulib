@@ -1,5 +1,17 @@
 2007-03-09  Bruno Haible  <bruno@clisp.org>
 
+	* modules/printf-posix: New file.
+	* lib/printf.c: New file.
+	* m4/printf-posix-rpl.m4: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also GNULIB_PRINTF_POSIX,
+	REPLACE_PRINTF.
+	* lib/stdio_.h (printf): New declaration.
+	(format, __format__, ____printf____, ____scanf____): New macros.
+	* modules/stdio (Makefile.am): Substitute also GNULIB_PRINTF_POSIX,
+	REPLACE_PRINTF.
+
+2007-03-09  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-vasnprintf-posix2.sh: New file.
 	* tests/test-vasnprintf-posix2.c: New file.
 	* modules/vasnprintf-posix-tests (Files): Add them and m4/locale-fr.m4.
