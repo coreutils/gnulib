@@ -1,5 +1,9 @@
 2007-03-09  Bruno Haible  <bruno@clisp.org>
 
+	* modules/printf-posix-tests: New file.
+	* tests/test-printf-posix.sh: New file.
+	* tests/test-printf-posix.c: New file.
+
 	* modules/printf-posix: New file.
 	* lib/printf.c: New file.
 	* m4/printf-posix-rpl.m4: New file.

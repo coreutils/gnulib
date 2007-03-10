@@ -1,0 +1,16 @@
+Files:
+tests/test-printf-posix.sh
+tests/test-printf-posix.c
+tests/test-printf-posix.h
+tests/test-fprintf-posix.out
+
+Depends-on:
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-printf-posix.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-printf-posix
+EXTRA_DIST += test-printf-posix.sh test-printf-posix.h test-fprintf-posix.out
