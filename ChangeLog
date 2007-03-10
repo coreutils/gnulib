@@ -1,3 +1,10 @@
+2007-03-10  Bruno Haible  <bruno@clisp.org>
+
+	* modules/allocsa-tests (test_allocsa_SOURCES): Remove redundant
+	variable.
+	* modules/dirname-tests (test_dirname_SOURCES): Remove redundant
+	variable.
+
 2007-03-09  Eric Blake  <ebb9@byu.net>
 	and Matthew Woehlke  <mw_triad@users.sourceforge.net>  (tiny change)
 

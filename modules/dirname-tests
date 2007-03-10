@@ -9,4 +9,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-dirname
 noinst_PROGRAMS += test-dirname
-test_dirname_SOURCES = test-dirname.c

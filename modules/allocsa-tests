@@ -8,5 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-allocsa
 check_PROGRAMS += test-allocsa
-test_allocsa_SOURCES = test-allocsa.c
 
