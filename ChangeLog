@@ -1,5 +1,9 @@
 2007-03-10  Bruno Haible  <bruno@clisp.org>
 
+	* modules/canonicalize-lgpl-tests: New file.
+	* tests/test-canonicalize-lgpl.sh: New file.
+	* tests/test-canonicalize-lgpl.c: New file.
+
 	* modules/c-strcase-tests: New file.
 	* tests/test-c-strcase.sh: New file.
 	* tests/test-c-strcasecmp.c: New file.
