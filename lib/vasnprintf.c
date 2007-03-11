@@ -110,6 +110,8 @@ local_wcslen (const wchar_t *s)
 # else
    /* Unix.  */
 #  define SNPRINTF snprintf
+   /* Here we need to call the native snprintf, not rpl_snprintf.  */
+#  undef snprintf
 # endif
 #endif
 

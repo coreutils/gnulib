@@ -1,5 +1,9 @@
 2007-03-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (snprintf): Undefine. Avoids an endless recursion.
+
+2007-03-11  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_create_megatestdir): Create also an autobuild
 	script, for submission to autobuild.josefsson.org.
 
