@@ -1,5 +1,10 @@
 2007-03-10  Bruno Haible  <bruno@clisp.org>
 
+	* modules/c-strcase-tests: New file.
+	* tests/test-c-strcase.sh: New file.
+	* tests/test-c-strcasecmp.c: New file.
+	* tests/test-c-strncasecmp.c: New file.
+
 	* modules/atexit-tests: New file.
 	* tests/test-atexit.sh: New file.
 	* tests/test-atexit.c: New file.
