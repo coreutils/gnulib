@@ -1,5 +1,10 @@
 2007-03-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/isnan.c (rpl_isnan, rpl_isnanl): Work around bug regarding
+	initializers in SunPRO C and Compaq C compilers.
+
+2007-03-11  Bruno Haible  <bruno@clisp.org>
+
 	* lib/gl_array_oset.c (gl_array_iterator_next): Make pointer
 	decrementing code ANSI C compliant.
 

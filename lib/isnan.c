@@ -58,21 +58,32 @@ FUNC (DOUBLE x)
 #ifdef KNOWN_EXPBIT0_LOCATION
   /* Be careful to not do any floating-point operation on x, such as x == x,
      because x may be a signaling NaN.  */
+# if defined __SUNPRO_C || defined __DECC
+  /* The Sun C 5.0 compilers and the Compaq (ex-DEC) 6.4 compilers don't
+     recognize the initializers as constant expressions.  */
+  memory_double nan;
+  DOUBLE plus_inf = L_(1.0) / L_(0.0);
+  DOUBLE minus_inf = -L_(1.0) / L_(0.0);
+  nan.value = L_(0.0) / L_(0.0);
+# else
   static memory_double nan = { L_(0.0) / L_(0.0) };
   static DOUBLE plus_inf = L_(1.0) / L_(0.0);
   static DOUBLE minus_inf = -L_(1.0) / L_(0.0);
-  memory_double m;
+# endif
+  {
+    memory_double m;
 
-  /* A NaN can be recognized through its exponent.  But exclude +Infinity and
-     -Infinity, which have the same exponent.  */
-  m.value = x;
-  if (((m.word[EXPBIT0_WORD] ^ nan.word[EXPBIT0_WORD])
-       & (EXP_MASK << EXPBIT0_BIT))
-      == 0)
-    return (memcmp (&m.value, &plus_inf, sizeof (DOUBLE)) != 0
-	    && memcmp (&m.value, &minus_inf, sizeof (DOUBLE)) != 0);
-  else
-    return 0;
+    /* A NaN can be recognized through its exponent.  But exclude +Infinity and
+       -Infinity, which have the same exponent.  */
+    m.value = x;
+    if (((m.word[EXPBIT0_WORD] ^ nan.word[EXPBIT0_WORD])
+	 & (EXP_MASK << EXPBIT0_BIT))
+	== 0)
+      return (memcmp (&m.value, &plus_inf, sizeof (DOUBLE)) != 0
+	      && memcmp (&m.value, &minus_inf, sizeof (DOUBLE)) != 0);
+    else
+      return 0;
+  }
 #else
   /* The configuration did not find sufficient information.  Give up about
      the signaling NaNs, handle only the quiet NaNs.  */
