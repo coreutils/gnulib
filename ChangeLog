@@ -1,5 +1,9 @@
 2007-03-11  Bruno Haible  <bruno@clisp.org>
 
+	* modules/long-options (Depends-on): Add getopt.
+
+2007-03-11  Bruno Haible  <bruno@clisp.org>
+
 	* modules/modechange (Depends-on): Add stdbool.
 
 2007-03-11  Bruno Haible  <bruno@clisp.org>
