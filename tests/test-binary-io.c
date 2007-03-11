@@ -37,18 +37,18 @@ main ()
 {
   /* Test the O_BINARY macro.  */
   {
-    int fd = open ("output2.tmp", O_CREAT | O_TRUNC | O_RDWR | O_BINARY);
+    int fd = open ("t-bin-out2.tmp", O_CREAT | O_TRUNC | O_RDWR | O_BINARY);
     if (write (fd, "Hello\n", 6) < 0)
       exit (1);
     close (fd);
   }
   {
     struct stat statbuf;
-    if (stat ("output2.tmp", &statbuf) < 0)
+    if (stat ("t-bin-out2.tmp", &statbuf) < 0)
       exit (1);
     ASSERT (statbuf.st_size == 6);
   }
-  unlink ("output2.tmp");
+  unlink ("t-bin-out2.tmp");
 
   /* Test the SET_BINARY macro.  */
   SET_BINARY (1);
@@ -57,7 +57,7 @@ main ()
   fclose (stderr);
   {
     struct stat statbuf;
-    if (stat ("output.tmp", &statbuf) < 0)
+    if (stat ("t-bin-out1.tmp", &statbuf) < 0)
       exit (1);
     ASSERT (statbuf.st_size == 6);
   }
