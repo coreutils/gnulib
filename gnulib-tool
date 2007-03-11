@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-03-11 12:03:51 $'
+cvsdatestamp='$Date: 2007-03-11 22:11:22 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2808,7 +2808,8 @@ func_create_megatestdir ()
                    -e 's,December,12,'  -e 's,Dec,12,' \
              | sed -e 's,^,00,' | sed -e 's,^[0-9]*\([0-9][0-9] \),\1,' \
              | sed -e 's,^\([0-9]*\) \([0-9]*\) \([0-9]*\),\3\2\1,'`
-  (echo "CVSDATE=$cvsdate"
+  (echo '#!/bin/sh'
+   echo "CVSDATE=$cvsdate"
    echo "test -d logs || mkdir logs"
    echo "for module in $megasubdirs; do"
    echo "  echo \"Working on module \$module...\""
