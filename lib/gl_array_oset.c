@@ -1,5 +1,5 @@
 /* Ordered set data type implemented by an array.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -297,8 +297,8 @@ gl_array_iterator_next (gl_oset_iterator_t *iterator, const void **eltp)
 	abort ();
       /* The last returned element was removed.  */
       iterator->count--;
-      iterator->p--;
-      iterator->q--;
+      iterator->p = (const void **) iterator->p - 1;
+      iterator->q = (const void **) iterator->q - 1;
     }
   if (iterator->p < iterator->q)
     {
