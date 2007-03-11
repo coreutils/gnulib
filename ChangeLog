@@ -1,5 +1,9 @@
 2007-03-11  Bruno Haible  <bruno@clisp.org>
 
+	* modules/i-ring (Depends-on): Add stdbool.
+
+2007-03-11  Bruno Haible  <bruno@clisp.org>
+
 	* modules/gc-des (Depends-on): Add stdbool.
 
 2007-03-11  Bruno Haible  <bruno@clisp.org>
