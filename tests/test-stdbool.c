@@ -40,13 +40,17 @@
  "error: __bool_true_false_are_defined is not defined"
 #endif
 
+#if 0 /* Cannot be guaranteed with gnulib's <stdbool.h>.  */
 struct s { _Bool s: 1; _Bool t; } s;
+#endif
 
 char a[true == 1 ? 1 : -1];
 char b[false == 0 ? 1 : -1];
 char c[__bool_true_false_are_defined == 1 ? 1 : -1];
+#if 0 /* Cannot be guaranteed with gnulib's <stdbool.h>.  */
 char d[(bool) 0.5 == true ? 1 : -1];
 bool e = &s;
+#endif
 char f[(_Bool) 0.0 == false ? 1 : -1];
 char g[true];
 char h[sizeof (_Bool)];
@@ -55,6 +59,7 @@ enum { j = false, k = true, l = false * true, m = true * 256 };
 _Bool n[m];
 char o[sizeof n == m * sizeof n[0] ? 1 : -1];
 char p[-1 - (_Bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
+#if 0 /* Cannot be guaranteed with gnulib's <stdbool.h>.  */
 #if defined __xlc__ || defined __GNUC__
  /* Catch a bug in IBM AIX xlc compiler version 6.0.0.0
     reported by James Lemley on 2005-10-05; see
@@ -73,6 +78,7 @@ char p[-1 - (_Bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
     future.  */
  char digs[] = "0123456789";
  int xlcbug = 1 / (&(digs + 5)[-2 + (bool) 1] == &digs[4] ? 1 : -1);
+#endif
 #endif
 /* Catch a bug in an HP-UX C compiler.  See
    http://gcc.gnu.org/ml/gcc-patches/2003-12/msg02303.html
