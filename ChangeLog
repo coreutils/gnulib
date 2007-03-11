@@ -1,5 +1,9 @@
 2007-03-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unistr/u32-mbtouc-unsafe.c (u32_mbtouc_unsafe): Fix syntax error.
+
+2007-03-11  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c (sprintf): Undefine.
 
 2007-03-11  Bruno Haible  <bruno@clisp.org>

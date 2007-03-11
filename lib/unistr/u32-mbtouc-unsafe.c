@@ -33,8 +33,8 @@ u32_mbtouc_unsafe (ucs4_t *puc, const uint32_t *s, size_t n)
   if (c < 0xd800 || (c >= 0xe000 && c < 0x110000))
 #endif
     *puc = c;
-  else
 #if CONFIG_UNICODE_SAFETY
+  else
     /* invalid multibyte character */
     *puc = 0xfffd;
 #endif
