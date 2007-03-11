@@ -1,0 +1,14 @@
+Files:
+tests/test-atexit.sh
+tests/test-atexit.c
+
+Depends-on:
+unistd
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-atexit.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-atexit
+EXTRA_DIST += test-atexit.sh

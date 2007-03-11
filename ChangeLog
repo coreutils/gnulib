@@ -1,5 +1,11 @@
 2007-03-10  Bruno Haible  <bruno@clisp.org>
 
+	* modules/atexit-tests: New file.
+	* tests/test-atexit.sh: New file.
+	* tests/test-atexit.c: New file.
+
+2007-03-10  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-binary-io.sh: Use temporary filenames that are not so
 	likely to clash with those of other tests (in a parallel make).
 	* tests/test-binary-io.c: Likewise.
