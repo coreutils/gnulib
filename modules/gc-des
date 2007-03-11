@@ -9,6 +9,7 @@ m4/des.m4
 
 Depends-on:
 stdint
+stdbool
 gc
 
 configure.ac:

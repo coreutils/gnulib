@@ -1,5 +1,9 @@
 2007-03-11  Bruno Haible  <bruno@clisp.org>
 
+	* modules/gc-des (Depends-on): Add stdbool.
+
+2007-03-11  Bruno Haible  <bruno@clisp.org>
+
 	* m4/mktime.m4 (gl_PREREQ_MKTIME): Require AC_C_INLINE.
 
 2007-03-11  Bruno Haible  <bruno@clisp.org>
