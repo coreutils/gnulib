@@ -1,5 +1,10 @@
 2007-03-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/dummy.c [__sun]: Define a dummy variable, not just a typedef.
+	Needed for Solaris 2.5.1 ranlib and SunPRO C 5.0.
+
+2007-03-11  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-stdbool.c (s, d, e, xlcbug): Disable checks that gnulib's
 	<stdbool.h> substitute doesn't pass.
 
