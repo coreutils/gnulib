@@ -114,6 +114,8 @@ local_wcslen (const wchar_t *s)
 #  undef snprintf
 # endif
 #endif
+/* Here we need to call the native sprintf, not rpl_sprintf.  */
+#undef sprintf
 
 CHAR_T *
 VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list args)

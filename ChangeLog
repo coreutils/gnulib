@@ -1,5 +1,9 @@
 2007-03-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (sprintf): Undefine.
+
+2007-03-11  Bruno Haible  <bruno@clisp.org>
+
 	* lib/isnan.c (rpl_isnan, rpl_isnanl): Work around bug regarding
 	initializers in SunPRO C and Compaq C compilers.
 
