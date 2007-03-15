@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2007-02-11.16}
+\def\texinfoversion{2007-03-14.11}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1584,7 +1584,7 @@ output) for that.)}
 % Definitions for a main text size of 11pt.  This is the default in
 % Texinfo.
 % 
-\def\definetextfontsizexi{
+\def\definetextfontsizexi{%
 % Text fonts (11.2pt, magstep1).
 \def\textnominalsize{11pt}
 \edef\mainmagstep{\magstephalf}
@@ -4168,6 +4168,34 @@ output) for that.)}
 %
 % All done with double columns.
 \def\enddoublecolumns{%
+  % The following penalty ensures that the page builder is exercised
+  % _before_ we change the output routine.  This is necessary in the
+  % following situation:
+  %
+  % The last section of the index consists only of a single entry.
+  % Before this section, \pagetotal is less than \pagegoal, so no
+  % break occurs before the last section starts.  However, the last
+  % section, consisting of \initial and the single \entry, does not
+  % fit on the page and has to be broken off.  Without the following
+  % penalty the page builder will not be exercised until \eject
+  % below, and by that time we'll already have changed the output
+  % routine to the \balancecolumns version, so the next-to-last
+  % double-column page will be processed with \balancecolumns, which
+  % is wrong:  The two columns will go to the main vertical list, with
+  % the broken-off section in the recent contributions.  As soon as
+  % the output routine finishes, TeX starts reconsidering the page
+  % break.  The two columns and the broken-off section both fit on the
+  % page, because the two columns now take up only half of the page
+  % goal.  When TeX sees \eject from below which follows the final
+  % section, it invokes the new output routine that we've set after
+  % \balancecolumns below; \onepageout will try to fit the two columns
+  % and the final section into the vbox of \pageheight (see
+  % \pagebody), causing an overfull box.
+  %
+  % Note that glue won't work here, because glue does not exercise the
+  % page builder, unlike penalties (see The TeXbook, pp. 280-281).
+  \penalty0
+  %
   \output = {%
     % Split the last of the double-column material.  Leave it on the
     % current page, no automatic page break.
