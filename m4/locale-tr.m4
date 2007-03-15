@@ -1,4 +1,4 @@
-# locale-tr.m4 serial 1
+# locale-tr.m4 serial 2
 dnl Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -72,6 +72,8 @@ changequote([,])dnl
           fi
         fi
       fi
+    else
+      gt_cv_locale_tr_utf8=none
     fi
     rm -fr conftest*
   ])

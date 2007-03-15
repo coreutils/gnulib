@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.32 2007-03-01 02:14:04 haible Exp $
+@comment $Id: gnulib.texi,v 1.33 2007-03-15 22:58:36 eggert Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2007-03-01 02:14:04 $
+@set UPDATED $Date: 2007-03-15 22:58:36 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -101,6 +101,7 @@ Resources:
 * Windows sockets::
 * Libtool and Windows::
 * License Texinfo sources::
+* Build robot for gnulib::
 @end menu
 
 
@@ -354,6 +355,63 @@ option to @command{gnulib-tool}.
 
 Of course the license texts themselves should not be changed at all.
 
+@node Build robot for gnulib
+@section Build robot for gnulib
+
+To simplify testing on a wide set of platforms, gnulib is built on
+many platforms every day and the results are uploaded to:
+
+@url{http://autobuild.josefsson.org/gnulib/}
+
+If you wish to help the gnulib development effort with build logs for
+your favorite platform, you may perform these steps:
+
+@enumerate
+
+@item Create gnulib directory
+
+On a machine with recent automake, autoconf, m4 installed and with a
+gnulib cvs checkout (typically a Linux machine), use
+
+@example
+gnulib-tool --create-megatestdir --with-tests --dir=..."
+@end example
+
+Note: The created directory uses ca. 512 MB on disk.
+
+@item Transfer gnulib directory
+
+Transfer this directory to a build machine (HP-UX, Cygwin, or
+whatever).  Often it is easier to transfer one file, and this can be
+achieved by running, inside the directory the following commands:
+
+@example
+./configure
+make dist
+@end example
+
+And then transferring the @file{dummy-0.tar.gz} file.
+
+@item Build modules
+
+On the build machine, run ./autobuild (or "nohup ./autobuild").  It
+creates a directory 'logs/' with a log file for each module.
+
+@item Submit build logs
+
+Submit each log file to Simon's site, either through a
+
+@example
+mail `echo gnulib__at__autobuild.josefsson.org | sed -e s/__at__/@/`
+@end example
+
+or through netcat
+
+@example
+autobuild-submit logs/*
+@end example
+
+@end enumerate
 
 @node Particular Modules
 @chapter Particular Modules

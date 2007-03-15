@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
+#include <wctype.h>
 
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
@@ -53,8 +54,6 @@
 #if !defined mbsinit && !HAVE_MBSINIT
 # define mbsinit(ps) 1
 #endif
-
-#include <wctype.h>
 
 #ifndef SIZE_MAX
 # define SIZE_MAX ((size_t) -1)

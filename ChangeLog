@@ -1,3 +1,41 @@
+2007-03-12  Bruno Haible  <bruno@clisp.org>
+
+	* lib/quotearg.c: Include <wctype.h> early, before the definition of
+	the iswprint macro. Needed on Solaris 2.5.1.
+
+2007-03-12  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-printf-frexp.c (main): Declare x as volatile.
+
+2007-03-12  Simon Josefsson  <simon@josefsson.org>
+
+	* doc/gnulib.texi (Build robot for gnulib): New section.
+
+2007-03-12  Jim Meyering  <jim@meyering.net>
+
+	* build-aux/bootstrap: New file.
+	* build-aux/bootstrap.conf: New file, from coreutils.
+
+2007-03-11  Bruno Haible  <bruno@clisp.org>
+
+	* m4/cycle-check.m4 (gl_CYCLE_CHECK): Require AC_C_INLINE.
+
+2007-03-12  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/des.h, lib/des.c, lib/gc-gnulib.c: Use gl_ namespace, to
+	avoid collisions with 'des_setkey'.  Reported by Bruno Haible
+	<bruno@clisp.org>.  Also change 'tripledes_' to '3des_'.
+
+2007-03-11  Bruno Haible  <bruno@clisp.org>
+
+	* m4/locale-tr.m4 (gt_LOCALE_TR_UTF8): If the test program fails to
+	compile, set LOCALE_TR_UTF8 to 'none' instead of empty.
+
+2007-03-11  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdint_.h (INT64_MIN, INTMAX_MIN): Avoid using the ~INT..._MAX
+	formula. Needed for SunPRO C 5.0.
+
 2007-03-11  Bruno Haible  <bruno@clisp.org>
 
 	* modules/long-options (Depends-on): Add getopt.

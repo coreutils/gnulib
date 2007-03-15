@@ -40,7 +40,12 @@ int
 main ()
 {
   int i;
-  double x;
+  /* The use of 'volatile' guarantees that excess precision bits are dropped
+     when dealing with denormalized numbers.  It is necessary on x86 systems
+     where double-floats are not IEEE compliant by default, to avoid that the
+     results become platform and compiler option dependent.  'volatile' is a
+     portable alternative to gcc's -ffloat-store option.  */
+  volatile double x;
 
   for (i = 1, x = 1.0; i <= DBL_MAX_EXP; i++, x *= 2.0)
     {

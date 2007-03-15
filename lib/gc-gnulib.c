@@ -187,7 +187,7 @@ typedef struct _gc_cipher_ctx {
   arcfour_context arcfourContext;
 #endif
 #ifdef GNULIB_GC_DES
-  des_ctx desContext;
+  gl_des_ctx desContext;
 #endif
 #ifdef GNULIB_GC_RIJNDAEL
   rijndaelKeyInstance aesEncKey;
@@ -305,7 +305,7 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
     case GC_DES:
       if (keylen != 8)
 	return GC_INVALID_CIPHER;
-      des_setkey (&ctx->desContext, key);
+      gl_des_setkey (&ctx->desContext, key);
       break;
 #endif
 
@@ -443,7 +443,7 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 #ifdef GNULIB_GC_DES
     case GC_DES:
       for (; len >= 8; len -= 8, data += 8)
-	des_ecb_encrypt (&ctx->desContext, data, data);
+	gl_des_ecb_encrypt (&ctx->desContext, data, data);
       break;
 #endif
 
@@ -515,7 +515,7 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 #ifdef GNULIB_GC_DES
     case GC_DES:
       for (; len >= 8; len -= 8, data += 8)
-	des_ecb_decrypt (&ctx->desContext, data, data);
+	gl_des_ecb_decrypt (&ctx->desContext, data, data);
       break;
 #endif
 

@@ -277,7 +277,9 @@
 #undef INT64_MIN
 #undef INT64_MAX
 #ifdef GL_INT64_T
-# define INT64_MIN  (~ INT64_MAX)
+/* Prefer (- INTMAX_C (1) << 63) over (~ INT64_MAX) because SunPRO C 5.0
+   evaluates the latter incorrectly in preprocessor expressions.  */
+# define INT64_MIN  (- INTMAX_C (1) << 63)
 # define INT64_MAX  INTMAX_C (9223372036854775807)
 #endif
 
@@ -377,10 +379,11 @@
 
 #undef INTMAX_MIN
 #undef INTMAX_MAX
-#define INTMAX_MIN  (~ INTMAX_MAX)
 #ifdef INT64_MAX
+# define INTMAX_MIN  INT64_MIN
 # define INTMAX_MAX  INT64_MAX
 #else
+# define INTMAX_MIN  INT32_MIN
 # define INTMAX_MAX  INT32_MAX
 #endif
 
