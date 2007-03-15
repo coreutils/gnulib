@@ -1,0 +1,35 @@
+Important notes
+---------------
+
+User visible incompatible changes
+---------------------------------
+
+Date        Modules         Changes
+
+2007-03-12  des             The types and functions in lib/des.h have been
+            gc-des          renamed:
+
+                            des_ctx -> gl_des_ctx, tripledes_ctx -> gl_3des_ctx,
+                            des_is_weak_key -> gl_des_is_weak_key,
+                            des_setkey -> gl_des_setkey,
+                            des_makekey -> gl_des_makekey,
+                            des_ecb_crypt -> gl_des_ecb_crypt,
+                            des_ecb_encrypt -> gl_des_ecb_encrypt,
+                            des_ecb_decrypt -> gl_des_ecb_decrypt,
+                            tripledes_set2keys -> gl_3des_set2keys,
+                            tripledes_set3keys -> gl_3des_set3keys,
+                            tripledes_makekey -> gl_3des_makekey,
+                            tripledes_ecb_crypt -> gl_3des_ecb_crypt.
+
+                            Also consider using the "gc-des" buffer instead of
+                            using the "des" module directly.
+
+2007-02-28  xreadlink       The module xreadlink was renamed to
+                            xreadlink-with-size. The function was renamed:
+                            xreadlink -> xreadlink_with_size.
+
+# This is for Emacs.
+# Local Variables:
+# indent-tabs-mode: nil
+# whitespace-check-buffer-indent: nil
+# End:
