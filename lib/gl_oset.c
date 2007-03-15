@@ -1,5 +1,5 @@
 /* Abstract ordered set data type.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -29,9 +29,10 @@
 
 gl_oset_t
 gl_oset_create_empty (gl_oset_implementation_t implementation,
-		      gl_setelement_compar_fn compar_fn)
+		      gl_setelement_compar_fn compar_fn,
+		      gl_setelement_dispose_fn dispose_fn)
 {
-  return implementation->create_empty (implementation, compar_fn);
+  return implementation->create_empty (implementation, compar_fn, dispose_fn);
 }
 
 size_t

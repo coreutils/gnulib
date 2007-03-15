@@ -43,12 +43,14 @@ struct gl_oset_impl
 
 static gl_oset_t
 gl_array_create_empty (gl_oset_implementation_t implementation,
-		       gl_setelement_compar_fn compar_fn)
+		       gl_setelement_compar_fn compar_fn,
+		       gl_setelement_dispose_fn dispose_fn)
 {
   struct gl_oset_impl *set = XMALLOC (struct gl_oset_impl);
 
   set->base.vtable = implementation;
   set->base.compar_fn = compar_fn;
+  set->base.dispose_fn = dispose_fn;
   set->elements = NULL;
   set->count = 0;
   set->allocated = 0;
@@ -204,6 +206,8 @@ gl_array_remove_at (gl_oset_t set, size_t position)
   size_t i;
 
   elements = set->elements;
+  if (set->base.dispose_fn != NULL)
+    set->base.dispose_fn (elements[position]);
   for (i = position + 1; i < count; i++)
     elements[i - 1] = elements[i];
   set->count = count - 1;
@@ -262,7 +266,23 @@ static void
 gl_array_free (gl_oset_t set)
 {
   if (set->elements != NULL)
-    free (set->elements);
+    {
+      if (set->base.dispose_fn != NULL)
+	{
+	  size_t count = set->count;
+
+	  if (count > 0)
+	    {
+	      gl_setelement_dispose_fn dispose = set->base.dispose_fn;
+	      const void **elements = set->elements;
+
+	      do
+		dispose (*elements++);
+	      while (--count > 0);
+	    }
+	}
+      free (set->elements);
+    }
   free (set);
 }
 

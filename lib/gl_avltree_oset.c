@@ -1,5 +1,5 @@
 /* Ordered set data type implemented by a binary tree.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -519,6 +519,8 @@ gl_tree_remove_node (gl_oset_t set, gl_oset_node_t node)
     }
 
   set->count--;
+  if (set->base.dispose_fn != NULL)
+    set->base.dispose_fn (node->value);
   free (node);
   return true;
 }

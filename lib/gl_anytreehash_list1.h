@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a hash table with a binary tree.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -152,7 +152,7 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
 
 		      nodes =
 			gl_oset_create_empty (OSET_TREE_FLAVOR,
-					      compare_by_position);
+					      compare_by_position, NULL);
 
 		      gl_oset_add (nodes, node);
 		      gl_oset_add (nodes, new_node);

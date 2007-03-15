@@ -86,10 +86,10 @@ main (int argc, char *argv[])
     unsigned int repeat;
 
     /* Create set1.  */
-    set1 = gl_oset_create_empty (GL_ARRAY_OSET, (gl_setelement_compar_fn) strcmp);
+    set1 = gl_oset_create_empty (GL_ARRAY_OSET, (gl_setelement_compar_fn) strcmp, NULL);
 
     /* Create set2.  */
-    set2 = gl_oset_create_empty (GL_AVLTREE_OSET, (gl_setelement_compar_fn) strcmp);
+    set2 = gl_oset_create_empty (GL_AVLTREE_OSET, (gl_setelement_compar_fn) strcmp, NULL);
 
     check_all (set1, set2);
 

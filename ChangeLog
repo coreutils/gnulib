@@ -1,3 +1,25 @@
+2007-03-15  Bruno Haible  <bruno@clisp.org>
+
+	* lib/gl_oset.h (gl_setelement_dispose_fn): New type.
+	(gl_oset_create_empty): Add dispose_fn argument.
+	(struct gl_oset_implementation): Add dispose_fn argument to
+	'create_empty' method.
+	(struct gl_oset_impl_base): Add dispose_fn field.
+	* lib/gl_oset.c (gl_oset_create_empty): Add dispose_fn argument.
+	* lib/gl_array_oset.c (gl_array_create_empty): Add dispose_fn argument.
+	(gl_array_remove_at, gl_array_free): Call dispose_fn on the dropped
+	values.
+	* lib/gl_anytree_oset.h (gl_tree_create_empty): Add dispose_fn argument.
+	(gl_tree_oset_free): Call dispose_fn on the dropped values.
+	* lib/gl_avltree_oset.c (gl_tree_remove_node): Call dispose_fn on the
+	dropped value.
+	* lib/gl_rbtree_oset.c (gl_tree_remove_node): Call dispose_fn on the
+	dropped value.
+	* tests/test-array_oset.c (main): Update.
+	* tests/test-avltree_oset.c (main): Update.
+	* tests/test-rbtree_oset.c (main): Update.
+	* lib/gl_anytreehash_list1.h (add_to_bucket): Update.
+
 2007-03-12  Bruno Haible  <bruno@clisp.org>
 
 	* lib/quotearg.c: Include <wctype.h> early, before the definition of

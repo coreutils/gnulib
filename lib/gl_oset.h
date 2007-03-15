@@ -1,5 +1,5 @@
 /* Abstract ordered set data type.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -70,6 +70,10 @@ extern "C" {
    NULL denotes pointer comparison.  */
 typedef int (*gl_setelement_compar_fn) (const void *elt1, const void *elt2);
 
+/* Type of function used to dispose an element once it's removed from a set.
+   NULL denotes a no-op.  */
+typedef void (*gl_setelement_dispose_fn) (const void *elt);
+
 /* Type of function used to compare an element with a threshold.
    Return true if the element is greater or equal than the threshold.  */
 typedef bool (*gl_setelement_threshold_fn) (const void *elt, const void *threshold);
@@ -84,9 +88,11 @@ typedef const struct gl_oset_implementation * gl_oset_implementation_t;
 
 /* Create an empty set.
    IMPLEMENTATION is one of GL_ARRAY_OSET, GL_AVLTREE_OSET, GL_RBTREE_OSET.
-   COMPAR_FN is an element comparison function or NULL.  */
+   COMPAR_FN is an element comparison function or NULL.
+   DISPOSE_FN is an element disposal function or NULL.  */
 extern gl_oset_t gl_oset_create_empty (gl_oset_implementation_t implementation,
-				       gl_setelement_compar_fn compar_fn);
+				       gl_setelement_compar_fn compar_fn,
+				       gl_setelement_dispose_fn dispose_fn);
 
 /* Return the current number of elements in an ordered set.  */
 extern size_t gl_oset_size (gl_oset_t set);
@@ -155,7 +161,8 @@ struct gl_oset_implementation
 {
   /* gl_oset_t functions.  */
   gl_oset_t (*create_empty) (gl_oset_implementation_t implementation,
-			     gl_setelement_compar_fn compar_fn);
+			     gl_setelement_compar_fn compar_fn,
+			     gl_setelement_dispose_fn dispose_fn);
   size_t (*size) (gl_oset_t set);
   bool (*search) (gl_oset_t set, const void *elt);
   bool (*search_atleast) (gl_oset_t set,
@@ -174,6 +181,7 @@ struct gl_oset_impl_base
 {
   const struct gl_oset_implementation *vtable;
   gl_setelement_compar_fn compar_fn;
+  gl_setelement_dispose_fn dispose_fn;
 };
 
 #if HAVE_INLINE
@@ -185,9 +193,10 @@ struct gl_oset_impl_base
 # define gl_oset_create_empty gl_oset_create_empty_inline
 static inline gl_oset_t
 gl_oset_create_empty (gl_oset_implementation_t implementation,
-		      gl_setelement_compar_fn compar_fn)
+		      gl_setelement_compar_fn compar_fn,
+		      gl_setelement_dispose_fn dispose_fn)
 {
-  return implementation->create_empty (implementation, compar_fn);
+  return implementation->create_empty (implementation, compar_fn, dispose_fn);
 }
 
 # define gl_oset_size gl_oset_size_inline

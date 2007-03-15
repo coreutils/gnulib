@@ -6,6 +6,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-03-15  oset            The function gl_oset_create_empty now takes a
+            array-oset      third argument. You can pass NULL.
+            avltree-oset
+            rbtree-oset
+
 2007-03-12  des             The types and functions in lib/des.h have been
             gc-des          renamed:
 
