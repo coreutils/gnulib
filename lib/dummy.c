@@ -36,7 +36,7 @@
 
 #ifdef __sun
 /* This declaration ensures that the library will export at least 1 symbol.  */
-int dummy;
+int gl_dummy_symbol;
 #else
 /* This declaration is solely to ensure that after preprocessing
    this file is never empty.  */

@@ -1,5 +1,10 @@
 2007-03-15  Bruno Haible  <bruno@clisp.org>
 
+	* lib/dummy.c (gl_dummy_symbol): Renamed from 'dummy'.
+	Reported by James Youngman <jay@gnu.org>.
+
+2007-03-15  Bruno Haible  <bruno@clisp.org>
+
 	* lib/glob.c (glob): Add 'restrict' so that prototype matches the
 	declared prototype. Needed with cc on OSF/1 5.1.
 
