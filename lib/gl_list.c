@@ -1,5 +1,5 @@
 /* Abstract sequential list data type.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -31,21 +31,23 @@ gl_list_t
 gl_list_create_empty (gl_list_implementation_t implementation,
 		      gl_listelement_equals_fn equals_fn,
 		      gl_listelement_hashcode_fn hashcode_fn,
+		      gl_listelement_dispose_fn dispose_fn,
 		      bool allow_duplicates)
 {
   return implementation->create_empty (implementation, equals_fn, hashcode_fn,
-				       allow_duplicates);
+				       dispose_fn, allow_duplicates);
 }
 
 gl_list_t
 gl_list_create (gl_list_implementation_t implementation,
 		gl_listelement_equals_fn equals_fn,
 		gl_listelement_hashcode_fn hashcode_fn,
+		gl_listelement_dispose_fn dispose_fn,
 		bool allow_duplicates,
 		size_t count, const void **contents)
 {
   return implementation->create (implementation, equals_fn, hashcode_fn,
-				 allow_duplicates, count, contents);
+				 dispose_fn, allow_duplicates, count, contents);
 }
 
 size_t

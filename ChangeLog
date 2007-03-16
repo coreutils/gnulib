@@ -1,5 +1,49 @@
 2007-03-15  Bruno Haible  <bruno@clisp.org>
 
+	* lib/gl_list.h (gl_listelement_dispose_fn): New type.
+	(gl_list_create_empty, gl_list_create): Add dispose_fn argument.
+	(struct gl_list_implementation): Add dispose_fn argument to the
+	'create_empty', 'create' methods.
+	(struct gl_list_impl_base): Add field 'dispose_fn'.
+	* lib/gl_list.c (gl_list_create_empty, gl_list_create): Add dispose_fn
+	argument.
+	* lib/gl_array_list.c (gl_array_create_empty, gl_array_create): Add
+	dispose_fn argument.
+	(gl_array_remove_node, gl_array_remove_at, gl_array_list_free): Call
+	dispose_fn on the dropped values.
+	* lib/gl_carray_list.c (gl_carray_create_empty, gl_carray_create): Add
+	dispose_fn argument.
+	(gl_carray_remove_at, gl_carray_list_free): Call dispose_fn on the
+	dropped values.
+	* lib/gl_anyavltree_list2.h (gl_tree_create): Add dispose_fn argument.
+	(gl_tree_remove_node): Call dispose_fn on the dropped value.
+	* lib/gl_anyrbtree_list2.h (gl_tree_create): Add dispose_fn argument.
+	(gl_tree_remove_node): Call dispose_fn on the dropped value.
+	* lib/gl_anytree_list2.h (gl_tree_create_empty): Add dispose_fn
+	argument.
+	(gl_tree_list_free): Call dispose_fn on the dropped values.
+	* lib/gl_anytreehash_list2.h (gl_tree_list_free): Call dispose_fn on
+	the dropped values.
+	* lib/gl_anylinked_list2.h (gl_linked_create_empty, gl_linked_create):
+	Add dispose_fn argument.
+	(gl_linked_remove_node, gl_linked_remove_at, gl_linked_list_free):
+	Call dispose_fn on the dropped values.
+	* lib/gl_sublist.c (gl_sublist_create_empty, gl_sublist_create_fill):
+	Add dispose_fn argument.
+	(gl_sublist_create): Initialize the 'dispose_fn' field.
+	* lib/clean-temp.c (create_temp_dir, register_fd): Update.
+	* tests/test-array_list.c (main): Update.
+	* tests/test-carray_list.c (main): Update.
+	* tests/test-avltree_list.c (main): Update.
+	* tests/test-rbtree_list.c (main): Update.
+	* tests/test-avltreehash_list.c (main): Update.
+	* tests/test-rbtreehash_list.c (main): Update.
+	* tests/test-linked_list.c (main): Update.
+	* tests/test-linkedhash_list.c (main): Update.
+	* tests/test-array_oset.c (main): Update.
+
+2007-03-15  Bruno Haible  <bruno@clisp.org>
+
 	* lib/gl_oset.h (gl_setelement_dispose_fn): New type.
 	(gl_oset_create_empty): Add dispose_fn argument.
 	(struct gl_oset_implementation): Add dispose_fn argument to

@@ -1,5 +1,5 @@
 /* Abstract sequential list data type.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -102,6 +102,10 @@ typedef bool (*gl_listelement_equals_fn) (const void *elt1, const void *elt2);
    NULL denotes a function that depends only on the pointer itself.  */
 typedef size_t (*gl_listelement_hashcode_fn) (const void *elt);
 
+/* Type of function used to dispose an element once it's removed from a list.
+   NULL denotes a no-op.  */
+typedef void (*gl_listelement_dispose_fn) (const void *elt);
+
 struct gl_list_impl;
 /* Type representing an entire list.  */
 typedef struct gl_list_impl * gl_list_t;
@@ -122,11 +126,13 @@ typedef const struct gl_list_implementation * gl_list_implementation_t;
    GL_RBTREEHASH_LIST.
    EQUALS_FN is an element comparison function or NULL.
    HASHCODE_FN is an element hash code function or NULL.
+   DISPOSE_FN is an element disposal function or NULL.
    ALLOW_DUPLICATES is false if duplicate elements shall not be allowed in
    the list. The implementation may verify this at runtime.  */
 extern gl_list_t gl_list_create_empty (gl_list_implementation_t implementation,
 				       gl_listelement_equals_fn equals_fn,
 				       gl_listelement_hashcode_fn hashcode_fn,
+				       gl_listelement_dispose_fn dispose_fn,
 				       bool allow_duplicates);
 
 /* Create a list with given contents.
@@ -135,6 +141,7 @@ extern gl_list_t gl_list_create_empty (gl_list_implementation_t implementation,
    GL_RBTREEHASH_LIST.
    EQUALS_FN is an element comparison function or NULL.
    HASHCODE_FN is an element hash code function or NULL.
+   DISPOSE_FN is an element disposal function or NULL.
    ALLOW_DUPLICATES is false if duplicate elements shall not be allowed in
    the list. The implementation may verify this at runtime.
    COUNT is the number of initial elements.
@@ -142,6 +149,7 @@ extern gl_list_t gl_list_create_empty (gl_list_implementation_t implementation,
 extern gl_list_t gl_list_create (gl_list_implementation_t implementation,
 				 gl_listelement_equals_fn equals_fn,
 				 gl_listelement_hashcode_fn hashcode_fn,
+				 gl_listelement_dispose_fn dispose_fn,
 				 bool allow_duplicates,
 				 size_t count, const void **contents);
 
@@ -364,10 +372,12 @@ struct gl_list_implementation
   gl_list_t (*create_empty) (gl_list_implementation_t implementation,
 			     gl_listelement_equals_fn equals_fn,
 			     gl_listelement_hashcode_fn hashcode_fn,
+			     gl_listelement_dispose_fn dispose_fn,
 			     bool allow_duplicates);
   gl_list_t (*create) (gl_list_implementation_t implementation,
 		       gl_listelement_equals_fn equals_fn,
 		       gl_listelement_hashcode_fn hashcode_fn,
+		       gl_listelement_dispose_fn dispose_fn,
 		       bool allow_duplicates,
 		       size_t count, const void **contents);
   size_t (*size) (gl_list_t list);
@@ -429,6 +439,7 @@ struct gl_list_impl_base
   const struct gl_list_implementation *vtable;
   gl_listelement_equals_fn equals_fn;
   gl_listelement_hashcode_fn hashcode_fn;
+  gl_listelement_dispose_fn dispose_fn;
   bool allow_duplicates;
 };
 
@@ -443,10 +454,11 @@ static inline gl_list_t
 gl_list_create_empty (gl_list_implementation_t implementation,
 		      gl_listelement_equals_fn equals_fn,
 		      gl_listelement_hashcode_fn hashcode_fn,
+		      gl_listelement_dispose_fn dispose_fn,
 		      bool allow_duplicates)
 {
   return implementation->create_empty (implementation, equals_fn, hashcode_fn,
-				       allow_duplicates);
+				       dispose_fn, allow_duplicates);
 }
 
 # define gl_list_create gl_list_create_inline
@@ -454,11 +466,12 @@ static inline gl_list_t
 gl_list_create (gl_list_implementation_t implementation,
 		gl_listelement_equals_fn equals_fn,
 		gl_listelement_hashcode_fn hashcode_fn,
+		gl_listelement_dispose_fn dispose_fn,
 		bool allow_duplicates,
 		size_t count, const void **contents)
 {
   return implementation->create (implementation, equals_fn, hashcode_fn,
-				 allow_duplicates, count, contents);
+				 dispose_fn, allow_duplicates, count, contents);
 }
 
 # define gl_list_size gl_list_size_inline

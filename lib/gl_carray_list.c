@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a circular array.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -57,15 +57,17 @@ struct gl_list_impl
 
 static gl_list_t
 gl_carray_create_empty (gl_list_implementation_t implementation,
-		       gl_listelement_equals_fn equals_fn,
-		       gl_listelement_hashcode_fn hashcode_fn,
-		       bool allow_duplicates)
+			gl_listelement_equals_fn equals_fn,
+			gl_listelement_hashcode_fn hashcode_fn,
+			gl_listelement_dispose_fn dispose_fn,
+			bool allow_duplicates)
 {
   struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
 
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
   list->base.hashcode_fn = hashcode_fn;
+  list->base.dispose_fn = dispose_fn;
   list->base.allow_duplicates = allow_duplicates;
   list->elements = NULL;
   list->offset = 0;
@@ -77,16 +79,18 @@ gl_carray_create_empty (gl_list_implementation_t implementation,
 
 static gl_list_t
 gl_carray_create (gl_list_implementation_t implementation,
-		 gl_listelement_equals_fn equals_fn,
-		 gl_listelement_hashcode_fn hashcode_fn,
-		 bool allow_duplicates,
-		 size_t count, const void **contents)
+		  gl_listelement_equals_fn equals_fn,
+		  gl_listelement_hashcode_fn hashcode_fn,
+		  gl_listelement_dispose_fn dispose_fn,
+		  bool allow_duplicates,
+		  size_t count, const void **contents)
 {
   struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
 
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
   list->base.hashcode_fn = hashcode_fn;
+  list->base.dispose_fn = dispose_fn;
   list->base.allow_duplicates = allow_duplicates;
   if (count > 0)
     {
@@ -448,6 +452,8 @@ gl_carray_remove_at (gl_list_t list, size_t position)
 	  /* Here we must have list->offset > 0, hence list->allocated > 0.  */
 	  size_t i1 = list->allocated - 1;
 	  i2 -= list->allocated;
+	  if (list->base.dispose_fn != NULL)
+	    list->base.dispose_fn (elements[i2]);
 	  for (i = i2; i > 0; i--)
 	    elements[i] = elements[i - 1];
 	  elements[0] = elements[i1];
@@ -456,6 +462,8 @@ gl_carray_remove_at (gl_list_t list, size_t position)
 	}
       else
 	{
+	  if (list->base.dispose_fn != NULL)
+	    list->base.dispose_fn (elements[i2]);
 	  for (i = i2; i > i0; i--)
 	    elements[i] = elements[i - 1];
 	}
@@ -474,6 +482,8 @@ gl_carray_remove_at (gl_list_t list, size_t position)
 	{
 	  i1 -= list->allocated;
 	  i3 -= list->allocated;
+	  if (list->base.dispose_fn != NULL)
+	    list->base.dispose_fn (elements[i1]);
 	  for (i = i1; i < i3; i++)
 	    elements[i] = elements[i + 1];
 	}
@@ -482,6 +492,8 @@ gl_carray_remove_at (gl_list_t list, size_t position)
 	  /* Here we must have list->offset > 0, hence list->allocated > 0.  */
 	  size_t i2 = list->allocated - 1;
 	  i3 -= list->allocated;
+	  if (list->base.dispose_fn != NULL)
+	    list->base.dispose_fn (elements[i1]);
 	  for (i = i1; i < i2; i++)
 	    elements[i] = elements[i + 1];
 	  elements[i2] = elements[0];
@@ -490,6 +502,8 @@ gl_carray_remove_at (gl_list_t list, size_t position)
 	}
       else
 	{
+	  if (list->base.dispose_fn != NULL)
+	    list->base.dispose_fn (elements[i1]);
 	  for (i = i1; i < i3; i++)
 	    elements[i] = elements[i + 1];
 	}
@@ -524,7 +538,42 @@ static void
 gl_carray_list_free (gl_list_t list)
 {
   if (list->elements != NULL)
-    free (list->elements);
+    {
+      if (list->base.dispose_fn != NULL)
+	{
+	  size_t count = list->count;
+
+	  if (count > 0)
+	    {
+	      gl_listelement_dispose_fn dispose = list->base.dispose_fn;
+	      const void **elements = list->elements;
+	      size_t i1 = list->offset;
+	      size_t i3 = list->offset + count - 1;
+
+	      if (i3 >= list->allocated)
+		{
+		  /* Here we must have list->offset > 0, hence
+		     list->allocated > 0.  */
+		  size_t i2 = list->allocated - 1;
+		  size_t i;
+
+		  i3 -= list->allocated;
+		  for (i = i1; i <= i2; i++)
+		    dispose (elements[i]);
+		  for (i = 0; i <= i3; i++)
+		    dispose (elements[i]);
+		}
+	      else
+		{
+		  size_t i;
+
+		  for (i = i1; i <= i3; i++)
+		    dispose (elements[i]);
+		}
+	    }
+	}
+      free (list->elements);
+    }
   free (list);
 }
 

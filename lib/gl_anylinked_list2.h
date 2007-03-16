@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a linked list.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -41,6 +41,7 @@ static gl_list_t
 gl_linked_create_empty (gl_list_implementation_t implementation,
 			gl_listelement_equals_fn equals_fn,
 			gl_listelement_hashcode_fn hashcode_fn,
+			gl_listelement_dispose_fn dispose_fn,
 			bool allow_duplicates)
 {
   struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
@@ -48,6 +49,7 @@ gl_linked_create_empty (gl_list_implementation_t implementation,
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
   list->base.hashcode_fn = hashcode_fn;
+  list->base.dispose_fn = dispose_fn;
   list->base.allow_duplicates = allow_duplicates;
 #if WITH_HASHTABLE
   list->table_size = 11;
@@ -64,6 +66,7 @@ static gl_list_t
 gl_linked_create (gl_list_implementation_t implementation,
 		  gl_listelement_equals_fn equals_fn,
 		  gl_listelement_hashcode_fn hashcode_fn,
+		  gl_listelement_dispose_fn dispose_fn,
 		  bool allow_duplicates,
 		  size_t count, const void **contents)
 {
@@ -73,6 +76,7 @@ gl_linked_create (gl_list_implementation_t implementation,
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
   list->base.hashcode_fn = hashcode_fn;
+  list->base.dispose_fn = dispose_fn;
   list->base.allow_duplicates = allow_duplicates;
 #if WITH_HASHTABLE
   {
@@ -684,6 +688,8 @@ gl_linked_remove_node (gl_list_t list, gl_list_node_t node)
   next->prev = prev;
   list->count--;
 
+  if (list->base.dispose_fn != NULL)
+    list->base.dispose_fn (node->value);
   free (node);
   return true;
 }
@@ -730,6 +736,8 @@ gl_linked_remove_at (gl_list_t list, size_t position)
 #endif
   list->count--;
 
+  if (list->base.dispose_fn != NULL)
+    list->base.dispose_fn (removed_node->value);
   free (removed_node);
   return true;
 }
@@ -748,11 +756,14 @@ gl_linked_remove (gl_list_t list, const void *elt)
 static void
 gl_linked_list_free (gl_list_t list)
 {
+  gl_listelement_dispose_fn dispose = list->base.dispose_fn;
   gl_list_node_t node;
 
   for (node = list->root.next; node != &list->root; )
     {
       gl_list_node_t next = node->next;
+      if (dispose != NULL)
+	dispose (node->value);
       free (node);
       node = next;
     }

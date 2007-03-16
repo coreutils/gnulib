@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a binary tree.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -68,6 +68,7 @@ static gl_list_t
 gl_tree_create (gl_list_implementation_t implementation,
 		gl_listelement_equals_fn equals_fn,
 		gl_listelement_hashcode_fn hashcode_fn,
+		gl_listelement_dispose_fn dispose_fn,
 		bool allow_duplicates,
 		size_t count, const void **contents)
 {
@@ -76,6 +77,7 @@ gl_tree_create (gl_list_implementation_t implementation,
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
   list->base.hashcode_fn = hashcode_fn;
+  list->base.dispose_fn = dispose_fn;
   list->base.allow_duplicates = allow_duplicates;
 #if WITH_HASHTABLE
   {
@@ -959,6 +961,8 @@ gl_tree_remove_node (gl_list_t list, gl_list_node_t node)
 	}
     }
 
+  if (list->base.dispose_fn != NULL)
+    list->base.dispose_fn (node->value);
   free (node);
   return true;
 }

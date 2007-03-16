@@ -1,5 +1,5 @@
 /* Sequential list data type backed by another list.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -53,6 +53,7 @@ static gl_list_t
 gl_sublist_create_empty (gl_list_implementation_t implementation,
 			 gl_listelement_equals_fn equals_fn,
 			 gl_listelement_hashcode_fn hashcode_fn,
+			 gl_listelement_dispose_fn dispose_fn,
 			 bool allow_duplicates)
 {
   /* Shouldn't be called.  */
@@ -63,6 +64,7 @@ static gl_list_t
 gl_sublist_create_fill (gl_list_implementation_t implementation,
 			gl_listelement_equals_fn equals_fn,
 			gl_listelement_hashcode_fn hashcode_fn,
+			gl_listelement_dispose_fn dispose_fn,
 			bool allow_duplicates,
 			size_t count, const void **contents)
 {
@@ -435,6 +437,7 @@ gl_sublist_create (gl_list_t whole_list, size_t start_index, size_t end_index)
     list->base.vtable = &gl_sublist_list_implementation;
     list->base.equals_fn = whole_list->base.equals_fn; /* actually unused */
     list->base.hashcode_fn = whole_list->base.hashcode_fn; /* actually unused */
+    list->base.dispose_fn = whole_list->base.dispose_fn; /* actually unused */
     list->base.allow_duplicates = whole_list->base.allow_duplicates; /* unused */
     if (whole_list->base.vtable == &gl_sublist_list_implementation)
       {

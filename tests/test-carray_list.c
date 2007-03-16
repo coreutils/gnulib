@@ -79,15 +79,15 @@ main (int argc, char *argv[])
       contents[i] = RANDOM_OBJECT ();
 
     /* Create list1.  */
-    list1 = gl_list_create (GL_ARRAY_LIST, NULL, NULL, true,
+    list1 = gl_list_create (GL_ARRAY_LIST, NULL, NULL, NULL, true,
                             initial_size, contents);
     /* Create list2.  */
-    list2 = gl_list_create_empty (GL_CARRAY_LIST, NULL, NULL, true);
+    list2 = gl_list_create_empty (GL_CARRAY_LIST, NULL, NULL, NULL, true);
     for (i = 0; i < initial_size; i++)
       gl_list_add_last (list2, contents[i]);
 
     /* Create list3.  */
-    list3 = gl_list_create (GL_CARRAY_LIST, NULL, NULL, true,
+    list3 = gl_list_create (GL_CARRAY_LIST, NULL, NULL, NULL, true,
                             initial_size, contents);
 
     check_all (list1, list2, list3);

@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by an array.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -56,6 +56,7 @@ static gl_list_t
 gl_array_create_empty (gl_list_implementation_t implementation,
 		       gl_listelement_equals_fn equals_fn,
 		       gl_listelement_hashcode_fn hashcode_fn,
+		       gl_listelement_dispose_fn dispose_fn,
 		       bool allow_duplicates)
 {
   struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
@@ -63,6 +64,7 @@ gl_array_create_empty (gl_list_implementation_t implementation,
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
   list->base.hashcode_fn = hashcode_fn;
+  list->base.dispose_fn = dispose_fn;
   list->base.allow_duplicates = allow_duplicates;
   list->elements = NULL;
   list->count = 0;
@@ -75,6 +77,7 @@ static gl_list_t
 gl_array_create (gl_list_implementation_t implementation,
 		 gl_listelement_equals_fn equals_fn,
 		 gl_listelement_hashcode_fn hashcode_fn,
+		 gl_listelement_dispose_fn dispose_fn,
 		 bool allow_duplicates,
 		 size_t count, const void **contents)
 {
@@ -83,6 +86,7 @@ gl_array_create (gl_list_implementation_t implementation,
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
   list->base.hashcode_fn = hashcode_fn;
+  list->base.dispose_fn = dispose_fn;
   list->base.allow_duplicates = allow_duplicates;
   if (count > 0)
     {
@@ -345,6 +349,8 @@ gl_array_remove_node (gl_list_t list, gl_list_node_t node)
     abort ();
   position = index;
   elements = list->elements;
+  if (list->base.dispose_fn != NULL)
+    list->base.dispose_fn (elements[position]);
   for (i = position + 1; i < count; i++)
     elements[i - 1] = elements[i];
   list->count = count - 1;
@@ -362,6 +368,8 @@ gl_array_remove_at (gl_list_t list, size_t position)
     /* Invalid argument.  */
     abort ();
   elements = list->elements;
+  if (list->base.dispose_fn != NULL)
+    list->base.dispose_fn (elements[position]);
   for (i = position + 1; i < count; i++)
     elements[i - 1] = elements[i];
   list->count = count - 1;
@@ -382,7 +390,23 @@ static void
 gl_array_list_free (gl_list_t list)
 {
   if (list->elements != NULL)
-    free (list->elements);
+    {
+      if (list->base.dispose_fn != NULL)
+	{
+	  size_t count = list->count;
+
+	  if (count > 0)
+	    {
+	      gl_listelement_dispose_fn dispose = list->base.dispose_fn;
+	      const void **elements = list->elements;
+
+	      do
+		dispose (*elements++);
+	      while (--count > 0);
+	    }
+	}
+      free (list->elements);
+    }
   free (list);
 }
 

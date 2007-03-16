@@ -91,7 +91,7 @@ main (int argc, char *argv[])
     set1 = gl_oset_create_empty (GL_ARRAY_OSET, (gl_setelement_compar_fn) strcmp, NULL);
 
     /* Create set2.  */
-    set2 = gl_list_create_empty (GL_ARRAY_LIST, NULL, NULL, false);
+    set2 = gl_list_create_empty (GL_ARRAY_LIST, NULL, NULL, NULL, false);
 
     check_all (set1, set2);
 

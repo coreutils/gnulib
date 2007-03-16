@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a hash table with a binary tree.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software; you can redistribute it and/or modify
@@ -198,6 +198,8 @@ gl_tree_list_free (gl_list_t list)
 	    if (!stack_ptr->rightp)
 	      break;
 	    /* Free the current node.  */
+	    if (list->base.dispose_fn != NULL)
+	      list->base.dispose_fn (node->value);
 	    free (node);
 	  }
 	/* Descend on right branch.  */

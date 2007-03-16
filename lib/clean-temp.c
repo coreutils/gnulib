@@ -320,9 +320,11 @@ create_temp_dir (const char *prefix, const char *parentdir,
   tmpdir->dirname = NULL;
   tmpdir->cleanup_verbose = cleanup_verbose;
   tmpdir->subdirs = gl_list_create_empty (GL_LINKEDHASH_LIST,
-					  string_equals, string_hash, false);
+					  string_equals, string_hash, NULL,
+					  false);
   tmpdir->files = gl_list_create_empty (GL_LINKEDHASH_LIST,
-					string_equals, string_hash, false);
+					string_equals, string_hash, NULL,
+					false);
 
   /* Create the temporary directory.  */
   xtemplate = (char *) xallocsa (PATH_MAX);
@@ -599,7 +601,8 @@ static void
 register_fd (int fd)
 {
   if (descriptors == NULL)
-    descriptors = gl_list_create_empty (GL_LINKEDHASH_LIST, NULL, NULL, false);
+    descriptors = gl_list_create_empty (GL_LINKEDHASH_LIST, NULL, NULL, NULL,
+					false);
   gl_list_add_first (descriptors, (void *) (uintptr_t) fd);
 }
 
