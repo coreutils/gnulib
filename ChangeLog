@@ -1,3 +1,8 @@
+2007-03-16  Alfred M. Szmidt  <ams@gnu.org>
+
+	* build-aux/bootstrap (gnulib_name): New variable.
+	(gnulib_tool_options): Use it.
+
 2007-03-13  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-des.c: Use new namespace.

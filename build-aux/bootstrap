@@ -89,6 +89,7 @@ extract_package_name='
   }
 '
 package=`sed -n "$extract_package_name" configure.ac` || exit
+gnulib_name=lib$package
 
 build_aux=build-aux
 # Extra files from gnulib, which override files from other sources.
@@ -450,7 +451,7 @@ gnulib_tool_options="\
  --no-changelog\
  --aux-dir $bt/$build_aux\
  --doc-base $bt/doc\
- --lib lib$package\
+ --lib $gnulib_name\
  --m4-base $bt/m4/\
  --source-base $bt/lib/\
  --tests-base $bt/tests\
