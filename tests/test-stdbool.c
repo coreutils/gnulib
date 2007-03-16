@@ -54,7 +54,9 @@ bool e = &s;
 char f[(_Bool) 0.0 == false ? 1 : -1];
 char g[true];
 char h[sizeof (_Bool)];
+#if 0 /* See above.  */
 char i[sizeof s.t];
+#endif
 enum { j = false, k = true, l = false * true, m = true * 256 };
 _Bool n[m];
 char o[sizeof n == m * sizeof n[0] ? 1 : -1];

@@ -20,6 +20,10 @@
 	* tests/test-rbtree_oset.c (main): Update.
 	* lib/gl_anytreehash_list1.h (add_to_bucket): Update.
 
+2007-03-13  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-stdbool.c (i): Update after last patch.
+
 2007-03-12  Bruno Haible  <bruno@clisp.org>
 
 	* lib/quotearg.c: Include <wctype.h> early, before the definition of
