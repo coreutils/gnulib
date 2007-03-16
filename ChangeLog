@@ -1,3 +1,7 @@
+2007-03-13  Simon Josefsson  <simon@josefsson.org>
+
+	* tests/test-des.c: Use new namespace.
+
 2007-03-15  Bruno Haible  <bruno@clisp.org>
 
 	* lib/dummy.c (gl_dummy_symbol): Renamed from 'dummy'.

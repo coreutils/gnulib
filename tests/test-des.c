@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 Free Software Foundation
+ * Copyright (C) 2005, 2007 Free Software Foundation
  * Written by Simon Josefsson
  *
  * This program is free software; you can redistribute it and/or modify
@@ -40,15 +40,15 @@ main (int argc, char *argv[])
     char input[8] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
     char result[8] = { 0x24, 0x6e, 0x9d, 0xb9, 0xc5, 0x50, 0x38, 0x1a };
     char temp1[8], temp2[8], temp3[8];
-    des_ctx des;
+    gl_des_ctx des;
 
     for (i = 0; i < 64; ++i)
       {
-	des_setkey (&des, key);
-	des_ecb_encrypt (&des, input, temp1);
-	des_ecb_encrypt (&des, temp1, temp2);
-	des_setkey (&des, temp2);
-	des_ecb_decrypt (&des, temp1, temp3);
+	gl_des_setkey (&des, key);
+	gl_des_ecb_encrypt (&des, input, temp1);
+	gl_des_ecb_encrypt (&des, temp1, temp2);
+	gl_des_setkey (&des, temp2);
+	gl_des_ecb_decrypt (&des, temp1, temp3);
 	memcpy (key, temp3, 8);
 	memcpy (input, temp1, 8);
       }
@@ -67,15 +67,15 @@ main (int argc, char *argv[])
     char key2[8] = { 0x11, 0x22, 0x33, 0x44, 0xff, 0xaa, 0xcc, 0xdd };
     char result[8] = { 0x7b, 0x38, 0x3b, 0x23, 0xa2, 0x7d, 0x26, 0xd3 };
 
-    tripledes_ctx des3;
+    gl_3des_ctx des3;
 
     for (i = 0; i < 16; ++i)
       {
-	tripledes_set2keys (&des3, key1, key2);
-	tripledes_ecb_encrypt (&des3, input, key1);
-	tripledes_ecb_decrypt (&des3, input, key2);
-	tripledes_set3keys (&des3, key1, input, key2);
-	tripledes_ecb_encrypt (&des3, input, input);
+	gl_3des_set2keys (&des3, key1, key2);
+	gl_3des_ecb_encrypt (&des3, input, key1);
+	gl_3des_ecb_decrypt (&des3, input, key2);
+	gl_3des_set3keys (&des3, key1, input, key2);
+	gl_3des_ecb_encrypt (&des3, input, input);
       }
     if (memcmp (input, result, 8))
       return 1;
@@ -196,20 +196,20 @@ main (int argc, char *argv[])
 
     char result[8];
     int i;
-    tripledes_ctx des3;
+    gl_3des_ctx des3;
 
     for (i = 0; i < sizeof (testdata) / sizeof (*testdata); ++i)
       {
-	tripledes_set3keys (&des3, testdata[i].key,
-			    testdata[i].key + 8, testdata[i].key + 16);
+	gl_3des_set3keys (&des3, testdata[i].key,
+			  testdata[i].key + 8, testdata[i].key + 16);
 
-	tripledes_ecb_encrypt (&des3, testdata[i].plain, result);
+	gl_3des_ecb_encrypt (&des3, testdata[i].plain, result);
 	if (memcmp (testdata[i].cipher, result, 8))
 	  {
 	    return 1;
 	  }
 
-	tripledes_ecb_decrypt (&des3, testdata[i].cipher, result);
+	gl_3des_ecb_decrypt (&des3, testdata[i].cipher, result);
 	if (memcmp (testdata[i].plain, result, 8))
 	  {
 	    return 1;
