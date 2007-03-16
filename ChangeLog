@@ -1,5 +1,11 @@
 2007-03-16  Alfred M. Szmidt  <ams@gnu.org>
 
+	* build-aux/bootstrap (with_gettext): New variable.  Run autopoint
+	and copy gettext configuration files only if configure.ac contains
+	a use of AM_GNU_GETTEXT_VERSION.
+
+2007-03-16  Alfred M. Szmidt  <ams@gnu.org>
+
 	* build-aux/bootstrap (gnulib_name): New variable.
 	(gnulib_tool_options): Use it.
 
