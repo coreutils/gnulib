@@ -212,10 +212,10 @@ int
 GLOB_ATTRIBUTE
 #endif
 glob (pattern, flags, errfunc, pglob)
-     const char *pattern;
+     const char * restrict pattern;
      int flags;
      int (*errfunc) (const char *, int);
-     glob_t *pglob;
+     glob_t * restrict pglob;
 {
   const char *filename;
   const char *dirname;

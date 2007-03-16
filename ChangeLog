@@ -1,5 +1,10 @@
 2007-03-15  Bruno Haible  <bruno@clisp.org>
 
+	* lib/glob.c (glob): Add 'restrict' so that prototype matches the
+	declared prototype. Needed with cc on OSF/1 5.1.
+
+2007-03-15  Bruno Haible  <bruno@clisp.org>
+
 	* lib/gl_list.h (gl_listelement_dispose_fn): New type.
 	(gl_list_create_empty, gl_list_create): Add dispose_fn argument.
 	(struct gl_list_implementation): Add dispose_fn argument to the
