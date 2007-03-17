@@ -42,6 +42,13 @@ Date        Modules         Changes
                             xreadlink-with-size. The function was renamed:
                             xreadlink -> xreadlink_with_size.
 
+2007-02-18  exit            The modules now depend on stdlib, so replace
+            mkdtemp           #include "exit.h"
+            mkstemp           #include "mkdtemp.h"
+                              #include "mkstemp.h"
+                            with
+                              #include <stdlib.h>
+
 2007-01-26  strdup          The module now depends on string, so replace
                               #include "strdup.h"
                             with
