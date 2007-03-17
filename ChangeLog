@@ -1,3 +1,7 @@
+2007-03-17  Jim Meyering  <jim@meyering.net>
+
+	* build-aux/bootstrap: Don't use \> in grep regexp.  For HP-UX.
+
 2007-03-16  Alfred M. Szmidt  <ams@gnu.org>
 
 	* build-aux/bootstrap (with_gettext): New variable.  Run autopoint
