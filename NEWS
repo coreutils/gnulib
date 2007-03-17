@@ -7,8 +7,14 @@ User visible incompatible changes
 Date        Modules         Changes
 
 2007-03-15  list            The functions gl_list_create_empty and
-                            gl_list_create now take an extra fourth argument.
-                            You can pass NULL.
+            array-list      gl_list_create now take an extra fourth argument.
+            carray-list     You can pass NULL.
+            linked-list
+            linkedhash-list
+            avltree-list
+            rbtree-list
+            avltreehash-list
+            rbtreehash-list
 
 2007-03-15  oset            The function gl_oset_create_empty now takes a
             array-oset      third argument. You can pass NULL.
