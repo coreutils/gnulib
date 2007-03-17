@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-03-12 00:48:31 $'
+cvsdatestamp='$Date: 2007-03-17 16:27:48 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1835,6 +1835,8 @@ func_import ()
   }
 
   # Copy files or make symbolic links. Remove obsolete files.
+  added_files=''
+  removed_files=''
   delimiter='	'
   # Construct a table with 2 columns: rewritten-file-name original-file-name,
   # representing the files according to the last gnulib-tool invocation.
@@ -1859,6 +1861,7 @@ func_import ()
       else
         echo "Remove file $g (backup in ${g}~)"
       fi
+      func_append removed_files "$g$nl"
     fi
   done
   # func_add_or_update handles a file that ought to be present afterwards.
@@ -1927,6 +1930,7 @@ func_import ()
       else
         echo "Copy file $g"
       fi
+      func_append added_files "$g$nl"
     fi
     rm -f "$tmpfile"
   }
@@ -2020,6 +2024,7 @@ func_import ()
       echo "Create $sourcebase/$makefile_am"
       rm -f "$tmpfile"
     fi
+    func_append added_files "$sourcebase/$makefile_am$nl"
   fi
 
   # Create m4/gnulib-cache.m4.
@@ -2245,8 +2250,85 @@ func_import ()
         echo "Create $testsbase/$makefile_am"
         rm -f "$tmpfile"
       fi
+    func_append added_files "$testsbase/$makefile_am$nl"
     fi
   fi
+
+  # Update the .cvsignore and .gitignore files.
+  { echo "$added_files" | sed -e '/^$/d' -e 's,\([^/]*\)$,|A|\1,'
+    echo "$removed_files" | sed -e '/^$/d' -e 's,\([^/]*\)$,|R|\1,'
+  } | LC_ALL=C sort -t'|' -k1,1 > "$tmp"/fileset-changes
+  { # Rearrange file descriptors. Needed because "while ... done < ..."
+    # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
+    exec 5<&0 < "$tmp"/fileset-changes
+    func_update_ignorelist ()
+    {
+      ignore="$1"
+      if test -f "$destdir/$dir$ignore"; then
+        if test -n "$dir_added" || test -n "$dir_removed"; then
+          LC_ALL=C sort "$destdir/$dir$ignore" > "$tmp"/ignore
+          echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u \
+            | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-added
+          echo "$dir_removed" | sed -e '/^$/d' | LC_ALL=C sort -u \
+            | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-removed
+          if test -s "$tmp"/ignore-added || test -s "$tmp"/ignore-removed; then
+            if $doit; then
+              echo "Updating $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
+              mv -f "$destdir/$dir$ignore" "$destdir/$dir$ignore"~
+              sed -e 's,^,/^,' -e 's,$,\$/d,' < "$tmp"/ignore-removed > "$tmp"/sed-ignore-removed
+              cat "$destdir/$dir$ignore"~ "$tmp"/ignore-added \
+                | sed -f "$tmp"/sed-ignore-removed \
+                > "$destdir/$dir$ignore"
+            else
+              echo "Update $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
+            fi
+          fi
+        fi
+      else
+        if test -n "$dir_added"; then
+          if $doit; then
+            echo "Creating $destdir/$dir$ignore"
+            echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u > "$destdir/$dir$ignore"
+          else
+            echo "Create $destdir/$dir$ignore"
+          fi
+        fi
+      fi
+    }
+    func_done_dir ()
+    {
+      dir="$1"
+      dir_added="$2"
+      dir_removed="$3"
+      if test -d "$destdir/${dir}CVS" || test -f "$destdir/${dir}.cvsignore"; then
+        func_update_ignorelist .cvsignore
+      fi
+      if test -d "$destdir/.git" || test -f "$destdir/${dir}.gitignore"; then
+        func_update_ignorelist .gitignore
+      fi
+    }
+    last_dir=
+    last_dir_added=
+    last_dir_removed=
+    while read line; do
+      # Why not ''read next_dir op file'' ? Because the dir column can be empty.
+      next_dir=`echo "$line" | sed -e 's,|.*,,'`
+      op=`echo "$line" | sed -e 's,^[^|]*|\([^|]*\)|.*$,\1,'`
+      file=`echo "$line" | sed -e 's,^[^|]*|[^|]*|,,'`
+      if test "$next_dir" != "$last_dir"; then
+        func_done_dir "$last_dir" "$last_dir_added" "$last_dir_removed"
+        last_dir="$next_dir"
+        last_dir_added=
+        last_dir_removed=
+      fi
+      case $op in
+        A) func_append last_dir_added "$file$nl";;
+        R) func_append last_dir_removed "$file$nl";;
+      esac
+    done
+    func_done_dir "$last_dir" "$last_dir_added" "$last_dir_removed"
+    exec 0<&5 5<&-
+  }
 
   echo "Finished."
   echo
