@@ -1,5 +1,10 @@
 2007-03-17  Jim Meyering  <jim@meyering.net>
 
+	Detect use of AC_CONFIG_AUX_DIR also when its argument is quoted.
+	* build-aux/bootstrap: Put ""s around use of $build_aux, in case
+	someone uses a name containing shell meta-characters.
+	Reported by Alfred M. Szmidt.
+
 	* build-aux/bootstrap: Don't use \> in grep regexp.  For HP-UX.
 
 2007-03-16  Alfred M. Szmidt  <ams@gnu.org>
