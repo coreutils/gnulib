@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate January 22, 2007
+@set lastupdate March 13, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -106,7 +106,7 @@ diff to the @file{standards.texi} or @file{make-stds.texi} files, but if
 you don't have those files, please mail your suggestion anyway.
 
 These standards cover the minimum of what is important when writing a
-GNU package.  Likely, the needs for additional standards will come up.
+GNU package.  Likely, the need for additional standards will come up.
 Sometimes, you might suggest that such standards be added to this
 document.  If you think your standards would be generally useful, please
 do suggest them.
