@@ -1,5 +1,11 @@
 2007-03-17  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unistr/u8-cpy-alloc.c: Include <stdlib.h>.
+	* lib/unistr/u16-cpy-alloc.c: Include <stdlib.h>.
+	* lib/unistr/u32-cpy-alloc.c: Include <stdlib.h>.
+
+2007-03-17  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Update .cvsignore and .gitignore files
 	to reflect files copied from gnulib (with or without modifications).
 	Suggested by Jim Meyering.
