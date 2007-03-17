@@ -1,5 +1,11 @@
 2007-03-17  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (VASNPRINTF): Clear out the memory used for arg_mem
+	before comparing it. Needed because on some platforms (e.g. x86) a
+	'long double' occupies less bytes than sizeof (long double).
+
+2007-03-17  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-crc.c (main): Make printf statements 64-bit clean.
 	* tests/test-gc-pbkdf2-sha1.c (main): Likewise.
 	* tests/test-getaddrinfo.c (simple): Likewise.

@@ -419,7 +419,9 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  {
 			    /* Distinguish 0.0L and -0.0L.  */
 			    static long double plus_zero = 0.0L;
-			    long double arg_mem = arg;
+			    long double arg_mem;
+			    memset (&arg_mem, 0, sizeof (long double));
+			    arg_mem = arg;
 			    if (memcmp (&plus_zero, &arg_mem, sizeof (long double)) != 0)
 			      {
 				sign = -1;
@@ -567,7 +569,9 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  {
 			    /* Distinguish 0.0 and -0.0.  */
 			    static double plus_zero = 0.0;
-			    double arg_mem = arg;
+			    double arg_mem;
+			    memset (&arg_mem, 0, sizeof (double));
+			    arg_mem = arg;
 			    if (memcmp (&plus_zero, &arg_mem, sizeof (double)) != 0)
 			      {
 				sign = -1;
