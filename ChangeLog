@@ -1,5 +1,12 @@
 2007-03-17  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-crc.c (main): Make printf statements 64-bit clean.
+	* tests/test-gc-pbkdf2-sha1.c (main): Likewise.
+	* tests/test-getaddrinfo.c (simple): Likewise.
+	* tests/test-read-file.c (main): Likewise.
+
+2007-03-17  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-dirname.c (main): Make printf statements 64-bit clean.
 
 2007-03-17  Bruno Haible  <bruno@clisp.org>
