@@ -46,7 +46,6 @@ my_xasprintf (const char *format, ...)
 static void
 test_xvasprintf ()
 {
-  char buf[8];
   int repeat;
 
   for (repeat = 0; repeat <= 8; repeat++)
@@ -61,7 +60,6 @@ test_xvasprintf ()
 static void
 test_xasprintf ()
 {
-  char buf[8];
   int repeat;
 
   for (repeat = 0; repeat <= 8; repeat++)
