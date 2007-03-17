@@ -1,5 +1,10 @@
 2007-03-17  Bruno Haible  <bruno@clisp.org>
 
+	* test-c-strcasecmp.c: Include c-strcase.h.
+	* test-c-strncasecmp.c: Likewise.
+
+2007-03-17  Bruno Haible  <bruno@clisp.org>
+
 	* modules/stdlib (Depends-on): Add unistd.
 	* lib/stdlib_.h: Include <unistd.h> if mkstemp is desired.
 	Needed for MacOS X 10.3.
