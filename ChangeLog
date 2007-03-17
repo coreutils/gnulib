@@ -1,7 +1,12 @@
 2007-03-17  Bruno Haible  <bruno@clisp.org>
 
-	* test-c-strcasecmp.c: Include c-strcase.h.
-	* test-c-strncasecmp.c: Likewise.
+	* tests/test-xvasprintf.c (test_xvasprintf, test_xasprintf): Remove
+	unused variable.
+
+2007-03-17  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-c-strcasecmp.c: Include c-strcase.h.
+	* tests/test-c-strncasecmp.c: Likewise.
 
 2007-03-17  Bruno Haible  <bruno@clisp.org>
 
