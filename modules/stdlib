@@ -8,6 +8,7 @@ m4/stdlib_h.m4
 Depends-on:
 absolute-header
 link-warning
+unistd
 
 configure.ac:
 gl_STDLIB_H

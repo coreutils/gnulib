@@ -1,5 +1,11 @@
 2007-03-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/stdlib (Depends-on): Add unistd.
+	* lib/stdlib_.h: Include <unistd.h> if mkstemp is desired.
+	Needed for MacOS X 10.3.
+
+2007-03-17  Bruno Haible  <bruno@clisp.org>
+
 	* lib/unistr/u-strdup.h: Include <stdlib.h>.
 
 2007-03-17  Bruno Haible  <bruno@clisp.org>

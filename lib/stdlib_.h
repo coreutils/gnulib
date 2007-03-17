@@ -120,6 +120,9 @@ extern char * mkdtemp (char *template);
    set.  */
 #  define mkstemp rpl_mkstemp
 extern int mkstemp (char *template);
+# else
+/* On MacOS X 10.3, only <unistd.h> declares mkstemp.  */
+#  include <unistd.h>
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkstemp
