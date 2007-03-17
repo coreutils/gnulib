@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002, 2003, 2004, 2005  Free Software Foundation
+ * Copyright (C) 2002, 2003, 2004, 2005, 2007  Free Software Foundation
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,13 +95,14 @@ main (int argc, char *argv[])
 			   pkcs5[i].iterations, out, pkcs5[i].dklen);
       if (rc != GC_OK)
 	{
-	  printf ("PKCS5 entry %d failed fatally: %d\n", i, rc);
+	  printf ("PKCS5 entry %ld failed fatally: %d\n",
+		  (unsigned long) i, rc);
 	  return 1;
 	}
 
       if (memcmp (pkcs5[i].expected, out, pkcs5[i].dklen) != 0)
 	{
-	  printf ("PKCS5 entry %d failed\n", i);
+	  printf ("PKCS5 entry %ld failed\n", (unsigned long) i);
 	  return 1;
 	}
     }

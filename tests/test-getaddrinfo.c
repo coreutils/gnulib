@@ -1,6 +1,6 @@
 /* Test the getaddrinfo module.
 
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ int simple (char *host, char *service)
       printf ("\tfamily %x\n", ai->ai_family);
       printf ("\tsocktype %x\n", ai->ai_socktype);
       printf ("\tprotocol %x\n", ai->ai_protocol);
-      printf ("\taddrlen %d: ", ai->ai_addrlen);
+      printf ("\taddrlen %ld: ", (unsigned long) ai->ai_addrlen);
       printf ("\tFound %s\n",
 	      inet_ntop (ai->ai_family,
 			 &((struct sockaddr_in *)

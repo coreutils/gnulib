@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Free Software Foundation
+ * Copyright (C) 2006-2007 Free Software Foundation
  * Written by Simon Josefsson
  *
  * This program is free software; you can redistribute it and/or modify
@@ -42,7 +42,7 @@ main (void)
     if (out[len] != '\0')
       perror ("BAD: out[len] not zero");
 
-    printf ("Read %d from %s...\n", len, FILE1);
+    printf ("Read %ld from %s...\n", (unsigned long) len, FILE1);
 
     free (out);
   }
@@ -57,7 +57,7 @@ main (void)
     if (out[len] != '\0')
       perror ("BAD: out[len] not zero");
 
-    printf ("Read %d from %s...\n", len, FILE2);
+    printf ("Read %ld from %s...\n", (unsigned long) len, FILE2);
 
     free (out);
   }

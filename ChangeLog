@@ -1,5 +1,9 @@
 2007-03-17  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-dirname.c (main): Make printf statements 64-bit clean.
+
+2007-03-17  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-xvasprintf.c (test_xvasprintf, test_xasprintf): Remove
 	unused variable.
 

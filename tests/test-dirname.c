@@ -154,8 +154,9 @@ main ()
 		 || (dirlen + 1 == strlen (dir) && dir[dirlen] == '.'))))
 	{
 	  ok = false;
-	  printf ("dir_name `%s': got `%s' len %d, expected `%s' len %d\n",
-		  t->name, dir, dirlen, t->dir, strlen (t->dir));
+	  printf ("dir_name `%s': got `%s' len %d, expected `%s' len %ld\n",
+		  t->name, dir, dirlen,
+		  t->dir, (unsigned long) strlen (t->dir));
 	}
       if (strcmp (last, t->last))
 	{
@@ -169,8 +170,9 @@ main ()
 		     && ISSLASH (base[baselen])))))
 	{
 	  ok = false;
-	  printf ("base_name `%s': got `%s' len %d, expected `%s' len %d\n",
-		  t->name, base, baselen, t->base, strlen (t->base));
+	  printf ("base_name `%s': got `%s' len %d, expected `%s' len %ld\n",
+		  t->name, base, baselen,
+		  t->base, (unsigned long) strlen (t->base));
 	}
       if (strcmp (stripped, t->stripped) || modified != t->modified)
 	{
