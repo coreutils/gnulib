@@ -46,7 +46,9 @@ sprintf (char *str, const char *format, ...)
 {
   char *output;
   size_t len;
-  size_t lenbuf = SIZE_MAX;
+  /* vasnprintf fails with EOVERFLOW when the buffer size argument is larger
+     than INT_MAX (if that fits into a 'size_t' at all).  */
+  size_t lenbuf = (SIZE_MAX < INT_MAX ? SIZE_MAX : INT_MAX);
   va_list args;
 
   va_start (args, format);

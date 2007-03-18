@@ -46,7 +46,9 @@ vsprintf (char *str, const char *format, va_list args)
 {
   char *output;
   size_t len;
-  size_t lenbuf = SIZE_MAX;
+  /* vasnprintf fails with EOVERFLOW when the buffer size argument is larger
+     than INT_MAX (if that fits into a 'size_t' at all).  */
+  size_t lenbuf = (SIZE_MAX < INT_MAX ? SIZE_MAX : INT_MAX);
 
   output = vasnprintf (str, &lenbuf, format, args);
   len = lenbuf;

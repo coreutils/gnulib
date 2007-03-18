@@ -59,6 +59,11 @@
 # endif
 #endif
 
+/* Some systems, like OSF/1 4.0 and Woe32, don't have EOVERFLOW.  */
+#ifndef EOVERFLOW
+# define EOVERFLOW E2BIG
+#endif
+
 #if HAVE_WCHAR_T
 # if HAVE_WCSLEN
 #  define local_wcslen wcslen
@@ -179,6 +184,10 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
       {
 	result = resultbuf;
 	allocated = *lengthp;
+	/* POSIX says that snprintf() fails with EOVERFLOW when the specified
+	   buffer size is larger than INT_MAX.  Let's do the same here.  */
+	if (allocated > INT_MAX)
+	  goto overflow;
       }
     else
       {
@@ -1107,6 +1116,9 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    retcount = 0;
 
 #if USE_SNPRINTF
+		    /* SNPRINTF can fail if maxlen > INT_MAX.  */
+		    if (maxlen > INT_MAX)
+		      goto overflow;
 # define SNPRINTF_BUF(arg) \
 		    switch (prefix_count)				    \
 		      {							    \
@@ -1381,6 +1393,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
        that's only because snprintf() returns an 'int'.  This function does
        not have this limitation.  */
     return result;
+
+  overflow:
+    if (!(result == resultbuf || result == NULL))
+      free (result);
+    if (buf_malloced != NULL)
+      free (buf_malloced);
+    CLEANUP ();
+    errno = EOVERFLOW;
+    return NULL;
 
   out_of_memory:
     if (!(result == resultbuf || result == NULL))
