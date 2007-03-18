@@ -1,5 +1,9 @@
 2007-03-17  Bruno Haible  <bruno@clisp.org>
 
+	* lib/fchownat.c: Include lchown.h.
+
+2007-03-17  Bruno Haible  <bruno@clisp.org>
+
 	Fix endless loop when the given allocated size was > INT_MAX.
 	* lib/vasnprintf.c (EOVERFLOW): New fallback definition.
 	(VASNPRINTF): Fail with EOVERFLOW when the given allocated size is
