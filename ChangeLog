@@ -1,5 +1,9 @@
 2007-03-17  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-argp-2.sh (func_compare): Output a context diff.
+
+2007-03-17  Bruno Haible  <bruno@clisp.org>
+
 	* m4/locale-fr.m4 (gt_LOCALE_FR, gt_LOCALE_FR_UTF8): Check also the
 	locale's decimal-point character.
 
