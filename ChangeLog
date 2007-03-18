@@ -1,3 +1,10 @@
+2007-03-18  Ben Pfaff  <blp@gnu.org>
+
+	* doc/relocatable.texi: Recommend using as prefix a directory
+	that does not exist and will never be created.  Based on
+	discussion with Bruno Haible, Ralf Wildenhues, Matthew Woehlke,
+	and others.
+
 2007-03-17  Bruno Haible  <bruno@clisp.org>
 
 	* lib/fchownat.c: Include lchown.h.

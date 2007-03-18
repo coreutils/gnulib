@@ -22,14 +22,33 @@ link file is in the same directory as the real program.
 
 To configure a program to be relocatable, add
 @option{--enable-relocatable} to the @program{configure} command line.
-For reliability, it is best to also give a @option{--prefix} option
-pointing to an otherwise unused (and never used again) directory,
-e.g.@: @option{--prefix=/tmp/inst$$}.  This is recommended because on
-some OSes the executables remember the location of shared libraries
+
+On some OSes the executables remember the location of shared libraries
 and prefer them over any other search path.  Therefore, such an
 executable will look for its shared libraries first in the original
 installation directory and only then in the current installation
-directory.
+directory.  Thus, for reliability, it is best to also give a
+@option{--prefix} option pointing to a directory that does not exist
+now and which never will be created, e.g.@:
+@option{--prefix=/nonexistent}.  You may use
+@code{DESTDIR=@var{dest-dir}} on the @program{make} command line to
+avoid installing into that directory.
+
+We do not recommend using a prefix writable by unprivileged users
+(e.g.@: @file{/tmp/inst$$}) because such a directory can be recreated
+by an unprivileged user after the original directory has been removed.
+We also do not recommend prefixes that might be behind an automounter
+(e.g.@: @file{$HOME/inst$$}) because of the performance impact of
+directory searching.
+
+Here's a sample installation run that takes into account all these
+recommendations:
+
+@example
+./configure --enable-relocatable --prefix=/nonexistent
+make
+make install DESTDIR=/tmp/inst$$
+@end example
 
 Installation with @option{--enable-relocatable} will not work for
 setuid or setgid executables, because such executables search only
