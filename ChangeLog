@@ -1,3 +1,8 @@
+2007-03-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/getcwd.c (__getcwd): Remove redundant comparison of buf to NULL.
+	If size is zero here, buf must be zero.
+
 2007-03-19  Simon Josefsson  <simon@josefsson.org>
 
 	* des.c: Remove weak_keys_chksum.  Reported by Bruno Haible

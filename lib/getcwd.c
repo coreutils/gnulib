@@ -391,7 +391,7 @@ __getcwd (char *buf, size_t size)
   used = dir + allocated - dirp;
   memmove (dir, dirp, used);
 
-  if (buf == NULL && size == 0)
+  if (size == 0)
     /* Ensure that the buffer is only as large as necessary.  */
     buf = realloc (dir, used);
 
