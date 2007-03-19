@@ -1,3 +1,25 @@
+2007-03-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Add limited support for Solaris 10 ZFS-style ACLs: just enough to
+	handle file_has_acl.
+	* lib/acl-internal.h, lib/acl_entries.c, lib/file-has-acl.c: New files.
+	* lib/acl.c: Move header inclusions and related macro defns into
+	lib/acl-internal.h.
+	(S_ISLNK): Remove defn, since that's now done for us.
+	(file_has_acl): Move to lib/file-has-acl.c.
+	Call acl_trivial if available.  This is the crucial part of the fix.
+	(acl_entries): Move to lib/acl_entries.c.  Now extern, since it's
+	shared within the library.  Rewrite a bit, partly to make it compatible
+	with the GNU coding style.
+	* m4/acl.m4 (AC_FUNC_ACL): Add AC_LIBOBJ([file-has-acl]).
+	Remove unnecessary double-quotes.
+	Don't test for acl_to_text; the build will catch that.
+	Replace acl_entries if it doesn't exist and it is needed.
+	Check for -lsec and acl_trivial (as used on Solaris 10).
+	* modules/acl (Files): Add lib/acl-internal.h, lib/acl_entries.c,
+	lib/file-has-acl.c.
+	(Depends-on): Add sys_stat, for S_ISLNK.
+
 2007-03-19  Ben Pfaff  <blp@gnu.org>
 
 	* doc/gnulib.texi: Fix typos.

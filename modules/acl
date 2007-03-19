@@ -4,11 +4,15 @@ Access control lists of files.  (Unportable.)
 Files:
 lib/acl.h
 lib/acl.c
+lib/acl-internal.h
+lib/acl_entries.c
+lib/file-has-acl.c
 m4/acl.m4
 
 Depends-on:
 error
 quote
+sys_stat
 
 configure.ac:
 AC_FUNC_ACL
