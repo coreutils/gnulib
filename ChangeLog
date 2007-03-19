@@ -1,3 +1,8 @@
+2007-03-19  Bruno Haible  <bruno@clisp.org>
+
+	* doc/relocatable-maint.texi: Break long shell script line.
+	Suggested by Thien-Thi Nguyen <ttn@gnuvola.org>.
+
 2007-03-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Add limited support for Solaris 10 ZFS-style ACLs: just enough to

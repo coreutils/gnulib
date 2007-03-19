@@ -102,8 +102,10 @@ if test "@@RELOCATABLE@@" = yes; then
   func_find_curr_installdir # determine curr_installdir
   func_find_prefixes
   # Relocate the directory variables that we use.
-  gettext_dir=`echo "$gettext_dir/" | sed -e 
-"s%^$@{orig_installprefix@}/%$@{curr_installprefix@}/%" | sed -e 's,/$,,'`
+  gettext_dir=`
+    echo "$gettext_dir/" \
+    | sed -e "s%^$@{orig_installprefix@}/%$@{curr_installprefix@}/%" \
+    | sed -e 's,/$,,'`
 fi
 @end example
 
