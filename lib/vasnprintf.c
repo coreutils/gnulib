@@ -184,10 +184,6 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
       {
 	result = resultbuf;
 	allocated = *lengthp;
-	/* POSIX says that snprintf() fails with EOVERFLOW when the specified
-	   buffer size is larger than INT_MAX.  Let's do the same here.  */
-	if (allocated > INT_MAX)
-	  goto overflow;
       }
     else
       {
