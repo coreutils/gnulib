@@ -6,6 +6,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-03-19  iconvme         The module is removed. Use module striconv instead:
+                            iconv_string -> str_iconv
+                            iconv_alloc -> str_cd_iconv (with reversed
+                                           arguments)
+
 2007-03-15  list            The functions gl_list_create_empty and
             array-list      gl_list_create now take an extra fourth argument.
             carray-list     You can pass NULL.

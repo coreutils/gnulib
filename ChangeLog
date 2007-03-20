@@ -1,5 +1,12 @@
 2007-03-19  Bruno Haible  <bruno@clisp.org>
 
+	* modules/iconvme: Remove file.
+	* lib/iconvme.h: Remove file.
+	* lib/iconvme.c: Remove file.
+	* m4/iconvme.m4: Remove file.
+
+2007-03-19  Bruno Haible  <bruno@clisp.org>
+
 	* doc/relocatable-maint.texi: Break long shell script line.
 	Suggested by Thien-Thi Nguyen <ttn@gnuvola.org>.
 
