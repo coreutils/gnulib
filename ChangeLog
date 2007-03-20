@@ -1,3 +1,11 @@
+2007-03-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Suggestions by Bruno Haible:
+	* lib/acl-internal.h: Include "gettext.h" rather than rolling
+	our own.
+	(ACL_NOT_WELL_SUPPORTED): Parenthesize arg when used.
+	* modules/acl (Depends-on): Add gettext.
+
 2007-03-19  Bruno Haible  <bruno@clisp.org>
 
 	* modules/iconvme: Remove file.

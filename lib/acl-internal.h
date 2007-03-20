@@ -40,12 +40,8 @@
 # define ENOTSUP (-1)
 #endif
 
-#if ENABLE_NLS
-# include <libintl.h>
-# define _(Text) gettext (Text)
-#else
-# define _(Text) Text
-#endif
+#include "gettext.h"
+#define _(msgid) gettext (msgid)
 
 #ifndef HAVE_FCHMOD
 # define HAVE_FCHMOD false
@@ -81,7 +77,7 @@
 #endif
 
 #define ACL_NOT_WELL_SUPPORTED(Errno) \
-  (Errno == ENOTSUP || Errno == ENOSYS || Errno == EINVAL)
+  ((Errno) == ENOTSUP || (Errno) == ENOSYS || (Errno) == EINVAL)
 
 /* Define a replacement for acl_entries if needed.  */
 #if USE_ACL && HAVE_ACL_GET_FILE && HAVE_ACL_FREE && !HAVE_ACL_ENTRIES

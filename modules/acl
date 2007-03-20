@@ -11,6 +11,7 @@ m4/acl.m4
 
 Depends-on:
 error
+gettext
 quote
 sys_stat
 
