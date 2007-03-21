@@ -192,9 +192,9 @@ extern char *strdup (char const *__s);
 # if ! @HAVE_STRNDUP@
 #  undef strndup
 #  define strndup rpl_strndup
-#  if ! @HAVE_DECL_STRNDUP@
+# endif
+# if ! @HAVE_STRNDUP@ || ! @HAVE_DECL_STRNDUP@
 extern char *strndup (char const *__string, size_t __n);
-#  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strndup
