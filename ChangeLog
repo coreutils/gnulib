@@ -1,3 +1,9 @@
+2007-03-21  Jim Meyering  <jim@meyering.net>
+
+	When trying to open ".", treat ESTALE like EACCES.
+	* lib/savewd.c (savewd_save): Resort to forking not just upon
+	failure with EACCES, but also when errno is ESTALE.
+
 2007-03-20  Bruno Haible  <bruno@clisp.org>
 
 	* lib/string_.h (strndup): Enable declaration also if ! HAVE_STRNDUP.

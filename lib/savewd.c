@@ -54,7 +54,7 @@ savewd_save (struct savewd *wd)
 	    wd->val.fd = fd;
 	    break;
 	  }
-	if (errno != EACCES)
+	if (errno != EACCES && errno != ESTALE)
 	  {
 	    wd->state = ERROR_STATE;
 	    wd->val.errnum = errno;
