@@ -6,7 +6,7 @@
 
 2007-03-20  Bruno Haible  <bruno@clisp.org>
 
-	* lib/string_.h (strndup): Enable declaration also if ! HAVE_STRNDUP.
+	* lib/string_.h (strndup): Enable declaration also if HAVE_STRNDUP.
 	Needed on AIX 5.1. Reported by Matthew Woehlke.
 
 2007-03-19  Paul Eggert  <eggert@cs.ucla.edu>
