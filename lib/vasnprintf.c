@@ -52,7 +52,7 @@
 
 #if NEED_PRINTF_DIRECTIVE_A && !defined IN_LIBINTL
 # include "isnan.h"
-# include "isnanl.h"
+# include "isnanl-nolibm.h"
 # if HAVE_LONG_DOUBLE
 #  include "printf-frexp.h"
 #  include "printf-frexpl.h"
