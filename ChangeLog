@@ -1,5 +1,11 @@
 2007-03-22  Bruno Haible  <bruno@clisp.org>
 
+	* lib/frexpl.c: Share code with lib/frexp.c.
+	* modules/mathl (Files): Add lib/frexp.c.
+	(Depends-on): Add isnanl-nolibm.
+
+2007-03-22  Bruno Haible  <bruno@clisp.org>
+
 	* modules/printf-frexp (Files): Add m4/frexp.m4.
 	* m4/printf-frexp.m4 (gl_FUNC_PRINTF_FREXP): Define HAVE_FREXP_IN_LIBC
 	only if the found frexp function actually works.

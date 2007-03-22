@@ -10,6 +10,7 @@ lib/cosl.c
 lib/expl.c
 lib/floorl.c
 lib/frexpl.c
+lib/frexp.c
 lib/ldexpl.c
 lib/logl.c
 lib/sincosl.c
@@ -22,6 +23,7 @@ m4/mathl.m4
 
 Depends-on:
 math
+isnanl-nolibm
 
 configure.ac:
 gl_FUNC_LONG_DOUBLE_MATH
