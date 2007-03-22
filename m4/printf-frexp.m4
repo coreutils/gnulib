@@ -1,4 +1,4 @@
-# printf-frexp.m4 serial 1
+# printf-frexp.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,8 +19,13 @@ AC_DEFUN([gl_FUNC_PRINTF_FREXP],
         [gl_cv_func_frexp_no_libm=no])
     ])
   if test $gl_cv_func_frexp_no_libm = yes; then
-    AC_DEFINE([HAVE_FREXP_IN_LIBC], 1,
-      [Define if the frexp function is available in libc.])
+    gl_FUNC_FREXP_WORKS
+    case "$gl_cv_func_frexp_works" in
+      *yes)
+        AC_DEFINE([HAVE_FREXP_IN_LIBC], 1,
+          [Define if the frexp function is available in libc.])
+        ;;
+    esac
   fi
 
   AC_CACHE_CHECK([whether ldexp can be used without linking with libm],

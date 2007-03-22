@@ -6,6 +6,7 @@ Files:
 lib/printf-frexp.h
 lib/printf-frexp.c
 m4/printf-frexp.m4
+m4/frexp.m4
 
 Depends-on:
 
