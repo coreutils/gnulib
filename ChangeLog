@@ -1,5 +1,15 @@
 2007-03-21  Bruno Haible  <bruno@clisp.org>
 
+	* modules/isnanl: New file.
+	* lib/isnanl.h: New file.
+	* m4/isnanl.m4 (gl_FUNC_ISNANL): New macro.
+	(gl_FUNC_ISNANL_NO_LIBM): Invoke gl_HAVE_ISNANL_NO_LIBM,
+	gl_FUNC_ISNANL_WORKS.
+	(gl_HAVE_ISNANL_NO_LIBM, gl_HAVE_ISNANL_IN_LIBM, gl_FUNC_ISNANL_WORKS):
+	New macros.
+
+2007-03-21  Bruno Haible  <bruno@clisp.org>
+
 	* modules/isnanl-nolibm (Files): Add lib/isnanl-nolibm.h, remove
 	lib/isnanl.h.
 	(Include): Update.

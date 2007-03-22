@@ -1,27 +1,58 @@
-# isnanl.m4 serial 1
+# isnanl.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
+AC_DEFUN([gl_FUNC_ISNANL],
+[
+  AC_REQUIRE([gt_TYPE_LONGDOUBLE])
+  ISNANL_LIBM=
+  if test $gt_cv_c_long_double = yes; then
+    gl_HAVE_ISNANL_NO_LIBM
+    if test $gl_cv_func_isnanl_no_libm = no; then
+      gl_HAVE_ISNANL_IN_LIBM
+      if test $gl_cv_func_isnanl_in_libm = yes; then
+        ISNANL_LIBM=-lm
+      fi
+    fi
+    if test $gl_cv_func_isnanl_no_libm = yes \
+       || test $gl_cv_func_isnanl_in_libm = yes; then
+      save_LIBS="$LIBS"
+      LIBS="$LIBS $ISNANL_LIBM"
+      gl_FUNC_ISNANL_WORKS
+      LIBS="$save_LIBS"
+      case "$gl_cv_func_isnanl_works" in
+        *yes) gl_func_isnanl=yes ;;
+        *)    gl_func_isnanl=no ;;
+      esac
+    else
+      gl_func_isnanl=no
+    fi
+    if test $gl_func_isnanl = yes; then
+      AC_DEFINE([HAVE_ISNANL], 1,
+        [Define if the isnan(long double) function is available.])
+    else
+      AC_LIBOBJ([isnanl])
+      gl_LONG_DOUBLE_EXPONENT_LOCATION
+    fi
+  fi
+])
+
 AC_DEFUN([gl_FUNC_ISNANL_NO_LIBM],
 [
   AC_REQUIRE([gt_TYPE_LONGDOUBLE])
   if test $gt_cv_c_long_double = yes; then
-    AC_CACHE_CHECK([whether isnan(long double) can be used without linking with libm],
-      [gl_cv_func_isnanl_no_libm],
-      [
-        AC_TRY_LINK([#include <math.h>
-                     #ifdef isnan
-                     # undef isnanl
-                     # define isnanl(x) isnan ((long double)(x))
-                     #endif
-                     long double x;],
-                    [return isnanl (x);],
-          [gl_cv_func_isnanl_no_libm=yes],
-          [gl_cv_func_isnanl_no_libm=no])
-      ])
-    if test $gl_cv_func_isnanl_no_libm = yes; then
+    gl_HAVE_ISNANL_NO_LIBM
+    gl_func_isnanl_no_libm=$gl_cv_func_isnanl_no_libm
+    if test $gl_func_isnanl_no_libm = yes; then
+      gl_FUNC_ISNANL_WORKS
+      case "$gl_cv_func_isnanl_works" in
+        *yes) ;;
+        *)    gl_func_isnanl_no_libm=no ;;
+      esac
+    fi
+    if test $gl_func_isnanl_no_libm = yes; then
       AC_DEFINE([HAVE_ISNANL_IN_LIBC], 1,
         [Define if the isnan(long double) function is available in libc.])
     else
@@ -29,6 +60,91 @@ AC_DEFUN([gl_FUNC_ISNANL_NO_LIBM],
       gl_LONG_DOUBLE_EXPONENT_LOCATION
     fi
   fi
+])
+
+dnl Test whether isnanl() can be used without libm.
+AC_DEFUN([gl_HAVE_ISNANL_NO_LIBM],
+[
+  AC_CACHE_CHECK([whether isnan(long double) can be used without linking with libm],
+    [gl_cv_func_isnanl_no_libm],
+    [
+      AC_TRY_LINK([#include <math.h>
+                   #ifdef isnan
+                   # undef isnanl
+                   # define isnanl(x) isnan ((long double)(x))
+                   #endif
+                   long double x;],
+                  [return isnanl (x);],
+        [gl_cv_func_isnanl_no_libm=yes],
+        [gl_cv_func_isnanl_no_libm=no])
+    ])
+])
+
+dnl Test whether isnanl() can be used with libm.
+AC_DEFUN([gl_HAVE_ISNANL_IN_LIBM],
+[
+  AC_CACHE_CHECK([whether isnan(long double) can be used with libm],
+    [gl_cv_func_isnanl_in_libm],
+    [
+      save_LIBS="$LIBS"
+      LIBS="$LIBS -lm"
+      AC_TRY_LINK([#include <math.h>
+                   #ifdef isnan
+                   # undef isnanl
+                   # define isnanl(x) isnan ((long double)(x))
+                   #endif
+                   long double x;],
+                  [return isnanl (x);],
+        [gl_cv_func_isnanl_in_libm=yes],
+        [gl_cv_func_isnanl_in_libm=no])
+      LIBS="$save_LIBS"
+    ])
+])
+
+dnl Test whether isnanl() recognizes all numbers which are neither finite nor
+dnl infinite. This test fails e.g. on NetBSD/i386.
+AC_DEFUN([gl_FUNC_ISNANL_WORKS],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([gt_TYPE_LONGDOUBLE])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether isnanl works], [gl_cv_func_isnanl_works],
+    [
+      AC_TRY_RUN([
+#include <limits.h>
+#include <math.h>
+#ifdef isnan
+# undef isnanl
+# define isnanl(x) isnan ((long double)(x))
+#endif
+#define NWORDS \
+  ((sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+typedef union { long double value; unsigned int word[NWORDS]; }
+        memory_long_double;
+int main ()
+{
+  memory_long_double m;
+  unsigned int i;
+
+  /* The isnanl function should be immune against changes in the sign bit and
+     in the mantissa bits.  The xor operation twiddles a bit that can only be
+     a sign bit or a mantissa bit (since the exponent never extends to
+     bit 31).  */
+  m.value = 0.0L / 0.0L;
+  m.word[NWORDS / 2] ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 1);
+  for (i = 0; i < NWORDS; i++)
+    m.word[i] |= 1;
+  if (!isnanl (m.value))
+    return 1;
+
+  return 0;
+}], [gl_cv_func_isnanl_works=yes], [gl_cv_func_isnanl_works=no],
+      [case "$host_os" in
+         netbsd*) gl_cv_func_isnanl_works="guessing no";;
+         *)       gl_cv_func_isnanl_works="guessing yes";;
+       esac
+      ])
+    ])
 ])
 
 AC_DEFUN([gl_LONG_DOUBLE_EXPONENT_LOCATION],

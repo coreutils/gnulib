@@ -1,0 +1,28 @@
+Description:
+isnanl() function: test for NaN.
+
+Files:
+lib/isnanl.h
+lib/isnanl.c
+lib/isnan.c
+m4/isnanl.m4
+m4/longdouble.m4
+
+Depends-on:
+
+configure.ac:
+gl_FUNC_ISNANL
+
+Makefile.am:
+
+Include:
+#if HAVE_LONG_DOUBLE
+# include "isnanl.h"
+#endif
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
