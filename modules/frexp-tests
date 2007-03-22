@@ -1,0 +1,15 @@
+Files:
+tests/test-frexp.c
+
+Depends-on:
+
+configure.ac:
+AC_SUBST([FREXP_LIBM])
+
+Makefile.am:
+TESTS += test-frexp
+check_PROGRAMS += test-frexp
+test_frexp_LDADD = @FREXP_LIBM@ $(LDADD)
+
+License:
+LGPL

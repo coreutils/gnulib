@@ -1,5 +1,8 @@
 2007-03-21  Bruno Haible  <bruno@clisp.org>
 
+	* modules/frexp-tests: New file.
+	* tests/test-frexp.c: New file.
+
 	* modules/frexp: New file.
 	* lib/frexp.c: New file.
 	* m4/frexp.m4: New file.
