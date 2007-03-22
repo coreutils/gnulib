@@ -12,7 +12,7 @@ AC_DEFUN([gl_FUNC_FREXP],
     [gl_cv_func_frexp_no_libm],
     [
       AC_TRY_LINK([#include <math.h>
-                   long double x;],
+                   double x;],
                   [int e; return frexp (x, &e) > 0;],
         [gl_cv_func_frexp_no_libm=yes],
         [gl_cv_func_frexp_no_libm=no])
@@ -24,7 +24,7 @@ AC_DEFUN([gl_FUNC_FREXP],
         save_LIBS="$LIBS"
         LIBS="$LIBS -lm"
         AC_TRY_LINK([#include <math.h>
-                     long double x;],
+                     double x;],
                     [int e; return frexp (x, &e) > 0;],
           [gl_cv_func_frexp_in_libm=yes],
           [gl_cv_func_frexp_in_libm=no])
