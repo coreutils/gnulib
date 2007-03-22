@@ -15,6 +15,9 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+/* Written by Paolo Bonzini <bonzini@gnu.org>, 2003, and
+   Bruno Haible <bruno@clisp.org>, 2007.  */
+
 #include <config.h>
 
 #if !(defined USE_LONG_DOUBLE && !HAVE_LONG_DOUBLE)
@@ -65,129 +68,86 @@ FUNC (DOUBLE x, int *exp)
       sign = -1;
     }
 
-  if (0)
-    {
-      /* Implementation contributed by Paolo Bonzini.
-         Disabled because it's under GPL and doesn't pass the tests.  */
+  {
+    /* Since the exponent is an 'int', it fits in 64 bits.  Therefore the
+       loops are executed no more than 64 times.  */
+    DOUBLE pow2[64]; /* pow2[i] = 2^2^i */
+    DOUBLE powh[64]; /* powh[i] = 2^-2^i */
+    int i;
 
-      /* Since the exponent is an 'int', it fits in 64 bits.  Therefore the
-	 loops are executed no more than 64 times.  */
-      DOUBLE exponents[64];
-      DOUBLE *next;
-      int bit;
+    exponent = 0;
+    if (x >= L_(1.0))
+      {
+	/* A positive exponent.  */
+	DOUBLE pow2_i; /* = pow2[i] */
+	DOUBLE powh_i; /* = powh[i] */
 
-      exponent = 0;
-      if (x >= L_(1.0))
-	{
-	  for (next = exponents, exponents[0] = L_(2.0), bit = 1;
-	       *next <= x + x;
-	       bit <<= 1, next[1] = next[0] * next[0], next++);
-
-	  for (; next >= exponents; bit >>= 1, next--)
-	    if (x + x >= *next)
+	/* Invariants: pow2_i = 2^2^i, powh_i = 2^-2^i,
+	   x * 2^exponent = argument, x >= 1.0.  */
+	for (i = 0, pow2_i = L_(2.0), powh_i = L_(0.5);
+	     ;
+	     i++, pow2_i = pow2_i * pow2_i, powh_i = powh_i * powh_i)
+	  {
+	    if (x >= pow2_i)
 	      {
-		x /= *next;
-		exponent |= bit;
+		exponent += (1 << i);
+		x *= powh_i;
 	      }
-	}
-      else if (x < L_(0.5))
-	{
-	  for (next = exponents, exponents[0] = L_(0.5), bit = 1;
-	       *next > x;
-	       bit <<= 1, next[1] = next[0] * next[0], next++);
+	    else
+	      break;
 
-	  for (; next >= exponents; bit >>= 1, next--)
-	    if (x < *next)
+	    pow2[i] = pow2_i;
+	    powh[i] = powh_i;
+	  }
+	/* Avoid making x too small, as it could become a denormalized
+	   number and thus lose precision.  */
+	while (i > 0 && x < pow2[i - 1])
+	  {
+	    i--;
+	    powh_i = powh[i];
+	  }
+	exponent += (1 << i);
+	x *= powh_i;
+	/* Here 2^-2^i <= x < 1.0.  */
+      }
+    else
+      {
+	/* A negative or zero exponent.  */
+	DOUBLE pow2_i; /* = pow2[i] */
+	DOUBLE powh_i; /* = powh[i] */
+
+	/* Invariants: pow2_i = 2^2^i, powh_i = 2^-2^i,
+	   x * 2^exponent = argument, x < 1.0.  */
+	for (i = 0, pow2_i = L_(2.0), powh_i = L_(0.5);
+	     ;
+	     i++, pow2_i = pow2_i * pow2_i, powh_i = powh_i * powh_i)
+	  {
+	    if (x < powh_i)
 	      {
-		x /= *next;
-		exponent |= bit;
+		exponent -= (1 << i);
+		x *= pow2_i;
 	      }
-	  exponent = - exponent;
-	}
-    }
-  else
-    {
-      /* Implementation contributed by Bruno Haible.  */
+	    else
+	      break;
 
-      /* Since the exponent is an 'int', it fits in 64 bits.  Therefore the
-	 loops are executed no more than 64 times.  */
-      DOUBLE pow2[64]; /* pow2[i] = 2^2^i */
-      DOUBLE powh[64]; /* powh[i] = 2^-2^i */
-      int i;
+	    pow2[i] = pow2_i;
+	    powh[i] = powh_i;
+	  }
+	/* Here 2^-2^i <= x < 1.0.  */
+      }
 
-      exponent = 0;
-      if (x >= L_(1.0))
-	{
-	  /* A positive exponent.  */
-	  DOUBLE pow2_i; /* = pow2[i] */
-	  DOUBLE powh_i; /* = powh[i] */
-
-	  /* Invariants: pow2_i = 2^2^i, powh_i = 2^-2^i,
-	     x * 2^exponent = argument, x >= 1.0.  */
-	  for (i = 0, pow2_i = L_(2.0), powh_i = L_(0.5);
-	       ;
-	       i++, pow2_i = pow2_i * pow2_i, powh_i = powh_i * powh_i)
-	    {
-	      if (x >= pow2_i)
-		{
-		  exponent += (1 << i);
-		  x *= powh_i;
-		}
-	      else
-		break;
-
-	      pow2[i] = pow2_i;
-	      powh[i] = powh_i;
-	    }
-	  /* Avoid making x too small, as it could become a denormalized
-	     number and thus lose precision.  */
-	  while (i > 0 && x < pow2[i - 1])
-	    {
-	      i--;
-	      powh_i = powh[i];
-	    }
-	  exponent += (1 << i);
-	  x *= powh_i;
-	  /* Here 2^-2^i <= x < 1.0.  */
-	}
-      else
-	{
-	  /* A negative or zero exponent.  */
-	  DOUBLE pow2_i; /* = pow2[i] */
-	  DOUBLE powh_i; /* = powh[i] */
-
-	  /* Invariants: pow2_i = 2^2^i, powh_i = 2^-2^i,
-	     x * 2^exponent = argument, x < 1.0.  */
-	  for (i = 0, pow2_i = L_(2.0), powh_i = L_(0.5);
-	       ;
-	       i++, pow2_i = pow2_i * pow2_i, powh_i = powh_i * powh_i)
-	    {
-	      if (x < powh_i)
-		{
-		  exponent -= (1 << i);
-		  x *= pow2_i;
-		}
-	      else
-		break;
-
-	      pow2[i] = pow2_i;
-	      powh[i] = powh_i;
-	    }
-	  /* Here 2^-2^i <= x < 1.0.  */
-	}
-
-      /* Invariants: x * 2^exponent = argument, and 2^-2^i <= x < 1.0.  */
-      while (i > 0)
-	{
-	  i--;
-	  if (x < powh[i])
-	    {
-	      exponent -= (1 << i);
-	      x *= pow2[i];
-	    }
-	}
-      /* Here 0.5 <= x < 1.0.  */
-    }
+    /* Invariants: x * 2^exponent = argument, and 2^-2^i <= x < 1.0.  */
+    while (i > 0)
+      {
+	i--;
+	if (x < powh[i])
+	  {
+	    exponent -= (1 << i);
+	    x *= pow2[i];
+	  }
+      }
+    /* Here 0.5 <= x < 1.0.  */
+  }
 
   *exp = exponent;
   return (sign < 0 ? - x : x);
