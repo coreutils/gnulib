@@ -24,7 +24,7 @@ AC_DEFUN([gl_FUNC_ISNANL],
       LIBS="$save_LIBS"
       case "$gl_cv_func_isnanl_works" in
         *yes) gl_func_isnanl=yes ;;
-        *)    gl_func_isnanl=no ;;
+        *)    gl_func_isnanl=no; ISNANL_LIBM= ;;
       esac
     else
       gl_func_isnanl=no
