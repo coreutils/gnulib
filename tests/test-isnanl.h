@@ -17,12 +17,6 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
-#include <config.h>
-
-#if HAVE_LONG_DOUBLE
-
-#include "isnanl.h"
-
 #include <limits.h>
 #include <stdlib.h>
 
@@ -65,13 +59,3 @@ main ()
 #endif
   return 0;
 }
-
-#else
-
-int
-main ()
-{
-  return 0;
-}
-
-#endif
