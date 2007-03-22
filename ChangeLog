@@ -1,3 +1,17 @@
+2007-03-21  Bruno Haible  <bruno@clisp.org>
+
+	* modules/isnanl-nolibm (Files): Add lib/isnanl-nolibm.h, remove
+	lib/isnanl.h.
+	(Include): Update.
+	* lib/isnanl-nolibm.h: Renamed from lib/isnanl.h.
+	* lib/vasnprintf.c: Update.
+	* modules/isnanl-nolibm-tests (Files): Add tests/test-isnanl-nolibm.c,
+	tests/test-isnanl.h, remove tests/test-isnanl.c.
+	(Makefile.am): Update.
+	* tests/test-isnanl-nolibm.c: New file.
+	* tests/test-isnanl.h: New file.
+	* tests/test-isnanl.c: Remove file.
+
 2007-03-21  Jim Meyering  <jim@meyering.net>
 
 	When trying to open ".", treat ESTALE like EACCES.

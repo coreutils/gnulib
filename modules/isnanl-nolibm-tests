@@ -1,5 +1,6 @@
 Files:
-tests/test-isnanl.c
+tests/test-isnanl-nolibm.c
+tests/test-isnanl.h
 
 Depends-on:
 
@@ -7,6 +8,7 @@ configure.ac:
 gl_LONG_DOUBLE_EXPONENT_LOCATION
 
 Makefile.am:
-TESTS += test-isnanl
-check_PROGRAMS += test-isnanl
+TESTS += test-isnanl-nolibm
+check_PROGRAMS += test-isnanl-nolibm
+EXTRA_DIST += test-isnanl.h
 

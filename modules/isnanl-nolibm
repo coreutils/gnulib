@@ -2,7 +2,7 @@ Description:
 isnanl() function: test for NaN, without requiring libm.
 
 Files:
-lib/isnanl.h
+lib/isnanl-nolibm.h
 lib/isnanl.c
 lib/isnan.c
 m4/isnanl.m4
@@ -17,7 +17,7 @@ Makefile.am:
 
 Include:
 #if HAVE_LONG_DOUBLE
-# include "isnan.h"
+# include "isnanl-nolibm.h"
 #endif
 
 License:
