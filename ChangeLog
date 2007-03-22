@@ -1,5 +1,15 @@
 2007-03-21  Bruno Haible  <bruno@clisp.org>
 
+	* modules/frexp: New file.
+	* lib/frexp.c: New file.
+	* m4/frexp.m4: New file.
+	* lib/math_.h (frexp): New declaration.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Also initialize GNULIB_FREXP and
+	REPLACE_FREXP.
+	* modules/math (math.h): Also substitute GNULIB_FREXP, REPLACE_FREXP.
+
+2007-03-21  Bruno Haible  <bruno@clisp.org>
+
 	* modules/isnanl-tests: New file.
 	* tests/test-isnanl.c: New file.
 

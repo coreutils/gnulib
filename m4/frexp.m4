@@ -1,0 +1,92 @@
+# frexp.m4 serial 1
+dnl Copyright (C) 2007 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
+
+AC_DEFUN([gl_FUNC_FREXP],
+[
+  AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  FREXP_LIBM=
+  AC_CACHE_CHECK([whether frexp() can be used without linking with libm],
+    [gl_cv_func_frexp_no_libm],
+    [
+      AC_TRY_LINK([#include <math.h>
+                   long double x;],
+                  [int e; return frexp (x, &e) > 0;],
+        [gl_cv_func_frexp_no_libm=yes],
+        [gl_cv_func_frexp_no_libm=no])
+    ])
+  if test $gl_cv_func_frexp_no_libm = no; then
+    AC_CACHE_CHECK([whether frexp() can be used with libm],
+      [gl_cv_func_frexp_in_libm],
+      [
+        save_LIBS="$LIBS"
+        LIBS="$LIBS -lm"
+        AC_TRY_LINK([#include <math.h>
+                     long double x;],
+                    [int e; return frexp (x, &e) > 0;],
+          [gl_cv_func_frexp_in_libm=yes],
+          [gl_cv_func_frexp_in_libm=no])
+        LIBS="$save_LIBS"
+      ])
+    if test $gl_cv_func_frexp_in_libm = yes; then
+      FREXP_LIBM=-lm
+    fi
+  fi
+  if test $gl_cv_func_frexp_no_libm = yes \
+     || test $gl_cv_func_frexp_in_libm = yes; then
+    save_LIBS="$LIBS"
+    LIBS="$LIBS $FREXP_LIBM"
+    gl_FUNC_FREXP_WORKS
+    LIBS="$save_LIBS"
+    case "$gl_cv_func_frexp_works" in
+      *yes) gl_func_frexp=yes ;;
+      *)    gl_func_frexp=no; REPLACE_FREXP=1; FREXP_LIBM= ;;
+    esac
+  else
+    gl_func_frexp=no
+  fi
+  if test $gl_func_frexp = yes; then
+    AC_DEFINE([HAVE_FREXP], 1,
+      [Define if the frexp() function is available and works.])
+  else
+    AC_LIBOBJ([frexp])
+  fi
+])
+
+dnl Test whether frexp() works also on denormalized numbers.
+dnl This test fails e.g. on NetBSD.
+AC_DEFUN([gl_FUNC_FREXP_WORKS],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether frexp works], [gl_cv_func_frexp_works],
+    [
+      AC_TRY_RUN([
+#include <float.h>
+#include <math.h>
+int main()
+{
+  int i;
+  volatile double x;
+  for (i = 1, x = 1.0; i >= DBL_MIN_EXP; i--, x *= 0.5)
+    ;
+  if (x > 0.0)
+    {
+      int exp;
+      double y = frexp (x, &exp);
+      /* On machines with IEEE754 arithmetic: x = 1.11254e-308, exp = -1022.
+         On NetBSD: y = 0.75. Correct: y = 0.5.  */
+      if (y != 0.5)
+        return 1;
+    }
+  return 0;
+}], [gl_cv_func_frexp_works=yes], [gl_cv_func_frexp_works=no],
+      [case "$host_os" in
+         netbsd*) gl_cv_func_frexp_works="guessing no";;
+         *)       gl_cv_func_frexp_works="guessing yes";;
+       esac
+      ])
+    ])
+])

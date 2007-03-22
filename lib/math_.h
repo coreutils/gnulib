@@ -30,6 +30,27 @@ extern "C" {
 #endif
 
 
+/* Write x as
+     x = mantissa * 2^exp
+   where
+     If x finite and nonzero: 0.5 <= |mantissa| < 1.0.
+     If x is zero: mantissa = x, exp = 0.
+     If x is infinite or NaN: mantissa = x, exp unspecified.
+   Store exp and return mantissa.  */
+#if @GNULIB_FREXP@
+# if @REPLACE_FREXP@
+#  define frexp rpl_frexp
+extern double frexp (double x, int *exp);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef frexp
+# define frexp(x,e) \
+    (GL_LINK_WARNING ("frexp is unportable - " \
+                      "use gnulib module frexp for portability"), \
+     frexp (x, e))
+#endif
+
+
 #if @GNULIB_MATHL@ || !@HAVE_DECL_ACOSL@
 extern long double acosl (long double x);
 #endif

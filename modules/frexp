@@ -1,0 +1,26 @@
+Description:
+frexp() function: split a double into its constituents.
+
+Files:
+lib/frexp.c
+m4/frexp.m4
+
+Depends-on:
+math
+isnan-nolibm
+
+configure.ac:
+gl_FUNC_FREXP
+gl_MATH_MODULE_INDICATOR([frexp])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible, Paolo Bonzini
+

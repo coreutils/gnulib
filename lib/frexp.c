@@ -1,0 +1,202 @@
+/* Split a double into fraction and mantissa.
+   Copyright (C) 2007 Free Software Foundation, Inc.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+#include <config.h>
+
+#if !(defined USE_LONG_DOUBLE && !HAVE_LONG_DOUBLE)
+
+/* Specification.  */
+# include <math.h>
+
+# include <float.h>
+# ifdef USE_LONG_DOUBLE
+#  include "isnanl-nolibm.h"
+# else
+#  include "isnan.h"
+# endif
+
+/* This file assumes FLT_RADIX = 2.  If FLT_RADIX is a power of 2 greater
+   than 2, or not even a power of 2, some rounding errors can occur, so that
+   then the returned mantissa is only guaranteed to be <= 1.0, not < 1.0.  */
+
+# ifdef USE_LONG_DOUBLE
+#  define FUNC frexpl
+#  define DOUBLE long double
+#  define ISNAN isnanl
+#  define L_(literal) literal##L
+# else
+#  define FUNC frexp
+#  define DOUBLE double
+#  define ISNAN isnan
+#  define L_(literal) literal
+# endif
+
+DOUBLE
+FUNC (DOUBLE x, int *exp)
+{
+  int sign;
+  int exponent;
+
+  /* Test for NaN, infinity, and zero.  */
+  if (ISNAN (x) || x + x == x)
+    {
+      *exp = 0;
+      return x;
+    }
+
+  sign = 0;
+  if (x < 0)
+    {
+      x = - x;
+      sign = -1;
+    }
+
+  if (0)
+    {
+      /* Implementation contributed by Paolo Bonzini.
+         Disabled because it's under GPL and doesn't pass the tests.  */
+
+      /* Since the exponent is an 'int', it fits in 64 bits.  Therefore the
+	 loops are executed no more than 64 times.  */
+      DOUBLE exponents[64];
+      DOUBLE *next;
+      int bit;
+
+      exponent = 0;
+      if (x >= L_(1.0))
+	{
+	  for (next = exponents, exponents[0] = L_(2.0), bit = 1;
+	       *next <= x + x;
+	       bit <<= 1, next[1] = next[0] * next[0], next++);
+
+	  for (; next >= exponents; bit >>= 1, next--)
+	    if (x + x >= *next)
+	      {
+		x /= *next;
+		exponent |= bit;
+	      }
+	}
+      else if (x < L_(0.5))
+	{
+	  for (next = exponents, exponents[0] = L_(0.5), bit = 1;
+	       *next > x;
+	       bit <<= 1, next[1] = next[0] * next[0], next++);
+
+	  for (; next >= exponents; bit >>= 1, next--)
+	    if (x < *next)
+	      {
+		x /= *next;
+		exponent |= bit;
+	      }
+	  exponent = - exponent;
+	}
+    }
+  else
+    {
+      /* Implementation contributed by Bruno Haible.  */
+
+      /* Since the exponent is an 'int', it fits in 64 bits.  Therefore the
+	 loops are executed no more than 64 times.  */
+      DOUBLE pow2[64]; /* pow2[i] = 2^2^i */
+      DOUBLE powh[64]; /* powh[i] = 2^-2^i */
+      int i;
+
+      exponent = 0;
+      if (x >= L_(1.0))
+	{
+	  /* A positive exponent.  */
+	  DOUBLE pow2_i; /* = pow2[i] */
+	  DOUBLE powh_i; /* = powh[i] */
+
+	  /* Invariants: pow2_i = 2^2^i, powh_i = 2^-2^i,
+	     x * 2^exponent = argument, x >= 1.0.  */
+	  for (i = 0, pow2_i = L_(2.0), powh_i = L_(0.5);
+	       ;
+	       i++, pow2_i = pow2_i * pow2_i, powh_i = powh_i * powh_i)
+	    {
+	      if (x >= pow2_i)
+		{
+		  exponent += (1 << i);
+		  x *= powh_i;
+		}
+	      else
+		break;
+
+	      pow2[i] = pow2_i;
+	      powh[i] = powh_i;
+	    }
+	  /* Avoid making x too small, as it could become a denormalized
+	     number and thus lose precision.  */
+	  while (i > 0 && x < pow2[i - 1])
+	    {
+	      i--;
+	      powh_i = powh[i];
+	    }
+	  exponent += (1 << i);
+	  x *= powh_i;
+	  /* Here 2^-2^i <= x < 1.0.  */
+	}
+      else
+	{
+	  /* A negative or zero exponent.  */
+	  DOUBLE pow2_i; /* = pow2[i] */
+	  DOUBLE powh_i; /* = powh[i] */
+
+	  /* Invariants: pow2_i = 2^2^i, powh_i = 2^-2^i,
+	     x * 2^exponent = argument, x < 1.0.  */
+	  for (i = 0, pow2_i = L_(2.0), powh_i = L_(0.5);
+	       ;
+	       i++, pow2_i = pow2_i * pow2_i, powh_i = powh_i * powh_i)
+	    {
+	      if (x < powh_i)
+		{
+		  exponent -= (1 << i);
+		  x *= pow2_i;
+		}
+	      else
+		break;
+
+	      pow2[i] = pow2_i;
+	      powh[i] = powh_i;
+	    }
+	  /* Here 2^-2^i <= x < 1.0.  */
+	}
+
+      /* Invariants: x * 2^exponent = argument, and 2^-2^i <= x < 1.0.  */
+      while (i > 0)
+	{
+	  i--;
+	  if (x < powh[i])
+	    {
+	      exponent -= (1 << i);
+	      x *= pow2[i];
+	    }
+	}
+      /* Here 0.5 <= x < 1.0.  */
+    }
+
+  *exp = exponent;
+  return (sign < 0 ? - x : x);
+}
+
+#else
+
+/* This declaration is solely to ensure that after preprocessing
+   this file is never empty.  */
+typedef int dummy;
+
+#endif
