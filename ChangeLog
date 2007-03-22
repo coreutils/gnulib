@@ -1,5 +1,8 @@
 2007-03-21  Bruno Haible  <bruno@clisp.org>
 
+	* modules/isnanl-tests: New file.
+	* tests/test-isnanl.c: New file.
+
 	* modules/isnanl: New file.
 	* lib/isnanl.h: New file.
 	* m4/isnanl.m4 (gl_FUNC_ISNANL): New macro.

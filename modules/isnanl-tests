@@ -1,0 +1,16 @@
+Files:
+tests/test-isnanl.c
+tests/test-isnanl.h
+
+Depends-on:
+
+configure.ac:
+gl_LONG_DOUBLE_EXPONENT_LOCATION
+AC_SUBST([ISNANL_LIBM])
+
+Makefile.am:
+TESTS += test-isnanl
+check_PROGRAMS += test-isnanl
+test_isnanl_LDADD = @ISNANL_LIBM@ $(LDADD)
+EXTRA_DIST += test-isnanl.h
+
