@@ -4,6 +4,7 @@ tests/test-sys_socket.c
 Depends-on:
 
 configure.ac:
+AC_CHECK_FUNCS([shutdown])
 
 Makefile.am:
 TESTS += test-sys_socket

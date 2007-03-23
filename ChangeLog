@@ -1,5 +1,12 @@
 2007-03-22  Bruno Haible  <bruno@clisp.org>
 
+	* modules/sys_socket-tests (configure.ac): Check for shutdown function.
+	* tests/test-sys_socket.c (a): Test only if shutdown() exists.
+	(main): Update.
+	Fixes a compilation error on BeOS.
+
+2007-03-22  Bruno Haible  <bruno@clisp.org>
+
 	* modules/frexpl-tests: New file.
 	* tests/test-frexpl.c: New file.
 

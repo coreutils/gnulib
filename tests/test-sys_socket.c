@@ -23,14 +23,16 @@
 
 #include <errno.h>
 
+#if HAVE_SHUTDOWN
 /* Check some integer constant expressions.  */
 int a[] = { SHUT_RD, SHUT_WR, SHUT_RDWR };
+#endif
 
 int
 main ()
 {
   /* Check some errno values.  */
-  switch (a[0])
+  switch (0)
     {
     case ENOTSOCK:
     case EADDRINUSE:
