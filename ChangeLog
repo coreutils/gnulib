@@ -1,5 +1,8 @@
 2007-03-22  Bruno Haible  <bruno@clisp.org>
 
+	* modules/frexpl-tests: New file.
+	* tests/test-frexpl.c: New file.
+
 	* modules/frexpl: New file.
 	* m4/frexpl.m4: New file.
 	* modules/math (Makefile.am): Also substitute GNULIB_FREXPL into math.h.

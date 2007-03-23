@@ -1,0 +1,13 @@
+Files:
+tests/test-frexpl.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-frexpl
+check_PROGRAMS += test-frexpl
+
+License:
+LGPL
