@@ -128,14 +128,21 @@ extern long double floorl (long double x);
      floorl (x))
 #endif
 
-#if @GNULIB_MATHL@ || !@HAVE_DECL_FREXPL@
+/* Write x as
+     x = mantissa * 2^exp
+   where
+     If x finite and nonzero: 0.5 <= |mantissa| < 1.0.
+     If x is zero: mantissa = x, exp = 0.
+     If x is infinite or NaN: mantissa = x, exp unspecified.
+   Store exp and return mantissa.  */
+#if @GNULIB_FREXPL@ || !@HAVE_DECL_FREXPL@
 extern long double frexpl (long double x, int *exp);
 #endif
-#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
+#if !@GNULIB_FREXPL@ || defined GNULIB_POSIXCHECK
 # undef frexpl
 # define frexpl(x,e) \
     (GL_LINK_WARNING ("frexpl is unportable - " \
-                      "use gnulib module mathl for portability"), \
+                      "use gnulib module frexpl for portability"), \
      frexpl (x, e))
 #endif
 

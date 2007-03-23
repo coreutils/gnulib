@@ -1,5 +1,16 @@
 2007-03-22  Bruno Haible  <bruno@clisp.org>
 
+	* modules/frexpl: New file.
+	* m4/frexpl.m4: New file.
+	* modules/math (Makefile.am): Also substitute GNULIB_FREXPL into math.h.
+	* lib/math_.h (frexpl): Test GNULIB_FREXPL instead of GNULIB_MATHL.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_FREXPL.
+	* modules/mathl (Files): Remove lib/frexpl.c, lib/frexp.c.
+	(Depends-on): Add frexpl. Remove isnanl-nolibm.
+	* m4/mathl.m4 (gl_FUNC_LONG_DOUBLE_MATH): Don't test for frexpl.
+
+2007-03-22  Bruno Haible  <bruno@clisp.org>
+
 	* lib/frexpl.c: Share code with lib/frexp.c.
 	* modules/mathl (Files): Add lib/frexp.c.
 	(Depends-on): Add isnanl-nolibm.
