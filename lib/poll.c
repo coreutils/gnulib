@@ -47,6 +47,11 @@
 #define EOVERFLOW EINVAL
 #endif
 
+/* BeOS does not have MSG_PEEK.  */
+#ifndef MSG_PEEK
+#define MSG_PEEK 0
+#endif
+
 int
 poll (pfd, nfd, timeout)
      struct pollfd *pfd;
