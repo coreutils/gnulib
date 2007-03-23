@@ -1,3 +1,9 @@
+2007-03-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh (File system functions): New module write-any-file.
+	* modules/write-any-file, lib/write-any-file.c, lib/write-any-file.h:
+	* m4/write-any-file.m4: New files.
+
 2007-03-23  Eric Blake  <ebb9@byu.net>
 
 	* gnulib-tool: Rearrange space-tab sequences, since some editors

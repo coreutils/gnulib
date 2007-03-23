@@ -2072,6 +2072,7 @@ func_all_modules ()
   func_module unlinkdir
   func_module utimecmp
   func_module utimens
+  func_module write-any-file
   func_module xgetcwd
   func_module xreadlink
   func_module xreadlink-with-size
