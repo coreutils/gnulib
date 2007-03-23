@@ -138,7 +138,7 @@ extern long double floorl (long double x);
 #if @GNULIB_FREXPL@ || !@HAVE_DECL_FREXPL@
 extern long double frexpl (long double x, int *exp);
 #endif
-#if !@GNULIB_FREXPL@ || defined GNULIB_POSIXCHECK
+#if !@GNULIB_FREXPL@ && defined GNULIB_POSIXCHECK
 # undef frexpl
 # define frexpl(x,e) \
     (GL_LINK_WARNING ("frexpl is unportable - " \
