@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-03-17 16:27:48 $'
+cvsdatestamp='$Date: 2007-03-23 13:11:28 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2823,13 +2823,13 @@ func_create_testdir ()
   # distributed (such as getdate.c).
   # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
   cleaned_files=`sed -e "$sed_remove_backslash_newline" < "$testdir/$sourcebase/Makefile.am" \
-                 | sed -n -e 's,^CLEANFILES[ 	]*+=\([^#]*\).*$,\1,p' -e 's,^MOSTLYCLEANFILES[ 	]*+=\([^#]*\).*$,\1,p'`
+                 | sed -n -e 's,^CLEANFILES[	 ]*+=\([^#]*\).*$,\1,p' -e 's,^MOSTLYCLEANFILES[	 ]*+=\([^#]*\).*$,\1,p'`
   cleaned_files=`for file in $cleaned_files; do echo " $file "; done`
   # Extract the value of "BUILT_SOURCES += ...". Remove variable references
   # such $(FOO_H) because they don't refer to distributed files.
   sed_remove_make_variables='s,[$]([A-Za-z0-9_]*),,g'
   built_sources=`sed -e "$sed_remove_backslash_newline" < "$testdir/$sourcebase/Makefile.am" \
-                 | sed -n -e 's,^BUILT_SOURCES[ 	]*+=\([^#]*\).*$,\1,p' \
+                 | sed -n -e 's,^BUILT_SOURCES[	 ]*+=\([^#]*\).*$,\1,p' \
                  | sed -e "$sed_remove_make_variables"`
   distributed_built_sources=`for file in $built_sources; do
                                case "$cleaned_files" in

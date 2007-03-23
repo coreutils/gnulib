@@ -1,5 +1,10 @@
 2007-03-23  Eric Blake  <ebb9@byu.net>
 
+	* gnulib-tool: Rearrange space-tab sequences, since some editors
+	like to eat them.
+
+2007-03-23  Eric Blake  <ebb9@byu.net>
+
 	* lib/version-etc.c (version_etc_va): Update license wording to
 	be more concise.  Recommended by Richard Stallman.
 
