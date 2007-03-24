@@ -668,13 +668,16 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
 	     specify hours.  If fours digits are used, minutes are
 	     also specified.  */
 	  {
+	    bool neg;
+	    int n;
+
 	    val = 0;
 	    while (*rp == ' ')
 	      ++rp;
 	    if (*rp != '+' && *rp != '-')
 	      return NULL;
-	    bool neg = *rp++ == '-';
-	    int n = 0;
+	    neg = *rp++ == '-';
+	    n = 0;
 	    while (n < 4 && *rp >= '0' && *rp <= '9')
 	      {
 		val = val * 10 + *rp++ - '0';

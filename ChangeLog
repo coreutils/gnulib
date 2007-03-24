@@ -1,3 +1,7 @@
+2007-03-22  Bruno Haible  <bruno@clisp.org>
+
+	* lib/strptime.c (__strptime_internal): Use ANSI C syntax.
+
 2007-03-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* MODULES.html.sh (File system functions): New module write-any-file.
