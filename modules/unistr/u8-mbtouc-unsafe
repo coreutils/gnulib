@@ -3,6 +3,7 @@ Look at first character in UTF-8 string.
 
 Files:
 lib/unistr/u8-mbtouc-unsafe.c
+lib/unistr/u8-mbtouc-unsafe-aux.c
 
 Depends-on:
 unistr/base
@@ -11,7 +12,7 @@ configure.ac:
 gl_MODULE_INDICATOR([unistr/u8-mbtouc-unsafe])
 
 Makefile.am:
-lib_SOURCES += unistr/u8-mbtouc-unsafe.c
+lib_SOURCES += unistr/u8-mbtouc-unsafe.c unistr/u8-mbtouc-unsafe-aux.c
 
 Include:
 "unistr.h"

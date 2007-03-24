@@ -3,6 +3,7 @@ Look at first character in UTF-16 string.
 
 Files:
 lib/unistr/u16-mbtouc.c
+lib/unistr/u16-mbtouc-aux.c
 
 Depends-on:
 unistr/base
@@ -11,7 +12,7 @@ configure.ac:
 gl_MODULE_INDICATOR([unistr/u16-mbtouc])
 
 Makefile.am:
-lib_SOURCES += unistr/u16-mbtouc.c
+lib_SOURCES += unistr/u16-mbtouc.c unistr/u16-mbtouc-aux.c
 
 Include:
 "unistr.h"

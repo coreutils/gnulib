@@ -1,5 +1,36 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/unistr/base (Depends-on): Remove utf8-ucs4-unsafe,
+	utf16-ucs4-unsafe, utf8-ucs4, utf16-ucs4, ucs4-utf8, ucs4-utf16.
+
+	* modules/unistr/u8-mbtouc: Add source files from module utf8-ucs4.
+	* modules/utf8-ucs4: Turn into a symbolic link to module
+	unistr/u8-mbtouc.
+
+	* modules/unistr/u8-mbtouc-unsafe: Add source files from module
+	utf8-ucs4-unsafe.
+	* modules/utf8-ucs4-unsafe: Turn into a symbolic link to module
+	unistr/u8-mbtouc-unsafe.
+
+	* modules/unistr/u16-mbtouc: Add source files from module utf16-ucs4.
+	* modules/utf16-ucs4: Turn into a symbolic link to module
+	unistr/u16-mbtouc.
+
+	* modules/unistr/u16-mbtouc-unsafe: Add source files from module
+	utf16-ucs4-unsafe.
+	* modules/utf16-ucs4-unsafe: Turn into a symbolic link to module
+	unistr/u16-mbtouc-unsafe.
+
+	* modules/unistr/u8-uctomb: Add source files from module utf4-utf8.
+	* modules/ucs4-utf8: Turn into a symbolic link to module
+	unistr/u8-ubtomb.
+
+	* modules/unistr/u16-uctomb: Add source files from module utf4-utf16.
+	* modules/ucs4-utf16: Turn into a symbolic link to module
+	unistr/u16-ubtomb.
+
+2007-03-24  Bruno Haible  <bruno@clisp.org>
+
 	* lib/unistr/u8-mbtouc-aux.c: Renamed from lib/unistr/utf8-ucs4.c.
 	Enable the function only if HAVE_INLINE.
 	* lib/unistr/u8-mbtouc-unsafe-aux.c: Renamed from
