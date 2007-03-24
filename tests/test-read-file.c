@@ -25,6 +25,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 
 #define FILE1 "/etc/resolv.conf"
 #define FILE2 "/dev/null"
@@ -32,35 +33,69 @@
 int
 main (void)
 {
-  {
-    size_t len;
-    char *out = read_file (FILE1, &len);
+  struct stat statbuf;
+  int err = 0;
 
-    if (!out)
-      perror ("Could not read file");
+  /* We can perform the test only if the file exists and is readable.
+     Test whether it exists, then assume it is world-readable.  */
+  if (stat (FILE1, &statbuf) >= 0)
+    {
+      size_t len;
+      char *out = read_file (FILE1, &len);
 
-    if (out[len] != '\0')
-      perror ("BAD: out[len] not zero");
+      if (!out)
+        {
+	  perror ("Could not read file");
+	  err = 1;
+	}
+      else
+	{
+	  if (out[len] != '\0')
+	    {
+	      perror ("BAD: out[len] not zero");
+	      err = 1;
+	    }
 
-    printf ("Read %ld from %s...\n", (unsigned long) len, FILE1);
+	  /* Assume FILE1 is a regular file or a symlink to a regular file.  */
+	  if (len != statbuf.st_size)
+	    {
+	      fprintf (stderr, "Read %ld from %s...\n", (unsigned long) len, FILE1);
+	      err = 1;
+	    }
+	  free (out);
+	}
+    }
 
-    free (out);
-  }
+  /* We can perform the test only if the file exists and is readable.
+     Test whether it exists, then assume it is world-readable.  */
+  if (stat (FILE2, &statbuf) >= 0)
+    {
+      size_t len;
+      char *out = read_file (FILE2, &len);
 
-  {
-    size_t len;
-    char *out = read_file (FILE2, &len);
+      if (!out)
+        {
+	  perror ("Could not read file");
+	  err = 1;
+	}
+      else
+	{
+	  if (out[len] != '\0')
+	    {
+	      perror ("BAD: out[len] not zero");
+	      err = 1;
+	    }
 
-    if (!out)
-      perror ("Could not read file");
+	  /* /dev/null should always be empty.  Ignore statbuf.st_size, since it
+	     is not a regular file.  */
+	  if (len != 0)
+	    {
+	      fprintf (stderr, "Read %ld from %s...\n", (unsigned long) len, FILE2);
+	      err = 1;
+	    }
+	  free (out);
+	}
+    }
 
-    if (out[len] != '\0')
-      perror ("BAD: out[len] not zero");
-
-    printf ("Read %ld from %s...\n", (unsigned long) len, FILE2);
-
-    free (out);
-  }
-
-  return 0;
+  return err;
 }
