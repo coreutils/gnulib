@@ -28,8 +28,6 @@
 
 #if HAVE_ICONV
 # include <iconv.h>
-# include "utf8-ucs4.h"
-# include "ucs4-utf8.h"
 # include "unistr.h"
 #endif
 

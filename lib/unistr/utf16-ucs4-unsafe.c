@@ -20,7 +20,7 @@
 #include <config.h>
 
 /* Specification.  */
-#include "utf16-ucs4-unsafe.h"
+#include "unistr.h"
 
 int
 u16_mbtouc_unsafe_aux (ucs4_t *puc, const uint16_t *s, size_t n)

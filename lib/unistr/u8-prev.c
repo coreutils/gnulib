@@ -25,7 +25,7 @@
 const uint8_t *
 u8_prev (ucs4_t *puc, const uint8_t *s, const uint8_t *start)
 {
-  /* Keep in sync with utf8-ucs4.h and utf8-ucs4.c.  */
+  /* Keep in sync with unistr.h and utf8-ucs4.c.  */
   if (s != start)
     {
       uint8_t c_1 = s[-1];

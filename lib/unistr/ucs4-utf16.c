@@ -1,5 +1,5 @@
 /* Conversion UCS-4 to UTF-16.
-   Copyright (C) 2002, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software; you can redistribute it and/or modify it
@@ -20,7 +20,7 @@
 #include <config.h>
 
 /* Specification.  */
-#include "ucs4-utf16.h"
+#include "unistr.h"
 
 int
 u16_uctomb_aux (uint16_t *s, ucs4_t uc, int n)

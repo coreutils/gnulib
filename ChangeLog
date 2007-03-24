@@ -1,5 +1,62 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
+	* lib/utf8-ucs4.h: Remove file.
+	* lib/utf8-ucs4-unsafe.h: Remove file.
+	* lib/utf16-ucs4.h: Remove file.
+	* lib/utf16-ucs4-unsafe.h: Remove file.
+	* lib/ucs4-utf8.h: Remove file.
+	* lib/ucs4-utf16.h: Remove file.
+	* lib/unistr.h: Include their previous contents.
+	* m4/utf-ucs4.m4: Remove file.
+	* m4/ucs4-utf.m4: Remove file.
+	* modules/utf8-ucs4 (Files): Remove lib/utf8-ucs4.h.
+	(Depends-on): Add unistr/base.
+	(configure.ac): Remove gl_UTF_UCS4.
+	(Makefile.am): Update.
+	(Include): Change to unistr.h.
+	* modules/utf8-ucs4-unsafe (Files): Remove lib/utf8-ucs4-unsafe.h.
+	(Depends-on): Add unistr/base.
+	(configure.ac): Remove gl_UTF_UCS4.
+	(Makefile.am): Update.
+	(Include): Change to unistr.h.
+	* modules/utf16-ucs4 (Files): Remove lib/utf16-ucs4.h.
+	(Depends-on): Add unistr/base.
+	(configure.ac): Remove gl_UTF_UCS4.
+	(Makefile.am): Update.
+	(Include): Change to unistr.h.
+	* modules/utf16-ucs4-unsafe (Files): Remove lib/utf16-ucs4-unsafe.h.
+	(Depends-on): Add unistr/base.
+	(configure.ac): Remove gl_UTF_UCS4.
+	(Makefile.am): Update.
+	(Include): Change to unistr.h.
+	* modules/ucs4-utf8 (Files): Remove lib/ucs4-utf8.h.
+	(Depends-on): Add unistr/base.
+	(configure.ac): Remove gl_UCS4_UTF.
+	(Makefile.am): Update.
+	(Include): Change to unistr.h.
+	* modules/ucs4-utf16 (Files): Remove lib/ucs4-utf16.h.
+	(Depends-on): Add unistr/base.
+	(configure.ac): Remove gl_UCS4_UTF.
+	(Makefile.am): Update.
+	(Include): Change to unistr.h.
+	* lib/unistr/utf8-ucs4.c: Include unistr.h instead of utf8-ucs4.h.
+	* lib/unistr/utf8-ucs4-unsafe.c: Include unistr.h instead of
+	utf8-ucs4-unsafe.h.
+	* lib/unistr/utf16-ucs4.c: Include unistr.h instead of utf16-ucs4.h.
+	* lib/unistr/utf16-ucs4-unsafe.c: Include unistr.h instead of
+	utf16-ucs4-unsafe.h.
+	* lib/unistr/ucs4-utf8.c: Include unistr.h instead of ucs4-utf8.h.
+	* lib/unistr/ucs4-utf16.c: Include unistr.h instead of ucs4-utf16.h.
+	* lib/unistr/u8-chr.c: Don't include ucs4-utf8.h.
+	* lib/unistr/u8-strchr.c: Likewise.
+	* lib/unistr/u8-strrchr.c: Likewise.
+	* lib/unistr/u16-chr.c: Don't include ucs4-utf16.h.
+	* lib/unistr/u16-strchr.c: Likewise.
+	* lib/unistr/u16-strrchr.c: Likewise.
+	* lib/striconveh.c: Update.
+
+2007-03-24  Bruno Haible  <bruno@clisp.org>
+
 	* lib/argp-help.c (fill_in_uparams, canon_doc_option): Cast the
 	arguments of isspace, isalpha, isalnum, isdigit to 'unsigned char'.
 

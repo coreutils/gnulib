@@ -6,6 +6,19 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-03-24  utf8-ucs4       The include file is changed from "utf8-ucs4.h"
+                            to "unistr.h".
+            utf8-ucs4-unsafe  The include file is changed from
+                            "utf8-ucs4-unsafe.h" to "unistr.h".
+            utf16-ucs4      The include file is changed from "utf16-ucs4.h"
+                            to "unistr.h".
+            utf16-ucs4-unsafe  The include file is changed from "utf16-ucs4.h"
+                            to "unistr.h".
+            ucs4-utf8       The include file is changed from "ucs4-utf8.h"
+                            to "unistr.h".
+            ucs4-utf16      The include file is changed from "ucs4-utf16.h"
+                            to "unistr.h".
+
 2007-03-19  iconvme         The module is removed. Use module striconv instead:
                             iconv_string -> str_iconv
                             iconv_alloc -> str_cd_iconv (with reversed

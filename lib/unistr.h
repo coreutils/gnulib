@@ -1,5 +1,5 @@
 /* Elementary Unicode string functions.
-   Copyright (C) 2002, 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002, 2005-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -126,9 +126,10 @@ extern int
 
 /* Return the length (number of units) of the first character in S, putting
    its 'ucs4_t' representation in *PUC.  Upon failure, *PUC is set to 0xfffd,
-   and an appropriate number of units is returned.  */
-/* Similar to mbtowc(), except that puc and s must not be NULL, and the NUL
-   character is not treated specially.  */
+   and an appropriate number of units is returned.
+   The number of available units, N, must be > 0.  */
+/* Similar to mbtowc(), except that puc and s must not be NULL, n must be > 0,
+   and the NUL character is not treated specially.  */
 /* The variants with _safe suffix are safe, even if the library is compiled
    without --enable-safety.  */
 
@@ -137,7 +138,21 @@ extern int
 extern int
        u8_mbtouc_unsafe (ucs4_t *puc, const uint8_t *s, size_t n);
 # else
-#  include "utf8-ucs4-unsafe.h"
+extern int
+       u8_mbtouc_unsafe_aux (ucs4_t *puc, const uint8_t *s, size_t n);
+static inline int
+u8_mbtouc_unsafe (ucs4_t *puc, const uint8_t *s, size_t n)
+{
+  uint8_t c = *s;
+
+  if (c < 0x80)
+    {
+      *puc = c;
+      return 1;
+    }
+  else
+    return u8_mbtouc_unsafe_aux (puc, s, n);
+}
 # endif
 #endif
 
@@ -146,7 +161,21 @@ extern int
 extern int
        u16_mbtouc_unsafe (ucs4_t *puc, const uint16_t *s, size_t n);
 # else
-#  include "utf16-ucs4-unsafe.h"
+extern int
+       u16_mbtouc_unsafe_aux (ucs4_t *puc, const uint16_t *s, size_t n);
+static inline int
+u16_mbtouc_unsafe (ucs4_t *puc, const uint16_t *s, size_t n)
+{
+  uint16_t c = *s;
+
+  if (c < 0xd800 || c >= 0xe000)
+    {
+      *puc = c;
+      return 1;
+    }
+  else
+    return u16_mbtouc_unsafe_aux (puc, s, n);
+}
 # endif
 #endif
 
@@ -179,7 +208,21 @@ u32_mbtouc_unsafe (ucs4_t *puc, const uint32_t *s, size_t n)
 extern int
        u8_mbtouc (ucs4_t *puc, const uint8_t *s, size_t n);
 # else
-#  include "utf8-ucs4.h"
+extern int
+       u8_mbtouc_aux (ucs4_t *puc, const uint8_t *s, size_t n);
+static inline int
+u8_mbtouc (ucs4_t *puc, const uint8_t *s, size_t n)
+{
+  uint8_t c = *s;
+
+  if (c < 0x80)
+    {
+      *puc = c;
+      return 1;
+    }
+  else
+    return u8_mbtouc_aux (puc, s, n);
+}
 # endif
 #endif
 
@@ -188,7 +231,21 @@ extern int
 extern int
        u16_mbtouc (ucs4_t *puc, const uint16_t *s, size_t n);
 # else
-#  include "utf16-ucs4.h"
+extern int
+       u16_mbtouc_aux (ucs4_t *puc, const uint16_t *s, size_t n);
+static inline int
+u16_mbtouc (ucs4_t *puc, const uint16_t *s, size_t n)
+{
+  uint16_t c = *s;
+
+  if (c < 0xd800 || c >= 0xe000)
+    {
+      *puc = c;
+      return 1;
+    }
+  else
+    return u16_mbtouc_aux (puc, s, n);
+}
 # endif
 #endif
 
@@ -223,7 +280,19 @@ u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n)
 extern int
        u8_uctomb (uint8_t *s, ucs4_t uc, int n);
 # else
-#  include "ucs4-utf8.h"
+extern int
+       u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n);
+static inline int
+u8_uctomb (uint8_t *s, ucs4_t uc, int n)
+{
+  if (uc < 0x80 && n > 0)
+    {
+      s[0] = uc;
+      return 1;
+    }
+  else
+    return u8_uctomb_aux (s, uc, n);
+}
 # endif
 #endif
 
@@ -232,7 +301,19 @@ extern int
 extern int
        u16_uctomb (uint16_t *s, ucs4_t uc, int n);
 # else
-#  include "ucs4-utf16.h"
+extern int
+       u16_uctomb_aux (uint16_t *s, ucs4_t uc, int n);
+static inline int
+u16_uctomb (uint16_t *s, ucs4_t uc, int n)
+{
+  if (uc < 0xd800 && n > 0)
+    {
+      s[0] = uc;
+      return 1;
+    }
+  else
+    return u16_uctomb_aux (s, uc, n);
+}
 # endif
 #endif
 

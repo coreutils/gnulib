@@ -25,7 +25,7 @@
 const uint16_t *
 u16_prev (ucs4_t *puc, const uint16_t *s, const uint16_t *start)
 {
-  /* Keep in sync with utf16-ucs4.h and utf16-ucs4.c.  */
+  /* Keep in sync with unistr.h and utf16-ucs4.c.  */
   if (s != start)
     {
       uint16_t c_1 = s[-1];

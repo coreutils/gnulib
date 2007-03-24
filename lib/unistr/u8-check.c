@@ -1,5 +1,5 @@
 /* Check UTF-8 string.
-   Copyright (C) 2002, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software; you can redistribute it and/or modify it
@@ -29,7 +29,7 @@ u8_check (const uint8_t *s, size_t n)
 
   while (s < s_end)
     {
-      /* Keep in sync with utf8-ucs4.h and utf8-ucs4.c.  */
+      /* Keep in sync with unistr.h and utf8-ucs4.c.  */
       uint8_t c = *s;
 
       if (c < 0x80)

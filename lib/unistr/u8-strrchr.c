@@ -1,5 +1,5 @@
 /* Search character in UTF-8 string.
-   Copyright (C) 1999, 2002, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software; you can redistribute it and/or modify it
@@ -21,8 +21,6 @@
 
 /* Specification.  */
 #include "unistr.h"
-
-#include "ucs4-utf8.h"
 
 uint8_t *
 u8_strrchr (const uint8_t *s, ucs4_t uc)

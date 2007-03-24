@@ -20,7 +20,7 @@
 #include <config.h>
 
 /* Specification.  */
-#include "utf8-ucs4.h"
+#include "unistr.h"
 
 int
 u8_mbtouc_aux (ucs4_t *puc, const uint8_t *s, size_t n)

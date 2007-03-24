@@ -27,7 +27,7 @@ u16_mblen (const uint16_t *s, size_t n)
 {
   if (n > 0)
     {
-      /* Keep in sync with utf16-ucs4.h and utf16-ucs4.c.  */
+      /* Keep in sync with unistr.h and utf16-ucs4.c.  */
       uint16_t c = *s;
 
       if (c < 0xd800 || c >= 0xe000)

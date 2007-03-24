@@ -2,21 +2,19 @@ Description:
 Conversion UTF-16 to UCS-4.
 
 Files:
-lib/utf16-ucs4-unsafe.h
 lib/unistr/utf16-ucs4-unsafe.c
-m4/utf-ucs4.m4
 
 Depends-on:
 unitypes
+unistr/base
 
 configure.ac:
-gl_UTF_UCS4
 
 Makefile.am:
-lib_SOURCES += utf16-ucs4-unsafe.h unistr/utf16-ucs4-unsafe.c
+lib_SOURCES += unistr/utf16-ucs4-unsafe.c
 
 Include:
-"utf16-ucs4-unsafe.h"
+"unistr.h"
 
 License:
 LGPL
