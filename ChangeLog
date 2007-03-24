@@ -1,5 +1,26 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unistr/u8-mbtouc-aux.c: Renamed from lib/unistr/utf8-ucs4.c.
+	Enable the function only if HAVE_INLINE.
+	* lib/unistr/u8-mbtouc-unsafe-aux.c: Renamed from
+	lib/unistr/utf8-ucs4-unsafe.c. Enable the function only if HAVE_INLINE.
+	* lib/unistr/u16-mbtouc-aux.c: Renamed from lib/unistr/utf16-ucs4.c.
+	Enable the function only if HAVE_INLINE.
+	* lib/unistr/u16-mbtouc-unsafe-aux.c: Renamed from
+	lib/unistr/utf16-ucs4-unsafe.c. Enable the function only if HAVE_INLINE.
+	* lib/unistr/u8-uctomb-aux.c: Renamed from lib/unistr/ucs4-utf8.c.
+	Enable the function only if HAVE_INLINE.
+	* lib/unistr/u16-uctomb-aux.c: Renamed from lib/unistr/ucs4-utf16.c.
+	Enable the function only if HAVE_INLINE.
+	* modules/utf8-ucs4: Update.
+	* modules/utf8-ucs4-unsafe: Update.
+	* modules/utf16-ucs4: Update.
+	* modules/utf16-ucs4-unsafe: Update.
+	* modules/ucs4-utf8: Update.
+	* modules/ucs4-utf16: Update.
+
+2007-03-24  Bruno Haible  <bruno@clisp.org>
+
 	* lib/utf8-ucs4.h: Remove file.
 	* lib/utf8-ucs4-unsafe.h: Remove file.
 	* lib/utf16-ucs4.h: Remove file.
