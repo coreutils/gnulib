@@ -1,5 +1,9 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
+	* m4/locale-fr.m4 (gt_LOCALE_FR, gt_LOCALE_FR_UTF8): Fix last change.
+
+2007-03-24  Bruno Haible  <bruno@clisp.org>
+
 	* modules/unistr/base (Depends-on): Remove utf8-ucs4-unsafe,
 	utf16-ucs4-unsafe, utf8-ucs4, utf16-ucs4, ucs4-utf8, ucs4-utf16.
 

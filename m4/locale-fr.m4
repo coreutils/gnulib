@@ -1,4 +1,4 @@
-# locale-fr.m4 serial 5 (gettext-0.16.2)
+# locale-fr.m4 serial 6 (gettext-0.16.2)
 dnl Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,7 @@ int main () {
   /* Check whether the decimal separator is a comma.
      On NetBSD 3.0 in the fr_FR.ISO8859-1 locale, localeconv()->decimal_point
      are nl_langinfo(RADIXCHAR) are both ".".  */
-  if (localeconv () ->decimal_point[0] != '.') return 1;
+  if (localeconv () ->decimal_point[0] != ',') return 1;
   return 0;
 }
 changequote([,])dnl
@@ -144,7 +144,7 @@ int main () {
   /* Check whether the decimal separator is a comma.
      On NetBSD 3.0 in the fr_FR.ISO8859-1 locale, localeconv()->decimal_point
      are nl_langinfo(RADIXCHAR) are both ".".  */
-  if (localeconv () ->decimal_point[0] != '.') return 1;
+  if (localeconv () ->decimal_point[0] != ',') return 1;
   return 0;
 }
 changequote([,])dnl
