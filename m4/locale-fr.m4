@@ -86,13 +86,8 @@ changequote([,])dnl
                 if (LC_ALL=fr LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
                   gt_cv_locale_fr=fr
                 else
-                  # Special test for NetBSD 1.6.
-                  if test -f /usr/share/locale/fr_FR.ISO8859-1/LC_CTYPE; then
-                    gt_cv_locale_fr=fr_FR.ISO8859-1
-                  else
-                    # None found.
-                    gt_cv_locale_fr=none
-                  fi
+                  # None found.
+                  gt_cv_locale_fr=none
                 fi
               fi
             fi

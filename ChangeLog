@@ -1,5 +1,10 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
+	* m4/locale-fr.m4 (gt_LOCALE_FR): Remove the special-casing of NetBSD,
+	since its fr_FR.ISO8859-1 locale wouldn't pass the tests.
+
+2007-03-24  Bruno Haible  <bruno@clisp.org>
+
 	* m4/locale-fr.m4 (gt_LOCALE_FR, gt_LOCALE_FR_UTF8): Fix last change.
 
 2007-03-24  Bruno Haible  <bruno@clisp.org>
