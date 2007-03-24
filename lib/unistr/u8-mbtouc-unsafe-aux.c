@@ -22,6 +22,8 @@
 /* Specification.  */
 #include "unistr.h"
 
+#if HAVE_INLINE
+
 int
 u8_mbtouc_unsafe_aux (ucs4_t *puc, const uint8_t *s, size_t n)
 {
@@ -164,3 +166,5 @@ u8_mbtouc_unsafe_aux (ucs4_t *puc, const uint8_t *s, size_t n)
   *puc = 0xfffd;
   return 1;
 }
+
+#endif

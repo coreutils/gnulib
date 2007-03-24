@@ -22,6 +22,8 @@
 /* Specification.  */
 #include "unistr.h"
 
+#if HAVE_INLINE
+
 int
 u16_mbtouc_aux (ucs4_t *puc, const uint16_t *s, size_t n)
 {
@@ -47,3 +49,5 @@ u16_mbtouc_aux (ucs4_t *puc, const uint16_t *s, size_t n)
   *puc = 0xfffd;
   return 1;
 }
+
+#endif

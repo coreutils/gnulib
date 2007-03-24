@@ -22,6 +22,8 @@
 /* Specification.  */
 #include "unistr.h"
 
+#if HAVE_INLINE
+
 int
 u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n)
 {
@@ -69,3 +71,5 @@ u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n)
     }
   return count;
 }
+
+#endif
