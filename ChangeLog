@@ -1,5 +1,8 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/search-tests: New file.
+	* tests/test-search.c: New file.
+
 	* modules/search: New file.
 	* lib/search_.h: New file, incorporating lib/tsearch.h.
 	* m4/search_h.m4: New file.
