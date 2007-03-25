@@ -8,6 +8,7 @@ lib/float+.h
 m4/isnan.m4
 
 Depends-on:
+fpieee
 
 configure.ac:
 gl_FUNC_ISNAN_NO_LIBM

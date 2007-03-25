@@ -1,5 +1,13 @@
 2007-03-25  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fpieee: New file.
+	* m4/fpieee.m4: New file.
+	* modules/isnan-nolibm (Depends-on): Add fpieee.
+	* modules/isnanl-nolibm (Depends-on): Add fpieee.
+	* modules/isnanl (Depends-on): Add fpieee.
+
+2007-03-25  Bruno Haible  <bruno@clisp.org>
+
 	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Test also finite numbers.
 
 2007-03-25  Bruno Haible  <bruno@clisp.org>
