@@ -64,11 +64,14 @@ FUNC (DOUBLE x)
      because x may be a signaling NaN.  */
 # if defined __SUNPRO_C || defined __DECC
   /* The Sun C 5.0 compilers and the Compaq (ex-DEC) 6.4 compilers don't
-     recognize the initializers as constant expressions.  */
+     recognize the initializers as constant expressions.  The latter compiler
+     also fails when constant-folding 0.0 / 0.0 even when constant-folding is
+     not required.  */
+  static DOUBLE zero = L_(0.0);
   memory_double nan;
   DOUBLE plus_inf = L_(1.0) / L_(0.0);
   DOUBLE minus_inf = -L_(1.0) / L_(0.0);
-  nan.value = L_(0.0) / L_(0.0);
+  nan.value = zero / zero;
 # else
   static memory_double nan = { L_(0.0) / L_(0.0) };
   static DOUBLE plus_inf = L_(1.0) / L_(0.0);
