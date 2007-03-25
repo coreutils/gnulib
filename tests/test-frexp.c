@@ -26,6 +26,18 @@
 
 #define ASSERT(expr) if (!(expr)) abort ();
 
+/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
+#ifdef __DECC
+static double
+NaN ()
+{
+  static double zero = 0.0;
+  return zero / zero;
+}
+#else
+# define NaN() (0.0 / 0.0)
+#endif
+
 static double
 my_ldexp (double x, int d)
 {
@@ -50,7 +62,7 @@ main ()
   { /* NaN.  */
     int exp = -9999;
     double mantissa;
-    x = 0.0 / 0.0;
+    x = NaN ();
     mantissa = frexp (x, &exp);
     ASSERT (mantissa != mantissa);
   }

@@ -1,5 +1,22 @@
 2007-03-25  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-frexp.c (NaN): New function/macro.
+	(main): Use it instead of 0.0 / 0.0.
+	* tests/test-isnan.c (NaN): New function/macro.
+	(main): Use it instead of 0.0 / 0.0.
+	* tests/test-vasnprintf-posix.c (NaN): New function/macro.
+	(test_function): Use it instead of 0.0 / 0.0.
+	* tests/test-vasprintf-posix.c (NaN): New function/macro.
+	(test_function): Use it instead of 0.0 / 0.0.
+	* tests/test-snprintf-posix.h (NaN): New function/macro.
+	(test_function): Use it instead of 0.0 / 0.0.
+	* tests/test-sprintf-posix.h (NaN): New function/macro.
+	(test_function): Use it instead of 0.0 / 0.0.
+	* tests/test-fprintf-posix.h (NaN): New function/macro.
+	(test_function): Use it instead of 0.0 / 0.0.
+	* tests/test-printf-posix.h (NaN): New function/macro.
+	(test_function): Use it instead of 0.0 / 0.0.
+
 	* lib/isnan.c (FUNC): Work around a DEC C compiler bug.
 
 2007-03-25  Bruno Haible  <bruno@clisp.org>

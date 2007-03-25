@@ -26,6 +26,18 @@
 
 #define ASSERT(expr) if (!(expr)) abort ();
 
+/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
+#ifdef __DECC
+static double
+NaN ()
+{
+  static double zero = 0.0;
+  return zero / zero;
+}
+#else
+# define NaN() (0.0 / 0.0)
+#endif
+
 int
 main ()
 {
@@ -40,7 +52,7 @@ main ()
   ASSERT (!isnan (1.0 / 0.0));
   ASSERT (!isnan (-1.0 / 0.0));
   /* Quiet NaN.  */
-  ASSERT (isnan (0.0 / 0.0));
+  ASSERT (isnan (NaN ()));
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
   /* Signalling NaN.  */
   {
@@ -48,7 +60,7 @@ main ()
       ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
     typedef union { double value; unsigned int word[NWORDS]; } memory_double;
     memory_double m;
-    m.value = 0.0 / 0.0;
+    m.value = NaN ();
 # if DBL_EXPBIT0_BIT > 0
     m.word[DBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (DBL_EXPBIT0_BIT - 1);
 # else

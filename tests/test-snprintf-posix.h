@@ -17,6 +17,18 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
+/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
+#ifdef __DECC
+static double
+NaN ()
+{
+  static double zero = 0.0;
+  return zero / zero;
+}
+#else
+# define NaN() (0.0 / 0.0)
+#endif
+
 static void
 test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
 {
@@ -143,7 +155,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%a %d", 0.0 / 0.0, 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%a %d", NaN (), 33, 44, 55);
     ASSERT (strcmp (result, "nan 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -336,7 +348,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%010a %d", 0.0 / 0.0, 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%010a %d", NaN (), 33, 44, 55);
     ASSERT (strcmp (result, "       nan 33") == 0);
     ASSERT (retval == strlen (result));
   }

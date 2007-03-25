@@ -17,6 +17,18 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
+/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
+#ifdef __DECC
+static double
+NaN ()
+{
+  static double zero = 0.0;
+  return zero / zero;
+}
+#else
+# define NaN() (0.0 / 0.0)
+#endif
+
 static void
 test_function (int (*my_fprintf) (FILE *, const char *, ...))
 {
@@ -47,13 +59,13 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
   my_fprintf (stdout, "%a %d\n", -1.0 / 0.0, 33, 44, 55);
 
   /* NaN.  */
-  my_fprintf (stdout, "%a %d\n", 0.0 / 0.0, 33, 44, 55);
+  my_fprintf (stdout, "%a %d\n", NaN (), 33, 44, 55);
 
   /* FLAG_ZERO with infinite number.  */
   my_fprintf (stdout, "%010a %d\n", 1.0 / 0.0, 33, 44, 55);
 
   /* FLAG_ZERO with NaN.  */
-  my_fprintf (stdout, "%010a %d\n", 0.0 / 0.0, 33, 44, 55);
+  my_fprintf (stdout, "%010a %d\n", NaN (), 33, 44, 55);
 
   /* Test the support of the POSIX/XSI format strings with positions.  */
 

@@ -31,6 +31,18 @@
 
 #define ASSERT(expr) if (!(expr)) abort ();
 
+/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
+#ifdef __DECC
+static double
+NaN ()
+{
+  static double zero = 0.0;
+  return zero / zero;
+}
+#else
+# define NaN() (0.0 / 0.0)
+#endif
+
 static void
 test_function (int (*my_asprintf) (char **, const char *, ...))
 {
@@ -164,7 +176,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* NaN.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%a %d", 0.0 / 0.0, 33, 44, 55);
+      my_asprintf (&result, "%a %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "nan 33") == 0);
     ASSERT (retval == strlen (result));
@@ -393,7 +405,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%010a %d", 0.0 / 0.0, 33, 44, 55);
+      my_asprintf (&result, "%010a %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "       nan 33") == 0);
     ASSERT (retval == strlen (result));
