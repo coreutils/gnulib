@@ -1,5 +1,10 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c [!HAVE_LONG_DOUBLE]: Include printf-frexp.h. Don't
+	include isnanl-nolibm.h.
+
+2007-03-24  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-read-file.c (main): Don't produce spurious output for
 	expected situations. Make the test fail if it encountered unexpected
 	results.
