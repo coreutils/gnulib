@@ -1,5 +1,9 @@
 2007-03-25  Bruno Haible  <bruno@clisp.org>
 
+	* lib/regexec.c (merge_state_with_log): Make static.
+
+2007-03-25  Bruno Haible  <bruno@clisp.org>
+
 	* lib/trigl.c (kernel_rem_pio2): Make static.
 
 2007-03-25  Bruno Haible  <bruno@clisp.org>
