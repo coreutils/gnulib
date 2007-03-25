@@ -1,5 +1,19 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/search: New file.
+	* lib/search_.h: New file, incorporating lib/tsearch.h.
+	* m4/search_h.m4: New file.
+	* lib/tsearch.h: Remove file.
+	* lib/tsearch.c: Include search.h instead of tsearch.h.
+	* m4/tsearch.m4 (gl_FUNC_TSEARCH): Require gl_SEARCH_H_DEFAULTS. Set
+	HAVE_TSEARCH.
+	* modules/tsearch (Files): Remove lib/tsearch.h.
+	(Depends-on): Add search.
+	(configure.ac): Invoke gl_SEARCH_MODULE_INDICATOR.
+	(Include): Change tsearch.h into search.h.
+
+2007-03-24  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fpucw: New file.
 	* lib/fpucw.h: New file.
 	* lib/frexp.c: Include fpucw.h.

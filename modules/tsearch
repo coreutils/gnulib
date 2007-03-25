@@ -2,19 +2,20 @@ Description:
 Binary tree data structure.
 
 Files:
-lib/tsearch.h
 lib/tsearch.c
 m4/tsearch.m4
 
 Depends-on:
+search
 
 configure.ac:
 gl_FUNC_TSEARCH
+gl_SEARCH_MODULE_INDICATOR([tsearch])
 
 Makefile.am:
 
 Include:
-"tsearch.h"
+<search.h>
 
 License:
 LGPL

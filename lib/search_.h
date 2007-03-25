@@ -1,5 +1,6 @@
-/* Binary tree data structure.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+/* A GNU-like <search.h>.
+
+   Copyright (C) 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,19 +16,24 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _TSEARCH_H
-#define _TSEARCH_H
+#ifndef _GL_SEARCH_H
+#define _GL_SEARCH_H
 
-#if HAVE_TSEARCH
+#if @HAVE_SEARCH_H@
+# include @ABSOLUTE_SEARCH_H@
+#endif
 
-/* Get tseach(), tfind(), tdelete(), twalk() declarations.  */
-#include <search.h>
 
-#else
+/* The definition of GL_LINK_WARNING is copied here.  */
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+
+#if @GNULIB_TSEARCH@
+# if !@HAVE_TSEARCH@
 
 /* See <http://www.opengroup.org/susv3xbd/search.h.html>,
        <http://www.opengroup.org/susv3xsh/tsearch.html>
@@ -73,10 +79,33 @@ extern void * tdelete (const void *key, void **vrootp,
 extern void twalk (const void *vroot,
 		   void (*action) (const void *, VISIT, int));
 
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef tsearch
+# define tsearch(k,v,c) \
+    (GL_LINK_WARNING ("tsearch is unportable - " \
+                      "use gnulib module tsearch for portability"), \
+     tsearch (k, v, c))
+# undef tfind
+# define tfind(k,v,c) \
+    (GL_LINK_WARNING ("tfind is unportable - " \
+                      "use gnulib module tsearch for portability"), \
+     tfind (k, v, c))
+# undef tdelete
+# define tdelete(k,v,c) \
+    (GL_LINK_WARNING ("tdelete is unportable - " \
+                      "use gnulib module tsearch for portability"), \
+     tdelete (k, v, c))
+# undef twalk
+# define twalk(v,a) \
+    (GL_LINK_WARNING ("twalk is unportable - " \
+                      "use gnulib module tsearch for portability"), \
+     twalk (v, a))
+#endif
+
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif
-
-#endif /* _TSEARCH_H */

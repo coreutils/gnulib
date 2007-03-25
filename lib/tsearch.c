@@ -1,4 +1,4 @@
-/* Copyright (C) 1995, 1996, 1997, 2000, 2006 Free Software Foundation, Inc.
+/* Copyright (C) 1995-1997, 2000, 2006-2007 Free Software Foundation, Inc.
    Contributed by Bernd Schmidt <crux@Pool.Informatik.RWTH-Aachen.DE>, 1997.
 
    NOTE: The canonical source of this file is maintained with the GNU C
@@ -88,7 +88,11 @@
 #include <config.h>
 
 /* Specification.  */
-#include "tsearch.h"
+#ifdef IN_LIBINTL
+# include "tsearch.h"
+#else
+# include <search.h>
+#endif
 
 #include <stdlib.h>
 
