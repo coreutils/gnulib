@@ -57,6 +57,7 @@
 # if HAVE_LONG_DOUBLE
 #  include "isnanl-nolibm.h"
 #  include "printf-frexpl.h"
+#  include "fpucw.h"
 # endif
 #endif
 
@@ -415,6 +416,9 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    else
 		      {
 			int sign = 0;
+			DECL_LONG_DOUBLE_ROUNDING
+
+			BEGIN_LONG_DOUBLE_ROUNDING ();
 
 			if (arg < 0.0L)
 			  {
@@ -542,6 +546,8 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			      while (*p != '\0')
 				p++;
 			  }
+
+			END_LONG_DOUBLE_ROUNDING ();
 		      }
 		  }
 		else

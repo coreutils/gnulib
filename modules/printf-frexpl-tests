@@ -2,6 +2,7 @@ Files:
 tests/test-printf-frexpl.c
 
 Depends-on:
+fpucw
 
 configure.ac:
 

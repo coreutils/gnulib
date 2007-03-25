@@ -24,6 +24,8 @@
 #include <float.h>
 #include <stdlib.h>
 
+#include "fpucw.h"
+
 #define ASSERT(expr) if (!(expr)) abort ();
 
 static long double
@@ -41,6 +43,9 @@ main ()
 {
   int i;
   long double x;
+  DECL_LONG_DOUBLE_ROUNDING
+
+  BEGIN_LONG_DOUBLE_ROUNDING ();
 
   { /* NaN.  */
     int exp = -9999;

@@ -1,0 +1,21 @@
+Description:
+Set the FPU control word, so as to allow correct 'long double' computations.
+
+Files:
+lib/fpucw.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"fpucw.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

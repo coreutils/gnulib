@@ -9,6 +9,7 @@ m4/frexpl.m4
 Depends-on:
 math
 isnanl-nolibm
+fpucw
 
 configure.ac:
 gl_FUNC_FREXPL

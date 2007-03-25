@@ -28,6 +28,7 @@
 # include <float.h>
 # ifdef USE_LONG_DOUBLE
 #  include "isnanl-nolibm.h"
+#  include "fpucw.h"
 # else
 #  include "isnan.h"
 # endif
@@ -40,11 +41,17 @@
 #  define FUNC frexpl
 #  define DOUBLE long double
 #  define ISNAN isnanl
+#  define DECL_ROUNDING DECL_LONG_DOUBLE_ROUNDING
+#  define BEGIN_ROUNDING() BEGIN_LONG_DOUBLE_ROUNDING ()
+#  define END_ROUNDING() END_LONG_DOUBLE_ROUNDING ()
 #  define L_(literal) literal##L
 # else
 #  define FUNC frexp
 #  define DOUBLE double
 #  define ISNAN isnan
+#  define DECL_ROUNDING
+#  define BEGIN_ROUNDING()
+#  define END_ROUNDING()
 #  define L_(literal) literal
 # endif
 
@@ -53,6 +60,7 @@ FUNC (DOUBLE x, int *exp)
 {
   int sign;
   int exponent;
+  DECL_ROUNDING
 
   /* Test for NaN, infinity, and zero.  */
   if (ISNAN (x) || x + x == x)
@@ -67,6 +75,8 @@ FUNC (DOUBLE x, int *exp)
       x = - x;
       sign = -1;
     }
+
+  BEGIN_ROUNDING ();
 
   {
     /* Since the exponent is an 'int', it fits in 64 bits.  Therefore the
@@ -149,8 +159,13 @@ FUNC (DOUBLE x, int *exp)
     /* Here 0.5 <= x < 1.0.  */
   }
 
+  if (sign < 0)
+    x = - x;
+
+  END_ROUNDING ();
+
   *exp = exponent;
-  return (sign < 0 ? - x : x);
+  return x;
 }
 
 #else

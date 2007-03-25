@@ -1,5 +1,35 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fpucw: New file.
+	* lib/fpucw.h: New file.
+	* lib/frexp.c: Include fpucw.h.
+	(DECL_ROUNDING, BEGIN_ROUNDING, END_ROUNDING): New macros.
+	(FUNC): Use them.
+	* lib/printf-frexp.c: Include fpucw.h.
+	(DECL_ROUNDING, BEGIN_ROUNDING, END_ROUNDING): New macros.
+	(FUNC): Use them.
+	* lib/vasnprintf.c: Include fpucw.h.
+	(VASNPRINTF): Invoke BEGIN/END_LONG_DOUBLE_ROUNDING around the
+	'long double' calculations.
+	* tests/test-frexpl.c: Include fpucw.h.
+	(main): Invoke BEGIN_LONG_DOUBLE_ROUNDING.
+	* tests/test-printf-frexpl.c: Include fpucw.h.
+	(main): Invoke BEGIN_LONG_DOUBLE_ROUNDING.
+	* modules/frexpl (Depends-on): Add fpucw.
+	* modules/printf-frexpl (Depends-on): Likewise.
+	* modules/fprintf-posix (Depends-on): Likewise.
+	* modules/snprintf-posix (Depends-on): Likewise.
+	* modules/sprintf-posix (Depends-on): Likewise.
+	* modules/vasnprintf-posix (Depends-on): Likewise.
+	* modules/vasprintf-posix (Depends-on): Likewise.
+	* modules/vfprintf-posix (Depends-on): Likewise.
+	* modules/vsnprintf-posix (Depends-on): Likewise.
+	* modules/vsprintf-posix (Depends-on): Likewise.
+	* modules/frexpl-tests (Depends-on): Likewise.
+	* modules/printf-frexpl-tests (Depends-on): Likewise.
+
+2007-03-24  Bruno Haible  <bruno@clisp.org>
+
 	* lib/float+.h: New file.
 	* lib/isnan.c: Include float+.h.
 	(SIZE): New macro.

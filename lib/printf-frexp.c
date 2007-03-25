@@ -28,6 +28,9 @@
 
 # include <float.h>
 # include <math.h>
+# ifdef USE_LONG_DOUBLE
+#  include "fpucw.h"
+# endif
 
 /* This file assumes FLT_RADIX = 2.  If FLT_RADIX is a power of 2 greater
    than 2, or not even a power of 2, some rounding errors can occur, so that
@@ -42,6 +45,9 @@
 #   define FREXP frexpl
 #   define LDEXP ldexpl
 #  endif
+#  define DECL_ROUNDING DECL_LONG_DOUBLE_ROUNDING
+#  define BEGIN_ROUNDING() BEGIN_LONG_DOUBLE_ROUNDING ()
+#  define END_ROUNDING() END_LONG_DOUBLE_ROUNDING ()
 #  define L_(literal) literal##L
 # else
 #  define FUNC printf_frexp
@@ -52,6 +58,9 @@
 #   define FREXP frexp
 #   define LDEXP ldexp
 #  endif
+#  define DECL_ROUNDING
+#  define BEGIN_ROUNDING()
+#  define END_ROUNDING()
 #  define L_(literal) literal
 # endif
 
@@ -59,6 +68,9 @@ DOUBLE
 FUNC (DOUBLE x, int *exp)
 {
   int exponent;
+  DECL_ROUNDING
+
+  BEGIN_ROUNDING ();
 
 # ifdef USE_FREXP_LDEXP
   /* frexp and ldexp are usually faster than the loop below.  */
@@ -169,6 +181,8 @@ FUNC (DOUBLE x, int *exp)
   /* Here either x < 1.0 and exponent = MIN_EXP - 1,
      or 1.0 <= x < 2.0 and exponent >= MIN_EXP - 1.  */
 # endif
+
+  END_ROUNDING ();
 
   *exp = exponent;
   return x;

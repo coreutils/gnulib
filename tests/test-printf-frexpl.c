@@ -24,6 +24,8 @@
 #include <float.h>
 #include <stdlib.h>
 
+#include "fpucw.h"
+
 #define ASSERT(expr) if (!(expr)) abort ();
 
 static long double
@@ -41,6 +43,9 @@ main ()
 {
   int i;
   long double x;
+  DECL_LONG_DOUBLE_ROUNDING
+
+  BEGIN_LONG_DOUBLE_ROUNDING ();
 
   for (i = 1, x = 1.0L; i <= LDBL_MAX_EXP; i++, x *= 2.0L)
     {

@@ -12,6 +12,7 @@ isnan-nolibm
 isnanl-nolibm
 printf-frexp
 printf-frexpl
+fpucw
 
 configure.ac:
 gl_FUNC_VASNPRINTF_POSIX
