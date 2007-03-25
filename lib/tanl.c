@@ -126,13 +126,13 @@ kernel_tanl (long double x, long double y, int iy)
   long double z, r, v, w, s, u, u1;
   int flag, sign;
 
-	sign = 1;
-      if (x < 0)
-	{
-	  x = -x;
-	  y = -y;
-	  sign = -1;
-	}
+  sign = 1;
+  if (x < 0)
+    {
+      x = -x;
+      y = -y;
+      sign = -1;
+    }
 
   if (x < 0.000000000000000006938893903907228377647697925567626953125L) /* x < 2**-57 */
     {
