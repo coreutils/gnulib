@@ -1,5 +1,9 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/tsearch-tests: New file.
+	* tests/test-tsearch.sh: New file.
+	* tests/test-tsearch.c: New file, mostly copied from glibc.
+
 	* modules/search-tests: New file.
 	* tests/test-search.c: New file.
 

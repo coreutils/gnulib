@@ -1,0 +1,27 @@
+Files:
+tests/test-tsearch.sh
+tests/test-tsearch.c
+
+Depends-on:
+stdint
+
+configure.ac:
+TEST_TSEARCH_LIBM=
+AC_TRY_LINK([
+   #ifndef __NO_MATH_INLINES
+   # define __NO_MATH_INLINES 1 /* for glibc */
+   #endif
+   #include <math.h>
+   double x;],
+  [x = log (x);], , [TEST_TSEARCH_LIBM=-lm])
+AC_SUBST([TEST_TSEARCH_LIBM])
+
+Makefile.am:
+TESTS += test-tsearch.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-tsearch
+test_tsearch_LDADD = @TEST_TSEARCH_LIBM@ $(LDADD)
+EXTRA_DIST += test-tsearch.sh
+
+License:
+LGPL
