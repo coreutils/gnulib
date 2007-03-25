@@ -28,6 +28,17 @@
 
 #define ASSERT(expr) if (!(expr)) abort ();
 
+/* On MIPS IRIX machines, LDBL_MIN_EXP is -1021, but the smallest reliable
+   exponent for 'long double' is -964.  For exponents below that, the
+   precision may be truncated to the precision used for 'double'.  */
+#ifdef __sgi
+# define MIN_NORMAL_EXP (LDBL_MIN_EXP + 57)
+# define MIN_SUBNORMAL_EXP MIN_NORMAL_EXP
+#else
+# define MIN_NORMAL_EXP LDBL_MIN_EXP
+# define MIN_SUBNORMAL_EXP (LDBL_MIN_EXP - 100)
+#endif
+
 static long double
 my_ldexp (long double x, int d)
 {
@@ -54,14 +65,14 @@ main ()
       ASSERT (exp == i - 1);
       ASSERT (mantissa == 1.0L);
     }
-  for (i = 1, x = 1.0L; i >= LDBL_MIN_EXP; i--, x *= 0.5L)
+  for (i = 1, x = 1.0L; i >= MIN_NORMAL_EXP; i--, x *= 0.5L)
     {
       int exp = -9999;
       long double mantissa = printf_frexpl (x, &exp);
       ASSERT (exp == i - 1);
       ASSERT (mantissa == 1.0L);
     }
-  for (; i >= LDBL_MIN_EXP - 100 && x > 0.0L; i--, x *= 0.5L)
+  for (; i >= MIN_SUBNORMAL_EXP && x > 0.0L; i--, x *= 0.5L)
     {
       int exp = -9999;
       long double mantissa = printf_frexpl (x, &exp);
@@ -76,14 +87,14 @@ main ()
       ASSERT (exp == i - 1);
       ASSERT (mantissa == 1.01L);
     }
-  for (i = 1, x = 1.01L; i >= LDBL_MIN_EXP; i--, x *= 0.5L)
+  for (i = 1, x = 1.01L; i >= MIN_NORMAL_EXP; i--, x *= 0.5L)
     {
       int exp = -9999;
       long double mantissa = printf_frexpl (x, &exp);
       ASSERT (exp == i - 1);
       ASSERT (mantissa == 1.01L);
     }
-  for (; i >= LDBL_MIN_EXP - 100 && x > 0.0L; i--, x *= 0.5L)
+  for (; i >= MIN_SUBNORMAL_EXP && x > 0.0L; i--, x *= 0.5L)
     {
       int exp = -9999;
       long double mantissa = printf_frexpl (x, &exp);
@@ -100,14 +111,14 @@ main ()
       ASSERT (exp == i - 1);
       ASSERT (mantissa == 1.73205L);
     }
-  for (i = 1, x = 1.73205L; i >= LDBL_MIN_EXP; i--, x *= 0.5L)
+  for (i = 1, x = 1.73205L; i >= MIN_NORMAL_EXP; i--, x *= 0.5L)
     {
       int exp = -9999;
       long double mantissa = printf_frexpl (x, &exp);
       ASSERT (exp == i - 1);
       ASSERT (mantissa == 1.73205L);
     }
-  for (; i >= LDBL_MIN_EXP - 100 && x > 0.0L; i--, x *= 0.5L)
+  for (; i >= MIN_SUBNORMAL_EXP && x > 0.0L; i--, x *= 0.5L)
     {
       int exp = -9999;
       long double mantissa = printf_frexpl (x, &exp);

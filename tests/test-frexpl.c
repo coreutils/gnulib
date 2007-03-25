@@ -29,6 +29,15 @@
 
 #define ASSERT(expr) if (!(expr)) abort ();
 
+/* On MIPS IRIX machines, LDBL_MIN_EXP is -1021, but the smallest reliable
+   exponent for 'long double' is -964.  For exponents below that, the
+   precision may be truncated to the precision used for 'double'.  */
+#ifdef __sgi
+# define MIN_NORMAL_EXP (LDBL_MIN_EXP + 57)
+#else
+# define MIN_NORMAL_EXP LDBL_MIN_EXP
+#endif
+
 static long double
 my_ldexp (long double x, int d)
 {
@@ -97,7 +106,7 @@ main ()
       ASSERT (exp == i);
       ASSERT (mantissa == 0.5L);
     }
-  for (i = 1, x = 1.0L; i >= LDBL_MIN_EXP; i--, x *= 0.5L)
+  for (i = 1, x = 1.0L; i >= MIN_NORMAL_EXP; i--, x *= 0.5L)
     {
       int exp = -9999;
       long double mantissa = frexpl (x, &exp);
@@ -119,7 +128,7 @@ main ()
       ASSERT (exp == i);
       ASSERT (mantissa == -0.5L);
     }
-  for (i = 1, x = -1.0L; i >= LDBL_MIN_EXP; i--, x *= 0.5L)
+  for (i = 1, x = -1.0L; i >= MIN_NORMAL_EXP; i--, x *= 0.5L)
     {
       int exp = -9999;
       long double mantissa = frexpl (x, &exp);
@@ -141,7 +150,7 @@ main ()
       ASSERT (exp == i);
       ASSERT (mantissa == 0.505L);
     }
-  for (i = 1, x = 1.01L; i >= LDBL_MIN_EXP; i--, x *= 0.5L)
+  for (i = 1, x = 1.01L; i >= MIN_NORMAL_EXP; i--, x *= 0.5L)
     {
       int exp = -9999;
       long double mantissa = frexpl (x, &exp);
@@ -165,7 +174,7 @@ main ()
       ASSERT (exp == i);
       ASSERT (mantissa == 0.866025L);
     }
-  for (i = 1, x = 1.73205L; i >= LDBL_MIN_EXP; i--, x *= 0.5L)
+  for (i = 1, x = 1.73205L; i >= MIN_NORMAL_EXP; i--, x *= 0.5L)
     {
       int exp = -9999;
       long double mantissa = frexpl (x, &exp);

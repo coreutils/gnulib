@@ -1,5 +1,14 @@
 2007-03-25  Bruno Haible  <bruno@clisp.org>
 
+	Avoid test failures on IRIX 6.5.
+	* tests/test-frexpl.c (MIN_NORMAL_EXP): New macro.
+	(main): Use it.
+	* tests/test-printf-frexpl.c (MIN_NORMAL_EXP, MIN_SUBNORMAL_EXP): New
+	macros.
+	(main): Use them.
+
+2007-03-25  Bruno Haible  <bruno@clisp.org>
+
 	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): New macro.
 	(gl_FUNC_FREXPL): Invoke it. Set REPLACE_FREXPL to 1 if it frexpl
 	exists but doesn't work.
