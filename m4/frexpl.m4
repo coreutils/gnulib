@@ -58,8 +58,8 @@ AC_DEFUN([gl_FUNC_FREXPL],
   fi
 ])
 
-dnl Test whether frexpl() works also on infinite numbers (this fails e.g. on
-dnl IRIX 6.5).
+dnl Test whether frexpl() works on finite numbers (this fails on AIX 5.1) and
+dnl also on infinite numbers (this fails e.g. on IRIX 6.5).
 AC_DEFUN([gl_FUNC_FREXPL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -71,6 +71,14 @@ AC_DEFUN([gl_FUNC_FREXPL_WORKS],
 int main()
 {
   volatile long double x;
+  /* Test on finite numbers.  */
+  {
+    int exp = -9999;
+    x = 16.0L;
+    frexpl (x, &exp);
+    if (exp != 5)
+      return 1;
+  }
   /* Test on infinite numbers.  */
   {
     x = 1.0L / 0.0L;
@@ -82,8 +90,8 @@ int main()
   return 0;
 }], [gl_cv_func_frexpl_works=yes], [gl_cv_func_frexpl_works=no],
       [case "$host_os" in
-         irix*) gl_cv_func_frexpl_works="guessing no";;
-         *)     gl_cv_func_frexpl_works="guessing yes";;
+         aix* | irix*) gl_cv_func_frexpl_works="guessing no";;
+         *)            gl_cv_func_frexpl_works="guessing yes";;
        esac
       ])
     ])
