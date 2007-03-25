@@ -1,4 +1,4 @@
-# frexp.m4 serial 1
+# frexp.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,8 +55,8 @@ AC_DEFUN([gl_FUNC_FREXP],
   fi
 ])
 
-dnl Test whether frexp() works also on denormalized numbers.
-dnl This test fails e.g. on NetBSD.
+dnl Test whether frexp() works also on denormalized numbers (this fails e.g. on
+dnl NetBSD 3.0) and on infinite numbers (this fails e.g. on IRIX 6.5).
 AC_DEFUN([gl_FUNC_FREXP_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -70,6 +70,7 @@ int main()
 {
   int i;
   volatile double x;
+  /* Test on denormalized numbers.  */
   for (i = 1, x = 1.0; i >= DBL_MIN_EXP; i--, x *= 0.5)
     ;
   if (x > 0.0)
@@ -81,11 +82,19 @@ int main()
       if (y != 0.5)
         return 1;
     }
+  /* Test on infinite numbers.  */
+  {
+    x = 1.0 / 0.0;
+    int exp;
+    double y = frexp (x, &exp);
+    if (y != x)
+      return 1;
+  }
   return 0;
 }], [gl_cv_func_frexp_works=yes], [gl_cv_func_frexp_works=no],
       [case "$host_os" in
-         netbsd*) gl_cv_func_frexp_works="guessing no";;
-         *)       gl_cv_func_frexp_works="guessing yes";;
+         netbsd* | irix*) gl_cv_func_frexp_works="guessing no";;
+         *)               gl_cv_func_frexp_works="guessing yes";;
        esac
       ])
     ])

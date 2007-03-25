@@ -1,5 +1,10 @@
 2007-03-25  Bruno Haible  <bruno@clisp.org>
 
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Add check whether frexp(inf)
+	returns inf. Needed on IRIX 6.5.
+
+2007-03-25  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-frexpl.c: Include isnanl-nolibm.h.
 	(main): Use isnanl instead of x != x idiom.
 	* modules/frexpl-tests (Depends-on): Add isnanl-nolibm.
