@@ -27,6 +27,11 @@
 
 #include <stddef.h>
 
+/* On some systems, such as AIX 5.1, <sys/stat.h> does a "#define stat stat64".
+   Make sure this definition is seen before glob-libc.h defines types that
+   rely on 'struct stat'.  */
+#include <sys/stat.h>
+
 #ifndef __BEGIN_DECLS
 # define __BEGIN_DECLS
 # define __END_DECLS
