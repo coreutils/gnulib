@@ -2,6 +2,7 @@ Files:
 tests/test-frexp.c
 
 Depends-on:
+isnan-nolibm
 
 configure.ac:
 AC_SUBST([FREXP_LIBM])

@@ -25,6 +25,7 @@
 #include <stdlib.h>
 
 #include "fpucw.h"
+#include "isnanl-nolibm.h"
 
 #define ASSERT(expr) if (!(expr)) abort ();
 
@@ -52,7 +53,7 @@ main ()
     long double mantissa;
     x = 0.0L / 0.0L;
     mantissa = frexpl (x, &exp);
-    ASSERT (mantissa != mantissa);
+    ASSERT (isnanl (mantissa));
   }
 
   { /* Positive infinity.  */

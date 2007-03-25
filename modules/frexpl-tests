@@ -3,6 +3,7 @@ tests/test-frexpl.c
 
 Depends-on:
 fpucw
+isnanl-nolibm
 
 configure.ac:
 

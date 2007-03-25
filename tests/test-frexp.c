@@ -24,6 +24,8 @@
 #include <float.h>
 #include <stdlib.h>
 
+#include "isnan.h"
+
 #define ASSERT(expr) if (!(expr)) abort ();
 
 /* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
@@ -64,7 +66,7 @@ main ()
     double mantissa;
     x = NaN ();
     mantissa = frexp (x, &exp);
-    ASSERT (mantissa != mantissa);
+    ASSERT (isnan (mantissa));
   }
 
   { /* Positive infinity.  */
