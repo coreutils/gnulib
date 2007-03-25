@@ -1,5 +1,5 @@
 /* Hierarchial argument parsing, layered over getopt.
-   Copyright (C) 1995-1999,2003-2006 Free Software Foundation, Inc.
+   Copyright (C) 1995-1999,2003-2007 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Written by Miles Bader <miles@gnu.ai.mit.edu>.
 
@@ -49,10 +49,12 @@
 #endif
 
 /* GCC 2.95 and later have "__restrict"; C99 compilers have
-   "restrict", and "configure" may have defined "restrict".  */
+   "restrict", and "configure" may have defined "restrict".
+   Other compilers use __restrict, __restrict__, and _Restrict, and
+   'configure' might #define 'restrict' to those words.  */
 #ifndef __restrict
 # if ! (2 < __GNUC__ || (2 == __GNUC__ && 95 <= __GNUC_MINOR__))
-#  if defined restrict || 199901L <= __STDC_VERSION__
+#  if 199901L <= __STDC_VERSION__
 #   define __restrict restrict
 #  else
 #   define __restrict
