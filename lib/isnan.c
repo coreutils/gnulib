@@ -22,6 +22,8 @@
 #include <float.h>
 #include <string.h>
 
+#include "float+.h"
+
 #ifdef USE_LONG_DOUBLE
 # define FUNC rpl_isnanl
 # define DOUBLE long double
@@ -32,6 +34,7 @@
 #  define EXPBIT0_WORD LDBL_EXPBIT0_WORD
 #  define EXPBIT0_BIT LDBL_EXPBIT0_BIT
 # endif
+# define SIZE SIZEOF_LDBL
 # define L_(literal) literal##L
 #else
 # define FUNC rpl_isnan
@@ -43,6 +46,7 @@
 #  define EXPBIT0_WORD DBL_EXPBIT0_WORD
 #  define EXPBIT0_BIT DBL_EXPBIT0_BIT
 # endif
+# define SIZE SIZEOF_DBL
 # define L_(literal) literal
 #endif
 
@@ -79,8 +83,8 @@ FUNC (DOUBLE x)
     if (((m.word[EXPBIT0_WORD] ^ nan.word[EXPBIT0_WORD])
 	 & (EXP_MASK << EXPBIT0_BIT))
 	== 0)
-      return (memcmp (&m.value, &plus_inf, sizeof (DOUBLE)) != 0
-	      && memcmp (&m.value, &minus_inf, sizeof (DOUBLE)) != 0);
+      return (memcmp (&m.value, &plus_inf, SIZE) != 0
+	      && memcmp (&m.value, &minus_inf, SIZE) != 0);
     else
       return 0;
   }

@@ -1,5 +1,19 @@
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
+	* lib/float+.h: New file.
+	* lib/isnan.c: Include float+.h.
+	(SIZE): New macro.
+	(FUNC): Compare only SIZE bytes of the value.
+	* lib/vasnprintf.c: Include float+.h.
+	(VASNPRINTF): When comparing agains +0.0L or +0.0, compare only
+	SIZEOF_LDBL or SIZEOF_DBL bytes.
+	* modules/isnan-nolibm (Files): Add lib/float+.h.
+	* modules/isnanl-nolibm (Files): Add lib/float+.h.
+	* modules/isnanl (Files): Add lib/float+.h.
+	* modules/vasnprintf (Files): Add lib/float+.h.
+	
+2007-03-24  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c [!HAVE_LONG_DOUBLE]: Include printf-frexp.h. Don't
 	include isnanl-nolibm.h.
 

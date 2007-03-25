@@ -5,6 +5,7 @@ Files:
 lib/isnanl-nolibm.h
 lib/isnanl.c
 lib/isnan.c
+lib/float+.h
 m4/isnanl.m4
 m4/longdouble.m4
 
