@@ -1,5 +1,15 @@
 2007-03-25  Bruno Haible  <bruno@clisp.org>
 
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): New macro.
+	(gl_FUNC_FREXPL): Invoke it. Set REPLACE_FREXPL to 1 if it frexpl
+	exists but doesn't work.
+	* lib/math_.h (frexpl): Define as a replacement macro if REPLACE_FREXPL
+	is set. Don't provide a prototype if REPLACE_FREXPL is not set.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_FREXPL.
+	* modules/math (Makefile.am) Substibute also REPLACE_FREXPL into math.h.
+
+2007-03-25  Bruno Haible  <bruno@clisp.org>
+
 	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Add check whether frexp(inf)
 	returns inf. Needed on IRIX 6.5.
 

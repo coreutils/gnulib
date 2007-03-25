@@ -1,4 +1,4 @@
-# frexpl.m4 serial 1
+# frexpl.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,6 +36,18 @@ AC_DEFUN([gl_FUNC_FREXPL],
   fi
   if test $gl_cv_func_frexpl_no_libm = yes \
      || test $gl_cv_func_frexpl_in_libm = yes; then
+    save_LIBS="$LIBS"
+    LIBS="$LIBS $FREXPL_LIBM"
+    gl_FUNC_FREXPL_WORKS
+    LIBS="$save_LIBS"
+    case "$gl_cv_func_frexpl_works" in
+      *yes) gl_func_frexpl=yes ;;
+      *)    gl_func_frexpl=no; REPLACE_FREXPL=1; FREXPL_LIBM= ;;
+    esac
+  else
+    gl_func_frexpl=no
+  fi
+  if test $gl_func_frexpl = yes; then
     AC_DEFINE([HAVE_FREXPL], 1,
       [Define if the frexpl() function is available.])
     dnl Also check whether it's declared.
@@ -44,4 +56,35 @@ AC_DEFUN([gl_FUNC_FREXPL],
   else
     AC_LIBOBJ([frexpl])
   fi
+])
+
+dnl Test whether frexpl() works also on infinite numbers (this fails e.g. on
+dnl IRIX 6.5).
+AC_DEFUN([gl_FUNC_FREXPL_WORKS],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether frexpl works], [gl_cv_func_frexpl_works],
+    [
+      AC_TRY_RUN([
+#include <math.h>
+int main()
+{
+  volatile long double x;
+  /* Test on infinite numbers.  */
+  {
+    x = 1.0L / 0.0L;
+    int exp;
+    long double y = frexpl (x, &exp);
+    if (y != x)
+      return 1;
+  }
+  return 0;
+}], [gl_cv_func_frexpl_works=yes], [gl_cv_func_frexpl_works=no],
+      [case "$host_os" in
+         irix*) gl_cv_func_frexpl_works="guessing no";;
+         *)     gl_cv_func_frexpl_works="guessing yes";;
+       esac
+      ])
+    ])
 ])

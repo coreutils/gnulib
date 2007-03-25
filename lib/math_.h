@@ -135,7 +135,10 @@ extern long double floorl (long double x);
      If x is zero: mantissa = x, exp = 0.
      If x is infinite or NaN: mantissa = x, exp unspecified.
    Store exp and return mantissa.  */
-#if @GNULIB_FREXPL@ || !@HAVE_DECL_FREXPL@
+#if @GNULIB_FREXPL@ && @REPLACE_FREXPL@
+# define frexpl rpl_frexpl
+#endif
+#if (@GNULIB_FREXPL@ && @REPLACE_FREXPL@) || !@HAVE_DECL_FREXPL@
 extern long double frexpl (long double x, int *exp);
 #endif
 #if !@GNULIB_FREXPL@ && defined GNULIB_POSIXCHECK
