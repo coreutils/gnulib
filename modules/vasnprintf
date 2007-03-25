@@ -6,6 +6,7 @@ lib/printf-args.h
 lib/printf-args.c
 lib/printf-parse.h
 lib/printf-parse.c
+lib/float+.h
 lib/vasnprintf.h
 lib/vasnprintf.c
 lib/asnprintf.c
