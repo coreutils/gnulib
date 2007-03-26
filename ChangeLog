@@ -332,6 +332,7 @@
 	* lib/unistr/u16-strchr.c: Likewise.
 	* lib/unistr/u16-strrchr.c: Likewise.
 	* lib/striconveh.c: Update.
+	* lib/linebreak.c: Update.
 
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 

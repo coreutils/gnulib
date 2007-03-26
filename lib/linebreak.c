@@ -25,10 +25,7 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 #include <string.h>
 #include "c-ctype.h"
 #include "xsize.h"
-
-#include "utf8-ucs4-unsafe.h"
-
-#include "utf16-ucs4-unsafe.h"
+#include "unistr.h"
 
 #ifdef unused
 static inline int
