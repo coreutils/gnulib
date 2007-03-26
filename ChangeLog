@@ -1,5 +1,21 @@
 2007-03-25  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c: Include langinfo.h.
+	(VASNPRINTF): Prefer nl_langinfo over localeconv, since it's more
+	multithread-safe.
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_DIRECTIVE_A): New macro.
+	* m4/fprintf-posix.m4 (gl_FUNC_FPRINTF_POSIX): Invoke it.
+	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Likewise.
+	* m4/sprintf-posix.m4 (gl_FUNC_SPRINTF_POSIX): Likewise.
+	* m4/vasnprintf-posix.m4 (gl_FUNC_VASNPRINTF_POSIX): Likewise.
+	* m4/vasprintf-posix.m4 (gl_FUNC_VASPRINTF_POSIX): Likewise.
+	* m4/vfprintf-posix.m4 (gl_FUNC_VFPRINTF_POSIX): Likewise.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX: Likewise.
+	* m4/vsprintf-posix.m4 (gl_FUNC_VSPRINTF_POSIX): Likewise.
+	Reported by Simon Josefsson.
+
+2007-03-25  Bruno Haible  <bruno@clisp.org>
+
 	* lib/printf-parse.c [!IN_LIBINTL]: Include <stdint.h>, for intmax_t.
 	(PRINTF_PARSE): Make the support for size specifier 'j' unconditional.
 	* modules/vasnprintf (Depends-on): Add stdint.

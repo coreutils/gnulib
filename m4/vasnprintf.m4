@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 9
+# vasnprintf.m4 serial 10
 dnl Copyright (C) 2002-2004, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,6 +60,18 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF],
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   AC_CHECK_FUNCS(snprintf wcslen)
+])
+
+# Extra prerequisites of lib/vasnprintf.c for supporting the 'a' directive.
+AC_DEFUN([gl_PREREQ_VASNPRINTF_DIRECTIVE_A],
+[
+  AC_REQUIRE([gl_PRINTF_DIRECTIVE_A])
+  if ! expr "$gl_cv_func_printf_directive_a" : ".*yes" > /dev/null; then
+    AC_DEFINE([NEED_PRINTF_DIRECTIVE_A], 1,
+      [Define if the vasnprintf implementation needs special code for
+       the 'a' and 'A' directives.])
+    AC_CHECK_FUNCS([nl_langinfo])
+  fi
 ])
 
 # Prerequisites of lib/asnprintf.c.

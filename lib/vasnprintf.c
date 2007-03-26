@@ -41,6 +41,9 @@
 #include <errno.h>	/* errno */
 #include <limits.h>	/* CHAR_BIT */
 #include <float.h>	/* DBL_MAX_EXP, LDBL_MAX_EXP */
+#if HAVE_NL_LANGINFO
+# include <langinfo.h>
+#endif
 #if WIDE_CHAR_VERSION
 # include "wprintf-parse.h"
 #else
@@ -507,8 +510,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			      if ((flags & FLAG_ALT)
 				  || mantissa > 0.0L || precision > 0)
 				{
-				  const char *point =
-				    localeconv () -> decimal_point;
+				  const char *point;
+				  /* Prefer nl_langinfo() over localeconv(),
+				     since the latter is not multithread-
+				     safe.  */
+#  if HAVE_NL_LANGINFO
+				  point = nl_langinfo (RADIXCHAR);
+#  else
+				  point = localeconv () -> decimal_point;
+#  endif
 				  /* The decimal point is always a single byte:
 				     either '.' or ','.  */
 				  *p++ = (point[0] != '\0' ? point[0] : '.');
@@ -657,8 +667,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			      if ((flags & FLAG_ALT)
 				  || mantissa > 0.0 || precision > 0)
 				{
-				  const char *point =
-				    localeconv () -> decimal_point;
+				  const char *point;
+				  /* Prefer nl_langinfo() over localeconv(),
+				     since the latter is not multithread-
+				     safe.  */
+#  if HAVE_NL_LANGINFO
+				  point = nl_langinfo (RADIXCHAR);
+#  else
+				  point = localeconv () -> decimal_point;
+#  endif
 				  /* The decimal point is always a single byte:
 				     either '.' or ','.  */
 				  *p++ = (point[0] != '\0' ? point[0] : '.');

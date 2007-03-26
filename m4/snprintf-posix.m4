@@ -1,4 +1,4 @@
-# snprintf-posix.m4 serial 1
+# snprintf-posix.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,11 +50,7 @@ AC_DEFUN([gl_FUNC_SNPRINTF_POSIX],
     esac
   fi
   if test $gl_cv_func_snprintf_posix = no; then
-    if ! expr "$gl_cv_func_printf_directive_a" : ".*yes" > /dev/null; then
-      AC_DEFINE([NEED_PRINTF_DIRECTIVE_A], 1,
-        [Define if the vasnprintf implementation needs special code for
-         the 'a' and 'A' directives.])
-    fi
+    gl_PREREQ_VASNPRINTF_DIRECTIVE_A
     gl_REPLACE_VASNPRINTF
     gl_REPLACE_SNPRINTF
   fi
