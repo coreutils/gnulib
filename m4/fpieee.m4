@@ -26,8 +26,9 @@ AC_DEFUN([gl_FP_IEEE],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST])
-  # IEEE behaviour is the default on all CPUs except Alpha
-  # (according to the test results of Bruno Haible's ieeefp/fenv_default.m4).
+  # IEEE behaviour is the default on all CPUs except Alpha and SH
+  # (according to the test results of Bruno Haible's ieeefp/fenv_default.m4
+  # and the GCC 4.1.2 manual).
   case "$host_cpu" in
     alpha*)
       # On Alpha systems, a compiler option provides the behaviour.
@@ -39,6 +40,12 @@ AC_DEFUN([gl_FP_IEEE],
       else
         # Compaq (ex-DEC) C has the option -ieee. 
         CPPFLAGS="$CPPFLAGS -ieee"
+      fi
+      ;;
+    sh*)
+      if test -n "$GCC"; then
+        # GCC has the option -mieee.
+        CPPFLAGS="$CPPFLAGS -mieee"
       fi
       ;;
   esac
