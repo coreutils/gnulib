@@ -71,8 +71,8 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF_DIRECTIVE_A],
       ;;
     *)
       AC_DEFINE([NEED_PRINTF_DIRECTIVE_A], 1,
-	[Define if the vasnprintf implementation needs special code for
-	 the 'a' and 'A' directives.])
+        [Define if the vasnprintf implementation needs special code for
+         the 'a' and 'A' directives.])
       AC_CHECK_FUNCS([nl_langinfo])
       ;;
   esac
