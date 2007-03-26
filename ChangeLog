@@ -22,6 +22,7 @@
 	(tanl): Perform test for NaN at the beginning of the function and
 	through a call to isnanl.
 	* lib/trigl.c (ieee754_rem_pio2l): Remove test for NaN.
+	* modules/mathl (Depends-on): Add isnanl.
 
 2007-03-26  Eric Blake  <ebb9@byu.net>
 

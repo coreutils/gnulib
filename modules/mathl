@@ -22,6 +22,7 @@ m4/mathl.m4
 Depends-on:
 math
 frexpl
+isnanl
 
 configure.ac:
 gl_FUNC_LONG_DOUBLE_MATH
