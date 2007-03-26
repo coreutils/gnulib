@@ -22,6 +22,7 @@ m4/vasnprintf.m4
 
 Depends-on:
 alloca-opt
+stdint
 xsize
 
 configure.ac:

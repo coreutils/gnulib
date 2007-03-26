@@ -1,5 +1,11 @@
 2007-03-25  Bruno Haible  <bruno@clisp.org>
 
+	* lib/printf-parse.c [!IN_LIBINTL]: Include <stdint.h>, for intmax_t.
+	(PRINTF_PARSE): Make the support for size specifier 'j' unconditional.
+	* modules/vasnprintf (Depends-on): Add stdint.
+
+2007-03-25  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fpieee: New file.
 	* m4/fpieee.m4: New file.
 	* modules/isnan-nolibm (Depends-on): Add fpieee.

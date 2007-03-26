@@ -28,11 +28,15 @@
 #include <stddef.h>
 
 /* Get intmax_t.  */
-#if HAVE_STDINT_H_WITH_UINTMAX
+#ifdef IN_LIBINTL
+# if HAVE_STDINT_H_WITH_UINTMAX
+#  include <stdint.h>
+# endif
+# if HAVE_INTTYPES_H_WITH_UINTMAX
+#  include <inttypes.h>
+# endif
+#else
 # include <stdint.h>
-#endif
-#if HAVE_INTTYPES_H_WITH_UINTMAX
-# include <inttypes.h>
 #endif
 
 /* malloc(), realloc(), free().  */
@@ -326,7 +330,6 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 		      flags += 8;
 		      cp++;
 		    }
-#if HAVE_INTMAX_T
 		  else if (*cp == 'j')
 		    {
 		      if (sizeof (intmax_t) > sizeof (long))
@@ -341,7 +344,6 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
 			}
 		      cp++;
 		    }
-#endif
 		  else if (*cp == 'z' || *cp == 'Z')
 		    {
 		      /* 'z' is standardized in ISO C 99, but glibc uses 'Z'
