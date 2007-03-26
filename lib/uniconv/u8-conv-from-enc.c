@@ -55,7 +55,7 @@ u8_conv_from_encoding (const char *fromcode,
 
 	  for (i = 0; i < srclen; )
 	    {
-	      int count = u8_mblen (src + i, srclen - i);
+	      int count = u8_mblen ((const uint8_t *) src + i, srclen - i);
 	      /* We can rely on count > 0 because of the previous u8_check.  */
 	      if (count <= 0)
 		abort ();

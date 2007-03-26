@@ -63,7 +63,7 @@ u8_strconv_to_encoding (const uint8_t *string,
     {
       result = NULL;
       length = 0;
-      if (mem_iconveha (string, u8_strlen (string) + 1,
+      if (mem_iconveha ((const char *) string, u8_strlen (string) + 1,
 			"UTF-8", tocode,
 			handler == iconveh_question_mark, handler,
 			NULL, &result, &length) < 0)
