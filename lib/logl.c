@@ -64,6 +64,8 @@
  *
  */
 
+#include "isnanl.h"
+
 /* log(1+x) = x - .5 x^2 + x^3 l(x)
    -.0078125 <= x <= +.0078125
    peak relative error 1.2e-37 */
@@ -196,6 +198,11 @@ logl(long double x)
 
   /* Check for IEEE special cases.  */
 
+  /* log(NaN) = NaN. */
+  if (isnanl (x))
+    {
+      return x;
+    }
   /* log(0) = -infinity. */
   if (x == 0.0L)
     {
@@ -206,8 +213,8 @@ logl(long double x)
     {
       return (x - x) / ZERO;
     }
-  /* log (infinity or NaN) */
-  if (x + x == x || x != x)
+  /* log (infinity) */
+  if (x + x == x)
     {
       return x + x;
     }

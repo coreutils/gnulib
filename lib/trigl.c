@@ -233,7 +233,7 @@ ieee754_rem_pio2l (long double x, long double *y)
 	return -1;
       }
 
-  if (x + x == x || x != x)	/* x is +=oo or NaN */
+  if (x + x == x)	/* x is ±oo */
     {
       y[0] = x - x;
       y[1] = y[0];

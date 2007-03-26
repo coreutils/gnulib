@@ -25,6 +25,7 @@
 #include <math.h>
 
 #include <float.h>
+#include "isnanl.h"
 
 /* A simple Newton-Raphson method. */
 long double
@@ -33,12 +34,16 @@ sqrtl(long double x)
   long double delta, y;
   int exponent;
 
+  /* Check for NaN */
+  if (isnanl (x))
+    return x;
+
   /* Check for negative numbers */
   if (x < 0.0L)
     return (long double) sqrt(-1);
 
-  /* Check for zero, NANs and infinites */
-  if (x + x == x || x != x)
+  /* Check for zero and infinites */
+  if (x + x == x)
     return x;
 
   frexpl (x, &exponent);

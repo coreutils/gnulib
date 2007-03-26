@@ -64,6 +64,7 @@
  *
  */
 
+#include "isnanl.h"
 
 /* arctan(k/8), k = 0, ..., 82 */
 static const long double atantbl[84] = {
@@ -178,11 +179,11 @@ atanl (long double x)
   int k, sign;
   long double t, u, p, q;
 
-  sign = x < 0.0;
-
   /* Check for zero or NaN.  */
-  if (x != x || x == 0.0)
+  if (isnanl (x) || x == 0.0)
     return x + x;
+
+  sign = x < 0.0;
 
   if (x + x == x)
     {

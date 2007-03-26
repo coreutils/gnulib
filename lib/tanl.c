@@ -55,6 +55,7 @@
 #include "trigl.c"
 #endif
 #endif
+#include "isnanl.h"
 
 /*
  * ====================================================
@@ -191,13 +192,17 @@ tanl (long double x)
   long double y[2], z = 0.0L;
   int n;
 
+  /* tanl(NaN) is NaN */
+  if (isnanl (x))
+    return x;
+
   /* |x| ~< pi/4 */
   if (x >= -0.7853981633974483096156608458198757210492 &&
       x <= 0.7853981633974483096156608458198757210492)
     return kernel_tanl (x, z, 1);
 
-  /* tanl(Inf or NaN) is NaN, tanl(0) is 0 */
-  else if (x + x == x || x != x)
+  /* tanl(Inf) is NaN, tanl(0) is 0 */
+  else if (x + x == x)
     return x - x;		/* NaN */
 
   /* argument reduction needed */

@@ -25,6 +25,7 @@
 #include <math.h>
 
 #include <float.h>
+#include "isnanl.h"
 
 long double
 ldexpl(long double x, int exp)
@@ -33,7 +34,7 @@ ldexpl(long double x, int exp)
   int bit;
 
   /* Check for zero, nan and infinity. */
-  if (x != x || x + x == x )
+  if (isnanl (x) || x + x == x)
     return x;
 
   if (exp < 0)

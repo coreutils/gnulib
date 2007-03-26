@@ -54,19 +54,24 @@
 #include "trigl.c"
 #include "sincosl.c"
 #endif
+#include "isnanl.h"
 
 long double cosl(long double x)
 {
 	long double y[2],z=0.0L;
 	int n;
 
+    /* cosl(NaN) is NaN */
+        if (isnanl (x))
+          return x;
+
     /* |x| ~< pi/4 */
         if(x >= -0.7853981633974483096156608458198757210492 &&
            x <= 0.7853981633974483096156608458198757210492)
           return kernel_cosl(x, z);
 
-    /* sinl(Inf or NaN) is NaN, sinl(0) is 0 */
-        else if ((x + x == x && x != 0.0) || x != x)
+    /* cosl(Inf) is NaN, cosl(0) is 1 */
+        else if (x + x == x && x != 0.0)
           return x-x;           /* NaN */
 
     /* argument reduction needed */

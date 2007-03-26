@@ -52,6 +52,7 @@
 #include "trigl.h"
 #include "trigl.c"
 #include "sincosl.c"
+#include "isnanl.h"
 
 long double
 sinl (long double x)
@@ -59,13 +60,17 @@ sinl (long double x)
   long double y[2], z = 0.0L;
   int n;
 
+  /* sinl(NaN) is NaN */
+  if (isnanl (x))
+    return x;
+
   /* |x| ~< pi/4 */
   if (x >= -0.7853981633974483096156608458198757210492 &&
       x <= 0.7853981633974483096156608458198757210492)
     return kernel_sinl (x, z, 0);
 
-    /* sinl(Inf or NaN) is NaN, sinl(0) is 0 */
-  else if (x + x == x || x != x)
+    /* sinl(Inf) is NaN, sinl(0) is 0 */
+  else if (x + x == x)
     return x - x;		/* NaN */
 
   /* argument reduction needed */

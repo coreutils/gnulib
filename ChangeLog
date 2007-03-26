@@ -1,3 +1,28 @@
+2007-03-26  Bruno Haible  <bruno@clisp.org>
+
+	Better support of signalling NaNs.
+	* lib/atanl.c: Include isnanl.h.
+	(atanl): Perform test for NaN at the beginning of the function and
+	through a call to isnanl.
+	* lib/cosl.c: Include isnanl.h.
+	(cosl): Perform test for NaN at the beginning of the function and
+	through a call to isnanl.
+	* lib/ldexpl.c: Include isnanl.h.
+	(ldexpl): Perform test for NaN through a call to isnanl.
+	* lib/logl.c: Include isnanl.h.
+	(logl): Perform test for NaN at the beginning of the function and
+	through a call to isnanl.
+	* lib/sinl.c: Include isnanl.h.
+	(sinl): Perform test for NaN at the beginning of the function and
+	through a call to isnanl.
+	* lib/sqrtl.c: Include isnanl.h.
+	(sqrtl): Perform test for NaN at the beginning of the function and
+	through a call to isnanl.
+	* lib/tanl.c: Include isnanl.h.
+	(tanl): Perform test for NaN at the beginning of the function and
+	through a call to isnanl.
+	* lib/trigl.c (ieee754_rem_pio2l): Remove test for NaN.
+
 2007-03-26  Eric Blake  <ebb9@byu.net>
 
 	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_DIRECTIVE_A): Fix
