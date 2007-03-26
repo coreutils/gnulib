@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 10
+# vasnprintf.m4 serial 11
 dnl Copyright (C) 2002-2004, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

@@ -1,3 +1,8 @@
+2007-03-26  Eric Blake  <ebb9@byu.net>
+
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_DIRECTIVE_A): Fix
+	regression in logic sense of previous patch.
+
 2007-03-26  Bruno Haible  <bruno@clisp.org>
 
 	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_DIRECTIVE_A): Don't use
@@ -203,7 +208,7 @@
 	* modules/isnanl-nolibm (Files): Add lib/float+.h.
 	* modules/isnanl (Files): Add lib/float+.h.
 	* modules/vasnprintf (Files): Add lib/float+.h.
-	
+
 2007-03-24  Bruno Haible  <bruno@clisp.org>
 
 	* lib/vasnprintf.c [!HAVE_LONG_DOUBLE]: Include printf-frexp.h. Don't
