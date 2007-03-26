@@ -1,3 +1,9 @@
+2007-03-26  Bruno Haible  <bruno@clisp.org>
+
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_DIRECTIVE_A): Don't use
+	unportable shell command "if ! ...".
+	Reported by Ralf Wildenhues.
+
 2007-03-25  Bruno Haible  <bruno@clisp.org>
 
 	* lib/sysexit_,h: If HAVE_SYSEXITS_H is defined, include the original
