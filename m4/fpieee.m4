@@ -38,7 +38,7 @@ AC_DEFUN([gl_FP_IEEE],
         CPPFLAGS="$CPPFLAGS -mieee"
       else
         # Compaq (ex-DEC) C has the option -ieee. 
-        CPPFLAGS="$CPPFLAGS -mieee"
+        CPPFLAGS="$CPPFLAGS -ieee"
       fi
       ;;
   esac
