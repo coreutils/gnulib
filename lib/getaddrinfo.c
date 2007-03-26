@@ -179,7 +179,7 @@ getaddrinfo (const char *restrict nodename,
       const char *proto =
 	(hints && hints->ai_socktype == SOCK_DGRAM) ? "udp" : "tcp";
 
-      if (!(hints->ai_flags & AI_NUMERICSERV))
+      if (hints == NULL || !(hints->ai_flags & AI_NUMERICSERV))
 	/* FIXME: Use getservbyname_r if available. */
 	se = getservbyname (servname, proto);
 
