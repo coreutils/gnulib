@@ -17,7 +17,9 @@ BUILT_SOURCES += $(SYSEXITS_H)
 # doesn't have one that works with the given compiler.
 sysexits.h: sysexit_.h
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/sysexit_.h; \
+	  sed -e 's|@''HAVE_SYSEXITS_H''@|$(HAVE_SYSEXITS_H)|g' \
+	      -e 's|@''ABSOLUTE_SYSEXITS_H''@|$(ABSOLUTE_SYSEXITS_H)|g' \
+	      < $(srcdir)/sysexit_.h; \
 	} > $@-t
 	mv -f $@-t $@
 MOSTLYCLEANFILES += sysexits.h sysexits.h-t
