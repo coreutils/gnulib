@@ -13,9 +13,8 @@ dnl From Paul Eggert.
 # st_atimespec.tv_nsec - FreeBSD, NetBSD, if ! defined _POSIX_SOURCE
 # st_atimensec - FreeBSD, NetBSD, if defined _POSIX_SOURCE
 # st_atim.st__tim.tv_nsec - UnixWare (at least 2.1.2 through 7.1)
-# st_spare1 - Cygwin?
 
-# st_birthtimespec present on NetBSD (probably also FreBSD, OpenBSD)
+# st_birthtimespec - FreeBSD, NetBSD (hidden on OpenBSD 3.9, anyway)
 
 AC_DEFUN([gl_STAT_TIME],
 [
@@ -49,11 +48,7 @@ AC_DEFUN([gl_STAT_TIME],
      fi],
     [AC_CHECK_MEMBERS([struct stat.st_atimespec.tv_nsec], [],
        [AC_CHECK_MEMBERS([struct stat.st_atimensec], [],
-	  [AC_CHECK_MEMBERS([struct stat.st_atim.st__tim.tv_nsec], [],
-	     [AC_CHECK_MEMBERS([struct stat.st_spare1], [],
-		[],
-		[#include <sys/types.h>
-		 #include <sys/stat.h>])],
+	  [AC_CHECK_MEMBERS([struct stat.st_atim.st__tim.tv_nsec], [], [],
 	     [#include <sys/types.h>
 	      #include <sys/stat.h>])],
 	  [#include <sys/types.h>
@@ -64,23 +59,20 @@ AC_DEFUN([gl_STAT_TIME],
      #include <sys/stat.h>])
 ])
 
-# Checks for st_birthtime, which is a feature from UFS2 (FreeBSD, NetBSD, OpenBSD, etc.)
-# There was a time when this field was named st_createtime (21 June 2002 to 16 July 2002)
-# But that window is very small and applied only to development code, so systems still
-# using that configuration are not a realistic development target.
-# See revisions 1.10 and 1.11 of FreeBSD's src/sys/ufs/ufs/dinode.h.
+# Check for st_birthtime, a feature from UFS2 (FreeBSD, NetBSD, OpenBSD, etc.).
+# There was a time when this field was named st_createtime (21 June
+# 2002 to 16 July 2002) But that window is very small and applied only
+# to development code, so systems still using that configuration are
+# not supported.  See revisions 1.10 and 1.11 of FreeBSD's
+# src/sys/ufs/ufs/dinode.h.
 #
 AC_DEFUN([gl_STAT_BIRTHTIME],
 [
   AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_HEADERS_ONCE([sys/time.h])
-  AC_CHECK_MEMBERS([struct stat.st_birthtimespec.tv_sec, struct stat.st_birthtimespec.tv_nsec], [],
-    [AC_CHECK_MEMBERS([struct stat.st_birthtime, struct stat.st_birthtimensec], [], 
-       [AC_CHECK_MEMBERS([struct stat.st_spare4], [], 
- 	   [],
-	   [#include <sys/types.h>
- 	    #include <sys/stat.h>])],
+  AC_CHECK_MEMBERS([struct stat.st_birthtimespec.tv_nsec], [],
+    [AC_CHECK_MEMBERS([struct stat.st_birthtimensec], [], [],
        [#include <sys/types.h>
 	#include <sys/stat.h>])],
     [#include <sys/types.h>

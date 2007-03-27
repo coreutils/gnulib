@@ -45,13 +45,6 @@
 # define STAT_TIMESPEC_NS(st, st_xtim) ((st)->st_xtim.st__tim.tv_nsec)
 #endif
 
-#if defined HAVE_STRUCT_STAT_ST_BIRTHTIME || defined HAVE_STRUCT_STAT_ST_BIRTHTIMENSEC || defined HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC || defined HAVE_STRUCT_STAT_ST_SPARE4
-# define USE_BIRTHTIME 1
-#else
-# undef USE_BIRTHTIME
-#endif
-
-
 /* Return the nanosecond component of *ST's access time.  */
 static inline long int
 get_stat_atime_ns (struct stat const *st)
@@ -60,8 +53,6 @@ get_stat_atime_ns (struct stat const *st)
   return STAT_TIMESPEC (st, st_atim).tv_nsec;
 # elif defined STAT_TIMESPEC_NS
   return STAT_TIMESPEC_NS (st, st_atim);
-# elif defined HAVE_STRUCT_STAT_ST_SPARE1
-  return st->st_spare1 * 1000;
 # else
   return 0;
 # endif
@@ -75,8 +66,6 @@ get_stat_ctime_ns (struct stat const *st)
   return STAT_TIMESPEC (st, st_ctim).tv_nsec;
 # elif defined STAT_TIMESPEC_NS
   return STAT_TIMESPEC_NS (st, st_ctim);
-# elif defined HAVE_STRUCT_STAT_ST_SPARE1
-  return st->st_spare3 * 1000;
 # else
   return 0;
 # endif
@@ -90,8 +79,6 @@ get_stat_mtime_ns (struct stat const *st)
   return STAT_TIMESPEC (st, st_mtim).tv_nsec;
 # elif defined STAT_TIMESPEC_NS
   return STAT_TIMESPEC_NS (st, st_mtim);
-# elif defined HAVE_STRUCT_STAT_ST_SPARE1
-  return st->st_spare2 * 1000;
 # else
   return 0;
 # endif
@@ -101,22 +88,13 @@ get_stat_mtime_ns (struct stat const *st)
 static inline long int
 get_stat_birthtime_ns (struct stat const *st)
 {
-# if defined USE_BIRTHTIME
-#  if defined STAT_TIMESPEC && defined HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC
+# if defined HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC
   return STAT_TIMESPEC (st, st_birthtim).tv_nsec;
-#  elif defined STAT_TIMESPEC_NS && defined HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_SEC
+# elif defined HAVE_STRUCT_STAT_ST_BIRTHTIMENSEC
   return STAT_TIMESPEC_NS (st, st_birthtim);
-#  elif defined HAVE_STRUCT_STAT_ST_SPARE4
-  /* Cygwin, without __CYGWIN_USE_BIG_TYPES__ */
-  return st->st_spare4[1] * 1000L;
-#  else
-  /* Birthtime is available, but not at nanosecond resolution.  */
-  return 0;
-#  endif
 # else
-  /* Birthtime is not available, so indicate this in the returned value.  */
   return 0;
-# endif 
+# endif
 }
 
 /* Return *ST's access time.  */
@@ -161,69 +139,41 @@ get_stat_mtime (struct stat const *st)
 #endif
 }
 
-/* Return *ST's birth time, if available, in *PTS.  A nonzero value is
- * returned if the stat structure appears to indicate that the
- * timestamp is available.
- *
- * The return value of this function does not reliably indicate that the 
- * returned data is valid; see the comments within the body of the 
- * function for an explanation.
- */
-static inline int
-get_stat_birthtime (struct stat const *st,
-		    struct timespec *pts)
+/* Return *ST's birth time, if available; otherwise return a value
+   with negative tv_nsec.  */
+static inline struct timespec
+get_stat_birthtime (struct stat const *st)
 {
-#if defined USE_BIRTHTIME
-# ifdef STAT_TIMESPEC
-  *pts = STAT_TIMESPEC (st, st_birthtim);
-# else
   struct timespec t;
-  pts->tv_sec = st->st_birthtime;
-  pts->tv_nsec = get_stat_birthtime_ns (st);
-# endif
 
-  /* NetBSD sometimes signals the absence of knowledge of the file's
-   * birth time by using zero.  We indicate we don't know, by
-   * returning 0 from this function when that happens.  This is
-   * slightly problematic since (time_t)0 is otherwise a valid, albeit
-   * unlikely, timestamp.  
-   *
-   * NetBSD sometimes returns 0 for unknown values (for example on
-   * ffs) and sometimes begative values for tv_nsec (for example on
-   * NFS).  For some filesystems (e.g. msdos) NetBSD also appears to
-   * fail to update the st_birthtime member at all, and just leaves in
-   * there whatever junk existed int he uninitialised stat structure
-   * the caller provided.  Therefore, callers are advised to initialise
-   * the tv_nsec number to a negative value before they call stat in
-   * order to detect this problem.
-   */
-  if (pts->tv_sec == (time_t)0)
-    {
-      return 0;			/* result probably invalid, see above. */
-    }
-  else
-    {
-      /* Sometimes NetBSD returns junk in the birth time fields, so 
-       * do a simple range check on the data, and return 0 to indicate
-       * that the data is invalid if it just looks wrong. 
-       */
-      return (pts->tv_nsec >= 0) && (pts->tv_nsec <= 1000000000);
-    }
-#elif (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
-  /* Woe32 native platforms (mingw, msvc, but not Cygwin) put the
-   * "file creation time" in st_ctime (!).  See for example the
-   * article
-   * <http://msdn2.microsoft.com/de-de/library/14h5k7ff(VS.80).aspx>
-   */
-  pts->tv_sec = st->st_ctime;
-  pts->tv_nsec = 0;
-  return 1;			/* result is valid */
+#ifdef HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC
+  t = STAT_TIMESPEC (st, st_birthtim);
+#elif defined HAVE_STRUCT_STAT_ST_BIRTHTIMENSEC
+  t.tv_sec = st->st_birthtime;
+  t.tv_nsec = st->st_birthtimensec;
+
+  /* NetBSD sometimes signals the absence of knowledge by using zero.
+     Attempt to work around this bug.  This sometimes reports failure
+     even for valid time stamps.  Also, sometimes NetBSD returns junk
+     in the birth time fields; work around this bug if it it is
+     detected.  There's no need to detect negative tv_nsec junk as
+     negative tv_nsec already indicates an error.  */
+  if (t.tv_sec == 0 || 1000000000 <= t.tv_nsec)
+    t.tv_nsec = -1;
+
+#elif (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  /* Woe32 native platforms (but not Cygwin) put the "file creation
+     time" in st_ctime (!).  See
+     <http://msdn2.microsoft.com/de-de/library/14h5k7ff(VS.80).aspx>.  */
+  t.tv_sec = st->st_ctime;
+  t.tv_nsec = 0;
 #else
-  /* Birth time not supported.  */
-  pts->tv_sec = 0;
-  pts->tv_nsec = 0;
-  return 0;			/* result is not valid */
+  /* Birth time is not supported.  Set tv_sec to avoid undefined behavior.  */
+  t.tv_sec = -1;
+  t.tv_nsec = -1;
 #endif
+
+  return t;
 }
 
 #endif

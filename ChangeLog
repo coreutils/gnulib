@@ -1,3 +1,17 @@
+2007-03-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/stat-time.h (USE_BIRTHTIME): Remove.
+	(get_stat_atime_ns, get_stat_ctime_ns, get_stat_mtime_ns):
+	(get_stat_birthtime_ns): Do not try to use "spare" fields.
+	(get_stat_birthtime_ns): Simplify compile-time tests.
+	(get_stat_birthtime): Change the API to look like
+	get_stat_mtime etc., except return a negative tv_nsec on error.
+	* m4/stat-time.m4 (gl_STAT_TIME, gl_STAT_BIRTHTIME):
+	Don't check for "spare" fields.
+	(gl_STAT_BIRTHTIME): Don't check for struct stat.st_birthtimespec.tv_sec
+	or for struct stat.st_birthtime, as these tests aren't used.
+	* tests/test-stat-time.c (test_birthtime): Adjust to new API.
+
 2007-03-27  Bruno Haible  <bruno@clisp.org>
 
 	* lib/stat-time.h: Include <sys/stat.h>.

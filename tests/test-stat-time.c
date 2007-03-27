@@ -135,10 +135,9 @@ test_birthtime (const struct stat *statinfo,
   /* Collect the birth times.. */
   for (i = 0; i < NFILES; ++i)
     {
-      if (!get_stat_birthtime (&statinfo[i], &birthtimes[i]))
-	{
-	  return;
-	}
+      birthtimes[i] = get_stat_birthtime (&statinfo[i]);
+      if (birthtimes[i].tv_nsec < 0)
+	return;
     }
 
   ASSERT (modtimes[0].tv_sec < birthtimes[1].tv_sec); /* mtime(stamp1) < birthtime(renamed) */
