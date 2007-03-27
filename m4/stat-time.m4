@@ -9,12 +9,13 @@
 
 dnl From Paul Eggert.
 
-# st_atim.tv_nsec - Linux, Solaris
+# st_atim.tv_nsec - Linux, Solaris, Cygwin
 # st_atimespec.tv_nsec - FreeBSD, NetBSD, if ! defined _POSIX_SOURCE
 # st_atimensec - FreeBSD, NetBSD, if defined _POSIX_SOURCE
 # st_atim.st__tim.tv_nsec - UnixWare (at least 2.1.2 through 7.1)
 
 # st_birthtimespec - FreeBSD, NetBSD (hidden on OpenBSD 3.9, anyway)
+# st_birthtim - Cygwin 1.7.0+
 
 AC_DEFUN([gl_STAT_TIME],
 [
@@ -43,7 +44,7 @@ AC_DEFUN([gl_STAT_TIME],
 	  [ac_cv_typeof_struct_stat_st_atim_is_struct_timespec=no])])
      if test $ac_cv_typeof_struct_stat_st_atim_is_struct_timespec = yes; then
        AC_DEFINE([TYPEOF_STRUCT_STAT_ST_ATIM_IS_STRUCT_TIMESPEC], 1,
-         [Define to 1 if the type of the st_atim member of a struct stat is
+	 [Define to 1 if the type of the st_atim member of a struct stat is
 	  struct timespec.])
      fi],
     [AC_CHECK_MEMBERS([struct stat.st_atimespec.tv_nsec], [],
@@ -59,7 +60,8 @@ AC_DEFUN([gl_STAT_TIME],
      #include <sys/stat.h>])
 ])
 
-# Check for st_birthtime, a feature from UFS2 (FreeBSD, NetBSD, OpenBSD, etc.).
+# Check for st_birthtime, a feature from UFS2 (FreeBSD, NetBSD, OpenBSD, etc.)
+# and NTFS (Cygwin).
 # There was a time when this field was named st_createtime (21 June
 # 2002 to 16 July 2002) But that window is very small and applied only
 # to development code, so systems still using that configuration are
@@ -72,7 +74,10 @@ AC_DEFUN([gl_STAT_BIRTHTIME],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_HEADERS_ONCE([sys/time.h])
   AC_CHECK_MEMBERS([struct stat.st_birthtimespec.tv_nsec], [],
-    [AC_CHECK_MEMBERS([struct stat.st_birthtimensec], [], [],
+    [AC_CHECK_MEMBERS([struct stat.st_birthtimensec], [],
+      [AC_CHECK_MEMBERS([struct stat.st_birthtim.tv_nsec], [], [],
+	 [#include <sys/types.h>
+	  #include <sys/stat.h>])],
        [#include <sys/types.h>
 	#include <sys/stat.h>])],
     [#include <sys/types.h>

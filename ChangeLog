@@ -1,3 +1,10 @@
+2007-03-27  Eric Blake  <ebb9@byu.net>
+
+	Support sub-second birthtime on cygwin.
+	* m4/stat-time.m4 (gl_STAT_BIRTHTIME): Also check for st_birthtim.
+	* lib/stat-time.h (STAT_TIMESPEC): Adjust comments.
+	(get_stat_birthtime): Also work with st_birthtim.
+
 2007-03-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/stat-time.h (USE_BIRTHTIME): Remove.

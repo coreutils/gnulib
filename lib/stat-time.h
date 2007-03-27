@@ -27,8 +27,9 @@
 /* STAT_TIMESPEC (ST, ST_XTIM) is the ST_XTIM member for *ST of type
    struct timespec, if available.  If not, then STAT_TIMESPEC_NS (ST,
    ST_XTIM) is the nanosecond component of the ST_XTIM member for *ST,
-   if available.  ST_XTIM can be st_atim, st_ctim, or st_mtim for
-   access, status change, or data modification time, respectively.
+   if available.  ST_XTIM can be st_atim, st_ctim, st_mtim, or st_birthtim
+   for access, status change, data modification, or birth (creation)
+   time respectively.
 
    These macros are private to stat-time.h.  */
 #if defined HAVE_STRUCT_STAT_ST_ATIM_TV_NSEC
@@ -146,7 +147,8 @@ get_stat_birthtime (struct stat const *st)
 {
   struct timespec t;
 
-#ifdef HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC
+#if defined HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC \
+  || defined HAVE_STRUCT_STAT_ST_BIRTHTIM_TV_NSEC
   t = STAT_TIMESPEC (st, st_birthtim);
 #elif defined HAVE_STRUCT_STAT_ST_BIRTHTIMENSEC
   t.tv_sec = st->st_birthtime;
