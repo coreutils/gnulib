@@ -1,3 +1,28 @@
+2007-03-27  Simon Josefsson  <simon@josefsson.org>
+	    Bruno Haible  <bruno@clisp.org>
+
+	* m4/vasprintf.m4: Convert AC_SUBST into shell variable for
+	REPLACE_VASPRINTF.  Set HAVE_VASPRINTF.  Add
+	AC_REQUIRE([gl_STDIO_H_DEFAULTS]).
+
+	* m4/stdio_h.m4: Add stubs for vasprintf too.
+
+	* modules/stdio: Support vasprintf in sed command.
+
+	* modules/vasprintf: Depend on stdio for prototypes.  Remove
+	vasprintf.h.  Add stdio module indicator.
+
+	* lib/stdio_.h: Declare asprintf and vasprintf, based on
+	vasprintf.h.
+
+	* lib/vasprintf.h: File removed.
+
+	* lib/asprintf.c: Use stdio.h instead of vasprintf.h.
+	* lib/vasprintf.c: Ditto.
+	* lib/xvasprintf.c: Ditto.
+	* tests/test-vasprintf-posix.c: Ditto.
+	* tests/test-vasprintf.c: Ditto.
+
 2007-03-27  Bruno Haible  <bruno@clisp.org>
 
 	Make vasnprintf multithread-safe.

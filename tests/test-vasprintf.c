@@ -21,7 +21,7 @@
 # include <config.h>
 #endif
 
-#include "vasprintf.h"
+#include <stdio.h>
 
 #include <stdarg.h>
 #include <stdlib.h>

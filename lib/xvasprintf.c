@@ -1,5 +1,5 @@
 /* vasprintf and asprintf with out-of-memory checking.
-   Copyright (C) 1999, 2002-2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002-2004, 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 #include <errno.h>
 #include <limits.h>
 #include <string.h>
+#include <stdio.h>
 
-#include "vasprintf.h"
 #include "xalloc.h"
 
 /* Checked size_t computations.  */
