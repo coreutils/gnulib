@@ -1,3 +1,10 @@
+2007-03-27  Bruno Haible  <bruno@clisp.org>
+
+	Make vasnprintf multithread-safe.
+	* lib/vasnprintf.c (decimal_point_char): New function.
+	(VASNPRINTF): Use it.
+	Suggested by Simon Josefsson.
+
 2007-03-27  Eric Blake  <ebb9@byu.net>
 
 	Support sub-second birthtime on cygwin.
