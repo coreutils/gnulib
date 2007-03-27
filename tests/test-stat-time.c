@@ -41,6 +41,9 @@ cleanup (int sig)
   unlink ("t-stt-stamp2");
   unlink ("t-stt-renamed");
   unlink ("t-stt-stamp3");
+
+  if (sig != 0)
+    _exit (1);
 }
 
 static int
