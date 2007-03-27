@@ -10,6 +10,7 @@ time
 
 configure.ac:
 gl_STAT_TIME
+gl_STAT_BIRTHTIME
 
 Makefile.am:
 

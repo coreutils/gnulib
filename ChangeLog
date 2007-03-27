@@ -1,3 +1,17 @@
+2007-03-27  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stat-time.h: Include <sys/stat.h>.
+
+2007-03-27  James Youngman  <jay@gnu.org>
+
+	* lib/stat-time.h (get_stat_birthtime): New function for
+	  retrieving st_birthtime as provided by UFS2 (hence *BSD).
+	* m4/stat-time.m4 (gl_STAT_BIRTHTIME): Probe for st_birthtime
+	  and its variants.
+	* modules/stat-time (configure.ac): call gl_STAT_BIRTHTIME.
+	* modules/stat-time-test: New file.
+	* tests/test-stat-time.c: New test, devised by Bruno Haible.
+
 2007-03-26  Bruno Haible  <bruno@clisp.org>
 
 	Better support of signalling NaNs.

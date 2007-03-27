@@ -1,0 +1,11 @@
+Files:
+tests/test-stat-time.c
+
+Depends-on:
+time
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stat-time
+check_PROGRAMS += test-stat-time
