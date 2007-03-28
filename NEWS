@@ -6,6 +6,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-03-27  vasprintf       The module now depends on stdio, so replace
+                               #include "vasprintf.h"
+                            with
+                               #include <stdio.h>
+
 2007-03-24  tsearch         The include file is changed from "tsearch.h" to
                             <search.h>.
 
@@ -41,11 +46,6 @@ Date        Modules         Changes
             array-oset      third argument. You can pass NULL.
             avltree-oset
             rbtree-oset
-
-2007-03-13  vasprintf       The module now depends on stdio, so replace
-                               #include "vasprintf.h"
-                            with
-                               #include <stdio.h>
 
 2007-03-12  des             The types and functions in lib/des.h have been
             gc-des          renamed:
