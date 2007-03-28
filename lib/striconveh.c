@@ -173,6 +173,79 @@ iconv_carefully_1 (iconv_t cd,
   return res;
 }
 
+/* utf8conv_carefully is like iconv, except that
+     - it converts from UTF-8 to UTF-8,
+     - it stops as soon as it encounters a conversion error, and it returns
+       in *INCREMENTED a boolean telling whether it has incremented the input
+       pointers past the error location,
+     - if one_character_only is true, it stops after converting one
+       character.  */
+static size_t
+utf8conv_carefully (bool one_character_only,
+		    const char **inbuf, size_t *inbytesleft,
+		    char **outbuf, size_t *outbytesleft,
+		    bool *incremented)
+{
+  const char *inptr = *inbuf;
+  size_t insize = *inbytesleft;
+  char *outptr = *outbuf;
+  size_t outsize = *outbytesleft;
+  size_t res;
+
+  res = 0;
+  do
+    {
+      ucs4_t uc;
+      int n;
+      int m;
+
+      n = u8_mbtoucr (&uc, (const uint8_t *) inptr, insize);
+      if (n < 0)
+	{
+	  errno = (n == -2 ? EINVAL : EILSEQ);
+	  n = u8_mbtouc (&uc, (const uint8_t *) inptr, insize);
+	  inptr += n;
+	  insize -= n;
+	  res = (size_t)(-1);
+	  *incremented = true;
+	  break;
+	}
+      if (outsize == 0)
+	{
+	  errno = E2BIG;
+	  res = (size_t)(-1);
+	  *incremented = false;
+	  break;
+	}
+      m = u8_uctomb ((uint8_t *) outptr, uc, outsize);
+      if (m == -2)
+	{
+	  errno = E2BIG;
+	  res = (size_t)(-1);
+	  *incremented = false;
+	  break;
+	}
+      inptr += n;
+      insize -= n;
+      if (m == -1)
+	{
+	  errno = EILSEQ;
+	  res = (size_t)(-1);
+	  *incremented = true;
+	  break;
+	}
+      outptr += m;
+      outsize -= m;
+    }
+  while (!one_character_only && insize > 0);
+
+  *inbuf = inptr;
+  *inbytesleft = insize;
+  *outbuf = outptr;
+  *outbytesleft = outsize;
+  return res;
+}
+
 static int
 mem_cd_iconveh_internal (const char *src, size_t srclen,
 			 iconv_t cd, iconv_t cd1, iconv_t cd2,
@@ -472,52 +545,10 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 	    else
 	      {
 		/* FROM_CODESET is UTF-8.  */
-		res1 = 0;
-		do
-		  {
-		    ucs4_t uc;
-		    int n;
-		    int m;
-
-		    n = u8_mbtoucr (&uc, (const uint8_t *) in1ptr, in1size);
-		    if (n < 0)
-		      {
-			errno = (n == -2 ? EINVAL : EILSEQ);
-			n = u8_mbtouc (&uc, (const uint8_t *) in1ptr, in1size);
-			in1ptr += n;
-			in1size -= n;
-			res1 = (size_t)(-1);
-			incremented1 = true;
-			break;
-		      }
-		    if (out1size == 0)
-		      {
-			errno = E2BIG;
-			res1 = (size_t)(-1);
-			incremented1 = false;
-			break;
-		      }
-		    m = u8_uctomb ((uint8_t *) out1ptr, uc, out1size);
-		    if (m == -2)
-		      {
-			errno = E2BIG;
-			res1 = (size_t)(-1);
-			incremented1 = false;
-			break;
-		      }
-		    in1ptr += n;
-		    in1size -= n;
-		    if (m == -1)
-		      {
-			errno = EILSEQ;
-			res1 = (size_t)(-1);
-			incremented1 = true;
-			break;
-		      }
-		    out1ptr += m;
-		    out1size -= m;
-		  }
-		while (offsets == NULL && in1size > 0);
+		res1 = utf8conv_carefully (offsets != NULL,
+					   &in1ptr, &in1size,
+					   &out1ptr, &out1size,
+					   &incremented1);
 	      }
 	  }
 	else if (do_final_flush1)

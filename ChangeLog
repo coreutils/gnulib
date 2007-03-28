@@ -1,5 +1,10 @@
 2007-03-28  Bruno Haible  <bruno@clisp.org>
 
+	* lib/striconveh.c (utf8conv_carefully): New function.
+	(mem_cd_iconveh_internal): Invoke it.
+
+2007-03-28  Bruno Haible  <bruno@clisp.org>
+
 	* lib/striconveh.c (mem_cd_iconveh_internal): Use u8_mbtoucr instead
 	of u8_mbtouc in order to distinguish invalid and incomplete UTF-8
 	input.
