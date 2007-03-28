@@ -1,0 +1,24 @@
+Description:
+Look at first character in UTF-8 string, returning an error code upon failure.
+
+Files:
+lib/unistr/u8-mbtoucr.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+gl_MODULE_INDICATOR([unistr/u8-mbtoucr])
+
+Makefile.am:
+lib_SOURCES += unistr/u8-mbtoucr.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
