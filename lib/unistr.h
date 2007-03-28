@@ -269,6 +269,29 @@ u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n)
 # endif
 #endif
 
+/* Return the length (number of units) of the first character in S, putting
+   its 'ucs4_t' representation in *PUC.  Upon failure, *PUC is set to 0xfffd,
+   and -1 is returned for an invalid sequence of units, -2 is returned for an
+   incomplete sequence of units.
+   The number of available units, N, must be > 0.  */
+/* Similar to u*_mbtouc(), except that the return value gives more details
+   about the failure, similar to mbrtowc().  */
+
+#ifdef GNULIB_UNISTR_U8_MBTOUCR
+extern int
+       u8_mbtoucr (ucs4_t *puc, const uint8_t *s, size_t n);
+#endif
+
+#ifdef GNULIB_UNISTR_U16_MBTOUCR
+extern int
+       u16_mbtoucr (ucs4_t *puc, const uint16_t *s, size_t n);
+#endif
+
+#ifdef GNULIB_UNISTR_U32_MBTOUCR
+extern int
+       u32_mbtoucr (ucs4_t *puc, const uint32_t *s, size_t n);
+#endif
+
 /* Put the multibyte character represented by UC in S, returning its
    length.  Return -1 upon failure, -2 if the number of available units, N,
    is too small.  The latter case cannot occur if N >= 6/2/1, respectively.  */
