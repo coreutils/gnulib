@@ -1,5 +1,14 @@
 2007-03-28  Bruno Haible  <bruno@clisp.org>
 
+	* lib/striconveh.c (mem_cd_iconveh_internal): Use u8_mbtoucr instead
+	of u8_mbtouc in order to distinguish invalid and incomplete UTF-8
+	input.
+	* modules/striconveh (Depends-on): Add unistr/u8-mbtoucr. Replace
+	utf8-ucs4 with unistr/u8-mbtouc. Replace ucs4-utf8 with
+	unistr/u8-uctomb.
+
+2007-03-28  Bruno Haible  <bruno@clisp.org>
+
 	* modules/unistr/u8-mbtoucr: New file.
 	* lib/unistr/u8-mbtoucr.c: New file.
 	* modules/unistr/u16-mbtoucr: New file.

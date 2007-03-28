@@ -479,16 +479,13 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 		    int n;
 		    int m;
 
-		    n = u8_mbtouc (&uc, (const uint8_t *) in1ptr, in1size);
-		    if (uc == 0xfffd
-			&& !(n >= 3
-			     && (uint8_t)in1ptr[0] == 0xEF
-			     && (uint8_t)in1ptr[1] == 0xBF
-			     && (uint8_t)in1ptr[2] == 0xBD))
+		    n = u8_mbtoucr (&uc, (const uint8_t *) in1ptr, in1size);
+		    if (n < 0)
 		      {
+			errno = (n == -2 ? EINVAL : EILSEQ);
+			n = u8_mbtouc (&uc, (const uint8_t *) in1ptr, in1size);
 			in1ptr += n;
 			in1size -= n;
-			errno = EILSEQ;
 			res1 = (size_t)(-1);
 			incremented1 = true;
 			break;
