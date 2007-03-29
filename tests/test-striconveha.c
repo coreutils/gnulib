@@ -311,6 +311,8 @@ main ()
 	}
     }
 
+  /* autodetect_jp is only supported when iconv() support ISO-2022-JP-2.  */
+# if defined _LIBICONV_VERSION || !(defined _AIX || defined __sgi || defined __hpux || defined __osf__)
   /* Test conversions from autodetect_jp to UTF-8.  */
   for (h = 0; h < SIZEOF (handlers); h++)
     {
@@ -402,6 +404,7 @@ main ()
 	  free (result);
 	}
     }
+# endif
 
 # if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
   /* Test conversion from UTF-8 to ISO-8859-1 with transliteration.  */

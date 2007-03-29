@@ -64,8 +64,6 @@ main ()
   iconv_t cd_88592_to_utf8 = iconv_open ("UTF-8", "ISO-8859-2");
   iconv_t cd_utf8_to_88592 = iconv_open ("ISO-8859-2", "UTF-8");
 
-  ASSERT (cd_88591_to_88592 != (iconv_t)(-1));
-  ASSERT (cd_88592_to_88591 != (iconv_t)(-1));
   ASSERT (cd_88591_to_utf8 != (iconv_t)(-1));
   ASSERT (cd_utf8_to_88591 != (iconv_t)(-1));
   ASSERT (cd_88592_to_utf8 != (iconv_t)(-1));
@@ -457,8 +455,10 @@ main ()
       free (result);
     }
 
-  iconv_close (cd_88591_to_88592);
-  iconv_close (cd_88592_to_88591);
+  if (cd_88591_to_88592 != (iconv_t)(-1))
+    iconv_close (cd_88591_to_88592);
+  if (cd_88592_to_88591 != (iconv_t)(-1))
+    iconv_close (cd_88592_to_88591);
   iconv_close (cd_88591_to_utf8);
   iconv_close (cd_utf8_to_88591);
   iconv_close (cd_88592_to_utf8);
