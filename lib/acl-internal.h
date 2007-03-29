@@ -18,8 +18,6 @@
 
    Written by Paul Eggert and Andreas Gruenbacher.  */
 
-#include <config.h>
-
 #include "acl.h"
 
 #include <stdbool.h>
@@ -55,12 +53,14 @@
 /* POSIX 1003.1e (draft 17) */
 #ifndef HAVE_ACL_GET_FD
 # define HAVE_ACL_GET_FD false
+# undef acl_get_fd
 # define acl_get_fd(fd) (NULL)
 #endif
 
 /* POSIX 1003.1e (draft 17) */
 #ifndef HAVE_ACL_SET_FD
 # define HAVE_ACL_SET_FD false
+# undef acl_set_fd
 # define acl_set_fd(fd, acl) (-1)
 #endif
 
@@ -76,8 +76,8 @@
 # define acl_from_mode(mode) (NULL)
 #endif
 
-#define ACL_NOT_WELL_SUPPORTED(Errno) \
-  ((Errno) == ENOTSUP || (Errno) == ENOSYS || (Errno) == EINVAL)
+#define ACL_NOT_WELL_SUPPORTED(Err) \
+  ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY)
 
 /* Define a replacement for acl_entries if needed.  */
 #if USE_ACL && HAVE_ACL_GET_FILE && HAVE_ACL_FREE && !HAVE_ACL_ENTRIES

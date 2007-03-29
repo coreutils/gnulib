@@ -1,3 +1,14 @@
+2007-03-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/acl-internal.h (acl_get_fd, acl_set_fd): undef before defining,
+	to work around a problem on OSF/1 5.1 reported by Bruno Haible.
+
+2007-03-29  Eric Blake  <ebb9@byu.net>
+
+	* lib/acl-internal.h: Remove redundant include.
+	(ACL_NOT_WELL_SUPPORTED): Also filter on EBUSY, returned by
+	Cygwin when a file is locked.
+
 2007-03-29  Bruno Haible  <bruno@clisp.org>
 
 	* lib/vasprintf.c [IN_LIBASPRINTF]: Include different specification
