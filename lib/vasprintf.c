@@ -18,7 +18,11 @@
 #include <config.h>
 
 /* Specification.  */
-#include <stdio.h>
+#ifdef IN_LIBINTL
+# include "vasprintf.h"
+#else
+# include <stdio.h>
+#endif
 
 #include <errno.h>
 #include <limits.h>
