@@ -1,7 +1,8 @@
 2007-03-29  Bruno Haible  <bruno@clisp.org>
 
-	* lib/vasprintf.c [IN_LIBINTL]: Include different specification file.
-	* lib/asprintf.c [IN_LIBINTL]: Likewise.
+	* lib/vasprintf.c [IN_LIBASPRINTF]: Include different specification
+	file.
+	* lib/asprintf.c [IN_LIBASPRINTF]: Likewise.
 
 2007-03-29  Paul Eggert  <eggert@cs.ucla.edu>
 
