@@ -21,11 +21,11 @@
 
 #include "stat-time.h"
 
+#include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include <sys/fcntl.h>
 #include <unistd.h>
 
 #define ASSERT(condition) if (!(condition)) abort ()

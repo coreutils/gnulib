@@ -1,3 +1,7 @@
+2007-03-29  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-stat-time.c: Include <fcntl.h>, not <sys/fcntl.h>.
+
 2007-03-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/acl-internal.h (acl_get_fd, acl_set_fd): undef before defining,
