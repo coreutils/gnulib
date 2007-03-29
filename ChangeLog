@@ -1,3 +1,11 @@
+2007-03-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/getcwd-path-max.m4 (gl_FUNC_GETCWD_PATH_MAX): Don't bother to
+	try to remove a parent directory if the child couldn't be removed
+	(except for the first rmdir, which could fail because the child
+	doesn't exist).  Problem reported by Jeff Blaine in
+	<http://lists.gnu.org/archive/html/bug-tar/2007-03/msg00014.html>.
+
 2007-03-28  Bruno Haible  <bruno@clisp.org>
 
 	* lib/striconveh.c (utf8conv_carefully): New function.
