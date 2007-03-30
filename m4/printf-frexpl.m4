@@ -40,11 +40,16 @@ AC_DEFUN([gl_FUNC_PRINTF_FREXPL],
           [gl_cv_func_ldexpl_no_libm=no])
       ])
     if test $gl_cv_func_ldexpl_no_libm = yes; then
-      AC_DEFINE([HAVE_LDEXPL_IN_LIBC], 1,
-        [Define if the ldexpl function is available in libc.])
-      dnl Also check whether it's declared.
-      dnl MacOS X 10.3 has ldexpl() in libc but doesn't declare it in <math.h>.
-      AC_CHECK_DECL([ldexpl], , [HAVE_DECL_LDEXPL=0], [#include <math.h>])
+      gl_FUNC_LDEXPL_WORKS
+      case "$gl_cv_func_ldexpl_works" in
+        *yes)
+          AC_DEFINE([HAVE_LDEXPL_IN_LIBC], 1,
+            [Define if the ldexpl function is available in libc.])
+          dnl Also check whether it's declared.
+          dnl MacOS X 10.3 has ldexpl() in libc but doesn't declare it in <math.h>.
+          AC_CHECK_DECL([ldexpl], , [HAVE_DECL_LDEXPL=0], [#include <math.h>])
+          ;;
+      esac
     fi
   fi
 ])

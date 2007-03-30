@@ -1,5 +1,21 @@
 2007-03-29  Bruno Haible  <bruno@clisp.org>
 
+	* modules/ldexpl: New file.
+	* m4/ldexpl.m4: New file.
+	* lib/math_.h (ldexpl): Define to a replacement if REPLACE_LDEXPL is
+	set.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize also GNULIB_LDEXPL,
+	REPLACE_LDEXPL.
+	* modules/math (Makefile.am): Substitute also GNULIB_LDEXPL,
+	REPLACE_LDEXPL.
+	* m4/printf-frexpl.m4 (gl_FUNC_PRINTF_FREXPL): Invoke
+	gl_FUNC_LDEXPL_WORKS.
+	* m4/mathl.m4 (gl_FUNC_LONG_DOUBLE_MATH): Remove test for ldexpl.
+	* modules/mathl (Files): Remove lib/ldexpl.c.
+	(Depends-on): Add ldexpl.
+
+2007-03-29  Bruno Haible  <bruno@clisp.org>
+
 	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Declare frexpl.
 
 2007-03-29  Bruno Haible  <bruno@clisp.org>

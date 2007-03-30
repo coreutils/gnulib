@@ -9,7 +9,6 @@ lib/ceill.c
 lib/cosl.c
 lib/expl.c
 lib/floorl.c
-lib/ldexpl.c
 lib/logl.c
 lib/sincosl.c
 lib/sinl.c
@@ -23,6 +22,7 @@ Depends-on:
 math
 frexpl
 isnanl
+ldexpl
 
 configure.ac:
 gl_FUNC_LONG_DOUBLE_MATH

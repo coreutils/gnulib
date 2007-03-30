@@ -149,14 +149,18 @@ extern long double frexpl (long double x, int *exp);
      frexpl (x, e))
 #endif
 
-#if @GNULIB_MATHL@ || !@HAVE_DECL_LDEXPL@
+/* Return x * 2^exp.  */
+#if @GNULIB_LDEXPL@ && @REPLACE_LDEXPL@
+# define ldexpl rpl_ldexpl
+#endif
+#if (@GNULIB_LDEXPL@ && @REPLACE_LDEXPL@) || !@HAVE_DECL_LDEXPL@
 extern long double ldexpl (long double x, int exp);
 #endif
-#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
+#if !@GNULIB_LDEXPL@ && defined GNULIB_POSIXCHECK
 # undef ldexpl
 # define ldexpl(x,e) \
     (GL_LINK_WARNING ("ldexpl is unportable - " \
-                      "use gnulib module mathl for portability"), \
+                      "use gnulib module ldexpl for portability"), \
      ldexpl (x, e))
 #endif
 
