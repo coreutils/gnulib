@@ -1,0 +1,15 @@
+Files:
+tests/test-ldexpl.c
+
+Depends-on:
+fpucw
+isnanl-nolibm
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-ldexpl
+check_PROGRAMS += test-ldexpl
+
+License:
+LGPL

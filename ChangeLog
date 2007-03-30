@@ -1,5 +1,10 @@
 2007-03-29  Bruno Haible  <bruno@clisp.org>
 
+	* modules/ldexpl-tests: New file.
+	* tests/test-ldexpl.c: New file.
+
+2007-03-29  Bruno Haible  <bruno@clisp.org>
+
 	* lib/ldexpl.c: Include fpucw.h.
 	(ldexpl): Use BEGIN/END_LONG_DOUBLE_ROUNDING. Skip the last unneeded
 	multiplication.
