@@ -1,5 +1,12 @@
 2007-03-29  Bruno Haible  <bruno@clisp.org>
 
+	* lib/ldexpl.c: Include fpucw.h.
+	(ldexpl): Use BEGIN/END_LONG_DOUBLE_ROUNDING. Skip the last unneeded
+	multiplication.
+	* modules/ldexpl (Depends-on): Add fpucw.
+
+2007-03-29  Bruno Haible  <bruno@clisp.org>
+
 	* modules/ldexpl: New file.
 	* m4/ldexpl.m4: New file.
 	* lib/math_.h (ldexpl): Define to a replacement if REPLACE_LDEXPL is

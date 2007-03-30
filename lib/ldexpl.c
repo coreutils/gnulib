@@ -25,6 +25,7 @@
 #include <math.h>
 
 #include <float.h>
+#include "fpucw.h"
 #include "isnanl.h"
 
 long double
@@ -32,22 +33,36 @@ ldexpl(long double x, int exp)
 {
   long double factor;
   int bit;
+  DECL_LONG_DOUBLE_ROUNDING
+
+  BEGIN_LONG_DOUBLE_ROUNDING ();
 
   /* Check for zero, nan and infinity. */
-  if (isnanl (x) || x + x == x)
-    return x;
-
-  if (exp < 0)
+  if (!(isnanl (x) || x + x == x))
     {
-      exp = -exp;
-      factor = 0.5L;
-    }
-  else
-    factor = 2.0L;
+      if (exp < 0)
+	{
+	  exp = -exp;
+	  factor = 0.5L;
+	}
+      else
+	factor = 2.0L;
 
-  for (bit = 1; bit <= exp; bit <<= 1, factor *= factor)
-    if (exp & bit)
-      x *= factor;
+      if (exp > 0)
+	for (bit = 1;;)
+	  {
+	    /* Invariant: Here bit = 2^i, factor = 2^-2^i or = 2^2^i,
+	       and bit <= exp.  */ 
+	    if (exp & bit)
+	      x *= factor;
+	    bit <<= 1;
+	    if (bit > exp)
+	      break;
+	    factor = factor * factor;
+	  }
+    }
+
+  END_LONG_DOUBLE_ROUNDING ();
 
   return x;
 }

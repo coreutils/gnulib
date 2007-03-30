@@ -8,6 +8,7 @@ m4/ldexpl.m4
 Depends-on:
 math
 isnanl-nolibm
+fpucw
 
 configure.ac:
 gl_FUNC_LDEXPL
