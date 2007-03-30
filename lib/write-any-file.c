@@ -34,10 +34,11 @@ bool
 can_write_any_file (void)
 {
   static bool initialized;
-  static bool can;
+  static bool can_write;
 
   if (! initialized)
     {
+      bool can = false;
 #if defined PRIV_EFFECTIVE && defined PRIV_FILE_DAC_WRITE
       priv_set_t *pset = priv_allocset ();
       if (pset)
@@ -47,13 +48,13 @@ can_write_any_file (void)
 	     && priv_ismember (pset, PRIV_FILE_DAC_WRITE));
 	  priv_freeset (pset);
 	}
-      else
 #else
       /* In traditional Unix, only root can unlink directories.  */
       can = (geteuid () == 0);
 #endif
+      can_write = can;
       initialized = true;
     }
 
-  return can;
+  return can_write;
 }
