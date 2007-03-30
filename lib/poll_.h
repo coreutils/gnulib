@@ -1,7 +1,7 @@
 /* Header for poll(2) emulation
    Contributed by Paolo Bonzini.
 
-   Copyright 2001, 2002, 2003 Free Software Foundation, Inc.
+   Copyright 2001, 2002, 2003, 2007 Free Software Foundation, Inc.
 
    This file is part of gnulib.
 
@@ -19,8 +19,8 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef GNULIB_POLL_H
-#define GNULIB_POLL_H
+#ifndef _GL_POLL_H
+#define _GL_POLL_H
 
 /* fake a poll(2) environment */
 #define POLLIN      0x0001	/* any readable data available   */
@@ -50,4 +50,4 @@ extern int poll (struct pollfd *pfd, nfds_t nfd, int timeout);
 #define INFTIM (-1)
 #endif
 
-#endif
+#endif /* _GL_POLL_H */

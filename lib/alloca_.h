@@ -1,6 +1,6 @@
 /* Memory allocation on the stack.
 
-   Copyright (C) 1995, 1999, 2001, 2002, 2003, 2004, 2006 Free Software
+   Copyright (C) 1995, 1999, 2001-2004, 2006-2007 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -20,8 +20,8 @@
 
 /* Avoid using the symbol _ALLOCA_H here, as Bison assumes _ALLOCA_H
    means there is a real alloca function.  */
-#ifndef _GNULIB_ALLOCA_H
-# define _GNULIB_ALLOCA_H
+#ifndef _GL_ALLOCA_H
+#define _GL_ALLOCA_H
 
 /* alloca (N) returns a pointer to N bytes of memory
    allocated on the stack, which will last until the function returns.
@@ -51,4 +51,4 @@ void *alloca (size_t);
 # endif
 #endif
 
-#endif /* _GNULIB_ALLOCA_H */
+#endif /* _GL_ALLOCA_H */

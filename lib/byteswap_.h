@@ -16,7 +16,8 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _BYTESWAP_H
+#ifndef _GL_BYTESWAP_H
+#define _GL_BYTESWAP_H
 
 /* Given an unsigned 16-bit argument X, return the value corresponding to
    X with reversed byte order.  */
@@ -41,4 +42,4 @@
 		     (((x) & 0x00FF000000000000ULL) >> 40) | \
 		     (((x) & 0xFF00000000000000ULL) >> 56))
 
-#endif
+#endif /* _GL_BYTESWAP_H */

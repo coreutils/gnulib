@@ -1,3 +1,18 @@
+2007-03-30  Bruno Haible  <bruno@clisp.org>
+
+	* lib/alloca_.h: Change prefix of double-inclusion guard macro to _GL_.
+	* lib/poll_.h: Likewise.
+	* lib/stat_.h: Likewise.
+	* lib/sys_time_.h: Likewise.
+	* lib/sysexit_.h: Likewise.
+	* lib/glob_.h: Prefix double-inclusion guard macro with _GL_.
+	* lib/stdbool_.h: Likewise.
+	* lib/byteswap_.h: Add double-inclusion guard.
+
+2007-03-30  Sergey Poznyakoff  <gray@mirddin.farlep.net>
+
+	* lib/sysexit_.h: Prefix double-inclusion guard macro with _GNULIB.
+
 2007-03-30  Karl Berry  <karl@gnu.org>
 
 	* config/srclist-update: double space after USA in the license

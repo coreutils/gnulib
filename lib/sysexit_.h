@@ -17,8 +17,8 @@
 
 /* Written by Simon Josefsson based on sysexits(3) man page */
 
-#ifndef _SYSEXITS_H
-#define _SYSEXITS_H
+#ifndef _GL_SYSEXITS_H
+#define _GL_SYSEXITS_H
 
 #if @HAVE_SYSEXITS_H@
 
@@ -51,4 +51,4 @@
 
 #endif
 
-#endif /* _SYSEXITS_H */
+#endif /* _GL_SYSEXITS_H */

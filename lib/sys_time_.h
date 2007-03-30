@@ -18,8 +18,8 @@
 
 /* Written by Paul Eggert.  */
 
-#ifndef _gl_SYS_TIME_H
-#define _gl_SYS_TIME_H
+#ifndef _GL_SYS_TIME_H
+#define _GL_SYS_TIME_H
 
 #if @HAVE_SYS_TIME_H@
 # include @ABSOLUTE_SYS_TIME_H@
@@ -41,4 +41,4 @@ struct timeval
 int gettimeofday (struct timeval *restrict, void *restrict);
 #endif
 
-#endif /* _gl_SYS_TIME_H */
+#endif /* _GL_SYS_TIME_H */

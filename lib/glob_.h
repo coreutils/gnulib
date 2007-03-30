@@ -18,8 +18,8 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef GLOB_H
-#define GLOB_H 1
+#ifndef _GL_GLOB_H
+#define _GL_GLOB_H
 
 #ifdef HAVE_SYS_CDEFS_H
 # include <sys/cdefs.h>
@@ -57,4 +57,4 @@
 /* Now the standard GNU C Library header should work.  */
 #include "glob-libc.h"
 
-#endif /* GLOB_H */
+#endif /* _GL_GLOB_H */

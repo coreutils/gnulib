@@ -1,5 +1,5 @@
 /* Provide a more complete sys/stat header file.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 
 /* Written by Eric Blake, Paul Eggert, and Jim Meyering.  */
 
-#ifndef _gl_SYS_STAT_H
-#define _gl_SYS_STAT_H
+#ifndef _GL_SYS_STAT_H
+#define _GL_SYS_STAT_H
 
 /* This file is supposed to be used on platforms where <sys/stat.h> is
    incomplete.  It is intended to provide definitions and prototypes
@@ -272,4 +272,4 @@ rpl_mkdir (char const *name, mode_t mode)
 # define mkdir rpl_mkdir
 #endif
 
-#endif /* _gl_SYS_STAT_H */
+#endif /* _GL_SYS_STAT_H */
