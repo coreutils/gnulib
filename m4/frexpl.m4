@@ -68,6 +68,7 @@ AC_DEFUN([gl_FUNC_FREXPL_WORKS],
     [
       AC_TRY_RUN([
 #include <math.h>
+extern long double frexpl (long double, int *);
 int main()
 {
   volatile long double x;

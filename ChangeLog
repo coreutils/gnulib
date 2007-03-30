@@ -1,5 +1,9 @@
 2007-03-29  Bruno Haible  <bruno@clisp.org>
 
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Declare frexpl.
+
+2007-03-29  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-striconveh.c (main): Don't assume that a direct conversion
 	between ISO-8859-1 and ISO-8859-2 is possible. Needed for OSF/1, IRIX
 	and possibly also HP-UX.
