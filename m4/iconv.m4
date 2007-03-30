@@ -1,5 +1,5 @@
-# iconv.m4 serial AM4 (gettext-0.11.3)
-dnl Copyright (C) 2000-2002 Free Software Foundation, Inc.
+# iconv.m4 serial AM5 (gettext-0.16.2)
+dnl Copyright (C) 2000-2002, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -21,6 +21,7 @@ AC_DEFUN([AM_ICONV_LINK],
 [
   dnl Some systems have iconv in libc, some have it in libiconv (OSF/1 and
   dnl those with the standalone portable GNU libiconv installed).
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   dnl Search for libiconv and define LIBICONV, LTLIBICONV and INCICONV
   dnl accordingly.
@@ -33,7 +34,7 @@ AC_DEFUN([AM_ICONV_LINK],
   am_save_CPPFLAGS="$CPPFLAGS"
   AC_LIB_APPENDTOVAR([CPPFLAGS], [$INCICONV])
 
-  AC_CACHE_CHECK(for iconv, am_cv_func_iconv, [
+  AC_CACHE_CHECK([for iconv], am_cv_func_iconv, [
     am_cv_func_iconv="no, consider installing GNU libiconv"
     am_cv_lib_iconv=no
     AC_TRY_LINK([#include <stdlib.h>
@@ -56,7 +57,49 @@ AC_DEFUN([AM_ICONV_LINK],
     fi
   ])
   if test "$am_cv_func_iconv" = yes; then
-    AC_DEFINE(HAVE_ICONV, 1, [Define if you have the iconv() function.])
+    AC_CACHE_CHECK([for working iconv], am_cv_func_iconv_works, [
+      dnl This tests against a bug in AIX 5.1: failures are not distinguishable
+      dnl from successul returns.
+      am_save_LIBS="$LIBS"
+      if test $am_cv_lib_iconv = yes; then
+        LIBS="$LIBS $LIBICONV"
+      fi
+      AC_TRY_RUN([
+int main ()
+{
+  static const char input[] = "\342\202\254"; /* EURO SIGN */
+  iconv_t cd_utf8_to_88591 = iconv_open ("ISO8859-1", "UTF-8");
+  if (cd_utf8_to_88591 != (iconv_t)(-1))
+    {
+      char buf[10];
+      const char *inptr = input;
+      size_t inbytesleft = strlen (input);
+      char *outptr = buf;
+      size_t outbytesleft = sizeof (buf);
+      size_t res = iconv (cd_utf8_to_88591,
+                          (char **) &inptr, &inbytesleft,
+                          &outptr, &outbytesleft);
+      return res == 0;
+    }
+  else
+    return 0;
+}], [am_cv_func_iconv_works=yes], [am_cv_func_iconv_works=no],
+        [case "$host_os" in
+           aix*) am_cv_func_iconv_works="guessing no" ;;
+           *)    am_cv_func_iconv_works="guessing yes" ;;
+         esac])
+      LIBS="$am_save_LIBS"
+    ])
+    case "$am_cv_func_iconv_works" in
+      *no) am_func_iconv=no am_cv_lib_iconv=no ;;
+      *)   am_func_iconv=yes ;;
+    esac
+  else
+    am_func_iconv=no am_cv_lib_iconv=no
+  fi
+  if test "$am_func_iconv" = yes; then
+    AC_DEFINE(HAVE_ICONV, 1,
+      [Define if you have the iconv() function and it works.])
   fi
   if test "$am_cv_lib_iconv" = yes; then
     AC_MSG_CHECKING([how to link with libiconv])

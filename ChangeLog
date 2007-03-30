@@ -1,5 +1,10 @@
 2007-03-29  Bruno Haible  <bruno@clisp.org>
 
+	* m4/iconv.m4 (AM_ICONV_LINK): Require AC_CANONICAL_HOST. Test against
+	a bug in AIX iconv().
+
+2007-03-29  Bruno Haible  <bruno@clisp.org>
+
 	* modules/ldexpl-tests: New file.
 	* tests/test-ldexpl.c: New file.
 
