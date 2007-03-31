@@ -1,5 +1,10 @@
 2007-03-31  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-striconveha.c (main): Don't expect "autodetect_jp" to
+	work on Solaris either. Protect also second use of "autodetect_jp".
+
+2007-03-31  Bruno Haible  <bruno@clisp.org>
+
 	* m4/frexpl.m4 (gl_FUNC_FREXPL): Set HAVE_DECL_FREXPL to 0 when
 	the function is not present.
 
