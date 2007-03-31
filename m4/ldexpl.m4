@@ -54,6 +54,7 @@ AC_DEFUN([gl_FUNC_LDEXPL],
     dnl MacOS X 10.3 has ldexpl() in libc but doesn't declare it in <math.h>.
     AC_CHECK_DECL([ldexpl], , [HAVE_DECL_LDEXPL=0], [#include <math.h>])
   else
+    HAVE_DECL_LDEXPL=0
     AC_LIBOBJ([ldexpl])
   fi
 ])
