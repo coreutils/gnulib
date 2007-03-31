@@ -1,5 +1,10 @@
 2007-03-31  Bruno Haible  <bruno@clisp.org>
 
+	* m4/iconv.m4 (AM_ICONV_LINK): Fix 2007-03-29 patch. Test also against
+	a bug in HP-UX iconv_open().
+
+2007-03-31  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh (func_module): Don't show gnulib-common.m4.
 	(Mathematics <math.h>): New section, add fpieee.
 	(Input/output <stdio.h>): Add fseterr.

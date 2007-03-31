@@ -58,35 +58,70 @@ AC_DEFUN([AM_ICONV_LINK],
   ])
   if test "$am_cv_func_iconv" = yes; then
     AC_CACHE_CHECK([for working iconv], am_cv_func_iconv_works, [
-      dnl This tests against a bug in AIX 5.1: failures are not distinguishable
-      dnl from successul returns.
+      dnl This tests against bugs in AIX 5.1 and HP-UX 11.11.
       am_save_LIBS="$LIBS"
       if test $am_cv_lib_iconv = yes; then
         LIBS="$LIBS $LIBICONV"
       fi
       AC_TRY_RUN([
+#include <iconv.h>
+#include <string.h>
 int main ()
 {
-  static const char input[] = "\342\202\254"; /* EURO SIGN */
-  iconv_t cd_utf8_to_88591 = iconv_open ("ISO8859-1", "UTF-8");
-  if (cd_utf8_to_88591 != (iconv_t)(-1))
-    {
-      char buf[10];
-      const char *inptr = input;
-      size_t inbytesleft = strlen (input);
-      char *outptr = buf;
-      size_t outbytesleft = sizeof (buf);
-      size_t res = iconv (cd_utf8_to_88591,
-                          (char **) &inptr, &inbytesleft,
-                          &outptr, &outbytesleft);
-      return res == 0;
-    }
-  else
-    return 0;
+  /* Test against AIX 5.1 bug: Failures are not distinguishable from successful
+     returns.  */
+  {
+    iconv_t cd_utf8_to_88591 = iconv_open ("ISO8859-1", "UTF-8");
+    if (cd_utf8_to_88591 != (iconv_t)(-1))
+      {
+        static const char input[] = "\342\202\254"; /* EURO SIGN */
+        char buf[10];
+        const char *inptr = input;
+        size_t inbytesleft = strlen (input);
+        char *outptr = buf;
+        size_t outbytesleft = sizeof (buf);
+        size_t res = iconv (cd_utf8_to_88591,
+                            (char **) &inptr, &inbytesleft,
+                            &outptr, &outbytesleft);
+        if (res == 0)
+          return 1;
+      }
+  }
+#if 0 /* This bug could be worked around by the caller.  */
+  /* Test against HP-UX 11.11 bug: Positive return value instead of 0.  */
+  {
+    iconv_t cd_88591_to_utf8 = iconv_open ("utf8", "iso88591");
+    if (cd_88591_to_utf8 != (iconv_t)(-1))
+      {
+        static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
+        char buf[50];
+        const char *inptr = input;
+        size_t inbytesleft = strlen (input);
+        char *outptr = buf;
+        size_t outbytesleft = sizeof (buf);
+        size_t res = iconv (cd_88591_to_utf8,
+                            (char **) &inptr, &inbytesleft,
+                            &outptr, &outbytesleft);
+        if ((int)res > 0)
+          return 1;
+      }
+  }
+#endif
+  /* Test against HP-UX 11.11 bug: No converter from EUC-JP to UTF-8 is
+     provided.  */
+  if (/* Try standardized names.  */
+      iconv_open ("UTF-8", "EUC-JP") == (iconv_t)(-1)
+      /* Try IRIX, OSF/1 names.  */
+      && iconv_open ("UTF-8", "eucJP") == (iconv_t)(-1)
+      /* Try AIX names.  */
+      && iconv_open ("UTF-8", "IBM-eucJP") == (iconv_t)(-1)
+      /* Try HP-UX names.  */
+      && iconv_open ("utf8", "eucJP") == (iconv_t)(-1))
+  return 0;
 }], [am_cv_func_iconv_works=yes], [am_cv_func_iconv_works=no],
         [case "$host_os" in
-           aix*) am_cv_func_iconv_works="guessing no" ;;
-           *)    am_cv_func_iconv_works="guessing yes" ;;
+           aix* | hpux*) am_cv_func_iconv_works="guessing no" ;;
+           *)            am_cv_func_iconv_works="guessing yes" ;;
          esac])
       LIBS="$am_save_LIBS"
     ])
