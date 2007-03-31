@@ -1,5 +1,28 @@
 2007-03-31  Bruno Haible  <bruno@clisp.org>
 
+	Support old proprietary implementations of iconv.
+	* modules/iconv_open: New file.
+	* lib/iconv_.h: New file.
+	* m4/iconv_h.m4: New file.
+	* lib/iconv_open.c: New file.
+	* lib/iconv_open-aix.gperf: New file.
+	* lib/iconv_open-hpux.gperf: New file.
+	* lib/iconv_open-irix.gperf: New file.
+	* lib/iconv_open-osf.gperf: New file.
+	* m4/iconv_open.m4: New file.
+	* modules/linebreak (Depends-on): Add iconv_open.
+	* modules/striconv (Depends-on): Likewise.
+	* modules/striconveh (Depends-on): Likewise.
+	* modules/unicodeio (Depends-on): Likewise.
+	* lib/striconveh.h (mem_cd_iconveh, str_cd_iconveh): Allow cd to be
+	(iconv_t)(-1).
+	* lib/striconveh.c (mem_cd_iconveh_internal): Use an indirect
+	conversion if cd is (iconv_t)(-1).
+	(mem_iconveh, str_iconveh): Don't fail just because a direct conversion
+	is not possible.
+
+2007-03-31  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-striconveha.c (main): Don't expect "autodetect_jp" to
 	work on Solaris either. Protect also second use of "autodetect_jp".
 
