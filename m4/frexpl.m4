@@ -54,6 +54,7 @@ AC_DEFUN([gl_FUNC_FREXPL],
     dnl MacOS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
     AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [#include <math.h>])
   else
+    HAVE_DECL_FREXPL=0
     AC_LIBOBJ([frexpl])
   fi
 ])

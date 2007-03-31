@@ -1,5 +1,10 @@
 2007-03-31  Bruno Haible  <bruno@clisp.org>
 
+	* m4/frexpl.m4 (gl_FUNC_FREXPL): Set HAVE_DECL_FREXPL to 0 when
+	the function is not present.
+
+2007-03-31  Bruno Haible  <bruno@clisp.org>
+
 	* m4/ldexpl.m4 (gl_FUNC_LDEXPL): Set HAVE_DECL_LDEXPL to 0 when
 	the function is not present.
 
