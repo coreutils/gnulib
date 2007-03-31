@@ -1,3 +1,11 @@
+2007-03-30  James Youngman  <jay@gnu.org>
+
+	* tests/test-stat-time.c (prepare_test): use chmod() rather than
+	rename() to change the ctime of a file (because ctime is unaffected
+	by rename on jfs2 on AIX 5.1).
+	(main): Start by doing cleanup, in case a previous run failed leaving
+	test files behind.
+
 2007-03-31  Bruno Haible  <bruno@clisp.org>
 
 	Support old proprietary implementations of iconv.

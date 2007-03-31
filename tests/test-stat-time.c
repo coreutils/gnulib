@@ -84,12 +84,12 @@ prepare_test (struct stat *statinfo, struct timespec *modtimes)
   sleep (2);
   create_file ("t-stt-stamp2");
   sleep (2);
-  ASSERT (rename ("t-stt-testfile", "t-stt-renamed") == 0);
+  ASSERT (chmod ("t-stt-testfile", 0400) == 0);
   sleep (2);
   create_file ("t-stt-stamp3");
 
   do_stat ("t-stt-stamp1",  &statinfo[0]);
-  do_stat ("t-stt-renamed", &statinfo[1]);
+  do_stat ("t-stt-testfile", &statinfo[1]);
   do_stat ("t-stt-stamp2",  &statinfo[2]);
   do_stat ("t-stt-stamp3",  &statinfo[3]);
 
@@ -164,6 +164,7 @@ main ()
   signal (SIGTERM, cleanup);
 #endif
 
+  cleanup (0);
   prepare_test (statinfo, modtimes);
   test_mtime (statinfo, modtimes);
   test_birthtime (statinfo, modtimes, birthtimes);
