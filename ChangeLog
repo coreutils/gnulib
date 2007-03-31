@@ -1,5 +1,30 @@
 2007-03-31  Bruno Haible  <bruno@clisp.org>
 
+	* MODULES.html.sh (func_module): Don't show gnulib-common.m4.
+	(Mathematics <math.h>): New section, add fpieee.
+	(Input/output <stdio.h>): Add fseterr.
+	(Mathematics <math.h>): New section, add printf-frexp.
+	(Container data structures): Add sublist.
+	(Core language properties): Add fpucw, inline.
+	(Functions for greatest-width integer types <inttypes.h>): Add
+	imaxabs, imaxdiv, inttypes.
+	(Mathematics <math.h>): Add frexp, frexpl, isnan-nolibm, isnanl,
+	isnanl-nolibm, ldexp.
+	(Mathematics <math.h>): New section, add printf-frexpl.
+	(Support for systems lacking POSIX:2001): Add fprintf-posix,
+	printf-posix, snprintf-posix, sprintf-posix, string, search, socklen,
+	sys_select, sys_socket, vasnprintf-posix, vasprintf-posix,
+	vfprintf-posix, vprintf-posix, vsnprintf-posix, vsprintf-posix.
+	(Unicode string functions): Add unistr/u*-mbtoucr.
+	(Java): Add javacomp-script, javaexec-script.
+	(C#): Add csharpcomp-script, csharpexec-script.
+	(Support for building libraries and executables): Add havelib,
+	relocatable-*.
+	(Support for maintaining and releasing projects): Renamed from
+	'Support for maintaining and release projects'. Add announce-gen.
+
+2007-03-31  Bruno Haible  <bruno@clisp.org>
+
 	* README: Talk primarily about git.
 	(git and CVS): Renamed from CVS.
 	* doc/gnulib.texi (Introduction, Build robot for gnulib): Mention that

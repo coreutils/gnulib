@@ -1427,7 +1427,8 @@ func_module ()
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
 
     includes=`gnulib-tool --extract-include-directive $1`
-    files=`gnulib-tool --extract-filelist $1`
+    files=`gnulib-tool --extract-filelist $1 \
+           | grep -v '^m4/gnulib-common\.m4$`
     element=`echo "$includes" \
              | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" \
                    -e 's,^#include "\(.*\)"$,#include "<A HREF="'$repo_url_prefix'lib/\1'$repo_url_suffix_repl'">\1</A>",' \
@@ -1525,6 +1526,16 @@ func_all_modules ()
   func_module verify
   func_end_table
 
+  element="Mathematics <math.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap ansic_enh_math
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module fpieee
+  func_end_table
+
   element="Input/output <stdio.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap ansic_enh_stdio
@@ -1532,6 +1543,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module fseterr
   func_module tmpfile
   func_end_table
 
@@ -1656,6 +1668,16 @@ func_all_modules ()
   func_module xstrndup
   func_end_table
 
+  element="Mathematics <math.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap ansic_ext_math
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module printf-frexp
+  func_end_table
+
   element="Numeric conversion functions <stdlib.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap ansic_ext_stdlib_conv
@@ -1736,6 +1758,7 @@ func_all_modules ()
   func_module linkedhash-list
   func_module avltreehash-list
   func_module rbtreehash-list
+  func_module sublist
   func_module oset
   func_module array-oset
   func_module avltree-oset
@@ -1790,6 +1813,8 @@ func_all_modules ()
 
   func_begin_table
   func_module flexmember
+  func_module fpucw
+  func_module inline
   func_module vararrays
   func_end_table
 
@@ -1863,6 +1888,9 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module imaxabs
+  func_module imaxdiv
+  func_module inttypes
   func_module strtoimax
   func_module strtoumax
   func_end_table
@@ -1894,6 +1922,12 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module frexp
+  func_module frexpl
+  func_module isnan-nolibm
+  func_module isnanl
+  func_module isnanl-nolibm
+  func_module ldexpl
   func_module math
   func_module mathl
   func_end_table
@@ -1910,6 +1944,16 @@ func_all_modules ()
   func_section_wrap isoc_ext
   func_wrap H2
   func_echo "$element"
+
+  element="Mathematics <math.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap isoc_ext_math
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module printf-frexpl
+  func_end_table
 
   element="Numeric conversion functions <stdlib.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
@@ -1946,6 +1990,7 @@ func_all_modules ()
   func_module chown
   func_module dup2
   func_module fchdir
+  func_module fprintf-posix
   func_module ftruncate
   func_module getaddrinfo
   func_module getcwd
@@ -1962,6 +2007,10 @@ func_all_modules ()
   func_module poll
   func_module readlink
   func_module lstat
+  func_module printf-posix
+  func_module snprintf-posix
+  func_module sprintf-posix
+  func_module string
   func_module tempname
   func_module time
   func_module time_r
@@ -1970,15 +2019,25 @@ func_all_modules ()
   func_module regex
   func_module rename
   func_module rmdir
+  func_module search
   func_module sigprocmask
+  func_module socklen
   func_module ssize_t
   func_module strptime
   func_module strtok_r
+  func_module sys_select
+  func_module sys_socket
   func_module sys_stat
   func_module sys_time
   func_module tsearch
   func_module unistd
   func_module utime
+  func_module vasnprintf-posix
+  func_module vasprintf-posix
+  func_module vfprintf-posix
+  func_module vprintf-posix
+  func_module vsnprintf-posix
+  func_module vsprintf-posix
   func_module wcwidth
   func_end_table
 
@@ -2248,6 +2307,9 @@ func_all_modules ()
   func_module unistr/u8-mbtouc
   func_module unistr/u16-mbtouc
   func_module unistr/u32-mbtouc
+  func_module unistr/u8-mbtoucr
+  func_module unistr/u16-mbtoucr
+  func_module unistr/u32-mbtoucr
   func_module unistr/u8-move
   func_module unistr/u16-move
   func_module unistr/u32-move
@@ -2367,7 +2429,9 @@ func_all_modules ()
 
   func_begin_table
   func_module classpath
+  func_module javacomp-script
   func_module javacomp
+  func_module javaexec-script
   func_module javaexec
   func_module javaversion
   #func_module gcj
@@ -2380,7 +2444,9 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module csharpcomp-script
   func_module csharpcomp
+  func_module csharpexec-script
   func_module csharpexec
   func_end_table
 
@@ -2426,10 +2492,16 @@ func_all_modules ()
   func_module configmake
   func_module dummy
   func_module elisp-comp
+  func_module havelib
   func_module ldd
   func_module lib-ignore
   func_module link-warning
   func_module no-c++
+  func_module relocatable-lib
+  func_module relocatable-lib-lgpl
+  func_module relocatable-prog
+  func_module relocatable-prog-wrapper
+  func_module relocatable-script
   func_end_table
 
   element="Support for building documentation"
@@ -2445,12 +2517,13 @@ func_all_modules ()
   func_module regexprops-generic
   func_end_table
 
-  element="Support for maintaining and release projects"
+  element="Support for maintaining and releasing projects"
   func_section_wrap maintain
   func_wrap H2
   func_echo "$element"
 
   func_begin_table
+  func_module announce-gen
   func_module gnupload
   func_module maintainer-makefile
   func_end_table
