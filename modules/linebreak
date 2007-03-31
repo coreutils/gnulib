@@ -11,6 +11,7 @@ Depends-on:
 localcharset
 c-ctype
 iconv
+iconv_open
 utf8-ucs4-unsafe
 utf16-ucs4-unsafe
 xsize

@@ -8,6 +8,7 @@ lib/striconveh.c
 Depends-on:
 stdbool
 iconv
+iconv_open
 unistr/u8-prev
 unistr/u8-mbtouc-unsafe
 unistr/u8-mbtouc

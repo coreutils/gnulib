@@ -8,6 +8,7 @@ m4/unicodeio.m4
 
 Depends-on:
 iconv
+iconv_open
 gettext-h
 localcharset
 error
