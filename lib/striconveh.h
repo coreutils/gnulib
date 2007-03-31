@@ -42,7 +42,8 @@ enum iconv_ilseq_handler
 
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is at [SRC,...,SRC+SRCLEN-1].
-   The conversion descriptor from FROMCODE to TOCODE is passed as CD.
+   CD is the conversion descriptor from FROMCODE to TOCODE, or (iconv_t)(-1) if
+   the system does not support a direct conversion from FROMCODE to TOCODE.
    CD1 is the conversion descriptor from FROM_CODESET to UTF-8 (or
    (iconv_t)(-1) if FROM_CODESET is UTF-8).
    CD2 is the conversion descriptor from UTF-8 to TO_CODESET (or (iconv_t)(-1)
@@ -67,9 +68,10 @@ extern int
 
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is the NUL-terminated string starting at SRC.
-   The conversion descriptor is passed as CD.  Both the "from" and the "to"
-   encoding must use a single NUL byte at the end of the string (i.e. not
-   UCS-2, UCS-4, UTF-16, UTF-32).
+   CD is the conversion descriptor from FROMCODE to TOCODE, or (iconv_t)(-1) if
+   the system does not support a direct conversion from FROMCODE to TOCODE.
+   Both the "from" and the "to" encoding must use a single NUL byte at the end
+   of the string (i.e. not UCS-2, UCS-4, UTF-16, UTF-32).
    CD1 is the conversion descriptor from FROM_CODESET to UTF-8 (or
    (iconv_t)(-1) if FROM_CODESET is UTF-8).
    CD2 is the conversion descriptor from UTF-8 to TO_CODESET (or (iconv_t)(-1)
