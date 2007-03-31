@@ -1,3 +1,11 @@
+2007-03-31  Bruno Haible  <bruno@clisp.org>
+
+	* README: Talk primarily about git.
+	(git and CVS): Renamed from CVS.
+	* doc/gnulib.texi (Introduction, Build robot for gnulib): Mention that
+	gnulib is available through git.
+	* doc/gnulib-tool.texi (CVS Issues): Mention git and svn as well.
+
 2007-03-30  Bruno Haible  <bruno@clisp.org>
 
 	* lib/alloca_.h: Change prefix of double-inclusion guard macro to _GL_.

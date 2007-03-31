@@ -355,7 +355,6 @@ They should not be checked into CVS, but instead added to
 @file{.cvsignore}.  When you have a Gnulib source file of the form
 @file{lib/foo_.h}, the corresponding @file{lib/foo.h} is such a file.
 
-
 @item
 In projects which customarily omit from the CVS all files that generated
 from other source files, all these files and directories would not be
@@ -375,3 +374,6 @@ Also it does not report in the ChangeLogs the files that it had to add
 because they were missing.
 
 @end itemize
+
+The same holds for other version control systems than CVS, such as @samp{git}
+or @samp{svn}.

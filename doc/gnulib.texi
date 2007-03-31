@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.34 2007-03-19 20:30:25 blp Exp $
+@comment $Id: gnulib.texi,v 1.35 2007-03-31 12:34:55 haible Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2007-03-19 20:30:25 $
+@set UPDATED $Date: 2007-03-31 12:34:55 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -68,7 +68,7 @@ Resources:
 @itemize
 @item Gnulib is hosted at Savannah:
       @url{http://savannah.gnu.org/projects/gnulib}.  Get the sources
-      through CVS from there.
+      through git or CVS from there.
 @item The Gnulib home page:
       @url{http://www.gnu.org/software/gnulib/}.
 @end itemize
@@ -371,7 +371,7 @@ your favorite platform, you may perform these steps:
 @item Create gnulib directory
 
 On a machine with recent automake, autoconf, m4 installed and with a
-gnulib cvs checkout (typically a Linux machine), use
+gnulib git or cvs checkout (typically a Linux machine), use
 
 @example
 gnulib-tool --create-megatestdir --with-tests --dir=..."

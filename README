@@ -202,21 +202,40 @@ High Quality
 
 We will be developing a testsuite for these applications.  The goal is
 to have a 100% firm interface so that maintainers can feel free to
-update to the code in CVS at *any* time and know that their
+update to the code in git at *any* time and know that their
 application will not break.  This means that before any change can be
 committed to the repository, a test suite program must be produced
 that exposes the bug for regression testing.  All experimental work
 should be done on branches to help promote this.
 
-CVS
-===
+git and CVS
+===========
 
 Gnulib is available for anonymous checkout.  In any Bourne-shell the
 following should work:
+  $ git clone git://git.sv.gnu.org/gnulib
+Or, if you prefer the CVS-like 'cogito' frontend to plain 'git':
+  $ cg clone git://git.sv.gnu.org/gnulib
 
-$ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib login
-(Just hit Enter or Return when prompted for a password)
-$ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib checkout gnulib
+git resources:
+  Overview: http://en.wikipedia.org/wiki/Git_(software)
+  Homepage: http://git.or.cz/
+  Download: http://www.kernel.org/pub/software/scm/git/
+  Tutorial: http://git.or.cz/course/
+            http://www.kernel.org/pub/software/scm/git/docs/tutorial.html
+  FAQ:      http://git.or.cz/gitwiki/GitFaq
+
+cogito resources:
+  Overview: http://en.wikipedia.org/wiki/Cogito_(software)
+  Homepage: http://git.or.cz/cogito/
+  Download: http://kernel.org/pub/software/scm/cogito/
+  Tutorial: http://git.or.cz/course/
+
+For those among us who have tightly limited disk space and a fast network
+connection, CVS checkouts are also supported:
+  $ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib login
+  (Just hit Enter or Return when prompted for a password)
+  $ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib checkout gnulib
 
 Gnulib is hosted on savannah.gnu.org.  The project page is
 http://savannah.gnu.org/projects/gnulib.
@@ -224,11 +243,11 @@ http://savannah.gnu.org/projects/gnulib.
 Keeping Up-to-date
 ==================
 
-The best way to work with Gnulib is to check it out of CVS.
+The best way to work with Gnulib is to check it out of git.
 Subscribing to the bug-gnulib@gnu.org mailing list will help you to
 plan when to update your local copy of Gnulib (which you use to
-maintain your software) from CVS.  You can use "cvs update -dP" to
-synchronize.
+maintain your software) from git.  To synchronize, you can use "git pull"
+or "cg update", or "cvs update -dP" if you are still using CVS.
 
 Sometimes, using an updated version of Gnulib will require you to use
 newer versions of GNU Automake or Autoconf.  You may find it helpful
@@ -237,7 +256,7 @@ changes.
 
 
 -----
-Copyright (C) 2001, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
