@@ -1,17 +1,17 @@
 Description:
-Compute hashed message authentication codes with MD5.
+Compute hashed message authentication codes with SHA1.
 
 Files:
 lib/hmac.h
-lib/hmac-md5.c
-m4/hmac-md5.m4
+lib/hmac-sha1.c
+m4/hmac-sha1.m4
 
 Depends-on:
-memxor
-md5
+crypto/memxor
+crypto/sha1
 
 configure.ac:
-gl_HMAC_MD5
+gl_HMAC_SHA1
 
 Makefile.am:
 

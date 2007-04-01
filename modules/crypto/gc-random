@@ -5,7 +5,7 @@ Files:
 m4/gc-random.m4
 
 Depends-on:
-gc
+crypto/gc
 
 configure.ac:
 gl_GC_RANDOM

@@ -9,7 +9,7 @@ m4/arcfour.m4
 
 Depends-on:
 stdint
-gc
+crypto/gc
 
 configure.ac:
 gl_GC_ARCFOUR

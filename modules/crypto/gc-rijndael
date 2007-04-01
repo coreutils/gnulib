@@ -11,7 +11,7 @@ m4/rijndael.m4
 
 Depends-on:
 stdint
-gc
+crypto/gc
 
 configure.ac:
 gl_GC_RIJNDAEL

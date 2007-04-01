@@ -6,9 +6,9 @@ m4/gc-md2.m4
 
 Depends-on:
 stdint
-gc
 minmax
-md2
+crypto/gc
+crypto/md2
 
 configure.ac:
 gl_GC_MD2

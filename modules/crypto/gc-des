@@ -10,7 +10,7 @@ m4/des.m4
 Depends-on:
 stdint
 stdbool
-gc
+crypto/gc
 
 configure.ac:
 gl_GC_DES

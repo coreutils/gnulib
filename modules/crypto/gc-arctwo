@@ -9,7 +9,7 @@ m4/arctwo.m4
 
 Depends-on:
 stdint
-gc
+crypto/gc
 
 configure.ac:
 gl_GC_ARCTWO

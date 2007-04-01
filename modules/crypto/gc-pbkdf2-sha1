@@ -6,8 +6,8 @@ lib/gc-pbkdf2-sha1.c
 m4/gc-pbkdf2-sha1.m4
 
 Depends-on:
-gc
-gc-hmac-sha1
+crypto/gc
+crypto/gc-hmac-sha1
 
 configure.ac:
 gl_GC_PBKDF2_SHA1

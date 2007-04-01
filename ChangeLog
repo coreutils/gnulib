@@ -1,3 +1,50 @@
+2007-04-01  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/crypto/arcfour: Moved from ../.
+	* modules/crypto/arcfour-tests: Moved from ../.
+	* modules/crypto/arctwo: Moved from ../.
+	* modules/crypto/arctwo-tests: Moved from ../.
+	* modules/crypto/des: Moved from ../.
+	* modules/crypto/des-tests: Moved from ../.
+	* modules/crypto/gc-arcfour: Moved from ../.
+	* modules/crypto/gc-arcfour-tests: Moved from ../.
+	* modules/crypto/gc-arctwo: Moved from ../.
+	* modules/crypto/gc-arctwo-tests: Moved from ../.
+	* modules/crypto/gc-des: Moved from ../.
+	* modules/crypto/gc-des-tests: Moved from ../.
+	* modules/crypto/gc-hmac-md5: Moved from ../.
+	* modules/crypto/gc-hmac-md5-tests: Moved from ../.
+	* modules/crypto/gc-hmac-sha1: Moved from ../.
+	* modules/crypto/gc-hmac-sha1-tests: Moved from ../.
+	* modules/crypto/gc-md2: Moved from ../.
+	* modules/crypto/gc-md2-tests: Moved from ../.
+	* modules/crypto/gc-md4: Moved from ../.
+	* modules/crypto/gc-md4-tests: Moved from ../.
+	* modules/crypto/gc-md5: Moved from ../.
+	* modules/crypto/gc-md5-tests: Moved from ../.
+	* modules/crypto/gc-pbkdf2-sha1: Moved from ../.
+	* modules/crypto/gc-pbkdf2-sha1-tests: Moved from ../.
+	* modules/crypto/gc-random: Moved from ../.
+	* modules/crypto/gc-rijndael: Moved from ../.
+	* modules/crypto/gc-rijndael-tests: Moved from ../.
+	* modules/crypto/gc-sha1: Moved from ../.
+	* modules/crypto/gc-sha1-tests: Moved from ../.
+	* modules/crypto/gc-tests: Moved from ../.
+	* modules/crypto/hmac-md5: Moved from ../.
+	* modules/crypto/hmac-md5-tests: Moved from ../.
+	* modules/crypto/hmac-sha1: Moved from ../.
+	* modules/crypto/hmac-sha1-tests: Moved from ../.
+	* modules/crypto/md2: Moved from ../.
+	* modules/crypto/md2-tests: Moved from ../.
+	* modules/crypto/md4: Moved from ../.
+	* modules/crypto/md4-tests: Moved from ../.
+	* modules/crypto/md5: Moved from ../.
+	* modules/crypto/md5-tests: Moved from ../.
+	* modules/crypto/memxor: Moved from ../.
+	* modules/crypto/rijndael: Moved from ../.
+	* modules/crypto/rijndael-tests: Moved from ../.
+	* modules/crypto/sha1: Moved from ../.
+
 2007-03-30  James Youngman  <jay@gnu.org>
 
 	* tests/test-stat-time.c (prepare_test): use chmod() rather than
