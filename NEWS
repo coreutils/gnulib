@@ -6,6 +6,30 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-04-01  arcfour         Renamed to crypto/arcfour.
+            arctwo          Renamed to crypto/arctwo.
+            des             Renamed to crypto/des.
+            gc-arcfour      Renamed to crypto/gc-arcfour.
+            gc-arctwo       Renamed to crypto/gc-arctwo.
+            gc-des          Renamed to crypto/gc-des.
+            gc-hmac-md5     Renamed to crypto/gc-hmac-md5.
+            gc-hmac-sha1    Renamed to crypto/gc-hmac-sha1.
+            gc-md2          Renamed to crypto/gc-md2.
+            gc-md4          Renamed to crypto/gc-md4.
+            gc-md5          Renamed to crypto/gc-md5.
+            gc-pbkdf2-sha1  Renamed to crypto/gc-pbkdf2-sha1.
+            gc-random       Renamed to crypto/gc-random.
+            gc-rijndael     Renamed to crypto/gc-rijndael.
+            gc-sha1         Renamed to crypto/gc-sha1.
+            hmac-md5        Renamed to crypto/hmac-md5.
+            hmac-sha1       Renamed to crypto/hmac-sha1.
+            md2             Renamed to crypto/md2.
+            md4             Renamed to crypto/md4.
+            md5             Renamed to crypto/md5.
+            memxor          Renamed to crypto/memxor.
+            rijndael        Renamed to crypto/rijndael.
+            sha1            Renamed to crypto/sha1.
+
 2007-03-27  vasprintf       The module now depends on stdio, so replace
                                #include "vasprintf.h"
                             with
