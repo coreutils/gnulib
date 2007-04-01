@@ -1,3 +1,9 @@
+2007-04-01  Bruno Haible <bruno@clisp.org>
+
+	* modules/phystemp: New file.
+	* lib/phystemp.h: New file.
+	* lib/phystemp.c: New file.
+
 2007-04-01  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/crypto/arcfour: Moved from ../.

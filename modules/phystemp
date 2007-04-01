@@ -1,0 +1,26 @@
+Description:
+Return physical temperature.
+
+Files:
+lib/phystemp.h
+lib/phystemp.c
+
+Depends-on:
+pipe
+wait-process
+getline
+strtod
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"phystemp.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible
+
