@@ -1,5 +1,6 @@
 Description:
-Generate manuals in several formats from Texinfo sources,
+Generate manuals in several formats from Texinfo sources.
+Can be used for http://www.gnu.org/software/PKG/manual/ directories.
 
 Files:
 build-aux/gendocs.sh

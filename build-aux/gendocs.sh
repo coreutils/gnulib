@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2006-07-15.08
+scriptversion=2007-04-02.15
 
 # Copyright (C) 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 #
@@ -30,19 +30,20 @@ srcdir=`pwd`
 scripturl="http://savannah.gnu.org/cgi-bin/viewcvs/~checkout~/texinfo/texinfo/util/gendocs.sh"
 templateurl="http://savannah.gnu.org/cgi-bin/viewcvs/~checkout~/texinfo/texinfo/util/gendocs_template"
 
+: ${SETLANG="env LANG= LC_MESSAGES= LC_ALL= LANGUAGE="}
 : ${MAKEINFO="makeinfo"}
 : ${TEXI2DVI="texi2dvi -t @finalout"}
 : ${DVIPS="dvips"}
-: ${DOCBOOK2TXT="docbook2txt"}
 : ${DOCBOOK2HTML="docbook2html"}
 : ${DOCBOOK2PDF="docbook2pdf"}
 : ${DOCBOOK2PS="docbook2ps"}
+: ${DOCBOOK2TXT="docbook2txt"}
 : ${GENDOCS_TEMPLATE_DIR="."}
 unset CDPATH
 
 version="gendocs.sh $scriptversion
 
-Copyright (C) 2006 Free Software Foundation, Inc.
+Copyright (C) 2007 Free Software Foundation, Inc.
 There is NO warranty.  You may redistribute this software
 under the terms of the GNU General Public License.
 For more information about these matters, see the files named COPYING."
@@ -83,9 +84,20 @@ times with different YOURMANUAL values, specifying a different output
 directory with -o each time.  Then write (by hand) an overall index.html
 with links to them all.
 
+If a manual's texinfo sources are spread across several directories,
+first copy or symlink all Texinfo sources into a single directory.
+(Part of the script's work is to make a tar.gz of the sources.)
+
 You can set the environment variables MAKEINFO, TEXI2DVI, and DVIPS to
 control the programs that get executed, and GENDOCS_TEMPLATE_DIR to
-control where the gendocs_template file is looked for.
+control where the gendocs_template file is looked for.  (With --docbook,
+the environment variables DOCBOOK2HTML, DOCBOOK2PDF, DOCBOOK2PS, and
+DOCBOOK2TXT are also respected.) 
+
+By default, makeinfo is run in the default (English) locale, since
+that's the language of most Texinfo manuals.  If you happen to have a
+non-English manual and non-English web site, check the SETLANG setting
+in the source.
 
 Email bug reports or enhancement requests to bug-texinfo@gnu.org.
 "
@@ -144,7 +156,7 @@ fi
 
 echo Generating output formats for $srcfile
 
-cmd="${MAKEINFO} -o $PACKAGE.info \"$srcfile\""
+cmd="$SETLANG $MAKEINFO -o $PACKAGE.info \"$srcfile\""
 echo "Generating info files... ($cmd)"
 eval "$cmd"
 mkdir -p $outdir/
@@ -175,7 +187,7 @@ eval "$cmd"
 pdf_size=`calcsize $PACKAGE.pdf`
 mv $PACKAGE.pdf $outdir/
 
-cmd="${MAKEINFO} -o $PACKAGE.txt --no-split --no-headers \"$srcfile\""
+cmd="$SETLANG $MAKEINFO -o $PACKAGE.txt --no-split --no-headers \"$srcfile\""
 echo "Generating ASCII... ($cmd)"
 eval "$cmd"
 ascii_size=`calcsize $PACKAGE.txt`
@@ -183,7 +195,7 @@ gzip -f -9 -c $PACKAGE.txt >$outdir/$PACKAGE.txt.gz
 ascii_gz_size=`calcsize $outdir/$PACKAGE.txt.gz`
 mv $PACKAGE.txt $outdir/
 
-cmd="${MAKEINFO} --no-split --html -o $PACKAGE.html $html \"$srcfile\""
+cmd="$SETLANG $MAKEINFO --no-split --html -o $PACKAGE.html $html \"$srcfile\""
 echo "Generating monolithic html... ($cmd)"
 rm -rf $PACKAGE.html  # in case a directory is left over
 eval "$cmd"
@@ -192,7 +204,7 @@ gzip -f -9 -c $PACKAGE.html >$outdir/$PACKAGE.html.gz
 html_mono_gz_size=`calcsize $outdir/$PACKAGE.html.gz`
 mv $PACKAGE.html $outdir/
 
-cmd="${MAKEINFO} --html -o $PACKAGE.html $html \"$srcfile\""
+cmd="$SETLANG $MAKEINFO --html -o $PACKAGE.html $html \"$srcfile\""
 echo "Generating html by node... ($cmd)"
 eval "$cmd"
 split_html_dir=$PACKAGE.html
@@ -212,7 +224,7 @@ tar cvzfh $outdir/$PACKAGE.texi.tar.gz $srcfiles
 texi_tgz_size=`calcsize $outdir/$PACKAGE.texi.tar.gz`
 
 if test -n "$docbook"; then
-  cmd="${MAKEINFO} -o - --docbook \"$srcfile\" > ${srcdir}/$PACKAGE-db.xml"
+  cmd="$SETLANG $MAKEINFO -o - --docbook \"$srcfile\" > ${srcdir}/$PACKAGE-db.xml"
   echo "Generating docbook XML... $(cmd)"
   eval "$cmd"
   docbook_xml_size=`calcsize $PACKAGE-db.xml`
