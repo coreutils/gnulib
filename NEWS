@@ -9,6 +9,7 @@ Date        Modules         Changes
 2007-04-01  arcfour         Renamed to crypto/arcfour.
             arctwo          Renamed to crypto/arctwo.
             des             Renamed to crypto/des.
+            gc              Renamed to crypto/gc.
             gc-arcfour      Renamed to crypto/gc-arcfour.
             gc-arctwo       Renamed to crypto/gc-arctwo.
             gc-des          Renamed to crypto/gc-des.
