@@ -1,5 +1,7 @@
 2007-04-02  Eric Blake  <ebb9@byu.net>
 
+	* lib/ldexpl.c (includes): Avoid libm.
+
 	* modules/printf-frexpl (Depends-on): Depend on ldexpl.
 
 2007-04-02  Bruno Haible  <bruno@clisp.org>

@@ -26,7 +26,7 @@
 
 #include <float.h>
 #include "fpucw.h"
-#include "isnanl.h"
+#include "isnanl-nolibm.h"
 
 long double
 ldexpl(long double x, int exp)
@@ -52,7 +52,7 @@ ldexpl(long double x, int exp)
 	for (bit = 1;;)
 	  {
 	    /* Invariant: Here bit = 2^i, factor = 2^-2^i or = 2^2^i,
-	       and bit <= exp.  */ 
+	       and bit <= exp.  */
 	    if (exp & bit)
 	      x *= factor;
 	    bit <<= 1;
