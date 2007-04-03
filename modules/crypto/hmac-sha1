@@ -7,7 +7,7 @@ lib/hmac-sha1.c
 m4/hmac-sha1.m4
 
 Depends-on:
-crypto/memxor
+memxor
 crypto/sha1
 
 configure.ac:

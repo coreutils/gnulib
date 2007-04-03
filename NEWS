@@ -27,7 +27,6 @@ Date        Modules         Changes
             md2             Renamed to crypto/md2.
             md4             Renamed to crypto/md4.
             md5             Renamed to crypto/md5.
-            memxor          Renamed to crypto/memxor.
             rijndael        Renamed to crypto/rijndael.
             sha1            Renamed to crypto/sha1.
 
