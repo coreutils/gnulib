@@ -1,5 +1,10 @@
 2007-04-03  Bruno Haible  <bruno@clisp.org>
 
+	* modules/TEMPLATE-EXTENDED: New file.
+	* gnulib-tool (func_all_modules, func_verify_module): Exclude it.
+
+2007-04-03  Bruno Haible  <bruno@clisp.org>
+
 	* DEPENDENCIES: New file.
 	Suggested by Simon Josefsson.
 

@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-03-23 13:11:28 $'
+cvsdatestamp='$Date: 2007-04-03 23:27:57 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -826,6 +826,7 @@ func_all_modules ()
             -e '/^COPYING$/d' -e '/\/COPYING$/d' \
             -e '/^README$/d' -e '/\/README$/d' \
             -e '/^TEMPLATE$/d' \
+            -e '/^TEMPLATE-EXTENDED$/d' \
             -e '/^TEMPLATE-TESTS$/d' \
             -e '/^\..*/d' \
             -e '/~$/d' \
@@ -848,6 +849,7 @@ func_verify_module ()
      && test "COPYING" != "$module" \
      && test "README" != "$module" \
      && test "TEMPLATE" != "$module" \
+     && test "TEMPLATE-EXTENDED" != "$module" \
      && test "TEMPLATE-TESTS" != "$module"; then
     # OK, $module is a correct module name.
     # Verify that building the module description with 'patch' succeeds.
