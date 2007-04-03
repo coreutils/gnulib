@@ -51,7 +51,7 @@ int main ()
           # Guess based on the CPU.
 changequote(,)dnl
           case "$host_cpu" in
-            alpha* | i[34567]86 | m68k | s390*)
+            alpha* | i[34567]86 | x86_64 | m68k | s390*)
               gt_cv_int_divbyzero_sigfpe="guessing yes";;
             *)
               gt_cv_int_divbyzero_sigfpe="guessing no";;

@@ -1,3 +1,8 @@
+2007-04-02  Bruno Haible  <bruno@clisp.org>
+
+	* m4/intdiv0.m4 (gt_INTDIV0): When cross-compiling, treat x86_64 like
+	i386.
+
 2007-04-01  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/crypto/arcfour: Moved from ../.
