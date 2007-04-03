@@ -1,3 +1,7 @@
+2007-04-03  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/crypto/gc: Moved from ../.
+
 2007-04-02  Eric Blake  <ebb9@byu.net>
 
 	* lib/ldexpl.c (includes): Avoid libm.
