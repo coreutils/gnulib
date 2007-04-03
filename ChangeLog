@@ -1,5 +1,10 @@
 2007-04-03  Bruno Haible  <bruno@clisp.org>
 
+	* DEPENDENCIES: New file.
+	Suggested by Simon Josefsson.
+
+2007-04-03  Bruno Haible  <bruno@clisp.org>
+
 	* doc/gnulib.texi: Escape @.
 
 2007-04-03  James Youngman  <jay@gnu.org>
