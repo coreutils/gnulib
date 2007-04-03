@@ -26,7 +26,7 @@
 
 #include <float.h>
 #include "fpucw.h"
-#include "isnanl-nolibm.h"
+#include "isnanl.h"
 
 long double
 ldexpl(long double x, int exp)

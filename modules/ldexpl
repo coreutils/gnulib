@@ -7,7 +7,7 @@ m4/ldexpl.m4
 
 Depends-on:
 math
-isnanl-nolibm
+isnanl
 fpucw
 
 configure.ac:

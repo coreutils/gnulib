@@ -1,5 +1,15 @@
 2007-04-03  Bruno Haible  <bruno@clisp.org>
 
+	* modules/ldexpl (Depends-on): Add isnanl, remove isnanl-nolibm.
+	* lib/ldexpl.c: Undo last change.
+
+2007-04-03  Bruno Haible  <bruno@clisp.org>
+
+	* modules/printf-frexpl (Depends-on): Undo last change.
+	(Files): Add m4/ldexpl.m4.
+
+2007-04-03  Bruno Haible  <bruno@clisp.org>
+
 	* m4/isnanl.m4 (gl_FUNC_ISNANL): Substitute ISNANL_LIBM.
 	* modules/isnanl (Link): New section.
 
