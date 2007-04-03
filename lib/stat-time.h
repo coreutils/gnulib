@@ -147,22 +147,12 @@ get_stat_birthtime (struct stat const *st)
 {
   struct timespec t;
 
-#if defined HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC \
-  || defined HAVE_STRUCT_STAT_ST_BIRTHTIM_TV_NSEC
+#if (defined HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC \
+     || defined HAVE_STRUCT_STAT_ST_BIRTHTIM_TV_NSEC)
   t = STAT_TIMESPEC (st, st_birthtim);
 #elif defined HAVE_STRUCT_STAT_ST_BIRTHTIMENSEC
   t.tv_sec = st->st_birthtime;
   t.tv_nsec = st->st_birthtimensec;
-
-  /* NetBSD sometimes signals the absence of knowledge by using zero.
-     Attempt to work around this bug.  This sometimes reports failure
-     even for valid time stamps.  Also, sometimes NetBSD returns junk
-     in the birth time fields; work around this bug if it it is
-     detected.  There's no need to detect negative tv_nsec junk as
-     negative tv_nsec already indicates an error.  */
-  if (t.tv_sec == 0 || 1000000000 <= t.tv_nsec)
-    t.tv_nsec = -1;
-
 #elif (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   /* Woe32 native platforms (but not Cygwin) put the "file creation
      time" in st_ctime (!).  See
@@ -173,6 +163,19 @@ get_stat_birthtime (struct stat const *st)
   /* Birth time is not supported.  Set tv_sec to avoid undefined behavior.  */
   t.tv_sec = -1;
   t.tv_nsec = -1;
+#endif
+
+#if (defined HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC \
+     || defined HAVE_STRUCT_STAT_ST_BIRTHTIM_TV_NSEC \
+     || defined HAVE_STRUCT_STAT_ST_BIRTHTIMENSEC)
+  /* FreeBSD and NetBSD sometimes signal the absence of knowledge by
+     using zero.  Attempt to work around this problem.  Alas, this can
+     report failure even for valid time stamps.  Also, NetBSD
+     sometimes returns junk in the birth time fields; work around this
+     bug if it it is detected.  There's no need to detect negative
+     tv_nsec junk as negative tv_nsec already indicates an error.  */
+  if (t.tv_sec == 0 || 1000000000 <= t.tv_nsec)
+    t.tv_nsec = -1;
 #endif
 
   return t;

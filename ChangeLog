@@ -1,3 +1,12 @@
+2007-04-03  James Youngman  <jay@gnu.org>
+
+	* lib/stat-time.h: (get_stat_birthtime): Check for zero-valued
+	birthtime on all systems, not just those which use
+	st_birthtimensec rather than st_birthtim.  Putting zero in
+	st_bithtim.tv_sec is how (for example) FreeBSD/x86 6.1
+	indicates that the birth time is not available for files on
+	an NFS mount.
+
 2007-04-03  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/memxor: Move back from crypto/, suggested by Bruno.
