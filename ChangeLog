@@ -1,5 +1,10 @@
 2007-04-02  Bruno Haible  <bruno@clisp.org>
 
+	* lib/sysexit_.h (EX_OK): Disable the EX_OK definition from <unistd.h>
+	on IRIX.
+
+2007-04-02  Bruno Haible  <bruno@clisp.org>
+
 	* m4/intdiv0.m4 (gt_INTDIV0): Avoid performing the test for real on
 	x86 or x86_64 platforms running MacOS X.
 	Reported by Ryan Schmidt <@ryandesign.com>.
