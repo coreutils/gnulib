@@ -14,7 +14,22 @@ AC_DEFUN([gt_INTDIV0],
   AC_CACHE_CHECK([whether integer division by zero raises SIGFPE],
     gt_cv_int_divbyzero_sigfpe,
     [
-      AC_TRY_RUN([
+      gt_cv_int_divbyzero_sigfpe=
+changequote(,)dnl
+      case "$host_os" in
+        macos* | darwin[6-9]* | darwin[1-9][0-9]*)
+          # On MacOS X 10.2 or newer, just assume the same as when cross-
+          # compiling. If we were to perform the real test, 1 Crash Report
+          # dialog window would pop up.
+          case "$host_cpu" in
+            i[34567]86 | x86_64)
+              gt_cv_int_divbyzero_sigfpe="guessing yes" ;;
+          esac
+          ;;
+      esac
+changequote([,])dnl
+      if test -z "$gt_cv_int_divbyzero_sigfpe"; then
+        AC_TRY_RUN([
 #include <stdlib.h>
 #include <signal.h>
 
@@ -47,17 +62,18 @@ int main ()
   exit (1);
 }
 ], gt_cv_int_divbyzero_sigfpe=yes, gt_cv_int_divbyzero_sigfpe=no,
-        [
-          # Guess based on the CPU.
+          [
+            # Guess based on the CPU.
 changequote(,)dnl
-          case "$host_cpu" in
-            alpha* | i[34567]86 | x86_64 | m68k | s390*)
-              gt_cv_int_divbyzero_sigfpe="guessing yes";;
-            *)
-              gt_cv_int_divbyzero_sigfpe="guessing no";;
-          esac
+            case "$host_cpu" in
+              alpha* | i[34567]86 | x86_64 | m68k | s390*)
+                gt_cv_int_divbyzero_sigfpe="guessing yes";;
+              *)
+                gt_cv_int_divbyzero_sigfpe="guessing no";;
+            esac
 changequote([,])dnl
-        ])
+          ])
+      fi
     ])
   case "$gt_cv_int_divbyzero_sigfpe" in
     *yes) value=1;;
