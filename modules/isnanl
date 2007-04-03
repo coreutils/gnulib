@@ -22,6 +22,9 @@ Include:
 # include "isnanl.h"
 #endif
 
+Link:
+$(ISNANL_LIBM)
+
 License:
 LGPL
 

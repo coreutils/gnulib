@@ -57,6 +57,7 @@ AC_DEFUN([gl_FUNC_LDEXPL],
     HAVE_DECL_LDEXPL=0
     AC_LIBOBJ([ldexpl])
   fi
+  AC_SUBST([LDEXPL_LIBM])
 ])
 
 dnl Test whether ldexpl() works on finite numbers (this fails on AIX 5.1).

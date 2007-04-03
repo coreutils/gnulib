@@ -57,6 +57,7 @@ AC_DEFUN([gl_FUNC_FREXPL],
     HAVE_DECL_FREXPL=0
     AC_LIBOBJ([frexpl])
   fi
+  AC_SUBST([FREXPL_LIBM])
 ])
 
 dnl Test whether frexpl() works on finite numbers (this fails on AIX 5.1) and

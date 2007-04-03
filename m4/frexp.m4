@@ -53,6 +53,7 @@ AC_DEFUN([gl_FUNC_FREXP],
   else
     AC_LIBOBJ([frexp])
   fi
+  AC_SUBST([FREXP_LIBM])
 ])
 
 dnl Test whether frexp() works also on denormalized numbers (this fails e.g. on

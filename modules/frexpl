@@ -20,6 +20,9 @@ Makefile.am:
 Include:
 <math.h>
 
+Link:
+$(FREXPL_LIBM)
+
 License:
 LGPL
 

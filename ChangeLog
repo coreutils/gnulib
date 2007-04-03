@@ -1,5 +1,19 @@
 2007-04-03  Bruno Haible  <bruno@clisp.org>
 
+	* m4/isnanl.m4 (gl_FUNC_ISNANL): Substitute ISNANL_LIBM.
+	* modules/isnanl (Link): New section.
+
+	* m4/frexp.m4 (gl_FUNC_FREXP): Substitute FREXP_LIBM.
+	* modules/frexp (Link): New section.
+
+	* m4/frexpl.m4 (gl_FUNC_FREXPL): Substitute FREXPL_LIBM.
+	* modules/frexpl (Link): New section.
+
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL): Substitute LDEXPL_LIBM.
+	* modules/ldexpl (Link): New section.
+
+2007-04-03  Bruno Haible  <bruno@clisp.org>
+
 	* modules/TEMPLATE-EXTENDED: New file.
 	* gnulib-tool (func_all_modules, func_verify_module): Exclude it.
 
