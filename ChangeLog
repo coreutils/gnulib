@@ -33,6 +33,10 @@
 	test_xvasprintf_LDADD.
 	Reported by Eric Blake.
 
+2007-04-03  Eric Blake  <ebb9@byu.net>
+
+	* DEPENDENCIES: Weaken m4 requirements.
+
 2007-04-03  Bruno Haible  <bruno@clisp.org>
 
 	* modules/frexp-tests (configure.ac): Remove AC_SUBST.
