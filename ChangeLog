@@ -1,3 +1,7 @@
+2007-04-04  Karl Berry  <karl@gnu.org>
+
+	* MODULES.html.sh (func_module): missing '.
+
 2007-04-03  Bruno Haible  <bruno@clisp.org>
 
 	* modules/argmatch-tests (Makefile.am): New variable
