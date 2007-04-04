@@ -1428,7 +1428,7 @@ func_module ()
 
     includes=`gnulib-tool --extract-include-directive $1`
     files=`gnulib-tool --extract-filelist $1 \
-           | grep -v '^m4/gnulib-common\.m4$`
+           | grep -v '^m4/gnulib-common\.m4$'`
     element=`echo "$includes" \
              | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" \
                    -e 's,^#include "\(.*\)"$,#include "<A HREF="'$repo_url_prefix'lib/\1'$repo_url_suffix_repl'">\1</A>",' \
