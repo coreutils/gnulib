@@ -1,3 +1,9 @@
+2007-04-03  Ben Pfaff  <blp@gnu.org>
+
+	* modules/iconv_open: Add $(srcdir)/ to source directory
+	references in Makefile fragments that call gperf, to fix VPATH
+	builds.
+
 2007-04-03  Bruno Haible  <bruno@clisp.org>
 
 	* modules/ldexpl (Depends-on): Add isnanl, remove isnanl-nolibm.
