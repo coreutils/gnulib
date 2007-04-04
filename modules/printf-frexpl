@@ -7,12 +7,12 @@ lib/printf-frexpl.h
 lib/printf-frexpl.c
 lib/printf-frexp.c
 m4/printf-frexpl.m4
+m4/ldexpl.m4
 m4/longdouble.m4
 
 Depends-on:
-fpucw
-ldexpl
 math
+fpucw
 
 configure.ac:
 gl_FUNC_PRINTF_FREXPL
