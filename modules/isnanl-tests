@@ -6,7 +6,6 @@ Depends-on:
 
 configure.ac:
 gl_LONG_DOUBLE_EXPONENT_LOCATION
-AC_SUBST([ISNANL_LIBM])
 
 Makefile.am:
 TESTS += test-isnanl

@@ -5,7 +5,6 @@ Depends-on:
 isnan-nolibm
 
 configure.ac:
-AC_SUBST([FREXP_LIBM])
 
 Makefile.am:
 TESTS += test-frexp
