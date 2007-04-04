@@ -1,8 +1,15 @@
-The following packages are needed by maintainers for using 'gnulib-tool':
+The following packages are needed by maintainers for using
+'gnulib-tool'.  In general, Gnulib prefers the latest stable
+version of each package, but in some cases it also supports
+older versions; this caters to commonly-used software
+distributions that may lag behind the latest stable package.
+Support for older versions is not guaranteed, though, and
+the version numbers in the following list may be incremented
+at any time.
 
-* A C runtime and compiler.
+* A C runtime, compiler, linker, etc.
   + Mandatory. Using the platform's native 'cc' gives good portability
-    exposure, but you can also use GNU gcc 2.95 or newer.
+    exposure, but you can also use GCC 2.95 or newer.
   + GCC Homepage:
     http://gcc.gnu.org/
   + Download:
@@ -11,7 +18,7 @@ The following packages are needed by maintainers for using 'gnulib-tool':
 
 * A 'make' utility.
   + Mandatory. Using the platform's native 'make' gives good portability
-    exposure for in-tree builds, but VPATH builds require GNU make 3.79.1 or
+    exposure for in-tree builds, but VPATH builds require GNU Make 3.79.1 or
     newer.
   + GNU Make Homepage:
     http://www.gnu.org/software/make/
@@ -19,7 +26,7 @@ The following packages are needed by maintainers for using 'gnulib-tool':
     http://ftp.gnu.org/gnu/make/
     ftp://ftp.gnu.org/gnu/make/
 
-* GNU m4 1.4.5 or newer.
+* GNU M4 1.4.5 or newer.
   + 1.4.5 or newer is mandatory, but 1.4.9 or newer is recommended.
   + Homepage:
     http://www.gnu.org/software/m4/
@@ -27,7 +34,7 @@ The following packages are needed by maintainers for using 'gnulib-tool':
     http://ftp.gnu.org/gnu/m4/
     ftp://ftp.gnu.org/gnu/m4/
 
-* GNU autoconf 2.59 or newer.
+* Autoconf 2.59 or newer.
   + Mandatory.
   + Homepage:
     http://www.gnu.org/software/autoconf/
@@ -35,7 +42,7 @@ The following packages are needed by maintainers for using 'gnulib-tool':
     http://ftp.gnu.org/gnu/autoconf/
     ftp://ftp.gnu.org/gnu/autoconf/
 
-* GNU automake 1.9.6 or newer.
+* Automake 1.9.6 or newer.
   + Mandatory.
   + Homepage:
     http://www.gnu.org/software/automake/
@@ -43,16 +50,65 @@ The following packages are needed by maintainers for using 'gnulib-tool':
     http://ftp.gnu.org/gnu/automake/
     ftp://ftp.gnu.org/gnu/automake/
 
+* A shell
+  + Mandatory. Using the platform's native 'sh' gives good portability
+    exposure, but you can also use Bash.
+  + Homepage:
+    http://www.gnu.org/software/bash/
+  + Download:
+    http://ftp.gnu.org/gnu/bash/
+    ftp://ftp.gnu.org/gnu/bash/
+
+* Core POSIX utilities, including:
+    [ basename cat chgrp chmod chown cp dd echo expand expr
+    false hostname install kill ln ls md5sum mkdir mkfifo
+    mknod mv printenv pwd rm rmdir sleep sort tee test touch
+    true uname
+  + Mandatory. Using the platform's native utilities gives good portability
+    exposure, but you can also use GNU coreutils.
+  + Homepage:
+    http://www.gnu.org/software/coreutils/
+  + Download:
+    http://ftp.gnu.org/gnu/coreutils/
+    ftp://ftp.gnu.org/gnu/coreutils/
+
+* The comparison utilities 'cmp' and 'diff'.
+  + Mandatory. Using the platform's native utilities gives good portability
+    exposure, but you can also use GNU diffutils.
+  + Homepage:
+    http://www.gnu.org/software/diffutils/
+  + Download:
+    http://ftp.gnu.org/gnu/diffutils/
+    ftp://ftp.gnu.org/gnu/diffutils/
+
+* Grep.
+  + Mandatory. Using the platform's native grep gives good portability
+    exposure, but you can also use GNU grep.
+  + Homepage:
+    http://www.gnu.org/software/grep/
+  + Download:
+    http://ftp.gnu.org/gnu/grep/
+    ftp://ftp.gnu.org/gnu/grep/
+
+* GNU Tar 1.11.8 or newer.
+  + Recommended.
+    Needed if you want to make a software distribution .
+  + Homepage:
+    http://www.gnu.org/software/tar/
+  + Download:
+    http://ftp.gnu.org/gnu/tar/
+    ftp://ftp.gnu.org/gnu/tar/
+
 * GNU gettext 0.16.1.
   + Recommended.
-    Needed if you use modules which make use of internationalization (many do).
+    Needed if you use modules that use internationalization (many do).
   + Homepage:
     http://www.gnu.org/software/gettext/
   + Download:
     http://ftp.gnu.org/gnu/gettext/
     ftp://ftp.gnu.org/gnu/gettext/
 
-* GNU bison 2.0 or newer.
+* Bison 2.0 or newer.
   + Recommended.
     Needed if you use the 'getdate' module.
   + Homepage:
@@ -70,7 +126,15 @@ The following packages are needed by maintainers for using 'gnulib-tool':
     http://ftp.gnu.org/gnu/gperf/
     ftp://ftp.gnu.org/gnu/gperf/
 
-* GNU texinfo 4.2 or newer.
+* Gzip (GNU zip) 1.2.4 or newer.
+  + Recommended.
+  + Homepage:
+    http://www.gnu.org/software/gzip/
+  + Download:
+    http://ftp.gnu.org/gnu/gzip/
+    ftp://ftp.gnu.org/gnu/gzip/
+
+* Texinfo 4.2 or newer.
   + Recommended.
     Needed if you use modules that include documentation.
   + Homepage:
@@ -79,7 +143,7 @@ The following packages are needed by maintainers for using 'gnulib-tool':
     http://ftp.gnu.org/gnu/texinfo/
     ftp://ftp.gnu.org/gnu/texinfo/
 
-* GNU sed
+* GNU sed.
   + Recommended.
     Needed on platforms where the vendor's 'sed' program is too buggy.
   + Homepage:

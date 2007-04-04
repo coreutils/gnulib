@@ -1,3 +1,9 @@
+2007-04-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* DEPENDENCIES: Give overall description of version dependency
+	desirability.  Use more-typical names for apps.
+	Add shell, coreutils, diffutils, grep, tar, gzip.
+
 2007-04-04  Simon Josefsson  <simon@josefsson.org>
 
 	* MODULES.html.sh: Rename crypto modules.  Remove iconvme.
