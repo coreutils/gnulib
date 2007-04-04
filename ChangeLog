@@ -1,3 +1,7 @@
+2007-04-04  Simon Josefsson  <simon@josefsson.org>
+
+	* MODULES.html.sh: Rename crypto modules.  Remove iconvme.
+
 2007-04-04  Karl Berry  <karl@gnu.org>
 
 	* MODULES.html.sh (func_module): missing '.

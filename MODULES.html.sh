@@ -1765,15 +1765,45 @@ func_all_modules ()
   func_module rbtree-oset
   func_end_table
 
-  element="Cryptographic computations"
+  element="Cryptographic computations (low-level)"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap ansic_ext_crypto
   func_wrap H3
   func_echo "$element"
 
   func_begin_table
-  func_module md5
-  func_module sha1
+  func_module crypto/arcfour
+  func_module crypto/arctwo
+  func_module crypto/des
+  func_module crypto/hmac-md5
+  func_module crypto/hmac-sha1
+  func_module crypto/md2
+  func_module crypto/md4
+  func_module crypto/md5
+  func_module crypto/rijndael
+  func_module crypto/sha1
+  func_end_table
+
+  element="Cryptographic computations (high-level)"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap ansic_ext_crypto2
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module crypto/gc
+  func_module crypto/gc-arcfour
+  func_module crypto/gc-arctwo
+  func_module crypto/gc-des
+  func_module crypto/gc-hmac-md5
+  func_module crypto/gc-hmac-sha1
+  func_module crypto/gc-md2
+  func_module crypto/gc-md4
+  func_module crypto/gc-md5
+  func_module crypto/gc-pbkdf2-sha1
+  func_module crypto/gc-random
+  func_module crypto/gc-rijndael
+  func_module crypto/gc-sha1
   func_end_table
 
   element="Misc"
@@ -2232,7 +2262,6 @@ func_all_modules ()
   func_module xstriconv
   func_module striconveh
   func_module striconveha
-  func_module iconvme
   func_module localcharset
   func_module hard-locale
   func_module mbslen
