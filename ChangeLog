@@ -1,5 +1,40 @@
 2007-04-03  Bruno Haible  <bruno@clisp.org>
 
+	* modules/argmatch-tests (Makefile.am): New variable
+	test_argmatch_LDADD.
+	* modules/argp-tests (Makefile.am): New variable test_argp_LDADD.
+	* modules/array-list-tests (Makefile.am): New variable
+	test_array_list_LDADD.
+	* modules/array-oset-tests (Makefile.am): New variable
+	test_array_oset_LDADD.
+	* modules/avltree-list-tests (Makefile.am): New variable
+	test_avltree_list_LDADD.
+	* modules/avltree-oset-tests (Makefile.am): New variable
+	test_avltree_oset_LDADD.
+	* modules/avltreehash-list-tests (Makefile.am): New variable
+	test_avltreehash_list_LDADD.
+	* modules/canonicalize-lgpl-tests (Makefile.am): New variable
+	test_canonicalize_lgpl_LDADD.
+	* modules/carray-list-tests (Makefile.am): New variable
+	test_carray_list_LDADD.
+	* modules/dirname-tests (Makefile.am): New variable
+	test_dirname_LDADD.
+	* modules/linked-list-tests (Makefile.am): New variable
+	test_linked_list_LDADD.
+	* modules/linkedhash-list-tests (Makefile.am): New variable
+	test_linkedhash_list_LDADD.
+	* modules/rbtree-list-tests (Makefile.am): New variable
+	test_rbtree_list_LDADD.
+	* modules/rbtree-oset-tests (Makefile.am): New variable
+	test_rbtree_oset_LDADD.
+	* modules/rbtreehash-list-tests (Makefile.am): New variable
+	test_rbtreehash_list_LDADD.
+	* modules/xvasprintf-tests (Makefile.am): New variable
+	test_xvasprintf_LDADD.
+	Reported by Eric Blake.
+
+2007-04-03  Bruno Haible  <bruno@clisp.org>
+
 	* modules/frexp-tests (configure.ac): Remove AC_SUBST.
 	* modules/isnanl-tests (configure.ac): Likewise.
 

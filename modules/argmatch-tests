@@ -9,4 +9,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-argmatch
 check_PROGRAMS += test-argmatch
+test_argmatch_LDADD = @LIBINTL@ $(LDADD)
 
