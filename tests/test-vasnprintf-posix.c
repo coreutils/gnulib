@@ -416,7 +416,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%010a %d", 1.0 / 0.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "       inf 33") == 0);
+    ASSERT (strcmp (result, "       inf 33") == 0
+	    || strcmp (result, "0000000inf 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -426,7 +427,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%010a %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "       nan 33") == 0);
+    ASSERT (strcmp (result, "       nan 33") == 0
+	    || strcmp (result, "0000000nan 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -724,7 +726,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%010La %d", 1.0L / 0.0L, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "       inf 33") == 0);
+    ASSERT (strcmp (result, "       inf 33") == 0
+	    || strcmp (result, "0000000inf 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -734,7 +737,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%010La %d", 0.0L / 0.0L, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "       nan 33") == 0);
+    ASSERT (strcmp (result, "       nan 33") == 0
+	    || strcmp (result, "0000000nan 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }

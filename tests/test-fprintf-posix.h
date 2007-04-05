@@ -61,12 +61,6 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
   /* NaN.  */
   my_fprintf (stdout, "%a %d\n", NaN (), 33, 44, 55);
 
-  /* FLAG_ZERO with infinite number.  */
-  my_fprintf (stdout, "%010a %d\n", 1.0 / 0.0, 33, 44, 55);
-
-  /* FLAG_ZERO with NaN.  */
-  my_fprintf (stdout, "%010a %d\n", NaN (), 33, 44, 55);
-
   /* Test the support of the POSIX/XSI format strings with positions.  */
 
   my_fprintf (stdout, "%2$d %1$d\n", 33, 55);

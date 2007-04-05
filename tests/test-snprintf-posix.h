@@ -341,7 +341,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%010a %d", 1.0 / 0.0, 33, 44, 55);
-    ASSERT (strcmp (result, "       inf 33") == 0);
+    ASSERT (strcmp (result, "       inf 33") == 0
+	    || strcmp (result, "0000000inf 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -349,7 +350,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%010a %d", NaN (), 33, 44, 55);
-    ASSERT (strcmp (result, "       nan 33") == 0);
+    ASSERT (strcmp (result, "       nan 33") == 0
+	    || strcmp (result, "0000000nan 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -599,7 +601,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%010La %d", 1.0L / 0.0L, 33, 44, 55);
-    ASSERT (strcmp (result, "       inf 33") == 0);
+    ASSERT (strcmp (result, "       inf 33") == 0
+	    || strcmp (result, "0000000inf 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -607,7 +610,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%010La %d", 0.0L / 0.0L, 33, 44, 55);
-    ASSERT (strcmp (result, "       nan 33") == 0);
+    ASSERT (strcmp (result, "       nan 33") == 0
+	    || strcmp (result, "0000000nan 33") == 0);
     ASSERT (retval == strlen (result));
   }
 

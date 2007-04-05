@@ -1,5 +1,16 @@
 2007-04-04  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-vasnprintf-posix.c (test_function): Allow two possible
+	results for "%010a" of Infinity and NaN.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-fprintf-posix.h (test_function): Remove these tests.
+	* tests/test-fprintf-posix.out: Update.
+	Needed for FreeBSD 6.1.
+
+2007-04-04  Bruno Haible  <bruno@clisp.org>
+
 	* DEPENDENCIES: Remove mentions of tar and gzip, since they are not
 	directly used by the gnulib modules nor by gnulib-tool.
 
