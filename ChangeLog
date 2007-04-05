@@ -1,3 +1,8 @@
+2007-04-04  Bruno Haible  <bruno@clisp.org>
+
+	* DEPENDENCIES: Remove mentions of tar and gzip, since they are not
+	directly used by the gnulib modules nor by gnulib-tool.
+
 2007-04-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* DEPENDENCIES: Give overall description of version dependency

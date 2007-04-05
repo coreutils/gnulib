@@ -90,15 +90,6 @@ at any time.
     http://ftp.gnu.org/gnu/grep/
     ftp://ftp.gnu.org/gnu/grep/
 
-* GNU Tar 1.11.8 or newer.
-  + Recommended.
-    Needed if you want to make a software distribution.
-  + Homepage:
-    http://www.gnu.org/software/tar/
-  + Download:
-    http://ftp.gnu.org/gnu/tar/
-    ftp://ftp.gnu.org/gnu/tar/
-
 * GNU gettext 0.16.1.
   + Recommended.
     Needed if you use modules that use internationalization (many do).
@@ -125,14 +116,6 @@ at any time.
   + Download:
     http://ftp.gnu.org/gnu/gperf/
     ftp://ftp.gnu.org/gnu/gperf/
-
-* Gzip (GNU zip) 1.2.4 or newer.
-  + Recommended.
-  + Homepage:
-    http://www.gnu.org/software/gzip/
-  + Download:
-    http://ftp.gnu.org/gnu/gzip/
-    ftp://ftp.gnu.org/gnu/gzip/
 
 * Texinfo 4.2 or newer.
   + Recommended.
