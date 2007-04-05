@@ -1,4 +1,4 @@
-# printf.m4 serial 2
+# printf.m4 serial 3
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -115,6 +115,13 @@ int main ()
           && strcmp (buf, "-0X6.488P-1 33") != 0
           && strcmp (buf, "-0XC.91P-2 33") != 0))
     return 1;
+  /* This catches a FreeBSD 6.1 bug: it doesn't round.  */
+  if (sprintf (buf, "%.2a %d", 1.51, 33, 44, 55) < 0
+      || (strcmp (result, "0x1.83p+0 33") != 0
+          && strcmp (result, "0x3.05p-1 33") != 0
+          && strcmp (result, "0x6.0ap-2 33") != 0
+          && strcmp (result, "0xc.14p-3 33") != 0))
+    return 1;
   /* This catches a MacOS X 10.3.9 (Darwin 7.9) bug.  */
   if (sprintf (buf, "%.1a", 1.999) < 0
       || (strcmp (buf, "0x1.0p+1") != 0
@@ -149,18 +156,9 @@ int main ()
              [gl_cv_func_printf_directive_a="guessing yes"],
              [gl_cv_func_printf_directive_a="guessing no"])
            ;;
-changequote(,)dnl
-                               # Guess yes on FreeBSD >= 5.
-         freebsd[1-4]*)        gl_cv_func_printf_directive_a="guessing no";;
-         freebsd* | kfreebsd*) gl_cv_func_printf_directive_a="guessing yes";;
-                               # Guess yes on NetBSD >= 4.
-         netbsd[1-3]* | netbsdelf[1-3]* | netbsdaout[1-3]* | netbsdcoff[1-3]*)
-                               gl_cv_func_printf_directive_a="guessing no";;
-         netbsd*)              gl_cv_func_printf_directive_a="guessing yes";;
                                # If we don't know, assume the worst.
          *)                    gl_cv_func_printf_directive_a="guessing no";;
        esac
-changequote([,])dnl
       ])
     ])
 ])
@@ -452,7 +450,7 @@ dnl
 dnl                                        1  2  3  4  5  6  7  8
 dnl   glibc 2.5                            .  .  .  .  .  .  .  .
 dnl   glibc 2.3.6                          .  #  .  .  .  .  .  .
-dnl   FreeBSD 5.4, 6.1                     .  .  .  .  .  .  .  .
+dnl   FreeBSD 5.4, 6.1                     .  ?  .  .  .  .  .  .
 dnl   MacOS X 10.3.9                       .  #  .  .  .  .  .  .
 dnl   OpenBSD 3.9, 4.0                     .  #  .  .  .  .  .  ?
 dnl   Cygwin 2007                          .  #  .  .  .  .  .  ?
@@ -466,7 +464,7 @@ dnl   HP-UX 10.20, 11.00, 11.11, 11.23     #  #  .  .  .  .  #  #
 dnl   IRIX 6.5                             #  #  .  .  .  .  #  .
 dnl   OSF/1 5.1                            #  #  .  .  .  .  #  .
 dnl   OSF/1 4.0d                           #  #  .  .  #  #  #  #
-dnl   NetBSD 4.0                           .  .  .  .  .  .  .  ?
+dnl   NetBSD 4.0                           .  ?  .  .  .  .  .  ?
 dnl   NetBSD 3.0                           .  #  .  #  .  .  .  .
 dnl   BeOS                                 #  #  .  #  .  .  .  .
 dnl   mingw                                #  #  .  #  .  #  #  #
