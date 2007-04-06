@@ -16,6 +16,7 @@
 	* tests/test-snprintf-posix.h (test_function): Likewise.
 	* tests/test-sprintf-posix.h (test_function): Likewise.
 	* tests/test-fprintf-posix.h (test_function): Remove these tests.
+	* tests/test-printf-posix.h (test_function): Likewise.
 	* tests/test-fprintf-posix.out: Update.
 	Needed for FreeBSD 6.1.
 
