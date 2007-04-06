@@ -12,6 +12,7 @@ isnan-nolibm
 isnanl-nolibm
 printf-frexp
 printf-frexpl
+signbit
 fpucw
 
 configure.ac:

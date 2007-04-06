@@ -1,5 +1,20 @@
 2007-04-06  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c: Include <math.h>. Don't include float+.h.
+	(VASNPRINTF): Use signbit for faster determination whether to print a
+	minus sign.
+	* modules/vasnprintf (Files): Remove lib/float+.h.
+	* modules/fprintf-posix (Depends-on): Add signbit.
+	* modules/snprintf-posix (Depends-on): Likewise.
+	* modules/sprintf-posix (Depends-on): Likewise.
+	* modules/vasnprintf-posix (Depends-on): Likewise.
+	* modules/vasprintf-posix (Depends-on): Likewise.
+	* modules/vfprintf-posix (Depends-on): Likewise.
+	* modules/vsnprintf-posix (Depends-on): Likewise.
+	* modules/vsprintf-posix (Depends-on): Likewise.
+
+2007-04-06  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-frexp.c (main): Test also the sign bit of zero results.
 	* tests/test-frexpl.c (main): Likewise.
 	* tests/test-ldexpl.c (main): Likewise.

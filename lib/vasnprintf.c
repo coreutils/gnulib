@@ -54,7 +54,7 @@
 #include "xsize.h"
 
 #if NEED_PRINTF_DIRECTIVE_A && !defined IN_LIBINTL
-# include "float+.h"
+# include <math.h>
 # include "isnan.h"
 # include "printf-frexp.h"
 # include "isnanl-nolibm.h"
@@ -445,21 +445,10 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 
 			BEGIN_LONG_DOUBLE_ROUNDING ();
 
-			if (arg < 0.0L)
+			if (signbit (arg)) /* arg < 0.0L or negative zero */
 			  {
 			    sign = -1;
 			    arg = -arg;
-			  }
-			else if (arg == 0.0L)
-			  {
-			    /* Distinguish 0.0L and -0.0L.  */
-			    static long double plus_zero = 0.0L;
-			    long double arg_mem = arg;
-			    if (memcmp (&plus_zero, &arg_mem, SIZEOF_LDBL) != 0)
-			      {
-				sign = -1;
-				arg = -arg;
-			      }
 			  }
 
 			if (sign < 0)
@@ -590,21 +579,10 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      {
 			int sign = 0;
 
-			if (arg < 0.0)
+			if (signbit (arg)) /* arg < 0.0 or negative zero */
 			  {
 			    sign = -1;
 			    arg = -arg;
-			  }
-			else if (arg == 0.0)
-			  {
-			    /* Distinguish 0.0 and -0.0.  */
-			    static double plus_zero = 0.0;
-			    double arg_mem = arg;
-			    if (memcmp (&plus_zero, &arg_mem, SIZEOF_DBL) != 0)
-			      {
-				sign = -1;
-				arg = -arg;
-			      }
 			  }
 
 			if (sign < 0)
