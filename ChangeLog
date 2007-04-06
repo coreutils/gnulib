@@ -9,6 +9,7 @@
 	* lib/time_.h [__DECC]: Likewise.
 	* lib/wchar_.h [__DECC]: Likewise.
 	* lib/wctype_.h [__DECC]: Likewise.
+	* lib/inttypes_.h [__DECC]: Likewise.
 	Reported by Albert Chin <china@thewrittenword.com> in
 	<http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00088.html>.
 
