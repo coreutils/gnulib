@@ -1,5 +1,13 @@
 2007-04-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/isnanf-nolibm: New file.
+	* lib/isnanf.h: New file.
+	* lib/isnanf.c: New file.
+	* lib/isnan.c: Consider the USE_FLOAT macro.
+	* m4/isnanf.m4: New file.
+
+2007-04-06  Bruno Haible  <bruno@clisp.org>
+
 	* modules/gettext-h (configure.ac): AC_SUBST LIBINTL and LTLIBINTL.
 	(Link): New section.
 
@@ -29492,80 +29500,3 @@
 	* m4/isc-posix.m4: New file.
 
 1998-05-10  Jim Meyering  <meyering@ascend.com>
-
-	* m4/jm-mktime.m4: Use AM_FUNC_MKTIME, now that it's up to date.
-
-1998-05-09  Jim Meyering  <meyering@ascend.com>
-
-	* m4/Makefile.am (EXTRA_DIST): Add ssize_t.m4.
-	(EXTRA_DIST): Remove mktime.m4, now that the new version is included
-	with automake.
-
-	* m4/ssize_t.m4: New file.
-	* m4/mktime.m4: Remove file -- the new automake has this now.
-
-1998-04-26  Jim Meyering  <meyering@ascend.com>
-
-	* m4/assert.m4: New file.
-	* m4/Makefile.am (EXTRA_DIST): Add assert.m4.
-
-1998-04-05  Jim Meyering  <meyering@ascend.com>
-
-	* m4/prereq.m4 (jm_PREREQ_REGEX): New macro.
-	(jm_PREREQ): Use it here.
-
-1998-03-23  Jim Meyering  <meyering@eng.ascend.com>
-
-	* m4/inttypes_h.m4: Kludges so I don't have to add HAVE_INTTYPES_H
-	in acconfig.h.
-
-1998-03-15  Jim Meyering  <meyering@eng.ascend.com>
-
-	* m4/prereq.m4: New file.
-	* m4/error.m4: New file.
-	* m4/Makefile.am (EXTRA_DIST): Add error.m4 and prereq.m4.
-
-1998-02-07  Jim Meyering  <meyering@eng.ascend.com>
-
-	* m4/getline.m4: Don't set am_cv_func_working_getline before the
-	cache-check for the same variable -- that defeated the purpose of
-	the test; the test program was never run.  This was a problem only
-	on systems with losing getline functions -- HP-UX 10.20 is one.
-	Reported by Bjorn Helgaas.
-
-1998-02-06  Jim Meyering  <meyering@eng.ascend.com>
-
-	* m4/Makefile.am (EXTRA_DIST): Add perl.m4.
-
-1998-01-10  Jim Meyering  <meyering@na-net.ornl.gov>
-
-	* m4/Makefile.am (EXTRA_DIST): Add const.m4.
-
-	* m4/const.m4: New file.  Use an initializer in this declaration
-	typedef int charset[2]; const charset x;
-	Reported by Bob Glickstein.
-
-1997-12-21  Jim Meyering  <meyering@na-net.ornl.gov>
-
-	* m4/chown.m4: Fix reversed types on -1 args to chown.
-	From Kaveh Ghazi.
-
-1997-12-14  Jim Meyering  <meyering@na-net.ornl.gov>
-
-	* m4/check-decl.m4: s/DECLARATION_/DECL_/g.
-	Add lseek and memchr.
-
-	* m4/decl.m4: s/HAVE_DECLARATION_/HAVE_DECL_/g.
-	T.E.Dickey <dickey@clark.net> said that some older preprocessors
-	have a 20-character limit on names.
-
-1997-11-30  Jim Meyering  <meyering@na-net.ornl.gov>
-
-	* m4/inttypes_h.m4: New file.
-	* m4/uintmax_t.m4: New file.
-	* m4/Makefile.am (EXTRA_DIST): Add inttypes_h.m4 and uintmax_t.m4.
-
-Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007
-  Free Software Foundation, Inc.
-Copying and distribution of this file, with or without modification,
-are permitted provided the copyright notice and this notice are preserved.

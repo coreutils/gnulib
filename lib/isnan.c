@@ -36,7 +36,7 @@
 # endif
 # define SIZE SIZEOF_LDBL
 # define L_(literal) literal##L
-#else
+#elif ! defined USE_FLOAT
 # define FUNC rpl_isnan
 # define DOUBLE double
 # define MAX_EXP DBL_MAX_EXP
@@ -48,6 +48,18 @@
 # endif
 # define SIZE SIZEOF_DBL
 # define L_(literal) literal
+#else /* defined USE_FLOAT */
+# define FUNC rpl_isnanf
+# define DOUBLE float
+# define MAX_EXP FLT_MAX_EXP
+# define MIN_EXP FLT_MIN_EXP
+# if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
+#  define KNOWN_EXPBIT0_LOCATION
+#  define EXPBIT0_WORD FLT_EXPBIT0_WORD
+#  define EXPBIT0_BIT FLT_EXPBIT0_BIT
+# endif
+# define SIZE SIZEOF_FLT
+# define L_(literal) literal##f
 #endif
 
 #define EXP_MASK ((MAX_EXP - MIN_EXP) | 7)
