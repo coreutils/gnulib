@@ -23,10 +23,17 @@
 
 #else
 /* Normal invocation convention.  */
+
+#ifdef __DECC
+# include_next <stdio.h>
+#endif
+
 #ifndef _GL_STDIO_H
 #define _GL_STDIO_H
 
-#include @ABSOLUTE_STDIO_H@
+#ifndef __DECC
+# include @ABSOLUTE_STDIO_H@
+#endif
 
 #include <stdarg.h>
 #include <stddef.h>

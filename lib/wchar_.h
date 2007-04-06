@@ -25,6 +25,11 @@
  * For now, this just ensures proper prerequisite inclusion order.
  */
 
+#ifdef __DECC
+# include <stdio.h>
+# include_next <wchar.h>
+#endif
+
 #ifndef _GL_WCHAR_H
 #define _GL_WCHAR_H
 
@@ -37,6 +42,8 @@
 #include <time.h>
 
 /* Include the original <wchar.h>.  */
-#include @ABSOLUTE_WCHAR_H@
+#ifndef __DECC
+# include @ABSOLUTE_WCHAR_H@
+#endif
 
 #endif /* _GL_WCHAR_H */

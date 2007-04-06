@@ -1,3 +1,17 @@
+2007-04-06  Bruno Haible  <bruno@clisp.org>
+
+	Fix problem with Compaq (ex-DEC) Desktop C compiler on Tru64.
+	* lib/math_.h [__DECC]: Include the overridden include file through
+	#include_next, outside the double-inclusion guard.
+	* lib/stdio_.h [__DECC]: Likewise.
+	* lib/stdlib_.h [__DECC]: Likewise.
+	* lib/string_.h [__DECC]: Likewise.
+	* lib/time_.h [__DECC]: Likewise.
+	* lib/wchar_.h [__DECC]: Likewise.
+	* lib/wctype_.h [__DECC]: Likewise.
+	Reported by Albert Chin <china@thewrittenword.com> in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00088.html>.
+
 2007-04-04  Eric Blake  <ebb9@byu.net>
 
 	* m4/stdint.m4 (gl_STDINT_H): Detect WINT_MAX bug in cygwin

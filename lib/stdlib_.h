@@ -30,6 +30,11 @@
 
 #else
 /* Normal invocation convention.  */
+
+#ifdef __DECC
+# include_next <stdlib.h>
+#endif
+
 #ifndef _GL_STDLIB_H
 #define _GL_STDLIB_H
 
@@ -40,7 +45,9 @@
 # pragma GCC system_header
 #endif
 
-#include @ABSOLUTE_STDLIB_H@
+#ifndef __DECC
+# include @ABSOLUTE_STDLIB_H@
+#endif
 
 
 /* The definition of GL_LINK_WARNING is copied here.  */

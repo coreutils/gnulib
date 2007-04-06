@@ -16,10 +16,16 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#ifdef __DECC
+# include_next <math.h>
+#endif
+
 #ifndef _GL_MATH_H
 #define _GL_MATH_H
 
-#include @ABSOLUTE_MATH_H@
+#ifndef __DECC
+# include @ABSOLUTE_MATH_H@
+#endif
 
 
 /* The definition of GL_LINK_WARNING is copied here.  */

@@ -26,9 +26,6 @@
  * wctrans_t, and wctype_t are not yet implemented.
  */
 
-#ifndef _GL_WCTYPE_H
-#define _GL_WCTYPE_H
-
 #if @HAVE_WINT_T@
 /* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.
    Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
@@ -39,15 +36,29 @@
 # include <stdio.h>
 # include <time.h>
 # include <wchar.h>
-typedef wint_t __wctype_wint_t;
-#else
-typedef int __wctype_wint_t;
 #endif
+
+#if @HAVE_WCTYPE_H@
+# ifdef __DECC
+#  include_next <wctype.h>
+# endif
+#endif
+
+#ifndef _GL_WCTYPE_H
+#define _GL_WCTYPE_H
 
 /* Include the original <wctype.h> if it exists.
    BeOS 5 has the functions but no <wctype.h>.  */
 #if @HAVE_WCTYPE_H@
-# include @ABSOLUTE_WCTYPE_H@
+# ifndef __DECC
+#  include @ABSOLUTE_WCTYPE_H@
+# endif
+#endif
+
+#if @HAVE_WINT_T@
+typedef wint_t __wctype_wint_t;
+#else
+typedef int __wctype_wint_t;
 #endif
 
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
