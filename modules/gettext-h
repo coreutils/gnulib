@@ -7,12 +7,17 @@ lib/gettext.h
 Depends-on:
 
 configure.ac:
+AC_SUBST([LIBINTL])
+AC_SUBST([LTLIBINTL])
 
 Makefile.am:
 lib_SOURCES += gettext.h
 
 Include:
 "gettext.h"
+
+Link:
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
 LGPL

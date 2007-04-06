@@ -10,6 +10,5 @@ Makefile.am:
 TESTS += test-canonicalize-lgpl.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-canonicalize-lgpl
-test_canonicalize_lgpl_LDADD = @LIBINTL@ $(LDADD)
 EXTRA_DIST += test-canonicalize-lgpl.sh
 

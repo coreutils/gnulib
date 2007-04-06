@@ -1,5 +1,12 @@
 2007-04-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/gettext-h (configure.ac): AC_SUBST LIBINTL and LTLIBINTL.
+	(Link): New section.
+
+	* modules/canonicalize-lgpl-tests (Makefile.am): Undo last change.
+
+2007-04-06  Bruno Haible  <bruno@clisp.org>
+
 	Assume the 'long double' type.
 	* m4/longdouble.m4: Remove file.
 	* config/srclist.txt: Don't mention longdouble.m4.
