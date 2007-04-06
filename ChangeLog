@@ -1,5 +1,19 @@
 2007-04-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/signbit: New file.
+	* lib/signbitf.c: New file.
+	* lib/signbitd.c: New file.
+	* lib/signbitl.c: New file.
+	* m4/signbit.m4: New file.
+	* lib/math_.h (gl_signbitf, gl_signbitd, gl_signbitl): New declarations.
+	(signbit): New macro.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_SIGNBIT and
+	REPLACE_SIGNBIT.
+	* modules/math (Makefile.am) Substibute also GNULIB_SIGNBIT and
+	REPLACE_FREXPL into math.h.
+
+2007-04-06  Bruno Haible  <bruno@clisp.org>
+
 	* modules/isnanf-nolibm-tests: New file.
 	* tests/test-isnanf.c: New file.
 

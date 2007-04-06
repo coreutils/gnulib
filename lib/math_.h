@@ -215,6 +215,51 @@ extern long double tanl (long double x);
 #endif
 
 
+#if @GNULIB_SIGNBIT@
+# if @REPLACE_SIGNBIT@
+#  undef signbit
+extern int gl_signbitf (float arg);
+extern int gl_signbitd (double arg);
+extern int gl_signbitl (long double arg);
+#  if __GNUC__ >= 2 && !__STRICT_ANSI__
+#   if defined FLT_SIGNBIT_WORD && defined FLT_SIGNBIT_BIT
+#    define gl_signbitf(arg) \
+       ({ union { float _value;						\
+                  unsigned int _word[(sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \
+                } _m;							\
+          _m._value = (arg);						\
+          (_m._word[FLT_SIGNBIT_WORD] >> FLT_SIGNBIT_BIT) & 1;		\
+        })
+#   endif
+#   if defined DBL_SIGNBIT_WORD && defined DBL_SIGNBIT_BIT
+#    define gl_signbitd(arg) \
+       ({ union { double _value;						\
+                  unsigned int _word[(sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \
+                } _m;							\
+          _m._value = (arg);						\
+          (_m._word[DBL_SIGNBIT_WORD] >> DBL_SIGNBIT_BIT) & 1;		\
+        })
+#   endif
+#   if defined LDBL_SIGNBIT_WORD && defined LDBL_SIGNBIT_BIT
+#    define gl_signbitl(arg) \
+       ({ union { long double _value;					\
+                  unsigned int _word[(sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \
+                } _m;							\
+          _m._value = (arg);						\
+          (_m._word[LDBL_SIGNBIT_WORD] >> LDBL_SIGNBIT_BIT) & 1;		\
+        })
+#   endif
+#  endif
+#  define signbit(x) \
+   (sizeof (x) == sizeof (long double) ? gl_signbitl (x) : \
+    sizeof (x) == sizeof (double) ? gl_signbitd (x) : \
+    gl_signbitf (x))
+# endif
+#elif defined GNULIB_POSIXCHECK
+  /* How to override a macro?  */
+#endif
+
+
 #ifdef __cplusplus
 }
 #endif

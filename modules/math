@@ -25,6 +25,7 @@ math.h: math_.h
 	      -e 's|@''GNULIB_FREXPL''@|$(GNULIB_FREXPL)|g' \
 	      -e 's|@''GNULIB_LDEXPL''@|$(GNULIB_LDEXPL)|g' \
 	      -e 's|@''GNULIB_MATHL''@|$(GNULIB_MATHL)|g' \
+	      -e 's|@''GNULIB_SIGNBIT''@|$(GNULIB_SIGNBIT)|g' \
 	      -e 's|@''HAVE_DECL_ACOSL''@|$(HAVE_DECL_ACOSL)|g' \
 	      -e 's|@''HAVE_DECL_ASINL''@|$(HAVE_DECL_ASINL)|g' \
 	      -e 's|@''HAVE_DECL_ATANL''@|$(HAVE_DECL_ATANL)|g' \
@@ -41,6 +42,7 @@ math.h: math_.h
 	      -e 's|@''REPLACE_FREXP''@|$(REPLACE_FREXP)|g' \
 	      -e 's|@''REPLACE_FREXPL''@|$(REPLACE_FREXPL)|g' \
 	      -e 's|@''REPLACE_LDEXPL''@|$(REPLACE_LDEXPL)|g' \
+	      -e 's|@''REPLACE_SIGNBIT''@|$(REPLACE_SIGNBIT)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/math_.h; \
 	} > $@-t

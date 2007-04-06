@@ -1,0 +1,55 @@
+/* signbit() macro: Determine the sign bit of a floating-point number.
+   Copyright (C) 2007 Free Software Foundation, Inc.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+#include <config.h>
+
+/* Specification.  */
+#include <math.h>
+
+#include <string.h>
+#include "isnanf.h"
+#include "float+.h"
+
+#undef gl_signbitf
+
+int
+gl_signbitf (float arg)
+{
+#if defined FLT_SIGNBIT_WORD && defined FLT_SIGNBIT_BIT
+# define NWORDS \
+    ((sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+  union { float value; unsigned int word[NWORDS]; } m;
+  m.value = arg;
+  return (m.word[FLT_SIGNBIT_WORD] >> FLT_SIGNBIT_BIT) & 1;
+#else
+  /* This does not do the right thing for NaN, but this is irrelevant for
+     most use cases.  */
+  if (isnanf (arg))
+    return 0;
+  if (arg < 0.0f)
+    return 1;
+  else if (arg == 0.0f)
+    {
+      /* Distinguish 0.0f and -0.0f.  */
+      static float plus_zero = 0.0f;
+      float arg_mem = arg;
+      return (memcmp (&plus_zero, &arg_mem, SIZEOF_FLT) != 0);
+    }
+  else
+    return 0;
+#endif
+}

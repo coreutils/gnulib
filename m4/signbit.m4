@@ -1,0 +1,164 @@
+# signbit.m4 serial 1
+dnl Copyright (C) 2007 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
+
+AC_DEFUN([gl_SIGNBIT],
+[
+  AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_CACHE_CHECK([for signbit macro], [gl_cv_func_signbit],
+    [
+      AC_TRY_RUN([
+#include <math.h>
+#include <string.h>
+float p0f = 0.0f;
+float m0f = -0.0f;
+double p0d = 0.0;
+double m0d = -0.0;
+long double p0l = 0.0L;
+long double m0l = -0.0L;
+int main ()
+{
+  {
+    float plus_inf = 1.0f / p0f;
+    float minus_inf = -1.0f / p0f;
+    if (!(!signbit (255.0f)
+          && signbit (-255.0f)
+          && !signbit (p0f)
+          && (memcmp (&m0f, &p0f, sizeof (float)) == 0 || signbit (m0f))
+          && !signbit (plus_inf)
+          && signbit (minus_inf)))
+      return 1;
+  }
+  {
+    double plus_inf = 1.0 / p0d;
+    double minus_inf = -1.0 / p0d;
+    if (!(!signbit (255.0)
+          && signbit (-255.0)
+          && !signbit (p0d)
+          && (memcmp (&m0d, &p0d, sizeof (double)) == 0 || signbit (m0d))
+          && !signbit (plus_inf)
+          && signbit (minus_inf)))
+      return 1;
+  }
+  {
+    long double plus_inf = 1.0L / p0l;
+    long double minus_inf = -1.0L / p0l;
+    if (!(!signbit (255.0L)
+          && signbit (-255.0L)
+          && !signbit (p0l)
+          && (memcmp (&m0l, &p0l, sizeof (long double)) == 0 || signbit (m0l))
+          && !signbit (plus_inf)
+          && signbit (minus_inf)))
+      return 1;
+  }
+  return 0;
+}], [gl_cv_func_signbit=yes], [gl_cv_func_signbit=no],
+        [gl_cv_func_signbit="guessing no"])
+    ])
+  if test "$gl_cv_func_signbit" != yes; then
+    REPLACE_SIGNBIT=1
+    AC_LIBOBJ([signbitf])
+    AC_LIBOBJ([signbitd])
+    AC_LIBOBJ([signbitl])
+    gl_FLOAT_SIGN_LOCATION
+    gl_DOUBLE_SIGN_LOCATION
+    gl_LONG_DOUBLE_SIGN_LOCATION
+  fi
+])
+
+AC_DEFUN([gl_FLOAT_SIGN_LOCATION],
+[
+  gl_FLOATTYPE_SIGN_LOCATION([float], [gl_cv_cc_float_signbit], [f], [FLT])
+])
+
+AC_DEFUN([gl_DOUBLE_SIGN_LOCATION],
+[
+  gl_FLOATTYPE_SIGN_LOCATION([double], [gl_cv_cc_double_signbit], [], [DBL])
+])
+
+AC_DEFUN([gl_LONG_DOUBLE_SIGN_LOCATION],
+[
+  gl_FLOATTYPE_SIGN_LOCATION([long double], [gl_cv_cc_long_double_signbit], [L], [LDBL])
+])
+
+AC_DEFUN([gl_FLOATTYPE_SIGN_LOCATION],
+[
+  AC_CACHE_CHECK([where to find the sign bit in a '$1'],
+    [$2],
+    [
+      AC_TRY_RUN([
+#include <stddef.h>
+#include <stdio.h>
+#define NWORDS \
+  ((sizeof ($1) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+typedef union { $1 value; unsigned int word[NWORDS]; }
+        memory_float;
+static memory_float plus = { 1.0$3 };
+static memory_float minus = { -1.0$3 };
+int main ()
+{
+  size_t j, k, i;
+  unsigned int m;
+  FILE *fp = fopen ("conftest.out", "w");
+  if (fp == NULL)
+    return 1;
+  /* Find the different bit.  */
+  k = 0; m = 0;
+  for (j = 0; j < NWORDS; j++)
+    {
+      unsigned int x = plus.word[j] ^ minus.word[j];
+      if ((x & (x - 1)) || (x && m))
+        {
+          /* More than one bit difference.  */
+          fprintf (fp, "unknown");
+          return 1;
+        }
+      if (x)
+        {
+          k = j;
+          m = x;
+        }
+    }
+  if (m == 0)
+    {
+      /* No difference.  */
+      fprintf (fp, "unknown");
+      return 1;
+    }
+  /* Now m = plus.word[k] ^ ~minus.word[k].  */
+  if (plus.word[k] & ~minus.word[k])
+    {
+      /* Oh? The sign bit is set in the positive and cleared in the negative
+         numbers?  */
+      fprintf (fp, "unknown");
+      return 1;
+    }
+  for (i = 0; ; i++)
+    if ((m >> i) & 1)
+      break;
+  fprintf (fp, "word %d bit %d", (int) k, (int) i);
+  return (fclose (fp) != 0);
+}
+        ],
+        [$2=`cat conftest.out`],
+        [$2="unknown"],
+        [
+          dnl When cross-compiling, we don't know. It depends on the
+          dnl ABI and compiler version. There are too many cases.
+          $2="unknown"
+        ])
+      rm -f conftest.out
+    ])
+  case "$]$2[" in
+    word*bit*)
+      word=`echo "$]$2[" | sed -e 's/word //' -e 's/ bit.*//'`
+      bit=`echo "$]$2[" | sed -e 's/word.*bit //'`
+      AC_DEFINE_UNQUOTED([$4][_SIGNBIT_WORD], [$word],
+        [Define as the word index where to find the sign of '$1'.])
+      AC_DEFINE_UNQUOTED([$4][_SIGNBIT_BIT], [$bit],
+        [Define as the bit index in the word where to find the sign of '$1'.])
+      ;;
+  esac
+])
