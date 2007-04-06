@@ -92,6 +92,7 @@ main ()
     mantissa = frexp (x, &exp);
     ASSERT (exp == 0);
     ASSERT (mantissa == x);
+    ASSERT (!signbit (mantissa));
   }
 
   { /* Negative zero.  */
@@ -101,6 +102,7 @@ main ()
     mantissa = frexp (x, &exp);
     ASSERT (exp == 0);
     ASSERT (mantissa == x);
+    ASSERT (signbit (mantissa));
   }
 
   for (i = 1, x = 1.0; i <= DBL_MAX_EXP; i++, x *= 2.0)

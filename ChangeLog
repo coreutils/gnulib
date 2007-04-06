@@ -1,5 +1,14 @@
 2007-04-06  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-frexp.c (main): Test also the sign bit of zero results.
+	* tests/test-frexpl.c (main): Likewise.
+	* tests/test-ldexpl.c (main): Likewise.
+	* modules/frexp-tests (Depends-on): Add signbit.
+	* modules/frexpl-tests (Depdends-on): Likewise.
+	* modules/ldexpl-tests (Depdends-on): Likewise.
+
+2007-04-06  Bruno Haible  <bruno@clisp.org>
+
 	* modules/signbit-tests: New file.
 	* tests/test-signbit.c: New file.
 

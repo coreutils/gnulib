@@ -62,16 +62,16 @@ main ()
 
   { /* Positive zero.  */
     x = 0.0L;
-    y = ldexpl (x, 0); ASSERT (y == x);
-    y = ldexpl (x, 5); ASSERT (y == x);
-    y = ldexpl (x, -5); ASSERT (y == x);
+    y = ldexpl (x, 0); ASSERT (y == x); ASSERT (!signbit (x));
+    y = ldexpl (x, 5); ASSERT (y == x); ASSERT (!signbit (x));
+    y = ldexpl (x, -5); ASSERT (y == x); ASSERT (!signbit (x));
   }
 
   { /* Negative zero.  */
     x = -0.0L;
-    y = ldexpl (x, 0); ASSERT (y == x);
-    y = ldexpl (x, 5); ASSERT (y == x);
-    y = ldexpl (x, -5); ASSERT (y == x);
+    y = ldexpl (x, 0); ASSERT (y == x); ASSERT (signbit (x));
+    y = ldexpl (x, 5); ASSERT (y == x); ASSERT (signbit (x));
+    y = ldexpl (x, -5); ASSERT (y == x); ASSERT (signbit (x));
   }
 
   { /* Positive finite number.  */

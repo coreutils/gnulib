@@ -4,6 +4,7 @@ tests/test-frexpl.c
 Depends-on:
 fpucw
 isnanl-nolibm
+signbit
 
 configure.ac:
 

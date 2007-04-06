@@ -88,6 +88,7 @@ main ()
     mantissa = frexpl (x, &exp);
     ASSERT (exp == 0);
     ASSERT (mantissa == x);
+    ASSERT (!signbit (mantissa));
   }
 
   { /* Negative zero.  */
@@ -97,6 +98,7 @@ main ()
     mantissa = frexpl (x, &exp);
     ASSERT (exp == 0);
     ASSERT (mantissa == x);
+    ASSERT (signbit (mantissa));
   }
 
   for (i = 1, x = 1.0L; i <= LDBL_MAX_EXP; i++, x *= 2.0L)
