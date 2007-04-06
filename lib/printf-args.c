@@ -67,11 +67,9 @@ printf_fetchargs (va_list args, arguments *a)
       case TYPE_DOUBLE:
 	ap->a.a_double = va_arg (args, double);
 	break;
-#if HAVE_LONG_DOUBLE
       case TYPE_LONGDOUBLE:
 	ap->a.a_longdouble = va_arg (args, long double);
 	break;
-#endif
       case TYPE_CHAR:
 	ap->a.a_char = va_arg (args, int);
 	break;

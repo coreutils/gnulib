@@ -1,5 +1,5 @@
-# intl.m4 serial 3 (gettext-0.16)
-dnl Copyright (C) 1995-2006 Free Software Foundation, Inc.
+# intl.m4 serial 4 (gettext-0.16.2)
+dnl Copyright (C) 1995-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -33,7 +33,6 @@ AC_DEFUN([AM_INTL_SUBDIR],
   AC_REQUIRE([gl_VISIBILITY])dnl
   AC_REQUIRE([gt_INTL_SUBDIR_CORE])dnl
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])dnl
-  AC_REQUIRE([gt_TYPE_LONGDOUBLE])dnl
   AC_REQUIRE([gt_TYPE_WCHAR_T])dnl
   AC_REQUIRE([gt_TYPE_WINT_T])dnl
   AC_REQUIRE([gl_AC_HEADER_INTTYPES_H])

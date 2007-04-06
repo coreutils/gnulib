@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 11
+# vasnprintf.m4 serial 12
 dnl Copyright (C) 2002-2004, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,7 +34,6 @@ AC_DEFUN([gl_REPLACE_VASNPRINTF],
 AC_DEFUN([gl_PREREQ_PRINTF_ARGS],
 [
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
-  AC_REQUIRE([gt_TYPE_LONGDOUBLE])
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
 ])
@@ -43,7 +42,6 @@ AC_DEFUN([gl_PREREQ_PRINTF_ARGS],
 AC_DEFUN([gl_PREREQ_PRINTF_PARSE],
 [
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
-  AC_REQUIRE([gt_TYPE_LONGDOUBLE])
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   AC_REQUIRE([AC_TYPE_SIZE_T])
@@ -56,7 +54,6 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF],
 [
   AC_REQUIRE([AC_FUNC_ALLOCA])
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
-  AC_REQUIRE([gt_TYPE_LONGDOUBLE])
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   AC_CHECK_FUNCS(snprintf wcslen)

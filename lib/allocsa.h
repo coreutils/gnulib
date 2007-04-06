@@ -109,16 +109,12 @@ enum
 #if HAVE_LONG_LONG_INT
   sa_alignment_longlong = sa_alignof (long long),
 #endif
-#if HAVE_LONG_DOUBLE
   sa_alignment_longdouble = sa_alignof (long double),
-#endif
   sa_alignment_max = ((sa_alignment_long - 1) | (sa_alignment_double - 1)
 #if HAVE_LONG_LONG_INT
 		      | (sa_alignment_longlong - 1)
 #endif
-#if HAVE_LONG_DOUBLE
 		      | (sa_alignment_longdouble - 1)
-#endif
 		     ) + 1,
 /* The increment that guarantees room for a magic word must be >= sizeof (int)
    and a multiple of sa_alignment_max.  */

@@ -19,18 +19,6 @@
 
 #include <config.h>
 
-#if HAVE_LONG_DOUBLE
-
 #include "isnanl-nolibm.h"
 
 #include "test-isnanl.h"
-
-#else
-
-int
-main ()
-{
-  return 0;
-}
-
-#endif

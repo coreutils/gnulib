@@ -57,11 +57,9 @@
 # include "float+.h"
 # include "isnan.h"
 # include "printf-frexp.h"
-# if HAVE_LONG_DOUBLE
-#  include "isnanl-nolibm.h"
-#  include "printf-frexpl.h"
-#  include "fpucw.h"
-# endif
+# include "isnanl-nolibm.h"
+# include "printf-frexpl.h"
+# include "fpucw.h"
 #endif
 
 /* Some systems, like OSF/1 4.0 and Woe32, don't have EOVERFLOW.  */
@@ -386,7 +384,6 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		  }
 
 		/* Allocate a temporary buffer of sufficient size.  */
-# if HAVE_LONG_DOUBLE
 		if (type == TYPE_LONGDOUBLE)
 		  tmp_length =
 		    (unsigned int) ((LDBL_DIG + 1)
@@ -394,7 +391,6 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 				   )
 		    + 1; /* turn floor into ceil */
 		else
-# endif
 		  tmp_length =
 		    (unsigned int) ((DBL_DIG + 1)
 				    * 0.831 /* decimal -> hexadecimal */
@@ -427,7 +423,6 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 
 		pad_ptr = NULL;
 		p = tmp;
-# if HAVE_LONG_DOUBLE
 		if (type == TYPE_LONGDOUBLE)
 		  {
 		    long double arg = a.arg[dp->arg_index].a.a_longdouble;
@@ -560,15 +555,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 				}
 			      }
 			      *p++ = dp->conversion - 'A' + 'P';
-#  if WIDE_CHAR_VERSION
+# if WIDE_CHAR_VERSION
 			      {
 				static const wchar_t decimal_format[] =
 				  { '%', '+', 'd', '\0' };
 				SNPRINTF (p, 6 + 1, decimal_format, exponent);
 			      }
-#  else
+# else
 			      sprintf (p, "%+d", exponent);
-#  endif
+# endif
 			      while (*p != '\0')
 				p++;
 			  }
@@ -577,7 +572,6 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      }
 		  }
 		else
-# endif
 		  {
 		    double arg = a.arg[dp->arg_index].a.a_double;
 
@@ -932,7 +926,6 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      break;
 
 		    case 'f': case 'F':
-# if HAVE_LONG_DOUBLE
 		      if (type == TYPE_LONGDOUBLE)
 			tmp_length =
 			  (unsigned int) (LDBL_MAX_EXP
@@ -942,7 +935,6 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  + 1 /* turn floor into ceil */
 			  + 10; /* sign, decimal point etc. */
 		      else
-# endif
 			tmp_length =
 			  (unsigned int) (DBL_MAX_EXP
 					  * 0.30103 /* binary -> decimal */
@@ -960,7 +952,6 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      break;
 
 		    case 'a': case 'A':
-# if HAVE_LONG_DOUBLE
 		      if (type == TYPE_LONGDOUBLE)
 			tmp_length =
 			  (unsigned int) (LDBL_DIG
@@ -968,7 +959,6 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 					 )
 			  + 1; /* turn floor into ceil */
 		      else
-# endif
 			tmp_length =
 			  (unsigned int) (DBL_DIG
 					  * 0.831 /* decimal -> hexadecimal */
@@ -1087,11 +1077,9 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 #endif
 		    *p++ = 'l';
 		    break;
-#if HAVE_LONG_DOUBLE
 		  case TYPE_LONGDOUBLE:
 		    *p++ = 'L';
 		    break;
-#endif
 		  default:
 		    break;
 		  }
@@ -1248,14 +1236,12 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  SNPRINTF_BUF (arg);
 			}
 			break;
-#if HAVE_LONG_DOUBLE
 		      case TYPE_LONGDOUBLE:
 			{
 			  long double arg = a.arg[dp->arg_index].a.a_longdouble;
 			  SNPRINTF_BUF (arg);
 			}
 			break;
-#endif
 		      case TYPE_CHAR:
 			{
 			  int arg = a.arg[dp->arg_index].a.a_char;

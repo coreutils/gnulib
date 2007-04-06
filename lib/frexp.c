@@ -20,40 +20,38 @@
 
 #include <config.h>
 
-#if !(defined USE_LONG_DOUBLE && !HAVE_LONG_DOUBLE)
-
 /* Specification.  */
-# include <math.h>
+#include <math.h>
 
-# include <float.h>
-# ifdef USE_LONG_DOUBLE
-#  include "isnanl-nolibm.h"
-#  include "fpucw.h"
-# else
-#  include "isnan.h"
-# endif
+#include <float.h>
+#ifdef USE_LONG_DOUBLE
+# include "isnanl-nolibm.h"
+# include "fpucw.h"
+#else
+# include "isnan.h"
+#endif
 
 /* This file assumes FLT_RADIX = 2.  If FLT_RADIX is a power of 2 greater
    than 2, or not even a power of 2, some rounding errors can occur, so that
    then the returned mantissa is only guaranteed to be <= 1.0, not < 1.0.  */
 
-# ifdef USE_LONG_DOUBLE
-#  define FUNC frexpl
-#  define DOUBLE long double
-#  define ISNAN isnanl
-#  define DECL_ROUNDING DECL_LONG_DOUBLE_ROUNDING
-#  define BEGIN_ROUNDING() BEGIN_LONG_DOUBLE_ROUNDING ()
-#  define END_ROUNDING() END_LONG_DOUBLE_ROUNDING ()
-#  define L_(literal) literal##L
-# else
-#  define FUNC frexp
-#  define DOUBLE double
-#  define ISNAN isnan
-#  define DECL_ROUNDING
-#  define BEGIN_ROUNDING()
-#  define END_ROUNDING()
-#  define L_(literal) literal
-# endif
+#ifdef USE_LONG_DOUBLE
+# define FUNC frexpl
+# define DOUBLE long double
+# define ISNAN isnanl
+# define DECL_ROUNDING DECL_LONG_DOUBLE_ROUNDING
+# define BEGIN_ROUNDING() BEGIN_LONG_DOUBLE_ROUNDING ()
+# define END_ROUNDING() END_LONG_DOUBLE_ROUNDING ()
+# define L_(literal) literal##L
+#else
+# define FUNC frexp
+# define DOUBLE double
+# define ISNAN isnan
+# define DECL_ROUNDING
+# define BEGIN_ROUNDING()
+# define END_ROUNDING()
+# define L_(literal) literal
+#endif
 
 DOUBLE
 FUNC (DOUBLE x, int *exp)
@@ -167,11 +165,3 @@ FUNC (DOUBLE x, int *exp)
   *exp = exponent;
   return x;
 }
-
-#else
-
-/* This declaration is solely to ensure that after preprocessing
-   this file is never empty.  */
-typedef int dummy;
-
-#endif

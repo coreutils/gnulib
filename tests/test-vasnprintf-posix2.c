@@ -49,8 +49,6 @@ main (int argc, char *argv[])
     free (result);
   }
 
-#if HAVE_LONG_DOUBLE
-
   /* Test that a locale dependent decimal point is used.  */
   {
     size_t length;
@@ -63,8 +61,6 @@ main (int argc, char *argv[])
     ASSERT (length == strlen (result));
     free (result);
   }
-
-#endif
 
   return 0;
 }

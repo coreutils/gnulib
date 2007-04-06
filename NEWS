@@ -6,6 +6,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-04-06  gettext         The macro HAVE_LONG_DOUBLE is no longer set.
+                            You can replace all its uses with 1, i.e. assume
+                            'long double' as a type exists.
+
 2007-04-01  arcfour         Renamed to crypto/arcfour.
             arctwo          Renamed to crypto/arctwo.
             des             Renamed to crypto/des.

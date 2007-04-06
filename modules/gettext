@@ -15,7 +15,6 @@ m4/inttypes_h.m4
 m4/inttypes-pri.m4
 m4/lcmessage.m4
 m4/lock.m4
-m4/longdouble.m4
 m4/longlong.m4
 m4/nls.m4
 m4/po.m4

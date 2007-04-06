@@ -143,8 +143,6 @@
 /* Verify that SIZEOF_FLT <= sizeof (float) etc.  */
 typedef int verify_sizeof_flt[2 * (SIZEOF_FLT <= sizeof (float)) - 1];
 typedef int verify_sizeof_dbl[2 * (SIZEOF_DBL <= sizeof (double)) - 1];
-#if HAVE_LONG_DOUBLE
 typedef int verify_sizeof_ldbl[2 * (SIZEOF_LDBL <= sizeof (long double)) - 1];
-#endif
 
 #endif /* _FLOATPLUS_H */

@@ -1,4 +1,4 @@
-# printf.m4 serial 3
+# printf.m4 serial 4
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,6 @@ AC_DEFUN([gl_PRINTF_SIZES_C99],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([gl_AC_HEADER_STDINT_H])
   AC_REQUIRE([gl_AC_HEADER_INTTYPES_H])
-  AC_REQUIRE([gt_TYPE_LONGDOUBLE])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether printf supports size specifiers as in C99],
     [gl_cv_func_printf_sizes_c99], 
@@ -46,12 +45,10 @@ int main ()
   if (sprintf (buf, "%tu %d", (ptrdiff_t) 12345673, 33, 44, 55) < 0
       || strcmp (buf, "12345673 33") != 0)
     return 1;
-#if HAVE_LONG_DOUBLE
   buf[0] = '\0';
   if (sprintf (buf, "%Lg %d", (long double) 1.5, 33, 44, 55) < 0
       || strcmp (buf, "1.5 33") != 0)
     return 1;
-#endif
   return 0;
 }], [gl_cv_func_printf_sizes_c99=yes], [gl_cv_func_printf_sizes_c99=no],
       [
@@ -92,7 +89,6 @@ dnl Result is gl_cv_func_printf_directive_a.
 AC_DEFUN([gl_PRINTF_DIRECTIVE_A],
 [
   AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([gt_TYPE_LONGDOUBLE])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether printf supports the 'a' and 'A' directives],
     [gl_cv_func_printf_directive_a], 
@@ -129,7 +125,6 @@ int main ()
           && strcmp (buf, "0x4.0p-1") != 0
           && strcmp (buf, "0x8.0p-2") != 0))
     return 1;
-#if HAVE_LONG_DOUBLE
   /* This catches the same MacOS X 10.3.9 (Darwin 7.9) bug and also a
      glibc 2.4 bug <http://sourceware.org/bugzilla/show_bug.cgi?id=2908>.  */
   if (sprintf (buf, "%.1La", 1.999L) < 0
@@ -138,7 +133,6 @@ int main ()
           && strcmp (buf, "0x4.0p-1") != 0
           && strcmp (buf, "0x8.0p-2") != 0))
     return 1;
-#endif
   return 0;
 }], [gl_cv_func_printf_directive_a=yes], [gl_cv_func_printf_directive_a=no],
       [

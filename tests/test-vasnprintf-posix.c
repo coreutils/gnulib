@@ -111,7 +111,6 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
-#if HAVE_LONG_DOUBLE
   {
     size_t length;
     char *result =
@@ -121,7 +120,6 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     ASSERT (length == strlen (result));
     free (result);
   }
-#endif
 
   /* Test the support of the 'a' and 'A' conversion specifier for hexadecimal
      output of floating-point numbers.  */
@@ -433,8 +431,6 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
-#if HAVE_LONG_DOUBLE
-
   { /* A positive number.  */
     size_t length;
     char *result =
@@ -742,8 +738,6 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     ASSERT (length == strlen (result));
     free (result);
   }
-
-#endif
 
   /* Test the support of the %n format directive.  */
 

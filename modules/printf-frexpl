@@ -8,7 +8,6 @@ lib/printf-frexpl.c
 lib/printf-frexp.c
 m4/printf-frexpl.m4
 m4/ldexpl.m4
-m4/longdouble.m4
 
 Depends-on:
 math
@@ -21,9 +20,7 @@ Makefile.am:
 lib_SOURCES += printf-frexpl.c
 
 Include:
-#if HAVE_LONG_DOUBLE
-# include "printf-frexpl.h"
-#endif
+"printf-frexpl.h"
 
 License:
 LGPL

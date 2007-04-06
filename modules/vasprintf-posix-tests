@@ -1,12 +1,10 @@
 Files:
 tests/test-vasprintf-posix.c
-m4/longdouble.m4
 
 Depends-on:
 stdint
 
 configure.ac:
-AC_REQUIRE([gt_TYPE_LONGDOUBLE])
 
 Makefile.am:
 TESTS += test-vasprintf-posix

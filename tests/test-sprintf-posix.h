@@ -71,7 +71,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
-#if HAVE_LONG_DOUBLE
   {
     char result[1000];
     int retval =
@@ -79,7 +78,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (strcmp (result, "1.5 33") == 0);
     ASSERT (retval == strlen (result));
   }
-#endif
 
   /* Test the support of the 'a' and 'A' conversion specifier for hexadecimal
      output of floating-point numbers.  */
@@ -341,8 +339,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
-#if HAVE_LONG_DOUBLE
-
   { /* A positive number.  */
     char result[1000];
     int retval =
@@ -600,8 +596,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
 	    || strcmp (result, "0000000nan 33") == 0);
     ASSERT (retval == strlen (result));
   }
-
-#endif
 
   /* Test the support of the %n format directive.  */
 

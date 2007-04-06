@@ -7,7 +7,6 @@ lib/isnanl.c
 lib/isnan.c
 lib/float+.h
 m4/isnanl.m4
-m4/longdouble.m4
 
 Depends-on:
 fpieee
@@ -18,9 +17,7 @@ gl_FUNC_ISNANL_NO_LIBM
 Makefile.am:
 
 Include:
-#if HAVE_LONG_DOUBLE
-# include "isnanl-nolibm.h"
-#endif
+"isnanl-nolibm.h"
 
 License:
 LGPL

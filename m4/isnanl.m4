@@ -1,4 +1,4 @@
-# isnanl.m4 serial 2
+# isnanl.m4 serial 3
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,60 +6,54 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_ISNANL],
 [
-  AC_REQUIRE([gt_TYPE_LONGDOUBLE])
   ISNANL_LIBM=
-  if test $gt_cv_c_long_double = yes; then
-    gl_HAVE_ISNANL_NO_LIBM
-    if test $gl_cv_func_isnanl_no_libm = no; then
-      gl_HAVE_ISNANL_IN_LIBM
-      if test $gl_cv_func_isnanl_in_libm = yes; then
-        ISNANL_LIBM=-lm
-      fi
+  gl_HAVE_ISNANL_NO_LIBM
+  if test $gl_cv_func_isnanl_no_libm = no; then
+    gl_HAVE_ISNANL_IN_LIBM
+    if test $gl_cv_func_isnanl_in_libm = yes; then
+      ISNANL_LIBM=-lm
     fi
-    if test $gl_cv_func_isnanl_no_libm = yes \
-       || test $gl_cv_func_isnanl_in_libm = yes; then
-      save_LIBS="$LIBS"
-      LIBS="$LIBS $ISNANL_LIBM"
-      gl_FUNC_ISNANL_WORKS
-      LIBS="$save_LIBS"
-      case "$gl_cv_func_isnanl_works" in
-        *yes) gl_func_isnanl=yes ;;
-        *)    gl_func_isnanl=no; ISNANL_LIBM= ;;
-      esac
-    else
-      gl_func_isnanl=no
-    fi
-    if test $gl_func_isnanl = yes; then
-      AC_DEFINE([HAVE_ISNANL], 1,
-        [Define if the isnan(long double) function is available.])
-    else
-      AC_LIBOBJ([isnanl])
-      gl_LONG_DOUBLE_EXPONENT_LOCATION
-    fi
+  fi
+  if test $gl_cv_func_isnanl_no_libm = yes \
+     || test $gl_cv_func_isnanl_in_libm = yes; then
+    save_LIBS="$LIBS"
+    LIBS="$LIBS $ISNANL_LIBM"
+    gl_FUNC_ISNANL_WORKS
+    LIBS="$save_LIBS"
+    case "$gl_cv_func_isnanl_works" in
+      *yes) gl_func_isnanl=yes ;;
+      *)    gl_func_isnanl=no; ISNANL_LIBM= ;;
+    esac
+  else
+    gl_func_isnanl=no
+  fi
+  if test $gl_func_isnanl = yes; then
+    AC_DEFINE([HAVE_ISNANL], 1,
+      [Define if the isnan(long double) function is available.])
+  else
+    AC_LIBOBJ([isnanl])
+    gl_LONG_DOUBLE_EXPONENT_LOCATION
   fi
   AC_SUBST([ISNANL_LIBM])
 ])
 
 AC_DEFUN([gl_FUNC_ISNANL_NO_LIBM],
 [
-  AC_REQUIRE([gt_TYPE_LONGDOUBLE])
-  if test $gt_cv_c_long_double = yes; then
-    gl_HAVE_ISNANL_NO_LIBM
-    gl_func_isnanl_no_libm=$gl_cv_func_isnanl_no_libm
-    if test $gl_func_isnanl_no_libm = yes; then
-      gl_FUNC_ISNANL_WORKS
-      case "$gl_cv_func_isnanl_works" in
-        *yes) ;;
-        *)    gl_func_isnanl_no_libm=no ;;
-      esac
-    fi
-    if test $gl_func_isnanl_no_libm = yes; then
-      AC_DEFINE([HAVE_ISNANL_IN_LIBC], 1,
-        [Define if the isnan(long double) function is available in libc.])
-    else
-      AC_LIBOBJ([isnanl])
-      gl_LONG_DOUBLE_EXPONENT_LOCATION
-    fi
+  gl_HAVE_ISNANL_NO_LIBM
+  gl_func_isnanl_no_libm=$gl_cv_func_isnanl_no_libm
+  if test $gl_func_isnanl_no_libm = yes; then
+    gl_FUNC_ISNANL_WORKS
+    case "$gl_cv_func_isnanl_works" in
+      *yes) ;;
+      *)    gl_func_isnanl_no_libm=no ;;
+    esac
+  fi
+  if test $gl_func_isnanl_no_libm = yes; then
+    AC_DEFINE([HAVE_ISNANL_IN_LIBC], 1,
+      [Define if the isnan(long double) function is available in libc.])
+  else
+    AC_LIBOBJ([isnanl])
+    gl_LONG_DOUBLE_EXPONENT_LOCATION
   fi
 ])
 
@@ -107,7 +101,6 @@ dnl infinite. This test fails e.g. on NetBSD/i386.
 AC_DEFUN([gl_FUNC_ISNANL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([gt_TYPE_LONGDOUBLE])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether isnanl works], [gl_cv_func_isnanl_works],
     [

@@ -52,9 +52,7 @@ typedef enum
   TYPE_ULONGLONGINT,
 #endif
   TYPE_DOUBLE,
-#if HAVE_LONG_DOUBLE
   TYPE_LONGDOUBLE,
-#endif
   TYPE_CHAR,
 #if HAVE_WINT_T
   TYPE_WIDE_CHAR,
@@ -93,9 +91,7 @@ typedef struct
 #endif
     float			a_float;
     double			a_double;
-#if HAVE_LONG_DOUBLE
     long double			a_longdouble;
-#endif
     int				a_char;
 #if HAVE_WINT_T
     wint_t			a_wide_char;

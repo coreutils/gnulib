@@ -1,5 +1,54 @@
 2007-04-06  Bruno Haible  <bruno@clisp.org>
 
+	Assume the 'long double' type.
+	* m4/longdouble.m4: Remove file.
+	* config/srclist.txt: Don't mention longdouble.m4.
+	* lib/allocsa.h: Assume HAVE_LONG_DOUBLE to be true.
+	* lib/float+.h: Likewise.
+	* lib/frexp.c: Likewise.
+	* lib/printf-args.h: Likewise.
+	* lib/printf-args.c: Likewise.
+	* lib/printf-frexp.c: Likewise.
+	* lib/printf-parse.c: Likewise.
+	* lib/vasnprintf.c: Likewise.
+	* m4/allocsa.m4: Remove gt_TYPE_LONGDOUBLE invocation.
+	* m4/intl.m4: Likewise.
+	* m4/isnanl.m4: Likewise.
+	* m4/printf.m4: Likewise.
+	* m4/printf-frexpl.m4: Likewise.
+	* m4/vasnprintf.m4: Likewise.
+	* modules/allocsa (Files): Remove m4/longdouble.m4.
+	* modules/gettext (Files): Likewise.
+	* modules/relocatable-prog-wrapper (Files): Likewise.
+	* modules/vasnprintf (Files): Likewise.
+	* modules/isnanl (Files): Likewise.
+	(Include): Simplify.
+	* modules/isnanl-nolibm (Files): Remove m4/longdouble.m4.
+	(Include): Simplify.
+	* modules/printf-frexpl (Files): Remove m4/longdouble.m4.
+	(Include): Simplify.
+	* modules/snprintf-posix-tests (Files): Remove m4/longdouble.m4.
+	(configure.ac): Remove gt_TYPE_LONGDOUBLE invocation.
+	* modules/sprintf-posix-tests (Files): Remove m4/longdouble.m4.
+	(configure.ac): Remove gt_TYPE_LONGDOUBLE invocation.
+	* modules/vasnprintf-posix-tests (Files): Remove m4/longdouble.m4.
+	(configure.ac): Remove gt_TYPE_LONGDOUBLE invocation.
+	* modules/vasprintf-posix-tests (Files): Remove m4/longdouble.m4.
+	(configure.ac): Remove gt_TYPE_LONGDOUBLE invocation.
+	* modules/vsnprintf-posix-tests (Files): Remove m4/longdouble.m4.
+	(configure.ac): Remove gt_TYPE_LONGDOUBLE invocation.
+	* modules/vsprintf-posix-tests (Files): Remove m4/longdouble.m4.
+	(configure.ac): Remove gt_TYPE_LONGDOUBLE invocation.
+	* tests/test-isnanl-nolibm.c: Assume HAVE_LONG_DOUBLE to be true.
+	* tests/test-isnanl.c: Likewise.
+	* tests/test-snprintf-posix.h: Likewise.
+	* tests/test-sprintf-posix.h: Likewise.
+	* tests/test-vasnprintf-posix.c: Likewise.
+	* tests/test-vasnprintf-posix2.c: Likewise.
+	* tests/test-vasprintf-posix.c: Likewise.
+
+2007-04-06  Bruno Haible  <bruno@clisp.org>
+
 	Fix problem with Compaq (ex-DEC) Desktop C compiler on Tru64.
 	* lib/math_.h [__DECC]: Include the overridden include file through
 	#include_next, outside the double-inclusion guard.

@@ -2,14 +2,12 @@ Files:
 tests/test-vasnprintf-posix.c
 tests/test-vasnprintf-posix2.sh
 tests/test-vasnprintf-posix2.c
-m4/longdouble.m4
 m4/locale-fr.m4
 
 Depends-on:
 stdint
 
 configure.ac:
-AC_REQUIRE([gt_TYPE_LONGDOUBLE])
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 

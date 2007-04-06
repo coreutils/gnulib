@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.147 2007-04-02 22:38:14 karl Exp $
+# $Id: srclist.txt,v 1.148 2007-04-06 14:36:56 haible Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -79,7 +79,6 @@ $GETTEXT/gettext-runtime/m4/intldir.m4			m4
 $GETTEXT/gettext-runtime/m4/intmax.m4			m4
 $GETTEXT/gettext-runtime/m4/inttypes-pri.m4		m4
 $GETTEXT/gettext-runtime/m4/lcmessage.m4		m4
-$GETTEXT/gettext-runtime/m4/longdouble.m4		m4
 $GETTEXT/gettext-runtime/m4/nls.m4			m4
 $GETTEXT/gettext-runtime/m4/po.m4			m4
 $GETTEXT/gettext-runtime/m4/printf-posix.m4		m4

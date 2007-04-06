@@ -10,7 +10,6 @@ lib/float+.h
 lib/vasnprintf.h
 lib/vasnprintf.c
 lib/asnprintf.c
-m4/longdouble.m4
 m4/wchar_t.m4
 m4/wint_t.m4
 m4/longlong.m4
