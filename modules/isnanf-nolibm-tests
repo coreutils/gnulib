@@ -1,0 +1,12 @@
+Files:
+tests/test-isnanf.c
+
+Depends-on:
+
+configure.ac:
+gl_FLOAT_EXPONENT_LOCATION
+
+Makefile.am:
+TESTS += test-isnanf
+check_PROGRAMS += test-isnanf
+

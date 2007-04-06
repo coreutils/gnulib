@@ -1,5 +1,8 @@
 2007-04-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/isnanf-nolibm-tests: New file.
+	* tests/test-isnanf.c: New file.
+
 	* modules/isnanf-nolibm: New file.
 	* lib/isnanf.h: New file.
 	* lib/isnanf.c: New file.
