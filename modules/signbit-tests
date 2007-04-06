@@ -1,0 +1,17 @@
+Files:
+tests/test-signbit.c
+m4/isnanf.m4
+m4/isnan.m4
+m4/isnanl.m4
+
+Depends-on:
+
+configure.ac:
+AC_REQUIRE([gl_FLOAT_EXPONENT_LOCATION])
+AC_REQUIRE([gl_DOUBLE_EXPONENT_LOCATION])
+AC_REQUIRE([gl_LONG_DOUBLE_EXPONENT_LOCATION])
+
+Makefile.am:
+TESTS += test-signbit
+check_PROGRAMS += test-signbit
+
