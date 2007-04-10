@@ -1,3 +1,15 @@
+2007-04-09  Eric Blake  <ebb9@byu.net>
+
+	* lib/stdio_.h [REPLACE_FFLUSH]: Declare rpl_fflush.
+	* modules/stdio (Makefile.am): Support fflush.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Likewise.
+	* modules/fflush: New file.
+	* lib/fflush.c: Likewise.
+	* m4/fflush.m4: Likewise.
+	* modules/fflush-tests: New test.
+	* tests/test-fflush.c: Likewise.
+	* MODULES.html.sh (Input/output <stdio.h>): Document new module.
+
 2007-04-06  Bruno Haible  <bruno@clisp.org>
 
 	* lib/vasnprintf.c: Include <math.h>. Don't include float+.h.

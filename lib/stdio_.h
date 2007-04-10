@@ -207,6 +207,13 @@ extern int vsprintf (char *str, const char *format, va_list args)
 # endif
 #endif
 
+#if @GNULIB_FFLUSH@ && @REPLACE_FFLUSH@
+# define fflush rpl_fflush
+  /* Flush all pending data on STREAM according to POSIX rules.  Both
+     output and seekable input streams are supported.  */
+  extern int fflush (FILE *gl_stream);
+#endif
+
 #ifdef __cplusplus
 }
 #endif

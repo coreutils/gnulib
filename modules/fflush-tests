@@ -1,0 +1,12 @@
+Files:
+tests/test-fflush.c
+
+Depends-on:
+unistd
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fflush
+check_PROGRAMS += test-fflush
+EXTRA_DIST += test-fflush.c

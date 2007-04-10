@@ -1543,6 +1543,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module fflush
   func_module fseterr
   func_module tmpfile
   func_end_table

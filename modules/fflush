@@ -1,0 +1,23 @@
+Description:
+Discard pending data on both input and output streams.
+
+Files:
+lib/fflush.c
+m4/fflush.m4
+
+Depends-on:
+stdio
+
+configure.ac:
+gl_FUNC_FFLUSH
+gl_STDIO_MODULE_INDICATOR([fflush])
+
+Makefile.am:
+
+Include:
+
+License:
+GPL
+
+Maintainer:
+Eric Blake
