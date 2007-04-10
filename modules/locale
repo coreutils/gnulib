@@ -1,0 +1,36 @@
+Description:
+A <locale.h> that conforms to POSIX.
+
+Files:
+lib/locale_.h
+m4/locale_h.m4
+
+Depends-on:
+absolute-header
+
+configure.ac:
+gl_LOCALE_H
+
+Makefile.am:
+BUILT_SOURCES += $(LOCALE_H)
+
+# We need the following in order to create <locale.h> when the system
+# doesn't have one that provides all definitions.
+locale.h: locale_.h
+	rm -f $@-t $@
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e 's|@''ABSOLUTE_LOCALE_H''@|$(ABSOLUTE_LOCALE_H)|g' \
+	      < $(srcdir)/locale_.h; \
+	} > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += locale.h locale.h-t
+
+Include:
+<locale.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
