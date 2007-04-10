@@ -1,3 +1,13 @@
+2007-04-10  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	* m4/signbit.m4 (gl_SIGNBIT): When the sign bit position could not
+	be determined, test for availability of the copysignf, copysign,
+	copysignl functions.
+	* lib/signbitf.c (gl_signbitf): Use copysignf if available in libc.
+	* lib/signbitd.c (gl_signbitd): Use copysign if available in libc.
+	* lib/signbitl.c (gl_signbitl): Use copysignl if available in libc.
+
 2007-04-09  Eric Blake  <ebb9@byu.net>
 
 	* lib/stdio_.h [REPLACE_FFLUSH]: Declare rpl_fflush.
