@@ -1,5 +1,8 @@
 2007-04-10  Bruno Haible  <bruno@clisp.org>
 
+	* modules/locale-tests: New file.
+	* tests/test-locale.c: New file.
+
 	* modules/locale: New file.
 	* lib/locale_.h: New file.
 	* m4/locale_h.m4: New file.

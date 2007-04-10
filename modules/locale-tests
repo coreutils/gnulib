@@ -1,0 +1,13 @@
+Files:
+tests/test-locale.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-locale
+check_PROGRAMS += test-locale
+
+License:
+LGPL
