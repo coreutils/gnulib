@@ -1,5 +1,37 @@
 2007-04-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (VASNPRINTF): Implement the %F directive using the
+	%f directive, if NEED_PRINTF_DIRECTIVE_F is defined.
+	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_F): New macro.
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_DIRECTIVE_F): New macro.
+	* m4/fprintf-posix.m4 (gl_FUNC_FPRINTF_POSIX): Invoke
+	gl_PRINTF_DIRECTIVE_F. Test gl_cv_func_printf_directive_f. Invoke
+	gl_PREREQ_VASNPRINTF_DIRECTIVE_F for the replacement.
+	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Invoke
+	gl_PRINTF_DIRECTIVE_F. Test gl_cv_func_printf_directive_f. Invoke
+	gl_PREREQ_VASNPRINTF_DIRECTIVE_F for the replacement.
+	* m4/sprintf-posix.m4 (gl_FUNC_SPRINTF_POSIX): Invoke
+	gl_PRINTF_DIRECTIVE_F. Test gl_cv_func_printf_directive_f. Invoke
+	gl_PREREQ_VASNPRINTF_DIRECTIVE_F for the replacement.
+	* m4/vasnprintf-posix.m4 (gl_FUNC_VASNPRINTF_POSIX): Invoke
+	gl_PRINTF_DIRECTIVE_F. Test gl_cv_func_printf_directive_f. Invoke
+	gl_PREREQ_VASNPRINTF_DIRECTIVE_F for the replacement.
+	* m4/vasprintf-posix.m4 (gl_FUNC_VASPRINTF_POSIX): Invoke
+	gl_PRINTF_DIRECTIVE_F. Test gl_cv_func_printf_directive_f. Invoke
+	gl_PREREQ_VASNPRINTF_DIRECTIVE_F for the replacement.
+	* m4/vfprintf-posix.m4 (gl_FUNC_VFPRINTF_POSIX): Invoke
+	gl_PRINTF_DIRECTIVE_F. Test gl_cv_func_printf_directive_f. Invoke
+	gl_PREREQ_VASNPRINTF_DIRECTIVE_F for the replacement.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX): Invoke
+	gl_PRINTF_DIRECTIVE_F. Test gl_cv_func_printf_directive_f. Invoke
+	gl_PREREQ_VASNPRINTF_DIRECTIVE_F for the replacement.
+	* m4/vsprintf-posix.m4 (gl_FUNC_VSPRINTF_POSIX): Invoke
+	gl_PRINTF_DIRECTIVE_F. Test gl_cv_func_printf_directive_f. Invoke
+	gl_PREREQ_VASNPRINTF_DIRECTIVE_F for the replacement.
+	Reported by Eric Blake.
+
+2007-04-11  Bruno Haible  <bruno@clisp.org>
+
 	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_A): Fix test. It always failed.
 
 2007-04-10  Bruno Haible  <bruno@clisp.org>

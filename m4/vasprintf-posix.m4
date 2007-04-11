@@ -1,4 +1,4 @@
-# vasprintf-posix.m4 serial 3
+# vasprintf-posix.m4 serial 4
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,7 @@ AC_DEFUN([gl_FUNC_VASPRINTF_POSIX],
   AC_REQUIRE([gl_EOVERFLOW])
   AC_REQUIRE([gl_PRINTF_SIZES_C99])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_A])
+  AC_REQUIRE([gl_PRINTF_DIRECTIVE_F])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_N])
   AC_REQUIRE([gl_PRINTF_POSITIONS])
   gl_cv_func_vasprintf_posix=no
@@ -17,14 +18,18 @@ AC_DEFUN([gl_FUNC_VASPRINTF_POSIX],
     *yes)
       case "$gl_cv_func_printf_directive_a" in
         *yes)
-          case "$gl_cv_func_printf_directive_n" in
+          case "$gl_cv_func_printf_directive_f" in
             *yes)
-              case "$gl_cv_func_printf_positions" in
+              case "$gl_cv_func_printf_directive_n" in
                 *yes)
-                  if test $ac_cv_func_vasprintf = yes; then
-                    # vasprintf exists and is already POSIX compliant.
-                    gl_cv_func_vasprintf_posix=yes
-                  fi
+                  case "$gl_cv_func_printf_positions" in
+                    *yes)
+                      if test $ac_cv_func_vasprintf = yes; then
+                        # vasprintf exists and is already POSIX compliant.
+                        gl_cv_func_vasprintf_posix=yes
+                      fi
+                      ;;
+                  esac
                   ;;
               esac
               ;;
@@ -35,6 +40,7 @@ AC_DEFUN([gl_FUNC_VASPRINTF_POSIX],
   esac
   if test $gl_cv_func_vasprintf_posix = no; then
     gl_PREREQ_VASNPRINTF_DIRECTIVE_A
+    gl_PREREQ_VASNPRINTF_DIRECTIVE_F
     gl_REPLACE_VASNPRINTF
     gl_REPLACE_VASPRINTF
   fi

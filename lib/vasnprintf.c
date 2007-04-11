@@ -1061,7 +1061,12 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		  default:
 		    break;
 		  }
-		*p = dp->conversion;
+#if NEED_PRINTF_DIRECTIVE_F
+		if (dp->conversion == 'F')
+		  *p = 'f';
+		else
+#endif
+		  *p = dp->conversion;
 #if USE_SNPRINTF
 		p[1] = '%';
 		p[2] = 'n';
@@ -1346,6 +1351,18 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    memcpy (result + length, tmp, count * sizeof (CHAR_T));
 		    if (tmp != tmpbuf)
 		      free (tmp);
+#endif
+
+#if NEED_PRINTF_DIRECTIVE_F
+		    if (dp->conversion == 'F')
+		      {
+			/* Convert the %f result to upper case for %F.  */
+			CHAR_T *rp = result + length;
+			size_t rc;
+			for (rc = count; rc > 0; rc--, rp++)
+			  if (*rp >= 'a' && *rp <= 'z')
+			    *rp = *rp - 'a' + 'A';
+		      }
 #endif
 
 		    length += count;
