@@ -497,6 +497,7 @@ dnl   Cygwin 2006                          #  #  #  .  .  .  .  .  ?
 dnl   Solaris 10                           .  #  .  .  .  .  .  .  .
 dnl   Solaris 2.6 ... 9                    #  #  #  .  .  .  .  .  .
 dnl   Solaris 2.5.1                        #  #  #  .  .  #  #  #  #
+dnl   AIX 5.2                              .  #  .  .  .  .  .  .  .
 dnl   AIX 4.3.2, 5.1                       #  #  #  .  .  .  .  .  .
 dnl   HP-UX 11.31                          .  #  .  .  .  .  .  #  #
 dnl   HP-UX 10.20, 11.00, 11.11, 11.23     #  #  #  .  .  .  .  #  #
