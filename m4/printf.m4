@@ -113,15 +113,15 @@ int main ()
     return 1;
   /* This catches a FreeBSD 6.1 bug: it doesn't round.  */
   if (sprintf (buf, "%.2a %d", 1.51, 33, 44, 55) < 0
-      || (strcmp (result, "0x1.83p+0 33") != 0
-          && strcmp (result, "0x3.05p-1 33") != 0
-          && strcmp (result, "0x6.0ap-2 33") != 0
-          && strcmp (result, "0xc.14p-3 33") != 0))
+      || (strcmp (buf, "0x1.83p+0 33") != 0
+          && strcmp (buf, "0x3.05p-1 33") != 0
+          && strcmp (buf, "0x6.0ap-2 33") != 0
+          && strcmp (buf, "0xc.14p-3 33") != 0))
     return 1;
   /* This catches a FreeBSD 6.1 bug.  See
      <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
   if (sprintf (buf, "%010a %d", 1.0 / 0.0, 33, 44, 55) < 0
-      || result[0] == '0')
+      || buf[0] == '0')
     return 1;
   /* This catches a MacOS X 10.3.9 (Darwin 7.9) bug.  */
   if (sprintf (buf, "%.1a", 1.999) < 0
