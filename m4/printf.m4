@@ -1,4 +1,4 @@
-# printf.m4 serial 4
+# printf.m4 serial 5
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -117,6 +117,11 @@ int main ()
           && strcmp (result, "0x3.05p-1 33") != 0
           && strcmp (result, "0x6.0ap-2 33") != 0
           && strcmp (result, "0xc.14p-3 33") != 0))
+    return 1;
+  /* This catches a FreeBSD 6.1 bug.  See
+     <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+  if (sprintf (buf, "%010a %d", 1.0 / 0.0, 33, 44, 55) < 0
+      || result[0] == '0')
     return 1;
   /* This catches a MacOS X 10.3.9 (Darwin 7.9) bug.  */
   if (sprintf (buf, "%.1a", 1.999) < 0

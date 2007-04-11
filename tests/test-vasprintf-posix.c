@@ -395,8 +395,9 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     int retval =
       my_asprintf (&result, "%010a %d", 1.0 / 0.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "       inf 33") == 0
-	    || strcmp (result, "0000000inf 33") == 0);
+    /* "0000000inf 33" is not a valid result; see
+       <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+    ASSERT (strcmp (result, "       inf 33") == 0);
     ASSERT (retval == strlen (result));
     free (result);
   }
@@ -406,8 +407,9 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     int retval =
       my_asprintf (&result, "%010a %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "       nan 33") == 0
-	    || strcmp (result, "0000000nan 33") == 0);
+    /* "0000000nan 33" is not a valid result; see
+       <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+    ASSERT (strcmp (result, "       nan 33") == 0);
     ASSERT (retval == strlen (result));
     free (result);
   }
@@ -703,8 +705,9 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     int retval =
       my_asprintf (&result, "%010La %d", 1.0L / 0.0L, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "       inf 33") == 0
-	    || strcmp (result, "0000000inf 33") == 0);
+    /* "0000000inf 33" is not a valid result; see
+       <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+    ASSERT (strcmp (result, "       inf 33") == 0);
     ASSERT (retval == strlen (result));
     free (result);
   }
@@ -714,8 +717,9 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     int retval =
       my_asprintf (&result, "%010La %d", 0.0L / 0.0L, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "       nan 33") == 0
-	    || strcmp (result, "0000000nan 33") == 0);
+    /* "0000000nan 33" is not a valid result; see
+       <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+    ASSERT (strcmp (result, "       nan 33") == 0);
     ASSERT (retval == strlen (result));
     free (result);
   }

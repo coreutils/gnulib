@@ -1,5 +1,18 @@
 2007-04-10  Bruno Haible  <bruno@clisp.org>
 
+	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_A): Add a test for correct result
+	for NaN and Infinity. Needed on FreeBSD 6.1.
+	* tests/test-vasnprintf-posix.c (test_function): Undo last change
+	regarding results for "%010a" of Infinity and NaN.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-fprintf-posix.h (test_function): Likewise.
+	* tests/test-printf-posix.h (test_function): Likewise.
+	* tests/test-fprintf-posix.out: Likewise.
+
+2007-04-10  Bruno Haible  <bruno@clisp.org>
+
 	* modules/locale-tests: New file.
 	* tests/test-locale.c: New file.
 
