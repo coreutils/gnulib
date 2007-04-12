@@ -6,6 +6,7 @@ lib/sysexit_.h
 m4/sysexits.m4
 
 Depends-on:
+absolute-header
 
 configure.ac:
 gl_SYSEXITS
