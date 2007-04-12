@@ -79,7 +79,7 @@ void
 close_stdin (void)
 {
   bool fail = false;
-  if (close_stream (stdin) != 0)
+  if (fflush (stdin) != 0 || close_stream (stdin) != 0)
     {
       char const *close_error = _("error closing file");
       if (file_name)

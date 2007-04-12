@@ -1,5 +1,8 @@
 2007-04-12  Eric Blake  <ebb9@byu.net>
 
+	Work around glibc's failure to flush stdin on fclose.
+	* lib/closein.c (close_stdin): Flush stdin before closing.
+
 	Work around glibc's failure to reset seekable stdin on exit.
 	* modules/closein: New module.
 	* lib/closein.c: New file.
