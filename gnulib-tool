@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-04-03 23:27:57 $'
+cvsdatestamp='$Date: 2007-04-12 11:56:38 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1175,7 +1175,9 @@ ba
   done
   # Add the dummy module, to make sure the library will be non-empty.
   if test -z "$have_lib_SOURCES"; then
-    func_append modules " dummy"
+    if func_acceptable "dummy"; then
+      func_append modules " dummy"
+    fi
   fi
 }
 

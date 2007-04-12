@@ -1,5 +1,9 @@
 2007-04-12  Simon Josefsson  <simon@josefsson.org>
 
+	* gnulib-tool (func_modules_add_dummy): Respect --avoid=dummy.
+
+2007-04-12  Simon Josefsson  <simon@josefsson.org>
+
 	* modules/autobuild: New module.
 
 	* m4/autobuild.m4: New file.
