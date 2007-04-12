@@ -6,6 +6,11 @@
 
 2007-04-12  Simon Josefsson  <simon@josefsson.org>
 
+	* MODULES.html.sh (Support for maintaining and releasing
+	projects): Add autobuild.  Suggested by Eric Blake <ebb9@byu.net>.
+
+2007-04-12  Simon Josefsson  <simon@josefsson.org>
+
 	* gnulib-tool (func_modules_add_dummy): Respect --avoid=dummy.
 
 2007-04-12  Simon Josefsson  <simon@josefsson.org>

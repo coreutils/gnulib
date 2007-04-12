@@ -2554,6 +2554,7 @@ func_all_modules ()
 
   func_begin_table
   func_module announce-gen
+  func_module autobuild
   func_module gnupload
   func_module maintainer-makefile
   func_end_table
