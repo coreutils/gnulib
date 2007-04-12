@@ -1,0 +1,100 @@
+/* Close standard input, rewinding seekable stdin if necessary.
+
+   Copyright (C) 2007 Free Software Foundation, Inc.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+#include <config.h>
+
+#include "closein.h"
+#include "closeout.h"
+
+#include <errno.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <unistd.h>
+
+#include "gettext.h"
+#define _(msgid) gettext (msgid)
+
+#include "close-stream.h"
+#include "error.h"
+#include "exitfail.h"
+#include "quotearg.h"
+
+static const char *file_name;
+
+/* Set the file name to be reported in the event an error is detected
+   on stdin by close_stdin.  See also close_stdout_set_file_name, if
+   an error is detected when closing stdout.  */
+void
+close_stdin_set_file_name (const char *file)
+{
+  file_name = file;
+}
+
+/* Close standard input, rewinding any unused input if stdin is
+   seekable.  On error, issue a diagnostic and _exit with status
+   'exit_failure'.  Then call close_stdout.
+
+   Most programs can get by with close_stdout.  close_stdin is only
+   needed when a program wants to guarantee that partially read input
+   from seekable stdin is not consumed, for any subsequent clients.
+   For example, POSIX requires that these two commands behave alike:
+
+     (sed -ne 1q; cat) < file
+     tail -n 1 file
+
+   Since close_stdin is commonly registered via 'atexit', POSIX
+   and the C standard both say that it should not call 'exit',
+   because the behavior is undefined if 'exit' is called more than
+   once.  So it calls '_exit' instead of 'exit'.  If close_stdin
+   is registered via atexit before other functions are registered,
+   the other functions can act before this _exit is invoked.
+
+   Applications that use close_stdout should flush any streams other
+   than stdin, stdout, and stderr before exiting, since the call to
+   _exit will bypass other buffer flushing.  Applications should be
+   flushing and closing other streams anyway, to check for I/O errors.
+   Also, applications should not use tmpfile, since _exit can bypass
+   the removal of these files.
+
+   It's important to detect such failures and exit nonzero because many
+   tools (most notably `make' and other build-management systems) depend
+   on being able to detect failure in other tools via their exit status.  */
+
+void
+close_stdin (void)
+{
+  bool fail = false;
+  if (close_stream (stdin) != 0)
+    {
+      char const *close_error = _("error closing file");
+      if (file_name)
+	error (0, errno, "%s: %s", quotearg_colon (file_name),
+	       close_error);
+      else
+	error (0, errno, "%s", close_error);
+
+      /* Defer failure until after closing stdout, since the output
+	 can still usefully be flushed.  */
+      fail = true;
+    }
+
+  close_stdout ();
+
+  if (fail)
+    _exit (exit_failure);
+}

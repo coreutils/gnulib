@@ -2192,6 +2192,7 @@ func_all_modules ()
 
   func_begin_table
   func_module close-stream
+  func_module closein
   func_module closeout
   func_module fopen-safer
   func_module fpending

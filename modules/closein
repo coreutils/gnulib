@@ -1,0 +1,26 @@
+Description:
+Close all standard streams, resetting seekable stdin if needed, and exiting with a diagnostic on error.
+
+Files:
+lib/closein.h
+lib/closein.c
+m4/closein.m4
+
+Depends-on:
+closeout
+fflush
+stdbool
+
+configure.ac:
+gl_CLOSEIN
+
+Makefile.am:
+
+Include:
+"closein.h"
+
+License:
+GPL
+
+Maintainer:
+Eric Blake
