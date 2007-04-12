@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-04-12 11:56:38 $'
+cvsdatestamp='$Date: 2007-04-12 13:02:00 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2911,8 +2911,8 @@ func_create_megatestdir ()
    echo "   echo rc=\$?"
    echo "  ) 2>&1 | { if test -n \"\$AUTOBUILD_SUBST\"; then sed -e \"\$AUTOBUILD_SUBST\"; else cat; fi; } > logs/\$safemodule"
    echo "done"
-  ) > "$megatestdir/autobuild"
-  chmod a+x "$megatestdir/autobuild"
+  ) > "$megatestdir/do-autobuild"
+  chmod a+x "$megatestdir/do-autobuild"
 
   # Create Makefile.am.
   (echo "## Process this file with automake to produce Makefile.in."
@@ -2921,7 +2921,7 @@ func_create_megatestdir ()
    echo
    echo "SUBDIRS = $megasubdirs"
    echo
-   echo "EXTRA_DIST = autobuild"
+   echo "EXTRA_DIST = do-autobuild"
   ) > "$megatestdir/Makefile.am"
 
   # Create configure.ac.

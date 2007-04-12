@@ -1,5 +1,12 @@
 2007-04-12  Simon Josefsson  <simon@josefsson.org>
 
+	* gnulib-tool: Rename generated 'autobuild' script to
+	'do-autobuild' in --create-megatestdir output.
+
+	* doc/gnulib.texi (Build robot for gnulib): Fix.
+
+2007-04-12  Simon Josefsson  <simon@josefsson.org>
+
 	* modules/sysexits (Depends-on): Add absolute-header.
 
 2007-04-12  Eric Blake  <ebb9@byu.net>
