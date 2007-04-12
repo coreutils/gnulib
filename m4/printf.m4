@@ -192,10 +192,23 @@ int main ()
   return 0;
 }], [gl_cv_func_printf_directive_f=yes], [gl_cv_func_printf_directive_f=no],
       [
+changequote(,)dnl
        case "$host_os" in
+                               # Guess yes on glibc systems.
+         *-gnu*)               gl_cv_func_printf_directive_f="guessing yes";;
+                               # Guess yes on FreeBSD >= 6.
+         freebsd[1-5]*)        gl_cv_func_printf_directive_f="guessing no";;
+         freebsd* | kfreebsd*) gl_cv_func_printf_directive_f="guessing yes";;
+                               # Guess yes on MacOS X >= 10.3.
+         darwin[1-6].*)        gl_cv_func_printf_directive_f="guessing no";;
+         darwin*)              gl_cv_func_printf_directive_f="guessing yes";;
+                               # Guess yes on Solaris >= 2.10.
+         solaris2.[0-9]*)      gl_cv_func_printf_directive_f="guessing no";;
+         solaris*)             gl_cv_func_printf_directive_f="guessing yes";;
                                # If we don't know, assume the worst.
          *)                    gl_cv_func_printf_directive_f="guessing no";;
        esac
+changequote([,])dnl
       ])
     ])
 ])
@@ -505,6 +518,6 @@ dnl   IRIX 6.5                             #  #  #  .  .  .  .  #  .
 dnl   OSF/1 5.1                            #  #  #  .  .  .  .  #  .
 dnl   OSF/1 4.0d                           #  #  #  .  .  #  #  #  #
 dnl   NetBSD 4.0                           .  ?  ?  .  .  .  .  .  ?
-dnl   NetBSD 3.0                           .  #  ?  .  #  .  .  .  .
-dnl   BeOS                                 #  #  ?  .  #  .  .  .  .
+dnl   NetBSD 3.0                           .  #  #  .  #  .  .  .  .
+dnl   BeOS                                 #  #  #  .  #  .  .  .  .
 dnl   mingw                                #  #  #  .  #  .  #  #  #
