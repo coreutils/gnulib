@@ -2,6 +2,7 @@ The following packages appear to be using gnulib and gnulib-tool:
 
   Net::CDP        http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
   OPeNDAP         http://scm.opendap.org:8090/svn/trunk/
+  autobuild	  http://josefsson.org/autobuild/
   bison           http://cvs.sv.gnu.org/viewcvs/bison/bison/
   coreutils       http://cvs.sv.gnu.org/viewcvs/coreutils/coreutils/
   cvs             http://cvs.sv.gnu.org/viewcvs/cvs/ccvs/
