@@ -1,3 +1,12 @@
+2007-04-12  Bruno Haible  <bruno@clisp.org>
+
+	* modules/iconv-tests (test_iconv_LDADD): Mention -liconv after LDADD,
+	not before, since $(LDADD) often contains libgnu.a.
+	* modules/striconv-tests (test_striconv_LDADD): Likewise.
+	* modules/striconveh-tests (test_striconveh_LDADD): Likewise.
+	* modules/striconveha-tests (test_striconveha_LDADD): Likewise.
+	Needed on Cygwin.
+
 2007-04-12  Eric Blake  <ebb9@byu.net>
 
 	Work around glibc's failure to flush stdin on fclose.
