@@ -36,38 +36,33 @@ int fpurge (FILE *);
 int
 rpl_fflush (FILE *stream)
 {
-  int e1; /* Leave errno unchanged on success.  */
-  int e2; /* Capture errno of first fflush if nothing else succeeds.  */
+  int e; /* Capture errno of first fflush if nothing else succeeds.  */
   int result;
 
   /* Try flushing the stream.  C89 guarantees behavior of output
      streams, so we only need to worry if failure might have been on
      an input stream.  When stream is NULL, POSIX only requires
      flushing of output streams.  */
-  e1 = errno;
   result = fflush (stream);
-  if (! stream || result == 0 || errno != EBADF)
+  if (! stream || result == 0 || (e = errno) != EBADF)
     return result;
 
   /* POSIX does not specify behavior for non-seekable streams.  */
-  e2 = errno;
   if (fseeko (stream, 0, SEEK_CUR) != 0)
     {
-      errno = e2;
+      errno = e;
       return EOF;
     }
 
   /* To get here, we must be flushing a seekable input stream, so the
      semantics of fpurge are now appropriate.  */
 #if HAVE_FPURGE
-  errno = e1;
   result = fpurge (stream);
 #elif HAVE___FPURGE
   /* __fpurge has no return value, and on Solaris, we can't even trust
      errno.  So assume it succeeds.  */
   __fpurge (stream);
   result = 0;
-  errno = e1;
 #else /* ! HAVE___FPURGE */
 
   /* No single replacement; do it manually.  */
@@ -82,13 +77,10 @@ rpl_fflush (FILE *stream)
     else if (fseeko (stream, position, SEEK_SET) != 0)
       {
 	result = EOF;
-	errno = e2;
+	errno = e;
       }
     else
-      {
-	result = 0;
-	errno = e1;
-      }
+      result = 0;
   }
 #endif /* ! HAVE___FPURGE */
 

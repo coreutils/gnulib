@@ -1,3 +1,9 @@
+2007-04-12  Eric Blake  <ebb9@byu.net>
+
+	No need to preserve errno on success.
+	* lib/fflush.c (rpl_fflush): Simplify errno tracking.
+	Reported by Bruno Haible.
+
 2007-04-12  Simon Josefsson  <simon@josefsson.org>
 
 	* gnulib-tool (func_modules_add_dummy): Respect --avoid=dummy.
