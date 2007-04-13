@@ -7,7 +7,6 @@ m4/gettime.m4
 
 Depends-on:
 clock-time
-gettime
 gettimeofday
 sys_time
 timespec

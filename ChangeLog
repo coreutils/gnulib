@@ -1,3 +1,8 @@
+2007-04-12  Eric Blake  <ebb9@byu.net>
+
+	* modules/gettime (Depends-on): Remove gettime.
+	Reported by Dmitry V. Levin.
+
 2007-04-12  Bruno Haible  <bruno@clisp.org>
 
 	* modules/fflush (Include): Mention <stdio.h>.
