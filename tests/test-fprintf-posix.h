@@ -67,6 +67,110 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
   /* FLAG_ZERO with NaN.  */
   my_fprintf (stdout, "%010a %d\n", NaN (), 33, 44, 55);
 
+  /* Test the support of the %f format directive.  */
+
+  /* A positive number.  */
+  my_fprintf (stdout, "%f %d\n", 12.75, 33, 44, 55);
+
+  /* A larger positive number.  */
+  my_fprintf (stdout, "%f %d\n", 1234567.0, 33, 44, 55);
+
+  /* A negative number.  */
+  my_fprintf (stdout, "%f %d\n", -0.03125, 33, 44, 55);
+
+  /* Positive zero.  */
+  my_fprintf (stdout, "%f %d\n", 0.0, 33, 44, 55);
+
+  /* Negative zero.  */
+  my_fprintf (stdout, "%f %d\n", -0.0, 33, 44, 55);
+
+  /* NaN.  */
+  my_fprintf (stdout, "%f %d\n", NaN (), 33, 44, 55);
+
+  /* FLAG_ZERO.  */
+  my_fprintf (stdout, "%015f %d\n", 1234.0, 33, 44, 55);
+
+  /* Precision.  */
+  my_fprintf (stdout, "%.f %d\n", 1234.0, 33, 44, 55);
+
+  /* A positive number.  */
+  my_fprintf (stdout, "%Lf %d\n", 12.75L, 33, 44, 55);
+
+  /* A larger positive number.  */
+  my_fprintf (stdout, "%Lf %d\n", 1234567.0L, 33, 44, 55);
+
+  /* A negative number.  */
+  my_fprintf (stdout, "%Lf %d\n", -0.03125L, 33, 44, 55);
+
+  /* Positive zero.  */
+  my_fprintf (stdout, "%Lf %d\n", 0.0L, 33, 44, 55);
+
+  /* Negative zero.  */
+  my_fprintf (stdout, "%Lf %d\n", -0.0L, 33, 44, 55);
+
+  { /* NaN.  */
+    static long double zero = 0.0L;
+    my_fprintf (stdout, "%Lf %d\n", zero / zero, 33, 44, 55);
+  }
+
+  /* FLAG_ZERO.  */
+  my_fprintf (stdout, "%015Lf %d\n", 1234.0L, 33, 44, 55);
+
+  /* Precision.  */
+  my_fprintf (stdout, "%.Lf %d\n", 1234.0L, 33, 44, 55);
+
+  /* Test the support of the %F format directive.  */
+
+  /* A positive number.  */
+  my_fprintf (stdout, "%F %d\n", 12.75, 33, 44, 55);
+
+  /* A larger positive number.  */
+  my_fprintf (stdout, "%F %d\n", 1234567.0, 33, 44, 55);
+
+  /* A negative number.  */
+  my_fprintf (stdout, "%F %d\n", -0.03125, 33, 44, 55);
+
+  /* Positive zero.  */
+  my_fprintf (stdout, "%F %d\n", 0.0, 33, 44, 55);
+
+  /* Negative zero.  */
+  my_fprintf (stdout, "%F %d\n", -0.0, 33, 44, 55);
+
+  /* NaN.  */
+  my_fprintf (stdout, "%F %d\n", NaN (), 33, 44, 55);
+
+  /* FLAG_ZERO.  */
+  my_fprintf (stdout, "%015F %d\n", 1234.0, 33, 44, 55);
+
+  /* Precision.  */
+  my_fprintf (stdout, "%.F %d\n", 1234.0, 33, 44, 55);
+
+  /* A positive number.  */
+  my_fprintf (stdout, "%LF %d\n", 12.75L, 33, 44, 55);
+
+  /* A larger positive number.  */
+  my_fprintf (stdout, "%LF %d\n", 1234567.0L, 33, 44, 55);
+
+  /* A negative number.  */
+  my_fprintf (stdout, "%LF %d\n", -0.03125L, 33, 44, 55);
+
+  /* Positive zero.  */
+  my_fprintf (stdout, "%LF %d\n", 0.0L, 33, 44, 55);
+
+  /* Negative zero.  */
+  my_fprintf (stdout, "%LF %d\n", -0.0L, 33, 44, 55);
+
+  { /* NaN.  */
+    static long double zero = 0.0L;
+    my_fprintf (stdout, "%LF %d\n", zero / zero, 33, 44, 55);
+  }
+
+  /* FLAG_ZERO.  */
+  my_fprintf (stdout, "%015LF %d\n", 1234.0L, 33, 44, 55);
+
+  /* Precision.  */
+  my_fprintf (stdout, "%.LF %d\n", 1234.0L, 33, 44, 55);
+
   /* Test the support of the POSIX/XSI format strings with positions.  */
 
   my_fprintf (stdout, "%2$d %1$d\n", 33, 55);

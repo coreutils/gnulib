@@ -743,6 +743,464 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
+  /* Test the support of the %f format directive.  */
+
+  { /* A positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%f %d", 12.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "12.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A larger positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%f %d", 1234567.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1234567.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A negative number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%f %d", -0.03125, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-0.031250 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Positive zero.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%f %d", 0.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative zero.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%f %d", -0.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Positive infinity.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%f %d", 1.0 / 0.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "inf 33") == 0
+	    || strcmp (result, "infinity 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative infinity.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%f %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-inf 33") == 0
+	    || strcmp (result, "-infinity 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* NaN.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%f %d", NaN (), 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%015f %d", 1234.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "00001234.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%015f %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "           -inf 33") == 0
+	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.f %d", 1234.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1234 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%Lf %d", 12.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "12.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A larger positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%Lf %d", 1234567.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1234567.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A negative number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%Lf %d", -0.03125L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-0.031250 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Positive zero.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%Lf %d", 0.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative zero.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%Lf %d", -0.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Positive infinity.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%Lf %d", 1.0L / 0.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "inf 33") == 0
+	    || strcmp (result, "infinity 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative infinity.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%Lf %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-inf 33") == 0
+	    || strcmp (result, "-infinity 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* NaN.  */
+    static long double zero = 0.0L;
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%Lf %d", zero / zero, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%015Lf %d", 1234.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "00001234.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%015Lf %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "           -inf 33") == 0
+	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.Lf %d", 1234.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1234 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  /* Test the support of the %F format directive.  */
+
+  { /* A positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%F %d", 12.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "12.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A larger positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%F %d", 1234567.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1234567.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A negative number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%F %d", -0.03125, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-0.031250 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Positive zero.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%F %d", 0.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative zero.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%F %d", -0.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Positive infinity.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%F %d", 1.0 / 0.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "INF 33") == 0
+	    || strcmp (result, "INFINITY 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative infinity.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%F %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-INF 33") == 0
+	    || strcmp (result, "-INFINITY 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* NaN.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%F %d", NaN (), 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "NAN 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%015F %d", 1234.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "00001234.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%015F %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "           -INF 33") == 0
+	    || strcmp (result, "      -INFINITY 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.F %d", 1234.0, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1234 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%LF %d", 12.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "12.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A larger positive number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%LF %d", 1234567.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1234567.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* A negative number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%LF %d", -0.03125L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-0.031250 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Positive zero.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%LF %d", 0.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "0.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative zero.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%LF %d", -0.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Positive infinity.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%LF %d", 1.0L / 0.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "INF 33") == 0
+	    || strcmp (result, "INFINITY 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Negative infinity.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%LF %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "-INF 33") == 0
+	    || strcmp (result, "-INFINITY 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* NaN.  */
+    static long double zero = 0.0L;
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%LF %d", zero / zero, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "NAN 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%015LF %d", 1234.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "00001234.000000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%015LF %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "           -INF 33") == 0
+	    || strcmp (result, "      -INFINITY 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* Precision.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.LF %d", 1234.0L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1234 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
   /* Test the support of the %n format directive.  */
 
   {

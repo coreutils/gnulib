@@ -601,6 +601,376 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+  /* Test the support of the %f format directive.  */
+
+  { /* A positive number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%f %d", 12.75, 33, 44, 55);
+    ASSERT (strcmp (result, "12.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A larger positive number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%f %d", 1234567.0, 33, 44, 55);
+    ASSERT (strcmp (result, "1234567.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A negative number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%f %d", -0.03125, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.031250 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive zero.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%f %d", 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "0.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative zero.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%f %d", -0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive infinity.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%f %d", 1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "inf 33") == 0
+	    || strcmp (result, "infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative infinity.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%f %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "-inf 33") == 0
+	    || strcmp (result, "-infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* NaN.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%f %d", NaN (), 33, 44, 55);
+    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%015f %d", 1234.0, 33, 44, 55);
+    ASSERT (strcmp (result, "00001234.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%015f %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "           -inf 33") == 0
+	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%.f %d", 1234.0, 33, 44, 55);
+    ASSERT (strcmp (result, "1234 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A positive number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%Lf %d", 12.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "12.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A larger positive number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%Lf %d", 1234567.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "1234567.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A negative number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%Lf %d", -0.03125L, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.031250 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive zero.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%Lf %d", 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "0.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative zero.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%Lf %d", -0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive infinity.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%Lf %d", 1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "inf 33") == 0
+	    || strcmp (result, "infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative infinity.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%Lf %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "-inf 33") == 0
+	    || strcmp (result, "-infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* NaN.  */
+    static long double zero = 0.0L;
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%Lf %d", zero / zero, 33, 44, 55);
+    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%015Lf %d", 1234.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "00001234.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%015Lf %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "           -inf 33") == 0
+	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%.Lf %d", 1234.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "1234 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  /* Test the support of the %F format directive.  */
+
+  { /* A positive number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%F %d", 12.75, 33, 44, 55);
+    ASSERT (strcmp (result, "12.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A larger positive number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%F %d", 1234567.0, 33, 44, 55);
+    ASSERT (strcmp (result, "1234567.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A negative number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%F %d", -0.03125, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.031250 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive zero.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%F %d", 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "0.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative zero.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%F %d", -0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive infinity.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%F %d", 1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "INF 33") == 0
+	    || strcmp (result, "INFINITY 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative infinity.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%F %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "-INF 33") == 0
+	    || strcmp (result, "-INFINITY 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* NaN.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%F %d", NaN (), 33, 44, 55);
+    ASSERT (strcmp (result, "NAN 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%015F %d", 1234.0, 33, 44, 55);
+    ASSERT (strcmp (result, "00001234.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%015F %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "           -INF 33") == 0
+	    || strcmp (result, "      -INFINITY 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%.F %d", 1234.0, 33, 44, 55);
+    ASSERT (strcmp (result, "1234 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A positive number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%LF %d", 12.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "12.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A larger positive number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%LF %d", 1234567.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "1234567.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A negative number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%LF %d", -0.03125L, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.031250 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive zero.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%LF %d", 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "0.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative zero.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%LF %d", -0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive infinity.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%LF %d", 1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "INF 33") == 0
+	    || strcmp (result, "INFINITY 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative infinity.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%LF %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "-INF 33") == 0
+	    || strcmp (result, "-INFINITY 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* NaN.  */
+    static long double zero = 0.0L;
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%LF %d", zero / zero, 33, 44, 55);
+    ASSERT (strcmp (result, "NAN 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%015LF %d", 1234.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "00001234.000000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%015LF %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "           -INF 33") == 0
+	    || strcmp (result, "      -INFINITY 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%.LF %d", 1234.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "1234 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
   /* Test the support of the %n format directive.  */
 
   {

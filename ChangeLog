@@ -1,5 +1,16 @@
 2007-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-vasnprintf-posix.c (test_function): Add tests for %f and
+	%F directives.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-fprintf-posix.h (test_function): Likewise.
+	* tests/test-printf-posix.h (test_function): Likewise.
+	* tests/test-fprintf-posix.out: Likewise.
+
+2007-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* modules/lock-tests (configure.ac): For LIBSCHED, try also -lposix4.
 	* modules/tls-tests (configure.ac): Likewise.
 	Reported by Arto C. Nirkko <anirkko@insel.ch>.
