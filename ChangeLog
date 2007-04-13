@@ -1,3 +1,8 @@
+2007-04-13  Bruno Haible  <bruno@clisp.org>
+
+	* lib/tls.c (glthread_tls_get): Fix return type.
+	Patch by Arto C. Nirkko <anirkko@insel.ch>.
+
 2007-04-12  Eric Blake  <ebb9@byu.net>
 
 	* modules/gettime (Depends-on): Remove gettime.
