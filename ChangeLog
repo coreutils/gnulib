@@ -1,5 +1,11 @@
 2007-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/lock-tests (configure.ac): For LIBSCHED, try also -lposix4.
+	* modules/tls-tests (configure.ac): Likewise.
+	Reported by Arto C. Nirkko <anirkko@insel.ch>.
+
+2007-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* lib/tls.c (glthread_tls_get): Fix return type.
 	Patch by Arto C. Nirkko <anirkko@insel.ch>.
 
