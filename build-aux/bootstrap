@@ -103,6 +103,8 @@ gnulib_extra_files="
 	$build_aux/config.sub
 	doc/INSTALL
 "
+# Additional gnulib-tool options to use.  Use "\newline" to break lines.
+gnulib_tool_option_extras=
 
 # Other locale categories that need message catalogs.
 EXTRA_LOCALE_CATEGORIES=
@@ -460,6 +462,7 @@ gnulib_tool_options="\
  --source-base $bt/lib/\
  --tests-base $bt/tests\
  --local-dir gl\
+$gnulib_tool_option_extras\
 "
 echo "$0: $gnulib_tool $gnulib_tool_options --import ..."
 $gnulib_tool $gnulib_tool_options --import $gnulib_modules &&

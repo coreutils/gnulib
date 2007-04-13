@@ -1,3 +1,9 @@
+2007-04-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* build-aux/bootstrap (gnulib_tool_option_extras): New var, used by
+	gzip bootstrap.conf to avoid dragging in i18n machinery.
+	(gnulib_tool_option): Use it.
+
 2007-04-13  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-vasnprintf-posix.c (test_function): Add tests for %f and
