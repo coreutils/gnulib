@@ -15,6 +15,7 @@ gl_STDIO_MODULE_INDICATOR([fflush])
 Makefile.am:
 
 Include:
+<stdio.h>
 
 License:
 GPL

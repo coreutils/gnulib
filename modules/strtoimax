@@ -19,6 +19,7 @@ gl_INTTYPES_MODULE_INDICATOR([strtoimax])
 Makefile.am:
 
 Include:
+<inttypes.h>
 
 License:
 GPL
