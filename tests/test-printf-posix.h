@@ -61,6 +61,16 @@ test_function (int (*my_printf) (const char *, ...))
   /* NaN.  */
   my_printf ("%a %d\n", NaN (), 33, 44, 55);
 
+  /* FLAG_ZERO with infinite number.  */
+  /* "0000000inf 33" is not a valid result; see
+     <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+  my_printf ("%010a %d\n", 1.0 / 0.0, 33, 44, 55);
+
+  /* FLAG_ZERO with NaN.  */
+  /* "0000000nan 33" is not a valid result; see
+     <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+  my_printf ("%010a %d\n", NaN (), 33, 44, 55);
+
   /* Test the support of the POSIX/XSI format strings with positions.  */
 
   my_printf ("%2$d %1$d\n", 33, 55);
