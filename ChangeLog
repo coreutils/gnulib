@@ -1,3 +1,8 @@
+2007-04-13  Bruno Haible  <bruno@clisp.org>
+
+	* modules/fflush-tests (Makefile.am): Remove EXTRA_DIST. Augment
+	MOSTLYCLEANFILES.
+
 2007-04-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* build-aux/bootstrap (gnulib_tool_option_extras): New var, used by

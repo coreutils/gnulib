@@ -9,4 +9,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-fflush
 check_PROGRAMS += test-fflush
-EXTRA_DIST += test-fflush.c
+MOSTLYCLEANFILES += test-fflush.txt
