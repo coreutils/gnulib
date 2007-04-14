@@ -1,5 +1,8 @@
 2007-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/freadable-tests: New file.
+	* tests/test-freadable.c: New file.
+
 	* modules/freadable: New file.
 	* lib/freadable.h: New file.
 	* lib/freadable.c: New file.

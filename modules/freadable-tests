@@ -1,0 +1,11 @@
+Files:
+tests/test-freadable.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-freadable
+check_PROGRAMS += test-freadable
+
