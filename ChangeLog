@@ -1,5 +1,12 @@
 2007-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fpurge: New file.
+	* lib/fpurge.h: New file.
+	* lib/fpurge.c: New file.
+	* m4/fpurge.m4: New file.
+
+2007-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fbufmode-tests: New file.
 	* tests/test-fbufmode.c: New file.
 
