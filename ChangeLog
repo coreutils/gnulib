@@ -1,5 +1,12 @@
 2007-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fwritable: New file.
+	* lib/fwritable.h: New file.
+	* lib/fwritable.c: New file.
+	* m4/fwritable.m4: New file.
+
+2007-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* modules/freadable-tests: New file.
 	* tests/test-freadable.c: New file.
 
