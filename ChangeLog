@@ -1,5 +1,12 @@
 2007-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/freadable: New file.
+	* lib/freadable.h: New file.
+	* lib/freadable.c: New file.
+	* m4/freadable.m4: New file.
+
+2007-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fflush-tests (Makefile.am): Remove EXTRA_DIST. Augment
 	MOSTLYCLEANFILES.
 
