@@ -1,0 +1,11 @@
+Files:
+tests/test-fpurge.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fpurge
+check_PROGRAMS += test-fpurge
+

@@ -1,5 +1,8 @@
 2007-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fpurge-tests: New file.
+	* tests/test-fpurge.c: New file.
+
 	* modules/fpurge: New file.
 	* lib/fpurge.h: New file.
 	* lib/fpurge.c: New file.
