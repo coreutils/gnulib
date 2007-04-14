@@ -1,0 +1,11 @@
+Files:
+tests/test-fwritable.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fwritable
+check_PROGRAMS += test-fwritable
+
