@@ -1,5 +1,12 @@
 2007-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fbufmode: New file.
+	* lib/fbufmode.h: New file.
+	* lib/fbufmode.c: New file.
+	* m4/fbufmode.m4: New file.
+
+2007-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fwritable-tests: New file.
 	* tests/test-fwritable.c: New file.
 
