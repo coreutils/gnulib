@@ -1,5 +1,8 @@
 2007-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fbufmode-tests: New file.
+	* tests/test-fbufmode.c: New file.
+
 	* modules/fbufmode: New file.
 	* lib/fbufmode.h: New file.
 	* lib/fbufmode.c: New file.
