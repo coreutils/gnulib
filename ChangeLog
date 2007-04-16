@@ -1,3 +1,7 @@
+2007-04-16  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/autobuild.m4: Re-indent.
+
 2007-04-13  Bruno Haible  <bruno@clisp.org>
 
 	* modules/fpurge-tests: New file.
