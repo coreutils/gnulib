@@ -8,4 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-fpurge
 check_PROGRAMS += test-fpurge
-
+MOSTLYCLEANFILES += t-fpurge.tmp

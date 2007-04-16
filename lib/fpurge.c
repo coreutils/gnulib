@@ -33,9 +33,10 @@ fpurge (FILE *fp)
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   fp->_p = fp->_bf._base;
   fp->_r = 0;
-  fp->_w = ((fp->_flags & (__SLBF | __SNBF) == 0) /* fully buffered? */
+  fp->_w = ((fp->_flags & (__SLBF | __SNBF)) == 0 /* fully buffered? */
 	    ? fp->_bf._size
 	    : 0);
+  return 0;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
   fp->_ptr = fp->_base;
   if (fp->_ptr != NULL)

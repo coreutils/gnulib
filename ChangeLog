@@ -1,3 +1,10 @@
+2007-04-16  Eric Blake  <ebb9@byu.net>
+
+	Fix fpurge for cygwin.
+	* lib/fpurge.c (fpurge): Fix order of operation flub, and return a
+	value.
+	* modules/fpurge-tests (Depends-on): Clean up trash.
+
 2007-04-16  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/gc-libgcrypt.c (gc_hash_open): Shut up compiler warnings.
@@ -205,7 +212,7 @@
 	* m4/locale_h.m4: New file.
 
 2007-04-10  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* m4/signbit.m4 (gl_SIGNBIT): When the sign bit position could not
 	be determined, test for availability of the copysignf, copysign,
