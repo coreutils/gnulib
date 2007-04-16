@@ -9,5 +9,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-xvasprintf
 check_PROGRAMS += test-xvasprintf
-test_xvasprintf_LDADD = @LIBINTL@ $(LDADD)
+test_xvasprintf_LDADD = $(LDADD) @LIBINTL@
 

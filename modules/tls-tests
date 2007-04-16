@@ -18,5 +18,5 @@ AC_SUBST([LIBSCHED])
 Makefile.am:
 TESTS += test-tls
 check_PROGRAMS += test-tls
-test_tls_LDADD = @LIBMULTITHREAD@ @LIBSCHED@ $(LDADD)
+test_tls_LDADD = $(LDADD) @LIBMULTITHREAD@ @LIBSCHED@
 

@@ -10,5 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-rbtreehash_list
 check_PROGRAMS += test-rbtreehash_list
-test_rbtreehash_list_LDADD = @LIBINTL@ $(LDADD)
-
+test_rbtreehash_list_LDADD = $(LDADD) @LIBINTL@

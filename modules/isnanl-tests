@@ -10,6 +10,6 @@ gl_LONG_DOUBLE_EXPONENT_LOCATION
 Makefile.am:
 TESTS += test-isnanl
 check_PROGRAMS += test-isnanl
-test_isnanl_LDADD = @ISNANL_LIBM@ $(LDADD)
+test_isnanl_LDADD = $(LDADD) @ISNANL_LIBM@
 EXTRA_DIST += test-isnanl.h
 

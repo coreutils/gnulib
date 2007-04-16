@@ -10,5 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-linked_list
 check_PROGRAMS += test-linked_list
-test_linked_list_LDADD = @LIBINTL@ $(LDADD)
-
+test_linked_list_LDADD = $(LDADD) @LIBINTL@

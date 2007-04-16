@@ -1,5 +1,28 @@
 2007-04-16  Eric Blake  <ebb9@byu.net>
 
+	Fix --with-tests compilation on cygwin.
+	* modules/argmatch-tests (Makefile.am): List gnulib library first
+	in LDADD.
+	* modules/argp-tests (Makefile.am): Likewise.
+	* modules/array-list-tests (Makefile.am): Likewise.
+	* modules/array-oset-tests (Makefile.am): Likewise.
+	* modules/avltree-list-tests (Makefile.am): Likewise.
+	* modules/avltree-oset-tests (Makefile.am): Likewise.
+	* modules/avltreehash-list-tests (Makefile.am): Likewise.
+	* modules/carray-list-tests (Makefile.am): Likewise.
+	* modules/dirname-tests (Makefile.am): Likewise.
+	* modules/frexp-tests (Makefile.am): Likewise.
+	* modules/isnanl-tests (Makefile.am): Likewise.
+	* modules/linked-list-tests (Makefile.am): Likewise.
+	* modules/linkedhash-list-tests (Makefile.am): Likewise.
+	* modules/lock-tests (Makefile.am): Likewise.
+	* modules/rbtree-list-tests (Makefile.am): Likewise.
+	* modules/rbtree-oset-tests (Makefile.am): Likewise.
+	* modules/rbtreehash-list-tests (Makefile.am): Likewise.
+	* modules/tls-tests (Makefile.am): Likewise.
+	* modules/tsearch-tests (Makefile.am): Likewise.
+	* modules/xvasprintf-tests (Makefile.am): Likewise.
+
 	Fix fpurge for cygwin.
 	* lib/fpurge.c (fpurge): Fix order of operation flub, and return a
 	value.
