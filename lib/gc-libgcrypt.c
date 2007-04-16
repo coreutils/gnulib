@@ -240,7 +240,7 @@ Gc_rc
 gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
 {
   _gc_hash_ctx *ctx;
-  int gcryalg, gcrymode;
+  int gcryalg = 0, gcrymode = 0;
   gcry_error_t err;
   Gc_rc rc = GC_OK;
 
