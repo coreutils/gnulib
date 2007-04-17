@@ -8,8 +8,7 @@
 dnl From Eric Blake
 
 dnl Find out how to obey POSIX semantics of fflush(stdin) discarding
-dnl unread input, rather than C99 undefined semantics.  fpurge is not
-dnl standardized, but has the desired properties.
+dnl unread input on seekable streams, rather than C99 undefined semantics.
 
 AC_DEFUN([gl_FUNC_FFLUSH],
 [
@@ -45,15 +44,6 @@ AC_DEFUN([gl_FUNC_FFLUSH],
 
 AC_DEFUN([gl_REPLACE_FFLUSH],
 [
-  AC_CHECK_HEADERS_ONCE([stdio_ext.h])
-  AC_CHECK_FUNCS_ONCE([fpurge __fpurge])
-dnl Linux documents int fpurge(), but only declares void __fpurge().
-  AC_CHECK_DECLS([fpurge], [], [], [[
-#include <stdio.h>
-#if HAVE_STDIO_EXT_H
-# include <stdio_ext.h>
-#endif
-]])
   AC_LIBOBJ([fflush])
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   REPLACE_FFLUSH=1
