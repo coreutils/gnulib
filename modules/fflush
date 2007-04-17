@@ -6,7 +6,9 @@ lib/fflush.c
 m4/fflush.m4
 
 Depends-on:
+fpurge
 stdio
+unistd
 
 configure.ac:
 gl_FUNC_FFLUSH

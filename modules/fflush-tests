@@ -2,7 +2,6 @@ Files:
 tests/test-fflush.c
 
 Depends-on:
-unistd
 
 configure.ac:
 

@@ -1,5 +1,12 @@
 2007-04-16  Eric Blake  <ebb9@byu.net>
 
+	Make fflush rely on fpurge.
+	* lib/fflush.c (rpl_fflush): Rely on fpurge module, rather than
+	open coding all variants.
+	* modules/fflush (Depends-on): Add fpurge and unistd.
+	* modules/fflush-tests (Depends-on): Unistd is no longer extra.
+	* m4/fflush.m4 (gl_REPLACE_FFLUSH): Simplify.
+
 	Fix --with-tests compilation on cygwin.
 	* modules/argmatch-tests (Makefile.am): List gnulib library first
 	in LDADD.

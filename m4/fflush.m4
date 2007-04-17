@@ -1,4 +1,4 @@
-#serial 1
+#serial 2
 
 # Copyright (C) 2007 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation

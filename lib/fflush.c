@@ -21,13 +21,7 @@
 #include <errno.h>
 #include <stdio.h>
 
-#if HAVE_STDIO_EXT_H
-# include <stdio_ext.h>
-#endif
-
-#if HAVE_FPURGE && ! HAVE_DECL_FPURGE
-int fpurge (FILE *);
-#endif
+#include "fpurge.h"
 
 #undef fflush
 
@@ -36,53 +30,31 @@ int fpurge (FILE *);
 int
 rpl_fflush (FILE *stream)
 {
-  int e; /* Capture errno of first fflush if nothing else succeeds.  */
   int result;
+  off_t pos;
 
   /* Try flushing the stream.  C89 guarantees behavior of output
      streams, so we only need to worry if failure might have been on
      an input stream.  When stream is NULL, POSIX only requires
      flushing of output streams.  */
   result = fflush (stream);
-  if (! stream || result == 0 || (e = errno) != EBADF)
+  if (! stream || result == 0 || errno != EBADF)
     return result;
 
-  /* POSIX does not specify behavior for non-seekable streams.  */
-  if (fseeko (stream, 0, SEEK_CUR) != 0)
+  /* POSIX does not specify fflush behavior for non-seekable input
+     streams.  */
+  pos = ftello (stream);
+  if (pos == -1)
     {
-      errno = e;
+      errno = EBADF;
       return EOF;
     }
 
   /* To get here, we must be flushing a seekable input stream, so the
-     semantics of fpurge are now appropriate.  */
-#if HAVE_FPURGE
+     semantics of fpurge are now appropriate to clear the buffer.  To
+     avoid losing data, the lseek is also necessary.  */
   result = fpurge (stream);
-#elif HAVE___FPURGE
-  /* __fpurge has no return value, and on Solaris, we can't even trust
-     errno.  So assume it succeeds.  */
-  __fpurge (stream);
-  result = 0;
-#else /* ! HAVE___FPURGE */
-
-  /* No single replacement; do it manually.  */
-  {
-    off_t position = ftello (stream);
-    if (position == -1)
-      {
-	result = EOF; /* Should not happen; we know stream is seekable.  */
-      }
-    /* Set position of stream; hopefully the stdio routines don't
-       overoptimize by not setting the underlying file position.  */
-    else if (fseeko (stream, position, SEEK_SET) != 0)
-      {
-	result = EOF;
-	errno = e;
-      }
-    else
-      result = 0;
-  }
-#endif /* ! HAVE___FPURGE */
-
+  if (result == 0 && lseek (fileno (stream), pos, SEEK_SET) == -1)
+    return EOF;
   return result;
 }
