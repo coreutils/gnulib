@@ -1,3 +1,8 @@
+2007-04-23  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-fbufmode.c (main): Be prepared to a failure of setvbuf.
+	Needed on HP-UX 11.
+
 2007-04-16  Eric Blake  <ebb9@byu.net>
 
 	Make fflush rely on fpurge.

@@ -49,13 +49,17 @@ main ()
     goto skip;
   ASSERT (fbufmode (fp) == _IONBF);
 
-  if (setvbuf (fp, buf, _IOLBF, 5))
-    goto skip;
-  ASSERT (fbufmode (fp) == _IOLBF);
+  /* This setvbuf call can fail, e.g. on HP-UX 11.  */
+  if (setvbuf (fp, buf, _IOLBF, 5) == 0)
+    {
+      ASSERT (fbufmode (fp) == _IOLBF);
+    }
 
-  if (setvbuf (fp, buf, _IOFBF, 5))
-    goto skip;
-  ASSERT (fbufmode (fp) == _IOFBF);
+  /* This setvbuf call can fail, e.g. on HP-UX 11.  */
+  if (setvbuf (fp, buf, _IOFBF, 5) == 0)
+    {
+      ASSERT (fbufmode (fp) == _IOFBF);
+    }
 
   fclose (fp);
 
