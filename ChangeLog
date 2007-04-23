@@ -1,5 +1,10 @@
 2007-04-23  Bruno Haible  <bruno@clisp.org>
 
+	* lib/fpurge.c (fpurge) [glibc, BSD]: Free a malloc()ed ungetc buffer.
+	Reported by Eric Blake.
+
+2007-04-23  Bruno Haible  <bruno@clisp.org>
+
 	* lib/fbufmode.c (fbufmode): Port to Solaris/SPARC64.
 
 2007-04-23  Bruno Haible  <bruno@clisp.org>
