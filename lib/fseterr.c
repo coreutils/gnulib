@@ -34,7 +34,7 @@ fseterr (FILE *fp)
   fp->_flags |= __SERR;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
 # if defined __sun && defined __sparc && defined _LP64 /* Solaris/SPARC 64-bit */
-  ((unsigned int *) fp) [9] |= 0x20;
+  ((unsigned int *) fp) [9] |= _IOERR;
 # else
   fp->_flag |= _IOERR;
 # endif

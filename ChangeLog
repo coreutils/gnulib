@@ -1,5 +1,9 @@
 2007-04-23  Bruno Haible  <bruno@clisp.org>
 
+	* lib/fseterr.c (fseterr): Don't hardcode the value of _IOERR.
+
+2007-04-23  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-fbufmode.c (main): Be prepared to a failure of setvbuf.
 	Needed on HP-UX 11.
 
