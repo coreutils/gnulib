@@ -55,9 +55,13 @@ fbufmode (FILE *fp)
   if (fp->_flag & _IOLBF)
     return _IOLBF;
 # endif
+# if defined __sun && defined __sparc && defined _LP64 /* Solaris/SPARC 64-bit */
+  return ((unsigned int *) fp) [9] & (_IONBF | _IOFBF);
+# else
   if (fp->_flag & _IONBF)
     return _IONBF;
   return _IOFBF;
+# endif
 #else
  #error "Please port gnulib fbufmode.c to your platform! Look at the setvbuf implementation."
 #endif
