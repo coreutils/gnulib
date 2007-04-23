@@ -1,3 +1,8 @@
+2007-04-23  Eric Blake  <ebb9@byu.net>
+
+	* lib/fflush.c: Fix missing include.
+	Reported by Bruno Haible.
+
 2007-04-23  Bruno Haible  <bruno@clisp.org>
 
 	* lib/fpurge.c (fpurge) [glibc, BSD]: Free a malloc()ed ungetc buffer.

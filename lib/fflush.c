@@ -18,8 +18,12 @@
 /* Written by Eric Blake. */
 
 #include <config.h>
-#include <errno.h>
+
+/* Specification.  */
 #include <stdio.h>
+
+#include <errno.h>
+#include <unistd.h>
 
 #include "fpurge.h"
 
