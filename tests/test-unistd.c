@@ -21,6 +21,9 @@
 
 #include <unistd.h>
 
+/* Check that the various SEEK_* macros are defined.  */
+int sk[] = { SEEK_CUR, SEEK_END, SEEK_SET };
+
 int
 main ()
 {

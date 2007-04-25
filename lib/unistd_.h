@@ -22,6 +22,11 @@
 # include @ABSOLUTE_UNISTD_H@
 #endif
 
+/* mingw doesn't define the SEEK_* macros in <unistd.h>.  */
+#if !(defined SEEK_CUR && defined SEEK_END && defined SEEK_SET)
+# include <stdio.h>
+#endif
+
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
