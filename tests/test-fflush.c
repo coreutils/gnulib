@@ -53,7 +53,7 @@ main (int argc, char *argv[])
   /* For deterministic results, ensure f read a bigger buffer.  */
   if (lseek (fd, 0, SEEK_CUR) == 5)
     {
-      fputs ("Sample file was not buffered.\n", stderr);
+      fputs ("Sample file was not buffered after fread.\n", stderr);
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;
@@ -61,7 +61,7 @@ main (int argc, char *argv[])
   /* POSIX requires fflush-fseek to set file offset of fd.  */
   if (fflush (f) != 0 || fseek (f, 0, SEEK_CUR) != 0)
     {
-      fputs ("Failed to flush sample file.\n", stderr);
+      fputs ("Failed to flush-fseek sample file.\n", stderr);
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;
@@ -69,7 +69,7 @@ main (int argc, char *argv[])
   /* Check that offset is correct.  */
   if (lseek (fd, 0, SEEK_CUR) != 5)
     {
-      fputs ("File offset is wrong.\n", stderr);
+      fputs ("File offset is wrong after fseek.\n", stderr);
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;
@@ -77,7 +77,39 @@ main (int argc, char *argv[])
   /* Check that file reading resumes at correct location.  */
   if (fgetc (f) != '6')
     {
-      fputs ("Failed to read next byte of file.\n", stderr);
+      fputs ("Failed to read next byte after fseek.\n", stderr);
+      fclose (f);
+      unlink ("test-fflush.txt");
+      return 1;
+    }
+  /* For deterministic results, ensure f read a bigger buffer.  */
+  if (lseek (fd, 0, SEEK_CUR) == 6)
+    {
+      fputs ("Sample file was not buffered after fgetc.\n", stderr);
+      fclose (f);
+      unlink ("test-fflush.txt");
+      return 1;
+    }
+  /* POSIX requires fflush-fseeko to set file offset of fd.  */
+  if (fflush (f) != 0 || fseeko (f, 0, SEEK_CUR) != 0)
+    {
+      fputs ("Failed to flush-fseeko sample file.\n", stderr);
+      fclose (f);
+      unlink ("test-fflush.txt");
+      return 1;
+    }
+  /* Check that offset is correct.  */
+  if (lseek (fd, 0, SEEK_CUR) != 6)
+    {
+      fputs ("File offset is wrong after fseeko.\n", stderr);
+      fclose (f);
+      unlink ("test-fflush.txt");
+      return 1;
+    }
+  /* Check that file reading resumes at correct location.  */
+  if (fgetc (f) != '7')
+    {
+      fputs ("Failed to read next byte after fseeko.\n", stderr);
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;

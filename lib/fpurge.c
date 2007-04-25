@@ -20,6 +20,8 @@
 /* Specification.  */
 #include "fpurge.h"
 
+#include <stdlib.h>
+
 int
 fpurge (FILE *fp)
 {

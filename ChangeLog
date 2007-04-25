@@ -1,3 +1,8 @@
+2007-04-25  Eric Blake  <ebb9@byu.net>
+
+	* lib/fpurge.c (includes): Use stdlib.h for free.
+	* tests/test-fflush.c (main): Also test fflush-fseeko.
+
 2007-04-25  Bruno Haible  <bruno@clisp.org>
 
 	Make fflush+fseek POSIX-compliant on FreeBSD and MacOS X.
