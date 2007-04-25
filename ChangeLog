@@ -1,5 +1,9 @@
 2007-04-25  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdio_.h (fflush): Add support for GNULIB_POSIXCHECK.
+
+2007-04-25  Bruno Haible  <bruno@clisp.org>
+
 	* lib/unistd_.h: Include <stdio.h> if needed to get the SEEK_* macros.
 	* tests/test-stdio.c: Check that the various SEEK_* macros are defined.
 	* tests/test-unistd.c: Likewise.

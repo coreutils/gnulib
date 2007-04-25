@@ -207,11 +207,20 @@ extern int vsprintf (char *str, const char *format, va_list args)
 # endif
 #endif
 
-#if @GNULIB_FFLUSH@ && @REPLACE_FFLUSH@
-# define fflush rpl_fflush
+#if @GNULIB_FFLUSH@
+# if @REPLACE_FFLUSH@
+#  define fflush rpl_fflush
   /* Flush all pending data on STREAM according to POSIX rules.  Both
      output and seekable input streams are supported.  */
   extern int fflush (FILE *gl_stream);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef fflush
+# define fflush(f) \
+   (GL_LINK_WARNING ("fflush is not always POSIX compliant - " \
+                     "use gnulib module fflush for portable " \
+                     "POSIX compliance"), \
+    fflush (f))
 #endif
 
 #ifdef __cplusplus
