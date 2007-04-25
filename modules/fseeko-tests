@@ -1,0 +1,10 @@
+Files:
+tests/test-fseeko.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fseeko
+check_PROGRAMS += test-fseeko
