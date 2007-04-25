@@ -7,6 +7,7 @@ m4/fflush.m4
 
 Depends-on:
 fpurge
+ftello
 stdio
 unistd
 

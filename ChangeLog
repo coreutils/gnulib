@@ -1,5 +1,9 @@
 2007-04-25  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fflush (Depends-on): Add ftello.
+
+2007-04-25  Bruno Haible  <bruno@clisp.org>
+
 	* modules/ftello-tests: New file.
 	* tests/test-ftello.c: New file.
 
