@@ -1,3 +1,12 @@
+2007-04-25  Charles Wilson  <libtool@cwilson.fastmail.fm>
+	    Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* lib/argz_.h: ensure error_t definition is obtained in same
+	mechanism system argz.h would have.
+	* m4/argz.m4 (gl_FUNC_ARGZ): add new test to check if $host's
+	argz facilities are known bad.  Err on the side of caution if
+	cross-compiling.
+
 2007-04-25  Eric Blake  <ebb9@byu.net>
 
 	* lib/fpurge.c (includes): Use stdlib.h for free.

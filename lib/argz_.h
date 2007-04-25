@@ -1,6 +1,6 @@
 /* lt__argz.h -- internal argz interface for non-glibc systems
 
-   Copyright (C) 2004 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2007 Free Software Foundation, Inc.
    Written by Gary V. Vaughan, 2004
 
    NOTE: The canonical source of this file is maintained with the
@@ -32,6 +32,8 @@ or obtained by writing to the Free Software Foundation, Inc.,
 #define LT__ARGZ_H 1
 
 #include <stdlib.h>
+#define __need_error_t
+#include <errno.h>
 #include <sys/types.h>
 
 #if defined(LTDL)
