@@ -38,6 +38,11 @@
 #include <stdarg.h>
 #include <stddef.h>
 
+#if @GNULIB_FFLUSH@ && @REPLACE_FFLUSH@
+/* Get off_t.  */
+# include <sys/types.h>
+#endif
+
 #ifndef __attribute__
 /* This feature is available in gcc versions 2.5 and later.  */
 # if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5) || __STRICT_ANSI__
@@ -207,7 +212,12 @@ extern int vsprintf (char *str, const char *format, va_list args)
 # endif
 #endif
 
-#if @GNULIB_FSEEKO@
+#if @GNULIB_FFLUSH@ && @REPLACE_FFLUSH@
+/* Provide fseek, fseeko functions that are aware of a preceding fflush().  */
+# define fseeko rpl_fseeko
+extern int fseeko (FILE *fp, off_t offset, int whence);
+# define fseek(fp, offset, whence) fseeko (fp, (off_t)(offset), whence)
+#elif @GNULIB_FSEEKO@
 # if !@HAVE_FSEEKO@
 /* Assume 'off_t' is the same type as 'long'.  */
 #  define fseeko fseek

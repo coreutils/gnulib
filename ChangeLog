@@ -1,5 +1,18 @@
 2007-04-25  Bruno Haible  <bruno@clisp.org>
 
+	Make fflush+fseek POSIX-compliant on FreeBSD and MacOS X.
+	* lib/fseeko.c: New file.
+	* lib/stdio_.h: Include <sys/types.h> when off_t is needed.
+	(fseeko, fseek): Define to replacements if REPLACE_FFLUSH.
+	* m4/fseeko.m4 (gl_CHECK_FSEEKO): New macro, extracted from
+	gl_FUNC_FSEEKO.
+	(gl_FUNC_FSEEKO): Invoke it.
+	* m4/fflush.m4 (gl_REPLACE_FFLUSH): Arrange to compile fseeko.c. Invoke
+	gl_CHECK_FSEEKO. Define HAVE_FSEEKO.
+	* modules/fflush (Files): Add lib/fseeko.c, m4/fseeko.m4.
+
+2007-04-25  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fflush (Depends-on): Add ftello.
 
 2007-04-25  Bruno Haible  <bruno@clisp.org>

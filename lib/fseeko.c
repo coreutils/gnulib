@@ -1,0 +1,72 @@
+/* An fseek() function that, together with fflush(), is POSIX compliant.
+   Copyright (C) 2007 Free Software Foundation, Inc.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License along
+   with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+#include <config.h>
+
+/* Specification.  */
+#include <stdio.h>
+
+/* Get off_t and lseek.  */
+#include <unistd.h>
+
+#undef fseeko
+#if !HAVE_FSEEKO
+# define fseeko fseek
+#endif
+
+int
+rpl_fseeko (FILE *fp, off_t offset, int whence)
+{
+  /* These tests are based on fpurge.c.  */
+#if defined _IO_ferror_unlocked     /* GNU libc, BeOS */
+  if (fp->_IO_read_end == fp->_IO_read_ptr
+      && fp->_IO_write_ptr == fp->_IO_write_base
+      && fp->_IO_save_base == NULL)
+#elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+# if defined __NetBSD__ || defined __OpenBSD__ /* NetBSD, OpenBSD */
+   /* See <http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/stdio/fileext.h?rev=HEAD&content-type=text/x-cvsweb-markup>
+      and <http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/stdio/fileext.h?rev=HEAD&content-type=text/x-cvsweb-markup> */
+#  define fp_ub ((struct { struct __sbuf _ub; } *) fp->_ext._base)->_ub
+# else                                         /* FreeBSD, MacOS X, Cygwin */
+#  define fp_ub fp->_ub
+# endif
+  if (fp->_p == fp->_bf._base
+      && fp->_r == 0
+      && fp->_w == ((fp->_flags & (__SLBF | __SNBF)) == 0 /* fully buffered? */
+		    ? fp->_bf._size
+		    : 0)
+      && fp_ub._base == NULL)
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
+# if defined __sun && defined __sparc && defined _LP64 /* Solaris/SPARC 64-bit */
+#  define fp_ ((struct { unsigned char *_ptr; \
+                         unsigned char *_base; \
+                         unsigned char *_end; \
+                         long _cnt; \
+                       } *) fp)
+  if (fp_->_ptr == fp_->_base
+      && (fp_->_ptr == NULL || fp_->_cnt == 0))
+# else
+  if (fp->_ptr == fp->_base
+      && (fp->_ptr == NULL || fp->_cnt == 0))
+# endif
+#else
+  #error "Please port gnulib fseeko.c to your platform! Look at the code in fpurge.c, then report this to bug-gnulib."
+#endif
+    return (lseek (fileno (fp), offset, whence) == (off_t)(-1) ? -1 : 0);
+  else
+    return fseeko (fp, offset, whence);
+}

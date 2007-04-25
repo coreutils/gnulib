@@ -3,7 +3,9 @@ Discard pending data on both input and output streams.
 
 Files:
 lib/fflush.c
+lib/fseeko.c
 m4/fflush.m4
+m4/fseeko.m4
 
 Depends-on:
 fpurge
