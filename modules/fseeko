@@ -1,0 +1,24 @@
+Description:
+fseeko() function: Reposition a FILE stream.
+
+Files:
+m4/fseeko.m4
+
+Depends-on:
+stdio
+
+configure.ac:
+gl_FUNC_FSEEKO
+gl_STDIO_MODULE_INDICATOR([fseeko])
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

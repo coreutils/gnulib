@@ -1,5 +1,15 @@
 2007-04-25  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fseeko: New file.
+	* m4/fseeko.m4: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also GNULIB_FSEEKO,
+	HAVE_FSEEKO.
+	* lib/stdio_.h (fseeko): New declaration.
+	* modules/stdio (Makefile.am): Substitute also GNULIB_FSEEKO,
+	HAVE_FSEEKO.
+
+2007-04-25  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdio_.h (fflush): Add support for GNULIB_POSIXCHECK.
 
 2007-04-25  Bruno Haible  <bruno@clisp.org>

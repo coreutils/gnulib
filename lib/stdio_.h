@@ -207,6 +207,19 @@ extern int vsprintf (char *str, const char *format, va_list args)
 # endif
 #endif
 
+#if @GNULIB_FSEEKO@
+# if !@HAVE_FSEEKO@
+/* Assume 'off_t' is the same type as 'long'.  */
+#  define fseeko fseek
+# endif
+#else
+# undef fseeko
+# define fseeko(f,o,w) \
+   (GL_LINK_WARNING ("fseeko is unportable - " \
+                     "use gnulib module fseeko for portability"), \
+    fseeko (f, o, w))
+#endif
+
 #if @GNULIB_FFLUSH@
 # if @REPLACE_FFLUSH@
 #  define fflush rpl_fflush
