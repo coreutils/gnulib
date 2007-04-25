@@ -1,0 +1,24 @@
+Description:
+ftello() function: Retrieve the position of a FILE stream.
+
+Files:
+m4/ftello.m4
+
+Depends-on:
+stdio
+
+configure.ac:
+gl_FUNC_FTELLO
+gl_STDIO_MODULE_INDICATOR([ftello])
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

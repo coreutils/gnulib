@@ -220,6 +220,19 @@ extern int vsprintf (char *str, const char *format, va_list args)
     fseeko (f, o, w))
 #endif
 
+#if @GNULIB_FTELLO@
+# if !@HAVE_FTELLO@
+/* Assume 'off_t' is the same type as 'long'.  */
+#  define ftello ftell
+# endif
+#else
+# undef ftello
+# define ftello(f) \
+   (GL_LINK_WARNING ("ftello is unportable - " \
+                     "use gnulib module ftello for portability"), \
+    ftello (f))
+#endif
+
 #if @GNULIB_FFLUSH@
 # if @REPLACE_FFLUSH@
 #  define fflush rpl_fflush

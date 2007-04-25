@@ -1,5 +1,15 @@
 2007-04-25  Bruno Haible  <bruno@clisp.org>
 
+	* modules/ftello: New file.
+	* m4/ftello.m4: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also GNULIB_FTELLO,
+	HAVE_FTELLO.
+	* lib/stdio_.h (ftello): New declaration.
+	* modules/stdio (Makefile.am): Substitute also GNULIB_FTELLO,
+	HAVE_FTELLO.
+
+2007-04-25  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fseeko-tests: New file.
 	* tests/test-fseeko.c: New file.
 
