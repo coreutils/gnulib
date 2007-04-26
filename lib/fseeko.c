@@ -66,7 +66,24 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
 #else
   #error "Please port gnulib fseeko.c to your platform! Look at the code in fpurge.c, then report this to bug-gnulib."
 #endif
-    return (lseek (fileno (fp), offset, whence) == (off_t)(-1) ? -1 : 0);
+    {
+      off_t pos = lseek (fileno (fp), offset, whence);
+      if (pos == -1)
+	{
+#if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+	  fp->_flags &= ~__SOFF;
+#endif
+	  return -1;
+	}
+      else
+	{
+#if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+	  fp->_offset = pos;
+	  fp->_flags |= __SOFF;
+#endif
+	  return 0;
+	}
+    }
   else
     return fseeko (fp, offset, whence);
 }

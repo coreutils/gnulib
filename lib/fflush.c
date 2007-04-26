@@ -58,7 +58,14 @@ rpl_fflush (FILE *stream)
      semantics of fpurge are now appropriate to clear the buffer.  To
      avoid losing data, the lseek is also necessary.  */
   result = fpurge (stream);
-  if (result == 0 && lseek (fileno (stream), pos, SEEK_SET) == -1)
+  if (result != 0)
+    return result;
+  pos = lseek (fileno (stream), pos, SEEK_SET);
+  if (pos == -1)
     return EOF;
-  return result;
+#if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+  stream->_offset = pos;
+  stream->_flags |= __SOFF;
+#endif
+  return 0;
 }

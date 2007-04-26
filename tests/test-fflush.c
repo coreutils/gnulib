@@ -74,6 +74,13 @@ main (int argc, char *argv[])
       unlink ("test-fflush.txt");
       return 1;
     }
+  if (ftell (f) != 5)
+    {
+      fputs ("ftell result is wrong after fseek.\n", stderr);
+      fclose (f);
+      unlink ("test-fflush.txt");
+      return 1;
+    }
   /* Check that file reading resumes at correct location.  */
   if (fgetc (f) != '6')
     {
@@ -102,6 +109,13 @@ main (int argc, char *argv[])
   if (lseek (fd, 0, SEEK_CUR) != 6)
     {
       fputs ("File offset is wrong after fseeko.\n", stderr);
+      fclose (f);
+      unlink ("test-fflush.txt");
+      return 1;
+    }
+  if (ftell (f) != 6)
+    {
+      fputs ("ftell result is wrong after fseek.\n", stderr);
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;
