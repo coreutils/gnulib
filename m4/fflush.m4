@@ -48,9 +48,4 @@ AC_DEFUN([gl_REPLACE_FFLUSH],
   AC_LIBOBJ([fseeko])
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   REPLACE_FFLUSH=1
-  gl_CHECK_FSEEKO
-  if test $gl_cv_func_fseeko = yes; then
-    AC_DEFINE([HAVE_FSEEKO], 1,
-      [Define to 1 if you have the fseeko() function or macro.])
-  fi
 ])

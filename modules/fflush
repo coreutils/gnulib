@@ -13,6 +13,9 @@ ftello
 stdio
 unistd
 
+configure.ac-early:
+AC_REQUIRE([AC_FUNC_FSEEKO])
+
 configure.ac:
 gl_FUNC_FFLUSH
 gl_STDIO_MODULE_INDICATOR([fflush])

@@ -7,6 +7,9 @@ m4/fseeko.m4
 Depends-on:
 stdio
 
+configure.ac-early:
+AC_REQUIRE([AC_FUNC_FSEEKO])
+
 configure.ac:
 gl_FUNC_FSEEKO
 gl_STDIO_MODULE_INDICATOR([fseeko])
