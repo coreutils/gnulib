@@ -38,7 +38,7 @@
 #include <stdarg.h>
 #include <stddef.h>
 
-#if @GNULIB_FFLUSH@ && @REPLACE_FFLUSH@
+#if (@GNULIB_FFLUSH@ && @REPLACE_FFLUSH@) || (@GNULIB_FSEEKO@ && !@HAVE_FSEEKO@) || (@GNULIB_FTELLO@ && !@HAVE_FTELLO@)
 /* Get off_t.  */
 # include <sys/types.h>
 #endif
@@ -220,6 +220,7 @@ extern int fseeko (FILE *fp, off_t offset, int whence);
 #elif @GNULIB_FSEEKO@
 # if !@HAVE_FSEEKO@
 /* Assume 'off_t' is the same type as 'long'.  */
+typedef int verify_fseeko_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
 #  define fseeko fseek
 # endif
 #else
@@ -233,6 +234,7 @@ extern int fseeko (FILE *fp, off_t offset, int whence);
 #if @GNULIB_FTELLO@
 # if !@HAVE_FTELLO@
 /* Assume 'off_t' is the same type as 'long'.  */
+typedef int verify_ftello_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
 #  define ftello ftell
 # endif
 #else

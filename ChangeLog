@@ -1,5 +1,11 @@
 2007-04-26  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdio_.h (fseeko, ftello): Check that off_t has the same size as
+	'long' when we assume it.
+	Suggested by Eric Blake.
+
+2007-04-26  Bruno Haible  <bruno@clisp.org>
+
 	Ensure fseeko, ftello are declared on glibc systems.
 	* modules/fflush (configure.ac-early): Require AC_FUNC_FSEEKO.
 	* modules/fseeko (configure.ac-early): Likewise.
