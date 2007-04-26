@@ -2,6 +2,7 @@ Files:
 tests/test-fflush.c
 
 Depends-on:
+fseeko
 
 configure.ac:
 
