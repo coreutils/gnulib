@@ -1,0 +1,11 @@
+Files:
+tests/test-freading.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-freading
+check_PROGRAMS += test-freading
+MOSTLYCLEANFILES += t-freading.tmp

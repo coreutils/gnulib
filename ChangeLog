@@ -1,3 +1,21 @@
+2007-04-26  Eric Blake  <ebb9@byu.net>
+	and Bruno Haible  <bruno@clisp.org>
+
+	Implement freading and fwriting.
+	* lib/freading.c: New file.
+	* lib/freading.h: Likewise.
+	* m4/freading.m4: Likewise.
+	* modules/freading: Likewise.
+	* modules/freading-tests: Likewise.
+	* tests/test-freading.c: Likewise.
+	* lib/fwriting.c: New file.
+	* lib/fwriting.h: Likewise.
+	* m4/fwriting.m4: Likewise.
+	* modules/fwriting: Likewise.
+	* modules/fwriting-tests: Likewise.
+	* tests/test-fwriting.c: Likewise.
+	* MODULES.html.sh (File stream based Input/Output): Mention them.
+
 2007-04-26  Bruno Haible  <bruno@clisp.org>
 
 	* lib/stdio_.h (fseeko, ftello): Check that off_t has the same size as

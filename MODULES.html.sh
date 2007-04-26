@@ -2196,6 +2196,8 @@ func_all_modules ()
   func_module closeout
   func_module fopen-safer
   func_module fpending
+  func_module freading
+  func_module fwriting
   func_module getpass
   func_module getpass-gnu
   func_module stdlib-safer

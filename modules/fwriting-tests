@@ -1,0 +1,11 @@
+Files:
+tests/test-fwriting.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fwriting
+check_PROGRAMS += test-fwriting
+MOSTLYCLEANFILES += t-fwriting.tmp
