@@ -25,6 +25,7 @@
 #include <errno.h>
 #include <unistd.h>
 
+#include "freading.h"
 #include "fpurge.h"
 
 #undef fflush
@@ -37,13 +38,12 @@ rpl_fflush (FILE *stream)
   int result;
   off_t pos;
 
-  /* Try flushing the stream.  C89 guarantees behavior of output
-     streams, so we only need to worry if failure might have been on
-     an input stream.  When stream is NULL, POSIX only requires
-     flushing of output streams.  */
-  result = fflush (stream);
-  if (! stream || result == 0 || errno != EBADF)
-    return result;
+  /* When stream is NULL, POSIX only requires flushing of output
+     streams.  C89 guarantees behavior of output streams, and fflush
+     should be safe on read-write streams that are not currently
+     reading.  */
+  if (! stream || ! freading (stream))
+    return fflush (stream);
 
   /* POSIX does not specify fflush behavior for non-seekable input
      streams.  */

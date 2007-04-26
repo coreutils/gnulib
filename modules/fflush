@@ -10,6 +10,7 @@ m4/fseeko.m4
 Depends-on:
 fpurge
 ftello
+freading
 stdio
 unistd
 

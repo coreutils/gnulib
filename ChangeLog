@@ -1,4 +1,11 @@
 2007-04-26  Eric Blake  <ebb9@byu.net>
+
+	Fix fflush on mingw.
+	* modules/fflush (Depends-on): Add freading.
+	* lib/fflush.c (rpl_fflush): Use freading to avoid losing buffered
+	but unread data.
+
+2007-04-26  Eric Blake  <ebb9@byu.net>
 	and Bruno Haible  <bruno@clisp.org>
 
 	Implement freading and fwriting.
