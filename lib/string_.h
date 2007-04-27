@@ -16,7 +16,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifdef __DECC
+#if defined __DECC && __DECC_VER >= 60000000
 # include_next <string.h>
 #endif
 
@@ -29,7 +29,7 @@
 # pragma GCC system_header
 #endif
 
-#ifndef __DECC
+#if !(defined __DECC && __DECC_VER >= 60000000)
 # include @ABSOLUTE_STRING_H@
 #endif
 

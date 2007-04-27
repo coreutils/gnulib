@@ -1,5 +1,17 @@
 2007-04-27  Bruno Haible  <bruno@clisp.org>
 
+	* lib/inttypes_.h [_DECC]: Don't use #include_next if the compiler
+	version is < 6.
+	* lib/math_.h [__DECC]: Likewise.
+	* lib/stdio_.h [__DECC]: Likewise.
+	* lib/stdlib_.h [__DECC]: Likewise.
+	* lib/string_.h [__DECC]: Likewise.
+	* lib/time_.h [__DECC]: Likewise.
+	* lib/wchar_.h [__DECC]: Likewise.
+	* lib/wctype_.h [__DECC]: Likewise.
+
+2007-04-27  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-fbufmode.c (main): Relax test, to avoid failure on mingw.
 
 2007-04-27  Bruno Haible  <bruno@clisp.org>

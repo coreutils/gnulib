@@ -25,14 +25,14 @@
 #else
 /* Normal invocation convention.  */
 
-# ifdef __DECC
+# if defined __DECC && __DECC_VER >= 60000000
 #  include_next <time.h>
 # endif
 
 # if ! defined _GL_TIME_H
 #  define _GL_TIME_H
 
-#  ifndef __DECC
+#  if !(defined __DECC && __DECC_VER >= 60000000)
 #   include @ABSOLUTE_TIME_H@
 #  endif
 

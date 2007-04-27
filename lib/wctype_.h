@@ -39,7 +39,7 @@
 #endif
 
 #if @HAVE_WCTYPE_H@
-# ifdef __DECC
+# if defined __DECC && __DECC_VER >= 60000000
 #  include_next <wctype.h>
 # endif
 #endif
@@ -50,7 +50,7 @@
 /* Include the original <wctype.h> if it exists.
    BeOS 5 has the functions but no <wctype.h>.  */
 #if @HAVE_WCTYPE_H@
-# ifndef __DECC
+# if !(defined __DECC && __DECC_VER >= 60000000)
 #  include @ABSOLUTE_WCTYPE_H@
 # endif
 #endif

@@ -25,7 +25,7 @@
  * For now, this just ensures proper prerequisite inclusion order.
  */
 
-#ifdef __DECC
+#if defined __DECC && __DECC_VER >= 60000000
 # include <stdio.h>
 # include_next <wchar.h>
 #endif
@@ -42,7 +42,7 @@
 #include <time.h>
 
 /* Include the original <wchar.h>.  */
-#ifndef __DECC
+#if !(defined __DECC && __DECC_VER >= 60000000)
 # include @ABSOLUTE_WCHAR_H@
 #endif
 

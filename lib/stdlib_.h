@@ -31,7 +31,7 @@
 #else
 /* Normal invocation convention.  */
 
-#ifdef __DECC
+#if defined __DECC && __DECC_VER >= 60000000
 # include_next <stdlib.h>
 #endif
 
@@ -45,7 +45,7 @@
 # pragma GCC system_header
 #endif
 
-#ifndef __DECC
+#if !(defined __DECC && __DECC_VER >= 60000000)
 # include @ABSOLUTE_STDLIB_H@
 #endif
 
