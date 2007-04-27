@@ -29,12 +29,12 @@ regex.c
 regex.h
 regex_internal.c
 regex_internal.h
-socket_.h
 stat-time.h
 stdbool_.h
 stdint_.h
 strnlen1.h
 strtoul.c
+sys_socket_.h
 time_r.h
 utimecmp.h
 vasnprintf.h

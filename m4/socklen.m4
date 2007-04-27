@@ -12,7 +12,7 @@ dnl types for the argument to getsockopt, getpeername, etc.  So we
 dnl have to test to find something that will work.
 
 dnl On mingw32, socklen_t is in ws2tcpip.h ('int'), so we try to find
-dnl it there first.  That file is included by gnulib's socket_.h, which
+dnl it there first.  That file is included by gnulib's sys_socket_.h, which
 dnl all users of this module should include.  Cygwin must not include
 dnl ws2tcpip.h.
 AC_DEFUN([gl_TYPE_SOCKLEN_T],
