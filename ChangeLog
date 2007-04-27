@@ -1,5 +1,9 @@
 2007-04-27  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-fbufmode.c (main): Relax test, to avoid failure on mingw.
+
+2007-04-27  Bruno Haible  <bruno@clisp.org>
+
 	* lib/fflush.c: Add comments.
 	* modules/fpurge-tests (Depends-on): Add fflush.
 	* modules/freadable-tests (Depends-on): Likewise.

@@ -52,7 +52,9 @@ main ()
   /* This setvbuf call can fail, e.g. on HP-UX 11.  */
   if (setvbuf (fp, buf, _IOLBF, 5) == 0)
     {
-      ASSERT (fbufmode (fp) == _IOLBF);
+      /* mingw's setvbuf implements _IOLBF the same way as _IOFBF.  */
+      ASSERT (fbufmode (fp) == _IOLBF
+	      || fbufmode (fp) == _IOFBF);
     }
 
   /* This setvbuf call can fail, e.g. on HP-UX 11.  */
