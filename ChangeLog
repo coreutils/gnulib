@@ -1,3 +1,8 @@
+2007-04-27  Bruno Haible  <bruno@clisp.org>
+
+	* lib/sys_stat_.h: Renamed from lib/stat_.h.
+	* modules/sys_stat (Makefile.am): Update.
+
 2007-04-27  Eric Blake  <ebb9@byu.net>
 
 	* lib/freading.h: Improve comments.
