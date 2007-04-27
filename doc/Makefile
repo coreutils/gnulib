@@ -1,6 +1,6 @@
-# $Id: Makefile,v 1.5 2007-04-27 19:58:15 haible Exp $
+# $Id: Makefile,v 1.6 2007-04-27 19:58:36 haible Exp $
 # Makefile for gnulib doc.  
-# Copyright (C) 2004, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2004, 2006-2007 Free Software Foundation, Inc.
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
