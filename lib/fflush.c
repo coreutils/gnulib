@@ -38,11 +38,24 @@ rpl_fflush (FILE *stream)
   int result;
   off_t pos;
 
-  /* When stream is NULL, POSIX only requires flushing of output
-     streams.  C89 guarantees behavior of output streams, and fflush
-     should be safe on read-write streams that are not currently
-     reading.  */
-  if (! stream || ! freading (stream))
+  /* When stream is NULL, POSIX and C99 only require flushing of "output
+     streams and update streams in which the most recent operation was not
+     input", and all implementations do this.
+
+     When stream is "an output stream or an update stream in which the most
+     recent operation was not input", POSIX and C99 requires that fflush
+     writes out any buffered data, and all implementations do this.
+
+     When stream is, however, an input stream or an update stream in which
+     the most recent operation was input, POSIX and C99 specify nothing.
+     mingw, in particular, drops the input buffer, leaving the file descriptor
+     positioned at the end of the input buffer. I.e. ftell (stream) is lost.
+     We don't want to call the implementation's fflush in this case.
+
+     We test ! freading (stream) here, rather than fwriting (stream), because
+     what we need to know is whether the stream holds a "read buffer", and on
+     mingw this is indicated by _IOREAD, regardless of _IOWRT.  */
+  if (stream == NULL || ! freading (stream))
     return fflush (stream);
 
   /* POSIX does not specify fflush behavior for non-seekable input
@@ -60,12 +73,16 @@ rpl_fflush (FILE *stream)
   result = fpurge (stream);
   if (result != 0)
     return result;
+
   pos = lseek (fileno (stream), pos, SEEK_SET);
   if (pos == -1)
     return EOF;
+  /* After a successful lseek, update the file descriptor's position cache
+     in the stream.  */
 #if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   stream->_offset = pos;
   stream->_flags |= __SOFF;
 #endif
+
   return 0;
 }
