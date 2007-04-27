@@ -1,10 +1,13 @@
 @node assert.h
 @section @file{assert.h}
 
-Gnulib module: ---
+Gnulib module: @code{assert}
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+Not a portability problem, per se, but allow the installer to disable
+assertions through "configure --disable-assert".
 @end itemize
 
 Portability problems not fixed by Gnulib:
