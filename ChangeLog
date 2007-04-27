@@ -1,5 +1,14 @@
 2007-04-27  Bruno Haible  <bruno@clisp.org>
 
+	* doc/headers/*.texi: New files.
+	* doc/gnulib.texi (Header File Substitutes): New chapter.
+	* doc/Makefile (gnulib.info, gnulib.html, gnulib.dvi): Specify
+	dependencies.
+	(standards.info ,standards.html, standards.dvi): Update dependencies.
+	(mostlyclean, clean): New targets.
+
+2007-04-27  Bruno Haible  <bruno@clisp.org>
+
 	* lib/sysexits_.h: Renamed from lib/sysexit_.h.
 	* modules/sysexits (Files, Makefile.am): Update.
 

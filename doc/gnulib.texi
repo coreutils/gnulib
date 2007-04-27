@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.37 2007-04-12 13:01:59 jas Exp $
+@comment $Id: gnulib.texi,v 1.38 2007-04-27 19:58:15 haible Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2007-04-12 13:01:59 $
+@set UPDATED $Date: 2007-04-27 19:58:15 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -51,6 +51,7 @@ Texts.  A copy of the license is included in the section entitled
 * Introduction::
 * Invoking gnulib-tool::
 * Miscellaneous Notes::
+* Header File Substitutes::
 * Particular Modules::          Documentation of Individual Modules
 * Copying This Manual::
 * Index::
@@ -412,6 +413,185 @@ autobuild-submit logs/*
 @end example
 
 @end enumerate
+
+@node Header File Substitutes
+@chapter ISO C and POSIX Header File Substitutes
+
+This chapter describes which header files specified by ISO C or POSIX are
+substituted by Gnulib, which portability pitfalls are fixed by Gnulib, and
+which (known) portability problems are not worked around by Gnulib.
+
+@menu
+* aio.h::
+* arpa/inet.h::
+* assert.h::
+* complex.h::
+* cpio.h::
+* ctype.h::
+* dirent.h::
+* dlfcn.h::
+* errno.h::
+* fcntl.h::
+* fenv.h::
+* float.h::
+* fmtmsg.h::
+* fnmatch.h::
+* ftw.h::
+* glob.h::
+* grp.h::
+* iconv.h::
+* inttypes.h::
+* iso646.h::
+* langinfo.h::
+* libgen.h::
+* limits.h::
+* locale.h::
+* math.h::
+* monetary.h::
+* mqueue.h::
+* ndbm.h::
+* net/if.h::
+* netdb.h::
+* netinet/in.h::
+* netinet/tcp.h::
+* nl_types.h::
+* poll.h::
+* pthread.h::
+* pwd.h::
+* regex.h::
+* sched.h::
+* search.h::
+* semaphore.h::
+* setjmp.h::
+* signal.h::
+* spawn.h::
+* stdarg.h::
+* stdbool.h::
+* stddef.h::
+* stdint.h::
+* stdio.h::
+* stdlib.h::
+* string.h::
+* strings.h::
+* stropts.h::
+* sys/ipc.h::
+* sys/mman.h::
+* sys/msg.h::
+* sys/resource.h::
+* sys/select.h::
+* sys/sem.h::
+* sys/shm.h::
+* sys/socket.h::
+* sys/stat.h::
+* sys/statvfs.h::
+* sys/time.h::
+* sys/timeb.h::
+* sys/times.h::
+* sys/types.h::
+* sys/uio.h::
+* sys/un.h::
+* sys/utsname.h::
+* sys/wait.h::
+* syslog.h::
+* tar.h::
+* termios.h::
+* tgmath.h::
+* time.h::
+* trace.h::
+* ucontext.h::
+* ulimit.h::
+* unistd.h::
+* utime.h::
+* utmpx.h::
+* wchar.h::
+* wctype.h::
+* wordexp.h::
+@end menu
+
+@include headers/aio.texi
+@include headers/arpa_inet.texi
+@include headers/assert.texi
+@include headers/complex.texi
+@include headers/cpio.texi
+@include headers/ctype.texi
+@include headers/dirent.texi
+@include headers/dlfcn.texi
+@include headers/errno.texi
+@include headers/fcntl.texi
+@include headers/fenv.texi
+@include headers/float.texi
+@include headers/fmtmsg.texi
+@include headers/fnmatch.texi
+@include headers/ftw.texi
+@include headers/glob.texi
+@include headers/grp.texi
+@include headers/iconv.texi
+@include headers/inttypes.texi
+@include headers/iso646.texi
+@include headers/langinfo.texi
+@include headers/libgen.texi
+@include headers/limits.texi
+@include headers/locale.texi
+@include headers/math.texi
+@include headers/monetary.texi
+@include headers/mqueue.texi
+@include headers/ndbm.texi
+@include headers/net_if.texi
+@include headers/netdb.texi
+@include headers/netinet_in.texi
+@include headers/netinet_tcp.texi
+@include headers/nl_types.texi
+@include headers/poll.texi
+@include headers/pthread.texi
+@include headers/pwd.texi
+@include headers/regex.texi
+@include headers/sched.texi
+@include headers/search.texi
+@include headers/semaphore.texi
+@include headers/setjmp.texi
+@include headers/signal.texi
+@include headers/spawn.texi
+@include headers/stdarg.texi
+@include headers/stdbool.texi
+@include headers/stddef.texi
+@include headers/stdint.texi
+@include headers/stdio.texi
+@include headers/stdlib.texi
+@include headers/string.texi
+@include headers/strings.texi
+@include headers/stropts.texi
+@include headers/sys_ipc.texi
+@include headers/sys_mman.texi
+@include headers/sys_msg.texi
+@include headers/sys_resource.texi
+@include headers/sys_select.texi
+@include headers/sys_sem.texi
+@include headers/sys_shm.texi
+@include headers/sys_socket.texi
+@include headers/sys_stat.texi
+@include headers/sys_statvfs.texi
+@include headers/sys_time.texi
+@include headers/sys_timeb.texi
+@include headers/sys_times.texi
+@include headers/sys_types.texi
+@include headers/sys_uio.texi
+@include headers/sys_un.texi
+@include headers/sys_utsname.texi
+@include headers/sys_wait.texi
+@include headers/syslog.texi
+@include headers/tar.texi
+@include headers/termios.texi
+@include headers/tgmath.texi
+@include headers/time.texi
+@include headers/trace.texi
+@include headers/ucontext.texi
+@include headers/ulimit.texi
+@include headers/unistd.texi
+@include headers/utime.texi
+@include headers/utmpx.texi
+@include headers/wchar.texi
+@include headers/wctype.texi
+@include headers/wordexp.texi
 
 @node Particular Modules
 @chapter Particular Modules
