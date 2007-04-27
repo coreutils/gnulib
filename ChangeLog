@@ -1,5 +1,8 @@
 2007-04-27  Bruno Haible  <bruno@clisp.org>
 
+	* lib/sys_socket_.h: Renamed from lib/socket_.h.
+	* modules/sys_socket (Makefile.am): Update.
+
 	* lib/sys_stat_.h: Renamed from lib/stat_.h.
 	* modules/sys_stat (Makefile.am): Update.
 
