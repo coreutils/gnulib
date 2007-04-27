@@ -1,3 +1,10 @@
+2007-04-27  Bruno Haible  <bruno@clisp.org>
+
+	* lib/fflush.c: Add comments.
+	* modules/fpurge-tests (Depends-on): Add fflush.
+	* modules/freadable-tests (Depends-on): Likewise.
+	* modules/fwritable-tests (Depends-on): Likewise.
+
 2007-04-27  Charles Wilson  <libtool@cwilson.fastmail.fm>
 
 	* m4/argz.m4 (gl_FUNC_ARGZ): Use !HAVE_WORKING_ARGZ instead of

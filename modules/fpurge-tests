@@ -2,6 +2,7 @@ Files:
 tests/test-fpurge.c
 
 Depends-on:
+fflush
 
 configure.ac:
 

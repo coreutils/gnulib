@@ -2,6 +2,7 @@ Files:
 tests/test-freadable.c
 
 Depends-on:
+fflush
 
 configure.ac:
 

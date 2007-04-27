@@ -2,6 +2,7 @@ Files:
 tests/test-fwritable.c
 
 Depends-on:
+fflush
 
 configure.ac:
 
