@@ -1,0 +1,27 @@
+@node inttypes.h
+@section @file{inttypes.h}
+
+Gnulib module: inttypes
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+OSF/1 4.0.
+@item
+This header file is very incomplete on some platforms.
+@item
+The PRI* macros are defined to non-string values on AIX 4.3.3.
+@item
+The declarations of @code{imaxabs} and @code{imaxdiv} are missing on some
+platforms:
+NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, BeOS.
+@item
+The declarations of @code{strtoimax} and @code{strtoumax} are missing on some
+platforms:
+OpenBSD 3.8, AIX 4.3.2, AIX 5.1 (missing only @code{strtoumax}), OSF/1 5.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

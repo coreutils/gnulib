@@ -1,0 +1,15 @@
+@node utime.h
+@section @file{utime.h}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms.  Use @code{<sys/utime.h>}
+if @code{<utime.h>} is missing.
+@end itemize

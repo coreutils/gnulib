@@ -1,0 +1,14 @@
+@node time.h
+@section @file{time.h}
+
+Gnulib module: time
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+@samp{struct timespec} is not defined on some platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

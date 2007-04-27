@@ -1,0 +1,12 @@
+@node sys/types.h
+@section @file{sys/types.h}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

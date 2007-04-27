@@ -1,0 +1,12 @@
+@node string.h
+@section @file{string.h}
+
+Gnulib module: string
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

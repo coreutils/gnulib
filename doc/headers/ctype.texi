@@ -1,0 +1,12 @@
+@node ctype.h
+@section @file{ctype.h}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

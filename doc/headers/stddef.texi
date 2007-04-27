@@ -1,0 +1,12 @@
+@node stddef.h
+@section @file{stddef.h}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

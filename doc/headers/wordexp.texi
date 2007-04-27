@@ -1,0 +1,15 @@
+@node wordexp.h
+@section @file{wordexp.h}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+MacOS X 10.3, OpenBSD 3.8, Cygwin, mingw, BeOS.
+@end itemize

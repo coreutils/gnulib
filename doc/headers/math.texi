@@ -1,0 +1,12 @@
+@node math.h
+@section @file{math.h}
+
+Gnulib module: math
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

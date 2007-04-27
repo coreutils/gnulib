@@ -1,0 +1,17 @@
+@node stdlib.h
+@section @file{stdlib.h}
+
+Gnulib module: stdlib
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+The macros @code{EXIT_SUCCESS} and @code{EXIT_FAILURE} are not defined on
+some platforms.
+@item
+The macro @code{EXIT_FAILURE} is incorrectly defined on Tandem/NSK.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

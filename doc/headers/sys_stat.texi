@@ -1,0 +1,22 @@
+@node sys/stat.h
+@section @file{sys/stat.h}
+
+Gnulib module: sys_stat
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+Some macros, such as @code{S_IFMT}, are missing on some platforms.
+@item
+The macros @code{S_ISBLK}, @code{S_ISCHR}, @code{S_ISDIR}, @code{S_ISFIFO},
+@code{S_ISLNK}, @code{S_ISREG}, @code{S_ISSOCK} are broken on some platforms.
+@item
+Some platforms define macros, such as @code{S_ISDOOR}, that are not defined
+on other platforms.
+@item
+The functions @code{lstat} and @code{mkdir} are not declared on mingw.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

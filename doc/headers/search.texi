@@ -1,0 +1,15 @@
+@node search.h
+@section @file{search.h}
+
+Gnulib module: search
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+BeOS.
+@end itemize

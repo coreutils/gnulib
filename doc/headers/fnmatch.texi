@@ -1,0 +1,15 @@
+@node fnmatch.h
+@section @file{fnmatch.h}
+
+Gnulib module: fnmatch-posix or fnmatch-gnu
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+mingw, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

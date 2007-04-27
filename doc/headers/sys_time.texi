@@ -1,0 +1,16 @@
+@node sys/time.h
+@section @file{sys/time.h}
+
+Gnulib module: sys_time
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms.
+@item
+@samp{struct timeval} is not defined on some platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

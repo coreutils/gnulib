@@ -1,0 +1,12 @@
+@node setjmp.h
+@section @file{setjmp.h}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

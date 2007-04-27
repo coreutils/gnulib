@@ -1,0 +1,28 @@
+@node stdbool.h
+@section @file{stdbool.h}
+
+Gnulib module: stdbool
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1.
+@item
+Some compilers have bugs relating to @samp{bool}.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+@code{<stdbool.h>} must be #included before @samp{_Bool} can be used.
+@item
+You cannot assume that @code{_Bool} is a typedef; it might be a macro.
+@item
+Bit-fields of type @samp{bool} are not supported.  Portable code
+should use @samp{unsigned int foo : 1;} rather than @samp{bool foo : 1;}.
+@item
+Casts and automatic conversions to @samp{bool} don't test against the
+zero value or the null pointer, as they should.  Such casts should only
+be used if the casted value is known to be equal to 0 or 1.
+@end itemize

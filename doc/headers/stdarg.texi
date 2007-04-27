@@ -1,0 +1,15 @@
+@node stdarg.h
+@section @file{stdarg.h}
+
+Gnulib module: stdarg
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode for the builtin
+@code{va_copy} to work.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

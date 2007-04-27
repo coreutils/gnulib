@@ -1,0 +1,25 @@
+@node fcntl.h
+@section @file{fcntl.h}
+
+Gnulib module: fcntl
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+@samp{O_NOCTTY}, @samp{O_DSYNC}, @samp{O_NONBLOCK}, @samp{O_RSYNC},
+@samp{O_SYNC} are not defined on some platforms.
+
+@item
+@samp{O_BINARY}, @samp{O_TEXT} (not specified by POSIX, but essential for
+portability to Woe32 platforms) are defined on some platforms but not on
+others.
+
+@item
+@samp{O_DIRECT}, @samp{O_DIRECTORY}, @samp{O_NDELAY}, @samp{O_NOATIME},
+@samp{O_NOFOLLOW}, @samp{O_NOLINKS} (not specified by POSIX) are defined
+on some platforms but not on others.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

@@ -1,0 +1,15 @@
+@node strings.h
+@section @file{strings.h}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This header file defines symbols, such as @samp{index}, often used for
+variables, making debugging harder.
+@end itemize

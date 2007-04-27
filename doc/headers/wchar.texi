@@ -1,0 +1,15 @@
+@node wchar.h
+@section @file{wchar.h}
+
+Gnulib module: wchar
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is not self-contained on some platforms:
+OSF/1 with Desktop Toolkit C, BSD/OS 4.0.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

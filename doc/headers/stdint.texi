@@ -1,0 +1,22 @@
+@node stdint.h
+@section @file{stdint.h}
+
+Gnulib module: stdint
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, BeOS.
+@item
+This header file is very incomplete on some platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+@code{@{uint,int@}_fast@{8,16,32,64@}_t} may not correspond to the fastest
+types available on the system.
+@item
+Macros are used instead of typedefs.
+@end itemize

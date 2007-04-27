@@ -1,0 +1,15 @@
+@node sys/utsname.h
+@section @file{sys/utsname.h}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+mingw.
+@end itemize
