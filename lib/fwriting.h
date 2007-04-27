@@ -18,10 +18,18 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-/* Return true if the stream STREAM is opened write-only or append-only, or
-   if the last operation on the stream was a write operation.  Return false
-   if the stream supports reading and the last operation on it was a read
-   operation or there was no such operation.
+/* Return true if the stream STREAM is opened write-only or
+   append-only, or if the last operation on the stream was a write
+   operation.  Return false if the stream is opened read-only, or if
+   it supports reading and there is no current write operation (such
+   as fputc).
+
+   freading and fwriting will never both be true.  If STREAM supports
+   both reads and writes, then both freading and fwriting might be
+   false when the stream is first opened, after repositioning (such as
+   fseek, fsetpos, or rewind), after read encounters EOF, or after
+   fflush, depending on the underlying implementation.
+
    STREAM must not be wide-character oriented.  */
 
 #if HAVE___FWRITING /* glibc >= 2.2, Solaris >= 7 */

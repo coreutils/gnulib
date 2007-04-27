@@ -1,5 +1,9 @@
 2007-04-27  Eric Blake  <ebb9@byu.net>
 
+	* lib/freading.h: Improve comments.
+	* lib/fwriting.h: Likewise.
+	* lib/fflush.c: Likewise.
+
 	Fix closein for mingw.
 	* modules/closein-tests: Add tests for closein.
 	* tests/test-closein.c: New file.

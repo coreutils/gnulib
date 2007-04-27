@@ -46,11 +46,13 @@ rpl_fflush (FILE *stream)
      recent operation was not input", POSIX and C99 requires that fflush
      writes out any buffered data, and all implementations do this.
 
-     When stream is, however, an input stream or an update stream in which
-     the most recent operation was input, POSIX and C99 specify nothing.
-     mingw, in particular, drops the input buffer, leaving the file descriptor
-     positioned at the end of the input buffer. I.e. ftell (stream) is lost.
-     We don't want to call the implementation's fflush in this case.
+     When stream is, however, an input stream or an update stream in
+     which the most recent operation was input, C99 specifies nothing,
+     and POSIX only specifies behavior if the stream is seekable.
+     mingw, in particular, drops the input buffer, leaving the file
+     descriptor positioned at the end of the input buffer. I.e. ftell
+     (stream) is lost.  We don't want to call the implementation's
+     fflush in this case.
 
      We test ! freading (stream) here, rather than fwriting (stream), because
      what we need to know is whether the stream holds a "read buffer", and on
@@ -59,7 +61,8 @@ rpl_fflush (FILE *stream)
     return fflush (stream);
 
   /* POSIX does not specify fflush behavior for non-seekable input
-     streams.  */
+     streams.  Some implementations purge unread data, some return
+     EBADF, some do nothing.  */
   pos = ftello (stream);
   if (pos == -1)
     {
@@ -79,7 +82,7 @@ rpl_fflush (FILE *stream)
     return EOF;
   /* After a successful lseek, update the file descriptor's position cache
      in the stream.  */
-#if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+#if defined __sferror           /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   stream->_offset = pos;
   stream->_flags |= __SOFF;
 #endif
