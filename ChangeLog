@@ -1,10 +1,13 @@
 2007-04-27  Bruno Haible  <bruno@clisp.org>
 
+	* lib/sysexits_.h: Renamed from lib/sysexit_.h.
+	* modules/sysexits (Files, Makefile.am): Update.
+
 	* lib/sys_socket_.h: Renamed from lib/socket_.h.
-	* modules/sys_socket (Makefile.am): Update.
+	* modules/sys_socket (Files, Makefile.am): Update.
 
 	* lib/sys_stat_.h: Renamed from lib/stat_.h.
-	* modules/sys_stat (Makefile.am): Update.
+	* modules/sys_stat (Files, Makefile.am): Update.
 
 2007-04-27  Eric Blake  <ebb9@byu.net>
 
