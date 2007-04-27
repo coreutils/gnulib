@@ -1,0 +1,13 @@
+Files:
+tests/test-closein.sh
+tests/test-closein.c
+
+Depends-on:
+binary-io
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-closein.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-closein

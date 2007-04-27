@@ -27,6 +27,8 @@
 # include <stdio.h>
 #endif
 
+/* mingw fails to declare _exit in <unistd.h>.  */
+#include <stdlib.h>
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 

@@ -19,7 +19,6 @@
 #include <config.h>
 
 #include "closein.h"
-#include "closeout.h"
 
 #include <errno.h>
 #include <stdbool.h>
@@ -30,6 +29,7 @@
 #define _(msgid) gettext (msgid)
 
 #include "close-stream.h"
+#include "closeout.h"
 #include "error.h"
 #include "exitfail.h"
 #include "quotearg.h"
@@ -79,18 +79,23 @@ void
 close_stdin (void)
 {
   bool fail = false;
-  if (fflush (stdin) != 0 || close_stream (stdin) != 0)
+
+  /* Only attempt flush if stdin is seekable, as fflush is entitled to
+     fail on non-seekable streams.  */
+  if (fseeko (stdin, 0, SEEK_CUR) == 0 && fflush (stdin) != 0)
+    fail = true;
+  if (close_stream (stdin) != 0)
+    fail = true;
+  if (fail)
     {
+      /* Report failure, but defer exit until after closing stdout,
+	 since the failure report should still be flushed.  */
       char const *close_error = _("error closing file");
       if (file_name)
 	error (0, errno, "%s: %s", quotearg_colon (file_name),
 	       close_error);
       else
 	error (0, errno, "%s", close_error);
-
-      /* Defer failure until after closing stdout, since the output
-	 can still usefully be flushed.  */
-      fail = true;
     }
 
   close_stdout ();

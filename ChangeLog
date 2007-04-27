@@ -1,3 +1,12 @@
+2007-04-27  Eric Blake  <ebb9@byu.net>
+
+	Fix closein for mingw.
+	* modules/closein-tests: Add tests for closein.
+	* tests/test-closein.c: New file.
+	* tests/test-closein.sh: Likewise.
+	* lib/unistd_.h [!SEEK_CUR]: Mingw also needs stdlib.h for _exit.
+	* lib/closein.c (close_stdin): Don't fflush non-seekable streams.
+
 2007-04-27  Bruno Haible  <bruno@clisp.org>
 
 	* lib/inttypes_.h [_DECC]: Don't use #include_next if the compiler
