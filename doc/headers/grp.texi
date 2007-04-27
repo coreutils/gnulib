@@ -11,6 +11,7 @@ Portability problems fixed by Gnulib:
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
 This header file is missing on some platforms:
 mingw.
 @end itemize
