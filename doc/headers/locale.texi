@@ -1,6 +1,8 @@
 @node locale.h
 @section @file{locale.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/locale.h.html}
+
 Gnulib module: locale
 
 Portability problems fixed by Gnulib:

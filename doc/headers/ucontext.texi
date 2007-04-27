@@ -1,6 +1,8 @@
 @node ucontext.h
 @section @file{ucontext.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/ucontext.h.html}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

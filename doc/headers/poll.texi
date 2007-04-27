@@ -1,6 +1,8 @@
 @node poll.h
 @section @file{poll.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/poll.h.html}
+
 Gnulib module: poll
 
 Portability problems fixed by Gnulib:

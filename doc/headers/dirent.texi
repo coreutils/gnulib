@@ -1,6 +1,8 @@
 @node dirent.h
 @section @file{dirent.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/dirent.h.html}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

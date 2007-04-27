@@ -1,6 +1,8 @@
 @node unistd.h
 @section @file{unistd.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/unistd.h.html}
+
 Gnulib module: unistd
 
 Portability problems fixed by Gnulib:

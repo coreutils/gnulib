@@ -1,6 +1,8 @@
 @node stdlib.h
 @section @file{stdlib.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/stdlib.h.html}
+
 Gnulib module: stdlib
 
 Portability problems fixed by Gnulib:

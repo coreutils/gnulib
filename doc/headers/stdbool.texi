@@ -1,6 +1,8 @@
 @node stdbool.h
 @section @file{stdbool.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/stdbool.h.html}
+
 Gnulib module: stdbool
 
 Portability problems fixed by Gnulib:

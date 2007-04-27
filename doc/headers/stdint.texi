@@ -1,6 +1,8 @@
 @node stdint.h
 @section @file{stdint.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/stdint.h.html}
+
 Gnulib module: stdint
 
 Portability problems fixed by Gnulib:

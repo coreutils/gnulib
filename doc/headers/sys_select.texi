@@ -1,6 +1,8 @@
 @node sys/select.h
 @section @file{sys/select.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/sys/select.h.html}
+
 Gnulib module: sys_select
 
 Portability problems fixed by Gnulib:

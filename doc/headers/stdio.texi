@@ -1,6 +1,8 @@
 @node stdio.h
 @section @file{stdio.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/stdio.h.html}
+
 Gnulib module: stdio
 
 Portability problems fixed by Gnulib:

@@ -1,6 +1,8 @@
 @node search.h
 @section @file{search.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/search.h.html}
+
 Gnulib module: search
 
 Portability problems fixed by Gnulib:

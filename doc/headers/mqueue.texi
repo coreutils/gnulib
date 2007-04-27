@@ -1,6 +1,8 @@
 @node mqueue.h
 @section @file{mqueue.h}
 
+POSIX specification: @url{http://www.opengroup.org/susv3xbd/mqueue.h.html}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:
