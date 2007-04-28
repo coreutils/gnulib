@@ -231,6 +231,16 @@ typedef int verify_fseeko_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
     fseeko (f, o, w))
 #endif
 
+#if defined GNULIB_POSIXCHECK
+# ifndef fseek
+#  define fseek(f,o,w) \
+     (GL_LINK_WARNING ("fseek cannot handle files larger than 4 GB " \
+                       "on 32-bit platforms - " \
+                       "use fseeko function for handling of large files"), \
+      fseek (f, o, w))
+# endif
+#endif
+
 #if @GNULIB_FTELLO@
 # if !@HAVE_FTELLO@
 /* Assume 'off_t' is the same type as 'long'.  */
@@ -243,6 +253,16 @@ typedef int verify_ftello_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
    (GL_LINK_WARNING ("ftello is unportable - " \
                      "use gnulib module ftello for portability"), \
     ftello (f))
+#endif
+
+#if defined GNULIB_POSIXCHECK
+# ifndef ftell
+#  define ftell(f) \
+     (GL_LINK_WARNING ("ftell cannot handle files larger than 4 GB " \
+                       "on 32-bit platforms - " \
+                       "use ftello function for handling of large files"), \
+      ftell (f))
+# endif
 #endif
 
 #if @GNULIB_FFLUSH@
