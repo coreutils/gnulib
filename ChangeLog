@@ -1,3 +1,9 @@
+2007-04-28  Jim Meyering  <jim@meyering.net>
+
+	Avoid false-negative in gl_STDINT_H's C99 conformance test.
+	* m4/stdint.m4 (gl_STDINT_H): When checking whether stdint.h conforms
+	to C99, include all of gl_STDINT_INCLUDES, not just <stddef.h>.
+
 2007-04-27  Eric Blake  <ebb9@byu.net>
 
 	* doc/headers/assert.texi (assert.h): Document assert module use.

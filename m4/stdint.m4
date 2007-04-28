@@ -66,8 +66,8 @@ AC_DEFUN([gl_STDINT_H],
       [gl_cv_header_working_stdint_h],
       [gl_cv_header_working_stdint_h=no
        AC_COMPILE_IFELSE([
-         AC_LANG_PROGRAM([[
-#include <stddef.h>
+         AC_LANG_PROGRAM([gl_STDINT_INCLUDES
+         [
 #define __STDC_LIMIT_MACROS 1 /* to make it work also in C++ mode */
 #define __STDC_CONSTANT_MACROS 1 /* to make it work also in C++ mode */
 #include ABSOLUTE_STDINT_H
