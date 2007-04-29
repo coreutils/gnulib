@@ -31,8 +31,6 @@
 # include <strings.h>
 #endif
 
-#include "progname.h"
-
 struct test_args
 {
   int test;
@@ -42,6 +40,8 @@ struct test_args
   int opt;
   char *optional;
   int optional_set;
+  int group_2_1_option;
+  int group_1_1_option;
 };
 
 static struct argp_option group1_option[] = 
@@ -92,15 +92,52 @@ struct argp_child group1_child = {
 };
 
 
+static struct argp_option group1_1_option[] = 
+{
+  { NULL, 0, NULL, 0, "Option Group 1.1", 0},
+  { "cantiga", 'C', NULL, 0, "create a cantiga" },
+  { "sonet", 'S', NULL, 0, "create a sonet" },
+  { NULL, 0, NULL, 0, NULL, 0 }
+};
+
+static error_t
+group1_1_parser (int key, char *arg, struct argp_state *state)
+{
+  struct test_args *args = state->input;
+  switch (key)
+    {
+    case 'C':
+    case 'S':
+      args->group_1_1_option = key;
+      break;
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+  return 0;
+}
+
+struct argp group1_1_argp = {
+  group1_1_option,
+  group1_1_parser
+};
+
+struct argp_child group1_1_child = {
+  &group1_1_argp,
+  0,
+  "",
+  2
+};
+
+
 static struct argp_option group2_option[] = 
 {
   { NULL, 0, NULL, 0, "Option Group 2", 0},
   { "option", 'O', NULL, 0, "An option", 1 },
   { "optional", 'o', "ARG", OPTION_ARG_OPTIONAL,
-    "Option with an optional argument. ARG is one of the following:", 1 },
-  { "one", 0, NULL, OPTION_DOC|OPTION_NO_TRANS, "one unit", 2 },
-  { "two", 0, NULL, OPTION_DOC|OPTION_NO_TRANS, "two units", 2 },
-  { "many", 0, NULL, OPTION_DOC|OPTION_NO_TRANS, "many units", 2 },
+    "Option with an optional argument. ARG is one of the following:", 2 },
+  { "one", 0, NULL, OPTION_DOC|OPTION_NO_TRANS, "one unit", 3 },
+  { "two", 0, NULL, OPTION_DOC|OPTION_NO_TRANS, "two units", 3 },
+  { "many", 0, NULL, OPTION_DOC|OPTION_NO_TRANS, "many units", 3 },
   { NULL, 0, NULL, 0, NULL, 0 }
 };
 
@@ -138,6 +175,44 @@ struct argp_child group2_child = {
   2
 };
 
+
+static struct argp_option group2_1_option[] = 
+{
+  { NULL, 0, NULL, 0, "Option Group 2.1", 0},
+  { "poem", 'p', NULL, 0, "create a poem" },
+  { "limerick", 'l', NULL, 0, "create a limerick" },
+  { NULL, 0, NULL, 0, NULL, 0 }
+};
+
+static error_t
+group2_1_parser (int key, char *arg, struct argp_state *state)
+{
+  struct test_args *args = state->input;
+  switch (key)
+    {
+    case 'p':
+    case 'e':
+      args->group_2_1_option = key;
+      break;
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+  return 0;
+}
+
+struct argp group2_1_argp = {
+  group2_1_option,
+  group2_1_parser
+};
+
+struct argp_child group2_1_child = {
+  &group2_1_argp,
+  0,
+  "",
+  2
+};
+	  
+
 static struct argp_option main_options[] =
   {
     { NULL, 0, NULL, 0, "Main options", 0},
@@ -342,6 +417,27 @@ test12(struct argp *argp)
   test_optional(argp, argc, argv, &test_args, "OPT", "FILE");
 }  
 
+void
+test13(struct argp *argp)
+{
+  INIT_TEST1 (1, "--cantiga");
+  if (argp_parse (argp, argc, argv, 0, NULL, &test_args))
+    fail("argp_parse failed");
+  else if (test_args.group_1_1_option != 'C')
+    fail("option not processed");
+}
+
+void
+test14(struct argp *argp)
+{
+  INIT_TEST1 (1, "--limerick");
+  if (argp_parse (argp, argc, argv, 0, NULL, &test_args))
+    fail("argp_parse failed");
+  else if (test_args.group_2_1_option != 'l')
+    fail("option not processed");
+}
+
+
 
 typedef void (*test_fp) (struct argp *argp);
 
@@ -349,17 +445,26 @@ test_fp test_fun[] = {
   test1,  test2,  test3,  test4,
   test5,  test6,  test7,  test8,
   test9,  test10, test11, test12,
+  test13, test14,
   NULL
 };
 
 int
 main (int argc, char **argv)
 {
-  struct argp_child argp_children[3];
+  struct argp_child argp_children[3], group1_children[2], group2_children[2];
   test_fp *fun;
 
   set_program_name (argv[0]);
 
+  group1_children[0] = group1_1_child;
+  group1_children[1].argp = NULL;
+  group1_argp.children = group1_children;
+
+  group2_children[0] = group2_1_child;
+  group2_children[1].argp = NULL;
+  group2_argp.children = group2_children;
+  
   argp_children[0] = group1_child;
   argp_children[1] = group2_child;
   argp_children[2].argp = NULL;
