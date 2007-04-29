@@ -97,7 +97,9 @@ main ()
   ASSERT (fwriting (fp));
   if (fseek (fp, 0, SEEK_END))
     goto skip;
-  /* fwriting (fp) is undefined here, but freading (fp) is false.  */
+  /* freading (fp) is undefined here, because on some implementations (e.g.
+     glibc) fseek causes a buffer to be read.
+     fwriting (fp) is undefined as well.  */
   if (fclose (fp))
     goto skip;
 
@@ -135,7 +137,9 @@ main ()
   ASSERT (fwriting (fp));
   if (fseek (fp, 0, SEEK_END))
     goto skip;
-  /* fwriting (fp) is undefined here, but freading (fp) is false.  */
+  /* freading (fp) is undefined here, because on some implementations (e.g.
+     glibc) fseek causes a buffer to be read.
+     fwriting (fp) is undefined as well.  */
   if (fclose (fp))
     goto skip;
 

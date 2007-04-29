@@ -24,10 +24,12 @@
    writing and there is no current read operation (such as fputc).
 
    freading and fwriting will never both be true.  If STREAM supports
-   both reads and writes, then both freading and fwriting might be
-   false when the stream is first opened, after repositioning (such as
-   fseek, fsetpos, or rewind), after read encounters EOF, or after
-   fflush, depending on the underlying implementation.
+   both reads and writes, then:
+     - both freading and fwriting might be false when the stream is first
+       opened, after read encounters EOF, or after fflush,
+     - freading might be false or true and fwriting might be false
+       after repositioning (such as fseek, fsetpos, or rewind),
+   depending on the underlying implementation.
 
    STREAM must not be wide-character oriented.  */
 

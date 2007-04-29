@@ -1,5 +1,12 @@
 2007-04-29  Bruno Haible  <bruno@clisp.org>
 
+	* lib/freading.h: Improve comments.
+	* lib/fwriting.h: Likewise.
+	* tests/test-freading.c (main): Don't check freading immediately after
+	repositioning. Needed for glibc.
+
+2007-04-29  Bruno Haible  <bruno@clisp.org>
+
 	* lib/freading.c (freading): Trivial simplification.
 
 2007-04-28  Bruno Haible  <bruno@clisp.org>
