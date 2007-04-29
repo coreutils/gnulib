@@ -33,7 +33,7 @@ main (int argc, char *argv[])
 
   /* Create test file.  */
   f = fopen ("test-fflush.txt", "w");
-  if (!f || fwrite ("1234567890", 1, 10, f) != 10 || fclose (f) != 0)
+  if (!f || fwrite ("1234567890ABCDEFG", 1, 17, f) != 17 || fclose (f) != 0)
     {
       fputs ("Failed to create sample file.\n", stderr);
       unlink ("test-fflush.txt");
@@ -50,7 +50,9 @@ main (int argc, char *argv[])
       unlink ("test-fflush.txt");
       return 1;
     }
-  /* For deterministic results, ensure f read a bigger buffer.  */
+  /* For deterministic results, ensure f read a bigger buffer.
+     This is not the case on BeOS.  */
+#if !defined __BEOS__
   if (lseek (fd, 0, SEEK_CUR) == 5)
     {
       fputs ("Sample file was not buffered after fread.\n", stderr);
@@ -58,6 +60,7 @@ main (int argc, char *argv[])
       unlink ("test-fflush.txt");
       return 1;
     }
+#endif
   /* POSIX requires fflush-fseek to set file offset of fd.  */
   if (fflush (f) != 0 || fseek (f, 0, SEEK_CUR) != 0)
     {
@@ -69,14 +72,16 @@ main (int argc, char *argv[])
   /* Check that offset is correct.  */
   if (lseek (fd, 0, SEEK_CUR) != 5)
     {
-      fputs ("File offset is wrong after fseek.\n", stderr);
+      fprintf (stderr, "File offset is wrong after fseek: %ld.\n",
+	       (long) lseek (fd, 0, SEEK_CUR));
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;
     }
   if (ftell (f) != 5)
     {
-      fputs ("ftell result is wrong after fseek.\n", stderr);
+      fprintf (stderr, "ftell result is wrong after fseek: %ld.\n",
+	       (long) ftell (f));
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;
@@ -108,14 +113,16 @@ main (int argc, char *argv[])
   /* Check that offset is correct.  */
   if (lseek (fd, 0, SEEK_CUR) != 6)
     {
-      fputs ("File offset is wrong after fseeko.\n", stderr);
+      fprintf (stderr, "File offset is wrong after fseeko: %ld.\n",
+	       (long) lseek (fd, 0, SEEK_CUR));
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;
     }
   if (ftell (f) != 6)
     {
-      fputs ("ftell result is wrong after fseek.\n", stderr);
+      fprintf (stderr, "ftell result is wrong after fseeko: %ld.\n",
+	       (long) ftell (f));
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;

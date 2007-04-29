@@ -1,5 +1,10 @@
 2007-04-29  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-fflush.c (main): Use a file of size 17, not 10.
+	Print more information in case of failure. Disable a test on BeOS.
+
+2007-04-29  Bruno Haible  <bruno@clisp.org>
+
 	* tests/**/test-*.[hc] (ASSERT): Use fprintf to show the line number.
 	This helps debugging on systems on which no gdb is available.
 
