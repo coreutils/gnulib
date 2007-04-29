@@ -273,7 +273,6 @@ conj
 conjf
 conjl
 connect
-contents
 copysign
 copysignf
 copysignl
