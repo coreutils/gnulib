@@ -1,5 +1,15 @@
 2007-04-28  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-fwriting.c (main): Also test the interaction between
+	fflush and fwriting.
+	* modules/fwriting-tests (Depends-on): Add fflush.
+
+	* tests/test-freading.c (main): Also test the interaction between
+	fflush and freading.
+	* modules/freading-tests (Depends-on): Add fflush.
+
+2007-04-28  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdio_.h (fseek, ftell): Provide link warnings suggesting to use
 	fseeko and ftello.
 	Suggested by Eric Blake.

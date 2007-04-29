@@ -57,6 +57,11 @@ main ()
   if (fgetc (fp) != 'b')
     goto skip;
   ASSERT (freading (fp));
+  fflush (fp);
+  ASSERT (freading (fp));
+  if (fgetc (fp) != 'a')
+    goto skip;
+  ASSERT (freading (fp));
   if (fseek (fp, 0, SEEK_END))
     goto skip;
   ASSERT (freading (fp));
@@ -77,12 +82,52 @@ main ()
   ASSERT (freading (fp));
   if (fseek (fp, 2, SEEK_CUR))
     goto skip;
-  /* freading (fp)) is undefined here, but fwriting is false.  */
+  /* freading (fp) is undefined here, but fwriting (fp) is false.  */
   if (fgetc (fp) != 'b')
     goto skip;
   ASSERT (freading (fp));
+  /* This fseek call is necessary when switching from reading to writing.
+     See the description of fopen(), ISO C 99 7.19.5.3.(6).  */
   if (fseek (fp, 0, SEEK_CUR) != 0)
     goto skip;
+  /* freading (fp) is undefined here, but fwriting (fp) is false.  */
+  if (fputc ('z', fp) != 'z')
+    goto skip;
+  ASSERT (!freading (fp));
+  if (fseek (fp, 0, SEEK_END))
+    goto skip;
+  ASSERT (!freading (fp));
+  if (fclose (fp))
+    goto skip;
+
+  /* Open it in read-write mode.  POSIX requires a reposition (fseek,
+     fsetpos, rewind) or EOF when transitioning from read to write;
+     freading is only deterministic after input or output, but this
+     test case should be portable even on open, after reposition, and
+     at EOF.  */
+  fp = fopen (TESTFILE, "r+");
+  if (fp == NULL)
+    goto skip;
+  ASSERT (!freading (fp));
+  if (fgetc (fp) != 'f')
+    goto skip;
+  ASSERT (freading (fp));
+  if (fseek (fp, 2, SEEK_CUR))
+    goto skip;
+  /* freading (fp) is undefined here, but fwriting (fp) is false.  */
+  if (fgetc (fp) != 'b')
+    goto skip;
+  ASSERT (freading (fp));
+  fflush (fp);
+  /* freading (fp) is undefined here, but fwriting (fp) is false.  */
+  if (fgetc (fp) != 'a')
+    goto skip;
+  ASSERT (freading (fp));
+  /* This fseek call is necessary when switching from reading to writing.
+     See the description of fopen(), ISO C 99 7.19.5.3.(6).  */
+  if (fseek (fp, 0, SEEK_CUR) != 0)
+    goto skip;
+  /* freading (fp) is undefined here, but fwriting (fp) is false.  */
   if (fputc ('z', fp) != 'z')
     goto skip;
   ASSERT (!freading (fp));

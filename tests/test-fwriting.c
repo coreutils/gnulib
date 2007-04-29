@@ -57,6 +57,11 @@ main ()
   if (fgetc (fp) != 'b')
     goto skip;
   ASSERT (!fwriting (fp));
+  fflush (fp);
+  ASSERT (!fwriting (fp));
+  if (fgetc (fp) != 'a')
+    goto skip;
+  ASSERT (!fwriting (fp));
   if (fseek (fp, 0, SEEK_END))
     goto skip;
   ASSERT (!fwriting (fp));
@@ -81,14 +86,54 @@ main ()
   if (fgetc (fp) != 'b')
     goto skip;
   ASSERT (!fwriting (fp));
+  /* This fseek call is necessary when switching from reading to writing.
+     See the description of fopen(), ISO C 99 7.19.5.3.(6).  */
   if (fseek (fp, 0, SEEK_CUR) != 0)
     goto skip;
+  ASSERT (!fwriting (fp));
   if (fputc ('z', fp) != 'z')
     goto skip;
   ASSERT (fwriting (fp));
   if (fseek (fp, 0, SEEK_END))
     goto skip;
-  /* fwriting (fp) is undefined here, but freading is false.  */
+  /* fwriting (fp) is undefined here, but freading (fp) is false.  */
+  if (fclose (fp))
+    goto skip;
+
+  /* Open it in read-write mode.  POSIX requires a reposition (fseek,
+     fsetpos, rewind) or fflush when transitioning from write to read,
+     fwriting is only deterministic after input or output, but this
+     test case should be portable even on open, after reposition, and
+     after fflush.  */
+  fp = fopen (TESTFILE, "r+");
+  if (fp == NULL)
+    goto skip;
+  ASSERT (!fwriting (fp));
+  if (fgetc (fp) != 'f')
+    goto skip;
+  ASSERT (!fwriting (fp));
+  if (fseek (fp, 2, SEEK_CUR))
+    goto skip;
+  ASSERT (!fwriting (fp));
+  if (fgetc (fp) != 'b')
+    goto skip;
+  ASSERT (!fwriting (fp));
+  fflush (fp);
+  ASSERT (!fwriting (fp));
+  if (fgetc (fp) != 'a')
+    goto skip;
+  ASSERT (!fwriting (fp));
+  /* This fseek call is necessary when switching from reading to writing.
+     See the description of fopen(), ISO C 99 7.19.5.3.(6).  */
+  if (fseek (fp, 0, SEEK_CUR) != 0)
+    goto skip;
+  ASSERT (!fwriting (fp));
+  if (fputc ('z', fp) != 'z')
+    goto skip;
+  ASSERT (fwriting (fp));
+  if (fseek (fp, 0, SEEK_END))
+    goto skip;
+  /* fwriting (fp) is undefined here, but freading (fp) is false.  */
   if (fclose (fp))
     goto skip;
 

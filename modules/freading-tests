@@ -2,6 +2,7 @@ Files:
 tests/test-freading.c
 
 Depends-on:
+fflush
 
 configure.ac:
 
