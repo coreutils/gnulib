@@ -1,14 +1,17 @@
 Files:
 tests/test-snprintf-posix.c
 tests/test-snprintf-posix.h
+tests/test-snprintf.c
 
 Depends-on:
 stdint
 
 configure.ac:
+AC_DEFINE([CHECK_SNPRINTF_POSIX], 1,
+  [Define to 1 for strict checking in test-snprintf.c.])
 
 Makefile.am:
-TESTS += test-snprintf-posix
-check_PROGRAMS += test-snprintf-posix
+TESTS += test-snprintf-posix test-snprintf
+check_PROGRAMS += test-snprintf-posix test-snprintf
 EXTRA_DIST += test-snprintf-posix.h
 

@@ -1,4 +1,4 @@
-# printf.m4 serial 6
+# printf.m4 serial 7
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -361,6 +361,16 @@ changequote([,])dnl
 dnl Test whether the return value of the snprintf function is the number
 dnl of bytes (excluding the terminating NUL) that would have been produced
 dnl if the buffer had been large enough. (ISO C99, POSIX:2001)
+dnl For example, this test program fails on IRIX 6.5:
+dnl     ---------------------------------------------------------------------
+dnl     #include <stdio.h>
+dnl     int main()
+dnl     {
+dnl       static char buf[8];
+dnl       int retval = snprintf (buf, 3, "%d", 12345);
+dnl       return retval >= 0 && retval < 3;
+dnl     }
+dnl     ---------------------------------------------------------------------
 dnl Result is gl_cv_func_snprintf_retval_c99.
 
 AC_DEFUN([gl_SNPRINTF_RETVAL_C99],
@@ -475,6 +485,104 @@ changequote([,])dnl
     ])
 ])
 
+dnl Test whether the vsnprintf function, when passed a zero size, produces no
+dnl output. (ISO C99, POSIX:2001)
+dnl For example, snprintf nevertheless writes a NUL byte in this case
+dnl on OSF/1 5.1:
+dnl     ---------------------------------------------------------------------
+dnl     #include <stdio.h>
+dnl     int main()
+dnl     {
+dnl       static char buf[8] = "DEADBEEF";
+dnl       snprintf (buf, 0, "%d", 12345);
+dnl       return buf[0] != 'D';
+dnl     }
+dnl     ---------------------------------------------------------------------
+dnl And vsnprintf writes any output without bounds in this case, behaving like
+dnl vsprintf, on HP-UX 11 and OSF/1 5.1:
+dnl     ---------------------------------------------------------------------
+dnl     #include <stdarg.h>
+dnl     #include <stdio.h>
+dnl     static int my_snprintf (char *buf, int size, const char *format, ...)
+dnl     {
+dnl       va_list args;
+dnl       int ret;
+dnl       va_start (args, format);
+dnl       ret = vsnprintf (buf, size, format, args);
+dnl       va_end (args);
+dnl       return ret;
+dnl     }
+dnl     int main()
+dnl     {
+dnl       static char buf[8] = "DEADBEEF";
+dnl       my_snprintf (buf, 0, "%d", 12345);
+dnl       return buf[0] != 'D';
+dnl     }
+dnl     ---------------------------------------------------------------------
+dnl Result is gl_cv_func_vsnprintf_zerosize_c99.
+
+AC_DEFUN([gl_VSNPRINTF_ZEROSIZE_C99],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether vsnprintf respects a zero size as in C99],
+    [gl_cv_func_vsnprintf_zerosize_c99], 
+    [
+      AC_TRY_RUN([
+#include <stdarg.h>
+#include <stdio.h>
+static int my_snprintf (char *buf, int size, const char *format, ...)
+{
+  va_list args;
+  int ret;
+  va_start (args, format);
+  ret = vsnprintf (buf, size, format, args);
+  va_end (args);
+  return ret;
+}
+int main()
+{
+  static char buf[8] = "DEADBEEF";
+  my_snprintf (buf, 0, "%d", 12345);
+  return buf[0] != 'D';
+}],
+      [gl_cv_func_vsnprintf_zerosize_c99=yes],
+      [gl_cv_func_vsnprintf_zerosize_c99=no],
+      [
+changequote(,)dnl
+       case "$host_os" in
+                               # Guess yes on glibc systems.
+         *-gnu*)               gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
+                               # Guess yes on FreeBSD >= 5.
+         freebsd[1-4]*)        gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
+         freebsd* | kfreebsd*) gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
+                               # Guess yes on MacOS X >= 10.3.
+         darwin[1-6].*)        gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
+         darwin*)              gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
+                               # Guess yes on Solaris >= 2.6.
+         solaris2.[0-5]*)      gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
+         solaris*)             gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
+                               # Guess yes on AIX >= 4.
+         aix[1-3]*)            gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
+         aix*)                 gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
+                               # Guess yes on IRIX >= 6.5.
+         irix6.5)              gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
+                               # Guess yes on NetBSD >= 3.
+         netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
+                               gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
+         netbsd*)              gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
+                               # Guess yes on BeOS.
+         beos*)                gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
+                               # Guess yes on mingw.
+         mingw* | pw*)         gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
+                               # If we don't know, assume the worst.
+         *)                    gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
+       esac
+changequote([,])dnl
+      ])
+    ])
+])
+
 dnl The results of these tests on various platforms are:
 dnl
 dnl 1 = gl_PRINTF_SIZES_C99
@@ -486,6 +594,7 @@ dnl 6 = gl_SNPRINTF_PRESENCE
 dnl 7 = gl_SNPRINTF_TRUNCATION_C99
 dnl 8 = gl_SNPRINTF_RETVAL_C99
 dnl 9 = gl_SNPRINTF_DIRECTIVE_N
+dnl 10 = gl_VSNPRINTF_ZEROSIZE_C99
 dnl
 dnl 1 = checking whether printf supports size specifiers as in C99...
 dnl 2 = checking whether printf supports the 'a' and 'A' directives...
@@ -496,28 +605,29 @@ dnl 6 = checking for snprintf...
 dnl 7 = checking whether snprintf truncates the result as in C99...
 dnl 8 = checking whether snprintf returns a byte count as in C99...
 dnl 9 = checking whether snprintf fully supports the 'n' directive...
+dnl 10 = checking whether vsnprintf respects a zero size as in C99...
 dnl
 dnl . = yes, # = no.
 dnl
-dnl                                        1  2  3  4  5  6  7  8  9
-dnl   glibc 2.5                            .  .  .  .  .  .  .  .  .
-dnl   glibc 2.3.6                          .  #  .  .  .  .  .  .  .
-dnl   FreeBSD 5.4, 6.1                     .  ?  .  .  .  .  .  .  .
-dnl   MacOS X 10.3.9                       .  #  .  .  .  .  .  .  .
-dnl   OpenBSD 3.9, 4.0                     .  #  ?  .  .  .  .  .  ?
-dnl   Cygwin 2007                          .  #  #  .  .  .  .  .  .
-dnl   Cygwin 2006                          #  #  #  .  .  .  .  .  .
-dnl   Solaris 10                           .  #  .  .  .  .  .  .  .
-dnl   Solaris 2.6 ... 9                    #  #  #  .  .  .  .  .  .
-dnl   Solaris 2.5.1                        #  #  #  .  .  #  #  #  #
-dnl   AIX 5.2                              .  #  .  .  .  .  .  .  .
-dnl   AIX 4.3.2, 5.1                       #  #  #  .  .  .  .  .  .
-dnl   HP-UX 11.31                          .  #  .  .  .  .  .  #  #
-dnl   HP-UX 10.20, 11.00, 11.11, 11.23     #  #  #  .  .  .  .  #  #
-dnl   IRIX 6.5                             #  #  #  .  .  .  .  #  .
-dnl   OSF/1 5.1                            #  #  #  .  .  .  .  #  .
-dnl   OSF/1 4.0d                           #  #  #  .  .  #  #  #  #
-dnl   NetBSD 4.0                           .  ?  ?  .  .  .  .  .  ?
-dnl   NetBSD 3.0                           .  #  #  .  #  .  .  .  .
-dnl   BeOS                                 #  #  #  .  #  .  .  .  .
-dnl   mingw                                #  #  #  .  #  .  #  #  #
+dnl                                        1  2  3  4  5  6  7  8  9 10
+dnl   glibc 2.5                            .  .  .  .  .  .  .  .  .  .
+dnl   glibc 2.3.6                          .  #  .  .  .  .  .  .  .  .
+dnl   FreeBSD 5.4, 6.1                     .  ?  .  .  .  .  .  .  .  .
+dnl   MacOS X 10.3.9                       .  #  .  .  .  .  .  .  .  .
+dnl   OpenBSD 3.9, 4.0                     .  #  ?  .  .  .  .  .  ?  ?
+dnl   Cygwin 2007                          .  #  #  .  .  .  .  .  .  ?
+dnl   Cygwin 2006                          #  #  #  .  .  .  .  .  .  ?
+dnl   Solaris 10                           .  #  .  .  .  .  .  .  .  .
+dnl   Solaris 2.6 ... 9                    #  #  #  .  .  .  .  .  .  .
+dnl   Solaris 2.5.1                        #  #  #  .  .  #  #  #  #  #
+dnl   AIX 5.2                              .  #  .  .  .  .  .  .  .  .
+dnl   AIX 4.3.2, 5.1                       #  #  #  .  .  .  .  .  .  .
+dnl   HP-UX 11.31                          .  #  .  .  .  .  .  #  #  .
+dnl   HP-UX 10.20, 11.00, 11.11, 11.23     #  #  #  .  .  .  .  #  #  #
+dnl   IRIX 6.5                             #  #  #  .  .  .  .  #  .  .
+dnl   OSF/1 5.1                            #  #  #  .  .  .  .  #  .  #
+dnl   OSF/1 4.0d                           #  #  #  .  .  #  #  #  #  #
+dnl   NetBSD 4.0                           .  ?  ?  .  .  .  .  .  ?  ?
+dnl   NetBSD 3.0                           .  #  #  .  #  .  .  .  .  .
+dnl   BeOS                                 #  #  #  .  #  .  .  .  .  .
+dnl   mingw                                #  #  #  .  #  .  #  #  #  .

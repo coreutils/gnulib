@@ -50,13 +50,18 @@ main (int argc, char *argv[])
       retval = snprintf (buf, size, "%d", 12345);
       if (size < 6)
 	{
+#if CHECK_SNPRINTF_POSIX
 	  ASSERT (retval < 0 || retval >= size);
+#endif
 	  if (size > 0)
 	    {
 	      ASSERT (memcmp (buf, "12345", size - 1) == 0);
 	      ASSERT (buf[size - 1] == '\0' || buf[size - 1] == '0' + size);
 	    }
-	  ASSERT (memcmp (buf + size, "DEADBEEF" + size, 8 - size) == 0);
+#if !CHECK_SNPRINTF_POSIX
+	  if (size > 0)
+#endif
+	    ASSERT (memcmp (buf + size, "DEADBEEF" + size, 8 - size) == 0);
 	}
       else
 	{

@@ -1,5 +1,21 @@
 2007-04-29  Bruno Haible  <bruno@clisp.org>
 
+	* m4/printf.m4 (gl_VSNPRINTF_ZEROSIZE_C99): New macro.
+	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Invoke
+	gl_VSNPRINTF_ZEROSIZE_C99. Test gl_cv_func_vsnprintf_zerosize_c99.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX): Likewise.
+	* modules/snprintf-posix-tests (Files): Add tests/test-snprintf.c.
+	(configure.ac): Define CHECK_SNPRINTF_POSIX.
+	(TESTS, check_PROGRAMS): Add test-snprintf.
+	* modules/vsnprintf-posix-tests (Files): Add tests/test-vsnprintf.c.
+	(configure.ac): Define CHECK_VSNPRINTF_POSIX.
+	(TESTS, check_PROGRAMS): Add test-vsnprintf.
+	* tests/test-snprintf.c (main) [!CHECK_SNPRINTF_POSIX]: Disable
+	assertions that fail on HP-UX, OSF/1, or IRIX.
+	* tests/test-vsnprintf.c (main) [!CHECK_VSNPRINTF_POSIX]: Likewise.
+
+2007-04-29  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh (posix_functions): Remove 'contents'.
 
 2007-04-29  Karl Berry  <karl@gnu.org>
