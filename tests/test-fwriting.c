@@ -73,6 +73,7 @@ main ()
      fwriting is only deterministic after input or output, but this
      test case should be portable even on open, after reposition, and
      after fflush.  */
+  /* First a scenario with only fgetc, fseek, fputc.  */
   fp = fopen (TESTFILE, "r+");
   if (fp == NULL)
     goto skip;
@@ -91,7 +92,7 @@ main ()
   if (fseek (fp, 0, SEEK_CUR) != 0)
     goto skip;
   ASSERT (!fwriting (fp));
-  if (fputc ('z', fp) != 'z')
+  if (fputc ('x', fp) != 'x')
     goto skip;
   ASSERT (fwriting (fp));
   if (fseek (fp, 0, SEEK_END))
@@ -105,6 +106,7 @@ main ()
      fwriting is only deterministic after input or output, but this
      test case should be portable even on open, after reposition, and
      after fflush.  */
+  /* Here a scenario that includes fflush.  */
   fp = fopen (TESTFILE, "r+");
   if (fp == NULL)
     goto skip;
@@ -120,7 +122,7 @@ main ()
   ASSERT (!fwriting (fp));
   fflush (fp);
   ASSERT (!fwriting (fp));
-  if (fgetc (fp) != 'a')
+  if (fgetc (fp) != 'x')
     goto skip;
   ASSERT (!fwriting (fp));
   /* This fseek call is necessary when switching from reading to writing.

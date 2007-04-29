@@ -73,6 +73,7 @@ main ()
      freading is only deterministic after input or output, but this
      test case should be portable even on open, after reposition, and
      at EOF.  */
+  /* First a scenario with only fgetc, fseek, fputc.  */
   fp = fopen (TESTFILE, "r+");
   if (fp == NULL)
     goto skip;
@@ -91,7 +92,7 @@ main ()
   if (fseek (fp, 0, SEEK_CUR) != 0)
     goto skip;
   /* freading (fp) is undefined here, but fwriting (fp) is false.  */
-  if (fputc ('z', fp) != 'z')
+  if (fputc ('x', fp) != 'x')
     goto skip;
   ASSERT (!freading (fp));
   if (fseek (fp, 0, SEEK_END))
@@ -105,6 +106,7 @@ main ()
      freading is only deterministic after input or output, but this
      test case should be portable even on open, after reposition, and
      at EOF.  */
+  /* Here a scenario that includes fflush.  */
   fp = fopen (TESTFILE, "r+");
   if (fp == NULL)
     goto skip;
@@ -120,7 +122,7 @@ main ()
   ASSERT (freading (fp));
   fflush (fp);
   /* freading (fp) is undefined here, but fwriting (fp) is false.  */
-  if (fgetc (fp) != 'a')
+  if (fgetc (fp) != 'x')
     goto skip;
   ASSERT (freading (fp));
   /* This fseek call is necessary when switching from reading to writing.
