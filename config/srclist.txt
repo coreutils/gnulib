@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.148 2007-04-06 14:36:56 haible Exp $
+# $Id: srclist.txt,v 1.149 2007-04-29 13:35:40 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -16,6 +16,7 @@ $AUTOMAKE/lib/mkinstalldirs	build-aux
 $TEXINFOSRC/doc/texinfo.tex		build-aux
 $TEXINFOSRC/util/gendocs.sh		build-aux
 $TEXINFOSRC/util/gendocs_template	doc
+$TEXINFOSRC/util/gendocs_template_min	doc
 #
 $AUTOCONF/INSTALL		doc
 #
