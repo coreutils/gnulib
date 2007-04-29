@@ -673,10 +673,12 @@ static int
 hol_cluster_cmp (const struct hol_cluster *cl1, const struct hol_cluster *cl2)
 {
   /* If one cluster is deeper than the other, use its ancestor at the same
-     level, so that finding the common ancestor is straightforward.  */
-  while (cl1->depth < cl2->depth)
+     level, so that finding the common ancestor is straightforward.
+     
+     clN->depth > 0 means that clN->parent != NULL (see hol_add_cluster) */
+  while (cl1->depth > cl2->depth)
     cl1 = cl1->parent;
-  while (cl2->depth < cl1->depth)
+  while (cl2->depth > cl1->depth)
     cl2 = cl2->parent;
 
   /* Now reduce both clusters to their ancestors at the point where both have
