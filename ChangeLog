@@ -1,3 +1,14 @@
+2007-04-29  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* lib/argp-help.c (hol_cluster_cmp): Reverse comparison.  Change
+	proposed by Sven Verdoolaege.
+
+	* tests/test-argp.c: Fix option ordering.  Test deeply clustered
+	options.
+	* tests/test-argp-2.sh (func_compare): Use diff instead of
+	cmp.  Change proposed by Bruno Haible
+	(usage and help tests): Update
+
 2007-04-29  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-fflush.c (main): Use a file of size 17, not 10.

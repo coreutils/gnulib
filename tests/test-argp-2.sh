@@ -26,15 +26,16 @@ func_compare() {
 # If argp was compiled without base_name, it will display full program name
   sed '1{
          s,: [^ ]*/test-argp,: test-argp,
-        }' | diff -c $TMP -
+        }' | diff -pu $TMP -
 }  
 
 ####
 # Test --usage output
 cat > $TMP <<EOT
-Usage: test-argp [-tvO?V] [-f FILE] [-o[ARG]] [--test] [--file=FILE]
-            [--input=FILE] [--verbose] [--optional[=ARG]] [--option] [--help]
-            [--usage] [--version] ARGS...
+Usage: test-argp [-tvCSOlp?V] [-f FILE] [-o[ARG]] [--test] [--file=FILE]
+            [--input=FILE] [--verbose] [--cantiga] [--sonet] [--option]
+            [--optional[=ARG]] [--limerick] [--poem] [--help] [--usage]
+            [--version] ARGS...
 EOT
 
 ./test-argp --usage | func_compare || ERR=1
@@ -44,7 +45,7 @@ EOT
 
 cat > $TMP <<EOT
 Usage: test-argp [-tvO?V] [-f FILE] [-o[ARG]] [--test] [--file=FILE]
-[--input=FILE] [--verbose] [--optional[=ARG]] [--option] [--help] [--usage]
+[--input=FILE] [--verbose] [--option] [--optional[=ARG]] [--help] [--usage]
 [--version] ARGS...
 EOT
 
@@ -63,14 +64,23 @@ documentation string
   -f, --file=FILE, --input=FILE   Option with a mandatory argument
   -v, --verbose              Simple option without arguments
 
+ Option Group 1.1
+  -C, --cantiga              create a cantiga
+  -S, --sonet                create a sonet
+
  Option Group 2
+  -O, --option               An option
+
   -o, --optional[=ARG]       Option with an optional argument. ARG is one of
                              the following:
-  -O, --option               An option
 
   many                       many units
   one                        one unit
   two                        two units
+
+ Option Group 2.1
+  -l, --limerick             create a limerick
+  -p, --poem                 create a poem
 
   -?, --help                 give this help list
       --usage                give a short usage message
@@ -88,6 +98,10 @@ EOT
 # Test ambiguous option handling
 
 ./test-argp --optio 2>/dev/null && ERR=1
+
+####
+# Run built-in tests
+./test-argp || ERR=1
 
 rm $TMP
 
