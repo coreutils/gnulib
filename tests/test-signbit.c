@@ -22,9 +22,19 @@
 #include <math.h>
 
 #include <limits.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-#define ASSERT(expr) if (!(expr)) abort ();
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
 
 float zerof = 0.0f;
 double zerod = 0.0;

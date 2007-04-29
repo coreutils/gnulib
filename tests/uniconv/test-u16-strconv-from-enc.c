@@ -23,12 +23,22 @@
 
 #include "uniconv.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "unistr.h"
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
-#define ASSERT(expr) if (!(expr)) abort ();
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
 
 int
 main ()

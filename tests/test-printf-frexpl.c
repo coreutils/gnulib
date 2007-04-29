@@ -22,11 +22,21 @@
 #include "printf-frexpl.h"
 
 #include <float.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "fpucw.h"
 
-#define ASSERT(expr) if (!(expr)) abort ();
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
 
 /* On MIPS IRIX machines, LDBL_MIN_EXP is -1021, but the smallest reliable
    exponent for 'long double' is -964.  For exponents below that, the

@@ -23,6 +23,7 @@
 #include "gl_avltreehash_list.h"
 
 #include <limits.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -62,7 +63,16 @@ string_hash (const void *x)
 }
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
-#define ASSERT(condition) if (!(condition)) abort ()
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
 #define RANDOM(n) (rand () % (n))
 #define RANDOM_OBJECT() objects[RANDOM (SIZEOF (objects))]
 

@@ -27,7 +27,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ASSERT(expr) if (!(expr)) abort ();
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
 
 static int
 my_snprintf (char *buf, int size, const char *format, ...)

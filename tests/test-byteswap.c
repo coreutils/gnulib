@@ -21,9 +21,19 @@
 
 #include <byteswap.h>
 
+#include <stdio.h>
 #include <stdlib.h>
 
-#define ASSERT(condition) if (!(condition)) abort ()
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
 
 int
 main ()

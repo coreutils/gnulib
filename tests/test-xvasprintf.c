@@ -24,12 +24,22 @@
 #include "xvasprintf.h"
 
 #include <stdarg.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "progname.h"
 
-#define ASSERT(expr) if (!(expr)) abort ();
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
 
 static char *
 my_xasprintf (const char *format, ...)
