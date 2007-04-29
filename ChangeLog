@@ -22,8 +22,7 @@
 
 	* tests/test-argp.c: Fix option ordering.  Test deeply clustered
 	options.
-	* tests/test-argp-2.sh (func_compare): Use diff instead of
-	cmp.  Change proposed by Bruno Haible
+	* tests/test-argp-2.sh (func_compare): Use diff instead of cmp.
 	(usage and help tests): Update
 
 2007-04-29  Bruno Haible  <bruno@clisp.org>
