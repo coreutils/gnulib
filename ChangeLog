@@ -1,3 +1,7 @@
+2007-04-29  Bruno Haible  <bruno@clisp.org>
+
+	* lib/freading.c (freading): Trivial simplification.
+
 2007-04-28  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-fwriting.c (main): Also test the interaction between

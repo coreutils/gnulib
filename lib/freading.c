@@ -32,8 +32,7 @@ freading (FILE *fp)
      fast macros.  */
 #if defined _IO_ferror_unlocked     /* GNU libc, BeOS */
   return ((fp->_flags & _IO_NO_WRITES) != 0
-	  || ((fp->_flags & _IO_NO_READS) == 0
-	      && (fp->_flags & _IO_CURRENTLY_PUTTING) == 0
+	  || ((fp->_flags & (_IO_NO_READS | _IO_CURRENTLY_PUTTING)) == 0
 	      && fp->_IO_read_base != NULL));
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   return (fp->_flags & __SRD) != 0;
