@@ -15,27 +15,25 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#ifndef _GL_FPURGE_H
+#define _GL_FPURGE_H
+
 #include <stdio.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* Discard all pending buffered I/O on the stream STREAM.
    STREAM must not be wide-character oriented.
    Return 0 if successful.  Upon error, return -1 and set errno.  */
-
-#if HAVE___FPURGE /* glibc >= 2.2, Solaris >= 7 */
-
-# include <stdio_ext.h>
-# define fpurge(stream) (__fpurge (stream), 0)
-
-#elif ! HAVE_DECL_FPURGE
-
-# ifdef __cplusplus
-extern "C" {
-# endif
-
+#if HAVE_FPURGE
+# define fpurge rpl_fpurge
+#endif
 extern int fpurge (FILE *stream);
 
-# ifdef __cplusplus
+#ifdef __cplusplus
 }
-# endif
-
 #endif
+
+#endif /* _GL_FPURGE_H */

@@ -46,7 +46,7 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
 # endif
   if (fp->_p == fp->_bf._base
       && fp->_r == 0
-      && fp->_w == ((fp->_flags & (__SLBF | __SNBF)) == 0 /* fully buffered? */
+      && fp->_w == ((fp->_flags & (__SLBF | __SNBF | __SRD)) == 0 /* fully buffered and not currently reading? */
 		    ? fp->_bf._size
 		    : 0)
       && fp_ub._base == NULL)

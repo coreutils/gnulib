@@ -1,3 +1,16 @@
+2007-04-29  Bruno Haible  <bruno@clisp.org>
+
+	Work around fpurge bug on BSD systems.
+	* modules/fpurge (Makefile.am): Compile fpurge.c unconditionally.
+	* m4/fpurge.m4 (gl_FUNC_FPURGE): Don't invoke AC_LIBOBJ.
+	* lib/fpurge.h (fpurge): Don't handle __fpurge wrapper here. Define
+	fpurge to rpl_fpurge if the system already has this function.
+	* lib/fpurge.c (fpurge): Handle also the __fpurge wrapper case and
+	the case where the system already has this function. Correct invariants
+	on BSD systems.
+	* lib/fseeko.c (rpl_fseeko): Update recognition of preceding fflush on
+	BSD systems.
+
 2007-04-29  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* lib/argp-help.c (hol_cluster_cmp): Reverse comparison.  Change
