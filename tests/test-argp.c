@@ -30,6 +30,7 @@
 #if HAVE_STRINGS_H
 # include <strings.h>
 #endif
+#include "progname.h"
 
 struct test_args
 {
