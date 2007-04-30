@@ -1,3 +1,9 @@
+2007-04-30  Eric Blake  <ebb9@byu.net>
+
+	Prefer fseeko to fseek.
+	* modules/getpass (Depends-on): Add fseeko.
+	* lib/getpass.c (getpass): Use fseeko, not fseek.
+
 2007-04-30  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* lib/argp-help.c (hol_entry_cmp): Option sorting algorithm
