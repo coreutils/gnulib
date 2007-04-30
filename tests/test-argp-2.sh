@@ -26,7 +26,7 @@ func_compare() {
 # If argp was compiled without base_name, it will display full program name
   sed '1{
          s,: [^ ]*/test-argp,: test-argp,
-        }' | diff -pu $TMP -
+        }' | diff -c $TMP -
 }  
 
 ####
@@ -44,9 +44,9 @@ EOT
 # Test working usage-indent format
 
 cat > $TMP <<EOT
-Usage: test-argp [-tvO?V] [-f FILE] [-o[ARG]] [--test] [--file=FILE]
-[--input=FILE] [--verbose] [--option] [--optional[=ARG]] [--help] [--usage]
-[--version] ARGS...
+Usage: test-argp [-tvCSOlp?V] [-f FILE] [-o[ARG]] [--test] [--file=FILE]
+[--input=FILE] [--verbose] [--cantiga] [--sonet] [--option] [--optional[=ARG]]
+[--limerick] [--poem] [--help] [--usage] [--version] ARGS...
 EOT
 
 ARGP_HELP_FMT='usage-indent=0' ./test-argp --usage | func_compare || ERR=1
