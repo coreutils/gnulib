@@ -733,6 +733,8 @@ canon_doc_option (const char **name)
   return non_opt;
 }
 
+#define HOL_ENTRY_PTRCMP(a,b) ((a) < (b) ? -1 : 1)
+
 /* Order ENTRY1 & ENTRY2 by the order which they should appear in a help
    listing.  */
 static int
@@ -742,6 +744,7 @@ hol_entry_cmp (const struct hol_entry *entry1,
   /* The group numbers by which the entries should be ordered; if either is
      in a cluster, then this is just the group within the cluster.  */
   int group1 = entry1->group, group2 = entry2->group;
+  int rc;
 
   if (entry1->cluster != entry2->cluster)
     {
@@ -758,7 +761,8 @@ hol_entry_cmp (const struct hol_entry *entry1,
 	return group_cmp (hol_cluster_base (entry1->cluster)->group, group2, 1);
       else
 	/* Both entries are in clusters, we can just compare the clusters.  */
-	return hol_cluster_cmp (entry1->cluster, entry2->cluster);
+	return (rc = hol_cluster_cmp (entry1->cluster, entry2->cluster)) ?
+	        rc : HOL_ENTRY_PTRCMP(entry1, entry2);
     }
   else if (group1 == group2)
     /* The entries are both in the same cluster and group, so compare them
@@ -782,7 +786,8 @@ hol_entry_cmp (const struct hol_entry *entry1,
 	return doc1 - doc2;
       else if (!short1 && !short2 && long1 && long2)
 	/* Only long options.  */
-	return __strcasecmp (long1, long2);
+	return (rc = __strcasecmp (long1, long2)) ?
+                 rc : HOL_ENTRY_PTRCMP(entry1, entry2);
       else
 	/* Compare short/short, long/short, short/long, using the first
 	   character of long options.  Entries without *any* valid
@@ -799,13 +804,15 @@ hol_entry_cmp (const struct hol_entry *entry1,
 #endif
 	  /* Compare ignoring case, except when the options are both the
 	     same letter, in which case lower-case always comes first.  */
-	  return lower_cmp ? lower_cmp : first2 - first1;
+	  return lower_cmp ? lower_cmp : 
+                    (rc = first2 - first1) ?
+	             rc : HOL_ENTRY_PTRCMP(entry1, entry2);
 	}
     }
   else
     /* Within the same cluster, but not the same group, so just compare
        groups.  */
-    return group_cmp (group1, group2, 0);
+    return group_cmp (group1, group2, HOL_ENTRY_PTRCMP(entry1, entry2));
 }
 
 /* Version of hol_entry_cmp with correct signature for qsort.  */
