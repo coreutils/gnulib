@@ -1,5 +1,10 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* modules/mkdir (Depends-on): Add sys_stat, because sys_stat provides
+	the portability of 'mkdir' to mingw systems.
+
+2007-05-01  Bruno Haible  <bruno@clisp.org>
+
 	* doc/headers/google-ranking.txt: New file.
 
 2007-04-30  Eric Blake  <ebb9@byu.net>
