@@ -1,5 +1,17 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* doc/functions/*.texi: New files.
+	* doc/functions/google-ranking.txt: New file.
+	* doc/gnulib.texi (Function Substitutes): New chapter.
+	(ctime, inet_ntoa): Remove sections.
+	* doc/ctime.texi: Remove file.
+	* doc/inet_ntoa.texi: Remove file.
+	* doc/Makefile (gnulib.info, gnulib.html, gnulib.dvi): Update
+	dependencies.
+	(%.info): New rule, specifying a --reference-limit.
+
+2007-05-01  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh (posix_functions): Remove 'exec', 'toc'.
 
 2007-05-01  Bruno Haible  <bruno@clisp.org>
