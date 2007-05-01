@@ -1,0 +1,11 @@
+Files:
+tests/test-sleep.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sleep
+check_PROGRAMS += test-sleep
+
