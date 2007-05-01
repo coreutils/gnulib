@@ -1,5 +1,10 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* doc/header/assert.texi: Undo last change: don't mention the gnulib
+	'assert' module here.
+
+2007-05-01  Bruno Haible  <bruno@clisp.org>
+
 	* doc/functions/*.texi: New files.
 	* doc/functions/google-ranking.txt: New file.
 	* doc/gnulib.texi (Function Substitutes): New chapter.
