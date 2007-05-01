@@ -70,7 +70,6 @@ pipe                                    110000
 kill                                    110000
 calloc                                  108000
 fputs                                   107000
-exec                                    107000
 getpid                                   97500
 memmove                                  96000
 bzero                                    92400
@@ -268,7 +267,6 @@ pthread_self                             10600
 writev                                   10200
 pthread_exit                             10100
 getppid                                  10100
-toc                                      10000
 tan                                      10000
 ftime                                    10000
 clearerr                                 10000
