@@ -1,0 +1,18 @@
+@node shm_unlink
+@section @code{shm_unlink}
+@findex shm_unlink
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/shm_unlink.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+NetBSD 3.0, OpenBSD 3.8, Solaris 2.4, Cygwin, mingw, BeOS.
+@end itemize

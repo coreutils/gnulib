@@ -1,0 +1,15 @@
+@node strncat
+@section @code{strncat}
+@findex strncat
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strncat.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

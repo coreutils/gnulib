@@ -1,0 +1,15 @@
+@node closedir
+@section @code{closedir}
+@findex closedir
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/closedir.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

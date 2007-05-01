@@ -1,0 +1,20 @@
+@node a64l
+@section @code{a64l}
+@findex a64l
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/a64l.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+FreeBSD 6.0, mingw, BeOS.
+@item
+This function was not correctly implemented in glibc versions before 2.2.5.
+@end itemize

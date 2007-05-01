@@ -1,0 +1,26 @@
+@node getsockopt
+@section @code{getsockopt}
+@findex getsockopt
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/getsockopt.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@item
+Some platforms don't have a @code{socklen_t} type; in this case this function's
+fifth argument type is @samp{int *}.
+@item
+Many socket options are not available on all platforms.
+@item
+BeOS has the @code{setsockopt} function, but not the @code{getsockopt}
+function.
+@end itemize

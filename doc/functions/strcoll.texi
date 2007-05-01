@@ -1,0 +1,15 @@
+@node strcoll
+@section @code{strcoll}
+@findex strcoll
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strcoll.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

@@ -1,0 +1,25 @@
+@node gettimeofday
+@section @code{gettimeofday}
+@findex gettimeofday
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/gettimeofday.html}
+
+Gnulib module: gettimeofday
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@item
+This function is declared with a nonstandard function prototype (only one
+argument, or ``...'' after the first argument) on some platforms.
+@item
+On some platforms, @code{gettimeofday} clobbers the buffer in which
+@code{localtime} returns its result:
+MacOS X 10.0.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

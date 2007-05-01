@@ -1,0 +1,18 @@
+@node putchar_unlocked
+@section @code{putchar_unlocked}
+@findex putchar_unlocked
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/putchar_unlocked.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@end itemize

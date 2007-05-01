@@ -1,0 +1,20 @@
+@node gets
+@section @code{gets}
+@findex gets
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/gets.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function should never be used, because it can overflow any given buffer.
+@item
+On Windows platforms (excluding Cygwin), this function does not set @code{errno}
+upon failure.
+@end itemize

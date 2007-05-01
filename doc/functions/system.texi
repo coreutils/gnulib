@@ -1,0 +1,20 @@
+@node system
+@section @code{system}
+@findex system
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/system.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On Windows platforms (excluding Cygwin), the command processor used by the
+@code{system} function is @file{cmd.exe}, not @file{/bin/sh}.  Accordingly,
+the rules for quoting shell arguments containing spaces, quote or other special
+characters are different.
+@end itemize

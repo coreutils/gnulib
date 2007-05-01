@@ -1,0 +1,18 @@
+@node trunc
+@section @code{trunc}
+@findex trunc
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/trunc.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, Solaris 9.
+@end itemize

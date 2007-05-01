@@ -1,0 +1,15 @@
+@node write
+@section @code{write}
+@findex write
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/write.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

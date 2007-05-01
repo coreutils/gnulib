@@ -1,0 +1,18 @@
+@node sched_getparam
+@section @code{sched_getparam}
+@findex sched_getparam
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/sched_getparam.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, OpenBSD 3.8, Solaris 2.4, mingw, BeOS.
+@end itemize

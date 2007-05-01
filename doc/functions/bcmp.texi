@@ -1,0 +1,21 @@
+@node bcmp
+@section @code{bcmp}
+@findex bcmp
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/bcmp.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Solaris 2.4, mingw.
+@item
+This function is marked as ``legacy'' in POSIX.  Better use @code{memcmp}
+instead.
+@end itemize

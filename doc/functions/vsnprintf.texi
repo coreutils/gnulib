@@ -1,0 +1,60 @@
+@node vsnprintf
+@section @code{vsnprintf}
+@findex vsnprintf
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/vsnprintf.html}
+
+Gnulib module: vsnprintf or vsnprintf-posix
+
+Portability problems fixed by either Gnulib module @code{vsnprintf} or @code{vsnprintf-posix}:
+@itemize
+@item
+This function is missing on some platforms:
+OSF/1 4.0, Solaris 2.5.1.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{vsnprintf-posix}:
+@itemize
+@item
+This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
+@code{j}, @code{t}, @code{z}) on some platforms:
+AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin 2006, mingw, BeOS.
+@item
+This function does not support the @samp{a} and @samp{A} directives on some
+platforms:
+glibc-2.3.6, MacOS X 10.3, NetBSD 3.0, OpenBSD 4.0, AIX 5.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin, mingw, BeOS.
+@item
+This function does not support the @samp{F} directive on some platforms:
+NetBSD 3.0, AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin, mingw, BeOS.
+@item
+This function does not support format directives that access arguments in an
+arbitrary order, such as @code{"%2$s"}, on some platforms:
+NetBSD 3.0, mingw, BeOS.
+@item
+This function does not truncate the result as specified in C99 on some platforms:
+mingw.
+@item
+This function does not return a byte count as specified in C99 on some platforms:
+HP-UX 11, IRIX 6.5, OSF/1 5.1, mingw.
+@item
+This function does not fully support the @samp{n} directive on some platforms:
+HP-UX 11, mingw.
+@item
+This function overwrites memory even when a zero size argument is passed on some
+platforms:
+HP-UX 11, OSF/1 5.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function doesn't support the @code{'} flag on some platforms:
+mingw.
+@item
+printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
+with zeroes) on some platforms:
+FreeBSD 6.0.
+@item
+printf of @samp{long double} numbers is unsupported on some platforms:
+mingw.
+@end itemize

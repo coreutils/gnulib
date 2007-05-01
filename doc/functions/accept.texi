@@ -1,0 +1,21 @@
+@node accept
+@section @code{accept}
+@findex accept
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/accept.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@item
+Some platforms don't have a @code{socklen_t} type; in this case this function's
+third argument type is @samp{int *}.
+@end itemize

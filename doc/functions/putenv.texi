@@ -1,0 +1,19 @@
+@node putenv
+@section @code{putenv}
+@findex putenv
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/putenv.html}
+
+Gnulib module: putenv
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function fails to remove environment variables correctly on some old
+platforms:
+SunOS 4.1.4.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

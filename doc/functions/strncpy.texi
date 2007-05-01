@@ -1,0 +1,15 @@
+@node strncpy
+@section @code{strncpy}
+@findex strncpy
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strncpy.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

@@ -1,0 +1,25 @@
+@node getopt
+@section @code{getopt}
+@findex getopt
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/getopt.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+The default behavior of the glibc implementation of @code{getopt} allows
+mixing option and non-option arguments on the command line in any order.
+Other implementations, such as the one in Cygwin, enforce strict POSIX
+compliance: they require that the option arguments precede the non-option
+arguments.  This is something to watch out in your program's testsuite.
+@end itemize
+
+Gnulib provides a module @code{getopt} that has support for ``long options''.
+Compared to POSIX, it adds a header file @code{<getopt.h>} and functions
+@code{getopt_long} and @code{getopt_long_only}.

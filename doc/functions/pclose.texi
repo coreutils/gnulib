@@ -1,0 +1,15 @@
+@node pclose
+@section @code{pclose}
+@findex pclose
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pclose.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

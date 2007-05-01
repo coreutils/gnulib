@@ -1,0 +1,15 @@
+@node clearerr
+@section @code{clearerr}
+@findex clearerr
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/clearerr.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

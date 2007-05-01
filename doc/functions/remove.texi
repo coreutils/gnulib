@@ -1,0 +1,15 @@
+@node remove
+@section @code{remove}
+@findex remove
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/remove.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

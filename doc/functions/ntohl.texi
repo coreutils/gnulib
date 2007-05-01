@@ -1,0 +1,18 @@
+@node ntohl
+@section @code{ntohl}
+@findex ntohl
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/ntohl.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, mingw, BeOS.
+@end itemize

@@ -1,0 +1,22 @@
+@node poll
+@section @code{poll}
+@findex poll
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/poll.html}
+
+Gnulib module: poll
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@item
+This function doesn't work on special files like @file{/dev/null} and ttys like
+@file{/dev/tty} on some platforms:
+MacOS X 10.4.0, AIX 5.3.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

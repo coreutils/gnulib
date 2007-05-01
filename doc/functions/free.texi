@@ -1,0 +1,17 @@
+@node free
+@section @code{free}
+@findex free
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/free.html}
+
+Gnulib module: free
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+On old platforms, @code{free (NULL)} is not allowed.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

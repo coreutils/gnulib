@@ -1,0 +1,21 @@
+@node dlopen
+@section @code{dlopen}
+@findex dlopen
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/dlopen.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@item
+If the file name argument is not absolute, the file is searched for.  The
+search algorithm is system specific.
+@end itemize

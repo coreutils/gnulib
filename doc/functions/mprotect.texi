@@ -1,0 +1,21 @@
+@node mprotect
+@section @code{mprotect}
+@findex mprotect
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/mprotect.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@item
+On AIX, it is not possible to use @code{mprotect} on memory regions allocated
+with @code{malloc}.
+@end itemize

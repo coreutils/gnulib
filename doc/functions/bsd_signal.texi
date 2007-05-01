@@ -1,0 +1,18 @@
+@node bsd_signal
+@section @code{bsd_signal}
+@findex bsd_signal
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/bsd_signal.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, Solaris 2.5.1, Cygwin, mingw.
+@end itemize

@@ -1,0 +1,21 @@
+@node waitid
+@section @code{waitid}
+@findex waitid
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/waitid.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, Cygwin, mingw, BeOS.
+@item
+As of 2005, no system is known on which @code{waitid} with flag @code{WNOWAIT}
+works correctly.
+@end itemize

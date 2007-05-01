@@ -1,0 +1,15 @@
+@node modf
+@section @code{modf}
+@findex modf
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/modf.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

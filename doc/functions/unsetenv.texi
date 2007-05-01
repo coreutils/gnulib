@@ -1,0 +1,21 @@
+@node unsetenv
+@section @code{unsetenv}
+@findex unsetenv
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/unsetenv.html}
+
+Gnulib module: setenv
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 9, mingw, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function has the return type @samp{void} instead of @samp{int} on some
+platforms.
+@end itemize

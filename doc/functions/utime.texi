@@ -1,0 +1,18 @@
+@node utime
+@section @code{utime}
+@findex utime
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/utime.html}
+
+Gnulib module: utime
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+On some old platforms, @code{utime (file, NULL)} fails to set the file's
+timestamp to the current time.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

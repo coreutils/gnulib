@@ -1,0 +1,15 @@
+@node y1
+@section @code{y1}
+@findex y1
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/y1.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

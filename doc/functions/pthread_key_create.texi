@@ -1,0 +1,18 @@
+@node pthread_key_create
+@section @code{pthread_key_create}
+@findex pthread_key_create
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_key_create.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Solaris 2.4, mingw, BeOS.
+@end itemize

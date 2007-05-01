@@ -1,0 +1,18 @@
+@node dbm_clearerr
+@section @code{dbm_clearerr}
+@findex dbm_clearerr
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/dbm_clearerr.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.3.6, HP-UX 11, OSF/1 5.1, Solaris 2.5.1, Cygwin, mingw, BeOS.
+@end itemize

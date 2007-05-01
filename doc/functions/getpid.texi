@@ -1,0 +1,15 @@
+@node getpid
+@section @code{getpid}
+@findex getpid
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/getpid.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

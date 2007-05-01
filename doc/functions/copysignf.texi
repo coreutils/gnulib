@@ -1,0 +1,18 @@
+@node copysignf
+@section @code{copysignf}
+@findex copysignf
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/copysignf.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+AIX 5.1, IRIX 6.5, Solaris 9.
+@end itemize

@@ -1,0 +1,18 @@
+@node getsockname
+@section @code{getsockname}
+@findex getsockname
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/getsockname.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+Some platforms don't have a @code{socklen_t} type; in this case this function's
+third argument type is @samp{int *}.
+@end itemize

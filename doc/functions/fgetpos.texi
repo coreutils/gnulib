@@ -1,0 +1,19 @@
+@node fgetpos
+@section @code{fgetpos}
+@findex fgetpos
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/fgetpos.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+@code{fflush}, @code{ftell}, @code{ftello}, @code{fgetpos} behave incorrectly
+on input streams that are opened in @code{O_TEXT} mode and whose contents
+contains Unix line terminators (LF), on some platforms: mingw.
+@end itemize

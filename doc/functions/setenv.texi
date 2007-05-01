@@ -1,0 +1,21 @@
+@node setenv
+@section @code{setenv}
+@findex setenv
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/setenv.html}
+
+Gnulib module: setenv
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+AIX 4.3.2, HP-UX 11, IRIX 6.5, Solaris 9, mingw, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+In some versions of glibc (e.g.@: 2.3.3), @code{setenv} doesn't fail if the
+first argument contains a @samp{=} character.
+@end itemize

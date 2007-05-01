@@ -1,0 +1,21 @@
+@node fgetwc
+@section @code{fgetwc}
+@findex fgetwc
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/fgetwc.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Solaris 2.5.1, Cygwin, BeOS.
+@item
+On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
+accommodate all Unicode characters.
+@end itemize

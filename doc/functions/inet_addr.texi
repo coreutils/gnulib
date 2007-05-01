@@ -1,0 +1,21 @@
+@node inet_addr
+@section @code{inet_addr}
+@findex inet_addr
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/inet_addr.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@item
+On some old platforms, this function returns a @samp{struct in_addr} rather
+than a scalar type such as @samp{unsigned int} or @samp{unsigned long}.
+@end itemize

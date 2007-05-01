@@ -1,0 +1,18 @@
+@node calloc
+@section @code{calloc}
+@findex calloc
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/calloc.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize
+
+Extension: Gnulib provides a module @samp{calloc} that substitutes a
+@code{calloc} implementation that behaves more like the glibc implementation.

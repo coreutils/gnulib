@@ -1,0 +1,17 @@
+@node strtoul
+@section @code{strtoul}
+@findex strtoul
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strtoul.html}
+
+Gnulib module: strtoul
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some old platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

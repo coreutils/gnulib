@@ -1,0 +1,18 @@
+@node pthread_rwlock_init
+@section @code{pthread_rwlock_init}
+@findex pthread_rwlock_init
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_rwlock_init.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+OSF/1 4.0, Solaris 2.6, mingw, BeOS.
+@end itemize

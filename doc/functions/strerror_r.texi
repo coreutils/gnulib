@@ -1,0 +1,27 @@
+@node strerror_r
+@section @code{strerror_r}
+@findex strerror_r
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strerror_r.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+NetBSD 3.0, HP-UX 11, IRIX 6.5, Solaris 9, mingw.
+@item
+glibc has an incompatible version of this function.  The POSIX compliant code
+@smallexample
+char *s = (strerror_r (err, buf, buflen) == 0 ? buf : NULL);
+@end smallexample
+is essentially equivalent to this code using the glibc function:
+@smallexample
+char *s = strerror_r (err, buf, buflen);
+@end smallexample
+@end itemize

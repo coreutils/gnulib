@@ -1,0 +1,24 @@
+@node nl_langinfo
+@section @code{nl_langinfo}
+@findex nl_langinfo
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/nl_langinfo.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@item
+Some older versions of glibc had @code{nl_langinfo} but not the @code{CODESET}
+macro.
+@item
+On Cygwin, which doesn't have locales, @code{nl_langinfo(CODESET)} always
+returns @code{"US-ASCII"}.
+@end itemize

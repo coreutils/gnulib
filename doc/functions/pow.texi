@@ -1,0 +1,15 @@
+@node pow
+@section @code{pow}
+@findex pow
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pow.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

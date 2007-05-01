@@ -1,0 +1,30 @@
+@node select
+@section @code{select}
+@findex select
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/select.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@item
+When you call @code{select} with a timeout, some implementations modify the
+timeout parameter so that upon return from the function, it contains the
+amount of time not slept.  Other implementations leave the timeout parameter
+unmodified.
+@item
+On Windows platforms (excluding Cygwin) and on BeOS, @code{select} can only be
+called on descriptors created by the @code{socket} function, not on regular
+file descriptors.
+@item
+On Linux, when some file descriptor refers to a regular file, @code{select}
+may fail, setting @code{errno} to @code{EBADF}.
+@end itemize

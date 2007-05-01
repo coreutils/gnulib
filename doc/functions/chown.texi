@@ -1,0 +1,25 @@
+@node chown
+@section @code{chown}
+@findex chown
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/chown.html}
+
+Gnulib module: chown
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+When passed an argument of -1, some implementations really set the owner 
+user/group id of the file to this value, rather than leaving that id of the
+file alone.
+@item
+When applied to a symbolic link, some implementations don't dereference
+the symlink, i.e.@: they behave like @code{lchown}.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@end itemize

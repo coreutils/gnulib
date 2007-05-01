@@ -1,0 +1,18 @@
+@node mq_send
+@section @code{mq_send}
+@findex mq_send
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/mq_send.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, Solaris 2.4, Cygwin, mingw, BeOS.
+@end itemize

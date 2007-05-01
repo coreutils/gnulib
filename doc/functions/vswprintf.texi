@@ -1,0 +1,23 @@
+@node vswprintf
+@section @code{vswprintf}
+@findex vswprintf
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/vswprintf.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+NetBSD 3.0, OpenBSD 3.8, HP-UX 11, IRIX 6.5, Solaris 2.6, Cygwin, BeOS.
+@item
+On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
+accommodate all Unicode characters.
+@item
+On Windows, this function does not take a buffer size as second argument.
+@end itemize

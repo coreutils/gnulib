@@ -1,0 +1,34 @@
+@node iconv_open
+@section @code{iconv_open}
+@findex iconv_open
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/iconv_open.html}
+
+Gnulib module: iconv and iconv_open
+
+Portability problems fixed by either Gnulib module @code{iconv} or @code{iconv_open}:
+@itemize
+@item
+GNU libiconv is not found if installed in @file{$PREFIX/lib}.
+@item
+No converter from EUC-JP to UTF-8 is provided on some platforms:
+HP-UX 11.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{iconv_open}:
+@itemize
+@item
+This function recognizes only non-standard aliases for many encodings (not
+the IANA registered encoding names) on many platforms:
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, OpenBSD 3.8, Cygwin, mingw, BeOS,
+when GNU libiconv is not installed.
+@item
+The set of supported encodings and conversions is system dependent.
+@end itemize

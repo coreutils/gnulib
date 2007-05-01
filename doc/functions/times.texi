@@ -1,0 +1,18 @@
+@node times
+@section @code{times}
+@findex times
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/times.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@end itemize

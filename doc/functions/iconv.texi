@@ -1,0 +1,34 @@
+@node iconv
+@section @code{iconv}
+@findex iconv
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/iconv.html}
+
+Gnulib module: iconv
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+GNU libiconv is not found if installed in @file{$PREFIX/lib}.
+@item
+Failures are not distinguishable from successful returns on some platforms:
+AIX 5.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, OpenBSD 3.8, Cygwin, mingw, BeOS,
+when GNU libiconv is not installed.
+@item
+This function was not correctly implemented in glibc versions before 2.2.
+@item
+When @code{iconv} encounters an input character that is valid but that can
+not be converted to the output character set, glibc's and GNU libiconv's
+@code{iconv} stop the conversion.  Some other implementations put an
+implementation-defined character into the output buffer.  ---
+Gnulib provides higher-level facilities @code{striconv} and @code{striconveh}
+(wrappers around @code{iconv}) that deal with conversion errors in a platform
+independent way.
+@end itemize

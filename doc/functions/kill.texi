@@ -1,0 +1,18 @@
+@node kill
+@section @code{kill}
+@findex kill
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/kill.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@end itemize

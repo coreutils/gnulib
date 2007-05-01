@@ -1,0 +1,21 @@
+@node getgroups
+@section @code{getgroups}
+@findex getgroups
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/getgroups.html}
+
+Gnulib module: getgroups
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@item
+On Ultrix 4.3, @code{getgroups (0, 0)} always fails.  See macro
+@samp{AC_FUNC_GETGROUPS}.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

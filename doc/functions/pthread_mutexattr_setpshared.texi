@@ -1,0 +1,18 @@
+@node pthread_mutexattr_setpshared
+@section @code{pthread_mutexattr_setpshared}
+@findex pthread_mutexattr_setpshared
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_mutexattr_setpshared.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, HP-UX 11, OSF/1 4.0, Solaris 2.4, mingw, BeOS.
+@end itemize

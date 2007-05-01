@@ -1,0 +1,15 @@
+@node FD_ISSET
+@section @code{FD_ISSET}
+@findex FD_ISSET
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/FD_ISSET.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

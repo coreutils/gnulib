@@ -1,0 +1,24 @@
+@node ldexpl
+@section @code{ldexpl}
+@findex ldexpl
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/ldexpl.html}
+
+Gnulib module: ldexpl
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin.
+@item
+This function has no prototype in @code{<math.h>} on some platforms:
+MacOS X.
+@item
+This function does not work on finite numbers on some platforms:
+AIX 5.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

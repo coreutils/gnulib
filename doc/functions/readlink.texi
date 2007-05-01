@@ -1,0 +1,27 @@
+@node readlink
+@section @code{readlink}
+@findex readlink
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/readlink.html}
+
+Gnulib module: readlink
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+When @code{readlink} is called on a directory: In the case of NFS mounted
+directories, Cygwin sets @code{errno} to @code{ENOENT} or @code{EIO} instead of
+@code{EINVAL}.  To avoid this problem, check for a directory before calling
+@code{readlink}.
+@item
+When @code{readlink} is called on a file that is not a symbolic link:
+Irix may set @code{errno} to @code{ENXIO} instead of @code{EINVAL}.  Cygwin
+may set errno to @code{EACCES} instead of @code{EINVAL}.
+@end itemize

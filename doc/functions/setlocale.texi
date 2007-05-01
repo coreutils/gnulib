@@ -1,0 +1,18 @@
+@node setlocale
+@section @code{setlocale}
+@findex setlocale
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/setlocale.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On Cygwin, which doesn't have locales, @code{setlocale(LC_ALL,NULL)} always
+returns @code{"C"}.
+@end itemize

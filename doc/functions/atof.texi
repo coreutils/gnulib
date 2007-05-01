@@ -1,0 +1,15 @@
+@node atof
+@section @code{atof}
+@findex atof
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/atof.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

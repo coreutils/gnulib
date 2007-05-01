@@ -1,0 +1,15 @@
+@node FD_ZERO
+@section @code{FD_ZERO}
+@findex FD_ZERO
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/FD_ZERO.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

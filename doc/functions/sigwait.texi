@@ -1,0 +1,23 @@
+@node sigwait
+@section @code{sigwait}
+@findex sigwait
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/sigwait.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@item
+On Linux/glibc platforms before the advent of NPTL, signals could only be
+sent to one particular thread.  In POSIX, signals are sent to the entire
+process and executed by any thread of the process that happens to have the
+particular signal currently unblocked.
+@end itemize

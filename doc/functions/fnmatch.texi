@@ -1,0 +1,20 @@
+@node fnmatch
+@section @code{fnmatch}
+@findex fnmatch
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/fnmatch.html}
+
+Gnulib module: fnmatch-posix or fnmatch-gnu
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@item
+This function is broken in some versions of Solaris and glibc.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

@@ -1,0 +1,18 @@
+@node fread
+@section @code{fread}
+@findex fread
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/fread.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On Windows platforms (excluding Cygwin), this function does not set @code{errno}
+upon failure.
+@end itemize

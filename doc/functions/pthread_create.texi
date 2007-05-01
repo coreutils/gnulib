@@ -1,0 +1,23 @@
+@node pthread_create
+@section @code{pthread_create}
+@findex pthread_create
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_create.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, Solaris 2.4, mingw, BeOS.
+@item
+On Linux/glibc platforms before the advent of NPTL, signals could only be
+sent to one particular thread.  In POSIX, signals are sent to the entire
+process and executed by any thread of the process that happens to have the
+particular signal currently unblocked.
+@end itemize

@@ -1,0 +1,32 @@
+@node sigaction
+@section @code{sigaction}
+@findex sigaction
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/sigaction.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@item
+The symbolic value @code{SIG_IGN} for the @code{SIGCHLD} signal is equivalent
+to a signal handler
+@smallexample
+void handle_child (int sigchld)
+@{
+  while (waitpid (-1, NULL, WNOHANG) > 0)
+    ;
+@}
+@end smallexample
+except that @code{SIG_IGN} for @code{SIGCHLD} has the effect that the children
+execution times are not accounted in the @code{times} function.
+On some platforms (BSD? SystemV? Linux?), you need to use the @code{sigaction}
+flag @code{SA_NOCLDWAIT} in order to obtain this behavior.
+@end itemize

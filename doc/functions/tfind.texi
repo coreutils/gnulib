@@ -1,0 +1,18 @@
+@node tfind
+@section @code{tfind}
+@findex tfind
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/tfind.html}
+
+Gnulib module: tsearch
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

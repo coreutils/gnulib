@@ -1,0 +1,18 @@
+@node getlogin_r
+@section @code{getlogin_r}
+@findex getlogin_r
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/getlogin_r.html}
+
+Gnulib module: getlogin_r
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+NetBSD 3.0, mingw.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

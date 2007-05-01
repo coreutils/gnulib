@@ -1,0 +1,22 @@
+@node fopen
+@section @code{fopen}
+@findex fopen
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/fopen.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On Windows platforms (excluding Cygwin), this function does not set @code{errno}
+upon failure.
+@item
+On Windows, this function returns a file stream in ``text'' mode by default;
+this means that it translates @code{'\n'} to CR/LF by default.  Use the
+@code{"b"} flag if you need reliable binary I/O.
+@end itemize

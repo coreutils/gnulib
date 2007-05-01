@@ -1,0 +1,19 @@
+@node strstr
+@section @code{strstr}
+@findex strstr
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strstr.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function cannot work correctly on character strings in most multibyte
+locales.  Gnulib provides an alternative function @code{mbsstr} that works
+on character strings in all locales.
+@end itemize

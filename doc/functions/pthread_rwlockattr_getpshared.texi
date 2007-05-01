@@ -1,0 +1,18 @@
+@node pthread_rwlockattr_getpshared
+@section @code{pthread_rwlockattr_getpshared}
+@findex pthread_rwlockattr_getpshared
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_rwlockattr_getpshared.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+NetBSD 3.0, HP-UX 11, OSF/1 4.0, Solaris 2.6, mingw, BeOS.
+@end itemize

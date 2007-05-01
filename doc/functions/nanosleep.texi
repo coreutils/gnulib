@@ -1,0 +1,26 @@
+@node nanosleep
+@section @code{nanosleep}
+@findex nanosleep
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/nanosleep.html}
+
+Gnulib module: nanosleep
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Solaris 2.4, mingw, BeOS.
+@item
+This function reports failure when called with small arguments such as 1 ns
+on some platforms:
+AIX 4.3.2.
+@item
+This function mishandles large arguments when interrupted by a signal on some
+platforms:
+Linux 64-bit, Solaris 64-bit.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

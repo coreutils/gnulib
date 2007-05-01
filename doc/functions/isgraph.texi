@@ -1,0 +1,15 @@
+@node isgraph
+@section @code{isgraph}
+@findex isgraph
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/isgraph.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

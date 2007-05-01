@@ -1,0 +1,18 @@
+@node realloc
+@section @code{realloc}
+@findex realloc
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/realloc.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize
+
+Extension: Gnulib provides a module @samp{realloc} that substitutes a
+@code{realloc} implementation that behaves more like the glibc implementation.

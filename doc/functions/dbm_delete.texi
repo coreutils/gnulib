@@ -1,0 +1,18 @@
+@node dbm_delete
+@section @code{dbm_delete}
+@findex dbm_delete
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/dbm_delete.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.3.6, Cygwin, mingw, BeOS.
+@end itemize

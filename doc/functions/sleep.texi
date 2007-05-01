@@ -1,0 +1,19 @@
+@node sleep
+@section @code{sleep}
+@findex sleep
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/sleep.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+According to POSIX, the @code{sleep} function may interfere with the program's
+use of the @code{SIGALRM} signal.  On Linux, it doesn't; on other platforms,
+it may.
+@end itemize

@@ -1,0 +1,18 @@
+@node msgrcv
+@section @code{msgrcv}
+@findex msgrcv
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/msgrcv.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@end itemize

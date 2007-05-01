@@ -1,0 +1,15 @@
+@node strcmp
+@section @code{strcmp}
+@findex strcmp
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strcmp.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

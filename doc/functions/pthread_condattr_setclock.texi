@@ -1,0 +1,18 @@
+@node pthread_condattr_setclock
+@section @code{pthread_condattr_setclock}
+@findex pthread_condattr_setclock
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_condattr_setclock.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.3.6, MacOS X 10.3, FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin, mingw, BeOS.
+@end itemize

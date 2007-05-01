@@ -1,0 +1,21 @@
+@node wcstoimax
+@section @code{wcstoimax}
+@findex wcstoimax
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/wcstoimax.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin.
+@item
+On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
+accommodate all Unicode characters.
+@end itemize

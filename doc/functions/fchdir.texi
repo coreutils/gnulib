@@ -1,0 +1,18 @@
+@node fchdir
+@section @code{fchdir}
+@findex fchdir
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/fchdir.html}
+
+Gnulib module: fchdir
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Tandem/NSK, mingw, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

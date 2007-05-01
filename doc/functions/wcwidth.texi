@@ -1,0 +1,25 @@
+@node wcwidth
+@section @code{wcwidth}
+@findex wcwidth
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/wcwidth.html}
+
+Gnulib module: wcwidth
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Solaris 2.5.1, mingw, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function handles combining characters in UTF-8 locales incorrectly on some
+platforms:
+MacOS X 10.3.
+@item
+On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
+accommodate all Unicode characters.
+@end itemize

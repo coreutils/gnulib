@@ -1,0 +1,19 @@
+@node tzset
+@section @code{tzset}
+@findex tzset
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/tzset.html}
+
+Gnulib module: tzset
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function clobbers the buffer used by the localtime function on some
+platforms:
+Solaris 2.6.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

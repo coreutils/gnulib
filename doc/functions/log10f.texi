@@ -1,0 +1,18 @@
+@node log10f
+@section @code{log10f}
+@findex log10f
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/log10f.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+AIX 5.1, Solaris 9.
+@end itemize

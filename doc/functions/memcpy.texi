@@ -1,0 +1,17 @@
+@node memcpy
+@section @code{memcpy}
+@findex memcpy
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/memcpy.html}
+
+Gnulib module: memcpy
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some older platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

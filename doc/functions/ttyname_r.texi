@@ -1,0 +1,18 @@
+@node ttyname_r
+@section @code{ttyname_r}
+@findex ttyname_r
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/ttyname_r.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+NetBSD 3.0, mingw, BeOS.
+@end itemize

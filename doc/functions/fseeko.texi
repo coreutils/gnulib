@@ -1,0 +1,25 @@
+@node fseeko
+@section @code{fseeko}
+@findex fseeko
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/fseeko.html}
+
+Gnulib module: fseeko
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+OSF/1 4.0, Solaris 2.5.1, mingw.
+@item
+The declaration of @code{fseeko} in @code{<stdio.h>} is not enabled by default
+on some platforms: glibc 2.3.6.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On platforms where @code{off_t} is a 32-bit type, @code{fseeko} does not work
+correctly with files larger than 2 GB.  The fix is to use the
+@code{AC_SYS_LARGEFILE} macro.
+@end itemize

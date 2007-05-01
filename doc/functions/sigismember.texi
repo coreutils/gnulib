@@ -1,0 +1,18 @@
+@node sigismember
+@section @code{sigismember}
+@findex sigismember
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/sigismember.html}
+
+Gnulib module: sigprocmask
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

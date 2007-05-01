@@ -1,0 +1,18 @@
+@node mlock
+@section @code{mlock}
+@findex mlock
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/mlock.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+OSF/1 4.0, mingw, BeOS.
+@end itemize

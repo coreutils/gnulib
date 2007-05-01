@@ -1,0 +1,17 @@
+@node dup2
+@section @code{dup2}
+@findex dup2
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/dup2.html}
+
+Gnulib module: dup2
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some older platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

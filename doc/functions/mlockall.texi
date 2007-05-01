@@ -1,0 +1,18 @@
+@node mlockall
+@section @code{mlockall}
+@findex mlockall
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/mlockall.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+OSF/1 4.0, Cygwin, mingw, BeOS.
+@end itemize

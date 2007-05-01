@@ -1,0 +1,21 @@
+@node asctime_r
+@section @code{asctime_r}
+@findex asctime_r
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/asctime_r.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@item
+This function may put more than 26 bytes into the argument buffer if an
+invalid year is passed.
+@end itemize

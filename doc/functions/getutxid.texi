@@ -1,0 +1,18 @@
+@node getutxid
+@section @code{getutxid}
+@findex getutxid
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/getutxid.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, OpenBSD 3.8, mingw, BeOS.
+@end itemize

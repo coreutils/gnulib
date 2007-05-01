@@ -1,0 +1,18 @@
+@node pthread_mutex_getprioceiling
+@section @code{pthread_mutex_getprioceiling}
+@findex pthread_mutex_getprioceiling
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_mutex_getprioceiling.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.3.6, NetBSD 3.0, HP-UX 11, OSF/1 4.0, Solaris 2.4, mingw, BeOS.
+@end itemize

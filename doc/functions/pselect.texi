@@ -1,0 +1,18 @@
+@node pselect
+@section @code{pselect}
+@findex pselect
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pselect.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw, BeOS.
+@end itemize

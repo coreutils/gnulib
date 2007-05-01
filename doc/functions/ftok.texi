@@ -1,0 +1,18 @@
+@node ftok
+@section @code{ftok}
+@findex ftok
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/ftok.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@end itemize

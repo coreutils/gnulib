@@ -1,0 +1,18 @@
+@node getgrgid_r
+@section @code{getgrgid_r}
+@findex getgrgid_r
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/getgrgid_r.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@end itemize

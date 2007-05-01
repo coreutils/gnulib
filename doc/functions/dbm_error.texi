@@ -1,0 +1,18 @@
+@node dbm_error
+@section @code{dbm_error}
+@findex dbm_error
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/dbm_error.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.3.6, HP-UX 11, OSF/1 4.0, Solaris 2.5.1, Cygwin, mingw, BeOS.
+@end itemize

@@ -1,0 +1,20 @@
+@node setsockopt
+@section @code{setsockopt}
+@findex setsockopt
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/setsockopt.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@item
+Many socket options are not available on all platforms.
+@end itemize

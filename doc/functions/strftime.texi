@@ -1,0 +1,15 @@
+@node strftime
+@section @code{strftime}
+@findex strftime
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strftime.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

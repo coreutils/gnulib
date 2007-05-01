@@ -1,0 +1,18 @@
+@node nftw
+@section @code{nftw}
+@findex nftw
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/nftw.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 5.2.1, NetBSD 3.0, mingw, BeOS.
+@end itemize

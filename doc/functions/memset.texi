@@ -1,0 +1,17 @@
+@node memset
+@section @code{memset}
+@findex memset
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/memset.html}
+
+Gnulib module: memset
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some older platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

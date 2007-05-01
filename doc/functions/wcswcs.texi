@@ -1,0 +1,24 @@
+@node wcswcs
+@section @code{wcswcs}
+@findex wcswcs
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/wcswcs.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, Solaris 2.5.1, Cygwin, mingw, BeOS.
+@item
+On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
+accommodate all Unicode characters.
+@item
+This function is marked as ``legacy'' in POSIX.  Better use @code{wcsstr}
+instead.
+@end itemize

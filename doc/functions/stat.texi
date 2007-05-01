@@ -1,0 +1,22 @@
+@node stat
+@section @code{stat}
+@findex stat
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/stat.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On platforms where @code{off_t} is a 32-bit type, @code{stat} may not correctly
+report the size of files or block devices larger than 2 GB.  The fix is to
+use the @code{AC_SYS_LARGEFILE} macro.
+@item
+Cygwin's @code{stat} function sometimes sets @code{errno} to @code{EACCES} when
+@code{ENOENT} would be more appropriate.
+@end itemize

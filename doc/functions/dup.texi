@@ -1,0 +1,15 @@
+@node dup
+@section @code{dup}
+@findex dup
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/dup.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

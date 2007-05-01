@@ -1,0 +1,17 @@
+@node strerror
+@section @code{strerror}
+@findex strerror
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strerror.html}
+
+Gnulib module: strerror
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some old platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

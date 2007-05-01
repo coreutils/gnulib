@@ -1,0 +1,24 @@
+@node memcmp
+@section @code{memcmp}
+@findex memcmp
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/memcmp.html}
+
+Gnulib module: memcmp
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some older platforms.
+@item
+This function does not work on 8-bit data on some older platforms:
+SunOS 4.1.3.
+@item
+This function fails when comparing 16 bytes or more and with at least one
+buffer not starting on a 4-byte boundary on some older platforms:
+NeXTstep/x86.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

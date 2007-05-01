@@ -1,0 +1,21 @@
+@node wcstoll
+@section @code{wcstoll}
+@findex wcstoll
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/wcstoll.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, OSF/1 5.1, Solaris 9, Cygwin.
+@item
+On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
+accommodate all Unicode characters.
+@end itemize

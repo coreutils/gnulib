@@ -1,0 +1,15 @@
+@node nextafter
+@section @code{nextafter}
+@findex nextafter
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/nextafter.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

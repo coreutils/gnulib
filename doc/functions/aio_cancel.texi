@@ -1,0 +1,18 @@
+@node aio_cancel
+@section @code{aio_cancel}
+@findex aio_cancel
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/aio_cancel.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+NetBSD 3.0, OpenBSD 3.8, OSF/1 5.1, Solaris 2.4, Cygwin, mingw, BeOS.
+@end itemize

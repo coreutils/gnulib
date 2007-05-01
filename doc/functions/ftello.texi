@@ -1,0 +1,29 @@
+@node ftello
+@section @code{ftello}
+@findex ftello
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/ftello.html}
+
+Gnulib module: ftello
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+OSF/1 4.0, Solaris 2.5.1, mingw.
+@item
+The declaration of @code{ftello} in @code{<stdio.h>} is not enabled by default
+on some platforms: glibc 2.3.6.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On platforms where @code{off_t} is a 32-bit type, @code{ftello} does not work
+correctly with files larger than 2 GB.  The fix is to use the
+@code{AC_SYS_LARGEFILE} macro.
+@item
+@code{fflush}, @code{ftell}, @code{ftello}, @code{fgetpos} behave incorrectly
+on input streams that are opened in @code{O_TEXT} mode and whose contents
+contains Unix line terminators (LF), on some platforms: mingw.
+@end itemize

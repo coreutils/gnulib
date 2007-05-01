@@ -1,0 +1,15 @@
+@node difftime
+@section @code{difftime}
+@findex difftime
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/difftime.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

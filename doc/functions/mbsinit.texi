@@ -1,0 +1,18 @@
+@node mbsinit
+@section @code{mbsinit}
+@findex mbsinit
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/mbsinit.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, IRIX 6.5, Solaris 2.6.
+@end itemize

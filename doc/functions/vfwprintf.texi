@@ -1,0 +1,18 @@
+@node vfwprintf
+@section @code{vfwprintf}
+@findex vfwprintf
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/vfwprintf.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+NetBSD 3.0, OpenBSD 3.8, HP-UX 11, IRIX 6.5, Solaris 2.6, Cygwin, BeOS.
+@end itemize

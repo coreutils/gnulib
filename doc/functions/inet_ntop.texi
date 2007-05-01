@@ -1,0 +1,18 @@
+@node inet_ntop
+@section @code{inet_ntop}
+@findex inet_ntop
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/inet_ntop.html}
+
+Gnulib module: inet_ntop
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, OSF/1 4.0, Solaris 2.5.1, mingw, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

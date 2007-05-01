@@ -1,0 +1,18 @@
+@node expm1
+@section @code{expm1}
+@findex expm1
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/expm1.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw.
+@end itemize

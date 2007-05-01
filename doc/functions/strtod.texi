@@ -1,0 +1,23 @@
+@node strtod
+@section @code{strtod}
+@findex strtod
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strtod.html}
+
+Gnulib module: strtod
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some old platforms.
+@item
+This function mis-parses strings with leading @samp{+} on some old platforms:
+Old versions of Linux.
+@item
+This function returns a wrong end pointer on some platforms:
+Solaris 2.4.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

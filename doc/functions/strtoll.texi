@@ -1,0 +1,18 @@
+@node strtoll
+@section @code{strtoll}
+@findex strtoll
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strtoll.html}
+
+Gnulib module: strtoll
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, OSF/1 5.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

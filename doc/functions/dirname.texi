@@ -1,0 +1,24 @@
+@node dirname
+@section @code{dirname}
+@findex dirname
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/dirname.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+IRIX 6.5, Solaris 2.5.1, mingw, BeOS.
+@item
+@code{dirname} assumes file names in POSIX syntax; it does not work with file
+names in Windows syntax.
+@end itemize
+
+The Gnulib module @code{dirname} provides similar API that also works with
+Windows file names.

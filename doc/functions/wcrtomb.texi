@@ -1,0 +1,21 @@
+@node wcrtomb
+@section @code{wcrtomb}
+@findex wcrtomb
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/wcrtomb.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, IRIX 6.5, Solaris 2.6, mingw.
+@item
+On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
+accommodate all Unicode characters.
+@end itemize

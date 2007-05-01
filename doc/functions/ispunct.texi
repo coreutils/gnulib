@@ -1,0 +1,15 @@
+@node ispunct
+@section @code{ispunct}
+@findex ispunct
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/ispunct.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

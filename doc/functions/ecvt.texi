@@ -1,0 +1,21 @@
+@node ecvt
+@section @code{ecvt}
+@findex ecvt
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/ecvt.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+FreeBSD 6.0, NetBSD 3.0.
+@item
+This function is marked as ``legacy'' in POSIX.  Better use @code{sprintf}
+instead.
+@end itemize

@@ -1,0 +1,23 @@
+@node open
+@section @code{open}
+@findex open
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/open.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On Windows, this function returns a file handle in @code{O_TEXT} mode by
+default; this means that it translates '\n' to CR/LF by default.  Use the
+@code{O_BINARY} flag if you need reliable binary I/O.
+@item
+On platforms where @code{off_t} is a 32-bit type, @code{open} may not work
+correctly with files larger than 2 GB.  The fix is to use the
+@code{AC_SYS_LARGEFILE} macro.
+@end itemize

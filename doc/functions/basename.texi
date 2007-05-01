@@ -1,0 +1,24 @@
+@node basename
+@section @code{basename}
+@findex basename
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/basename.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+IRIX 6.5, Solaris 2.5.1, mingw, BeOS.
+@item
+glibc has two different functions @code{basename}: the POSIX version and
+the GNU version.
+@item
+@code{basename} assumes file names in POSIX syntax; it does not work with file
+names in Windows syntax.
+@end itemize

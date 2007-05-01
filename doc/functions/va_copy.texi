@@ -1,0 +1,17 @@
+@node va_copy
+@section @code{va_copy}
+@findex va_copy
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/va_copy.html}
+
+Gnulib module: stdarg
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This macro is missing on some platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

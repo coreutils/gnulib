@@ -1,0 +1,18 @@
+@node strfmon
+@section @code{strfmon}
+@findex strfmon
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/strfmon.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+NetBSD 3.0, OpenBSD 3.8, Cygwin, mingw, BeOS.
+@end itemize

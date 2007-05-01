@@ -1,0 +1,18 @@
+@node freeaddrinfo
+@section @code{freeaddrinfo}
+@findex freeaddrinfo
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/freeaddrinfo.html}
+
+Gnulib module: getaddrinfo
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, IRIX 6.5, OSF/1 4.0, Solaris 7, Cygwin, mingw, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

@@ -1,0 +1,21 @@
+@node tzname
+@section @code{tzname}
+@findex tzname
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/tzname.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This variable is missing on some platforms:
+IRIX 6.5, OSF/1 5.1, Cygwin, mingw.
+@item
+The address of this variable is not a compile-time constant on some platforms:
+Cygwin, mingw.
+@end itemize

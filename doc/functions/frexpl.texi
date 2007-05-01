@@ -1,0 +1,24 @@
+@node frexpl
+@section @code{frexpl}
+@findex frexpl
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/frexpl.html}
+
+Gnulib module: frexpl
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin.
+@item
+This function does not work on finite numbers on some platforms:
+AIX 5.1.
+@item
+This function does not work on infinite numbers on some platforms:
+IRIX 6.5.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

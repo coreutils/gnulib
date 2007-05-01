@@ -1,0 +1,28 @@
+@node mkdir
+@section @code{mkdir}
+@findex mkdir
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/mkdir.html}
+
+Gnulib module: mkdir
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+When the argument ends in a slash, the function call fails on some platforms.
+@item
+On Windows platforms (excluding Cygwin), this function is called @code{_mkdir}
+and takes only one argument.  The fix (without Gnulib) is to define a macro
+like this:
+@smallexample
+#define mkdir ((int (*)()) _mkdir)
+@end smallexample
+or
+@smallexample
+#define mkdir(path,mode) _mkdir (path)
+@end smallexample
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

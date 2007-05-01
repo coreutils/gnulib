@@ -1,0 +1,18 @@
+@node pthread_mutexattr_settype
+@section @code{pthread_mutexattr_settype}
+@findex pthread_mutexattr_settype
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_mutexattr_settype.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, Solaris 2.6, mingw, BeOS.
+@end itemize

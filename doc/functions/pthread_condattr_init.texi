@@ -1,0 +1,18 @@
+@node pthread_condattr_init
+@section @code{pthread_condattr_init}
+@findex pthread_condattr_init
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_condattr_init.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, Solaris 2.4, mingw, BeOS.
+@end itemize

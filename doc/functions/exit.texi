@@ -1,0 +1,18 @@
+@node exit
+@section @code{exit}
+@findex exit
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/exit.html}
+
+Gnulib module: exit
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+Some problems with the macros @code{EXIT_SUCCESS} and @code{EXIT_FAILURE},
+see @ref{stdlib.h}.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

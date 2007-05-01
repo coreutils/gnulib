@@ -1,0 +1,15 @@
+@node cos
+@section @code{cos}
+@findex cos
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/cos.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

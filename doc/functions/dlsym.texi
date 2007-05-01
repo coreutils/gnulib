@@ -1,0 +1,21 @@
+@node dlsym
+@section @code{dlsym}
+@findex dlsym
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/dlsym.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@item
+The visibility of symbols loaded in dependent shared libraries or present
+in the main executable is system dependent.
+@end itemize

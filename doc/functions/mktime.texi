@@ -1,0 +1,19 @@
+@node mktime
+@section @code{mktime}
+@findex mktime
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/mktime.html}
+
+Gnulib module: mktime
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+@code{mktime} may go into an endless loop on some platforms.
+@item
+@code{mktime} may occasionally return wrong results on some platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

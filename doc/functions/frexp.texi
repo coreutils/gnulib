@@ -1,0 +1,21 @@
+@node frexp
+@section @code{frexp}
+@findex frexp
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/frexp.html}
+
+Gnulib module: frexp
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function does not work on denormalized numbers on some platforms:
+NetBSD 3.0.
+@item
+This function does not work on infinite numbers on some platforms:
+IRIX 6.5.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

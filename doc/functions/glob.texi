@@ -1,0 +1,23 @@
+@node glob
+@section @code{glob}
+@findex glob
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/glob.html}
+
+Gnulib module: glob
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@item
+This function may list symbolic links to nonexistent files among the results,
+on some platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+Some platforms may store additional flags in the @code{gl_flags} field.
+@end itemize

@@ -1,0 +1,19 @@
+@node rename
+@section @code{rename}
+@findex rename
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/rename.html}
+
+Gnulib module: rename
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function does not work when the source file name ends in a slash on
+some platforms:
+SunOS 4.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

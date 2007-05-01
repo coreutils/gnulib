@@ -1,0 +1,18 @@
+@node pthread_setcanceltype
+@section @code{pthread_setcanceltype}
+@findex pthread_setcanceltype
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_setcanceltype.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, Solaris 2.4, mingw, BeOS.
+@end itemize

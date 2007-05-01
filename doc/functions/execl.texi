@@ -1,0 +1,15 @@
+@node execl
+@section @code{execl}
+@findex execl
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/execl.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

@@ -1,0 +1,20 @@
+@node nice
+@section @code{nice}
+@findex nice
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/nice.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@item
+In glibc before glibc 2.2.4, @code{nice} returned 0 upon success.
+@end itemize
