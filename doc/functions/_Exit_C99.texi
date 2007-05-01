@@ -1,0 +1,21 @@
+@node _Exit
+@section @code{_Exit}
+@findex _Exit
+@c This file would ideally be called _Exit.texi, but then it would collide
+@c with _exit.texi on case-insensitive file systems (MacOS X HFS+ and Woe32
+@c file systems).
+
+POSIX specification: @url{http://www.opengroup.org/susv3xsh/_Exit.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin, Interix 3.5, BeOS.
+@end itemize
