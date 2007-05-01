@@ -191,6 +191,23 @@ extern int readlink (const char *file, char *buf, size_t bufsize);
 #endif
 
 
+#if @GNULIB_SLEEP@
+/* Pause the execution of the current thread for N seconds.
+   Returns the number of seconds left to sleep.
+   See the POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/sleep.html>.  */
+# if !@HAVE_SLEEP@
+extern unsigned int sleep (unsigned int n);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef sleep
+# define sleep(n) \
+    (GL_LINK_WARNING ("sleep is unportable - " \
+                      "use gnulib module sleep for portability"), \
+     sleep (n))
+#endif
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,0 +1,25 @@
+Description:
+sleep() function: pause execution of the current thread.
+
+Files:
+lib/sleep.c
+m4/sleep.m4
+
+Depends-on:
+unistd
+
+configure.ac:
+gl_FUNC_SLEEP
+gl_UNISTD_MODULE_INDICATOR([sleep])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

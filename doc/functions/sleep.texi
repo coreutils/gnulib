@@ -4,10 +4,13 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/sleep.html}
 
-Gnulib module: ---
+Gnulib module: sleep
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+mingw (2005 or newer).
 @end itemize
 
 Portability problems not fixed by Gnulib:
