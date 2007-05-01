@@ -253,14 +253,14 @@
 
 /* mingw does not support symlinks, therefore it does not have lstat.  But
    without links, stat does just fine.  */
-#if ! HAVE_LSTAT
+#if ! @HAVE_LSTAT@
 # define lstat stat
 #endif
 
 /* mingw's _mkdir() function has 1 argument, but we pass 2 arguments.
    Additionally, it declares _mkdir (and depending on compile flags, an
    alias mkdir), only in the nonstandard io.h.  */
-#if ! HAVE_DECL_MKDIR && HAVE_IO_H
+#if ! @HAVE_DECL_MKDIR@ && @HAVE_IO_H@
 # include <io.h>
 
 static inline int

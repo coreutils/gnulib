@@ -1,5 +1,14 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* lib/sys_stat_.h: Test HAVE_LSTAT, HAVE_DECL_MKDIR, HAVE_IO_H at
+	configure time.
+	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Substitute HAVE_LSTAT,
+	HAVE_DECL_MKDIR, HAVE_IO_H via AC_SUBST.
+	* modules/sys_stat (Makefile.am): Substitute their values into
+	sys/stat.h.
+
+2007-05-01  Bruno Haible  <bruno@clisp.org>
+
 	* lib/glob_.h: Test HAVE_SYS_CDEFS_H at configure time.
 	* m4/glob.m4 (gl_PREREQ_GLOB): Substitute HAVE_SYS_CDEFS_H via AC_SUBST.
 	* modules/glob (Makefile.am): Put HAVE_SYS_CDEFS_H value into glob.h.
