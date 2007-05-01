@@ -349,7 +349,6 @@ erfcl
 erff
 erfl
 errno
-exec
 execl
 execle
 execlp

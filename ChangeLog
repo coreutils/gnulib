@@ -1,6 +1,6 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
-	* MODULES.html.sh (posix_functions): Remove 'toc'.
+	* MODULES.html.sh (posix_functions): Remove 'exec', 'toc'.
 
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
