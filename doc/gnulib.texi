@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.39 2007-05-01 15:14:20 haible Exp $
+@comment $Id: gnulib.texi,v 1.40 2007-05-01 22:37:10 haible Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2007-05-01 15:14:20 $
+@set UPDATED $Date: 2007-05-01 22:37:10 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -1723,7 +1723,7 @@ by Gnulib.
 @include functions/FD_ISSET.texi
 @include functions/FD_SET.texi
 @include functions/FD_ZERO.texi
-@include functions/_Exit.texi
+@include functions/_Exit_C99.texi
 @include functions/_exit.texi
 @include functions/_longjmp.texi
 @include functions/_setjmp.texi

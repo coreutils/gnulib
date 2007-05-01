@@ -1,5 +1,11 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* doc/functions/_Exit_C99.texi: Renamed from doc/functions/_Exit.texi.
+	Reported by Eric Blake.
+	* doc/gnulib.texi (Function Substitutes): Update.
+
+2007-05-01  Bruno Haible  <bruno@clisp.org>
+
 	* doc/functions.texi: Remove file, now redundant through
 	doc/functions/*.texi.
 
