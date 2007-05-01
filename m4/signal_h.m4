@@ -1,4 +1,4 @@
-# signal_h.m4 serial 1
+# signal_h.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,5 +21,8 @@ AC_DEFUN([gl_SIGNAL_MODULE_INDICATOR],
 
 AC_DEFUN([gl_SIGNAL_H_DEFAULTS],
 [
+  GNULIB_SIGPROCMASK=0;        AC_SUBST([GNULIB_SIGPROCMASK])
   dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_POSIX_SIGNALBLOCKING=1; AC_SUBST([HAVE_POSIX_SIGNALBLOCKING])
+  HAVE_SIGSET_T=1;             AC_SUBST([HAVE_SIGSET_T])
 ])

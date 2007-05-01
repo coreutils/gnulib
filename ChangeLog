@@ -1,5 +1,25 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* lib/sigprocmask.h: Remove file.
+	* lib/signal_.h: Incorporate the previous contents of sigprocmask.h.
+	* lib/sigprocmask.c: Include <signal.h> instead of sigprocmask.h.
+	* m4/signal_h.m4 (gl_SIGNAL_H_DEFAULTS): Substitute GNULIB_SIGPROCMASK,
+	HAVE_POSIX_SIGNALBLOCKING, HAVE_SIGSET_T.
+	* m4/signalblocking.m4 (gl_SIGNALBLOCKING): Require
+	gl_SIGNAL_H_DEFAULTS. Set HAVE_POSIX_SIGNALBLOCKING as a shell variable.
+	(gl_PREREQ_SIGPROCMASK): Require gl_SIGNAL_H_DEFAULTS. Set
+	HAVE_SIGSET_T as a shell variable.
+	* modules/signal (Makefile.am): Substitute GNULIB_SIGPROCMASK,
+	HAVE_POSIX_SIGNALBLOCKING, HAVE_SIGSET_T into signal.h.
+	* modules/sigprocmask (Files): Remove lib/sigprocmask.h.
+	(Depends-on): Add signal. Remove verify.
+	(configure.ac): Invoke gl_SIGNAL_MODULE_INDICATOR.
+	(Include): Mention <signal.h> instead of sigprocmask.h.
+	* NEWS: Mention the change.
+	* lib/fatal-signal.c: Don't include sigprocmask.h.
+
+2007-05-01  Bruno Haible  <bruno@clisp.org>
+
 	* modules/signal: New file.
 	* lib/signal_.h: New file.
 	* m4/signal_h.m4: New file.

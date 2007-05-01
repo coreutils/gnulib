@@ -2,21 +2,21 @@ Description:
 POSIX compatible signal blocking.
 
 Files:
-lib/sigprocmask.h
 lib/sigprocmask.c
 m4/signalblocking.m4
 
 Depends-on:
-verify
+signal
 stdint
 
 configure.ac:
 gl_SIGNALBLOCKING
+gl_SIGNAL_MODULE_INDICATOR([sigprocmask])
 
 Makefile.am:
 
 Include:
-"sigprocmask.h"
+<signal.h>
 
 License:
 LGPL

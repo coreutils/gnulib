@@ -6,6 +6,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-05-01  sigprocmask     The module now depends on signal, so replace
+                              #include "sigprocmask.h"
+                            with
+                              #include <signal.h>
+
 2007-04-06  gettext         The macro HAVE_LONG_DOUBLE is no longer set.
                             You can replace all its uses with 1, i.e. assume
                             'long double' as a type exists.
