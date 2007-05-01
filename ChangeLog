@@ -1,5 +1,11 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* modules/signal: New file.
+	* lib/signal_.h: New file.
+	* m4/signal_h.m4: New file.
+
+2007-05-01  Bruno Haible  <bruno@clisp.org>
+
 	* lib/wctype_.h: Test HAVE_ISWCNTRL at configure time.
 	* m4/wctype.m4 (gl_WCTYPE_H): Substitute HAVE_ISWCNTRL.
 	* modules/wctype (Makefile.am): Substitute HAVE_ISWCNTRL instead of

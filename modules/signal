@@ -1,0 +1,37 @@
+Description:
+A GNU-like <signal.h>.
+
+Files:
+lib/signal_.h
+m4/signal_h.m4
+
+Depends-on:
+absolute-header
+link-warning
+
+configure.ac:
+gl_SIGNAL_H
+
+Makefile.am:
+BUILT_SOURCES += signal.h
+
+# We need the following in order to create <signal.h> when the system
+# doesn't have a complete one.
+signal.h: signal_.h
+	rm -f $@-t $@
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e 's|@''ABSOLUTE_SIGNAL_H''@|$(ABSOLUTE_SIGNAL_H)|g' \
+	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
+	      < $(srcdir)/signal_.h; \
+	} > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += signal.h signal.h-t
+
+Include:
+#include <signal.h>
+
+License:
+LGPL
+
+Maintainer:
+all
