@@ -1,5 +1,9 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* MODULES.html.sh (posix_functions): Remove 'toc'.
+
+2007-05-01  Bruno Haible  <bruno@clisp.org>
+
 	* modules/mkdir (Depends-on): Add sys_stat, because sys_stat provides
 	the portability of 'mkdir' to mingw systems.
 

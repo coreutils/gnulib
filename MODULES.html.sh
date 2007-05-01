@@ -1159,7 +1159,6 @@ timezone
 tmpfile
 tmpnam
 toascii
-toc
 tolower
 toupper
 towctrans
