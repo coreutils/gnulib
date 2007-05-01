@@ -1,5 +1,11 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* lib/glob_.h: Test HAVE_SYS_CDEFS_H at configure time.
+	* m4/glob.m4 (gl_PREREQ_GLOB): Substitute HAVE_SYS_CDEFS_H via AC_SUBST.
+	* modules/glob (Makefile.am): Put HAVE_SYS_CDEFS_H value into glob.h.
+
+2007-05-01  Bruno Haible  <bruno@clisp.org>
+
 	* doc/header/assert.texi: Undo last change: don't mention the gnulib
 	'assert' module here.
 

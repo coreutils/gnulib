@@ -30,7 +30,8 @@ BUILT_SOURCES += $(GLOB_H)
 # doesn't have one that works with the given compiler.
 glob.h: glob_.h
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/glob_.h; \
+	  sed -e 's|@''HAVE_SYS_CDEFS_H''@|$(HAVE_SYS_CDEFS_H)|g' \
+	      < $(srcdir)/glob_.h; \
 	} > $@-t
 	mv -f $@-t $@
 MOSTLYCLEANFILES += glob.h glob.h-t

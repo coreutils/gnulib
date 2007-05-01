@@ -21,7 +21,7 @@
 #ifndef _GL_GLOB_H
 #define _GL_GLOB_H
 
-#ifdef HAVE_SYS_CDEFS_H
+#if @HAVE_SYS_CDEFS_H@
 # include <sys/cdefs.h>
 #endif
 
