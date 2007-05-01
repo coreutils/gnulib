@@ -1,5 +1,12 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* modules/argp (Depends-on): Add sleep.
+
+2007-05-01  Bruno Haible  <bruno@clisp.org>
+
+	* modules/sleep-tests: New file.
+	* tests/test-sleep.c: New file.
+
 	* modules/sleep: New file.
 	* lib/sleep.c: New file.
 	* m4/sleep.m4: New file.

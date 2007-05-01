@@ -29,6 +29,7 @@ strndup
 strcase
 extensions
 vsnprintf
+sleep
 
 configure.ac:
 gl_ARGP
