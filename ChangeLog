@@ -1,5 +1,12 @@
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* lib/wctype_.h: Test HAVE_ISWCNTRL at configure time.
+	* m4/wctype.m4 (gl_WCTYPE_H): Substitute HAVE_ISWCNTRL.
+	* modules/wctype (Makefile.am): Substitute HAVE_ISWCNTRL instead of
+	HAVE_WCTYPE_CTMP_BUG into wctype.h.
+
+2007-05-01  Bruno Haible  <bruno@clisp.org>
+
 	* lib/sys_stat_.h: Test HAVE_LSTAT, HAVE_DECL_MKDIR, HAVE_IO_H at
 	configure time.
 	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Substitute HAVE_LSTAT,

@@ -63,7 +63,7 @@ typedef int __wctype_wint_t;
 
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
    Assume all 12 functions are implemented the same way, or not at all.  */
-#if ! HAVE_ISWCNTRL
+#if ! @HAVE_ISWCNTRL@
 
 /* IRIX 5.3 has macros but no functions, its isw* macros refer to an
    undefined variable _ctmp_ and to <ctype.h> macros like _P, and they
