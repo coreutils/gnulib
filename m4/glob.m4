@@ -76,11 +76,11 @@ AC_DEFUN([gl_PREREQ_GLOB],
   AC_REQUIRE([AC_C_RESTRICT])dnl
   AC_REQUIRE([AC_GNU_SOURCE])dnl
   AC_CHECK_HEADERS_ONCE([sys/cdefs.h unistd.h])dnl
-  AC_CHECK_FUNCS_ONCE([getlogin_r getpwnam_r])dnl
   if test $ac_cv_header_sys_cdefs_h = yes; then
     HAVE_SYS_CDEFS_H=1
   else
     HAVE_SYS_CDEFS_H=0
   fi
   AC_SUBST([HAVE_SYS_CDEFS_H])
+  AC_CHECK_FUNCS_ONCE([getlogin_r getpwnam_r])dnl
 ])
