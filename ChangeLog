@@ -1,3 +1,9 @@
+2007-05-02  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* lib/argp-help.c (struct hol_entry): New member `ord'.
+	(HOL_ENTRY_PTRCMP): Use ord for comparison
+	(hol_sort): Initialize ord.
+
 2007-05-01  Bruno Haible  <bruno@clisp.org>
 
 	* doc/functions/_Exit_C99.texi: Renamed from doc/functions/_Exit.texi.
