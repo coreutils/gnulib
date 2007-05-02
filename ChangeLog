@@ -1,3 +1,9 @@
+2007-05-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/d-ino.m4 (gl_CHECK_TYPE_STRUCT_DIRENT_D_INO): Test whether
+	readdir returns garbage in d_ino.  Problem reported by Kaz Sasayama in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2007-05/msg00021.html>.
+
 2007-05-02  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* lib/argp-help.c (struct hol_entry): New member `ord'.
