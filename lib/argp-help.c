@@ -375,6 +375,9 @@ struct hol_entry
 
   /* The argp from which this option came.  */
   const struct argp *argp;
+
+  /* Position in the array */
+  unsigned ord;
 };
 
 /* A cluster of entries to reflect the argp tree structure.  */
@@ -733,7 +736,7 @@ canon_doc_option (const char **name)
   return non_opt;
 }
 
-#define HOL_ENTRY_PTRCMP(a,b) ((a) < (b) ? -1 : 1)
+#define HOL_ENTRY_PTRCMP(a,b) ((a)->ord < (b)->ord ? -1 : 1)
 
 /* Order ENTRY1 & ENTRY2 by the order which they should appear in a help
    listing.  */
@@ -829,8 +832,14 @@ static void
 hol_sort (struct hol *hol)
 {
   if (hol->num_entries > 0)
-    qsort (hol->entries, hol->num_entries, sizeof (struct hol_entry),
-	   hol_entry_qcmp);
+    {
+      unsigned i;
+      struct hol_entry *e;
+      for (i = 0, e = hol->entries; i < hol->num_entries; i++, e++)
+	e->ord = i;
+      qsort (hol->entries, hol->num_entries, sizeof (struct hol_entry),
+	     hol_entry_qcmp);
+    }
 }
 
 /* Append MORE to HOL, destroying MORE in the process.  Options in HOL shadow
