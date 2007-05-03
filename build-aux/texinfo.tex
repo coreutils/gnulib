@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2007-04-26.15}
+\def\texinfoversion{2007-05-03.09}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1327,7 +1327,11 @@ output) for that.)}
   % used to mark target names; must be expandable.
   \def\pdfmkpgn#1{#1}
   %
-  \let\linkcolor = \Blue  % was Cyan, but that seems light?
+  % by default, use a color that is dark enough to print on paper as
+  % nearly black, but still distinguishable for online viewing.
+  % (Defined in pdfcolor.tex.)
+  \let\urlcolor = \BrickRed
+  \let\linkcolor = \BrickRed
   \def\endlink{\Black\pdfendlink}
   %
   % Adding outlines to PDF; macros for calculating structure of outlines
@@ -1461,7 +1465,7 @@ output) for that.)}
       \def\@{@}%
       \let\/=\empty
       \makevalueexpandable
-      \leavevmode\Red
+      \leavevmode\urlcolor
       \startlink attr{/Border [0 0 0]}%
         user{/Subtype /Link /A << /S /URI /URI (#1) >>}%
     \endgroup}
