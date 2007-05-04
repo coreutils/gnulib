@@ -1,4 +1,4 @@
-#serial 9
+#serial 10
 
 dnl From Jim Meyering.
 dnl
@@ -35,8 +35,7 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
 	    [gl_cv_struct_dirent_d_ino=no])])
    if test $gl_cv_struct_dirent_d_ino = yes; then
      AC_DEFINE(D_INO_IN_DIRENT, 1,
-       [Define if there is a member named d_ino in the struct describing
-        directory headers.])
+       [Define if struct dirent has a member d_ino that actually works.])
    fi
   ]
 )

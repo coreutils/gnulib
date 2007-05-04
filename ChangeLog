@@ -1,3 +1,8 @@
+2007-05-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/d-ino.m4 (gl_CHECK_TYPE_STRUCT_DIRENT_D_INO): Use better
+	comment for D_INO_IN_DIRENT.  Problem reported by James Youngman.
+
 2007-05-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/d-ino.m4 (gl_CHECK_TYPE_STRUCT_DIRENT_D_INO): Test whether
