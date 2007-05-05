@@ -23,9 +23,11 @@ unset ARGP_HELP_FMT
 ERR=0
 
 func_compare() {
-# If argp was compiled without base_name, it will display full program name
+# If argp was compiled without base_name, it will display full program name.
+# If run on mingw, it will display the program name with a .exe suffix.
   sed '1{
          s,: [^ ]*/test-argp,: test-argp,
+         s,: test-argp\.exe,: test-argp,
         }' | diff -c $TMP -
 }  
 
