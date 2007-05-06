@@ -309,6 +309,7 @@ int main ()
       [
 changequote(,)dnl
        case "$host_os" in
+         cygwin*)      gl_cv_func_printf_flag_grouping="guessing no";;
          netbsd*)      gl_cv_func_printf_flag_grouping="guessing no";;
          mingw* | pw*) gl_cv_func_printf_flag_grouping="guessing no";;
          *)            gl_cv_func_printf_flag_grouping="guessing yes";;
@@ -632,6 +633,8 @@ changequote(,)dnl
                                # Guess yes on MacOS X >= 10.3.
          darwin[1-6].*)        gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
          darwin*)              gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
+                               # Guess yes on Cygwin.
+         cygwin*)              gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
                                # Guess yes on Solaris >= 2.6.
          solaris2.[0-5]*)      gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
          solaris*)             gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
@@ -692,8 +695,8 @@ dnl   glibc 2.3.6                          .  #  .  .  .  .  .  .  .  .  .  .
 dnl   FreeBSD 5.4, 6.1                     .  ?  .  .  .  .  #  .  .  .  .  .
 dnl   MacOS X 10.3.9                       .  #  .  .  .  .  #  .  .  .  .  .
 dnl   OpenBSD 3.9, 4.0                     .  #  ?  .  .  ?  ?  .  .  .  ?  ?
-dnl   Cygwin 2007                          .  #  #  .  .  ?  ?  .  .  .  .  ?
-dnl   Cygwin 2006                          #  #  #  .  .  ?  ?  .  .  .  .  ?
+dnl   Cygwin 2007 (= Cygwin 1.5.24)        .  #  #  .  .  .  ?  .  .  .  .  .
+dnl   Cygwin 2006 (= Cygwin 1.5.19)        #  #  #  .  .  #  ?  .  .  .  .  .
 dnl   Solaris 10                           .  #  .  .  .  .  #  .  .  .  .  .
 dnl   Solaris 2.6 ... 9                    #  #  #  .  .  .  #  .  .  .  .  .
 dnl   Solaris 2.5.1                        #  #  #  .  .  .  #  #  #  #  #  #

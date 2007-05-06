@@ -32,7 +32,7 @@ arbitrary order, such as @code{"%2$s"}, on some platforms:
 NetBSD 3.0, mingw, BeOS.
 @item
 This function doesn't support the @code{'} flag on some platforms:
-NetBSD 3.0, mingw.
+NetBSD 3.0, Cygwin 2006, mingw.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes) on some platforms:
