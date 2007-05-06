@@ -1012,8 +1012,14 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		   sprintf.  */
 		p = buf;
 		*p++ = '%';
+#if NEED_PRINTF_FLAG_GROUPING
+		/* The underlying implementation doesn't support the ' flag.
+		   Produce no grouping characters in this case; this is
+		   acceptable because the grouping is locale dependent.  */
+#else
 		if (dp->flags & FLAG_GROUP)
 		  *p++ = '\'';
+#endif
 		if (dp->flags & FLAG_LEFT)
 		  *p++ = '-';
 		if (dp->flags & FLAG_SHOWSIGN)

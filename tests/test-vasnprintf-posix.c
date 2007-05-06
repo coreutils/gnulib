@@ -1236,6 +1236,18 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     ASSERT (length == strlen (result));
     free (result);
   }
+
+  /* Test the support of the grouping flag.  */
+
+  {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%'d %d", 1234567, 99);
+    ASSERT (result != NULL);
+    ASSERT (result[strlen (result) - 1] == '9');
+    ASSERT (length == strlen (result));
+    free (result);
+  }
 }
 
 static char *

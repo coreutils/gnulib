@@ -1006,4 +1006,14 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     ASSERT (strcmp (result, "55 33") == 0);
     ASSERT (retval == strlen (result));
   }
+
+  /* Test the support of the grouping flag.  */
+
+  {
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%'d %d", 1234567, 99);
+    ASSERT (result[strlen (result) - 1] == '9');
+    ASSERT (retval == strlen (result));
+  }
 }

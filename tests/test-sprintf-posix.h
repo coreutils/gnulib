@@ -992,4 +992,14 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (strcmp (result, "55 33") == 0);
     ASSERT (retval == strlen (result));
   }
+
+  /* Test the support of the grouping flag.  */
+
+  {
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%'d %d", 1234567, 99);
+    ASSERT (result[strlen (result) - 1] == '9');
+    ASSERT (retval == strlen (result));
+  }
 }

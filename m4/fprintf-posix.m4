@@ -1,4 +1,4 @@
-# fprintf-posix.m4 serial 3
+# fprintf-posix.m4 serial 4
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,6 +12,7 @@ AC_DEFUN([gl_FUNC_FPRINTF_POSIX],
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_F])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_N])
   AC_REQUIRE([gl_PRINTF_POSITIONS])
+  AC_REQUIRE([gl_PRINTF_FLAG_GROUPING])
   gl_cv_func_fprintf_posix=no
   case "$gl_cv_func_printf_sizes_c99" in
     *yes)
@@ -23,8 +24,12 @@ AC_DEFUN([gl_FUNC_FPRINTF_POSIX],
                 *yes)
                   case "$gl_cv_func_printf_positions" in
                     *yes)
-                      # fprintf exists and is already POSIX compliant.
-                      gl_cv_func_fprintf_posix=yes
+                      case "$gl_cv_func_printf_flag_grouping" in
+                        *yes)
+                          # fprintf exists and is already POSIX compliant.
+                          gl_cv_func_fprintf_posix=yes
+                          ;;
+                      esac
                       ;;
                   esac
                   ;;
@@ -38,6 +43,7 @@ AC_DEFUN([gl_FUNC_FPRINTF_POSIX],
   if test $gl_cv_func_fprintf_posix = no; then
     gl_PREREQ_VASNPRINTF_DIRECTIVE_A
     gl_PREREQ_VASNPRINTF_DIRECTIVE_F
+    gl_PREREQ_VASNPRINTF_FLAG_GROUPING
     gl_REPLACE_VASNPRINTF
     gl_REPLACE_FPRINTF
   fi

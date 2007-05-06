@@ -1217,6 +1217,18 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     ASSERT (retval == strlen (result));
     free (result);
   }
+
+  /* Test the support of the grouping flag.  */
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "%'d %d", 1234567, 99);
+    ASSERT (result != NULL);
+    ASSERT (result[strlen (result) - 1] == '9');
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
 }
 
 static int

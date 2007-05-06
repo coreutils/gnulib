@@ -23,13 +23,13 @@ NetBSD 3.0, AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin, mingw,
 This function does not support format directives that access arguments in an
 arbitrary order, such as @code{"%2$s"}, on some platforms:
 NetBSD 3.0, mingw, BeOS.
+@item
+This function doesn't support the @code{'} flag on some platforms:
+NetBSD 3.0, mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function doesn't support the @code{'} flag on some platforms:
-mingw.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes) on some platforms:
