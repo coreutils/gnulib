@@ -1,5 +1,19 @@
 2007-05-06  Bruno Haible  <bruno@clisp.org>
 
+	* m4/printf.m4 (gl_PRINTF_FLAG_GROUPING, gl_VSNPRINTF_ZEROSIZE_C99):
+	Update with info about Cygwin.
+	* doc/functions/fprintf.texi: Update.
+	* doc/functions/printf.texi: Update.
+	* doc/functions/snprintf.texi: Update.
+	* doc/functions/sprintf.texi: Update.
+	* doc/functions/vfprintf.texi: Update.
+	* doc/functions/vprintf.texi: Update.
+	* doc/functions/vsnprintf.texi: Update.
+	* doc/functions/vsprintf.texi: Update.
+	Reported by Eric Blake.
+
+2007-05-06  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c (VASNPRINTF) [NEED_PRINTF_FLAG_ZERO]: Perform the
 	padding ourselves for the floating-point directives.
 	* m4/printf.m4 (gl_PRINTF_FLAG_ZERO): New macro.
