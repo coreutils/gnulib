@@ -669,7 +669,55 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
-  { /* FLAG_ZERO.  */
+  { /* Width.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%10f %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_LEFT.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%-10f %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000   33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SHOWSIGN.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%+f %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "+1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SPACE.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "% f %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, " 1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%#f %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%#.f %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "2. 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with finite number.  */
     char result[1000];
     int retval =
       my_sprintf (result, "%015f %d", 1234.0, 33, 44, 55);
@@ -683,6 +731,14 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
       my_sprintf (result, "%015f %d", -1.0 / 0.0, 33, 44, 55);
     ASSERT (strcmp (result, "           -inf 33") == 0
 	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with NaN.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%015f %d", NaN (), 33, 44, 55);
+    ASSERT (strcmp (result, "            nan 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -761,7 +817,55 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
-  { /* FLAG_ZERO.  */
+  { /* Width.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%10Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_LEFT.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%-10Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000   33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SHOWSIGN.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%+Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "+1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SPACE.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "% Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, " 1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%#Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%#.Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "2. 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with finite number.  */
     char result[1000];
     int retval =
       my_sprintf (result, "%015Lf %d", 1234.0L, 33, 44, 55);
@@ -775,6 +879,15 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
       my_sprintf (result, "%015Lf %d", -1.0L / 0.0L, 33, 44, 55);
     ASSERT (strcmp (result, "           -inf 33") == 0
 	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with NaN.  */
+    static long double zero = 0.0L;
+    char result[1000];
+    int retval =
+      my_sprintf (result, "%015Lf %d", zero / zero, 33, 44, 55);
+    ASSERT (strcmp (result, "            nan 33") == 0);
     ASSERT (retval == strlen (result));
   }
 

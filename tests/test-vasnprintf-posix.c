@@ -837,7 +837,67 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
-  { /* FLAG_ZERO.  */
+  { /* Width.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%10f %d", 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_LEFT.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%-10f %d", 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1.750000   33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_SHOWSIGN.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%+f %d", 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "+1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_SPACE.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "% f %d", 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, " 1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#f %d", 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#.f %d", 1.75, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "2. 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO with finite number.  */
     size_t length;
     char *result =
       my_asnprintf (NULL, &length, "%015f %d", 1234.0, 33, 44, 55);
@@ -854,6 +914,16 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "           -inf 33") == 0
 	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO with NaN.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%015f %d", NaN (), 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "            nan 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -951,7 +1021,67 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     free (result);
   }
 
-  { /* FLAG_ZERO.  */
+  { /* Width.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%10Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "  1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_LEFT.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%-10Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1.750000   33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_SHOWSIGN.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%+Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "+1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_SPACE.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "% Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, " 1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1.750000 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ALT.  */
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#.Lf %d", 1.75L, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "2. 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO with finite number.  */
     size_t length;
     char *result =
       my_asnprintf (NULL, &length, "%015Lf %d", 1234.0L, 33, 44, 55);
@@ -968,6 +1098,17 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "           -inf 33") == 0
 	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  { /* FLAG_ZERO with NaN.  */
+    static long double zero = 0.0L;
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%015Lf %d", zero / zero, 33, 44, 55);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "            nan 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }

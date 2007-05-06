@@ -1,5 +1,35 @@
 2007-05-06  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (VASNPRINTF) [NEED_PRINTF_FLAG_ZERO]: Perform the
+	padding ourselves for the floating-point directives.
+	* m4/printf.m4 (gl_PRINTF_FLAG_ZERO): New macro.
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_FLAG_ZERO): New macro.
+	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Invoke
+	gl_PRINTF_FLAG_ZERO and test its result. Invoke
+	gl_PREREQ_VASNPRINTF_FLAG_ZERO.
+	* m4/sprintf-posix.m4 (gl_FUNC_SPRINTF_POSIX): Likewise.
+	* m4/fprintf-posix.m4 (gl_FUNC_FPRINTF_POSIX): Likewise.
+	* m4/vasnprintf-posix.m4 (gl_FUNC_VASNPRINTF_POSIX): Likewise.
+	* m4/vasprintf-posix.m4 (gl_FUNC_VASPRINTF_POSIX): Likewise.
+	* m4/vfprintf-posix.m4 (gl_FUNC_VFPRINTF_POSIX): Likewise.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX): Likewise.
+	* m4/vsprintf-posix.m4 (gl_FUNC_VSPRINTF_POSIX): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Also check the width
+	and some flags in the %f directive.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-vasnprintf-posix.c (test_function): Likewise.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* doc/functions/fprintf.texi: Update.
+	* doc/functions/printf.texi: Update.
+	* doc/functions/snprintf.texi: Update.
+	* doc/functions/sprintf.texi: Update.
+	* doc/functions/vfprintf.texi: Update.
+	* doc/functions/vprintf.texi: Update.
+	* doc/functions/vsnprintf.texi: Update.
+	* doc/functions/vsprintf.texi: Update.
+
+2007-05-06  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c (VASNPRINTF) [NEED_PRINTF_FLAG_GROUPING]: Don't
 	pass the ' flag character to sprintf or snprintf.
 	* m4/printf.m4 (gl_PRINTF_FLAG_GROUPING): New macro.

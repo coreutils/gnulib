@@ -756,41 +756,64 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 	    else
 	      {
 		arg_type type = a.arg[dp->arg_index].type;
-		CHAR_T *p;
+		int flags = dp->flags;
+#if !USE_SNPRINTF || NEED_PRINTF_FLAG_ZERO
+		int has_width;
+		size_t width;
+#endif
+#if NEED_PRINTF_FLAG_ZERO
+		int pad_ourselves;
+#else
+#		define pad_ourselves 0
+#endif
+		CHAR_T *fbp;
 		unsigned int prefix_count;
 		int prefixes[2];
 #if !USE_SNPRINTF
 		size_t tmp_length;
 		CHAR_T tmpbuf[700];
 		CHAR_T *tmp;
+#endif
 
+#if !USE_SNPRINTF || NEED_PRINTF_FLAG_ZERO
+		has_width = 0;
+		width = 0;
+		if (dp->width_start != dp->width_end)
+		  {
+		    if (dp->width_arg_index != ARG_NONE)
+		      {
+			int arg;
+
+			if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
+			  abort ();
+			arg = a.arg[dp->width_arg_index].a.a_int;
+			if (arg < 0)
+			  {
+			    /* "A negative field width is taken as a '-' flag
+			        followed by a positive field width."  */
+			    flags |= FLAG_LEFT;
+			    width = (unsigned int) (-arg);
+			  }
+			else
+			  width = arg;
+		      }
+		    else
+		      {
+			const CHAR_T *digitp = dp->width_start;
+
+			do
+			  width = xsum (xtimes (width, 10), *digitp++ - '0');
+			while (digitp != dp->width_end);
+		      }
+		    has_width = 1;
+		  }
+#endif
+
+#if !USE_SNPRINTF
 		/* Allocate a temporary buffer of sufficient size for calling
 		   sprintf.  */
 		{
-		  size_t width;
 		  size_t precision;
-
-		  width = 0;
-		  if (dp->width_start != dp->width_end)
-		    {
-		      if (dp->width_arg_index != ARG_NONE)
-			{
-			  int arg;
-
-			  if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
-			    abort ();
-			  arg = a.arg[dp->width_arg_index].a.a_int;
-			  width = (arg < 0 ? (unsigned int) (-arg) : arg);
-			}
-		      else
-			{
-			  const CHAR_T *digitp = dp->width_start;
-
-			  do
-			    width = xsum (xtimes (width, 10), *digitp++ - '0');
-			  while (digitp != dp->width_end);
-			}
-		    }
 
 		  precision = 6;
 		  if (dp->precision_start != dp->precision_end)
@@ -1008,39 +1031,56 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		  }
 #endif
 
+		/* Decide whether to perform the padding ourselves.  */
+#if NEED_PRINTF_FLAG_ZERO
+		switch (dp->conversion)
+		  {
+		  case 'f': case 'F': case 'e': case 'E': case 'g': case 'G':
+		  case 'a': case 'A':
+		    pad_ourselves = 1;
+		    break;
+		  default:
+		    pad_ourselves = 0;
+		    break;
+		  }
+#endif
+
 		/* Construct the format string for calling snprintf or
 		   sprintf.  */
-		p = buf;
-		*p++ = '%';
+		fbp = buf;
+		*fbp++ = '%';
 #if NEED_PRINTF_FLAG_GROUPING
 		/* The underlying implementation doesn't support the ' flag.
 		   Produce no grouping characters in this case; this is
 		   acceptable because the grouping is locale dependent.  */
 #else
-		if (dp->flags & FLAG_GROUP)
-		  *p++ = '\'';
+		if (flags & FLAG_GROUP)
+		  *fbp++ = '\'';
 #endif
-		if (dp->flags & FLAG_LEFT)
-		  *p++ = '-';
-		if (dp->flags & FLAG_SHOWSIGN)
-		  *p++ = '+';
-		if (dp->flags & FLAG_SPACE)
-		  *p++ = ' ';
-		if (dp->flags & FLAG_ALT)
-		  *p++ = '#';
-		if (dp->flags & FLAG_ZERO)
-		  *p++ = '0';
-		if (dp->width_start != dp->width_end)
+		if (flags & FLAG_LEFT)
+		  *fbp++ = '-';
+		if (flags & FLAG_SHOWSIGN)
+		  *fbp++ = '+';
+		if (flags & FLAG_SPACE)
+		  *fbp++ = ' ';
+		if (flags & FLAG_ALT)
+		  *fbp++ = '#';
+		if (!pad_ourselves)
 		  {
-		    size_t n = dp->width_end - dp->width_start;
-		    memcpy (p, dp->width_start, n * sizeof (CHAR_T));
-		    p += n;
+		    if (flags & FLAG_ZERO)
+		      *fbp++ = '0';
+		    if (dp->width_start != dp->width_end)
+		      {
+			size_t n = dp->width_end - dp->width_start;
+			memcpy (fbp, dp->width_start, n * sizeof (CHAR_T));
+			fbp += n;
+		      }
 		  }
 		if (dp->precision_start != dp->precision_end)
 		  {
 		    size_t n = dp->precision_end - dp->precision_start;
-		    memcpy (p, dp->precision_start, n * sizeof (CHAR_T));
-		    p += n;
+		    memcpy (fbp, dp->precision_start, n * sizeof (CHAR_T));
+		    fbp += n;
 		  }
 
 		switch (type)
@@ -1048,7 +1088,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 #if HAVE_LONG_LONG_INT
 		  case TYPE_LONGLONGINT:
 		  case TYPE_ULONGLONGINT:
-		    *p++ = 'l';
+		    *fbp++ = 'l';
 		    /*FALLTHROUGH*/
 #endif
 		  case TYPE_LONGINT:
@@ -1059,31 +1099,31 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 #if HAVE_WCHAR_T
 		  case TYPE_WIDE_STRING:
 #endif
-		    *p++ = 'l';
+		    *fbp++ = 'l';
 		    break;
 		  case TYPE_LONGDOUBLE:
-		    *p++ = 'L';
+		    *fbp++ = 'L';
 		    break;
 		  default:
 		    break;
 		  }
 #if NEED_PRINTF_DIRECTIVE_F
 		if (dp->conversion == 'F')
-		  *p = 'f';
+		  *fbp = 'f';
 		else
 #endif
-		  *p = dp->conversion;
+		  *fbp = dp->conversion;
 #if USE_SNPRINTF
-		p[1] = '%';
-		p[2] = 'n';
-		p[3] = '\0';
+		fbp[1] = '%';
+		fbp[2] = 'n';
+		fbp[3] = '\0';
 #else
-		p[1] = '\0';
+		fbp[1] = '\0';
 #endif
 
 		/* Construct the arguments for calling snprintf or sprintf.  */
 		prefix_count = 0;
-		if (dp->width_arg_index != ARG_NONE)
+		if (!pad_ourselves && dp->width_arg_index != ARG_NONE)
 		  {
 		    if (!(a.arg[dp->width_arg_index].type == TYPE_INT))
 		      abort ();
@@ -1288,11 +1328,11 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      {
 			/* snprintf() doesn't understand the '%n'
 			   directive.  */
-			if (p[1] != '\0')
+			if (fbp[1] != '\0')
 			  {
 			    /* Don't use the '%n' directive; instead, look
 			       at the snprintf() return value.  */
-			    p[1] = '\0';
+			    fbp[1] = '\0';
 			    continue;
 			  }
 			else
@@ -1327,6 +1367,77 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			errno = EINVAL;
 			return NULL;
 		      }
+
+		    /* Perform padding.  */
+#if NEED_PRINTF_FLAG_ZERO
+		    if (pad_ourselves && has_width && count < width)
+		      {
+# if USE_SNPRINTF
+			/* Make room for the result.  */
+			if (width >= maxlen)
+			  {
+			    /* Need at least width bytes.  But allocate
+			       proportionally, to avoid looping eternally if
+			       snprintf() reports a too small count.  */
+			    size_t n =
+			      xmax (xsum (length, width),
+				    xtimes (allocated, 2));
+
+			    length += count;
+			    ENSURE_ALLOCATION (n);
+			    length -= count;
+			    maxlen = allocated - length; /* >= width */
+			  }
+# endif
+			{
+# if USE_SNPRINTF
+			  CHAR_T * const rp = result + length;
+# else
+			  CHAR_T * const rp = tmp;
+# endif
+			  CHAR_T *p = rp + count;
+			  size_t pad = width - count;
+			  CHAR_T *end = p + pad;
+			  CHAR_T *pad_ptr = (*rp == '-' ? rp + 1 : rp);
+			  /* No zero-padding of "inf" and "nan".  */
+			  if ((*pad_ptr >= 'A' && *pad_ptr <= 'Z')
+			      || (*pad_ptr >= 'a' && *pad_ptr <= 'z'))
+			    pad_ptr = NULL;
+			  /* The generated string now extends from rp to p,
+			     with the zero padding insertion point being at
+			     pad_ptr.  */
+
+			  if (flags & FLAG_LEFT)
+			    {
+			      /* Pad with spaces on the right.  */
+			      for (; pad > 0; pad--)
+				*p++ = ' ';
+			    }
+			  else if ((flags & FLAG_ZERO) && pad_ptr != NULL)
+			    {
+			      /* Pad with zeroes.  */
+			      CHAR_T *q = end;
+
+			      while (p > pad_ptr)
+				*--q = *--p;
+			      for (; pad > 0; pad--)
+				*p++ = '0';
+			    }
+			  else
+			    {
+			      /* Pad with spaces on the left.  */
+			      CHAR_T *q = end;
+
+			      while (p > rp)
+				*--q = *--p;
+			      for (; pad > 0; pad--)
+				*p++ = ' ';
+			    }
+
+			  count = width; /* = count + pad = end - rp */
+			}
+		      }
+#endif
 
 #if !USE_SNPRINTF
 		    if (count >= tmp_length)

@@ -34,6 +34,10 @@ NetBSD 3.0, mingw, BeOS.
 This function doesn't support the @code{'} flag on some platforms:
 NetBSD 3.0, mingw.
 @item
+printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
+with zeroes) on some platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, AIX 5.2, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw.
+@item
 This function does not truncate the result as specified in C99 on some platforms:
 mingw.
 @item
@@ -50,10 +54,6 @@ HP-UX 11, OSF/1 5.1.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
-with zeroes) on some platforms:
-FreeBSD 6.0.
 @item
 printf of @samp{long double} numbers is unsupported on some platforms:
 mingw.

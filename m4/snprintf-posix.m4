@@ -1,4 +1,4 @@
-# snprintf-posix.m4 serial 5
+# snprintf-posix.m4 serial 6
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,6 +13,7 @@ AC_DEFUN([gl_FUNC_SNPRINTF_POSIX],
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_N])
   AC_REQUIRE([gl_PRINTF_POSITIONS])
   AC_REQUIRE([gl_PRINTF_FLAG_GROUPING])
+  AC_REQUIRE([gl_PRINTF_FLAG_ZERO])
   gl_cv_func_snprintf_posix=no
   AC_CHECK_FUNCS([snprintf])
   if test $ac_cv_func_snprintf = yes; then
@@ -32,17 +33,21 @@ AC_DEFUN([gl_FUNC_SNPRINTF_POSIX],
                       *yes)
                         case "$gl_cv_func_printf_flag_grouping" in
                           *yes)
-                            case "$gl_cv_func_snprintf_truncation_c99" in
+                            case "$gl_cv_func_printf_flag_zero" in
                               *yes)
-                                case "$gl_cv_func_snprintf_retval_c99" in
+                                case "$gl_cv_func_snprintf_truncation_c99" in
                                   *yes)
-                                    case "$gl_cv_func_snprintf_directive_n" in
+                                    case "$gl_cv_func_snprintf_retval_c99" in
                                       *yes)
-                                        case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                        case "$gl_cv_func_snprintf_directive_n" in
                                           *yes)
-                                            # snprintf exists and is already
-                                            # POSIX compliant.
-                                            gl_cv_func_snprintf_posix=yes
+                                            case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                              *yes)
+                                                # snprintf exists and is already
+                                                # POSIX compliant.
+                                                gl_cv_func_snprintf_posix=yes
+                                                ;;
+                                            esac
                                             ;;
                                         esac
                                         ;;
@@ -68,6 +73,7 @@ AC_DEFUN([gl_FUNC_SNPRINTF_POSIX],
     gl_PREREQ_VASNPRINTF_DIRECTIVE_A
     gl_PREREQ_VASNPRINTF_DIRECTIVE_F
     gl_PREREQ_VASNPRINTF_FLAG_GROUPING
+    gl_PREREQ_VASNPRINTF_FLAG_ZERO
     gl_REPLACE_VASNPRINTF
     gl_REPLACE_SNPRINTF
   fi
