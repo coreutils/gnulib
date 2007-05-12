@@ -1,6 +1,6 @@
 /* linebuffer.h -- declarations for reading arbitrarily long lines
 
-   Copyright (C) 1986, 1991, 1998, 1999, 2002, 2003 Free Software
+   Copyright (C) 1986, 1991, 1998, 1999, 2002, 2003, 2007 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -33,6 +33,14 @@ struct linebuffer
 
 /* Initialize linebuffer LINEBUFFER for use. */
 void initbuffer (struct linebuffer *linebuffer);
+
+/* Read an arbitrarily long line of text from STREAM into LINEBUFFER.
+   Consider lines to be terminated by DELIMITER.
+   Keep the delimiter; append DELIMITER if we reach EOF and it wasn't
+   the last character in the file.  Do not null terminate.
+   Return LINEBUFFER, except at end of file return 0.  */
+struct linebuffer *readlinebuffer_delim (struct linebuffer *linebuffer,
+					 FILE *stream, char delimiter);
 
 /* Read an arbitrarily long line of text from STREAM into LINEBUFFER.
    Keep the newline; append a newline if it's the last line of a file

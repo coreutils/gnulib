@@ -1,3 +1,11 @@
+2007-05-12  James Youngman  <jay@gnu.org>
+
+	* lib/linebuffer.c (readlinebuffer_delim): New function,
+	like readlinebuffer, but use a caller-specified delimiter.
+	(readlinebuffer): Just call readlinebuffer_delim with '\n'
+	as the delimiter.
+	* lib/linebuffer.h (readlinebuffer_delim): Declare it.
+
 2007-05-12  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* m4/openat.m4 (gl_FUNC_OPENAT): Do not require openat-die.
