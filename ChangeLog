@@ -1,10 +1,9 @@
 2007-05-12  Sergey Poznyakoff  <gray@gnu.org.ua>
 
-        * m4/openat.m4 (gl_FUNC_OPENAT): Do not require
-	openat-die
-        * modules/openat (Files): Remove openat-die.c
-        (Depends-on): Add openat-die
-        * modules/openat-die: New module.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Do not require openat-die.
+	* modules/openat (Files): Remove openat-die.c.
+	(Depends-on): Add openat-die.
+	* modules/openat-die: New module.
 
 2007-05-06  Bruno Haible  <bruno@clisp.org>
 
