@@ -9,7 +9,6 @@ lib/fstatat.c
 lib/mkdirat.c
 lib/openat.c
 lib/openat.h
-lib/openat-die.c
 lib/openat-priv.h
 lib/openat-proc.c
 m4/openat.m4
@@ -21,6 +20,7 @@ gettext-h
 intprops
 lchown
 lstat
+openat-die
 same-inode
 save-cwd
 stdbool
