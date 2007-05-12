@@ -10,7 +10,6 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_OPENAT],
 [
-  AC_LIBOBJ([openat-die])
   AC_LIBOBJ([openat-proc])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([lchmod])
