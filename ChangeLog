@@ -1,3 +1,13 @@
+2007-05-13  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdlib_.h (mkdtemp, mkstemp): Comment out argument name. Needed
+	when used in C++ mode.
+
+2007-05-12  Bruno Haible  <bruno@clisp.org>
+
+	* lib/linebuffer.h: Tweak doc.
+	* lib/linebuffer.c: Likewise.
+
 2007-05-12  James Youngman  <jay@gnu.org>
 
 	* lib/linebuffer.c (readlinebuffer_delim): New function,

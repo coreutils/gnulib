@@ -103,7 +103,7 @@ extern int getsubopt (char **optionp, char *const *tokens, char **valuep);
    they are replaced with a string that makes the directory name unique.
    Returns TEMPLATE, or a null pointer if it cannot get a unique name.
    The directory is created mode 700.  */
-extern char * mkdtemp (char *template);
+extern char * mkdtemp (char * /*template*/);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkdtemp
@@ -126,7 +126,7 @@ extern char * mkdtemp (char *template);
    Returns the open file descriptor if successful, otherwise -1 and errno
    set.  */
 #  define mkstemp rpl_mkstemp
-extern int mkstemp (char *template);
+extern int mkstemp (char * /*template*/);
 # else
 /* On MacOS X 10.3, only <unistd.h> declares mkstemp.  */
 #  include <unistd.h>
