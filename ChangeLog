@@ -1,5 +1,13 @@
 2007-05-13  Bruno Haible  <bruno@clisp.org>
 
+	* stpcpy.m4 (gl_FUNC_STPCPY): Require AC_C_RESTRICT.
+	* stpncpy.m4 (gl_FUNC_STPNCPY): Likewise.
+	* strsep.m4 (gl_FUNC_STRSEP): Likewise.
+	* strtok_r.m4 (gl_FUNC_STRTOK_R): Likewise.
+	(gl_PREREQ_STRTOK_R): Don't require it here.
+
+2007-05-13  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdlib_.h (mkdtemp, mkstemp): Comment out argument name. Needed
 	when used in C++ mode.
 
