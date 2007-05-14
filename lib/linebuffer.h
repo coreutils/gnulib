@@ -37,15 +37,15 @@ void initbuffer (struct linebuffer *linebuffer);
 /* Read an arbitrarily long line of text from STREAM into LINEBUFFER.
    Consider lines to be terminated by DELIMITER.
    Keep the delimiter; append DELIMITER if we reach EOF and it wasn't
-   the last character in the file.  Do not null terminate.
-   Return LINEBUFFER, except at end of file return 0.  */
+   the last character in the file.  Do not NUL-terminate.
+   Return LINEBUFFER, except at end of file return NULL.  */
 struct linebuffer *readlinebuffer_delim (struct linebuffer *linebuffer,
 					 FILE *stream, char delimiter);
 
 /* Read an arbitrarily long line of text from STREAM into LINEBUFFER.
    Keep the newline; append a newline if it's the last line of a file
-   that ends in a non-newline character.  Do not null terminate.
-   Return LINEBUFFER, except at end of file return 0.  */
+   that ends in a non-newline character.  Do not NUL-terminate.
+   Return LINEBUFFER, except at end of file return NULL.  */
 struct linebuffer *readlinebuffer (struct linebuffer *linebuffer, FILE *stream);
 
 /* Free linebuffer LINEBUFFER and its data, all allocated with malloc. */

@@ -47,9 +47,9 @@ readlinebuffer (struct linebuffer *linebuffer, FILE *stream)
 }
 
 /* Read an arbitrarily long line of text from STREAM into LINEBUFFER.
-   Consder lines to be terminated by DELIMITER.
+   Consider lines to be terminated by DELIMITER.
    Keep the delimiter; append DELIMITER if it's the last line of a file
-   that ends in a character other than DELIMITER.  Do not null terminate.
+   that ends in a character other than DELIMITER.  Do not NUL-terminate.
    Therefore the stream can contain NUL bytes, and the length
    (including the delimiter) is returned in linebuffer->length.
    Return NULL when stream is empty.  Return NULL and set errno upon
