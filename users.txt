@@ -31,7 +31,6 @@ The following packages appear to be using gnulib and gnulib-tool:
   miktex          https://svn.sourceforge.net/svnroot/miktex/miktex/trunk
   msmtp           http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
   newts           http://svn.arete.cc/newts/trunk/
-  opencdk         http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/opencdk/?root=GNU+TLS+Library
   parted          http://git.debian.org/?p=parted/parted.git;a=summary
   prelude-lml     https://trac.prelude-ids.org/browser/trunk/prelude-lml/
   prelude-manager https://trac.prelude-ids.org/browser/trunk/prelude-manager/
