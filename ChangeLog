@@ -1,3 +1,8 @@
+2007-05-17  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* modules/closein-tests (Makefile.am): Distribute
+	`test-closein.sh'.
+
 2007-05-17  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-printf-posix.output: Renamed from

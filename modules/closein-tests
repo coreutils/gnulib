@@ -11,3 +11,4 @@ Makefile.am:
 TESTS += test-closein.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-closein
+EXTRA_DIST += test-closein.sh
