@@ -24,8 +24,11 @@
    <sys/types.h>.  */
 
 # include <sys/types.h>
-# include @ABSOLUTE_NETINET_IN_H@
-
+# if @HAVE_INCLUDE_NEXT@
+#  include_next <netinet/in.h>
+# else
+#  include @ABSOLUTE_NETINET_IN_H@
+# endif
 #else
 
 /* A platform that lacks <netinet/in.h>.  */

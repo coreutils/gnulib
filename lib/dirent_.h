@@ -18,8 +18,11 @@
 #ifndef _GL_DIRENT_H
 #define _GL_DIRENT_H
 
-#include @ABSOLUTE_DIRENT_H@
-
+#if @HAVE_INCLUDE_NEXT@
+# include_next <dirent.h>
+#else
+# include @ABSOLUTE_DIRENT_H@
+#endif
 
 /* Declare overridden functions.  */
 

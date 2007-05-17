@@ -24,7 +24,12 @@
    <sys/types.h>.  */
 
 # include <sys/types.h>
-# include @ABSOLUTE_SYS_SELECT_H@
+
+# if @HAVE_INCLUDE_NEXT@
+#  include_next <sys/select.h>
+# else
+#  include @ABSOLUTE_SYS_SELECT_H@
+# endif
 
 #else
 

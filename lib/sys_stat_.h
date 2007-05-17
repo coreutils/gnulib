@@ -23,7 +23,12 @@
 /* This file is supposed to be used on platforms where <sys/stat.h> is
    incomplete.  It is intended to provide definitions and prototypes
    needed by an application.  Start with what the system provides.  */
-#include @ABSOLUTE_SYS_STAT_H@
+
+#if @HAVE_INCLUDE_NEXT@
+# include_next <sys/stat.h>
+#else
+# include @ABSOLUTE_SYS_STAT_H@
+#endif
 
 #ifndef S_IFMT
 # define S_IFMT 0170000

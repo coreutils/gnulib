@@ -29,6 +29,7 @@ iconv.h: iconv_.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''ABSOLUTE_ICONV_H''@|$(ABSOLUTE_ICONV_H)|g' \
+	      -e 's/@''HAVE_INCLUDE_NEXT''@/$(HAVE_INCLUDE_NEXT)/g' \
 	      -e 's|@''REPLACE_ICONV_OPEN''@|$(REPLACE_ICONV_OPEN)|g' \
 	      < $(srcdir)/iconv_.h; \
 	} > $@-t
@@ -61,4 +62,3 @@ LGPL
 
 Maintainer:
 Bruno Haible
-

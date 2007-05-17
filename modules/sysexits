@@ -20,6 +20,7 @@ sysexits.h: sysexits_.h
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_SYSEXITS_H''@|$(HAVE_SYSEXITS_H)|g' \
 	      -e 's|@''ABSOLUTE_SYSEXITS_H''@|$(ABSOLUTE_SYSEXITS_H)|g' \
+	      -e 's/@''HAVE_INCLUDE_NEXT''@/$(HAVE_INCLUDE_NEXT)/g' \
 	      < $(srcdir)/sysexits_.h; \
 	} > $@-t
 	mv -f $@-t $@

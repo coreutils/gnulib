@@ -22,6 +22,7 @@ sys/socket.h: sys_socket_.h
 	@MKDIR_P@ sys
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''ABSOLUTE_SYS_SOCKET_H''@|$(ABSOLUTE_SYS_SOCKET_H)|g' \
+	      -e 's/@''HAVE_INCLUDE_NEXT''@/$(HAVE_INCLUDE_NEXT)/g' \
 	      -e 's|@''HAVE_SYS_SOCKET_H''@|$(HAVE_SYS_SOCKET_H)|g' \
 	      -e 's|@''HAVE_WINSOCK2_H''@|$(HAVE_WINSOCK2_H)|g' \
 	      -e 's|@''HAVE_WS2TCPIP_H''@|$(HAVE_WS2TCPIP_H)|g' \

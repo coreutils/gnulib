@@ -30,7 +30,11 @@
 #  undef EX_OK
 # endif
 
-# include @ABSOLUTE_SYSEXITS_H@
+# if @HAVE_INCLUDE_NEXT@
+#  include_next <sysexits.h>
+# else
+#  include @ABSOLUTE_SYSEXITS_H@
+# endif
 
 /* HP-UX 11 <sysexits.h> ends at EX_NOPERM.  */
 # ifndef EX_CONFIG

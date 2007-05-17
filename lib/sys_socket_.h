@@ -30,7 +30,12 @@
    <sys/types.h>.  */
 
 # include <sys/types.h>
-# include @ABSOLUTE_SYS_SOCKET_H@
+
+# if @HAVE_INCLUDE_NEXT@
+#  include_next <sys/socket.h>
+# else
+#  include @ABSOLUTE_SYS_SOCKET_H@
+# endif
 
 #else
 

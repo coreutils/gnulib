@@ -19,8 +19,11 @@
 #ifndef _GL_ICONV_H
 #define _GL_ICONV_H
 
-#include @ABSOLUTE_ICONV_H@
-
+#if @HAVE_INCLUDE_NEXT@
+# include_next <iconv.h>
+#else
+# include @ABSOLUTE_ICONV_H@
+#endif
 
 #ifdef __cplusplus
 extern "C" {

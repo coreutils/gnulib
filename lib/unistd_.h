@@ -19,7 +19,11 @@
 #define _GL_UNISTD_H
 
 #if @HAVE_UNISTD_H@
-# include @ABSOLUTE_UNISTD_H@
+# if @HAVE_INCLUDE_NEXT@
+#  include_next <unistd.h>
+# else
+#  include @ABSOLUTE_UNISTD_H@
+# endif
 #endif
 
 /* mingw doesn't define the SEEK_* macros in <unistd.h>.  */

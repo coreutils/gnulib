@@ -1,3 +1,21 @@
+2007-05-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/dirent_.h: Prefer #include_next <foo.h> to #include
+	@ABSOLUTE_FOO_H@ if @HAVE_INCLUDE_NEXT@.  This works better with
+	GCC 4.2, which otherwise issues a lot of warnings.
+	* lib/iconv_.h, lib/locale_.h, lib/netinet_in_.h, lib/sys_select_.h:
+	* lib/sys_socket_.h, lib/sys_stat_.h, lib/sysexits_.h, lib/unistd_.h:
+	Likewise.
+	* modules/fchdir (dirent.h): Substitute @HAVE_INCLUDE_NEXT@.
+	* modules/iconv_open (iconv.h): Likewise.
+	* modules/locale (locale.h): Likewise.
+	* modules/netinet_in (netinet/in.h): Likewise.
+	* modules/sys_select (sys_select.h): Likewise.
+	* modules/sys_socket (sys/socket.h): Likewise.
+	* modules/sys_stat (sys/stat.h): Likewise.
+	* modules/sysexits (sysexits.h): Likewise.
+	* modules/unistd (unistd.h): Likewise.
+
 2007-05-17  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* modules/closein-tests (Makefile.am): Distribute
