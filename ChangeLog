@@ -1,3 +1,29 @@
+2007-05-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/fcntl_.h: Prefer #include_next <foo.h> to #include
+	@ABSOLUTE_FOO_H@ if @HAVE_INCLUDE_NEXT@.  This works better with
+	GCC 4.2, which otherwise issues a lot of warnings.
+	* lib/inttypes_.h, lib/math_.h, lib/search_.h, lib/signal_.h:
+	* lib/stdint_.h, lib/stdio_.h, lib/stdlib_.h, lib/string_.h:
+	* lib/sys_time_.h, lib/time_.h, lib/wchar_.h, lib/wctype_.h: Likewise.
+	* lib/stdlib_.h: Don't bother with #pragma GCC system_header, as
+	it should no longer be needed.
+	* lib/string_.h: Likewise.
+	* modules/absolute-header (HAVE_INCLUDE_NEXT): New 'make' define.
+	* modules/fcntl (fcntl.h): Substitute @HAVE_INCLUDE_NEXT@.
+	* modules/inttypes (inttypes.h): Likewise.
+	* modules/math (math.h): Likewise.
+	* modules/search (search.h): Likewise.
+	* modules/signal (signal.h): Likewise.
+	* modules/stdint (stdint.h): Likewise.
+	* modules/stdio (stdio.h): Likewise.
+	* modules/stdlib (stdlib.h): Likewise.
+	* modules/string (string.h): Likewise.
+	* modules/sys_time (sys/time.h): Likewise.
+	* modules/time (time.h): Likewise.
+	* modules/wchar (wchar.h): Likewise.
+	* modules/wctype (wtype.h): Likewise.
+
 2007-05-16  Thien-Thi Nguyen  <ttn@gnuvola.org>  (tiny change)
 
 	* doc/gnulib-tool.texi (CVS Issues): Fix typo.

@@ -21,7 +21,7 @@
    which in turn includes this file.  */
 #if ! defined INTTYPES_H || defined _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H
 # if @HAVE_INTTYPES_H@
-#  if defined __DECC && __DECC_VER >= 60000000
+#  if @HAVE_INCLUDE_NEXT@
 #   include_next <inttypes.h>
 #  else
 #   include @ABSOLUTE_INTTYPES_H@

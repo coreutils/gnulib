@@ -19,33 +19,23 @@
 #if defined __need_malloc_and_calloc
 /* Special invocation convention inside glibc header files.  */
 
-/* This #pragma avoids a warning with "gcc -Wall" on some glibc systems
-   on which <stdlib.h> has an inappropriate declaration, see
-   <http://sourceware.org/bugzilla/show_bug.cgi?id=1079>.  */
-#ifdef __GNUC__
-# pragma GCC system_header
+#if @HAVE_INCLUDE_NEXT@
+# include_next <stdlib.h>
+#else
+# include @ABSOLUTE_STDLIB_H@
 #endif
-
-#include @ABSOLUTE_STDLIB_H@
 
 #else
 /* Normal invocation convention.  */
 
-#if defined __DECC && __DECC_VER >= 60000000
+#if @HAVE_INCLUDE_NEXT@
 # include_next <stdlib.h>
 #endif
 
 #ifndef _GL_STDLIB_H
 #define _GL_STDLIB_H
 
-/* This #pragma avoids a warning with "gcc -Wall" on some glibc systems
-   on which <stdlib.h> has an inappropriate declaration, see
-   <http://sourceware.org/bugzilla/show_bug.cgi?id=1079>.  */
-#ifdef __GNUC__
-# pragma GCC system_header
-#endif
-
-#if !(defined __DECC && __DECC_VER >= 60000000)
+#if ! @HAVE_INCLUDE_NEXT@
 # include @ABSOLUTE_STDLIB_H@
 #endif
 

@@ -24,7 +24,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include @ABSOLUTE_FCNTL_H@
+#if @HAVE_INCLUDE_NEXT@
+# include_next <fcntl.h>
+#else
+# include @ABSOLUTE_FCNTL_H@
+#endif
 
 
 /* Declare overridden functions.  */

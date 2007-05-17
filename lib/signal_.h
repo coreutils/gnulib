@@ -19,7 +19,11 @@
 #if defined __need_sig_atomic_t || defined __need_sigset_t
 /* Special invocation convention inside glibc header files.  */
 
-#include @ABSOLUTE_SIGNAL_H@
+# if @HAVE_INCLUDE_NEXT@
+#  include_next <signal.h>
+# else
+#  include @ABSOLUTE_SIGNAL_H@
+# endif
 
 #else
 /* Normal invocation convention.  */
@@ -27,8 +31,11 @@
 #ifndef _GL_SIGNAL_H
 #define _GL_SIGNAL_H
 
-#include @ABSOLUTE_SIGNAL_H@
-
+#if @HAVE_INCLUDE_NEXT@
+# include_next <signal.h>
+#else
+# include @ABSOLUTE_SIGNAL_H@
+#endif
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 

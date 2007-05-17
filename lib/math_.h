@@ -16,14 +16,14 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#if defined __DECC && __DECC_VER >= 60000000
+#if @HAVE_INCLUDE_NEXT@
 # include_next <math.h>
 #endif
 
 #ifndef _GL_MATH_H
 #define _GL_MATH_H
 
-#if !(defined __DECC && __DECC_VER >= 60000000)
+#if ! @HAVE_INCLUDE_NEXT@
 # include @ABSOLUTE_MATH_H@
 #endif
 

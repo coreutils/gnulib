@@ -22,7 +22,11 @@
 #define _GL_SYS_TIME_H
 
 #if @HAVE_SYS_TIME_H@
-# include @ABSOLUTE_SYS_TIME_H@
+# if @HAVE_INCLUDE_NEXT@
+#  include_next <sys/time.h>
+# else
+#  include @ABSOLUTE_SYS_TIME_H@
+# endif
 #else
 # include <time.h>
 #endif

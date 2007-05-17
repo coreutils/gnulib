@@ -21,6 +21,7 @@ search.h: search_.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''HAVE_SEARCH_H''@|$(HAVE_SEARCH_H)|g' \
+	      -e 's/@''HAVE_INCLUDE_NEXT''@/$(HAVE_INCLUDE_NEXT)/g' \
 	      -e 's|@''ABSOLUTE_SEARCH_H''@|$(ABSOLUTE_SEARCH_H)|g' \
 	      -e 's|@''GNULIB_TSEARCH''@|$(GNULIB_TSEARCH)|g' \
 	      -e 's|@''HAVE_TSEARCH''@|$(HAVE_TSEARCH)|g' \

@@ -16,20 +16,14 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#if defined __DECC && __DECC_VER >= 60000000
+#if @HAVE_INCLUDE_NEXT@
 # include_next <string.h>
 #endif
 
 #ifndef _GL_STRING_H
 #define _GL_STRING_H
 
-/* This #pragma avoids a warning with "gcc -Wmissing-prototypes" on some
-   mingw systems.  */
-#ifdef __GNUC__
-# pragma GCC system_header
-#endif
-
-#if !(defined __DECC && __DECC_VER >= 60000000)
+#if ! @HAVE_INCLUDE_NEXT@
 # include @ABSOLUTE_STRING_H@
 #endif
 

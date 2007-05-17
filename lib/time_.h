@@ -20,19 +20,24 @@
    declare a few standard symbols, rather than to declare all the
    symbols.  */
 #if defined __need_time_t || defined __need_clock_t || defined __need_timespec
-# include @ABSOLUTE_TIME_H@
+
+# if @HAVE_INCLUDE_NEXT@
+#  include_next <time.h>
+# else
+#  include @ABSOLUTE_TIME_H@
+# endif
 
 #else
 /* Normal invocation convention.  */
 
-# if defined __DECC && __DECC_VER >= 60000000
+# if @HAVE_INCLUDE_NEXT@
 #  include_next <time.h>
 # endif
 
 # if ! defined _GL_TIME_H
 #  define _GL_TIME_H
 
-#  if !(defined __DECC && __DECC_VER >= 60000000)
+#  if ! @HAVE_INCLUDE_NEXT@
 #   include @ABSOLUTE_TIME_H@
 #  endif
 

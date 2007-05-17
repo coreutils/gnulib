@@ -19,19 +19,23 @@
 #if defined __need_FILE || defined __need___FILE
 /* Special invocation convention inside glibc header files.  */
 
-#include @ABSOLUTE_STDIO_H@
+#if @HAVE_INCLUDE_NEXT@
+# include_next <stdio.h>
+#else
+# include @ABSOLUTE_STDIO_H@
+#endif
 
 #else
 /* Normal invocation convention.  */
 
-#if defined __DECC && __DECC_VER >= 60000000
+#if @HAVE_INCLUDE_NEXT@
 # include_next <stdio.h>
 #endif
 
 #ifndef _GL_STDIO_H
 #define _GL_STDIO_H
 
-#if !(defined __DECC && __DECC_VER >= 60000000)
+#if ! @HAVE_INCLUDE_NEXT@
 # include @ABSOLUTE_STDIO_H@
 #endif
 

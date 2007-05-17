@@ -20,7 +20,11 @@
 #define _GL_SEARCH_H
 
 #if @HAVE_SEARCH_H@
-# include @ABSOLUTE_SEARCH_H@
+# if @HAVE_INCLUDE_NEXT@
+#  include_next <search.h>
+# else
+#  include @ABSOLUTE_SEARCH_H@
+# endif
 #endif
 
 
@@ -40,9 +44,9 @@ extern "C" {
    for details.  */
 
 typedef enum
-{ 
+{
   preorder,
-  postorder, 
+  postorder,
   endorder,
   leaf
 }
