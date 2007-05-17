@@ -6,6 +6,10 @@
 	* modules/printf-posix-tests: Update.
 	* modules/vfprintf-posix-tests: Update.
 	* modules/vprintf-posix-tests: Update.
+	* tests/test-fprintf-posix.sh: Update.
+	* tests/test-printf-posix.sh: Update.
+	* tests/test-vfprintf-posix.sh: Update.
+	* tests/test-vprintf-posix.sh: Update.
 	Reported by Ralf Wildenhues.
 
 2007-05-16  Paul Eggert  <eggert@cs.ucla.edu>

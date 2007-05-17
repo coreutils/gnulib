@@ -7,7 +7,7 @@ tmpfiles="$tmpfiles t-vprintf-posix.tmp"
 ./test-vprintf-posix${EXEEXT} > t-vprintf-posix.tmp || exit 1
 
 : ${DIFF=diff}
-${DIFF} "${srcdir}/test-fprintf-posix.out" t-vprintf-posix.tmp
+${DIFF} "${srcdir}/test-printf-posix.output" t-vprintf-posix.tmp
 result=$?
 
 rm -fr $tmpfiles
