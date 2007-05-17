@@ -1,3 +1,13 @@
+2007-05-17  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-printf-posix.output: Renamed from
+	tests/test-fprintf-posix.out.
+	* modules/fprintf-posix-tests: Update.
+	* modules/printf-posix-tests: Update.
+	* modules/vfprintf-posix-tests: Update.
+	* modules/vprintf-posix-tests: Update.
+	Reported by Ralf Wildenhues.
+
 2007-05-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/fcntl_.h: Prefer #include_next <foo.h> to #include

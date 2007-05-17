@@ -2,7 +2,7 @@ Files:
 tests/test-printf-posix.sh
 tests/test-printf-posix.c
 tests/test-printf-posix.h
-tests/test-fprintf-posix.out
+tests/test-printf-posix.output
 
 Depends-on:
 stdint
@@ -13,4 +13,4 @@ Makefile.am:
 TESTS += test-printf-posix.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-printf-posix
-EXTRA_DIST += test-printf-posix.sh test-printf-posix.h test-fprintf-posix.out
+EXTRA_DIST += test-printf-posix.sh test-printf-posix.h test-printf-posix.output
