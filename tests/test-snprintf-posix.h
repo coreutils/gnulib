@@ -1299,6 +1299,990 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+  /* Test the support of the %e format directive.  */
+
+  { /* A positive number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%e %d", 12.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.275000e+01 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A larger positive number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%e %d", 1234567.0, 33, 44, 55);
+    ASSERT (strcmp (result, "1.234567e+06 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Small and large positive numbers.  */
+    static struct { double value; const char *string; } data[] =
+      {
+	{ 1.234321234321234e-37, "1.234321e-37" },
+	{ 1.234321234321234e-36, "1.234321e-36" },
+	{ 1.234321234321234e-35, "1.234321e-35" },
+	{ 1.234321234321234e-34, "1.234321e-34" },
+	{ 1.234321234321234e-33, "1.234321e-33" },
+	{ 1.234321234321234e-32, "1.234321e-32" },
+	{ 1.234321234321234e-31, "1.234321e-31" },
+	{ 1.234321234321234e-30, "1.234321e-30" },
+	{ 1.234321234321234e-29, "1.234321e-29" },
+	{ 1.234321234321234e-28, "1.234321e-28" },
+	{ 1.234321234321234e-27, "1.234321e-27" },
+	{ 1.234321234321234e-26, "1.234321e-26" },
+	{ 1.234321234321234e-25, "1.234321e-25" },
+	{ 1.234321234321234e-24, "1.234321e-24" },
+	{ 1.234321234321234e-23, "1.234321e-23" },
+	{ 1.234321234321234e-22, "1.234321e-22" },
+	{ 1.234321234321234e-21, "1.234321e-21" },
+	{ 1.234321234321234e-20, "1.234321e-20" },
+	{ 1.234321234321234e-19, "1.234321e-19" },
+	{ 1.234321234321234e-18, "1.234321e-18" },
+	{ 1.234321234321234e-17, "1.234321e-17" },
+	{ 1.234321234321234e-16, "1.234321e-16" },
+	{ 1.234321234321234e-15, "1.234321e-15" },
+	{ 1.234321234321234e-14, "1.234321e-14" },
+	{ 1.234321234321234e-13, "1.234321e-13" },
+	{ 1.234321234321234e-12, "1.234321e-12" },
+	{ 1.234321234321234e-11, "1.234321e-11" },
+	{ 1.234321234321234e-10, "1.234321e-10" },
+	{ 1.234321234321234e-9, "1.234321e-09" },
+	{ 1.234321234321234e-8, "1.234321e-08" },
+	{ 1.234321234321234e-7, "1.234321e-07" },
+	{ 1.234321234321234e-6, "1.234321e-06" },
+	{ 1.234321234321234e-5, "1.234321e-05" },
+	{ 1.234321234321234e-4, "1.234321e-04" },
+	{ 1.234321234321234e-3, "1.234321e-03" },
+	{ 1.234321234321234e-2, "1.234321e-02" },
+	{ 1.234321234321234e-1, "1.234321e-01" },
+	{ 1.234321234321234, "1.234321e+00" },
+	{ 1.234321234321234e1, "1.234321e+01" },
+	{ 1.234321234321234e2, "1.234321e+02" },
+	{ 1.234321234321234e3, "1.234321e+03" },
+	{ 1.234321234321234e4, "1.234321e+04" },
+	{ 1.234321234321234e5, "1.234321e+05" },
+	{ 1.234321234321234e6, "1.234321e+06" },
+	{ 1.234321234321234e7, "1.234321e+07" },
+	{ 1.234321234321234e8, "1.234321e+08" },
+	{ 1.234321234321234e9, "1.234321e+09" },
+	{ 1.234321234321234e10, "1.234321e+10" },
+	{ 1.234321234321234e11, "1.234321e+11" },
+	{ 1.234321234321234e12, "1.234321e+12" },
+	{ 1.234321234321234e13, "1.234321e+13" },
+	{ 1.234321234321234e14, "1.234321e+14" },
+	{ 1.234321234321234e15, "1.234321e+15" },
+	{ 1.234321234321234e16, "1.234321e+16" },
+	{ 1.234321234321234e17, "1.234321e+17" },
+	{ 1.234321234321234e18, "1.234321e+18" },
+	{ 1.234321234321234e19, "1.234321e+19" },
+	{ 1.234321234321234e20, "1.234321e+20" },
+	{ 1.234321234321234e21, "1.234321e+21" },
+	{ 1.234321234321234e22, "1.234321e+22" },
+	{ 1.234321234321234e23, "1.234321e+23" },
+	{ 1.234321234321234e24, "1.234321e+24" },
+	{ 1.234321234321234e25, "1.234321e+25" },
+	{ 1.234321234321234e26, "1.234321e+26" },
+	{ 1.234321234321234e27, "1.234321e+27" },
+	{ 1.234321234321234e28, "1.234321e+28" },
+	{ 1.234321234321234e29, "1.234321e+29" },
+	{ 1.234321234321234e30, "1.234321e+30" },
+	{ 1.234321234321234e31, "1.234321e+31" },
+	{ 1.234321234321234e32, "1.234321e+32" },
+	{ 1.234321234321234e33, "1.234321e+33" },
+	{ 1.234321234321234e34, "1.234321e+34" },
+	{ 1.234321234321234e35, "1.234321e+35" },
+	{ 1.234321234321234e36, "1.234321e+36" }
+      };
+    size_t k;
+    for (k = 0; k < SIZEOF (data); k++)
+      {
+	char result[100];
+	int retval =
+	  my_snprintf (result, sizeof (result), "%e", data[k].value);
+	ASSERT (strmatch (data[k].string, result));
+	ASSERT (retval == strlen (result));
+      }
+  }
+
+  { /* A negative number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%e %d", -0.03125, 33, 44, 55);
+    ASSERT (strcmp (result, "-3.125000e-02 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive zero.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%e %d", 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "0.000000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative zero.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%e %d", -0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.000000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive infinity.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%e %d", 1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "inf 33") == 0
+	    || strcmp (result, "infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative infinity.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%e %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "-inf 33") == 0
+	    || strcmp (result, "-infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* NaN.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%e %d", NaN (), 33, 44, 55);
+    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%15e %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "   1.750000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_LEFT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%-15e %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000e+00    33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SHOWSIGN.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%+e %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "+1.750000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SPACE.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "% e %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, " 1.750000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#e %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#.e %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "2.e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#.e %d", 9.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.e+01 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with finite number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%015e %d", 1234.0, 33, 44, 55);
+    ASSERT (strcmp (result, "0001.234000e+03 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%015e %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "           -inf 33") == 0
+	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with NaN.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%015e %d", NaN (), 33, 44, 55);
+    ASSERT (strcmp (result, "            nan 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%.e %d", 1234.0, 33, 44, 55);
+    ASSERT (strcmp (result, "1e+03 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A positive number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", 12.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.275000e+01 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A larger positive number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", 1234567.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.234567e+06 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Small and large positive numbers.  */
+    static struct { long double value; const char *string; } data[] =
+      {
+	{ 1.234321234321234e-37L, "1.234321e-37" },
+	{ 1.234321234321234e-36L, "1.234321e-36" },
+	{ 1.234321234321234e-35L, "1.234321e-35" },
+	{ 1.234321234321234e-34L, "1.234321e-34" },
+	{ 1.234321234321234e-33L, "1.234321e-33" },
+	{ 1.234321234321234e-32L, "1.234321e-32" },
+	{ 1.234321234321234e-31L, "1.234321e-31" },
+	{ 1.234321234321234e-30L, "1.234321e-30" },
+	{ 1.234321234321234e-29L, "1.234321e-29" },
+	{ 1.234321234321234e-28L, "1.234321e-28" },
+	{ 1.234321234321234e-27L, "1.234321e-27" },
+	{ 1.234321234321234e-26L, "1.234321e-26" },
+	{ 1.234321234321234e-25L, "1.234321e-25" },
+	{ 1.234321234321234e-24L, "1.234321e-24" },
+	{ 1.234321234321234e-23L, "1.234321e-23" },
+	{ 1.234321234321234e-22L, "1.234321e-22" },
+	{ 1.234321234321234e-21L, "1.234321e-21" },
+	{ 1.234321234321234e-20L, "1.234321e-20" },
+	{ 1.234321234321234e-19L, "1.234321e-19" },
+	{ 1.234321234321234e-18L, "1.234321e-18" },
+	{ 1.234321234321234e-17L, "1.234321e-17" },
+	{ 1.234321234321234e-16L, "1.234321e-16" },
+	{ 1.234321234321234e-15L, "1.234321e-15" },
+	{ 1.234321234321234e-14L, "1.234321e-14" },
+	{ 1.234321234321234e-13L, "1.234321e-13" },
+	{ 1.234321234321234e-12L, "1.234321e-12" },
+	{ 1.234321234321234e-11L, "1.234321e-11" },
+	{ 1.234321234321234e-10L, "1.234321e-10" },
+	{ 1.234321234321234e-9L, "1.234321e-09" },
+	{ 1.234321234321234e-8L, "1.234321e-08" },
+	{ 1.234321234321234e-7L, "1.234321e-07" },
+	{ 1.234321234321234e-6L, "1.234321e-06" },
+	{ 1.234321234321234e-5L, "1.234321e-05" },
+	{ 1.234321234321234e-4L, "1.234321e-04" },
+	{ 1.234321234321234e-3L, "1.234321e-03" },
+	{ 1.234321234321234e-2L, "1.234321e-02" },
+	{ 1.234321234321234e-1L, "1.234321e-01" },
+	{ 1.234321234321234L, "1.234321e+00" },
+	{ 1.234321234321234e1L, "1.234321e+01" },
+	{ 1.234321234321234e2L, "1.234321e+02" },
+	{ 1.234321234321234e3L, "1.234321e+03" },
+	{ 1.234321234321234e4L, "1.234321e+04" },
+	{ 1.234321234321234e5L, "1.234321e+05" },
+	{ 1.234321234321234e6L, "1.234321e+06" },
+	{ 1.234321234321234e7L, "1.234321e+07" },
+	{ 1.234321234321234e8L, "1.234321e+08" },
+	{ 1.234321234321234e9L, "1.234321e+09" },
+	{ 1.234321234321234e10L, "1.234321e+10" },
+	{ 1.234321234321234e11L, "1.234321e+11" },
+	{ 1.234321234321234e12L, "1.234321e+12" },
+	{ 1.234321234321234e13L, "1.234321e+13" },
+	{ 1.234321234321234e14L, "1.234321e+14" },
+	{ 1.234321234321234e15L, "1.234321e+15" },
+	{ 1.234321234321234e16L, "1.234321e+16" },
+	{ 1.234321234321234e17L, "1.234321e+17" },
+	{ 1.234321234321234e18L, "1.234321e+18" },
+	{ 1.234321234321234e19L, "1.234321e+19" },
+	{ 1.234321234321234e20L, "1.234321e+20" },
+	{ 1.234321234321234e21L, "1.234321e+21" },
+	{ 1.234321234321234e22L, "1.234321e+22" },
+	{ 1.234321234321234e23L, "1.234321e+23" },
+	{ 1.234321234321234e24L, "1.234321e+24" },
+	{ 1.234321234321234e25L, "1.234321e+25" },
+	{ 1.234321234321234e26L, "1.234321e+26" },
+	{ 1.234321234321234e27L, "1.234321e+27" },
+	{ 1.234321234321234e28L, "1.234321e+28" },
+	{ 1.234321234321234e29L, "1.234321e+29" },
+	{ 1.234321234321234e30L, "1.234321e+30" },
+	{ 1.234321234321234e31L, "1.234321e+31" },
+	{ 1.234321234321234e32L, "1.234321e+32" },
+	{ 1.234321234321234e33L, "1.234321e+33" },
+	{ 1.234321234321234e34L, "1.234321e+34" },
+	{ 1.234321234321234e35L, "1.234321e+35" },
+	{ 1.234321234321234e36L, "1.234321e+36" }
+      };
+    size_t k;
+    for (k = 0; k < SIZEOF (data); k++)
+      {
+	char result[100];
+	int retval =
+	  my_snprintf (result, sizeof (result), "%Le", data[k].value);
+	ASSERT (strmatch (data[k].string, result));
+	ASSERT (retval == strlen (result));
+      }
+  }
+
+  { /* A negative number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", -0.03125L, 33, 44, 55);
+    ASSERT (strcmp (result, "-3.125000e-02 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive zero.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "0.000000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative zero.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", -0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.000000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive infinity.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", 1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "inf 33") == 0
+	    || strcmp (result, "infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative infinity.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "-inf 33") == 0
+	    || strcmp (result, "-infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* NaN.  */
+    static long double zero = 0.0L;
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", zero / zero, 33, 44, 55);
+    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%15Le %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "   1.750000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_LEFT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%-15Le %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000e+00    33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SHOWSIGN.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%+Le %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "+1.750000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SPACE.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "% Le %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, " 1.750000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#Le %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.750000e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#.Le %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "2.e+00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#.Le %d", 9.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.e+01 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with finite number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%015Le %d", 1234.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "0001.234000e+03 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%015Le %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "           -inf 33") == 0
+	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with NaN.  */
+    static long double zero = 0.0L;
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%015Le %d", zero / zero, 33, 44, 55);
+    ASSERT (strcmp (result, "            nan 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%.Le %d", 1234.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "1e+03 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  /* Test the support of the %g format directive.  */
+
+  { /* A positive number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%g %d", 12.75, 33, 44, 55);
+    ASSERT (strcmp (result, "12.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A larger positive number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%g %d", 1234567.0, 33, 44, 55);
+    ASSERT (strcmp (result, "1.23457e+06 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Small and large positive numbers.  */
+    static struct { double value; const char *string; } data[] =
+      {
+	{ 1.234321234321234e-37, "1.23432e-37" },
+	{ 1.234321234321234e-36, "1.23432e-36" },
+	{ 1.234321234321234e-35, "1.23432e-35" },
+	{ 1.234321234321234e-34, "1.23432e-34" },
+	{ 1.234321234321234e-33, "1.23432e-33" },
+	{ 1.234321234321234e-32, "1.23432e-32" },
+	{ 1.234321234321234e-31, "1.23432e-31" },
+	{ 1.234321234321234e-30, "1.23432e-30" },
+	{ 1.234321234321234e-29, "1.23432e-29" },
+	{ 1.234321234321234e-28, "1.23432e-28" },
+	{ 1.234321234321234e-27, "1.23432e-27" },
+	{ 1.234321234321234e-26, "1.23432e-26" },
+	{ 1.234321234321234e-25, "1.23432e-25" },
+	{ 1.234321234321234e-24, "1.23432e-24" },
+	{ 1.234321234321234e-23, "1.23432e-23" },
+	{ 1.234321234321234e-22, "1.23432e-22" },
+	{ 1.234321234321234e-21, "1.23432e-21" },
+	{ 1.234321234321234e-20, "1.23432e-20" },
+	{ 1.234321234321234e-19, "1.23432e-19" },
+	{ 1.234321234321234e-18, "1.23432e-18" },
+	{ 1.234321234321234e-17, "1.23432e-17" },
+	{ 1.234321234321234e-16, "1.23432e-16" },
+	{ 1.234321234321234e-15, "1.23432e-15" },
+	{ 1.234321234321234e-14, "1.23432e-14" },
+	{ 1.234321234321234e-13, "1.23432e-13" },
+	{ 1.234321234321234e-12, "1.23432e-12" },
+	{ 1.234321234321234e-11, "1.23432e-11" },
+	{ 1.234321234321234e-10, "1.23432e-10" },
+	{ 1.234321234321234e-9, "1.23432e-09" },
+	{ 1.234321234321234e-8, "1.23432e-08" },
+	{ 1.234321234321234e-7, "1.23432e-07" },
+	{ 1.234321234321234e-6, "1.23432e-06" },
+	{ 1.234321234321234e-5, "1.23432e-05" },
+	{ 1.234321234321234e-4, "0.000123432" },
+	{ 1.234321234321234e-3, "0.00123432" },
+	{ 1.234321234321234e-2, "0.0123432" },
+	{ 1.234321234321234e-1, "0.123432" },
+	{ 1.234321234321234, "1.23432" },
+	{ 1.234321234321234e1, "12.3432" },
+	{ 1.234321234321234e2, "123.432" },
+	{ 1.234321234321234e3, "1234.32" },
+	{ 1.234321234321234e4, "12343.2" },
+	{ 1.234321234321234e5, "123432" },
+	{ 1.234321234321234e6, "1.23432e+06" },
+	{ 1.234321234321234e7, "1.23432e+07" },
+	{ 1.234321234321234e8, "1.23432e+08" },
+	{ 1.234321234321234e9, "1.23432e+09" },
+	{ 1.234321234321234e10, "1.23432e+10" },
+	{ 1.234321234321234e11, "1.23432e+11" },
+	{ 1.234321234321234e12, "1.23432e+12" },
+	{ 1.234321234321234e13, "1.23432e+13" },
+	{ 1.234321234321234e14, "1.23432e+14" },
+	{ 1.234321234321234e15, "1.23432e+15" },
+	{ 1.234321234321234e16, "1.23432e+16" },
+	{ 1.234321234321234e17, "1.23432e+17" },
+	{ 1.234321234321234e18, "1.23432e+18" },
+	{ 1.234321234321234e19, "1.23432e+19" },
+	{ 1.234321234321234e20, "1.23432e+20" },
+	{ 1.234321234321234e21, "1.23432e+21" },
+	{ 1.234321234321234e22, "1.23432e+22" },
+	{ 1.234321234321234e23, "1.23432e+23" },
+	{ 1.234321234321234e24, "1.23432e+24" },
+	{ 1.234321234321234e25, "1.23432e+25" },
+	{ 1.234321234321234e26, "1.23432e+26" },
+	{ 1.234321234321234e27, "1.23432e+27" },
+	{ 1.234321234321234e28, "1.23432e+28" },
+	{ 1.234321234321234e29, "1.23432e+29" },
+	{ 1.234321234321234e30, "1.23432e+30" },
+	{ 1.234321234321234e31, "1.23432e+31" },
+	{ 1.234321234321234e32, "1.23432e+32" },
+	{ 1.234321234321234e33, "1.23432e+33" },
+	{ 1.234321234321234e34, "1.23432e+34" },
+	{ 1.234321234321234e35, "1.23432e+35" },
+	{ 1.234321234321234e36, "1.23432e+36" }
+      };
+    size_t k;
+    for (k = 0; k < SIZEOF (data); k++)
+      {
+	char result[100];
+	int retval =
+	  my_snprintf (result, sizeof (result), "%g", data[k].value);
+	ASSERT (strmatch (data[k].string, result));
+	ASSERT (retval == strlen (result));
+      }
+  }
+
+  { /* A negative number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%g %d", -0.03125, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.03125 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive zero.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%g %d", 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "0 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative zero.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%g %d", -0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "-0 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive infinity.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%g %d", 1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "inf 33") == 0
+	    || strcmp (result, "infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative infinity.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%g %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "-inf 33") == 0
+	    || strcmp (result, "-infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* NaN.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%g %d", NaN (), 33, 44, 55);
+    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%10g %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "      1.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_LEFT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%-10g %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.75       33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SHOWSIGN.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%+g %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "+1.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SPACE.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "% g %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, " 1.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#g %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.75000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#.g %d", 1.75, 33, 44, 55);
+    ASSERT (strcmp (result, "2. 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#.g %d", 9.75, 33, 44, 55);
+    ASSERT (strcmp (result, "1.e+01 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with finite number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%010g %d", 1234.0, 33, 44, 55);
+    ASSERT (strcmp (result, "0000001234 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%015g %d", -1.0 / 0.0, 33, 44, 55);
+    ASSERT (strcmp (result, "           -inf 33") == 0
+	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with NaN.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%015g %d", NaN (), 33, 44, 55);
+    ASSERT (strcmp (result, "            nan 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%.g %d", 1234.0, 33, 44, 55);
+    ASSERT (strcmp (result, "1e+03 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A positive number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", 12.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "12.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* A larger positive number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", 1234567.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.23457e+06 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Small and large positive numbers.  */
+    static struct { long double value; const char *string; } data[] =
+      {
+	{ 1.234321234321234e-37L, "1.23432e-37" },
+	{ 1.234321234321234e-36L, "1.23432e-36" },
+	{ 1.234321234321234e-35L, "1.23432e-35" },
+	{ 1.234321234321234e-34L, "1.23432e-34" },
+	{ 1.234321234321234e-33L, "1.23432e-33" },
+	{ 1.234321234321234e-32L, "1.23432e-32" },
+	{ 1.234321234321234e-31L, "1.23432e-31" },
+	{ 1.234321234321234e-30L, "1.23432e-30" },
+	{ 1.234321234321234e-29L, "1.23432e-29" },
+	{ 1.234321234321234e-28L, "1.23432e-28" },
+	{ 1.234321234321234e-27L, "1.23432e-27" },
+	{ 1.234321234321234e-26L, "1.23432e-26" },
+	{ 1.234321234321234e-25L, "1.23432e-25" },
+	{ 1.234321234321234e-24L, "1.23432e-24" },
+	{ 1.234321234321234e-23L, "1.23432e-23" },
+	{ 1.234321234321234e-22L, "1.23432e-22" },
+	{ 1.234321234321234e-21L, "1.23432e-21" },
+	{ 1.234321234321234e-20L, "1.23432e-20" },
+	{ 1.234321234321234e-19L, "1.23432e-19" },
+	{ 1.234321234321234e-18L, "1.23432e-18" },
+	{ 1.234321234321234e-17L, "1.23432e-17" },
+	{ 1.234321234321234e-16L, "1.23432e-16" },
+	{ 1.234321234321234e-15L, "1.23432e-15" },
+	{ 1.234321234321234e-14L, "1.23432e-14" },
+	{ 1.234321234321234e-13L, "1.23432e-13" },
+	{ 1.234321234321234e-12L, "1.23432e-12" },
+	{ 1.234321234321234e-11L, "1.23432e-11" },
+	{ 1.234321234321234e-10L, "1.23432e-10" },
+	{ 1.234321234321234e-9L, "1.23432e-09" },
+	{ 1.234321234321234e-8L, "1.23432e-08" },
+	{ 1.234321234321234e-7L, "1.23432e-07" },
+	{ 1.234321234321234e-6L, "1.23432e-06" },
+	{ 1.234321234321234e-5L, "1.23432e-05" },
+	{ 1.234321234321234e-4L, "0.000123432" },
+	{ 1.234321234321234e-3L, "0.00123432" },
+	{ 1.234321234321234e-2L, "0.0123432" },
+	{ 1.234321234321234e-1L, "0.123432" },
+	{ 1.234321234321234L, "1.23432" },
+	{ 1.234321234321234e1L, "12.3432" },
+	{ 1.234321234321234e2L, "123.432" },
+	{ 1.234321234321234e3L, "1234.32" },
+	{ 1.234321234321234e4L, "12343.2" },
+	{ 1.234321234321234e5L, "123432" },
+	{ 1.234321234321234e6L, "1.23432e+06" },
+	{ 1.234321234321234e7L, "1.23432e+07" },
+	{ 1.234321234321234e8L, "1.23432e+08" },
+	{ 1.234321234321234e9L, "1.23432e+09" },
+	{ 1.234321234321234e10L, "1.23432e+10" },
+	{ 1.234321234321234e11L, "1.23432e+11" },
+	{ 1.234321234321234e12L, "1.23432e+12" },
+	{ 1.234321234321234e13L, "1.23432e+13" },
+	{ 1.234321234321234e14L, "1.23432e+14" },
+	{ 1.234321234321234e15L, "1.23432e+15" },
+	{ 1.234321234321234e16L, "1.23432e+16" },
+	{ 1.234321234321234e17L, "1.23432e+17" },
+	{ 1.234321234321234e18L, "1.23432e+18" },
+	{ 1.234321234321234e19L, "1.23432e+19" },
+	{ 1.234321234321234e20L, "1.23432e+20" },
+	{ 1.234321234321234e21L, "1.23432e+21" },
+	{ 1.234321234321234e22L, "1.23432e+22" },
+	{ 1.234321234321234e23L, "1.23432e+23" },
+	{ 1.234321234321234e24L, "1.23432e+24" },
+	{ 1.234321234321234e25L, "1.23432e+25" },
+	{ 1.234321234321234e26L, "1.23432e+26" },
+	{ 1.234321234321234e27L, "1.23432e+27" },
+	{ 1.234321234321234e28L, "1.23432e+28" },
+	{ 1.234321234321234e29L, "1.23432e+29" },
+	{ 1.234321234321234e30L, "1.23432e+30" },
+	{ 1.234321234321234e31L, "1.23432e+31" },
+	{ 1.234321234321234e32L, "1.23432e+32" },
+	{ 1.234321234321234e33L, "1.23432e+33" },
+	{ 1.234321234321234e34L, "1.23432e+34" },
+	{ 1.234321234321234e35L, "1.23432e+35" },
+	{ 1.234321234321234e36L, "1.23432e+36" }
+      };
+    size_t k;
+    for (k = 0; k < SIZEOF (data); k++)
+      {
+	char result[100];
+	int retval =
+	  my_snprintf (result, sizeof (result), "%Lg", data[k].value);
+	ASSERT (strmatch (data[k].string, result));
+	ASSERT (retval == strlen (result));
+      }
+  }
+
+  { /* A negative number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", -0.03125L, 33, 44, 55);
+    ASSERT (strcmp (result, "-0.03125 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive zero.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "0 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative zero.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", -0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "-0 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Positive infinity.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", 1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "inf 33") == 0
+	    || strcmp (result, "infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Negative infinity.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "-inf 33") == 0
+	    || strcmp (result, "-infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* NaN.  */
+    static long double zero = 0.0L;
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", zero / zero, 33, 44, 55);
+    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Width.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%10Lg %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "      1.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_LEFT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%-10Lg %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.75       33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SHOWSIGN.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%+Lg %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "+1.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_SPACE.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "% Lg %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, " 1.75 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#Lg %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.75000 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#.Lg %d", 1.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "2. 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ALT.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%#.Lg %d", 9.75L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.e+01 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with finite number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%010Lg %d", 1234.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "0000001234 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with infinite number.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%015Lg %d", -1.0L / 0.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "           -inf 33") == 0
+	    || strcmp (result, "      -infinity 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* FLAG_ZERO with NaN.  */
+    static long double zero = 0.0L;
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%015Lg %d", zero / zero, 33, 44, 55);
+    ASSERT (strcmp (result, "            nan 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision.  */
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%.Lg %d", 1234.0L, 33, 44, 55);
+    ASSERT (strcmp (result, "1e+03 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
   /* Test the support of the %n format directive.  */
 
   {

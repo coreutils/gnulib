@@ -1,5 +1,13 @@
 2007-05-18  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-vasnprintf-posix.c (test_function): Also test the %e and
+	%g directives.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+
+2007-05-18  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-vasnprintf-posix.c (SIZEOF): New macro.
 	(strmatch): New function.
 	(test_function): Test the %f directive on numbers of various exponents.
