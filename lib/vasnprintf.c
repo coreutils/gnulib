@@ -623,19 +623,19 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
     goto increment_q;
   {
     size_t i;
-    for (i = b_len; i > 0; )
+    for (i = b_len;;)
       {
+	mp_limb_t r_i =
+	  (i <= r_len && i > 0 ? r_ptr[i - 1] >> (GMP_LIMB_BITS - 1) : 0)
+	  | (i < r_len ? r_ptr[i] << 1 : 0);
+	mp_limb_t b_i = (i < b_len ? b_ptr[i] : 0);
+	if (r_i > b_i)
+	  goto increment_q;
+	if (r_i < b_i)
+	  goto keep_q;
+	if (i == 0)
+	  break;
 	i--;
-	{
-	  mp_limb_t r_i =
-	    (i + 1 < r_len ? r_ptr[i + 1] >> (GMP_LIMB_BITS - 1) : 0)
-	    | (i < r_len ? r_ptr[i] << 1 : 0);
-	  mp_limb_t b_i = b_ptr[i];
-	  if (r_i > b_i)
-	    goto increment_q;
-	  if (r_i < b_i)
-	    goto keep_q;
-	}
       }
   }
   if (q_len > 0 && ((q_ptr[0] & 1) != 0))
