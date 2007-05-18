@@ -7,6 +7,7 @@ lib/printf-frexpl.h
 lib/printf-frexpl.c
 lib/printf-frexp.c
 m4/printf-frexpl.m4
+m4/frexpl.m4
 m4/ldexpl.m4
 
 Depends-on:

@@ -1,5 +1,11 @@
 2007-05-18  Bruno Haible  <bruno@clisp.org>
 
+	* m4/printf-frexpl.m4 (gl_FUNC_PRINTF_FREXPL): Invoke
+	gl_FUNC_FREXPL_WORKS.
+	* modules/printf-frexpl (Files): Add m4/frexpl.m4.
+
+2007-05-18  Bruno Haible  <bruno@clisp.org>
+
 	* modules/frexpl-nolibm-tests: New file.
 
 	* modules/frexpl-nolibm: New file.

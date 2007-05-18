@@ -1,4 +1,4 @@
-# printf-frexpl.m4 serial 4
+# printf-frexpl.m4 serial 5
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,7 @@ dnl Check how to define printf_frexpl() without linking with libm.
 AC_DEFUN([gl_FUNC_PRINTF_FREXPL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  dnl Subset of gl_FUNC_FREXPL_NO_LIBM.
   AC_CACHE_CHECK([whether frexpl can be used without linking with libm],
     [gl_cv_func_frexpl_no_libm],
     [
@@ -20,6 +21,15 @@ AC_DEFUN([gl_FUNC_PRINTF_FREXPL],
         [gl_cv_func_frexpl_no_libm=no])
     ])
   if test $gl_cv_func_frexpl_no_libm = yes; then
+    gl_FUNC_FREXPL_WORKS
+    case "$gl_cv_func_frexpl_works" in
+      *yes) gl_func_frexpl_no_libm=yes ;;
+      *)    gl_func_frexpl_no_libm=no; REPLACE_FREXPL=1 ;;
+    esac
+  else
+    gl_func_frexpl_no_libm=no
+  fi
+  if test $gl_func_frexpl_no_libm = yes; then
     AC_DEFINE([HAVE_FREXPL_IN_LIBC], 1,
       [Define if the frexpl function is available in libc.])
     dnl Also check whether it's declared.
