@@ -1088,8 +1088,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 #if HAVE_LONG_LONG_INT
 		  case TYPE_LONGLONGINT:
 		  case TYPE_ULONGLONGINT:
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+		    *fbp++ = 'I';
+		    *fbp++ = '6';
+		    *fbp++ = '4';
+		    break;
+# else
 		    *fbp++ = 'l';
 		    /*FALLTHROUGH*/
+# endif
 #endif
 		  case TYPE_LONGINT:
 		  case TYPE_ULONGINT:
