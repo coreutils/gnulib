@@ -1,0 +1,16 @@
+Files:
+tests/test-frexpl.c
+
+Depends-on:
+fpucw
+isnanl-nolibm
+signbit
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-frexpl
+check_PROGRAMS += test-frexpl
+
+License:
+LGPL

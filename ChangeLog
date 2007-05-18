@@ -1,5 +1,7 @@
 2007-05-18  Bruno Haible  <bruno@clisp.org>
 
+	* modules/frexpl-nolibm-tests: New file.
+
 	* modules/frexpl-nolibm: New file.
 	* m4/frexpl.m4 (gl_FUNC_FREXPL_NO_LIBM): New macro.
 
