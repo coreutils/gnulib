@@ -48,7 +48,7 @@
 
 2007-05-18  Bruno Haible  <bruno@clisp.org>
 
-	* lib/vasnprintf.m4 (VASNPRINTF) [WIN32]: Use %I64d instead of %lld
+	* lib/vasnprintf.c (VASNPRINTF) [WIN32]: Use %I64d instead of %lld
 	for printing 64-bit integers. Needed for mingw.
 
 2007-05-18  Bruno Haible  <bruno@clisp.org>
