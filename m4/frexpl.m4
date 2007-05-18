@@ -1,4 +1,4 @@
-# frexpl.m4 serial 2
+# frexpl.m4 serial 3
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -58,6 +58,39 @@ AC_DEFUN([gl_FUNC_FREXPL],
     AC_LIBOBJ([frexpl])
   fi
   AC_SUBST([FREXPL_LIBM])
+])
+
+AC_DEFUN([gl_FUNC_FREXPL_NO_LIBM],
+[
+  AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_CACHE_CHECK([whether frexpl() can be used without linking with libm],
+    [gl_cv_func_frexpl_no_libm],
+    [
+      AC_TRY_LINK([#include <math.h>
+                   long double x;],
+                  [int e; return frexpl (x, &e) > 0;],
+        [gl_cv_func_frexpl_no_libm=yes],
+        [gl_cv_func_frexpl_no_libm=no])
+    ])
+  if test $gl_cv_func_frexpl_no_libm = yes; then
+    gl_FUNC_FREXPL_WORKS
+    case "$gl_cv_func_frexpl_works" in
+      *yes) gl_func_frexpl_no_libm=yes ;;
+      *)    gl_func_frexpl_no_libm=no; REPLACE_FREXPL=1 ;;
+    esac
+  else
+    gl_func_frexpl_no_libm=no
+  fi
+  if test $gl_func_frexpl_no_libm = yes; then
+    AC_DEFINE([HAVE_FREXPL_IN_LIBC], 1,
+      [Define if the frexpl() function is available in libc.])
+    dnl Also check whether it's declared.
+    dnl MacOS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
+    AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [#include <math.h>])
+  else
+    HAVE_DECL_FREXPL=0
+    AC_LIBOBJ([frexpl])
+  fi
 ])
 
 dnl Test whether frexpl() works on finite numbers (this fails on AIX 5.1) and

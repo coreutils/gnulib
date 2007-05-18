@@ -1,3 +1,8 @@
+2007-05-18  Bruno Haible  <bruno@clisp.org>
+
+	* modules/frexpl-nolibm: New file.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_NO_LIBM): New macro.
+
 2007-05-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/dirent_.h: Prefer #include_next <foo.h> to #include
