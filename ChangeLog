@@ -1,5 +1,49 @@
 2007-05-18  Bruno Haible  <bruno@clisp.org>
 
+	Add support for 'long double' number output.
+	* m4/printf.m4 (gl_PRINTF_LONG_DOUBLE): New macro.
+	* lib/vasnprintf.c: Include math.h and float+.h.
+	(mp_limb_t): New type.
+	(GMP_LIMB_BITS): New macro.
+	(mp_twolimb_t): New type.
+	(GMP_TWOLIMB_BITS): New macro.
+	(mpn_t): New type.
+	(multiply, divide, convert_to_decimal, decode_long_double,
+	scale10_round_long_double, scale10_round_decimal_long_double,
+	floorlog10l): New functions.
+	(VASNPRINTF) [NEED_PRINTF_LONG_DOUBLE]: Implement 'long double' support
+	for the %f, %F, %e, %E, %g, %G directives.
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_LONG_DOUBLE): New macro.
+	* m4/fprintf-posix.m4 (gl_FUNC_FPRINTF_POSIX): Invoke
+	gl_PRINTF_LONG_DOUBLE and test its result. Invoke
+	gl_PREREQ_VASNPRINTF_LONG_DOUBLE.
+	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Likewise.
+	* m4/sprintf-posix.m4 (gl_FUNC_SPRINTF_POSIX): Likewise.
+	* m4/vasnprintf-posix.m4 (gl_FUNC_VASNPRINTF_POSIX): Likewise.
+	* m4/vasprintf-posix.m4 (gl_FUNC_VASPRINTF_POSIX): Likewise.
+	* m4/vfprintf-posix.m4 (gl_FUNC_VFPRINTF_POSIX): Likewise.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX): Likewise.
+	* m4/vsprintf-posix.m4 (gl_FUNC_VSPRINTF_POSIX): Likewise.
+	* modules/fprintf-posix (Depends-on): Add frexpl-nolibm.
+	* modules/snprintf-posix (Depends-on): Likewise.
+	* modules/sprintf-posix (Depends-on): Likewise.
+	* modules/vasnprintf-posix (Depends-on): Likewise.
+	* modules/vasprintf-posix (Depends-on): Likewise.
+	* modules/vfprintf-posix (Depends-on): Likewise.
+	* modules/vsnprintf-posix (Depends-on): Likewise.
+	* modules/vsprintf-posix (Depends-on): Likewise.
+	* modules/vasnprintf (Files): Add lib/float+.h.
+	* doc/functions/fprintf.texi: Update.
+	* doc/functions/printf.texi: Update.
+	* doc/functions/snprintf.texi: Update.
+	* doc/functions/sprintf.texi: Update.
+	* doc/functions/vfprintf.texi: Update.
+	* doc/functions/vprintf.texi: Update.
+	* doc/functions/vsnprintf.texi: Update.
+	* doc/functions/vsprintf.texi: Update.
+
+2007-05-18  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c (USE_SNPRINTF): Define to 0 on BeOS.
 
 2007-05-18  Bruno Haible  <bruno@clisp.org>

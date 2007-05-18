@@ -12,6 +12,7 @@ fseterr
 vasnprintf
 isnan-nolibm
 isnanl-nolibm
+frexpl-nolibm
 printf-frexp
 printf-frexpl
 signbit

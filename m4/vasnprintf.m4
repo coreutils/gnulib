@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 15
+# vasnprintf.m4 serial 16
 dnl Copyright (C) 2002-2004, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,6 +57,22 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF],
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   AC_CHECK_FUNCS(snprintf wcslen)
+])
+
+# Extra prerequisites of lib/vasnprintf.c for supporting 'long double'
+# arguments.
+AC_DEFUN([gl_PREREQ_VASNPRINTF_LONG_DOUBLE],
+[
+  AC_REQUIRE([gl_PRINTF_LONG_DOUBLE])
+  case "$gl_cv_func_printf_long_double" in
+    *yes)
+      ;;
+    *)
+      AC_DEFINE([NEED_PRINTF_LONG_DOUBLE], 1,
+        [Define if the vasnprintf implementation needs special code for
+         'long double' arguments.])
+      ;;
+  esac
 ])
 
 # Extra prerequisites of lib/vasnprintf.c for supporting the 'a' directive.

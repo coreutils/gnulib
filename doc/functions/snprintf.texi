@@ -20,6 +20,9 @@ This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
 @code{j}, @code{t}, @code{z}) on some platforms:
 AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin 2006, mingw, BeOS.
 @item
+printf of @samp{long double} numbers is unsupported on some platforms:
+mingw, BeOS.
+@item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
 glibc-2.3.6, MacOS X 10.3, NetBSD 3.0, OpenBSD 4.0, AIX 5.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin, mingw, BeOS.
@@ -54,7 +57,4 @@ OSF/1 5.1.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-printf of @samp{long double} numbers is unsupported on some platforms:
-mingw.
 @end itemize

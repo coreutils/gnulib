@@ -2,6 +2,7 @@ Description:
 vsprintf with automatic memory allocation and bounded output size.
 
 Files:
+lib/float+.h
 lib/printf-args.h
 lib/printf-args.c
 lib/printf-parse.h
