@@ -1,5 +1,22 @@
 2007-05-18  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-vasnprintf-posix.c (SIZEOF): New macro.
+	(strmatch): New function.
+	(test_function): Test the %f directive on numbers of various exponents.
+	* tests/test-vasprintf-posix.c (SIZEOF): New macro.
+	(strmatch): New function.
+	(test_function): Test the %f directive on numbers of various exponents.
+	* tests/test-snprintf-posix.h (strmatch): New function.
+	(test_function): Test the %f directive on numbers of various exponents.
+	* tests/test-sprintf-posix.h (strmatch): New function.
+	(test_function): Test the %f directive on numbers of various exponents.
+	* tests/test-snprintf-posix.c (SIZEOF): New macro.
+	* tests/test-sprintf-posix.c (SIZEOF): New macro.
+	* tests/test-vsnprintf-posix.c (SIZEOF): New macro.
+	* tests/test-vsprintf-posix.c (SIZEOF): New macro.
+
+2007-05-18  Bruno Haible  <bruno@clisp.org>
+
 	Add support for 'long double' number output.
 	* m4/printf.m4 (gl_PRINTF_LONG_DOUBLE): New macro.
 	* lib/vasnprintf.c: Include math.h and float+.h.

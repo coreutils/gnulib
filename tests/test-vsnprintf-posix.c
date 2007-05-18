@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
   do									     \
     {									     \
