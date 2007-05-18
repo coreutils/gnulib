@@ -111,7 +111,14 @@ local_wcslen (const wchar_t *s)
 # define DIRECTIVE char_directive
 # define DIRECTIVES char_directives
 # define PRINTF_PARSE printf_parse
-# define USE_SNPRINTF (HAVE_DECL__SNPRINTF || HAVE_SNPRINTF)
+# /* Use snprintf if it exists under the name 'snprintf' or '_snprintf'.
+     But don't use it on BeOS, since BeOS snprintf produces no output if the
+     size argument is >= 0x3000000.  */
+# if (HAVE_DECL__SNPRINTF || HAVE_SNPRINTF) && !defined __BEOS__
+#  define USE_SNPRINTF 1
+# else
+#  define USE_SNPRINTF 0
+# endif
 # if HAVE_DECL__SNPRINTF
    /* Windows.  */
 #  define SNPRINTF _snprintf
