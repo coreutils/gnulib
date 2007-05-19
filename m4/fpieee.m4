@@ -38,7 +38,7 @@ AC_DEFUN([gl_FP_IEEE],
         # GCC has the option -mieee.
         CPPFLAGS="$CPPFLAGS -mieee"
       else
-        # Compaq (ex-DEC) C has the option -ieee. 
+        # Compaq (ex-DEC) C has the option -ieee.
         CPPFLAGS="$CPPFLAGS -ieee"
       fi
       ;;
