@@ -656,22 +656,25 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
   return roomptr;
 }
 
-/* Convert a bignum a >= 0 to decimal representation.
+/* Convert a bignum a >= 0, multiplied with 10^extra_zeroes, to decimal
+   representation.
    Destroys the contents of a.
    Return the allocated memory - containing the decimal digits in low-to-high
    order, terminated with a NUL character - in case of success, NULL in case
    of memory allocation failure.  */
 static char *
-convert_to_decimal (mpn_t a)
+convert_to_decimal (mpn_t a, size_t extra_zeroes)
 {
   mp_limb_t *a_ptr = a.limbs;
   size_t a_len = a.nlimbs;
   /* 0.03345 is slightly larger than log(2)/(9*log(10)).  */
   size_t c_len = 9 * ((size_t)(a_len * (GMP_LIMB_BITS * 0.03345f)) + 1);
-  char *c_ptr = (char *) malloc (c_len);
+  char *c_ptr = (char *) malloc (xsum (c_len, extra_zeroes));
   if (c_ptr != NULL)
     {
       char *d_ptr = c_ptr;
+      for (; extra_zeroes > 0; extra_zeroes--)
+	*d_ptr++ = '0';
       while (a_len > 0)
 	{
 	  /* Divide a by 10^9, in-place.  */
@@ -789,16 +792,18 @@ decode_long_double (long double x, int *ep, mpn_t *mp)
 }
 
 /* Assuming x is finite and >= 0, and n is an integer:
-   Compute y = round (x * 10^n) as a bignum >= 0.
-   Return the allocated memory in case of success, NULL in case of memory
-   allocation failure.  */
-static void *
-scale10_round_long_double (long double x, int n, mpn_t *yp)
+   Returns the decimal representation of round (x * 10^n).
+   Return the allocated memory - containing the decimal digits in low-to-high
+   order, terminated with a NUL character - in case of success, NULL in case
+   of memory allocation failure.  */
+static char *
+scale10_round_decimal_long_double (long double x, int n)
 {
   int e;
   mpn_t m;
   void *memory = decode_long_double (x, &e, &m);
   int s;
+  size_t extra_zeroes;
   unsigned int abs_n;
   unsigned int abs_s;
   mp_limb_t *pow5_ptr;
@@ -806,6 +811,9 @@ scale10_round_long_double (long double x, int n, mpn_t *yp)
   unsigned int s_limbs;
   unsigned int s_bits;
   mpn_t pow5;
+  mpn_t z;
+  void *z_memory;
+  char *digits;
 
   if (memory == NULL)
     return NULL;
@@ -813,6 +821,17 @@ scale10_round_long_double (long double x, int n, mpn_t *yp)
      y = round (2^e * 10^n * m) = round (2^(e+n) * 5^n * m)
        = round (2^s * 5^n * m).  */
   s = e + n;
+  extra_zeroes = 0;
+  /* Factor out a common power of 10 if possible.  */
+  if (s > 0 && n > 0)
+    {
+      extra_zeroes = (s < n ? s : n);
+      s -= extra_zeroes;
+      n -= extra_zeroes;
+    }
+  /* Here y = round (2^s * 5^n * m) * 10^extra_zeroes.
+     Before converting to decimal, we need to compute
+     z = round (2^s * 5^n * m).  */
   /* Compute 5^|n|, possibly shifted by |s| bits if n and s have the same
      sign.  2.322 is slightly larger than log(5)/log(2).  */
   abs_n = (n >= 0 ? n : -n);
@@ -895,18 +914,12 @@ scale10_round_long_double (long double x, int n, mpn_t *yp)
       if (n >= 0)
 	{
 	  /* Multiply m with pow5.  No division needed.  */
-	  void *result_memory = multiply (m, pow5, yp);
-	  free (pow5_ptr);
-	  free (memory);
-	  return result_memory;
+	  z_memory = multiply (m, pow5, &z);
 	}
       else
 	{
 	  /* Divide m by pow5 and round.  */
-	  void *result_memory = divide (m, pow5, yp);
-	  free (pow5_ptr);
-	  free (memory);
-	  return result_memory;
+	  z_memory = divide (m, pow5, &z);
 	}
     }
   else
@@ -920,7 +933,6 @@ scale10_round_long_double (long double x, int n, mpn_t *yp)
 	  mpn_t numerator;
 	  mpn_t denominator;
 	  void *tmp_memory;
-	  void *result_memory;
 	  tmp_memory = multiply (m, pow5, &numerator);
 	  if (tmp_memory == NULL)
 	    {
@@ -938,11 +950,8 @@ scale10_round_long_double (long double x, int n, mpn_t *yp)
 	    denominator.limbs = ptr;
 	    denominator.nlimbs = s_limbs + 1;
 	  }
-	  result_memory = divide (numerator, denominator, yp);
+	  z_memory = divide (numerator, denominator, &z);
 	  free (tmp_memory);
-	  free (pow5_ptr);
-	  free (memory);
-	  return result_memory;
 	}
       else
 	{
@@ -950,7 +959,6 @@ scale10_round_long_double (long double x, int n, mpn_t *yp)
 	     Multiply m with 2^s, then divide by pow5.  */
 	  mpn_t numerator;
 	  mp_limb_t *num_ptr;
-	  void *result_memory;
 	  num_ptr = (mp_limb_t *) malloc ((m.nlimbs + s_limbs + 1)
 					  * sizeof (mp_limb_t));
 	  if (num_ptr == NULL)
@@ -990,32 +998,19 @@ scale10_round_long_double (long double x, int n, mpn_t *yp)
 	    numerator.limbs = num_ptr;
 	    numerator.nlimbs = destptr - num_ptr;
 	  }
-	  result_memory = divide (numerator, pow5, yp);
+	  z_memory = divide (numerator, pow5, &z);
 	  free (num_ptr);
-	  free (pow5_ptr);
-	  free (memory);
-	  return result_memory;
 	}
     }
-}
-
-/* Assuming x is finite and >= 0, and n is an integer:
-   Returns the decimal representation of round (x * 10^n).
-   Return the allocated memory - containing the decimal digits in low-to-high
-   order, terminated with a NUL character - in case of success, NULL in case
-   of memory allocation failure.  */
-static char *
-scale10_round_decimal_long_double (long double x, int n)
-{
-  mpn_t y;
-  void *memory;
-  char *digits;
-
-  memory = scale10_round_long_double (x, n, &y);
-  if (memory == NULL)
-    return NULL;
-  digits = convert_to_decimal (y);
+  free (pow5_ptr);
   free (memory);
+
+  /* Here y = round (x * 10^n) = z * 10^extra_zeroes.  */
+
+  if (z_memory == NULL)
+    return NULL;
+  digits = convert_to_decimal (z, extra_zeroes);
+  free (z_memory);
   return digits;
 }
 

@@ -1,3 +1,10 @@
+2007-05-19  Bruno Haible  <bruno@clisp.org>
+
+	* lib/vasnprintf.c (convert_to_decimal): Add an extra_zeroes argument.
+	(scale10_round_decimal_long_double): Inline scale10_round_long_double.
+	Instead of multiplying with 10^k, set extra_zeroes to k.
+	(scale10_round_long_double): Remove function.
+
 2007-05-18  Bruno Haible  <bruno@clisp.org>
 
 	* lib/vasnprintf.c (VASNPRINTF) [NEED_PRINTF_FLAG_ZERO]: Fix logic bug
