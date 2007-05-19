@@ -165,7 +165,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%a %d", NaN (), 33, 44, 55);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -359,10 +361,12 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%010a %d", NaN (), 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%020a %d", NaN (), 33, 44, 55);
     /* "0000000nan 33" is not a valid result; see
        <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
-    ASSERT (strcmp (result, "       nan 33") == 0);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -424,7 +428,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%La %d", 0.0L / 0.0L, 33, 44, 55);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -619,10 +625,12 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%010La %d", 0.0L / 0.0L, 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%020La %d", 0.0L / 0.0L, 33, 44, 55);
     /* "0000000nan 33" is not a valid result; see
        <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
-    ASSERT (strcmp (result, "       nan 33") == 0);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -779,7 +787,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%f %d", NaN (), 33, 44, 55);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -857,8 +867,10 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%015f %d", NaN (), 33, 44, 55);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+      my_snprintf (result, sizeof (result), "%020f %d", NaN (), 33, 44, 55);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1022,7 +1034,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%Lf %d", zero / zero, 33, 44, 55);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1101,8 +1115,10 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     static long double zero = 0.0L;
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%015Lf %d", zero / zero, 33, 44, 55);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+      my_snprintf (result, sizeof (result), "%020Lf %d", zero / zero, 33, 44, 55);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1178,7 +1194,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%F %d", NaN (), 33, 44, 55);
-    ASSERT (strcmp (result, "NAN 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "NAN", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1270,7 +1288,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%LF %d", zero / zero, 33, 44, 55);
-    ASSERT (strcmp (result, "NAN 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "NAN", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1466,7 +1486,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%e %d", NaN (), 33, 44, 55);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1554,8 +1576,10 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%015e %d", NaN (), 33, 44, 55);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+      my_snprintf (result, sizeof (result), "%020e %d", NaN (), 33, 44, 55);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1720,7 +1744,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%Le %d", zero / zero, 33, 44, 55);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1801,8 +1827,10 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     static long double zero = 0.0L;
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%015Le %d", zero / zero, 33, 44, 55);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+      my_snprintf (result, sizeof (result), "%020Le %d", zero / zero, 33, 44, 55);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1977,7 +2005,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%g %d", NaN (), 33, 44, 55);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -2058,8 +2088,10 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%015g %d", NaN (), 33, 44, 55);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+      my_snprintf (result, sizeof (result), "%020g %d", NaN (), 33, 44, 55);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -2224,7 +2256,9 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%Lg %d", zero / zero, 33, 44, 55);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -2305,8 +2339,10 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     static long double zero = 0.0L;
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%015Lg %d", zero / zero, 33, 44, 55);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+      my_snprintf (result, sizeof (result), "%020Lg %d", zero / zero, 33, 44, 55);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
 

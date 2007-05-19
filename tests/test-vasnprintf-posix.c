@@ -217,7 +217,9 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%a %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -446,11 +448,13 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%010a %d", NaN (), 33, 44, 55);
+      my_asnprintf (NULL, &length, "%020a %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
     /* "0000000nan 33" is not a valid result; see
        <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
-    ASSERT (strcmp (result, "       nan 33") == 0);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -526,7 +530,9 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%La %d", 0.0L / 0.0L, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -756,11 +762,13 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%010La %d", 0.0L / 0.0L, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%020La %d", 0.0L / 0.0L, 33, 44, 55);
     ASSERT (result != NULL);
     /* "0000000nan 33" is not a valid result; see
        <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
-    ASSERT (strcmp (result, "       nan 33") == 0);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -935,7 +943,9 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%f %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1024,9 +1034,11 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%015f %d", NaN (), 33, 44, 55);
+      my_asnprintf (NULL, &length, "%020f %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1210,7 +1222,9 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lf %d", zero / zero, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1300,9 +1314,11 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     static long double zero = 0.0L;
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%015Lf %d", zero / zero, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%020Lf %d", zero / zero, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1396,7 +1412,9 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%F %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "NAN 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "NAN", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1510,7 +1528,9 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%LF %d", zero / zero, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "NAN 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "NAN", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1729,7 +1749,9 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%e %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1836,9 +1858,11 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%015e %d", NaN (), 33, 44, 55);
+      my_asnprintf (NULL, &length, "%020e %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2023,7 +2047,9 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Le %d", zero / zero, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2123,9 +2149,11 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     static long double zero = 0.0L;
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%015Le %d", zero / zero, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%020Le %d", zero / zero, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2320,7 +2348,9 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%g %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2420,9 +2450,11 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%015g %d", NaN (), 33, 44, 55);
+      my_asnprintf (NULL, &length, "%020g %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2607,7 +2639,9 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lg %d", zero / zero, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "nan 33") == 0);
+    ASSERT (strlen (result) >= 3 + 3
+	    && memcmp (result, "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2707,9 +2741,11 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     static long double zero = 0.0L;
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%015Lg %d", zero / zero, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%020Lg %d", zero / zero, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "            nan 33") == 0);
+    ASSERT (strlen (result) == 20 + 3
+	    && memcmp (result + strspn (result, " "), "nan", 3) == 0
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }

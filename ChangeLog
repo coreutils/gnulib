@@ -1,5 +1,14 @@
 2007-05-19  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-vasnprintf-posix.c (test_function): Allow NaN to be
+	printed as "nan0x7fffffff" instead of "nan".
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	Needed for IRIX 6.5.
+
+2007-05-19  Bruno Haible  <bruno@clisp.org>
+
 	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Fix C89 syntax error in test code.
 	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Likewise.
 
