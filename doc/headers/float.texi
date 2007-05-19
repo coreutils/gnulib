@@ -3,10 +3,14 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xbd/float.h.html}
 
-Gnulib module: ---
+Gnulib module: float
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+The values of @code{LDBL_*} macros are incorrect on some platforms:
+On BeOS, they are the same as the values of the @code{DBL_*} macros, although
+@samp{long double} is a larger type than @samp{double}.
 @end itemize
 
 Portability problems not fixed by Gnulib:

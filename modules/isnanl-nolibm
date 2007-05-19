@@ -9,6 +9,7 @@ lib/float+.h
 m4/isnanl.m4
 
 Depends-on:
+float
 fpieee
 
 configure.ac:

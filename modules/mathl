@@ -19,6 +19,7 @@ lib/trigl.h
 m4/mathl.m4
 
 Depends-on:
+float
 math
 frexpl
 isnanl

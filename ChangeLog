@@ -1,3 +1,16 @@
+2007-05-19  Bruno Haible  <bruno@clisp.org>
+
+	* lib/float_.h: New file.
+	* m4/float_h.m4: New file.
+	* modules/float: New file.
+	* modules/isnanl (Dependencies): Add float.
+	* modules/isnanl-nolibm (Dependencies): Likewise.
+	* modules/mathl (Dependencies): Likewise.
+	* modules/printf-frexpl (Dependencies): Likewise.
+	* modules/signbit (Dependencies): Likewise.
+	* modules/vasnprintf (Dependencies): Likewise.
+	* doc/headers/float.texi: Update.
+
 2007-05-19  Jim Meyering  <jim@meyering.net>
 
 	* lib/utimens.c (gl_futimens): Rename from futimens,

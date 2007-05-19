@@ -11,6 +11,7 @@ m4/frexpl.m4
 m4/ldexpl.m4
 
 Depends-on:
+float
 math
 fpucw
 

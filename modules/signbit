@@ -9,6 +9,7 @@ lib/float+.h
 m4/signbit.m4
 
 Depends-on:
+float
 math
 isnanf-nolibm
 isnan-nolibm
