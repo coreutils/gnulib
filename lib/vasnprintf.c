@@ -53,6 +53,16 @@
 /* Checked size_t computations.  */
 #include "xsize.h"
 
+#if NEED_PRINTF_INFINITE && !defined IN_LIBINTL
+# include <math.h>
+# include "isnan.h"
+#endif
+
+#if NEED_PRINTF_LONG_DOUBLE && !defined IN_LIBINTL
+# include <math.h>
+# include "float+.h"
+#endif
+
 #if NEED_PRINTF_DIRECTIVE_A && !defined IN_LIBINTL
 # include <math.h>
 # include "isnan.h"
@@ -60,11 +70,6 @@
 # include "isnanl-nolibm.h"
 # include "printf-frexpl.h"
 # include "fpucw.h"
-#endif
-
-#if NEED_PRINTF_LONG_DOUBLE && !defined IN_LIBINTL
-# include <math.h>
-# include "float+.h"
 #endif
 
 /* Some systems, like OSF/1 4.0 and Woe32, don't have EOVERFLOW.  */
@@ -162,6 +167,17 @@ decimal_point_char ()
   return (point[0] != '\0' ? point[0] : '.');
 }
 # endif
+#endif
+
+#if NEED_PRINTF_INFINITE && !defined IN_LIBINTL
+
+/* Equivalent to !isfinite(x) || x == 0, but does not require libm.  */
+static int
+is_infinite_or_zero (double x)
+{
+  return isnan (x) || x + x == x;
+}
+
 #endif
 
 #if NEED_PRINTF_LONG_DOUBLE && !defined IN_LIBINTL
@@ -1257,18 +1273,29 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    abort ();
 		  }
 	      }
-#if NEED_PRINTF_LONG_DOUBLE && !defined IN_LIBINTL
+#if (NEED_PRINTF_INFINITE || NEED_PRINTF_LONG_DOUBLE) && !defined IN_LIBINTL
 	    else if ((dp->conversion == 'f' || dp->conversion == 'F'
 		      || dp->conversion == 'e' || dp->conversion == 'E'
 		      || dp->conversion == 'g' || dp->conversion == 'G')
-		     && a.arg[dp->arg_index].type == TYPE_LONGDOUBLE)
+		     && (0
+# if NEED_PRINTF_INFINITE
+			 || (a.arg[dp->arg_index].type == TYPE_DOUBLE
+			     /* The systems (mingw) which produce wrong output
+				for Inf and -Inf also do so for NaN and -0.0.
+				Therefore we treat these cases here as well.  */
+			     && is_infinite_or_zero (a.arg[dp->arg_index].a.a_double))
+# endif
+# if NEED_PRINTF_LONG_DOUBLE
+			 || a.arg[dp->arg_index].type == TYPE_LONGDOUBLE
+# endif
+			))
 	      {
+		arg_type type = a.arg[dp->arg_index].type;
 		int flags = dp->flags;
 		int has_width;
 		size_t width;
 		int has_precision;
 		size_t precision;
-		long double arg;
 		size_t tmp_length;
 		CHAR_T tmpbuf[700];
 		CHAR_T *tmp;
@@ -1337,19 +1364,38 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      }
 		  }
 
-		arg = a.arg[dp->arg_index].a.a_longdouble;
+		/* POSIX specifies the default precision to be 6 for %f, %F,
+		   %e, %E, but not for %g, %G.  Implementations appear to use
+		   the same default precision also for %g, %G.  */
+		if (!has_precision)
+		  precision = 6;
 
 		/* Allocate a temporary buffer of sufficient size.  */
+# if NEED_PRINTF_INFINITE && NEED_PRINTF_LONG_DOUBLE
+		tmp_length = (type == TYPE_LONGDOUBLE ? LDBL_DIG + 1 : 0);
+# elif NEED_PRINTF_LONG_DOUBLE
 		tmp_length = LDBL_DIG + 1;
+# elif NEED_PRINTF_INFINITE
+		tmp_length = 0;
+# endif
 		if (tmp_length < precision)
 		  tmp_length = precision;
-		if (dp->conversion == 'f' || dp->conversion == 'F')
-		  if (!(isnanl (arg) || arg + arg == arg))
+# if NEED_PRINTF_LONG_DOUBLE
+#  if NEED_PRINTF_INFINITE
+		if (type == TYPE_LONGDOUBLE)
+#  endif
+		  if (dp->conversion == 'f' || dp->conversion == 'F')
 		    {
-		      int exponent = floorlog10l (arg < 0 ? -arg : arg);
-		      if (exponent >= 0 && tmp_length < exponent + precision)
-			tmp_length = exponent + precision;
+		      long double arg = a.arg[dp->arg_index].a.a_longdouble;
+		      if (!(isnanl (arg) || arg + arg == arg))
+			{
+			  /* arg is finite and nonzero.  */
+			  int exponent = floorlog10l (arg < 0 ? -arg : arg);
+			  if (exponent >= 0 && tmp_length < exponent + precision)
+			    tmp_length = exponent + precision;
+			}
 		    }
+# endif
 		/* Account for sign, decimal point etc. */
 		tmp_length = xsum (tmp_length, 12);
 
@@ -1376,156 +1422,88 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		pad_ptr = NULL;
 		p = tmp;
 
-		if (isnanl (arg))
+# if NEED_PRINTF_LONG_DOUBLE
+#  if NEED_PRINTF_INFINITE
+		if (type == TYPE_LONGDOUBLE)
+#  endif
 		  {
-		    if (dp->conversion >= 'A' && dp->conversion <= 'Z')
-		      {
-			*p++ = 'N'; *p++ = 'A'; *p++ = 'N';
-		      }
-		    else
-		      {
-			*p++ = 'n'; *p++ = 'a'; *p++ = 'n';
-		      }
-		  }
-		else
-		  {
-		    int sign = 0;
-		    DECL_LONG_DOUBLE_ROUNDING
+		    long double arg = a.arg[dp->arg_index].a.a_longdouble;
 
-		    BEGIN_LONG_DOUBLE_ROUNDING ();
-
-		    if (signbit (arg)) /* arg < 0.0L or negative zero */
-		      {
-			sign = -1;
-			arg = -arg;
-		      }
-
-		    if (sign < 0)
-		      *p++ = '-';
-		    else if (flags & FLAG_SHOWSIGN)
-		      *p++ = '+';
-		    else if (flags & FLAG_SPACE)
-		      *p++ = ' ';
-
-		    if (arg > 0.0L && arg + arg == arg)
+		    if (isnanl (arg))
 		      {
 			if (dp->conversion >= 'A' && dp->conversion <= 'Z')
 			  {
-			    *p++ = 'I'; *p++ = 'N'; *p++ = 'F';
+			    *p++ = 'N'; *p++ = 'A'; *p++ = 'N';
 			  }
 			else
 			  {
-			    *p++ = 'i'; *p++ = 'n'; *p++ = 'f';
+			    *p++ = 'n'; *p++ = 'a'; *p++ = 'n';
 			  }
 		      }
 		    else
 		      {
-			pad_ptr = p;
+			int sign = 0;
+			DECL_LONG_DOUBLE_ROUNDING
 
-			if (dp->conversion == 'f' || dp->conversion == 'F')
+			BEGIN_LONG_DOUBLE_ROUNDING ();
+
+			if (signbit (arg)) /* arg < 0.0L or negative zero */
 			  {
-			    char *digits;
-			    size_t ndigits;
-
-			    if (!has_precision)
-			      precision = 6;
-
-			    digits =
-			      scale10_round_decimal_long_double (arg, precision);
-			    if (digits == NULL)
-			      {
-				END_LONG_DOUBLE_ROUNDING ();
-				goto out_of_memory;
-			      }
-			    ndigits = strlen (digits);
-
-			    if (ndigits > precision)
-			      do
-				{
-				  --ndigits;
-				  *p++ = digits[ndigits];
-				}
-			      while (ndigits > precision);
-			    else
-			      *p++ = '0';
-			    /* Here ndigits <= precision.  */
-			    if ((flags & FLAG_ALT) || precision > 0)
-			      {
-				*p++ = decimal_point_char ();
-				for (; precision > ndigits; precision--)
-				  *p++ = '0';
-				while (ndigits > 0)
-				  {
-				    --ndigits;
-				    *p++ = digits[ndigits];
-				  }
-			      }
-
-			    free (digits);
+			    sign = -1;
+			    arg = -arg;
 			  }
-			else if (dp->conversion == 'e' || dp->conversion == 'E')
+
+			if (sign < 0)
+			  *p++ = '-';
+			else if (flags & FLAG_SHOWSIGN)
+			  *p++ = '+';
+			else if (flags & FLAG_SPACE)
+			  *p++ = ' ';
+
+			if (arg > 0.0L && arg + arg == arg)
 			  {
-			    int exponent;
-
-			    if (!has_precision)
-			      precision = 6;
-
-			    if (arg == 0.0L)
+			    if (dp->conversion >= 'A' && dp->conversion <= 'Z')
 			      {
-				exponent = 0;
-				*p++ = '0';
-				if ((flags & FLAG_ALT) || precision > 0)
-				  {
-				    *p++ = decimal_point_char ();
-				    for (; precision > 0; precision--)
-				      *p++ = '0';
-				  }
+				*p++ = 'I'; *p++ = 'N'; *p++ = 'F';
 			      }
 			    else
 			      {
-				/* arg > 0.0L.  */
-				int adjusted;
+				*p++ = 'i'; *p++ = 'n'; *p++ = 'f';
+			      }
+			  }
+			else
+			  {
+			    pad_ptr = p;
+
+			    if (dp->conversion == 'f' || dp->conversion == 'F')
+			      {
 				char *digits;
 				size_t ndigits;
 
-				exponent = floorlog10l (arg);
-				adjusted = 0;
-				for (;;)
+				digits =
+				  scale10_round_decimal_long_double (arg, precision);
+				if (digits == NULL)
 				  {
-				    digits =
-				      scale10_round_decimal_long_double (arg,
-									 (int)precision - exponent);
-				    if (digits == NULL)
-				      {
-					END_LONG_DOUBLE_ROUNDING ();
-					goto out_of_memory;
-				      }
-				    ndigits = strlen (digits);
-
-				    if (ndigits == precision + 1)
-				      break;
-				    if (ndigits < precision
-					|| ndigits > precision + 2)
-				      /* The exponent was not guessed precisely
-					 enough.  */
-				      abort ();
-				    if (adjusted)
-				      /* None of two values of exponent is the
-					 right one.  Prevent an endless loop.  */
-				      abort ();
-				    free (digits);
-				    if (ndigits == precision)
-				      exponent -= 1;
-				    else
-				      exponent += 1;
-				    adjusted = 1;
+				    END_LONG_DOUBLE_ROUNDING ();
+				    goto out_of_memory;
 				  }
+				ndigits = strlen (digits);
 
-				/* Here ndigits = precision+1.  */
-				*p++ = digits[--ndigits];
+				if (ndigits > precision)
+				  do
+				    {
+				      --ndigits;
+				      *p++ = digits[ndigits];
+				    }
+				  while (ndigits > precision);
+				else
+				  *p++ = '0';
+				/* Here ndigits <= precision.  */
 				if ((flags & FLAG_ALT) || precision > 0)
 				  {
 				    *p++ = decimal_point_char ();
+				    for (; precision > ndigits; precision--)
+				      *p++ = '0';
 				    while (ndigits > 0)
 				      {
 					--ndigits;
@@ -1535,119 +1513,201 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 
 				free (digits);
 			      }
-
-			    *p++ = dp->conversion; /* 'e' or 'E' */
-# if WIDE_CHAR_VERSION
-			    {
-			      static const wchar_t decimal_format[] =
-				{ '%', '+', '.', '2', 'd', '\0' };
-			      SNPRINTF (p, 6 + 1, decimal_format, exponent);
-			    }
-# else
-			    sprintf (p, "%+.2d", exponent);
-# endif
-			    while (*p != '\0')
-			      p++;
-			  }
-			else if (dp->conversion == 'g' || dp->conversion == 'G')
-			  {
-			    /* This is not specified by POSIX, but
-			       implementations appear to do this.  */
-			    if (!has_precision)
-			      precision = 6;
-
-			    if (precision == 0)
-			      precision = 1;
-			    /* precision >= 1.  */
-
-			    if (arg == 0.0L)
-			      /* The exponent is 0, >= -4, < precision.
-				 Use fixed-point notation.  */
+			    else if (dp->conversion == 'e' || dp->conversion == 'E')
 			      {
-				size_t ndigits = precision;
-				/* Number of trailing zeroes that have to be
-				   dropped.  */
-				size_t nzeroes =
-				  (flags & FLAG_ALT ? 0 : precision - 1);
-
-				--ndigits;
-				*p++ = '0';
-				if ((flags & FLAG_ALT) || ndigits > nzeroes)
-				  {
-				    *p++ = decimal_point_char ();
-				    while (ndigits > nzeroes)
-				      {
-					--ndigits;
-					*p++ = '0';
-				      }
-				  }
-			      }
-			    else
-			      {
-				/* arg > 0.0L.  */
 				int exponent;
-				int adjusted;
-				char *digits;
-				size_t ndigits;
-				size_t nzeroes;
 
-				exponent = floorlog10l (arg);
-				adjusted = 0;
-				for (;;)
+				if (arg == 0.0L)
 				  {
-				    digits =
-				      scale10_round_decimal_long_double (arg,
-									 (int)(precision - 1) - exponent);
-				    if (digits == NULL)
+				    exponent = 0;
+				    *p++ = '0';
+				    if ((flags & FLAG_ALT) || precision > 0)
 				      {
-					END_LONG_DOUBLE_ROUNDING ();
-					goto out_of_memory;
+					*p++ = decimal_point_char ();
+					for (; precision > 0; precision--)
+					  *p++ = '0';
 				      }
-				    ndigits = strlen (digits);
-
-				    if (ndigits == precision)
-				      break;
-				    if (ndigits < precision - 1
-					|| ndigits > precision + 1)
-				      /* The exponent was not guessed precisely
-					 enough.  */
-				      abort ();
-				    if (adjusted)
-				      /* None of two values of exponent is the
-					 right one.  Prevent an endless loop.  */
-				      abort ();
-				    free (digits);
-				    if (ndigits < precision)
-				      exponent -= 1;
-				    else
-				      exponent += 1;
-				    adjusted = 1;
 				  }
-				/* Here ndigits = precision.  */
-
-				/* Determine the number of trailing zeroes that
-				   have to be dropped.  */
-				nzeroes = 0;
-				if ((flags & FLAG_ALT) == 0)
-				  while (nzeroes < ndigits
-					 && digits[nzeroes] == '0')
-				    nzeroes++;
-
-				/* The exponent is now determined.  */
-				if (exponent >= -4 && exponent < (long)precision)
+				else
 				  {
-				    /* Fixed-point notation: max(exponent,0)+1
-				       digits, then the decimal point, then the
-				       remaining digits without trailing zeroes.  */
-				    if (exponent >= 0)
+				    /* arg > 0.0L.  */
+				    int adjusted;
+				    char *digits;
+				    size_t ndigits;
+
+				    exponent = floorlog10l (arg);
+				    adjusted = 0;
+				    for (;;)
 				      {
-					size_t count = exponent + 1;
-					/* Note: count <= precision = ndigits.  */
-					for (; count > 0; count--)
-					  *p++ = digits[--ndigits];
-					if ((flags & FLAG_ALT) || ndigits > nzeroes)
+					digits =
+					  scale10_round_decimal_long_double (arg,
+									     (int)precision - exponent);
+					if (digits == NULL)
 					  {
+					    END_LONG_DOUBLE_ROUNDING ();
+					    goto out_of_memory;
+					  }
+					ndigits = strlen (digits);
+
+					if (ndigits == precision + 1)
+					  break;
+					if (ndigits < precision
+					    || ndigits > precision + 2)
+					  /* The exponent was not guessed
+					     precisely enough.  */
+					  abort ();
+					if (adjusted)
+					  /* None of two values of exponent is
+					     the right one.  Prevent an endless
+					     loop.  */
+					  abort ();
+					free (digits);
+					if (ndigits == precision)
+					  exponent -= 1;
+					else
+					  exponent += 1;
+					adjusted = 1;
+				      }
+
+				    /* Here ndigits = precision+1.  */
+				    *p++ = digits[--ndigits];
+				    if ((flags & FLAG_ALT) || precision > 0)
+				      {
+					*p++ = decimal_point_char ();
+					while (ndigits > 0)
+					  {
+					    --ndigits;
+					    *p++ = digits[ndigits];
+					  }
+				      }
+
+				    free (digits);
+				  }
+
+				*p++ = dp->conversion; /* 'e' or 'E' */
+#  if WIDE_CHAR_VERSION
+				{
+				  static const wchar_t decimal_format[] =
+				    { '%', '+', '.', '2', 'd', '\0' };
+				  SNPRINTF (p, 6 + 1, decimal_format, exponent);
+				}
+#  else
+				sprintf (p, "%+.2d", exponent);
+#  endif
+				while (*p != '\0')
+				  p++;
+			      }
+			    else if (dp->conversion == 'g' || dp->conversion == 'G')
+			      {
+				if (precision == 0)
+				  precision = 1;
+				/* precision >= 1.  */
+
+				if (arg == 0.0L)
+				  /* The exponent is 0, >= -4, < precision.
+				     Use fixed-point notation.  */
+				  {
+				    size_t ndigits = precision;
+				    /* Number of trailing zeroes that have to be
+				       dropped.  */
+				    size_t nzeroes =
+				      (flags & FLAG_ALT ? 0 : precision - 1);
+
+				    --ndigits;
+				    *p++ = '0';
+				    if ((flags & FLAG_ALT) || ndigits > nzeroes)
+				      {
+					*p++ = decimal_point_char ();
+					while (ndigits > nzeroes)
+					  {
+					    --ndigits;
+					    *p++ = '0';
+					  }
+				      }
+				  }
+				else
+				  {
+				    /* arg > 0.0L.  */
+				    int exponent;
+				    int adjusted;
+				    char *digits;
+				    size_t ndigits;
+				    size_t nzeroes;
+
+				    exponent = floorlog10l (arg);
+				    adjusted = 0;
+				    for (;;)
+				      {
+					digits =
+					  scale10_round_decimal_long_double (arg,
+									     (int)(precision - 1) - exponent);
+					if (digits == NULL)
+					  {
+					    END_LONG_DOUBLE_ROUNDING ();
+					    goto out_of_memory;
+					  }
+					ndigits = strlen (digits);
+
+					if (ndigits == precision)
+					  break;
+					if (ndigits < precision - 1
+					    || ndigits > precision + 1)
+					  /* The exponent was not guessed
+					     precisely enough.  */
+					  abort ();
+					if (adjusted)
+					  /* None of two values of exponent is
+					     the right one.  Prevent an endless
+					     loop.  */
+					  abort ();
+					free (digits);
+					if (ndigits < precision)
+					  exponent -= 1;
+					else
+					  exponent += 1;
+					adjusted = 1;
+				      }
+				    /* Here ndigits = precision.  */
+
+				    /* Determine the number of trailing zeroes
+				       that have to be dropped.  */
+				    nzeroes = 0;
+				    if ((flags & FLAG_ALT) == 0)
+				      while (nzeroes < ndigits
+					     && digits[nzeroes] == '0')
+					nzeroes++;
+
+				    /* The exponent is now determined.  */
+				    if (exponent >= -4
+					&& exponent < (long)precision)
+				      {
+					/* Fixed-point notation:
+					   max(exponent,0)+1 digits, then the
+					   decimal point, then the remaining
+					   digits without trailing zeroes.  */
+					if (exponent >= 0)
+					  {
+					    size_t count = exponent + 1;
+					    /* Note: count <= precision = ndigits.  */
+					    for (; count > 0; count--)
+					      *p++ = digits[--ndigits];
+					    if ((flags & FLAG_ALT) || ndigits > nzeroes)
+					      {
+						*p++ = decimal_point_char ();
+						while (ndigits > nzeroes)
+						  {
+						    --ndigits;
+						    *p++ = digits[ndigits];
+						  }
+					      }
+					  }
+					else
+					  {
+					    size_t count = -exponent - 1;
+					    *p++ = '0';
 					    *p++ = decimal_point_char ();
+					    for (; count > 0; count--)
+					      *p++ = '0';
 					    while (ndigits > nzeroes)
 					      {
 						--ndigits;
@@ -1657,54 +1717,143 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 				      }
 				    else
 				      {
-					size_t count = -exponent - 1;
-					*p++ = '0';
-					*p++ = decimal_point_char ();
-					for (; count > 0; count--)
-					  *p++ = '0';
-					while (ndigits > nzeroes)
+					/* Exponential notation.  */
+					*p++ = digits[--ndigits];
+					if ((flags & FLAG_ALT) || ndigits > nzeroes)
 					  {
-					    --ndigits;
-					    *p++ = digits[ndigits];
+					    *p++ = decimal_point_char ();
+					    while (ndigits > nzeroes)
+					      {
+						--ndigits;
+						*p++ = digits[ndigits];
+					      }
 					  }
+					*p++ = dp->conversion - 'G' + 'E'; /* 'e' or 'E' */
+#  if WIDE_CHAR_VERSION
+					{
+					  static const wchar_t decimal_format[] =
+					    { '%', '+', '.', '2', 'd', '\0' };
+					  SNPRINTF (p, 6 + 1, decimal_format, exponent);
+					}
+#  else
+					sprintf (p, "%+.2d", exponent);
+#  endif
+					while (*p != '\0')
+					  p++;
 				      }
-				  }
-				else
-				  {
-				    /* Exponential notation.  */
-				    *p++ = digits[--ndigits];
-				    if ((flags & FLAG_ALT) || ndigits > nzeroes)
-				      {
-					*p++ = decimal_point_char ();
-					while (ndigits > nzeroes)
-					  {
-					    --ndigits;
-					    *p++ = digits[ndigits];
-					  }
-				      }
-				    *p++ = dp->conversion - 'G' + 'E'; /* 'e' or 'E' */
-# if WIDE_CHAR_VERSION
-				    {
-				      static const wchar_t decimal_format[] =
-					{ '%', '+', '.', '2', 'd', '\0' };
-				      SNPRINTF (p, 6 + 1, decimal_format, exponent);
-				    }
-# else
-				    sprintf (p, "%+.2d", exponent);
-# endif
-				    while (*p != '\0')
-				      p++;
-				  }
 
-				free (digits);
+				    free (digits);
+				  }
+			      }
+			    else
+			      abort ();
+			  }
+
+			END_LONG_DOUBLE_ROUNDING ();
+		      }
+		  }
+#  if NEED_PRINTF_INFINITE
+		else
+#  endif
+# endif
+# if NEED_PRINTF_INFINITE
+		  {
+		    /* Simpler than above: handle only NaN, Infinity, zero.  */
+		    double arg = a.arg[dp->arg_index].a.a_double;
+
+		    if (isnan (arg))
+		      {
+			if (dp->conversion >= 'A' && dp->conversion <= 'Z')
+			  {
+			    *p++ = 'N'; *p++ = 'A'; *p++ = 'N';
+			  }
+			else
+			  {
+			    *p++ = 'n'; *p++ = 'a'; *p++ = 'n';
+			  }
+		      }
+		    else
+		      {
+			int sign = 0;
+
+			if (signbit (arg)) /* arg < 0.0L or negative zero */
+			  {
+			    sign = -1;
+			    arg = -arg;
+			  }
+
+			if (sign < 0)
+			  *p++ = '-';
+			else if (flags & FLAG_SHOWSIGN)
+			  *p++ = '+';
+			else if (flags & FLAG_SPACE)
+			  *p++ = ' ';
+
+			if (arg > 0.0 && arg + arg == arg)
+			  {
+			    if (dp->conversion >= 'A' && dp->conversion <= 'Z')
+			      {
+				*p++ = 'I'; *p++ = 'N'; *p++ = 'F';
+			      }
+			    else
+			      {
+				*p++ = 'i'; *p++ = 'n'; *p++ = 'f';
 			      }
 			  }
 			else
-			  abort ();
-		      }
+			  {
+			    if (!(arg == 0.0))
+			      abort ();
 
-		    END_LONG_DOUBLE_ROUNDING ();
+			    pad_ptr = p;
+
+			    if (dp->conversion == 'f' || dp->conversion == 'F')
+			      {
+				*p++ = '0';
+				if ((flags & FLAG_ALT) || precision > 0)
+				  {
+				    *p++ = decimal_point_char ();
+				    for (; precision > 0; precision--)
+				      *p++ = '0';
+				  }
+			      }
+			    else if (dp->conversion == 'e' || dp->conversion == 'E')
+			      {
+				*p++ = '0';
+				if ((flags & FLAG_ALT) || precision > 0)
+				  {
+				    *p++ = decimal_point_char ();
+				    for (; precision > 0; precision--)
+				      *p++ = '0';
+				  }
+				*p++ = dp->conversion; /* 'e' or 'E' */
+				*p++ = '+';
+				/* Produce the same number of exponent digits as
+				   the native printf implementation.  */
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+				*p++ = '0';
+# endif
+				*p++ = '0';
+				*p++ = '0';
+			      }
+			    else if (dp->conversion == 'g' || dp->conversion == 'G')
+			      {
+				*p++ = '0';
+				if (flags & FLAG_ALT)
+				  {
+				    size_t ndigits =
+				      (precision > 0 ? precision - 1 : 0);
+				    *p++ = decimal_point_char ();
+				    for (; ndigits > 0; --ndigits)
+				      *p++ = '0';
+				  }
+			      }
+			    else
+			      abort ();
+			  }
+		      }
 		  }
+# endif
 
 		/* The generated string now extends from tmp to p, with the
 		   zero padding insertion point being at pad_ptr.  */

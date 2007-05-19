@@ -20,6 +20,10 @@ This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
 @code{j}, @code{t}, @code{z}) on some platforms:
 AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin 2006, mingw, BeOS.
 @item
+printf @code{"%f"}, @code{"%e"}, @code{"%g"} of Infinity and NaN yields an
+incorrect result on some platforms:
+mingw.
+@item
 printf of @samp{long double} numbers is unsupported on some platforms:
 mingw, BeOS.
 @item
