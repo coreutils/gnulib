@@ -17,18 +17,6 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
-/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
-#ifdef __DECC
-static double
-NaN ()
-{
-  static double zero = 0.0;
-  return zero / zero;
-}
-#else
-# define NaN() (0.0 / 0.0)
-#endif
-
 static void
 test_function (int (*my_fprintf) (FILE *, const char *, ...))
 {
@@ -58,14 +46,8 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
   /* Negative infinity.  */
   my_fprintf (stdout, "%a %d\n", -1.0 / 0.0, 33, 44, 55);
 
-  /* NaN.  */
-  my_fprintf (stdout, "%a %d\n", NaN (), 33, 44, 55);
-
   /* FLAG_ZERO with infinite number.  */
   my_fprintf (stdout, "%010a %d\n", 1.0 / 0.0, 33, 44, 55);
-
-  /* FLAG_ZERO with NaN.  */
-  my_fprintf (stdout, "%010a %d\n", NaN (), 33, 44, 55);
 
   /* Test the support of the %f format directive.  */
 
@@ -83,9 +65,6 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
 
   /* Negative zero.  */
   my_fprintf (stdout, "%f %d\n", -0.0, 33, 44, 55);
-
-  /* NaN.  */
-  my_fprintf (stdout, "%f %d\n", NaN (), 33, 44, 55);
 
   /* FLAG_ZERO.  */
   my_fprintf (stdout, "%015f %d\n", 1234.0, 33, 44, 55);
@@ -107,11 +86,6 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
 
   /* Negative zero.  */
   my_fprintf (stdout, "%Lf %d\n", -0.0L, 33, 44, 55);
-
-  { /* NaN.  */
-    static long double zero = 0.0L;
-    my_fprintf (stdout, "%Lf %d\n", zero / zero, 33, 44, 55);
-  }
 
   /* FLAG_ZERO.  */
   my_fprintf (stdout, "%015Lf %d\n", 1234.0L, 33, 44, 55);
@@ -136,9 +110,6 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
   /* Negative zero.  */
   my_fprintf (stdout, "%F %d\n", -0.0, 33, 44, 55);
 
-  /* NaN.  */
-  my_fprintf (stdout, "%F %d\n", NaN (), 33, 44, 55);
-
   /* FLAG_ZERO.  */
   my_fprintf (stdout, "%015F %d\n", 1234.0, 33, 44, 55);
 
@@ -159,11 +130,6 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
 
   /* Negative zero.  */
   my_fprintf (stdout, "%LF %d\n", -0.0L, 33, 44, 55);
-
-  { /* NaN.  */
-    static long double zero = 0.0L;
-    my_fprintf (stdout, "%LF %d\n", zero / zero, 33, 44, 55);
-  }
 
   /* FLAG_ZERO.  */
   my_fprintf (stdout, "%015LF %d\n", 1234.0L, 33, 44, 55);
