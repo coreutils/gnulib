@@ -15,7 +15,7 @@ AC_DEFUN([gl_PRINTF_SIZES_C99],
   AC_REQUIRE([gl_AC_HEADER_INTTYPES_H])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether printf supports size specifiers as in C99],
-    [gl_cv_func_printf_sizes_c99], 
+    [gl_cv_func_printf_sizes_c99],
     [
       AC_TRY_RUN([
 #include <stddef.h>
@@ -90,7 +90,7 @@ AC_DEFUN([gl_PRINTF_INFINITE],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether printf supports infinite 'double' arguments],
-    [gl_cv_func_printf_infinite], 
+    [gl_cv_func_printf_infinite],
     [
       AC_TRY_RUN([
 #include <stdio.h>
@@ -138,7 +138,7 @@ AC_DEFUN([gl_PRINTF_LONG_DOUBLE],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether printf supports 'long double' arguments],
-    [gl_cv_func_printf_long_double], 
+    [gl_cv_func_printf_long_double],
     [
       AC_TRY_RUN([
 #include <stdio.h>
@@ -182,7 +182,7 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_A],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether printf supports the 'a' and 'A' directives],
-    [gl_cv_func_printf_directive_a], 
+    [gl_cv_func_printf_directive_a],
     [
       AC_TRY_RUN([
 #include <stdio.h>
@@ -262,7 +262,7 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_F],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether printf supports the 'F' directive],
-    [gl_cv_func_printf_directive_f], 
+    [gl_cv_func_printf_directive_f],
     [
       AC_TRY_RUN([
 #include <stdio.h>
@@ -313,7 +313,7 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_N],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether printf supports the 'n' directive],
-    [gl_cv_func_printf_directive_n], 
+    [gl_cv_func_printf_directive_n],
     [
       AC_TRY_RUN([
 #include <stdio.h>
@@ -347,7 +347,7 @@ AC_DEFUN([gl_PRINTF_POSITIONS],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether printf supports POSIX/XSI format strings with positions],
-    [gl_cv_func_printf_positions], 
+    [gl_cv_func_printf_positions],
     [
       AC_TRY_RUN([
 #include <stdio.h>
@@ -466,7 +466,7 @@ AC_DEFUN([gl_SNPRINTF_TRUNCATION_C99],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether snprintf truncates the result as in C99],
-    [gl_cv_func_snprintf_truncation_c99], 
+    [gl_cv_func_snprintf_truncation_c99],
     [
       AC_TRY_RUN([
 #include <stdio.h>
@@ -543,7 +543,7 @@ AC_DEFUN([gl_SNPRINTF_RETVAL_C99],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether snprintf returns a byte count as in C99],
-    [gl_cv_func_snprintf_retval_c99], 
+    [gl_cv_func_snprintf_retval_c99],
     [
       AC_TRY_RUN([
 #include <stdio.h>
@@ -600,7 +600,7 @@ AC_DEFUN([gl_SNPRINTF_DIRECTIVE_N],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether snprintf fully supports the 'n' directive],
-    [gl_cv_func_snprintf_directive_n], 
+    [gl_cv_func_snprintf_directive_n],
     [
       AC_TRY_RUN([
 #include <stdio.h>
@@ -691,7 +691,7 @@ AC_DEFUN([gl_VSNPRINTF_ZEROSIZE_C99],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether vsnprintf respects a zero size as in C99],
-    [gl_cv_func_vsnprintf_zerosize_c99], 
+    [gl_cv_func_vsnprintf_zerosize_c99],
     [
       AC_TRY_RUN([
 #include <stdarg.h>
