@@ -75,8 +75,8 @@ struct utimbuf
    Return 0 on success, -1 (setting errno) on failure.  */
 
 int
-futimens (int fd ATTRIBUTE_UNUSED,
-	  char const *file, struct timespec const timespec[2])
+gl_futimens (int fd ATTRIBUTE_UNUSED,
+	     char const *file, struct timespec const timespec[2])
 {
   /* Some Linux-based NFS clients are buggy, and mishandle time stamps
      of files in NFS file systems in some cases.  We have no
@@ -185,5 +185,5 @@ futimens (int fd ATTRIBUTE_UNUSED,
 int
 utimens (char const *file, struct timespec const timespec[2])
 {
-  return futimens (-1, file, timespec);
+  return gl_futimens (-1, file, timespec);
 }

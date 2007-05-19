@@ -1,3 +1,8 @@
+2007-05-19  Jim Meyering  <jim@meyering.net>
+
+	* lib/utimens.c (gl_futimens): Rename from futimens,
+	now that glibc-2.6 declares futimens.
+
 2007-05-19  Bruno Haible  <bruno@clisp.org>
 
 	Avoid test failures on mingw.
