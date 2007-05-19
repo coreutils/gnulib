@@ -1305,7 +1305,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%e %d", 12.75, 33, 44, 55);
-    ASSERT (strcmp (result, "1.275000e+01 33") == 0);
+    ASSERT (strcmp (result, "1.275000e+01 33") == 0
+	    || strcmp (result, "1.275000e+001 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1313,7 +1314,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%e %d", 1234567.0, 33, 44, 55);
-    ASSERT (strcmp (result, "1.234567e+06 33") == 0);
+    ASSERT (strcmp (result, "1.234567e+06 33") == 0
+	    || strcmp (result, "1.234567e+006 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1401,7 +1403,16 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
 	char result[100];
 	int retval =
 	  my_snprintf (result, sizeof (result), "%e", data[k].value);
-	ASSERT (strmatch (data[k].string, result));
+	const char *expected = data[k].string;
+	ASSERT (result != NULL);
+	ASSERT (strcmp (result, expected) == 0
+		/* Some implementations produce exponents with 3 digits.  */
+		|| (strlen (result) == strlen (expected) + 1
+		    && memcmp (result, expected, strlen (expected) - 2) == 0
+		    && result[strlen (expected) - 2] == '0'
+		    && strcmp (result + strlen (expected) - 1,
+			       expected + strlen (expected) - 2)
+		       == 0));
 	ASSERT (retval == strlen (result));
       }
   }
@@ -1410,7 +1421,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%e %d", -0.03125, 33, 44, 55);
-    ASSERT (strcmp (result, "-3.125000e-02 33") == 0);
+    ASSERT (strcmp (result, "-3.125000e-02 33") == 0
+	    || strcmp (result, "-3.125000e-002 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1418,7 +1430,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%e %d", 0.0, 33, 44, 55);
-    ASSERT (strcmp (result, "0.000000e+00 33") == 0);
+    ASSERT (strcmp (result, "0.000000e+00 33") == 0
+	    || strcmp (result, "0.000000e+000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1426,7 +1439,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%e %d", -0.0, 33, 44, 55);
-    ASSERT (strcmp (result, "-0.000000e+00 33") == 0);
+    ASSERT (strcmp (result, "-0.000000e+00 33") == 0
+	    || strcmp (result, "-0.000000e+000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1460,7 +1474,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%15e %d", 1.75, 33, 44, 55);
-    ASSERT (strcmp (result, "   1.750000e+00 33") == 0);
+    ASSERT (strcmp (result, "   1.750000e+00 33") == 0
+	    || strcmp (result, "  1.750000e+000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1468,7 +1483,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%-15e %d", 1.75, 33, 44, 55);
-    ASSERT (strcmp (result, "1.750000e+00    33") == 0);
+    ASSERT (strcmp (result, "1.750000e+00    33") == 0
+	    || strcmp (result, "1.750000e+000   33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1476,7 +1492,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%+e %d", 1.75, 33, 44, 55);
-    ASSERT (strcmp (result, "+1.750000e+00 33") == 0);
+    ASSERT (strcmp (result, "+1.750000e+00 33") == 0
+	    || strcmp (result, "+1.750000e+000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1484,7 +1501,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "% e %d", 1.75, 33, 44, 55);
-    ASSERT (strcmp (result, " 1.750000e+00 33") == 0);
+    ASSERT (strcmp (result, " 1.750000e+00 33") == 0
+	    || strcmp (result, " 1.750000e+000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1492,7 +1510,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%#e %d", 1.75, 33, 44, 55);
-    ASSERT (strcmp (result, "1.750000e+00 33") == 0);
+    ASSERT (strcmp (result, "1.750000e+00 33") == 0
+	    || strcmp (result, "1.750000e+000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1500,7 +1519,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%#.e %d", 1.75, 33, 44, 55);
-    ASSERT (strcmp (result, "2.e+00 33") == 0);
+    ASSERT (strcmp (result, "2.e+00 33") == 0
+	    || strcmp (result, "2.e+000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1508,7 +1528,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%#.e %d", 9.75, 33, 44, 55);
-    ASSERT (strcmp (result, "1.e+01 33") == 0);
+    ASSERT (strcmp (result, "1.e+01 33") == 0
+	    || strcmp (result, "1.e+001 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1516,7 +1537,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%015e %d", 1234.0, 33, 44, 55);
-    ASSERT (strcmp (result, "0001.234000e+03 33") == 0);
+    ASSERT (strcmp (result, "0001.234000e+03 33") == 0
+	    || strcmp (result, "001.234000e+003 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1541,7 +1563,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%.e %d", 1234.0, 33, 44, 55);
-    ASSERT (strcmp (result, "1e+03 33") == 0);
+    ASSERT (strcmp (result, "1e+03 33") == 0
+	    || strcmp (result, "1e+003 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1645,7 +1668,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
 	char result[100];
 	int retval =
 	  my_snprintf (result, sizeof (result), "%Le", data[k].value);
-	ASSERT (strmatch (data[k].string, result));
+	ASSERT (strcmp (result, data[k].string) == 0);
 	ASSERT (retval == strlen (result));
       }
   }
@@ -1805,7 +1828,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%g %d", 1234567.0, 33, 44, 55);
-    ASSERT (strcmp (result, "1.23457e+06 33") == 0);
+    ASSERT (strcmp (result, "1.23457e+06 33") == 0
+	    || strcmp (result, "1.23457e+006 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1893,7 +1917,16 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
 	char result[100];
 	int retval =
 	  my_snprintf (result, sizeof (result), "%g", data[k].value);
-	ASSERT (strmatch (data[k].string, result));
+	const char *expected = data[k].string;
+	ASSERT (strcmp (result, expected) == 0
+		/* Some implementations produce exponents with 3 digits.  */
+		|| (expected[strlen (expected) - 4] == 'e'
+		    && strlen (result) == strlen (expected) + 1
+		    && memcmp (result, expected, strlen (expected) - 2) == 0
+		    && result[strlen (expected) - 2] == '0'
+		    && strcmp (result + strlen (expected) - 1,
+			       expected + strlen (expected) - 2)
+		       == 0));
 	ASSERT (retval == strlen (result));
       }
   }
@@ -2000,7 +2033,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%#.g %d", 9.75, 33, 44, 55);
-    ASSERT (strcmp (result, "1.e+01 33") == 0);
+    ASSERT (strcmp (result, "1.e+01 33") == 0
+	    || strcmp (result, "1.e+001 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -2033,7 +2067,8 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     char result[100];
     int retval =
       my_snprintf (result, sizeof (result), "%.g %d", 1234.0, 33, 44, 55);
-    ASSERT (strcmp (result, "1e+03 33") == 0);
+    ASSERT (strcmp (result, "1e+03 33") == 0
+	    || strcmp (result, "1e+003 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -2137,7 +2172,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
 	char result[100];
 	int retval =
 	  my_snprintf (result, sizeof (result), "%Lg", data[k].value);
-	ASSERT (strmatch (data[k].string, result));
+	ASSERT (strcmp (result, data[k].string) == 0);
 	ASSERT (retval == strlen (result));
       }
   }

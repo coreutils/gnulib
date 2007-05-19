@@ -1553,7 +1553,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%e %d", 12.75, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "1.275000e+01 33") == 0);
+    ASSERT (strcmp (result, "1.275000e+01 33") == 0
+	    || strcmp (result, "1.275000e+001 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1563,7 +1564,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%e %d", 1234567.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "1.234567e+06 33") == 0);
+    ASSERT (strcmp (result, "1.234567e+06 33") == 0
+	    || strcmp (result, "1.234567e+006 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1652,8 +1654,16 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
 	size_t length;
 	char *result =
 	  my_asnprintf (NULL, &length, "%e", data[k].value);
+	const char *expected = data[k].string;
 	ASSERT (result != NULL);
-	ASSERT (strmatch (data[k].string, result));
+	ASSERT (strcmp (result, expected) == 0
+		/* Some implementations produce exponents with 3 digits.  */
+		|| (strlen (result) == strlen (expected) + 1
+		    && memcmp (result, expected, strlen (expected) - 2) == 0
+		    && result[strlen (expected) - 2] == '0'
+		    && strcmp (result + strlen (expected) - 1,
+			       expected + strlen (expected) - 2)
+		       == 0));
 	ASSERT (length == strlen (result));
 	free (result);
       }
@@ -1664,7 +1674,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%e %d", -0.03125, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-3.125000e-02 33") == 0);
+    ASSERT (strcmp (result, "-3.125000e-02 33") == 0
+	    || strcmp (result, "-3.125000e-002 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1674,7 +1685,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%e %d", 0.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "0.000000e+00 33") == 0);
+    ASSERT (strcmp (result, "0.000000e+00 33") == 0
+	    || strcmp (result, "0.000000e+000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1684,7 +1696,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%e %d", -0.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-0.000000e+00 33") == 0);
+    ASSERT (strcmp (result, "-0.000000e+00 33") == 0
+	    || strcmp (result, "-0.000000e+000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1726,7 +1739,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%15e %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "   1.750000e+00 33") == 0);
+    ASSERT (strcmp (result, "   1.750000e+00 33") == 0
+	    || strcmp (result, "  1.750000e+000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1736,7 +1750,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%-15e %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "1.750000e+00    33") == 0);
+    ASSERT (strcmp (result, "1.750000e+00    33") == 0
+	    || strcmp (result, "1.750000e+000   33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1746,7 +1761,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%+e %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "+1.750000e+00 33") == 0);
+    ASSERT (strcmp (result, "+1.750000e+00 33") == 0
+	    || strcmp (result, "+1.750000e+000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1756,7 +1772,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "% e %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, " 1.750000e+00 33") == 0);
+    ASSERT (strcmp (result, " 1.750000e+00 33") == 0
+	    || strcmp (result, " 1.750000e+000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1766,7 +1783,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%#e %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "1.750000e+00 33") == 0);
+    ASSERT (strcmp (result, "1.750000e+00 33") == 0
+	    || strcmp (result, "1.750000e+000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1776,7 +1794,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%#.e %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "2.e+00 33") == 0);
+    ASSERT (strcmp (result, "2.e+00 33") == 0
+	    || strcmp (result, "2.e+000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1786,7 +1805,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%#.e %d", 9.75, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "1.e+01 33") == 0);
+    ASSERT (strcmp (result, "1.e+01 33") == 0
+	    || strcmp (result, "1.e+001 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1796,7 +1816,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%015e %d", 1234.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "0001.234000e+03 33") == 0);
+    ASSERT (strcmp (result, "0001.234000e+03 33") == 0
+	    || strcmp (result, "001.234000e+003 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1827,7 +1848,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%.e %d", 1234.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "1e+03 33") == 0);
+    ASSERT (strcmp (result, "1e+03 33") == 0
+	    || strcmp (result, "1e+003 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1937,7 +1959,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
 	char *result =
 	  my_asnprintf (NULL, &length, "%Le", data[k].value);
 	ASSERT (result != NULL);
-	ASSERT (strmatch (data[k].string, result));
+	ASSERT (strcmp (result, data[k].string) == 0);
 	ASSERT (length == strlen (result));
 	free (result);
       }
@@ -2135,7 +2157,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%g %d", 1234567.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "1.23457e+06 33") == 0);
+    ASSERT (strcmp (result, "1.23457e+06 33") == 0
+	    || strcmp (result, "1.23457e+006 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2224,8 +2247,17 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
 	size_t length;
 	char *result =
 	  my_asnprintf (NULL, &length, "%g", data[k].value);
+	const char *expected = data[k].string;
 	ASSERT (result != NULL);
-	ASSERT (strmatch (data[k].string, result));
+	ASSERT (strcmp (result, expected) == 0
+		/* Some implementations produce exponents with 3 digits.  */
+		|| (expected[strlen (expected) - 4] == 'e'
+		    && strlen (result) == strlen (expected) + 1
+		    && memcmp (result, expected, strlen (expected) - 2) == 0
+		    && result[strlen (expected) - 2] == '0'
+		    && strcmp (result + strlen (expected) - 1,
+			       expected + strlen (expected) - 2)
+		       == 0));
 	ASSERT (length == strlen (result));
 	free (result);
       }
@@ -2358,7 +2390,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%#.g %d", 9.75, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "1.e+01 33") == 0);
+    ASSERT (strcmp (result, "1.e+01 33") == 0
+	    || strcmp (result, "1.e+001 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2399,7 +2432,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%.g %d", 1234.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "1e+03 33") == 0);
+    ASSERT (strcmp (result, "1e+03 33") == 0
+	    || strcmp (result, "1e+003 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2509,7 +2543,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
 	char *result =
 	  my_asnprintf (NULL, &length, "%Lg", data[k].value);
 	ASSERT (result != NULL);
-	ASSERT (strmatch (data[k].string, result));
+	ASSERT (strcmp (result, data[k].string) == 0);
 	ASSERT (length == strlen (result));
 	free (result);
       }
