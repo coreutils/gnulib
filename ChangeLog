@@ -1,5 +1,10 @@
 2007-05-18  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (VASNPRINTF) [NEED_PRINTF_FLAG_ZERO]: Fix logic bug
+	introduced on 2007-05-06.
+
+2007-05-18  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-vasnprintf-posix.c (test_function): Also test the %e and
 	%g directives.
 	* tests/test-vasprintf-posix.c (test_function): Likewise.

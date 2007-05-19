@@ -2841,6 +2841,23 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			return NULL;
 		      }
 
+		    /* Make room for the result.  */
+		    if (count >= maxlen)
+		      {
+			/* Need at least count bytes.  But allocate
+			   proportionally, to avoid looping eternally if
+			   snprintf() reports a too small count.  */
+			size_t n =
+			  xmax (xsum (length, count), xtimes (allocated, 2));
+
+			ENSURE_ALLOCATION (n);
+#if USE_SNPRINTF
+			continue;
+#else
+			maxlen = allocated - length;
+#endif
+		      }
+
 		    /* Perform padding.  */
 #if NEED_PRINTF_FLAG_ZERO
 		    if (pad_ourselves && has_width && count < width)
@@ -2853,14 +2870,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			       proportionally, to avoid looping eternally if
 			       snprintf() reports a too small count.  */
 			    size_t n =
-			      xmax (xsum (length, width),
+			      xmax (xsum (length + 1, width),
 				    xtimes (allocated, 2));
 
 			    length += count;
 			    ENSURE_ALLOCATION (n);
 			    length -= count;
-			    maxlen = allocated - length; /* >= width */
+			    maxlen = allocated - length; /* > width */
 			  }
+			/* Here width < maxlen.  */
 # endif
 			{
 # if USE_SNPRINTF
@@ -2919,20 +2937,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      abort ();
 #endif
 
-		    /* Make room for the result.  */
-		    if (count >= maxlen)
-		      {
-			/* Need at least count bytes.  But allocate
-			   proportionally, to avoid looping eternally if
-			   snprintf() reports a too small count.  */
-			size_t n =
-			  xmax (xsum (length, count), xtimes (allocated, 2));
-
-			ENSURE_ALLOCATION (n);
-#if USE_SNPRINTF
-			continue;
-#endif
-		      }
+		    /* Here still count < maxlen.  */
 
 #if USE_SNPRINTF
 		    /* The snprintf() result did fit.  */
