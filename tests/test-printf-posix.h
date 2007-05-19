@@ -37,9 +37,6 @@ test_function (int (*my_printf) (const char *, ...))
   /* Positive zero.  */
   my_printf ("%a %d\n", 0.0, 33, 44, 55);
 
-  /* Negative zero.  */
-  my_printf ("%a %d\n", -0.0, 33, 44, 55);
-
   /* Positive infinity.  */
   my_printf ("%a %d\n", 1.0 / 0.0, 33, 44, 55);
 
@@ -65,9 +62,6 @@ test_function (int (*my_printf) (const char *, ...))
   /* Positive zero.  */
   my_printf ("%f %d\n", 0.0, 33, 44, 55);
 
-  /* Negative zero.  */
-  my_printf ("%f %d\n", -0.0, 33, 44, 55);
-
   /* FLAG_ZERO.  */
   my_printf ("%015f %d\n", 1234.0, 33, 44, 55);
 
@@ -85,9 +79,6 @@ test_function (int (*my_printf) (const char *, ...))
 
   /* Positive zero.  */
   my_printf ("%Lf %d\n", 0.0L, 33, 44, 55);
-
-  /* Negative zero.  */
-  my_printf ("%Lf %d\n", -0.0L, 33, 44, 55);
 
   /* FLAG_ZERO.  */
   my_printf ("%015Lf %d\n", 1234.0L, 33, 44, 55);
@@ -109,9 +100,6 @@ test_function (int (*my_printf) (const char *, ...))
   /* Positive zero.  */
   my_printf ("%F %d\n", 0.0, 33, 44, 55);
 
-  /* Negative zero.  */
-  my_printf ("%F %d\n", -0.0, 33, 44, 55);
-
   /* FLAG_ZERO.  */
   my_printf ("%015F %d\n", 1234.0, 33, 44, 55);
 
@@ -129,9 +117,6 @@ test_function (int (*my_printf) (const char *, ...))
 
   /* Positive zero.  */
   my_printf ("%LF %d\n", 0.0L, 33, 44, 55);
-
-  /* Negative zero.  */
-  my_printf ("%LF %d\n", -0.0L, 33, 44, 55);
 
   /* FLAG_ZERO.  */
   my_printf ("%015LF %d\n", 1234.0L, 33, 44, 55);

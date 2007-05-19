@@ -54,6 +54,15 @@ NaN ()
 # define NaN() (0.0 / 0.0)
 #endif
 
+/* The SGI MIPS floating-point format does not distinguish 0.0 and -0.0.  */
+static int
+have_minus_zero ()
+{
+  static double plus_zero = 0.0;
+  static double minus_zero = -0.0;
+  return memcmp (&plus_zero, &minus_zero, sizeof (double)) != 0;
+}
+
 static int
 strmatch (const char *pattern, const char *string)
 {
@@ -187,7 +196,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%a %d", -0.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-0x0p+0 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0x0p+0 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -500,7 +510,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%La %d", -0.0L, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-0x0p+0 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0x0p+0 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -911,7 +922,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%f %d", -0.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1189,7 +1201,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lf %d", -0.0L, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1380,7 +1393,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%F %d", -0.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1495,7 +1509,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%LF %d", -0.0L, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -1716,8 +1731,9 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%e %d", -0.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-0.000000e+00 33") == 0
-	    || strcmp (result, "-0.000000e+000 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000e+00 33") == 0
+	      || strcmp (result, "-0.000000e+000 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2014,7 +2030,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Le %d", -0.0L, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-0.000000e+00 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000e+00 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2316,7 +2333,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%g %d", -0.0, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-0 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -2606,7 +2624,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lg %d", -0.0L, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "-0 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0 33") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }

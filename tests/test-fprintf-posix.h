@@ -37,9 +37,6 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
   /* Positive zero.  */
   my_fprintf (stdout, "%a %d\n", 0.0, 33, 44, 55);
 
-  /* Negative zero.  */
-  my_fprintf (stdout, "%a %d\n", -0.0, 33, 44, 55);
-
   /* Positive infinity.  */
   my_fprintf (stdout, "%a %d\n", 1.0 / 0.0, 33, 44, 55);
 
@@ -63,9 +60,6 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
   /* Positive zero.  */
   my_fprintf (stdout, "%f %d\n", 0.0, 33, 44, 55);
 
-  /* Negative zero.  */
-  my_fprintf (stdout, "%f %d\n", -0.0, 33, 44, 55);
-
   /* FLAG_ZERO.  */
   my_fprintf (stdout, "%015f %d\n", 1234.0, 33, 44, 55);
 
@@ -83,9 +77,6 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
 
   /* Positive zero.  */
   my_fprintf (stdout, "%Lf %d\n", 0.0L, 33, 44, 55);
-
-  /* Negative zero.  */
-  my_fprintf (stdout, "%Lf %d\n", -0.0L, 33, 44, 55);
 
   /* FLAG_ZERO.  */
   my_fprintf (stdout, "%015Lf %d\n", 1234.0L, 33, 44, 55);
@@ -107,9 +98,6 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
   /* Positive zero.  */
   my_fprintf (stdout, "%F %d\n", 0.0, 33, 44, 55);
 
-  /* Negative zero.  */
-  my_fprintf (stdout, "%F %d\n", -0.0, 33, 44, 55);
-
   /* FLAG_ZERO.  */
   my_fprintf (stdout, "%015F %d\n", 1234.0, 33, 44, 55);
 
@@ -127,9 +115,6 @@ test_function (int (*my_fprintf) (FILE *, const char *, ...))
 
   /* Positive zero.  */
   my_fprintf (stdout, "%LF %d\n", 0.0L, 33, 44, 55);
-
-  /* Negative zero.  */
-  my_fprintf (stdout, "%LF %d\n", -0.0L, 33, 44, 55);
 
   /* FLAG_ZERO.  */
   my_fprintf (stdout, "%015LF %d\n", 1234.0L, 33, 44, 55);

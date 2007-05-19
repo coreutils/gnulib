@@ -1,10 +1,35 @@
 2007-05-19  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-vasnprintf-posix.c (have_minus_zero): New function.
+	(test_function): Skip tests involving -0.0 on platforms where
+	-0.0 = 0.0.
+	* tests/test-vasprintf-posix.c (have_minus_zero): New function.
+	(test_function): Skip tests involving -0.0 on platforms where
+	-0.0 = 0.0.
+	* tests/test-snprintf-posix.h (have_minus_zero): New function.
+	(test_function): Skip tests involving -0.0 on platforms where
+	-0.0 = 0.0.
+	* tests/test-sprintf-posix.h (have_minus_zero): New function.
+	(test_function): Skip tests involving -0.0 on platforms where
+	-0.0 = 0.0.
+	* tests/test-fprintf-posix.h (test_function): Remove all -0.0 related
+	tests.
+	* tests/test-printf-posix.h (test_function): Likewise.
+	* tests/test-printf-posix.output: Remove all -0.0 related results.
+	Needed for IRIX 6.5.
+
+2007-05-19  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-vasnprintf-posix.c (test_function): Allow NaN to be
 	printed as "nan0x7fffffff" instead of "nan".
 	* tests/test-vasprintf-posix.c (test_function): Likewise.
 	* tests/test-snprintf-posix.h (test_function): Likewise.
 	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-fprintf-posix.h (NaN): Remove macro.
+	(test_function): Remove all NaN related tests.
+	* tests/test-printf-posix.h (NaN): Remove macro.
+	(test_function): Remove all NaN related tests.
+	* tests/test-printf-posix.output: Remove all NaN related results.
 	Needed for IRIX 6.5.
 
 2007-05-19  Bruno Haible  <bruno@clisp.org>

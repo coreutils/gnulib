@@ -29,6 +29,15 @@ NaN ()
 # define NaN() (0.0 / 0.0)
 #endif
 
+/* The SGI MIPS floating-point format does not distinguish 0.0 and -0.0.  */
+static int
+have_minus_zero ()
+{
+  static double plus_zero = 0.0;
+  static double minus_zero = -0.0;
+  return memcmp (&plus_zero, &minus_zero, sizeof (double)) != 0;
+}
+
 static int
 strmatch (const char *pattern, const char *string)
 {
@@ -127,7 +136,8 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     char result[1000];
     int retval =
       my_sprintf (result, "%a %d", -0.0, 33, 44, 55);
-    ASSERT (strcmp (result, "-0x0p+0 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0x0p+0 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -390,7 +400,8 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     char result[1000];
     int retval =
       my_sprintf (result, "%La %d", -0.0L, 33, 44, 55);
-    ASSERT (strcmp (result, "-0x0p+0 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0x0p+0 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -747,7 +758,8 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     char result[1000];
     int retval =
       my_sprintf (result, "%f %d", -0.0, 33, 44, 55);
-    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -987,7 +999,8 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     char result[1000];
     int retval =
       my_sprintf (result, "%Lf %d", -0.0L, 33, 44, 55);
-    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1142,7 +1155,8 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     char result[1000];
     int retval =
       my_sprintf (result, "%F %d", -0.0, 33, 44, 55);
-    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1235,7 +1249,8 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     char result[1000];
     int retval =
       my_sprintf (result, "%LF %d", -0.0L, 33, 44, 55);
-    ASSERT (strcmp (result, "-0.000000 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1433,8 +1448,9 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     char result[1000];
     int retval =
       my_sprintf (result, "%e %d", -0.0, 33, 44, 55);
-    ASSERT (strcmp (result, "-0.000000e+00 33") == 0
-	    || strcmp (result, "-0.000000e+000 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000e+00 33") == 0
+	      || strcmp (result, "-0.000000e+000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1691,7 +1707,8 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     char result[1000];
     int retval =
       my_sprintf (result, "%Le %d", -0.0L, 33, 44, 55);
-    ASSERT (strcmp (result, "-0.000000e+00 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0.000000e+00 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1953,7 +1970,8 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     char result[1000];
     int retval =
       my_sprintf (result, "%g %d", -0.0, 33, 44, 55);
-    ASSERT (strcmp (result, "-0 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -2203,7 +2221,8 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     char result[1000];
     int retval =
       my_sprintf (result, "%Lg %d", -0.0L, 33, 44, 55);
-    ASSERT (strcmp (result, "-0 33") == 0);
+    if (have_minus_zero ())
+      ASSERT (strcmp (result, "-0 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
