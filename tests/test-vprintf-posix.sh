@@ -3,11 +3,12 @@
 tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
-tmpfiles="$tmpfiles t-vprintf-posix.tmp"
+tmpfiles="$tmpfiles t-vprintf-posix.tmp t-vprintf-posix.out"
 ./test-vprintf-posix${EXEEXT} > t-vprintf-posix.tmp || exit 1
+tr -d '\r' < t-vprintf-posix.tmp > t-vprintf-posix.out || exit 1
 
 : ${DIFF=diff}
-${DIFF} "${srcdir}/test-printf-posix.output" t-vprintf-posix.tmp
+${DIFF} "${srcdir}/test-printf-posix.output" t-vprintf-posix.out
 result=$?
 
 rm -fr $tmpfiles

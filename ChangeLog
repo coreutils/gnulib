@@ -1,5 +1,13 @@
 2007-05-19  Bruno Haible  <bruno@clisp.org>
 
+	Avoid test failures on mingw.
+	* tests/test-fprintf-posix.sh: Convert CR/LF to LF in output.
+	* tests/test-printf-posix.sh: Likewise.
+	* tests/test-vfprintf-posix.sh: Likewise.
+	* tests/test-vprintf-posix.sh: Likewise.
+
+2007-05-19  Bruno Haible  <bruno@clisp.org>
+
 	Fix *printf result for NaN, Inf, -0.0 on mingw.
 	* m4/printf.m4 (gl_PRINTF_INFINITE): New macro.
 	* lib/vasnprintf.c: Include math.h and isnan.h.
