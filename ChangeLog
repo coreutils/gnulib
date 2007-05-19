@@ -1,5 +1,10 @@
 2007-05-19  Bruno Haible  <bruno@clisp.org>
 
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Fix C89 syntax error in test code.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Likewise.
+
+2007-05-19  Bruno Haible  <bruno@clisp.org>
+
 	* lib/float_.h: New file.
 	* m4/float_h.m4: New file.
 	* modules/float: New file.

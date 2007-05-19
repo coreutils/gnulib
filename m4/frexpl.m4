@@ -1,4 +1,4 @@
-# frexpl.m4 serial 3
+# frexpl.m4 serial 4
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -108,16 +108,16 @@ int main()
 {
   volatile long double x;
   /* Test on finite numbers.  */
+  x = 16.0L;
   {
     int exp = -9999;
-    x = 16.0L;
     frexpl (x, &exp);
     if (exp != 5)
       return 1;
   }
   /* Test on infinite numbers.  */
+  x = 1.0L / 0.0L;
   {
-    x = 1.0L / 0.0L;
     int exp;
     long double y = frexpl (x, &exp);
     if (y != x)
