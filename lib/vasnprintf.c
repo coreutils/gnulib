@@ -1290,7 +1290,9 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 # endif
 			))
 	      {
+# if NEED_PRINTF_INFINITE && NEED_PRINTF_LONG_DOUBLE
 		arg_type type = a.arg[dp->arg_index].type;
+# endif
 		int flags = dp->flags;
 		int has_width;
 		size_t width;
