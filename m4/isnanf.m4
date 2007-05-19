@@ -1,4 +1,4 @@
-# isnanf.m4 serial 1
+# isnanf.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,10 @@ AC_DEFUN([gl_FUNC_ISNANF_NO_LIBM],
 [
   gl_HAVE_ISNANF_NO_LIBM
   if test $gl_cv_func_isnanf_no_libm = yes; then
+    gl_ISNANF_WORKS
+  fi
+  if test $gl_cv_func_isnanf_no_libm = yes \
+     && test $gl_cv_func_isnanf_works = yes; then
     AC_DEFINE([HAVE_ISNANF_IN_LIBC], 1,
       [Define if the isnan(float) function is available in libc.])
   else
@@ -33,6 +37,47 @@ AC_DEFUN([gl_HAVE_ISNANF_NO_LIBM],
                   [return isnanf (x);],
         [gl_cv_func_isnanf_no_libm=yes],
         [gl_cv_func_isnanf_no_libm=no])
+    ])
+])
+
+dnl Test whether isnanf() recognizes a NaN (this fails on IRIX 6.5) and rejects
+dnl Infinity (this fails on Solaris 2.5.1).
+AC_DEFUN([gl_ISNANF_WORKS],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether isnanf works], [gl_cv_func_isnanf_works],
+    [
+      AC_TRY_RUN([
+#include <math.h>
+#ifdef isnan
+# undef isnanf
+# define isnanf(x) isnan ((float)(x))
+#endif
+/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
+#ifdef __DECC
+static float
+NaN ()
+{
+  static float zero = 0.0f;
+  return zero / zero;
+}
+#else
+# define NaN() (0.0f / 0.0f)
+#endif
+int main()
+{
+  if (!isnanf (NaN ()))
+    return 1;
+  if (isnanf (1.0f / 0.0f))
+    return 1;
+  return 0;
+}], [gl_cv_func_isnanf_works=yes], [gl_cv_func_isnanf_works=no],
+        [case "$host_os" in
+           irix* | solaris*) gl_cv_func_isnanf_works="guessing no";;
+           *)                gl_cv_func_isnanf_works="guessing yes";;
+         esac
+        ])
     ])
 ])
 

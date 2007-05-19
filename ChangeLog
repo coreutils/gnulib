@@ -1,5 +1,12 @@
 2007-05-19  Bruno Haible  <bruno@clisp.org>
 
+	* m4/isnanf.m4 (gl_ISNANF_WORKS): New macro.
+	(gl_FUNC_ISNANF_NO_LIBM): Invoke it.
+	* lib/isnan.c (FUNC): Use run-time expressions for SGI compiler.
+	Needed for IRIX 6.5 and Solaris 2.5.1.
+
+2007-05-19  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-vasnprintf-posix.c (have_minus_zero): New function.
 	(test_function): Skip tests involving -0.0 on platforms where
 	-0.0 = 0.0.
