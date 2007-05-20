@@ -80,6 +80,8 @@ AC_DEFUN([gl_FUNC_FREXPL_NO_LIBM],
     esac
   else
     gl_func_frexpl_no_libm=no
+    dnl Set REPLACE_FREXPL here because the system may have frexpl in libm.
+    REPLACE_FREXPL=1
   fi
   if test $gl_func_frexpl_no_libm = yes; then
     AC_DEFINE([HAVE_FREXPL_IN_LIBC], 1,
