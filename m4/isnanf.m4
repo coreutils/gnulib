@@ -46,7 +46,7 @@ AC_DEFUN([gl_ISNANF_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  AC_CACHE_CHECK([whether isnanf works], [gl_cv_func_isnanf_works],
+  AC_CACHE_CHECK([whether isnan(float) works], [gl_cv_func_isnanf_works],
     [
       AC_TRY_RUN([
 #include <math.h>
