@@ -1,3 +1,13 @@
+2007-05-20  Jim Meyering  <jim@meyering.net>
+
+	Fix buggy test for the fchownat-deref bug.
+	* m4/openat.m4 (gl_FUNC_FCHOWNAT_DEREF_BUG): Create the dangling
+	symlink required for the run-test.  Without it, this test would
+	always declare that fchownat doesn't work, and client code would
+	unnecessarily use the replacement function with fixed libc.
+	(gl_FUNC_FCHOWNAT): Eliminate a variable that wasn't initialized.
+	Reported by Greg Schafer.
+
 2007-05-19  Bruno Haible  <bruno@clisp.org>
 
 	* m4/isnanf.m4 (gl_ISNANF_WORKS): New macro.

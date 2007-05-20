@@ -37,6 +37,7 @@ AC_DEFUN([gl_FUNC_FCHOWNAT_DEREF_BUG],
      rm -f $gl_dangle
      # Arrange for deletion of the temporary file this test creates.
      ac_clean_files="$ac_clean_files $gl_dangle"
+     ln -s conftest.no-such $gl_dangle
      AC_RUN_IFELSE(
        [AC_LANG_SOURCE(
 	  [[
@@ -73,10 +74,7 @@ AC_DEFUN([gl_FUNC_FCHOWNAT],
 
   AC_CHECK_FUNC([fchownat], [have_fchownat=yes], [have_fchownat=no])
   if test $have_fchownat = yes; then
-    gl_FUNC_FCHOWNAT_DEREF_BUG([have_fchownat_bug=yes])
-    if test $have_fchownat_bug = no; then
-      use_replacement_fchownat=no
-    fi
+    gl_FUNC_FCHOWNAT_DEREF_BUG([], [use_replacement_fchownat=no])
   fi
 
   if test $use_replacement_fchownat = yes; then
