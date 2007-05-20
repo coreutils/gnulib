@@ -1,3 +1,12 @@
+2007-05-20  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-vasnprintf-posix.c (test_function): Allow NaN to be
+	printed as "-nan" instead of "nan".
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	Needed for HP-UX 11.
+
 2007-05-20  Jim Meyering  <jim@meyering.net>
 
 	Fix buggy test for the fchownat-deref bug.
