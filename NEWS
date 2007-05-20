@@ -6,6 +6,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-05-20  utimens         Renamed futimens to gl_futimens, to avoid
+                            conflict with the glibc-2.6-introduced function
+                            that has a different signature.
+
 2007-05-01  sigprocmask     The module now depends on signal, so replace
                               #include "sigprocmask.h"
                             with
