@@ -1,4 +1,4 @@
-# frexpl.m4 serial 4
+# frexpl.m4 serial 5
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -95,8 +95,8 @@ AC_DEFUN([gl_FUNC_FREXPL_NO_LIBM],
   fi
 ])
 
-dnl Test whether frexpl() works on finite numbers (this fails on AIX 5.1) and
-dnl also on infinite numbers (this fails e.g. on IRIX 6.5).
+dnl Test whether frexpl() works on finite numbers (this fails on AIX 5.1 and
+dnl on BeOS) and also on infinite numbers (this fails e.g. on IRIX 6.5).
 AC_DEFUN([gl_FUNC_FREXPL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -117,6 +117,20 @@ int main()
     if (exp != 5)
       return 1;
   }
+  /* Test on large finite numbers.  This fails on BeOS at i = 16322, while
+     LDBL_MAX_EXP = 16384.
+     In the loop end test, we test x against Infinity, rather than comparing
+     i with LDBL_MAX_EXP, because BeOS <float.h> has a wrong LDBL_MAX_EXP.  */
+  {
+    int i;
+    for (i = 1, x = 1.0L; x != x + x; i++, x *= 2.0L)
+      {
+        int exp = -9999;
+        frexpl (x, &exp);
+        if (exp != i)
+          return 1;
+      }
+  }
   /* Test on infinite numbers.  */
   x = 1.0L / 0.0L;
   {
@@ -128,8 +142,8 @@ int main()
   return 0;
 }], [gl_cv_func_frexpl_works=yes], [gl_cv_func_frexpl_works=no],
       [case "$host_os" in
-         aix* | irix*) gl_cv_func_frexpl_works="guessing no";;
-         *)            gl_cv_func_frexpl_works="guessing yes";;
+         aix* | beos* | irix*) gl_cv_func_frexpl_works="guessing no";;
+         *)                    gl_cv_func_frexpl_works="guessing yes";;
        esac
       ])
     ])
