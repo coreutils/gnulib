@@ -1,5 +1,38 @@
 2007-05-20  Bruno Haible  <bruno@clisp.org>
 
+	Fix *printf result for NaN, Inf on AIX, Solaris, OSF/1.
+	* m4/printf.m4 (gl_PRINTF_INFINITE): Update cross-compiling guesses.
+	(gl_PRINTF_INFINITE_LONG_DOUBLE): New macro.
+	* lib/vasnprintf.c: Use NEED_PRINTF_INFINITE_DOUBLE instead of
+	NEED_PRINTF_INFINITE.
+	(is_infinitel): New function.
+	(VASNPRINTF): Handle NEED_PRINTF_INFINITE_LONG_DOUBLE case.
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_INFINITE_DOUBLE): Renamed from
+	gl_PREREQ_VASNPRINTF_INFINITE.
+	(gl_PREREQ_VASNPRINTF_INFINITE_LONG_DOUBLE): New macro.
+	* m4/fprintf-posix.m4 (gl_FUNC_FPRINTF_POSIX): Invoke
+	gl_PRINTF_INFINITE_LONG_DOUBLE and test its result. Invoke
+	gl_PREREQ_VASNPRINTF_INFINITE_DOUBLE and
+	gl_PREREQ_VASNPRINTF_INFINITE_LONG_DOUBLE instead of
+	gl_PREREQ_VASNPRINTF_INFINITE.
+	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Likewise.
+	* m4/sprintf-posix.m4 (gl_FUNC_SPRINTF_POSIX): Likewise.
+	* m4/vasnprintf-posix.m4 (gl_FUNC_VASNPRINTF_POSIX): Likewise.
+	* m4/vasprintf-posix.m4 (gl_FUNC_VASPRINTF_POSIX): Likewise.
+	* m4/vfprintf-posix.m4 (gl_FUNC_VFPRINTF_POSIX): Likewise.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX): Likewise.
+	* m4/vsprintf-posix.m4 (gl_FUNC_VSPRINTF_POSIX): Likewise.
+	* doc/functions/fprintf.texi: Update.
+	* doc/functions/printf.texi: Update.
+	* doc/functions/snprintf.texi: Update.
+	* doc/functions/sprintf.texi: Update.
+	* doc/functions/vfprintf.texi: Update.
+	* doc/functions/vprintf.texi: Update.
+	* doc/functions/vsnprintf.texi: Update.
+	* doc/functions/vsprintf.texi: Update.
+
+2007-05-20  Bruno Haible  <bruno@clisp.org>
+
 	* m4/frexpl.m4 (gl_FUNC_FREXPL_NO_LIBM): Set REPLACE_FREXPL if frexpl
 	was not found in libc.
 	* m4/printf-frexpl.m4 (gl_FUNC_PRINTF_FREXPL): Likewise.

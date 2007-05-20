@@ -53,14 +53,19 @@
 /* Checked size_t computations.  */
 #include "xsize.h"
 
-#if NEED_PRINTF_INFINITE && !defined IN_LIBINTL
+#if NEED_PRINTF_LONG_DOUBLE && !defined IN_LIBINTL
+# include <math.h>
+# include "float+.h"
+#endif
+
+#if NEED_PRINTF_INFINITE_DOUBLE && !defined IN_LIBINTL
 # include <math.h>
 # include "isnan.h"
 #endif
 
-#if NEED_PRINTF_LONG_DOUBLE && !defined IN_LIBINTL
+#if NEED_PRINTF_INFINITE_LONG_DOUBLE && !defined IN_LIBINTL
 # include <math.h>
-# include "float+.h"
+# include "isnanl-nolibm.h"
 #endif
 
 #if NEED_PRINTF_DIRECTIVE_A && !defined IN_LIBINTL
@@ -169,13 +174,24 @@ decimal_point_char ()
 # endif
 #endif
 
-#if NEED_PRINTF_INFINITE && !defined IN_LIBINTL
+#if NEED_PRINTF_INFINITE_DOUBLE && !defined IN_LIBINTL
 
 /* Equivalent to !isfinite(x) || x == 0, but does not require libm.  */
 static int
 is_infinite_or_zero (double x)
 {
   return isnan (x) || x + x == x;
+}
+
+#endif
+
+#if NEED_PRINTF_INFINITE_LONG_DOUBLE && !defined IN_LIBINTL
+
+/* Equivalent to !isfinite(x), but does not require libm.  */
+static int
+is_infinitel (long double x)
+{
+  return isnanl (x) || (x + x == x && x != 0.0L);
 }
 
 #endif
@@ -1273,12 +1289,12 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    abort ();
 		  }
 	      }
-#if (NEED_PRINTF_INFINITE || NEED_PRINTF_LONG_DOUBLE) && !defined IN_LIBINTL
+#if (NEED_PRINTF_INFINITE_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE || NEED_PRINTF_LONG_DOUBLE) && !defined IN_LIBINTL
 	    else if ((dp->conversion == 'f' || dp->conversion == 'F'
 		      || dp->conversion == 'e' || dp->conversion == 'E'
 		      || dp->conversion == 'g' || dp->conversion == 'G')
 		     && (0
-# if NEED_PRINTF_INFINITE
+# if NEED_PRINTF_INFINITE_DOUBLE
 			 || (a.arg[dp->arg_index].type == TYPE_DOUBLE
 			     /* The systems (mingw) which produce wrong output
 				for Inf and -Inf also do so for NaN and -0.0.
@@ -1287,10 +1303,16 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 # endif
 # if NEED_PRINTF_LONG_DOUBLE
 			 || a.arg[dp->arg_index].type == TYPE_LONGDOUBLE
+# elif NEED_PRINTF_INFINITE_LONG_DOUBLE
+			 || (a.arg[dp->arg_index].type == TYPE_LONGDOUBLE
+			     /* The systems which produce wrong output for Inf
+				and -Inf also do so for NaN.  Therefore treat
+				this case here as well.  */
+			     && is_infinitel (a.arg[dp->arg_index].a.a_longdouble))
 # endif
 			))
 	      {
-# if NEED_PRINTF_INFINITE && NEED_PRINTF_LONG_DOUBLE
+# if NEED_PRINTF_INFINITE_DOUBLE && (NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE)
 		arg_type type = a.arg[dp->arg_index].type;
 # endif
 		int flags = dp->flags;
@@ -1373,17 +1395,17 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		  precision = 6;
 
 		/* Allocate a temporary buffer of sufficient size.  */
-# if NEED_PRINTF_INFINITE && NEED_PRINTF_LONG_DOUBLE
+# if NEED_PRINTF_INFINITE_DOUBLE && NEED_PRINTF_LONG_DOUBLE
 		tmp_length = (type == TYPE_LONGDOUBLE ? LDBL_DIG + 1 : 0);
 # elif NEED_PRINTF_LONG_DOUBLE
 		tmp_length = LDBL_DIG + 1;
-# elif NEED_PRINTF_INFINITE
+# else
 		tmp_length = 0;
 # endif
 		if (tmp_length < precision)
 		  tmp_length = precision;
 # if NEED_PRINTF_LONG_DOUBLE
-#  if NEED_PRINTF_INFINITE
+#  if NEED_PRINTF_INFINITE_DOUBLE
 		if (type == TYPE_LONGDOUBLE)
 #  endif
 		  if (dp->conversion == 'f' || dp->conversion == 'F')
@@ -1424,8 +1446,8 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		pad_ptr = NULL;
 		p = tmp;
 
-# if NEED_PRINTF_LONG_DOUBLE
-#  if NEED_PRINTF_INFINITE
+# if NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE
+#  if NEED_PRINTF_INFINITE_DOUBLE
 		if (type == TYPE_LONGDOUBLE)
 #  endif
 		  {
@@ -1475,6 +1497,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  }
 			else
 			  {
+#  if NEED_PRINTF_LONG_DOUBLE
 			    pad_ptr = p;
 
 			    if (dp->conversion == 'f' || dp->conversion == 'F')
@@ -1587,15 +1610,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 				  }
 
 				*p++ = dp->conversion; /* 'e' or 'E' */
-#  if WIDE_CHAR_VERSION
+#   if WIDE_CHAR_VERSION
 				{
 				  static const wchar_t decimal_format[] =
 				    { '%', '+', '.', '2', 'd', '\0' };
 				  SNPRINTF (p, 6 + 1, decimal_format, exponent);
 				}
-#  else
+#   else
 				sprintf (p, "%+.2d", exponent);
-#  endif
+#   endif
 				while (*p != '\0')
 				  p++;
 			      }
@@ -1731,15 +1754,15 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 					      }
 					  }
 					*p++ = dp->conversion - 'G' + 'E'; /* 'e' or 'E' */
-#  if WIDE_CHAR_VERSION
+#   if WIDE_CHAR_VERSION
 					{
 					  static const wchar_t decimal_format[] =
 					    { '%', '+', '.', '2', 'd', '\0' };
 					  SNPRINTF (p, 6 + 1, decimal_format, exponent);
 					}
-#  else
+#   else
 					sprintf (p, "%+.2d", exponent);
-#  endif
+#   endif
 					while (*p != '\0')
 					  p++;
 				      }
@@ -1749,16 +1772,20 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			      }
 			    else
 			      abort ();
+#  else
+			    /* arg is finite.  */
+			    abort ();
+#  endif
 			  }
 
 			END_LONG_DOUBLE_ROUNDING ();
 		      }
 		  }
-#  if NEED_PRINTF_INFINITE
+#  if NEED_PRINTF_INFINITE_DOUBLE
 		else
 #  endif
 # endif
-# if NEED_PRINTF_INFINITE
+# if NEED_PRINTF_INFINITE_DOUBLE
 		  {
 		    /* Simpler than above: handle only NaN, Infinity, zero.  */
 		    double arg = a.arg[dp->arg_index].a.a_double;
@@ -1832,9 +1859,9 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 				*p++ = '+';
 				/* Produce the same number of exponent digits as
 				   the native printf implementation.  */
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#  if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 				*p++ = '0';
-# endif
+#  endif
 				*p++ = '0';
 				*p++ = '0';
 			      }

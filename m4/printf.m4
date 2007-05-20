@@ -1,4 +1,4 @@
-# printf.m4 serial 11
+# printf.m4 serial 12
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -164,12 +164,106 @@ int main ()
       [
 changequote(,)dnl
        case "$host_os" in
-         mingw* | pw*) gl_cv_func_printf_infinite="guessing no";;
-         *)            gl_cv_func_printf_infinite="guessing yes";;
+                               # Guess yes on glibc systems.
+         *-gnu*)               gl_cv_func_printf_infinite="guessing yes";;
+                               # Guess yes on FreeBSD >= 6.
+         freebsd[1-5]*)        gl_cv_func_printf_infinite="guessing no";;
+         freebsd* | kfreebsd*) gl_cv_func_printf_infinite="guessing yes";;
+                               # Guess yes on MacOS X >= 10.3.
+         darwin[1-6].*)        gl_cv_func_printf_infinite="guessing no";;
+         darwin*)              gl_cv_func_printf_infinite="guessing yes";;
+                               # Guess yes on HP-UX >= 11.
+         hpux[7-9]* | hpux10*) gl_cv_func_printf_infinite="guessing no";;
+         hpux*)                gl_cv_func_printf_infinite="guessing yes";;
+                               # Guess yes on IRIX >= 6.5.
+         irix6.5)              gl_cv_func_printf_infinite="guessing yes";;
+                               # Guess yes on NetBSD >= 3.
+         netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
+                               gl_cv_func_printf_infinite="guessing no";;
+         netbsd*)              gl_cv_func_printf_infinite="guessing yes";;
+                               # Guess yes on BeOS.
+         beos*)                gl_cv_func_printf_infinite="guessing yes";;
+                               # If we don't know, assume the worst.
+         *)                    gl_cv_func_printf_infinite="guessing no";;
        esac
 changequote([,])dnl
       ])
     ])
+])
+
+dnl Test whether the *printf family of functions supports infinite 'long double'
+dnl arguments in the %f, %e, %g directives. (ISO C99, POSIX:2001)
+dnl Result is gl_cv_func_printf_infinite_long_double.
+
+AC_DEFUN([gl_PRINTF_INFINITE_LONG_DOUBLE],
+[
+  AC_REQUIRE([gl_PRINTF_LONG_DOUBLE])
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  case "$gl_cv_func_printf_long_double" in
+    *yes)
+      AC_CACHE_CHECK([whether printf supports infinite 'long double' arguments],
+        [gl_cv_func_printf_infinite_long_double],
+        [
+          AC_TRY_RUN([
+#include <stdio.h>
+#include <string.h>
+static char buf[100];
+int main ()
+{
+  if (sprintf (buf, "%Lf", 1.0L / 0.0L) < 0
+      || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
+    return 1;
+  if (sprintf (buf, "%Lf", -1.0L / 0.0L) < 0
+      || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
+    return 1;
+  if (sprintf (buf, "%Le", 1.0L / 0.0L) < 0
+      || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
+    return 1;
+  if (sprintf (buf, "%Le", -1.0L / 0.0L) < 0
+      || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
+    return 1;
+  if (sprintf (buf, "%Lg", 1.0L / 0.0L) < 0
+      || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
+    return 1;
+  if (sprintf (buf, "%Lg", -1.0L / 0.0L) < 0
+      || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
+    return 1;
+  return 0;
+}],
+          [gl_cv_func_printf_infinite_long_double=yes],
+          [gl_cv_func_printf_infinite_long_double=no],
+          [
+changequote(,)dnl
+           case "$host_os" in
+                                   # Guess yes on glibc systems.
+             *-gnu*)               gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                   # Guess yes on FreeBSD >= 6.
+             freebsd[1-5]*)        gl_cv_func_printf_infinite_long_double="guessing no";;
+             freebsd* | kfreebsd*) gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                   # Guess yes on MacOS X >= 10.3.
+             darwin[1-6].*)        gl_cv_func_printf_infinite_long_double="guessing no";;
+             darwin*)              gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                   # Guess yes on HP-UX >= 11.
+             hpux[7-9]* | hpux10*) gl_cv_func_printf_infinite_long_double="guessing no";;
+             hpux*)                gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                   # Guess yes on IRIX >= 6.5.
+             irix6.5)              gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                   # Guess yes on NetBSD >= 3.
+             netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
+                                   gl_cv_func_printf_infinite_long_double="guessing no";;
+             netbsd*)              gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                   # If we don't know, assume the worst.
+             *)                    gl_cv_func_printf_infinite_long_double="guessing no";;
+           esac
+changequote([,])dnl
+          ])
+        ])
+      ;;
+    *)
+      gl_cv_func_printf_infinite_long_double="irrelevant"
+      ;;
+  esac
 ])
 
 dnl Test whether the *printf family of functions supports the 'a' and 'A'
@@ -755,54 +849,56 @@ dnl
 dnl 1 = gl_PRINTF_SIZES_C99
 dnl 2 = gl_PRINTF_LONG_DOUBLE
 dnl 3 = gl_PRINTF_INFINITE
-dnl 4 = gl_PRINTF_DIRECTIVE_A
-dnl 5 = gl_PRINTF_DIRECTIVE_F
-dnl 6 = gl_PRINTF_DIRECTIVE_N
-dnl 7 = gl_PRINTF_POSITIONS
-dnl 8 = gl_PRINTF_FLAG_GROUPING
-dnl 9 = gl_PRINTF_FLAG_ZERO
-dnl 10 = gl_SNPRINTF_PRESENCE
-dnl 11 = gl_SNPRINTF_TRUNCATION_C99
-dnl 12 = gl_SNPRINTF_RETVAL_C99
-dnl 13 = gl_SNPRINTF_DIRECTIVE_N
-dnl 14 = gl_VSNPRINTF_ZEROSIZE_C99
+dnl 4 = gl_PRINTF_INFINITE_LONG_DOUBLE
+dnl 5 = gl_PRINTF_DIRECTIVE_A
+dnl 6 = gl_PRINTF_DIRECTIVE_F
+dnl 7 = gl_PRINTF_DIRECTIVE_N
+dnl 8 = gl_PRINTF_POSITIONS
+dnl 9 = gl_PRINTF_FLAG_GROUPING
+dnl 10 = gl_PRINTF_FLAG_ZERO
+dnl 11 = gl_SNPRINTF_PRESENCE
+dnl 12 = gl_SNPRINTF_TRUNCATION_C99
+dnl 13 = gl_SNPRINTF_RETVAL_C99
+dnl 14 = gl_SNPRINTF_DIRECTIVE_N
+dnl 15 = gl_VSNPRINTF_ZEROSIZE_C99
 dnl
 dnl 1 = checking whether printf supports size specifiers as in C99...
 dnl 2 = checking whether printf supports 'long double' arguments...
 dnl 3 = checking whether printf supports infinite 'double' arguments...
-dnl 4 = checking whether printf supports the 'a' and 'A' directives...
-dnl 5 = checking whether printf supports the 'F' directive...
-dnl 6 = checking whether printf supports the 'n' directive...
-dnl 7 = checking whether printf supports POSIX/XSI format strings with positions...
-dnl 8 = checking whether printf supports the grouping flag...
-dnl 9 = checking whether printf supports the zero flag correctly...
-dnl 10 = checking for snprintf...
-dnl 11 = checking whether snprintf truncates the result as in C99...
-dnl 12 = checking whether snprintf returns a byte count as in C99...
-dnl 13 = checking whether snprintf fully supports the 'n' directive...
-dnl 14 = checking whether vsnprintf respects a zero size as in C99...
+dnl 4 = checking whether printf supports infinite 'long double' arguments...
+dnl 5 = checking whether printf supports the 'a' and 'A' directives...
+dnl 6 = checking whether printf supports the 'F' directive...
+dnl 7 = checking whether printf supports the 'n' directive...
+dnl 8 = checking whether printf supports POSIX/XSI format strings with positions...
+dnl 9 = checking whether printf supports the grouping flag...
+dnl 10 = checking whether printf supports the zero flag correctly...
+dnl 11 = checking for snprintf...
+dnl 12 = checking whether snprintf truncates the result as in C99...
+dnl 13 = checking whether snprintf returns a byte count as in C99...
+dnl 14 = checking whether snprintf fully supports the 'n' directive...
+dnl 15 = checking whether vsnprintf respects a zero size as in C99...
 dnl
 dnl . = yes, # = no.
 dnl
-dnl                                     1  2  3  4  5  6  7  8  9 10 11 12 13 14
-dnl   glibc 2.5                         .  .  .  .  .  .  .  .  .  .  .  .  .  .
-dnl   glibc 2.3.6                       .  .  .  #  .  .  .  .  .  .  .  .  .  .
-dnl   FreeBSD 5.4, 6.1                  .  ?  .  ?  .  .  .  .  #  .  .  .  .  .
-dnl   MacOS X 10.3.9                    .  .  .  #  .  .  .  .  #  .  .  .  .  .
-dnl   OpenBSD 3.9, 4.0                  .  ?  ?  #  ?  .  .  ?  ?  .  .  .  ?  ?
-dnl   Cygwin 2007 (= Cygwin 1.5.24)     .  ?  ?  #  #  .  .  .  #  .  .  .  .  .
-dnl   Cygwin 2006 (= Cygwin 1.5.19)     #  ?  ?  #  #  .  .  #  #  .  .  .  .  .
-dnl   Solaris 10                        .  .  ?  #  .  .  .  .  #  .  .  .  .  .
-dnl   Solaris 2.6 ... 9                 #  .  ?  #  #  .  .  .  #  .  .  .  .  .
-dnl   Solaris 2.5.1                     #  .  #  #  #  .  .  .  #  #  #  #  #  #
-dnl   AIX 5.2                           .  .  ?  #  .  .  .  .  #  .  .  .  .  .
-dnl   AIX 4.3.2, 5.1                    #  .  #  #  #  .  .  .  #  .  .  .  .  .
-dnl   HP-UX 11.31                       .  .  .  #  .  .  .  .  #  .  .  #  #  .
-dnl   HP-UX 10.20, 11.{00,11,23}        #  .  .  #  #  .  .  .  #  .  .  #  #  #
-dnl   IRIX 6.5                          #  .  .  #  #  .  .  .  #  .  .  #  .  .
-dnl   OSF/1 5.1                         #  .  ?  #  #  .  .  .  #  .  .  #  .  #
-dnl   OSF/1 4.0d                        #  .  #  #  #  .  .  .  #  #  #  #  #  #
-dnl   NetBSD 4.0                        .  ?  ?  ?  ?  .  .  ?  ?  .  .  .  ?  ?
-dnl   NetBSD 3.0                        .  ?  ?  #  #  .  #  #  #  .  .  .  .  .
-dnl   BeOS                              #  #  ?  #  #  .  #  .  .  .  .  .  .  .
-dnl   mingw                             #  #  #  #  #  .  #  #  #  .  #  #  #  .
+dnl                                  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+dnl   glibc 2.5                      .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+dnl   glibc 2.3.6                    .  .  .  .  #  .  .  .  .  .  .  .  .  .  .
+dnl   FreeBSD 5.4, 6.1               .  .  .  .  #  .  .  .  .  #  .  .  .  .  .
+dnl   MacOS X 10.3.9                 .  .  .  .  #  .  .  .  .  #  .  .  .  .  .
+dnl   OpenBSD 3.9, 4.0               .  ?  ?  ?  #  ?  .  .  ?  ?  .  .  .  ?  ?
+dnl   Cygwin 2007 (= Cygwin 1.5.24)  .  ?  ?  ?  #  #  .  .  .  #  .  .  .  .  .
+dnl   Cygwin 2006 (= Cygwin 1.5.19)  #  ?  ?  ?  #  #  .  .  #  #  .  .  .  .  .
+dnl   Solaris 10                     .  .  #  #  #  .  .  .  .  #  .  .  .  .  .
+dnl   Solaris 2.6 ... 9              #  .  #  #  #  #  .  .  .  #  .  .  .  .  .
+dnl   Solaris 2.5.1                  #  .  #  #  #  #  .  .  .  #  #  #  #  #  #
+dnl   AIX 5.2                        .  .  #  #  #  .  .  .  .  #  .  .  .  .  .
+dnl   AIX 4.3.2, 5.1                 #  .  #  #  #  #  .  .  .  #  .  .  .  .  .
+dnl   HP-UX 11.31                    .  .  .  .  #  .  .  .  .  #  .  .  #  #  .
+dnl   HP-UX 10.20, 11.{00,11,23}     #  .  .  .  #  #  .  .  .  #  .  .  #  #  #
+dnl   IRIX 6.5                       #  .  .  .  #  #  .  .  .  #  .  .  #  .  .
+dnl   OSF/1 5.1                      #  .  #  #  #  #  .  .  .  #  .  .  #  .  #
+dnl   OSF/1 4.0d                     #  .  #  #  #  #  .  .  .  #  #  #  #  #  #
+dnl   NetBSD 4.0                     .  ?  ?  ?  ?  ?  .  .  ?  ?  .  .  .  ?  ?
+dnl   NetBSD 3.0                     .  .  .  .  #  #  .  #  #  #  .  .  .  .  .
+dnl   BeOS                           #  #  .  #  #  #  .  #  .  .  .  .  .  .  .
+dnl   mingw                          #  #  #  #  #  #  .  #  #  #  .  #  #  #  .
