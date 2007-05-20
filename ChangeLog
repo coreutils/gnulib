@@ -86,6 +86,7 @@
 
 	* lib/utimens.c (gl_futimens): Rename from futimens,
 	now that glibc-2.6 declares futimens.
+	* lib/utimens.h: Likewise.
 
 2007-05-19  Bruno Haible  <bruno@clisp.org>
 
