@@ -30,7 +30,7 @@
 /* Number of mantissa units, in base FLT_RADIX.  */
 # undef LDBL_MANT_DIG
 # define LDBL_MANT_DIG   64
-/* Number of decimal digits that sufficient for representing a number.  */
+/* Number of decimal digits that is sufficient for representing a number.  */
 # undef LDBL_DIG
 # define LDBL_DIG        18
 /* x-1 where x is the smallest representable number > 1.  */
