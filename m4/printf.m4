@@ -1,4 +1,4 @@
-# printf.m4 serial 12
+# printf.m4 serial 13
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -124,8 +124,8 @@ changequote([,])dnl
     ])
 ])
 
-dnl Test whether the *printf family of functions supports infinite 'double'
-dnl arguments in the %f, %e, %g directives. (ISO C99, POSIX:2001)
+dnl Test whether the *printf family of functions supports infinite and NaN
+dnl 'double' arguments in the %f, %e, %g directives. (ISO C99, POSIX:2001)
 dnl Result is gl_cv_func_printf_infinite.
 
 AC_DEFUN([gl_PRINTF_INFINITE],
@@ -138,7 +138,26 @@ AC_DEFUN([gl_PRINTF_INFINITE],
       AC_TRY_RUN([
 #include <stdio.h>
 #include <string.h>
+static int
+strisnan (const char *string, size_t start_index, size_t end_index)
+{
+  if (start_index < end_index)
+    {
+      if (string[start_index] == '-')
+        start_index++;
+      if (start_index + 3 <= end_index
+          && memcmp (string + start_index, "nan", 3) == 0)
+        {
+          start_index += 3;
+          if (start_index == end_index
+              || (string[start_index] == '(' && string[end_index - 1] == ')'))
+            return 1;
+        }
+    }
+  return 0;
+}
 static char buf[100];
+static double zero = 0.0;
 int main ()
 {
   if (sprintf (buf, "%f", 1.0 / 0.0) < 0
@@ -147,17 +166,26 @@ int main ()
   if (sprintf (buf, "%f", -1.0 / 0.0) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
     return 1;
+  if (sprintf (buf, "%f", zero / zero) < 0
+      || !strisnan (buf, 0, strlen (buf)))
+    return 1;
   if (sprintf (buf, "%e", 1.0 / 0.0) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
     return 1;
   if (sprintf (buf, "%e", -1.0 / 0.0) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
     return 1;
+  if (sprintf (buf, "%e", zero / zero) < 0
+      || !strisnan (buf, 0, strlen (buf)))
+    return 1;
   if (sprintf (buf, "%g", 1.0 / 0.0) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
     return 1;
   if (sprintf (buf, "%g", -1.0 / 0.0) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
+    return 1;
+  if (sprintf (buf, "%g", zero / zero) < 0
+      || !strisnan (buf, 0, strlen (buf)))
     return 1;
   return 0;
 }], [gl_cv_func_printf_infinite=yes], [gl_cv_func_printf_infinite=no],
@@ -175,8 +203,6 @@ changequote(,)dnl
                                # Guess yes on HP-UX >= 11.
          hpux[7-9]* | hpux10*) gl_cv_func_printf_infinite="guessing no";;
          hpux*)                gl_cv_func_printf_infinite="guessing yes";;
-                               # Guess yes on IRIX >= 6.5.
-         irix6.5)              gl_cv_func_printf_infinite="guessing yes";;
                                # Guess yes on NetBSD >= 3.
          netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
                                gl_cv_func_printf_infinite="guessing no";;
@@ -191,8 +217,8 @@ changequote([,])dnl
     ])
 ])
 
-dnl Test whether the *printf family of functions supports infinite 'long double'
-dnl arguments in the %f, %e, %g directives. (ISO C99, POSIX:2001)
+dnl Test whether the *printf family of functions supports infinite and NaN
+dnl 'long double' arguments in the %f, %e, %g directives. (ISO C99, POSIX:2001)
 dnl Result is gl_cv_func_printf_infinite_long_double.
 
 AC_DEFUN([gl_PRINTF_INFINITE_LONG_DOUBLE],
@@ -208,7 +234,26 @@ AC_DEFUN([gl_PRINTF_INFINITE_LONG_DOUBLE],
           AC_TRY_RUN([
 #include <stdio.h>
 #include <string.h>
+static int
+strisnan (const char *string, size_t start_index, size_t end_index)
+{
+  if (start_index < end_index)
+    {
+      if (string[start_index] == '-')
+        start_index++;
+      if (start_index + 3 <= end_index
+          && memcmp (string + start_index, "nan", 3) == 0)
+        {
+          start_index += 3;
+          if (start_index == end_index
+              || (string[start_index] == '(' && string[end_index - 1] == ')'))
+            return 1;
+        }
+    }
+  return 0;
+}
 static char buf[100];
+static long double zeroL = 0.0L;
 int main ()
 {
   if (sprintf (buf, "%Lf", 1.0L / 0.0L) < 0
@@ -217,17 +262,26 @@ int main ()
   if (sprintf (buf, "%Lf", -1.0L / 0.0L) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
     return 1;
+  if (sprintf (buf, "%Lf", zeroL / zeroL) < 0
+      || !strisnan (buf, 0, strlen (buf)))
+    return 1;
   if (sprintf (buf, "%Le", 1.0L / 0.0L) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
     return 1;
   if (sprintf (buf, "%Le", -1.0L / 0.0L) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
     return 1;
+  if (sprintf (buf, "%Le", zeroL / zeroL) < 0
+      || !strisnan (buf, 0, strlen (buf)))
+    return 1;
   if (sprintf (buf, "%Lg", 1.0L / 0.0L) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
     return 1;
   if (sprintf (buf, "%Lg", -1.0L / 0.0L) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
+    return 1;
+  if (sprintf (buf, "%Lg", zeroL / zeroL) < 0
+      || !strisnan (buf, 0, strlen (buf)))
     return 1;
   return 0;
 }],
@@ -247,8 +301,6 @@ changequote(,)dnl
                                    # Guess yes on HP-UX >= 11.
              hpux[7-9]* | hpux10*) gl_cv_func_printf_infinite_long_double="guessing no";;
              hpux*)                gl_cv_func_printf_infinite_long_double="guessing yes";;
-                                   # Guess yes on IRIX >= 6.5.
-             irix6.5)              gl_cv_func_printf_infinite_long_double="guessing yes";;
                                    # Guess yes on NetBSD >= 3.
              netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
                                    gl_cv_func_printf_infinite_long_double="guessing no";;
@@ -895,7 +947,7 @@ dnl   AIX 5.2                        .  .  #  #  #  .  .  .  .  #  .  .  .  .  .
 dnl   AIX 4.3.2, 5.1                 #  .  #  #  #  #  .  .  .  #  .  .  .  .  .
 dnl   HP-UX 11.31                    .  .  .  .  #  .  .  .  .  #  .  .  #  #  .
 dnl   HP-UX 10.20, 11.{00,11,23}     #  .  .  .  #  #  .  .  .  #  .  .  #  #  #
-dnl   IRIX 6.5                       #  .  .  .  #  #  .  .  .  #  .  .  #  .  .
+dnl   IRIX 6.5                       #  .  #  #  #  #  .  .  .  #  .  .  #  .  .
 dnl   OSF/1 5.1                      #  .  #  #  #  #  .  .  .  #  .  .  #  .  #
 dnl   OSF/1 4.0d                     #  .  #  #  #  #  .  .  .  #  #  #  #  #  #
 dnl   NetBSD 4.0                     .  ?  ?  ?  ?  ?  .  .  ?  ?  .  .  .  ?  ?

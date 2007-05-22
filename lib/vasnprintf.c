@@ -1297,17 +1297,16 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 # if NEED_PRINTF_INFINITE_DOUBLE
 			 || (a.arg[dp->arg_index].type == TYPE_DOUBLE
 			     /* The systems (mingw) which produce wrong output
-				for Inf and -Inf also do so for NaN and -0.0.
-				Therefore we treat these cases here as well.  */
+				for Inf, -Inf, and NaN also do so for -0.0.
+				Therefore we treat this case here as well.  */
 			     && is_infinite_or_zero (a.arg[dp->arg_index].a.a_double))
 # endif
 # if NEED_PRINTF_LONG_DOUBLE
 			 || a.arg[dp->arg_index].type == TYPE_LONGDOUBLE
 # elif NEED_PRINTF_INFINITE_LONG_DOUBLE
 			 || (a.arg[dp->arg_index].type == TYPE_LONGDOUBLE
-			     /* The systems which produce wrong output for Inf
-				and -Inf also do so for NaN.  Therefore treat
-				this case here as well.  */
+			     /* Some systems produce wrong output for Inf,
+				-Inf, and NaN.  */
 			     && is_infinitel (a.arg[dp->arg_index].a.a_longdouble))
 # endif
 			))

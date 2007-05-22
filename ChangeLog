@@ -1,3 +1,19 @@
+2007-05-21  Bruno Haible  <bruno@clisp.org>
+
+	* m4/printf.m4 (gl_PRINTF_INFINITE, gl_PRINTF_INFINITE_LONG_DOUBLE):
+	Check also the output for NaN arguments. When cross-compiling, guess
+	no on IRIX.
+	* lib/vasnprintf.c: Update comments.
+	* tests/test-vasnprintf-posix.c (strisnan): New function.
+	(test_function): Use it.
+	* tests/test-vasprintf-posix.c (strisnan): New function.
+	(test_function): Use it.
+	* tests/test-snprintf-posix.h (strisnan): New function.
+	(test_function): Use it.
+	* tests/test-sprintf-posix.h (strisnan): New function.
+	(test_function): Use it.
+	Reported by Eric Blake.
+
 2007-05-20  Bruno Haible  <bruno@clisp.org>
 
 	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Add test for large finite

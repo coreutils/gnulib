@@ -49,6 +49,27 @@ strmatch (const char *pattern, const char *string)
   return 1;
 }
 
+/* Test whether string[start_index..end_index-1] is a valid textual
+   representation of NaN.  */
+static int
+strisnan (const char *string, size_t start_index, size_t end_index, int uppercase)
+{
+  if (start_index < end_index)
+    {
+      if (string[start_index] == '-')
+	start_index++;
+      if (start_index + 3 <= end_index
+	  && memcmp (string + start_index, uppercase ? "NAN" : "nan", 3) == 0)
+	{
+	  start_index += 3;
+	  if (start_index == end_index
+	      || (string[start_index] == '(' && string[end_index - 1] == ')'))
+	    return 1;
+	}
+    }
+  return 0;
+}
+	  
 static void
 test_function (int (*my_sprintf) (char *, const char *, ...))
 {
@@ -162,8 +183,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%a %d", NaN (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
-	    && (memcmp (result, "nan", 3) == 0
-		|| memcmp (result, "-nan", 4) == 0)
+	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -362,8 +382,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     /* "0000000nan 33" is not a valid result; see
        <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
     ASSERT (strlen (result) == 20 + 3
-	    && (memcmp (result + strspn (result, " "), "nan", 3) == 0
-		|| memcmp (result + strspn (result, " "), "-nan", 4) == 0)
+	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -428,8 +447,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%La %d", 0.0L / 0.0L, 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
-	    && (memcmp (result, "nan", 3) == 0
-		|| memcmp (result, "-nan", 4) == 0)
+	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -629,8 +647,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     /* "0000000nan 33" is not a valid result; see
        <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
     ASSERT (strlen (result) == 20 + 3
-	    && (memcmp (result + strspn (result, " "), "nan", 3) == 0
-		|| memcmp (result + strspn (result, " "), "-nan", 4) == 0)
+	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -790,8 +807,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%f %d", NaN (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
-	    && (memcmp (result, "nan", 3) == 0
-		|| memcmp (result, "-nan", 4) == 0)
+	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -866,8 +882,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%020f %d", NaN (), 33, 44, 55);
     ASSERT (strlen (result) == 20 + 3
-	    && (memcmp (result + strspn (result, " "), "nan", 3) == 0
-		|| memcmp (result + strspn (result, " "), "-nan", 4) == 0)
+	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -1034,8 +1049,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%Lf %d", zero / zero, 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
-	    && (memcmp (result, "nan", 3) == 0
-		|| memcmp (result, "-nan", 4) == 0)
+	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -1111,8 +1125,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%020Lf %d", zero / zero, 33, 44, 55);
     ASSERT (strlen (result) == 20 + 3
-	    && (memcmp (result + strspn (result, " "), "nan", 3) == 0
-		|| memcmp (result + strspn (result, " "), "-nan", 4) == 0)
+	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -1191,8 +1204,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%F %d", NaN (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
-	    && (memcmp (result, "NAN", 3) == 0
-		|| memcmp (result, "-NAN", 4) == 0)
+	    && strisnan (result, 0, strlen (result) - 3, 1)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -1287,8 +1299,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%LF %d", zero / zero, 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
-	    && (memcmp (result, "NAN", 3) == 0
-		|| memcmp (result, "-NAN", 4) == 0)
+	    && strisnan (result, 0, strlen (result) - 3, 1)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -1487,8 +1498,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%e %d", NaN (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
-	    && (memcmp (result, "nan", 3) == 0
-		|| memcmp (result, "-nan", 4) == 0)
+	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -1579,8 +1589,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%020e %d", NaN (), 33, 44, 55);
     ASSERT (strlen (result) == 20 + 3
-	    && (memcmp (result + strspn (result, " "), "nan", 3) == 0
-		|| memcmp (result + strspn (result, " "), "-nan", 4) == 0)
+	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -1748,8 +1757,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%Le %d", zero / zero, 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
-	    && (memcmp (result, "nan", 3) == 0
-		|| memcmp (result, "-nan", 4) == 0)
+	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -1833,8 +1841,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%020Le %d", zero / zero, 33, 44, 55);
     ASSERT (strlen (result) == 20 + 3
-	    && (memcmp (result + strspn (result, " "), "nan", 3) == 0
-		|| memcmp (result + strspn (result, " "), "-nan", 4) == 0)
+	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -2012,8 +2019,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%g %d", NaN (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
-	    && (memcmp (result, "nan", 3) == 0
-		|| memcmp (result, "-nan", 4) == 0)
+	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -2097,8 +2103,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%020g %d", NaN (), 33, 44, 55);
     ASSERT (strlen (result) == 20 + 3
-	    && (memcmp (result + strspn (result, " "), "nan", 3) == 0
-		|| memcmp (result + strspn (result, " "), "-nan", 4) == 0)
+	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -2266,8 +2271,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%Lg %d", zero / zero, 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
-	    && (memcmp (result, "nan", 3) == 0
-		|| memcmp (result, "-nan", 4) == 0)
+	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -2351,8 +2355,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%020Lg %d", zero / zero, 33, 44, 55);
     ASSERT (strlen (result) == 20 + 3
-	    && (memcmp (result + strspn (result, " "), "nan", 3) == 0
-		|| memcmp (result + strspn (result, " "), "-nan", 4) == 0)
+	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
