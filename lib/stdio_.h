@@ -227,7 +227,7 @@ extern int fseeko (FILE *fp, off_t offset, int whence);
 typedef int verify_fseeko_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
 #  define fseeko fseek
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef fseeko
 # define fseeko(f,o,w) \
    (GL_LINK_WARNING ("fseeko is unportable - " \
@@ -251,7 +251,7 @@ typedef int verify_fseeko_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
 typedef int verify_ftello_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
 #  define ftello ftell
 # endif
-#else
+#elif defined GNULIB_POSIXCHECK
 # undef ftello
 # define ftello(f) \
    (GL_LINK_WARNING ("ftello is unportable - " \

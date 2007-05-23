@@ -1,3 +1,8 @@
+2007-05-23  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdio_.h (fseeko, ftello): Provide a link warning only if
+	GNULIB_POSIXCHECK is defined.
+
 2007-05-21  Bruno Haible  <bruno@clisp.org>
 
 	* m4/printf.m4 (gl_PRINTF_INFINITE, gl_PRINTF_INFINITE_LONG_DOUBLE):
