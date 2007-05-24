@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate March 8, 2007
+@set lastupdate May 23, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -446,6 +446,24 @@ and list them as the contributors of the code that you copied.  If all
 you did was copy it, not write it, then for copyright purposes you are
 @emph{not} one of the contributors of @emph{this} code.
 
+Especially when code has been released into the public domain, authors
+sometimes fail to write a license statement in each file.  In this
+case, please first be sure that all the authors of the code have
+disclaimed copyright interest.  Then, when copying the new files into
+your project, add a brief note at the beginning of the files recording
+the authors, the public domain status, and anything else relevant.
+
+On the other hand, when merging some public domain code into an
+existing file covered by the GPL (or LGPL or other free software
+license), there is no reason to indicate the pieces which are public
+domain.  The notice saying that the whole file is under the GPL (or
+other license) is legally sufficient.
+
+Using code that is released under a GPL-compatible free license,
+rather than being in the public domain, may require preserving
+copyright notices or other steps.  Of course, you should do what is
+needed.
+
 If you are maintaining an FSF-copyrighted package, please verify we
 have papers for the code you are copying, @emph{before} copying it.
 If you are copying from another FSF-copyrighted package, then we
@@ -461,6 +479,7 @@ the code was not written as a contribution to your package, but that
 doesn't mean it is ok to do without them.  If you cannot get papers
 for the code, you can only use it as an external library
 (@pxref{External Libraries}).
+
 
 @node Copyright Notices
 @section Copyright Notices
