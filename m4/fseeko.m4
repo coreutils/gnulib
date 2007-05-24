@@ -12,7 +12,7 @@ AC_DEFUN([gl_FUNC_FSEEKO],
   AC_CACHE_CHECK([for fseeko], [gl_cv_func_fseeko],
     [
       AC_TRY_LINK([#include <stdio.h>], [fseeko (stdin, 0, 0);],
-	[gl_cv_func_fseeko=yes], [gl_cv_func_fseeko=no])
+        [gl_cv_func_fseeko=yes], [gl_cv_func_fseeko=no])
     ])
   if test $gl_cv_func_fseeko = no; then
     HAVE_FSEEKO=0
