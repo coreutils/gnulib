@@ -42,7 +42,9 @@
 #include <stdarg.h>
 #include <stddef.h>
 
-#if (@GNULIB_FFLUSH@ && @REPLACE_FFLUSH@) || (@GNULIB_FSEEKO@ && !@HAVE_FSEEKO@) || (@GNULIB_FTELLO@ && !@HAVE_FTELLO@)
+#if (@GNULIB_FFLUSH@ && @REPLACE_FFLUSH@)                               \
+  || (@GNULIB_FSEEKO@ && (!@HAVE_FSEEKO@ || @REPLACE_FSEEKO@))          \
+  || (@GNULIB_FTELLO@ && (!@HAVE_FTELLO@ || @REPLACE_FTELLO@))
 /* Get off_t.  */
 # include <sys/types.h>
 #endif
@@ -216,7 +218,7 @@ extern int vsprintf (char *str, const char *format, va_list args)
 # endif
 #endif
 
-#if @GNULIB_FFLUSH@ && @REPLACE_FFLUSH@
+#if (@GNULIB_FFLUSH@ && @REPLACE_FFLUSH@) || (@GNULIB_FSEEKO@ && @REPLACE_FSEEKO@)
 /* Provide fseek, fseeko functions that are aware of a preceding fflush().  */
 # define fseeko rpl_fseeko
 extern int fseeko (FILE *fp, off_t offset, int whence);
@@ -250,6 +252,9 @@ typedef int verify_fseeko_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
 /* Assume 'off_t' is the same type as 'long'.  */
 typedef int verify_ftello_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
 #  define ftello ftell
+# elif @REPLACE_FTELLO@
+#  define ftello rpl_ftello
+extern off_t ftello (FILE *fp);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef ftello

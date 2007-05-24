@@ -12,4 +12,9 @@ Portability problems fixed by Gnulib:
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+stdin is created in 32-bit mode instead of 64-bit mode: Cygwin 1.5.x.
+One workaround is to use freopen(NULL, ``r'', stdin) on Cygwin 1.5.21
+or newer.  Another is to use the gnulib ftello module and do
+ftello(stdin).
 @end itemize

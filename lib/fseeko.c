@@ -44,6 +44,19 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
 # else                                         /* FreeBSD, MacOS X, Cygwin */
 #  define fp_ub fp->_ub
 # endif
+# if defined __SL64 && defined __SCLE /* Cygwin */
+  if ((fp->_flags & __SL64) == 0)
+    {
+      /* Cygwin 1.5.0 through 1.5.24 failed to open stdin in 64-bit
+	 mode; but has an fseeko that requires 64-bit mode.  */
+      FILE *tmp = fopen ("/dev/null", "r");
+      if (!tmp)
+	return -1;
+      fp->_flags |= __SL64;
+      fp->_seek64 = tmp->_seek64;
+      fclose (tmp);
+    }
+# endif
   if (fp->_p == fp->_bf._base
       && fp->_r == 0
       && fp->_w == ((fp->_flags & (__SLBF | __SNBF | __SRD)) == 0 /* fully buffered and not currently reading? */
@@ -53,10 +66,10 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
 # if defined __sun && defined __sparc && defined _LP64 /* Solaris/SPARC 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \
-                         unsigned char *_base; \
-                         unsigned char *_end; \
-                         long _cnt; \
-                       } *) fp)
+			 unsigned char *_base; \
+			 unsigned char *_end; \
+			 long _cnt; \
+		       } *) fp)
   if (fp_->_ptr == fp_->_base
       && (fp_->_ptr == NULL || fp_->_cnt == 0))
 # else

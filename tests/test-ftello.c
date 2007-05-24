@@ -27,8 +27,7 @@
 int
 main ()
 {
+  /* This test assumes stdin is seekable.  */
   off_t pos = ftello (stdin);
-  (void)pos;
-
-  return 0;
+  return pos < 0;
 }

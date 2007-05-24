@@ -1,10 +1,13 @@
 Files:
 tests/test-fseeko.c
+tests/test-fseeko.sh
 
 Depends-on:
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-fseeko
+TESTS += test-fseeko.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-fseeko
+EXTRA_DIST += test-fseeko.sh

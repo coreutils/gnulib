@@ -27,8 +27,6 @@
 int
 main ()
 {
-  off_t pos = fseeko (stdin, (off_t)0, SEEK_CUR);
-  (void)pos;
-
-  return 0;
+  /* This test assumes stdin is seekable.  */
+  return fseeko (stdin, (off_t)0, SEEK_CUR) != 0;
 }

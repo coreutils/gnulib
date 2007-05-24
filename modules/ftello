@@ -2,6 +2,7 @@ Description:
 ftello() function: Retrieve the position of a FILE stream.
 
 Files:
+lib/ftello.c
 m4/ftello.m4
 
 Depends-on:

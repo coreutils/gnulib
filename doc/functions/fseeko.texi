@@ -14,6 +14,8 @@ OSF/1 4.0, Solaris 2.5.1, mingw.
 @item
 The declaration of @code{fseeko} in @code{<stdio.h>} is not enabled by default
 on some platforms: glibc 2.3.6.
+@item
+This function fails on seekable stdin, stdout, and stderr: cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:

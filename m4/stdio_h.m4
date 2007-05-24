@@ -1,4 +1,4 @@
-# stdio_h.m4 serial 4
+# stdio_h.m4 serial 5
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,6 +47,29 @@ AC_DEFUN([gl_STDIO_H_DEFAULTS],
   HAVE_VASPRINTF=1;        AC_SUBST([HAVE_VASPRINTF])
   REPLACE_VASPRINTF=0;     AC_SUBST([REPLACE_VASPRINTF])
   HAVE_FSEEKO=1;           AC_SUBST([HAVE_FSEEKO])
+  REPLACE_FSEEKO=0;        AC_SUBST([REPLACE_FSEEKO])
   HAVE_FTELLO=1;           AC_SUBST([HAVE_FTELLO])
+  REPLACE_FTELLO=0;        AC_SUBST([REPLACE_FTELLO])
   REPLACE_FFLUSH=0;        AC_SUBST([REPLACE_FFLUSH])
+])
+
+dnl Code shared by fseeko and ftello.  Determine if large files are supported,
+dnl but stdin does not start as a large file by default.
+AC_DEFUN([gl_STDIN_LARGE_OFFSET],
+  [
+    AC_CACHE_CHECK([whether stdin defaults to large file offsets],
+      [gl_cv_var_stdin_large_offset],
+      [AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <stdio.h>],
+[#if defined __SL64 && defined __SCLE /* cygwin */
+  /* Cygwin 1.5.24 and earlier fail to put stdin in 64-bit mode, making
+     fseeko/ftello needlessly fail.  This bug was fixed at the same time
+     that cygwin started exporting asnprintf (cygwin 1.7.0), so we use
+     that as a link-time test for cross-compiles rather than building
+     a runtime test.  */
+  size_t s;
+  if (asnprintf (NULL, &s, ""))
+    return 0;
+#endif])],
+	[gl_cv_var_stdin_large_offset=yes],
+	[gl_cv_var_stdin_large_offset=no])])
 ])

@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.40 2007-05-01 22:37:10 haible Exp $
+@comment $Id: gnulib.texi,v 1.41 2007-05-24 03:53:38 ericb Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2007-05-01 22:37:10 $
+@set UPDATED $Date: 2007-05-24 03:53:38 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -1543,7 +1543,9 @@ by Gnulib.
 * sscanf::
 * stat::
 * statvfs::
+* stderr::
 * stdin::
+* stdout::
 * strcasecmp::
 * strcat::
 * strchr::
@@ -2659,7 +2661,9 @@ by Gnulib.
 @include functions/sscanf.texi
 @include functions/stat.texi
 @include functions/statvfs.texi
+@include functions/stderr.texi
 @include functions/stdin.texi
+@include functions/stdout.texi
 @include functions/strcasecmp.texi
 @include functions/strcat.texi
 @include functions/strchr.texi
@@ -2877,3 +2881,8 @@ generated automatically.
 @printindex cp
 
 @bye
+
+@c Local Variables:
+@c indent-tabs-mode: nil
+@c whitespace-check-buffer-indent: nil
+@c End:

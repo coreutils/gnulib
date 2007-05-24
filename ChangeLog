@@ -1,3 +1,34 @@
+2007-05-23  Eric Blake  <ebb9@byu.net>
+
+	Fix fseeko/ftello on cygwin 1.5.24.
+	* doc/functions/fseeko.texi (fseeko): Document the fix.
+	* doc/functions/ftello.texi (ftello): Document the fix.
+	* doc/functions/stdin.texi (stdin): Document the cygwin bug.
+	* doc/functions/stdout.text (stdout): New file.
+	* doc/functions/stderr.text (stderr): New file.
+	* doc/gnulib.texi (Function Substitutes): Use new files.
+	* tests/test-fseeko.c (main): Check for broken fseeko on cygwin
+	prior to 1.7.0.
+	* tests/test-ftello.c (main): Likewise for ftello.
+	* tests/test-fseeko.sh: New file.
+	* tests/test-ftello.sh: New file.
+	* modules/fseeko-tests (Makefile.am): Ensure test-fseeko is run
+	with seekable stdin.
+	* modules/ftello-tests (Makefile.am): Likewise for test-ftello.
+	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Detect the cygwin bug.
+	(gl_REPLACE_FSEEKO): New macro.
+	* m4/ftello.m4 (gl_FUNC_FTELLO, gl_REPLACE_FTELLO): Likewise.
+	* modules/fseeko (Files): Distribute fseeko.c.
+	* modules/ftello (Files): Distribute ftello.c.
+	* lib/fseeko.c (rpl_fseeko) [__CYGWIN__]: Convert stdin to 64-bit
+	mode.
+	* lib/ftello.c (rpl_ftello): New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Allow replacement of
+	fseeko, ftello.
+	(gl_STDIN_LARGE_OFFSET): New macro.
+	* modules/stdio (Makefile.am): Perform the replacement.
+	* lib/stdio_.h (rpl_fseeko, rpl_ftello): Define when needed.
+
 2007-05-23  Bruno Haible  <bruno@clisp.org>
 
 	* lib/stdio_.h (fseeko, ftello): Provide a link warning only if
