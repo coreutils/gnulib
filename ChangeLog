@@ -1,3 +1,12 @@
+2007-05-24  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-vasnprintf-posix.c (test_function): Allow up to 50 bytes
+	in the printed representation of a NaN.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	Reported by Eric Blake.
+
 2007-05-23  Eric Blake  <ebb9@byu.net>
 
 	Fix fseeko/ftello on cygwin 1.5.24.

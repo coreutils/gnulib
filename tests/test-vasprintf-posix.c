@@ -460,11 +460,11 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%020a %d", NaN (), 33, 44, 55);
+      my_asprintf (&result, "%050a %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
     /* "0000000nan 33" is not a valid result; see
        <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
-    ASSERT (strlen (result) == 20 + 3
+    ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
@@ -775,11 +775,11 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%020La %d", 0.0L / 0.0L, 33, 44, 55);
+      my_asprintf (&result, "%050La %d", 0.0L / 0.0L, 33, 44, 55);
     ASSERT (result != NULL);
     /* "0000000nan 33" is not a valid result; see
        <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
-    ASSERT (strlen (result) == 20 + 3
+    ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
@@ -1048,9 +1048,9 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%020f %d", NaN (), 33, 44, 55);
+      my_asprintf (&result, "%050f %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) == 20 + 3
+    ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
@@ -1329,9 +1329,9 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     static long double zero = 0.0L;
     char *result;
     int retval =
-      my_asprintf (&result, "%020Lf %d", zero / zero, 33, 44, 55);
+      my_asprintf (&result, "%050Lf %d", zero / zero, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) == 20 + 3
+    ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
@@ -1876,9 +1876,9 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%020e %d", NaN (), 33, 44, 55);
+      my_asprintf (&result, "%050e %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) == 20 + 3
+    ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
@@ -2168,9 +2168,9 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     static long double zero = 0.0L;
     char *result;
     int retval =
-      my_asprintf (&result, "%020Le %d", zero / zero, 33, 44, 55);
+      my_asprintf (&result, "%050Le %d", zero / zero, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) == 20 + 3
+    ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
@@ -2470,9 +2470,9 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%020g %d", NaN (), 33, 44, 55);
+      my_asprintf (&result, "%050g %d", NaN (), 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) == 20 + 3
+    ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
@@ -2762,9 +2762,9 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
     static long double zero = 0.0L;
     char *result;
     int retval =
-      my_asprintf (&result, "%020Lg %d", zero / zero, 33, 44, 55);
+      my_asprintf (&result, "%050Lg %d", zero / zero, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) == 20 + 3
+    ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
