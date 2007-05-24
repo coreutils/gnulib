@@ -25,8 +25,12 @@
 #include <sys/types.h>
 
 int
-main ()
+main (int argc, char **argv)
 {
-  /* This test assumes stdin is seekable.  */
-  return fseeko (stdin, (off_t)0, SEEK_CUR) != 0;
+  /* Assume stdin is seekable iff argc > 1.  */
+  int expected = argc > 1 ? 0 : -1;
+  /* Exit with success only if fseek/fseeko agree.  */
+  int r1 = fseeko (stdin, (off_t)0, SEEK_CUR);
+  int r2 = fseek (stdin, (long)0, SEEK_CUR);
+  return ! (r1 == r2 && r1 == expected);
 }

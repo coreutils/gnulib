@@ -25,12 +25,19 @@
 
 #undef fseeko
 #if !HAVE_FSEEKO
+# undef fseek
 # define fseeko fseek
 #endif
 
 int
 rpl_fseeko (FILE *fp, off_t offset, int whence)
 {
+#if LSEEK_PIPE_BROKEN
+  /* mingw gives bogus answers rather than failure on non-seekable files.  */
+  if (lseek (fileno (fp), 0, SEEK_CUR) == -1)
+    return EOF;
+#endif
+
   /* These tests are based on fpurge.c.  */
 #if defined _IO_ferror_unlocked     /* GNU libc, BeOS */
   if (fp->_IO_read_end == fp->_IO_read_ptr

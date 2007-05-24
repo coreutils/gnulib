@@ -176,6 +176,25 @@ extern int getlogin_r (char *name, size_t size);
 #endif
 
 
+#if @GNULIB_LSEEK@
+# if @REPLACE_LSEEK@
+/* Set the offset of FD relative to SEEK_SET, SEEK_CUR, or SEEK_END.
+   Return the new offset if successful, otherwise -1 and errno set.
+   See the POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/lseek.html>.  */
+#  define lseek rpl_lseek
+   extern off_t lseek (int fd, off_t offset, int whence);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef lseek
+# define lseek(f,o,w) \
+    (GL_LINK_WARNING ("lseek does not fail with ESPIPE on non-seekable " \
+                      "files on some systems - " \
+                      "use gnulib module lseek for portability"), \
+     lseek (f, o, w))
+#endif
+
+
 #if @GNULIB_READLINK@
 /* Read the contents of the symbolic link FILE and place the first BUFSIZE
    bytes of it into BUF.  Return the number of bytes placed into BUF if

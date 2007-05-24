@@ -42,9 +42,7 @@
 #include <stdarg.h>
 #include <stddef.h>
 
-#if (@GNULIB_FFLUSH@ && @REPLACE_FFLUSH@)                               \
-  || (@GNULIB_FSEEKO@ && (!@HAVE_FSEEKO@ || @REPLACE_FSEEKO@))          \
-  || (@GNULIB_FTELLO@ && (!@HAVE_FTELLO@ || @REPLACE_FTELLO@))
+#if (@GNULIB_FSEEKO@ && @REPLACE_FSEEKO@) || (@GNULIB_FTELLO@ && @REPLACE_FTELLO@)
 /* Get off_t.  */
 # include <sys/types.h>
 #endif
@@ -218,16 +216,13 @@ extern int vsprintf (char *str, const char *format, va_list args)
 # endif
 #endif
 
-#if (@GNULIB_FFLUSH@ && @REPLACE_FFLUSH@) || (@GNULIB_FSEEKO@ && @REPLACE_FSEEKO@)
-/* Provide fseek, fseeko functions that are aware of a preceding fflush().  */
-# define fseeko rpl_fseeko
+#if @GNULIB_FSEEKO@
+# if @REPLACE_FSEEKO@
+/* Provide fseek, fseeko functions that are aware of a preceding
+   fflush(), and which detect pipes.  */
+#  define fseeko rpl_fseeko
 extern int fseeko (FILE *fp, off_t offset, int whence);
-# define fseek(fp, offset, whence) fseeko (fp, (off_t)(offset), whence)
-#elif @GNULIB_FSEEKO@
-# if !@HAVE_FSEEKO@
-/* Assume 'off_t' is the same type as 'long'.  */
-typedef int verify_fseeko_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
-#  define fseeko fseek
+#  define fseek(fp, offset, whence) fseeko (fp, (off_t)(offset), whence)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef fseeko
@@ -248,13 +243,10 @@ typedef int verify_fseeko_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
 #endif
 
 #if @GNULIB_FTELLO@
-# if !@HAVE_FTELLO@
-/* Assume 'off_t' is the same type as 'long'.  */
-typedef int verify_ftello_types[2 * (sizeof (off_t) == sizeof (long)) - 1];
-#  define ftello ftell
-# elif @REPLACE_FTELLO@
+# if @REPLACE_FTELLO@
 #  define ftello rpl_ftello
 extern off_t ftello (FILE *fp);
+#  define ftell(fp) ftello (fp)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef ftello

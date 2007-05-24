@@ -46,9 +46,7 @@ stdio.h: stdio_.h
 	      -e 's|@''REPLACE_VSPRINTF''@|$(REPLACE_VSPRINTF)|g' \
 	      -e 's|@''HAVE_VASPRINTF''@|$(HAVE_VASPRINTF)|g' \
 	      -e 's|@''REPLACE_VASPRINTF''@|$(REPLACE_VASPRINTF)|g' \
-	      -e 's|@''HAVE_FSEEKO''@|$(HAVE_FSEEKO)|g' \
 	      -e 's|@''REPLACE_FSEEKO''@|$(REPLACE_FSEEKO)|g' \
-	      -e 's|@''HAVE_FTELLO''@|$(HAVE_FTELLO)|g' \
 	      -e 's|@''REPLACE_FTELLO''@|$(REPLACE_FTELLO)|g' \
 	      -e 's|@''REPLACE_FFLUSH''@|$(REPLACE_FFLUSH)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \

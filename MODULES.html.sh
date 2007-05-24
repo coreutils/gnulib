@@ -2029,13 +2029,14 @@ func_all_modules ()
   func_module gettimeofday
   func_module inet_ntop
   func_module inet_pton
+  func_module lseek
+  func_module lstat
   func_module mkdir
   func_module mkdtemp
   func_module mkstemp
   func_module poll
-  func_module readlink
-  func_module lstat
   func_module printf-posix
+  func_module readlink
   func_module snprintf-posix
   func_module sprintf-posix
   func_module string

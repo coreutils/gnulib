@@ -1,3 +1,38 @@
+2007-05-24  Eric Blake  <ebb9@byu.net>
+
+	Fix lseek on mingw.
+	* modules/lseek: New module.
+	* m4/lseek.m4: New file.
+	* lib/lseek.c: New file.
+	* modules/lseek-tests: New file.
+	* tests/test-lseek.c: New file.
+	* tests/test-lseek.sh: New file.
+	* MODULES.html.sh: Document lseek module.
+	* modules/fflush (Depends-on): Add lseek, fseeko.
+	* modules/fseeko (Depends-on): Likewise.
+	* modules/ftello (Depends-on): Likewise.
+	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Replace fseek[o] if lseek is
+	broken.
+	* m4/ftello.m4 (gl_FUNC_FTELLO): Replace ftell[o] if lseek is
+	broken.
+	* m4/fflush.m4 (gl_REPLACE_FFLUSH): Trigger fseeko module.
+	* lib/fseeko.c (rpl_fseeko): Quit early on non-seekable files.
+	* lib/ftello.c (rpl_ftello): Likewise.
+	* tests/test-fseeko.c (main): Test this.
+	* tests/test-fseeko.sh: Likewise.
+	* tests/test-ftello.c (main): Likewise.
+	* tests/test-ftello.sh: Likewise.
+	* lib/stdio_.h (fseek, ftell): Simplify, since missing fseeko now
+	implies replacing fseek.
+	* modules/stdio (Makefile.am): No longer need HAVE_FSEEKO,
+	HAVE_FTELLO.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add lseek info.
+	* modules/unistd (Makefile.am): Likewise.
+	* lib/unistd_.h (lseek): Declare a replacement.
+	* doc/functions/lseek.texi (lseek): Document this fix.
+	* doc/functions/fseek.texi (fseek): Likewise.
+	* doc/functions/ftell.texi (ftell): Likewise.
+
 2007-05-24  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-vasnprintf-posix.c (test_function): Allow up to 50 bytes

@@ -6,6 +6,7 @@ lib/ftello.c
 m4/ftello.m4
 
 Depends-on:
+lseek
 stdio
 
 configure.ac-early:

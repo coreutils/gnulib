@@ -6,6 +6,7 @@ lib/fseeko.c
 m4/fseeko.m4
 
 Depends-on:
+lseek
 stdio
 
 configure.ac-early:

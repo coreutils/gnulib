@@ -1,4 +1,4 @@
-#serial 3
+# fflush.m4 serial 4
 
 # Copyright (C) 2007 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -20,9 +20,9 @@ AC_DEFUN([gl_FUNC_FFLUSH],
 #include <stdio.h>
 #include <unistd.h>
        ]], [[FILE *f = fopen ("conftest.txt", "r");
-         char buffer[10];
+	 char buffer[10];
 	 int fd = fileno (f);
-         if (!f || 0 > fd || fread (buffer, 1, 5, f) != 5)
+	 if (!f || 0 > fd || fread (buffer, 1, 5, f) != 5)
 	   return 2;
 	 /* For deterministic results, ensure f read a bigger buffer.  */
 	 if (lseek (fd, 0, SEEK_CUR) == 5)
@@ -48,4 +48,5 @@ AC_DEFUN([gl_REPLACE_FFLUSH],
   AC_LIBOBJ([fseeko])
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   REPLACE_FFLUSH=1
+  REPLACE_FSEEKO=1
 ])

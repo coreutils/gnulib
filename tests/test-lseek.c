@@ -1,4 +1,4 @@
-/* Test of ftello() function.
+/* Test of lseek() function.
    Copyright (C) 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -15,22 +15,15 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-/* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
+/* Written by Eric Blake, 2007.  */
 
 #include <config.h>
 
-#include <stdio.h>
-
-/* Get off_t.  */
-#include <sys/types.h>
+#include <unistd.h>
 
 int
-main (int argc, char **argv)
+main ()
 {
-  /* Assume stdin is seekable iff argc > 1.  */
-  int expected = argc > 1 ? 0 : -1;
-  /* Exit with success only if ftell/ftello agree.  */
-  off_t pos1 = ftello (stdin);
-  long pos2 = ftell (stdin);
-  return ! (pos1 == pos2 && pos1 == expected);
+  /* Exit with success only if stdin is seekable.  */
+  return lseek (0, (off_t)0, SEEK_CUR) < 0;
 }

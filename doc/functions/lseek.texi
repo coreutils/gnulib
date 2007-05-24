@@ -4,10 +4,12 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/lseek.html}
 
-Gnulib module: ---
+Gnulib module: lseek
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function mistakenly succeeds on non-seekable files: mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
