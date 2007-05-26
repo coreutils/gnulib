@@ -8,6 +8,7 @@ m4/fts.m4
 
 Depends-on:
 dirfd
+fchdir
 i-ring
 openat
 stdbool

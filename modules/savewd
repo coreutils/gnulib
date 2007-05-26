@@ -9,6 +9,7 @@ m4/savewd.m4
 Depends-on:
 dirname
 exit
+fchdir
 fcntl-safer
 fcntl
 raise

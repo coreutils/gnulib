@@ -16,6 +16,7 @@ m4/openat.m4
 Depends-on:
 dirname
 extensions
+fchdir
 gettext-h
 intprops
 lchown
