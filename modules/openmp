@@ -1,0 +1,24 @@
+Description:
+Detection of OpenMP support.
+
+Files:
+m4/openmp.m4
+
+Depends-on:
+
+configure.ac:
+AC_OPENMP
+
+Makefile.am:
+
+Include:
+
+Link:
+$(OPENMP_CFLAGS)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
