@@ -31,7 +31,13 @@ off_t
 rpl_lseek (int fd, off_t offset, int whence)
 {
   /* mingw lseek mistakenly succeeds on pipes, sockets, and terminals.  */
-  if (GetFileType ((HANDLE) _get_osfhandle (fd)) != FILE_TYPE_DISK)
+  HANDLE h = (HANDLE) _get_osfhandle (fd);
+  if (h == INVALID_HANDLE_VALUE)
+    {
+      errno = EBADF;
+      return -1;
+    }
+  if (GetFileType (h) != FILE_TYPE_DISK)
     {
       errno = ESPIPE;
       return -1;

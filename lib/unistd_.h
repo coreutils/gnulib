@@ -188,9 +188,8 @@ extern int getlogin_r (char *name, size_t size);
 #elif defined GNULIB_POSIXCHECK
 # undef lseek
 # define lseek(f,o,w) \
-    (GL_LINK_WARNING ("lseek does not fail with ESPIPE on non-seekable " \
-                      "files on some systems - " \
-                      "use gnulib module lseek for portability"), \
+    (GL_LINK_WARNING ("lseek does not fail with ESPIPE on pipes on some " \
+                      "systems - use gnulib module lseek for portability"), \
      lseek (f, o, w))
 #endif
 

@@ -1,3 +1,12 @@
+2007-05-28  Eric Blake  <ebb9@byu.net>
+
+	Improve lseek module.
+	* lib/lseek.c (rpl_lseek): Detect EBADF on mingw.
+	* lib/unistd_.h (lseek): Scale back link warning message.
+	* tests/test-lseek.c: Beef up test.
+	* tests/test-lseek.sh: Exercise more facets of lseek.
+	Reported by Bruno Haible.
+
 2007-05-28  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-unistd.c: Test all the types that <unistd.h> is expected

@@ -19,11 +19,69 @@
 
 #include <config.h>
 
+#include <errno.h>
+#include <stdio.h>
 #include <unistd.h>
 
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
+
+/* ARGC must be 2; *ARGV[1] is '0' if stdin and stdout are files, '1'
+   if they are pipes, and '2' if they are closed.  Check for proper
+   semantics of lseek.  */
 int
-main ()
+main (int argc, char **argv)
 {
-  /* Exit with success only if stdin is seekable.  */
-  return lseek (0, (off_t)0, SEEK_CUR) < 0;
+  if (argc != 2)
+    return 2;
+  switch (*argv[1])
+    {
+    case '0': /* regular files */
+      ASSERT (lseek (0, (off_t)2, SEEK_SET) == 2);
+      ASSERT (lseek (0, (off_t)-4, SEEK_CUR) == -1);
+      ASSERT (errno == EINVAL);
+      errno = 0;
+      ASSERT (lseek (0, (off_t)0, SEEK_CUR) == 2);
+      ASSERT (lseek (0, (off_t)0, (SEEK_SET | SEEK_CUR | SEEK_END) + 1) == -1);
+      ASSERT (errno == EINVAL);
+      ASSERT (lseek (1, (off_t)2, SEEK_SET) == 2);
+      errno = 0;
+      ASSERT (lseek (1, (off_t)-4, SEEK_CUR) == -1);
+      ASSERT (errno == EINVAL);
+      errno = 0;
+      ASSERT (lseek (1, (off_t)0, SEEK_CUR) == 2);
+      ASSERT (lseek (1, (off_t)0, (SEEK_SET | SEEK_CUR | SEEK_END) + 1) == -1);
+      ASSERT (errno == EINVAL);
+      break;
+
+    case '1': /* pipes */
+      errno = 0;
+      ASSERT (lseek (0, (off_t)0, SEEK_CUR) == -1);
+      ASSERT (errno == ESPIPE);
+      errno = 0;
+      ASSERT (lseek (1, (off_t)0, SEEK_CUR) == -1);
+      ASSERT (errno == ESPIPE);
+      break;
+
+    case '2': /* closed */
+      errno = 0;
+      ASSERT (lseek (0, (off_t)0, SEEK_CUR) == -1);
+      ASSERT (errno == EBADF);
+      errno = 0;
+      ASSERT (lseek (1, (off_t)0, SEEK_CUR) == -1);
+      ASSERT (errno == EBADF);
+      break;
+
+    default:
+      return 1;
+    }
+  return 0;
 }
