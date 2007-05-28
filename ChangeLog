@@ -1,5 +1,9 @@
 2007-05-28  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdio_.h (fflush): More comments.
+
+2007-05-28  Bruno Haible  <bruno@clisp.org>
+
 	* m4/lseek.m4 (gl_FUNC_LSEEK): When not cross-compiling, perform a real
 	runtime test.
 

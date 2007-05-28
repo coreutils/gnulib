@@ -270,7 +270,11 @@ extern off_t ftello (FILE *fp);
 # if @REPLACE_FFLUSH@
 #  define fflush rpl_fflush
   /* Flush all pending data on STREAM according to POSIX rules.  Both
-     output and seekable input streams are supported.  */
+     output and seekable input streams are supported.
+     Note! LOSS OF DATA can occur if fflush is applied on an input stream
+     that is _not_seekable_ or on an update stream that is _not_seekable_
+     and in which the most recent operation was input.  Seekability can
+     be tested with lseek(fileno(fp),0,SEEK_CUR).  */
   extern int fflush (FILE *gl_stream);
 # endif
 #elif defined GNULIB_POSIXCHECK
