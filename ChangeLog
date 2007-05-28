@@ -1,5 +1,11 @@
 2007-05-28  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import): Remember the --with-tests command-line
+	option through the macro gl_WITH_TESTS in the gnulib-cache.m4.
+	Reported by Eric Blake.
+
+2007-05-28  Bruno Haible  <bruno@clisp.org>
+
 	* modules/ftell-tests: New file.
 	* tests/test-ftell.c: New file, based on tests/test-ftello.c.
 	* tests/test-ftell.sh: New file, based on tests/test-ftello.sh.

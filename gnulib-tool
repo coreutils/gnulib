@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-04-12 13:02:00 $'
+cvsdatestamp='$Date: 2007-05-28 15:46:55 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1566,6 +1566,7 @@ func_import ()
   cached_m4base=
   cached_docbase=
   cached_testsbase=
+  cached_inctests=
   cached_libname=
   cached_lgpl=
   cached_makefile_name=
@@ -1598,6 +1599,9 @@ func_import ()
       }
       /gl_TESTS_BASE(/ {
         s,^.*gl_TESTS_BASE([[ ]*\([^])]*\).*$,cached_testsbase="\1",p
+      }
+      /gl_WITH_TESTS/ {
+        s,^.*$,cached_inctests=true,p
       }
       /gl_LIB(/ {
         s,^.*gl_LIB([[ ]*\([^])]*\).*$,cached_libname="\1",p
@@ -1686,6 +1690,10 @@ func_import ()
     if test -z "$testsbase"; then
       func_fatal_error "missing --tests-base option"
     fi
+  fi
+  # Require the tests if specified either way.
+  if test -z "$inctests"; then
+    inctests="$cached_inctests"
   fi
   # The libname defaults to the cached one.
   if test -z "$supplied_libname"; then
@@ -1977,6 +1985,9 @@ func_import ()
   func_append actioncmd " --m4-base=$m4base"
   func_append actioncmd " --doc-base=$docbase"
   func_append actioncmd " --aux-dir=$auxdir"
+  if test -n "$inctests"; then
+    func_append actioncmd " --with-tests"
+  fi
   for module in $avoidlist; do
     func_append actioncmd " --avoid=$module"
   done
@@ -2066,6 +2077,7 @@ func_import ()
     echo "gl_M4_BASE([$m4base])"
     echo "gl_DOC_BASE([$docbase])"
     echo "gl_TESTS_BASE([$testsbase])"
+    test -z "$inctests" || echo "gl_WITH_TESTS"
     echo "gl_LIB([$libname])"
     test -z "$lgpl" || echo "gl_LGPL"
     echo "gl_MAKEFILE_NAME([$makefile_name])"
@@ -3080,7 +3092,8 @@ case $mode in
               # Perform func_import in a subshell, so that variable values
               # such as
               #   local_gnulib_dir, avoidlist, sourcebase, m4base, docbase,
-              #   testsbase, libname, lgpl, makefile_name, libtool, macro_prefix
+              #   testsbase, inctests, libname, lgpl, makefile_name, libtool,
+              #   macro_prefix
               # don't propagate from one directory to another.
               (func_import) || func_exit 1
             done
