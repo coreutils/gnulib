@@ -1,24 +1,14 @@
 2007-05-28  Bruno Haible  <bruno@clisp.org>
 
-	* gnulib-tool (func_import): Remember the --with-tests command-line
-	option through the macro gl_WITH_TESTS in the gnulib-cache.m4.
-	Reported by Eric Blake.
-
-2007-05-28  Bruno Haible  <bruno@clisp.org>
-
-	* modules/ftell-tests: New file.
-	* tests/test-ftell.c: New file, based on tests/test-ftello.c.
-	* tests/test-ftell.sh: New file, based on tests/test-ftello.sh.
-
-	* lib/ftell.c: New file.
-	* modules/ftell: New file.
-	* m4/ftell.m4: New file.
-	* doc/functions/ftell.texi: Update.
-	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also GNULIB_FTELL,
-	REPLACE_FTELL.
-	* lib/stdio_.h (rpl_ftell): New declaration.
-	* modules/stdio (Makefile.am): Substitute also GNULIB_FTELL,
-	REPLACE_FTELL.
+	* tests/uniconv/test-u16-conv-from-enc.c: Remove #ifdef HAVE_CONFIG_H.
+	* tests/uniconv/test-u16-strconv-from-enc.c: Likewise.
+	* tests/uniconv/test-u16-strconv-to-enc.c: Likewise.
+	* tests/uniconv/test-u32-conv-from-enc.c: Likewise.
+	* tests/uniconv/test-u32-strconv-from-enc.c: Likewise.
+	* tests/uniconv/test-u32-strconv-to-enc.c: Likewise.
+	* tests/uniconv/test-u8-conv-from-enc.c: Likewise.
+	* tests/uniconv/test-u8-strconv-from-enc.c: Likewise.
+	* tests/uniconv/test-u8-strconv-to-enc.c: Likewise.
 
 2007-05-28  Eric Blake  <ebb9@byu.net>
 
@@ -54,6 +44,30 @@
 	test-vfprintf-posix.c, test-vprintf-posix.c,
 	test-vsnprintf-posix.c, test-vsnprintf.c, test-vsprintf-posix.c,
 	test-xvasprintf.c: Likewise.
+
+2007-05-28  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Remember the --with-tests command-line
+	option through the macro gl_WITH_TESTS in the gnulib-cache.m4.
+	Reported by Eric Blake.
+
+2007-05-28  Bruno Haible  <bruno@clisp.org>
+
+	* modules/ftell-tests: New file.
+	* tests/test-ftell.c: New file, based on tests/test-ftello.c.
+	* tests/test-ftell.sh: New file, based on tests/test-ftello.sh.
+
+	* lib/ftell.c: New file.
+	* modules/ftell: New file.
+	* m4/ftell.m4: New file.
+	* doc/functions/ftell.texi: Update.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also GNULIB_FTELL,
+	REPLACE_FTELL.
+	* lib/stdio_.h (rpl_ftell): New declaration.
+	* modules/stdio (Makefile.am): Substitute also GNULIB_FTELL,
+	REPLACE_FTELL.
+
+2007-05-28  Eric Blake  <ebb9@byu.net>
 
 	* lib/allocsa.h (safe_alloca): Avoid compiler warning.
 
