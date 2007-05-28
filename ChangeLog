@@ -1,5 +1,9 @@
 2007-05-28  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fseek-tests: New file.
+	* tests/test-fseek.c: New file, based on tests/test-fseeko.c.
+	* tests/test-fseek.sh: New file, based on tests/test-fseeko.sh.
+
 	* lib/fseek.c: New file.
 	* modules/fseek: New file.
 	* m4/fseek.m4: New file.

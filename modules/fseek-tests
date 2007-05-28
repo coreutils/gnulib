@@ -1,0 +1,13 @@
+Files:
+tests/test-fseek.c
+tests/test-fseek.sh
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fseek.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-fseek
+EXTRA_DIST += test-fseek.sh
