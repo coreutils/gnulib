@@ -17,9 +17,7 @@
 
 /* Written by Eric Blake, 2007.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include <stdio.h>
 #include <unistd.h>

@@ -22,6 +22,39 @@
 
 2007-05-28  Eric Blake  <ebb9@byu.net>
 
+	Unconditionally include <config.h> in unit tests.
+	* tests/test-alloca-opt.c: Remove #ifdef HAVE_CONFIG_H.
+	* tests/test-allocsa.c, tests/test-arcfour.c,
+	tests/test-arctwo.c, tests/test-argmatch.c, tests/test-argp.c,
+	tests/test-array_list.c, tests/test-array_oset.c,
+	tests/test-atexit.c, test-avltree_list.c, test-avltree_oset.c,
+	test-avltreehash_list.c, test-base64.c, test-binary-io.c,
+	test-c-ctype.c, test-c-strcasecmp.c, test-c-strcasestr.c,
+	test-c-strncasecmp.c, test-c-strstr.c, test-canonicalize-lgpl.c,
+	test-carray_list.c, test-crc.c, test-des.c, test-dirname.c,
+	test-fflush.c, test-fprintf-posix.c, test-gc-arcfour.c,
+	test-gc-arctwo.c, test-gc-des.c, test-gc-hmac-md5.c,
+	test-gc-hmac-sha1.c, test-gc-md2.c, test-gc-md4.c, test-gc-md5.c,
+	test-gc-pbkdf2-sha1.c, test-gc-rijndael.c, test-gc-sha1.c,
+	test-gc.c, test-getpass.c, test-hmac-md5.c, test-hmac-sha1.c,
+	test-iconv.c, test-linked_list.c, test-linkedhash_list.c,
+	test-lock.c, test-mbscasecmp.c, test-mbscasestr1.c,
+	test-mbscasestr2.c, test-mbscasestr3.c, test-mbscasestr4.c,
+	test-mbschr.c, test-mbscspn.c, test-mbsncasecmp.c, test-mbspbrk.c,
+	test-mbspcasecmp.c, test-mbsrchr.c, test-mbsspn.c, test-mbsstr1.c,
+	test-mbsstr2.c, test-mbsstr3.c, test-md2.c, test-md4.c,
+	test-md5.c, test-memmem.c, test-printf-posix.c,
+	test-rbtree_list.c, test-rbtree_oset.c, test-rbtreehash_list.c,
+	test-read-file.c, test-rijndael.c, test-snprintf-posix.c,
+	test-snprintf.c, test-sprintf-posix.c, test-stdint.c,
+	test-strcasestr.c, test-striconv.c, test-striconveh.c,
+	test-striconveha.c, test-tls.c, test-vasnprintf-posix.c,
+	test-vasnprintf-posix2.c, test-vasnprintf.c,
+	test-vasprintf-posix.c, test-vasprintf.c, test-verify.c,
+	test-vfprintf-posix.c, test-vprintf-posix.c,
+	test-vsnprintf-posix.c, test-vsnprintf.c, test-vsprintf-posix.c,
+	test-xvasprintf.c: Likewise.
+
 	* lib/allocsa.h (safe_alloca): Avoid compiler warning.
 
 2007-05-28  Bruno Haible  <bruno@clisp.org>

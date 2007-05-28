@@ -16,9 +16,7 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "argp.h"
 
@@ -45,12 +43,12 @@ struct test_args
   int group_1_1_option;
 };
 
-static struct argp_option group1_option[] = 
+static struct argp_option group1_option[] =
 {
   { NULL, 0, NULL, 0, "Option Group 1", 0},
   { "verbose", 'v', NULL, 0, "Simple option without arguments", 1 },
   { "file", 'f', "FILE", 0, "Option with a mandatory argument", 1 },
-  { "input", 0, NULL, OPTION_ALIAS, NULL, 1 }, 
+  { "input", 0, NULL, OPTION_ALIAS, NULL, 1 },
   { "hidden", 'H', "FILE", OPTION_HIDDEN, "Hidden option", 1 },
   { NULL, 0, NULL, 0, NULL, 0 }
 };
@@ -65,15 +63,15 @@ group1_parser (int key, char *arg, struct argp_state *state)
     case 'v':
       args->verbose++;
       break;
-      
+
     case 'f':
       args->file = arg;
       break;
-      
+
     case 'H':
       args->hidden = arg;
       break;
-      
+
     default:
       return ARGP_ERR_UNKNOWN;
     }
@@ -93,7 +91,7 @@ struct argp_child group1_child = {
 };
 
 
-static struct argp_option group1_1_option[] = 
+static struct argp_option group1_1_option[] =
 {
   { NULL, 0, NULL, 0, "Option Group 1.1", 0},
   { "cantiga", 'C', NULL, 0, "create a cantiga" },
@@ -130,7 +128,7 @@ struct argp_child group1_1_child = {
 };
 
 
-static struct argp_option group2_option[] = 
+static struct argp_option group2_option[] =
 {
   { NULL, 0, NULL, 0, "Option Group 2", 0},
   { "option", 'O', NULL, 0, "An option", 1 },
@@ -152,12 +150,12 @@ group2_parser (int key, char *arg, struct argp_state *state)
     case 'O':
       args->opt = 1;
       break;
-      
+
     case 'o':
       args->optional_set = 1;
       args->optional = arg;
       break;
-      
+
     default:
       return ARGP_ERR_UNKNOWN;
     }
@@ -177,7 +175,7 @@ struct argp_child group2_child = {
 };
 
 
-static struct argp_option group2_1_option[] = 
+static struct argp_option group2_1_option[] =
 {
   { NULL, 0, NULL, 0, "Option Group 2.1", 0},
   { "poem", 'p', NULL, 0, "create a poem" },
@@ -212,12 +210,12 @@ struct argp_child group2_1_child = {
   "",
   2
 };
-	  
+
 
 static struct argp_option main_options[] =
   {
     { NULL, 0, NULL, 0, "Main options", 0},
-    { "test", 't', NULL, 0, NULL, 1 }, 
+    { "test", 't', NULL, 0, NULL, 1 },
     { NULL, 0, NULL, 0, NULL, 0 }
   };
 
@@ -226,7 +224,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
 {
   struct test_args *args = state->input;
   int i;
-  
+
   switch (key)
     {
     case ARGP_KEY_INIT:
@@ -237,7 +235,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
     case 't':
       args->test = 1;
       break;
-      
+
     default:
       return ARGP_ERR_UNKNOWN;
     }
@@ -403,7 +401,7 @@ test10(struct argp *argp)
   INIT_TEST2 (10, "--optional", "ARG");
   test_optional(argp, argc, argv, &test_args, NULL, "ARG");
 }
-  
+
 void
 test11(struct argp *argp)
 {
@@ -416,7 +414,7 @@ test12(struct argp *argp)
 {
   INIT_TEST3 (12, "--option", "--optional=OPT", "FILE");
   test_optional(argp, argc, argv, &test_args, "OPT", "FILE");
-}  
+}
 
 void
 test13(struct argp *argp)
@@ -465,7 +463,7 @@ main (int argc, char **argv)
   group2_children[0] = group2_1_child;
   group2_children[1].argp = NULL;
   group2_argp.children = group2_children;
-  
+
   argp_children[0] = group1_child;
   argp_children[1] = group2_child;
   argp_children[2].argp = NULL;
@@ -473,11 +471,11 @@ main (int argc, char **argv)
 
   if (argc > 0)
     {
-      struct test_args test_args;    
-      init_args(test_args);          
+      struct test_args test_args;
+      init_args(test_args);
       return argp_parse (&test_argp, argc, argv, 0, NULL, &test_args);
     }
-  
+
   for (fun = test_fun; *fun; fun++)
     (*fun) (&test_argp);
 

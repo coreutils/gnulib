@@ -18,9 +18,7 @@
 /* Written by Bruno Haible <bruno@clisp.org>, 2007, based on test code
    by David MacKenzie <djm@gnu.ai.mit.edu>.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "argmatch.h"
 
@@ -104,4 +102,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-

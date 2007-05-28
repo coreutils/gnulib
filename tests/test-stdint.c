@@ -17,9 +17,7 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2006.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 /* Whether to enable pedantic checks. */
 #define DO_PEDANTIC 0

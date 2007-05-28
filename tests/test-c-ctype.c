@@ -17,9 +17,7 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2005.  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "c-ctype.h"
 
