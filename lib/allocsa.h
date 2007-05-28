@@ -46,7 +46,7 @@ extern "C" {
    This must be a macro, not an inline function.  */
 # define safe_alloca(N) ((N) < 4032 ? alloca (N) : NULL)
 #else
-# define safe_alloca(N) ((N), NULL)
+# define safe_alloca(N) ((void) (N), NULL)
 #endif
 
 /* allocsa(N) is a safe variant of alloca(N).  It allocates N bytes of
