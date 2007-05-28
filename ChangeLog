@@ -1,5 +1,9 @@
 2007-05-28  Bruno Haible  <bruno@clisp.org>
 
+	* modules/ftell-tests: New file.
+	* tests/test-ftell.c: New file, based on tests/test-ftello.c.
+	* tests/test-ftell.sh: New file, based on tests/test-ftello.sh.
+
 	* lib/ftell.c: New file.
 	* modules/ftell: New file.
 	* m4/ftell.m4: New file.
