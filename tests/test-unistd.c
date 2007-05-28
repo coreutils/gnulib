@@ -24,6 +24,16 @@
 /* Check that the various SEEK_* macros are defined.  */
 int sk[] = { SEEK_CUR, SEEK_END, SEEK_SET };
 
+/* Check that the types are all defined.  */
+size_t t1;
+ssize_t t2;
+uid_t t3;
+gid_t t4;
+off_t t5;
+pid_t t6;
+useconds_t t7;
+intptr_t t8;
+
 int
 main ()
 {
