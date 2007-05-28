@@ -1,5 +1,17 @@
 2007-05-28  Bruno Haible  <bruno@clisp.org>
 
+	* lib/fseek.c: New file.
+	* modules/fseek: New file.
+	* m4/fseek.m4: New file.
+	* doc/functions/fseek.texi: Update.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Set also GNULIB_FSEEK,
+	REPLACE_FSEEK.
+	* lib/stdio_.h (rpl_fseek): New declaration.
+	* modules/stdio (Makefile.am): Substitute also GNULIB_FSEEK,
+	REPLACE_FSEEK.
+
+2007-05-28  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdio_.h (fflush): More comments.
 
 2007-05-28  Bruno Haible  <bruno@clisp.org>

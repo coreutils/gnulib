@@ -232,7 +232,19 @@ extern int fseeko (FILE *fp, off_t offset, int whence);
     fseeko (f, o, w))
 #endif
 
-#if defined GNULIB_POSIXCHECK
+#if @GNULIB_FSEEK@ && @REPLACE_FSEEK@
+extern int rpl_fseek (FILE *fp, long offset, int whence);
+# undef fseek
+# if defined GNULIB_POSIXCHECK
+#  define fseek(f,o,w) \
+     (GL_LINK_WARNING ("fseek cannot handle files larger than 4 GB " \
+                       "on 32-bit platforms - " \
+                       "use fseeko function for handling of large files"), \
+      rpl_fseek (f, o, w))
+# else
+#  define fseek rpl_fseek
+# endif
+#elif defined GNULIB_POSIXCHECK
 # ifndef fseek
 #  define fseek(f,o,w) \
      (GL_LINK_WARNING ("fseek cannot handle files larger than 4 GB " \
