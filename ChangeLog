@@ -1,3 +1,8 @@
+2007-05-28  Bruno Haible  <bruno@clisp.org>
+
+	* m4/lseek.m4 (gl_FUNC_LSEEK): When not cross-compiling, perform a real
+	runtime test.
+
 2007-05-28  Eric Blake  <ebb9@byu.net>
 
 	Improve lseek module.
