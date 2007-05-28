@@ -9,7 +9,7 @@ Gnulib module: lseek
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function mistakenly succeeds on non-seekable files: mingw.
+This function mistakenly succeeds on pipes on some platforms: mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
