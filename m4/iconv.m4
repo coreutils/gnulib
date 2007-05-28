@@ -1,4 +1,4 @@
-# iconv.m4 serial AM5 (gettext-0.16.2)
+# iconv.m4 serial AM6 (gettext-0.16.2)
 dnl Copyright (C) 2000-2002, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -117,6 +117,7 @@ int main ()
       && iconv_open ("UTF-8", "IBM-eucJP") == (iconv_t)(-1)
       /* Try HP-UX names.  */
       && iconv_open ("utf8", "eucJP") == (iconv_t)(-1))
+    return 1;
   return 0;
 }], [am_cv_func_iconv_works=yes], [am_cv_func_iconv_works=no],
         [case "$host_os" in
