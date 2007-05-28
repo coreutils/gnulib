@@ -268,7 +268,19 @@ extern off_t ftello (FILE *fp);
     ftello (f))
 #endif
 
-#if defined GNULIB_POSIXCHECK
+#if @GNULIB_FTELL@ && @REPLACE_FTELL@
+extern long rpl_ftell (FILE *fp);
+# undef ftell
+# if GNULIB_POSIXCHECK
+#  define ftell(f) \
+     (GL_LINK_WARNING ("ftell cannot handle files larger than 4 GB " \
+                       "on 32-bit platforms - " \
+                       "use ftello function for handling of large files"), \
+      rpl_ftell (f))
+# else
+#  define ftell rpl_ftell
+# endif
+#elif defined GNULIB_POSIXCHECK
 # ifndef ftell
 #  define ftell(f) \
      (GL_LINK_WARNING ("ftell cannot handle files larger than 4 GB " \
