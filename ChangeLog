@@ -1,3 +1,8 @@
+2007-05-29  Eric Blake  <ebb9@byu.net>
+
+	* m4/isnanf.m4 (gl_FUNC_ISNANF_NO_LIBM): Avoid syntax error on
+	cross compiles.
+
 2007-05-28  Eric Blake  <ebb9@byu.net>
 
 	* modules/closein-tests (test_closein_LDADD): Support test on

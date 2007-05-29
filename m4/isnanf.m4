@@ -1,4 +1,4 @@
-# isnanf.m4 serial 2
+# isnanf.m4 serial 3
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_ISNANF_NO_LIBM],
     gl_ISNANF_WORKS
   fi
   if test $gl_cv_func_isnanf_no_libm = yes \
-     && test $gl_cv_func_isnanf_works = yes; then
+     && test "$gl_cv_func_isnanf_works" = yes; then
     AC_DEFINE([HAVE_ISNANF_IN_LIBC], 1,
       [Define if the isnan(float) function is available in libc.])
   else
