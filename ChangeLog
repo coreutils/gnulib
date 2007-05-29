@@ -1,4 +1,5 @@
 2007-05-29  Eric Blake  <ebb9@byu.net>
+            Bruno Haible  <bruno@clisp.org>
 
 	* m4/isnanf.m4 (gl_FUNC_ISNANF_NO_LIBM): Avoid syntax error on
 	cross compiles.

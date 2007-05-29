@@ -13,7 +13,11 @@ AC_DEFUN([gl_FUNC_ISNANF_NO_LIBM],
     gl_ISNANF_WORKS
   fi
   if test $gl_cv_func_isnanf_no_libm = yes \
-     && test "$gl_cv_func_isnanf_works" = yes; then
+     && { case "$gl_cv_func_isnanf_works" in
+            *yes) true;;
+            *) false;;
+          esac
+        }; then
     AC_DEFINE([HAVE_ISNANF_IN_LIBC], 1,
       [Define if the isnan(float) function is available in libc.])
   else
