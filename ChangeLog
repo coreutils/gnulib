@@ -1,5 +1,11 @@
 2007-05-29  Bruno Haible  <bruno@clisp.org>
 
+	* m4/isnan.m4 (gl_DOUBLE_EXPONENT_LOCATION): Silence the AC_C_BIGENDIAN
+	invocation.
+	Reported by Eric Blake.
+
+2007-05-29  Bruno Haible  <bruno@clisp.org>
+
 	* m4/isnanf.m4 (gl_FLOAT_EXPONENT_LOCATION): Fix typo in cross-
 	compiling case.
 

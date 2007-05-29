@@ -1,4 +1,4 @@
-# isnan.m4 serial 1
+# isnan.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -110,10 +110,16 @@ int main ()
             ],
             [gl_cv_cc_double_expbit0="unknown"],
             [
+              pushdef([AC_MSG_CHECKING],[:])dnl
+              pushdef([AC_MSG_RESULT],[:])dnl
+              pushdef([AC_MSG_RESULT_UNQUOTED],[:])dnl
               AC_C_BIGENDIAN(
                 [gl_cv_cc_double_expbit0="word 0 bit 20"],
                 [gl_cv_cc_double_expbit0="word 1 bit 20"],
                 [gl_cv_cc_double_expbit0="unknown"])
+              popdef([AC_MSG_RESULT_UNQUOTED])dnl
+              popdef([AC_MSG_RESULT])dnl
+              popdef([AC_MSG_CHECKING])dnl
             ])
         ])
       rm -f conftest.out
