@@ -1,4 +1,4 @@
-# isnanf.m4 serial 3
+# isnanf.m4 serial 4
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -157,7 +157,7 @@ int main ()
         ],
         [gl_cv_cc_float_expbit0=`cat conftest.out`],
         [gl_cv_cc_float_expbit0="unknown"],
-        [gl_cv_cc_double_expbit0="word 0 bit 23"])
+        [gl_cv_cc_float_expbit0="word 0 bit 23"])
       rm -f conftest.out
     ])
   case "$gl_cv_cc_float_expbit0" in
