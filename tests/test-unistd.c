@@ -31,8 +31,10 @@ uid_t t3;
 gid_t t4;
 off_t t5;
 pid_t t6;
+#ifdef TODO
 useconds_t t7;
 intptr_t t8;
+#endif
 
 int
 main ()

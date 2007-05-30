@@ -1,5 +1,10 @@
 2007-05-29  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-unistd.c: Disable the tests for useconds_t and intptr_t
+	for the moment.
+
+2007-05-29  Bruno Haible  <bruno@clisp.org>
+
 	* m4/isnan.m4 (gl_DOUBLE_EXPONENT_LOCATION): Silence the AC_C_BIGENDIAN
 	invocation.
 	Reported by Eric Blake.
