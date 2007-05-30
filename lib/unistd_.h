@@ -16,8 +16,8 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #ifndef _GL_UNISTD_H
-#define _GL_UNISTD_H
 
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_UNISTD_H@
 # if @HAVE_INCLUDE_NEXT@
 #  include_next <unistd.h>
@@ -25,6 +25,9 @@
 #  include @ABSOLUTE_UNISTD_H@
 # endif
 #endif
+
+#ifndef _GL_UNISTD_H
+#define _GL_UNISTD_H
 
 /* mingw doesn't define the SEEK_* macros in <unistd.h>.  */
 #if !(defined SEEK_CUR && defined SEEK_END && defined SEEK_SET)
@@ -235,4 +238,5 @@ extern unsigned int sleep (unsigned int n);
 #endif
 
 
+#endif /* _GL_UNISTD_H */
 #endif /* _GL_UNISTD_H */

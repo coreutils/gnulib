@@ -16,16 +16,17 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#ifndef _GL_MATH_H
+
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_INCLUDE_NEXT@
 # include_next <math.h>
+#else
+# include @ABSOLUTE_MATH_H@
 #endif
 
 #ifndef _GL_MATH_H
 #define _GL_MATH_H
-
-#if ! @HAVE_INCLUDE_NEXT@
-# include @ABSOLUTE_MATH_H@
-#endif
 
 
 /* The definition of GL_LINK_WARNING is copied here.  */
@@ -264,4 +265,5 @@ extern int gl_signbitl (long double arg);
 }
 #endif
 
-#endif
+#endif /* _GL_MATH_H */
+#endif /* _GL_MATH_H */

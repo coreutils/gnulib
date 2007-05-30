@@ -16,13 +16,12 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _GL_STDINT_H
-#define _GL_STDINT_H
-
 /*
  * ISO C 99 <stdint.h> for platforms that lack it.
  * <http://www.opengroup.org/susv3xbd/stdint.h.html>
  */
+
+#ifndef _GL_STDINT_H
 
 /* Get those types that are already defined in other system include
    files, so that we can "#define int8_t signed char" below without
@@ -42,13 +41,17 @@
   /* Other systems may have an incomplete or buggy <stdint.h>.
      Include it before <inttypes.h>, since any "#include <stdint.h>"
      in <inttypes.h> would reinclude us, skipping our contents because
-     _GL_STDINT_H is defined.  */
+     _GL_STDINT_H is defined.
+     The include_next requires a split double-inclusion guard.  */
 # if @HAVE_INCLUDE_NEXT@
 #  include_next <stdint.h>
 # else
 #  include @ABSOLUTE_STDINT_H@
 # endif
 #endif
+
+#ifndef _GL_STDINT_H
+#define _GL_STDINT_H
 
 /* <sys/types.h> defines some of the stdint.h types as well, on glibc,
    IRIX 6.5, and OpenBSD 3.8 (via <machine/types.h>).
@@ -505,4 +508,5 @@
 
 #endif /* !defined __cplusplus || defined __STDC_CONSTANT_MACROS */
 
+#endif /* _GL_STDINT_H */
 #endif /* _GL_STDINT_H */

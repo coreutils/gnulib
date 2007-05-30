@@ -17,18 +17,21 @@
 
 /* Written by Eric Blake, Paul Eggert, and Jim Meyering.  */
 
-#ifndef _GL_SYS_STAT_H
-#define _GL_SYS_STAT_H
-
 /* This file is supposed to be used on platforms where <sys/stat.h> is
    incomplete.  It is intended to provide definitions and prototypes
    needed by an application.  Start with what the system provides.  */
 
+#ifndef _GL_SYS_STAT_H
+
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_INCLUDE_NEXT@
 # include_next <sys/stat.h>
 #else
 # include @ABSOLUTE_SYS_STAT_H@
 #endif
+
+#ifndef _GL_SYS_STAT_H
+#define _GL_SYS_STAT_H
 
 #ifndef S_IFMT
 # define S_IFMT 0170000
@@ -277,4 +280,5 @@ rpl_mkdir (char const *name, mode_t mode)
 # define mkdir rpl_mkdir
 #endif
 
+#endif /* _GL_SYS_STAT_H */
 #endif /* _GL_SYS_STAT_H */

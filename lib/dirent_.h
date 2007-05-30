@@ -16,13 +16,17 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #ifndef _GL_DIRENT_H
-#define _GL_DIRENT_H
 
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_INCLUDE_NEXT@
 # include_next <dirent.h>
 #else
 # include @ABSOLUTE_DIRENT_H@
 #endif
+
+#ifndef _GL_DIRENT_H
+#define _GL_DIRENT_H
+
 
 /* Declare overridden functions.  */
 
@@ -42,4 +46,5 @@ extern int closedir (DIR *);
 #endif
 
 
+#endif /* _GL_DIRENT_H */
 #endif /* _GL_DIRENT_H */

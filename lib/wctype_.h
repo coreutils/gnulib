@@ -26,6 +26,8 @@
  * wctrans_t, and wctype_t are not yet implemented.
  */
 
+#ifndef _GL_WCTYPE_H
+
 #if @HAVE_WINT_T@
 /* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.
    Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
@@ -38,22 +40,19 @@
 # include <wchar.h>
 #endif
 
+/* Include the original <wctype.h> if it exists.
+   BeOS 5 has the functions but no <wctype.h>.  */
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_WCTYPE_H@
 # if @HAVE_INCLUDE_NEXT@
 #  include_next <wctype.h>
+# else
+#  include @ABSOLUTE_WCTYPE_H@
 # endif
 #endif
 
 #ifndef _GL_WCTYPE_H
 #define _GL_WCTYPE_H
-
-/* Include the original <wctype.h> if it exists.
-   BeOS 5 has the functions but no <wctype.h>.  */
-#if @HAVE_WCTYPE_H@
-# if ! @HAVE_INCLUDE_NEXT@
-#  include @ABSOLUTE_WCTYPE_H@
-# endif
-#endif
 
 #if @HAVE_WINT_T@
 typedef wint_t __wctype_wint_t;
@@ -162,4 +161,5 @@ iswxdigit (__wctype_wint_t wc)
 
 # endif /* ! HAVE_ISWCNTRL */
 
+#endif /* _GL_WCTYPE_H */
 #endif /* _GL_WCTYPE_H */

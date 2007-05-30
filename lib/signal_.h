@@ -29,13 +29,16 @@
 /* Normal invocation convention.  */
 
 #ifndef _GL_SIGNAL_H
-#define _GL_SIGNAL_H
 
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_INCLUDE_NEXT@
 # include_next <signal.h>
 #else
 # include @ABSOLUTE_SIGNAL_H@
 #endif
+
+#ifndef _GL_SIGNAL_H
+#define _GL_SIGNAL_H
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
@@ -98,5 +101,6 @@ extern int sigprocmask (int operation, const sigset_t *set, sigset_t *old_set);
 }
 #endif
 
+#endif /* _GL_SIGNAL_H */
 #endif /* _GL_SIGNAL_H */
 #endif

@@ -17,8 +17,8 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #ifndef _GL_SEARCH_H
-#define _GL_SEARCH_H
 
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_SEARCH_H@
 # if @HAVE_INCLUDE_NEXT@
 #  include_next <search.h>
@@ -26,6 +26,9 @@
 #  include @ABSOLUTE_SEARCH_H@
 # endif
 #endif
+
+#ifndef _GL_SEARCH_H
+#define _GL_SEARCH_H
 
 
 /* The definition of GL_LINK_WARNING is copied here.  */
@@ -112,4 +115,5 @@ extern void twalk (const void *vroot,
 }
 #endif
 
-#endif
+#endif /* _GL_SEARCH_H */
+#endif /* _GL_SEARCH_H */

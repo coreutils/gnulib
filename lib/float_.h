@@ -17,13 +17,16 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #ifndef _GL_FLOAT_H
-#define _GL_FLOAT_H
 
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_INCLUDE_NEXT@
 # include_next <float.h>
 #else
 # include @ABSOLUTE_FLOAT_H@
 #endif
+
+#ifndef _GL_FLOAT_H
+#define _GL_FLOAT_H
 
 /* 'long double' properties.  */
 #if defined __i386__ && defined __BEOS__
@@ -56,4 +59,5 @@
 # define LDBL_MAX_10_EXP 4932
 #endif
 
+#endif /* _GL_FLOAT_H */
 #endif /* _GL_FLOAT_H */

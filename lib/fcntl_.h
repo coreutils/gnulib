@@ -1,6 +1,6 @@
 /* Like <fcntl.h>, but with non-working flags defined to 0.
 
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,16 +19,19 @@
 /* written by Paul Eggert */
 
 #ifndef _GL_FCNTL_H
-#define _GL_FCNTL_H
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_INCLUDE_NEXT@
 # include_next <fcntl.h>
 #else
 # include @ABSOLUTE_FCNTL_H@
 #endif
+
+#ifndef _GL_FCNTL_H
+#define _GL_FCNTL_H
 
 
 /* Declare overridden functions.  */
@@ -117,4 +120,6 @@ extern int open (const char *, int, ...);
 # define O_TEXT 0
 #endif
 
-#endif
+
+#endif /* _GL_FCNTL_H */
+#endif /* _GL_FCNTL_H */

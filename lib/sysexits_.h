@@ -18,7 +18,6 @@
 /* Written by Simon Josefsson based on sysexits(3) man page */
 
 #ifndef _GL_SYSEXITS_H
-#define _GL_SYSEXITS_H
 
 #if @HAVE_SYSEXITS_H@
 
@@ -30,6 +29,7 @@
 #  undef EX_OK
 # endif
 
+/* The include_next requires a split double-inclusion guard.  */
 # if @HAVE_INCLUDE_NEXT@
 #  include_next <sysexits.h>
 # else
@@ -41,7 +41,12 @@
 #  define EX_CONFIG 78
 # endif
 
-#else
+#endif
+
+#ifndef _GL_SYSEXITS_H
+#define _GL_SYSEXITS_H
+
+#if !@HAVE_SYSEXITS_H@
 
 # define EX_OK 0 /* same value as EXIT_SUCCESS */
 
@@ -63,4 +68,5 @@
 
 #endif
 
+#endif /* _GL_SYSEXITS_H */
 #endif /* _GL_SYSEXITS_H */

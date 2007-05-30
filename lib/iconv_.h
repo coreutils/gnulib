@@ -17,13 +17,16 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #ifndef _GL_ICONV_H
-#define _GL_ICONV_H
 
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_INCLUDE_NEXT@
 # include_next <iconv.h>
 #else
 # include @ABSOLUTE_ICONV_H@
 #endif
+
+#ifndef _GL_ICONV_H
+#define _GL_ICONV_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -42,4 +45,5 @@ extern iconv_t iconv_open (const char *tocode, const char *fromcode);
 }
 #endif
 
-#endif
+#endif /* _GL_ICONV_H */
+#endif /* _GL_ICONV_H */

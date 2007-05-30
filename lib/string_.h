@@ -16,16 +16,17 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#ifndef _GL_STRING_H
+
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_INCLUDE_NEXT@
 # include_next <string.h>
+#else
+# include @ABSOLUTE_STRING_H@
 #endif
 
 #ifndef _GL_STRING_H
 #define _GL_STRING_H
-
-#if ! @HAVE_INCLUDE_NEXT@
-# include @ABSOLUTE_STRING_H@
-#endif
 
 
 /* The definition of GL_LINK_WARNING is copied here.  */
@@ -541,4 +542,5 @@ extern char * mbstok_r (char *string, const char *delim, char **save_ptr);
 }
 #endif
 
-#endif
+#endif /* _GL_STRING_H */
+#endif /* _GL_STRING_H */

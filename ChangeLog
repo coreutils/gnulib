@@ -1,5 +1,32 @@
 2007-05-29  Bruno Haible  <bruno@clisp.org>
 
+	Fix a problem with #include_next.
+	* lib/dirent_.h: Split the double-inclusion guard.
+	* lib/fcntl_.h: Likewise.
+	* lib/float_.h: Likewise.
+	* lib/iconv_.h: Likewise.
+	* lib/inttypes_.h: Likewise.
+	* lib/locale_.h: Likewise.
+	* lib/math_.h: Likewise.
+	* lib/netinet_in_.h: Likewise.
+	* lib/search_.h: Likewise.
+	* lib/signal_.h: Likewise.
+	* lib/stdint_.h: Likewise.
+	* lib/stdio_.h: Likewise.
+	* lib/stdlib_.h: Likewise.
+	* lib/string_.h: Likewise.
+	* lib/sys_select_.h: Likewise.
+	* lib/sys_socket_.h: Likewise.
+	* lib/sys_stat_.h: Likewise.
+	* lib/sys_time_.h: Likewise.
+	* lib/sysexits_.h: Likewise.
+	* lib/time_.h: Likewise.
+	* lib/unistd_.h: Likewise.
+	* lib/wchar_.h: Likewise.
+	* lib/wctype_.h: Likewise.
+
+2007-05-29  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-unistd.c: Disable the tests for useconds_t and intptr_t
 	for the moment.
 

@@ -16,28 +16,32 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _GL_SYS_SOCKET_H
-#define _GL_SYS_SOCKET_H
-
 /* This file is supposed to be used on platforms that lack <sys/socket.h>
    and on platforms where <sys/socket.h> cannot be included standalone.
    It is intended to provide definitions and prototypes needed by an
    application.  */
 
+#ifndef _GL_SYS_SOCKET_H
+
 #if @HAVE_SYS_SOCKET_H@
 
 /* On many platforms, <sys/socket.h> assumes prior inclusion of
    <sys/types.h>.  */
-
 # include <sys/types.h>
 
+/* The include_next requires a split double-inclusion guard.  */
 # if @HAVE_INCLUDE_NEXT@
 #  include_next <sys/socket.h>
 # else
 #  include @ABSOLUTE_SYS_SOCKET_H@
 # endif
 
-#else
+#endif
+
+#ifndef _GL_SYS_SOCKET_H
+#define _GL_SYS_SOCKET_H
+
+#if !@HAVE_SYS_SOCKET_H@
 
 /* A platform that lacks <sys/socket.h>.
 
@@ -87,4 +91,5 @@
 
 #endif /* HAVE_SYS_SOCKET_H */
 
+#endif /* _GL_SYS_SOCKET_H */
 #endif /* _GL_SYS_SOCKET_H */

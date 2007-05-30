@@ -16,9 +16,15 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+/*
+ * ISO C 99 <inttypes.h> for platforms that lack it.
+ * <http://www.opengroup.org/susv3xbd/inttypes.h.html>
+ */
+
 /* Include the original <inttypes.h> if it exists, and if this file
    has not been included yet or if this file includes gnulib stdint.h
-   which in turn includes this file.  */
+   which in turn includes this file.
+   The include_next requires a split double-inclusion guard.  */
 #if ! defined INTTYPES_H || defined _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H
 # if @HAVE_INTTYPES_H@
 #  if @HAVE_INCLUDE_NEXT@
@@ -31,11 +37,6 @@
 
 #if ! defined INTTYPES_H && ! defined _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H
 #define INTTYPES_H
-
-/*
- * ISO C 99 <inttypes.h> for platforms that lack it.
- * <http://www.opengroup.org/susv3xbd/inttypes.h.html>
- */
 
 /* Include <stdint.h> or the gnulib replacement.  */
 #include <stdint.h>

@@ -25,13 +25,7 @@
  * For now, this just ensures proper prerequisite inclusion order.
  */
 
-#if @HAVE_INCLUDE_NEXT@
-# include <stdio.h>
-# include_next <wchar.h>
-#endif
-
 #ifndef _GL_WCHAR_H
-#define _GL_WCHAR_H
 
 /* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
    <wchar.h>.
@@ -42,8 +36,15 @@
 #include <time.h>
 
 /* Include the original <wchar.h>.  */
-#if ! @HAVE_INCLUDE_NEXT@
+/* The include_next requires a split double-inclusion guard.  */
+#if @HAVE_INCLUDE_NEXT@
+# include_next <wchar.h>
+#else
 # include @ABSOLUTE_WCHAR_H@
 #endif
 
+#ifndef _GL_WCHAR_H
+#define _GL_WCHAR_H
+
+#endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */

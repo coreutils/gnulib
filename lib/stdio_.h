@@ -28,16 +28,17 @@
 #else
 /* Normal invocation convention.  */
 
+#ifndef _GL_STDIO_H
+
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_INCLUDE_NEXT@
 # include_next <stdio.h>
+#else
+# include @ABSOLUTE_STDIO_H@
 #endif
 
 #ifndef _GL_STDIO_H
 #define _GL_STDIO_H
-
-#if ! @HAVE_INCLUDE_NEXT@
-# include @ABSOLUTE_STDIO_H@
-#endif
 
 #include <stdarg.h>
 #include <stddef.h>
@@ -314,5 +315,6 @@ extern long rpl_ftell (FILE *fp);
 }
 #endif
 
+#endif /* _GL_STDIO_H */
 #endif /* _GL_STDIO_H */
 #endif

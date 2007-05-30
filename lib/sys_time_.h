@@ -19,8 +19,8 @@
 /* Written by Paul Eggert.  */
 
 #ifndef _GL_SYS_TIME_H
-#define _GL_SYS_TIME_H
 
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_SYS_TIME_H@
 # if @HAVE_INCLUDE_NEXT@
 #  include_next <sys/time.h>
@@ -30,6 +30,9 @@
 #else
 # include <time.h>
 #endif
+
+#ifndef _GL_SYS_TIME_H
+#define _GL_SYS_TIME_H
 
 #if ! @HAVE_STRUCT_TIMEVAL@
 struct timeval
@@ -45,4 +48,5 @@ struct timeval
 int gettimeofday (struct timeval *restrict, void *restrict);
 #endif
 
+#endif /* _GL_SYS_TIME_H */
 #endif /* _GL_SYS_TIME_H */

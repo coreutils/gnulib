@@ -28,16 +28,17 @@
 #else
 /* Normal invocation convention.  */
 
+#ifndef _GL_STDLIB_H
+
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_INCLUDE_NEXT@
 # include_next <stdlib.h>
+#else
+# include @ABSOLUTE_STDLIB_H@
 #endif
 
 #ifndef _GL_STDLIB_H
 #define _GL_STDLIB_H
-
-#if ! @HAVE_INCLUDE_NEXT@
-# include @ABSOLUTE_STDLIB_H@
-#endif
 
 
 /* The definition of GL_LINK_WARNING is copied here.  */
@@ -134,5 +135,6 @@ extern int mkstemp (char * /*template*/);
 }
 #endif
 
+#endif /* _GL_STDLIB_H */
 #endif /* _GL_STDLIB_H */
 #endif

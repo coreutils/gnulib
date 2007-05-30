@@ -16,13 +16,16 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #ifndef _GL_LOCALE_H
-#define _GL_LOCALE_H
 
+/* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_INCLUDE_NEXT@
 # include_next <locale.h>
 #else
 # include @ABSOLUTE_LOCALE_H@
 #endif
+
+#ifndef _GL_LOCALE_H
+#define _GL_LOCALE_H
 
 /* The LC_MESSAGES locale category is specified in POSIX, but not in ISO C.
    On systems that don't define it, use the same value as GNU libintl.  */
@@ -30,4 +33,5 @@
 # define LC_MESSAGES 1729
 #endif
 
+#endif /* _GL_LOCALE_H */
 #endif /* _GL_LOCALE_H */
