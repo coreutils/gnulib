@@ -1,4 +1,4 @@
-# intl.m4 serial 4 (gettext-0.16.2)
+# intl.m4 serial 5 (gettext-0.16.2)
 dnl Copyright (C) 1995-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -105,6 +105,19 @@ AC_DEFUN([AM_INTL_SUBDIR],
   fi
   WOE32DLL=$is_woe32dll
   AC_SUBST([WOE32DLL])
+
+  dnl On mingw and Cygwin, we can activate special Makefile rules which add
+  dnl version information to the shared libraries and executables.
+  case "$host_os" in
+    mingw* | cygwin*) is_woe32=yes ;;
+    *) is_woe32=no ;;
+  esac
+  WOE32=$is_woe32
+  AC_SUBST([WOE32])
+  if test $WOE32 = yes; then
+    dnl Check for a program that compiles Windows resource files.
+    AC_CHECK_TOOL([WINDRES], [windres])
+  fi
 
   dnl Rename some macros and functions used for locking.
   AH_BOTTOM([
