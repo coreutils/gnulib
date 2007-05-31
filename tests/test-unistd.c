@@ -27,8 +27,10 @@ int sk[] = { SEEK_CUR, SEEK_END, SEEK_SET };
 /* Check that the types are all defined.  */
 size_t t1;
 ssize_t t2;
+#ifdef TODO /* Not implemented in gnulib yet */
 uid_t t3;
 gid_t t4;
+#endif
 off_t t5;
 pid_t t6;
 #ifdef TODO

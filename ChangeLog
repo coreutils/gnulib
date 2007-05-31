@@ -1,3 +1,11 @@
+2007-05-30  Eric Blake  <ebb9@byu.net>
+	and Bruno Haible  <bruno@clisp.org>
+
+	Work around mingw test failures exposed by m4-1.4.9b.
+	* m4/stdint.m4 (gl_STDINT_H): Detect mingw bug.
+	* tests/test-unistd.c: Disable uid_t and git_t tests for the
+	moment.
+
 2007-05-30  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-lseek.c: Explicitly close file descriptors 0 and 1 before
