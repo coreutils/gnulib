@@ -1,3 +1,8 @@
+2007-05-31  Eric Blake  <ebb9@byu.net>
+
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Guess no on mingw when
+	cross compiling.
+
 2007-05-30  Eric Blake  <ebb9@byu.net>
 	and Bruno Haible  <bruno@clisp.org>
 
@@ -55,7 +60,7 @@
 	compiling case.
 
 2007-05-29  Eric Blake  <ebb9@byu.net>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* m4/isnanf.m4 (gl_FUNC_ISNANF_NO_LIBM): Avoid syntax error on
 	cross compiles.

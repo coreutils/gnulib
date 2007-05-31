@@ -142,7 +142,7 @@ int main()
   return 0;
 }], [gl_cv_func_frexpl_works=yes], [gl_cv_func_frexpl_works=no],
       [case "$host_os" in
-         aix* | beos* | irix*) gl_cv_func_frexpl_works="guessing no";;
+         aix* | beos* | irix* | mingw*) gl_cv_func_frexpl_works="guessing no";;
          *)                    gl_cv_func_frexpl_works="guessing yes";;
        esac
       ])
