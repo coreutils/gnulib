@@ -1,3 +1,7 @@
+2007-05-28  Bruno Haible  <bruno@clisp.org>
+
+	* m4/intl.m4 (AM_INTL_SUBDIR): Substitute variables WOE32, WINDRES.
+
 2007-05-31  Eric Blake  <ebb9@byu.net>
 
 	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Guess no on mingw when
