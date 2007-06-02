@@ -44,7 +44,8 @@ main ()
 {
   /* Test the O_BINARY macro.  */
   {
-    int fd = open ("t-bin-out2.tmp", O_CREAT | O_TRUNC | O_RDWR | O_BINARY);
+    int fd =
+      open ("t-bin-out2.tmp", O_CREAT | O_TRUNC | O_RDWR | O_BINARY, 0600);
     if (write (fd, "Hello\n", 6) < 0)
       exit (1);
     close (fd);

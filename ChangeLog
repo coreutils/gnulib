@@ -1,5 +1,10 @@
 2007-06-01  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-binary-io.c (main): Pass a third argument to open().
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2007-06-01  Bruno Haible  <bruno@clisp.org>
+
 	* doc/functions/frexpl.texi: Update for mingw.
 
 2007-06-01  Bruno Haible  <bruno@clisp.org>
@@ -7,6 +12,7 @@
 	* tests/test-lseek.c (main): Disable test of errno for invalid third
 	argument.
 	* doc/functions/lseek.texi: Update.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
 
 2007-05-28  Bruno Haible  <bruno@clisp.org>
 
