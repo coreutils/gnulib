@@ -96,7 +96,8 @@ AC_DEFUN([gl_FUNC_FREXPL_NO_LIBM],
 ])
 
 dnl Test whether frexpl() works on finite numbers (this fails on AIX 5.1 and
-dnl on BeOS) and also on infinite numbers (this fails e.g. on IRIX 6.5).
+dnl on BeOS) and also on infinite numbers (this fails e.g. on IRIX 6.5 and
+dnl mingw).
 AC_DEFUN([gl_FUNC_FREXPL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -142,8 +143,9 @@ int main()
   return 0;
 }], [gl_cv_func_frexpl_works=yes], [gl_cv_func_frexpl_works=no],
       [case "$host_os" in
-         aix* | beos* | irix* | mingw*) gl_cv_func_frexpl_works="guessing no";;
-         *)                    gl_cv_func_frexpl_works="guessing yes";;
+         aix* | beos* | irix* | mingw* | pw*)
+            gl_cv_func_frexpl_works="guessing no";;
+         *) gl_cv_func_frexpl_works="guessing yes";;
        esac
       ])
     ])
