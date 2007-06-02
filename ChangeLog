@@ -1,3 +1,9 @@
+2007-06-01  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-lseek.c (main): Disable test of errno for invalid third
+	argument.
+	* doc/functions/lseek.texi: Update.
+
 2007-05-28  Bruno Haible  <bruno@clisp.org>
 
 	* m4/intl.m4 (AM_INTL_SUBDIR): Substitute variables WOE32, WINDRES.
