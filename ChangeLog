@@ -1,3 +1,11 @@
+2007-06-02  Bruno Haible  <bruno@clisp.org>
+
+	Fix test-stdint failure on FreeBSD/ia64.
+	* m4/stdint.m4 (gl_STDINT_H): Check the values of PTRDIFF_MIN,
+	PTRDIFF_MAX, SIG_ATOMIC_MIN, SIG_ATOMIC_MAX, SIZE_MAX, WCHAR_MIN,
+	WCHAR_MAX, WINT_MIN, WINT_MAX entirely, not only for plausibility.
+	* doc/headers/stdint.texi: Update.
+
 2007-06-01  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-binary-io.c (main): Pass a third argument to open().

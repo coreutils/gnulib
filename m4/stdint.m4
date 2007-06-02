@@ -1,5 +1,5 @@
-# stdint.m4 serial 24
-dnl Copyright (C) 2001-2002, 2004-2007 Free Software Foundation, Inc.
+# stdint.m4 serial 25
+dnl Copyright (C) 2001-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -142,14 +142,32 @@ uintptr_t h = UINTPTR_MAX;
 #endif
 intmax_t i = INTMAX_MAX;
 uintmax_t j = UINTMAX_MAX;
+
+#include <limits.h> /* for CHAR_BIT */
+#define TYPE_MINIMUM(t) \
+  ((t) ((t) 0 < (t) -1 ? (t) 0 : ~ (t) 0 << (sizeof (t) * CHAR_BIT - 1)))
+#define TYPE_MAXIMUM(t) \
+  ((t) ((t) 0 < (t) -1 ? (t) -1 : ~ (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))))
 struct s {
-  int check_PTRDIFF: PTRDIFF_MIN < (ptrdiff_t) 0 && (ptrdiff_t) 0 < PTRDIFF_MAX ? 1 : -1;
-  int check_SIG_ATOMIC: SIG_ATOMIC_MIN <= (sig_atomic_t) 0 && (sig_atomic_t) 0 < SIG_ATOMIC_MAX ? 1 : -1;
-  int check_SIZE: (size_t) 0 < SIZE_MAX ? 1 : -1;
-  int check_WCHAR: WCHAR_MIN <= (wchar_t) 0 && (wchar_t) 0 < WCHAR_MAX ? 1 : -1;
-  int check_WINT: WINT_MIN <= (wint_t) 0 && (wint_t) 0 < WINT_MAX
-                  && (WINT_MIN < (wint_t) 0 || (wint_t) -1 == (wint_t) WINT_MAX)
-                  ? 1 : -1;
+  int check_PTRDIFF:
+      PTRDIFF_MIN == TYPE_MINIMUM (ptrdiff_t)
+      && PTRDIFF_MAX == TYPE_MAXIMUM (ptrdiff_t)
+      ? 1 : -1;
+  /* Detect bug in FreeBSD 6.0 / ia64.  */
+  int check_SIG_ATOMIC:
+      SIG_ATOMIC_MIN == TYPE_MINIMUM (sig_atomic_t)
+      && SIG_ATOMIC_MAX == TYPE_MAXIMUM (sig_atomic_t)
+      ? 1 : -1;
+  int check_SIZE: SIZE_MAX == TYPE_MAXIMUM (size_t) ? 1 : -1;
+  int check_WCHAR:
+      WCHAR_MIN == TYPE_MINIMUM (wchar_t)
+      && WCHAR_MAX == TYPE_MAXIMUM (wchar_t)
+      ? 1 : -1;
+  /* Detect bug in mingw.  */
+  int check_WINT:
+      WINT_MIN == TYPE_MINIMUM (wint_t)
+      && WINT_MAX == TYPE_MAXIMUM (wint_t)
+      ? 1 : -1;
 
   /* Detect bugs in glibc 2.4 and Solaris 10 stdint.h, among others.  */
   int check_UINT8_C:

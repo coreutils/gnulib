@@ -12,6 +12,13 @@ This header file is missing on some platforms:
 OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Interix 3.5, BeOS.
 @item
 This header file is very incomplete on some platforms.
+@item
+The values of @code{SIG_ATOMIC_MIN} and @code{SIG_ATOMIC_MAX} are incorrect
+on some platforms:
+FreeBSD 6.2 / ia64.
+@item
+The value of @code{WINT_MAX} is incorrect on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
