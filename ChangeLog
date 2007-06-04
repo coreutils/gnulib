@@ -1,3 +1,11 @@
+2007-06-04  Bruno Haible  <bruno@clisp.org>
+
+	Avoid test failures on some PowerPC platforms.
+	* tests/test-printf-frexpl.c (MIN_NORMAL_EXP, MIN_SUBNORMAL_EXP):
+	Define differently for PowerPC.
+	* tests/test-frexpl.c (MIN_NORMAL_EXP): Likewise.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
 2007-06-02  Bruno Haible  <bruno@clisp.org>
 
 	Fix test-stdint failure on FreeBSD/ia64.
