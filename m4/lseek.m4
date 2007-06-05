@@ -1,4 +1,4 @@
-# lseek.m4 serial 2
+# lseek.m4 serial 3
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,21 +19,21 @@ int main ()
   /* Exit with success only if stdin is seekable.  */
   return lseek (0, (off_t)0, SEEK_CUR) < 0;
 }],
-         [if test -s conftest$ac_exeext \
-             && ./conftest$ac_exeext < conftest.$ac_ext \
-             && { echo hi | ./conftest$ac_exeext; test $? = 1; }; then
-            gl_cv_func_lseek_pipe=yes
-          else
-            gl_cv_func_lseek_pipe=no
-          fi],
-         [gl_cv_func_lseek_pipe=no])
+	 [if test -s conftest$ac_exeext \
+	     && ./conftest$ac_exeext < conftest.$ac_ext \
+	     && { echo hi | ./conftest$ac_exeext; test $? = 1; }; then
+	    gl_cv_func_lseek_pipe=yes
+	  else
+	    gl_cv_func_lseek_pipe=no
+	  fi],
+	 [gl_cv_func_lseek_pipe=no])
      else
-       AC_LINK_IFELSE([
+       AC_COMPILE_IFELSE([
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 /* mingw mistakenly returns 0 when trying to seek on pipes.  */
   Choke me.
 #endif],
-         [gl_cv_func_lseek_pipe=yes], [gl_cv_func_lseek_pipe=no])
+	 [gl_cv_func_lseek_pipe=yes], [gl_cv_func_lseek_pipe=no])
      fi])
   if test $gl_cv_func_lseek_pipe = no; then
     gl_REPLACE_LSEEK
