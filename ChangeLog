@@ -1,5 +1,10 @@
 2007-06-05  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (VASNPRINTF): Do the extra handling of NaN and Inf
+	also the %a / %A. Handle the %a / %A code before this extra handling.
+
+2007-06-05  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c [NEED_PRINTF_LONG_DOUBLE ||
 	NEED_PRINTF_INFINITE_LONG_DOUBLE]: Include fpucw.h.
 
