@@ -1,4 +1,4 @@
-# isnanl.m4 serial 3
+# isnanl.m4 serial 4
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -97,14 +97,16 @@ AC_DEFUN([gl_HAVE_ISNANL_IN_LIBM],
 ])
 
 dnl Test whether isnanl() recognizes all numbers which are neither finite nor
-dnl infinite. This test fails e.g. on NetBSD/i386.
+dnl infinite. This test fails e.g. on NetBSD/i386 and on glibc/ia64.
 AC_DEFUN([gl_FUNC_ISNANL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_C_BIGENDIAN])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether isnanl works], [gl_cv_func_isnanl_works],
     [
       AC_TRY_RUN([
+#include <float.h>
 #include <limits.h>
 #include <math.h>
 #ifdef isnan
@@ -113,7 +115,7 @@ AC_DEFUN([gl_FUNC_ISNANL_WORKS],
 #endif
 #define NWORDS \
   ((sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-typedef union { long double value; unsigned int word[NWORDS]; }
+typedef union { unsigned int word[NWORDS]; long double value; }
         memory_long_double;
 int main ()
 {
@@ -131,6 +133,71 @@ int main ()
   if (!isnanl (m.value))
     return 1;
 
+#if ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+/* Representation of an 80-bit 'long double' as an initializer for a sequence
+   of 'unsigned int' words.  */
+# ifdef WORDS_BIGENDIAN
+#  define LDBL80_WORDS(exponent,manthi,mantlo) \
+     { ((unsigned int) (exponent) << 16) | ((unsigned int) (manthi) >> 16), \
+       ((unsigned int) (manthi) << 16) | (unsigned int) (mantlo) >> 16),    \
+       (unsigned int) (mantlo) << 16                                        \
+     }
+# else
+#  define LDBL80_WORDS(exponent,manthi,mantlo) \
+     { mantlo, manthi, exponent }
+# endif
+  { /* Quiet NaN.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0xFFFF, 0xC3333333, 0x00000000) };
+    if (!isnanl (x.value))
+      return 1;
+  }
+  {
+    /* Signalling NaN.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0xFFFF, 0x83333333, 0x00000000) };
+    if (!isnanl (x.value))
+      return 1;
+  }
+  /* The isnanl function should recognize Pseudo-NaNs, Pseudo-Infinities,
+     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
+       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
+       Application Architecture.
+       Table 5-2 "Floating-Point Register Encodings"
+       Figure 5-6 "Memory to Floating-Point Register Data Translation"
+   */
+  { /* Pseudo-NaN.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
+    if (!isnanl (x.value))
+      return 1;
+  }
+  { /* Pseudo-Infinity.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
+    if (!isnanl (x.value))
+      return 1;
+  }
+  { /* Pseudo-Zero.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
+    if (!isnanl (x.value))
+      return 1;
+  }
+  { /* Unnormalized number.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
+    if (!isnanl (x.value))
+      return 1;
+  }
+  { /* Pseudo-Denormal.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
+    if (!isnanl (x.value))
+      return 1;
+  }
+#endif
+
   return 0;
 }], [gl_cv_func_isnanl_works=yes], [gl_cv_func_isnanl_works=no],
       [case "$host_os" in
@@ -143,6 +210,7 @@ int main ()
 
 AC_DEFUN([gl_LONG_DOUBLE_EXPONENT_LOCATION],
 [
+  AC_REQUIRE([AC_C_BIGENDIAN])
   AC_CACHE_CHECK([where to find the exponent in a 'long double'],
     [gl_cv_cc_long_double_expbit0],
     [

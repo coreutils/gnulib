@@ -72,9 +72,41 @@ int
 FUNC (DOUBLE x)
 {
 #ifdef KNOWN_EXPBIT0_LOCATION
+# if defined USE_LONG_DOUBLE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+  /* Special CPU dependent code is needed to treat bit patterns outside the
+     IEEE 754 specification (such as Pseudo-NaNs, Pseudo-Infinities,
+     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals) as NaNs.
+     These bit patterns are:
+       - exponent = 0x0001..0x7FFF, mantissa bit 63 = 0,
+       - exponent = 0x0000, mantissa bit 63 = 1.
+     The NaN bit pattern is:
+       - exponent = 0x7FFF, mantissa >= 0x8000000000000001.  */
+  memory_double m;
+  unsigned int exponent;
+
+  m.value = x;
+  exponent = (m.word[EXPBIT0_WORD] >> EXPBIT0_BIT) & EXP_MASK;
+#  ifdef WORDS_BIGENDIAN
+  /* Big endian: EXPBIT0_WORD = 0, EXPBIT0_BIT = 16.  */
+  if (exponent == 0)
+    return 1 & (m.word[0] >> 15);
+  else if (exponent == EXP_MASK)
+    return (((m.word[0] ^ 0x8000U) << 16) | m.word[1] | (m.word[2] >> 16)) != 0;
+  else
+    return 1 & ~(m.word[0] >> 15);
+#  else
+  /* Little endian: EXPBIT0_WORD = 2, EXPBIT0_BIT = 0.  */
+  if (exponent == 0)
+    return (m.word[1] >> 31);
+  else if (exponent == EXP_MASK)
+    return ((m.word[1] ^ 0x80000000U) | m.word[0]) != 0;
+  else
+    return (m.word[1] >> 31) ^ 1;
+#  endif
+# else
   /* Be careful to not do any floating-point operation on x, such as x == x,
      because x may be a signaling NaN.  */
-# if defined __SUNPRO_C || defined __DECC || (defined __sgi && !defined __GNUC__)
+#  if defined __SUNPRO_C || defined __DECC || (defined __sgi && !defined __GNUC__)
   /* The Sun C 5.0 compilers and the Compaq (ex-DEC) 6.4 compilers don't
      recognize the initializers as constant expressions.  The latter compiler
      also fails when constant-folding 0.0 / 0.0 even when constant-folding is
@@ -85,11 +117,11 @@ FUNC (DOUBLE x)
   DOUBLE plus_inf = L_(1.0) / L_(0.0);
   DOUBLE minus_inf = -L_(1.0) / L_(0.0);
   nan.value = zero / zero;
-# else
+#  else
   static memory_double nan = { L_(0.0) / L_(0.0) };
   static DOUBLE plus_inf = L_(1.0) / L_(0.0);
   static DOUBLE minus_inf = -L_(1.0) / L_(0.0);
-# endif
+#  endif
   {
     memory_double m;
 
@@ -104,6 +136,7 @@ FUNC (DOUBLE x)
     else
       return 0;
   }
+# endif
 #else
   /* The configuration did not find sufficient information.  Give up about
      the signaling NaNs, handle only the quiet NaNs.  */

@@ -1,5 +1,15 @@
 2007-06-05  Bruno Haible  <bruno@clisp.org>
 
+	Fix isnanl so that it recognizes non-IEEE numbers on i386, x86_64, ia64.
+	* m4/isnanl.m4 (gl_FUNC_ISNANL_WORKS): Require AC_C_BIGENDIAN. Tested
+	non-IEEE numbers on i386, x86_64, ia64.
+	(gl_LONG_DOUBLE_EXPONENT_LOCATION): Require AC_C_BIGENDIAN.
+	* lib/isnan.c (FUNC): Add special code for i386, x86_64, ia64.
+	* tests/test-isnanl.h: Include float.h.
+	(main): Check also non-IEEE numbers on i386, x86_64, ia64.
+
+2007-06-05  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c (VASNPRINTF): Do the extra handling of NaN and Inf
 	also the %a / %A. Handle the %a / %A code before this extra handling.
 
