@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 17
+# vasnprintf.m4 serial 18
 dnl Copyright (C) 2002-2004, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -101,7 +101,7 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF_INFINITE_LONG_DOUBLE],
   AC_REQUIRE([gl_PREREQ_VASNPRINTF_LONG_DOUBLE])
   case "$gl_cv_func_printf_long_double" in
     *yes)
-      case "$gl_cv_func_printf_infinite" in
+      case "$gl_cv_func_printf_infinite_long_double" in
         *yes)
           ;;
         *)

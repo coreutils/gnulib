@@ -1,3 +1,8 @@
+2007-06-05  Bruno Haible  <bruno@clisp.org>
+
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_INFINITE_LONG_DOUBLE): Fix
+	typo in variable name.
+
 2007-06-05  Eric Blake  <ebb9@byu.net>
 
 	* m4/lseek.m4 (gl_FUNC_LSEEK): Work when cross-compiling.
