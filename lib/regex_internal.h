@@ -48,7 +48,7 @@
 #endif
 
 /* In case that the system doesn't have isblank().  */
-#if !defined _LIBC && !HAVE_DECL_ISBLANK && !defined isblank
+#if !defined _LIBC && ! (defined isblank || (HAVE_ISBLANK && HAVE_DECL_ISBLANK))
 # define isblank(ch) ((ch) == ' ' || (ch) == '\t')
 #endif
 

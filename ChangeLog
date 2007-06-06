@@ -1,3 +1,14 @@
+2007-06-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Work around problem reported by Steven M. Schweda in
+	<http://lists.gnu.org/archive/html/bug-tar/2007-06/msg00002.html>:
+	Tru64 5.1B with the Compaq compiler environment installed declares
+	an 'isblank' function but does not define it in the C library.
+	* lib/fnmatch.c (isblank): Check for HAVE_ISBLANK, too.
+	* lib/regex_internal.h (isblank): Likewise.
+	* m4/fnmatch.m4 (_AC_LIBOBJ_FNMATCH): Check for isblank existence.
+	* m4/regex.m4 (gl_PREREQ_REGEX): Likewise.
+
 2007-06-05  Bruno Haible  <bruno@clisp.org>
 
 	Fix *printf so that it recognizes non-IEEE numbers on i386, x86_64,

@@ -83,7 +83,7 @@ AC_DEFUN([_AC_LIBOBJ_FNMATCH],
 [AC_REQUIRE([AC_FUNC_ALLOCA])dnl
 AC_REQUIRE([AC_TYPE_MBSTATE_T])dnl
 AC_CHECK_DECLS([isblank], [], [], [#include <ctype.h>])
-AC_CHECK_FUNCS_ONCE([btowc iswctype mbsrtowcs mempcpy wmemchr wmemcpy wmempcpy])
+AC_CHECK_FUNCS_ONCE([btowc isblank iswctype mbsrtowcs mempcpy wmemchr wmemcpy wmempcpy])
 AC_CHECK_HEADERS_ONCE([wctype.h])
 AC_LIBOBJ([fnmatch])
 FNMATCH_H=fnmatch.h

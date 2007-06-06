@@ -206,6 +206,6 @@ AC_DEFUN([gl_PREREQ_REGEX],
 [
   AC_REQUIRE([AC_GNU_SOURCE])
   AC_REQUIRE([AC_C_RESTRICT])
-  AC_CHECK_FUNCS_ONCE([iswctype mbrtowc wcrtomb wcscoll])
+  AC_CHECK_FUNCS_ONCE([isblank iswctype mbrtowc wcrtomb wcscoll])
   AC_CHECK_DECLS([isblank], [], [], [#include <ctype.h>])
 ])

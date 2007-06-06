@@ -85,7 +85,7 @@ extern int fnmatch (const char *pattern, const char *string, int flags);
 #if defined _LIBC || !defined __GNU_LIBRARY__ || !HAVE_FNMATCH_GNU
 
 
-# if ! (defined isblank || HAVE_DECL_ISBLANK)
+# if ! (defined isblank || (HAVE_ISBLANK && HAVE_DECL_ISBLANK))
 #  define isblank(c) ((c) == ' ' || (c) == '\t')
 # endif
 
