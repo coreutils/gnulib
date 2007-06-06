@@ -56,6 +56,7 @@
 #if NEED_PRINTF_LONG_DOUBLE && !defined IN_LIBINTL
 # include <math.h>
 # include "float+.h"
+# include "fpucw.h"
 #endif
 
 #if NEED_PRINTF_INFINITE_DOUBLE && !defined IN_LIBINTL
@@ -66,6 +67,7 @@
 #if NEED_PRINTF_INFINITE_LONG_DOUBLE && !defined IN_LIBINTL
 # include <math.h>
 # include "isnanl-nolibm.h"
+# include "fpucw.h"
 #endif
 
 #if NEED_PRINTF_DIRECTIVE_A && !defined IN_LIBINTL
