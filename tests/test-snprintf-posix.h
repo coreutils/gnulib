@@ -38,6 +38,19 @@ have_minus_zero ()
   return memcmp (&plus_zero, &minus_zero, sizeof (double)) != 0;
 }
 
+/* Representation of an 80-bit 'long double' as an initializer for a sequence
+   of 'unsigned int' words.  */
+#ifdef WORDS_BIGENDIAN
+# define LDBL80_WORDS(exponent,manthi,mantlo) \
+    { ((unsigned int) (exponent) << 16) | ((unsigned int) (manthi) >> 16), \
+      ((unsigned int) (manthi) << 16) | (unsigned int) (mantlo) >> 16),    \
+      (unsigned int) (mantlo) << 16                                        \
+    }
+#else
+# define LDBL80_WORDS(exponent,manthi,mantlo) \
+    { mantlo, manthi, exponent }
+#endif
+
 static int
 strmatch (const char *pattern, const char *string)
 {
@@ -465,6 +478,93 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if CHECK_PRINTF_SAFE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+  { /* Quiet NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0xC3333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%La %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  {
+    /* Signalling NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x83333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%La %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  /* The isnanl function should recognize Pseudo-NaNs, Pseudo-Infinities,
+     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
+       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
+       Application Architecture.
+       Table 5-2 "Floating-Point Register Encodings"
+       Figure 5-6 "Memory to Floating-Point Register Data Translation"
+   */
+  { /* Pseudo-NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%La %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Infinity.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%La %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Zero.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%La %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Unnormalized number.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%La %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Denormal.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%La %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 
   { /* Rounding near the decimal point.  */
     char result[100];
@@ -1073,6 +1173,93 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if CHECK_PRINTF_SAFE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+  { /* Quiet NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0xC3333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lf %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  {
+    /* Signalling NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x83333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lf %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  /* The isnanl function should recognize Pseudo-NaNs, Pseudo-Infinities,
+     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
+       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
+       Application Architecture.
+       Table 5-2 "Floating-Point Register Encodings"
+       Figure 5-6 "Memory to Floating-Point Register Data Translation"
+   */
+  { /* Pseudo-NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lf %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Infinity.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lf %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Zero.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lf %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Unnormalized number.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lf %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Denormal.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lf %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 
   { /* Width.  */
     char result[100];
@@ -1787,6 +1974,93 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if CHECK_PRINTF_SAFE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+  { /* Quiet NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0xC3333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  {
+    /* Signalling NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x83333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  /* The isnanl function should recognize Pseudo-NaNs, Pseudo-Infinities,
+     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
+       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
+       Application Architecture.
+       Table 5-2 "Floating-Point Register Encodings"
+       Figure 5-6 "Memory to Floating-Point Register Data Translation"
+   */
+  { /* Pseudo-NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Infinity.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Zero.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Unnormalized number.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Denormal.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Le %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 
   { /* Width.  */
     char result[100];
@@ -2301,6 +2575,93 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (retval == strlen (result));
   }
+#if CHECK_PRINTF_SAFE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+  { /* Quiet NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0xC3333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  {
+    /* Signalling NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x83333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  /* The isnanl function should recognize Pseudo-NaNs, Pseudo-Infinities,
+     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
+       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
+       Application Architecture.
+       Table 5-2 "Floating-Point Register Encodings"
+       Figure 5-6 "Memory to Floating-Point Register Data Translation"
+   */
+  { /* Pseudo-NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Infinity.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Zero.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Unnormalized number.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+  { /* Pseudo-Denormal.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
+    char result[100];
+    int retval =
+      my_snprintf (result, sizeof (result), "%Lg %d", x.value, 33, 44, 55);
+    ASSERT (strlen (result) >= 3 + 3
+	    && strisnan (result, 0, strlen (result) - 3, 0)
+	    && strcmp (result + strlen (result) - 3, " 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+#endif
 
   { /* Width.  */
     char result[100];

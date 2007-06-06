@@ -15,6 +15,7 @@ printf-frexp
 printf-frexpl
 signbit
 fpucw
+printf-safe
 
 configure.ac:
 gl_FUNC_VASPRINTF_POSIX

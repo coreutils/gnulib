@@ -1,7 +1,45 @@
 2007-06-05  Bruno Haible  <bruno@clisp.org>
 
+	Fix *printf so that it recognizes non-IEEE numbers on i386, x86_64,
+	ia64.
+	* modules/printf-safe: New file.
+	* modules/fprintf-posix (Depends-on): Add printf-safe.
+	* modules/printf-posix (Depends-on): Likewise.
+	* modules/snprintf-posix (Depends-on): Likewise.
+	* modules/sprintf-posix (Depends-on): Likewise.
+	* modules/vasnprintf-posix (Depends-on): Likewise.
+	* modules/vasprintf-posix (Depends-on): Likewise.
+	* modules/vfprintf-posix (Depends-on): Likewise.
+	* modules/vprintf-posix (Depends-on): Likewise.
+	* modules/vsnprintf-posix (Depends-on): Likewise.
+	* modules/vsprintf-posix (Depends-on): Likewise.
+	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE): Require
+	AC_C_BIGENDIAN. Define CHECK_PRINTF_SAFE if printf-safe is used. Test
+	non-IEEE numbers on i386, x86_64, ia64. When cross-compiling, guess
+	"no" on i386, x86_64, ia64.
+	* tests/test-snprintf-posix.h (LDBL80_WORDS): New macro.
+	(test_function): Check result of %La, %Lf, %Le, %Lg on non-IEEE numbers
+	on i386, x86_64, ia64.
+	* tests/test-sprintf-posix.h (LDBL80_WORDS): New macro.
+	(test_function): Check result of %La, %Lf, %Le, %Lg on non-IEEE numbers
+	on i386, x86_64, ia64.
+	* tests/test-vasnprintf-posix.c: Include float.h.
+	(LDBL80_WORDS): New macro.
+	(test_function): Check result of %La, %Lf, %Le, %Lg on non-IEEE numbers
+	on i386, x86_64, ia64.
+	* tests/test-vasprintf-posix.c: Include float.h.
+	(LDBL80_WORDS): New macro.
+	(test_function): Check result of %La, %Lf, %Le, %Lg on non-IEEE numbers
+	on i386, x86_64, ia64.
+	* tests/test-snprintf-posix.c: Include float.h.
+	* tests/test-sprintf-posix.c: Likewise.
+	* tests/test-vsnprintf-posix.c: Likewise.
+	* tests/test-vsprintf-posix.c: Likewise.
+
+2007-06-05  Bruno Haible  <bruno@clisp.org>
+
 	Fix isnanl so that it recognizes non-IEEE numbers on i386, x86_64, ia64.
-	* m4/isnanl.m4 (gl_FUNC_ISNANL_WORKS): Require AC_C_BIGENDIAN. Tested
+	* m4/isnanl.m4 (gl_FUNC_ISNANL_WORKS): Require AC_C_BIGENDIAN. Test
 	non-IEEE numbers on i386, x86_64, ia64.
 	(gl_LONG_DOUBLE_EXPONENT_LOCATION): Require AC_C_BIGENDIAN.
 	* lib/isnan.c (FUNC): Add special code for i386, x86_64, ia64.

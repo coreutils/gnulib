@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 
+#include <float.h>
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdio.h>
