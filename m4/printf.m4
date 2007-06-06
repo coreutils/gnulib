@@ -1,4 +1,4 @@
-# printf.m4 serial 13
+# printf.m4 serial 14
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -225,13 +225,22 @@ AC_DEFUN([gl_PRINTF_INFINITE_LONG_DOUBLE],
 [
   AC_REQUIRE([gl_PRINTF_LONG_DOUBLE])
   AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_C_BIGENDIAN])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  dnl The user can set or unset the variable gl_printf_safe to indicate
+  dnl that he wishes a safe handling of non-IEEE-754 'long double' values.
+  if test -n "$gl_printf_safe"; then
+    AC_DEFINE([CHECK_PRINTF_SAFE], 1,
+      [Define if you wish *printf() functions that have a safe handling of
+       non-IEEE-754 'long double' values.])
+  fi
   case "$gl_cv_func_printf_long_double" in
     *yes)
       AC_CACHE_CHECK([whether printf supports infinite 'long double' arguments],
         [gl_cv_func_printf_infinite_long_double],
         [
           AC_TRY_RUN([
+#include <float.h>
 #include <stdio.h>
 #include <string.h>
 static int
@@ -283,30 +292,142 @@ int main ()
   if (sprintf (buf, "%Lg", zeroL / zeroL) < 0
       || !strisnan (buf, 0, strlen (buf)))
     return 1;
+#if CHECK_PRINTF_SAFE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+/* Representation of an 80-bit 'long double' as an initializer for a sequence
+   of 'unsigned int' words.  */
+# ifdef WORDS_BIGENDIAN
+#  define LDBL80_WORDS(exponent,manthi,mantlo) \
+     { ((unsigned int) (exponent) << 16) | ((unsigned int) (manthi) >> 16), \
+       ((unsigned int) (manthi) << 16) | (unsigned int) (mantlo) >> 16),    \
+       (unsigned int) (mantlo) << 16                                        \
+     }
+# else
+#  define LDBL80_WORDS(exponent,manthi,mantlo) \
+     { mantlo, manthi, exponent }
+# endif
+  { /* Quiet NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0xC3333333, 0x00000000) };
+    if (sprintf (buf, "%Lf", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Le", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Lg", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+  }
+  {
+    /* Signalling NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x83333333, 0x00000000) };
+    if (sprintf (buf, "%Lf", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Le", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Lg", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+  }
+  { /* Pseudo-NaN.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
+    if (sprintf (buf, "%Lf", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Le", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Lg", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+  }
+  { /* Pseudo-Infinity.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
+    if (sprintf (buf, "%Lf", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Le", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Lg", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+  }
+  { /* Pseudo-Zero.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
+    if (sprintf (buf, "%Lf", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Le", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Lg", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+  }
+  { /* Unnormalized number.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
+    if (sprintf (buf, "%Lf", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Le", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Lg", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+  }
+  { /* Pseudo-Denormal.  */
+    static union { unsigned int word[4]; long double value; } x =
+      { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
+    if (sprintf (buf, "%Lf", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Le", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+    if (sprintf (buf, "%Lg", x.value) < 0
+        || !strisnan (buf, 0, strlen (buf)))
+      return 1;
+  }
+#endif
   return 0;
 }],
           [gl_cv_func_printf_infinite_long_double=yes],
           [gl_cv_func_printf_infinite_long_double=no],
           [
 changequote(,)dnl
-           case "$host_os" in
-                                   # Guess yes on glibc systems.
-             *-gnu*)               gl_cv_func_printf_infinite_long_double="guessing yes";;
-                                   # Guess yes on FreeBSD >= 6.
-             freebsd[1-5]*)        gl_cv_func_printf_infinite_long_double="guessing no";;
-             freebsd* | kfreebsd*) gl_cv_func_printf_infinite_long_double="guessing yes";;
-                                   # Guess yes on MacOS X >= 10.3.
-             darwin[1-6].*)        gl_cv_func_printf_infinite_long_double="guessing no";;
-             darwin*)              gl_cv_func_printf_infinite_long_double="guessing yes";;
-                                   # Guess yes on HP-UX >= 11.
-             hpux[7-9]* | hpux10*) gl_cv_func_printf_infinite_long_double="guessing no";;
-             hpux*)                gl_cv_func_printf_infinite_long_double="guessing yes";;
-                                   # Guess yes on NetBSD >= 3.
-             netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
-                                   gl_cv_func_printf_infinite_long_double="guessing no";;
-             netbsd*)              gl_cv_func_printf_infinite_long_double="guessing yes";;
-                                   # If we don't know, assume the worst.
-             *)                    gl_cv_func_printf_infinite_long_double="guessing no";;
+           case "$host_cpu" in
+                                   # Guess no on ia64, i386.
+             ia64 | i*86)          gl_cv_func_printf_infinite_long_double="guessing no";;
+             *)
+               case "$host_os" in
+                                       # Guess yes on glibc systems.
+                 *-gnu*)               gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                       # Guess yes on FreeBSD >= 6.
+                 freebsd[1-5]*)        gl_cv_func_printf_infinite_long_double="guessing no";;
+                 freebsd* | kfreebsd*) gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                       # Guess yes on MacOS X >= 10.3.
+                 darwin[1-6].*)        gl_cv_func_printf_infinite_long_double="guessing no";;
+                 darwin*)              gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                       # Guess yes on HP-UX >= 11.
+                 hpux[7-9]* | hpux10*) gl_cv_func_printf_infinite_long_double="guessing no";;
+                 hpux*)                gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                       # Guess yes on NetBSD >= 3.
+                 netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
+                                       gl_cv_func_printf_infinite_long_double="guessing no";;
+                 netbsd*)              gl_cv_func_printf_infinite_long_double="guessing yes";;
+                                       # If we don't know, assume the worst.
+                 *)                    gl_cv_func_printf_infinite_long_double="guessing no";;
+               esac
+               ;;
            esac
 changequote([,])dnl
           ])
