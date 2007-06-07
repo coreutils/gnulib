@@ -8,6 +8,7 @@ m4/mbrtowc.m4
 
 Depends-on:
 mbchar
+wchar
 stdbool
 strnlen1
 

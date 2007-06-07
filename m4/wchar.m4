@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar.m4 serial 1
+# wchar.m4 serial 2
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -20,6 +20,15 @@ wchar_t w;]],
   if test $gl_cv_header_wchar_h_standalone = yes; then
     WCHAR_H=
   else
+    dnl Check for <wchar.h> (missing in Linux uClibc when built without wide
+    dnl character support).
+    AC_CHECK_HEADERS_ONCE([wchar.h])
+    if test $ac_cv_header_wchar_h = yes; then
+      HAVE_WCHAR_H=1
+    else
+      HAVE_WCHAR_H=0
+    fi
+    AC_SUBST([HAVE_WCHAR_H])
     gl_ABSOLUTE_HEADER([wchar.h])
     ABSOLUTE_WCHAR_H=\"$gl_cv_absolute_wchar_h\"
     WCHAR_H=wchar.h

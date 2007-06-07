@@ -1,4 +1,4 @@
-# stdint.m4 serial 25
+# stdint.m4 serial 26
 dnl Copyright (C) 2001-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -222,6 +222,10 @@ struct s {
     fi
     AC_SUBST([HAVE_SYS_BITYPES_H])
 
+    dnl Check for <wchar.h> (missing in Linux uClibc when built without wide
+    dnl character support).
+    AC_CHECK_HEADERS_ONCE([wchar.h])
+
     gl_STDINT_TYPE_PROPERTIES
     STDINT_H=stdint.h
   fi
@@ -357,9 +361,11 @@ AC_DEFUN([gl_STDINT_INCLUDES],
      included before <wchar.h>.  */
   #include <stddef.h>
   #include <signal.h>
-  #include <stdio.h>
-  #include <time.h>
-  #include <wchar.h>
+  #if HAVE_WCHAR_H
+  # include <stdio.h>
+  # include <time.h>
+  # include <wchar.h>
+  #endif
 ]])
 
 dnl gl_STDINT_TYPE_PROPERTIES

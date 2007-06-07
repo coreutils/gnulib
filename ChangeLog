@@ -1,3 +1,17 @@
+2007-06-07  Bruno Haible  <bruno@clisp.org>
+
+	Work around the lack of <wchar.h> on some builds of uClibc.
+	* doc/headers/wchar.texi: Update.
+	* lib/wchar_.h: Include <wchar.h> only if it exists.
+	* m4/wchar.m4 (gl_WCHAR_H): Check for <wchar.h>. Set HAVE_WCHAR_H.
+	* m4/stdint.m4 (gl_STDINT_H): Check for <wchar.h>.
+	(gl_STDINT_TYPE_PROPERTIES): Don't try to include <wchar.h> if it
+	doesn't exist.
+	* modules/wchar (wchar.h): Substitute HAVE_WCHAR_H.
+	* modules/mbfile (Depends-on): Add wchar.
+	* modules/mbiter (Depends-on): Likewise.
+	* modules/mbuiter (Depends-on): Likewise.
+
 2007-06-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Work around problem reported by Steven M. Schweda in
