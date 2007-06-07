@@ -1,5 +1,8 @@
 2007-06-07  Bruno Haible  <bruno@clisp.org>
 
+	* modules/localename-tests: New file.
+	* tests/test-localename.c: New file.
+
 	New module 'localename'.
 	* lib/localename.h: New file.
 	* lib/localename.c: New file, from GNU gettext.
