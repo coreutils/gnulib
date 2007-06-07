@@ -1,5 +1,13 @@
 2007-06-07  Bruno Haible  <bruno@clisp.org>
 
+	New module 'localename'.
+	* lib/localename.h: New file.
+	* lib/localename.c: New file, from GNU gettext.
+	* m4/localename.m4: New file.
+	* modules/localename: New file.
+
+2007-06-07  Bruno Haible  <bruno@clisp.org>
+
 	Work around the lack of <wchar.h> on some builds of uClibc.
 	* doc/headers/wchar.texi: Update.
 	* lib/wchar_.h: Include <wchar.h> only if it exists.
@@ -11,6 +19,7 @@
 	* modules/mbfile (Depends-on): Add wchar.
 	* modules/mbiter (Depends-on): Likewise.
 	* modules/mbuiter (Depends-on): Likewise.
+	Reported by Simon Josefsson.
 
 2007-06-06  Paul Eggert  <eggert@cs.ucla.edu>
 
