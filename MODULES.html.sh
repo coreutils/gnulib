@@ -1598,8 +1598,8 @@ func_all_modules ()
   func_module xalloc-die
   func_module alloca
   func_module alloca-opt
-  func_module allocsa
-  func_module xallocsa
+  func_module malloca
+  func_module xmalloca
   func_end_table
 
   element="Integer arithmetic functions <stdlib.h>"

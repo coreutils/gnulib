@@ -1,5 +1,4 @@
 alloca_.h
-allocsa.h
 error.h
 exit.h
 fnmatch_.h
@@ -18,6 +17,7 @@ getpagesize.h
 getpass.c
 gettext.h
 localcharset.h
+malloca.h
 mbchar.h
 mbuiter.h
 md5.h

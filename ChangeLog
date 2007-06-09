@@ -39,6 +39,8 @@
 	* lib/striconveha.c: Update.
 	* modules/relocatable-prog-wrapper (Files): Update.
 	* lib/relocwrapper.c: Update.
+	* build-aux/install-reloc: Update.
+	* MODULES.html.sh (Memory management functions <stdlib.h>): Update.
 
 2007-06-08  Bruno Haible  <bruno@clisp.org>
 
