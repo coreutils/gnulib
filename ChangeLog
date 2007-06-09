@@ -1,3 +1,9 @@
+2007-06-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/intlmacosx.m4: New file, extracted from gettext.m4.
+	* m4/gettext.m4 (gt_INTL_MACOSX): Remove macro, moved to intlmacosx.m4.
+	* modules/gettext (Files): Add m4/intlmacosx.m4.
+
 2007-06-07  Bruno Haible  <bruno@clisp.org>
 
 	* modules/localename-tests: New file.

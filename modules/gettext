@@ -10,6 +10,7 @@ m4/iconv.m4
 m4/intdiv0.m4
 m4/intl.m4
 m4/intldir.m4
+m4/intlmacosx.m4
 m4/intmax.m4
 m4/inttypes_h.m4
 m4/inttypes-pri.m4
