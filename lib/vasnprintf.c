@@ -107,9 +107,26 @@ local_wcslen (const wchar_t *s)
 # endif
 #endif
 
+/* Define some macros that parametrize the code:
+     VASNPRINTF         The name of the function being defined.
+     FCHAR_T            The element type of the format string.
+     DCHAR_T            The element type of the destination (result) string.
+     TCHAR_T            The element type of the temporary buffer that is
+                        filled with a simple format directive, executed by
+                        the system's sprintf/snprintf (or similar) function.
+     DIRECTIVE          Structure denoting a format directive.
+                        Depends on FCHAR_T.
+     DIRECTIVES         Structure denoting the set of format directives of a
+                        format string.  Depends on FCHAR_T.
+     PRINTF_PARSE       Function that parses a format string.
+                        Depends on FCHAR_T.
+     SNPRINTF           The system's snprintf (or similar) function.
+                        Depends on DCHAR_T.  */
 #if WIDE_CHAR_VERSION
 # define VASNPRINTF vasnwprintf
-# define CHAR_T wchar_t
+# define FCHAR_T wchar_t
+# define DCHAR_T wchar_t
+# define TCHAR_T wchar_t
 # define DIRECTIVE wchar_t_directive
 # define DIRECTIVES wchar_t_directives
 # define PRINTF_PARSE wprintf_parse
@@ -124,7 +141,9 @@ local_wcslen (const wchar_t *s)
 # endif
 #else
 # define VASNPRINTF vasnprintf
-# define CHAR_T char
+# define FCHAR_T char
+# define DCHAR_T char
+# define TCHAR_T char
 # define DIRECTIVE char_directive
 # define DIRECTIVES char_directives
 # define PRINTF_PARSE printf_parse
@@ -1137,8 +1156,8 @@ floorlog10l (long double x)
 
 #endif
 
-CHAR_T *
-VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list args)
+DCHAR_T *
+VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp, const FCHAR_T *format, va_list args)
 {
   DIRECTIVES d;
   arguments a;
@@ -1163,13 +1182,13 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 
   {
     size_t buf_neededlength;
-    CHAR_T *buf;
-    CHAR_T *buf_malloced;
-    const CHAR_T *cp;
+    TCHAR_T *buf;
+    TCHAR_T *buf_malloced;
+    const FCHAR_T *cp;
     size_t i;
     DIRECTIVE *dp;
     /* Output string accumulator.  */
-    CHAR_T *result;
+    DCHAR_T *result;
     size_t allocated;
     size_t length;
 
@@ -1178,18 +1197,18 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
     buf_neededlength =
       xsum4 (7, d.max_width_length, d.max_precision_length, 6);
 #if HAVE_ALLOCA
-    if (buf_neededlength < 4000 / sizeof (CHAR_T))
+    if (buf_neededlength < 4000 / sizeof (TCHAR_T))
       {
-	buf = (CHAR_T *) alloca (buf_neededlength * sizeof (CHAR_T));
+	buf = (TCHAR_T *) alloca (buf_neededlength * sizeof (TCHAR_T));
 	buf_malloced = NULL;
       }
     else
 #endif
       {
-	size_t buf_memsize = xtimes (buf_neededlength, sizeof (CHAR_T));
+	size_t buf_memsize = xtimes (buf_neededlength, sizeof (TCHAR_T));
 	if (size_overflow_p (buf_memsize))
 	  goto out_of_memory_1;
-	buf = (CHAR_T *) malloc (buf_memsize);
+	buf = (TCHAR_T *) malloc (buf_memsize);
 	if (buf == NULL)
 	  goto out_of_memory_1;
 	buf_malloced = buf;
@@ -1216,22 +1235,22 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
     if ((needed) > allocated)						     \
       {									     \
 	size_t memory_size;						     \
-	CHAR_T *memory;							     \
+	DCHAR_T *memory;						     \
 									     \
 	allocated = (allocated > 0 ? xtimes (allocated, 2) : 12);	     \
 	if ((needed) > allocated)					     \
 	  allocated = (needed);						     \
-	memory_size = xtimes (allocated, sizeof (CHAR_T));		     \
+	memory_size = xtimes (allocated, sizeof (DCHAR_T));		     \
 	if (size_overflow_p (memory_size))				     \
 	  goto out_of_memory;						     \
 	if (result == resultbuf || result == NULL)			     \
-	  memory = (CHAR_T *) malloc (memory_size);			     \
+	  memory = (DCHAR_T *) malloc (memory_size);			     \
 	else								     \
-	  memory = (CHAR_T *) realloc (result, memory_size);		     \
+	  memory = (DCHAR_T *) realloc (result, memory_size);		     \
 	if (memory == NULL)						     \
 	  goto out_of_memory;						     \
 	if (result == resultbuf && length > 0)				     \
-	  memcpy (memory, result, length * sizeof (CHAR_T));		     \
+	  memcpy (memory, result, length * sizeof (DCHAR_T));		     \
 	result = memory;						     \
       }
 
@@ -1243,7 +1262,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 	    size_t augmented_length = xsum (length, n);
 
 	    ENSURE_ALLOCATION (augmented_length);
-	    memcpy (result + length, cp, n * sizeof (CHAR_T));
+	    memcpy (result + length, cp, n * sizeof (DCHAR_T));
 	    length = augmented_length;
 	  }
 	if (i == d.count)
@@ -1301,10 +1320,10 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		int has_precision;
 		size_t precision;
 		size_t tmp_length;
-		CHAR_T tmpbuf[700];
-		CHAR_T *tmp;
-		CHAR_T *pad_ptr;
-		CHAR_T *p;
+		DCHAR_T tmpbuf[700];
+		DCHAR_T *tmp;
+		DCHAR_T *pad_ptr;
+		DCHAR_T *p;
 
 		has_width = 0;
 		width = 0;
@@ -1329,7 +1348,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      }
 		    else
 		      {
-			const CHAR_T *digitp = dp->width_start;
+			const FCHAR_T *digitp = dp->width_start;
 
 			do
 			  width = xsum (xtimes (width, 10), *digitp++ - '0');
@@ -1359,7 +1378,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      }
 		    else
 		      {
-			const CHAR_T *digitp = dp->precision_start + 1;
+			const FCHAR_T *digitp = dp->precision_start + 1;
 
 			precision = 0;
 			while (digitp != dp->precision_end)
@@ -1391,16 +1410,16 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 
 		tmp_length = xsum (tmp_length, 1); /* account for trailing NUL */
 
-		if (tmp_length <= sizeof (tmpbuf) / sizeof (CHAR_T))
+		if (tmp_length <= sizeof (tmpbuf) / sizeof (DCHAR_T))
 		  tmp = tmpbuf;
 		else
 		  {
-		    size_t tmp_memsize = xtimes (tmp_length, sizeof (CHAR_T));
+		    size_t tmp_memsize = xtimes (tmp_length, sizeof (DCHAR_T));
 
 		    if (size_overflow_p (tmp_memsize))
 		      /* Overflow, would lead to out of memory.  */
 		      goto out_of_memory;
-		    tmp = (CHAR_T *) malloc (tmp_memsize);
+		    tmp = (DCHAR_T *) malloc (tmp_memsize);
 		    if (tmp == NULL)
 		      /* Out of memory.  */
 		      goto out_of_memory;
@@ -1682,7 +1701,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		if (has_width && p - tmp < width)
 		  {
 		    size_t pad = width - (p - tmp);
-		    CHAR_T *end = p + pad;
+		    DCHAR_T *end = p + pad;
 
 		    if (flags & FLAG_LEFT)
 		      {
@@ -1693,7 +1712,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    else if ((flags & FLAG_ZERO) && pad_ptr != NULL)
 		      {
 			/* Pad with zeroes.  */
-			CHAR_T *q = end;
+			DCHAR_T *q = end;
 
 			while (p > pad_ptr)
 			  *--q = *--p;
@@ -1703,7 +1722,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    else
 		      {
 			/* Pad with spaces on the left.  */
-			CHAR_T *q = end;
+			DCHAR_T *q = end;
 
 			while (p > tmp)
 			  *--q = *--p;
@@ -1731,7 +1750,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    }
 
 		  /* Append the result.  */
-		  memcpy (result + length, tmp, count * sizeof (CHAR_T));
+		  memcpy (result + length, tmp, count * sizeof (DCHAR_T));
 		  if (tmp != tmpbuf)
 		    free (tmp);
 		  length += count;
@@ -1770,10 +1789,10 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		int has_precision;
 		size_t precision;
 		size_t tmp_length;
-		CHAR_T tmpbuf[700];
-		CHAR_T *tmp;
-		CHAR_T *pad_ptr;
-		CHAR_T *p;
+		DCHAR_T tmpbuf[700];
+		DCHAR_T *tmp;
+		DCHAR_T *pad_ptr;
+		DCHAR_T *p;
 
 		has_width = 0;
 		width = 0;
@@ -1798,7 +1817,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      }
 		    else
 		      {
-			const CHAR_T *digitp = dp->width_start;
+			const FCHAR_T *digitp = dp->width_start;
 
 			do
 			  width = xsum (xtimes (width, 10), *digitp++ - '0');
@@ -1828,7 +1847,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      }
 		    else
 		      {
-			const CHAR_T *digitp = dp->precision_start + 1;
+			const FCHAR_T *digitp = dp->precision_start + 1;
 
 			precision = 0;
 			while (digitp != dp->precision_end)
@@ -1877,16 +1896,16 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 
 		tmp_length = xsum (tmp_length, 1); /* account for trailing NUL */
 
-		if (tmp_length <= sizeof (tmpbuf) / sizeof (CHAR_T))
+		if (tmp_length <= sizeof (tmpbuf) / sizeof (DCHAR_T))
 		  tmp = tmpbuf;
 		else
 		  {
-		    size_t tmp_memsize = xtimes (tmp_length, sizeof (CHAR_T));
+		    size_t tmp_memsize = xtimes (tmp_length, sizeof (DCHAR_T));
 
 		    if (size_overflow_p (tmp_memsize))
 		      /* Overflow, would lead to out of memory.  */
 		      goto out_of_memory;
-		    tmp = (CHAR_T *) malloc (tmp_memsize);
+		    tmp = (DCHAR_T *) malloc (tmp_memsize);
 		    if (tmp == NULL)
 		      /* Out of memory.  */
 		      goto out_of_memory;
@@ -2338,7 +2357,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		if (has_width && p - tmp < width)
 		  {
 		    size_t pad = width - (p - tmp);
-		    CHAR_T *end = p + pad;
+		    DCHAR_T *end = p + pad;
 
 		    if (flags & FLAG_LEFT)
 		      {
@@ -2349,7 +2368,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    else if ((flags & FLAG_ZERO) && pad_ptr != NULL)
 		      {
 			/* Pad with zeroes.  */
-			CHAR_T *q = end;
+			DCHAR_T *q = end;
 
 			while (p > pad_ptr)
 			  *--q = *--p;
@@ -2359,7 +2378,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    else
 		      {
 			/* Pad with spaces on the left.  */
-			CHAR_T *q = end;
+			DCHAR_T *q = end;
 
 			while (p > tmp)
 			  *--q = *--p;
@@ -2387,7 +2406,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    }
 
 		  /* Append the result.  */
-		  memcpy (result + length, tmp, count * sizeof (CHAR_T));
+		  memcpy (result + length, tmp, count * sizeof (DCHAR_T));
 		  if (tmp != tmpbuf)
 		    free (tmp);
 		  length += count;
@@ -2407,13 +2426,13 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 #else
 #		define pad_ourselves 0
 #endif
-		CHAR_T *fbp;
+		TCHAR_T *fbp;
 		unsigned int prefix_count;
 		int prefixes[2];
 #if !USE_SNPRINTF
 		size_t tmp_length;
-		CHAR_T tmpbuf[700];
-		CHAR_T *tmp;
+		DCHAR_T tmpbuf[700];
+		DCHAR_T *tmp;
 #endif
 
 #if !USE_SNPRINTF || NEED_PRINTF_FLAG_ZERO
@@ -2440,7 +2459,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		      }
 		    else
 		      {
-			const CHAR_T *digitp = dp->width_start;
+			const FCHAR_T *digitp = dp->width_start;
 
 			do
 			  width = xsum (xtimes (width, 10), *digitp++ - '0');
@@ -2470,7 +2489,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			}
 		      else
 			{
-			  const CHAR_T *digitp = dp->precision_start + 1;
+			  const FCHAR_T *digitp = dp->precision_start + 1;
 
 			  precision = 0;
 			  while (digitp != dp->precision_end)
@@ -2656,16 +2675,16 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		  tmp_length = xsum (tmp_length, 1); /* account for trailing NUL */
 		}
 
-		if (tmp_length <= sizeof (tmpbuf) / sizeof (CHAR_T))
+		if (tmp_length <= sizeof (tmpbuf) / sizeof (DCHAR_T))
 		  tmp = tmpbuf;
 		else
 		  {
-		    size_t tmp_memsize = xtimes (tmp_length, sizeof (CHAR_T));
+		    size_t tmp_memsize = xtimes (tmp_length, sizeof (DCHAR_T));
 
 		    if (size_overflow_p (tmp_memsize))
 		      /* Overflow, would lead to out of memory.  */
 		      goto out_of_memory;
-		    tmp = (CHAR_T *) malloc (tmp_memsize);
+		    tmp = (DCHAR_T *) malloc (tmp_memsize);
 		    if (tmp == NULL)
 		      /* Out of memory.  */
 		      goto out_of_memory;
@@ -2713,14 +2732,14 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    if (dp->width_start != dp->width_end)
 		      {
 			size_t n = dp->width_end - dp->width_start;
-			memcpy (fbp, dp->width_start, n * sizeof (CHAR_T));
+			memcpy (fbp, dp->width_start, n * sizeof (TCHAR_T));
 			fbp += n;
 		      }
 		  }
 		if (dp->precision_start != dp->precision_end)
 		  {
 		    size_t n = dp->precision_end - dp->precision_start;
-		    memcpy (fbp, dp->precision_start, n * sizeof (CHAR_T));
+		    memcpy (fbp, dp->precision_start, n * sizeof (TCHAR_T));
 		    fbp += n;
 		  }
 
@@ -3057,14 +3076,14 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 # endif
 			{
 # if USE_SNPRINTF
-			  CHAR_T * const rp = result + length;
+			  DCHAR_T * const rp = result + length;
 # else
-			  CHAR_T * const rp = tmp;
+			  DCHAR_T * const rp = tmp;
 # endif
-			  CHAR_T *p = rp + count;
+			  DCHAR_T *p = rp + count;
 			  size_t pad = width - count;
-			  CHAR_T *end = p + pad;
-			  CHAR_T *pad_ptr = (*rp == '-' ? rp + 1 : rp);
+			  DCHAR_T *end = p + pad;
+			  DCHAR_T *pad_ptr = (*rp == '-' ? rp + 1 : rp);
 			  /* No zero-padding of "inf" and "nan".  */
 			  if ((*pad_ptr >= 'A' && *pad_ptr <= 'Z')
 			      || (*pad_ptr >= 'a' && *pad_ptr <= 'z'))
@@ -3082,7 +3101,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  else if ((flags & FLAG_ZERO) && pad_ptr != NULL)
 			    {
 			      /* Pad with zeroes.  */
-			      CHAR_T *q = end;
+			      DCHAR_T *q = end;
 
 			      while (p > pad_ptr)
 				*--q = *--p;
@@ -3092,7 +3111,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  else
 			    {
 			      /* Pad with spaces on the left.  */
-			      CHAR_T *q = end;
+			      DCHAR_T *q = end;
 
 			      while (p > rp)
 				*--q = *--p;
@@ -3118,7 +3137,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    /* The snprintf() result did fit.  */
 #else
 		    /* Append the sprintf() result.  */
-		    memcpy (result + length, tmp, count * sizeof (CHAR_T));
+		    memcpy (result + length, tmp, count * sizeof (DCHAR_T));
 		    if (tmp != tmpbuf)
 		      free (tmp);
 #endif
@@ -3127,7 +3146,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 		    if (dp->conversion == 'F')
 		      {
 			/* Convert the %f result to upper case for %F.  */
-			CHAR_T *rp = result + length;
+			DCHAR_T *rp = result + length;
 			size_t rc;
 			for (rc = count; rc > 0; rc--, rp++)
 			  if (*rp >= 'a' && *rp <= 'z')
@@ -3149,9 +3168,9 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
     if (result != resultbuf && length + 1 < allocated)
       {
 	/* Shrink the allocated memory if possible.  */
-	CHAR_T *memory;
+	DCHAR_T *memory;
 
-	memory = (CHAR_T *) realloc (result, (length + 1) * sizeof (CHAR_T));
+	memory = (DCHAR_T *) realloc (result, (length + 1) * sizeof (DCHAR_T));
 	if (memory != NULL)
 	  result = memory;
       }
@@ -3192,5 +3211,7 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 #undef PRINTF_PARSE
 #undef DIRECTIVES
 #undef DIRECTIVE
-#undef CHAR_T
+#undef TCHAR_T
+#undef DCHAR_T
+#undef FCHAR_T
 #undef VASNPRINTF
