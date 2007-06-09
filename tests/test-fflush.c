@@ -49,8 +49,8 @@ main (int argc, char *argv[])
       return 1;
     }
   /* For deterministic results, ensure f read a bigger buffer.
-     This is not the case on BeOS.  */
-#if !defined __BEOS__
+     This is not the case on BeOS, nor on uClibc.  */
+#if !(defined __BEOS__ || defined __UCLIBC__)
   if (lseek (fd, 0, SEEK_CUR) == 5)
     {
       fputs ("Sample file was not buffered after fread.\n", stderr);

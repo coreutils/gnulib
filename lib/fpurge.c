@@ -96,6 +96,14 @@ fpurge (FILE *fp)
   if (fp->_ptr != NULL)
     fp->_cnt = 0;
   return 0;
+# elif defined __UCLIBC__           /* uClibc */
+#  ifdef __STDIO_BUFFERS
+  if (fp->__modeflags & __FLAG_WRITING)
+    fp->__bufpos = fp->__bufstart;
+  else if (fp->__modeflags & (__FLAG_READONLY | __FLAG_READING))
+    fp->__bufpos = fp->__bufread;
+#  endif
+  return 0;
 # else
  #error "Please port gnulib fpurge.c to your platform! Look at the definitions of fflush, setvbuf and ungetc on your system, then report this to bug-gnulib."
 # endif

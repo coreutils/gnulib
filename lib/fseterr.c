@@ -38,6 +38,8 @@ fseterr (FILE *fp)
 # else
   fp->_flag |= _IOERR;
 # endif
+#elif defined __UCLIBC__            /* uClibc */
+  fp->__modeflags |= __FLAG_ERROR;
 #elif 0                             /* unknown  */
   /* Portable fallback, based on an idea by Rich Felker.
      Wow! 6 system calls for something that is just a bit operation!

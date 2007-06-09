@@ -83,6 +83,11 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
   if (fp->_ptr == fp->_base
       && (fp->_ptr == NULL || fp->_cnt == 0))
 # endif
+#elif defined __UCLIBC__            /* uClibc */
+  if (((fp->__modeflags & __FLAG_WRITING) == 0
+       || fp->__bufpos == fp->__bufstart)
+      && ((fp->__modeflags & (__FLAG_READONLY | __FLAG_READING)) == 0
+	  || fp->__bufpos == fp->__bufread))
 #else
   #error "Please port gnulib fseeko.c to your platform! Look at the code in fpurge.c, then report this to bug-gnulib."
 #endif

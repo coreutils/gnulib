@@ -38,6 +38,8 @@ freading (FILE *fp)
   return (fp->_flags & __SRD) != 0;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
   return (fp->_flag & _IOREAD) != 0;
+#elif defined __UCLIBC__            /* uClibc */
+  return (fp->__modeflags & (__FLAG_READONLY | __FLAG_READING)) != 0;
 #else
  #error "Please port gnulib freading.c to your platform!"
 #endif

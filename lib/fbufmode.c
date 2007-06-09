@@ -62,6 +62,12 @@ fbufmode (FILE *fp)
     return _IONBF;
   return _IOFBF;
 # endif
+#elif defined __UCLIBC__            /* uClibc */
+  if (fp->__modeflags & __FLAG_LBF)
+    return _IOLBF;
+  if (fp->__modeflags & __FLAG_NBF)
+    return _IONBF;
+  return _IOFBF;
 #else
  #error "Please port gnulib fbufmode.c to your platform! Look at the setvbuf implementation."
 #endif
