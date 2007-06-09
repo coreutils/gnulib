@@ -6,6 +6,17 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-06-09  xallocsa        Renamed to xmalloca. The include file "xallocsa.h"
+                            was remamed to "xmalloca.h". The function was
+                            renamed:
+                              xallocsa -> xmalloca
+
+2007-06-09  allocsa         Renamed to malloca. The include file "allocsa.h"
+                            was remamed to "malloca.h". The function-like
+                            macros were renamed:
+                              allocsa -> malloca
+                              freesa -> freea
+
 2007-05-20  utimens         Renamed futimens to gl_futimens, to avoid
                             conflict with the glibc-2.6-introduced function
                             that has a different signature.

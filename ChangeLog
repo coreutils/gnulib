@@ -1,3 +1,45 @@
+2007-06-09  Bruno Haible  <bruno@clisp.org>
+
+	Rename 'allocsa' -> 'malloca', 'freesa' -> 'freea'.
+	* modules/malloca: Renamed from modules/allocsa, updated.
+	* lib/malloca.h: Renamed from lib/allocsa.h, updated.
+	* lib/malloca.c: Renamed from lib/allocsa.c, updated.
+	* lib/malloca.valgrind: Renamed from lib/allocsa.valgrind, updated.
+	* m4/malloca.m4: Renamed from m4/allocsa.m4, updated.
+	* modules/malloca-tests: Renamed from modules/allocsa-tests, updated.
+	* tests/test-malloca.c: Renamed from tests/test-allocsa.c, updated.
+	* modules/xmalloca: Renamed from modules/xallocsa, updated.
+	* lib/xmalloca.h: Renamed from lib/xallocsa.h, updated.
+	* lib/xmalloca.c: Renamed from lib/xallocsa.c, updated.
+	* modules/c-strcasestr (Depends-on): Update.
+	* lib/c-strcasestr.c: Update.
+	* modules/c-strstr (Depends-on): Update.
+	* lib/c-strstr.c: Update.
+	* modules/canonicalize-lgpl (Depends-on): Update.
+	* lib/canonicalize-lgpl.c: Update.
+	* modules/clean-temp (Depends-on): Update.
+	* lib/clean-temp.c: Update.
+	* modules/csharpcomp (Depends-on): Update.
+	* lib/csharpcomp.c: Update.
+	* modules/csharpexec (Depends-on): Update.
+	* lib/csharpexec.c: Update.
+	* modules/javacomp (Depends-on): Update.
+	* lib/javacomp.c: Update.
+	* modules/javaexec (Depends-on): Update.
+	* lib/javaexec.c: Update.
+	* modules/mbscasestr (Depends-on): Update.
+	* lib/mbscasestr.c: Update.
+	* modules/mbsstr (Depends-on): Update.
+	* lib/mbsstr.c: Update.
+	* modules/setenv (Depends-on): Update.
+	* lib/setenv.c: Update.
+	* modules/strcasestr (Depends-on): Update.
+	* lib/strcasestr.c: Update.
+	* modules/striconveha (Depends-on): Update.
+	* lib/striconveha.c: Update.
+	* modules/relocatable-prog-wrapper (Files): Update.
+	* lib/relocwrapper.c: Update.
+
 2007-06-08  Bruno Haible  <bruno@clisp.org>
 
 	Port to uClibc.
