@@ -1,0 +1,13 @@
+Files:
+tests/uniconv/test-u32-conv-to-enc.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u32-conv-to-enc
+check_PROGRAMS += test-u32-conv-to-enc
+test_u32_conv_to_enc_SOURCES = uniconv/test-u32-conv-to-enc.c
+test_u32_conv_to_enc_LDADD = @LIBICONV@ $(LDADD)
+
