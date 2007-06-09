@@ -1,5 +1,26 @@
 2007-06-09  Bruno Haible  <bruno@clisp.org>
 
+	* modules/uniconv/u32-conv-to-enc: New file.
+	* lib/uniconv/u32-conv-to-enc.c: New file.
+	* modules/uniconv/u32-conv-to-enc-tests: New file.
+	* tests/uniconv/test-u32-conv-to-enc.c: New file.
+
+	* modules/uniconv/u16-conv-to-enc: New file.
+	* lib/uniconv/u16-conv-to-enc.c: New file.
+	* lib/uniconv/u-conv-to-enc.h: New file.
+	* modules/uniconv/u16-conv-to-enc-tests: New file.
+	* tests/uniconv/test-u16-conv-to-enc.c: New file.
+
+	* modules/uniconv/u8-conv-to-enc: New file.
+	* lib/uniconv/u8-conv-to-enc.c: New file.
+	* modules/uniconv/u8-conv-to-enc-tests: New file.
+	* tests/uniconv/test-u8-conv-to-enc.c: New file.
+
+	* lib/uniconv.h (u8_conv_to_encoding, u16_conv_to_encoding,
+	u32_conv_to_encoding): New declarations.
+
+2007-06-09  Bruno Haible  <bruno@clisp.org>
+
 	* tests/uniconv/test-u32-strconv-to-enc.c (main): Remove unused code.
 
 2007-06-09  Bruno Haible  <bruno@clisp.org>
