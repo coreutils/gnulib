@@ -1,0 +1,27 @@
+Description:
+Conversion from UTF-32 to legacy encodings.
+
+Files:
+lib/uniconv/u32-conv-to-enc.c
+lib/uniconv/u-conv-to-enc.h
+
+Depends-on:
+uniconv/base
+striconveha
+uniconv/u8-conv-to-enc
+unistr/u32-to-u8
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uniconv/u32-conv-to-enc.c
+
+Include:
+"uniconv.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
