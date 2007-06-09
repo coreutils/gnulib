@@ -8,7 +8,7 @@ lib/c-strcasestr.c
 Depends-on:
 c-ctype
 stdbool
-allocsa
+malloca
 strnlen
 
 configure.ac:

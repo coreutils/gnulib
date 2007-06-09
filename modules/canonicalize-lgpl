@@ -8,7 +8,7 @@ m4/canonicalize-lgpl.m4
 
 Depends-on:
 alloca-opt
-allocsa
+malloca
 pathmax
 readlink
 

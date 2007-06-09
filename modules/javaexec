@@ -13,7 +13,7 @@ xsetenv
 sh-quote
 filename
 xalloc
-xallocsa
+xmalloca
 error
 gettext-h
 javaexec-script

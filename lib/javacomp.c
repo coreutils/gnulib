@@ -41,7 +41,7 @@
 #include "binary-io.h"
 #include "safe-read.h"
 #include "xalloc.h"
-#include "xallocsa.h"
+#include "xmalloca.h"
 #include "getline.h"
 #include "filename.h"
 #include "fwriteerror.h"
@@ -230,7 +230,7 @@ compile_using_envjavac (const char *javac,
     command_length += 1 + shell_quote_length (java_sources[i]);
   command_length += 1;
 
-  command = (char *) xallocsa (command_length);
+  command = (char *) xmalloca (command_length);
   p = command;
   /* Don't shell_quote $JAVAC, because it may consist of a command
      and options.  */
@@ -273,7 +273,7 @@ compile_using_envjavac (const char *javac,
 			null_stderr, true, true);
   err = (exitstatus != 0);
 
-  freesa (command);
+  freea (command);
 
   return err;
 }
@@ -303,7 +303,7 @@ compile_using_gcj (const char * const *java_sources,
     2 + (no_assert_option ? 1 : 0) + (fsource_option ? 1 : 0)
     + (ftarget_option ? 1 : 0) + (optimize ? 1 : 0) + (debug ? 1 : 0)
     + (directory != NULL ? 2 : 0) + java_sources_count;
-  argv = (char **) xallocsa ((argc + 1) * sizeof (char *));
+  argv = (char **) xmalloca ((argc + 1) * sizeof (char *));
 
   argp = argv;
   *argp++ = "gcj";
@@ -312,7 +312,7 @@ compile_using_gcj (const char * const *java_sources,
     *argp++ = "-fno-assert";
   if (fsource_option)
     {
-      fsource_arg = (char *) xallocsa (9 + strlen (source_version) + 1);
+      fsource_arg = (char *) xmalloca (9 + strlen (source_version) + 1);
       memcpy (fsource_arg, "-fsource=", 9);
       strcpy (fsource_arg + 9, source_version);
       *argp++ = fsource_arg;
@@ -321,7 +321,7 @@ compile_using_gcj (const char * const *java_sources,
     fsource_arg = NULL;
   if (ftarget_option)
     {
-      ftarget_arg = (char *) xallocsa (9 + strlen (target_version) + 1);
+      ftarget_arg = (char *) xmalloca (9 + strlen (target_version) + 1);
       memcpy (ftarget_arg, "-ftarget=", 9);
       strcpy (ftarget_arg + 9, target_version);
       *argp++ = ftarget_arg;
@@ -356,10 +356,10 @@ compile_using_gcj (const char * const *java_sources,
   err = (exitstatus != 0);
 
   if (ftarget_arg != NULL)
-    freesa (ftarget_arg);
+    freea (ftarget_arg);
   if (fsource_arg != NULL)
-    freesa (fsource_arg);
-  freesa (argv);
+    freea (fsource_arg);
+  freea (argv);
 
   return err;
 }
@@ -385,7 +385,7 @@ compile_using_javac (const char * const *java_sources,
   argc =
     1 + (source_option ? 2 : 0) + (target_option ? 2 : 0) + (optimize ? 1 : 0)
     + (debug ? 1 : 0) + (directory != NULL ? 2 : 0) + java_sources_count;
-  argv = (char **) xallocsa ((argc + 1) * sizeof (char *));
+  argv = (char **) xmalloca ((argc + 1) * sizeof (char *));
 
   argp = argv;
   *argp++ = "javac";
@@ -426,7 +426,7 @@ compile_using_javac (const char * const *java_sources,
 			null_stderr, true, true);
   err = (exitstatus != 0);
 
-  freesa (argv);
+  freea (argv);
 
   return err;
 }
@@ -450,7 +450,7 @@ compile_using_jikes (const char * const *java_sources,
   argc =
     1 + (optimize ? 1 : 0) + (debug ? 1 : 0) + (directory != NULL ? 2 : 0)
     + java_sources_count;
-  argv = (char **) xallocsa ((argc + 1) * sizeof (char *));
+  argv = (char **) xmalloca ((argc + 1) * sizeof (char *));
 
   argp = argv;
   *argp++ = "jikes";
@@ -481,7 +481,7 @@ compile_using_jikes (const char * const *java_sources,
 			null_stderr, true, true);
   err = (exitstatus != 0);
 
-  freesa (argv);
+  freea (argv);
 
   return err;
 }
@@ -566,7 +566,7 @@ is_envjavac_gcj (const char *javac)
 
       /* Setup the command "$JAVAC --version".  */
       command_length = strlen (javac) + 1 + 9 + 1;
-      command = (char *) xallocsa (command_length);
+      command = (char *) xmalloca (command_length);
       p = command;
       /* Don't shell_quote $JAVAC, because it may consist of a command
 	 and options.  */
@@ -612,7 +612,7 @@ is_envjavac_gcj (const char *javac)
 	envjavac_gcj = false;
 
      failed:
-      freesa (command);
+      freea (command);
 
       envjavac_tested = true;
     }
@@ -647,7 +647,7 @@ is_envjavac_gcj43 (const char *javac)
 
       /* Setup the command "$JAVAC --version".  */
       command_length = strlen (javac) + 1 + 9 + 1;
-      command = (char *) xallocsa (command_length);
+      command = (char *) xmalloca (command_length);
       p = command;
       /* Don't shell_quote $JAVAC, because it may consist of a command
 	 and options.  */
@@ -696,7 +696,7 @@ is_envjavac_gcj43 (const char *javac)
 	envjavac_gcj43 = false;
 
      failed:
-      freesa (command);
+      freea (command);
 
       envjavac_tested = true;
     }

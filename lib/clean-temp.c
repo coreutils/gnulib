@@ -40,7 +40,7 @@
 #include "pathmax.h"
 #include "tmpdir.h"
 #include "xalloc.h"
-#include "xallocsa.h"
+#include "xmalloca.h"
 #include "gl_linkedhash_list.h"
 #include "gettext.h"
 #if GNULIB_FWRITEERROR
@@ -327,7 +327,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
 					false);
 
   /* Create the temporary directory.  */
-  xtemplate = (char *) xallocsa (PATH_MAX);
+  xtemplate = (char *) xmalloca (PATH_MAX);
   if (path_search (xtemplate, PATH_MAX, parentdir, prefix, parentdir == NULL))
     {
       error (0, errno,
@@ -354,11 +354,11 @@ create_temp_dir (const char *prefix, const char *parentdir,
      block because then the cleanup handler would not remove the directory
      if xstrdup fails.  */
   tmpdir->dirname = xstrdup (tmpdirname);
-  freesa (xtemplate);
+  freea (xtemplate);
   return (struct temp_dir *) tmpdir;
 
  quit:
-  freesa (xtemplate);
+  freea (xtemplate);
   return NULL;
 }
 
@@ -665,14 +665,14 @@ fopen_temp (const char *file_name, const char *mode)
   if (supports_delete_on_close ())
     {
       size_t mode_len = strlen (mode);
-      char *augmented_mode = (char *) xallocsa (mode_len + 2);
+      char *augmented_mode = (char *) xmalloca (mode_len + 2);
       memcpy (augmented_mode, mode, mode_len);
       memcpy (augmented_mode + mode_len, "D", 2);
 
       fp = fopen (file_name, augmented_mode);
       saved_errno = errno;
 
-      freesa (augmented_mode);
+      freea (augmented_mode);
     }
   else
 #endif

@@ -1,5 +1,5 @@
 /* Return the canonical absolute name of a given file.
-   Copyright (C) 1996-2003, 2005-2006 Free Software Foundation, Inc.
+   Copyright (C) 1996-2003, 2005-2007 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software; you can redistribute it and/or modify
@@ -66,7 +66,7 @@
 # define __canonicalize_file_name canonicalize_file_name
 # define __realpath rpl_realpath
 # include "pathmax.h"
-# include "allocsa.h"
+# include "malloca.h"
 # if HAVE_GETCWD
 #  ifdef VMS
     /* We want the directory in Unix syntax, not in VMS syntax.  */
@@ -244,7 +244,7 @@ __realpath (const char *name, char *resolved)
 		  goto error;
 		}
 
-	      buf = allocsa (path_max);
+	      buf = malloca (path_max);
 	      if (!buf)
 		{
 		  errno = ENOMEM;
@@ -255,7 +255,7 @@ __realpath (const char *name, char *resolved)
 	      if (n < 0)
 		{
 		  int saved_errno = errno;
-		  freesa (buf);
+		  freea (buf);
 		  errno = saved_errno;
 		  goto error;
 		}
@@ -263,10 +263,10 @@ __realpath (const char *name, char *resolved)
 
 	      if (!extra_buf)
 		{
-		  extra_buf = allocsa (path_max);
+		  extra_buf = malloca (path_max);
 		  if (!extra_buf)
 		    {
-		      freesa (buf);
+		      freea (buf);
 		      errno = ENOMEM;
 		      goto error;
 		    }
@@ -275,7 +275,7 @@ __realpath (const char *name, char *resolved)
 	      len = strlen (end);
 	      if ((long int) (n + len) >= path_max)
 		{
-		  freesa (buf);
+		  freea (buf);
 		  __set_errno (ENAMETOOLONG);
 		  goto error;
 		}
@@ -299,7 +299,7 @@ __realpath (const char *name, char *resolved)
   *dest = '\0';
 
   if (extra_buf)
-    freesa (extra_buf);
+    freea (extra_buf);
 
   return resolved ? memcpy (resolved, rpath, dest - rpath + 1) : rpath;
 
@@ -307,7 +307,7 @@ error:
   {
     int saved_errno = errno;
     if (extra_buf)
-      freesa (extra_buf);
+      freea (extra_buf);
     if (resolved)
       strcpy (resolved, rpath);
     else

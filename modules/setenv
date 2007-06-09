@@ -9,7 +9,7 @@ lib/unsetenv.c
 m4/setenv.m4
 
 Depends-on:
-allocsa
+malloca
 alloca-opt
 unistd
 

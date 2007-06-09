@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "allocsa.h"
+#include "malloca.h"
 #include "c-strcase.h"
 
 #define SIZEOF(a) (sizeof(a)/sizeof(a[0]))
@@ -231,7 +231,7 @@ mem_iconveha (const char *src, size_t srclen,
     {
       int retval;
       size_t len = strlen (to_codeset);
-      char *to_codeset_suffixed = (char *) allocsa (len + 10 + 1);
+      char *to_codeset_suffixed = (char *) malloca (len + 10 + 1);
       memcpy (to_codeset_suffixed, to_codeset, len);
       memcpy (to_codeset_suffixed + len, "//TRANSLIT", 10 + 1);
 
@@ -239,7 +239,7 @@ mem_iconveha (const char *src, size_t srclen,
 					from_codeset, to_codeset_suffixed,
 					handler, offsets, resultp, lengthp);
 
-      freesa (to_codeset_suffixed);
+      freea (to_codeset_suffixed);
 
       return retval;
     }
@@ -331,14 +331,14 @@ str_iconveha (const char *src,
     {
       char *result;
       size_t len = strlen (to_codeset);
-      char *to_codeset_suffixed = (char *) allocsa (len + 10 + 1);
+      char *to_codeset_suffixed = (char *) malloca (len + 10 + 1);
       memcpy (to_codeset_suffixed, to_codeset, len);
       memcpy (to_codeset_suffixed + len, "//TRANSLIT", 10 + 1);
 
       result = str_iconveha_notranslit (src, from_codeset, to_codeset_suffixed,
 					handler);
 
-      freesa (to_codeset_suffixed);
+      freea (to_codeset_suffixed);
 
       return result;
     }

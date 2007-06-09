@@ -14,7 +14,7 @@ pathmax
 tmpdir
 mkdtemp
 xalloc
-xallocsa
+xmalloca
 linkedhash-list
 gettext-h
 

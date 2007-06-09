@@ -1,5 +1,5 @@
 /* Compile a C# program.
-   Copyright (C) 2003-2006 Free Software Foundation, Inc.
+   Copyright (C) 2003-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -33,7 +33,7 @@
 #include "getline.h"
 #include "sh-quote.h"
 #include "safe-read.h"
-#include "xallocsa.h"
+#include "xmalloca.h"
 #include "error.h"
 #include "gettext.h"
 
@@ -102,7 +102,7 @@ compile_csharp_using_pnet (const char * const *sources,
 	1 + (output_is_library ? 1 : 0) + 2 + 2 * libdirs_count
 	+ 2 * libraries_count + (optimize ? 1 : 0) + (debug ? 1 : 0)
 	+ sources_count;
-      argv = (char **) xallocsa ((argc + 1) * sizeof (char *));
+      argv = (char **) xmalloca ((argc + 1) * sizeof (char *));
 
       argp = argv;
       *argp++ = "cscc";
@@ -131,7 +131,7 @@ compile_csharp_using_pnet (const char * const *sources,
 	      && memcmp (source_file + strlen (source_file) - 10, ".resources",
 			 10) == 0)
 	    {
-	      char *option = (char *) xallocsa (12 + strlen (source_file) + 1);
+	      char *option = (char *) xmalloca (12 + strlen (source_file) + 1);
 
 	      memcpy (option, "-fresources=", 12);
 	      strcpy (option + 12, source_file);
@@ -157,8 +157,8 @@ compile_csharp_using_pnet (const char * const *sources,
 
       for (i = 0; i < sources_count; i++)
 	if (argv[argc - sources_count + i] != sources[i])
-	  freesa (argv[argc - sources_count + i]);
-      freesa (argv);
+	  freea (argv[argc - sources_count + i]);
+      freea (argv);
 
       return (exitstatus != 0);
     }
@@ -214,28 +214,28 @@ compile_csharp_using_mono (const char * const *sources,
       argc =
 	1 + (output_is_library ? 1 : 0) + 1 + libdirs_count + libraries_count
 	+ (debug ? 1 : 0) + sources_count;
-      argv = (char **) xallocsa ((argc + 1) * sizeof (char *));
+      argv = (char **) xmalloca ((argc + 1) * sizeof (char *));
 
       argp = argv;
       *argp++ = "mcs";
       if (output_is_library)
 	*argp++ = "-target:library";
       {
-	char *option = (char *) xallocsa (5 + strlen (output_file) + 1);
+	char *option = (char *) xmalloca (5 + strlen (output_file) + 1);
 	memcpy (option, "-out:", 5);
 	strcpy (option + 5, output_file);
 	*argp++ = option;
       }
       for (i = 0; i < libdirs_count; i++)
 	{
-	  char *option = (char *) xallocsa (5 + strlen (libdirs[i]) + 1);
+	  char *option = (char *) xmalloca (5 + strlen (libdirs[i]) + 1);
 	  memcpy (option, "-lib:", 5);
 	  strcpy (option + 5, libdirs[i]);
 	  *argp++ = option;
 	}
       for (i = 0; i < libraries_count; i++)
 	{
-	  char *option = (char *) xallocsa (11 + strlen (libraries[i]) + 4 + 1);
+	  char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
 	  memcpy (option, "-reference:", 11);
 	  memcpy (option + 11, libraries[i], strlen (libraries[i]));
 	  strcpy (option + 11 + strlen (libraries[i]), ".dll");
@@ -250,7 +250,7 @@ compile_csharp_using_mono (const char * const *sources,
 	      && memcmp (source_file + strlen (source_file) - 10, ".resources",
 			 10) == 0)
 	    {
-	      char *option = (char *) xallocsa (10 + strlen (source_file) + 1);
+	      char *option = (char *) xmalloca (10 + strlen (source_file) + 1);
 
 	      memcpy (option, "-resource:", 10);
 	      strcpy (option + 10, source_file);
@@ -308,11 +308,11 @@ compile_csharp_using_mono (const char * const *sources,
 	   i < 1 + (output_is_library ? 1 : 0)
 	       + 1 + libdirs_count + libraries_count;
 	   i++)
-	freesa (argv[i]);
+	freea (argv[i]);
       for (i = 0; i < sources_count; i++)
 	if (argv[argc - sources_count + i] != sources[i])
-	  freesa (argv[argc - sources_count + i]);
-      freesa (argv);
+	  freea (argv[argc - sources_count + i]);
+      freea (argv);
 
       return (exitstatus != 0);
     }
@@ -396,28 +396,28 @@ compile_csharp_using_sscli (const char * const *sources,
       argc =
 	1 + 1 + 1 + libdirs_count + libraries_count
 	+ (optimize ? 1 : 0) + (debug ? 1 : 0) + sources_count;
-      argv = (char **) xallocsa ((argc + 1) * sizeof (char *));
+      argv = (char **) xmalloca ((argc + 1) * sizeof (char *));
 
       argp = argv;
       *argp++ = "csc";
       *argp++ =
 	(char *) (output_is_library ? "-target:library" : "-target:exe");
       {
-	char *option = (char *) xallocsa (5 + strlen (output_file) + 1);
+	char *option = (char *) xmalloca (5 + strlen (output_file) + 1);
 	memcpy (option, "-out:", 5);
 	strcpy (option + 5, output_file);
 	*argp++ = option;
       }
       for (i = 0; i < libdirs_count; i++)
 	{
-	  char *option = (char *) xallocsa (5 + strlen (libdirs[i]) + 1);
+	  char *option = (char *) xmalloca (5 + strlen (libdirs[i]) + 1);
 	  memcpy (option, "-lib:", 5);
 	  strcpy (option + 5, libdirs[i]);
 	  *argp++ = option;
 	}
       for (i = 0; i < libraries_count; i++)
 	{
-	  char *option = (char *) xallocsa (11 + strlen (libraries[i]) + 4 + 1);
+	  char *option = (char *) xmalloca (11 + strlen (libraries[i]) + 4 + 1);
 	  memcpy (option, "-reference:", 11);
 	  memcpy (option + 11, libraries[i], strlen (libraries[i]));
 	  strcpy (option + 11 + strlen (libraries[i]), ".dll");
@@ -434,7 +434,7 @@ compile_csharp_using_sscli (const char * const *sources,
 	      && memcmp (source_file + strlen (source_file) - 10, ".resources",
 			 10) == 0)
 	    {
-	      char *option = (char *) xallocsa (10 + strlen (source_file) + 1);
+	      char *option = (char *) xmalloca (10 + strlen (source_file) + 1);
 
 	      memcpy (option, "-resource:", 10);
 	      strcpy (option + 10, source_file);
@@ -459,11 +459,11 @@ compile_csharp_using_sscli (const char * const *sources,
 			    true, true);
 
       for (i = 2; i < 3 + libdirs_count + libraries_count; i++)
-	freesa (argv[i]);
+	freea (argv[i]);
       for (i = 0; i < sources_count; i++)
 	if (argv[argc - sources_count + i] != sources[i])
-	  freesa (argv[argc - sources_count + i]);
-      freesa (argv);
+	  freea (argv[argc - sources_count + i]);
+      freea (argv);
 
       return (exitstatus != 0);
     }

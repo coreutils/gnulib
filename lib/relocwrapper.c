@@ -23,10 +23,10 @@
         -> xreadlink
            -> readlink
         -> canonicalize-lgpl
-           -> allocsa
+           -> malloca
     -> relocatable
     -> setenv
-       -> allocsa
+       -> malloca
     -> strerror
     -> c-ctype
 

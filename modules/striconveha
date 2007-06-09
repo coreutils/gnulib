@@ -9,7 +9,7 @@ lib/striconveha.c
 Depends-on:
 stdbool
 striconveh
-allocsa
+malloca
 strdup
 c-strcase
 

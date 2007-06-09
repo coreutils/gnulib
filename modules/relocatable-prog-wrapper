@@ -13,8 +13,8 @@ lib/xreadlink.c
 lib/readlink.c
 lib/canonicalize.h
 lib/canonicalize-lgpl.c
-lib/allocsa.h
-lib/allocsa.c
+lib/malloca.h
+lib/malloca.c
 lib/relocatable.h
 lib/relocatable.c
 lib/setenv.h
@@ -22,7 +22,7 @@ lib/setenv.c
 lib/strerror.c
 lib/c-ctype.h
 lib/c-ctype.c
-m4/allocsa.m4
+m4/malloca.m4
 m4/canonicalize-lgpl.m4
 m4/eealloc.m4
 m4/longlong.m4
