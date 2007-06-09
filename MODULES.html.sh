@@ -2423,6 +2423,9 @@ func_all_modules ()
   func_module uniconv/u8-conv-from-enc
   func_module uniconv/u16-conv-from-enc
   func_module uniconv/u32-conv-from-enc
+  func_module uniconv/u8-conv-to-enc
+  func_module uniconv/u16-conv-to-enc
+  func_module uniconv/u32-conv-to-enc
   func_module uniconv/u8-strconv-from-enc
   func_module uniconv/u16-strconv-from-enc
   func_module uniconv/u32-strconv-from-enc
