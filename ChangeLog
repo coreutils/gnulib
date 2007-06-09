@@ -1,5 +1,9 @@
 2007-06-09  Bruno Haible  <bruno@clisp.org>
 
+	* tests/uniconv/test-u32-strconv-to-enc.c (main): Remove unused code.
+
+2007-06-09  Bruno Haible  <bruno@clisp.org>
+
 	Rename 'allocsa' -> 'malloca', 'freesa' -> 'freea'.
 	* modules/malloca: Renamed from modules/allocsa, updated.
 	* lib/malloca.h: Renamed from lib/allocsa.h, updated.

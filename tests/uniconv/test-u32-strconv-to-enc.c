@@ -102,19 +102,6 @@ main ()
 	}
     }
 
-# if 0
-  /* Test conversion from UTF-32 to ISO-8859-1 with EINVAL.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
-    {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const uint32_t input[] = { 0x12345678, 0 };
-      char *result = u32_strconv_to_encoding (input, "ISO-8859-1", handler);
-      ASSERT (result != NULL);
-      ASSERT (strcmp (result, "") == 0);
-      free (result);
-    }
-# endif
-
 #endif
 
   return 0;
