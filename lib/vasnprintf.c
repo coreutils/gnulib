@@ -2431,8 +2431,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp, const FCHAR_T *format, va_list 
 		int prefixes[2];
 #if !USE_SNPRINTF
 		size_t tmp_length;
-		DCHAR_T tmpbuf[700];
-		DCHAR_T *tmp;
+		TCHAR_T tmpbuf[700];
+		TCHAR_T *tmp;
 #endif
 
 #if !USE_SNPRINTF || NEED_PRINTF_FLAG_ZERO
@@ -2675,16 +2675,16 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp, const FCHAR_T *format, va_list 
 		  tmp_length = xsum (tmp_length, 1); /* account for trailing NUL */
 		}
 
-		if (tmp_length <= sizeof (tmpbuf) / sizeof (DCHAR_T))
+		if (tmp_length <= sizeof (tmpbuf) / sizeof (TCHAR_T))
 		  tmp = tmpbuf;
 		else
 		  {
-		    size_t tmp_memsize = xtimes (tmp_length, sizeof (DCHAR_T));
+		    size_t tmp_memsize = xtimes (tmp_length, sizeof (TCHAR_T));
 
 		    if (size_overflow_p (tmp_memsize))
 		      /* Overflow, would lead to out of memory.  */
 		      goto out_of_memory;
-		    tmp = (DCHAR_T *) malloc (tmp_memsize);
+		    tmp = (TCHAR_T *) malloc (tmp_memsize);
 		    if (tmp == NULL)
 		      /* Out of memory.  */
 		      goto out_of_memory;
