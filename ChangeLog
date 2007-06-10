@@ -1,3 +1,9 @@
+2007-06-10  Bruno Haible  <bruno@clisp.org>
+
+	* lib/vasnprintf.c (VASNPRINTF) [!USE_SNPRINTF]: Remove variable
+	'maxlen'. Ensure only length + width bytes are allocated, not
+	length + 1 + width.
+
 2007-06-09  Bruno Haible  <bruno@clisp.org>
 
 	* lib/vasnprintf.c (FCHAR_T, DCHAR_T, TCHAR_T): New macros.

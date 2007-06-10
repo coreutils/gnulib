@@ -2812,15 +2812,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp, const FCHAR_T *format, va_list 
 
 		for (;;)
 		  {
-		    size_t maxlen;
-		    int count;
-		    int retcount;
-
-		    maxlen = allocated - length;
-		    count = -1;
-		    retcount = 0;
+		    int count = -1;
+		    int retcount = 0;
 
 #if USE_SNPRINTF
+		    size_t maxlen = allocated - length;
 		    /* SNPRINTF can fail if maxlen > INT_MAX.  */
 		    if (maxlen > INT_MAX)
 		      goto overflow;
@@ -3035,6 +3031,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp, const FCHAR_T *format, va_list 
 			return NULL;
 		      }
 
+#if USE_SNPRINTF
 		    /* Make room for the result.  */
 		    if (count >= maxlen)
 		      {
@@ -3045,12 +3042,24 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp, const FCHAR_T *format, va_list 
 			  xmax (xsum (length, count), xtimes (allocated, 2));
 
 			ENSURE_ALLOCATION (n);
-#if USE_SNPRINTF
 			continue;
-#else
-			maxlen = allocated - length;
-#endif
 		      }
+#endif
+
+#if !USE_SNPRINTF
+		    /* Make room for the result.  */
+		    if (count > allocated - length)
+		      {
+			/* Need at least count bytes.  But allocate
+			   proportionally.  */
+			size_t n =
+			  xmax (xsum (length, count), xtimes (allocated, 2));
+
+			ENSURE_ALLOCATION (n);
+		      }
+#endif
+
+		    /* Here count <= allocated - length.  */
 
 		    /* Perform padding.  */
 #if NEED_PRINTF_FLAG_ZERO
@@ -3058,21 +3067,20 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp, const FCHAR_T *format, va_list 
 		      {
 # if USE_SNPRINTF
 			/* Make room for the result.  */
-			if (width >= maxlen)
+			if (width > maxlen)
 			  {
 			    /* Need at least width bytes.  But allocate
 			       proportionally, to avoid looping eternally if
 			       snprintf() reports a too small count.  */
 			    size_t n =
-			      xmax (xsum (length + 1, width),
+			      xmax (xsum (length, width),
 				    xtimes (allocated, 2));
 
 			    length += count;
 			    ENSURE_ALLOCATION (n);
 			    length -= count;
-			    maxlen = allocated - length; /* > width */
 			  }
-			/* Here width < maxlen.  */
+			/* Here width <= allocated - length.  */
 # endif
 			{
 # if USE_SNPRINTF
@@ -3131,7 +3139,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp, const FCHAR_T *format, va_list 
 		      abort ();
 #endif
 
-		    /* Here still count < maxlen.  */
+		    /* Here still count <= allocated - length.  */
 
 #if USE_SNPRINTF
 		    /* The snprintf() result did fit.  */
