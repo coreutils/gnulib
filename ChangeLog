@@ -1,3 +1,8 @@
+2007-06-10  Bruno Haible  <bruno@clisp.org>
+
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF): Check for _snprintf
+	declaration.
+
 2007-06-10  Karl Berry  <karl@gnu.org>
 
 	* config/srclist.txt: remove gettext entries, Bruno prefers
