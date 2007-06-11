@@ -85,6 +85,7 @@
 
 #include <assert.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <string.h>
 
 /* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before

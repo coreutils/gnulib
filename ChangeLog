@@ -1,5 +1,10 @@
 2007-06-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/mbiter.h: Include <stddef.h>, needed for ptrdiff_t.
+	* lib/mbuiter.h: Likewise.
+
+2007-06-10  Bruno Haible  <bruno@clisp.org>
+
 	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF): Check for _snprintf
 	declaration.
 
