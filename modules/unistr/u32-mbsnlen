@@ -1,0 +1,23 @@
+Description:
+Count characters in UTF-32 string.
+
+Files:
+lib/unistr/u32-mbsnlen.c
+
+Depends-on:
+unistr/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistr/u32-mbsnlen.c
+
+Include:
+"unistr.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

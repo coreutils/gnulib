@@ -1,5 +1,8 @@
 2007-06-10  Bruno Haible  <bruno@clisp.org>
 
+	* modules/unistr/u32-mbsnlen: New file.
+	* lib/unistr/u32-mbsnlen.c: New file.
+
 	* modules/unistr/u16-mbsnlen: New file.
 	* lib/unistr/u16-mbsnlen.c: New file.
 
