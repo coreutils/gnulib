@@ -1,5 +1,44 @@
 2007-06-10  Bruno Haible  <bruno@clisp.org>
 
+	Prepare vasnprintf code for use with Unicode strings.
+	* lib/printf-args.h (PRINTF_FETCHARGS): New macro.
+	(arg_type) [ENABLE_UNISTDIO]: Define TYPE_U8_STRING, TYPE_U16_STRING,
+	TYPE_U32_STRING.
+	(argument) [ENABLE_UNISTDIO]: Add a_u8_string, a_u16_string,
+	a_u32_string variants.
+	(PRINTF_FETCHARGS): Renamed from printf_fetchargs.
+	* lib/printf-args.c: Don't include config.h and the specification
+	header if PRINTF_FETCHARGS is already defined.
+	(PRINTF_FETCHARGS): Renamed from printf_fetchargs.
+	(PRINTF_FETCHARGS) [ENABLE_UNISTDIO]: Add code for TYPE_U8_STRING,
+	TYPE_U16_STRING, TYPE_U32_STRING.
+	* lib/printf-parse.h [ENABLE_UNISTDIO] (u8_directive, u8_directives,
+	u16_directive, u16_directives, u32_directive, u32_directives): New
+	types.
+	(ulc_printf_parse, u8_printf_parse, u16_printf_parse, u32_printf_parse):
+	New declarations.
+	* lib/printf-parse.c: Don't include config.h and the specification
+	header if PRINTF_PARSE is already defined. Eliminate the set of
+	parameters for WIDE_CHAR_VERSION; the user of this file must provide
+	them now. Include c-ctype.h.
+	(PRINTF_PARSE) [ENABLE_UNISTDIO]: Add code implementing the 'U'
+	directive and CHAR_T_ONLY_ASCII.
+	* lib/vasnprintf.c: Don't include config.h and the specification header
+	if VASNPRINTF is already defined.
+	(DCHAR_IS_TCHAR, DCHAR_CPY): New macros.
+	(VASNPRINTF): Use PRINTF_FETCHARGS instead of printf_fetchargs. Use
+	DCHAR_CPY. Handle the case that DCHAR_T and FCHAR_T are not the same
+	type. Handle the case that TCHAR_T and FCHAR_T are not of the same
+	size. Handle the case that DCHAR_T and TCHAR_T are not the same type,
+	add a conversion from TCHAR_T[] to DCHAR_T[], and rework the padding
+	code accordingly.
+	(VASNPRINTF) [ENABLE_UNISTDIO]: Implement the 'U' directive. Enable
+	pad_ourselves also in this case, with the 'c' and 's' directives, and
+	with a different notion of "width".
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_WITH_EXTRAS): New macros.
+
+2007-06-10  Bruno Haible  <bruno@clisp.org>
+
 	* modules/unistr/u32-mbsnlen: New file.
 	* lib/unistr/u32-mbsnlen.c: New file.
 

@@ -18,6 +18,16 @@
 #ifndef _PRINTF_ARGS_H
 #define _PRINTF_ARGS_H
 
+/* This file can be parametrized with the following macros:
+     ENABLE_UNISTDIO    Set to 1 to enable the unistdio extensions.
+     PRINTF_FETCHARGS   Name of the function to be declared.
+     STATIC             Set to 'static' to declare the function static.  */
+
+/* Default parameters.  */
+#ifndef PRINTF_FETCHARGS
+# define PRINTF_FETCHARGS printf_fetchargs
+#endif
+
 /* Get size_t.  */
 #include <stddef.h>
 
@@ -69,6 +79,12 @@ typedef enum
 #if HAVE_LONG_LONG_INT
 , TYPE_COUNT_LONGLONGINT_POINTER
 #endif
+#if ENABLE_UNISTDIO
+  /* The unistdio extensions.  */
+, TYPE_U8_STRING
+, TYPE_U16_STRING
+, TYPE_U32_STRING
+#endif
 } arg_type;
 
 /* Polymorphic argument */
@@ -108,6 +124,12 @@ typedef struct
 #if HAVE_LONG_LONG_INT
     long long int *		a_count_longlongint_pointer;
 #endif
+#if ENABLE_UNISTDIO
+    /* The unistdio extensions.  */
+    const uint8_t *		a_u8_string;
+    const uint16_t *		a_u16_string;
+    const uint32_t *		a_u32_string;
+#endif
   }
   a;
 }
@@ -127,6 +149,6 @@ STATIC
 #else
 extern
 #endif
-int printf_fetchargs (va_list args, arguments *a);
+int PRINTF_FETCHARGS (va_list args, arguments *a);
 
 #endif /* _PRINTF_ARGS_H */
