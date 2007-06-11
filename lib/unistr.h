@@ -411,6 +411,15 @@ extern uint16_t *
 extern uint32_t *
        u32_chr (const uint32_t *s, size_t n, ucs4_t uc);
 
+/* Count the number of Unicode characters in the N units from S.  */
+/* Similar to mbsnlen().  */
+extern size_t
+       u8_mbsnlen (const uint8_t *s, size_t n);
+extern size_t
+       u16_mbsnlen (const uint16_t *s, size_t n);
+extern size_t
+       u32_mbsnlen (const uint32_t *s, size_t n);
+
 /* Elementary string functions with memory allocation.  */
 
 /* Make a freshly allocated copy of S, of length N.  */

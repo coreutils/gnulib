@@ -1,5 +1,10 @@
 2007-06-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unistr.h (u8_mbsnlen, u16_mbsnlen, u32_mbsnlen): New
+	declarations.
+
+2007-06-10  Bruno Haible  <bruno@clisp.org>
+
 	* lib/string_.h (mbsnlen): New declaration.
 	* lib/mbsnlen.c: New file.
 	* m4/mbsnlen.m4: New file.
