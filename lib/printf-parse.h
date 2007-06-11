@@ -51,7 +51,7 @@ typedef struct
   const char* precision_start;
   const char* precision_end;
   size_t precision_arg_index;
-  char conversion; /* d i o u x X f e E g G c s p n U % but not C S */
+  char conversion; /* d i o u x X f F e E g G a A c s p n U % but not C S */
   size_t arg_index;
 }
 char_directive;
@@ -80,7 +80,7 @@ typedef struct
   const uint8_t* precision_start;
   const uint8_t* precision_end;
   size_t precision_arg_index;
-  uint8_t conversion; /* d i o u x X f e E g G c s p n U % but not C S */
+  uint8_t conversion; /* d i o u x X f F e E g G a A c s p n U % but not C S */
   size_t arg_index;
 }
 u8_directive;
@@ -107,7 +107,7 @@ typedef struct
   const uint16_t* precision_start;
   const uint16_t* precision_end;
   size_t precision_arg_index;
-  uint16_t conversion; /* d i o u x X f e E g G c s p n U % but not C S */
+  uint16_t conversion; /* d i o u x X f F e E g G a A c s p n U % but not C S */
   size_t arg_index;
 }
 u16_directive;
@@ -134,7 +134,7 @@ typedef struct
   const uint32_t* precision_start;
   const uint32_t* precision_end;
   size_t precision_arg_index;
-  uint32_t conversion; /* d i o u x X f e E g G c s p n U % but not C S */
+  uint32_t conversion; /* d i o u x X f F e E g G a A c s p n U % but not C S */
   size_t arg_index;
 }
 u32_directive;

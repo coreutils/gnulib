@@ -1,3 +1,9 @@
+2007-06-11  Bruno Haible  <bruno@clisp.org>
+
+	* lib/printf-args.c (PRINTF_FETCHARGS) [ENABLE_UNISTDIO]: Fix NULL
+	replacement string.
+	Reported by Eric Blake.
+
 2007-06-10  Bruno Haible  <bruno@clisp.org>
 
 	Prepare vasnprintf code for use with Unicode strings.

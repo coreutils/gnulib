@@ -150,7 +150,7 @@ PRINTF_FETCHARGS (va_list args, arguments *a)
 	if (ap->a.a_u8_string == NULL)
 	  {
 	    static const uint8_t u8_null_string[] =
-	      { '(', 'N', 'U', 'L', 'L', 0 };
+	      { '(', 'N', 'U', 'L', 'L', ')', 0 };
 	    ap->a.a_u8_string = u8_null_string;
 	  }
 	break;
@@ -162,7 +162,7 @@ PRINTF_FETCHARGS (va_list args, arguments *a)
 	if (ap->a.a_u16_string == NULL)
 	  {
 	    static const uint16_t u16_null_string[] =
-	      { '(', 'N', 'U', 'L', 'L', 0 };
+	      { '(', 'N', 'U', 'L', 'L', ')', 0 };
 	    ap->a.a_u16_string = u16_null_string;
 	  }
 	break;
@@ -174,7 +174,7 @@ PRINTF_FETCHARGS (va_list args, arguments *a)
 	if (ap->a.a_u32_string == NULL)
 	  {
 	    static const uint32_t u32_null_string[] =
-	      { '(', 'N', 'U', 'L', 'L', 0 };
+	      { '(', 'N', 'U', 'L', 'L', ')', 0 };
 	    ap->a.a_u32_string = u32_null_string;
 	  }
 	break;
