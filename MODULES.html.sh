@@ -2267,6 +2267,7 @@ func_all_modules ()
   func_module localcharset
   func_module hard-locale
   func_module mbslen
+  func_module mbsnlen
   func_module mbschr
   func_module mbsrchr
   func_module mbsstr

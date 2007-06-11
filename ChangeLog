@@ -1,5 +1,15 @@
 2007-06-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/string_.h (mbsnlen): New declaration.
+	* lib/mbsnlen.c: New file.
+	* m4/mbsnlen.m4: New file.
+	* modules/mbsnlen: New file.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Set GNULIB_MBSNLEN.
+	* modules/string (string.h): Substitute GNULIB_MBSNLEN.
+	* MODULES.html.sh (Internationalization functions): Add mbsnlen.
+
+2007-06-10  Bruno Haible  <bruno@clisp.org>
+
 	* lib/mbslen.c: Include <stdlib.h>, needed for MB_CUR_MAX.
 
 2007-06-10  Bruno Haible  <bruno@clisp.org>

@@ -401,6 +401,12 @@ extern char *strtok_r (char *restrict s, char const *restrict delim,
 extern size_t mbslen (const char *string);
 #endif
 
+#if @GNULIB_MBSNLEN@
+/* Return the number of multibyte characters in the character string starting
+   at STRING and ending at STRING + LEN.  */
+extern size_t mbsnlen (const char *string, size_t len);
+#endif
+
 #if @GNULIB_MBSCHR@
 /* Locate the first single-byte character C in the character string STRING,
    and return a pointer to it.  Return NULL if C is not found in STRING.
