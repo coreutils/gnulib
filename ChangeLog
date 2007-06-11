@@ -1,5 +1,9 @@
 2007-06-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/mbslen.c: Include <stdlib.h>, needed for MB_CUR_MAX.
+
+2007-06-10  Bruno Haible  <bruno@clisp.org>
+
 	* lib/mbiter.h: Include <stddef.h>, needed for ptrdiff_t.
 	* lib/mbuiter.h: Likewise.
 

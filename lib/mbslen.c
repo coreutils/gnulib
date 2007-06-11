@@ -21,6 +21,8 @@
 /* Specification.  */
 #include <string.h>
 
+#include <stdlib.h>
+
 #if HAVE_MBRTOWC
 # include "mbuiter.h"
 #endif
