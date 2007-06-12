@@ -1,3 +1,8 @@
+2007-06-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/regex.m4 (gl_REGEX): Catch a bug with [[:alnum:]_-] reported by
+	Vin Shelton.
+
 2007-06-11  Bruno Haible  <bruno@clisp.org>
 
 	* lib/printf-args.c (PRINTF_FETCHARGS) [ENABLE_UNISTDIO]: Fix NULL

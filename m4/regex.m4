@@ -1,4 +1,4 @@
-#serial 46
+#serial 47
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
 # 2006, 2007 Free Software Foundation, Inc.
@@ -135,6 +135,17 @@ AC_DEFUN([gl_REGEX],
 	      return 1;
 
 	    if (re_search (&regex, "WXY", 3, 0, 3, &regs) < 0)
+	      return 1;
+
+	    /* Catch a bug reported by Vin Shelton in
+	       http://lists.gnu.org/archive/html/bug-coreutils/2007-06/msg00089.html
+	       */
+	    re_set_syntax (RE_SYNTAX_POSIX_BASIC
+			   & ~RE_CONTEXT_INVALID_DUP
+			   & ~RE_NO_EMPTY_RANGES);
+	    memset (&regex, 0, sizeof regex);
+	    s = re_compile_pattern ("[[:alnum:]_-]\\\\+$", 16, &regex);
+	    if (s)
 	      return 1;
 
 	    /* REG_STARTEND was added to glibc on 2004-01-15.
