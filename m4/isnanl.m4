@@ -1,4 +1,4 @@
-# isnanl.m4 serial 4
+# isnanl.m4 serial 5
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -200,9 +200,15 @@ int main ()
 
   return 0;
 }], [gl_cv_func_isnanl_works=yes], [gl_cv_func_isnanl_works=no],
-      [case "$host_os" in
-         netbsd*) gl_cv_func_isnanl_works="guessing no";;
-         *)       gl_cv_func_isnanl_works="guessing yes";;
+      [case "$host_cpu" in
+                               # Guess no on ia64, x86_64, i386.
+         ia64 | x86_64 | i*86) gl_cv_func_isnanl_works="guessing no";;
+         *)
+           case "$host_os" in
+             netbsd*) gl_cv_func_isnanl_works="guessing no";;
+             *)       gl_cv_func_isnanl_works="guessing yes";;
+           esac
+           ;;
        esac
       ])
     ])
