@@ -1,4 +1,4 @@
-# printf.m4 serial 14
+# printf.m4 serial 15
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -405,8 +405,8 @@ int main ()
           [
 changequote(,)dnl
            case "$host_cpu" in
-                                   # Guess no on ia64, i386.
-             ia64 | i*86)          gl_cv_func_printf_infinite_long_double="guessing no";;
+                                   # Guess no on ia64, x86_64, i386.
+             ia64 | x86_64 | i*86) gl_cv_func_printf_infinite_long_double="guessing no";;
              *)
                case "$host_os" in
                                        # Guess yes on glibc systems.
