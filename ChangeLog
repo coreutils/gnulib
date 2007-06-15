@@ -1,3 +1,12 @@
+2007-06-15  Jim Meyering  <jim@meyering.net>
+
+	Change license (GPL to LGPL) of fsusage and dependents.
+	* modules/fsusage (License): Change to LGPL.
+	* modules/full-read (License): Likewise.
+	* modules/full-write (License): Likewise.
+	* modules/safe-read (License): Likewise.
+	* modules/safe-write (License): Likewise.
+
 2007-06-14  Ben Pfaff  <blp@gnu.org>
 
 	Missing part of allocsa -> malloca transition.
