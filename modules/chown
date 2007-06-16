@@ -1,5 +1,5 @@
 Description:
-chown() function: change ownership of a file.
+chown() function: change ownership of a file, following symlinks.
 
 Files:
 lib/chown.c

@@ -1,3 +1,30 @@
+2007-06-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Revamp lchown so that it lives in unistd.h where it belongs.
+	* lib/lchown.h: Remove.
+	* lib/dirchownmod.c: Don't include lib/lchown.h.
+	* lib/fchownat.c: Likewise.
+	* lib/openat.c: Likewise.
+	* lib/lchown.c (REPLACE_CHOWN): Define to 0 if the system chown
+	does not follow symlinks.
+	(EOPNOTSUPP): Define if not defined.
+	* lib/unistd_.h (chown): Do not replace if REPLADE_CHOWN
+	is defined to 0.
+	(lchown): New decl.
+	* m4/lchown.m4 (gl_FUNC_LCHOWN): Require gl_UNISTD_H_DEFAULTS.
+	Do not check for lchown decl.
+	Set REPLACE_LCHOWN.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Set GNULIB_LCHOWN,
+	REPLACE_LCHOWN.
+	* modules/chown: Make it clear it follows symlinks.
+	* modules/lchown: Make it clear it doesn't follow symlinks.
+	(Files): Remove lib/lchown.h
+	(Depends-on): Add unistd.
+	(configure.ac): Add gl_UNISTD_MODULE_INDICATOR([lchown]).
+	(Include): Include <unistd.h>, not "lchown.h".
+	* modules/unistd (unistd.h): Substitude GNULIB_LCHOWN and
+	REPLACE_LCHOWN.
+
 2007-06-15  Jim Meyering  <jim@meyering.net>
 
 	Change license (GPL to LGPL) of fsusage and dependents.

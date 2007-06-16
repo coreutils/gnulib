@@ -1,5 +1,5 @@
 /* provide a replacement openat function
-   Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@
 
 #include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
 #include "fcntl--.h"
-#include "lchown.h"
 #include "lstat.h"
 #include "openat-priv.h"
 #include "save-cwd.h"

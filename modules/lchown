@@ -1,22 +1,23 @@
 Description:
-lchown() function: change ownership of a file.
+lchown() function: change ownership of a file, without following symlinks.
 
 Files:
-lib/lchown.h
 lib/lchown.c
 m4/lchown.m4
 
 Depends-on:
 chown
 sys_stat
+unistd
 
 configure.ac:
 gl_FUNC_LCHOWN
+gl_UNISTD_MODULE_INDICATOR([lchown])
 
 Makefile.am:
 
 Include:
-"lchown.h"
+<unistd.h>
 
 License:
 GPL
