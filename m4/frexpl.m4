@@ -1,4 +1,4 @@
-# frexpl.m4 serial 5
+# frexpl.m4 serial 6
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -95,9 +95,9 @@ AC_DEFUN([gl_FUNC_FREXPL_NO_LIBM],
   fi
 ])
 
-dnl Test whether frexpl() works on finite numbers (this fails on AIX 5.1 and
-dnl on BeOS) and also on infinite numbers (this fails e.g. on IRIX 6.5 and
-dnl mingw).
+dnl Test whether frexpl() works on finite numbers (this fails on
+dnl MacOS X 10.4/PowerPC, on AIX 5.1, and on BeOS) and also on infinite numbers
+dnl (this fails e.g. on IRIX 6.5 and mingw).
 AC_DEFUN([gl_FUNC_FREXPL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -110,12 +110,24 @@ extern long double frexpl (long double, int *);
 int main()
 {
   volatile long double x;
-  /* Test on finite numbers.  */
+  /* Test on finite numbers that fails on AIX 5.1.  */
   x = 16.0L;
   {
     int exp = -9999;
     frexpl (x, &exp);
     if (exp != 5)
+      return 1;
+  }
+  /* Test on finite numbers that fails on MacOS X 10.4, because its frexpl
+     function returns an invalid (incorrectly normalized) value: it returns
+               y = { 0x3fe028f5, 0xc28f5c28, 0x3c9eb851, 0xeb851eb8 }
+     but the correct result is
+          0.505L = { 0x3fe028f5, 0xc28f5c29, 0xbc547ae1, 0x47ae1480 }  */
+  x = 1.01L;
+  {
+    int exp = -9999;
+    long double y = frexpl (x, &exp);
+    if (!(exp == 1 && y == 0.505L))
       return 1;
   }
   /* Test on large finite numbers.  This fails on BeOS at i = 16322, while
@@ -143,7 +155,7 @@ int main()
   return 0;
 }], [gl_cv_func_frexpl_works=yes], [gl_cv_func_frexpl_works=no],
       [case "$host_os" in
-         aix* | beos* | irix* | mingw* | pw*)
+         aix* | beos* | darwin* | irix* | mingw* | pw*)
             gl_cv_func_frexpl_works="guessing no";;
          *) gl_cv_func_frexpl_works="guessing yes";;
        esac

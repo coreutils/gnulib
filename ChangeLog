@@ -1,3 +1,9 @@
+2007-06-16  Bruno Haible  <bruno@clisp.org>
+
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Catch the MacOS X 10.4 bug.
+	* doc/functions/frexpl.texi: Document the MacOS X 10.4 bug.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
 2007-06-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Revamp lchown so that it lives in unistd.h where it belongs.
