@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-06-16  lchown          The include file is changed from "lchown.h" to
+                            <unistd.h>.
+
 2007-06-09  xallocsa        Renamed to xmalloca. The include file "xallocsa.h"
                             was remamed to "xmalloca.h". The function was
                             renamed:
