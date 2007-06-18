@@ -12,9 +12,11 @@ m4/getdate.m4
 Depends-on:
 stdbool
 gettime
+intprops
 mktime
 setenv
 time
+verify
 xalloc
 
 configure.ac:

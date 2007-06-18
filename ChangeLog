@@ -1,3 +1,12 @@
+2007-06-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Detect porting problems to FreeBSD/arm, which has time_t wider than
+	long int.  Original problem reported for GNU diff by Xin Li in
+	<http://lists.gnu.org/archive/html/bug-gnu-utils/2007-06/msg00091.html>.
+	* modules/getdate (Depends-on): Add intprops, verify.
+	* lib/getdate.y: Include intprops.h, verify.h.  Verify that time_t
+	is an integer type no wider than long int.
+
 2007-06-18  Jim Meyering  <jim@meyering.net>
 
 	New module: mreadlink-with-size.
