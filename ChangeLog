@@ -1,3 +1,12 @@
+2007-06-18  Jim Meyering  <jim@meyering.net>
+
+	New module: mreadlink-with-size.
+	* MODULES.html.sh: Add mreadlink-with-size.
+	* modules/mreadlink-with-size: New module
+	* modules/canonicalize (Depends-on): Depend on mreadlink-with-size,
+	not xreadlink-with-size.
+	* lib/mreadlink-with-size.c, lib/mreadlink.h: New files.
+
 2007-06-16  Bruno Haible  <bruno@clisp.org>
 
 	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Catch the MacOS X 10.4 bug.

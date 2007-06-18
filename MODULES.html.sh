@@ -2149,6 +2149,7 @@ func_all_modules ()
   func_module mkdir-p
   func_module modechange
   func_module mountlist
+  func_module mreadlink-with-size
   func_module openat
   func_module pathmax
   func_module same
