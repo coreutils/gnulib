@@ -1,3 +1,8 @@
+2007-06-19  Eric Blake  <ebb9@byu.net>
+
+	* modules/canonicalize-lgpl-tests (test_canonicalize_lgpl_LDADD):
+	Allow compilation on cygwin.
+
 2007-06-19  Jim Meyering  <jim@meyering.net>
 
 	xreadlink-with-size: Remove module.  No longer used.
