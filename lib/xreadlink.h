@@ -21,14 +21,4 @@
 
 #include <stddef.h>
 
-/* Call readlink to get the symbolic link value of FILENAME.
-   Return a pointer to that NUL-terminated string in malloc'd storage.
-   If readlink fails, return NULL and set errno.  */
 extern char *xreadlink (char const *filename);
-
-/* Call readlink to get the symbolic link value of FILENAME.
-   SIZE_HINT is a hint as to how long the link is expected to be;
-   typically it is taken from st_size.  It need not be correct.
-   Return a pointer to that NUL-terminated string in malloc'd storage.
-   If readlink fails, return NULL and set errno.  */
-extern char *xreadlink_with_size (char const *filename, size_t size_hint);

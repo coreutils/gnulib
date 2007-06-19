@@ -1,5 +1,13 @@
 2007-06-19  Jim Meyering  <jim@meyering.net>
 
+	xreadlink-with-size: Remove module.  No longer used.
+	Ex-callers now use xreadlink or mreadlink-with-size.
+	* modules/xreadlink-with-size: Remove module.
+	* lib/xreadlink-with-size.c: Remove file.
+	* lib/xreadlink.h (xreadlink_with_size): Remove prototype.
+	(xreadlink): Remove inaccurate comment.  The one in xreadlink.c,
+	just before the function definition *is* accurate.
+
 	Eliminate one way canonicalize_filename_mode could exit.
 	* lib/canonicalize.c (canonicalize_filename_mode):
 	Use mreadlink_with_size, not xreadlink_with_size.
