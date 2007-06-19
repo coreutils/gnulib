@@ -1,3 +1,9 @@
+2007-06-19  Jim Meyering  <jim@meyering.net>
+
+	Eliminate one way canonicalize_filename_mode could exit.
+	* lib/canonicalize.c (canonicalize_filename_mode):
+	Use mreadlink_with_size, not xreadlink_with_size.
+
 2007-06-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Detect porting problems to FreeBSD/arm, which has time_t wider than
