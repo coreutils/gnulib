@@ -1,3 +1,9 @@
+2007-06-20  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* build-aux/bootstrap: Remove stray dot.
+	Make sure build_aux settings are honored when linking
+	gnulib_extra_files.
+
 2007-06-19  Eric Blake  <ebb9@byu.net>
 
 	* modules/canonicalize-lgpl-tests (test_canonicalize_lgpl_LDADD):
