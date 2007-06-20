@@ -1,4 +1,4 @@
-# $Id: srclist.txt,v 1.150 2007-06-10 13:39:53 karl Exp $
+# $Id: srclist.txt,v 1.151 2007-06-20 13:52:29 karl Exp $
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -20,11 +20,11 @@ $TEXINFOSRC/util/gendocs_template_min	doc
 #
 $AUTOCONF/INSTALL		doc
 #
-$GNUWWWLICENSES/fdl.texi	doc
-$GNUWWWLICENSES/gpl.texi	doc
-$GNUWWWLICENSES/lgpl.texi	doc
-$GNUWWWLICENSES/gpl.txt		doc
-$GNUWWWLICENSES/lgpl.txt	doc
+$GNUWWWLICENSES/fdl-1.2.texi	doc
+$GNUWWWLICENSES/gpl-2.0.texi	doc
+$GNUWWWLICENSES/gpl-2.0.txt	doc
+$GNUWWWLICENSES/lgpl-2.1.texi	doc
+$GNUWWWLICENSES/lgpl-2.1.txt	doc
 #
 $GNUSTANDARDS/maintain.texi	doc
 $GNUSTANDARDS/standards.texi	doc
