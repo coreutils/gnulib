@@ -103,6 +103,7 @@ gnulib_extra_files="
 	$build_aux/config.sub
 	doc/INSTALL
 "
+
 # Additional gnulib-tool options to use.  Use "\newline" to break lines.
 gnulib_tool_option_extras=
 
@@ -178,7 +179,8 @@ grep '^[	 ]*AC_CONFIG_AUX_DIR('"$build_aux"')' configure.ac \
     >/dev/null && found_aux_dir=yes
 if test $found_aux_dir = no; then
   echo "$0: expected line not found in configure.ac. Add the following:" >&2
-  echo "  AC_CONFIG_AUX_DIR([$build_aux])" >&2.
+  echo "  AC_CONFIG_AUX_DIR([$build_aux])" >&2
+  exit 1
 fi
 
 # If $build_aux doesn't exist, create it now, otherwise some bits
@@ -508,10 +510,10 @@ done
 
 
 # Get some extra files from gnulib, overriding existing files.
-
 for file in $gnulib_extra_files; do
   case $file in
   */INSTALL) dst=INSTALL;;
+  build-aux/*) dst=$build_aux/`expr "$file" : 'build-aux/\(.*\)'`;;
   *) dst=$file;;
   esac
   symlink_to_gnulib $file $dst || exit
