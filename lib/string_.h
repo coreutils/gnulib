@@ -19,11 +19,7 @@
 #ifndef _GL_STRING_H
 
 /* The include_next requires a split double-inclusion guard.  */
-#if @HAVE_INCLUDE_NEXT@
-# include_next <string.h>
-#else
-# include @ABSOLUTE_STRING_H@
-#endif
+#@INCLUDE_NEXT@ @NEXT_STRING_H@
 
 #ifndef _GL_STRING_H
 #define _GL_STRING_H

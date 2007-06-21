@@ -19,11 +19,7 @@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_UNISTD_H@
-# if @HAVE_INCLUDE_NEXT@
-#  include_next <unistd.h>
-# else
-#  include @ABSOLUTE_UNISTD_H@
-# endif
+# @INCLUDE_NEXT@ @NEXT_UNISTD_H@
 #endif
 
 #ifndef _GL_UNISTD_H

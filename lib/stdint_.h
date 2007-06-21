@@ -43,14 +43,10 @@
      in <inttypes.h> would reinclude us, skipping our contents because
      _GL_STDINT_H is defined.
      The include_next requires a split double-inclusion guard.  */
-# if @HAVE_INCLUDE_NEXT@
-#  include_next <stdint.h>
-# else
-#  include @ABSOLUTE_STDINT_H@
-# endif
+# @INCLUDE_NEXT@ @NEXT_STDINT_H@
 #endif
 
-#ifndef _GL_STDINT_H
+#if ! defined _GL_STDINT_H && ! defined _GL_JUST_INCLUDE_SYSTEM_STDINT_H
 #define _GL_STDINT_H
 
 /* <sys/types.h> defines some of the stdint.h types as well, on glibc,
@@ -58,7 +54,7 @@
    AIX 5.2 <sys/types.h> isn't needed and causes troubles.
    MacOS X 10.4.6 <sys/types.h> includes <stdint.h> (which is us), but
    relies on the system <stdint.h> definitions, so include
-   <sys/types.h> after @ABSOLUTE_STDINT_H@.  */
+   <sys/types.h> after @NEXT_STDINT_H@.  */
 #if @HAVE_SYS_TYPES_H@ && ! defined _AIX
 # include <sys/types.h>
 #endif
@@ -509,4 +505,4 @@
 #endif /* !defined __cplusplus || defined __STDC_CONSTANT_MACROS */
 
 #endif /* _GL_STDINT_H */
-#endif /* _GL_STDINT_H */
+#endif /* !defined _GL_STDINT_H && !defined _GL_JUST_INCLUDE_SYSTEM_STDINT_H */

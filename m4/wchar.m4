@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar.m4 serial 2
+# wchar.m4 serial 3
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -29,10 +29,8 @@ wchar_t w;]],
       HAVE_WCHAR_H=0
     fi
     AC_SUBST([HAVE_WCHAR_H])
-    gl_ABSOLUTE_HEADER([wchar.h])
-    ABSOLUTE_WCHAR_H=\"$gl_cv_absolute_wchar_h\"
+    gl_CHECK_NEXT_HEADERS([wchar.h])
     WCHAR_H=wchar.h
   fi
-  AC_SUBST([ABSOLUTE_WCHAR_H])
   AC_SUBST([WCHAR_H])
 ])

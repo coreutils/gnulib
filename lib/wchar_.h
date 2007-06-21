@@ -39,11 +39,7 @@
    Some builds of uClibc lack it.  */
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_WCHAR_H@
-# if @HAVE_INCLUDE_NEXT@
-#  include_next <wchar.h>
-# else
-#  include @ABSOLUTE_WCHAR_H@
-# endif
+# @INCLUDE_NEXT@ @NEXT_WCHAR_H@
 #endif
 
 #ifndef _GL_WCHAR_H

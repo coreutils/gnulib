@@ -44,11 +44,7 @@
    BeOS 5 has the functions but no <wctype.h>.  */
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_WCTYPE_H@
-# if @HAVE_INCLUDE_NEXT@
-#  include_next <wctype.h>
-# else
-#  include @ABSOLUTE_WCTYPE_H@
-# endif
+# @INCLUDE_NEXT@ @NEXT_WCTYPE_H@
 #endif
 
 #ifndef _GL_WCTYPE_H

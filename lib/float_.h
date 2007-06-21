@@ -19,11 +19,7 @@
 #ifndef _GL_FLOAT_H
 
 /* The include_next requires a split double-inclusion guard.  */
-#if @HAVE_INCLUDE_NEXT@
-# include_next <float.h>
-#else
-# include @ABSOLUTE_FLOAT_H@
-#endif
+#@INCLUDE_NEXT@ @NEXT_FLOAT_H@
 
 #ifndef _GL_FLOAT_H
 #define _GL_FLOAT_H

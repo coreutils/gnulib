@@ -20,11 +20,7 @@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_SEARCH_H@
-# if @HAVE_INCLUDE_NEXT@
-#  include_next <search.h>
-# else
-#  include @ABSOLUTE_SEARCH_H@
-# endif
+# @INCLUDE_NEXT@ @NEXT_SEARCH_H@
 #endif
 
 #ifndef _GL_SEARCH_H

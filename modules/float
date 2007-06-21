@@ -6,7 +6,7 @@ lib/float_.h
 m4/float_h.m4
 
 Depends-on:
-absolute-header
+include_next
 
 configure.ac:
 gl_FLOAT_H
@@ -19,8 +19,8 @@ BUILT_SOURCES += $(FLOAT_H)
 float.h: float_.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
-	  sed -e 's|@''ABSOLUTE_FLOAT_H''@|$(ABSOLUTE_FLOAT_H)|g' \
-	      -e 's/@''HAVE_INCLUDE_NEXT''@/$(HAVE_INCLUDE_NEXT)/g' \
+	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
+	      -e 's|@''NEXT_FLOAT_H''@|$(NEXT_FLOAT_H)|g' \
 	      < $(srcdir)/float_.h; \
 	} > $@-t
 	mv $@-t $@

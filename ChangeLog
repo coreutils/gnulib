@@ -1,3 +1,69 @@
+2007-06-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/include_next.m4 (gl_INCLUDE_NEXT): Define and AC_SUBST
+	INCLUDE_NEXT.
+	(gl_CHECK_NEXT_HEADERS): New macro.
+	* m4/fcntl_h.m4 (gl_FCNTL_H): use gl_CHECK_NEXT_HEADERS instead of
+	the obsolescent gl_ABSOLUTE_HEADER.
+	* m4/float_h.m4 (gl_FLOAT_H): Likewise.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Likewise.
+	* m4/math_h.m4 (gl_MATH_H): Likewise.
+	* m4/search_h.m4 (gl_SEARCH_H): Likewise.
+	* m4/signal_h.m4 (gl_SIGNAL_H): Likewise.
+	* m4/stdint.m4 (gl_STDINT_H): Likewise.
+	* m4/stdio_h.m4 (gl_STDIO_H): Likewise.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Likewise.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_BODY): Likewise.
+	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Likewise.
+	* m4/sys_time_h.m4 (gl_HEADER_SYS_TIME_H_BODY): Likewise.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_BODY): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Likewise.
+	* m4/wchar.m4 (gl_WCHAR_H): Likewise.
+	* m4/wctype.m4 (gl_WCTYPE_H): Likewise.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Define
+	_GL_JUST_INCLUDE_SYSTEM_INTTYPES_H to avoid the problem of unclean
+	builds, since ABSOLUTE_INTTYPES_H is no longer being defined.
+	* m4/stdint.m4 (gl_STDINT_H): Likewise, for
+	_GL_JUST_INCLUDE_SYSTEM_STDINT_H.
+	* lib/fcntl_.h: Use @INCLUDE_NEXT@ @NEXT_foo_H@
+	rather than @HAVE_INCLUDE_NEXT@ and @ABSOLUTE_foo_H@.
+	* lib/float_.h: Likewise.
+	* lib/inttypes_.h: Likewise.
+	* lib/math_.h: Likewise.
+	* lib/search_.h: Likewise.
+	* lib/signal_.h: Likewise.
+	* lib/stdint_.h: Likewise.
+	* lib/stdio_.h: Likewise.
+	* lib/stdlib_.h: Likewise.
+	* lib/string_.h: Likewise.
+	* lib/sys_stat_.h: Likewise.
+	* lib/sys_time_.h: Likewise.
+	* lib/time_.h: Likewise.
+	* lib/unistd_.h: Likewise.
+	* lib/wchar_.h: Likewise.
+	* lib/wctype_.h: Likewise.
+	* modules/fcntl (Depends-on): Depend on absolute-header, not
+	include_next.
+	(Makefile): Substitute INCLUDE_NEXT and NEXT_foo_H, not
+	HAVE_INCLUDE_NEXT and ABSOLUTE_foo_H.
+	* modules/float: Likewise.
+	* modules/inttypes: Likewise.
+	* modules/math: Likewise.
+	* modules/search: Likewise.
+	* modules/signal: Likewise.
+	* modules/stdint: Likewise.
+	* modules/stdio: Likewise.
+	* modules/stdlib: Likewise.
+	* modules/string: Likewise.
+	* modules/sys_stat: Likewise.
+	* modules/sys_time: Likewise.
+	* modules/time: Likewise.
+	* modules/unistd: Likewise.
+	* modules/wchar: Likewise.
+	* modules/wctype: Likewise.
+	* modules/sys_stat: Change maintainer to "all".
+	* modules/unistd: Likewise.
+
 2007-06-20  Karl Berry  <karl@gnu.org>
 
 	* config/srclist.txt: track www changes in license files.

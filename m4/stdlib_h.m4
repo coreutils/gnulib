@@ -1,4 +1,4 @@
-# stdlib_h.m4 serial 1
+# stdlib_h.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,9 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_STDLIB_H],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
-  gl_ABSOLUTE_HEADER([stdlib.h])
-  ABSOLUTE_STDLIB_H=\"$gl_cv_absolute_stdlib_h\"
-  AC_SUBST([ABSOLUTE_STDLIB_H])
+  gl_CHECK_NEXT_HEADERS([stdlib.h])
 ])
 
 AC_DEFUN([gl_STDLIB_MODULE_INDICATOR],

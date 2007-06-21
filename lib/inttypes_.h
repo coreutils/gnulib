@@ -25,17 +25,13 @@
    has not been included yet or if this file includes gnulib stdint.h
    which in turn includes this file.
    The include_next requires a split double-inclusion guard.  */
-#if ! defined INTTYPES_H || defined _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H
+#if ! defined INTTYPES_H || defined _GL_JUST_INCLUDE_SYSTEM_INTTYPES_H
 # if @HAVE_INTTYPES_H@
-#  if @HAVE_INCLUDE_NEXT@
-#   include_next <inttypes.h>
-#  else
-#   include @ABSOLUTE_INTTYPES_H@
-#  endif
+#  @INCLUDE_NEXT@ @NEXT_INTTYPES_H@
 # endif
 #endif
 
-#if ! defined INTTYPES_H && ! defined _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H
+#if ! defined INTTYPES_H && ! defined _GL_JUST_INCLUDE_SYSTEM_INTTYPES_H
 #define INTTYPES_H
 
 /* Include <stdint.h> or the gnulib replacement.  */
@@ -1097,4 +1093,4 @@ extern uintmax_t strtoumax (const char *, char **, int);
 }
 #endif
 
-#endif /* INTTYPES_H */
+#endif /* !defined INTTYPES_H && !defined _GL_JUST_INCLUDE_SYSTEM_INTTYPES_H */

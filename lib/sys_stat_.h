@@ -24,11 +24,7 @@
 #ifndef _GL_SYS_STAT_H
 
 /* The include_next requires a split double-inclusion guard.  */
-#if @HAVE_INCLUDE_NEXT@
-# include_next <sys/stat.h>
-#else
-# include @ABSOLUTE_SYS_STAT_H@
-#endif
+#@INCLUDE_NEXT@ @NEXT_SYS_STAT_H@
 
 #ifndef _GL_SYS_STAT_H
 #define _GL_SYS_STAT_H

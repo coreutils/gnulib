@@ -24,11 +24,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 /* The include_next requires a split double-inclusion guard.  */
-#if @HAVE_INCLUDE_NEXT@
-# include_next <fcntl.h>
-#else
-# include @ABSOLUTE_FCNTL_H@
-#endif
+#@INCLUDE_NEXT@ @NEXT_FCNTL_H@
 
 #ifndef _GL_FCNTL_H
 #define _GL_FCNTL_H

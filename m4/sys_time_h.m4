@@ -18,17 +18,13 @@ AC_DEFUN([gl_HEADER_SYS_TIME_H],
 AC_DEFUN([gl_HEADER_SYS_TIME_H_BODY],
 [
   AC_REQUIRE([AC_C_RESTRICT])
-  AC_CHECK_HEADERS_ONCE([sys/time.h])
+  gl_CHECK_NEXT_HEADERS([sys/time.h])
 
   if test $ac_cv_header_sys_time_h = yes; then
-    gl_ABSOLUTE_HEADER([sys/time.h])
-    ABSOLUTE_SYS_TIME_H=\"$gl_cv_absolute_sys_time_h\"
     HAVE_SYS_TIME_H=1
   else
-    ABSOLUTE_SYS_TIME_H=\"no/such/file/sys/time.h\"
     HAVE_SYS_TIME_H=0
   fi
-  AC_SUBST([ABSOLUTE_SYS_TIME_H])
   AC_SUBST([HAVE_SYS_TIME_H])
 
   AC_CACHE_CHECK([for struct timeval], [gl_cv_sys_struct_timeval],

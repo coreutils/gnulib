@@ -1,4 +1,4 @@
-# float_h.m4 serial 1
+# float_h.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,9 +12,7 @@ AC_DEFUN([gl_FLOAT_H],
   case "$host_os" in
     beos*)
       FLOAT_H=float.h
-      gl_ABSOLUTE_HEADER([float.h])
-      ABSOLUTE_FLOAT_H=\"$gl_cv_absolute_float_h\"
-      AC_SUBST([ABSOLUTE_FLOAT_H])
+      gl_CHECK_NEXT_HEADERS([float.h])
       ;;
   esac
   AC_SUBST([FLOAT_H])

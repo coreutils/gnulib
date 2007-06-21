@@ -19,11 +19,7 @@
 #if defined __need_malloc_and_calloc
 /* Special invocation convention inside glibc header files.  */
 
-#if @HAVE_INCLUDE_NEXT@
-# include_next <stdlib.h>
-#else
-# include @ABSOLUTE_STDLIB_H@
-#endif
+#@INCLUDE_NEXT@ @NEXT_STDLIB_H@
 
 #else
 /* Normal invocation convention.  */
@@ -31,11 +27,7 @@
 #ifndef _GL_STDLIB_H
 
 /* The include_next requires a split double-inclusion guard.  */
-#if @HAVE_INCLUDE_NEXT@
-# include_next <stdlib.h>
-#else
-# include @ABSOLUTE_STDLIB_H@
-#endif
+#@INCLUDE_NEXT@ @NEXT_STDLIB_H@
 
 #ifndef _GL_STDLIB_H
 #define _GL_STDLIB_H

@@ -19,11 +19,7 @@
 #ifndef _GL_MATH_H
 
 /* The include_next requires a split double-inclusion guard.  */
-#if @HAVE_INCLUDE_NEXT@
-# include_next <math.h>
-#else
-# include @ABSOLUTE_MATH_H@
-#endif
+#@INCLUDE_NEXT@ @NEXT_MATH_H@
 
 #ifndef _GL_MATH_H
 #define _GL_MATH_H

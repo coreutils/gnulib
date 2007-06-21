@@ -6,7 +6,7 @@ lib/fcntl_.h
 m4/fcntl_h.m4
 
 Depends-on:
-absolute-header
+include_next
 unistd
 
 configure.ac:
@@ -20,8 +20,8 @@ BUILT_SOURCES += $(FCNTL_H)
 fcntl.h: fcntl_.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''ABSOLUTE_FCNTL_H''@|$(ABSOLUTE_FCNTL_H)|g' \
-	      -e 's/@''HAVE_INCLUDE_NEXT''@/$(HAVE_INCLUDE_NEXT)/g' \
+	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
+	      -e 's|@''NEXT_FCNTL_H''@|$(NEXT_FCNTL_H)|g' \
 	      < $(srcdir)/fcntl_.h; \
 	} > $@-t
 	mv $@-t $@

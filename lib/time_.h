@@ -21,11 +21,7 @@
    symbols.  */
 #if defined __need_time_t || defined __need_clock_t || defined __need_timespec
 
-# if @HAVE_INCLUDE_NEXT@
-#  include_next <time.h>
-# else
-#  include @ABSOLUTE_TIME_H@
-# endif
+# @INCLUDE_NEXT@ @NEXT_TIME_H@
 
 #else
 /* Normal invocation convention.  */
@@ -33,11 +29,7 @@
 # if ! defined _GL_TIME_H
 
 /* The include_next requires a split double-inclusion guard.  */
-#  if @HAVE_INCLUDE_NEXT@
-#   include_next <time.h>
-#  else
-#   include @ABSOLUTE_TIME_H@
-#  endif
+#  @INCLUDE_NEXT@ @NEXT_TIME_H@
 
 #  if ! defined _GL_TIME_H
 #   define _GL_TIME_H

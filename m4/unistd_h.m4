@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 8
+# unistd_h.m4 serial 9
 dnl Copyright (C) 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,16 +12,15 @@ AC_DEFUN([gl_UNISTD_H],
   dnl once only, before all statements that occur in other macros.
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
 
+  gl_CHECK_NEXT_HEADERS([unistd.h])
+
   AC_CHECK_HEADERS_ONCE([unistd.h])
   if test $ac_cv_header_unistd_h = yes; then
     HAVE_UNISTD_H=1
-    gl_ABSOLUTE_HEADER([unistd.h])
-    ABSOLUTE_UNISTD_H=\"$gl_cv_absolute_unistd_h\"
   else
     HAVE_UNISTD_H=0
   fi
   AC_SUBST([HAVE_UNISTD_H])
-  AC_SUBST([ABSOLUTE_UNISTD_H])
 ])
 
 AC_DEFUN([gl_UNISTD_MODULE_INDICATOR],

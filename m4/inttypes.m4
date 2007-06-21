@@ -1,4 +1,4 @@
-# inttypes.m4 serial 8
+# inttypes.m4 serial 9
 dnl Copyright (C) 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,7 +37,8 @@ AC_DEFUN([gl_INTTYPES_H],
 #define __STDC_LIMIT_MACROS 1 /* to make it work also in C++ mode */
 #define __STDC_CONSTANT_MACROS 1 /* to make it work also in C++ mode */
 #define __STDC_FORMAT_MACROS 1 /* to make it work also in C++ mode */
-#include ABSOLUTE_INTTYPES_H
+#define _GL_JUST_INCLUDE_SYSTEM_INTTYPES_H /* work if build isn't clean */
+#include <inttypes.h>
 
 /* No need to duplicate the tests of stdint.m4; they are subsumed by
    $gl_cv_header_working_stdint_h = yes.  */
@@ -141,14 +142,7 @@ const char *l = /* implicit string concatenation */
   else
 
     AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
-    dnl AC_INCLUDES_DEFAULT defines $ac_cv_header_inttypes_h.
-    if test $ac_cv_header_inttypes_h = yes; then
-      gl_ABSOLUTE_HEADER([inttypes.h])
-      ABSOLUTE_INTTYPES_H=\"$gl_cv_absolute_inttypes_h\"
-    else
-      ABSOLUTE_INTTYPES_H=\"no/such/file/inttypes.h\"
-    fi
-    AC_SUBST([ABSOLUTE_INTTYPES_H])
+    gl_CHECK_NEXT_HEADERS([inttypes.h])
 
     PRIPTR_PREFIX=
     if test -n "$STDINT_H"; then

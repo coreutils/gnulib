@@ -19,11 +19,7 @@
 #if defined __need_sig_atomic_t || defined __need_sigset_t
 /* Special invocation convention inside glibc header files.  */
 
-# if @HAVE_INCLUDE_NEXT@
-#  include_next <signal.h>
-# else
-#  include @ABSOLUTE_SIGNAL_H@
-# endif
+# @INCLUDE_NEXT@ @NEXT_SIGNAL_H@
 
 #else
 /* Normal invocation convention.  */
@@ -31,11 +27,7 @@
 #ifndef _GL_SIGNAL_H
 
 /* The include_next requires a split double-inclusion guard.  */
-#if @HAVE_INCLUDE_NEXT@
-# include_next <signal.h>
-#else
-# include @ABSOLUTE_SIGNAL_H@
-#endif
+#@INCLUDE_NEXT@ @NEXT_SIGNAL_H@
 
 #ifndef _GL_SIGNAL_H
 #define _GL_SIGNAL_H

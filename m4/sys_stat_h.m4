@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 5   -*- Autoconf -*-
+# sys_stat_h.m4 serial 6   -*- Autoconf -*-
 dnl Copyright (C) 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,9 +42,7 @@ AC_DEFUN([gl_HEADER_SYS_STAT_H],
   dnl Check for broken stat macros.
   AC_REQUIRE([AC_HEADER_STAT])
 
-  gl_ABSOLUTE_HEADER([sys/stat.h])
-  ABSOLUTE_SYS_STAT_H=\"$gl_cv_absolute_sys_stat_h\"
-  AC_SUBST([ABSOLUTE_SYS_STAT_H])
+  gl_CHECK_NEXT_HEADERS([sys/stat.h])
   SYS_STAT_H='sys/stat.h'
   AC_SUBST([SYS_STAT_H])
 ]) # gl_HEADER_SYS_STAT_H

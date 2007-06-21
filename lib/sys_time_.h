@@ -22,11 +22,7 @@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_SYS_TIME_H@
-# if @HAVE_INCLUDE_NEXT@
-#  include_next <sys/time.h>
-# else
-#  include @ABSOLUTE_SYS_TIME_H@
-# endif
+# @INCLUDE_NEXT@ @NEXT_SYS_TIME_H@
 #else
 # include <time.h>
 #endif

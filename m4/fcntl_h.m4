@@ -1,5 +1,5 @@
 # Configure fcntl.h.
-dnl Copyright (C) 2006 Free Software Foundation, Inc.
+dnl Copyright (C) 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -73,9 +73,7 @@ AC_DEFUN([gl_FCNTL_H],
   AC_DEFINE_UNQUOTED([HAVE_WORKING_O_NOFOLLOW], [$ac_val],
     [Define to 1 if O_NOFOLLOW works.])
 
-  gl_ABSOLUTE_HEADER([fcntl.h])
-  ABSOLUTE_FCNTL_H=\"$gl_cv_absolute_fcntl_h\"
-  AC_SUBST([ABSOLUTE_FCNTL_H])
+  gl_CHECK_NEXT_HEADERS([fcntl.h])
   FCNTL_H='fcntl.h'
   AC_SUBST([FCNTL_H])
 ])
