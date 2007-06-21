@@ -47,8 +47,8 @@
 	* lib/unistd_.h: Likewise.
 	* lib/wchar_.h: Likewise.
 	* lib/wctype_.h: Likewise.
-	* modules/fcntl (Depends-on): Depend on absolute-header, not
-	include_next.
+	* modules/fcntl (Depends-on): Depend on include_next, not
+	absolute_header.
 	(Makefile): Substitute INCLUDE_NEXT and NEXT_foo_H, not
 	HAVE_INCLUDE_NEXT and ABSOLUTE_foo_H.
 	* modules/float: Likewise.
