@@ -2529,6 +2529,7 @@ func_all_modules ()
   func_module dummy
   func_module elisp-comp
   func_module havelib
+  func_module include_next
   func_module ldd
   func_module lib-ignore
   func_module link-warning

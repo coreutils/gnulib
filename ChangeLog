@@ -1,3 +1,8 @@
+2007-06-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh: Add include_next.
+	* modules/include_next: New file.
+
 2007-06-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/include_next.m4 (gl_INCLUDE_NEXT): Define and AC_SUBST
