@@ -1,4 +1,4 @@
-# netinet_in_h.m4 serial 2
+# netinet_in_h.m4 serial 3
 dnl Copyright (C) 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,9 +18,7 @@ AC_DEFUN([gl_HEADER_NETINET_IN],
   else
     NETINET_IN_H='netinet/in.h'
     AC_CHECK_HEADERS([netinet/in.h])
-    gl_ABSOLUTE_HEADER([netinet/in.h])
-    ABSOLUTE_NETINET_IN_H=\"$gl_cv_absolute_netinet_in_h\"
-    AC_SUBST([ABSOLUTE_NETINET_IN_H])
+    gl_CHECK_NEXT_HEADERS([netinet/in.h])
     if test $ac_cv_header_netinet_in_h = yes; then
       HAVE_NETINET_IN_H=1
     else

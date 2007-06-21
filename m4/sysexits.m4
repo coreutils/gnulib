@@ -1,4 +1,4 @@
-# sysexits.m4 serial 3
+# sysexits.m4 serial 4
 dnl Copyright (C) 2003, 2005, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,8 +9,7 @@ AC_DEFUN([gl_SYSEXITS],
   AC_CHECK_HEADERS_ONCE([sysexits.h])
   if test $ac_cv_header_sysexits_h = yes; then
     HAVE_SYSEXITS_H=1
-    gl_ABSOLUTE_HEADER([sysexits.h])
-    ABSOLUTE_SYSEXITS_H=\"$gl_cv_absolute_sysexits_h\"
+    gl_CHECK_NEXT_HEADERS([sysexits.h])
     AC_TRY_COMPILE([#include <sysexits.h>],
       [switch (0)
        {
@@ -40,6 +39,5 @@ AC_DEFUN([gl_SYSEXITS],
     SYSEXITS_H=sysexits.h
   fi
   AC_SUBST([HAVE_SYSEXITS_H])
-  AC_SUBST([ABSOLUTE_SYSEXITS_H])
   AC_SUBST([SYSEXITS_H])
 ])

@@ -30,11 +30,7 @@
 # include <sys/types.h>
 
 /* The include_next requires a split double-inclusion guard.  */
-# if @HAVE_INCLUDE_NEXT@
-#  include_next <sys/socket.h>
-# else
-#  include @ABSOLUTE_SYS_SOCKET_H@
-# endif
+# @INCLUDE_NEXT@ @NEXT_SYS_SOCKET_H@
 
 #endif
 

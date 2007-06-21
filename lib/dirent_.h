@@ -18,11 +18,7 @@
 #ifndef _GL_DIRENT_H
 
 /* The include_next requires a split double-inclusion guard.  */
-#if @HAVE_INCLUDE_NEXT@
-# include_next <dirent.h>
-#else
-# include @ABSOLUTE_DIRENT_H@
-#endif
+#@INCLUDE_NEXT@ @NEXT_DIRENT_H@
 
 #ifndef _GL_DIRENT_H
 #define _GL_DIRENT_H

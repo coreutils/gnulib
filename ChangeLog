@@ -10,17 +10,24 @@
 	(gl_CHECK_NEXT_HEADERS): New macro.
 	* m4/fcntl_h.m4 (gl_FCNTL_H): use gl_CHECK_NEXT_HEADERS instead of
 	the obsolescent gl_ABSOLUTE_HEADER.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Likewise.
 	* m4/float_h.m4 (gl_FLOAT_H): Likewise.
+	* m4/iconv_h.m4 (gl_ICONV_H): Likewise.
 	* m4/inttypes.m4 (gl_INTTYPES_H): Likewise.
+	* m4/locale_h.m4 (gl_LOCALE_H): Likewise.
 	* m4/math_h.m4 (gl_MATH_H): Likewise.
+	* m4/netinet_in_h.m4 (gl_HEADER_NETINET_IN): Likewise.
 	* m4/search_h.m4 (gl_SEARCH_H): Likewise.
 	* m4/signal_h.m4 (gl_SIGNAL_H): Likewise.
 	* m4/stdint.m4 (gl_STDINT_H): Likewise.
 	* m4/stdio_h.m4 (gl_STDIO_H): Likewise.
 	* m4/stdlib_h.m4 (gl_STDLIB_H): Likewise.
 	* m4/string_h.m4 (gl_HEADER_STRING_H_BODY): Likewise.
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Likewise.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Likewise.
 	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Likewise.
 	* m4/sys_time_h.m4 (gl_HEADER_SYS_TIME_H_BODY): Likewise.
+	* m4/sysexits.m4 (gl_SYSEXITS): Likewise.
 	* m4/time_h.m4 (gl_HEADER_TIME_H_BODY): Likewise.
 	* m4/unistd_h.m4 (gl_UNISTD_H): Likewise.
 	* m4/wchar.m4 (gl_WCHAR_H): Likewise.
@@ -47,21 +54,35 @@
 	* lib/unistd_.h: Likewise.
 	* lib/wchar_.h: Likewise.
 	* lib/wctype_.h: Likewise.
+	* lib/dirent_.h: Likewise.
+	* lib/iconv_.h: Likewise.
+	* lib/locale_.h: Likewise.
+	* lib/netinet_in_.h: Likewise.
+	* lib/sys_select_.h: Likewise.
+	* lib/sys_socket_.h: Likewise.
+	* lib/sysexits_.h: Likewise.
 	* modules/fcntl (Depends-on): Depend on include_next, not
 	absolute_header.
 	(Makefile): Substitute INCLUDE_NEXT and NEXT_foo_H, not
 	HAVE_INCLUDE_NEXT and ABSOLUTE_foo_H.
+	* modules/fchdir: Likewise.
 	* modules/float: Likewise.
+	* modules/iconv_open: Likewise.
 	* modules/inttypes: Likewise.
+	* modules/locale: Likewise.
 	* modules/math: Likewise.
+	* modules/netinet_in: Likewise.
 	* modules/search: Likewise.
 	* modules/signal: Likewise.
 	* modules/stdint: Likewise.
 	* modules/stdio: Likewise.
 	* modules/stdlib: Likewise.
 	* modules/string: Likewise.
+	* modules/sys_select: Likewise.
+	* modules/sys_socket: Likewise.
 	* modules/sys_stat: Likewise.
 	* modules/sys_time: Likewise.
+	* modules/sysexits: Likewise.
 	* modules/time: Likewise.
 	* modules/unistd: Likewise.
 	* modules/wchar: Likewise.

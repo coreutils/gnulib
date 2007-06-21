@@ -1,4 +1,4 @@
-# sys_socket_h.m4 serial 3
+# sys_socket_h.m4 serial 4
 dnl Copyright (C) 2005, 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,10 +20,7 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
   else
     SYS_SOCKET_H='sys/socket.h'
 
-    AC_CHECK_HEADERS([sys/socket.h])
-    gl_ABSOLUTE_HEADER([sys/socket.h])
-    ABSOLUTE_SYS_SOCKET_H=\"$gl_cv_absolute_sys_socket_h\"
-    AC_SUBST([ABSOLUTE_SYS_SOCKET_H])
+    gl_CHECK_NEXT_HEADERS([sys/socket.h])
     if test $ac_cv_header_sys_socket_h = yes; then
       HAVE_SYS_SOCKET_H=1
       HAVE_WINSOCK2_H=0

@@ -1,4 +1,4 @@
-# locale_h.m4 serial 1
+# locale_h.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,9 +15,7 @@ int x = LC_MESSAGES;], [],
   if test $gl_cv_header_working_locale_h = yes; then
     LOCALE_H=
   else
-    gl_ABSOLUTE_HEADER([locale.h])
-    ABSOLUTE_LOCALE_H=\"$gl_cv_absolute_locale_h\"
-    AC_SUBST([ABSOLUTE_LOCALE_H])
+    gl_CHECK_NEXT_HEADERS([locale.h])
     LOCALE_H=locale.h
   fi
   AC_SUBST([LOCALE_H])

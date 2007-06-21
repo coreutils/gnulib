@@ -6,7 +6,7 @@ lib/sys_select_.h
 m4/sys_select_h.m4
 
 Depends-on:
-absolute-header
+include_next
 sys_socket
 
 configure.ac:
@@ -22,8 +22,8 @@ sys/select.h:
 	@MKDIR_P@ sys
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''ABSOLUTE_SYS_SELECT_H''@|$(ABSOLUTE_SYS_SELECT_H)|g' \
-	      -e 's/@''HAVE_INCLUDE_NEXT''@/$(HAVE_INCLUDE_NEXT)/g' \
+	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
+	      -e 's|@''NEXT_SYS_SELECT_H''@|$(NEXT_SYS_SELECT_H)|g' \
 	      -e 's|@''HAVE_SYS_SELECT_H''@|$(HAVE_SYS_SELECT_H)|g' \
 	      < $(srcdir)/sys_select_.h; \
 	} > $@-t

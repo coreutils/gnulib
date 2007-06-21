@@ -18,11 +18,7 @@
 #ifndef _GL_LOCALE_H
 
 /* The include_next requires a split double-inclusion guard.  */
-#if @HAVE_INCLUDE_NEXT@
-# include_next <locale.h>
-#else
-# include @ABSOLUTE_LOCALE_H@
-#endif
+#@INCLUDE_NEXT@ @NEXT_LOCALE_H@
 
 #ifndef _GL_LOCALE_H
 #define _GL_LOCALE_H

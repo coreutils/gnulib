@@ -30,11 +30,7 @@
 # endif
 
 /* The include_next requires a split double-inclusion guard.  */
-# if @HAVE_INCLUDE_NEXT@
-#  include_next <sysexits.h>
-# else
-#  include @ABSOLUTE_SYSEXITS_H@
-# endif
+# @INCLUDE_NEXT@ @NEXT_SYSEXITS_H@
 
 /* HP-UX 11 <sysexits.h> ends at EX_NOPERM.  */
 # ifndef EX_CONFIG

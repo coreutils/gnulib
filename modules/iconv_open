@@ -12,7 +12,7 @@ m4/iconv_h.m4
 m4/iconv_open.m4
 
 Depends-on:
-absolute-header
+include_next
 iconv
 c-ctype
 
@@ -28,8 +28,8 @@ BUILT_SOURCES += $(ICONV_H)
 iconv.h: iconv_.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
-	  sed -e 's|@''ABSOLUTE_ICONV_H''@|$(ABSOLUTE_ICONV_H)|g' \
-	      -e 's/@''HAVE_INCLUDE_NEXT''@/$(HAVE_INCLUDE_NEXT)/g' \
+	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
+	      -e 's|@''NEXT_ICONV_H''@|$(NEXT_ICONV_H)|g' \
 	      -e 's|@''REPLACE_ICONV_OPEN''@|$(REPLACE_ICONV_OPEN)|g' \
 	      < $(srcdir)/iconv_.h; \
 	} > $@-t

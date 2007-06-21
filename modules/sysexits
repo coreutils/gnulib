@@ -6,7 +6,7 @@ lib/sysexits_.h
 m4/sysexits.m4
 
 Depends-on:
-absolute-header
+include_next
 
 configure.ac:
 gl_SYSEXITS
@@ -19,8 +19,8 @@ BUILT_SOURCES += $(SYSEXITS_H)
 sysexits.h: sysexits_.h
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_SYSEXITS_H''@|$(HAVE_SYSEXITS_H)|g' \
-	      -e 's|@''ABSOLUTE_SYSEXITS_H''@|$(ABSOLUTE_SYSEXITS_H)|g' \
-	      -e 's/@''HAVE_INCLUDE_NEXT''@/$(HAVE_INCLUDE_NEXT)/g' \
+	      -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
+	      -e 's|@''NEXT_SYSEXITS_H''@|$(NEXT_SYSEXITS_H)|g' \
 	      < $(srcdir)/sysexits_.h; \
 	} > $@-t
 	mv -f $@-t $@

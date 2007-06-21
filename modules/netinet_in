@@ -6,7 +6,7 @@ lib/netinet_in_.h
 m4/netinet_in_h.m4
 
 Depends-on:
-absolute-header
+include_next
 sys_socket
 
 configure.ac:
@@ -22,8 +22,8 @@ netinet/in.h:
 	@MKDIR_P@ netinet
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''ABSOLUTE_NETINET_IN_H''@|$(ABSOLUTE_NETINET_IN_H)|g' \
-	      -e 's/@''HAVE_INCLUDE_NEXT''@/$(HAVE_INCLUDE_NEXT)/g' \
+	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
+	      -e 's|@''NEXT_NETINET_IN_H''@|$(NEXT_NETINET_IN_H)|g' \
 	      -e 's|@''HAVE_NETINET_IN_H''@|$(HAVE_NETINET_IN_H)|g' \
 	      < $(srcdir)/netinet_in_.h; \
 	} > $@-t

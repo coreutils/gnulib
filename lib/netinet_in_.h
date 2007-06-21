@@ -24,11 +24,7 @@
 # include <sys/types.h>
 
 /* The include_next requires a split double-inclusion guard.  */
-# if @HAVE_INCLUDE_NEXT@
-#  include_next <netinet/in.h>
-# else
-#  include @ABSOLUTE_NETINET_IN_H@
-# endif
+# @INCLUDE_NEXT@ @NEXT_NETINET_IN_H@
 
 #endif
 

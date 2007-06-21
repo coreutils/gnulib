@@ -19,11 +19,7 @@
 #ifndef _GL_ICONV_H
 
 /* The include_next requires a split double-inclusion guard.  */
-#if @HAVE_INCLUDE_NEXT@
-# include_next <iconv.h>
-#else
-# include @ABSOLUTE_ICONV_H@
-#endif
+#@INCLUDE_NEXT@ @NEXT_ICONV_H@
 
 #ifndef _GL_ICONV_H
 #define _GL_ICONV_H
