@@ -1,3 +1,8 @@
+2007-06-21  Karl Berry  <karl@gnu.org>
+
+	* config/srclist.txt: guess we can't handle the licenses via
+	srclist at the moment.
+
 2007-06-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* MODULES.html.sh: Add include_next.
