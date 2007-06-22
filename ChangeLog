@@ -1,3 +1,10 @@
+2007-06-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (func_add_or_update, func_create_testdir): Do not
+	simplify `sed_replace_build_aux' scripts, they are portable but
+	echoing them with `echo' is not.
+	Report and analysis by Fernando Ferreira <fernando.prog@netcabo.pt>.
+
 2007-06-21  Karl Berry  <karl@gnu.org>
 
 	* config/srclist.txt: guess we can't handle the licenses via

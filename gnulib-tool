@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-05-28 15:46:55 $'
+cvsdatestamp='$Date: 2007-06-22 18:16:40 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2174,7 +2174,6 @@ func_import ()
           s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
           ba
         }'
-      sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
     else
       sed_replace_build_aux=
     fi
@@ -2623,7 +2622,6 @@ func_create_testdir ()
 	 s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:../'"$auxdir"'/\2)|
 	 ba
        }'
-     sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
      # We don't have explicit ordering constraints between the various
      # autoconf snippets. It's cleanest to put those of the library before
      # those of the tests.
@@ -2744,7 +2742,6 @@ func_create_testdir ()
          s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
          ba
        }'
-     sed_replace_build_aux=`echo "$sed_replace_build_aux" | sed -e 1d -e 's/^ *//'`
    else
      sed_replace_build_aux=
    fi
