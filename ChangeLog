@@ -1,5 +1,12 @@
 2007-06-23  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
+	Don't let the 'mostlyclean' target fail if the last subdirectory could
+	not be removed.
+	Reported by Karl Berry.
+
+2007-06-23  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (echo): Add a speedier workaround for ksh.
 	* tests/test-echo.sh: Likewise.
 
