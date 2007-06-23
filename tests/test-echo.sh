@@ -76,7 +76,7 @@ $*
 EOF
 }
   else
-    # 'printf' is a shell built-in. Now it's safe to define 'echo'.
+    # 'printf' is a shell built-in.
 echo ()
 {
   printf '%s\n' "$*"
