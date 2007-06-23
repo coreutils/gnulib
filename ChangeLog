@@ -1,3 +1,8 @@
+2007-06-23  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (echo): Add workarounds also for bash versions < 2.04.
+	* tests/test-echo.sh: Likewise.
+
 2007-06-23  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* gnulib-tool (IFS): Initialize early, so we don't set it to

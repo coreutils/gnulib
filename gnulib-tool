@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-06-23 07:40:58 $'
+cvsdatestamp='$Date: 2007-06-23 09:52:09 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -415,16 +415,21 @@ func_ln_if_changed ()
 # Test cases:
 #   echo '\n' | wc -l                 prints 1 when OK, 2 when KO
 #   echo '\t' | grep t > /dev/null    has return code 0 when OK, 1 when KO
-# This problem is a weird heritage from SVR4. BSD got it right.
+# This problem is a weird heritage from SVR4. BSD got it right (except that
+# BSD echo interprets '-n' as an option, which is also not desirable).
 # Nowadays the problem occurs in 4 situations:
-# - in bash, when the shell option xpg_echo is set,
+# - in bash, when the shell option xpg_echo is set (bash >= 2.04)
+#            or when it was built with --enable-usg-echo-default (bash >= 2.0)
+#            or when it was built with DEFAULT_ECHO_TO_USG (bash < 2.0),
 # - in zsh, when sh-emulation is not set,
 # - in ksh (e.g. AIX /bin/sh and Solaris /usr/xpg4/bin/sh are ksh instances,
 #           and HP-UX /bin/sh and IRIX /bin/sh behave similarly),
 # - in Solaris /bin/sh and OSF/1 /bin/sh.
 # We try the following workarounds:
 # - for all: respawn using $CONFIG_SHELL if that is set and works.
-# - for bash: unset the shell option xpg_echo.
+# - for bash >= 2.04: unset the shell option xpg_echo.
+# - for bash >= 2.0: define echo to a function that uses the printf built-in.
+# - for bash < 2.0: define echo to a function that uses cat of a here document.
 # - for zsh: turn sh-emulation on.
 # - for ksh: alias echo to a function that uses cat of a here document.
 # - for Solaris /bin/sh: respawn using /bin/ksh and rely on the ksh workaround.
@@ -445,12 +450,36 @@ if test -z "$have_echo" \
   exec $CONFIG_SHELL "$0" --no-reexec "$@"
   exit 127
 fi
-# For bash: unset the shell option xpg_echo.
+# For bash >= 2.04: unset the shell option xpg_echo.
 if test -z "$have_echo" \
    && test -n "$BASH_VERSION" \
    && (shopt -o xpg_echo; echo '\t' | grep t > /dev/null) 2>/dev/null; then
   shopt -o xpg_echo
   have_echo=yes
+fi
+# For bash >= 2.0: define echo to a function that uses the printf built-in.
+# For bash < 2.0: define echo to a function that uses cat of a here document.
+# (There is no win in using 'printf' over 'cat' if it is not a shell built-in.)
+if test -z "$have_echo" \
+   && test -n "$BASH_VERSION"; then \
+  if type printf 2>/dev/null | grep / > /dev/null; then
+    # 'printf' is not a shell built-in.
+echo ()
+{
+cat <<EOF
+$*
+EOF
+}
+  else
+    # 'printf' is a shell built-in. Now it's safe to define 'echo'.
+echo ()
+{
+  printf '%s\n' "$*"
+}
+  fi
+  if echo '\t' | grep t > /dev/null; then
+    have_echo=yes
+  fi
 fi
 # For zsh: turn sh-emulation on.
 if test -z "$have_echo" \
@@ -464,7 +493,7 @@ fi
 #    Therefore, for an alias to take effect, the alias definition command has
 #    to be executed before the command which references the alias is read."
 # Because of this, we have to play strange tricks with have_echo, to ensure
-# that the top-level statement containing the test start after the 'alias'
+# that the top-level statement containing the test starts after the 'alias'
 # command.
 if test -z "$have_echo"; then
 bsd_echo ()
