@@ -1,5 +1,10 @@
 2007-06-23  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (echo): Add a speedier workaround for ksh.
+	* tests/test-echo.sh: Likewise.
+
+2007-06-23  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (echo): Add workarounds also for bash versions < 2.04.
 	* tests/test-echo.sh: Likewise.
 

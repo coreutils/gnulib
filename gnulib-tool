@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-06-23 10:14:04 $'
+cvsdatestamp='$Date: 2007-06-23 11:20:11 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -431,8 +431,10 @@ func_ln_if_changed ()
 # - for bash >= 2.0: define echo to a function that uses the printf built-in.
 # - for bash < 2.0: define echo to a function that uses cat of a here document.
 # - for zsh: turn sh-emulation on.
+# - for ksh: alias echo to 'print -r'.
 # - for ksh: alias echo to a function that uses cat of a here document.
-# - for Solaris /bin/sh: respawn using /bin/ksh and rely on the ksh workaround.
+# - for Solaris /bin/sh and OSF/1 /bin/sh: respawn using /bin/ksh and rely on
+#   the ksh workaround.
 # - otherwise: respawn using /bin/sh and rely on the workarounds.
 # When respawning, we pass --no-reexec as first argument, so as to avoid
 # turning this script into a fork bomb in unlucky situations.
@@ -486,6 +488,24 @@ if test -z "$have_echo" \
    && test -n "$ZSH_VERSION" \
    && (emulate sh) >/dev/null 2>&1; then
   emulate sh
+fi
+# For ksh: alias echo to 'print -r'.
+if test -z "$have_echo" \
+   && (type print) >/dev/null 2>&1; then
+  # A 'print' command exists.
+  if type print 2>/dev/null | grep / > /dev/null; then
+    :
+  else
+    # 'print' is a shell built-in.
+    if (print -r '\told' | grep told > /dev/null) 2>/dev/null; then
+      # 'print' is the ksh shell built-in.
+      alias echo='print -r'
+    fi
+  fi
+fi
+if test -z "$have_echo" \
+   && echo '\t' | grep t > /dev/null; then
+  have_echo=yes
 fi
 # For ksh: alias echo to a function that uses cat of a here document.
 # The ksh manual page says:
