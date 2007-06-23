@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-06-23 11:20:11 $'
+cvsdatestamp='$Date: 2007-06-23 12:37:29 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2774,8 +2774,8 @@ func_create_testdir ()
      sed_replace_build_aux='
        :a
        /AC_CONFIG_FILES(.*:build-aux\/.*)/{
-	 s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:../'"$auxdir"'/\2)|
-	 ba
+         s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:../'"$auxdir"'/\2)|
+         ba
        }'
      # We don't have explicit ordering constraints between the various
      # autoconf snippets. It's cleanest to put those of the library before
@@ -2970,7 +2970,7 @@ func_create_testdir ()
        echo "executing ${AUTOPOINT} --force"
        ${AUTOPOINT} --force || func_exit 1
        for f in ../$m4base/*.m4~; do
-	 mv -f $f `echo $f | sed -e 's,~$,,'` || func_exit 1
+         mv -f $f `echo $f | sed -e 's,~$,,'` || func_exit 1
        done
      fi
      echo "executing ${ACLOCAL} -I ../$m4base"
