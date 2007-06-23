@@ -1,3 +1,11 @@
+2007-06-23  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (IFS): Initialize early, so we don't set it to
+	empty later.
+	(self_abspathname): Rewrite algorithm to set it, reindent.
+	(func_emit_lib_Makefile_am, func_emit_tests_Makefile_am)
+	(func_create_megatestdir): Merge some sed scripts.
+
 2007-06-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/include_next.m4 (gl_CHECK_NEXT_HEADERS): Check some typos
