@@ -1,4 +1,4 @@
-# include_next.m4 serial 2
+# include_next.m4 serial 3
 dnl Copyright (C) 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,12 +49,15 @@ AC_DEFUN([gl_CHECK_NEXT_HEADERS],
   AC_FOREACH([gl_HEADER_NAME], [$1],
     [AS_VAR_PUSHDEF([gl_next_header],
 		    [gl_cv_next_]m4_quote(m4_defn([gl_HEADER_NAME])))
-     AS_VAR_SET([gl_next_header], ['<'gl_HEADER_NAME'>'])
-     if test $gl_cv_have_include_next = no; then
+     if test $gl_cv_have_include_next = yes; then
+       AS_VAR_SET([gl_next_header], ['<'gl_HEADER_NAME'>'])
+     else
        AC_CACHE_CHECK(
 	 [absolute name of <]m4_quote(m4_defn([gl_HEADER_NAME]))[>],
 	 m4_quote(m4_defn([gl_next_header])),
-	 [if test AS_VAR_GET([ac_cv_header_]m4_quote(m4_defn([gl_HEADER_NAME]))) = yes; then
+	 [AS_VAR_PUSHDEF([gl_header_exists],
+			 [ac_cv_header_]m4_quote(m4_defn([gl_HEADER_NAME])))
+	  if test AS_VAR_GET(gl_header_exists) = yes; then
 	    AC_LANG_CONFTEST(
 	      [AC_LANG_SOURCE(
 		 [[#include <]]m4_dquote(m4_defn([gl_HEADER_NAME]))[[>]]
@@ -70,7 +73,10 @@ AC_DEFUN([gl_CHECK_NEXT_HEADERS],
 		 p
 		 q
 	       }'`'"'])
-	  fi])
+	  else
+	    AS_VAR_SET([gl_next_header], ['<'gl_HEADER_NAME'>'])
+	  fi
+	  AS_VAR_POPDEF([gl_header_exists])])
      fi
      AC_SUBST(
        AS_TR_CPP([NEXT_]m4_quote(m4_defn([gl_HEADER_NAME]))),

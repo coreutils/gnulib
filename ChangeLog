@@ -1,3 +1,8 @@
+2007-06-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/include_next.m4 (gl_CHECK_NEXT_HEADERS): Check some typos
+	exposed by Sun Studio 11 cc on Solaris 8.
+
 2007-06-22  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (echo): Ensure the echo primitive does not interpret
