@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2007-06-20.13}
+\def\texinfoversion{2007-06-24.14}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -8335,6 +8335,10 @@ should work if nowhere else does.}
   \ifpdf
     \pdfpageheight #7\relax
     \pdfpagewidth #8\relax
+    % if we don't reset these, they will remain at "1 true in" of
+    % whatever layout pdftex was dumped with.
+    \pdfhorigin = 1 true in
+    \pdfvorigin = 1 true in
   \fi
   %
   \setleading{\textleading}
