@@ -1,3 +1,7 @@
+2007-06-26  Karl Berry  <karl@gnu.org>
+
+	* MODULES.html.sh: remove xreadlink-with-size.
+
 2007-06-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/time_.h: Port to Solaris 8 with Sun Studio 11, using a
