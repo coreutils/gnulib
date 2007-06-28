@@ -1,3 +1,12 @@
+2007-06-27  Simon Josefsson  <simon@josefsson.org>
+	    Bruno Haible  <bruno@clisp.org>
+
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Require gl_HEADER_SYS_SOCKET
+	before using HAVE_WS2TCPIP_H. Check for gai_strerror through an
+	explicit link test, rather than AC_REPLACE_FUNCS - for mingw.
+	(gl_PREREQ_GETADDRINFO): Require gl_HEADER_SYS_SOCKET before using
+	HAVE_SYS_SOCKET_H and HAVE_WS2TCPIP_H.
+
 2007-06-27  Bruno Haible  <bruno@clisp.org>
 
 	* build-aux/config.rpath: Upgrade to libtool-1.5.24.
