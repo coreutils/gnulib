@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 23, 2007
+@set lastupdate June 26, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -677,9 +677,8 @@ as in (a) below.  A copy of the license is included in the section
 entitled "GNU Free Documentation License".
 
 (a) The FSF's Back-Cover Text is: ``You are free to copy and modify
-this GNU Manual.  Buying copies from GNU Press supports the FSF in
+this GNU Manual. Buying copies from GNU Press supports the FSF in
 developing GNU and promoting software freedom.''
-
 @end smallexample
 
 If the FSF does not publish this manual on paper, then omit the last
