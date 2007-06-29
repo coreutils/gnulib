@@ -2,7 +2,7 @@
 # This Makefile fragment is intended to be useful by any GNU-like project.
 # This file originate from coreutils, CPPI, Bison, and Autoconf.
 
-## Copyright (C) 2001-2006 Free Software Foundation, Inc.
+## Copyright (C) 2001-2007 Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -109,7 +109,7 @@ syntax-check: $(syntax-check-rules)
 
 # Update gettext files.
 PACKAGE ?= $(shell basename $(PWD))
-POURL = http://www.iro.umontreal.ca/translation/maint/$(PACKAGE)/
+POURL = http://translationproject.org/latest/$(PACKAGE)/
 PODIR ?= po
 refresh-po:
 	rm -f $(PODIR)/*.po && \
