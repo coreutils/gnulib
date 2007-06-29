@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2007-06-24.14}
+\def\texinfoversion{2007-06-29.13}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -11,7 +11,7 @@
 %
 % This texinfo.tex file is free software; you can redistribute it and/or
 % modify it under the terms of the GNU General Public License as
-% published by the Free Software Foundation; either version 2, or (at
+% published by the Free Software Foundation; either version 3, or (at
 % your option) any later version.
 %
 % This texinfo.tex file is distributed in the hope that it will be
@@ -6332,6 +6332,10 @@ end
 % all characters are catcode 10, 11 or 12, except \ which is active
 % (as in normal texinfo). It is necessary to change the definition of \.
 
+% Non-ASCII encodings make 8-bit characters active, so un-activate
+% them to avoid their expansion.  Must do this non-globally, to
+% confine the change to the current group.
+
 % It's necessary to have hard CRs when the macro is executed. This is
 % done by  making ^^M (\endlinechar) catcode 12 when reading the macro
 % body, and then making it the \newlinechar in \scanmacro.
@@ -6346,6 +6350,7 @@ end
   \catcode`\_=\other
   \catcode`\|=\other
   \catcode`\~=\other
+  \ifx\declaredencoding\ascii \else \setnonasciicharscatcodenonglobal\other \fi
 }
 
 \def\scanargctxt{%
@@ -7479,6 +7484,14 @@ should work if nowhere else does.}
    \count255=128
    \loop\ifnum\count255<256
       \global\catcode\count255=#1
+      \advance\count255 by 1
+   \repeat
+}
+
+\def\setnonasciicharscatcodenonglobal#1{%
+   \count255=128
+   \loop\ifnum\count255<256
+      \catcode\count255=#1
       \advance\count255 by 1
    \repeat
 }
