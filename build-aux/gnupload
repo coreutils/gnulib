@@ -1,9 +1,9 @@
 #!/bin/sh
 # Sign files and upload them.
 
-scriptversion=2006-11-12.11
+scriptversion=2007-06-30.12
 
-# Copyright (C) 2004, 2005, 2006  Free Software Foundation
+# Copyright (C) 2004, 2005, 2006, 2007  Free Software Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ fi
 
 # Make sure all files exist.  We don't want to ask
 # for the passphrase if the script will fail.
-for file;
+for file
 do
   if test ! -f $file; then
     echo "$0: Cannot find \`$file'" 1>&2
@@ -127,16 +127,16 @@ read -r passphrase
 stty echo
 echo
 
-for file;
+for file
 do
   echo "Signing $file..."
   rm -f $file.sig
   echo $passphrase | $GPG --passphrase-fd 0 -ba -o $file.sig $file
 done
 
-for dest in $to;
+for dest in $to
 do
-  for file;
+  for file
   do
     echo "Uploading $file to $dest..."
     files="$file $file.sig"

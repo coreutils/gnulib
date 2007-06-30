@@ -1,3 +1,9 @@
+2007-06-30  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Sync from Automake.
+	* build-aux/gnupload: Fix shell portability issues with for loops.
+	Report by Karl Berry.
+
 2007-06-29  Simon Josefsson  <simon@josefsson.org>
 
 	* build-aux/maint.mk (POURL): Use translationproject.org.
