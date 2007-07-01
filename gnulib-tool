@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-06-23 19:21:30 $'
+cvsdatestamp='$Date: 2007-07-01 07:55:35 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -887,23 +887,22 @@ case "$0" in
   /*) self_abspathname="$0" ;;
   */*) self_abspathname=`pwd`/"$0" ;;
   *)
-  
-  self_abspathname=
-  save_IFS=$IFS
-  IFS=:
-  for d in $PATH; do
+    self_abspathname=
+    save_IFS=$IFS
+    IFS=:
+    for d in $PATH; do
+      IFS=$save_IFS
+      test -z "$d" && d=.
+      if test -x "$d/$0" && test ! -d "$d/$0"; then
+	self_abspathname=$d/$0
+	break
+      fi
+    done
     IFS=$save_IFS
-    test -z "$d" && d=.
-    if test -x "$d/$0" && test ! -d "$d/$0"; then
-      self_abspathname=$d/$0
-      break
+    if test -z "$self_abspathname"; then
+      func_fatal_error "could not locate the gnulib-tool program - how did you invoke it?"
     fi
-  done
-  IFS=$save_IFS
-  if test -z "$self_abspathname"; then
-    func_fatal_error "could not locate the gnulib-tool program - how did you invoke it?"
-  fi
-  ;;
+    ;;
 esac
 while test -h "$self_abspathname"; do
   # Resolve symbolic link.
@@ -3058,7 +3057,7 @@ func_create_megatestdir ()
                    -e 's,October,10,'   -e 's,Oct,10,' \
                    -e 's,November,11,'  -e 's,Nov,11,' \
                    -e 's,December,12,'  -e 's,Dec,12,' \
-                   -e 's,^,00,'         -e 's,^[0-9]*\([0-9][0-9] \),\1,' \
+                   -e 's,^,00,' -e 's,^[0-9]*\([0-9][0-9] \),\1,' \
                    -e 's,^\([0-9]*\) \([0-9]*\) \([0-9]*\),\3\2\1,'`
   (echo '#!/bin/sh'
    echo "CVSDATE=$cvsdate"

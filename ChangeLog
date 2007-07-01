@@ -1,3 +1,9 @@
+2007-07-01  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool: Fix indentation.
+	(func_create_megatestdir): Likewise.
+	Report by Bruno Haible.
+
 2007-06-30  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Sync from Automake.
