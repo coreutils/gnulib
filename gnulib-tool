@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-07-01 11:02:15 $'
+cvsdatestamp='$Date: 2007-07-01 12:17:22 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -892,7 +892,7 @@ case "$0" in
     case :$PATH: in
       *::*)
         pathx=`echo ":$PATH:" | sed -e 's/:::*/:.:/g' -e 's/^://' -e 's/:\$//'`
-	;;
+        ;;
     esac
     save_IFS=$IFS
     IFS=:
@@ -900,8 +900,8 @@ case "$0" in
       IFS=$save_IFS
       test -z "$d" && d=.
       if test -x "$d/$0" && test ! -d "$d/$0"; then
-	self_abspathname=$d/$0
-	break
+        self_abspathname=$d/$0
+        break
       fi
     done
     IFS=$save_IFS
