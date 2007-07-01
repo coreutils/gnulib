@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-07-01 12:17:22 $'
+cvsdatestamp='$Date: 2007-07-01 13:01:40 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -887,24 +887,57 @@ case "$0" in
   /*) self_abspathname="$0" ;;
   */*) self_abspathname=`pwd`/"$0" ;;
   *)
+    # Look in $PATH.
+    # Iterate through the elements of $PATH.
+    # We use IFS=: instead of
+    #   for d in `echo ":$PATH:" | sed -e 's/:::*/:.:/g' | sed -e 's/:/ /g'`
+    # because the latter does not work when some PATH element contains spaces.
+    # We use a canonicalized $pathx instead of $PATH, because empty PATH
+    # elements are by definition equivalent to '.', however field splitting
+    # according to IFS=: loses empty fields in many shells:
+    #   - /bin/sh on OSF/1 and Solaris loses all empty fields (at the
+    #     beginning, at the end, and in the middle),
+    #   - /bin/sh on IRIX and /bin/ksh on IRIX and OSF/1 lose empty fields
+    #     at the beginning and at the end,
+    #   - GNU bash, /bin/sh on AIX and HP-UX, and /bin/ksh on AIX, HP-UX,
+    #     Solaris lose empty fields at the end.
+    # The 'case' statement is an optimization, to avoid evaluating the
+    # explicit canonicalization command when $PATH contains no empty fields.
     self_abspathname=
-    pathx=$PATH
-    case :$PATH: in
-      *::*)
-        pathx=`echo ":$PATH:" | sed -e 's/:::*/:.:/g' -e 's/^://' -e 's/:\$//'`
-        ;;
-    esac
-    save_IFS=$IFS
-    IFS=:
+    if test "${PATH_SEPARATOR+set}" != set; then
+      func_tmpdir
+      { echo "#! /bin/sh"; echo "exit 0"; } > "$tmp"/conf.sh
+      chmod +x "$tmp"/conf.sh
+      if (PATH="/nonexistent;$tmp"; conf.sh) >/dev/null 2>&1; then
+        PATH_SEPARATOR=';'
+      else
+        PATH_SEPARATOR=:
+      fi
+      rm -rf "$tmp"
+    fi
+    if test "$PATH_SEPARATOR" = ";"; then
+      # On Windows, programs are searched in "." before $PATH.
+      pathx=".;$PATH"
+    else
+      # On Unix, we have to convert empty PATH elements to ".".
+      pathx="$PATH"
+      case :$PATH: in
+        *::*)
+          pathx=`echo ":$PATH:" | sed -e 's/:::*/:.:/g' -e 's/^://' -e 's/:\$//'`
+          ;;
+      esac
+    fi
+    save_IFS="$IFS"
+    IFS="$PATH_SEPARATOR"
     for d in $pathx; do
-      IFS=$save_IFS
+      IFS="$save_IFS"
       test -z "$d" && d=.
       if test -x "$d/$0" && test ! -d "$d/$0"; then
-        self_abspathname=$d/$0
+        self_abspathname="$d/$0"
         break
       fi
     done
-    IFS=$save_IFS
+    IFS="$save_IFS"
     if test -z "$self_abspathname"; then
       func_fatal_error "could not locate the gnulib-tool program - how did you invoke it?"
     fi

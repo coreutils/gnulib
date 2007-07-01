@@ -1,4 +1,9 @@
 2007-07-01  Bruno Haible <bruno@clisp.org>
+
+	* gnulib-tool (self_abspathname): Determine PATH_SEPARATOR and handle
+	Windows PATH as well. Conservative double-quoting. Comments.
+
+2007-07-01  Bruno Haible <bruno@clisp.org>
 	    Eric Blake  <ebb9@byu.net>
 	    Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
