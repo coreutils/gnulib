@@ -25,6 +25,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <stdarg.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 #include "vasnprintf.h"
@@ -46,9 +47,17 @@ vsprintf (char *str, const char *format, va_list args)
 {
   char *output;
   size_t len;
+  size_t lenbuf;
+
   /* vasnprintf fails with EOVERFLOW when the buffer size argument is larger
-     than INT_MAX (if that fits into a 'size_t' at all).  */
-  size_t lenbuf = (SIZE_MAX < INT_MAX ? SIZE_MAX : INT_MAX);
+     than INT_MAX (if that fits into a 'size_t' at all).
+     Also note that glibc's iconv fails with E2BIG when we pass a length that
+     is so large that str + lenbuf wraps around, i.e.
+     (uintptr_t) (str + lenbuf) < (uintptr_t) str.
+     Therefore set lenbuf = min (SIZE_MAX, INT_MAX, - (uintptr_t) str - 1).  */
+  lenbuf = (SIZE_MAX < INT_MAX ? SIZE_MAX : INT_MAX);
+  if (lenbuf > ~ (uintptr_t) str)
+    lenbuf = ~ (uintptr_t) str;
 
   output = vasnprintf (str, &lenbuf, format, args);
   len = lenbuf;

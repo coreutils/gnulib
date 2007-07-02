@@ -1,3 +1,11 @@
+2007-07-01  Bruno Haible  <bruno@clisp.org>
+
+	* lib/sprintf.c (sprintf): Limit the available length estimation,
+	to avoid address wraparound.
+	* lib/vsprintf.c (vsprintf): Likewise.
+	* modules/sprintf-posix (Dependencies): Add stdint.
+	* modules/vsprintf-posix (Dependencies): Likewise.
+
 2007-07-01  Bruno Haible <bruno@clisp.org>
 
 	* gnulib-tool (self_abspathname): Determine PATH_SEPARATOR and handle

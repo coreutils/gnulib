@@ -17,6 +17,7 @@ printf-frexpl
 signbit
 fpucw
 printf-safe
+stdint
 
 configure.ac:
 gl_FUNC_SPRINTF_POSIX
