@@ -1,4 +1,4 @@
-# inttypes.m4 serial 9
+# inttypes.m4 serial 10
 dnl Copyright (C) 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -143,6 +143,22 @@ const char *l = /* implicit string concatenation */
 
     AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
     gl_CHECK_NEXT_HEADERS([inttypes.h])
+
+    dnl Ensure that <stdint.h> defines the limit macros, since gnulib's
+    dnl <inttypes.h> relies on them.  This macro is only needed when a
+    dnl C++ compiler is in use; it has no effect for a C compiler.
+    dnl Also be careful to define __STDC_LIMIT_MACROS only when gnulib's
+    dnl <inttypes.h> is going to be created, and to avoid redefinition warnings
+    dnl if the __STDC_LIMIT_MACROS is already defined through the CPPFLAGS.
+    AC_DEFINE([__STDC_LIMIT_MACROS_TRIGGER], 1,
+      [Define to make the limit macros in <stdint.h> visible.])
+    AH_VERBATIM([__STDC_LIMIT_MACROS_ZZZ],
+[/* Ensure that <stdint.h> defines the limit macros, since gnulib's
+   <inttypes.h> relies on them.  */
+#if defined __cplusplus && !defined __STDC_LIMIT_MACROS && __STDC_LIMIT_MACROS_TRIGGER
+# define __STDC_LIMIT_MACROS 1
+#endif
+])
 
     PRIPTR_PREFIX=
     if test -n "$STDINT_H"; then

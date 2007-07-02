@@ -1,3 +1,9 @@
+2007-07-02  Bruno Haible  <bruno@clisp.org>
+
+	* m4/inttypes.m4 (gl_INTTYPES_H): Define __STDC_LIMIT_MACROS in C++
+	mode, when inttypes.h comes from gnulib.
+	Reported by Joel E. Denny <jdenny@ces.clemson.edu>.
+
 2007-07-02  Simon Josefsson  <simon@josefsson.org>
 
 	* NEWS: Mention lgpl module name change.
