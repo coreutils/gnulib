@@ -7,6 +7,7 @@ lib/unistdio/u-printf-args.c
 lib/printf-args.h
 lib/printf-args.c
 m4/vasnprintf.m4
+m4/intmax_t.m4
 
 Depends-on:
 unitypes
