@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2007-07-01.15}
+\def\texinfoversion{2007-07-02.23}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995, 2007,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1260,7 +1260,33 @@ be supported due to the design of the PDF format; use regular TeX (DVI
 output) for that.)}
 
 \ifpdf
-  \input pdfcolor
+  %
+  % Color manipulation macros from pdfcolor.tex.
+  \def\cmykBrickRed{0 0.89 0.94 0.28}
+  \def\cmykBlack{0 0 0 1}
+  %
+  \def\BrickRed{\pdfsetcolor{\cmykBrickRed}}
+  \def\Black{\pdfsetcolor{\cmykBlack}}
+  %
+  \def\pdfsetcolor#1{\pdfliteral{#1 k}}
+  \def\setcolor#1{\mark{#1}\pdfsetcolor{#1}}
+  %
+  \def\maincolor{\cmykBlack}
+  \pdfsetcolor{\maincolor}
+  %
+  \def\makefootline{
+      \baselineskip24pt
+      \line{\pdfsetcolor{\maincolor}\the\footline}}
+  %
+  \def\makeheadline{%
+      \edef\M{\topmark}
+      \ifx\M\empty\let\M=\maincolor\fi
+      \vbox to 0pt{\vskip-22.5pt
+          \line{\vbox to8.5pt{}%
+          \pdfsetcolor{\maincolor}\the\headline\pdfsetcolor{\M}}\vss}%
+      \nointerlineskip}
+  %
+  %
   \pdfcatalog{/PageMode /UseOutlines}
   %
   % #1 is image name, #2 width (might be empty/whitespace), #3 height (ditto).
@@ -1327,7 +1353,6 @@ output) for that.)}
   %
   % by default, use a color that is dark enough to print on paper as
   % nearly black, but still distinguishable for online viewing.
-  % (Defined in pdfcolor.tex.)
   \let\urlcolor = \BrickRed
   \let\linkcolor = \BrickRed
   \def\endlink{\Black\pdfendlink}
@@ -4097,7 +4122,7 @@ end
   %
   % If \lastskip is nonzero, that means the last item was a
   % skip.  And since a skip is discardable, that means this
-  % -\skip0 glue we're inserting is preceded by a
+  % -\whatsitskip glue we're inserting is preceded by a
   % non-discardable item, therefore it is not a potential
   % breakpoint, therefore no \nobreak needed.
   \ifx\lastskipmacro\zeroskipmacro
@@ -4966,6 +4991,7 @@ end
     \donoderef{#2}%
     %
     % Typeset the actual heading.
+    \nobreak % Avoid page breaks at the interline glue.
     \vbox{\hyphenpenalty=10000 \tolerance=5000 \parindent=0pt \raggedright
           \hangindent=\wd0 \centerparametersmaybe
           \unhbox0 #1\par}%
