@@ -1,8 +1,8 @@
 Description:
-Provide the GNU General Public License in Texinfo format.
+Provide the GNU General Public License version 2.0 in Texinfo format.
 
 Files:
-doc/gpl.texi
+doc/gpl-2.0.texi
 
 Depends-on:
 

@@ -1,3 +1,12 @@
+2007-07-02  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/gpl-3.0: New file, based on gpl-2.0.
+
+	* modules/gpl-2.0: Renamed from gpl.
+
+	* modules/gpl: Fix filename, doc/gpl.texi is now found at
+	doc/gpl-2.0.texi.
+
 2007-07-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/inttypes_.h [defined __cplusplus&&!defined __STDC_LIMIT_MACROS]:
