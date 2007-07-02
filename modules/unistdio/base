@@ -1,0 +1,22 @@
+Description:
+Base layer for formatted output to strings.
+
+Files:
+lib/unistdio.h
+
+Depends-on:
+unitypes
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"unistdio.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

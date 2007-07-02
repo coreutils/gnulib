@@ -1,0 +1,26 @@
+Description:
+Formatted output to an UTF-8 string, with automatic memory allocation and
+bounded output size.
+
+Files:
+lib/unistdio/u8-asnprintf.c
+lib/unistdio/u-asnprintf.h
+
+Depends-on:
+unistdio/base
+unistdio/u8-vasnprintf
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistdio/u8-asnprintf.c
+
+Include:
+"unistdio.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

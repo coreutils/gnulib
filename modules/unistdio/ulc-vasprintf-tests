@@ -1,0 +1,13 @@
+Files:
+tests/unistdio/test-ulc-vasprintf1.c
+tests/unistdio/test-ulc-printf1.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-ulc-vasprintf1
+check_PROGRAMS += test-ulc-vasprintf1
+test_ulc_vasprintf1_SOURCES = unistdio/test-ulc-vasprintf1.c
+test_ulc_vasprintf1_LDADD = $(LDADD) @LIBICONV@

@@ -1,0 +1,25 @@
+Description:
+Formatted output to a string, with automatic memory allocation.
+
+Files:
+lib/unistdio/ulc-asprintf.c
+lib/unistdio/u-asprintf.h
+
+Depends-on:
+unistdio/base
+unistdio/ulc-vasprintf
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistdio/ulc-asprintf.c
+
+Include:
+"unistdio.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

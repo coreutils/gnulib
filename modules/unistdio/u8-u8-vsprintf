@@ -1,0 +1,26 @@
+Description:
+Formatted output to an UTF-8 string.
+
+Files:
+lib/unistdio/u8-u8-vsprintf.c
+lib/unistdio/u-vsprintf.h
+
+Depends-on:
+unistdio/base
+unistdio/u8-u8-vasnprintf
+stdint
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistdio/u8-u8-vsprintf.c
+
+Include:
+"unistdio.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

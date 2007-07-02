@@ -1,0 +1,25 @@
+Description:
+Formatted output to an UTF-16 string, with automatic memory allocation.
+
+Files:
+lib/unistdio/u16-u16-vasprintf.c
+lib/unistdio/u-vasprintf.h
+
+Depends-on:
+unistdio/base
+unistdio/u16-u16-vasnprintf
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistdio/u16-u16-vasprintf.c
+
+Include:
+"unistdio.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

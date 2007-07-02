@@ -1,0 +1,25 @@
+Description:
+Formatted output to an UTF-16 string, with automatic memory allocation.
+
+Files:
+lib/unistdio/u16-u16-asprintf.c
+lib/unistdio/u-asprintf.h
+
+Depends-on:
+unistdio/base
+unistdio/u16-u16-vasprintf
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistdio/u16-u16-asprintf.c
+
+Include:
+"unistdio.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

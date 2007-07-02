@@ -2439,6 +2439,70 @@ func_all_modules ()
   func_module uniconv/u8-strconv-to-locale
   func_module uniconv/u16-strconv-to-locale
   func_module uniconv/u32-strconv-to-locale
+  func_module unistdio/base
+  func_module unistdio/u-printf-args
+  func_module unistdio/ulc-asnprintf
+  func_module unistdio/ulc-asprintf
+  func_module unistdio/ulc-fprintf
+  func_module unistdio/ulc-printf-parse
+  func_module unistdio/ulc-snprintf
+  func_module unistdio/ulc-sprintf
+  func_module unistdio/ulc-vasnprintf
+  func_module unistdio/ulc-vasprintf
+  func_module unistdio/ulc-vfprintf
+  func_module unistdio/ulc-vsnprintf
+  func_module unistdio/ulc-vsprintf
+  func_module unistdio/u8-asnprintf
+  func_module unistdio/u8-asprintf
+  func_module unistdio/u8-printf-parse
+  func_module unistdio/u8-snprintf
+  func_module unistdio/u8-sprintf
+  func_module unistdio/u8-vasnprintf
+  func_module unistdio/u8-vasprintf
+  func_module unistdio/u8-vsnprintf
+  func_module unistdio/u8-vsprintf
+  func_module unistdio/u8-u8-asnprintf
+  func_module unistdio/u8-u8-asprintf
+  func_module unistdio/u8-u8-snprintf
+  func_module unistdio/u8-u8-sprintf
+  func_module unistdio/u8-u8-vasnprintf
+  func_module unistdio/u8-u8-vasprintf
+  func_module unistdio/u8-u8-vsnprintf
+  func_module unistdio/u8-u8-vsprintf
+  func_module unistdio/u16-asnprintf
+  func_module unistdio/u16-asprintf
+  func_module unistdio/u16-printf-parse
+  func_module unistdio/u16-snprintf
+  func_module unistdio/u16-sprintf
+  func_module unistdio/u16-vasnprintf
+  func_module unistdio/u16-vasprintf
+  func_module unistdio/u16-vsnprintf
+  func_module unistdio/u16-vsprintf
+  func_module unistdio/u16-u16-asnprintf
+  func_module unistdio/u16-u16-asprintf
+  func_module unistdio/u16-u16-snprintf
+  func_module unistdio/u16-u16-sprintf
+  func_module unistdio/u16-u16-vasnprintf
+  func_module unistdio/u16-u16-vasprintf
+  func_module unistdio/u16-u16-vsnprintf
+  func_module unistdio/u16-u16-vsprintf
+  func_module unistdio/u32-asnprintf
+  func_module unistdio/u32-asprintf
+  func_module unistdio/u32-printf-parse
+  func_module unistdio/u32-snprintf
+  func_module unistdio/u32-sprintf
+  func_module unistdio/u32-vasnprintf
+  func_module unistdio/u32-vasprintf
+  func_module unistdio/u32-vsnprintf
+  func_module unistdio/u32-vsprintf
+  func_module unistdio/u32-u32-asnprintf
+  func_module unistdio/u32-u32-asprintf
+  func_module unistdio/u32-u32-snprintf
+  func_module unistdio/u32-u32-sprintf
+  func_module unistdio/u32-u32-vasnprintf
+  func_module unistdio/u32-u32-vasprintf
+  func_module unistdio/u32-u32-vsnprintf
+  func_module unistdio/u32-u32-vsprintf
   func_end_table
 
   element="Executing programs"

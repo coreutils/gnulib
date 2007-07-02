@@ -1,0 +1,26 @@
+Description:
+Formatted output to a fixed-length UTF-16 string.
+
+Files:
+lib/unistdio/u16-vsnprintf.c
+lib/unistdio/u-vsnprintf.h
+
+Depends-on:
+unistdio/base
+unistdio/u16-vasnprintf
+unistr/u16-cpy
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistdio/u16-vsnprintf.c
+
+Include:
+"unistdio.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

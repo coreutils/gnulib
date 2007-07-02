@@ -1,0 +1,26 @@
+Description:
+Formatted output to a string, with automatic memory allocation and bounded
+output size.
+
+Files:
+lib/unistdio/ulc-asnprintf.c
+lib/unistdio/u-asnprintf.h
+
+Depends-on:
+unistdio/base
+unistdio/ulc-vasnprintf
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistdio/ulc-asnprintf.c
+
+Include:
+"unistdio.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

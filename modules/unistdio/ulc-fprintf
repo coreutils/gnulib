@@ -1,0 +1,25 @@
+Description:
+Print formatted output to a stream.
+
+Files:
+lib/unistdio/ulc-fprintf.c
+
+Depends-on:
+unistdio/base
+unistdio/ulc-vasnprintf
+fseterr
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistdio/ulc-fprintf.c
+
+Include:
+"unistdio.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

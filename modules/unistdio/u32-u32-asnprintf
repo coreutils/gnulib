@@ -1,0 +1,26 @@
+Description:
+Formatted output to an UTF-32 string, with automatic memory allocation and
+bounded output size.
+
+Files:
+lib/unistdio/u32-u32-asnprintf.c
+lib/unistdio/u-asnprintf.h
+
+Depends-on:
+unistdio/base
+unistdio/u32-u32-vasnprintf
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistdio/u32-u32-asnprintf.c
+
+Include:
+"unistdio.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

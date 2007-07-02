@@ -1,0 +1,26 @@
+Description:
+Formatted output to a fixed-length UTF-32 string.
+
+Files:
+lib/unistdio/u32-vsnprintf.c
+lib/unistdio/u-vsnprintf.h
+
+Depends-on:
+unistdio/base
+unistdio/u32-vasnprintf
+unistr/u32-cpy
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unistdio/u32-vsnprintf.c
+
+Include:
+"unistdio.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
