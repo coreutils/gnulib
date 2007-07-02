@@ -1,5 +1,9 @@
 2007-07-02  Simon Josefsson  <simon@josefsson.org>
 
+	* NEWS: Mention lgpl module name change.
+
+	* modules/lgpl-2.1: Renamed from lgpl.
+
 	* NEWS: Mention gpl module name change.
 
 	* modules/gpl-3.0: New file, based on gpl-2.0.
