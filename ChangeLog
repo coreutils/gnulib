@@ -1,3 +1,8 @@
+2007-07-04  Karl Berry  <karl@gnu.org>
+
+	* MODULES.html.sh (func_all_modules): Complete rename of
+	gpl/lgpl to gpl-2.0 and lgpl-2.1, and add gpl-3.0.
+
 2007-07-02  Bruno Haible  <bruno@clisp.org>
 
 	* m4/inttypes.m4 (gl_INTTYPES_H): Define __STDC_LIMIT_MACROS in C++
