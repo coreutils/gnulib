@@ -1,3 +1,12 @@
+2007-07-04  Jim Meyering  <jim@meyering.net>
+
+	* lib/getugroups.h: New file.
+	* lib/getugroups.c: Include "getugroups.h".
+	Remove uses of "register" keyword.
+	Move local variable, "cp", down into scope where used.
+	Give "username" parameter the "const" attribute.
+	* modules/getugroups (Files): Add lib/getugroups.h
+
 2007-07-04  Karl Berry  <karl@gnu.org>
 
 	* MODULES.html.sh (func_all_modules): Complete rename of

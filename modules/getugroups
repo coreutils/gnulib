@@ -3,6 +3,7 @@ Return the group IDs of a user.
 
 Files:
 lib/getugroups.c
+lib/getugroups.h
 m4/getugroups.m4
 
 Depends-on:

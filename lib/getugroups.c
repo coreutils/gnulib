@@ -1,7 +1,6 @@
 /* getugroups.c -- return a list of the groups a user is in
 
-   Copyright (C) 1990, 1991, 1998, 1999, 2000, 2003, 2004, 2005, 2006
-   Free Software Foundation.
+   Copyright (C) 1990, 1991, 1998-2000, 2003-2007 Free Software Foundation.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,7 +20,8 @@
 
 #include <config.h>
 
-#include <sys/types.h>
+#include "getugroups.h"
+
 #include <stdio.h> /* grp.h on alpha OSF1 V2.0 uses "FILE *". */
 #include <grp.h>
 
@@ -49,11 +49,11 @@ struct group *getgrent ();
    Always return the number of groups of which USERNAME is a member.  */
 
 int
-getugroups (int maxcount, GETGROUPS_T *grouplist, char *username, gid_t gid)
+getugroups (int maxcount, GETGROUPS_T *grouplist, char const *username,
+	    gid_t gid)
 {
   struct group *grp;
-  register char **cp;
-  register int count = 0;
+  int count = 0;
 
   if (gid != (gid_t) -1)
     {
@@ -65,6 +65,7 @@ getugroups (int maxcount, GETGROUPS_T *grouplist, char *username, gid_t gid)
   setgrent ();
   while ((grp = getgrent ()) != 0)
     {
+      char **cp;
       for (cp = grp->gr_mem; *cp; ++cp)
 	{
 	  int n;
