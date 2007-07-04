@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2007-07-02.23}
+\def\texinfoversion{2007-07-03.23}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995, 2007,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1262,11 +1262,8 @@ output) for that.)}
 \ifpdf
   %
   % Color manipulation macros from pdfcolor.tex.
-  \def\cmykBrickRed{0 0.89 0.94 0.28}
+  \def\cmykDarkRed{0.28 1 1 0.35}
   \def\cmykBlack{0 0 0 1}
-  %
-  \def\BrickRed{\pdfsetcolor{\cmykBrickRed}}
-  \def\Black{\pdfsetcolor{\cmykBlack}}
   %
   \def\pdfsetcolor#1{\pdfliteral{#1 k}}
   \def\setcolor#1{\mark{#1}\pdfsetcolor{#1}}
@@ -1353,9 +1350,9 @@ output) for that.)}
   %
   % by default, use a color that is dark enough to print on paper as
   % nearly black, but still distinguishable for online viewing.
-  \let\urlcolor = \BrickRed
-  \let\linkcolor = \BrickRed
-  \def\endlink{\Black\pdfendlink}
+  \def\urlcolor{\cmykDarkRed}
+  \def\linkcolor{\cmykDarkRed}
+  \def\endlink{\setcolor{\maincolor}\pdfendlink}
   %
   % Adding outlines to PDF; macros for calculating structure of outlines
   % come from Petr Olsak
@@ -1488,7 +1485,7 @@ output) for that.)}
       \def\@{@}%
       \let\/=\empty
       \makevalueexpandable
-      \leavevmode\urlcolor
+      \leavevmode\setcolor{\urlcolor}%
       \startlink attr{/Border [0 0 0]}%
         user{/Subtype /Link /A << /S /URI /URI (#1) >>}%
     \endgroup}
@@ -1515,13 +1512,14 @@ output) for that.)}
     {\noexpand\pdflink{\the\toksC}}\toksC={}\global\countA=0}
   \def\pdflink#1{%
     \startlink attr{/Border [0 0 0]} goto name{\pdfmkpgn{#1}}
-    \linkcolor #1\endlink}
+    \setcolor{\linkcolor}#1\endlink}
   \def\done{\edef\st{\global\noexpand\toksA={\the\toksB}}\st}
 \else
   \let\pdfmkdest = \gobble
   \let\pdfurl = \gobble
   \let\endlink = \relax
-  \let\linkcolor = \relax
+  \let\setcolor = \gobble
+  \let\pdfsetcolor = \gobble
   \let\pdfmakeoutlines = \relax
 \fi  % \ifx\pdfoutput
 
@@ -6718,7 +6716,7 @@ end
          goto name{\pdfmkpgn{\pdfxrefdest}}%
      \fi
     }%
-    \linkcolor
+    \setcolor{\linkcolor}%
   \fi
   %
   % Float references are printed completely differently: "Figure 1.2"
