@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2007-07-03.23}
+\def\texinfoversion{2007-07-05.10}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995, 2007,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -373,7 +373,7 @@
 % marginal hacks, juha@viisa.uucp (Juha Takala)
 \ifvoid\margin\else % marginal info is present
   \rlap{\kern\hsize\vbox to\z@{\kern1pt\box\margin \vss}}\fi
-\dimen@=\dp#1 \unvbox#1
+\dimen@=\dp#1\relax \unvbox#1\relax
 \ifvoid\footins\else\vskip\skip\footins\footnoterule \unvbox\footins\fi
 \ifr@ggedbottom \kern-\dimen@ \vfil \fi}
 }
@@ -7505,7 +7505,7 @@ should work if nowhere else does.}
 \def\setnonasciicharscatcode#1{%
    \count255=128
    \loop\ifnum\count255<256
-      \global\catcode\count255=#1
+      \global\catcode\count255=#1\relax
       \advance\count255 by 1
    \repeat
 }
@@ -7513,7 +7513,7 @@ should work if nowhere else does.}
 \def\setnonasciicharscatcodenonglobal#1{%
    \count255=128
    \loop\ifnum\count255<256
-      \catcode\count255=#1
+      \catcode\count255=#1\relax
       \advance\count255 by 1
    \repeat
 }
@@ -8509,7 +8509,7 @@ should work if nowhere else does.}
   \parskip = 3pt plus 2pt minus 1pt
   \setleading{\textleading}%
   %
-  \dimen0 = #1
+  \dimen0 = #1\relax
   \advance\dimen0 by \voffset
   %
   \dimen2 = \hsize
