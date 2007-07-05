@@ -1,3 +1,8 @@
+2007-07-05  Jim Meyering  <jim@meyering.net>
+
+	Close the group DB even when failing with 2^31 or more members.
+	* lib/getugroups.c (getugroups): Don't return without calling endgrent.
+
 2007-07-04  Jim Meyering  <jim@meyering.net>
 
 	* lib/getugroups.h: New file.

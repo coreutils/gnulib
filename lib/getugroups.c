@@ -84,21 +84,21 @@ getugroups (int maxcount, GETGROUPS_T *grouplist, char const *username,
 	      if (maxcount != 0)
 		{
 		  if (count >= maxcount)
-		    {
-		      endgrent ();
-		      return count;
-		    }
+		    goto done;
 		  grouplist[count] = grp->gr_gid;
 		}
 	      count++;
 	      if (count < 0)
 		{
 		  errno = EOVERFLOW;
-		  return -1;
+		  count = -1;
+		  goto done;
 		}
 	    }
 	}
     }
+
+ done:
   endgrent ();
 
   return count;
