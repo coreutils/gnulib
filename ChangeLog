@@ -1,3 +1,10 @@
+2007-07-05  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* build-aux/bootstrap (TP_URL,get_translations): Update to use
+	the new TP address.
+	(usage): Fix typo
+	(gnulib_mk): New variable.
+
 2007-07-05  Jim Meyering  <jim@meyering.net>
 
 	Don't let endgrent clobber errno, no matter how improbable.
