@@ -99,7 +99,11 @@ getugroups (int maxcount, GETGROUPS_T *grouplist, char const *username,
     }
 
  done:
-  endgrent ();
+  {
+    int saved_errno = errno;
+    endgrent ();
+    errno = saved_errno;
+  }
 
   return count;
 }

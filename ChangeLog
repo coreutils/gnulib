@@ -1,5 +1,9 @@
 2007-07-05  Jim Meyering  <jim@meyering.net>
 
+	Don't let endgrent clobber errno, no matter how improbable.
+	* lib/getugroups.c (getugroups): Save and restore errno around
+	endgrent call.
+
 	Close the group DB even when failing with 2^31 or more members.
 	* lib/getugroups.c (getugroups): Don't return without calling endgrent.
 
