@@ -1,3 +1,8 @@
+2007-07-06  Jim Meyering  <jim@meyering.net>
+
+	* lib/getugroups.c (getugroups): Detect getgrent failure.
+	Adjust comment to reflect reality: this function may return -1.
+
 2007-07-05  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* build-aux/bootstrap (TP_URL,get_translations): Update to use

@@ -45,14 +45,13 @@ struct group *getgrent ();
    process.  Store at most MAXCOUNT group IDs in the GROUPLIST array.
    If GID is not -1, store it first (if possible).  GID should be the
    group ID (pw_gid) obtained from getpwuid, in case USERNAME is not
-   listed in /etc/groups.
-   Always return the number of groups of which USERNAME is a member.  */
+   listed in /etc/groups.  Upon failure, set errno and return -1.
+   Otherwise, return the number of IDs we've written into GROUPLIST.  */
 
 int
 getugroups (int maxcount, GETGROUPS_T *grouplist, char const *username,
 	    gid_t gid)
 {
-  struct group *grp;
   int count = 0;
 
   if (gid != (gid_t) -1)
@@ -63,9 +62,16 @@ getugroups (int maxcount, GETGROUPS_T *grouplist, char const *username,
     }
 
   setgrent ();
-  while ((grp = getgrent ()) != 0)
+  while (1)
     {
       char **cp;
+      struct group *grp;
+
+      errno = 0;
+      grp = getgrent ();
+      if (grp == NULL)
+	break;
+
       for (cp = grp->gr_mem; *cp; ++cp)
 	{
 	  int n;
@@ -91,12 +97,14 @@ getugroups (int maxcount, GETGROUPS_T *grouplist, char const *username,
 	      if (count < 0)
 		{
 		  errno = EOVERFLOW;
-		  count = -1;
 		  goto done;
 		}
 	    }
 	}
     }
+
+  if (errno != 0)
+    count = -1;
 
  done:
   {
