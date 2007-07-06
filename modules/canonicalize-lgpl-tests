@@ -11,4 +11,4 @@ TESTS += test-canonicalize-lgpl.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-canonicalize-lgpl
 EXTRA_DIST += test-canonicalize-lgpl.sh
-test_canonicalize_lgpl_LDADD = $(LDADD) @LIBINTL@
+test_canonicalize_lgpl_LDADD = $(LDADD)

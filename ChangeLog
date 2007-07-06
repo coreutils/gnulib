@@ -1,3 +1,14 @@
+2007-07-06  Eric Blake  <ebb9@byu.net>
+
+	Fix testing canonicalize on cygwin.
+	* modules/canonicalize-lgpl-tests (test_canonicalize_lgpl_LDADD):
+	Revert patch from 2007-06-19.
+	* tests/test-canonicalize-lgpl.c (main): Instead, skip test when
+	canonicalize module is also in use.
+	* tests/test-canonicalize.c: New file.
+	* tests/test-canonicalize.sh: Likewise.
+	* modules/canonicalize-tests: Likewise.
+
 2007-07-06  Jim Meyering  <jim@meyering.net>
 
 	* lib/getugroups.c (getugroups): Detect getgrent failure.

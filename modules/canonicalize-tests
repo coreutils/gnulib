@@ -1,0 +1,14 @@
+Files:
+tests/test-canonicalize.sh
+tests/test-canonicalize.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-canonicalize.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-canonicalize
+EXTRA_DIST += test-canonicalize.sh
+test_canonicalize_LDADD = $(LDADD) @LIBINTL@

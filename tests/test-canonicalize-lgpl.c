@@ -39,6 +39,12 @@
 int
 main ()
 {
+#ifdef GNULIB_CANONICALIZE
+  /* No need to test canonicalize-lgpl module if canonicalize is also
+     in use.  */
+  return 0;
+#endif
+
   /* Check that the symbolic link to a file can be resolved.  */
   {
     char *result1 = canonicalize_file_name ("t-can-lgpl.tmp/huk");
