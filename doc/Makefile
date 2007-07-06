@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.7 2007-05-01 15:14:20 haible Exp $
+# $Id: Makefile,v 1.8 2007-07-06 22:56:38 haible Exp $
 # Makefile for gnulib doc.  
 # Copyright (C) 2004, 2006-2007 Free Software Foundation, Inc.
 #
@@ -8,7 +8,7 @@
 
 doc = gnulib
 
-TEXI2HTML = $(MAKEINFO) --no-split --html
+TEXI2HTML = $(MAKEINFO) --no-split --reference-limit=2000 --html
 %.html: %.texi
 	$(TEXI2HTML) -o $@ $<
 

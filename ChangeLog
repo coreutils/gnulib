@@ -1,5 +1,9 @@
 2007-07-06  Bruno Haible  <bruno@clisp.org>
 
+	* doc/Makefile (TEXI2HTML): Specify a --reference-limit.
+
+2007-07-06  Bruno Haible  <bruno@clisp.org>
+
 	* lib/sys_time_.h: Use a recursion-safe inclusion guard rather than
 	a split double-inclusion guard. Needed for cygwin, where <sys/time.h>
 	includes <cygwin/sys_time.h> which includes <sys/select.h> which
