@@ -1,3 +1,11 @@
+2007-07-06  Bruno Haible  <bruno@clisp.org>
+
+	* lib/sys_time_.h: Use a recursion-safe inclusion guard rather than
+	a split double-inclusion guard. Needed for cygwin, where <sys/time.h>
+	includes <cygwin/sys_time.h> which includes <sys/select.h> which
+	include <sys/time.h>.
+	Reported by Eric Blake.
+
 2007-07-06  Eric Blake  <ebb9@byu.net>
 
 	Fix testing canonicalize on cygwin.
