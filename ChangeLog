@@ -1,5 +1,8 @@
 2007-07-07  Bruno Haible  <bruno@clisp.org>
 
+	* tests/uniwidth/test-u16-width.c: New file.
+	* modules/uniwidth/u16-width-tests: New file.
+
 	* lib/uniwidth/u16-width.c: New file.
 	* modules/uniwidth/u16-width: New file.
 
