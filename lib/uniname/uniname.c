@@ -30,7 +30,13 @@
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
 
-/* Table of Unicode character names, derived from UnicodeData.txt.  */
+/* Table of Unicode character names, derived from UnicodeData.txt.
+   This table is generated in a way to minimize the memory footprint:
+     1. its compiled size is small (less than 300 KB),
+     2. it resides entirely in the text or read-only data segment of the
+        executable or shared library: the table contains only immediate
+        integers, no pointers, and the functions don't do heap allocation.
+ */
 #include "uninames.h"
 /* It contains:
   static const char unicode_name_words[34594] = ...;
