@@ -11,14 +11,14 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Solaris 2.5.1, mingw, BeOS.
-@end itemize
-
-Portability problems not fixed by Gnulib:
-@itemize
 @item
 This function handles combining characters in UTF-8 locales incorrectly on some
 platforms:
 MacOS X 10.3.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @item
 On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.

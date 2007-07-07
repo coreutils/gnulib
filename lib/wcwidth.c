@@ -23,8 +23,30 @@
 /* Get iswprint.  */
 #include <wctype.h>
 
+#include "localcharset.h"
+#include "streq.h"
+#include "uniwidth.h"
+
+#undef wcwidth
+
 int
 rpl_wcwidth (wchar_t wc)
 {
-  return wc == 0 ? 0 : iswprint (wc) ? 1 : -1;
+  /* In UTF-8 locales, use a Unicode aware width function.  */
+  const char *encoding = locale_charset ();
+  if (STREQ (encoding, "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0 ,0))
+    {
+      /* We assume that in a UTF-8 locale, a wide character is the same as a
+	 Unicode character.  */
+      return uc_width (wc, encoding);
+    }
+  else
+    {
+      /* Otherwise, fall back to the system's wcwidth function.  */
+#if HAVE_WCWIDTH
+      return wcwidth (wc);
+#else
+      return wc == 0 ? 0 : iswprint (wc) ? 1 : -1;
+#endif
+    }
 }
