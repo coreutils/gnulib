@@ -1,0 +1,11 @@
+Files:
+tests/test-wcwidth.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-wcwidth
+check_PROGRAMS += test-wcwidth
+

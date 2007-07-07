@@ -1,5 +1,8 @@
 2007-07-07  Bruno Haible  <bruno@clisp.org>
 
+	* modules/wcwidth-tests: New file.
+	* tests/test-wcwidth.c: New file.
+
 	Work around MacOS X wcwidth() bug.
 	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Test against MacOS X 10.3 bug.
 	* lib/wcwidth.c: Include localcharset.h, streq.h, uniwidth.h.
