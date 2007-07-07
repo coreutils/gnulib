@@ -1,0 +1,25 @@
+Description:
+Association between Unicode characters and their names.
+
+Files:
+lib/uniname/gen-uninames.lisp
+lib/uniname/uninames.h
+lib/uniname/uniname.c
+
+Depends-on:
+uniname/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uniname/uniname.c
+
+Include:
+"uniname.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -1,0 +1,18 @@
+Files:
+tests/uniname/test-uninames.sh
+tests/uniname/test-uninames.c
+tests/uniname/UnicodeDataNames.txt
+
+Depends-on:
+xalloc
+
+configure.ac:
+
+Makefile.am:
+TESTS += uniname/test-uninames.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-uninames
+test_uninames_SOURCES = uniname/test-uninames.c
+test_uninames_LDADD = $(LDADD) @LIBINTL@
+EXTRA_DIST += uniname/test-uninames.sh uniname/UnicodeDataNames.txt
+

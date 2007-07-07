@@ -1,0 +1,22 @@
+Description:
+Base layer for Unicode character names.
+
+Files:
+lib/uniname.h
+
+Depends-on:
+unitypes
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"uniname.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

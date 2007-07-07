@@ -2503,6 +2503,8 @@ func_all_modules ()
   func_module unistdio/u32-u32-vasprintf
   func_module unistdio/u32-u32-vsnprintf
   func_module unistdio/u32-u32-vsprintf
+  func_module uniname/base
+  func_module uniname/uniname
   func_end_table
 
   element="Executing programs"
