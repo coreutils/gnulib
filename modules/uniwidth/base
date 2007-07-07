@@ -1,0 +1,23 @@
+Description:
+Base layer for Unicode string width.
+
+Files:
+lib/uniwidth.h
+lib/localcharset.h
+
+Depends-on:
+unitypes
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"uniwidth.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
