@@ -1,0 +1,25 @@
+Description:
+Determine display width of UTF-8 string.
+
+Files:
+lib/uniwidth/u8-strwidth.c
+
+Depends-on:
+uniwidth/base
+uniwidth/u8-width
+unistr/u8-strlen
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uniwidth/u8-strwidth.c
+
+Include:
+"uniwidth.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
