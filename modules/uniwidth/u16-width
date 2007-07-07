@@ -1,0 +1,25 @@
+Description:
+Determine display width of UTF-16 string.
+
+Files:
+lib/uniwidth/u16-width.c
+
+Depends-on:
+uniwidth/base
+uniwidth/width
+unistr/u16-mbtouc-unsafe
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uniwidth/u16-width.c
+
+Include:
+"uniwidth.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
