@@ -1,5 +1,8 @@
 2007-07-07  Bruno Haible  <bruno@clisp.org>
 
+	* lib/uniwidth/u32-strwidth.c: New file.
+	* modules/uniwidth/u32-strwidth: New file.
+
 	* tests/uniwidth/test-u16-strwidth.c: New file.
 	* modules/uniwidth/u16-strwidth-tests: New file.
 
