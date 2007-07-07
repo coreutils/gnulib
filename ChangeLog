@@ -1,5 +1,8 @@
 2007-07-07  Bruno Haible  <bruno@clisp.org>
 
+	* tests/uniwidth/test-u32-width.c: New file.
+	* modules/uniwidth/u32-width-tests: New file.
+
 	* lib/uniwidth/u32-width.c: New file.
 	* modules/uniwidth/u32-width: New file.
 
