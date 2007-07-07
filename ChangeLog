@@ -1,5 +1,8 @@
 2007-07-07  Bruno Haible  <bruno@clisp.org>
 
+	* tests/uniwidth/test-uc_width.c: New file.
+	* modules/uniwidth/width-tests: New file.
+
 	* lib/uniwidth/width.c: New file, from GNU libiconv.
 	* lib/uniwidth/cjk.h: New file, from GNU libiconv.
 	* modules/uniwidth/width: New file.

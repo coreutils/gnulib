@@ -1,0 +1,12 @@
+Files:
+tests/uniwidth/test-uc_width.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-uc_width
+check_PROGRAMS += test-uc_width
+test_uc_width_SOURCES = uniwidth/test-uc_width.c
+
