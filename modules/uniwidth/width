@@ -1,0 +1,25 @@
+Description:
+Determine display width of Unicode character.
+
+Files:
+lib/uniwidth/width.c
+lib/uniwidth/cjk.h
+
+Depends-on:
+uniwidth/base
+streq
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uniwidth/width.c
+
+Include:
+"uniwidth.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
