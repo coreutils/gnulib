@@ -1,5 +1,8 @@
 2007-07-07  Bruno Haible  <bruno@clisp.org>
 
+	* tests/uniwidth/test-u8-width.c: New file.
+	* modules/uniwidth/u8-width-tests: New file.
+
 	* lib/uniwidth/u8-width.c: New file.
 	* modules/uniwidth/u8-width: New file.
 
