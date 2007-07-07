@@ -4,7 +4,7 @@
 	* lib/wcwidth.h: Don't include wctype.h. Replace inline function
 	definition with an external declaration.
 	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Use wcwidth.c when wcwidth is not
-	defined as a function.
+	defined as a function. Remove AC_C_INLINE requirement.
 	* modules/wcwidth (Files): Add lib/wcwidth.c.
 	(Makefile.am): Remove redundant statement.
 

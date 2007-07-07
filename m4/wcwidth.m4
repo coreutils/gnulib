@@ -9,7 +9,6 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
   dnl Persuade glibc <wchar.h> to declare wcwidth().
   AC_REQUIRE([AC_GNU_SOURCE])
 
-  AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
 
