@@ -30,11 +30,8 @@
 /* Get isprint().  */
 #include <ctype.h>
 
-/* Get mbstate_t, mbrtowc(), mbsinit().  */
+/* Get mbstate_t, mbrtowc(), mbsinit(), wcwidth().  */
 #include <wchar.h>
-
-/* Get wcwidth().  */
-#include "wcwidth.h"
 
 /* Get iswcntrl().  */
 #include <wctype.h>

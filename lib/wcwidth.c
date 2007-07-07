@@ -18,7 +18,7 @@
 #include <config.h>
 
 /* Specification.  */
-#include "wcwidth.h"
+#include <wchar.h>
 
 /* Get iswprint.  */
 #include <wctype.h>

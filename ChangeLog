@@ -1,5 +1,27 @@
 2007-07-07  Bruno Haible  <bruno@clisp.org>
 
+	* lib/wchar_.h: Include the GL_LINK_WARNING macro.
+	(wcwidth): New declaration.
+	* m4/wchar.m4 (gl_WCHAR_MODULE_INDICATOR, gl_WCHAR_H_DEFAULTS): New
+	macros.
+	(gl_WCHAR_H): Require gl_WCHAR_H_DEFAULTS. Don't set WCHAR_H to empty
+	here. Prepare for creating <wchar.h> unconditionally.
+	* modules/wchar (Depends-on): Add link-warning.
+	(Makefile.am): Substitute also GNULIB_WCWIDTH, HAVE_DECL_WCWIDTH,
+	REPLACE_WCWIDTH, and GL_LINK_WARNING.
+	* lib/wcwidth.h: Remove file.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Require gl_WCHAR_H_DEFAULTS. Set
+	HAVE_DECL_WCWIDTH, REPLACE_WCWIDTH, WCHAR_H.
+	* modules/wcwidth (Files): Remove lib/wcwidth.h.
+	(configure.ac): Invoke gl_WCHAR_MODULE_INDICATOR.
+	(Include): Replace wcwidth.h with <wchar.h>.
+	* lib/wcwidth.c: Include <wchar.h> instead of wcwidth.h.
+	* lib/mbchar.h: Don't include wcwidth.h.
+	* lib/mbswidth.c: Likewise.
+	* NEWS: Mention the change.
+
+2007-07-07  Bruno Haible  <bruno@clisp.org>
+
 	* lib/wcwidth.c: New file, extracted from lib/wcwidth.h.
 	* lib/wcwidth.h: Don't include wctype.h. Replace inline function
 	definition with an external declaration.

@@ -22,7 +22,8 @@
  * ISO C 99 <wchar.h> for platforms that have issues.
  * <http://www.opengroup.org/susv3xbd/wchar.h.html>
  *
- * For now, this just ensures proper prerequisite inclusion order.
+ * For now, this just ensures proper prerequisite inclusion order and
+ * the declaration of wcwidth().
  */
 
 #ifndef _GL_WCHAR_H
@@ -44,6 +45,38 @@
 
 #ifndef _GL_WCHAR_H
 #define _GL_WCHAR_H
+
+/* The definition of GL_LINK_WARNING is copied here.  */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+/* Return the number of screen columns needed for WC.  */
+#if @GNULIB_WCWIDTH@
+# if @REPLACE_WCWIDTH@
+#  undef wcwidth
+#  define wcwidth rpl_wcwidth
+extern int wcwidth (wchar_t);
+# else
+#  if !defined wcwidth && !@HAVE_DECL_WCWIDTH@
+/* wcwidth exists but is not declared.  */
+extern int wcwidth (int /* actually wchar_t */);
+#  endif
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef wcwidth
+# define wcwidth(w) \
+    (GL_LINK_WARNING ("wcwidth is unportable - " \
+                      "use gnulib module wcwidth for portability"), \
+     wcwidth (w))
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */

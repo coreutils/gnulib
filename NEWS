@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-07-07  wcwidth         The include file is changed from "wcwidth.h" to
+                            <wchar.h>.
+
 2007-07-02  gpl, lgpl       Renamed to gpl-2.0 and lgpl-2.1 respectively.
                             (There is also a new module gpl-3.0.)
 

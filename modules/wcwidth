@@ -2,7 +2,6 @@ Description:
 Determine the number of screen columns needed for a character.
 
 Files:
-lib/wcwidth.h
 lib/wcwidth.c
 m4/wcwidth.m4
 m4/wchar_t.m4
@@ -14,11 +13,12 @@ wctype
 
 configure.ac:
 gl_FUNC_WCWIDTH
+gl_WCHAR_MODULE_INDICATOR([wcwidth])
 
 Makefile.am:
 
 Include:
-"wcwidth.h"
+<wchar.h>
 
 License:
 LGPL
