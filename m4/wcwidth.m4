@@ -1,4 +1,4 @@
-# wcwidth.m4 serial 8
+# wcwidth.m4 serial 9
 dnl Copyright (C) 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,4 +27,9 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
 #include <stdio.h>
 #include <time.h>
 #include <wchar.h>
-])])
+])
+
+  if test $ac_cv_func_wcwidth = no; then
+    AC_LIBOBJ([wcwidth])
+  fi
+])

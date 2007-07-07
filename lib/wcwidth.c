@@ -15,36 +15,16 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _gl_WCWIDTH_H
-#define _gl_WCWIDTH_H
+#include <config.h>
 
-#if HAVE_WCHAR_T
+/* Specification.  */
+#include "wcwidth.h"
 
-/* Get wcwidth if available, along with wchar_t.  */
-# include <wchar.h>
+/* Get iswprint.  */
+#include <wctype.h>
 
-# ifndef HAVE_DECL_WCWIDTH
-"this configure-time declaration test was not run"
-# endif
-# ifndef wcwidth
-#  if !HAVE_WCWIDTH
-
-/* Defined by gnulib.  */
-#   define wcwidth rpl_wcwidth
-extern int wcwidth (wchar_t);
-
-#  elif !HAVE_DECL_WCWIDTH
-
-/* wcwidth exists but is not declared.  */
-extern
-#   ifdef __cplusplus
-"C"
-#   endif
-int wcwidth (int /* actually wchar_t */);
-
-#  endif
-# endif
-
-#endif /* HAVE_WCHAR_T */
-
-#endif /* _gl_WCWIDTH_H */
+int
+rpl_wcwidth (wchar_t wc)
+{
+  return wc == 0 ? 0 : iswprint (wc) ? 1 : -1;
+}

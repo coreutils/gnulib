@@ -1,5 +1,15 @@
 2007-07-07  Bruno Haible  <bruno@clisp.org>
 
+	* lib/wcwidth.c: New file, extracted from lib/wcwidth.h.
+	* lib/wcwidth.h: Don't include wctype.h. Replace inline function
+	definition with an external declaration.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Use wcwidth.c when wcwidth is not
+	defined as a function.
+	* modules/wcwidth (Files): Add lib/wcwidth.c.
+	(Makefile.am): Remove redundant statement.
+
+2007-07-07  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh (Unicode string functions): Add the new modules.
 
 	* tests/uniwidth/test-u32-strwidth.c: New file.
