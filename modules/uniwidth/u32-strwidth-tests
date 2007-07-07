@@ -1,0 +1,12 @@
+Files:
+tests/uniwidth/test-u32-strwidth.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u32-strwidth
+check_PROGRAMS += test-u32-strwidth
+test_u32_strwidth_SOURCES = uniwidth/test-u32-strwidth.c
+
