@@ -2505,6 +2505,14 @@ func_all_modules ()
   func_module unistdio/u32-u32-vsprintf
   func_module uniname/base
   func_module uniname/uniname
+  func_module uniwidth/base
+  func_module uniwidth/u8-strwidth
+  func_module uniwidth/u8-width
+  func_module uniwidth/u16-strwidth
+  func_module uniwidth/u16-width
+  func_module uniwidth/u32-strwidth
+  func_module uniwidth/u32-width
+  func_module uniwidth/width
   func_end_table
 
   element="Executing programs"

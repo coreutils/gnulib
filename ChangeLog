@@ -1,5 +1,7 @@
 2007-07-07  Bruno Haible  <bruno@clisp.org>
 
+	* MODULES.html.sh (Unicode string functions): Add the new modules.
+
 	* tests/uniwidth/test-u32-strwidth.c: New file.
 	* modules/uniwidth/u32-strwidth-tests: New file.
 
