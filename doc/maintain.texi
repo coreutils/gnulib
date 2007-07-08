@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate June 26, 2007
+@set lastupdate July 7, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -671,13 +671,13 @@ Texts,,,texinfo,Texinfo}, for a full example in a Texinfo manual.
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.2 or
 any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License", with the
+Invariant Sections being ``GNU General Public License'', with the
 Front-Cover Texts being ``A GNU Manual,'' and with the Back-Cover Texts
 as in (a) below.  A copy of the license is included in the section
-entitled "GNU Free Documentation License".
+entitled ``GNU Free Documentation License''.
 
 (a) The FSF's Back-Cover Text is: ``You are free to copy and modify
-this GNU Manual. Buying copies from GNU Press supports the FSF in
+this GNU Manual.  Buying copies from GNU Press supports the FSF in
 developing GNU and promoting software freedom.''
 @end smallexample
 
@@ -1738,7 +1738,7 @@ and ask each person to pick randomly which part to read.
 Be sure to specify the random choice procedure;
 otherwise people will probably use a mental procedure
 that is not really random,
-such as "pick a part near the middle",
+such as ``pick a part near the middle'',
 and you will not get even coverage.
 
 You can either divide up the work physically, into 20 separate files,
@@ -1752,7 +1752,7 @@ to count as a section, or not?
 For a job needing special skills, send an explanation of it,
 and ask people to send you mail if they volunteer for the job.
 When you get enough volunteers, send another message to the list saying
-"I have enough volunteers, no more please."
+``I have enough volunteers, no more please.''
 @end itemize
 
 @node Index
