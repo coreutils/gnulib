@@ -47,9 +47,10 @@
                   ;   0x0A000..0x0A4FF  >>12=  0x0A        -> 0x5
                   ;   0x0F900..0x0FFFF  >>12=  0x0F        -> 0x6
                   ;   0x10300..0x104FF  >>12=  0x10        -> 0x7
-                  ;   0x1D000..0x1D7DD  >>12=  0x1D        -> 0x8
-                  ;   0x2F800..0x2FAFF  >>12=  0x2F        -> 0x9
-                  ;   0xE0000..0xE00FF  >>12=  0xE0        -> 0xA
+                  ;   0x12000..0x12473  >>12=  0x12        -> 0x8
+                  ;   0x1D000..0x1D7DD  >>12=  0x1D        -> 0x9
+                  ;   0x2F800..0x2FAFF  >>12=  0x2F        -> 0xA
+                  ;   0xE0000..0xE00FF  >>12=  0xE0        -> 0xB
                   (flet ((transform (x)
                            (dpb
                              (case (ash x -12)
@@ -57,9 +58,10 @@
                                (#x0A 5)
                                (#x0F 6)
                                (#x10 7)
-                               (#x1D 8)
-                               (#x2F 9)
-                               (#xE0 #xA)
+                               (#x12 8)
+                               (#x1D 9)
+                               (#x2F #xA)
+                               (#xE0 #xB)
                                (t (error "Update the transform function for 0x~5,'0X" x))
                              )
                              (byte 8 12)
@@ -252,7 +254,9 @@
             (incf i (length (unicode-char-word-indices uc)))
         ) )
         (format ostream "};~%")
-        (format ostream "static const struct { uint16_t code; uint16_t name; } unicode_name_to_code[~D] = {~%"
+        (format ostream "static const struct { uint16_t code; uint32_t name:24; }~%")
+        (format ostream "#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)~%__attribute__((__packed__))~%#endif~%")
+        (format ostream "unicode_name_to_code[~D] = {~%"
                         (length all-chars)
         )
         (dolist (uc all-chars)
@@ -266,7 +270,9 @@
           (format ostream "~%")
         )
         (format ostream "};~%")
-        (format ostream "static const struct { uint16_t code; uint16_t name; } unicode_code_to_name[~D] = {~%"
+        (format ostream "static const struct { uint16_t code; uint32_t name:24; }~%")
+        (format ostream "#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)~%__attribute__((__packed__))~%#endif~%")
+        (format ostream "unicode_code_to_name[~D] = {~%"
                         (length all-chars)
         )
         (dolist (uc (sort (copy-list all-chars) #'< :key #'unicode-char-code))

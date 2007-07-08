@@ -32,23 +32,23 @@
 
 /* Table of Unicode character names, derived from UnicodeData.txt.
    This table is generated in a way to minimize the memory footprint:
-     1. its compiled size is small (less than 300 KB),
+     1. its compiled size is small (less than 350 KB),
      2. it resides entirely in the text or read-only data segment of the
         executable or shared library: the table contains only immediate
         integers, no pointers, and the functions don't do heap allocation.
  */
 #include "uninames.h"
 /* It contains:
-  static const char unicode_name_words[34594] = ...;
-  #define UNICODE_CHARNAME_NUM_WORDS 5906
+  static const char unicode_name_words[36303] = ...;
+  #define UNICODE_CHARNAME_NUM_WORDS 6260
   static const struct { uint16_t extra_offset; uint16_t ind_offset; } unicode_name_by_length[26] = ...;
-  #define UNICODE_CHARNAME_WORD_HANGUL 3624
-  #define UNICODE_CHARNAME_WORD_SYLLABLE 4654
-  #define UNICODE_CHARNAME_WORD_CJK 401
-  #define UNICODE_CHARNAME_WORD_COMPATIBILITY 5755
-  static const uint16_t unicode_names[62620] = ...;
-  static const struct { uint16_t code; uint16_t name; } unicode_name_to_code[15257] = ...;
-  static const struct { uint16_t code; uint16_t name; } unicode_code_to_name[15257] = ...;
+  #define UNICODE_CHARNAME_WORD_HANGUL 3902
+  #define UNICODE_CHARNAME_WORD_SYLLABLE 4978
+  #define UNICODE_CHARNAME_WORD_CJK 417
+  #define UNICODE_CHARNAME_WORD_COMPATIBILITY 6107
+  static const uint16_t unicode_names[68940] = ...;
+  static const struct { uint16_t code; uint32_t name:24; } unicode_name_to_code[16626] = ...;
+  static const struct { uint16_t code; uint32_t name:24; } unicode_code_to_name[16626] = ...;
   #define UNICODE_CHARNAME_MAX_LENGTH 83
   #define UNICODE_CHARNAME_MAX_WORDS 13
 */
@@ -221,14 +221,17 @@ unicode_character_name (ucs4_t c, char *buf)
 	case 0x10:
 	  c -= 0x09000;
 	  break;
+	case 0x12:
+	  c -= 0x0A000;
+	  break;
 	case 0x1D:
-	  c -= 0x15000;
+	  c -= 0x14000;
 	  break;
 	case 0x2F:
-	  c -= 0x26000;
+	  c -= 0x25000;
 	  break;
 	case 0xE0:
-	  c -= 0xD6000;
+	  c -= 0xD5000;
 	  break;
 	default:
 	  return NULL;
@@ -493,11 +496,11 @@ unicode_name_character (const char *name)
 			    unsigned int c = unicode_name_to_code[i].code;
 
 			    /* Undo the transformation to 16-bit space.  */
-			    static const unsigned int offset[11] =
+			    static const unsigned int offset[12] =
 			      {
 				0x00000, 0x00000, 0x00000, 0x00000, 0x00000,
-				0x05000, 0x09000, 0x09000, 0x15000, 0x26000,
-				0xD6000
+				0x05000, 0x09000, 0x09000, 0x0A000, 0x14000,
+				0x25000, 0xD5000
 			      };
 			    return c + offset[c >> 12];
 			  }
