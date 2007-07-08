@@ -1,6 +1,23 @@
 2007-07-08  Bruno Haible  <bruno@clisp.org>
 
 	Update to Unicode 5.0.
+	* lib/uniwidth/width.c (nonspacing_table_data): Add U+00AD,
+	U+0350..U+035F, U+05A2, U+05BA, U+05C5, U+05C7, U+0600..U+0603,
+	U+0610..U+0615, U+0656..U+065E, U+07EB..U+07F3, U+0A01, U+0AE2..U+0AE3,
+	U+0CBC. Remove U+0CBF, U+0CC6. Add U+0CE2..U+0CE3, U+135F,
+	U+17B4..U+17B5, U+17DD. Remove U+180E. Add U+1920..U+1922,
+	U+1927..U+192B, U+1932, U+1939..U+193B, U+1A17..U+1A18, U+1B00..U+1B03,
+	U+1B34, U+1B36..U+1B3A, U+1B3C, U+1B42, U+1B6B..U+1B73, U+1DC0..U+1DCA,
+	U+1DFE..U+1DFF, U+20EB..U+20EF, U+A802, U+A806, U+A80B, U+A825..U+A826,
+	U+10A01..U+10A03, U+10A05..U+10A06, U+10A0C..U+10A0F, U+10A38..U+10A3A,
+	U+10A3F, U+1D242..U+1D244.
+	(nonspacing_table_ind): Update.
+	(uc_width): Assign width 0 to U+E0100..U+E01EF. Assign width 1 to
+	U+4DC0..U+4DFF. Assign width 2 to U+2329..U+232A, U+FE10..U+FE1F.
+
+2007-07-08  Bruno Haible  <bruno@clisp.org>
+
+	Update to Unicode 5.0.
 	* lib/uniname/gen-uninames.lisp (main): Add the range 0x12xxx to the
 	code transform. Extend the name index field of unicode_name_to_code and
 	unicode_code_to_name from 16 to 24 bits.
