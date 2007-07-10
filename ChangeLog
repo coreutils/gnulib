@@ -1,3 +1,8 @@
+2007-07-10  Eric Blake  <ebb9@byu.net>
+
+	* lib/version-etc.c (version_etc_va): Default to GPLv3+.
+	* NEWS: Document this change.
+
 2007-07-08  Bruno Haible  <bruno@clisp.org>
 
 	Update to Unicode 5.0.
