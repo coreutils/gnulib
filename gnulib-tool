@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-07-01 13:01:40 $'
+cvsdatestamp='$Date: 2007-07-10 12:25:38 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1864,8 +1864,10 @@ func_import ()
   specified_modules="$cached_specified_modules $1"
   # Append the cached and the specified avoidlist. This is probably better
   # than dropping the cached one when --avoid is specified at least once.
-  avoidlist=`echo $cached_avoidlist $avoidlist`
-  # The sourcebase defaults to the cached one.
+  avoidlist=`for m in $cached_avoidlist $avoidlist; do echo $m; done | LC_ALL=C sort -u`
+  avoidlist=`echo $avoidlist`
+
+    # The sourcebase defaults to the cached one.
   if test -z "$sourcebase"; then
     sourcebase="$cached_sourcebase"
     if test -z "$sourcebase"; then
@@ -2390,7 +2392,7 @@ func_import ()
     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
     # created using libtool, because libtool already handles the dependencies.
     if test "$libtool" != true; then
-      libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z' 'A-Z'`
+      libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z-' 'A-Z_'`
       echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
       echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
       echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
@@ -2839,7 +2841,7 @@ func_create_testdir ()
      # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
      # created using libtool, because libtool already handles the dependencies.
      if test "$libtool" != true; then
-       libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z' 'A-Z'`
+       libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z-' 'A-Z_'`
        echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
        echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
        echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
@@ -2950,7 +2952,7 @@ func_create_testdir ()
    # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
    # created using libtool, because libtool already handles the dependencies.
    if test "$libtool" != true; then
-     libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z' 'A-Z'`
+     libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z-' 'A-Z_'`
      echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
      echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
      echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
