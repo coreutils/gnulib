@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate July 7, 2007
+@set lastupdate July 9, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -585,27 +585,33 @@ is optional.
 @cindex license notices in program files
 
 Every nontrivial file needs a license notice as well as the copyright
-notice.  (Without a license notice giving permission to copy and change
-the file
-would make the file non-free.)
+notice.  (Without a license notice giving permission to copy and
+change the file, the file is non-free.)
 
-The package itself should contain a full copy of GPL (conventionally in
-a file named @file{COPYING}) and the GNU Free Documentation License
-(included within your documentation).  If the package contains any files
-distributed under the Lesser GPL, it should contain a full copy of that
-as well (conventionally in a file named @file{COPYING.LIB}).
+The package itself should contain a full copy of GPL (conventionally
+in a file named @file{COPYING}) and the GNU Free Documentation License
+(included within your documentation).  If the package contains any
+files distributed under the Lesser GPL, it should contain a full copy
+of that as well (conventionally in a file named
+@file{COPYING.LESSER}).
 
-You can get the official versions of these files from three places.
+@menu
+* Source: Canonical License Sources:
+* Code: License Notices for Code:
+* Documentation: License Notices for Documentation:
+* Other: License Notices for Other Files:
+@end menu
+
+
+@node Canonical License Sources
+@subsection Canonical License Sources
+
+You can get the official versions of these files from several places.
 You can use whichever is the most convenient for you.
 
 @itemize @bullet
 @item
 @uref{http://www.gnu.org/licenses/}.
-
-@item
-The directory @file{/gd/gnuorg} on the host
-@code{fencepost.gnu.org}.  (You can ask @email{accounts@@gnu.org}
-for an account there if you don't have one).
 
 @item
 The @code{gnulib} project on @code{savannah.gnu.org}, which you
@@ -616,18 +622,23 @@ can access via anonymous CVS.  See
 
 The official Texinfo sources for the licenses are also available in
 those same places, so you can include them in your documentation.  A
-GFDL-covered manual must include the GFDL in this way.  @xref{GNU Sample
-Texts,,,texinfo,Texinfo}, for a full example in a Texinfo manual.
+GFDL-covered manual should include the GFDL in this way.  @xref{GNU
+Sample Texts,,,texinfo,Texinfo}, for a full example in a Texinfo
+manual.
+
+
+@node License Notices for Code
+@subsection License Notices for Code
 
 Typically the license notice for program files (including build scripts,
 configure files and makefiles) should cite the GPL, like this:
 
 @quotation
-This file is part of GNU @var{program}
+This file is part of GNU @var{program}.
 
 GNU @var{program} is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
+the Free Software Foundation; either version 3, or (at your option)
 any later version.
 
 GNU @var{program} is distributed in the hope that it will be useful,
@@ -636,9 +647,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with @var{program}; see the file COPYING.  If not, write to
-the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
-Boston, MA  02110-1301  USA.
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @end quotation
 
 But in a small program which is just a few files, you can use
@@ -647,7 +656,7 @@ this instead:
 @quotation
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
+the Free Software Foundation; either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
@@ -655,17 +664,18 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @end quotation
 
+
+@node License Notices for Documentation
+@subsection License Notices for Documentation
+
 Documentation files should have license notices also.  Manuals should
-use the GNU Free Documentation License.  Here is an example of the
-license notice to use after the copyright notice.  Please adjust the
-list of invariant sections as appropriate for your manual.  (If there
-are none, then say ``with no invariant sections''.)  @xref{GNU Sample
-Texts,,,texinfo,Texinfo}, for a full example in a Texinfo manual.
+use the GNU Free Documentation License.  Following is an example of the
+license notice to use after the copyright line(s) using all the
+features of the GFDL.
 
 @smallexample
 Permission is granted to copy, distribute and/or modify this document
@@ -686,20 +696,31 @@ sentence in (a) that talks about copies from GNU Press.  If the FSF is
 not the copyright holder, then replace @samp{FSF} with the appropriate
 name.
 
-See @url{http://www.gnu.org/licenses/fdl-howto.html} for more advice
-about how to use the GNU FDL.
+Please adjust the list of invariant sections as appropriate for your
+manual.  If there are none, then say ``with no Invariant Sections''.
+If your manual is not published by the FSF, and under 400 pages, you
+can omit both cover texts and the inclusion of the GPL.
+
+@xref{GNU Sample Texts,,,texinfo,Texinfo}, for a full example in a
+Texinfo manual, and see
+@url{http://www.gnu.org/licenses/fdl-howto.html} for more advice about
+how to use the GNU FDL.
 
 If the manual is over 400 pages, or if the FSF thinks it might be a good
 choice for publishing on paper, then please include our standard
 invariant section which explains the importance of free documentation.
 Write to @email{assign@@gnu.org} to get a copy of this section.
 
-Note that when you distribute several manuals together in one software
-package, their on-line forms can share a single copy of the GFDL (see
-section 6).  However, the printed (@samp{.dvi}) forms should each
-contain a copy of the GFDL, unless they are set up to be printed
-and published only together.  Therefore, it is usually simplest to
-include the GFDL in each manual.
+When you distribute several manuals together in one software package,
+their on-line forms can share a single copy of the GFDL (see
+section@tie{}6).  However, the printed (@samp{.dvi}, @samp{.pdf},
+@dots{}) forms should each contain a copy of the GFDL, unless they are
+set up to be printed and published only together.  Therefore, it is
+usually simplest to include the GFDL in each manual.
+
+
+@node License Notices for Other Files
+@subsection License Notices for Other Files
 
 Small supporting files, short manuals (under 300 lines long) and rough
 documentation (README files, INSTALL files, etc) can use a simple
@@ -718,6 +739,7 @@ license for these macros.
 
 If you would like help with license issues or with using the GFDL,
 please contact @email{licensing@@gnu.org}.
+
 
 @node External Libraries
 @section External Libraries
