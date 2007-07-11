@@ -1442,7 +1442,7 @@ func_module ()
     element=`echo "$files" \
              | sed -e '/^$/d' \
              | sed -n -e "$sed_choose_lib_files" \
-             | sed -e '/^'"${includefile}"'$/d' \
+             | sed -e '\|^'"${includefile}"'$|d' \
                    -e 's,^\(.*\)$,<A HREF="'$repo_url_prefix'lib/\1'$repo_url_suffix_repl'">\1</A>,' \
                    -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'

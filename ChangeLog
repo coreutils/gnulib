@@ -1,3 +1,9 @@
+2007-07-11  Karl Berry  <karl@gnu.org>
+
+	* MODULES.html.sh (func_module): use
+	 sed -e '\|^'"${includefile}"'$|d' 
+	 instead of /.../d, to avoid errors on $includefile's containing /.
+
 2007-07-10  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* gnulib-tool (func_import): Avoid duplication of --avoid
