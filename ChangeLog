@@ -1,3 +1,11 @@
+2007-07-13  Jim Meyering  <jim@meyering.net>
+
+	df: Don't fail for Tru64's "file-on-file mount".
+	* m4/fsusage.m4 (gl_FSUSAGE): Reject Tru64's buggy statvfs,
+	so we fall through and use statfs instead.  Details here:
+	<http://thread.gmane.org/gmane.comp.gnu.coreutils.bugs/10878>
+	Reported by Albert Chin.
+
 2007-07-13  Bruno Haible  <bruno@clisp.org>
 
 	* modules/alloca-opt (License): Use the synonymous term "LGPLv2+".
