@@ -1,3 +1,8 @@
+2007-07-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/inttypes_.h: Undo previous change, since it was fixed
+	in a different way in the 2007-07-02 fix to m4/inttypes.m4.
+
 2007-07-13  Bruno Haible  <bruno@clisp.org>
 
 	* lib/stdint_.h: Fix typo: _GL_JUST_INCLUDE_SYSTEM_INTTYPES_H was
