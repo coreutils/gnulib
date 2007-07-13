@@ -1,3 +1,8 @@
+2007-07-13  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdint_.h: Fix typo: _GL_JUST_INCLUDE_SYSTEM_INTTYPES_H was
+	misspelled as _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H.
+
 2007-07-13  Jim Meyering  <jim@meyering.net>
 
 	df: Don't fail for Tru64's "file-on-file mount".
@@ -36,7 +41,7 @@
 2007-07-11  Karl Berry  <karl@gnu.org>
 
 	* MODULES.html.sh (func_module): use
-	 sed -e '\|^'"${includefile}"'$|d' 
+	 sed -e '\|^'"${includefile}"'$|d'
 	 instead of /.../d, to avoid errors on $includefile's containing /.
 
 2007-07-10  Sergey Poznyakoff  <gray@gnu.org.ua>

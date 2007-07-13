@@ -35,17 +35,7 @@
 #define INTTYPES_H
 
 /* Include <stdint.h> or the gnulib replacement.  */
-#if ! defined __cplusplus || defined __STDC_LIMIT_MACROS
-# include <stdint.h>
-#else
-/* Macros like INT32_MIN are used below, so define __STDC_LIMIT_MACROS
-   while including <stdint.h>; this isn't namespace clean for C++,
-   unfortunately.  */
-# define __STDC_LIMIT_MACROS
-# include <stdint.h>
-# undef __STDC_LIMIT_MACROS
-#endif
-
+#include <stdint.h>
 /* Get CHAR_BIT.  */
 #include <limits.h>
 

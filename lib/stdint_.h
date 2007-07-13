@@ -66,9 +66,9 @@
   /* In OpenBSD 3.8, <inttypes.h> includes <machine/types.h>, which defines
      int{8,16,32,64}_t, uint{8,16,32,64}_t and __BIT_TYPES_DEFINED__.
      <inttypes.h> also defines intptr_t and uintptr_t.  */
-# define _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H
+# define _GL_JUST_INCLUDE_SYSTEM_INTTYPES_H
 # include <inttypes.h>
-# undef _GL_JUST_INCLUDE_ABSOLUTE_INTTYPES_H
+# undef _GL_JUST_INCLUDE_SYSTEM_INTTYPES_H
 #elif @HAVE_SYS_INTTYPES_H@
   /* Solaris 7 <sys/inttypes.h> has the types except the *_fast*_t types, and
      the macros except for *_FAST*_*, INTPTR_MIN, PTRDIFF_MIN, PTRDIFF_MAX.  */
