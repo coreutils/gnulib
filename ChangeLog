@@ -1,3 +1,8 @@
+2007-07-13  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Treat LGPLv2 as synonymous to LGPL.
+	(func_create_testdir): Handle copying terms "GPLv2+" and "LGPLv2+".
+
 2007-07-12  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib-intro.texi (Copyright): Clarify the license abbreviations
