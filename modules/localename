@@ -23,7 +23,7 @@ Link:
 @INTL_MACOSX_LIBS@
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible

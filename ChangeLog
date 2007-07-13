@@ -1,5 +1,22 @@
 2007-07-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/alloca-opt (License): Use the synonymous term "LGPLv2+".
+	* modules/configmake (License): Likewise.
+	* modules/gettext (License): Likewise.
+	* modules/gettext-h (License): Likewise.
+	* modules/include_next (License): Likewise.
+	* modules/link-warning (License): Likewise.
+	* modules/localcharset (License): Likewise.
+	* modules/localename (License): Likewise.
+	* modules/lock (License): Likewise.
+	* modules/relocatable-lib-lgpl (License): Likewise.
+	* modules/size_max (License): Likewise.
+	* modules/vasnprintf (License): Likewise.
+	* modules/wchar (License): Likewise.
+	* modules/xsize (License): Likewise.
+
+2007-07-13  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Treat LGPLv2 as synonymous to LGPL.
 	(func_create_testdir): Handle copying terms "GPLv2+" and "LGPLv2+".
 

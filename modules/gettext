@@ -57,7 +57,7 @@ Link:
 $(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible

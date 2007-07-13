@@ -14,7 +14,7 @@ LINK_WARNING_H=$(top_srcdir)/build-aux/link-warning.h
 Include:
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible

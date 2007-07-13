@@ -64,7 +64,7 @@ Include:
 "configmake.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all

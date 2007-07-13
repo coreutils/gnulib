@@ -17,7 +17,7 @@ Include:
 #include "size_max.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Simon Josefsson

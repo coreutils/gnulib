@@ -28,7 +28,7 @@ Include:
 #include <alloca.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 bug-gnulib@gnu.org
