@@ -1,5 +1,14 @@
 2007-07-13  Bruno Haible  <bruno@clisp.org>
 
+	New gnulib-tool option --more-symlinks.
+	* gnulib-tool (func_usage): Document --more-symlinks.
+	(do_copyrights): New variable.
+	Recognize option --more-symlinks.
+	(func_import): Don't add a copyright notice transform to
+	sed_transform_lib_file if do_copyrights is empty.
+
+2007-07-13  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c (decimal_point_char): Define also if
 	(NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE)
 	&& !NEED_PRINTF_DIRECTIVE_A.

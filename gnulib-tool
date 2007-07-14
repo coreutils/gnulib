@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-07-13 01:17:00 $'
+cvsdatestamp='$Date: 2007-07-14 01:42:14 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -167,6 +167,8 @@ Options for --import and --update:
   -s, --symbolic, --symlink Make symbolic links instead of copying files.
       --local-symlink       Make symbolic links instead of copying files, only
                             for files from the local override directory.
+  -S, --more-symlinks       Make symbolic links instead of copying files, and
+                            don't replace copyright notices.
 
 Report bugs to <bug-gnulib@gnu.org>."
 }
@@ -578,8 +580,10 @@ fi
 # - autoconf_minversion  minimum supported autoconf version
 # - do_changelog    false if --no-changelog was given, : otherwise
 # - doit            : if actions shall be executed, false if only to be printed
-# - symbolic        true if --symlink was given, blank otherwise
+# - symbolic        true if --symlink or --more-symlinks was given, blank
+#                   otherwise
 # - lsymbolic       true if --local-symlink was given, blank otherwise
+# - do_copyrights   blank if --more-symlinks was given, true otherwise
 {
   mode=
   destdir=
@@ -601,6 +605,7 @@ fi
   doit=:
   symbolic=
   lsymbolic=
+  do_copyrights=true
 
   supplied_opts="$@"
 
@@ -766,6 +771,10 @@ fi
         shift ;;
       --local-symlink | --local-symlin | --local-symli | --local-syml | --local-sym | --local-sy | --local-s )
         lsymbolic=true
+        shift ;;
+      -S | --more-symlinks | --more-symlink | --more-symlin | --more-symli | --more-syml | --more-sym | --more-sy | --more-s | --more- | --more | --mor | --mo )
+        symbolic=true
+        do_copyrights=
         shift ;;
       --help | --hel | --he | --h )
         func_usage
@@ -1751,6 +1760,8 @@ func_emit_initmacro_done ()
 # - symbolic        true if files should be symlinked, copied otherwise
 # - lsymbolic       true if files from local_gnulib_dir should be symlinked,
 #                   copied otherwise
+# - do_copyrights   true if copyright notices in files should be replaced,
+#                   blank otherwise
 func_import ()
 {
   # Get the cached settings.
@@ -1958,12 +1969,14 @@ func_import ()
       break
     fi
   done
-  if test -n "$lgpl"; then
-    # Update license.
-    sed_transform_lib_file=$sed_transform_lib_file'
-      s/GNU General/GNU Lesser General/g
-      s/version 2\([ ,]\)/version 2.1\1/g
-    '
+  if test -n "$do_copyrights"; then
+    if test -n "$lgpl"; then
+      # Update license.
+      sed_transform_lib_file=$sed_transform_lib_file'
+        s/GNU General/GNU Lesser General/g
+        s/version 2\([ ,]\)/version 2.1\1/g
+      '
+    fi
   fi
 
   # Determine final file list.
