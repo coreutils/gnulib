@@ -1,3 +1,11 @@
+2007-07-13  Bruno Haible  <bruno@clisp.org>
+
+	* lib/vasnprintf.c (decimal_point_char): Define also if
+	(NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE)
+	&& !NEED_PRINTF_DIRECTIVE_A.
+	Reported by Clemens Koller <clemens.koller@anagramm.de> via
+	Gary V. Vaughan <gary@gnu.org>.
+
 2007-07-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/inttypes_.h: Undo previous change, since it was fixed

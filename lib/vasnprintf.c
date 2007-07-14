@@ -200,7 +200,7 @@ local_wcslen (const wchar_t *s)
 /* Here we need to call the native sprintf, not rpl_sprintf.  */
 #undef sprintf
 
-#if NEED_PRINTF_DIRECTIVE_A && !defined IN_LIBINTL
+#if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE) && !defined IN_LIBINTL
 /* Determine the decimal-point character according to the current locale.  */
 # ifndef decimal_point_char_defined
 #  define decimal_point_char_defined 1
