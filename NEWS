@@ -6,6 +6,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-07-14  gpl, lgpl       New Texinfo versions with no sectioning commands.
+
 2007-07-10  version-etc     Output now mentions GPLv3+, not GPLv2+.  Use
                             gnulib-tool --local-dir to override this.
 
