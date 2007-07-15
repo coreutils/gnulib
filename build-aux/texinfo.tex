@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2007-07-09.17}
+\def\texinfoversion{2007-07-15.14}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995, 2007,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1950,6 +1950,7 @@ end
 \setfont\textttsl\ttslshape{10}{\mainmagstep}{OT1TT}
 \font\texti=cmmi10 scaled \mainmagstep
 \font\textsy=cmsy10 scaled \mainmagstep
+\def\textecsize{1095}
 
 % A few fonts for @defun names and args.
 \setfont\defbf\bfshape{10}{\magstep1}{OT1}
@@ -1969,6 +1970,7 @@ end
 \setfont\smallttsl\ttslshape{10}{900}{OT1TT}
 \font\smalli=cmmi9
 \font\smallsy=cmsy9
+\def\smallecsize{0900}
 
 % Fonts for small examples (8pt).
 \def\smallernominalsize{8pt}
@@ -1982,6 +1984,7 @@ end
 \setfont\smallerttsl\ttslshape{10}{800}{OT1TT}
 \font\smalleri=cmmi8
 \font\smallersy=cmsy8
+\def\smallerecsize{0800}
 
 % Fonts for title page (20.4pt):
 \def\titlenominalsize{20pt}
@@ -1997,6 +2000,7 @@ end
 \font\titlesy=cmsy10 scaled \magstep4
 \def\authorrm{\secrm}
 \def\authortt{\sectt}
+\def\titleecsize{2074}
 
 % Chapter (and unnumbered) fonts (17.28pt).
 \def\chapnominalsize{17pt}
@@ -2010,6 +2014,7 @@ end
 \setfont\chapsc\scbshape{10}{\magstep3}{OT1}
 \font\chapi=cmmi12 scaled \magstep2
 \font\chapsy=cmsy10 scaled \magstep3
+\def\chapecsize{1728}
 
 % Section fonts (14.4pt).
 \def\secnominalsize{14pt}
@@ -2023,6 +2028,7 @@ end
 \setfont\secsc\scbshape{10}{\magstep2}{OT1}
 \font\seci=cmmi12 scaled \magstep1
 \font\secsy=cmsy10 scaled \magstep2
+\def\sececsize{1440}
 
 % Subsection fonts (13.15pt).
 \def\ssecnominalsize{13pt}
@@ -2036,6 +2042,7 @@ end
 \setfont\ssecsc\scbshape{10}{1315}{OT1}
 \font\sseci=cmmi12 scaled \magstephalf
 \font\ssecsy=cmsy10 scaled 1315
+\def\ssececsize{1200}
 
 % Reduced fonts for @acro in text (10pt).
 \def\reducednominalsize{10pt}
@@ -2049,6 +2056,7 @@ end
 \setfont\reducedttsl\ttslshape{10}{1000}{OT1TT}
 \font\reducedi=cmmi10
 \font\reducedsy=cmsy10
+\def\reducedecsize{1000}
 
 % reset the current fonts
 \textfonts
@@ -2075,6 +2083,7 @@ end
 \setfont\textttsl\ttslshape{10}{\mainmagstep}{OT1TT}
 \font\texti=cmmi10 scaled \mainmagstep
 \font\textsy=cmsy10 scaled \mainmagstep
+\def\textecsize{1000}
 
 % A few fonts for @defun names and args.
 \setfont\defbf\bfshape{10}{\magstephalf}{OT1}
@@ -2094,6 +2103,7 @@ end
 \setfont\smallttsl\ttslshape{10}{900}{OT1TT}
 \font\smalli=cmmi9
 \font\smallsy=cmsy9
+\def\smallecsize{0900}
 
 % Fonts for small examples (8pt).
 \def\smallernominalsize{8pt}
@@ -2107,6 +2117,7 @@ end
 \setfont\smallerttsl\ttslshape{10}{800}{OT1TT}
 \font\smalleri=cmmi8
 \font\smallersy=cmsy8
+\def\smallerecsize{0800}
 
 % Fonts for title page (20.4pt):
 \def\titlenominalsize{20pt}
@@ -2122,6 +2133,7 @@ end
 \font\titlesy=cmsy10 scaled \magstep4
 \def\authorrm{\secrm}
 \def\authortt{\sectt}
+\def\titleecsize{2074}
 
 % Chapter fonts (14.4pt).
 \def\chapnominalsize{14pt}
@@ -2135,6 +2147,7 @@ end
 \setfont\chapsc\scbshape{10}{\magstep2}{OT1}
 \font\chapi=cmmi12 scaled \magstep1
 \font\chapsy=cmsy10 scaled \magstep2
+\def\chapecsize{1440}
 
 % Section fonts (12pt).
 \def\secnominalsize{12pt}
@@ -2148,6 +2161,7 @@ end
 \setfont\secsc\scbshape{10}{\magstep1}{OT1}
 \font\seci=cmmi12 
 \font\secsy=cmsy10 scaled \magstep1
+\def\sececsize{1200}
 
 % Subsection fonts (10pt).
 \def\ssecnominalsize{10pt}
@@ -2161,6 +2175,7 @@ end
 \setfont\ssecsc\scbshape{10}{1000}{OT1}
 \font\sseci=cmmi10
 \font\ssecsy=cmsy10
+\def\ssececsize{1000}
 
 % Reduced fonts for @acro in text (9pt).
 \def\reducednominalsize{9pt}
@@ -2174,6 +2189,7 @@ end
 \setfont\reducedttsl\ttslshape{10}{900}{OT1TT}
 \font\reducedi=cmmi9
 \font\reducedsy=cmsy9
+\def\reducedecsize{0900}
 
 % reduce space between paragraphs
 \divide\parskip by 2
@@ -2688,6 +2704,35 @@ end
   \thiseurofont
 }
 
+% Hacks for glyphs from the EC fonts similar to \euro.  We don't
+% use \let for the aliases, because sometimes we redefine the original
+% macro, and the alias should reflect the redefinition.
+\def\guillemetleft{{\ecfont \char"13}}
+\def\guillemotleft{\guillemetleft}
+\def\guillemetright{{\ecfont \char"14}}
+\def\guillemotright{\guillemetright}
+\def\guilsinglleft{{\ecfont \char"0E}}
+\def\guilsinglright{{\ecfont \char"0F}}
+\def\quotedblbase{{\ecfont \char"12}}
+\def\quotesinglbase{{\ecfont \char"0D}}
+%
+\def\ecfont{%
+  % We can't distinguish serif/sanserif and italic/slanted, but this
+  % is used for crude hacks anyway (like adding French and German
+  % quotes to documents typeset with CM, where we lose kerning), so
+  % hopefully nobody will notice/care.
+  \edef\ecsize{\csname\curfontsize ecsize\endcsname}%
+  \edef\nominalsize{\csname\curfontsize nominalsize\endcsname}%
+  \ifx\curfontstyle\bfstylename
+    % bold:
+    \font\thisecfont = ecb\ifusingit{i}{x}\ecsize \space at \nominalsize
+  \else
+    % regular:
+    \font\thisecfont = ec\ifusingit{ti}{rm}\ecsize \space at \nominalsize
+  \fi
+  \thisecfont
+}
+
 % @registeredsymbol - R in a circle.  The font for the R should really
 % be smaller yet, but lllsize is the best we can do for now.
 % Adapted from the plain.tex definition of \copyright.
@@ -2710,6 +2755,11 @@ end
 \def\Orb{\mathhexbox20D}
 \fi
 
+% Quotes.
+\chardef\quotedblleft="5C
+\chardef\quotedblright=`\"
+\chardef\quoteleft=`\`
+\chardef\quoteright=`\'
 
 \message{page headings,}
 
@@ -3946,11 +3996,21 @@ end
   \definedummyword\equiv
   \definedummyword\error
   \definedummyword\euro
+  \definedummyword\guillemetleft
+  \definedummyword\guillemetright
+  \definedummyword\guilsinglleft
+  \definedummyword\guilsinglright
   \definedummyword\expansion
   \definedummyword\minus
   \definedummyword\pounds
   \definedummyword\point
   \definedummyword\print
+  \definedummyword\quotedblbase
+  \definedummyword\quotedblleft
+  \definedummyword\quotedblright
+  \definedummyword\quoteleft
+  \definedummyword\quoteright
+  \definedummyword\quotesinglbase
   \definedummyword\result
   \definedummyword\textdegree
   %
@@ -4080,11 +4140,21 @@ end
   \def\equiv{==}%
   \def\error{error}%
   \def\euro{euro}%
+  \def\guillemetleft{<<}%
+  \def\guillemetright{>>}%
+  \def\guilsinglleft{<}%
+  \def\guilsinglright{>}%
   \def\expansion{==>}%
   \def\minus{-}%
   \def\pounds{pounds}%
   \def\point{.}%
   \def\print{-|}%
+  \def\quotedblbase{"}%
+  \def\quotedblleft{"}%
+  \def\quotedblright{"}%
+  \def\quoteleft{`}%
+  \def\quoteright{'}%
+  \def\quotesinglbase{,}%
   \def\result{=>}%
   \def\textdegree{degrees}%
   %
@@ -8102,6 +8172,7 @@ should work if nowhere else does.}
   \DeclareUnicodeCharacter{00A8}{\"{ }}
   \DeclareUnicodeCharacter{00A9}{\copyright}
   \DeclareUnicodeCharacter{00AA}{\ordf}
+  \DeclareUnicodeCharacter{00AB}{\guillemetleft}
   \DeclareUnicodeCharacter{00AD}{\-}
   \DeclareUnicodeCharacter{00AE}{\registeredsymbol}
   \DeclareUnicodeCharacter{00AF}{\={ }}
@@ -8110,6 +8181,7 @@ should work if nowhere else does.}
   \DeclareUnicodeCharacter{00B4}{\'{ }}
   \DeclareUnicodeCharacter{00B8}{\cedilla{ }}
   \DeclareUnicodeCharacter{00BA}{\ordm}
+  \DeclareUnicodeCharacter{00BB}{\guillemetright}
   \DeclareUnicodeCharacter{00BF}{\questiondown}
 
   \DeclareUnicodeCharacter{00C0}{\`A}
@@ -8458,8 +8530,16 @@ should work if nowhere else does.}
 
   \DeclareUnicodeCharacter{2013}{--}
   \DeclareUnicodeCharacter{2014}{---}
+  \DeclareUnicodeCharacter{2018}{\quoteleft}
+  \DeclareUnicodeCharacter{2019}{\quoteright}
+  \DeclareUnicodeCharacter{201A}{\quotesinglbase}
+  \DeclareUnicodeCharacter{201C}{\quotedblleft}
+  \DeclareUnicodeCharacter{201D}{\quotedblright}
+  \DeclareUnicodeCharacter{201E}{\quotedblbase}
   \DeclareUnicodeCharacter{2022}{\bullet}
   \DeclareUnicodeCharacter{2026}{\dots}
+  \DeclareUnicodeCharacter{2039}{\guilsinglleft}
+  \DeclareUnicodeCharacter{203A}{\guilsinglright}
   \DeclareUnicodeCharacter{20AC}{\euro}
 
   \DeclareUnicodeCharacter{2192}{\expansion}
