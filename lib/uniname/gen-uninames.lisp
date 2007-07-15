@@ -120,6 +120,7 @@
       ;; Output the tables.
       (with-open-file (ostream outputfile :direction :output
                        #+UNICODE :external-format #+UNICODE charset:ascii)
+        (format ostream "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */~%")
         (format ostream "/*~%")
         (format ostream " * ~A~%" (file-namestring outputfile))
         (format ostream " *~%")

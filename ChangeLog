@@ -1,3 +1,9 @@
+2007-07-14  Bruno Haible  <bruno@clisp.org>
+
+	* lib/uniname/gen-uninames.lisp (main): Emit a "do not edit" line to
+	the output file.
+	* lib/uniname/uninames.h: Regenerated.
+
 2007-07-14  Karl Berry  <karl@gnu.org>
 
 	* doc/*gpl*.texi, doc/fdl.texi: new versions, consistently
