@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.41 2007-05-24 03:53:38 ericb Exp $
+@comment $Id: gnulib.texi,v 1.42 2007-07-15 14:05:43 karl Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2007-05-24 03:53:38 $
+@set UPDATED $Date: 2007-07-15 14:05:43 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -52,9 +52,9 @@ Texts.  A copy of the license is included in the section entitled
 * Invoking gnulib-tool::
 * Miscellaneous Notes::
 * Header File Substitutes::
-* Function Substitutes::
-* Particular Modules::          Documentation of Individual Modules
-* Copying This Manual::
+* Function Substitutes::            Replacing system functions.
+* Particular Modules::              Documentation of individual modules.
+* GNU Free Documentation License::  Copying and sharing this manual.
 * Index::
 @end menu
 
@@ -349,13 +349,16 @@ libgsasl_la_LDFLAGS += -no-undefined
 
 Gnulib provides copies of the GNU GPL, GNU LGPL, and GNU FDL licenses
 in Texinfo form.  (The master location is
-@url{http://www.gnu.org/licenses/}).  These Texinfo documents have
-various node names and structures built into them; for your manual,
-you might like to change these.  It's ok to do this, and a convenient
-way to do so is to use a context diff and the @option{--local-dir}
-option to @command{gnulib-tool}.
+@url{http://www.gnu.org/licenses/}).  These Texinfo documents do not
+have any node names and structures built into them; for your manual,
+you should @code{@@include} them in an appropriate @code{@@node}.
+
+The conventional name for the GPL node is @samp{Copying} and for the FDL
+@samp{GNU Free Documentation License}.  The LGPL doesn't seem to have
+a conventional node name.
 
 Of course the license texts themselves should not be changed at all.
+
 
 @node Build robot for gnulib
 @section Build robot for gnulib
@@ -2865,12 +2868,8 @@ generated automatically.
 @include regexprops-generic.texi
 
 
-@node Copying This Manual
-@appendix Copying This Manual
-
-@menu
-* GNU Free Documentation License::  License for copying this manual.
-@end menu
+@node GNU Free Documentation License
+@appendix GNU Free Documentation License
 
 @include fdl.texi
 

@@ -1,3 +1,7 @@
+2007-07-15  Karl Berry  <karl@gnu.org>
+
+	* doc/gnulib.texi: revise node structure per new fdl.texi.
+
 2007-07-14  Bruno Haible  <bruno@clisp.org>
 
 	* lib/uniname/gen-uninames.lisp (main): Emit a "do not edit" line to
