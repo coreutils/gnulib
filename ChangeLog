@@ -1,4 +1,4 @@
-2007-07-13  Bruno Haible  <bruno@clisp.org>
+2007-07-16  Bruno Haible  <bruno@clisp.org>
 
 	* modules/lseek (License): Use the synonymous term "LGPLv2+".
 	* modules/getdelim (License): Likewise.
