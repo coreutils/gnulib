@@ -27,7 +27,7 @@ Include:
 <argz.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 bug-libtool@gnu.org
