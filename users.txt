@@ -18,6 +18,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   hello           http://cvs.sv.gnu.org/viewcvs/hello/hello/
   icoutils        http://riva.ucam.org/svn/cjwatson/src/debian/icoutils/trunk/icoutils/
   inetutils       http://cvs.sv.gnu.org/viewcvs/inetutils/inetutils/
+  jwhois          http://cvs.sv.gnu.org/viewvc/jwhois/jwhois/
   libdap          http://scm.opendap.org:8090/svn/trunk/libdap/
   libiconv        http://libiconv.cvs.sourceforge.net/libiconv/libiconv/
   libidn          http://josefsson.org/cgi-bin/viewcvs.cgi/libidn/
