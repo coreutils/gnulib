@@ -35,7 +35,7 @@ Include:
 #include <sys/time.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all

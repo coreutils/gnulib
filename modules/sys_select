@@ -35,7 +35,7 @@ Include:
 #include <sys/select.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Simon Josefsson

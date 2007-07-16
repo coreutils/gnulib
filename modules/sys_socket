@@ -36,7 +36,7 @@ Include:
 #include <sys/socket.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Simon Josefsson

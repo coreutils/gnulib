@@ -18,7 +18,7 @@ gl_INET_NTOP
 Makefile.am:
 
 License:
-LGPL
+LGPLv2+
 
 Include:
 "inet_ntop.h"

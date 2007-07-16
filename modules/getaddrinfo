@@ -25,7 +25,7 @@ Include:
 "getaddrinfo.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Simon Josefsson

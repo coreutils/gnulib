@@ -58,7 +58,7 @@ Include:
 #include <stdint.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all

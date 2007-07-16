@@ -29,7 +29,7 @@ Include:
 #include <poll.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Paolo Bonzini  <bonzini@gnu.org>

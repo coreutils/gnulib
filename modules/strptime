@@ -24,7 +24,7 @@ Include:
 <time.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 glibc

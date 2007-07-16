@@ -1,3 +1,52 @@
+2007-07-16  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+
+	* modules/arpa_inet (License): Use the synonymous term LGPLv2.
+	* modules/d-type (License): Likewise.
+	* modules/extensions (License): Likewise.
+	* modules/fnmatch (License): Likewise.
+	* modules/fseeko (License): Likewise.
+	* modules/getaddrinfo (License): Likewise.
+	* modules/getline (License): Likewise.
+	* modules/getlogin_r (License): Likewise.
+	* modules/getpass (License): Likewise.
+	* modules/gettimeofday (License): Likewise.
+	* modules/glob (License): Likewise.
+	* modules/inet_ntop (License): Likewise.
+	* modules/malloc (License): Likewise.
+	* modules/malloca (License): Likewise.
+	* modules/memmem (License): Likewise.
+	* modules/mempcpy (License): Likewise.
+	* modules/memset (License): Likewise.
+	* modules/minmax (License): Likewise.
+	* modules/mktime (License): Likewise.
+	* modules/netinet_in (License): Likewise.
+	* modules/pathmax (License): Likewise.
+	* modules/poll (License): Likewise.
+	* modules/regex (License): Likewise.
+	* modules/snprintf (License): Likewise.
+	* modules/stdbool (License): Likewise.
+	* modules/stdint (License): Likewise.
+	* modules/stdio (License): Likewise.
+	* modules/strcase (License): Likewise.
+	* modules/strcasestr (License): Likewise.
+	* modules/strdup (License): Likewise.
+	* modules/string (License): Likewise.
+	* modules/strndup (License): Likewise.
+	* modules/strnlen (License): Likewise.
+	* modules/strpbrk (License): Likewise.
+	* modules/strptime (License): Likewise.
+	* modules/strsep (License): Likewise.
+	* modules/sys_select (License): Likewise.
+	* modules/sys_socket (License): Likewise.
+	* modules/sys_stat (License): Likewise.
+	* modules/sys_time (License): Likewise.
+	* modules/time (License): Likewise.
+	* modules/time_r (License): Likewise.
+	* modules/timegm (License): Likewise.
+	* modules/unistd (License): Likewise.
+	* modules/vsnprintf (License): Likewise.
+	* modules/wctype (License): Likewise.
+
 2007-07-16  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* modules/argz (License): LGPLv2+.

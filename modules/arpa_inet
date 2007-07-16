@@ -30,7 +30,7 @@ Include:
 #include <arpa/inet.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Simon Josefsson

@@ -36,7 +36,7 @@ Include:
 #include <sys/stat.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
