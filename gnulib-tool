@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-07-14 01:42:14 $'
+cvsdatestamp='$Date: 2007-07-18 23:45:37 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -1223,6 +1223,17 @@ func_get_automake_snippet ()
           fi
           ;;
       esac
+      # Synthesize an EXTRA_DIST augmentation also for the files in build-aux/.
+      buildaux_files=`for f in $all_files; do \
+                        case $f in \
+                          build-aux/*) echo $f ;; \
+                        esac; \
+                      done | sed -e 's,^build-aux/,,'`
+      if test -n "$buildaux_files"; then
+        sed_prepend_auxdir='s,^,$(top_srcdir)/'"$auxdir"'/,'
+        echo "EXTRA_DIST += "`echo "$buildaux_files" | sed -e "$sed_prepend_auxdir"`
+        echo
+      fi
       ;;
   esac
 }

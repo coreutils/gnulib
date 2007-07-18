@@ -1,3 +1,8 @@
+2007-07-18  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_get_automake_snippet): Synthesize also an
+	EXTRA_DIST augmentation for files in build-aux/.
+
 2007-07-16  Bruno Haible  <bruno@clisp.org>
 
 	* modules/lseek (License): Use the synonymous term "LGPLv2+".
