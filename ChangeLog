@@ -1,5 +1,16 @@
 2007-07-18  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool: New options --po-base, --po-domain.
+	(func_usage): Document them.
+	(pobase, po_domain): New variables.
+	(func_emit_lib_Makefile_am): Augment AM_CPPFLAGS, defining
+	DEFAULT_TEXT_DOMAIN.
+	(func_emit_po_Makevars, func_emit_po_POTFILES_in): New functions.
+	(func_import): Consider pobase and po_domain. Create a po/ directory.
+	(func_create_testdir): Set pobase and po_domain to empty.
+
+2007-07-18  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_get_automake_snippet): Synthesize also an
 	EXTRA_DIST augmentation for files in build-aux/.
 

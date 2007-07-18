@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-07-18 23:45:37 $'
+cvsdatestamp='$Date: 2007-07-18 23:50:58 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -140,6 +140,8 @@ Options for --import:
                             placed (default \"lib\").
       --m4-base=DIRECTORY   Directory relative to --dir where *.m4 macros are
                             placed (default \"m4\").
+      --po-base=DIRECTORY   Directory relative to --dir where *.po files are
+                            placed (default \"po\").
       --doc-base=DIRECTORY  Directory relative to --dir where doc files are
                             placed (default \"doc\").
       --tests-base=DIRECTORY
@@ -160,6 +162,8 @@ Options for --import:
       --no-libtool          Don't use libtool rules.
       --macro-prefix=PREFIX  Specify the prefix of the macros 'gl_EARLY' and
                             'gl_INIT'. Default is 'gl'.
+      --po-domain=NAME      Specify the prefix of the i18n domain. Usually use
+                            the package name. A suffix '-gnulib' is appended.
       --no-changelog        don't update or create ChangeLog files
 
 Options for --import and --update:
@@ -567,6 +571,7 @@ fi
 # - libname, supplied_libname  from --lib
 # - sourcebase      from --source-base
 # - m4base          from --m4-base
+# - pobase          from --po-base
 # - docbase         from --doc-base
 # - testsbase       from --tests-base
 # - auxdir          from --aux-dir
@@ -577,6 +582,7 @@ fi
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
 # - macro_prefix    from --macro-prefix
+# - po_domain       from --po-domain
 # - autoconf_minversion  minimum supported autoconf version
 # - do_changelog    false if --no-changelog was given, : otherwise
 # - doit            : if actions shall be executed, false if only to be printed
@@ -592,6 +598,7 @@ fi
   supplied_libname=
   sourcebase=
   m4base=
+  pobase=
   docbase=
   testsbase=
   auxdir=
@@ -601,6 +608,7 @@ fi
   makefile_name=
   libtool=
   macro_prefix=
+  po_domain=
   do_changelog=:
   doit=:
   symbolic=
@@ -687,6 +695,16 @@ fi
       --m4-base=* )
         m4base=`echo "X$1" | sed -e 's/^X--m4-base=//'`
         shift ;;
+      --po-base )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --po-base"
+        fi
+        pobase=$1
+        shift ;;
+      --po-base=* )
+        pobase=`echo "X$1" | sed -e 's/^X--po-base=//'`
+        shift ;;
       --doc-base )
         shift
         if test $# = 0; then
@@ -760,6 +778,16 @@ fi
       --macro-prefix=* )
         macro_prefix=`echo "X$1" | sed -e 's/^X--macro-prefix=//'`
         shift ;;
+      --po-domain )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --po-domain"
+        fi
+        po_domain="$1"
+        shift ;;
+      --po-domain=* )
+        po_domain=`echo "X$1" | sed -e 's/^X--po-domain=//'`
+        shift ;;
       --no-changelog | --no-changelo | --no-changel | --no-change | --no-chang | --no-chan | --no-cha | --no-ch | --no-c )
         do_changelog=false
         shift ;;
@@ -804,10 +832,11 @@ fi
       func_exit 1
     fi
     if test -n "$local_gnulib_dir" || test -n "$supplied_libname" \
-       || test -n "$sourcebase" || test -n "$m4base" \
+       || test -n "$sourcebase" || test -n "$m4base" || test -n "$pobase" \
        || test -n "$docbase" || test -n "$testsbase" || test -n "$auxdir" \
        || test -n "$inctests" || test -n "$avoidlist" || test -n "$lgpl" \
-       || test -n "$makefile_name" || test -n "$macro_prefix"; then
+       || test -n "$makefile_name" || test -n "$macro_prefix" \
+       || test -n "$po_domain"; then
       echo "gnulib-tool: invalid options for 'update' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
       echo "If you really want to modify the gnulib configuration of your project," 1>&2
@@ -815,6 +844,14 @@ fi
       func_exit 1
     fi
     do_changelog=false
+  fi
+  if test -n "$pobase" && test -z "$po_domain"; then
+    echo "gnulib-tool: together with --po-base, you need to specify --po-domain" 1>&2
+    echo "Try 'gnulib-tool --help' for more information." 1>&2
+    func_exit 1
+  fi
+  if test -z "$pobase" && test -n "$po_domain"; then
+    echo "gnulib-tool: warning: --po-domain has no effect without a --po-base option" 1>&2
   fi
 
   # Determine the minimum supported autoconf version from the project's
@@ -880,6 +917,9 @@ fi
   esac
   case "$m4base" in
     */ ) m4base=`echo "$m4base" | sed -e "$sed_trimtrailingslashes"` ;;
+  esac
+  case "$pobase" in
+    */ ) pobase=`echo "$pobase" | sed -e "$sed_trimtrailingslashes"` ;;
   esac
   case "$docbase" in
     */ ) docbase=`echo "$docbase" | sed -e "$sed_trimtrailingslashes"` ;;
@@ -1419,10 +1459,12 @@ func_modules_to_filelist ()
 # - local_gnulib_dir  from --local-dir
 # - modules         list of modules, including dependencies
 # - libname         library name
+# - pobase          directory relative to destdir where to place *.po files
 # - auxdir          directory relative to destdir where to place build aux files
 # - makefile_name   from --makefile-name
 # - libtool         true if libtool will be used, false or blank otherwise
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
+# - po_domain       prefix of i18n domain to use (without -gnulib suffix)
 # - actioncmd       (optional) command that will reproduce this invocation
 # - for_test        true if creating a package for testing, false otherwise
 # Output:
@@ -1550,6 +1592,10 @@ func_emit_lib_Makefile_am ()
     echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
   fi
   echo
+  if test -n "$pobase"; then
+    echo "AM_CPPFLAGS += -DDEFAULT_TEXT_DOMAIN=\\\"${po_domain}-gnulib\\\""
+    echo
+  fi
   cat allsnippets.tmp \
     | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
   echo
@@ -1561,6 +1607,82 @@ func_emit_lib_Makefile_am ()
   echo "	done; \\"
   echo "	:"
   rm -f allsnippets.tmp
+}
+
+# func_emit_po_Makevars
+# emits the contents of po/ makefile parametrization to standard output.
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - sourcebase      directory relative to destdir where to place source code
+# - pobase          directory relative to destdir where to place *.po files
+# - po_domain       prefix of i18n domain to use (without -gnulib suffix)
+func_emit_po_Makevars ()
+{
+  echo "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
+  func_emit_copyright_notice
+  echo
+  echo "# Usually the message domain is the same as the package name."
+  echo "# But here it has a '-gnulib' suffix."
+  echo "DOMAIN = ${po_domain}-gnulib"
+  echo
+  echo "# These two variables depend on the location of this directory."
+  echo "subdir = ${pobase}"
+  echo "top_builddir = "`echo "$pobase" | sed -e 's,//*,/,g' -e 's,[^/][^/]*,..,g'`
+  echo
+  cat <<\EOF
+# These options get passed to xgettext.
+XGETTEXT_OPTIONS = \
+  --keyword=_ --flag=_:1:pass-c-format \
+  --keyword=N_ --flag=N_:1:pass-c-format \
+  --keyword='proper_name:1,"This is a proper name. See the gettext manual, section Names."' \
+  --keyword='proper_name_utf8:1,"This is a proper name. See the gettext manual, section Names."' \
+  --flag=error:3:c-format --flag=error_at_line:5:c-format
+
+# This is the copyright holder that gets inserted into the header of the
+# $(DOMAIN).pot file.  gnulib is copyrighted by the FSF.
+COPYRIGHT_HOLDER = Free Software Foundation, Inc.
+
+# This is the email address or URL to which the translators shall report
+# bugs in the untranslated strings:
+# - Strings which are not entire sentences, see the maintainer guidelines
+#   in the GNU gettext documentation, section 'Preparing Strings'.
+# - Strings which use unclear terms or require additional context to be
+#   understood.
+# - Strings which make invalid assumptions about notation of date, time or
+#   money.
+# - Pluralisation problems.
+# - Incorrect English spelling.
+# - Incorrect formatting.
+# It can be your email address, or a mailing list address where translators
+# can write to without being subscribed, or the URL of a web page through
+# which the translators can contact you.
+MSGID_BUGS_ADDRESS = bug-gnulib@gnu.org
+
+# This is the list of locale categories, beyond LC_MESSAGES, for which the
+# message catalogs shall be used.  It is usually empty.
+EXTRA_LOCALE_CATEGORIES =
+
+# This tells whether the $(DOMAIN).pot file contains messages with an 'msgctxt'
+# context.  Possible values are "yes" and "no".  Set this to yes if the
+# package uses functions taking also a message context, like pgettext(), or
+# if in $(XGETTEXT_OPTIONS) you define keywords with a context argument.
+USE_MSGCTXT = no
+EOF
+}
+
+# func_emit_po_POTFILES_in
+# emits the file list to be passed to xgettext to standard output.
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - sourcebase      directory relative to destdir where to place source code
+# - files           list of new files
+func_emit_po_POTFILES_in ()
+{
+  echo "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
+  func_emit_copyright_notice
+  echo
+  echo "# List of files which contain translatable strings."
+  echo "$files" | sed -n -e "s,^lib/,$sourcebase/,p"
 }
 
 # func_emit_tests_Makefile_am
@@ -1755,6 +1877,7 @@ func_emit_initmacro_done ()
 # - libname         library name
 # - sourcebase      directory relative to destdir where to place source code
 # - m4base          directory relative to destdir where to place *.m4 macros
+# - pobase          directory relative to destdir where to place *.po files
 # - docbase         directory relative to destdir where to place doc files
 # - testsbase       directory relative to destdir where to place unit test code
 # - auxdir          directory relative to destdir where to place build aux files
@@ -1766,6 +1889,7 @@ func_emit_initmacro_done ()
 #                   given, blank otherwise
 # - guessed_libtool true if the configure.ac file uses libtool, false otherwise
 # - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
+# - po_domain       prefix of i18n domain to use (without -gnulib suffix)
 # - autoconf_minversion  minimum supported autoconf version
 # - doit            : if actions shall be executed, false if only to be printed
 # - symbolic        true if files should be symlinked, copied otherwise
@@ -1781,6 +1905,7 @@ func_import ()
   cached_avoidlist=
   cached_sourcebase=
   cached_m4base=
+  cached_pobase=
   cached_docbase=
   cached_testsbase=
   cached_inctests=
@@ -1789,6 +1914,7 @@ func_import ()
   cached_makefile_name=
   cached_libtool=
   cached_macro_prefix=
+  cached_po_domain=
   cached_files=
   if test -f "$destdir"/$m4base/gnulib-cache.m4; then
     cached_libtool=false
@@ -1810,6 +1936,9 @@ func_import ()
       }
       /gl_M4_BASE(/ {
         s,^.*gl_M4_BASE([[ ]*\([^])]*\).*$,cached_m4base="\1",p
+      }
+      /gl_PO_BASE(/ {
+        s,^.*gl_PO_BASE([[ ]*\([^])]*\).*$,cached_pobase="\1",p
       }
       /gl_DOC_BASE(/ {
         s,^.*gl_DOC_BASE([[ ]*\([^])]*\).*$,cached_docbase="\1",p
@@ -1834,6 +1963,9 @@ func_import ()
       }
       /gl_MACRO_PREFIX(/ {
         s,^.*gl_MACRO_PREFIX([[ ]*\([^])]*\).*$,cached_macro_prefix="\1",p
+      }
+      /gl_PO_DOMAIN(/ {
+        s,^.*gl_PO_DOMAIN([[ ]*\([^])]*\).*$,cached_po_domain="\1",p
       }'
     eval `sed -n -e "$my_sed_traces" < "$destdir"/$m4base/gnulib-cache.m4`
     if test -f "$destdir"/$m4base/gnulib-comp.m4; then
@@ -1889,11 +2021,18 @@ func_import ()
   avoidlist=`for m in $cached_avoidlist $avoidlist; do echo $m; done | LC_ALL=C sort -u`
   avoidlist=`echo $avoidlist`
 
-    # The sourcebase defaults to the cached one.
+  # The sourcebase defaults to the cached one.
   if test -z "$sourcebase"; then
     sourcebase="$cached_sourcebase"
     if test -z "$sourcebase"; then
       func_fatal_error "missing --source-base option"
+    fi
+  fi
+  # The pobase defaults to the cached one.
+  if test -z "$pobase"; then
+    pobase="$cached_pobase"
+    if test -z "$pobase"; then
+      func_fatal_error "missing --po-base option"
     fi
   fi
   # The docbase defaults to the cached one.
@@ -1942,6 +2081,13 @@ func_import ()
     macro_prefix="$cached_macro_prefix"
     if test -z "$macro_prefix"; then
       func_fatal_error "missing --macro-prefix option"
+    fi
+  fi
+  # The po_domain defaults to the cached one.
+  if test -z "$po_domain"; then
+    po_domain="$cached_po_domain"
+    if test -z "$po_domain"; then
+      func_fatal_error "missing --po-domain option"
     fi
   fi
 
@@ -2021,6 +2167,9 @@ func_import ()
   # Create directories.
   { echo "$sourcebase"
     echo "$m4base"
+    if test -n "$pobase"; then
+      echo "$pobase"
+    fi
     docfiles=`echo "$files" | sed -n -e 's,^doc/,,p'`
     if test -n "$docfiles"; then
       echo "$docbase"
@@ -2204,6 +2353,9 @@ func_import ()
   func_append actioncmd " --lib=$libname"
   func_append actioncmd " --source-base=$sourcebase"
   func_append actioncmd " --m4-base=$m4base"
+  if test -n "$pobase"; then
+    func_append actioncmd " --po-base=$pobase"
+  fi
   func_append actioncmd " --doc-base=$docbase"
   func_append actioncmd " --aux-dir=$auxdir"
   if test -n "$inctests"; then
@@ -2224,6 +2376,9 @@ func_import ()
     func_append actioncmd " --no-libtool"
   fi
   func_append actioncmd " --macro-prefix=$macro_prefix"
+  if test -n "$po_domain"; then
+    func_append actioncmd " --po-domain=$po_domain"
+  fi
   func_append actioncmd " `echo $specified_modules`"
 
   # Default the makefile name to Makefile.am.
@@ -2263,6 +2418,129 @@ func_import ()
     func_append added_files "$sourcebase/$makefile_am$nl"
   fi
 
+  # Create po/ directory.
+  if test -n "$pobase"; then
+    # Create po makefile and auxiliary files.
+    for file in Makefile.in.in remove-potcdate.sin; do
+      func_dest_tmpfilename $pobase/$file
+      func_lookup_file build-aux/po/$file
+      cat "$lookedup_file" > "$tmpfile"
+      if test -f "$destdir"/$pobase/$file; then
+        if cmp "$destdir"/$pobase/$file "$tmpfile" > /dev/null; then
+          rm -f "$tmpfile"
+        else
+          if $doit; then
+            echo "Updating $pobase/$file (backup in $pobase/$file~)"
+            mv -f "$destdir"/$pobase/$file "$destdir"/$pobase/$file~
+            mv -f "$tmpfile" "$destdir"/$pobase/$file
+          else
+            echo "Update $pobase/$file (backup in $pobase/$file~)"
+            rm -f "$tmpfile"
+          fi
+        fi
+      else
+        if $doit; then
+          echo "Creating $pobase/$file"
+          mv -f "$tmpfile" "$destdir"/$pobase/$file
+        else
+          echo "Create $pobase/$file"
+          rm -f "$tmpfile"
+        fi
+        func_append added_files "$pobase/$file$nl"
+      fi
+    done
+    # Create po makefile parametrization, part 1.
+    func_dest_tmpfilename $pobase/Makevars
+    func_emit_po_Makevars > "$tmpfile"
+    if test -f "$destdir"/$pobase/Makevars; then
+      if cmp "$destdir"/$pobase/Makevars "$tmpfile" > /dev/null; then
+        rm -f "$tmpfile"
+      else
+        if $doit; then
+          echo "Updating $pobase/Makevars (backup in $pobase/Makevars~)"
+          mv -f "$destdir"/$pobase/Makevars "$destdir"/$pobase/Makevars~
+          mv -f "$tmpfile" "$destdir"/$pobase/Makevars
+        else
+          echo "Update $pobase/Makevars (backup in $pobase/Makevars~)"
+          rm -f "$tmpfile"
+        fi
+      fi
+    else
+      if $doit; then
+        echo "Creating $pobase/Makevars"
+        mv -f "$tmpfile" "$destdir"/$pobase/Makevars
+      else
+        echo "Create $pobase/Makevars"
+        rm -f "$tmpfile"
+      fi
+      func_append added_files "$pobase/Makevars$nl"
+    fi
+    # Create po makefile parametrization, part 2.
+    func_dest_tmpfilename $pobase/POTFILES.in
+    func_emit_po_POTFILES_in > "$tmpfile"
+    if test -f "$destdir"/$pobase/POTFILES.in; then
+      if cmp "$destdir"/$pobase/POTFILES.in "$tmpfile" > /dev/null; then
+        rm -f "$tmpfile"
+      else
+        if $doit; then
+          echo "Updating $pobase/POTFILES.in (backup in $pobase/POTFILES.in~)"
+          mv -f "$destdir"/$pobase/POTFILES.in "$destdir"/$pobase/POTFILES.in~
+          mv -f "$tmpfile" "$destdir"/$pobase/POTFILES.in
+        else
+          echo "Update $pobase/POTFILES.in (backup in $pobase/POTFILES.in~)"
+          rm -f "$tmpfile"
+        fi
+      fi
+    else
+      if $doit; then
+        echo "Creating $pobase/POTFILES.in"
+        mv -f "$tmpfile" "$destdir"/$pobase/POTFILES.in
+      else
+        echo "Create $pobase/POTFILES.in"
+        rm -f "$tmpfile"
+      fi
+      func_append added_files "$pobase/POTFILES.in$nl"
+    fi
+    # Fetch PO files.
+    TP_URL="http://translationproject.org/latest/"
+    if $doit; then
+      echo "Fetching gnulib PO files from $TP_URL"
+      (cd "$destdir"/$pobase \
+       && wget --quiet -r -l1 -nd -np -A.po "${TP_URL}gnulib"
+      )
+    else
+      echo "Fetch gnulib PO files from $TP_URL"
+    fi
+    # Create po/LINGUAS.
+    if $doit; then
+      func_dest_tmpfilename $pobase/LINGUAS
+      (cd "$destdir"/$pobase \
+       && { echo '# Set of available languages.'
+            LC_ALL=C ls -1 *.po | sed -e 's,\.po$,,'
+          }
+      ) > "$tmpfile"
+      if test -f "$destdir"/$pobase/LINGUAS; then
+        if cmp "$destdir"/$pobase/LINGUAS "$tmpfile" > /dev/null; then
+          rm -f "$tmpfile"
+        else
+          echo "Updating $pobase/LINGUAS (backup in $pobase/LINGUAS~)"
+          mv -f "$destdir"/$pobase/LINGUAS "$destdir"/$pobase/LINGUAS~
+          mv -f "$tmpfile" "$destdir"/$pobase/LINGUAS
+        fi
+      else
+        echo "Creating $pobase/LINGUAS"
+        mv -f "$tmpfile" "$destdir"/$pobase/LINGUAS
+        func_append added_files "$pobase/LINGUAS$nl"
+      fi
+    else
+      if test -f "$destdir"/$pobase/LINGUAS; then
+        echo "Update $pobase/LINGUAS (backup in $pobase/LINGUAS~)"
+      else
+        echo "Create $pobase/LINGUAS"
+      fi
+    fi
+  fi
+
   # Create m4/gnulib-cache.m4.
   func_dest_tmpfilename $m4base/gnulib-cache.m4
   (
@@ -2296,6 +2574,7 @@ func_import ()
     echo "gl_AVOID([$avoidlist])"
     echo "gl_SOURCE_BASE([$sourcebase])"
     echo "gl_M4_BASE([$m4base])"
+    echo "gl_PO_BASE([$pobase])"
     echo "gl_DOC_BASE([$docbase])"
     echo "gl_TESTS_BASE([$testsbase])"
     test -z "$inctests" || echo "gl_WITH_TESTS"
@@ -2306,6 +2585,7 @@ func_import ()
       echo "gl_LIBTOOL"
     fi
     echo "gl_MACRO_PREFIX([$macro_prefix])"
+    echo "gl_PO_DOMAIN([$po_domain])"
   ) > "$tmpfile"
   if test -f "$destdir"/$m4base/gnulib-cache.m4; then
     if cmp "$destdir"/$m4base/gnulib-cache.m4 "$tmpfile" > /dev/null; then
@@ -2618,6 +2898,9 @@ func_import ()
   else
     echo "  - \"include $makefile_name\" from within \"$sourcebase/Makefile.am\","
   fi
+  if test -n "$pobase"; then
+    echo "  - add \"$pobase/Makefile.in\" to AC_CONFIG_FILES in $configure_ac,"
+  fi
   if test -n "$inctests"; then
     if test "$makefile_am" = Makefile.am; then
       echo "  - add \"$testsbase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
@@ -2629,6 +2912,11 @@ func_import ()
     sourcebase_dir=`echo "$sourcebase" | sed -n -e 's,/[^/]*$,/,p'`
     sourcebase_base=`basename "$sourcebase"`
     echo "  - mention \"${sourcebase_base}\" in SUBDIRS in ${sourcebase_dir}Makefile.am,"
+  fi
+  if test -n "$pobase"; then
+    pobase_dir=`echo "$pobase" | sed -n -e 's,/[^/]*$,/,p'`
+    pobase_base=`basename "$pobase"`
+    echo "  - mention \"${pobase_base}\" in SUBDIRS in ${pobase_dir}Makefile.am,"
   fi
   if test -n "$inctests"; then
     if test "$makefile_am" = Makefile.am; then
@@ -2714,9 +3002,11 @@ func_create_testdir ()
   # Subdirectory names.
   sourcebase=gllib
   m4base=glm4
+  pobase=
   docbase=gldoc
   testsbase=gltests
   macro_prefix=gl
+  po_domain=
 
   # Determine final module list.
   func_modules_transitive_closure
@@ -3330,9 +3620,9 @@ case $mode in
             for m4base in $m4dirs; do
               # Perform func_import in a subshell, so that variable values
               # such as
-              #   local_gnulib_dir, avoidlist, sourcebase, m4base, docbase,
-              #   testsbase, inctests, libname, lgpl, makefile_name, libtool,
-              #   macro_prefix
+              #   local_gnulib_dir, avoidlist, sourcebase, m4base, pobase,
+              #   docbase, testsbase, inctests, libname, lgpl, makefile_name,
+              #   libtool, macro_prefix, po_domain
               # don't propagate from one directory to another.
               (func_import) || func_exit 1
             done
