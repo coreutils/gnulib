@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-07-18 23:50:58 $'
+cvsdatestamp='$Date: 2007-07-19 20:06:45 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2031,9 +2031,6 @@ func_import ()
   # The pobase defaults to the cached one.
   if test -z "$pobase"; then
     pobase="$cached_pobase"
-    if test -z "$pobase"; then
-      func_fatal_error "missing --po-base option"
-    fi
   fi
   # The docbase defaults to the cached one.
   if test -z "$docbase"; then
@@ -2086,9 +2083,6 @@ func_import ()
   # The po_domain defaults to the cached one.
   if test -z "$po_domain"; then
     po_domain="$cached_po_domain"
-    if test -z "$po_domain"; then
-      func_fatal_error "missing --po-domain option"
-    fi
   fi
 
   # Canonicalize the list of specified modules.
