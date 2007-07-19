@@ -8,6 +8,8 @@
 	(func_emit_po_Makevars, func_emit_po_POTFILES_in): New functions.
 	(func_import): Consider pobase and po_domain. Create a po/ directory.
 	(func_create_testdir): Set pobase and po_domain to empty.
+	* build-aux/po/Makefile.in.in: New file, from GNU gettext 0.16.1.
+	* build-aux/po/remove-potcdate.sin: New file, from GNU gettext 0.16.1.
 
 2007-07-18  Bruno Haible  <bruno@clisp.org>
 
