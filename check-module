@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Check a gnulib module.
 
-# Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2005, 2006, 2007 Free Software Foundation, Inc.
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ my $COPYRIGHT_NOTICE = "Copyright (C) 2006 Free Software Foundation, Inc.\n".
 "the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n".
 "There is NO WARRANTY, to the extent permitted by law.\n";
 
-(my $VERSION = '$Revision: 1.7 $ ') =~ tr/[0-9].//cd;
+(my $VERSION = '$Revision: 1.8 $ ') =~ tr/[0-9].//cd;
 (my $ME = $0) =~ s|.*/||;
 
 use constant ST_INIT => 1;
@@ -98,6 +98,9 @@ sub parse_module_file ($)
 	  elsif ($state eq ST_DEPENDENTS)
 	    {
 	      $dep_set{$line} = 1;
+	      (my $base = $module_file) =~ s,.*/,,;
+	      $line eq $base
+		and die "$ME: module $module_file depends on itself\n";
 	    }
 	}
     }

@@ -1,3 +1,7 @@
+2007-07-20  Jim Meyering  <jim@meyering.net>
+
+	* check-module: Diagnose a self-dependency.
+
 2007-07-19  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Don't abort if pobase or po_domain is
