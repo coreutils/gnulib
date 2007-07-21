@@ -1,3 +1,8 @@
+2007-07-21  Bruno Haible  <bruno@clisp.org>
+
+	* lib/error.c (_) [ENABLE_NLS]: Define to gettext.
+	* lib/verror.c (_) [ENABLE_NLS]: Likewise.
+
 2007-07-20  Jim Meyering  <jim@meyering.net>
 
 	* check-module: Diagnose a self-dependency.
