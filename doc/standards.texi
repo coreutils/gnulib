@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate June 27, 2007
+@set lastupdate July 22, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -64,15 +64,15 @@ Free Documentation License''.
 @end ifnottex
 
 @menu
-* Preface::                     About the GNU Coding Standards
-* Legal Issues::                Keeping Free Software Free
-* Design Advice::               General Program Design
-* Program Behavior::            Program Behavior for All Programs
-* Writing C::                   Making The Best Use of C
-* Documentation::               Documenting Programs
-* Managing Releases::           The Release Process
-* References::                  References to Non-Free Software or Documentation
-* Copying This Manual::         How to Make Copies of This Manual
+* Preface::                     About the GNU Coding Standards.
+* Legal Issues::                Keeping free software free.
+* Design Advice::               General program design.
+* Program Behavior::            Program behavior for all programs
+* Writing C::                   Making the best use of C.
+* Documentation::               Documenting programs.
+* Managing Releases::           The release process.
+* References::                  Mentioning non-free software or documentation.
+* GNU Free Documentation License::  Copying and sharing this manual.
 * Index::
 
 @end menu
@@ -129,9 +129,9 @@ This chapter discusses how you can make sure that GNU software
 avoids legal difficulties, and other related issues.
 
 @menu
-* Reading Non-Free Code::       Referring to Proprietary Programs
-* Contributions::               Accepting Contributions
-* Trademarks::                  How We Deal with Trademark Issues
+* Reading Non-Free Code::       Referring to proprietary programs.
+* Contributions::               Accepting contributions.
+* Trademarks::                  How we deal with trademark issues.
 @end menu
 
 @node Reading Non-Free Code
@@ -266,10 +266,10 @@ account when designing your program.
 
 @menu
 * Source Language::             Which languages to use.
-* Compatibility::               Compatibility with other implementations
-* Using Extensions::            Using non-standard features
-* Standard C::                  Using Standard C features
-* Conditional Compilation::     Compiling Code Only If A Conditional is True
+* Compatibility::               Compatibility with other implementations.
+* Using Extensions::            Using non-standard features.
+* Standard C::                  Using standard C features.
+* Conditional Compilation::     Compiling code only if a conditional is true.
 @end menu
 
 @node Source Language
@@ -521,15 +521,15 @@ command line interface, and how libraries should behave.
 @menu
 * Non-GNU Standards::           We consider standards such as POSIX;
                                   we don't "obey" them.
-* Semantics::                   Writing robust programs
-* Libraries::                   Library behavior
-* Errors::                      Formatting error messages
-* User Interfaces::             Standards about interfaces generally
-* Graphical Interfaces::        Standards for graphical interfaces
-* Command-Line Interfaces::     Standards for command line interfaces
-* Option Table::                Table of long options
-* Memory Usage::                When and how to care about memory needs
-* File Usage::                  Which files to use, and where
+* Semantics::                   Writing robust programs.
+* Libraries::                   Library behavior.
+* Errors::                      Formatting error messages.
+* User Interfaces::             Standards about interfaces generally.
+* Graphical Interfaces::        Standards for graphical interfaces.
+* Command-Line Interfaces::     Standards for command line interfaces.
+* Option Table::                Table of long options.
+* Memory Usage::                When and how to care about memory needs.
+* File Usage::                  Which files to use, and where.
 @end menu
 
 @node Non-GNU Standards
@@ -2259,14 +2259,14 @@ This chapter provides advice on how best to use the C language
 when writing GNU software.
 
 @menu
-* Formatting::                  Formatting Your Source Code
-* Comments::                    Commenting Your Work
-* Syntactic Conventions::       Clean Use of C Constructs
-* Names::                       Naming Variables, Functions, and Files
-* System Portability::          Portability between different operating systems
-* CPU Portability::             Supporting the range of CPU types
-* System Functions::            Portability and ``standard'' library functions
-* Internationalization::        Techniques for internationalization
+* Formatting::                  Formatting your source code.
+* Comments::                    Commenting your work.
+* Syntactic Conventions::       Clean use of C constructs.
+* Names::                       Naming variables, functions, and files.
+* System Portability::          Portability among different operating systems.
+* CPU Portability::             Supporting the range of CPU types.
+* System Functions::            Portability and ``standard'' library functions.
+* Internationalization::        Techniques for internationalization.
 * Character Set::               Use ASCII by default.
 * Quote Characters::            Use `...' in the C locale.
 * Mmap::                        How you can safely use @code{mmap}.
@@ -3234,7 +3234,7 @@ extending it, as well as just using it.
 * Manual Credits::              Giving credit to documentation contributors.
 * Printed Manuals::             Mentioning the printed manual.
 * NEWS File::                   NEWS files supplement manuals.
-* Change Logs::                 Recording Changes
+* Change Logs::                 Recording changes.
 * Man Pages::                   Man pages are secondary.
 * Reading other Manuals::       How far you can go in learning
                                 from other manuals.
@@ -3763,9 +3763,9 @@ makes it easy to include your package into the larger framework of
 all GNU software.
 
 @menu
-* Configuration::               How Configuration Should Work
-* Makefile Conventions::        Makefile Conventions
-* Releases::                    Making Releases
+* Configuration::               How configuration of GNU packages should work.
+* Makefile Conventions::        Makefile conventions.
+* Releases::                    Making releases
 @end menu
 
 @node Configuration
@@ -4145,13 +4145,11 @@ place to get a non-free program; but if a site you want to link to
 refers to AT&T's web site in some other context (such as long-distance
 telephone service), that is not a problem.
 
-@node Copying This Manual
-@appendix Copying This Manual
 
-@menu
-* GNU Free Documentation License::  License for copying this manual
-@end menu
+@node GNU Free Documentation License
+@appendix GNU Free Documentation License
 
+@cindex FDL, GNU Free Documentation License
 @include fdl.texi
 
 @node Index
