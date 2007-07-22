@@ -1,5 +1,7 @@
 2007-07-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* build-aux/announce-gen: Update to GPLv3.
+
 	* build-aux/config.guess: Update from config.
 
 2007-07-21  Bruno Haible  <bruno@clisp.org>
