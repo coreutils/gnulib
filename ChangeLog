@@ -1,5 +1,11 @@
 2007-07-22  Ben Pfaff  <blp@gnu.org>
 
+	* lib/popcount.h: Use faster, branchless algorithm for non-GCC
+	case.
+	Suggested by Eric Blake.
+
+2007-07-22  Ben Pfaff  <blp@gnu.org>
+
 	New module: popcount.
 	* MODULES.html.sh: Add popcount.
 	* modules/popcount: New file.

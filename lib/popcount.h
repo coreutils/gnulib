@@ -20,15 +20,33 @@
 #ifndef POPCOUNT_H
 # define POPCOUNT_H 1
 
+#include <limits.h>
+#include <stdlib.h>
+
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR >= 4)
-#define POPCOUNT_CALCULATION(NAME)              \
+#define POPCOUNT_CALCULATION(NAME, TYPE)        \
         return __builtin_##NAME (x);
 #else
-#define POPCOUNT_CALCULATION(NAME)              \
-        int pop;                                \
-        for (pop = 0; x != 0; pop++)            \
-          x &= x - 1;                           \
+#define POPCOUNT_CALCULATION(NAME, TYPE)        \
+        int pop = popcount32 (x);               \
+        if (CHAR_BIT * sizeof (TYPE) > 32)      \
+          pop += popcount32 (x >> 31 >> 1);     \
+        if (CHAR_BIT * sizeof (TYPE) > 64)      \
+          abort ();                             \
         return pop;
+
+/* Compute and return the population count of the low 32 bits of
+   X, that is, the number of 1-bits set in its least significant
+   32 bits. */
+static inline int
+popcount32 (unsigned int x)
+{
+  x = ((x & 0xaaaaaaaa) >> 1) + (x & 0x55555555);
+  x = ((x & 0xcccccccc) >> 2) + (x & 0x33333333);
+  x = ((x & 0xf0f0f0f0) >> 4) + (x & 0x0f0f0f0f);
+  x = ((x & 0xff00ff00) >> 8) + (x & 0x00ff00ff);
+  return (x >> 16) + (x & 0xff);
+}
 #endif
 
 /* Compute and return the population count of X, that is, the
@@ -36,7 +54,7 @@
 static inline int
 popcount (unsigned int x)
 {
-  POPCOUNT_CALCULATION (popcount);
+  POPCOUNT_CALCULATION (popcount, unsigned int);
 }
 
 /* Compute and return the population count of X, that is, the
@@ -44,7 +62,7 @@ popcount (unsigned int x)
 static inline int
 popcountl (unsigned long int x)
 {
-  POPCOUNT_CALCULATION (popcountl);
+  POPCOUNT_CALCULATION (popcountl, unsigned long int);
 }
 
 #if HAVE_UNSIGNED_LONG_LONG_INT
@@ -53,7 +71,7 @@ popcountl (unsigned long int x)
 static inline int
 popcountll (unsigned long long int x)
 {
-  POPCOUNT_CALCULATION (popcountll);
+  POPCOUNT_CALCULATION (popcountll, unsigned long long int);
 }
 #endif
 
