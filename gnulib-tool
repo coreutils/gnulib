@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-07-19 20:06:45 $'
+cvsdatestamp='$Date: 2007-07-23 22:08:02 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2798,7 +2798,14 @@ func_import ()
         if test -n "$dir_added"; then
           if $doit; then
             echo "Creating $destdir/$dir$ignore"
-            echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u > "$destdir/$dir$ignore"
+            {
+              if test "$ignore" = .cvsignore; then
+                echo ".deps"
+                # Automake generates Makefile rules that create .dirstamp files.
+                echo ".dirstamp"
+              fi
+              echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u
+            } > "$destdir/$dir$ignore"
           else
             echo "Create $destdir/$dir$ignore"
           fi
@@ -2810,7 +2817,7 @@ func_import ()
       dir="$1"
       dir_added="$2"
       dir_removed="$3"
-      if test -d "$destdir/${dir}CVS" || test -f "$destdir/${dir}.cvsignore"; then
+      if test -d "$destdir/CVS" || test -d "$destdir/${dir}CVS" || test -f "$destdir/${dir}.cvsignore"; then
         func_update_ignorelist .cvsignore
       fi
       if test -d "$destdir/.git" || test -f "$destdir/${dir}.gitignore"; then

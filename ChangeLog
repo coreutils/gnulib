@@ -1,3 +1,10 @@
+2007-07-23  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Create a .cvsignore file also when the
+	directory is not yet in CVS but the toplevel directory is. When
+	creating a .cvsignore file, add ".deps" and ".dirstamp" to it.
+	Reported by Karl Berry.
+
 2007-07-22  Ben Pfaff  <blp@gnu.org>
 
 	* lib/popcount.h: Use faster, branchless algorithm for non-GCC
@@ -644,12 +651,12 @@
 	* modules/sprintf-posix (Dependencies): Add stdint.
 	* modules/vsprintf-posix (Dependencies): Likewise.
 
-2007-07-01  Bruno Haible <bruno@clisp.org>
+2007-07-01  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (self_abspathname): Determine PATH_SEPARATOR and handle
 	Windows PATH as well. Conservative double-quoting. Comments.
 
-2007-07-01  Bruno Haible <bruno@clisp.org>
+2007-07-01  Bruno Haible  <bruno@clisp.org>
 	    Eric Blake  <ebb9@byu.net>
 	    Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
