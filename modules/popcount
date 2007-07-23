@@ -1,0 +1,23 @@
+Description:
+Compute population count (number of 1-bits in a word).
+
+Files:
+lib/popcount.h
+m4/popcount.m4
+
+Depends-on:
+inline
+
+configure.ac:
+gl_POPCOUNT
+
+Makefile.am:
+
+Include:
+"popcount.h"
+
+License:
+GPL
+
+Maintainer:
+Ben Pfaff

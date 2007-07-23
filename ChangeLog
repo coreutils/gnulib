@@ -1,3 +1,13 @@
+2007-07-22  Ben Pfaff  <blp@gnu.org>
+
+	New module: popcount.
+	* MODULES.html.sh: Add popcount.
+	* modules/popcount: New file.
+	* modules/popcount-tests: New file.
+	* tests/test-popcount.c: New file.
+	* lib/popcount.h: New file.
+	* m4/popcount.m4: New file.
+
 2007-07-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* build-aux/announce-gen: Update to GPLv3.

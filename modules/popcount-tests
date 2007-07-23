@@ -1,0 +1,10 @@
+Files:
+tests/test-popcount.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-popcount
+check_PROGRAMS += test-popcount
