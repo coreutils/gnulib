@@ -1,5 +1,12 @@
 2007-07-23  Ben Pfaff  <blp@gnu.org>
 
+	* lib/popcount.h (popcount32): Reduce size of constants, to allow
+	better code generation, and add U to large constants to avoid
+	warnings, in non-GCC case.
+	Suggested by Bruno Haible.
+
+2007-07-23  Ben Pfaff  <blp@gnu.org>
+
 	* lib/popcount.h: Use verify_true instead of if...abort.
 	* modules/popcount: Depend on verify module.
 	Suggested by Jim Meyering.
