@@ -22,17 +22,17 @@
 
 #include <limits.h>
 #include <stdlib.h>
+#include "verify.h"
 
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR >= 4)
 #define POPCOUNT_CALCULATION(NAME, TYPE)        \
         return __builtin_##NAME (x);
 #else
-#define POPCOUNT_CALCULATION(NAME, TYPE)        \
-        int pop = popcount32 (x);               \
-        if (CHAR_BIT * sizeof (TYPE) > 32)      \
-          pop += popcount32 (x >> 31 >> 1);     \
-        if (CHAR_BIT * sizeof (TYPE) > 64)      \
-          abort ();                             \
+#define POPCOUNT_CALCULATION(NAME, TYPE)                        \
+        int pop = popcount32 (x);                               \
+        if (CHAR_BIT * sizeof (TYPE) > 32)                      \
+          pop += popcount32 (x >> 31 >> 1);                     \
+        (void) verify_true (CHAR_BIT * sizeof (TYPE) <= 64);    \
         return pop;
 
 /* Compute and return the population count of the low 32 bits of
