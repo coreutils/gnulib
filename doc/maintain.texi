@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate July 24, 2007
+@set lastupdate July 25, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -636,9 +636,9 @@ configure files and makefiles) should cite the GPL, like this:
 @quotation
 This file is part of GNU @var{program}.
 
-GNU @var{program} is free software; you can redistribute it and/or
+GNU @var{program} is free software: you can redistribute it and/or
 modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation; either version 3 of the
+published by the Free Software Foundation, either version 3 of the
 License, or (at your option) any later version.
 
 GNU @var{program} is distributed in the hope that it will be useful,
