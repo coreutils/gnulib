@@ -1,3 +1,12 @@
+2007-07-25  Peter O'Gorman  <peter@pogma.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* m4/include_next.m4 (gl_INCLUDE_NEXT): Test whether #include_next
+	really works. Needed because AIX 4.3 "xlc -E" doesn't understand
+	#include_next, gives a diagnostic about it, but reports no error in
+	the exit code.
+	Reported by Gary V. Vaughan <gary@thewrittenword.com>.
+
 2007-07-24  Ben Pfaff  <blp@gnu.org>
 
 	Improve name: "count-one-bits" is better than "popcount".

@@ -1,4 +1,4 @@
-# include_next.m4 serial 3
+# include_next.m4 serial 4
 dnl Copyright (C) 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,9 +11,31 @@ AC_DEFUN([gl_INCLUDE_NEXT],
   AC_LANG_PREPROC_REQUIRE()
   AC_CACHE_CHECK([whether the preprocessor supports include_next],
     [gl_cv_have_include_next],
-    [AC_PREPROC_IFELSE([#include_next <stddef.h>],
+    [rm -rf conftestd1 conftestd2
+     mkdir conftestd1 conftestd2
+     cat <<EOF > conftestd1/conftest.h
+#define DEFINED_IN_CONFTESTD1
+#include_next <conftest.h>
+#ifdef DEFINED_IN_CONFTESTD2
+int foo;
+#else
+#error "include_next doesn't work"
+#endif
+EOF
+     cat <<EOF > conftestd2/conftest.h
+#ifndef DEFINED_IN_CONFTESTD1
+#error "include_next test doesn't work"
+#endif
+#define DEFINED_IN_CONFTESTD2
+EOF
+     save_CPPFLAGS="$CPPFLAGS"
+     CPPFLAGS="$CPPFLAGS -Iconftestd1 -Iconftestd2"
+     AC_COMPILE_IFELSE([#include <conftest.h>],
        [gl_cv_have_include_next=yes],
-       [gl_cv_have_include_next=no])])
+       [gl_cv_have_include_next=no])
+     CPPFLAGS="$save_CPPFLAGS"
+     rm -rf conftestd1 conftestd2
+    ])
   if test $gl_cv_have_include_next = yes; then
 
     dnl FIXME: Remove HAVE_INCLUDE_NEXT and update everything that uses it
