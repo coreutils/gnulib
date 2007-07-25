@@ -1609,9 +1609,9 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module count-one-bits
   func_module gcd
   func_module minmax
-  func_module popcount
   func_end_table
 
   element="Environment variables <stdlib.h>"

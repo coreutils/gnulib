@@ -1,3 +1,16 @@
+2007-07-24  Ben Pfaff  <blp@gnu.org>
+
+	Improve name: "count-one-bits" is better than "popcount".
+	* MODULES.html.sh: Update name.
+	* lib/popcount.h: Renamed lib/count-one-bits.h.
+	(popcount): Renamed count_one_bits.
+	(popcountl): Renamed count_one_bits_l.
+	(popcountll): Renamed count_one_bits_ll.
+	* m4/popcount.m4: Renamed m4/count-one-bits.m4.
+	* modules/popcount: Renamed module/count-one-bits.
+	* modules/popcount-tests: Renamed module/count-one-bits-tests.
+	* tests/test-popcount.c: Renamed tests/test-count-one-bits.c.
+
 2007-07-23  Ben Pfaff  <blp@gnu.org>
 
 	* lib/popcount.h (popcount32): Reduce size of constants, to allow

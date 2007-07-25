@@ -1,4 +1,4 @@
-/* popcount.h -- population count
+/* count-one-bits.h -- counts the number of 1-bits in a word.
    Copyright (C) 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -17,29 +17,28 @@
 
 /* Written by Ben Pfaff.  */
 
-#ifndef POPCOUNT_H
-# define POPCOUNT_H 1
+#ifndef COUNT_ONE_BITS_H
+# define COUNT_ONE_BITS_H 1
 
 #include <limits.h>
 #include <stdlib.h>
 #include "verify.h"
 
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR >= 4)
-#define POPCOUNT_CALCULATION(NAME, TYPE)        \
-        return __builtin_##NAME (x);
+#define COUNT_ONE_BITS(BUILTIN, TYPE)              \
+        return BUILTIN (x);
 #else
-#define POPCOUNT_CALCULATION(NAME, TYPE)                        \
-        int pop = popcount32 (x);                               \
+#define COUNT_ONE_BITS(BUILTIN, TYPE)                           \
+        int count = count_one_bits_32 (x);                      \
         if (CHAR_BIT * sizeof (TYPE) > 32)                      \
-          pop += popcount32 (x >> 31 >> 1);                     \
+          count += count_one_bits_32 (x >> 31 >> 1);            \
         (void) verify_true (CHAR_BIT * sizeof (TYPE) <= 64);    \
-        return pop;
+        return count;
 
-/* Compute and return the population count of the low 32 bits of
-   X, that is, the number of 1-bits set in its least significant
-   32 bits. */
+/* Compute and return the the number of 1-bits set in the least
+   significant 32 bits of X. */
 static inline int
-popcount32 (unsigned int x)
+count_one_bits_32 (unsigned int x)
 {
   x = ((x & 0xaaaaaaaaU) >> 1) + (x & 0x55555555U);
   x = ((x & 0xccccccccU) >> 2) + (x & 0x33333333U);
@@ -49,30 +48,27 @@ popcount32 (unsigned int x)
 }
 #endif
 
-/* Compute and return the population count of X, that is, the
-   number of 1-bits set in X. */
+/* Compute and return the number of 1-bits set in X. */
 static inline int
-popcount (unsigned int x)
+count_one_bits (unsigned int x)
 {
-  POPCOUNT_CALCULATION (popcount, unsigned int);
+  COUNT_ONE_BITS (__builtin_popcount, unsigned int);
 }
 
-/* Compute and return the population count of X, that is, the
-   number of 1-bits set in X. */
+/* Compute and return the number of 1-bits set in X. */
 static inline int
-popcountl (unsigned long int x)
+count_one_bits_l (unsigned long int x)
 {
-  POPCOUNT_CALCULATION (popcountl, unsigned long int);
+  COUNT_ONE_BITS (__builtin_popcountl, unsigned long int);
 }
 
 #if HAVE_UNSIGNED_LONG_LONG_INT
-/* Compute and return the population count of X, that is, the
-   number of 1-bits set in X. */
+/* Compute and return the number of 1-bits set in X. */
 static inline int
-popcountll (unsigned long long int x)
+count_one_bits_ll (unsigned long long int x)
 {
-  POPCOUNT_CALCULATION (popcountll, unsigned long long int);
+  COUNT_ONE_BITS (__builtin_popcountll, unsigned long long int);
 }
 #endif
 
-#endif /* POPCOUNT_H */
+#endif /* COUNT_ONE_BITS_H */

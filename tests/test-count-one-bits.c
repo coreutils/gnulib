@@ -20,7 +20,7 @@
 
 #include <config.h>
 
-#include "popcount.h"
+#include "count-one-bits.h"
 
 #include <limits.h>
 #include <stdio.h>
@@ -52,7 +52,7 @@ main (int argc, char *argv[])
 {
   int i, j;
 
-#define TEST_POPCOUNT(FUNC, TYPE, BITS, MAX, ONE)       \
+#define TEST_COUNT_ONE_BITS(FUNC, TYPE, BITS, MAX, ONE) \
   ASSERT (FUNC (0) == 0);                               \
   for (i = 0; i < BITS; i++)                            \
     {                                                   \
@@ -70,11 +70,12 @@ main (int argc, char *argv[])
     }                                                   \
   ASSERT (FUNC (MAX) == BITS);
 
-  TEST_POPCOUNT (popcount, unsigned int, UINT_BIT, UINT_MAX, 1U);
-  TEST_POPCOUNT (popcountl, unsigned long int, ULONG_BIT, ULONG_MAX, 1UL);
+  TEST_COUNT_ONE_BITS (count_one_bits, unsigned int, UINT_BIT, UINT_MAX, 1U);
+  TEST_COUNT_ONE_BITS (count_one_bits_l, unsigned long int,
+                       ULONG_BIT, ULONG_MAX, 1UL);
 #ifdef HAVE_UNSIGNED_LONG_LONG_INT
-  TEST_POPCOUNT (popcountll,
-                 unsigned long long int, ULLONG_BIT, ULLONG_MAX, 1ULL);
+  TEST_COUNT_ONE_BITS (count_one_bits_ll,
+                       unsigned long long int, ULLONG_BIT, ULLONG_MAX, 1ULL);
 #endif
 
   return 0;
