@@ -1,7 +1,7 @@
 /* human.h -- print human readable file size
 
    Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
-   2005, 2006 Free Software Foundation, Inc.
+   2005, 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -78,6 +78,6 @@ enum
 
 char *human_readable (uintmax_t, char *, int, uintmax_t, uintmax_t);
 
-int human_options (char const *, bool, uintmax_t *);
+int human_options (char const *, bool, char const *, uintmax_t *);
 
 #endif /* HUMAN_H_ */

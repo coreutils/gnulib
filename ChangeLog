@@ -1,3 +1,12 @@
+2007-07-25  Jim Meyering  <jim@meyering.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/xstrtol.h (_STRTOL_ERROR): Change third argument from a
+	localized noun to an option name.
+	(STRTOL_FATAL_ERROR, STRTOL_FAIL_WARN): Likewise.
+	* lib/human.h (human_options): Insert a third argument.
+	* lib/human.h (human_options): Likewise. Pass it to STRTOL_FATAL_ERROR.
+
 2007-07-25  Peter O'Gorman  <peter@pogma.com>
             Bruno Haible  <bruno@clisp.org>
 
