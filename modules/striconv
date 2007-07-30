@@ -27,7 +27,7 @@ Include:
 "striconv.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible, Simon Josefsson

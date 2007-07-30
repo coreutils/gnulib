@@ -1,3 +1,32 @@
+2007-07-30  Bruno Haible  <bruno@clisp.org>
+
+	* modules/base64 (License): Use the synonymous term "LGPLv2+".
+	* modules/c-ctype (License): Likewise.
+	* modules/c-strcase (License): Likewise.
+	* modules/check-version (License): Likewise.
+	* modules/iconv (License): Likewise.
+	* modules/iconv_open (License): Likewise.
+	* modules/read-file (License): Likewise.
+	* modules/striconv (License): Likewise.
+	* modules/strverscmp (License): Likewise.
+	* modules/vasprintf (License): Likewise.
+	* modules/crypto/des (License): Likewise.
+	* modules/crypto/gc (License): Likewise.
+	* modules/crypto/gc-arcfour (License): Likewise.
+	* modules/crypto/gc-arctwo (License): Likewise.
+	* modules/crypto/gc-des (License): Likewise.
+	* modules/crypto/gc-hmac-md5 (License): Likewise.
+	* modules/crypto/gc-hmac-sha1 (License): Likewise.
+	* modules/crypto/gc-md2 (License): Likewise.
+	* modules/crypto/gc-md4 (License): Likewise.
+	* modules/crypto/gc-md5 (License): Likewise.
+	* modules/crypto/gc-pbkdf2-sha1 (License): Likewise.
+	* modules/crypto/gc-random (License): Likewise.
+	* modules/crypto/gc-rijndael (License): Likewise.
+	* modules/crypto/gc-sha1 (License): Likewise.
+	* modules/crypto/md2 (License): Likewise.
+	* modules/crypto/md4 (License): Likewise.
+
 2007-07-30  Jim Meyering  <jim@meyering.net>
 
 	* lib/fts.c (fts_read): Upon failure to chdir into a subdirectory,
