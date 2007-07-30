@@ -1,3 +1,11 @@
+2007-07-30  Jim Meyering  <jim@meyering.net>
+
+	* lib/fts.c (fts_read): Upon failure to chdir into a subdirectory,
+	set fts_info to FTS_DNR, not to FTS_ERR, so that the caller knows
+	it has valid stat data.  This bug would cause du not to count the
+	sizes of inaccessible directories.
+	Patch by Jose Maria Plans, reported in http://bugzilla.redhat.com/250077
+
 2007-07-25  Peter O'Gorman  <peter@pogma.com>
             Bruno Haible  <bruno@clisp.org>
 

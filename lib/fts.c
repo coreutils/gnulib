@@ -685,7 +685,7 @@ fts_read (register FTS *sp)
 			/* If fts_build's call to fts_safe_changedir failed
 			   because it was not able to fchdir into a
 			   subdirectory, tell the caller.  */
-			if (p->fts_errno)
+			if (p->fts_errno && p->fts_info != FTS_DNR)
 				p->fts_info = FTS_ERR;
 			LEAVE_DIR (sp, p, "2");
 			return (p);
