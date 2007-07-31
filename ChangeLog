@@ -1,5 +1,11 @@
 2007-07-31  Bruno Haible  <bruno@clisp.org>
 
+	* m4/stdint.m4 (gl_STDINT_H): Test whether WCHAR_MIN and WCHAR_MAX
+	are defined by <stdint.h> (as opposed to <wchar.h>, as on Dragonfly).
+	Reported by Joerg Sonnenberger <joerg@britannica.bec.de>.
+
+2007-07-31  Bruno Haible  <bruno@clisp.org>
+
 	* lib/fflush.c (rpl_fflush): On BSD systems, use the __SNPT flag.
 	Suggested by Joerg Sonnenberger <joerg@britannica.bec.de>.
 

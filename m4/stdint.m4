@@ -1,4 +1,4 @@
-# stdint.m4 serial 27
+# stdint.m4 serial 28
 dnl Copyright (C) 2001-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -59,12 +59,18 @@ AC_DEFUN([gl_STDINT_H],
       [gl_cv_header_working_stdint_h],
       [gl_cv_header_working_stdint_h=no
        AC_COMPILE_IFELSE([
-         AC_LANG_PROGRAM([gl_STDINT_INCLUDES
-         [
+         AC_LANG_PROGRAM([[
 #define __STDC_LIMIT_MACROS 1 /* to make it work also in C++ mode */
 #define __STDC_CONSTANT_MACROS 1 /* to make it work also in C++ mode */
 #define _GL_JUST_INCLUDE_SYSTEM_STDINT_H 1 /* work if build isn't clean */
 #include <stdint.h>
+/* Dragonfly defines WCHAR_MIN, WCHAR_MAX only in <wchar.h>.  */
+#if !(defined WCHAR_MIN && defined WCHAR_MAX)
+#error "WCHAR_MIN, WCHAR_MAX not defined in <stdint.h>"
+#endif
+]
+gl_STDINT_INCLUDES
+[
 #ifdef INT8_MAX
 int8_t a1 = INT8_MAX;
 int8_t a1min = INT8_MIN;
