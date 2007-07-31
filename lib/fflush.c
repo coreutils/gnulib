@@ -77,15 +77,34 @@ rpl_fflush (FILE *stream)
   if (result != 0)
     return result;
 
+#if defined __sferror && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+
+  {
+    /* Disable seek optimization for the next fseeko call.  This tells the
+       following fseeko call to seek to the desired position directly, rather
+       than to seek to a block-aligned boundary.  */
+    int saved_flags = stream->_flags & (__SOPT | __SNPT);
+    stream->_flags = (stream->_flags & ~__SOPT) | __SNPT;
+
+    result = fseeko (stream, pos, SEEK_SET);
+
+    stream->_flags = (stream->_flags & ~(__SOPT | __SNPT)) | saved_flags;
+  }
+  return result;
+
+#else
+
   pos = lseek (fileno (stream), pos, SEEK_SET);
   if (pos == -1)
     return EOF;
   /* After a successful lseek, update the file descriptor's position cache
      in the stream.  */
-#if defined __sferror           /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+# if defined __sferror           /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   stream->_offset = pos;
   stream->_flags |= __SOFF;
-#endif
+# endif
 
   return 0;
+
+#endif
 }
