@@ -33,7 +33,7 @@
 	set fts_info to FTS_DNR, not to FTS_ERR, so that the caller knows
 	it has valid stat data.  This bug would cause du not to count the
 	sizes of inaccessible directories.
-	Patch by Brian Mason <bjmason@redhat.com>, via Jose Maria Plans
+	Patch by Bryan Mason <bmason@redhat.com>, via Jose Maria Plans
 	in <http://bugzilla.redhat.com/250077>.
 
 2007-07-25  Peter O'Gorman  <peter@pogma.com>
