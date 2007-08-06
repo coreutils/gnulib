@@ -1,3 +1,7 @@
+2007-08-06  Simon Josefsson  <simon@josefsson.org>
+
+	* build-aux/maint.mk, build-aux/GNUmakefile: Relicense to GPLv3+.
+
 2007-07-31  Bruno Haible  <bruno@clisp.org>
 
 	* m4/stdint.m4 (gl_STDINT_H): Test whether WCHAR_MIN and WCHAR_MAX
