@@ -8,7 +8,6 @@ lib/human.c
 m4/human.m4
 
 Depends-on:
-gettext-h
 argmatch
 error
 intprops

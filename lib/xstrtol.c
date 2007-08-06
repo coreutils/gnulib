@@ -1,7 +1,7 @@
 /* A more useful interface to strtol.
 
-   Copyright (C) 1995, 1996, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2006
-   Free Software Foundation, Inc.
+   Copyright (C) 1995, 1996, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
+   2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -254,7 +254,7 @@ main (int argc, char **argv)
 	}
       else
 	{
-	  STRTOL_FATAL_ERROR (argv[i], "arg", s_err);
+	  STRTOL_FATAL_ERROR ("arg", argv[i], s_err);
 	}
     }
   exit (0);

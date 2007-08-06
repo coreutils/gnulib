@@ -1,3 +1,27 @@
+2007-08-06  Paul Eggert  <eggert@cs.ucla.edu>
+	and Bruno Haible  <bruno@clisp.org>
+
+	* NEWS: Describe interface changes to human, xstrtol.
+	* lib/human.h: Include <xstrtol.h>.
+	(human_options): Return enum strtol_error, not int.  Remove
+	bool arg; take int * instead.
+	* lib/human.c: Don't include "gettext.h".
+	(_): Remove; no longer used.
+	Don't include <xstrtol.h>, since human.h does it.
+	(human_options): Adjust to abovementioned interface changes.
+	Do not report error to stderr; that's now the caller's
+	responsibility.
+	* lib/xstrtol.c (main) [defined TESTING_XSTRTO]: Adjust to
+	interface change.
+	* lib/xstrtol.h (_STRTOL_ERROR): Take Option, Arg rather than
+	Str, Argument_type_string.  All uses changed.  Put " argument"
+	in diagnostics to make them clearer.  Change wording of suffix
+	message for clarity.
+	(STRTOL_FATAL_ERROR): Take Option, Arg rather than Str,
+	Argument_type_string.
+	(STRTOL_FATAL_WARN): Remove; no longer used.
+	* modules/human (Depends-on): Remove gettext-h.
+
 2007-08-06  Simon Josefsson  <simon@josefsson.org>
 
 	* build-aux/maint.mk, build-aux/GNUmakefile: Relicense to GPLv3+.

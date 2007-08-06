@@ -6,6 +6,17 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-08-04  human           The function human_options no longer reports an
+                            error to standard error; that is now the
+                            caller's responsibility.  It returns an
+                            error code of type enum strtol_error
+                            instead of the integer option value, and stores
+                            the option value via a new int * argument.
+            xstrtol         The first two arguments of STRTOL_FATAL_ERROR
+                            are now an option name and option argument
+                            instead of an option argument and a type string,
+                            STRTOL_FAIL_WARN is removed.
+
 2007-07-14  gpl, lgpl       New Texinfo versions with no sectioning commands.
 
 2007-07-10  version-etc     Output now mentions GPLv3+, not GPLv2+.  Use

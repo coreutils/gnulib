@@ -1,6 +1,6 @@
 /* A more useful interface to strtol.
 
-   Copyright (C) 1995, 1996, 1998, 1999, 2001, 2002, 2003, 2004, 2006
+   Copyright (C) 1995, 1996, 1998, 1999, 2001, 2002, 2003, 2004, 2006, 2007
    Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -50,7 +50,13 @@ _DECLARE_XSTRTOL (xstrtoul, unsigned long int)
 _DECLARE_XSTRTOL (xstrtoimax, intmax_t)
 _DECLARE_XSTRTOL (xstrtoumax, uintmax_t)
 
-# define _STRTOL_ERROR(Exit_code, Str, Argument_type_string, Err)	\
+/* Report an error for an out-of-range integer argument.
+   EXIT_CODE is the exit code (0 for a non-fatal error).
+   OPTION is the option that takes the argument
+    (usually starting with one or two minus signs).
+   ARG is the option's argument.
+   ERR is the error code returned by one of the xstrto* functions.  */
+# define _STRTOL_ERROR(Exit_code, Option, Arg, Err)			\
   do									\
     {									\
       switch ((Err))							\
@@ -59,29 +65,26 @@ _DECLARE_XSTRTOL (xstrtoumax, uintmax_t)
 	  abort ();							\
 									\
 	case LONGINT_INVALID:						\
-	  error ((Exit_code), 0, gettext ("invalid %s `%s'"),		\
-		 (Argument_type_string), (Str));			\
+	  error (Exit_code, 0, gettext ("invalid %s argument `%s'"),	\
+		 Option, Arg);						\
 	  break;							\
 									\
 	case LONGINT_INVALID_SUFFIX_CHAR:				\
 	case LONGINT_INVALID_SUFFIX_CHAR | LONGINT_OVERFLOW:		\
 	  error ((Exit_code), 0,					\
-		 gettext ("invalid character following %s in `%s'"),	\
-		 (Argument_type_string), (Str));			\
+		 gettext ("invalid suffix in %s argument `%s'"),	\
+		 Option, Arg);						\
 	  break;							\
 									\
 	case LONGINT_OVERFLOW:						\
-	  error ((Exit_code), 0, gettext ("%s `%s' too large"),		\
-		 (Argument_type_string), (Str));			\
+	  error (Exit_code, 0, gettext ("%s argument `%s' too large"),	\
+		 Option, Arg);						\
 	  break;							\
 	}								\
     }									\
   while (0)
 
-# define STRTOL_FATAL_ERROR(Str, Argument_type_string, Err)		\
-  _STRTOL_ERROR (exit_failure, Str, Argument_type_string, Err)
-
-# define STRTOL_FAIL_WARN(Str, Argument_type_string, Err)		\
-  _STRTOL_ERROR (0, Str, Argument_type_string, Err)
+# define STRTOL_FATAL_ERROR(Option, Arg, Err)				\
+  _STRTOL_ERROR (exit_failure, Option, Arg, Err)
 
 #endif /* not XSTRTOL_H_ */

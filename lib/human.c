@@ -1,7 +1,7 @@
 /* human.c -- print human readable file size
 
    Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
-   2005, 2006 Free Software Foundation, Inc.
+   2005, 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,13 +28,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "gettext.h"
-#define _(msgid) gettext (msgid)
-
 #include <argmatch.h>
 #include <error.h>
 #include <intprops.h>
-#include <xstrtol.h>
 
 /* The maximum length of a suffix like "KiB".  */
 #define HUMAN_READABLE_SUFFIX_LENGTH_MAX 3
@@ -463,17 +459,14 @@ humblock (char const *spec, uintmax_t *block_size, int *options)
   return LONGINT_OK;
 }
 
-int
-human_options (char const *spec, bool report_errors, uintmax_t *block_size)
+enum strtol_error
+human_options (char const *spec, int *opts, uintmax_t *block_size)
 {
-  int opts;
-  strtol_error e = humblock (spec, block_size, &opts);
+  strtol_error e = humblock (spec, block_size, opts);
   if (*block_size == 0)
     {
       *block_size = default_block_size ();
       e = LONGINT_INVALID;
     }
-  if (e != LONGINT_OK && report_errors)
-    STRTOL_FATAL_ERROR (spec, _("block size"), e);
-  return opts;
+  return e;
 }
