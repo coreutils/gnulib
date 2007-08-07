@@ -1,4 +1,4 @@
-# inttypes.m4 serial 10
+# inttypes.m4 serial 11
 dnl Copyright (C) 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -150,12 +150,12 @@ const char *l = /* implicit string concatenation */
     dnl Also be careful to define __STDC_LIMIT_MACROS only when gnulib's
     dnl <inttypes.h> is going to be created, and to avoid redefinition warnings
     dnl if the __STDC_LIMIT_MACROS is already defined through the CPPFLAGS.
-    AC_DEFINE([__STDC_LIMIT_MACROS_TRIGGER], 1,
+    AC_DEFINE([GL_TRIGGER_STDC_LIMIT_MACROS], 1,
       [Define to make the limit macros in <stdint.h> visible.])
     AH_VERBATIM([__STDC_LIMIT_MACROS_ZZZ],
 [/* Ensure that <stdint.h> defines the limit macros, since gnulib's
    <inttypes.h> relies on them.  */
-#if defined __cplusplus && !defined __STDC_LIMIT_MACROS && __STDC_LIMIT_MACROS_TRIGGER
+#if defined __cplusplus && !defined __STDC_LIMIT_MACROS && GL_TRIGGER_STDC_LIMIT_MACROS
 # define __STDC_LIMIT_MACROS 1
 #endif
 ])

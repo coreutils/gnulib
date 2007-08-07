@@ -1,3 +1,10 @@
+2007-08-07  Bruno Haible  <bruno@clisp.org>
+
+	* m4/inttypes.m4 (gl_INTTYPES_H): Use GL_TRIGGER_STDC_LIMIT_MACROS
+	instead of __STDC_LIMIT_MACROS_TRIGGER. This avoids a redefinition
+	warning from gcc.
+	Reported by Eric Blake.
+
 2007-08-07  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/crypto/arctwo (License): Use the synonymous term "LGPLv2+".
