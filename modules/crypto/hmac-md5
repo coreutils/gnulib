@@ -19,7 +19,7 @@ Include:
 "hmac.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Simon Josefsson

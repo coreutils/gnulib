@@ -10,4 +10,4 @@ TESTS += test-gc-hmac-md5
 check_PROGRAMS += test-gc-hmac-md5
 
 License:
-LGPL
+LGPLv2+

@@ -10,4 +10,4 @@ TESTS += test-gc-arcfour
 check_PROGRAMS += test-gc-arcfour
 
 License:
-LGPL
+LGPLv2+

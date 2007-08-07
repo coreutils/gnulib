@@ -10,4 +10,4 @@ TESTS += test-des
 check_PROGRAMS += test-des
 
 License:
-LGPL
+LGPLv2+

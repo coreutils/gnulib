@@ -1,3 +1,28 @@
+2007-08-07  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/crypto/arctwo (License): Use the synonymous term "LGPLv2+".
+	* modules/crypto/arcfour (License): Likewise.
+	* modules/crypto/des-tests (License): Likewise.
+	* modules/crypto/gc-arctwo-tests (License): Likewise.
+	* modules/crypto/gc-des-tests (License): Likewise.
+	* modules/crypto/gc-hmac-md5-tests (License): Likewise.
+	* modules/crypto/gc-hmac-sha1-tests (License): Likewise.
+	* modules/crypto/gc-md2-tests (License): Likewise.
+	* modules/crypto/gc-md4-tests (License): Likewise.
+	* modules/crypto/gc-md5-tests (License): Likewise.
+	* modules/crypto/gc-pbkdf2-sha1-tests (License): Likewise.
+	* modules/crypto/gc-rijndael-tests (License): Likewise.
+	* modules/crypto/gc-sha1-tests (License): Likewise.
+	* modules/crypto/gc-tests (License): Likewise.
+	* modules/crypto/hmac-md5 (License): Likewise.
+	* modules/crypto/hmac-sha1 (License): Likewise.
+	* modules/crypto/md2-tests (License): Likewise.
+	* modules/crypto/md4-tests (License): Likewise.
+	* modules/crypto/md5 (License): Likewise.
+	* modules/crypto/rijndael (License): Likewise.
+	* modules/crypto/sha1 (License): Likewise.
+	* modules/memxor (License): Likewise.
+
 2007-08-06  Paul Eggert  <eggert@cs.ucla.edu>
 	and Bruno Haible  <bruno@clisp.org>
 

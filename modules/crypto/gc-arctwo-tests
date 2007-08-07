@@ -10,4 +10,4 @@ TESTS += test-gc-arctwo
 check_PROGRAMS += test-gc-arctwo
 
 License:
-LGPL
+LGPLv2+

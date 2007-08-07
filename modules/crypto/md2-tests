@@ -10,4 +10,4 @@ TESTS += test-md2
 check_PROGRAMS += test-md2
 
 License:
-LGPL
+LGPLv2+

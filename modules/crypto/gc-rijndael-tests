@@ -10,4 +10,4 @@ TESTS += test-gc-rijndael
 check_PROGRAMS += test-gc-rijndael
 
 License:
-LGPL
+LGPLv2+

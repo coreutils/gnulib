@@ -10,4 +10,4 @@ TESTS += test-gc-pbkdf2-sha1
 check_PROGRAMS += test-gc-pbkdf2-sha1
 
 License:
-LGPL
+LGPLv2+

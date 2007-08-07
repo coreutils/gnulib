@@ -10,4 +10,4 @@ TESTS += test-gc-sha1
 check_PROGRAMS += test-gc-sha1
 
 License:
-LGPL
+LGPLv2+

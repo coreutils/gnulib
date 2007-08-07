@@ -10,4 +10,4 @@ TESTS += test-gc-md5
 check_PROGRAMS += test-gc-md5
 
 License:
-LGPL
+LGPLv2+

@@ -21,7 +21,7 @@ Include:
 "rijndael-api-fst.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Simon Josefsson
