@@ -17,36 +17,13 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef XSTRTOL_H_
-# define XSTRTOL_H_ 1
+#include <config.h>
+#include "xstrtol.h"
 
-# include "exitfail.h"
+#include "error.h"
+#include "gettext.h"
 
-# include <inttypes.h>
-
-# ifndef _STRTOL_ERROR
-enum strtol_error
-  {
-    LONGINT_OK = 0,
-
-    /* These two values can be ORed together, to indicate that both
-       errors occurred.  */
-    LONGINT_OVERFLOW = 1,
-    LONGINT_INVALID_SUFFIX_CHAR = 2,
-
-    LONGINT_INVALID_SUFFIX_CHAR_WITH_OVERFLOW = (LONGINT_INVALID_SUFFIX_CHAR
-						 | LONGINT_OVERFLOW),
-    LONGINT_INVALID = 4
-  };
-typedef enum strtol_error strtol_error;
-# endif
-
-# define _DECLARE_XSTRTOL(name, type) \
-  strtol_error name (const char *, char **, int, type *, const char *);
-_DECLARE_XSTRTOL (xstrtol, long int)
-_DECLARE_XSTRTOL (xstrtoul, unsigned long int)
-_DECLARE_XSTRTOL (xstrtoimax, intmax_t)
-_DECLARE_XSTRTOL (xstrtoumax, uintmax_t)
+#define _(str) gettext (str)
 
 /* Report an error for an out-of-range integer argument.
    EXIT_CODE is the exit code (0 for a non-fatal error).
@@ -54,10 +31,29 @@ _DECLARE_XSTRTOL (xstrtoumax, uintmax_t)
     (usually starting with one or two minus signs).
    ARG is the option's argument.
    ERR is the error code returned by one of the xstrto* functions.  */
-void xstrtol_error (int exit_code, char const *option, char const *arg,
-		    strtol_error err);
+void
+xstrtol_error (int exit_code, char const *option, char const *arg,
+	       strtol_error err)
+{
+  switch (err)
+    {
+    default:
+      abort ();
 
-# define STRTOL_FATAL_ERROR(Option, Arg, Err)				\
-  xstrtol_error (exit_failure, Option, Arg, Err)
+    case LONGINT_INVALID:
+      error (exit_code, 0, _("invalid %s argument `%s'"),
+	     option, arg);
+      break;
 
-#endif /* not XSTRTOL_H_ */
+    case LONGINT_INVALID_SUFFIX_CHAR:
+    case LONGINT_INVALID_SUFFIX_CHAR | LONGINT_OVERFLOW:
+      error (exit_code, 0, _("invalid suffix in %s argument `%s'"),
+	     option, arg);
+      break;
+
+    case LONGINT_OVERFLOW:
+      error (exit_code, 0, _("%s argument `%s' too large"),
+	     option, arg);
+      break;
+    }
+}

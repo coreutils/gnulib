@@ -227,37 +227,3 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
   *val = tmp;
   return err;
 }
-
-#ifdef TESTING_XSTRTO
-
-# include <stdio.h>
-# include "error.h"
-
-char *program_name;
-
-int
-main (int argc, char **argv)
-{
-  strtol_error s_err;
-  int i;
-
-  program_name = argv[0];
-  for (i=1; i<argc; i++)
-    {
-      char *p;
-      __strtol_t val;
-
-      s_err = __xstrtol (argv[i], &p, 0, &val, "bckmw");
-      if (s_err == LONGINT_OK)
-	{
-	  printf ("%s->%lu (%s)\n", argv[i], val, p);
-	}
-      else
-	{
-	  STRTOL_FATAL_ERROR ("arg", argv[i], s_err);
-	}
-    }
-  exit (0);
-}
-
-#endif /* TESTING_XSTRTO */

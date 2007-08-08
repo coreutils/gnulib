@@ -5,6 +5,7 @@ Files:
 lib/xstrtol.h
 lib/xstrtol.c
 lib/xstrtoul.c
+lib/xstrtol-error.c
 m4/xstrtol.m4
 
 Depends-on:

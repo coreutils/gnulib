@@ -1,0 +1,14 @@
+Files:
+tests/test-xstrtoumax.c
+tests/test-xstrtoumax.sh
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-xstrtoumax.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-xstrtoumax
+EXTRA_DIST += test-xstrtoumax.sh
+test_xstrtoumax_LDADD = $(LDADD) @LIBINTL@

@@ -1,3 +1,22 @@
+2007-08-08  Eric Blake  <ebb9@byu.net>
+
+	Move xstrtol messages into gnulib domain, when --pobase is used.
+	* lib/xstrtol.h (_STRTOL_ERROR): Move messages out of macro...
+	* lib/xstrtol-error.c (xstrtol_error): ...into new file.
+	* modules/xstrtol (Files): Distribute new file.
+	* m4/xstrtol.m4 (gl_XSTRTOL): Build new file.
+	* lib/xstrtol.c (TESTING_XSTRTO): Move tests...
+	* tests/test-xstrtol.c: ...into new file.
+	* tests/test-xstrtoul.c: Also test xstrtoul.
+	* tests/test-xstrtoimax.c: Also test xstrtoimax.
+	* tests/test-xstrtoumax.c: Also test xstrtoumax.
+	* tests/test-xstrtol.sh: Drive the tests.
+	* tests/test-xstrtoimax.sh: Likewise.
+	* tests/test-xstrtoumax.sh: Likewise.
+	* modules/xstrtol-tests: New module.
+	* modules/xstrtoimax-tests: Likewise.
+	* modules/xstrtoumax-tests: Likewise.
+
 2007-08-08  Jim Meyering  <jim@meyering.net>
 
 	New function: mfile_name_concat.
