@@ -1,7 +1,6 @@
 /* Concatenate two arbitrary file names.
 
-   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
-   2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1996-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,6 +23,7 @@
 /* Specification.  */
 #include "filenamecat.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #include "dirname.h"
@@ -57,10 +57,10 @@ longest_relative_suffix (char const *f)
    set *BASE_IN_RESULT to point to the sole corresponding slash that
    is copied into the result buffer.
 
-   Report an error if memory is exhausted.  */
+   Return NULL if malloc fails.  */
 
 char *
-file_name_concat (char const *dir, char const *abase, char **base_in_result)
+mfile_name_concat (char const *dir, char const *abase, char **base_in_result)
 {
   char const *dirbase = last_component (dir);
   size_t dirbaselen = base_len (dirbase);
@@ -70,8 +70,11 @@ file_name_concat (char const *dir, char const *abase, char **base_in_result)
   char const *base = longest_relative_suffix (abase);
   size_t baselen = strlen (base);
 
-  char *p_concat = xmalloc (dirlen + needs_separator + baselen + 1);
+  char *p_concat = malloc (dirlen + needs_separator + baselen + 1);
   char *p;
+
+  if (p_concat == NULL)
+    return NULL;
 
   p = mempcpy (p_concat, dir, dirlen);
   *p = DIRECTORY_SEPARATOR;
@@ -84,6 +87,19 @@ file_name_concat (char const *dir, char const *abase, char **base_in_result)
   *p = '\0';
 
   return p_concat;
+}
+
+/* Just like mfile_name_concat, above, except, rather than
+   returning NULL upon malloc failure, here, we report the
+   "memory exhausted" condition and exit.  */
+
+char *
+file_name_concat (char const *dir, char const *abase, char **base_in_result)
+{
+  char *p = mfile_name_concat (dir, abase, base_in_result);
+  if (p == NULL)
+    xalloc_die ();
+  return p;
 }
 
 #ifdef TEST_FILE_NAME_CONCAT

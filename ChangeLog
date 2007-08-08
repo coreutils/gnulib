@@ -1,3 +1,11 @@
+2007-08-08  Jim Meyering  <jim@meyering.net>
+
+	New function: mfile_name_concat.
+	* lib/filenamecat.c (mfile_name_concat): New function, just like
+	file_name_concat, but return NULL upon failure rather than exiting
+	with a diagnostic.
+	* lib/filenamecat.h: Declare it.
+
 2007-08-07  Bruno Haible  <bruno@clisp.org>
 
 	* m4/inttypes.m4 (gl_INTTYPES_H): Use GL_TRIGGER_STDC_LIMIT_MACROS
