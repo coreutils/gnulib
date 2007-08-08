@@ -1,5 +1,7 @@
 2007-08-08  Eric Blake  <ebb9@byu.net>
 
+	* lib/xstrtol-error.c: Add missing include.
+
 	Move xstrtol messages into gnulib domain, when --pobase is used.
 	* lib/xstrtol.h (_STRTOL_ERROR): Move messages out of macro...
 	* lib/xstrtol-error.c (xstrtol_error): ...into new file.
