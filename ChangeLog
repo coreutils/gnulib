@@ -23,6 +23,8 @@
 	of old STRTOL_FATAL_ERROR macro.
 	* tests/test-xstrtol.sh (t-xstrtol.xo): Adjust to match new behavior
 	of test program.
+	* tests/test-xstrtoimax.sh (t-xstrtoimax.xo): Likewise.
+	* tests/test-xstrtoumax.sh (t-xstrtoumax.xo): Likewise.
 
 2007-08-08  Eric Blake  <ebb9@byu.net>
 
