@@ -11,6 +11,7 @@ m4/xstrtol.m4
 Depends-on:
 exitfail
 error
+getopt
 gettext-h
 intprops
 inttypes

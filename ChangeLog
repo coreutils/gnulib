@@ -1,3 +1,29 @@
+2007-08-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* NEWS: In xstrtol, remove STRTOL_FATAL_ERROR and add xstrtol_fatal.
+	* lib/xstrtol.h: Don't include exitfail.h; that's now internal to
+	xstrtol.c.  Include getopt.h, since xstrtol_fatal's signature
+	depends on it.
+	(xstrtol_error): Remove.
+	(xstrtol_fatal): New decl, replacing the functionality of xstrtol_error
+	but with a different signature.
+	(ATTRIBUTE_NORETURN, __attribute__): New macros.
+	* lib/xstrtol-error.c: Include exitfail.h.
+	(xstrtol_fatal): New function, with a different signature from the
+	old xstrtol_error, so that the caller need not worry about passing
+	in an exit status, or about storage management of the option argument.
+	(xstrtol_error): Now a static function.  Redo signature to
+	implement xstrtol_fatal.  Output the correct number of hyphens in
+	front of the option so that the caller need not worry about
+	storage management.
+	(N_): New macro.
+	(_): Remove; not used now.
+	* modules/xstrtol: Depend on getopt.
+	* tests/test-xstrtol.c (main): Use new xstrtol_error function instead
+	of old STRTOL_FATAL_ERROR macro.
+	* tests/test-xstrtol.sh (t-xstrtol.xo): Adjust to match new behavior
+	of test program.
+
 2007-08-08  Eric Blake  <ebb9@byu.net>
 
 	* lib/xstrtol-error.c: Add missing include.

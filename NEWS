@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-08-10  xstrtol         The STRTOL_FATAL_ERROR macro is removed.
+                            Use the new xstrtol_fatal function instead.
+
 2007-08-04  human           The function human_options no longer reports an
                             error to standard error; that is now the
                             caller's responsibility.  It returns an

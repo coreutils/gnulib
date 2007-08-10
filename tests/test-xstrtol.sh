@@ -40,19 +40,19 @@ cat > t-xstrtol.xo <<EOF
 1->1 ()
 -1->-1 ()
 1k->1024 ()
-invalid suffix in arg argument \`${too_big}h'
-arg argument \`$too_big' too large
-invalid arg argument \`x'
-invalid suffix in arg argument \`9x'
+invalid suffix in X argument \`${too_big}h'
+X argument \`$too_big' too large
+invalid X argument \`x'
+invalid suffix in X argument \`9x'
 010->8 ()
 MiB->1048576 ()
 1->1 ()
-invalid arg argument \`-1'
+invalid X argument \`-1'
 1k->1024 ()
-invalid suffix in arg argument \`${too_big}h'
-arg argument \`$too_big' too large
-invalid arg argument \`x'
-invalid suffix in arg argument \`9x'
+invalid suffix in X argument \`${too_big}h'
+X argument \`$too_big' too large
+invalid X argument \`x'
+invalid suffix in X argument \`9x'
 010->8 ()
 MiB->1048576 ()
 EOF

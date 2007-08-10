@@ -52,7 +52,7 @@ main (int argc, char **argv)
 	}
       else
 	{
-	  STRTOL_FATAL_ERROR ("arg", argv[i], s_err);
+	  xstrtol_fatal (s_err, -2, 'X', NULL, argv[i]);
 	}
     }
   exit (0);
