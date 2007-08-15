@@ -1,3 +1,14 @@
+2007-08-14  Ben Pfaff  <blp@gnu.org>
+
+	* lib/count-one-bits.h: Add comments.  From Bruno Haible.
+
+2007-08-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/count-one-bits.h: Don't include <limits.h>; no longer needed
+	given the changes below.
+	(COUNT_ONE_BITS): Use 'verify' rather than 'verify_true'.  Work
+	even on hosts that have padding bits beyond the supported 64.
+
 2007-08-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* NEWS: In xstrtol, remove STRTOL_FATAL_ERROR and add xstrtol_fatal.

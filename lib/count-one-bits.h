@@ -20,19 +20,21 @@
 #ifndef COUNT_ONE_BITS_H
 # define COUNT_ONE_BITS_H 1
 
-#include <limits.h>
 #include <stdlib.h>
 #include "verify.h"
 
+/* Expand the code which computes the number of 1-bits of the local
+   variable 'x' of type TYPE (an unsigned integer type) and returns it
+   from the current function.  */
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR >= 4)
 #define COUNT_ONE_BITS(BUILTIN, TYPE)              \
         return BUILTIN (x);
 #else
-#define COUNT_ONE_BITS(BUILTIN, TYPE)                           \
-        int count = count_one_bits_32 (x);                      \
-        if (CHAR_BIT * sizeof (TYPE) > 32)                      \
-          count += count_one_bits_32 (x >> 31 >> 1);            \
-        (void) verify_true (CHAR_BIT * sizeof (TYPE) <= 64);    \
+#define COUNT_ONE_BITS(BUILTIN, TYPE)                                       \
+        verify ((TYPE) -1 >> 31 >> 31 <= 3); /* TYPE has at most 64 bits */ \
+        int count = count_one_bits_32 (x);                                  \
+        if (1 < (TYPE) -1 >> 31) /* TYPE has more than 32 bits? */          \
+          count += count_one_bits_32 (x >> 31 >> 1);                        \
         return count;
 
 /* Compute and return the the number of 1-bits set in the least
