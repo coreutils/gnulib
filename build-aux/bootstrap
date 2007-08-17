@@ -4,10 +4,10 @@
 
 # Copyright (C) 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 
-# This program is free software; you can redistribute it and/or modify
+# This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
-# any later version.
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,9 +15,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-# 02110-1301, USA.
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Written by Paul Eggert.
 
@@ -28,6 +26,8 @@ nl='
 # Also, ensure diagnostics are in English, e.g., "wget --help" below.
 LC_ALL=C
 export LC_ALL
+
+local_gl_dir=gl
 
 # Temporary directory names.
 bt='._bootmp'
@@ -278,12 +278,18 @@ case $SKIP_PO in
   fi;;
 esac
 
-symlink_to_gnulib()
+symlink_to_dir()
 {
-  src=$GNULIB_SRCDIR/$1
-  dst=${2-$1}
+  src=$1/$2
+  dst=${3-$2}
 
   test -f "$src" && {
+
+    # If the destination directory doesn't exist, create it.
+    # This is required at least for "lib/uniwidth/cjk.h".
+    dst_dir=`dirname "$dst"`
+    test -d "$dst_dir" || mkdir -p "$dst_dir"
+
     if $copy; then
       {
 	test ! -h "$dst" || {
@@ -328,7 +334,9 @@ cp_mark_as_generated()
   cp_dst=$2
 
   if cmp -s "$cp_src" "$GNULIB_SRCDIR/$cp_dst"; then
-    symlink_to_gnulib "$cp_dst"
+    symlink_to_dir "$GNULIB_SRCDIR" "$cp_dst"
+  elif cmp -s "$cp_src" "$local_gl_dir/$cp_dst"; then
+    symlink_to_dir $local_gl_dir "$cp_dst"
   else
     case $cp_dst in
       *.[ch])             c1='/* '; c2=' */';;
@@ -381,7 +389,11 @@ slurp() {
   for dir in . `(cd $1 && find * -type d -print)`; do
     copied=
     sep=
-    for file in `ls $1/$dir`; do
+    for file in `ls -a $1/$dir`; do
+      case $file in
+      .|..) continue;;
+      .*) continue;; # FIXME: should all file names starting with "." be ignored?
+      esac
       test -d $1/$dir/$file && continue
       for excluded_file in $excluded_files; do
 	test "$dir/$file" = "$excluded_file" && continue 2
@@ -446,7 +458,7 @@ gnulib_tool_options="\
  --m4-base $bt/m4/\
  --source-base $bt/lib/\
  --tests-base $bt/tests\
- --local-dir gl\
+ --local-dir $local_gl_dir\
 $gnulib_tool_option_extras\
 "
 echo "$0: $gnulib_tool $gnulib_tool_options --import ..."
@@ -454,7 +466,7 @@ $gnulib_tool $gnulib_tool_options --import $gnulib_modules &&
 slurp $bt || exit
 
 for file in $gnulib_files; do
-  symlink_to_gnulib $file || exit
+  symlink_to_dir "$GNULIB_SRCDIR" $file || exit
 done
 
 
@@ -472,6 +484,24 @@ if test $with_gettext = yes; then
   rm -fr $bt $bt2 || exit
 fi
 
+# Coreutils is unusual in that it generates some of its test-related
+# Makefile.am files.  That must be done before invoking automake.
+mam_template=tests/Makefile.am.in
+if test -f $mam_template; then
+  PERL=perl
+  for tool in cut head join pr sort tac tail test tr uniq wc; do
+    m=tests/$tool/Makefile.am
+    t=${m}t
+    rm -f $m $t
+    sed -n '1,/^##test-files-begin/p' $mam_template > $t
+    echo "x = $tool" >> $t
+    srcdir=tests/$tool
+    $PERL -I$srcdir -w -- tests/mk-script $srcdir --list >> $t
+    sed -n '/^##test-files-end/,$p' $mam_template >> $t
+    chmod -w $t
+    mv $t $m
+  done
+fi
 
 # Reconfigure, getting other files.
 
@@ -499,7 +529,7 @@ for file in $gnulib_extra_files; do
   build-aux/*) dst=$build_aux/`expr "$file" : 'build-aux/\(.*\)'`;;
   *) dst=$file;;
   esac
-  symlink_to_gnulib $file $dst || exit
+  symlink_to_dir "$GNULIB_SRCDIR" $file $dst || exit
 done
 
 if test $with_gettext = yes; then
