@@ -1815,6 +1815,7 @@ func_all_modules ()
   func_module base64
   func_module check-version
   func_module diacrit
+  func_module diffseq
   func_module getline
   func_module getdelim
   func_module getnline

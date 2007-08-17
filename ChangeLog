@@ -1,3 +1,11 @@
+2007-08-17  Bruno Haible  <bruno@clisp.org>
+	and Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh: Add diffseq.
+	* modules/diffseq: New file.
+	* lib/diffseq.h: New file, from GNU gettext with a few minor changes,
+	extracted from GNU gettext's fstrcmp.c and GNU diff's analyze.c.
+
 2007-08-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Import changes from coreutils for bootstrap script.
