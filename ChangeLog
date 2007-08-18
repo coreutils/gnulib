@@ -1,5 +1,12 @@
 2007-08-18  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fstrcmp: New file, from GNU gettext with modifications.
+	* lib/fstrcmp.h: New file, from GNU gettext.
+	* lib/fstrcmp.c: New file, from GNU gettext.
+	* MODULES.html.sh (String handling): Add fstrcmp.
+
+2007-08-18  Bruno Haible  <bruno@clisp.org>
+
 	* lib/diffseq.h (struct context): Change type of 'heuristic' field to
 	'bool'.
 	(diag, compareseq): Remove const from the ctxt argument.
