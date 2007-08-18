@@ -1,0 +1,12 @@
+Files:
+tests/test-fstrcmp.c
+
+Depends-on:
+stdbool
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fstrcmp
+check_PROGRAMS += test-fstrcmp
+
