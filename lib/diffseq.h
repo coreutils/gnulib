@@ -71,28 +71,28 @@
  */
 struct context
 {
-  /* Vectors being compared. */
+  /* Vectors being compared.  */
   const ELEMENT *xvec;
   const ELEMENT *yvec;
 
-  /* Extra fields. */
+  /* Extra fields.  */
   EXTRA_CONTEXT_FIELDS
 
   /* Vector, indexed by diagonal, containing 1 + the X coordinate of the point
      furthest along the given diagonal in the forward search of the edit
-     matrix. */
+     matrix.  */
   OFFSET *fdiag;
 
   /* Vector, indexed by diagonal, containing the X coordinate of the point
      furthest along the given diagonal in the backward search of the edit
-     matrix. */
+     matrix.  */
   OFFSET *bdiag;
 
   #ifdef USE_HEURISTIC
   /* This corresponds to the diff -H flag.  With this heuristic, for
      vectors with a constant small density of changes, the algorithm is
      linear in the vectors size.  */
-  int heuristic;
+  bool heuristic;
   #endif
 
   /* Edit scripts longer than this are too expensive to compute.  */
@@ -115,6 +115,7 @@ struct partition
   bool hi_minimal;
 };
 
+
 /* Find the midpoint of the shortest edit script for a specified portion
    of the two vectors.
 
@@ -123,9 +124,9 @@ struct partition
    When the two searches meet, we have found the midpoint of the shortest
    edit sequence.
 
-   If FIND_MINIMAL is true, find the minimal edit script regardless
-   of expense.  Otherwise, if the search is too expensive, use
-   heuristics to stop the search and report a suboptimal answer.
+   If FIND_MINIMAL is true, find the minimal edit script regardless of
+   expense.  Otherwise, if the search is too expensive, use heuristics to
+   stop the search and report a suboptimal answer.
 
    Set PART->(xmid,ymid) to the midpoint (XMID,YMID).  The diagonal number
    XMID - YMID equals the number of inserted elements minus the number
@@ -144,7 +145,7 @@ struct partition
 
 static void
 diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
-      struct partition *part, struct context const *ctxt)
+      struct partition *part, struct context *ctxt)
 {
   OFFSET *const fd = ctxt->fdiag;	/* Give the compiler a chance. */
   OFFSET *const bd = ctxt->bdiag;	/* Additional help for the compiler. */
@@ -220,7 +221,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	  OFFSET thi = bd[d + 1];
 	  OFFSET x0 = tlo < thi ? tlo : thi - 1;
 
-	  for (x = x0, y = x - d;
+	  for (x = x0, y = x0 - d;
 	       xoff < x && yoff < y && EQUAL (xv[x - 1], yv[y - 1]);
 	       x--, y--)
 	    continue;
@@ -390,6 +391,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
     }
 }
 
+
 /* Compare in detail contiguous subsequences of the two vectors
    which are known, as a whole, to match each other.
 
@@ -401,12 +403,11 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
    If FIND_MINIMAL, find a minimal difference no matter how
    expensive it is.
 
-   The results are recorded in the vectors files[N].changed, by storing 1
-   in the element for each line that is an insertion or deletion.  */
+   The results are recorded by invoking NOTE_DELETE and NOTE_INSERT.  */
 
 static void
 compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
-	    bool find_minimal, struct context const *ctxt)
+	    bool find_minimal, struct context *ctxt)
 {
   ELEMENT const *xv = ctxt->xvec; /* Help the compiler.  */
   ELEMENT const *yv = ctxt->yvec;
@@ -454,7 +455,8 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
 #undef ELEMENT
 #undef EQUAL
 #undef OFFSET
-#undef OFFSET_MAX
 #undef EXTRA_CONTEXT_FIELDS
 #undef NOTE_DELETE
 #undef NOTE_INSERT
+#undef USE_HEURISTIC
+#undef OFFSET_MAX
