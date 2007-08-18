@@ -1,3 +1,10 @@
+2007-08-18  Bruno Haible  <bruno@clisp.org>
+
+	* lib/diffseq.h (struct context): Change type of 'heuristic' field to
+	'bool'.
+	(diag, compareseq): Remove const from the ctxt argument.
+	(USE_HEURISTIC): Undefine at the end.
+
 2007-08-18  Jim Meyering  <jim@meyering.net>
 
 	New file: lib/idcache.h
