@@ -1,3 +1,14 @@
+2007-08-18  Jim Meyering  <jim@meyering.net>
+
+	New file: lib/idcache.h
+	* NEWS: Mention the addition.
+	* modules/idcache (Files): Add lib/idcache.h
+	* lib/idcache.c: Include "idcache.h".
+	Don't include <sys/types.h>.
+	Add a FIXME comment.
+	Move file-scoped "static" declarations to the top.
+	* lib/idcache.h: New file.  Include <sys/types.h> here, instead.
+
 2007-08-17  Bruno Haible  <bruno@clisp.org>
 	and Paul Eggert  <eggert@cs.ucla.edu>
 

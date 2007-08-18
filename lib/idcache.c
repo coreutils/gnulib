@@ -1,6 +1,6 @@
 /* idcache.c -- map user and group IDs, cached for speed
 
-   Copyright (C) 1985, 1988, 1989, 1990, 1997, 1998, 2003, 2005, 2006
+   Copyright (C) 1985, 1988, 1989, 1990, 1997, 1998, 2003, 2005-2007
    Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -19,10 +19,10 @@
 
 #include <config.h>
 
+#include "idcache.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
-#include <sys/types.h>
 #include <pwd.h>
 #include <grp.h>
 
@@ -45,10 +45,23 @@ struct userid
   char name[FLEXIBLE_ARRAY_MEMBER];
 };
 
+/* FIXME: provide a function to free any malloc'd storage and reset lists,
+   so that an application can use code like this just before exiting:
+   #ifdef lint
+     idcache_clear ();
+   #endif
+*/
+
 static struct userid *user_alist;
 
 /* Each entry on list is a user name for which the first lookup failed.  */
 static struct userid *nouser_alist;
+
+/* Use the same struct as for userids.  */
+static struct userid *group_alist;
+
+/* Each entry on list is a group name for which the first lookup failed.  */
+static struct userid *nogroup_alist;
 
 /* Translate UID to a login name, with cache, or NULL if unresolved.  */
 
@@ -131,12 +144,6 @@ getuidbyname (const char *user)
   nouser_alist = tail;
   return NULL;
 }
-
-/* Use the same struct as for userids.  */
-static struct userid *group_alist;
-
-/* Each entry on list is a group name for which the first lookup failed.  */
-static struct userid *nogroup_alist;
 
 /* Translate GID to a group name, with cache, or NULL if unresolved.  */
 

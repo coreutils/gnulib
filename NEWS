@@ -6,6 +6,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-08-18  idcache         Now provides prototypes in "idcache.h".
+
 2007-08-10  xstrtol         The STRTOL_FATAL_ERROR macro is removed.
                             Use the new xstrtol_fatal function instead.
 
