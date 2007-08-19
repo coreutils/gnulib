@@ -9,7 +9,7 @@
 @cindex standards for makefiles
 
 @c Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 2000, 2001,
-@c 2004, 2005, 2006 Free Software Foundation, Inc.
+@c 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.2
@@ -297,7 +297,7 @@ $(INSTALL_DATA) libfoo.a $(DESTDIR)$(libdir)/libfoo.a
 @end example
 
 The @code{DESTDIR} variable is specified by the user on the @code{make}
-command line.  For example:
+command line as an absolute file name.  For example:
 
 @example
 make DESTDIR=/tmp/stage install
