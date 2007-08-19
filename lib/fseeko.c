@@ -71,11 +71,13 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
 		    : 0)
       && fp_ub._base == NULL)
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
-# if defined __sun && defined __sparc && defined _LP64 /* Solaris/SPARC 64-bit */
+# if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \
 			 unsigned char *_base; \
 			 unsigned char *_end; \
 			 long _cnt; \
+			 int _file; \
+			 unsigned int _flag; \
 		       } *) fp)
   if (fp_->_ptr == fp_->_base
       && (fp_->_ptr == NULL || fp_->_cnt == 0))

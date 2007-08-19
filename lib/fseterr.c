@@ -33,8 +33,15 @@ fseterr (FILE *fp)
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   fp->_flags |= __SERR;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
-# if defined __sun && defined __sparc && defined _LP64 /* Solaris/SPARC 64-bit */
-  ((unsigned int *) fp) [9] |= _IOERR;
+# if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
+#  define fp_ ((struct { unsigned char *_ptr; \
+			 unsigned char *_base; \
+			 unsigned char *_end; \
+			 long _cnt; \
+			 int _file; \
+			 unsigned int _flag; \
+		       } *) fp)
+  fp_->_flag |= _IOERR;
 # else
   fp->_flag |= _IOERR;
 # endif

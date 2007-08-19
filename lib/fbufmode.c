@@ -55,8 +55,15 @@ fbufmode (FILE *fp)
   if (fp->_flag & _IOLBF)
     return _IOLBF;
 # endif
-# if defined __sun && defined __sparc && defined _LP64 /* Solaris/SPARC 64-bit */
-  return ((unsigned int *) fp) [9] & (_IONBF | _IOFBF);
+# if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
+#  define fp_ ((struct { unsigned char *_ptr; \
+			 unsigned char *_base; \
+			 unsigned char *_end; \
+			 long _cnt; \
+			 int _file; \
+			 unsigned int _flag; \
+		       } *) fp)
+  return fp_->_flag & (_IONBF | _IOFBF);
 # else
   if (fp->_flag & _IONBF)
     return _IONBF;
