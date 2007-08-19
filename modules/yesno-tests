@@ -1,0 +1,15 @@
+Files:
+tests/test-yesno.c
+tests/test-yesno.sh
+
+Depends-on:
+closein
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-yesno.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-yesno
+EXTRA_DIST += test-yesno.sh
+test_yesno_LDADD = $(LDADD) @LIBINTL@

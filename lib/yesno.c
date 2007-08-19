@@ -1,6 +1,6 @@
 /* yesno.c -- read a yes/no response from stdin
 
-   Copyright (C) 1990, 1998, 2001, 2003, 2004, 2005, 2006 Free
+   Copyright (C) 1990, 1998, 2001, 2003, 2004, 2005, 2006, 2007 Free
    Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -28,9 +28,13 @@
 # include "getline.h"
 #endif
 
-/* Return true if we read an affirmative line from standard input.  */
-
 extern int rpmatch (char const *response);
+
+/* Return true if we read an affirmative line from standard input.
+
+   Since this function uses stdin, it is suggested that the caller not
+   use STDIN_FILENO directly, and also that the line
+   atexit(close_stdin) be added to main().  */
 
 bool
 yesno (void)

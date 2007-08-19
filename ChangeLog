@@ -1,3 +1,11 @@
+2007-08-19  Eric Blake  <ebb9@byu.net>
+
+	Test yesno in combination with closein.
+	* lib/yesno.c (yesno): Document use of stdin.
+	* modules/yesno-tests (Files): New module.
+	* tests/test-yesno.c (main): New file.
+	* tests/test-yesno.sh: Likewise.
+
 2007-08-19  Bruno Haible  <bruno@clisp.org>
 
 	* lib/fbufmode.c (fbufmode): Add tentative support for Solaris/AMD64.
