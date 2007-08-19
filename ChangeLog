@@ -1,4 +1,13 @@
 2007-08-18  Bruno Haible  <bruno@clisp.org>
+            Eric Blake  <ebb9@byu.net>
+
+	* lib/lseek.c: Include <sys/stat.h>.
+	(rpl_lseek): Add workaround code also for Unix platforms.
+	Needed for BeOS.
+	* m4/lseek.m4 (gl_FUNC_LSEEK): When cross-compiling, fail on BeOS.
+	* doc/functions/lseek.texi: Document BeOS definiency.
+
+2007-08-18  Bruno Haible  <bruno@clisp.org>
 
 	* modules/fstrcmp-tests: New file.
 	* tests/test-fstrcmp.c: New file.

@@ -1,4 +1,4 @@
-# lseek.m4 serial 3
+# lseek.m4 serial 4
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,8 +29,8 @@ int main ()
 	 [gl_cv_func_lseek_pipe=no])
      else
        AC_COMPILE_IFELSE([
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* mingw mistakenly returns 0 when trying to seek on pipes.  */
+#if ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__) || defined __BEOS__
+/* mingw and BeOS mistakenly return 0 when trying to seek on pipes.  */
   Choke me.
 #endif],
 	 [gl_cv_func_lseek_pipe=yes], [gl_cv_func_lseek_pipe=no])
