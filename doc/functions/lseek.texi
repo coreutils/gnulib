@@ -27,4 +27,9 @@ When the third argument is invalid, POSIX says that @code{lseek} should set
 @code{errno} to @code{EINVAL} and return -1, but in this situation a
 @code{SIGSYS} signal is raised on some platforms:
 IRIX 6.5.
+@item
+When the @code{lseek} function fails, POSIX says that the file offset remains
+unchanged.  But on some platforms, attempting to set a negative file offset
+fails and sets the file offset to 0:
+BeOS.
 @end itemize

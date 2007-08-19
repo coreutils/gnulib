@@ -1,4 +1,9 @@
-2007-08-18  Bruno Haible  <bruno@clisp.org>
+2007-08-19  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-lseek.c (main): Disable a test for BeOS.
+	* doc/functions/lseek.texi: Document the BeOS bug.
+
+2007-08-19  Bruno Haible  <bruno@clisp.org>
             Eric Blake  <ebb9@byu.net>
 
 	* lib/lseek.c: Include <sys/stat.h>.
