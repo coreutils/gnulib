@@ -2194,9 +2194,14 @@ func_all_modules ()
   func_module close-stream
   func_module closein
   func_module closeout
+  func_module fbufmode
   func_module fopen-safer
   func_module fpending
+  func_module fpurge
+  func_module freadable
+  func_module freadahead
   func_module freading
+  func_module fwritable
   func_module fwriting
   func_module getpass
   func_module getpass-gnu

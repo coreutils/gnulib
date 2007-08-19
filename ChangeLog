@@ -1,3 +1,11 @@
+2007-08-19  Bruno Haible  <bruno@clisp.org>
+
+	* modules/freadahead: New file.
+	* lib/freadahead.h: New file.
+	* lib/freadahead.c: New file.
+	* MODULES.html.sh (File stream based Input/Output): Add freadahead,
+	fbufmode, fpurge, freadable, fwritable.
+
 2007-08-19  Eric Blake  <ebb9@byu.net>
 
 	Test yesno in combination with closein.
