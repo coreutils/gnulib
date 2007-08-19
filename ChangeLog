@@ -1,5 +1,9 @@
 2007-08-19  Bruno Haible  <bruno@clisp.org>
 
+	* modules/freadahead-tests: New file.
+	* tests/test-freadahead.sh: New file.
+	* tests/test-freadahead.c: New file.
+
 	* modules/freadahead: New file.
 	* lib/freadahead.h: New file.
 	* lib/freadahead.c: New file.
