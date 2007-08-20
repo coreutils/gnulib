@@ -32,6 +32,7 @@
 #include "closeout.h"
 #include "error.h"
 #include "exitfail.h"
+#include "freadahead.h"
 #include "quotearg.h"
 
 static const char *file_name;
@@ -80,10 +81,16 @@ close_stdin (void)
 {
   bool fail = false;
 
-  /* Only attempt flush if stdin is seekable, as fflush is entitled to
-     fail on non-seekable streams.  */
-  if (fseeko (stdin, 0, SEEK_CUR) == 0 && fflush (stdin) != 0)
-    fail = true;
+  /* There is no need to flush stdin if we can determine quickly that stdin's
+     input buffer is empty; in this case we know that if stdin is seekable,
+     fseeko (stdin, 0, SEEK_CUR) == lseek (0, 0, SEEK_CUR).  */
+  if (freadahead (stdin) > 0)
+    {
+      /* Only attempt flush if stdin is seekable, as fflush is entitled to
+	 fail on non-seekable streams.  */
+      if (fseeko (stdin, 0, SEEK_CUR) == 0 && fflush (stdin) != 0)
+	fail = true;
+    }
   if (close_stream (stdin) != 0)
     fail = true;
   if (fail)

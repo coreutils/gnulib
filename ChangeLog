@@ -1,5 +1,12 @@
 2007-08-19  Bruno Haible  <bruno@clisp.org>
 
+	* modules/closein (Depends-on): Add freadahead.
+	* lib/closein.c: Include freadahead.h.
+	(close_stdin): Skip the fseeko and fflush calls if freadahead(stdin)
+	is zero.
+
+2007-08-19  Bruno Haible  <bruno@clisp.org>
+
 	* modules/freadahead-tests: New file.
 	* tests/test-freadahead.sh: New file.
 	* tests/test-freadahead.c: New file.
