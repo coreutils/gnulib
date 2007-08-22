@@ -14,6 +14,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   gpg             http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/
   gsasl           http://josefsson.org/cgi-bin/viewcvs.cgi/gsasl/
   gss             http://josefsson.org/cgi-bin/viewcvs.cgi/gss/
+  guile           http://cvs.sv.gnu.org/viewvc/guile/guile/guile-core/
   gzip            http://cvs.sv.gnu.org/viewcvs/gzip/gzip/
   hello           http://cvs.sv.gnu.org/viewcvs/hello/hello/
   icoutils        http://riva.ucam.org/svn/cjwatson/src/debian/icoutils/trunk/icoutils/
@@ -54,7 +55,7 @@ Articles:
 
 -----
 
-Copyright (C) 2006 Free Software Foundation, Inc.
+Copyright (C) 2006-2007 Free Software Foundation, Inc.
 
 This file is free documentation; the Free Software Foundation
 gives unlimited permission to copy and/or distribute it,

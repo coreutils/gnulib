@@ -1,3 +1,7 @@
+2007-08-22  Ludovic Courtès  <ludo@gnu.org>
+
+	* users.txt: Add Guile.
+
 2007-08-22  Eric Blake  <ebb9@byu.net>
 
 	* tests/test-getdelim.c (main): Use remove, not unlink.
