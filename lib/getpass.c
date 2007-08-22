@@ -41,8 +41,6 @@
 # include <termios.h>
 #endif
 
-#include "getline.h"
-
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
 #else

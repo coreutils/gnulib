@@ -24,10 +24,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#if ENABLE_NLS
-# include "getline.h"
-#endif
-
 extern int rpmatch (char const *response);
 
 /* Return true if we read an affirmative line from standard input.

@@ -1,0 +1,11 @@
+Files:
+tests/test-getline.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getline
+check_PROGRAMS += test-getline
+MOSTLYCLEANFILES += test-getline.txt

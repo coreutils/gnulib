@@ -6,6 +6,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-08-22  getdelim, getline
+                            The include file is changed from "getdelim.h"
+                            and "getline.h" to the POSIX 200x <stdio.h>.
+
 2007-08-18  idcache         Now provides prototypes in "idcache.h".
 
 2007-08-10  xstrtol         The STRTOL_FATAL_ERROR macro is removed.

@@ -30,7 +30,6 @@
 #include "execute.h"
 #include "pipe.h"
 #include "wait-process.h"
-#include "getline.h"
 #include "sh-quote.h"
 #include "safe-read.h"
 #include "xmalloca.h"

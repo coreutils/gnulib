@@ -2,20 +2,21 @@ Description:
 Read a line from a stream.
 
 Files:
-lib/getline.h
 lib/getline.c
 m4/getline.m4
 
 Depends-on:
 getdelim
+stdio
 
 configure.ac:
 gl_FUNC_GETLINE
+gl_STDIO_MODULE_INDICATOR([getline])
 
 Makefile.am:
 
 Include:
-"getline.h"
+<stdio.h>
 
 License:
 LGPLv2+

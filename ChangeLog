@@ -1,3 +1,33 @@
+2007-08-22  Eric Blake  <ebb9@byu.net>
+
+	Move getline and getdelim into stdio.h, per POSIX 200x.
+	* modules/getline (Files): Remove getline.h.
+	(Depends-on): Add stdio.
+	(configure.ac): Add module indicator.
+	* modules/getdelim (Files): Remove getdelim.h.
+	(Depends-on): Add stdio.
+	(configure.ac): Add module indicator.
+	* modules/stdio (Makefile.am): Work with new indicators.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Add new defaults.
+	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Work with stdio needs.
+	* m4/getline.m4 (gl_FUNC_GETLINE): Likewise.
+	* lib/getdelim.h: Delete.
+	* lib/getline.h: Delete.
+	* lib/stdio_.h (getdelim, getline): Declare.
+	* modules/getdelim-tests: New module.
+	* modules/getline-tests: Likewise.
+	* tests/test-getdelim.c: New file.
+	* tests/test-getline.c: Likewise.
+	* NEWS: Document the change.
+	* lib/getline.c: Update choice of header.
+	* lib/csharpcomp.c: Likewise.
+	* lib/getpass.c: Likewise.
+	* lib/javacomp.c: Likewise.
+	* lib/javaversion.c: Likewise.
+	* lib/yesno.c: Likewise.
+	* lib/getdelim.c: Likewise.
+	(getdelim): Set errno on failure, and avoid memory leak.
+
 2007-08-19  Bruno Haible  <bruno@clisp.org>
 
 	* modules/closein (Depends-on): Add freadahead.

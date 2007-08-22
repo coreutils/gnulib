@@ -42,7 +42,6 @@
 #include "safe-read.h"
 #include "xalloc.h"
 #include "xmalloca.h"
-#include "getline.h"
 #include "filename.h"
 #include "fwriteerror.h"
 #include "clean-temp.h"
