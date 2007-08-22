@@ -1,5 +1,8 @@
 2007-08-22  Eric Blake  <ebb9@byu.net>
 
+	* tests/test-getdelim.c (main): Use remove, not unlink.
+	* tests/test-getline.c (main): Likewise.
+
 	Move getline and getdelim into stdio.h, per POSIX 200x.
 	* modules/getline (Files): Remove getline.h.
 	(Depends-on): Add stdio.

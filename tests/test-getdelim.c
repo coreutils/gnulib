@@ -47,14 +47,14 @@ main (int argc, char **argv)
   if (!f || fwrite ("anbcnd\0f", 1, 8, f) != 8 || fclose (f) != 0)
     {
       fputs ("Failed to create sample file.\n", stderr);
-      unlink ("test-getdelim.txt");
+      remove ("test-getdelim.txt");
       return 1;
     }
   f = fopen ("test-getdelim.txt", "rb");
   if (!f)
     {
       fputs ("Failed to reopen sample file.\n", stderr);
-      unlink ("test-getdelim.txt");
+      remove ("test-getdelim.txt");
       return 1;
     }
 
@@ -84,6 +84,6 @@ main (int argc, char **argv)
 
   free (line);
   fclose (f);
-  unlink ("test-getdelim.txt");
+  remove ("test-getdelim.txt");
   return 0;
 }
