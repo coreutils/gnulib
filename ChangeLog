@@ -1,3 +1,8 @@
+2007-08-23  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/readline.c: Don't include getline.h, the prototype is now
+	found in stdio.h.
+
 2007-08-23  Jim Meyering  <jim@meyering.net>
 
 	Getdelim touchup.
