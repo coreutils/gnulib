@@ -1,0 +1,23 @@
+@node getdelim
+@section @code{getdelim}
+@findex getdelim
+
+POSIX specification: Draft 3 of 200x; free membership at
+@url{http://www.opengroup.org/austin/} is required
+
+Gnulib module: getdelim
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw
+
+@item
+This function is missing a declaration on some platforms:
+BeOS
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

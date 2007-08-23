@@ -6,7 +6,7 @@ dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_PREREQ(2.52)
+AC_PREREQ([2.60])
 
 AC_DEFUN([gl_FUNC_GETDELIM],
 [
@@ -15,11 +15,14 @@ AC_DEFUN([gl_FUNC_GETDELIM],
   dnl Persuade glibc <stdio.h> to declare getdelim().
   AC_REQUIRE([AC_GNU_SOURCE])
 
-  AC_REPLACE_FUNCS(getdelim)
-  AC_CHECK_DECLS_ONCE(getdelim)
+  AC_REPLACE_FUNCS([getdelim])
+  AC_CHECK_DECLS_ONCE([getdelim])
 
   if test $ac_cv_func_getdelim = no; then
     gl_PREREQ_GETDELIM
+  fi
+
+  if test $ac_cv_have_decl_getdelim = no; then
     HAVE_DECL_GETDELIM=0
   fi
 ])

@@ -1,3 +1,18 @@
+2007-08-22  Eric Blake  <ebb9@byu.net>
+
+	Getline touchups.
+	* lib/getdelim.c (getdelim): Revert regression that required *n to
+	be 0 when *lineptr is NULL.  Preserve errno across funlockfile.
+	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Check for declaration of
+	getdelim, rather than whether implementation is missing.
+	* m4/getline.m4 (gl_FUNC_GETLINE): Likewise for getline.
+	* lib/stdio_.h (getline): Also declare if replacement is
+	required.
+	* doc/functions/getdelim.texi: New file.
+	* doc/functions/getline.texi: Likewise.
+	* doc/gnulib.texi (Function Substitutes): Add new files.
+	Reported by Bruno Haible.
+
 2007-08-22  Ludovic Courtès  <ludo@gnu.org>
 
 	* users.txt: Add Guile.

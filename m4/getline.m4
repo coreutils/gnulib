@@ -7,7 +7,7 @@ dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_PREREQ(2.52)
+AC_PREREQ([2.60])
 
 dnl See if there's a working, system-supplied version of the getline function.
 dnl We can't just do AC_REPLACE_FUNCS(getline) because some systems
@@ -20,7 +20,7 @@ AC_DEFUN([gl_FUNC_GETLINE],
   dnl Persuade glibc <stdio.h> to declare getline().
   AC_REQUIRE([AC_GNU_SOURCE])
 
-  AC_CHECK_DECLS([getline])
+  AC_CHECK_DECLS_ONCE([getline])
 
   gl_getline_needs_run_time_check=no
   AC_CHECK_FUNC(getline,
@@ -62,13 +62,13 @@ AC_DEFUN([gl_FUNC_GETLINE],
     )])
   fi
 
-  if test $ac_cv_func_getline = no; then
+  if test $ac_cv_have_decl_getline = no; then
     HAVE_DECL_GETLINE=0
   fi
 
   if test $am_cv_func_working_getline = no; then
     REPLACE_GETLINE=1
-    AC_LIBOBJ(getline)
+    AC_LIBOBJ([getline])
 
     gl_PREREQ_GETLINE
   fi

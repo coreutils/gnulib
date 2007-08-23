@@ -1,5 +1,5 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.42 2007-07-15 14:05:43 karl Exp $
+@comment $Id: gnulib.texi,v 1.43 2007-08-23 02:00:19 ericb Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -7,7 +7,7 @@
 @syncodeindex pg cp
 @comment %**end of header
 
-@set UPDATED $Date: 2007-07-15 14:05:43 $
+@set UPDATED $Date: 2007-08-23 02:00:19 $
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
@@ -929,6 +929,7 @@ by Gnulib.
 * getcontext::
 * getcwd::
 * getdate::
+* getdelim::
 * getegid::
 * getenv::
 * geteuid::
@@ -945,6 +946,7 @@ by Gnulib.
 * gethostid::
 * gethostname::
 * getitimer::
+* getline::
 * getlogin::
 * getlogin_r::
 * getmsg::
@@ -2047,6 +2049,7 @@ by Gnulib.
 @include functions/getcontext.texi
 @include functions/getcwd.texi
 @include functions/getdate.texi
+@include functions/getdelim.texi
 @include functions/getegid.texi
 @include functions/getenv.texi
 @include functions/geteuid.texi
@@ -2063,6 +2066,7 @@ by Gnulib.
 @include functions/gethostid.texi
 @include functions/gethostname.texi
 @include functions/getitimer.texi
+@include functions/getline.texi
 @include functions/getlogin.texi
 @include functions/getlogin_r.texi
 @include functions/getmsg.texi

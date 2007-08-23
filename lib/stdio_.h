@@ -328,7 +328,7 @@ extern long rpl_ftell (FILE *fp);
 #  undef getline
 #  define getline rpl_getline
 # endif
-# if !@HAVE_DECL_GETLINE@
+# if !@HAVE_DECL_GETLINE@ || @REPLACE_GETLINE@
   /* Read up to (and including) a newline from FP into *LINEPTR (and
      NUL-terminate it).  *LINEPTR is a pointer returned from malloc (or
      NULL), pointing to *N characters of space.  It is realloc'ed as

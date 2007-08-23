@@ -1,0 +1,27 @@
+@node getline
+@section @code{getline}
+@findex getline
+
+POSIX specification: Draft 3 of 200x; free membership at
+@url{http://www.opengroup.org/austin/} is required
+
+Gnulib module: getline
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw
+
+@item
+This function is missing a declaration on some platforms:
+BeOS
+
+@item
+Some platforms provide a function by this name but with the wrong
+signature, for example in -linet.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize
