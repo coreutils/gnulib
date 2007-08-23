@@ -58,7 +58,6 @@ getdelim (char **lineptr, size_t *n, int delimiter, FILE *fp)
 {
   ssize_t result;
   size_t cur_len = 0;
-  int e; /* Preserve errno across funlockfile.  */
 
   if (lineptr == NULL || n == NULL || fp == NULL)
     {
@@ -75,7 +74,6 @@ getdelim (char **lineptr, size_t *n, int delimiter, FILE *fp)
       if (*lineptr == NULL)
 	{
 	  result = -1;
-	  e = ENOMEM;
 	  goto unlock_return;
 	}
     }
@@ -88,7 +86,6 @@ getdelim (char **lineptr, size_t *n, int delimiter, FILE *fp)
       if (i == EOF)
 	{
 	  result = -1;
-	  e = errno;
 	  break;
 	}
 
@@ -105,7 +102,7 @@ getdelim (char **lineptr, size_t *n, int delimiter, FILE *fp)
 	  if (cur_len + 1 >= needed)
 	    {
 	      result = -1;
-	      e = EOVERFLOW;
+	      errno = EOVERFLOW;
 	      goto unlock_return;
 	    }
 
@@ -113,7 +110,6 @@ getdelim (char **lineptr, size_t *n, int delimiter, FILE *fp)
 	  if (new_lineptr == NULL)
 	    {
 	      result = -1;
-	      e = ENOMEM;
 	      goto unlock_return;
 	    }
 
@@ -131,8 +127,7 @@ getdelim (char **lineptr, size_t *n, int delimiter, FILE *fp)
   result = cur_len ? cur_len : result;
 
  unlock_return:
-  funlockfile (fp);
-  if (result == -1)
-    errno = e;
+  funlockfile (fp); /* doesn't set errno */
+
   return result;
 }
