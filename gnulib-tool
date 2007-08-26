@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-08-26 10:31:22 $'
+cvsdatestamp='$Date: 2007-08-26 10:36:54 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2230,7 +2230,7 @@ func_import ()
   sed_take_first_column='s,'"$delimiter"'.*,,'
   for g in `LC_ALL=C join -t"$delimiter" -v1 "$tmp"/old-files "$tmp"/new-files | sed -e "$sed_take_first_column"`; do
     # Remove the file. Do nothing if the user already removed it.
-    if test -f "$destdir/$g"; then
+    if test -f "$destdir/$g" || test -h "$destdir/$g"; then
       if $doit; then
         echo "Removing file $g (backup in ${g}~)"
         mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"

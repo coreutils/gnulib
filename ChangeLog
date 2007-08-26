@@ -1,5 +1,11 @@
 2007-08-26  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import): When deciding which files to remove,
+	consider also dangling symbolic links.
+	Reported by Eric Blake.
+
+2007-08-26  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_ln_if_changed): Use "test -h", not "test -L".
 
 2007-08-23  Simon Josefsson  <simon@josefsson.org>
