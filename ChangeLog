@@ -1,3 +1,7 @@
+2007-08-26  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_ln_if_changed): Use "test -h", not "test -L".
+
 2007-08-23  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/readline.c: Don't include getline.h, the prototype is now
