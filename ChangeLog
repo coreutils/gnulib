@@ -1,3 +1,16 @@
+2007-08-28  Jim Meyering  <jim@meyering.net>
+
+	Rename mreadlink_with_size to areadlink_with_size.
+	* NEWS: Document the change.
+	* lib/mreadlink-with-size.c (mreadlink_with_size): Rename this to...
+	* lib/areadlink-with-size.c (areadlink_with_size): ...this.
+	* lib/mreadlink.h: Rename this to...
+	* lib/areadlink.h: ...this.
+	* modules/mreadlink-with-size: Rename this to...
+	* modules/areadlink-with-size: ...this.
+	* lib/canonicalize.c: Reflect the renaming.
+	* modules/canonicalize: Likewise.
+
 2007-08-26  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): When deciding which files to remove,

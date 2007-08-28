@@ -47,7 +47,7 @@
 #endif
 
 #include "pathmax.h"
-#include "mreadlink.h"
+#include "areadlink.h"
 
 #if !HAVE_CANONICALIZE_FILE_NAME
 /* Return the canonical absolute name of file NAME.  A canonical name
@@ -246,7 +246,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 		    goto error;
 		}
 
-	      buf = mreadlink_with_size (rname, st.st_size);
+	      buf = areadlink_with_size (rname, st.st_size);
 	      if (!buf)
 		{
 		  if (can_mode == CAN_MISSING && errno != ENOMEM)

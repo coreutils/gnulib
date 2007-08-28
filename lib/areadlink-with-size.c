@@ -22,7 +22,7 @@
 
 #include <config.h>
 
-#include "mreadlink.h"
+#include "areadlink.h"
 
 #include <stdio.h>
 #include <errno.h>
@@ -55,7 +55,7 @@
    than SSIZE_MAX, return NULL (caller may use errno to diagnose).  */
 
 char *
-mreadlink_with_size (char const *file, size_t size)
+areadlink_with_size (char const *file, size_t size)
 {
   /* Some buggy file systems report garbage in st_size.  Defend
      against them by ignoring outlandish st_size values in the initial

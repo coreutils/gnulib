@@ -21,4 +21,4 @@
 
 #include <stddef.h>
 
-extern char *mreadlink_with_size (char const *filename, size_t size_hint);
+extern char *areadlink_with_size (char const *filename, size_t size_hint);

@@ -13,7 +13,7 @@ filenamecat
 sys_stat
 xalloc
 xgetcwd
-mreadlink-with-size
+areadlink-with-size
 
 configure.ac:
 AC_FUNC_CANONICALIZE_FILE_NAME
