@@ -18,6 +18,9 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>.  */
 
+#ifndef _GL_STREQ_H
+#define _GL_STREQ_H
+
 #include <string.h>
 
 /* STREQ allows to optimize string comparison with a small literal string.
@@ -171,3 +174,5 @@ streq0 (const char *s1, const char *s2, char s20, char s21, char s22, char s23, 
   (strcmp (s1, s2) == 0)
 
 #endif
+
+#endif /* _GL_STREQ_H */
