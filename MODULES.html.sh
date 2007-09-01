@@ -2127,6 +2127,7 @@ func_all_modules ()
 
   func_begin_table
   func_module acl
+  func_module areadlink-with-size
   func_module backupfile
   func_module canonicalize
   func_module canonicalize-lgpl
@@ -2151,7 +2152,6 @@ func_all_modules ()
   func_module mkdir-p
   func_module modechange
   func_module mountlist
-  func_module mreadlink-with-size
   func_module openat
   func_module pathmax
   func_module same
