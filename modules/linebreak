@@ -14,6 +14,8 @@ iconv
 iconv_open
 utf8-ucs4-unsafe
 utf16-ucs4-unsafe
+streq
+uniwidth/width
 xsize
 
 configure.ac:

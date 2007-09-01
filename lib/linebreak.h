@@ -1,5 +1,5 @@
 /* linebreak.h - line breaking of Unicode strings
-   Copyright (C) 2001-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
 This program is free software; you can redistribute it and/or modify
@@ -26,24 +26,6 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
-/* Display width.  */
-
-/* These functions are locale dependent.  The encoding argument identifies
-   the encoding (e.g. "ISO-8859-2" for Polish).  */
-
-/* Return the encoding of the current locale.  */
-extern const char * locale_charset (void);
-
-/* Determine number of column positions required for UC. */
-extern int uc_width (unsigned int uc, const char *encoding);
-
-/* Determine number of column positions required for first N units
-   (or fewer if S ends before this) in S.  */
-extern int u8_width (const unsigned char *s, size_t n, const char *encoding);
-extern int u16_width (const unsigned short *s, size_t n, const char *encoding);
-extern int u32_width (const unsigned int *s, size_t n, const char *encoding);
 
 
 /* Line breaking.  */

@@ -1,3 +1,18 @@
+2007-09-01  Bruno Haible  <bruno@clisp.org>
+
+	Fix collision between uniwidth/* and linebreak modules.
+	* lib/linebreak.h (locale_charset, uc_width, u8_width, u16_width,
+	u32_width): Remove declarations.
+	* lib/linebreak.c: Include uniwidth.h, uniwidth/cjk.h, streq.h.
+	(u32_mbtouc_unsafe, streq9, streq8, streq7, streq6, streq5, streq4,
+	streq3, streq2, streq1, streq0): Remove functions.
+	(STREQ): Remove macro.
+	(is_cjk_encoding): Remove function.
+	(nonspacing_table_data, nonspacing_table_ind): Remove constants.
+	(uc_width, u8_width, u16_width, u32_width): Remove functions.
+	* modules/linebreak (Depends-on): Add streq, uniwidth/width.
+	* NEWS: Document the change.
+
 2007-08-28  Jim Meyering  <jim@meyering.net>
 
 	Rename mreadlink_with_size to areadlink_with_size.
