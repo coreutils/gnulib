@@ -1,5 +1,37 @@
 2007-09-03  Jim Meyering  <jim@meyering.net>
 
+	Import changes from coreutils for bootstrap script.
+
+	* build-aux/bootstrap (WGET_COMMAND): Remove code to set this variable.
+
+	bootstrap: uses rsync to download the .po files
+	* build-aux/bootstrap (po_download_command_format): New global.
+	(download_po_files): Use rsync.
+	(update_po_files): Don't remove .po files after download,
+	so future rsync runs can take advantage of the copies.
+
+	* build-aux/bootstrap (gnulib_tool): Make sha1sum check quietly.
+
+	Solve the unnecessary-.po-file-regeneration problem once and for all.
+	* build-aux/bootstrap (download_po_files): New function, renamed from
+	get_translations.  Now, downloads, but doesn't update LINGUAS.
+	(update_po_files): New function.
+
+	bootstrap: Ignore more.
+	* build-aux/bootstrap (symlink_to_dir): Add a directory name like
+	uniwidth to e.g., lib/.gitignore.
+	(slurp): Handle the sys_stat_.h -> sys mapping, too.
+
+	* build-aux/bootstrap: New setting: vc_ignore.
+	(insert_sorted_if_absent): Create $file if absent.
+	Adapt to new, possibly empty, list: $vc_ignore.
+
+	bootstrap: generate more ignorable names
+	* build-aux/bootstrap (slurp): When generating ignorable names,
+	also map .sin to .sed, .gperf to .c, and .y to .c.
+
+2007-09-03  Jim Meyering  <jim@meyering.net>
+
 	* build-aux/git-version-gen: New file, from coreutils.  For details, see
 	http://git.sv.gnu.org/gitweb/?p=coreutils.git;a=commitdiff;h=bfe49f506
 
