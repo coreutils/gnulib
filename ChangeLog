@@ -1,3 +1,11 @@
+2007-09-02  Bruno Haible  <bruno@clisp.org>
+
+	Fix mis-recognition of 'mcs' on QNX 6.
+	* m4/csharpcomp.m4 (gt_CSHARPCOMP): Test whether the "mcs --version"
+	output contains the string "Mono".
+	* lib/csharpcomp.c (compile_csharp_using_mono): Likewise.
+	Reported by <kraai@ftbfs.org> at <https://savannah.gnu.org/bugs/?18337>.
+
 2007-09-01  Bruno Haible  <bruno@clisp.org>
 
 	Fix collision between uniwidth/* and linebreak modules.

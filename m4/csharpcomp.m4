@@ -1,5 +1,5 @@
-# csharpcomp.m4 serial 6 (gettext-0.15)
-dnl Copyright (C) 2003-2005 Free Software Foundation, Inc.
+# csharpcomp.m4 serial 7 (gettext-0.16.2)
+dnl Copyright (C) 2003-2005, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -43,7 +43,8 @@ AC_DEFUN([gt_CSHARPCOMP],
         ;;
       mono)
         if test -n "$HAVE_MCS_IN_PATH" \
-           && mcs --version >/dev/null 2>/dev/null; then
+           && mcs --version >/dev/null 2>/dev/null \
+           && mcs --version 2>/dev/null | grep Mono >/dev/null; then
           HAVE_MCS=1
           ac_result="mcs"
           break

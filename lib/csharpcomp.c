@@ -182,16 +182,48 @@ compile_csharp_using_mono (const char * const *sources,
   if (!mcs_tested)
     {
       /* Test for presence of mcs:
-	 "mcs --version >/dev/null 2>/dev/null"  */
+	 "mcs --version >/dev/null 2>/dev/null"
+	 and (to exclude an unrelated 'mcs' program on QNX 6)
+	 "mcs --version 2>/dev/null | grep Mono >/dev/null"  */
       char *argv[3];
+      pid_t child;
+      int fd[1];
       int exitstatus;
 
       argv[0] = "mcs";
       argv[1] = "--version";
       argv[2] = NULL;
-      exitstatus = execute ("mcs", "mcs", argv, false, false, true, true, true,
-			    false);
-      mcs_present = (exitstatus == 0);
+      child = create_pipe_in ("mcs", "mcs", argv, DEV_NULL, true, true, false,
+			      fd);
+      mcs_present = false;
+      if (child != -1)
+	{
+	  /* Read the subprocess output, and test whether it contains the
+	     string "Mono".  */
+	  char c[4];
+	  size_t count = 0;
+
+	  while (safe_read (fd[0], &c[count], 1) > 0)
+	    {
+	      count++;
+	      if (count == 4)
+		{
+		  if (memcmp (c, "Mono", 4) == 0)
+		    mcs_present = true;
+		  c[0] = c[1]; c[1] = c[2]; c[2] = c[3];
+		  count--;
+		}
+	    }
+
+	  close (fd[0]);
+
+	  /* Remove zombie process from process list, and retrieve exit
+	     status.  */
+	  exitstatus =
+	    wait_subprocess (child, "mcs", false, true, true, false);
+	  if (exitstatus != 0)
+	    mcs_present = false;
+	}
       mcs_tested = true;
     }
 
