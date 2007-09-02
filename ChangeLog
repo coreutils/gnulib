@@ -1,3 +1,8 @@
+2007-09-03  Jim Meyering  <jim@meyering.net>
+
+	* build-aux/git-version-gen: New file, from coreutils.  For details, see
+	http://git.sv.gnu.org/gitweb/?p=coreutils.git;a=commitdiff;h=bfe49f506
+
 2007-09-02  Bruno Haible  <bruno@clisp.org>
 
 	Fix mis-recognition of 'mcs' on QNX 6.
