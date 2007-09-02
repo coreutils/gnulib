@@ -25,6 +25,10 @@
 
 	* lib/streq.h: Add double-inclusion guard.
 
+2007-09-01  Karl Berry  <karl@gnu.org>
+
+	* MODULES.html.sh: Rename mreadlink_with_size to areadlink_with_size.
+
 2007-08-28  Jim Meyering  <jim@meyering.net>
 
 	Rename mreadlink_with_size to areadlink_with_size.
