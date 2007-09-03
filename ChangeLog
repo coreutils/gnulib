@@ -1,5 +1,8 @@
 2007-09-03  Jim Meyering  <jim@meyering.net>
 
+	New module: git-version-gen.
+	* modules/git-version-gen: New file.
+
 	Import changes from coreutils for bootstrap script.
 
 	* build-aux/bootstrap (WGET_COMMAND): Remove code to set this variable.
