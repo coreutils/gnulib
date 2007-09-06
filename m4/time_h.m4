@@ -65,7 +65,7 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_TIMESPEC],
 	    [[static struct timespec x; x.tv_sec = x.tv_nsec;]])],
 	 [gl_cv_sys_struct_timespec_in_sys_time_h=yes],
 	 [gl_cv_sys_struct_timespec_in_sys_time_h=no])])
-    if test $gl_cv_sys_struct_timespec_in_time_h = yes; then
+    if test $gl_cv_sys_struct_timespec_in_sys_time_h = yes; then
       SYS_TIME_H_DEFINES_STRUCT_TIMESPEC=1
     fi
   fi

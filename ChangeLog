@@ -1,3 +1,8 @@
+2007-09-06  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+
+	* m4/time_h.m4 (gl_CHECK_TYPE_STRUCT_TIMESPEC): Fix misspelling
+	in variable name.
+
 2007-09-03  Jim Meyering  <jim@meyering.net>
 
 	New module: git-version-gen.
