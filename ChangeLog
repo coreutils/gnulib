@@ -1,3 +1,7 @@
+2007-09-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* build-aux/bootstrap: Remove obsolete comment about wget --help.
+
 2007-09-06  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
 	* m4/time_h.m4 (gl_CHECK_TYPE_STRUCT_TIMESPEC): Fix misspelling
