@@ -29,3 +29,22 @@ types available on the system.
 @item
 Macros are used instead of typedefs.
 @end itemize
+
+The stdint.h module uses @code{#include_next}.  If you wish to install
+the generated stdint.h file under another name, typically in order to
+be able to use some of the types defined by stdint.h in your public
+header file, you could use the following Makefile.am-snippet:
+
+@example
+
+BUILT_SOURCES += idn-int.h
+DISTCLEANFILES += idn-int.h
+nodist_include_HEADERS += idn-int.h
+
+idn-int.h:
+	if test -n "$(STDINT_H)"; then \
+		sed -e s/include_next/include/ gl/stdint.h > idn-int.h; \
+	else \
+		echo '#include <stdint.h>' > idn-int.h; \
+	fi
+@end example

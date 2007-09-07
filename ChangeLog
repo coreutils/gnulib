@@ -1,3 +1,7 @@
+2007-09-07  Simon Josefsson  <simon@josefsson.org>
+
+	* doc/headers/stdint.texi: Discuss #include_next issue.
+
 2007-09-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* build-aux/bootstrap: Remove obsolete comment about wget --help.
