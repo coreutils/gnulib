@@ -1,3 +1,7 @@
+2007-09-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/inttypes-h.m4: Remove stub file.
+
 2007-09-07  Simon Josefsson  <simon@josefsson.org>
 
 	* doc/headers/stdint.texi: Discuss #include_next issue.
