@@ -19,7 +19,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-09-08 22:27:19 $'
+cvsdatestamp='$Date: 2007-09-08 22:45:08 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -116,6 +116,26 @@ while test -h "$self_abspathname"; do
   esac
 done
 gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
+
+# Command-line option processing.
+while test $# -gt 0; do
+  case "$1" in
+    --help | --hel | --he | --h )
+      func_usage
+      exit $? ;;
+    --version | --versio | --versi | --vers | --ver | --ve | --v )
+      func_version
+      exit $? ;;
+    -* )
+      echo "posix-modules: unknown option $1" 1>&2
+      echo "Try 'posix-modules --help' for more information." 1>&2
+      exit 1 ;;
+    * )
+      echo "posix-modules: too many arguments" 1>&2
+      echo "Try 'posix-modules --help' for more information." 1>&2
+      exit 1 ;;
+  esac
+done
 
 (
   # Get the header modules.
