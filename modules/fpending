@@ -2,8 +2,8 @@ Description:
 Determine the number of bytes waiting in the output buffer of a stream.
 
 Files:
-lib/__fpending.h
-lib/__fpending.c
+lib/fpending.h
+lib/fpending.c
 m4/fpending.m4
 
 Depends-on:
@@ -14,7 +14,7 @@ gl_FUNC_FPENDING
 Makefile.am:
 
 Include:
-"__fpending.h"
+"fpending.h"
 
 License:
 GPL

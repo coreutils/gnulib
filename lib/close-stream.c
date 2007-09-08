@@ -1,6 +1,6 @@
 /* Close a stream, with nicer error checking than fclose's.
 
-   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2006 Free
+   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2006, 2007 Free
    Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 #include <errno.h>
 #include <stdbool.h>
 
-#include "__fpending.h"
+#include "fpending.h"
 
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"

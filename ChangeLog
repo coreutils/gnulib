@@ -1,3 +1,13 @@
+2007-09-08  Jim Meyering  <jim@meyering.net>
+
+	Rename __fpending.c -> fpending.c and __fpending.h -> fpending.h
+	* lib/fpending.h: Rename from __fpending.h.
+	* lib/fpending.c: Rename from __fpending.c.
+	Include "fpending.h", not "__fpending.h".
+	* lib/__fpending.h, lib/__fpending.c: Remove files.
+	* modules/fpending (Files): Reflect new file names.
+	* lib/close-stream.c: Include "fpending.h", not "__fpending.h".
+
 2007-09-08  Bruno Haible  <bruno@clisp.org>
 
 	* m4/inttypes-h.m4: Remove stub file.
