@@ -1,0 +1,135 @@
+#!/bin/sh
+#
+# Copyright (C) 2002-2007 Free Software Foundation, Inc.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+#
+
+progname=$0
+package=gnulib
+cvsdatestamp='$Date: 2007-09-08 22:27:19 $'
+last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
+version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
+
+# func_usage
+# outputs to stdout the --help usage message.
+func_usage ()
+{
+  echo "\
+Usage: posix-modules
+
+Report bugs to <bug-gnulib@gnu.org>."
+}
+
+# func_version
+# outputs to stdout the --version message.
+func_version ()
+{
+  year=`echo "$last_checkin_date" | sed -e 's,/.*$,,'`
+  echo "\
+$progname (GNU $package) $version
+Copyright (C) $year Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Written by" "Bruno Haible"
+}
+
+case "$0" in
+  /*) self_abspathname="$0" ;;
+  */*) self_abspathname=`pwd`/"$0" ;;
+  *)
+    # Look in $PATH.
+    # Iterate through the elements of $PATH.
+    # We use IFS=: instead of
+    #   for d in `echo ":$PATH:" | sed -e 's/:::*/:.:/g' | sed -e 's/:/ /g'`
+    # because the latter does not work when some PATH element contains spaces.
+    # We use a canonicalized $pathx instead of $PATH, because empty PATH
+    # elements are by definition equivalent to '.', however field splitting
+    # according to IFS=: loses empty fields in many shells:
+    #   - /bin/sh on OSF/1 and Solaris loses all empty fields (at the
+    #     beginning, at the end, and in the middle),
+    #   - /bin/sh on IRIX and /bin/ksh on IRIX and OSF/1 lose empty fields
+    #     at the beginning and at the end,
+    #   - GNU bash, /bin/sh on AIX and HP-UX, and /bin/ksh on AIX, HP-UX,
+    #     Solaris lose empty fields at the end.
+    # The 'case' statement is an optimization, to avoid evaluating the
+    # explicit canonicalization command when $PATH contains no empty fields.
+    self_abspathname=
+    if test "${PATH_SEPARATOR+set}" != set; then
+      func_tmpdir
+      { echo "#! /bin/sh"; echo "exit 0"; } > "$tmp"/conf.sh
+      chmod +x "$tmp"/conf.sh
+      if (PATH="/nonexistent;$tmp"; conf.sh) >/dev/null 2>&1; then
+        PATH_SEPARATOR=';'
+      else
+        PATH_SEPARATOR=:
+      fi
+      rm -rf "$tmp"
+    fi
+    if test "$PATH_SEPARATOR" = ";"; then
+      # On Windows, programs are searched in "." before $PATH.
+      pathx=".;$PATH"
+    else
+      # On Unix, we have to convert empty PATH elements to ".".
+      pathx="$PATH"
+      case :$PATH: in
+        *::*)
+          pathx=`echo ":$PATH:" | sed -e 's/:::*/:.:/g' -e 's/^://' -e 's/:\$//'`
+          ;;
+      esac
+    fi
+    save_IFS="$IFS"
+    IFS="$PATH_SEPARATOR"
+    for d in $pathx; do
+      IFS="$save_IFS"
+      test -z "$d" && d=.
+      if test -x "$d/$0" && test ! -d "$d/$0"; then
+        self_abspathname="$d/$0"
+        break
+      fi
+    done
+    IFS="$save_IFS"
+    if test -z "$self_abspathname"; then
+      func_fatal_error "could not locate the gnulib-tool program - how did you invoke it?"
+    fi
+    ;;
+esac
+while test -h "$self_abspathname"; do
+  # Resolve symbolic link.
+  linkval=`func_readlink "$self_abspathname"`
+  test -n "$linkval" || break
+  case "$linkval" in
+    /* ) self_abspathname="$linkval" ;;
+    * ) self_abspathname=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`/"$linkval" ;;
+  esac
+done
+gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
+
+(
+  # Get the header modules.
+  LC_ALL=C grep -h '^Gnulib module: ' "$gnulib_dir"/doc/headers/* 2>/dev/null \
+    | sed -e 's,^Gnulib module: ,,'
+  # Get the function modules.
+  LC_ALL=C grep -h '^Gnulib module: ' "$gnulib_dir"/doc/functions/* 2>/dev/null \
+    | sed -e 's,^Gnulib module: ,,'
+  # Then filter out the words "---", "and", "or" and remove *-gnu modules.
+) | LC_ALL=C sort | LC_ALL=C uniq \
+  | { # Then filter out the words "---", "and", "or" and remove *-gnu modules.
+      tr ' ' '\012' | sed -e '/^---$/d' -e '/^and$/d' -e '/^or$/d' -e '/-gnu$/d'
+    } \
+  | LC_ALL=C sort | LC_ALL=C uniq \
+  | { # Except ftruncate, which aborts the configuration on mingw. FiXME
+      sed -e '/^ftruncate$/d'
+    }
