@@ -1,3 +1,13 @@
+2007-09-08  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Prefer rsync over wget when available,
+	for fetching the PO files.
+
+2007-09-08  Bruno Haible  <bruno@clisp.org>
+
+	* posix-modules: New file. Portions copied from gnulib-tool.
+	* doc/gnulib.texi (POSIX Substitutes Library): New chapter.
+
 2007-09-08  Jim Meyering  <jim@meyering.net>
 
 	Rename __fpending.c -> fpending.c and __fpending.h -> fpending.h

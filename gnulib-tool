@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-08-26 10:36:54 $'
+cvsdatestamp='$Date: 2007-09-08 23:07:48 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -2497,10 +2497,18 @@ func_import ()
     fi
     # Fetch PO files.
     TP_URL="http://translationproject.org/latest/"
+    TP_RSYNC_URI="translationproject.org::tp/latest/"
     if $doit; then
       echo "Fetching gnulib PO files from $TP_URL"
       (cd "$destdir"/$pobase \
-       && wget --quiet -r -l1 -nd -np -A.po "${TP_URL}gnulib"
+       && { # Prefer rsync over wget if it is available, since it consumes
+            # less network bandwidth, due to compression.
+            if type rsync 2>/dev/null | grep / > /dev/null; then
+              rsync -Lrtz "${TP_RSYNC_URI}gnulib/" .
+            else
+              wget --quiet -r -l1 -nd -np -A.po "${TP_URL}gnulib"
+            fi
+          }
       )
     else
       echo "Fetch gnulib PO files from $TP_URL"
