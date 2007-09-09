@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-09-08 23:07:48 $'
+cvsdatestamp='$Date: 2007-09-09 11:49:58 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -132,6 +132,8 @@ General options:
                             directory.
       --local-dir=DIRECTORY  Specify a local override directory where to look
                             up files before looking in gnulib's directory.
+      --verbose             Increase verbosity. May be repeated.
+      --quiet               Decrease verbosity. May be repeated.
 
 Options for --import:
       --lib=LIBRARY         Specify the library name.  Defaults to 'libgnu'.
@@ -568,6 +570,7 @@ fi
 # - mode            list or import or create-testdir or create-megatestdir
 # - destdir         from --dir
 # - local_gnulib_dir  from --local-dir
+# - verbose         integer, default 0, inc/decremented by --verbose/--quiet
 # - libname, supplied_libname  from --lib
 # - sourcebase      from --source-base
 # - m4base          from --m4-base
@@ -594,6 +597,7 @@ fi
   mode=
   destdir=
   local_gnulib_dir=
+  verbose=0
   libname=libgnu
   supplied_libname=
   sourcebase=
@@ -662,6 +666,12 @@ fi
         shift ;;
       --local-dir=* )
         local_gnulib_dir=`echo "X$1" | sed -e 's/^X--local-dir=//'`
+        shift ;;
+      --verbose | --verbos | --verbo | --verb )
+        verbose=`expr $verbose + 1`
+        shift ;;
+      --quiet | --quie | --qui | --qu | --q )
+        verbose=`expr $verbose - 1`
         shift ;;
       --lib )
         shift
@@ -807,7 +817,7 @@ fi
       --help | --hel | --he | --h )
         func_usage
         func_exit $? ;;
-      --version | --versio | --versi | --vers | --ver | --ve | --v )
+      --version | --versio | --versi | --vers )
         func_version
         func_exit $? ;;
       -- )
@@ -1453,6 +1463,32 @@ func_modules_to_filelist ()
   files=`for f in $files; do echo $f; done | LC_ALL=C sort -u`
 }
 
+
+# func_execute_command command [args...]
+# Executes a command.
+# Uses also the variables
+# - verbose         integer, default 0, inc/decremented by --verbose/--quiet
+func_execute_command ()
+{
+  if test $verbose -ge 0; then
+    echo "executing $*"
+    "$@"
+  else
+    # Commands like automake produce output to stderr even when the succeed.
+    # Turn this output off if the command succeeds.
+    "$@" > "$tmp"/cmdout 2>&1
+    cmdret=$?
+    if test $cmdret = 0; then
+      rm -f "$tmp"/cmdout
+    else
+      echo "executing $*"
+      cat "$tmp"/cmdout 1>&2
+      rm -f "$tmp"/cmdout
+      (exit $cmdret)
+    fi
+  fi
+}
+
 # func_emit_lib_Makefile_am
 # emits the contents of library makefile to standard output.
 # Input:
@@ -1874,6 +1910,7 @@ func_emit_initmacro_done ()
 # Uses also the variables
 # - destdir         target directory
 # - local_gnulib_dir  from --local-dir
+# - verbose         integer, default 0, inc/decremented by --verbose/--quiet
 # - libname         library name
 # - sourcebase      directory relative to destdir where to place source code
 # - m4base          directory relative to destdir where to place *.m4 macros
@@ -2091,8 +2128,10 @@ func_import ()
   # Determine final module list.
   modules="$specified_modules"
   func_modules_transitive_closure
-  echo "Module list with included dependencies:"
-  echo "$modules" | sed -e 's/^/  /'
+  if test $verbose -ge 0; then
+    echo "Module list with included dependencies:"
+    echo "$modules" | sed -e 's/^/  /'
+  fi
 
   # Add the dummy module if needed.
   func_modules_add_dummy
@@ -2132,8 +2171,10 @@ func_import ()
 
   # Determine final file list.
   func_modules_to_filelist
-  echo "File list:"
-  echo "$files" | sed -e 's/^/  /'
+  if test $verbose -ge 0; then
+    echo "File list:"
+    echo "$files" | sed -e 's/^/  /'
+  fi
 
   test -n "$files" \
     || func_fatal_error "refusing to do nothing"
@@ -3019,16 +3060,20 @@ func_create_testdir ()
 
   # Determine final module list.
   func_modules_transitive_closure
-  echo "Module list with included dependencies:"
-  echo "$modules" | sed -e 's/^/  /'
+  if test $verbose -ge 0; then
+    echo "Module list with included dependencies:"
+    echo "$modules" | sed -e 's/^/  /'
+  fi
 
   # Add the dummy module if needed.
   func_modules_add_dummy
 
   # Determine final file list.
   func_modules_to_filelist
-  echo "File list:"
-  echo "$files" | sed -e 's/^/  /'
+  if test $verbose -ge 0; then
+    echo "File list:"
+    echo "$files" | sed -e 's/^/  /'
+  fi
 
   sed_rewrite_files="\
     s,^build-aux/,$auxdir/,
@@ -3328,24 +3373,18 @@ func_create_testdir ()
    # Do not use "${AUTORECONF} --force --install", because it may invoke
    # autopoint, which brings in older versions of some of our .m4 files.
    if test -f $m4base/gettext.m4; then
-     echo "executing ${AUTOPOINT} --force"
-     ${AUTOPOINT} --force || func_exit 1
+     func_execute_command ${AUTOPOINT} --force || func_exit 1
      for f in $m4base/*.m4~; do
        mv -f $f `echo $f | sed -e 's,~$,,'` || func_exit 1
      done
    fi
-   echo "executing ${ACLOCAL} -I $m4base"
-   ${ACLOCAL} -I $m4base || func_exit 1
+   func_execute_command ${ACLOCAL} -I $m4base || func_exit 1
    if ! test -d build-aux; then
-     echo "executing mkdir build-aux"
-     mkdir build-aux || func_exit 1
+     func_execute_command mkdir build-aux || func_exit 1
    fi
-   echo "executing ${AUTOCONF}"
-   ${AUTOCONF} || func_exit 1
-   echo "executing ${AUTOHEADER}"
-   ${AUTOHEADER} || func_exit 1
-   echo "executing ${AUTOMAKE} --add-missing --copy"
-   ${AUTOMAKE} --add-missing --copy || func_exit 1
+   func_execute_command ${AUTOCONF} || func_exit 1
+   func_execute_command ${AUTOHEADER} || func_exit 1
+   func_execute_command ${AUTOMAKE} --add-missing --copy || func_exit 1
   ) || func_exit 1
   if test -n "$inctests"; then
     # Create autogenerated files.
@@ -3353,24 +3392,18 @@ func_create_testdir ()
      # Do not use "${AUTORECONF} --force --install", because it may invoke
      # autopoint, which brings in older versions of some of our .m4 files.
      if test -f ../$m4base/gettext.m4; then
-       echo "executing ${AUTOPOINT} --force"
-       ${AUTOPOINT} --force || func_exit 1
+       func_execute_command ${AUTOPOINT} --force || func_exit 1
        for f in ../$m4base/*.m4~; do
          mv -f $f `echo $f | sed -e 's,~$,,'` || func_exit 1
        done
      fi
-     echo "executing ${ACLOCAL} -I ../$m4base"
-     ${ACLOCAL} -I ../$m4base || func_exit 1
+     func_execute_command ${ACLOCAL} -I ../$m4base || func_exit 1
      if ! test -d ../build-aux; then
-       echo "executing mkdir ../build-aux"
-       mkdir ../build-aux
+       func_execute_command mkdir ../build-aux
      fi
-     echo "executing ${AUTOCONF}"
-     ${AUTOCONF} || func_exit 1
-     echo "executing ${AUTOHEADER}"
-     ${AUTOHEADER} || func_exit 1
-     echo "executing ${AUTOMAKE} --add-missing --copy"
-     ${AUTOMAKE} --add-missing --copy || func_exit 1
+     func_execute_command ${AUTOCONF} || func_exit 1
+     func_execute_command ${AUTOHEADER} || func_exit 1
+     func_execute_command ${AUTOMAKE} --add-missing --copy || func_exit 1
     ) || func_exit 1
   fi
   # Need to run configure and make once, to create built files that are to be
@@ -3493,14 +3526,10 @@ func_create_megatestdir ()
    # Do not use "${AUTORECONF} --install", because autoreconf operates
    # recursively, but the subdirectories are already finished, therefore
    # calling autoreconf here would only waste lots of CPU time.
-   echo "executing ${ACLOCAL}"
-   ${ACLOCAL} || func_exit 1
-   echo "executing mkdir build-aux"
-   mkdir build-aux
-   echo "executing ${AUTOCONF}"
-   ${AUTOCONF} || func_exit 1
-   echo "executing ${AUTOMAKE} --add-missing --copy"
-   ${AUTOMAKE} --add-missing --copy || func_exit 1
+   func_execute_command ${ACLOCAL} || func_exit 1
+   func_execute_command mkdir build-aux
+   func_execute_command ${AUTOCONF} || func_exit 1
+   func_execute_command ${AUTOMAKE} --add-missing --copy || func_exit 1
   ) || func_exit 1
 }
 

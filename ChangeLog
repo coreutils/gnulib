@@ -1,3 +1,14 @@
+2007-09-09  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool: New options --verbose, --quiet.
+	(func_usage): Document them.
+	(verbose): New variable.
+	(func_execute_command): New function.
+	(func_import): Don't show the module list and the file list if
+	$verbose < 0.
+	(func_create_testdir): Likewise. Use func_execute_command.
+	(func_create_megatestdir): Use func_execute_command.
+
 2007-09-08  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Prefer rsync over wget when available,
