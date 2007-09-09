@@ -2,8 +2,8 @@
 @section @code{getline}
 @findex getline
 
-POSIX specification: Draft 3 of 200x; free membership at
-@url{http://www.opengroup.org/austin/} is required
+POSIX specification: Draft 3 of 200x; to access it, free membership at
+@url{http://www.opengroup.org/austin/} is required.
 
 Gnulib module: getline
 
@@ -11,12 +11,10 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw
-
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, Interix 3.5.
 @item
 This function is missing a declaration on some platforms:
-BeOS
-
+BeOS.
 @item
 Some platforms provide a function by this name but with the wrong
 signature, for example in -linet.

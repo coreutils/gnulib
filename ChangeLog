@@ -1,3 +1,9 @@
+2007-09-09  Bruno Haible  <bruno@clisp.org>
+
+	* doc/functions/getdelim.texi: Update list of platforms lacking the
+	function.
+	* doc/functions/getline.texi: Likewise.
+
 2007-09-09  Jim Meyering  <jim@meyering.net>
 
 	* lib/hash.c (hash_initialize): Detect calloc failure.
