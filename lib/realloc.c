@@ -30,6 +30,10 @@
 
 #include <errno.h>
 
+/* Call the system's malloc and realloc below.  */
+#undef malloc
+#undef realloc
+
 /* Change the size of an allocated block of memory P to N bytes,
    with error checking.  If N is zero, change it to 1.  If P is NULL,
    use malloc.  */

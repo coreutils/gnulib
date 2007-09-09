@@ -30,6 +30,9 @@
 
 #include <errno.h>
 
+/* Call the system's calloc below.  */
+#undef calloc
+
 /* Allocate and zero-fill an NxS-byte block of memory from the heap.
    If N or S is zero, allocate and zero-fill a 1-byte block.  */
 
