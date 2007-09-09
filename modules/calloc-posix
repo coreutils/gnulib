@@ -4,6 +4,7 @@ calloc() function: allocate memory with indefinite extent.
 Files:
 lib/calloc.c
 m4/calloc.m4
+m4/malloc.m4
 
 Depends-on:
 stdlib

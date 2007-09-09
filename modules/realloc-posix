@@ -4,6 +4,7 @@ realloc() function: allocate memory with indefinite extent.
 Files:
 lib/realloc.c
 m4/realloc.m4
+m4/malloc.m4
 
 Depends-on:
 stdlib

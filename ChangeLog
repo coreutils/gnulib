@@ -1,5 +1,14 @@
 2007-09-09  Bruno Haible  <bruno@clisp.org>
 
+	* m4/malloc.m4 (gl_CHECK_MALLOC_POSIX): New macro.
+	(gl_FUNC_MALLOC_POSIX): Require it.
+	* m4/realloc.m4 (gl_FUNC_REALLOC_POSIX): Likewise.
+	* m4/calloc.m4 (gl_FUNC_CALLOC_POSIX): Likewise.
+	* modules/realloc (Files): Add m4/malloc.m4.
+	* modules/calloc (Files): Likewise.
+
+2007-09-09  Bruno Haible  <bruno@clisp.org>
+
 	* modules/malloc-posix: New file.
 	* modules/malloc (Depends-on): Add malloc-posix.
 	* lib/malloc.c: Include errno.h.
