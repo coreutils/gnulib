@@ -1,0 +1,25 @@
+Description:
+realloc() function: allocate memory with indefinite extent.
+
+Files:
+lib/realloc.c
+m4/realloc.m4
+
+Depends-on:
+stdlib
+
+configure.ac:
+gl_FUNC_REALLOC_POSIX
+gl_STDLIB_MODULE_INDICATOR([realloc-posix])
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

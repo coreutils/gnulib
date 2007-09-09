@@ -55,6 +55,21 @@ extern "C" {
 #endif
 
 
+#if @GNULIB_REALLOC_POSIX@
+# if !@HAVE_REALLOC_POSIX@
+#  undef realloc
+#  define realloc rpl_realloc
+extern void * realloc (void *ptr, size_t size);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef realloc
+# define realloc(p,s) \
+    (GL_LINK_WARNING ("realloc is not POSIX compliant everywhere - " \
+                      "use gnulib module realloc-posix for portability"), \
+     realloc (p, s))
+#endif
+
+
 #if @GNULIB_CALLOC_POSIX@
 # if !@HAVE_CALLOC_POSIX@
 #  undef calloc

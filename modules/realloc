@@ -5,6 +5,7 @@ Files:
 lib/realloc.c
 
 Depends-on:
+realloc-posix
 
 configure.ac:
 AC_FUNC_REALLOC
