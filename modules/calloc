@@ -6,6 +6,7 @@ lib/calloc.c
 m4/calloc.m4
 
 Depends-on:
+calloc-posix
 
 configure.ac:
 AC_FUNC_CALLOC

@@ -1,0 +1,25 @@
+Description:
+calloc() function: allocate memory with indefinite extent.
+
+Files:
+lib/calloc.c
+m4/calloc.m4
+
+Depends-on:
+stdlib
+
+configure.ac:
+gl_FUNC_CALLOC_POSIX
+gl_STDLIB_MODULE_INDICATOR([calloc-posix])
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

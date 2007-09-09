@@ -55,6 +55,21 @@ extern "C" {
 #endif
 
 
+#if @GNULIB_CALLOC_POSIX@
+# if !@HAVE_CALLOC_POSIX@
+#  undef calloc
+#  define calloc rpl_calloc
+extern void * calloc (size_t nmemb, size_t size);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef calloc
+# define calloc(n,s) \
+    (GL_LINK_WARNING ("calloc is not POSIX compliant everywhere - " \
+                      "use gnulib module calloc-posix for portability"), \
+     calloc (n, s))
+#endif
+
+
 #if @GNULIB_GETSUBOPT@
 /* Assuming *OPTIONP is a comma separated list of elements of the form
    "token" or "token=value", getsubopt parses the first of these elements.

@@ -1,6 +1,6 @@
-# calloc.m4 serial 6
+# calloc.m4 serial 7
 
-# Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -41,3 +41,33 @@ AC_DEFUN([AC_FUNC_CALLOC],
    AC_DEFINE([calloc], [rpl_calloc],
       [Define to rpl_calloc if the replacement function should be used.])])
 ])# AC_FUNC_CALLOC
+
+
+# gl_FUNC_CALLOC_POSIX
+# --------------------
+# Test whether 'calloc' is POSIX compliant (sets errno to ENOMEM when it
+# fails), and replace calloc if it is not.
+AC_DEFUN([gl_FUNC_CALLOC_POSIX],
+[
+  AC_CACHE_CHECK([whether calloc is POSIX compliant],
+    [gl_cv_func_calloc_posix],
+    [
+      dnl It is too dangerous to try to allocate a large amount of memory:
+      dnl some systems go to their knees when you do that. So assume that
+      dnl all Unix implementations of the function are POSIX compliant.
+      AC_TRY_COMPILE([],
+        [#if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+         choke me
+         #endif
+        ], [gl_cv_func_calloc_posix=yes], [gl_cv_func_calloc_posix=no])
+    ])
+  if test $gl_cv_func_calloc_posix = yes; then
+    HAVE_CALLOC_POSIX=1
+    AC_DEFINE([HAVE_CALLOC_POSIX], 1,
+      [Define if the 'calloc' function is POSIX compliant.])
+  else
+    AC_LIBOBJ([calloc])
+    HAVE_CALLOC_POSIX=0
+  fi
+  AC_SUBST([HAVE_CALLOC_POSIX])
+])

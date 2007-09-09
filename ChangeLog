@@ -1,5 +1,21 @@
 2007-09-09  Bruno Haible  <bruno@clisp.org>
 
+	* modules/calloc-posix: New file.
+	* modules/calloc (Depends-on): Add calloc-posix.
+	* lib/calloc.c: Include errno.h.
+	(rpl_calloc): Merge the requirements of a glibc-compatible calloc
+	and a POSIX-compatible calloc into a single function. Set ENOMEM
+	when returning NULL.
+	* m4/calloc.m4 (gl_FUNC_CALLOC_POSIX): New macro.
+	* doc/functions/calloc.texi: Mention the calloc-posix module.
+	* lib/stdlib_.h (calloc): New declaration.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize
+	GNULIB_CALLOC_POSIX and HAVE_CALLOC_POSIX.
+	* modules/stdlib (stdlib.h): Substitute also GNULIB_CALLOC_POSIX
+	and HAVE_CALLOC_POSIX.
+
+2007-09-09  Bruno Haible  <bruno@clisp.org>
+
 	Allow for modules to show an arbitrary notice.
 	* modules/TEMPLATE-EXTENDED: Add 'Notice' field.
 	* gnulib-tool: New option --extract-notice.
