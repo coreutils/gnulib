@@ -135,7 +135,12 @@ __realpath (const char *name, char *resolved)
     {
       rpath = malloc (path_max);
       if (rpath == NULL)
-	return NULL;
+	{
+	  /* It's easier to set errno to ENOMEM than to rely on the
+	     'malloc-posix' gnulib module.  */
+	  errno = ENOMEM;
+	  return NULL;
+	}
     }
   else
     rpath = resolved;
@@ -209,7 +214,12 @@ __realpath (const char *name, char *resolved)
 		new_size += path_max;
 	      new_rpath = (char *) realloc (rpath, new_size);
 	      if (new_rpath == NULL)
-		goto error;
+		{
+		  /* It's easier to set errno to ENOMEM than to rely on the
+		     'realloc-posix' gnulib module.  */
+		  errno = ENOMEM;
+		  goto error;
+		}
 	      rpath = new_rpath;
 	      rpath_limit = rpath + new_size;
 

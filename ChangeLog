@@ -1,5 +1,10 @@
 2007-09-09  Bruno Haible  <bruno@clisp.org>
 
+	* lib/canonicalize-lgpl.c (__realpath): Set errno to ENOMEM when
+	malloc or realloc fails.
+
+2007-09-09  Bruno Haible  <bruno@clisp.org>
+
 	* modules/getcwd (Depends-on): Add malloc-posix.
 	* modules/glob (Depends-on): Likewise.
 	* modules/putenv (Depends-on): Likewise.
