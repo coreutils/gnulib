@@ -33,7 +33,7 @@ AC_DEFUN([gl_CHECK_MALLOC_POSIX],
       dnl some systems go to their knees when you do that. So assume that
       dnl all Unix implementations of the function are POSIX compliant.
       AC_TRY_COMPILE([],
-        [#if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+        [#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
          choke me
          #endif
         ], [gl_cv_func_malloc_posix=yes], [gl_cv_func_malloc_posix=no])
