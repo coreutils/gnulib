@@ -1,6 +1,6 @@
 /* hash - hashing table processing.
 
-   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2006 Free
+   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2006, 2007 Free
    Software Foundation, Inc.
 
    Written by Jim Meyering, 1992.
@@ -576,6 +576,8 @@ hash_initialize (size_t candidate, const Hash_tuning *tuning,
     goto fail;
 
   table->bucket = calloc (table->n_buckets, sizeof *table->bucket);
+  if (table->bucket == NULL)
+    goto fail;
   table->bucket_limit = table->bucket + table->n_buckets;
   table->n_buckets_used = 0;
   table->n_entries = 0;
