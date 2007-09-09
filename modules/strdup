@@ -7,6 +7,7 @@ m4/strdup.m4
 
 Depends-on:
 string
+malloc-posix
 
 configure.ac:
 gl_FUNC_STRDUP

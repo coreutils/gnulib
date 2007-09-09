@@ -19,6 +19,7 @@ stdbool
 strdup
 sys_stat
 unistd
+malloc-posix
 
 configure.ac:
 gl_GLOB

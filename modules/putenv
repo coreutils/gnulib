@@ -6,6 +6,7 @@ lib/putenv.c
 m4/putenv.m4
 
 Depends-on:
+malloc-posix
 
 configure.ac:
 gl_FUNC_PUTENV
