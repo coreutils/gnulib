@@ -49,19 +49,8 @@ AC_DEFUN([AC_FUNC_CALLOC],
 # fails), and replace calloc if it is not.
 AC_DEFUN([gl_FUNC_CALLOC_POSIX],
 [
-  AC_CACHE_CHECK([whether calloc is POSIX compliant],
-    [gl_cv_func_calloc_posix],
-    [
-      dnl It is too dangerous to try to allocate a large amount of memory:
-      dnl some systems go to their knees when you do that. So assume that
-      dnl all Unix implementations of the function are POSIX compliant.
-      AC_TRY_COMPILE([],
-        [#if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
-         choke me
-         #endif
-        ], [gl_cv_func_calloc_posix=yes], [gl_cv_func_calloc_posix=no])
-    ])
-  if test $gl_cv_func_calloc_posix = yes; then
+  AC_REQUIRE([gl_CHECK_MALLOC_POSIX])
+  if test $gl_cv_func_malloc_posix = yes; then
     HAVE_CALLOC_POSIX=1
     AC_DEFINE([HAVE_CALLOC_POSIX], 1,
       [Define if the 'calloc' function is POSIX compliant.])
