@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-09-09 11:49:58 $'
+cvsdatestamp='$Date: 2007-09-09 12:17:36 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -89,6 +89,7 @@ Usage: gnulib-tool --list
        gnulib-tool --test --dir=directory module1 ... moduleN
        gnulib-tool --megatest --dir=directory [module1 ... moduleN]
        gnulib-tool --extract-description module
+       gnulib-tool --extract-notice module
        gnulib-tool --extract-filelist module
        gnulib-tool --extract-dependencies module
        gnulib-tool --extract-autoconf-snippet module
@@ -114,6 +115,7 @@ Operation modes:
       --megatest            test the given modules one by one and all together
                             (recommended to use CC=\"gcc -Wall\" here)
       --extract-description        extract the description
+      --extract-notice             extract the notice or banner
       --extract-filelist           extract the list of files
       --extract-dependencies       extract the dependencies
       --extract-autoconf-snippet   extract the snippet for configure.ac
@@ -1142,6 +1144,7 @@ sed_extract_prog=':[	 ]*$/ {
   :a
     n
     s/^Description:[	 ]*$//
+    s/^Notice:[	 ]*$//
     s/^Files:[	 ]*$//
     s/^Depends-on:[	 ]*$//
     s/^configure\.ac-early:[	 ]*$//
@@ -1164,6 +1167,15 @@ func_get_description ()
 {
   func_lookup_file "modules/$1"
   sed -n -e "/^Description$sed_extract_prog" < "$lookedup_file"
+}
+
+# func_get_notice module
+# Input:
+# - local_gnulib_dir  from --local-dir
+func_get_notice ()
+{
+  func_lookup_file "modules/$1"
+  sed -n -e "/^Notice$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_filelist module
@@ -1444,6 +1456,27 @@ ba
   fi
 }
 
+# func_modules_notice
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - verbose         integer, default 0, inc/decremented by --verbose/--quiet
+# - modules         list of modules, including dependencies
+func_modules_notice ()
+{
+  if test $verbose -ge -1; then
+    for module in $modules; do
+      func_verify_module
+      if test -n "$module"; then
+        msg=`func_get_notice $module`
+        if test -n "$msg"; then
+          echo "Notice from module $module:"
+          echo "$msg" | sed -e 's/^/  /'
+        fi
+      fi
+    done
+  fi
+}
+
 # func_modules_to_filelist
 # Input:
 # - local_gnulib_dir  from --local-dir
@@ -1462,7 +1495,6 @@ func_modules_to_filelist ()
   done
   files=`for f in $files; do echo $f; done | LC_ALL=C sort -u`
 }
-
 
 # func_execute_command command [args...]
 # Executes a command.
@@ -2147,6 +2179,9 @@ func_import ()
       esac
     done
   fi
+
+  # Show banner notice of every module.
+  func_modules_notice
 
   # Determine script to apply to imported library files.
   sed_transform_lib_file=
@@ -3068,6 +3103,9 @@ func_create_testdir ()
   # Add the dummy module if needed.
   func_modules_add_dummy
 
+  # Show banner notice of every module.
+  func_modules_notice
+
   # Determine final file list.
   func_modules_to_filelist
   if test $verbose -ge 0; then
@@ -3745,6 +3783,16 @@ case $mode in
       func_verify_module
       if test -n "$module"; then
         func_get_description "$module"
+      fi
+    done
+    ;;
+
+  extract-notice )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_notice "$module"
       fi
     done
     ;;

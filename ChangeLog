@@ -1,5 +1,17 @@
 2007-09-09  Bruno Haible  <bruno@clisp.org>
 
+	Allow for modules to show an arbitrary notice.
+	* modules/TEMPLATE-EXTENDED: Add 'Notice' field.
+	* gnulib-tool: New option --extract-notice.
+	(func_usage): Document it.
+	(sed_extract_prog): Update.
+	(func_get_notice): New function.
+	(func_modules_notice): New function.
+	(func_import, func_create_testdir): Invoke it.
+	Suggested by Jim Meyering.
+
+2007-09-09  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool: New options --verbose, --quiet.
 	(func_usage): Document them.
 	(verbose): New variable.
