@@ -1,0 +1,25 @@
+Description:
+malloc() function: allocate memory with indefinite extent.
+
+Files:
+lib/malloc.c
+m4/malloc.m4
+
+Depends-on:
+stdlib
+
+configure.ac:
+gl_FUNC_MALLOC_POSIX
+gl_STDLIB_MODULE_INDICATOR([malloc-posix])
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

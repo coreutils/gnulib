@@ -1,5 +1,21 @@
 2007-09-09  Bruno Haible  <bruno@clisp.org>
 
+	* modules/malloc-posix: New file.
+	* modules/malloc (Depends-on): Add malloc-posix.
+	* lib/malloc.c: Include errno.h.
+	(rpl_malloc): Merge the requirements of a glibc-compatible malloc
+	and a POSIX-compatible malloc into a single function. Set ENOMEM
+	when returning NULL.
+	* m4/malloc.m4: New file.
+	* doc/functions/malloc.texi: Mention the malloc-posix module.
+	* lib/stdlib_.h (malloc): New declaration.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize
+	GNULIB_MALLOC_POSIX and HAVE_MALLOC_POSIX.
+	* modules/stdlib (stdlib.h): Substitute also GNULIB_MALLOC_POSIX
+	and HAVE_MALLOC_POSIX.
+
+2007-09-09  Bruno Haible  <bruno@clisp.org>
+
 	* modules/realloc-posix: New file.
 	* modules/realloc (Depends-on): Add realloc-posix.
 	* lib/realloc.c: Include errno.h.

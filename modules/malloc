@@ -5,6 +5,7 @@ Files:
 lib/malloc.c
 
 Depends-on:
+malloc-posix
 
 configure.ac:
 AC_FUNC_MALLOC

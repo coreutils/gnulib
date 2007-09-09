@@ -55,6 +55,21 @@ extern "C" {
 #endif
 
 
+#if @GNULIB_MALLOC_POSIX@
+# if !@HAVE_MALLOC_POSIX@
+#  undef malloc
+#  define malloc rpl_malloc
+extern void * malloc (size_t size);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef malloc
+# define malloc(s) \
+    (GL_LINK_WARNING ("malloc is not POSIX compliant everywhere - " \
+                      "use gnulib module malloc-posix for portability"), \
+     malloc (s))
+#endif
+
+
 #if @GNULIB_REALLOC_POSIX@
 # if !@HAVE_REALLOC_POSIX@
 #  undef realloc
