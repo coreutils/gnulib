@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate July 22, 2007
+@set lastupdate September 9, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -4135,7 +4135,7 @@ policy is relevant particularly for the web pages for a GNU package.
 Following links from nearly any web site can lead to non-free
 software; this is an inescapable aspect of the nature of the web, and
 in itself is no objection to linking to a site.  As long as the site
-does not itself recommend a non-free program, there is no need be
+does not itself recommend a non-free program, there is no need to be
 concerned about the sites it links to for other reasons.
 
 Thus, for example, you should not make a link to AT&T's web site,
