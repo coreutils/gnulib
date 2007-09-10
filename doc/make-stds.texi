@@ -155,7 +155,7 @@ installation should not use any utilities directly except these:
 @c mkfifo mknod tee uname
 
 @example
-cat cmp cp diff echo egrep expr false grep install-info
+awk cat cmp cp diff echo egrep expr false grep install-info
 ln ls mkdir mv pwd rm rmdir sed sleep sort tar test touch true
 @end example
 
