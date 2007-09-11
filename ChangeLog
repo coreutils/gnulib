@@ -1,3 +1,8 @@
+2007-09-11  Bruno Haible  <bruno@clisp.org>
+
+	* m4/isc-posix.m4: Remove file.
+	Suggested by Eric Blake.
+
 2007-09-11  Eric Blake  <ebb9@byu.net>
 
 	* ChangeLog: Restore lines accidentally truncated 2007-04-06.
