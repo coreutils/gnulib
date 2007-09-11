@@ -19,7 +19,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-09-08 22:45:08 $'
+cvsdatestamp='$Date: 2007-09-11 00:40:16 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 
@@ -102,7 +102,7 @@ case "$0" in
     done
     IFS="$save_IFS"
     if test -z "$self_abspathname"; then
-      func_fatal_error "could not locate the gnulib-tool program - how did you invoke it?"
+      func_fatal_error "could not locate the posix-modules program - how did you invoke it?"
     fi
     ;;
 esac
