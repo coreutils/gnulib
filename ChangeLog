@@ -1,3 +1,9 @@
+2007-09-12  Bruno Haible  <bruno@clisp.org>
+
+	* m4/lock.m4: Don't provide an AC_USE_SYSTEM_EXTENSIONS definition.
+	(gl_LOCK_EARLY_BODY): Use AC_GNU_SOURCE when AC_USE_SYSTEM_EXTENSIONS
+	is not defined.
+
 2007-09-12  Eric Blake  <ebb9@byu.net>
 
 	Track CVS Autoconf on AC_USE_SYSTEM_EXTENSIONS.
