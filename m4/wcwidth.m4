@@ -1,4 +1,4 @@
-# wcwidth.m4 serial 11
+# wcwidth.m4 serial 12
 dnl Copyright (C) 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
   AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
 
   dnl Persuade glibc <wchar.h> to declare wcwidth().
-  AC_REQUIRE([AC_GNU_SOURCE])
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])

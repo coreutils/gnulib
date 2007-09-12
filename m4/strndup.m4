@@ -1,4 +1,4 @@
-# strndup.m4 serial 13
+# strndup.m4 serial 14
 dnl Copyright (C) 2002-2003, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_STRNDUP],
 [
   dnl Persuade glibc <string.h> to declare strndup().
-  AC_REQUIRE([AC_GNU_SOURCE])
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   AC_CHECK_DECLS_ONCE([strndup])
@@ -19,7 +19,7 @@ AC_DEFUN([gl_FUNC_STRNDUP],
   AC_CACHE_CHECK([for working strndup], gl_cv_func_strndup,
     [AC_RUN_IFELSE([
        AC_LANG_PROGRAM([#include <string.h>
-		 	#include <stdlib.h>], [[
+			#include <stdlib.h>], [[
 #ifndef HAVE_DECL_STRNDUP
   extern char *strndup (const char *, size_t);
 #endif

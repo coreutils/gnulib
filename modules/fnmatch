@@ -9,6 +9,7 @@ m4/mbstate_t.m4
 m4/fnmatch.m4
 
 Depends-on:
+extensions
 alloca
 stdbool
 wchar

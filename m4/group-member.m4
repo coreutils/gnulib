@@ -1,6 +1,6 @@
-#serial 10
+#serial 11
 
-# Copyright (C) 1999, 2000, 2001, 2003, 2004, 2005, 2006 Free Software
+# Copyright (C) 1999, 2000, 2001, 2003, 2004, 2005, 2006, 2007 Free Software
 # Foundation, Inc.
 
 # This file is free software; the Free Software Foundation
@@ -12,7 +12,7 @@ dnl Written by Jim Meyering
 AC_DEFUN([gl_FUNC_GROUP_MEMBER],
 [
   dnl Persuade glibc <unistd.h> to declare group_member().
-  AC_REQUIRE([AC_GNU_SOURCE])
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   dnl Do this replacement check manually because I want the hyphen
   dnl (not the underscore) in the filename.

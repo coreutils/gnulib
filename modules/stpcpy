@@ -6,6 +6,7 @@ lib/stpcpy.c
 m4/stpcpy.m4
 
 Depends-on:
+extensions
 string
 
 configure.ac:

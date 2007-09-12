@@ -1,3 +1,60 @@
+2007-09-12  Eric Blake  <ebb9@byu.net>
+
+	Track CVS Autoconf on AC_USE_SYSTEM_EXTENSIONS.
+	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS): Update to CVS
+	Autoconf definition.
+	* modules/euidaccess (Depends-on): Add extensions, for
+	AC_USE_SYSTEM_EXTENSIONS with autoconf <= 2.59.
+	* modules/fnmatch (Depends-on): Likewise.
+	* modules/getaddrinfo (Depends-on): Likewise.
+	* modules/getdelim (Depends-on): Likewise.
+	* modules/getline (Depends-on): Likewise.
+	* modules/getsubopt (Depends-on): Likewise.
+	* modules/gettext (Depends-on): Likewise.
+	* modules/group-member (Depends-on): Likewise.
+	* modules/mbchar (Depends-on): Likewise.
+	* modules/memmem (Depends-on): Likewise.
+	* modules/mempcpy (Depends-on): Likewise.
+	* modules/memrchr (Depends-on): Likewise.
+	* modules/pagealign_alloc (Depends-on): Likewise.
+	* modules/readutmp (Depends-on): Likewise.
+	* modules/stpcpy (Depends-on): Likewise.
+	* modules/stpncpy (Depends-on): Likewise.
+	* modules/strchrnul (Depends-on): Likewise.
+	* modules/strndup (Depends-on): Likewise.
+	* modules/strsep (Depends-on): Likewise.
+	* modules/strverscmp (Depends-on): Likewise.
+	* modules/vasprintf (Depends-on): Likewise.
+	* modules/wcwidth (Depends-on): Likewise.
+	* m4/euidaccess.m4 (gl_FUNC_EUIDACCESS): AC_GNU_SOURCE will be
+	obsolete in Autoconf 2.62; use AC_USE_SYSTEM_EXTENSIONS instead.
+	* m4/fnmatch.m4 (gl_FUNC_FNMATCH_GNU): Likewise.
+	* m4/getaddrinfo.m4 (gl_PREREQ_GETADDR_INFO): Likewise.
+	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Likewise.
+	* m4/getline.m4 (gl_FUNC_GETLINE): Likewise.
+	* m4/getsubopt.m4 (gl_FUNC_GETSUBOPT): Likewise.
+	* m4/glob.m4 (gl_PREREQ_GLOB): Likewise.
+	* m4/group-member.m4 (gl_FUNC_GROUP_MEMBER): Likewise.
+	* m4/mbchar.m4 (gl_MBCHAR): Likewise.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Likewise.
+	* m4/mempcpy.m4 (gl_FUNC_MEMPCPY): Likewise.
+	* m4/memrchr.m4 (gl_FUNC_MEMRCHR): Likewise.
+	* m4/mmap-anon.m4 (gl_FUNC_MMAP_ANON): Likewise.
+	* m4/pagealign_alloc.m4 (gl_PAGEALIGN_ALLOC): Likewise.
+	* m4/readutmp.m4 (gl_READUTMP): Likewise.
+	* m4/regex.m4 (gl_PREREQ_REGEX): Likewise.
+	* m4/stpcpy.m4 (gl_FUNC_STPCPY): Likewise.
+	* m4/stpncpy.m4 (gl_FUNC_STPNCPY): Likewise.
+	* m4/strchrnul.m4 (gl_FUNC_STRCHRNUL): Likewise.
+	* m4/strndup.m4 (gl_FUNC_STRNDUP): Likewise.
+	* m4/strnlen.m4 (gl_FUNC_STRNLEN): Likewise.
+	* m4/strsep.m4 (gl_FUNC_STRSEP): Likewise.
+	* m4/strverscmp.m4 (gl_FUNC_STRVERSCMP): Likewise.
+	* m4/vasprintf.m4 (gl_PREREQ_VASPRINTF_H): Likewise.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Likewise.
+	* m4/lock.m4 (gl_LOCK_EARLY_BODY): Likewise, but provide fallback,
+	so that lock.m4 can be used in gettext without extensions module.
+
 2007-09-11  Bruno Haible  <bruno@clisp.org>
 
 	* m4/isc-posix.m4: Remove file.

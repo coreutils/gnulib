@@ -7,6 +7,7 @@ lib/euidaccess.c
 m4/euidaccess.m4
 
 Depends-on:
+extensions
 group-member
 sys_stat
 

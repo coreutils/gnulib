@@ -8,6 +8,7 @@ lib/gai_strerror.c
 m4/getaddrinfo.m4
 
 Depends-on:
+extensions
 gettext-h
 inet_ntop
 snprintf

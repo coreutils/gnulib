@@ -7,6 +7,7 @@ lib/readutmp.c
 m4/readutmp.m4
 
 Depends-on:
+extensions
 xalloc
 free
 stdbool

@@ -6,6 +6,7 @@ lib/memrchr.c
 m4/memrchr.m4
 
 Depends-on:
+extensions
 string
 
 configure.ac:

@@ -1,4 +1,4 @@
-# glob.m4 serial 8
+# glob.m4 serial 9
 dnl Copyright (C) 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -74,7 +74,7 @@ AC_DEFUN([gl_PREREQ_GLOB],
 [
   AC_REQUIRE([gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE])dnl
   AC_REQUIRE([AC_C_RESTRICT])dnl
-  AC_REQUIRE([AC_GNU_SOURCE])dnl
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])dnl
   AC_CHECK_HEADERS_ONCE([sys/cdefs.h unistd.h])dnl
   if test $ac_cv_header_sys_cdefs_h = yes; then
     HAVE_SYS_CDEFS_H=1

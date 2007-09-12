@@ -6,6 +6,7 @@ lib/memmem.c
 m4/memmem.m4
 
 Depends-on:
+extensions
 string
 
 configure.ac:

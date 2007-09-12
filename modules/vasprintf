@@ -7,6 +7,7 @@ lib/asprintf.c
 m4/vasprintf.m4
 
 Depends-on:
+extensions
 vasnprintf
 stdio
 

@@ -6,6 +6,7 @@ lib/strchrnul.c
 m4/strchrnul.m4
 
 Depends-on:
+extensions
 string
 
 configure.ac:

@@ -6,6 +6,7 @@ lib/getsubopt.c
 m4/getsubopt.m4
 
 Depends-on:
+extensions
 strchrnul
 stdlib
 

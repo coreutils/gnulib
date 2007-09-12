@@ -32,6 +32,7 @@ m4/xsize.m4
 build-aux/config.rpath
 
 Depends-on:
+extensions
 gettext-h
 havelib
 

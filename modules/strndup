@@ -6,6 +6,7 @@ lib/strndup.c
 m4/strndup.m4
 
 Depends-on:
+extensions
 string
 strnlen
 

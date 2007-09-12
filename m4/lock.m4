@@ -1,5 +1,5 @@
-# lock.m4 serial 6 (gettext-0.16)
-dnl Copyright (C) 2005-2006 Free Software Foundation, Inc.
+# lock.m4 serial 7 (gettext-0.16)
+dnl Copyright (C) 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -35,7 +35,7 @@ AC_DEFUN([gl_LOCK_EARLY_BODY],
   AC_BEFORE([$0], [gl_ARGP])dnl
 
   AC_REQUIRE([AC_CANONICAL_HOST])
-  AC_REQUIRE([AC_GNU_SOURCE]) dnl needed for pthread_rwlock_t on glibc systems
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS]) dnl needed for pthread_rwlock_t on glibc systems
   dnl Check for multithreading.
   AC_ARG_ENABLE(threads,
 AC_HELP_STRING([--enable-threads={posix|solaris|pth|win32}], [specify multithreading API])
@@ -256,6 +256,14 @@ AC_DEFUN([gl_LOCK],
 AC_DEFUN([gl_PREREQ_LOCK], [
   AC_REQUIRE([AC_C_INLINE])
 ])
+
+# AC_USE_SYSTEM_EXTENSIONS was only added in autoconf 2.60, but lock.m4
+# wants to work with autoconf 2.54.  Add a fallback until such time as
+# a newer autoconf is standard, if one is not already provided by gnulib
+# extensions.m4.
+m4_if(m4_version_compare(m4_PACKAGE_VERSION, [2.60]), [-1],
+      [m4_ifndef([AC_USE_SYSTEM_EXTENSIONS],
+                 [AC_DEFUN([AC_USE_SYSTEM_EXTENSIONS], [AC_GNU_SOURCE])])])
 
 dnl Survey of platforms:
 dnl

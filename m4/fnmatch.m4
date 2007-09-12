@@ -1,4 +1,4 @@
-# Check for fnmatch.
+# Check for fnmatch - serial 2.
 
 # Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
 # Foundation, Inc.
@@ -110,7 +110,7 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
 AC_DEFUN([gl_FUNC_FNMATCH_GNU],
 [
   dnl Persuade glibc <fnmatch.h> to declare FNM_CASEFOLD etc.
-  AC_REQUIRE([AC_GNU_SOURCE])
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   FNMATCH_H=
   _AC_FUNC_FNMATCH_IF([GNU], [ac_cv_func_fnmatch_gnu],

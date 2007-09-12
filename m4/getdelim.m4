@@ -1,4 +1,4 @@
-# getdelim.m4 serial 3
+# getdelim.m4 serial 4
 
 dnl Copyright (C) 2005, 2006, 2007 Free Software dnl Foundation, Inc.
 dnl
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_GETDELIM],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
 
   dnl Persuade glibc <stdio.h> to declare getdelim().
-  AC_REQUIRE([AC_GNU_SOURCE])
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_REPLACE_FUNCS([getdelim])
   AC_CHECK_DECLS_ONCE([getdelim])

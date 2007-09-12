@@ -1,4 +1,4 @@
-# getline.m4 serial 16
+# getline.m4 serial 17
 
 dnl Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2005, 2006, 2007 Free
 dnl Software Foundation, Inc.
@@ -18,7 +18,7 @@ AC_DEFUN([gl_FUNC_GETLINE],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
 
   dnl Persuade glibc <stdio.h> to declare getline().
-  AC_REQUIRE([AC_GNU_SOURCE])
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_CHECK_DECLS_ONCE([getline])
 

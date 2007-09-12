@@ -1,4 +1,4 @@
-# vasprintf.m4 serial 5
+# vasprintf.m4 serial 6
 dnl Copyright (C) 2002-2003, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,7 +31,7 @@ AC_DEFUN([gl_REPLACE_VASPRINTF],
 AC_DEFUN([gl_PREREQ_VASPRINTF_H],
 [
   dnl Persuade glibc <stdio.h> to declare asprintf() and vasprintf().
-  AC_REQUIRE([AC_GNU_SOURCE])
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 ])
 
 # Prerequisites of lib/vasprintf.c.

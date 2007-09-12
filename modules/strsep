@@ -6,6 +6,7 @@ lib/strsep.c
 m4/strsep.m4
 
 Depends-on:
+extensions
 string
 strpbrk
 

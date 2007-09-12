@@ -6,6 +6,7 @@ lib/mempcpy.c
 m4/mempcpy.m4
 
 Depends-on:
+extensions
 string
 
 configure.ac:

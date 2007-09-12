@@ -6,6 +6,7 @@ lib/getdelim.c
 m4/getdelim.m4
 
 Depends-on:
+extensions
 stdio
 realloc-posix
 

@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 12
+# getaddrinfo.m4 serial 13
 dnl Copyright (C) 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -81,7 +81,7 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   AC_REQUIRE([gl_SOCKET_FAMILIES])
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
   AC_REQUIRE([AC_C_INLINE])
-  AC_REQUIRE([AC_GNU_SOURCE])
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_HEADERS_ONCE(netinet/in.h netdb.h)
   AC_CHECK_DECLS([getaddrinfo, freeaddrinfo, gai_strerror, getnameinfo],,,[
   /* sys/types.h is not needed according to POSIX, but the
