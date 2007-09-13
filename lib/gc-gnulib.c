@@ -581,6 +581,8 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
   Gc_rc rc = GC_OK;
 
   ctx = calloc (sizeof (*ctx), 1);
+  if (!ctx)
+    return GC_MALLOC_ERROR;
 
   ctx->alg = hash;
   ctx->mode = mode;

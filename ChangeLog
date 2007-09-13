@@ -1,3 +1,8 @@
+2007-09-13  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gc-gnulib.c (gc_hash_open): Catch NULL calloc return value.
+	Reported by Bruno Haible <bruno@clisp.org>.
+
 2007-09-12  Bruno Haible  <bruno@clisp.org>
 
 	* m4/lock.m4: Don't provide an AC_USE_SYSTEM_EXTENSIONS definition.
@@ -33005,6 +33010,9 @@
 
 	* m4/isc-posix.m4: New file.
 
+<<<<<<< ChangeLog
+1998-05-10  Jim Meyering  <meyering@ascend.com>
+=======
 1998-05-10  Jim Meyering  <meyering@ascend.com>
 
 	* m4/jm-mktime.m4: Use AM_FUNC_MKTIME, now that it's up to date.
@@ -33083,3 +33091,4 @@ Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007
   Free Software Foundation, Inc.
 Copying and distribution of this file, with or without modification,
 are permitted provided the copyright notice and this notice are preserved.
+>>>>>>> 1.1932
