@@ -1,3 +1,9 @@
+2007-09-15  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (sed): Try a little harder to make bash understand the
+	alias.
+	Reported by Bruce Korb <bruce.korb@gmail.com>.
+
 2007-09-13  Eric Blake  <ebb9@byu.net>
 
 	* ChangeLog: Remove conflict markers.

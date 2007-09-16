@@ -22,7 +22,7 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-09-09 12:17:36 $'
+cvsdatestamp='$Date: 2007-09-16 00:41:34 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
 nl='
@@ -73,6 +73,17 @@ fi
 # gnulib-tool generates, since we don't want "sed --posix" to leak
 # into makefiles.
 if (alias) > /dev/null 2>&1 && echo | sed --posix -e d >/dev/null 2>&1; then
+  # Define sed as an alias.
+  # It is not always possible to use aliases. Aliases are guaranteed to work
+  # if the executing shell is bash and either it is invoked as /bin/sh or
+  # is a version >= 2.0, supporting shopt. This is the common case.
+  # Two other approaches (use of a variable $sed or of a function func_sed
+  # instead of an alias) require massive, fragile code changes.
+  # An other approach (use of function sed) requires `which sed` - but 'which'
+  # is hard to emulate, due to missing "test -x" on some platforms.
+  if test -n "$BASH_VERSION"; then
+    shopt -s expand_aliases >/dev/null 2>&1
+  fi
   alias sed='sed --posix'
 fi
 
