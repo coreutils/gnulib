@@ -1,4 +1,4 @@
-# printf.m4 serial 15
+# printf.m4 serial 16
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -95,7 +95,7 @@ AC_DEFUN([gl_PRINTF_LONG_DOUBLE],
       AC_TRY_RUN([
 #include <stdio.h>
 #include <string.h>
-static char buf[100];
+static char buf[10000];
 int main ()
 {
   buf[0] = '\0';
@@ -156,7 +156,7 @@ strisnan (const char *string, size_t start_index, size_t end_index)
     }
   return 0;
 }
-static char buf[100];
+static char buf[10000];
 static double zero = 0.0;
 int main ()
 {
@@ -261,7 +261,7 @@ strisnan (const char *string, size_t start_index, size_t end_index)
     }
   return 0;
 }
-static char buf[100];
+static char buf[10000];
 static long double zeroL = 0.0L;
 int main ()
 {

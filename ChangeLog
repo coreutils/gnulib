@@ -1,3 +1,10 @@
+2007-09-16  Bruno Haible  <bruno@clisp.org>
+
+	* m4/printf.m4 (gl_PRINTF_LONG_DOUBLE, gl_PRINTF_INFINITE,
+	gl_PRINTF_INFINITE_LONG_DOUBLE): Increase buf's size from 100 to 10000.
+	Needed on glibc-2.6.1 with -fstack-protector -D_FORTIFY_SOURCE=2.
+	Reported by Greg Schafer <gschafer@zip.com.au>.
+
 2007-09-15  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (sed): Try a little harder to make bash understand the
