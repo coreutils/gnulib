@@ -35,6 +35,9 @@
 #include "dirname.h"
 #include "fcntl-safer.h"
 
+#ifndef ESTALE
+# define ESTALE -1
+#endif
 
 /* Save the working directory into *WD, if it hasn't been saved
    already.  Return true if a child has been forked to do the real

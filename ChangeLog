@@ -1,3 +1,8 @@
+2007-09-17  Jim Meyering  <jim@meyering.net>
+
+	* lib/savewd.c (ESTALE) [!defined]: Define.
+	Reported to be required on Interix by Martin Koeppe.
+
 2007-09-17  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_version): Use $version.
