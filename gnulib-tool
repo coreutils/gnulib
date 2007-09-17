@@ -22,9 +22,11 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-09-16 00:41:34 $'
+cvsdatestamp='$Date: 2007-09-17 10:26:33 $'
 last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
+# Sometimes last_checkin_date is "YYYY/MM/DD ...", sometimes "YYYY-MM-DD ...".
 version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
+# version is in YYYY-MM-DD format.
 nl='
 '
 IFS=" ""	$nl"
@@ -196,7 +198,7 @@ Report bugs to <bug-gnulib@gnu.org>."
 # outputs to stdout the --version message.
 func_version ()
 {
-  year=`echo "$last_checkin_date" | sed -e 's,/.*$,,'`
+  year=`echo "$version" | sed -e 's,-.*$,,'`
   echo "\
 $progname (GNU $package) $version
 Copyright (C) $year Free Software Foundation, Inc.
