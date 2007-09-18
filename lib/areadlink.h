@@ -21,4 +21,5 @@
 
 #include <stddef.h>
 
+extern char *areadlink (char const *filename);
 extern char *areadlink_with_size (char const *filename, size_t size_hint);
