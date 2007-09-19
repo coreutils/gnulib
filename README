@@ -233,9 +233,7 @@ cogito resources:
 
 For those among us who have tightly limited disk space and a fast network
 connection, CVS checkouts are also supported:
-  $ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib login
-  (Just hit Enter or Return when prompted for a password)
-  $ cvs -d :pserver:anoncvs@cvs.gnu.org:/cvsroot/gnulib checkout gnulib
+  $ cvs -d :pserver:anonymous@pserver.git.sv.gnu.org:/gnulib.git co -d gnulib HEAD
 
 Gnulib is hosted on savannah.gnu.org.  The project page is
 http://savannah.gnu.org/projects/gnulib.
