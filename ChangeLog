@@ -1,3 +1,7 @@
+2007-09-21  Simon Josefsson  <simon@josefsson.org>
+
+	* tests/test-canonicalize.sh: Turn on executable bit.
+
 2007-09-19  Eric Blake  <ebb9@byu.net>
 
 	* README: Update CVS instructions.
