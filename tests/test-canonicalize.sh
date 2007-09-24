@@ -20,6 +20,19 @@ ln -s t-can.tmp/ket ise \
  && mkdir lum
 ) || exit 1
 
+# Trigger a bug that would make the function mistakenly report a loop.
+# To trigger it, we have to construct a name/situation during the
+# resolution of which the code dereferences the same symlink (S)
+# two different times with no actual loop.  In addition, the
+# second and fourth calls to readlink must operate on S.
+(cd t-can.tmp \
+ && ln -s s p \
+ && ln -s d s \
+ && mkdir d \
+ && echo > d/2 \
+ && ln -s ../s/2 d/1
+) || exit 1
+
 ./test-canonicalize${EXEEXT}
 result=$?
 

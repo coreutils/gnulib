@@ -1,5 +1,15 @@
 2007-09-27  Jim Meyering  <jim@meyering.net>
 
+	canonicalize: Avoid a false-positive cycle failure.
+	* modules/canonicalize (Depends-on): Add file-set and hash-triple.
+	Sort.  Remove cycle-check.
+	* lib/canonicalize.c: Include file-set.h and hash-triple.h,
+	not cycle-check.h.
+	(seen_triple): New function.
+	(canonicalize_filename_mode): Use it instead of cycle-check.
+	* tests/test-canonicalize.c: Add a test for this bug.
+	* tests/test-canonicalize.sh: Set up and run the test.
+
 	New module, file-set.
 	* modules/file-set: Define it.
 	* lib/file-set.c, lib/file-set.h: Implement.

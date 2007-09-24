@@ -34,8 +34,9 @@
 #include <errno.h>
 #include <stddef.h>
 
-#include "cycle-check.h"
+#include "file-set.h"
 #include "filenamecat.h"
+#include "hash-triple.h"
 #include "xalloc.h"
 #include "xgetcwd.h"
 
@@ -123,6 +124,30 @@ canonicalize_file_name (const char *name)
 }
 #endif /* !HAVE_CANONICALIZE_FILE_NAME */
 
+/* Return true if we've already seen the triple, <FILENAME, dev, ino>.
+   If *HT is not initialized, initialize it.  */
+static bool
+seen_triple (Hash_table **ht, char const *filename, struct stat const *st)
+{
+  if (*ht == NULL)
+    {
+      size_t initial_capacity = 7;
+      *ht = hash_initialize (initial_capacity,
+			    NULL,
+			    triple_hash,
+			    triple_compare,
+			    triple_free);
+      if (*ht == NULL)
+	xalloc_die ();
+    }
+
+  if (seen_file (*ht, filename, st))
+    return true;
+
+  record_file (*ht, filename, st);
+  return false;
+}
+
 /* Return the canonical absolute name of file NAME.  A canonical name
    does not contain any `.', `..' components nor any repeated file name
    separators ('/') or symlinks.  Whether components must exist
@@ -136,7 +161,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
   char const *end;
   char const *rname_limit;
   size_t extra_len = 0;
-  struct cycle_check_state cycle_state;
+  Hash_table *ht = NULL;
 
   if (name == NULL)
     {
@@ -176,7 +201,6 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
       dest = rname + 1;
     }
 
-  cycle_check_init (&cycle_state);
   for (start = end = name; *start; start = end)
     {
       /* Skip sequence of multiple file name separators.  */
@@ -237,7 +261,11 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 	      char *buf;
 	      size_t n, len;
 
-	      if (cycle_check (&cycle_state, &st))
+	      /* Detect loops.  We cannot use the cycle-check module here,
+		 since it's actually possible to encounter the same symlink
+		 more than once in a given traversal.  However, encountering
+		 the same symlink,NAME pair twice does indicate a loop.  */
+	      if (seen_triple (&ht, name, &st))
 		{
 		  __set_errno (ELOOP);
 		  if (can_mode == CAN_MISSING)
@@ -298,10 +326,14 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
   *dest = '\0';
 
   free (extra_buf);
+  if (ht)
+    hash_free (ht);
   return rname;
 
 error:
   free (extra_buf);
   free (rname);
+  if (ht)
+    hash_free (ht);
   return NULL;
 }

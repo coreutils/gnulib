@@ -8,12 +8,13 @@ lib/pathmax.h
 m4/canonicalize.m4
 
 Depends-on:
-cycle-check
+areadlink-with-size
+file-set
 filenamecat
+hash-triple
 sys_stat
 xalloc
 xgetcwd
-areadlink-with-size
 
 configure.ac:
 AC_FUNC_CANONICALIZE_FILE_NAME

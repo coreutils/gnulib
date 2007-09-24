@@ -127,5 +127,17 @@ main ()
     free (result2);
   }
 
+  /* Ensure that the following is resolved properly.
+     Before 2007-09-27, it would mistakenly report a loop.  */
+  {
+    char *result1 = canonicalize_filename_mode ("t-can.tmp", CAN_EXISTING);
+    char *result2 = canonicalize_filename_mode ("t-can.tmp/p/1", CAN_EXISTING);
+    ASSERT (result1 != NULL);
+    ASSERT (result2 != NULL);
+    ASSERT (strcmp (result2 + strlen (result1), "/d/2") == 0);
+    free (result1);
+    free (result2);
+  }
+
   return 0;
 }
