@@ -1,3 +1,9 @@
+2007-09-24  Eric Blake  <ebb9@byu.net>
+
+	Revert fpending breakage from 2007-09-08.
+	* m4/fpending.m4 (gl_FUNC_FPENDING): Don't require existence of
+	__fpending.c.
+
 2007-09-24  Jim Meyering  <jim@meyering.net>
 
 	filenamecat.c: Add a test.
