@@ -1,3 +1,9 @@
+2007-09-24  Jim Meyering  <jim@meyering.net>
+
+	filenamecat.c: Add a test.
+	* lib/filenamecat.c (main) [TEST_FILE_NAME_CONCAT]: Add a test
+	showing how the function works when DIR is the empty string.
+
 2007-09-21  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-canonicalize.sh: Turn on executable bit.

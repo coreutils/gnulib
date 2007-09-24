@@ -121,6 +121,7 @@ main ()
       {"a", "/",  "a/"},   /* this might deserve a diagnostic */
       {"/a", "/", "/a/"},  /* this might deserve a diagnostic */
       {"a", "//b",  "a/b"},
+      {"", "a", "a"},  /* this might deserve a diagnostic */
     };
   size_t i;
   bool fail = false;
