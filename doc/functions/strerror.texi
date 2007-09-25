@@ -10,6 +10,11 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some old platforms.
+
+@item
+This function fails to return a string for out-of-range integers on
+some platforms:
+Interix
 @end itemize
 
 Portability problems not fixed by Gnulib:

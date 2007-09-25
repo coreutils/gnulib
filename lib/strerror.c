@@ -19,7 +19,29 @@
 
 #include <config.h>
 
-#if !HAVE_STRERROR
+#if REPLACE_STRERROR
+
+# include <string.h>
+# include <stdio.h>
+
+# undef strerror
+
+char *rpl_strerror (int n)
+{
+  static char const fmt[] = "Unknown error (%d)";
+  static char mesg[sizeof fmt + sizeof n * CHAR_BIT / 3];
+
+  char *result = strerror (n);
+
+  if (! result)
+    {
+      sprintf (mesg, fmt, n);
+      return mesg;
+    }
+  return result;
+}
+
+#elif !HAVE_STRERROR
 
 #include <limits.h>
 

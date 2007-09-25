@@ -1,3 +1,23 @@
+2007-09-25  Eric Blake  <ebb9@byu.net>
+
+	Fix strerror on Interix.
+	* lib/string_.h (strerror): Declare replacement.
+	* doc/functions/strerror.texi (strerror): Document the Interix
+	shortcoming.
+	* modules/string (Makefile.am): Support new hooks.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Add new hooks.
+	* m4/strerror.m4 (gl_FUNC_STRERROR): Defer to
+	gl_FUNC_STRERROR_SEPARATE.
+	(gl_FUNC_STRERROR_SEPARATE): Check for Interix bug.
+	* lib/strerror.c (rpl_strerror): Provide replacement.
+	* modules/strerror (Depends-on): Add string.
+	(configure.ac): Detect use of module.
+	* tests/test-strerror.c: New file.
+	* modules/strerror-tests: New test module.
+	* modules/argp (Depends-on): Add strerror.
+	* modules/error (Depends-on): Likewise.
+	Reported by Martin Koeppe.
+
 2007-09-24  Bruno Haible  <bruno@clisp.org>
 
 	* README: Update git instructions.

@@ -539,6 +539,23 @@ extern char * mbssep (char **stringp, const char *delim);
 extern char * mbstok_r (char *string, const char *delim, char **save_ptr);
 #endif
 
+/* Map any int, typically from errno, into an error message.  */
+#if @GNULIB_STRERROR@
+# if @REPLACE_STRERROR@
+#  undef strerror
+#  define strerror rpl_strerror
+# endif
+# if !@HAVE_DECL_STRERROR@ || @REPLACE_STRERROR@
+extern char *strerror (int);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef strerror
+# define strerror(e) \
+    (GL_LINK_WARNING ("strerror is unportable - " \
+                      "use gnulib module strerror to guarantee non-NULL result"), \
+     strerror (e))
+#endif
+
 
 #ifdef __cplusplus
 }

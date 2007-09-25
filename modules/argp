@@ -30,6 +30,7 @@ strcase
 extensions
 vsnprintf
 sleep
+strerror
 
 configure.ac:
 gl_ARGP

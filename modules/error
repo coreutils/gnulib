@@ -7,6 +7,7 @@ lib/error.c
 m4/error.m4
 
 Depends-on:
+strerror
 
 configure.ac:
 gl_ERROR

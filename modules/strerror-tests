@@ -1,0 +1,10 @@
+Files:
+tests/test-strerror.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-strerror
+check_PROGRAMS += test-strerror
