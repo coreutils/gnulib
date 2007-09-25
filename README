@@ -217,6 +217,14 @@ following should work:
 Or, if you prefer the CVS-like 'cogito' frontend to plain 'git':
   $ cg clone git://git.sv.gnu.org/gnulib
 
+For a read-write checkout you need to have a login on savannah.gnu.org and be
+a member of the gnulib project at http://savannah.gnu.org/projects/gnulib .
+Then, instead of the URL
+  git://git.sv.gnu.org/gnulib
+use the URL
+  ssh://<user>@git.sv.gnu.org/srv/git/gnulib
+where <user> is your login name on savannah.gnu.org.
+
 git resources:
   Overview: http://en.wikipedia.org/wiki/Git_(software)
   Homepage: http://git.or.cz/
