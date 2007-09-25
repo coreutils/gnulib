@@ -1,5 +1,9 @@
 2007-09-27  Jim Meyering  <jim@meyering.net>
 
+	New module, file-set.
+	* modules/file-set: Define it.
+	* lib/file-set.c, lib/file-set.h: Implement.
+
 	New module, hash-triple.
 	* modules/hash-triple: Define it.
 	* lib/hash-triple.c, lib/hash-triple.h: Implement.
