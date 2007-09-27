@@ -10,11 +10,11 @@
 	* tests/test-canonicalize.c: Add a test for this bug.
 	* tests/test-canonicalize.sh: Set up and run the test.
 
-	New module, file-set.
+	New module, file-set, from coreutils.
 	* modules/file-set: Define it.
 	* lib/file-set.c, lib/file-set.h: Implement.
 
-	New module, hash-triple.
+	New module, hash-triple, from coreutils.
 	* modules/hash-triple: Define it.
 	* lib/hash-triple.c, lib/hash-triple.h: Implement.
 
