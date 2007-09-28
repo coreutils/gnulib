@@ -4,6 +4,7 @@
 	* tests/test-closein.c (main): Don't assume stdin can be inherited
 	closed on all systems.
 	* tests/test-closein.sh: Likewise.
+	Reported by Piotr Tarnowski.
 
 2007-09-28  Jim Meyering  <jim@meyering.net>
 
