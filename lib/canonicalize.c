@@ -135,7 +135,7 @@ seen_triple (Hash_table **ht, char const *filename, struct stat const *st)
       *ht = hash_initialize (initial_capacity,
 			    NULL,
 			    triple_hash,
-			    triple_compare,
+			    triple_compare_ino_str,
 			    triple_free);
       if (*ht == NULL)
 	xalloc_die ();

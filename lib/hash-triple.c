@@ -22,10 +22,13 @@
 #include "hash-triple.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "hash-pjw.h"
 #include "same.h"
 #include "same-inode.h"
+
+#define STREQ(a, b) (strcmp ((a), (b)) == 0)
 
 /* Hash an F_triple, and *do* consider the file name.  */
 size_t
@@ -55,6 +58,14 @@ triple_compare (void const *x, void const *y)
   struct F_triple const *a = x;
   struct F_triple const *b = y;
   return (SAME_INODE (*a, *b) && same_name (a->name, b->name)) ? true : false;
+}
+
+bool
+triple_compare_ino_str (void const *x, void const *y)
+{
+  struct F_triple const *a = x;
+  struct F_triple const *b = y;
+  return (SAME_INODE (*a, *b) && STREQ (a->name, b->name)) ? true : false;
 }
 
 /* Free an F_triple.  */

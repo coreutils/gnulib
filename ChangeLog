@@ -1,3 +1,17 @@
+2007-09-28  Jim Meyering  <jim@meyering.net>
+
+	Fix canonicalize loop-detection corner case.
+	Do not attempt to stat the symlink values stored via seen_triple.
+	Without this, coreutils' tests/misc/readlink-fp-loop test would fail
+	on linux-2.6.18, (but not 2.6.22).
+	* lib/canonicalize.c (seen_triple): Use triple_compare_ino_str, not
+	triple_compare.  The former compares dev,ino,filename, while the latter
+	would actually stat dirname(filename) when dev and ino were equal.
+	* lib/hash-triple.c: Install <string.h>.
+	(STREQ): Define.
+	(triple_compare_ino_str): New function.
+	* lib/hash-triple.h (triple_compare_ino_str): Declare it.
+
 2007-09-28  Eric Blake  <ebb9@byu.net>
 
 	Enforce that AC_REPLACE_FUNCS files exist.
