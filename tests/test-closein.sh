@@ -30,7 +30,7 @@ cat ${p}in.tmp | ./test-closein${EXEEXT} consume || exit 1
 ./test-closein${EXEEXT} consume </dev/null || exit 1
 
 # Test for error when read fails because no file available
-./test-closein${EXEEXT} consume <&- 2>/dev/null && exit 1
+./test-closein${EXEEXT} consume close <&- 2>/dev/null && exit 1
 
 # Cleanup
 rm -fr $tmpfiles

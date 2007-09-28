@@ -3,7 +3,7 @@
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
+   the Free Software Foundation; either version 3, or (at your option)
    any later version.
 
    This program is distributed in the hope that it will be useful,
@@ -23,6 +23,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "binary-io.h"
 
@@ -42,6 +43,9 @@ main (int argc, char **argv)
   /* close_stdin currently relies on ftell, but mingw ftell is
      unreliable on text mode input.  */
   SET_BINARY (0);
+
+  if (argc > 2)
+    close (0);
 
   if (argc > 1)
     i = fread (buf, 1, 6, stdin);

@@ -1,3 +1,10 @@
+2007-09-28  Eric Blake  <ebb9@byu.net>
+
+	Fix test-closein on Solaris 10.
+	* tests/test-closein.c (main): Don't assume stdin can be inherited
+	closed on all systems.
+	* tests/test-closein.sh: Likewise.
+
 2007-09-28  Jim Meyering  <jim@meyering.net>
 
 	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Fix typo in comment.
