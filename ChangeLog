@@ -1,3 +1,7 @@
+2007-09-28  Jim Meyering  <jim@meyering.net>
+
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Fix typo in comment.
+
 2007-09-27  Jim Meyering  <jim@meyering.net>
 
 	canonicalize: Avoid a false-positive cycle failure.

@@ -1,4 +1,4 @@
-#serial 22
+#serial 23
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -92,7 +92,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
     REPLACE_NANOSLEEP=1
     if test "$gl_cv_func_nanosleep" = 'no (mishandles large arguments)'; then
       AC_DEFINE([HAVE_BUG_BIG_NANOSLEEP], 1,
-	[Define to 1 if nanosleep mishandle large arguments.])
+	[Define to 1 if nanosleep mishandles large arguments.])
       for ac_lib in $LIB_CLOCK_GETTIME; do
 	case " $LIB_NANOSLEEP " in
 	*" $ac_lib "*) ;;
