@@ -1,3 +1,9 @@
+2007-09-28  Eric Blake  <ebb9@byu.net>
+
+	Provide move-if-change.
+	* build-aux/move-if-change: New file, based on best practice
+	rather than any canonical upstream location.
+
 2007-09-28  Jim Meyering  <jim@meyering.net>
 
 	Fix canonicalize loop-detection corner case.
