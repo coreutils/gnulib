@@ -1938,23 +1938,27 @@ func_emit_initmacro_done ()
   echo
   echo "# Like AC_LIBOBJ, except that the module name goes"
   echo "# into ${macro_prefix}_LIBOBJS instead of into LIBOBJS."
-  echo "AC_DEFUN([${macro_prefix}_LIBOBJ],"
-  echo "  [AS_LITERAL_IF([\$1], [${macro_prefix}_LIBSOURCES([\$1.c])])dnl"
-  echo "  ${macro_prefix}_LIBOBJS=\"\$${macro_prefix}_LIBOBJS \$1.\$ac_objext\"])"
+  echo "AC_DEFUN([${macro_prefix}_LIBOBJ], ["
+  echo "  AS_LITERAL_IF([\$1], [${macro_prefix}_LIBSOURCES([\$1.c])])dnl"
+  echo "  ${macro_prefix}_LIBOBJS=\"\$${macro_prefix}_LIBOBJS \$1.\$ac_objext\""
+  echo "])"
   echo
   echo "# Like AC_REPLACE_FUNCS, except that the module name goes"
   echo "# into ${macro_prefix}_LIBOBJS instead of into LIBOBJS."
-  echo "AC_DEFUN([${macro_prefix}_REPLACE_FUNCS],"
-  echo "  [m4_foreach_w([gl_NAME], [\$1], [AC_LIBSOURCES(gl_NAME[.c])])dnl"
-  echo "  AC_CHECK_FUNCS([\$1], , [${macro_prefix}_LIBOBJ(\$ac_func)])])"
+  echo "AC_DEFUN([${macro_prefix}_REPLACE_FUNCS], ["
+  echo "  m4_foreach_w([gl_NAME], [\$1], [AC_LIBSOURCES(gl_NAME[.c])])dnl"
+  echo "  AC_CHECK_FUNCS([\$1], , [${macro_prefix}_LIBOBJ(\$ac_func)])"
+  echo "])"
   echo
   echo "# Like AC_LIBSOURCES, except check for typos now."
   echo "# We rely on EXTRA_lib..._SOURCES instead."
-  echo "AC_DEFUN([${macro_prefix}_LIBSOURCES],"
-  echo "  [m4_foreach([_gl_NAME], [\$1],"
-  echo "    [m4_syscmd([test -r $sourcebase/]_gl_NAME[ || test ! -d $sourcebase])dnl"
+  echo "AC_DEFUN([${macro_prefix}_LIBSOURCES], ["
+  echo "  m4_foreach([_gl_NAME], [\$1], ["
+  echo "    m4_syscmd([test -r $sourcebase/]_gl_NAME[ || test ! -d $sourcebase])dnl"
   echo "    m4_if(m4_sysval, [0], [],"
-  echo "      [AC_FATAL([missing $sourcebase/]_gl_NAME)])])])"
+  echo "      [AC_FATAL([missing $sourcebase/]_gl_NAME)])"
+  echo "  ])"
+  echo "])"
 }
 
 # func_import modules
