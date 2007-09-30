@@ -1,5 +1,9 @@
 2007-09-29  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdio_.h (getdelim, getline): Add identifiers. Doc tweak.
+
+2007-09-29  Bruno Haible  <bruno@clisp.org>
+
 	* lib/xreadlink.c (xreadlink): Simplify to a wrapper around areadlink.
 	* modules/xreadlink (Depends-on): Add areadlink, remove readlink etc.
 	* build-aux/install-reloc: Compile also areadlink.c.
