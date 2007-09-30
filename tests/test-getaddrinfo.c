@@ -24,6 +24,11 @@
 #include <stdio.h>
 #include <string.h>
 
+/* BeOS does not have AF_UNSPEC.  */
+#ifndef AF_UNSPEC
+# define AF_UNSPEC 0
+#endif
+
 int simple (char *host, char *service)
 {
   char buf[BUFSIZ];

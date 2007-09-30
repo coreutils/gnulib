@@ -1,5 +1,10 @@
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-getaddrinfo.c (AF_UNSPEC): Provide a fallback definition.
+	Needed on BeOS.
+
+2007-09-30  Bruno Haible  <bruno@clisp.org>
+
 	* modules/dirname-tests (check_PROGRAMS): Renamed from noinst_PROGRAMS.
 
 2007-09-29  Bruno Haible  <bruno@clisp.org>
