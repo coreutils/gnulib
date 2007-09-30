@@ -1,5 +1,12 @@
 2007-09-29  Bruno Haible  <bruno@clisp.org>
 
+	* lib/xreadlink.c (xreadlink): Simplify to a wrapper around areadlink.
+	* modules/xreadlink (Depends-on): Add areadlink, remove readlink etc.
+	* build-aux/install-reloc: Compile also areadlink.c.
+	* modules/relocatable-prog-wrapper (Files): Add lib/areadlink.[hc].
+
+2007-09-29  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_initmacro_done): Indentation.
 
 2007-09-29  Bruno Haible  <bruno@clisp.org>

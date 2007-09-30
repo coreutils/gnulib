@@ -6,9 +6,7 @@ lib/xreadlink.h
 lib/xreadlink.c
 
 Depends-on:
-readlink
-ssize_t
-unistd
+areadlink
 xalloc
 
 configure.ac:

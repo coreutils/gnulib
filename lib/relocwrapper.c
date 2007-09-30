@@ -21,7 +21,8 @@
     -> progname
     -> progreloc
         -> xreadlink
-           -> readlink
+           -> areadlink
+              -> readlink
         -> canonicalize-lgpl
            -> malloca
     -> relocatable

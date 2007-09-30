@@ -10,6 +10,8 @@ lib/progname.c
 lib/progreloc.c
 lib/xreadlink.h
 lib/xreadlink.c
+lib/areadlink.h
+lib/areadlink.c
 lib/readlink.c
 lib/canonicalize.h
 lib/canonicalize-lgpl.c
