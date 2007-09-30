@@ -8,5 +8,5 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-dirname
-noinst_PROGRAMS += test-dirname
+check_PROGRAMS += test-dirname
 test_dirname_LDADD = $(LDADD) @LIBINTL@
