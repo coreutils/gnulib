@@ -1,3 +1,8 @@
+2007-10-01  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_initmacro_done): Special case for alloca.c.
+	Needed for the alloca-opt module.
+
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
 	* lib/alloca.in.h: Renamed from lib/alloca_.h.
