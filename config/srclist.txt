@@ -53,7 +53,7 @@ $GNUORG/disclaim.program			doc/Copyright
 #$LIBCSRC/argp/argp.h			lib gpl
 #$LIBCSRC/stdlib/getsubopt.c		lib gpl
 #$LIBCSRC/posix/getopt.c		lib gpl
-#$LIBCSRC/posix/getopt.h		lib gpl (getopt_.h in gnulib)
+#$LIBCSRC/posix/getopt.h		lib gpl (getopt.in.h in gnulib)
 #$LIBCSRC/posix/getopt1.c		lib gpl
 #$LIBCSRC/posix/getopt_int.h		lib gpl
 #
