@@ -3,6 +3,8 @@
 	* lib/alloca.in.h: Renamed from lib/alloca_.h.
 	* modules/alloca-opt (Files, Makefile.am): Use alloca.in.h instead of
 	alloca_.h.
+	* lib/argz.in.h: Renamed from lib/argz_.h.
+	* modules/argz (Files, Makefile.am): Use argz.in.h instead of argz_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
