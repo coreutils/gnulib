@@ -2,7 +2,7 @@ Description:
 Character set conversion.
 
 Files:
-lib/iconv_.h
+lib/iconv.in.h
 lib/iconv_open.c
 lib/iconv_open-aix.gperf
 lib/iconv_open-hpux.gperf
@@ -25,13 +25,13 @@ BUILT_SOURCES += $(ICONV_H)
 
 # We need the following in order to create <iconv.h> when the system
 # doesn't have one that works with the given compiler.
-iconv.h: iconv_.h
+iconv.h: iconv.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
 	      -e 's|@''NEXT_ICONV_H''@|$(NEXT_ICONV_H)|g' \
 	      -e 's|@''REPLACE_ICONV_OPEN''@|$(REPLACE_ICONV_OPEN)|g' \
-	      < $(srcdir)/iconv_.h; \
+	      < $(srcdir)/iconv.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += iconv.h iconv.h-t

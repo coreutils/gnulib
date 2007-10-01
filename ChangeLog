@@ -25,6 +25,9 @@
 	getopt_.h.
 	* lib/glob.in.h: Renamed from lib/glob_.h.
 	* modules/glob (Files, Makefile.am): Use glob.in.h instead of glob_.h.
+	* lib/iconv.in.h: Renamed from lib/iconv_.h.
+	* modules/iconv_open (Files, Makefile.am): Use iconv.in.h instead of
+	iconv_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
