@@ -2,7 +2,7 @@ Description:
 A GNU-like <stdlib.h>.
 
 Files:
-lib/stdlib_.h
+lib/stdlib.in.h
 m4/stdlib_h.m4
 
 Depends-on:
@@ -18,7 +18,7 @@ BUILT_SOURCES += stdlib.h
 
 # We need the following in order to create <stdlib.h> when the system
 # doesn't have one that works with the given compiler.
-stdlib.h: stdlib_.h
+stdlib.h: stdlib.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
@@ -36,7 +36,7 @@ stdlib.h: stdlib_.h
 	      -e 's|@''HAVE_REALLOC_POSIX''@|$(HAVE_REALLOC_POSIX)|g' \
 	      -e 's|@''REPLACE_MKSTEMP''@|$(REPLACE_MKSTEMP)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
-	      < $(srcdir)/stdlib_.h; \
+	      < $(srcdir)/stdlib.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += stdlib.h stdlib.h-t

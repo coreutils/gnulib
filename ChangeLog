@@ -56,6 +56,9 @@
 	* lib/stdio.in.h: Renamed from lib/stdio_.h.
 	* modules/stdio (Files, Makefile.am): Use stdio.in.h instead of
 	stdio_.h.
+	* lib/stdlib.in.h: Renamed from lib/stdlib_.h.
+	* modules/stdlib (Files, Makefile.am): Use stdlib.in.h instead of
+	stdlib_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
