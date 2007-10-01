@@ -1,4 +1,4 @@
-# signalblocking.m4 serial 5
+# signalblocking.m4 serial 6
 dnl Copyright (C) 2001-2002, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,7 +24,7 @@ AC_DEFUN([gl_SIGNALBLOCKING],
   fi
 ])
 
-# Prerequisites of the part of lib/signal_.h and of lib/sigprocmask.c.
+# Prerequisites of the part of lib/signal.in.h and of lib/sigprocmask.c.
 AC_DEFUN([gl_PREREQ_SIGPROCMASK],
 [
   AC_REQUIRE([gl_SIGNAL_H_DEFAULTS])

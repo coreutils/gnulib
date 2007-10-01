@@ -44,6 +44,9 @@
 	* lib/search.in.h: Renamed from lib/search_.h.
 	* modules/search (Files, Makefile.am): Use search.in.h instead of
 	search_.h.
+	* lib/signal.in.h: Renamed from lib/signal_.h.
+	* modules/signal (Files, Makefile.am): Use signal.in.h instead of
+	_signal.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 

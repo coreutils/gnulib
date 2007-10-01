@@ -2,7 +2,7 @@ Description:
 A GNU-like <signal.h>.
 
 Files:
-lib/signal_.h
+lib/signal.in.h
 m4/signal_h.m4
 
 Depends-on:
@@ -17,7 +17,7 @@ BUILT_SOURCES += signal.h
 
 # We need the following in order to create <signal.h> when the system
 # doesn't have a complete one.
-signal.h: signal_.h
+signal.h: signal.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
@@ -26,7 +26,7 @@ signal.h: signal_.h
 	      -e 's|@''HAVE_POSIX_SIGNALBLOCKING''@|$(HAVE_POSIX_SIGNALBLOCKING)|g' \
 	      -e 's|@''HAVE_SIGSET_T''@|$(HAVE_SIGSET_T)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
-	      < $(srcdir)/signal_.h; \
+	      < $(srcdir)/signal.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += signal.h signal.h-t
