@@ -60,7 +60,7 @@ Module list with included dependencies:
 File list:
   lib/dummy.c
   lib/strdup.c
-  lib/string_.h
+  lib/string.in.h
   m4/absolute-header.m4
   m4/extensions.m4
   m4/gnulib-common.m4
@@ -70,7 +70,7 @@ Creating directory ./lib
 Creating directory ./m4
 Copying file lib/dummy.c
 Copying file lib/strdup.c
-Copying file lib/string_.h
+Copying file lib/string.in.h
 Copying file m4/absolute-header.m4
 Copying file m4/extensions.m4
 Copying file m4/gnulib-common.m4

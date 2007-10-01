@@ -2,7 +2,7 @@ Description:
 A GNU-like <string.h>.
 
 Files:
-lib/string_.h
+lib/string.in.h
 m4/string_h.m4
 
 Depends-on:
@@ -18,7 +18,7 @@ BUILT_SOURCES += string.h
 
 # We need the following in order to create <string.h> when the system
 # doesn't have one that works with the given compiler.
-string.h: string_.h
+string.h: string.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
@@ -70,7 +70,7 @@ string.h: string_.h
 	      -e 's|@''HAVE_DECL_STRERROR''@|$(HAVE_DECL_STRERROR)|g' \
 	      -e 's|@''REPLACE_STRERROR''@|$(REPLACE_STRERROR)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
-	      < $(srcdir)/string_.h; \
+	      < $(srcdir)/string.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += string.h string.h-t

@@ -59,6 +59,10 @@
 	* lib/stdlib.in.h: Renamed from lib/stdlib_.h.
 	* modules/stdlib (Files, Makefile.am): Use stdlib.in.h instead of
 	stdlib_.h.
+	* lib/string.in.h: Renamed from lib/string_.h.
+	* modules/string (Files, Makefile.am): Use string.in.h instead of
+	string_.h.
+	* doc/gnulib-tool.texi (Initial import): Update.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
