@@ -80,6 +80,9 @@
 	sysexits_.h.
 	* lib/time.in.h: Renamed from lib/time_.h.
 	* modules/time (Files, Makefile.am): Use time.in.h instead of time_.h.
+	* lib/unistd.in.h: Renamed from lib/unistd_.h.
+	* modules/unistd (Files, Makefile.am): Use unistd.in.h instead of
+	unistd_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 

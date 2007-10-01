@@ -3,7 +3,7 @@ A GNU-like <unistd.h>.
 
 Files:
 m4/unistd_h.m4
-lib/unistd_.h
+lib/unistd.in.h
 
 Depends-on:
 include_next
@@ -17,7 +17,7 @@ BUILT_SOURCES += unistd.h
 
 # We need the following in order to create an empty placeholder for
 # <unistd.h> when the system doesn't have one.
-unistd.h: unistd_.h
+unistd.h: unistd.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_UNISTD_H''@|$(HAVE_UNISTD_H)|g' \
