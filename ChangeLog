@@ -14,6 +14,9 @@
 	* lib/fcntl.in.h: Renamed from lib/fcntl_.h.
 	* modules/fcntl (Files, Makefile.am): Use fcntl.in.h instead of
 	fcntl_.h.
+	* lib/float.in.h: Renamed from lib/float_.h.
+	* modules/float (Files, Makefile.am): Use float.in.h instead of
+	float_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 

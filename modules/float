@@ -2,7 +2,7 @@ Description:
 A correct <float.h>.
 
 Files:
-lib/float_.h
+lib/float.in.h
 m4/float_h.m4
 
 Depends-on:
@@ -16,12 +16,12 @@ BUILT_SOURCES += $(FLOAT_H)
 
 # We need the following in order to create <float.h> when the system
 # doesn't have one that works with the given compiler.
-float.h: float_.h
+float.h: float.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
 	      -e 's|@''NEXT_FLOAT_H''@|$(NEXT_FLOAT_H)|g' \
-	      < $(srcdir)/float_.h; \
+	      < $(srcdir)/float.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += float.h float.h-t
