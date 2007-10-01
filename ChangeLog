@@ -69,6 +69,9 @@
 	* lib/sys_socket.in.h: Renamed from lib/sys_socket_.h.
 	* modules/sys_socket (Files, Makefile.am): Use sys_socket.in.h instead
 	of sys_socket_.h.
+	* lib/sys_stat.in.h: Renamed from lib/sys_stat_.h.
+	* modules/sys_stat (Files, Makefile.am): Use sys_stat.in.h instead of
+	sys_stat_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
