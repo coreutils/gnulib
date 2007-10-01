@@ -2,7 +2,7 @@ Description:
 An <inttypes.h> that nearly conforms to C99.
 
 Files:
-lib/inttypes_.h
+lib/inttypes.in.h
 m4/inttypes-pri.m4
 m4/inttypes.m4
 
@@ -19,7 +19,7 @@ BUILT_SOURCES += $(INTTYPES_H)
 
 # We need the following in order to create <inttypes.h> when the system
 # doesn't have one that works with the given compiler.
-inttypes.h: inttypes_.h
+inttypes.h: inttypes.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's/@''HAVE_INTTYPES_H''@/$(HAVE_INTTYPES_H)/g' \
@@ -38,7 +38,7 @@ inttypes.h: inttypes_.h
 	      -e 's/@''HAVE_DECL_STRTOIMAX''@/$(HAVE_DECL_STRTOIMAX)/g' \
 	      -e 's/@''HAVE_DECL_STRTOUMAX''@/$(HAVE_DECL_STRTOUMAX)/g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
-	      < $(srcdir)/inttypes_.h; \
+	      < $(srcdir)/inttypes.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += inttypes.h inttypes.h-t
