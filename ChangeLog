@@ -39,6 +39,8 @@
 	* lib/netinet_in.in.h: Renamed from lib/netinet_in_.h.
 	* modules/netinet_in (Files, Makefile.am): Use netinet_in.in.h instead
 	of netinet_in_.h. Add dependency.
+	* lib/poll.in.h: Renamed from lib/poll_.h.
+	* modules/poll (Files, Makefile.am): Use poll.in.h instead of poll_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
