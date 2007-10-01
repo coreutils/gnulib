@@ -36,6 +36,9 @@
 	locale_.h.
 	* lib/math.in.h: Renamed from lib/math_.h.
 	* modules/math (Files, Makefile.am): Use math.in.h instead of math_.h.
+	* lib/netinet_in.in.h: Renamed from lib/netinet_in_.h.
+	* modules/netinet_in (Files, Makefile.am): Use netinet_in.in.h instead
+	of netinet_in_.h. Add dependency.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
