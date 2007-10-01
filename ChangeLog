@@ -8,6 +8,9 @@
 	* lib/byteswap.in.h: Renamed from lib/byteswap_.h.
 	* modules/byteswap (Files, Makefile.am): Use byteswap.in.h instead of
 	byteswap_.h.
+	* lib/dirent.in.h: Renamed from lib/dirent_.h.
+	* modules/fchdir (Files, Makefile.am): Use dirent.in.h instead of
+	dirent_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
