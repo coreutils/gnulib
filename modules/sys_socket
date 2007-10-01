@@ -2,7 +2,7 @@ Description:
 A <sys/socket.h> for systems lacking it.
 
 Files:
-lib/sys_socket_.h
+lib/sys_socket.in.h
 m4/sys_socket_h.m4
 m4/sockpfaf.m4
 
@@ -18,7 +18,7 @@ BUILT_SOURCES += $(SYS_SOCKET_H)
 
 # We need the following in order to create <sys/socket.h> when the system
 # doesn't have one that works with the given compiler.
-sys/socket.h: sys_socket_.h
+sys/socket.h: sys_socket.in.h
 	@MKDIR_P@ sys
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
@@ -26,7 +26,7 @@ sys/socket.h: sys_socket_.h
 	      -e 's|@''HAVE_SYS_SOCKET_H''@|$(HAVE_SYS_SOCKET_H)|g' \
 	      -e 's|@''HAVE_WINSOCK2_H''@|$(HAVE_WINSOCK2_H)|g' \
 	      -e 's|@''HAVE_WS2TCPIP_H''@|$(HAVE_WS2TCPIP_H)|g' \
-	      < $(srcdir)/sys_socket_.h; \
+	      < $(srcdir)/sys_socket.in.h; \
 	} > $@-t
 	mv -f $@-t $@
 MOSTLYCLEANFILES += sys/socket.h sys/socket.h-t

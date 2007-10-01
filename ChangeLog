@@ -66,6 +66,9 @@
 	* lib/sys_select.in.h: Renamed from lib/sys_select_.h.
 	* modules/sys_select (Files, Makefile.am): Use sys_select.in.h instead
 	of sys_select_.h. Add dependency.
+	* lib/sys_socket.in.h: Renamed from lib/sys_socket_.h.
+	* modules/sys_socket (Files, Makefile.am): Use sys_socket.in.h instead
+	of sys_socket_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
