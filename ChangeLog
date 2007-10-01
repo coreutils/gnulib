@@ -31,6 +31,9 @@
 	* lib/inttypes.in.h: Renamed from lib/inttypes_.h.
 	* modules/inttypes (Files, Makefile.am): Use inttypes.in.h instead of
 	inttypes_.h.
+	* lib/locale.in.h: Renamed from lib/locale_.h.
+	* modules/locale (Files, Makefile.am): Use locale.in.h instead of
+	locale_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 

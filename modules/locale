@@ -2,7 +2,7 @@ Description:
 A <locale.h> that conforms to POSIX.
 
 Files:
-lib/locale_.h
+lib/locale.in.h
 m4/locale_h.m4
 
 Depends-on:
@@ -16,12 +16,12 @@ BUILT_SOURCES += $(LOCALE_H)
 
 # We need the following in order to create <locale.h> when the system
 # doesn't have one that provides all definitions.
-locale.h: locale_.h
+locale.h: locale.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
 	      -e 's|@''NEXT_LOCALE_H''@|$(NEXT_LOCALE_H)|g' \
-	      < $(srcdir)/locale_.h; \
+	      < $(srcdir)/locale.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += locale.h locale.h-t
