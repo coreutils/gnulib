@@ -2,7 +2,7 @@ Description:
 GNU fnmatch() implementation.
 
 Files:
-lib/fnmatch_.h
+lib/fnmatch.in.h
 lib/fnmatch.c
 lib/fnmatch_loop.c
 m4/mbstate_t.m4
@@ -23,9 +23,9 @@ BUILT_SOURCES += $(FNMATCH_H)
 
 # We need the following in order to create <fnmatch.h> when the system
 # doesn't have one that supports the required API.
-fnmatch.h: fnmatch_.h
+fnmatch.h: fnmatch.in.h
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/fnmatch_.h; \
+	  cat $(srcdir)/fnmatch.in.h; \
 	} > $@-t
 	mv -f $@-t $@
 MOSTLYCLEANFILES += fnmatch.h fnmatch.h-t

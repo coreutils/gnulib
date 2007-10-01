@@ -17,6 +17,9 @@
 	* lib/float.in.h: Renamed from lib/float_.h.
 	* modules/float (Files, Makefile.am): Use float.in.h instead of
 	float_.h.
+	* lib/fnmatch.in.h: Renamed from lib/fnmatch_.h.
+	* modules/fnmatch (Files, Makefile.am): Use fnmatch.in.h instead of
+	fnmatch_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
