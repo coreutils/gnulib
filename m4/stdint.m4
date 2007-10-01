@@ -1,4 +1,4 @@
-# stdint.m4 serial 28
+# stdint.m4 serial 29
 dnl Copyright (C) 2001-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -370,7 +370,7 @@ AC_DEFUN([gl_STDINT_INCLUDES],
 
 dnl gl_STDINT_TYPE_PROPERTIES
 dnl Compute HAVE_SIGNED_t, BITSIZEOF_t and t_SUFFIX, for all the types t
-dnl of interest to stdint_.h.
+dnl of interest to stdint.in.h.
 AC_DEFUN([gl_STDINT_TYPE_PROPERTIES],
 [
   gl_STDINT_BITSIZEOF([ptrdiff_t sig_atomic_t size_t wchar_t wint_t],

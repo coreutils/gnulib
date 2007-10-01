@@ -7,7 +7,7 @@ may not correspond to the fastest types available on the system.
 Macros are used instead of typedefs.
 
 Files:
-lib/stdint_.h
+lib/stdint.in.h
 m4/stdint.m4
 m4/longlong.m4
 m4/ulonglong.m4
@@ -24,7 +24,7 @@ BUILT_SOURCES += $(STDINT_H)
 
 # We need the following in order to create <stdint.h> when the system
 # doesn't have one that works with the given compiler.
-stdint.h: stdint_.h
+stdint.h: stdint.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's/@''HAVE_STDINT_H''@/$(HAVE_STDINT_H)/g' \
@@ -49,7 +49,7 @@ stdint.h: stdint_.h
 	      -e 's/@''BITSIZEOF_WINT_T''@/$(BITSIZEOF_WINT_T)/g' \
 	      -e 's/@''HAVE_SIGNED_WINT_T''@/$(HAVE_SIGNED_WINT_T)/g' \
 	      -e 's/@''WINT_T_SUFFIX''@/$(WINT_T_SUFFIX)/g' \
-	      < $(srcdir)/stdint_.h; \
+	      < $(srcdir)/stdint.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += stdint.h stdint.h-t

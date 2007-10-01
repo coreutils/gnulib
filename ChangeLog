@@ -50,6 +50,9 @@
 	* lib/stdbool.in.h: Renamed from lib/stdbool_.h.
 	* modules/stdbool (Files, Makefile.am): Use stdbool.in.h instead of
 	stdbool_.h.
+	* lib/stdint.in.h: Renamed from lib/stdint_.h.
+	* modules/stdint (Files, Makefile.am): Use stdint.in.h instead of
+	stdint_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
