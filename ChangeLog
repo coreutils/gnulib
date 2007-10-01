@@ -47,6 +47,9 @@
 	* lib/signal.in.h: Renamed from lib/signal_.h.
 	* modules/signal (Files, Makefile.am): Use signal.in.h instead of
 	_signal.h.
+	* lib/stdbool.in.h: Renamed from lib/stdbool_.h.
+	* modules/stdbool (Files, Makefile.am): Use stdbool.in.h instead of
+	stdbool_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
