@@ -5,6 +5,9 @@
 	alloca_.h.
 	* lib/argz.in.h: Renamed from lib/argz_.h.
 	* modules/argz (Files, Makefile.am): Use argz.in.h instead of argz_.h.
+	* lib/byteswap.in.h: Renamed from lib/byteswap_.h.
+	* modules/byteswap (Files, Makefile.am): Use byteswap.in.h instead of
+	byteswap_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 

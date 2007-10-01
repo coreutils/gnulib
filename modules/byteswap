@@ -2,7 +2,7 @@ Description:
 Swap bytes of 16, 32 and 64 bit values.
 
 Files:
-lib/byteswap_.h
+lib/byteswap.in.h
 m4/byteswap.m4
 
 Depends-on:
@@ -15,9 +15,9 @@ BUILT_SOURCES += $(BYTESWAP_H)
 
 # We need the following in order to create <byteswap.h> when the system
 # doesn't have one.
-byteswap.h: byteswap_.h
+byteswap.h: byteswap.in.h
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/byteswap_.h; \
+	  cat $(srcdir)/byteswap.in.h; \
 	} > $@-t
 	mv -f $@-t $@
 MOSTLYCLEANFILES += byteswap.h byteswap.h-t
