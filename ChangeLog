@@ -89,6 +89,8 @@
 	* lib/wctype.in.h: Renamed from lib/wctype_.h.
 	* modules/wctype (Files, Makefile.am): Use wctype.in.h instead of
 	wctype_.h.
+	* build-aux/bootstrap (slurp): Update.
+	* lib/.cppi-disable: Update.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
