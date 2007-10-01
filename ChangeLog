@@ -11,6 +11,9 @@
 	* lib/dirent.in.h: Renamed from lib/dirent_.h.
 	* modules/fchdir (Files, Makefile.am): Use dirent.in.h instead of
 	dirent_.h.
+	* lib/fcntl.in.h: Renamed from lib/fcntl_.h.
+	* modules/fcntl (Files, Makefile.am): Use fcntl.in.h instead of
+	fcntl_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 

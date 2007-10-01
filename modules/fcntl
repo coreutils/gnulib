@@ -2,7 +2,7 @@ Description:
 Like <fcntl.h>, but with non-working flags defined to 0.
 
 Files:
-lib/fcntl_.h
+lib/fcntl.in.h
 m4/fcntl_h.m4
 
 Depends-on:
@@ -17,12 +17,12 @@ BUILT_SOURCES += $(FCNTL_H)
 
 # We need the following in order to create <fcntl.h> when the system
 # doesn't have one that works with the given compiler.
-fcntl.h: fcntl_.h
+fcntl.h: fcntl.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
 	      -e 's|@''NEXT_FCNTL_H''@|$(NEXT_FCNTL_H)|g' \
-	      < $(srcdir)/fcntl_.h; \
+	      < $(srcdir)/fcntl.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += fcntl.h fcntl.h-t
