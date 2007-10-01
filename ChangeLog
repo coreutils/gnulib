@@ -34,6 +34,8 @@
 	* lib/locale.in.h: Renamed from lib/locale_.h.
 	* modules/locale (Files, Makefile.am): Use locale.in.h instead of
 	locale_.h.
+	* lib/math.in.h: Renamed from lib/math_.h.
+	* modules/math (Files, Makefile.am): Use math.in.h instead of math_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 

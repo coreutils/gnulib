@@ -2,7 +2,7 @@ Description:
 A GNU-like <math.h>.
 
 Files:
-lib/math_.h
+lib/math.in.h
 m4/math_h.m4
 
 Depends-on:
@@ -17,7 +17,7 @@ BUILT_SOURCES += math.h
 
 # We need the following in order to create <math.h> when the system
 # doesn't have one that works with the given compiler.
-math.h: math_.h
+math.h: math.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
@@ -45,7 +45,7 @@ math.h: math_.h
 	      -e 's|@''REPLACE_LDEXPL''@|$(REPLACE_LDEXPL)|g' \
 	      -e 's|@''REPLACE_SIGNBIT''@|$(REPLACE_SIGNBIT)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
-	      < $(srcdir)/math_.h; \
+	      < $(srcdir)/math.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += math.h math.h-t
