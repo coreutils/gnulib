@@ -53,6 +53,9 @@
 	* lib/stdint.in.h: Renamed from lib/stdint_.h.
 	* modules/stdint (Files, Makefile.am): Use stdint.in.h instead of
 	stdint_.h.
+	* lib/stdio.in.h: Renamed from lib/stdio_.h.
+	* modules/stdio (Files, Makefile.am): Use stdio.in.h instead of
+	stdio_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
