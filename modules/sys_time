@@ -2,7 +2,7 @@ Description:
 A <sys/time.h> that conforms better to POSIX.
 
 Files:
-lib/sys_time_.h
+lib/sys_time.in.h
 m4/sys_time_h.m4
 
 Depends-on:
@@ -17,7 +17,7 @@ BUILT_SOURCES += $(SYS_TIME_H)
 
 # We need the following in order to create <sys/time.h> when the system
 # doesn't have one that works with the given compiler.
-sys/time.h: sys_time_.h
+sys/time.h: sys_time.in.h
 	@MKDIR_P@ sys
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -26,7 +26,7 @@ sys/time.h: sys_time_.h
 	      -e 's|@''NEXT_SYS_TIME_H''@|$(NEXT_SYS_TIME_H)|g' \
 	      -e 's/@''REPLACE_GETTIMEOFDAY''@/$(REPLACE_GETTIMEOFDAY)/g' \
 	      -e 's/@''HAVE_STRUCT_TIMEVAL''@/$(HAVE_STRUCT_TIMEVAL)/g' \
-	      < $(srcdir)/sys_time_.h; \
+	      < $(srcdir)/sys_time.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += sys/time.h sys/time.h-t
