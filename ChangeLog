@@ -41,6 +41,9 @@
 	of netinet_in_.h. Add dependency.
 	* lib/poll.in.h: Renamed from lib/poll_.h.
 	* modules/poll (Files, Makefile.am): Use poll.in.h instead of poll_.h.
+	* lib/search.in.h: Renamed from lib/search_.h.
+	* modules/search (Files, Makefile.am): Use search.in.h instead of
+	search_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
