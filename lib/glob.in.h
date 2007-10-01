@@ -1,4 +1,4 @@
-/* glob_.h -- Find a path matching a pattern.
+/* glob.h -- Find a path matching a pattern.
 
    Copyright (C) 2005-2007 Free Software Foundation, Inc.
 

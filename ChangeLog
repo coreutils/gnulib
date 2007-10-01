@@ -20,6 +20,11 @@
 	* lib/fnmatch.in.h: Renamed from lib/fnmatch_.h.
 	* modules/fnmatch (Files, Makefile.am): Use fnmatch.in.h instead of
 	fnmatch_.h.
+	* lib/getopt.in.h: Renamed from lib/getopt_.h.
+	* modules/getopt (Files, Makefile.am): Use getopt.in.h instead of
+	getopt_.h.
+	* lib/glob.in.h: Renamed from lib/glob_.h.
+	* modules/glob (Files, Makefile.am): Use glob.in.h instead of glob_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
