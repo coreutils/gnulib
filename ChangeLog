@@ -1,5 +1,11 @@
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
+	* lib/alloca.in.h: Renamed from lib/alloca_.h.
+	* modules/alloca-opt (Files, Makefile.am): Use alloca.in.h instead of
+	alloca_.h.
+
+2007-09-30  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-getaddrinfo.c (AF_UNSPEC): Provide a fallback definition.
 	Needed on BeOS.
 
