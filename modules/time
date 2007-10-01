@@ -2,7 +2,7 @@ Description:
 A more-standard <time.h>.
 
 Files:
-lib/time_.h
+lib/time.in.h
 m4/time_h.m4
 
 Depends-on:
@@ -17,7 +17,7 @@ BUILT_SOURCES += time.h
 
 # We need the following in order to create <time.h> when the system
 # doesn't have one that works with the given compiler.
-time.h: time_.h
+time.h: time.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
@@ -28,7 +28,7 @@ time.h: time_.h
 	      -e 's|@REPLACE_TIMEGM''@|$(REPLACE_TIMEGM)|g' \
 	      -e 's|@SYS_TIME_H_DEFINES_STRUCT_TIMESPEC''@|$(SYS_TIME_H_DEFINES_STRUCT_TIMESPEC)|g' \
 	      -e 's|@TIME_H_DEFINES_STRUCT_TIMESPEC''@|$(TIME_H_DEFINES_STRUCT_TIMESPEC)|g' \
-	      < $(srcdir)/time_.h; \
+	      < $(srcdir)/time.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += time.h time.h-t

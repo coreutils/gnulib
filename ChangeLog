@@ -78,6 +78,8 @@
 	* lib/sysexits.in.h: Renamed from lib/sysexits_.h.
 	* modules/sysexits (Files, Makefile.am): Use sysexits.in.h instead of
 	sysexits_.h.
+	* lib/time.in.h: Renamed from lib/time_.h.
+	* modules/time (Files, Makefile.am): Use time.in.h instead of time_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
