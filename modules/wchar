@@ -2,7 +2,7 @@ Description:
 A <wchar.h> that works around platform issues.
 
 Files:
-lib/wchar_.h
+lib/wchar.in.h
 m4/wchar.m4
 
 Depends-on:
@@ -17,7 +17,7 @@ BUILT_SOURCES += $(WCHAR_H)
 
 # We need the following in order to create <wchar.h> when the system
 # version does not work standalone.
-wchar.h: wchar_.h
+wchar.h: wchar.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
@@ -27,7 +27,7 @@ wchar.h: wchar_.h
 	      -e 's|@''HAVE_DECL_WCWIDTH''@|$(HAVE_DECL_WCWIDTH)|g' \
 	      -e 's|@''REPLACE_WCWIDTH''@|$(REPLACE_WCWIDTH)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
-	    < $(srcdir)/wchar_.h; \
+	    < $(srcdir)/wchar.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += wchar.h wchar.h-t

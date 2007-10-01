@@ -83,6 +83,9 @@
 	* lib/unistd.in.h: Renamed from lib/unistd_.h.
 	* modules/unistd (Files, Makefile.am): Use unistd.in.h instead of
 	unistd_.h.
+	* lib/wchar.in.h: Renamed from lib/wchar_.h.
+	* modules/wchar (Files, Makefile.am): Use wchar.in.h instead of
+	wchar_.h.
 
 2007-09-30  Bruno Haible  <bruno@clisp.org>
 
