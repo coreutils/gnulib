@@ -1,3 +1,9 @@
+2007-10-02  Jim Meyering  <jim@meyering.net>
+
+	Perform one more "_.h" -> ".in.h" substitution.
+	* modules/unistd (Makefile.am) [unistd.h]: Use unistd.h.in
+	instead of unistd_.h here, too.
+
 2007-10-01  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_emit_initmacro_done): Special case for alloca.c.
