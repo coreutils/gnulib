@@ -1,6 +1,8 @@
 2007-10-03  Bruno Haible  <bruno@clisp.org>
+            Jim Meyering  <jim@meyering.net>
+            Eric Blake  <ebb9@byu.net>
 
-	* doc/relocatable.texi: Use @samp instead of @program.
+	* doc/relocatable.texi: Use @command instead of @program.
 
 2007-10-02  Jim Meyering  <jim@meyering.net>
 
