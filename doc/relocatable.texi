@@ -21,7 +21,7 @@ possible to do the same thing with a hard link @emph{only} if the hard
 link file is in the same directory as the real program.
 
 To configure a program to be relocatable, add
-@option{--enable-relocatable} to the @program{configure} command line.
+@option{--enable-relocatable} to the @samp{configure} command line.
 
 On some OSes the executables remember the location of shared libraries
 and prefer them over any other search path.  Therefore, such an
@@ -31,7 +31,7 @@ directory.  Thus, for reliability, it is best to also give a
 @option{--prefix} option pointing to a directory that does not exist
 now and which never will be created, e.g.@:
 @option{--prefix=/nonexistent}.  You may use
-@code{DESTDIR=@var{dest-dir}} on the @program{make} command line to
+@code{DESTDIR=@var{dest-dir}} on the @samp{make} command line to
 avoid installing into that directory.
 
 We do not recommend using a prefix writable by unprivileged users
