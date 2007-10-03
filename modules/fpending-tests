@@ -1,0 +1,10 @@
+Files:
+tests/test-fpending.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fpending
+check_PROGRAMS += test-fpending

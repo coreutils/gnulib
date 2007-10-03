@@ -1,5 +1,11 @@
 2007-10-03  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-fpending.c: New file, mostly copied
+	from coreutils/lib/t-fpending.c.
+	* modules/fpending-tests: New file.
+
+2007-10-03  Bruno Haible  <bruno@clisp.org>
+
 	Port the stdio extensions to QNX (untested).
 	* lib/fseterr.c (fseterr): Add support for QNX.
 	* lib/fbufmode.c (fbufmode): Likewise.
