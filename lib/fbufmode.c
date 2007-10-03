@@ -75,6 +75,12 @@ fbufmode (FILE *fp)
   if (fp->__modeflags & __FLAG_NBF)
     return _IONBF;
   return _IOFBF;
+#elif defined __QNX__               /* QNX */
+  if (fp->_Mode & _MLBF)
+    return _IOLBF;
+  if (fp->_Mode & _MNBF)
+    return _IONBF;
+  return _IOFBF;
 #else
  #error "Please port gnulib fbufmode.c to your platform! Look at the setvbuf implementation."
 #endif

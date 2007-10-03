@@ -34,6 +34,9 @@ fwriting (FILE *fp)
   return (fp->_flag & _IOWRT) != 0;
 #elif defined __UCLIBC__            /* uClibc */
   return (fp->__modeflags & __FLAG_WRITING) != 0;
+#elif defined __QNX__               /* QNX */
+  return ((fp->_Mode & _MOPENR) == 0
+	  || (fp->_Mode & _MWRITE) != 0);
 #else
  #error "Please port gnulib fwriting.c to your platform!"
 #endif

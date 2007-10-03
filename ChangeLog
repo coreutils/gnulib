@@ -1,4 +1,17 @@
 2007-10-03  Bruno Haible  <bruno@clisp.org>
+
+	Port the stdio extensions to QNX (untested).
+	* lib/fseterr.c (fseterr): Add support for QNX.
+	* lib/fbufmode.c (fbufmode): Likewise.
+	* lib/freadable.c (freadable): Likewise.
+	* lib/fwritable.c (fwritable): Likewise.
+	* lib/freading.c (freading): Likewise.
+	* lib/fwriting.c (fwriting): Likewise.
+	* lib/freadahead.c (freadahed): Likewise.
+	* lib/fpurge.c (fpurge): Likewise.
+	* lib/fseeko.c (rpl_fseeko): Likewise.
+
+2007-10-03  Bruno Haible  <bruno@clisp.org>
             Jim Meyering  <jim@meyering.net>
             Eric Blake  <ebb9@byu.net>
 

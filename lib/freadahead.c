@@ -56,6 +56,11 @@ freadahead (FILE *fp)
 # else
   return 0;
 # endif
+#elif defined __QNX__               /* QNX */
+  if ((fp->_Mode & _MWRITE) != 0)
+    return 0;
+  /* fp->_Buf <= fp->_Next <= fp->_Rend */
+  return fp->_Rend - fp->_Next;
 #else
  #error "Please port gnulib freadahead.c to your platform! Look at the definition of fflush, fread on your system, then report this to bug-gnulib."
 #endif

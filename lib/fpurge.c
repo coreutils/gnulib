@@ -104,6 +104,15 @@ fpurge (FILE *fp)
     fp->__bufpos = fp->__bufread;
 #  endif
   return 0;
+# elif defined __QNX__              /* QNX */
+  fp->_Rback = fp->_Back + sizeof (fp->_Back);
+  fp->_Rsave = NULL;
+  if (fp->_Mode & _MWRITE)
+    /* fp->_Buf <= fp->_Next <= fp->_Wend */
+    fp->_Next = fp->_Buf;
+  else
+    /* fp->_Buf <= fp->_Next <= fp->_Rend */
+    fp->_Rend = fp->_Next;
 # else
  #error "Please port gnulib fpurge.c to your platform! Look at the definitions of fflush, setvbuf and ungetc on your system, then report this to bug-gnulib."
 # endif
