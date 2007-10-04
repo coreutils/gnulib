@@ -15,4 +15,3 @@ Makefile.am:
 TESTS += test-c-strcase.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' LOCALE_FR='@LOCALE_FR@' LOCALE_TR_UTF8='@LOCALE_TR_UTF8@'
 check_PROGRAMS += test-c-strcasecmp test-c-strncasecmp
-EXTRA_DIST += test-c-strcase.sh

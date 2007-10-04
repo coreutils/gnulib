@@ -10,5 +10,4 @@ gl_LONG_DOUBLE_EXPONENT_LOCATION
 Makefile.am:
 TESTS += test-isnanl-nolibm
 check_PROGRAMS += test-isnanl-nolibm
-EXTRA_DIST += test-isnanl.h
 

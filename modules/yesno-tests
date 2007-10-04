@@ -11,5 +11,4 @@ Makefile.am:
 TESTS += test-yesno.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-yesno
-EXTRA_DIST += test-yesno.sh
 test_yesno_LDADD = $(LDADD) @LIBINTL@

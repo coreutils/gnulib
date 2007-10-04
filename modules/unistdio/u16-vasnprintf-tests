@@ -28,4 +28,3 @@ test_u16_vasnprintf2_SOURCES = unistdio/test-u16-vasnprintf2.c
 test_u16_vasnprintf2_LDADD = $(LDADD) @LIBICONV@
 test_u16_vasnprintf3_SOURCES = unistdio/test-u16-vasnprintf3.c
 test_u16_vasnprintf3_LDADD = $(LDADD) @LIBICONV@
-EXTRA_DIST += unistdio/test-u16-vasnprintf2.sh unistdio/test-u16-vasnprintf3.sh

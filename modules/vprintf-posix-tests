@@ -13,4 +13,3 @@ Makefile.am:
 TESTS += test-vprintf-posix.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-vprintf-posix
-EXTRA_DIST += test-vprintf-posix.sh test-printf-posix.h test-printf-posix.output

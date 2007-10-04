@@ -13,5 +13,4 @@ AC_DEFINE([CHECK_VSNPRINTF_POSIX], 1,
 Makefile.am:
 TESTS += test-vsnprintf-posix test-vsnprintf
 check_PROGRAMS += test-vsnprintf-posix test-vsnprintf
-EXTRA_DIST += test-snprintf-posix.h
 

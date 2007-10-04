@@ -10,4 +10,3 @@ Makefile.am:
 TESTS += test-ftello.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-ftello
-EXTRA_DIST += test-ftello.sh

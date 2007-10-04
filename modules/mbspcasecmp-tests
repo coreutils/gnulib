@@ -12,6 +12,5 @@ gt_LOCALE_TR_UTF8
 Makefile.am:
 TESTS += test-mbspcasecmp.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' LOCALE_TR_UTF8='@LOCALE_TR_UTF8@'
-EXTRA_DIST += test-mbspcasecmp.sh
 check_PROGRAMS += test-mbspcasecmp
 

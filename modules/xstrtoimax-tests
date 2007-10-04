@@ -10,5 +10,4 @@ Makefile.am:
 TESTS += test-xstrtoimax.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-xstrtoimax
-EXTRA_DIST += test-xstrtoimax.sh
 test_xstrtoimax_LDADD = $(LDADD) @LIBINTL@

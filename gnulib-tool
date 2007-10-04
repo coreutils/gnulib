@@ -1247,6 +1247,18 @@ func_get_automake_snippet ()
   case "$1" in
     *-tests)
       # *-tests module live in tests/, not lib/.
+      # Synthesize an EXTRA_DIST augmentation.
+      all_files=`func_get_filelist $1`
+      tests_files=`for f in $all_files; do \
+                     case $f in \
+                       tests/*) echo $f ;; \
+                     esac; \
+                   done | sed -e 's,^tests/,,'`
+      extra_files="$tests_files"
+      if test -n "$extra_files"; then
+        echo "EXTRA_DIST +=" $extra_files
+        echo
+      fi
       ;;
     *)
       # Synthesize an EXTRA_DIST augmentation.

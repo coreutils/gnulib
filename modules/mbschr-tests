@@ -12,6 +12,5 @@ gt_LOCALE_ZH_CN
 Makefile.am:
 TESTS += test-mbschr.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' LOCALE_ZH_CN='@LOCALE_ZH_CN@'
-EXTRA_DIST += test-mbschr.sh
 check_PROGRAMS += test-mbschr
 

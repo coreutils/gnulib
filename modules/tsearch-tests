@@ -21,7 +21,6 @@ TESTS += test-tsearch.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-tsearch
 test_tsearch_LDADD = $(LDADD) @TEST_TSEARCH_LIBM@
-EXTRA_DIST += test-tsearch.sh
 
 License:
 LGPL

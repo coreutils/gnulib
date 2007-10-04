@@ -1,5 +1,54 @@
 2007-10-03  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_get_automake_snippet): Synthesize an EXTRA_DIST
+	augmentation also for tests modules.
+	* modules/argp-tests (Makefile.am): Remove EXTRA_DIST augmentation.
+	* modules/atexit-tests (Makefile.am): Likewise.
+	* modules/binary-io-tests (Makefile.am): Likewise.
+	* modules/c-strcase-tests (Makefile.am): Likewise.
+	* modules/canonicalize-lgpl-tests (Makefile.am): Likewise.
+	* modules/canonicalize-tests (Makefile.am): Likewise.
+	* modules/closein-tests (Makefile.am): Likewise.
+	* modules/fprintf-posix-tests (Makefile.am): Likewise.
+	* modules/freadahead-tests (Makefile.am): Likewise.
+	* modules/fseek-tests (Makefile.am): Likewise.
+	* modules/fseeko-tests (Makefile.am): Likewise.
+	* modules/ftell-tests (Makefile.am): Likewise.
+	* modules/ftello-tests (Makefile.am): Likewise.
+	* modules/isnanl-nolibm-tests (Makefile.am): Likewise.
+	* modules/isnanl-tests (Makefile.am): Likewise.
+	* modules/lseek-tests (Makefile.am): Likewise.
+	* modules/mbscasecmp-tests (Makefile.am): Likewise.
+	* modules/mbscasestr-tests (Makefile.am): Likewise.
+	* modules/mbschr-tests (Makefile.am): Likewise.
+	* modules/mbscspn-tests (Makefile.am): Likewise.
+	* modules/mbsncasecmp-tests (Makefile.am): Likewise.
+	* modules/mbspbrk-tests (Makefile.am): Likewise.
+	* modules/mbspcasecmp-tests (Makefile.am): Likewise.
+	* modules/mbsrchr-tests (Makefile.am): Likewise.
+	* modules/mbsspn-tests (Makefile.am): Likewise.
+	* modules/mbsstr-tests (Makefile.am): Likewise.
+	* modules/printf-posix-tests (Makefile.am): Likewise.
+	* modules/snprintf-posix-tests (Makefile.am): Likewise.
+	* modules/sprintf-posix-tests (Makefile.am): Likewise.
+	* modules/tsearch-tests (Makefile.am): Likewise.
+	* modules/uniname/uniname-tests (Makefile.am): Likewise.
+	* modules/unistdio/u16-vasnprintf-tests (Makefile.am): Likewise.
+	* modules/unistdio/u32-vasnprintf-tests (Makefile.am): Likewise.
+	* modules/unistdio/u8-vasnprintf-tests (Makefile.am): Likewise.
+	* modules/unistdio/ulc-vasnprintf-tests (Makefile.am): Likewise.
+	* modules/vasnprintf-posix-tests (Makefile.am): Likewise.
+	* modules/vfprintf-posix-tests (Makefile.am): Likewise.
+	* modules/vprintf-posix-tests (Makefile.am): Likewise.
+	* modules/vsnprintf-posix-tests (Makefile.am): Likewise.
+	* modules/vsprintf-posix-tests (Makefile.am): Likewise.
+	* modules/xstrtoimax-tests (Makefile.am): Likewise.
+	* modules/xstrtol-tests (Makefile.am): Likewise.
+	* modules/xstrtoumax-tests (Makefile.am): Likewise.
+	* modules/yesno-tests (Makefile.am): Likewise.
+
+2007-10-03  Bruno Haible  <bruno@clisp.org>
+
 	* modules/trunc-tests: New file.
 	* tests/test-trunc.c: New file.
 

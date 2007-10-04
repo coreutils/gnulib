@@ -10,5 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-sprintf-posix
 check_PROGRAMS += test-sprintf-posix
-EXTRA_DIST += test-sprintf-posix.h
 
