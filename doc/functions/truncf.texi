@@ -4,15 +4,15 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/truncf.html}
 
-Gnulib module: ---
+Gnulib module: truncf
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, Solaris 9, Interix 3.5.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

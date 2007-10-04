@@ -65,6 +65,7 @@ extern long double acosl (long double x);
      acosl (x))
 #endif
 
+
 #if @GNULIB_MATHL@ || !@HAVE_DECL_ASINL@
 extern long double asinl (long double x);
 #endif
@@ -75,6 +76,7 @@ extern long double asinl (long double x);
                       "use gnulib module mathl for portability"), \
      asinl (x))
 #endif
+
 
 #if @GNULIB_MATHL@ || !@HAVE_DECL_ATANL@
 extern long double atanl (long double x);
@@ -87,6 +89,7 @@ extern long double atanl (long double x);
      atanl (x))
 #endif
 
+
 #if @GNULIB_MATHL@ || !@HAVE_DECL_CEILL@
 extern long double ceill (long double x);
 #endif
@@ -97,6 +100,7 @@ extern long double ceill (long double x);
                       "use gnulib module mathl for portability"), \
      ceill (x))
 #endif
+
 
 #if @GNULIB_MATHL@ || !@HAVE_DECL_COSL@
 extern long double cosl (long double x);
@@ -109,6 +113,7 @@ extern long double cosl (long double x);
      cosl (x))
 #endif
 
+
 #if @GNULIB_MATHL@ || !@HAVE_DECL_EXPL@
 extern long double expl (long double x);
 #endif
@@ -120,6 +125,7 @@ extern long double expl (long double x);
      expl (x))
 #endif
 
+
 #if @GNULIB_MATHL@ || !@HAVE_DECL_FLOORL@
 extern long double floorl (long double x);
 #endif
@@ -130,6 +136,7 @@ extern long double floorl (long double x);
                       "use gnulib module mathl for portability"), \
      floorl (x))
 #endif
+
 
 /* Write x as
      x = mantissa * 2^exp
@@ -152,6 +159,7 @@ extern long double frexpl (long double x, int *exp);
      frexpl (x, e))
 #endif
 
+
 /* Return x * 2^exp.  */
 #if @GNULIB_LDEXPL@ && @REPLACE_LDEXPL@
 # define ldexpl rpl_ldexpl
@@ -167,6 +175,7 @@ extern long double ldexpl (long double x, int exp);
      ldexpl (x, e))
 #endif
 
+
 #if @GNULIB_MATHL@ || !@HAVE_DECL_LOGL@
 extern long double logl (long double x);
 #endif
@@ -177,6 +186,7 @@ extern long double logl (long double x);
                       "use gnulib module mathl for portability"), \
      logl (x))
 #endif
+
 
 #if @GNULIB_MATHL@ || !@HAVE_DECL_SINL@
 extern long double sinl (long double x);
@@ -189,6 +199,7 @@ extern long double sinl (long double x);
      sinl (x))
 #endif
 
+
 #if @GNULIB_MATHL@ || !@HAVE_DECL_SQRTL@
 extern long double sqrtl (long double x);
 #endif
@@ -200,6 +211,7 @@ extern long double sqrtl (long double x);
      sqrtl (x))
 #endif
 
+
 #if @GNULIB_MATHL@ || !@HAVE_DECL_TANL@
 extern long double tanl (long double x);
 #endif
@@ -209,6 +221,20 @@ extern long double tanl (long double x);
     (GL_LINK_WARNING ("tanl is unportable - " \
                       "use gnulib module mathl for portability"), \
      tanl (x))
+#endif
+
+
+#if @GNULIB_TRUNCF@
+# if !@HAVE_DECL_TRUNCF@
+#  define truncf rpl_truncf
+extern float truncf (float x);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef truncf
+# define truncf(x) \
+    (GL_LINK_WARNING ("truncf is unportable - " \
+                      "use gnulib module truncf for portability"), \
+     truncf (x))
 #endif
 
 #if @GNULIB_TRUNC@

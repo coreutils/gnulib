@@ -1,3 +1,16 @@
+2007-10-04  Bruno Haible  <bruno@clisp.org>
+
+	* modules/truncf: New file.
+	* lib/trunc.c: Make paramerizable through USE_* macros.
+	* lib/truncf.c: New file.
+	* m4/truncf.m4: New file.
+	* lib/math.in.h (truncf): New declaration.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_TRUNCF and
+	HAVE_DECL_TRUNCF.
+	* modules/math (Makefile.am): Substitute also GNULIB_TRUNCF and
+	HAVE_DECL_TRUNCF.
+	* doc/functions/truncf.texi: Mention the 'truncf' module.
+
 2007-10-03  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_get_automake_snippet): Synthesize an EXTRA_DIST

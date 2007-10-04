@@ -24,18 +24,36 @@
 
 #include <float.h>
 
-/* 2^(DBL_MANT_DIG-1).  */
-static const double TWO_MANT_DIG =
-  /* Assume DBL_MANT_DIG <= 4 * 31.
-     Use the identity
-       n = floor(n/4) + floor((n+1)/4) + floor((n+2)/4) + floor((n+3)/4).  */
-  (double) (1U << ((DBL_MANT_DIG - 1) / 4))
-  * (double) (1U << ((DBL_MANT_DIG - 1 + 1) / 4))
-  * (double) (1U << ((DBL_MANT_DIG - 1 + 2) / 4))
-  * (double) (1U << ((DBL_MANT_DIG - 1 + 3) / 4));
+#ifdef USE_LONG_DOUBLE
+# define FUNC truncl
+# define DOUBLE long double
+# define MANT_DIG LDBL_MANT_DIG
+# define L_(literal) literal##L
+#elif ! defined USE_FLOAT
+# define FUNC trunc
+# define DOUBLE double
+# define MANT_DIG DBL_MANT_DIG
+# define L_(literal) literal
+#else /* defined USE_FLOAT */
+# define FUNC truncf
+# define DOUBLE float
+# define MANT_DIG FLT_MANT_DIG
+# define L_(literal) literal##f
+#endif
 
-double
-trunc (double x)
+/* 2^(MANT_DIG-1).  */
+static const double TWO_MANT_DIG =
+  /* Assume MANT_DIG <= 5 * 31.
+     Use the identity
+       n = floor(n/5) + floor((n+1)/5) + ... + floor((n+4)/5).  */
+  (DOUBLE) (1U << ((MANT_DIG - 1) / 5))
+  * (DOUBLE) (1U << ((MANT_DIG - 1 + 1) / 5))
+  * (DOUBLE) (1U << ((MANT_DIG - 1 + 2) / 5))
+  * (DOUBLE) (1U << ((MANT_DIG - 1 + 3) / 5))
+  * (DOUBLE) (1U << ((MANT_DIG - 1 + 4) / 5));
+
+DOUBLE
+FUNC (DOUBLE x)
 {
   /* The use of 'volatile' guarantees that excess precision bits are dropped
      at each addition step and before the following comparison at the caller's
@@ -43,26 +61,26 @@ trunc (double x)
      compliant by default, to avoid that the results become platform and compiler
      option dependent.  'volatile' is a portable alternative to gcc's
      -ffloat-store option.  */
-  volatile double y = x;
-  volatile double z = y;
+  volatile DOUBLE y = x;
+  volatile DOUBLE z = y;
 
-  if (z > 0)
+  if (z > L_(0.0))
     {
       /* Round to the next integer (nearest or up or down, doesn't matter).  */
       z += TWO_MANT_DIG;
       z -= TWO_MANT_DIG;
       /* Enforce rounding down.  */
       if (z > y)
-	z -= 1.0;
+	z -= L_(1.0);
     }
-  else if (z < 0)
+  else if (z < L_(0.0))
     {
       /* Round to the next integer (nearest or up or down, doesn't matter).  */
       z -= TWO_MANT_DIG;
       z += TWO_MANT_DIG;
       /* Enforce rounding up.  */
       if (z < y)
-	z += 1.0;
+	z += L_(1.0);
     }
   return z;
 }

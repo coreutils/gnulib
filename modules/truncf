@@ -1,0 +1,31 @@
+Description:
+truncf() function: round towards zero.
+
+Files:
+lib/truncf.c
+lib/trunc.c
+m4/truncf.m4
+
+Depends-on:
+math
+extensions
+float
+
+configure.ac:
+gl_FUNC_TRUNCF
+gl_MATH_MODULE_INDICATOR([truncf])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(TRUNCF_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
