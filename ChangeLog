@@ -1,5 +1,8 @@
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/truncf-tests: New file.
+	* tests/test-truncf.c: New file.
+
 	* modules/truncf: New file.
 	* lib/trunc.c: Make paramerizable through USE_* macros.
 	* lib/truncf.c: New file.
