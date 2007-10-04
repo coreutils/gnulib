@@ -1,5 +1,17 @@
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/truncl: New file.
+	* lib/truncl.c: New file.
+	* m4/truncl.m4: New file.
+	* lib/math.in.h (truncl): New declaration.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_TRUNCL and
+	HAVE_DECL_TRUNCL.
+	* modules/math (Makefile.am): Substitute also GNULIB_TRUNCL and
+	HAVE_DECL_TRUNCL.
+	* doc/functions/truncl.texi: Mention the 'truncl' module.
+
+2007-10-04  Bruno Haible  <bruno@clisp.org>
+
 	* modules/truncf-tests: New file.
 	* tests/test-truncf.c: New file.
 

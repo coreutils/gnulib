@@ -250,6 +250,19 @@ extern double trunc (double x);
      trunc (x))
 #endif
 
+#if @GNULIB_TRUNCL@
+# if !@HAVE_DECL_TRUNCL@
+#  define truncl rpl_truncl
+extern long double truncl (long double x);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef truncl
+# define truncl(x) \
+    (GL_LINK_WARNING ("truncl is unportable - " \
+                      "use gnulib module truncl for portability"), \
+     truncl (x))
+#endif
+
 
 #if @GNULIB_SIGNBIT@
 # if @REPLACE_SIGNBIT@
