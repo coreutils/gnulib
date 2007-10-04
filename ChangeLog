@@ -1,5 +1,8 @@
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/truncl-tests: New file.
+	* tests/test-truncl.c: New file.
+
 	* modules/truncl: New file.
 	* lib/truncl.c: New file.
 	* m4/truncl.m4: New file.

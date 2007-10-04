@@ -1,0 +1,16 @@
+Files:
+tests/test-truncl.c
+
+Depends-on:
+fpucw
+isnanl-nolibm
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-truncl
+check_PROGRAMS += test-truncl
+test_truncl_LDADD = $(LDADD) @TRUNCL_LIBM@
+
+License:
+LGPL
