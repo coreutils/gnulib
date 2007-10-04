@@ -1,0 +1,14 @@
+Files:
+tests/test-trunc.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-trunc
+check_PROGRAMS += test-trunc
+test_trunc_LDADD = $(LDADD) @TRUNC_LIBM@
+
+License:
+LGPL

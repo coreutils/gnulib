@@ -1,0 +1,83 @@
+/* Test of rounding towards zero.
+   Copyright (C) 2007 Free Software Foundation, Inc.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+/* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
+
+#include <config.h>
+
+#include <math.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
+
+/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
+#ifdef __DECC
+static double
+NaN ()
+{
+  static double zero = 0.0;
+  return zero / zero;
+}
+#else
+# define NaN() (0.0 / 0.0)
+#endif
+
+int
+main ()
+{
+  /* Zero.  */
+  ASSERT (trunc (0.0) == 0.0);
+  ASSERT (trunc (-0.0) == 0.0);
+  /* Positive numbers.  */
+  ASSERT (trunc (0.3) == 0.0);
+  ASSERT (trunc (0.7) == 0.0);
+  ASSERT (trunc (1.0) == 1.0);
+  ASSERT (trunc (1.5) == 1.0);
+  ASSERT (trunc (1.999) == 1.0);
+  ASSERT (trunc (2.0) == 2.0);
+  ASSERT (trunc (65535.999) == 65535.0);
+  ASSERT (trunc (65536.0) == 65536.0);
+  ASSERT (trunc (2.341e31) == 2.341e31);
+  /* Negative numbers.  */
+  ASSERT (trunc (-0.3) == 0.0);
+  ASSERT (trunc (-0.7) == 0.0);
+  ASSERT (trunc (-1.0) == -1.0);
+  ASSERT (trunc (-1.5) == -1.0);
+  ASSERT (trunc (-1.999) == -1.0);
+  ASSERT (trunc (-2.0) == -2.0);
+  ASSERT (trunc (-65535.999) == -65535.0);
+  ASSERT (trunc (-65536.0) == -65536.0);
+  ASSERT (trunc (-2.341e31) == -2.341e31);
+  /* Infinite numbers.  */
+  ASSERT (trunc (1.0 / 0.0) == 1.0 / 0.0);
+  ASSERT (trunc (-1.0 / 0.0) == -1.0 / 0.0);
+  /* NaNs.  */
+  ASSERT (isnan (trunc (NaN ())));
+
+  return 0;
+}

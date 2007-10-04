@@ -1,5 +1,20 @@
 2007-10-03  Bruno Haible  <bruno@clisp.org>
 
+	* modules/trunc-tests: New file.
+	* tests/test-trunc.c: New file.
+
+	* modules/trunc: New file.
+	* lib/trunc.c: New file.
+	* m4/trunc.m4: New file.
+	* lib/math.in.h (trunc): New declaration.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_TRUNC and
+	HAVE_DECL_TRUNC.
+	* modules/math (Makefile.am): Substitute also GNULIB_TRUNC and
+	HAVE_DECL_TRUNC.
+	* doc/functions/trunc.texi: Mention the 'trunc' module.
+
+2007-10-03  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-fpending.c: New file, mostly copied
 	from coreutils/lib/t-fpending.c.
 	* modules/fpending-tests: New file.
