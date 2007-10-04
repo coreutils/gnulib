@@ -211,6 +211,19 @@ extern long double tanl (long double x);
      tanl (x))
 #endif
 
+#if @GNULIB_TRUNC@
+# if !@HAVE_DECL_TRUNC@
+#  define trunc rpl_trunc
+extern double trunc (double x);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef trunc
+# define trunc(x) \
+    (GL_LINK_WARNING ("trunc is unportable - " \
+                      "use gnulib module trunc for portability"), \
+     trunc (x))
+#endif
+
 
 #if @GNULIB_SIGNBIT@
 # if @REPLACE_SIGNBIT@

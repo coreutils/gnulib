@@ -1,4 +1,4 @@
-# math_h.m4 serial 5
+# math_h.m4 serial 6
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,6 +24,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_LDEXPL=0;  AC_SUBST([GNULIB_LDEXPL])
   GNULIB_MATHL=0;   AC_SUBST([GNULIB_MATHL])
   GNULIB_SIGNBIT=0; AC_SUBST([GNULIB_SIGNBIT])
+  GNULIB_TRUNC=0;   AC_SUBST([GNULIB_TRUNC])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_ACOSL=1;  AC_SUBST([HAVE_DECL_ACOSL])
   HAVE_DECL_ASINL=1;  AC_SUBST([HAVE_DECL_ASINL])
@@ -38,6 +39,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_DECL_SINL=1;   AC_SUBST([HAVE_DECL_SINL])
   HAVE_DECL_SQRTL=1;  AC_SUBST([HAVE_DECL_SQRTL])
   HAVE_DECL_TANL=1;   AC_SUBST([HAVE_DECL_TANL])
+  HAVE_DECL_TRUNC=1;  AC_SUBST([HAVE_DECL_TRUNC])
   REPLACE_FREXP=0;    AC_SUBST([REPLACE_FREXP])
   REPLACE_FREXPL=0;   AC_SUBST([REPLACE_FREXPL])
   REPLACE_LDEXPL=0;   AC_SUBST([REPLACE_LDEXPL])
