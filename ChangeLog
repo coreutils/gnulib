@@ -1,3 +1,16 @@
+2007-10-04  Bruno Haible  <bruno@clisp.org>
+
+	* modules/floorf: New file.
+	* lib/floor.c: New file.
+	* lib/floorf.c: New file.
+	* m4/floorf.m4: New file.
+	* lib/math.in.h (floorf): New declaration.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_FLOORF and
+	HAVE_DECL_FLOORF.
+	* modules/math (Makefile.am): Substitute also GNULIB_FLOORF and
+	HAVE_DECL_FLOORF.
+	* doc/functions/floorf.texi: Mention the 'floorf' module.
+
 2007-10-04  Benoit Sigoure  <tsuna@lrde.epita.fr>
             Bruno Haible  <bruno@clisp.org>
 

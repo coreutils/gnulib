@@ -126,6 +126,19 @@ extern long double expl (long double x);
 #endif
 
 
+#if @GNULIB_FLOORF@
+# if !@HAVE_DECL_FLOORF@
+#  define floorf rpl_floorf
+extern float floorf (float x);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef floorf
+# define floorf(x) \
+    (GL_LINK_WARNING ("floorf is unportable - " \
+                      "use gnulib module floorf for portability"), \
+     floorf (x))
+#endif
+
 #if @GNULIB_MATHL@ || !@HAVE_DECL_FLOORL@
 extern long double floorl (long double x);
 #endif
