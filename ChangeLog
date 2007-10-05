@@ -1,5 +1,8 @@
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/ceilf-tests: New file.
+	* tests/test-ceilf.c: New file.
+
 	* modules/ceilf: New file.
 	* lib/ceil.c: New file.
 	* lib/ceilf.c: New file.

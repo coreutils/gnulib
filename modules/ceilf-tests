@@ -1,0 +1,14 @@
+Files:
+tests/test-ceilf.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-ceilf
+check_PROGRAMS += test-ceilf
+test_ceilf_LDADD = $(LDADD) @CEILF_LIBM@
+
+License:
+LGPL
