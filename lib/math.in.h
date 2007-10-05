@@ -90,6 +90,19 @@ extern long double atanl (long double x);
 #endif
 
 
+#if @GNULIB_CEILF@
+# if !@HAVE_DECL_CEILF@
+#  define ceilf rpl_ceilf
+extern float ceilf (float x);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef ceilf
+# define ceilf(x) \
+    (GL_LINK_WARNING ("ceilf is unportable - " \
+                      "use gnulib module ceilf for portability"), \
+     ceilf (x))
+#endif
+
 #if @GNULIB_MATHL@ || !@HAVE_DECL_CEILL@
 extern long double ceill (long double x);
 #endif
