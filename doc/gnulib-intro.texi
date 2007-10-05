@@ -276,7 +276,9 @@ information in the corresponding module description.
 Gnulib modules are continually adapted, to match new practices, to be
 consistent with newly added modules, or simply as a response to build
 failure reports.  We don't make releases, but instead recommend to use the
-newest version of Gnulib from the CVS, except in periods of major changes.
+newest version of Gnulib from the Git repository, except in periods of major
+changes.  The source tree can also be fetched from a read-only CVS that
+mirrors the Git repository.
 
 @node Openness
 @section Openness

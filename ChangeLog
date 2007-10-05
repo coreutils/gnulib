@@ -1,3 +1,13 @@
+2007-10-04  Benoit Sigoure  <tsuna@lrde.epita.fr>
+            Bruno Haible  <bruno@clisp.org>
+
+	Advertise for the Git server instead of the CVS server.
+	* doc/gnulib-intro.texi (Steady Development): Mention the Git
+	repository instead of the CVS one.
+	* doc/gnulib-tool.texi (VCS Issues): Renamed from "CVS Issues". Talk
+	about all VCS systems generically.
+	* doc/gnulib.texi (Introduction): Capitalize `Git'.
+
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib.texi (Function Substitutes): Explain what an absent module

@@ -71,7 +71,7 @@ Resources:
 @itemize
 @item Gnulib is hosted at Savannah:
       @url{http://savannah.gnu.org/projects/gnulib}.  Get the sources
-      through git or CVS from there.
+      through Git or CVS from there.
 @item The Gnulib home page:
       @url{http://www.gnu.org/software/gnulib/}.
 @end itemize
