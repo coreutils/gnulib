@@ -1,0 +1,31 @@
+Description:
+ceill() function: round towards positive infinity.
+
+Files:
+lib/ceill.c
+lib/ceil.c
+m4/ceill.m4
+
+Depends-on:
+math
+extensions
+float
+
+configure.ac:
+gl_FUNC_CEILL
+gl_MATH_MODULE_INDICATOR([ceill])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(CEILL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

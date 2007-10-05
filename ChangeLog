@@ -1,5 +1,17 @@
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/ceill: New file.
+	* lib/ceill.c: Replace entire file.
+	* m4/ceill.m4: New file.
+	* lib/math.in.h (ceill): Replace declaration.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_CEILL.
+	* modules/math (Makefile.am): Substitute also GNULIB_CEILL.
+	* doc/functions/ceill.texi: Mention the 'ceill' module.
+	* modules/mathl (Files): Remove lib/ceill.c.
+	(Depends-on): Add ceill.
+
+2007-10-04  Bruno Haible  <bruno@clisp.org>
+
 	* modules/ceilf-tests: New file.
 	* tests/test-ceilf.c: New file.
 

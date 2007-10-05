@@ -103,14 +103,16 @@ extern float ceilf (float x);
      ceilf (x))
 #endif
 
-#if @GNULIB_MATHL@ || !@HAVE_DECL_CEILL@
+#if @GNULIB_CEILL@
+# if !@HAVE_DECL_CEILL@
+#  define ceill rpl_ceill
 extern long double ceill (long double x);
-#endif
-#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
+# endif
+#elif defined GNULIB_POSIXCHECK
 # undef ceill
 # define ceill(x) \
     (GL_LINK_WARNING ("ceill is unportable - " \
-                      "use gnulib module mathl for portability"), \
+                      "use gnulib module ceill for portability"), \
      ceill (x))
 #endif
 
