@@ -1,5 +1,17 @@
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/floorl: New file.
+	* lib/floorl.c: Replace entire file.
+	* m4/floorl.m4: New file.
+	* lib/math.in.h (floorl): Replace declaration.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_FLOORL.
+	* modules/math (Makefile.am): Substitute also GNULIB_FLOORL.
+	* doc/functions/floorl.texi: Mention the 'floorl' module.
+	* modules/mathl (Files): Remove lib/floorl.c.
+	(Depends-on): Add floorl.
+
+2007-10-04  Bruno Haible  <bruno@clisp.org>
+
 	* modules/floorf-tests: New file.
 	* tests/test-floorf.c: New file.
 

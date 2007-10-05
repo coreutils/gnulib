@@ -1,9 +1,5 @@
-/* Emulation for floorl.
-   Contributed by Paolo Bonzini
-
-   Copyright 2002, 2003, 2007 Free Software Foundation, Inc.
-
-   This file is part of gnulib.
+/* Round towards negative infinity.
+   Copyright (C) 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,28 +15,7 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#include <config.h>
+/* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
-/* Specification.  */
-#include <math.h>
-
-#include <float.h>
-
-/* To compute the integer part of X, sum a big enough
-   integer so that the precision of the floating point
-   number is exactly 1.  */
-
-long double
-floorl(long double x)
-{
-  long double y;
-  if (x < 0.0L)
-    y = -(1.0L / LDBL_EPSILON - x - 1.0 / LDBL_EPSILON);
-  else
-    y = 1.0L / LDBL_EPSILON + x - 1.0 / LDBL_EPSILON;
-
-  if (y > x)
-    return y - 1.0L;
-  else
-    return y;
-}
+#define USE_LONG_DOUBLE
+#include "floor.c"

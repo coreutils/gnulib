@@ -23,6 +23,7 @@ math.h: math.in.h
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
 	      -e 's|@''NEXT_MATH_H''@|$(NEXT_MATH_H)|g' \
 	      -e 's|@''GNULIB_FLOORF''@|$(GNULIB_FLOORF)|g' \
+	      -e 's|@''GNULIB_FLOORL''@|$(GNULIB_FLOORL)|g' \
 	      -e 's|@''GNULIB_FREXP''@|$(GNULIB_FREXP)|g' \
 	      -e 's|@''GNULIB_FREXPL''@|$(GNULIB_FREXPL)|g' \
 	      -e 's|@''GNULIB_LDEXPL''@|$(GNULIB_LDEXPL)|g' \

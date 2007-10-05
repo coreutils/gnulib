@@ -139,14 +139,16 @@ extern float floorf (float x);
      floorf (x))
 #endif
 
-#if @GNULIB_MATHL@ || !@HAVE_DECL_FLOORL@
+#if @GNULIB_FLOORL@
+# if !@HAVE_DECL_FLOORL@
+#  define floorl rpl_floorl
 extern long double floorl (long double x);
-#endif
-#if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
+# endif
+#elif defined GNULIB_POSIXCHECK
 # undef floorl
 # define floorl(x) \
     (GL_LINK_WARNING ("floorl is unportable - " \
-                      "use gnulib module mathl for portability"), \
+                      "use gnulib module floorl for portability"), \
      floorl (x))
 #endif
 

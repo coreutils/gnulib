@@ -8,7 +8,6 @@ lib/atanl.c
 lib/ceill.c
 lib/cosl.c
 lib/expl.c
-lib/floorl.c
 lib/logl.c
 lib/sincosl.c
 lib/sinl.c
@@ -24,6 +23,7 @@ math
 frexpl
 isnanl
 ldexpl
+floorl
 
 configure.ac:
 gl_FUNC_LONG_DOUBLE_MATH
