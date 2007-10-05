@@ -1,5 +1,8 @@
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/ceill-tests: New file.
+	* tests/test-ceill.c: New file.
+
 	* modules/ceill: New file.
 	* lib/ceill.c: Replace entire file.
 	* m4/ceill.m4: New file.
