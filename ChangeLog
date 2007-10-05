@@ -1,5 +1,8 @@
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/floorl-tests: New file.
+	* tests/test-floorl.c: New file.
+
 	* modules/floorl: New file.
 	* lib/floorl.c: Replace entire file.
 	* m4/floorl.m4: New file.

@@ -1,0 +1,16 @@
+Files:
+tests/test-floorl.c
+
+Depends-on:
+fpucw
+isnanl-nolibm
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-floorl
+check_PROGRAMS += test-floorl
+test_floorl_LDADD = $(LDADD) @FLOORL_LIBM@
+
+License:
+LGPL
