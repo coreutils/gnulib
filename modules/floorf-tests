@@ -1,0 +1,14 @@
+Files:
+tests/test-floorf.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-floorf
+check_PROGRAMS += test-floorf
+test_floorf_LDADD = $(LDADD) @FLOORF_LIBM@
+
+License:
+LGPL

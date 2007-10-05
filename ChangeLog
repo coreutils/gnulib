@@ -1,5 +1,8 @@
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/floorf-tests: New file.
+	* tests/test-floorf.c: New file.
+
 	* modules/floorf: New file.
 	* lib/floor.c: New file.
 	* lib/floorf.c: New file.
