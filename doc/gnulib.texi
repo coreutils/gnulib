@@ -635,6 +635,15 @@ ISO C or POSIX are substituted by Gnulib, which portability pitfalls are
 fixed by Gnulib, and which (known) portability problems are not worked around
 by Gnulib.
 
+The notation ``Gnulib module: ---'' means that Gnulib does not provide a
+module providing a substitute for the function.  When the list
+``Portability problems not fixed by Gnulib'' is empty, such a module is
+not needed: No portability problems are known.  Otherwise, it indicates
+that such a module would be useful but is not available: Noone so far
+found this function important enough to contribute a substitute for it.
+If you need this particular function, you may write to
+@code{<bug-gnulib at gnu dot org>}.
+
 @menu
 * FD_CLR::
 * FD_ISSET::

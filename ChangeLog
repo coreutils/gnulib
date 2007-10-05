@@ -1,5 +1,11 @@
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* doc/gnulib.texi (Function Substitutes): Explain what an absent module
+	means.
+	Reported by Benoît Sigoure <tsuna@lrde.epita.fr>.
+
+2007-10-04  Bruno Haible  <bruno@clisp.org>
+
 	* modules/truncl-tests: New file.
 	* tests/test-truncl.c: New file.
 
