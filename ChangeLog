@@ -1,3 +1,9 @@
+2007-10-07  Jim Meyering  <meyering@redhat.com>
+
+	Make xnanosleep's integer overflow test more robust.
+	* lib/xnanosleep.c (xnanosleep): Declare a temporary to be "volatile",
+	so that gcc-4.3.0 doesn't optimize away this test for overflow.
+
 2007-10-07  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib-intro.texi (Copyright): Update the meaning of the license

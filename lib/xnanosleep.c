@@ -72,7 +72,9 @@ xnanosleep (double seconds)
   /* Normalize the interval length.  nanosleep requires this.  */
   if (BILLION <= ts_sleep.tv_nsec)
     {
-      time_t t = ts_sleep.tv_sec + 1;
+      /* Declare "volatile" so that gcc-4.3.0 doesn't optimize away
+	 the overflow test.  */
+      volatile time_t t = ts_sleep.tv_sec + 1;
 
       /* Detect integer overflow.  */
       overflow |= (t < ts_sleep.tv_sec);
