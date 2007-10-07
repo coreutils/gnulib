@@ -19,5 +19,5 @@
    where exp >= LDBL_MIN_EXP - 1,
          mantissa < 2.0,
          if x is not a denormalized number then mantissa >= 1.0.
-   Store exp and return mantissa.  */
-extern long double printf_frexpl (long double x, int *exp);
+   Store exp in *EXPPTR and return mantissa.  */
+extern long double printf_frexpl (long double x, int *expptr);

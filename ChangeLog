@@ -1,3 +1,13 @@
+2007-10-07  Bruno Haible  <bruno@clisp.org>
+
+	Avoid gcc warnings "declaration of 'exp' shadows a global declaration".
+	* lib/math.in.h (frexp, frexpl): Change parameter name to 'expptr'.
+	* lib/frexp.c (FUNC): Likewise.
+	* lib/printf-frexp.h (printf_frexp): Likewise.
+	* lib/printf-frexpl.h (printf_frexpl): Likewise.
+	* lib/printf-frexp.c (FUNC): Likewise.
+	Suggested by Jim Meyering.
+
 2007-10-07  Jim Meyering  <meyering@redhat.com>
 
 	Make xnanosleep's integer overflow test more robust.

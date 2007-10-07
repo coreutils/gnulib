@@ -38,11 +38,11 @@ extern "C" {
      If x finite and nonzero: 0.5 <= |mantissa| < 1.0.
      If x is zero: mantissa = x, exp = 0.
      If x is infinite or NaN: mantissa = x, exp unspecified.
-   Store exp and return mantissa.  */
+   Store exp in *EXPPTR and return mantissa.  */
 #if @GNULIB_FREXP@
 # if @REPLACE_FREXP@
 #  define frexp rpl_frexp
-extern double frexp (double x, int *exp);
+extern double frexp (double x, int *expptr);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef frexp
@@ -173,12 +173,12 @@ extern long double floorl (long double x);
      If x finite and nonzero: 0.5 <= |mantissa| < 1.0.
      If x is zero: mantissa = x, exp = 0.
      If x is infinite or NaN: mantissa = x, exp unspecified.
-   Store exp and return mantissa.  */
+   Store exp in *EXPPTR and return mantissa.  */
 #if @GNULIB_FREXPL@ && @REPLACE_FREXPL@
 # define frexpl rpl_frexpl
 #endif
 #if (@GNULIB_FREXPL@ && @REPLACE_FREXPL@) || !@HAVE_DECL_FREXPL@
-extern long double frexpl (long double x, int *exp);
+extern long double frexpl (long double x, int *expptr);
 #endif
 #if !@GNULIB_FREXPL@ && defined GNULIB_POSIXCHECK
 # undef frexpl

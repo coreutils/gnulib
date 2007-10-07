@@ -53,7 +53,7 @@
 #endif
 
 DOUBLE
-FUNC (DOUBLE x, int *exp)
+FUNC (DOUBLE x, int *expptr)
 {
   int sign;
   int exponent;
@@ -62,7 +62,7 @@ FUNC (DOUBLE x, int *exp)
   /* Test for NaN, infinity, and zero.  */
   if (ISNAN (x) || x + x == x)
     {
-      *exp = 0;
+      *expptr = 0;
       return x;
     }
 
@@ -161,6 +161,6 @@ FUNC (DOUBLE x, int *exp)
 
   END_ROUNDING ();
 
-  *exp = exponent;
+  *expptr = exponent;
   return x;
 }

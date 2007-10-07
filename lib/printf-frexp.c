@@ -62,7 +62,7 @@
 #endif
 
 DOUBLE
-FUNC (DOUBLE x, int *exp)
+FUNC (DOUBLE x, int *expptr)
 {
   int exponent;
   DECL_ROUNDING
@@ -183,6 +183,6 @@ FUNC (DOUBLE x, int *exp)
 
   END_ROUNDING ();
 
-  *exp = exponent;
+  *expptr = exponent;
   return x;
 }
