@@ -117,6 +117,10 @@ open (const char *filename, int flags, ...)
 
       va_end (arg);
     }
+#if defined GNULIB_OPEN && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+  if (strcmp (filename, "/dev/null") == 0)
+    filename = "NUL";
+#endif
   fd = open (filename, flags, mode);
   if (fd >= 0)
     {

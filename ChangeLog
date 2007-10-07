@@ -1,3 +1,18 @@
+2007-10-06  Bruno Haible  <bruno@clisp.org>
+
+	* modules/open: New file.
+	* lib/open.c: New file.
+	* m4/open.m4: New file.
+	* lib/fchdir.c (open): If the gnulib module 'open' is used, do what
+	lib/open.c does.
+	* lib/fcntl.in.h (open): Declare also if replaced by the 'open' module.
+	* m4/fcntl_h.m4 (gl_FCNTL_MODULE_INDICATOR, gl_FCNTL_H_DEFAULTS): New
+	macros.
+	(gl_FCNTL_H): Require gl_FCNTL_H_DEFAULTS.
+	* modules/fcntl (Makefile.am): Also substitute GNULIB_OPEN and
+	REPLACE_OPEN.
+	* doc/functions/open.texi: Mention the 'open' module.
+
 2007-10-04  Bruno Haible  <bruno@clisp.org>
 
 	* modules/ceill-tests: New file.
