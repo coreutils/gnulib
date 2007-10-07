@@ -1,5 +1,8 @@
 2007-10-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/open-tests: New file.
+	* tests/test-open.c: New file.
+
 	* modules/open: New file.
 	* lib/open.c: New file.
 	* m4/open.m4: New file.

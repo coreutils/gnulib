@@ -1,0 +1,11 @@
+Files:
+tests/test-open.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-open
+check_PROGRAMS += test-open
+
