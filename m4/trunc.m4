@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_TRUNC],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
-  dnl Persuade glibc <math.h> to declare truncl().
+  dnl Persuade glibc <math.h> to declare trunc().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   dnl Test whether trunc() is declared.
   AC_CHECK_DECLS([trunc], , , [#include <math.h>])
