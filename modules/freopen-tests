@@ -1,0 +1,11 @@
+Files:
+tests/test-freopen.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-freopen
+check_PROGRAMS += test-freopen
+

@@ -1,5 +1,8 @@
 2007-10-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/freopen-tests: New file.
+	* tests/test-freopen.c: New file.
+
 	* modules/fopen-tests: New file.
 	* tests/test-fopen.c: New file.
 
