@@ -212,6 +212,32 @@ extern int vsprintf (char *str, const char *format, va_list args)
 # endif
 #endif
 
+#if @GNULIB_FOPEN@
+# if @REPLACE_FOPEN@
+#  define fopen rpl_fopen
+extern FILE * fopen (const char *filename, const char *mode);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef fopen
+# define fopen(f,m) \
+   (GL_LINK_WARNING ("fopen on Win32 platforms is not POSIX compatible - " \
+                     "use gnulib module fopen for portability"), \
+    fopen (f, m))
+#endif
+
+#if @GNULIB_FREOPEN@
+# if @REPLACE_FREOPEN@
+#  define freopen rpl_freopen
+extern FILE * freopen (const char *filename, const char *mode, FILE *stream);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef freopen
+# define freopen(f,m,s) \
+   (GL_LINK_WARNING ("freopen on Win32 platforms is not POSIX compatible - " \
+                     "use gnulib module freopen for portability"), \
+    freopen (f, m, s))
+#endif
+
 #if @GNULIB_FSEEKO@
 # if @REPLACE_FSEEKO@
 /* Provide fseek, fseeko functions that are aware of a preceding
