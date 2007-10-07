@@ -212,9 +212,9 @@ proofreading the patch.
 Most modules are under the GPL.  Some, mostly modules which can
 reasonably be used in libraries, are under LGPL.  The source files
 always say "GPL", but the real license specification is in the module
-description file.  If the module description file says "GPL", it currently
-means "GPLv2+" (GPLv2 or newer, at the licensee's choice); if it says "LGPL",
-it currently means "LGPLv2+" (LGPLv2 or newer, at the licensee's choice).
+description file.  If the module description file says "GPL", it means
+"GPLv3+" (GPLv3 or newer, at the licensee's choice); if it says "LGPL",
+it means "LGPLv3+" (LGPLv3 or newer, at the licensee's choice).
 
 More precisely, the license specification in the module description
 file applies to the files in @file{lib/} and @file{build-aux/}.  Different

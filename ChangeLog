@@ -1,5 +1,8 @@
 2007-10-07  Bruno Haible  <bruno@clisp.org>
 
+	* doc/gnulib-intro.texi (Copyright): Update the meaning of the license
+	abbreviations in the modules files.
+
 	Change copyright notice from GPLv2+ to GPLv3+.
 	* README: Change copyright notice.
 	* MODULES.html.sh: Likewise.
