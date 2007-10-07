@@ -1,0 +1,11 @@
+Files:
+tests/test-fopen.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fopen
+check_PROGRAMS += test-fopen
+

@@ -1,5 +1,8 @@
 2007-10-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fopen-tests: New file.
+	* tests/test-fopen.c: New file.
+
 	* modules/fopen: New file.
 	* lib/fopen.c: New file.
 	* m4/fopen.m4: New file.
