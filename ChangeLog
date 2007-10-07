@@ -1,5 +1,11 @@
 2007-10-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/trunc (Dependencies): Add 'extensions'.
+	* m4/trunc.m4 (gl_FUNC_TRUNC): Require gl_USE_SYSTEM_EXTENSIONS.
+	Reported by Ben Pfaff <blp@gnu.org>.
+
+2007-10-06  Bruno Haible  <bruno@clisp.org>
+
 	* modules/freopen-tests: New file.
 	* tests/test-freopen.c: New file.
 

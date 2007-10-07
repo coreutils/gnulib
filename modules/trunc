@@ -7,6 +7,7 @@ m4/trunc.m4
 
 Depends-on:
 math
+extensions
 float
 
 configure.ac:

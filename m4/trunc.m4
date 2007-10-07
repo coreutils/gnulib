@@ -1,4 +1,4 @@
-# trunc.m4 serial 1
+# trunc.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,8 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_TRUNC],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  dnl Persuade glibc <math.h> to declare truncl().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   dnl Test whether trunc() is declared.
   AC_CHECK_DECLS([trunc], , , [#include <math.h>])
   if test "$ac_cv_have_decl_trunc" = yes; then
