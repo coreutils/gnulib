@@ -41,7 +41,7 @@
 #endif
 
 /* 2^(MANT_DIG-1).  */
-static const double TWO_MANT_DIG =
+static const DOUBLE TWO_MANT_DIG =
   /* Assume MANT_DIG <= 5 * 31.
      Use the identity
        n = floor(n/5) + floor((n+1)/5) + ... + floor((n+4)/5).  */

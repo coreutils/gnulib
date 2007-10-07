@@ -1,5 +1,12 @@
 2007-10-07  Bruno Haible  <bruno@clisp.org>
 
+	* trunc.c (TWO_MANT_DIG): Change type to DOUBLE.
+	* floor.c (TWO_MANT_DIG): Likewise.
+	* ceil.c (TWO_MANT_DIG): Likewise.
+	Reported by Ben Pfaff.
+
+2007-10-07  Bruno Haible  <bruno@clisp.org>
+
 	Avoid gcc warnings "declaration of 'exp' shadows a global declaration".
 	* lib/math.in.h (frexp, frexpl): Change parameter name to 'expptr'.
 	* lib/frexp.c (FUNC): Likewise.
