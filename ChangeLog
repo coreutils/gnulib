@@ -1,3 +1,9 @@
+2007-10-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/xnanosleep.c (xnanosleep): Don't assume GCC 4.3.0 behavior
+	when avoiding problems with integer overflow.  Use a portable test
+	instead.
+
 2007-10-08  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/dummy (License): Change to LGPLv2+.
