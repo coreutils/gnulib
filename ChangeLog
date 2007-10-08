@@ -1,3 +1,10 @@
+2007-10-08  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/dummy (License): Change to LGPLv2+.
+	* modules/float (License): Likewise
+	* modules/realloc (License): Likewise
+	* modules/stdlib (License): Likewise
+
 2007-10-07  Bruno Haible  <bruno@clisp.org>
 
 	* trunc.c (TWO_MANT_DIG): Change type to DOUBLE.

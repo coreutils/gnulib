@@ -45,7 +45,7 @@ Include:
 #include <stdlib.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
