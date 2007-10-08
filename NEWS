@@ -6,6 +6,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-10-07  most modules    The license for most modules has changed from
+                            GPLv2+ to GPLv3+, and from LGPLv2+ to LGPLv3+.
+                            A few modules are still under LGPLv2+; see the
+                            module description for the applicable license.
+
 2007-09-01  linebreak       "linebreak.h" no longer declares the functions
                             locale_charset, uc_width, u{8,16,32}_width. Use
                             "uniwidth.h" to get these functions declared.

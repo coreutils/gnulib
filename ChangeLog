@@ -23,6 +23,8 @@
 
 2007-10-07  Bruno Haible  <bruno@clisp.org>
 
+	* NEWS: Mention the license change.
+
 	* doc/gnulib-intro.texi (Copyright): Update the meaning of the license
 	abbreviations in the modules files.
 
