@@ -49,35 +49,48 @@ xnanosleep (double seconds)
 {
   enum { BILLION = 1000000000 };
 
-  bool overflow = false;
-  double ns;
+  /* For overflow checking, use naive comparison if possible, widening
+     to long double if double is not wide enough.  Otherwise, use <=,
+     not <, to avoid problems when TIME_T_MAX is less than SECONDS but
+     compares equal to SECONDS after loss of precision when coercing
+     from time_t to long double.  This mishandles near-maximal values
+     in some rare (perhaps theoretical) cases but that is better than
+     undefined behavior.  */
+  bool overflow = ((time_t) ((double) TIME_T_MAX / 2) == TIME_T_MAX / 2
+		   ? TIME_T_MAX < seconds
+		   : (time_t) ((long double) TIME_T_MAX / 2) == TIME_T_MAX / 2
+		   ? TIME_T_MAX < (long double) seconds
+		   : TIME_T_MAX <= (long double) seconds);
+
   struct timespec ts_sleep;
 
   assert (0 <= seconds);
 
-  /* Separate whole seconds from nanoseconds.
-     Be careful to detect any overflow.  */
-  ts_sleep.tv_sec = seconds;
-  ns = BILLION * (seconds - ts_sleep.tv_sec);
-  overflow |= ! (ts_sleep.tv_sec <= seconds && 0 <= ns && ns <= BILLION);
-  ts_sleep.tv_nsec = ns;
-
-  /* Round up to the next whole number, if necessary, so that we
-     always sleep for at least the requested amount of time.  Assuming
-     the default rounding mode, we don't have to worry about the
-     rounding error when computing 'ns' above, since the error won't
-     cause 'ns' to drop below an integer boundary.  */
-  ts_sleep.tv_nsec += (ts_sleep.tv_nsec < ns);
-
-  /* Normalize the interval length.  nanosleep requires this.  */
-  if (BILLION <= ts_sleep.tv_nsec)
+  /* Separate whole seconds from nanoseconds.  */
+  if (! overflow)
     {
-      if (ts_sleep.tv_sec == TIME_T_MAX)
-	overflow = true;
-      else
+      time_t floor_seconds = seconds;
+      double ns = BILLION * (seconds - floor_seconds);
+      ts_sleep.tv_sec = floor_seconds;
+
+      /* Round up to the next whole number, if necessary, so that we
+	 always sleep for at least the requested amount of time.  Assuming
+	 the default rounding mode, we don't have to worry about the
+	 rounding error when computing 'ns' above, since the error won't
+	 cause 'ns' to drop below an integer boundary.  */
+      ts_sleep.tv_nsec = ns;
+      ts_sleep.tv_nsec += (ts_sleep.tv_nsec < ns);
+
+      /* Normalize the interval length.  nanosleep requires this.  */
+      if (BILLION <= ts_sleep.tv_nsec)
 	{
-	  ts_sleep.tv_sec++;
-	  ts_sleep.tv_nsec -= BILLION;
+	  if (ts_sleep.tv_sec == TIME_T_MAX)
+	    overflow = true;
+	  else
+	    {
+	      ts_sleep.tv_sec++;
+	      ts_sleep.tv_nsec -= BILLION;
+	    }
 	}
     }
 
