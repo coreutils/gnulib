@@ -27,7 +27,7 @@ extern "C" {
 
 
 /* xmalloca(N) is a checking safe variant of alloca(N).  It allocates N bytes
-   of memory allocated on the stack, that must be freed using freesa() before
+   of memory allocated on the stack, that must be freed using freea() before
    the function returns.  Upon failure, it exits with an error message.  */
 #if HAVE_ALLOCA
 # define xmalloca(N) \

@@ -1,3 +1,7 @@
+2007-10-08  Ben Pfaff  <blp@gnu.org>
+
+	* lib/xmalloca.h: Fix typo in comment.
+
 2007-10-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/xnanosleep.c (xnanosleep): Don't assume GCC 4.3.0 behavior
