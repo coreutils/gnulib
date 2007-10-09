@@ -1,3 +1,27 @@
+2007-10-09  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh (func_module): Don't create a hyperlink for
+	function names like 'printf_frexp'.
+	(Misc): Add crc, memxor.
+	(Characteristics of floating types): New section.
+	(Mathematics): Add ceilf, ceill, floorf, floorl, frexpl-nolibm,
+	isnanf-nolibm, signbit, trunc, truncf, truncl.
+	(Enhancements for ISO C 99 functions): New subsection Input/output.
+	(Support for systems lacking POSIX:2001): Add arpa_inet, calloc-posix,
+	fcntl, fopen, freopen, fseek, fseeko, ftell, ftello, iconv_open,
+	locale, malloc-posix, netinet_in, open, realloc-posix, signal, sleep.
+	(Compatibility checks for POSIX:2001 functions): Add clock-time.
+	(Enhancements for POSIX:2001 functions): Add chdir-long.
+	(File system functions): Add areadlink, chdir-safer, read-file.
+	Remove cycle-check.
+	(File system as inode set): New section.
+	(Date and time): Add gethrxtime.
+	(Multithreading): Add openmp.
+	(Internationalization functions): Add localename.
+	(Unicode string functions): Add unistr/u*-mbsnlen.
+	(Support for maintaining and releasing projects): Add git-version-gen.
+	(Lone files): Remove directories.
+
 2007-10-08  Ben Pfaff  <blp@gnu.org>
 
 	* lib/xmalloca.h: Fix typo in comment.

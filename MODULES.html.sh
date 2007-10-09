@@ -1409,7 +1409,7 @@ func_module ()
     element=`gnulib-tool --extract-description $1 \
              | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" \
                    -e 's,^, ,' \
-                   -e 's,\([^a-zA-Z]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A>(),g' \
+                   -e 's,\([^a-zA-Z_]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A>(),g' \
                    -e 's,^ ,,'`
     func_echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=\"80%\">$element"
 
@@ -1813,6 +1813,7 @@ func_all_modules ()
   func_begin_table
   func_module base64
   func_module check-version
+  func_module crc
   func_module diacrit
   func_module diffseq
   func_module getline
@@ -1820,6 +1821,7 @@ func_all_modules ()
   func_module getnline
   func_module getndelim2
   func_module linebuffer
+  func_module memxor
   func_module obstack
   func_module hash-pjw
   func_module hash
@@ -1944,6 +1946,16 @@ func_all_modules ()
   func_module wctype
   func_end_table
 
+  element="Characteristics of floating types <float.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap isoc_sup_float
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module float
+  func_end_table
+
   element="Mathematics <math.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap isoc_sup_math
@@ -1951,14 +1963,24 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module ceilf
+  func_module ceill
+  func_module floorf
+  func_module floorl
   func_module frexp
   func_module frexpl
+  func_module frexpl-nolibm
   func_module isnan-nolibm
+  func_module isnanf-nolibm
   func_module isnanl
   func_module isnanl-nolibm
   func_module ldexpl
   func_module math
   func_module mathl
+  func_module signbit
+  func_module trunc
+  func_module truncf
+  func_module truncl
   func_end_table
 
   element="Enhancements for ISO C 99 functions"
@@ -1966,7 +1988,14 @@ func_all_modules ()
   func_wrap H2
   func_echo "$element"
 
+  element="Input/output <stdio.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap isoc_enh_stdio
+  func_wrap H3
+  func_echo "$element"
+
   func_begin_table
+  func_module printf-safe
   func_end_table
 
   element="Extra functions based on ISO C 99"
@@ -2016,10 +2045,19 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module arpa_inet
+  func_module calloc-posix
   func_module chown
   func_module dup2
   func_module fchdir
+  func_module fcntl
+  func_module fopen
   func_module fprintf-posix
+  func_module freopen
+  func_module fseek
+  func_module fseeko
+  func_module ftell
+  func_module ftello
   func_module ftruncate
   func_module getaddrinfo
   func_module getcwd
@@ -2028,16 +2066,24 @@ func_all_modules ()
   func_module getlogin_r
   func_module getsubopt
   func_module gettimeofday
+  func_module iconv_open
   func_module inet_ntop
   func_module inet_pton
+  func_module locale
   func_module lseek
   func_module lstat
+  func_module malloc-posix
   func_module mkdir
   func_module mkdtemp
   func_module mkstemp
+  func_module netinet_in
+  func_module open
   func_module poll
   func_module printf-posix
   func_module readlink
+  func_module realloc-posix
+  func_module signal
+  func_module sleep
   func_module snprintf-posix
   func_module sprintf-posix
   func_module string
@@ -2077,6 +2123,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module clock-time
   func_module d-ino
   func_module d-type
   func_module link-follow
@@ -2093,6 +2140,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module chdir-long
   func_module dirname
   func_module getopt
   func_module unistd-safer
@@ -2126,13 +2174,14 @@ func_all_modules ()
 
   func_begin_table
   func_module acl
+  func_module areadlink
   func_module areadlink-with-size
   func_module backupfile
   func_module canonicalize
   func_module canonicalize-lgpl
+  func_module chdir-safer
   func_module clean-temp
   func_module copy-file
-  func_module cycle-check
   func_module fsusage
   func_module dirfd
   func_module double-slash-root
@@ -2153,6 +2202,7 @@ func_all_modules ()
   func_module mountlist
   func_module openat
   func_module pathmax
+  func_module read-file
   func_module same
   func_module save-cwd
   func_module savedir
@@ -2165,6 +2215,21 @@ func_all_modules ()
   func_module write-any-file
   func_module xgetcwd
   func_module xreadlink
+  func_end_table
+
+  element="File system as inode set"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap posix_ext_inodeset
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module cycle-check
+  func_module dev-ino
+  func_module file-set
+  func_module hash-triple
+  func_module i-ring
+  func_module same-inode
   func_end_table
 
   element="File descriptor based Input/Output"
@@ -2228,6 +2293,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module gethrxtime
   func_module gettime
   func_module settime
   func_module posixtm
@@ -2254,6 +2320,7 @@ func_all_modules ()
   func_begin_table
   func_module lock
   func_module tls
+  func_module openmp
   func_end_table
 
   element="Internationalization functions"
@@ -2272,6 +2339,7 @@ func_all_modules ()
   func_module striconveha
   func_module localcharset
   func_module hard-locale
+  func_module localename
   func_module mbslen
   func_module mbsnlen
   func_module mbschr
@@ -2339,6 +2407,9 @@ func_all_modules ()
   func_module unistr/u8-mblen
   func_module unistr/u16-mblen
   func_module unistr/u32-mblen
+  func_module unistr/u8-mbsnlen
+  func_module unistr/u16-mbsnlen
+  func_module unistr/u32-mbsnlen
   func_module unistr/u8-mbtouc-unsafe
   func_module unistr/u16-mbtouc-unsafe
   func_module unistr/u32-mbtouc-unsafe
@@ -2642,6 +2713,7 @@ func_all_modules ()
   func_begin_table
   func_module announce-gen
   func_module autobuild
+  func_module git-version-gen
   func_module gnupload
   func_module maintainer-makefile
   func_end_table
@@ -2721,7 +2793,7 @@ if test -n "$missed_modules"; then
 
 fi
 
-LC_ALL=C ls -d lib/* m4/* | sed -e /CVS/d -e /README/d -e /ChangeLog/d -e /Makefile/d -e /TODO/d -e '/tags$/d' -e '/TAGS$/d' -e '/~$/d' > "$tmp/all-files"
+{ find lib -type f -print; find m4 -type f -print; } | LC_ALL=C sort | sed -e '/\/\./d' -e /CVS/d -e /README/d -e /ChangeLog/d -e /Makefile/d -e /TODO/d -e '/tags$/d' -e '/TAGS$/d' -e '/~$/d' > "$tmp/all-files"
 missed_files=`for file in $seen_files; do echo $file; done \
 		| LC_ALL=C sort -u \
 		| LC_ALL=C join -v 2 - "$tmp/all-files"`
