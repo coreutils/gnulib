@@ -1,3 +1,9 @@
+2007-10-09  Eric Blake  <ebb9@byu.net>
+
+	Silence test-fpending.
+	* modules/fpending-tests (Files): Add wrapper script.
+	* tests/test-fpending.sh: New file.
+
 2007-10-09  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh (func_module): Don't create a hyperlink for
@@ -1177,7 +1183,7 @@
 	* doc/functions/floorf.texi: Mention the 'floorf' module.
 
 2007-10-04  Benoit Sigoure  <tsuna@lrde.epita.fr>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Advertise for the Git server instead of the CVS server.
 	* doc/gnulib-intro.texi (Steady Development): Mention the Git
@@ -1307,8 +1313,8 @@
 	* lib/fseeko.c (rpl_fseeko): Likewise.
 
 2007-10-03  Bruno Haible  <bruno@clisp.org>
-            Jim Meyering  <jim@meyering.net>
-            Eric Blake  <ebb9@byu.net>
+	    Jim Meyering  <jim@meyering.net>
+	    Eric Blake  <ebb9@byu.net>
 
 	* doc/relocatable.texi: Use @command instead of @program.
 
