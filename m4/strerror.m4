@@ -1,4 +1,4 @@
-# strerror.m4 serial 5
+# strerror.m4 serial 6
 dnl Copyright (C) 2002, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,13 +26,10 @@ AC_DEFUN([gl_FUNC_STRERROR_SEPARATE],
 	 [return !*strerror (-2);])],
       [gl_cv_func_working_strerror=yes],
       [gl_cv_func_working_strerror=no],
-      [dnl Assume crossbuild works if it compiles, except for Interix.
+      [dnl Assume crossbuild works if it compiles.
        AC_COMPILE_IFELSE(
-         [AC_LANG_PROGRAM(
+	 [AC_LANG_PROGRAM(
 	    [#include <string.h>
-	     #ifdef __INTERIX
-	       Interix is broken;
-	     #endif
 	    ],
 	    [return !*strerror (-2);])],
 	 [gl_cv_func_working_strerror=yes],
