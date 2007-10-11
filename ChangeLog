@@ -1,3 +1,9 @@
+2007-10-11  Bruno Haible  <bruno@clisp.org>
+
+	* modules/filenamecat-tests: New file.
+	* tests/test-filenamecat.c: New file, extracted from lib/filenamecat.c.
+	* lib/filenamecat.c: Remove test code.
+
 2007-10-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Simplify and modernize strerror substitute, partly to fix Solaris 8 bug.

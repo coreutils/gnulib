@@ -1,0 +1,11 @@
+Files:
+tests/test-filenamecat.c
+
+Depends-on:
+stdbool
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-filenamecat
+check_PROGRAMS += test-filenamecat
