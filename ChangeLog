@@ -1,3 +1,22 @@
+2007-10-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Simplify and modernize strerror substitute, partly to fix Solaris 8 bug.
+
+	* lib/strerror.c: Include <string.h> always, to test interface,
+	and to remove the need for the dummy.
+	Include intprops.h to compute width instead of doing it ourselves
+	and missing a CHAR_BIT declaration, which broke tar 1.19 on Solaris 8.
+	(strerror): Define it to return NULL if there's no system strerror.
+	(rpl_strerror): Use INT_STRLEN_BOUND to compute bound.
+	Omit !HAVE_STRERROR code.  We don't need to worry about supporting
+	ancient pre-strerror Unix systems well any more.  Saying "unknown
+	system error" is enough.
+	* lib/string.in.h (strerror): Simplify the ifdef to reflect the
+	simpler strerror.c implementation.
+	* m4/strerror.m4 (gl_FUNC_STRERROR_SEPARATE, gl_PREREQ_STDERROR):
+	Simplify the tests to reflect the simpler strerror implementation.
+	* modules/strerror (Depends-on): Add intprops.
+
 2007-10-09  Eric Blake  <ebb9@byu.net>
 
 	Silence test-fpending.

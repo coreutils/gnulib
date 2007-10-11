@@ -544,8 +544,6 @@ extern char * mbstok_r (char *string, const char *delim, char **save_ptr);
 # if @REPLACE_STRERROR@
 #  undef strerror
 #  define strerror rpl_strerror
-# endif
-# if !@HAVE_DECL_STRERROR@ || @REPLACE_STRERROR@
 extern char *strerror (int);
 # endif
 #elif defined GNULIB_POSIXCHECK

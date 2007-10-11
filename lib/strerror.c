@@ -1,7 +1,6 @@
-/* strerror.c --- ANSI C compatible system error routine
+/* strerror.c --- POSIX compatible system error routine
 
-   Copyright (C) 1986, 1988, 1989, 1991, 2002, 2003, 2006, 2007 Free
-   Software Foundation, Inc.
+   Copyright (C) 2007 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,61 +17,33 @@
 
 #include <config.h>
 
+#include <string.h>
+
 #if REPLACE_STRERROR
 
-# include <string.h>
 # include <stdio.h>
 
+# include "intprops.h"
+
 # undef strerror
+# if ! HAVE_DECL_STRERROR
+#  define strerror(n) NULL
+# endif
 
-char *rpl_strerror (int n)
+char *
+rpl_strerror (int n)
 {
-  static char const fmt[] = "Unknown error (%d)";
-  static char mesg[sizeof fmt + sizeof n * CHAR_BIT / 3];
-
   char *result = strerror (n);
 
   if (! result)
     {
+      static char const fmt[] = "Unknown error (%d)";
+      static char mesg[sizeof fmt + INT_STRLEN_BOUND (n)];
       sprintf (mesg, fmt, n);
       return mesg;
     }
+
   return result;
 }
-
-#elif !HAVE_STRERROR
-
-#include <limits.h>
-
-/* Don't include <stdio.h>, since it may or may not declare
-   sys_errlist and its declarations may collide with ours.  Just
-   declare the stuff that we need directly.  Standard hosted C89
-   implementations define strerror and they don't need this strerror
-   function, so take some liberties with the standard to cater to
-   ancient or limited freestanding implementations.  */
-int sprintf (char *, char const *, ...);
-extern int sys_nerr;
-extern char *sys_errlist[];
-
-char *
-strerror (int n)
-{
-  static char const fmt[] = "Unknown error (%d)";
-  static char mesg[sizeof fmt + sizeof n * CHAR_BIT / 3];
-
-  if (n < 0 || n >= sys_nerr)
-    {
-      sprintf (mesg, fmt, n);
-      return mesg;
-    }
-  else
-    return sys_errlist[n];
-}
-
-#else
-
-/* This declaration is solely to ensure that after preprocessing
-   this file is never empty.  */
-typedef int dummy;
 
 #endif
