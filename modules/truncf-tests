@@ -1,14 +1,14 @@
 Files:
-tests/test-truncf.c
+tests/test-truncf1.c
 
 Depends-on:
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-truncf
-check_PROGRAMS += test-truncf
-test_truncf_LDADD = $(LDADD) @TRUNCF_LIBM@
+TESTS += test-truncf1
+check_PROGRAMS += test-truncf1
+test_truncf1_LDADD = $(LDADD) @TRUNCF_LIBM@
 
 License:
 LGPL

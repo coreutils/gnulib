@@ -1,3 +1,8 @@
+2007-10-12  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-truncf1.c: Renamed from tests/test-truncf.c.
+	* modules/truncf-tests: Update.
+
 2007-10-11  Eric Blake  <ebb9@byu.net>
 
 	Don't claim strerror is broken on Interix.
