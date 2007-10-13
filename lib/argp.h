@@ -520,9 +520,11 @@ extern void __argp_state_help (const struct argp_state *__restrict __state,
 			       FILE *__restrict __stream,
 			       unsigned int __flags);
 
+#if _LIBC || !defined __USE_EXTERN_INLINES
 /* Possibly output the standard usage message for ARGP to stderr and exit.  */
 extern void argp_usage (const struct argp_state *__state);
 extern void __argp_usage (const struct argp_state *__state);
+#endif
 
 /* If appropriate, print the printf string FMT and following args, preceded
    by the program name and `:', to stderr, and followed by a `Try ... --help'
@@ -551,6 +553,7 @@ extern void __argp_failure (const struct argp_state *__restrict __state,
 			    const char *__restrict __fmt, ...)
      __attribute__ ((__format__ (__printf__, 4, 5)));
 
+#if _LIBC || !defined __USE_EXTERN_INLINES
 /* Returns true if the option OPT is a valid short option.  */
 extern int _option_is_short (const struct argp_option *__opt) __THROW;
 extern int __option_is_short (const struct argp_option *__opt) __THROW;
@@ -559,6 +562,7 @@ extern int __option_is_short (const struct argp_option *__opt) __THROW;
    options array.  */
 extern int _option_is_end (const struct argp_option *__opt) __THROW;
 extern int __option_is_end (const struct argp_option *__opt) __THROW;
+#endif
 
 /* Return the input field for ARGP in the parser corresponding to STATE; used
    by the help routines.  */
@@ -579,7 +583,26 @@ extern void *__argp_input (const struct argp *__restrict __argp,
 # endif
 
 # ifndef ARGP_EI
-#  define ARGP_EI extern __inline__
+#  ifdef __GNUC__
+    /* GCC 4.3 and above with -std=c99 or -std=gnu99 implements ISO C99
+       inline semantics, unless -fgnu89-inline is used.  It defines a macro
+       __GNUC_STDC_INLINE__ to indicate this situation or a macro
+       __GNUC_GNU_INLINE__ to indicate the opposite situation.
+       GCC 4.2 with -std=c99 or -std=gnu99 implements the GNU C inline
+       semantics but warns, unless -fgnu89-inline is used:
+         warning: C99 inline functions are not supported; using GNU89
+         warning: to disable this warning use -fgnu89-inline or the gnu_inline function attribute
+       It defines a macro __GNUC_GNU_INLINE__ to indicate this situation.  */
+#   if defined __GNUC_STDC_INLINE__ || defined __GNUC_GNU_INLINE__
+#    define ARGP_EI extern __inline__ __attribute__ ((__gnu_inline__))
+#   else
+#    define ARGP_EI extern __inline__
+#   endif
+#  else
+    /* With other compilers, assume the ISO C99 meaning of 'inline', if
+       the compiler supports 'inline' at all.  */
+#   define ARGP_EI inline
+#  endif
 # endif
 
 ARGP_EI void

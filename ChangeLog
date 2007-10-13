@@ -1,5 +1,22 @@
 2007-10-13  Bruno Haible  <bruno@clisp.org>
 
+	Handle 'inline' change in gcc 4.3.0.
+	* lib/argp-fmtstream.h (argp_fmtstream_putc, argp_fmtstream_puts,
+	argp_fmtstream_write, argp_fmtstream_set_lmargin,
+	argp_fmtstream_set_rmargin, argp_fmtstream_set_wmargin,
+	argp_fmtstream_point): Disable 'extern' declaration if the function
+	definition is going to be provided inline.
+	(ARGP_FS_EI): If __GNUC_STDC_INLINE__ is defined, use the GNU C inline
+	semantics, not the ISO C99 inline semantics.
+	* lib/argp.h (argp_usage, _option_is_short, _option_is_end): Disable
+	'extern' declaration if the function definition is going to be provided
+	inline.
+	(ARGP_EI): Don't assume GNU C. If __GNUC_STDC_INLINE__ is defined, use
+	the GNU C inline semantics, not the ISO C99 inline semantics. With
+	GCC 4.2, avoid a warning.
+
+2007-10-13  Bruno Haible  <bruno@clisp.org>
+
 	* lib/freading.h (freading): Enable the use of __freading for
 	glibc >= 2.7.
 	* lib/freading.c (freading): Likewise.

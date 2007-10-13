@@ -1,5 +1,5 @@
 /* Word-wrapping and line-truncating streams.
-   Copyright (C) 1997, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1997, 2006-2007 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Written by Miles Bader <miles@gnu.ai.mit.edu>.
 
@@ -134,6 +134,7 @@ extern ssize_t argp_fmtstream_printf (argp_fmtstream_t __fs,
 				      const char *__fmt, ...)
      __attribute__ ((__format__ (printf, 2, 3)));
 
+#if _LIBC || !defined __OPTIMIZE__
 extern int __argp_fmtstream_putc (argp_fmtstream_t __fs, int __ch);
 extern int argp_fmtstream_putc (argp_fmtstream_t __fs, int __ch);
 
@@ -144,6 +145,7 @@ extern size_t __argp_fmtstream_write (argp_fmtstream_t __fs,
 				      const char *__str, size_t __len);
 extern size_t argp_fmtstream_write (argp_fmtstream_t __fs,
 				    const char *__str, size_t __len);
+#endif
 
 /* Access macros for various bits of state.  */
 #define argp_fmtstream_lmargin(__fs) ((__fs)->lmargin)
@@ -153,6 +155,7 @@ extern size_t argp_fmtstream_write (argp_fmtstream_t __fs,
 #define __argp_fmtstream_rmargin argp_fmtstream_rmargin
 #define __argp_fmtstream_wmargin argp_fmtstream_wmargin
 
+#if _LIBC || !defined __OPTIMIZE__
 /* Set __FS's left margin to LMARGIN and return the old value.  */
 extern size_t argp_fmtstream_set_lmargin (argp_fmtstream_t __fs,
 					  size_t __lmargin);
@@ -174,6 +177,7 @@ extern size_t __argp_fmtstream_set_wmargin (argp_fmtstream_t __fs,
 /* Return the column number of the current output point in __FS.  */
 extern size_t argp_fmtstream_point (argp_fmtstream_t __fs);
 extern size_t __argp_fmtstream_point (argp_fmtstream_t __fs);
+#endif
 
 /* Internal routines.  */
 extern void _argp_fmtstream_update (argp_fmtstream_t __fs);
@@ -197,11 +201,24 @@ extern int __argp_fmtstream_ensure (argp_fmtstream_t __fs, size_t __amount);
 #endif
 
 #ifndef ARGP_FS_EI
-# if __GNUC_GNU_INLINE__
-#  define ARGP_FS_EI extern inline __attribute__ ((__gnu_inline__))
-# elif __GNUC__
-#  define ARGP_FS_EI extern inline
+# ifdef __GNUC__
+   /* GCC 4.3 and above with -std=c99 or -std=gnu99 implements ISO C99
+      inline semantics, unless -fgnu89-inline is used.  It defines a macro
+      __GNUC_STDC_INLINE__ to indicate this situation or a macro
+      __GNUC_GNU_INLINE__ to indicate the opposite situation.
+      GCC 4.2 with -std=c99 or -std=gnu99 implements the GNU C inline
+      semantics but warns, unless -fgnu89-inline is used:
+        warning: C99 inline functions are not supported; using GNU89
+        warning: to disable this warning use -fgnu89-inline or the gnu_inline function attribute
+      It defines a macro __GNUC_GNU_INLINE__ to indicate this situation.  */
+#  if defined __GNUC_STDC_INLINE__ || defined __GNUC_GNU_INLINE__
+#   define ARGP_FS_EI extern inline __attribute__ ((__gnu_inline__))
+#  else
+#   define ARGP_FS_EI extern inline
+#  endif
 # else
+   /* With other compilers, assume the ISO C99 meaning of 'inline', if
+      the compiler supports 'inline' at all.  */
 #  define ARGP_FS_EI inline
 # endif
 #endif
