@@ -197,7 +197,13 @@ extern int __argp_fmtstream_ensure (argp_fmtstream_t __fs, size_t __amount);
 #endif
 
 #ifndef ARGP_FS_EI
-#define ARGP_FS_EI extern inline
+# if __GNUC_GNU_INLINE__
+#  define ARGP_FS_EI extern inline __attribute__ ((__gnu_inline__))
+# elif __GNUC__
+#  define ARGP_FS_EI extern inline
+# else
+#  define ARGP_FS_EI inline
+# endif
 #endif
 
 ARGP_FS_EI size_t
