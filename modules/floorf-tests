@@ -1,14 +1,20 @@
 Files:
 tests/test-floorf1.c
+tests/test-floorf2.c
 
 Depends-on:
+float
+isnanf-nolibm
+stdbool
+stdint
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-floorf1
-check_PROGRAMS += test-floorf1
+TESTS += test-floorf1 test-floorf2
+check_PROGRAMS += test-floorf1 test-floorf2
 test_floorf1_LDADD = $(LDADD) @FLOORF_LIBM@
+test_floorf2_LDADD = $(LDADD) @FLOORF_LIBM@
 
 License:
 LGPL

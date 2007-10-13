@@ -63,20 +63,31 @@ FUNC (DOUBLE x)
   volatile DOUBLE y = x;
   volatile DOUBLE z = y;
 
-  /* Round to the next integer (nearest or up or down, doesn't matter).  */
   if (z > L_(0.0))
     {
-      z += TWO_MANT_DIG;
-      z -= TWO_MANT_DIG;
+      /* Avoid rounding errors for values near 2^k, where k >= MANT_DIG-1.  */
+      if (z < TWO_MANT_DIG)
+	{
+	  /* Round to the next integer (nearest or up or down, doesn't matter).  */
+	  z += TWO_MANT_DIG;
+	  z -= TWO_MANT_DIG;
+	  /* Enforce rounding down.  */
+	  if (z > y)
+	    z -= L_(1.0);
+	}
     }
   else if (z < L_(0.0))
     {
-      z -= TWO_MANT_DIG;
-      z += TWO_MANT_DIG;
+      /* Avoid rounding errors for values near -2^k, where k >= MANT_DIG-1.  */
+      if (z > - TWO_MANT_DIG)
+	{
+	  /* Round to the next integer (nearest or up or down, doesn't matter).  */
+	  z -= TWO_MANT_DIG;
+	  z += TWO_MANT_DIG;
+	  /* Enforce rounding down.  */
+	  if (z > y)
+	    z -= L_(1.0);
+	}
     }
-  /* Enforce rounding down.  */
-  if (z > y)
-    z -= L_(1.0);
-
   return z;
 }

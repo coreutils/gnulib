@@ -1,5 +1,10 @@
 2007-10-12  Bruno Haible  <bruno@clisp.org>
 
+	* lib/floor.c (FUNC): Avoid rounding errors for values near a power
+	of 2.
+	* tests/test-floorf2.c: New file.
+	* modules/floorf-tests: (Files, Depends-on, Makefile.am): Add new test.
+
 	* tests/test-floorf1.c: Renamed from tests/test-floorf.c.
 	* modules/floorf-tests: Update.
 
