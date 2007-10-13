@@ -1,14 +1,16 @@
 Files:
 tests/test-trunc1.c
+tests/test-trunc2.c
 
 Depends-on:
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-trunc1
-check_PROGRAMS += test-trunc1
+TESTS += test-trunc1 test-trunc2
+check_PROGRAMS += test-trunc1 test-trunc2
 test_trunc1_LDADD = $(LDADD) @TRUNC_LIBM@
+test_trunc2_LDADD = $(LDADD) @TRUNC_LIBM@
 
 License:
 LGPL
