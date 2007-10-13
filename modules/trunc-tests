@@ -3,6 +3,10 @@ tests/test-trunc1.c
 tests/test-trunc2.c
 
 Depends-on:
+float
+isnan-nolibm
+stdbool
+stdint
 
 configure.ac:
 
