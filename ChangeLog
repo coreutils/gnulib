@@ -1,5 +1,10 @@
 2007-10-12  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-floorf1.c: Renamed from tests/test-floorf.c.
+	* modules/floorf-tests: Update.
+
+2007-10-12  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-trunc2.c: New file.
 	* modules/trunc-tests: (Files, Depends-on, Makefile.am): Add new test.
 
