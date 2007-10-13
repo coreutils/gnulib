@@ -211,7 +211,9 @@ extern int __argp_fmtstream_ensure (argp_fmtstream_t __fs, size_t __amount);
         warning: C99 inline functions are not supported; using GNU89
         warning: to disable this warning use -fgnu89-inline or the gnu_inline function attribute
       It defines a macro __GNUC_GNU_INLINE__ to indicate this situation.  */
-#  if defined __GNUC_STDC_INLINE__ || defined __GNUC_GNU_INLINE__
+#  if defined __GNUC_STDC_INLINE__
+#   define ARGP_FS_EI inline
+#  elif defined __GNUC_GNU_INLINE__
 #   define ARGP_FS_EI extern inline __attribute__ ((__gnu_inline__))
 #  else
 #   define ARGP_FS_EI extern inline

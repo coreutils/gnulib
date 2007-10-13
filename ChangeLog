@@ -1,5 +1,11 @@
 2007-10-13  Bruno Haible  <bruno@clisp.org>
 
+	* lib/argp-fmtstream.h (ARGP_FS_EI): If __GNUC_STDC_INLINE__ is
+	defined, use the ISO C99 inline semantics.
+	* lib/argp.h (ARGP_EI): Likewise.
+
+2007-10-13  Bruno Haible  <bruno@clisp.org>
+
 	Handle 'inline' change in gcc 4.3.0.
 	* lib/argp-fmtstream.h (argp_fmtstream_putc, argp_fmtstream_puts,
 	argp_fmtstream_write, argp_fmtstream_set_lmargin,

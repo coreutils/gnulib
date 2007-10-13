@@ -593,7 +593,9 @@ extern void *__argp_input (const struct argp *__restrict __argp,
          warning: C99 inline functions are not supported; using GNU89
          warning: to disable this warning use -fgnu89-inline or the gnu_inline function attribute
        It defines a macro __GNUC_GNU_INLINE__ to indicate this situation.  */
-#   if defined __GNUC_STDC_INLINE__ || defined __GNUC_GNU_INLINE__
+#   if defined __GNUC_STDC_INLINE__
+#    define ARGP_EI __inline__
+#   elif defined __GNUC_GNU_INLINE__
 #    define ARGP_EI extern __inline__ __attribute__ ((__gnu_inline__))
 #   else
 #    define ARGP_EI extern __inline__
