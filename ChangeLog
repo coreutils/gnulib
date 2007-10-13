@@ -1,5 +1,10 @@
 2007-10-12  Bruno Haible  <bruno@clisp.org>
 
+	* lib/ceil.c (FUNC): Avoid rounding errors for values near a power
+	of 2.
+	* tests/test-ceilf2.c: New file.
+	* modules/ceilf-tests: (Files, Depends-on, Makefile.am): Add new test.
+
 	* tests/test-ceilf1.c: Renamed from tests/test-ceilf.c.
 	* modules/ceilf-tests: Update.
 
