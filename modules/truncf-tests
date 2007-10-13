@@ -1,14 +1,20 @@
 Files:
 tests/test-truncf1.c
+tests/test-truncf2.c
 
 Depends-on:
+float
+isnanf-nolibm
+stdbool
+stdint
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-truncf1
-check_PROGRAMS += test-truncf1
+TESTS += test-truncf1 test-truncf2
+check_PROGRAMS += test-truncf1 test-truncf2
 test_truncf1_LDADD = $(LDADD) @TRUNCF_LIBM@
+test_truncf2_LDADD = $(LDADD) @TRUNCF_LIBM@
 
 License:
 LGPL

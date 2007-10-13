@@ -1,4 +1,4 @@
-/* Round towards zero.
+/* Test of rounding towards zero.
    Copyright (C) 2007 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -18,27 +18,33 @@
 
 #include <config.h>
 
-/* Specification.  */
 #include <math.h>
 
 #include <float.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#ifdef USE_LONG_DOUBLE
-# define FUNC truncl
-# define DOUBLE long double
-# define MANT_DIG LDBL_MANT_DIG
-# define L_(literal) literal##L
-#elif ! defined USE_FLOAT
-# define FUNC trunc
-# define DOUBLE double
-# define MANT_DIG DBL_MANT_DIG
-# define L_(literal) literal
-#else /* defined USE_FLOAT */
-# define FUNC truncf
-# define DOUBLE float
-# define MANT_DIG FLT_MANT_DIG
-# define L_(literal) literal##f
-#endif
+#include "isnanf.h"
+
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
+
+
+/* The reference implementation, taken from lib/trunc.c.  */
+
+#define DOUBLE float
+#define MANT_DIG FLT_MANT_DIG
+#define L_(literal) literal##f
 
 /* 2^(MANT_DIG-1).  */
 static const DOUBLE TWO_MANT_DIG =
@@ -52,7 +58,7 @@ static const DOUBLE TWO_MANT_DIG =
   * (DOUBLE) (1U << ((MANT_DIG - 1 + 4) / 5));
 
 DOUBLE
-FUNC (DOUBLE x)
+truncf_reference (DOUBLE x)
 {
   /* The use of 'volatile' guarantees that excess precision bits are dropped
      at each addition step and before the following comparison at the caller's
@@ -90,4 +96,71 @@ FUNC (DOUBLE x)
 	}
     }
   return z;
+}
+
+
+/* Test for equality.  */
+static int
+equal (DOUBLE x, DOUBLE y)
+{
+  return (isnanf (x) ? isnanf (y) : x == y);
+}
+
+/* Test whether the result for a given argument is correct.  */
+static bool
+correct_result_p (DOUBLE x, DOUBLE result)
+{
+  return
+    (x >= 0
+     ? (x < 1 ? result == L_(0.0) :
+	x - 1 < x ? result <= x && result > x - 1 :
+	equal (result, x))
+     : (x > -1 ? result == L_(0.0) :
+	x + 1 > x ? result >= x && result < x + 1 :
+	equal (result, x)));
+}
+
+/* Test the function for a given argument.  */
+static int
+check (float x)
+{
+  /* If the reference implementation is incorrect, bail out immediately.  */
+  float reference = truncf_reference (x);
+  ASSERT (correct_result_p (x, reference));
+  /* If the actual implementation is wrong, return an error code.  */
+  {
+    float result = truncf (x);
+    if (correct_result_p (x, result))
+      return 0;
+    else
+      {
+	fprintf (stderr, "truncf %g(%a) = %g(%a) or %g(%a)?\n",
+		 x, x, reference, reference, result, result);
+	return 1;
+      }
+  }
+}
+
+#define NUM_HIGHBITS 12
+#define NUM_LOWBITS 4
+
+int
+main ()
+{
+  unsigned int highbits;
+  unsigned int lowbits;
+  int error = 0;
+  for (highbits = 0; highbits < (1 << NUM_HIGHBITS); highbits++)
+    for (lowbits = 0; lowbits < (1 << NUM_LOWBITS); lowbits++)
+      {
+	/* Combine highbits and lowbits into a floating-point number,
+	   sign-extending the lowbits to 32-NUM_HIGHBITS bits.  */
+	union { float f; uint32_t i; } janus;
+	janus.i = ((uint32_t) highbits << (32 - NUM_HIGHBITS))
+		  | ((uint32_t) ((int32_t) ((uint32_t) lowbits << (32 - NUM_LOWBITS))
+				 >> (32 - NUM_LOWBITS - NUM_HIGHBITS))
+		     >> NUM_HIGHBITS);
+	error |= check (janus.f);
+      }
+  return (error ? 1 : 0);
 }
