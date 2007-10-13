@@ -1,5 +1,10 @@
 2007-10-12  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-trunc1.c: Renamed from tests/test-trunc.c.
+	* modules/trunc-tests: Update.
+
+2007-10-12  Bruno Haible  <bruno@clisp.org>
+
 	* lib/trunc.c (FUNC): Avoid rounding errors for values near a power
 	of 2.
 	* tests/test-truncf2.c: New file.
