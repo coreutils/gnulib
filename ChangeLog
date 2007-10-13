@@ -1,3 +1,9 @@
+2007-10-13  Albert Chin  <china@thewrittenword.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Perform the test for getaddrinfo
+	through a link check that includes <netdb.h>. Needed for OSF/1 5.1.
+
 2007-10-13  Bruno Haible  <bruno@clisp.org>
 
 	* lib/argp-fmtstream.h (ARGP_FS_EI): If __GNUC_STDC_INLINE__ is

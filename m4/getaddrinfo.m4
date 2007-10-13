@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 13
+# getaddrinfo.m4 serial 14
 dnl Copyright (C) 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,8 +9,23 @@ AC_DEFUN([gl_GETADDRINFO],
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])dnl for HAVE_SYS_SOCKET_H, HAVE_WINSOCK2_H
   AC_MSG_NOTICE([checking how to do getaddrinfo, freeaddrinfo and getnameinfo])
 
+  AC_CHECK_HEADERS_ONCE(netdb.h)
+
   AC_SEARCH_LIBS(getaddrinfo, [nsl socket])
-  AC_CHECK_FUNCS(getaddrinfo,, [
+  AC_CACHE_CHECK([for getaddrinfo], [gl_cv_func_getaddrinfo], [
+    AC_TRY_LINK([
+#include <sys/types.h>
+#ifdef HAVE_SYS_SOCKET_H
+#include <sys/socket.h>
+#endif
+#ifdef HAVE_NETDB_H
+#include <netdb.h>
+#endif
+#include <stdlib.h>
+], [getaddrinfo("", "", NULL, NULL);],
+      [gl_cv_func_getaddrinfo=yes],
+      [gl_cv_func_getaddrinfo=no])])
+  if test $gl_cv_func_getaddrinfo = no; then
     AC_CACHE_CHECK(for getaddrinfo in ws2tcpip.h and -lws2_32,
 		   gl_cv_w32_getaddrinfo, [
       gl_cv_w32_getaddrinfo=no
@@ -27,12 +42,11 @@ AC_DEFUN([gl_GETADDRINFO],
     else
       AC_LIBOBJ(getaddrinfo)
     fi
-    ])
+  fi
 
   # We can't use AC_REPLACE_FUNCS here because gai_strerror may be an
   # inline function declared in ws2tcpip.h, so we need to get that
   # header included somehow.
-  AC_CHECK_HEADERS_ONCE(netdb.h)
   AC_CACHE_CHECK([for gai_strerror (possibly via ws2tcpip.h)],
     gl_cv_func_gai_strerror, [
       AC_TRY_LINK([
