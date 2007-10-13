@@ -1,3 +1,9 @@
+2007-10-13  Bruno Haible  <bruno@clisp.org>
+
+	* lib/freading.h (freading): Enable the use of __freading for
+	glibc >= 2.7.
+	* lib/freading.c (freading): Likewise.
+
 2007-10-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/argp-fmtstream.h (ARGP_FS_EI): Work around GCC 4.2.1 diagnostic
