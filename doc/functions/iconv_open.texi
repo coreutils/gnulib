@@ -4,7 +4,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/iconv_open.html}
 
-Gnulib module: iconv and iconv_open
+Gnulib module: iconv, iconv_open, iconv_open-utf
 
 Portability problems fixed by either Gnulib module @code{iconv} or @code{iconv_open}:
 @itemize
@@ -21,6 +21,14 @@ Portability problems fixed by Gnulib module @code{iconv_open}:
 This function recognizes only non-standard aliases for many encodings (not
 the IANA registered encoding names) on many platforms:
 AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{iconv_open-utf}:
+@itemize
+@item
+This function does not support the encodings UTF-16BE, UTF-16LE, UTF-32BE,
+UTF-32LE on many platforms:
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8.
 @end itemize
 
 Portability problems not fixed by Gnulib:

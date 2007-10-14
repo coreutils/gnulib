@@ -15,6 +15,7 @@ Depends-on:
 include_next
 iconv
 c-ctype
+c-strcase
 
 configure.ac:
 gl_ICONV_H
@@ -30,7 +31,10 @@ iconv.h: iconv.in.h
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
 	      -e 's|@''NEXT_ICONV_H''@|$(NEXT_ICONV_H)|g' \
+	      -e 's|@''ICONV_CONST''@|$(ICONV_CONST)|g' \
+	      -e 's|@''REPLACE_ICONV''@|$(REPLACE_ICONV)|g' \
 	      -e 's|@''REPLACE_ICONV_OPEN''@|$(REPLACE_ICONV_OPEN)|g' \
+	      -e 's|@''REPLACE_ICONV_UTF''@|$(REPLACE_ICONV_UTF)|g' \
 	      < $(srcdir)/iconv.in.h; \
 	} > $@-t
 	mv $@-t $@

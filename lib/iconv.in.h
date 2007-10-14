@@ -36,6 +36,28 @@ extern "C" {
 extern iconv_t iconv_open (const char *tocode, const char *fromcode);
 #endif
 
+#if @REPLACE_ICONV_UTF@
+/* Special constants for supporting UTF-{16,32}{BE,LE} encodings.
+   Not public.  */
+# define _ICONV_UTF8_UTF16BE (iconv_t)(-161)
+# define _ICONV_UTF8_UTF16LE (iconv_t)(-162)
+# define _ICONV_UTF8_UTF32BE (iconv_t)(-163)
+# define _ICONV_UTF8_UTF32LE (iconv_t)(-164)
+# define _ICONV_UTF16BE_UTF8 (iconv_t)(-165)
+# define _ICONV_UTF16LE_UTF8 (iconv_t)(-166)
+# define _ICONV_UTF32BE_UTF8 (iconv_t)(-167)
+# define _ICONV_UTF32LE_UTF8 (iconv_t)(-168)
+#endif
+
+#if @REPLACE_ICONV@
+# define iconv rpl_iconv
+extern size_t iconv (iconv_t cd,
+		     @ICONV_CONST@ char **inbuf, size_t *inbytesleft,
+		     char **outbuf, size_t *outbytesleft);
+# define iconv_close rpl_iconv_close
+extern int iconv_close (iconv_t cd);
+#endif
+
 
 #ifdef __cplusplus
 }

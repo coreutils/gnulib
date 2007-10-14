@@ -1,3 +1,26 @@
+2007-10-14  Bruno Haible  <bruno@clisp.org>
+
+	Enhance iconv_open to support UTF-16BE, UTF-16LE, UTF-32BE, UTF-32LE.
+	* modules/iconv_open-utf: New file.
+	* lib/iconv.in.h (_ICONV_UTF8_UTF*, _ICONV_UTF*_UTF8): New macros.
+	(iconv, iconv_close): New declarations.
+	* lib/iconv_open.c: Include c-strcase.h. Don't require ICONV_FLAVOR to
+	be defined.
+	(iconv_open): Add special handling of conversion between UTF-8 and
+	UTF-{16,32}{BE,LE}.
+	* lib/iconv.c: New file, incorporating code from GNU libiconv 1.11.
+	* lib/iconv_close.c: New file.
+	* m4/iconv_open.m4 (gl_REPLACE_ICONV_OPEN): New macro, extracted from
+	gl_FUNC_ICONV_OPEN.
+	(gl_FUNC_ICONV_OPEN): Use it.
+	(gl_FUNC_ICONV_OPEN_UTF): New macro.
+	* m4/iconv_h.m4 (gl_ICONV_H_DEFAULTS): Initialize also REPLACE_ICONV
+	and REPLACE_ICONV_UTF.
+	* modules/iconv_open (Depends-on): Add c-strcase.
+	(Makefile.am): Substitute also REPLACE_ICONV, REPLACE_ICONV_UTF,
+	ICONV_CONST.
+	* doc/functions/iconv_open.texi: Mention the iconv_open-utf module.
+
 2007-10-13  Albert Chin  <china@thewrittenword.com>
             Bruno Haible  <bruno@clisp.org>
 

@@ -1,4 +1,4 @@
-# iconv_h.m4 serial 2
+# iconv_h.m4 serial 3
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,5 +22,7 @@ AC_DEFUN([gl_ICONV_MODULE_INDICATOR],
 AC_DEFUN([gl_ICONV_H_DEFAULTS],
 [
   dnl Assume proper GNU behavior unless another module says otherwise.
+  REPLACE_ICONV=0;      AC_SUBST([REPLACE_ICONV])
   REPLACE_ICONV_OPEN=0; AC_SUBST([REPLACE_ICONV_OPEN])
+  REPLACE_ICONV_UTF=0;  AC_SUBST([REPLACE_ICONV_UTF])
 ])
