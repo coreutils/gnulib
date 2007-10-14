@@ -1,5 +1,8 @@
 2007-10-14  Bruno Haible  <bruno@clisp.org>
 
+	* modules/iconv_open-utf-tests: New file.
+	* tests/test-iconv-utf.c: New file.
+
 	Enhance iconv_open to support UTF-16BE, UTF-16LE, UTF-32BE, UTF-32LE.
 	* modules/iconv_open-utf: New file.
 	* lib/iconv.in.h (_ICONV_UTF8_UTF*, _ICONV_UTF*_UTF8): New macros.

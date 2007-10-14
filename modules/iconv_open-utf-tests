@@ -1,0 +1,12 @@
+Files:
+tests/test-iconv-utf.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-iconv-utf
+check_PROGRAMS += test-iconv-utf
+test_iconv_utf_LDADD = $(LDADD) @LIBICONV@
+
