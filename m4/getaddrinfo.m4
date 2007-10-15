@@ -21,7 +21,7 @@ AC_DEFUN([gl_GETADDRINFO],
 #ifdef HAVE_NETDB_H
 #include <netdb.h>
 #endif
-#include <stdlib.h>
+#include <stddef.h>
 ], [getaddrinfo("", "", NULL, NULL);],
       [gl_cv_func_getaddrinfo=yes],
       [gl_cv_func_getaddrinfo=no])])
@@ -35,7 +35,7 @@ AC_DEFUN([gl_GETADDRINFO],
 #ifdef HAVE_WS2TCPIP_H
 #include <ws2tcpip.h>
 #endif
-#include <stdlib.h>
+#include <stddef.h>
 ], [getaddrinfo(NULL, NULL, NULL, NULL);], gl_cv_w32_getaddrinfo=yes)
     LIBS="$am_save_LIBS"])
     if test "$gl_cv_w32_getaddrinfo" = "yes"; then
@@ -61,7 +61,7 @@ AC_DEFUN([gl_GETADDRINFO],
 #ifdef HAVE_WS2TCPIP_H
 #include <ws2tcpip.h>
 #endif
-#include <stdlib.h>
+#include <stddef.h>
 ], [gai_strerror (NULL);],
         [gl_cv_func_gai_strerror=yes],
         [gl_cv_func_gai_strerror=no])])
@@ -87,7 +87,7 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
 #ifdef HAVE_WINSOCK2_H
 #include <winsock2.h>
 #endif
-#include <stdlib.h>
+#include <stddef.h>
 ], [gethostbyname(NULL);], gl_cv_w32_gethostbyname=yes)
     LIBS="$am_save_LIBS"])
     if test "$gl_cv_w32_gethostbyname" = "yes"; then

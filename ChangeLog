@@ -1,5 +1,11 @@
 2007-10-15  Bruno Haible  <bruno@clisp.org>
 
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO, gl_PREREQ_GETADDRINFO): Use
+	<stddef.h> instead of <stdlib.h> since we only need NULL.
+	Reported by Ben Pfaff <blp@cs.stanford.edu>.
+
+2007-10-15  Bruno Haible  <bruno@clisp.org>
+
 	* doc/gnulib-tool.texi (Initial import): Swap order of -I directives.
 	Replace paragraph talking about LIBOBJS.
 	Reported by Colin Watson <cjwatson@debian.org>.
