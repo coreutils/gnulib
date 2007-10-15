@@ -275,9 +275,9 @@ utf32le_wctomb (unsigned char *r, ucs4_t wc, size_t n)
 #endif
 
 size_t
-iconv (iconv_t cd,
-       ICONV_CONST char **inbuf, size_t *inbytesleft,
-       char **outbuf, size_t *outbytesleft)
+rpl_iconv (iconv_t cd,
+	   ICONV_CONST char **inbuf, size_t *inbytesleft,
+	   char **outbuf, size_t *outbytesleft)
 #undef iconv
 {
 #if REPLACE_ICONV_UTF

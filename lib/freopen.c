@@ -24,7 +24,7 @@
 #include <string.h>
 
 FILE *
-freopen (const char *filename, const char *mode, FILE *stream)
+rpl_freopen (const char *filename, const char *mode, FILE *stream)
 #undef freopen
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__

@@ -26,7 +26,7 @@
 #endif
 
 int
-iconv_close (iconv_t cd)
+rpl_iconv_close (iconv_t cd)
 #undef iconv_close
 {
 #if REPLACE_ICONV_UTF

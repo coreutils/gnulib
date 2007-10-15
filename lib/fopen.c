@@ -24,7 +24,7 @@
 #include <string.h>
 
 FILE *
-fopen (const char *filename, const char *mode)
+rpl_fopen (const char *filename, const char *mode)
 #undef fopen
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__

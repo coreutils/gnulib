@@ -78,7 +78,7 @@ ensure_dirs_slot (size_t fd)
 /* Override open() and close(), to keep track of the open file descriptors.  */
 
 int
-close (int fd)
+rpl_close (int fd)
 #undef close
 {
   int retval = close (fd);
@@ -94,7 +94,7 @@ close (int fd)
 }
 
 int
-open (const char *filename, int flags, ...)
+rpl_open (const char *filename, int flags, ...)
 #undef open
 {
   mode_t mode;
@@ -139,7 +139,7 @@ open (const char *filename, int flags, ...)
    descriptors.  Needed because there is a function dirfd().  */
 
 int
-closedir (DIR *dp)
+rpl_closedir (DIR *dp)
 #undef closedir
 {
   int fd = dirfd (dp);
@@ -156,7 +156,7 @@ closedir (DIR *dp)
 }
 
 DIR *
-opendir (const char *filename)
+rpl_opendir (const char *filename)
 #undef opendir
 {
   DIR *dp;
@@ -182,7 +182,7 @@ opendir (const char *filename)
 /* Override dup() and dup2(), to keep track of open file descriptors.  */
 
 int
-dup (int oldfd)
+rpl_dup (int oldfd)
 #undef dup
 {
   int newfd = dup (oldfd);
@@ -217,7 +217,7 @@ dup (int oldfd)
 }
 
 int
-dup2 (int oldfd, int newfd)
+rpl_dup2 (int oldfd, int newfd)
 #undef dup2
 {
   int retval = dup2 (oldfd, newfd);

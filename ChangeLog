@@ -1,3 +1,12 @@
+2007-10-15  Bruno Haible  <bruno@clisp.org>
+
+	* lib/fchdir.c (close, open, closedir, opendir, dup, dup2): Define
+	with explicit rpl_ prefix.
+	* lib/fopen.c (fopen): Likewise.
+	* lib/freopen.c (freopen): Likewise.
+	* lib/iconv.c (iconv): Likewise.
+	* lib/iconv_close.c (iconv_close): Likewise.
+
 2007-10-15  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* m4/iconv_open (gl_FUNC_ICONV_OPEN_UTF): Fix cache variable name.
