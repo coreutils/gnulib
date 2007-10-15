@@ -245,8 +245,8 @@ resulting object files to be automatically added to @file{lib/libgnu.a}.
 This is because your @code{AC_LIBOBJ} and @code{AC_REPLACE_FUNCS} invocations
 from @file{configure.ac} augment a variable @code{@@LIBOBJS@@} (and/or
 @code{@@LTLIBOBJS@@} if using Libtool), whereas @file{lib/libgnu.a}
-is build from the contents of a different variable, usually
-@code{@@gl_LIBOBJS@@} (or @code{@@gl_LTLIBOBJS@@} is using Libtool).
+is built from the contents of a different variable, usually
+@code{@@gl_LIBOBJS@@} (or @code{@@gl_LTLIBOBJS@@} if using Libtool).
 
 
 @node Modified imports
