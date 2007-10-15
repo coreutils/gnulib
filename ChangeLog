@@ -1,3 +1,8 @@
+2007-10-15  Bruno Haible  <bruno@clisp.org>
+
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO, gl_PREREQ_GETADDRINFO): Include
+	<stdlib.h> before using NULL.
+
 2007-10-15  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/getaddrinfo.m4: Use NULL rather than 0 for pointers.
