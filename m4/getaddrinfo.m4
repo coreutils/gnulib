@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 14
+# getaddrinfo.m4 serial 15
 dnl Copyright (C) 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,7 +35,7 @@ AC_DEFUN([gl_GETADDRINFO],
 #ifdef HAVE_WS2TCPIP_H
 #include <ws2tcpip.h>
 #endif
-], [getaddrinfo(0, 0, 0, 0);], gl_cv_w32_getaddrinfo=yes)
+], [getaddrinfo(NULL, NULL, NULL, NULL);], gl_cv_w32_getaddrinfo=yes)
     LIBS="$am_save_LIBS"])
     if test "$gl_cv_w32_getaddrinfo" = "yes"; then
       LIBS="$LIBS -lws2_32"
@@ -60,7 +60,7 @@ AC_DEFUN([gl_GETADDRINFO],
 #ifdef HAVE_WS2TCPIP_H
 #include <ws2tcpip.h>
 #endif
-], [gai_strerror (0);],
+], [gai_strerror (NULL);],
         [gl_cv_func_gai_strerror=yes],
         [gl_cv_func_gai_strerror=no])])
   if test $gl_cv_func_gai_strerror = no; then
@@ -85,7 +85,7 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
 #ifdef HAVE_WINSOCK2_H
 #include <winsock2.h>
 #endif
-], [gethostbyname(0);], gl_cv_w32_gethostbyname=yes)
+], [gethostbyname(NULL);], gl_cv_w32_gethostbyname=yes)
     LIBS="$am_save_LIBS"])
     if test "$gl_cv_w32_gethostbyname" = "yes"; then
       LIBS="$LIBS -lws2_32"

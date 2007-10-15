@@ -1,3 +1,8 @@
+2007-10-15  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/getaddrinfo.m4: Use NULL rather than 0 for pointers.
+	Reported by Albert Chin <china@thewrittenword.com>.
+
 2007-10-14  Bruno Haible  <bruno@clisp.org>
 
 	* modules/iconv_open-utf-tests: New file.
