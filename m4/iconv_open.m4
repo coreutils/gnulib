@@ -1,4 +1,4 @@
-# iconv_open.m4 serial 2
+# iconv_open.m4 serial 3
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,7 @@ AC_DEFUN([gl_FUNC_ICONV_OPEN_UTF],
     fi
     AC_SUBST([ICONV_CONST])
     AC_CACHE_CHECK([whether iconv supports conversion between UTF-8 and UTF-{16,32}{BE,LE}],
-      [gl_func_iconv_supports_utf],
+      [gl_cv_func_iconv_supports_utf],
       [
         save_LIBS="$LIBS"
         LIBS="$LIBS $LIBICONV"
@@ -206,25 +206,25 @@ int main ()
     ASSERT (iconv_close (cd) == 0);
   }
   return 0;
-}], [gl_func_iconv_supports_utf=yes], [gl_func_iconv_supports_utf=no],
+}], [gl_cv_func_iconv_supports_utf=yes], [gl_cv_func_iconv_supports_utf=no],
           [
            dnl We know that GNU libiconv, GNU libc, and Solaris >= 9 do.
            dnl OSF/1 5.1 has these encodings, but inserts a BOM in the "to"
            dnl direction.
-           gl_func_iconv_supports_utf=no
+           gl_cv_func_iconv_supports_utf=no
            if test $gl_func_iconv_gnu = yes; then
-             gl_func_iconv_supports_utf=yes
+             gl_cv_func_iconv_supports_utf=yes
            else
 changequote(,)dnl
              case "$host_os" in
-               solaris2.9 | solaris2.1[0-9]) gl_func_iconv_supports_utf=yes ;;
+               solaris2.9 | solaris2.1[0-9]) gl_cv_func_iconv_supports_utf=yes ;;
              esac
 changequote([,])dnl
            fi
           ])
         LIBS="$save_LIBS"
       ])
-    if test $gl_func_iconv_supports_utf = no; then
+    if test $gl_cv_func_iconv_supports_utf = no; then
       REPLACE_ICONV_UTF=1
       AC_DEFINE([REPLACE_ICONV_UTF], 1,
         [Define if the iconv() functions are enhanced to handle the UTF-{16,32}{BE,LE} encodings.])
