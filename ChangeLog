@@ -1,3 +1,11 @@
+2007-10-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Check for 64-bit int errors in HP-UX 10.20 preprocessor.
+	Problem reported by H.Merijn Brand in
+	<http://lists.gnu.org/archive/html/bug-tar/2007-10/msg00018.html>.
+	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT): Check preprocessor too.
+	* m4/ulonglong.m4 (AC_TYPE_UNSIGNED_LONG_LONG_INT): Likewise.
+
 2007-10-15  Bruno Haible  <bruno@clisp.org>
 
 	* lib/fchdir.c (close, open, closedir, opendir, dup, dup2): Define
