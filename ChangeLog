@@ -1,5 +1,49 @@
 2007-10-16  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Merge glibc changes into lib/glob.c.
+
+	* lib/glob.c (glob_in_dir): Sync with glibc/posix/glob.c, dated
+	2007-10-15 04:59:03 UTC.  Here are the changes:
+
+	2007-10-14  Ulrich Drepper  <drepper@redhat.com>
+
+	* lib/glob.c: Reimplement link_exists_p to use fstatat64.
+
+	* lib/glob.c: Add some branch prediction throughout.
+
+	2007-10-07  Ulrich Drepper  <drepper@redhat.com>
+
+	[BZ #5103]
+	* lib/glob.c (glob): Recognize patterns starting \/.
+
+	2007-02-14  Jakub Jelinek  <jakub@redhat.com>
+
+	[BZ #3996]
+	* lib/glob.c (attribute_hidden): Define if not defined.
+	(glob): Unescape dirname, filename or username when needed and not
+	GLOB_NOESCAPE.  Handle \/ correctly.  Handle GLOB_MARK if filename
+	is NULL.  Handle unescaped [ in pattern without closing ].
+	Don't pass GLOB_CHECK down to recursive glob for directories.
+	(__glob_pattern_type): New function.
+	(__glob_pattern_p): Implement using __glob_pattern_type.
+	(glob_in_dir): Handle GLOB_NOCHECK patterns containing no meta
+	characters and backslashes if not GLOB_NOESCAPE or unterminated [.
+	Remove unreachable code.
+
+	2006-09-30  Ulrich Drepper  <drepper@redhat.com>
+
+	* lib/glob.c (glob_in_dir): Add some comments and asserts to
+	explain why there are no leaks.
+
+	2006-09-25  Jakub Jelinek  <jakub@redhat.com>
+
+	[BZ #3253]
+	* lib/glob.c (glob_in_dir): Don't alloca one struct globlink at a
+	time, rather allocate increasingly bigger arrays of pointers, if
+	possible with alloca, if too large with malloc.
+
+2007-10-16  Paul Eggert  <eggert@cs.ucla.edu>
+
 	Check for 64-bit int errors in HP-UX 10.20 preprocessor.
 	Problem reported by H.Merijn Brand in
 	<http://lists.gnu.org/archive/html/bug-tar/2007-10/msg00018.html>.
