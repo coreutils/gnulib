@@ -54,8 +54,9 @@ int main ()
   if (nl_langinfo (CODESET) [0] == '\0') return 1;
 #endif
 #ifdef __CYGWIN__
-  /* On Cygwin, avoid locale names  without encoding suffix, because the
-     locale_charset() function relies on the encoding suffix.  */
+  /* On Cygwin, avoid locale names without encoding suffix, because the
+     locale_charset() function relies on the encoding suffix.  Note that
+     LC_ALL is set on the command line.  */
   if (strchr (getenv ("LC_ALL"), '.') == NULL) return 1;
 #endif
   /* Check whether in a month name, no byte in the range 0x80..0x9F occurs.
