@@ -1212,7 +1212,7 @@ func_get_filelist ()
 func_get_dependencies ()
 {
   # ${module}-tests always implicitly depends on ${module}.
-  echo "$1" | sed -n -e 's/-tests//p'
+  echo "$1" | sed -n -e 's/-tests$//p'
   # Then the explicit dependencies listed in the module description.
   func_lookup_file "modules/$1"
   sed -n -e "/^Depends-on$sed_extract_prog" < "$lookedup_file"
