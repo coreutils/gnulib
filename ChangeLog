@@ -1,3 +1,14 @@
+2007-10-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Modify glob.c to use fstatat and dirfd, to simplify it.
+	Suggested by Eric Blake.
+	* lib/glob.c (__fxstatat64) [!_LIBC]: New macro.
+	Don't include <stdbool.h>; not used.
+	(link_exists2_p, glob_in_dir) [!_LIBC]: No longer a special case.
+	(link_exists_p): Simplify implementation, since we can now assume
+	dirfd and fstatat.
+	* modules/glob (Depends-on): Add dirfd, openat.  Remove stdbool.
+
 2007-10-17  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* gnulib-tool (func_get_dependencies): Fix sed script to

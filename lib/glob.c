@@ -134,6 +134,7 @@
 # define struct_stat64		struct stat64
 #else /* !_LIBC */
 # define __stat64(fname, buf)	stat (fname, buf)
+# define __fxstatat64(_, d, f, st, flag) fstatat (d, f, st, flag)
 # define struct_stat64		struct stat
 # define __stat(fname, buf)	stat (fname, buf)
 # define __alloca		alloca
@@ -142,8 +143,12 @@
 # define __glob_pattern_p	glob_pattern_p
 #endif /* _LIBC */
 
-#include <stdbool.h>
 #include <fnmatch.h>
+
+#ifndef _LIBC
+# include "dirfd.h"
+# include "openat.h"
+#endif
 
 #ifdef _SC_GETPW_R_SIZE_MAX
 # define GETPW_R_SIZE_MAX()	sysconf (_SC_GETPW_R_SIZE_MAX)
@@ -1219,40 +1224,31 @@ weak_alias (__glob_pattern_p, glob_pattern_p)
 static int
 __attribute_noinline__
 link_exists2_p (const char *dir, size_t dirlen, const char *fname,
-	       glob_t *pglob
-# ifndef _LIBC
-		, int flags
-# endif
-		)
+		glob_t *pglob)
 {
   size_t fnamelen = strlen (fname);
   char *fullname = __alloca (dirlen + 1 + fnamelen + 1);
   struct stat st;
-# ifndef _LIBC
-  struct_stat64 st64;
-# endif
 
   mempcpy (mempcpy (mempcpy (fullname, dir, dirlen), "/", 1),
 	   fname, fnamelen + 1);
 
-# ifdef _LIBC
   return (*pglob->gl_stat) (fullname, &st) == 0;
-# else
-  return ((__builtin_expect (flags & GLOB_ALTDIRFUNC, 0)
-	   ? (*pglob->gl_stat) (fullname, &st)
-	   : __stat64 (fullname, &st64)) == 0);
-# endif
 }
-# ifdef _LIBC
-#  define link_exists_p(dfd, dirname, dirnamelen, fname, pglob, flags) \
-  (__builtin_expect (flags & GLOB_ALTDIRFUNC, 0)			      \
-   ? link_exists2_p (dirname, dirnamelen, fname, pglob)			      \
-   : ({ struct stat64 st64;						      \
-       __fxstatat64 (_STAT_VER, dfd, fname, &st64, 0) == 0; }))
-# else
-#  define link_exists_p(dfd, dirname, dirnamelen, fname, pglob, flags) \
-  link_exists2_p (dirname, dirnamelen, fname, pglob, flags)
-# endif
+
+/* Return true if DIR/FNAME exists.  */
+static int
+link_exists_p (int dfd, const char *dir, size_t dirlen, const char *fname,
+	       glob_t *pglob, int flags)
+{
+  if (__builtin_expect (flags & GLOB_ALTDIRFUNC, 0))
+    return link_exists2_p (dir, dirlen, fname, pglob);
+  else
+    {
+      struct_stat64 st64;
+      return __fxstatat64 (_STAT_VER, dfd, fname, &st64, 0) == 0;
+    }
+}
 #endif
 
 
@@ -1328,10 +1324,8 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
 	}
       else
 	{
-#ifdef _LIBC
 	  int dfd = (__builtin_expect (flags & GLOB_ALTDIRFUNC, 0)
 		     ? -1 : dirfd ((DIR *) stream));
-#endif
 	  int fnm_flags = ((!(flags & GLOB_PERIOD) ? FNM_PERIOD : 0)
 			   | ((flags & GLOB_NOESCAPE) ? FNM_NOESCAPE : 0)
 #if defined _AMIGA || defined VMS

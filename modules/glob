@@ -11,11 +11,12 @@ m4/glob.m4
 Depends-on:
 alloca
 d-type
+dirfd
 extensions
 fnmatch
 getlogin_r
 mempcpy
-stdbool
+openat
 strdup
 sys_stat
 unistd
