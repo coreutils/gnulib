@@ -1,4 +1,4 @@
-# locale-fr.m4 serial 6 (gettext-0.16.2)
+# locale-fr.m4 serial 7 (gettext-0.16.2)
 dnl Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,6 +37,8 @@ changequote(,)dnl
 #if HAVE_LANGINFO_CODESET
 # include <langinfo.h>
 #endif
+#include <stdlib.h>
+#include <string.h>
 struct tm t;
 char buf[16];
 int main () {
@@ -47,6 +49,11 @@ int main () {
      is empty, and the behaviour of Tcl 8.4 in this locale is not useful.  */
 #if HAVE_LANGINFO_CODESET
   if (nl_langinfo (CODESET) [0] == '\0') return 1;
+#endif
+#ifdef __CYGWIN__
+  /* On Cygwin, avoid locale names  without encoding suffix, because the
+     locale_charset() function relies on the encoding suffix.  */
+  if (strchr (getenv ("LC_ALL"), '.') == NULL) return 1;
 #endif
   /* Check whether in the abbreviation of the second month, the second
      character (should be U+00E9: LATIN SMALL LETTER E WITH ACUTE) is only
@@ -113,6 +120,8 @@ changequote(,)dnl
 #if HAVE_LANGINFO_CODESET
 # include <langinfo.h>
 #endif
+#include <stdlib.h>
+#include <string.h>
 struct tm t;
 char buf[16];
 int main () {
@@ -127,6 +136,11 @@ int main () {
      is empty, and the behaviour of Tcl 8.4 in this locale is not useful.  */
 # if HAVE_LANGINFO_CODESET
   if (nl_langinfo (CODESET) [0] == '\0') return 1;
+# endif
+# ifdef __CYGWIN__
+  /* On Cygwin, avoid locale names  without encoding suffix, because the
+     locale_charset() function relies on the encoding suffix.  */
+  if (strchr (getenv ("LC_ALL"), '.') == NULL) return 1;
 # endif
   /* Check whether in the abbreviation of the second month, the second
      character (should be U+00E9: LATIN SMALL LETTER E WITH ACUTE) is

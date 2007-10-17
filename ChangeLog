@@ -1,3 +1,10 @@
+2007-10-17  Bruno Haible  <bruno@clisp.org>
+
+	* m4/locale-fr.m4 (gt_LOCALE_FR, gt_LOCALE_FR_UTF8): On Cygwin, don't
+	allow locale names without encoding suffix.
+	* m4/locale-tr.m4 (gt_LOCALE_TR_UTF8): Likewise.
+	* m4/locale-zh.m4 (gt_LOCALE_ZH_CN): Likewise.
+
 2007-10-16  Bruno Haible  <bruno@clisp.org>
 
 	* lib/getcwd.c (__getcwd): Define with explicit rpl_ prefix.
