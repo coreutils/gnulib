@@ -1,3 +1,12 @@
+2007-10-16  Bruno Haible  <bruno@clisp.org>
+
+	* modules/absolute-header (License): Change from LGPL to LGPLv2+.
+	* modules/malloc-posix (License): Likewise.
+	* modules/realloc-posix (License): Likewise.
+	* modules/calloc-posix (License): Likewise.
+	* modules/intprops (License): Change from GPL to LGPL, with
+	Paul Eggert's approval.
+
 2007-10-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Merge glibc changes into lib/glob.c.

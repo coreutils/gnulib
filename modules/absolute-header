@@ -17,7 +17,7 @@ HAVE_INCLUDE_NEXT = (__GNUC__ || 60000000 <= __DECC_VER)
 Include:
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
