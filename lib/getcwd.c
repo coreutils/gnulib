@@ -89,7 +89,7 @@
 #endif
 
 #if !_LIBC
-# define __getcwd getcwd
+# define __getcwd rpl_getcwd
 # define __lstat lstat
 # define __closedir closedir
 # define __opendir opendir

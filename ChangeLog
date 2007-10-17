@@ -1,5 +1,11 @@
 2007-10-16  Bruno Haible  <bruno@clisp.org>
 
+	* lib/getcwd.c (__getcwd): Define with explicit rpl_ prefix.
+	* lib/getgroups.c (getgroups): Likewise.
+	* lib/gettimeofday.c (localtime, gmtime, tzset): Likewise.
+
+2007-10-16  Bruno Haible  <bruno@clisp.org>
+
 	* modules/absolute-header (License): Change from LGPL to LGPLv2+.
 	* modules/malloc-posix (License): Likewise.
 	* modules/realloc-posix (License): Likewise.

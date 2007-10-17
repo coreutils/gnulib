@@ -48,7 +48,7 @@ static struct tm *localtime_buffer_addr = &tm_zero_buffer;
    localtime uses for its result.  */
 
 struct tm *
-localtime (time_t const *timep)
+rpl_localtime (time_t const *timep)
 {
 #undef localtime
   extern struct tm *localtime (time_t const *);
@@ -62,7 +62,7 @@ localtime (time_t const *timep)
 
 /* Same as above, since gmtime and localtime use the same buffer.  */
 struct tm *
-gmtime (time_t const *timep)
+rpl_gmtime (time_t const *timep)
 {
 #undef gmtime
   extern struct tm *gmtime (time_t const *);
@@ -80,7 +80,7 @@ gmtime (time_t const *timep)
 /* This is a wrapper for tzset, for systems on which tzset may clobber
    the static buffer used for localtime's result.  */
 void
-tzset (void)
+rpl_tzset (void)
 {
 #undef tzset
   extern void tzset (void);
