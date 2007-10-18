@@ -1,3 +1,8 @@
+2007-10-18  Bruno Haible  <bruno@clisp.org>
+
+	* m4/vasnprintf.m4 (VASNPRINTF): Don't use %n on glibc >= 2.3 systems.
+	Reported by Jim Meyering.
+
 2007-10-18  Eric Blake  <ebb9@byu.net>
 
 	* modules/filenamecat-tests (Makefile.am): Link against -lintl.

@@ -3385,9 +3385,21 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #endif
 		  *fbp = dp->conversion;
 #if USE_SNPRINTF
+# if !(__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3))
 		fbp[1] = '%';
 		fbp[2] = 'n';
 		fbp[3] = '\0';
+# else
+		/* On glibc2 systems from glibc >= 2.3 - probably also older
+		   ones - we know that snprintf's returns value conforms to
+		   ISO C 99: the gl_SNPRINTF_DIRECTIVE_N test passes.
+		   Therefore we can avoid using %n in this situation.
+		   On glibc2 systems from 2004-10-18 or newer, the use of %n
+		   in format strings in writable memory may crash the program
+		   (if compiled with _FORTIFY_SOURCE=2), so we should avoid it
+		   in this situation.  */
+		fbp[1] = '\0';
+# endif
 #else
 		fbp[1] = '\0';
 #endif
