@@ -1,4 +1,4 @@
-# printf.m4 serial 16
+# printf.m4 serial 17
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -585,11 +585,16 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_N],
       AC_TRY_RUN([
 #include <stdio.h>
 #include <string.h>
+static char fmtstring[10];
 static char buf[100];
 int main ()
 {
   int count = -1;
-  if (sprintf (buf, "%d %n", 123, &count, 33, 44, 55) < 0
+  /* Copy the format string.  Some systems (glibc with _FORTIFY_SOURCE=2)
+     support %n in format strings in read-only memory but not in writable
+     memory.  */
+  strcpy (fmtstring, "%d %n");
+  if (sprintf (buf, fmtstring, 123, &count, 33, 44, 55) < 0
       || strcmp (buf, "123 ") != 0
       || count != 4)
     return 1;
@@ -872,11 +877,16 @@ AC_DEFUN([gl_SNPRINTF_DIRECTIVE_N],
       AC_TRY_RUN([
 #include <stdio.h>
 #include <string.h>
+static char fmtstring[10];
 static char buf[100];
 int main ()
 {
   int count = -1;
-  snprintf (buf, 4, "%d %n", 12345, &count, 33, 44, 55);
+  /* Copy the format string.  Some systems (glibc with _FORTIFY_SOURCE=2)
+     support %n in format strings in read-only memory but not in writable
+     memory.  */
+  strcpy (fmtstring, "%d %n");
+  snprintf (buf, 4, fmtstring, 12345, &count, 33, 44, 55);
   if (count != 6)
     return 1;
   return 0;

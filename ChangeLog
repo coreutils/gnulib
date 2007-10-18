@@ -1,3 +1,8 @@
+2007-10-18  Bruno Haible  <bruno@clisp.org>
+
+	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_N, gl_SNPRINTF_DIRECTIVE_N): Put
+	the format string into writable memory. Needed in Fortify conditions.
+
 2007-10-18  Colin Watson <cjwatson@debian.org>  (tiny change)
             Bruno Haible  <bruno@clisp.org>
 
