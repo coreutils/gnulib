@@ -2,16 +2,19 @@ Description:
 trim() removes leading and/or trailing whitespaces
 
 Files:
-lib/trim.c
 lib/trim.h
+lib/trim.c
 
 Depends-on:
 xalloc
+mbchar
 mbiter
 
 configure.ac:
+gl_FUNC_MBRTOWC
 
 Makefile.am:
+lib_SOURCES += trim.c
 
 Include:
 #include "trim.h"

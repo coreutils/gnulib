@@ -1,3 +1,12 @@
+2007-10-18  Colin Watson <cjwatson@debian.org>  (tiny change)
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/trim.c: Include config.h unconditionally. Include trim.h always.
+	Include ctype.h always. Include stdlib.h, not mbuiter.h, for MB_CUR_MAX.
+	* modules/trim (Depends-on): Add mbchar.
+	(configure.ac): Add gl_FUNC_MBRTOWC.
+	(Makefile.am): Augment lib_SOURCES.
+
 2007-10-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Modify glob.c to use fstatat and dirfd, to simplify it.

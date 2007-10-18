@@ -1,5 +1,5 @@
 /* Removes leading and/or trailing whitespaces
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,21 +16,21 @@
 
 /* Written by Davide Angelocola <davide.angelocola@gmail.com> */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include <config.h>
+
+/* Specification.  */
+#include "trim.h"
+
+#include <ctype.h>
 
 #if HAVE_MBRTOWC 
 # include <stddef.h>
+# include <stdlib.h>
 # include "mbchar.h"
 # include "mbiter.h"
-# include "mbuiter.h"		/* FIXME: for MB_CUR_MAX */
-#else
-# include <ctype.h>
 #endif
 
 #include "xalloc.h"
-#include "trim.h"
 
 char *
 trim2(const char *s, int how)
@@ -62,7 +62,7 @@ trim2(const char *s, int how)
       if (how != TRIM_LEADING) 
 	{
 	  int state = 0;
-	  char *r;
+	  char *r; /* used only while state = 2 */
 	  
 	  mbi_init (i, d, strlen (d));
 
