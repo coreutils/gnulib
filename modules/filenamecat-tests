@@ -9,3 +9,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-filenamecat
 check_PROGRAMS += test-filenamecat
+test_filenamecat_LDADD = $(LDADD) @LIBINTL@
