@@ -37,7 +37,7 @@ xprintf (char const *restrict format, ...)
   va_list args;
   va_start (args, format);
   int err = vprintf (format, args);
-  if (err && (errno == EILSEQ || errno == EINVAL || errno == ENOMEM))
+  if (err < 0 && (errno == EILSEQ || errno == EINVAL || errno == ENOMEM))
     error (exit_failure, errno, gettext ("write error"));
 
   return err;
@@ -51,7 +51,7 @@ xfprintf (FILE *restrict stream, char const *restrict format, ...)
   va_list args;
   va_start (args, format);
   int err = vfprintf (stream, format, args);
-  if (err && (errno == EILSEQ || errno == EINVAL || errno == ENOMEM))
+  if (err < 0 && (errno == EILSEQ || errno == EINVAL || errno == ENOMEM))
     error (exit_failure, errno, gettext ("write error"));
 
   return err;
