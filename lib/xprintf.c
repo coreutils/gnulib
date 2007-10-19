@@ -29,29 +29,29 @@
 
 /* written by Jim Meyering */
 
-/* Just like printf, but call error if it fails for any reason
-   for which printf does not set the stream error indicator.  */
+/* Just like printf, but call error if it fails without setting
+   the error indicator.  */
 int
 xprintf (char const *restrict format, ...)
 {
   va_list args;
   va_start (args, format);
   int err = vprintf (format, args);
-  if (err < 0 && (errno == EILSEQ || errno == EINVAL || errno == ENOMEM))
+  if (err < 0 && ! ferror (stdout))
     error (exit_failure, errno, gettext ("write error"));
 
   return err;
 }
 
-/* Just like fprintf, but call error if it fails for any reason
-   for which printf does not set the stream error indicator.  */
+/* Just like fprintf, but call error if it fails without setting
+   the error indicator.  */
 int
 xfprintf (FILE *restrict stream, char const *restrict format, ...)
 {
   va_list args;
   va_start (args, format);
   int err = vfprintf (stream, format, args);
-  if (err < 0 && (errno == EILSEQ || errno == EINVAL || errno == ENOMEM))
+  if (err < 0 && ! ferror (stream))
     error (exit_failure, errno, gettext ("write error"));
 
   return err;

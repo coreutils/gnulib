@@ -1,6 +1,7 @@
 2007-10-19  Jim Meyering  <meyering@redhat.com>
 
 	* lib/xprintf.c (xprintf, xfprintf): Test err < 0, not just "err".
+	Don't bother testing specific errno values.  Just test ferror.
 
 	New module: xprintf
 	* modules/xprintf, lib/xprintf.c, lib/xprintf.h: New files.
