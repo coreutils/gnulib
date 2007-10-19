@@ -21,7 +21,7 @@ javaexec-script
 configure.ac:
 
 Makefile.am:
-DEFS += -DEXEEXT=\"$(EXEEXT)\"
+DEFS += -DEXEEXT=\"@EXEEXT@\"
 lib_SOURCES += javaexec.h javaexec.c
 
 Include:

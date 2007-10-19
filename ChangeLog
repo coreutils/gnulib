@@ -1,3 +1,11 @@
+2007-10-19  Bruno Haible  <bruno@clisp.org>
+
+	* modules/csharpexec (Makefile.am): Use @FOO@ syntax instead of $(FOO)
+	syntax.
+	* modules/javaexec (Makefile.am): Likewise.
+	* modules/relocatable-prog (Makefile.am): Likewise.
+	Suggested by Jim Meyering.
+
 2007-10-18  Bruno Haible  <bruno@clisp.org>
 
 	* lib/vasnprintf.c (VASNPRINTF): Don't use %n on glibc >= 2.3 systems.

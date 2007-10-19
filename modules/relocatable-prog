@@ -25,7 +25,7 @@ configure.ac:
 gl_RELOCATABLE([$gl_source_base])
 
 Makefile.am:
-DEFS += -DEXEEXT=\"$(EXEEXT)\"
+DEFS += -DEXEEXT=\"@EXEEXT@\"
 
 Include:
 #include "relocatable.h"

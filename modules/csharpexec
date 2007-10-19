@@ -21,7 +21,7 @@ csharpexec-script
 configure.ac:
 
 Makefile.am:
-DEFS += -DEXEEXT=\"$(EXEEXT)\"
+DEFS += -DEXEEXT=\"@EXEEXT@\"
 lib_SOURCES += csharpexec.h csharpexec.c
 
 Include:
