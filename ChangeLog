@@ -1,5 +1,10 @@
 2007-10-20  Jim Meyering  <meyering@redhat.com>
 
+	Change xprintf's license to GPL.
+	* modules/xprintf (License): s/LGPL/GPL/, since this module
+	depends on modules (exit and exitfail) which are GPL.
+	Suggestion from Bruno Haible.
+
 	xprintf fixes.
 	* lib/xprintf.c (xprintf, xfprintf): Use va_end.
 	Use a clearer diagnostic.
