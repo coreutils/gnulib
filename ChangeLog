@@ -1,5 +1,7 @@
 2007-10-20  Jim Meyering  <meyering@redhat.com>
 
+	* lib/xprintf.c: Include <config.h> unconditionally.
+
 	Change xprintf's license to GPL.
 	* modules/xprintf (License): s/LGPL/GPL/, since this module
 	depends on modules (exit and exitfail) which are GPL.
