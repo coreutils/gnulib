@@ -1,0 +1,26 @@
+Description:
+ceil() function: round towards positive infinity.
+
+Files:
+m4/ceil.m4
+
+Depends-on:
+math
+
+configure.ac:
+gl_FUNC_CEIL
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(CEIL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

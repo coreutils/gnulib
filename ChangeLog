@@ -1,5 +1,17 @@
 2007-10-20  Bruno Haible  <bruno@clisp.org>
 
+	* modules/ceil: New file.
+	* m4/ceil.m4: New file.
+	* doc/functions/ceil.texi: Mention the 'ceil' module.
+
+2007-10-20  Bruno Haible  <bruno@clisp.org>
+
+	* modules/floor: New file.
+	* m4/floor.m4: New file.
+	* doc/functions/floor.texi: Mention the 'floor' module.
+
+2007-10-20  Bruno Haible  <bruno@clisp.org>
+
 	* modules/ceilf-tests (Depends-on): Add fprintf-posix. Needed for use
 	of %a.
 	* modules/floorf-tests (Depends-on): Likewise.

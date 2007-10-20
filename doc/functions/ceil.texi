@@ -4,7 +4,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/ceil.html}
 
-Gnulib module: ---
+Gnulib module: ceil
 
 Portability problems fixed by Gnulib:
 @itemize
