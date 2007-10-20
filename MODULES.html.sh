@@ -1977,6 +1977,9 @@ func_all_modules ()
   func_module ldexpl
   func_module math
   func_module mathl
+  func_module round
+  func_module roundf
+  func_module roundl
   func_module signbit
   func_module trunc
   func_module truncf

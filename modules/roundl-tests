@@ -1,0 +1,16 @@
+Files:
+tests/test-roundl.c
+
+Depends-on:
+fpucw
+isnanl-nolibm
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-roundl
+check_PROGRAMS += test-roundl
+test_roundl_LDADD = $(LDADD) @ROUNDL_LIBM@
+
+License:
+LGPL

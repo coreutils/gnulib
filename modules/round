@@ -1,0 +1,32 @@
+Description:
+round() function: round toward nearest, breaking ties away from zero.
+
+Files:
+lib/round.c
+m4/check-libm-func.m4
+m4/round.m4
+
+Depends-on:
+float
+floor
+math
+extensions
+
+configure.ac:
+gl_FUNC_ROUND
+gl_MATH_MODULE_INDICATOR([round])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(ROUND_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Ben Pfaff
+

@@ -30,6 +30,9 @@ math.h: math.in.h
 	      -e 's|@''GNULIB_FREXPL''@|$(GNULIB_FREXPL)|g' \
 	      -e 's|@''GNULIB_LDEXPL''@|$(GNULIB_LDEXPL)|g' \
 	      -e 's|@''GNULIB_MATHL''@|$(GNULIB_MATHL)|g' \
+	      -e 's|@''GNULIB_ROUND''@|$(GNULIB_ROUND)|g' \
+	      -e 's|@''GNULIB_ROUNDF''@|$(GNULIB_ROUNDF)|g' \
+	      -e 's|@''GNULIB_ROUNDL''@|$(GNULIB_ROUNDL)|g' \
 	      -e 's|@''GNULIB_SIGNBIT''@|$(GNULIB_SIGNBIT)|g' \
 	      -e 's|@''GNULIB_TRUNC''@|$(GNULIB_TRUNC)|g' \
 	      -e 's|@''GNULIB_TRUNCF''@|$(GNULIB_TRUNCF)|g' \
@@ -46,6 +49,9 @@ math.h: math.in.h
 	      -e 's|@''HAVE_DECL_FREXPL''@|$(HAVE_DECL_FREXPL)|g' \
 	      -e 's|@''HAVE_DECL_LDEXPL''@|$(HAVE_DECL_LDEXPL)|g' \
 	      -e 's|@''HAVE_DECL_LOGL''@|$(HAVE_DECL_LOGL)|g' \
+	      -e 's|@''HAVE_DECL_ROUND''@|$(HAVE_DECL_ROUND)|g' \
+	      -e 's|@''HAVE_DECL_ROUNDF''@|$(HAVE_DECL_ROUNDF)|g' \
+	      -e 's|@''HAVE_DECL_ROUNDL''@|$(HAVE_DECL_ROUNDL)|g' \
 	      -e 's|@''HAVE_DECL_SINL''@|$(HAVE_DECL_SINL)|g' \
 	      -e 's|@''HAVE_DECL_SQRTL''@|$(HAVE_DECL_SQRTL)|g' \
 	      -e 's|@''HAVE_DECL_TANL''@|$(HAVE_DECL_TANL)|g' \

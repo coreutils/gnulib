@@ -217,6 +217,48 @@ extern long double logl (long double x);
 #endif
 
 
+#if @GNULIB_ROUNDF@
+# if !@HAVE_DECL_ROUNDF@
+#  define roundf rpl_roundf
+extern float roundf (float x);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef roundf
+# define roundf(x) \
+    (GL_LINK_WARNING ("roundf is unportable - " \
+                      "use gnulib module roundf for portability"), \
+     roundf (x))
+#endif
+
+
+#if @GNULIB_ROUND@
+# if !@HAVE_DECL_ROUND@
+#  define round rpl_round
+extern double round (double x);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef round
+# define round(x) \
+    (GL_LINK_WARNING ("round is unportable - " \
+                      "use gnulib module round for portability"), \
+     round (x))
+#endif
+
+
+#if @GNULIB_ROUNDL@
+# if !@HAVE_DECL_ROUNDL@
+#  define roundl rpl_roundl
+extern long double roundl (long double x);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef roundl
+# define roundl(x) \
+    (GL_LINK_WARNING ("roundl is unportable - " \
+                      "use gnulib module roundl for portability"), \
+     roundl (x))
+#endif
+
+
 #if @GNULIB_MATHL@ || !@HAVE_DECL_SINL@
 extern long double sinl (long double x);
 #endif

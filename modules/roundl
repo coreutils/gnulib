@@ -1,0 +1,32 @@
+Description:
+roundl() function: round toward nearest, breaking ties away from zero.
+
+Files:
+lib/round.c
+lib/roundl.c
+m4/check-libm-func.m4
+m4/roundl.m4
+
+Depends-on:
+float
+math
+extensions
+
+configure.ac:
+gl_FUNC_ROUNDL
+gl_MATH_MODULE_INDICATOR([roundl])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(ROUNDL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Ben Pfaff
+

@@ -1,3 +1,33 @@
+2007-10-20  Ben Pfaff  <blp@gnu.org>
+
+	* lib/math.in.h: Declare round, roundf, roundl if we are providing
+	implementations.
+	* m4/math_h.m4: New substitutions for round, roundf, roundl modules.
+	* lib/round.c: New file.
+	* lib/roundf.c: New file.
+	* lib/roundl.c: New file.
+	* m4/round.m4: New file.
+	* m4/roundf.m4: New file.
+	* m4/roundl.m4: New file.
+	* m4/check-libm-func-m4: New file.
+	* modules/math: Replace round, roundf, roundl related @VARS@ in
+	math.in.h.
+	* modules/round: New file.
+	* modules/round-tests: New file.
+	* modules/roundf: New file.
+	* modules/roundf-tests: New file.
+	* modules/roundl: New file.
+	* modules/roundl-tests: New file.
+	* tests/test-round1.c: New file.
+	* tests/test-round2.c: New file.
+	* tests/test-roundf1.c: New file.
+	* tests/test-roundf2.c: New file.
+	* tests/test-roundl.c: New file.
+	* doc/functions/round.texi: Mention round module.
+	* doc/functions/roundf.texi: Mention roundf module.
+	* doc/functions/roundl.texi: Mention roundl module.
+	* MODULES.html.sh: Mention new modules.
+
 2007-10-20  Jim Meyering  <meyering@redhat.com>
 
 	* lib/xprintf.c: Include <config.h> unconditionally.
