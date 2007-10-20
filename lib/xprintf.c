@@ -38,7 +38,8 @@ xprintf (char const *restrict format, ...)
   va_start (args, format);
   int err = vprintf (format, args);
   if (err < 0 && ! ferror (stdout))
-    error (exit_failure, errno, gettext ("write error"));
+    error (exit_failure, errno, gettext ("cannot perform formatted output"));
+  va_end (args);
 
   return err;
 }
@@ -52,7 +53,8 @@ xfprintf (FILE *restrict stream, char const *restrict format, ...)
   va_start (args, format);
   int err = vfprintf (stream, format, args);
   if (err < 0 && ! ferror (stream))
-    error (exit_failure, errno, gettext ("write error"));
+    error (exit_failure, errno, gettext ("cannot perform formatted output"));
+  va_end (args);
 
   return err;
 }
