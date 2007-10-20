@@ -113,10 +113,10 @@ correct_result_p (DOUBLE x, DOUBLE result)
   return
     (x >= 0
      ? (x < 1 ? result == L_(0.0) :
-	x - 1 < x ? result <= x && result > x - 1 :
+	x - 1 < x ? result <= x && result >= x - 1 && x - result < 1 :
 	equal (result, x))
      : (x > -1 ? result == L_(0.0) :
-	x + 1 > x ? result >= x && result < x + 1 :
+	x + 1 > x ? result >= x && result <= x + 1 && result - x < 1 :
 	equal (result, x)));
 }
 
