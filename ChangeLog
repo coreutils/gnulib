@@ -1,5 +1,11 @@
 2007-10-20  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (VASNPRINTF): Don't report overflow if the available
+	length is INT_MAX and sizeof (DCHAR_T) > sizeof (TCHAR_T).
+	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
+2007-10-20  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-floorf2.c (correct_result_p): Don't rely on excess
 	precision in the comparison result > x - 1 or similar.
 	* tests/test-ceilf2.c (correct_result_p): Likewise.

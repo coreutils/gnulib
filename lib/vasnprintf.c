@@ -3442,7 +3442,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		    /* SNPRINTF can fail if its second argument is
 		       > INT_MAX.  */
 		    if (maxlen > INT_MAX / TCHARS_PER_DCHAR)
-		      goto overflow;
+		      maxlen = INT_MAX / TCHARS_PER_DCHAR;
 		    maxlen = maxlen * TCHARS_PER_DCHAR;
 # define SNPRINTF_BUF(arg) \
 		    switch (prefix_count)				    \
@@ -3663,17 +3663,26 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		    /* Handle overflow of the allocated buffer.  */
 		    if (count >= maxlen)
 		      {
-			/* Need at least count * sizeof (TCHAR_T) bytes.  But
-			   allocate proportionally, to avoid looping eternally
-			   if snprintf() reports a too small count.  */
-			size_t n =
-			  xmax (xsum (length,
-				      (count + TCHARS_PER_DCHAR - 1)
-				      / TCHARS_PER_DCHAR),
-				xtimes (allocated, 2));
+			/* If maxlen already has attained its allowed maximum,
+			   allocating more memory will not increase maxlen.
+			   Instead of looping, bail out.  */
+			if (maxlen == INT_MAX / TCHARS_PER_DCHAR)
+			  goto overflow;
+			else
+			  {
+			    /* Need at least count * sizeof (TCHAR_T) bytes.
+			       But allocate proportionally, to avoid looping
+			       eternally if snprintf() reports a too small
+			       count.  */
+			    size_t n =
+			      xmax (xsum (length,
+					  (count + TCHARS_PER_DCHAR - 1)
+					  / TCHARS_PER_DCHAR),
+				    xtimes (allocated, 2));
 
-			ENSURE_ALLOCATION (n);
-			continue;
+			    ENSURE_ALLOCATION (n);
+			    continue;
+			  }
 		      }
 #endif
 
