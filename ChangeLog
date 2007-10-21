@@ -1,3 +1,7 @@
+2007-10-21  Eric Blake  <ebb9@byu.net>
+
+	* users.txt: Update URL for m4.
+
 2007-10-21  Bruno Haible  <bruno@clisp.org>
 
 	* users.txt: Add clisp. Update URLs to Simon Josefsson's projects.
