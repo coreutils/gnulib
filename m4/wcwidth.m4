@@ -1,4 +1,4 @@
-# wcwidth.m4 serial 12
+# wcwidth.m4 serial 13
 dnl Copyright (C) 2006, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,6 +37,7 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
     REPLACE_WCWIDTH=1
   else
     dnl On MacOS X 10.3, wcwidth(0x0301) (COMBINING ACUTE ACCENT) returns 1.
+    dnl On OSF/1 5.1, wcwidth(0x200B) (ZERO WIDTH SPACE) returns 1.
     dnl This leads to bugs in 'ls' (coreutils).
     AC_CACHE_CHECK([whether wcwidth works reasonably in UTF-8 locales],
       [gl_cv_func_wcwidth_works],
@@ -63,7 +64,7 @@ int wcwidth (int);
 int main ()
 {
   if (setlocale (LC_ALL, "fr_FR.UTF-8") != NULL)
-    if (wcwidth (0x0301) > 0)
+    if (wcwidth (0x0301) > 0 || wcwidth (0x200B) > 0)
       return 1;
   return 0;
 }], [gl_cv_func_wcwidth_works=yes], [gl_cv_func_wcwidth_works=no],

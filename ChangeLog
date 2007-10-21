@@ -1,5 +1,10 @@
 2007-10-21  Bruno Haible  <bruno@clisp.org>
 
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Check also the width of U+200B.
+	Needed on OSF/1 5.1.
+
+2007-10-21  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-floorf1.c: Include isnanf.h.
 	(main): Use isnanf() instead of isnan().
 	* tests/test-ceilf1.c: Include isnanf.h.
