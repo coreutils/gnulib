@@ -23,6 +23,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "isnanf.h"
+
 #define ASSERT(expr) \
   do									     \
     {									     \
@@ -76,7 +78,7 @@ main ()
   ASSERT (truncf (1.0f / 0.0f) == 1.0f / 0.0f);
   ASSERT (truncf (-1.0f / 0.0f) == -1.0f / 0.0f);
   /* NaNs.  */
-  ASSERT (isnan (truncf (NaN ())));
+  ASSERT (isnanf (truncf (NaN ())));
 
   return 0;
 }

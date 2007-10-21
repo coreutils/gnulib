@@ -23,6 +23,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "isnanf.h"
+
 #define ASSERT(expr) \
   do									     \
     {									     \
@@ -77,7 +79,7 @@ main ()
   ASSERT (ceilf (1.0f / 0.0f) == 1.0f / 0.0f);
   ASSERT (ceilf (-1.0f / 0.0f) == -1.0f / 0.0f);
   /* NaNs.  */
-  ASSERT (isnan (ceilf (NaN ())));
+  ASSERT (isnanf (ceilf (NaN ())));
 
   return 0;
 }

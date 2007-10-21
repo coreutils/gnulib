@@ -25,6 +25,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "isnanf.h"
+
 #define ASSERT(expr) \
   do									     \
     {									     \
@@ -84,7 +86,7 @@ main ()
   ASSERT (roundf (1.0 / 0.0f) == 1.0 / 0.0f);
   ASSERT (roundf (-1.0 / 0.0f) == -1.0 / 0.0f);
   /* NaNs.  */
-  ASSERT (isnan (roundf (NaN ())));
+  ASSERT (isnanf (roundf (NaN ())));
 
   return 0;
 }
