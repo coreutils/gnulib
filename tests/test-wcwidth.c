@@ -56,11 +56,11 @@ main ()
       ASSERT (wcwidth (0x05B0) == 0);
 
       /* Test width of some format control characters.  */
-      ASSERT (wcwidth (0x200E) == 0);
+      ASSERT (wcwidth (0x200E) <= 0);
       ASSERT (wcwidth (0x2060) == 0);
 #if 0  /* wchar_t may be only 16 bits.  */
-      ASSERT (wcwidth (0xE0001) == 0);
-      ASSERT (wcwidth (0xE0044) == 0);
+      ASSERT (wcwidth (0xE0001) <= 0);
+      ASSERT (wcwidth (0xE0044) <= 0);
 #endif
 
       /* Test width of some zero width characters.  */

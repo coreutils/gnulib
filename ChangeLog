@@ -1,5 +1,8 @@
 2007-10-21  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-wcwidth.c (main): Allow negative result for some control
+	characters.
+
 	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Check also the width of U+200B.
 	Needed on OSF/1 5.1.
 
