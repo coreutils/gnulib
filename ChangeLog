@@ -1,3 +1,8 @@
+2007-10-21  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_create_megatestdir): Determine the cvsdate from
+	Git's management files if the CVS files are not present.
+
 2007-10-20  Bruno Haible  <bruno@clisp.org>
 
 	* lib/count-one-bits.h (COUNT_ONE_BITS): Use the builtin also for

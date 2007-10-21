@@ -3538,7 +3538,12 @@ func_create_megatestdir ()
   func_append megasubdirs "ALL"
 
   # Create autobuild.
-  cvsdate=`sh "$gnulib_dir/build-aux/mdate-sh" "$gnulib_dir/CVS/Entries" \
+  cvsdate=`if test -f "$gnulib_dir/CVS/Entries"; then \
+             vc_witness="$gnulib_dir/CVS/Entries"; \
+           else \
+             vc_witness="$gnulib_dir/.git/refs/heads/master"; \
+           fi; \
+           sh "$gnulib_dir/build-aux/mdate-sh" "$vc_witness" \
              | sed -e 's,January,01,'   -e 's,Jan,01,' \
                    -e 's,February,02,'  -e 's,Feb,02,' \
                    -e 's,March,03,'     -e 's,Mar,03,' \
