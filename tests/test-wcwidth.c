@@ -65,7 +65,7 @@ main ()
 
       /* Test width of some zero width characters.  */
       ASSERT (wcwidth (0x200B) == 0);
-      ASSERT (wcwidth (0xFEFF) == 0);
+      ASSERT (wcwidth (0xFEFF) <= 0);
 
       /* Test width of some CJK characters.  */
       ASSERT (wcwidth (0x3000) == 2);
