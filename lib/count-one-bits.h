@@ -25,7 +25,7 @@
 /* Expand the code which computes the number of 1-bits of the local
    variable 'x' of type TYPE (an unsigned integer type) and returns it
    from the current function.  */
-#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR >= 4)
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
 #define COUNT_ONE_BITS(BUILTIN, TYPE)              \
         return BUILTIN (x);
 #else
