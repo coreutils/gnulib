@@ -1,5 +1,9 @@
 2007-10-21  Bruno Haible  <bruno@clisp.org>
 
+	* users.txt: Add clisp. Update URLs to Simon Josefsson's projects.
+
+2007-10-21  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_create_megatestdir): Determine the cvsdate from
 	Git's management files if the CVS files are not present.
 

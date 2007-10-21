@@ -2,18 +2,20 @@ The following packages appear to be using gnulib and gnulib-tool:
 
   Net::CDP        http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
   OPeNDAP         http://scm.opendap.org:8090/svn/trunk/
-  autobuild	  http://josefsson.org/autobuild/
+  autobuild       http://josefsson.org/autobuild/
   bison           http://cvs.sv.gnu.org/viewcvs/bison/bison/
+  clisp           http://clisp.cvs.sourceforge.net/clisp/clisp/
   coreutils       http://cvs.sv.gnu.org/viewcvs/coreutils/coreutils/
   cvs             http://cvs.sv.gnu.org/viewcvs/cvs/ccvs/
   diffutils       http://cvs.sv.gnu.org/viewcvs/diffutils/diffutils/
   findutils       http://cvs.sv.gnu.org/viewcvs/findutils/findutils/
   gettext         http://cvs.sv.gnu.org/viewcvs/gettext/gettext/
   gnutls          http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/gnutls/?root=GNU+TLS+Library
-                  http://josefsson.org/cgi-bin/viewcvs.cgi/gnutls/?root=gnupg-mirror
+                  http://git.sv.gnu.org/gitweb/?p=gnutls.git
+                  http://repo.or.cz/w/gnutls.git
   gpg             http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/
-  gsasl           http://josefsson.org/cgi-bin/viewcvs.cgi/gsasl/
-  gss             http://josefsson.org/cgi-bin/viewcvs.cgi/gss/
+  gsasl           http://git.sv.gnu.org/gitweb/?p=gsasl.git
+  gss             http://git.sv.gnu.org/gitweb/?p=gss.git
   guile           http://cvs.sv.gnu.org/viewvc/guile/guile/guile-core/
   gzip            http://cvs.sv.gnu.org/viewcvs/gzip/gzip/
   hello           http://cvs.sv.gnu.org/viewcvs/hello/hello/
@@ -22,13 +24,13 @@ The following packages appear to be using gnulib and gnulib-tool:
   jwhois          http://cvs.sv.gnu.org/viewvc/jwhois/jwhois/
   libdap          http://scm.opendap.org:8090/svn/trunk/libdap/
   libiconv        http://libiconv.cvs.sourceforge.net/libiconv/libiconv/
-  libidn          http://josefsson.org/cgi-bin/viewcvs.cgi/libidn/
-  libksba         http://josefsson.org/cgi-bin/viewcvs.cgi/libksba/?root=gnupg-mirror
-  libntlm         http://josefsson.org/cgi-bin/viewcvs.cgi/libntlm/
+  libidn          http://git.sv.gnu.org/gitweb/?p=libidn.git
+  libksba         ?
+  libntlm         http://git.josefsson.org/?p=libntlm.git;a=summary
   libprelude      https://trac.prelude-ids.org/browser/trunk/libprelude/
   libpreludedb    https://trac.prelude-ids.org/browser/trunk/libpreludedb/
   libtasn1        http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/libtasn1/?root=GNU+TLS+Library
-                  http://josefsson.org/cgi-bin/viewcvs.cgi/libtasn1/?root=gnupg-mirror
+                  http://repo.or.cz/w/libtasn1.git
   m4              http://cvs.sv.gnu.org/viewcvs/m4/m4/
   miktex          https://svn.sourceforge.net/svnroot/miktex/miktex/trunk
   msmtp           http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
@@ -38,7 +40,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   prelude-manager https://trac.prelude-ids.org/browser/trunk/prelude-manager/
   pspp            http://cvs.sv.gnu.org/viewcvs/pspp/pspp/
   sed             http://cvs.savannah.gnu.org/viewcvs/sed/?root=sed
-  shishi          http://josefsson.org/cgi-bin/viewcvs.cgi/shishi/
+  shishi          http://git.sv.gnu.org/gitweb/?p=shishi.git
   tar             http://cvs.sv.gnu.org/viewcvs/tar/tar/
   texinfo         http://cvs.sv.gnu.org/viewcvs/texinfo/texinfo/
 
@@ -46,7 +48,7 @@ The following packages appear to be using gnulib and gnulib-tool:
 The following packages are using gnulib without gnulib-tool:
 
   libtool         http://cvs.sv.gnu.org/viewcvs/libtool/libtool/
-  libgcrypt	  http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/?root=Libgcrypt
+  libgcrypt       http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/?root=Libgcrypt
 
 Articles:
 
@@ -60,3 +62,12 @@ Copyright (C) 2006-2007 Free Software Foundation, Inc.
 This file is free documentation; the Free Software Foundation
 gives unlimited permission to copy and/or distribute it,
 with or without modifications, as long as this notice is preserved.
+
+-----
+
+Hey Emacs!
+Local Variables:
+indent-tabs-mode: nil
+whitespace-check-buffer-indent: nil
+End:
+
