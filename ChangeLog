@@ -2,11 +2,11 @@
 
 	* tests/test-floorf1.c: Include isnanf.h.
 	(main): Use isnanf() instead of isnan().
-	* tests/test-ceil1.c: Include isnanf.h.
+	* tests/test-ceilf1.c: Include isnanf.h.
 	(main): Use isnanf() instead of isnan().
-	* tests/test-trunc1.c: Include isnanf.h.
+	* tests/test-truncf1.c: Include isnanf.h.
 	(main): Use isnanf() instead of isnan().
-	* tests/test-round1.c: Include isnanf.h.
+	* tests/test-roundf1.c: Include isnanf.h.
 	(main): Use isnanf() instead of isnan().
 
 2007-10-21  Eric Blake  <ebb9@byu.net>
