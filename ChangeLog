@@ -1,5 +1,10 @@
 2007-10-21  Bruno Haible  <bruno@clisp.org>
 
+	* lib/printf-parse.c: Don't assume <stdint.h> exists in IN_LIBASPRINTF
+	context.
+
+2007-10-21  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-wcwidth.c (main): Allow negative result for some control
 	characters.
 
