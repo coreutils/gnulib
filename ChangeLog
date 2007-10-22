@@ -1,5 +1,11 @@
 2007-10-21  Ben Pfaff  <blp@gnu.org>
 
+	* modules/roundf-tests: Add dependency on floorf, ceilf to allow
+	round.c roundf implementation that depends on floorf and ceilf to
+	be tested unconditionally.
+
+2007-10-21  Ben Pfaff  <blp@gnu.org>
+
 	* m4/check-libm-func.m4: Removed.
 	* m4/check-math-lib.m4: New file.
 	* m4/round.m4: Rewrite to use gl_CHECK_MATH_LIB.

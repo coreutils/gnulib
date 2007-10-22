@@ -4,6 +4,8 @@ tests/test-round2.c
 tests/test-roundf2.c
 
 Depends-on:
+ceilf
+floorf
 isnanf-nolibm
 stdbool
 stdint
