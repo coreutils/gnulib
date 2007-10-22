@@ -1,3 +1,7 @@
+2007-10-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* tests/test-i-ring.c: Work for C89.
+
 2007-10-22  Bruno Haible  <bruno@clisp.org>
 
 	* m4/ulonglong.m4 (AC_TYPE_UNSIGNED_LONG_LONG_INT): Use -1ull, not

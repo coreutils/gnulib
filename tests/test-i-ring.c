@@ -37,9 +37,10 @@
 int
 main ()
 {
+  int o;
   I_ring ir;
   i_ring_init (&ir, -1);
-  int o = i_ring_push (&ir, 1);
+  o = i_ring_push (&ir, 1);
   ASSERT (o == -1);
   o = i_ring_push (&ir, 2);
   ASSERT (o == -1);
