@@ -1,3 +1,7 @@
+2007-10-22  Bruno Haible  <bruno@clisp.org>
+
+	* lib/acl.c (copy_acl): Fix file name in comment.
+
 2007-10-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Fix Tru64 problem with stdbool.h.
