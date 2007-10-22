@@ -4,7 +4,7 @@ tmpfiles=
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
 p=t-yesno-
-tmpfiles="${p}in.tmp ${p}xout.tmp ${p}out.tmp"
+tmpfiles="${p}in.tmp ${p}xout.tmp ${p}out.tmp ${p}err.tmp"
 
 # For now, only test with C locale
 LC_ALL=C
@@ -49,8 +49,9 @@ EOF
 cmp ${p}xout.tmp ${p}out.tmp || exit 1
 
 # Test for behavior when stdin is closed
-./test-yesno${EXEEXT} 0 <&- > ${p}out.tmp && exit 1
+./test-yesno${EXEEXT} 0 <&- > ${p}out.tmp 2> ${p}err.tmp && exit 1
 cmp ${p}xout.tmp ${p}out.tmp || exit 1
+test -s ${p}err.tmp || exit 1
 
 # Cleanup
 rm -fr $tmpfiles

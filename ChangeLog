@@ -1,3 +1,7 @@
+2007-10-22  Eric Blake  <ebb9@byu.net>
+
+	* tests/test-yesno.sh: Silence stderr during test.
+
 2007-10-22  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/crypto/gc-camellia: New file.
