@@ -42,6 +42,7 @@
 #define FUNC u16_conv_to_encoding
 #define UNIT uint16_t
 #define U_TO_U8 u16_to_u8
+#define U_MBLEN u16_mblen
 #if defined UTF16_NAME
 # define UTF_NAME UTF16_NAME
 # define HAVE_UTF_NAME 1

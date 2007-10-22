@@ -41,6 +41,7 @@
 #define FUNC u32_conv_to_encoding
 #define UNIT uint32_t
 #define U_TO_U8 u32_to_u8
+#define U_MBLEN u32_mblen
 #if defined UTF32_NAME
 # define UTF_NAME UTF32_NAME
 # define HAVE_UTF_NAME 1
