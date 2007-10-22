@@ -79,7 +79,9 @@ enum Gc_cipher
   GC_DES,
   GC_ARCFOUR128,
   GC_ARCFOUR40,
-  GC_ARCTWO40
+  GC_ARCTWO40,
+  GC_CAMELLIA128,
+  GC_CAMELLIA256
 };
 typedef enum Gc_cipher Gc_cipher;
 

@@ -1,0 +1,23 @@
+Description:
+Generic crypto wrappers for Camellia block cipher.
+
+Files:
+m4/gc-camellia.m4
+
+Depends-on:
+crypto/gc
+
+configure.ac:
+gl_GC_CAMELLIA
+gl_MODULE_INDICATOR([gc-camellia])
+
+Makefile.am:
+
+Include:
+"gc.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Simon Josefsson
