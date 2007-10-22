@@ -19,7 +19,6 @@
 #include "xprintf.h"
 
 #include <errno.h>
-#include <stdarg.h>
 
 #include "error.h"
 #include "exitfail.h"
@@ -33,11 +32,22 @@ int
 xprintf (char const *restrict format, ...)
 {
   va_list args;
+  int err;
   va_start (args, format);
+  err = xvprintf (format, args);
+  va_end (args);
+
+  return err;
+}
+
+/* Just like vprintf, but call error if it fails without setting
+   the error indicator.  */
+int
+xvprintf (char const *restrict format, va_list args)
+{
   int err = vprintf (format, args);
   if (err < 0 && ! ferror (stdout))
     error (exit_failure, errno, gettext ("cannot perform formatted output"));
-  va_end (args);
 
   return err;
 }
@@ -48,11 +58,22 @@ int
 xfprintf (FILE *restrict stream, char const *restrict format, ...)
 {
   va_list args;
+  int err;
   va_start (args, format);
+  err = xvfprintf (stream, format, args);
+  va_end (args);
+
+  return err;
+}
+
+/* Just like vfprintf, but call error if it fails without setting
+   the error indicator.  */
+int
+xvfprintf (FILE *restrict stream, char const *restrict format, va_list args)
+{
   int err = vfprintf (stream, format, args);
   if (err < 0 && ! ferror (stream))
     error (exit_failure, errno, gettext ("cannot perform formatted output"));
-  va_end (args);
 
   return err;
 }

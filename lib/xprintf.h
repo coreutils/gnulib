@@ -17,6 +17,7 @@
 #ifndef _XPRINTF_H
 #define _XPRINTF_H
 
+#include <stdarg.h>
 #include <stdio.h>
 
 #ifndef __attribute__
@@ -34,7 +35,12 @@
 
 extern int xprintf (char const *restrict format, ...)
   __attribute__ ((__format__ (__printf__, 1, 2)));
+extern int xvprintf (char const *restrict format, va_list args)
+  __attribute__ ((__format__ (__printf__, 1, 0)));
 extern int xfprintf (FILE *restrict stream, char const *restrict format, ...)
   __attribute__ ((__format__ (__printf__, 2, 3)));
+extern int xvfprintf (FILE *restrict stream, char const *restrict format,
+		      va_list args)
+  __attribute__ ((__format__ (__printf__, 2, 0)));
 
 #endif

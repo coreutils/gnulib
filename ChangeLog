@@ -1,3 +1,10 @@
+2007-10-22  Eric Blake  <ebb9@byu.net>
+
+	Also wrap vf?printf.
+	* lib/xprintf.h (xvprintf, xvfprintf): New declarations.
+	* lib/xprintf.c (xprintf, xfprintf): Work for C89.
+	(xvprintf, xvfprintf): New functions.
+
 2007-10-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* modules/fstrcmp-tests (test_fstrcmp_LDADD): New, add
