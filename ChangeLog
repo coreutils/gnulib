@@ -1,3 +1,10 @@
+2007-10-22  Eric Blake  <ebb9@byu.net>
+
+	Tweak x*printf documentation.
+	* lib/xprintf.c (xprintf, xvprintf, xfprintf, xvfprintf): Adjust
+	variable name and comments.
+	Suggested by Bruno Haible.
+
 2007-10-22  Bruno Haible  <bruno@clisp.org>
 
 	* lib/acl.c (copy_acl): Fix file name in comment.

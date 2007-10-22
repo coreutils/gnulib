@@ -26,54 +26,54 @@
 
 /* written by Jim Meyering */
 
-/* Just like printf, but call error if it fails without setting
-   the error indicator.  */
+/* Just like printf, but call error if it fails without setting the
+   stream's error indicator.  */
 int
 xprintf (char const *restrict format, ...)
 {
   va_list args;
-  int err;
+  int retval;
   va_start (args, format);
-  err = xvprintf (format, args);
+  retval = xvprintf (format, args);
   va_end (args);
 
-  return err;
+  return retval;
 }
 
-/* Just like vprintf, but call error if it fails without setting
-   the error indicator.  */
+/* Just like vprintf, but call error if it fails without setting the
+   stream's error indicator.  */
 int
 xvprintf (char const *restrict format, va_list args)
 {
-  int err = vprintf (format, args);
-  if (err < 0 && ! ferror (stdout))
+  int retval = vprintf (format, args);
+  if (retval < 0 && ! ferror (stdout))
     error (exit_failure, errno, gettext ("cannot perform formatted output"));
 
-  return err;
+  return retval;
 }
 
-/* Just like fprintf, but call error if it fails without setting
-   the error indicator.  */
+/* Just like fprintf, but call error if it fails without setting the
+   stream's error indicator.  */
 int
 xfprintf (FILE *restrict stream, char const *restrict format, ...)
 {
   va_list args;
-  int err;
+  int retval;
   va_start (args, format);
-  err = xvfprintf (stream, format, args);
+  retval = xvfprintf (stream, format, args);
   va_end (args);
 
-  return err;
+  return retval;
 }
 
-/* Just like vfprintf, but call error if it fails without setting
-   the error indicator.  */
+/* Just like vfprintf, but call error if it fails without setting the
+   stream's error indicator.  */
 int
 xvfprintf (FILE *restrict stream, char const *restrict format, va_list args)
 {
-  int err = vfprintf (stream, format, args);
-  if (err < 0 && ! ferror (stream))
+  int retval = vfprintf (stream, format, args);
+  if (retval < 0 && ! ferror (stream))
     error (exit_failure, errno, gettext ("cannot perform formatted output"));
 
-  return err;
+  return retval;
 }
