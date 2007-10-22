@@ -1,5 +1,11 @@
 2007-10-22  Simon Josefsson  <simon@josefsson.org>
 
+	* build-aux/maint.mk (gzip_rsyncable): Don't fail if gzip sends
+	--help to stdout.  Reported by sms@antinode.org (Steven
+	M. Schweda).
+
+2007-10-22  Simon Josefsson  <simon@josefsson.org>
+
 	* users.txt: Fix link to libksba.
 
 2007-10-21  Ben Pfaff  <blp@gnu.org>
