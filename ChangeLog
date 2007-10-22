@@ -1,5 +1,8 @@
 2007-10-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	* modules/fstrcmp-tests (test_fstrcmp_LDADD): New, add
+	@LIBINTL@ for FreeBSD 6.2, $(LIBTHREAD) for AIX 4.3.3.
+
 	* lib/uniconv/u16-conv-to-enc.c (U_MBLEN): Define.
 	* lib/uniconv/u32-conv-to-enc.c (U_MBLEN): Likewise.
 
