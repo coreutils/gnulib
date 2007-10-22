@@ -1,4 +1,4 @@
-# ulonglong.m4 serial 7
+# ulonglong.m4 serial 8
 dnl Copyright (C) 1999-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,7 +21,7 @@ AC_DEFUN([AC_TYPE_UNSIGNED_LONG_LONG_INT],
     [ac_cv_type_unsigned_long_long_int],
     [AC_LINK_IFELSE(
        [AC_LANG_PROGRAM(
-	  [[#if ! (18446744073709551615ULL <= -1u)
+	  [[#if ! (18446744073709551615ULL <= -1ull)
 	      error in preprocessor;
 	    #endif
 	    unsigned long long int ull = 18446744073709551615ULL;
