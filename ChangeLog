@@ -1,3 +1,8 @@
+2007-10-22  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdint.in.h: Add check that intmax_t and uintmax_t have the same
+	size.
+
 2007-10-22  Eric Blake  <ebb9@byu.net>
 
 	Tweak x*printf documentation.
