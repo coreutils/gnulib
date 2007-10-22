@@ -1,3 +1,8 @@
+2007-10-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/acl.c (copy_acl): Adjust to IRIX 6.5.  Problem reported
+	by Bruno Haible.
+
 2007-10-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* lib/getloadavg.c

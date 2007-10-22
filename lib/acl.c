@@ -84,7 +84,12 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
 	  int n = acl_entries (acl);
 
 	  acl_free (acl);
-	  if (n == 3)
+	  /* On most hosts an ACL is trivial if n == 3, and it cannot be
+	     less than 3.  On IRIX 6.5 it is also trivial if n == -1.
+	     For simplicity and safety, assume the ACL is trivial if n <= 3.
+	     Also see file_has_acl.c for some of the other possibilities;
+	     it's not clear whether that complexity is needed here.  */
+	  if (n <= 3)
 	    {
 	      if (chmod_or_fchmod (dst_name, dest_desc, mode) != 0)
 		saved_errno = errno;
