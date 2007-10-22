@@ -1,3 +1,12 @@
+2007-10-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Fix Tru64 problem with stdbool.h.
+	* lib/stdbool.in.h (false, true):
+	[! (defined __cplusplus || defined __BEOS__) && !defined __GNUC__]:
+	Don't declare as an enum in this situation; it runs afoul of Tru64.
+	Problem reported by Steven M. Schweda in
+	<http://lists.gnu.org/archive/html/bug-autoconf/2007-10/msg00019.html>.
+
 2007-10-22  Eric Blake  <ebb9@byu.net>
 
 	Also wrap vf?printf.
