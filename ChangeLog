@@ -1,3 +1,7 @@
+2007-10-22  Simon Josefsson  <simon@josefsson.org>
+
+	* users.txt: Fix link to libksba.
+
 2007-10-21  Ben Pfaff  <blp@gnu.org>
 
 	* modules/roundf-tests: Add dependency on floorf, ceilf to allow

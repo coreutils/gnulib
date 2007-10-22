@@ -25,7 +25,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   libdap          http://scm.opendap.org:8090/svn/trunk/libdap/
   libiconv        http://libiconv.cvs.sourceforge.net/libiconv/libiconv/
   libidn          http://git.sv.gnu.org/gitweb/?p=libidn.git
-  libksba         ?
+  libksba         http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/?root=KSBA
   libntlm         http://git.josefsson.org/?p=libntlm.git;a=summary
   libprelude      https://trac.prelude-ids.org/browser/trunk/libprelude/
   libpreludedb    https://trac.prelude-ids.org/browser/trunk/libpreludedb/
