@@ -1,4 +1,4 @@
-# roundl.m4 serial 1
+# roundl.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,14 +9,20 @@ AC_DEFUN([gl_FUNC_ROUNDL],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   dnl Persuade glibc <math.h> to declare roundl().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  dnl Test whether roundl() is declared.
-  gl_CHECK_LIBM_FUNC([roundl], [x = roundl(x);], [], [
-    dnl No.  Are both floorl() and ceill() available?  If so then we can use
-    dnl them to implement roundl(), on the assumption that they're fast.
-    gl_CHECK_LIBM_FUNC([floorl], [x = floorl(x);], [
-      AC_CHECK_DECL([ceill], 
-        [dnl Yes.  Both are declared.  Link against the necessary library.
-         ROUNDL_LIBM="$FLOORL_LIBM"],
-        [: dnl No. We will use an implementation that doesn't need them.
-], [#include <math.h>
-])])])])
+  AC_CHECK_DECLS([roundl], , , [#include <math.h>])
+  if test "$ac_cv_have_decl_roundl" = yes; then
+    gl_CHECK_MATH_LIB([ROUNDL_LIBM], [x = roundl (x);])
+  else
+    AC_CHECK_DECLS([ceill, floorl], , , [#include <math.h>])
+    if test "$ac_cv_have_decl_floorl" = yes &&
+       test "$ac_cv_have_decl_ceill" = yes; then
+      gl_CHECK_MATH_LIB([ROUNDL_LIBM], [x = floorl (x) + ceill (x);])
+    else
+      ROUNDL_LIBM=
+    fi
+    HAVE_DECL_ROUNDL=0
+    AC_LIBOBJ([roundl])
+  fi
+  AC_SUBST([HAVE_DECL_ROUNDL])
+  AC_SUBST([ROUNDL_LIBM])
+])

@@ -74,7 +74,7 @@ check (DOUBLE x)
 {
   DOUBLE ref1 = round_reference1 (x);
   DOUBLE ref2 = round_reference2 (x);
-  DOUBLE result = round (x);
+  DOUBLE result = ROUND (x);
   
   /* If the reference implementations disagree, bail out immediately.  */
   if (!equal ("reference implementations disagree", x, ref1, ref2)) 

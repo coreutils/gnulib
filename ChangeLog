@@ -1,3 +1,17 @@
+2007-10-21  Ben Pfaff  <blp@gnu.org>
+
+	* m4/check-libm-func.m4: Removed.
+	* m4/check-math-lib.m4: New file.
+	* m4/round.m4: Rewrite to use gl_CHECK_MATH_LIB.
+	* m4/roundf.m4: Ditto, and fix lack of HAVE_DECL_ROUNDF
+	definition and lack of AC_LIBOBJ([roundf]).
+	* m4/roundl.m4: Ditto, and similarly for roundl.
+	* modules/round: Reference new m4 file.
+	* modules/roundf: Ditto.
+	* modules/roundl: Ditto.
+	* tests/test-round2.c (main): Use ROUND instead of round.
+	Bug report from Bruno Haible.
+
 2007-10-21  Bruno Haible  <bruno@clisp.org>
 
 	* lib/printf-parse.c: Don't assume <stdint.h> exists in IN_LIBASPRINTF
@@ -69,6 +83,7 @@
 	* doc/functions/roundf.texi: Mention roundf module.
 	* doc/functions/roundl.texi: Mention roundl module.
 	* MODULES.html.sh: Mention new modules.
+	Thanks to Bruno Haible for suggestions.
 
 2007-10-20  Jim Meyering  <meyering@redhat.com>
 

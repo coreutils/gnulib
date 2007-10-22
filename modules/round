@@ -3,7 +3,7 @@ round() function: round toward nearest, breaking ties away from zero.
 
 Files:
 lib/round.c
-m4/check-libm-func.m4
+m4/check-math-lib.m4
 m4/round.m4
 
 Depends-on:

@@ -1,4 +1,4 @@
-# roundf.m4 serial 1
+# roundf.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,14 +9,20 @@ AC_DEFUN([gl_FUNC_ROUNDF],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   dnl Persuade glibc <math.h> to declare roundf().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  dnl Test whether roundf() is declared.
-  gl_CHECK_LIBM_FUNC([roundf], [x = roundf(x);], [], [
-    dnl No.  Are both floorf() and ceilf() available?  If so then we can use
-    dnl them to implement roundf(), on the assumption that they're fast.
-    gl_CHECK_LIBM_FUNC([floorf], [x = floorf(x);], [
-      AC_CHECK_DECL([ceilf], 
-        [dnl Yes.  Both are declared.  Link against the necessary library.
-         ROUNDF_LIBM="$FLOORF_LIBM"],
-        [: dnl No. We will use an implementation that doesn't need them.
-], [#include <math.h>
-])])])])
+  AC_CHECK_DECLS([roundf], , , [#include <math.h>])
+  if test "$ac_cv_have_decl_roundf" = yes; then
+    gl_CHECK_MATH_LIB([ROUNDF_LIBM], [x = roundf (x);])
+  else
+    AC_CHECK_DECLS([ceilf, floorf], , , [#include <math.h>])
+    if test "$ac_cv_have_decl_floorf" = yes &&
+       test "$ac_cv_have_decl_ceilf" = yes; then
+      gl_CHECK_MATH_LIB([ROUNDF_LIBM], [x = floorf (x) + ceilf (x);])
+    else
+      ROUNDF_LIBM=
+    fi
+    HAVE_DECL_ROUNDF=0
+    AC_LIBOBJ([roundf])
+  fi
+  AC_SUBST([HAVE_DECL_ROUNDF])
+  AC_SUBST([ROUNDF_LIBM])
+])
