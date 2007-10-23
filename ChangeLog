@@ -1,5 +1,23 @@
 2007-10-23  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	Fix linking of some unistdio tests on FreeBSD.
+	* modules/unistdio/u16-vsnprintf-tests
+	(test_u16_vsprintf1_LDADD): Add @LIBINTL@.
+	* modules/unistdio/u16-vsprintf-tests
+	(test_u16_vsnprintf1_LDADD): Likewise.
+	* modules/unistdio/u32-vsnprintf-tests
+	(test_u32_vsnprintf1_LDADD): Likewise.
+	* modules/unistdio/u32-vsprintf-tests
+	(test_u32_vsprintf1_LDADD): Likewise.
+	* modules/unistdio/u8-vsnprintf-tests
+	(test_u8_vsnprintf1_LDADD): Likewise.
+	* modules/unistdio/u8-vsprintf-tests
+	(test_u8_vsprintf1_LDADD): Likewise.
+	* modules/unistdio/ulc-vsnprintf-tests
+	(test_ulc_vsnprintf1_LDADD): Likewise.
+	* modules/unistdio/ulc-vsprintf-tests
+	(test_ulc_vsprintf1_LDADD): Likewise.
+
 	Fix linking of some uniconv tests on FreeBSD.
 	* modules/uniconv/u16-conv-from-enc-tests
 	(test_u16_conv_from_enc_LDADD): Link $(LDADD) before @LIBICONV@.
