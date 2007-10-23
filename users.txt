@@ -43,6 +43,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   shishi          http://git.sv.gnu.org/gitweb/?p=shishi.git
   tar             http://cvs.sv.gnu.org/viewcvs/tar/tar/
   texinfo         http://cvs.sv.gnu.org/viewcvs/texinfo/texinfo/
+  wget            http://hg.addictivecode.org/wget/mainline/
 
 
 The following packages are using gnulib without gnulib-tool:
