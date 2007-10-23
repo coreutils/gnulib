@@ -1,3 +1,31 @@
+2007-10-23  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Fix linking of some uniconv tests on FreeBSD.
+	* modules/uniconv/u16-conv-from-enc-tests
+	(test_u16_conv_from_enc_LDADD): Link $(LDADD) before @LIBICONV@.
+	* modules/uniconv/u16-conv-to-enc-tests
+	(test_u16_conv_to_enc_LDADD): Likewise.
+	* modules/uniconv/u16-strconv-from-enc-tests
+	(test_u16_strconv_from_enc_LDADD): Likewise.
+	* modules/uniconv/u16-strconv-to-enc-tests
+	(test_u16_strconv_to_enc_LDADD): Likewise.
+	* modules/uniconv/u32-conv-from-enc-tests
+	(test_u32_conv_from_enc_LDADD): Likewise.
+	* modules/uniconv/u32-conv-to-enc-tests
+	(test_u32_conv_to_enc_LDADD): Likewise.
+	* modules/uniconv/u32-strconv-from-enc-tests
+	(test_u32_strconv_from_enc_LDADD): Likewise.
+	* modules/uniconv/u32-strconv-to-enc-tests
+	(test_u32_strconv_to_enc_LDADD): Likewise.
+	* modules/uniconv/u8-conv-from-enc-tests
+	(test_u8_conv_from_enc_LDADD): Likewise.
+	* modules/uniconv/u8-conv-to-enc-tests
+	(test_u8_conv_to_enc_LDADD): Likewise.
+	* modules/uniconv/u8-strconv-from-enc-tests
+	(test_u8_strconv_from_enc_LDADD): Likewise.
+	* modules/uniconv/u8-strconv-to-enc-tests
+	(test_u8_strconv_to_enc_LDADD): Likewise.
+
 2007-10-22  Bruno Haible  <bruno@clisp.org>
 
 	* lib/stdint.in.h: Add check that intmax_t and uintmax_t have the same

@@ -10,5 +10,5 @@ Makefile.am:
 TESTS += test-u8-strconv-to-enc
 check_PROGRAMS += test-u8-strconv-to-enc
 test_u8_strconv_to_enc_SOURCES = uniconv/test-u8-strconv-to-enc.c
-test_u8_strconv_to_enc_LDADD = @LIBICONV@ $(LDADD)
+test_u8_strconv_to_enc_LDADD = $(LDADD) @LIBICONV@
 
