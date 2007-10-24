@@ -213,9 +213,9 @@ git and CVS
 
 Gnulib is available for anonymous checkout.  In any Bourne-shell the
 following should work:
-  $ git clone git://git.sv.gnu.org/gnulib
+  $ git clone git://git.sv.gnu.org/gnulib.git
 Or, if you prefer the CVS-like 'cogito' frontend to plain 'git':
-  $ cg clone git://git.sv.gnu.org/gnulib
+  $ cg clone git://git.sv.gnu.org/gnulib.git
 
 For a read-write checkout you need to have a login on savannah.gnu.org and be
 a member of the gnulib project at http://savannah.gnu.org/projects/gnulib .
