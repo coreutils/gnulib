@@ -1,3 +1,13 @@
+2007-10-24  Jim Meyering  <meyering@redhat.com>
+
+	* build-aux/bootstrap: Sync from coreutils:
+	2007-10-24  Jim Meyering  <meyering@redhat.com>
+	Get gnulib from the git repository, not from an obsolete cvs one.
+	* build-aux/bootstrap: Suggestion from Micah Cowan.
+	2007-10-04  Jim Meyering  <jim@meyering.net>
+	* build-aux/bootstrap (slurp): Adapt to _.h -> .in.h name change.
+	(update_po_files): Work also when there are no .po files in po/.
+
 2007-10-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* README: Append ".git" to git and cg examples.

@@ -242,7 +242,7 @@ case ${GNULIB_SRCDIR--} in
 
     trap cleanup_gnulib 1 2 13 15
 
-    cvs -z3 -q -d ${CVS_PREFIX}cvs.savannah.gnu.org:/cvsroot/gnulib co gnulib ||
+    git clone --depth 2 git://git.sv.gnu.org/gnulib ||
       cleanup_gnulib
 
     trap - 1 2 13 15
@@ -280,13 +280,16 @@ update_po_files() {
     && ls "$ref_po_dir"/*.po 2>/dev/null |
       sed 's|.*/||; s|\.po$||' > "$po_dir/LINGUAS"
 
+  langs=`cd $ref_po_dir && echo *.po|sed 's/\.po//g'`
+  test "$langs" = '*' && langs=x
   for po in `cd $ref_po_dir && echo *.po|sed 's/\.po//g'`; do
-     new_po="$ref_po_dir/$po.po"
-     cksum_file="$ref_po_dir/$po.s1"
-     if ! sha1sum -c --status "$cksum_file" < "$new_po" > /dev/null; then
-       echo "updated $po_dir/$po.po..."
-       cp "$new_po" "$po_dir/$po.po" && sha1sum < "$new_po" > "$cksum_file"
-     fi
+    case $po in x) continue;; esac
+    new_po="$ref_po_dir/$po.po"
+    cksum_file="$ref_po_dir/$po.s1"
+    if ! sha1sum -c --status "$cksum_file" < "$new_po" > /dev/null; then
+      echo "updated $po_dir/$po.po..."
+      cp "$new_po" "$po_dir/$po.po" && sha1sum < "$new_po" > "$cksum_file"
+    fi
   done
 }
 
@@ -468,7 +471,7 @@ slurp() {
       ig=$dir/$dot_ig
       if test -n "$copied"; then
 	insert_sorted_if_absent $ig "$copied"
-	# If an ignored file name ends with _.h, then also add
+	# If an ignored file name ends with .in.h, then also add
 	# the name with just ".h".  Many gnulib headers are generated,
 	# e.g., stdint.in.h -> stdint.h, dirent.in.h ->..., etc.
 	# Likewise for .gperf -> .h, .y -> .c, and .sin -> .sed
