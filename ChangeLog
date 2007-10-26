@@ -1,3 +1,9 @@
+2007-10-24  Micah Cowan  <micah@cowan.name>
+
+	Remove vestiges of cvs-gnulib-checkout process.  Now we use git.
+	* build-aux/bootstrap: Remove support for now-unnecessary option,
+	--cvs-user, and envvars CVS_USER, CVS_RSH.
+
 2007-10-24  Jim Meyering  <meyering@redhat.com>
 
 	Avoid diagnostics from sha1sum when there is no cached checksum.
