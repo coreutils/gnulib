@@ -1,3 +1,8 @@
+2007-10-26  Bruno Haible  <bruno@clisp.org>
+
+	* lib/strerror.c (rpl_strerror): Return "Unknown error ..." also if
+	strerror returned the empty string. Needed on HP-UX 11.00.
+
 2007-10-24  Micah Cowan  <micah@cowan.name>
 
 	Remove vestiges of cvs-gnulib-checkout process.  Now we use git.
