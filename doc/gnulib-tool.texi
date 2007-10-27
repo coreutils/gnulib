@@ -31,6 +31,7 @@ a real run without changing anything.
 * Initial import::              First import of Gnulib modules.
 * Modified imports::            Changing the import specification.
 * Simple update::               Tracking Gnulib development.
+* Source changes::              Impact of Gnulib on your source files.
 * VCS Issues::                  Integration with Version Control Systems.
 @end menu
 
@@ -322,6 +323,7 @@ The argument is the prefix to use for macros in the @file{gnulib-comp.m4}
 file.  Corresponds to the @samp{--macro-prefix} command line argument.
 @end table
 
+
 @node Simple update
 @section Simple update
 
@@ -333,7 +335,38 @@ does it:
 $ gnulib-tool --import
 @end smallexample
 
+@noindent
 This will create, update or remove files, as needed.
+
+Note: From time to time, changes are made in Gnulib that are not backward
+compatible.  When updating to a more recent Gnulib, you should consult
+Gnulib's @file{NEWS} file to check whether the incompatible changes affect
+your project.
+
+
+@node Source changes
+@section Changing your sources for use with Gnulib
+
+Gnulib contains some header file overrides.  This means that when building
+on systems with deficient header files in @file{/usr/include/}, it may create
+files named @file{string.h}, @file{stdlib.h}, @file{stdint.h} or similar in
+the build directory.  In the other source directories of your package you
+will usually pass @samp{-I} options to the compiler, so that these Gnulib
+substitutes are visible and take precedence over the files in
+@file{/usr/include/}.
+
+These Gnulib substitute header files rely on @file{<config.h>} being
+already included.  Furthermore @file{<config.h>} must be the first include
+in every compilation unit.  This means that to @emph{all your source files}
+and likely also to @emph{all your tests source files} you need to add an
+@samp{#include <config.h>} at the top.  Which source files are affected?
+Exactly those whose compilation includes a @samp{-I} option that refers to
+the Gnulib library directory.
+
+This is annoying, but inevitable: On many systems, @file{<config.h>} is
+used to set system dependent flags (such as @code{_GNU_SOURCE} on GNU systems),
+and these flags have no effect after any system header file has been included.
+
 
 @node VCS Issues
 @section Issues with Version Control Systems

@@ -1,3 +1,10 @@
+2007-10-27  Bruno Haible  <bruno@clisp.org>
+
+	* doc/gnulib.texi: Invoke @firstparagraphindent.
+	* doc/gnulib-tool.texi (Simple update): Mention possible incompatible
+	changes in gnulib.
+	(Source changes): New section.
+
 2007-10-26  Bruno Haible  <bruno@clisp.org>
 
 	* m4/gnulib-common.m4 (AC_C_RESTRICT): New overriding definition,

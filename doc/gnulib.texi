@@ -5,6 +5,9 @@
 @settitle GNU Gnulib
 @syncodeindex fn cp
 @syncodeindex pg cp
+@ifclear texi2html
+@firstparagraphindent insert
+@end ifclear
 @comment %**end of header
 
 @set UPDATED $Date: 2007-09-09 13:20:45 $
