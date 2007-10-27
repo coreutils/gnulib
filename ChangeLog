@@ -1,5 +1,10 @@
 2007-10-26  Bruno Haible  <bruno@clisp.org>
 
+	* m4/gnulib-common.m4 (AC_C_RESTRICT): New overriding definition,
+	borrowed from autoconf.
+
+2007-10-26  Bruno Haible  <bruno@clisp.org>
+
 	* lib/strerror.c (rpl_strerror): Return "Unknown error ..." also if
 	strerror returned the empty string. Needed on HP-UX 11.00.
 
