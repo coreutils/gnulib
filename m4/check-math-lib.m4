@@ -1,18 +1,20 @@
-# check-math-lib.m4 serial 1
+# check-math-lib.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 dnl
-dnl AC_CHECK_MATH_LIB (VARIABLE, EXPRESSION)
+dnl gl_CHECK_MATH_LIB (VARIABLE, EXPRESSION)
 dnl
-dnl Checks whether EXPRESSION requires -lm to compile and link.  If so, sets
-dnl the shell VARIABLE to -lm, otherwise to the empty string.
+dnl Sets the shell VARIABLE according to the libraries needed by EXPRESSION
+dnl to compile and link: to the empty string if no extra libraries are needed,
+dnl to "-lm" if -lm is needed, or to "missing" if it does not compile and
+dnl link either way.
 dnl
-dnl Example: AC_CHECK_MATH_LIB([ROUNDF_LIBM], [x = roundf (x);])
+dnl Example: gl_CHECK_MATH_LIB([ROUNDF_LIBM], [x = roundf (x);])
 AC_DEFUN([gl_CHECK_MATH_LIB], [
   save_LIBS=$LIBS
-  $1=?
+  $1=missing
   for libm in "" "-lm"; do
     LIBS="$save_LIBS $libm"
     AC_TRY_LINK([
@@ -26,7 +28,4 @@ AC_DEFUN([gl_CHECK_MATH_LIB], [
 break])
   done
   LIBS=$save_LIBS
-  if test "$$1" = "?"; then
-    $1=
-  fi
 ])

@@ -219,6 +219,7 @@ extern long double logl (long double x);
 
 #if @GNULIB_ROUNDF@
 # if !@HAVE_DECL_ROUNDF@
+#  undef roundf
 #  define roundf rpl_roundf
 extern float roundf (float x);
 # endif
@@ -233,6 +234,7 @@ extern float roundf (float x);
 
 #if @GNULIB_ROUND@
 # if !@HAVE_DECL_ROUND@
+#  undef round
 #  define round rpl_round
 extern double round (double x);
 # endif
@@ -247,6 +249,7 @@ extern double round (double x);
 
 #if @GNULIB_ROUNDL@
 # if !@HAVE_DECL_ROUNDL@
+#  undef roundl
 #  define roundl rpl_roundl
 extern long double roundl (long double x);
 # endif

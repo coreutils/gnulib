@@ -1,3 +1,18 @@
+2007-10-27  Ben Pfaff  <blp@gnu.org>
+
+	Ralf Wildenhues reported that Tru64 4.0D declares the round
+	functions but does not have definitions.
+	* m4/check-math-lib.m4 (gl_CHECK_MATH_LIB): If the target function
+	cannot be found in any library, set the output variable to
+	"missing" instead of "".
+	* m4/round.m4: Also use our substitute if we cannot find round in
+	any library, even if it is declared.
+	* m4/roundf.m4: Likewise for roundf.
+	* m4/roundl.m4: Likewise for roundl.
+	* lib/math.in.h: Undefine roundf, round, roundl before defining
+	their replacements, to allow for hypothetical systems where these
+	may be defined as macros but not available in libraries.
+
 2007-10-27  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib.texi: Invoke @firstparagraphindent.

@@ -1,4 +1,4 @@
-# round.m4 serial 2
+# round.m4 serial 3
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,8 @@ AC_DEFUN([gl_FUNC_ROUND],
   AC_CHECK_DECLS([round], , , [#include <math.h>])
   if test "$ac_cv_have_decl_round" = yes; then
     gl_CHECK_MATH_LIB([ROUND_LIBM], [x = round (x);])
-  else
+  fi
+  if test "$ac_cv_have_decl_round" != yes || test "$ROUND_LIBM" = missing; then
     gl_CHECK_MATH_LIB([ROUND_LIBM], [x = floor (x) + ceil (x);])
     HAVE_DECL_ROUND=0
     AC_LIBOBJ([round])
