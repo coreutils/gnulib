@@ -169,8 +169,10 @@ Options for --import:
       --avoid=MODULE        Avoid including the given MODULE. Useful if you
                             have code that provides equivalent functionality.
                             This option can be repeated.
-      --lgpl                Abort if modules aren't available under the LGPL.
+      --lgpl[=2|=3]         Abort if modules aren't available under the LGPL.
                             Also modify license template from GPL to LGPL.
+                            The version number of the LGPL can be specified;
+                            the default is currently LGPLv3.
       --makefile-name=NAME  Name of makefile in automake syntax in the
                             source-base and tests-base directories
                             (default \"Makefile.am\").
@@ -594,7 +596,7 @@ fi
 # - auxdir          from --aux-dir
 # - inctests        true if --with-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
-# - lgpl            true if --lgpl was given, blank otherwise
+# - lgpl            yes or a number if --lgpl was given, blank otherwise
 # - makefile_name   from --makefile-name
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
@@ -774,7 +776,15 @@ fi
         func_append avoidlist " $arg"
         shift ;;
       --lgpl )
-        lgpl=true
+        lgpl=yes
+        shift ;;
+      --lgpl=* )
+        arg=`echo "X$1" | sed -e 's/^X--lgpl=//'`
+        case "$arg" in
+          2 | 3) ;;
+          *) func_fatal_error "invalid LGPL version number for --lgpl" ;;
+        esac
+        lgpl=$arg
         shift ;;
       --makefile-name )
         shift
@@ -1990,7 +2000,8 @@ func_emit_initmacro_done ()
 # - auxdir          directory relative to destdir where to place build aux files
 # - inctests        true if --with-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
-# - lgpl            true if library's license shall be LGPL, blank otherwise
+# - lgpl            yes or a number if library's license shall be LGPL,
+#                   blank otherwise
 # - makefile_name   from --makefile-name
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
@@ -2059,8 +2070,11 @@ func_import ()
       /gl_LIB(/ {
         s,^.*gl_LIB([[ ]*\([^])]*\).*$,cached_libname="\1",p
       }
+      /gl_LGPL(/ {
+        s,^.*gl_LGPL([[ ]*\([^])]*\).*$,cached_lgpl="\1",p
+      }
       /gl_LGPL/ {
-        s,^.*$,cached_lgpl=true,p
+        s,^.*$,cached_lgpl=yes,p
       }
       /gl_MAKEFILE_NAME(/ {
         s,^.*gl_MAKEFILE_NAME([[ ]*\([^])]*\).*$,cached_makefile_name="\1",p
@@ -2211,9 +2225,25 @@ func_import ()
     for module in $modules; do
       license=`func_get_license $module`
       case $license in
-        LGPL | LGPLv2+ | 'GPLed build tool') ;;
+        'GPLed build tool') ;;
         'public domain' | 'unlimited' | 'unmodifiable license text') ;;
-        *) func_fatal_error "incompatible license on module $module: $license" ;;
+        *)
+          case "$lgpl" in
+            yes | 3)
+              case $license in
+                LGPL | LGPLv2+) ;;
+                *) func_fatal_error "incompatible license on module $module: $license" ;;
+              esac
+              ;;
+            2)
+              case $license in
+                LGPLv2+) ;;
+                *) func_fatal_error "incompatible license on module $module: $license" ;;
+              esac
+              ;;
+            *) func_fatal_error "invalid value lgpl=$lgpl" ;;
+          esac
+          ;;
       esac
     done
   fi
@@ -2235,10 +2265,20 @@ func_import ()
   if test -n "$do_copyrights"; then
     if test -n "$lgpl"; then
       # Update license.
-      sed_transform_lib_file=$sed_transform_lib_file'
-        s/GNU General/GNU Lesser General/g
-        s/version 2\([ ,]\)/version 2.1\1/g
-      '
+      case "$lgpl" in
+        yes | 3)
+          sed_transform_lib_file=$sed_transform_lib_file'
+            s/GNU General/GNU Lesser General/g
+          '
+          ;;
+        2)
+          sed_transform_lib_file=$sed_transform_lib_file'
+            s/GNU General/GNU Lesser General/g
+            s/version [23]\([ ,]\)/version 2.1\1/g
+          '
+          ;;
+        *) func_fatal_error "invalid value lgpl=$lgpl" ;;
+      esac
     fi
   fi
 
@@ -2473,7 +2513,11 @@ func_import ()
     func_append actioncmd " --avoid=$module"
   done
   if test -n "$lgpl"; then
-    func_append actioncmd " --lgpl"
+    if test "$lgpl" = yes; then
+      func_append actioncmd " --lgpl"
+    else
+      func_append actioncmd " --lgpl=$lgpl"
+    fi
   fi
   if test -n "$makefile_name"; then
     func_append actioncmd " --makefile-name=$makefile_name"
@@ -2695,7 +2739,13 @@ func_import ()
     echo "gl_TESTS_BASE([$testsbase])"
     test -z "$inctests" || echo "gl_WITH_TESTS"
     echo "gl_LIB([$libname])"
-    test -z "$lgpl" || echo "gl_LGPL"
+    if test -n "$lgpl"; then
+      if test "$lgpl" = yes; then
+        echo "gl_LGPL"
+      else
+        echo "gl_LGPL([$lgpl])"
+      fi
+    fi
     echo "gl_MAKEFILE_NAME([$makefile_name])"
     if test "$libtool" = true; then
       echo "gl_LIBTOOL"

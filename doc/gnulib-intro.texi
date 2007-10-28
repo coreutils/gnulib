@@ -262,7 +262,9 @@ Texts.
 If you want to use some Gnulib modules under LGPL, you can do so by
 passing the option @samp{--lgpl} to @code{gnulib-tool}.  This will
 replace the GPL header with an LGPL header while copying the source
-files to your package.
+files to your package.  Similarly, if you want some Gnulib modules
+under LGPLv2+ (Lesser GPL version 2.1 or newer), you can do so by
+passing the option @samp{--lgpl=2} to @code{gnulib-tool}.
 
 Keep in mind that when you submit patches to files in Gnulib, you should
 license them under a compatible license.  This means that sometimes the

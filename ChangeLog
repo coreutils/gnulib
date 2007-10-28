@@ -1,3 +1,19 @@
+2007-10-28  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool: Allow specifying the LGPL version number through
+	--lgpl=2 or --lgpl=3.
+	(func_usage): Document --lgpl with argument.
+	Handle --lgpl=... arguments.
+	(func_import): Recognize also gl_LGPL calls with an argument. When
+	--lgpl=2 is used and the module's license is just LGPL, report an
+	error. Set sed_transform_lib_file according to the lgpl variable. In
+	the generated files, use --lgpl or gl_LGPL invocations with argument,
+	if necessary.
+	* doc/gnulib-intro.texi (Copyright): Explain how to get modules under
+	an LGPv2+ license.
+	* doc/gnulib-tool.texi (Modified imports): Update explanation of
+	gl_LGPL macro.
+
 2007-10-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
             Bruno Haible  <bruno@clisp.org>
 

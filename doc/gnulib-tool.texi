@@ -310,8 +310,10 @@ The argument is the name of the library to be created.  Corresponds to the
 @samp{--lib} command line argument.
 
 @item gl_LGPL
-The presence of this macro corresponds to the @samp{--lgpl} command line
-argument.  It takes no arguments.
+The presence of this macro without arguments corresponds to the @samp{--lgpl}
+command line argument.  The presence of this macro with an argument (whose
+value must be 2 or 3) corresponds to the @samp{--lgpl=@var{arg}} command line
+argument.
 
 @item gl_LIBTOOL
 The presence of this macro corresponds to the @samp{--libtool} command line
