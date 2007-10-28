@@ -297,12 +297,13 @@ extern int
    must be specified.  */
 
 #ifdef GNULIB_UNISTR_U8_UCTOMB
+/* Auxiliary function, also used by u8_chr, u8_strchr, u8_strrchr.  */
+extern int
+       u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n);
 # if !HAVE_INLINE
 extern int
        u8_uctomb (uint8_t *s, ucs4_t uc, int n);
 # else
-extern int
-       u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n);
 static inline int
 u8_uctomb (uint8_t *s, ucs4_t uc, int n)
 {
@@ -318,12 +319,13 @@ u8_uctomb (uint8_t *s, ucs4_t uc, int n)
 #endif
 
 #ifdef GNULIB_UNISTR_U16_UCTOMB
+/* Auxiliary function, also used by u16_chr, u16_strchr, u16_strrchr.  */
+extern int
+       u16_uctomb_aux (uint16_t *s, ucs4_t uc, int n);
 # if !HAVE_INLINE
 extern int
        u16_uctomb (uint16_t *s, ucs4_t uc, int n);
 # else
-extern int
-       u16_uctomb_aux (uint16_t *s, ucs4_t uc, int n);
 static inline int
 u16_uctomb (uint16_t *s, ucs4_t uc, int n)
 {
