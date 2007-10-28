@@ -37,6 +37,7 @@ math.h: math.in.h
 	      -e 's|@''GNULIB_TRUNC''@|$(GNULIB_TRUNC)|g' \
 	      -e 's|@''GNULIB_TRUNCF''@|$(GNULIB_TRUNCF)|g' \
 	      -e 's|@''GNULIB_TRUNCL''@|$(GNULIB_TRUNCL)|g' \
+	      -e 's|@''GNULIB_ISFINITE''@|$(GNULIB_ISFINITE)|g' \
 	      -e 's|@''HAVE_DECL_ACOSL''@|$(HAVE_DECL_ACOSL)|g' \
 	      -e 's|@''HAVE_DECL_ASINL''@|$(HAVE_DECL_ASINL)|g' \
 	      -e 's|@''HAVE_DECL_ATANL''@|$(HAVE_DECL_ATANL)|g' \
@@ -58,6 +59,7 @@ math.h: math.in.h
 	      -e 's|@''HAVE_DECL_TRUNC''@|$(HAVE_DECL_TRUNC)|g' \
 	      -e 's|@''HAVE_DECL_TRUNCF''@|$(HAVE_DECL_TRUNCF)|g' \
 	      -e 's|@''HAVE_DECL_TRUNCL''@|$(HAVE_DECL_TRUNCL)|g' \
+	      -e 's|@''HAVE_DECL_ISFINITE''@|$(HAVE_DECL_ISFINITE)|g' \
 	      -e 's|@''REPLACE_FREXP''@|$(REPLACE_FREXP)|g' \
 	      -e 's|@''REPLACE_FREXPL''@|$(REPLACE_FREXPL)|g' \
 	      -e 's|@''REPLACE_LDEXPL''@|$(REPLACE_LDEXPL)|g' \

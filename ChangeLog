@@ -1,5 +1,20 @@
 2007-10-27  Ben Pfaff  <blp@gnu.org>
 
+	* lib/math.in.h: Define isfinite macro and prototypes for
+	gl_isfinitef, gl_isfinited, gl_isfinitel if we are providing
+	implementations.
+	* m4/math_h.m4: New substitutions for isfinite module.
+	* lib/isfinite.c: New file.
+	* m4/isfinite.m4: New file.
+	* modules/math: Replace isfinite-related @VARS@ in math.in.h.
+	* modules/isfinite: New file.
+	* modules/isfinite-tests: New file.
+	* tests/tests-isfinite.c: New file.
+	* doc/functions/isfinite.texi: Mention isfinite module.
+	* MODULES.html.sh: Mention new module.
+
+2007-10-27  Ben Pfaff  <blp@gnu.org>
+
 	Ralf Wildenhues reported that Tru64 4.0D declares the round
 	functions but does not have definitions.
 	* m4/check-math-lib.m4 (gl_CHECK_MATH_LIB): If the target function

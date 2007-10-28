@@ -4,15 +4,18 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/isfinite.html}
 
-Gnulib module: ---
+Gnulib module: isfinite
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This macro is missing on some platforms:
+MacOS X 10.3, OpenBSD 3.8, AIX 5.1, IRIX 6.5, OSF/1 5.1, Solaris 10, Interix 3.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-MacOS X 10.3, OpenBSD 3.8, AIX 5.1, IRIX 6.5, OSF/1 5.1, Solaris 10, Interix 3.5.
+It is implementation-dependent whether @code{isfinite} raises an
+exception given a signaling NaN operand.
 @end itemize

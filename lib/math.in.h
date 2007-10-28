@@ -337,6 +337,20 @@ extern long double truncl (long double x);
      truncl (x))
 #endif
 
+#if @GNULIB_ISFINITE@
+# if !@HAVE_DECL_ISFINITE@
+extern int gl_isfinitef (float x);
+extern int gl_isfinited (double x);
+extern int gl_isfinitel (long double x);
+#  undef isfinite
+#  define isfinite(x) \
+   (sizeof (x) == sizeof (long double) ? gl_isfinitel (x) : \
+    sizeof (x) == sizeof (double) ? gl_isfinited (x) : \
+    gl_isfinitef (x))
+# endif
+#elif defined GNULIB_POSIXCHECK
+  /* How to override a macro?  */
+#endif
 
 #if @GNULIB_SIGNBIT@
 # if @REPLACE_SIGNBIT@

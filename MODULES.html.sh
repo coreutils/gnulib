@@ -1970,6 +1970,7 @@ func_all_modules ()
   func_module frexp
   func_module frexpl
   func_module frexpl-nolibm
+  func_module isfinite
   func_module isnan-nolibm
   func_module isnanf-nolibm
   func_module isnanl
