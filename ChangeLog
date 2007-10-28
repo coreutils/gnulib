@@ -1,3 +1,12 @@
+2007-10-28  Bruno Haible  <bruno@clisp.org>
+
+	* modules/error: Add a notice recommending to change XGETTEXT_OPTIONS.
+	Invoke AM_GETTEXT_OPTION if it exists.
+	* modules/vasprintf: Likewise.
+	* modules/verror: Likewise.
+	* modules/xprintf: Likewise.
+	* modules/xvasprintf: Likewise.
+
 2007-10-27  Ben Pfaff  <blp@gnu.org>
 
 	* lib/math.in.h: Define isfinite macro and prototypes for

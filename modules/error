@@ -1,6 +1,11 @@
 Description:
 error() and error_at_line() functions: Error reporting.
 
+Notice:
+If you are using GNU gettext version 0.16.1 or older, add the following options
+to XGETTEXT_OPTIONS in your po/Makevars:
+  --flag=error:3:c-format --flag=error_at_line:5:c-format
+
 Files:
 lib/error.h
 lib/error.c
@@ -11,6 +16,9 @@ strerror
 
 configure.ac:
 gl_ERROR
+m4_ifdef([AM_XGETTEXT_OPTION],
+  [AM_XGETTEXT_OPTION([--flag=error:3:c-format])
+   AM_XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
 
 Makefile.am:
 

@@ -1,6 +1,12 @@
 Description:
 a wrapper around printf that calls error upon ENOMEM or EILSEQ errors
 
+Notice:
+If you are using GNU gettext version 0.16.1 or older, add the following options
+to XGETTEXT_OPTIONS in your po/Makevars:
+  --flag=xprintf:1:c-format --flag=xvprintf:1:c-format
+  --flag=xfprintf:2:c-format --flag=xvfprintf:2:c-format
+
 Files:
 lib/xprintf.h
 lib/xprintf.c
@@ -13,6 +19,11 @@ stdarg
 stdio
 
 configure.ac:
+m4_ifdef([AM_XGETTEXT_OPTION],
+  [AM_XGETTEXT_OPTION([--flag=xprintf:1:c-format])
+   AM_XGETTEXT_OPTION([--flag=xvprintf:1:c-format])
+   AM_XGETTEXT_OPTION([--flag=xfprintf:2:c-format])
+   AM_XGETTEXT_OPTION([--flag=xvfprintf:2:c-format])])
 
 Makefile.am:
 lib_SOURCES += xprintf.h xprintf.c
