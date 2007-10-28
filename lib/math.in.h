@@ -231,7 +231,6 @@ extern float roundf (float x);
      roundf (x))
 #endif
 
-
 #if @GNULIB_ROUND@
 # if !@HAVE_DECL_ROUND@
 #  undef round
@@ -245,7 +244,6 @@ extern double round (double x);
                       "use gnulib module round for portability"), \
      round (x))
 #endif
-
 
 #if @GNULIB_ROUNDL@
 # if !@HAVE_DECL_ROUNDL@
@@ -337,6 +335,7 @@ extern long double truncl (long double x);
      truncl (x))
 #endif
 
+
 #if @GNULIB_ISFINITE@
 # if !@HAVE_DECL_ISFINITE@
 extern int gl_isfinitef (float x);
@@ -351,6 +350,7 @@ extern int gl_isfinitel (long double x);
 #elif defined GNULIB_POSIXCHECK
   /* How to override a macro?  */
 #endif
+
 
 #if @GNULIB_SIGNBIT@
 # if @REPLACE_SIGNBIT@
