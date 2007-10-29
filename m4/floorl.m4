@@ -1,4 +1,4 @@
-# floorl.m4 serial 2
+# floorl.m4 serial 3
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,14 +15,18 @@ AC_DEFUN([gl_FUNC_FLOORL],
     dnl Test whether floorl() can be used without libm.
     gl_FUNC_FLOORL_LIBS
     if test "$FLOORL_LIBM" = "?"; then
-      FLOORL_LIBM=
+      dnl Sun C 5.0 on Solaris declares floorl() and has it in the system-wide
+      dnl libm.so, but not in the libm.so that the compiler uses.
+      REPLACE_FLOORL=1
     fi
   else
-    HAVE_DECL_FLOORL=0
+    REPLACE_FLOORL=1
+  fi
+  if test $REPLACE_FLOORL = 1; then
     AC_LIBOBJ([floorl])
     FLOORL_LIBM=
   fi
-  AC_SUBST([HAVE_DECL_FLOORL])
+  AC_SUBST([REPLACE_FLOORL])
   AC_SUBST([FLOORL_LIBM])
 ])
 

@@ -1,4 +1,4 @@
-# ceilf.m4 serial 2
+# ceilf.m4 serial 3
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,14 +15,18 @@ AC_DEFUN([gl_FUNC_CEILF],
     dnl Test whether ceilf() can be used without libm.
     gl_FUNC_CEILF_LIBS
     if test "$CEILF_LIBM" = "?"; then
-      CEILF_LIBM=
+      dnl Sun C 5.0 on Solaris declares ceilf() and has it in the system-wide
+      dnl libm.so, but not in the libm.so that the compiler uses.
+      REPLACE_CEILF=1
     fi
   else
-    HAVE_DECL_CEILF=0
+    REPLACE_CEILF=1
+  fi
+  if test $REPLACE_CEILF = 1; then
     AC_LIBOBJ([ceilf])
     CEILF_LIBM=
   fi
-  AC_SUBST([HAVE_DECL_CEILF])
+  AC_SUBST([REPLACE_CEILF])
   AC_SUBST([CEILF_LIBM])
 ])
 

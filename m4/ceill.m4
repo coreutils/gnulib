@@ -1,4 +1,4 @@
-# ceill.m4 serial 2
+# ceill.m4 serial 3
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,14 +15,18 @@ AC_DEFUN([gl_FUNC_CEILL],
     dnl Test whether ceill() can be used without libm.
     gl_FUNC_CEILL_LIBS
     if test "$CEILL_LIBM" = "?"; then
-      CEILL_LIBM=
+      dnl Sun C 5.0 on Solaris declares ceill() and has it in the system-wide
+      dnl libm.so, but not in the libm.so that the compiler uses.
+      REPLACE_CEILL=1
     fi
   else
-    HAVE_DECL_CEILL=0
+    REPLACE_CEILL=1
+  fi
+  if test $REPLACE_CEILL = 1; then
     AC_LIBOBJ([ceill])
     CEILL_LIBM=
   fi
-  AC_SUBST([HAVE_DECL_CEILL])
+  AC_SUBST([REPLACE_CEILL])
   AC_SUBST([CEILL_LIBM])
 ])
 

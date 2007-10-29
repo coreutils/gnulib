@@ -90,7 +90,7 @@ extern long double atanl (long double x);
 
 
 #if @GNULIB_CEILF@
-# if !@HAVE_DECL_CEILF@
+# if @REPLACE_CEILF@
 #  define ceilf rpl_ceilf
 extern float ceilf (float x);
 # endif
@@ -103,7 +103,7 @@ extern float ceilf (float x);
 #endif
 
 #if @GNULIB_CEILL@
-# if !@HAVE_DECL_CEILL@
+# if @REPLACE_CEILL@
 #  define ceill rpl_ceill
 extern long double ceill (long double x);
 # endif
@@ -141,7 +141,7 @@ extern long double expl (long double x);
 
 
 #if @GNULIB_FLOORF@
-# if !@HAVE_DECL_FLOORF@
+# if @REPLACE_FLOORF@
 #  define floorf rpl_floorf
 extern float floorf (float x);
 # endif
@@ -154,7 +154,7 @@ extern float floorf (float x);
 #endif
 
 #if @GNULIB_FLOORL@
-# if !@HAVE_DECL_FLOORL@
+# if @REPLACE_FLOORL@
 #  define floorl rpl_floorl
 extern long double floorl (long double x);
 # endif

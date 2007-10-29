@@ -1,5 +1,23 @@
 2007-10-28  Bruno Haible  <bruno@clisp.org>
 
+	Fix link errors with Sun C 5.0 on Solaris 10.
+	* m4/floorf.m4 (gl_FUNC_FLOORF): Consider also the case that the
+	function is declared but not present in the compiler's libm.
+	* m4/floorl.m4 (gl_FUNC_FLOORL): Likewise.
+	* m4/ceilf.m4 (gl_FUNC_CEILF): Likewise.
+	* m4/ceill.m4 (gl_FUNC_CEILL: Likewise.
+	* lib/math.in.h: Test REPLACE_CEILF instead of HAVE_DECL_CEILF.
+	Test REPLACE_CEILL instead of HAVE_DECL_CEILL.
+	Test REPLACE_FLOORF instead of HAVE_DECL_FLOORF.
+	Test REPLACE_FLOORL instead of HAVE_DECL_FLOORL.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Update.
+	* modules/math (Makefile.am): Substitute REPLACE_CEILF instead of
+	HAVE_DECL_CEILF, REPLACE_CEILL instead of HAVE_DECL_CEILL,
+	REPLACE_FLOORF instead of HAVE_DECL_FLOORF, REPLACE_FLOORL instead of
+	HAVE_DECL_FLOORL.
+
+2007-10-28  Bruno Haible  <bruno@clisp.org>
+
 	* m4/floorl.m4 (gl_FUNC_FLOORL_LIBS): New macro, extracted from
 	gl_FUNC_FLOORL. Cache the result.
 	(gl_FUNC_FLOORL): Use it.
@@ -35177,214 +35195,3 @@
 	(jm_CHECK_DECL_LOCALTIME_R): New macro.
 
 	* m4/mktime.m4: Test for spring-forward gap before long-running test.
-
-1998-10-14  Jim Meyering  <meyering@ascend.com>
-
-	* m4/mktime.m4: Use the more portable "TZ=PST8PDT,M4.1.0,M10.5.0"
-	instead of "TZ=America/Vancouver".  From Paul Eggert.
-
-1998-10-11  Jim Meyering  <meyering@ascend.com>
-
-	* m4/mktime.m4 (jm_AM_FUNC_MKTIME): New file and macro.
-	This adds a test for a recently added compatibility fix for mktime.c.
-	* m4/jm-mktime.m4: Require jm_AM_FUNC_MKTIME, not AM_FUNC_MKTIME.
-
-1998-09-27  Jim Meyering  <meyering@ascend.com>
-
-	* m4/jm-macros.m4 (jm_MACROS): Require jm_FUNC_FNMATCH.
-
-	* m4/fnmatch.m4 (jm_FUNC_FNMATCH): New file/macro.  Extracted from
-	../configure.in, including a change from Gordon Matzigkeit to allow
-	cross-compiling for the Hurd.
-
-	* m4/glibc.m4: New file/macro to test for the GNU C Library
-	versions 1 and 2.  From Gordon Matzigkeit.
-	Indent.
-
-1998-09-21  Jim Meyering  <meyering@ascend.com>
-
-	* m4/chown.m4: Declare locals: before, after.  From Andries Brouwer.
-
-1998-08-18  Paul Eggert  <eggert@twinsun.com>
-
-	Port nanosecond-resolution times to UnixWare 2.1.2 and
-	pedantic Solaris 2.6.
-
-	* m4/st_mtim.m4 (AC_STRUCT_ST_MTIM_NSEC): Renamed from
-	AC_STRUCT_ST_MTIM.
-	* m4/st_mtim.m4 (AC_STRUCT_ST_MTIM_NSEC):
-	Generate name of ns member, instead of just 1 or undef.
-	Allow for UnixWare 2.1.2 and Solaris 2.6 if in pedantic mode.
-
-1998-08-15  Jim Meyering  <meyering@ascend.com>
-
-	* m4/ssize_t.m4 (jm_TYPE_SSIZE_T): Remove file.
-	* m4/check-type.m4: New file.  Replacement for AC_CHECK_TYPE.
-	* m4/jm-macros.m4: Use the new AC_CHECK_TYPE(ssize_t, int)
-	instead of jm_TYPE_SSIZE_T.
-
-1998-08-12  Jim Meyering  <meyering@ascend.com>
-
-	* m4/st_dm_mode.m4: New file.  From Johan Danielsson.
-
-1998-08-02  Jim Meyering  <meyering@ascend.com>
-
-	* m4/st_mtim.m4: Use hack to avoid having to put #undef HAVE_ST_MTIM
-	in acconfig.h manually.
-
-1998-07-31  Paul Eggert  <eggert@twinsun.com>
-
-	* m4/st_mtim.m4: New file.
-
-1998-07-28  Jim Meyering  <meyering@ascend.com>
-
-	* m4/utimes.m4: Undef stat.
-
-1998-07-25  Jim Meyering  <meyering@ascend.com>
-
-	* m4/utime.m4 (jm_FUNC_UTIME): New file and macro.
-	* m4/utimes.m4 (jm_FUNC_UTIMES_NULL): New file and macro.
-
-1998-07-09  Manfred Hollstein  <manfred@s-direktnet.de>
-
-	* m4/chown.m4 (jm_FUNC_CHOWN): Add a check to verify that the
-	uid and gid actually remain unchanged.
-
-1998-07-07  Jim Meyering  <meyering@ascend.com>
-
-	* m4/jm-glibc-io.m4: Remove fclose_unlocked.
-
-1998-07-04  Jim Meyering  <meyering@ascend.com>
-
-	* m4/regex.m4: Use syscmd, ifelse, and sysval.  Mainly as an exercise
-	to prove that this macro can be used in packages without regex.c.
-
-1998-07-04  Andreas Schwab  <schwab@issan.informatik.uni-dortmund.de>
-
-	* m4/gettext.m4 (AM_WITH_NLS): Remove intl/libintl.h if <libintl.h>
-	is to be used.
-
-1998-07-03  Jim Meyering  <meyering@ascend.com>
-
-	* m4/gettext.m4: Add -lintl if it's found to be necessary.
-
-	* m4/gettext.m4: New file -- from gettext-0.10.35.
-	* m4/lcmessage.m4: Likewise.
-	* m4/progtest.m4: Likewise.
-
-	* m4/regex.m4 (jm_WITH_REGEX): New file and macro.
-	* m4/jm-macros.m4: Require the new macro.
-
-1998-06-29  Jim Meyering  <meyering@ascend.com>
-
-	* m4/fstypename.m4: Include sys/param.h.  NetBSD 1.3.1 requires this
-	for the definition of NGROUPS (used in a system header included
-	by sys/mount.h).
-
-1998-06-28  Jim Meyering  <meyering@ascend.com>
-
-	* m4/ls-mntd-fs.m4: New file.
-	* m4/fstypename.m4: New file.
-
-	* m4/jm-macros.m4: Require the new macro.
-	* m4/jm-glibc-io.m4: New file.
-
-1998-05-19  Jim Meyering  <meyering@ascend.com>
-
-	* m4/jm-macros.m4: Add jm_FUNC_LCHOWN.
-	* m4/lchown.m4: New file.
-
-	* m4/Makefile.am.in: New file.
-	* m4/Makefile.am (Makefile.am): Depend on Makefile.am.in.
-
-1998-05-14  Jim Meyering  <meyering@ascend.com>
-
-	* m4/Makefile.am (EXTRA_DIST): Add them.
-	* m4/jm-macros.m4: New file.
-	* m4/utimbuf.m4: New file.
-
-1998-05-12  Jim Meyering  <meyering@ascend.com>
-
-	* m4/Makefile.am (EXTRA_DIST): Add isc-posix.m4.
-
-1998-05-11  Jim Meyering  <meyering@ascend.com>
-
-	* m4/isc-posix.m4: New file.
-
-1998-05-10  Jim Meyering  <meyering@ascend.com>
-
-	* m4/jm-mktime.m4: Use AM_FUNC_MKTIME, now that it's up to date.
-
-1998-05-09  Jim Meyering  <meyering@ascend.com>
-
-	* m4/Makefile.am (EXTRA_DIST): Add ssize_t.m4.
-	(EXTRA_DIST): Remove mktime.m4, now that the new version is included
-	with automake.
-
-	* m4/ssize_t.m4: New file.
-	* m4/mktime.m4: Remove file -- the new automake has this now.
-
-1998-04-26  Jim Meyering  <meyering@ascend.com>
-
-	* m4/assert.m4: New file.
-	* m4/Makefile.am (EXTRA_DIST): Add assert.m4.
-
-1998-04-05  Jim Meyering  <meyering@ascend.com>
-
-	* m4/prereq.m4 (jm_PREREQ_REGEX): New macro.
-	(jm_PREREQ): Use it here.
-
-1998-03-23  Jim Meyering  <meyering@eng.ascend.com>
-
-	* m4/inttypes_h.m4: Kludges so I don't have to add HAVE_INTTYPES_H
-	in acconfig.h.
-
-1998-03-15  Jim Meyering  <meyering@eng.ascend.com>
-
-	* m4/prereq.m4: New file.
-	* m4/error.m4: New file.
-	* m4/Makefile.am (EXTRA_DIST): Add error.m4 and prereq.m4.
-
-1998-02-07  Jim Meyering  <meyering@eng.ascend.com>
-
-	* m4/getline.m4: Don't set am_cv_func_working_getline before the
-	cache-check for the same variable -- that defeated the purpose of
-	the test; the test program was never run.  This was a problem only
-	on systems with losing getline functions -- HP-UX 10.20 is one.
-	Reported by Bjorn Helgaas.
-
-1998-02-06  Jim Meyering  <meyering@eng.ascend.com>
-
-	* m4/Makefile.am (EXTRA_DIST): Add perl.m4.
-
-1998-01-10  Jim Meyering  <meyering@na-net.ornl.gov>
-
-	* m4/Makefile.am (EXTRA_DIST): Add const.m4.
-
-	* m4/const.m4: New file.  Use an initializer in this declaration
-	typedef int charset[2]; const charset x;
-	Reported by Bob Glickstein.
-
-1997-12-21  Jim Meyering  <meyering@na-net.ornl.gov>
-
-	* m4/chown.m4: Fix reversed types on -1 args to chown.
-	From Kaveh Ghazi.
-
-1997-12-14  Jim Meyering  <meyering@na-net.ornl.gov>
-
-	* m4/check-decl.m4: s/DECLARATION_/DECL_/g.
-	Add lseek and memchr.
-
-	* m4/decl.m4: s/HAVE_DECLARATION_/HAVE_DECL_/g.
-	T.E.Dickey <dickey@clark.net> said that some older preprocessors
-	have a 20-character limit on names.
-
-1997-11-30  Jim Meyering  <meyering@na-net.ornl.gov>
-
-	* m4/inttypes_h.m4: New file.
-	* m4/uintmax_t.m4: New file.
-	* m4/Makefile.am (EXTRA_DIST): Add inttypes_h.m4 and uintmax_t.m4.
-
-Copyright (C) 1997-2007 Free Software Foundation, Inc.
-Copying and distribution of this file, with or without modification,
-are permitted provided the copyright notice and this notice are preserved.
