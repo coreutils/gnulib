@@ -1,5 +1,28 @@
 2007-10-28  Bruno Haible  <bruno@clisp.org>
 
+	* m4/floorl.m4 (gl_FUNC_FLOORL_LIBS): New macro, extracted from
+	gl_FUNC_FLOORL. Cache the result.
+	(gl_FUNC_FLOORL): Use it.
+	* m4/ceill.m4 (gl_FUNC_CEILL_LIBS): New macro, extracted from
+	gl_FUNC_CEILL. Cache the result.
+	(gl_FUNC_CEILL): Use it.
+
+	* m4/floor.m4 (gl_FUNC_FLOOR_LIBS): New macro, extracted from
+	gl_FUNC_FLOOR. Cache the result.
+	(gl_FUNC_FLOOR): Use it.
+	* m4/ceil.m4 (gl_FUNC_CEIL_LIBS): New macro, extracted from
+	gl_FUNC_CEIL. Cache the result.
+	(gl_FUNC_CEIL): Use it.
+
+	* m4/floorf.m4 (gl_FUNC_FLOORF_LIBS): New macro, extracted from
+	gl_FUNC_FLOORF. Cache the result.
+	(gl_FUNC_FLOORF): Use it.
+	* m4/ceilf.m4 (gl_FUNC_CEILF_LIBS): New macro, extracted from
+	gl_FUNC_CEILF. Cache the result.
+	(gl_FUNC_CEILF): Use it.
+
+2007-10-28  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool: Allow specifying the LGPL version number through
 	--lgpl=2 or --lgpl=3.
 	(func_usage): Document --lgpl with argument.

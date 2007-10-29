@@ -1,4 +1,4 @@
-# ceill.m4 serial 1
+# ceill.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,28 +13,7 @@ AC_DEFUN([gl_FUNC_CEILL],
   AC_CHECK_DECLS([ceill], , , [#include <math.h>])
   if test "$ac_cv_have_decl_ceill" = yes; then
     dnl Test whether ceill() can be used without libm.
-    CEILL_LIBM=?
-    AC_TRY_LINK([
-       #ifndef __NO_MATH_INLINES
-       # define __NO_MATH_INLINES 1 /* for glibc */
-       #endif
-       #include <math.h>
-       long double x;],
-      [x = ceill(x);],
-      [CEILL_LIBM=])
-    if test "$CEILL_LIBM" = "?"; then
-      save_LIBS="$LIBS"
-      LIBS="$LIBS -lm"
-      AC_TRY_LINK([
-         #ifndef __NO_MATH_INLINES
-         # define __NO_MATH_INLINES 1 /* for glibc */
-         #endif
-         #include <math.h>
-         long double x;],
-        [x = ceill(x);],
-        [CEILL_LIBM="-lm"])
-      LIBS="$save_LIBS"
-    fi
+    gl_FUNC_CEILL_LIBS
     if test "$CEILL_LIBM" = "?"; then
       CEILL_LIBM=
     fi
@@ -45,4 +24,35 @@ AC_DEFUN([gl_FUNC_CEILL],
   fi
   AC_SUBST([HAVE_DECL_CEILL])
   AC_SUBST([CEILL_LIBM])
+])
+
+# Determines the libraries needed to get the ceill() function.
+# Sets CEILL_LIBM.
+AC_DEFUN([gl_FUNC_CEILL_LIBS],
+[
+  AC_CACHE_VAL([gl_func_ceill_libm], [
+    gl_func_ceill_libm=?
+    AC_TRY_LINK([
+       #ifndef __NO_MATH_INLINES
+       # define __NO_MATH_INLINES 1 /* for glibc */
+       #endif
+       #include <math.h>
+       long double x;],
+      [x = ceill(x);],
+      [gl_func_ceill_libm=])
+    if test "$gl_func_ceill_libm" = "?"; then
+      save_LIBS="$LIBS"
+      LIBS="$LIBS -lm"
+      AC_TRY_LINK([
+         #ifndef __NO_MATH_INLINES
+         # define __NO_MATH_INLINES 1 /* for glibc */
+         #endif
+         #include <math.h>
+         long double x;],
+        [x = ceill(x);],
+        [gl_func_ceill_libm="-lm"])
+      LIBS="$save_LIBS"
+    fi
+  ])
+  CEILL_LIBM="$gl_func_ceill_libm"
 ])

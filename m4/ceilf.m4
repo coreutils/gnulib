@@ -1,4 +1,4 @@
-# ceilf.m4 serial 1
+# ceilf.m4 serial 2
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,28 +13,7 @@ AC_DEFUN([gl_FUNC_CEILF],
   AC_CHECK_DECLS([ceilf], , , [#include <math.h>])
   if test "$ac_cv_have_decl_ceilf" = yes; then
     dnl Test whether ceilf() can be used without libm.
-    CEILF_LIBM=?
-    AC_TRY_LINK([
-       #ifndef __NO_MATH_INLINES
-       # define __NO_MATH_INLINES 1 /* for glibc */
-       #endif
-       #include <math.h>
-       float x;],
-      [x = ceilf(x);],
-      [CEILF_LIBM=])
-    if test "$CEILF_LIBM" = "?"; then
-      save_LIBS="$LIBS"
-      LIBS="$LIBS -lm"
-      AC_TRY_LINK([
-         #ifndef __NO_MATH_INLINES
-         # define __NO_MATH_INLINES 1 /* for glibc */
-         #endif
-         #include <math.h>
-         float x;],
-        [x = ceilf(x);],
-        [CEILF_LIBM="-lm"])
-      LIBS="$save_LIBS"
-    fi
+    gl_FUNC_CEILF_LIBS
     if test "$CEILF_LIBM" = "?"; then
       CEILF_LIBM=
     fi
@@ -45,4 +24,35 @@ AC_DEFUN([gl_FUNC_CEILF],
   fi
   AC_SUBST([HAVE_DECL_CEILF])
   AC_SUBST([CEILF_LIBM])
+])
+
+# Determines the libraries needed to get the ceilf() function.
+# Sets CEILF_LIBM.
+AC_DEFUN([gl_FUNC_CEILF_LIBS],
+[
+  AC_CACHE_VAL([gl_func_ceilf_libm], [
+    gl_func_ceilf_libm=?
+    AC_TRY_LINK([
+       #ifndef __NO_MATH_INLINES
+       # define __NO_MATH_INLINES 1 /* for glibc */
+       #endif
+       #include <math.h>
+       float x;],
+      [x = ceilf(x);],
+      [gl_func_ceilf_libm=])
+    if test "$gl_func_ceilf_libm" = "?"; then
+      save_LIBS="$LIBS"
+      LIBS="$LIBS -lm"
+      AC_TRY_LINK([
+         #ifndef __NO_MATH_INLINES
+         # define __NO_MATH_INLINES 1 /* for glibc */
+         #endif
+         #include <math.h>
+         float x;],
+        [x = ceilf(x);],
+        [gl_func_ceilf_libm="-lm"])
+      LIBS="$save_LIBS"
+    fi
+  ])
+  CEILF_LIBM="$gl_func_ceilf_libm"
 ])
