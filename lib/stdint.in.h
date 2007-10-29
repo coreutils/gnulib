@@ -101,7 +101,10 @@
 #define _STDINT_MAX(signed, bits, zero) \
   ((signed) \
    ? ~ _STDINT_MIN (signed, bits, zero) \
-   : ((((zero) + 1) << ((bits) ? (bits) - 1 : 0)) - 1) * 2 + 1)
+   : /* The expression for the unsigned case.  The subtraction of (signed) \
+	is a nop in the unsigned case and avoids "signed integer overflow" \
+	warnings in the signed case.  */ \
+     ((((zero) + 1) << ((bits) ? (bits) - 1 - (signed) : 0)) - 1) * 2 + 1)
 
 /* 7.18.1.1. Exact-width integer types */
 

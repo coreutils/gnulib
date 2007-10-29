@@ -1,5 +1,10 @@
 2007-10-28  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdint.in.h (_STDINT_MAX): Subtract 1 from an unused signed
+	integer shift in the signed case. Fixes warnings with OSF/1 5.1 cc.
+
+2007-10-28  Bruno Haible  <bruno@clisp.org>
+
 	Fix link errors with Sun C 5.0 on Solaris 10.
 	* m4/floorf.m4 (gl_FUNC_FLOORF): Consider also the case that the
 	function is declared but not present in the compiler's libm.
