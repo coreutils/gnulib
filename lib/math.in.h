@@ -337,7 +337,7 @@ extern long double truncl (long double x);
 
 
 #if @GNULIB_ISFINITE@
-# if !@HAVE_DECL_ISFINITE@
+# if @REPLACE_ISFINITE@
 extern int gl_isfinitef (float x);
 extern int gl_isfinited (double x);
 extern int gl_isfinitel (long double x);
