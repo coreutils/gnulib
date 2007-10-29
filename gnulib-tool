@@ -2279,6 +2279,13 @@ func_import ()
           ;;
         *) func_fatal_error "invalid value lgpl=$lgpl" ;;
       esac
+    else
+      # Update license.
+      sed_transform_lib_file=$sed_transform_lib_file'
+        s/GNU Lesser General/GNU General/g
+        s/GNU Library General/GNU General/g
+        s/version \(2\|2\.1\)\([ ,]\)/version 3\2/g
+      '
     fi
   fi
 

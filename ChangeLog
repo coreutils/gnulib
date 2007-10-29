@@ -1,3 +1,10 @@
+2007-10-29  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): When --lgpl is not specified, set
+	sed_transform_lib_file to convert LGPL and GPLv2+ copyright headers to
+	GPLv3.
+	Reported by Simon Josefsson.
+
 2007-10-28  Bruno Haible  <bruno@clisp.org>
 
 	* lib/math.in.h: Test REPLACE_ISFINITE instead of HAVE_DECL_ISFINITE.
