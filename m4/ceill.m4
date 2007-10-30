@@ -34,8 +34,8 @@ AC_DEFUN([gl_FUNC_CEILL],
 # Sets CEILL_LIBM.
 AC_DEFUN([gl_FUNC_CEILL_LIBS],
 [
-  AC_CACHE_VAL([gl_func_ceill_libm], [
-    gl_func_ceill_libm=?
+  AC_CACHE_VAL([gl_cv_func_ceill_libm], [
+    gl_cv_func_ceill_libm=?
     AC_TRY_LINK([
        #ifndef __NO_MATH_INLINES
        # define __NO_MATH_INLINES 1 /* for glibc */
@@ -43,8 +43,8 @@ AC_DEFUN([gl_FUNC_CEILL_LIBS],
        #include <math.h>
        long double x;],
       [x = ceill(x);],
-      [gl_func_ceill_libm=])
-    if test "$gl_func_ceill_libm" = "?"; then
+      [gl_cv_func_ceill_libm=])
+    if test "$gl_cv_func_ceill_libm" = "?"; then
       save_LIBS="$LIBS"
       LIBS="$LIBS -lm"
       AC_TRY_LINK([
@@ -54,9 +54,9 @@ AC_DEFUN([gl_FUNC_CEILL_LIBS],
          #include <math.h>
          long double x;],
         [x = ceill(x);],
-        [gl_func_ceill_libm="-lm"])
+        [gl_cv_func_ceill_libm="-lm"])
       LIBS="$save_LIBS"
     fi
   ])
-  CEILL_LIBM="$gl_func_ceill_libm"
+  CEILL_LIBM="$gl_cv_func_ceill_libm"
 ])

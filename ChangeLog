@@ -1,5 +1,16 @@
 2007-10-29  Bruno Haible  <bruno@clisp.org>
 
+	* m4/floorf.m4 (gl_FUNC_FLOORF_LIBS): Rename the cache variable to
+	contain the special marker '_cv_'.
+	* m4/floor.m4 (gl_FUNC_FLOOR_LIBS): Likewise.
+	* m4/floorl.m4 (gl_FUNC_FLOORL_LIBS): Likewise.
+	* m4/ceilf.m4 (gl_FUNC_CEILF_LIBS): Likewise.
+	* m4/ceil.m4 (gl_FUNC_CEIL_LIBS): Likewise.
+	* m4/ceill.m4 (gl_FUNC_CEILL_LIBS): Likewise.
+	Reported by Ralf Wildenhues.
+
+2007-10-29  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): When --lgpl is not specified, set
 	sed_transform_lib_file to convert LGPL and GPLv2+ copyright headers to
 	GPLv3.
