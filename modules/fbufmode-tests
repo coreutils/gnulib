@@ -8,4 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-fbufmode
 check_PROGRAMS += test-fbufmode
-
+MOSTLYCLEANFILES += t-fbufmode.tmp
