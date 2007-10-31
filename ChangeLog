@@ -1,5 +1,10 @@
 2007-10-30  Bruno Haible  <bruno@clisp.org>
 
+	* modules/xvasprintf-posix: New file.
+	Suggested by Eric Blake.
+
+2007-10-30  Bruno Haible  <bruno@clisp.org>
+
 	* modules/xprintf-posix-tests: New file.
 	* tests/test-xprintf-posix.sh: New file.
 	* tests/test-xprintf-posix.c: New file.

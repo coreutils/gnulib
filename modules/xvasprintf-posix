@@ -1,0 +1,23 @@
+Description:
+vasprintf and asprintf with POSIX compatible format string interpretation and
+with out-of-memory checking.  Also see xalloc-die.
+
+Files:
+
+Depends-on:
+xvasprintf
+vasprintf-posix
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"xvasprintf.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible
+
