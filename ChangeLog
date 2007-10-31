@@ -1,3 +1,11 @@
+2007-11-01  Jim Meyering  <meyering@redhat.com>
+
+	Treat an empty date string exactly like "0".
+	* lib/getdate.y (get_date): Once any isspace or TZ= prefix is consumed,
+	if the remaining date string (to be parsed) is empty, use "0".
+	Reported by Mischa Molhoek and discussed in this thread:
+	<http://thread.gmane.org/gmane.comp.gnu.coreutils.bugs/11726>.
+
 2007-10-31  Bruno Haible  <bruno@clisp.org>
 
 	* m4/intmax_t.m4 (gl_AC_TYPE_INTMAX_T, gt_AC_TYPE_INTMAX_T): Use

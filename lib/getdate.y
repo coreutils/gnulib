@@ -1238,6 +1238,12 @@ get_date (struct timespec *result, char const *p, struct timespec const *now)
 	  }
     }
 
+  /* As documented, be careful to treat the empty string just like
+     a date string of "0".  Without this, an empty string would be
+     declared invalid when parsed during a DST transition.  */
+  if (*p == '\0')
+    p = "0";
+
   pc.input = p;
   pc.year.value = tmp->tm_year;
   pc.year.value += TM_YEAR_BASE;
