@@ -3,7 +3,7 @@ strtoull() function: convert string to 'unsigned long long'.
 
 Files:
 lib/strtoull.c
-m4/ulonglong.m4
+m4/longlong.m4
 m4/strtoull.m4
 
 Depends-on:

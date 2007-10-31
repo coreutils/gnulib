@@ -10,7 +10,6 @@ Files:
 lib/stdint.in.h
 m4/stdint.m4
 m4/longlong.m4
-m4/ulonglong.m4
 
 Depends-on:
 include_next
