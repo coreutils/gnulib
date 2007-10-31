@@ -1,5 +1,10 @@
 2007-10-30  Bruno Haible  <bruno@clisp.org>
 
+	* modules/xprintf-posix-tests: New file.
+	* tests/test-xprintf-posix.sh: New file.
+	* tests/test-xprintf-posix.c: New file.
+	* tests/test-xfprintf-posix.c: New file.
+
 	* modules/xprintf-posix: New file.
 
 2007-10-30  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
