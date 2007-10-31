@@ -1,3 +1,7 @@
+2007-10-30  Bruno Haible  <bruno@clisp.org>
+
+	* modules/xprintf-posix: New file.
+
 2007-10-30  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* modules/fbufmode-tests (MOSTLYCLEANFILES): Remove temp files.
