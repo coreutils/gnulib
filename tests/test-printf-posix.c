@@ -1,4 +1,4 @@
-/* Test of POSIX compatible fprintf() function.
+/* Test of POSIX compatible printf() function.
    Copyright (C) 2007 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
