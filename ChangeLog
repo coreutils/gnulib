@@ -1,5 +1,14 @@
 2007-10-31  Bruno Haible  <bruno@clisp.org>
 
+	* m4/intmax_t.m4 (gl_AC_TYPE_INTMAX_T, gt_AC_TYPE_INTMAX_T): Use
+	AC_TYPE_LONG_LONG_INT instead of gl_AC_TYPE_LONG_LONG.
+	* m4/uintmax_t.m4 (gl_AC_TYPE_UINTMAX_T): Use
+	AC_TYPE_UNSIGNED_LONG_LONG_INT instead of gl_AC_TYPE_UNSIGNED_LONG_LONG.
+	* m4/longlong.m4 (gl_AC_TYPE_LONG_LONG): Remove macro.
+	* m4/ulonglong.m4 (gl_AC_TYPE_UNSIGNED_LONG_LONG): Remove macro.
+
+2007-10-31  Bruno Haible  <bruno@clisp.org>
+
 	* m4/longlong.m4 (_AC_TYPE_LONG_LONG_SNIPPET): New macro, extracted
 	from AC_TYPE_LONG_LONG_INT and AC_TYPE_UNSIGNED_LONG_LONG_INT.
 	(AC_TYPE_LONG_LONG_INT): Use it.
