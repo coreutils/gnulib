@@ -1,3 +1,10 @@
+2007-11-08  Jim Meyering  <meyering@redhat.com>
+
+	Change cache variable name prefix "jm_" to "gl_" everywhere.
+	* m4/d-type.m4, m4/jm-winsz1.m4, m4/jm-winsz2.m4, m4/link-follow.m4:
+	* m4/putenv.m4, m4/strtoimax.m4, m4/strtoumax.m4, m4/unlink-busy.m4:
+	* m4/uptime.m4: s/gl_/jm_/
+
 2007-11-07  Bruno Haible  <bruno@clisp.org>
 
 	Update to GNU gettext 0.17.

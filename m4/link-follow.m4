@@ -11,7 +11,7 @@ AC_DEFUN([gl_AC_FUNC_LINK_FOLLOWS_SYMLINK],
 [dnl
   AC_CACHE_CHECK(
     [whether link(2) dereferences a symlink specified with a trailing slash],
-		 jm_ac_cv_func_link_follows_symlink,
+		 gl_ac_cv_func_link_follows_symlink,
   [
     # Create a regular file.
     echo > conftest.file
@@ -52,12 +52,12 @@ AC_DEFUN([gl_AC_FUNC_LINK_FOLLOWS_SYMLINK],
 	  return SAME_INODE (sb_hard, sb_file) ? 0 : 1;
 	}
       ],
-      jm_ac_cv_func_link_follows_symlink=yes,
-      jm_ac_cv_func_link_follows_symlink=no,
-      jm_ac_cv_func_link_follows_symlink=yes dnl We're cross compiling.
+      gl_ac_cv_func_link_follows_symlink=yes,
+      gl_ac_cv_func_link_follows_symlink=no,
+      gl_ac_cv_func_link_follows_symlink=yes dnl We're cross compiling.
     )
   ])
-  if test $jm_ac_cv_func_link_follows_symlink = yes; then
+  if test $gl_ac_cv_func_link_follows_symlink = yes; then
     AC_DEFINE(LINK_FOLLOWS_SYMLINKS, 1,
       [Define if `link(2)' dereferences symbolic links.])
   fi

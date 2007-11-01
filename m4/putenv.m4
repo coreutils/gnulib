@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_PUTENV],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_CACHE_CHECK([for putenv compatible with GNU and SVID],
-   [jm_cv_func_svid_putenv],
+   [gl_cv_func_svid_putenv],
    [AC_RUN_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],[
     /* Put it in env.  */
     if (putenv ("CONFTEST_putenv=val"))
@@ -29,12 +29,12 @@ AC_DEFUN([gl_FUNC_PUTENV],
 
     return 0;
 	      ])],
-	     jm_cv_func_svid_putenv=yes,
-	     jm_cv_func_svid_putenv=no,
+	     gl_cv_func_svid_putenv=yes,
+	     gl_cv_func_svid_putenv=no,
 	     dnl When crosscompiling, assume putenv is broken.
-	     jm_cv_func_svid_putenv=no)
+	     gl_cv_func_svid_putenv=no)
    ])
-  if test $jm_cv_func_svid_putenv = no; then
+  if test $gl_cv_func_svid_putenv = no; then
     REPLACE_PUTENV=1
     AC_LIBOBJ(putenv)
   fi

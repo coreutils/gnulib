@@ -14,7 +14,7 @@ dnl
 
 AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE],
   [AC_CACHE_CHECK([for d_type member in directory struct],
-		  jm_cv_struct_dirent_d_type,
+		  gl_cv_struct_dirent_d_type,
      [AC_TRY_LINK(dnl
        [
 #include <sys/types.h>
@@ -22,11 +22,11 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE],
        ],
        [struct dirent dp; dp.d_type = 0;],
 
-       jm_cv_struct_dirent_d_type=yes,
-       jm_cv_struct_dirent_d_type=no)
+       gl_cv_struct_dirent_d_type=yes,
+       gl_cv_struct_dirent_d_type=no)
      ]
    )
-   if test $jm_cv_struct_dirent_d_type = yes; then
+   if test $gl_cv_struct_dirent_d_type = yes; then
      AC_DEFINE(HAVE_STRUCT_DIRENT_D_TYPE, 1,
        [Define if there is a member named d_type in the struct describing
         directory headers.])

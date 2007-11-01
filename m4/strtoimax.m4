@@ -11,15 +11,15 @@ AC_DEFUN([gl_FUNC_STRTOIMAX],
   AC_REQUIRE([AC_PROG_EGREP])
 
   AC_CACHE_CHECK([whether <inttypes.h> defines strtoimax as a macro],
-    jm_cv_func_strtoimax_macro,
+    gl_cv_func_strtoimax_macro,
     [AC_EGREP_CPP([inttypes_h_defines_strtoimax], [#include <inttypes.h>
 #ifdef strtoimax
  inttypes_h_defines_strtoimax
 #endif],
-       jm_cv_func_strtoimax_macro=yes,
-       jm_cv_func_strtoimax_macro=no)])
+       gl_cv_func_strtoimax_macro=yes,
+       gl_cv_func_strtoimax_macro=no)])
 
-  if test "$jm_cv_func_strtoimax_macro" != yes; then
+  if test "$gl_cv_func_strtoimax_macro" != yes; then
     AC_REPLACE_FUNCS(strtoimax)
     if test $ac_cv_func_strtoimax = no; then
       gl_PREREQ_STRTOIMAX
