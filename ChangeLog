@@ -1,3 +1,10 @@
+2007-11-01  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdlib.in.h (putenv): Remove the "not POSIX compliant everywhere"
+	warning.
+	* doc/functions/putenv.texi: Clarify that the 'putenv' module is not
+	needed for POSIX compatibility.
+
 2007-11-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/putenv.m4 (gl_FUNC_PUTENV): Also mention that we're checking
