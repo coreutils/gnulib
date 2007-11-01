@@ -1,4 +1,4 @@
-# putenv.m4 serial 13
+# putenv.m4 serial 14
 dnl Copyright (C) 2002-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,8 @@ dnl The putenv in libc on at least SunOS 4.1.4 does *not* do that.
 AC_DEFUN([gl_FUNC_PUTENV],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
-  AC_CACHE_CHECK([for SVID conformant putenv], jm_cv_func_svid_putenv,
+  AC_CACHE_CHECK([for putenv compatible with GNU and SVID],
+   [jm_cv_func_svid_putenv],
    [AC_RUN_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],[
     /* Put it in env.  */
     if (putenv ("CONFTEST_putenv=val"))

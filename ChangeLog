@@ -1,3 +1,8 @@
+2007-11-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/putenv.m4 (gl_FUNC_PUTENV): Also mention that we're checking
+	for compatibility with GNU.
+
 2007-11-01  Bruno Haible  <bruno@clisp.org>
 
 	* lib/putenv.c: Include <stdlib.h>. Remove rpl_putenv declaration.
