@@ -1,5 +1,5 @@
-# putenv.m4 serial 12
-dnl Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# putenv.m4 serial 13
+dnl Copyright (C) 2002-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -10,8 +10,10 @@ dnl Check whether putenv ("FOO") removes FOO from the environment.
 dnl The putenv in libc on at least SunOS 4.1.4 does *not* do that.
 
 AC_DEFUN([gl_FUNC_PUTENV],
-[AC_CACHE_CHECK([for SVID conformant putenv], jm_cv_func_svid_putenv,
-  [AC_RUN_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],[
+[
+  AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
+  AC_CACHE_CHECK([for SVID conformant putenv], jm_cv_func_svid_putenv,
+   [AC_RUN_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],[
     /* Put it in env.  */
     if (putenv ("CONFTEST_putenv=val"))
       return 1;
@@ -30,10 +32,9 @@ AC_DEFUN([gl_FUNC_PUTENV],
 	     jm_cv_func_svid_putenv=no,
 	     dnl When crosscompiling, assume putenv is broken.
 	     jm_cv_func_svid_putenv=no)
-  ])
+   ])
   if test $jm_cv_func_svid_putenv = no; then
+    REPLACE_PUTENV=1
     AC_LIBOBJ(putenv)
-    AC_DEFINE(putenv, rpl_putenv,
-      [Define to rpl_putenv if the replacement function should be used.])
   fi
 ])

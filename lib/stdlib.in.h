@@ -167,6 +167,21 @@ extern int mkstemp (char * /*template*/);
 #endif
 
 
+#if @GNULIB_PUTENV@
+# if @REPLACE_PUTENV@
+#  undef putenv
+#  define putenv rpl_putenv
+extern int putenv (char *string);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef putenv
+# define putenv(s) \
+    (GL_LINK_WARNING ("putenv is not POSIX compliant everywhere - " \
+                      "use gnulib module putenv for portability"), \
+     putenv (s))
+#endif
+
+
 #ifdef __cplusplus
 }
 #endif

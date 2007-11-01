@@ -1,3 +1,21 @@
+2007-11-01  Bruno Haible  <bruno@clisp.org>
+
+	* lib/putenv.c: Include <stdlib.h>. Remove rpl_putenv declaration.
+	(putenv): Renamed from rpl_putenv. Change argument type from
+	'const char *' to 'char *'.
+	* m4/putenv.m4 (gl_FUNC_PUTENV): Require gl_STDLIB_H_DEFAULTS. Instead
+	of defining putenv in config.h, just set REPLACE_PUTENV.
+	* modules/putenv (Depends-on): Add stdlib.
+	(configure.ac): Invoke gl_STDLIB_MODULE_INDICATOR.
+	(Include): Use <stdlib.h>.
+	* lib/stdlib.in.h (putenv): New declaration.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize GNULIB_PUTENV and
+	REPLACE_PUTENV.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_PUTENV and
+	REPLACE_PUTENV.
+	Needed for MacOS X 10.5.0.
+	Reported by Peter O'Gorman <peter@pogma.com>.
+
 2007-11-01  Jim Meyering  <meyering@redhat.com>
 
 	Treat an empty date string exactly like "0".
