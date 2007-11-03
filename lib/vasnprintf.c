@@ -88,18 +88,17 @@
 /* Checked size_t computations.  */
 #include "xsize.h"
 
-#if NEED_PRINTF_LONG_DOUBLE && !defined IN_LIBINTL
+#if (NEED_PRINTF_DOUBLE || NEED_PRINTF_LONG_DOUBLE) && !defined IN_LIBINTL
 # include <math.h>
 # include "float+.h"
-# include "fpucw.h"
 #endif
 
-#if NEED_PRINTF_INFINITE_DOUBLE && !defined IN_LIBINTL
+#if (NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE) && !defined IN_LIBINTL
 # include <math.h>
 # include "isnan.h"
 #endif
 
-#if NEED_PRINTF_INFINITE_LONG_DOUBLE && !defined IN_LIBINTL
+#if (NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE) && !defined IN_LIBINTL
 # include <math.h>
 # include "isnanl-nolibm.h"
 # include "fpucw.h"
@@ -200,7 +199,7 @@ local_wcslen (const wchar_t *s)
 /* Here we need to call the native sprintf, not rpl_sprintf.  */
 #undef sprintf
 
-#if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE) && !defined IN_LIBINTL
+#if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE) && !defined IN_LIBINTL
 /* Determine the decimal-point character according to the current locale.  */
 # ifndef decimal_point_char_defined
 #  define decimal_point_char_defined 1
@@ -227,7 +226,7 @@ decimal_point_char ()
 # endif
 #endif
 
-#if NEED_PRINTF_INFINITE_DOUBLE && !defined IN_LIBINTL
+#if NEED_PRINTF_INFINITE_DOUBLE && !NEED_PRINTF_DOUBLE && !defined IN_LIBINTL
 
 /* Equivalent to !isfinite(x) || x == 0, but does not require libm.  */
 static int
@@ -238,7 +237,7 @@ is_infinite_or_zero (double x)
 
 #endif
 
-#if NEED_PRINTF_INFINITE_LONG_DOUBLE && !defined IN_LIBINTL
+#if NEED_PRINTF_INFINITE_LONG_DOUBLE && !NEED_PRINTF_LONG_DOUBLE && !defined IN_LIBINTL
 
 /* Equivalent to !isfinite(x), but does not require libm.  */
 static int
@@ -249,7 +248,7 @@ is_infinitel (long double x)
 
 #endif
 
-#if NEED_PRINTF_LONG_DOUBLE && !defined IN_LIBINTL
+#if (NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE) && !defined IN_LIBINTL
 
 /* Converting 'long double' to decimal without rare rounding bugs requires
    real bignums.  We use the naming conventions of GNU gmp, but vastly simpler
@@ -795,6 +794,8 @@ convert_to_decimal (mpn_t a, size_t extra_zeroes)
   return c_ptr;
 }
 
+# if NEED_PRINTF_LONG_DOUBLE
+
 /* Assuming x is finite and >= 0:
    write x as x = 2^e * m, where m is a bignum.
    Return the allocated memory in case of success, NULL in case of memory
@@ -823,8 +824,8 @@ decode_long_double (long double x, int *ep, mpn_t *mp)
      2^31 and 2^32 to 'unsigned int', therefore play safe and cast only
      'long double' values between 0 and 2^16 (to 'unsigned int' or 'int',
      doesn't matter).  */
-# if (LDBL_MANT_BIT % GMP_LIMB_BITS) != 0
-#  if (LDBL_MANT_BIT % GMP_LIMB_BITS) > GMP_LIMB_BITS / 2
+#  if (LDBL_MANT_BIT % GMP_LIMB_BITS) != 0
+#   if (LDBL_MANT_BIT % GMP_LIMB_BITS) > GMP_LIMB_BITS / 2
     {
       mp_limb_t hi, lo;
       y *= (mp_limb_t) 1 << (LDBL_MANT_BIT % (GMP_LIMB_BITS / 2));
@@ -839,7 +840,7 @@ decode_long_double (long double x, int *ep, mpn_t *mp)
 	abort ();
       m.limbs[LDBL_MANT_BIT / GMP_LIMB_BITS] = (hi << (GMP_LIMB_BITS / 2)) | lo;
     }
-#  else
+#   else
     {
       mp_limb_t d;
       y *= (mp_limb_t) 1 << (LDBL_MANT_BIT % GMP_LIMB_BITS);
@@ -849,8 +850,8 @@ decode_long_double (long double x, int *ep, mpn_t *mp)
 	abort ();
       m.limbs[LDBL_MANT_BIT / GMP_LIMB_BITS] = d;
     }
+#   endif
 #  endif
-# endif
   for (i = LDBL_MANT_BIT / GMP_LIMB_BITS; i > 0; )
     {
       mp_limb_t hi, lo;
@@ -876,17 +877,101 @@ decode_long_double (long double x, int *ep, mpn_t *mp)
   return m.limbs;
 }
 
-/* Assuming x is finite and >= 0, and n is an integer:
+# endif
+
+# if NEED_PRINTF_DOUBLE
+
+/* Assuming x is finite and >= 0:
+   write x as x = 2^e * m, where m is a bignum.
+   Return the allocated memory in case of success, NULL in case of memory
+   allocation failure.  */
+static void *
+decode_double (double x, int *ep, mpn_t *mp)
+{
+  mpn_t m;
+  int exp;
+  double y;
+  size_t i;
+
+  /* Allocate memory for result.  */
+  m.nlimbs = (DBL_MANT_BIT + GMP_LIMB_BITS - 1) / GMP_LIMB_BITS;
+  m.limbs = (mp_limb_t *) malloc (m.nlimbs * sizeof (mp_limb_t));
+  if (m.limbs == NULL)
+    return NULL;
+  /* Split into exponential part and mantissa.  */
+  y = frexp (x, &exp);
+  if (!(y >= 0.0 && y < 1.0))
+    abort ();
+  /* x = 2^exp * y = 2^(exp - DBL_MANT_BIT) * (y * DBL_MANT_BIT), and the
+     latter is an integer.  */
+  /* Convert the mantissa (y * DBL_MANT_BIT) to a sequence of limbs.
+     I'm not sure whether it's safe to cast a 'double' value between
+     2^31 and 2^32 to 'unsigned int', therefore play safe and cast only
+     'double' values between 0 and 2^16 (to 'unsigned int' or 'int',
+     doesn't matter).  */
+#  if (DBL_MANT_BIT % GMP_LIMB_BITS) != 0
+#   if (DBL_MANT_BIT % GMP_LIMB_BITS) > GMP_LIMB_BITS / 2
+    {
+      mp_limb_t hi, lo;
+      y *= (mp_limb_t) 1 << (DBL_MANT_BIT % (GMP_LIMB_BITS / 2));
+      hi = (int) y;
+      y -= hi;
+      if (!(y >= 0.0 && y < 1.0))
+	abort ();
+      y *= (mp_limb_t) 1 << (GMP_LIMB_BITS / 2);
+      lo = (int) y;
+      y -= lo;
+      if (!(y >= 0.0 && y < 1.0))
+	abort ();
+      m.limbs[DBL_MANT_BIT / GMP_LIMB_BITS] = (hi << (GMP_LIMB_BITS / 2)) | lo;
+    }
+#   else
+    {
+      mp_limb_t d;
+      y *= (mp_limb_t) 1 << (DBL_MANT_BIT % GMP_LIMB_BITS);
+      d = (int) y;
+      y -= d;
+      if (!(y >= 0.0 && y < 1.0))
+	abort ();
+      m.limbs[DBL_MANT_BIT / GMP_LIMB_BITS] = d;
+    }
+#   endif
+#  endif
+  for (i = DBL_MANT_BIT / GMP_LIMB_BITS; i > 0; )
+    {
+      mp_limb_t hi, lo;
+      y *= (mp_limb_t) 1 << (GMP_LIMB_BITS / 2);
+      hi = (int) y;
+      y -= hi;
+      if (!(y >= 0.0 && y < 1.0))
+	abort ();
+      y *= (mp_limb_t) 1 << (GMP_LIMB_BITS / 2);
+      lo = (int) y;
+      y -= lo;
+      if (!(y >= 0.0 && y < 1.0))
+	abort ();
+      m.limbs[--i] = (hi << (GMP_LIMB_BITS / 2)) | lo;
+    }
+  if (!(y == 0.0))
+    abort ();
+  /* Normalise.  */
+  while (m.nlimbs > 0 && m.limbs[m.nlimbs - 1] == 0)
+    m.nlimbs--;
+  *mp = m;
+  *ep = exp - DBL_MANT_BIT;
+  return m.limbs;
+}
+
+# endif
+
+/* Assuming x = 2^e * m is finite and >= 0, and n is an integer:
    Returns the decimal representation of round (x * 10^n).
    Return the allocated memory - containing the decimal digits in low-to-high
    order, terminated with a NUL character - in case of success, NULL in case
    of memory allocation failure.  */
 static char *
-scale10_round_decimal_long_double (long double x, int n)
+scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
 {
-  int e;
-  mpn_t m;
-  void *memory = decode_long_double (x, &e, &m);
   int s;
   size_t extra_zeroes;
   unsigned int abs_n;
@@ -1099,6 +1184,44 @@ scale10_round_decimal_long_double (long double x, int n)
   return digits;
 }
 
+# if NEED_PRINTF_LONG_DOUBLE
+
+/* Assuming x is finite and >= 0, and n is an integer:
+   Returns the decimal representation of round (x * 10^n).
+   Return the allocated memory - containing the decimal digits in low-to-high
+   order, terminated with a NUL character - in case of success, NULL in case
+   of memory allocation failure.  */
+static char *
+scale10_round_decimal_long_double (long double x, int n)
+{
+  int e;
+  mpn_t m;
+  void *memory = decode_long_double (x, &e, &m);
+  return scale10_round_decimal_decoded (e, m, memory, n);
+}
+
+# endif
+
+# if NEED_PRINTF_DOUBLE
+
+/* Assuming x is finite and >= 0, and n is an integer:
+   Returns the decimal representation of round (x * 10^n).
+   Return the allocated memory - containing the decimal digits in low-to-high
+   order, terminated with a NUL character - in case of success, NULL in case
+   of memory allocation failure.  */
+static char *
+scale10_round_decimal_double (double x, int n)
+{
+  int e;
+  mpn_t m;
+  void *memory = decode_double (x, &e, &m);
+  return scale10_round_decimal_decoded (e, m, memory, n);
+}
+
+# endif
+
+# if NEED_PRINTF_LONG_DOUBLE
+
 /* Assuming x is finite and > 0:
    Return an approximation for n with 10^n <= x < 10^(n+1).
    The approximation is usually the right n, but may be off by 1 sometimes.  */
@@ -1185,6 +1308,99 @@ floorlog10l (long double x)
   /* Round down to the next integer.  */
   return (int) l + (l < 0 ? -1 : 0);
 }
+
+# endif
+
+# if NEED_PRINTF_DOUBLE
+
+/* Assuming x is finite and > 0:
+   Return an approximation for n with 10^n <= x < 10^(n+1).
+   The approximation is usually the right n, but may be off by 1 sometimes.  */
+static int
+floorlog10 (double x)
+{
+  int exp;
+  double y;
+  double z;
+  double l;
+
+  /* Split into exponential part and mantissa.  */
+  y = frexp (x, &exp);
+  if (!(y >= 0.0 && y < 1.0))
+    abort ();
+  if (y == 0.0)
+    return INT_MIN;
+  if (y < 0.5)
+    {
+      while (y < (1.0 / (1 << (GMP_LIMB_BITS / 2)) / (1 << (GMP_LIMB_BITS / 2))))
+	{
+	  y *= 1.0 * (1 << (GMP_LIMB_BITS / 2)) * (1 << (GMP_LIMB_BITS / 2));
+	  exp -= GMP_LIMB_BITS;
+	}
+      if (y < (1.0 / (1 << 16)))
+	{
+	  y *= 1.0 * (1 << 16);
+	  exp -= 16;
+	}
+      if (y < (1.0 / (1 << 8)))
+	{
+	  y *= 1.0 * (1 << 8);
+	  exp -= 8;
+	}
+      if (y < (1.0 / (1 << 4)))
+	{
+	  y *= 1.0 * (1 << 4);
+	  exp -= 4;
+	}
+      if (y < (1.0 / (1 << 2)))
+	{
+	  y *= 1.0 * (1 << 2);
+	  exp -= 2;
+	}
+      if (y < (1.0 / (1 << 1)))
+	{
+	  y *= 1.0 * (1 << 1);
+	  exp -= 1;
+	}
+    }
+  if (!(y >= 0.5 && y < 1.0))
+    abort ();
+  /* Compute an approximation for l = log2(x) = exp + log2(y).  */
+  l = exp;
+  z = y;
+  if (z < 0.70710678118654752444)
+    {
+      z *= 1.4142135623730950488;
+      l -= 0.5;
+    }
+  if (z < 0.8408964152537145431)
+    {
+      z *= 1.1892071150027210667;
+      l -= 0.25;
+    }
+  if (z < 0.91700404320467123175)
+    {
+      z *= 1.0905077326652576592;
+      l -= 0.125;
+    }
+  if (z < 0.9576032806985736469)
+    {
+      z *= 1.0442737824274138403;
+      l -= 0.0625;
+    }
+  /* Now 0.95 <= z <= 1.01.  */
+  z = 1 - z;
+  /* log(1-z) = - z - z^2/2 - z^3/3 - z^4/4 - ...
+     Four terms are enough to get an approximation with error < 10^-7.  */
+  l -= z * (1.0 + z * (0.5 + z * ((1.0 / 3) + z * 0.25)));
+  /* Finally multiply with log(2)/log(10), yields an approximation for
+     log10(x).  */
+  l *= 0.30102999566398119523;
+  /* Round down to the next integer.  */
+  return (int) l + (l < 0 ? -1 : 0);
+}
+
+# endif
 
 #endif
 
@@ -2290,13 +2506,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		}
 	      }
 #endif
-#if (NEED_PRINTF_INFINITE_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE || NEED_PRINTF_LONG_DOUBLE) && !defined IN_LIBINTL
+#if (NEED_PRINTF_INFINITE_DOUBLE || NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE || NEED_PRINTF_LONG_DOUBLE) && !defined IN_LIBINTL
 	    else if ((dp->conversion == 'f' || dp->conversion == 'F'
 		      || dp->conversion == 'e' || dp->conversion == 'E'
 		      || dp->conversion == 'g' || dp->conversion == 'G'
 		      || dp->conversion == 'a' || dp->conversion == 'A')
 		     && (0
-# if NEED_PRINTF_INFINITE_DOUBLE
+# if NEED_PRINTF_DOUBLE
+			 || a.arg[dp->arg_index].type == TYPE_DOUBLE
+# elif NEED_PRINTF_INFINITE_DOUBLE
 			 || (a.arg[dp->arg_index].type == TYPE_DOUBLE
 			     /* The systems (mingw) which produce wrong output
 				for Inf, -Inf, and NaN also do so for -0.0.
@@ -2313,7 +2531,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # endif
 			))
 	      {
-# if NEED_PRINTF_INFINITE_DOUBLE && (NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE)
+# if (NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE) && (NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE)
 		arg_type type = a.arg[dp->arg_index].type;
 # endif
 		int flags = dp->flags;
@@ -2396,17 +2614,21 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		  precision = 6;
 
 		/* Allocate a temporary buffer of sufficient size.  */
-# if NEED_PRINTF_INFINITE_DOUBLE && NEED_PRINTF_LONG_DOUBLE
+# if NEED_PRINTF_DOUBLE && NEED_PRINTF_LONG_DOUBLE
+		tmp_length = (type == TYPE_LONGDOUBLE ? LDBL_DIG + 1 : DBL_DIG + 1);
+# elif NEED_PRINTF_INFINITE_DOUBLE && NEED_PRINTF_LONG_DOUBLE
 		tmp_length = (type == TYPE_LONGDOUBLE ? LDBL_DIG + 1 : 0);
 # elif NEED_PRINTF_LONG_DOUBLE
 		tmp_length = LDBL_DIG + 1;
+# elif NEED_PRINTF_DOUBLE
+		tmp_length = DBL_DIG + 1;
 # else
 		tmp_length = 0;
 # endif
 		if (tmp_length < precision)
 		  tmp_length = precision;
 # if NEED_PRINTF_LONG_DOUBLE
-#  if NEED_PRINTF_INFINITE_DOUBLE
+#  if NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE
 		if (type == TYPE_LONGDOUBLE)
 #  endif
 		  if (dp->conversion == 'f' || dp->conversion == 'F')
@@ -2416,6 +2638,22 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			{
 			  /* arg is finite and nonzero.  */
 			  int exponent = floorlog10l (arg < 0 ? -arg : arg);
+			  if (exponent >= 0 && tmp_length < exponent + precision)
+			    tmp_length = exponent + precision;
+			}
+		    }
+# endif
+# if NEED_PRINTF_DOUBLE
+#  if NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE
+		if (type == TYPE_DOUBLE)
+#  endif
+		  if (dp->conversion == 'f' || dp->conversion == 'F')
+		    {
+		      double arg = a.arg[dp->arg_index].a.a_double;
+		      if (!(isnan (arg) || arg + arg == arg))
+			{
+			  /* arg is finite and nonzero.  */
+			  int exponent = floorlog10 (arg < 0 ? -arg : arg);
 			  if (exponent >= 0 && tmp_length < exponent + precision)
 			    tmp_length = exponent + precision;
 			}
@@ -2448,7 +2686,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		p = tmp;
 
 # if NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE
-#  if NEED_PRINTF_INFINITE_DOUBLE
+#  if NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE
 		if (type == TYPE_LONGDOUBLE)
 #  endif
 		  {
@@ -2808,13 +3046,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			END_LONG_DOUBLE_ROUNDING ();
 		      }
 		  }
-#  if NEED_PRINTF_INFINITE_DOUBLE
+#  if NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE
 		else
 #  endif
 # endif
-# if NEED_PRINTF_INFINITE_DOUBLE
+# if NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE
 		  {
-		    /* Simpler than above: handle only NaN, Infinity, zero.  */
 		    double arg = a.arg[dp->arg_index].a.a_double;
 
 		    if (isnan (arg))
@@ -2832,7 +3069,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		      {
 			int sign = 0;
 
-			if (signbit (arg)) /* arg < 0.0L or negative zero */
+			if (signbit (arg)) /* arg < 0.0 or negative zero */
 			  {
 			    sign = -1;
 			    arg = -arg;
@@ -2858,6 +3095,332 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			  }
 			else
 			  {
+#  if NEED_PRINTF_DOUBLE
+			    pad_ptr = p;
+
+			    if (dp->conversion == 'f' || dp->conversion == 'F')
+			      {
+				char *digits;
+				size_t ndigits;
+
+				digits =
+				  scale10_round_decimal_double (arg, precision);
+				if (digits == NULL)
+				  goto out_of_memory;
+				ndigits = strlen (digits);
+
+				if (ndigits > precision)
+				  do
+				    {
+				      --ndigits;
+				      *p++ = digits[ndigits];
+				    }
+				  while (ndigits > precision);
+				else
+				  *p++ = '0';
+				/* Here ndigits <= precision.  */
+				if ((flags & FLAG_ALT) || precision > 0)
+				  {
+				    *p++ = decimal_point_char ();
+				    for (; precision > ndigits; precision--)
+				      *p++ = '0';
+				    while (ndigits > 0)
+				      {
+					--ndigits;
+					*p++ = digits[ndigits];
+				      }
+				  }
+
+				free (digits);
+			      }
+			    else if (dp->conversion == 'e' || dp->conversion == 'E')
+			      {
+				int exponent;
+
+				if (arg == 0.0)
+				  {
+				    exponent = 0;
+				    *p++ = '0';
+				    if ((flags & FLAG_ALT) || precision > 0)
+				      {
+					*p++ = decimal_point_char ();
+					for (; precision > 0; precision--)
+					  *p++ = '0';
+				      }
+				  }
+				else
+				  {
+				    /* arg > 0.0.  */
+				    int adjusted;
+				    char *digits;
+				    size_t ndigits;
+
+				    exponent = floorlog10 (arg);
+				    adjusted = 0;
+				    for (;;)
+				      {
+					digits =
+					  scale10_round_decimal_double (arg,
+									(int)precision - exponent);
+					if (digits == NULL)
+					  goto out_of_memory;
+					ndigits = strlen (digits);
+
+					if (ndigits == precision + 1)
+					  break;
+					if (ndigits < precision
+					    || ndigits > precision + 2)
+					  /* The exponent was not guessed
+					     precisely enough.  */
+					  abort ();
+					if (adjusted)
+					  /* None of two values of exponent is
+					     the right one.  Prevent an endless
+					     loop.  */
+					  abort ();
+					free (digits);
+					if (ndigits == precision)
+					  exponent -= 1;
+					else
+					  exponent += 1;
+					adjusted = 1;
+				      }
+
+				    /* Here ndigits = precision+1.  */
+				    *p++ = digits[--ndigits];
+				    if ((flags & FLAG_ALT) || precision > 0)
+				      {
+					*p++ = decimal_point_char ();
+					while (ndigits > 0)
+					  {
+					    --ndigits;
+					    *p++ = digits[ndigits];
+					  }
+				      }
+
+				    free (digits);
+				  }
+
+				*p++ = dp->conversion; /* 'e' or 'E' */
+#   if WIDE_CHAR_VERSION
+				{
+				  static const wchar_t decimal_format[] =
+				    /* Produce the same number of exponent digits
+				       as the native printf implementation.  */
+#    if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+				    { '%', '+', '.', '3', 'd', '\0' };
+#    else
+				    { '%', '+', '.', '2', 'd', '\0' };
+#    endif
+				  SNPRINTF (p, 6 + 1, decimal_format, exponent);
+				}
+				while (*p != '\0')
+				  p++;
+#   else
+				{
+				  static const char decimal_format[] =
+				    /* Produce the same number of exponent digits
+				       as the native printf implementation.  */
+#    if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+				    "%+.3d";
+#    else
+				    "%+.2d";
+#    endif
+				  if (sizeof (DCHAR_T) == 1)
+				    {
+				      sprintf ((char *) p, decimal_format, exponent);
+				      while (*p != '\0')
+					p++;
+				    }
+				  else
+				    {
+				      char expbuf[6 + 1];
+				      const char *ep;
+				      sprintf (expbuf, decimal_format, exponent);
+				      for (ep = expbuf; (*p = *ep) != '\0'; ep++)
+					p++;
+				    }
+				}
+#   endif
+			      }
+			    else if (dp->conversion == 'g' || dp->conversion == 'G')
+			      {
+				if (precision == 0)
+				  precision = 1;
+				/* precision >= 1.  */
+
+				if (arg == 0.0)
+				  /* The exponent is 0, >= -4, < precision.
+				     Use fixed-point notation.  */
+				  {
+				    size_t ndigits = precision;
+				    /* Number of trailing zeroes that have to be
+				       dropped.  */
+				    size_t nzeroes =
+				      (flags & FLAG_ALT ? 0 : precision - 1);
+
+				    --ndigits;
+				    *p++ = '0';
+				    if ((flags & FLAG_ALT) || ndigits > nzeroes)
+				      {
+					*p++ = decimal_point_char ();
+					while (ndigits > nzeroes)
+					  {
+					    --ndigits;
+					    *p++ = '0';
+					  }
+				      }
+				  }
+				else
+				  {
+				    /* arg > 0.0.  */
+				    int exponent;
+				    int adjusted;
+				    char *digits;
+				    size_t ndigits;
+				    size_t nzeroes;
+
+				    exponent = floorlog10 (arg);
+				    adjusted = 0;
+				    for (;;)
+				      {
+					digits =
+					  scale10_round_decimal_double (arg,
+									(int)(precision - 1) - exponent);
+					if (digits == NULL)
+					  goto out_of_memory;
+					ndigits = strlen (digits);
+
+					if (ndigits == precision)
+					  break;
+					if (ndigits < precision - 1
+					    || ndigits > precision + 1)
+					  /* The exponent was not guessed
+					     precisely enough.  */
+					  abort ();
+					if (adjusted)
+					  /* None of two values of exponent is
+					     the right one.  Prevent an endless
+					     loop.  */
+					  abort ();
+					free (digits);
+					if (ndigits < precision)
+					  exponent -= 1;
+					else
+					  exponent += 1;
+					adjusted = 1;
+				      }
+				    /* Here ndigits = precision.  */
+
+				    /* Determine the number of trailing zeroes
+				       that have to be dropped.  */
+				    nzeroes = 0;
+				    if ((flags & FLAG_ALT) == 0)
+				      while (nzeroes < ndigits
+					     && digits[nzeroes] == '0')
+					nzeroes++;
+
+				    /* The exponent is now determined.  */
+				    if (exponent >= -4
+					&& exponent < (long)precision)
+				      {
+					/* Fixed-point notation:
+					   max(exponent,0)+1 digits, then the
+					   decimal point, then the remaining
+					   digits without trailing zeroes.  */
+					if (exponent >= 0)
+					  {
+					    size_t count = exponent + 1;
+					    /* Note: count <= precision = ndigits.  */
+					    for (; count > 0; count--)
+					      *p++ = digits[--ndigits];
+					    if ((flags & FLAG_ALT) || ndigits > nzeroes)
+					      {
+						*p++ = decimal_point_char ();
+						while (ndigits > nzeroes)
+						  {
+						    --ndigits;
+						    *p++ = digits[ndigits];
+						  }
+					      }
+					  }
+					else
+					  {
+					    size_t count = -exponent - 1;
+					    *p++ = '0';
+					    *p++ = decimal_point_char ();
+					    for (; count > 0; count--)
+					      *p++ = '0';
+					    while (ndigits > nzeroes)
+					      {
+						--ndigits;
+						*p++ = digits[ndigits];
+					      }
+					  }
+				      }
+				    else
+				      {
+					/* Exponential notation.  */
+					*p++ = digits[--ndigits];
+					if ((flags & FLAG_ALT) || ndigits > nzeroes)
+					  {
+					    *p++ = decimal_point_char ();
+					    while (ndigits > nzeroes)
+					      {
+						--ndigits;
+						*p++ = digits[ndigits];
+					      }
+					  }
+					*p++ = dp->conversion - 'G' + 'E'; /* 'e' or 'E' */
+#   if WIDE_CHAR_VERSION
+					{
+					  static const wchar_t decimal_format[] =
+					    /* Produce the same number of exponent digits
+					       as the native printf implementation.  */
+#    if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+					    { '%', '+', '.', '3', 'd', '\0' };
+#    else
+					    { '%', '+', '.', '2', 'd', '\0' };
+#    endif
+					  SNPRINTF (p, 6 + 1, decimal_format, exponent);
+					}
+					while (*p != '\0')
+					  p++;
+#   else
+					{
+					  static const char decimal_format[] =
+					    /* Produce the same number of exponent digits
+					       as the native printf implementation.  */
+#    if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+					    "%+.3d";
+#    else
+					    "%+.2d";
+#    endif
+					  if (sizeof (DCHAR_T) == 1)
+					    {
+					      sprintf ((char *) p, decimal_format, exponent);
+					      while (*p != '\0')
+						p++;
+					    }
+					  else
+					    {
+					      char expbuf[6 + 1];
+					      const char *ep;
+					      sprintf (expbuf, decimal_format, exponent);
+					      for (ep = expbuf; (*p = *ep) != '\0'; ep++)
+						p++;
+					    }
+					}
+#   endif
+				      }
+
+				    free (digits);
+				  }
+			      }
+			    else
+			      abort ();
+#  else
+			    /* arg is finite.  */
 			    if (!(arg == 0.0))
 			      abort ();
 
@@ -2886,9 +3449,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 				*p++ = '+';
 				/* Produce the same number of exponent digits as
 				   the native printf implementation.  */
-#  if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#   if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 				*p++ = '0';
-#  endif
+#   endif
 				*p++ = '0';
 				*p++ = '0';
 			      }
@@ -2906,6 +3469,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			      }
 			    else
 			      abort ();
+#  endif
 			  }
 		      }
 		  }

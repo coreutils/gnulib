@@ -1,4 +1,4 @@
-# printf.m4 serial 17
+# printf.m4 serial 18
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -721,6 +721,109 @@ changequote([,])dnl
     ])
 ])
 
+dnl Test whether the *printf family of functions recovers gracefully in case
+dnl of an out-of-memory condition, or whether it crashes the entire program.
+dnl Result is gl_cv_func_printf_enomem.
+
+AC_DEFUN([gl_PRINTF_ENOMEM],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether printf survives out-of-memory conditions],
+    [gl_cv_func_printf_enomem],
+    [
+      if test "$cross_compiling" = no; then
+        AC_LANG_CONFTEST([AC_LANG_SOURCE([
+changequote(,)dnl
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <errno.h>
+int main()
+{
+  struct rlimit limit;
+  int ret;
+  /* Some printf implementations allocate temporary space with malloc.  */
+  /* On BSD systems, malloc() is limited by RLIMIT_DATA.  */
+#ifdef RLIMIT_DATA
+  if (getrlimit (RLIMIT_DATA, &limit) < 0)
+    return 77;
+  if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > 5000000)
+    limit.rlim_max = 5000000;
+  limit.rlim_cur = limit.rlim_max;
+  if (setrlimit (RLIMIT_DATA, &limit) < 0)
+    return 77;
+#endif
+  /* On Linux systems, malloc() is limited by RLIMIT_AS.  */
+#ifdef RLIMIT_AS
+  if (getrlimit (RLIMIT_AS, &limit) < 0)
+    return 77;
+  if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > 5000000)
+    limit.rlim_max = 5000000;
+  limit.rlim_cur = limit.rlim_max;
+  if (setrlimit (RLIMIT_AS, &limit) < 0)
+    return 77;
+#endif
+  /* Some printf implementations allocate temporary space on the stack.  */
+#ifdef RLIMIT_STACK
+  if (getrlimit (RLIMIT_STACK, &limit) < 0)
+    return 77;
+  if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > 5000000)
+    limit.rlim_max = 5000000;
+  limit.rlim_cur = limit.rlim_max;
+  if (setrlimit (RLIMIT_STACK, &limit) < 0)
+    return 77;
+#endif
+  ret = printf ("%.5000000f", 1.0);
+  return !(ret == 5000002 || (ret < 0 && errno == ENOMEM));
+}
+changequote([,])dnl
+          ])])
+        if AC_TRY_EVAL([ac_link]) && test -s conftest$ac_exeext; then
+          (./conftest
+           result=$?
+           if test $result != 0 && test $result != 77; then result=1; fi
+           exit $result
+          ) >/dev/null 2>/dev/null
+          case $? in
+            0) gl_cv_func_printf_enomem="yes" ;;
+            77) gl_cv_func_printf_enomem="guessing no" ;;
+            *) gl_cv_func_printf_enomem="no" ;;
+          esac
+        else
+          gl_cv_func_printf_enomem="guessing no"
+        fi
+        rm -fr conftest*
+      else
+changequote(,)dnl
+        case "$host_os" in
+                    # Guess yes on glibc systems.
+          *-gnu*)   gl_cv_func_printf_enomem="guessing yes";;
+                    # Guess yes on Solaris.
+          solaris*) gl_cv_func_printf_enomem="guessing yes";;
+                    # Guess yes on AIX.
+          aix*)     gl_cv_func_printf_enomem="guessing yes";;
+                    # Guess yes on HP-UX/hppa.
+          hpux*)    case "$host_cpu" in
+                      hppa*) gl_cv_func_printf_enomem="guessing yes";;
+                      *)     gl_cv_func_printf_enomem="guessing no";;
+                    esac
+                    ;;
+                    # Guess yes on IRIX.
+          irix*)    gl_cv_func_printf_enomem="guessing yes";;
+                    # Guess yes on OSF/1.
+          osf*)     gl_cv_func_printf_enomem="guessing yes";;
+                    # Guess yes on BeOS.
+          beos*)    gl_cv_func_printf_enomem="guessing yes";;
+                    # If we don't know, assume the worst.
+          *)        gl_cv_func_printf_enomem="guessing no";;
+        esac
+changequote([,])dnl
+      fi
+    ])
+])
+
 dnl Test whether the snprintf function exists. (ISO C99, POSIX:2001)
 dnl Result is ac_cv_func_snprintf.
 
@@ -1039,11 +1142,12 @@ dnl 7 = gl_PRINTF_DIRECTIVE_N
 dnl 8 = gl_PRINTF_POSITIONS
 dnl 9 = gl_PRINTF_FLAG_GROUPING
 dnl 10 = gl_PRINTF_FLAG_ZERO
-dnl 11 = gl_SNPRINTF_PRESENCE
-dnl 12 = gl_SNPRINTF_TRUNCATION_C99
-dnl 13 = gl_SNPRINTF_RETVAL_C99
-dnl 14 = gl_SNPRINTF_DIRECTIVE_N
-dnl 15 = gl_VSNPRINTF_ZEROSIZE_C99
+dnl 11 = gl_PRINTF_ENOMEM
+dnl 12 = gl_SNPRINTF_PRESENCE
+dnl 13 = gl_SNPRINTF_TRUNCATION_C99
+dnl 14 = gl_SNPRINTF_RETVAL_C99
+dnl 15 = gl_SNPRINTF_DIRECTIVE_N
+dnl 16 = gl_VSNPRINTF_ZEROSIZE_C99
 dnl
 dnl 1 = checking whether printf supports size specifiers as in C99...
 dnl 2 = checking whether printf supports 'long double' arguments...
@@ -1055,33 +1159,34 @@ dnl 7 = checking whether printf supports the 'n' directive...
 dnl 8 = checking whether printf supports POSIX/XSI format strings with positions...
 dnl 9 = checking whether printf supports the grouping flag...
 dnl 10 = checking whether printf supports the zero flag correctly...
-dnl 11 = checking for snprintf...
-dnl 12 = checking whether snprintf truncates the result as in C99...
-dnl 13 = checking whether snprintf returns a byte count as in C99...
-dnl 14 = checking whether snprintf fully supports the 'n' directive...
-dnl 15 = checking whether vsnprintf respects a zero size as in C99...
+dnl 11 = checking whether printf survives out-of-memory conditions...
+dnl 12 = checking for snprintf...
+dnl 13 = checking whether snprintf truncates the result as in C99...
+dnl 14 = checking whether snprintf returns a byte count as in C99...
+dnl 15 = checking whether snprintf fully supports the 'n' directive...
+dnl 16 = checking whether vsnprintf respects a zero size as in C99...
 dnl
 dnl . = yes, # = no.
 dnl
-dnl                                  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
-dnl   glibc 2.5                      .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-dnl   glibc 2.3.6                    .  .  .  .  #  .  .  .  .  .  .  .  .  .  .
-dnl   FreeBSD 5.4, 6.1               .  .  .  .  #  .  .  .  .  #  .  .  .  .  .
-dnl   MacOS X 10.3.9                 .  .  .  .  #  .  .  .  .  #  .  .  .  .  .
-dnl   OpenBSD 3.9, 4.0               .  ?  ?  ?  #  ?  .  .  ?  ?  .  .  .  ?  ?
-dnl   Cygwin 2007 (= Cygwin 1.5.24)  .  .  .  .  #  #  .  .  .  #  .  .  .  .  .
-dnl   Cygwin 2006 (= Cygwin 1.5.19)  #  .  .  .  #  #  .  .  #  #  .  .  .  .  .
-dnl   Solaris 10                     .  .  #  #  #  .  .  .  .  #  .  .  .  .  .
-dnl   Solaris 2.6 ... 9              #  .  #  #  #  #  .  .  .  #  .  .  .  .  .
-dnl   Solaris 2.5.1                  #  .  #  #  #  #  .  .  .  #  #  #  #  #  #
-dnl   AIX 5.2                        .  .  #  #  #  .  .  .  .  #  .  .  .  .  .
-dnl   AIX 4.3.2, 5.1                 #  .  #  #  #  #  .  .  .  #  .  .  .  .  .
-dnl   HP-UX 11.31                    .  .  .  .  #  .  .  .  .  #  .  .  #  #  .
-dnl   HP-UX 10.20, 11.{00,11,23}     #  .  .  .  #  #  .  .  .  #  .  .  #  #  #
-dnl   IRIX 6.5                       #  .  #  #  #  #  .  .  .  #  .  .  #  .  .
-dnl   OSF/1 5.1                      #  .  #  #  #  #  .  .  .  #  .  .  #  .  #
-dnl   OSF/1 4.0d                     #  .  #  #  #  #  .  .  .  #  #  #  #  #  #
-dnl   NetBSD 4.0                     .  ?  ?  ?  ?  ?  .  .  ?  ?  .  .  .  ?  ?
-dnl   NetBSD 3.0                     .  .  .  .  #  #  .  #  #  #  .  .  .  .  .
-dnl   BeOS                           #  #  .  #  #  #  .  #  .  .  .  .  .  .  .
-dnl   mingw                          #  #  #  #  #  #  .  #  #  #  .  #  #  #  .
+dnl                                  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
+dnl   glibc 2.5                      .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+dnl   glibc 2.3.6                    .  .  .  .  #  .  .  .  .  .  .  .  .  .  .  .
+dnl   FreeBSD 5.4, 6.1               .  .  .  .  #  .  .  .  .  #  #  .  .  .  .  .
+dnl   MacOS X 10.3.9                 .  .  .  .  #  .  .  .  .  #  #  .  .  .  .  .
+dnl   OpenBSD 3.9, 4.0               .  ?  ?  ?  #  ?  .  .  ?  ?  ?  .  .  .  ?  ?
+dnl   Cygwin 2007 (= Cygwin 1.5.24)  .  .  .  .  #  #  .  .  .  #  ?  .  .  .  .  .
+dnl   Cygwin 2006 (= Cygwin 1.5.19)  #  .  .  .  #  #  .  .  #  #  ?  .  .  .  .  .
+dnl   Solaris 10                     .  .  #  #  #  .  .  .  .  #  .  .  .  .  .  .
+dnl   Solaris 2.6 ... 9              #  .  #  #  #  #  .  .  .  #  .  .  .  .  .  .
+dnl   Solaris 2.5.1                  #  .  #  #  #  #  .  .  .  #  .  #  #  #  #  #
+dnl   AIX 5.2                        .  .  #  #  #  .  .  .  .  #  .  .  .  .  .  .
+dnl   AIX 4.3.2, 5.1                 #  .  #  #  #  #  .  .  .  #  .  .  .  .  .  .
+dnl   HP-UX 11.31                    .  .  .  .  #  .  .  .  .  #  .  .  .  #  #  .
+dnl   HP-UX 10.20, 11.{00,11,23}     #  .  .  .  #  #  .  .  .  #  .  .  .  #  #  #
+dnl   IRIX 6.5                       #  .  #  #  #  #  .  .  .  #  .  .  .  #  .  .
+dnl   OSF/1 5.1                      #  .  #  #  #  #  .  .  .  #  .  .  .  #  .  #
+dnl   OSF/1 4.0d                     #  .  #  #  #  #  .  .  .  #  .  #  #  #  #  #
+dnl   NetBSD 4.0                     .  ?  ?  ?  ?  ?  .  .  ?  ?  ?  .  .  .  ?  ?
+dnl   NetBSD 3.0                     .  .  .  .  #  #  .  #  #  #  #  .  .  .  .  .
+dnl   BeOS                           #  #  .  #  #  #  .  #  .  .  ?  .  .  .  .  .
+dnl   mingw                          #  #  #  #  #  #  .  #  #  #  ?  .  #  #  #  .

@@ -11,6 +11,7 @@ stdio
 vasnprintf
 isnan-nolibm
 isnanl-nolibm
+frexp-nolibm
 frexpl-nolibm
 printf-frexp
 printf-frexpl
