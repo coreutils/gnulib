@@ -1,3 +1,11 @@
+2007-11-03  Bruno Haible  <bruno@clisp.org>
+
+	Fix out-of-memory handling of vasnprintf.
+	* lib/printf-parse.c: Include <errno.h>.
+	(PRINTF_PARSE): When failing, set errno to EINVAL or ENOMEM.
+	* lib/vasnprintf.c (VASNPRINTF): When PRINTF_PARSE fails, assume errno
+	is already set.
+
 2007-11-02  Eric Blake  <ebb9@byu.net>
 
 	Fix tests on cygwin.

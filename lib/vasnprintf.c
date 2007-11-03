@@ -1196,10 +1196,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
   arguments a;
 
   if (PRINTF_PARSE (format, &d, &a) < 0)
-    {
-      errno = EINVAL;
-      return NULL;
-    }
+    /* errno is already set.  */
+    return NULL;
 
 #define CLEANUP() \
   free (d.dir);								\
