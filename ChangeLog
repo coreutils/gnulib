@@ -1,5 +1,11 @@
 2007-11-03  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (VASNPRINTF): Don't assume that snprintf's return
+	value is C99 compliant.
+	Needed for OSF/1 5.1.
+
+2007-11-03  Bruno Haible  <bruno@clisp.org>
+
 	Fix out-of-memory handling of vasnprintf.
 	* lib/printf-parse.c: Include <errno.h>.
 	(PRINTF_PARSE): When failing, set errno to EINVAL or ENOMEM.

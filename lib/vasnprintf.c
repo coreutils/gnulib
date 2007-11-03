@@ -3658,8 +3658,12 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		      }
 
 #if USE_SNPRINTF
-		    /* Handle overflow of the allocated buffer.  */
-		    if (count >= maxlen)
+		    /* Handle overflow of the allocated buffer.
+		       If such an overflow occurs, a C99 compliant snprintf()
+		       returns a count >= maxlen.  However, a non-compliant
+		       snprintf() function returns only count = maxlen - 1.  To
+		       cover both cases, test whether count >= maxlen - 1.  */
+		    if ((unsigned int) count + 1 >= maxlen)
 		      {
 			/* If maxlen already has attained its allowed maximum,
 			   allocating more memory will not increase maxlen.
