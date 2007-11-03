@@ -1,4 +1,4 @@
-# frexp.m4 serial 3
+# frexp.m4 serial 4
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -54,6 +54,37 @@ AC_DEFUN([gl_FUNC_FREXP],
     AC_LIBOBJ([frexp])
   fi
   AC_SUBST([FREXP_LIBM])
+])
+
+AC_DEFUN([gl_FUNC_FREXP_NO_LIBM],
+[
+  AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_CACHE_CHECK([whether frexp() can be used without linking with libm],
+    [gl_cv_func_frexp_no_libm],
+    [
+      AC_TRY_LINK([#include <math.h>
+                   double x;],
+                  [int e; return frexp (x, &e) > 0;],
+        [gl_cv_func_frexp_no_libm=yes],
+        [gl_cv_func_frexp_no_libm=no])
+    ])
+  if test $gl_cv_func_frexp_no_libm = yes; then
+    gl_FUNC_FREXP_WORKS
+    case "$gl_cv_func_frexp_works" in
+      *yes) gl_func_frexp_no_libm=yes ;;
+      *)    gl_func_frexp_no_libm=no; REPLACE_FREXP=1 ;;
+    esac
+  else
+    gl_func_frexp_no_libm=no
+    dnl Set REPLACE_FREXP here because the system may have frexp in libm.
+    REPLACE_FREXP=1
+  fi
+  if test $gl_func_frexp_no_libm = yes; then
+    AC_DEFINE([HAVE_FREXP_IN_LIBC], 1,
+      [Define if the frexp() function is available in libc.])
+  else
+    AC_LIBOBJ([frexp])
+  fi
 ])
 
 dnl Test whether frexp() works also on denormalized numbers (this fails e.g. on

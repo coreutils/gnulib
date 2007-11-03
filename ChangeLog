@@ -1,5 +1,10 @@
 2007-11-03  Bruno Haible  <bruno@clisp.org>
 
+	* modules/frexp-nolibm: New file.
+	* m4/frexp.m4 (gl_FUNC_FREXP_NO_LIBM): New macro.
+
+2007-11-03  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c (VASNPRINTF): Don't assume that snprintf's return
 	value is C99 compliant.
 	Needed for OSF/1 5.1.
