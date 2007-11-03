@@ -1,5 +1,7 @@
 2007-11-03  Bruno Haible  <bruno@clisp.org>
 
+	* modules/frexp-nolibm-tests: New file.
+
 	* modules/frexp-nolibm: New file.
 	* m4/frexp.m4 (gl_FUNC_FREXP_NO_LIBM): New macro.
 

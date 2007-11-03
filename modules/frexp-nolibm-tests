@@ -1,0 +1,15 @@
+Files:
+tests/test-frexp.c
+
+Depends-on:
+isnan-nolibm
+signbit
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-frexp
+check_PROGRAMS += test-frexp
+
+License:
+LGPL
