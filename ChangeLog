@@ -1,5 +1,11 @@
 2007-11-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/nocrash: New file.
+	* m4/nocrash.m4: New file, taken from GNU clisp. Code taken from
+	GNU libsigsegv, with permission of GNU libsigsegv's copyright holders.
+
+2007-11-04  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-vasnprintf-posix.c (test_function): Add some tests of
 	precision handling.
 	* tests/test-vasprintf-posix.c (test_function): Likewise.
