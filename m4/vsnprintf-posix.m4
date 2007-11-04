@@ -1,4 +1,4 @@
-# vsnprintf-posix.m4 serial 9
+# vsnprintf-posix.m4 serial 10
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,6 +17,7 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_POSIX],
   AC_REQUIRE([gl_PRINTF_POSITIONS])
   AC_REQUIRE([gl_PRINTF_FLAG_GROUPING])
   AC_REQUIRE([gl_PRINTF_FLAG_ZERO])
+  AC_REQUIRE([gl_PRINTF_PRECISION])
   AC_REQUIRE([gl_PRINTF_ENOMEM])
   gl_cv_func_vsnprintf_posix=no
   AC_CHECK_FUNCS([vsnprintf])
@@ -46,19 +47,23 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_POSIX],
                                       *yes)
                                         case "$gl_cv_func_printf_flag_zero" in
                                           *yes)
-                                            case "$gl_cv_func_printf_enomem" in
+                                            case "$gl_cv_func_printf_precision" in
                                               *yes)
-                                                case "$gl_cv_func_snprintf_truncation_c99" in
+                                                case "$gl_cv_func_printf_enomem" in
                                                   *yes)
-                                                    case "$gl_cv_func_snprintf_retval_c99" in
+                                                    case "$gl_cv_func_snprintf_truncation_c99" in
                                                       *yes)
-                                                        case "$gl_cv_func_snprintf_directive_n" in
+                                                        case "$gl_cv_func_snprintf_retval_c99" in
                                                           *yes)
-                                                            case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                                            case "$gl_cv_func_snprintf_directive_n" in
                                                               *yes)
-                                                                # vsnprintf exists and is
-                                                                # already POSIX compliant.
-                                                                gl_cv_func_vsnprintf_posix=yes
+                                                                case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                                                  *yes)
+                                                                    # vsnprintf exists and is
+                                                                    # already POSIX compliant.
+                                                                    gl_cv_func_vsnprintf_posix=yes
+                                                                    ;;
+                                                                esac
                                                                 ;;
                                                             esac
                                                             ;;
@@ -98,6 +103,7 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_POSIX],
     gl_PREREQ_VASNPRINTF_DIRECTIVE_F
     gl_PREREQ_VASNPRINTF_FLAG_GROUPING
     gl_PREREQ_VASNPRINTF_FLAG_ZERO
+    gl_PREREQ_VASNPRINTF_PRECISION
     gl_PREREQ_VASNPRINTF_ENOMEM
     gl_REPLACE_VASNPRINTF
     gl_REPLACE_VSNPRINTF

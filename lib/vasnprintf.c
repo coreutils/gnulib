@@ -3540,11 +3540,20 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 	      {
 		arg_type type = a.arg[dp->arg_index].type;
 		int flags = dp->flags;
-#if !USE_SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO
+#if !USE_SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
 		int has_width;
 		size_t width;
 #endif
-#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO
+#if !USE_SNPRINTF || NEED_PRINTF_UNBOUNDED_PRECISION
+		int has_precision;
+		size_t precision;
+#endif
+#if NEED_PRINTF_UNBOUNDED_PRECISION
+		int prec_ourselves;
+#else
+#		define prec_ourselves 0
+#endif
+#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
 		int pad_ourselves;
 #else
 #		define pad_ourselves 0
@@ -3558,7 +3567,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		TCHAR_T *tmp;
 #endif
 
-#if !USE_SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO
+#if !USE_SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
 		has_width = 0;
 		width = 0;
 		if (dp->width_start != dp->width_end)
@@ -3592,34 +3601,42 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		  }
 #endif
 
+#if !USE_SNPRINTF || NEED_PRINTF_UNBOUNDED_PRECISION
+		has_precision = 0;
+		precision = 6;
+		if (dp->precision_start != dp->precision_end)
+		  {
+		    if (dp->precision_arg_index != ARG_NONE)
+		      {
+			int arg;
+
+			if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
+			  abort ();
+			arg = a.arg[dp->precision_arg_index].a.a_int;
+			/* "A negative precision is taken as if the precision
+			    were omitted."  */
+			if (arg >= 0)
+			  {
+			    precision = arg;
+			    has_precision = 1;
+			  }
+		      }
+		    else
+		      {
+			const FCHAR_T *digitp = dp->precision_start + 1;
+
+			precision = 0;
+			while (digitp != dp->precision_end)
+			  precision = xsum (xtimes (precision, 10), *digitp++ - '0');
+			has_precision = 1;
+		      }
+		  }
+#endif
+
 #if !USE_SNPRINTF
 		/* Allocate a temporary buffer of sufficient size for calling
 		   sprintf.  */
 		{
-		  size_t precision;
-
-		  precision = 6;
-		  if (dp->precision_start != dp->precision_end)
-		    {
-		      if (dp->precision_arg_index != ARG_NONE)
-			{
-			  int arg;
-
-			  if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
-			    abort ();
-			  arg = a.arg[dp->precision_arg_index].a.a_int;
-			  precision = (arg < 0 ? 0 : arg);
-			}
-		      else
-			{
-			  const FCHAR_T *digitp = dp->precision_start + 1;
-
-			  precision = 0;
-			  while (digitp != dp->precision_end)
-			    precision = xsum (xtimes (precision, 10), *digitp++ - '0');
-			}
-		    }
-
 		  switch (dp->conversion)
 		    {
 
@@ -3824,8 +3841,23 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		  }
 #endif
 
+		/* Decide whether to handle the precision ourselves.  */
+#if NEED_PRINTF_UNBOUNDED_PRECISION
+		switch (dp->conversion)
+		  {
+		  case 'd': case 'i': case 'u':
+		  case 'o':
+		  case 'x': case 'X': case 'p':
+		    prec_ourselves = has_precision && (precision > 0);
+		    break;
+		  default:
+		    prec_ourselves = 0;
+		    break;
+		  }
+#endif
+
 		/* Decide whether to perform the padding ourselves.  */
-#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO
+#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
 		switch (dp->conversion)
 		  {
 # if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO
@@ -3842,7 +3874,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		    pad_ourselves = 1;
 		    break;
 		  default:
-		    pad_ourselves = 0;
+		    pad_ourselves = prec_ourselves;
 		    break;
 		  }
 #endif
@@ -3890,22 +3922,25 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			  }
 		      }
 		  }
-		if (dp->precision_start != dp->precision_end)
+		if (!prec_ourselves)
 		  {
-		    size_t n = dp->precision_end - dp->precision_start;
-		    /* The precision specification is known to consist only
-		       of standard ASCII characters.  */
-		    if (sizeof (FCHAR_T) == sizeof (TCHAR_T))
+		    if (dp->precision_start != dp->precision_end)
 		      {
-		        memcpy (fbp, dp->precision_start, n * sizeof (TCHAR_T));
-		        fbp += n;
-		      }
-		    else
-		      {
-			const FCHAR_T *mp = dp->precision_start;
-			do
-			  *fbp++ = (unsigned char) *mp++;
-			while (--n > 0);
+			size_t n = dp->precision_end - dp->precision_start;
+			/* The precision specification is known to consist only
+			   of standard ASCII characters.  */
+			if (sizeof (FCHAR_T) == sizeof (TCHAR_T))
+			  {
+			    memcpy (fbp, dp->precision_start, n * sizeof (TCHAR_T));
+			    fbp += n;
+			  }
+			else
+			  {
+			    const FCHAR_T *mp = dp->precision_start;
+			    do
+			      *fbp++ = (unsigned char) *mp++;
+			    while (--n > 0);
+			  }
 		      }
 		  }
 
@@ -4252,6 +4287,69 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		      }
 #endif
 
+#if NEED_PRINTF_UNBOUNDED_PRECISION
+		    if (prec_ourselves)
+		      {
+			/* Handle the precision.  */
+			TCHAR_T *prec_ptr = 
+# if USE_SNPRINTF
+			  (TCHAR_T *) (result + length);
+# else
+			  tmp;
+# endif
+			size_t prefix_count;
+			size_t move;
+
+			prefix_count = 0;
+			/* Put the additional zeroes after the sign.  */
+			if (count >= 1
+			    && (*prec_ptr == '-' || *prec_ptr == '+'
+				|| *prec_ptr == ' '))
+			  prefix_count = 1;
+			/* Put the additional zeroes after the 0x prefix if
+			   (flags & FLAG_ALT) || (dp->conversion == 'p').  */
+			else if (count >= 2
+				 && prec_ptr[0] == '0'
+				 && (prec_ptr[1] == 'x' || prec_ptr[1] == 'X'))
+			  prefix_count = 2;
+
+			move = count - prefix_count;
+			if (precision > move)
+			  {
+			    /* Insert zeroes.  */
+			    size_t insert = precision - move;
+			    TCHAR_T *prec_end;
+
+# if USE_SNPRINTF
+			    size_t n =
+			      xsum (length,
+				    (count + insert + TCHARS_PER_DCHAR - 1)
+				    / TCHARS_PER_DCHAR);
+			    length += (count + TCHARS_PER_DCHAR - 1) / TCHARS_PER_DCHAR;
+			    ENSURE_ALLOCATION (n);
+			    length -= (count + TCHARS_PER_DCHAR - 1) / TCHARS_PER_DCHAR;
+			    prec_ptr = (TCHAR_T *) (result + length);
+# endif
+
+			    prec_end = prec_ptr + count;
+			    prec_ptr += prefix_count;
+
+			    while (prec_end > prec_ptr)
+			      {
+				prec_end--;
+				prec_end[insert] = prec_end[0];
+			      }
+
+			    prec_end += insert;
+			    do
+			      *--prec_end = '0';
+			    while (prec_end > prec_ptr);
+
+			    count += insert;
+			  }
+		      }
+#endif
+
 #if !DCHAR_IS_TCHAR
 # if !USE_SNPRINTF
 		    if (count >= tmp_length)
@@ -4360,7 +4458,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		    /* Here count <= allocated - length.  */
 
 		    /* Perform padding.  */
-#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO
+#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
 		    if (pad_ourselves && has_width)
 		      {
 			size_t w;

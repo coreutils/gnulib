@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 21
+# vasnprintf.m4 serial 22
 dnl Copyright (C) 2002-2004, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -178,6 +178,27 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF_FLAG_ZERO],
   esac
 ])
 
+# Extra prerequisites of lib/vasnprintf.c for supporting large precisions.
+AC_DEFUN([gl_PREREQ_VASNPRINTF_PRECISION],
+[
+  AC_REQUIRE([gl_PRINTF_PRECISION])
+  case "$gl_cv_func_printf_precision" in
+    *yes)
+      ;;
+    *)
+      AC_DEFINE([NEED_PRINTF_UNBOUNDED_PRECISION], 1,
+        [Define if the vasnprintf implementation needs special code for
+         supporting large precisions without arbitrary bounds.])
+      AC_DEFINE([NEED_PRINTF_DOUBLE], 1,
+        [Define if the vasnprintf implementation needs special code for
+         'double' arguments.])
+      AC_DEFINE([NEED_PRINTF_LONG_DOUBLE], 1,
+        [Define if the vasnprintf implementation needs special code for
+         'long double' arguments.])
+      ;;
+  esac
+])
+
 # Extra prerequisites of lib/vasnprintf.c for surviving out-of-memory
 # conditions.
 AC_DEFUN([gl_PREREQ_VASNPRINTF_ENOMEM],
@@ -211,6 +232,7 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF_WITH_EXTRAS],
   gl_PREREQ_VASNPRINTF_DIRECTIVE_F
   gl_PREREQ_VASNPRINTF_FLAG_GROUPING
   gl_PREREQ_VASNPRINTF_FLAG_ZERO
+  gl_PREREQ_VASNPRINTF_PRECISION
   gl_PREREQ_VASNPRINTF_ENOMEM
 ])
 
