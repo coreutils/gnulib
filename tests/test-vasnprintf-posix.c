@@ -3252,6 +3252,106 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     ASSERT (length == strlen (result));
     free (result);
   }
+
+  /* Test the support of large precision.  */
+
+  {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.4000d %d", 1234567, 99);
+    size_t i;
+    ASSERT (result != NULL);
+    for (i = 0; i < 4000 - 7; i++)
+      ASSERT (result[i] == '0');
+    ASSERT (strcmp (result + 4000 - 7, "1234567 99") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.4000d %d", -1234567, 99);
+    size_t i;
+    ASSERT (result != NULL);
+    ASSERT (result[0] == '-');
+    for (i = 0; i < 4000 - 7; i++)
+      ASSERT (result[1 + i] == '0');
+    ASSERT (strcmp (result + 1 + 4000 - 7, "1234567 99") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.4000u %d", 1234567, 99);
+    size_t i;
+    ASSERT (result != NULL);
+    for (i = 0; i < 4000 - 7; i++)
+      ASSERT (result[i] == '0');
+    ASSERT (strcmp (result + 4000 - 7, "1234567 99") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.4000o %d", 1234567, 99);
+    size_t i;
+    ASSERT (result != NULL);
+    for (i = 0; i < 4000 - 7; i++)
+      ASSERT (result[i] == '0');
+    ASSERT (strcmp (result + 4000 - 7, "4553207 99") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.4000x %d", 1234567, 99);
+    size_t i;
+    ASSERT (result != NULL);
+    for (i = 0; i < 4000 - 6; i++)
+      ASSERT (result[i] == '0');
+    ASSERT (strcmp (result + 4000 - 6, "12d687 99") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%#.4000x %d", 1234567, 99);
+    size_t i;
+    ASSERT (result != NULL);
+    ASSERT (result[0] == '0');
+    ASSERT (result[1] == 'x');
+    for (i = 0; i < 4000 - 6; i++)
+      ASSERT (result[2 + i] == '0');
+    ASSERT (strcmp (result + 2 + 4000 - 6, "12d687 99") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  {
+    char input[5000];
+    size_t length;
+    char *result;
+    size_t i;
+
+    for (i = 0; i < sizeof (input) - 1; i++)
+      input[i] = 'a' + ((1000000 / (i + 1)) % 26);
+    input[i] = '\0';
+    result = my_asnprintf (NULL, &length, "%.4000s %d", input, 99);
+    ASSERT (result != NULL);
+    ASSERT (memcmp (result, input, 4000) == 0);
+    ASSERT (strcmp (result + 4000, " 99") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
 }
 
 static char *

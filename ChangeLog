@@ -1,5 +1,11 @@
 2007-11-04  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-vasnprintf-posix.c (test_function): Add some tests of
+	precision handling.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+
 	Fix *printf behaviour for large precisions on mingw and BeOS.
 	* m4/printf.m4 (gl_PRINTF_PRECISION): New macro.
 	* lib/vasnprintf.c (VASNPRINTF): Handle NEED_PRINTF_UNBOUNDED_PRECISION.
