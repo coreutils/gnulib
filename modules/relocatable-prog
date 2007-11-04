@@ -11,6 +11,7 @@ lib/relocatable.c
 lib/progreloc.c
 m4/relocatable.m4
 m4/relocatable-lib.m4
+m4/lib-ld.m4
 
 Depends-on:
 relocatable-prog-wrapper
