@@ -1,5 +1,9 @@
 2007-11-04  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (DCHAR_IS_TCHAR, DCHAR_CPY): Undefine at the end.
+
+2007-11-04  Bruno Haible  <bruno@clisp.org>
+
 	* m4/printf.m4 (gl_PRINTF_ENOMEM): Use GL_NOCRASH.
 	* modules/fprintf-posix (Depends-on): Add nocrash.
 	* modules/snprintf-posix (Depends-on): Likewise.
