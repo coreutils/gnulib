@@ -1,5 +1,9 @@
 2007-11-04  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (scale10_round_decimal_decoded): Fix shift loop.
+
+2007-11-04  Bruno Haible  <bruno@clisp.org>
+
 	* modules/relocatable-prog (Files): Add m4/lib-ld.m4.
 	Reported by Sylvain Beucler <beuc@gnu.org>.
 

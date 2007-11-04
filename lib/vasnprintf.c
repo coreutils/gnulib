@@ -1151,7 +1151,7 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
 		size_t count;
 		for (count = m.nlimbs; count > 0; count--)
 		  {
-		    accu += (mp_twolimb_t) *sourceptr++ << s;
+		    accu += (mp_twolimb_t) *sourceptr++ << s_bits;
 		    *destptr++ = (mp_limb_t) accu;
 		    accu = accu >> GMP_LIMB_BITS;
 		  }
