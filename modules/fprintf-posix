@@ -18,6 +18,7 @@ printf-frexp
 printf-frexpl
 signbit
 fpucw
+nocrash
 printf-safe
 
 configure.ac:

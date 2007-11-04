@@ -35,6 +35,7 @@ printf-frexp
 printf-frexpl
 signbit
 fpucw
+nocrash
 printf-safe
 alloca-opt
 localcharset

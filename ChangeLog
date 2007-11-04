@@ -1,5 +1,24 @@
 2007-11-04  Bruno Haible  <bruno@clisp.org>
 
+	* m4/printf.m4 (gl_PRINTF_ENOMEM): Use GL_NOCRASH.
+	* modules/fprintf-posix (Depends-on): Add nocrash.
+	* modules/snprintf-posix (Depends-on): Likewise.
+	* modules/sprintf-posix (Depends-on): Likewise.
+	* modules/vasnprintf-posix (Depends-on): Likewise.
+	* modules/vasprintf-posix (Depends-on): Likewise.
+	* modules/vfprintf-posix (Depends-on): Likewise.
+	* modules/vsnprintf-posix (Depends-on): Likewise.
+	* modules/vsprintf-posix (Depends-on): Likewise.
+	* modules/unistdio/u8-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-u8-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-vasnprintf (Depends-on): Likewise.
+
+2007-11-04  Bruno Haible  <bruno@clisp.org>
+
 	* modules/nocrash: New file.
 	* m4/nocrash.m4: New file, taken from GNU clisp. Code taken from
 	GNU libsigsegv, with permission of GNU libsigsegv's copyright holders.

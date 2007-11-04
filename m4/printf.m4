@@ -1,4 +1,4 @@
-# printf.m4 serial 19
+# printf.m4 serial 20
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -774,6 +774,7 @@ AC_DEFUN([gl_PRINTF_ENOMEM],
     [
       if test "$cross_compiling" = no; then
         AC_LANG_CONFTEST([AC_LANG_SOURCE([
+]GL_NOCRASH[
 changequote(,)dnl
 #include <stdio.h>
 #include <sys/types.h>
@@ -784,6 +785,7 @@ int main()
 {
   struct rlimit limit;
   int ret;
+  nocrash_init ();
   /* Some printf implementations allocate temporary space with malloc.  */
   /* On BSD systems, malloc() is limited by RLIMIT_DATA.  */
 #ifdef RLIMIT_DATA
