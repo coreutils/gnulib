@@ -1,5 +1,11 @@
 2007-11-04  Bruno Haible  <bruno@clisp.org>
 
+	* lib/lock.h: Protect all macro definitions containing an 'if'
+	statement through a "do { ... } while (0)".
+	* lib/tls.h: Likewise.
+
+2007-11-04  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c (DCHAR_IS_TCHAR, DCHAR_CPY): Undefine at the end.
 
 2007-11-04  Bruno Haible  <bruno@clisp.org>
