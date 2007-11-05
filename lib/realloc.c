@@ -18,18 +18,32 @@
 /* written by Jim Meyering and Bruno Haible */
 
 #include <config.h>
+
 /* Only the AC_FUNC_REALLOC macro defines 'realloc' already in config.h.  */
 #ifdef realloc
-# define NEED_REALLOC_GNU
-# undef realloc
+# define NEED_REALLOC_GNU 1
 #endif
+
+/* Infer the properties of the system's malloc function.
+   Only the AC_FUNC_MALLOC macro defines 'malloc' already in config.h.  */
+#if GNULIB_MALLOC_GNU && !defined malloc
+# define SYSTEM_MALLOC_GLIBC_COMPATIBLE 1
+#endif
+
+/* Below we want to call the system's malloc and realloc.
+   Undefine the symbols here so that including <stdlib.h> provides a
+   declaration of malloc(), not of rpl_malloc(), and likewise for realloc.  */
+#undef malloc
+#undef realloc
 
 /* Specification.  */
 #include <stdlib.h>
 
 #include <errno.h>
 
-/* Call the system's malloc and realloc below.  */
+/* Below we want to call the system's malloc and realloc.
+   Undefine the symbols, if they were defined by gnulib's <stdlib.h>
+   replacement.  */
 #undef malloc
 #undef realloc
 
@@ -42,7 +56,7 @@ rpl_realloc (void *p, size_t n)
 {
   void *result;
 
-#ifdef NEED_REALLOC_GNU
+#if NEED_REALLOC_GNU
   if (n == 0)
     {
       n = 1;
@@ -53,7 +67,16 @@ rpl_realloc (void *p, size_t n)
     }
 #endif
 
-  result = (p == NULL ? malloc (n) : realloc (p, n));
+  if (p == NULL)
+    {
+#if GNULIB_REALLOC_GNU && !NEED_REALLOC_GNU && !SYSTEM_MALLOC_GLIBC_COMPATIBLE
+      if (n == 0)
+	n = 1;
+#endif
+      result = malloc (n);
+    }
+  else
+    result = realloc (p, n);
 
 #if !HAVE_REALLOC_POSIX
   if (result == NULL)

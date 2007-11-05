@@ -9,6 +9,7 @@ realloc-posix
 
 configure.ac:
 AC_FUNC_REALLOC
+AC_DEFINE([GNULIB_REALLOC_GNU], 1, [Define to indicate the 'realloc' module.])
 
 Makefile.am:
 

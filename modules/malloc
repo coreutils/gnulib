@@ -9,6 +9,7 @@ malloc-posix
 
 configure.ac:
 AC_FUNC_MALLOC
+AC_DEFINE([GNULIB_MALLOC_GNU], 1, [Define to indicate the 'malloc' module.])
 
 Makefile.am:
 

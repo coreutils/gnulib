@@ -1,3 +1,13 @@
+2007-10-27  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+            Bruno Haible  <bruno@clisp.org>
+
+	* modules/malloc (configure.ac): Define GNULIB_MALLOC_GNU always.
+	* modules/realloc (configure.ac): Define GNULIB_REALLOC_GNU always.
+	* lib/realloc.c (SYSTEM_MALLOC_GLIBC_COMPATIBLE): New macro.
+	(malloc): Undefine also before including <stdlib.h>.
+	(rpl_realloc): Turn malloc(0) into malloc(1) if necessary.
+	Needed on OSF/1 4.0.
+
 2007-11-05  Jim Meyering  <meyering@redhat.com>
 
 	git-version-gen: sync from coreutils.
