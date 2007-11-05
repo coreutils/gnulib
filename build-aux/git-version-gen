@@ -1,7 +1,6 @@
 #!/bin/sh
 # Print a version string.
-# This script is derived from GIT-VERSION-GEN from GIT: http://git.or.cz/.
-scriptversion=2007-06-30.12
+scriptversion=2007-11-05.08
 
 # Copyright (C) 2007 Free Software Foundation
 #
@@ -20,13 +19,19 @@ scriptversion=2007-06-30.12
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 
+# This script is derived from GIT-VERSION-GEN from GIT: http://git.or.cz/.
+# It may be run two ways:
+# - from a git repository in which the git-describe command below
+#   produces useful output (thus requiring at least one signed tag)
+# - from a non-git-repo directory containing a .version file, which
+#   presumes this script is invoked like "./git-version-gen .version".
+
 case $# in
-    2) ;;
-    *) echo 1>&2 "Usage: $0 \$VERSION \$srcdir/.version"; exit 1;;
+    1) ;;
+    *) echo 1>&2 "Usage: $0 \$srcdir/.version"; exit 1;;
 esac
 
-default_version=$1
-tarball_version_file=$2
+tarball_version_file=$1
 nl='
 '
 
@@ -54,13 +59,17 @@ elif test -d .git \
 	 *) (exit 1) ;;
        esac
 then
-    # Remove the "g" in git-describe's output string; change each - to a '.'
-    v=`echo "$v" | sed 's/\(.*\)-g/\1-/;s/-/./g'`;
+    # Change the first '-' to a '.', so version-comparing tools work properly.
+    # Remove the "g" in git-describe's output string, to save a byte.
+    v=`echo "$v" | sed 's/-/./;s/\(.*\)-g/\1-/'`;
 else
-    v=$default_version
+    v=UNKNOWN
 fi
 
 v=`echo "$v" |sed 's/^v//'`
+
+# Don't declare a version "dirty" merely because a time stamp has changed.
+git-status > /dev/null 2>&1
 
 dirty=`sh -c 'git diff-index --name-only HEAD' 2>/dev/null` || dirty=
 case "$dirty" in
