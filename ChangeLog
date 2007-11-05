@@ -1,3 +1,10 @@
+2007-11-05  Bruno Haible  <bruno@clisp.org>
+
+	* lib/vasnprintf.c (VASNPRINTF): Expand the NEED_PRINTF_DIRECTIVE_A
+	code when NEED_PRINTF_LONG_DOUBLE or NEED_PRINTF_DOUBLE is set.
+	Needed on Cygwin, where !NEED_PRINTF_DIRECTIVE_A && NEED_PRINTF_DOUBLE.
+	Reported by Eric Blake.
+
 2007-10-27  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
             Bruno Haible  <bruno@clisp.org>
 
