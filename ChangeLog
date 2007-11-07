@@ -1,3 +1,7 @@
+2007-11-06  Bruno Haible  <bruno@clisp.org>
+
+	* m4/fpending.m4 (gl_FUNC_FPENDING): Add a variant for QNX.
+
 2007-11-05  Bruno Haible  <bruno@clisp.org>
 
 	* lib/vasnprintf.c (VASNPRINTF): Expand the NEED_PRINTF_DIRECTIVE_A
