@@ -1,4 +1,4 @@
-# intdiv0.m4 serial 2 (gettext-0.16.2)
+# intdiv0.m4 serial 2 (gettext-0.17)
 dnl Copyright (C) 2002, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

@@ -1,4 +1,4 @@
-# javacomp.m4 serial 10 (gettext-0.16.2)
+# javacomp.m4 serial 10
 dnl Copyright (C) 2001-2003, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
