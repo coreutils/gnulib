@@ -24,7 +24,6 @@ m4/progtest.m4
 m4/size_max.m4
 m4/stdint_h.m4
 m4/uintmax_t.m4
-m4/ulonglong.m4
 m4/visibility.m4
 m4/wchar_t.m4
 m4/wint_t.m4
@@ -38,7 +37,7 @@ havelib
 
 configure.ac:
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.16.1])
+AM_GNU_GETTEXT_VERSION([0.17])
 
 Makefile.am:
 # This is for those projects which use "gettextize --intl" to put a source-code

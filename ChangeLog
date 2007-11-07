@@ -1,3 +1,11 @@
+2007-11-07  Bruno Haible  <bruno@clisp.org>
+
+	Update to GNU gettext 0.17.
+	* m4/intl.m4: Update to GNU gettext 0.17.
+	* m4/po.m4: Likewise.
+	* modules/gettext (Files): Remove m4/ulonglong.m4.
+	(configure.ac): Require gettext infrastructure from version 0.17.
+
 2007-11-06  Bruno Haible  <bruno@clisp.org>
 
 	* lib/fbufmode.c (fbufmode) [QNX]: Use numerical values for flags; the

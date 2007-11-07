@@ -1,4 +1,4 @@
-# intl.m4 serial 5 (gettext-0.16.2)
+# intl.m4 serial 8 (gettext-0.17)
 dnl Copyright (C) 1995-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -97,7 +97,7 @@ AC_DEFUN([AM_INTL_SUBDIR],
   dnl    exported variables _also_ in the static library.
   if test "$enable_shared" = yes; then
     case "$host_os" in
-      cygwin*) is_woe32dll=yes ;;
+      mingw* | cygwin*) is_woe32dll=yes ;;
       *) is_woe32dll=no ;;
     esac
   else
@@ -118,6 +118,18 @@ AC_DEFUN([AM_INTL_SUBDIR],
     dnl Check for a program that compiles Windows resource files.
     AC_CHECK_TOOL([WINDRES], [windres])
   fi
+
+  dnl Determine whether when creating a library, "-lc" should be passed to
+  dnl libtool or not. On many platforms, it is required for the libtool option
+  dnl -no-undefined to work. On HP-UX, however, the -lc - stored by libtool
+  dnl in the *.la files - makes it impossible to create multithreaded programs,
+  dnl because libtool also reorders the -lc to come before the -pthread, and
+  dnl this disables pthread_create() <http://docs.hp.com/en/1896/pthreads.html>.
+  case "$host_os" in
+    hpux*) LTLIBC="" ;;
+    *)     LTLIBC="-lc" ;;
+  esac
+  AC_SUBST([LTLIBC])
 
   dnl Rename some macros and functions used for locking.
   AH_BOTTOM([
@@ -209,7 +221,9 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
   AC_CACHE_CHECK([for NL_LOCALE_NAME macro], gt_cv_nl_locale_name,
     [AC_TRY_LINK([#include <langinfo.h>
 #include <locale.h>],
-      [char* cs = nl_langinfo(_NL_LOCALE_NAME(LC_MESSAGES));],
+      [char* cs = nl_langinfo(_NL_LOCALE_NAME(LC_MESSAGES));
+       return !cs;
+      ],
       gt_cv_nl_locale_name=yes,
       gt_cv_nl_locale_name=no)
     ])
