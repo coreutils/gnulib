@@ -40,8 +40,8 @@ freading (FILE *fp)
 #elif defined __UCLIBC__            /* uClibc */
   return (fp->__modeflags & (__FLAG_READONLY | __FLAG_READING)) != 0;
 #elif defined __QNX__               /* QNX */
-  return ((fp->_Mode & _MOPENW) == 0
-	  || (fp->_Mode & _MREAD) != 0);
+  return ((fp->_Mode & 0x2 /* _MOPENW */) == 0
+	  || (fp->_Mode & 0x1000 /* _MREAD */) != 0);
 #else
  #error "Please port gnulib freading.c to your platform!"
 #endif

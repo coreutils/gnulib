@@ -75,9 +75,9 @@ fbufmode (FILE *fp)
     return _IONBF;
   return _IOFBF;
 #elif defined __QNX__               /* QNX */
-  if (fp->_Mode & _MLBF)
+  if (fp->_Mode & 0x400 /* _MLBF */)
     return _IOLBF;
-  if (fp->_Mode & _MNBF)
+  if (fp->_Mode & 0x800 /* _MNBF */)
     return _IONBF;
   return _IOFBF;
 #else

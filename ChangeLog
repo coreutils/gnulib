@@ -1,5 +1,16 @@
 2007-11-06  Bruno Haible  <bruno@clisp.org>
 
+	* lib/fbufmode.c (fbufmode) [QNX]: Use numerical values for flags; the
+	symbolic values are not defined in a public header.
+	* lib/freadable.c (freadable) [QNX]: Likewise.
+	* lib/freadahead.c (freadahead) [QNX]: Likewise.
+	* lib/freading.c (freading) [QNX]: Likewise.
+	* lib/fseterr.c (fseterr) [QNX]: Likewise.
+	* lib/fwritable.c (fwritable) [QNX]: Likewise.
+	* lib/fwriting.c (fwriting) [QNX]: Likewise.
+	* lib/fpurge.c (fpurge) [QNX]: Likewise. Add a return statement.
+	Reported by Alain Magloire.
+
 	* m4/fpending.m4 (gl_FUNC_FPENDING): Add a variant for QNX.
 
 2007-11-05  Bruno Haible  <bruno@clisp.org>

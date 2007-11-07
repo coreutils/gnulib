@@ -32,7 +32,7 @@ fwritable (FILE *fp)
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
   return (fp->_flag & (_IORW | _IOWRT)) != 0;
 #elif defined __QNX__               /* QNX */
-  return (fp->_mode & _MOPENW) != 0;
+  return (fp->_Mode & 0x2 /* _MOPENW */) != 0;
 #else
  #error "Please port gnulib fwritable.c to your platform! Look at the definition of fopen, fdopen on your system, then report this to bug-gnulib."
 #endif

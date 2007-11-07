@@ -32,7 +32,7 @@ freadable (FILE *fp)
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
   return (fp->_flag & (_IORW | _IOREAD)) != 0;
 #elif defined __QNX__               /* QNX */
-  return (fp->_Mode & _MOPENR) != 0;
+  return (fp->_Mode & 0x1 /* _MOPENR */) != 0;
 #else
  #error "Please port gnulib freadable.c to your platform! Look at the definition of fopen, fdopen on your system, then report this to bug-gnulib."
 #endif

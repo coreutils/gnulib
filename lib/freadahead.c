@@ -56,7 +56,7 @@ freadahead (FILE *fp)
   return 0;
 # endif
 #elif defined __QNX__               /* QNX */
-  if ((fp->_Mode & _MWRITE) != 0)
+  if ((fp->_Mode & 0x2000 /* _MWRITE */) != 0)
     return 0;
   /* fp->_Buf <= fp->_Next <= fp->_Rend */
   return fp->_Rend - fp->_Next;
