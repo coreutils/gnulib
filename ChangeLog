@@ -1,3 +1,8 @@
+2007-11-09  Bruno Haible  <bruno@clisp.org>
+
+	* m4/locale-tr.m4 (gt_LOCALE_TR_UTF8) [BeOS]: Make this test return
+	none instead of tr_TR. Fixes a failure of test-c-strcasecmp.c.
+
 2007-11-08  Jim Meyering  <meyering@redhat.com>
 
 	Change cache variable name prefix "jm_" to "gl_" everywhere.
