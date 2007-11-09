@@ -4046,9 +4046,13 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		   sizeof (TCHAR_T) divides sizeof (DCHAR_T) and
 		   alignof (TCHAR_T) <= alignof (DCHAR_T).  */
 # define TCHARS_PER_DCHAR (sizeof (DCHAR_T) / sizeof (TCHAR_T))
+		/* Ensure that maxlen below will be >= 2.  Needed on BeOS,
+		   where an snprintf() with maxlen==1 acts like sprintf().  */
+		ENSURE_ALLOCATION (xsum (length,
+					 (2 + TCHARS_PER_DCHAR - 1)
+					 / TCHARS_PER_DCHAR));
 		/* Prepare checking whether snprintf returns the count
 		   via %n.  */
-		ENSURE_ALLOCATION (xsum (length, 1));
 		*(TCHAR_T *) (result + length) = '\0';
 #endif
 

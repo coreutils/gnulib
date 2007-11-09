@@ -61,6 +61,10 @@ HP-UX 11, IRIX 6.5, OSF/1 5.1, mingw.
 This function does not fully support the @samp{n} directive on some platforms:
 HP-UX 11, mingw.
 @item
+This function overwrites memory when a size = 1 argument is passed on some
+platforms:
+BeOS.
+@item
 This function overwrites memory even when a zero size argument is passed on some
 platforms:
 HP-UX 11, OSF/1 5.1.

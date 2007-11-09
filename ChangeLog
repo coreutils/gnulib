@@ -1,5 +1,12 @@
 2007-11-09  Bruno Haible  <bruno@clisp.org>
 
+	* doc/functions/snprintf.texi: Mention BeOS deficiency.
+	* doc/functions/vsnprintf.texi: Likewise.
+	* lib/vasnprintf.c (VASNPRINTF): Ensure that we never call snprintf
+	with a size argument < 2.
+
+2007-11-09  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c (VASNPRINTF): Increase reallocation of snprintf
 	buffer. Fixes an inefficiency introduced on 2007-11-03.
 
