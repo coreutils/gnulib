@@ -1,5 +1,10 @@
 2007-11-09  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (VASNPRINTF): Increase reallocation of snprintf
+	buffer. Fixes an inefficiency introduced on 2007-11-03.
+
+2007-11-09  Bruno Haible  <bruno@clisp.org>
+
 	* m4/locale-tr.m4 (gt_LOCALE_TR_UTF8) [BeOS]: Make this test return
 	none instead of tr_TR. Fixes a failure of test-c-strcasecmp.c.
 
