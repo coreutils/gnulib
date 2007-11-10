@@ -1,3 +1,9 @@
+2007-11-10  Jim Meyering  <meyering@redhat.com>
+
+	Avoid link failure for the argmatch test.
+	* tests/test-argmatch.c (usage): Define function to avoid a link
+	failure: argmatch_die requires a usage function.
+
 2007-11-09  Bruno Haible  <bruno@clisp.org>
 
 	* doc/functions/snprintf.texi: Mention BeOS deficiency.

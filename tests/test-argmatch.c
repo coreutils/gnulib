@@ -62,6 +62,11 @@ static const enum backup_type backup_vals[] =
   numbered_backups, numbered_backups, numbered_backups
 };
 
+void
+usage (void)
+{
+}
+
 int
 main (int argc, char *argv[])
 {
