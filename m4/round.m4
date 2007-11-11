@@ -1,4 +1,4 @@
-# round.m4 serial 4
+# round.m4 serial 5
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,6 +13,44 @@ AC_DEFUN([gl_FUNC_ROUND],
   if test "$ac_cv_have_decl_round" = yes; then
     gl_CHECK_MATH_LIB([ROUND_LIBM], [x = round (x);])
   fi
+  if test "$ac_cv_have_decl_round" = yes && test "$ROUND_LIBM" != missing; then
+    dnl Test whether round() produces correct results. On NetBSD 3.0, for
+    dnl x = 1/2 - 2^-54, the system's round() returns a wrong result.
+    AC_REQUIRE([AC_PROG_CC])
+    AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+    AC_CACHE_CHECK([whether round works], [gl_cv_func_round_works],
+      [
+        save_LIBS="$LIBS"
+        LIBS="$LIBS $ROUND_LIBM"
+        AC_TRY_RUN([
+#include <float.h>
+#include <math.h>
+int main()
+{
+  /* 2^DBL_MANT_DIG.  */
+  static const double TWO_MANT_DIG =
+    /* Assume DBL_MANT_DIG <= 5 * 31.
+       Use the identity
+       n = floor(n/5) + floor((n+1)/5) + ... + floor((n+4)/5).  */
+    (double) (1U << (DBL_MANT_DIG / 5))
+    * (double) (1U << ((DBL_MANT_DIG + 1) / 5))
+    * (double) (1U << ((DBL_MANT_DIG + 2) / 5))
+    * (double) (1U << ((DBL_MANT_DIG + 3) / 5))
+    * (double) (1U << ((DBL_MANT_DIG + 4) / 5));
+  volatile double x = 0.5 - 0.5 / TWO_MANT_DIG;
+  exit (x < 0.5 && round (x) != 0.0);
+}], [gl_cv_func_round_works=yes], [gl_cv_func_round_works=no],
+        [case "$host_os" in
+           netbsd*) gl_cv_func_round_works="guessing no";;
+           *)       gl_cv_func_round_works="guessing yes";;
+         esac
+        ])
+        LIBS="$save_LIBS"
+      ])
+    case "$gl_cv_func_round_works" in
+      *no) ROUND_LIBM=missing ;;
+    esac
+  fi
   if test "$ac_cv_have_decl_round" != yes || test "$ROUND_LIBM" = missing; then
     REPLACE_ROUND=1
     AC_LIBOBJ([round])
@@ -20,4 +58,5 @@ AC_DEFUN([gl_FUNC_ROUND],
     gl_FUNC_CEIL_LIBS
     ROUND_LIBM="$FLOOR_LIBM $CEIL_LIBM"
   fi
-  AC_SUBST([ROUND_LIBM])])
+  AC_SUBST([ROUND_LIBM])
+])
