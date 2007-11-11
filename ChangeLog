@@ -1,3 +1,19 @@
+2007-11-11  Bruno Haible  <bruno@clisp.org>
+
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): Set REPLACE_ROUNDF instead of
+	HAVE_DECL_ROUNDF. Remove redundant AC_SUBST.
+	* m4/round.m4 (gl_FUNC_ROUND): Set REPLACE_ROUND instead of
+	HAVE_DECL_ROUND. Remove redundant AC_SUBST.
+	* m4/roundl.m4 (gl_FUNC_ROUNDL): Set REPLACE_ROUNDL instead of
+	HAVE_DECL_ROUNDL. Remove redundant AC_SUBST.
+	* lib/math.in.h (roundf): Use REPLACE_ROUNDF instead of
+	HAVE_DECL_ROUNDF.
+	(round): Use REPLACE_ROUND instead of HAVE_DECL_ROUND.
+	(roundl): Use REPLACE_ROUNDL instead of HAVE_DECL_ROUNDL.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_ROUND* instead
+	of HAVE_DECL_ROUND*.
+	* modules/math (Makefile.am): Update.
+
 2007-11-10  Bruno Haible  <bruno@clisp.org>
 
 	* m4/vasnprintf.m4 (gl_PREREQ_PRINTF_PARSE): Use same check for

@@ -1,4 +1,4 @@
-# roundl.m4 serial 3
+# roundl.m4 serial 4
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,16 +14,15 @@ AC_DEFUN([gl_FUNC_ROUNDL],
     gl_CHECK_MATH_LIB([ROUNDL_LIBM], [x = roundl (x);])
   fi
   if test "$ac_cv_have_decl_roundl" != yes || test "$ROUNDL_LIBM" = missing; then
+    REPLACE_ROUNDL=1
+    AC_LIBOBJ([roundl])
     AC_CHECK_DECLS([ceill, floorl], , , [#include <math.h>])
-    if test "$ac_cv_have_decl_floorl" = yes &&
-       test "$ac_cv_have_decl_ceill" = yes; then
+    if test "$ac_cv_have_decl_floorl" = yes \
+       && test "$ac_cv_have_decl_ceill" = yes; then
       gl_CHECK_MATH_LIB([ROUNDL_LIBM], [x = floorl (x) + ceill (x);])
     else
       ROUNDL_LIBM=
     fi
-    HAVE_DECL_ROUNDL=0
-    AC_LIBOBJ([roundl])
   fi
-  AC_SUBST([HAVE_DECL_ROUNDL])
   AC_SUBST([ROUNDL_LIBM])
 ])
