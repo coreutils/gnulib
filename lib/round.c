@@ -30,7 +30,7 @@
 # define DOUBLE long double
 # define MANT_DIG LDBL_MANT_DIG
 # define L_(literal) literal##L
-# define HAVE_FLOOR_AND_CEIL (HAVE_DECL_FLOORL && HAVE_DECL_CEILL)
+# define HAVE_FLOOR_AND_CEIL HAVE_FLOORL_AND_CEILL
 #elif ! defined USE_FLOAT
 # define ROUND round
 # define FLOOR floor
@@ -46,7 +46,7 @@
 # define DOUBLE float
 # define MANT_DIG FLT_MANT_DIG
 # define L_(literal) literal##f
-# define HAVE_FLOOR_AND_CEIL (HAVE_DECL_FLOORF && HAVE_DECL_CEILF)
+# define HAVE_FLOOR_AND_CEIL HAVE_FLOORF_AND_CEILF
 #endif
 
 /* If we're being included from test-round2[f].c, it already defined names for

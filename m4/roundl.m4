@@ -20,6 +20,12 @@ AC_DEFUN([gl_FUNC_ROUNDL],
     if test "$ac_cv_have_decl_floorl" = yes \
        && test "$ac_cv_have_decl_ceill" = yes; then
       gl_CHECK_MATH_LIB([ROUNDL_LIBM], [x = floorl (x) + ceill (x);])
+      if test "$ROUNDL_LIBM" != missing; then
+        AC_DEFINE([HAVE_FLOORL_AND_CEILL], 1,
+          [Define if the both the floorl() and ceill() functions exist.])
+      else
+        ROUNDL_LIBM=
+      fi
     else
       ROUNDL_LIBM=
     fi

@@ -1,5 +1,15 @@
 2007-11-11  Bruno Haible  <bruno@clisp.org>
 
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): Handle the case that floorf and
+	roundf were declared but do not exist on functions.
+	* m4/roundl.m4 (gl_FUNC_ROUNDL): Handle the case that floorl and
+	roundl were declared but do not exist on functions.
+	* lib/round.c (HAVE_FLOOR_AND_CEIL): Use HAVE_FLOORF_AND_CEILF and
+	HAVE_FLOORL_AND_CEILL, respectively.
+	Needed for Sun C on Solaris 10.
+
+2007-11-11  Bruno Haible  <bruno@clisp.org>
+
 	* m4/roundf.m4 (gl_FUNC_ROUNDF): Set REPLACE_ROUNDF instead of
 	HAVE_DECL_ROUNDF. Remove redundant AC_SUBST.
 	* m4/round.m4 (gl_FUNC_ROUND): Set REPLACE_ROUND instead of
