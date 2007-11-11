@@ -16,6 +16,8 @@ AC_DEFUN([gl_FUNC_ROUND],
   if test "$ac_cv_have_decl_round" != yes || test "$ROUND_LIBM" = missing; then
     REPLACE_ROUND=1
     AC_LIBOBJ([round])
-    gl_CHECK_MATH_LIB([ROUND_LIBM], [x = floor (x) + ceil (x);])
+    gl_FUNC_FLOOR_LIBS
+    gl_FUNC_CEIL_LIBS
+    ROUND_LIBM="$FLOOR_LIBM $CEIL_LIBM"
   fi
   AC_SUBST([ROUND_LIBM])])

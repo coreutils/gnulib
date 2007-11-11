@@ -5,6 +5,8 @@ Files:
 lib/round.c
 m4/check-math-lib.m4
 m4/round.m4
+m4/floor.m4
+m4/ceil.m4
 
 Depends-on:
 float

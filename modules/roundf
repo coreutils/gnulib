@@ -6,6 +6,8 @@ lib/round.c
 lib/roundf.c
 m4/check-math-lib.m4
 m4/roundf.m4
+m4/floorf.m4
+m4/ceilf.m4
 
 Depends-on:
 float

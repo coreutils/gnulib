@@ -1,5 +1,17 @@
 2007-11-11  Bruno Haible  <bruno@clisp.org>
 
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): Use gl_FUNC_FLOORF_LIBS and
+	gl_FUNC_CEILF_LIBS.
+	* m4/round.m4 (gl_FUNC_ROUND): Use gl_FUNC_FLOOR_LIBS and
+	gl_FUNC_CEIL_LIBS.
+	* m4/roundl.m4 (gl_FUNC_ROUNDL): Use gl_FUNC_FLOORL_LIBS and
+	gl_FUNC_CEILL_LIBS.
+	* modules/roundf (Files): Add m4/floorf.m4, m4/ceilf.m4.
+	* modules/round (Files): Add m4/floor.m4, m4/ceil.m4.
+	* modules/roundl (Files): Add m4/floorl.m4, m4/ceill.m4.
+
+2007-11-11  Bruno Haible  <bruno@clisp.org>
+
 	* m4/roundf.m4 (gl_FUNC_ROUNDF): Handle the case that floorf and
 	roundf were declared but do not exist on functions.
 	* m4/roundl.m4 (gl_FUNC_ROUNDL): Handle the case that floorl and
