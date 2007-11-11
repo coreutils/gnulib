@@ -19,6 +19,10 @@
 
 #include <config.h>
 
+/* Some packages define ARGMATCH_DIE in their <config.h>.  Here we want to
+   assume the default definition of ARGMATCH_DIE.  */
+#undef ARGMATCH_DIE
+
 #include "argmatch.h"
 
 #include <stdio.h>
@@ -61,11 +65,6 @@ static const enum backup_type backup_vals[] =
   numbered_existing_backups, numbered_existing_backups, numbered_existing_backups,
   numbered_backups, numbered_backups, numbered_backups
 };
-
-void
-usage (void)
-{
-}
 
 int
 main (int argc, char *argv[])

@@ -1,5 +1,10 @@
 2007-11-11  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-argmatch.c (ARGMATCH_DIE): Undefine.
+	(usage): Remove function.
+
+2007-11-11  Bruno Haible  <bruno@clisp.org>
+
 	* m4/roundf.m4 (gl_FUNC_ROUNDF): Use gl_FUNC_FLOORF_LIBS and
 	gl_FUNC_CEILF_LIBS.
 	* m4/round.m4 (gl_FUNC_ROUND): Use gl_FUNC_FLOOR_LIBS and
