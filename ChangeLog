@@ -1,3 +1,8 @@
+2007-11-10  Bruno Haible  <bruno@clisp.org>
+
+	* m4/vasnprintf.m4 (gl_PREREQ_PRINTF_PARSE): Use same check for
+	ptrdiff_t as m4/intl.m4.
+
 2007-11-10  Jim Meyering  <meyering@redhat.com>
 
 	Avoid link failure for the argmatch test.

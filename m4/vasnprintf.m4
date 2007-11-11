@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 22
+# vasnprintf.m4 serial 23
 dnl Copyright (C) 2002-2004, 2006-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,7 +45,10 @@ AC_DEFUN([gl_PREREQ_PRINTF_PARSE],
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   AC_REQUIRE([AC_TYPE_SIZE_T])
-  AC_CHECK_TYPES(ptrdiff_t)
+  AC_CHECK_TYPE([ptrdiff_t], ,
+    [AC_DEFINE([ptrdiff_t], [long],
+       [Define as the type of the result of subtracting two pointers, if the system doesn't define it.])
+    ])
   AC_REQUIRE([gt_AC_TYPE_INTMAX_T])
 ])
 
