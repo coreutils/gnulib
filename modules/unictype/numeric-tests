@@ -1,0 +1,13 @@
+Files:
+tests/unictype/test-numeric.c
+tests/unictype/test-numeric.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-numeric
+check_PROGRAMS += test-numeric
+test_numeric_SOURCES = unictype/test-numeric.c
+

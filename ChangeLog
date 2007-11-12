@@ -1,5 +1,327 @@
 2007-11-12  Bruno Haible  <bruno@clisp.org>
 
+	Tests for Unicode character classification functions.
+
+	* modules/unictype/bidicategory-byname-tests: New file.
+	* modules/unictype/bidicategory-name-tests: New file.
+	* modules/unictype/bidicategory-of-tests: New file.
+	* modules/unictype/bidicategory-test-tests: New file.
+	* modules/unictype/block-list-tests: New file.
+	* modules/unictype/block-of-tests: New file.
+	* modules/unictype/block-test-tests: New file.
+	* modules/unictype/category-C-tests: New file.
+	* modules/unictype/category-Cc-tests: New file.
+	* modules/unictype/category-Cf-tests: New file.
+	* modules/unictype/category-Cn-tests: New file.
+	* modules/unictype/category-Co-tests: New file.
+	* modules/unictype/category-Cs-tests: New file.
+	* modules/unictype/category-L-tests: New file.
+	* modules/unictype/category-Ll-tests: New file.
+	* modules/unictype/category-Lm-tests: New file.
+	* modules/unictype/category-Lo-tests: New file.
+	* modules/unictype/category-Lt-tests: New file.
+	* modules/unictype/category-Lu-tests: New file.
+	* modules/unictype/category-M-tests: New file.
+	* modules/unictype/category-Mc-tests: New file.
+	* modules/unictype/category-Me-tests: New file.
+	* modules/unictype/category-Mn-tests: New file.
+	* modules/unictype/category-N-tests: New file.
+	* modules/unictype/category-Nd-tests: New file.
+	* modules/unictype/category-Nl-tests: New file.
+	* modules/unictype/category-No-tests: New file.
+	* modules/unictype/category-P-tests: New file.
+	* modules/unictype/category-Pc-tests: New file.
+	* modules/unictype/category-Pd-tests: New file.
+	* modules/unictype/category-Pe-tests: New file.
+	* modules/unictype/category-Pf-tests: New file.
+	* modules/unictype/category-Pi-tests: New file.
+	* modules/unictype/category-Po-tests: New file.
+	* modules/unictype/category-Ps-tests: New file.
+	* modules/unictype/category-S-tests: New file.
+	* modules/unictype/category-Sc-tests: New file.
+	* modules/unictype/category-Sk-tests: New file.
+	* modules/unictype/category-Sm-tests: New file.
+	* modules/unictype/category-So-tests: New file.
+	* modules/unictype/category-Z-tests: New file.
+	* modules/unictype/category-Zl-tests: New file.
+	* modules/unictype/category-Zp-tests: New file.
+	* modules/unictype/category-Zs-tests: New file.
+	* modules/unictype/category-and-not-tests: New file.
+	* modules/unictype/category-and-tests: New file.
+	* modules/unictype/category-byname-tests: New file.
+	* modules/unictype/category-name-tests: New file.
+	* modules/unictype/category-none-tests: New file.
+	* modules/unictype/category-of-tests: New file.
+	* modules/unictype/category-or-tests: New file.
+	* modules/unictype/category-test-withtable-tests: New file.
+	* modules/unictype/combining-class-tests: New file.
+	* modules/unictype/ctype-alnum-tests: New file.
+	* modules/unictype/ctype-alpha-tests: New file.
+	* modules/unictype/ctype-blank-tests: New file.
+	* modules/unictype/ctype-cntrl-tests: New file.
+	* modules/unictype/ctype-digit-tests: New file.
+	* modules/unictype/ctype-graph-tests: New file.
+	* modules/unictype/ctype-lower-tests: New file.
+	* modules/unictype/ctype-print-tests: New file.
+	* modules/unictype/ctype-punct-tests: New file.
+	* modules/unictype/ctype-space-tests: New file.
+	* modules/unictype/ctype-upper-tests: New file.
+	* modules/unictype/ctype-xdigit-tests: New file.
+	* modules/unictype/decimal-digit-tests: New file.
+	* modules/unictype/digit-tests: New file.
+	* modules/unictype/mirror-tests: New file.
+	* modules/unictype/numeric-tests: New file.
+	* modules/unictype/property-alphabetic-tests: New file.
+	* modules/unictype/property-ascii-hex-digit-tests: New file.
+	* modules/unictype/property-bidi-arabic-digit-tests: New file.
+	* modules/unictype/property-bidi-arabic-right-to-left-tests: New file.
+	* modules/unictype/property-bidi-block-separator-tests: New file.
+	* modules/unictype/property-bidi-boundary-neutral-tests: New file.
+	* modules/unictype/property-bidi-common-separator-tests: New file.
+	* modules/unictype/property-bidi-control-tests: New file.
+	* modules/unictype/property-bidi-embedding-or-override-tests: New file.
+	* modules/unictype/property-bidi-eur-num-separator-tests: New file.
+	* modules/unictype/property-bidi-eur-num-terminator-tests: New file.
+	* modules/unictype/property-bidi-european-digit-tests: New file.
+	* modules/unictype/property-bidi-hebrew-right-to-left-tests: New file.
+	* modules/unictype/property-bidi-left-to-right-tests: New file.
+	* modules/unictype/property-bidi-non-spacing-mark-tests: New file.
+	* modules/unictype/property-bidi-other-neutral-tests: New file.
+	* modules/unictype/property-bidi-pdf-tests: New file.
+	* modules/unictype/property-bidi-segment-separator-tests: New file.
+	* modules/unictype/property-bidi-whitespace-tests: New file.
+	* modules/unictype/property-byname-tests: New file.
+	* modules/unictype/property-combining-tests: New file.
+	* modules/unictype/property-composite-tests: New file.
+	* modules/unictype/property-currency-symbol-tests: New file.
+	* modules/unictype/property-dash-tests: New file.
+	* modules/unictype/property-decimal-digit-tests: New file.
+	* modules/unictype/property-default-ignorable-code-point-tests: New file.
+	* modules/unictype/property-deprecated-tests: New file.
+	* modules/unictype/property-diacritic-tests: New file.
+	* modules/unictype/property-extender-tests: New file.
+	* modules/unictype/property-format-control-tests: New file.
+	* modules/unictype/property-grapheme-base-tests: New file.
+	* modules/unictype/property-grapheme-extend-tests: New file.
+	* modules/unictype/property-grapheme-link-tests: New file.
+	* modules/unictype/property-hex-digit-tests: New file.
+	* modules/unictype/property-hyphen-tests: New file.
+	* modules/unictype/property-id-continue-tests: New file.
+	* modules/unictype/property-id-start-tests: New file.
+	* modules/unictype/property-ideographic-tests: New file.
+	* modules/unictype/property-ids-binary-operator-tests: New file.
+	* modules/unictype/property-ids-trinary-operator-tests: New file.
+	* modules/unictype/property-ignorable-control-tests: New file.
+	* modules/unictype/property-iso-control-tests: New file.
+	* modules/unictype/property-join-control-tests: New file.
+	* modules/unictype/property-left-of-pair-tests: New file.
+	* modules/unictype/property-line-separator-tests: New file.
+	* modules/unictype/property-logical-order-exception-tests: New file.
+	* modules/unictype/property-lowercase-tests: New file.
+	* modules/unictype/property-math-tests: New file.
+	* modules/unictype/property-non-break-tests: New file.
+	* modules/unictype/property-not-a-character-tests: New file.
+	* modules/unictype/property-numeric-tests: New file.
+	* modules/unictype/property-other-alphabetic-tests: New file.
+	* modules/unictype/property-other-default-ignorable-code-point-tests: New file.
+	* modules/unictype/property-other-grapheme-extend-tests: New file.
+	* modules/unictype/property-other-id-continue-tests: New file.
+	* modules/unictype/property-other-id-start-tests: New file.
+	* modules/unictype/property-other-lowercase-tests: New file.
+	* modules/unictype/property-other-math-tests: New file.
+	* modules/unictype/property-other-uppercase-tests: New file.
+	* modules/unictype/property-paired-punctuation-tests: New file.
+	* modules/unictype/property-paragraph-separator-tests: New file.
+	* modules/unictype/property-pattern-syntax-tests: New file.
+	* modules/unictype/property-pattern-white-space-tests: New file.
+	* modules/unictype/property-private-use-tests: New file.
+	* modules/unictype/property-punctuation-tests: New file.
+	* modules/unictype/property-quotation-mark-tests: New file.
+	* modules/unictype/property-radical-tests: New file.
+	* modules/unictype/property-sentence-terminal-tests: New file.
+	* modules/unictype/property-soft-dotted-tests: New file.
+	* modules/unictype/property-space-tests: New file.
+	* modules/unictype/property-terminal-punctuation-tests: New file.
+	* modules/unictype/property-test-tests: New file.
+	* modules/unictype/property-titlecase-tests: New file.
+	* modules/unictype/property-unassigned-code-value-tests: New file.
+	* modules/unictype/property-unified-ideograph-tests: New file.
+	* modules/unictype/property-uppercase-tests: New file.
+	* modules/unictype/property-variation-selector-tests: New file.
+	* modules/unictype/property-white-space-tests: New file.
+	* modules/unictype/property-xid-continue-tests: New file.
+	* modules/unictype/property-xid-start-tests: New file.
+	* modules/unictype/property-zero-width-tests: New file.
+	* modules/unictype/scripts-tests: New file.
+	* modules/unictype/syntax-c-ident-tests: New file.
+	* modules/unictype/syntax-c-whitespace-tests: New file.
+	* modules/unictype/syntax-java-ident-tests: New file.
+	* modules/unictype/syntax-java-whitespace-tests: New file.
+	* tests/unictype/test-bidi_byname.c: New file.
+	* tests/unictype/test-bidi_name.c: New file.
+	* tests/unictype/test-bidi_of.c: New file.
+	* tests/unictype/test-bidi_test.c: New file.
+	* tests/unictype/test-block_list.c: New file.
+	* tests/unictype/test-block_of.c: New file.
+	* tests/unictype/test-block_test.c: New file.
+	* tests/unictype/test-categ_and.c: New file.
+	* tests/unictype/test-categ_and_not.c: New file.
+	* tests/unictype/test-categ_byname.c: New file.
+	* tests/unictype/test-categ_name.c: New file.
+	* tests/unictype/test-categ_none.c: New file.
+	* tests/unictype/test-categ_of.c: New file.
+	* tests/unictype/test-categ_or.c: New file.
+	* tests/unictype/test-categ_test_withtable.c: New file.
+	* tests/unictype/test-combining.c: New file.
+	* tests/unictype/test-decdigit.c: New file.
+	* tests/unictype/test-digit.c: New file.
+	* tests/unictype/test-mirror.c: New file.
+	* tests/unictype/test-numeric.c: New file.
+	* tests/unictype/test-pr_byname.c: New file.
+	* tests/unictype/test-pr_test.c: New file.
+	* tests/unictype/test-predicate-part1.h: New file.
+	* tests/unictype/test-predicate-part2.h: New file.
+	* tests/unictype/test-scripts.c: New file.
+	* tests/unictype/test-sy_c_ident.c: New file.
+	* tests/unictype/test-sy_java_ident.c: New file.
+
+	* tests/unictype/test-categ_C.c: New file, generated by gen-ctype.c
+	for Unicode 5.0.0.
+	* tests/unictype/test-categ_Cc.c: Likewise.
+	* tests/unictype/test-categ_Cf.c: Likewise.
+	* tests/unictype/test-categ_Cn.c: Likewise.
+	* tests/unictype/test-categ_Co.c: Likewise.
+	* tests/unictype/test-categ_Cs.c: Likewise.
+	* tests/unictype/test-categ_L.c: Likewise.
+	* tests/unictype/test-categ_Ll.c: Likewise.
+	* tests/unictype/test-categ_Lm.c: Likewise.
+	* tests/unictype/test-categ_Lo.c: Likewise.
+	* tests/unictype/test-categ_Lt.c: Likewise.
+	* tests/unictype/test-categ_Lu.c: Likewise.
+	* tests/unictype/test-categ_M.c: Likewise.
+	* tests/unictype/test-categ_Mc.c: Likewise.
+	* tests/unictype/test-categ_Me.c: Likewise.
+	* tests/unictype/test-categ_Mn.c: Likewise.
+	* tests/unictype/test-categ_N.c: Likewise.
+	* tests/unictype/test-categ_Nd.c: Likewise.
+	* tests/unictype/test-categ_Nl.c: Likewise.
+	* tests/unictype/test-categ_No.c: Likewise.
+	* tests/unictype/test-categ_P.c: Likewise.
+	* tests/unictype/test-categ_Pc.c: Likewise.
+	* tests/unictype/test-categ_Pd.c: Likewise.
+	* tests/unictype/test-categ_Pe.c: Likewise.
+	* tests/unictype/test-categ_Pf.c: Likewise.
+	* tests/unictype/test-categ_Pi.c: Likewise.
+	* tests/unictype/test-categ_Po.c: Likewise.
+	* tests/unictype/test-categ_Ps.c: Likewise.
+	* tests/unictype/test-categ_S.c: Likewise.
+	* tests/unictype/test-categ_Sc.c: Likewise.
+	* tests/unictype/test-categ_Sk.c: Likewise.
+	* tests/unictype/test-categ_Sm.c: Likewise.
+	* tests/unictype/test-categ_So.c: Likewise.
+	* tests/unictype/test-categ_Z.c: Likewise.
+	* tests/unictype/test-categ_Zl.c: Likewise.
+	* tests/unictype/test-categ_Zp.c: Likewise.
+	* tests/unictype/test-categ_Zs.c: Likewise.
+	* tests/unictype/test-ctype_alnum.c: Likewise.
+	* tests/unictype/test-ctype_alpha.c: Likewise.
+	* tests/unictype/test-ctype_blank.c: Likewise.
+	* tests/unictype/test-ctype_cntrl.c: Likewise.
+	* tests/unictype/test-ctype_digit.c: Likewise.
+	* tests/unictype/test-ctype_graph.c: Likewise.
+	* tests/unictype/test-ctype_lower.c: Likewise.
+	* tests/unictype/test-ctype_print.c: Likewise.
+	* tests/unictype/test-ctype_punct.c: Likewise.
+	* tests/unictype/test-ctype_space.c: Likewise.
+	* tests/unictype/test-ctype_upper.c: Likewise.
+	* tests/unictype/test-ctype_xdigit.c: Likewise.
+	* tests/unictype/test-decdigit.h: Likewise.
+	* tests/unictype/test-digit.h: Likewise.
+	* tests/unictype/test-numeric.h: Likewise.
+	* tests/unictype/test-pr_alphabetic.c: Likewise.
+	* tests/unictype/test-pr_ascii_hex_digit.c: Likewise.
+	* tests/unictype/test-pr_bidi_arabic_digit.c: Likewise.
+	* tests/unictype/test-pr_bidi_arabic_right_to_left.c: Likewise.
+	* tests/unictype/test-pr_bidi_block_separator.c: Likewise.
+	* tests/unictype/test-pr_bidi_boundary_neutral.c: Likewise.
+	* tests/unictype/test-pr_bidi_common_separator.c: Likewise.
+	* tests/unictype/test-pr_bidi_control.c: Likewise.
+	* tests/unictype/test-pr_bidi_embedding_or_override.c: Likewise.
+	* tests/unictype/test-pr_bidi_eur_num_separator.c: Likewise.
+	* tests/unictype/test-pr_bidi_eur_num_terminator.c: Likewise.
+	* tests/unictype/test-pr_bidi_european_digit.c: Likewise.
+	* tests/unictype/test-pr_bidi_hebrew_right_to_left.c: Likewise.
+	* tests/unictype/test-pr_bidi_left_to_right.c: Likewise.
+	* tests/unictype/test-pr_bidi_non_spacing_mark.c: Likewise.
+	* tests/unictype/test-pr_bidi_other_neutral.c: Likewise.
+	* tests/unictype/test-pr_bidi_pdf.c: Likewise.
+	* tests/unictype/test-pr_bidi_segment_separator.c: Likewise.
+	* tests/unictype/test-pr_bidi_whitespace.c: Likewise.
+	* tests/unictype/test-pr_combining.c: Likewise.
+	* tests/unictype/test-pr_composite.c: Likewise.
+	* tests/unictype/test-pr_currency_symbol.c: Likewise.
+	* tests/unictype/test-pr_dash.c: Likewise.
+	* tests/unictype/test-pr_decimal_digit.c: Likewise.
+	* tests/unictype/test-pr_default_ignorable_code_point.c: Likewise.
+	* tests/unictype/test-pr_deprecated.c: Likewise.
+	* tests/unictype/test-pr_diacritic.c: Likewise.
+	* tests/unictype/test-pr_extender.c: Likewise.
+	* tests/unictype/test-pr_format_control.c: Likewise.
+	* tests/unictype/test-pr_grapheme_base.c: Likewise.
+	* tests/unictype/test-pr_grapheme_extend.c: Likewise.
+	* tests/unictype/test-pr_grapheme_link.c: Likewise.
+	* tests/unictype/test-pr_hex_digit.c: Likewise.
+	* tests/unictype/test-pr_hyphen.c: Likewise.
+	* tests/unictype/test-pr_id_continue.c: Likewise.
+	* tests/unictype/test-pr_id_start.c: Likewise.
+	* tests/unictype/test-pr_ideographic.c: Likewise.
+	* tests/unictype/test-pr_ids_binary_operator.c: Likewise.
+	* tests/unictype/test-pr_ids_trinary_operator.c: Likewise.
+	* tests/unictype/test-pr_ignorable_control.c: Likewise.
+	* tests/unictype/test-pr_iso_control.c: Likewise.
+	* tests/unictype/test-pr_join_control.c: Likewise.
+	* tests/unictype/test-pr_left_of_pair.c: Likewise.
+	* tests/unictype/test-pr_line_separator.c: Likewise.
+	* tests/unictype/test-pr_logical_order_exception.c: Likewise.
+	* tests/unictype/test-pr_lowercase.c: Likewise.
+	* tests/unictype/test-pr_math.c: Likewise.
+	* tests/unictype/test-pr_non_break.c: Likewise.
+	* tests/unictype/test-pr_not_a_character.c: Likewise.
+	* tests/unictype/test-pr_numeric.c: Likewise.
+	* tests/unictype/test-pr_other_alphabetic.c: Likewise.
+	* tests/unictype/test-pr_other_default_ignorable_code_point.c: Likewise.
+	* tests/unictype/test-pr_other_grapheme_extend.c: Likewise.
+	* tests/unictype/test-pr_other_id_continue.c: Likewise.
+	* tests/unictype/test-pr_other_id_start.c: Likewise.
+	* tests/unictype/test-pr_other_lowercase.c: Likewise.
+	* tests/unictype/test-pr_other_math.c: Likewise.
+	* tests/unictype/test-pr_other_uppercase.c: Likewise.
+	* tests/unictype/test-pr_paired_punctuation.c: Likewise.
+	* tests/unictype/test-pr_paragraph_separator.c: Likewise.
+	* tests/unictype/test-pr_pattern_syntax.c: Likewise.
+	* tests/unictype/test-pr_pattern_white_space.c: Likewise.
+	* tests/unictype/test-pr_private_use.c: Likewise.
+	* tests/unictype/test-pr_punctuation.c: Likewise.
+	* tests/unictype/test-pr_quotation_mark.c: Likewise.
+	* tests/unictype/test-pr_radical.c: Likewise.
+	* tests/unictype/test-pr_sentence_terminal.c: Likewise.
+	* tests/unictype/test-pr_soft_dotted.c: Likewise.
+	* tests/unictype/test-pr_space.c: Likewise.
+	* tests/unictype/test-pr_terminal_punctuation.c: Likewise.
+	* tests/unictype/test-pr_titlecase.c: Likewise.
+	* tests/unictype/test-pr_unassigned_code_value.c: Likewise.
+	* tests/unictype/test-pr_unified_ideograph.c: Likewise.
+	* tests/unictype/test-pr_uppercase.c: Likewise.
+	* tests/unictype/test-pr_variation_selector.c: Likewise.
+	* tests/unictype/test-pr_white_space.c: Likewise.
+	* tests/unictype/test-pr_xid_continue.c: Likewise.
+	* tests/unictype/test-pr_xid_start.c: Likewise.
+	* tests/unictype/test-pr_zero_width.c: Likewise.
+	* tests/unictype/test-sy_c_whitespace.c: Likewise.
+	* tests/unictype/test-sy_java_whitespace.c: Likewise.
+
+2007-11-12  Bruno Haible  <bruno@clisp.org>
+
 	Unicode character classification functions.
 	* lib/unictype.h: New file.
 	* modules/unictype/base: New file.
@@ -323,7 +645,7 @@
 	* lib/unictype/sy_java_ident.c: New file.
 	* lib/unictype/sy_java_whitespace.c: New file.
 
-	* lib/unictype/bidi_of.h: New file, generated from gen-ctype.c for
+	* lib/unictype/bidi_of.h: New file, generated by gen-ctype.c for
 	Unicode 5.0.0.
 	* lib/unictype/blocks.h: Likewise.
 	* lib/unictype/categ_C.h: Likewise.

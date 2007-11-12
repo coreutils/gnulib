@@ -1,0 +1,12 @@
+Files:
+tests/unictype/test-combining.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-combining
+check_PROGRAMS += test-combining
+test_combining_SOURCES = unictype/test-combining.c
+

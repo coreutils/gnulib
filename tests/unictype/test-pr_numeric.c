@@ -1,0 +1,83 @@
+/* DO NOT EDIT! GENERATED AUTOMATICALLY! */
+/* Test the Unicode character type functions.
+   Copyright (C) 2007 Free Software Foundation, Inc.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+
+#include "test-predicate-part1.h"
+
+    { 0x0030, 0x0039 },
+    { 0x00B2, 0x00B3 },
+    { 0x00B9, 0x00B9 },
+    { 0x00BC, 0x00BE },
+    { 0x0660, 0x0669 },
+    { 0x06F0, 0x06F9 },
+    { 0x07C0, 0x07C9 },
+    { 0x0966, 0x096F },
+    { 0x09E6, 0x09EF },
+    { 0x09F4, 0x09F9 },
+    { 0x0A66, 0x0A6F },
+    { 0x0AE6, 0x0AEF },
+    { 0x0B66, 0x0B6F },
+    { 0x0BE6, 0x0BF2 },
+    { 0x0C66, 0x0C6F },
+    { 0x0CE6, 0x0CEF },
+    { 0x0D66, 0x0D6F },
+    { 0x0E50, 0x0E59 },
+    { 0x0ED0, 0x0ED9 },
+    { 0x0F20, 0x0F33 },
+    { 0x1040, 0x1049 },
+    { 0x1369, 0x137C },
+    { 0x16EE, 0x16F0 },
+    { 0x17E0, 0x17E9 },
+    { 0x17F0, 0x17F9 },
+    { 0x1810, 0x1819 },
+    { 0x1946, 0x194F },
+    { 0x19D0, 0x19D9 },
+    { 0x1B50, 0x1B59 },
+    { 0x2070, 0x2070 },
+    { 0x2074, 0x2079 },
+    { 0x2080, 0x2089 },
+    { 0x2153, 0x2183 },
+    { 0x2460, 0x249B },
+    { 0x24EA, 0x24FF },
+    { 0x2776, 0x2793 },
+    { 0x2CFD, 0x2CFD },
+    { 0x3007, 0x3007 },
+    { 0x3021, 0x3029 },
+    { 0x3038, 0x303A },
+    { 0x3192, 0x3195 },
+    { 0x3220, 0x3229 },
+    { 0x3251, 0x325F },
+    { 0x3280, 0x3289 },
+    { 0x32B1, 0x32BF },
+    { 0xFF10, 0xFF19 },
+    { 0x10107, 0x10133 },
+    { 0x10140, 0x10178 },
+    { 0x1018A, 0x1018A },
+    { 0x10320, 0x10323 },
+    { 0x10341, 0x10341 },
+    { 0x1034A, 0x1034A },
+    { 0x103D1, 0x103D5 },
+    { 0x104A0, 0x104A9 },
+    { 0x10916, 0x10919 },
+    { 0x10A40, 0x10A47 },
+    { 0x12400, 0x12431 },
+    { 0x12434, 0x12455 },
+    { 0x12458, 0x12462 },
+    { 0x1D360, 0x1D371 },
+    { 0x1D7CE, 0x1D7FF }
+
+#define PREDICATE(c) uc_is_property_numeric (c)
+#include "test-predicate-part2.h"

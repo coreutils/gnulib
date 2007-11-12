@@ -1,0 +1,13 @@
+Files:
+tests/unictype/test-digit.c
+tests/unictype/test-digit.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-digit
+check_PROGRAMS += test-digit
+test_digit_SOURCES = unictype/test-digit.c
+

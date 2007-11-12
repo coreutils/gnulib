@@ -1,0 +1,13 @@
+Files:
+tests/unictype/test-categ_name.c
+
+Depends-on:
+unictype/category-or
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-categ_name
+check_PROGRAMS += test-categ_name
+test_categ_name_SOURCES = unictype/test-categ_name.c
+
