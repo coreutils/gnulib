@@ -207,9 +207,71 @@ const char *l = /* implicit string concatenation */
       HAVE_DECL_STRTOUMAX=0
     fi
 
+    gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
+      [INT32_MAX_LT_INTMAX_MAX],
+      [defined INT32_MAX && defined INTMAX_MAX],
+      [INT32_MAX < INTMAX_MAX],
+      [sizeof (int) < sizeof (long long int)])
+    gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
+      [INT64_MAX_EQ_LONG_MAX],
+      [defined INT64_MAX],
+      [INT64_MAX == LONG_MAX],
+      [sizeof (long long int) == sizeof (long int)])
+    gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
+      [UINT32_MAX_LT_UINTMAX_MAX],
+      [defined UINT32_MAX && defined UINTMAX_MAX],
+      [UINT32_MAX < UINTMAX_MAX],
+      [sizeof (unsigned int) < sizeof (unsigned long long int)])
+    gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
+      [UINT64_MAX_EQ_ULONG_MAX],
+      [defined UINT64_MAX],
+      [UINT64_MAX == ULONG_MAX],
+      [sizeof (unsigned long long int) == sizeof (unsigned long int)])
+
     INTTYPES_H='inttypes.h'
   fi
   AC_SUBST(INTTYPES_H)
+])
+
+# Define the symbol $1 to be 1 if the condition is true, 0 otherwise.
+# If $2 is true, the condition is $3; otherwise if long long int is supported
+# approximate the condition with $4; otherwise, assume the condition is false.
+# The condition should work on all C99 platforms; the approximations should be
+# good enough to work on all practical pre-C99 platforms.
+# $2 is evaluated by the C preprocessor, $3 and $4 as compile-time constants.
+AC_DEFUN([gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION],
+[
+  AC_CACHE_CHECK([whether $3],
+    [gl_cv_test_$1],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+	  [[/* Work also in C++ mode.  */
+	    #define __STDC_LIMIT_MACROS 1
+
+	    /* Work if build is not clean.  */
+	    #define _GL_JUST_INCLUDE_SYSTEM_STDINT_H
+
+	    #include <limits.h>
+	    #if HAVE_STDINT_H
+	     #include <stdint.h>
+	    #endif
+
+	    #if $2
+	     #define CONDITION ($3)
+	    #elif HAVE_LONG_LONG_INT
+	     #define CONDITION ($4)
+	    #else
+	     #define CONDITION 0
+	    #endif
+	    int test[CONDITION ? 1 : -1];]])],
+       [gl_cv_test_$1=yes],
+       [gl_cv_test_$1=no])])
+  if test $gl_cv_test_$1 = yes; then
+    $1=1;
+  else
+    $1=0;
+  fi
+  AC_SUBST([$1])
 ])
 
 AC_DEFUN([gl_INTTYPES_MODULE_INDICATOR],

@@ -165,7 +165,7 @@
 #  endif
 # endif
 # ifdef INT64_MAX
-#  if INT64_MAX == LONG_MAX
+#  if @INT64_MAX_EQ_LONG_MAX@
 #   define _PRI64_PREFIX "l"
 #  elif defined _MSC_VER || defined __MINGW32__
 #   define _PRI64_PREFIX "I64"
@@ -182,7 +182,7 @@
 #  endif
 # endif
 # ifdef UINT64_MAX
-#  if UINT64_MAX == ULONG_MAX
+#  if @UINT64_MAX_EQ_ULONG_MAX@
 #   define _PRIu64_PREFIX "l"
 #  elif defined _MSC_VER || defined __MINGW32__
 #   define _PRIu64_PREFIX "I64"
@@ -483,7 +483,7 @@
 
 # if !defined PRIdMAX || @PRI_MACROS_BROKEN@
 #  undef PRIdMAX
-#  if INTMAX_MAX > INT32_MAX
+#  if @INT32_MAX_LT_INTMAX_MAX@
 #   define PRIdMAX PRId64
 #  else
 #   define PRIdMAX "ld"
@@ -491,7 +491,7 @@
 # endif
 # if !defined PRIiMAX || @PRI_MACROS_BROKEN@
 #  undef PRIiMAX
-#  if INTMAX_MAX > INT32_MAX
+#  if @INT32_MAX_LT_INTMAX_MAX@
 #   define PRIiMAX PRIi64
 #  else
 #   define PRIiMAX "li"
@@ -499,7 +499,7 @@
 # endif
 # if !defined PRIoMAX || @PRI_MACROS_BROKEN@
 #  undef PRIoMAX
-#  if UINTMAX_MAX > UINT32_MAX
+#  if @UINT32_MAX_LT_UINTMAX_MAX@
 #   define PRIoMAX PRIo64
 #  else
 #   define PRIoMAX "lo"
@@ -507,7 +507,7 @@
 # endif
 # if !defined PRIuMAX || @PRI_MACROS_BROKEN@
 #  undef PRIuMAX
-#  if UINTMAX_MAX > UINT32_MAX
+#  if @UINT32_MAX_LT_UINTMAX_MAX@
 #   define PRIuMAX PRIu64
 #  else
 #   define PRIuMAX "lu"
@@ -515,7 +515,7 @@
 # endif
 # if !defined PRIxMAX || @PRI_MACROS_BROKEN@
 #  undef PRIxMAX
-#  if UINTMAX_MAX > UINT32_MAX
+#  if @UINT32_MAX_LT_UINTMAX_MAX@
 #   define PRIxMAX PRIx64
 #  else
 #   define PRIxMAX "lx"
@@ -523,7 +523,7 @@
 # endif
 # if !defined PRIXMAX || @PRI_MACROS_BROKEN@
 #  undef PRIXMAX
-#  if UINTMAX_MAX > UINT32_MAX
+#  if @UINT32_MAX_LT_UINTMAX_MAX@
 #   define PRIXMAX PRIX64
 #  else
 #   define PRIXMAX "lX"
@@ -658,7 +658,7 @@
 #  endif
 # endif
 # ifdef INT64_MAX
-#  if INT64_MAX == LONG_MAX
+#  if @INT64_MAX_EQ_LONG_MAX@
 #   define _SCN64_PREFIX "l"
 #  elif defined _MSC_VER || defined __MINGW32__
 #   define _SCN64_PREFIX "I64"
@@ -675,7 +675,7 @@
 #  endif
 # endif
 # ifdef UINT64_MAX
-#  if UINT64_MAX == ULONG_MAX
+#  if @UINT64_MAX_EQ_ULONG_MAX@
 #   define _SCNu64_PREFIX "l"
 #  elif defined _MSC_VER || defined __MINGW32__
 #   define _SCNu64_PREFIX "I64"
@@ -958,7 +958,7 @@
 
 # if !defined SCNdMAX || @PRI_MACROS_BROKEN@
 #  undef SCNdMAX
-#  if INTMAX_MAX > INT32_MAX
+#  if @INT32_MAX_LT_INTMAX_MAX@
 #   define SCNdMAX SCNd64
 #  else
 #   define SCNdMAX "ld"
@@ -966,7 +966,7 @@
 # endif
 # if !defined SCNiMAX || @PRI_MACROS_BROKEN@
 #  undef SCNiMAX
-#  if INTMAX_MAX > INT32_MAX
+#  if @INT32_MAX_LT_INTMAX_MAX@
 #   define SCNiMAX SCNi64
 #  else
 #   define SCNiMAX "li"
@@ -974,7 +974,7 @@
 # endif
 # if !defined SCNoMAX || @PRI_MACROS_BROKEN@
 #  undef SCNoMAX
-#  if UINTMAX_MAX > UINT32_MAX
+#  if @UINT32_MAX_LT_UINTMAX_MAX@
 #   define SCNoMAX SCNo64
 #  else
 #   define SCNoMAX "lo"
@@ -982,7 +982,7 @@
 # endif
 # if !defined SCNuMAX || @PRI_MACROS_BROKEN@
 #  undef SCNuMAX
-#  if UINTMAX_MAX > UINT32_MAX
+#  if @UINT32_MAX_LT_UINTMAX_MAX@
 #   define SCNuMAX SCNu64
 #  else
 #   define SCNuMAX "lu"
@@ -990,7 +990,7 @@
 # endif
 # if !defined SCNxMAX || @PRI_MACROS_BROKEN@
 #  undef SCNxMAX
-#  if UINTMAX_MAX > UINT32_MAX
+#  if @UINT32_MAX_LT_UINTMAX_MAX@
 #   define SCNxMAX SCNx64
 #  else
 #   define SCNxMAX "lx"

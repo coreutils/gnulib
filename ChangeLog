@@ -1,3 +1,22 @@
+2007-11-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Don't insist on 'long long int' support in the preprocessor.  It
+	breaks too many things.  For example, PRIdMAX still uses a 'long
+	long int' format with the latest Sun compiler, even though
+	HAVE_LONG_LONG_INT isn't defined due to that compiler's
+	preprocessor problem.  This causes the latest coreutils to dump
+	core on Solaris 10 sparc with the Sun C compiler.
+	Instead, fix the 2007-10-16 problem in a different way, by evaluating
+	the troublesome expressions at configure-time, not at #if-time.
+	* m4/longlong.m4 (_AC_TYPE_LONG_LONG_SNIPPET): Don't test the
+	preprocessor.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Move the #if checks into
+	compile-time C checks, done at 'configure'-time.
+	(gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION): New macro.
+	* modules/inttypes (Makefile): Substitute the new symbols that
+	gl_INTTYPES_H now generates.
+	* lib/inttypes.in.h: Don't use constants wider than 'long' in #if.
+
 2007-11-12  Bruno Haible  <bruno@clisp.org>
 
 	Tests for Unicode character classification functions.
