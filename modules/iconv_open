@@ -12,6 +12,7 @@ m4/iconv_h.m4
 m4/iconv_open.m4
 
 Depends-on:
+gperf
 include_next
 iconv
 c-ctype
@@ -40,7 +41,6 @@ iconv.h: iconv.in.h
 	mv $@-t $@
 MOSTLYCLEANFILES += iconv.h iconv.h-t
 
-GPERF = gperf
 iconv_open-aix.h: iconv_open-aix.gperf
 	$(GPERF) -m 10 $(srcdir)/iconv_open-aix.gperf > $@-t
 	mv $@-t $@

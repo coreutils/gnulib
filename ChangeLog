@@ -1,5 +1,11 @@
 2007-11-11  Bruno Haible  <bruno@clisp.org>
 
+	* modules/gperf: New file.
+	* modules/iconv_open (Depends-on): Add it.
+	(Makefile.am): Remove the GPERF definition.
+
+2007-11-11  Bruno Haible  <bruno@clisp.org>
+
 	* m4/round.m4 (gl_FUNC_ROUND): Test against NetBSD 3.0 bug.
 	* doc/functions/round.texi: Mention the NetBSD 3.0 bug.
 

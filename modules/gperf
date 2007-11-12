@@ -1,0 +1,20 @@
+Description:
+Provides the GNU gperf build tool.
+
+Files:
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+GPERF = gperf
+
+Include:
+
+License:
+unlimited
+
+Maintainer:
+Bruno Haible
+
