@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "zero width".
+
+Files:
+lib/unictype/pr_zero_width.c
+lib/unictype/pr_zero_width.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_zero_width.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

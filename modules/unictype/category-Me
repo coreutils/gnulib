@@ -1,0 +1,24 @@
+Description:
+Test whether a Unicode character is of general category Me.
+
+Files:
+lib/unictype/categ_Me.c
+lib/unictype/categ_Me.h
+
+Depends-on:
+unictype/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/categ_Me.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

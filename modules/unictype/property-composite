@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "composite".
+
+Files:
+lib/unictype/pr_composite.c
+lib/unictype/pr_composite.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_composite.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

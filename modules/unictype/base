@@ -1,0 +1,23 @@
+Description:
+Base layer for Unicode classification and properties.
+
+Files:
+lib/unictype.h
+
+Depends-on:
+unitypes
+stdbool
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

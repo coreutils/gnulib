@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "quotation mark".
+
+Files:
+lib/unictype/pr_quotation_mark.c
+lib/unictype/pr_quotation_mark.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_quotation_mark.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

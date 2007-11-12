@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "grapheme link".
+
+Files:
+lib/unictype/pr_grapheme_link.c
+lib/unictype/pr_grapheme_link.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_grapheme_link.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -1,0 +1,23 @@
+Description:
+Test whether a Unicode character belongs to a given Unicode block.
+
+Files:
+lib/unictype/block_test.c
+
+Depends-on:
+unictype/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/block_test.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

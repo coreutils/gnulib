@@ -1,0 +1,24 @@
+Description:
+Value of a numeric Unicode character.
+
+Files:
+lib/unictype/numeric.c
+lib/unictype/numeric.h
+
+Depends-on:
+unictype/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/numeric.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

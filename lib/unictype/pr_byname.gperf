@@ -1,0 +1,89 @@
+struct named_property { const char *name; uc_property_t property; };
+%struct-type
+%language=ANSI-C
+%define hash-function-name properties_hash
+%define lookup-function-name uc_property_lookup
+%7bit
+%readonly-tables
+%global-table
+%define word-array-name properties
+%%
+white_space, { &uc_is_property_white_space }
+alphabetic, { &uc_is_property_alphabetic }
+other_alphabetic, { &uc_is_property_other_alphabetic }
+not_a_character, { &uc_is_property_not_a_character }
+default_ignorable_code_point, { &uc_is_property_default_ignorable_code_point }
+other_default_ignorable_code_point, { &uc_is_property_other_default_ignorable_code_point }
+deprecated, { &uc_is_property_deprecated }
+logical_order_exception, { &uc_is_property_logical_order_exception }
+variation_selector, { &uc_is_property_variation_selector }
+private_use, { &uc_is_property_private_use }
+unassigned_code_value, { &uc_is_property_unassigned_code_value }
+uppercase, { &uc_is_property_uppercase }
+other_uppercase, { &uc_is_property_other_uppercase }
+lowercase, { &uc_is_property_lowercase }
+other_lowercase, { &uc_is_property_other_lowercase }
+titlecase, { &uc_is_property_titlecase }
+soft_dotted, { &uc_is_property_soft_dotted }
+id_start, { &uc_is_property_id_start }
+other_id_start, { &uc_is_property_other_id_start }
+id_continue, { &uc_is_property_id_continue }
+other_id_continue, { &uc_is_property_other_id_continue }
+xid_start, { &uc_is_property_xid_start }
+xid_continue, { &uc_is_property_xid_continue }
+pattern_white_space, { &uc_is_property_pattern_white_space }
+pattern_syntax, { &uc_is_property_pattern_syntax }
+join_control, { &uc_is_property_join_control }
+grapheme_base, { &uc_is_property_grapheme_base }
+grapheme_extend, { &uc_is_property_grapheme_extend }
+other_grapheme_extend, { &uc_is_property_other_grapheme_extend }
+grapheme_link, { &uc_is_property_grapheme_link }
+bidi_control, { &uc_is_property_bidi_control }
+bidi_left_to_right, { &uc_is_property_bidi_left_to_right }
+bidi_hebrew_right_to_left, { &uc_is_property_bidi_hebrew_right_to_left }
+bidi_arabic_right_to_left, { &uc_is_property_bidi_arabic_right_to_left }
+bidi_european_digit, { &uc_is_property_bidi_european_digit }
+bidi_eur_num_separator, { &uc_is_property_bidi_eur_num_separator }
+bidi_eur_num_terminator, { &uc_is_property_bidi_eur_num_terminator }
+bidi_arabic_digit, { &uc_is_property_bidi_arabic_digit }
+bidi_common_separator, { &uc_is_property_bidi_common_separator }
+bidi_block_separator, { &uc_is_property_bidi_block_separator }
+bidi_segment_separator, { &uc_is_property_bidi_segment_separator }
+bidi_whitespace, { &uc_is_property_bidi_whitespace }
+bidi_non_spacing_mark, { &uc_is_property_bidi_non_spacing_mark }
+bidi_boundary_neutral, { &uc_is_property_bidi_boundary_neutral }
+bidi_pdf, { &uc_is_property_bidi_pdf }
+bidi_embedding_or_override, { &uc_is_property_bidi_embedding_or_override }
+bidi_other_neutral, { &uc_is_property_bidi_other_neutral }
+hex_digit, { &uc_is_property_hex_digit }
+ascii_hex_digit, { &uc_is_property_ascii_hex_digit }
+ideographic, { &uc_is_property_ideographic }
+unified_ideograph, { &uc_is_property_unified_ideograph }
+radical, { &uc_is_property_radical }
+ids_binary_operator, { &uc_is_property_ids_binary_operator }
+ids_trinary_operator, { &uc_is_property_ids_trinary_operator }
+zero_width, { &uc_is_property_zero_width }
+space, { &uc_is_property_space }
+non_break, { &uc_is_property_non_break }
+iso_control, { &uc_is_property_iso_control }
+format_control, { &uc_is_property_format_control }
+dash, { &uc_is_property_dash }
+hyphen, { &uc_is_property_hyphen }
+punctuation, { &uc_is_property_punctuation }
+line_separator, { &uc_is_property_line_separator }
+paragraph_separator, { &uc_is_property_paragraph_separator }
+quotation_mark, { &uc_is_property_quotation_mark }
+sentence_terminal, { &uc_is_property_sentence_terminal }
+terminal_punctuation, { &uc_is_property_terminal_punctuation }
+currency_symbol, { &uc_is_property_currency_symbol }
+math, { &uc_is_property_math }
+other_math, { &uc_is_property_other_math }
+paired_punctuation, { &uc_is_property_paired_punctuation }
+left_of_pair, { &uc_is_property_left_of_pair }
+combining, { &uc_is_property_combining }
+composite, { &uc_is_property_composite }
+decimal_digit, { &uc_is_property_decimal_digit }
+numeric, { &uc_is_property_numeric }
+diacritic, { &uc_is_property_diacritic }
+extender, { &uc_is_property_extender }
+ignorable_control, { &uc_is_property_ignorable_control }

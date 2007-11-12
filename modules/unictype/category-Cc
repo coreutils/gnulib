@@ -1,0 +1,24 @@
+Description:
+Test whether a Unicode character is of general category Cc.
+
+Files:
+lib/unictype/categ_Cc.c
+lib/unictype/categ_Cc.h
+
+Depends-on:
+unictype/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/categ_Cc.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -1,0 +1,27 @@
+Description:
+Test whether a Unicode character is "bidi other neutral".
+
+Files:
+lib/unictype/pr_bidi_other_neutral.c
+lib/unictype/pr_bidi_other_neutral.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+unictype/bidicategory-of
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_bidi_other_neutral.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

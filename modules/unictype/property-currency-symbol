@@ -1,0 +1,28 @@
+Description:
+Test whether a Unicode character is "currency symbol".
+
+Files:
+lib/unictype/pr_currency_symbol.c
+lib/unictype/pr_currency_symbol.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+unictype/category-test
+unictype/category-Sc
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_currency_symbol.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

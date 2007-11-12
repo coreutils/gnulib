@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "not a character".
+
+Files:
+lib/unictype/pr_not_a_character.c
+lib/unictype/pr_not_a_character.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_not_a_character.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

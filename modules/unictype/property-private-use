@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "private use".
+
+Files:
+lib/unictype/pr_private_use.c
+lib/unictype/pr_private_use.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_private_use.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

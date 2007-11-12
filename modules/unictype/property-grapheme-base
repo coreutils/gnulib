@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "grapheme base".
+
+Files:
+lib/unictype/pr_grapheme_base.c
+lib/unictype/pr_grapheme_base.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_grapheme_base.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

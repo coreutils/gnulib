@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "ids binary operator".
+
+Files:
+lib/unictype/pr_ids_binary_operator.c
+lib/unictype/pr_ids_binary_operator.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_ids_binary_operator.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

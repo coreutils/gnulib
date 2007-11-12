@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "other id continue".
+
+Files:
+lib/unictype/pr_other_id_continue.c
+lib/unictype/pr_other_id_continue.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_other_id_continue.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

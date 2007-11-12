@@ -1,0 +1,26 @@
+Description:
+Generalization of <ctype.h> isspace() and <wctype.h> iswspace().
+
+Files:
+lib/unictype/ctype_space.c
+lib/unictype/ctype_space.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/ctype_space.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

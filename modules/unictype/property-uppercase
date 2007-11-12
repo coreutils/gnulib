@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "uppercase".
+
+Files:
+lib/unictype/pr_uppercase.c
+lib/unictype/pr_uppercase.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_uppercase.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

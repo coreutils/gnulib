@@ -1,0 +1,27 @@
+Description:
+Test whether a Unicode character is "bidi non spacing mark".
+
+Files:
+lib/unictype/pr_bidi_non_spacing_mark.c
+lib/unictype/pr_bidi_non_spacing_mark.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+unictype/bidicategory-of
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_bidi_non_spacing_mark.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

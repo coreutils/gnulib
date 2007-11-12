@@ -1,0 +1,26 @@
+Description:
+Generalization of <ctype.h> isblank() and <wctype.h> iswblank().
+
+Files:
+lib/unictype/ctype_blank.c
+lib/unictype/ctype_blank.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/ctype_blank.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

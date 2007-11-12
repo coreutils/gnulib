@@ -1,0 +1,23 @@
+Description:
+Name of Unicode character category.
+
+Files:
+lib/unictype/categ_name.c
+
+Depends-on:
+unictype/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/categ_name.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

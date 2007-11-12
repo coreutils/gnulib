@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "left of pair".
+
+Files:
+lib/unictype/pr_left_of_pair.c
+lib/unictype/pr_left_of_pair.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_left_of_pair.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

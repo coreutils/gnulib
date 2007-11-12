@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "sentence terminal".
+
+Files:
+lib/unictype/pr_sentence_terminal.c
+lib/unictype/pr_sentence_terminal.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_sentence_terminal.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

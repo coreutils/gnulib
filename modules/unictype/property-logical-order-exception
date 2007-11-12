@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "logical order exception".
+
+Files:
+lib/unictype/pr_logical_order_exception.c
+lib/unictype/pr_logical_order_exception.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_logical_order_exception.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

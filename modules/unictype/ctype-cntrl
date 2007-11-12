@@ -1,0 +1,26 @@
+Description:
+Generalization of <ctype.h> iscntrl() and <wctype.h> iswcntrl().
+
+Files:
+lib/unictype/ctype_cntrl.c
+lib/unictype/ctype_cntrl.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/ctype_cntrl.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

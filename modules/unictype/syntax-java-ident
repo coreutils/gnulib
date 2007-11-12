@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character can occur in identifiers in the Java language.
+
+Files:
+lib/unictype/sy_java_ident.c
+lib/unictype/sy_java_ident.h
+lib/unictype/identsyntaxmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/sy_java_ident.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

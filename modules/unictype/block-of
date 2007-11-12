@@ -1,0 +1,22 @@
+Description:
+Determine block of a Unicode character.
+
+Files:
+
+Depends-on:
+unictype/base
+unictype/block-list
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

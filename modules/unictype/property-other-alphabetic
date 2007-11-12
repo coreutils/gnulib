@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "other alphabetic".
+
+Files:
+lib/unictype/pr_other_alphabetic.c
+lib/unictype/pr_other_alphabetic.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_other_alphabetic.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

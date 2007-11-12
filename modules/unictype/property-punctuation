@@ -1,0 +1,28 @@
+Description:
+Test whether a Unicode character is "punctuation".
+
+Files:
+lib/unictype/pr_punctuation.c
+lib/unictype/pr_punctuation.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+unictype/category-test
+unictype/category-P
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_punctuation.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

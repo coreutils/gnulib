@@ -1,0 +1,24 @@
+Description:
+Test whether a Unicode character is of general category Sm.
+
+Files:
+lib/unictype/categ_Sm.c
+lib/unictype/categ_Sm.h
+
+Depends-on:
+unictype/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/categ_Sm.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

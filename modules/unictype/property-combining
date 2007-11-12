@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "combining".
+
+Files:
+lib/unictype/pr_combining.c
+lib/unictype/pr_combining.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_combining.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

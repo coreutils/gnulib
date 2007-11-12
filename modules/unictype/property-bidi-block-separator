@@ -1,0 +1,27 @@
+Description:
+Test whether a Unicode character is "bidi block separator".
+
+Files:
+lib/unictype/pr_bidi_block_separator.c
+lib/unictype/pr_bidi_block_separator.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+unictype/bidicategory-of
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_bidi_block_separator.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

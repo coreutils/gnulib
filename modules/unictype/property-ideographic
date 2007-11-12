@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "ideographic".
+
+Files:
+lib/unictype/pr_ideographic.c
+lib/unictype/pr_ideographic.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_ideographic.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

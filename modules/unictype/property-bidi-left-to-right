@@ -1,0 +1,27 @@
+Description:
+Test whether a Unicode character is "bidi left to right".
+
+Files:
+lib/unictype/pr_bidi_left_to_right.c
+lib/unictype/pr_bidi_left_to_right.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+unictype/bidicategory-of
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_bidi_left_to_right.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -1,0 +1,25 @@
+Description:
+Set-difference of categories of Unicode characters.
+
+Files:
+lib/unictype/categ_and_not.c
+
+Depends-on:
+unictype/base
+unictype/category-none
+unictype/category-test-withtable
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/categ_and_not.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

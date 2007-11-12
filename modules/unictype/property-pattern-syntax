@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "pattern syntax".
+
+Files:
+lib/unictype/pr_pattern_syntax.c
+lib/unictype/pr_pattern_syntax.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_pattern_syntax.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

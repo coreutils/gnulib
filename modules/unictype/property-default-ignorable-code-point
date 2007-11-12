@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "default ignorable code point".
+
+Files:
+lib/unictype/pr_default_ignorable_code_point.c
+lib/unictype/pr_default_ignorable_code_point.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_default_ignorable_code_point.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

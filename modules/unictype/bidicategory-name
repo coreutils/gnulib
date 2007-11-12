@@ -1,0 +1,23 @@
+Description:
+Name of Unicode character bidi category.
+
+Files:
+lib/unictype/bidi_name.c
+
+Depends-on:
+unictype/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/bidi_name.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

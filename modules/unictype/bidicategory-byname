@@ -1,0 +1,23 @@
+Description:
+Find a Unicode character bidi category, given its name.
+
+Files:
+lib/unictype/bidi_byname.c
+
+Depends-on:
+unictype/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/bidi_byname.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

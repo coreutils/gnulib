@@ -1,0 +1,26 @@
+Description:
+Generalization of <ctype.h> isalpha() and <wctype.h> iswalpha().
+
+Files:
+lib/unictype/ctype_alpha.c
+lib/unictype/ctype_alpha.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/ctype_alpha.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "math".
+
+Files:
+lib/unictype/pr_math.c
+lib/unictype/pr_math.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_math.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

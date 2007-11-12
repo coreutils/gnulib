@@ -1,0 +1,26 @@
+Description:
+Generalization of <ctype.h> isprint() and <wctype.h> iswprint().
+
+Files:
+lib/unictype/ctype_print.c
+lib/unictype/ctype_print.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/ctype_print.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "soft dotted".
+
+Files:
+lib/unictype/pr_soft_dotted.c
+lib/unictype/pr_soft_dotted.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_soft_dotted.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

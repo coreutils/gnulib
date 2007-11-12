@@ -1,0 +1,28 @@
+Description:
+Test whether a Unicode character is "decimal digit".
+
+Files:
+lib/unictype/pr_decimal_digit.c
+lib/unictype/pr_decimal_digit.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+unictype/category-test
+unictype/category-Nd
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_decimal_digit.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

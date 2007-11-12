@@ -1,0 +1,24 @@
+Description:
+Test whether a Unicode character is of general category Zp.
+
+Files:
+lib/unictype/categ_Zp.c
+lib/unictype/categ_Zp.h
+
+Depends-on:
+unictype/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/categ_Zp.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

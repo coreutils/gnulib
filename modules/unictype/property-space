@@ -1,0 +1,28 @@
+Description:
+Test whether a Unicode character is "space".
+
+Files:
+lib/unictype/pr_space.c
+lib/unictype/pr_space.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+unictype/category-test
+unictype/category-Zs
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_space.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

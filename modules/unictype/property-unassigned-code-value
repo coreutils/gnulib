@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "unassigned code value".
+
+Files:
+lib/unictype/pr_unassigned_code_value.c
+lib/unictype/pr_unassigned_code_value.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_unassigned_code_value.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

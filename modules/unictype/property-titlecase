@@ -1,0 +1,28 @@
+Description:
+Test whether a Unicode character is "titlecase".
+
+Files:
+lib/unictype/pr_titlecase.c
+lib/unictype/pr_titlecase.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+unictype/category-test
+unictype/category-Lt
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_titlecase.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "radical".
+
+Files:
+lib/unictype/pr_radical.c
+lib/unictype/pr_radical.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_radical.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

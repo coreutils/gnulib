@@ -1,0 +1,24 @@
+Description:
+Determine bidi category of a Unicode character.
+
+Files:
+lib/unictype/bidi_of.c
+lib/unictype/bidi_of.h
+
+Depends-on:
+unictype/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/bidi_of.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

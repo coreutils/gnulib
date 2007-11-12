@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "unified ideograph".
+
+Files:
+lib/unictype/pr_unified_ideograph.c
+lib/unictype/pr_unified_ideograph.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_unified_ideograph.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

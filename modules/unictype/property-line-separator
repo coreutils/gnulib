@@ -1,0 +1,26 @@
+Description:
+Test whether a Unicode character is "line separator".
+
+Files:
+lib/unictype/pr_line_separator.c
+lib/unictype/pr_line_separator.h
+lib/unictype/bitmap.h
+
+Depends-on:
+unictype/base
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unictype/pr_line_separator.c
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
