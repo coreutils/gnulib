@@ -28,6 +28,14 @@ Portability problems not fixed by Gnulib:
 types available on the system.
 @item
 Macros are used instead of typedefs.
+@item
+Some C preprocessors mishandle constants that do not fit in @code{long int}.
+For example, as of 2007, Sun C mishandles @code{#if LLONG_MIN < 0} on
+a platform with 32-bit @code{long int} and 64-bit @code{long long int}.
+Some older preprocessors mishandle constants ending in @code{LL}.
+To work around these problems, compute the value of expressions like
+@code{LONG_MAX < LLONG_MAX} at @code{configure}-time rather than at
+@code{#if}-time.
 @end itemize
 
 The stdint.h module uses @code{#include_next}.  If you wish to install

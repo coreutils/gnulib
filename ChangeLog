@@ -1,5 +1,9 @@
 2007-11-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Document 64-bit #if problems in stdint.texi.
+	* doc/headers/stdint.texi (stdint.h): Mention problems with
+	64-bit-#if, and how to work around them.
+
 	Don't insist on 'long long int' support in the preprocessor.  It
 	breaks too many things.  For example, PRIdMAX still uses a 'long
 	long int' format with the latest Sun compiler, even though
