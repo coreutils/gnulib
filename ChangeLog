@@ -1,3 +1,10 @@
+2007-11-14  Jim Meyering  <meyering@redhat.com>
+
+	Define a sometimes-link-required function using ARGMATCH_DIE_DECL.
+	* tests/test-argmatch.c (ARGMATCH_DIE_DECL): When defined,
+	use this macro to create a function _definition_.
+	Remove useless "#undef ARGMATCH_DIE".
+
 2007-11-14  Bruno Haible  <bruno@clisp.org>
 
 	* lib/config.charset: Update for OpenBSD 4.1.

@@ -19,10 +19,6 @@
 
 #include <config.h>
 
-/* Some packages define ARGMATCH_DIE in their <config.h>.  Here we want to
-   assume the default definition of ARGMATCH_DIE.  */
-#undef ARGMATCH_DIE
-
 #include "argmatch.h"
 
 #include <stdio.h>
@@ -40,6 +36,12 @@
         }								     \
     }									     \
   while (0)
+
+/* Some packages define ARGMATCH_DIE and ARGMATCH_DIE_DECL in <config.h>, and
+   thus must link with a definition of that function.  Provide it here.  */
+#ifdef ARGMATCH_DIE_DECL
+ARGMATCH_DIE_DECL { exit (1); }
+#endif
 
 enum backup_type
 {
