@@ -1,3 +1,8 @@
+2007-11-14  Bruno Haible  <bruno@clisp.org>
+
+	* lib/config.charset: Update for OpenBSD 4.1.
+	Reported and helped by Ben Pfaff <blp@cs.stanford.edu>.
+
 2007-11-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Document 64-bit #if problems in stdint.texi.
