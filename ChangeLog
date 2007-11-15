@@ -1,3 +1,10 @@
+2007-11-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	New module gnu-make, for determining whether we're using GNU Make.
+	* m4/gnu-make.m4: New file.
+	* modules/gnu-make: New file.
+	* MODULES.html.sh: Mention new module.
+
 2007-11-14  Jim Meyering  <meyering@redhat.com>
 
 	Define a sometimes-link-required function using ARGMATCH_DIE_DECL.

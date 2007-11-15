@@ -2728,6 +2728,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module gnu-make
   func_module host-os
   func_module perl
   func_module uptime
