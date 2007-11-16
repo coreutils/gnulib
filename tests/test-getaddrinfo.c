@@ -37,10 +37,13 @@ int simple (char *host, char *service)
 
   printf ("Finding %s service %s...\n", host, service);
 
+  /* This initializes "hints" but does not use it.  Is there a reason
+     for this?  If so, please fix this comment.  */
   memset (&hints, 0, sizeof (hints));
   hints.ai_flags = AI_CANONNAME;
   hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
+
   res = getaddrinfo (host, service, 0, &ai0);
 
   printf ("res %d: %s\n", res, gai_strerror (res));
@@ -86,12 +89,15 @@ int simple (char *host, char *service)
   return 0;
 }
 
+/* Use numbers for http and https services, rather than names, because
+   Solaris 8 /etc/services does not define these service names by
+   default.  */
 #define HOST1 "www.gnu.org"
-#define SERV1 "http"
+#define SERV1 "80"
 #define HOST2 "www.ibm.com"
-#define SERV2 "https"
+#define SERV2 "443"
 #define HOST3 "microsoft.com"
-#define SERV3 "http"
+#define SERV3 "80"
 #define HOST4 "google.org"
 #define SERV4 "ldap"
 
