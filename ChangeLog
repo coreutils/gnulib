@@ -1,9 +1,14 @@
 2007-11-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	The license of gnu-make and posix-shell is now "GPLed build tool".
+	* modules/gnu-make (License): Likewise.
+	* modules/posix-shell (License): Likewise.
+
 	New module posix-shell, for determining a POSIX shell
 	or perhaps something that is close enough to a POSIX shell.
 	* m4/posix-shell.m4: New file.
 	* modules/posix-shell: New file.
+
 	* MODULES.html.sh: Mention new module.
 
 	New module gnu-make, for determining whether we're using GNU Make.

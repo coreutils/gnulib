@@ -22,7 +22,7 @@ Makefile.am:
 Include:
 
 License:
-GPL
+GPLed build tool
 
 Maintainer:
 Paul Eggert
