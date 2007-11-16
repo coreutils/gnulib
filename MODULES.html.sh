@@ -2731,6 +2731,7 @@ func_all_modules ()
   func_module gnu-make
   func_module host-os
   func_module perl
+  func_module posix-shell
   func_module uptime
   func_end_table
 }

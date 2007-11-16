@@ -1,5 +1,11 @@
 2007-11-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	New module posix-shell, for determining a POSIX shell
+	or perhaps something that is close enough to a POSIX shell.
+	* m4/posix-shell.m4: New file.
+	* modules/posix-shell: New file.
+	* MODULES.html.sh: Mention new module.
+
 	New module gnu-make, for determining whether we're using GNU Make.
 	* m4/gnu-make.m4: New file.
 	* modules/gnu-make: New file.
