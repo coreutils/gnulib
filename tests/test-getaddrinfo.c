@@ -28,6 +28,10 @@
 # define AF_UNSPEC 0
 #endif
 
+#ifndef EAI_SERVICE
+# define EAI_SERVICE 0
+#endif
+
 int simple (char *host, char *service)
 {
   char buf[BUFSIZ];
@@ -49,7 +53,14 @@ int simple (char *host, char *service)
   printf ("res %d: %s\n", res, gai_strerror (res));
 
   if (res != 0)
-    return 1;
+    {
+      /* Solaris reports EAI_SERVICE for "http" and "https".  Don't
+         fail the test merely because of this.  */
+      if (res == EAI_SERVICE)
+	return 0;
+
+      return 1;
+    }
 
   for (ai = ai0; ai; ai = ai->ai_next)
     {
@@ -89,15 +100,12 @@ int simple (char *host, char *service)
   return 0;
 }
 
-/* Use numbers for http and https services, rather than names, because
-   Solaris 8 /etc/services does not define these service names by
-   default.  */
 #define HOST1 "www.gnu.org"
-#define SERV1 "80"
+#define SERV1 "http"
 #define HOST2 "www.ibm.com"
-#define SERV2 "443"
+#define SERV2 "https"
 #define HOST3 "microsoft.com"
-#define SERV3 "80"
+#define SERV3 "http"
 #define HOST4 "google.org"
 #define SERV4 "ldap"
 
