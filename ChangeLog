@@ -1,3 +1,15 @@
+2007-11-18  Jim Meyering  <meyering@redhat.com>
+
+	Pull my changes from coreutils:
+	bootstrap: fix typo to enable use of $gnulib_tool_option_extras.
+	* build-aux/bootstrap (gnulib_tool_options): Add a space before the
+	use of $gnulib_tool_option_extras, so that it's separated from the
+	preceding argument.
+
+	Fix bootstrap failure to handle files like lib/uniwidth/cjk.h.
+	* build-aux/bootstrap (cp_mark_as_generated): Create any required
+	parent destination directories before copying a file into place.
+
 2007-11-18  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	bootstrap: work also with 4-argument variant of AC_INIT
