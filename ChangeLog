@@ -1,3 +1,8 @@
+2007-11-18  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	bootstrap: work also with 4-argument variant of AC_INIT
+	* build-aux/bootstrap (gnulib_extra_files): Adjust sed command.
+
 2007-11-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Port test-getaddrinfo to Solaris.
