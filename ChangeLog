@@ -1,3 +1,15 @@
+2007-11-22  Ondřej Vašík  <ovasik@redhat.com>
+	and Jim Meyering  <meyering@redhat.com>
+
+	Adjust getdate' grammar to accept a slightly more regular language.
+	E.g., accept "YYYYMMDD +N days" as well as "YYYYMMDD N days".
+	Before, the former was rejected.
+	* lib/getdate.y (digits_to_date_time): New function, factored
+	out of ...
+	(number): ...here.  Just call digits_to_date_time.
+	(hybrid): New non-terminal to handle an <unsigned number,
+	signed relative offset> sequence consistently.
+
 2007-11-18  Jim Meyering  <meyering@redhat.com>
 
 	Pull my changes from coreutils:

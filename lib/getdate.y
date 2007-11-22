@@ -208,6 +208,45 @@ static int yylex (union YYSTYPE *, parser_control *);
 static int yyerror (parser_control const *, char const *);
 static long int time_zone_hhmm (textint, long int);
 
+/* Extract into *PC any date and time info from a string of digits
+   of the form e.g., YYYYMMDD, YYMMDD, HHMM, HH (and sometimes YYY,
+   YYYY, ...).  */
+static void
+digits_to_date_time (parser_control *pc, textint text_int)
+{
+  if (pc->dates_seen && ! pc->year.digits
+      && ! pc->rels_seen && (pc->times_seen || 2 < text_int.digits))
+    pc->year = text_int;
+  else
+    {
+      if (4 < text_int.digits)
+	{
+	  pc->dates_seen++;
+	  pc->day = text_int.value % 100;
+	  pc->month = (text_int.value / 100) % 100;
+	  pc->year.value = text_int.value / 10000;
+	  pc->year.digits = text_int.digits - 4;
+	}
+      else
+	{
+	  pc->times_seen++;
+	  if (text_int.digits <= 2)
+	    {
+	      pc->hour = text_int.value;
+	      pc->minutes = 0;
+	    }
+	  else
+	    {
+	      pc->hour = text_int.value / 100;
+	      pc->minutes = text_int.value % 100;
+	    }
+	  pc->seconds.tv_sec = 0;
+	  pc->seconds.tv_nsec = 0;
+	  pc->meridian = MER24;
+	}
+    }
+}
+
 %}
 
 /* We want a reentrant parser, even if the TZ manipulation and the calls to
@@ -277,6 +316,7 @@ item:
   | rel
       { pc->rels_seen = true; }
   | number
+  | hybrid
   ;
 
 time:
@@ -552,38 +592,23 @@ unsigned_seconds:
 
 number:
     tUNUMBER
+      { digits_to_date_time (pc, $1); }
+  ;
+
+hybrid:
+    tUNUMBER relunit_snumber
       {
-	if (pc->dates_seen && ! pc->year.digits
-	    && ! pc->rels_seen && (pc->times_seen || 2 < $1.digits))
-	  pc->year = $1;
-	else
-	  {
-	    if (4 < $1.digits)
-	      {
-		pc->dates_seen++;
-		pc->day = $1.value % 100;
-		pc->month = ($1.value / 100) % 100;
-		pc->year.value = $1.value / 10000;
-		pc->year.digits = $1.digits - 4;
-	      }
-	    else
-	      {
-		pc->times_seen++;
-		if ($1.digits <= 2)
-		  {
-		    pc->hour = $1.value;
-		    pc->minutes = 0;
-		  }
-		else
-		  {
-		    pc->hour = $1.value / 100;
-		    pc->minutes = $1.value % 100;
-		  }
-		pc->seconds.tv_sec = 0;
-		pc->seconds.tv_nsec = 0;
-		pc->meridian = MER24;
-	      }
-	  }
+	/* Hybrid all-digit and relative offset, so that we accept e.g.,
+	   "YYYYMMDD +N days" as well as "YYYYMMDD N days".  */
+	digits_to_date_time (pc, $1);
+	pc->rel.ns += $2.ns;
+	pc->rel.seconds += $2.seconds;
+	pc->rel.minutes += $2.minutes;
+	pc->rel.hour += $2.hour;
+	pc->rel.day += $2.day;
+	pc->rel.month += $2.month;
+	pc->rel.year += $2.year;
+	pc->rels_seen = true;
       }
   ;
 
