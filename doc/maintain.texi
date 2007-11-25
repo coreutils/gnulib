@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate July 25, 2007
+@set lastupdate October 24, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -72,6 +72,7 @@ copyright notice and this permission notice are preserved.
 * Index::
 @end menu
 
+
 @node Preface
 @chapter About This Document
 
@@ -104,10 +105,11 @@ currently @code{fencepost.gnu.org}; if you are the maintainer of a GNU
 package, you should have an account there.  Contact
 @email{accounts@@gnu.org} if you don't have one.  (You can also ask
 for accounts for people who help you a large amount in working on the
-package.)  
+package.)
 
 This release of the GNU Maintenance Instructions was last updated
 @value{lastupdate}.
+
 
 @node Stepping Down
 @chapter Stepping Down
@@ -129,8 +131,9 @@ a person is capable of doing the job will carry a lot of weight.
 As your final act as maintainer, it would be helpful to set up the
 package under @code{savannah.gnu.org} (@pxref{Old Versions}).  This will
 make it much easier for the new maintainer to pick up where you left off
-and will ensure that the CVS tree is not misplaced if it takes us a
+and will ensure that the source tree is not misplaced if it takes us a
 while to find a new maintainer.
+
 
 @node Recruiting Developers
 @chapter Recruiting Developers
@@ -162,6 +165,7 @@ out the maintainer's functions together.  If you would like to propose
 some of your developers as co-maintainers, please contact
 @email{maintainers@@gnu.org}.
 
+
 @node Legal Matters
 @chapter Legal Matters
 @cindex legal matters
@@ -172,11 +176,11 @@ as you maintain the program, to avoid legal difficulties.
 @menu
 * Copyright Papers::
 * Legally Significant::
-* Recording Contributors::      
+* Recording Contributors::
 * Copying from Other Packages::
-* Copyright Notices::           
-* License Notices::             
-* External Libraries::          
+* Copyright Notices::
+* License Notices::
+* External Libraries::
 @end menu
 
 @node Copyright Papers
@@ -596,10 +600,10 @@ of that as well (conventionally in a file named
 @file{COPYING.LESSER}).
 
 @menu
-* Source: Canonical License Sources:
-* Code: License Notices for Code:
-* Documentation: License Notices for Documentation:
-* Other: License Notices for Other Files:
+* Source: Canonical License Sources.
+* Code: License Notices for Code.
+* Documentation: License Notices for Documentation.
+* Other: License Notices for Other Files.
 @end menu
 
 
@@ -615,7 +619,7 @@ You can use whichever is the most convenient for you.
 
 @item
 The @code{gnulib} project on @code{savannah.gnu.org}, which you
-can access via anonymous CVS.  See
+can access via anonymous Git or CVS.  See
 @uref{http://savannah.gnu.org/projects/gnulib}.
 
 @end itemize
@@ -782,6 +786,7 @@ methods only for general-purpose modules that were written for other
 programs and released separately for general use.  For anything that was
 written as a contribution to your package, please get papers signed.
 
+
 @node Clean Ups
 @chapter Cleaning Up Changes
 @cindex contributions, accepting
@@ -815,6 +820,7 @@ Standards}).  The Emacs Lisp manual contains an appendix that gives
 coding standards for Emacs Lisp programs; it is good to urge authors to
 read it (@pxref{Tips, , Tips and Standards, elisp, The GNU Emacs Lisp
 Reference Manual}).
+
 
 @node Platforms
 @chapter Platforms to Support
@@ -941,15 +947,16 @@ Some GNU packages, such as Emacs and GCC, come with advice about how to
 make bug reports useful.  If you want to copy and adapt that, it could
 be a very useful thing to do.
 
+
 @node Old Versions
 @chapter Recording Old Versions
 @cindex version control
 
 It is very important to keep backup files of all source files of GNU.
-You can do this using RCS, CVS or PRCS if you like.  The easiest way to
-use RCS or CVS is via the Version Control library in Emacs;
-@ref{VC Concepts,, Concepts of Version Control, emacs, The GNU Emacs
-Manual}.
+You can do this using a source control system (such as RCS, CVS, Git,
+@dots{}) if you like.  The easiest way to use RCS or CVS is via the
+Version Control library in Emacs (@pxref{VC Concepts,, Concepts of
+Version Control, emacs, The GNU Emacs Manual}).
 
 The history of previous revisions and log entries is very important for
 future maintainers of the package, so even if you do not make it
@@ -957,20 +964,17 @@ publicly accessible, be careful not to put anything in the repository or
 change log that you would not want to hand over to another maintainer
 some day.
 
-The GNU Project provides a CVS server that GNU software packages can
-use: @code{subversions.gnu.org}.  (The name refers to the multiple
-versions and their subversions that are stored in a CVS repository.)
+The GNU Project provides a server that GNU software packages can use
+for source control and other package needs: @code{savannah.gnu.org}.
 You don't have to use this repository, but if you plan to allow public
 read-only access to your development sources, it is convenient for
-people to be able to find various GNU packages in a central place.  The
-CVS Server is managed by @email{cvs-hackers@@gnu.org}.
+people to be able to find various GNU packages in a central place.
+Savannah is managed by @email{savannah-hackers@@gnu.org}.
 
-The GNU project also provides additional developer resources on
-@code{subversions.gnu.org} through its @code{savannah.gnu.org}
-interface.  All GNU maintainers are encouraged to take advantage of
-these facilities, as @code{savannah} can serve to foster a sense of
-community among all GNU developers and help in keeping up with project
-management.
+All GNU maintainers are encouraged to take advantage of Savannah, as
+sharing such a central point can serve to foster a sense of community
+among GNU developers and help in keeping up with project management.
+
 
 @node Distributions
 @chapter Distributions
@@ -1234,9 +1238,11 @@ the @file{/incoming/ftp} directory. If the upload is destined for
 @code{alpha.gnu.org}, place the file(s) in the @file{/incoming/alpha}
 directory.
 
-Uploads are processed every five minutes. Uploads that are in progress while
-the upload processing script is running are handled properly, so do not worry
-about the timing of your upload.
+Uploads are processed every five minutes.  Uploads that are in
+progress while the upload processing script is running are handled
+properly, so do not worry about the timing of your upload.  Uploaded
+files that belong to an incomplete triplet are deleted automatically
+after 24 hours.
 
 Your designated upload email addresses (@pxref{Automated Upload Registration})
 are sent a message if there are any problems processing an upload for your
@@ -1317,7 +1323,17 @@ Archive an old file, taking it offline:
 version: 1.1
 directory: bar/v1
 archive: foo-1.1.tar.gz
-comment: archive an old file - it will not be available through FTP anymore
+comment: archive an old file; it will not be available through FTP anymore
+@end example
+
+@noindent
+Archive an old directory (with all contents), taking it offline:
+
+@example
+version: 1.1
+directory: bar/v1
+archive: foo
+comment: archive an old directory; it will not be available through FTP anymore
 @end example
 
 @noindent
@@ -1388,15 +1404,16 @@ worth announcing.  If you use @email{info-gnu@@gnu.org}, please do not
 announce pretest releases, only real releases.  But real releases do
 include releases made just to fix bugs.
 
+
 @node Web Pages
 @chapter Web Pages
 @cindex web pages
 
-Please write pages about your package for installation on
-@code{www.gnu.org}.  The pages should follow our usual standards for web
+Please write web pages about your package for installation on
+@code{www.gnu.org}.  They should follow our usual standards for web
 pages (see @url{http://www.gnu.org/server}); we chose them in order to
-support a wide variety of browsers, to focus on information rather than
-flashy eye candy, and to keep the site simple and uniform.
+support a wide variety of browsers, to focus on information rather
+than flashy eye candy, and to keep the site simple and uniform.
 
 The simplest way to maintain the web pages for your project is to
 register the project on @code{savannah.gnu.org}.  Then you can edit
@@ -1421,6 +1438,19 @@ because of patent problems (@pxref{Ethical and Philosophical
 Consideration}).  Although the GIF patents expired in 2006, using GIF
 images is still not recommended, as the PNG and JPEG formats are
 generally superior.  See @url{http://www.gnu.org/philosophy/gif.html}.
+
+If you use a site other than @code{www.gnu.org}, please make sure that
+the site runs on free software alone.  (It is ok if the site uses
+unreleased custom software, since that is free in a trivial sense:
+there's only one user and it has the four freedoms.)  If the web site
+for a GNU package runs on non-free software, the public will see this,
+and it will have the effect of granting legitimacy to the non-free
+program.
+
+If you use multiple sites, they should all follow that criterion.
+Please don't link to a site that is about your package, which the
+public might perceive as connected with it and reflecting the position
+of its developers, unless it follows that criterion.
 
 The web pages for the package should include its manuals, in HTML,
 DVI, Info, PostScript, PDF, plain ASCII, and Texinfo format (source).
@@ -1449,6 +1479,7 @@ so based on the contents of your @file{manual} directory.
 * CVS Keywords in Web Pages::
 @end menu
 
+
 @node Invoking gendocs.sh
 @section Invoking @command{gendocs.sh}
 @pindex gendocs.sh
@@ -1462,6 +1493,12 @@ sources:
 @format
 @uref{http://savannah.gnu.org/cgi-bin/viewcvs/texinfo/texinfo/util/gendocs.sh}
 @uref{http://savannah.gnu.org/cgi-bin/viewcvs/texinfo/texinfo/util/gendocs_template}
+@end format
+
+There is also a ``minimalistic'' template version, available from:
+
+@format
+@uref{http://savannah.gnu.org/cgi-bin/viewcvs/texinfo/texinfo/util/gendocs_template_min}
 @end format
 
 Invoke the script like this, in the directory containing the Texinfo
@@ -1508,9 +1545,21 @@ gendocs.sh -o info info "GNU Info manual"
 gendocs.sh -o info-stnd info-stnd "GNU info-stnd manual"
 @end example
 
+By default, the script uses @command{makeinfo} for generating
+@acronym{HTML} output.  If you prefer to use @command{texi2html}, use
+the @option{--texi2html} command line option, e.g.:
+
+@example
+gendocs --texi2html -o texinfo texinfo "GNU Texinfo manual"
+@end example
+
+The template files will automatically produce entries for additional
+HTML output generated by @command{texi2html} (i.e., split by sections
+and chapters).
+
 You can set the environment variables @env{MAKEINFO}, @env{TEXI2DVI},
-and @env{DVIPS} to control the programs that get executed, and
-@env{GENDOCS_TEMPLATE_DIR} to control where the
+@env{TEXI2HTML} and @env{DVIPS} to control the programs that get
+executed, and @env{GENDOCS_TEMPLATE_DIR} to control where the
 @file{gendocs_template} file is found.
 
 Please email bug reports, enhancement requests, or other
@@ -1563,33 +1612,39 @@ output avoiding the literal keyword string.
 @cindex ethics
 @cindex philosophy
 
-The GNU project takes a strong stand for software freedom.  Many times,
-this means you'll need to avoid certain technologies when such
-technologies conflict with our ethics of software freedom.
+The GNU project takes a strong stand for software freedom.  Many
+times, this means you'll need to avoid certain technologies when their
+use would conflict with our long-term goals.
 
 Software patents threaten the advancement of free software and freedom
-to program.  For our safety (which includes yours), we try to avoid
-using algorithms and techniques that we know are patented in the US or
-elsewhere, unless the patent looks so absurd that we doubt it will be
-enforced, or we have a suitable patent license allowing release of free
-software.
+to program.  There are so many software patents in the US that any
+large program probably implements hundreds of patented techniques,
+unknown to the program's developers.  It would be futile and
+self-defeating to try to find and avoid all these patents.  But there
+are some patents which we know are likely to be used to threaten free
+software, so we make an effort to avoid the patented techniques.  If
+you are concerned about the danger of a patent and would like advice,
+write to @email{maintainers@@gnu.org}, and we will try to help you get
+advice from a lawyer.
 
-Beyond that, sometimes the GNU project takes a strong stand against a
-particular patented technology in order to encourage everyone to
-reject it.  For example, until the GIF patents expired in 2006, we
-specified that GNU packages and web pages should not include GIF image
-files, and that equal or better support for other image formats such
-as PNG and JPEG was crucial.  (These other formats remain superior, so
-there is still no particular reason to use GIF's.)
+Sometimes the GNU project takes a strong stand against a particular
+patented technology in order to encourage society to reject it.
 
-Software patents are not the only matter for ethical concern.  A GNU
-package should not recommend use of any non-free program, nor should it
-require a non-free program (such as a non-free compiler or IDE) to
-build.  Thus, a GNU package cannot be written in a programming language
-that does not have a free software implementation.  Now that GNU/Linux
-systems are widely available, all GNU packages should function
-completely with the GNU/Linux system and not require any non-free
-software to build or function.
+For example, the MP3 audio format is covered by a software patent in
+the USA and some other countries.  A patent holder has threatened
+lawsuits against the developers of free programs (these are not GNU
+programs) to produce and play MP3, and some GNU/Linux distributors are
+afraid to include them.  Development of the programs continues, but we
+campaign for the rejection of MP3 format in favor of Ogg Vorbis format.
+
+A GNU package should not recommend use of any non-free program, nor
+should it require a non-free program (such as a non-free compiler or
+IDE) to build.  Thus, a GNU package cannot be written in a programming
+language that does not have a free software implementation.  Now that
+GNU/Linux systems are widely available, all GNU packages should
+provide full functionality on a 100% free GNU/Linux system, and should
+not require any non-free software to build or function.
+The GNU Coding Standards say a lot more about this issue.
 
 A GNU package should not refer the user to any non-free documentation
 for free software.  The need for free documentation to come with free
@@ -1601,6 +1656,7 @@ Finally, new issues concerning the ethics of software freedom come up
 frequently.  We ask that GNU maintainers, at least on matters that
 pertain specifically to their package, stand with the rest of the GNU
 project when such issues come up.
+
 
 @node Terminology
 @chapter Terminology Issues
@@ -1680,6 +1736,7 @@ When referring to the collection of servers that is the higher level
 of the GNU kernel, please call it ``the Hurd'' or ``the GNU Hurd.''
 Note that this uses a space, not a slash.
 
+
 @node Hosting
 @chapter Hosting
 @cindex CVS repository
@@ -1711,14 +1768,17 @@ of the package (which should be listed in the package itself), or look
 on www.gnu.org for more information on how to contribute.
 @end smallexample
 
+
 @node Free Software Directory
 @chapter Free Software Directory
 @cindex Free Software Directory
+@cindex Directory, Free Software
 
 The Free Software Directory aims to be a complete list of free software
 packages, within certain criteria.  Every GNU package should be listed
 there, so please contact @email{bug-directory@@gnu.org} to ask for
 information on how to write an entry for your package.
+
 
 @node Using the Proofreaders List
 @chapter Using the Proofreaders List
@@ -1776,6 +1836,7 @@ and ask people to send you mail if they volunteer for the job.
 When you get enough volunteers, send another message to the list saying
 ``I have enough volunteers, no more please.''
 @end itemize
+
 
 @node Index
 @unnumbered Index

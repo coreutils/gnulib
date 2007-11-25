@@ -2,7 +2,7 @@
 @center Version 3, 29 June 2007
 
 @c This file is intended to be included within another document,
-@c hence no sectioning command or @node.  
+@c hence no sectioning command or @node.
 
 @display
 Copyright @copyright{} 2007 Free Software Foundation, Inc. @url{http://fsf.org/}
@@ -16,7 +16,7 @@ the terms and conditions of version 3 of the GNU General Public
 License, supplemented by the additional permissions listed below.
 
 @enumerate 0
-@item Additional Definitions. 
+@item Additional Definitions.
 
 As used herein, ``this License'' refers to version 3 of the GNU Lesser
 General Public License, and the ``GNU GPL'' refers to version 3 of the GNU
@@ -59,13 +59,13 @@ facility is invoked), then you may convey a copy of the modified
 version:
 
 @enumerate a
-@item 
+@item
 under this License, provided that you make a good faith effort to
 ensure that, in the event an Application does not supply the
 function or data, the facility still operates, and performs
 whatever part of its purpose remains meaningful, or
 
-@item 
+@item
 under the GNU GPL, with none of the additional permissions of
 this License applicable to that copy.
 @end enumerate
@@ -128,7 +128,7 @@ Library.  A suitable mechanism is one that (a) uses at run time
 a copy of the Library already present on the user's computer
 system, and (b) will operate properly with a modified version
 of the Library that is interface-compatible with the Linked
-Version. 
+Version.
 @end enumerate
 
 @item
