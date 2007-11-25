@@ -67,6 +67,9 @@ The simplest way to compile this package is:
      all sorts of other programs in order to regenerate files that came
      with the distribution.
 
+  6. Often, you can also type `make uninstall' to remove the installed
+     files again.
+
 Compilers and Options
 =====================
 
