@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2007-07-01.15
+scriptversion=2007-10-24.16
 
 # Copyright (C) 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 #
@@ -37,7 +37,9 @@ templateurl="http://savannah.gnu.org/cgi-bin/viewcvs/~checkout~/texinfo/texinfo/
 : ${DOCBOOK2PS="docbook2ps"}
 : ${DOCBOOK2TXT="docbook2txt"}
 : ${GENDOCS_TEMPLATE_DIR="."}
+: ${TEXI2HTML="texi2html"}
 unset CDPATH
+unset use_texi2html
 
 version="gendocs.sh $scriptversion
 
@@ -55,7 +57,8 @@ See the GNU Maintainers document for a more extensive discussion:
 Options:
   -o OUTDIR   write files into OUTDIR, instead of manual/.
   --docbook   convert to DocBook too (xml, txt, html, pdf and ps).
-  --html ARG  pass indicated ARG to makeinfo for HTML targets.
+  --html ARG  pass indicated ARG to makeinfo or texi2html for HTML targets.
+  --texi2html use texi2html to generate HTML targets.
   --help      display this help and exit successfully.
   --version   display version information and exit successfully.
 
@@ -118,6 +121,8 @@ while test $# -gt 0; do
     -o) shift; outdir=$1;;
     --docbook) docbook=yes;;
     --html) shift; html=$1;;
+    --texi2html) use_texi2html=1
+                 html="$html --node-files";;
     -*)
       echo "$0: Unknown or ambiguous option \`$1'." >&2
       echo "$0: Try \`--help' for more information." >&2
@@ -193,28 +198,60 @@ gzip -f -9 -c $PACKAGE.txt >$outdir/$PACKAGE.txt.gz
 ascii_gz_size=`calcsize $outdir/$PACKAGE.txt.gz`
 mv $PACKAGE.txt $outdir/
 
-cmd="$SETLANG $MAKEINFO --no-split --html -o $PACKAGE.html $html \"$srcfile\""
-echo "Generating monolithic html... ($cmd)"
-rm -rf $PACKAGE.html  # in case a directory is left over
-eval "$cmd"
-html_mono_size=`calcsize $PACKAGE.html`
-gzip -f -9 -c $PACKAGE.html >$outdir/$PACKAGE.html.gz
-html_mono_gz_size=`calcsize $outdir/$PACKAGE.html.gz`
-mv $PACKAGE.html $outdir/
+html_split() {
+  cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html --split=$1 $html \"$srcfile\""
+  echo "Generating html by $1... ($cmd)"
+  eval "$cmd"
+  split_html_dir=$PACKAGE.html
+  (
+    cd ${split_html_dir} || exit 1
+    ln -sf ${PACKAGE}.html index.html
+    tar -czf ../$outdir/${PACKAGE}.html_$1.tar.gz -- *.html
+  )
+  eval html_$1_tgz_size=`calcsize $outdir/${PACKAGE}.html_$1.tar.gz`
+  rm -f $outdir/html_$1/*.html
+  mkdir -p $outdir/html_$1/
+  mv ${split_html_dir}/*.html $outdir/html_$1/
+  rmdir ${split_html_dir}
+}
 
-cmd="$SETLANG $MAKEINFO --html -o $PACKAGE.html $html \"$srcfile\""
-echo "Generating html by node... ($cmd)"
-eval "$cmd"
-split_html_dir=$PACKAGE.html
-(
-  cd ${split_html_dir} || exit 1
-  tar -czf ../$outdir/${PACKAGE}.html_node.tar.gz -- *.html
-)
-html_node_tgz_size=`calcsize $outdir/${PACKAGE}.html_node.tar.gz`
-rm -f $outdir/html_node/*.html
-mkdir -p $outdir/html_node/
-mv ${split_html_dir}/*.html $outdir/html_node/
-rmdir ${split_html_dir}
+if test -z "$use_texi2html"; then
+  cmd="$SETLANG $MAKEINFO --no-split --html -o $PACKAGE.html $html \"$srcfile\""
+  echo "Generating monolithic html... ($cmd)"
+  rm -rf $PACKAGE.html  # in case a directory is left over
+  eval "$cmd"
+  html_mono_size=`calcsize $PACKAGE.html`
+  gzip -f -9 -c $PACKAGE.html >$outdir/$PACKAGE.html.gz
+  html_mono_gz_size=`calcsize $outdir/$PACKAGE.html.gz`
+  mv $PACKAGE.html $outdir/
+
+  cmd="$SETLANG $MAKEINFO --html -o $PACKAGE.html $html \"$srcfile\""
+  echo "Generating html by node... ($cmd)"
+  eval "$cmd"
+  split_html_dir=$PACKAGE.html
+  (
+   cd ${split_html_dir} || exit 1
+   tar -czf ../$outdir/${PACKAGE}.html_node.tar.gz -- *.html
+  )
+  html_node_tgz_size=`calcsize $outdir/${PACKAGE}.html_node.tar.gz` 
+  rm -f $outdir/html_node/*.html
+  mkdir -p $outdir/html_node/
+  mv ${split_html_dir}/*.html $outdir/html_node/
+  rmdir ${split_html_dir}
+else
+  cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html $html \"$srcfile\"" 
+  echo "Generating monolithic html... ($cmd)"
+  rm -rf $PACKAGE.html  # in case a directory is left over
+  eval "$cmd"
+  html_mono_size=`calcsize $PACKAGE.html`
+  gzip -f -9 -c $PACKAGE.html >$outdir/$PACKAGE.html.gz
+  html_mono_gz_size=`calcsize $outdir/$PACKAGE.html.gz`
+  mv $PACKAGE.html $outdir/
+
+  html_split node
+  html_split chapter
+  html_split section
+fi
 
 echo Making .tar.gz for sources...
 srcfiles=`ls *.texinfo *.texi *.txi *.eps 2>/dev/null`
@@ -265,6 +302,12 @@ if test -n "$docbook"; then
 fi
 
 echo Writing index file...
+if test -z "$use_texi2html"; then
+   CONDS="/%%IF  *HTML_SECTION%%/,/%%ENDIF  *HTML_SECTION%%/d;\
+          /%%IF  *HTML_CHAPTER%%/,/%%ENDIF  *HTML_CHAPTER%%/d"
+else
+   CONDS="/%%ENDIF.*%%/d;/%%IF  *HTML_SECTION%%/d;/%%IF  *HTML_CHAPTER%%/d"
+fi
 curdate=`date '+%B %d, %Y'`
 sed \
    -e "s!%%TITLE%%!$MANUAL_TITLE!g" \
@@ -273,6 +316,8 @@ sed \
    -e "s!%%HTML_MONO_SIZE%%!$html_mono_size!g" \
    -e "s!%%HTML_MONO_GZ_SIZE%%!$html_mono_gz_size!g" \
    -e "s!%%HTML_NODE_TGZ_SIZE%%!$html_node_tgz_size!g" \
+   -e "s!%%HTML_SECTION_TGZ_SIZE%%!$html_section_tgz_size!g" \
+   -e "s!%%HTML_CHAPTER_TGZ_SIZE%%!$html_chapter_tgz_size!g" \
    -e "s!%%INFO_TGZ_SIZE%%!$info_tgz_size!g" \
    -e "s!%%DVI_GZ_SIZE%%!$dvi_gz_size!g" \
    -e "s!%%PDF_SIZE%%!$pdf_size!g" \
@@ -288,6 +333,7 @@ sed \
    -e "s!%%DOCBOOK_XML_GZ_SIZE%%!$docbook_xml_gz_size!g" \
    -e "s,%%SCRIPTURL%%,$scripturl,g" \
    -e "s!%%SCRIPTNAME%%!$prog!g" \
+   -e "$CONDS" \
 $GENDOCS_TEMPLATE_DIR/gendocs_template >$outdir/index.html
 
 echo "Done!  See $outdir/ subdirectory for new files."

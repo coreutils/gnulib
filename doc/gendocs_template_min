@@ -37,12 +37,30 @@
     (%%HTML_MONO_SIZE%%K bytes)</a> - entirely on one web page.</li>
 <li><a href="html_node/index.html">HTML</a> - with one web page per
     node.</li>
+%%IF HTML_SECTION%%
+<li><a href="html_section/index.html">HTML</a> - with one web page per
+    section.</li>
+%%ENDIF HTML_SECTION%%
+%%IF HTML_CHAPTER%%
+<li><a href="html_chapter/index.html">HTML</a> - with one web page per
+    chapter.</li>
+%%ENDIF HTML_CHAPTER%%
 <li><a href="%%PACKAGE%%.html.gz">HTML compressed
-    (%%HTML_MONO_GZ_SIZE%%K bytes gzipped)</a> - entirely on 
+    (%%HTML_MONO_GZ_SIZE%%K gzipped characters)</a> - entirely on 
     one web page.</li>
 <li><a href="%%PACKAGE%%.html_node.tar.gz">HTML compressed
     (%%HTML_NODE_TGZ_SIZE%%K gzipped tar file)</a> -
     with one web page per node.</li>
+%%IF HTML_SECTION%%
+<li><a href="%%PACKAGE%%.html_section.tar.gz">HTML compressed
+    (%%HTML_SECTION_TGZ_SIZE%%K gzipped tar file)</a> -
+    with one web page per section.</li>
+%%ENDIF HTML_SECTION%%
+%%IF HTML_CHAPTER%%
+<li><a href="%%PACKAGE%%.html_chapter.tar.gz">HTML compressed
+    (%%HTML_CHAPTER_TGZ_SIZE%%K gzipped tar file)</a> -
+    with one web page per chapter.</li>
+%%ENDIF HTML_CHAPTER%%
 <li><a href="%%PACKAGE%%.info.tar.gz">Info document
     (%%INFO_TGZ_SIZE%%K bytes gzipped tar file)</a>.</li>
 <li><a href="%%PACKAGE%%.txt">ASCII text
