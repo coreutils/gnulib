@@ -1,3 +1,10 @@
+2007-11-26  Bruno Haible  <bruno@clisp.org>
+
+	* lib/vasnprintf.c (decode_long_double): Don't abort if the
+	'long double' type has excess precision.
+	Reported by Jim Meyering in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2007-11/msg00120.html>.
+
 2007-11-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* doc/fdl.texi, doc/gpl-3.0.texi, doc/lgpl-3.0.texi:
