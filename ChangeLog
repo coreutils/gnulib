@@ -1,3 +1,7 @@
+2007-11-28  Jim Meyering  <meyering@redhat.com>
+
+	* modules/physmem (License): Change from GPL to LGPLv2+.
+
 2007-11-26  Bruno Haible  <bruno@clisp.org>
 
 	* lib/vasnprintf.c (decode_long_double): Don't abort if the
