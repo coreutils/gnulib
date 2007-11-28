@@ -31,4 +31,5 @@
 int file_has_acl (char const *, struct stat const *);
 int copy_acl (char const *, int, char const *, int, mode_t);
 int set_acl (char const *, int, mode_t);
+int qset_acl (char const *, int, mode_t);
 int chmod_or_fchmod (char const *, int, mode_t);

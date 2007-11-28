@@ -40,11 +40,11 @@ chmod_or_fchmod (const char *name, int desc, mode_t mode)
 /* Copy access control lists from one file to another. If SOURCE_DESC is
    a valid file descriptor, use file descriptor operations, else use
    filename based operations on SRC_NAME. Likewise for DEST_DESC and
-   DEST_NAME.
+   DST_NAME.
    If access control lists are not available, fchmod the target file to
    MODE.  Also sets the non-permission bits of the destination file
    (S_ISUID, S_ISGID, S_ISVTX) to those from MODE if any are set.
-   System call return value semantics.  */
+   Return 0 if successful, otherwise output a diagnostic and return -1.  */
 
 int
 copy_acl (const char *src_name, int source_desc, const char *dst_name,
@@ -161,7 +161,7 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
    semantics.  */
 
 int
-set_acl (char const *name, int desc, mode_t mode)
+qset_acl (char const *name, int desc, mode_t mode)
 {
 #if USE_ACL && HAVE_ACL_SET_FILE && HAVE_ACL_FREE
   /* POSIX 1003.1e draft 17 (abandoned) specific version.  */
@@ -185,10 +185,7 @@ set_acl (char const *name, int desc, mode_t mode)
     {
       acl = acl_from_mode (mode);
       if (!acl)
-	{
-	  error (0, errno, "%s", quote (name));
-	  return -1;
-	}
+	return -1;
     }
   else
     {
@@ -206,10 +203,7 @@ set_acl (char const *name, int desc, mode_t mode)
 
       acl = acl_from_text (acl_text);
       if (!acl)
-	{
-	  error (0, errno, "%s", quote (name));
-	  return -1;
-	}
+	return -1;
     }
   if (HAVE_ACL_SET_FD && desc != -1)
     ret = acl_set_fd (desc, acl);
@@ -227,17 +221,14 @@ set_acl (char const *name, int desc, mode_t mode)
 	  else
 	    return 0;
 	}
-      error (0, saved_errno, _("setting permissions for %s"), quote (name));
+      errno = saved_errno;
       return -1;
     }
   else
     acl_free (acl);
 
   if (S_ISDIR (mode) && acl_delete_def_file (name))
-    {
-      error (0, errno, _("setting permissions for %s"), quote (name));
-      return -1;
-    }
+    return -1;
 
   if (mode & (S_ISUID | S_ISGID | S_ISVTX))
     {
@@ -245,16 +236,21 @@ set_acl (char const *name, int desc, mode_t mode)
          been set.  */
 
       if (chmod_or_fchmod (name, desc, mode))
-	{
-	  error (0, errno, _("preserving permissions for %s"), quote (name));
-	  return -1;
-	}
+	return -1;
     }
   return 0;
 #else
-   int ret = chmod_or_fchmod (name, desc, mode);
-   if (ret)
-     error (0, errno, _("setting permissions for %s"), quote (name));
-   return ret;
+  return chmod_or_fchmod (name, desc, mode);
 #endif
+}
+
+/* As with qset_acl, but also output a diagnostic on failure.  */
+
+int
+set_acl (char const *name, int desc, mode_t mode)
+{
+  int r = qset_acl (name, desc, mode);
+  if (r != 0)
+    error (0, errno, _("setting permissions for %s"), quote (name));
+  return r;
 }

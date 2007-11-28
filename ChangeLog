@@ -1,3 +1,10 @@
+2007-11-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	New function qset_acl, like set_acl but with syscall semantics.
+	* lib/acl.h (qset_acl): New decl.
+	* lib/acl.c (qset_acl): New function.
+	(set_acl): Use new function.  Use more-consistent diagnostics.
+
 2007-11-28  Jim Meyering  <meyering@redhat.com>
 
 	* modules/physmem (License): Change from GPL to LGPLv2+.
