@@ -275,10 +275,12 @@ $(INSTALL_DATA) libfoo.a $(libdir)/libfoo.a
 However, it is preferable to support a @code{DESTDIR} prefix on the
 target files, as explained in the next section.
 
-@noindent
-Always use a file name, not a directory name, as the second argument of
-the installation commands.  Use a separate command for each file to be
-installed.
+It is acceptable, but not required, to install multiple files in one
+command, with the final argument being a directory, as in:
+
+@example
+$(INSTALL_PROGRAM) foo bar baz $(bindir)
+@end example
 
 
 @node DESTDIR
