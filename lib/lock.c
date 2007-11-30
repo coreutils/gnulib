@@ -1,5 +1,5 @@
 /* Locking in multithreaded situations.
-   Copyright (C) 2005-2006 Free Software Foundation, Inc.
+   Copyright (C) 2005-2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -250,7 +250,24 @@ glthread_rwlock_destroy (gl_rwlock_t *lock)
 
 # if HAVE_PTHREAD_MUTEX_RECURSIVE
 
-#  if !(defined PTHREAD_RECURSIVE_MUTEX_INITIALIZER || defined PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP)
+#  if defined PTHREAD_RECURSIVE_MUTEX_INITIALIZER || defined PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP
+
+void
+glthread_recursive_lock_init (gl_recursive_lock_t *lock)
+{
+  pthread_mutexattr_t attributes;
+
+  if (pthread_mutexattr_init (&attributes) != 0)
+    abort ();
+  if (pthread_mutexattr_settype (&attributes, PTHREAD_MUTEX_RECURSIVE) != 0)
+    abort ();
+  if (pthread_mutex_init (lock, &attributes) != 0)
+    abort ();
+  if (pthread_mutexattr_destroy (&attributes) != 0)
+    abort ();
+}
+
+#  else
 
 void
 glthread_recursive_lock_init (gl_recursive_lock_t *lock)

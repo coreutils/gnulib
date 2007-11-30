@@ -361,11 +361,11 @@ typedef pthread_mutex_t gl_recursive_lock_t;
        PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP
 #   endif
 #   define gl_recursive_lock_init(NAME) \
-      do                                                                  \
-        {                                                                 \
-          if (pthread_in_use () && pthread_mutex_init (&NAME, NULL) != 0) \
-            abort ();                                                     \
-        }                                                                 \
+      do                                          \
+        {                                         \
+          if (pthread_in_use ())                  \
+            glthread_recursive_lock_init (&NAME); \
+        }                                         \
       while (0)
 #   define gl_recursive_lock_lock(NAME) \
       do                                                            \
@@ -388,6 +388,7 @@ typedef pthread_mutex_t gl_recursive_lock_t;
             abort ();                                                  \
         }                                                              \
       while (0)
+extern void glthread_recursive_lock_init (gl_recursive_lock_t *lock);
 
 #  else
 

@@ -1,3 +1,12 @@
+2007-11-30  Bruno Haible  <bruno@clisp.org>
+
+	* lib/lock.h (gl_recursive_lock_init) [PTHREAD &&
+	PTHREAD_RECURSIVE_MUTEX_INITIALIZER]: Call
+	glthread_recursive_lock_init.
+	* lib/lock.c (glthread_recursive_lock_init)
+	[PTHREAD_RECURSIVE_MUTEX_INITIALIZER]: New function.
+	Reported by Yoann Vandoorselaere <yoann.v@prelude-ids.com>.
+
 2007-11-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	New function qset_acl, like set_acl but with syscall semantics.
