@@ -1,3 +1,8 @@
+2007-12-01  Eric Blake  <ebb9@byu.net>
+
+	* m4/stdio_h.m4 (gl_STDIN_LARGE_OFFSET) [__CYGWIN__]: Rewrite to
+	accomodate fix in cygwin 1.5.25.
+
 2007-12-01  Jim Meyering  <meyering@redhat.com>
 
 	Fix a bug that inhibited much of the utf8-optimization in regcomp.c.

@@ -73,13 +73,15 @@ AC_DEFUN([gl_STDIN_LARGE_OFFSET],
       [AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <stdio.h>],
 [#if defined __SL64 && defined __SCLE /* cygwin */
   /* Cygwin 1.5.24 and earlier fail to put stdin in 64-bit mode, making
-     fseeko/ftello needlessly fail.  This bug was fixed at the same time
-     that cygwin started exporting asnprintf (cygwin 1.7.0), so we use
-     that as a link-time test for cross-compiles rather than building
-     a runtime test.  */
-  size_t s;
-  if (asnprintf (NULL, &s, ""))
-    return 0;
+     fseeko/ftello needlessly fail.  This bug was fixed in 1.5.25, at the
+     same time that cygwin fixed the declaration of "long timezone" to no
+     longer be a macro, so we use that as a compile-time test for
+     cross-compiles rather than building a runtime test.  */
+# define timezonevar
+# include <sys/time.h>
+# ifdef timezone
+  choke me
+# endif
 #endif])],
 	[gl_cv_var_stdin_large_offset=yes],
 	[gl_cv_var_stdin_large_offset=no])])
