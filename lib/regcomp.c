@@ -1049,7 +1049,7 @@ optimize_utf8 (re_dfa_t *dfa)
 	  mb_chars = true;
 	break;
       case ANCHOR:
-	switch (dfa->nodes[node].opr.idx)
+	switch (dfa->nodes[node].opr.ctx_type)
 	  {
 	  case LINE_FIRST:
 	  case LINE_LAST:

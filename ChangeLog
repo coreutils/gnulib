@@ -1,3 +1,10 @@
+2007-12-01  Jim Meyering  <meyering@redhat.com>
+
+	Fix a bug that inhibited much of the utf8-optimization in regcomp.c.
+	* lib/regcomp.c (optimize_utf8): Fix a typo, s/idx/ctx_type/,
+	that would inhibit utf8-optimization of a regexp containing line-
+	or buffer-anchors, e.g., `^', `$'.
+
 2007-11-30  Bruno Haible  <bruno@clisp.org>
 
 	* lib/lock.h (gl_recursive_lock_init) [PTHREAD &&
