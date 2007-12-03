@@ -1,3 +1,8 @@
+2007-12-03  James Youngman  <jay@gnu.org>
+
+	* doc/regexprops-generic.texi: change "an close-group" to "a
+	close-group" and "illegal" to "not allowed".
+
 2007-11-23  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* lib/unictype/pr_byname.c: Include unictype/pr_byname.h instead of
