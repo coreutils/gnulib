@@ -1,3 +1,15 @@
+2007-12-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Add support for Solaris 10 ACLs.  Also, ACLs are Gnulib, not Autoconf.
+	* modules/acl (configure.ac): Rename AC_FUNC_ACL to gl_FUNC_ACL.
+	* m4/acl.m4 (gl_FUNC_ACL): Renamed from AC_FUNC_ACL.  On Solaris,
+	put -lsec in even for programs other than 'ls'.  This fixes a problem
+	for gettext reported by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2007-12/msg00007.html>.
+	* lib/acl.c (copy_acl, qset_acl) [USE_ACL && defined ACL_NO_TRIVIAL]:
+	Add support for Solaris 10.  This isn't efficient, but should get the
+	job done for now.
+
 2007-12-03  James Youngman  <jay@gnu.org>
 
 	* doc/regexprops-generic.texi: change "an close-group" to "a
