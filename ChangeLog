@@ -1,5 +1,8 @@
 2007-12-02  Bruno Haible  <bruno@clisp.org>
 
+	* modules/strings-tests: New file.
+	* tests/test-strings.c: New file.
+
 	Move declarations of str{,n}casecmp from <string.h> to <strings.h>.
 	* lib/strings.in.h: New file.
 	* lib/string.in.h (strcasecmp, strncasecmp): Remove declarations.
