@@ -32,7 +32,6 @@
 #endif
 
 #include "error.h"
-#include "getpagesize.h"
 #include "xalloc.h"
 #include "gettext.h"
 

@@ -2,18 +2,19 @@ Description:
 getpagesize() function: Return memory page size.
 
 Files:
-lib/getpagesize.h
 m4/getpagesize.m4
 
 Depends-on:
+unistd
 
 configure.ac:
-gl_GETPAGESIZE
+gl_FUNC_GETPAGESIZE
+gl_UNISTD_MODULE_INDICATOR([getpagesize])
 
 Makefile.am:
 
 Include:
-"getpagesize.h"
+<unistd.h>
 
 License:
 LGPL

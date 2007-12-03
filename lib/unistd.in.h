@@ -180,6 +180,61 @@ extern int getlogin_r (char *name, size_t size);
 #endif
 
 
+#if @GNULIB_GETPAGESIZE@
+# if !@HAVE_GETPAGESIZE@
+/* This is for POSIX systems.  */
+#  if !defined getpagesize && defined _SC_PAGESIZE
+#   if ! (defined __VMS && __VMS_VER < 70000000)
+#    define getpagesize() sysconf (_SC_PAGESIZE)
+#   endif
+#  endif
+/* This is for older VMS.  */
+#  if !defined getpagesize && defined __VMS
+#   ifdef __ALPHA
+#    define getpagesize() 8192
+#   else
+#    define getpagesize() 512
+#   endif
+#  endif
+/* This is for BeOS.  */
+#  if !defined getpagesize && @HAVE_OS_H@
+#   include <OS.h>
+#   if defined B_PAGE_SIZE
+#    define getpagesize() B_PAGE_SIZE
+#   endif
+#  endif
+/* This is for AmigaOS4.0.  */
+#  if !defined getpagesize && defined __amigaos4__
+#   define getpagesize() 2048
+#  endif
+/* This is for older Unix systems.  */
+#  if !defined getpagesize && @HAVE_SYS_PARAM_H@
+#   include <sys/param.h>
+#   ifdef EXEC_PAGESIZE
+#    define getpagesize() EXEC_PAGESIZE
+#   else
+#    ifdef NBPG
+#     ifndef CLSIZE
+#      define CLSIZE 1
+#     endif
+#     define getpagesize() (NBPG * CLSIZE)
+#    else
+#     ifdef NBPC
+#      define getpagesize() NBPC
+#     endif
+#    endif
+#   endif
+#  endif
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef getpagesize
+# define getpagesize() \
+    (GL_LINK_WARNING ("getpagesize is unportable - " \
+                      "use gnulib module getpagesize for portability"), \
+     getpagesize ())
+#endif
+
+
 #if @GNULIB_LCHOWN@
 # if @REPLACE_LCHOWN@
 /* Change the owner of FILE to UID (if UID is not -1) and the group of FILE

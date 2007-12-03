@@ -1,3 +1,23 @@
+2007-12-02  Martin Lambers <marlam@marlam.de>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/getpagesize.h: Remove file.
+	* lib/unistd.in.h: Include declaration of getpagesize here.
+	* m4/getpagesize.m4 (gl_FUNC_GETPAGESIZE): Renamed from gl_GETPAGESIZE.
+	Invoke gl_UNISTD_H_DEFAULTS. Set HAVE_GETPAGESIZE, HAVE_OS_H,
+	HAVE_SYS_PARAM_H.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_GETPAGESIZE,
+	HAVE_GETPAGESIZE, HAVE_OS_H, HAVE_SYS_PARAM_H.
+	* modules/getpagesize (Files): Remove lib/getpagesize.h.
+	(Depends-on): Add unistd.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+	(Include): Use <unistd.h> instead of getpagesize.h.
+	* modules/unistd (Makefile.am): Substitute also GNULIB_GETPAGESIZE,
+	HAVE_GETPAGESIZE, HAVE_OS_H, HAVE_SYS_PARAM_H.
+	* m4/pagealign_alloc.m4 (gl_PREREQ_PAGEALIGN_ALLOC): Remove
+	gl_GETPAGESIZE invocation, already handled by module dependency.
+	* lib/pagealign_alloc.c: Don't include getpagesize.h.
+
 2007-12-02  Bruno Haible  <bruno@clisp.org>
 
 	* modules/strings-tests: New file.
