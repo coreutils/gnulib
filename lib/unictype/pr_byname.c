@@ -23,7 +23,7 @@
 #include <string.h>
 
 /* Get gperf generated lookup function.  */
-#include "pr_byname.h"
+#include "unictype/pr_byname.h"
 
 static const uc_property_t UC_PROPERTY_NONE = { NULL };
 

@@ -1,3 +1,12 @@
+2007-11-23  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* lib/unictype/pr_byname.c: Include unictype/pr_byname.h instead of
+	pr_byname.h. Needed for the rare case when the maintainer has done
+	"make maintainer-clean" in the source directory and then attempts a
+	build outside the source directory.
+	* lib/unictype/scripts.c: Include unictype/scripts_byname.h instead of
+	scripts_byname.h.
+
 2007-12-02  Martin Lambers <marlam@marlam.de>
             Bruno Haible  <bruno@clisp.org>
 

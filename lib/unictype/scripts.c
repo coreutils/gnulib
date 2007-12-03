@@ -23,7 +23,7 @@
 #include <string.h>
 
 #include "scripts.h"
-#include "scripts_byname.h"
+#include "unictype/scripts_byname.h"
 
 const uc_script_t *
 uc_script (ucs4_t uc)
