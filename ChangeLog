@@ -1,3 +1,8 @@
+2007-12-03  Eric Blake  <ebb9@byu.net>
+
+	* m4/strerror.m4 (gl_FUNC_STRERROR_SEPARATE): Ensure
+	REPLACE_STRERROR is initialized before this macro.
+
 2007-12-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Add support for Solaris 10 ACLs.  Also, ACLs are Gnulib, not Autoconf.
@@ -25,7 +30,7 @@
 	scripts_byname.h.
 
 2007-12-02  Martin Lambers <marlam@marlam.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/getpagesize.h: Remove file.
 	* lib/unistd.in.h: Include declaration of getpagesize here.
@@ -1117,7 +1122,7 @@
 	Reported by Eric Blake.
 
 2007-10-27  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* modules/malloc (configure.ac): Define GNULIB_MALLOC_GNU always.
 	* modules/realloc (configure.ac): Define GNULIB_REALLOC_GNU always.
@@ -1464,7 +1469,7 @@
 	gl_LGPL macro.
 
 2007-10-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/unistr.h (u8_uctomb_aux): Declare also if !HAVE_INLINE.
 	(u16_uctomb_aux): Likewise.

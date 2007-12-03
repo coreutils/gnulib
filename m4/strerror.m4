@@ -17,6 +17,7 @@ AC_DEFUN([gl_FUNC_STRERROR],
 # Like gl_FUNC_STRERROR, except prepare for separate compilation (no AC_LIBOBJ).
 AC_DEFUN([gl_FUNC_STRERROR_SEPARATE],
 [
+  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   AC_CACHE_CHECK([for working strerror function],
    [gl_cv_func_working_strerror],
    [AC_RUN_IFELSE(
