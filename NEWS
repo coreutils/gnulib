@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-12-03  strcase         The include file is changed from <string.h> to
+                            <strings.h>.
+
 2007-10-07  most modules    The license for most modules has changed from
                             GPLv2+ to GPLv3+, and from LGPLv2+ to LGPLv3+.
                             A few modules are still under LGPLv2+; see the

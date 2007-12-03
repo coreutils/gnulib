@@ -7,7 +7,7 @@ lib/strncasecmp.c
 m4/strcase.m4
 
 Depends-on:
-string
+strings
 
 configure.ac:
 gl_STRCASE
@@ -15,7 +15,7 @@ gl_STRCASE
 Makefile.am:
 
 Include:
-<string.h>
+<strings.h>
 
 License:
 LGPLv2+

@@ -1,3 +1,16 @@
+2007-12-02  Bruno Haible  <bruno@clisp.org>
+
+	Move declarations of str{,n}casecmp from <string.h> to <strings.h>.
+	* lib/strings.in.h: New file.
+	* lib/string.in.h (strcasecmp, strncasecmp): Remove declarations.
+	* m4/strings_h.m4: New file.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Remove initialization
+	of HAVE_STRCASECMP, HAVE_DECL_STRNCASECMP.
+	* modules/strings: New file.
+	* modules/string (Makefile.am): Update.
+	* modules/strcase (Include): Mention <strings.h>, not <string.h>.
+	Reported by Karl Berry.
+
 2007-12-01  Eric Blake  <ebb9@byu.net>
 
 	* m4/stdio_h.m4 (gl_STDIN_LARGE_OFFSET) [__CYGWIN__]: Rewrite to
