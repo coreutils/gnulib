@@ -1,5 +1,10 @@
 2007-12-04  Eric Blake  <ebb9@byu.net>
 
+	Fix frexp on mingw.
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Detect mingw bug when
+	cross-compiling.
+	* doc/functions/frexp.texi (frexp): Document the bug.
+
 	Make cygwin fseeko check more reliable.
 	* m4/stdio_h.m4 (gl_STDIN_LARGE_OFFSET) [__CYGWIN__]: Use cygwin
 	version numbers, rather than unrelated feature check.

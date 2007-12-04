@@ -1,4 +1,4 @@
-# frexp.m4 serial 4
+# frexp.m4 serial 5
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -126,6 +126,7 @@ int main()
 }], [gl_cv_func_frexp_works=yes], [gl_cv_func_frexp_works=no],
       [case "$host_os" in
          netbsd* | irix*) gl_cv_func_frexp_works="guessing no";;
+         mingw*)          gl_cv_func_frexp_works="guessing no";;
          *)               gl_cv_func_frexp_works="guessing yes";;
        esac
       ])
