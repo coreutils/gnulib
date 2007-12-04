@@ -1,5 +1,10 @@
 2007-12-04  Eric Blake  <ebb9@byu.net>
 
+	Make scripts executable.
+	* build-aux/config.guess: Add execute permissions.
+	* build-aux/config.sub: Likewise.
+	* build-aux/gendocs.sh: Likewise.
+
 	Fix frexp on mingw.
 	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Detect mingw bug when
 	cross-compiling.
