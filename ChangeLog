@@ -1,5 +1,12 @@
 2007-12-04  Eric Blake  <ebb9@byu.net>
 
+	Make cygwin fseeko check more reliable.
+	* m4/stdio_h.m4 (gl_STDIN_LARGE_OFFSET) [__CYGWIN__]: Use cygwin
+	version numbers, rather than unrelated feature check.
+	* doc/functions/fseeko.texi (fseeko): Tweak failure report.
+	* doc/functions/ftello.texi (ftello): Likewise.
+	Reported by Bruno Haible.
+
 	* m4/strerror.m4: Bump version number.
 
 2007-12-03  Bruno Haible  <bruno@clisp.org>
