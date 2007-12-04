@@ -16,6 +16,9 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 mingw, BeOS.
 @item
+This function does not set @code{errno} on some platforms:
+mingw.
+@item
 On AIX, it is not possible to use @code{mprotect} on memory regions allocated
 with @code{malloc}.
 @end itemize
