@@ -2015,6 +2015,13 @@ func_emit_initmacro_done ()
   echo "  ${macro_prefix_arg}_LIBOBJS=\"\$${macro_prefix_arg}_LIBOBJS \$1.\$ac_objext\""
   echo "])"
   echo
+  echo "# m4_foreach_w is provided by autoconf-2.59c and later."
+  echo "# This definition is to accommodate developers using versions"
+  echo "# of autoconf older than that."
+  echo "m4_ifndef([m4_foreach_w],"
+  echo "  [m4_define([m4_foreach_w],"
+  echo "    [m4_foreach([\$1], m4_split(m4_normalize([\$2]), [ ]), [\$3])])])"
+  echo
   echo "# Like AC_REPLACE_FUNCS, except that the module name goes"
   echo "# into ${macro_prefix_arg}_LIBOBJS instead of into LIBOBJS."
   echo "AC_DEFUN([${macro_prefix_arg}_REPLACE_FUNCS], ["

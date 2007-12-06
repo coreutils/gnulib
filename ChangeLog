@@ -1,3 +1,9 @@
+2007-12-11  Jim Meyering  <meyering@redhat.com>
+
+	Support versions of autoconf prior to 2.59c.
+	* gnulib-tool (func_emit_initmacro_done): Define m4_foreach_w
+	if it is not already defined.
+
 2007-12-09  Bruno Haible  <bruno@clisp.org>
 
 	Let 'gnulib-tool --import' collect sources needed for the tests in
