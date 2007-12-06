@@ -24,7 +24,8 @@ AC_DEFUN([gl_FUNC_ACL],
       [test "$ac_cv_search_acl_trivial" = "none required" ||
        LIB_ACL=$ac_cv_search_acl_trivial
        AC_CHECK_FUNCS([acl_trivial])],
-      [if test $ac_cv_func_acl_trivial != yes; then
+      [AC_CHECK_FUNCS([acl_trivial])
+       if test $ac_cv_func_acl_trivial != yes; then
 	 AC_SEARCH_LIBS([acl_get_file], [acl],
 	   [test "$ac_cv_search_acl_get_file" = "none required" ||
 	    LIB_ACL=$ac_cv_search_acl_get_file

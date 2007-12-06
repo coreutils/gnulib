@@ -1,3 +1,9 @@
+2007-12-06  Jim Meyering  <meyering@redhat.com>
+
+	Avoid a configure-time syntax error in gl_FUNC_ACL.
+	* m4/acl.m4 (gl_FUNC_ACL): Be careful to check for the acl_trivial
+	function in each branch, before testing the cache variable.
+
 2007-12-04  Eric Blake  <ebb9@byu.net>
 
 	Make scripts executable.
