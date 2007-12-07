@@ -1,3 +1,10 @@
+2007-12-07  Jim Meyering  <meyering@redhat.com>
+
+	Let these macros work also with autoconf-2.59.
+	* m4/getline.m4 (gl_FUNC_GETLINE): Require only autoconf-2.59.  2.60
+	is not needed, since gnulib now permits use of AC_CHECK_DECLS_ONCE.
+	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Likewise.
+
 2007-12-06  Jim Meyering  <meyering@redhat.com>
 
 	Avoid a configure-time syntax error in gl_FUNC_ACL.
