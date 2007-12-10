@@ -1,5 +1,10 @@
 2007-12-09  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_emit_tests_Makefile_am): Expand references to
+	the build-aux directory.
+
+2007-12-09  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_tests_Makefile_am): Remove redundant code
 	introduced on 2006-09-09.
 

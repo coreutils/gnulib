@@ -1883,7 +1883,8 @@ func_emit_tests_Makefile_am ()
   echo
   echo "LDADD = ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext}"
   echo
-  cat allsnippets.tmp
+  cat allsnippets.tmp \
+    | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
   echo "# Clean up after Solaris cc."
   echo "clean-local:"
   echo "	rm -rf SunWS_cache"
