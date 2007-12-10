@@ -1923,7 +1923,10 @@ func_emit_tests_Makefile_am ()
   if $use_libtests; then
     local_ldadd=' libtests.a $(LIBTESTS_LIBDEPS)'
   fi
-  echo "LDADD =${local_ldadd} ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext}"
+  # local_ldadd must be listed first, since it often depends on non-test
+  # modules; it must also be listed last, since it can include modules
+  # such as progname that satisfy dependencies of non-test modules.
+  echo "LDADD =${local_ldadd} ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext}${local_ldadd}"
   echo
   if $use_libtests; then
     echo "libtests_a_SOURCES ="

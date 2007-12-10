@@ -1,4 +1,10 @@
 2007-12-11  Eric Blake  <ebb9@byu.net>
+
+	Avoid link failures with separate libtests.a.
+	* gnulib-tool (func_emit_tests_Makefile_am): Also list local_ldadd
+	last, to satisfy circular dependencies.
+
+2007-12-11  Eric Blake  <ebb9@byu.net>
 	and Bruno Haible  <bruno@clisp.org>
 
 	Fix OpenBSD 4.0 <float.h> handling of long double.
