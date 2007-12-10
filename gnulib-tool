@@ -1803,11 +1803,6 @@ func_emit_tests_Makefile_am ()
 {
   if test "$libtool" = true; then
     libext=la
-  else
-    libext=a
-  fi
-  if test "$libtool" = true; then
-    libext=la
     sed_eliminate_LDFLAGS=
   else
     libext=a

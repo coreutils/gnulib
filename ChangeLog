@@ -1,3 +1,8 @@
+2007-12-09  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_tests_Makefile_am): Remove redundant code
+	introduced on 2006-09-09.
+
 2007-12-07  Jim Meyering  <meyering@redhat.com>
 
 	Let these macros work also with autoconf-2.59.
