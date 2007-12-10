@@ -1,5 +1,27 @@
 2007-12-09  Bruno Haible  <bruno@clisp.org>
 
+	Let 'gnulib-tool --import' collect sources needed for the tests in
+	tests/ rather than in lib/.
+	* gnulib-tool (func_emit_tests_Makefile_am): Accept use_libtests
+	argument. If true, add rules to generate libtests.a, and put libtests.a
+	into $(LDADD). Consider source files in subdirectories and set
+	uses_subdirs.
+	(func_emit_initmacro_start, func_emit_initmacro_end,
+	func_emit_initmacro_done): Pass all arguments explicitly.
+	(func_import): Determine two module lists main_modules,
+	testsrelated_modules. Determine use_libtests. Determine two variables
+	sed_transform_main_lib_file, sed_transform_testsrelated_lib_file
+	instead of just sed_transform_lib_file. Determine two variables
+	main_files and testsrelated_files. Compute 'files' as the union of
+	both. Adjust sed_rewrite_old_files, sed_rewrite_new_files,
+	func_add_or_update. In the generated gnulib-comp.m4, collect the
+	object files for tests/ in different variables than those for lib/.
+	Substitute LIBTESTS_LIBDEPS.
+	(func_create_testdir): Combine the uses_subdirs results from
+	func_emit_lib_Makefile_am and from func_emit_tests_Makefile_am.
+
+2007-12-09  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_tests_Makefile_am): Expand references to
 	the build-aux directory.
 

@@ -1793,12 +1793,17 @@ func_emit_po_POTFILES_in ()
 # - local_gnulib_dir  from --local-dir
 # - modules         list of modules, including dependencies
 # - libname         library name
+# - auxdir          directory relative to destdir where to place build aux files
 # - makefile_name   from --makefile-name
 # - libtool         true if libtool will be used, false or blank otherwise
 # - sourcebase      relative directory containing lib source code
 # - m4base          relative directory containing autoconf macros
 # - testsbase       relative directory containing unit test code
+# - macro_prefix    prefix of gl_LIBOBJS macros to use
 # - for_test        true if creating a package for testing, false otherwise
+# - use_libtests    true if a libtests.a should be built, false otherwise
+# Output:
+# - uses_subdirs    nonempty if object files in subdirs exist
 func_emit_tests_Makefile_am ()
 {
   if test "$libtool" = true; then
@@ -1822,24 +1827,28 @@ func_emit_tests_Makefile_am ()
   echo "## Process this file with automake to produce Makefile.in."
   func_emit_copyright_notice
   echo
-  # Generate dependencies here, since it eases the debugging of test failures.
-  echo "AUTOMAKE_OPTIONS = 1.5 foreign"
-  echo
-  echo "ACLOCAL_AMFLAGS = -I ${testsbase_inverse}/${m4base}"
-  echo
+  uses_subdirs=
   (
     for module in $modules; do
-      func_verify_tests_module
+      if $for_test; then
+        func_verify_tests_module
+      else
+        func_verify_module
+      fi
       if test -n "$module"; then
         {
           func_get_automake_snippet "$module" |
             sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
                 -e "$sed_eliminate_LDFLAGS" \
-                -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' \
+                -e 's,lib_\([A-Z][A-Z]*\),libtests_a_\1,g' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g' \
                 -e "$sed_transform_check_PROGRAMS"
+          if $use_libtests && test "$module" = 'alloca'; then
+            echo "libtests_a_LIBADD += @${perhapsLT}ALLOCA@"
+            echo "libtests_a_DEPENDENCIES += @${perhapsLT}ALLOCA@"
+          fi
         } > amsnippet.tmp
         # Skip the contents if its entirely empty.
         if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
@@ -1850,9 +1859,28 @@ func_emit_tests_Makefile_am ()
           echo
         fi
         rm -f amsnippet.tmp
+        # Test whether there are some source files in subdirectories.
+        for f in `func_get_filelist "$module"`; do
+          case $f in
+            lib/*/*.c | tests/*/*.c) uses_subdirs=yes ;;
+          esac
+        done
       fi
     done
   ) > allsnippets.tmp
+  # Generate dependencies here, since it eases the debugging of test failures.
+  # If there are source files in subdirectories, prevent collision of the
+  # object files (example: hash.c and libxml/hash.c).
+  subdir_options=
+  if test -n "$uses_subdirs"; then
+    subdir_options=' subdir-objects'
+  fi
+  echo "AUTOMAKE_OPTIONS = 1.5 foreign${subdir_options}"
+  echo
+  if $for_test; then
+    echo "ACLOCAL_AMFLAGS = -I ${testsbase_inverse}/${m4base}"
+    echo
+  fi
   # Nothing is being added to SUBDIRS; nevertheless the existence of this
   # variable is needed to avoid an error from automake:
   #   "AM_GNU_GETTEXT used but SUBDIRS not defined"
@@ -1864,6 +1892,16 @@ func_emit_tests_Makefile_am ()
     echo "check_PROGRAMS ="
   fi
   echo "noinst_HEADERS ="
+  echo "noinst_LIBRARIES ="
+  if $use_libtests; then
+    if $for_test; then
+      echo "noinst_LIBRARIES += libtests.a"
+    else
+      echo "check_LIBRARIES = libtests.a"
+    fi
+  fi
+  # Automake versions < 1.9b create an empty pkgdatadir at installation time
+  # if you specify pkgdata_DATA to empty. This is a workaround.
   if grep '^pkgdata_DATA *+=' allsnippets.tmp > /dev/null; then
     echo "pkgdata_DATA ="
   fi
@@ -1881,8 +1919,21 @@ func_emit_tests_Makefile_am ()
   echo "  -I${testsbase_inverse} -I\$(srcdir)/${testsbase_inverse} \\"
   echo "  -I${testsbase_inverse}/${sourcebase-lib} -I\$(srcdir)/${testsbase_inverse}/${sourcebase-lib}"
   echo
-  echo "LDADD = ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext}"
+  local_ldadd=''
+  if $use_libtests; then
+    local_ldadd=' libtests.a $(LIBTESTS_LIBDEPS)'
+  fi
+  echo "LDADD =${local_ldadd} ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext}"
   echo
+  if $use_libtests; then
+    echo "libtests_a_SOURCES ="
+    # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
+    # automake during its analyses looks for $(LIBOBJS), not for @LIBOBJS@.
+    echo "libtests_a_LIBADD = \$(${macro_prefix}tests_LIBOBJS)"
+    echo "libtests_a_DEPENDENCIES = \$(${macro_prefix}tests_LIBOBJS)"
+    echo "EXTRA_libtests_a_SOURCES ="
+    echo
+  fi
   cat allsnippets.tmp \
     | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
   echo "# Clean up after Solaris cc."
@@ -1899,84 +1950,88 @@ func_emit_tests_Makefile_am ()
   rm -f allsnippets.tmp
 }
 
-# func_emit_initmacro_start
+# func_emit_initmacro_start macro_prefix
 # emits the first few statements of the gl_INIT macro to standard output.
 # - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
 func_emit_initmacro_start ()
 {
+  macro_prefix_arg="$1"
   # Overriding AC_LIBOBJ and AC_REPLACE_FUNCS has the effect of storing
-  # platform-dependent object files in ${macro_prefix}_LIBOBJS instead of
+  # platform-dependent object files in ${macro_prefix_arg}_LIBOBJS instead of
   # LIBOBJS.  The purpose is to allow several gnulib instantiations under
   # a single configure.ac file.  (AC_CONFIG_LIBOBJ_DIR does not allow this
   # flexibility.)
   # Furthermore it avoids an automake error like this when a Makefile.am
   # that uses pieces of gnulib also uses $(LIBOBJ):
   #   automatically discovered file `error.c' should not be explicitly mentioned
-  echo "  m4_pushdef([AC_LIBOBJ], m4_defn([${macro_prefix}_LIBOBJ]))"
-  echo "  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([${macro_prefix}_REPLACE_FUNCS]))"
+  echo "  m4_pushdef([AC_LIBOBJ], m4_defn([${macro_prefix_arg}_LIBOBJ]))"
+  echo "  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([${macro_prefix_arg}_REPLACE_FUNCS]))"
   # Overriding AC_LIBSOURCES has the same purpose of avoiding the automake
   # error when a Makefile.am that uses pieces of gnulib also uses $(LIBOBJ):
   #   automatically discovered file `error.c' should not be explicitly mentioned
   # We let automake know about the files to be distributed through the
   # EXTRA_lib_SOURCES variable.
-  echo "  m4_pushdef([AC_LIBSOURCES], m4_defn([${macro_prefix}_LIBSOURCES]))"
+  echo "  m4_pushdef([AC_LIBSOURCES], m4_defn([${macro_prefix_arg}_LIBSOURCES]))"
 }
 
-# func_emit_initmacro_end
+# func_emit_initmacro_end macro_prefix
 # emits the last few statements of the gl_INIT macro to standard output.
 # - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
 func_emit_initmacro_end ()
 {
+  macro_prefix_arg="$1"
   echo "  m4_popdef([AC_LIBSOURCES])"
   echo "  m4_popdef([AC_REPLACE_FUNCS])"
   echo "  m4_popdef([AC_LIBOBJ])"
   echo "  AC_CONFIG_COMMANDS_PRE(["
-  echo "    ${macro_prefix}_libobjs="
-  echo "    ${macro_prefix}_ltlibobjs="
-  echo "    if test -n \"\$${macro_prefix}_LIBOBJS\"; then"
+  echo "    ${macro_prefix_arg}_libobjs="
+  echo "    ${macro_prefix_arg}_ltlibobjs="
+  echo "    if test -n \"\$${macro_prefix_arg}_LIBOBJS\"; then"
   echo "      # Remove the extension."
   echo "      sed_drop_objext='s/\\.o\$//;s/\\.obj\$//'"
-  echo "      for i in \`for i in \$${macro_prefix}_LIBOBJS; do echo \"\$i\"; done | sed \"\$sed_drop_objext\" | sort | uniq\`; do"
-  echo "        ${macro_prefix}_libobjs=\"\$${macro_prefix}_libobjs \$i.\$ac_objext\""
-  echo "        ${macro_prefix}_ltlibobjs=\"\$${macro_prefix}_ltlibobjs \$i.lo\""
+  echo "      for i in \`for i in \$${macro_prefix_arg}_LIBOBJS; do echo \"\$i\"; done | sed \"\$sed_drop_objext\" | sort | uniq\`; do"
+  echo "        ${macro_prefix_arg}_libobjs=\"\$${macro_prefix_arg}_libobjs \$i.\$ac_objext\""
+  echo "        ${macro_prefix_arg}_ltlibobjs=\"\$${macro_prefix_arg}_ltlibobjs \$i.lo\""
   echo "      done"
   echo "    fi"
-  echo "    AC_SUBST([${macro_prefix}_LIBOBJS], [\$${macro_prefix}_libobjs])"
-  echo "    AC_SUBST([${macro_prefix}_LTLIBOBJS], [\$${macro_prefix}_ltlibobjs])"
+  echo "    AC_SUBST([${macro_prefix_arg}_LIBOBJS], [\$${macro_prefix_arg}_libobjs])"
+  echo "    AC_SUBST([${macro_prefix_arg}_LTLIBOBJS], [\$${macro_prefix_arg}_ltlibobjs])"
   echo "  ])"
 }
 
-# func_emit_initmacro_done
+# func_emit_initmacro_done macro_prefix sourcebase
 # emits a few statements after the gl_INIT macro to standard output.
 # - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
 # - sourcebase      directory relative to destdir where to place source code
 func_emit_initmacro_done ()
 {
+  macro_prefix_arg="$1"
+  sourcebase_arg="$2"
   echo
   echo "# Like AC_LIBOBJ, except that the module name goes"
-  echo "# into ${macro_prefix}_LIBOBJS instead of into LIBOBJS."
-  echo "AC_DEFUN([${macro_prefix}_LIBOBJ], ["
-  echo "  AS_LITERAL_IF([\$1], [${macro_prefix}_LIBSOURCES([\$1.c])])dnl"
-  echo "  ${macro_prefix}_LIBOBJS=\"\$${macro_prefix}_LIBOBJS \$1.\$ac_objext\""
+  echo "# into ${macro_prefix_arg}_LIBOBJS instead of into LIBOBJS."
+  echo "AC_DEFUN([${macro_prefix_arg}_LIBOBJ], ["
+  echo "  AS_LITERAL_IF([\$1], [${macro_prefix_arg}_LIBSOURCES([\$1.c])])dnl"
+  echo "  ${macro_prefix_arg}_LIBOBJS=\"\$${macro_prefix_arg}_LIBOBJS \$1.\$ac_objext\""
   echo "])"
   echo
   echo "# Like AC_REPLACE_FUNCS, except that the module name goes"
-  echo "# into ${macro_prefix}_LIBOBJS instead of into LIBOBJS."
-  echo "AC_DEFUN([${macro_prefix}_REPLACE_FUNCS], ["
+  echo "# into ${macro_prefix_arg}_LIBOBJS instead of into LIBOBJS."
+  echo "AC_DEFUN([${macro_prefix_arg}_REPLACE_FUNCS], ["
   echo "  m4_foreach_w([gl_NAME], [\$1], [AC_LIBSOURCES(gl_NAME[.c])])dnl"
-  echo "  AC_CHECK_FUNCS([\$1], , [${macro_prefix}_LIBOBJ(\$ac_func)])"
+  echo "  AC_CHECK_FUNCS([\$1], , [${macro_prefix_arg}_LIBOBJ(\$ac_func)])"
   echo "])"
   echo
   echo "# Like AC_LIBSOURCES, except the directory where the source file is"
   echo "# expected is derived from the gnulib-tool parametrization,"
   echo "# and alloca is special cased (for the alloca-opt module)."
   echo "# We could also entirely rely on EXTRA_lib..._SOURCES."
-  echo "AC_DEFUN([${macro_prefix}_LIBSOURCES], ["
+  echo "AC_DEFUN([${macro_prefix_arg}_LIBSOURCES], ["
   echo "  m4_foreach([_gl_NAME], [\$1], ["
   echo "    m4_if(_gl_NAME, [alloca.c], [], ["
-  echo "      m4_syscmd([test -r $sourcebase/]_gl_NAME[ || test ! -d $sourcebase])dnl"
+  echo "      m4_syscmd([test -r $sourcebase_arg/]_gl_NAME[ || test ! -d $sourcebase_arg])dnl"
   echo "      m4_if(m4_sysval, [0], [],"
-  echo "        [AC_FATAL([missing $sourcebase/]_gl_NAME)])"
+  echo "        [AC_FATAL([missing $sourcebase_arg/]_gl_NAME)])"
   echo "    ])"
   echo "  ])"
   echo "])"
@@ -2212,13 +2267,68 @@ func_import ()
     echo "Module list with included dependencies:"
     echo "$modules" | sed -e 's/^/  /'
   fi
+  final_modules="$modules"
 
-  # Add the dummy module if needed.
+  # Determine main module list and tests-related module list separately.
+  # The main module list is the transitive closure of the specified modules,
+  # ignoring tests modules. Its lib/* sources go into $sourcebase/. If --lgpl
+  # is specified, it will consist only of LGPLed source.
+  # The tests-related module list is the transitive closure of the specified
+  # modules, including tests modules, minus the main module list. Its lib/*
+  # sources (brought in through dependencies of *-tests modules) go into
+  # $testsbase/. It may contain GPLed source, even if --lgpl is specified.
+  # Determine main module list.
+  saved_inctests="$inctests"
+  inctests=""
+  modules="$specified_modules"
+  func_modules_transitive_closure
+  main_modules="$modules"
+  inctests="$saved_inctests"
+  if test $verbose -ge 1; then
+    echo "Main module list:"
+    echo "$main_modules" | sed -e 's/^/  /'
+  fi
+  # Determine tests-related module list.
+  echo "$final_modules" | LC_ALL=C sort -u > "$tmp"/final-modules
+  testsrelated_modules=`echo "$main_modules" | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/final-modules`
+  if test $verbose -ge 1; then
+    echo "Tests-related module list:"
+    echo "$testsrelated_modules" | sed -e 's/^/  /'
+  fi
+
+  # Add the dummy module to the main module list if needed.
+  modules="$main_modules"
   func_modules_add_dummy
+  main_modules="$modules"
+
+  # Determine whether a $testsbase/libtests.a is needed.
+  use_libtests=false
+  for module in $testsrelated_modules; do
+    func_verify_nontests_module
+    if test -n "$module"; then
+      all_files=`func_get_filelist $module`
+      lib_files=`for f in $all_files; do \
+                   case $f in \
+                     lib/*) echo $f ;; \
+                   esac; \
+                 done | sed -e 's,^lib/,,'`
+      if test -n "$lib_files"; then
+        use_libtests=true
+        break
+      fi
+    fi
+  done
+
+  # Add the dummy module to the tests-related module list if needed.
+  if $use_libtests; then
+    modules="$testsrelated_modules"
+    func_modules_add_dummy
+    testsrelated_modules="$modules"
+  fi
 
   # If --lgpl, verify that the licenses of modules are compatible.
   if test -n "$lgpl"; then
-    for module in $modules; do
+    for module in $main_modules; do
       license=`func_get_license $module`
       case $license in
         'GPLed build tool') ;;
@@ -2245,11 +2355,12 @@ func_import ()
   fi
 
   # Show banner notice of every module.
+  modules="$main_modules"
   func_modules_notice
 
   # Determine script to apply to imported library files.
   sed_transform_lib_file=
-  for module in $modules; do
+  for module in $main_modules; do
     if test $module = config-h; then
       # Assume config.h exists, and that -DHAVE_CONFIG_H is omitted.
       sed_transform_lib_file=$sed_transform_lib_file'
@@ -2258,17 +2369,18 @@ func_import ()
       break
     fi
   done
+  sed_transform_main_lib_file="$sed_transform_lib_file"
   if test -n "$do_copyrights"; then
     if test -n "$lgpl"; then
       # Update license.
       case "$lgpl" in
         yes | 3)
-          sed_transform_lib_file=$sed_transform_lib_file'
+          sed_transform_main_lib_file=$sed_transform_main_lib_file'
             s/GNU General/GNU Lesser General/g
           '
           ;;
         2)
-          sed_transform_lib_file=$sed_transform_lib_file'
+          sed_transform_main_lib_file=$sed_transform_main_lib_file'
             s/GNU General/GNU Lesser General/g
             s/version [23]\([ ,]\)/version 2.1\1/g
           '
@@ -2277,7 +2389,7 @@ func_import ()
       esac
     else
       # Update license.
-      sed_transform_lib_file=$sed_transform_lib_file'
+      sed_transform_main_lib_file=$sed_transform_main_lib_file'
         s/GNU Lesser General/GNU General/g
         s/GNU Library General/GNU General/g
         s/version \(2\|2\.1\)\([ ,]\)/version 3\2/g
@@ -2285,11 +2397,37 @@ func_import ()
     fi
   fi
 
-  # Determine final file list.
+  # Determine script to apply to library files that go into $testsbase/.
+  sed_transform_testsrelated_lib_file="$sed_transform_lib_file"
+  if test -n "$do_copyrights"; then
+    # Update license.
+    sed_transform_testsrelated_lib_file=$sed_transform_testsrelated_lib_file'
+      s/GNU Lesser General/GNU General/g
+      s/GNU Library General/GNU General/g
+      s/version \(2\|2\.1\)\([ ,]\)/version 3\2/g
+    '
+  fi
+
+  # Determine the final file lists.
+  # They must be computed separately, because files in lib/* go into
+  # $sourcebase/ if they are in the main file list but into $testsbase/
+  # if they are in the tests-related file list. Furthermore lib/dummy.c
+  # can be in both.
+  # Determine final main file list.
+  modules="$main_modules"
   func_modules_to_filelist
+  main_files="$files"
+  # Determine final tests-related file list.
+  modules="$testsrelated_modules"
+  func_modules_to_filelist
+  testsrelated_files=`echo "$files" | sed -e 's,^lib/,tests=lib/,'`
+  # Merge both file lists.
+  sed_remove_empty_lines='/^$/d'
+  files=`{ echo "$main_files"; echo "$testsrelated_files"; } | sed -e "$sed_remove_empty_lines" | LC_ALL=C sort -u`
   if test $verbose -ge 0; then
     echo "File list:"
-    echo "$files" | sed -e 's/^/  /'
+    sed_prettyprint_files='s,^tests=lib/\(.*\)$,lib/\1 -> tests/\1,'
+    echo "$files" | sed -e "$sed_prettyprint_files" -e 's/^/  /'
   fi
 
   test -n "$files" \
@@ -2307,13 +2445,15 @@ func_import ()
     s,^doc/,$cached_docbase/,
     s,^lib/,$cached_sourcebase/,
     s,^m4/,$cached_m4base/,
-    s,^tests/,$cached_testsbase/,"
+    s,^tests/,$cached_testsbase/,
+    s,^tests=lib/,$cached_testsbase/,"
   sed_rewrite_new_files="\
     s,^build-aux/,$auxdir/,
     s,^doc/,$docbase/,
     s,^lib/,$sourcebase/,
     s,^m4/,$m4base/,
-    s,^tests/,$testsbase/,"
+    s,^tests/,$testsbase/,
+    s,^tests=lib/,$testsbase/,"
 
   # Create directories.
   { echo "$sourcebase"
@@ -2404,13 +2544,25 @@ func_import ()
   # - already_present  nonempty if the file already exists, empty otherwise
   func_add_or_update ()
   {
+    of="$f"
+    case "$f" in
+      tests=lib/*) f=`echo "$f" | sed -e 's,^tests=lib/,lib/,'` ;;
+    esac
     func_dest_tmpfilename "$g"
     func_lookup_file "$f"
     cp "$lookedup_file" "$tmpfile" || func_fatal_error "failed"
-    if test -n "$sed_transform_lib_file"; then
-      case "$f" in
+    if test -n "$sed_transform_main_lib_file"; then
+      case "$of" in
         lib/*)
-          sed -e "$sed_transform_lib_file" \
+          sed -e "$sed_transform_main_lib_file" \
+            < "$lookedup_file" > "$tmpfile" || func_fatal_error "failed"
+          ;;
+      esac
+    fi
+    if test -n "$sed_transform_testsrelated_lib_file"; then
+      case "$of" in
+        tests=lib/*)
+          sed -e "$sed_transform_testsrelated_lib_file" \
             < "$lookedup_file" > "$tmpfile" || func_fatal_error "failed"
           ;;
       esac
@@ -2548,6 +2700,7 @@ func_import ()
 
   # Create library makefile.
   func_dest_tmpfilename $sourcebase/$makefile_am
+  modules="$main_modules"
   func_emit_lib_Makefile_am > "$tmpfile"
   if test -f "$destdir"/$sourcebase/$makefile_am; then
     if cmp "$destdir"/$sourcebase/$makefile_am "$tmpfile" > /dev/null; then
@@ -2813,7 +2966,7 @@ func_import ()
     if grep AC_GNU_SOURCE "$destdir"/$m4base/*.m4 >/dev/null 2>/dev/null; then
       echo "  AC_REQUIRE([AC_GNU_SOURCE])"
     fi
-    for module in $modules; do
+    for module in $final_modules; do
       func_verify_module
       if test -n "$module"; then
         func_get_autoconf_early_snippet "$module"
@@ -2826,7 +2979,6 @@ func_import ()
     echo "# \"Check for header files, types and library functions\"."
     echo "AC_DEFUN([${macro_prefix}_INIT],"
     echo "["
-    func_emit_initmacro_start
     if test "$libtool" = true; then
       echo "  AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
       echo "  gl_cond_libtool=true"
@@ -2836,7 +2988,6 @@ func_import ()
       echo "  gl_libdeps="
       echo "  gl_ltlibdeps="
     fi
-    echo "  gl_source_base='$sourcebase'"
     if test "$auxdir" != "build-aux"; then
       sed_replace_build_aux='
         :a
@@ -2847,7 +2998,9 @@ func_import ()
     else
       sed_replace_build_aux=
     fi
-    for module in $modules; do
+    func_emit_initmacro_start $macro_prefix
+    echo "  gl_source_base='$sourcebase'"
+    for module in $main_modules; do
       func_verify_module
       if test -n "$module"; then
         func_get_autoconf_snippet "$module" \
@@ -2862,6 +3015,24 @@ func_import ()
         fi
       fi
     done
+    func_emit_initmacro_end $macro_prefix
+    echo "  gltests_libdeps="
+    echo "  gltests_ltlibdeps="
+    func_emit_initmacro_start ${macro_prefix}tests
+    echo "  gl_source_base='$testsbase'"
+    for module in $testsrelated_modules; do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_autoconf_snippet "$module" \
+          | sed -e '/^$/d;' -e 's/^/  /' \
+                -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./' \
+                -e "$sed_replace_build_aux" \
+                -e 's/\$gl_cond_libtool/false/g' \
+                -e 's/gl_libdeps/gltests_libdeps/g' \
+                -e 's/gl_ltlibdeps/gltests_ltlibdeps/g'
+      fi
+    done
+    func_emit_initmacro_end ${macro_prefix}tests
     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
     # created using libtool, because libtool already handles the dependencies.
     if test "$libtool" != true; then
@@ -2871,9 +3042,13 @@ func_import ()
       echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
       echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
     fi
-    func_emit_initmacro_end
+    if $use_libtests; then
+      echo "  LIBTESTS_LIBDEPS=\"\$gltests_libdeps\""
+      echo "  AC_SUBST([LIBTESTS_LIBDEPS])"
+    fi
     echo "])"
-    func_emit_initmacro_done
+    func_emit_initmacro_done $macro_prefix $sourcebase
+    func_emit_initmacro_done ${macro_prefix}tests $testsbase
     echo
     echo "# This macro records the list of files which have been installed by"
     echo "# gnulib-tool and may be removed by future gnulib-tool invocations."
@@ -2913,6 +3088,7 @@ func_import ()
   if test -n "$inctests"; then
     # Create tests makefile.
     func_dest_tmpfilename $testsbase/$makefile_am
+    modules="$testsrelated_modules"
     func_emit_tests_Makefile_am > "$tmpfile"
     if test -f "$destdir"/$testsbase/$makefile_am; then
       if cmp "$destdir"/$testsbase/$makefile_am "$tmpfile" > /dev/null; then
@@ -3025,13 +3201,13 @@ func_import ()
   echo "Finished."
   echo
   echo "You may need to add #include directives for the following .h files."
-  # Intersect $specified_modules and $modules
-  # (since $specified_modules is not necessarily of subset of $modules - some
-  # may have been skipped through --avoid, and since the elements of $modules
-  # but not in $specified_modules can go away without explicit notice - through
-  # changes in the module dependencies).
+  # Intersect $specified_modules and $main_modules
+  # (since $specified_modules is not necessarily of subset of $main_modules
+  # - some may have been skipped through --avoid, and since the elements of
+  # $main_modules but not in $specified_modules can go away without explicit
+  # notice - through changes in the module dependencies).
   echo "$specified_modules" > "$tmp"/modules1 # a sorted list, one module per line
-  echo "$modules" > "$tmp"/modules2 # also a sorted list, one module per line
+  echo "$main_modules" > "$tmp"/modules2 # also a sorted list, one module per line
   # First the #include <...> directives without #ifs, sorted for convenience,
   # then the #include "..." directives without #ifs, sorted for convenience,
   # then the #include directives that are surrounded by #ifs. Not sorted.
@@ -3054,7 +3230,7 @@ func_import ()
   ) | sed -e '/^$/d' -e 's/^/  /'
   rm -f "$tmp"/include-angles "$tmp"/include-quotes "$tmp"/include-if
 
-  for module in $modules; do
+  for module in $main_modules; do
     func_get_link_directive "$module"
   done \
     | LC_ALL=C sort -u | sed -e '/^$/d' -e 's/^/  /' > "$tmp"/link
@@ -3259,6 +3435,7 @@ func_create_testdir ()
   # Create $sourcebase/Makefile.am.
   mkdir -p "$testdir/$sourcebase"
   func_emit_lib_Makefile_am > "$testdir/$sourcebase/Makefile.am"
+  any_uses_subdirs="$uses_subdirs"
 
   # Create $m4base/Makefile.am.
   mkdir -p "$testdir/$m4base"
@@ -3288,7 +3465,9 @@ func_create_testdir ()
   if test -n "$inctests"; then
     test -d "$testdir/$testsbase" || mkdir "$testdir/$testsbase"
     # Create $testsbase/Makefile.am.
+    use_libtests=false
     func_emit_tests_Makefile_am > "$testdir/$testsbase/Makefile.am"
+    any_uses_subdirs="$any_uses_subdirs$uses_subdirs"
     # Create $testsbase/configure.ac.
     (echo "# Process this file with autoconf to produce a configure script."
      echo "AC_INIT([dummy], [0])"
@@ -3330,13 +3509,13 @@ func_create_testdir ()
      # expansion of the required macro before the current point, and only one
      # expansion total).
      echo "AC_DEFUN([gl_INIT], ["
-     func_emit_initmacro_start
      sed_replace_build_aux='
        :a
        /AC_CONFIG_FILES(.*:build-aux\/.*)/{
          s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:../'"$auxdir"'/\2)|
          ba
        }'
+     func_emit_initmacro_start $macro_prefix
      # We don't have explicit ordering constraints between the various
      # autoconf snippets. It's cleanest to put those of the library before
      # those of the tests.
@@ -3356,6 +3535,7 @@ func_create_testdir ()
            | sed -e "$sed_replace_build_aux"
        fi
      done
+     func_emit_initmacro_end $macro_prefix
      # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
      # created using libtool, because libtool already handles the dependencies.
      if test "$libtool" != true; then
@@ -3365,9 +3545,8 @@ func_create_testdir ()
        echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
        echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
      fi
-     func_emit_initmacro_end
      echo "])"
-     func_emit_initmacro_done
+     func_emit_initmacro_done $macro_prefix $sourcebase # FIXME use $sourcebase or $testsbase?
      echo
      echo "gl_INIT"
      echo
@@ -3416,7 +3595,7 @@ func_create_testdir ()
    echo
    echo "AC_PROG_RANLIB"
    echo
-   if test -n "$uses_subdirs"; then
+   if test -n "$any_uses_subdirs"; then
      echo "AM_PROG_CC_C_O"
      echo
    fi
@@ -3440,7 +3619,6 @@ func_create_testdir ()
      echo "gl_libdeps="
      echo "gl_ltlibdeps="
    fi
-   echo "gl_source_base='$sourcebase'"
    # Wrap the set of autoconf snippets into an autoconf macro that is then
    # invoked. This is needed because autoconf does not support AC_REQUIRE
    # at the top level:
@@ -3449,7 +3627,6 @@ func_create_testdir ()
    # expansion of the required macro before the current point, and only one
    # expansion total).
    echo "AC_DEFUN([gl_INIT], ["
-   func_emit_initmacro_start
    if test "$auxdir" != "build-aux"; then
      sed_replace_build_aux='
        :a
@@ -3460,6 +3637,8 @@ func_create_testdir ()
    else
      sed_replace_build_aux=
    fi
+   func_emit_initmacro_start $macro_prefix
+   echo "gl_source_base='$sourcebase'"
    for module in $modules; do
      func_verify_nontests_module
      if test -n "$module"; then
@@ -3467,6 +3646,7 @@ func_create_testdir ()
          | sed -e "$sed_replace_build_aux"
      fi
    done
+   func_emit_initmacro_end $macro_prefix
    # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
    # created using libtool, because libtool already handles the dependencies.
    if test "$libtool" != true; then
@@ -3476,9 +3656,8 @@ func_create_testdir ()
      echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
      echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
    fi
-   func_emit_initmacro_end
    echo "])"
-   func_emit_initmacro_done
+   func_emit_initmacro_done $macro_prefix $sourcebase
    echo
    echo "gl_INIT"
    echo
