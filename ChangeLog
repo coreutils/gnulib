@@ -1,3 +1,11 @@
+2007-12-11  Eric Blake  <ebb9@byu.net>
+	and Bruno Haible  <bruno@clisp.org>
+
+	Fix OpenBSD 4.0 <float.h> handling of long double.
+	* m4/float_h.m4 (gl_FLOAT_H): Also claim OpenBSD is broken.
+	* lib/float.in.h [__OpenBSD__]: Add fixes for OpenBSD.
+	* doc/headers/float.texi (float.h): Document OpenBSD bug.
+
 2007-12-11  Jim Meyering  <meyering@redhat.com>
 
 	* users.txt: Add libvirt.
