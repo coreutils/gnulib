@@ -140,7 +140,19 @@ FUNC (DOUBLE x)
   /* The configuration did not find sufficient information.  Give up about
      the signaling NaNs, handle only the quiet NaNs.  */
   if (x == x)
-    return 0;
+    {
+# if defined USE_LONG_DOUBLE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+      /* Detect any special bit patterns that pass ==; see comment above.  */
+      memory_double m1;
+      memory_double m2;
+
+      m1.value = x;
+      m2.value = x + 0;
+      if (memcmp (&m1.value, &m2.value, SIZE) != 0)
+        return 1;
+# endif
+      return 0;
+    }
   else
     return 1;
 #endif

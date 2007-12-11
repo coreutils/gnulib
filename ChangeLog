@@ -1,5 +1,10 @@
 2007-12-11  Eric Blake  <ebb9@byu.net>
 
+	Detect pseudo-denormals on x86 even when cross-compiling.
+	* lib/isnan.c (rpl_isnanl) [!KNOWN_EXPBIT0_LOCATION
+	&& USE_LONG_DOUBLE && x86]: Add one more check to filter out
+	invalid bit patterns that happen to satisfy ==.
+
 	Avoid link failures with separate libtests.a.
 	* gnulib-tool (func_emit_tests_Makefile_am): Also list local_ldadd
 	last, to satisfy circular dependencies.
