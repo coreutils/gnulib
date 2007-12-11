@@ -1,5 +1,11 @@
 2007-12-11  Eric Blake  <ebb9@byu.net>
 
+	Fix bug with -0.0L in previous patch.
+	* lib/isnan.c (rpl_isnanl): Make robust to -0.0L and pad bits.
+	* tests/test-isnan.c (main): Also test on zeroes.
+	* tests/test-isnanf.c (main): Likewise.
+	* tests/test-isnanl.h (main): Likewise.
+
 	Detect pseudo-denormals on x86 even when cross-compiling.
 	* lib/isnan.c (rpl_isnanl) [!KNOWN_EXPBIT0_LOCATION
 	&& USE_LONG_DOUBLE && x86]: Add one more check to filter out

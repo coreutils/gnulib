@@ -146,8 +146,10 @@ FUNC (DOUBLE x)
       memory_double m1;
       memory_double m2;
 
+      memset (&m1.value, 0, SIZE);
+      memset (&m2.value, 0, SIZE);
       m1.value = x;
-      m2.value = x + 0;
+      m2.value = x + (x ? 0.0L : -0.0L);
       if (memcmp (&m1.value, &m2.value, SIZE) != 0)
         return 1;
 # endif

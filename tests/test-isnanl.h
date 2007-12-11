@@ -47,6 +47,8 @@ main ()
   ASSERT (!isnanl (-2.718L));
   ASSERT (!isnanl (-2.718e30L));
   ASSERT (!isnanl (-2.718e-30L));
+  ASSERT (!isnanl (0.0L));
+  ASSERT (!isnanl (-0.0L));
   /* Infinite values.  */
   ASSERT (!isnanl (1.0L / 0.0L));
   ASSERT (!isnanl (-1.0L / 0.0L));

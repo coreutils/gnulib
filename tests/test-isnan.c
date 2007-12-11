@@ -57,6 +57,8 @@ main ()
   ASSERT (!isnan (-2.718));
   ASSERT (!isnan (-2.718e30));
   ASSERT (!isnan (-2.718e-30));
+  ASSERT (!isnan (0.0));
+  ASSERT (!isnan (-0.0));
   /* Infinite values.  */
   ASSERT (!isnan (1.0 / 0.0));
   ASSERT (!isnan (-1.0 / 0.0));
