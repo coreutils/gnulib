@@ -1,5 +1,7 @@
 2007-12-11  Jim Meyering  <meyering@redhat.com>
 
+	* users.txt: Add libvirt.
+
 	Support versions of autoconf prior to 2.59c.
 	* gnulib-tool (func_emit_initmacro_done): Define m4_foreach_w
 	if it is not already defined.

@@ -31,6 +31,8 @@ The following packages appear to be using gnulib and gnulib-tool:
   libpreludedb    https://trac.prelude-ids.org/browser/trunk/libpreludedb/
   libtasn1        http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/libtasn1/?root=GNU+TLS+Library
                   http://repo.or.cz/w/libtasn1.git
+  libvirt         http://libvirt.org/
+                  http://git.et.redhat.com/?p=libvirt.git;a=summary
   m4              http://git.sv.gnu.org/gitweb/?p=m4.git;a=summary
   miktex          https://svn.sourceforge.net/svnroot/miktex/miktex/trunk
   msmtp           http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
@@ -71,4 +73,3 @@ Local Variables:
 indent-tabs-mode: nil
 whitespace-check-buffer-indent: nil
 End:
-
