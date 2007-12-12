@@ -1935,6 +1935,8 @@ func_emit_tests_Makefile_am ()
     echo "libtests_a_LIBADD = \$(${macro_prefix}tests_LIBOBJS)"
     echo "libtests_a_DEPENDENCIES = \$(${macro_prefix}tests_LIBOBJS)"
     echo "EXTRA_libtests_a_SOURCES ="
+    # The circular dependency in LDADD requires this.
+    echo "AM_LIBTOOLFLAGS = --preserve-dup-deps"
     echo
   fi
   cat allsnippets.tmp \

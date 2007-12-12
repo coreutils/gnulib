@@ -1,3 +1,9 @@
+2007-12-12  Eric Blake  <ebb9@byu.net>
+
+	Allow circular dependency of separate libtests.a
+	* gnulib-tool (func_emit_tests_Makefile_am): Add AM_LIBTOOLFLAGS
+	when use_libtests.
+
 2007-12-11  Eric Blake  <ebb9@byu.net>
 
 	Fix bug with -0.0L in previous patch.
