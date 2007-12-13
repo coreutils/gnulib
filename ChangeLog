@@ -1,3 +1,10 @@
+2007-12-13  Eric Blake  <ebb9@byu.net>
+
+	Beef up fseek tests.
+	* tests/test-fseek.c (main): Also test eof handling.
+	* tests/test-fseeko.c (main): Likewise.
+	Reported by Larry Jones.
+
 2007-12-13  Larry Jones  <lawrence.jones@siemens.com>  (tiny change)
 
 	Fix fseeko on BSD-based platforms.

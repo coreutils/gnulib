@@ -31,5 +31,21 @@ main (int argc, char **argv)
   /* Exit with success only if fseek/fseeko agree.  */
   int r1 = fseeko (stdin, (off_t)0, SEEK_CUR);
   int r2 = fseek (stdin, (long)0, SEEK_CUR);
-  return ! (r1 == r2 && r1 == expected);
+  if (r1 != r2 || r1 != expected)
+    return 1;
+  if (argc > 1)
+    {
+      /* Test that fseek resets end-of-file marker.  */
+      if (fseeko (stdin, (off_t) 0, SEEK_END))
+        return 1;
+      if (fgetc (stdin) != EOF)
+        return 1;
+      if (!feof (stdin))
+        return 1;
+      if (fseeko (stdin, (off_t) 0, SEEK_END))
+        return 1;
+      if (feof (stdin))
+        return 1;
+    }
+  return 0;
 }

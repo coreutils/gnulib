@@ -25,5 +25,21 @@ main (int argc, char **argv)
 {
   /* Assume stdin is seekable iff argc > 1.  */
   int expected = argc > 1 ? 0 : -1;
-  return fseek (stdin, 0, SEEK_CUR) != expected;
+  if (fseek (stdin, 0, SEEK_CUR) != expected)
+    return 1;
+  if (argc > 1)
+    {
+      /* Test that fseek resets end-of-file marker.  */
+      if (fseek (stdin, 0, SEEK_END))
+        return 1;
+      if (fgetc (stdin) != EOF)
+        return 1;
+      if (!feof (stdin))
+        return 1;
+      if (fseek (stdin, 0, SEEK_END))
+        return 1;
+      if (feof (stdin))
+        return 1;
+    }
+  return 0;
 }
