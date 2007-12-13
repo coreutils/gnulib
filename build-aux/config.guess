@@ -4,7 +4,7 @@
 #   2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software Foundation,
 #   Inc.
 
-timestamp='2007-12-05'
+timestamp='2007-12-12'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -798,6 +798,9 @@ EOF
 		exit ;;
 	    EM64T | authenticamd)
 		echo x86_64-unknown-interix${UNAME_RELEASE}
+		exit ;;
+	    IA64)
+		echo ia64-unknown-interix${UNAME_RELEASE}
 		exit ;;
 	esac ;;
     [345]86:Windows_95:* | [345]86:Windows_98:* | [345]86:Windows_NT:*)
