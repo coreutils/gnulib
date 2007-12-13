@@ -1,5 +1,9 @@
 2007-12-13  Eric Blake  <ebb9@byu.net>
 
+	Fix fseeko on mingw.
+	* lib/fseeko.c (rpl_fseeko) [_IOERR]: Reset EOF flag on successful
+	seek.
+
 	Beef up fseek tests.
 	* tests/test-fseek.c (main): Also test eof handling.
 	* tests/test-fseeko.c (main): Likewise.
