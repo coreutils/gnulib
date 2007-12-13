@@ -1,3 +1,9 @@
+2007-12-13  Larry Jones  <lawrence.jones@siemens.com>  (tiny change)
+
+	Fix fseeko on BSD-based platforms.
+	* lib/fseeko.c (rpl_fseeko) [__sferror]: Reset EOF flag on
+	successful seek.
+
 2007-12-12  Eric Blake  <ebb9@byu.net>
 
 	Allow circular dependency of separate libtests.a
