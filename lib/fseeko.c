@@ -27,6 +27,9 @@
 #if !HAVE_FSEEKO
 # undef fseek
 # define fseeko fseek
+
+# include <verify.h>
+verify (sizeof (off_t) == sizeof (long));
 #endif
 
 int

@@ -1,5 +1,13 @@
 2007-12-13  Eric Blake  <ebb9@byu.net>
 
+	Another fseek test.
+	* tests/test-fseek.c (main): Also test ungetc handling.
+	* tests/test-fseeko.c (main): Likewise.
+	* modules/fseeko (Depends-on): Add verify.
+	* lib/fseeko.c [!HAVE_FSEEKO]: Verify that off_t is not too
+	large.
+	Reported by Larry Jones.
+
 	Fix fseeko on mingw.
 	* lib/fseeko.c (rpl_fseeko) [_IOERR]: Reset EOF flag on successful
 	seek.

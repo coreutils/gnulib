@@ -23,17 +23,23 @@
 int
 main (int argc, char **argv)
 {
-  /* Assume stdin is seekable iff argc > 1.  */
+  /* Assume stdin is non-empty and seekable iff argc > 1.  */
   int expected = argc > 1 ? 0 : -1;
   if (fseek (stdin, 0, SEEK_CUR) != expected)
     return 1;
   if (argc > 1)
     {
-      /* Test that fseek resets end-of-file marker.  */
+      /* Test that fseek discards ungetc data.  */
+      int ch = fgetc (stdin);
+      if (ch == EOF)
+        return 1;
+      if (ungetc (ch ^ 0xff, stdin) != (ch ^ 0xff))
+        return 1;
       if (fseek (stdin, 0, SEEK_END))
         return 1;
       if (fgetc (stdin) != EOF)
         return 1;
+      /* Test that fseek resets end-of-file marker.  */
       if (!feof (stdin))
         return 1;
       if (fseek (stdin, 0, SEEK_END))
