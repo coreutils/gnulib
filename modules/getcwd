@@ -12,6 +12,7 @@ mempcpy
 d-ino
 dirfd
 extensions
+openat
 stdbool
 unistd
 malloc-posix

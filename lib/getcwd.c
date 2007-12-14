@@ -29,6 +29,11 @@
 
 #include <fcntl.h> /* For AT_FDCWD on Solaris 9.  */
 
+/* On a system without the openat function, undefine AT_FDCWD.  */
+#if ! HAVE_OPENAT
+# undef AT_FDCWD
+#endif
+
 #ifndef __set_errno
 # define __set_errno(val) (errno = (val))
 #endif

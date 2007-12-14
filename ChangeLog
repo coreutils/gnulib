@@ -1,3 +1,11 @@
+2007-12-17  Jim Meyering  <meyering@redhat.com>
+
+	Port to GNU/kFreeBSD - FreeBSD kernel + GNU libc,
+	which has no openat syscall, yet <fcntl.h> does define AT_FDCWD.
+	* lib/getcwd.c: Undef AT_FDCWD if there is no openat function.
+	* modules/getcwd (Depends-on): Add openat.
+	Reported by Petr Salinger.
+
 2007-12-17  Bruno Haible  <bruno@clisp.org>
 
 	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE): Use GL_NOCRASH to
