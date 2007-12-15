@@ -1,7 +1,7 @@
 #!/bin/sh
 # Sign files and upload them.
 
-scriptversion=2007-06-30.12
+scriptversion=2007-12-15.10
 
 # Copyright (C) 2004, 2005, 2006, 2007  Free Software Foundation
 #
@@ -24,7 +24,7 @@ scriptversion=2007-06-30.12
 
 set -e
 
-GPG='/usr/bin/gpg --batch --no-tty'
+GPG='gpg --batch --no-tty'
 to=
 
 usage="Usage: $0 [OPTIONS]... FILES...

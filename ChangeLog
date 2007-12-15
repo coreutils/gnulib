@@ -1,3 +1,7 @@
+2007-12-15  Jim Meyering  <meyering@redhat.com>
+
+	* build-aux/gnupload (GPG): Don't hard-code patch to gpg binary.
+
 2007-12-13  Eric Blake  <ebb9@byu.net>
 
 	Another fseek test.
