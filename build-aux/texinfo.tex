@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2007-09-03.05}
+\def\texinfoversion{2007-12-02.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995, 2007,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1642,11 +1642,17 @@ output) for that.)}
   }%
 }
 
-%
 % PDF CMaps.  See also LaTeX's t1.cmap.
 %
-% \cmapOT1
-\ifpdf
+% do nothing with this by default.
+\expandafter\let\csname cmapOT1\endcsname\gobble
+\expandafter\let\csname cmapOT1IT\endcsname\gobble
+\expandafter\let\csname cmapOT1TT\endcsname\gobble
+
+% if we are producing pdf, and we have \pdffontattr, then define cmaps.
+% (\pdffontattr was introduced many years ago, but people still run
+% older pdftex's; it's easy to conditionalize, so we do.)
+\ifpdf \ifx\pdffontattr\undefined \else
   \begingroup
     \catcode`\^^M=\active \def^^M{^^J}% Output line endings as the ^^J char.
     \catcode`\%=12 \immediate\pdfobj stream {%!PS-Adobe-3.0 Resource-CMap
@@ -1894,11 +1900,7 @@ end
   \expandafter\edef\csname cmapOT1TT\endcsname#1{%
     \pdffontattr#1{/ToUnicode \the\pdflastobj\space 0 R}%
   }%
-\else
-  \expandafter\let\csname cmapOT1\endcsname\gobble
-  \expandafter\let\csname cmapOT1IT\endcsname\gobble
-  \expandafter\let\csname cmapOT1TT\endcsname\gobble
-\fi
+\fi\fi
 
 
 % Set the font macro #1 to the font named #2, adding on the
@@ -1912,7 +1914,7 @@ end
 }
 % This is what gets called when #5 of \setfont is empty.
 \let\cmap\gobble
-
+% emacs-page end of cmaps
 
 % Use cm as the default font prefix.
 % To specify the font prefix, you must define \fontprefix
@@ -2764,6 +2766,7 @@ end
 \chardef\quotedblright=`\"
 \chardef\quoteleft=`\`
 \chardef\quoteright=`\'
+
 
 \message{page headings,}
 
