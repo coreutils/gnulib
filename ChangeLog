@@ -1,3 +1,8 @@
+2007-12-17  Petr Salinger  <Petr.Salinger@seznam.cz>
+
+	getcwd.c: Use a more readable witness: HAVE_OPENAT_SUPPORT
+	* lib/getcwd.c: Define and use HAVE_OPENAT_SUPPORT, in place of AT_FDCWD.
+
 2007-12-17  Jim Meyering  <meyering@redhat.com>
 
 	Port to GNU/kFreeBSD - FreeBSD kernel + GNU libc,
