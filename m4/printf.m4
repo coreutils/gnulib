@@ -1,4 +1,4 @@
-# printf.m4 serial 20
+# printf.m4 serial 21
 dnl Copyright (C) 2003, 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -240,6 +240,7 @@ AC_DEFUN([gl_PRINTF_INFINITE_LONG_DOUBLE],
         [gl_cv_func_printf_infinite_long_double],
         [
           AC_TRY_RUN([
+]GL_NOCRASH[
 #include <float.h>
 #include <stdio.h>
 #include <string.h>
@@ -265,6 +266,7 @@ static char buf[10000];
 static long double zeroL = 0.0L;
 int main ()
 {
+  nocrash_init();
   if (sprintf (buf, "%Lf", 1.0L / 0.0L) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
     return 1;

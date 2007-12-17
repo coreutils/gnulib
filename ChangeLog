@@ -1,3 +1,8 @@
+2007-12-17  Bruno Haible  <bruno@clisp.org>
+
+	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE): Use GL_NOCRASH to
+	avoid a segmentation fault of the configure test on x86_64 systems.
+
 2007-12-15  Jim Meyering  <meyering@redhat.com>
 
 	* build-aux/gnupload (GPG): Don't hard-code absolute name of gpg binary.
