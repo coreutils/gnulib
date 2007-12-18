@@ -1,3 +1,14 @@
+2007-12-17  Eric Blake  <ebb9@byu.net>
+
+	Revert addition of verify, for BSD/OS.
+	* lib/fseeko.c [!HAVE_FSEEKO]: Allow off_t > long, even though it
+	can't handle large files, for the sake of obsolete platforms.
+	* modules/fseeko (Depends-on): Remove verify.
+	* doc/functions/fseeko.texi (fseeko): Document BSD/OS limitation.
+	* doc/functions/ftello.texi (ftello): Likewise.
+	* doc/functions/fgetpos.texi (fgetpos): Likewise.
+	Reported by Larry Jones.
+
 2007-12-17  Petr Salinger  <Petr.Salinger@seznam.cz>
 
 	getcwd.c: Use a more readable witness: HAVE_OPENAT_SUPPORT

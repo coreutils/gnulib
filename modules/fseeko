@@ -8,7 +8,6 @@ m4/fseeko.m4
 Depends-on:
 lseek
 stdio
-verify
 
 configure.ac-early:
 AC_REQUIRE([AC_FUNC_FSEEKO])

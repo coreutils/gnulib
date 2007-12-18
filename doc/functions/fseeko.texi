@@ -24,4 +24,8 @@ Portability problems not fixed by Gnulib:
 On platforms where @code{off_t} is a 32-bit type, @code{fseeko} does not work
 correctly with files larger than 2 GB.  The fix is to use the
 @code{AC_SYS_LARGEFILE} macro.
+@item
+On platforms where @code{off_t} is a 64-bit type, but @code{fseeko} is
+not present, stream operations on files larger than 2 GB silently do
+the wrong thing.  This affects BSD/OS, which is mostly obsolete.
 @end itemize
