@@ -5,6 +5,8 @@
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
+# serial 2
+
 # Written by Paul Eggert.
 
 AC_DEFUN([gl_HEADER_STRING_H],
@@ -75,4 +77,5 @@ AC_DEFUN([gl_HEADER_STRING_H_DEFAULTS],
   HAVE_DECL_STRTOK_R=1;		AC_SUBST([HAVE_DECL_STRTOK_R])
   HAVE_DECL_STRERROR=1;		AC_SUBST([HAVE_DECL_STRERROR])
   REPLACE_STRERROR=0;		AC_SUBST([REPLACE_STRERROR])
+  REPLACE_MEMMEM=0;		AC_SUBST([REPLACE_MEMMEM])
 ])

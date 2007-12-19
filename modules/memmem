@@ -8,6 +8,10 @@ m4/memmem.m4
 Depends-on:
 extensions
 string
+stdbool
+malloca
+memchr
+memcmp
 
 configure.ac:
 gl_FUNC_MEMMEM

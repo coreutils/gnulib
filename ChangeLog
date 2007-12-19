@@ -1,3 +1,21 @@
+2007-12-19  Eric Blake  <ebb9@byu.net>
+
+	Fix memmem to avoid O(n^2) worst-case complexity.
+	* lib/memmem.c (knuth_morris_pratt): New function.
+	(memmem): Use it if first few naive iterations fail.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Detect cygwin bug.
+	* modules/memcmp (License): Set to LGPLv2+, not LGPL.
+	* modules/memchr (License): Likewise.
+	* modules/memmem (Depends-on): Add memcmp, memchr, stdbool, and
+	malloca.
+	* tests/test-memmem.c: Rewrite, borrowing ideas from
+	test-mbsstr1.c; the old version wouldn't even compile!
+	* modules/memmem-tests: New file.
+	* lib/string.in.h (rpl_memmem): Add declaration.
+	* modules/string (Makefile.am): Substitute REPLACE_MEMMEM.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Default for
+	REPLACE_MEMMEM.
+
 2007-12-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Fix problem with _GL_JUST_INCLUDE_SYSTEM_INTTYPES_H on VMS.

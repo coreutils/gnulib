@@ -35,7 +35,10 @@ extern "C" {
 
 /* Return the first occurrence of NEEDLE in HAYSTACK.  */
 #if @GNULIB_MEMMEM@
-# if ! @HAVE_DECL_MEMMEM@
+# if @REPLACE_MEMMEM@
+#  define memmem rpl_memmem
+# endif
+# if ! @HAVE_DECL_MEMMEM@ || @REPLACE_MEMMEM@
 extern void *memmem (void const *__haystack, size_t __haystack_len,
 		     void const *__needle, size_t __needle_len);
 # endif

@@ -1,0 +1,12 @@
+Files:
+tests/test-memmem.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-memmem
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-memmem
+

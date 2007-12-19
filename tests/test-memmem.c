@@ -19,39 +19,128 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
 
 int
 main (int argc, char *argv[])
 {
-  const char *big = "foo-bar-baz";
-  char *p;
+  {
+    const char input[] = "foo";
+    const char *result = memmem (input, strlen (input), "", 0);
+    ASSERT (result == input);
+  }
 
-  p = memmem (big, "foo", strlen (big));
-  if (p != big)
-    {
-      fprintf (stderr, "memmem FAILURE 1\n");
-      return 1;
-    }
+  {
+    const char input[] = "foo";
+    const char *result = memmem (input, strlen (input), "o", 1);
+    ASSERT (result == input + 1);
+  }
 
-  p = memmem (big, "baz", strlen (big));
-  if (p != big + strlen (big) - 3)
-    {
-      fprintf (stderr, "memmem FAILURE 2\n");
-      return 1;
+  {
+    const char input[] = "ABC ABCDAB ABCDABCDABDE";
+    const char *result = memmem (input, strlen (input), "ABCDABD", 7);
+    ASSERT (result == input + 15);
+  }
 
-  p = memmem (big, "-", strlen (big));
-  if (p != big + 3)
-    {
-      fprintf (stderr, "memmem FAILURE 3\n");
-      return 1;
-    }
+  {
+    const char input[] = "ABC ABCDAB ABCDABCDABDE";
+    const char *result = memmem (input, strlen (input), "ABCDABE", 7);
+    ASSERT (result == NULL);
+  }
 
-  p = memmem (big, "baz", strlen (big) - 1);
-  if (p != NULL)
-    {
-      fprintf (stderr, "memmem FAILURE 4\n");
-      return 1;
-    }
+  /* Check that length 0 does not dereference NULL.  */
+  {
+    const char *result = memmem (NULL, 0, "foo", 3);
+    ASSERT (result == NULL);
+  }
+
+  {
+    const char input[] = "foo";
+    const char *result = memmem (input, strlen (input), NULL, 0);
+    ASSERT (result == input);
+  }
+
+  /* Check that a very long haystack is handled quickly if the needle is
+     short and occurs near the beginning.  */
+  {
+    size_t repeat = 10000;
+    size_t m = 1000000;
+    char *needle =
+      "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    size_t n = strlen (needle);
+    char *haystack = (char *) malloc (m + 1);
+    if (haystack != NULL)
+      {
+	memset (haystack, 'A', m);
+	haystack[0] = 'B';
+
+	for (; repeat > 0; repeat--)
+	  {
+	    ASSERT (memmem (haystack, m, needle, n) == haystack + 1);
+	  }
+
+	free (haystack);
+      }
+  }
+
+  /* Check that a very long needle is discarded quickly if the haystack is
+     short.  */
+  {
+    size_t repeat = 10000;
+    size_t m = 1000000;
+    char *haystack =
+      "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      "ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB";
+    size_t n = strlen (haystack);
+    char *needle = (char *) malloc (m + 1);
+    if (needle != NULL)
+      {
+	memset (needle, 'A', m);
+
+	for (; repeat > 0; repeat--)
+	  {
+	    ASSERT (memmem (haystack, n, needle, m) == NULL);
+	  }
+
+	free (needle);
+      }
+  }
+
+  /* Check that the asymptotic worst-case complexity is not quadratic.  */
+  {
+    size_t m = 1000000;
+    char *haystack = (char *) malloc (2 * m + 1);
+    char *needle = (char *) malloc (m + 1);
+    if (haystack != NULL && needle != NULL)
+      {
+	const char *result;
+
+	memset (haystack, 'A', 2 * m);
+	haystack[2 * m] = 'B';
+
+	memset (needle, 'A', m);
+	needle[m] = 'B';
+
+	result = memmem (haystack, 2 * m + 1, needle, m + 1);
+	ASSERT (result == haystack + m);
+      }
+    if (needle != NULL)
+      free (needle);
+    if (haystack != NULL)
+      free (haystack);
+  }
 
   return 0;
 }
