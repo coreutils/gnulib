@@ -1,3 +1,9 @@
+2007-12-20  Eric Blake  <ebb9@byu.net>
+
+	Work around circular library issue when cross-compiling.
+	* lib/progname.c (set_program_name): Use strncmp, not memcmp, so
+	that progname.o does not need to pull in rpl_memcmp.
+
 2007-12-19  Eric Blake  <ebb9@byu.net>
 
 	Fix memmem to avoid O(n^2) worst-case complexity.

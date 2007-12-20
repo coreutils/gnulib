@@ -1,5 +1,5 @@
 /* Program name management.
-   Copyright (C) 2001-2003, 2005-2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ set_program_name (const char *argv0)
 
   slash = strrchr (argv0, '/');
   base = (slash != NULL ? slash + 1 : argv0);
-  if (base - argv0 >= 7 && memcmp (base - 7, "/.libs/", 7) == 0)
+  if (base - argv0 >= 7 && strncmp (base - 7, "/.libs/", 7) == 0)
     argv0 = base;
   if (strncmp (base, "lt-", 3) == 0)
     argv0 = base + 3;
