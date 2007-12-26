@@ -1,3 +1,37 @@
+2007-12-24  Bruno Haible  <bruno@clisp.org>
+
+	Split setenv module into setenv and unsetenv. Get rid of setenv.h.
+	* lib/setenv.h: Remove file.
+	* lib/stdlib.in.h (setenv, unsetenv): New declarations, moved here from
+	lib/setenv.h.
+	* modules/setenv (Files): Remove lib/setenv.h, lib/unsetenv.c.
+	(Depends-on): Add stdlib.
+	(configure.ac): Invoke gl_STDLIB_MODULE_INDICATOR. Don't invoke
+	gl_FUNC_UNSETENV.
+	(Include): Replace setenv.h with <stdlib.h>.
+	* modules/unsetenv: New file.
+	* lib/setenv.c: Include <stdlib.h> first, after alloca.h.
+	* lib/unsetenv.c: Include <stdlib.h> first.
+	* m4/setenv.m4 (gl_FUNC_SETENV, gl_FUNC_SETENV_SEPARATE): Require
+	gl_STDLIB_H_DEFAULTS. Conditionally set HAVE_SETENV to 0.
+	(gl_FUNC_UNSETENV): Require gl_STDLIB_H_DEFAULTS. Conditionally set
+	HAVE_UNSETENV to 0. Set VOID_UNSETENV as an AC_SUBSTed variable.
+	* modules/stdlib (Makefile.am): Substitute also GNULIB_SETENV,
+	HAVE_SETENV, GNULIB_UNSETENV, HAVE_UNSETENV, VOID_UNSETENV.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize GNULIB_SETENV,
+	HAVE_SETENV, GNULIB_UNSETENV, HAVE_UNSETENV, VOID_UNSETENV.
+	* doc/functions/unsetenv.texi: Update.
+	* modules/xsetenv (Depends-on): Add unsetenv.
+	* modules/getdate (Depends-on): Likewise.
+	* lib/xsetenv.h: Include <stdlib.h> instead of setenv.h.
+	* lib/xsetenv.c: Don't include setenv.h.
+	* lib/getdate.y: Likewise.
+	* lib/relocwrapper.c: Likewise.
+	* modules/relocatable-prog-wrapper (Files): Remove lib/setenv.h.
+	(Depends-on): Add stdlib.
+	* NEWS: Mention the changes.
+	Reported by Левашев Иван <octagram@bluebottle.com>.
+
 2007-12-23  Bruno Haible  <bruno@clisp.org>
 
 	* lib/memmem.c (memmem): Use lowercase variable names. Tab
