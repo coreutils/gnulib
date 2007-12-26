@@ -3483,6 +3483,9 @@ func_create_testdir ()
 
   if test -n "$inctests"; then
     test -d "$testdir/$testsbase" || mkdir "$testdir/$testsbase"
+    # Viewed from the $testsbase subdirectory, $auxdir is different.
+    saved_auxdir="$auxdir"
+    auxdir=`echo "$testsbase/"|sed 's%[^/][^/]*//*%../%g'`"$auxdir"
     # Create $testsbase/Makefile.am.
     use_libtests=false
     func_emit_tests_Makefile_am > "$testdir/$testsbase/Makefile.am"
@@ -3490,7 +3493,7 @@ func_create_testdir ()
     # Create $testsbase/configure.ac.
     (echo "# Process this file with autoconf to produce a configure script."
      echo "AC_INIT([dummy], [0])"
-     echo "AC_CONFIG_AUX_DIR([../$auxdir])"
+     echo "AC_CONFIG_AUX_DIR([$auxdir])"
      echo "AM_INIT_AUTOMAKE"
      echo
      echo "AM_CONFIG_HEADER([config.h])"
@@ -3531,7 +3534,7 @@ func_create_testdir ()
      sed_replace_build_aux='
        :a
        /AC_CONFIG_FILES(.*:build-aux\/.*)/{
-         s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:../'"$auxdir"'/\2)|
+         s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
          ba
        }'
      func_emit_initmacro_start $macro_prefix
@@ -3575,6 +3578,7 @@ func_create_testdir ()
      echo
      echo "AC_OUTPUT([Makefile])"
     ) > "$testdir/$testsbase/configure.ac"
+    auxdir="$saved_auxdir"
     func_append subdirs " $testsbase"
     subdirs_with_configure_ac="$subdirs_with_configure_ac $testsbase"
   fi

@@ -1,5 +1,11 @@
 2007-12-22  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_create_testdir): Change $auxdir while generating
+	the contents of $testsbase.
+	Reported by Ralf Wildenhues.
+
+2007-12-22  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_tests_Makefile_am): Replace local_ldadd with
 	two variables local_ldadd_before, local_ldadd_last.
 
