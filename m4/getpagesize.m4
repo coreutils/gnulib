@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_GETPAGESIZE],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_FUNCS([getpagesize])
   if test $ac_cv_func_getpagesize = no; then
     HAVE_GETPAGESIZE=0
@@ -19,4 +20,10 @@ AC_DEFUN([gl_FUNC_GETPAGESIZE],
       HAVE_SYS_PARAM_H=1
     fi
   fi
+  case "$host_os" in
+    mingw*)
+      REPLACE_GETPAGESIZE=1
+      AC_LIBOBJ([getpagesize])
+      ;;
+  esac
 ])

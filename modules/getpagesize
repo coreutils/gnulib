@@ -2,6 +2,7 @@ Description:
 getpagesize() function: Return memory page size.
 
 Files:
+lib/getpagesize.c
 m4/getpagesize.m4
 
 Depends-on:

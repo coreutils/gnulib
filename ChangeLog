@@ -1,3 +1,14 @@
+2007-12-10  Martin Lambers <marlam@marlam.de>
+
+	Override getpagesize on mingw.
+	* lib/getpagesize.c: New file.
+	* m4/getpagesize.m4 (gl_FUNC_GETPAGESIZE): Enable replacement on mingw.
+	* modules/getpagesize (Files): Add lib/getpagesize.c.
+	* lib/unistd.in.h (getpagesize): Declare if we are using a replacement.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	REPLACE_GETPAGESIZE.
+	* modules/unistd (Makefile.am): Substitute REPLACE_GETPAGESIZE.
+
 2007-12-25  Bruno Haible  <bruno@clisp.org>
 
 	* modules/localcharset (Notice): New field.
