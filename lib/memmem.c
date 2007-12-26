@@ -154,14 +154,14 @@ knuth_morris_pratt (const char *haystack, const char *last_haystack,
    if NEEDLE_LEN is 0, otherwise NULL if NEEDLE is not found in
    HAYSTACK.  */
 void *
-memmem (const void *haystack, size_t haystack_len,
-        const void *needle, size_t needle_len)
+memmem (const void *haystack_start, size_t haystack_len,
+	const void *needle_start, size_t needle_len)
 {
   /* Operating with void * is awkward.  */
-  const char *Haystack = (const char *) haystack;
-  const char *Needle = (const char *) needle;
-  const char *last_haystack = Haystack + haystack_len;
-  const char *last_needle = Needle + needle_len;
+  const char *haystack = (const char *) haystack_start;
+  const char *needle = (const char *) needle_start;
+  const char *last_haystack = haystack + haystack_len;
+  const char *last_needle = needle + needle_len;
 
   if (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
@@ -175,7 +175,7 @@ memmem (const void *haystack, size_t haystack_len,
 
   /* Use optimizations in memchr when possible.  */
   if (__builtin_expect (needle_len == 1, 0))
-    return memchr (haystack, (unsigned char) *Needle, haystack_len);
+    return memchr (haystack, (unsigned char) *needle, haystack_len);
 
   /* Minimizing the worst-case complexity:
      Let n = haystack_len, m = needle_len.
@@ -198,55 +198,55 @@ memmem (const void *haystack, size_t haystack_len,
 
     /* Speed up the following searches of needle by caching its first
        byte.  */
-    char b = *Needle++;
+    char b = *needle++;
 
-    for (;; Haystack++)
+    for (;; haystack++)
       {
-        if (Haystack == last_haystack)
-          /* No match.  */
-          return NULL;
+	if (haystack == last_haystack)
+	  /* No match.  */
+	  return NULL;
 
-        /* See whether it's advisable to use an asymptotically faster
-           algorithm.  */
-        if (try_kmp
-            && outer_loop_count >= 10
-            && comparison_count >= 5 * outer_loop_count)
-          {
-            /* See if needle + comparison_count now reaches the end of
-               needle.  */
-            if (comparison_count >= needle_len)
-              {
-                /* Try the Knuth-Morris-Pratt algorithm.  */
-                const char *result;
-                if (knuth_morris_pratt (Haystack, last_haystack,
-                                        Needle - 1, needle_len, &result))
-                  return (void *) result;
-                try_kmp = false;
-              }
-          }
+	/* See whether it's advisable to use an asymptotically faster
+	   algorithm.  */
+	if (try_kmp
+	    && outer_loop_count >= 10
+	    && comparison_count >= 5 * outer_loop_count)
+	  {
+	    /* See if needle + comparison_count now reaches the end of
+	       needle.  */
+	    if (comparison_count >= needle_len)
+	      {
+		/* Try the Knuth-Morris-Pratt algorithm.  */
+		const char *result;
+		if (knuth_morris_pratt (haystack, last_haystack,
+					needle - 1, needle_len, &result))
+		  return (void *) result;
+		try_kmp = false;
+	      }
+	  }
 
-        outer_loop_count++;
-        comparison_count++;
-        if (*Haystack == b)
-          /* The first byte matches.  */
-          {
-            const char *rhaystack = Haystack + 1;
-            const char *rneedle = Needle;
+	outer_loop_count++;
+	comparison_count++;
+	if (*haystack == b)
+	  /* The first byte matches.  */
+	  {
+	    const char *rhaystack = haystack + 1;
+	    const char *rneedle = needle;
 
-            for (;; rhaystack++, rneedle++)
-              {
-                if (rneedle == last_needle)
-                  /* Found a match.  */
-                  return (void *) Haystack;
-                if (rhaystack == last_haystack)
-                  /* No match.  */
-                  return NULL;
-                comparison_count++;
-                if (*rhaystack != *rneedle)
-                  /* Nothing in this round.  */
-                  break;
-              }
-          }
+	    for (;; rhaystack++, rneedle++)
+	      {
+		if (rneedle == last_needle)
+		  /* Found a match.  */
+		  return (void *) haystack;
+		if (rhaystack == last_haystack)
+		  /* No match.  */
+		  return NULL;
+		comparison_count++;
+		if (*rhaystack != *rneedle)
+		  /* Nothing in this round.  */
+		  break;
+	      }
+	  }
       }
   }
 

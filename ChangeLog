@@ -1,5 +1,10 @@
 2007-12-23  Bruno Haible  <bruno@clisp.org>
 
+	* lib/memmem.c (memmem): Use lowercase variable names. Tab
+	indentation.
+
+2007-12-23  Bruno Haible  <bruno@clisp.org>
+
 	* lib/c-strcasestr.c: Add more comments.
 	* lib/c-strstr.c: Likewise.
 	* lib/mbscasestr.c: Likewise.
