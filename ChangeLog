@@ -1,5 +1,14 @@
 2007-12-24  Bruno Haible  <bruno@clisp.org>
 
+	Make --enable-relocatable work with DESTDIR.
+	* build-aux/install-reloc: Accept another argument 'destdir'. Use it
+	to compute installdir from destprog.
+	* m4/relocatable.m4 (gl_RELOCATABLE_BODY): In INSTALL_PROGRAM_ENV,
+	also set the RELOC_DESTDIR variable.
+	Reported by Левашев Иван <octagram@bluebottle.com>.
+
+2007-12-24  Bruno Haible  <bruno@clisp.org>
+
 	Fix link error due to xalloc_die().
 	* lib/progreloc.c: When NO_XMALLOC is defined, use areadlink instead
 	of xreadlink.

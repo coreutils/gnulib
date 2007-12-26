@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Usage:
-#   install-reloc library_path_var library_path_value prefix \
+#   install-reloc library_path_var library_path_value prefix destdir \
 #                 compile_command srcdir config_h_dir exeext \
 #                 install_command... destprog
 # where
@@ -25,6 +25,9 @@
 #   - library_path_value is a colon separated list of directories that contain
 #     the libraries at installation time (use this instead of -rpath)
 #   - prefix is the base directory at installation time
+#   - destdir is a string that is prepended to all file names at installation
+#     time; it is already prepended to destprog but not to library_path_value
+#     and prefix
 #   - compile_command is a C compiler compilation and linking command
 #   - srcdir is the directory where to find relocwrapper.c and its dependencies
 #   - builddir is the directory where to find built dependencies (namely,
@@ -43,6 +46,7 @@ if test $# -eq 2; then
   library_path_var=$RELOC_LIBRARY_PATH_VAR
   library_path_value=$RELOC_LIBRARY_PATH_VALUE
   prefix=$RELOC_PREFIX
+  destdir=$RELOC_DESTDIR
   compile_command=$RELOC_COMPILE_COMMAND
   srcdir=$RELOC_SRCDIR
   builddir=$RELOC_BUILDDIR
@@ -50,17 +54,17 @@ if test $# -eq 2; then
   exeext=$RELOC_EXEEXT
   install_prog=$RELOC_INSTALL_PROG # including the "-c" option
 else
-  if test $# -ge 9; then
+  if test $# -ge 10; then
     # Get fixed position arguments.
     library_path_var=$1
     library_path_value=$2
     prefix=$3
-    compile_command=$4
-    srcdir=$5
-    builddir=$6
-    config_h_dir=$7
-    exeext=$8
-    install_prog=$9 # maybe not including the "-c" option
+    destdir=$4
+    compile_command=$5
+    srcdir=$6
+    builddir=$7
+    config_h_dir=$8
+    exeext=$9
     shift
     shift
     shift
@@ -69,9 +73,11 @@ else
     shift
     shift
     shift
+    shift
+    install_prog=$1 # maybe not including the "-c" option
     shift
   else
-    echo "Usage: $0 library_path_var library_path_value prefix" \
+    echo "Usage: $0 library_path_var library_path_value prefix destdir" \
          "compile_command srcdir builddir config_h_dir exeext" \
          "install_command... destprog" 1>&2
     exit 1
@@ -86,8 +92,9 @@ do
 done
 # Remove trailing $exeext, if present.
 if test -n "$exeext"; then
-  sedexpr='s|'`echo "$exeext" | sed -e 's,\.,\\\.,g'`'$||'
-  destprog=`echo "$destprog" | sed -e "$sedexpr"`
+  sed_quote='s,\.,\\.,g'
+  sed_remove_exeext='s|'`echo "$exeext" | sed -e "$sed_quote"`'$||'
+  destprog=`echo "$destprog" | sed -e "$sed_remove_exeext"`
 fi
 
 # Outputs a command and runs it.
@@ -120,8 +127,15 @@ IFS="$save_IFS"
 # wrapper.
 test -n "$libdirs" || exit 0
 
-# Compile wrapper.
+# Determine installdir from destprog, removing a leading destdir if present.
 installdir=`echo "$destprog" | sed -e 's,/[^/]*$,,'`
+if test -n "$destdir"; then
+  sed_quote='s,\([|.\*^$[]\),\\\1,g'
+  sed_remove_destdir='s|^'`echo "$destdir" | sed -e "$sed_quote"`'||'
+  installdir=`echo "$installdir" | sed -e "$sed_remove_destdir"`
+fi
+
+# Compile wrapper.
 func_verbose $compile_command \
              -I"$builddir" -I"$srcdir" -I"$config_h_dir" \
              -DHAVE_CONFIG_H -DIN_RELOCWRAPPER -DNO_XMALLOC \
