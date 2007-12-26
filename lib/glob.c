@@ -1443,7 +1443,8 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
 	  while (1)
 	    {
 	      struct globnames *old = names;
-	      for (size_t i = 0; i < cur; ++i)
+	      size_t i;
+	      for (i = 0; i < cur; ++i)
 		free (names->name[i]);
 	      names = names->next;
 	      /* NB: we will not leak memory here if we exit without
@@ -1468,7 +1469,8 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
 	  while (1)
 	    {
 	      struct globnames *old = names;
-	      for (size_t i = 0; i < cur; ++i)
+	      size_t i;
+	      for (i = 0; i < cur; ++i)
 		new_gl_pathv[pglob->gl_offs + pglob->gl_pathc++]
 		  = names->name[i];
 	      names = names->next;

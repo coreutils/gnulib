@@ -1,3 +1,8 @@
+2007-12-25  Bruno Haible  <bruno@clisp.org>
+
+	Fixup after 2007-10-16 commit.
+	* lib/glob.c (glob_in_dir): Don't use ISO C99 syntax.
+
 2007-12-24  Bruno Haible  <bruno@clisp.org>
 
 	Make --enable-relocatable work with DESTDIR.
