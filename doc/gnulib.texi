@@ -2891,12 +2891,24 @@ If you need this particular function, you may write to
 @chapter Particular Modules
 
 @menu
+* alloca::
+* alloca-opt::
 * Quoting::
 * error and progname::
 * gcd::
 * Regular expressions::
 * Supporting Relocation::
 @end menu
+
+@node alloca
+@section alloca
+@findex alloca
+@include alloca.texi
+
+@node alloca-opt
+@section alloca-opt
+@findex alloca
+@include alloca-opt.texi
 
 @include quote.texi
 @include error.texi

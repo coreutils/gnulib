@@ -1,6 +1,6 @@
 @c Documentation of gnulib module 'alloca'.
 
-@c Copyright (C) 2004 Free Software Foundation, Inc.
+@c Copyright (C) 2004, 2007 Free Software Foundation, Inc.
 
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.2 or
@@ -9,20 +9,35 @@
 @c Texts.  A copy of the license is included in the ``GNU Free
 @c Documentation License'' file as part of this distribution.
 
-The alloca module provides for a function alloca() which allocates memory
-on the stack, where the system allows it. A memory block allocated with alloca()
-exists only until the function that calls alloca() returns or exits abruptly.
+The alloca module provides for a function @code{alloca} which allocates
+memory on the stack, where the system allows it. A memory block allocated with
+@code{alloca} exists only until the function that calls @code{alloca} returns
+or exits abruptly.
 
 There are a few systems where this is not possible: HP-UX systems, and some
 other platforms when the C++ compiler is used. On these platforms the alloca
-module provides a malloc() based emulation. This emulation will not free a
+module provides a @code{malloc} based emulation. This emulation will not free a
 memory block immediately when the calling function returns, but rather will
-wait until the next alloca() call from a function with the same or a shorter
-stack length. Thus, in some cases, a few memory blocks will be kept although
-they are not needed any more.
+wait until the next @code{alloca} call from a function with the same or a
+shorter stack length. Thus, in some cases, a few memory blocks will be kept
+although they are not needed any more.
 
-The user can #include <alloca.h> and use alloca() on all platforms. Note
-that the #include <alloca.h> must be the first one after the autoconf-generated
-config.h. Thanks to AIX for this nice restriction!
+The user can @code{#include <alloca.h>} and use @code{alloca} on all platforms.
+Note that the @code{#include <alloca.h>} must be the first one after the
+autoconf-generated @file{config.h}, for AIX 3 compatibility. Thanks to IBM for
+this nice restriction!
 
-An alternative to this module is the 'alloca-opt' module.
+Note that GCC 3.1 and 3.2 can @emph{inline} functions that call @code{alloca}.
+When this happens, the memory blocks allocated with @code{alloca} will not be
+freed until @emph{the end of the calling function}. If this calling function
+runs a loop calling the function that uses @code{alloca}, the program easily
+gets a stack overflow and crashes. To protect against this compiler behaviour,
+you can mark the function that uses @code{alloca} with the following attribute:
+
+@smallexample
+#ifdef __GNUC__
+__attribute__ ((__noinline__))
+#endif
+@end smallexample
+
+An alternative to this module is the @samp{alloca-opt} module.

@@ -1,5 +1,5 @@
 Description:
-An interface to write() that retries after interrupts.
+An interface to the write() function that retries after interrupts.
 
 Files:
 lib/safe-write.h

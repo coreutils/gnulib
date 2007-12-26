@@ -1,5 +1,5 @@
 Description:
-error() and error_at_line() functions: Error reporting.
+error and error_at_line functions: Error reporting.
 
 Notice:
 If you are using GNU gettext version 0.16.1 or older, add the following options

@@ -1406,11 +1406,21 @@ func_module ()
     element='<A HREF="#module='$1'">'$1'</A>'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=\"20%\">$element"
 
+    # Rendering the description:
+    # - Change the symbol() syntax as suitable for documentation, removing the
+    #   parentheses (as per GNU standards, section "GNU Manuals").
+    # - Flag the remaining symbol() constructs as errors.
+    # - Change 'xxx' to <CODE>xxx</CODE>.
     element=`gnulib-tool --extract-description $1 \
              | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" \
-                   -e 's,^, ,' \
-                   -e 's,\([^a-zA-Z_]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A>(),g' \
-                   -e 's,^ ,,'`
+                   -e 's,^, ,' -e 's,$, ,' \
+                   -e 's,\([^a-zA-Z_]\)'"${posix_functions}"'() \(function\|macro\),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A> \3,g' \
+                   -e 's,\([^a-zA-Z_]\)'"${posix_functions}"' \(function\|macro\),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A> \3,g' \
+                   -e 's,\([^a-zA-Z_]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A> <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g' \
+                   -e 's,\([^a-zA-Z_]\)\([a-zA-Z_][a-zA-Z0-9_]*\)() \(function\|macro\),\1\2 \3,g' \
+                   -e 's,\([^a-zA-Z_]\)\([a-zA-Z_][a-zA-Z0-9_]*\)(),\1\2 <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g' \
+                   -e 's, '"'"'\([a-zA-Z0-9_ -]*\)'"'"'\([^a-zA-Z0-9_]\), <CODE>\1</CODE>\2,g' \
+                   -e 's,^ ,,' -e 's, $,,'`
     func_echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=\"80%\">$element"
 
     func_end TR

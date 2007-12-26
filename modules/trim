@@ -1,5 +1,5 @@
 Description:
-trim() removes leading and/or trailing whitespaces
+trim() function: remove leading and/or trailing whitespaces
 
 Files:
 lib/trim.h

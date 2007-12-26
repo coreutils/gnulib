@@ -35,7 +35,7 @@ that.
 Similarly, Gnulib has a facility for executing a command in a
 subprocess.  It is at the same time a portability enhancement (it
 works on GNU, Unix, and Windows, compared to the classical
-@code{fork()}/@code{exec()} which is not portable to Windows), as well
+@code{fork}/@code{exec} idiom which is not portable to Windows), as well
 as an application aid: it takes care of redirecting stdin and/or
 stdout if desired, and emits an error message if the subprocess
 failed.
@@ -175,7 +175,7 @@ C++ language or from the Linux kernel.
 @subsection Interfaces to external libraries
 
 Examples are the @samp{iconv} module, which interfaces to the
-@code{iconv()} facility, regardless whether it is contained in libc or in
+@code{iconv} facility, regardless whether it is contained in libc or in
 an external @code{libiconv}.  Or the @samp{readline} module, which
 interfaces to the GNU readline library.
 

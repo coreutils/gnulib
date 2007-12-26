@@ -1,3 +1,28 @@
+2007-12-25  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	Avoid using the syntax symbol() in formatted documentation.
+	* MODULES.html.sh (func_module): When replacing symbol() with a
+	hyperlink, remove the parentheses. Show an error if some remain.
+	Recognize and render the '...' syntax.
+	* doc/alloca-opt.texi: Remove parentheses from symbol reference.
+	Rework. Add paragraph about GCC's inlining.
+	* doc/alloca.texi: Likewise.
+	* doc/error.texi: Remove parentheses from symbol reference.
+	* doc/gnulib-intro.texi: Likewise.
+	* doc/gnulib.texi (alloca, alloca-opt): New nodes.
+	* modules/fnmatch (Description): Reword to say "the ... function".
+	* modules/full-read (Description): Likewise.
+	* modules/full-write (Description): Likewise.
+	* modules/safe-read (Description): Likewise.
+	* modules/safe-write (Description): Likewise.
+	* modules/strchrnul (Description): Likewise.
+	* modules/trim (Description): Likewise.
+	* modules/error (Description): Remove parentheses from symbol
+	references.
+	* modules/verror (Description): Likewise.
+	Reported by Karl Berry.
+
 2007-12-25  Bruno Haible  <bruno@clisp.org>
 
 	Fixup after 2007-10-16 commit.

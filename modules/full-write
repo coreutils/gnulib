@@ -1,5 +1,5 @@
 Description:
-An interface to write() that writes all it is asked to write.
+An interface to the write() function that writes all it is asked to write.
 
 Files:
 lib/full-write.h
