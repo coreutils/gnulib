@@ -19,11 +19,11 @@
    relocwrapper
     -> progname
     -> progreloc
-        -> xreadlink
-           -> areadlink
-              -> readlink
+        -> areadlink
+           -> readlink
         -> canonicalize-lgpl
            -> malloca
+           -> readlink
     -> relocatable
     -> setenv
        -> malloca

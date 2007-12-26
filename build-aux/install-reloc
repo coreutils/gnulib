@@ -131,7 +131,6 @@ func_verbose $compile_command \
              "$srcdir"/relocwrapper.c \
              "$srcdir"/progname.c \
              "$srcdir"/progreloc.c \
-             "$srcdir"/xreadlink.c \
              "$srcdir"/areadlink.c \
              "$srcdir"/readlink.c \
              "$srcdir"/canonicalize-lgpl.c \

@@ -1,5 +1,5 @@
 /* Provide relocatable programs.
-   Copyright (C) 2003-2006 Free Software Foundation, Inc.
+   Copyright (C) 2003-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -43,9 +43,15 @@
 # include <windows.h>
 #endif
 
-#include "xreadlink.h"
 #include "canonicalize.h"
 #include "relocatable.h"
+
+#ifdef NO_XMALLOC
+# include "areadlink.h"
+# define xreadlink areadlink
+#else
+# include "xreadlink.h"
+#endif
 
 #ifdef NO_XMALLOC
 # define xmalloc malloc

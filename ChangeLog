@@ -1,5 +1,16 @@
 2007-12-24  Bruno Haible  <bruno@clisp.org>
 
+	Fix link error due to xalloc_die().
+	* lib/progreloc.c: When NO_XMALLOC is defined, use areadlink instead
+	of xreadlink.
+	* lib/relocwrapper.c: Update comments.
+	* build-aux/install-reloc: Remove xreadlink.c from file list.
+	* modules/relocatable-prog-wrapper (Files): Remove xreadlink.h and
+	xreadlink.c.
+	Reported by Левашев Иван <octagram@bluebottle.com>.
+
+2007-12-24  Bruno Haible  <bruno@clisp.org>
+
 	Split setenv module into setenv and unsetenv. Get rid of setenv.h.
 	* lib/setenv.h: Remove file.
 	* lib/stdlib.in.h (setenv, unsetenv): New declarations, moved here from
