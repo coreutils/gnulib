@@ -53,7 +53,6 @@
 
 #include "progname.h"
 #include "relocatable.h"
-#include "setenv.h"
 #include "c-ctype.h"
 
 /* Return a copy of the filename, with an extra ".bin" at the end.

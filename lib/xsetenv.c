@@ -21,7 +21,6 @@
 
 #include <stdlib.h>
 
-#include "setenv.h"
 #include "error.h"
 #include "gettext.h"
 

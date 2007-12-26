@@ -15,6 +15,7 @@ gettime
 intprops
 mktime
 setenv
+unsetenv
 time
 verify
 xalloc

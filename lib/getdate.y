@@ -66,7 +66,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "setenv.h"
 #include "xalloc.h"
 
 

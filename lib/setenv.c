@@ -19,12 +19,14 @@
 #endif
 #include <alloca.h>
 
+/* Specification.  */
+#include <stdlib.h>
+
 #include <errno.h>
 #ifndef __set_errno
 # define __set_errno(ev) ((errno) = (ev))
 #endif
 
-#include <stdlib.h>
 #include <string.h>
 #if _LIBC || HAVE_UNISTD_H
 # include <unistd.h>

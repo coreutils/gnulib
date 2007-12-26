@@ -1,19 +1,17 @@
 Description:
-setenv() function: set an environment variable.
+unsetenv() function: remove an environment variable.
 
 Files:
-lib/setenv.c
+lib/unsetenv.c
 m4/setenv.m4
 
 Depends-on:
 stdlib
-malloca
-alloca-opt
 unistd
 
 configure.ac:
-gl_FUNC_SETENV
-gl_STDLIB_MODULE_INDICATOR([setenv])
+gl_FUNC_UNSETENV
+gl_STDLIB_MODULE_INDICATOR([unsetenv])
 
 Makefile.am:
 

@@ -19,7 +19,6 @@ lib/malloca.h
 lib/malloca.c
 lib/relocatable.h
 lib/relocatable.c
-lib/setenv.h
 lib/setenv.c
 lib/strerror.c
 lib/c-ctype.h
@@ -38,6 +37,7 @@ alloca-opt
 pathmax
 ssize_t
 stdbool
+stdlib
 unistd
 
 configure.ac:

@@ -6,6 +6,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2007-12-24  setenv          The include file is changed from "setenv.h" to
+                            <stdlib.h>. Also, the unsetenv function is no
+                            longer declared in this module; use the 'unsetenv'
+                            module if you need it.
+
 2007-12-03  getpagesize     The include file is changed from "getpagesize.h"
                             to <unistd.h>.
 

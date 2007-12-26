@@ -15,7 +15,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* Get unsetenv().  It can be used without error checking.  */
-#include "setenv.h"
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
