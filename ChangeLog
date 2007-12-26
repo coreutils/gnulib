@@ -1,3 +1,9 @@
+2007-12-25  Bruno Haible  <bruno@clisp.org>
+
+	* modules/localcharset (Notice): New field.
+	(configure.ac): Define LOCALCHARSET_TESTS_ENVIRONMENT.
+	Suggested by Ben Pfaff <blp@cs.stanford.edu>.
+
 2007-12-25  Paul Eggert  <eggert@cs.ucla.edu>
             Bruno Haible  <bruno@clisp.org>
 

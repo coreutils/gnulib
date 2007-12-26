@@ -1,6 +1,12 @@
 Description:
 Return current locale's character encoding.
 
+Notice:
+If your package's tests make use of the locale_charset() function directly or
+indirectly, you may need to define the CHARSETALIASDIR environment variable,
+so that "make check" works before "make install". In Makefile.am syntax:
+TESTS_ENVIRONMENT += @LOCALCHARSET_TESTS_ENVIRONMENT@
+
 Files:
 lib/localcharset.h
 lib/localcharset.c
@@ -16,6 +22,8 @@ configmake
 
 configure.ac:
 gl_LOCALCHARSET
+LOCALCHARSET_TESTS_ENVIRONMENT="CHARSETALIASDIR=\"\$(top_builddir)/$gl_source_base\""
+AC_SUBST([LOCALCHARSET_TESTS_ENVIRONMENT])
 
 Makefile.am:
 lib_SOURCES += localcharset.h localcharset.c
