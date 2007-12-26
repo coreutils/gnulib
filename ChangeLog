@@ -1,3 +1,8 @@
+2007-12-22  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_emit_tests_Makefile_am): Replace local_ldadd with
+	two variables local_ldadd_before, local_ldadd_last.
+
 2007-12-20  Eric Blake  <ebb9@byu.net>
 
 	Work around circular library issue when cross-compiling.
