@@ -1,3 +1,8 @@
+2007-12-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/memmem.c (knuth_morris_pratt): Check for size_t overflow
+	when multiplying M by sizeof (size_t).
+
 2007-12-10  Martin Lambers <marlam@marlam.de>
 
 	Override getpagesize on mingw.

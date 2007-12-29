@@ -39,7 +39,10 @@ knuth_morris_pratt (const char *haystack, const char *last_haystack,
                     const char **resultp)
 {
   /* Allocate the table.  */
-  size_t *table = (size_t *) malloca (m * sizeof (size_t));
+  size_t *table;
+  if ((size_t) -1 / sizeof (size_t) < m)
+    return false;
+  table = (size_t *) malloca (m * sizeof (size_t));
   if (table == NULL)
     return false;
   /* Fill the table.
