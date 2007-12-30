@@ -80,7 +80,7 @@ Resources:
 @end itemize
 
 @menu
-* Library vs. Reusable Code::
+* Library vs Reusable Code::
 * Portability and Application Code::
 * Modules::
 * Various Kinds of Modules::
