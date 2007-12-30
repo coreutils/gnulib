@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 24, 2007
+@set lastupdate December 20, 2007
 @c %**end of header
 
 @dircategory GNU organization
@@ -377,9 +377,9 @@ had contributed code, and we might have to track them down and ask
 them.
 
 When you record a small patch in a change log file, first search for
-previous changes by the same person, and see if his past
+previous changes by the same person, and see if per past
 contributions, plus the new one, add up to something legally
-significant.  If so, you should get copyright papers for all his
+significant.  If so, you should get copyright papers for all per
 changes before you install the new change.
 
 If that is not so, you can install the small patch.  Write @samp{(tiny
@@ -599,6 +599,9 @@ files distributed under the Lesser GPL, it should contain a full copy
 of that as well (conventionally in a file named
 @file{COPYING.LESSER}).
 
+If you have questions about license issues for your GNU package,
+please write @email{licensing@@gnu.org}.
+
 @menu
 * Source: Canonical License Sources.
 * Code: License Notices for Code.
@@ -686,7 +689,7 @@ Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.2 or
 any later version published by the Free Software Foundation; with the
 Invariant Sections being ``GNU General Public License'', with the
-Front-Cover Texts being ``A GNU Manual,'' and with the Back-Cover Texts
+Front-Cover Texts being ``A GNU Manual'', and with the Back-Cover Texts
 as in (a) below.  A copy of the license is included in the section
 entitled ``GNU Free Documentation License''.
 
@@ -740,9 +743,6 @@ If your package distributes Autoconf macros that are intended to be
 used (hence distributed) by third-party packages under possibly
 incompatible licenses, you may also use the above all-permissive
 license for these macros.
-
-If you would like help with license issues or with using the GFDL,
-please contact @email{licensing@@gnu.org}.
 
 
 @node External Libraries
@@ -1693,7 +1693,7 @@ However, due to the much greater publicity that the Open Source
 Movement receives, the GNU Project needs to overcome a widespread
 mistaken impression that GNU is @emph{and always was} an activity of
 the Open Source Movement.  For this reason, please use the term ``free
-software,'' not ``open source,'' in GNU software releases, GNU
+software'', not ``open source'', in GNU software releases, GNU
 documentation, and announcements and articles that you publish in your
 role as the maintainer of a GNU package.  A reference to the URL given
 above, to explain the difference, is a useful thing to include as
@@ -1727,7 +1727,7 @@ role as the maintainer of a GNU package.  If you want to explain the
 terminology and its reasons, you can refer to the URL
 @url{http://www.gnu.org/gnu/linux-and-gnu.html}.
 
-Do contrast the GNU system properly speaking to GNU/Linux, you can
+To contrast the GNU system properly with respect to GNU/Linux, you can
 call it ``GNU/Hurd'' or ``the GNU/Hurd system.''  However, when that
 contrast is not specifically the focus, please call it just ``GNU'' or
 ``the GNU system.''
