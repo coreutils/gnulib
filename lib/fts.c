@@ -1475,7 +1475,7 @@ fts_sort (FTS *sp, FTSENT *head, register size_t nitems)
 	 * 40 so don't realloc one entry at a time.
 	 */
 	if (nitems > sp->fts_nitems) {
-		struct _ftsent **a;
+		FTSENT **a;
 
 		sp->fts_nitems = nitems + 40;
 		if (SIZE_MAX / sizeof *a < sp->fts_nitems
