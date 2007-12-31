@@ -37,7 +37,7 @@ knuth_morris_pratt (const char *haystack, const char *needle,
   size_t m = strlen (needle);
 
   /* Allocate the table.  */
-  size_t *table = (size_t *) malloca (m * sizeof (size_t));
+  size_t *table = (size_t *) nmalloca (m, sizeof (size_t));
   if (table == NULL)
     return false;
   /* Fill the table.

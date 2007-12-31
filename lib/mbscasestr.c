@@ -42,7 +42,7 @@ knuth_morris_pratt_unibyte (const char *haystack, const char *needle,
   size_t m = strlen (needle);
 
   /* Allocate the table.  */
-  size_t *table = (size_t *) malloca (m * sizeof (size_t));
+  size_t *table = (size_t *) nmalloca (m, sizeof (size_t));
   if (table == NULL)
     return false;
   /* Fill the table.
@@ -164,7 +164,7 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
   size_t *table;
 
   /* Allocate room for needle_mbchars and the table.  */
-  char *memory = (char *) malloca (m * (sizeof (mbchar_t) + sizeof (size_t)));
+  char *memory = (char *) nmalloca (m, sizeof (mbchar_t) + sizeof (size_t));
   if (memory == NULL)
     return false;
   needle_mbchars = (mbchar_t *) memory;

@@ -1,3 +1,15 @@
+2007-12-30  Bruno Haible  <bruno@clisp.org>
+
+	* lib/malloca.h (nmalloca): New macro.
+	* lib/c-strcasestr.c (knuth_morris_pratt): Use it.
+	* lib/c-strstr.c (knuth_morris_pratt): Likewise.
+	* lib/mbscasestr.c (knuth_morris_pratt_unibyte,
+	knuth_morris_pratt_multibyte): Likewise.
+	* lib/mbsstr.c (knuth_morris_pratt_unibyte,
+	knuth_morris_pratt_multibyte): Likewise.
+	* lib/memmem.c (knuth_morris_pratt): Likewise.
+	* lib/strcasestr.c (knuth_morris_pratt): Likewise.
+
 2007-12-25  Bruno Haible  <bruno@clisp.org>
 
 	Fixup after 2007-10-17 commit. Ensure that 'glob' stays under LGPLv2+.
