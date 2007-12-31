@@ -3,6 +3,11 @@
 	Avoid use of private FTS type name.
 	* lib/fts.c (fts_sort): Use FTSENT rather than "struct _ftsent".
 
+2007-12-30  Karl Berry  <karl@gnu.org>
+
+	* doc/gnulib.texi (Library vs. Reusable Code): remove period, to
+	work around defect in Texinfo and/or the standalone Info browser.
+
 2007-12-30  Bruno Haible  <bruno@clisp.org>
 
 	Unify 5 copies of the KMP code.
