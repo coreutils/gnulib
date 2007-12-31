@@ -1,4 +1,4 @@
-# glob.m4 serial 9
+# glob.m4 serial 10
 dnl Copyright (C) 2005-2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -82,5 +82,5 @@ AC_DEFUN([gl_PREREQ_GLOB],
     HAVE_SYS_CDEFS_H=0
   fi
   AC_SUBST([HAVE_SYS_CDEFS_H])
-  AC_CHECK_FUNCS_ONCE([getlogin_r getpwnam_r])dnl
+  AC_CHECK_FUNCS_ONCE([fstatat getlogin_r getpwnam_r])dnl
 ])

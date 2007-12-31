@@ -1,3 +1,14 @@
+2007-12-25  Bruno Haible  <bruno@clisp.org>
+
+	Fixup after 2007-10-17 commit. Ensure that 'glob' stays under LGPLv2+.
+	* lib/glob.c: Don't include openat.h.
+	(link_exists2_p): Add back the code that deals with the
+	!GLOB_ALTDIRFUNC case.
+	(link_exists_p) [!_LIBC && !HAVE_FSTATAT]: Just call link_exists2_p and
+	let it do the filename concatenation.
+	* m4/glob.m4 (gl_PREREQ_GLOB): Add check for fstatat.
+	* modules/glob (Depends-on): Remove openat.
+
 2007-12-31  Bruno Haible  <bruno@clisp.org>
 
 	* modules/dirfd (License): Change to LGPLv2+.

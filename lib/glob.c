@@ -147,7 +147,6 @@
 
 #ifndef _LIBC
 # include "dirfd.h"
-# include "openat.h"
 #endif
 
 #ifdef _SC_GETPW_R_SIZE_MAX
@@ -1218,13 +1217,17 @@ weak_alias (__glob_pattern_p, glob_pattern_p)
 #endif /* !GLOB_ONLY_P */
 
 
+#if !defined _LIBC || !defined GLOB_ONLY_P
 /* We put this in a separate function mainly to allow the memory
    allocated with alloca to be recycled.  */
-#if !defined _LIBC || !defined GLOB_ONLY_P
 static int
 __attribute_noinline__
 link_exists2_p (const char *dir, size_t dirlen, const char *fname,
-		glob_t *pglob)
+		glob_t *pglob
+# if !defined _LIBC && !HAVE_FSTATAT
+		, int flags
+# endif
+		)
 {
   size_t fnamelen = strlen (fname);
   char *fullname = __alloca (dirlen + 1 + fnamelen + 1);
@@ -1233,6 +1236,13 @@ link_exists2_p (const char *dir, size_t dirlen, const char *fname,
   mempcpy (mempcpy (mempcpy (fullname, dir, dirlen), "/", 1),
 	   fname, fnamelen + 1);
 
+# if !defined _LIBC && !HAVE_FSTATAT
+  if (__builtin_expect ((flags & GLOB_ALTDIRFUNC) == 0, 1))
+    {
+      struct_stat64 st64;
+      return __stat64 (fullname, &st64) == 0;
+    }
+# endif
   return (*pglob->gl_stat) (fullname, &st) == 0;
 }
 
@@ -1241,6 +1251,7 @@ static int
 link_exists_p (int dfd, const char *dir, size_t dirlen, const char *fname,
 	       glob_t *pglob, int flags)
 {
+# if defined _LIBC || HAVE_FSTATAT
   if (__builtin_expect (flags & GLOB_ALTDIRFUNC, 0))
     return link_exists2_p (dir, dirlen, fname, pglob);
   else
@@ -1248,6 +1259,9 @@ link_exists_p (int dfd, const char *dir, size_t dirlen, const char *fname,
       struct_stat64 st64;
       return __fxstatat64 (_STAT_VER, dfd, fname, &st64, 0) == 0;
     }
+# else
+  return link_exists2_p (dir, dirlen, fname, pglob, flags);
+# endif
 }
 #endif
 

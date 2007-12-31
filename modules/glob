@@ -16,7 +16,6 @@ extensions
 fnmatch
 getlogin_r
 mempcpy
-openat
 strdup
 sys_stat
 unistd
