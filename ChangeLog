@@ -1,3 +1,8 @@
+2007-12-31  Bruno Haible  <bruno@clisp.org>
+
+	* modules/dirfd (License): Change to LGPLv2+.
+	Approved by Jim Meyering.
+
 2007-12-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/memmem.c (knuth_morris_pratt): Check for size_t overflow
