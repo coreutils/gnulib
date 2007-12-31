@@ -3,6 +3,7 @@ mbscasestr() function: case-insensitive search for a substring in a string.
 
 Files:
 lib/mbscasestr.c
+lib/str-kmp.h
 m4/mbscasestr.m4
 m4/mbrtowc.m4
 

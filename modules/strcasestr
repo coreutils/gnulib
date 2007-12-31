@@ -3,6 +3,7 @@ strcasestr() function: case-insensitive search for a substring in a string.
 
 Files:
 lib/strcasestr.c
+lib/str-kmp.h
 m4/strcasestr.m4
 
 Depends-on:

@@ -1,5 +1,29 @@
 2007-12-30  Bruno Haible  <bruno@clisp.org>
 
+	Unify 5 copies of the KMP code.
+	* lib/str-kmp.h: New file.
+	* lib/c-strcasestr.c: Include str-kmp.h.
+	(knuth_morris_pratt): Remove function.
+	(c_strcasestr): Update.
+	* lib/c-strstr.c: Include str-kmp.h.
+	(knuth_morris_pratt): Remove function.
+	(c_strcasestr): Update.
+	* lib/mbscasestr.c: Include str-kmp.h.
+	(knuth_morris_pratt_unibyte): Remove function.
+	* lib/mbsstr.c: Include str-kmp.h.
+	(knuth_morris_pratt_unibyte): Remove function.
+	* lib/strcasestr.c: Include str-kmp.h.
+	(knuth_morris_pratt): Remove function.
+	(strcasestr): Update.
+	* modules/c-strcasestr (Files): Add lib/str-kmp.h.
+	* modules/c-strstr (Files): Likewise.
+	* modules/mbscasestr (Files): Likewise.
+	* modules/mbsstr (Files): Likewise.
+	* modules/strcasestr (Files): Likewise.
+	Suggested by Paul Eggert.
+
+2007-12-30  Bruno Haible  <bruno@clisp.org>
+
 	* lib/xmalloca.c (xmmalloca): Don't define if HAVE_ALLOCA is not
 	defined.
 
