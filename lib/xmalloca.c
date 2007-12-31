@@ -22,6 +22,8 @@
 
 #include "xalloc.h"
 
+#if HAVE_ALLOCA
+
 void *
 xmmalloca (size_t n)
 {
@@ -32,3 +34,5 @@ xmmalloca (size_t n)
     xalloc_die ();
   return p;
 }
+
+#endif
