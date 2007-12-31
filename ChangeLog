@@ -1,5 +1,10 @@
 2007-12-30  Bruno Haible  <bruno@clisp.org>
 
+	* lib/xmalloca.h: Include xalloc.h.
+	(xnmalloca): New macro.
+
+2007-12-30  Bruno Haible  <bruno@clisp.org>
+
 	* lib/malloca.h (nmalloca): New macro.
 	* lib/c-strcasestr.c (knuth_morris_pratt): Use it.
 	* lib/c-strstr.c (knuth_morris_pratt): Likewise.
