@@ -1,3 +1,9 @@
+2008-01-02  Bruno Haible  <bruno@clisp.org>
+
+	* lib/memmem.c (knuth_morris_pratt, memmem): Change all 'char *'
+	variables to 'unsigned char *' type.
+	Reported by Paul Eggert.
+
 2008-01-02  Jim Meyering  <jim@meyering.net>
 
 	* lib/version-etc.c (COPYRIGHT_YEAR): Increase for new year.

@@ -1,4 +1,4 @@
-/* Copyright (C) 1991,92,93,94,96,97,98,2000,2004,2007 Free Software Foundation, Inc.
+/* Copyright (C) 1991,92,93,94,96,97,98,2000,2004,2007,2008 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software; you can redistribute it and/or modify
@@ -34,9 +34,10 @@
    Return a boolean indicating success.  */
 
 static bool
-knuth_morris_pratt (const char *haystack, const char *last_haystack,
-                    const char *needle, size_t m,
-                    const char **resultp)
+knuth_morris_pratt (const unsigned char *haystack,
+                    const unsigned char *last_haystack,
+                    const unsigned char *needle, size_t m,
+                    const unsigned char **resultp)
 {
   /* Allocate the table.  */
   size_t *table = (size_t *) nmalloca (m, sizeof (size_t));
@@ -70,14 +71,14 @@ knuth_morris_pratt (const char *haystack, const char *last_haystack,
 	   The inequality needle[x..i-1] != needle[0..i-1-x] is known to hold
 	   for x < table[i-1], by induction.
 	   Furthermore, if j>0: needle[i-1-j..i-2] = needle[0..j-1].  */
-	unsigned char b = (unsigned char) needle[i - 1];
+	unsigned char b = needle[i - 1];
 
 	for (;;)
 	  {
 	    /* Invariants: The inequality needle[x..i-1] != needle[0..i-1-x]
 	       is known to hold for x < i-1-j.
 	       Furthermore, if j>0: needle[i-1-j..i-2] = needle[0..j-1].  */
-	    if (b == (unsigned char) needle[j])
+	    if (b == needle[j])
 	      {
 		/* Set table[i] := i-1-j.  */
 		table[i] = i - ++j;
@@ -112,8 +113,8 @@ knuth_morris_pratt (const char *haystack, const char *last_haystack,
   /* Search, using the table to accelerate the processing.  */
   {
     size_t j;
-    const char *rhaystack;
-    const char *phaystack;
+    const unsigned char *rhaystack;
+    const unsigned char *phaystack;
 
     *resultp = NULL;
     j = 0;
@@ -121,7 +122,7 @@ knuth_morris_pratt (const char *haystack, const char *last_haystack,
     phaystack = haystack;
     /* Invariant: phaystack = rhaystack + j.  */
     while (phaystack != last_haystack)
-      if ((unsigned char) needle[j] == (unsigned char) *phaystack)
+      if (needle[j] == *phaystack)
 	{
 	  j++;
 	  phaystack++;
@@ -157,11 +158,12 @@ void *
 memmem (const void *haystack_start, size_t haystack_len,
 	const void *needle_start, size_t needle_len)
 {
-  /* Operating with void * is awkward.  */
-  const char *haystack = (const char *) haystack_start;
-  const char *needle = (const char *) needle_start;
-  const char *last_haystack = haystack + haystack_len;
-  const char *last_needle = needle + needle_len;
+  /* Abstract memory is considered to be an array of 'unsigned char' values,
+     not an array of 'char' values.  See ISO C 99 section 6.2.6.1.  */
+  const unsigned char *haystack = (const unsigned char *) haystack_start;
+  const unsigned char *needle = (const unsigned char *) needle_start;
+  const unsigned char *last_haystack = haystack + haystack_len;
+  const unsigned char *last_needle = needle + needle_len;
 
   if (needle_len == 0)
     /* The first occurrence of the empty string is deemed to occur at
@@ -175,7 +177,7 @@ memmem (const void *haystack_start, size_t haystack_len,
 
   /* Use optimizations in memchr when possible.  */
   if (__builtin_expect (needle_len == 1, 0))
-    return memchr (haystack, (unsigned char) *needle, haystack_len);
+    return memchr (haystack, *needle, haystack_len);
 
   /* Minimizing the worst-case complexity:
      Let n = haystack_len, m = needle_len.
@@ -198,7 +200,7 @@ memmem (const void *haystack_start, size_t haystack_len,
 
     /* Speed up the following searches of needle by caching its first
        byte.  */
-    char b = *needle++;
+    unsigned char b = *needle++;
 
     for (;; haystack++)
       {
@@ -217,7 +219,7 @@ memmem (const void *haystack_start, size_t haystack_len,
 	    if (comparison_count >= needle_len)
 	      {
 		/* Try the Knuth-Morris-Pratt algorithm.  */
-		const char *result;
+		const unsigned char *result;
 		if (knuth_morris_pratt (haystack, last_haystack,
 					needle - 1, needle_len, &result))
 		  return (void *) result;
@@ -230,8 +232,8 @@ memmem (const void *haystack_start, size_t haystack_len,
 	if (*haystack == b)
 	  /* The first byte matches.  */
 	  {
-	    const char *rhaystack = haystack + 1;
-	    const char *rneedle = needle;
+	    const unsigned char *rhaystack = haystack + 1;
+	    const unsigned char *rneedle = needle;
 
 	    for (;; rhaystack++, rneedle++)
 	      {
