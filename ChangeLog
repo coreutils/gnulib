@@ -1,3 +1,8 @@
+2008-01-03  Colin Watson  <cjwatson@debian.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	* doc/gnulib-tool.texi (Localization): New section.
+
 2008-01-02  Bruno Haible  <bruno@clisp.org>
 
 	* lib/memmem.c (knuth_morris_pratt, memmem): Change all 'char *'

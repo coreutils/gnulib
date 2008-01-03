@@ -1,7 +1,7 @@
 @node Invoking gnulib-tool
 @chapter Invoking gnulib-tool
 
-@c Copyright (C) 2005, 2006, 2007 Free Software Foundation, Inc.
+@c Copyright (C) 2005-2008 Free Software Foundation, Inc.
 
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.2 or
@@ -32,6 +32,7 @@ a real run without changing anything.
 * Modified imports::            Changing the import specification.
 * Simple update::               Tracking Gnulib development.
 * Source changes::              Impact of Gnulib on your source files.
+* Localization::                Handling Gnulib's own message translations.
 * VCS Issues::                  Integration with Version Control Systems.
 @end menu
 
@@ -368,6 +369,80 @@ the Gnulib library directory.
 This is annoying, but inevitable: On many systems, @file{<config.h>} is
 used to set system dependent flags (such as @code{_GNU_SOURCE} on GNU systems),
 and these flags have no effect after any system header file has been included.
+
+
+@node Localization
+@section Handling Gnulib's own message translations
+
+Gnulib provides some functions that emit translatable messages using GNU
+@code{gettext}.  The @samp{gnulib} domain at the
+@url{http://translationproject.org/, Translation Project} collects
+translations of these messages, which you should incorporate into your
+own programs.
+
+There are two basic ways to achieve this.  The first, and older, method
+is to list all the source files you use from Gnulib in your own
+@file{po/POTFILES.in} file.  This will cause all the relevant
+translatable strings to be included in your POT file.  When you send
+this POT file to the Translation Project, translators will normally fill
+in the translations of the Gnulib strings from their ``translation
+memory'', and send you back updated PO files.
+
+However, this process is error-prone: you might forget to list some
+source files, or the translator might not be using a translation memory
+and provide a different translation than another translator, or the
+translation might not be kept in sync between Gnulib and your package.
+It is also slow and causes substantial extra work, because a human
+translator must be in the loop for each language and you will need to
+incorporate their work on request.
+
+For these reasons, a new method was designed and is now recommended.  If
+you pass the @code{--po-base=@var{directory}} and @code{--po-domain=@var{domain}}
+options to @code{gnulib-tool}, then @code{gnulib-tool} will create a
+separate directory with its own @file{POTFILES.in}, and fetch current
+translations directly from the Translation Project (using
+@command{rsync} or @command{wget}, whichever is available).
+The POT file in this directory will be called
+@file{@var{domain}-gnulib.pot}, depending on the @var{domain} you gave to the
+@code{--po-domain} option (typically the same as the package name).
+This causes these translations to reside in a separate message domain,
+so that they do not clash either with the translations for the main part
+of your package nor with those of other packages on the system that use
+possibly different versions of Gnulib.
+When you use these options, the functions in Gnulib are built
+in such a way that they will always use this domain regardless of the
+default domain set by @code{textdomain}.
+
+In order to use this method, you must -- in each program that might use
+Gnulib code -- add an extra line to the part of the program that
+initializes locale-dependent behavior.  Where you would normally write
+something like:
+
+@example
+@group
+  setlocale (LC_ALL, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+@end group
+@end example
+
+@noindent
+you should add an additional @code{bindtextdomain} call to inform
+gettext of where the MO files for the extra message domain may be found:
+
+@example
+@group
+  bindtextdomain (PACKAGE "-gnulib", LOCALEDIR);
+@end group
+@end example
+
+(This example assumes that the @var{domain} that you specified
+to @code{gnulib-tool} is the same as the value of the @code{PACKAGE}
+preprocessor macro.)
+
+Since you do not change the @code{textdomain} call, the default message
+domain for your program remains the same and your own use of @code{gettext}
+functions will not be affected.
 
 
 @node VCS Issues
