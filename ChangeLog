@@ -1,3 +1,9 @@
+2008-01-04  Bruno Haible  <bruno@clisp.org>
+
+	* m4/strcase.m4 (gl_FUNC_STRCASECMP, gl_FUNC_STRNCASECMP):
+	Require gl_HEADER_STRINGS_H_DEFAULTS, not
+	gl_HEADER_STRING_H_DEFAULTS.
+
 2008-01-04  Eric Blake  <ebb9@byu.net>
 
 	Shorten duration of memmem test.
