@@ -1,3 +1,8 @@
+2007-12-21  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/relocatable-prog-wrapper (Depends-on): Add intprops and
+	string, needed by strerror.
+
 2008-01-03  Colin Watson  <cjwatson@debian.org>
             Bruno Haible  <bruno@clisp.org>
 
