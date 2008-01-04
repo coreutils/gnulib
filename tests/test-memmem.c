@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004, 2007 Free Software Foundation
+ * Copyright (C) 2004, 2007, 2008 Free Software Foundation
  * Written by Bruno Haible and Eric Blake
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define ASSERT(expr) \
   do									     \
@@ -36,6 +37,9 @@
 int
 main (int argc, char *argv[])
 {
+  /* Declare failure if test takes too long, by using default abort
+     caused by SIGALRM.  */
+  alarm (10);
   {
     const char input[] = "foo";
     const char *result = memmem (input, strlen (input), "", 0);

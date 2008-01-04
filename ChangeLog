@@ -1,10 +1,17 @@
+2008-01-04  Eric Blake  <ebb9@byu.net>
+
+	Shorten duration of memmem test.
+	* tests/test-memmem.c (main): Use alarm to declare failure if test
+	is taking too long.
+	Reported by Ralf Wildenhues.
+
 2007-12-21  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/relocatable-prog-wrapper (Depends-on): Add intprops and
 	string, needed by strerror.
 
 2008-01-03  Colin Watson  <cjwatson@debian.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib-tool.texi (Localization): New section.
 
@@ -113,7 +120,7 @@
 	Suggested by Ben Pfaff <blp@cs.stanford.edu>.
 
 2007-12-25  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Avoid using the syntax symbol() in formatted documentation.
 	* MODULES.html.sh (func_module): When replacing symbol() with a
@@ -37242,6 +37249,6 @@
 	* m4/uintmax_t.m4: New file.
 	* m4/Makefile.am (EXTRA_DIST): Add inttypes_h.m4 and uintmax_t.m4.
 
-Copyright (C) 1997-2007 Free Software Foundation, Inc.
+Copyright (C) 1997-2008 Free Software Foundation, Inc.
 Copying and distribution of this file, with or without modification,
 are permitted provided the copyright notice and this notice are preserved.
