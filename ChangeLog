@@ -1,3 +1,13 @@
+2008-01-05  Eric Blake  <ebb9@byu.net>
+
+	Fix memmem test for mingw.
+	* modules/memmem-tests (configure.ac): Check for alarm.
+	* tests/test-memmem.c (main): Avoid alarm on platforms that lack
+	it.
+	* doc/functions/memmem.texi: New file.
+	* doc/gnulib.texi (Function Substitutes): Add memmem.
+	Reported by Bruno Haible.
+
 2008-01-04  Bruno Haible  <bruno@clisp.org>
 
 	* m4/strcase.m4 (gl_FUNC_STRCASECMP, gl_FUNC_STRNCASECMP):

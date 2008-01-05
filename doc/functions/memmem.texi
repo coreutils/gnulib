@@ -1,0 +1,28 @@
+@node memmem
+@section @code{memmem}
+@findex memmem
+
+Unspecified by POSIX, but comparable to @code{strstr}.
+
+Gnulib module: memmem
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function fails to return the start of the haystack for an empty
+needle on some platforms:
+Cygwin 1.5.x
+
+@item
+This function has quadratic instead of linear complexity on some
+platforms:
+glibc <= 2.6.1
+
+@item
+This function is missing on some platforms:
+Mingw, OpenBSD 4.0
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

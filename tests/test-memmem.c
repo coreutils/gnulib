@@ -37,9 +37,14 @@
 int
 main (int argc, char *argv[])
 {
+#if HAVE_DECL_ALARM
   /* Declare failure if test takes too long, by using default abort
-     caused by SIGALRM.  */
+     caused by SIGALRM.  All known platforms that lack alarm also lack
+     memmem, and the replacement memmem is known to not take too
+     long.  */
   alarm (10);
+#endif
+
   {
     const char input[] = "foo";
     const char *result = memmem (input, strlen (input), "", 0);
