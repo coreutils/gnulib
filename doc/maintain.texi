@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 20, 2007
+@set lastupdate January 5, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -25,7 +25,7 @@
 Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
-2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
+2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free Software
 Foundation, Inc.
 
 @quotation
@@ -1153,6 +1153,9 @@ In order to upload new releases to @code{ftp.gnu.org} or
 information.  Then, you can perform uploads yourself, with no
 intervention needed by the system administrators.
 
+The general idea is that releases should be crytographically signed
+before they are made publicly available.
+
 @menu
 * Automated Upload Registration::
 * Automated Upload Procedure::
@@ -1167,9 +1170,25 @@ intervention needed by the system administrators.
 @cindex registration
 @cindex uploads, registration for
 
-To register your information to perform automated uploads, send a
-message, preferably GPG-signed, to @email{ftp-upload@@gnu.org} with
-the following:
+Here is how to register your information so you can perform uploads
+for your GNU package:
+
+@enumerate
+
+@item
+Create an account for yourself at @url{http://savannah.gnu.org}, if
+you don't already have one.  By the way, this is also needed to
+maintain the web pages for your project also (@pxref{Web Pages}).
+
+@item
+In the @samp{My Account Conf} page on @code{savannah}, upload the GPG
+key you will use to sign your packages.  You can create a key with the
+command @code{gpg --gen-key}.  (For full information about GPG, see
+@url{http://www.gnu.org/software/gpg}).
+
+@item
+Send a message, preferably GPG-signed, to @email{ftp-upload@@gnu.org}
+with the following:
 
 @enumerate
 @item
@@ -1177,8 +1196,8 @@ Name of package(s) that you are the maintainer for, and your
 preferred email address.
 
 @item
-An ASCII armored copy of your GnuPG key, as an attachment.
-(@samp{gpg --export -a YOUR_KEY_ID >mykey.asc} should give you this.)
+An ASCII armored copy of your GnuPG key, as an attachment.  (@samp{gpg
+--export -a @var{your_key_id} >mykey.asc} should give you this.)
 
 @item
 A list of names and preferred email addresses of other individuals you
@@ -1187,6 +1206,7 @@ don't make all releases yourself).
 
 @item
 ASCII armored copies of GnuPG keys for any individuals listed in (3).
+@end enumerate
 @end enumerate
 
 The administrators will acknowledge your message when they have added
