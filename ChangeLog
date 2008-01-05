@@ -1,5 +1,9 @@
 2008-01-05  Eric Blake  <ebb9@byu.net>
 
+	Avoid quadratic system memmem.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Check for quadratic memmem.
+	Reported by Ralf Wildenhues.
+
 	Fix memmem test for mingw.
 	* modules/memmem-tests (configure.ac): Check for alarm.
 	* tests/test-memmem.c (main): Avoid alarm on platforms that lack
