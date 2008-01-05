@@ -8,8 +8,7 @@ m4/memmem.m4
 Depends-on:
 extensions
 string
-stdbool
-malloca
+stdint
 memchr
 memcmp
 

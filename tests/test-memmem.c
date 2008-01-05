@@ -69,6 +69,12 @@ main (int argc, char *argv[])
     ASSERT (result == NULL);
   }
 
+  {
+    const char input[] = "ABC ABCDAB ABCDABCDABDE";
+    const char *result = memmem (input, strlen (input), "ABCDABCD", 8);
+    ASSERT (result == input + 11);
+  }
+
   /* Check that length 0 does not dereference NULL.  */
   {
     const char *result = memmem (NULL, 0, "foo", 3);
@@ -150,6 +156,33 @@ main (int argc, char *argv[])
       free (needle);
     if (haystack != NULL)
       free (haystack);
+  }
+
+  /* Check that long needles not present in a haystack can be handled
+     with sublinear speed.  */
+  {
+    size_t repeat = 10000;
+    size_t m = 1000000;
+    size_t n = 1000;
+    char *haystack = (char *) malloc (m);
+    char *needle = (char *) malloc (n);
+    if (haystack != NULL && needle != NULL)
+      {
+	const char *result;
+
+	memset (haystack, 'A', m);
+	memset (needle, 'B', n);
+
+	for (; repeat > 0; repeat--)
+	  {
+	    result = memmem (haystack, m, needle, n);
+	    ASSERT (result == NULL);
+	  }
+      }
+    if (haystack != NULL)
+      free (haystack);
+    if (needle != NULL)
+      free (needle);
   }
 
   return 0;

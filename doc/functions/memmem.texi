@@ -9,14 +9,18 @@ Gnulib module: memmem
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function fails to return the start of the haystack for an empty
-needle on some platforms:
-Cygwin 1.5.x
+This function has reversed arguments on some older platforms:
+Linux libc 5.0.9
+
+@item
+This function returns incorrect values in some cases, such as when
+given an empty needle:
+glibc <= 2.0, cygwin 1.5.x
 
 @item
 This function has quadratic instead of linear complexity on some
 platforms:
-glibc <= 2.6.1
+glibc <= 2.6.1, cygwin 1.5.x
 
 @item
 This function is missing on some platforms:

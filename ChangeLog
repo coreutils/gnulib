@@ -1,3 +1,18 @@
+2008-01-08  Eric Blake  <ebb9@byu.net>
+
+	Rewrite memmem to guarantee linear complexity without malloc.
+	* lib/memmem.c (memmem): Use Two-Way rather than
+	Knuth-Morris-Pratt, to allow O(1) space usage.
+	(critical_factorization, two_way_short_needle)
+	(two_way_long_needle): New functions.
+	(knuth_morris_pratt): Delete.
+	* modules/memmem (Depends-on): No longer need malloca or stdbool.
+	Add stdint.
+	* tests/test-memmem.c (main): Add tests for periodic needle and
+	sublinear performance.
+	* doc/functions/memmem.texi (memmem): Document other deficiencies
+	in cygwin and older glibc.
+
 2008-01-08  Bruno Haible  <bruno@clisp.org>
 
 	* modules/memmem-tests (Makefile.am): Remove TESTS_ENVIRONMENT
