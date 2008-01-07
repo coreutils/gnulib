@@ -1,3 +1,9 @@
+2008-01-01  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-wcwidth.c (main): Relax test of U+2060. Avoids a test
+	failure on older glibc systems.
+	Reported by Peter Fales <psfales@alcatel-lucent.com>.
+
 2008-01-05  Eric Blake  <ebb9@byu.net>
 
 	Avoid quadratic system memmem.

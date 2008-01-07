@@ -1,5 +1,5 @@
 /* Test of wcwidth() function.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ main ()
 
       /* Test width of some format control characters.  */
       ASSERT (wcwidth (0x200E) <= 0);
-      ASSERT (wcwidth (0x2060) == 0);
+      ASSERT (wcwidth (0x2060) <= 0);
 #if 0  /* wchar_t may be only 16 bits.  */
       ASSERT (wcwidth (0xE0001) <= 0);
       ASSERT (wcwidth (0xE0044) <= 0);
