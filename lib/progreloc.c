@@ -1,5 +1,5 @@
 /* Provide relocatable programs.
-   Copyright (C) 2003-2007 Free Software Foundation, Inc.
+   Copyright (C) 2003-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -281,7 +281,7 @@ static void
 prepare_relocate (const char *orig_installprefix, const char *orig_installdir,
 		  const char *argv0)
 {
-  const char *curr_prefix;
+  char *curr_prefix;
 
   /* Determine the full pathname of the current executable.  */
   executable_fullname = find_executable (argv0);
@@ -290,8 +290,12 @@ prepare_relocate (const char *orig_installprefix, const char *orig_installdir,
   curr_prefix = compute_curr_prefix (orig_installprefix, orig_installdir,
 				     executable_fullname);
   if (curr_prefix != NULL)
-    /* Now pass this prefix to all copies of the relocate.c source file.  */
-    set_relocation_prefix (orig_installprefix, curr_prefix);
+    {
+      /* Now pass this prefix to all copies of the relocate.c source file.  */
+      set_relocation_prefix (orig_installprefix, curr_prefix);
+
+      free (curr_prefix);
+    }
 }
 
 /* Set program_name, based on argv[0], and original installation prefix and
