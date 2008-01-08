@@ -34,6 +34,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   libvirt         http://libvirt.org/
                   http://git.et.redhat.com/?p=libvirt.git;a=summary
   m4              http://git.sv.gnu.org/gitweb/?p=m4.git;a=summary
+  man-db          http://www.chiark.greenend.org.uk/~cjwatson/bzr/man-db/trunk/
   miktex          https://svn.sourceforge.net/svnroot/miktex/miktex/trunk
   msmtp           http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
   newts           http://svn.arete.cc/newts/trunk/
@@ -60,7 +61,7 @@ Articles:
 
 -----
 
-Copyright (C) 2006-2007 Free Software Foundation, Inc.
+Copyright (C) 2006-2008 Free Software Foundation, Inc.
 
 This file is free documentation; the Free Software Foundation
 gives unlimited permission to copy and/or distribute it,
