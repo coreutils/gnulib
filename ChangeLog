@@ -1,3 +1,9 @@
+2008-01-07  Bruno Haible  <bruno@clisp.org>
+
+	* lib/progname.c (set_program_name): Don't strip off a leading
+	"lt-" prefix outside a .libs directory.
+	Suggested by Paul Eggert.
+
 2008-01-01  Sylvain Beucler  <beuc@gnu.org>
             Bruno Haible  <bruno@clisp.org>
 
