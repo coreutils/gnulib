@@ -3,6 +3,7 @@ tests/test-localename.c
 
 Depends-on:
 setenv
+unsetenv
 
 configure.ac:
 
