@@ -1,3 +1,9 @@
+2008-01-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Test also U+3000. Needed to
+	detect bug on OpenBSD 4.0.
+	* doc/functions/wcwidth.texi: Document the OpenBSD bug.
+
 2008-01-08  Eric Blake  <ebb9@byu.net>
 
 	Rewrite memmem to guarantee linear complexity without malloc.

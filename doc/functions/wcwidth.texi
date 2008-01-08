@@ -15,6 +15,10 @@ Solaris 2.5.1, mingw, BeOS.
 This function handles combining characters in UTF-8 locales incorrectly on some
 platforms:
 MacOS X 10.3.
+@item
+This function handles double-width CJK characters in UTF-8 locales incorrectly
+on some platforms:
+OpenBSD 4.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
