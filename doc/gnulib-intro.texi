@@ -1,5 +1,5 @@
 @node Library vs Reusable Code
-@section Library vs Reusable Code
+@section Library vs. Reusable Code
 
 Classical libraries are installed as binary object code.  Gnulib is
 different: It is used as a source code library.  Each package that uses

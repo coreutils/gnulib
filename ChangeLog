@@ -1,5 +1,10 @@
 2008-01-07  Bruno Haible  <bruno@clisp.org>
 
+	* doc/gnulib-intro.texi (Library vs Reusable Code): Restore the
+	previous section name.
+
+2008-01-07  Bruno Haible  <bruno@clisp.org>
+
 	* lib/progname.c (set_program_name): Don't strip off a leading
 	"lt-" prefix outside a .libs directory.
 	Suggested by Paul Eggert.
