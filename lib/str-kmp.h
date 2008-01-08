@@ -1,6 +1,6 @@
 /* Substring search in a NUL terminated string of 'char' elements,
    using the Knuth-Morris-Pratt algorithm.
-   Copyright (C) 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 2005-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2005.
 
    This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,9 @@
 
 /* Knuth-Morris-Pratt algorithm.
    See http://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
-   Return a boolean indicating success.  */
+   Return a boolean indicating success:
+   Return true and set *RESULTP if the search was completed.
+   Return false if it was aborted because not enough memory was available.  */
 static bool
 knuth_morris_pratt_unibyte (const char *haystack, const char *needle,
 			    const char **resultp)
