@@ -1,3 +1,7 @@
+2008-01-08  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* DEPENDENCIES: Require Texinfo version 4.6 or newer.
+
 2008-01-06  Colin Watson  <cjwatson@debian.org>
 
 	* users.txt: Add man-db.

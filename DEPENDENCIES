@@ -117,7 +117,7 @@ at any time.
     http://ftp.gnu.org/gnu/gperf/
     ftp://ftp.gnu.org/gnu/gperf/
 
-* Texinfo 4.2 or newer.
+* Texinfo 4.6 or newer.
   + Recommended.
     Needed if you use modules that include documentation.
   + Homepage:
