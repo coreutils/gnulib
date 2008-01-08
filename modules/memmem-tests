@@ -8,6 +8,5 @@ AC_CHECK_DECLS_ONCE([alarm])
 
 Makefile.am:
 TESTS += test-memmem
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-memmem
 
