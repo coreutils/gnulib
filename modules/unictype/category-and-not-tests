@@ -4,6 +4,10 @@ tests/unictype/test-categ_and_not.c
 Depends-on:
 unictype/category-or
 unictype/category-test
+unictype/category-L
+unictype/category-N
+unictype/category-Lu
+unictype/category-Nd
 
 configure.ac:
 

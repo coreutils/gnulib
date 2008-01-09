@@ -3,6 +3,8 @@ tests/unictype/test-categ_or.c
 
 Depends-on:
 unictype/category-test
+unictype/category-L
+unictype/category-N
 
 configure.ac:
 

@@ -1,5 +1,18 @@
 2008-01-08  Bruno Haible  <bruno@clisp.org>
 
+	* modules/unictype/category-of (Depends-on): Add
+	unictype/category-none.
+	* modules/unictype/category-and-tests (Depends-on): Add
+	unictype/category-{L,N,Lu,Nd}.
+	* modules/unictype/category-and-not-tests (Depends-on): Likewise.
+	* modules/unictype/category-or-tests (Depends-on): Add
+	unictype/category-{L,N}.
+	* modules/unictype/category-name-tests (Depends-on): Add
+	unictype/category-{Z,Nl}.
+	Reported by Simon Josefsson.
+
+2008-01-08  Bruno Haible  <bruno@clisp.org>
+
 	* lib/str-kmp.h (knuth_morris_pratt_unibyte): Document the calling
 	convention better.
 	* lib/mbsstr.c (knuth_morris_pratt_multibyte): Likewise.
