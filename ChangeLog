@@ -1,3 +1,11 @@
+2008-01-08  Jim Meyering  <meyering@redhat.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/printf-parse.c (PRINTF_PARSE): Handle a size specifier "q"
+	on MacOS X and a size specifier "I64" on mingw. Needed for PRIdMAX.
+	Reported by Peter Fales in
+	<http://lists.gnu.org/archive/html/bug-coreutils/2007-12/msg00148.html>.
+
 2008-01-08  Bruno Haible  <bruno@clisp.org>
 
 	* modules/unictype/category-of (Depends-on): Add
