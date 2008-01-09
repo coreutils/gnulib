@@ -1,6 +1,6 @@
 /* A GNU-like <string.h>.
 
-   Copyright (C) 1995-1996, 2001-2007 Free Software Foundation, Inc.
+   Copyright (C) 1995-1996, 2001-2008 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,6 +25,18 @@
 #define _GL_STRING_H
 
 
+#ifndef __attribute__
+/* This feature is available in gcc versions 2.5 and later.  */
+# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5) || __STRICT_ANSI__
+#  define __attribute__(Spec) /* empty */
+# endif
+/* The attribute __pure__ was added in gcc 2.96.  */
+# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 96)
+#  define __pure__ /* empty */
+# endif
+#endif
+
+
 /* The definition of GL_LINK_WARNING is copied here.  */
 
 
@@ -40,7 +52,8 @@ extern "C" {
 # endif
 # if ! @HAVE_DECL_MEMMEM@ || @REPLACE_MEMMEM@
 extern void *memmem (void const *__haystack, size_t __haystack_len,
-		     void const *__needle, size_t __needle_len);
+		     void const *__needle, size_t __needle_len)
+  __attribute__ ((__pure__));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef memmem
@@ -68,7 +81,8 @@ extern void *mempcpy (void *restrict __dest, void const *restrict __src,
 /* Search backwards through a block for a byte (specified as an int).  */
 #if @GNULIB_MEMRCHR@
 # if ! @HAVE_DECL_MEMRCHR@
-extern void *memrchr (void const *, int, size_t);
+extern void *memrchr (void const *, int, size_t)
+  __attribute__ ((__pure__));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef memrchr
@@ -121,7 +135,8 @@ extern char *stpncpy (char *restrict __dst, char const *restrict __src,
 /* Find the first occurrence of C in S or the final NUL byte.  */
 #if @GNULIB_STRCHRNUL@
 # if ! @HAVE_STRCHRNUL@
-extern char *strchrnul (char const *__s, int __c_in);
+extern char *strchrnul (char const *__s, int __c_in)
+  __attribute__ ((__pure__));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strchrnul
@@ -166,7 +181,8 @@ extern char *strndup (char const *__string, size_t __n);
    return MAXLEN.  */
 #if @GNULIB_STRNLEN@
 # if ! @HAVE_DECL_STRNLEN@
-extern size_t strnlen (char const *__string, size_t __maxlen);
+extern size_t strnlen (char const *__string, size_t __maxlen)
+  __attribute__ ((__pure__));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strnlen
@@ -192,7 +208,8 @@ extern size_t strnlen (char const *__string, size_t __maxlen);
 /* Find the first occurrence in S of any character in ACCEPT.  */
 #if @GNULIB_STRPBRK@
 # if ! @HAVE_STRPBRK@
-extern char *strpbrk (char const *__s, char const *__accept);
+extern char *strpbrk (char const *__s, char const *__accept)
+  __attribute__ ((__pure__));
 # endif
 # if defined GNULIB_POSIXCHECK
 /* strpbrk() assumes the second argument is a list of single-byte characters.
@@ -288,7 +305,8 @@ extern char *strsep (char **restrict __stringp, char const *restrict __delim);
 /* Find the first occurrence of NEEDLE in HAYSTACK, using case-insensitive
    comparison.  */
 #if ! @HAVE_STRCASESTR@
-extern char *strcasestr (const char *haystack, const char *needle);
+extern char *strcasestr (const char *haystack, const char *needle)
+  __attribute__ ((__pure__));
 #endif
 #if defined GNULIB_POSIXCHECK
 /* strcasestr() does not work with multibyte strings:

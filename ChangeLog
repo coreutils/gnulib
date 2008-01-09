@@ -1,3 +1,10 @@
+2008-01-09  Eric Blake  <ebb9@byu.net>
+
+	Give gcc some memmem optimization hints.
+	* lib/string.in.h (memmem, memrchr, strchrnul, strnlen, strpbrk)
+	(strcasestr): Declare as pure.
+	* modules/memmem (Maintainer): Claim my implementation.
+
 2008-01-09  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Support AIX 6.1 and higher.
@@ -91,7 +98,7 @@
 	Suggested by Paul Eggert.
 
 2008-01-01  Sylvain Beucler  <beuc@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Improve memory cleanup in 'relocatable' module.
 	* lib/relocatable.h (compute_curr_prefix): Change return type to
