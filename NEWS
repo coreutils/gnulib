@@ -6,6 +6,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-01-08  memmem          This module now replaces worst-case inefficient
+                            implementations; clients that use controlled
+                            needles and thus do not care about worst-case
+                            efficiency should use the new memmem-simple
+                            module instead for smaller code size.
+
 2007-12-24  setenv          The include file is changed from "setenv.h" to
                             <stdlib.h>. Also, the unsetenv function is no
                             longer declared in this module; use the 'unsetenv'

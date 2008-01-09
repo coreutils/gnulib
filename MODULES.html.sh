@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) 2002-2007 Free Software Foundation, Inc.
+# Copyright (C) 2002-2008 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1654,6 +1654,7 @@ func_all_modules ()
   func_begin_table
   func_module bcopy
   func_module memmem
+  func_module memmem-simple
   func_module mempcpy
   func_module memrchr
   func_module stpcpy

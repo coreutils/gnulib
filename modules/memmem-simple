@@ -1,5 +1,5 @@
 Description:
-memmem() function: efficiently locate first substring in a buffer.
+memmem() function: locate first substring in a buffer.
 
 Files:
 lib/memmem.c
@@ -13,7 +13,7 @@ memchr
 memcmp
 
 configure.ac:
-gl_FUNC_MEMMEM
+gl_FUNC_MEMMEM_SIMPLE
 gl_STRING_MODULE_INDICATOR([memmem])
 
 Makefile.am:
@@ -25,4 +25,4 @@ License:
 LGPLv2+
 
 Maintainer:
-libc, Eric Blake
+libc, Eric Blake, Simon Josefsson
