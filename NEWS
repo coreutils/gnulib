@@ -6,6 +6,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-01-09  alloca-opt      Now defines HAVE_ALLOCA_H only when the system
+                            supplies an <alloca.h>.  Gnulib-using code is now
+                            expected to include <alloca.h> unconditionally.
+                            Non-gnulib-using code can continue to include
+                            <alloca.h> only if HAVE_ALLOCA_H is defined.
+
 2008-01-08  memmem          This module now replaces worst-case inefficient
                             implementations; clients that use controlled
                             needles and thus do not care about worst-case

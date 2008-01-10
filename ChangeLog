@@ -1,3 +1,10 @@
+2008-01-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gl_FUNC_ALLOCA no longer defines HAVE_ALLOCA_H unconditionally.
+	See <http://lists.gnu.org/archive/html/bug-gnulib/2007-12/msg00149.html>.
+	* NEWS: announce this.
+	* m4/alloca.m4 (gl_FUNC_ALLOCA): Don't define HAVE_ALLOCA_H.
+
 2008-01-09  Simon Josefsson  <simon@josefsson.org>
 	and Eric Blake  <ebb9@byu.net>
 
