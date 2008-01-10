@@ -1,5 +1,13 @@
 2008-01-09  Bruno Haible  <bruno@clisp.org>
 
+	* doc/functions/memmem.texi: Use the same structure as snprintf.texi
+	and other files.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Say "guessing no" instead of "no"
+	if it's only a guess.
+	* modules/memmem: Simplify by depending on memmem-simple.
+
+2008-01-09  Bruno Haible  <bruno@clisp.org>
+
 	Work around OpenBSD 4.0 tdelete() bug.
 	* m4/tsearch.m4 (gl_FUNC_TSEARCH): Also check tdelete's return value.
 	* lib/search.in.h: If REPLACE_TSEARCH is 1, define tsearch etc. as

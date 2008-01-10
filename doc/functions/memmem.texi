@@ -4,27 +4,31 @@
 
 Unspecified by POSIX, but comparable to @code{strstr}.
 
-Gnulib module: memmem, memmem-simple
+Gnulib module: memmem or memmem-simple
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{memmem-simple}
+or @code{memmem}:
 @itemize
+@item
+This function is missing on some platforms:
+Mingw, OpenBSD 4.0
+
 @item
 This function has reversed arguments on some older platforms:
 Linux libc 5.0.9
+@end itemize
 
+Portability problems fixed by Gnulib module @code{memmem}:
+@itemize
 @item
 This function returns incorrect values in some cases, such as when
-given an empty needle (not fixed in memmem-simple):
+given an empty needle:
 glibc <= 2.0, cygwin 1.5.x
 
 @item
 This function has quadratic instead of linear complexity on some
-platforms (not fixed in memmem-simple):
+platforms:
 glibc <= 2.6.1, cygwin 1.5.x
-
-@item
-This function is missing on some platforms:
-Mingw, OpenBSD 4.0
 @end itemize
 
 Portability problems not fixed by Gnulib:
