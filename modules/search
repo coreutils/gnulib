@@ -25,6 +25,7 @@ search.h: search.in.h
 	      -e 's|@''NEXT_SEARCH_H''@|$(NEXT_SEARCH_H)|g' \
 	      -e 's|@''GNULIB_TSEARCH''@|$(GNULIB_TSEARCH)|g' \
 	      -e 's|@''HAVE_TSEARCH''@|$(HAVE_TSEARCH)|g' \
+	      -e 's|@''REPLACE_TSEARCH''@|$(REPLACE_TSEARCH)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/search.in.h; \
 	} > $@-t

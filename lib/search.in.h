@@ -1,6 +1,6 @@
 /* A GNU-like <search.h>.
 
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,12 +35,19 @@ extern "C" {
 
 
 #if @GNULIB_TSEARCH@
-# if !@HAVE_TSEARCH@
+# if @REPLACE_TSEARCH@
+#  define tsearch rpl_tsearch
+#  define tfind rpl_tfind
+#  define tdelete rpl_tdelete
+#  define twalk rpl_twalk
+# endif
+# if !@HAVE_TSEARCH@ || @REPLACE_TSEARCH@
 
 /* See <http://www.opengroup.org/susv3xbd/search.h.html>,
        <http://www.opengroup.org/susv3xsh/tsearch.html>
    for details.  */
 
+#  if !@HAVE_TSEARCH@
 typedef enum
 {
   preorder,
@@ -49,6 +56,7 @@ typedef enum
   leaf
 }
 VISIT;
+#  endif
 
 /* Searches an element in the tree *VROOTP that compares equal to KEY.
    If one is found, it is returned.  Otherwise, a new element equal to KEY

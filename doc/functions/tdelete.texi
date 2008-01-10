@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 mingw, BeOS.
+@item
+@code{tdelete} returns @code{NULL} when removing the last element of a tree
+on some platforms:
+OpenBSD 4.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -1,5 +1,15 @@
 2008-01-09  Bruno Haible  <bruno@clisp.org>
 
+	Work around OpenBSD 4.0 tdelete() bug.
+	* m4/tsearch.m4 (gl_FUNC_TSEARCH): Also check tdelete's return value.
+	* lib/search.in.h: If REPLACE_TSEARCH is 1, define tsearch etc. as
+	macros and don't redefine the enum values.
+	* m4/search_h.m4 (gl_SEARCH_H_DEFAULTS): Initialize REPLACE_TSEARCH.
+	* modules/search (Makefile.am): Also substitute REPLACE_TSEARCH.
+	* doc/functions/tdelete.texi: Document the OpenBSD 4.0 bug.
+
+2008-01-09  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-wcwidth.c: Include <string.h> and localcharset.h.
 	(main): Don't perform the tests if setlocale did not install a UTF-8
 	locale. Needed on OpenBSD 4.0.
