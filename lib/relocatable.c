@@ -409,7 +409,9 @@ get_shared_library_fullname ()
 #endif /* PIC */
 
 /* Returns the pathname, relocated according to the current installation
-   directory.  */
+   directory.
+   The returned string is either PATHNAME unmodified or a freshly allocated
+   string that you can free with free() after casting it to 'char *'.  */
 const char *
 relocate (const char *pathname)
 {
@@ -455,9 +457,19 @@ relocate (const char *pathname)
       && strncmp (pathname, orig_prefix, orig_prefix_len) == 0)
     {
       if (pathname[orig_prefix_len] == '\0')
-	/* pathname equals orig_prefix.  */
-	return curr_prefix;
-      if (ISSLASH (pathname[orig_prefix_len]))
+	{
+	  /* pathname equals orig_prefix.  */
+	  char *result = (char *) xmalloc (strlen (curr_prefix) + 1);
+
+#ifdef NO_XMALLOC
+	  if (result != NULL)
+#endif
+	    {
+	      strcpy (result, curr_prefix);
+	      return result;
+	    }
+	}
+      else if (ISSLASH (pathname[orig_prefix_len]))
 	{
 	  /* pathname starts with orig_prefix.  */
 	  const char *pathname_tail = &pathname[orig_prefix_len];

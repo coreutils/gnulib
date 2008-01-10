@@ -49,12 +49,15 @@ extern RELOCATABLE_DLL_EXPORTED void
 			      const char *curr_prefix);
 
 /* Returns the pathname, relocated according to the current installation
-   directory.  */
+   directory.
+   The returned string is either PATHNAME unmodified or a freshly allocated
+   string that you can free with free() after casting it to 'char *'.  */
 extern const char * relocate (const char *pathname);
 
 /* Memory management: relocate() leaks memory, because it has to construct
    a fresh pathname.  If this is a problem because your program calls
-   relocate() frequently, think about caching the result.  */
+   relocate() frequently, think about caching the result.  Or free the
+   return value if it was different from the argument pathname.  */
 
 /* Convenience function:
    Computes the current installation prefix, based on the original

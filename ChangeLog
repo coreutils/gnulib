@@ -1,4 +1,12 @@
-2008-01-10   Colin Watson  <cjwatson@debian.org>
+2008-01-10  Bruno Haible  <bruno@clisp.org>
+
+	* lib/relocatable.h (relocate): State whether result is freshly
+	allocated or not.
+	* lib/relocatable.c (relocate): Return a freshly allocated string
+	instead of a pointer to a privately held string.
+	Reported by Sylvain Beucler <beuc@gnu.org>.
+
+2008-01-10  Colin Watson  <cjwatson@debian.org>
 
 	* lib/canonicalize-lgpl.c [!_LIBC]: Fix typo in #if directive:
 	s/S_ISNLK/S_ISLNK/.
