@@ -2,6 +2,7 @@ Description:
 memmem() function: locate first substring in a buffer.
 
 Files:
+lib/str-two-way.h
 lib/memmem.c
 m4/memmem.m4
 

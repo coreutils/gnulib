@@ -1,5 +1,12 @@
 2008-01-10  Eric Blake  <ebb9@byu.net>
 
+	Share two-way algorithm.
+	* lib/str-two-way.h: New file, merged from...
+	* lib/memmem.c: ...here...
+	* lib/strstr.c: ...and here.
+	* modules/memmem (Files): Use it.
+	* modules/strstr (Files): Likewise.
+
 	Avoid quadratic strstr implementations.
 	* lib/strstr.c: New file.
 	* m4/strstr.m4: Likewise.

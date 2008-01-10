@@ -2,6 +2,7 @@ Description:
 strstr() function: efficiently locate first substring in a buffer.
 
 Files:
+lib/str-two-way.h
 lib/strstr.c
 m4/strstr.m4
 
