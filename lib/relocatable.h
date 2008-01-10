@@ -54,9 +54,9 @@ extern RELOCATABLE_DLL_EXPORTED void
    string that you can free with free() after casting it to 'char *'.  */
 extern const char * relocate (const char *pathname);
 
-/* Memory management: relocate() leaks memory, because it has to construct
-   a fresh pathname.  If this is a problem because your program calls
-   relocate() frequently, think about caching the result.  Or free the
+/* Memory management: relocate() potentially allocates memory, because it has
+   to construct a fresh pathname.  If this is a problem because your program
+   calls relocate() frequently, think about caching the result.  Or free the
    return value if it was different from the argument pathname.  */
 
 /* Convenience function:

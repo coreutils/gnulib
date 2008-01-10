@@ -1,5 +1,9 @@
 2008-01-10  Eric Blake  <ebb9@byu.net>
 
+	* lib/relocatable.h: Fix a comment.
+
+2008-01-10  Eric Blake  <ebb9@byu.net>
+
 	Share two-way algorithm.
 	* lib/str-two-way.h: New file, merged from...
 	* lib/memmem.c: ...here...
