@@ -1,0 +1,12 @@
+Files:
+tests/test-strstr.c
+
+Depends-on:
+
+configure.ac:
+AC_CHECK_DECLS_ONCE([alarm])
+
+Makefile.am:
+TESTS += test-strstr
+check_PROGRAMS += test-strstr
+

@@ -4,10 +4,14 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/strstr.html}
 
-Gnulib module: ---
+Gnulib module: strstr
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function has quadratic instead of linear complexity on some
+platforms:
+glibc <= 2.6.1, cygwin 1.5.x, OpenBSD 4.0, Solaris 9, mingw
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -58,8 +58,9 @@ extern void *memmem (void const *__haystack, size_t __haystack_len,
 #elif defined GNULIB_POSIXCHECK
 # undef memmem
 # define memmem(a,al,b,bl) \
-    (GL_LINK_WARNING ("memmem is unportable - " \
-                      "use gnulib module memmem for portability"), \
+    (GL_LINK_WARNING ("memmem is unportable and often quadratic - " \
+                      "use gnulib module memmem-simple for portability, " \
+                      "and module memmem for speed" ), \
      memmem (a, al, b, bl))
 #endif
 
@@ -289,16 +290,24 @@ extern char *strsep (char **restrict __stringp, char const *restrict __delim);
      strsep (s, d))
 #endif
 
-#if defined GNULIB_POSIXCHECK
+#if @GNULIB_STRSTR@
+# if @REPLACE_STRSTR@
+#  define strstr rpl_strstr
+char *strstr (const char *haystack, const char *needle)
+  __attribute__ ((__pure__));
+# endif
+#elif defined GNULIB_POSIXCHECK
 /* strstr() does not work with multibyte strings if the locale encoding is
    different from UTF-8:
    POSIX says that it operates on "strings", and "string" in POSIX is defined
    as a sequence of bytes, not of characters.  */
 # undef strstr
 # define strstr(a,b) \
-    (GL_LINK_WARNING ("strstr cannot work correctly on character strings " \
-                      "in most multibyte locales - " \
-                      "use mbsstr if you care about internationalization"), \
+    (GL_LINK_WARNING ("strstr is quadratic on many systems, and cannot " \
+                      "work correctly on character strings in most "    \
+                      "multibyte locales - " \
+                      "use mbsstr if you care about internationalization, " \
+                      "or use strstr if you care about speed"), \
      strstr (a, b))
 #endif
 

@@ -1,3 +1,18 @@
+2008-01-10  Eric Blake  <ebb9@byu.net>
+
+	Avoid quadratic strstr implementations.
+	* lib/strstr.c: New file.
+	* m4/strstr.m4: Likewise.
+	* modules/strstr: Likewise.
+	* modules/strstr-tests: Likewise.
+	* tests/test-strstr.c: Likewise.
+	* lib/string.in.h (rpl_strstr): Declare.
+	(memmem) [GNULIB_POSIXCHECK]: Document speed issue.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Support strstr.
+	* modules/string (Makefile.am): Likewise.
+	* MODULES.html.sh (string handling): Mention new module.
+	* doc/functions/strstr.texi (strstr): Document the bug.
+
 2008-01-10  Bruno Haible  <bruno@clisp.org>
 
 	* lib/relocatable.h (relocate): State whether result is freshly
