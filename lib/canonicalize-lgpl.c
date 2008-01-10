@@ -78,7 +78,7 @@
 # endif
 # define __readlink readlink
   /* On systems without symbolic links, call stat() instead of lstat().  */
-# if !defined S_ISNLK && !HAVE_READLINK
+# if !defined S_ISLNK && !HAVE_READLINK
 #  define lstat stat
 # endif
 #endif

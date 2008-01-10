@@ -1,3 +1,8 @@
+2008-01-10   Colin Watson  <cjwatson@debian.org>
+
+	* lib/canonicalize-lgpl.c [!_LIBC]: Fix typo in #if directive:
+	s/S_ISNLK/S_ISLNK/.
+
 2008-01-09  Bruno Haible  <bruno@clisp.org>
 
 	* doc/functions/memmem.texi: Use the same structure as snprintf.texi
