@@ -2,6 +2,7 @@ Files:
 tests/test-wcwidth.c
 
 Depends-on:
+localcharset
 
 configure.ac:
 

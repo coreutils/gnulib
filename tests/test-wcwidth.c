@@ -23,6 +23,9 @@
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include "localcharset.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -45,7 +48,13 @@ main ()
     ASSERT (wcwidth (wc) == 1);
 
   /* Switch to an UTF-8 locale.  */
-  if (setlocale (LC_ALL, "fr_FR.UTF-8") != NULL)
+  if (setlocale (LC_ALL, "fr_FR.UTF-8") != NULL
+      /* Check whether it's really an UTF-8 locale.
+	 On OpenBSD 4.0, the setlocale call succeeds only for the LC_CTYPE
+	 category and therefore returns "C/fr_FR.UTF-8/C/C/C/C", but the
+	 LC_CTYPE category is effectively set to an ASCII LC_CTYPE category;
+	 in particular, locale_charset() returns "ASCII".  */
+      && strcmp (locale_charset (), "UTF-8") == 0)
     {
       /* Test width of ASCII characters.  */
       for (wc = 0x20; wc < 0x7F; wc++)

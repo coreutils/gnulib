@@ -1,3 +1,10 @@
+2008-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-wcwidth.c: Include <string.h> and localcharset.h.
+	(main): Don't perform the tests if setlocale did not install a UTF-8
+	locale. Needed on OpenBSD 4.0.
+	* modules/wcwidth-tests (Depends-on): Add localcharset.
+
 2008-01-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gl_FUNC_ALLOCA no longer defines HAVE_ALLOCA_H unconditionally.
