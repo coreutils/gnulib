@@ -1,7 +1,7 @@
 2008-01-10  Eric Blake  <ebb9@byu.net>
 
 	* m4/strstr.m4: Delete cruft from copy-n-paste.
-	Reported by Brun Haible.
+	Reported by Bruno Haible.
 
 2008-01-10  Bruno Haible  <bruno@clisp.org>
 
