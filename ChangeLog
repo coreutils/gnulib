@@ -1,3 +1,24 @@
+2008-01-14  Eric Blake  <ebb9@byu.net>
+
+	Convert strcasestr module to use Two-Way algorithm.
+	* modules/strcasestr-simple: New module, based on the old
+	strcasestr, but with Two-Way rather than KMP.
+	* modules/strcasestr (Depends-on): Change to strcasestr-simple.
+	* lib/string.in.h (rpl_strcasestr): Declare.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Check for linear
+	performance.
+	* lib/strcasestr.c (strcasestr): Simplify, and avoid malloc.
+	* modules/string (Makefile.am): Support strcasestr.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Likewise.
+	* modules/strcasestr-tests (Depends-on): Check for alarm.
+	* tests/test-strcasestr.c: Augment test.
+	* lib/str-two-way.h: Clean up stray macro.
+	* NEWS: Document new module.
+	* MODULES.html.sh (string handling): Likewise.
+	* doc/functions/strcasestr.texi: New file.
+	* doc/gnulib.texi (Function Substitutes): New node.  Move memmem
+	here, since it is not a POSIX function.
+
 2008-01-14  Colin Watson  <cjwatson@debian.org>
             Bruno Haible  <bruno@clisp.org>
 

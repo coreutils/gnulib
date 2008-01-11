@@ -1,5 +1,5 @@
 /* Case-insensitive searching in a string.
-   Copyright (C) 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 2005-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2005.
 
    This program is free software; you can redistribute it and/or modify
@@ -23,109 +23,61 @@
 
 #include <ctype.h>
 #include <stdbool.h>
-#include <stddef.h>  /* for NULL, in case a nonstandard string.h lacks it */
-
-#include "malloca.h"
+#include <strings.h>
 
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
 
-/* Knuth-Morris-Pratt algorithm.  */
+/* Two-Way algorithm.  */
+#define RETURN_TYPE char *
+#define AVAILABLE(h, h_l, j, n_l)			\
+  (!memchr ((h) + (h_l), '\0', (j) + (n_l) - (h_l))	\
+   && ((h_l) = (j) + (n_l)))
 #define CANON_ELEMENT(c) TOLOWER (c)
-#include "str-kmp.h"
+#define CMP_FUNC(p1, p2, l)				\
+  strncasecmp ((const char *) (p1), (const char *) (p2), l)
+#include "str-two-way.h"
 
-/* Find the first occurrence of NEEDLE in HAYSTACK, using case-insensitive
-   comparison.
-   Note: This function may, in multibyte locales, return success even if
-   strlen (haystack) < strlen (needle) !  */
+/* Find the first occurrence of NEEDLE in HAYSTACK, using
+   case-insensitive comparison.  This function gives unspecified
+   results in multibyte locales.  */
 char *
-strcasestr (const char *haystack, const char *needle)
+strcasestr (const char *haystack_start, const char *needle_start)
 {
-  if (*needle != '\0')
+  const char *haystack = haystack_start;
+  const char *needle = needle_start;
+  size_t needle_len; /* Length of NEEDLE.  */
+  size_t haystack_len; /* Known minimum length of HAYSTACK.  */
+  bool ok = true; /* True if NEEDLE is prefix of HAYSTACK.  */
+
+  /* Determine length of NEEDLE, and in the process, make sure
+     HAYSTACK is at least as long (no point processing all of a long
+     NEEDLE if HAYSTACK is too short).  */
+  while (*haystack && *needle)
     {
-      /* Minimizing the worst-case complexity:
-	 Let n = strlen(haystack), m = strlen(needle).
-	 The naïve algorithm is O(n*m) worst-case.
-	 The Knuth-Morris-Pratt algorithm is O(n) worst-case but it needs a
-	 memory allocation.
-	 To achieve linear complexity and yet amortize the cost of the memory
-	 allocation, we activate the Knuth-Morris-Pratt algorithm only once
-	 the naïve algorithm has already run for some time; more precisely,
-	 when
-	   - the outer loop count is >= 10,
-	   - the average number of comparisons per outer loop is >= 5,
-	   - the total number of comparisons is >= m.
-	 But we try it only once.  If the memory allocation attempt failed,
-	 we don't retry it.  */
-      bool try_kmp = true;
-      size_t outer_loop_count = 0;
-      size_t comparison_count = 0;
-      size_t last_ccount = 0;			/* last comparison count */
-      const char *needle_last_ccount = needle;	/* = needle + last_ccount */
-
-      /* Speed up the following searches of needle by caching its first
-	 character.  */
-      unsigned char b = TOLOWER ((unsigned char) *needle);
-
+      ok &= (TOLOWER ((unsigned char) *haystack)
+	     == TOLOWER ((unsigned char) *needle));
+      haystack++;
       needle++;
-      for (;; haystack++)
-	{
-	  if (*haystack == '\0')
-	    /* No match.  */
-	    return NULL;
-
-	  /* See whether it's advisable to use an asymptotically faster
-	     algorithm.  */
-	  if (try_kmp
-	      && outer_loop_count >= 10
-	      && comparison_count >= 5 * outer_loop_count)
-	    {
-	      /* See if needle + comparison_count now reaches the end of
-		 needle.  */
-	      if (needle_last_ccount != NULL)
-		{
-		  needle_last_ccount +=
-		    strnlen (needle_last_ccount, comparison_count - last_ccount);
-		  if (*needle_last_ccount == '\0')
-		    needle_last_ccount = NULL;
-		  last_ccount = comparison_count;
-		}
-	      if (needle_last_ccount == NULL)
-		{
-		  /* Try the Knuth-Morris-Pratt algorithm.  */
-		  const char *result;
-		  bool success =
-		    knuth_morris_pratt_unibyte (haystack, needle - 1, &result);
-		  if (success)
-		    return (char *) result;
-		  try_kmp = false;
-		}
-	    }
-
-	  outer_loop_count++;
-	  comparison_count++;
-	  if (TOLOWER ((unsigned char) *haystack) == b)
-	    /* The first character matches.  */
-	    {
-	      const char *rhaystack = haystack + 1;
-	      const char *rneedle = needle;
-
-	      for (;; rhaystack++, rneedle++)
-		{
-		  if (*rneedle == '\0')
-		    /* Found a match.  */
-		    return (char *) haystack;
-		  if (*rhaystack == '\0')
-		    /* No match.  */
-		    return NULL;
-		  comparison_count++;
-		  if (TOLOWER ((unsigned char) *rhaystack)
-		      != TOLOWER ((unsigned char) *rneedle))
-		    /* Nothing in this round.  */
-		    break;
-		}
-	    }
-	}
     }
-  else
-    return (char *) haystack;
+  if (*needle)
+    return NULL;
+  if (ok)
+    return (char *) haystack_start;
+  needle_len = needle - needle_start;
+  haystack = haystack_start + 1;
+  haystack_len = needle_len - 1;
+
+  /* Perform the search.  Abstract memory is considered to be an array
+     of 'unsigned char' values, not an array of 'char' values.  See
+     ISO C 99 section 6.2.6.1.  */
+  if (needle_len < LONG_NEEDLE_THRESHOLD)
+    return two_way_short_needle ((const unsigned char *) haystack,
+				 haystack_len,
+				 (const unsigned char *) needle_start,
+				 needle_len);
+  return two_way_long_needle ((const unsigned char *) haystack, haystack_len,
+			      (const unsigned char *) needle_start,
+			      needle_len);
 }
+
+#undef LONG_NEEDLE_THRESHOLD

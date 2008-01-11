@@ -1664,6 +1664,7 @@ func_all_modules ()
   func_module c-strcaseeq
   func_module c-strcasestr
   func_module strcasestr
+  func_module strcasestr-simple
   func_module strchrnul
   func_module strdup
   func_module streq

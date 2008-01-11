@@ -1,5 +1,5 @@
 /* Test of case-insensitive searching in a string.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define ASSERT(expr) \
   do									     \
@@ -37,6 +38,14 @@
 int
 main ()
 {
+#if HAVE_DECL_ALARM
+  /* Declare failure if test takes too long, by using default abort
+     caused by SIGALRM.  All known platforms that lack alarm also lack
+     memmem, and the replacement memmem is known to not take too
+     long.  */
+  alarm (50);
+#endif
+
   {
     const char input[] = "foo";
     const char *result = strcasestr (input, "");
@@ -59,6 +68,12 @@ main ()
     const char input[] = "ABC ABCDAB ABCDABCDABDE";
     const char *result = strcasestr (input, "ABCDaBE");
     ASSERT (result == NULL);
+  }
+
+  {
+    const char input[] = "ABC ABCDAB ABCDABCDABDE";
+    const char *result = strcasestr (input, "ABCDaBCD");
+    ASSERT (result == input + 11);
   }
 
   /* Check that a very long haystack is handled quickly if the needle is
@@ -110,7 +125,6 @@ main ()
   }
 
   /* Check that the asymptotic worst-case complexity is not quadratic.  */
-#if !HAVE_STRCASESTR /* The system's strcasestr() function fails this test.  */
   {
     size_t m = 1000000;
     char *haystack = (char *) malloc (2 * m + 2);
@@ -135,7 +149,6 @@ main ()
     if (haystack != NULL)
       free (haystack);
   }
-#endif
 
   return 0;
 }

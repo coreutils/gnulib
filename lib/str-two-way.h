@@ -422,5 +422,6 @@ two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
 
 #undef AVAILABLE
 #undef CANON_ELEMENT
+#undef CMP_FUNC
 #undef MAX
 #undef RETURN_TYPE

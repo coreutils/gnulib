@@ -6,6 +6,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-01-14  strcasestr      This module now replaces worst-case inefficient
+                            implementations; clients that use controlled
+                            needles and thus do not care about worst-case
+                            efficiency should use the new strcasestr-simple
+                            module instead for smaller code size.
+
 2008-01-09  alloca-opt      Now defines HAVE_ALLOCA_H only when the system
                             supplies an <alloca.h>.  Gnulib-using code is now
                             expected to include <alloca.h> unconditionally.
