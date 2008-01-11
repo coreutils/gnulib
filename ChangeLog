@@ -1,3 +1,14 @@
+2008-01-10  Bruno Haible  <bruno@clisp.org>
+
+	* doc/gnulib.texi (String Functions in C Locale): New section.
+	* doc/c-ctype.texi: New file.
+	* doc/c-strcase.texi: New file.
+	* doc/c-strcaseeq.texi: New file.
+	* doc/c-strcasestr.texi: New file.
+	* doc/c-strstr.texi: New file.
+	* doc/c-strtod.texi: New file.
+	* doc/c-strtold.texi: New file.
+
 2008-01-10  Eric Blake  <ebb9@byu.net>
 
 	* lib/relocatable.h: Fix a comment.
