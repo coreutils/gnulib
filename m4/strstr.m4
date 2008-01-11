@@ -41,8 +41,4 @@ AC_DEFUN([gl_FUNC_STRSTR],
     REPLACE_STRSTR=1
     AC_LIBOBJ([strstr])
   fi
-]) # gl_FUNC_MEMMEM
-
-# Prerequisites of lib/memmem.c.
-AC_DEFUN([gl_PREREQ_MEMMEM], [:])
-])
+]) # gl_FUNC_STRSTR
