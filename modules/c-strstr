@@ -4,12 +4,9 @@ Search for a substring in a string in C locale.
 Files:
 lib/c-strstr.h
 lib/c-strstr.c
-lib/str-kmp.h
 
 Depends-on:
-stdbool
-malloca
-strnlen
+strstr
 
 configure.ac:
 

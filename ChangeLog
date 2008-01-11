@@ -1,5 +1,13 @@
 2008-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Make c-strstr rely on strstr.
+	* lib/c-strstr.c: Don't include str-kmp.h.
+	(c_strstr): Define in terms of strstr.
+	* modules/c-strstr (Files): Remove lib/str-kmp.h.
+	(Depends-on): Remove stdbool, malloca, strnlen. Add strstr.
+
+2008-01-10  Bruno Haible  <bruno@clisp.org>
+
 	* doc/gnulib.texi (String Functions in C Locale): New section.
 	* doc/c-ctype.texi: New file.
 	* doc/c-strcase.texi: New file.
