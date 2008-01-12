@@ -11,7 +11,7 @@ or @code{memmem}:
 @itemize
 @item
 This function is missing on some platforms:
-Mingw, OpenBSD 4.0
+MacOS X 10.3, FreeBSD 5.2.1, OpenBSD 4.0, AIX 4.3.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, Interix 3.5, BeOS.
 
 @item
 This function has reversed arguments on some older platforms:
@@ -23,12 +23,12 @@ Portability problems fixed by Gnulib module @code{memmem}:
 @item
 This function returns incorrect values in some cases, such as when
 given an empty needle:
-glibc <= 2.0, cygwin 1.5.x
+glibc <= 2.0, Cygwin 1.5.x.
 
 @item
-This function has quadratic instead of linear complexity on some
+This function has quadratic instead of linear worst-case complexity on some
 platforms:
-glibc <= 2.6.1, cygwin 1.5.x
+glibc 2.6.1, FreeBSD 6.2, NetBSD 3.0, AIX 5.1, Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:
