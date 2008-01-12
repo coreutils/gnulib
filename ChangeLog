@@ -1,5 +1,13 @@
 2008-01-12  Jim Meyering  <meyering@redhat.com>
 
+	announce-gen: emit Gnulib's git-based version string.
+	* build-aux/announce-gen: Remove option: --gnulib-snapshot-time-stamp=S.
+	New option --gnulib-version=V, where V is expected to be
+	the output of running git describe in the gnulib directory.
+	(get_tool_versions): Request feedback on xdelta.  I suspect it's
+	not useful, and plan to stop publishing an xdelta file with each
+	coreutils release.
+
 	* build-aux/announce-gen: Also check for lzma-compressed files.
 
 2008-01-11  Bruno Haible  <bruno@clisp.org>

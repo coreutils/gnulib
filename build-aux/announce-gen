@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2008-01-12 07:47'; # UTC
+my $VERSION = '2008-01-12 08:52'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -327,22 +327,17 @@ sub print_changelog_deltas ($$)
 
 sub get_tool_versions ($$)
 {
-  my ($bootstrap_tools, $gnulib_snapshot_timestamp) = @_;
-  defined $bootstrap_tools
+  my ($tool_list, $gnulib_version) = @_;
+  @$tool_list
     or return ();
 
-  defined $gnulib_snapshot_timestamp
-    or $gnulib_snapshot_timestamp = strftime '%Y-%m-%d %T UTC', gmtime;
-
   my $fail;
-  my @tool_list = split ',', $bootstrap_tools;
   my @tool_version_pair;
-  foreach my $t (@tool_list)
+  foreach my $t (@$tool_list)
     {
       if ($t eq 'gnulib')
 	{
-	  push @tool_version_pair,
-	    "CVS Gnulib sources from $gnulib_snapshot_timestamp";
+	  push @tool_version_pair, ucfirst $t . ' ' . $gnulib_version;
 	  next;
 	}
       # Assume that the last "word" on the first line of
@@ -381,7 +376,7 @@ sub get_tool_versions ($$)
   my @url_dir_list;
   my @news_file;
   my $bootstrap_tools;
-  my $gnulib_snapshot_timestamp;
+  my $gnulib_version;
 
   GetOptions
     (
@@ -393,7 +388,7 @@ sub get_tool_versions ($$)
      'url-directory=s'    => \@url_dir_list,
      'news=s'             => \@news_file,
      'bootstrap-tools=s'  => \$bootstrap_tools,
-     'gnulib-snapshot-time-stamp=s' => \$gnulib_snapshot_timestamp,
+     'gnulib-version=s'   => \$gnulib_version,
 
      help => sub { usage 0 },
      version => sub { print "$ME version $VERSION\n"; exit },
@@ -413,6 +408,13 @@ sub get_tool_versions ($$)
     or (warn "$ME: GnuPG key ID not specified\n"), $fail = 1;
   @url_dir_list
     or (warn "$ME: URL directory name(s) not specified\n"), $fail = 1;
+
+  my @tool_list = split ',', $bootstrap_tools;
+
+  grep (/^gnulib$/, @tool_list) ^ defined $gnulib_version
+    and (warn "$ME: when specifying gnulib as a tool, you must also specify\n"
+	. "--gnulib-version=V, where V is the result of running git-describe\n"
+	. "in the gnulib source directory.\n"), $fail = 1;
 
   exists $valid_release_types{$release_type}
     or (warn "$ME: `$release_type': invalid release type\n"), $fail = 1;
@@ -451,7 +453,9 @@ EOF
 
   print_locations ("compressed sources", @url_dir_list, %size, @tarballs);
   -f $xd
-    and print_locations ("xdelta-style diffs", @url_dir_list, %size, $xd);
+    and print_locations ("xdelta diffs (useful? if so, "
+			 . "please tell bug-gnulib\@gnu.org)",
+			 @url_dir_list, %size, $xd);
   my @sig_files = map { "$_.sig" } @tarballs;
   print_locations ("GPG detached signatures[*]", @url_dir_list, %size,
 		   @sig_files);
@@ -475,8 +479,7 @@ then run this command to import it:
 and rerun the \`gpg --verify' command.
 EOF
 
-  my @tool_versions = get_tool_versions ($bootstrap_tools,
-                                         $gnulib_snapshot_timestamp);
+  my @tool_versions = get_tool_versions (\@tool_list, $gnulib_version);
   @tool_versions
     and print "\nThis release was bootstrapped with the following tools:",
       join ('', map {"\n  $_"} @tool_versions), "\n";
