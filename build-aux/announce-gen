@@ -1,13 +1,13 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2007-07-22 16:09'; # UTC
+my $VERSION = '2008-01-12 07:47'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
 # do its job.  Otherwise, update this string manually.
 
-# Copyright (C) 2002-2007 Free Software Foundation, Inc.
+# Copyright (C) 2002-2008 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -426,9 +426,10 @@ sub get_tool_versions ($$)
   my $my_distdir = "$package_name-$curr_version";
   my $tgz = "$my_distdir.tar.gz";
   my $tbz = "$my_distdir.tar.bz2";
+  my $lzma = "$my_distdir.tar.lzma";
   my $xd = "$package_name-$prev_version-$curr_version.xdelta";
 
-  my @tarballs = grep {-f $_} ($tgz, $tbz);
+  my @tarballs = grep {-f $_} ($tgz, $tbz, $lzma);
   my @sizable = @tarballs;
   -f $xd
     and push @sizable, $xd;

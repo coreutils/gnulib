@@ -1,3 +1,7 @@
+2008-01-12  Jim Meyering  <meyering@redhat.com>
+
+	* build-aux/announce-gen: Also check for lzma-compressed files.
+
 2008-01-11  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-memmem.c (main): Increase maximum allowed time.
