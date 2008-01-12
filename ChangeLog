@@ -1,4 +1,9 @@
-2008-01-10  Bruno Haible  <bruno@clisp.org>
+2008-01-11  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-memmem.c (main): Increase maximum allowed time.
+	* tests/test-strstr.c (main): Likewise.
+
+2008-01-11  Bruno Haible  <bruno@clisp.org>
 
 	* doc/functions/memmem.texi: Add more precisions about platforms.
 	* doc/functions/strstr.texi: Likewise.
