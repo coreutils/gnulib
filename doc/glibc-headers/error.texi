@@ -1,0 +1,32 @@
+@node error.h
+@section @file{error.h}
+
+Declares the functions @code{error}, @code{error_at_line} and the variables
+@code{error_print_progname}, @code{error_message_count},
+@code{error_one_per_line}.
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Error Messages,,,libc},
+@end ifinfo
+@ifnotinfo
+@url{http://www.gnu.org/software/libc/manual/html_node/Error-Messages.html},
+@end ifnotinfo
+@item
+@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/error.3.html,,man error}.
+@end itemize
+
+Gnulib module: error
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on all non-glibc platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

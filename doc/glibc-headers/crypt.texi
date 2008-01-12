@@ -1,0 +1,44 @@
+@node crypt.h
+@section @file{crypt.h}
+
+Defines the type @code{struct crypt_data} and declares the functions
+@code{crypt}, @code{crypt_r},
+@code{setkey}, @code{setkey_r},
+@code{encrypt}, @code{encrypt_r}.
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{crypt,,Encrypting Passwords,libc},
+@ref{DES Encryption,,,libc},
+@end ifinfo
+@ifnotinfo
+@url{http://www.gnu.org/software/libc/manual/html_node/crypt.html},
+@url{http://www.gnu.org/software/libc/manual/html_node/DES-Encryption.html},
+@end ifnotinfo
+@item
+@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/crypt.3.html,,man crypt},
+@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/encrypt.3.html,,man encrypt}.
+@end itemize
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, mingw, Interix 3.5, BeOS.
+@item
+The functions @code{crypt}, @code{setkey}, @code{encrypt} are missing on some
+platforms:
+HP-UX 11, OSF/1 5.1.
+@item
+The type @code{struct crypt_data} and the functions @code{crypt_r},
+@code{setkey_r}, @code{encrypt_r} are missing on some platforms:
+IRIX 6.5, Solaris 10, Cygwin.
+@end itemize

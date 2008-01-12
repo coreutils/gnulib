@@ -1,0 +1,38 @@
+@node mntent.h
+@section @file{mntent.h}
+
+Defines the type @code{struct mntent} and the macros @code{MNTTAB},
+@code{MOUNTED}, @code{MNTTYPE_*}, @code{MNTOPT_*}, and declares the functions
+@code{setmntent}, @code{getmntent}, @code{getmntent_r}, @code{addmntent},
+@code{endmntent}, @code{hasmntopt}.
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{mtab,,The `mtab' file,libc},
+@end ifinfo
+@ifnotinfo
+@url{http://www.gnu.org/software/libc/manual/html_node/mtab.html},
+@end ifnotinfo
+@item
+@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/setmntent.3.html,,man setmntent}.
+@end itemize
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 4.3.2, OSF/1 5.1, Solaris 10, mingw, Interix 3.5, BeOS.
+@item
+The function @code{getmntent_r} is missing on all non-glibc platforms:
+AIX 5.1, HP-UX 11, IRIX 6.5, Cygwin.
+@end itemize
+
+Gnulib module @code{mountlist} provides a higher-level abstraction.

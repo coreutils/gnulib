@@ -1,0 +1,26 @@
+@node aliases.h
+@section @file{aliases.h}
+
+Defines the type @code{struct aliasent} and declares the functions
+@code{setaliasent}, @code{endaliasent},
+@code{getaliasent}, @code{getaliasent_r},
+@code{getaliasbyname}, @code{getaliasbyname_r}.
+
+Documentation:
+@itemize
+@item
+@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/setaliasent.3.html,,man setaliasent}.
+@end itemize
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This header file is missing on all non-glibc platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize

@@ -1,0 +1,31 @@
+@node argz.h
+@section @file{argz.h}
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Argz Functions,,,libc},
+@end ifinfo
+@ifnotinfo
+@url{http://www.gnu.org/software/libc/manual/html_node/Argz-Functions.html},
+@end ifnotinfo
+@item
+@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/argz.3.html,,man argz}.
+@end itemize
+
+Gnulib module: argz
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, Interix 3.5, BeOS.
+@item
+The argz functions do not work on some platforms:
+Cygwin.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize

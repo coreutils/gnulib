@@ -1,3 +1,37 @@
+2008-01-12  Bruno Haible  <bruno@clisp.org>
+
+	* doc/gnulib.texi (Glibc Header File Substitutes): New chapter.
+	* doc/glibc-headers/a.out.texi: New file.
+	* doc/glibc-headers/aliases.texi: New file.
+	* doc/glibc-headers/alloca.texi: New file.
+	* doc/glibc-headers/ar.texi: New file.
+	* doc/glibc-headers/argp.texi: New file.
+	* doc/glibc-headers/argz.texi: New file.
+	* doc/glibc-headers/byteswap.texi: New file.
+	* doc/glibc-headers/crypt.texi: New file.
+	* doc/glibc-headers/endian.texi: New file.
+	* doc/glibc-headers/envz.texi: New file.
+	* doc/glibc-headers/err.texi: New file.
+	* doc/glibc-headers/error.texi: New file.
+	* doc/glibc-headers/execinfo.texi: New file.
+	* doc/glibc-headers/fpu_control.texi: New file.
+	* doc/glibc-headers/fstab.texi: New file.
+	* doc/glibc-headers/fts.texi: New file.
+	* doc/glibc-headers/getopt.texi: New file.
+	* doc/glibc-headers/ieee754.texi: New file.
+	* doc/glibc-headers/ifaddrs.texi: New file.
+	* doc/glibc-headers/libintl.texi: New file.
+	* doc/glibc-headers/mcheck.texi: New file.
+	* doc/glibc-headers/mntent.texi: New file.
+	* doc/glibc-headers/obstack.texi: New file.
+	* doc/glibc-headers/paths.texi: New file.
+	* doc/glibc-headers/printf.texi: New file.
+	* doc/glibc-headers/pty.texi: New file.
+	* doc/glibc-headers/resolv.texi: New file.
+	* doc/glibc-headers/shadow.texi: New file.
+	* doc/glibc-headers/sysexits.texi: New file.
+	* doc/glibc-headers/ttyent.texi: New file.
+
 2008-01-12  Jim Meyering  <meyering@redhat.com>
 
 	announce-gen: emit Gnulib's git-based version string.

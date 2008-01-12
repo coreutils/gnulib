@@ -1,0 +1,28 @@
+@node envz.h
+@section @file{envz.h}
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Envz Functions,,,libc},
+@end ifinfo
+@ifnotinfo
+@url{http://www.gnu.org/software/libc/manual/html_node/Envz-Functions.html},
+@end ifnotinfo
+@item
+@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/envz.3.html,,man envz}.
+@end itemize
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This header file is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, Interix 3.5, BeOS.
+@end itemize

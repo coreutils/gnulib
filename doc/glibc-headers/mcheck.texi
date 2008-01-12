@@ -1,0 +1,30 @@
+@node mcheck.h
+@section @file{mcheck.h}
+
+Defines the type @code{enum mcheck_status} and declares the functions
+@code{mcheck}, @code{mcheck_pedantic}, @code{mcheck_check_all}, @code{mprobe},
+@code{mtrace}, @code{muntrace}.
+
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Heap Consistency Checking,,,libc},
+@end ifinfo
+@ifnotinfo
+@url{http://www.gnu.org/software/libc/manual/html_node/Heap-Consistency-Checking.html}.
+@end ifnotinfo
+@end itemize
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This header file is missing on all non-glibc platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize

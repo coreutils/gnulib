@@ -58,6 +58,7 @@ Texts.  A copy of the license is included in the section entitled
 * POSIX Substitutes Library::       Building as a separate substitutes library.
 * Header File Substitutes::         Overriding system headers.
 * Function Substitutes::            Replacing system functions.
+* Glibc Header File Substitutes::   Overriding system headers.
 * Particular Modules::              Documentation of individual modules.
 * GNU Free Documentation License::  Copying and sharing this manual.
 * Index::
@@ -2888,6 +2889,78 @@ If you need this particular function, you may write to
 @include functions/y0.texi
 @include functions/y1.texi
 @include functions/yn.texi
+
+@node Glibc Header File Substitutes
+@chapter Glibc Header File Substitutes
+
+This chapter describes which header files contained in GNU libc but not
+specified by ISO C or POSIX are substituted by Gnulib, which portability
+pitfalls are fixed by Gnulib, and which (known) portability problems are
+not worked around by Gnulib.
+
+@menu
+* a.out.h::
+* aliases.h::
+* alloca.h::
+* ar.h::
+* argp.h::
+* argz.h::
+* byteswap.h::
+* crypt.h::
+* endian.h::
+* envz.h::
+* err.h::
+* error.h::
+* execinfo.h::
+* fpu_control.h::
+* fstab.h::
+* fts.h::
+* getopt.h::
+* ieee754.h::
+* ifaddrs.h::
+* libintl.h::
+* mcheck.h::
+* mntent.h::
+* obstack.h::
+* paths.h::
+* printf.h::
+* pty.h::
+* resolv.h::
+* shadow.h::
+* sysexits.h::
+* ttyent.h::
+@end menu
+
+@include glibc-headers/a.out.texi
+@include glibc-headers/aliases.texi
+@include glibc-headers/alloca.texi
+@include glibc-headers/ar.texi
+@include glibc-headers/argp.texi
+@include glibc-headers/argz.texi
+@include glibc-headers/byteswap.texi
+@include glibc-headers/crypt.texi
+@include glibc-headers/endian.texi
+@include glibc-headers/envz.texi
+@include glibc-headers/err.texi
+@include glibc-headers/error.texi
+@include glibc-headers/execinfo.texi
+@include glibc-headers/fpu_control.texi
+@include glibc-headers/fstab.texi
+@include glibc-headers/fts.texi
+@include glibc-headers/getopt.texi
+@include glibc-headers/ieee754.texi
+@include glibc-headers/ifaddrs.texi
+@include glibc-headers/libintl.texi
+@include glibc-headers/mcheck.texi
+@include glibc-headers/mntent.texi
+@include glibc-headers/obstack.texi
+@include glibc-headers/paths.texi
+@include glibc-headers/printf.texi
+@include glibc-headers/pty.texi
+@include glibc-headers/resolv.texi
+@include glibc-headers/shadow.texi
+@include glibc-headers/sysexits.texi
+@include glibc-headers/ttyent.texi
 
 @node Particular Modules
 @chapter Particular Modules
