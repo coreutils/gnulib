@@ -1,0 +1,69 @@
+/* Test of strsignal() function.
+   Copyright (C) 2008 Free Software Foundation, Inc.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+/* Written by Colin Watson <cjwatson@debian.org>, 2008.  */
+
+#include <config.h>
+
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
+
+#if HAVE_DECL_SYS_SIGLIST
+# define ASSERT_DESCRIPTION(got, expect)
+#else
+/* In this case, we can guarantee some signal descriptions.  */
+# define ASSERT_DESCRIPTION(got, expect) ASSERT (!strcmp (got, expect))
+#endif
+
+int
+main (int argc, char **argv)
+{
+  char *str;
+
+  /* We try a couple of signals, since not all signals are supported
+     everywhere.  Notwithstanding the #ifdef for neatness, SIGINT should in
+     fact be available on all platforms.  */
+
+#ifdef SIGHUP
+  str = strsignal (SIGHUP);
+  ASSERT (str);
+  ASSERT (*str);
+  ASSERT_DESCRIPTION (str, "Hangup");
+#endif
+
+#ifdef SIGINT
+  str = strsignal (SIGINT);
+  ASSERT (str);
+  ASSERT (*str);
+  ASSERT_DESCRIPTION (str, "Interrupt");
+#endif
+
+  return 0;
+}

@@ -1,5 +1,8 @@
 2008-01-13  Colin Watson  <cjwatson@debian.org>
 
+	* modules/strsignal-tests: New file.
+	* tests/test-strsignal.c: New file.
+
 	* lib/strsignal.c: New file, from glibc with modifications.
 	* lib/siglist.h: New file, from glibc with modifications.
 	* lib/string.in.h (strsignal): New declaration.

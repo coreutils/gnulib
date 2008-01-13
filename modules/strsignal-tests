@@ -1,0 +1,10 @@
+Files:
+tests/test-strsignal.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-strsignal
+check_PROGRAMS += test-strsignal
