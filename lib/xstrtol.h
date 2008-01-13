@@ -1,7 +1,7 @@
 /* A more useful interface to strtol.
 
-   Copyright (C) 1995, 1996, 1998, 1999, 2001, 2002, 2003, 2004, 2006, 2007
-   Free Software Foundation, Inc.
+   Copyright (C) 1995, 1996, 1998, 1999, 2001, 2002, 2003, 2004, 2006, 2007,
+   2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ _DECLARE_XSTRTOL (xstrtoimax, intmax_t)
 _DECLARE_XSTRTOL (xstrtoumax, uintmax_t)
 
 #ifndef __attribute__
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8) || __STRICT_ANSI__
+# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
 #  define __attribute__(x)
 # endif
 #endif

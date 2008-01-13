@@ -1,6 +1,6 @@
 /* Stack overflow handling.
 
-   Copyright (C) 2002, 2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2004, 2006, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@
 #include <config.h>
 
 #ifndef __attribute__
-# if __GNUC__ < 3 || __STRICT_ANSI__
+# if __GNUC__ < 3
 #  define __attribute__(x)
 # endif
 #endif

@@ -1,3 +1,21 @@
+2008-01-13  Bruno Haible  <bruno@clisp.org>
+
+	* lib/argp-fmtstream.h (__attribute__): Don't redefine if
+	__STRICT_ANSI__ is set: it's not needed by any version of gcc.
+	* lib/argp.h (__attribute__): Likewise.
+	* lib/c-stack.c (__attribute__): Likewise.
+	* lib/error.h (__attribute__): Likewise.
+	* lib/fts.c (__attribute__): Likewise.
+	* lib/openat.h (__attribute__): Likewise.
+	* lib/stdio.in.h (__attribute__): Likewise.
+	* lib/string.in.h (__attribute__): Likewise.
+	* lib/utimens.c (__attribute__): Likewise.
+	* lib/vasnprintf.h (__attribute__): Likewise.
+	* lib/xalloc.h (__attribute__): Likewise.
+	* lib/xprintf.h (__attribute__): Likewise.
+	* lib/xstrtol.h (__attribute__): Likewise.
+	* lib/xvasprintf.h (__attribute__): Likewise.
+
 2008-01-12  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib.texi (Glibc Header File Substitutes): New chapter.
