@@ -1,0 +1,30 @@
+Description:
+strsignal() function: return string describing signal.
+
+Files:
+lib/strsignal.c
+lib/siglist.h
+m4/strsignal.m4
+
+Depends-on:
+string
+gettext-h
+lock
+tls
+snprintf
+memset
+
+configure.ac:
+gl_FUNC_STRSIGNAL
+gl_STRING_MODULE_INDICATOR([strsignal])
+
+Makefile.am:
+
+Include:
+"strsignal.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Colin Watson, glibc

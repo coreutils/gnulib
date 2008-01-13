@@ -1,3 +1,15 @@
+2008-01-13  Colin Watson  <cjwatson@debian.org>
+
+	* lib/strsignal.c: New file, from glibc with modifications.
+	* lib/siglist.h: New file, from glibc with modifications.
+	* lib/string.in.h (strsignal): New declaration.
+	* m4/strsignal.m4: New file.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Initialize
+	GNULIB_STRSIGNAL and HAVE_DECL_STRSIGNAL.
+	* modules/strsignal: New file.
+	* modules/string (Makefile.am): Substitute GNULIB_STRSIGNAL and
+	HAVE_DECL_STRSIGNAL.
+
 2008-01-13  Bruno Haible  <bruno@clisp.org>
 
 	* m4/locale-fr.m4 (gt_LOCALE_FR, gt_LOCALE_FR_UTF8): Check that the

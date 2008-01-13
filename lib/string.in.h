@@ -541,6 +541,18 @@ extern char *strerror (int);
      strerror (e))
 #endif
 
+#if @GNULIB_STRSIGNAL@
+# if ! @HAVE_DECL_STRSIGNAL@
+extern char *strsignal (int __sig);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef strsignal
+# define strsignal(a) \
+    (GL_LINK_WARNING ("strsignal is unportable - " \
+                      "use gnulib module strsignal for portability"), \
+     strsignal (a))
+#endif
+
 
 #ifdef __cplusplus
 }
