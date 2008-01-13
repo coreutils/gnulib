@@ -1,5 +1,5 @@
-# locale-fr.m4 serial 7
-dnl Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
+# locale-fr.m4 serial 8
+dnl Copyright (C) 2003, 2005-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -44,11 +44,18 @@ char buf[16];
 int main () {
   /* Check whether the given locale name is recognized by the system.  */
   if (setlocale (LC_ALL, "") == NULL) return 1;
-  /* Check whether nl_langinfo(CODESET) is nonempty.
+  /* Check whether nl_langinfo(CODESET) is nonempty and not "ASCII" or "646".
      On MacOS X 10.3.5 (Darwin 7.5) in the fr_FR locale, nl_langinfo(CODESET)
-     is empty, and the behaviour of Tcl 8.4 in this locale is not useful.  */
+     is empty, and the behaviour of Tcl 8.4 in this locale is not useful.
+     On OpenBSD 4.0, when an unsupported locale is specified, setlocale()
+     succeeds but then nl_langinfo(CODESET) is "646". In this situations,
+     some unit tests fail.  */
 #if HAVE_LANGINFO_CODESET
-  if (nl_langinfo (CODESET) [0] == '\0') return 1;
+  {
+    const char *cs = nl_langinfo (CODESET);
+    if (cs[0] == '\0' || strcmp (cs, "ASCII") == 0 || strcmp (cs, "646") == 0)
+      return 1;
+  }
 #endif
 #ifdef __CYGWIN__
   /* On Cygwin, avoid locale names without encoding suffix, because the
@@ -132,11 +139,18 @@ int main () {
 #if !defined(__BEOS__)
   /* Check whether the given locale name is recognized by the system.  */
   if (setlocale (LC_ALL, "") == NULL) return 1;
-  /* Check whether nl_langinfo(CODESET) is nonempty.
+  /* Check whether nl_langinfo(CODESET) is nonempty and not "ASCII" or "646".
      On MacOS X 10.3.5 (Darwin 7.5) in the fr_FR locale, nl_langinfo(CODESET)
-     is empty, and the behaviour of Tcl 8.4 in this locale is not useful.  */
+     is empty, and the behaviour of Tcl 8.4 in this locale is not useful.
+     On OpenBSD 4.0, when an unsupported locale is specified, setlocale()
+     succeeds but then nl_langinfo(CODESET) is "646". In this situations,
+     some unit tests fail.  */
 # if HAVE_LANGINFO_CODESET
-  if (nl_langinfo (CODESET) [0] == '\0') return 1;
+  {
+    const char *cs = nl_langinfo (CODESET);
+    if (cs[0] == '\0' || strcmp (cs, "ASCII") == 0 || strcmp (cs, "646") == 0)
+      return 1;
+  }
 # endif
 # ifdef __CYGWIN__
   /* On Cygwin, avoid locale names without encoding suffix, because the

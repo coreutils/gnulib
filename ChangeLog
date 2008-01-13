@@ -1,5 +1,12 @@
 2008-01-13  Bruno Haible  <bruno@clisp.org>
 
+	* m4/locale-fr.m4 (gt_LOCALE_FR, gt_LOCALE_FR_UTF8): Check that the
+	locale encoding is not ASCII. Needed for OpenBSD 4.0.
+	* m4/locale-tr.m4 (gt_LOCALE_TR_UTF8): Likewise.
+	* m4/locale-zh.m4 (gt_LOCALE_ZH_CN): Likewise.
+
+2008-01-13  Bruno Haible  <bruno@clisp.org>
+
 	* lib/argp-fmtstream.h (__attribute__): Don't redefine if
 	__STRICT_ANSI__ is set: it's not needed by any version of gcc.
 	* lib/argp.h (__attribute__): Likewise.
