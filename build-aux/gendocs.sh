@@ -2,9 +2,10 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2007-10-24.16
+scriptversion=2008-01-13.10
 
-# Copyright (C) 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008
+# Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -308,7 +309,7 @@ if test -z "$use_texi2html"; then
 else
    CONDS="/%%ENDIF.*%%/d;/%%IF  *HTML_SECTION%%/d;/%%IF  *HTML_CHAPTER%%/d"
 fi
-curdate=`date '+%B %d, %Y'`
+curdate=`$SETLANG date '+%B %d, %Y'`
 sed \
    -e "s!%%TITLE%%!$MANUAL_TITLE!g" \
    -e "s!%%DATE%%!$curdate!g" \
