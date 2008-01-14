@@ -1,3 +1,9 @@
+2008-01-14  Colin Watson  <cjwatson@debian.org>
+
+	* modules/argp (Notice): Add a notice recommending to change
+	XGETTEXT_OPTIONS.
+	(configure.ac): Invoke AM_XGETTEXT_OPTION if it exists.
+
 2008-01-13  Colin Watson  <cjwatson@debian.org>
 
 	* modules/strsignal-tests: New file.

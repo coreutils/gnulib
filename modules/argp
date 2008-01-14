@@ -1,6 +1,11 @@
 Description:
 Hierarchical processing of command line arguments.
 
+Notice:
+If you are using GNU gettext version 0.16.1 or older, add the following options
+to XGETTEXT_OPTIONS in your po/Makevars:
+  --flag=argp_error:2:c-format --flag=argp_failure:4:c-format
+
 Files:
 lib/argp.h
 lib/argp-ba.c
@@ -34,6 +39,9 @@ strerror
 
 configure.ac:
 gl_ARGP
+m4_ifdef([AM_XGETTEXT_OPTION],
+  [AM_XGETTEXT_OPTION([--flag=argp_error:2:c-format])
+   AM_XGETTEXT_OPTION([--flag=argp_failure:4:c-format])])
 
 Makefile.am:
 lib_SOURCES += argp.h argp-ba.c argp-eexst.c \
