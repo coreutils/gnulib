@@ -48,7 +48,7 @@ int main () {
      On MacOS X 10.3.5 (Darwin 7.5) in the fr_FR locale, nl_langinfo(CODESET)
      is empty, and the behaviour of Tcl 8.4 in this locale is not useful.
      On OpenBSD 4.0, when an unsupported locale is specified, setlocale()
-     succeeds but then nl_langinfo(CODESET) is "646". In this situations,
+     succeeds but then nl_langinfo(CODESET) is "646". In this situation,
      some unit tests fail.  */
 #if HAVE_LANGINFO_CODESET
   {
@@ -143,7 +143,7 @@ int main () {
      On MacOS X 10.3.5 (Darwin 7.5) in the fr_FR locale, nl_langinfo(CODESET)
      is empty, and the behaviour of Tcl 8.4 in this locale is not useful.
      On OpenBSD 4.0, when an unsupported locale is specified, setlocale()
-     succeeds but then nl_langinfo(CODESET) is "646". In this situations,
+     succeeds but then nl_langinfo(CODESET) is "646". In this situation,
      some unit tests fail.  */
 # if HAVE_LANGINFO_CODESET
   {
