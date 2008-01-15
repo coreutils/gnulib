@@ -1,5 +1,9 @@
 2008-01-14  Eric Blake  <ebb9@byu.net>
 
+	Touch up previous patch.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE): Fix typo.
+	* doc/functions/strcasestr.texi (strcasestr): Document OpenBSD bug.
+
 	Convert strcasestr module to use Two-Way algorithm.
 	* modules/strcasestr-simple: New module, based on the old
 	strcasestr, but with Two-Way rather than KMP.

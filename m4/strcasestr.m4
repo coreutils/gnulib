@@ -1,4 +1,4 @@
-# strcasestr.m4 serial 7
+# strcasestr.m4 serial 8
 dnl Copyright (C) 2005, 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,7 @@ AC_DEFUN([gl_FUNC_STRCASESTR_SIMPLE],
 ]) # gl_FUNC_STRCASESTR_SIMPLE
 
 dnl Additionally, check that strcasestr is efficient.
-AC_DEFUN([gl_FUNC_STRCASESTR])
+AC_DEFUN([gl_FUNC_STRCASESTR],
 [
   AC_REQUIRE([gl_FUNC_STRCASESTR_SIMPLE])
   if test $ac_cv_func_strcasestr = yes; then
