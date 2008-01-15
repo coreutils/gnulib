@@ -1,3 +1,10 @@
+2008-01-15  Bruno Haible  <bruno@clisp.org>
+
+	Work around a MacOS X 10.5 bug in frexpl().
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Also check denormalized numbers.
+	* doc/functions/frexpl.texi: Document the bug.
+	Reported by Elias Pipping <pipping@gentoo.org>.
+
 2008-01-14  Eric Blake  <ebb9@byu.net>
 
 	Touch up previous patch.

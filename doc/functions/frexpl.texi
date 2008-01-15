@@ -15,6 +15,9 @@ FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, I
 This function does not work on finite numbers on some platforms:
 MacOS X 10.4/PowerPC, AIX 5.1, BeOS.
 @item
+This function does not work on denormalized numbers on some platforms:
+MacOS X 10.5/i386.
+@item
 This function does not work on infinite numbers on some platforms:
 IRIX 6.5, mingw.
 @end itemize

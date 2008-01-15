@@ -1,5 +1,5 @@
-# frexpl.m4 serial 6
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# frexpl.m4 serial 7
+dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -96,8 +96,9 @@ AC_DEFUN([gl_FUNC_FREXPL_NO_LIBM],
 ])
 
 dnl Test whether frexpl() works on finite numbers (this fails on
-dnl MacOS X 10.4/PowerPC, on AIX 5.1, and on BeOS) and also on infinite numbers
-dnl (this fails e.g. on IRIX 6.5 and mingw).
+dnl MacOS X 10.4/PowerPC, on AIX 5.1, and on BeOS), on denormalized numbers
+dnl (this fails on MacOS X 10.5/i386), and also on infinite numbers (this
+dnl fails e.g. on IRIX 6.5 and mingw).
 AC_DEFUN([gl_FUNC_FREXPL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -141,6 +142,21 @@ int main()
         int exp = -9999;
         frexpl (x, &exp);
         if (exp != i)
+          return 1;
+      }
+  }
+  /* Test on denormalized numbers.  */
+  {
+    int i;
+    for (i = 1, x = 1.0L; i >= LDBL_MIN_EXP; i--, x *= 0.5L)
+      ;
+    if (x > 0.0L)
+      {
+        int exp;
+        long double y = frexpl (x, &exp);
+        /* On machines with IEEE854 arithmetic: x = 1.68105e-4932,
+           exp = -16382, y = 0.5.  On MacOS X 10.5: exp = -16384, y = 0.5.  */
+        if (exp != LDBL_MIN_EXP - 1)
           return 1;
       }
   }
