@@ -65,5 +65,17 @@ main (int argc, char **argv)
   ASSERT_DESCRIPTION (str, "Interrupt");
 #endif
 
+  /* Test that for out-of-range signal numbers the result is usable.  */
+
+  str = strsignal (-1);
+  ASSERT (str);
+  ASSERT (str != (char *) -1);
+  ASSERT (strlen (str));
+
+  str = strsignal (9249234);
+  ASSERT (str);
+  ASSERT (str != (char *) -1);
+  ASSERT (strlen (str));
+
   return 0;
 }

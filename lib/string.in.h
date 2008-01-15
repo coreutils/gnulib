@@ -542,7 +542,10 @@ extern char *strerror (int);
 #endif
 
 #if @GNULIB_STRSIGNAL@
-# if ! @HAVE_DECL_STRSIGNAL@
+# if @REPLACE_STRSIGNAL@
+#  define strsignal rpl_strsignal
+# endif
+# if ! @HAVE_DECL_STRSIGNAL@ || @REPLACE_STRSIGNAL@
 extern char *strsignal (int __sig);
 # endif
 #elif defined GNULIB_POSIXCHECK
