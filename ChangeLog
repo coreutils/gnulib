@@ -1,3 +1,7 @@
+2008-01-16  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gethostname.c [!HAVE_UNAME]: Need string.h for strcpy.
+
 2008-01-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Fix problem with getdate on mingw32 reported by Simon Josefsson
