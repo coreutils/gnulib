@@ -1,3 +1,9 @@
+2008-01-15  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gc-libgcrypt.c (gc_init): Disable secure memory by default.
+	Applications that requires it should initialize libgcrypt
+	manually.
+
 2008-01-16  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/gethostname.c [!HAVE_UNAME]: Need string.h for strcpy.

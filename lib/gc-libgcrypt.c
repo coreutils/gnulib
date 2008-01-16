@@ -1,5 +1,5 @@
 /* gc-libgcrypt.c --- Crypto wrappers around Libgcrypt for GC.
- * Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -46,6 +46,9 @@ gc_init (void)
   err = gcry_control (GCRYCTL_ANY_INITIALIZATION_P);
   if (err == GPG_ERR_NO_ERROR)
     {
+      if (gcry_control (GCRYCTL_DISABLE_SECMEM, NULL, 0))
+	return GC_INIT_ERROR;
+
       if (gcry_check_version (GCRYPT_VERSION) == NULL)
 	return GC_INIT_ERROR;
 
