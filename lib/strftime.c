@@ -37,7 +37,7 @@
 #include <ctype.h>
 #include <time.h>
 
-#if HAVE_TZNAME && ! defined tzname
+#if HAVE_TZNAME && !HAVE_DECL_TZNAME
 extern char *tzname[];
 #endif
 

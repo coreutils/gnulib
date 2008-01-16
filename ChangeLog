@@ -1,3 +1,11 @@
+2008-01-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Fix problem with getdate on mingw32 reported by Simon Josefsson
+	in <http://lists.gnu.org/archive/html/bug-gnulib/2008-01/msg00192.html>.
+	* lib/getdate.y (get_date): Check "HAVE_DECL_TZNAME", not "defined
+	tzname", when deciding whether to declare tzname.
+	* lib/strftime.c (tzname): Likewise.
+
 2008-01-15  Bruno Haible  <bruno@clisp.org>
 
 	Work around a MacOS X 10.5 bug in frexpl().
