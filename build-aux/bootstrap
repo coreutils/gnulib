@@ -121,6 +121,9 @@ XGETTEXT_OPTIONS='\\\
  --flag=error:3:c-format --flag=error_at_line:5:c-format\\\
 '
 
+# Package bug report address for gettext files
+MSGID_BUGS_ADDRESS=bug-$package@gnu.org
+
 # Files we don't want to import.
 excluded_files=
 
@@ -572,7 +575,7 @@ if test $with_gettext = yes; then
   rm -f po/Makevars
   sed '
     /^EXTRA_LOCALE_CATEGORIES *=/s/=.*/= '"$EXTRA_LOCALE_CATEGORIES"'/
-    /^MSGID_BUGS_ADDRESS *=/s/=.*/= bug-'"$package"'@gnu.org/
+    /^MSGID_BUGS_ADDRESS *=/s/=.*/= '"$MSGID_BUGS_ADDRESS"'/
     /^XGETTEXT_OPTIONS *=/{
       s/$/ \\/
       a\
