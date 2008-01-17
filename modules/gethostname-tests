@@ -1,0 +1,10 @@
+Files:
+tests/test-gethostname.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-gethostname
+check_PROGRAMS += test-gethostname
