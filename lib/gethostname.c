@@ -21,9 +21,9 @@
 
 #ifdef HAVE_UNAME
 # include <sys/utsname.h>
-#else
-# include <string.h>
 #endif
+
+#include <string.h>
 
 /* Put up to LEN chars of the host name into NAME.
    Null terminate it if the name is shorter than LEN.
