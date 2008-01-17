@@ -1,5 +1,5 @@
 /* Test of case-insensitive searching in a string.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -60,6 +60,12 @@ main ()
     const char input[] = "ABC ABCDAB ABCDABCDABDE";
     const char *result = c_strcasestr (input, "ABCDaBE");
     ASSERT (result == NULL);
+  }
+
+  {
+    const char input[] = "ABC ABCDAB ABCDABCDABDE";
+    const char *result = c_strcasestr (input, "ABCDaBCD");
+    ASSERT (result == input + 11);
   }
 
   /* Check that a very long haystack is handled quickly if the needle is

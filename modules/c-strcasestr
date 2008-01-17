@@ -1,16 +1,15 @@
 Description:
-Case-insensitive searching in a string in C locale.
+Efficient case-insensitive searching in a string in C locale.
 
 Files:
 lib/c-strcasestr.h
 lib/c-strcasestr.c
-lib/str-kmp.h
+lib/str-two-way.h
 
 Depends-on:
 c-ctype
+c-strcase
 stdbool
-malloca
-strnlen
 
 configure.ac:
 
