@@ -36,7 +36,7 @@ main (int argc, char *argv[])
 
   if (rc != 0)
     {
-      printf ("gethostname failed, rc %d errno %d\n", errno);
+      printf ("gethostname failed, rc %d errno %d\n", rc, errno);
       return 1;
     }
 
