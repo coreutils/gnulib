@@ -1,0 +1,16 @@
+@node clnt_perrno
+@subsection @code{clnt_perrno}
+@findex clnt_perrno
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Cygwin, mingw, BeOS.
+@end itemize

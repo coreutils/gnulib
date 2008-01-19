@@ -1,0 +1,16 @@
+@node innetgr
+@subsection @code{innetgr}
+@findex innetgr
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize

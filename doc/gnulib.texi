@@ -59,6 +59,7 @@ Texts.  A copy of the license is included in the section entitled
 * Header File Substitutes::         Overriding system headers.
 * Function Substitutes::            Replacing system functions.
 * Glibc Header File Substitutes::   Overriding system headers.
+* Glibc Function Substitutes::      Replacing system functions.
 * Particular Modules::              Documentation of individual modules.
 * GNU Free Documentation License::  Copying and sharing this manual.
 * Index::
@@ -2965,7 +2966,7 @@ not worked around by Gnulib.
 @chapter Glibc Function Substitutes
 
 This chapter describes which functions and function-like macros
-provided as extensions by at least glibc are also supported by Gnulib,
+provided as extensions by at least GNU libc are also supported by Gnulib,
 which portability pitfalls are fixed by Gnulib, and which (known)
 portability problems are not worked around by Gnulib.
 
@@ -2978,13 +2979,2760 @@ found this function important enough to contribute a substitute for it.
 If you need this particular function, you may write to
 @code{<bug-gnulib at gnu dot org>}.
 
+This list of functions is sorted according to the header that declares them.
+
 @menu
-* memmem::
-* strcasestr::
+* Glibc aio.h::                 
+* Glibc aliases.h::             
+* Glibc argp.h::                
+* Glibc argz.h::                
+* Glibc arpa/inet.h::           
+* Glibc byteswap.h::            
+* Glibc complex.h::             
+* Glibc crypt.h::               
+* Glibc ctype.h::               
+* Glibc dirent.h::              
+* Glibc dlfcn.h::               
+* Glibc envz.h::                
+* Glibc err.h::                 
+* Glibc errno.h::               
+* Glibc error.h::               
+* Glibc execinfo.h::            
+* Glibc fcntl.h::               
+* Glibc fenv.h::                
+* Glibc fmtmsg.h::              
+* Glibc fstab.h::               
+* Glibc fts.h::                 
+* Glibc getopt.h::              
+* Glibc glob.h::                
+* Glibc gnu/libc-version.h::    
+* Glibc grp.h::                 
+* Glibc ifaddrs.h::             
+* Glibc langinfo.h::            
+* Glibc libintl.h::             
+* Glibc link.h::                
+* Glibc locale.h::              
+* Glibc malloc.h::              
+* Glibc math.h::                
+* Glibc mcheck.h::              
+* Glibc monetary.h::            
+* Glibc mntent.h::              
+* Glibc netdb.h::               
+* Glibc netinet/ether.h::       
+* Glibc netinet/in.h::          
+* Glibc obstack.h::             
+* Glibc printf.h::              
+* Glibc pthread.h::             
+* Glibc pwd.h::                 
+* Glibc regex.h::               
+* Glibc regexp.h::              
+* Glibc resolv.h::              
+* Glibc rpc/auth.h::            
+* Glibc rpc/auth_des.h::        
+* Glibc rpc/auth_unix.h::       
+* Glibc rpc/clnt.h::            
+* Glibc rpc/des_crypt.h::       
+* Glibc rpc/key_prot.h::        
+* Glibc rpc/netdb.h::           
+* Glibc rpc/pmap_clnt.h::       
+* Glibc rpc/pmap_prot.h::       
+* Glibc rpc/pmap_rmt.h::        
+* Glibc rpc/rpc_msg.h::         
+* Glibc rpc/svc.h::             
+* Glibc rpc/xdr.h::             
+* Glibc rpcsvc/nislib.h::       
+* Glibc rpcsvc/nis_callback.h::  
+* Glibc rpcsvc/yp.h::           
+* Glibc rpcsvc/yp_prot.h::      
+* Glibc rpcsvc/ypclnt.h::       
+* Glibc rpcsvc/ypupd.h::        
+* Glibc sched.h::               
+* Glibc search.h::              
+* Glibc shadow.h::              
+* Glibc signal.h::              
+* Glibc stdio.h::               
+* Glibc stdlib.h::              
+* Glibc string.h::              
+* Glibc sys/capability.h::      
+* Glibc sys/epoll.h::           
+* Glibc sys/file.h::            
+* Glibc sys/fsuid.h::           
+* Glibc sys/gmon.h::            
+* Glibc sys/io.h and sys/perm.h::              
+* Glibc sys/kdaemon.h::         
+* Glibc sys/klog.h::            
+* Glibc sys/mman.h::            
+* Glibc sys/mount.h::           
+* Glibc sys/personality.h::     
+* Glibc sys/prctl.h::           
+* Glibc sys/profil.h::          
+* Glibc sys/ptrace.h::          
+* Glibc sys/quota.h::           
+* Glibc sys/reboot.h::          
+* Glibc sys/sem.h::             
+* Glibc sys/sendfile.h::        
+* Glibc sys/socket.h::          
+* Glibc sys/stat.h::            
+* Glibc sys/statfs.h::          
+* Glibc sys/swap.h::            
+* Glibc sys/sysctl.h::          
+* Glibc sys/sysinfo.h::         
+* Glibc sys/syslog.h::          
+* Glibc sys/sysmacros.h::       
+* Glibc sys/time.h::            
+* Glibc sys/timex.h::           
+* Glibc sys/ustat.h::           
+* Glibc sys/vlimit.h::          
+* Glibc sys/vm86.h::            
+* Glibc sys/vtimes.h::          
+* Glibc sys/wait.h::            
+* Glibc sys/xattr.h::           
+* Glibc termios.h::             
+* Glibc time.h::                
+* Glibc ttyent.h::              
+* Glibc unistd.h::              
+* Glibc utmp.h::                
+* Glibc utmpx.h::               
+* Glibc wchar.h::               
+* Glibc wctype.h::              
 @end menu
 
-@include functions/memmem.texi
-@include functions/strcasestr.texi
+@c @node Glibc a.out.h
+@c @section Glibc @code{<a.out.h>}
+
+@node Glibc aio.h
+@section Glibc Extensions to @code{<aio.h>}
+
+@menu
+* aio_init::
+@end menu
+
+@include glibc-functions/aio_init.texi
+
+@node Glibc aliases.h
+@section Glibc @code{<aliases.h>}
+
+@menu
+* endaliasent::
+* getaliasbyname::
+* getaliasbyname_r::
+* getaliasent::
+* getaliasent_r::
+* setaliasent::
+@end menu
+
+@include glibc-functions/endaliasent.texi
+@include glibc-functions/getaliasbyname.texi
+@include glibc-functions/getaliasbyname_r.texi
+@include glibc-functions/getaliasent.texi
+@include glibc-functions/getaliasent_r.texi
+@include glibc-functions/setaliasent.texi
+
+@c @node Glibc alloca.h
+@c @section Glibc @code{<alloca.h>}
+
+@c @node Glibc ar.h
+@c @section Glibc @code{<ar.h>}
+
+@node Glibc argp.h
+@section Glibc @code{<argp.h>}
+
+@menu
+* argp_err_exit_status::
+* argp_error::
+* argp_failure::
+* argp_help::
+* argp_parse::
+* argp_program_bug_address::
+* argp_program_version::
+* argp_program_version_hook::
+* argp_state_help::
+* argp_usage::
+@end menu
+
+@include glibc-functions/argp_err_exit_status.texi
+@include glibc-functions/argp_error.texi
+@include glibc-functions/argp_failure.texi
+@include glibc-functions/argp_help.texi
+@include glibc-functions/argp_parse.texi
+@include glibc-functions/argp_program_bug_address.texi
+@include glibc-functions/argp_program_version.texi
+@include glibc-functions/argp_program_version_hook.texi
+@include glibc-functions/argp_state_help.texi
+@include glibc-functions/argp_usage.texi
+
+@node Glibc argz.h
+@section Glibc @code{<argz.h>}
+
+@menu
+* argz_add::
+* argz_add_sep::
+* argz_append::
+* argz_count::
+* argz_create::
+* argz_create_sep::
+* argz_delete::
+* argz_extract::
+* argz_insert::
+* argz_next::
+* argz_replace::
+* argz_stringify::
+@end menu
+
+@include glibc-functions/argz_add.texi
+@include glibc-functions/argz_add_sep.texi
+@include glibc-functions/argz_append.texi
+@include glibc-functions/argz_count.texi
+@include glibc-functions/argz_create.texi
+@include glibc-functions/argz_create_sep.texi
+@include glibc-functions/argz_delete.texi
+@include glibc-functions/argz_extract.texi
+@include glibc-functions/argz_insert.texi
+@include glibc-functions/argz_next.texi
+@include glibc-functions/argz_replace.texi
+@include glibc-functions/argz_stringify.texi
+
+@node Glibc arpa/inet.h
+@section Glibc Extensions to @code{<arpa/inet.h>}
+
+@menu
+* inet_aton::
+* inet_lnaof::
+* inet_makeaddr::
+* inet_net_ntop::
+* inet_net_pton::
+* inet_neta::
+* inet_netof::
+* inet_network::
+* inet_nsap_addr::
+* inet_nsap_ntoa::
+@end menu
+
+@include glibc-functions/inet_aton.texi
+@include glibc-functions/inet_lnaof.texi
+@include glibc-functions/inet_makeaddr.texi
+@include glibc-functions/inet_net_ntop.texi
+@include glibc-functions/inet_net_pton.texi
+@include glibc-functions/inet_neta.texi
+@include glibc-functions/inet_netof.texi
+@include glibc-functions/inet_network.texi
+@include glibc-functions/inet_nsap_addr.texi
+@include glibc-functions/inet_nsap_ntoa.texi
+
+@c @node Glibc assert.h
+@c @section Glibc Extensions to @code{<assert.h>}
+
+@node Glibc byteswap.h
+@section Glibc @code{<byteswap.h>}
+
+@menu
+* bswap_16::
+* bswap_32::
+* bswap_64::
+@end menu
+
+@include glibc-functions/bswap_16.texi
+@include glibc-functions/bswap_32.texi
+@include glibc-functions/bswap_64.texi
+
+@node Glibc complex.h
+@section Glibc Extensions to @code{<complex.h>}
+
+@menu
+* clog10::
+* clog10f::
+* clog10l::
+@end menu
+
+@include glibc-functions/clog10.texi
+@include glibc-functions/clog10f.texi
+@include glibc-functions/clog10l.texi
+
+@c @node Glibc cpio.h
+@c @section Glibc Extensions to @code{<cpio.h>}
+
+@node Glibc crypt.h
+@section Glibc @code{<crypt.h>}
+
+@menu
+* crypt_r::
+* encrypt_r::
+* setkey_r::
+@end menu
+
+@include glibc-functions/crypt_r.texi
+@include glibc-functions/encrypt_r.texi
+@include glibc-functions/setkey_r.texi
+
+@node Glibc ctype.h
+@section Glibc Extensions to @code{<ctype.h>}
+
+@menu
+* isalnum_l::
+* isalpha_l::
+* isblank_l::
+* iscntrl_l::
+* isctype::
+* isdigit_l::
+* isgraph_l::
+* islower_l::
+* isprint_l::
+* ispunct_l::
+* isspace_l::
+* isupper_l::
+* isxdigit_l::
+* tolower_l::
+* toupper_l::
+@end menu
+
+@include glibc-functions/isalnum_l.texi
+@include glibc-functions/isalpha_l.texi
+@include glibc-functions/isblank_l.texi
+@include glibc-functions/iscntrl_l.texi
+@include glibc-functions/isctype.texi
+@include glibc-functions/isdigit_l.texi
+@include glibc-functions/isgraph_l.texi
+@include glibc-functions/islower_l.texi
+@include glibc-functions/isprint_l.texi
+@include glibc-functions/ispunct_l.texi
+@include glibc-functions/isspace_l.texi
+@include glibc-functions/isupper_l.texi
+@include glibc-functions/isxdigit_l.texi
+@include glibc-functions/tolower_l.texi
+@include glibc-functions/toupper_l.texi
+
+@node Glibc dirent.h
+@section Glibc Extensions to @code{<dirent.h>}
+
+@menu
+* alphasort::
+* dirfd::
+* getdirentries::
+* scandir::
+* versionsort::
+@end menu
+
+@include glibc-functions/alphasort.texi
+@include glibc-functions/dirfd.texi
+@include glibc-functions/getdirentries.texi
+@include glibc-functions/scandir.texi
+@include glibc-functions/versionsort.texi
+
+@node Glibc dlfcn.h
+@section Glibc Extensions to @code{<dlfcn.h>}
+
+@menu
+* dladdr::
+* dladdr1::
+* dlinfo::
+* dlmopen::
+* dlvsym::
+@end menu
+
+@include glibc-functions/dladdr.texi
+@include glibc-functions/dladdr1.texi
+@include glibc-functions/dlinfo.texi
+@include glibc-functions/dlmopen.texi
+@include glibc-functions/dlvsym.texi
+
+@c @node Glibc endian.h
+@c @section Glibc @code{<endian.h>}
+
+@node Glibc envz.h
+@section Glibc @code{<envz.h>}
+
+@menu
+* envz_add::
+* envz_entry::
+* envz_get::
+* envz_merge::
+* envz_remove::
+* envz_strip::
+@end menu
+
+@include glibc-functions/envz_add.texi
+@include glibc-functions/envz_entry.texi
+@include glibc-functions/envz_get.texi
+@include glibc-functions/envz_merge.texi
+@include glibc-functions/envz_remove.texi
+@include glibc-functions/envz_strip.texi
+
+@node Glibc err.h
+@section Glibc @code{<err.h>}
+
+@menu
+* err::
+* errx::
+* verr::
+* verrx::
+* vwarn::
+* vwarnx::
+* warn::
+* warnx::
+@end menu
+
+@include glibc-functions/err.texi
+@include glibc-functions/errx.texi
+@include glibc-functions/verr.texi
+@include glibc-functions/verrx.texi
+@include glibc-functions/vwarn.texi
+@include glibc-functions/vwarnx.texi
+@include glibc-functions/warn.texi
+@include glibc-functions/warnx.texi
+
+@node Glibc errno.h
+@section Glibc Extensions to @code{<errno.h>}
+
+@menu
+* program_invocation_name::
+* program_invocation_short_name::
+@end menu
+
+@include glibc-functions/program_invocation_name.texi
+@include glibc-functions/program_invocation_short_name.texi
+
+@node Glibc error.h
+@section Glibc @code{<error.h>}
+
+@menu
+* error::
+* error_at_line::
+* error_message_count::
+* error_one_per_line::
+* error_print_progname::
+@end menu
+
+@include glibc-functions/error.texi
+@include glibc-functions/error_at_line.texi
+@include glibc-functions/error_message_count.texi
+@include glibc-functions/error_one_per_line.texi
+@include glibc-functions/error_print_progname.texi
+
+@node Glibc execinfo.h
+@section Glibc @code{<execinfo.h>}
+
+@menu
+* backtrace::
+* backtrace_symbols::
+* backtrace_symbols_fd::
+@end menu
+
+@include glibc-functions/backtrace.texi
+@include glibc-functions/backtrace_symbols.texi
+@include glibc-functions/backtrace_symbols_fd.texi
+
+@node Glibc fcntl.h
+@section Glibc Extensions to @code{<fcntl.h>}
+
+@menu
+* readahead::
+@end menu
+
+@include glibc-functions/readahead.texi
+
+@node Glibc fenv.h
+@section Glibc Extensions to @code{<fenv.h>}
+
+@menu
+* fedisableexcept::
+* feenableexcept::
+* fegetexcept::
+@end menu
+
+@include glibc-functions/fedisableexcept.texi
+@include glibc-functions/feenableexcept.texi
+@include glibc-functions/fegetexcept.texi
+
+@c @node Glibc float.h
+@c @section Glibc Extensions to @code{<float.h>}
+
+@node Glibc fmtmsg.h
+@section Glibc Extensions to @code{<fmtmsg.h>}
+
+@menu
+* addseverity::
+@end menu
+
+@include glibc-functions/addseverity.texi
+
+@c @node Glibc fnmatch.h
+@c @section Glibc Extensions to @code{<fnmatch.h>}
+
+@c @node Glibc fpu_control.h
+@c @section Glibc @code{<fpu_control.h>}
+
+@node Glibc fstab.h
+@section Glibc @code{<fstab.h>}
+
+@menu
+* endfsent::
+* getfsent::
+* getfsfile::
+* getfsspec::
+* setfsent::
+@end menu
+
+@include glibc-functions/endfsent.texi
+@include glibc-functions/getfsent.texi
+@include glibc-functions/getfsfile.texi
+@include glibc-functions/getfsspec.texi
+@include glibc-functions/setfsent.texi
+
+@node Glibc fts.h
+@section Glibc @code{<fts.h>}
+
+@menu
+* fts_children::
+* fts_close::
+* fts_open::
+* fts_read::
+* fts_set::
+@end menu
+
+@include glibc-functions/fts_children.texi
+@include glibc-functions/fts_close.texi
+@include glibc-functions/fts_open.texi
+@include glibc-functions/fts_read.texi
+@include glibc-functions/fts_set.texi
+
+@c @node Glibc ftw.h
+@c @section Glibc Extensions to @code{<ftw.h>}
+
+@node Glibc getopt.h
+@section Glibc @code{<getopt.h>}
+
+@menu
+* getopt_long::
+* getopt_long_only::
+* opterr::
+* optind::
+* optopt::
+@end menu
+
+@include glibc-functions/getopt_long.texi
+@include glibc-functions/getopt_long_only.texi
+@include glibc-functions/opterr.texi
+@include glibc-functions/optind.texi
+@include glibc-functions/optopt.texi
+
+@node Glibc glob.h
+@section Glibc Extensions to @code{<glob.h>}
+
+@menu
+* glob_pattern_p::
+@end menu
+
+@include glibc-functions/glob_pattern_p.texi
+
+@node Glibc gnu/libc-version.h
+@section Glibc Extensions to @code{<gnu/libc-version.h>}
+
+@menu
+* gnu_get_libc_release::
+* gnu_get_libc_version::
+@end menu
+
+@include glibc-functions/gnu_get_libc_release.texi
+@include glibc-functions/gnu_get_libc_version.texi
+
+@node Glibc grp.h
+@section Glibc Extensions to @code{<grp.h>}
+
+@menu
+* fgetgrent::
+* fgetgrent_r::
+* getgrent_r::
+* getgrouplist::
+* initgroups::
+* putgrent::
+* setgroups::
+@end menu
+
+@include glibc-functions/fgetgrent.texi
+@include glibc-functions/fgetgrent_r.texi
+@include glibc-functions/getgrent_r.texi
+@include glibc-functions/getgrouplist.texi
+@include glibc-functions/initgroups.texi
+@include glibc-functions/putgrent.texi
+@include glibc-functions/setgroups.texi
+
+@c @node Glibc iconv.h
+@c @section Glibc Extensions to @code{<iconv.h>}
+
+@c @node Glibc ieee754.h
+@c @section Glibc @code{<ieee754.h>}
+
+@node Glibc ifaddrs.h
+@section Glibc @code{<ifaddrs.h>}
+
+@menu
+* getifaddrs::
+* freeifaddrs::
+@end menu
+
+@include glibc-functions/getifaddrs.texi
+@include glibc-functions/freeifaddrs.texi
+
+@c @node Glibc inttypes.h
+@c @section Glibc Extensions to @code{<inttypes.h>}
+
+@c @node Glibc iso646.h
+@c @section Glibc Extensions to @code{<iso646.h>}
+
+@node Glibc langinfo.h
+@section Glibc Extensions to @code{<langinfo.h>}
+
+@menu
+* nl_langinfo_l::
+@end menu
+
+@include glibc-functions/nl_langinfo_l.texi
+
+@c @node Glibc libgen.h
+@c @section Glibc Extensions to @code{<libgen.h>}
+
+@node Glibc libintl.h
+@section Glibc @code{<libintl.h>}
+
+@menu
+* bind_textdomain_codeset::
+* bindtextdomain::
+* dcgettext::
+* dcngettext::
+* dgettext::
+* dngettext::
+* gettext::
+* ngettext::
+* textdomain::
+@end menu
+
+@include glibc-functions/bind_textdomain_codeset.texi
+@include glibc-functions/bindtextdomain.texi
+@include glibc-functions/dcgettext.texi
+@include glibc-functions/dcngettext.texi
+@include glibc-functions/dgettext.texi
+@include glibc-functions/dngettext.texi
+@include glibc-functions/gettext.texi
+@include glibc-functions/ngettext.texi
+@include glibc-functions/textdomain.texi
+
+@c @node Glibc limits.h
+@c @section Glibc Extensions to @code{<limits.h>}
+
+@node Glibc link.h
+@section Glibc @code{<link.h>}
+
+@menu
+* dl_iterate_phdr::
+@end menu
+
+@include glibc-functions/dl_iterate_phdr.texi
+
+@node Glibc locale.h
+@section Glibc Extensions to @code{<locale.h>}
+
+@menu
+* duplocale::
+* freelocale::
+* newlocale::
+* uselocale::
+@end menu
+
+@include glibc-functions/duplocale.texi
+@include glibc-functions/freelocale.texi
+@include glibc-functions/newlocale.texi
+@include glibc-functions/uselocale.texi
+
+@node Glibc malloc.h
+@section Glibc @code{<malloc.h>}
+
+@menu
+* mallinfo::
+* malloc_get_state::
+* malloc_set_state::
+* malloc_stats::
+* malloc_trim::
+* malloc_usable_size::
+* mallopt::
+* memalign::
+* pvalloc::
+@end menu
+
+@include glibc-functions/mallinfo.texi
+@include glibc-functions/malloc_get_state.texi
+@include glibc-functions/malloc_set_state.texi
+@include glibc-functions/malloc_stats.texi
+@include glibc-functions/malloc_trim.texi
+@include glibc-functions/malloc_usable_size.texi
+@include glibc-functions/mallopt.texi
+@include glibc-functions/memalign.texi
+@include glibc-functions/pvalloc.texi
+
+@node Glibc math.h
+@section Glibc Extensions to @code{<math.h>}
+
+@menu
+* drem::
+* dremf::
+* dreml::
+* exp10::
+* exp10f::
+* exp10l::
+* finite::
+* finitef::
+* finitel::
+* gamma::
+* gammaf::
+* gammal::
+* isinff::
+* isinfl::
+* isnanf::
+* isnanl::
+* j0f::
+* j0l::
+* j1f::
+* j1l::
+* jnf::
+* jnl::
+* lgamma_r::
+* lgammaf_r::
+* lgammal_r::
+* matherr::
+* pow10::
+* pow10f::
+* pow10l::
+* scalbf::
+* scalbl::
+* signgam::
+* significand::
+* significandf::
+* significandl::
+* sincos::
+* sincosf::
+* sincosl::
+* y0f::
+* y0l::
+* y1f::
+* y1l::
+* ynf::
+* ynl::
+@end menu
+
+@include glibc-functions/drem.texi
+@include glibc-functions/dremf.texi
+@include glibc-functions/dreml.texi
+@include glibc-functions/exp10.texi
+@include glibc-functions/exp10f.texi
+@include glibc-functions/exp10l.texi
+@include glibc-functions/finite.texi
+@include glibc-functions/finitef.texi
+@include glibc-functions/finitel.texi
+@include glibc-functions/gamma.texi
+@include glibc-functions/gammaf.texi
+@include glibc-functions/gammal.texi
+@include glibc-functions/isinff.texi
+@include glibc-functions/isinfl.texi
+@include glibc-functions/isnanf.texi
+@include glibc-functions/isnanl.texi
+@include glibc-functions/j0f.texi
+@include glibc-functions/j0l.texi
+@include glibc-functions/j1f.texi
+@include glibc-functions/j1l.texi
+@include glibc-functions/jnf.texi
+@include glibc-functions/jnl.texi
+@include glibc-functions/lgamma_r.texi
+@include glibc-functions/lgammaf_r.texi
+@include glibc-functions/lgammal_r.texi
+@include glibc-functions/matherr.texi
+@include glibc-functions/pow10.texi
+@include glibc-functions/pow10f.texi
+@include glibc-functions/pow10l.texi
+@include glibc-functions/scalbf.texi
+@include glibc-functions/scalbl.texi
+@include glibc-functions/signgam.texi
+@include glibc-functions/significand.texi
+@include glibc-functions/significandf.texi
+@include glibc-functions/significandl.texi
+@include glibc-functions/sincos.texi
+@include glibc-functions/sincosf.texi
+@include glibc-functions/sincosl.texi
+@include glibc-functions/y0f.texi
+@include glibc-functions/y0l.texi
+@include glibc-functions/y1f.texi
+@include glibc-functions/y1l.texi
+@include glibc-functions/ynf.texi
+@include glibc-functions/ynl.texi
+
+@node Glibc mcheck.h
+@section Glibc @code{<mcheck.h>}
+
+@menu
+* mcheck::
+* mcheck_check_all::
+* mcheck_pedantic::
+* mprobe::
+* mtrace::
+* muntrace::
+@end menu
+
+@include glibc-functions/mcheck.texi
+@include glibc-functions/mcheck_check_all.texi
+@include glibc-functions/mcheck_pedantic.texi
+@include glibc-functions/mprobe.texi
+@include glibc-functions/mtrace.texi
+@include glibc-functions/muntrace.texi
+
+@node Glibc monetary.h
+@section Glibc Extensions to @code{<monetary.h>}
+
+@menu
+* strfmon_l::
+@end menu
+
+@include glibc-functions/strfmon_l.texi
+
+@node Glibc mntent.h
+@section Glibc @code{<mntent.h>}
+
+@menu
+* addmntent::
+* endmntent::
+* getmntent::
+* getmntent_r::
+* hasmntopt::
+* setmntent::
+@end menu
+
+@include glibc-functions/addmntent.texi
+@include glibc-functions/endmntent.texi
+@include glibc-functions/getmntent.texi
+@include glibc-functions/getmntent_r.texi
+@include glibc-functions/hasmntopt.texi
+@include glibc-functions/setmntent.texi
+
+@c @node Glibc mqueue.h
+@c @section Glibc Extensions to @code{<mqueue.h>}
+
+@c @node Glibc ndbm.h
+@c @section Glibc Extensions to @code{<ndbm.h>}
+
+@node Glibc netdb.h
+@section Glibc Extensions to @code{<netdb.h>}
+
+@menu
+* endnetgrent::
+* gethostbyaddr_r::
+* gethostbyname2::
+* gethostbyname2_r::
+* gethostbyname_r::
+* gethostent_r::
+* getnetbyaddr_r::
+* getnetbyname_r::
+* getnetent_r::
+* getnetgrent::
+* getnetgrent_r::
+* getprotobyname_r::
+* getprotobynumber_r::
+* getprotoent_r::
+* getservbyname_r::
+* getservbyport_r::
+* getservent_r::
+* herror::
+* hstrerror::
+* innetgr::
+* rcmd::
+* rcmd_af::
+* rexec::
+* rexec_af::
+* rresvport::
+* rresvport_af::
+* ruserok::
+* ruserok_af::
+* setnetgrent::
+@end menu
+
+@include glibc-functions/endnetgrent.texi
+@include glibc-functions/gethostbyaddr_r.texi
+@include glibc-functions/gethostbyname2.texi
+@include glibc-functions/gethostbyname2_r.texi
+@include glibc-functions/gethostbyname_r.texi
+@include glibc-functions/gethostent_r.texi
+@include glibc-functions/getnetbyaddr_r.texi
+@include glibc-functions/getnetbyname_r.texi
+@include glibc-functions/getnetent_r.texi
+@include glibc-functions/getnetgrent.texi
+@include glibc-functions/getnetgrent_r.texi
+@include glibc-functions/getprotobyname_r.texi
+@include glibc-functions/getprotobynumber_r.texi
+@include glibc-functions/getprotoent_r.texi
+@include glibc-functions/getservbyname_r.texi
+@include glibc-functions/getservbyport_r.texi
+@include glibc-functions/getservent_r.texi
+@include glibc-functions/herror.texi
+@include glibc-functions/hstrerror.texi
+@include glibc-functions/innetgr.texi
+@include glibc-functions/rcmd.texi
+@include glibc-functions/rcmd_af.texi
+@include glibc-functions/rexec.texi
+@include glibc-functions/rexec_af.texi
+@include glibc-functions/rresvport.texi
+@include glibc-functions/rresvport_af.texi
+@include glibc-functions/ruserok.texi
+@include glibc-functions/ruserok_af.texi
+@include glibc-functions/setnetgrent.texi
+
+@node Glibc netinet/ether.h
+@section Glibc @code{<netinet/ether.h>}
+
+@menu
+* ether_aton::
+* ether_aton_r::
+* ether_hostton::
+* ether_line::
+* ether_ntoa::
+* ether_ntoa_r::
+* ether_ntohost::
+@end menu
+
+@include glibc-functions/ether_aton.texi
+@include glibc-functions/ether_aton_r.texi
+@include glibc-functions/ether_hostton.texi
+@include glibc-functions/ether_line.texi
+@include glibc-functions/ether_ntoa.texi
+@include glibc-functions/ether_ntoa_r.texi
+@include glibc-functions/ether_ntohost.texi
+
+@node Glibc netinet/in.h
+@section Glibc Extensions to @code{<netinet/in.h>}
+
+@menu
+* bindresvport::
+* getipv4sourcefilter::
+* getsourcefilter::
+* in6addr_any::
+* in6addr_loopback::
+* inet6_option_alloc::
+* inet6_option_append::
+* inet6_option_find::
+* inet6_option_init::
+* inet6_option_next::
+* inet6_option_space::
+* setipv4sourcefilter::
+* setsourcefilter::
+@end menu
+
+@include glibc-functions/bindresvport.texi
+@include glibc-functions/getipv4sourcefilter.texi
+@include glibc-functions/getsourcefilter.texi
+@include glibc-functions/in6addr_any.texi
+@include glibc-functions/in6addr_loopback.texi
+@include glibc-functions/inet6_option_alloc.texi
+@include glibc-functions/inet6_option_append.texi
+@include glibc-functions/inet6_option_find.texi
+@include glibc-functions/inet6_option_init.texi
+@include glibc-functions/inet6_option_next.texi
+@include glibc-functions/inet6_option_space.texi
+@include glibc-functions/setipv4sourcefilter.texi
+@include glibc-functions/setsourcefilter.texi
+
+@c @node Glibc nl_types.h
+@c @section Glibc Extensions to @code{<nl_types.h>}
+
+@node Glibc obstack.h
+@section Glibc @code{<obstack.h>}
+
+@menu
+* obstack_alloc_failed_handler::
+* obstack_exit_failure::
+* obstack_free::
+* obstack_printf::
+* obstack_vprintf::
+@end menu
+
+@include glibc-functions/obstack_alloc_failed_handler.texi
+@include glibc-functions/obstack_exit_failure.texi
+@include glibc-functions/obstack_free.texi
+@include glibc-functions/obstack_printf.texi
+@include glibc-functions/obstack_vprintf.texi
+
+@c @node Glibc paths.h
+@c @section Glibc @code{<paths.h>}
+
+@c @node Glibc poll.h
+@c @section Glibc Extensions to @code{<poll.h>}
+
+@node Glibc printf.h
+@section Glibc @code{<printf.h>}
+
+@menu
+* parse_printf_format::
+* printf_size::
+* printf_size_info::
+* register_printf_function::
+@end menu
+
+@include glibc-functions/parse_printf_format.texi
+@include glibc-functions/printf_size.texi
+@include glibc-functions/printf_size_info.texi
+@include glibc-functions/register_printf_function.texi
+
+@node Glibc pthread.h
+@section Glibc Extensions to @code{<pthread.h>}
+
+@menu
+* pthread_getattr_np::
+* pthread_kill_other_threads_np::
+* pthread_rwlockattr_getkind_np::
+* pthread_rwlockattr_setkind_np::
+* pthread_yield::
+@end menu
+
+@include glibc-functions/pthread_getattr_np.texi
+@include glibc-functions/pthread_kill_other_threads_np.texi
+@include glibc-functions/pthread_rwlockattr_getkind_np.texi
+@include glibc-functions/pthread_rwlockattr_setkind_np.texi
+@include glibc-functions/pthread_yield.texi
+
+@c @node Glibc pty.h
+@c @section Glibc @code{<pty.h>}
+
+@node Glibc pwd.h
+@section Glibc Extensions to @code{<pwd.h>}
+
+@menu
+* fgetpwent::
+* fgetpwent_r::
+* getpw::
+* getpwent_r::
+* putpwent::
+@end menu
+
+@include glibc-functions/fgetpwent.texi
+@include glibc-functions/fgetpwent_r.texi
+@include glibc-functions/getpw.texi
+@include glibc-functions/getpwent_r.texi
+@include glibc-functions/putpwent.texi
+
+@node Glibc regex.h
+@section Glibc Extensions to @code{<regex.h>}
+
+@menu
+* re_comp::
+* re_compile_fastmap::
+* re_compile_pattern::
+* re_exec::
+* re_match::
+* re_match_2::
+* re_search::
+* re_search_2::
+* re_set_registers::
+* re_set_syntax::
+* re_syntax_options::
+@end menu
+
+@include glibc-functions/re_comp.texi
+@include glibc-functions/re_compile_fastmap.texi
+@include glibc-functions/re_compile_pattern.texi
+@include glibc-functions/re_exec.texi
+@include glibc-functions/re_match.texi
+@include glibc-functions/re_match_2.texi
+@include glibc-functions/re_search.texi
+@include glibc-functions/re_search_2.texi
+@include glibc-functions/re_set_registers.texi
+@include glibc-functions/re_set_syntax.texi
+@include glibc-functions/re_syntax_options.texi
+
+@node Glibc regexp.h
+@section Glibc @code{<regexp.h>}
+
+@menu
+* advance::
+* loc1::
+* loc2::
+* locs::
+* step::
+@end menu
+
+@include glibc-functions/advance.texi
+@include glibc-functions/loc1.texi
+@include glibc-functions/loc2.texi
+@include glibc-functions/locs.texi
+@include glibc-functions/step.texi
+
+@node Glibc resolv.h
+@section Glibc @code{<resolv.h>}
+
+@menu
+* dn_expand::
+* res_init::
+* res_mkquery::
+* res_query::
+* res_querydomain::
+* res_search::
+@end menu
+
+@include glibc-functions/dn_expand.texi
+@include glibc-functions/res_init.texi
+@include glibc-functions/res_mkquery.texi
+@include glibc-functions/res_query.texi
+@include glibc-functions/res_querydomain.texi
+@include glibc-functions/res_search.texi
+
+@node Glibc rpc/auth.h
+@section Glibc @code{<rpc/auth.h>}
+
+@menu
+* authdes_create::
+* authdes_pk_create::
+* authnone_create::
+* authunix_create::
+* authunix_create_default::
+* getnetname::
+* host2netname::
+* key_decryptsession::
+* key_decryptsession_pk::
+* key_encryptsession::
+* key_encryptsession_pk::
+* key_gendes::
+* key_get_conv::
+* key_secretkey_is_set::
+* key_setsecret::
+* netname2host::
+* netname2user::
+* user2netname::
+* xdr_des_block::
+* xdr_opaque_auth::
+@end menu
+
+@include glibc-functions/authdes_create.texi
+@include glibc-functions/authdes_pk_create.texi
+@include glibc-functions/authnone_create.texi
+@include glibc-functions/authunix_create.texi
+@include glibc-functions/authunix_create_default.texi
+@include glibc-functions/getnetname.texi
+@include glibc-functions/host2netname.texi
+@include glibc-functions/key_decryptsession.texi
+@include glibc-functions/key_decryptsession_pk.texi
+@include glibc-functions/key_encryptsession.texi
+@include glibc-functions/key_encryptsession_pk.texi
+@include glibc-functions/key_gendes.texi
+@include glibc-functions/key_get_conv.texi
+@include glibc-functions/key_secretkey_is_set.texi
+@include glibc-functions/key_setsecret.texi
+@include glibc-functions/netname2host.texi
+@include glibc-functions/netname2user.texi
+@include glibc-functions/user2netname.texi
+@include glibc-functions/xdr_des_block.texi
+@include glibc-functions/xdr_opaque_auth.texi
+
+@node Glibc rpc/auth_des.h
+@section Glibc @code{<rpc/auth_des.h>}
+
+@menu
+* authdes_getucred::
+* getpublickey::
+* getsecretkey::
+* rtime::
+@end menu
+
+@include glibc-functions/authdes_getucred.texi
+@include glibc-functions/getpublickey.texi
+@include glibc-functions/getsecretkey.texi
+@include glibc-functions/rtime.texi
+
+@node Glibc rpc/auth_unix.h
+@section Glibc @code{<rpc/auth_unix.h>}
+
+@menu
+* xdr_authunix_parms::
+@end menu
+
+@include glibc-functions/xdr_authunix_parms.texi
+
+@node Glibc rpc/clnt.h
+@section Glibc @code{<rpc/clnt.h>}
+
+@menu
+* callrpc::
+* clnt_create::
+* clnt_pcreateerror::
+* clnt_perrno::
+* clnt_perror::
+* clnt_spcreateerror::
+* clnt_sperrno::
+* clnt_sperror::
+* clntraw_create::
+* clnttcp_create::
+* clntudp_bufcreate::
+* clntudp_create::
+* clntunix_create::
+* get_myaddress::
+* getrpcport::
+* rpc_createerr::
+@end menu
+
+@include glibc-functions/callrpc.texi
+@include glibc-functions/clnt_create.texi
+@include glibc-functions/clnt_pcreateerror.texi
+@include glibc-functions/clnt_perrno.texi
+@include glibc-functions/clnt_perror.texi
+@include glibc-functions/clnt_spcreateerror.texi
+@include glibc-functions/clnt_sperrno.texi
+@include glibc-functions/clnt_sperror.texi
+@include glibc-functions/clntraw_create.texi
+@include glibc-functions/clnttcp_create.texi
+@include glibc-functions/clntudp_bufcreate.texi
+@include glibc-functions/clntudp_create.texi
+@include glibc-functions/clntunix_create.texi
+@include glibc-functions/get_myaddress.texi
+@include glibc-functions/getrpcport.texi
+@include glibc-functions/rpc_createerr.texi
+
+@node Glibc rpc/des_crypt.h
+@section Glibc @code{<rpc/des_crypt.h>}
+
+@menu
+* cbc_crypt::
+* des_setparity::
+* ecb_crypt::
+@end menu
+
+@include glibc-functions/cbc_crypt.texi
+@include glibc-functions/des_setparity.texi
+@include glibc-functions/ecb_crypt.texi
+
+@node Glibc rpc/key_prot.h
+@section Glibc @code{<rpc/key_prot.h>}
+
+@menu
+* xdr_cryptkeyarg::
+* xdr_cryptkeyarg2::
+* xdr_cryptkeyres::
+* xdr_getcredres::
+* xdr_key_netstarg::
+* xdr_key_netstres::
+* xdr_keybuf::
+* xdr_keystatus::
+* xdr_netnamestr::
+* xdr_unixcred::
+@end menu
+
+@include glibc-functions/xdr_cryptkeyarg.texi
+@include glibc-functions/xdr_cryptkeyarg2.texi
+@include glibc-functions/xdr_cryptkeyres.texi
+@include glibc-functions/xdr_getcredres.texi
+@include glibc-functions/xdr_key_netstarg.texi
+@include glibc-functions/xdr_key_netstres.texi
+@include glibc-functions/xdr_keybuf.texi
+@include glibc-functions/xdr_keystatus.texi
+@include glibc-functions/xdr_netnamestr.texi
+@include glibc-functions/xdr_unixcred.texi
+
+@node Glibc rpc/netdb.h
+@section Glibc @code{<rpc/netdb.h>}
+
+@menu
+* endrpcent::
+* getrpcbyname::
+* getrpcbyname_r::
+* getrpcbynumber::
+* getrpcbynumber_r::
+* getrpcent::
+* getrpcent_r::
+* setrpcent::
+@end menu
+
+@include glibc-functions/endrpcent.texi
+@include glibc-functions/getrpcbyname.texi
+@include glibc-functions/getrpcbyname_r.texi
+@include glibc-functions/getrpcbynumber.texi
+@include glibc-functions/getrpcbynumber_r.texi
+@include glibc-functions/getrpcent.texi
+@include glibc-functions/getrpcent_r.texi
+@include glibc-functions/setrpcent.texi
+
+@node Glibc rpc/pmap_clnt.h
+@section Glibc @code{<rpc/pmap_clnt.h>}
+
+@menu
+* clnt_broadcast::
+* pmap_getmaps::
+* pmap_getport::
+* pmap_rmtcall::
+* pmap_set::
+* pmap_unset::
+@end menu
+
+@include glibc-functions/clnt_broadcast.texi
+@include glibc-functions/pmap_getmaps.texi
+@include glibc-functions/pmap_getport.texi
+@include glibc-functions/pmap_rmtcall.texi
+@include glibc-functions/pmap_set.texi
+@include glibc-functions/pmap_unset.texi
+
+@node Glibc rpc/pmap_prot.h
+@section Glibc @code{<rpc/pmap_prot.h>}
+
+@menu
+* xdr_pmap::
+* xdr_pmaplist::
+@end menu
+
+@include glibc-functions/xdr_pmap.texi
+@include glibc-functions/xdr_pmaplist.texi
+
+@node Glibc rpc/pmap_rmt.h
+@section Glibc @code{<rpc/pmap_rmt.h>}
+
+@menu
+* xdr_rmtcall_args::
+* xdr_rmtcallres::
+@end menu
+
+@include glibc-functions/xdr_rmtcall_args.texi
+@include glibc-functions/xdr_rmtcallres.texi
+
+@node Glibc rpc/rpc_msg.h
+@section Glibc @code{<rpc/rpc_msg.h>}
+
+@menu
+* xdr_callhdr::
+* xdr_callmsg::
+* xdr_replymsg::
+@end menu
+
+@include glibc-functions/xdr_callhdr.texi
+@include glibc-functions/xdr_callmsg.texi
+@include glibc-functions/xdr_replymsg.texi
+
+@node Glibc rpc/svc.h
+@section Glibc @code{<rpc/svc.h>}
+
+@menu
+* svc_exit::
+* svc_fdset::
+* svc_getreq::
+* svc_getreq_common::
+* svc_getreq_poll::
+* svc_getreqset::
+* svc_max_pollfd::
+* svc_pollfd::
+* svc_register::
+* svc_run::
+* svc_sendreply::
+* svc_unregister::
+* svcerr_auth::
+* svcerr_decode::
+* svcerr_noproc::
+* svcerr_noprog::
+* svcerr_progvers::
+* svcerr_systemerr::
+* svcerr_weakauth::
+* svcraw_create::
+* svctcp_create::
+* svcudp_bufcreate::
+* svcudp_create::
+* svcunix_create::
+* xprt_register::
+* xprt_unregister::
+@end menu
+
+@include glibc-functions/svc_exit.texi
+@include glibc-functions/svc_fdset.texi
+@include glibc-functions/svc_getreq.texi
+@include glibc-functions/svc_getreq_common.texi
+@include glibc-functions/svc_getreq_poll.texi
+@include glibc-functions/svc_getreqset.texi
+@include glibc-functions/svc_max_pollfd.texi
+@include glibc-functions/svc_pollfd.texi
+@include glibc-functions/svc_register.texi
+@include glibc-functions/svc_run.texi
+@include glibc-functions/svc_sendreply.texi
+@include glibc-functions/svc_unregister.texi
+@include glibc-functions/svcerr_auth.texi
+@include glibc-functions/svcerr_decode.texi
+@include glibc-functions/svcerr_noproc.texi
+@include glibc-functions/svcerr_noprog.texi
+@include glibc-functions/svcerr_progvers.texi
+@include glibc-functions/svcerr_systemerr.texi
+@include glibc-functions/svcerr_weakauth.texi
+@include glibc-functions/svcraw_create.texi
+@include glibc-functions/svctcp_create.texi
+@include glibc-functions/svcudp_bufcreate.texi
+@include glibc-functions/svcudp_create.texi
+@include glibc-functions/svcunix_create.texi
+@include glibc-functions/xprt_register.texi
+@include glibc-functions/xprt_unregister.texi
+
+@node Glibc rpc/xdr.h
+@section Glibc @code{<rpc/xdr.h>}
+
+@menu
+* xdr_array::
+* xdr_bool::
+* xdr_bytes::
+* xdr_char::
+* xdr_double::
+* xdr_enum::
+* xdr_float::
+* xdr_free::
+* xdr_hyper::
+* xdr_int::
+* xdr_int16_t::
+* xdr_int32_t::
+* xdr_int64_t::
+* xdr_int8_t::
+* xdr_long::
+* xdr_longlong_t::
+* xdr_netobj::
+* xdr_opaque::
+* xdr_pointer::
+* xdr_quad_t::
+* xdr_reference::
+* xdr_short::
+* xdr_sizeof::
+* xdr_string::
+* xdr_u_char::
+* xdr_u_hyper::
+* xdr_u_int::
+* xdr_u_long::
+* xdr_u_longlong_t::
+* xdr_u_quad_t::
+* xdr_u_short::
+* xdr_uint16_t::
+* xdr_uint32_t::
+* xdr_uint64_t::
+* xdr_uint8_t::
+* xdr_union::
+* xdr_vector::
+* xdr_void::
+* xdr_wrapstring::
+* xdrmem_create::
+* xdrrec_create::
+* xdrrec_endofrecord::
+* xdrrec_eof::
+* xdrrec_skiprecord::
+* xdrstdio_create::
+@end menu
+
+@include glibc-functions/xdr_array.texi
+@include glibc-functions/xdr_bool.texi
+@include glibc-functions/xdr_bytes.texi
+@include glibc-functions/xdr_char.texi
+@include glibc-functions/xdr_double.texi
+@include glibc-functions/xdr_enum.texi
+@include glibc-functions/xdr_float.texi
+@include glibc-functions/xdr_free.texi
+@include glibc-functions/xdr_hyper.texi
+@include glibc-functions/xdr_int.texi
+@include glibc-functions/xdr_int16_t.texi
+@include glibc-functions/xdr_int32_t.texi
+@include glibc-functions/xdr_int64_t.texi
+@include glibc-functions/xdr_int8_t.texi
+@include glibc-functions/xdr_long.texi
+@include glibc-functions/xdr_longlong_t.texi
+@include glibc-functions/xdr_netobj.texi
+@include glibc-functions/xdr_opaque.texi
+@include glibc-functions/xdr_pointer.texi
+@include glibc-functions/xdr_quad_t.texi
+@include glibc-functions/xdr_reference.texi
+@include glibc-functions/xdr_short.texi
+@include glibc-functions/xdr_sizeof.texi
+@include glibc-functions/xdr_string.texi
+@include glibc-functions/xdr_u_char.texi
+@include glibc-functions/xdr_u_hyper.texi
+@include glibc-functions/xdr_u_int.texi
+@include glibc-functions/xdr_u_long.texi
+@include glibc-functions/xdr_u_longlong_t.texi
+@include glibc-functions/xdr_u_quad_t.texi
+@include glibc-functions/xdr_u_short.texi
+@include glibc-functions/xdr_uint16_t.texi
+@include glibc-functions/xdr_uint32_t.texi
+@include glibc-functions/xdr_uint64_t.texi
+@include glibc-functions/xdr_uint8_t.texi
+@include glibc-functions/xdr_union.texi
+@include glibc-functions/xdr_vector.texi
+@include glibc-functions/xdr_void.texi
+@include glibc-functions/xdr_wrapstring.texi
+@include glibc-functions/xdrmem_create.texi
+@include glibc-functions/xdrrec_create.texi
+@include glibc-functions/xdrrec_endofrecord.texi
+@include glibc-functions/xdrrec_eof.texi
+@include glibc-functions/xdrrec_skiprecord.texi
+@include glibc-functions/xdrstdio_create.texi
+
+@node Glibc rpcsvc/nislib.h
+@section Glibc @code{<rpcsvc/nislib.h>}
+
+@menu
+* nis_add::
+* nis_add_entry::
+* nis_addmember::
+* nis_checkpoint::
+* nis_clone_object::
+* nis_creategroup::
+* nis_destroy_object::
+* nis_destroygroup::
+* nis_dir_cmp::
+* nis_domain_of::
+* nis_domain_of_r::
+* nis_first_entry::
+* nis_freenames::
+* nis_freeresult::
+* nis_freeservlist::
+* nis_freetags::
+* nis_getnames::
+* nis_getservlist::
+* nis_ismember::
+* nis_leaf_of::
+* nis_leaf_of_r::
+* nis_lerror::
+* nis_list::
+* nis_local_directory::
+* nis_local_group::
+* nis_local_host::
+* nis_local_principal::
+* nis_lookup::
+* nis_mkdir::
+* nis_modify::
+* nis_modify_entry::
+* nis_name_of::
+* nis_name_of_r::
+* nis_next_entry::
+* nis_perror::
+* nis_ping::
+* nis_print_directory::
+* nis_print_entry::
+* nis_print_group::
+* nis_print_group_entry::
+* nis_print_link::
+* nis_print_object::
+* nis_print_result::
+* nis_print_rights::
+* nis_print_table::
+* nis_remove::
+* nis_remove_entry::
+* nis_removemember::
+* nis_rmdir::
+* nis_servstate::
+* nis_sperrno::
+* nis_sperror::
+* nis_sperror_r::
+* nis_stats::
+* nis_verifygroup::
+@end menu
+
+@include glibc-functions/nis_add.texi
+@include glibc-functions/nis_add_entry.texi
+@include glibc-functions/nis_addmember.texi
+@include glibc-functions/nis_checkpoint.texi
+@include glibc-functions/nis_clone_object.texi
+@include glibc-functions/nis_creategroup.texi
+@include glibc-functions/nis_destroy_object.texi
+@include glibc-functions/nis_destroygroup.texi
+@include glibc-functions/nis_dir_cmp.texi
+@include glibc-functions/nis_domain_of.texi
+@include glibc-functions/nis_domain_of_r.texi
+@include glibc-functions/nis_first_entry.texi
+@include glibc-functions/nis_freenames.texi
+@include glibc-functions/nis_freeresult.texi
+@include glibc-functions/nis_freeservlist.texi
+@include glibc-functions/nis_freetags.texi
+@include glibc-functions/nis_getnames.texi
+@include glibc-functions/nis_getservlist.texi
+@include glibc-functions/nis_ismember.texi
+@include glibc-functions/nis_leaf_of.texi
+@include glibc-functions/nis_leaf_of_r.texi
+@include glibc-functions/nis_lerror.texi
+@include glibc-functions/nis_list.texi
+@include glibc-functions/nis_local_directory.texi
+@include glibc-functions/nis_local_group.texi
+@include glibc-functions/nis_local_host.texi
+@include glibc-functions/nis_local_principal.texi
+@include glibc-functions/nis_lookup.texi
+@include glibc-functions/nis_mkdir.texi
+@include glibc-functions/nis_modify.texi
+@include glibc-functions/nis_modify_entry.texi
+@include glibc-functions/nis_name_of.texi
+@include glibc-functions/nis_name_of_r.texi
+@include glibc-functions/nis_next_entry.texi
+@include glibc-functions/nis_perror.texi
+@include glibc-functions/nis_ping.texi
+@include glibc-functions/nis_print_directory.texi
+@include glibc-functions/nis_print_entry.texi
+@include glibc-functions/nis_print_group.texi
+@include glibc-functions/nis_print_group_entry.texi
+@include glibc-functions/nis_print_link.texi
+@include glibc-functions/nis_print_object.texi
+@include glibc-functions/nis_print_result.texi
+@include glibc-functions/nis_print_rights.texi
+@include glibc-functions/nis_print_table.texi
+@include glibc-functions/nis_remove.texi
+@include glibc-functions/nis_remove_entry.texi
+@include glibc-functions/nis_removemember.texi
+@include glibc-functions/nis_rmdir.texi
+@include glibc-functions/nis_servstate.texi
+@include glibc-functions/nis_sperrno.texi
+@include glibc-functions/nis_sperror.texi
+@include glibc-functions/nis_sperror_r.texi
+@include glibc-functions/nis_stats.texi
+@include glibc-functions/nis_verifygroup.texi
+
+@node Glibc rpcsvc/nis_callback.h
+@section Glibc @code{<rpcsvc/nis_callback.h>}
+
+@menu
+* xdr_cback_data::
+* xdr_obj_p::
+@end menu
+
+@include glibc-functions/xdr_cback_data.texi
+@include glibc-functions/xdr_obj_p.texi
+
+@node Glibc rpcsvc/yp.h
+@section Glibc @code{<rpcsvc/yp.h>}
+
+@menu
+* xdr_domainname::
+* xdr_keydat::
+* xdr_mapname::
+* xdr_peername::
+* xdr_valdat::
+* xdr_ypbind_binding::
+* xdr_ypbind_resp::
+* xdr_ypbind_resptype::
+* xdr_ypbind_setdom::
+* xdr_ypmap_parms::
+* xdr_ypmaplist::
+* xdr_yppush_status::
+* xdr_yppushresp_xfr::
+* xdr_ypreq_key::
+* xdr_ypreq_nokey::
+* xdr_ypreq_xfr::
+* xdr_ypresp_all::
+* xdr_ypresp_key_val::
+* xdr_ypresp_maplist::
+* xdr_ypresp_master::
+* xdr_ypresp_order::
+* xdr_ypresp_val::
+* xdr_ypresp_xfr::
+* xdr_ypstat::
+* xdr_ypxfrstat::
+@end menu
+
+@include glibc-functions/xdr_domainname.texi
+@include glibc-functions/xdr_keydat.texi
+@include glibc-functions/xdr_mapname.texi
+@include glibc-functions/xdr_peername.texi
+@include glibc-functions/xdr_valdat.texi
+@include glibc-functions/xdr_ypbind_binding.texi
+@include glibc-functions/xdr_ypbind_resp.texi
+@include glibc-functions/xdr_ypbind_resptype.texi
+@include glibc-functions/xdr_ypbind_setdom.texi
+@include glibc-functions/xdr_ypmap_parms.texi
+@include glibc-functions/xdr_ypmaplist.texi
+@include glibc-functions/xdr_yppush_status.texi
+@include glibc-functions/xdr_yppushresp_xfr.texi
+@include glibc-functions/xdr_ypreq_key.texi
+@include glibc-functions/xdr_ypreq_nokey.texi
+@include glibc-functions/xdr_ypreq_xfr.texi
+@include glibc-functions/xdr_ypresp_all.texi
+@include glibc-functions/xdr_ypresp_key_val.texi
+@include glibc-functions/xdr_ypresp_maplist.texi
+@include glibc-functions/xdr_ypresp_master.texi
+@include glibc-functions/xdr_ypresp_order.texi
+@include glibc-functions/xdr_ypresp_val.texi
+@include glibc-functions/xdr_ypresp_xfr.texi
+@include glibc-functions/xdr_ypstat.texi
+@include glibc-functions/xdr_ypxfrstat.texi
+
+@node Glibc rpcsvc/yp_prot.h
+@section Glibc @code{<rpcsvc/yp_prot.h>}
+
+@menu
+* xdr_ypall::
+@end menu
+
+@include glibc-functions/xdr_ypall.texi
+
+@node Glibc rpcsvc/ypclnt.h
+@section Glibc @code{<rpcsvc/ypclnt.h>}
+
+@menu
+* yp_all::
+* yp_bind::
+* yp_first::
+* yp_get_default_domain::
+* yp_master::
+* yp_match::
+* yp_next::
+* yp_order::
+* yp_unbind::
+* yp_update::
+* ypbinderr_string::
+* yperr_string::
+* ypprot_err::
+@end menu
+
+@include glibc-functions/yp_all.texi
+@include glibc-functions/yp_bind.texi
+@include glibc-functions/yp_first.texi
+@include glibc-functions/yp_get_default_domain.texi
+@include glibc-functions/yp_master.texi
+@include glibc-functions/yp_match.texi
+@include glibc-functions/yp_next.texi
+@include glibc-functions/yp_order.texi
+@include glibc-functions/yp_unbind.texi
+@include glibc-functions/yp_update.texi
+@include glibc-functions/ypbinderr_string.texi
+@include glibc-functions/yperr_string.texi
+@include glibc-functions/ypprot_err.texi
+
+@node Glibc rpcsvc/ypupd.h
+@section Glibc @code{<rpcsvc/ypupd.h>}
+
+@menu
+* xdr_yp_buf::
+* xdr_ypdelete_args::
+* xdr_ypupdate_args::
+@end menu
+
+@include glibc-functions/xdr_yp_buf.texi
+@include glibc-functions/xdr_ypdelete_args.texi
+@include glibc-functions/xdr_ypupdate_args.texi
+
+@node Glibc sched.h
+@section Glibc Extensions to @code{<sched.h>}
+
+@menu
+* clone::
+* sched_getaffinity::
+* sched_get_priority_min::
+* sched_setaffinity::
+@end menu
+
+@include glibc-functions/clone.texi
+@include glibc-functions/sched_getaffinity.texi
+@include glibc-functions/sched_get_priority_min.texi
+@include glibc-functions/sched_setaffinity.texi
+
+@node Glibc search.h
+@section Glibc Extensions to @code{<search.h>}
+
+@menu
+* hcreate_r::
+* hdestroy_r::
+* hsearch_r::
+* tdestroy::
+@end menu
+
+@include glibc-functions/hcreate_r.texi
+@include glibc-functions/hdestroy_r.texi
+@include glibc-functions/hsearch_r.texi
+@include glibc-functions/tdestroy.texi
+
+@c @node Glibc semaphore.h
+@c @section Glibc Extensions to @code{<semaphore.h>}
+
+@c @node Glibc setjmp.h
+@c @section Glibc Extensions to @code{<setjmp.h>}
+
+@node Glibc shadow.h
+@section Glibc @code{<shadow.h>}
+
+@menu
+* endspent::
+* fgetspent::
+* fgetspent_r::
+* getspent::
+* getspent_r::
+* getspnam::
+* getspnam_r::
+* lckpwdf::
+* putspent::
+* setspent::
+* sgetspent::
+* sgetspent_r::
+* ulckpwdf::
+@end menu
+
+@include glibc-functions/endspent.texi
+@include glibc-functions/fgetspent.texi
+@include glibc-functions/fgetspent_r.texi
+@include glibc-functions/getspent.texi
+@include glibc-functions/getspent_r.texi
+@include glibc-functions/getspnam.texi
+@include glibc-functions/getspnam_r.texi
+@include glibc-functions/lckpwdf.texi
+@include glibc-functions/putspent.texi
+@include glibc-functions/setspent.texi
+@include glibc-functions/sgetspent.texi
+@include glibc-functions/sgetspent_r.texi
+@include glibc-functions/ulckpwdf.texi
+
+@node Glibc signal.h
+@section Glibc Extensions to @code{<signal.h>}
+
+@menu
+* gsignal::
+* psignal::
+* sigandset::
+* sigblock::
+* siggetmask::
+* sigisemptyset::
+* sigorset::
+* sigreturn::
+* sigsetmask::
+* sigstack::
+* sigvec::
+* ssignal::
+* sys_siglist::
+* sysv_signal::
+@end menu
+
+@include glibc-functions/gsignal.texi
+@include glibc-functions/psignal.texi
+@include glibc-functions/sigandset.texi
+@include glibc-functions/sigblock.texi
+@include glibc-functions/siggetmask.texi
+@include glibc-functions/sigisemptyset.texi
+@include glibc-functions/sigorset.texi
+@include glibc-functions/sigreturn.texi
+@include glibc-functions/sigsetmask.texi
+@include glibc-functions/sigstack.texi
+@include glibc-functions/sigvec.texi
+@include glibc-functions/ssignal.texi
+@include glibc-functions/sys_siglist.texi
+@include glibc-functions/sysv_signal.texi
+
+@c @node Glibc spawn.h
+@c @section Glibc Extensions to @code{<spawn.h>}
+
+@c @node Glibc stdarg.h
+@c @section Glibc Extensions to @code{<stdarg.h>}
+
+@c @node Glibc stdbool.h
+@c @section Glibc Extensions to @code{<stdbool.h>}
+
+@c @node Glibc stddef.h
+@c @section Glibc Extensions to @code{<stddef.h>}
+
+@c @node Glibc stdint.h
+@c @section Glibc Extensions to @code{<stdint.h>}
+
+@node Glibc stdio.h
+@section Glibc Extensions to @code{<stdio.h>}
+
+@menu
+* asprintf::
+* cuserid::
+* dprintf::
+* clearerr_unlocked::
+* fcloseall::
+* feof_unlocked::
+* ferror_unlocked::
+* fflush_unlocked::
+* fgetc_unlocked::
+* fgets_unlocked::
+* fileno_unlocked::
+* fmemopen::
+* fopencookie::
+* fputc_unlocked::
+* fputs_unlocked::
+* fread_unlocked::
+* fwrite_unlocked::
+* getw::
+* open_memstream::
+* putw::
+* setbuffer::
+* setlinebuf::
+* sys_errlist::
+* sys_nerr::
+* tmpnam_r::
+* vasprintf::
+* vdprintf::
+@end menu
+
+@include glibc-functions/asprintf.texi
+@include glibc-functions/cuserid.texi
+@include glibc-functions/dprintf.texi
+@include glibc-functions/clearerr_unlocked.texi
+@include glibc-functions/fcloseall.texi
+@include glibc-functions/feof_unlocked.texi
+@include glibc-functions/ferror_unlocked.texi
+@include glibc-functions/fflush_unlocked.texi
+@include glibc-functions/fgetc_unlocked.texi
+@include glibc-functions/fgets_unlocked.texi
+@include glibc-functions/fileno_unlocked.texi
+@include glibc-functions/fmemopen.texi
+@include glibc-functions/fopencookie.texi
+@include glibc-functions/fputc_unlocked.texi
+@include glibc-functions/fputs_unlocked.texi
+@include glibc-functions/fread_unlocked.texi
+@include glibc-functions/fwrite_unlocked.texi
+@include glibc-functions/getw.texi
+@include glibc-functions/open_memstream.texi
+@include glibc-functions/putw.texi
+@include glibc-functions/setbuffer.texi
+@include glibc-functions/setlinebuf.texi
+@include glibc-functions/sys_errlist.texi
+@include glibc-functions/sys_nerr.texi
+@include glibc-functions/tmpnam_r.texi
+@include glibc-functions/vasprintf.texi
+@include glibc-functions/vdprintf.texi
+
+@node Glibc stdlib.h
+@section Glibc Extensions to @code{<stdlib.h>}
+
+@menu
+* canonicalize_file_name::
+* cfree::
+* clearenv::
+* drand48_r::
+* ecvt_r::
+* erand48_r::
+* fcvt_r::
+* getloadavg::
+* getpt::
+* initstate_r::
+* jrand48_r::
+* lcong48_r::
+* lrand48_r::
+* mkdtemp::
+* mrand48_r::
+* nrand48_r::
+* on_exit::
+* ptsname_r::
+* qecvt::
+* qecvt_r::
+* qfcvt::
+* qfcvt_r::
+* qgcvt::
+* random_r::
+* rpmatch::
+* seed48_r::
+* setstate_r::
+* srand48_r::
+* srandom_r::
+* strtod_l::
+* strtof_l::
+* strtol_l::
+* strtold_l::
+* strtoll_l::
+* strtoq::
+* strtoul_l::
+* strtoull_l::
+* strtouq::
+* valloc::
+@end menu
+
+@include glibc-functions/canonicalize_file_name.texi
+@include glibc-functions/cfree.texi
+@include glibc-functions/clearenv.texi
+@include glibc-functions/drand48_r.texi
+@include glibc-functions/ecvt_r.texi
+@include glibc-functions/erand48_r.texi
+@include glibc-functions/fcvt_r.texi
+@include glibc-functions/getloadavg.texi
+@include glibc-functions/getpt.texi
+@include glibc-functions/initstate_r.texi
+@include glibc-functions/jrand48_r.texi
+@include glibc-functions/lcong48_r.texi
+@include glibc-functions/lrand48_r.texi
+@include glibc-functions/mkdtemp.texi
+@include glibc-functions/mrand48_r.texi
+@include glibc-functions/nrand48_r.texi
+@include glibc-functions/on_exit.texi
+@include glibc-functions/ptsname_r.texi
+@include glibc-functions/qecvt.texi
+@include glibc-functions/qecvt_r.texi
+@include glibc-functions/qfcvt.texi
+@include glibc-functions/qfcvt_r.texi
+@include glibc-functions/qgcvt.texi
+@include glibc-functions/random_r.texi
+@include glibc-functions/rpmatch.texi
+@include glibc-functions/seed48_r.texi
+@include glibc-functions/setstate_r.texi
+@include glibc-functions/srand48_r.texi
+@include glibc-functions/srandom_r.texi
+@include glibc-functions/strtod_l.texi
+@include glibc-functions/strtof_l.texi
+@include glibc-functions/strtol_l.texi
+@include glibc-functions/strtold_l.texi
+@include glibc-functions/strtoll_l.texi
+@include glibc-functions/strtoq.texi
+@include glibc-functions/strtoul_l.texi
+@include glibc-functions/strtoull_l.texi
+@include glibc-functions/strtouq.texi
+@include glibc-functions/valloc.texi
+
+@node Glibc string.h
+@section Glibc Extensions to @code{<string.h>}
+
+@menu
+* ffsl::
+* ffsll::
+* memfrob::
+* memmem::
+* mempcpy::
+* memrchr::
+* rawmemchr::
+* stpcpy::
+* stpncpy::
+* strcasecmp_l::
+* strcasestr::
+* strchrnul::
+* strcoll_l::
+* strfry::
+* strsep::
+* strsignal::
+* strncasecmp_l::
+* strndup::
+* strnlen::
+* strverscmp::
+* strxfrm_l::
+@end menu
+
+@include glibc-functions/ffsl.texi
+@include glibc-functions/ffsll.texi
+@include glibc-functions/memfrob.texi
+@include glibc-functions/memmem.texi
+@include glibc-functions/mempcpy.texi
+@include glibc-functions/memrchr.texi
+@include glibc-functions/rawmemchr.texi
+@include glibc-functions/stpcpy.texi
+@include glibc-functions/stpncpy.texi
+@include glibc-functions/strcasecmp_l.texi
+@include glibc-functions/strcasestr.texi
+@include glibc-functions/strchrnul.texi
+@include glibc-functions/strcoll_l.texi
+@include glibc-functions/strfry.texi
+@include glibc-functions/strsep.texi
+@include glibc-functions/strsignal.texi
+@include glibc-functions/strncasecmp_l.texi
+@include glibc-functions/strndup.texi
+@include glibc-functions/strnlen.texi
+@include glibc-functions/strverscmp.texi
+@include glibc-functions/strxfrm_l.texi
+
+@c @node Glibc strings.h
+@c @section Glibc Extensions to @code{<strings.h>}
+
+@c @node Glibc stropts.h
+@c @section Glibc Extensions to @code{<stropts.h>}
+
+@node Glibc sys/capability.h
+@section Glibc @code{<sys/capability.h>}
+
+@menu
+* capget::
+* capset::
+@end menu
+
+@include glibc-functions/capget.texi
+@include glibc-functions/capset.texi
+
+@node Glibc sys/epoll.h
+@section Glibc @code{<sys/epoll.h>}
+
+@menu
+* epoll_create::
+* epoll_ctl::
+* epoll_wait::
+@end menu
+
+@include glibc-functions/epoll_create.texi
+@include glibc-functions/epoll_ctl.texi
+@include glibc-functions/epoll_wait.texi
+
+@node Glibc sys/file.h
+@section Glibc @code{<sys/file.h>}
+
+@menu
+* flock::
+@end menu
+
+@include glibc-functions/flock.texi
+
+@node Glibc sys/fsuid.h
+@section Glibc @code{<sys/fsuid.h>}
+
+@menu
+* setfsgid::
+* setfsuid::
+@end menu
+
+@include glibc-functions/setfsgid.texi
+@include glibc-functions/setfsuid.texi
+
+@node Glibc sys/gmon.h
+@section Glibc @code{<sys/gmon.h>}
+
+@menu
+* monstartup::
+@end menu
+
+@include glibc-functions/monstartup.texi
+
+@node Glibc sys/io.h and sys/perm.h
+@section Glibc @code{<sys/io.h>}, @code{<sys/perm.h>}
+
+@menu
+* ioperm::
+* iopl::
+@end menu
+
+@include glibc-functions/ioperm.texi
+@include glibc-functions/iopl.texi
+
+@c @node Glibc sys/ipc.h
+@c @section Glibc Extensions to @code{<sys/ipc.h>}
+
+@node Glibc sys/kdaemon.h
+@section Glibc @code{<sys/kdaemon.h>}
+
+@menu
+* bdflush::
+@end menu
+
+@include glibc-functions/bdflush.texi
+
+@node Glibc sys/klog.h
+@section Glibc @code{<sys/klog.h>}
+
+@menu
+* klogctl::
+@end menu
+
+@include glibc-functions/klogctl.texi
+
+@node Glibc sys/mman.h
+@section Glibc Extensions to @code{<sys/mman.h>}
+
+@menu
+* madvise::
+* mincore::
+* mremap::
+* remap_file_pages::
+@end menu
+
+@include glibc-functions/madvise.texi
+@include glibc-functions/mincore.texi
+@include glibc-functions/mremap.texi
+@include glibc-functions/remap_file_pages.texi
+
+@node Glibc sys/mount.h
+@section Glibc @code{<sys/mount.h>}
+
+@menu
+* mount::
+* umount::
+* umount2::
+@end menu
+
+@include glibc-functions/mount.texi
+@include glibc-functions/umount.texi
+@include glibc-functions/umount2.texi
+
+@c @node Glibc sys/msg.h
+@c @section Glibc Extensions to @code{<sys/msg.h>}
+
+@node Glibc sys/personality.h
+@section Glibc @code{<sys/personality.h>}
+
+@menu
+* personality::
+@end menu
+
+@include glibc-functions/personality.texi
+
+@node Glibc sys/prctl.h
+@section Glibc @code{<sys/prctl.h>}
+
+@menu
+* prctl::
+@end menu
+
+@include glibc-functions/prctl.texi
+
+@node Glibc sys/profil.h
+@section Glibc @code{<sys/profil.h>}
+
+@menu
+* sprofil::
+@end menu
+
+@include glibc-functions/sprofil.texi
+
+@node Glibc sys/ptrace.h
+@section Glibc @code{<sys/ptrace.h>}
+
+@menu
+* ptrace::
+@end menu
+
+@include glibc-functions/ptrace.texi
+
+@node Glibc sys/quota.h
+@section Glibc @code{<sys/quota.h>}
+
+@menu
+* quotactl::
+@end menu
+
+@include glibc-functions/quotactl.texi
+
+@node Glibc sys/reboot.h
+@section Glibc @code{<sys/reboot.h>}
+
+@menu
+* reboot::
+@end menu
+
+@include glibc-functions/reboot.texi
+
+@c @node Glibc sys/resource.h
+@c @section Glibc Extensions to @code{<sys/resource.h>}
+
+@c @node Glibc sys/select.h
+@c @section Glibc Extensions to @code{<sys/select.h>}
+
+@node Glibc sys/sem.h
+@section Glibc Extensions to @code{<sys/sem.h>}
+
+@menu
+* semtimedop::
+@end menu
+
+@include glibc-functions/semtimedop.texi
+
+@node Glibc sys/sendfile.h
+@section Glibc @code{<sys/sendfile.h>}
+
+@menu
+* sendfile::
+@end menu
+
+@include glibc-functions/sendfile.texi
+
+@c @node Glibc sys/shm.h
+@c @section Glibc Extensions to @code{<sys/shm.h>}
+
+@node Glibc sys/socket.h
+@section Glibc Extensions to @code{<sys/socket.h>}
+
+@menu
+* isfdtype::
+@end menu
+
+@include glibc-functions/isfdtype.texi
+
+@node Glibc sys/stat.h
+@section Glibc Extensions to @code{<sys/stat.h>}
+
+@menu
+* lchmod::
+@end menu
+
+@include glibc-functions/lchmod.texi
+
+@node Glibc sys/statfs.h
+@section Glibc @code{<sys/statfs.h>}
+
+@menu
+* fstatfs::
+* statfs::
+@end menu
+
+@include glibc-functions/fstatfs.texi
+@include glibc-functions/statfs.texi
+
+@c @node Glibc sys/statvfs.h
+@c @section Glibc Extensions to @code{<sys/statvfs.h>}
+
+@node Glibc sys/swap.h
+@section Glibc @code{<sys/swap.h>}
+
+@menu
+* swapoff::
+* swapon::
+@end menu
+
+@include glibc-functions/swapoff.texi
+@include glibc-functions/swapon.texi
+
+@node Glibc sys/sysctl.h
+@section Glibc @code{<sys/sysctl.h>}
+
+@menu
+* sysctl::
+@end menu
+
+@include glibc-functions/sysctl.texi
+
+@node Glibc sys/sysinfo.h
+@section Glibc @code{<sys/sysinfo.h>}
+
+@menu
+* get_avphys_pages::
+* get_nprocs::
+* get_nprocs_conf::
+* get_phys_pages::
+* sysinfo::
+@end menu
+
+@include glibc-functions/get_avphys_pages.texi
+@include glibc-functions/get_nprocs.texi
+@include glibc-functions/get_nprocs_conf.texi
+@include glibc-functions/get_phys_pages.texi
+@include glibc-functions/sysinfo.texi
+
+@node Glibc sys/syslog.h
+@section Glibc @code{<sys/syslog.h>}
+
+@menu
+* vsyslog::
+@end menu
+
+@include glibc-functions/vsyslog.texi
+
+@node Glibc sys/sysmacros.h
+@section Glibc @code{<sys/sysmacros.h>}
+
+@menu
+* gnu_dev_major::
+* gnu_dev_makedev::
+* gnu_dev_minor::
+@end menu
+
+@include glibc-functions/gnu_dev_major.texi
+@include glibc-functions/gnu_dev_makedev.texi
+@include glibc-functions/gnu_dev_minor.texi
+
+@node Glibc sys/time.h
+@section Glibc Extensions to @code{<sys/time.h>}
+
+@menu
+* adjtime::
+* futimes::
+* lutimes::
+* settimeofday::
+@end menu
+
+@include glibc-functions/adjtime.texi
+@include glibc-functions/futimes.texi
+@include glibc-functions/lutimes.texi
+@include glibc-functions/settimeofday.texi
+
+@c @node Glibc sys/timeb.h
+@c @section Glibc Extensions to @code{<sys/timeb.h>}
+
+@c @node Glibc sys/times.h
+@c @section Glibc Extensions to @code{<sys/times.h>}
+
+@node Glibc sys/timex.h
+@section Glibc @code{<sys/timex.h>}
+
+@menu
+* adjtimex::
+* ntp_adjtime::
+* ntp_gettime::
+@end menu
+
+@include glibc-functions/adjtimex.texi
+@include glibc-functions/ntp_adjtime.texi
+@include glibc-functions/ntp_gettime.texi
+
+@c @node Glibc sys/types.h
+@c @section Glibc Extensions to @code{<sys/types.h>}
+
+@c @node Glibc sys/uio.h
+@c @section Glibc Extensions to @code{<sys/uio.h>}
+
+@c @node Glibc sys/un.h
+@c @section Glibc Extensions to @code{<sys/un.h>}
+
+@node Glibc sys/ustat.h
+@section Glibc @code{<sys/ustat.h>}
+
+@menu
+* ustat::
+@end menu
+
+@include glibc-functions/ustat.texi
+
+@c @node Glibc sys/utsname.h
+@c @section Glibc Extensions to @code{<sys/utsname.h>}
+
+@node Glibc sys/vlimit.h
+@section Glibc @code{<sys/vlimit.h>}
+
+@menu
+* vlimit::
+@end menu
+
+@include glibc-functions/vlimit.texi
+
+@node Glibc sys/vm86.h
+@section Glibc @code{<sys/vm86.h>}
+
+@menu
+* vm86::
+@end menu
+
+@include glibc-functions/vm86.texi
+
+@node Glibc sys/vtimes.h
+@section Glibc @code{<sys/vtimes.h>}
+
+@menu
+* vtimes::
+@end menu
+
+@include glibc-functions/vtimes.texi
+
+@node Glibc sys/wait.h
+@section Glibc Extensions to @code{<sys/wait.h>}
+
+@menu
+* wait3::
+* wait4::
+@end menu
+
+@include glibc-functions/wait3.texi
+@include glibc-functions/wait4.texi
+
+@node Glibc sys/xattr.h
+@section Glibc @code{<sys/xattr.h>}
+
+@menu
+* fgetxattr::
+* flistxattr::
+* fremovexattr::
+* fsetxattr::
+* getxattr::
+* lgetxattr::
+* listxattr::
+* llistxattr::
+* lremovexattr::
+* lsetxattr::
+* removexattr::
+* setxattr::
+@end menu
+
+@include glibc-functions/fgetxattr.texi
+@include glibc-functions/flistxattr.texi
+@include glibc-functions/fremovexattr.texi
+@include glibc-functions/fsetxattr.texi
+@include glibc-functions/getxattr.texi
+@include glibc-functions/lgetxattr.texi
+@include glibc-functions/listxattr.texi
+@include glibc-functions/llistxattr.texi
+@include glibc-functions/lremovexattr.texi
+@include glibc-functions/lsetxattr.texi
+@include glibc-functions/removexattr.texi
+@include glibc-functions/setxattr.texi
+
+@c @node Glibc sysexits.h
+@c @section Glibc @code{<sysexits.h>}
+
+@c @node Glibc syslog.h
+@c @section Glibc Extensions to @code{<syslog.h>}
+
+@c @node Glibc tar.h
+@c @section Glibc Extensions to @code{<tar.h>}
+
+@node Glibc termios.h
+@section Glibc Extensions to @code{<termios.h>}
+
+@menu
+* cfmakeraw::
+* cfsetspeed::
+@end menu
+
+@include glibc-functions/cfmakeraw.texi
+@include glibc-functions/cfsetspeed.texi
+
+@c @node Glibc tgmath.h
+@c @section Glibc Extensions to @code{<tgmath.h>}
+
+@node Glibc time.h
+@section Glibc Extensions to @code{<time.h>}
+
+@menu
+* dysize::
+* getdate_err::
+* getdate_r::
+* stime::
+* strftime_l::
+* strptime_l::
+* timegm::
+* timelocal::
+* timer_gettime::
+@end menu
+
+@include glibc-functions/dysize.texi
+@include glibc-functions/getdate_err.texi
+@include glibc-functions/getdate_r.texi
+@include glibc-functions/stime.texi
+@include glibc-functions/strftime_l.texi
+@include glibc-functions/strptime_l.texi
+@include glibc-functions/timegm.texi
+@include glibc-functions/timelocal.texi
+@include glibc-functions/timer_gettime.texi
+
+@c @node Glibc trace.h
+@c @section Glibc Extensions to @code{<trace.h>}
+
+@node Glibc ttyent.h
+@section Glibc @code{<ttyent.h>}
+
+@menu
+* endttyent::
+* getttyent::
+* getttynam::
+* setttyent::
+@end menu
+
+@include glibc-functions/endttyent.texi
+@include glibc-functions/getttyent.texi
+@include glibc-functions/getttynam.texi
+@include glibc-functions/setttyent.texi
+
+@c @node Glibc ucontext.h
+@c @section Glibc Extensions to @code{<ucontext.h>}
+
+@c @node Glibc ulimit.h
+@c @section Glibc Extensions to @code{<ulimit.h>}
+
+@node Glibc unistd.h
+@section Glibc Extensions to @code{<unistd.h>}
+
+@menu
+* acct::
+* brk::
+* chroot::
+* daemon::
+* endusershell::
+* euidaccess::
+* fexecve::
+* get_current_dir_name::
+* getdomainname::
+* getdtablesize::
+* getpagesize::
+* getpass::
+* getresgid::
+* getresuid::
+* getusershell::
+* group_member::
+* profil::
+* revoke::
+* sbrk::
+* setlogin::
+* setdomainname::
+* sethostid::
+* sethostname::
+* setresgid::
+* setresuid::
+* setusershell::
+* syscall::
+* ttyslot::
+* vhangup::
+@end menu
+
+@include glibc-functions/acct.texi
+@include glibc-functions/brk.texi
+@include glibc-functions/chroot.texi
+@include glibc-functions/daemon.texi
+@include glibc-functions/endusershell.texi
+@include glibc-functions/euidaccess.texi
+@include glibc-functions/fexecve.texi
+@include glibc-functions/get_current_dir_name.texi
+@include glibc-functions/getdomainname.texi
+@include glibc-functions/getdtablesize.texi
+@include glibc-functions/getpagesize.texi
+@include glibc-functions/getpass.texi
+@include glibc-functions/getresgid.texi
+@include glibc-functions/getresuid.texi
+@include glibc-functions/getusershell.texi
+@include glibc-functions/group_member.texi
+@include glibc-functions/profil.texi
+@include glibc-functions/revoke.texi
+@include glibc-functions/sbrk.texi
+@include glibc-functions/setlogin.texi
+@include glibc-functions/setdomainname.texi
+@include glibc-functions/sethostid.texi
+@include glibc-functions/sethostname.texi
+@include glibc-functions/setresgid.texi
+@include glibc-functions/setresuid.texi
+@include glibc-functions/setusershell.texi
+@include glibc-functions/syscall.texi
+@include glibc-functions/ttyslot.texi
+@include glibc-functions/vhangup.texi
+
+@c @node Glibc utime.h
+@c @section Glibc Extensions to @code{<utime.h>}
+
+@node Glibc utmp.h
+@section Glibc @code{<utmp.h>}
+
+@menu
+* endutent::
+* getutent::
+* getutent_r::
+* getutid::
+* getutid_r::
+* getutline::
+* getutline_r::
+* pututline::
+* setutent::
+* updwtmp::
+* utmpname::
+@end menu
+
+@include glibc-functions/endutent.texi
+@include glibc-functions/getutent.texi
+@include glibc-functions/getutent_r.texi
+@include glibc-functions/getutid.texi
+@include glibc-functions/getutid_r.texi
+@include glibc-functions/getutline.texi
+@include glibc-functions/getutline_r.texi
+@include glibc-functions/pututline.texi
+@include glibc-functions/setutent.texi
+@include glibc-functions/updwtmp.texi
+@include glibc-functions/utmpname.texi
+
+@node Glibc utmpx.h
+@section Glibc Extensions to @code{<utmpx.h>}
+
+@menu
+* getutmp::
+* getutmpx::
+* updwtmpx::
+* utmpxname::
+@end menu
+
+@include glibc-functions/getutmp.texi
+@include glibc-functions/getutmpx.texi
+@include glibc-functions/updwtmpx.texi
+@include glibc-functions/utmpxname.texi
+
+@node Glibc wchar.h
+@section Glibc Extensions to @code{<wchar.h>}
+
+@menu
+* fgetwc_unlocked::
+* fgetws_unlocked::
+* fputwc_unlocked::
+* fputws_unlocked::
+* getwc_unlocked::
+* getwchar_unlocked::
+* mbsnrtowcs::
+* putwc_unlocked::
+* putwchar_unlocked::
+* wcpcpy::
+* wcpncpy::
+* wcscasecmp::
+* wcscasecmp_l::
+* wcschrnul::
+* wcscoll_l::
+* wcsdup::
+* wcsftime_l::
+* wcsncasecmp::
+* wcsncasecmp_l::
+* wcsnlen::
+* wcsnrtombs::
+* wcstod_l::
+* wcstof_l::
+* wcstol_l::
+* wcstold_l::
+* wcstoll_l::
+* wcstoq::
+* wcstoul_l::
+* wcstoull_l::
+* wcstouq::
+* wcsxfrm_l::
+* wmempcpy::
+@end menu
+
+@include glibc-functions/fgetwc_unlocked.texi
+@include glibc-functions/fgetws_unlocked.texi
+@include glibc-functions/fputwc_unlocked.texi
+@include glibc-functions/fputws_unlocked.texi
+@include glibc-functions/getwc_unlocked.texi
+@include glibc-functions/getwchar_unlocked.texi
+@include glibc-functions/mbsnrtowcs.texi
+@include glibc-functions/putwc_unlocked.texi
+@include glibc-functions/putwchar_unlocked.texi
+@include glibc-functions/wcpcpy.texi
+@include glibc-functions/wcpncpy.texi
+@include glibc-functions/wcscasecmp.texi
+@include glibc-functions/wcscasecmp_l.texi
+@include glibc-functions/wcschrnul.texi
+@include glibc-functions/wcscoll_l.texi
+@include glibc-functions/wcsdup.texi
+@include glibc-functions/wcsftime_l.texi
+@include glibc-functions/wcsncasecmp.texi
+@include glibc-functions/wcsncasecmp_l.texi
+@include glibc-functions/wcsnlen.texi
+@include glibc-functions/wcsnrtombs.texi
+@include glibc-functions/wcstod_l.texi
+@include glibc-functions/wcstof_l.texi
+@include glibc-functions/wcstol_l.texi
+@include glibc-functions/wcstold_l.texi
+@include glibc-functions/wcstoll_l.texi
+@include glibc-functions/wcstoq.texi
+@include glibc-functions/wcstoul_l.texi
+@include glibc-functions/wcstoull_l.texi
+@include glibc-functions/wcstouq.texi
+@include glibc-functions/wcsxfrm_l.texi
+@include glibc-functions/wmempcpy.texi
+
+@node Glibc wctype.h
+@section Glibc Extensions to @code{<wctype.h>}
+
+@menu
+* iswalnum_l::
+* iswalpha_l::
+* iswblank_l::
+* iswcntrl_l::
+* iswctype_l::
+* iswdigit_l::
+* iswgraph_l::
+* iswlower_l::
+* iswprint_l::
+* iswpunct_l::
+* iswspace_l::
+* iswupper_l::
+* iswxdigit_l::
+* towctrans_l::
+* towlower_l::
+* towupper_l::
+* wctrans_l::
+* wctype_l::
+@end menu
+
+@include glibc-functions/iswalnum_l.texi
+@include glibc-functions/iswalpha_l.texi
+@include glibc-functions/iswblank_l.texi
+@include glibc-functions/iswcntrl_l.texi
+@include glibc-functions/iswctype_l.texi
+@include glibc-functions/iswdigit_l.texi
+@include glibc-functions/iswgraph_l.texi
+@include glibc-functions/iswlower_l.texi
+@include glibc-functions/iswprint_l.texi
+@include glibc-functions/iswpunct_l.texi
+@include glibc-functions/iswspace_l.texi
+@include glibc-functions/iswupper_l.texi
+@include glibc-functions/iswxdigit_l.texi
+@include glibc-functions/towctrans_l.texi
+@include glibc-functions/towlower_l.texi
+@include glibc-functions/towupper_l.texi
+@include glibc-functions/wctrans_l.texi
+@include glibc-functions/wctype_l.texi
+
+@c @node Glibc wordexp.h
+@c @section Glibc Extensions to @code{<wordexp.h>}
 
 @node Particular Modules
 @chapter Particular Modules

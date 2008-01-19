@@ -1,0 +1,16 @@
+@node svc_fdset
+@subsection @code{svc_fdset}
+@findex svc_fdset
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This variable is missing on some platforms:
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Cygwin, mingw, BeOS.
+@end itemize

@@ -1,0 +1,16 @@
+@node ether_ntohost
+@subsection @code{ether_ntohost}
+@findex ether_ntohost
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+HP-UX 11, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize

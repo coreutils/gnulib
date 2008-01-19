@@ -1,0 +1,16 @@
+@node xdr_opaque_auth
+@subsection @code{xdr_opaque_auth}
+@findex xdr_opaque_auth
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Cygwin, mingw, BeOS.
+@end itemize

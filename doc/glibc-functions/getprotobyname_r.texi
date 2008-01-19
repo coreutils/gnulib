@@ -1,0 +1,16 @@
+@node getprotobyname_r
+@subsection @code{getprotobyname_r}
+@findex getprotobyname_r
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, HP-UX 11, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize

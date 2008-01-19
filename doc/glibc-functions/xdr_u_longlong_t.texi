@@ -1,0 +1,16 @@
+@node xdr_u_longlong_t
+@subsection @code{xdr_u_longlong_t}
+@findex xdr_u_longlong_t
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, OpenBSD 3.8, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize

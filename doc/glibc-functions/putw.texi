@@ -1,0 +1,16 @@
+@node putw
+@subsection @code{putw}
+@findex putw
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+BeOS.
+@end itemize

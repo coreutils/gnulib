@@ -1,0 +1,16 @@
+@node svcerr_auth
+@subsection @code{svcerr_auth}
+@findex svcerr_auth
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Cygwin, mingw, BeOS.
+@end itemize

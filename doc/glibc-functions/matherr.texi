@@ -1,0 +1,16 @@
+@node matherr
+@subsection @code{matherr}
+@findex matherr
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+FreeBSD 6.0, AIX 5.1, HP-UX 11, OSF/1 5.1, mingw.
+@end itemize

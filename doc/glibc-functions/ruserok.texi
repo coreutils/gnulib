@@ -1,0 +1,16 @@
+@node ruserok
+@subsection @code{ruserok}
+@findex ruserok
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+mingw, BeOS.
+@end itemize

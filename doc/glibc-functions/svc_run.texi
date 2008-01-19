@@ -1,0 +1,16 @@
+@node svc_run
+@subsection @code{svc_run}
+@findex svc_run
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Cygwin, mingw, BeOS.
+@end itemize

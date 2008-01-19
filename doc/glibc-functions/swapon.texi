@@ -1,0 +1,16 @@
+@node swapon
+@subsection @code{swapon}
+@findex swapon
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+OpenBSD 3.8, AIX 5.1, IRIX 6.5, Solaris 10, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize

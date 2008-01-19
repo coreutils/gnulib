@@ -1,0 +1,16 @@
+@node pmap_getport
+@subsection @code{pmap_getport}
+@findex pmap_getport
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Cygwin, mingw, BeOS.
+@end itemize

@@ -1,0 +1,16 @@
+@node xdr_getcredres
+@subsection @code{xdr_getcredres}
+@findex xdr_getcredres
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, NetBSD 3.0, OpenBSD 3.8, IRIX 6.5, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize

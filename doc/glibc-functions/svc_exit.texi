@@ -1,0 +1,16 @@
+@node svc_exit
+@subsection @code{svc_exit}
+@findex svc_exit
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, OpenBSD 3.8, AIX 5.1, IRIX 6.5, OSF/1 5.1, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize

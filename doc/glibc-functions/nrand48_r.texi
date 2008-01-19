@@ -1,0 +1,16 @@
+@node nrand48_r
+@subsection @code{nrand48_r}
+@findex nrand48_r
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, HP-UX 11, IRIX 6.5, Solaris 10, Cygwin, mingw, Interix 3.5.
+@end itemize

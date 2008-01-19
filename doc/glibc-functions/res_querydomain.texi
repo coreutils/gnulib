@@ -1,0 +1,16 @@
+@node res_querydomain
+@subsection @code{res_querydomain}
+@findex res_querydomain
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Cygwin, mingw, Interix 3.5.
+@end itemize

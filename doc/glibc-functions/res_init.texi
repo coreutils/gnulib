@@ -1,0 +1,16 @@
+@node res_init
+@subsection @code{res_init}
+@findex res_init
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+Cygwin, mingw, Interix 3.5.
+@end itemize

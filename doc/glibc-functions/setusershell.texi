@@ -1,0 +1,16 @@
+@node setusershell
+@subsection @code{setusershell}
+@findex setusershell
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+AIX 4.3.2, IRIX 6.5, mingw, Interix 3.5, BeOS.
+@end itemize

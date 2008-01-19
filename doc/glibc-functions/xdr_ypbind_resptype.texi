@@ -1,0 +1,16 @@
+@node xdr_ypbind_resptype
+@subsection @code{xdr_ypbind_resptype}
+@findex xdr_ypbind_resptype
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+NetBSD 3.0, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize
