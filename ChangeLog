@@ -1,5 +1,11 @@
 2008-01-19  Bruno Haible  <bruno@clisp.org>
 
+	* doc/posix-headers: Renamed from doc/headers.
+	* doc/posix-functions: Renamed from doc/functions.
+	* doc/gnulib.texi: Update.
+
+2008-01-19  Bruno Haible  <bruno@clisp.org>
+
 	* doc/glibc-functions/strcasestr.texi: Include contents of
 	doc/functions/strcasestr.texi, fixing the list of platforms.
 	* doc/functions/strcasestr.texi: Remove file.
