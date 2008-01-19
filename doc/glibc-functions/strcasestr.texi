@@ -2,15 +2,24 @@
 @subsection @code{strcasestr}
 @findex strcasestr
 
-Gnulib module: ---
+Gnulib module: strcasestr or strcasestr-simple
 
-Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{strcasestr-simple}
+or @code{strcasestr}:
 @itemize
 @item
 This function is missing on some platforms:
 AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin, mingw, BeOS.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{strcasestr}:
+@itemize
+@item
+This function has quadratic instead of linear worst-case complexity on some
+platforms:
+glibc 2.6.1, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize
