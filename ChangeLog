@@ -1,5 +1,11 @@
 2008-01-18  Bruno Haible  <bruno@clisp.org>
 
+	* doc/glibc-functions/memmem.texi: Include contents of
+	doc/functions/memmem.texi.
+	* doc/functions/memmem.texi: Remove file.
+
+2008-01-18  Bruno Haible  <bruno@clisp.org>
+
 	* doc/glibc-functions/*.texi: New files.
 	* doc/gnulib.texi (Glibc Function Substitutes): Completely rewritten
 	to use the new files.

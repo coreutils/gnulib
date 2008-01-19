@@ -2,15 +2,31 @@
 @subsection @code{memmem}
 @findex memmem
 
-Gnulib module: ---
+Gnulib module: memmem or memmem-simple
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{memmem-simple}
+or @code{memmem}:
 @itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 5.2.1, OpenBSD 4.0, AIX 4.3.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, Interix 3.5, BeOS.
+@item
+This function has reversed arguments on some older platforms:
+Linux libc 5.0.9
+@end itemize
+
+Portability problems fixed by Gnulib module @code{memmem}:
+@itemize
+@item
+This function returns incorrect values in some cases, such as when
+given an empty needle:
+glibc <= 2.0, Cygwin 1.5.x.
+@item
+This function has quadratic instead of linear worst-case complexity on some
+platforms:
+glibc 2.6.1, FreeBSD 6.2, NetBSD 3.0, AIX 5.1, Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-MacOS X 10.3, FreeBSD 5.2.1, OpenBSD 3.8, AIX 4.3.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, Interix 3.5, BeOS.
 @end itemize
