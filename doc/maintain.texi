@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate January 5, 2008
+@set lastupdate January 17, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -29,9 +29,12 @@ Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 Foundation, Inc.
 
 @quotation
-Permission is granted to make and distribute verbatim copies
-of this entire document without royalty provided the
-copyright notice and this permission notice are preserved.
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled
+``GNU Free Documentation License''.
 @end quotation
 @end copying
 
@@ -69,6 +72,7 @@ copyright notice and this permission notice are preserved.
 * Hosting::
 * Free Software Directory::
 * Using the Proofreaders List::
+* GNU Free Documentation License::
 * Index::
 @end menu
 
@@ -1414,15 +1418,15 @@ your package (in the example above, that is @code{bar}).
 @node Announcements
 @section Announcing Releases
 
-When you have a new release, please make an announcement.  You can
-maintain your own mailing list for announcements if you like, or you can
-use the moderated general GNU announcements list,
-@email{info-gnu@@gnu.org}.
+When you have a new release, please make an announcement.  For
+official new releases, including those made just to fix bugs, we
+recommend using the (moderated) general GNU announcements list,
+@email{info-gnu@@gnu.org}.  Doing so makes it easier for users and
+developers to find the latest GNU releases.
 
-If you use your own list, you can decide as you see fit what events are
-worth announcing.  If you use @email{info-gnu@@gnu.org}, please do not
-announce pretest releases, only real releases.  But real releases do
-include releases made just to fix bugs.
+You can maintain your own mailing list for announcements as well if
+you like.  For your own list, you can decide as you see fit what
+events are worth announcing.
 
 
 @node Web Pages
@@ -1761,15 +1765,20 @@ Note that this uses a space, not a slash.
 @chapter Hosting
 @cindex CVS repository
 @cindex repository
+@cindex source repository
+@cindex version control system
 @cindex FTP site
 @cindex hosting
 
-We would like to recommend using @code{subversions.gnu.org} as the CVS
-repository for your package, and using @code{ftp.gnu.org} as the
-standard FTP site.  It is ok to use other machines if you wish.  If you
-use a company's machine to hold the repository for your program, or as
-its ftp site, please put this statement in a prominent place on the
-site, so as to prevent people from getting the wrong idea about the
+We recommend using @code{savannah.gnu.org} for the source code
+repository for your package, and, even more so, using
+@code{ftp.gnu.org} as the standard distribution site.  Doing so makes
+it easier for developers and users to find the latest GNU releases.
+
+However, it is ok to use other machines if you wish.  If you use a
+company's machine to hold the repository for your program, or as its
+ftp site, please put this statement in a prominent place on the site,
+so as to prevent people from getting the wrong idea about the
 relationship between the package and the company:
 
 @smallexample
@@ -1856,6 +1865,13 @@ and ask people to send you mail if they volunteer for the job.
 When you get enough volunteers, send another message to the list saying
 ``I have enough volunteers, no more please.''
 @end itemize
+
+
+@node GNU Free Documentation License
+@appendix GNU Free Documentation License
+
+@cindex FDL, GNU Free Documentation License
+@include fdl.texi
 
 
 @node Index
