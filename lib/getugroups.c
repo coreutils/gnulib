@@ -21,6 +21,7 @@
 
 #include "getugroups.h"
 
+#include <limits.h>
 #include <stdio.h> /* grp.h on alpha OSF1 V2.0 uses "FILE *". */
 #include <grp.h>
 
@@ -92,12 +93,12 @@ getugroups (int maxcount, GETGROUPS_T *grouplist, char const *username,
 		    goto done;
 		  grouplist[count] = grp->gr_gid;
 		}
-	      count++;
-	      if (count < 0)
+	      if (count == INT_MAX)
 		{
 		  errno = EOVERFLOW;
 		  goto done;
 		}
+	      count++;
 	    }
 	}
     }

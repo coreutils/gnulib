@@ -1,3 +1,9 @@
+2008-02-13  Lasse Collin  <lasse.collin@tukaani.org>
+
+	Don't rely on signed integer overflowing to negative value.
+	* lib/getugroups.c (getugroups): Include <limits.h>.
+	Instead, compare against INT_MAX, and increment only if the test passes.
+
 2008-02-13  Jim Meyering  <meyering@redhat.com>
 	and Eric Blake  <ebb9@byu.net>
 
