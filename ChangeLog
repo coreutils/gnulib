@@ -1,3 +1,14 @@
+2008-01-24  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/sockets: New module, can be used to call WSA_Startup and
+	WSA_Cleanup when needed.
+
+	* lib/sockets.h, lib/sockets.c: New files.
+
+	* m4/sockets.m4: New file.
+
+	* tests/test-sockets.c: New file.
+
 2008-01-19  Bruno Haible  <bruno@clisp.org>
 
 	* doc/posix-headers: Renamed from doc/headers.

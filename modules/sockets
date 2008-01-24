@@ -1,0 +1,25 @@
+Description:
+Wrappers for Windows socket functions
+
+Files:
+lib/sockets.c
+lib/sockets.h
+m4/sockets.m4
+
+Depends-on:
+sys_socket
+
+configure.ac:
+gl_SOCKETS
+
+Makefile.am:
+lib_SOURCES += sockets.h sockets.c
+
+Include:
+"sockets.h"
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson
