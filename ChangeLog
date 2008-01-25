@@ -1,3 +1,9 @@
+2008-01-25  Jim Meyering  <meyering@redhat.com>
+
+	Prefer <config.h> over "config.h".  See autoconf doc for explanation.
+	* lib/poll.c: Include <config.h>, not "config.h".
+	* tests/test-getaddrinfo.c: Likewise.
+
 2008-01-25  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/sockets-tests: New file.
