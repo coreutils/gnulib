@@ -1,3 +1,7 @@
+2008-01-25  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/sockets-tests: New file.
+
 2008-01-24  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/sockets: New module, can be used to call WSA_Startup and
