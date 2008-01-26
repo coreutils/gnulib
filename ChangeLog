@@ -4,6 +4,7 @@
 	gl_FUNC_ISNANL_WORKS): Test the GCC >= 4.0 built-in.
 	* lib/isnanl.h (isnanl): Use the GCC >= 4.0 built-in.
 	* lib/isnanl-nolibm.h (isnanl): Likewise.
+	Reported by Paul Eggert <eggert@cs.ucla.edu>.
 
 2008-01-26  Bruno Haible  <bruno@clisp.org>
 
