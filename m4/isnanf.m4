@@ -1,5 +1,5 @@
-# isnanf.m4 serial 4
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# isnanf.m4 serial 5
+dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -33,7 +33,10 @@ AC_DEFUN([gl_HAVE_ISNANF_NO_LIBM],
     [gl_cv_func_isnanf_no_libm],
     [
       AC_TRY_LINK([#include <math.h>
-                   #ifdef isnan
+                   #if __GNUC__ >= 4
+                   # undef isnanf
+                   # define isnanf(x) __builtin_isnanf ((float)(x))
+                   #elif defined isnan
                    # undef isnanf
                    # define isnanf(x) isnan ((float)(x))
                    #endif
@@ -54,7 +57,10 @@ AC_DEFUN([gl_ISNANF_WORKS],
     [
       AC_TRY_RUN([
 #include <math.h>
-#ifdef isnan
+#if __GNUC__ >= 4
+# undef isnanf
+# define isnanf(x) __builtin_isnanf ((float)(x))
+#elif defined isnan
 # undef isnanf
 # define isnanf(x) isnan ((float)(x))
 #endif

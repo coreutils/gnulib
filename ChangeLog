@@ -1,5 +1,11 @@
 2008-01-26  Bruno Haible  <bruno@clisp.org>
 
+	* m4/isnanf.m4 (gl_HAVE_ISNANF_NO_LIBM, gl_ISNANF_WORKS): Test the
+	GCC >= 4.0 built-in.
+	* lib/isnanf.h (isnanf): Use the GCC >= 4.0 built-in.
+
+2008-01-26  Bruno Haible  <bruno@clisp.org>
+
 	Rename isnan, applicable to 'double' only, to isnand.
 	* modules/isnand-nolibm: Renamed from modules/isnan-nolibm.
 	(Files): Add lib/isnand.h, lib/isnand.c. Remove lib/isnan.h.
