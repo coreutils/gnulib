@@ -1,3 +1,15 @@
+2008-01-25  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	* m4/signbit.m4 (gl_SIGNBIT): Require a macro definition. Test whether
+	the GCC builtins for signbits are present and set
+	REPLACE_SIGNBIT_USING_GCC if so.
+	* lib/math.in.h (signbit): Define using GCC builtins if
+	REPLACE_SIGNBIT_USING_GCC is set.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize
+	REPLACE_SIGNBIT_USING_GCC.
+	* modules/math (Makefile.am): Substitute REPLACE_SIGNBIT_USING_GCC.
+
 2008-01-25  Jim Meyering  <meyering@redhat.com>
 
 	Prefer <config.h> over "config.h".  See autoconf doc for explanation.

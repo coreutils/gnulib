@@ -64,6 +64,7 @@ math.h: math.in.h
 	      -e 's|@''REPLACE_ROUNDF''@|$(REPLACE_ROUNDF)|g' \
 	      -e 's|@''REPLACE_ROUNDL''@|$(REPLACE_ROUNDL)|g' \
 	      -e 's|@''REPLACE_SIGNBIT''@|$(REPLACE_SIGNBIT)|g' \
+	      -e 's|@''REPLACE_SIGNBIT_USING_GCC''@|$(REPLACE_SIGNBIT_USING_GCC)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/math.in.h; \
 	} > $@-t

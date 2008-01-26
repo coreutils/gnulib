@@ -353,6 +353,14 @@ extern int gl_isfinitel (long double x);
 
 
 #if @GNULIB_SIGNBIT@
+# if @REPLACE_SIGNBIT_USING_GCC@
+#  undef signbit
+   /* GCC 4.0 and newer provides three built-ins for signbit.  */
+#  define signbit(x) \
+   (sizeof (x) == sizeof (long double) ? __builtin_signbitl (x) : \
+    sizeof (x) == sizeof (double) ? __builtin_signbit (x) : \
+    __builtin_signbitf (x))
+# endif
 # if @REPLACE_SIGNBIT@
 #  undef signbit
 extern int gl_signbitf (float arg);

@@ -1,5 +1,5 @@
-# signbit.m4 serial 2
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# signbit.m4 serial 3
+dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -11,7 +11,119 @@ AC_DEFUN([gl_SIGNBIT],
     [
       AC_TRY_RUN([
 #include <math.h>
+/* If signbit is defined as a function, don't use it, since calling it for
+   'float' or 'long double' arguments would involve conversions.
+   If signbit is not declared at all but exists as a library function, don't
+   use it, since the prototype may not match.
+   If signbit is not declared at all but exists as a compiler built-in, don't
+   use it, since it's preferable to use __builtin_signbit* (no warnings,
+   no conversions).  */
+#ifndef signbit
+# error "signbit should be a macro"
+#endif
 #include <string.h>
+]gl_SIGNBIT_TEST_PROGRAM
+, [gl_cv_func_signbit=yes], [gl_cv_func_signbit=no],
+        [gl_cv_func_signbit="guessing no"])
+    ])
+  dnl GCC 4.0 and newer provides three built-ins for signbit.
+  dnl They can be used without warnings, also in C++, regardless of <math.h>.
+  dnl But they may expand to calls to functions, which may or may not be in
+  dnl libc.
+  AC_CACHE_CHECK([for signbit compiler built-ins], [gl_cv_func_signbit_gcc],
+    [
+      AC_TRY_RUN([
+#if __GNUC__ >= 4
+# define signbit(x) \
+   (sizeof (x) == sizeof (long double) ? __builtin_signbitl (x) : \
+    sizeof (x) == sizeof (double) ? __builtin_signbit (x) : \
+    __builtin_signbitf (x))
+#else
+# error "signbit should be three compiler built-ins"
+#endif
+#include <string.h>
+]gl_SIGNBIT_TEST_PROGRAM
+, [gl_cv_func_signbit_gcc=yes], [gl_cv_func_signbit_gcc=no],
+        [gl_cv_func_signbit_gcc="guessing no"])
+    ])
+  dnl Use the compiler built-ins whenever possible, because they are more
+  dnl efficient than the system library functions (if they exist).
+  if test "$gl_cv_func_signbit_gcc" = yes; then
+    REPLACE_SIGNBIT_USING_GCC=1
+  else
+    if test "$gl_cv_func_signbit" != yes; then
+      REPLACE_SIGNBIT=1
+      AC_LIBOBJ([signbitf])
+      AC_LIBOBJ([signbitd])
+      AC_LIBOBJ([signbitl])
+      gl_FLOAT_SIGN_LOCATION
+      gl_DOUBLE_SIGN_LOCATION
+      gl_LONG_DOUBLE_SIGN_LOCATION
+      if test "$gl_cv_cc_float_signbit" = unknown; then
+        dnl Test whether copysignf() is declared.
+        AC_CHECK_DECLS([copysignf], , , [#include <math.h>])
+        if test "$ac_cv_have_decl_copysignf" = yes; then
+          dnl Test whether copysignf() can be used without libm.
+          AC_CACHE_CHECK([whether copysignf can be used without linking with libm],
+            [gl_cv_func_copysignf_no_libm],
+            [
+              AC_TRY_LINK([#include <math.h>
+                           float x, y;],
+                          [return copysignf (x, y) < 0;],
+                [gl_cv_func_copysignf_no_libm=yes],
+                [gl_cv_func_copysignf_no_libm=no])
+            ])
+          if test $gl_cv_func_copysignf_no_libm = yes; then
+            AC_DEFINE([HAVE_COPYSIGNF_IN_LIBC], 1,
+              [Define if the copysignf function is declared in <math.h> and available in libc.])
+          fi
+        fi
+      fi
+      if test "$gl_cv_cc_double_signbit" = unknown; then
+        dnl Test whether copysign() is declared.
+        AC_CHECK_DECLS([copysign], , , [#include <math.h>])
+        if test "$ac_cv_have_decl_copysign" = yes; then
+          dnl Test whether copysign() can be used without libm.
+          AC_CACHE_CHECK([whether copysign can be used without linking with libm],
+            [gl_cv_func_copysign_no_libm],
+            [
+              AC_TRY_LINK([#include <math.h>
+                           double x, y;],
+                          [return copysign (x, y) < 0;],
+                [gl_cv_func_copysign_no_libm=yes],
+                [gl_cv_func_copysign_no_libm=no])
+            ])
+          if test $gl_cv_func_copysign_no_libm = yes; then
+            AC_DEFINE([HAVE_COPYSIGN_IN_LIBC], 1,
+              [Define if the copysign function is declared in <math.h> and available in libc.])
+          fi
+        fi
+      fi
+      if test "$gl_cv_cc_long_double_signbit" = unknown; then
+        dnl Test whether copysignl() is declared.
+        AC_CHECK_DECLS([copysignl], , , [#include <math.h>])
+        if test "$ac_cv_have_decl_copysignl" = yes; then
+          dnl Test whether copysignl() can be used without libm.
+          AC_CACHE_CHECK([whether copysignl can be used without linking with libm],
+            [gl_cv_func_copysignl_no_libm],
+            [
+              AC_TRY_LINK([#include <math.h>
+                           long double x, y;],
+                          [return copysignl (x, y) < 0;],
+                [gl_cv_func_copysignl_no_libm=yes],
+                [gl_cv_func_copysignl_no_libm=no])
+            ])
+          if test $gl_cv_func_copysignl_no_libm = yes; then
+            AC_DEFINE([HAVE_COPYSIGNL_IN_LIBC], 1,
+              [Define if the copysignl function is declared in <math.h> and available in libc.])
+          fi
+        fi
+      fi
+    fi
+  fi
+])
+
+AC_DEFUN([gl_SIGNBIT_TEST_PROGRAM], [
 float p0f = 0.0f;
 float m0f = -0.0f;
 double p0d = 0.0;
@@ -54,78 +166,7 @@ int main ()
       return 1;
   }
   return 0;
-}], [gl_cv_func_signbit=yes], [gl_cv_func_signbit=no],
-        [gl_cv_func_signbit="guessing no"])
-    ])
-  if test "$gl_cv_func_signbit" != yes; then
-    REPLACE_SIGNBIT=1
-    AC_LIBOBJ([signbitf])
-    AC_LIBOBJ([signbitd])
-    AC_LIBOBJ([signbitl])
-    gl_FLOAT_SIGN_LOCATION
-    gl_DOUBLE_SIGN_LOCATION
-    gl_LONG_DOUBLE_SIGN_LOCATION
-    if test "$gl_cv_cc_float_signbit" = unknown; then
-      dnl Test whether copysignf() is declared.
-      AC_CHECK_DECLS([copysignf], , , [#include <math.h>])
-      if test "$ac_cv_have_decl_copysignf" = yes; then
-        dnl Test whether copysignf() can be used without libm.
-        AC_CACHE_CHECK([whether copysignf can be used without linking with libm],
-          [gl_cv_func_copysignf_no_libm],
-          [
-            AC_TRY_LINK([#include <math.h>
-                         float x, y;],
-                        [return copysignf (x, y) < 0;],
-              [gl_cv_func_copysignf_no_libm=yes],
-              [gl_cv_func_copysignf_no_libm=no])
-          ])
-        if test $gl_cv_func_copysignf_no_libm = yes; then
-          AC_DEFINE([HAVE_COPYSIGNF_IN_LIBC], 1,
-            [Define if the copysignf function is declared in <math.h> and available in libc.])
-        fi
-      fi
-    fi
-    if test "$gl_cv_cc_double_signbit" = unknown; then
-      dnl Test whether copysign() is declared.
-      AC_CHECK_DECLS([copysign], , , [#include <math.h>])
-      if test "$ac_cv_have_decl_copysign" = yes; then
-        dnl Test whether copysign() can be used without libm.
-        AC_CACHE_CHECK([whether copysign can be used without linking with libm],
-          [gl_cv_func_copysign_no_libm],
-          [
-            AC_TRY_LINK([#include <math.h>
-                         double x, y;],
-                        [return copysign (x, y) < 0;],
-              [gl_cv_func_copysign_no_libm=yes],
-              [gl_cv_func_copysign_no_libm=no])
-          ])
-        if test $gl_cv_func_copysign_no_libm = yes; then
-          AC_DEFINE([HAVE_COPYSIGN_IN_LIBC], 1,
-            [Define if the copysign function is declared in <math.h> and available in libc.])
-        fi
-      fi
-    fi
-    if test "$gl_cv_cc_long_double_signbit" = unknown; then
-      dnl Test whether copysignl() is declared.
-      AC_CHECK_DECLS([copysignl], , , [#include <math.h>])
-      if test "$ac_cv_have_decl_copysignl" = yes; then
-        dnl Test whether copysignl() can be used without libm.
-        AC_CACHE_CHECK([whether copysignl can be used without linking with libm],
-          [gl_cv_func_copysignl_no_libm],
-          [
-            AC_TRY_LINK([#include <math.h>
-                         long double x, y;],
-                        [return copysignl (x, y) < 0;],
-              [gl_cv_func_copysignl_no_libm=yes],
-              [gl_cv_func_copysignl_no_libm=no])
-          ])
-        if test $gl_cv_func_copysignl_no_libm = yes; then
-          AC_DEFINE([HAVE_COPYSIGNL_IN_LIBC], 1,
-            [Define if the copysignl function is declared in <math.h> and available in libc.])
-        fi
-      fi
-    fi
-  fi
+}
 ])
 
 AC_DEFUN([gl_FLOAT_SIGN_LOCATION],
