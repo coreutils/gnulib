@@ -1,5 +1,5 @@
-# isnanl.m4 serial 5
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# isnanl.m4 serial 6
+dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -64,7 +64,10 @@ AC_DEFUN([gl_HAVE_ISNANL_NO_LIBM],
     [gl_cv_func_isnanl_no_libm],
     [
       AC_TRY_LINK([#include <math.h>
-                   #ifdef isnan
+                   #if __GNUC__ >= 4
+                   # undef isnanl
+                   # define isnanl(x) __builtin_isnanl ((long double)(x))
+                   #elif defined isnan
                    # undef isnanl
                    # define isnanl(x) isnan ((long double)(x))
                    #endif
@@ -84,7 +87,10 @@ AC_DEFUN([gl_HAVE_ISNANL_IN_LIBM],
       save_LIBS="$LIBS"
       LIBS="$LIBS -lm"
       AC_TRY_LINK([#include <math.h>
-                   #ifdef isnan
+                   #if __GNUC__ >= 4
+                   # undef isnanl
+                   # define isnanl(x) __builtin_isnanl ((long double)(x))
+                   #elif defined isnan
                    # undef isnanl
                    # define isnanl(x) isnan ((long double)(x))
                    #endif
@@ -98,6 +104,9 @@ AC_DEFUN([gl_HAVE_ISNANL_IN_LIBM],
 
 dnl Test whether isnanl() recognizes all numbers which are neither finite nor
 dnl infinite. This test fails e.g. on NetBSD/i386 and on glibc/ia64.
+dnl Also, the GCC >= 4.0 built-in __builtin_isnanl does not pass the tests
+dnl - for pseudo-denormals on i686 and x86_64,
+dnl - for pseudo-zeroes, unnormalized numbers, and pseudo-denormals on ia64.
 AC_DEFUN([gl_FUNC_ISNANL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -109,7 +118,10 @@ AC_DEFUN([gl_FUNC_ISNANL_WORKS],
 #include <float.h>
 #include <limits.h>
 #include <math.h>
-#ifdef isnan
+#if __GNUC__ >= 4
+# undef isnanl
+# define isnanl(x) __builtin_isnanl ((long double)(x))
+#elif defined isnan
 # undef isnanl
 # define isnanl(x) isnan ((long double)(x))
 #endif

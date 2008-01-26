@@ -1,5 +1,5 @@
 /* Test for NaN.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,7 +17,11 @@
 #if HAVE_ISNANL
 /* Get declaration of isnan macro or (older) isnanl function.  */
 # include <math.h>
-# ifdef isnan
+# if __GNUC__ >= 4
+   /* GCC 4.0 and newer provides three built-ins for isnan.  */
+#  undef isnanl
+#  define isnanl(x) __builtin_isnanl ((long double)(x))
+# elif defined isnan
 #  undef isnanl
 #  define isnanl(x) isnan ((long double)(x))
 # endif
