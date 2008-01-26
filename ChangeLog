@@ -1,3 +1,71 @@
+2008-01-26  Bruno Haible  <bruno@clisp.org>
+
+	Rename isnan, applicable to 'double' only, to isnand.
+	* modules/isnand-nolibm: Renamed from modules/isnan-nolibm.
+	(Files): Add lib/isnand.h, lib/isnand.c. Remove lib/isnan.h.
+	(configure.ac): Update.
+	(Include): Replace "isnan.h" with "isnand.h".
+	* m4/isnand.m4: Renamed from m4/isnan.m4.
+	(gl_FUNC_ISNAND_NO_LIBM): Renamed from gl_FUNC_ISNAN_NO_LIBM. Set
+	HAVE_ISNAND_IN_LIBC instead of HAVE_ISNAN_IN_LIBC. Build isnand.c
+	instead of isnan.c.
+	* lib/isnand.h: Renamed from lib/isnan.h. Test HAVE_ISNAND_IN_LIBC
+	instead of HAVE_ISNAN_IN_LIBC.
+	(isnand): Renamed from isnan.
+	* lib/isnand.c: New file.
+	* modules/isnand-nolibm-tests: Renamed from modules/isnan-nolibm-tests.
+	(Files): Add tests/test-isnand.c. Remove tests/test-isnan.c.
+	(Makefile.am): Update.
+	* tests/test-isnand.c: Renamed from tests/test-isnan.c.
+	Include isnand.h instead of isnan.h.
+	(main): Test isnand instead of isnan.
+	* modules/fprintf-posix (Depends-on): Add isnand-nolibm, remove
+	isnan-nolibm.
+	* modules/frexp (Depends-on): Likewise.
+	* modules/frexp-tests (Depends-on): Likewise.
+	* modules/frexp-nolibm (Depends-on): Likewise.
+	* modules/frexp-nolibm-tests (Depends-on): Likewise.
+	* modules/isfinite (Depends-on): Likewise.
+	* modules/round-tests (Depends-on): Likewise.
+	* modules/signbit (Depends-on): Likewise.
+	* modules/signbit-tests (Depends-on): Likewise.
+	* modules/snprintf-posix (Depends-on): Likewise.
+	* modules/sprintf-posix (Depends-on): Likewise.
+	* modules/trunc-tests (Depends-on): Likewise.
+	* modules/unistdio/u8-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-u8-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-vasnprintf (Depends-on): Likewise.
+	* modules/vasnprintf-posix (Depends-on): Likewise.
+	* modules/vasprintf-posix (Depends-on): Likewise.
+	* modules/vfprintf-posix (Depends-on): Likewise.
+	* modules/vsnprintf-posix (Depends-on): Likewise.
+	* modules/vsprintf-posix (Depends-on): Likewise.
+	* lib/frexp.c: Include isnand.h instead of isnan.h.
+	(ISNAN): Set to isnand instead of isnan.
+	* lib/isfinite.c: Include isnand.h instead of isnan.h.
+	(gl_isfinited): Use isnand instead of isnan.
+	* lib/signbitd.c: Include isnand.h instead of isnan.h.
+	(gl_signbitd): Use isnand instead of isnan.
+	* lib/vasnprintf.c: Include isnand.h instead of isnan.h.
+	(is_infinite_or_zero, VASNPRINTF): Use isnand instead of isnan.
+	* tests/test-frexp.c: Include isnand.h instead of isnan.h.
+	(main): Use isnand instead of isnan.
+	* tests/test-round1.c: Include isnand.h.
+	(main): Use isnand instead of isnan.
+	* tests/test-round2.c: Include isnand.h instead of isnan.h.
+	(ISNAN): Set to isnand instead of isnan.
+	* tests/test-trunc1.c: Include isnand.h.
+	(main): Use isnand instead of isnan.
+	* tests/test-trunc2.c: Include isnand.h instead of isnan.h.
+	(equal): Use isnand instead of isnan.
+	* MODULES.html.sh (Mathematics <math.h>): Replace isnan-nolibm with
+	isnand-nolibm.
+	* NEWS: Mention the change.
+
 2008-01-25  Paul Eggert  <eggert@cs.ucla.edu>
             Bruno Haible  <bruno@clisp.org>
 

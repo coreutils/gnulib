@@ -1,27 +1,27 @@
-# isnan.m4 serial 2
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# isnand.m4 serial 1
+dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-dnl Check how to get or define isnan() without linking with libm.
+dnl Check how to get or define isnand() without linking with libm.
 
-AC_DEFUN([gl_FUNC_ISNAN_NO_LIBM],
+AC_DEFUN([gl_FUNC_ISNAND_NO_LIBM],
 [
   AC_CACHE_CHECK([whether isnan(double) can be used without linking with libm],
-    [gl_cv_func_isnan_no_libm],
+    [gl_cv_func_isnand_no_libm],
     [
       AC_TRY_LINK([#include <math.h>
                    double x;],
                   [return isnan (x);],
-        [gl_cv_func_isnan_no_libm=yes],
-        [gl_cv_func_isnan_no_libm=no])
+        [gl_cv_func_isnand_no_libm=yes],
+        [gl_cv_func_isnand_no_libm=no])
     ])
-  if test $gl_cv_func_isnan_no_libm = yes; then
-    AC_DEFINE([HAVE_ISNAN_IN_LIBC], 1,
+  if test $gl_cv_func_isnand_no_libm = yes; then
+    AC_DEFINE([HAVE_ISNAND_IN_LIBC], 1,
       [Define if the isnan(double) function is available in libc.])
   else
-    AC_LIBOBJ([isnan])
+    AC_LIBOBJ([isnand])
     gl_DOUBLE_EXPONENT_LOCATION
   fi
 ])

@@ -1,5 +1,5 @@
 /* signbit() macro: Determine the sign bit of a floating-point number.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #include <math.h>
 
 #include <string.h>
-#include "isnan.h"
+#include "isnand.h"
 #include "float+.h"
 
 #undef gl_signbitd
@@ -45,7 +45,7 @@ gl_signbitd (double arg)
 #else
   /* This does not do the right thing for NaN, but this is irrelevant for
      most use cases.  */
-  if (isnan (arg))
+  if (isnand (arg))
     return 0;
   if (arg < 0.0)
     return 1;

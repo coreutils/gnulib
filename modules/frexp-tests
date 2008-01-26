@@ -2,7 +2,7 @@ Files:
 tests/test-frexp.c
 
 Depends-on:
-isnan-nolibm
+isnand-nolibm
 signbit
 
 configure.ac:

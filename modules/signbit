@@ -12,7 +12,7 @@ Depends-on:
 float
 math
 isnanf-nolibm
-isnan-nolibm
+isnand-nolibm
 isnanl-nolibm
 fpieee
 

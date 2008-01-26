@@ -1984,8 +1984,8 @@ func_all_modules ()
   func_module frexpl
   func_module frexpl-nolibm
   func_module isfinite
-  func_module isnan-nolibm
   func_module isnanf-nolibm
+  func_module isnand-nolibm
   func_module isnanl
   func_module isnanl-nolibm
   func_module ldexpl

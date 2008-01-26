@@ -1,5 +1,5 @@
 Files:
-tests/test-isnan.c
+tests/test-isnand.c
 
 Depends-on:
 
@@ -7,6 +7,6 @@ configure.ac:
 gl_DOUBLE_EXPONENT_LOCATION
 
 Makefile.am:
-TESTS += test-isnan
-check_PROGRAMS += test-isnan
+TESTS += test-isnand
+check_PROGRAMS += test-isnand
 

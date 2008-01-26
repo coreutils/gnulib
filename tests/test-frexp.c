@@ -1,5 +1,5 @@
 /* Test of splitting a double into fraction and mantissa.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "isnan.h"
+#include "isnand.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -75,7 +75,7 @@ main ()
     double mantissa;
     x = NaN ();
     mantissa = frexp (x, &exp);
-    ASSERT (isnan (mantissa));
+    ASSERT (isnand (mantissa));
   }
 
   { /* Positive infinity.  */

@@ -1,5 +1,5 @@
 /* Split a double into fraction and mantissa.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 # include "isnanl-nolibm.h"
 # include "fpucw.h"
 #else
-# include "isnan.h"
+# include "isnand.h"
 #endif
 
 /* This file assumes FLT_RADIX = 2.  If FLT_RADIX is a power of 2 greater
@@ -45,7 +45,7 @@
 #else
 # define FUNC frexp
 # define DOUBLE double
-# define ISNAN isnan
+# define ISNAN isnand
 # define DECL_ROUNDING
 # define BEGIN_ROUNDING()
 # define END_ROUNDING()

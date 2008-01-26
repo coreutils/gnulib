@@ -1,5 +1,5 @@
 /* Test of rounding to nearest, breaking ties away from zero.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -37,8 +37,8 @@
 #ifdef USE_LONG_DOUBLE
 # error Long double not supported.
 #elif ! defined USE_FLOAT
-# include "isnan.h"
-# define ISNAN isnan
+# include "isnand.h"
+# define ISNAN isnand
 # define FUNCTION "round"
 # define DOUBLE_UINT uint64_t
 # define DOUBLE_BITS 64

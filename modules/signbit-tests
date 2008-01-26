@@ -1,7 +1,7 @@
 Files:
 tests/test-signbit.c
 m4/isnanf.m4
-m4/isnan.m4
+m4/isnand.m4
 m4/isnanl.m4
 
 Depends-on:

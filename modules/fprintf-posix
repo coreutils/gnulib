@@ -10,7 +10,7 @@ Depends-on:
 stdio
 fseterr
 vasnprintf
-isnan-nolibm
+isnand-nolibm
 isnanl-nolibm
 frexp-nolibm
 frexpl-nolibm

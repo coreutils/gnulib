@@ -1,22 +1,23 @@
 Description:
-isnan() function: test for NaN, without requiring libm.
+isnand() function: test for NaN, without requiring libm.
 
 Files:
-lib/isnan.h
+lib/isnand.h
+lib/isnand.c
 lib/isnan.c
 lib/float+.h
-m4/isnan.m4
+m4/isnand.m4
 
 Depends-on:
 fpieee
 
 configure.ac:
-gl_FUNC_ISNAN_NO_LIBM
+gl_FUNC_ISNAND_NO_LIBM
 
 Makefile.am:
 
 Include:
-#include "isnan.h"
+#include "isnand.h"
 
 License:
 LGPL

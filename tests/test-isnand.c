@@ -1,5 +1,5 @@
-/* Test of isnan() substitute.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+/* Test of isnand() substitute.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#include "isnan.h"
+#include "isnand.h"
 
 #include <limits.h>
 #include <stdio.h>
@@ -51,19 +51,19 @@ int
 main ()
 {
   /* Finite values.  */
-  ASSERT (!isnan (3.141));
-  ASSERT (!isnan (3.141e30));
-  ASSERT (!isnan (3.141e-30));
-  ASSERT (!isnan (-2.718));
-  ASSERT (!isnan (-2.718e30));
-  ASSERT (!isnan (-2.718e-30));
-  ASSERT (!isnan (0.0));
-  ASSERT (!isnan (-0.0));
+  ASSERT (!isnand (3.141));
+  ASSERT (!isnand (3.141e30));
+  ASSERT (!isnand (3.141e-30));
+  ASSERT (!isnand (-2.718));
+  ASSERT (!isnand (-2.718e30));
+  ASSERT (!isnand (-2.718e-30));
+  ASSERT (!isnand (0.0));
+  ASSERT (!isnand (-0.0));
   /* Infinite values.  */
-  ASSERT (!isnan (1.0 / 0.0));
-  ASSERT (!isnan (-1.0 / 0.0));
+  ASSERT (!isnand (1.0 / 0.0));
+  ASSERT (!isnand (-1.0 / 0.0));
   /* Quiet NaN.  */
-  ASSERT (isnan (NaN ()));
+  ASSERT (isnand (NaN ()));
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
   /* Signalling NaN.  */
   {
@@ -80,7 +80,7 @@ main ()
 # endif
     m.word[DBL_EXPBIT0_WORD + (DBL_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
       |= (unsigned int) 1 << DBL_EXPBIT0_BIT;
-    ASSERT (isnan (m.value));
+    ASSERT (isnand (m.value));
   }
 #endif
   return 0;

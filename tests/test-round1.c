@@ -1,5 +1,5 @@
 /* Test of rounding to nearest, breaking ties away from zero.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "isnand.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -84,7 +86,7 @@ main ()
   ASSERT (round (1.0 / 0.0) == 1.0 / 0.0);
   ASSERT (round (-1.0 / 0.0) == -1.0 / 0.0);
   /* NaNs.  */
-  ASSERT (isnan (round (NaN ())));
+  ASSERT (isnand (round (NaN ())));
 
   return 0;
 }

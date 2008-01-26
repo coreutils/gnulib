@@ -4,7 +4,7 @@ tests/test-trunc2.c
 
 Depends-on:
 float
-isnan-nolibm
+isnand-nolibm
 stdbool
 stdint
 fprintf-posix

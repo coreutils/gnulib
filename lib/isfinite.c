@@ -1,5 +1,5 @@
 /* Test for finite value (zero, subnormal, or normal, and not infinite or NaN).
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@
 
 #include <config.h>
 
-#include "isnan.h"
 #include "isnanf.h"
+#include "isnand.h"
 #include "isnanl-nolibm.h"
 
 int gl_isfinitef (float x)
@@ -30,7 +30,7 @@ int gl_isfinitef (float x)
 
 int gl_isfinited (double x)
 {
-  return !isnan (x) && x - x == 0.;
+  return !isnand (x) && x - x == 0.;
 }
 
 int gl_isfinitel (long double x)

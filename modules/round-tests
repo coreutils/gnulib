@@ -3,7 +3,7 @@ tests/test-round1.c
 tests/test-round2.c
 
 Depends-on:
-isnan-nolibm
+isnand-nolibm
 stdbool
 stdint
 fprintf-posix

@@ -28,7 +28,7 @@ unistr/u16-strmblen
 unistr/u32-strlen
 unistr/u32-strmblen
 mbsnlen
-isnan-nolibm
+isnand-nolibm
 isnanl-nolibm
 frexpl-nolibm
 printf-frexp

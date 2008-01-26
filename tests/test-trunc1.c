@@ -1,5 +1,5 @@
 /* Test of rounding towards zero.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "isnand.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -76,7 +78,7 @@ main ()
   ASSERT (trunc (1.0 / 0.0) == 1.0 / 0.0);
   ASSERT (trunc (-1.0 / 0.0) == -1.0 / 0.0);
   /* NaNs.  */
-  ASSERT (isnan (trunc (NaN ())));
+  ASSERT (isnand (trunc (NaN ())));
 
   return 0;
 }

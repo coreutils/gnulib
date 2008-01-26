@@ -1,5 +1,5 @@
 /* Test for NaN that does not need libm.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,12 +14,6 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#if HAVE_ISNAN_IN_LIBC
-/* Get declaration of isnan macro.  */
-# include <math.h>
-#else
-/* Test whether X is a NaN.  */
-# undef isnan
-# define isnan rpl_isnan
-extern int isnan (double x);
-#endif
+/* Written by Bruno Haible <bruno@clisp.org>, 2008.  */
+
+#include "isnan.c"
