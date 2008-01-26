@@ -1,4 +1,4 @@
-# isnand.m4 serial 1
+# isnand.m4 serial 2
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,8 +12,15 @@ AC_DEFUN([gl_FUNC_ISNAND_NO_LIBM],
     [gl_cv_func_isnand_no_libm],
     [
       AC_TRY_LINK([#include <math.h>
+                   #if __GNUC__ >= 4
+                   # undef isnand
+                   # define isnand(x) __builtin_isnan ((double)(x))
+                   #else
+                   # undef isnand
+                   # define isnand(x) isnan ((double)(x))
+                   #endif
                    double x;],
-                  [return isnan (x);],
+                  [return isnand (x);],
         [gl_cv_func_isnand_no_libm=yes],
         [gl_cv_func_isnand_no_libm=no])
     ])

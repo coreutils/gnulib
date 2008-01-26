@@ -1,5 +1,10 @@
 2008-01-26  Bruno Haible  <bruno@clisp.org>
 
+	* m4/isnand.m4 (gl_FUNC_ISNAND_NO_LIBM): Test the GCC >= 4.0 built-in.
+	* lib/isnand.h (isnand): Use the GCC >= 4.0 built-in.
+
+2008-01-26  Bruno Haible  <bruno@clisp.org>
+
 	* m4/isnanf.m4 (gl_HAVE_ISNANF_NO_LIBM, gl_ISNANF_WORKS): Test the
 	GCC >= 4.0 built-in.
 	* lib/isnanf.h (isnanf): Use the GCC >= 4.0 built-in.

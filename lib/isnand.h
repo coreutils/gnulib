@@ -17,7 +17,11 @@
 #if HAVE_ISNAND_IN_LIBC
 /* Get declaration of isnan macro.  */
 # include <math.h>
-# ifdef isnan
+# if __GNUC__ >= 4
+   /* GCC 4.0 and newer provides three built-ins for isnan.  */
+#  undef isnand
+#  define isnand(x) __builtin_isnan ((double)(x))
+# else
 #  undef isnand
 #  define isnand(x) isnan ((double)(x))
 # endif
