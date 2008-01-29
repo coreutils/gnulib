@@ -4327,7 +4327,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		    if (prec_ourselves)
 		      {
 			/* Handle the precision.  */
-			TCHAR_T *prec_ptr = 
+			TCHAR_T *prec_ptr =
 # if USE_SNPRINTF
 			  (TCHAR_T *) (result + length);
 # else
@@ -4654,6 +4654,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
        not have this limitation.  */
     return result;
 
+#if USE_SNPRINTF
   overflow:
     if (!(result == resultbuf || result == NULL))
       free (result);
@@ -4662,6 +4663,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
     CLEANUP ();
     errno = EOVERFLOW;
     return NULL;
+#endif
 
   out_of_memory:
     if (!(result == resultbuf || result == NULL))

@@ -1,3 +1,10 @@
+2008-01-29  Jim Meyering  <meyering@redhat.com>
+
+	vasnprintf.c: Avoid warning about unused label
+	* lib/vasnprintf.c (VASNPRINTF) [!USE_SNPRINTF]: Guard the
+	"overflow" label definition and associated code with the
+	same cpp condition that guards the sole use of that label.
+
 2008-01-26  Bruno Haible  <bruno@clisp.org>
 
 	* m4/isnanl.m4 (gl_HAVE_ISNANL_NO_LIBM, gl_HAVE_ISNANL_IN_LIBM,
