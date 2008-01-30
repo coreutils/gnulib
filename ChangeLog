@@ -1,3 +1,12 @@
+2008-01-30  Peter Palfrader  <weasel@debian.org>
+
+	sha1: remove the result buffer alignment constraint
+	* lib/sha1.c (set_uint32): New function.
+	(sha1_read_ctx): Rewrite to remove the result buffer alignment
+	constraint.
+	(sha1_finish_ctx): Remove comment warning about alignment constraint.
+	* lib/sha1.h: Likewise.
+
 2008-01-30  Andreas Schwab  <schwab@suse.de>
             Bruno Haible  <bruno@clisp.org>
 
