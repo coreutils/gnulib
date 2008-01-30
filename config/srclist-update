@@ -4,7 +4,7 @@
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
 #
-# Copyright (C) 2002, 2003, 2005, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2002, 2003, 2005, 2007, 2008 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -118,6 +118,9 @@ cat | while read src dst options; do
   fixfile $src $srctmp
   test -r $dst && fixfile $dst $dsttmp
 
+  # if src was executable, make dst executable, to placate git.
+  test -x $src && chmod a+x $dst
+  
   if test ! -e $dst; then
     echo "## $srctmp $dst  # new"
     $chicken cp -p $srctmp $dst

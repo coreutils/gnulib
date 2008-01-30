@@ -2,8 +2,8 @@
 # Variables for srclist-update and srclist.txt.
 # Will change for each user.
 
-# Copyright (C) 2002, 2003, 2004 2005, 2006 Free Software Foundation,
-# Inc.
+# Copyright (C) 2002, 2003, 2004 2005, 2006, 2008
+# Free Software Foundation, Inc.
 
 # This file is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ karl)
   : ${TEXMFROOT=/usr/local/texmf/texmf-dist}
   : ${AUTOCONF=../autoconf}
   : ${AUTOMAKE=../automake}
-  : ${EMACSSRC=../emacs}
+  : ${EMACSSRC=../etrunk}
   : ${GETTEXT=../gettext}
   : ${GNUCONFIG=../config}
   : ${GNUORG=$HOME/gnu/gnuorg}
