@@ -1,3 +1,8 @@
+2008-01-30  Karl Berry  <karl@gnu.org>
+
+	* config/srclist-update: try to preserve x bit on updates.
+	* config/srclistvars.sh: update for karl.
+
 2008-01-29  Jim Meyering  <meyering@redhat.com>
 
 	vasnprintf.c: Avoid warning about unused label
