@@ -1,3 +1,9 @@
+2008-01-30  Andreas Schwab  <schwab@suse.de>
+            Bruno Haible  <bruno@clisp.org>
+
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Include <float.h> and ensure a
+	correct definition of LDBL_MIN_EXP.
+
 2008-01-30  Karl Berry  <karl@gnu.org>
 
 	* config/srclist-update: try to preserve x bit on updates.

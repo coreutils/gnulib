@@ -1,4 +1,4 @@
-# frexpl.m4 serial 7
+# frexpl.m4 serial 8
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -106,7 +106,13 @@ AC_DEFUN([gl_FUNC_FREXPL_WORKS],
   AC_CACHE_CHECK([whether frexpl works], [gl_cv_func_frexpl_works],
     [
       AC_TRY_RUN([
+#include <float.h>
 #include <math.h>
+/* Override the values of <float.h>, like done in float.in.h.  */
+#if defined __i386__ && (defined __BEOS__ || defined __OpenBSD__)
+# undef LDBL_MIN_EXP
+# define LDBL_MIN_EXP    (-16381)
+#endif
 extern long double frexpl (long double, int *);
 int main()
 {
