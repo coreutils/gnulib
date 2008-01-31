@@ -23,6 +23,8 @@
 # include <stdio.h>
 # include <stdint.h>
 
+#define SHA1_DIGEST_SIZE 20
+
 /* Structure to save state of computation between the single steps.  */
 struct sha1_ctx
 {
