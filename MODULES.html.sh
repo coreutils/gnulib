@@ -2733,6 +2733,7 @@ func_all_modules ()
   func_module git-version-gen
   func_module gnupload
   func_module maintainer-makefile
+  func_module vc-list-files
   func_end_table
 
   element="Misc"
