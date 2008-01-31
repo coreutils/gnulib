@@ -6,7 +6,7 @@
 
 2008-01-31  Simon Josefsson  <simon@josefsson.org>
 
-	* lib/sha1.h (SHA1_DIGEST_SIZE): Add.
+	* lib/sha1.h (SHA1_DIGEST_SIZE): Define.
 
 2008-01-31  Jim Meyering  <meyering@redhat.com>
 
