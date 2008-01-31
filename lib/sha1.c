@@ -82,11 +82,11 @@ void *
 sha1_read_ctx (const struct sha1_ctx *ctx, void *resbuf)
 {
   char *r = resbuf;
-  set_uint32 (r + 0*4, SWAP (ctx->A));
-  set_uint32 (r + 1*4, SWAP (ctx->B));
-  set_uint32 (r + 2*4, SWAP (ctx->C));
-  set_uint32 (r + 3*4, SWAP (ctx->D));
-  set_uint32 (r + 4*4, SWAP (ctx->E));
+  set_uint32 (r + 0 * sizeof ctx->A, SWAP (ctx->A));
+  set_uint32 (r + 1 * sizeof ctx->B, SWAP (ctx->B));
+  set_uint32 (r + 2 * sizeof ctx->C, SWAP (ctx->C));
+  set_uint32 (r + 3 * sizeof ctx->D, SWAP (ctx->D));
+  set_uint32 (r + 4 * sizeof ctx->E, SWAP (ctx->E));
 
   return resbuf;
 }

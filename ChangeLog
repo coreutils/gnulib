@@ -1,3 +1,10 @@
+2008-01-31  Jim Meyering  <meyering@redhat.com>
+
+	Use "sizeof VAR", rather than a literal "4".
+	* lib/md5.c (md5_read_ctx): Use sizeof ctx->A, not 4.
+	* lib/md4.c (md4_read_ctx): Likewise.
+	* lib/sha1.c (sha1_read_ctx): Likewise.
+
 2008-01-31  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-sha1.c: New file, based on test-md5.c.
