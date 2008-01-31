@@ -1,5 +1,11 @@
 2008-01-31  Simon Josefsson  <simon@josefsson.org>
 
+	* tests/test-sha1.c: New file, based on test-md5.c.
+
+	* modules/crypto/sha1-tests: New file.
+
+2008-01-31  Simon Josefsson  <simon@josefsson.org>
+
 	* lib/sha1.h (SHA1_DIGEST_SIZE): Add.
 
 2008-01-31  Jim Meyering  <meyering@redhat.com>

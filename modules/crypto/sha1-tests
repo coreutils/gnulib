@@ -1,0 +1,10 @@
+Files:
+tests/test-sha1.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sha1
+check_PROGRAMS += test-sha1
