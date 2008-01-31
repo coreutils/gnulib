@@ -1,5 +1,10 @@
 2008-01-31  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/sha1.c (set_uint32): Mark function as static.
+
+2008-01-31  Simon Josefsson  <simon@josefsson.org>
+
+	md2: clarify comments to say that alignment is not required.
 	* lib/md2.h: Remove warning about alignment in comment.
 	* lib/md2.c (md2_read_ctx, md2_finish_ctx): Doc fix, alignment has
 	never been required.
