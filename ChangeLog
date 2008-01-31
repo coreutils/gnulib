@@ -1,6 +1,14 @@
 2008-01-31  Simon Josefsson  <simon@josefsson.org>
 
-	* md5: adapt alignment constraint fix from sha1.
+	md4: adapt alignment constraint fix from sha1.
+	* lib/md4.c (set_uint32): New function, from sha1.c
+	(md4_read_ctx): Use it.
+	(md4_finish_ctx): Doc fix.
+	* lib/md4.h: Doc fix.
+
+2008-01-31  Simon Josefsson  <simon@josefsson.org>
+
+	md5: adapt alignment constraint fix from sha1.
 	* lib/md5.c (set_uint32): New function, from sha1.c
 	(md5_read_ctx): Use it.
 	(md5_finish_ctx): Doc fix.

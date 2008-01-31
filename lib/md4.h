@@ -1,6 +1,6 @@
 /* Declarations of functions and data types used for MD4 sum
    library functions.
-   Copyright (C) 2000, 2001, 2003, 2005 Free Software Foundation, Inc.
+   Copyright (C) 2000, 2001, 2003, 2005, 2008 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -58,19 +58,13 @@ extern void md4_process_bytes (const void *buffer, size_t len,
 /* Process the remaining bytes in the buffer and put result from CTX
    in first 16 bytes following RESBUF.  The result is always in little
    endian byte order, so that a byte-wise output yields to the wanted
-   ASCII representation of the message digest.
-
-   IMPORTANT: On some systems it is required that RESBUF be correctly
-   aligned for a 32 bits value.  */
+   ASCII representation of the message digest.  */
 extern void *md4_finish_ctx (struct md4_ctx *ctx, void *resbuf);
 
 
 /* Put result from CTX in first 16 bytes following RESBUF.  The result is
    always in little endian byte order, so that a byte-wise output yields
-   to the wanted ASCII representation of the message digest.
-
-   IMPORTANT: On some systems it is required that RESBUF is correctly
-   aligned for a 32 bits value.  */
+   to the wanted ASCII representation of the message digest.  */
 extern void *md4_read_ctx (const struct md4_ctx *ctx, void *resbuf);
 
 
