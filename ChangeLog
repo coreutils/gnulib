@@ -1,5 +1,11 @@
 2008-01-31  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/md2.h: Remove warning about alignment in comment.
+	* lib/md2.c (md2_read_ctx, md2_finish_ctx): Doc fix, alignment has
+	never been required.
+
+2008-01-31  Simon Josefsson  <simon@josefsson.org>
+
 	md4: adapt alignment constraint fix from sha1.
 	* lib/md4.c (set_uint32): New function, from sha1.c
 	(md4_read_ctx): Use it.

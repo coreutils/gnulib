@@ -1,6 +1,6 @@
 /* Functions to compute MD2 message digest of files or memory blocks.
    according to the definition of MD2 in RFC 1319 from April 1992.
-   Copyright (C) 1995,1996,1997,1999,2000,2001,2002,2003,2005,2006
+   Copyright (C) 1995,1996,1997,1999,2000,2001,2002,2003,2005,2006,2008
    Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -53,10 +53,7 @@ md2_init_ctx (struct md2_ctx *ctx)
 }
 
 /* Put result from CTX in first 16 bytes following RESBUF.  The result
-   must be in little endian byte order.
-
-   IMPORTANT: On some systems it is required that RESBUF is correctly
-   aligned for a 32 bits value.  */
+   must be in little endian byte order.  */
 void *
 md2_read_ctx (const struct md2_ctx *ctx, void *resbuf)
 {
@@ -66,10 +63,7 @@ md2_read_ctx (const struct md2_ctx *ctx, void *resbuf)
 }
 
 /* Process the remaining bytes in the internal buffer and the usual
-   prolog according to the standard and write the result to RESBUF.
-
-   IMPORTANT: On some systems it is required that RESBUF is correctly
-   aligned for a 32 bits value.  */
+   prolog according to the standard and write the result to RESBUF.  */
 void *
 md2_finish_ctx (struct md2_ctx *ctx, void *resbuf)
 {
