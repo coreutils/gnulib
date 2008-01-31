@@ -73,7 +73,7 @@ sha1_init_ctx (struct sha1_ctx *ctx)
 static void
 set_uint32 (char *cp, uint32_t v)
 {
-  memcpy (cp, &v, 4);
+  memcpy (cp, &v, sizeof v);
 }
 
 /* Put result from CTX in first 20 bytes following RESBUF.  The result

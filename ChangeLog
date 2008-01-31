@@ -1,3 +1,10 @@
+2008-01-31  Jim Meyering  <meyering@redhat.com>
+
+	Prefer "sizeof v" over the equivalent "4".
+	* lib/md4.c (set_uint32): Use "sizeof v" as memcpy length, not 4.
+	* lib/md5.c (set_uint32): Likewise.
+	* lib/sha1.c (set_uint32): Likewise.
+
 2008-01-31  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/sha1.c (set_uint32): Mark function as static.

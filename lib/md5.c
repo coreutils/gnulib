@@ -86,7 +86,7 @@ md5_init_ctx (struct md5_ctx *ctx)
 static void
 set_uint32 (char *cp, uint32_t v)
 {
-  memcpy (cp, &v, 4);
+  memcpy (cp, &v, sizeof v);
 }
 
 /* Put result from CTX in first 16 bytes following RESBUF.  The result
