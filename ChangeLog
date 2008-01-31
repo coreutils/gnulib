@@ -1,3 +1,12 @@
+2008-01-31  Bruno Haible  <bruno@clisp.org>
+
+	* lib/md4.c (set_uint32): Mark as inline.
+	* lib/md5.c (set_uint32): Likewise.
+	* lib/sha1.c (set_uint32): Likewise.
+	* m4/md4.m4 (gl_MD4): Require AC_C_INLINE.
+	* m4/md5.m4 (gl_MD5): Likewise.
+	* m4/sha1.m4 (gl_SHA1): Likewise.
+
 2008-01-31  Jim Meyering  <meyering@redhat.com>
 
 	Use "sizeof VAR", rather than a literal "4".
