@@ -1,6 +1,6 @@
 /* Analyze differences between two vectors.
 
-   Copyright (C) 1988-1989, 1992-1995, 2001-2004, 2006, 2007 Free
+   Copyright (C) 1988-1989, 1992-1995, 2001-2004, 2006-2008 Free
    Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -50,7 +50,12 @@
      NOTE_DELETE(ctxt, xoff) Record the removal of the object xvec[xoff].
      NOTE_INSERT(ctxt, yoff) Record the insertion of the object yvec[yoff].
      USE_HEURISTIC           (Optional) Define if you want to support the
-                             heuristic for large vectors.  */
+                             heuristic for large vectors.
+   Before including this file, you also need to include:
+     #include <limits.h>
+     #include <stdbool.h>
+     #include "minmax.h"
+ */
 
 /* Maximum value of type OFFSET.  */
 #define OFFSET_MAX \

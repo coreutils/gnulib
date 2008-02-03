@@ -1,3 +1,8 @@
+2008-02-03  Bruno Haible  <bruno@clisp.org>
+
+	* lib/diffseq.h: Add comments about required #includes.
+	Reported by Michael Biggs <gnulib@doubleplum.net>.
+
 2008-02-01  Bruno Haible  <bruno@clisp.org>
 
 	* users.txt: Add gnuit.
