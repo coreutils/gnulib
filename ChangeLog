@@ -1,3 +1,8 @@
+2008-02-05  Peter O'Gorman <pogma@thewrittenword.com>
+
+	getloadavg: use libperfstat on AIX5
+	* lib/getloadavg.c, m4/getloadavg.m4 [aix]: Use libperfstat
+
 2008-02-03  Bruno Haible  <bruno@clisp.org>
 
 	* lib/diffseq.h: Add comments about required #includes.

@@ -30,6 +30,8 @@
 				If that isn't an option, then just put
 				AC_CHECK_FUNCS(pstat_getdynamic) in your
 				configure.in file.
+   HAVE_LIBPERFSTAT Define this if your system has the
+				perfstat_cpu_total function in libperfstat (AIX).
    FIXUP_KERNEL_SYMBOL_ADDR()	Adjust address in returned struct nlist.
    KERNEL_FILE			Name of the kernel file to nlist.
    LDAV_CVT()			Scale the load average from the kernel.
@@ -254,7 +256,7 @@
 #   define LOAD_AVE_TYPE long
 #  endif
 
-#  ifdef _AIX
+#  if defined _AIX && ! defined HAVE_LIBPERFSTAT
 #   define LOAD_AVE_TYPE long
 #  endif
 
@@ -309,7 +311,7 @@
 #   define FSCALE 100.0
 #  endif
 
-#  ifdef _AIX
+#  if defined _AIX && !defined HAVE_LIBPERFSTAT
 #   define FSCALE 65536.0
 #  endif
 
@@ -347,7 +349,7 @@
 #  define LDAV_SYMBOL "_Loadavg"
 # endif
 
-# if !defined (LDAV_SYMBOL) && ((defined (hpux) && !defined (hp9000s300)) || defined (_SEQUENT_) || defined (SVR4) || defined (ISC) || defined (sgi) || (defined (ardent) && defined (titan)) || defined (_AIX))
+# if !defined (LDAV_SYMBOL) && ((defined (hpux) && !defined (hp9000s300)) || defined (_SEQUENT_) || defined (SVR4) || defined (ISC) || defined (sgi) || (defined (ardent) && defined (titan)) || (defined (_AIX) && !defined(HAVE_LIBPERFSTAT)))
 #  define LDAV_SYMBOL "avenrun"
 # endif
 
@@ -403,6 +405,14 @@
 #  endif /* !LDAV_CVT */
 
 # endif /* LOAD_AVE_TYPE */
+
+# if defined HAVE_LIBPERFSTAT
+#  include <libperfstat.h>
+#  include <sys/proc.h>
+#  ifndef SBITS
+#   define SBITS 16
+#  endif
+# endif
 
 # if defined (__GNU__) && !defined (NeXT)
 /* Note that NeXT Openstep defines __GNU__ even though it should not.  */
@@ -567,6 +577,22 @@ getloadavg (double loadavg[], int nelem)
     loadavg[elem++] = dyn_info.psd_avg_15_min;
 
 # endif /* hpux && HAVE_PSTAT_GETDYNAMIC */
+
+# if ! defined LDAV_DONE && defined HAVE_LIBPERFSTAT
+#  define LDAV_DONE
+#  undef LOAD_AVE_TYPE
+/* Use perfstat_cpu_total because we don't have to be root. */
+  {
+    perfstat_cpu_total_t cpu_stats;
+    int result = perfstat_cpu_total (NULL, &cpu_stats, sizeof cpu_stats, 1);
+    if (result == -1)
+      return result;
+    loadavg[0] = cpu_stats.loadavg[0] / (double)(1 << SBITS);
+    loadavg[1] = cpu_stats.loadavg[1] / (double)(1 << SBITS);
+    loadavg[2] = cpu_stats.loadavg[2] / (double)(1 << SBITS);
+    elem = 3;
+  }
+# endif
 
 # if !defined (LDAV_DONE) && (defined (__linux__) || defined (__CYGWIN__))
 #  define LDAV_DONE
