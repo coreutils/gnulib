@@ -1,3 +1,9 @@
+2008-02-06  Bruno Haible  <bruno@clisp.org>
+
+	Fix bug introduced on 2007-06-10.
+	* lib/vasnprintf.c (VASNPRINTF): Perform zero-padding also if
+	!NEED_PRINTF_FLAG_ZERO.
+
 2008-02-05  Peter O'Gorman <pogma@thewrittenword.com>
 
 	getloadavg: use libperfstat on AIX5

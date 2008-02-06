@@ -4535,15 +4535,14 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # endif
 			      DCHAR_T *p = rp + count;
 			      DCHAR_T *end = p + pad;
-# if NEED_PRINTF_FLAG_ZERO
 			      DCHAR_T *pad_ptr;
-#  if !DCHAR_IS_TCHAR
+# if !DCHAR_IS_TCHAR
 			      if (dp->conversion == 'c'
 				  || dp->conversion == 's')
 				/* No zero-padding for string directives.  */
 				pad_ptr = NULL;
 			      else
-#  endif
+# endif
 				{
 				  pad_ptr = (*rp == '-' ? rp + 1 : rp);
 				  /* No zero-padding of "inf" and "nan".  */
@@ -4551,7 +4550,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 				      || (*pad_ptr >= 'a' && *pad_ptr <= 'z'))
 				    pad_ptr = NULL;
 				}
-# endif
 			      /* The generated string now extends from rp to p,
 				 with the zero padding insertion point being at
 				 pad_ptr.  */
@@ -4564,7 +4562,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 				  for (; pad > 0; pad--)
 				    *p++ = ' ';
 				}
-# if NEED_PRINTF_FLAG_ZERO
 			      else if ((flags & FLAG_ZERO) && pad_ptr != NULL)
 				{
 				  /* Pad with zeroes.  */
@@ -4575,7 +4572,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 				  for (; pad > 0; pad--)
 				    *p++ = '0';
 				}
-# endif
 			      else
 				{
 				  /* Pad with spaces on the left.  */
