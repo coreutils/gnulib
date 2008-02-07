@@ -27,24 +27,34 @@
 enum quoting_style
   {
     /* Output names as-is (ls --quoting-style=literal).  Can result in
-       embedded null bytes in some cases.  */
+       embedded null bytes if QA_ELIDE_NULL_BYTES is not in
+       effect.  */
     literal_quoting_style,
 
     /* Quote names for the shell if they contain shell metacharacters
        or would cause ambiguous output (ls --quoting-style=shell).
-       Can result in embedded null bytes in some cases.  */
+       Can result in embedded null bytes if QA_ELIDE_NULL_BYTES is not
+       in effect.  */
     shell_quoting_style,
 
     /* Quote names for the shell, even if they would normally not
        require quoting (ls --quoting-style=shell-always).  Can result
-       in embedded null bytes in some cases.  */
+       in embedded null bytes if QA_ELIDE_NULL_BYTES is not in effect.
+       Behaves like shell_quoting_style if QA_ELIDE_OUTER_QUOTES is in
+       effect.  */
     shell_always_quoting_style,
 
-    /* Quote names as for a C language string (ls --quoting-style=c).  */
+    /* Quote names as for a C language string (ls --quoting-style=c).
+       Behaves like c_maybe_quoting_style if QA_ELIDE_OUTER_QUOTES is
+       in effect.  */
     c_quoting_style,
 
     /* Like c_quoting_style except omit the surrounding double-quote
-       characters (ls --quoting-style=escape).  */
+       characters if no quoted characters are encountered.  */
+    c_maybe_quoting_style,
+
+    /* Like c_quoting_style except always omit the surrounding
+       double-quote characters (ls --quoting-style=escape).  */
     escape_quoting_style,
 
     /* Like clocale_quoting_style, but quote `like this' instead of
@@ -54,6 +64,19 @@ enum quoting_style
     /* Like c_quoting_style except use quotation marks appropriate for
        the locale (ls --quoting-style=clocale).  */
     clocale_quoting_style
+  };
+
+/* Flags for use in set_quoting_flags.  */
+enum quoting_flags
+  {
+    /* Always elide null bytes from styles that do not quote them,
+       even when the length of the result is available to the
+       caller.  */
+    QA_ELIDE_NULL_BYTES = 0x01,
+
+    /* Omit the surrounding quote characters if no escaped characters
+       are encountered.  */
+    QA_ELIDE_OUTER_QUOTES = 0x02
   };
 
 /* For now, --quoting-style=literal is the default, but this may change.  */
@@ -90,10 +113,9 @@ void set_quoting_style (struct quoting_options *o, enum quoting_style s);
 int set_char_quoting (struct quoting_options *o, char c, int i);
 
 /* In O (or in the default if O is null),
-   set the value of the quoting options flag to I.
-   Return the old value.  Currently, the only values defined for I are
-   0 (the default) and 1 (which means to elide null bytes from styles
-   that would otherwise output them unquoted).  */
+   set the value of the quoting options flag to I, which can be a
+   bitwise combination of enum quoting_flags, or 0 for default
+   behavior.  Return the old value.  */
 int set_quoting_flags (struct quoting_options *o, int i);
 
 /* Place into buffer BUFFER (of size BUFFERSIZE) a quoted version of

@@ -1,5 +1,13 @@
 2008-02-07  Eric Blake  <ebb9@byu.net>
 
+	Quotearg part 3: add flag to control outer quote elision.
+	* lib/quotearg.h (c_maybe_quoting_style): New style.
+	(enum quoting_flags): Better documentation of flags.
+	* lib/quotearg.c (quoting_style_args, quoting_style_vals): Add
+	c-maybe style.
+	(quotearg_buffer_restyled): Handle new flag to elide outer
+	quotes.
+
 	Quotearg part 2: add flag that can control NUL elision.
 	* lib/quotearg.h (set_quoting_flags): New prototype.
 	* lib/quotearg.c (struct quoting_options): Add flag field.

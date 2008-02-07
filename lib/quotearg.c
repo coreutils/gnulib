@@ -65,9 +65,7 @@ struct quoting_options
   /* Basic quoting style.  */
   enum quoting_style style;
 
-  /* Additional flags.  Behavior is altered according to these bits:
-     0x01: Elide null bytes rather than embed them unquoted.
-   */
+  /* Additional flags.  Bitwise combination of enum quoting_flags.  */
   int flags;
 
   /* Quote the characters indicated by this bit vector even if the
@@ -82,6 +80,7 @@ char const *const quoting_style_args[] =
   "shell",
   "shell-always",
   "c",
+  "c-maybe",
   "escape",
   "locale",
   "clocale",
@@ -95,6 +94,7 @@ enum quoting_style const quoting_style_vals[] =
   shell_quoting_style,
   shell_always_quoting_style,
   c_quoting_style,
+  c_maybe_quoting_style,
   escape_quoting_style,
   locale_quoting_style,
   clocale_quoting_style
@@ -149,10 +149,9 @@ set_char_quoting (struct quoting_options *o, char c, int i)
 }
 
 /* In O (or in the default if O is null),
-   set the value of the quoting options flag to I.
-   Return the old value.  Currently, the only values defined for I are
-   0 (the default) and 1 (which means to elide null bytes from styles
-   that would otherwise output them unquoted).  */
+   set the value of the quoting options flag to I, which can be a
+   bitwise combination of enum quoting_flags, or 0 for default
+   behavior.  Return the old value.  */
 int
 set_quoting_flags (struct quoting_options *o, int i)
 {
@@ -200,6 +199,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
   size_t quote_string_len = 0;
   bool backslash_escapes = false;
   bool unibyte_locale = MB_CUR_MAX == 1;
+  bool elide_outer_quotes = (flags & QA_ELIDE_OUTER_QUOTES) != 0;
 
 #define STORE(c) \
     do \
@@ -212,8 +212,13 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
   switch (quoting_style)
     {
+    case c_maybe_quoting_style:
+      quoting_style = c_quoting_style;
+      elide_outer_quotes = true;
+      /* Fall through.  */
     case c_quoting_style:
-      STORE ('"');
+      if (!elide_outer_quotes)
+	STORE ('"');
       backslash_escapes = true;
       quote_string = "\"";
       quote_string_len = 1;
@@ -221,6 +226,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
     case escape_quoting_style:
       backslash_escapes = true;
+      elide_outer_quotes = false;
       break;
 
     case locale_quoting_style:
@@ -248,22 +254,32 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
 	char const *left = gettext_quote (N_("`"), quoting_style);
 	char const *right = gettext_quote (N_("'"), quoting_style);
-	for (quote_string = left; *quote_string; quote_string++)
-	  STORE (*quote_string);
+	if (!elide_outer_quotes)
+	  for (quote_string = left; *quote_string; quote_string++)
+	    STORE (*quote_string);
 	backslash_escapes = true;
 	quote_string = right;
 	quote_string_len = strlen (quote_string);
       }
       break;
 
+    case shell_quoting_style:
+      quoting_style = shell_always_quoting_style;
+      elide_outer_quotes = true;
+      /* Fall through.  */
     case shell_always_quoting_style:
-      STORE ('\'');
+      if (!elide_outer_quotes)
+	STORE ('\'');
       quote_string = "'";
       quote_string_len = 1;
       break;
 
-    default:
+    case literal_quoting_style:
+      elide_outer_quotes = false;
       break;
+
+    default:
+      abort ();
     }
 
   for (i = 0;  ! (argsize == SIZE_MAX ? arg[i] == '\0' : i == argsize);  i++)
@@ -275,7 +291,11 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 	  && quote_string_len
 	  && i + quote_string_len <= argsize
 	  && memcmp (arg + i, quote_string, quote_string_len) == 0)
-	STORE ('\\');
+	{
+	  if (elide_outer_quotes)
+	    goto force_outer_quoting_style;
+	  STORE ('\\');
+	}
 
       c = arg[i];
       switch (c)
@@ -283,20 +303,24 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 	case '\0':
 	  if (backslash_escapes)
 	    {
+	      if (elide_outer_quotes)
+		goto force_outer_quoting_style;
 	      STORE ('\\');
 	      STORE ('0');
 	      STORE ('0');
 	      c = '0';
 	    }
-	  else if (flags & 0x1)
+	  else if (flags & QA_ELIDE_NULL_BYTES)
 	    continue;
 	  break;
 
 	case '?':
 	  switch (quoting_style)
 	    {
-	    case shell_quoting_style:
-	      goto use_shell_always_quoting_style;
+	    case shell_always_quoting_style:
+	      if (elide_outer_quotes)
+		goto force_outer_quoting_style;
+	      break;
 
 	    case c_quoting_style:
 	      if (i + 2 < argsize && arg[i + 1] == '?')
@@ -307,6 +331,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 		  case '<': case '=': case '>':
 		    /* Escape the second '?' in what would otherwise be
 		       a trigraph.  */
+		    if (elide_outer_quotes)
+		      goto force_outer_quoting_style;
 		    c = arg[i + 2];
 		    i += 2;
 		    STORE ('?');
@@ -334,8 +360,10 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 	case '\\': esc = c; goto c_and_shell_escape;
 
 	c_and_shell_escape:
-	  if (quoting_style == shell_quoting_style)
-	    goto use_shell_always_quoting_style;
+	  if (quoting_style == shell_always_quoting_style
+	      && elide_outer_quotes)
+	    goto force_outer_quoting_style;
+	  /* Fall through.  */
 	c_escape:
 	  if (backslash_escapes)
 	    {
@@ -365,24 +393,19 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 	     be the first bytes of multibyte characters, which means
 	     we should check them with mbrtowc, but in practice this
 	     doesn't happen so it's not worth worrying about.  */
-	  if (quoting_style == shell_quoting_style)
-	    goto use_shell_always_quoting_style;
+	  if (quoting_style == shell_always_quoting_style
+	      && elide_outer_quotes)
+	    goto force_outer_quoting_style;
 	  break;
 
 	case '\'':
-	  switch (quoting_style)
+	  if (quoting_style == shell_always_quoting_style)
 	    {
-	    case shell_quoting_style:
-	      goto use_shell_always_quoting_style;
-
-	    case shell_always_quoting_style:
+	      if (elide_outer_quotes)
+		goto force_outer_quoting_style;
 	      STORE ('\'');
 	      STORE ('\\');
 	      STORE ('\'');
-	      break;
-
-	    default:
-	      break;
 	    }
 	  break;
 
@@ -454,7 +477,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 			   that is really the 2nd byte of a multibyte character.
 			   In practice the problem is limited to ASCII
 			   chars >= '@' that are shell special chars.  */
-			if ('[' == 0x5b && quoting_style == shell_quoting_style)
+			if ('[' == 0x5b && elide_outer_quotes
+			    && quoting_style == shell_always_quoting_style)
 			  {
 			    size_t j;
 			    for (j = 1; j < bytes; j++)
@@ -462,7 +486,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 				{
 				case '[': case '\\': case '^':
 				case '`': case '|':
-				  goto use_shell_always_quoting_style;
+				  goto force_outer_quoting_style;
 
 				default:
 				  break;
@@ -487,6 +511,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 		  {
 		    if (backslash_escapes && ! printable)
 		      {
+			if (elide_outer_quotes)
+			  goto force_outer_quoting_style;
 			STORE ('\\');
 			STORE ('0' + (c >> 6));
 			STORE ('0' + ((c >> 3) & 7));
@@ -508,16 +534,19 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 	goto store_c;
 
     store_escape:
+      if (elide_outer_quotes)
+	goto force_outer_quoting_style;
       STORE ('\\');
 
     store_c:
       STORE (c);
     }
 
-  if (i == 0 && quoting_style == shell_quoting_style)
-    goto use_shell_always_quoting_style;
+  if (i == 0 && quoting_style == shell_always_quoting_style
+      && elide_outer_quotes)
+    goto force_outer_quoting_style;
 
-  if (quote_string)
+  if (quote_string && !elide_outer_quotes)
     for (; *quote_string; quote_string++)
       STORE (*quote_string);
 
@@ -525,9 +554,10 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
     buffer[len] = '\0';
   return len;
 
- use_shell_always_quoting_style:
+ force_outer_quoting_style:
   return quotearg_buffer_restyled (buffer, buffersize, arg, argsize,
-				   shell_always_quoting_style, flags, o);
+				   quoting_style,
+				   flags & ~QA_ELIDE_OUTER_QUOTES, o);
 }
 
 /* Place into buffer BUFFER (of size BUFFERSIZE) a quoted version of
@@ -573,7 +603,7 @@ quotearg_alloc_mem (char const *arg, size_t argsize, size_t *size,
   struct quoting_options const *p = o ? o : &default_quoting_options;
   int e = errno;
   /* Elide embedded null bytes if we can't return a size.  */
-  int flags = p->flags | (size ? 0 : 0x1);
+  int flags = p->flags | (size ? 0 : QA_ELIDE_NULL_BYTES);
   size_t bufsize = quotearg_buffer_restyled (0, 0, arg, argsize, p->style,
 					     flags, p) + 1;
   char *buf = xcharalloc (bufsize);
@@ -663,9 +693,9 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
     size_t size = sv[n].size;
     char *val = sv[n].val;
     /* Elide embedded null bytes since we don't return a size.  */
+    int flags = options->flags | QA_ELIDE_NULL_BYTES;
     size_t qsize = quotearg_buffer_restyled (val, size, arg, argsize,
-					     options->style,
-					     options->flags | 0x1, options);
+					     options->style, flags, options);
 
     if (size <= qsize)
       {
@@ -674,7 +704,7 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
 	  free (val);
 	sv[n].val = val = xcharalloc (size);
 	quotearg_buffer_restyled (val, size, arg, argsize, options->style,
-				  options->flags | 0x1, options);
+				  flags, options);
       }
 
     errno = e;
