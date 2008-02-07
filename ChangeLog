@@ -1,5 +1,37 @@
 2008-02-06  Bruno Haible  <bruno@clisp.org>
 
+	Fix *printf behaviour regarding the left-adjust flag on HP-UX 10.20.
+	* m4/printf.m4 (gl_PRINTF_FLAG_LEFTADJUST): New macro.
+	* lib/vasnprintf.c (VASNPRINTF): Handle NEED_PRINTF_FLAG_LEFTADJUST.
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_FLAG_LEFTADJUST): New macro.
+	(gl_PREREQ_VASNPRINTF_WITH_EXTRAS): Invoke it.
+	* m4/fprintf-posix.m4 (gl_FUNC_FPRINTF_POSIX): Invoke
+	gl_PRINTF_FLAG_LEFTADJUST and test its result. Invoke
+	gl_PREREQ_VASNPRINTF_FLAG_LEFTADJUST.
+	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Likewise.
+	* m4/sprintf-posix.m4 (gl_FUNC_SPRINTF_POSIX): Likewise.
+	* m4/vasnprintf-posix.m4 (gl_FUNC_VASNPRINTF_POSIX): Likewise.
+	* m4/vasprintf-posix.m4 (gl_FUNC_VASPRINTF_POSIX): Likewise.
+	* m4/vfprintf-posix.m4 (gl_FUNC_VFPRINTF_POSIX): Likewise.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX): Likewise.
+	* m4/vsprintf-posix.m4 (gl_FUNC_VSPRINTF_POSIX): Likewise.
+	* tests/test-vasnprintf-posix.c (test_function): Add testcases for the
+	left-adjust flag.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* doc/functions/fprintf.texi: Update.
+	* doc/functions/printf.texi: Update.
+	* doc/functions/snprintf.texi: Update.
+	* doc/functions/sprintf.texi: Update.
+	* doc/functions/vfprintf.texi: Update.
+	* doc/functions/vprintf.texi: Update.
+	* doc/functions/vsnprintf.texi: Update.
+	* doc/functions/vsprintf.texi: Update.
+	Reported by Peter Fales <psfales@alcatel-lucent.com>.
+
+2008-02-06  Bruno Haible  <bruno@clisp.org>
+
 	Fix bug introduced on 2008-01-26.
 	* lib/isnan.c (FUNC): Set to rpl_isnand, not rpl_isnan.
 

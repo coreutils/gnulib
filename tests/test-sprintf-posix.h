@@ -1,5 +1,5 @@
 /* Test of POSIX compatible vsprintf() and sprintf() functions.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -2757,6 +2757,32 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%'d %d", 1234567, 99);
     ASSERT (result[strlen (result) - 1] == '9');
+    ASSERT (retval == strlen (result));
+  }
+
+  /* Test the support of the left-adjust flag.  */
+
+  {
+    char result[1000];
+    int retval =
+      my_sprintf (result, "a%*sc", -3, "b");
+    ASSERT (strcmp (result, "ab  c") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    char result[1000];
+    int retval =
+      my_sprintf (result, "a%-*sc", 3, "b");
+    ASSERT (strcmp (result, "ab  c") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    char result[1000];
+    int retval =
+      my_sprintf (result, "a%-*sc", -3, "b");
+    ASSERT (strcmp (result, "ab  c") == 0);
     ASSERT (retval == strlen (result));
   }
 

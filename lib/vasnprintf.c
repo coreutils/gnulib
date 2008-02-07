@@ -3566,7 +3566,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 	      {
 		arg_type type = a.arg[dp->arg_index].type;
 		int flags = dp->flags;
-#if !USE_SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+#if !USE_SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
 		int has_width;
 		size_t width;
 #endif
@@ -3579,7 +3579,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #else
 #		define prec_ourselves 0
 #endif
-#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+#if NEED_PRINTF_FLAG_LEFTADJUST
+#		define pad_ourselves 1
+#elif !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
 		int pad_ourselves;
 #else
 #		define pad_ourselves 0
@@ -3593,7 +3595,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		TCHAR_T *tmp;
 #endif
 
-#if !USE_SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+#if !USE_SNPRINTF || !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
 		has_width = 0;
 		width = 0;
 		if (dp->width_start != dp->width_end)
@@ -3883,7 +3885,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #endif
 
 		/* Decide whether to perform the padding ourselves.  */
-#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+#if !NEED_PRINTF_FLAG_LEFTADJUST && (!DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION)
 		switch (dp->conversion)
 		  {
 # if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO
@@ -4494,7 +4496,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		    /* Here count <= allocated - length.  */
 
 		    /* Perform padding.  */
-#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
+#if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_LEFTADJUST || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION
 		    if (pad_ourselves && has_width)
 		      {
 			size_t w;

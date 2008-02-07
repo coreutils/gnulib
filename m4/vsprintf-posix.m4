@@ -1,5 +1,5 @@
-# vsprintf-posix.m4 serial 9
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# vsprintf-posix.m4 serial 10
+dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -16,6 +16,7 @@ AC_DEFUN([gl_FUNC_VSPRINTF_POSIX],
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_N])
   AC_REQUIRE([gl_PRINTF_POSITIONS])
   AC_REQUIRE([gl_PRINTF_FLAG_GROUPING])
+  AC_REQUIRE([gl_PRINTF_FLAG_LEFTADJUST])
   AC_REQUIRE([gl_PRINTF_FLAG_ZERO])
   AC_REQUIRE([gl_PRINTF_PRECISION])
   AC_REQUIRE([gl_PRINTF_ENOMEM])
@@ -38,15 +39,19 @@ AC_DEFUN([gl_FUNC_VSPRINTF_POSIX],
                                 *yes)
                                   case "$gl_cv_func_printf_flag_grouping" in
                                     *yes)
-                                      case "$gl_cv_func_printf_flag_zero" in
+                                      case "$gl_cv_func_printf_flag_leftadjust" in
                                         *yes)
-                                          case "$gl_cv_func_printf_precision" in
+                                          case "$gl_cv_func_printf_flag_zero" in
                                             *yes)
-                                              case "$gl_cv_func_printf_enomem" in
+                                              case "$gl_cv_func_printf_precision" in
                                                 *yes)
-                                                  # vsprintf exists and is
-                                                  # already POSIX compliant.
-                                                  gl_cv_func_vsprintf_posix=yes
+                                                  case "$gl_cv_func_printf_enomem" in
+                                                    *yes)
+                                                      # vsprintf exists and is
+                                                      # already POSIX compliant.
+                                                      gl_cv_func_vsprintf_posix=yes
+                                                      ;;
+                                                  esac
                                                   ;;
                                               esac
                                               ;;
@@ -78,6 +83,7 @@ AC_DEFUN([gl_FUNC_VSPRINTF_POSIX],
     gl_PREREQ_VASNPRINTF_DIRECTIVE_A
     gl_PREREQ_VASNPRINTF_DIRECTIVE_F
     gl_PREREQ_VASNPRINTF_FLAG_GROUPING
+    gl_PREREQ_VASNPRINTF_FLAG_LEFTADJUST
     gl_PREREQ_VASNPRINTF_FLAG_ZERO
     gl_PREREQ_VASNPRINTF_PRECISION
     gl_PREREQ_VASNPRINTF_ENOMEM

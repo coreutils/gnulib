@@ -1,5 +1,5 @@
 /* Test of POSIX compatible vasprintf() and asprintf() functions.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -3230,6 +3230,38 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
       my_asprintf (&result, "%'d %d", 1234567, 99);
     ASSERT (result != NULL);
     ASSERT (result[strlen (result) - 1] == '9');
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  /* Test the support of the left-adjust flag.  */
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "a%*sc", -3, "b");
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "ab  c") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "a%-*sc", 3, "b");
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "ab  c") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
+      my_asprintf (&result, "a%-*sc", -3, "b");
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "ab  c") == 0);
     ASSERT (retval == strlen (result));
     free (result);
   }

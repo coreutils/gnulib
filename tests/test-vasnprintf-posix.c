@@ -1,5 +1,5 @@
 /* Test of POSIX compatible vasnprintf() and asnprintf() functions.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -3249,6 +3249,38 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%'d %d", 1234567, 99);
     ASSERT (result != NULL);
     ASSERT (result[strlen (result) - 1] == '9');
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  /* Test the support of the left-adjust flag.  */
+
+  {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "a%*sc", -3, "b");
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "ab  c") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "a%-*sc", 3, "b");
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "ab  c") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "a%-*sc", -3, "b");
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "ab  c") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
