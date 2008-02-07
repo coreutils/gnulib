@@ -1,7 +1,7 @@
 /* quotearg.c - quote arguments for output
 
-   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006, 2007 Free
-   Software Foundation, Inc.
+   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006, 2007,
+   2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -529,17 +529,30 @@ quotearg_buffer (char *buffer, size_t buffersize,
   return r;
 }
 
-/* Like quotearg_buffer (..., ARG, ARGSIZE, O), except return newly
-   allocated storage containing the quoted string.  */
+/* Equivalent to quotearg_alloc (ARG, ARGSIZE, NULL, O).  */
 char *
 quotearg_alloc (char const *arg, size_t argsize,
 		struct quoting_options const *o)
+{
+  return quotearg_alloc_mem (arg, argsize, NULL, o);
+}
+
+/* Like quotearg_buffer (..., ARG, ARGSIZE, O), except return newly
+   allocated storage containing the quoted string, and store the
+   resulting size into *SIZE, if non-NULL.  If SIZE is NULL, then
+   either ARGSIZE should be -1, or O should escape or elide any
+   embedded null bytes.  */
+char *
+quotearg_alloc_mem (char const *arg, size_t argsize, size_t *size,
+		    struct quoting_options const *o)
 {
   int e = errno;
   size_t bufsize = quotearg_buffer (0, 0, arg, argsize, o) + 1;
   char *buf = xcharalloc (bufsize);
   quotearg_buffer (buf, bufsize, arg, argsize, o);
   errno = e;
+  if (size)
+    *size = bufsize - 1;
   return buf;
 }
 
@@ -644,9 +657,21 @@ quotearg_n (int n, char const *arg)
 }
 
 char *
+quotearg_n_mem (int n, char const *arg, size_t argsize)
+{
+  return quotearg_n_options (n, arg, argsize, &default_quoting_options);
+}
+
+char *
 quotearg (char const *arg)
 {
   return quotearg_n (0, arg);
+}
+
+char *
+quotearg_mem (char const *arg, size_t argsize)
+{
+  return quotearg_n_mem (0, arg, argsize);
 }
 
 /* Return quoting options for STYLE, with no extra quoting.  */
@@ -681,16 +706,34 @@ quotearg_style (enum quoting_style s, char const *arg)
 }
 
 char *
-quotearg_char (char const *arg, char ch)
+quotearg_style_mem (enum quoting_style s, char const *arg, size_t argsize)
+{
+  return quotearg_n_style_mem (0, s, arg, argsize);
+}
+
+char *
+quotearg_char_mem (char const *arg, size_t argsize, char ch)
 {
   struct quoting_options options;
   options = default_quoting_options;
   set_char_quoting (&options, ch, 1);
-  return quotearg_n_options (0, arg, SIZE_MAX, &options);
+  return quotearg_n_options (0, arg, argsize, &options);
+}
+
+char *
+quotearg_char (char const *arg, char ch)
+{
+  return quotearg_char_mem (arg, SIZE_MAX, ch);
 }
 
 char *
 quotearg_colon (char const *arg)
 {
   return quotearg_char (arg, ':');
+}
+
+char *
+quotearg_colon_mem (char const *arg, size_t argsize)
+{
+  return quotearg_char_mem (arg, argsize, ':');
 }

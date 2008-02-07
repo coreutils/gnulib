@@ -1,3 +1,15 @@
+2008-02-07  Eric Blake  <ebb9@byu.net>
+
+	Quotearg part 1: more wrappers, restore quotearg_char state.
+	* lib/quotearg.h (quotearg_alloc_mem, quotearg_n_mem)
+	(quotearg_mem, quotearg_style_mem, quotearg_char_mem)
+	(quotearg_colon_mem): New wrappers.
+	* lib/quotearg.c (quotearg_alloc, quotearg_char): Rewrite...
+	(quotearg_alloc_mem, quotearg_char_mem): ...in terms of these new
+	functions.
+	(quotearg_n_mem, quotearg_mem, quotearg_style_mem)
+	(quotearg_colon_mem): New functions.
+
 2008-02-11  Bruno Haible  <bruno@clisp.org>
 
 	* modules/git-merge-changelog (Makefile.am): Don't use -L and -l for a

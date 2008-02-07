@@ -1,6 +1,6 @@
 /* quotearg.h - quote arguments for output
 
-   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2006 Free
+   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2006, 2008 Free
    Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -99,9 +99,18 @@ size_t quotearg_buffer (char *buffer, size_t buffersize,
 			struct quoting_options const *o);
 
 /* Like quotearg_buffer, except return the result in a newly allocated
-   buffer.  It is the caller's responsibility to free the result.  */
+   buffer.  It is the caller's responsibility to free the result.
+   Either ARGSIZE should be -1, or O should not permit embedded null
+   bytes in the output.  */
 char *quotearg_alloc (char const *arg, size_t argsize,
 		      struct quoting_options const *o);
+
+/* Like quotearg_alloc, except that the length of the result,
+   excluding the terminating null byte, is stored into SIZE if it is
+   non-NULL.  Thus, this can be safe to use even when O specifies
+   embedded null bytes.  */
+char *quotearg_alloc_mem (char const *arg, size_t argsize,
+			  size_t *size, struct quoting_options const *o);
 
 /* Use storage slot N to return a quoted version of the string ARG.
    Use the default quoting options.
@@ -112,6 +121,14 @@ char *quotearg_n (int n, char const *arg);
 
 /* Equivalent to quotearg_n (0, ARG).  */
 char *quotearg (char const *arg);
+
+/* Use storage slot N to return a quoted version of the argument ARG
+   of size ARGSIZE.  This is like quotearg_n (N, ARG), except it can
+   quote null bytes.  */
+char *quotearg_n_mem (int n, char const *arg, size_t argsize);
+
+/* Equivalent to quotearg_n_mem (0, ARG, ARGSIZE).  */
+char *quotearg_mem (char const *arg, size_t argsize);
 
 /* Use style S and storage slot N to return a quoted version of the string ARG.
    This is like quotearg_n (N, ARG), except that it uses S with no other
@@ -127,11 +144,21 @@ char *quotearg_n_style_mem (int n, enum quoting_style s,
 /* Equivalent to quotearg_n_style (0, S, ARG).  */
 char *quotearg_style (enum quoting_style s, char const *arg);
 
+/* Equivalent to quotearg_n_style_mem (0, S, ARG, ARGSIZE).  */
+char *quotearg_style_mem (enum quoting_style s,
+			  char const *arg, size_t argsize);
+
 /* Like quotearg (ARG), except also quote any instances of CH.  */
 char *quotearg_char (char const *arg, char ch);
 
+/* Like quotearg_char (ARG, CH), except it can quote null bytes.  */
+char *quotearg_char_mem (char const *arg, size_t argsize, char ch);
+
 /* Equivalent to quotearg_char (ARG, ':').  */
 char *quotearg_colon (char const *arg);
+
+/* Like quotearg_colon (ARG), except it can quote null bytes.  */
+char *quotearg_colon_mem (char const *arg, size_t argsize);
 
 /* Free any dynamically allocated memory.  */
 void quotearg_free (void);
