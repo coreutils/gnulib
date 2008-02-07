@@ -20,14 +20,14 @@
 	* tests/test-snprintf-posix.h (test_function): Likewise.
 	* tests/test-sprintf-posix.h (test_function): Likewise.
 	* tests/test-vasprintf-posix.c (test_function): Likewise.
-	* doc/functions/fprintf.texi: Update.
-	* doc/functions/printf.texi: Update.
-	* doc/functions/snprintf.texi: Update.
-	* doc/functions/sprintf.texi: Update.
-	* doc/functions/vfprintf.texi: Update.
-	* doc/functions/vprintf.texi: Update.
-	* doc/functions/vsnprintf.texi: Update.
-	* doc/functions/vsprintf.texi: Update.
+	* doc/posix-functions/fprintf.texi: Update.
+	* doc/posix-functions/printf.texi: Update.
+	* doc/posix-functions/snprintf.texi: Update.
+	* doc/posix-functions/sprintf.texi: Update.
+	* doc/posix-functions/vfprintf.texi: Update.
+	* doc/posix-functions/vprintf.texi: Update.
+	* doc/posix-functions/vsnprintf.texi: Update.
+	* doc/posix-functions/vsprintf.texi: Update.
 	Reported by Peter Fales <psfales@alcatel-lucent.com>.
 
 2008-02-06  Bruno Haible  <bruno@clisp.org>
