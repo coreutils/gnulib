@@ -65,6 +65,11 @@ struct quoting_options
   /* Basic quoting style.  */
   enum quoting_style style;
 
+  /* Additional flags.  Behavior is altered according to these bits:
+     0x01: Elide null bytes rather than embed them unquoted.
+   */
+  int flags;
+
   /* Quote the characters indicated by this bit vector even if the
      quoting style would not normally require them to be quoted.  */
   unsigned int quote_these_too[(UCHAR_MAX / INT_BITS) + 1];
@@ -143,6 +148,22 @@ set_char_quoting (struct quoting_options *o, char c, int i)
   return r;
 }
 
+/* In O (or in the default if O is null),
+   set the value of the quoting options flag to I.
+   Return the old value.  Currently, the only values defined for I are
+   0 (the default) and 1 (which means to elide null bytes from styles
+   that would otherwise output them unquoted).  */
+int
+set_quoting_flags (struct quoting_options *o, int i)
+{
+  int r;
+  if (!o)
+    o = &default_quoting_options;
+  r = o->flags;
+  o->flags = i;
+  return r;
+}
+
 /* MSGID approximates a quotation mark.  Return its translation if it
    has one; otherwise, return either it or "\"", depending on S.  */
 static char const *
@@ -155,8 +176,8 @@ gettext_quote (char const *msgid, enum quoting_style s)
 }
 
 /* Place into buffer BUFFER (of size BUFFERSIZE) a quoted version of
-   argument ARG (of size ARGSIZE), using QUOTING_STYLE and the
-   non-quoting-style part of O to control quoting.
+   argument ARG (of size ARGSIZE), using QUOTING_STYLE, FLAGS, and the
+   remaining part of O to control quoting.
    Terminate the output with a null character, and return the written
    size of the output, not counting the terminating null.
    If BUFFERSIZE is too small to store the output string, return the
@@ -164,13 +185,13 @@ gettext_quote (char const *msgid, enum quoting_style s)
    If ARGSIZE is SIZE_MAX, use the string length of the argument for ARGSIZE.
 
    This function acts like quotearg_buffer (BUFFER, BUFFERSIZE, ARG,
-   ARGSIZE, O), except it uses QUOTING_STYLE instead of the quoting
-   style specified by O, and O may not be null.  */
+   ARGSIZE, O), except it uses QUOTING_STYLE and FLAGS instead of the
+   quoting style specified by O, and O may not be null.  */
 
 static size_t
 quotearg_buffer_restyled (char *buffer, size_t buffersize,
 			  char const *arg, size_t argsize,
-			  enum quoting_style quoting_style,
+			  enum quoting_style quoting_style, int flags,
 			  struct quoting_options const *o)
 {
   size_t i;
@@ -267,6 +288,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 	      STORE ('0');
 	      c = '0';
 	    }
+	  else if (flags & 0x1)
+	    continue;
 	  break;
 
 	case '?':
@@ -504,7 +527,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
  use_shell_always_quoting_style:
   return quotearg_buffer_restyled (buffer, buffersize, arg, argsize,
-				   shell_always_quoting_style, o);
+				   shell_always_quoting_style, flags, o);
 }
 
 /* Place into buffer BUFFER (of size BUFFERSIZE) a quoted version of
@@ -524,7 +547,7 @@ quotearg_buffer (char *buffer, size_t buffersize,
   struct quoting_options const *p = o ? o : &default_quoting_options;
   int e = errno;
   size_t r = quotearg_buffer_restyled (buffer, buffersize, arg, argsize,
-				       p->style, p);
+				       p->style, p->flags, p);
   errno = e;
   return r;
 }
@@ -539,17 +562,22 @@ quotearg_alloc (char const *arg, size_t argsize,
 
 /* Like quotearg_buffer (..., ARG, ARGSIZE, O), except return newly
    allocated storage containing the quoted string, and store the
-   resulting size into *SIZE, if non-NULL.  If SIZE is NULL, then
-   either ARGSIZE should be -1, or O should escape or elide any
-   embedded null bytes.  */
+   resulting size into *SIZE, if non-NULL.  The result can contain
+   embedded null bytes only if ARGSIZE is not SIZE_MAX, SIZE is not
+   NULL, and set_quoting_flags has not set the null byte elision
+   flag.  */
 char *
 quotearg_alloc_mem (char const *arg, size_t argsize, size_t *size,
 		    struct quoting_options const *o)
 {
+  struct quoting_options const *p = o ? o : &default_quoting_options;
   int e = errno;
-  size_t bufsize = quotearg_buffer (0, 0, arg, argsize, o) + 1;
+  /* Elide embedded null bytes if we can't return a size.  */
+  int flags = p->flags | (size ? 0 : 0x1);
+  size_t bufsize = quotearg_buffer_restyled (0, 0, arg, argsize, p->style,
+					     flags, p) + 1;
   char *buf = xcharalloc (bufsize);
-  quotearg_buffer (buf, bufsize, arg, argsize, o);
+  quotearg_buffer_restyled (buf, bufsize, arg, argsize, p->style, flags, p);
   errno = e;
   if (size)
     *size = bufsize - 1;
@@ -634,7 +662,10 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
   {
     size_t size = sv[n].size;
     char *val = sv[n].val;
-    size_t qsize = quotearg_buffer (val, size, arg, argsize, options);
+    /* Elide embedded null bytes since we don't return a size.  */
+    size_t qsize = quotearg_buffer_restyled (val, size, arg, argsize,
+					     options->style,
+					     options->flags | 0x1, options);
 
     if (size <= qsize)
       {
@@ -642,7 +673,8 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
 	if (val != slot0)
 	  free (val);
 	sv[n].val = val = xcharalloc (size);
-	quotearg_buffer (val, size, arg, argsize, options);
+	quotearg_buffer_restyled (val, size, arg, argsize, options->style,
+				  options->flags | 0x1, options);
       }
 
     errno = e;
@@ -680,6 +712,7 @@ quoting_options_from_style (enum quoting_style style)
 {
   struct quoting_options o;
   o.style = style;
+  o.flags = 0;
   memset (o.quote_these_too, 0, sizeof o.quote_these_too);
   return o;
 }

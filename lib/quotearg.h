@@ -26,15 +26,18 @@
 /* Basic quoting styles.  */
 enum quoting_style
   {
-    /* Output names as-is (ls --quoting-style=literal).  */
+    /* Output names as-is (ls --quoting-style=literal).  Can result in
+       embedded null bytes in some cases.  */
     literal_quoting_style,
 
     /* Quote names for the shell if they contain shell metacharacters
-       or would cause ambiguous output (ls --quoting-style=shell).  */
+       or would cause ambiguous output (ls --quoting-style=shell).
+       Can result in embedded null bytes in some cases.  */
     shell_quoting_style,
 
     /* Quote names for the shell, even if they would normally not
-       require quoting (ls --quoting-style=shell-always).  */
+       require quoting (ls --quoting-style=shell-always).  Can result
+       in embedded null bytes in some cases.  */
     shell_always_quoting_style,
 
     /* Quote names as for a C language string (ls --quoting-style=c).  */
@@ -86,6 +89,13 @@ void set_quoting_style (struct quoting_options *o, enum quoting_style s);
    it would not otherwise be quoted).  */
 int set_char_quoting (struct quoting_options *o, char c, int i);
 
+/* In O (or in the default if O is null),
+   set the value of the quoting options flag to I.
+   Return the old value.  Currently, the only values defined for I are
+   0 (the default) and 1 (which means to elide null bytes from styles
+   that would otherwise output them unquoted).  */
+int set_quoting_flags (struct quoting_options *o, int i);
+
 /* Place into buffer BUFFER (of size BUFFERSIZE) a quoted version of
    argument ARG (of size ARGSIZE), using O to control quoting.
    If O is null, use the default.
@@ -93,22 +103,26 @@ int set_char_quoting (struct quoting_options *o, char c, int i);
    size of the output, not counting the terminating null.
    If BUFFERSIZE is too small to store the output string, return the
    value that would have been returned had BUFFERSIZE been large enough.
-   If ARGSIZE is -1, use the string length of the argument for ARGSIZE.  */
+   If ARGSIZE is -1, use the string length of the argument for ARGSIZE.
+   On output, BUFFER might contain embedded null bytes if ARGSIZE was
+   not -1, the style of O does not use backslash escapes, and the
+   flags of O do not request elision of null bytes.*/
 size_t quotearg_buffer (char *buffer, size_t buffersize,
 			char const *arg, size_t argsize,
 			struct quoting_options const *o);
 
 /* Like quotearg_buffer, except return the result in a newly allocated
-   buffer.  It is the caller's responsibility to free the result.
-   Either ARGSIZE should be -1, or O should not permit embedded null
-   bytes in the output.  */
+   buffer.  It is the caller's responsibility to free the result.  The
+   result will not contain embedded null bytes.  */
 char *quotearg_alloc (char const *arg, size_t argsize,
 		      struct quoting_options const *o);
 
 /* Like quotearg_alloc, except that the length of the result,
    excluding the terminating null byte, is stored into SIZE if it is
-   non-NULL.  Thus, this can be safe to use even when O specifies
-   embedded null bytes.  */
+   non-NULL.  The result might contain embedded null bytes if ARGSIZE
+   was not -1, SIZE was not NULL, the style of O does not use
+   backslash escapes, and the flags of O do not request elision of
+   null bytes.*/
 char *quotearg_alloc_mem (char const *arg, size_t argsize,
 			  size_t *size, struct quoting_options const *o);
 
@@ -116,7 +130,9 @@ char *quotearg_alloc_mem (char const *arg, size_t argsize,
    Use the default quoting options.
    The returned value points to static storage that can be
    reused by the next call to this function with the same value of N.
-   N must be nonnegative.  */
+   N must be nonnegative.  The output of all functions in the
+   quotearg_n family are guaranteed to not contain embedded null
+   bytes.*/
 char *quotearg_n (int n, char const *arg);
 
 /* Equivalent to quotearg_n (0, ARG).  */

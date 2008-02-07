@@ -1,5 +1,15 @@
 2008-02-07  Eric Blake  <ebb9@byu.net>
 
+	Quotearg part 2: add flag that can control NUL elision.
+	* lib/quotearg.h (set_quoting_flags): New prototype.
+	* lib/quotearg.c (struct quoting_options): Add flag field.
+	(set_quoting_flags): New function.
+	(quotearg_buffer_restyled): Add flags parameter.
+	(quotearg_alloc_mem): Set the flag if length cannot be returned.
+	(quotearg_n_options): Set the flag, since length cannot be
+	returned.
+	(quoting_options_from_style): Default flags correctly.
+
 	Quotearg part 1: more wrappers, restore quotearg_char state.
 	* lib/quotearg.h (quotearg_alloc_mem, quotearg_n_mem)
 	(quotearg_mem, quotearg_style_mem, quotearg_char_mem)
@@ -235,7 +245,7 @@
 	* lib/sha1.h: Likewise.
 
 2008-01-30  Andreas Schwab  <schwab@suse.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Include <float.h> and ensure a
 	correct definition of LDBL_MIN_EXP.
@@ -340,7 +350,7 @@
 	* NEWS: Mention the change.
 
 2008-01-25  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* m4/signbit.m4 (gl_SIGNBIT): Require a macro definition. Test whether
 	the GCC builtins for signbits are present and set
@@ -476,7 +486,7 @@
 	here, since it is not a POSIX function.
 
 2008-01-14  Colin Watson  <cjwatson@debian.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* m4/strsignal.m4 (gl_FUNC_STRSIGNAL): Also check whether strsignal
 	works fine; if not, set REPLACE_STRSIGNAL.
