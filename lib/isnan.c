@@ -1,5 +1,5 @@
 /* Test for NaN that does not need libm.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@
 # define SIZE SIZEOF_LDBL
 # define L_(literal) literal##L
 #elif ! defined USE_FLOAT
-# define FUNC rpl_isnan
+# define FUNC rpl_isnand
 # define DOUBLE double
 # define MAX_EXP DBL_MAX_EXP
 # define MIN_EXP DBL_MIN_EXP

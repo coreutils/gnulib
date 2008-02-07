@@ -1,5 +1,10 @@
 2008-02-06  Bruno Haible  <bruno@clisp.org>
 
+	Fix bug introduced on 2008-01-26.
+	* lib/isnan.c (FUNC): Set to rpl_isnand, not rpl_isnan.
+
+2008-02-06  Bruno Haible  <bruno@clisp.org>
+
 	Fix bug introduced on 2007-06-10.
 	* lib/vasnprintf.c (VASNPRINTF): Perform zero-padding also if
 	!NEED_PRINTF_FLAG_ZERO.
