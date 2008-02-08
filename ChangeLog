@@ -1,5 +1,9 @@
 2008-02-08  Jim Meyering  <meyering@redhat.com>
 
+	Avoid two "parameter unused" warnings.
+	* lib/stat-time.h (get_stat_birthtime_ns, get_stat_birthtime):
+	Mark "st" as used.
+
 	Use "git COMMAND", not "git-COMMAND".
 	* build-aux/bootstrap (version_controlled_file): s/git-rm/git-rm/.
 	* build-aux/announce-gen (get_tool_versions): Correct a diagnostic.

@@ -93,6 +93,8 @@ get_stat_birthtime_ns (struct stat const *st)
 # elif defined HAVE_STRUCT_STAT_ST_BIRTHTIMENSEC
   return STAT_TIMESPEC_NS (st, st_birthtim);
 # else
+  /* Avoid a "parameter unused" warning.  */
+  (void) st;
   return 0;
 # endif
 }
@@ -162,6 +164,8 @@ get_stat_birthtime (struct stat const *st)
   /* Birth time is not supported.  Set tv_sec to avoid undefined behavior.  */
   t.tv_sec = -1;
   t.tv_nsec = -1;
+  /* Avoid a "parameter unused" warning.  */
+  (void) st;
 #endif
 
 #if (defined HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC \
