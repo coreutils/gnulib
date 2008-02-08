@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2008-01-12 08:52'; # UTC
+my $VERSION = '2008-02-08 10:34'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -413,7 +413,7 @@ sub get_tool_versions ($$)
 
   grep (/^gnulib$/, @tool_list) ^ defined $gnulib_version
     and (warn "$ME: when specifying gnulib as a tool, you must also specify\n"
-	. "--gnulib-version=V, where V is the result of running git-describe\n"
+	. "--gnulib-version=V, where V is the result of running git describe\n"
 	. "in the gnulib source directory.\n"), $fail = 1;
 
   exists $valid_release_types{$release_type}

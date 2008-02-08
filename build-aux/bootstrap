@@ -2,7 +2,7 @@
 
 # Bootstrap this package from checked-out sources.
 
-# Copyright (C) 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2003-2008 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -408,7 +408,7 @@ version_controlled_file() {
     grep -F "/$file/" $dir/CVS/Entries 2>/dev/null |
 	     grep '^/[^/]*/[0-9]' > /dev/null && found=yes
   elif test -d .git; then
-    git-rm -n "$dir/$file" > /dev/null 2>&1 && found=yes
+    git rm -n "$dir/$file" > /dev/null 2>&1 && found=yes
   else
     echo "$0: no version control for $dir/$file?" >&2
   fi

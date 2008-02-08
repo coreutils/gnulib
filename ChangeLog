@@ -1,5 +1,8 @@
 2008-02-08  Jim Meyering  <meyering@redhat.com>
 
+	Use "git COMMAND", not "git-COMMAND".
+	* build-aux/bootstrap (version_controlled_file): s/git-rm/git-rm/.
+	* build-aux/announce-gen (get_tool_versions): Correct a diagnostic.
 	* build-aux/git-version-gen: Use "git status", not "git-status".
 
 2008-02-07  Bruno Haible  <bruno@clisp.org>
