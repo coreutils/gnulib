@@ -1,3 +1,7 @@
+2008-02-08  Jim Meyering  <meyering@redhat.com>
+
+	* build-aux/git-version-gen: Use "git status", not "git-status".
+
 2008-02-07  Bruno Haible  <bruno@clisp.org>
 
 	* lib/vasnprintf.c (VASNPRINTF): Don't use %n on native Woe32 systems.

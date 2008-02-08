@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2007-11-05.08
+scriptversion=2008-02-08.11
 
 # Copyright (C) 2007 Free Software Foundation
 #
@@ -21,10 +21,10 @@ scriptversion=2007-11-05.08
 
 # This script is derived from GIT-VERSION-GEN from GIT: http://git.or.cz/.
 # It may be run two ways:
-# - from a git repository in which the git-describe command below
+# - from a git repository in which the "git describe" command below
 #   produces useful output (thus requiring at least one signed tag)
 # - from a non-git-repo directory containing a .version file, which
-#   presumes this script is invoked like "./git-version-gen .version".
+#   presumes this script is invoked like "./git-version-gen .tarball-version".
 
 case $# in
     1) ;;
@@ -36,7 +36,7 @@ nl='
 '
 
 # First see if there is a tarball-only version file.
-# then try git-describe, then default.
+# then try "git describe", then default.
 if test -f $tarball_version_file
 then
     v=`cat $tarball_version_file` || exit 1
@@ -60,7 +60,7 @@ elif test -d .git \
        esac
 then
     # Change the first '-' to a '.', so version-comparing tools work properly.
-    # Remove the "g" in git-describe's output string, to save a byte.
+    # Remove the "g" in git describe's output string, to save a byte.
     v=`echo "$v" | sed 's/-/./;s/\(.*\)-g/\1-/'`;
 else
     v=UNKNOWN
@@ -69,7 +69,7 @@ fi
 v=`echo "$v" |sed 's/^v//'`
 
 # Don't declare a version "dirty" merely because a time stamp has changed.
-git-status > /dev/null 2>&1
+git status > /dev/null 2>&1
 
 dirty=`sh -c 'git diff-index --name-only HEAD' 2>/dev/null` || dirty=
 case "$dirty" in
