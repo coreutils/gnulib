@@ -1,3 +1,9 @@
+2008-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* lib/vasnprintf.c (VASNPRINTF): Don't use %n on native Woe32 systems.
+	Avoids a crash on Windows Vista.
+	Reported by Simon Josefsson <simon@josefsson.org>.
+
 2008-02-06  Bruno Haible  <bruno@clisp.org>
 
 	Fix *printf behaviour regarding the left-adjust flag on HP-UX 10.20.
