@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a circular array.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -124,6 +124,21 @@ gl_carray_node_value (gl_list_t list, gl_list_node_t node)
   if (i >= list->allocated)
     i -= list->allocated;
   return list->elements[i];
+}
+
+static void
+gl_carray_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
+{
+  uintptr_t index = NODE_TO_INDEX (node);
+  size_t i;
+
+  if (!(index < list->count))
+    /* Invalid argument.  */
+    abort ();
+  i = list->offset + index;
+  if (i >= list->allocated)
+    i -= list->allocated;
+  list->elements[i] = elt;
 }
 
 static gl_list_node_t
@@ -808,6 +823,7 @@ const struct gl_list_implementation gl_carray_list_implementation =
     gl_carray_create,
     gl_carray_size,
     gl_carray_node_value,
+    gl_carray_node_set_value,
     gl_carray_next_node,
     gl_carray_previous_node,
     gl_carray_get_at,

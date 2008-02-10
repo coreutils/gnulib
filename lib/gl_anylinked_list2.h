@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a linked list.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -124,6 +124,32 @@ static const void *
 gl_linked_node_value (gl_list_t list, gl_list_node_t node)
 {
   return node->value;
+}
+
+static void
+gl_linked_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
+{
+#if WITH_HASHTABLE
+  if (elt != node->value)
+    {
+      size_t new_hashcode =
+	(list->base.hashcode_fn != NULL
+	 ? list->base.hashcode_fn (elt)
+	 : (size_t)(uintptr_t) elt);
+
+      if (new_hashcode != node->h.hashcode)
+	{
+	  remove_from_bucket (list, node);
+	  node->value = elt;
+	  node->h.hashcode = new_hashcode;
+	  add_to_bucket (list, node);
+	}
+      else
+	node->value = elt;
+    }
+#else
+  node->value = elt;
+#endif
 }
 
 static gl_list_node_t

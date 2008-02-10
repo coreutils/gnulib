@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by an array.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -114,6 +114,16 @@ gl_array_node_value (gl_list_t list, gl_list_node_t node)
     /* Invalid argument.  */
     abort ();
   return list->elements[index];
+}
+
+static void
+gl_array_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
+{
+  uintptr_t index = NODE_TO_INDEX (node);
+  if (!(index < list->count))
+    /* Invalid argument.  */
+    abort ();
+  list->elements[index] = elt;
 }
 
 static gl_list_node_t
@@ -618,6 +628,7 @@ const struct gl_list_implementation gl_array_list_implementation =
     gl_array_create,
     gl_array_size,
     gl_array_node_value,
+    gl_array_node_set_value,
     gl_array_next_node,
     gl_array_previous_node,
     gl_array_get_at,

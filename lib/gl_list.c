@@ -1,5 +1,5 @@
 /* Abstract sequential list data type.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -61,6 +61,13 @@ gl_list_node_value (gl_list_t list, gl_list_node_t node)
 {
   return ((const struct gl_list_impl_base *) list)->vtable
 	 ->node_value (list, node);
+}
+
+void
+gl_list_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
+{
+  ((const struct gl_list_impl_base *) list)->vtable
+  ->node_set_value (list, node, elt);
 }
 
 gl_list_node_t

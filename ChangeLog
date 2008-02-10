@@ -1,5 +1,27 @@
 2008-02-10  Bruno Haible  <bruno@clisp.org>
 
+	New abstract list operation 'node_set_value'.
+	* lib/gl_list.h (gl_list_node_set_value): New function.
+	(struct gl_list_implementation): New field node_set_value.
+	* lib/gl_list.c (gl_list_node_set_value): New function.
+	* lib/gl_array_list.c (gl_array_node_set_value): New function.
+	(gl_array_list_implementation): Update.
+	* lib/gl_carray_list.c (gl_carray_node_set_value): New function.
+	(gl_carray_list_implementation): Update.
+	* lib/gl_anylinked_list2.h (gl_linked_node_set_value): New function.
+	* lib/gl_linked_list.c (gl_linked_list_implementation): Update.
+	* lib/gl_linkedhash_list.c (gl_linkedhash_list_implementation): Update.
+	* lib/gl_anytree_list2.h (gl_tree_node_set_value): New function.
+	* lib/gl_avltree_list.c (gl_avltree_list_implementation): Update.
+	* lib/gl_rbtree_list.c (gl_rbtree_list_implementation): Update.
+	* lib/gl_avltreehash_list.c (gl_avltreehash_list_implementation):
+	Update.
+	* lib/gl_rbtreehash_list.c (gl_rbtreehash_list_implementation): Update.
+	* lib/gl_sublist.c (gl_sublist_node_set_value): New function.
+	(gl_sublist_list_implementation): Update.
+
+2008-02-10  Bruno Haible  <bruno@clisp.org>
+
 	* lib/diffseq.h: Write "ELEMENT const" instead of "const ELEMENT".
 	Needed when ELEMENT is #defined to 'some_type *'.
 

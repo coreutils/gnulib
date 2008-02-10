@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a binary tree.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -71,6 +71,7 @@ const struct gl_list_implementation gl_rbtree_list_implementation =
     gl_tree_create,
     gl_tree_size,
     gl_tree_node_value,
+    gl_tree_node_set_value,
     gl_tree_next_node,
     gl_tree_previous_node,
     gl_tree_get_at,

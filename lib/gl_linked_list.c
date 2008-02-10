@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a linked list.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ const struct gl_list_implementation gl_linked_list_implementation =
     gl_linked_create,
     gl_linked_size,
     gl_linked_node_value,
+    gl_linked_node_set_value,
     gl_linked_next_node,
     gl_linked_previous_node,
     gl_linked_get_at,
