@@ -1,3 +1,9 @@
+2008-02-10  Jim Meyering  <meyering@redhat.com>
+
+	* build-aux/useless-if-before-free: Exit 2 for errors.
+	Upon failure to open a file, don't exit immediately.
+	Rather, just warn and continue with any remaining files.
+
 2008-02-10  Bruno Haible  <bruno@clisp.org>
 
 	New abstract list operation 'node_set_value'.

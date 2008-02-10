@@ -2,7 +2,7 @@
 # Detect instances of "if (p) free (p);".
 # Likewise for "if (p != NULL) free (p);".  And with braces.
 
-my $VERSION = '2008-02-10 16:09'; # UTC
+my $VERSION = '2008-02-10 19:36'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -25,9 +25,6 @@ my $VERSION = '2008-02-10 16:09'; # UTC
 
 # Written by Jim Meyering
 
-# Exit status is like grep: 0 for no match. 1 for any number.
-# Note: giving line numbers isn't practical, since I've reset the
-# input record separator.
 use strict;
 use warnings;
 use Getopt::Long;
@@ -60,6 +57,12 @@ OPTIONS:
    --help       display this help and exit
    --version    output version information and exit
 
+Exit status:
+
+  0   no match
+  1   one or more matches
+  2   an error
+
 EXAMPLE:
 
 For example, this command prints all removable "if" tests before "free"
@@ -73,6 +76,11 @@ EOF
 }
 
 {
+  sub EXIT_NO_MATCH {0}
+  sub EXIT_MATCH {1}
+  sub EXIT_ERROR {2}
+  my $err = EXIT_NO_MATCH;
+
   my @name = qw(free);
   GetOptions
     (
@@ -84,19 +92,21 @@ EOF
   # Make sure we have the right number of non-option arguments.
   # Always tell the user why we fail.
   @ARGV < 1
-    and (warn "$ME: missing FILE argument\n"), usage 1;
+    and (warn "$ME: missing FILE argument\n"), usage EXIT_ERROR;
 
   my $or = join '|', @name;
   my $regexp = qr/(?:$or)/;
 
   # Set the input record separator.
+  # Note: this makes it impractical to print line numbers.
   $/ = '"';
 
   my $found_match = 0;
   foreach my $file (@ARGV)
     {
       open FH, '<', $file
-        or die "$ME: can't open `$file' for reading: $!\n";
+        or (warn "$ME: can't open `$file' for reading: $!\n"),
+          $err = EXIT_ERROR, next;
       while (defined (my $line = <FH>))
         {
           if ($line =~
@@ -110,7 +120,11 @@ EOF
         }
       close FH;
     }
-  exit !$found_match;
+
+  $found_match && $err == EXIT_NO_MATCH
+    and $err = EXIT_MATCH;
+
+  exit $err;
 }
 
 my $foo = <<'EOF';
