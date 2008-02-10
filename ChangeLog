@@ -6,6 +6,13 @@
 	* lib/xstrtol-error.c (xstrtol_error): The parameter was unused:
 	s/exit_failure/exit_status/.
 
+2008-02-09  Jim Meyering  <meyering@redhat.com>
+
+	New script and module: gitlog-to-changelog
+	* MODULES.html.sh (maint+release support): Add gitlog-to-changelog.
+	* modules/gitlog-to-changelog: New file.
+	* build-aux/gitlog-to-changelog: New file.
+
 2008-02-08  Jim Meyering  <meyering@redhat.com>
 
 	Avoid two "parameter unused" warnings.
