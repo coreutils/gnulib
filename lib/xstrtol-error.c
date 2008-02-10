@@ -1,6 +1,6 @@
 /* A more useful interface to strtol.
 
-   Copyright (C) 1995, 1996, 1998, 1999, 2001, 2002, 2003, 2004, 2006, 2007
+   Copyright (C) 1995, 1996, 1998, 1999, 2001-2004, 2006-2008
    Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -83,7 +83,7 @@ xstrtol_error (enum strtol_error err,
   else
     option = long_options[opt_idx].name;
 
-  error (exit_failure, 0, gettext (msgid), hyphens, option, arg);
+  error (exit_status, 0, gettext (msgid), hyphens, option, arg);
 }
 
 /* Like xstrtol_error, except exit with a failure status.  */
