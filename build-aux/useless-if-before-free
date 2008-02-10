@@ -1,0 +1,137 @@
+#!/usr/bin/perl -T
+# Detect instances of "if (p) free (p);".
+# Likewise for "if (p != NULL) free (p);".  And with braces.
+
+my $VERSION = '2008-02-10 16:09'; # UTC
+# The definition above must lie within the first 8 lines in order
+# for the Emacs time-stamp write hook (at end) to update it.
+# If you change this file with Emacs, please let the write hook
+# do its job.  Otherwise, update this string manually.
+
+# Copyright (C) 2008 Free Software Foundation, Inc.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Written by Jim Meyering
+
+# Exit status is like grep: 0 for no match. 1 for any number.
+# Note: giving line numbers isn't practical, since I've reset the
+# input record separator.
+use strict;
+use warnings;
+use Getopt::Long;
+
+(my $ME = $0) =~ s|.*/||;
+
+sub usage ($)
+{
+  my ($exit_code) = @_;
+  my $STREAM = ($exit_code == 0 ? *STDOUT : *STDERR);
+  if ($exit_code != 0)
+    {
+      print $STREAM "Try `$ME --help' for more information.\n";
+    }
+  else
+    {
+      print $STREAM <<EOF;
+Usage: $ME [OPTIONS] FILE...
+
+Detect any instance in FILE of a useless "if" test before a free call, e.g.,
+"if (p) free (p);".  Any such test may be safely removed without affecting
+the semantics of the C code in FILE.  Use --name=FOO --name=BAR to also
+detect free-like functions named FOO and BAR.
+
+OPTIONS:
+
+   --name=N     add name N to the list of `free'-like functions to detect;
+                  may be repeated
+
+   --help       display this help and exit
+   --version    output version information and exit
+
+EXAMPLE:
+
+For example, this command prints all removable "if" tests before "free"
+and "kfree" calls in the linux kernel sources:
+
+    git ls-files -z |xargs -0 $ME --name=kfree
+
+EOF
+    }
+  exit $exit_code;
+}
+
+{
+  my @name = qw(free);
+  GetOptions
+    (
+     help => sub { usage 0 },
+     version => sub { print "$ME version $VERSION\n"; exit },
+     'name=s@' => \@name,
+    ) or usage 1;
+
+  # Make sure we have the right number of non-option arguments.
+  # Always tell the user why we fail.
+  @ARGV < 1
+    and (warn "$ME: missing FILE argument\n"), usage 1;
+
+  my $or = join '|', @name;
+  my $regexp = qr/(?:$or)/;
+
+  # Set the input record separator.
+  $/ = '"';
+
+  my $found_match = 0;
+  foreach my $file (@ARGV)
+    {
+      open FH, '<', $file
+        or die "$ME: can't open `$file' for reading: $!\n";
+      while (defined (my $line = <FH>))
+        {
+          if ($line =~
+              /\b(if\s*\(\s*(\S+?)(?:\s*!=\s*NULL)?\s*\)
+               (?:   \s*$regexp\s*\(\s*\2\s*\)|
+                \s*\{\s*$regexp\s*\(\s*\2\s*\)\s*;\s*\}))/sx)
+            {
+              print "$file: $1\n";
+              $found_match = 1;
+            }
+        }
+      close FH;
+    }
+  exit !$found_match;
+}
+
+my $foo = <<'EOF';
+# The above is to *find* them.
+# This adjusts them, removing the unnecessary "if (p)" part.
+
+# FIXME: do something like this as an option (doesn't do braces):
+git ls-files -z |xargs -0 \
+perl -0x3b -pi -e 's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*NULL)?\s*\)\s+(k?free\s*\(\s*\1\s*\))/$2/s'
+
+Be careful that the result of the above transformation is valid.
+If the matched string is followed by "else", then obviously, it won't be.
+
+When modifying files, refuse to process anything other than a regular file.
+EOF
+
+## Local Variables:
+## indent-tabs-mode: nil
+## eval: (add-hook 'write-file-hooks 'time-stamp)
+## time-stamp-start: "my $VERSION = '"
+## time-stamp-format: "%:y-%02m-%02d %02H:%02M"
+## time-stamp-time-zone: "UTC"
+## time-stamp-end: "'; # UTC"
+## End:

@@ -1,5 +1,10 @@
 2008-02-10  Jim Meyering  <meyering@redhat.com>
 
+	New script and module: useless-if-before-free
+	* MODULES.html.sh (maint+release support): Add useless-if-before-free.
+	* build-aux/useless-if-before-free: New file.
+	* modules/useless-if-before-free: New file.
+
 	* build-aux/gitlog-to-changelog: Use committer date, not author date.
 
 	xstrtol_error: Fix typo.

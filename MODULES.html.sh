@@ -2734,6 +2734,7 @@ func_all_modules ()
   func_module gitlog-to-changelog
   func_module gnupload
   func_module maintainer-makefile
+  func_module useless-if-before-free
   func_module vc-list-files
   func_end_table
 
