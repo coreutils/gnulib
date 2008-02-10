@@ -1,3 +1,8 @@
+2008-02-10  Bruno Haible  <bruno@clisp.org>
+
+	* lib/diffseq.h: Write "ELEMENT const" instead of "const ELEMENT".
+	Needed when ELEMENT is #defined to 'some_type *'.
+
 2008-02-10  Jim Meyering  <meyering@redhat.com>
 
 	New script and module: useless-if-before-free

@@ -76,8 +76,8 @@
 struct context
 {
   /* Vectors being compared.  */
-  const ELEMENT *xvec;
-  const ELEMENT *yvec;
+  ELEMENT const *xvec;
+  ELEMENT const *yvec;
 
   /* Extra fields.  */
   EXTRA_CONTEXT_FIELDS
@@ -153,8 +153,8 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 {
   OFFSET *const fd = ctxt->fdiag;	/* Give the compiler a chance. */
   OFFSET *const bd = ctxt->bdiag;	/* Additional help for the compiler. */
-  const ELEMENT *const xv = ctxt->xvec;	/* Still more help for the compiler. */
-  const ELEMENT *const yv = ctxt->yvec;	/* And more and more . . . */
+  ELEMENT const *const xv = ctxt->xvec;	/* Still more help for the compiler. */
+  ELEMENT const *const yv = ctxt->yvec;	/* And more and more . . . */
   const OFFSET dmin = xoff - ylim;	/* Minimum valid diagonal. */
   const OFFSET dmax = xlim - yoff;	/* Maximum valid diagonal. */
   const OFFSET fmid = xoff - yoff;	/* Center diagonal of top-down search. */
