@@ -1,5 +1,7 @@
 2008-02-10  Jim Meyering  <meyering@redhat.com>
 
+	useless-if-before-free: New option: --list (-l).
+
 	useless-if-before-free: Don't exit immediately upon open failure.
 	* build-aux/useless-if-before-free: Exit 2 for errors.
 	Upon failure to open a file, don't exit immediately.

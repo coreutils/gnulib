@@ -2,7 +2,7 @@
 # Detect instances of "if (p) free (p);".
 # Likewise for "if (p != NULL) free (p);".  And with braces.
 
-my $VERSION = '2008-02-10 19:36'; # UTC
+my $VERSION = '2008-02-10 22:17'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -51,6 +51,7 @@ detect free-like functions named FOO and BAR.
 
 OPTIONS:
 
+   --list       print only the name of each matching FILE (\0-terminated)
    --name=N     add name N to the list of `free'-like functions to detect;
                   may be repeated
 
@@ -81,11 +82,13 @@ EOF
   sub EXIT_ERROR {2}
   my $err = EXIT_NO_MATCH;
 
+  my $list;
   my @name = qw(free);
   GetOptions
     (
      help => sub { usage 0 },
      version => sub { print "$ME version $VERSION\n"; exit },
+     list => \$list,
      'name=s@' => \@name,
     ) or usage 1;
 
@@ -102,6 +105,7 @@ EOF
   $/ = '"';
 
   my $found_match = 0;
+ FILE:
   foreach my $file (@ARGV)
     {
       open FH, '<', $file
@@ -114,10 +118,15 @@ EOF
                (?:   \s*$regexp\s*\(\s*\2\s*\)|
                 \s*\{\s*$regexp\s*\(\s*\2\s*\)\s*;\s*\}))/sx)
             {
-              print "$file: $1\n";
               $found_match = 1;
+              $list
+                and (print "$file\0"), next FILE;
+              print "$file: $1\n";
             }
         }
+    }
+  continue
+    {
       close FH;
     }
 
@@ -134,6 +143,10 @@ my $foo = <<'EOF';
 # FIXME: do something like this as an option (doesn't do braces):
 git ls-files -z |xargs -0 \
 perl -0x3b -pi -e 's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*NULL)?\s*\)\s+(k?free\s*\(\s*\1\s*\))/$2/s'
+
+useless-if-before-free -l $(lid -knone free) | xargs -0 \
+  perl -0x3b -pi -e \
+   's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*NULL)?\s*\)\s+(free\s*\(\s*\1\s*\))/$2/s'
 
 Be careful that the result of the above transformation is valid.
 If the matched string is followed by "else", then obviously, it won't be.
