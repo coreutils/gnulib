@@ -1,5 +1,7 @@
 2008-02-10  Jim Meyering  <meyering@redhat.com>
 
+	* build-aux/gitlog-to-changelog: Use committer date, not author date.
+
 	xstrtol_error: Fix typo.
 	* lib/xstrtol-error.c (xstrtol_error): The parameter was unused:
 	s/exit_failure/exit_status/.
