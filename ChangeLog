@@ -1,3 +1,9 @@
+2008-02-10  Bruno Haible  <bruno@clisp.org>
+
+	New module 'git-merge-changelog'.
+	* modules/git-merge-changelog: New file.
+	* lib/git-merge-changelog.c: New file.
+
 2008-02-10  Jim Meyering  <meyering@redhat.com>
 
 	useless-if-before-free: New option: --list (-l).
