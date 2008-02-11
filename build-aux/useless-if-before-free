@@ -2,7 +2,7 @@
 # Detect instances of "if (p) free (p);".
 # Likewise for "if (p != NULL) free (p);".  And with braces.
 
-my $VERSION = '2008-02-10 22:17'; # UTC
+my $VERSION = '2008-02-11 07:32'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -30,6 +30,14 @@ use warnings;
 use Getopt::Long;
 
 (my $ME = $0) =~ s|.*/||;
+
+# use File::Coda; # http://meyering.net/code/Coda/
+END {
+  defined fileno STDOUT or return;
+  close STDOUT and return;
+  warn "$ME: failed to close standard output: $!\n";
+  $? ||= 1;
+}
 
 sub usage ($)
 {
