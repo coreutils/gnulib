@@ -47,14 +47,14 @@
    $ make install
    - Add to .git/config of the checkout (or to your $HOME/.gitconfig) the lines
 
-        [merge "cl-merge"]
+        [merge "merge-changelog"]
                 name = GNU-style ChangeLog merge driver
                 driver = /usr/local/bin/git-merge-changelog %O %A %B
 
    - In every directory that contains a ChangeLog file, add a file
      '.gitattributes' with this line:
 
-        ChangeLog    merge=cl-merge
+        ChangeLog    merge=merge-changelog
 
      (See "man 5 gitattributes" for more info.)
  */
@@ -828,7 +828,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 
        How to distinguish these situation? There are several hints:
 	 - During a "git stash apply", GIT_REFLOG_ACTION is not set. During
-	   a "git pull", it is set to 'pull'.
+	   a "git pull", it is set to 'pull '.
 	 - During a "git stash apply", there is an environment variable of
 	   the form GITHEAD_<40_hex_digits>='Stashed changes'.  */
     {
