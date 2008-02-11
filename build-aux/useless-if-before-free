@@ -2,7 +2,7 @@
 # Detect instances of "if (p) free (p);".
 # Likewise for "if (p != NULL) free (p);".  And with braces.
 
-my $VERSION = '2008-02-11 07:32'; # UTC
+my $VERSION = '2008-02-11 08:08'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -85,8 +85,8 @@ EOF
 }
 
 {
-  sub EXIT_NO_MATCH {0}
-  sub EXIT_MATCH {1}
+  sub EXIT_MATCH {0}
+  sub EXIT_NO_MATCH {1}
   sub EXIT_ERROR {2}
   my $err = EXIT_NO_MATCH;
 

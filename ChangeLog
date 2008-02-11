@@ -1,5 +1,9 @@
 2008-02-11  Jim Meyering  <meyering@redhat.com>
 
+	useless-if-before-free: Fix reversed exit values.
+	* build-aux/useless-if-before-free: Use correct values
+	for EXIT_MATCH and EXIT_NO_MATCH.
+
 	* build-aux/useless-if-before-free: Close stdout carefully.
 
 2008-02-10  Bruno Haible  <bruno@clisp.org>
