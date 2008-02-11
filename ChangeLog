@@ -1,3 +1,7 @@
+2008-02-11  Bruno Haible  <bruno@clisp.org>
+
+	* .gitattributes: New file.
+
 2008-02-11  Jim Meyering  <meyering@redhat.com>
 
 	useless-if-before-free: Fix reversed exit values.
