@@ -93,7 +93,8 @@
 
 	* lib/vasnprintf.c (VASNPRINTF): Don't use %n on native Woe32 systems.
 	Avoids a crash on Windows Vista.
-	Reported by Simon Josefsson <simon@josefsson.org>.
+	Reported by Adam Strzelecki <ono@java.pl> via
+	Simon Josefsson <simon@josefsson.org>.
 
 2008-02-06  Bruno Haible  <bruno@clisp.org>
 
