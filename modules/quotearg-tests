@@ -1,0 +1,12 @@
+Files:
+tests/test-quotearg.c
+
+Depends-on:
+progname
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-quotearg
+check_PROGRAMS += test-quotearg

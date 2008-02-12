@@ -1,3 +1,16 @@
+2008-02-12  Eric Blake  <ebb9@byu.net>
+
+	Quotearg part 4: add tests, fix c-maybe colon quoting.
+	* lib/quotearg.h: Improve documentation.
+	* lib/quotearg.c (quotearg_buffer_restyled): Don't add extra
+	escapes when adding outer quotes.  When quoting trigraphs, use
+	valid C notation.  When quoting NUL, omit extra characters if next
+	character is not digit.  Alter prototype.
+	(quotearg_buffer, quotearg_alloc_mem, quotearg_n_options): Adjust
+	callers.
+	* modules/quotearg-tests: New module.
+	* tests/test-quotearg.c: New test.
+
 2008-02-07  Eric Blake  <ebb9@byu.net>
 
 	Quotearg part 3: add flag to control outer quote elision.
