@@ -202,7 +202,7 @@ static size_t
 quotearg_buffer_restyled (char *buffer, size_t buffersize,
 			  char const *arg, size_t argsize,
 			  enum quoting_style quoting_style, int flags,
-			  unsigned int *quote_these_too)
+			  unsigned int const *quote_these_too)
 {
   size_t i;
   size_t len = 0;

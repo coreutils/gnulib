@@ -1,5 +1,8 @@
 2008-02-12  Eric Blake  <ebb9@byu.net>
 
+	Silence warning in last patch.
+	* lib/quotearg.c (quotearg_buffer_restyled): Add missing const.
+
 	Quotearg part 4: add tests, fix c-maybe colon quoting.
 	* lib/quotearg.h: Improve documentation.
 	* lib/quotearg.c (quotearg_buffer_restyled): Don't add extra
