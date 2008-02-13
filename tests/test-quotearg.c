@@ -29,6 +29,12 @@
 #include <string.h>
 
 #if ENABLE_NLS
+/* On Linux, gettext is optionally defined as a forwarding macro,
+   which would cause syntax errors in our definition below.  But on
+   platforms that require -lintl, we cannot #undef gettext, since we
+   want to provide the entry point libintl_gettext.  So we disable
+   optimizations to avoid the Linux macros.  */
+# undef __OPTIMIZE__
 # include <libintl.h>
 
 /* These quotes are borrowed from a pt_PT.utf8 translation.  */
@@ -66,7 +72,7 @@ static struct result_strings inputs = {
   "", "\0001\0", 3, "simple", " \t\n'\"\033?""?/\\", "a:b"
 };
 
-static struct result_groups results[] = {
+static struct result_groups results_g[] = {
   /* literal_quoting_style */
   { { "", "\0""1\0", 3, "simple", " \t\n'\"\033?""?/\\", "a:b" },
     { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b" },
@@ -231,10 +237,16 @@ dgettext (char const *d, char const *str)
 {
   return gettext (str);
 }
+
+char *
+dcgettext (char const *d, char const *str, int c)
+{
+  return gettext (str);
+}
 #endif /* ENABLE_NLS */
 
 int
-main (int argc, char **argv)
+main ()
 {
   int i;
 
@@ -244,9 +256,9 @@ main (int argc, char **argv)
   for (i = literal_quoting_style; i <= clocale_quoting_style; i++)
     {
       set_quoting_style (NULL, i);
-      compare_strings (use_quotearg_buffer, &results[i].group1);
-      compare_strings (use_quotearg, &results[i].group2);
-      compare_strings (use_quotearg_colon, &results[i].group3);
+      compare_strings (use_quotearg_buffer, &results_g[i].group1);
+      compare_strings (use_quotearg, &results_g[i].group2);
+      compare_strings (use_quotearg_colon, &results_g[i].group3);
     }
 
 #if ENABLE_NLS

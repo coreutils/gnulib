@@ -1,3 +1,12 @@
+2008-02-13  Jim Meyering  <meyering@redhat.com>
+	and Eric Blake  <ebb9@byu.net>
+
+	Avoid shadowing warning and compile errors on Linux.
+	* tests/test-quotearg.c [ENABLE_NLS]: Disable <libintl.h>
+	forwarding macros on Linux.
+	(dcgettext): Define a stub, for Linux.
+	(results_g, main): Avoid warnings.
+
 2008-02-12  Eric Blake  <ebb9@byu.net>
 
 	Silence warning in last patch.
