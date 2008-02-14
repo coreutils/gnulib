@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate January 30, 2008
+@set lastupdate February 11, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -200,7 +200,7 @@ GPL-covered status in court if necessary.
 @strong{Before} incorporating significant changes, make sure that the
 person who wrote the changes has signed copyright papers and that the
 Free Software Foundation has received and signed them.  We may also need
-a disclaimer from the person's employer.
+an employer's disclaimer from the person's employer.
 
 @cindex data base of GNU copyright assignments
 To check whether papers have been received, look in
@@ -261,8 +261,8 @@ copy of the file @file{request-assign.changes}.  (Like all the
 @samp{request-} files, it is in @file{/gd/gnuorg/Copyright} and in
 @code{gnulib}.)
 
-For medium to small changes, request a disclaimer by sending per the
-file @file{request-disclaim.changes}.
+For medium to small changes, request a personal disclaimer by sending
+per the file @file{request-disclaim.changes}.
 
 If the contributor is likely to keep making changes, person might want
 to sign an assignment for all per future changes to the program.  So it
@@ -273,7 +273,7 @@ When you send a @file{request-} file, you don't need to fill in anything
 before sending it.  Just send the file verbatim to the contributor.  The
 file gives per instructions for how to ask the FSF to mail per the
 papers to sign.  The @file{request-} file also raises the issue of
-getting a copyright disclaimer from the contributor's employer.
+getting an employer's disclaimer from the contributor's employer.
 
 When the contributor emails the form to the FSF, the FSF sends per
 papers to sign.  If person signs them right away, the whole process
