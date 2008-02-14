@@ -1,3 +1,11 @@
+2008-02-13  Eric Blake  <ebb9@byu.net>
+
+	Avoid trigraph quoting in default output.
+	* lib/quotearg.h (enum quoting_flags): Add QA_SPLIT_TRIGRAPHS.
+	* lib/quotearg.c (quotearg_buffer_restyled): Don't quote trigraphs
+	unless explicitly requested.
+	* tests/test-quotearg.c (flag_results, main): Add additional tests.
+
 2008-02-13  Lasse Collin  <lasse.collin@tukaani.org>
 
 	Don't rely on signed integer overflowing to negative value.

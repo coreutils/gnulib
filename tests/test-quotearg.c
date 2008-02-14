@@ -90,18 +90,18 @@ static struct result_groups results_g[] = {
 
   /* c_quoting_style */
   { { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a:b\"" },
+      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a:b\"" },
     { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a:b\"" },
+      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a:b\"" },
     { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a\\:b\"" } },
+      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a\\:b\"" } },
 
   /* c_maybe_quoting_style */
-  { { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"",
+  { { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
       "a:b" },
-    { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"",
+    { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
       "a:b" },
-    { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"",
+    { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
       "\"a:b\"" } },
 
   /* escape_quoting_style */
@@ -124,6 +124,29 @@ static struct result_groups results_g[] = {
       "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a:b\"" },
     { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
       "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a\\:b\"" } }
+};
+
+static struct result_groups flag_results[] = {
+  /* literal_quoting_style and QA_ELIDE_NULL_BYTES */
+  { { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b" },
+    { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b" },
+    { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b" } },
+
+  /* c_quoting_style and QA_ELIDE_OUTER_QUOTES */
+  { { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
+      "a:b" },
+    { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
+      "a:b" },
+    { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
+      "\"a:b\"" } },
+
+  /* c_quoting_style and QA_SPLIT_TRIGRAPHS */
+  { { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
+      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a:b\"" },
+    { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
+      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a:b\"" },
+    { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
+      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a\\:b\"" } }
 };
 
 #if ENABLE_NLS
@@ -260,6 +283,27 @@ main ()
       compare_strings (use_quotearg, &results_g[i].group2);
       compare_strings (use_quotearg_colon, &results_g[i].group3);
     }
+
+  set_quoting_style (NULL, literal_quoting_style);
+  ASSERT (set_quoting_flags (NULL, QA_ELIDE_NULL_BYTES) == 0);
+  compare_strings (use_quotearg_buffer, &flag_results[0].group1);
+  compare_strings (use_quotearg, &flag_results[0].group2);
+  compare_strings (use_quotearg_colon, &flag_results[0].group3);
+
+  set_quoting_style (NULL, c_quoting_style);
+  ASSERT (set_quoting_flags (NULL, QA_ELIDE_OUTER_QUOTES)
+	  == QA_ELIDE_NULL_BYTES);
+  compare_strings (use_quotearg_buffer, &flag_results[1].group1);
+  compare_strings (use_quotearg, &flag_results[1].group2);
+  compare_strings (use_quotearg_colon, &flag_results[1].group3);
+
+  ASSERT (set_quoting_flags (NULL, QA_SPLIT_TRIGRAPHS)
+	  == QA_ELIDE_OUTER_QUOTES);
+  compare_strings (use_quotearg_buffer, &flag_results[2].group1);
+  compare_strings (use_quotearg, &flag_results[2].group2);
+  compare_strings (use_quotearg_colon, &flag_results[2].group3);
+
+  ASSERT (set_quoting_flags (NULL, 0) == QA_SPLIT_TRIGRAPHS);
 
 #if ENABLE_NLS
   /* Rather than change locales, and require a .gmo file with

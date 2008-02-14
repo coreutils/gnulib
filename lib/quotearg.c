@@ -337,7 +337,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 	      break;
 
 	    case c_quoting_style:
-	      if (i + 2 < argsize && arg[i + 1] == '?')
+	      if ((flags & QA_SPLIT_TRIGRAPHS)
+		  && i + 2 < argsize && arg[i + 1] == '?')
 		switch (arg[i + 2])
 		  {
 		  case '!': case '\'':

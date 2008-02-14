@@ -75,14 +75,15 @@ enum quoting_style
 
     /* Quote names as for a C language string (ls --quoting-style=c).
        Behaves like c_maybe_quoting_style if QA_ELIDE_OUTER_QUOTES is
-       in effect.
+       in effect.  Split into consecutive strings if
+       QA_SPLIT_TRIGRAPHS.
 
        quotearg_buffer:
-       "\"simple\"", "\"\\0 \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a:b\""
+       "\"simple\"", "\"\\0 \\t\\n'\\\"\\033??/\\\\\"", "\"a:b\""
        quotearg:
-       "\"simple\"", "\"\\0 \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a:b\""
+       "\"simple\"", "\"\\0 \\t\\n'\\\"\\033??/\\\\\"", "\"a:b\""
        quotearg_colon:
-       "\"simple\"", "\"\\0 \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a\\:b\""
+       "\"simple\"", "\"\\0 \\t\\n'\\\"\\033??/\\\\\"", "\"a\\:b\""
     */
     c_quoting_style,
 
@@ -90,17 +91,16 @@ enum quoting_style
        characters if no quoted characters are encountered.
 
        quotearg_buffer:
-       "simple", "\"\\0 \\t\\n'\\\"\\033?\"\"?/\\\\\"", "a:b"
+       "simple", "\"\\0 \\t\\n'\\\"\\033??/\\\\\"", "a:b"
        quotearg:
-       "simple", "\"\\0 \\t\\n'\\\"\\033?\"\"?/\\\\\"", "a:b"
+       "simple", "\"\\0 \\t\\n'\\\"\\033??/\\\\\"", "a:b"
        quotearg_colon:
-       "simple", "\"\\0 \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a:b\""
+       "simple", "\"\\0 \\t\\n'\\\"\\033??/\\\\\"", "\"a:b\""
     */
     c_maybe_quoting_style,
 
     /* Like c_quoting_style except always omit the surrounding
-       double-quote characters and don't worry about trigraphs (ls
-       --quoting-style=escape).
+       double-quote characters (ls --quoting-style=escape).
 
        quotearg_buffer:
        "simple", "\\0 \\t\\n'\"\\033??/\\\\", "a:b"
@@ -136,8 +136,7 @@ enum quoting_style
     locale_quoting_style,
 
     /* Like c_quoting_style except use quotation marks appropriate for
-       the locale and don't worry about trigraphs (ls
-       --quoting-style=clocale).
+       the locale (ls --quoting-style=clocale).
 
        LC_MESSAGES=C
        quotearg_buffer:
@@ -171,7 +170,13 @@ enum quoting_flags
 
     /* Omit the surrounding quote characters if no escaped characters
        are encountered.  */
-    QA_ELIDE_OUTER_QUOTES = 0x02
+    QA_ELIDE_OUTER_QUOTES = 0x02,
+
+    /* In the c_quoting_style and c_maybe_quoting_style, split ANSI
+       trigraph sequences into concatenated strings (for example,
+       "?""?/" rather than "??/", which could be confused with
+       "\\").  */
+    QA_SPLIT_TRIGRAPHS = 0x04
   };
 
 /* For now, --quoting-style=literal is the default, but this may change.  */
