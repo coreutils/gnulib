@@ -9,7 +9,7 @@
 @cindex standards for makefiles
 
 @c Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 2000, 2001,
-@c 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+@c 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.2
@@ -159,7 +159,8 @@ awk cat cmp cp diff echo egrep expr false grep install-info
 ln ls mkdir mv pwd rm rmdir sed sleep sort tar test touch true
 @end example
 
-The compression program @code{gzip} can be used in the @code{dist} rule.
+Compression programs such as @code{gzip} can be used in the
+@code{dist} rule.
 
 Stick to the generally supported options for these programs.  For
 example, don't use @samp{mkdir -p}, convenient as it may be, because
