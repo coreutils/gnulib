@@ -373,7 +373,11 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 	case '\r': esc = 'r'; goto c_and_shell_escape;
 	case '\t': esc = 't'; goto c_and_shell_escape;
 	case '\v': esc = 'v'; goto c_escape;
-	case '\\': esc = c; goto c_and_shell_escape;
+	case '\\': esc = c;
+	  /* No need to escape the escape if we are trying to elide
+	     outer quotes and nothing else is problematic.  */
+	  if (backslash_escapes && elide_outer_quotes && quote_string_len)
+	    goto store_c;
 
 	c_and_shell_escape:
 	  if (quoting_style == shell_always_quoting_style

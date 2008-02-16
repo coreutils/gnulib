@@ -1,3 +1,14 @@
+2008-02-16  Eric Blake  <ebb9@byu.net>
+
+	Avoid doubling \ in common case of "c-maybe" quoting style.
+	* lib/quotearg.c (quotearg_buffer_restyled): Don't escape \ when
+	eliding outer quotes.
+	* lib/quotearg.h: Document this.
+	* tests/test-quotearg.c (result_strings, inputs, results_g)
+	(flag_results, locale_results): Test it by adding a new string to
+	each test group.
+	(compare_strings): Test new string.
+
 2008-02-13  Eric Blake  <ebb9@byu.net>
 
 	Avoid trigraph quoting in default output.

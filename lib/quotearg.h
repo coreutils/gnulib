@@ -169,7 +169,8 @@ enum quoting_flags
     QA_ELIDE_NULL_BYTES = 0x01,
 
     /* Omit the surrounding quote characters if no escaped characters
-       are encountered.  */
+       are encountered.  Note that if no other character needs
+       escaping, then neither does the escape character.  */
     QA_ELIDE_OUTER_QUOTES = 0x02,
 
     /* In the c_quoting_style and c_maybe_quoting_style, split ANSI
