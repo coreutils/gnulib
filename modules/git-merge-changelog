@@ -18,6 +18,7 @@ xalloc
 xmalloca
 fstrcmp
 minmax
+c-strstr
 fwriteerror
 
 configure.ac:

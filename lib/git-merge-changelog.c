@@ -67,10 +67,11 @@
         being merged in.
 
    In case of a "git stash apply" or of an upstream pull (e.g. from a subsystem
-   maintainer to a central maintainer):
+   maintainer to a central maintainer) or of a downstream pull with --rebase:
      2. %A = The file's newest pulled contents; modified by other committers.
      3. %B = The user's newest copy of the file; modified by the user.
-   In case of a downstream pull (e.g. from a central repository to the user):
+   In case of a downstream pull (e.g. from a central repository to the user)
+   or of an upstream pull with --rebase:
      2. %A = The user's newest copy of the file; modified by the user.
      3. %B = The file's newest pulled contents; modified by other committers.
 
@@ -137,6 +138,7 @@
 #include "xmalloca.h"
 #include "fstrcmp.h"
 #include "minmax.h"
+#include "c-strstr.h"
 #include "fwriteerror.h"
 
 #define ASSERT(expr) \
@@ -827,8 +829,9 @@ There is NO WARRANTY, to the extent permitted by law.\n\
        "git pull" only to pull downstream.
 
        How to distinguish these situation? There are several hints:
-	 - During a "git stash apply", GIT_REFLOG_ACTION is not set. During
-	   a "git pull", it is set to 'pull '.
+	 - During a "git stash apply", GIT_REFLOG_ACTION is not set.  During
+	   a "git pull", it is set to 'pull '. During a "git pull --rebase",
+	   it is set to 'pull --rebase'.
 	 - During a "git stash apply", there is an environment variable of
 	   the form GITHEAD_<40_hex_digits>='Stashed changes'.  */
     {
@@ -849,7 +852,8 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 	      printf ("GIT_REFLOG_ACTION=|%s|\n", var);
 	      #endif
 	      if (var != NULL
-		  && (strncmp (var, "pull", 4) == 0
+		  && ((strncmp (var, "pull", 4) == 0
+		       && c_strstr (var, " --rebase") == NULL)
 		      || strncmp (var, "merge origin", 12) == 0))
 		downstream = true;
 	      else
@@ -868,7 +872,10 @@ There is NO WARRANTY, to the extent permitted by law.\n\
       sprintf (buf, "head -1 %s", destination_file_name); system (buf);
       printf ("First line of %%B:\n");
       sprintf (buf, "head -1 %s", other_file_name); system (buf);
-      printf ("Guessing direction: %sstream\n", downstream ? "down" : "up");
+      printf ("Guessing calling convention: %s\n",
+	      downstream
+	      ? "%A = modified by user, %B = upstream"
+	      : "%A = upstream, %B = modified by user");
     }
     #endif
 

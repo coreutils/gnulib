@@ -1,3 +1,10 @@
+2008-02-17  Bruno Haible  <bruno@clisp.org>
+
+	* lib/git-merge-changelog.c: Include c-strstr.h.
+	(main): Support the "git pull --rebase" situation.
+	* modules/git-merge-changelog (Depends-on): Add c-strstr.
+	Reported by Eric Blake.
+
 2008-02-16  Eric Blake  <ebb9@byu.net>
 
 	Avoid doubling \ in common case of "c-maybe" quoting style.
