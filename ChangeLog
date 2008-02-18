@@ -1,5 +1,15 @@
 2008-02-17  Bruno Haible  <bruno@clisp.org>
 
+	New option --split-merged-entry.
+	* lib/git-merge-changelog.c (FSTRCMP_STRICTER_THRESHOLD): New macro.
+	(find_paragraph_end, try_split_merged_entry): New functions.
+	(long_options): Add option --split-merged-entry.
+	(usage): Document option --split-merged-entry.
+	(main): Implement option --split-merged-entry.
+	Reported by Eric Blake.
+
+2008-02-17  Bruno Haible  <bruno@clisp.org>
+
 	* lib/git-merge-changelog.c: Include c-strstr.h.
 	(main): Support the "git pull --rebase" situation.
 	* modules/git-merge-changelog (Depends-on): Add c-strstr.
