@@ -160,7 +160,23 @@ struct entry
 {
   char *string;
   size_t length;
+  /* Cache for the hash code.  */
+  bool hashcode_cached;
+  size_t hashcode;
 };
+
+/* Create an entry.
+   The memory region passed by the caller must of indefinite extent.  It is
+   *not* copied here.  */
+static struct entry *
+entry_create (char *string, size_t length)
+{
+  struct entry *result = XMALLOC (struct entry);
+  result->string = string;
+  result->length = length;
+  result->hashcode_cached = false;
+  return result;
+}
 
 /* Compare two entries for equality.  */
 static bool
@@ -176,16 +192,21 @@ entry_equals (const void *elt1, const void *elt2)
 static size_t
 entry_hashcode (const void *elt)
 {
-  const struct entry *entry = (const struct entry *) elt;
-  /* See http://www.haible.de/bruno/hashfunc.html.  */
-  const char *s;
-  size_t n;
-  size_t h = 0;
+  struct entry *entry = (struct entry *) elt;
+  if (!entry->hashcode_cached)
+    {
+      /* See http://www.haible.de/bruno/hashfunc.html.  */
+      const char *s;
+      size_t n;
+      size_t h = 0;
 
-  for (s = entry->string, n = entry->length; n > 0; s++, n--)
-    h = (unsigned char) *s + ((h << 9) | (h >> (sizeof (size_t) * CHAR_BIT - 9)));
+      for (s = entry->string, n = entry->length; n > 0; s++, n--)
+	h = (unsigned char) *s + ((h << 9) | (h >> (sizeof (size_t) * CHAR_BIT - 9)));
 
-  return h;
+      entry->hashcode = h;
+      entry->hashcode_cached = true;
+    }
+  return entry->hashcode;
 }
 
 /* Perform a fuzzy comparison of two ChangeLog entries.
@@ -282,9 +303,7 @@ read_changelog_file (const char *filename, struct changelog_file *result)
 	      }
 	  }
 
-	curr = XMALLOC (struct entry);
-	curr->string = start;
-	curr->length = ptr - start;
+	curr = entry_create (start, ptr - start);
 	gl_list_add_last (result->entries_list, curr);
 	gl_list_add_first (result->entries_reversed, curr);
 
@@ -735,19 +754,15 @@ try_split_merged_entry (const struct entry *old_entry,
   if (best_similarity < FSTRCMP_STRICTER_THRESHOLD)
     return false;
 
-  new_split[0] = XMALLOC (struct entry);
-  new_split[0]->string = new_entry->string;
-  new_split[0]->length = best_split_offset + 1;
+  new_split[0] = entry_create (new_entry->string, best_split_offset + 1);
 
-  new_split[1] = XMALLOC (struct entry);
   {
     size_t len1 = new_title_len;
     size_t len2 = new_entry->length - best_split_offset;
     char *combined = XNMALLOC (len1 + len2, char);
     memcpy (combined, new_entry->string, len1);
     memcpy (combined + len1, new_entry->string + best_split_offset, len2);
-    new_split[1]->string = combined;
-    new_split[1]->length = len1 + len2;
+    new_split[1] = entry_create (combined, len1 + len2);
   }
 
   return true;
