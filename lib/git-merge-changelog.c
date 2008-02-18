@@ -1257,7 +1257,8 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 							    result_entries_pointers[k],
 							    changed_entry);
 				  }
-				else
+				else if (!entry_equals (ancestor_file.entries[i],
+							changed_entry))
 				  {
 				    struct conflict *c = XMALLOC (struct conflict);
 				    c->num_old_entries = 1;
@@ -1337,7 +1338,10 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 				  }
 				else
 				  {
-				    struct conflict *c = XMALLOC (struct conflict);
+				    struct conflict *c;
+				    ASSERT (!entry_equals (ancestor_file.entries[i],
+							   changed_entry));
+				    c = XMALLOC (struct conflict);
 				    c->num_old_entries = 1;
 				    c->old_entries =
 				      XNMALLOC (c->num_old_entries, struct entry *);
@@ -1399,7 +1403,10 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 				      }
 				    else
 				      {
-					struct conflict *c = XMALLOC (struct conflict);
+					struct conflict *c;
+					ASSERT (!entry_equals (ancestor_file.entries[i],
+							       changed_entry));
+					c = XMALLOC (struct conflict);
 					c->num_old_entries = 1;
 					c->old_entries =
 					  XNMALLOC (c->num_old_entries, struct entry *);
