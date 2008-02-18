@@ -330,8 +330,7 @@ main ()
 	      ASSERT (offsets[1] == MAGIC);
 	      free (offsets);
 	    }
-	  if (result != NULL)
-	    free (result);
+	  free (result);
 	}
     }
 
@@ -719,8 +718,7 @@ main ()
 	      ASSERT (offsets[1] == MAGIC);
 	      free (offsets);
 	    }
-	  if (result != NULL)
-	    free (result);
+	  free (result);
 	}
     }
 

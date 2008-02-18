@@ -546,8 +546,7 @@ gc_cipher_close (gc_cipher_handle handle)
 {
   _gc_cipher_ctx *ctx = handle;
 
-  if (ctx)
-    free (ctx);
+  free (ctx);
 
   return GC_OK;
 }

@@ -97,6 +97,5 @@ free_cwd (struct saved_cwd *cwd)
 {
   if (cwd->desc >= 0)
     close (cwd->desc);
-  if (cwd->name)
-    free (cwd->name);
+  free (cwd->name);
 }

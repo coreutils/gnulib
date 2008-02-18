@@ -1,4 +1,4 @@
-/* Copyright (C) 1991, 1994, 1997, 1998, 2000, 2003, 2004, 2005, 2006, 2007
+/* Copyright (C) 1991, 1994, 1997-1998, 2000, 2003-2008
    Free Software Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C
@@ -122,8 +122,7 @@ putenv (char *string)
 		     size * sizeof (char *));
       new_environ[size] = (char *) string;
       new_environ[size + 1] = NULL;
-      if (last_environ != NULL)
-	free (last_environ);
+      free (last_environ);
       last_environ = new_environ;
       environ = new_environ;
     }

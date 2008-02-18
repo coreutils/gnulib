@@ -102,8 +102,7 @@ main ()
 			       &result, &length);
     ASSERT (retval == 0);
     ASSERT (length == 0);
-    if (result != NULL)
-      free (result);
+    free (result);
   }
 
   /* ------------------------- Test str_cd_iconv() ------------------------- */

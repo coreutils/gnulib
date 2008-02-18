@@ -152,10 +152,8 @@ main (int argc, char *argv[])
 	result = memmem (haystack, 2 * m + 1, needle, m + 1);
 	ASSERT (result == haystack + m);
       }
-    if (needle != NULL)
-      free (needle);
-    if (haystack != NULL)
-      free (haystack);
+    free (needle);
+    free (haystack);
   }
 
   /* Check that long needles not present in a haystack can be handled
@@ -179,10 +177,8 @@ main (int argc, char *argv[])
 	    ASSERT (result == NULL);
 	  }
       }
-    if (haystack != NULL)
-      free (haystack);
-    if (needle != NULL)
-      free (needle);
+    free (haystack);
+    free (needle);
   }
 
   return 0;

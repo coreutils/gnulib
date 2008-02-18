@@ -1,5 +1,27 @@
 2008-03-02  Jim Meyering  <meyering@redhat.com>
 
+	Remove useless "if" tests before free.  Deprecate "free" module.
+	* doc/posix-functions/free.texi: Mention that this
+	module is no longer useful.
+	* modules/free (Notice): Say this module is obsolete.
+	* modules/readutmp (Depends-on): Remove free.
+	* lib/save-cwd.c (free_cwd): Remove useless "if" before free.
+	* lib/putenv.c (putenv): Likewise.
+	* lib/gc-gnulib.c (gc_cipher_close): Likewise.
+	* lib/getaddrinfo.c (freeaddrinfo): Likewise.
+	* tests/test-c-strcasestr.c (main): Likewise.
+	* tests/test-c-strstr.c (main): Likewise.
+	* tests/test-mbscasestr1.c (main): Likewise.
+	* tests/test-mbscasestr2.c (main): Likewise.
+	* tests/test-mbsstr1.c (main): Likewise.
+	* tests/test-mbsstr2.c (main): Likewise.
+	* tests/test-memmem.c (main): Likewise.
+	* tests/test-strcasestr.c (main): Likewise.
+	* tests/test-striconv.c (main): Likewise.
+	* tests/test-striconveh.c (main): Likewise.
+	* tests/test-striconveha.c (main): Likewise.
+	* tests/test-strstr.c (main): Likewise.
+
 	* build-aux/git-version-gen: Adjust a comment and the Usage string.
 
 	bootstrap: sync from coreutils again

@@ -136,10 +136,8 @@ main ()
 	result = c_strcasestr (haystack, needle);
 	ASSERT (result == haystack + m);
       }
-    if (needle != NULL)
-      free (needle);
-    if (haystack != NULL)
-      free (haystack);
+    free (needle);
+    free (haystack);
   }
 
   return 0;

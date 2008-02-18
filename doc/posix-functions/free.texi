@@ -9,7 +9,10 @@ Gnulib module: free
 Portability problems fixed by Gnulib:
 @itemize
 @item
-On old platforms, @code{free (NULL)} is not allowed.
+On old platforms such as SunOS4, @code{free (NULL)} fails.
+However, since all such systems are so old as to no longer
+be considered ``reasonable portability targets,''
+this module is no longer useful.
 @end itemize
 
 Portability problems not fixed by Gnulib:

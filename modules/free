@@ -1,6 +1,9 @@
 Description:
 Work around incompatibility on older systems where free (NULL) fails.
 
+Notice:
+This module is obsolete.
+
 Files:
 lib/free.c
 m4/free.m4
@@ -20,4 +23,3 @@ GPL
 
 Maintainer:
 Paul Eggert
-

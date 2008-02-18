@@ -142,10 +142,8 @@ main (int argc, char *argv[])
 	result = strstr (haystack, needle);
 	ASSERT (result == haystack + m);
       }
-    if (needle != NULL)
-      free (needle);
-    if (haystack != NULL)
-      free (haystack);
+    free (needle);
+    free (haystack);
   }
 
   /* Sublinear speed is only possible in memmem; strstr must examine
