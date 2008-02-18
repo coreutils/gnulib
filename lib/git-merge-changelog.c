@@ -133,6 +133,7 @@
 #include "gl_list.h"
 #include "gl_array_list.h"
 #include "gl_linkedhash_list.h"
+#include "gl_rbtreehash_list.h"
 #include "gl_linked_list.h"
 #include "xalloc.h"
 #include "xmalloca.h"
@@ -248,7 +249,7 @@ read_changelog_file (const char *filename, struct changelog_file *result)
     gl_list_create_empty (GL_LINKEDHASH_LIST, entry_equals, entry_hashcode,
 			  NULL, true);
   result->entries_reversed =
-    gl_list_create_empty (GL_LINKEDHASH_LIST, entry_equals, entry_hashcode,
+    gl_list_create_empty (GL_RBTREEHASH_LIST, entry_equals, entry_hashcode,
 			  NULL, true);
   /* A ChangeLog file consists of ChangeLog entries.  A ChangeLog entry starts
      at a line following a blank line and that starts with a non-whitespace

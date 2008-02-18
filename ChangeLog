@@ -1,5 +1,13 @@
 2008-02-17  Bruno Haible  <bruno@clisp.org>
 
+	Speed up from O(n^2) to O(n) for long ChangeLog files.
+	* lib/git-merge-changelog.c: Include gl_rbtreehash_list.h.
+	(read_changelog_file): Change implementation of entries_reversed list
+	to rbtreehash.
+	* modules/git-merge-changelog (Depends-on): Add rbtreehash-list.
+
+2008-02-17  Bruno Haible  <bruno@clisp.org>
+
 	New option --split-merged-entry.
 	* lib/git-merge-changelog.c (FSTRCMP_STRICTER_THRESHOLD): New macro.
 	(find_paragraph_end, try_split_merged_entry): New functions.
