@@ -1,5 +1,11 @@
 2008-02-17  Bruno Haible  <bruno@clisp.org>
 
+	Speed up by 10%.
+	* lib/git-merge-changelog.c (main): Use the iterator to iterate through
+	result_entries, rather than an index-based loop.
+
+2008-02-17  Bruno Haible  <bruno@clisp.org>
+
 	Speed up by 25%.
 	* lib/git-merge-changelog.c (struct entry): New fields 'hashcode',
 	'hashcode_cached'.

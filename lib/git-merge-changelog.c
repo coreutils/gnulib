@@ -1505,11 +1505,14 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 	for (i = 0; i < n; i++)
 	  conflict_write (fp, (struct conflict *) gl_list_get_at (result_conflicts, i));
       }
+      /* Output the modified and unmodified entries, in order.  */
       {
-	size_t n = gl_list_size (result_entries);
-	size_t i;
-	for (i = 0; i < n; i++)
-	  entry_write (fp, (struct entry *) gl_list_get_at (result_entries, i));
+	gl_list_iterator_t iter = gl_list_iterator (result_entries);
+	const void *elt;
+	gl_list_node_t node;
+	while (gl_list_iterator_next (&iter, &elt, &node))
+	  entry_write (fp, (struct entry *) elt);
+	gl_list_iterator_free (&iter);
       }
 
       if (fwriteerror (fp))
