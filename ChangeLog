@@ -38195,6 +38195,11 @@
 	* m4/uintmax_t.m4: New file.
 	* m4/Makefile.am (EXTRA_DIST): Add inttypes_h.m4 and uintmax_t.m4.
 
-Copyright (C) 1997-2008 Free Software Foundation, Inc.
-Copying and distribution of this file, with or without modification,
-are permitted provided the copyright notice and this notice are preserved.
+
+	-----
+
+	Copyright (C) 1997-2008 Free Software Foundation, Inc.
+
+	Copying and distribution of this file, with or without
+	modification, are permitted provided the copyright notice
+	and this notice are preserved.
