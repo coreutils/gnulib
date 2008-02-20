@@ -1090,7 +1090,7 @@ mem1:				saved_errno = errno;
 		new_len = len + _D_EXACT_NAMLEN (dp);
 		if (new_len < len) {
 			/*
-			 * In the unlikely even that we would end up
+			 * In the unlikely event that we would end up
 			 * with a file name longer than SIZE_MAX, free up
 			 * the current structure and the structures already
 			 * allocated, then error out with ENAMETOOLONG.
