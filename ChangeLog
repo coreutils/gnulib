@@ -1,3 +1,10 @@
+2008-02-20  Bob Proulx  <bob@proulx.com>
+
+	Enable use of older two part flavor 'git describe'.
+	* build-aux/git-version-gen: If using the older two part flavor of
+	git version then recreate the third part now present in the
+	newer three part flavor of git describe.
+
 2008-02-20  Martin Buchholz  <martin@xemacs.org>  (tiny change)
 
 	* lib/fts.c (fts_build): Typo correction to comment.
