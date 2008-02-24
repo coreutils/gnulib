@@ -23,7 +23,7 @@ shared libraries on MacOS X 10.5.  Here is a workaround: Instead, one can use
 #include <crt_externs.h>
 #define environ (*_NSGetEnviron())
 @end smallexample
-This works at least on MacOS X 10.3 and newer.
+This works at all versions of MacOS X.
 @end itemize
 
 Portability problems not fixed by Gnulib:
