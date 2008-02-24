@@ -16,6 +16,18 @@ Portability problems not fixed by Gnulib:
 This variable is missing on some platforms:
 MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, IRIX 6.5, OSF/1 5.1, Cygwin.
 @item
+On MacOS X 10, this variable is not declared.  Up to MacOS X 10.4, one can use
+@smallexample
+extern char **environ;
+@end smallexample
+to get the variable declared.  This does not work any more, however, in
+shared libraries on MacOS X 10.5.  Here is a workaround: Instead, one can use
+@smallexample
+#include <crt_externs.h>
+#define environ (*_NSGetEnviron())
+@end smallexample
+This works at least on MacOS X 10.3 and newer.
+@item
 The address of this variable is not a compile-time constant on some platforms:
 mingw.
 @end itemize

@@ -1,3 +1,7 @@
+2008-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-functions/environ.texi: Document the MacOS X problem.
+
 2008-02-20  Bob Proulx  <bob@proulx.com>
 
 	Enable use of older two part flavor 'git describe'.
