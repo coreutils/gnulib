@@ -1,5 +1,8 @@
 2008-02-24  Bruno Haible  <bruno@clisp.org>
 
+	* modules/environ-tests: New file.
+	* tests/test-environ.c: New file.
+
 	New module 'environ'.
 	* modules/environ: New file.
 	* lib/unistd.in.h (environ): New declaration.
