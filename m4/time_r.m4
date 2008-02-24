@@ -1,6 +1,6 @@
 dnl Reentrant time functions like localtime_r.
 
-dnl Copyright (C) 2003, 2006, 2007 Free Software Foundation, Inc.
+dnl Copyright (C) 2003, 2006, 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -23,7 +23,9 @@ AC_DEFUN([gl_TIME_R],
 	   even though the POSIX signature has the 'restrict's,
 	   since C99 says they can't affect type compatibility.  */
 	struct tm * (*ptr) (time_t const *, struct tm *) = localtime_r;
-        if (ptr) return 0;],
+        if (ptr) return 0;
+        /* Check the return type is a pointer.  On HP-UX 10 it is 'int'.  */
+        *localtime_r (0, 0);],
        [gl_cv_time_r_posix=yes],
        [gl_cv_time_r_posix=no])])
   if test $gl_cv_time_r_posix = yes; then
