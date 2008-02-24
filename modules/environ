@@ -6,6 +6,7 @@ m4/environ.m4
 
 Depends-on:
 unistd
+extensions
 
 configure.ac:
 gl_ENVIRON
