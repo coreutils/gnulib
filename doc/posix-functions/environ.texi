@@ -4,17 +4,14 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/environ.html}
 
-Gnulib module: ---
+Gnulib module: environ
 
 Portability problems fixed by Gnulib:
 @itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
-@itemize
 @item
-This variable is missing on some platforms:
-MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, IRIX 6.5, OSF/1 5.1, Cygwin.
+POSIX does not require this variable to be declared, and it is indeed not
+declared on some platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, IRIX 6.5, Solaris 10.
 @item
 On MacOS X 10, this variable is not declared.  Up to MacOS X 10.4, one can use
 @smallexample
@@ -27,6 +24,10 @@ shared libraries on MacOS X 10.5.  Here is a workaround: Instead, one can use
 #define environ (*_NSGetEnviron())
 @end smallexample
 This works at least on MacOS X 10.3 and newer.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @item
 The address of this variable is not a compile-time constant on some platforms:
 mingw.

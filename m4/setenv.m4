@@ -1,5 +1,5 @@
-# setenv.m4 serial 9
-dnl Copyright (C) 2001-2004, 2006-2007 Free Software Foundation, Inc.
+# setenv.m4 serial 10
+dnl Copyright (C) 2001-2004, 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -53,38 +53,19 @@ int unsetenv();
   fi
 ])
 
-# Check if a variable is properly declared.
-# gt_CHECK_VAR_DECL(includes,variable)
-AC_DEFUN([gt_CHECK_VAR_DECL],
-[
-  define([gt_cv_var], [gt_cv_var_]$2[_declaration])
-  AC_MSG_CHECKING([if $2 is properly declared])
-  AC_CACHE_VAL(gt_cv_var, [
-    AC_TRY_COMPILE([$1
-      extern struct { int foo; } $2;],
-      [$2.foo = 1;],
-      gt_cv_var=no,
-      gt_cv_var=yes)])
-  AC_MSG_RESULT($gt_cv_var)
-  if test $gt_cv_var = yes; then
-    AC_DEFINE([HAVE_]translit($2, [a-z], [A-Z])[_DECL], 1,
-              [Define if you have the declaration of $2.])
-  fi
-])
-
 # Prerequisites of lib/setenv.c.
 AC_DEFUN([gl_PREREQ_SETENV],
 [
   AC_REQUIRE([AC_FUNC_ALLOCA])
+  AC_REQUIRE([gl_ENVIRON])
   AC_CHECK_HEADERS_ONCE(unistd.h)
   AC_CHECK_HEADERS(search.h)
   AC_CHECK_FUNCS(tsearch)
-  gt_CHECK_VAR_DECL([#include <unistd.h>], environ)
 ])
 
 # Prerequisites of lib/unsetenv.c.
 AC_DEFUN([gl_PREREQ_UNSETENV],
 [
+  AC_REQUIRE([gl_ENVIRON])
   AC_CHECK_HEADERS_ONCE(unistd.h)
-  gt_CHECK_VAR_DECL([#include <unistd.h>], environ)
 ])

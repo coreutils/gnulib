@@ -1,5 +1,32 @@
 2008-02-24  Bruno Haible  <bruno@clisp.org>
 
+	New module 'environ'.
+	* modules/environ: New file.
+	* lib/unistd.in.h (environ): New declaration.
+	* m4/environ.m4: New file.
+	(gt_CHECK_VAR_DECL): Moved here from m4/setenv.m4. Undefine gt_cv_var
+	after use.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_ENVIRON and
+	HAVE_DECL_ENVIRON.
+	* modules/unistd (Makefile.am): Substitute also GNULIB_ENVIRON and
+	HAVE_DECL_ENVIRON.
+	* doc/posix-functions/environ.texi: Mention module 'environ'. Remove
+	wrong claim that 'environ' is missing on some systems.
+	* modules/execute (Depends-on): Add environ.
+	* lib/execute.c (environ): Remove fallback declaration.
+	* modules/pipe (Depends-on): Add environ.
+	* lib/pipe.c (environ): Remove fallback declaration.
+	* modules/setenv (Depends-on): Add environ.
+	* lib/setenv.c (environ): Remove fallback declaration.
+	* modules/unsetenv (Depends-on): Add environ.
+	* lib/unsetenv.c (environ): Remove fallback declaration.
+	* m4/setenv.m4 (gt_CHECK_VAR_DECL): Remove macro. Moved to
+	m4/environ.m4.
+	(gl_PREREQ_SETENV): Require gl_ENVIRON instead of testing for environ.
+	(gl_PREREQ_UNSETENV): Likewise.
+
+2008-02-24  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-functions/environ.texi: Document the MacOS X problem.
 
 2008-02-20  Bob Proulx  <bob@proulx.com>
