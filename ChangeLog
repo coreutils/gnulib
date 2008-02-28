@@ -1,3 +1,11 @@
+2008-02-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* build-aux/bootstrap (source_base, m4_base)
+	(doc_base, tests_base): New variables.
+	(gnulib_tool_options): Do not hardcode base directories, use
+	the above variables instead.
+
+
 2008-02-28  Atsushi SAKAI  <sakaia@jp.fujitsu.com>
 
 	* lib/xsize.h: Fix typo in comment: s/tupe/type/.
