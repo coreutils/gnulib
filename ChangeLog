@@ -1,3 +1,7 @@
+2008-02-28  Atsushi SAKAI  <sakaia@jp.fujitsu.com>
+
+	* lib/xsize.h: Fix typo in comment: s/tupe/type/.
+
 2008-02-28  Bruno Haible  <bruno@clisp.org>
 
 	* modules/freadptr-tests: New file.
