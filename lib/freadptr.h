@@ -23,8 +23,9 @@ extern "C" {
 
 /* Assuming the stream STREAM is open for reading:
    Return a pointer to the input buffer of STREAM.
-   If freadahead (STREAM) > 0, the result is a pointer to freadahead (STREAM)
-   bytes.
+   If freadahead (STREAM) > 0, the result is either a pointer to
+   freadahead (STREAM) bytes, or NULL.  The latter case can happen after
+   use of 'ungetc (..., STREAM)'.
    If freadahead (STREAM) == 0, the result is not usable; it may be NULL.
    In this case, you should use getc (STREAM), fgetc (STREAM), or
    fread (..., STREAM) to access the input from STREAM.
