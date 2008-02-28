@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate February 11, 2008
+@set lastupdate February 21, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -1182,7 +1182,8 @@ for your GNU package:
 @item
 Create an account for yourself at @url{http://savannah.gnu.org}, if
 you don't already have one.  By the way, this is also needed to
-maintain the web pages for your project also (@pxref{Web Pages}).
+maintain the web pages at @url{www.gnu.org} for your project
+(@pxref{Web Pages}).
 
 @item
 In the @samp{My Account Conf} page on @code{savannah}, upload the GPG
