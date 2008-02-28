@@ -2282,6 +2282,7 @@ func_all_modules ()
   func_module freadable
   func_module freadahead
   func_module freading
+  func_module freadptr
   func_module fwritable
   func_module fwriting
   func_module getpass
