@@ -1,0 +1,15 @@
+Files:
+tests/test-freadptr.c
+tests/test-freadptr.sh
+
+Depends-on:
+lseek
+freadahead
+unistd
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-freadptr.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-freadptr

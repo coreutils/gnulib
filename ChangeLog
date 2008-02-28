@@ -1,5 +1,9 @@
 2008-02-28  Bruno Haible  <bruno@clisp.org>
 
+	* modules/freadptr-tests: New file.
+	* tests/test-freadptr.sh: New file.
+	* tests/test-freadptr.c: New file.
+
 	New module 'freadptr'.
 	* modules/freadptr: New file.
 	* lib/freadptr.h: New file.
