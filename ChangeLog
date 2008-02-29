@@ -1,5 +1,9 @@
 2008-02-29  Bruno Haible  <bruno@clisp.org>
 
+	* modules/freadseek-tests: New file.
+	* tests/test-freadseek.sh: New file.
+	* tests/test-freadseek.c: New file.
+
 	New module 'freadseek'.
 	* modules/freadseek: New file.
 	* lib/freadseek.h: New file.
