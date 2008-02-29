@@ -2,10 +2,12 @@ The following packages appear to be using gnulib and gnulib-tool:
 
   Net::CDP        http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
   OPeNDAP         http://scm.opendap.org:8090/svn/trunk/
+  anubis          http://cvs.sv.gnu.org/viewcvs/anubis/anubis/
   autobuild       http://josefsson.org/autobuild/
   bison           http://cvs.sv.gnu.org/viewcvs/bison/bison/
   clisp           http://clisp.cvs.sourceforge.net/clisp/clisp/
   coreutils       http://cvs.sv.gnu.org/viewcvs/coreutils/coreutils/
+  cpio            http://cvs.sv.gnu.org/viewcvs/cpio/cpio/
   cvs             http://cvs.sv.gnu.org/viewcvs/cvs/ccvs/
   diffutils       http://cvs.sv.gnu.org/viewcvs/diffutils/diffutils/
   findutils       http://cvs.sv.gnu.org/viewcvs/findutils/findutils/
@@ -35,6 +37,8 @@ The following packages appear to be using gnulib and gnulib-tool:
   libvirt         http://libvirt.org/
                   http://git.et.redhat.com/?p=libvirt.git;a=summary
   m4              http://git.sv.gnu.org/gitweb/?p=m4.git;a=summary
+  mailfromd       http://svn.gnu.org.ua/viewvc/mailfromd/trunk/
+  mailutils       http://cvs.sv.gnu.org/viewcvs/mailutils/mailutils/
   man-db          http://www.chiark.greenend.org.uk/~cjwatson/bzr/man-db/trunk/
   miktex          https://svn.sourceforge.net/svnroot/miktex/miktex/trunk
   msmtp           http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
@@ -43,12 +47,14 @@ The following packages appear to be using gnulib and gnulib-tool:
   prelude-lml     https://trac.prelude-ids.org/browser/trunk/prelude-lml/
   prelude-manager https://trac.prelude-ids.org/browser/trunk/prelude-manager/
   pspp            http://cvs.sv.gnu.org/viewcvs/pspp/pspp/
+  radius          http://cvs.sv.gnu.org/viewcvs/radius/radius/
   sed             http://cvs.savannah.gnu.org/viewcvs/sed/?root=sed
   shishi          http://git.sv.gnu.org/gitweb/?p=shishi.git
   tar             http://cvs.sv.gnu.org/viewcvs/tar/tar/
   texinfo         http://cvs.sv.gnu.org/viewcvs/texinfo/texinfo/
   wget            http://hg.addictivecode.org/wget/mainline/
-
+  wydawca         http://svn.gnu.org.ua/viewvc/wydawca/trunk/
+  wyslij-po       http://svn.gnu.org.ua/viewvc/wyslij-po/trunk/ 
 
 The following packages are using gnulib without gnulib-tool:
 
