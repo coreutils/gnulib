@@ -32,20 +32,20 @@ AC_DEFUN([gl_ARGP],
   # be defined and other not, I prefer to stay on the safe side and to
   # test each one separately.
   AC_MSG_CHECKING(whether program_invocation_name is defined)
-  AC_TRY_COMPILE([#include <argp.h>],
-                 [ program_invocation_name = "test"; ],
-                 [ AC_DEFINE(HAVE_PROGRAM_INVOCATION_NAME,1,
-                   [Define if program_invocation_name is defined])
-                   AC_MSG_RESULT(yes)],
-                 [ AC_MSG_RESULT(no)] )
+  AC_TRY_LINK([#include <argp.h>],
+              [ program_invocation_name = "test"; ],
+              [ AC_DEFINE(HAVE_PROGRAM_INVOCATION_NAME,1,
+                 [Define if program_invocation_name is defined])
+                 AC_MSG_RESULT(yes)],
+              [ AC_MSG_RESULT(no)] )
 
   AC_MSG_CHECKING(whether program_invocation_short_name is defined)
-  AC_TRY_COMPILE([#include <argp.h>],
-                 [ program_invocation_short_name = "test"; ],
-                 [ AC_DEFINE(HAVE_PROGRAM_INVOCATION_SHORT_NAME,1,
-                   [Define if program_invocation_short_name is defined])
-                   AC_MSG_RESULT(yes)],
-                 [ AC_MSG_RESULT(no)] )
+  AC_TRY_LINK([#include <argp.h>],
+              [ program_invocation_short_name = "test"; ],
+              [ AC_DEFINE(HAVE_PROGRAM_INVOCATION_SHORT_NAME,1,
+                 [Define if program_invocation_short_name is defined])
+                 AC_MSG_RESULT(yes)],
+              [ AC_MSG_RESULT(no)] )
 
   AC_CHECK_DECLS_ONCE([clearerr_unlocked])
   AC_CHECK_DECLS_ONCE([feof_unlocked])
