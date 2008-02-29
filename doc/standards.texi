@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate October 10, 2007
+@set lastupdate February 23, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -22,18 +22,12 @@
 
 @c This is used by a cross ref in make-stds.texi
 @set CODESTD  1
-@iftex
-@set CHAPTER chapter
-@end iftex
-@ifinfo
-@set CHAPTER node
-@end ifinfo
 
 @copying
 The GNU coding standards, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
-2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
+2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free Software
 Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
@@ -3825,6 +3819,17 @@ definition of @code{VPATH} into the Makefile.  Some rules may need to
 refer explicitly to the specified source directory.  To make this
 possible, @code{configure} can add to the Makefile a variable named
 @code{srcdir} whose value is precisely the specified directory.
+
+In addition, the @samp{configure} script should take options
+corresponding to most of the standard directory variables
+(@pxref{Directory Variables}).  Here is the list:
+
+@example
+--prefix --exec-prefix --bindir --sbindir --libexecdir --sysconfdir
+--sharedstatedir --localstatedir --libdir --includedir --oldincludedir
+--datarootdir --datadir --infodir --localedir --mandir --docdir
+--htmldir --dvidir --pdfdir --psdir
+@end example
 
 The @code{configure} script should also take an argument which specifies the
 type of system to build the program for.  This argument should look like
