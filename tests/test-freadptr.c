@@ -47,18 +47,79 @@ main (int argc, char **argv)
 
   if (lseek (0, 0, SEEK_CUR) == nbytes)
     /* An unbuffered stdio, such as BeOS or on uClibc compiled without
-       __STDIO_BUFFERS.  */
+       __STDIO_BUFFERS.  Or stdin is a pipe.  */
     ASSERT (freadahead (stdin) == 0);
   else
     {
       /* Normal buffered stdio.  */
       const char stdin_contents[] =
-	"#!/bin/sh\n\n./test-freadptr${EXEEXT} 5 < \"$srcdir/test-freadptr.sh\" || exit 1\nexit 0\n";
+	"#!/bin/sh\n\n./test-freadptr${EXEEXT} 5 < \"$srcdir/test-freadptr.sh\" || exit 1\ncat \"$srcdir/test-freadptr.sh\" | ./test-freadptr${EXEEXT} 5 || exit 1\nexit 0\n";
       const char *expected = stdin_contents + nbytes;
-      size_t available = freadahead (stdin);
+      size_t available;
+      size_t available2;
+      size_t available3;
+
+      /* Test normal behaviour.  */
+      available = freadahead (stdin);
       ASSERT (available != 0);
       ASSERT (available <= strlen (expected));
-      ASSERT (memcmp (freadptr (stdin), expected, available) == 0);
+      {
+	const char *ptr = freadptr (stdin);
+
+	ASSERT (ptr != NULL);
+	ASSERT (memcmp (ptr, expected, available) == 0);
+      }
+
+      /* Test behaviour after normal ungetc.  */
+      ungetc (fgetc (stdin), stdin);
+      available2 = freadahead (stdin);
+      ASSERT (/* available2 == available - 1 || */ available2 == available);
+#if 0
+      if (available2 == available - 1)
+	{
+	  ASSERT (freadptr (stdin) == NULL);
+	}
+      else
+#endif
+	{
+	  const char *ptr = freadptr (stdin);
+
+	  ASSERT (ptr != NULL);
+	  ASSERT (memcmp (ptr, expected, available) == 0);
+	}
+
+      /* Test behaviour after arbitrary ungetc.  */
+      fgetc (stdin);
+      ungetc ('@', stdin);
+      available3 = freadahead (stdin);
+      ASSERT (available3 == 0 || available3 == 1 || /* available3 == available - 1 || */ available3 == available);
+      if (available3 == 0)
+	;
+      else if (available3 == 1)
+	{
+	  const char *ptr = freadptr (stdin);
+
+	  if (ptr != NULL)
+	    {
+	      ASSERT (ptr[0] == '@');
+	    }
+	}
+#if 0
+      else if (available3 == available - 1)
+	{
+	  ASSERT (freadptr (stdin) == NULL);
+	}
+#endif
+      else
+	{
+	  const char *ptr = freadptr (stdin);
+
+	  if (ptr != NULL)
+	    {
+	      ASSERT (ptr[0] == '@');
+	      ASSERT (memcmp (ptr + 1, expected + 1, available - 1) == 0);
+	    }
+	}
     }
 
   return 0;
