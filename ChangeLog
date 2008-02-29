@@ -1,3 +1,11 @@
+2008-02-29  Bruno Haible  <bruno@clisp.org>
+
+	New module 'freadseek'.
+	* modules/freadseek: New file.
+	* lib/freadseek.h: New file.
+	* lib/freadseek.c: New file.
+	* MODULES.html.sh (File stream based Input/Output): Add freadseek.
+
 2008-02-29  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* users.txt: Add anubis, cpio, mailfromd, mailutils, radius,
