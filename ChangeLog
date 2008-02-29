@@ -1,3 +1,9 @@
+2008-02-29  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* m4/argp.m4 (gl_ARGP): Use AC_TRY_LINK to test if
+	program_invocation_name and program_invocation_short_name are
+	present.
+
 2008-02-28  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-freadptr.c: Add a test for behaviour after ungetc.
