@@ -1,3 +1,9 @@
+2008-03-01  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: sync from coreutils
+	* build-aux/bootstrap (update_po_files): Copy a .po file into place
+	also when the target doesn't exist.
+
 2008-03-01  Eric Blake  <ebb9@byu.net>
 
 	New module 'memchr2'.
