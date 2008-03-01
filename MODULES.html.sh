@@ -1653,6 +1653,7 @@ func_all_modules ()
 
   func_begin_table
   func_module bcopy
+  func_module memchr2
   func_module memmem
   func_module memmem-simple
   func_module mempcpy

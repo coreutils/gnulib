@@ -1,3 +1,13 @@
+2008-03-01  Eric Blake  <ebb9@byu.net>
+
+	New module 'memchr2'.
+	* modules/memchr2: New file.
+	* modules/memchr2-tests: Likewise.
+	* lib/memchr2.h: Likewise.
+	* lib/memchr2.c: Likewise, based on memchr.c.
+	* tests/test-memchr2.c: New test.
+	* MODULES.html.sh (String handling): Add memchr2.
+
 2008-02-29  Bruno Haible  <bruno@clisp.org>
 
 	* modules/freadseek-tests: New file.
