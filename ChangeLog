@@ -1,5 +1,7 @@
 2008-03-02  Jim Meyering  <meyering@redhat.com>
 
+	* lib/getdelim.c (getdelim): Don't leak memory upon failed realloc.
+
 	Remove useless "if" tests before free.  Deprecate "free" module.
 	* doc/posix-functions/free.texi: Mention that this
 	module is no longer useful.
