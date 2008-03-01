@@ -6,6 +6,12 @@
 
 2008-03-01  Eric Blake  <ebb9@byu.net>
 
+	Fix bugs in last patch.
+	* lib/memchr2.c (memchr2): Fix typo.
+	* tests/test-memchr2.c: Test previous bug, and don't use GNU
+	extension.
+	Reported by Bruce Korb.
+
 	New module 'memchr2'.
 	* modules/memchr2: New file.
 	* modules/memchr2-tests: Likewise.

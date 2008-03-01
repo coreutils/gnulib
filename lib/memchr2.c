@@ -81,8 +81,8 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
   magic_bits = 0xfefefefe;
   charmask1 = c1 | (c1 << 8);
   charmask2 = c2 | (c2 << 8);
-  charmask1 |= charmask2 << 16;
-  charmask1 |= charmask2 << 16;
+  charmask1 |= charmask1 << 16;
+  charmask2 |= charmask2 << 16;
 #if 0xffffffffU < UINTMAX_MAX
   magic_bits |= magic_bits << 32;
   charmask1 |= charmask1 << 32;
