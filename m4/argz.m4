@@ -25,8 +25,8 @@ AC_CHECK_TYPES([error_t],
 #endif])
 
 ARGZ_H=
-AC_CHECK_FUNCS([argz_append argz_create_sep argz_insert argz_next \
-	argz_stringify], [], [ARGZ_H=argz.h; AC_LIBOBJ([argz])])
+AC_CHECK_FUNCS([argz_add argz_append argz_count argz_create_sep argz_insert \
+	argz_next argz_stringify], [], [ARGZ_H=argz.h; AC_LIBOBJ([argz])])
 
 dnl if have system argz functions, allow forced use of 
 dnl libltdl-supplied implementation (and default to do so
