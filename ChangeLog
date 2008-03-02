@@ -1,3 +1,8 @@
+2008-03-02  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: sync from coreutils again
+	* build-aux/bootstrap: Remove dangling m4/*.m4 symlinks.
+
 2008-03-01  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: sync from coreutils
