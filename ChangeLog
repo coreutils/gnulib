@@ -1,5 +1,9 @@
 2008-03-02  Jim Meyering  <meyering@redhat.com>
 
+	Remove the last dependency on the "free" module.
+	* m4/readutmp.m4 (gl_READUTMP): Don't require gl_FUNC_FREE.
+	Reported by Bob Proulx.
+
 	* lib/getdelim.c (getdelim): Don't leak memory upon failed realloc.
 
 	Remove useless "if" tests before free.  Deprecate "free" module.

@@ -1,5 +1,5 @@
-# readutmp.m4 serial 14
-dnl Copyright (C) 2002-2007 Free Software Foundation, Inc.
+# readutmp.m4 serial 15
+dnl Copyright (C) 2002-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -15,7 +15,6 @@ AC_DEFUN([gl_READUTMP],
 
     dnl Prerequisites of lib/readutmp.h and lib/readutmp.c.
     AC_REQUIRE([AC_C_INLINE])
-    AC_REQUIRE([gl_FUNC_FREE])
     AC_CHECK_FUNCS_ONCE(utmpname utmpxname)
     AC_CHECK_DECLS(getutent,,,[
 #ifdef HAVE_UTMP_H
