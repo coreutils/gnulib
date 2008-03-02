@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2008-02-08.11
+scriptversion=2008-03-02.16
 
 # Copyright (C) 2007 Free Software Foundation
 #
@@ -23,12 +23,12 @@ scriptversion=2008-02-08.11
 # It may be run two ways:
 # - from a git repository in which the "git describe" command below
 #   produces useful output (thus requiring at least one signed tag)
-# - from a non-git-repo directory containing a .version file, which
+# - from a non-git-repo directory containing a .tarball-version file, which
 #   presumes this script is invoked like "./git-version-gen .tarball-version".
 
 case $# in
     1) ;;
-    *) echo 1>&2 "Usage: $0 \$srcdir/.version"; exit 1;;
+    *) echo 1>&2 "Usage: $0 \$srcdir/.tarball-version"; exit 1;;
 esac
 
 tarball_version_file=$1

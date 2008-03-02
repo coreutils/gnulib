@@ -1,5 +1,7 @@
 2008-03-02  Jim Meyering  <meyering@redhat.com>
 
+	* build-aux/git-version-gen: Adjust a comment and the Usage string.
+
 	bootstrap: sync from coreutils again
 	* build-aux/bootstrap: Remove dangling m4/*.m4 symlinks.
 
