@@ -1,4 +1,10 @@
 2008-03-03  John E. Malmberg  <wb8tyw@qsl.net>  (tiny change)
+            Bruno Haible  <bruno@clisp.org>
+
+	Add VMS support.
+	* lib/alloca.in.h (alloca): Define as alias for DEC C on VMS.
+
+2008-03-03  John E. Malmberg  <wb8tyw@qsl.net>  (tiny change)
 
 	Update VMS specifics.
 	* lib/getopt.c [VMS]: Remove include of unixlib.h.
