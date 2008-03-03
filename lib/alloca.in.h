@@ -42,11 +42,10 @@
 # elif defined _MSC_VER
 #  include <malloc.h>
 #  define alloca _alloca
+# elif defined __DECC && defined __VMS
+#  define alloca __ALLOCA
 # else
 #  include <stddef.h>
-#  if defined __DECC && defined __VMS
-#   define alloca __ALLOCA
-#  endif
 #  ifdef  __cplusplus
 extern "C"
 #  endif
