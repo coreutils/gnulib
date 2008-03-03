@@ -1,3 +1,8 @@
+2008-03-03  John E. Malmberg  <wb8tyw@qsl.net>  (tiny change)
+
+	Update VMS specifics.
+	* lib/getopt.c [VMS]: Remove include of unixlib.h.
+
 2008-03-02  Jim Meyering  <meyering@redhat.com>
 
 	Remove the last dependency on the "free" module.
