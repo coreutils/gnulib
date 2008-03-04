@@ -5746,6 +5746,7 @@ This list of functions is sorted according to the header that declares them.
 * gcd::
 * Regular expressions::
 * Supporting Relocation::
+* __func__::
 @end menu
 
 @node alloca
@@ -5825,6 +5826,19 @@ generated automatically.
 
 @include regexprops-generic.texi
 
+@node __func__
+@section __func__
+
+The @code{__func__} module makes sure that you can use the
+@code{__func__} variable as defined by C99 in your code.
+
+A small example is:
+
+@smallexample
+#include <config.h>
+...
+printf ("%s: something happened\n", __func__);
+@end smallexample
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
