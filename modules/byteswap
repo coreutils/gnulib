@@ -26,7 +26,7 @@ Include:
 <byteswap.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Oskar Liljeblad
