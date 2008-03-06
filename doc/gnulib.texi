@@ -5826,23 +5826,8 @@ generated automatically.
 
 @include regexprops-generic.texi
 
-@node func
-@section func
+@include func.texi
 
-The @code{func} module makes sure that you can use the predefined
-identifier @code{__func__} as defined by C99 in your code.
-
-A small example is:
-
-@smallexample
-#include <config.h>
-#include <stdio.h> /* for printf */
-
-int main (void)
-@{
-    printf ("%s: hello world\n", __func__);
-@}
-@end smallexample
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License

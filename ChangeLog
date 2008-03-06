@@ -1,3 +1,8 @@
+2008-03-06  Bruno Haible  <bruno@clisp.org>
+
+	* doc/func.texi: New file, extracted from doc/gnulib.texi.
+	* doc/gnulib.texi: Include it.
+
 2008-03-06  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/func (License): Change license to unlimited; there was
