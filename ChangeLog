@@ -1,5 +1,8 @@
 2008-03-06  Simon Josefsson  <simon@josefsson.org>
 
+	* modules/func (License): Change license to unlimited; there was
+	no LGPL parts in the module anyway.
+
 	* doc/gnulib.texi (__func__): Use C99 terminology when talking
 	about __func__.  Make example self-contained.  Suggested by Eric
 	Blake <ebb9@byu.net>.
