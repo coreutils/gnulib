@@ -65,6 +65,18 @@ Texts.  A copy of the license is included in the section entitled
 * Index::
 @end menu
 
+@c This is used at the beginning of four chapters.
+@macro nosuchmodulenote{thing}
+The notation ``Gnulib module: ---'' means that Gnulib does not provide a
+module providing a substitute for the \thing\.  When the list
+``Portability problems not fixed by Gnulib'' is empty, such a module is
+not needed: No portability problems are known.  Otherwise, it indicates
+that such a module would be useful but is not available: No one so far
+found this \thing\ important enough to contribute a substitute for it.
+If you need this particular \thing\, you may write to
+@code{<bug-gnulib at gnu dot org>}.
+@end macro
+
 @node Introduction
 @chapter Introduction
 
@@ -386,7 +398,7 @@ On a machine with recent automake, autoconf, m4 installed and with a
 gnulib git or cvs checkout (typically a Linux machine), use
 
 @example
-gnulib-tool --create-megatestdir --with-tests --dir=..."
+gnulib-tool --create-megatestdir --with-tests --dir=...
 @end example
 
 Note: The created directory uses ca. 512 MB on disk.
@@ -460,6 +472,8 @@ for the C++ compiler).
 This chapter describes which header files specified by ISO C or POSIX are
 substituted by Gnulib, which portability pitfalls are fixed by Gnulib, and
 which (known) portability problems are not worked around by Gnulib.
+
+@nosuchmodulenote header file
 
 @menu
 * aio.h::
@@ -641,14 +655,7 @@ ISO C or POSIX are substituted by Gnulib, which portability pitfalls are
 fixed by Gnulib, and which (known) portability problems are not worked around
 by Gnulib.
 
-The notation ``Gnulib module: ---'' means that Gnulib does not provide a
-module providing a substitute for the function.  When the list
-``Portability problems not fixed by Gnulib'' is empty, such a module is
-not needed: No portability problems are known.  Otherwise, it indicates
-that such a module would be useful but is not available: No one so far
-found this function important enough to contribute a substitute for it.
-If you need this particular function, you may write to
-@code{<bug-gnulib at gnu dot org>}.
+@nosuchmodulenote function
 
 @menu
 * FD_CLR::
@@ -2898,6 +2905,8 @@ specified by ISO C or POSIX are substituted by Gnulib, which portability
 pitfalls are fixed by Gnulib, and which (known) portability problems are
 not worked around by Gnulib.
 
+@nosuchmodulenote header
+
 @menu
 * a.out.h::
 * aliases.h::
@@ -2970,14 +2979,7 @@ provided as extensions by at least GNU libc are also supported by Gnulib,
 which portability pitfalls are fixed by Gnulib, and which (known)
 portability problems are not worked around by Gnulib.
 
-The notation ``Gnulib module: ---'' means that Gnulib does not provide a
-module providing a substitute for the function.  When the list
-``Portability problems not fixed by Gnulib'' is empty, such a module is
-not needed: No portability problems are known.  Otherwise, it indicates
-that such a module would be useful but is not available: No one so far
-found this function important enough to contribute a substitute for it.
-If you need this particular function, you may write to
-@code{<bug-gnulib at gnu dot org>}.
+@nosuchmodulenote function
 
 This list of functions is sorted according to the header that declares them.
 

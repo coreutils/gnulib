@@ -1,3 +1,10 @@
+2008-03-06  Thien-Thi Nguyen  <ttn@gnuvola.org>  (tiny change)
+
+	* doc/gnulib-tool.texi (@nosuchmodulenote): New macro.
+	(Header File Substitutes, Function Substitutes,
+	Glibc Header File Substitutes, Glibc Function Substitutes): Use it.
+	(Build robot for gnulib): Fix typo.
+
 2008-03-06  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib-tool.texi (VCS Issues): Small updates.
