@@ -2,12 +2,12 @@ Description:
 Make sure __func__ is usable even on non-C99 platforms.
 
 Files:
-m4/__func__.m4
+m4/func.m4
 
 Depends-on:
 
 configure.ac:
-gl___FUNC__
+gl_FUNC
 
 Makefile.am:
 

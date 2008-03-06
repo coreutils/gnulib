@@ -1,0 +1,8 @@
+Files:
+tests/test-func.c
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-func
+check_PROGRAMS += test-func
