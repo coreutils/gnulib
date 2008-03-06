@@ -4,6 +4,10 @@
 
 2008-03-05  Simon Josefsson  <simon@josefsson.org>
 
+	* doc/Makefile: Add pdf target.
+
+2008-03-05  Simon Josefsson  <simon@josefsson.org>
+
 	* modules/inline (License): Use 'unlimited', since there are only
 	*.m4 files in this module.
 
