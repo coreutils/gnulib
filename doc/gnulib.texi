@@ -2905,7 +2905,7 @@ specified by ISO C or POSIX are substituted by Gnulib, which portability
 pitfalls are fixed by Gnulib, and which (known) portability problems are
 not worked around by Gnulib.
 
-@nosuchmodulenote header
+@nosuchmodulenote header file
 
 @menu
 * a.out.h::
