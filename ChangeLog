@@ -3,12 +3,31 @@
 	* modules/func (License): Change license to unlimited; there was
 	no LGPL parts in the module anyway.
 
+2008-03-06  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/__func__: Renamed to modules/func.
+	* modules/__func__-tests: Renamed to modules/func-tests.
+	* tests/test-__func__.c: Renamed to tests/test-func.c.
+	* m4/__func__.m4: Renamed to m4/func.m4.
+	* doc/gnulib.texi (__func__): Section renamed to func.
+	Suggested by Eric Blake <ebb9@byu.net>.
+
+2008-03-06  Simon Josefsson  <simon@josefsson.org>
+
 	* doc/gnulib.texi (__func__): Use C99 terminology when talking
 	about __func__.  Make example self-contained.  Suggested by Eric
 	Blake <ebb9@byu.net>.
 
 	* tests/test-__func__.c (main): Avoid extraneous () around __func.
 	Suggested by Eric Blake <ebb9@byu.net>.
+
+2008-03-06  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/__func__: New file.
+	* modules/__func__-tests: New file.
+	* tests/test-__func__.c: New file.
+	* m4/__func__.m4: New file.
+	* doc/gnulib.texi (__func__): Document __func__ module.
 
 2008-03-05  Simon Josefsson  <simon@josefsson.org>
 
