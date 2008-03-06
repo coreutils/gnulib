@@ -1,5 +1,11 @@
 2008-03-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fseeko (Dependencies): Add extensions.
+	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Require AC_USE_SYSTEM_EXTENSIONS.
+	Needed on glibc systems.
+
+2008-03-06  Bruno Haible  <bruno@clisp.org>
+
 	* doc/gnulib-tool.texi (@nosuchmodulenote): Avoid line break inside
 	email address.
 	Reported by Thien-Thi Nguyen <ttn@gnuvola.org>.
