@@ -1,5 +1,10 @@
 2008-03-06  Bruno Haible  <bruno@clisp.org>
 
+	* doc/gnulib-tool.texi (VCS Issues): Small updates.
+	Reported by Thien-Thi Nguyen <ttn@gnuvola.org>.
+
+2008-03-06  Bruno Haible  <bruno@clisp.org>
+
 	* doc/func.texi: New file, extracted from doc/gnulib.texi.
 	* doc/gnulib.texi: Include it.
 
