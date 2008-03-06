@@ -1,3 +1,12 @@
+2008-03-06  Simon Josefsson  <simon@josefsson.org>
+
+	* doc/gnulib.texi (__func__): Use C99 terminology when talking
+	about __func__.  Make example self-contained.  Suggested by Eric
+	Blake <ebb9@byu.net>.
+
+	* tests/test-__func__.c (main): Avoid extraneous () around __func.
+	Suggested by Eric Blake <ebb9@byu.net>.
+
 2008-03-05  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/byteswap (License): Re-license as LGPLv2+.

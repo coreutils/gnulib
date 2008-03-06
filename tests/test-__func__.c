@@ -36,6 +36,6 @@
 int
 main ()
 {
-  ASSERT (strlen (__func__) + 1 == sizeof (__func__));
+  ASSERT (strlen (__func__) + 1 == sizeof __func__);
   return 0;
 }

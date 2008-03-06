@@ -5829,15 +5829,19 @@ generated automatically.
 @node __func__
 @section __func__
 
-The @code{__func__} module makes sure that you can use the
-@code{__func__} variable as defined by C99 in your code.
+The @code{__func__} module makes sure that you can use the predefined
+identifier @code{__func__} as defined by C99 in your code.
 
 A small example is:
 
 @smallexample
 #include <config.h>
-...
-printf ("%s: something happened\n", __func__);
+#include <stdio.h> /* for printf */
+
+int main (void)
+@{
+    printf ("%s: hello world\n", __func__);
+@}
 @end smallexample
 
 @node GNU Free Documentation License
