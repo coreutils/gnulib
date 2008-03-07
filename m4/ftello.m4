@@ -1,5 +1,5 @@
-# ftello.m4 serial 3
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# ftello.m4 serial 4
+dnl Copyright (C) 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -9,6 +9,10 @@ AC_DEFUN([gl_FUNC_FTELLO],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([gl_STDIN_LARGE_OFFSET])
+
+  dnl Persuade glibc <stdio.h> to declare fseeko().
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+
   AC_CACHE_CHECK([for ftello], [gl_cv_func_ftello],
     [
       AC_TRY_LINK([#include <stdio.h>], [ftello (stdin);],

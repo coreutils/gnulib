@@ -1,3 +1,9 @@
+2008-03-06  Eric Blake  <ebb9@byu.net>
+
+	Likewise for ftello.
+	* modules/ftello (Dependencies): Add extensions.
+	* m4/ftello.m4 (gl_FUNC_FTELLO): Require AC_USE_SYSTEM_EXTENSIONS.
+
 2008-03-06  Bruno Haible  <bruno@clisp.org>
 
 	* modules/fseeko (Dependencies): Add extensions.
@@ -76,7 +82,7 @@
 	*.m4 files in this module.
 
 2008-03-03  John E. Malmberg  <wb8tyw@qsl.net>  (tiny change)
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Add support for HP C 7.1 on OpenVMS 8.3.
 	* lib/alloca.in.h (alloca): Define as alias for DEC C on VMS.
