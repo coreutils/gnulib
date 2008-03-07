@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2008-01-13.10
+scriptversion=2008-03-05.14
 
 # Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008
 # Free Software Foundation, Inc.
@@ -122,8 +122,7 @@ while test $# -gt 0; do
     -o) shift; outdir=$1;;
     --docbook) docbook=yes;;
     --html) shift; html=$1;;
-    --texi2html) use_texi2html=1
-                 html="$html --node-files";;
+    --texi2html) use_texi2html=1;;
     -*)
       echo "$0: Unknown or ambiguous option \`$1'." >&2
       echo "$0: Try \`--help' for more information." >&2
@@ -200,7 +199,7 @@ ascii_gz_size=`calcsize $outdir/$PACKAGE.txt.gz`
 mv $PACKAGE.txt $outdir/
 
 html_split() {
-  cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html --split=$1 $html \"$srcfile\""
+  cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html --split=$1 $html --node-files \"$srcfile\""
   echo "Generating html by $1... ($cmd)"
   eval "$cmd"
   split_html_dir=$PACKAGE.html
