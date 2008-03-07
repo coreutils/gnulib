@@ -1,5 +1,5 @@
 /* fflush.c -- allow flushing input streams
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -58,6 +58,46 @@ rpl_fflush (FILE *stream)
      mingw this is indicated by _IOREAD, regardless of _IOWRT.  */
   if (stream == NULL || ! freading (stream))
     return fflush (stream);
+
+  /* Clear the ungetc buffer.
+
+     This is needed before fetching the file-position indicator, because
+     1) The file position indicator is incremented by fgetc() and decremented
+        by ungetc():
+        <http://www.opengroup.org/susv3/functions/fgetc.html>
+          "The file-position indicator is decremented by each successful
+           call to ungetc()..."
+        <http://www.opengroup.org/susv3/functions/ungetc.html>
+          "... the fgetc() function shall ... advance the associated file
+        position indicator for the stream ..."
+     2) <http://www.opengroup.org/susv3/functions/ungetc.html> says:
+          "The value of the file-position indicator for the stream after
+           reading or discarding all pushed-back bytes shall be the same
+           as it was before the bytes were pushed back."
+     3) Here we are discarding all pushed-back bytes.
+
+     Unfortunately it is impossible to implement this on platforms with
+     _IOERR, because an ungetc() on this platform prepends the pushed-back
+     bytes to the buffer without an indication of the limit between the
+     pushed-back bytes and the read-ahead bytes.  */
+#if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+  {
+# if defined __NetBSD__ || defined __OpenBSD__
+    struct __sfileext
+      {
+	struct  __sbuf _ub; /* ungetc buffer */
+	/* More fields, not relevant here.  */
+      };
+    if (((struct __sfileext *) stream->_ext._base)->_ub._base != NULL)
+# else
+    if (stream->_ub._base != NULL)
+# endif
+      {
+	stream->_p += stream->_r;
+	stream->_r = 0;
+      }
+  }
+#endif
 
   /* POSIX does not specify fflush behavior for non-seekable input
      streams.  Some implementations purge unread data, some return

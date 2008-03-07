@@ -1,5 +1,7 @@
 Files:
 tests/test-fflush.c
+tests/test-fflush2.sh
+tests/test-fflush2.c
 
 Depends-on:
 fseeko
@@ -7,6 +9,7 @@ fseeko
 configure.ac:
 
 Makefile.am:
-TESTS += test-fflush
-check_PROGRAMS += test-fflush
+TESTS += test-fflush test-fflush2.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-fflush test-fflush2
 MOSTLYCLEANFILES += test-fflush.txt

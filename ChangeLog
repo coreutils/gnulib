@@ -1,3 +1,14 @@
+2008-03-06  Bruno Haible  <bruno@clisp.org>
+
+	Make fflush after ungetc work on BSD platforms.
+	* lib/fflush.c (rpl_fflush): Discard ungetc buffer if possible.
+	* tests/test-fflush2.c: New file.
+	* tests/test-fflush2.sh: New file.
+	* modules/fflush-tests (Files): Add tests/test-fflush2.sh,
+	tests/test-fflush2.c.
+	(Makefile.am): Build test-fflush2 and run test-fflush2.sh.
+	* doc/posix-functions/fflush.texi: Document fflush after ungetc bug.
+
 2008-03-06  Eric Blake  <ebb9@byu.net>
 
 	Likewise for ftello.
