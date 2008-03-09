@@ -65,11 +65,11 @@ rpl_fflush (FILE *stream)
      1) The file position indicator is incremented by fgetc() and decremented
         by ungetc():
         <http://www.opengroup.org/susv3/functions/fgetc.html>
+          "... the fgetc() function shall ... advance the associated file
+           position indicator for the stream ..."
+        <http://www.opengroup.org/susv3/functions/ungetc.html>
           "The file-position indicator is decremented by each successful
            call to ungetc()..."
-        <http://www.opengroup.org/susv3/functions/ungetc.html>
-          "... the fgetc() function shall ... advance the associated file
-        position indicator for the stream ..."
      2) <http://www.opengroup.org/susv3/functions/ungetc.html> says:
           "The value of the file-position indicator for the stream after
            reading or discarding all pushed-back bytes shall be the same
