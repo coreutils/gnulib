@@ -1,5 +1,22 @@
 2008-03-09  Bruno Haible  <bruno@clisp.org>
 
+	Extend freadptr to return also the buffer size.
+	* lib/freadptr.h (freadptr): Add sizep argument.
+	* lib/freadptr.c: Include freadptr.h, not freadahead.h.
+	(freadptr): Add sizep argument. Determine buffer size like freadahead
+	does.
+	* tests/test-freadptr.c: Don't include freadahead.h.
+	(main): Adapt for new calling convention of freadptr.
+	* tests/test-freadptr2.c: New file, based on tests/test-freadahead.c.
+	* tests/test-freadptr2.sh: New file, based on tests/test-freadahead.sh.
+	* modules/freadptr-tests (Files): Add tests/test-freadptr2.c,
+	tests/test-freadptr2.sh.
+	(Depends): Remove freadahead.
+	(TESTS): Add test-freadptr2.sh.
+	(check_PROGRAMS): Add test-freadptr2.
+
+2008-03-09  Bruno Haible  <bruno@clisp.org>
+
 	* doc/Makefile (%.pdf): Explain how to remedy the save_size error.
 	Report and solution by Simon Josefsson.
 

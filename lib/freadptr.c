@@ -17,15 +17,29 @@
 #include <config.h>
 
 /* Specification.  */
-#include "freadahead.h"
+#include "freadptr.h"
 
 const char *
-freadptr (FILE *fp)
+freadptr (FILE *fp, size_t *sizep)
 {
+  size_t size;
+
   /* Keep this code in sync with freadahead!  */
 #if defined _IO_ferror_unlocked     /* GNU libc, BeOS */
+  if (fp->_IO_write_ptr > fp->_IO_write_base)
+    return NULL;
+  size = fp->_IO_read_end - fp->_IO_read_ptr;
+  if (size == 0)
+    return NULL;
+  *sizep = size;
   return (const char *) fp->_IO_read_ptr;
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+  if ((fp->_flags & __SWR) != 0 || fp->_r < 0)
+    return NULL;
+  size = fp->_r;
+  if (size == 0)
+    return NULL;
+  *sizep = size;
   return (const char *) fp->_p;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
@@ -36,19 +50,44 @@ freadptr (FILE *fp)
 			 int _file; \
 			 unsigned int _flag; \
 		       } *) fp)
+  if ((fp_->_flag & _IOWRT) != 0)
+    return NULL;
+  size = fp_->_cnt;
+  if (size == 0)
+    return NULL;
+  *sizep = size;
   return (const char *) fp_->_ptr;
 # else
+  if ((fp->_flag & _IOWRT) != 0)
+    return NULL;
+  size = fp->_cnt;
+  if (size == 0)
+    return NULL;
+  *sizep = size;
   return (const char *) fp->_ptr;
 # endif
 #elif defined __UCLIBC__            /* uClibc */
 # ifdef __STDIO_BUFFERS
+  if (fp->__modeflags & __FLAG_WRITING)
+    return NULL;
+  size = fp->__bufread - fp->__bufpos;
+  if (size == 0)
+    return NULL;
+  *sizep = size;
   return (const char *) fp->__bufpos;
 # else
   return NULL;
 # endif
 #elif defined __QNX__               /* QNX */
+  if ((fp->_Mode & 0x2000 /* _MWRITE */) != 0)
+    return NULL;
+  /* fp->_Buf <= fp->_Next <= fp->_Rend */
+  size = fp->_Rend - fp->_Next;
+  if (size == 0)
+    return NULL;
+  *sizep = size;
   return (const char *) fp->_Next;
 #else
- #error "Please port gnulib freadptr.c to your platform! Look at the definition of getc, getc_unlocked on your system, then report this to bug-gnulib."
+ #error "Please port gnulib freadptr.c to your platform! Look at the definition of fflush, fread, getc, getc_unlocked on your system, then report this to bug-gnulib."
 #endif
 }

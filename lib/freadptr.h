@@ -22,19 +22,17 @@ extern "C" {
 #endif
 
 /* Assuming the stream STREAM is open for reading:
-   Return a pointer to the input buffer of STREAM.
-   If freadahead (STREAM) > 0, the result is either a pointer to
-   freadahead (STREAM) bytes, or NULL.  The latter case can happen after
-   use of 'ungetc (..., STREAM)'.
-   If freadahead (STREAM) == 0, the result is not usable; it may be NULL.
-   In this case, you should use getc (STREAM), fgetc (STREAM), or
-   fread (..., STREAM) to access the input from STREAM.
+   Return a pointer to the input buffer of STREAM, or NULL.
+   If the returned pointer is non-NULL, *SIZEP is set to the (positive) size
+   of the input buffer.
+   If the returned pointer is NULL, you should use getc (STREAM),
+   fgetc (STREAM), or fread (..., STREAM) to access the input from STREAM.
 
    The resulting pointer becomes invalid upon any operation on STREAM.
 
    STREAM must not be wide-character oriented.  */
 
-extern const char * freadptr (FILE *stream);
+extern const char * freadptr (FILE *stream, size_t *sizep);
 
 #ifdef __cplusplus
 }
