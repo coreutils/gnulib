@@ -1,3 +1,8 @@
+2008-03-09  Bruno Haible  <bruno@clisp.org>
+
+	* doc/Makefile (%.pdf): Explain how to remedy the save_size error.
+	Report and solution by Simon Josefsson.
+
 2008-03-06  Bruno Haible  <bruno@clisp.org>
 
 	Make fflush after ungetc work on BSD platforms.

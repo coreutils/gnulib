@@ -16,7 +16,7 @@ TEXI2HTML = $(MAKEINFO) --no-split --reference-limit=2000 --html
 	LANG= LC_MESSAGES= LC_ALL= LANGUAGE= makeinfo --no-split --reference-limit=2000 $<
 
 %.pdf: %.texi
-	texi2pdf $<
+	texi2pdf $< || { if texi2pdf $< 2>/dev/null | grep 'TeX capacity exceeded, sorry \[save size=' > /dev/null; then echo '*** You must increase the save_size in your texmf.cnf file.'; fi; exit 1; }
 
 all: info html dvi
 info: $(doc).info
