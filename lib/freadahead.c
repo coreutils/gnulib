@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,11 +25,24 @@ freadahead (FILE *fp)
 #if defined _IO_ferror_unlocked     /* GNU libc, BeOS */
   if (fp->_IO_write_ptr > fp->_IO_write_base)
     return 0;
-  return fp->_IO_read_end - fp->_IO_read_ptr;
+  return (fp->_IO_read_end - fp->_IO_read_ptr)
+	 + (fp->_flags & _IO_IN_BACKUP ? fp->_IO_save_end - fp->_IO_save_base :
+	    0);
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+# if defined __NetBSD__ || defined __OpenBSD__
+  struct __sfileext
+    {
+      struct  __sbuf _ub; /* ungetc buffer */
+      /* More fields, not relevant here.  */
+    };
+# define HASUB(fp) (((struct __sfileext *) (fp)->_ext._base)->_ub._base != NULL)
+# else
+# define HASUB(fp) ((fp)->_ub._base != NULL)
+# endif
   if ((fp->_flags & __SWR) != 0 || fp->_r < 0)
     return 0;
-  return fp->_r;
+  return fp->_r
+	 + (HASUB (fp) ? fp->_ur : 0);
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \
@@ -51,16 +64,21 @@ freadahead (FILE *fp)
 # ifdef __STDIO_BUFFERS
   if (fp->__modeflags & __FLAG_WRITING)
     return 0;
-  return fp->__bufread - fp->__bufpos;
+  return (fp->__bufread - fp->__bufpos)
+	 + (fp->__modeflags & __FLAG_UNGOT ? 1 : 0);
 # else
   return 0;
 # endif
 #elif defined __QNX__               /* QNX */
   if ((fp->_Mode & 0x2000 /* _MWRITE */) != 0)
     return 0;
-  /* fp->_Buf <= fp->_Next <= fp->_Rend */
-  return fp->_Rend - fp->_Next;
+  /* fp->_Buf <= fp->_Next <= fp->_Rend,
+     and fp->_Rend may be overridden by fp->_Rsave. */
+  return ((fp->_Rsave ? fp->_Rsave : fp->_Rend) - fp->_Next)
+	 + (fp->_Mode & 0x4000 /* _MBYTE */
+	    ? (fp->_Back + sizeof (fp->_Back)) - fp->_Rback
+	    : 0);
 #else
- #error "Please port gnulib freadahead.c to your platform! Look at the definition of fflush, fread on your system, then report this to bug-gnulib."
+ #error "Please port gnulib freadahead.c to your platform! Look at the definition of fflush, fread, ungetc on your system, then report this to bug-gnulib."
 #endif
 }

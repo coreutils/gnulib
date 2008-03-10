@@ -1,5 +1,13 @@
 2008-03-09  Bruno Haible  <bruno@clisp.org>
 
+	* lib/freadahead.h (freadahead): Document more precisely.
+	* lib/freadahead.c (freadahead): When an ungetc is in effect, return
+	the sum of both buffer sizes.
+	* tests/test-freadahead.c (main): Also test behaviour after ungetc.
+	* NEWS: Document the change.
+
+2008-03-09  Bruno Haible  <bruno@clisp.org>
+
 	Extend freadptr to return also the buffer size.
 	* lib/freadptr.h (freadptr): Add sizep argument.
 	* lib/freadptr.c: Include freadptr.h, not freadahead.h.

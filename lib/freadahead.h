@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ extern "C" {
 
 /* Assuming the stream STREAM is open for reading:
    Return the number of bytes waiting in the input buffer of STREAM.
+   This includes both the bytes that have been read from the underlying input
+   source and the bytes that have been pushed back through 'ungetc'.
 
    If this number is 0 and the stream is not currently writing,
    fflush (STREAM) is known to be a no-op.

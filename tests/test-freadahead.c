@@ -1,5 +1,5 @@
 /* Test of freadahead() function.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -54,8 +54,29 @@ main (int argc, char **argv)
 	   __STDIO_BUFFERS.  */
 	ASSERT (freadahead (stdin) == 0);
       else
-	/* Normal buffered stdio.  */
-	ASSERT (freadahead (stdin) != 0);
+	{
+	  /* Normal buffered stdio.  */
+	  size_t buffered;
+	  int c, c2;
+
+	  ASSERT (freadahead (stdin) != 0);
+	  buffered = freadahead (stdin);
+
+	  c = fgetc (stdin);
+	  ASSERT (freadahead (stdin) == buffered - 1);
+	  ungetc (c, stdin);
+	  ASSERT (freadahead (stdin) == buffered);
+	  c2 = fgetc (stdin);
+	  ASSERT (c2 == c);
+	  ASSERT (freadahead (stdin) == buffered - 1);
+
+	  c = '@';
+	  ungetc (c, stdin);
+	  ASSERT (freadahead (stdin) == buffered);
+	  c2 = fgetc (stdin);
+	  ASSERT (c2 == c);
+	  ASSERT (freadahead (stdin) == buffered - 1);
+	}
     }
 
   return 0;
