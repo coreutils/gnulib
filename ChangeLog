@@ -1,5 +1,11 @@
 2008-03-10  Bruno Haible  <bruno@clisp.org>
 
+	* m4/include_next.m4 (gl_CHECK_NEXT_HEADERS): Document a restriction.
+	* m4/absolute-header.m4 (gl_ABSOLUTE_HEADER): Likewise.
+	Reported by Peter O'Gorman <bug-gnulib@mlists.thewrittenword.com>.
+
+2008-03-10  Bruno Haible  <bruno@clisp.org>
+
 	* modules/stdlib (Depends-on): Add include_next, remove
 	absolute-header.
 
