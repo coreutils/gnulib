@@ -6,7 +6,7 @@ lib/stdlib.in.h
 m4/stdlib_h.m4
 
 Depends-on:
-absolute-header
+include_next
 link-warning
 unistd
 

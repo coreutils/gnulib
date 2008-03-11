@@ -1,3 +1,8 @@
+2008-03-10  Bruno Haible  <bruno@clisp.org>
+
+	* modules/stdlib (Depends-on): Add include_next, remove
+	absolute-header.
+
 2008-03-09  Bruno Haible  <bruno@clisp.org>
 
 	* lib/freadahead.h (freadahead): Document more precisely.
