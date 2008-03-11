@@ -9,7 +9,8 @@ Gnulib module: stdarg
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This macro is missing on some platforms.
+This macro is missing on some platforms:
+AIX 5.1 with cc or xlc, HP-UX 11 with cc, IRIX 6.5 with cc, OSF/1 5.1 with cc.
 @end itemize
 
 Portability problems not fixed by Gnulib:

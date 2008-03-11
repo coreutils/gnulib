@@ -1,3 +1,15 @@
+2008-03-10  Peter O'Gorman  <bug-gnulib@mlists.thewrittenword.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	Make va_copy work with some version of xlc on AIX 5.1.
+	* lib/stdarg.in.h: New file.
+	* m4/stdarg.m4 (gl_STDARG_H): Initialize STDARG_H and NEXT_STDARG_H.
+	On AIX, use a <stdarg.h> file substitute.
+	* modules/stdarg (Files): Add lib/stdarg.in.h.
+	(Depends-on): Add include_next.
+	(Makefile.am): Build a stdarg.h substitute if requested.
+	* doc/posix-functions/va_copy.texi: Document the platforms lacking it.
+
 2008-03-10  Bruno Haible  <bruno@clisp.org>
 
 	* m4/include_next.m4 (gl_CHECK_NEXT_HEADERS): Document a restriction.

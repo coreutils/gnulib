@@ -2,9 +2,11 @@ Description:
 An <stdarg.h> that conforms to C99.
 
 Files:
+lib/stdarg.in.h
 m4/stdarg.m4
 
 Depends-on:
+include_next
 
 configure.ac-early:
 dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
@@ -17,6 +19,19 @@ configure.ac:
 gl_STDARG_H
 
 Makefile.am:
+BUILT_SOURCES += $(STDARG_H)
+
+# We need the following in order to create <stdarg.h> when the system
+# doesn't have one that works with the given compiler.
+stdarg.h: stdarg.in.h
+	rm -f $@-t $@
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
+	      -e 's|@''NEXT_STDARG_H''@|$(NEXT_STDARG_H)|g' \
+	      < $(srcdir)/stdarg.in.h; \
+	} > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += stdarg.h stdarg.h-t
 
 Include:
 #include <stdarg.h>
