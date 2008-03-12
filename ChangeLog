@@ -1,5 +1,8 @@
 2008-03-12  Jim Meyering  <meyering@redhat.com>
 
+	Recognize optional cast of the argument to free.
+	* build-aux/useless-if-before-free: Update regexps.
+
 	* build-aux/bootstrap (gnulib_tool): Remove trailing blanks.
 
 2008-03-11  Bruno Haible  <bruno@clisp.org>
