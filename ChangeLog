@@ -1,3 +1,9 @@
+2008-03-11  Bruno Haible  <bruno@clisp.org>
+
+	Avoid conflicts between local macro definitions.
+	* m4/lib-link.m4 (AC_LIB_LINKFLAGS, AC_LIB_HAVE_LINKFLAGS,
+	AC_LIB_LINKFLAGS_BODY): Use pushdef/popdef instead of define/undefine.
+
 2008-03-10  Peter O'Gorman  <bug-gnulib@mlists.thewrittenword.com>
             Bruno Haible  <bruno@clisp.org>
 
