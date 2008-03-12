@@ -416,7 +416,7 @@ version_controlled_file() {
   elif test -d .git; then
     git rm -n "$dir/$file" > /dev/null 2>&1 && found=yes
   elif test -d .svn; then
-    svn log -r HEAD "$dir/$file" > /dev/null 2>&1 && found=yes  
+    svn log -r HEAD "$dir/$file" > /dev/null 2>&1 && found=yes
   else
     echo "$0: no version control for $dir/$file?" >&2
   fi
