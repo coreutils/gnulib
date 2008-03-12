@@ -1,3 +1,7 @@
+2008-03-12  Jim Meyering  <meyering@redhat.com>
+
+	* build-aux/bootstrap (gnulib_tool): Remove trailing blanks.
+
 2008-03-11  Bruno Haible  <bruno@clisp.org>
 
 	Extend AC_LIB_LINKFLAGS to the situation of several libraries provided
@@ -19,7 +23,7 @@
 	AC_LIB_LINKFLAGS_BODY): Use pushdef/popdef instead of define/undefine.
 
 2008-03-10  Peter O'Gorman  <bug-gnulib@mlists.thewrittenword.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Make va_copy work with some version of xlc on AIX 5.1.
 	* lib/stdarg.in.h: New file.
