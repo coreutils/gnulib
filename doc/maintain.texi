@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate February 21, 2008
+@set lastupdate March 10, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -220,7 +220,7 @@ for accounts for people who help you a large amount in working on the
 package.)
 
 In order for the contributor to know person should sign papers, you need
-to ask for the necessary papers.  If you don't know per well, and you
+to ask per for the necessary papers.  If you don't know per well, and you
 don't know that person is used to our ways of handling copyright papers,
 then it might be a good idea to raise the subject with a message like
 this:
@@ -340,8 +340,8 @@ and we will work with a lawyer to decide what to do.}
 @section Legally Significant Changes
 
 If a person contributes more than around 15 lines of code and/or text
-that is legally significant for copyright purposes, which means we
-need copyright papers for it as described above.
+that is legally significant for copyright purposes, we
+need copyright papers for that contribution, as described above.
 
 A change of just a few lines (less than 15 or so) is not legally
 significant for copyright.  A regular series of repeated changes, such
@@ -398,9 +398,9 @@ change)} after the patch author's name, like this:
 @cindex recording contributors
 
 @strong{Keep correct records of which portions were written by whom.}
-This is very important.  These records should say which files
-parts of files, were written by each person, and which files or
-portions were revised by each person.  This should include
+This is very important.  These records should say which files or
+parts of files were written by each person, and which files or
+parts of files were revised by each person.  This should include
 installation scripts as well as manuals and documentation
 files---everything.
 
@@ -544,17 +544,17 @@ seen significant changes in the new year and which have not.  It is
 recommended and simpler to add the new year to all files in the
 package, and be done with it for the rest of the year.
 
-For files which are regularly copied from another project (such as
-@samp{gnulib}), the copyright notice should left as it is in the
-original.
-
-Don't delete old year numbers, though; they can indicate when older
-versions might theoretically go into the public domain.  If you copy a
-file into the package from some other program, keep the copyright
-years that come with the file.
+Don't delete old year numbers, though; they are significant since they
+indicate when older versions might theoretically go into the public
+domain, if the movie companies don't continue buying laws to further
+extend copyright.  If you copy a file into the package from some other
+program, keep the copyright years that come with the file.
 
 Do not abbreviate the year list using a range; for instance, do not
 write @samp{1996--1998}; instead, write @samp{1996, 1997, 1998}.
+
+For files which are regularly copied from another project (such as
+@samp{gnulib}), leave the copyright notice as it is in the original.
 
 The copyright statement may be split across multiple lines, both in
 source files and in any generated output.  This often happens for
