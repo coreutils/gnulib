@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 2002-2007 Free Software Foundation, Inc.
+# Copyright (C) 2002-2008 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,11 +21,6 @@
 
 progname=$0
 package=gnulib
-cvsdatestamp='$Date: 2007-09-17 10:26:33 $'
-last_checkin_date=`echo "$cvsdatestamp" | sed -e 's,^\$[D]ate: ,,'`
-# Sometimes last_checkin_date is "YYYY/MM/DD ...", sometimes "YYYY-MM-DD ...".
-version=`echo "$last_checkin_date" | sed -e 's/ .*$//' -e 's,/,-,g'`
-# version is in YYYY-MM-DD format.
 nl='
 '
 IFS=" ""	$nl"
@@ -199,12 +194,16 @@ Report bugs to <bug-gnulib@gnu.org>."
 # outputs to stdout the --version message.
 func_version ()
 {
-  year=`echo "$version" | sed -e 's,-.*$,,'`
+  func_gnulib_dir
+  version=`"$gnulib_dir"/build-aux/git-version-gen /dev/null`
+  year=`"$gnulib_dir"/build-aux/mdate-sh "$self_abspathname" | sed 's,^.* ,,'`
   echo "\
 $progname (GNU $package) $version
 Copyright (C) $year Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
 Written by" "Bruno Haible" "and" "Simon Josefsson"
 }
 
@@ -228,6 +227,85 @@ func_emit_copyright_notice ()
 func_exit ()
 {
   (exit $1); exit $1
+}
+
+# func_gnulib_dir
+# locates the directory where the gnulib repository lives
+# Sets variables
+# - self_abspathname         absolute pathname of gnulib-tool
+# - gnulib_dir               absolute pathname of gnulib repository
+func_gnulib_dir ()
+{
+  case "$0" in
+    /*) self_abspathname="$0" ;;
+    */*) self_abspathname=`pwd`/"$0" ;;
+    *)
+      # Look in $PATH.
+      # Iterate through the elements of $PATH.
+      # We use IFS=: instead of
+      #   for d in `echo ":$PATH:" | sed -e 's/:::*/:.:/g' | sed -e 's/:/ /g'`
+      # because the latter does not work when some PATH element contains spaces.
+      # We use a canonicalized $pathx instead of $PATH, because empty PATH
+      # elements are by definition equivalent to '.', however field splitting
+      # according to IFS=: loses empty fields in many shells:
+      #   - /bin/sh on OSF/1 and Solaris loses all empty fields (at the
+      #     beginning, at the end, and in the middle),
+      #   - /bin/sh on IRIX and /bin/ksh on IRIX and OSF/1 lose empty fields
+      #     at the beginning and at the end,
+      #   - GNU bash, /bin/sh on AIX and HP-UX, and /bin/ksh on AIX, HP-UX,
+      #     Solaris lose empty fields at the end.
+      # The 'case' statement is an optimization, to avoid evaluating the
+      # explicit canonicalization command when $PATH contains no empty fields.
+      self_abspathname=
+      if test "${PATH_SEPARATOR+set}" != set; then
+        func_tmpdir
+        { echo "#! /bin/sh"; echo "exit 0"; } > "$tmp"/conf.sh
+        chmod +x "$tmp"/conf.sh
+        if (PATH="/nonexistent;$tmp"; conf.sh) >/dev/null 2>&1; then
+          PATH_SEPARATOR=';'
+        else
+          PATH_SEPARATOR=:
+        fi
+        rm -rf "$tmp"
+      fi
+      if test "$PATH_SEPARATOR" = ";"; then
+        # On Windows, programs are searched in "." before $PATH.
+        pathx=".;$PATH"
+      else
+        # On Unix, we have to convert empty PATH elements to ".".
+        pathx="$PATH"
+        case :$PATH: in
+          *::*)
+            pathx=`echo ":$PATH:" | sed -e 's/:::*/:.:/g' -e 's/^://' -e 's/:\$//'`
+            ;;
+        esac
+      fi
+      save_IFS="$IFS"
+      IFS="$PATH_SEPARATOR"
+      for d in $pathx; do
+        IFS="$save_IFS"
+        test -z "$d" && d=.
+        if test -x "$d/$0" && test ! -d "$d/$0"; then
+          self_abspathname="$d/$0"
+          break
+        fi
+      done
+      IFS="$save_IFS"
+      if test -z "$self_abspathname"; then
+        func_fatal_error "could not locate the gnulib-tool program - how did you invoke it?"
+      fi
+      ;;
+  esac
+  while test -h "$self_abspathname"; do
+    # Resolve symbolic link.
+    linkval=`func_readlink "$self_abspathname"`
+    test -n "$linkval" || break
+    case "$linkval" in
+      /* ) self_abspathname="$linkval" ;;
+      * ) self_abspathname=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`/"$linkval" ;;
+    esac
+  done
+  gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
 }
 
 # func_tmpdir
@@ -966,77 +1044,7 @@ fi
   esac
 }
 
-case "$0" in
-  /*) self_abspathname="$0" ;;
-  */*) self_abspathname=`pwd`/"$0" ;;
-  *)
-    # Look in $PATH.
-    # Iterate through the elements of $PATH.
-    # We use IFS=: instead of
-    #   for d in `echo ":$PATH:" | sed -e 's/:::*/:.:/g' | sed -e 's/:/ /g'`
-    # because the latter does not work when some PATH element contains spaces.
-    # We use a canonicalized $pathx instead of $PATH, because empty PATH
-    # elements are by definition equivalent to '.', however field splitting
-    # according to IFS=: loses empty fields in many shells:
-    #   - /bin/sh on OSF/1 and Solaris loses all empty fields (at the
-    #     beginning, at the end, and in the middle),
-    #   - /bin/sh on IRIX and /bin/ksh on IRIX and OSF/1 lose empty fields
-    #     at the beginning and at the end,
-    #   - GNU bash, /bin/sh on AIX and HP-UX, and /bin/ksh on AIX, HP-UX,
-    #     Solaris lose empty fields at the end.
-    # The 'case' statement is an optimization, to avoid evaluating the
-    # explicit canonicalization command when $PATH contains no empty fields.
-    self_abspathname=
-    if test "${PATH_SEPARATOR+set}" != set; then
-      func_tmpdir
-      { echo "#! /bin/sh"; echo "exit 0"; } > "$tmp"/conf.sh
-      chmod +x "$tmp"/conf.sh
-      if (PATH="/nonexistent;$tmp"; conf.sh) >/dev/null 2>&1; then
-        PATH_SEPARATOR=';'
-      else
-        PATH_SEPARATOR=:
-      fi
-      rm -rf "$tmp"
-    fi
-    if test "$PATH_SEPARATOR" = ";"; then
-      # On Windows, programs are searched in "." before $PATH.
-      pathx=".;$PATH"
-    else
-      # On Unix, we have to convert empty PATH elements to ".".
-      pathx="$PATH"
-      case :$PATH: in
-        *::*)
-          pathx=`echo ":$PATH:" | sed -e 's/:::*/:.:/g' -e 's/^://' -e 's/:\$//'`
-          ;;
-      esac
-    fi
-    save_IFS="$IFS"
-    IFS="$PATH_SEPARATOR"
-    for d in $pathx; do
-      IFS="$save_IFS"
-      test -z "$d" && d=.
-      if test -x "$d/$0" && test ! -d "$d/$0"; then
-        self_abspathname="$d/$0"
-        break
-      fi
-    done
-    IFS="$save_IFS"
-    if test -z "$self_abspathname"; then
-      func_fatal_error "could not locate the gnulib-tool program - how did you invoke it?"
-    fi
-    ;;
-esac
-while test -h "$self_abspathname"; do
-  # Resolve symbolic link.
-  linkval=`func_readlink "$self_abspathname"`
-  test -n "$linkval" || break
-  case "$linkval" in
-    /* ) self_abspathname="$linkval" ;;
-    * ) self_abspathname=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`/"$linkval" ;;
-  esac
-done
-gnulib_dir=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`
-
+func_gnulib_dir
 func_tmpdir
 trap 'exit_status=$?
       if test "$signal" != 0; then

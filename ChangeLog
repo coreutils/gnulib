@@ -1,3 +1,13 @@
+2008-03-14  Eric Blake  <ebb9@byu.net>
+
+	Fix 'gnulib-tool --version' output to work with git.
+	* gnulib-tool (func_gnulib_dir): New function, extracted from...
+	(startup): ...here.
+	(func_version): Use it to invoke git-version-gen, rather than
+	relying on CVS keyword expansion.  Modernize wording.
+	(cvsdatestamp, last_checkin_date, version): Kill unused
+	variables.
+
 2008-03-12  Jim Meyering  <meyering@redhat.com>
 
 	Recognize optional cast of the argument to free.
