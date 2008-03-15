@@ -217,9 +217,9 @@ sha1_process_bytes (const void *buffer, size_t len, struct sha1_ctx *ctx)
 
       if (ctx->buflen > 64)
 	{
-	  sha1_process_block (ctx->buffer, ctx->buflen & ~63, ctx);
-
 	  ctx->buflen &= 63;
+	  sha1_process_block (ctx->buffer, ctx->buflen, ctx);
+
 	  /* The regions in the following copy operation cannot overlap.  */
 	  memcpy (ctx->buffer,
 		  &((char *) ctx->buffer)[(left_over + add) & ~63],

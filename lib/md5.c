@@ -230,9 +230,9 @@ md5_process_bytes (const void *buffer, size_t len, struct md5_ctx *ctx)
 
       if (ctx->buflen > 64)
 	{
-	  md5_process_block (ctx->buffer, ctx->buflen & ~63, ctx);
-
 	  ctx->buflen &= 63;
+	  md5_process_block (ctx->buffer, ctx->buflen, ctx);
+
 	  /* The regions in the following copy operation cannot overlap.  */
 	  memcpy (ctx->buffer,
 		  &((char *) ctx->buffer)[(left_over + add) & ~63],
