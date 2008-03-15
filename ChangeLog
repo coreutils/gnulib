@@ -1,5 +1,9 @@
 2008-03-15  Jim Meyering  <meyering@redhat.com>
 
+	Undo last change.
+	* lib/sha1.c, lib/md5.c: 63 != ~63.
+	Reported by Andreas Schwab.
+
 	sha1.c, md5.c: Hoist a redundant expression.
 	* lib/sha1.c (sha1_process_bytes): AND-off the low bits in
 	"ctx->buflen" only once, before calling *_process_block.
