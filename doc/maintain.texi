@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate March 10, 2008
+@set lastupdate March 14, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -300,6 +300,16 @@ manual.  For smaller changes, use
 changes to a manual, you can use @file{assign.future.manual}.
 For a translation of a manual, use @file{assign.translation.manual}.
 
+For translations of program strings (as used by GNU Gettext, for
+example; @pxref{Internationalization,,,standards,GNU Coding
+Standards}), use @file{disclaim.translation}.  If you make use of the
+Translation Project (@url{http://translationproject.org}) facilities,
+please check with the TP coordinators that they have sent the
+contributor the papers; if they haven't, then you should send the
+papers.  In any case, you should wait for the confirmation from the
+FSF that the signed papers have been received and accepted before
+integrating the new contributor's material, as usual.
+ 
 If a contributor is reluctant to sign an assignment for a large change,
 and is willing to sign a disclaimer instead, that is acceptable, so you
 should offer this alternative if it helps you reach agreement.  We
