@@ -1,3 +1,10 @@
+2008-03-18  Jim Meyering  <meyering@redhat.com>
+
+	New script and module: mktempd
+	* MODULES.html.sh (maint+release support): Add mktempd.
+	* build-aux/mktempd: New file.
+	* modules/mktempd: New file.
+
 2008-03-15  Jim Meyering  <meyering@redhat.com>
 
 	Undo last change.
