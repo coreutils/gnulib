@@ -1,3 +1,15 @@
+2008-03-20  Eric Blake  <ebb9@byu.net>
+
+	Sync GNUmakefile with coreutils.
+	* build-aux/GNUmakefile (have-Makefile): Rename...
+	(_have-Makefile): ...to this, for namespace consideration.
+	(GNUmakefile.cfg): Include, if present.
+	(_autoreconf): Define a default.
+	(_is-dist-target): New rule for rebuilds to pick up intra-release
+	version.
+	(maint-cfg.mk): Rename...
+	(cfg.mk): ...to this.
+
 2008-03-18  Jim Meyering  <meyering@redhat.com>
 
 	New script and module: mktempd
