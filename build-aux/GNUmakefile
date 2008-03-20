@@ -50,7 +50,8 @@ _autoreconf ?= autoreconf
 
 # Ensure that $(VERSION) is up to date for dist-related targets, but not
 # for others: rerunning autoreconf and recompiling everything isn't cheap.
-_have-git-version-gen := $(shell test -f $(srcdir)/$(_build-aux)/git-version-gen && echo yes)
+_have-git-version-gen := \
+  $(shell test -f $(srcdir)/$(_build-aux)/git-version-gen && echo yes)
 ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
   _is-dist-target = $(filter-out %clean, \
     $(filter dist% alpha beta major,$(MAKECMDGOALS)))
