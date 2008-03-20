@@ -1,3 +1,8 @@
+2008-03-20  Eric Blake  <ebb9@byu.net>
+
+	VPATH fix.
+	* build-aux/GNUmakefile (_have_git-version-gen): Look in correct dir.
+
 2008-03-20  Simon Josefsson  <simon@josefsson.org>
 
 	* build-aux/GNUmakefile: Make git-version-gen optional.  Add

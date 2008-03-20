@@ -40,18 +40,17 @@ export TAR_OPTIONS = --owner=0 --group=0 --numeric-owner
 
 include Makefile
 
-# Allow cfg.mk to override this.
-_build-aux ?= build-aux
-
 # Some projects override e.g., _autoreconf here.
 -include $(srcdir)/cfg.mk
 include $(srcdir)/maint.mk
 
+# Allow cfg.mk to override these.
+_build-aux ?= build-aux
 _autoreconf ?= autoreconf
 
 # Ensure that $(VERSION) is up to date for dist-related targets, but not
 # for others: rerunning autoreconf and recompiling everything isn't cheap.
-_have-git-version-gen := $(shell test -f ./$(_build-aux)/git-version-gen && echo yes)
+_have-git-version-gen := $(shell test -f $(srcdir)/$(_build-aux)/git-version-gen && echo yes)
 ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
   _is-dist-target = $(filter-out %clean, \
     $(filter dist% alpha beta major,$(MAKECMDGOALS)))
