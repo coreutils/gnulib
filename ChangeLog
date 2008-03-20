@@ -1,3 +1,8 @@
+2008-03-20  Simon Josefsson  <simon@josefsson.org>
+
+	* build-aux/GNUmakefile: Make git-version-gen optional.  Add
+	_build-aux variable.  Suggested by Eric Blake <ebb9@byu.net>.
+
 2008-03-20  Eric Blake  <ebb9@byu.net>
 
 	Sync GNUmakefile with coreutils.
