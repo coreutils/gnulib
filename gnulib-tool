@@ -195,10 +195,11 @@ Report bugs to <bug-gnulib@gnu.org>."
 func_version ()
 {
   func_gnulib_dir
+  date=`sed 's/ .*//;q' "$gnulib_dir"/ChangeLog`
   version=`"$gnulib_dir"/build-aux/git-version-gen /dev/null`
   year=`"$gnulib_dir"/build-aux/mdate-sh "$self_abspathname" | sed 's,^.* ,,'`
   echo "\
-$progname (GNU $package) $version
+gnulib-tool (GNU $package $date) $version
 Copyright (C) $year Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.

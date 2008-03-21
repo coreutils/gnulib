@@ -1,3 +1,9 @@
+2008-03-21  Eric Blake  <ebb9@byu.net>
+
+	More --version tweaks.
+	* gnulib-tool (func_version): Obey GNU Coding Standards.  Output
+	date of last ChangeLog entry.
+
 2008-03-21  Jim Meyering  <meyering@redhat.com>
 
 	* build-aux/GNUmakefile (_have-git-version-gen): Split long line.
