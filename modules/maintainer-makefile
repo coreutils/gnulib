@@ -2,8 +2,10 @@ Description:
 Helper GNUmakefile with syntax checks, build improvements, etc.
 
 Files:
-build-aux/GNUmakefile
-build-aux/maint.mk
+top/maint.mk
+
+Depends-on:
+gnumakefile
 
 License:
 GPLed build tool

@@ -2735,6 +2735,7 @@ func_all_modules ()
   func_module autobuild
   func_module git-version-gen
   func_module gitlog-to-changelog
+  func_module gnumakefile
   func_module gnupload
   func_module maintainer-makefile
   func_module mktempd
