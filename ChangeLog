@@ -1,3 +1,9 @@
+2008-03-23  Bruno Haible  <bruno@clisp.org>
+
+	Tweak "gnulib --version" output.
+	* gnulib-tool (func_version): Use date of last commit to ChangeLog,
+	rather than contents of ChangeLog, when possible.
+
 2008-03-21  Eric Blake  <ebb9@byu.net>
 
 	More --version tweaks.
