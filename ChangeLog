@@ -1,3 +1,12 @@
+2008-03-23  Eric Blake  <ebb9@byu.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	Install files from top/ in the destination directory.
+	* gnulib-tool (func_get_automake_snippet): Synthesize an EXTRA_DIST
+	augmentation also for the files from top/.
+	(func_import, func_create_testdir): Rewrite file names:
+	top/filename -> filename.
+
 2008-03-23  Bruno Haible  <bruno@clisp.org>
 
 	Tweak "gnulib --version" output.

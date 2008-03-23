@@ -1370,6 +1370,17 @@ func_get_automake_snippet ()
         echo "EXTRA_DIST += "`echo "$buildaux_files" | sed -e "$sed_prepend_auxdir"`
         echo
       fi
+      # Synthesize an EXTRA_DIST augmentation also for the files from top/.
+      top_files=`for f in $all_files; do \
+                   case $f in \
+                     top/*) echo $f ;; \
+                   esac; \
+                 done | sed -e 's,^top/,,'`
+      if test -n "$top_files"; then
+        sed_prepend_topdir='s,^,$(top_srcdir)/,'
+        echo "EXTRA_DIST += "`echo "$top_files" | sed -e "$sed_prepend_topdir"`
+        echo
+      fi
       ;;
   esac
 }
@@ -2505,14 +2516,16 @@ func_import ()
     s,^lib/,$cached_sourcebase/,
     s,^m4/,$cached_m4base/,
     s,^tests/,$cached_testsbase/,
-    s,^tests=lib/,$cached_testsbase/,"
+    s,^tests=lib/,$cached_testsbase/,
+    s,^top/,,"
   sed_rewrite_new_files="\
     s,^build-aux/,$auxdir/,
     s,^doc/,$docbase/,
     s,^lib/,$sourcebase/,
     s,^m4/,$m4base/,
     s,^tests/,$testsbase/,
-    s,^tests=lib/,$testsbase/,"
+    s,^tests=lib/,$testsbase/,
+    s,^top/,,"
 
   # Create directories.
   { echo "$sourcebase"
@@ -3444,7 +3457,8 @@ func_create_testdir ()
     s,^doc/,$docbase/,
     s,^lib/,$sourcebase/,
     s,^m4/,$m4base/,
-    s,^tests/,$testsbase/,"
+    s,^tests/,$testsbase/,
+    s,^top/,,"
 
   # Create directories.
   for f in $files; do echo $f; done \
