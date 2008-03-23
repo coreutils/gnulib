@@ -1,5 +1,14 @@
 2008-03-23  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool: New options --vc-files, --no-vc-files.
+	(func_usage): Document them.
+	(vc_files): New variable.
+	(func_import): Consider vc_files.
+	(func_create_testdir): Set vc_files to empty.
+	Suggested by Jim Meyering and Karl Berry.
+
+2008-03-23  Bruno Haible  <bruno@clisp.org>
+
 	Fix regex compilation error on HP-UX 11.
 	* m4/regex.m4 (gl_PREREQ_REGEX): Require AC_TYPE_MBSTATE_T.
 	* modules/regex (Files): Add m4/mbstate_t.m4.

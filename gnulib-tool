@@ -177,7 +177,10 @@ Options for --import:
                             'gl_INIT'. Default is 'gl'.
       --po-domain=NAME      Specify the prefix of the i18n domain. Usually use
                             the package name. A suffix '-gnulib' is appended.
-      --no-changelog        don't update or create ChangeLog files
+      --vc-files            Update version control related files.
+      --no-vc-files         Don't update version control related files
+                            (.gitignore and/or .cvsignore).
+      --no-changelog        Don't update or create ChangeLog files.
 
 Options for --import and --update:
       --dry-run             For --import, only print what would have been done.
@@ -712,6 +715,8 @@ fi
 #                   given, blank otherwise
 # - macro_prefix    from --macro-prefix
 # - po_domain       from --po-domain
+# - vc_files        true if --vc-files was given, false if --no-vc-files was
+#                   given, blank otherwise
 # - autoconf_minversion  minimum supported autoconf version
 # - do_changelog    false if --no-changelog was given, : otherwise
 # - doit            : if actions shall be executed, false if only to be printed
@@ -739,6 +744,7 @@ fi
   libtool=
   macro_prefix=
   po_domain=
+  vc_files=
   do_changelog=:
   doit=:
   symbolic=
@@ -932,6 +938,12 @@ fi
       --po-domain=* )
         po_domain=`echo "X$1" | sed -e 's/^X--po-domain=//'`
         shift ;;
+      --vc-files )
+        vc_files=true
+        shift ;;
+      --no-vc-files )
+        vc_files=false
+        shift ;;
       --no-changelog | --no-changelo | --no-changel | --no-change | --no-chang | --no-chan | --no-cha | --no-ch | --no-c )
         do_changelog=false
         shift ;;
@@ -980,7 +992,7 @@ fi
        || test -n "$docbase" || test -n "$testsbase" || test -n "$auxdir" \
        || test -n "$inctests" || test -n "$avoidlist" || test -n "$lgpl" \
        || test -n "$makefile_name" || test -n "$macro_prefix" \
-       || test -n "$po_domain"; then
+       || test -n "$po_domain" || test -n "$vc_files"; then
       echo "gnulib-tool: invalid options for 'update' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
       echo "If you really want to modify the gnulib configuration of your project," 1>&2
@@ -2129,6 +2141,8 @@ func_emit_initmacro_done ()
 # - guessed_libtool true if the configure.ac file uses libtool, false otherwise
 # - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
 # - po_domain       prefix of i18n domain to use (without -gnulib suffix)
+# - vc_files        true if --vc-files was given, false if --no-vc-files was
+#                   given, blank otherwise
 # - autoconf_minversion  minimum supported autoconf version
 # - doit            : if actions shall be executed, false if only to be printed
 # - symbolic        true if files should be symlinked, copied otherwise
@@ -2154,6 +2168,7 @@ func_import ()
   cached_libtool=
   cached_macro_prefix=
   cached_po_domain=
+  cached_vc_files=
   cached_files=
   if test -f "$destdir"/$m4base/gnulib-cache.m4; then
     cached_libtool=false
@@ -2208,6 +2223,9 @@ func_import ()
       }
       /gl_PO_DOMAIN(/ {
         s,^.*gl_PO_DOMAIN([[ ]*\([^])]*\).*$,cached_po_domain="\1",p
+      }
+      /gl_VC_FILES(/ {
+        s,^.*gl_VC_FILES([[ ]*\([^])]*\).*$,cached_vc_files="\1",p
       }'
     eval `sed -n -e "$my_sed_traces" < "$destdir"/$m4base/gnulib-cache.m4`
     if test -f "$destdir"/$m4base/gnulib-comp.m4; then
@@ -2325,6 +2343,10 @@ func_import ()
   # The po_domain defaults to the cached one.
   if test -z "$po_domain"; then
     po_domain="$cached_po_domain"
+  fi
+  # The vc_files defaults to the cached one.
+  if test -z "$vc_files"; then
+    vc_files="$cached_vc_files"
   fi
 
   # Canonicalize the list of specified modules.
@@ -2758,6 +2780,13 @@ func_import ()
   if test -n "$po_domain"; then
     func_append actioncmd " --po-domain=$po_domain"
   fi
+  if test -n "$vc_files"; then
+    if test "$vc_files" = true; then
+      func_append actioncmd " --vc-files"
+    else
+      func_append actioncmd " --no-vc-files"
+    fi
+  fi
   func_append actioncmd " `echo $specified_modules`"
 
   # Default the makefile name to Makefile.am.
@@ -2980,6 +3009,9 @@ func_import ()
     fi
     echo "gl_MACRO_PREFIX([$macro_prefix])"
     echo "gl_PO_DOMAIN([$po_domain])"
+    if test -n "$vc_files"; then
+      echo "gl_VC_FILES([$vc_files])"
+    fi
   ) > "$tmpfile"
   if test -f "$destdir"/$m4base/gnulib-cache.m4; then
     if cmp "$destdir"/$m4base/gnulib-cache.m4 "$tmpfile" > /dev/null; then
@@ -3187,88 +3219,90 @@ func_import ()
     fi
   fi
 
-  # Update the .cvsignore and .gitignore files.
-  { echo "$added_files" | sed -e '/^$/d' -e 's,\([^/]*\)$,|A|\1,'
-    echo "$removed_files" | sed -e '/^$/d' -e 's,\([^/]*\)$,|R|\1,'
-  } | LC_ALL=C sort -t'|' -k1,1 > "$tmp"/fileset-changes
-  { # Rearrange file descriptors. Needed because "while ... done < ..."
-    # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
-    exec 5<&0 < "$tmp"/fileset-changes
-    func_update_ignorelist ()
-    {
-      ignore="$1"
-      if test -f "$destdir/$dir$ignore"; then
-        if test -n "$dir_added" || test -n "$dir_removed"; then
-          LC_ALL=C sort "$destdir/$dir$ignore" > "$tmp"/ignore
-          echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u \
-            | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-added
-          echo "$dir_removed" | sed -e '/^$/d' | LC_ALL=C sort -u \
-            | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-removed
-          if test -s "$tmp"/ignore-added || test -s "$tmp"/ignore-removed; then
+  if test "$vc_files" != false; then
+    # Update the .cvsignore and .gitignore files.
+    { echo "$added_files" | sed -e '/^$/d' -e 's,\([^/]*\)$,|A|\1,'
+      echo "$removed_files" | sed -e '/^$/d' -e 's,\([^/]*\)$,|R|\1,'
+    } | LC_ALL=C sort -t'|' -k1,1 > "$tmp"/fileset-changes
+    { # Rearrange file descriptors. Needed because "while ... done < ..."
+      # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
+      exec 5<&0 < "$tmp"/fileset-changes
+      func_update_ignorelist ()
+      {
+        ignore="$1"
+        if test -f "$destdir/$dir$ignore"; then
+          if test -n "$dir_added" || test -n "$dir_removed"; then
+            LC_ALL=C sort "$destdir/$dir$ignore" > "$tmp"/ignore
+            echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u \
+              | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-added
+            echo "$dir_removed" | sed -e '/^$/d' | LC_ALL=C sort -u \
+              | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-removed
+            if test -s "$tmp"/ignore-added || test -s "$tmp"/ignore-removed; then
+              if $doit; then
+                echo "Updating $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
+                mv -f "$destdir/$dir$ignore" "$destdir/$dir$ignore"~
+                sed -e 's,^,/^,' -e 's,$,\$/d,' < "$tmp"/ignore-removed > "$tmp"/sed-ignore-removed
+                cat "$destdir/$dir$ignore"~ "$tmp"/ignore-added \
+                  | sed -f "$tmp"/sed-ignore-removed \
+                  > "$destdir/$dir$ignore"
+              else
+                echo "Update $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
+              fi
+            fi
+          fi
+        else
+          if test -n "$dir_added"; then
             if $doit; then
-              echo "Updating $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
-              mv -f "$destdir/$dir$ignore" "$destdir/$dir$ignore"~
-              sed -e 's,^,/^,' -e 's,$,\$/d,' < "$tmp"/ignore-removed > "$tmp"/sed-ignore-removed
-              cat "$destdir/$dir$ignore"~ "$tmp"/ignore-added \
-                | sed -f "$tmp"/sed-ignore-removed \
-                > "$destdir/$dir$ignore"
+              echo "Creating $destdir/$dir$ignore"
+              {
+                if test "$ignore" = .cvsignore; then
+                  echo ".deps"
+                  # Automake generates Makefile rules that create .dirstamp files.
+                  echo ".dirstamp"
+                fi
+                echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u
+              } > "$destdir/$dir$ignore"
             else
-              echo "Update $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
+              echo "Create $destdir/$dir$ignore"
             fi
           fi
         fi
-      else
-        if test -n "$dir_added"; then
-          if $doit; then
-            echo "Creating $destdir/$dir$ignore"
-            {
-              if test "$ignore" = .cvsignore; then
-                echo ".deps"
-                # Automake generates Makefile rules that create .dirstamp files.
-                echo ".dirstamp"
-              fi
-              echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u
-            } > "$destdir/$dir$ignore"
-          else
-            echo "Create $destdir/$dir$ignore"
-          fi
+      }
+      func_done_dir ()
+      {
+        dir="$1"
+        dir_added="$2"
+        dir_removed="$3"
+        if test -d "$destdir/CVS" || test -d "$destdir/${dir}CVS" || test -f "$destdir/${dir}.cvsignore"; then
+          func_update_ignorelist .cvsignore
         fi
-      fi
+        if test -d "$destdir/.git" || test -f "$destdir/${dir}.gitignore"; then
+          func_update_ignorelist .gitignore
+        fi
+      }
+      last_dir=
+      last_dir_added=
+      last_dir_removed=
+      while read line; do
+        # Why not ''read next_dir op file'' ? Because the dir column can be empty.
+        next_dir=`echo "$line" | sed -e 's,|.*,,'`
+        op=`echo "$line" | sed -e 's,^[^|]*|\([^|]*\)|.*$,\1,'`
+        file=`echo "$line" | sed -e 's,^[^|]*|[^|]*|,,'`
+        if test "$next_dir" != "$last_dir"; then
+          func_done_dir "$last_dir" "$last_dir_added" "$last_dir_removed"
+          last_dir="$next_dir"
+          last_dir_added=
+          last_dir_removed=
+        fi
+        case $op in
+          A) func_append last_dir_added "$file$nl";;
+          R) func_append last_dir_removed "$file$nl";;
+        esac
+      done
+      func_done_dir "$last_dir" "$last_dir_added" "$last_dir_removed"
+      exec 0<&5 5<&-
     }
-    func_done_dir ()
-    {
-      dir="$1"
-      dir_added="$2"
-      dir_removed="$3"
-      if test -d "$destdir/CVS" || test -d "$destdir/${dir}CVS" || test -f "$destdir/${dir}.cvsignore"; then
-        func_update_ignorelist .cvsignore
-      fi
-      if test -d "$destdir/.git" || test -f "$destdir/${dir}.gitignore"; then
-        func_update_ignorelist .gitignore
-      fi
-    }
-    last_dir=
-    last_dir_added=
-    last_dir_removed=
-    while read line; do
-      # Why not ''read next_dir op file'' ? Because the dir column can be empty.
-      next_dir=`echo "$line" | sed -e 's,|.*,,'`
-      op=`echo "$line" | sed -e 's,^[^|]*|\([^|]*\)|.*$,\1,'`
-      file=`echo "$line" | sed -e 's,^[^|]*|[^|]*|,,'`
-      if test "$next_dir" != "$last_dir"; then
-        func_done_dir "$last_dir" "$last_dir_added" "$last_dir_removed"
-        last_dir="$next_dir"
-        last_dir_added=
-        last_dir_removed=
-      fi
-      case $op in
-        A) func_append last_dir_added "$file$nl";;
-        R) func_append last_dir_removed "$file$nl";;
-      esac
-    done
-    func_done_dir "$last_dir" "$last_dir_added" "$last_dir_removed"
-    exec 0<&5 5<&-
-  }
+  fi
 
   echo "Finished."
   echo
@@ -3431,6 +3465,7 @@ func_create_testdir ()
   testsbase=gltests
   macro_prefix=gl
   po_domain=
+  vc_files=
 
   # Determine final module list.
   func_modules_transitive_closure
@@ -4050,7 +4085,7 @@ case $mode in
               # such as
               #   local_gnulib_dir, avoidlist, sourcebase, m4base, pobase,
               #   docbase, testsbase, inctests, libname, lgpl, makefile_name,
-              #   libtool, macro_prefix, po_domain
+              #   libtool, macro_prefix, po_domain, vc_files
               # don't propagate from one directory to another.
               (func_import) || func_exit 1
             done
