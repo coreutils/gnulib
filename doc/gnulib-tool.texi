@@ -32,6 +32,7 @@ a real run without changing anything.
 * Modified imports::            Changing the import specification.
 * Simple update::               Tracking Gnulib development.
 * Source changes::              Impact of Gnulib on your source files.
+* gettextize and autopoint::    Caveat: @code{gettextize} and @code{autopoint} users!
 * Localization::                Handling Gnulib's own message translations.
 * VCS Issues::                  Integration with Version Control Systems.
 @end menu
@@ -369,6 +370,53 @@ the Gnulib library directory.
 This is annoying, but inevitable: On many systems, @file{<config.h>} is
 used to set system dependent flags (such as @code{_GNU_SOURCE} on GNU systems),
 and these flags have no effect after any system header file has been included.
+
+
+@node gettextize and autopoint
+@section Caveat: @code{gettextize} and @code{autopoint} users
+
+@cindex gettextize, caveat
+@cindex autopoint, caveat
+The programs @code{gettextize} and @code{autopoint}, part of
+GNU @code{gettext}, import or update the internationalization infrastructure.
+Some of this infrastructure, namely ca.@: 20 autoconf macro files and the
+@file{config.rpath} file, is also contained in Gnulib and may be imported
+by @code{gnulib-tool}.  The use of @code{gettextize} or @code{autopoint}
+will therefore overwrite some of the files that @code{gnulib-tool} has
+imported, and vice versa.
+
+Avoiding to use @code{gettextize} (manually, as package maintainer) or
+@code{autopoint} (as part of a script like @code{autoreconf} or
+@code{autogen.sh}) is not the solution: These programs also import the
+infrastructure in the @file{po/} and optionally in the @file{intl/} directory.
+
+The copies of the conflicting files in Gnulib are more up-to-date than
+the copies brought in by @code{gettextize} and @code{autopoint}.  When a
+new @code{gettext} release is made, the copies of the files in Gnulib will
+be updated immediately.
+
+The solution is therefore:
+
+@enumerate
+@item
+When you run @code{gettextize}, always use the @code{gettextize} from the
+newest GNU gettext release found on @url{http://ftp.gnu.org/gnu/gettext/},
+and invoke @code{gnulib-tool} afterwards.
+
+@item
+When a script of yours run @code{autopoint}, invoke @code{gnulib-tool}
+afterwards.
+
+@item
+If you get an error message like
+@code{*** error: gettext infrastructure mismatch:
+using a Makefile.in.in from gettext version ...
+but the autoconf macros are from gettext version ...},
+it means that a new GNU gettext release was made, and its autoconf macros
+were integrated into Gnulib and now mismatch the @file{po/} infrastructure.
+In this case, fetch and install the new GNU gettext release and run
+@code{gettextize} followed by @code{gnulib-tool}.
+@end enumerate
 
 
 @node Localization
