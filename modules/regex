@@ -9,6 +9,7 @@ lib/regex_internal.h
 lib/regexec.c
 lib/regcomp.c
 m4/regex.m4
+m4/mbstate_t.m4
 
 Depends-on:
 alloca

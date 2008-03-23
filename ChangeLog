@@ -1,5 +1,12 @@
 2008-03-23  Bruno Haible  <bruno@clisp.org>
 
+	Fix regex compilation error on HP-UX 11.
+	* m4/regex.m4 (gl_PREREQ_REGEX): Require AC_TYPE_MBSTATE_T.
+	* modules/regex (Files): Add m4/mbstate_t.m4.
+	Reported by Ton Voon <ton.voon@altinity.com>.
+
+2008-03-23  Bruno Haible  <bruno@clisp.org>
+
 	* doc/gnulib-tool.texi (gettextize and autopoint): New section.
 
 2008-03-23  Eric Blake  <ebb9@byu.net>
