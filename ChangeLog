@@ -1,3 +1,8 @@
+2008-03-26  Jim Meyering  <meyering@redhat.com>
+
+	gnumakefile: Don't double-quote-expand $(VPATH) value.
+	* modules/gnumakefile (clean-GNUmakefile): Use single quotes.
+
 2008-03-24  Eric Blake  <ebb9@byu.net>
 
 	Alter GNUmakefile to install into top directory.
@@ -31,7 +36,7 @@
 	* doc/gnulib-tool.texi (gettextize and autopoint): New section.
 
 2008-03-23  Eric Blake  <ebb9@byu.net>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Install files from top/ in the destination directory.
 	* gnulib-tool (func_get_automake_snippet): Synthesize an EXTRA_DIST
