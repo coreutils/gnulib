@@ -21,7 +21,7 @@ m4_if(m4_version_compare([2.61a.100],
 Makefile.am:
 distclean-local: clean-GNUmakefile
 clean-GNUmakefile:
-	if test x'$(VPATH)' != x ; then rm -f $(top_srcdir)/GNUmakefile ; fi
+	test x'$(VPATH)' != x && rm -f $(top_builddir)/GNUmakefile || :
 
 Include:
 

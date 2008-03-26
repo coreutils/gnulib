@@ -6,6 +6,10 @@
 
 2008-03-26  Jim Meyering  <meyering@redhat.com>
 
+	gnumakefile: remove file from $(top_builddir), not from $(top_srcdir)
+	* modules/gnumakefile (clean-GNUmakefile): Also, use
+	test ... && ... || : syntax rather than if-then ... fi.
+
 	gnumakefile: Don't double-quote-expand $(VPATH) value.
 	* modules/gnumakefile (clean-GNUmakefile): Use single quotes.
 
