@@ -400,8 +400,11 @@ The solution is therefore:
 @enumerate
 @item
 When you run @code{gettextize}, always use the @code{gettextize} from the
-newest GNU gettext release found on @url{http://ftp.gnu.org/gnu/gettext/},
-and invoke @code{gnulib-tool} afterwards.
+matching GNU gettext release.  For the most recent Gnulib checkout, this is
+the newest release found on @url{http://ftp.gnu.org/gnu/gettext/}.  For an
+older Gnulib snapshot, it is the release that was the most recent release
+at the time the Gnulib snapshot was taken.  Then, after @code{gettextize},
+invoke @code{gnulib-tool}.
 
 @item
 When a script of yours run @code{autopoint}, invoke @code{gnulib-tool}
