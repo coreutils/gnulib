@@ -1,3 +1,12 @@
+2008-03-28  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gc.h (enum Gc_hash): Add GC_SHA224.
+	(GC_SHA224_DIGEST_SIZE): Add.
+
+	* lib/gc-libgcrypt.c (gc_hash_open): Handle SHA-224.
+	(gc_hash_digest_length): Likewise.
+	(gc_hash_buffer): Likewise.
+
 2008-03-25  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib-tool.texi (gettextize and autopoint): Explain in more
