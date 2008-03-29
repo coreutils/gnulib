@@ -48,6 +48,15 @@
 int
 main (int argc, char **argv)
 {
+#if 0
+  /* Check fflush after a backup ungetc() call.  This is case 1 in terms of
+     <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>.
+     The Austin Group has not yet decided how this should behave.  */
+#endif
+#if 0
+  /* Check fflush after a non-backup ungetc() call.  This is case 1 in terms of
+     <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>.
+     The Austin Group has not yet decided how this should behave.  */
   /* Check that fflush after a non-backup ungetc() call discards the ungetc
      buffer.  This is mandated by POSIX
      <http://www.opengroup.org/susv3/functions/ungetc.html>:
@@ -73,6 +82,7 @@ main (int argc, char **argv)
 
   c = fgetc (stdin);
   ASSERT (c == '/');
+#endif
 
   return 0;
 }

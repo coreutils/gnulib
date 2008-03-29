@@ -1,6 +1,6 @@
-# fflush.m4 serial 4
+# fflush.m4 serial 5
 
-# Copyright (C) 2007 Free Software Foundation, Inc.
+# Copyright (C) 2007-2008 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -21,8 +21,11 @@ AC_DEFUN([gl_FUNC_FFLUSH],
 #include <unistd.h>
        ]], [[FILE *f = fopen ("conftest.txt", "r");
 	 char buffer[10];
-	 int fd = fileno (f);
-	 if (!f || 0 > fd || fread (buffer, 1, 5, f) != 5)
+	 int fd;
+	 if (f == NULL)
+	   return 1;
+	 fd = fileno (f);
+	 if (fd < 0 || fread (buffer, 1, 5, f) != 5)
 	   return 2;
 	 /* For deterministic results, ensure f read a bigger buffer.  */
 	 if (lseek (fd, 0, SEEK_CUR) == 5)
@@ -30,7 +33,11 @@ AC_DEFUN([gl_FUNC_FFLUSH],
 	 /* POSIX requires fflush-fseek to set file offset of fd.  */
 	 if (fflush (f) != 0 || fseek (f, 0, SEEK_CUR) != 0)
 	   return 4;
-	 return !(lseek (fd, 0, SEEK_CUR) == 5);
+	 if (lseek (fd, 0, SEEK_CUR) != 5)
+	   return 5;
+	 /* TODO: Verify behaviour of fflush after ungetc, see
+	    <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>.  */
+	 return 0;
        ]])], [gl_cv_func_fflush_stdin=yes], [gl_cv_func_fflush_stdin=no],
      [dnl Pessimistically assume fflush is broken.  This is wrong for
       dnl at least glibc and cygwin; but lib/fflush.c takes this into account.

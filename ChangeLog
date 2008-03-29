@@ -1,3 +1,10 @@
+2008-03-29  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-fflush2.c (main): Temporarily disable the contents of
+	this test.
+	* m4/fflush.m4 (gl_FUNC_FFLUSH): Add a TODO.
+	Reported by Eric Blake.
+
 2008-03-28  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/gc.h (enum Gc_hash): Add GC_SHA224.
