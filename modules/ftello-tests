@@ -3,6 +3,7 @@ tests/test-ftello.c
 tests/test-ftello.sh
 
 Depends-on:
+binary-io
 
 configure.ac:
 

@@ -1,5 +1,13 @@
 2008-03-29  Eric Blake  <ebb9@byu.net>
 
+	Fix ftell on mingw.
+	* lib/ftell.c (EOVERFLOW): Define if the system lacks it.
+	* modules/ftell-tests (Depends-on): Add binary-io.
+	* modules/ftello-tests (Depends-on): Likewise.
+	* tests/test-ftell.c (main): Enhance test to cover behavior after
+	ungetc.  Enforce binary mode.
+	* tests/test-ftello.c (main): Likewise.
+
 	Pass test-freadseek on cygwin.
 	* modules/freadseek (Depends-on): Use freadptr, not freadseek.
 	* lib/freadseek.c (freadseek): Don't increment beyond bounds of
