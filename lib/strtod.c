@@ -1,4 +1,5 @@
-/* Copyright (C) 1991, 1992, 1997, 1999, 2003, 2006 Free Software Foundation, Inc.
+/* Copyright (C) 1991, 1992, 1997, 1999, 2003, 2006, 2008 Free
+   Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,14 +16,13 @@
 
 #include <config.h>
 
-#include <errno.h>
+#include <stdlib.h>
 
 #include <ctype.h>
-
-#include <math.h>
-
+#include <errno.h>
 #include <float.h>
-#include <stdlib.h>
+#include <math.h>
+#include <stdbool.h>
 #include <string.h>
 
 /* Convert NPTR to a double.  If ENDPTR is not NULL, a pointer to the
@@ -30,14 +30,14 @@
 double
 strtod (const char *nptr, char **endptr)
 {
-  register const char *s;
-  short int sign;
+  const char *s;
+  bool negative = false;
 
   /* The number so far.  */
   double num;
 
-  int got_dot;			/* Found a decimal point.  */
-  int got_digit;		/* Seen any digits.  */
+  bool got_dot;			/* Found a decimal point.  */
+  bool got_digit;		/* Seen any digits.  */
 
   /* The exponent of the number.  */
   long int exponent;
@@ -55,19 +55,19 @@ strtod (const char *nptr, char **endptr)
     ++s;
 
   /* Get the sign.  */
-  sign = *s == '-' ? -1 : 1;
+  negative = *s == '-';
   if (*s == '-' || *s == '+')
     ++s;
 
   num = 0.0;
-  got_dot = 0;
-  got_digit = 0;
+  got_dot = false;
+  got_digit = false;
   exponent = 0;
   for (;; ++s)
     {
       if ('0' <= *s && *s <= '9')
 	{
-	  got_digit = 1;
+	  got_digit = true;
 
 	  /* Make sure that multiplication by 10 will not overflow.  */
 	  if (num > DBL_MAX * 0.1)
@@ -89,14 +89,54 @@ strtod (const char *nptr, char **endptr)
 	}
       else if (!got_dot && *s == '.')
 	/* Record that we have found the decimal point.  */
-	got_dot = 1;
+	got_dot = true;
       else
 	/* Any other character terminates the number.  */
 	break;
     }
 
   if (!got_digit)
-    goto noconv;
+    {
+      /* Check for infinities and NaNs.  */
+      if (tolower ((unsigned char) *s) == 'i'
+	  && tolower ((unsigned char) s[1]) == 'n'
+	  && tolower ((unsigned char) s[2]) == 'f')
+	{
+	  s += 3;
+	  num = HUGE_VAL;
+	  if (tolower ((unsigned char) *s) == 'i'
+	      && tolower ((unsigned char) s[1]) == 'n'
+	      && tolower ((unsigned char) s[2]) == 'i'
+	      && tolower ((unsigned char) s[3]) == 't'
+	      && tolower ((unsigned char) s[4]) == 'y')
+	    s += 5;
+	  goto valid;
+	}
+#ifdef NAN
+      else if (tolower ((unsigned char) *s) == 'n'
+	       && tolower ((unsigned char) s[1]) == 'a'
+	       && tolower ((unsigned char) s[2]) == 'n')
+	{
+	  s += 3;
+	  num = NAN;
+	  /* Since nan(<n-char-sequence>) is implementation-defined,
+	     we define it by ignoring <n-char-sequence>.  A nicer
+	     implementation would populate the bits of the NaN
+	     according to interpreting n-char-sequence as a
+	     hexadecimal number, but the result is still a NaN.  */
+	  if (*s == '(')
+	    {
+	      const char *p = s + 1;
+	      while (isalnum ((unsigned char) *p))
+		p++;
+	      if (*p == ')')
+		s = p + 1;
+	    }
+	  goto valid;
+	}
+#endif
+      goto noconv;
+    }
 
   if (tolower ((unsigned char) *s) == 'e')
     {
@@ -108,7 +148,7 @@ strtod (const char *nptr, char **endptr)
       errno = 0;
       ++s;
       exp = strtol (s, &end, 10);
-      if (errno == ERANGE)
+      if (errno == ERANGE && num)
 	{
 	  /* The exponent overflowed a `long int'.  It is probably a safe
 	     assumption that an exponent that cannot be represented by
@@ -129,11 +169,8 @@ strtod (const char *nptr, char **endptr)
       exponent += exp;
     }
 
-  if (endptr != NULL)
-    *endptr = (char *) s;
-
   if (num == 0.0)
-    return 0.0;
+    goto valid;
 
   /* Multiply NUM by 10 to the EXPONENT power,
      checking for overflow and underflow.  */
@@ -151,23 +188,29 @@ strtod (const char *nptr, char **endptr)
 
   num *= pow (10.0, (double) exponent);
 
-  return num * sign;
+ valid:
+  if (endptr != NULL)
+    *endptr = (char *) s;
+  return negative ? -num : num;
 
-overflow:
+ overflow:
   /* Return an overflow error.  */
+  if (endptr != NULL)
+    *endptr = (char *) s;
   errno = ERANGE;
-  return HUGE_VAL * sign;
+  return negative ? -HUGE_VAL : HUGE_VAL;
 
-underflow:
+ underflow:
   /* Return an underflow error.  */
   if (endptr != NULL)
-    *endptr = (char *) nptr;
+    *endptr = (char *) s;
   errno = ERANGE;
-  return 0.0;
+  return negative ? -0.0 : 0.0;
 
-noconv:
+ noconv:
   /* There was no number.  */
   if (endptr != NULL)
     *endptr = (char *) nptr;
+  errno = EINVAL;
   return 0.0;
 }

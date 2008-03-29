@@ -10,9 +10,11 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some old platforms.
+
 @item
 This function mis-parses strings with leading @samp{+} on some old platforms:
 Old versions of Linux.
+
 @item
 This function returns a wrong end pointer on some platforms:
 Solaris 2.4.
@@ -20,4 +22,40 @@ Solaris 2.4.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function returns a positive value for negative underflow on some
+platforms:
+glibc 2.4, Mingw, Cygwin.
+
+@item
+This function fails to do a valid parse of @samp{-0x} on some
+platforms:
+glibc 2.4, Cygwin < 1.5.25-11.
+
+@item
+This function fails to parse Infinities and plain NaNs on some platforms:
+Solaris 8, Mingw, OpenBSD 4.0.
+
+@item
+This function fails to parse NaN() on some platforms:
+Solaris 8, Mingw, OpenBSD 4.0, Cygwin < 1.5.25-11.
+
+@item
+This function fails to parse NaN(n-char-sequence) on some platforms:
+Solaris 8, Mingw, OpenBSD 4.0.
+
+@item
+This function returns the wrong end pointer when parsing
+NaN(n-char-sequence) on some platforms:
+glibc 2.4.
+
+@item
+This function fails to parse C99 hexadecimal floating point on some
+platforms:
+Solaris 8, Mingw, OpenBSD 4.0.
+
+@item
+This function fails to correctly parse very long strings on some
+platforms:
+Mingw, Cygwin.
 @end itemize

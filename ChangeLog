@@ -1,5 +1,23 @@
 2008-03-29  Eric Blake  <ebb9@byu.net>
 
+	Document various strtod bugs, with some fixes.
+	* doc/posix-functions/strtod.texi (strtod): Document bugs with
+	"-0x", "inf", "nan", and hex constants.
+	* doc/posix-functions/atof.texi (atof): Likewise.
+	* modules/stdlib (Makefile.am): Support strtod.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Likewise.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Fit in stdlib framework, and
+	detect additional strtod bugs.
+	* lib/stdlib.in.h (rpl_strtod): Add declarations.
+	* lib/strtod.c (strtod): Return -0.0 on negative underflow.  Use
+	bool where appropriate.  Parse 'inf' and 'nan'.
+	* tests/test-strtod.c: New file.
+	* modules/strtod (Depends-on): Add stdbool, stdlib.
+	(configure.ac): Turn on module indicator.
+	* modules/strtod-tests: New module.
+
+2008-03-29  Eric Blake  <ebb9@byu.net>
+
 	Fix ftell on mingw.
 	* lib/ftell.c (EOVERFLOW): Define if the system lacks it.
 	* modules/ftell-tests (Depends-on): Add binary-io.

@@ -1,6 +1,6 @@
 /* A GNU-like <stdlib.h>.
 
-   Copyright (C) 1995, 2001-2004, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 1995, 2001-2004, 2006-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -196,6 +196,23 @@ extern int setenv (const char *name, const char *value, int replace);
 /* Remove the variable NAME from the environment.  */
 extern int unsetenv (const char *name);
 # endif
+#endif
+
+
+#if @GNULIB_STRTOD@
+# if @REPLACE_STRTOD@
+#  define strtod rpl_strtod
+# endif
+# if !@HAVE_STRTOD@ || @REPLACE_STRTOD@
+ /* Parse a double from STRING, updating ENDP if appropriate.  */
+extern double strtod (const char *str, char **endp);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef strtod
+# define strtod(s, e)                           \
+    (GL_LINK_WARNING ("strtod is unportable - " \
+                      "use gnulib module strtod for portability"), \
+     strtod (s, e))
 #endif
 
 
