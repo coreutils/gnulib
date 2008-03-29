@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "freadahead.h"
+#include "freadptr.h"
 
 int
 freadseek (FILE *fp, size_t offset)
@@ -34,7 +34,7 @@ freadseek (FILE *fp, size_t offset)
     return 0;
 
   /* Increment the in-memory pointer.  This is very cheap (no system calls).  */
-  buffered = freadahead (fp);
+  freadptr (fp, &buffered);
   if (buffered > 0)
     {
       size_t increment = (buffered < offset ? buffered : offset);

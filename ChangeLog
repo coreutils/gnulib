@@ -1,3 +1,11 @@
+2008-03-29  Eric Blake  <ebb9@byu.net>
+
+	Pass test-freadseek on cygwin.
+	* modules/freadseek (Depends-on): Use freadptr, not freadseek.
+	* lib/freadseek.c (freadseek): Don't increment beyond bounds of
+	ungetc buffer.
+	* tests/test-fflush2.c (main): Fix typo.
+
 2008-03-29  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-fflush2.c (main): Temporarily disable the contents of

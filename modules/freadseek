@@ -6,7 +6,7 @@ lib/freadseek.h
 lib/freadseek.c
 
 Depends-on:
-freadahead
+freadptr
 lseek
 
 configure.ac:

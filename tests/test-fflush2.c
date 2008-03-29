@@ -54,7 +54,7 @@ main (int argc, char **argv)
      The Austin Group has not yet decided how this should behave.  */
 #endif
 #if 0
-  /* Check fflush after a non-backup ungetc() call.  This is case 1 in terms of
+  /* Check fflush after a non-backup ungetc() call.  This is case 2 in terms of
      <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>.
      The Austin Group has not yet decided how this should behave.  */
   /* Check that fflush after a non-backup ungetc() call discards the ungetc
