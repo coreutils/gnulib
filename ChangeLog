@@ -1,3 +1,9 @@
+2008-03-30  Eric Blake  <ebb9@byu.net>
+
+	strtod touchups.
+	* lib/strtod.c (strtod): Avoid compiler warnings.
+	Reported by Jim Meyering.
+
 2008-03-30  Bruno Haible  <bruno@clisp.org>
 
 	* lib/unistdio/u-vsprintf.h (EOVERFLOW): Remove fallback.

@@ -51,7 +51,8 @@ strtod (const char *nptr, char **endptr)
       goto noconv;
     }
 
-  s = nptr;
+  /* Use unsigned char for the ctype routines.  */
+  s = (unsigned char *) nptr;
 
   /* Eat whitespace.  */
   while (isspace (*s))
@@ -191,11 +192,11 @@ strtod (const char *nptr, char **endptr)
       /* Get the exponent specified after the `e' or `E'.  */
       int save = errno;
       char *end;
-      long int exp;
+      long int value;
 
       errno = 0;
       ++s;
-      exp = strtol (s, &end, 10);
+      value = strtol ((char *) s, &end, 10);
       if (errno == ERANGE && num)
 	{
 	  /* The exponent overflowed a `long int'.  It is probably a safe
@@ -203,7 +204,7 @@ strtod (const char *nptr, char **endptr)
 	     a `long int' exceeds the limits of a `double'.  */
 	  if (endptr != NULL)
 	    *endptr = end;
-	  if (exp < 0)
+	  if (value < 0)
 	    goto underflow;
 	  else
 	    goto overflow;
@@ -213,8 +214,8 @@ strtod (const char *nptr, char **endptr)
 	   the 'e' or 'E', so *ENDPTR will be set there.  */
 	end = (char *) s - 1;
       errno = save;
-      s = end;
-      exponent += exp;
+      s = (unsigned char *) end;
+      exponent += value;
     }
 
   if (num == 0.0)
