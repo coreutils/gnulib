@@ -34,12 +34,11 @@ freadseek (FILE *fp, size_t offset)
     return 0;
 
   /* Increment the in-memory pointer.  This is very cheap (no system calls).  */
-  freadptr (fp, &buffered);
-  if (buffered > 0)
+  if (freadptr (fp, &buffered) != NULL && buffered > 0)
     {
       size_t increment = (buffered < offset ? buffered : offset);
 
-      /* Keep this code in sync with freadahead and freadptr!  */
+      /* Keep this code in sync with freadptr!  */
 #if defined _IO_ferror_unlocked     /* GNU libc, BeOS */
       fp->_IO_read_ptr += increment;
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
