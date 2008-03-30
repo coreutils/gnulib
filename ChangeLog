@@ -1,5 +1,9 @@
 2008-03-30  Eric Blake  <ebb9@byu.net>
 
+	Test signbit behavior on zeros.
+	* tests/test-signbit.c (test_signbitf): Add tests for zero.
+	(test_signbitd, test_signbitl): Likewise.
+
 	More strtod touchups.
 	* tests/test-strtod.c (main): Ignore tests for signbit on NaN, and
 	sign of negative underflow, for now.  Use .5, not .1.
