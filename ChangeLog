@@ -1,3 +1,10 @@
+2008-03-30  Bruno Haible  <bruno@clisp.org>
+
+	Fix buffer overrun.
+	* lib/vasnprintf.c (VASNPRINTF): If !USE_SNPRINTF && pad_ourselves:
+	Don't consider the width for tmp_length. Check count against tmp_length
+	before doing the padding. Ensure enough allocation during padding.
+
 2008-03-30  Eric Blake  <ebb9@byu.net>
 
 	strtod touchups.
