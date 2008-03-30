@@ -447,7 +447,7 @@ main ()
     char *ptr;
     double result = strtod (input, &ptr);
     ASSERT (result == HUGE_VAL);
-    ASSERT (ptr == input + 8);
+    ASSERT (ptr == input + 9);
     ASSERT (errno == ERANGE);
   }
   {
@@ -456,7 +456,7 @@ main ()
     char *ptr;
     double result = strtod (input, &ptr);
     ASSERT (result == -HUGE_VAL);
-    ASSERT (ptr == input + 9);
+    ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);
   }
   {

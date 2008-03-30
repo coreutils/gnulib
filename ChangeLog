@@ -1,3 +1,12 @@
+2008-03-30  Eric Blake  <ebb9@byu.net>
+
+	More strtod touchups.
+	* tests/test-strtod.c (main): Ignore tests for signbit on NaN, and
+	sign of negative underflow, for now.  Use .5, not .1.
+	* doc/posix-functions/strtod.texi (strtod): Mention these
+	limitations.
+	Reported by Jim Meyering.
+
 2008-03-30  Bruno Haible  <bruno@clisp.org>
 
 	* lib/striconveh.h (mem_iconveh, str_iconveh): Optimize the conversion
@@ -16,15 +25,6 @@
 	* lib/vasnprintf.c (VASNPRINTF): If !USE_SNPRINTF && pad_ourselves:
 	Don't consider the width for tmp_length. Check count against tmp_length
 	before doing the padding. Ensure enough allocation during padding.
-
-2008-03-30  Eric Blake  <ebb9@byu.net>
-
-	More strtod touchups.
-	* tests/test-strtod.c (main): Ignore tests for signbit on NaN, and
-	sign of negative underflow, for now.  Use .5, not .1.
-	* doc/posix-functions/strtod.texi (strtod): Mention these
-	limitations.
-	Reported by Jim Meyering.
 
 2008-03-30  Eric Blake  <ebb9@byu.net>
 
