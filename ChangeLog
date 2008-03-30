@@ -83,6 +83,9 @@
 	* lib/poll.c (EOVERFLOW): Remove fallback.
 	* modules/poll (Depends-on): Add EOVERFLOW.
 
+	* lib/getugroups.c (EOVERFLOW): Remove fallback.
+	* modules/getugroups (Depends-on): Add EOVERFLOW.
+
 	* lib/getdelim.c (EOVERFLOW): Remove fallback.
 	* modules/getdelim (Depends-on): Add EOVERFLOW.
 

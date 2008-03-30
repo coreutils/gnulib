@@ -7,6 +7,7 @@ lib/getugroups.h
 m4/getugroups.m4
 
 Depends-on:
+EOVERFLOW
 
 configure.ac:
 gl_GETUGROUPS
