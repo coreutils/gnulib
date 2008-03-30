@@ -52,7 +52,12 @@ Portability problems not fixed by Gnulib:
 @item
 This function returns a positive value for negative underflow on some
 platforms:
-glibc 2.4, Mingw, Cygwin.
+glibc 2.7, Mingw, Cygwin.
+
+@item
+This function cannot distinguish between ``nan'' and ``-nan'' on some
+platforms:
+glibc 2.7.
 
 @item
 This function fails to correctly parse very long strings on some

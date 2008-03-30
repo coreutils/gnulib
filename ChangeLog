@@ -19,6 +19,15 @@
 
 2008-03-30  Eric Blake  <ebb9@byu.net>
 
+	More strtod touchups.
+	* tests/test-strtod.c (main): Ignore tests for signbit on NaN, and
+	sign of negative underflow, for now.  Use .5, not .1.
+	* doc/posix-functions/strtod.texi (strtod): Mention these
+	limitations.
+	Reported by Jim Meyering.
+
+2008-03-30  Eric Blake  <ebb9@byu.net>
+
 	strtod touchups.
 	* lib/strtod.c (strtod): Avoid compiler warnings.
 	Reported by Jim Meyering.
