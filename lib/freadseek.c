@@ -22,28 +22,21 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "freadahead.h"
 #include "freadptr.h"
 
-int
-freadseek (FILE *fp, size_t offset)
+/* Increment the in-memory pointer.  INCREMENT must be at most the buffer size
+   returned by freadptr().
+   This is very cheap (no system calls).  */
+static inline void
+freadptrinc (FILE *fp, size_t increment)
 {
-  size_t buffered;
-  int fd;
-
-  if (offset == 0)
-    return 0;
-
-  /* Increment the in-memory pointer.  This is very cheap (no system calls).  */
-  if (freadptr (fp, &buffered) != NULL && buffered > 0)
-    {
-      size_t increment = (buffered < offset ? buffered : offset);
-
-      /* Keep this code in sync with freadptr!  */
+  /* Keep this code in sync with freadptr!  */
 #if defined _IO_ferror_unlocked     /* GNU libc, BeOS */
-      fp->_IO_read_ptr += increment;
+  fp->_IO_read_ptr += increment;
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-      fp->_p += increment;
-      fp->_r -= increment;
+  fp->_p += increment;
+  fp->_r -= increment;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \
@@ -53,27 +46,63 @@ freadseek (FILE *fp, size_t offset)
 			 int _file; \
 			 unsigned int _flag; \
 		       } *) fp)
-      fp_->_ptr += increment;
-      fp_->_cnt -= increment;
+  fp_->_ptr += increment;
+  fp_->_cnt -= increment;
 # else
-      fp->_ptr += increment;
-      fp->_cnt -= increment;
+  fp->_ptr += increment;
+  fp->_cnt -= increment;
 # endif
 #elif defined __UCLIBC__            /* uClibc */
 # ifdef __STDIO_BUFFERS
-      fp->__bufpos += increment;
+  fp->__bufpos += increment;
 # else
-      abort ();
+  abort ();
 # endif
 #elif defined __QNX__               /* QNX */
-      fp->_Next += increment;
+  fp->_Next += increment;
 #else
  #error "Please port gnulib freadseek.c to your platform! Look at the definition of getc, getc_unlocked on your system, then report this to bug-gnulib."
 #endif
+}
 
-      offset -= increment;
+int
+freadseek (FILE *fp, size_t offset)
+{
+  size_t total_buffered;
+  int fd;
+
+  if (offset == 0)
+    return 0;
+
+  /* Seek over the already read and buffered input as quickly as possible,
+     without doing any system calls.  */
+  total_buffered = freadahead (fp);
+  /* This loop is usually executed at most twice: once for ungetc buffer (if
+     present) and once for the main buffer.  */
+  while (total_buffered > 0)
+    {
+      size_t buffered;
+
+      if (freadptr (fp, &buffered) != NULL && buffered > 0)
+	{
+	  size_t increment = (buffered < offset ? buffered : offset);
+
+	  freadptrinc (fp, increment);
+	  offset -= increment;
+	  if (offset == 0)
+	    return 0;
+	  total_buffered -= increment;
+	  if (total_buffered == 0)
+	    break;
+	}
+      /* Read one byte.  If we were reading from the ungetc buffer, this
+	 switches the stream back to the main buffer.  */
+      if (fgetc (fp) == EOF)
+	goto eof;
+      offset--;
       if (offset == 0)
 	return 0;
+      total_buffered--;
     }
 
   /* Test whether the stream is seekable or not.  */
@@ -93,18 +122,19 @@ freadseek (FILE *fp, size_t offset)
 	{
 	  size_t count = (sizeof (buf) < offset ? sizeof (buf) : offset);
 	  if (fread (buf, 1, count, fp) < count)
-	    {
-	      if (ferror (fp))
-		/* EOF, or error before or while reading.  */
-		return EOF;
-	      else
-		/* Encountered EOF.  */
-		return 0;
-	    }
+	    goto eof;
 	  offset -= count;
 	}
       while (offset > 0);
 
       return 0;
    }
+
+ eof:
+  /* EOF, or error before or while reading.  */
+  if (ferror (fp))
+    return EOF;
+  else
+    /* Encountered EOF.  */
+    return 0;
 }
