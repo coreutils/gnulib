@@ -1,6 +1,99 @@
 2008-03-30  Bruno Haible  <bruno@clisp.org>
 
-	* lib/c-stack.c (EOVERFLOW): Remove unused override.
+	* lib/unistdio/u-vsprintf.h (EOVERFLOW): Remove fallback.
+	* modules/unistdio/ulc-vsprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u8-vsprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u8-u8-vsprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u16-vsprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u16-u16-vsprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u32-vsprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u32-u32-vsprintf (Depends-on): Add EOVERFLOW.
+
+	* lib/unistdio/u-vsnprintf.h (EOVERFLOW): Remove fallback.
+	* modules/unistdio/ulc-vsnprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u8-vsnprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u8-u8-vsnprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u16-vsnprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u16-u16-vsnprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u32-vsnprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u32-u32-vsnprintf (Depends-on): Add EOVERFLOW.
+
+	* lib/unistdio/u-vasprintf.h (EOVERFLOW): Remove fallback.
+	* modules/unistdio/ulc-vasprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u8-vasprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u8-u8-vasprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u16-vasprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u16-u16-vasprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u32-vasprintf (Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u32-u32-vasprintf (Depends-on): Add EOVERFLOW.
+
+	* lib/unistdio/ulc-vfprintf.c (EOVERFLOW): Remove fallback.
+	* modules/unistdio/ulc-vfprintf (Depends-on): Add EOVERFLOW.
+
+	* lib/unistdio/ulc-fprintf.c (EOVERFLOW): Remove fallback.
+	* modules/unistdio/ulc-fprintf (Depends-on): Add EOVERFLOW.
+
+	* lib/xvasprintf.c (EOVERFLOW): Remove fallback.
+	* modules/xvasprintf (Depends-on): Add EOVERFLOW.
+
+	* lib/vsprintf.c (EOVERFLOW): Remove fallback.
+	* m4/vsprintf-posix.m4 (gl_FUNC_VSPRINTF_POSIX): Drop gl_EOVERFLOW.
+	* modules/vsprintf-posix (Depends-on): Add EOVERFLOW.
+
+	* lib/vsnprintf.c (EOVERFLOW): Remove fallback.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX): Drop gl_EOVERFLOW.
+	* modules/vsnprintf (Depends-on): Add EOVERFLOW.
+
+	* lib/vfprintf.c (EOVERFLOW): Remove fallback.
+	* m4/vfprintf-posix.m4 (gl_FUNC_VFPRINTF_POSIX): Drop gl_EOVERFLOW.
+	* modules/vfprintf-posix (Depends-on): Add EOVERFLOW.
+
+	* lib/vasprintf.c (EOVERFLOW): Remove fallback.
+	* m4/vasprintf-posix.m4 (gl_FUNC_VASPRINTF_POSIX): Drop gl_EOVERFLOW.
+	* modules/vasprintf (Depends-on): Add EOVERFLOW.
+
+	* lib/vasnprintf.c (EOVERFLOW): Remove fallback.
+	* m4/vasnprintf.m4 (gl_FUNC_VASNPRINTF): Drop gl_EOVERFLOW.
+	* m4/vasnprintf-posix.m4 (gl_FUNC_VASNPRINTF_POSIX): Drop gl_EOVERFLOW.
+	* modules/vasnprintf (Files): Remove m4/eoverflow.m4.
+	(Depends-on): Add EOVERFLOW.
+	* modules/unistdio/ulc-vasnprintf (Files): Remove m4/eoverflow.m4.
+	(Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u8-vasnprintf (Files): Remove m4/eoverflow.m4.
+	(Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u8-u8-vasnprintf (Files): Remove m4/eoverflow.m4.
+	(Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u16-vasnprintf (Files): Remove m4/eoverflow.m4.
+	(Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u16-u16-vasnprintf (Files): Remove m4/eoverflow.m4.
+	(Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u32-vasnprintf (Files): Remove m4/eoverflow.m4.
+	(Depends-on): Add EOVERFLOW.
+	* modules/unistdio/u32-u32-vasnprintf (Files): Remove m4/eoverflow.m4.
+	(Depends-on): Add EOVERFLOW.
+
+	* lib/sprintf.c (EOVERFLOW): Remove fallback.
+	* m4/sprintf-posix.m4 (gl_FUNC_SPRINTF_POSIX): Drop gl_EOVERFLOW.
+	* modules/sprintf-posix (Depends-on): Add EOVERFLOW.
+
+	* lib/snprintf.c (EOVERFLOW): Remove fallback.
+	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Drop gl_EOVERFLOW.
+	* modules/snprintf (Depends-on): Add EOVERFLOW.
+
+	* lib/poll.c (EOVERFLOW): Remove fallback.
+	* modules/poll (Depends-on): Add EOVERFLOW.
+
+	* lib/getdelim.c (EOVERFLOW): Remove fallback.
+	* modules/getdelim (Depends-on): Add EOVERFLOW.
+
+	* lib/ftell.c (EOVERFLOW): Remove fallback.
+	* modules/ftell (Depends-on): Add EOVERFLOW.
+
+	* lib/fprintf.c (EOVERFLOW): Remove fallback.
+	* m4/fprintf-posix.m4 (gl_FUNC_FPRINTF_POSIX): Drop gl_EOVERFLOW.
+	* modules/fprintf-posix (Depends-on): Add EOVERFLOW.
+
+	* lib/c-stack.c (EOVERFLOW): Remove unused fallback.
 
 	* modules/EOVERFLOW-tests: New file.
 	* tests/test-EOVERFLOW.c: New file.

@@ -9,6 +9,7 @@ Depends-on:
 unistdio/base
 unistdio/u32-vasnprintf
 unistr/u32-cpy
+EOVERFLOW
 
 configure.ac:
 

@@ -23,11 +23,6 @@
 /* Get off_t.  */
 #include <unistd.h>
 
-/* Some systems, like OSF/1 4.0 and Woe32, don't have EOVERFLOW.  */
-#ifndef EOVERFLOW
-# define EOVERFLOW E2BIG
-#endif
-
 long
 ftell (FILE *fp)
 {

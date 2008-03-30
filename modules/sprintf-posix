@@ -20,6 +20,7 @@ fpucw
 nocrash
 printf-safe
 stdint
+EOVERFLOW
 
 configure.ac:
 gl_FUNC_SPRINTF_POSIX

@@ -8,6 +8,7 @@ lib/unistdio/u-vasprintf.h
 Depends-on:
 unistdio/base
 unistdio/u32-u32-vasnprintf
+EOVERFLOW
 
 configure.ac:
 
