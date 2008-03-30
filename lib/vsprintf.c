@@ -1,5 +1,5 @@
 /* Formatted output to strings.
-   Copyright (C) 2004, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,11 +28,6 @@
 #include <stdlib.h>
 
 #include "vasnprintf.h"
-
-/* Some systems, like OSF/1 4.0 and Woe32, don't have EOVERFLOW.  */
-#ifndef EOVERFLOW
-# define EOVERFLOW E2BIG
-#endif
 
 #ifndef SIZE_MAX
 # define SIZE_MAX ((size_t) -1)

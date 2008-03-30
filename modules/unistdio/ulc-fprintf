@@ -8,6 +8,7 @@ Depends-on:
 unistdio/base
 unistdio/ulc-vasnprintf
 fseterr
+EOVERFLOW
 
 configure.ac:
 

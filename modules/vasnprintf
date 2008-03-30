@@ -16,7 +16,6 @@ m4/longlong.m4
 m4/intmax_t.m4
 m4/stdint_h.m4
 m4/inttypes_h.m4
-m4/eoverflow.m4
 m4/vasnprintf.m4
 
 Depends-on:
@@ -24,6 +23,7 @@ alloca-opt
 float
 stdint
 xsize
+EOVERFLOW
 
 configure.ac:
 gl_FUNC_VASNPRINTF

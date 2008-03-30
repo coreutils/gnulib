@@ -8,6 +8,7 @@ m4/ftell.m4
 Depends-on:
 ftello
 stdio
+EOVERFLOW
 
 configure.ac:
 gl_FUNC_FTELL

@@ -117,11 +117,6 @@
 # include "fpucw.h"
 #endif
 
-/* Some systems, like OSF/1 4.0 and Woe32, don't have EOVERFLOW.  */
-#ifndef EOVERFLOW
-# define EOVERFLOW E2BIG
-#endif
-
 #if HAVE_WCHAR_T
 # if HAVE_WCSLEN
 #  define local_wcslen wcslen
@@ -3661,6 +3656,44 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		  }
 #endif
 
+		/* Decide whether to handle the precision ourselves.  */
+#if NEED_PRINTF_UNBOUNDED_PRECISION
+		switch (dp->conversion)
+		  {
+		  case 'd': case 'i': case 'u':
+		  case 'o':
+		  case 'x': case 'X': case 'p':
+		    prec_ourselves = has_precision && (precision > 0);
+		    break;
+		  default:
+		    prec_ourselves = 0;
+		    break;
+		  }
+#endif
+
+		/* Decide whether to perform the padding ourselves.  */
+#if !NEED_PRINTF_FLAG_LEFTADJUST && (!DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION)
+		switch (dp->conversion)
+		  {
+# if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO
+		  /* If we need conversion from TCHAR_T[] to DCHAR_T[], we need
+		     to perform the padding after this conversion.  Functions
+		     with unistdio extensions perform the padding based on
+		     character count rather than element count.  */
+		  case 'c': case 's':
+# endif
+# if NEED_PRINTF_FLAG_ZERO
+		  case 'f': case 'F': case 'e': case 'E': case 'g': case 'G':
+		  case 'a': case 'A':
+# endif
+		    pad_ourselves = 1;
+		    break;
+		  default:
+		    pad_ourselves = prec_ourselves;
+		    break;
+		  }
+#endif
+
 #if !USE_SNPRINTF
 		/* Allocate a temporary buffer of sufficient size for calling
 		   sprintf.  */
@@ -3837,18 +3870,22 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		      abort ();
 		    }
 
+		  if (!pad_ourselves)
+		    {
 # if ENABLE_UNISTDIO
-		  /* Padding considers the number of characters, therefore the
-		     number of elements after padding may be
-		       > max (tmp_length, width)
-		     but is certainly
-		       <= tmp_length + width.  */
-		  tmp_length = xsum (tmp_length, width);
+		      /* Padding considers the number of characters, therefore
+			 the number of elements after padding may be
+			   > max (tmp_length, width)
+			 but is certainly
+			   <= tmp_length + width.  */
+		      tmp_length = xsum (tmp_length, width);
 # else
-		  /* Padding considers the number of elements, says POSIX.  */
-		  if (tmp_length < width)
-		    tmp_length = width;
+		      /* Padding considers the number of elements,
+			 says POSIX.  */
+		      if (tmp_length < width)
+			tmp_length = width;
 # endif
+		    }
 
 		  tmp_length = xsum (tmp_length, 1); /* account for trailing NUL */
 		}
@@ -3866,44 +3903,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		    if (tmp == NULL)
 		      /* Out of memory.  */
 		      goto out_of_memory;
-		  }
-#endif
-
-		/* Decide whether to handle the precision ourselves.  */
-#if NEED_PRINTF_UNBOUNDED_PRECISION
-		switch (dp->conversion)
-		  {
-		  case 'd': case 'i': case 'u':
-		  case 'o':
-		  case 'x': case 'X': case 'p':
-		    prec_ourselves = has_precision && (precision > 0);
-		    break;
-		  default:
-		    prec_ourselves = 0;
-		    break;
-		  }
-#endif
-
-		/* Decide whether to perform the padding ourselves.  */
-#if !NEED_PRINTF_FLAG_LEFTADJUST && (!DCHAR_IS_TCHAR || ENABLE_UNISTDIO || NEED_PRINTF_FLAG_ZERO || NEED_PRINTF_UNBOUNDED_PRECISION)
-		switch (dp->conversion)
-		  {
-# if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO
-		  /* If we need conversion from TCHAR_T[] to DCHAR_T[], we need
-		     to perform the padding after this conversion.  Functions
-		     with unistdio extensions perform the padding based on
-		     character count rather than element count.  */
-		  case 'c': case 's':
-# endif
-# if NEED_PRINTF_FLAG_ZERO
-		  case 'f': case 'F': case 'e': case 'E': case 'g': case 'G':
-		  case 'a': case 'A':
-# endif
-		    pad_ourselves = 1;
-		    break;
-		  default:
-		    pad_ourselves = prec_ourselves;
-		    break;
 		  }
 #endif
 
@@ -4403,14 +4402,14 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		      }
 #endif
 
-#if !DCHAR_IS_TCHAR
-# if !USE_SNPRINTF
+#if !USE_SNPRINTF
 		    if (count >= tmp_length)
 		      /* tmp_length was incorrectly calculated - fix the
 			 code above!  */
 		      abort ();
-# endif
+#endif
 
+#if !DCHAR_IS_TCHAR
 		    /* Convert from TCHAR_T[] to DCHAR_T[].  */
 		    if (dp->conversion == 'c' || dp->conversion == 's')
 		      {
@@ -4528,7 +4527,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			if (w < width)
 			  {
 			    size_t pad = width - w;
-# if USE_SNPRINTF
+
 			    /* Make room for the result.  */
 			    if (xsum (count, pad) > allocated - length)
 			      {
@@ -4538,12 +4537,16 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 				  xmax (xsum3 (length, count, pad),
 					xtimes (allocated, 2));
 
+# if USE_SNPRINTF
 				length += count;
 				ENSURE_ALLOCATION (n);
 				length -= count;
+# else
+				ENSURE_ALLOCATION (n);
+# endif
 			      }
 			    /* Here count + pad <= allocated - length.  */
-# endif
+
 			    {
 # if !DCHAR_IS_TCHAR || USE_SNPRINTF
 			      DCHAR_T * const rp = result + length;
@@ -4553,7 +4556,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			      DCHAR_T *p = rp + count;
 			      DCHAR_T *end = p + pad;
 			      DCHAR_T *pad_ptr;
-# if !DCHAR_IS_TCHAR
+# if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO
 			      if (dp->conversion == 'c'
 				  || dp->conversion == 's')
 				/* No zero-padding for string directives.  */
@@ -4602,13 +4605,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			    }
 			  }
 		      }
-#endif
-
-#if DCHAR_IS_TCHAR && !USE_SNPRINTF
-		    if (count >= tmp_length)
-		      /* tmp_length was incorrectly calculated - fix the
-			 code above!  */
-		      abort ();
 #endif
 
 		    /* Here still count <= allocated - length.  */

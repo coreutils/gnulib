@@ -6,10 +6,12 @@ lib/freadseek.h
 lib/freadseek.c
 
 Depends-on:
+freadahead
 freadptr
 lseek
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += freadseek.c

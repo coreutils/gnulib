@@ -1,5 +1,5 @@
 /* Formatted output to a stream.
-   Copyright (C) 2004, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,11 +28,6 @@
 
 #include "fseterr.h"
 #include "vasnprintf.h"
-
-/* Some systems, like OSF/1 4.0 and Woe32, don't have EOVERFLOW.  */
-#ifndef EOVERFLOW
-# define EOVERFLOW E2BIG
-#endif
 
 /* Print formatted output to the stream FP.
    Return string length of formatted string.  On error, return a negative

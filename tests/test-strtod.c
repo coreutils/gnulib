@@ -143,10 +143,10 @@ main ()
   }
   {
     errno = 0;
-    const char input[] = ".1";
+    const char input[] = ".5";
     char *ptr;
     double result = strtod (input, &ptr);
-    ASSERT (result == 0.1);
+    ASSERT (result == 0.5);
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
@@ -215,10 +215,10 @@ main ()
   }
   {
     errno = 0;
-    const char input[] = "1e-1";
+    const char input[] = "5e-1";
     char *ptr;
     double result = strtod (input, &ptr);
-    ASSERT (result == 0.1);
+    ASSERT (result == 0.5);
     ASSERT (ptr == input + 4);
     ASSERT (errno == 0);
   }
@@ -443,7 +443,7 @@ main ()
   /* Overflow/underflow.  */
   {
     errno = 0;
-    const char input[] = "1E100000";
+    const char input[] = "1E1000000";
     char *ptr;
     double result = strtod (input, &ptr);
     ASSERT (result == HUGE_VAL);
@@ -452,7 +452,7 @@ main ()
   }
   {
     errno = 0;
-    const char input[] = "-1E100000";
+    const char input[] = "-1E1000000";
     char *ptr;
     double result = strtod (input, &ptr);
     ASSERT (result == -HUGE_VAL);
@@ -475,7 +475,13 @@ main ()
     char *ptr;
     double result = strtod (input, &ptr);
     ASSERT (-FLT_MIN <= result && result <= 0.0);
+#if 0
+    /* FIXME - this is glibc bug 5995; POSIX allows returning positive
+       0 on negative underflow, even though quality of implementation
+       demands preserving the sign.  Disable this test until fixed
+       glibc is more prevalent.  */
     ASSERT (signbit (result) == signbit (-0.0));
+#endif
     ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);
   }
@@ -539,7 +545,11 @@ main ()
 #ifdef NAN
     ASSERT (isnan (result1));
     ASSERT (isnan (result2));
+# if 0
+    /* Sign bits of NaN is a portability sticking point, not worth
+       worrying about.  */
     ASSERT (signbit (result1) != signbit (result2));
+# endif
     ASSERT (ptr1 == input + 4);
     ASSERT (ptr2 == input + 4);
     ASSERT (errno == 0);
@@ -587,7 +597,11 @@ main ()
 #ifdef NAN
     ASSERT (isnan (result1));
     ASSERT (isnan (result2));
+# if 0
+    /* Sign bits of NaN is a portability sticking point, not worth
+       worrying about.  */
     ASSERT (signbit (result1) != signbit (result2));
+# endif
     ASSERT (ptr1 == input + 6);
     ASSERT (ptr2 == input + 6);
     ASSERT (errno == 0);
@@ -630,7 +644,11 @@ main ()
 #ifdef NAN
     ASSERT (isnan (result1));
     ASSERT (isnan (result2));
+# if 0
+    /* Sign bits of NaN is a portability sticking point, not worth
+       worrying about.  */
     ASSERT (signbit (result1) != signbit (result2));
+# endif
     ASSERT (ptr1 == input + 7);
     ASSERT (ptr2 == input + 7);
     ASSERT (errno == 0);

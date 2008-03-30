@@ -15,6 +15,7 @@ Depends-on:
 extensions
 vasnprintf
 stdio
+EOVERFLOW
 
 configure.ac:
 gl_FUNC_VASPRINTF

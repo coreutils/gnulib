@@ -1,5 +1,5 @@
-/* An ftell() function that works around platform bugs.
-   Copyright (C) 2007, 2008 Free Software Foundation, Inc.
+/* Test of EOVERFLOW macro.
+   Copyright (C) 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,23 +16,17 @@
 
 #include <config.h>
 
-/* Specification.  */
-#include <stdio.h>
-
 #include <errno.h>
-/* Get off_t.  */
-#include <unistd.h>
 
-long
-ftell (FILE *fp)
+/* Check that it can be used as an initializer outside of a function.  */
+static int err = EOVERFLOW;
+
+int
+main ()
 {
-  /* Use the replacement ftello function with all its workarounds.  */
-  off_t offset = ftello (fp);
-  if (offset == (long)offset)
-    return (long)offset;
-  else
-    {
-      errno = EOVERFLOW;
-      return -1;
-    }
+  /* snprintf() callers want to distinguish EINVAL and EOVERFLOW.  */
+  if (err == EINVAL)
+    return 1;
+
+  return 0;
 }

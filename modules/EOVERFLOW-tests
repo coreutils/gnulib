@@ -1,0 +1,10 @@
+Files:
+tests/test-EOVERFLOW.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-EOVERFLOW
+check_PROGRAMS += test-EOVERFLOW

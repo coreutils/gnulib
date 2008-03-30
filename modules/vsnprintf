@@ -9,6 +9,7 @@ m4/vsnprintf.m4
 Depends-on:
 stdio
 vasnprintf
+EOVERFLOW
 
 configure.ac:
 gl_FUNC_VSNPRINTF

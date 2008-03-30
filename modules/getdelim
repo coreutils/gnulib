@@ -9,6 +9,7 @@ Depends-on:
 extensions
 stdio
 realloc-posix
+EOVERFLOW
 
 configure.ac:
 gl_FUNC_GETDELIM

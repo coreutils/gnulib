@@ -12,7 +12,6 @@ m4/longlong.m4
 m4/intmax_t.m4
 m4/stdint_h.m4
 m4/inttypes_h.m4
-m4/eoverflow.m4
 
 Depends-on:
 unistdio/base
@@ -40,6 +39,7 @@ printf-safe
 alloca-opt
 localcharset
 xsize
+EOVERFLOW
 
 configure.ac:
 gl_PREREQ_VASNPRINTF_WITH_EXTRAS

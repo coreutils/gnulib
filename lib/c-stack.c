@@ -48,9 +48,6 @@
 #ifndef ENOTSUP
 # define ENOTSUP EINVAL
 #endif
-#ifndef EOVERFLOW
-# define EOVERFLOW EINVAL
-#endif
 
 #include <signal.h>
 #if ! HAVE_STACK_T && ! defined stack_t
