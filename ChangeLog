@@ -1,5 +1,8 @@
 2008-03-30  Bruno Haible  <bruno@clisp.org>
 
+	* modules/EOVERFLOW-tests: New file.
+	* tests/test-EOVERFLOW.c: New file.
+
 	* modules/EOVERFLOW: New file.
 	* doc/posix-headers/errno.texi: Mention EOVERFLOW portability problem.
 
