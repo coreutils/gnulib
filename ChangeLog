@@ -1,5 +1,10 @@
 2008-03-30  Bruno Haible  <bruno@clisp.org>
 
+	* lib/striconveh.h (mem_iconveh, str_iconveh): Optimize the conversion
+	from UTF-8 to UTF-8//TRANSLIT in the same way as from UTF-8 to UTF-8.
+
+2008-03-30  Bruno Haible  <bruno@clisp.org>
+
 	Avoid failure when attempting to return empty iconv results on some
 	platforms.
 	* lib/striconveh.c (mem_cd_iconveh_internal): In the final memory

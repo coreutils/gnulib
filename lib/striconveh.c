@@ -1017,7 +1017,11 @@ mem_iconveh (const char *src, size_t srclen,
 	    }
 	}
 
-      if (STRCASEEQ (to_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0))
+      if (STRCASEEQ (to_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0)
+# if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
+	  || c_strcasecmp (to_codeset, "UTF-8//TRANSLIT") == 0
+# endif
+	 )
 	cd2 = (iconv_t)(-1);
       else
 	{
@@ -1153,7 +1157,11 @@ str_iconveh (const char *src,
 	    }
 	}
 
-      if (STRCASEEQ (to_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0))
+      if (STRCASEEQ (to_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0)
+# if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
+	  || c_strcasecmp (to_codeset, "UTF-8//TRANSLIT") == 0
+# endif
+	 )
 	cd2 = (iconv_t)(-1);
       else
 	{
