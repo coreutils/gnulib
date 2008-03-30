@@ -1,5 +1,5 @@
 /* Character set conversion with error handling.
-   Copyright (C) 2001-2007 Free Software Foundation, Inc.
+   Copyright (C) 2001-2008 Free Software Foundation, Inc.
    Written by Bruno Haible and Simon Josefsson.
 
    This program is free software: you can redistribute it and/or modify
@@ -870,9 +870,10 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
   /* Now the final memory allocation.  */
   if (result == tmpbuf)
     {
+      size_t memsize = length + extra_alloc;
       char *memory;
 
-      memory = (char *) malloc (length + extra_alloc);
+      memory = (char *) malloc (memsize > 0 ? memsize : 1);
       if (memory != NULL)
 	{
 	  memcpy (memory, tmpbuf, length);
@@ -887,9 +888,10 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
   else if (result != *resultp && length + extra_alloc < allocated)
     {
       /* Shrink the allocated memory if possible.  */
+      size_t memsize = length + extra_alloc;
       char *memory;
 
-      memory = (char *) realloc (result, length + extra_alloc);
+      memory = (char *) realloc (result, memsize > 0 ? memsize : 1);
       if (memory != NULL)
 	result = memory;
     }

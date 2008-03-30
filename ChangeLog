@@ -1,5 +1,12 @@
 2008-03-30  Bruno Haible  <bruno@clisp.org>
 
+	Avoid failure when attempting to return empty iconv results on some
+	platforms.
+	* lib/striconveh.c (mem_cd_iconveh_internal): In the final memory
+	allocation, don't report ENOMEM when the resulting string is empty.
+
+2008-03-30  Bruno Haible  <bruno@clisp.org>
+
 	Fix buffer overrun.
 	* lib/vasnprintf.c (VASNPRINTF): If !USE_SNPRINTF && pad_ourselves:
 	Don't consider the width for tmp_length. Check count against tmp_length
