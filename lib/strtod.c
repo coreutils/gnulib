@@ -25,12 +25,14 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "c-ctype.h"
+
 /* Convert NPTR to a double.  If ENDPTR is not NULL, a pointer to the
    character after the last one used in the number is put in *ENDPTR.  */
 double
 strtod (const char *nptr, char **endptr)
 {
-  const char *s;
+  const unsigned char *s;
   bool negative = false;
 
   /* The number so far.  */
@@ -38,6 +40,7 @@ strtod (const char *nptr, char **endptr)
 
   bool got_dot;			/* Found a decimal point.  */
   bool got_digit;		/* Seen any digits.  */
+  bool hex = false;		/* Look for hex float exponent.  */
 
   /* The exponent of the number.  */
   long int exponent;
@@ -51,7 +54,7 @@ strtod (const char *nptr, char **endptr)
   s = nptr;
 
   /* Eat whitespace.  */
-  while (isspace ((unsigned char) *s))
+  while (isspace (*s))
     ++s;
 
   /* Get the sign.  */
@@ -63,59 +66,104 @@ strtod (const char *nptr, char **endptr)
   got_dot = false;
   got_digit = false;
   exponent = 0;
-  for (;; ++s)
+
+  /* Check for hex float.  */
+  if (*s == '0' && c_tolower (s[1]) == 'x'
+      && (c_isxdigit (s[2]) || ('.' == s[2] && c_isxdigit (s[3]))))
     {
-      if ('0' <= *s && *s <= '9')
+      hex = true;
+      s += 2;
+      for (;; ++s)
 	{
-	  got_digit = true;
+	  if (c_isxdigit (*s))
+	    {
+	      got_digit = true;
 
-	  /* Make sure that multiplication by 10 will not overflow.  */
-	  if (num > DBL_MAX * 0.1)
-	    /* The value of the digit doesn't matter, since we have already
-	       gotten as many digits as can be represented in a `double'.
-	       This doesn't necessarily mean the result will overflow.
-	       The exponent may reduce it to within range.
+	      /* Make sure that multiplication by 16 will not overflow.  */
+	      if (num > DBL_MAX / 16)
+		/* The value of the digit doesn't matter, since we have already
+		   gotten as many digits as can be represented in a `double'.
+		   This doesn't necessarily mean the result will overflow.
+		   The exponent may reduce it to within range.
 
-	       We just need to record that there was another
-	       digit so that we can multiply by 10 later.  */
-	    ++exponent;
+		   We just need to record that there was another
+		   digit so that we can multiply by 16 later.  */
+		++exponent;
+	      else
+		num = ((num * 16.0)
+		       + (c_tolower (*s) - (c_isdigit (*s) ? '0' : 'a' - 10)));
+
+	      /* Keep track of the number of digits after the decimal point.
+		 If we just divided by 16 here, we would lose precision.  */
+	      if (got_dot)
+		--exponent;
+	    }
+	  else if (!got_dot && *s == '.')
+	    /* Record that we have found the decimal point.  */
+	    got_dot = true;
 	  else
-	    num = (num * 10.0) + (*s - '0');
-
-	  /* Keep track of the number of digits after the decimal point.
-	     If we just divided by 10 here, we would lose precision.  */
-	  if (got_dot)
-	    --exponent;
+	    /* Any other character terminates the number.  */
+	    break;
 	}
-      else if (!got_dot && *s == '.')
-	/* Record that we have found the decimal point.  */
-	got_dot = true;
-      else
-	/* Any other character terminates the number.  */
-	break;
+    }
+
+  /* Not a hex float.  */
+  else
+    {
+      for (;; ++s)
+	{
+	  if (c_isdigit (*s))
+	    {
+	      got_digit = true;
+
+	      /* Make sure that multiplication by 10 will not overflow.  */
+	      if (num > DBL_MAX * 0.1)
+		/* The value of the digit doesn't matter, since we have already
+		   gotten as many digits as can be represented in a `double'.
+		   This doesn't necessarily mean the result will overflow.
+		   The exponent may reduce it to within range.
+
+		   We just need to record that there was another
+		   digit so that we can multiply by 10 later.  */
+		++exponent;
+	      else
+		num = (num * 10.0) + (*s - '0');
+
+	      /* Keep track of the number of digits after the decimal point.
+		 If we just divided by 10 here, we would lose precision.  */
+	      if (got_dot)
+		--exponent;
+	    }
+	  else if (!got_dot && *s == '.')
+	    /* Record that we have found the decimal point.  */
+	    got_dot = true;
+	  else
+	    /* Any other character terminates the number.  */
+	    break;
+	}
     }
 
   if (!got_digit)
     {
       /* Check for infinities and NaNs.  */
-      if (tolower ((unsigned char) *s) == 'i'
-	  && tolower ((unsigned char) s[1]) == 'n'
-	  && tolower ((unsigned char) s[2]) == 'f')
+      if (c_tolower (*s) == 'i'
+	  && c_tolower (s[1]) == 'n'
+	  && c_tolower (s[2]) == 'f')
 	{
 	  s += 3;
 	  num = HUGE_VAL;
-	  if (tolower ((unsigned char) *s) == 'i'
-	      && tolower ((unsigned char) s[1]) == 'n'
-	      && tolower ((unsigned char) s[2]) == 'i'
-	      && tolower ((unsigned char) s[3]) == 't'
-	      && tolower ((unsigned char) s[4]) == 'y')
+	  if (c_tolower (*s) == 'i'
+	      && c_tolower (s[1]) == 'n'
+	      && c_tolower (s[2]) == 'i'
+	      && c_tolower (s[3]) == 't'
+	      && c_tolower (s[4]) == 'y')
 	    s += 5;
 	  goto valid;
 	}
 #ifdef NAN
-      else if (tolower ((unsigned char) *s) == 'n'
-	       && tolower ((unsigned char) s[1]) == 'a'
-	       && tolower ((unsigned char) s[2]) == 'n')
+      else if (c_tolower (*s) == 'n'
+	       && c_tolower (s[1]) == 'a'
+	       && c_tolower (s[2]) == 'n')
 	{
 	  s += 3;
 	  num = NAN;
@@ -126,8 +174,8 @@ strtod (const char *nptr, char **endptr)
 	     hexadecimal number, but the result is still a NaN.  */
 	  if (*s == '(')
 	    {
-	      const char *p = s + 1;
-	      while (isalnum ((unsigned char) *p))
+	      const unsigned char *p = s + 1;
+	      while (c_isalnum (*p))
 		p++;
 	      if (*p == ')')
 		s = p + 1;
@@ -138,7 +186,7 @@ strtod (const char *nptr, char **endptr)
       goto noconv;
     }
 
-  if (tolower ((unsigned char) *s) == 'e')
+  if (c_tolower (*s) == (hex ? 'p' : 'e') && !isspace (s[1]))
     {
       /* Get the exponent specified after the `e' or `E'.  */
       int save = errno;
@@ -160,7 +208,7 @@ strtod (const char *nptr, char **endptr)
 	  else
 	    goto overflow;
 	}
-      else if (end == s)
+      else if (end == (char *) s)
 	/* There was no exponent.  Reset END to point to
 	   the 'e' or 'E', so *ENDPTR will be set there.  */
 	end = (char *) s - 1;
@@ -171,6 +219,13 @@ strtod (const char *nptr, char **endptr)
 
   if (num == 0.0)
     goto valid;
+
+  if (hex)
+    {
+      /* ldexp takes care of range errors.  */
+      num = ldexp (num, exponent);
+      goto valid;
+    }
 
   /* Multiply NUM by 10 to the EXPONENT power,
      checking for overflow and underflow.  */

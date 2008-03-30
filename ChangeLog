@@ -1,5 +1,14 @@
 2008-03-29  Eric Blake  <ebb9@byu.net>
 
+	Add hex float support.
+	* modules/strtod (Depends-on): Add c-ctype.
+	(Link): Mention POW_LIB.
+	* lib/strtod.c (strtod): Recognize hex floats.  Don't allow
+	whitespace between 'e' and exponent.
+	* tests/test-strtod.c (main): Enable hex float tests.
+	* doc/posix-functions/strtod.texi (strtod): Document what gnulib
+	now provides.
+
 	Document various strtod bugs, with some fixes.
 	* doc/posix-functions/strtod.texi (strtod): Document bugs with
 	"-0x", "inf", "nan", and hex constants.

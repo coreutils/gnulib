@@ -6,6 +6,7 @@ lib/strtod.c
 m4/strtod.m4
 
 Depends-on:
+c-ctype
 stdbool
 stdlib
 
@@ -18,6 +19,9 @@ LIBS += $(POW_LIB)
 
 Include:
 <stdlib.h>
+
+Link:
+$(POW_LIB)
 
 License:
 LGPL

@@ -333,6 +333,15 @@ main ()
   }
   {
     errno = 0;
+    const char input[] = "1E 2";
+    char *ptr;
+    double result = strtod (input, &ptr);
+    ASSERT (result == 1.0);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+  {
+    errno = 0;
     const char input[] = "0x";
     char *ptr;
     double result = strtod (input, &ptr);
@@ -637,8 +646,6 @@ main ()
   }
 
   /* Hex.  */
-#if 0
-  /* TODO - gnulib doesn't implement this yet.  */
   {
     errno = 0;
     const char input[] = "0xa";
@@ -693,7 +700,6 @@ main ()
     ASSERT (ptr == input + 6);
     ASSERT (errno == 0);
   }
-#endif
 
   /* Large buffers.  */
   {
