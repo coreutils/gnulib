@@ -1,5 +1,7 @@
 2008-03-30  Bruno Haible  <bruno@clisp.org>
 
+	* lib/c-stack.c (EOVERFLOW): Remove unused override.
+
 	* modules/EOVERFLOW-tests: New file.
 	* tests/test-EOVERFLOW.c: New file.
 
