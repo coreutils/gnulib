@@ -1,5 +1,11 @@
 2008-03-30  Bruno Haible  <bruno@clisp.org>
 
+	Fix bug introduced on 2007-06-10.
+	* lib/vasnprintf.c (VASNPRINTF): When performing zero-padding, use
+	spaces instead of 0 digits for 's' also when ENABLE_UNISTDIO.
+
+2008-03-30  Bruno Haible  <bruno@clisp.org>
+
 	Improve freadseek's efficiency after ungetc.
 	* lib/freadseek.c: Include freadahead.h.
 	(freadptrinc): New function, extracted from freadseek.

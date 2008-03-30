@@ -4553,7 +4553,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			      DCHAR_T *p = rp + count;
 			      DCHAR_T *end = p + pad;
 			      DCHAR_T *pad_ptr;
-# if !DCHAR_IS_TCHAR
+# if !DCHAR_IS_TCHAR || ENABLE_UNISTDIO
 			      if (dp->conversion == 'c'
 				  || dp->conversion == 's')
 				/* No zero-padding for string directives.  */
