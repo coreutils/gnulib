@@ -3,10 +3,13 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xbd/errno.h.html}
 
-Gnulib module: ---
+Gnulib module: EOVERFLOW
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+The macro @code{EOVERFLOW} is not defined on some platforms:
+OSF/1 4.0, mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
