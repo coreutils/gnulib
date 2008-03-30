@@ -36,9 +36,10 @@
 	* tests/test-ftello.c (main): Likewise.
 
 	Pass test-freadseek on cygwin.
-	* modules/freadseek (Depends-on): Use freadptr, not freadseek.
+	* modules/freadseek (Depends-on): Use freadptr, not freadahead.
 	* lib/freadseek.c (freadseek): Don't increment beyond bounds of
 	ungetc buffer.
+
 	* tests/test-fflush2.c (main): Fix typo.
 
 2008-03-29  Bruno Haible  <bruno@clisp.org>
