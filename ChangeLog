@@ -1,3 +1,9 @@
+2008-03-30  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-strtod.c: Add comments about which assertion fails on which
+	platform.
+	* doc/posix-functions/strtod.texi: Add info about many more platforms.
+
 2008-03-30  Eric Blake  <ebb9@byu.net>
 
 	Test signbit behavior on zeros.
