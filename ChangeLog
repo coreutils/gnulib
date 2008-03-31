@@ -1,3 +1,9 @@
+2008-03-31  Jim Meyering  <meyering@redhat.com>
+
+	Don't compare actual signbit return values.
+	* tests/test-strtod.c (main): Rather, compare only their
+	zero/non-zero nature.
+
 2008-03-31  Eric Blake  <ebb9@byu.net>
 
 	More strtod documentation.

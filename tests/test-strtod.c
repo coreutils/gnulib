@@ -280,7 +280,7 @@ main ()
     char *ptr;
     double result = strtod (input, &ptr);
     ASSERT (result == 0.0);
-    ASSERT (signbit (result) == signbit (-0.0)); /* IRIX 6.5 */
+    ASSERT (!!signbit (result) == !!signbit (-0.0)); /* IRIX 6.5 */
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
@@ -366,7 +366,7 @@ main ()
     char *ptr;
     double result = strtod (input, &ptr);
     ASSERT (result == 0.0);
-    ASSERT (signbit (result) == signbit (-0.0)); /* MacOS X 10.3, FreeBSD 6.2, IRIX 6.5 */
+    ASSERT (!!signbit (result) == !!signbit (-0.0)); /* MacOS X 10.3, FreeBSD 6.2, IRIX 6.5 */
     ASSERT (ptr == input + 2);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2 */
     ASSERT (errno == 0);
   }
@@ -480,7 +480,7 @@ main ()
        0 on negative underflow, even though quality of implementation
        demands preserving the sign.  Disable this test until fixed
        glibc is more prevalent.  */
-    ASSERT (signbit (result) == signbit (-0.0)); /* glibc-2.3.6, mingw */
+    ASSERT (!!signbit (result) == !!signbit (-0.0)); /* glibc-2.3.6, mingw */
 #endif
     ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);
@@ -548,7 +548,7 @@ main ()
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
-    ASSERT (signbit (result1) != signbit (result2)); /* glibc-2.3.6, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, OSF/1 5.1, mingw */
 # endif
     ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, Solaris 2.5.1, mingw */
     ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, Solaris 2.5.1, mingw */
@@ -573,7 +573,7 @@ main ()
 #ifdef NAN
     ASSERT (isnan (result1));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (isnan (result2));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (signbit (result1) == signbit (result2));
+    ASSERT (!!signbit (result1) == !!signbit (result2));
     ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 2.5.1, mingw */
     ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 2.5.1, mingw */
     ASSERT (errno == 0);
@@ -600,7 +600,7 @@ main ()
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
-    ASSERT (signbit (result1) != signbit (result2)); /* glibc-2.3.6, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, OSF/1 5.1, mingw */
 # endif
     ASSERT (ptr1 == input + 6);         /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (ptr2 == input + 6);         /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
@@ -647,7 +647,7 @@ main ()
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
-    ASSERT (signbit (result1) != signbit (result2)); /* glibc-2.3.6, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (!!signbit (result1) != !!signbit (result2)); /* glibc-2.3.6, IRIX 6.5, OSF/1 5.1, mingw */
 # endif
     ASSERT (ptr1 == input + 7);         /* glibc-2.3.6, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (ptr2 == input + 7);         /* glibc-2.3.6, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
@@ -829,7 +829,7 @@ main ()
 	input[m] = '\0';
 	result = strtod (input, &ptr);
 	ASSERT (result == 0.0);
-	ASSERT (signbit (result) == signbit (-0.0)); /* IRIX 6.5 */
+	ASSERT (!!signbit (result) == !!signbit (-0.0)); /* IRIX 6.5 */
 	ASSERT (ptr == input + m);
 	ASSERT (errno == 0);
       }
