@@ -1,5 +1,10 @@
 2008-03-31  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-strtod.c (main): Update results for OSF/1 platforms.
+	* doc/posix-functions/strtod.texi: Likewise.
+
+2008-03-31  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-strtod.c (main): Don't use C99 syntax.
 
 2008-03-31  Bruno Haible  <bruno@clisp.org>

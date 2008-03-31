@@ -305,7 +305,7 @@ main ()
     errno = 0;
     result = strtod (input, &ptr);
     ASSERT (result == 0.0);
-    ASSERT (!!signbit (result) == !!signbit (-0.0)); /* IRIX 6.5 */
+    ASSERT (!!signbit (result) == !!signbit (-0.0)); /* IRIX 6.5, OSF/1 4.0 */
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
@@ -400,7 +400,7 @@ main ()
     errno = 0;
     result = strtod (input, &ptr);
     ASSERT (result == 0.0);
-    ASSERT (!!signbit (result) == !!signbit (-0.0)); /* MacOS X 10.3, FreeBSD 6.2, IRIX 6.5 */
+    ASSERT (!!signbit (result) == !!signbit (-0.0)); /* MacOS X 10.3, FreeBSD 6.2, IRIX 6.5, OSF/1 4.0 */
     ASSERT (ptr == input + 2);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2 */
     ASSERT (errno == 0);
   }
@@ -489,7 +489,7 @@ main ()
     errno = 0;
     result = strtod (input, &ptr);
     ASSERT (result == HUGE_VAL);
-    ASSERT (ptr == input + 9);
+    ASSERT (ptr == input + 9);          /* OSF/1 5.1 */
     ASSERT (errno == ERANGE);
   }
   {
@@ -894,7 +894,7 @@ main ()
 	errno = 0;
 	result = strtod (input, &ptr);
 	ASSERT (result == 0.0);
-	ASSERT (!!signbit (result) == !!signbit (-0.0)); /* IRIX 6.5 */
+	ASSERT (!!signbit (result) == !!signbit (-0.0)); /* IRIX 6.5, OSF/1 4.0 */
 	ASSERT (ptr == input + m);
 	ASSERT (errno == 0);
       }

@@ -35,7 +35,7 @@ glibc 2.4, MacOS X 10.3, FreeBSD 6.2, Cygwin < 1.5.25-11.
 
 @item
 This function returns +0.0 (not -0.0) for @samp{-0} on some platforms:
-IRIX 6.5.
+IRIX 6.5, OSF/1 4.0.
 
 @item
 This function fails to parse Infinities and plain NaNs on some platforms:
