@@ -42,80 +42,88 @@ main ()
   int status = 0;
   /* Subject sequence empty or invalid.  */
   {
-    errno = 0;
     const char input[] = "";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input);
     ASSERT (errno == 0 || errno == EINVAL);
   }
   {
-    errno = 0;
     const char input[] = " ";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input);
     ASSERT (errno == 0 || errno == EINVAL);
   }
   {
-    errno = 0;
     const char input[] = " +";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input);
     ASSERT (errno == 0 || errno == EINVAL);
   }
   {
-    errno = 0;
     const char input[] = " .";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input);
     ASSERT (errno == 0 || errno == EINVAL);
   }
   {
-    errno = 0;
     const char input[] = " .e0";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input);              /* IRIX 6.5, OSF/1 5.1 */
     ASSERT (errno == 0 || errno == EINVAL);
   }
   {
-    errno = 0;
     const char input[] = " +.e-0";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input);              /* IRIX 6.5, OSF/1 5.1 */
     ASSERT (errno == 0 || errno == EINVAL);
   }
   {
-    errno = 0;
     const char input[] = " in";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input);
     ASSERT (errno == 0 || errno == EINVAL);
   }
   {
-    errno = 0;
     const char input[] = " na";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input);
@@ -124,100 +132,111 @@ main ()
 
   /* Simple floating point values.  */
   {
-    errno = 0;
     const char input[] = "1";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 1);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "1.";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = ".5";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.5);
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = " 1";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "+1";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "-1";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == -1.0);
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "1e0";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 3);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "1e+0";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 4);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "1e-0";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 4);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "1e1";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 10.0);
     ASSERT (ptr == input + 3);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "5e-1";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.5);
     ASSERT (ptr == input + 4);
     ASSERT (errno == 0);
@@ -225,60 +244,66 @@ main ()
 
   /* Zero.  */
   {
-    errno = 0;
     const char input[] = "0";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 1);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = ".0";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0e0";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 3);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0e+9999999";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 10);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0e-9999999";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 10);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "-0";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!!signbit (result) == !!signbit (-0.0)); /* IRIX 6.5 */
     ASSERT (ptr == input + 2);
@@ -287,154 +312,170 @@ main ()
 
   /* Suffixes.  */
   {
-    errno = 0;
     const char input[] = "1f";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 1);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "1.f";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "1e";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 1);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "1e+";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 1);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "1e-";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 1);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "1E 2";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);             /* HP-UX 11.11, IRIX 6.5, OSF/1 4.0 */
     ASSERT (ptr == input + 1);          /* HP-UX 11.11, IRIX 6.5 */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0x";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 1);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2 */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "00x1";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "-0x";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!!signbit (result) == !!signbit (-0.0)); /* MacOS X 10.3, FreeBSD 6.2, IRIX 6.5 */
     ASSERT (ptr == input + 2);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2 */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0xg";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 1);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2 */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0xp";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 1);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2 */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0x.";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 1);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2 */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0xp+";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 1);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2 */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0xp+1";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 1);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2 */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0x.p+1";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 0.0);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 1);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2 */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "1p+1";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);
     ASSERT (ptr == input + 1);
     ASSERT (errno == 0);
@@ -442,38 +483,42 @@ main ()
 
   /* Overflow/underflow.  */
   {
-    errno = 0;
     const char input[] = "1E1000000";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == HUGE_VAL);
     ASSERT (ptr == input + 9);
     ASSERT (errno == ERANGE);
   }
   {
-    errno = 0;
     const char input[] = "-1E1000000";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == -HUGE_VAL);
     ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);
   }
   {
-    errno = 0;
     const char input[] = "1E-100000";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (0.0 <= result && result <= FLT_MIN);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 9);
     ASSERT (errno == ERANGE);
   }
   {
-    errno = 0;
     const char input[] = "-1E-100000";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (-FLT_MIN <= result && result <= 0.0);
 #if 0
     /* FIXME - this is glibc bug 5995; POSIX allows returning positive
@@ -488,46 +533,51 @@ main ()
 
   /* Infinity.  */
   {
-    errno = 0;
     const char input[] = "iNf";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (ptr == input + 3);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw */
     ASSERT (errno == 0);                /* HP-UX 11.11, OSF/1 4.0 */
   }
   {
-    errno = 0;
     const char input[] = "-InF";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == -HUGE_VAL);       /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (ptr == input + 4);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, OSF/1 4.0, Solaris 9, mingw */
     ASSERT (errno == 0);                /* HP-UX 11.11, OSF/1 4.0 */
   }
   {
-    errno = 0;
     const char input[] = "infinite";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (ptr == input + 3);          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (errno == 0);                /* OSF/1 4.0 */
   }
   {
-    errno = 0;
     const char input[] = "infinitY";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (ptr == input + 8);          /* OpenBSD 4.0, HP-UX 11.00, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw */
     ASSERT (errno == 0);                /* HP-UX 11.11, OSF/1 4.0 */
   }
   {
-    errno = 0;
     const char input[] = "infinitY.";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == HUGE_VAL);        /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (ptr == input + 8);          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (errno == 0);                /* OSF/1 4.0 */
@@ -536,12 +586,14 @@ main ()
   /* NaN.  Some processors set the sign bit of the default NaN, so all
      we check is that using a sign changes the result.  */
   {
-    errno = 0;
     const char input[] = "-nan";
     char *ptr1;
     char *ptr2;
-    double result1 = strtod (input, &ptr1);
-    double result2 = strtod (input + 1, &ptr2);
+    double result1;
+    double result2;
+    errno = 0;
+    result1 = strtod (input, &ptr1);
+    result2 = strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnan (result1));           /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (isnan (result2));           /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
@@ -564,12 +616,14 @@ main ()
 #endif
   }
   {
-    errno = 0;
     const char input[] = "+nan(";
     char *ptr1;
     char *ptr2;
-    double result1 = strtod (input, &ptr1);
-    double result2 = strtod (input + 1, &ptr2);
+    double result1;
+    double result2;
+    errno = 0;
+    result1 = strtod (input, &ptr1);
+    result2 = strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnan (result1));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (isnan (result2));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
@@ -588,12 +642,14 @@ main ()
 #endif
   }
   {
-    errno = 0;
     const char input[] = "-nan()";
     char *ptr1;
     char *ptr2;
-    double result1 = strtod (input, &ptr1);
-    double result2 = strtod (input + 1, &ptr2);
+    double result1;
+    double result2;
+    errno = 0;
+    result1 = strtod (input, &ptr1);
+    result2 = strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnan (result1));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (isnan (result2));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
@@ -616,10 +672,11 @@ main ()
 #endif
   }
   {
-    errno = 0;
     const char input[] = " nan().";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
 #if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnan (result));            /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (ptr == input + 6);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
@@ -632,15 +689,17 @@ main ()
 #endif
   }
   {
-    errno = 0;
     /* The behavior of nan(0) is implementation-defined, but all
        implementations we know of which handle optional
        n-char-sequences handle nan(0) the same as nan().  */
     const char input[] = "-nan(0).";
     char *ptr1;
     char *ptr2;
-    double result1 = strtod (input, &ptr1);
-    double result2 = strtod (input + 1, &ptr2);
+    double result1;
+    double result2;
+    errno = 0;
+    result1 = strtod (input, &ptr1);
+    result2 = strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnan (result1));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (isnan (result2));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
@@ -665,55 +724,61 @@ main ()
 
   /* Hex.  */
   {
-    errno = 0;
     const char input[] = "0xa";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 10.0);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0XA";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 10.0);            /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0x1p";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0x1p+";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0x1p+1";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 2.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
   {
-    errno = 0;
     const char input[] = "0x1p+1a";
     char *ptr;
-    double result = strtod (input, &ptr);
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
     ASSERT (result == 2.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (errno == 0);
@@ -721,7 +786,6 @@ main ()
 
   /* Large buffers.  */
   {
-    errno = 0;
     size_t m = 1000000;
     char *input = malloc (m + 1);
     if (input)
@@ -731,6 +795,7 @@ main ()
 	memset (input, '\t', m - 1);
 	input[m - 1] = '1';
 	input[m] = '\0';
+	errno = 0;
 	result = strtod (input, &ptr);
 	ASSERT (result == 1.0);
 	ASSERT (ptr == input + m);
@@ -739,7 +804,6 @@ main ()
     free (input);
   }
   {
-    errno = 0;
     size_t m = 1000000;
     char *input = malloc (m + 1);
     if (input)
@@ -749,6 +813,7 @@ main ()
 	memset (input, '0', m - 1);
 	input[m - 1] = '1';
 	input[m] = '\0';
+	errno = 0;
 	result = strtod (input, &ptr);
 	ASSERT (result == 1.0);
 	ASSERT (ptr == input + m);
@@ -760,7 +825,6 @@ main ()
   /* Newlib has an artificial limit of 20000 for the exponent.  TODO -
      gnulib should fix this.  */
   {
-    errno = 0;
     size_t m = 1000000;
     char *input = malloc (m + 1);
     if (input)
@@ -779,6 +843,7 @@ main ()
 	input[m - 2] = '9';
 	input[m - 1] = '1';
 	input[m] = '\0';
+	errno = 0;
 	result = strtod (input, &ptr);
 	ASSERT (result == 1.0);         /* MacOS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
 	ASSERT (ptr == input + m);      /* OSF/1 5.1 */
@@ -787,7 +852,6 @@ main ()
     free (input);
   }
   {
-    errno = 0;
     size_t m = 1000000;
     char *input = malloc (m + 1);
     if (input)
@@ -805,6 +869,7 @@ main ()
 	input[m - 2] = '9';
 	input[m - 1] = '1';
 	input[m] = '\0';
+	errno = 0;
 	result = strtod (input, &ptr);
 	ASSERT (result == 1.0);         /* MacOS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
 	ASSERT (ptr == input + m);
@@ -814,7 +879,6 @@ main ()
   }
 #endif
   {
-    errno = 0;
     size_t m = 1000000;
     char *input = malloc (m + 1);
     if (input)
@@ -827,6 +891,7 @@ main ()
 	input[3] = '1';
 	memset (input + 4, '0', m - 3);
 	input[m] = '\0';
+	errno = 0;
 	result = strtod (input, &ptr);
 	ASSERT (result == 0.0);
 	ASSERT (!!signbit (result) == !!signbit (-0.0)); /* IRIX 6.5 */

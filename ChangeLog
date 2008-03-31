@@ -1,5 +1,9 @@
 2008-03-31  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-strtod.c (main): Don't use C99 syntax.
+
+2008-03-31  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-strtod.c (main): Don't test NAN macro. Needed for Solaris.
 	Reported by Eric Blake.
 
