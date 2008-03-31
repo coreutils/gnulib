@@ -1,3 +1,8 @@
+2008-03-31  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-strtod.c (main): Don't test NAN macro. Needed for Solaris.
+	Reported by Eric Blake.
+
 2008-03-31  Jim Meyering  <meyering@redhat.com>
 
 	Don't compare actual signbit return values.

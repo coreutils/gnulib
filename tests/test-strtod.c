@@ -542,7 +542,7 @@ main ()
     char *ptr2;
     double result1 = strtod (input, &ptr1);
     double result2 = strtod (input + 1, &ptr2);
-#ifdef NAN
+#if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnan (result1));           /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (isnan (result2));           /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
 # if 0
@@ -570,7 +570,7 @@ main ()
     char *ptr2;
     double result1 = strtod (input, &ptr1);
     double result2 = strtod (input + 1, &ptr2);
-#ifdef NAN
+#if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnan (result1));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (isnan (result2));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (!!signbit (result1) == !!signbit (result2));
@@ -594,7 +594,7 @@ main ()
     char *ptr2;
     double result1 = strtod (input, &ptr1);
     double result2 = strtod (input + 1, &ptr2);
-#ifdef NAN
+#if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnan (result1));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (isnan (result2));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
 # if 0
@@ -620,7 +620,7 @@ main ()
     const char input[] = " nan().";
     char *ptr;
     double result = strtod (input, &ptr);
-#ifdef NAN
+#if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnan (result));            /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (ptr == input + 6);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (errno == 0);
@@ -641,7 +641,7 @@ main ()
     char *ptr2;
     double result1 = strtod (input, &ptr1);
     double result2 = strtod (input + 1, &ptr2);
-#ifdef NAN
+#if 1 /* All known CPUs support NaNs.  */
     ASSERT (isnan (result1));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (isnan (result2));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
 # if 0
