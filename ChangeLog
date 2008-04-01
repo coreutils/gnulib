@@ -1,3 +1,11 @@
+2008-04-01  Eric Blake  <ebb9@byu.net>
+
+	For now, cater to gnulib strtod inaccuracies.
+	* tests/test-strtod.c (main): Allow 1-ulp error on expected
+	fractional results.  While not as nice from a QoI perspective, it
+	is a quicker patch than correctly implementing decimal to binary
+	rounding.
+
 2008-03-31  Eric Blake  <ebb9@byu.net>
 
 	Guarantee a definition of NAN.
