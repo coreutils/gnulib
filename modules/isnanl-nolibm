@@ -11,6 +11,7 @@ m4/isnanl.m4
 Depends-on:
 float
 fpieee
+math
 
 configure.ac:
 gl_FUNC_ISNANL_NO_LIBM

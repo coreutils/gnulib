@@ -1,6 +1,6 @@
 /* A GNU-like <math.h>.
 
-   Copyright (C) 2002-2003, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2007, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,6 +31,24 @@
 extern "C" {
 #endif
 
+
+/* POSIX allows platforms that don't support NAN.  But all major
+   machines in the past 15 years have supported something close to
+   IEEE NaN, so we define this unconditionally.  */
+#ifndef NAN
+  /* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
+# ifdef __DECC
+static float
+_NaN ()
+{
+  static float zero = 0.0f;
+  return zero / zero;
+}
+#  define NAN (_NaN())
+# else
+#  define NAN (0.0f / 0.0f)
+# endif
+#endif
 
 /* Write x as
      x = mantissa * 2^exp

@@ -2,6 +2,7 @@ Files:
 tests/test-vasprintf-posix.c
 
 Depends-on:
+math
 stdint
 
 configure.ac:

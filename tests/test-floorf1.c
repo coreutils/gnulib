@@ -1,5 +1,5 @@
 /* Test of rounding towards negative infinity.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -36,18 +36,6 @@
     }									     \
   while (0)
 
-/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
-#ifdef __DECC
-static float
-NaN ()
-{
-  static float zero = 0.0f;
-  return zero / zero;
-}
-#else
-# define NaN() (0.0f / 0.0f)
-#endif
-
 int
 main ()
 {
@@ -79,7 +67,7 @@ main ()
   ASSERT (floorf (1.0f / 0.0f) == 1.0f / 0.0f);
   ASSERT (floorf (-1.0f / 0.0f) == -1.0f / 0.0f);
   /* NaNs.  */
-  ASSERT (isnanf (floorf (NaN ())));
+  ASSERT (isnanf (floorf (NAN)));
 
   return 0;
 }

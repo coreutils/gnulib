@@ -21,6 +21,7 @@
 #include "isnand.h"
 
 #include <limits.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -34,18 +35,6 @@
         }								     \
     }									     \
   while (0)
-
-/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
-#ifdef __DECC
-static double
-NaN ()
-{
-  static double zero = 0.0;
-  return zero / zero;
-}
-#else
-# define NaN() (0.0 / 0.0)
-#endif
 
 int
 main ()
@@ -63,7 +52,7 @@ main ()
   ASSERT (!isnand (1.0 / 0.0));
   ASSERT (!isnand (-1.0 / 0.0));
   /* Quiet NaN.  */
-  ASSERT (isnand (NaN ()));
+  ASSERT (isnand (NAN));
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
   /* Signalling NaN.  */
   {
@@ -71,7 +60,7 @@ main ()
       ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
     typedef union { double value; unsigned int word[NWORDS]; } memory_double;
     memory_double m;
-    m.value = NaN ();
+    m.value = NAN;
 # if DBL_EXPBIT0_BIT > 0
     m.word[DBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (DBL_EXPBIT0_BIT - 1);
 # else

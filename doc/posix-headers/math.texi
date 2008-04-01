@@ -7,8 +7,14 @@ Gnulib module: math
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+Some platforms do not provide a definition of NAN:
+Solaris 8.
+
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+NAN is not a compile time constant with some broken compilers:
+Compaq (ex-DEC) C 6.4
 @end itemize

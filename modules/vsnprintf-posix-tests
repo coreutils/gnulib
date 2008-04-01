@@ -4,6 +4,7 @@ tests/test-snprintf-posix.h
 tests/test-vsnprintf.c
 
 Depends-on:
+math
 stdint
 
 configure.ac:

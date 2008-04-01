@@ -36,18 +36,6 @@
     }									     \
   while (0)
 
-/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
-#ifdef __DECC
-static double
-NaN ()
-{
-  static double zero = 0.0;
-  return zero / zero;
-}
-#else
-# define NaN() (0.0 / 0.0)
-#endif
-
 int
 main ()
 {
@@ -78,7 +66,7 @@ main ()
   ASSERT (trunc (1.0 / 0.0) == 1.0 / 0.0);
   ASSERT (trunc (-1.0 / 0.0) == -1.0 / 0.0);
   /* NaNs.  */
-  ASSERT (isnand (trunc (NaN ())));
+  ASSERT (isnand (trunc (NAN)));
 
   return 0;
 }

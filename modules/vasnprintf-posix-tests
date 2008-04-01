@@ -5,6 +5,7 @@ tests/test-vasnprintf-posix2.c
 m4/locale-fr.m4
 
 Depends-on:
+math
 stdint
 
 configure.ac:

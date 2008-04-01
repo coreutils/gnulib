@@ -16,17 +16,7 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
-/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
-#ifdef __DECC
-static double
-NaN ()
-{
-  static double zero = 0.0;
-  return zero / zero;
-}
-#else
-# define NaN() (0.0 / 0.0)
-#endif
+#include <math.h>
 
 /* The SGI MIPS floating-point format does not distinguish 0.0 and -0.0.  */
 static int
@@ -81,7 +71,7 @@ strisnan (const char *string, size_t start_index, size_t end_index, int uppercas
     }
   return 0;
 }
-	  
+
 static void
 test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
 {
@@ -207,7 +197,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%a %d", NaN (), 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%a %d", NAN, 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -404,7 +394,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%050a %d", NaN (), 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%050a %d", NAN, 33, 44, 55);
     /* "0000000nan 33" is not a valid result; see
        <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
     ASSERT (strlen (result) == 50 + 3
@@ -918,7 +908,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%f %d", NaN (), 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%f %d", NAN, 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -999,7 +989,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%050f %d", NaN (), 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%050f %d", NAN, 33, 44, 55);
     ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -1414,7 +1404,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%F %d", NaN (), 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%F %d", NAN, 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 1)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -1708,7 +1698,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%e %d", NaN (), 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%e %d", NAN, 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -1799,7 +1789,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%050e %d", NaN (), 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%050e %d", NAN, 33, 44, 55);
     ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -2316,7 +2306,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%g %d", NaN (), 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%g %d", NAN, 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -2400,7 +2390,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%050g %d", NaN (), 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%050g %d", NAN, 33, 44, 55);
     ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);

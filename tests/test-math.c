@@ -1,5 +1,5 @@
 /* Test of <math.h> substitute.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,8 +20,14 @@
 
 #include <math.h>
 
+#ifndef NAN
+# error NAN should be defined
+choke me
+#endif
+
 int
 main ()
 {
-  return 0;
+  double d = NAN;
+  return d == d;
 }

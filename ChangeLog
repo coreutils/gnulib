@@ -1,3 +1,34 @@
+2008-03-31  Eric Blake  <ebb9@byu.net>
+
+	Guarantee a definition of NAN.
+	* lib/math.in.h (NAN): Define if missing.
+	* tests/test-math.c (main): Test it.
+	* doc/posix-headers/math.texi (math.h): Document this.
+	* lib/isnan.c (rpl_isnand): Use it.
+	* tests/test-ceilf1.c (NaN): Delete, and use NAN instead.
+	* tests/test-floorf1.c (NaN): Likewise.
+	* tests/test-frexp.c (NaN): Likewise.
+	* tests/test-isnand.c (NaN): Likewise.
+	* tests/test-isnanf.c (NaN): Likewise.
+	* tests/test-round1.c (NaN): Likewise.
+	* tests/test-roundf1.c (NaN): Likewise.
+	* tests/test-snprintf-posix.h (NaN): Likewise.
+	* tests/test-sprintf-posix.h (NaN): Likewise.
+	* tests/test-trunc1.c (NaN): Likewise.
+	* tests/test-truncf1.c (NaN): Likewise.
+	* tests/test-vasnprintf-posix.c (NaN): Likewise.
+	* tests/test-vasprintf-posix.c (NaN): Likewise.
+	* modules/isnand-nolibm (Depends-on): Add math.
+	* modules/isnanf-nolibm (Depends-on): Likewise.
+	* modules/isnanl (Depends-on): Likewise.
+	* modules/isnanl-nolibm (Depends-on): Likewise.
+	* modules/snprintf-posix-tests (Depends-on): Likewise.
+	* modules/sprintf-posix-tests (Depends-on): Likewise.
+	* modules/vsnprintf-posix-tests (Depends-on): Likewise.
+	* modules/vsprintf-posix-tests (Depends-on): Likewise.
+	* modules/vasnprintf-posix-tests (Depends-on): Likewise.
+	* modules/vasprintf-posix-tests (Depends-on): Likewise.
+
 2008-03-31  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-strtod.c (main): Update results for OSF/1 platforms.
