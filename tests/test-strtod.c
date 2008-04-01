@@ -514,7 +514,7 @@ main ()
     double result;
     errno = 0;
     result = strtod (input, &ptr);
-    ASSERT (0.0 <= result && result <= FLT_MIN);
+    ASSERT (0.0 <= result && result <= DBL_MIN);
     ASSERT (!signbit (result));
     ASSERT (ptr == input + 9);
     ASSERT (errno == ERANGE);
@@ -525,7 +525,7 @@ main ()
     double result;
     errno = 0;
     result = strtod (input, &ptr);
-    ASSERT (-FLT_MIN <= result && result <= 0.0);
+    ASSERT (-DBL_MIN <= result && result <= 0.0);
 #if 0
     /* FIXME - this is glibc bug 5995; POSIX allows returning positive
        0 on negative underflow, even though quality of implementation
@@ -910,7 +910,7 @@ main ()
   /* Rounding.  */
   /* TODO - is it worth some tests of rounding for typical IEEE corner
      cases, such as .5 ULP rounding up to the smallest denormal and
-     not causing underflow, or FLT_MIN - .5 ULP not causing an
+     not causing underflow, or DBL_MIN - .5 ULP not causing an
      infinite loop?  */
 
   return status;

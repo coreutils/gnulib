@@ -1,5 +1,9 @@
 2008-04-01  Eric Blake  <ebb9@byu.net>
 
+	Fix typos.
+	* tests/test-strtod.c (main): s/FLT_/DBL_/ for minimum and epsilon
+	values to be the right type.
+
 	For now, cater to gnulib strtod inaccuracies.
 	* tests/test-strtod.c (main): Allow 1-ulp error on expected
 	fractional results.  While not as nice from a QoI perspective, it
