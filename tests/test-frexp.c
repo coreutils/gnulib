@@ -27,6 +27,10 @@
 #include "isnand.h"
 #include "nan.h"
 
+/* Avoid some warnings from "gcc -Wshadow".
+   This file doesn't use the exp() function.  */
+#define exp exponent
+
 #define ASSERT(expr) \
   do									     \
     {									     \

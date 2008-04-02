@@ -1,3 +1,9 @@
+2008-04-02  Jim Meyering  <meyering@redhat.com>
+
+	Avoid some warnings from "gcc -Wshadow".
+	* tests/test-frexp.c (exp): Define to a different identifier.
+	* tests/test-frexpl.c (exp): Likewise.
+
 2008-04-03  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: remove dangling *.[ch] symlinks from lib

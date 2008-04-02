@@ -1,5 +1,5 @@
 /* Test of splitting a 'long double' into fraction and mantissa.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,6 +26,10 @@
 
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
+
+/* Avoid some warnings from "gcc -Wshadow".
+   This file doesn't use the exp() function.  */
+#define exp exponent
 
 #define ASSERT(expr) \
   do									     \
