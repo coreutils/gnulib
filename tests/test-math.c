@@ -30,9 +30,20 @@ choke me
 static float n = NAN;
 #endif
 
+/* Compare two numbers with ==.
+   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
+   'x == x' test.  */
+static int
+numeric_equal (double x, double y)
+{
+  return x == y;
+}
+
 int
 main ()
 {
   double d = NAN;
-  return d == d;
+  if (numeric_equal (d, d))
+    return 1;
+  return 0;
 }

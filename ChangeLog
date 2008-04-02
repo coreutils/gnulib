@@ -1,5 +1,11 @@
 2008-04-01  Bruno Haible  <bruno@clisp.org>
 
+	Fix test to work on IRIX 6.5 with cc.
+	* tests/test-math.c (numeric_equal): New function.
+	(main): Use it.
+
+2008-04-01  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-headers/math.texi: Refine documentation of NAN problem.
 
 2008-04-01  Bruno Haible  <bruno@clisp.org>
