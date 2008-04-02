@@ -1,5 +1,9 @@
 2008-04-01  Bruno Haible  <bruno@clisp.org>
 
+	* doc/posix-headers/math.texi: Refine documentation of NAN problem.
+
+2008-04-01  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-vasnprintf-posix.c: Include nan.h instead of <math.h>.
 	(test_function): Use NaNd, NaNl instead of NAN or 0.0L/0.0L.
 	* modules/vasnprintf-posix-tests (Files): Add tests/nan.h.
