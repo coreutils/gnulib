@@ -25,6 +25,11 @@
 choke me
 #endif
 
+#if 0
+/* Check that NAN expands into a constant expression.  */
+static float n = NAN;
+#endif
+
 int
 main ()
 {

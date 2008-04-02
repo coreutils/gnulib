@@ -21,9 +21,10 @@
 #include "isnand.h"
 
 #include <limits.h>
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "nan.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -52,7 +53,7 @@ main ()
   ASSERT (!isnand (1.0 / 0.0));
   ASSERT (!isnand (-1.0 / 0.0));
   /* Quiet NaN.  */
-  ASSERT (isnand (NAN));
+  ASSERT (isnand (NaNd ()));
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
   /* Signalling NaN.  */
   {
@@ -60,7 +61,7 @@ main ()
       ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
     typedef union { double value; unsigned int word[NWORDS]; } memory_double;
     memory_double m;
-    m.value = NAN;
+    m.value = NaNd ();
 # if DBL_EXPBIT0_BIT > 0
     m.word[DBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (DBL_EXPBIT0_BIT - 1);
 # else

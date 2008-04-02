@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "isnand.h"
+#include "nan.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -66,7 +67,7 @@ main ()
   ASSERT (trunc (1.0 / 0.0) == 1.0 / 0.0);
   ASSERT (trunc (-1.0 / 0.0) == -1.0 / 0.0);
   /* NaNs.  */
-  ASSERT (isnand (trunc (NAN)));
+  ASSERT (isnand (trunc (NaNd ())));
 
   return 0;
 }

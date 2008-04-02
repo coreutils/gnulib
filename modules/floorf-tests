@@ -1,6 +1,7 @@
 Files:
 tests/test-floorf1.c
 tests/test-floorf2.c
+tests/nan.h
 
 Depends-on:
 float

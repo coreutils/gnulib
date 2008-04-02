@@ -2,9 +2,9 @@ Files:
 tests/test-snprintf-posix.c
 tests/test-snprintf-posix.h
 tests/test-snprintf.c
+tests/nan.h
 
 Depends-on:
-math
 stdint
 
 configure.ac:

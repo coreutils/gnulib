@@ -16,7 +16,7 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
-#include <math.h>
+#include "nan.h"
 
 /* The SGI MIPS floating-point format does not distinguish 0.0 and -0.0.  */
 static int
@@ -183,7 +183,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* NaN.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%a %d", NAN, 33, 44, 55);
+      my_sprintf (result, "%a %d", NaNd (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -380,7 +380,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%050a %d", NAN, 33, 44, 55);
+      my_sprintf (result, "%050a %d", NaNd (), 33, 44, 55);
     /* "0000000nan 33" is not a valid result; see
        <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
     ASSERT (strlen (result) == 50 + 3
@@ -447,7 +447,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* NaN.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%La %d", 0.0L / 0.0L, 33, 44, 55);
+      my_sprintf (result, "%La %d", NaNl (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -732,7 +732,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%050La %d", 0.0L / 0.0L, 33, 44, 55);
+      my_sprintf (result, "%050La %d", NaNl (), 33, 44, 55);
     /* "0000000nan 33" is not a valid result; see
        <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
     ASSERT (strlen (result) == 50 + 3
@@ -894,7 +894,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* NaN.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%f %d", NAN, 33, 44, 55);
+      my_sprintf (result, "%f %d", NaNd (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -969,7 +969,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%050f %d", NAN, 33, 44, 55);
+      my_sprintf (result, "%050f %d", NaNd (), 33, 44, 55);
     ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -1133,10 +1133,9 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   }
 
   { /* NaN.  */
-    static long double zero = 0.0L;
     char result[1000];
     int retval =
-      my_sprintf (result, "%Lf %d", zero / zero, 33, 44, 55);
+      my_sprintf (result, "%Lf %d", NaNl (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -1296,10 +1295,9 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   }
 
   { /* FLAG_ZERO with NaN.  */
-    static long double zero = 0.0L;
     char result[1000];
     int retval =
-      my_sprintf (result, "%050Lf %d", zero / zero, 33, 44, 55);
+      my_sprintf (result, "%050Lf %d", NaNl (), 33, 44, 55);
     ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -1378,7 +1376,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* NaN.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%F %d", NAN, 33, 44, 55);
+      my_sprintf (result, "%F %d", NaNd (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 1)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -1470,10 +1468,9 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   }
 
   { /* NaN.  */
-    static long double zero = 0.0L;
     char result[1000];
     int retval =
-      my_sprintf (result, "%LF %d", zero / zero, 33, 44, 55);
+      my_sprintf (result, "%LF %d", NaNl (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 1)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -1672,7 +1669,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* NaN.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%e %d", NAN, 33, 44, 55);
+      my_sprintf (result, "%e %d", NaNd (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -1763,7 +1760,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%050e %d", NAN, 33, 44, 55);
+      my_sprintf (result, "%050e %d", NaNd (), 33, 44, 55);
     ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -1928,10 +1925,9 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   }
 
   { /* NaN.  */
-    static long double zero = 0.0L;
     char result[1000];
     int retval =
-      my_sprintf (result, "%Le %d", zero / zero, 33, 44, 55);
+      my_sprintf (result, "%Le %d", NaNl (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -2099,10 +2095,9 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   }
 
   { /* FLAG_ZERO with NaN.  */
-    static long double zero = 0.0L;
     char result[1000];
     int retval =
-      my_sprintf (result, "%050Le %d", zero / zero, 33, 44, 55);
+      my_sprintf (result, "%050Le %d", NaNl (), 33, 44, 55);
     ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -2280,7 +2275,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* NaN.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%g %d", NAN, 33, 44, 55);
+      my_sprintf (result, "%g %d", NaNd (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -2364,7 +2359,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* FLAG_ZERO with NaN.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%050g %d", NAN, 33, 44, 55);
+      my_sprintf (result, "%050g %d", NaNd (), 33, 44, 55);
     ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -2529,10 +2524,9 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   }
 
   { /* NaN.  */
-    static long double zero = 0.0L;
     char result[1000];
     int retval =
-      my_sprintf (result, "%Lg %d", zero / zero, 33, 44, 55);
+      my_sprintf (result, "%Lg %d", NaNl (), 33, 44, 55);
     ASSERT (strlen (result) >= 3 + 3
 	    && strisnan (result, 0, strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -2700,10 +2694,9 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   }
 
   { /* FLAG_ZERO with NaN.  */
-    static long double zero = 0.0L;
     char result[1000];
     int retval =
-      my_sprintf (result, "%050Lg %d", zero / zero, 33, 44, 55);
+      my_sprintf (result, "%050Lg %d", NaNl (), 33, 44, 55);
     ASSERT (strlen (result) == 50 + 3
 	    && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
 	    && strcmp (result + strlen (result) - 3, " 33") == 0);

@@ -1,8 +1,8 @@
 Files:
 tests/test-vasprintf-posix.c
+tests/nan.h
 
 Depends-on:
-math
 stdint
 
 configure.ac:

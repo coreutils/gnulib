@@ -1,9 +1,9 @@
 Files:
 tests/test-sprintf-posix.c
 tests/test-sprintf-posix.h
+tests/nan.h
 
 Depends-on:
-math
 stdint
 
 configure.ac:

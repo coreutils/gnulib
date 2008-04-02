@@ -1,3 +1,74 @@
+2008-04-01  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-vasnprintf-posix.c: Include nan.h instead of <math.h>.
+	(test_function): Use NaNd, NaNl instead of NAN or 0.0L/0.0L.
+	* modules/vasnprintf-posix-tests (Files): Add tests/nan.h.
+	(Depends-on): Remove math.
+
+	* tests/test-vasprintf-posix.c: Include nan.h instead of <math.h>.
+	(test_function): Use NaNd, NaNl instead of NAN or 0.0L/0.0L.
+	* modules/vasprintf-posix-tests (Files): Add tests/nan.h.
+	(Depends-on): Remove math.
+
+	* tests/test-snprintf-posix.h: Include nan.h instead of <math.h>.
+	(test_function): Use NaNd, NaNl instead of NAN or 0.0L/0.0L.
+	* modules/snprintf-posix-tests (Files): Add tests/nan.h.
+	(Depends-on): Remove math.
+	* modules/vsnprintf-posix-tests (Files): Add tests/nan.h.
+	(Depends-on): Remove math.
+
+	* tests/test-sprintf-posix.h: Include nan.h instead of <math.h>.
+	(test_function): Use NaNd, NaNl instead of NAN or 0.0L/0.0L.
+	* modules/sprintf-posix-tests (Files): Add tests/nan.h.
+	(Depends-on): Remove math.
+	* modules/vsprintf-posix-tests (Files): Add tests/nan.h.
+	(Depends-on): Remove math.
+
+	* tests/test-round1.c: Include nan.h.
+	(main): Use NaNd instead of NAN.
+	* modules/round-tests (Files): Add tests/nan.h.
+
+	* tests/test-trunc1.c: Include nan.h.
+	(main): Use NaNd instead of NAN.
+	* modules/trunc-tests (Files): Add tests/nan.h.
+
+	* tests/test-roundf1.c: Include nan.h.
+	(main): Use NaNf instead of NAN.
+	* modules/roundf-tests (Files): Add tests/nan.h.
+
+	* tests/test-truncf1.c: Include nan.h.
+	(main): Use NaNf instead of NAN.
+	* modules/truncf-tests (Files): Add tests/nan.h.
+
+	* tests/test-ceilf1.c: Include nan.h.
+	(main): Use NaNf instead of NAN.
+	* modules/ceilf-tests (Files): Add tests/nan.h.
+
+	* tests/test-floorf1.c: Include nan.h.
+	(main): Use NaNf instead of NAN.
+	* modules/floorf-tests (Files): Add tests/nan.h.
+
+	* tests/test-isnanf.c: Include nan.h instead of <math.h>.
+	(main): Use NaNf instead of NAN.
+	* modules/isnanf-nolibm-tests (Files): Add tests/nan.h.
+
+	* tests/test-isnand.c: Include nan.h instead of <math.h>.
+	(main): Use NaNd instead of NAN.
+	* modules/isnand-nolibm-tests (Files): Add tests/nan.h.
+
+	* tests/test-frexp.c: Include nan.h.
+	(main): Use NaNd instead of NAN.
+	* modules/frexp-tests (Files): Add tests/nan.h.
+
+	* lib/isnan.c: Don't include <math.h>.
+	(FUNC): Don't use NAN macro.
+	* modules/isnand-nolibm (Depends-on): Remove math.
+	* modules/isnanf-nolibm (Depends-on): Remove math.
+	* modules/isnanl (Depends-on): Remove math.
+	* modules/isnanl-nolibm (Depends-on): Remove math.
+
+	* tests/nan.h: New file.
+
 2008-04-01  Eric Blake  <ebb9@byu.net>
 
 	Fix typos.

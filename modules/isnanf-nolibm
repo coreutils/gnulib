@@ -10,7 +10,6 @@ m4/isnanf.m4
 
 Depends-on:
 fpieee
-math
 
 configure.ac:
 gl_FUNC_ISNANF_NO_LIBM

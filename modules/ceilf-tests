@@ -1,6 +1,7 @@
 Files:
 tests/test-ceilf1.c
 tests/test-ceilf2.c
+tests/nan.h
 
 Depends-on:
 float

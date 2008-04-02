@@ -1,5 +1,5 @@
 /* Test of rounding towards negative infinity.
-   Copyright (C) 2007, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "isnanf.h"
+#include "nan.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -67,7 +68,7 @@ main ()
   ASSERT (floorf (1.0f / 0.0f) == 1.0f / 0.0f);
   ASSERT (floorf (-1.0f / 0.0f) == -1.0f / 0.0f);
   /* NaNs.  */
-  ASSERT (isnanf (floorf (NAN)));
+  ASSERT (isnanf (floorf (NaNf ())));
 
   return 0;
 }

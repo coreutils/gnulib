@@ -25,6 +25,7 @@
 #include <stdlib.h>
 
 #include "isnand.h"
+#include "nan.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -61,7 +62,7 @@ main ()
   { /* NaN.  */
     int exp = -9999;
     double mantissa;
-    x = NAN;
+    x = NaNd ();
     mantissa = frexp (x, &exp);
     ASSERT (isnand (mantissa));
   }

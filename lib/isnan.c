@@ -19,7 +19,6 @@
 #include <config.h>
 
 #include <float.h>
-#include <math.h>
 #include <string.h>
 
 #include "float+.h"
@@ -112,10 +111,11 @@ FUNC (DOUBLE x)
      also fails when constant-folding 0.0 / 0.0 even when constant-folding is
      not required.  The SGI MIPSpro C compiler complains about "floating-point
      operation result is out of range".  */
+  static DOUBLE zero = L_(0.0);
   memory_double nan;
   DOUBLE plus_inf = L_(1.0) / L_(0.0);
   DOUBLE minus_inf = -L_(1.0) / L_(0.0);
-  nan.value = NAN;
+  nan.value = zero / zero;
 #  else
   static memory_double nan = { L_(0.0) / L_(0.0) };
   static DOUBLE plus_inf = L_(1.0) / L_(0.0);
