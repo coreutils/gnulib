@@ -1,5 +1,5 @@
 /* Test of POSIX compatible vsprintf() function.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -40,6 +40,8 @@
     }									     \
   while (0)
 
+#include "test-sprintf-posix.h"
+
 static int
 my_sprintf (char *str, const char *format, ...)
 {
@@ -51,8 +53,6 @@ my_sprintf (char *str, const char *format, ...)
   va_end (args);
   return ret;
 }
-
-#include "test-sprintf-posix.h"
 
 int
 main (int argc, char *argv[])

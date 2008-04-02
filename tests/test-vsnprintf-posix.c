@@ -1,5 +1,5 @@
 /* Test of POSIX compatible vsnprintf() function.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -40,6 +40,8 @@
     }									     \
   while (0)
 
+#include "test-snprintf-posix.h"
+
 static int
 my_snprintf (char *str, size_t size, const char *format, ...)
 {
@@ -51,8 +53,6 @@ my_snprintf (char *str, size_t size, const char *format, ...)
   va_end (args);
   return ret;
 }
-
-#include "test-snprintf-posix.h"
 
 int
 main (int argc, char *argv[])
