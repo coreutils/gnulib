@@ -1,3 +1,10 @@
+2008-04-03  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: remove dangling *.[ch] symlinks from lib
+	* build-aux/bootstrap [dangling symlink removal]: Move find's
+	-depth option to precede all others, to avoid a warning.
+	Remove *.[ch] files too, and from "$source_base" (usually lib/).
+
 2008-04-02  Bruno Haible  <bruno@clisp.org>
 
 	Avoid some warnings from "gcc -Wshadow".
