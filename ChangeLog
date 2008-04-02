@@ -1,3 +1,9 @@
+2008-04-02  Bruno Haible  <bruno@clisp.org>
+
+	Avoid some "statement with no effect" warnings from gcc.
+	* tests/test-wctype.c (main): Explicitly ignore unused values.
+	Reported by Jim Meyering.
+
 2008-04-02  Jim Meyering  <meyering@redhat.com>
 
 	Avoid some warnings from "gcc -Wshadow".

@@ -1,5 +1,5 @@
 /* Test of <wctype.h> substitute.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,20 +24,20 @@ int
 main ()
 {
   /* Check that the isw* functions exist as functions or as macros.  */
-  iswalnum (0);
-  iswalpha (0);
+  (void) iswalnum (0);
+  (void) iswalpha (0);
 #if 0 /* not portable: missing on mingw */
-  iswblank (0);
+  (void) iswblank (0);
 #endif
-  iswcntrl (0);
-  iswdigit (0);
-  iswgraph (0);
-  iswlower (0);
-  iswprint (0);
-  iswpunct (0);
-  iswspace (0);
-  iswupper (0);
-  iswxdigit (0);
+  (void) iswcntrl (0);
+  (void) iswdigit (0);
+  (void) iswgraph (0);
+  (void) iswlower (0);
+  (void) iswprint (0);
+  (void) iswpunct (0);
+  (void) iswspace (0);
+  (void) iswupper (0);
+  (void) iswxdigit (0);
 
   return 0;
 }
