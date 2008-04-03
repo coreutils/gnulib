@@ -1,3 +1,9 @@
+2008-04-03  Eric Blake  <ebb9@byu.net>
+
+	Another maintainer tweak.
+	* top/GNUmakefile (_is-dist-target): Allow maintainer-distcheck as
+	a target that regenerates version.
+
 2008-04-03  Jim Meyering  <meyering@redhat.com>
 
 	vc-list-files: don't cause coreutils "make po-check" failure
