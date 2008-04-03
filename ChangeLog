@@ -1,3 +1,10 @@
+2008-04-03  Eric Blake  <ebb9@byu.net>
+
+	Allow VPATH usage of vc-list-files.
+	* build-aux/vc-list-files (scriptversion): Add timestamp.
+	(options): Add --help, --version, -C.
+	(CVS): Support installed cvsu.
+
 2008-04-02  Bruno Haible  <bruno@clisp.org>
 
 	Avoid some "statement with no effect" warnings from gcc.
