@@ -68,10 +68,15 @@ endif
 else
 
 .DEFAULT_GOAL := abort-due-to-no-makefile
+srcdir = .
 
 # The package can override .DEFAULT_GOAL to run actions like autoreconf.
 -include ./cfg.mk
 include ./maint.mk
+
+ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
+$(MAKECMDGOALS): abort-due-to-no-makefile
+endif
 
 abort-due-to-no-makefile:
 	@echo There seems to be no Makefile in this directory.   1>&2
