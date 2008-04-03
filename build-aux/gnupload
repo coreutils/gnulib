@@ -1,9 +1,9 @@
 #!/bin/sh
 # Sign files and upload them.
 
-scriptversion=2007-12-18.17
+scriptversion=2008-04-02.19
 
-# Copyright (C) 2004, 2005, 2006, 2007  Free Software Foundation
+# Copyright (C) 2004, 2005, 2006, 2007, 2008  Free Software Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -145,7 +145,7 @@ do
 	cat >$file.directive<<EOF
 version: 1.1
 directory: $destdir
-filename: $file
+filename: `basename -- "$file"`
 EOF
 	echo "$passphrase" | $GPG --passphrase-fd 0 --clearsign $file.directive
         ncftpput ftp-upload.gnu.org /incoming/alpha $files $file.directive.asc
@@ -156,7 +156,7 @@ EOF
 	cat >$file.directive<<EOF
 version: 1.1
 directory: $destdir
-filename: $file
+filename: `basename -- "$file"`
 EOF
 	echo "$passphrase" | $GPG --passphrase-fd 0 --clearsign $file.directive
         ncftpput ftp-upload.gnu.org /incoming/ftp $files $file.directive.asc
