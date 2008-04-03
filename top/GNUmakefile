@@ -60,7 +60,8 @@ ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
                    $(srcdir)/.tarball-version)
     ifneq ($(_curr-ver),$(VERSION))
       $(info INFO: running autoreconf for new version string: $(_curr-ver))
-      _dummy := $(shell cd $(srcdir) && rm -rf autom4te.cache && $(_autoreconf)))
+      _dummy := $(shell cd $(srcdir) && rm -rf autom4te.cache .version \
+        && $(_autoreconf))
     endif
   endif
 endif

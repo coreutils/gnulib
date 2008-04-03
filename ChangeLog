@@ -1,5 +1,10 @@
 2008-04-03  Eric Blake  <ebb9@byu.net>
 
+	Ensure sane .version contents.
+	* top/GNUmakefile (_dummy): Also delete .version when rebuilding
+	version string.
+	* build-aux/git-version-gen: Improve documentation.
+
 	Make GNU make output nicer.
 	* top/GNUmakefile [!_have-Makefile]: Add dependency on
 	MAKECMDGOALS to enforce message for all command line targets.  Set
