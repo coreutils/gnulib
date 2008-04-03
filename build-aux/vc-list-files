@@ -2,7 +2,7 @@
 # List version-controlled file names.
 
 # Print a version string.
-scriptversion=2008-04-03.14
+scriptversion=2008-04-03.17
 
 # Copyright (C) 2006-2008 Free Software Foundation, Inc.
 
@@ -56,7 +56,7 @@ EOF
     exit ;;
 
   -C)
-    postprocess="| sed 's|^|$2/|'"
+    test "$2" = . || postprocess="| sed 's|^|$2/|'"
     cd "$2" || exit 1
     shift; shift ;;
 esac

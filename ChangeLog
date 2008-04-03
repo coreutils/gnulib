@@ -1,3 +1,8 @@
+2008-04-03  Jim Meyering  <meyering@redhat.com>
+
+	vc-list-files: don't cause coreutils "make po-check" failure
+	* build-aux/vc-list-files: Skip postprocessing when $2 is '.'
+
 2008-04-03  Eric Blake  <ebb9@byu.net>
 
 	Allow VPATH usage of vc-list-files.
