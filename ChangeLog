@@ -1,3 +1,10 @@
+2008-04-04  Eric Blake  <ebb9@byu.net>
+
+	Improve strtod bug detection check.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Also check for hex-float parsing,
+	required for Solaris 10.
+	Reported by Bob Friesenhahn and Nelson H. F. Beebe.
+
 2008-04-04  Bruno Haible  <bruno@clisp.org>
 
 	* modules/relocatable-prog-wrapper (Files): Add m4/environ.m4. Needed

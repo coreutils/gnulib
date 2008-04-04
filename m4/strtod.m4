@@ -1,4 +1,4 @@
-# strtod.m4 serial 7
+# strtod.m4 serial 8
 dnl Copyright (C) 2002, 2003, 2006, 2007, 2008 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -22,15 +22,23 @@ AC_DEFUN([gl_FUNC_STRTOD],
 ]], [[
   {
     /* Older glibc and Cygwin mis-parse "-0x".  */
-    char *string = "-0x";
+    const char *string = "-0x";
     char *term;
     double value = strtod (string, &term);
     if (1 / value != -HUGE_VAL || term != (string + 2))
       return 1;
   }
   {
+    /* Many platforms do not parse hex floats.  */
+    const char *string = "0XaP+1";
+    char *term;
+    double value = strtod (string, &term);
+    if (value != 20.0 || term != (string + 6))
+      return 1;
+  }
+  {
     /* Many platforms do not parse infinities.  */
-    char *string = "inf";
+    const char *string = "inf";
     char *term;
     double value = strtod (string, &term);
     if (value != HUGE_VAL || term != (string + 3))
