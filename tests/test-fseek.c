@@ -1,5 +1,5 @@
 /* Test of fseek() function.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,33 +19,43 @@
 #include <config.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
 
 int
 main (int argc, char **argv)
 {
-  /* Assume stdin is non-empty and seekable iff argc > 1.  */
+  /* Assume stdin is non-empty, seekable, and starts with '#!/bin/sh'
+     iff argc > 1.  */
   int expected = argc > 1 ? 0 : -1;
-  if (fseek (stdin, 0, SEEK_CUR) != expected)
-    return 1;
+  ASSERT (fseek (stdin, 0, SEEK_CUR) == expected);
   if (argc > 1)
     {
-      /* Test that fseek discards ungetc data.  */
+      /* Test that fseek discards previously read ungetc data.  */
       int ch = fgetc (stdin);
-      if (ch == EOF)
-        return 1;
-      if (ungetc (ch ^ 0xff, stdin) != (ch ^ 0xff))
-        return 1;
-      if (fseek (stdin, 0, SEEK_END))
-        return 1;
-      if (fgetc (stdin) != EOF)
-        return 1;
+      ASSERT (ch == '#');
+      ASSERT (ungetc (ch, stdin) == ch);
+      ASSERT (fseek (stdin, 2, SEEK_SET) == 0);
+      /* Test that fseek discards random ungetc data.  */
+      ch = fgetc (stdin);
+      ASSERT (ch == '/');
+      ASSERT (ungetc (ch ^ 0xff, stdin) == (ch ^ 0xff));
+      ASSERT (fseek (stdin, 0, SEEK_END) == 0);
+      ASSERT (fgetc (stdin) == EOF);
       /* Test that fseek resets end-of-file marker.  */
-      if (!feof (stdin))
-        return 1;
-      if (fseek (stdin, 0, SEEK_END))
-        return 1;
-      if (feof (stdin))
-        return 1;
+      ASSERT (feof (stdin));
+      ASSERT (fseek (stdin, 0, SEEK_END) == 0);
+      ASSERT (!feof (stdin));
     }
   return 0;
 }

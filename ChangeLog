@@ -1,5 +1,10 @@
 2008-04-04  Eric Blake  <ebb9@byu.net>
 
+	Make test-fseeko.c failures meaningful.
+	* tests/test-fseeko.c: Print line number on failure.
+	* tests/test-fseek.c: Likewise.
+	Reported by Nelson H. F. Beebe.
+
 	Improve strtod bug detection check.
 	* m4/strtod.m4 (gl_FUNC_STRTOD): Also check for hex-float parsing,
 	required for Solaris 10.
