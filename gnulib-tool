@@ -2671,7 +2671,7 @@ func_import ()
           if test -n "$already_present"; then
             echo "Updating file $g (backup in ${g}~)"
           else
-            echo "Replacing file $g (non-gnulib code backuped in ${g}~) !!"
+            echo "Replacing file $g (non-gnulib code backed up in ${g}~) !!"
           fi
           mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
           if { test -n "$symbolic" \
@@ -2687,7 +2687,7 @@ func_import ()
           if test -n "$already_present"; then
             echo "Update file $g (backup in ${g}~)"
           else
-            echo "Replace file $g (non-gnulib code backuped in ${g}~) !!"
+            echo "Replace file $g (non-gnulib code backed up in ${g}~) !!"
           fi
         fi
       fi
