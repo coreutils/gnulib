@@ -1,3 +1,9 @@
+2008-04-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* m4/double-slash-root.m4 (gl_DOUBLE_SLASH_ROOT): Fix quoting,
+	hide error from 'ls', needed on OS/2.
+	Report by Elbert Pol <elbert.pol@gmail.com>.
+
 2008-04-04  Eric Blake  <ebb9@byu.net>
 
 	Make test-fseeko.c failures meaningful.
