@@ -1,3 +1,12 @@
+2008-04-06  Bruno Haible  <bruno@clisp.org>
+
+	Avoid possible error with non-ASCII bytes in UTF-8 locales.
+	* tests/test-fprintf-posix.sh: Use "LC_ALL=C tr" instead of "tr".
+	* tests/test-printf-posix.sh: Likewise.
+	* tests/test-vfprintf-posix.sh: Likewise.
+	* tests/test-vprintf-posix.sh: Likewise.
+	* tests/test-xprintf-posix.sh: Likewise.
+
 2008-04-06  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* m4/double-slash-root.m4 (gl_DOUBLE_SLASH_ROOT): Fix quoting,
