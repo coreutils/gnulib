@@ -1,3 +1,9 @@
+2008-04-08  Eric Blake  <ebb9@byu.net>
+
+	Use 'git describe --match' if present (added in git 1.5.5).
+	* build-aux/git-version-gen: Limit result to tags that match 'v*'
+	if possible.
+
 2008-04-08  Bruno Haible  <bruno@clisp.org>
 
 	Add tentative support for OpenServer.

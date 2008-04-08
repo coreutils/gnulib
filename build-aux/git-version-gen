@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2008-04-03.22
+scriptversion=2008-04-08.07
 
 # Copyright (C) 2007-2008 Free Software Foundation
 #
@@ -95,7 +95,8 @@ if test -n "$v"
 then
     : # use $v
 elif test -d .git \
-    && v=`git describe --abbrev=4 HEAD 2>/dev/null` \
+    && v=`git describe --abbrev=4 --match='v*' HEAD 2>/dev/null \
+	  || git describe --abbrev=4 HEAD 2>/dev/null` \
     && case $v in
 	 v[0-9]*) ;;
 	 *) (exit 1) ;;
