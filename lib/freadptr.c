@@ -41,7 +41,7 @@ freadptr (FILE *fp, size_t *sizep)
     return NULL;
   *sizep = size;
   return (const char *) fp->_p;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \
 			 unsigned char *_base; \
@@ -58,6 +58,11 @@ freadptr (FILE *fp, size_t *sizep)
   *sizep = size;
   return (const char *) fp_->_ptr;
 # else
+#  if defined _SCO_DS               /* OpenServer */
+#   define _flag __flag
+#   define _ptr __ptr
+#   define _cnt __cnt
+#  endif
   if ((fp->_flag & _IOWRT) != 0)
     return NULL;
   size = fp->_cnt;

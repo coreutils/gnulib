@@ -1,3 +1,21 @@
+2008-04-08  Bruno Haible  <bruno@clisp.org>
+
+	Add tentative support for OpenServer.
+	* lib/fbufmode.c (fbufmode): Add conditional define for _flag, _base,
+	_ptr, _cnt.
+	* lib/fpurge.c (fpurge): Likewise.
+	* lib/freadable.c (freadable): Likewise.
+	* lib/freadahead.c (freadahead): Likewise.
+	* lib/freading.c (freading): Likewise.
+	* lib/freadptr.c (freadptr): Likewise.
+	* lib/freadseek.c (freadptrinc): Likewise.
+	* lib/fseeko.c (rpl_fseeko): Likewise.
+	* lib/fseterr.c (fseterr): Likewise.
+	* lib/fwritable.c (fwritable): Likewise.
+	* lib/fwriting.c (fwriting): Likewise.
+	Reported by Roger Cornelius <rac@tenzing.org> and
+	Brian K. White <brian@aljex.com>.
+
 2008-04-06  Jim Meyering  <meyering@redhat.com>
 
 	* gnulib-tool (func_add_or_update): s/backuped/backed up/ in diagnostic

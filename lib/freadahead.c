@@ -43,7 +43,7 @@ freadahead (FILE *fp)
     return 0;
   return fp->_r
 	 + (HASUB (fp) ? fp->_ur : 0);
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \
 			 unsigned char *_base; \
@@ -56,6 +56,10 @@ freadahead (FILE *fp)
     return 0;
   return fp_->_cnt;
 # else
+#  if defined _SCO_DS               /* OpenServer */
+#   define _flag __flag
+#   define _cnt __cnt
+#  endif
   if ((fp->_flag & _IOWRT) != 0)
     return 0;
   return fp->_cnt;

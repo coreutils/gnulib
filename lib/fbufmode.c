@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ fbufmode (FILE *fp)
   if (fp->_flags & __SNBF)
     return _IONBF;
   return _IOFBF;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 # if HAVE___FLBF                    /* Solaris >= 7 */
   if (__flbf (fp))
     return _IOLBF;
@@ -64,6 +64,9 @@ fbufmode (FILE *fp)
 		       } *) fp)
   return fp_->_flag & (_IONBF | _IOFBF);
 # else
+#  if defined _SCO_DS               /* OpenServer */
+#   define _flag __flag
+#  endif
   if (fp->_flag & _IONBF)
     return _IONBF;
   return _IOFBF;

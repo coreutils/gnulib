@@ -1,5 +1,5 @@
 /* Set the error indicator of a stream.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ fseterr (FILE *fp)
   fp->_flags |= _IO_ERR_SEEN;
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   fp->_flags |= __SERR;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \
 			 unsigned char *_base; \
@@ -42,6 +42,9 @@ fseterr (FILE *fp)
 		       } *) fp)
   fp_->_flag |= _IOERR;
 # else
+#  if defined _SCO_DS               /* OpenServer */
+#   define _flag __flag
+#  endif
   fp->_flag |= _IOERR;
 # endif
 #elif defined __UCLIBC__            /* uClibc */

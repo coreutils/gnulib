@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,7 +29,10 @@ fwritable (FILE *fp)
   return (fp->_flags & _IO_NO_WRITES) == 0;
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   return (fp->_flags & (__SRW | __SWR)) != 0;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, mingw */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
+# if defined _SCO_DS                /* OpenServer */
+#  define _flag __flag
+# endif
   return (fp->_flag & (_IORW | _IOWRT)) != 0;
 #elif defined __QNX__               /* QNX */
   return (fp->_Mode & 0x2 /* _MOPENW */) != 0;
