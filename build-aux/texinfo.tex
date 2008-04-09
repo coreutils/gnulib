@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-03-31.10}
+\def\texinfoversion{2008-04-09.09}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -924,7 +924,7 @@ where each line of input produces a line of output.}
   \pushthisfilestack
   \def\thisfile{#1}%
   {%
-    \makevalueexpandable  % we want to expand any @value in FILE.  
+    \makevalueexpandable  % we want to expand any @value in FILE.
     \turnoffactive        % and allow special characters in the expansion
     \edef\temp{\noexpand\input #1 }%
     %
@@ -1140,9 +1140,11 @@ where each line of input produces a line of output.}
   }
 }
 
-% @bullet and @minus need the same treatment as @math, just above.
+% Some math mode symbols.
 \def\bullet{$\ptexbullet$}
-\def\minus{$-$}
+\def\geq{\ifmmode \ge\else $\ge$\fi}
+\def\leq{\ifmmode \le\else $\le$\fi}
+\def\minus{\ifmmode -\else $-$\fi}
 
 % @dots{} outputs an ellipsis using the current font.
 % We do .5em per period so that it has the same spacing in the cm
