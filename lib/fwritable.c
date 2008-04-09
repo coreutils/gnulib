@@ -29,6 +29,8 @@ fwritable (FILE *fp)
   return (fp->_flags & _IO_NO_WRITES) == 0;
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   return (fp->_flags & (__SRW | __SWR)) != 0;
+#elif defined __EMX__               /* emx+gcc */
+  return (fp->_flags & (_IORW | _IOWRT)) != 0;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 # if defined _SCO_DS                /* OpenServer */
 #  define _flag __flag

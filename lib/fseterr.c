@@ -31,6 +31,8 @@ fseterr (FILE *fp)
   fp->_flags |= _IO_ERR_SEEN;
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   fp->_flags |= __SERR;
+#elif defined __EMX__               /* emx+gcc */
+  fp->_flags |= _IOERR;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \

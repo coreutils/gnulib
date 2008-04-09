@@ -19,6 +19,8 @@
 /* Specification.  */
 #include "freadptr.h"
 
+#include <stdlib.h>
+
 const char *
 freadptr (FILE *fp, size_t *sizep)
 {
@@ -41,6 +43,17 @@ freadptr (FILE *fp, size_t *sizep)
     return NULL;
   *sizep = size;
   return (const char *) fp->_p;
+#elif defined __EMX__               /* emx+gcc */
+  if ((fp->_flags & _IOWRT) != 0)
+    return NULL;
+  /* Note: fp->_ungetc_count > 0 implies fp->_rcount <= 0,
+           fp->_ungetc_count = 0 implies fp->_rcount >= 0.  */
+  if (fp->_rcount <= 0)
+    return NULL;
+  if (fp->_ungetc_count == 0)
+    abort ();
+  *sizep = fp->_rcount;
+  return fp->_ptr;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \

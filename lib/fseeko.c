@@ -70,6 +70,11 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
 		    ? fp->_bf._size
 		    : 0)
       && fp_ub._base == NULL)
+#elif defined __EMX__               /* emx+gcc */
+  if (fp->_ptr == fp->_buffer
+      && fp->_rcount == 0
+      && fp->_wcount == 0
+      && fp->_ungetc_count == 0)
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \
@@ -117,6 +122,8 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
 	  fp->_offset = pos;
 	  fp->_flags |= __SOFF;
 	  fp->_flags &= ~__SEOF;
+#elif defined __EMX__               /* emx+gcc */
+          fp->_flags &= ~_IOEOF;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 # if defined _SCO_DS                /* OpenServer */
 #  define _flag __flag

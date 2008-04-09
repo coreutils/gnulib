@@ -37,6 +37,9 @@ freadptrinc (FILE *fp, size_t increment)
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
   fp->_p += increment;
   fp->_r -= increment;
+#elif defined __EMX__               /* emx+gcc */
+  fp->_ptr += increment;
+  fp->_rcount -= increment;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \

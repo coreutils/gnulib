@@ -43,6 +43,14 @@ freadahead (FILE *fp)
     return 0;
   return fp->_r
 	 + (HASUB (fp) ? fp->_ur : 0);
+#elif defined __EMX__               /* emx+gcc */
+  if ((fp->_flags & _IOWRT) != 0)
+    return 0;
+  /* Note: fp->_ungetc_count > 0 implies fp->_rcount <= 0,
+           fp->_ungetc_count = 0 implies fp->_rcount >= 0.  */
+  /* equivalent to
+     (fp->_ungetc_count == 0 ? fp->_rcount : fp->_ungetc_count - fp->_rcount) */
+  return (fp->_rcount > 0 ? fp->_rcount : fp->_ungetc_count - fp->_rcount);
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \

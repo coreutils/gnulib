@@ -90,6 +90,12 @@ fpurge (FILE *fp)
       fp_ub._base = NULL;
     }
   return 0;
+# elif defined __EMX__              /* emx+gcc */
+  fp->_ptr = fp->_buffer;
+  fp->_rcount = 0;
+  fp->_wcount = 0;
+  fp->_ungetc_count = 0;
+  return 0;
 # elif defined _IOERR               /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
 #  if defined _SCO_DS               /* OpenServer */
 #   define _base __base
