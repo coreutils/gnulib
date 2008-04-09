@@ -1,5 +1,5 @@
-# gc-random.m4 serial 2
-dnl Copyright (C) 2005-2007 Free Software Foundation, Inc.
+# gc-random.m4 serial 3
+dnl Copyright (C) 2005-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -39,21 +39,21 @@ AC_DEFUN([gl_GC_RANDOM],
 
   AC_MSG_CHECKING([device with (strong) random data...])
   AC_ARG_ENABLE(random-device,
-	AC_HELP_STRING([--enable-random-device],
+	AS_HELP_STRING([--enable-random-device],
 		[device with (strong) randomness (for Nettle)]),
 	NAME_OF_RANDOM_DEVICE=$enableval)
   AC_MSG_RESULT($NAME_OF_RANDOM_DEVICE)
 
   AC_MSG_CHECKING([device with pseudo random data...])
   AC_ARG_ENABLE(pseudo-random-device,
-	AC_HELP_STRING([--enable-pseudo-random-device],
+	AS_HELP_STRING([--enable-pseudo-random-device],
 		[device with pseudo randomness (for Nettle)]),
 	NAME_OF_PSEUDO_RANDOM_DEVICE=$enableval)
   AC_MSG_RESULT($NAME_OF_PSEUDO_RANDOM_DEVICE)
 
   AC_MSG_CHECKING([device with unpredictable data for nonces...])
   AC_ARG_ENABLE(nonce-device,
-	AC_HELP_STRING([--enable-nonce-device],
+	AS_HELP_STRING([--enable-nonce-device],
 		[device with unpredictable nonces (for Nettle)]),
 	NAME_OF_NONCE_DEVICE=$enableval)
   AC_MSG_RESULT($NAME_OF_NONCE_DEVICE)
@@ -72,7 +72,7 @@ AC_DEFUN([gl_GC_RANDOM],
         AC_MSG_WARN([[Device `$NAME_OF_NONCE_DEVICE' does not exist, consider to use --enable-nonce-device]]))
     fi
   else
-    AC_MSG_NOTICE([[Cross compiling, assuming random devices exists on the target host...]])  
+    AC_MSG_NOTICE([[Cross compiling, assuming random devices exists on the target host...]])
   fi
 
   # FIXME?: Open+read 42 bytes+close twice and compare data.  Should differ.

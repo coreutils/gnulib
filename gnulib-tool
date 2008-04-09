@@ -1262,8 +1262,7 @@ func_get_filelist ()
   echo m4/gnulib-common.m4
   case "$autoconf_minversion" in
     2.59)
-      #echo m4/onceonly.m4
-      echo m4/onceonly_2_57.m4
+      echo m4/onceonly.m4
       ;;
   esac
 }

@@ -1,4 +1,5 @@
 # acl.m4 - check for access control list (ACL) primitives
+# serial 2
 
 # Copyright (C) 2002, 2004-2008 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -13,7 +14,7 @@ AC_DEFUN([gl_FUNC_ACL],
   AC_LIBOBJ([file-has-acl])
 
   AC_ARG_ENABLE([acl],
-    AC_HELP_STRING([--disable-acl], [do not support ACLs]),
+    AS_HELP_STRING([--disable-acl], [do not support ACLs]),
     , [enable_acl=auto])
 
   LIB_ACL=

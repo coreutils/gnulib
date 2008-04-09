@@ -2,7 +2,19 @@
 
 	Avoid some autoconf warnings.
 	* m4/regex.m4 (gl_REGEX): s/AC_HELP_STRING/AS_HELP_STRING/.
+	* m4/acl.m4 (gl_FUNC_ACL): Likewise.
+	* m4/afs.m4 (gl_AFS): Likewise.
+	* m4/gc-random.m4 (gl_GC_RANDOM): Likewise.
 	* m4/include_next.m4 (gl_INCLUDE_NEXT): s/AC_FOREACH/m4_foreach_w/.
+	* m4/absolute-header.m4 (gl_ABSOLUTE_HEADER): Likewise.
+	* m4/stdint.m4 (gl_STDINT_BITSIZEOF, gl_CHECK_TYPES_SIGNED)
+	(gl_INTEGER_TYPE_SUFFIX): Likewise.
+	* m4/onceonly_2_57.m4 (AC_CHECK_HEADERS_ONCE, AC_CHECK_FUNCS_ONCE)
+	(AC_CHECK_DECLS_ONCE): Likewise.
+	Rename file...
+	* m4/onceonly.m4: ...to this, and delete 2.54 variant, now that
+	gnulib-tool requires autoconf 2.59 or better.
+	* gnulib-tool (func_get_filelist): s/\(onceonly\)_2_57.m4/\1.m4/.
 
 2008-04-08  Eric Blake  <ebb9@byu.net>
 

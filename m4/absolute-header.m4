@@ -1,4 +1,4 @@
-# absolute-header.m4 serial 8
+# absolute-header.m4 serial 9
 dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,7 +21,7 @@ dnl From Derek Price.
 # provides some type/enum definitions or function/variable declarations.
 AC_DEFUN([gl_ABSOLUTE_HEADER],
 [AC_LANG_PREPROC_REQUIRE()dnl
-AC_FOREACH([gl_HEADER_NAME], [$1],
+m4_foreach_w([gl_HEADER_NAME], [$1],
   [AS_VAR_PUSHDEF([gl_absolute_header],
                   [gl_cv_absolute_]m4_quote(m4_defn([gl_HEADER_NAME])))dnl
   AC_CACHE_CHECK([absolute name of <]m4_quote(m4_defn([gl_HEADER_NAME]))[>],
