@@ -1,4 +1,4 @@
-#serial 49
+#serial 50
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
 # 2006, 2007, 2008 Free Software Foundation, Inc.
@@ -17,7 +17,7 @@ AC_DEFUN([gl_REGEX],
   AC_CHECK_HEADERS_ONCE([locale.h])
 
   AC_ARG_WITH([included-regex],
-    [AC_HELP_STRING([--without-included-regex],
+    [AS_HELP_STRING([--without-included-regex],
 		    [don't compile regex; this is the default on 32-bit
 		     systems with recent-enough versions of the GNU C
 		     Library (use with caution on other systems).

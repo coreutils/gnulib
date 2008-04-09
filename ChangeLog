@@ -1,3 +1,9 @@
+2008-04-09  Eric Blake  <ebb9@byu.net>
+
+	Avoid some autoconf warnings.
+	* m4/regex.m4 (gl_REGEX): s/AC_HELP_STRING/AS_HELP_STRING/.
+	* m4/include_next.m4 (gl_INCLUDE_NEXT): s/AC_FOREACH/m4_foreach_w/.
+
 2008-04-08  Eric Blake  <ebb9@byu.net>
 
 	Use 'git describe --match' if present (added in git 1.5.5).
