@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 /* Return true if the stream STREAM is opened read-only, or if the
    last operation on the stream was a read operation.  Return false if
    the stream is opened write-only or append-only, or if it supports
-   writing and there is no current read operation (such as fputc).
+   writing and there is no current read operation (such as fgetc).
 
    freading and fwriting will never both be true.  If STREAM supports
    both reads and writes, then:
