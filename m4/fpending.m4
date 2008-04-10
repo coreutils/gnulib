@@ -1,6 +1,6 @@
-#serial 12
+#serial 13
 
-# Copyright (C) 2000, 2001, 2004, 2005, 2006, 2007 Free Software
+# Copyright (C) 2000, 2001, 2004, 2005, 2006, 2007, 2008 Free Software
 # Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -52,6 +52,9 @@ AC_DEFUN([gl_FUNC_FPENDING],
 									  \
 	    '# old glibc iostream?'					  \
 	    'fp->_pptr - fp->_pbase'					  \
+									  \
+	    '# emx+gcc'							  \
+	    'fp->_ptr - fp->_buffer'					  \
 									  \
 	    '# VMS'							  \
 	    '(*fp)->_ptr - (*fp)->_base'				  \

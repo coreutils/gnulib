@@ -12,6 +12,7 @@
 	* lib/fseterr.c (fseterr): Likewise.
 	* lib/fwritable.c (fwritable): Likewise.
 	* lib/fwriting.c (fwriting): Likewise.
+	* m4/fpending.m4 (gl_FUNC_FPENDING): Add a variant for emx+gcc.
 
 2008-04-09  Eric Blake  <ebb9@byu.net>
 
