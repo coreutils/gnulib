@@ -1,5 +1,9 @@
 2008-04-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/wchar.in.h: Tweak comment.
+
+2008-04-11  Bruno Haible  <bruno@clisp.org>
+
 	Fix __GNUC_STDC_INLINE__ predefine with Apple GCC on MacOS X 10.5.
 	* gnulib-tool (func_emit_initmacro_start): Emit an invocation of
 	gl_COMMON.
