@@ -1,5 +1,5 @@
 /* Test the Unicode character type functions.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
         {								     \
           fprintf (stderr, "%s:%d: assertion failed for c = 0x%04X\n",	     \
 		   __FILE__, __LINE__, c);				     \
+          fflush (stderr);						     \
           abort ();							     \
         }								     \
     }									     \
