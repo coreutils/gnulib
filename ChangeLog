@@ -1,3 +1,10 @@
+2008-04-11  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gc-gnulib.c: On Windows, use CryptGenRandom from CSP instead
+	of attempting to use non-existing /dev/*random.  Based on patch
+	from Adam Strzelecki <ono@java.pl> in
+	<http://lists.gnu.org/archive/html/help-gsasl/2008-02/msg00000.html>.
+
 2008-04-08  Bruno Haible  <bruno@clisp.org>
 
 	Add tentative support for emx+gcc.
