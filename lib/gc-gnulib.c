@@ -1,5 +1,5 @@
 /* gc-gnulib.c --- Common gnulib internal crypto interface functions
- * Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007  Simon Josefsson
+ * Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008  Simon Josefsson
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -73,15 +73,40 @@
 #undef open
 #undef close
 
+#ifdef GNULIB_GC_RANDOM
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#  include <wincrypt.h>
+HCRYPTPROV g_hProv = 0;
+# endif
+#endif
+
 Gc_rc
 gc_init (void)
 {
+#ifdef GNULIB_GC_RANDOM
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  if(g_hProv)
+    CryptReleaseContext(g_hProv, 0);
+  CryptAcquireContext(&g_hProv, NULL, NULL, PROV_RSA_FULL, 0);
+# endif
+#endif
+
   return GC_OK;
 }
 
 void
 gc_done (void)
 {
+#ifdef GNULIB_GC_RANDOM
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  if(g_hProv)
+    {
+      CryptReleaseContext(g_hProv, 0);
+      g_hProv = 0;
+    }
+# endif
+#endif
+
   return;
 }
 
@@ -92,6 +117,11 @@ gc_done (void)
 static Gc_rc
 randomize (int level, char *data, size_t datalen)
 {
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  if(!g_hProv)
+    return GC_RANDOM_ERROR;
+  CryptGenRandom(g_hProv, (DWORD)datalen, data);
+#else
   int fd;
   const char *device;
   size_t len = 0;
@@ -140,6 +170,7 @@ randomize (int level, char *data, size_t datalen)
   rc = close (fd);
   if (rc < 0)
     return GC_RANDOM_ERROR;
+#endif
 
   return GC_OK;
 }
