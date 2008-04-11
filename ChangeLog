@@ -1,5 +1,10 @@
 2008-04-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/glob.c: Include <stdbool.h>. Needed at least with IRIX cc.
+	* modules/glob (Depends-on): Add stdbool.
+
+2008-04-11  Bruno Haible  <bruno@clisp.org>
+
 	* lib/trim.c: Include <string.h>.
 
 2008-04-11  Eric Blake  <ebb9@byu.net>
