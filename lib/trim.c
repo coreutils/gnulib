@@ -1,5 +1,5 @@
 /* Removes leading and/or trailing whitespaces
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include "trim.h"
 
 #include <ctype.h>
+#include <string.h>
 
 #if HAVE_MBRTOWC 
 # include <stddef.h>
