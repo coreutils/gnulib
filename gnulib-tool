@@ -2046,6 +2046,7 @@ func_emit_initmacro_start ()
   # We let automake know about the files to be distributed through the
   # EXTRA_lib_SOURCES variable.
   echo "  m4_pushdef([AC_LIBSOURCES], m4_defn([${macro_prefix_arg}_LIBSOURCES]))"
+  echo "  gl_COMMON"
 }
 
 # func_emit_initmacro_end macro_prefix

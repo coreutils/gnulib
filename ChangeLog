@@ -1,5 +1,12 @@
 2008-04-11  Bruno Haible  <bruno@clisp.org>
 
+	Fix __GNUC_STDC_INLINE__ predefine with Apple GCC on MacOS X 10.5.
+	* gnulib-tool (func_emit_initmacro_start): Emit an invocation of
+	gl_COMMON.
+	* m4/gnulib-common.m4 (gl_COMMON, gl_COMMON_BODY): New macros.
+
+2008-04-11  Bruno Haible  <bruno@clisp.org>
+
 	* modules/git-merge-changelog (git_merge_changelog_LDADD): Add LIBINTL.
 
 2008-04-11  Simon Josefsson  <simon@josefsson.org>
