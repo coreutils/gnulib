@@ -1,5 +1,12 @@
 2008-04-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/strsignal.c (_sys_siglist): Don't declare if already declared.
+	(init): Fix syntax error.
+	* m4/strsignal.m4 (gl_PREREQ_STRSIGNAL): Check whether _sys_siglist
+	is declared.
+
+2008-04-11  Bruno Haible  <bruno@clisp.org>
+
 	* lib/glob.c: Include <stdbool.h>. Needed at least with IRIX cc.
 	* modules/glob (Depends-on): Add stdbool.
 

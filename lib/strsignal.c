@@ -66,7 +66,9 @@ extern const char *const _sys_siglist_internal[] attribute_hidden;
 #  ifndef NSIG
 #   define NSIG 32
 #  endif /* NSIG */
+#  if !HAVE_DECL__SYS_SIGLIST
 static const char *_sys_siglist[NSIG];
+#  endif
 # endif /* !HAVE_DECL_SYS_SIGLIST */
 
 #endif /* _LIBC */
@@ -147,7 +149,6 @@ init (void)
 #  define init_sig(sig, abbrev, desc) \
   if (sig >= 0 && sig < NSIG) \
     _sys_siglist[sig] = desc;
-} while (0);
 
 #  include "siglist.h"
 
