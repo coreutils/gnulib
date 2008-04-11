@@ -1,7 +1,14 @@
+2008-04-11  Eric Blake  <ebb9@byu.net>
+
+	Avoid compile failure on OS/2.
+	* lib/regex_internal.h (internal_function): Disable optimization
+	on OS/2 (__EMX__), where it caused compiler error.
+	Reported by Elbert Pol.
+
 2008-04-11  Bruno Haible  <bruno@clisp.org>
 
 	Flush the standard error stream before aborting. Needed on netlabs.org
-	klibc (derived from emx+gcc libc).
+	klibc (derived from emx+gcc libc) and mingw.
 	* tests/test-argmatch.c (ASSERT): Call fflush(stderr) before abort().
 	* tests/test-array_list.c (ASSERT): Likewise.
 	* tests/test-array_oset.c (ASSERT): Likewise.
