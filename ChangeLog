@@ -1,5 +1,11 @@
 2008-04-12  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-strtod.c: Include isnand.h.
+	(main): Use isnand instead of isnan.
+	Reported by Jim Meyering.
+
+2008-04-12  Bruno Haible  <bruno@clisp.org>
+
 	* m4/isnanf.m4 (gl_ISNANF_WORKS): Add a test for a special NaN.
 	Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
 

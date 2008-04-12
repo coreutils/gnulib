@@ -25,6 +25,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "isnand.h"
+
 #define ASSERT(expr) \
   do									     \
     {									     \
@@ -602,8 +604,8 @@ main ()
     result1 = strtod (input, &ptr1);
     result2 = strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnan (result1));           /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (isnan (result2));           /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result1));          /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result2));          /* OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, mingw */
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
@@ -632,8 +634,8 @@ main ()
     result1 = strtod (input, &ptr1);
     result2 = strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnan (result1));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (isnan (result2));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (!!signbit (result1) == !!signbit (result2));
     ASSERT (ptr1 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 2.5.1, mingw */
     ASSERT (ptr2 == input + 4);         /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 2.5.1, mingw */
@@ -658,8 +660,8 @@ main ()
     result1 = strtod (input, &ptr1);
     result2 = strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnan (result1));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (isnan (result2));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
@@ -685,7 +687,7 @@ main ()
     errno = 0;
     result = strtod (input, &ptr);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnan (result));            /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (ptr == input + 6);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
     ASSERT (errno == 0);
 #else
@@ -708,8 +710,8 @@ main ()
     result1 = strtod (input, &ptr1);
     result2 = strtod (input + 1, &ptr2);
 #if 1 /* All known CPUs support NaNs.  */
-    ASSERT (isnan (result1));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
-    ASSERT (isnan (result2));           /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result1));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
+    ASSERT (isnand (result2));          /* OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw */
 # if 0
     /* Sign bits of NaN is a portability sticking point, not worth
        worrying about.  */
