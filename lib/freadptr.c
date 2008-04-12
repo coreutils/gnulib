@@ -50,7 +50,7 @@ freadptr (FILE *fp, size_t *sizep)
            fp->_ungetc_count = 0 implies fp->_rcount >= 0.  */
   if (fp->_rcount <= 0)
     return NULL;
-  if (fp->_ungetc_count == 0)
+  if (!(fp->_ungetc_count == 0))
     abort ();
   *sizep = fp->_rcount;
   return fp->_ptr;

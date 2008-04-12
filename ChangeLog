@@ -1,3 +1,8 @@
+2008-04-12  Bruno Haible  <bruno@clisp.org>
+
+	* lib/freadptr.c (freadptr) [__EMX__]: Fix wrong assertion.
+	Reported by Elbert Pol <e.pol@chello.nl>.
+
 2008-04-12  Eric Blake  <ebb9@byu.net>
 
 	Work around Solaris 10 math.h bug.
