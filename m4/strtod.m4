@@ -25,7 +25,8 @@ AC_DEFUN([gl_FUNC_STRTOD],
     const char *string = "-0x";
     char *term;
     double value = strtod (string, &term);
-    if (1 / value != -HUGE_VAL || term != (string + 2))
+    double zero = 0.0;
+    if (1.0 / value != -1.0 / zero || term != (string + 2))
       return 1;
   }
   {

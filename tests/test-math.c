@@ -43,7 +43,11 @@ int
 main ()
 {
   double d = NAN;
+  double zero = 0.0;
   if (numeric_equal (d, d))
+    return 1;
+  d = HUGE_VAL;
+  if (!numeric_equal (d, 1.0 / zero))
     return 1;
   return 0;
 }

@@ -58,8 +58,10 @@ math.h: math.in.h
 	      -e 's|@''REPLACE_FLOORL''@|$(REPLACE_FLOORL)|g' \
 	      -e 's|@''REPLACE_FREXP''@|$(REPLACE_FREXP)|g' \
 	      -e 's|@''REPLACE_FREXPL''@|$(REPLACE_FREXPL)|g' \
+	      -e 's|@''REPLACE_HUGE_VAL''@|$(REPLACE_HUGE_VAL)|g' \
 	      -e 's|@''REPLACE_ISFINITE''@|$(REPLACE_ISFINITE)|g' \
 	      -e 's|@''REPLACE_LDEXPL''@|$(REPLACE_LDEXPL)|g' \
+	      -e 's|@''REPLACE_NAN''@|$(REPLACE_NAN)|g' \
 	      -e 's|@''REPLACE_ROUND''@|$(REPLACE_ROUND)|g' \
 	      -e 's|@''REPLACE_ROUNDF''@|$(REPLACE_ROUNDF)|g' \
 	      -e 's|@''REPLACE_ROUNDL''@|$(REPLACE_ROUNDL)|g' \

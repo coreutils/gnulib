@@ -1,4 +1,4 @@
-# math_h.m4 serial 9
+# math_h.m4 serial 10
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,31 @@ AC_DEFUN([gl_MATH_H],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   gl_CHECK_NEXT_HEADERS([math.h])
+  AC_CACHE_CHECK([whether NAN macro works], [gl_cv_header_math_nan_works],
+    [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([@%:@include <math.h>],
+      [[/* Solaris 10 has a broken definition of NAN.  Other platforms
+        fail to provide NAN, or provide it only in C99 mode; this
+        test only needs to fail when NAN is provided but wrong.  */
+         float f = 1.0f;
+#ifdef NAN
+	 f = NAN;
+#endif
+	 return f == 0;]])],
+      [gl_cv_header_math_nan_works=yes],
+      [gl_cv_header_math_nan_works=no])])
+  if test gl_cv_header_math_nan_works = no; then
+    REPLACE_NAN=1
+  fi
+  AC_CACHE_CHECK([whether HUGE_VAL works], [gl_cv_header_math_huge_val_works],
+    [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([@%:@include <math.h>],
+      [[/* Solaris 10 has a broken definition of HUGE_VAL.  */
+	 double d = HUGE_VAL;
+	 return d == 0;]])],
+      [gl_cv_header_math_huge_val_works=yes],
+      [gl_cv_header_math_huge_val_works=no])])
+  if test gl_cv_header_math_huge_val_works = no; then
+    REPLACE_HUGE_VAL=1
+  fi
 ])
 
 AC_DEFUN([gl_MATH_MODULE_INDICATOR],
@@ -56,8 +81,10 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   REPLACE_FLOORL=0;            AC_SUBST([REPLACE_FLOORL])
   REPLACE_FREXP=0;             AC_SUBST([REPLACE_FREXP])
   REPLACE_FREXPL=0;            AC_SUBST([REPLACE_FREXPL])
+  REPLACE_HUGE_VAL=0;          AC_SUBST([REPLACE_HUGE_VAL])
   REPLACE_ISFINITE=0;          AC_SUBST([REPLACE_ISFINITE])
   REPLACE_LDEXPL=0;            AC_SUBST([REPLACE_LDEXPL])
+  REPLACE_NAN=0;               AC_SUBST([REPLACE_NAN])
   REPLACE_ROUND=0;             AC_SUBST([REPLACE_ROUND])
   REPLACE_ROUNDF=0;            AC_SUBST([REPLACE_ROUNDF])
   REPLACE_ROUNDL=0;            AC_SUBST([REPLACE_ROUNDL])

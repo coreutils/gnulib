@@ -1,3 +1,15 @@
+2008-04-12  Eric Blake  <ebb9@byu.net>
+
+	Work around Solaris 10 math.h bug.
+	* m4/math_h.m4 (gl_MATH_H): Check for bug.
+	(gl_MATH_H_DEFAULTS): Set up default.
+	* modules/math (Makefile.am): Replace new indicators.
+	* lib/math.in.h (NAN, HUGE_VAL): Provide replacements.
+	* tests/test-math.c (main): Test this.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Don't rely on HUGE_VAL.
+	* doc/posix-headers/math.texi (math.h): Mention bug.
+	Reported by Nelson H. F. Beebe and Jim Meyering.
+
 2008-04-11  Bruno Haible  <bruno@clisp.org>
 
 	Adapt to future versions of Apple GCC.

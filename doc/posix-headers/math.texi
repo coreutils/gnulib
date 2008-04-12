@@ -9,7 +9,17 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 The macro @code{NAN} is not defined on some platforms:
-OpenBSD 4.0, AIX 5.1, IRIX 6.5, OSF/1 5.1, Solaris 10.
+OpenBSD 4.0, AIX 5.1, IRIX 6.5, OSF/1 5.1.
+
+@item
+The macro @code{NAN} is not exposed outside of C99 compilation on some
+platforms:
+glibc.
+
+@item
+The macros @code{NAN} and @code{HUGE_VAL} expand to a function address
+rather than a floating point constant on some platforms:
+Solaris 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:
