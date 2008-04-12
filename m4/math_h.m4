@@ -1,4 +1,4 @@
-# math_h.m4 serial 10
+# math_h.m4 serial 11
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,7 +20,7 @@ AC_DEFUN([gl_MATH_H],
 	 return f == 0;]])],
       [gl_cv_header_math_nan_works=yes],
       [gl_cv_header_math_nan_works=no])])
-  if test gl_cv_header_math_nan_works = no; then
+  if test $gl_cv_header_math_nan_works = no; then
     REPLACE_NAN=1
   fi
   AC_CACHE_CHECK([whether HUGE_VAL works], [gl_cv_header_math_huge_val_works],
@@ -30,7 +30,7 @@ AC_DEFUN([gl_MATH_H],
 	 return d == 0;]])],
       [gl_cv_header_math_huge_val_works=yes],
       [gl_cv_header_math_huge_val_works=no])])
-  if test gl_cv_header_math_huge_val_works = no; then
+  if test $gl_cv_header_math_huge_val_works = no; then
     REPLACE_HUGE_VAL=1
   fi
 ])

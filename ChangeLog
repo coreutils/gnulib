@@ -1,3 +1,7 @@
+2008-04-12  Jim Meyering  <meyering@redhat.com>
+
+	* m4/math_h.m4 (gl_MATH_H): Fix typos.
+
 2008-04-12  Bruno Haible  <bruno@clisp.org>
 
 	* lib/freadptr.c (freadptr) [__EMX__]: Fix wrong assertion.
