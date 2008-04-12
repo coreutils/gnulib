@@ -1,5 +1,7 @@
 2008-04-11  Bruno Haible  <bruno@clisp.org>
 
+	* modules/strsignal-tests (Makefile.am): Define test_strsignal_LDADD.
+
 	* modules/getaddrinfo-tests (Makefile.am): Define
 	test_getaddrinfo_LDADD.
 
