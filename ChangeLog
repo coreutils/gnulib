@@ -1,5 +1,11 @@
 2008-04-11  Bruno Haible  <bruno@clisp.org>
 
+	Adapt to future versions of Apple GCC.
+	* lib/argp-fmtstream.h (ARGP_FS_EI): Don't test __GNUC_GNU_INLINE__.
+	Reported by Peter O'Gorman <peter@pogma.com>.
+
+2008-04-11  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-getaddrinfo.c (simple): Ignore EAI_NONAME error.
 
 2008-04-11  Bruno Haible  <bruno@clisp.org>

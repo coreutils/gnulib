@@ -206,14 +206,44 @@ extern int __argp_fmtstream_ensure (argp_fmtstream_t __fs, size_t __amount);
       inline semantics, unless -fgnu89-inline is used.  It defines a macro
       __GNUC_STDC_INLINE__ to indicate this situation or a macro
       __GNUC_GNU_INLINE__ to indicate the opposite situation.
+
       GCC 4.2 with -std=c99 or -std=gnu99 implements the GNU C inline
       semantics but warns, unless -fgnu89-inline is used:
         warning: C99 inline functions are not supported; using GNU89
         warning: to disable this warning use -fgnu89-inline or the gnu_inline function attribute
-      It defines a macro __GNUC_GNU_INLINE__ to indicate this situation.  */
+      It defines a macro __GNUC_GNU_INLINE__ to indicate this situation.
+
+      Whereas Apple GCC 4.0.1 build 5479 without -std=c99 or -std=gnu99
+      implements the GNU C inline semantics and defines the macro
+      __GNUC_GNU_INLINE__, but it does not warn and does not support
+      __attribute__ ((__gnu_inline__)).
+
+      All in all, these are the possible combinations.  For every compiler,
+      we need to choose ARGP_FS_EI so that the corresponding table cell
+      contains an "ok".
+
+        \    ARGP_FS_EI                      inline   extern    extern
+          \                                           inline    inline
+      CC    \                                                   __attribute__
+                                                                ((gnu_inline))
+
+      gcc 4.3.0                              error    ok        ok
+      gcc 4.3.0 -std=gnu99 -fgnu89-inline    error    ok        ok
+      gcc 4.3.0 -std=gnu99                   ok       error     ok
+
+      gcc 4.2.2                              error    ok        ok
+      gcc 4.2.2 -std=gnu99 -fgnu89-inline    error    ok        ok
+      gcc 4.2.2 -std=gnu99                   error    warning   ok
+
+      gcc 4.1.2                              error    ok        warning
+      gcc 4.1.2 -std=gnu99                   error    ok        warning
+
+      Apple gcc 4.0.1                        error    ok        warning
+      Apple gcc 4.0.1 -std=gnu99             ok       error     warning
+    */
 #  if defined __GNUC_STDC_INLINE__
 #   define ARGP_FS_EI inline
-#  elif defined __GNUC_GNU_INLINE__
+#  elif __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2)
 #   define ARGP_FS_EI extern inline __attribute__ ((__gnu_inline__))
 #  else
 #   define ARGP_FS_EI extern inline
