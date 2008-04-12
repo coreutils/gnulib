@@ -54,6 +54,10 @@ int simple (char *host, char *service)
 
   if (res != 0)
     {
+      /* IRIX reports EAI_NONAME for "https".  Don't fail the test
+	 merely because of this.  */
+      if (res == EAI_NONAME)
+	return 0;
       /* Solaris reports EAI_SERVICE for "http" and "https".  Don't
          fail the test merely because of this.  */
       if (res == EAI_SERVICE)

@@ -1,5 +1,9 @@
 2008-04-11  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-getaddrinfo.c (simple): Ignore EAI_NONAME error.
+
+2008-04-11  Bruno Haible  <bruno@clisp.org>
+
 	* modules/strsignal-tests (Makefile.am): Define test_strsignal_LDADD.
 
 	* modules/getaddrinfo-tests (Makefile.am): Define
