@@ -62,6 +62,10 @@ int simple (char *host, char *service)
          fail the test merely because of this.  */
       if (res == EAI_SERVICE)
 	return 0;
+      /* AIX reports EAI_NODATA for "https".  Don't fail the test
+	 merely because of this.  */
+      if (res == EAI_NODATA)
+	return 0;
 
       return 1;
     }
