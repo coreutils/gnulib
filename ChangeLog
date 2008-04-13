@@ -1,5 +1,11 @@
 2008-04-13  Bruno Haible  <bruno@clisp.org>
 
+	Make test-signbit pass on HP-UX/hppa.
+	* tests/test-signbit.c (minus_zerol): New variable.
+	(test_signbitl): Use it.
+
+2008-04-13  Bruno Haible  <bruno@clisp.org>
+
 	Make truncl work on OSF/1 4.0.
 	* m4/truncl.m4 (gl_FUNC_TRUNCL): Test whether truncl actually works.
 	Set REPLACE_TRUNCL, not HAVE_DECL_TRUNCL.
