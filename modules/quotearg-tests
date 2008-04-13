@@ -10,3 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-quotearg
 check_PROGRAMS += test-quotearg
+test_quotearg_LDADD = $(LDADD) @LIBINTL@

@@ -1,5 +1,9 @@
 2008-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/quotearg-tests (Makefile.am): Define test_quotearg_LDADD.
+
+2008-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-headers/sys_socket.texi: Document the problem on EMX.
 	* lib/sys_socket.in.h (SHUT_RD, SHUT_WR, SHUT_RDWR): Define if missing.
 	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Replace <sys/socket.h>
