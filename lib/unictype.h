@@ -1,5 +1,5 @@
 /* Unicode character classification and properties.
-   Copyright (C) 2002, 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2005-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -247,7 +247,7 @@ enum
   UC_CCC_AR   = 232, /* Above Right */
   UC_CCC_DB   = 233, /* Double Below */
   UC_CCC_DA   = 234, /* Double Above */
-  UC_CCC_IS   = 240, /* Iota Subscript */
+  UC_CCC_IS   = 240  /* Iota Subscript */
 };
 
 /* Return the canonical combining class of a Unicode character.  */

@@ -1,5 +1,9 @@
 2008-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unictype.h: Remove trailing comma from enumeration definitions.
+
+2008-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* lib/count-one-bits.h (COUNT_ONE_BITS): Rewrite verification
 	expression, so as to avoid HP-UX 11 cc compiler bug.
 
