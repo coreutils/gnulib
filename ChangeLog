@@ -1,6 +1,12 @@
-2008-04-12  Bruno Haible  <bruno@clisp.org>
+2008-04-13  Bruno Haible  <bruno@clisp.org>
+
+	* lib/localcharset.c (OS2): Don't redefine if already defined.
+	Reported by Elbert Pol <e.pol@chello.nl>.
+
+2008-04-13  Bruno Haible  <bruno@clisp.org>
 
 	* lib/binary-io.h [__EMX__]: Include <io.h>.
+	Reported by Elbert Pol <e.pol@chello.nl>.
 
 2008-04-12  Bruno Haible  <bruno@clisp.org>
 
