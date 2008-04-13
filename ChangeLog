@@ -1,5 +1,9 @@
 2008-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* m4/regex.m4 (gl_PREREQ_REGEX): Also check for <libintl.h>.
+
+2008-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* lib/git-merge-changelog.c: Remove empty declaration outside of
 	functions.
 
