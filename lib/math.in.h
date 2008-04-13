@@ -351,7 +351,8 @@ extern double trunc (double x);
 #endif
 
 #if @GNULIB_TRUNCL@
-# if !@HAVE_DECL_TRUNCL@
+# if @REPLACE_TRUNCL@
+#  undef truncl
 #  define truncl rpl_truncl
 extern long double truncl (long double x);
 # endif

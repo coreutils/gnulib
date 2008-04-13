@@ -1,5 +1,17 @@
 2008-04-13  Bruno Haible  <bruno@clisp.org>
 
+	Make truncl work on OSF/1 4.0.
+	* m4/truncl.m4 (gl_FUNC_TRUNCL): Test whether truncl actually works.
+	Set REPLACE_TRUNCL, not HAVE_DECL_TRUNCL.
+	* lib/math.in.h (truncl): Test REPLACE_TRUNCL, not HAVE_DECL_TRUNCL.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_TRUNCL, not
+	HAVE_DECL_TRUNCL.
+	* modules/math (Makefile.am): Substitute REPLACE_TRUNCL, not
+	HAVE_DECL_TRUNCL.
+	* doc/posix-functions/truncl.texi: Document the OSF/1 4.0 problem.
+
+2008-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* lib/unictype.h: Remove trailing comma from enumeration definitions.
 
 2008-04-13  Bruno Haible  <bruno@clisp.org>

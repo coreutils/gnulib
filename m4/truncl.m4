@@ -1,5 +1,5 @@
-# truncl.m4 serial 1
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# truncl.m4 serial 2
+dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_TRUNCL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   dnl Persuade glibc <math.h> to declare truncl().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   dnl Test whether truncl() is declared.
@@ -38,11 +39,34 @@ AC_DEFUN([gl_FUNC_TRUNCL],
     if test "$TRUNCL_LIBM" = "?"; then
       TRUNCL_LIBM=
     fi
+    dnl Test whether truncl() works. It crashes on OSF/1 4.0d.
+    AC_CACHE_CHECK([whether truncl works], [gl_cv_func_truncl_works],
+      [
+        AC_TRY_RUN([
+#include <math.h>
+long double x;
+int main()
+{
+  x = truncl (0.0L);
+  return 0;
+}], [gl_cv_func_truncl_works=yes], [gl_cv_func_truncl_works=no],
+          [case "$host_os" in
+             osf4*) gl_cv_func_truncl_works="guessing no";;
+             *)     gl_cv_func_truncl_works="guessing yes";;
+           esac
+          ])
+      ])
+    case "$gl_cv_func_truncl_works" in
+      *yes) ;;
+      *) REPLACE_TRUNCL=1 ;;
+    esac
   else
-    HAVE_DECL_TRUNCL=0
+    REPLACE_TRUNCL=1
+  fi
+  if test $REPLACE_TRUNCL = 1; then
     AC_LIBOBJ([truncl])
     TRUNCL_LIBM=
   fi
-  AC_SUBST([HAVE_DECL_TRUNCL])
+  AC_SUBST([REPLACE_TRUNCL])
   AC_SUBST([TRUNCL_LIBM])
 ])
