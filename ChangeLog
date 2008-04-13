@@ -1,5 +1,14 @@
 2008-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* doc/posix-headers/sys_socket.texi: Document the problem on EMX.
+	* lib/sys_socket.in.h (SHUT_RD, SHUT_WR, SHUT_RDWR): Define if missing.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Replace <sys/socket.h>
+	also if it exists but lacks definitions of the SHUT_* macros.
+	* modules/sys_socket (Description): Update.
+	Reported by Elbert Pol <e.pol@chello.nl>.
+
+2008-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* lib/localcharset.c (OS2): Don't redefine if already defined.
 	Reported by Elbert Pol <e.pol@chello.nl>.
 

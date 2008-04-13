@@ -13,6 +13,11 @@ mingw.
 @item
 This header file is not self-contained on some platforms: it requires
 @code{<sys/types.h>} to be included first.
+@item
+This header file is lacking the @code{SHUT_RD}, @code{SHUT_WR},
+@code{SHUT_RDWR} macros on some platforms, despite having the @code{shutdown}
+functions:
+emx+gcc.
 @end itemize
 
 Portability problems not fixed by Gnulib:
