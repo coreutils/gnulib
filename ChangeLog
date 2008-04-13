@@ -1,5 +1,10 @@
 2008-04-13  Bruno Haible  <bruno@clisp.org>
 
+	* lib/git-merge-changelog.c: Remove empty declaration outside of
+	functions.
+
+2008-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* modules/quotearg-tests (Makefile.am): Define test_quotearg_LDADD.
 
 2008-04-13  Bruno Haible  <bruno@clisp.org>

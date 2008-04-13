@@ -186,7 +186,7 @@ entry_equals (const void *elt1, const void *elt2)
   const struct entry *entry2 = (const struct entry *) elt2;
   return entry1->length == entry2->length
 	 && memcmp (entry1->string, entry2->string, entry1->length) == 0;
-};
+}
 
 /* Return a hash code of the contents of a ChangeLog entry.  */
 static size_t
