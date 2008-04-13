@@ -1,5 +1,5 @@
 /* count-one-bits.h -- counts the number of 1-bits in a word.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
         return BUILTIN (x);
 #else
 #define COUNT_ONE_BITS(BUILTIN, TYPE)                                       \
-        verify ((TYPE) -1 >> 31 >> 31 <= 3); /* TYPE has at most 64 bits */ \
+        verify (((TYPE) -1 >> 31 >> 31 >> 2) == 0); /* TYPE has at most 64 bits */ \
         int count = count_one_bits_32 (x);                                  \
         if (1 < (TYPE) -1 >> 31) /* TYPE has more than 32 bits? */          \
           count += count_one_bits_32 (x >> 31 >> 1);                        \
