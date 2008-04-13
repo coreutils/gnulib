@@ -1,5 +1,5 @@
 /* Manipulating the FPU control word.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2007.
 
    This program is free software: you can redistribute it and/or modify
@@ -61,7 +61,7 @@
  */
 
 /* Inline assembler like this works only with GNU C.  */
-#if defined __i386__ && defined __GNUC__
+#if (defined __i386__ || defined __x86_64__) && defined __GNUC__
 
 typedef unsigned short fpucw_t; /* glibc calls this fpu_control_t */
 
