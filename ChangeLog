@@ -1,5 +1,11 @@
 2008-04-13  Bruno Haible  <bruno@clisp.org>
 
+	Fix conflict between modules 'canonicalize' and 'canonicalize-lgpl'.
+	* lib/canonicalize-lgpl.c: Elide the contents if the 'canonicalize'
+	module is also used and while not building the reloc-wrapper.
+
+2008-04-13  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-getaddrinfo.c (simple): Ignore EAI_NODATA error.
 
 2008-04-13  Bruno Haible  <bruno@clisp.org>
