@@ -29,6 +29,7 @@
 
 /* Avoid some warnings from "gcc -Wshadow".
    This file doesn't use the exp() function.  */
+#undef exp
 #define exp exponent
 
 #define ASSERT(expr) \

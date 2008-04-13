@@ -1,5 +1,11 @@
 2008-04-13  Bruno Haible  <bruno@clisp.org>
 
+	Fix AIX compilation failure introduced on 2008-04-02.
+	* tests/test-frexp.c (exp): Undefine before redefining.
+	* tests/test-frexpl.c (exp): Likewise.
+
+2008-04-13  Bruno Haible  <bruno@clisp.org>
+
 	Work around a HP-UX stdio bug.
 	* tests/test-ftell.c (main): Disable the fseek/ftell test on HP-UX.
 	* tests/test-ftello.c (main): Likewise.
