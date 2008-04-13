@@ -1,5 +1,9 @@
 2008-04-12  Bruno Haible  <bruno@clisp.org>
 
+	* lib/binary-io.h [__EMX__]: Include <io.h>.
+
+2008-04-12  Bruno Haible  <bruno@clisp.org>
+
 	* lib/fpucw.h: Enable the definitions also for x86_64.
 	Needed for NetBSD/x86_64.
 	Reported by Thomas Klausner <tk@giga.or.at>.
