@@ -10,6 +10,10 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function mistakenly succeeds on pipes on some platforms: mingw.
+@item
+This function produces incorrect results immediately after @code{fseek} on some
+platforms:
+HP-UX 11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

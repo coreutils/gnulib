@@ -1,5 +1,13 @@
 2008-04-13  Bruno Haible  <bruno@clisp.org>
 
+	Work around a HP-UX stdio bug.
+	* tests/test-ftell.c (main): Disable the fseek/ftell test on HP-UX.
+	* tests/test-ftello.c (main): Likewise.
+	* doc/posix-functions/ftell.texi: Mention HP-UX bug.
+	* doc/posix-functions/ftello.texi: Likewise.
+
+2008-04-13  Bruno Haible  <bruno@clisp.org>
+
 	Make test-signbit pass on HP-UX/hppa.
 	* tests/test-signbit.c (minus_zerol): New variable.
 	(test_signbitl): Use it.

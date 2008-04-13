@@ -88,10 +88,12 @@ main (int argc, char **argv)
   ASSERT (ftell (stdin) == 3);
   ASSERT (ftello (stdin) == 3);
 
+#if !defined __hpux /* HP-UX 11 has a known bug here */
   /* Test ftell after ungetc without read.  */
   ASSERT (fseek (stdin, 0, SEEK_CUR) == 0);
   ASSERT (ftell (stdin) == 3);
   ASSERT (ftello (stdin) == 3);
+#endif
 
   ch = ungetc ('~', stdin);
   ASSERT (ch == '~');
