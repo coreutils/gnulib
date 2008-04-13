@@ -30,6 +30,8 @@
         return BUILTIN (x);
 #else
 #define COUNT_ONE_BITS(BUILTIN, TYPE)                                       \
+        /* This condition is written so as to avoid shifting by more than   \
+           31 bits at once, and also avoids a random HP-UX cc bug.  */      \
         verify (((TYPE) -1 >> 31 >> 31 >> 2) == 0); /* TYPE has at most 64 bits */ \
         int count = count_one_bits_32 (x);                                  \
         if (1 < (TYPE) -1 >> 31) /* TYPE has more than 32 bits? */          \
