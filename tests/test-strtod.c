@@ -163,7 +163,7 @@ main ()
     /* FIXME - gnulib's version is rather inaccurate.  It would be
        nice to guarantee an exact result, but for now, we settle for a
        1-ulp error.  */
-    ASSERT (abs (result - 0.5) < DBL_EPSILON);
+    ASSERT (fabs (result - 0.5) < DBL_EPSILON);
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
@@ -246,7 +246,7 @@ main ()
     /* FIXME - gnulib's version is rather inaccurate.  It would be
        nice to guarantee an exact result, but for now, we settle for a
        1-ulp error.  */
-    ASSERT (abs (result - 0.5) < DBL_EPSILON);
+    ASSERT (fabs (result - 0.5) < DBL_EPSILON);
     ASSERT (ptr == input + 4);
     ASSERT (errno == 0);
   }
