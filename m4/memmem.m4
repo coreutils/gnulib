@@ -1,4 +1,4 @@
-# memmem.m4 serial 9
+# memmem.m4 serial 10
 dnl Copyright (C) 2002, 2003, 2004, 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,11 +26,11 @@ AC_DEFUN([gl_FUNC_MEMMEM],
   if test $ac_cv_have_decl_memmem = yes; then
     AC_CACHE_CHECK([whether memmem works in linear time],
       [gl_cv_func_memmem_works],
-      [AC_RUN_IFELSE([AC_LANG_PROGRAM([
+      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <string.h> /* for memmem */
 #include <stdlib.h> /* for malloc */
 #include <unistd.h> /* for alarm */
-], [[size_t m = 1000000;
+]], [[size_t m = 1000000;
     char *haystack = (char *) malloc (2 * m + 1);
     char *needle = (char *) malloc (m + 1);
     void *result = 0;

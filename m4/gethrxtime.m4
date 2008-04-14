@@ -1,5 +1,5 @@
-# gethrxtime.m4 serial 6
-dnl Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+# gethrxtime.m4 serial 7
+dnl Copyright (C) 2005, 2006, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -28,8 +28,8 @@ AC_DEFUN([gl_ARITHMETIC_HRTIME_T],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CACHE_CHECK([for arithmetic hrtime_t], gl_cv_arithmetic_hrtime_t,
     [AC_COMPILE_IFELSE(
-       [AC_LANG_PROGRAM([#include <time.h>],
-	  [hrtime_t x = 0; return x/x;])],
+       [AC_LANG_PROGRAM([[#include <time.h>]],
+	  [[hrtime_t x = 0; return x/x;]])],
        [gl_cv_arithmetic_hrtime_t=yes],
        [gl_cv_arithmetic_hrtime_t=no])])
   if test $gl_cv_arithmetic_hrtime_t = yes; then

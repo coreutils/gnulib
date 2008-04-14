@@ -1,4 +1,4 @@
-# strcasestr.m4 serial 8
+# strcasestr.m4 serial 9
 dnl Copyright (C) 2005, 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,11 +25,11 @@ AC_DEFUN([gl_FUNC_STRCASESTR],
   if test $ac_cv_func_strcasestr = yes; then
     AC_CACHE_CHECK([whether strcasestr works in linear time],
       [gl_cv_func_strcasestr_linear],
-      [AC_RUN_IFELSE([AC_LANG_PROGRAM([
+      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <string.h> /* for memmem */
 #include <stdlib.h> /* for malloc */
 #include <unistd.h> /* for alarm */
-], [[size_t m = 1000000;
+]], [[size_t m = 1000000;
     char *haystack = (char *) malloc (2 * m + 2);
     char *needle = (char *) malloc (m + 2);
     void *result = 0;

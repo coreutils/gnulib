@@ -1,4 +1,4 @@
-#serial 51
+#serial 52
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
 # 2006, 2007, 2008 Free Software Foundation, Inc.
@@ -37,13 +37,13 @@ AC_DEFUN([gl_REGEX],
 		   [gl_cv_func_re_compile_pattern_working],
       [AC_RUN_IFELSE(
 	[AC_LANG_PROGRAM(
-	  [AC_INCLUDES_DEFAULT
+	  [AC_INCLUDES_DEFAULT[
 	   #if HAVE_LOCALE_H
 	    #include <locale.h>
 	   #endif
 	   #include <limits.h>
 	   #include <regex.h>
-	   ],
+	   ]],
 	  [[static struct re_pattern_buffer regex;
 	    unsigned char folded_chars[UCHAR_MAX + 1];
 	    int i;

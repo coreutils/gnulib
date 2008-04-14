@@ -1,4 +1,4 @@
-# sys_socket_h.m4 serial 5
+# sys_socket_h.m4 serial 6
 dnl Copyright (C) 2005-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
   AC_CACHE_CHECK([whether <sys/socket.h> is self-contained],
     [gl_cv_header_sys_socket_h_selfcontained],
     [
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([#include <sys/socket.h>], [])],
+      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/socket.h>]], [[]])],
         [gl_cv_header_sys_socket_h_selfcontained=yes],
         [gl_cv_header_sys_socket_h_selfcontained=no])
     ])

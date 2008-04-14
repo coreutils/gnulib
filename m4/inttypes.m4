@@ -1,5 +1,5 @@
-# inttypes.m4 serial 11
-dnl Copyright (C) 2006-2007 Free Software Foundation, Inc.
+# inttypes.m4 serial 12
+dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -32,7 +32,7 @@ AC_DEFUN([gl_INTTYPES_H],
 	&& test "$ac_cv_have_decl_strtoimax" = yes \
 	&& test "$ac_cv_have_decl_strtoumax" = yes; then
        AC_COMPILE_IFELSE([
-	 AC_LANG_PROGRAM([
+	 AC_LANG_PROGRAM([[
 #include <stddef.h>
 #define __STDC_LIMIT_MACROS 1 /* to make it work also in C++ mode */
 #define __STDC_CONSTANT_MACROS 1 /* to make it work also in C++ mode */
@@ -131,7 +131,7 @@ const char *l = /* implicit string concatenation */
   SCNoPTR SCNuPTR SCNxPTR
 #endif
   ;
-	 ])],
+	 ]])],
 	 [gl_cv_header_working_inttypes_h=yes])
      fi])
 
@@ -174,9 +174,9 @@ const char *l = /* implicit string concatenation */
           I64) gltype1='__int64';;
         esac
         AC_COMPILE_IFELSE(
-          [AC_LANG_PROGRAM([#include <stdint.h>
+          [AC_LANG_PROGRAM([[#include <stdint.h>
              extern intptr_t foo;
-             extern $gltype1 foo;])],
+             extern $gltype1 foo;]])],
           [PRIPTR_PREFIX='"'$glpfx'"'])
         test -n "$PRIPTR_PREFIX" && break
       done

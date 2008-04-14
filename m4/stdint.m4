@@ -1,4 +1,4 @@
-# stdint.m4 serial 30
+# stdint.m4 serial 31
 dnl Copyright (C) 2001-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -337,9 +337,9 @@ AC_DEFUN([gl_INTEGER_TYPE_SUFFIX],
            ui64)gltype1='unsigned __int64';;
          esac
          AC_COMPILE_IFELSE(
-           [AC_LANG_PROGRAM([$2
+           [AC_LANG_PROGRAM([$2[
               extern $gltype foo;
-              extern $gltype1 foo;])],
+              extern $gltype1 foo;]])],
            [eval gl_cv_type_${gltype}_suffix=\$glsuf])
          eval result=\$gl_cv_type_${gltype}_suffix
          test "$result" != no && break

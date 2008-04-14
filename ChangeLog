@@ -1,3 +1,27 @@
+2008-04-14  Bruno Haible  <bruno@clisp.org>
+
+	* m4/calloc.m4 (_AC_FUNC_CALLOC_IF): Fix underquoting of
+	AC_LANG_PROGRAM argument.
+	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS): Likewise.
+	* m4/gethrxtime.m4 (gl_ARITHMETIC_HRTIME_T): Likewise.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Likewise.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Likewise.
+	* m4/math_h.m4 (gl_MATH_H): Likewise.
+	* m4/mbstate_t.m4 (AC_TYPE_MBSTATE_T): Likewise.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Likewise.
+	* m4/netinet_in_h.m4 (gl_HEADER_NETINET_IN): Likewise.
+	* m4/physmem.m4 (gl_SYS__SYSTEM_CONFIGURATION): Likewise.
+	* m4/putenv.m4 (gl_FUNC_PUTENV): Likewise.
+	* m4/regex.m4 (gl_REGEX): Likewise.
+	* m4/stdint.m4 (gl_INTEGER_TYPE_SUFFIX): Likewise.
+	* m4/stdio_h.m4 (gl_STDIN_LARGE_OFFSET): Likewise.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Likewise.
+	* m4/strerror.m4 (gl_FUNC_STRERROR_SEPARATE): Likewise.
+	* m4/strndup.m4 (gl_FUNC_STRNDUP): Likewise.
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Likewise.
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Likewise.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Likewise.
+
 2008-04-14  Jim Meyering  <meyering@redhat.com>
 
 	test-strtod: fix typos: s/abs/fabs/
