@@ -4,7 +4,7 @@
 #   2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008
 #   Free Software Foundation, Inc.
 
-timestamp='2008-03-26'
+timestamp='2008-04-14'
 
 # This file is (in principle) common to ALL GNU software.
 # The presence of a machine in this file suggests that SOME GNU software
@@ -529,6 +529,10 @@ case $basic_machine in
 	delta88)
 		basic_machine=m88k-motorola
 		os=-sysv3
+		;;
+	dicos)
+		basic_machine=i686-pc
+		os=-dicos
 		;;
 	djgpp)
 		basic_machine=i586-pc
@@ -1391,6 +1395,9 @@ case $os in
 		;;
 	-zvmoe)
 		os=-zvmoe
+		;;
+	-dicos*)
+		os=-dicos
 		;;
 	-none)
 		;;
