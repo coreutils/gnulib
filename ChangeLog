@@ -1,3 +1,9 @@
+2008-04-15  Paolo Bonzini  <bonzini@gnu.org>
+
+	* lib/tanl.c (kernel_tanl): Rename flag to invert, initialize it
+	to 0.
+	* lib/trigl.c (ieee754_rem_pio2l): Fix range checks.
+
 2008-04-14  Bruno Haible  <bruno@clisp.org>
 
 	* m4/calloc.m4 (_AC_FUNC_CALLOC_IF): Fix underquoting of

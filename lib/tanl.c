@@ -125,7 +125,7 @@ long double
 kernel_tanl (long double x, long double y, int iy)
 {
   long double z, r, v, w, s, u, u1;
-  int flag, sign;
+  int invert = 0, sign;
 
   sign = 1;
   if (x < 0)
@@ -147,7 +147,7 @@ kernel_tanl (long double x, long double y, int iy)
     }
   if (x >= 0.6743316650390625) /* |x| >= 0.6743316650390625 */
     {
-      flag = 1;
+      invert = 1;
 
       z = pio4hi - x;
       w = pio4lo - y;
@@ -163,7 +163,7 @@ kernel_tanl (long double x, long double y, int iy)
   r = y + z * (s * r + y);
   r += TH * s;
   w = x + r;
-  if (flag)
+  if (invert)
     {
       v = (long double) iy;
       w = (v - 2.0 * (x - (w * w / (w + v) - r)));
