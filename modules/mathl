@@ -27,6 +27,7 @@ ceill
 
 configure.ac:
 gl_FUNC_LONG_DOUBLE_MATH
+gl_MATH_MODULE_INDICATOR([mathl])
 
 Makefile.am:
 noinst_HEADERS += trigl.h trigl.c sincosl.c
