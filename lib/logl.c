@@ -190,8 +190,7 @@ long double
 logl(long double x)
 {
   long double z, y, w;
-  long double u, t;
-  unsigned int m;
+  long double t;
   int k, e;
 
   /* Check for IEEE special cases.  */

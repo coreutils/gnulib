@@ -1,5 +1,9 @@
 2008-04-15  Bruno Haible  <bruno@clisp.org>
 
+	* lib/logl.c (logl): Remove unused variables.
+
+2008-04-15  Bruno Haible  <bruno@clisp.org>
+
 	* lib/uniconv/u-conv-to-enc.h (FUNC): Fix return value when U_TO_U8
 	fails.
 
