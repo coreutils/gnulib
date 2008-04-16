@@ -1,5 +1,10 @@
 2008-04-15  Bruno Haible  <bruno@clisp.org>
 
+	* lib/uniconv/u-conv-to-enc.h (FUNC): Fix return value when U_TO_U8
+	fails.
+
+2008-04-15  Bruno Haible  <bruno@clisp.org>
+
 	* lib/trim.c (trim2): Fix argument of isspace() macro.
 
 2008-04-15  Paolo Bonzini  <bonzini@gnu.org>

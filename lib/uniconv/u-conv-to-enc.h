@@ -1,5 +1,5 @@
 /* Conversion from UTF-16/UTF-32 to legacy encodings.
-   Copyright (C) 2002, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -67,7 +67,7 @@ FUNC (const char *tocode,
 
   utf8_src = U_TO_U8 (src, srclen, tmpbuf, &tmpbufsize);
   if (utf8_src == NULL)
-    return NULL;
+    return -1;
   utf8_srclen = tmpbufsize;
 
   if (offsets != NULL)
