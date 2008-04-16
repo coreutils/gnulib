@@ -113,7 +113,7 @@ trim2(const char *s, int how)
       
       /* Trim leading whitespaces. */
       if (how != TRIM_TRAILING) {
-	for (p = d; *p && isspace (*p); p++)
+	for (p = d; *p && isspace ((unsigned char) *p); p++)
 	  ;			
 
 	memmove (d, p, strlen (p) + 1);
@@ -121,7 +121,7 @@ trim2(const char *s, int how)
 
       /* Trim trailing whitespaces. */
       if (how != TRIM_LEADING) {
-	for (p = d + strlen (d) - 1; p >= d && isspace (*p); p--)
+	for (p = d + strlen (d) - 1; p >= d && isspace ((unsigned char) *p); p--)
 	  *p = '\0';
       }
     }

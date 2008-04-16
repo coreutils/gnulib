@@ -1,3 +1,7 @@
+2008-04-15  Bruno Haible  <bruno@clisp.org>
+
+	* lib/trim.c (trim2): Fix argument of isspace() macro.
+
 2008-04-15  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/tanl.c (kernel_tanl): Rename flag to invert, initialize it
