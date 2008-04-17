@@ -30,7 +30,7 @@
 
 	Adjust strtod detection to catch glibc 2.7 bug.
 	* m4/strtod.m4 (gl_FUNC_STRTOD): Test "nan()" behavior.
-	Reported by BuraphaLinux Server.
+	Reported by John Gatewood Ham.
 
 2008-04-16  Bruno Haible  <bruno@clisp.org>
 
