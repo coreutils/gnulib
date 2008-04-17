@@ -27,7 +27,7 @@ freadptr (FILE *fp, size_t *sizep)
   size_t size;
 
   /* Keep this code in sync with freadahead!  */
-#if defined _IO_ferror_unlocked     /* GNU libc, BeOS */
+#if defined _IO_ferror_unlocked || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Linux libc5 */
   if (fp->_IO_write_ptr > fp->_IO_write_base)
     return NULL;
   size = fp->_IO_read_end - fp->_IO_read_ptr;

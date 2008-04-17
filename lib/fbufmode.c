@@ -29,7 +29,7 @@ fbufmode (FILE *fp)
   /* Most systems provide FILE as a struct and the necessary bitmask in
      <stdio.h>, because they need it for implementing getc() and putc() as
      fast macros.  */
-#if defined _IO_ferror_unlocked     /* GNU libc, BeOS */
+#if defined _IO_ferror_unlocked || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Linux libc5 */
 # if HAVE___FLBF                    /* glibc >= 2.2 */
   if (__flbf (fp))
     return _IOLBF;
