@@ -1,5 +1,5 @@
 /* Determine name of the currently selected locale.
-   Copyright (C) 1995-1999, 2000-2007 Free Software Foundation, Inc.
+   Copyright (C) 1995-1999, 2000-2008 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -612,9 +612,11 @@
 # ifndef SUBLANG_SERBIAN_CYRILLIC
 # define SUBLANG_SERBIAN_CYRILLIC 0x03
 # endif
-# ifndef SUBLANG_SINDHI_PAKISTAN
-# define SUBLANG_SINDHI_PAKISTAN 0x01
+# ifndef SUBLANG_SINDHI_INDIA
+# define SUBLANG_SINDHI_INDIA 0x01
 # endif
+# undef SUBLANG_SINDHI_PAKISTAN
+# define SUBLANG_SINDHI_PAKISTAN 0x02
 # ifndef SUBLANG_SINDHI_AFGHANISTAN
 # define SUBLANG_SINDHI_AFGHANISTAN 0x02
 # endif
@@ -696,18 +698,23 @@
 # ifndef SUBLANG_UZBEK_CYRILLIC
 # define SUBLANG_UZBEK_CYRILLIC 0x02
 # endif
+/* GetLocaleInfoA operations.  */
+# ifndef LOCALE_SNAME
+# define LOCALE_SNAME 0x5c
+# endif
 #endif
 
-# if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
+
+#if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
 /* MacOS X 10.2 or newer */
 
 /* Canonicalize a MacOS X locale name to a Unix locale name.
    NAME is a sufficiently large buffer.
    On input, it contains the MacOS X locale name.
    On output, it contains the Unix locale name.  */
-#  if !defined IN_LIBINTL
+# if !defined IN_LIBINTL
 static
-#  endif
+# endif
 void
 gl_locale_name_canonicalize (char *name)
 {
@@ -975,126 +982,73 @@ gl_locale_name_canonicalize (char *name)
 
 #endif
 
-/* XPG3 defines the result of 'setlocale (category, NULL)' as:
-   "Directs 'setlocale()' to query 'category' and return the current
-    setting of 'local'."
-   However it does not specify the exact format.  Neither do SUSV2 and
-   ISO C 99.  So we can use this feature only on selected systems (e.g.
-   those using GNU C Library).  */
-#if defined _LIBC || (defined __GLIBC__ && __GLIBC__ >= 2)
-# define HAVE_LOCALE_NULL
-#endif
 
-/* Determine the current locale's name, and canonicalize it into XPG syntax
-     language[_territory][.codeset][@modifier]
-   The codeset part in the result is not reliable; the locale_charset()
-   should be used for codeset information instead.
-   The result must not be freed; it is statically allocated.  */
+#ifdef WIN32_NATIVE
 
-const char *
-gl_locale_name_posix (int category, const char *categoryname)
+/* Canonicalize a Win32 native locale name to a Unix locale name.
+   NAME is a sufficiently large buffer.
+   On input, it contains the Win32 locale name.
+   On output, it contains the Unix locale name.  */
+# if !defined IN_LIBINTL
+static
+# endif
+void
+gl_locale_name_canonicalize (char *name)
 {
-  /* Use the POSIX methods of looking to 'LC_ALL', 'LC_xxx', and 'LANG'.
-     On some systems this can be done by the 'setlocale' function itself.  */
-#if defined HAVE_SETLOCALE && defined HAVE_LC_MESSAGES && defined HAVE_LOCALE_NULL
-  return setlocale (category, NULL);
-#else
-  const char *retval;
+  /* FIXME: This is probably incomplete: it does not handle "zh-Hans" and
+     "zh-Hant".  */
+  char *p;
 
-  /* Setting of LC_ALL overrides all other.  */
-  retval = getenv ("LC_ALL");
-  if (retval != NULL && retval[0] != '\0')
-    return retval;
-  /* Next comes the name of the desired category.  */
-  retval = getenv (categoryname);
-  if (retval != NULL && retval[0] != '\0')
-    return retval;
-  /* Last possibility is the LANG environment variable.  */
-  retval = getenv ("LANG");
-  if (retval != NULL && retval[0] != '\0')
-    return retval;
-
-  return NULL;
-#endif
+  for (p = name; *p != '\0'; p++)
+    if (*p == '-')
+      {
+	*p = '_';
+	p++;
+	for (; *p != '\0'; p++)
+	  {
+	    if (*p >= 'a' && *p <= 'z')
+	      *p += 'A' - 'a';
+	    if (*p == '-')
+	      {
+		*p = '\0';
+		return;
+	      }
+	  }
+	return;
+      }
 }
 
-const char *
-gl_locale_name_default (void)
-{
-  /* POSIX:2001 says:
-     "All implementations shall define a locale as the default locale, to be
-      invoked when no environment variables are set, or set to the empty
-      string.  This default locale can be the POSIX locale or any other
-      implementation-defined locale.  Some implementations may provide
-      facilities for local installation administrators to set the default
-      locale, customizing it for each location.  POSIX:2001 does not require
-      such a facility.  */
-
-#if !(HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE || defined(WIN32_NATIVE))
-
-  /* The system does not have a way of setting the locale, other than the
-     POSIX specified environment variables.  We use C as default locale.  */
-  return "C";
-
-#else
-
-  /* Return an XPG style locale name language[_territory][@modifier].
-     Don't even bother determining the codeset; it's not useful in this
-     context, because message catalogs are not specific to a single
-     codeset.  */
-
-# if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
-  /* MacOS X 10.2 or newer */
-  {
-    /* Cache the locale name, since CoreFoundation calls are expensive.  */
-    static const char *cached_localename;
-
-    if (cached_localename == NULL)
-      {
-	char namebuf[256];
-#  if HAVE_CFLOCALECOPYCURRENT /* MacOS X 10.3 or newer */
-	CFLocaleRef locale = CFLocaleCopyCurrent ();
-	CFStringRef name = CFLocaleGetIdentifier (locale);
-
-	if (CFStringGetCString (name, namebuf, sizeof(namebuf),
-				kCFStringEncodingASCII))
-	  {
-	    gl_locale_name_canonicalize (namebuf);
-	    cached_localename = strdup (namebuf);
-	  }
-	CFRelease (locale);
-#  elif HAVE_CFPREFERENCESCOPYAPPVALUE /* MacOS X 10.2 or newer */
-	CFTypeRef value =
-	  CFPreferencesCopyAppValue (CFSTR ("AppleLocale"),
-				     kCFPreferencesCurrentApplication);
-	if (value != NULL
-	    && CFGetTypeID (value) == CFStringGetTypeID ()
-	    && CFStringGetCString ((CFStringRef)value, namebuf, sizeof(namebuf),
-				   kCFStringEncodingASCII))
-	  {
-	    gl_locale_name_canonicalize (namebuf);
-	    cached_localename = strdup (namebuf);
-	  }
-#  endif
-	if (cached_localename == NULL)
-	  cached_localename = "C";
-      }
-    return cached_localename;
-  }
-
+# if !defined IN_LIBINTL
+static
 # endif
+const char *
+gl_locale_name_from_win32_LANGID (LANGID langid)
+{
+  /* Activate the new code only when the GETTEXT_MUI environment variable is
+     set, for the time being, since the new code is not well tested.  */
+  if (getenv ("GETTEXT_MUI") != NULL)
+    {
+      static char namebuf[256];
 
-# if defined(WIN32_NATIVE) /* WIN32, not Cygwin */
+      /* Query the system's notion of locale name.
+	 On Windows95/98/ME, GetLocaleInfoA returns some incorrect results.
+	 But we don't need to support systems that are so old.  */
+      if (GetLocaleInfoA (MAKELCID (langid, SORT_DEFAULT), LOCALE_SNAME,
+			  namebuf, sizeof (namebuf) - 1))
+	{
+	  /* Convert it to a Unix locale name.  */
+	  gl_locale_name_canonicalize (namebuf);
+	  return namebuf;
+	}
+    }
+  /* Internet Explorer has an LCID to RFC3066 name mapping stored in
+     HKEY_CLASSES_ROOT\Mime\Database\Rfc1766.  But we better don't use that
+     since IE's i18n subsystem is known to be inconsistent with the Win32 base
+     (e.g. they have different character conversion facilities that produce
+     different results).  */
+  /* Use our own table.  */
   {
-    LCID lcid;
-    LANGID langid;
     int primary, sub;
-
-    /* Use native Win32 API locale ID.  */
-    lcid = GetThreadLocale ();
-
-    /* Strip off the sorting rules, keep only the language part.  */
-    langid = LANGIDFROMLCID (lcid);
 
     /* Split into language and territory part.  */
     primary = PRIMARYLANGID (langid);
@@ -1386,8 +1340,9 @@ gl_locale_name_default (void)
       case LANG_SINDHI:
 	switch (sub)
 	  {
+	  case SUBLANG_SINDHI_INDIA: return "sd_IN";
 	  case SUBLANG_SINDHI_PAKISTAN: return "sd_PK";
-	  case SUBLANG_SINDHI_AFGHANISTAN: return "sd_AF";
+	  /*case SUBLANG_SINDHI_AFGHANISTAN: return "sd_AF";*/
 	  }
 	return "sd";
       case LANG_SINHALESE: return "si_LK";
@@ -1489,6 +1444,143 @@ gl_locale_name_default (void)
       case LANG_ZULU: return "zu_ZA";
       default: return "C";
       }
+  }
+}
+
+# if !defined IN_LIBINTL
+static
+# endif
+const char *
+gl_locale_name_from_win32_LCID (LCID lcid)
+{
+  LANGID langid;
+
+  /* Strip off the sorting rules, keep only the language part.  */
+  langid = LANGIDFROMLCID (lcid);
+
+  return gl_locale_name_from_win32_LANGID (langid);
+}
+
+#endif
+
+
+/* XPG3 defines the result of 'setlocale (category, NULL)' as:
+   "Directs 'setlocale()' to query 'category' and return the current
+    setting of 'local'."
+   However it does not specify the exact format.  Neither do SUSV2 and
+   ISO C 99.  So we can use this feature only on selected systems (e.g.
+   those using GNU C Library).  */
+#if defined _LIBC || (defined __GLIBC__ && __GLIBC__ >= 2)
+# define HAVE_LOCALE_NULL
+#endif
+
+/* Determine the current locale's name, and canonicalize it into XPG syntax
+     language[_territory][.codeset][@modifier]
+   The codeset part in the result is not reliable; the locale_charset()
+   should be used for codeset information instead.
+   The result must not be freed; it is statically allocated.  */
+
+const char *
+gl_locale_name_posix (int category, const char *categoryname)
+{
+  /* Use the POSIX methods of looking to 'LC_ALL', 'LC_xxx', and 'LANG'.
+     On some systems this can be done by the 'setlocale' function itself.  */
+#if defined HAVE_SETLOCALE && defined HAVE_LC_MESSAGES && defined HAVE_LOCALE_NULL
+  return setlocale (category, NULL);
+#else
+  const char *retval;
+
+  /* Setting of LC_ALL overrides all other.  */
+  retval = getenv ("LC_ALL");
+  if (retval != NULL && retval[0] != '\0')
+    return retval;
+  /* Next comes the name of the desired category.  */
+  retval = getenv (categoryname);
+  if (retval != NULL && retval[0] != '\0')
+    return retval;
+  /* Last possibility is the LANG environment variable.  */
+  retval = getenv ("LANG");
+  if (retval != NULL && retval[0] != '\0')
+    return retval;
+
+  return NULL;
+#endif
+}
+
+const char *
+gl_locale_name_default (void)
+{
+  /* POSIX:2001 says:
+     "All implementations shall define a locale as the default locale, to be
+      invoked when no environment variables are set, or set to the empty
+      string.  This default locale can be the POSIX locale or any other
+      implementation-defined locale.  Some implementations may provide
+      facilities for local installation administrators to set the default
+      locale, customizing it for each location.  POSIX:2001 does not require
+      such a facility.  */
+
+#if !(HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE || defined(WIN32_NATIVE))
+
+  /* The system does not have a way of setting the locale, other than the
+     POSIX specified environment variables.  We use C as default locale.  */
+  return "C";
+
+#else
+
+  /* Return an XPG style locale name language[_territory][@modifier].
+     Don't even bother determining the codeset; it's not useful in this
+     context, because message catalogs are not specific to a single
+     codeset.  */
+
+# if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
+  /* MacOS X 10.2 or newer */
+  {
+    /* Cache the locale name, since CoreFoundation calls are expensive.  */
+    static const char *cached_localename;
+
+    if (cached_localename == NULL)
+      {
+	char namebuf[256];
+#  if HAVE_CFLOCALECOPYCURRENT /* MacOS X 10.3 or newer */
+	CFLocaleRef locale = CFLocaleCopyCurrent ();
+	CFStringRef name = CFLocaleGetIdentifier (locale);
+
+	if (CFStringGetCString (name, namebuf, sizeof(namebuf),
+				kCFStringEncodingASCII))
+	  {
+	    gl_locale_name_canonicalize (namebuf);
+	    cached_localename = strdup (namebuf);
+	  }
+	CFRelease (locale);
+#  elif HAVE_CFPREFERENCESCOPYAPPVALUE /* MacOS X 10.2 or newer */
+	CFTypeRef value =
+	  CFPreferencesCopyAppValue (CFSTR ("AppleLocale"),
+				     kCFPreferencesCurrentApplication);
+	if (value != NULL
+	    && CFGetTypeID (value) == CFStringGetTypeID ()
+	    && CFStringGetCString ((CFStringRef)value, namebuf, sizeof(namebuf),
+				   kCFStringEncodingASCII))
+	  {
+	    gl_locale_name_canonicalize (namebuf);
+	    cached_localename = strdup (namebuf);
+	  }
+#  endif
+	if (cached_localename == NULL)
+	  cached_localename = "C";
+      }
+    return cached_localename;
+  }
+
+# endif
+
+# if defined(WIN32_NATIVE) /* WIN32, not Cygwin */
+  {
+    LCID lcid;
+
+    /* Use native Win32 API locale ID.  */
+    lcid = GetThreadLocale ();
+
+    return gl_locale_name_from_win32_LCID (lcid);
   }
 # endif
 #endif
