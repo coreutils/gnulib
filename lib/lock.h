@@ -1,5 +1,5 @@
 /* Locking in multithreaded situations.
-   Copyright (C) 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 2005-2008 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -1062,6 +1062,7 @@ typedef int gl_lock_t;
 # define gl_lock_init(NAME)
 # define gl_lock_lock(NAME)
 # define gl_lock_unlock(NAME)
+# define gl_lock_destroy(NAME)
 
 /* ------------------------- gl_rwlock_t datatype ------------------------- */
 
@@ -1072,6 +1073,7 @@ typedef int gl_rwlock_t;
 # define gl_rwlock_rdlock(NAME)
 # define gl_rwlock_wrlock(NAME)
 # define gl_rwlock_unlock(NAME)
+# define gl_rwlock_destroy(NAME)
 
 /* --------------------- gl_recursive_lock_t datatype --------------------- */
 
@@ -1081,6 +1083,7 @@ typedef int gl_recursive_lock_t;
 # define gl_recursive_lock_init(NAME)
 # define gl_recursive_lock_lock(NAME)
 # define gl_recursive_lock_unlock(NAME)
+# define gl_recursive_lock_destroy(NAME)
 
 /* -------------------------- gl_once_t datatype -------------------------- */
 

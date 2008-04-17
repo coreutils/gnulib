@@ -1,3 +1,10 @@
+2008-04-17  Bruno Haible  <bruno@clisp.org>
+
+	* lib/lock.h (gl_lock_destroy, gl_rwlock_destroy,
+	gl_recursive_lock_destroy): Provide no-op definitions for the dummy
+	implementation.
+	Patch by Bruce Merry <bmerry@gmail.com>.
+
 2008-04-17  Simon Josefsson  <simon@josefsson.org>
 
 	* doc/posix-functions/strftime.texi (strftime): Mention that %e
