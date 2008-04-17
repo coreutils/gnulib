@@ -1,4 +1,4 @@
-# strtod.m4 serial 8
+# strtod.m4 serial 9
 dnl Copyright (C) 2002, 2003, 2006, 2007, 2008 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -19,6 +19,14 @@ AC_DEFUN([gl_FUNC_STRTOD],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <stdlib.h>
 #include <math.h>
+/* Compare two numbers with ==.
+   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
+   'x == x' test.  */
+static int
+numeric_equal (double x, double y)
+{
+  return x == y;
+}
 ]], [[
   {
     /* Older glibc and Cygwin mis-parse "-0x".  */
@@ -43,6 +51,14 @@ AC_DEFUN([gl_FUNC_STRTOD],
     char *term;
     double value = strtod (string, &term);
     if (value != HUGE_VAL || term != (string + 3))
+      return 1;
+  }
+  {
+    /* glibc 2.7 and cygwin 1.5.24 misparse "nan()".  */
+    const char *string = "nan()";
+    char *term;
+    double value = strtod (string, &term);
+    if (numeric_equal (value, value) || term != (string + 5))
       return 1;
   }
 ]])],

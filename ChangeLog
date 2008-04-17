@@ -1,3 +1,9 @@
+2008-04-16  Eric Blake  <ebb9@byu.net>
+
+	Adjust strtod detection to catch glibc 2.7 bug.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Test "nan()" behavior.
+	Reported by BuraphaLinux Server.
+
 2008-04-16  Bruno Haible  <bruno@clisp.org>
 
 	Add tentative support for Linux libc5.
