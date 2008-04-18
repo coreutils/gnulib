@@ -13,8 +13,9 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-Windows does not support the non-SUS %e specifier (and possibly the
-other non-SUS specifiers too).
+The Windows C runtime library (which is used by MinGW) does not
+support the non-SUS %e specifier (and possibly the other non-SUS
+specifiers too).
 @end itemize
 
 Extension: Gnulib offers a module @samp{strftime} that provides an
