@@ -984,6 +984,22 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+  { /* Precision with no rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.2f %d", 999.951, 33, 44, 55);
+    ASSERT (strcmp (result, "999.95 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.2f %d", 999.996, 33, 44, 55);
+    ASSERT (strcmp (result, "1000.00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
   { /* A positive number.  */
     char result[1000];
     int retval =
@@ -1312,6 +1328,22 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+  { /* Precision with no rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.2Lf %d", 999.951L, 33, 44, 55);
+    ASSERT (strcmp (result, "999.95 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.2Lf %d", 999.996L, 33, 44, 55);
+    ASSERT (strcmp (result, "1000.00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
   /* Test the support of the %F format directive.  */
 
   { /* A positive number.  */
@@ -1408,6 +1440,22 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+  { /* Precision with no rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.2F %d", 999.951, 33, 44, 55);
+    ASSERT (strcmp (result, "999.95 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.2F %d", 999.996, 33, 44, 55);
+    ASSERT (strcmp (result, "1000.00 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
   { /* A positive number.  */
     char result[1000];
     int retval =
@@ -1499,6 +1547,22 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%.LF %d", 1234.0L, 33, 44, 55);
     ASSERT (strcmp (result, "1234 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with no rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.2LF %d", 999.951L, 33, 44, 55);
+    ASSERT (strcmp (result, "999.95 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.2LF %d", 999.996L, 33, 44, 55);
+    ASSERT (strcmp (result, "1000.00 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -1773,6 +1837,24 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
       my_sprintf (result, "%.e %d", 1234.0, 33, 44, 55);
     ASSERT (strcmp (result, "1e+03 33") == 0
 	    || strcmp (result, "1e+003 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with no rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.4e %d", 999.951, 33, 44, 55);
+    ASSERT (strcmp (result, "9.9995e+02 33") == 0
+	    || strcmp (result, "9.9995e+002 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.4e %d", 999.996, 33, 44, 55);
+    ASSERT (strcmp (result, "1.0000e+03 33") == 0
+	    || strcmp (result, "1.0000e+003 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -2112,6 +2194,22 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     ASSERT (retval == strlen (result));
   }
 
+  { /* Precision with no rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.4Le %d", 999.951L, 33, 44, 55);
+    ASSERT (strcmp (result, "9.9995e+02 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.4Le %d", 999.996L, 33, 44, 55);
+    ASSERT (strcmp (result, "1.0000e+03 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
   /* Test the support of the %g format directive.  */
 
   { /* A positive number.  */
@@ -2372,6 +2470,22 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
       my_sprintf (result, "%.g %d", 1234.0, 33, 44, 55);
     ASSERT (strcmp (result, "1e+03 33") == 0
 	    || strcmp (result, "1e+003 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with no rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.5g %d", 999.951, 33, 44, 55);
+    ASSERT (strcmp (result, "999.95 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.5g %d", 999.996, 33, 44, 55);
+    ASSERT (strcmp (result, "1000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 
@@ -2708,6 +2822,22 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%.Lg %d", 1234.0L, 33, 44, 55);
     ASSERT (strcmp (result, "1e+03 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with no rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.5Lg %d", 999.951L, 33, 44, 55);
+    ASSERT (strcmp (result, "999.95 33") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  { /* Precision with rounding.  */
+    char result[100];
+    int retval =
+      my_sprintf (result, "%.5Lg %d", 999.996L, 33, 44, 55);
+    ASSERT (strcmp (result, "1000 33") == 0);
     ASSERT (retval == strlen (result));
   }
 

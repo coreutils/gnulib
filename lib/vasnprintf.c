@@ -1404,6 +1404,20 @@ floorlog10 (double x)
 
 # endif
 
+/* Tests whether a string of digits consists of exactly PRECISION zeroes and
+   a single '1' digit.  */
+static int
+is_borderline (const char *digits, size_t precision)
+{
+  for (; precision > 0; precision--, digits++)
+    if (*digits != '0')
+      return 0;
+  if (*digits != '1')
+    return 0;
+  digits++;
+  return *digits == '\0';
+}
+
 #endif
 
 DCHAR_T *
@@ -2853,8 +2867,32 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 					  exponent += 1;
 					adjusted = 1;
 				      }
-
 				    /* Here ndigits = precision+1.  */
+				    if (is_borderline (digits, precision))
+				      {
+					/* Maybe the exponent guess was too high
+					   and a smaller exponent can be reached
+					   by turning a 10...0 into 9...9x.  */
+					char *digits2 =
+					  scale10_round_decimal_long_double (arg,
+									     (int)precision - exponent + 1);
+					if (digits2 == NULL)
+					  {
+					    free (digits);
+					    END_LONG_DOUBLE_ROUNDING ();
+					    goto out_of_memory;
+					  }
+					if (strlen (digits2) == precision + 1)
+					  {
+					    free (digits);
+					    digits = digits2;
+					    exponent -= 1;
+					  }
+					else
+					  free (digits2);
+				      }
+				    /* Here ndigits = precision+1.  */
+
 				    *p++ = digits[--ndigits];
 				    if ((flags & FLAG_ALT) || precision > 0)
 				      {
@@ -2964,6 +3002,30 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 					else
 					  exponent += 1;
 					adjusted = 1;
+				      }
+				    /* Here ndigits = precision.  */
+				    if (is_borderline (digits, precision - 1))
+				      {
+					/* Maybe the exponent guess was too high
+					   and a smaller exponent can be reached
+					   by turning a 10...0 into 9...9x.  */
+					char *digits2 =
+					  scale10_round_decimal_long_double (arg,
+									     (int)(precision - 1) - exponent + 1);
+					if (digits2 == NULL)
+					  {
+					    free (digits);
+					    END_LONG_DOUBLE_ROUNDING ();
+					    goto out_of_memory;
+					  }
+					if (strlen (digits2) == precision)
+					  {
+					    free (digits);
+					    digits = digits2;
+					    exponent -= 1;
+					  }
+					else
+					  free (digits2);
 				      }
 				    /* Here ndigits = precision.  */
 
@@ -3206,8 +3268,31 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 					  exponent += 1;
 					adjusted = 1;
 				      }
-
 				    /* Here ndigits = precision+1.  */
+				    if (is_borderline (digits, precision))
+				      {
+					/* Maybe the exponent guess was too high
+					   and a smaller exponent can be reached
+					   by turning a 10...0 into 9...9x.  */
+					char *digits2 =
+					  scale10_round_decimal_double (arg,
+									(int)precision - exponent + 1);
+					if (digits2 == NULL)
+					  {
+					    free (digits);
+					    goto out_of_memory;
+					  }
+					if (strlen (digits2) == precision + 1)
+					  {
+					    free (digits);
+					    digits = digits2;
+					    exponent -= 1;
+					  }
+					else
+					  free (digits2);
+				      }
+				    /* Here ndigits = precision+1.  */
+
 				    *p++ = digits[--ndigits];
 				    if ((flags & FLAG_ALT) || precision > 0)
 				      {
@@ -3330,6 +3415,29 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 					else
 					  exponent += 1;
 					adjusted = 1;
+				      }
+				    /* Here ndigits = precision.  */
+				    if (is_borderline (digits, precision - 1))
+				      {
+					/* Maybe the exponent guess was too high
+					   and a smaller exponent can be reached
+					   by turning a 10...0 into 9...9x.  */
+					char *digits2 =
+					  scale10_round_decimal_double (arg,
+									(int)(precision - 1) - exponent + 1);
+					if (digits2 == NULL)
+					  {
+					    free (digits);
+					    goto out_of_memory;
+					  }
+					if (strlen (digits2) == precision)
+					  {
+					    free (digits);
+					    digits = digits2;
+					    exponent -= 1;
+					  }
+					else
+					  free (digits2);
 				      }
 				    /* Here ndigits = precision.  */
 

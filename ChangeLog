@@ -1,3 +1,20 @@
+2008-04-19  Bruno Haible  <bruno@clisp.org>
+
+	Fix rounding when a precision is given.
+	* lib/vasnprintf.c (is_borderline): New function.
+	(VASNPRINTF): For %e and %g, consider replacing the digits 10....0 with
+	9...9x.
+	* tests/test-vasnprintf-posix.c (test_function): Test rounding with %f,
+	%e, %g.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-fprintf-posix.h (test_function): Test rounding with %f.
+	* tests/test-printf-posix.h (test_function): Likewise.
+	* tests/test-printf-posix.output: Update.
+	Reported by John Darrington <john@darrington.wattle.id.au> via
+	Ben Pfaff <blp@cs.stanford.edu>.
+
 2008-04-18  Simon Josefsson  <simon@josefsson.org>
 
 	* doc/posix-functions/strftime.texi (strftime): Clarify platform.
