@@ -1301,9 +1301,9 @@ floorlog10l (long double x)
     }
   /* Now 0.95 <= z <= 1.01.  */
   z = 1 - z;
-  /* log(1-z) = - z - z^2/2 - z^3/3 - z^4/4 - ...
+  /* log2(1-z) = 1/log(2) * (- z - z^2/2 - z^3/3 - z^4/4 - ...)
      Four terms are enough to get an approximation with error < 10^-7.  */
-  l -= z * (1.0 + z * (0.5 + z * ((1.0 / 3) + z * 0.25)));
+  l -= 1.4426950408889634074 * z * (1.0 + z * (0.5 + z * ((1.0 / 3) + z * 0.25)));
   /* Finally multiply with log(2)/log(10), yields an approximation for
      log10(x).  */
   l *= 0.30102999566398119523;
@@ -1392,9 +1392,9 @@ floorlog10 (double x)
     }
   /* Now 0.95 <= z <= 1.01.  */
   z = 1 - z;
-  /* log(1-z) = - z - z^2/2 - z^3/3 - z^4/4 - ...
+  /* log2(1-z) = 1/log(2) * (- z - z^2/2 - z^3/3 - z^4/4 - ...)
      Four terms are enough to get an approximation with error < 10^-7.  */
-  l -= z * (1.0 + z * (0.5 + z * ((1.0 / 3) + z * 0.25)));
+  l -= 1.4426950408889634074 * z * (1.0 + z * (0.5 + z * ((1.0 / 3) + z * 0.25)));
   /* Finally multiply with log(2)/log(10), yields an approximation for
      log10(x).  */
   l *= 0.30102999566398119523;

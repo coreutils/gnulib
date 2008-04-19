@@ -1,5 +1,10 @@
 2008-04-19  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (floorlog10l, floorlog10): Reduce maximum error
+	from 0.0058 to less than 10^-7.
+
+2008-04-19  Bruno Haible  <bruno@clisp.org>
+
 	Fix rounding when a precision is given.
 	* lib/vasnprintf.c (is_borderline): New function.
 	(VASNPRINTF): For %e and %g, consider replacing the digits 10....0 with
