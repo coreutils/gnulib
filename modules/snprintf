@@ -4,6 +4,7 @@ snprintf() function: print formatted output to a fixed length string
 Files:
 lib/snprintf.c
 m4/snprintf.m4
+m4/printf.m4
 
 Depends-on:
 stdio

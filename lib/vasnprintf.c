@@ -177,10 +177,12 @@ local_wcslen (const wchar_t *s)
 # endif
 #else
   /* TCHAR_T is char.  */
-# /* Use snprintf if it exists under the name 'snprintf' or '_snprintf'.
+  /* Use snprintf if it exists under the name 'snprintf' or '_snprintf'.
      But don't use it on BeOS, since BeOS snprintf produces no output if the
-     size argument is >= 0x3000000.  */
-# if (HAVE_DECL__SNPRINTF || HAVE_SNPRINTF) && !defined __BEOS__
+     size argument is >= 0x3000000.
+     Also don't use it on Linux libc5, since there snprintf with size = 1
+     writes any output without bounds, like sprintf.  */
+# if (HAVE_DECL__SNPRINTF || HAVE_SNPRINTF) && !defined __BEOS__ && !(__GNU_LIBRARY__ == 1)
 #  define USE_SNPRINTF 1
 # else
 #  define USE_SNPRINTF 0

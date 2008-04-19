@@ -5,6 +5,7 @@ to a fixed length string
 Files:
 lib/vsnprintf.c
 m4/vsnprintf.m4
+m4/printf.m4
 
 Depends-on:
 stdio

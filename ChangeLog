@@ -1,5 +1,21 @@
 2008-04-19  Bruno Haible  <bruno@clisp.org>
 
+	Work around snprintf bug on Linux libc5.
+	* m4/printf.m4 (gl_SNPRINTF_SIZE1): New macro.
+	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Invoke
+	gl_SNPRINTF_SIZE1.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX): Likewise.
+	* m4/snprintf.m4 (gl_FUNC_SNPRINTF): Likewise. Replace snprintf if
+	that test failed.
+	* m4/vsnprintf.m4 (gl_FUNC_VSNPRINTF): Likewise.
+	* lib/vasnprintf.c (USE_SNPRINTF): Set to 0 on Linux libc5 systems.
+	* modules/snprintf (Files): Add m4/printf.m4.
+	* modules/vsnprintf (Files): Likewise.
+	* doc/posix-functions/snprintf.texi: Document Linux libc5 problem.
+	* doc/posix-functions/vsnprintf.texi: Likewise.
+
+2008-04-19  Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c (floorlog10l, floorlog10): Reduce maximum error
 	from 0.0058 to less than 10^-7.
 

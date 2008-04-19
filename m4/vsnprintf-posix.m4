@@ -1,4 +1,4 @@
-# vsnprintf-posix.m4 serial 12
+# vsnprintf-posix.m4 serial 13
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,6 +26,7 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_POSIX],
     gl_SNPRINTF_TRUNCATION_C99
     gl_SNPRINTF_RETVAL_C99
     gl_SNPRINTF_DIRECTIVE_N
+    gl_SNPRINTF_SIZE1
     gl_VSNPRINTF_ZEROSIZE_C99
     case "$gl_cv_func_printf_sizes_c99" in
       *yes)
@@ -59,11 +60,15 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_POSIX],
                                                               *yes)
                                                                 case "$gl_cv_func_snprintf_directive_n" in
                                                                   *yes)
-                                                                    case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                                                    case "$gl_cv_func_snprintf_size1" in
                                                                       *yes)
-                                                                        # vsnprintf exists and is
-                                                                        # already POSIX compliant.
-                                                                        gl_cv_func_vsnprintf_posix=yes
+                                                                        case "$gl_cv_func_vsnprintf_zerosize_c99" in
+                                                                          *yes)
+                                                                            # vsnprintf exists and is
+                                                                            # already POSIX compliant.
+                                                                            gl_cv_func_vsnprintf_posix=yes
+                                                                            ;;
+                                                                        esac
                                                                         ;;
                                                                     esac
                                                                     ;;

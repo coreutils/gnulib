@@ -1,4 +1,4 @@
-# printf.m4 serial 22
+# printf.m4 serial 23
 dnl Copyright (C) 2003, 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1115,6 +1115,31 @@ changequote([,])dnl
     ])
 ])
 
+dnl Test whether the snprintf function, when passed a size = 1, writes any
+dnl output without bounds in this case, behaving like sprintf. This is the
+dnl case on Linux libc5.
+dnl Result is gl_cv_func_snprintf_size1.
+
+AC_DEFUN([gl_SNPRINTF_SIZE1],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_CACHE_CHECK([whether snprintf respects a size of 1],
+    [gl_cv_func_snprintf_size1],
+    [
+      AC_TRY_RUN([
+#include <stdio.h>
+int main()
+{
+  static char buf[8] = "DEADBEEF";
+  snprintf (buf, 1, "%d", 12345);
+  return buf[1] != 'E';
+}],
+      [gl_cv_func_snprintf_size1=yes],
+      [gl_cv_func_snprintf_size1=no],
+      [gl_cv_func_snprintf_size1="guessing yes"])
+    ])
+])
+
 dnl Test whether the vsnprintf function, when passed a zero size, produces no
 dnl output. (ISO C99, POSIX:2001)
 dnl For example, snprintf nevertheless writes a NUL byte in this case
@@ -1234,7 +1259,8 @@ dnl 14 = gl_SNPRINTF_PRESENCE
 dnl 15 = gl_SNPRINTF_TRUNCATION_C99
 dnl 16 = gl_SNPRINTF_RETVAL_C99
 dnl 17 = gl_SNPRINTF_DIRECTIVE_N
-dnl 18 = gl_VSNPRINTF_ZEROSIZE_C99
+dnl 18 = gl_SNPRINTF_SIZE1
+dnl 19 = gl_VSNPRINTF_ZEROSIZE_C99
 dnl
 dnl 1 = checking whether printf supports size specifiers as in C99...
 dnl 2 = checking whether printf supports 'long double' arguments...
@@ -1253,30 +1279,31 @@ dnl 14 = checking for snprintf...
 dnl 15 = checking whether snprintf truncates the result as in C99...
 dnl 16 = checking whether snprintf returns a byte count as in C99...
 dnl 17 = checking whether snprintf fully supports the 'n' directive...
-dnl 18 = checking whether vsnprintf respects a zero size as in C99...
+dnl 18 = checking whether snprintf respects a size of 1...
+dnl 19 = checking whether vsnprintf respects a zero size as in C99...
 dnl
 dnl . = yes, # = no.
 dnl
-dnl                                  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
-dnl   glibc 2.5                      .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
-dnl   glibc 2.3.6                    .  .  .  .  #  .  .  .  .  .  .  .  .  .  .  .  .  .
-dnl   FreeBSD 5.4, 6.1               .  .  .  .  #  .  .  .  .  .  #  .  #  .  .  .  .  .
-dnl   MacOS X 10.3.9                 .  .  .  .  #  .  .  .  .  .  #  .  #  .  .  .  .  .
-dnl   OpenBSD 3.9, 4.0               .  .  #  #  #  #  .  .  #  .  #  .  #  .  .  .  .  .
-dnl   Cygwin 2007 (= Cygwin 1.5.24)  .  .  .  .  #  #  .  .  .  ?  #  ?  ?  .  .  .  .  .
-dnl   Cygwin 2006 (= Cygwin 1.5.19)  #  .  .  .  #  #  .  .  #  ?  #  ?  ?  .  .  .  .  .
-dnl   Solaris 10                     .  .  #  #  #  .  .  .  .  .  #  .  .  .  .  .  .  .
-dnl   Solaris 2.6 ... 9              #  .  #  #  #  #  .  .  .  .  #  .  .  .  .  .  .  .
-dnl   Solaris 2.5.1                  #  .  #  #  #  #  .  .  .  .  #  .  .  #  #  #  #  #
-dnl   AIX 5.2                        .  .  #  #  #  .  .  .  .  .  #  .  .  .  .  .  .  .
-dnl   AIX 4.3.2, 5.1                 #  .  #  #  #  #  .  .  .  .  #  .  .  .  .  .  .  .
-dnl   HP-UX 11.31                    .  .  .  .  #  .  .  .  .  .  #  .  .  .  .  #  #  .
-dnl   HP-UX 11.{00,11,23}            #  .  .  .  #  #  .  .  .  .  #  .  .  .  .  #  #  #
-dnl   HP-UX 10.20                    #  .  .  .  #  #  .  .  .  #  #  .  .  .  .  #  #  #
-dnl   IRIX 6.5                       #  .  #  #  #  #  .  .  .  .  #  .  .  .  .  #  .  .
-dnl   OSF/1 5.1                      #  .  #  #  #  #  .  .  .  .  #  .  .  .  .  #  .  #
-dnl   OSF/1 4.0d                     #  .  #  #  #  #  .  .  .  .  #  .  .  #  #  #  #  #
-dnl   NetBSD 4.0                     .  ?  ?  ?  ?  ?  .  .  ?  ?  ?  ?  ?  .  .  .  ?  ?
-dnl   NetBSD 3.0                     .  .  .  .  #  #  .  #  #  ?  #  .  #  .  .  .  .  .
-dnl   BeOS                           #  #  .  #  #  #  .  #  .  ?  .  #  ?  .  .  .  .  .
-dnl   mingw                          #  #  #  #  #  #  .  #  #  .  #  #  ?  .  #  #  #  .
+dnl                                  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19
+dnl   glibc 2.5                      .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+dnl   glibc 2.3.6                    .  .  .  .  #  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+dnl   FreeBSD 5.4, 6.1               .  .  .  .  #  .  .  .  .  .  #  .  #  .  .  .  .  .  .
+dnl   MacOS X 10.3.9                 .  .  .  .  #  .  .  .  .  .  #  .  #  .  .  .  .  .  .
+dnl   OpenBSD 3.9, 4.0               .  .  #  #  #  #  .  .  #  .  #  .  #  .  .  .  .  .  .
+dnl   Cygwin 2007 (= Cygwin 1.5.24)  .  .  .  .  #  #  .  .  .  ?  #  ?  ?  .  .  .  .  .  .
+dnl   Cygwin 2006 (= Cygwin 1.5.19)  #  .  .  .  #  #  .  .  #  ?  #  ?  ?  .  .  .  .  .  .
+dnl   Solaris 10                     .  .  #  #  #  .  .  .  .  .  #  .  .  .  .  .  .  .  .
+dnl   Solaris 2.6 ... 9              #  .  #  #  #  #  .  .  .  .  #  .  .  .  .  .  .  .  .
+dnl   Solaris 2.5.1                  #  .  #  #  #  #  .  .  .  .  #  .  .  #  #  #  #  #  #
+dnl   AIX 5.2                        .  .  #  #  #  .  .  .  .  .  #  .  .  .  .  .  .  .  .
+dnl   AIX 4.3.2, 5.1                 #  .  #  #  #  #  .  .  .  .  #  .  .  .  .  .  .  .  .
+dnl   HP-UX 11.31                    .  .  .  .  #  .  .  .  .  .  #  .  .  .  .  #  #  .  .
+dnl   HP-UX 11.{00,11,23}            #  .  .  .  #  #  .  .  .  .  #  .  .  .  .  #  #  .  #
+dnl   HP-UX 10.20                    #  .  .  .  #  #  .  .  .  #  #  .  .  .  .  #  #  ?  #
+dnl   IRIX 6.5                       #  .  #  #  #  #  .  .  .  .  #  .  .  .  .  #  .  .  .
+dnl   OSF/1 5.1                      #  .  #  #  #  #  .  .  .  .  #  .  .  .  .  #  .  .  #
+dnl   OSF/1 4.0d                     #  .  #  #  #  #  .  .  .  .  #  .  .  #  #  #  #  #  #
+dnl   NetBSD 4.0                     .  ?  ?  ?  ?  ?  .  .  ?  ?  ?  ?  ?  .  .  .  ?  ?  ?
+dnl   NetBSD 3.0                     .  .  .  .  #  #  .  #  #  ?  #  .  #  .  .  .  .  .  .
+dnl   BeOS                           #  #  .  #  #  #  .  #  .  ?  .  #  ?  .  .  .  .  .  .
+dnl   mingw                          #  #  #  #  #  #  .  #  #  .  #  #  ?  .  #  #  #  .  .
