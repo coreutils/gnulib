@@ -183,7 +183,7 @@ main ()
 					    &result, &length);
 	  ASSERT (retval == 0);
 	  ASSERT (length == strlen (""));
-	  ASSERT (result != NULL);
+	  /* result may be == NULL or != NULL.  */
 	  if (o)
 	    {
 	      ASSERT (offsets[0] == 0);
