@@ -1,5 +1,5 @@
 /* Test program for tsearch et al.
-   Copyright (C) 1997, 2000, 2001, 2007 Free Software Foundation, Inc.
+   Copyright (C) 1997, 2000-2001, 2007-2008 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software: you can redistribute it and/or
@@ -256,7 +256,9 @@ main (int argc, char **argv)
   void *root = NULL;
   int i, j;
 
+#if HAVE_INITSTATE
   initstate (SEED, state, 8);
+#endif
 
   for (i = 0; i < SIZE; ++i)
     x[i] = i;

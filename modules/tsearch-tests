@@ -15,6 +15,7 @@ AC_TRY_LINK([
    double x;],
   [x = log (x);], , [TEST_TSEARCH_LIBM=-lm])
 AC_SUBST([TEST_TSEARCH_LIBM])
+AC_CHECK_FUNCS([initstate])
 
 Makefile.am:
 TESTS += test-tsearch.sh
