@@ -1,5 +1,5 @@
-# sys_stat_h.m4 serial 6   -*- Autoconf -*-
-dnl Copyright (C) 2006-2007 Free Software Foundation, Inc.
+# sys_stat_h.m4 serial 7   -*- Autoconf -*-
+dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -45,4 +45,13 @@ AC_DEFUN([gl_HEADER_SYS_STAT_H],
   gl_CHECK_NEXT_HEADERS([sys/stat.h])
   SYS_STAT_H='sys/stat.h'
   AC_SUBST([SYS_STAT_H])
+
+  dnl Define types that are supposed to be defined in <sys/types.h> or
+  dnl <sys/stat.h>.
+  AC_CHECK_TYPE([nlink_t], [],
+    [AC_DEFINE([nlink_t], [int],
+       [Define to the type of st_nlink in struct stat, or a supertype.])],
+    [#include <sys/types.h>
+     #include <sys/stat.h>])
+
 ]) # gl_HEADER_SYS_STAT_H
