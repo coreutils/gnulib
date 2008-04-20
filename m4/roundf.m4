@@ -1,5 +1,5 @@
-# roundf.m4 serial 4
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# roundf.m4 serial 5
+dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -12,6 +12,41 @@ AC_DEFUN([gl_FUNC_ROUNDF],
   AC_CHECK_DECLS([roundf], , , [#include <math.h>])
   if test "$ac_cv_have_decl_roundf" = yes; then
     gl_CHECK_MATH_LIB([ROUNDF_LIBM], [x = roundf (x);])
+  fi
+  if test "$ac_cv_have_decl_roundf" = yes && test "$ROUNDF_LIBM" != missing; then
+    dnl Test whether roundf() produces correct results. On mingw, for
+    dnl x = 1/2 - 2^-25, the system's roundf() returns a wrong result.
+    AC_REQUIRE([AC_PROG_CC])
+    AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+    AC_CACHE_CHECK([whether roundf works], [gl_cv_func_roundf_works],
+      [
+        save_LIBS="$LIBS"
+        LIBS="$LIBS $ROUNDF_LIBM"
+        AC_TRY_RUN([
+#include <float.h>
+#include <math.h>
+int main()
+{
+  /* 2^FLT_MANT_DIG.  */
+  static const float TWO_MANT_DIG =
+    /* Assume FLT_MANT_DIG <= 3 * 31.
+       Use the identity  n = floor(n/3) + floor((n+1)/3) + floor((n+2)/3).  */
+    (float) (1U << (FLT_MANT_DIG / 3))
+    * (float) (1U << ((FLT_MANT_DIG + 1) / 3))
+    * (float) (1U << ((FLT_MANT_DIG + 2) / 3));
+  volatile float x = 0.5f - 0.5f / TWO_MANT_DIG;
+  exit (x < 0.5f && roundf (x) != 0.0f);
+}], [gl_cv_func_roundf_works=yes], [gl_cv_func_roundf_works=no],
+        [case "$host_os" in
+           mingw*) gl_cv_func_roundf_works="guessing no";;
+           *)      gl_cv_func_roundf_works="guessing yes";;
+         esac
+        ])
+        LIBS="$save_LIBS"
+      ])
+    case "$gl_cv_func_roundf_works" in
+      *no) ROUNDF_LIBM=missing ;;
+    esac
   fi
   if test "$ac_cv_have_decl_roundf" != yes || test "$ROUNDF_LIBM" = missing; then
     REPLACE_ROUNDF=1
