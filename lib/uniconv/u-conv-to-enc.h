@@ -106,7 +106,7 @@ FUNC (const char *tocode,
 
       iunit = 0;
       i8 = 0;
-      while (iunit < srclen)
+      while (iunit < srclen && i8 < utf8_srclen)
 	{
 	  int countunit;
 	  int count8;
@@ -119,6 +119,17 @@ FUNC (const char *tocode,
 	    abort ();
 	  iunit += countunit;
 	  i8 += count8;
+	}
+      /* Check that utf8_src has been traversed entirely.  */
+      if (i8 < utf8_srclen)
+	abort ();
+      /* Check that src has been traversed entirely, except possibly for an
+	 incomplete sequence of units at the end.  */
+      if (iunit < srclen)
+	{
+	  offsets[iunit] = *lengthp;
+	  if (!(U_MBLEN (src + iunit, srclen - iunit) < 0))
+	    abort ();
 	}
       free (scaled_offsets);
     }

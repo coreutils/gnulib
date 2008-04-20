@@ -9,7 +9,10 @@ Depends-on:
 uniconv/base
 striconveha
 uniconv/u8-conv-to-enc
-unistr/u16-to-u8
+unistr/u16-mbtoucr
+unistr/u8-uctomb
+unistr/u16-mblen 
+unistr/u8-mblen 
 
 configure.ac:
 AC_REQUIRE([AC_C_BIGENDIAN])
