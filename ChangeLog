@@ -1,5 +1,10 @@
 2008-04-20  Bruno Haible  <bruno@clisp.org>
 
+	* modules/uniconv/u32-conv-to-enc (Depends-on): Add unistr/u32-mblen,
+	unistr/u8-mblen.
+
+2008-04-20  Bruno Haible  <bruno@clisp.org>
+
 	Fix test failure on platforms with non-GNU iconv.
 	* lib/uniconv/u16-conv-to-enc.c (u16_to_u8_lenient): New function.
 	(U_TO_U8): Use it, rather than u16_to_u8.
