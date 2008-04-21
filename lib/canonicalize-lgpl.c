@@ -21,7 +21,7 @@
    <stdlib.h> on Solaris 2.5.1.  */
 #undef realpath
 
-#if !(HAVE_CANONICALIZE_FILE_NAME || (GNULIB_CANONICALIZE && !defined IN_RELOCWRAPPER)) || defined _LIBC
+#if !HAVE_CANONICALIZE_FILE_NAME || defined _LIBC
 
 #include <alloca.h>
 

@@ -1,5 +1,5 @@
 /* Return the canonical absolute name of a given file.
-   Copyright (C) 1996-2007 Free Software Foundation, Inc.
+   Copyright (C) 1996-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@
 #include "pathmax.h"
 #include "areadlink.h"
 
-#if !HAVE_CANONICALIZE_FILE_NAME
+#if !(HAVE_CANONICALIZE_FILE_NAME || GNULIB_CANONICALIZE_LGPL)
 /* Return the canonical absolute name of file NAME.  A canonical name
    does not contain any `.', `..' components nor any repeated file name
    separators ('/') or symlinks.  All components must exist.
