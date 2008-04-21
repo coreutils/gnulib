@@ -1,6 +1,6 @@
 /* Test whether a file descriptor is a pipe.
 
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,15 +22,42 @@
 #include "isapipe.h"
 
 #include <errno.h>
-#include <stdbool.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+/* Windows platforms.  */
+
+/* Get _get_osfhandle.  */
+# include <io.h>
+
+/* Get GetFileType.  */
+# include <windows.h>
+
+int
+isapipe (int fd)
+{
+  HANDLE h = (HANDLE) _get_osfhandle (fd);
+
+  if (h == INVALID_HANDLE_VALUE)
+    {
+      errno = EBADF;
+      return -1;
+    }
+
+  return (GetFileType (h) == FILE_TYPE_PIPE);
+}
+
+#else
+/* Unix platforms.  */
+
+# include <stdbool.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <unistd.h>
 
 /* The maximum link count for pipes; (nlink_t) -1 if not known.  */
-#ifndef PIPE_LINK_COUNT_MAX
-# define PIPE_LINK_COUNT_MAX ((nlink_t) (-1))
-#endif
+# ifndef PIPE_LINK_COUNT_MAX
+#  define PIPE_LINK_COUNT_MAX ((nlink_t) (-1))
+# endif
 
 /* Return 1 if FD is a pipe, 0 if not, -1 (setting errno) on error.
 
@@ -88,3 +115,5 @@ isapipe (int fd)
     (st.st_nlink <= pipe_link_count_max
      && (check_for_fifo ? S_ISFIFO (st.st_mode) : S_ISSOCK (st.st_mode)));
 }
+
+#endif
