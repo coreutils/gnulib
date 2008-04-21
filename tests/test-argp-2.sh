@@ -1,6 +1,6 @@
 #! /bin/sh
 # Test suite for argp.
-# Copyright (C) 2006-2007 Free Software Foundation, Inc.
+# Copyright (C) 2006-2008 Free Software Foundation, Inc.
 # This file is part of the GNUlib Library.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ func_compare() {
   sed '1{
          s,: [^ ]*/test-argp,: test-argp,
          s,: test-argp\.exe,: test-argp,
-        }' | diff -c $TMP -
+        }' | LC_ALL=C tr -d '\r' | diff -c $TMP -
 }  
 
 ####

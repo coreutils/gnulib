@@ -1,5 +1,10 @@
 2008-04-21  Bruno Haible  <bruno@clisp.org>
 
+	Fix test failure on mingw.
+	* tests/test-argp-2.sh (func_compare): Remove CRs from sed's output.
+
+2008-04-21  Bruno Haible  <bruno@clisp.org>
+
 	* lib/localename.c (SUBLANG_TIBETAN_PRC, SUBLANG_TIBETAN_BHUTAN):
 	Actually assign a value.
 
