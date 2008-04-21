@@ -1,3 +1,9 @@
+2008-04-21  Eric Blake  <ebb9@byu.net>
+
+	Work around preprocessors that don't handle UINTMAX_MAX.
+	* lib/memchr2.c (memchr2): Avoid embedded #if.
+	Reported by Alain Guibert, fix suggested by Bruno Haible.
+
 2008-04-21  Simon Josefsson  <simon@josefsson.org>
 
 	* doc/posix-functions/strftime.texi (strftime): Explain better
@@ -120,7 +126,7 @@
 	Reported by Daniel Bergström <daniel@octocode.com>.
 
 2007-12-25  KJK::Hyperion  <hackbunny@reactos.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/localename.c (gl_locale_name_canonicalize) [WIN32_NATIVE]: New
 	function.

@@ -83,18 +83,19 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
   charmask2 = c2 | (c2 << 8);
   charmask1 |= charmask1 << 16;
   charmask2 |= charmask2 << 16;
-#if 0xffffffffU < UINTMAX_MAX
-  magic_bits |= magic_bits << 32;
-  charmask1 |= charmask1 << 32;
-  charmask2 |= charmask2 << 32;
-  if (8 < sizeof longword1)
-    for (i = 64; i < sizeof longword1 * 8; i *= 2)
-      {
-	magic_bits |= magic_bits << i;
-	charmask1 |= charmask1 << i;
-	charmask2 |= charmask2 << i;
-      }
-#endif
+  if (0xffffffffU < UINTMAX_MAX)
+    {
+      magic_bits |= magic_bits << 32;
+      charmask1 |= charmask1 << 32;
+      charmask2 |= charmask2 << 32;
+      if (8 < sizeof longword1)
+	for (i = 64; i < sizeof longword1 * 8; i *= 2)
+	  {
+	    magic_bits |= magic_bits << i;
+	    charmask1 |= charmask1 << i;
+	    charmask2 |= charmask2 << i;
+	  }
+    }
   magic_bits = (UINTMAX_MAX >> 1) & (magic_bits | 1);
 
   /* Instead of the traditional loop which tests each character,
