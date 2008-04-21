@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 7   -*- Autoconf -*-
+# sys_stat_h.m4 serial 8   -*- Autoconf -*-
 dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,8 @@ dnl Test whether <sys/stat.h> contains lstat and mkdir or must be substituted.
 
 AC_DEFUN([gl_HEADER_SYS_STAT_H],
 [
+  AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
+
   dnl Check for lstat.  Systems that lack it (mingw) also lack symlinks, so
   dnl stat is a good replacement.
   AC_CHECK_FUNCS_ONCE([lstat])
@@ -19,24 +21,7 @@ AC_DEFUN([gl_HEADER_SYS_STAT_H],
   fi
   AC_SUBST([HAVE_LSTAT])
 
-  dnl Check for mkdir.  Mingw has _mkdir(name) in the nonstandard <io.h>
-  dnl instead.
-  AC_CHECK_DECLS([mkdir],
-    [],
-    [AC_CHECK_HEADERS([io.h])],
-    [#include <sys/stat.h>])
-  if test $ac_cv_have_decl_mkdir = yes; then
-    HAVE_DECL_MKDIR=1
-  else
-    HAVE_DECL_MKDIR=0
-  fi
-  AC_SUBST([HAVE_DECL_MKDIR])
-  if test "$ac_cv_header_io_h" = yes; then
-    HAVE_IO_H=1
-  else
-    HAVE_IO_H=0
-  fi
-  AC_SUBST([HAVE_IO_H])
+  dnl For the mkdir substitute.
   AC_REQUIRE([AC_C_INLINE])
 
   dnl Check for broken stat macros.
@@ -55,3 +40,16 @@ AC_DEFUN([gl_HEADER_SYS_STAT_H],
      #include <sys/stat.h>])
 
 ]) # gl_HEADER_SYS_STAT_H
+
+AC_DEFUN([gl_SYS_STAT_MODULE_INDICATOR],
+[
+  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
+  AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
+  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+])
+
+AC_DEFUN([gl_SYS_STAT_H_DEFAULTS],
+[
+  dnl Assume proper GNU behavior unless another module says otherwise.
+  REPLACE_MKDIR=0; AC_SUBST([REPLACE_MKDIR])
+])

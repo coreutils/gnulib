@@ -1,5 +1,21 @@
 2008-04-20  Bruno Haible  <bruno@clisp.org>
 
+	* lib/mkdir.c (mkdir): Undefine after the includes, not right after
+	config.h. Provide _mkdir based fallback for mingw.
+	* lib/sys_stat.in.h (mkdir): Define through an 'extern' declaration
+	if REPLACE_MKDIR is 1. Otherwise, test for mingw directly.
+	* m4/mkdir-slash.m4 (gl_FUNC_MKDIR_TRAILING_SLASH): Require
+	gl_SYS_STAT_H_DEFAULTS. When doing the replacement, set REPLACE_MKDIR
+	rather than defining mkdir in config.h.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_MODULE_INDICATOR): New macro.
+	(gl_SYS_STAT_H_DEFAULTS): New macro.
+	(gl_HEADER_SYS_STAT_H): Require it. Don't set HAVE_DECL_MKDIR and
+	HAVE_IO_H any more.
+	* modules/sys_stat (Makefile.am): Substitute REPLACE_MKDIR instead of
+	HAVE_DECL_MKDIR and HAVE_IO_H.
+
+2008-04-20  Bruno Haible  <bruno@clisp.org>
+
 	* lib/isapipe.c: Port to native Windows platforms.
 
 2008-04-20  Bruno Haible  <bruno@clisp.org>

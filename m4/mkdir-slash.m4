@@ -1,6 +1,6 @@
-#serial 5
+#serial 6
 
-# Copyright (C) 2001, 2003, 2004, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2004, 2006, 2008 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -10,6 +10,7 @@
 # trailing slashes.
 AC_DEFUN([gl_FUNC_MKDIR_TRAILING_SLASH],
 [dnl
+  AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
   AC_CHECK_HEADERS_ONCE(unistd.h)
   AC_CACHE_CHECK([whether mkdir fails due to a trailing slash],
     gl_cv_func_mkdir_trailing_slash_bug,
@@ -37,9 +38,8 @@ AC_DEFUN([gl_FUNC_MKDIR_TRAILING_SLASH],
   )
 
   if test $gl_cv_func_mkdir_trailing_slash_bug = yes; then
+    REPLACE_MKDIR=1
     AC_LIBOBJ(mkdir)
-    AC_DEFINE(mkdir, rpl_mkdir,
-      [Define to rpl_mkdir if the replacement function should be used.])
     gl_PREREQ_MKDIR
   fi
 ])
