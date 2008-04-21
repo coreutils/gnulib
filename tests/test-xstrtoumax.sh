@@ -20,7 +20,7 @@ result=0
 ./test-xstrtoumax${EXEEXT} MiB >> t-xstrtoumax.tmp 2>&1 || result=1
 
 # normalize output
-sed -e 's/^[^:]*: //' < t-xstrtoumax.tmp > t-xstrtoumax.xo
+LC_ALL=C tr -d '\r' < t-xstrtoumax.tmp > t-xstrtoumax.xo
 mv t-xstrtoumax.xo t-xstrtoumax.tmp
 
 # compare expected output

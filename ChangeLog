@@ -1,5 +1,14 @@
 2008-04-21  Bruno Haible  <bruno@clisp.org>
 
+	Fix test failures on mingw.
+	* tests/test-xstrtol.c (print_no_progname): New function.
+	(main): Install it in error_print_progname hook.
+	* tests/test-xstrtol.sh: Convert CR/LF to NL in output.
+	* tests/test-xstrtoimax.sh: Likewise.
+	* tests/test-xstrtoumax.sh: Likewise.
+
+2008-04-21  Bruno Haible  <bruno@clisp.org>
+
 	Fix test failure on mingw.
 	* tests/test-argp-2.sh (func_compare): Remove CRs from sed's output.
 

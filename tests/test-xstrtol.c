@@ -1,6 +1,6 @@
 /* Test of xstrtol module.
    Copyright (C) 1995, 1996, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
-   2006, 2007 Free Software Foundation, Inc.
+   2006, 2007, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -32,6 +32,12 @@
 
 char *program_name;
 
+/* Don't show the program name in error messages.  */
+static void
+print_no_progname (void)
+{
+}
+
 int
 main (int argc, char **argv)
 {
@@ -39,6 +45,8 @@ main (int argc, char **argv)
   int i;
 
   program_name = argv[0];
+  error_print_progname = print_no_progname;
+
   for (i = 1; i < argc; i++)
     {
       char *p;

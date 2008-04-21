@@ -32,7 +32,7 @@ result=0
 ./test-xstrtoul${EXEEXT} MiB >> t-xstrtol.tmp 2>&1 || result=1
 
 # normalize output
-sed -e 's/^[^:]*: //' < t-xstrtol.tmp > t-xstrtol.xo
+LC_ALL=C tr -d '\r' < t-xstrtol.tmp > t-xstrtol.xo
 mv t-xstrtol.xo t-xstrtol.tmp
 
 # compare expected output
