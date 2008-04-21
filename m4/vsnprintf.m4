@@ -17,7 +17,7 @@ AC_DEFUN([gl_FUNC_VSNPRINTF],
         ;;
     esac
   fi
-  if test $gl_cv_func_snprintf_usable = no; then
+  if test $gl_cv_func_vsnprintf_usable = no; then
     gl_REPLACE_VSNPRINTF
   fi
   AC_CHECK_DECLS_ONCE([vsnprintf])
