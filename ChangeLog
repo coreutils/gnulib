@@ -1,3 +1,9 @@
+2008-04-21  Simon Josefsson  <simon@josefsson.org>
+
+	* doc/posix-functions/strftime.texi (strftime): Explain better
+	Windows incompatibility.  Suggested by Micah Cowan
+	<micah@cowan.name>.
+
 2008-04-20  Bruno Haible  <bruno@clisp.org>
 
 	* modules/uniconv/u32-conv-to-enc (Depends-on): Add unistr/u32-mblen,
