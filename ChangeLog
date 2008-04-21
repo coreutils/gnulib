@@ -119,6 +119,15 @@
 	(gl_locale_name_from_win32_LANGID): Fix code for Sindhi.
 	Reported by Daniel Bergström <daniel@octocode.com>.
 
+2007-12-25  KJK::Hyperion  <hackbunny@reactos.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/localename.c (gl_locale_name_canonicalize) [WIN32_NATIVE]: New
+	function.
+	(gl_locale_name_from_win32_LANGID, gl_locale_name_from_win32_LCID):
+	New functions, mostly extracted from gl_locale_name_default.
+	(gl_locale_name_default): Use gl_locale_name_from_win32_LCID.
+
 2008-04-16  Eric Blake  <ebb9@byu.net>
 
 	Adjust strtod detection to catch glibc 2.7 bug.
