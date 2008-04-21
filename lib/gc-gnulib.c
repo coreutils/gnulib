@@ -75,6 +75,7 @@
 
 #ifdef GNULIB_GC_RANDOM
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#  include <windows.h>
 #  include <wincrypt.h>
 HCRYPTPROV g_hProv = 0;
 # endif
