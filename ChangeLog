@@ -19,6 +19,7 @@
 	* doc/posix-functions/iswspace.texi: Likewise.
 	* doc/posix-functions/iswupper.texi: Likewise.
 	* doc/posix-functions/iswxdigit.texi: Likewise.
+	Reported by Alain Guibert.
 
 2008-04-21  Bruno Haible  <bruno@clisp.org>
 
