@@ -1,5 +1,27 @@
 2008-04-21  Bruno Haible  <bruno@clisp.org>
 
+	* lib/wctype.in.h (iswalnum, iswalpha, iswblank, iswcntrl, iswdigit,
+	iswgraph, iswlower, iswprint, iswpunct, iswspace, iswupper, iswxdigit):
+	Define to replacements if REPLACE_ISWCNTRL is 1.
+	* m4/wctype.m4 (gl_WCTYPE_H): Test whether the isw* functions work.
+	If not, set WCTYPE_H to nonempty and REPLACE_ISWCNTRL to 1.
+	* modules/wctype (Makefile.am): Substitute REPLACE_ISWCNTRL.
+	* doc/posix-functions/iswalnum.texi: Mention the 'wctype' module and
+	what it fixes.
+	* doc/posix-functions/iswalpha.texi: Likewise.
+	* doc/posix-functions/iswblank.texi: Likewise.
+	* doc/posix-functions/iswcntrl.texi: Likewise.
+	* doc/posix-functions/iswdigit.texi: Likewise.
+	* doc/posix-functions/iswgraph.texi: Likewise.
+	* doc/posix-functions/iswlower.texi: Likewise.
+	* doc/posix-functions/iswprint.texi: Likewise.
+	* doc/posix-functions/iswpunct.texi: Likewise.
+	* doc/posix-functions/iswspace.texi: Likewise.
+	* doc/posix-functions/iswupper.texi: Likewise.
+	* doc/posix-functions/iswxdigit.texi: Likewise.
+
+2008-04-21  Bruno Haible  <bruno@clisp.org>
+
 	* m4/vsnprintf.m4 (gl_FUNC_VSNPRINTF): Fix typo in last commit.
 	Patch by Alain Guibert.
 

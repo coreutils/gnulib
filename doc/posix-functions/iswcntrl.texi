@@ -4,17 +4,20 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/iswcntrl.html}
 
-Gnulib module: ---
+Gnulib module: wctype
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 Solaris 2.5.1.
+@item
+This function returns 0 for all possible arguments on some platforms:
+Linux libc5.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @item
 On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
