@@ -1,3 +1,8 @@
+2008-04-21  Bruno Haible  <bruno@clisp.org>
+
+	* lib/localename.c (SUBLANG_TIBETAN_PRC, SUBLANG_TIBETAN_BHUTAN):
+	Actually assign a value.
+
 2008-04-20  Bruno Haible  <bruno@clisp.org>
 
 	Fix conflict between modules 'canonicalize' and 'canonicalize-lgpl',
