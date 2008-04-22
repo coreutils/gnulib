@@ -102,6 +102,10 @@
 #  define ESHUTDOWN               WSAESHUTDOWN
 # endif
 
+# if defined _WIN32 || defined __WIN32__
+#  define setsockopt(a,b,c,d,e) setsockopt(a,b,c,(const void*)(d),e)
+# endif
+
 #endif /* HAVE_SYS_SOCKET_H */
 
 #endif /* _GL_SYS_SOCKET_H */

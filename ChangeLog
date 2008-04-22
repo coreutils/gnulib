@@ -1,3 +1,8 @@
+2008-04-22  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/sys_socket.in.h: Define setsockopt macro to cast fourth
+	parameter to void* as per POSIX standard (MinGW uses char*).
+
 2008-04-21  Bruno Haible  <bruno@clisp.org>
 
 	* lib/wctype.in.h (iswalnum, iswalpha, iswblank, iswcntrl, iswdigit,
