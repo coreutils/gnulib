@@ -15,7 +15,7 @@ Include:
 "verify.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Paul Eggert, Jim Meyering

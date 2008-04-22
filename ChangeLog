@@ -1,3 +1,7 @@
+2008-04-22  Jim Meyering  <meyering@redhat.com>
+
+	* modules/verify (License): Re-license as LGPLv2+.
+
 2008-04-22  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/sys_socket.in.h: Define setsockopt macro to cast fourth
