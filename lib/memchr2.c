@@ -29,19 +29,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 #include <stdint.h>
 #include <string.h>
 
+#include "intprops.h"
+
 /* Return the first address of either C1 or C2 (treated as unsigned
    char) that occurs within N bytes of the memory region S.  If
    neither byte appears, return NULL.  */
 void *
 memchr2 (void const *s, int c1_in, int c2_in, size_t n)
 {
+  /* On 32-bit hardware, choosing longword to be a 32-bit unsigned
+     long instead of a 64-bit uintmax_t tends to give better
+     performance.  On 64-bit hardware, unsigned long is generally 64
+     bits already.  Change this typedef to experiment with
+     performance.  */
+  typedef unsigned long longword;
+
   const unsigned char *char_ptr;
-  const uintmax_t *longword_ptr;
-  uintmax_t longword1;
-  uintmax_t longword2;
-  uintmax_t magic_bits;
-  uintmax_t charmask1;
-  uintmax_t charmask2;
+  const longword *longword_ptr;
+  longword longword1;
+  longword longword2;
+  longword magic_bits;
+  longword charmask1;
+  longword charmask2;
   unsigned char c1;
   unsigned char c2;
   int i;
@@ -63,31 +72,17 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
   /* All these elucidatory comments refer to 4-byte longwords,
      but the theory applies equally well to any size longwords.  */
 
-  longword_ptr = (const uintmax_t *) char_ptr;
-
-  /* Bits 31, 24, 16, and 8 of this number are zero.  Call these bits
-     the "holes."  Note that there is a hole just to the left of
-     each byte, with an extra at the end:
-
-     bits:  01111110 11111110 11111110 11111111
-     bytes: AAAAAAAA BBBBBBBB CCCCCCCC DDDDDDDD
-
-     The 1-bits make sure that carries propagate to the next 0-bit.
-     The 0-bits provide holes for carries to fall into.  */
-
-  /* Set MAGIC_BITS to be this pattern of 1 and 0 bits.
-     Set CHARMASK to be a longword, each of whose bytes is C.  */
-
-  magic_bits = 0xfefefefe;
+  longword_ptr = (const longword *) char_ptr;
+  magic_bits = 0x01010101;
   charmask1 = c1 | (c1 << 8);
   charmask2 = c2 | (c2 << 8);
   charmask1 |= charmask1 << 16;
   charmask2 |= charmask2 << 16;
-  if (0xffffffffU < UINTMAX_MAX)
+  if (0xffffffffU < TYPE_MAXIMUM (longword))
     {
-      magic_bits |= magic_bits << 32;
-      charmask1 |= charmask1 << 32;
-      charmask2 |= charmask2 << 32;
+      magic_bits |= magic_bits << 31 << 1;
+      charmask1 |= charmask1 << 31 << 1;
+      charmask2 |= charmask2 << 31 << 1;
       if (8 < sizeof longword1)
 	for (i = 64; i < sizeof longword1 * 8; i *= 2)
 	  {
@@ -96,89 +91,28 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
 	    charmask2 |= charmask2 << i;
 	  }
     }
-  magic_bits = (UINTMAX_MAX >> 1) & (magic_bits | 1);
 
   /* Instead of the traditional loop which tests each character,
      we will test a longword at a time.  The tricky part is testing
-     if *any of the four* bytes in the longword in question are zero.  */
+     if *any of the four* bytes in the longword in question are zero.
+
+     We first use an xor to convert target bytes into a NUL byte,
+     since the test for a zero byte is more efficient.  For all byte
+     values except 0x00 and 0x80, subtracting 1 from the byte will
+     leave the most significant bit unchanged.  So detecting 0 is
+     simply a matter of subtracting from all bytes in parallel, and
+     checking for a most significant bit that changed to 1.  */
+
   while (n >= sizeof longword1)
     {
-      /* We tentatively exit the loop if adding MAGIC_BITS to
-	 LONGWORD fails to change any of the hole bits of LONGWORD.
-
-	 1) Is this safe?  Will it catch all the zero bytes?
-	 Suppose there is a byte with all zeros.  Any carry bits
-	 propagating from its left will fall into the hole at its
-	 least significant bit and stop.  Since there will be no
-	 carry from its most significant bit, the LSB of the
-	 byte to the left will be unchanged, and the zero will be
-	 detected.
-
-	 2) Is this worthwhile?  Will it ignore everything except
-	 zero bytes?  Suppose every byte of LONGWORD has a bit set
-	 somewhere.  There will be a carry into bit 8.  If bit 8
-	 is set, this will carry into bit 16.  If bit 8 is clear,
-	 one of bits 9-15 must be set, so there will be a carry
-	 into bit 16.  Similarly, there will be a carry into bit
-	 24.  If one of bits 24-30 is set, there will be a carry
-	 into bit 31, so all of the hole bits will be changed.
-
-	 The one misfire occurs when bits 24-30 are clear and bit
-	 31 is set; in this case, the hole at bit 31 is not
-	 changed.  If we had access to the processor carry flag,
-	 we could close this loophole by putting the fourth hole
-	 at bit 32!
-
-	 So it ignores everything except 128's, when they're aligned
-	 properly.
-
-	 3) But wait!  Aren't we looking for C, not zero?
-	 Good point.  So what we do is XOR LONGWORD with a longword,
-	 each of whose bytes is C.  This turns each byte that is C
-	 into a zero.  */
-
       longword1 = *longword_ptr ^ charmask1;
-      longword2 = *longword_ptr++ ^ charmask2;
+      longword2 = *longword_ptr ^ charmask2;
 
-      /* Add MAGIC_BITS to LONGWORD.  */
-      if ((((longword1 + magic_bits)
-
-	    /* Set those bits that were unchanged by the addition.  */
-	    ^ ~longword1)
-
-	   /* Look at only the hole bits.  If any of the hole bits
-	      are unchanged, most likely one of the bytes was a
-	      zero.  */
-	   & ~magic_bits) != 0
-	  || (((longword2 + magic_bits) ^ ~longword2) & ~magic_bits) != 0)
-	{
-	  /* Which of the bytes was C?  If none of them were, it was
-	     a misfire; continue the search.  */
-
-	  const unsigned char *cp = (const unsigned char *) (longword_ptr - 1);
-
-	  if (cp[0] == c1 || cp[0] == c2)
-	    return (void *) cp;
-	  if (cp[1] == c1 || cp[1] == c2)
-	    return (void *) &cp[1];
-	  if (cp[2] == c1 || cp[2] == c2)
-	    return (void *) &cp[2];
-	  if (cp[3] == c1 || cp[3] == c2)
-	    return (void *) &cp[3];
-	  if (4 < sizeof longword1 && (cp[4] == c1 || cp[4] == c2))
-	    return (void *) &cp[4];
-	  if (5 < sizeof longword1 && (cp[5] == c1 || cp[5] == c2))
-	    return (void *) &cp[5];
-	  if (6 < sizeof longword1 && (cp[6] == c1 || cp[6] == c2))
-	    return (void *) &cp[6];
-	  if (7 < sizeof longword1 && (cp[7] == c1 || cp[7] == c2))
-	    return (void *) &cp[7];
-	  if (8 < sizeof longword1)
-	    for (i = 8; i < sizeof longword1; i++)
-	      if (cp[i] == c1 || cp[i] == c2)
-		return (void *) &cp[i];
-	}
-
+      if (((((longword1 - magic_bits) & ~longword1)
+	    | ((longword2 - magic_bits) & ~longword2))
+	   & (magic_bits << 7)) != 0)
+	break;
+      longword_ptr++;
       n -= sizeof longword1;
     }
 
@@ -191,5 +125,5 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
       ++char_ptr;
     }
 
-  return 0;
+  return NULL;
 }

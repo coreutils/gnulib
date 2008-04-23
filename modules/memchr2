@@ -6,6 +6,7 @@ lib/memchr2.h
 lib/memchr2.c
 
 Depends-on:
+intprops
 stdint
 memchr
 

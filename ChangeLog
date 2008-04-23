@@ -1,3 +1,10 @@
+2008-04-23  Eric Blake  <ebb9@byu.net>
+
+	Improve memchr2 performance.
+	* lib/memchr2.c (memchr2): Further optimize parallel detection of
+	NUL bytes.
+	* modules/memchr2 (Depends-on): Use intprops.h.
+
 2008-04-23  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/sys_socket.in.h (setsockopt): Be more type safe by declaring
