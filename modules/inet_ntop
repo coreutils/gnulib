@@ -14,6 +14,7 @@ netinet_in
 
 configure.ac:
 gl_INET_NTOP
+gl_ARPA_INET_MODULE_INDICATOR([inet_ntop])
 
 Makefile.am:
 

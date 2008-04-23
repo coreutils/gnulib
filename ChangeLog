@@ -1,3 +1,19 @@
+2008-04-23  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/arpa_inet.in.h: New file.
+
+	* modules/arpa_inet (Files): Add lib/arpa_inet.in.h.
+	(Makefile.am): Sed in substitute header file.
+
+	* m4/arpa_inet_h.m4: Add gl_ARPA_INET_H_DEFAULTS and
+	gl_ARPA_INET_MODULE_INDICATOR.  Use them.
+
+	* modules/inet_ntop (configure.ac): Use
+	gl_ARPA_INET_MODULE_INDICATOR.
+
+	* modules/inet_pton (configure.ac): Use
+	gl_ARPA_INET_MODULE_INDICATOR.
+
 2008-04-22  Jim Meyering  <meyering@redhat.com>
 
 	* modules/verify (License): Re-license as LGPLv2+.
