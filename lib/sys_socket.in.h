@@ -103,7 +103,13 @@
 # endif
 
 # if defined _WIN32 || defined __WIN32__
-#  define setsockopt(a,b,c,d,e) setsockopt(a,b,c,(const void*)(d),e)
+#  define setsockopt(a,b,c,d,e) rpl_setsockopt(a,b,c,d,e)
+static inline int
+rpl_setsockopt(int socket, int level, int optname, const void *optval,
+	       socklen_t optlen)
+{
+  return (setsockopt)(socket, level, optname, optval, optlen);
+}
 # endif
 
 #endif /* HAVE_SYS_SOCKET_H */

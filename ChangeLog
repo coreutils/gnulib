@@ -1,5 +1,11 @@
 2008-04-23  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/sys_socket.in.h (setsockopt): Be more type safe by declaring
+	an inline function instead of a CPP macro.  Patch by Ben Pfaff
+	<blp@cs.stanford.edu>.
+
+2008-04-23  Simon Josefsson  <simon@josefsson.org>
+
 	* lib/arpa_inet.in.h: New file.
 
 	* modules/arpa_inet (Files): Add lib/arpa_inet.in.h.
