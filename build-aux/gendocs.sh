@@ -157,6 +157,11 @@ if test ! -r $GENDOCS_TEMPLATE_DIR/gendocs_template; then
   exit 1
 fi
 
+case $outdir in
+  /*) dotdot_outdir="$outdir";;
+  *) dotdot_outdir="../$outdir";;
+esac
+
 echo Generating output formats for $srcfile
 
 cmd="$SETLANG $MAKEINFO -o $PACKAGE.info \"$srcfile\""
@@ -206,7 +211,7 @@ html_split() {
   (
     cd ${split_html_dir} || exit 1
     ln -sf ${PACKAGE}.html index.html
-    tar -czf ../$outdir/${PACKAGE}.html_$1.tar.gz -- *.html
+    tar -czf $dotdot_outdir/${PACKAGE}.html_$1.tar.gz -- *.html
   )
   eval html_$1_tgz_size=`calcsize $outdir/${PACKAGE}.html_$1.tar.gz`
   rm -f $outdir/html_$1/*.html
@@ -231,7 +236,7 @@ if test -z "$use_texi2html"; then
   split_html_dir=$PACKAGE.html
   (
    cd ${split_html_dir} || exit 1
-   tar -czf ../$outdir/${PACKAGE}.html_node.tar.gz -- *.html
+   tar -czf $dotdot_outdir/${PACKAGE}.html_node.tar.gz -- *.html
   )
   html_node_tgz_size=`calcsize $outdir/${PACKAGE}.html_node.tar.gz` 
   rm -f $outdir/html_node/*.html
@@ -273,7 +278,7 @@ if test -n "$docbook"; then
   split_html_db_dir=html_node_db
   (
     cd ${split_html_db_dir} || exit 1
-    tar -czf ../$outdir/${PACKAGE}.html_node_db.tar.gz -- *.html
+    tar -czf $dotdot_outdir/${PACKAGE}.html_node_db.tar.gz -- *.html
   )
   html_node_db_tgz_size=`calcsize $outdir/${PACKAGE}.html_node_db.tar.gz`
   rm -f $outdir/html_node_db/*.html
