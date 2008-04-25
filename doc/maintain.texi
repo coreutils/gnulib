@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate March 21, 2008
+@set lastupdate April 25, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -1717,7 +1717,7 @@ different movements which differ in their basic philosophy.  The Free
 Software Movement is idealistic, and raises issues of freedom, ethics,
 principle and what makes for a good society.  The Open Source Movement,
 founded in 1998, studiously avoids such questions.  For more explanation,
-see @url{http://www.gnu.org/philosophy/free-software-for-freedom.html}.
+see @url{http://www.gnu.org/philosophy/open-source-misses-the-point.html}.
 
 The GNU Project is aligned with the Free Software Movement.  This
 doesn't mean that all GNU contributors and maintainers have to agree;

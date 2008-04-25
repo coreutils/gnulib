@@ -968,6 +968,8 @@ then @code{tar} that subdirectory.
 
 Compress the tar file with @code{gzip}.  For example, the actual
 distribution file for GCC version 1.40 is called @file{gcc-1.40.tar.gz}.
+It is ok to support other free compression formats as well, such as
+@code{bzip2} and @code{lzma}.
 
 The @code{dist} target should explicitly depend on all non-source files
 that are in the distribution, to make sure they are up to date in the
