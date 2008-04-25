@@ -1,3 +1,9 @@
+2008-04-25  Eric Blake  <ebb9@byu.net>
+
+	Use native fstatat on cygwin 1.7.0.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Make sure lstat check is made
+	first.
+
 2008-04-23  Eric Blake  <ebb9@byu.net>
 
 	Improve memchr2 performance.
