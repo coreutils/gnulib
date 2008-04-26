@@ -35,9 +35,9 @@ freadahead (FILE *fp)
       struct  __sbuf _ub; /* ungetc buffer */
       /* More fields, not relevant here.  */
     };
-# define HASUB(fp) (((struct __sfileext *) (fp)->_ext._base)->_ub._base != NULL)
+#  define HASUB(fp) (((struct __sfileext *) (fp)->_ext._base)->_ub._base != NULL)
 # else
-# define HASUB(fp) ((fp)->_ub._base != NULL)
+#  define HASUB(fp) ((fp)->_ub._base != NULL)
 # endif
   if ((fp->_flags & __SWR) != 0 || fp->_r < 0)
     return 0;
