@@ -1,0 +1,10 @@
+Files:
+tests/test-memchr.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-memchr
+check_PROGRAMS += test-memchr
