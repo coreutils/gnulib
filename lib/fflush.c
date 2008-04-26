@@ -62,7 +62,7 @@ restore_seek_optimization (FILE *fp, int saved_flags)
 #endif
 
 static inline void
-update_fpos_cache (FILE *fp)
+update_fpos_cache (FILE *fp, off_t pos)
 {
 #if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
   fp_->_offset = pos;
@@ -161,7 +161,7 @@ rpl_fflush (FILE *stream)
     return EOF;
   /* After a successful lseek, update the file descriptor's position cache
      in the stream.  */
-  update_fpos_cache (stream);
+  update_fpos_cache (stream, pos);
 
   return 0;
 
