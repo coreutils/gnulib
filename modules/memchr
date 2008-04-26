@@ -6,6 +6,7 @@ lib/memchr.c
 m4/memchr.m4
 
 Depends-on:
+intprops
 
 configure.ac:
 gl_FUNC_MEMCHR

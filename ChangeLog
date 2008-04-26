@@ -1,3 +1,10 @@
+2008-04-26  Eric Blake  <ebb9@byu.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/memchr.c: Include intprops.h.
+	(__memchr): Optimize parallel detection of matching bytes. Rename local
+	variables. Add explanatory comments.
+
 2008-04-26  Bruno Haible  <bruno@clisp.org>
 
 	Fix module 'memchr', broken since 2000-10-28.
