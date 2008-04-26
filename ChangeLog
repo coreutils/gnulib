@@ -1,5 +1,10 @@
 2008-04-26  Bruno Haible  <bruno@clisp.org>
 
+	Fix module 'memchr', broken since 2000-10-28.
+	* lib/memchr.c: Outside glibc, define memchr, not __memchr.
+
+2008-04-26  Bruno Haible  <bruno@clisp.org>
+
 	* lib/memchr2.c (memchr2): Rename local variables. Add explanatory
 	comments.
 

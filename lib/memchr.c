@@ -1,5 +1,5 @@
-/* Copyright (C) 1991, 1993, 1996, 1997, 1999, 2000, 2003, 2004, 2006 Free
-   Software Foundation, Inc.
+/* Copyright (C) 1991, 1993, 1996, 1997, 1999, 2000, 2003, 2004, 2006, 2008
+   Free Software Foundation, Inc.
 
    Based on strlen implementation by Torbjorn Granlund (tege@sics.se),
    with help from Dan Sahlin (dan@sics.se) and
@@ -45,8 +45,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 # define BP_SYM(sym) sym
 #endif
 
-#undef memchr
 #undef __memchr
+#ifdef _LIBC
+# undef memchr
+#endif
+
+#ifndef weak_alias
+# define __memchr memchr
+#endif
 
 /* Search no more than N bytes of S for C.  */
 void *
