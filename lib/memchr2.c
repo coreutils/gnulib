@@ -46,14 +46,11 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
 
   const unsigned char *char_ptr;
   const longword *longword_ptr;
-  longword longword1;
-  longword longword2;
-  longword magic_bits;
-  longword charmask1;
-  longword charmask2;
+  longword repeated_one;
+  longword repeated_c1;
+  longword repeated_c2;
   unsigned char c1;
   unsigned char c2;
-  int i;
 
   c1 = (unsigned char) c1_in;
   c2 = (unsigned char) c2_in;
@@ -61,68 +58,108 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
   if (c1 == c2)
     return memchr (s, c1, n);
 
-  /* Handle the first few characters by reading one character at a time.
+  /* Handle the first few bytes by reading one byte at a time.
      Do this until CHAR_PTR is aligned on a longword boundary.  */
   for (char_ptr = (const unsigned char *) s;
-       n > 0 && (size_t) char_ptr % sizeof longword1 != 0;
+       n > 0 && (size_t) char_ptr % sizeof (longword) != 0;
        --n, ++char_ptr)
     if (*char_ptr == c1 || *char_ptr == c2)
       return (void *) char_ptr;
 
+  longword_ptr = (const longword *) char_ptr;
+
   /* All these elucidatory comments refer to 4-byte longwords,
      but the theory applies equally well to any size longwords.  */
 
-  longword_ptr = (const longword *) char_ptr;
-  magic_bits = 0x01010101;
-  charmask1 = c1 | (c1 << 8);
-  charmask2 = c2 | (c2 << 8);
-  charmask1 |= charmask1 << 16;
-  charmask2 |= charmask2 << 16;
+  /* Compute auxiliary longword values:
+     repeated_one is a value which has a 1 in every byte.
+     repeated_c1 has c1 in every byte.
+     repeated_c2 has c2 in every byte.  */
+  repeated_one = 0x01010101;
+  repeated_c1 = c1 | (c1 << 8);
+  repeated_c2 = c2 | (c2 << 8);
+  repeated_c1 |= repeated_c1 << 16;
+  repeated_c2 |= repeated_c2 << 16;
   if (0xffffffffU < TYPE_MAXIMUM (longword))
     {
-      magic_bits |= magic_bits << 31 << 1;
-      charmask1 |= charmask1 << 31 << 1;
-      charmask2 |= charmask2 << 31 << 1;
-      if (8 < sizeof longword1)
-	for (i = 64; i < sizeof longword1 * 8; i *= 2)
-	  {
-	    magic_bits |= magic_bits << i;
-	    charmask1 |= charmask1 << i;
-	    charmask2 |= charmask2 << i;
-	  }
+      repeated_one |= repeated_one << 31 << 1;
+      repeated_c1 |= repeated_c1 << 31 << 1;
+      repeated_c2 |= repeated_c2 << 31 << 1;
+      if (8 < sizeof (longword))
+	{
+	  int i;
+
+	  for (i = 64; i < sizeof (longword) * 8; i *= 2)
+	    {
+	      repeated_one |= repeated_one << i;
+	      repeated_c1 |= repeated_c1 << i;
+	      repeated_c2 |= repeated_c2 << i;
+	    }
+	}
     }
 
-  /* Instead of the traditional loop which tests each character,
-     we will test a longword at a time.  The tricky part is testing
-     if *any of the four* bytes in the longword in question are zero.
+  /* Instead of the traditional loop which tests each byte, we will test a
+     longword at a time.  The tricky part is testing if *any of the four*
+     bytes in the longword in question are equal to c1 or c2.  We first use
+     an xor with repeated_c1 and repeated_c2, respectively.  This reduces
+     the task to testing whether *any of the four* bytes in longword1 or
+     longword2 is zero.
 
-     We first use an xor to convert target bytes into a NUL byte,
-     since the test for a zero byte is more efficient.  For all byte
-     values except 0x00 and 0x80, subtracting 1 from the byte will
-     leave the most significant bit unchanged.  So detecting 0 is
-     simply a matter of subtracting from all bytes in parallel, and
-     checking for a most significant bit that changed to 1.  */
+     Let's consider longword1.  We compute tmp1 =
+       ((longword1 - repeated_one) & ~longword1) & (repeated_one << 7).
+     That is, we perform the following operations:
+       1. Subtract repeated_one.
+       2. & ~longword1.
+       3. & a mask consisting of 0x80 in every byte.
+     Consider what happens in each byte:
+       - If a byte of longword1 is zero, step 1 and 2 transform it into 0xff,
+         and step 3 transforms it into 0x80.  A carry can also be propagated
+         to more significant bytes.
+       - If a byte of longword1 is nonzero, let its lowest 1 bit be at
+         position k (0 <= k <= 7); so the lowest k bits are 0.  After step 1,
+         the byte ends in a single bit of value 0 and k bits of value 1.
+         After step 2, the result is just k bits of value 1: 2^k - 1.  After
+         step 3, the result is 0.  And no carry is produced.
+     So, if longword1 has only non-zero bytes, tmp1 is zero.
+     Whereas if longword1 has a zero byte, call j the position of the least
+     significant zero byte.  Then the result has a zero at positions 0, ...,
+     j-1 and a 0x80 at position j.  We cannot predict the result at the more
+     significant bytes (positions j+1..3), but it does not matter since we
+     already have a non-zero bit at position 8*j+7.
 
-  while (n >= sizeof longword1)
+     Similary, we compute tmp2 =
+       ((longword2 - repeated_one) & ~longword2) & (repeated_one << 7).
+
+     The test whether any byte in longword1 or longword2 is zero is equivalent
+     to testing whether tmp1 is nonzero or tmp2 is nonzero.  We can combine
+     this into a single test, whether (tmp1 | tmp2) is nonzero.  */
+
+  while (n >= sizeof (longword))
     {
-      longword1 = *longword_ptr ^ charmask1;
-      longword2 = *longword_ptr ^ charmask2;
+      longword longword1 = *longword_ptr ^ repeated_c1;
+      longword longword2 = *longword_ptr ^ repeated_c2;
 
-      if (((((longword1 - magic_bits) & ~longword1)
-	    | ((longword2 - magic_bits) & ~longword2))
-	   & (magic_bits << 7)) != 0)
+      if (((((longword1 - repeated_one) & ~longword1)
+	    | ((longword2 - repeated_one) & ~longword2))
+	   & (repeated_one << 7)) != 0)
 	break;
       longword_ptr++;
-      n -= sizeof longword1;
+      n -= sizeof (longword);
     }
 
   char_ptr = (const unsigned char *) longword_ptr;
 
-  while (n-- > 0)
+  /* At this point, we know that either n < sizeof (longword), or one of the
+     sizeof (longword) bytes starting at char_ptr is == c1 or == c2.  On
+     little-endian machines, we could determine the first such byte without
+     any further memory accesses, just by looking at the (tmp1 | tmp2) result
+     from the last loop iteration.  But this does not work on big-endian
+     machines.  Choose code that works in both cases.  */
+
+  for (; n > 0; --n, ++char_ptr)
     {
       if (*char_ptr == c1 || *char_ptr == c2)
 	return (void *) char_ptr;
-      ++char_ptr;
     }
 
   return NULL;

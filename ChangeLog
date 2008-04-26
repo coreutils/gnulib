@@ -1,3 +1,8 @@
+2008-04-26  Bruno Haible  <bruno@clisp.org>
+
+	* lib/memchr2.c (memchr2): Rename local variables. Add explanatory
+	comments.
+
 2008-04-25  Eric Blake  <ebb9@byu.net>
 
 	Use native fstatat on cygwin 1.7.0.
