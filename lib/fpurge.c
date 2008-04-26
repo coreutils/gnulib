@@ -24,6 +24,8 @@
 #endif
 #include <stdlib.h>
 
+#include "stdio-impl.h"
+
 int
 fpurge (FILE *fp)
 {
@@ -76,13 +78,6 @@ fpurge (FILE *fp)
 	    ? fp->_bf._size
 	    : 0);
   /* Avoid memory leak when there is an active ungetc buffer.  */
-#  if defined __NetBSD__ || defined __OpenBSD__ /* NetBSD, OpenBSD */
-   /* See <http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/stdio/fileext.h?rev=HEAD&content-type=text/x-cvsweb-markup>
-      and <http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/stdio/fileext.h?rev=HEAD&content-type=text/x-cvsweb-markup> */
-#   define fp_ub ((struct { struct __sbuf _ub; } *) fp->_ext._base)->_ub
-#  else                                         /* FreeBSD, MacOS X, Cygwin */
-#   define fp_ub fp->_ub
-#  endif
   if (fp_ub._base != NULL)
     {
       if (fp_ub._base != fp->_ubuf)
@@ -97,11 +92,6 @@ fpurge (FILE *fp)
   fp->_ungetc_count = 0;
   return 0;
 # elif defined _IOERR               /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
-#  if defined _SCO_DS               /* OpenServer */
-#   define _base __base
-#   define _ptr __ptr
-#   define _cnt __cnt
-#  endif
   fp->_ptr = fp->_base;
   if (fp->_ptr != NULL)
     fp->_cnt = 0;

@@ -4,6 +4,7 @@ freadptr() function: Pointer to the input buffer of a stream.
 Files:
 lib/freadptr.h
 lib/freadptr.c
+lib/stdio-impl.h
 
 Depends-on:
 

@@ -19,6 +19,8 @@
 /* Specification.  */
 #include "fwritable.h"
 
+#include "stdio-impl.h"
+
 bool
 fwritable (FILE *fp)
 {
@@ -32,9 +34,6 @@ fwritable (FILE *fp)
 #elif defined __EMX__               /* emx+gcc */
   return (fp->_flags & (_IORW | _IOWRT)) != 0;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
-# if defined _SCO_DS                /* OpenServer */
-#  define _flag __flag
-# endif
   return (fp->_flag & (_IORW | _IOWRT)) != 0;
 #elif defined __QNX__               /* QNX */
   return (fp->_Mode & 0x2 /* _MOPENW */) != 0;

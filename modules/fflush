@@ -3,6 +3,7 @@ Discard pending data on both input and output streams.
 
 Files:
 lib/fflush.c
+lib/stdio-impl.h
 m4/fflush.m4
 
 Depends-on:

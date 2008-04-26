@@ -1,5 +1,45 @@
 2008-04-26  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdio-impl.h: New file.
+	* lib/fbufmode.c: Include stdio-impl.h.
+	(fbufmode): Use fp_, remove redundant #defines.
+	* lib/fflush.c: Include stdio-impl.h.
+	(clear_ungetc_buffer): Remove redundant #defines.
+	* lib/fpurge.c: Include stdio-impl.h.
+	(fpurge): Remove redundant #defines.
+	* lib/freadable.c: Include stdio-impl.h.
+	(freadable): Remove redundant #defines.
+	* lib/freadahead.c: Include stdio-impl.h.
+	(freadahead): Remove redundant #defines.
+	* lib/freading.c: Include stdio-impl.h.
+	(freading): Remove redundant #defines.
+	* lib/freadptr.c: Include stdio-impl.h.
+	(freadptr): Remove redundant #defines.
+	* lib/freadseek.c: Include stdio-impl.h.
+	(freadptrinc): Remove redundant #defines.
+	* lib/fseeko.c: Include stdio-impl.h.
+	(rpl_fseeko): Remove redundant #defines.
+	* lib/fseterr.c: Include stdio-impl.h.
+	(fseterr): Remove redundant #defines.
+	* lib/fwritable.c: Include stdio-impl.h.
+	(fwritable: Remove redundant #defines.
+	* lib/fwriting.c: Include stdio-impl.h.
+	(fwriting): Remove redundant #defines.
+	* modules/fbufmode (Files): Add lib/stdio-impl.h.
+	* modules/fflush (Files): Likewise.
+	* modules/fpurge (Files): Likewise.
+	* modules/freadable (Files): Likewise.
+	* modules/freadahead (Files): Likewise.
+	* modules/freading (Files): Likewise.
+	* modules/freadptr (Files): Likewise.
+	* modules/freadseek (Files): Likewise.
+	* modules/fseeko (Files): Likewise.
+	* modules/fseterr (Files): Likewise.
+	* modules/fwritable (Files): Likewise.
+	* modules/fwriting (Files): Likewise.
+
+2008-04-26  Bruno Haible  <bruno@clisp.org>
+
 	* lib/fflush.c (clear_ungetc_buffer, disable_seek_optimization,
 	restore_seek_optimization, update_fpos_cache): New functions, extracted
 	from rpl_fflush.

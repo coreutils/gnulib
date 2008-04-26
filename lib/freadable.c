@@ -19,6 +19,8 @@
 /* Specification.  */
 #include "freadable.h"
 
+#include "stdio-impl.h"
+
 bool
 freadable (FILE *fp)
 {
@@ -32,9 +34,6 @@ freadable (FILE *fp)
 #elif defined __EMX__               /* emx+gcc */
   return (fp->_flags & (_IORW | _IOREAD)) != 0;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
-# if defined _SCO_DS                /* OpenServer */
-#  define _flag __flag
-# endif
   return (fp->_flag & (_IORW | _IOREAD)) != 0;
 #elif defined __QNX__               /* QNX */
   return (fp->_Mode & 0x1 /* _MOPENR */) != 0;

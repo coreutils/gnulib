@@ -23,6 +23,8 @@
 # include <stdio_ext.h>
 #endif
 
+#include "stdio-impl.h"
+
 int
 fbufmode (FILE *fp)
 {
@@ -56,23 +58,9 @@ fbufmode (FILE *fp)
   if (fp->_flag & _IOLBF)
     return _IOLBF;
 # endif
-# if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
-#  define fp_ ((struct { unsigned char *_ptr; \
-			 unsigned char *_base; \
-			 unsigned char *_end; \
-			 long _cnt; \
-			 int _file; \
-			 unsigned int _flag; \
-		       } *) fp)
-  return fp_->_flag & (_IONBF | _IOFBF);
-# else
-#  if defined _SCO_DS               /* OpenServer */
-#   define _flag __flag
-#  endif
-  if (fp->_flag & _IONBF)
+  if (fp_->_flag & _IONBF)
     return _IONBF;
   return _IOFBF;
-# endif
 #elif defined __UCLIBC__            /* uClibc */
   if (fp->__modeflags & __FLAG_LBF)
     return _IOLBF;

@@ -21,6 +21,8 @@
 
 #include <stdlib.h>
 
+#include "stdio-impl.h"
+
 const char *
 freadptr (FILE *fp, size_t *sizep)
 {
@@ -55,14 +57,6 @@ freadptr (FILE *fp, size_t *sizep)
   *sizep = fp->_rcount;
   return fp->_ptr;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
-# if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
-#  define fp_ ((struct { unsigned char *_ptr; \
-			 unsigned char *_base; \
-			 unsigned char *_end; \
-			 long _cnt; \
-			 int _file; \
-			 unsigned int _flag; \
-		       } *) fp)
   if ((fp_->_flag & _IOWRT) != 0)
     return NULL;
   size = fp_->_cnt;
@@ -70,20 +64,6 @@ freadptr (FILE *fp, size_t *sizep)
     return NULL;
   *sizep = size;
   return (const char *) fp_->_ptr;
-# else
-#  if defined _SCO_DS               /* OpenServer */
-#   define _flag __flag
-#   define _ptr __ptr
-#   define _cnt __cnt
-#  endif
-  if ((fp->_flag & _IOWRT) != 0)
-    return NULL;
-  size = fp->_cnt;
-  if (size == 0)
-    return NULL;
-  *sizep = size;
-  return (const char *) fp->_ptr;
-# endif
 #elif defined __UCLIBC__            /* uClibc */
 # ifdef __STDIO_BUFFERS
   if (fp->__modeflags & __FLAG_WRITING)

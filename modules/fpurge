@@ -4,6 +4,7 @@ fpurge() function: Flush buffers.
 Files:
 lib/fpurge.h
 lib/fpurge.c
+lib/stdio-impl.h
 m4/fpurge.m4
 
 Depends-on:

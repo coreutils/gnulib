@@ -25,6 +25,8 @@
 #include "freadahead.h"
 #include "freadptr.h"
 
+#include "stdio-impl.h"
+
 /* Increment the in-memory pointer.  INCREMENT must be at most the buffer size
    returned by freadptr().
    This is very cheap (no system calls).  */
@@ -41,24 +43,8 @@ freadptrinc (FILE *fp, size_t increment)
   fp->_ptr += increment;
   fp->_rcount -= increment;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
-# if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
-#  define fp_ ((struct { unsigned char *_ptr; \
-			 unsigned char *_base; \
-			 unsigned char *_end; \
-			 long _cnt; \
-			 int _file; \
-			 unsigned int _flag; \
-		       } *) fp)
   fp_->_ptr += increment;
   fp_->_cnt -= increment;
-# else
-#  if defined _SCO_DS               /* OpenServer */
-#   define _ptr __ptr
-#   define _cnt __cnt
-#  endif
-  fp->_ptr += increment;
-  fp->_cnt -= increment;
-# endif
 #elif defined __UCLIBC__            /* uClibc */
 # ifdef __STDIO_BUFFERS
   fp->__bufpos += increment;

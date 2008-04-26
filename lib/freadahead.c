@@ -19,6 +19,8 @@
 /* Specification.  */
 #include "freadahead.h"
 
+#include "stdio-impl.h"
+
 size_t
 freadahead (FILE *fp)
 {
@@ -29,16 +31,6 @@ freadahead (FILE *fp)
 	 + (fp->_flags & _IO_IN_BACKUP ? fp->_IO_save_end - fp->_IO_save_base :
 	    0);
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-# if defined __NetBSD__ || defined __OpenBSD__
-  struct __sfileext
-    {
-      struct  __sbuf _ub; /* ungetc buffer */
-      /* More fields, not relevant here.  */
-    };
-#  define HASUB(fp) (((struct __sfileext *) (fp)->_ext._base)->_ub._base != NULL)
-# else
-#  define HASUB(fp) ((fp)->_ub._base != NULL)
-# endif
   if ((fp->_flags & __SWR) != 0 || fp->_r < 0)
     return 0;
   return fp->_r
@@ -52,26 +44,9 @@ freadahead (FILE *fp)
      (fp->_ungetc_count == 0 ? fp->_rcount : fp->_ungetc_count - fp->_rcount) */
   return (fp->_rcount > 0 ? fp->_rcount : fp->_ungetc_count - fp->_rcount);
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
-# if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
-#  define fp_ ((struct { unsigned char *_ptr; \
-			 unsigned char *_base; \
-			 unsigned char *_end; \
-			 long _cnt; \
-			 int _file; \
-			 unsigned int _flag; \
-		       } *) fp)
   if ((fp_->_flag & _IOWRT) != 0)
     return 0;
   return fp_->_cnt;
-# else
-#  if defined _SCO_DS               /* OpenServer */
-#   define _flag __flag
-#   define _cnt __cnt
-#  endif
-  if ((fp->_flag & _IOWRT) != 0)
-    return 0;
-  return fp->_cnt;
-# endif
 #elif defined __UCLIBC__            /* uClibc */
 # ifdef __STDIO_BUFFERS
   if (fp->__modeflags & __FLAG_WRITING)

@@ -4,6 +4,7 @@ freadable() function: Determine whether a FILE stream supports reading.
 Files:
 lib/freadable.h
 lib/freadable.c
+lib/stdio-impl.h
 m4/freadable.m4
 
 Depends-on:

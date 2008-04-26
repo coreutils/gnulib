@@ -4,6 +4,7 @@ fwriting() function: Determine whether a FILE stream is currently doing writing.
 Files:
 lib/fwriting.h
 lib/fwriting.c
+lib/stdio-impl.h
 m4/fwriting.m4
 
 Depends-on:

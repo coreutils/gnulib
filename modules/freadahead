@@ -5,6 +5,7 @@ buffer of a stream.
 Files:
 lib/freadahead.h
 lib/freadahead.c
+lib/stdio-impl.h
 
 Depends-on:
 

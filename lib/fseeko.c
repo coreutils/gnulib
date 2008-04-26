@@ -23,6 +23,8 @@
 /* Get off_t and lseek.  */
 #include <unistd.h>
 
+#include "stdio-impl.h"
+
 #undef fseeko
 #if !HAVE_FSEEKO
 # undef fseek
@@ -44,13 +46,6 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
       && fp->_IO_write_ptr == fp->_IO_write_base
       && fp->_IO_save_base == NULL)
 #elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-# if defined __NetBSD__ || defined __OpenBSD__ /* NetBSD, OpenBSD */
-   /* See <http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/stdio/fileext.h?rev=HEAD&content-type=text/x-cvsweb-markup>
-      and <http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/stdio/fileext.h?rev=HEAD&content-type=text/x-cvsweb-markup> */
-#  define fp_ub ((struct { struct __sbuf _ub; } *) fp->_ext._base)->_ub
-# else                                         /* FreeBSD, MacOS X, Cygwin */
-#  define fp_ub fp->_ub
-# endif
 # if defined __SL64 && defined __SCLE /* Cygwin */
   if ((fp->_flags & __SL64) == 0)
     {
@@ -76,25 +71,8 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
       && fp->_wcount == 0
       && fp->_ungetc_count == 0)
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
-# if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
-#  define fp_ ((struct { unsigned char *_ptr; \
-			 unsigned char *_base; \
-			 unsigned char *_end; \
-			 long _cnt; \
-			 int _file; \
-			 unsigned int _flag; \
-		       } *) fp)
   if (fp_->_ptr == fp_->_base
       && (fp_->_ptr == NULL || fp_->_cnt == 0))
-# else
-#  if defined _SCO_DS               /* OpenServer */
-#   define _base __base
-#   define _ptr __ptr
-#   define _cnt __cnt
-#  endif
-  if (fp->_ptr == fp->_base
-      && (fp->_ptr == NULL || fp->_cnt == 0))
-# endif
 #elif defined __UCLIBC__            /* uClibc */
   if (((fp->__modeflags & __FLAG_WRITING) == 0
        || fp->__bufpos == fp->__bufstart)
@@ -125,9 +103,6 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
 #elif defined __EMX__               /* emx+gcc */
           fp->_flags &= ~_IOEOF;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
-# if defined _SCO_DS                /* OpenServer */
-#  define _flag __flag
-# endif
           fp->_flag &= ~_IOEOF;
 #endif
 	  return 0;

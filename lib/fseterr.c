@@ -21,6 +21,8 @@
 
 #include <errno.h>
 
+#include "stdio-impl.h"
+
 void
 fseterr (FILE *fp)
 {
@@ -34,21 +36,7 @@ fseterr (FILE *fp)
 #elif defined __EMX__               /* emx+gcc */
   fp->_flags |= _IOERR;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
-# if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
-#  define fp_ ((struct { unsigned char *_ptr; \
-			 unsigned char *_base; \
-			 unsigned char *_end; \
-			 long _cnt; \
-			 int _file; \
-			 unsigned int _flag; \
-		       } *) fp)
   fp_->_flag |= _IOERR;
-# else
-#  if defined _SCO_DS               /* OpenServer */
-#   define _flag __flag
-#  endif
-  fp->_flag |= _IOERR;
-# endif
 #elif defined __UCLIBC__            /* uClibc */
   fp->__modeflags |= __FLAG_ERROR;
 #elif defined __QNX__               /* QNX */

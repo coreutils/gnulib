@@ -27,22 +27,14 @@
 #include "freading.h"
 #include "fpurge.h"
 
+#include "stdio-impl.h"
+
 #undef fflush
 
 static inline void
 clear_ungetc_buffer (FILE *fp)
 {
 #if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-# if defined __NetBSD__ || defined __OpenBSD__
-  struct __sfileext
-    {
-      struct  __sbuf _ub; /* ungetc buffer */
-      /* More fields, not relevant here.  */
-    };
-#  define HASUB(fp) (((struct __sfileext *) (fp)->_ext._base)->_ub._base != NULL)
-# else
-#  define HASUB(fp) ((fp)->_ub._base != NULL)
-# endif
   if (HASUB (fp))
     {
       fp->_p += stream->_r;

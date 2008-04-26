@@ -3,6 +3,7 @@ fseeko() function: Reposition a FILE stream.
 
 Files:
 lib/fseeko.c
+lib/stdio-impl.h
 m4/fseeko.m4
 
 Depends-on:

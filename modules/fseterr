@@ -4,6 +4,7 @@ Set the error indicator of a stream.
 Files:
 lib/fseterr.h
 lib/fseterr.c
+lib/stdio-impl.h
 
 Depends-on:
 
