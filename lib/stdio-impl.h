@@ -21,7 +21,34 @@
 
 /* BSD stdio derived implementations.  */
 
-#if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+#if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+
+# if defined __DragonFly__          /* DragonFly */
+  /* See <http://www.dragonflybsd.org/cvsweb/src/lib/libc/stdio/priv_stdio.h?rev=HEAD&content-type=text/x-cvsweb-markup>.  */
+#  define fp_ ((struct { struct __FILE_public pub; \
+			 struct { unsigned char *_base; int _size; } _bf; \
+			 void *cookie; \
+			 void *_close; \
+			 void *_read; \
+			 void *_seek; \
+			 void *_write; \
+			 struct { unsigned char *_base; int _size; } _ub; \
+			 int _ur; \
+			 unsigned char _ubuf[3]; \
+			 unsigned cahr _nbuf[1]; \
+			 struct { unsigned char *_base; int _size; } _lb; \
+			 int _blksize; \
+			 fpos_t _offset; \
+			 /* More fields, not relevant here.  */ \
+		       } *) fp)
+  /* See <http://www.dragonflybsd.org/cvsweb/src/include/stdio.h?rev=HEAD&content-type=text/x-cvsweb-markup>.  */
+#  define _p pub._p
+#  define _flags pub._flags
+#  define _r pub._r
+#  define _w pub._w
+# else
+#  define fp_ fp
+# endif
 
 # if defined __NetBSD__ || defined __OpenBSD__ /* NetBSD, OpenBSD */
   /* See <http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/stdio/fileext.h?rev=HEAD&content-type=text/x-cvsweb-markup>
@@ -32,7 +59,7 @@
       /* More fields, not relevant here.  */
     };
 #  define fp_ub ((struct __sfileext *) fp->_ext._base)->_ub
-# else                                         /* FreeBSD, MacOS X, Cygwin */
+# else                                         /* FreeBSD, DragonFly, MacOS X, Cygwin */
 #  define fp_ub fp->_ub
 # endif
 

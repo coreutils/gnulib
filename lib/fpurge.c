@@ -35,7 +35,7 @@ fpurge (FILE *fp)
   /* The __fpurge function does not have a return value.  */
   return 0;
 
-#elif HAVE_FPURGE                   /* FreeBSD, NetBSD, OpenBSD, MacOS X */
+#elif HAVE_FPURGE                   /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X */
 
   /* Call the system's fpurge function.  */
 # undef fpurge
@@ -43,7 +43,7 @@ fpurge (FILE *fp)
   extern int fpurge (FILE *);
 # endif
   int result = fpurge (fp);
-# if defined __sferror              /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+# if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
   if (result == 0)
     /* Correct the invariants that fpurge broke.
        <stdio.h> on BSD systems says:
@@ -51,8 +51,8 @@ fpurge (FILE *fp)
        If this invariant is not fulfilled and the stream is read-write but
        currently writing, subsequent putc or fputc calls will write directly
        into the buffer, although they shouldn't be allowed to.  */
-    if ((fp->_flags & __SRD) != 0)
-      fp->_w = 0;
+    if ((fp_->_flags & __SRD) != 0)
+      fp_->_w = 0;
 # endif
   return result;
 
@@ -71,16 +71,16 @@ fpurge (FILE *fp)
       fp->_IO_save_base = NULL;
     }
   return 0;
-# elif defined __sferror            /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-  fp->_p = fp->_bf._base;
-  fp->_r = 0;
-  fp->_w = ((fp->_flags & (__SLBF | __SNBF | __SRD)) == 0 /* fully buffered and not currently reading? */
-	    ? fp->_bf._size
-	    : 0);
+# elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+  fp_->_p = fp_->_bf._base;
+  fp_->_r = 0;
+  fp_->_w = ((fp_->_flags & (__SLBF | __SNBF | __SRD)) == 0 /* fully buffered and not currently reading? */
+	     ? fp_->_bf._size
+	     : 0);
   /* Avoid memory leak when there is an active ungetc buffer.  */
   if (fp_ub._base != NULL)
     {
-      if (fp_ub._base != fp->_ubuf)
+      if (fp_ub._base != fp_->_ubuf)
 	free (fp_ub._base);
       fp_ub._base = NULL;
     }

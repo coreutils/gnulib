@@ -45,7 +45,7 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
   if (fp->_IO_read_end == fp->_IO_read_ptr
       && fp->_IO_write_ptr == fp->_IO_write_base
       && fp->_IO_save_base == NULL)
-#elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
 # if defined __SL64 && defined __SCLE /* Cygwin */
   if ((fp->_flags & __SL64) == 0)
     {
@@ -59,11 +59,11 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
       fclose (tmp);
     }
 # endif
-  if (fp->_p == fp->_bf._base
-      && fp->_r == 0
-      && fp->_w == ((fp->_flags & (__SLBF | __SNBF | __SRD)) == 0 /* fully buffered and not currently reading? */
-		    ? fp->_bf._size
-		    : 0)
+  if (fp_->_p == fp_->_bf._base
+      && fp_->_r == 0
+      && fp_->_w == ((fp_->_flags & (__SLBF | __SNBF | __SRD)) == 0 /* fully buffered and not currently reading? */
+		     ? fp_->_bf._size
+		     : 0)
       && fp_ub._base == NULL)
 #elif defined __EMX__               /* emx+gcc */
   if (fp->_ptr == fp->_buffer
@@ -89,17 +89,17 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
       off_t pos = lseek (fileno (fp), offset, whence);
       if (pos == -1)
 	{
-#if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-	  fp->_flags &= ~__SOFF;
+#if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+	  fp_->_flags &= ~__SOFF;
 #endif
 	  return -1;
 	}
       else
 	{
-#if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-	  fp->_offset = pos;
-	  fp->_flags |= __SOFF;
-	  fp->_flags &= ~__SEOF;
+#if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+	  fp_->_offset = pos;
+	  fp_->_flags |= __SOFF;
+	  fp_->_flags &= ~__SEOF;
 #elif defined __EMX__               /* emx+gcc */
           fp->_flags &= ~_IOEOF;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */

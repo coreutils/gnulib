@@ -37,14 +37,14 @@ freadptr (FILE *fp, size_t *sizep)
     return NULL;
   *sizep = size;
   return (const char *) fp->_IO_read_ptr;
-#elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-  if ((fp->_flags & __SWR) != 0 || fp->_r < 0)
+#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+  if ((fp_->_flags & __SWR) != 0 || fp_->_r < 0)
     return NULL;
-  size = fp->_r;
+  size = fp_->_r;
   if (size == 0)
     return NULL;
   *sizep = size;
-  return (const char *) fp->_p;
+  return (const char *) fp_->_p;
 #elif defined __EMX__               /* emx+gcc */
   if ((fp->_flags & _IOWRT) != 0)
     return NULL;

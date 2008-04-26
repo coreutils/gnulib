@@ -29,8 +29,8 @@ freadable (FILE *fp)
      fast macros.  */
 #if defined _IO_ferror_unlocked || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Linux libc5 */
   return (fp->_flags & _IO_NO_READS) == 0;
-#elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-  return (fp->_flags & (__SRW | __SRD)) != 0;
+#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+  return (fp_->_flags & (__SRW | __SRD)) != 0;
 #elif defined __EMX__               /* emx+gcc */
   return (fp->_flags & (_IORW | _IOREAD)) != 0;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */

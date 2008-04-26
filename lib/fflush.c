@@ -34,29 +34,29 @@
 static inline void
 clear_ungetc_buffer (FILE *fp)
 {
-#if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+#if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
   if (HASUB (fp))
     {
-      fp->_p += stream->_r;
-      fp->_r = 0;
+      fp_->_p += fp_->_r;
+      fp_->_r = 0;
     }
 #endif
 }
 
-#if defined __sferror && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+#if (defined __sferror || defined __DragonFly__) && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
 
 static inline int
 disable_seek_optimization (FILE *fp)
 {
-  int saved_flags = fp->_flags & (__SOPT | __SNPT);
-  fp->_flags = (fp->_flags & ~__SOPT) | __SNPT;
+  int saved_flags = fp_->_flags & (__SOPT | __SNPT);
+  fp_->_flags = (fp_->_flags & ~__SOPT) | __SNPT;
   return saved_flags;
 }
 
 static inline void
 restore_seek_optimization (FILE *fp, int saved_flags)
 {
-  fp->_flags = (fp->_flags & ~(__SOPT | __SNPT)) | saved_flags;
+  fp_->_flags = (fp_->_flags & ~(__SOPT | __SNPT)) | saved_flags;
 }
 
 #endif
@@ -64,9 +64,9 @@ restore_seek_optimization (FILE *fp, int saved_flags)
 static inline void
 update_fpos_cache (FILE *fp)
 {
-#if defined __sferror               /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-  fp->_offset = pos;
-  fp->_flags |= __SOFF;
+#if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+  fp_->_offset = pos;
+  fp_->_flags |= __SOFF;
 #endif
 }
 
@@ -140,7 +140,7 @@ rpl_fflush (FILE *stream)
   if (result != 0)
     return result;
 
-#if defined __sferror && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
+#if (defined __sferror || defined __DragonFly__) && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
 
   {
     /* Disable seek optimization for the next fseeko call.  This tells the

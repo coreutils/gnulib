@@ -42,10 +42,10 @@ fbufmode (FILE *fp)
   if (fp->_flags & _IO_UNBUFFERED)
     return _IONBF;
   return _IOFBF;
-#elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-  if (fp->_flags & __SLBF)
+#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+  if (fp_->_flags & __SLBF)
     return _IOLBF;
-  if (fp->_flags & __SNBF)
+  if (fp_->_flags & __SNBF)
     return _IONBF;
   return _IOFBF;
 #elif defined __EMX__               /* emx+gcc */

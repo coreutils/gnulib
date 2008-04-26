@@ -30,11 +30,11 @@ freadahead (FILE *fp)
   return (fp->_IO_read_end - fp->_IO_read_ptr)
 	 + (fp->_flags & _IO_IN_BACKUP ? fp->_IO_save_end - fp->_IO_save_base :
 	    0);
-#elif defined __sferror             /* FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-  if ((fp->_flags & __SWR) != 0 || fp->_r < 0)
+#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+  if ((fp_->_flags & __SWR) != 0 || fp_->_r < 0)
     return 0;
-  return fp->_r
-	 + (HASUB (fp) ? fp->_ur : 0);
+  return fp_->_r
+	 + (HASUB (fp) ? fp_->_ur : 0);
 #elif defined __EMX__               /* emx+gcc */
   if ((fp->_flags & _IOWRT) != 0)
     return 0;
