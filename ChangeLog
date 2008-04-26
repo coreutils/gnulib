@@ -1,5 +1,14 @@
 2008-04-26  Bruno Haible  <bruno@clisp.org>
 
+	* lib/fflush.c (clear_ungetc_buffer, disable_seek_optimization,
+	restore_seek_optimization, update_fpos_cache): New functions, extracted
+	from rpl_fflush.
+	(rpl_fflush): Use them.
+	* m4/fflush.m4 (gl_PREREQ_FFLUSH): New macro.
+	(gl_REPLACE_FFLUSH): Use it.
+
+2008-04-26  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-xstrtol.sh: Work around limitation of an old 'tr' program
 	on Solaris.
 	* tests/test-xstrtoimax.sh: Likewise.
