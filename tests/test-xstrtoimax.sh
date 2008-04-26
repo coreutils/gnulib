@@ -19,8 +19,16 @@ result=0
 ./test-xstrtoimax${EXEEXT} 010 >> t-xstrtoimax.tmp 2>&1 || result=1
 ./test-xstrtoimax${EXEEXT} MiB >> t-xstrtoimax.tmp 2>&1 || result=1
 
+# Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
+# does not understand '\r'.
+if echo solaris | tr -d '\r' | grep solais > /dev/null; then
+  cr='\015'
+else
+  cr='\r'
+fi
+
 # normalize output
-LC_ALL=C tr -d '\r' < t-xstrtoimax.tmp > t-xstrtoimax.xo
+LC_ALL=C tr -d "$cr" < t-xstrtoimax.tmp > t-xstrtoimax.xo
 mv t-xstrtoimax.xo t-xstrtoimax.tmp
 
 # compare expected output

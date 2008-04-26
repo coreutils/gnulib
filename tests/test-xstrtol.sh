@@ -31,8 +31,16 @@ result=0
 ./test-xstrtoul${EXEEXT} 010 >> t-xstrtol.tmp 2>&1 || result=1
 ./test-xstrtoul${EXEEXT} MiB >> t-xstrtol.tmp 2>&1 || result=1
 
+# Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
+# does not understand '\r'.
+if echo solaris | tr -d '\r' | grep solais > /dev/null; then
+  cr='\015'
+else
+  cr='\r'
+fi
+
 # normalize output
-LC_ALL=C tr -d '\r' < t-xstrtol.tmp > t-xstrtol.xo
+LC_ALL=C tr -d "$cr" < t-xstrtol.tmp > t-xstrtol.xo
 mv t-xstrtol.xo t-xstrtol.tmp
 
 # compare expected output

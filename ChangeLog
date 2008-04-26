@@ -1,5 +1,13 @@
 2008-04-26  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-xstrtol.sh: Work around limitation of an old 'tr' program
+	on Solaris.
+	* tests/test-xstrtoimax.sh: Likewise.
+	* tests/test-xstrtoumax.sh: Likewise.
+	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
+2008-04-26  Bruno Haible  <bruno@clisp.org>
+
 	* modules/memchr-tests: New file.
 	* tests/test-memchr.c; New file, based on tests/test-memchr2.c.
 
