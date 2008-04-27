@@ -87,7 +87,7 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
       repeated_c2 |= repeated_c2 << 31 << 1;
       if (8 < sizeof (longword))
 	{
-	  int i;
+	  size_t i;
 
 	  for (i = 64; i < sizeof (longword) * 8; i *= 2)
 	    {

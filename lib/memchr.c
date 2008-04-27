@@ -100,7 +100,7 @@ __memchr (void const *s, int c_in, size_t n)
       repeated_c |= repeated_c << 31 << 1;
       if (8 < sizeof (longword))
 	{
-	  int i;
+	  size_t i;
 
 	  for (i = 64; i < sizeof (longword) * 8; i *= 2)
 	    {

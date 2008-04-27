@@ -1,3 +1,8 @@
+2008-04-27  Bruno Haible  <bruno@clisp.org>
+
+	* lib/memchr.c (__memchr): Change type of 'i'.
+	* lib/memchr2.c (memchr2): Likewise.
+
 2008-04-26  Eric Blake  <ebb9@byu.net>
 	and Bruno Haible  <bruno@clisp.org>
 
