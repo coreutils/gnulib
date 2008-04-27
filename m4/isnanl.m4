@@ -1,4 +1,4 @@
-# isnanl.m4 serial 6
+# isnanl.m4 serial 7
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -133,6 +133,10 @@ int main ()
 {
   memory_long_double m;
   unsigned int i;
+
+  /* gcc-3.4.3 on IRIX 6.5 appears to have a problem with this.  */
+  if (!isnanl (0.0L / 0.0L))
+    return 1;
 
   /* The isnanl function should be immune against changes in the sign bit and
      in the mantissa bits.  The xor operation twiddles a bit that can only be
