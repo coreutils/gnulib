@@ -1,5 +1,10 @@
 2008-04-27  Bruno Haible  <bruno@clisp.org>
 
+	Allow local renaming in config.h.
+	* lib/memrchr.c (memrchr): Don't undefine outside libc.
+
+2008-04-27  Bruno Haible  <bruno@clisp.org>
+
 	* lib/memchr.c (__memchr): Change type of 'i'.
 	* lib/memchr2.c (memchr2): Likewise.
 

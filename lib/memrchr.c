@@ -35,7 +35,9 @@
 #include "intprops.h"
 
 #undef __memrchr
-#undef memrchr
+#ifdef _LIBC
+# undef memrchr
+#endif
 
 #ifndef weak_alias
 # define __memrchr memrchr
