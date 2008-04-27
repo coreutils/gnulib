@@ -1,3 +1,12 @@
+2008-04-26  Eric Blake  <ebb9@byu.net>
+	and Bruno Haible  <bruno@clisp.org>
+
+	Optimize and test memrchr.
+	* modules/memrchr (Depends-on): Add intprops.
+	* lib/memrchr.c (__memrchr): Avoid false positives in loop.
+	* modules/memrchr-tests: New file.
+	* tests/test-memrchr.c: New file.
+
 2008-04-26  Bruno Haible  <bruno@clisp.org>
 
 	Add tentative support for DragonFly BSD.

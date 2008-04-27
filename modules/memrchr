@@ -7,6 +7,7 @@ m4/memrchr.m4
 
 Depends-on:
 extensions
+intprops
 string
 
 configure.ac:
