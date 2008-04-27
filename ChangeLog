@@ -1,5 +1,13 @@
 2008-04-27  Bruno Haible  <bruno@clisp.org>
 
+	Make test-yesno.sh work on mingw.
+	* tests/test-yesno.sh: Postprocess the output to convert CR/LF to LF.
+	* tests/test-yesno.c: Include yesno.h first. Include binary-io.h.
+	(main): Set stdin to binary mode.
+	* modules/yesno-tests (Depends-on): Add binary-io.
+
+2008-04-27  Bruno Haible  <bruno@clisp.org>
+
 	Fix 'isfinite' on x86, x86_64, ia64 platforms.
 	* tests/test-isfinite.c (test_isfinitel): Also test the behavior on
 	argument that lie outside the IEEE 854 domain.
