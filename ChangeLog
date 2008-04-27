@@ -1,5 +1,14 @@
 2008-04-27  Bruno Haible  <bruno@clisp.org>
 
+	* modules/stat-time-tests (Depends-on): Add sleep.
+	* tests/test-stat-time.c (force_unlink): New function.
+	(cleanup): Use it.
+	(test_mtime): Remove the ctime related tests.
+	(test_ctime): New function, containing the ctime related tests.
+	(main): Call test_ctime, except on native Windows platforms.
+
+2008-04-27  Bruno Haible  <bruno@clisp.org>
+
 	* lib/rpmatch.c (rpmatch): Add some comments.
 	Reported by James Youngman <jay@gnu.org>.
 

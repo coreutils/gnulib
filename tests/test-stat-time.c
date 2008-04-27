@@ -42,14 +42,23 @@
 enum { NFILES = 4 };
 
 static void
+force_unlink (const char *filename)
+{
+  /* This chmod is necessary on mingw, where unlink() of a read-only file
+     fails with EPERM.  */
+  chmod (filename, 0600);
+  unlink (filename);
+}
+
+static void
 cleanup (int sig)
 {
   /* Remove temporary files.  */
-  unlink ("t-stt-stamp1");
-  unlink ("t-stt-testfile");
-  unlink ("t-stt-stamp2");
-  unlink ("t-stt-renamed");
-  unlink ("t-stt-stamp3");
+  force_unlink ("t-stt-stamp1");
+  force_unlink ("t-stt-testfile");
+  force_unlink ("t-stt-stamp2");
+  force_unlink ("t-stt-renamed");
+  force_unlink ("t-stt-stamp3");
 
   if (sig != 0)
     _exit (1);
@@ -117,7 +126,6 @@ test_mtime (const struct stat *statinfo, struct timespec *modtimes)
   /* Use the struct stat fields directly. */
   ASSERT (statinfo[0].st_mtime < statinfo[2].st_mtime); /* mtime(stamp1) < mtime(stamp2) */
   ASSERT (statinfo[2].st_mtime < statinfo[3].st_mtime); /* mtime(stamp2) < mtime(stamp3) */
-  ASSERT (statinfo[2].st_mtime < statinfo[1].st_ctime); /* mtime(stamp2) < ctime(renamed) */
 
   /* Now check the result of the access functions. */
   ASSERT (modtimes[0].tv_sec < modtimes[2].tv_sec); /* mtime(stamp1) < mtime(stamp2) */
@@ -130,6 +138,12 @@ test_mtime (const struct stat *statinfo, struct timespec *modtimes)
       ts = get_stat_mtime (&statinfo[i]);
       ASSERT (ts.tv_sec == statinfo[i].st_mtime);
     }
+}
+
+static void
+test_ctime (const struct stat *statinfo)
+{
+  ASSERT (statinfo[2].st_mtime < statinfo[1].st_ctime); /* mtime(stamp2) < ctime(renamed) */
 
   ASSERT (statinfo[2].st_mtime < statinfo[1].st_ctime); /* mtime(stamp2) < ctime(renamed) */
 }
@@ -176,6 +190,12 @@ main ()
   cleanup (0);
   prepare_test (statinfo, modtimes);
   test_mtime (statinfo, modtimes);
+  /* Skip the ctime tests on native Windows platforms, because there st_ctime
+     is either the same as st_mtime (plus or minus an offset) or set to the
+     file _creation_ time, and is not influenced by rename or chmod.  */
+#if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
+  test_ctime (statinfo);
+#endif
   test_birthtime (statinfo, modtimes, birthtimes);
 
   cleanup (0);

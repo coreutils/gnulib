@@ -3,6 +3,7 @@ tests/test-stat-time.c
 
 Depends-on:
 time
+sleep
 
 configure.ac:
 
