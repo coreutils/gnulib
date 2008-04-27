@@ -1,5 +1,14 @@
 2008-04-27  Bruno Haible  <bruno@clisp.org>
 
+	Fix 'isfinite' on x86, x86_64, ia64 platforms.
+	* tests/test-isfinite.c (test_isfinitel): Also test the behavior on
+	argument that lie outside the IEEE 854 domain.
+	* m4/isfinite.m4 (gl_ISFINITEL_WORKS): New macro.
+	(gl_ISFINITE): Use it.
+	* doc/posix-functions/isfinite.texi: Document the fixed bugs.
+
+2008-04-27  Bruno Haible  <bruno@clisp.org>
+
 	Allow local renaming in config.h.
 	* lib/memrchr.c (memrchr): Don't undefine outside libc.
 

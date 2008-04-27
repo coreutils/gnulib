@@ -11,6 +11,16 @@ Portability problems fixed by Gnulib:
 @item
 This macro is missing on some platforms:
 MacOS X 10.3, OpenBSD 3.8, AIX 5.1, IRIX 6.5, OSF/1 5.1, Solaris 10, Interix 3.5.
+@item
+This macro incorrectly yields true for some @samp{double} arguments, on some
+platforms:
+Linux/ia64 (signalling NaNs).
+@item
+This macro incorrectly yields true for some @samp{long double} arguments, on
+some platforms:
+x86 (pseudo-zeroes, unnormalized numbers, pseudo-denormals),
+x86_64 (pseudo-denormals),
+ia64 (pseudo-NaN, pseudo-Infinity, pseudo-zeroes, unnormalized numbers, pseudo-denormals).
 @end itemize
 
 Portability problems not fixed by Gnulib:

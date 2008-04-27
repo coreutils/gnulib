@@ -131,6 +131,11 @@ test_isfinited ()
 static void
 test_isfinitel ()
 {
+  #define NWORDS \
+    ((sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+  typedef union { unsigned int word[NWORDS]; long double value; }
+          memory_long_double;
+
   /* Zero. */
   ASSERT (isfinite (0.0L));
   /* Subnormal values. */
@@ -148,14 +153,11 @@ test_isfinitel ()
   ASSERT (!isfinite (-1.0L / 0.0L));
   /* Quiet NaN.  */
   ASSERT (!isfinite (zerol / zerol));
+
 #if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT
   /* A bit pattern that is different from a Quiet NaN.  With a bit of luck,
      it's a Signalling NaN.  */
   {
-    #define NWORDS \
-      ((sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-    typedef union { unsigned int word[NWORDS]; long double value; }
-          memory_long_double;
     memory_long_double m;
     m.value = zerol / zerol;
 # if LDBL_EXPBIT0_BIT > 0
@@ -167,9 +169,68 @@ test_isfinitel ()
     m.word[LDBL_EXPBIT0_WORD + (LDBL_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
       |= (unsigned int) 1 << LDBL_EXPBIT0_BIT;
     ASSERT (!isfinite (m.value));
-    #undef NWORDS
   }
 #endif
+
+#if ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+/* Representation of an 80-bit 'long double' as an initializer for a sequence
+   of 'unsigned int' words.  */
+# ifdef WORDS_BIGENDIAN
+#  define LDBL80_WORDS(exponent,manthi,mantlo) \
+     { ((unsigned int) (exponent) << 16) | ((unsigned int) (manthi) >> 16), \
+       ((unsigned int) (manthi) << 16) | (unsigned int) (mantlo) >> 16),    \
+       (unsigned int) (mantlo) << 16                                        \
+     }
+# else
+#  define LDBL80_WORDS(exponent,manthi,mantlo) \
+     { mantlo, manthi, exponent }
+# endif
+  { /* Quiet NaN.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0xFFFF, 0xC3333333, 0x00000000) };
+    ASSERT (!isfinite (x.value));
+  }
+  {
+    /* Signalling NaN.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0xFFFF, 0x83333333, 0x00000000) };
+    ASSERT (!isfinite (x.value));
+  }
+  /* The isnanl function should recognize Pseudo-NaNs, Pseudo-Infinities,
+     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
+       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
+       Application Architecture.
+       Table 5-2 "Floating-Point Register Encodings"
+       Figure 5-6 "Memory to Floating-Point Register Data Translation"
+   */
+  { /* Pseudo-NaN.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
+    ASSERT (!isfinite (x.value));
+  }
+  { /* Pseudo-Infinity.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
+    ASSERT (!isfinite (x.value));
+  }
+  { /* Pseudo-Zero.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
+    ASSERT (!isfinite (x.value));
+  }
+  { /* Unnormalized number.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
+    ASSERT (!isfinite (x.value));
+  }
+  { /* Pseudo-Denormal.  */
+    static memory_long_double x =
+      { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
+    ASSERT (!isfinite (x.value));
+  }
+#endif
+
+  #undef NWORDS
 }
 
 int
