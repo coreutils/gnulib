@@ -1,7 +1,7 @@
 /* Determine whether string value is affirmation or negative response
    according to current locale's data.
 
-   Copyright (C) 1996, 1998, 2000, 2002, 2003, 2006 Free Software
+   Copyright (C) 1996, 1998, 2000, 2002, 2003, 2006, 2008 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -60,6 +60,15 @@ rpmatch (const char *response)
 #if ENABLE_NLS
   /* Match against one of the response patterns, compiling the pattern
      first if necessary.  */
+
+  /* We get the patterns from a PO file.  It would be possible to use
+     nl_langinfo (YESEXPR) instead of _("^[yY]"), and nl_langinfo (NOEXPR)
+     instead of _("^[nN]"), if we could assume that the system's locale
+     support is good.  But this is not the case e.g. on Cygwin.  The
+     localizations of gnulib.pot are of better quality in general.
+     Also, if we used locale info from non-free systems that don't have a
+     'localedef' command, we would deprive the users of the freedom to
+     localize this pattern for their preferred language.  */
 
   /* We cache the response patterns and compiled regexps here.  */
   static const char *yesexpr, *noexpr;
