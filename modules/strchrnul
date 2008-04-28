@@ -9,6 +9,7 @@ m4/strchrnul.m4
 Depends-on:
 extensions
 string
+rawmemchr
 
 configure.ac:
 gl_FUNC_STRCHRNUL

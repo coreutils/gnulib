@@ -1,5 +1,5 @@
 /* Searching in a string.
-   Copyright (C) 2003, 2007, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@
 /* Specification.  */
 #include <string.h>
 
-/* Find the first occurrence of C in S or the final NUL byte.  */
-char *
-strchrnul (const char *s, int c_in)
+/* Find the first occurrence of C in S.  */
+void *
+rawmemchr (const void *s, int c_in)
 {
   /* On 32-bit hardware, choosing longword to be a 32-bit unsigned
      long instead of a 64-bit uintmax_t tends to give better
@@ -37,16 +37,14 @@ strchrnul (const char *s, int c_in)
   unsigned char c;
 
   c = (unsigned char) c_in;
-  if (!c)
-    return rawmemchr (s, 0);
 
   /* Handle the first few bytes by reading one byte at a time.
      Do this until CHAR_PTR is aligned on a longword boundary.  */
   for (char_ptr = (const unsigned char *) s;
        (size_t) char_ptr % sizeof (longword) != 0;
        ++char_ptr)
-    if (!*char_ptr || *char_ptr == c)
-      return (char *) char_ptr;
+    if (*char_ptr == c)
+      return (void *) char_ptr;
 
   longword_ptr = (const longword *) char_ptr;
 
@@ -79,10 +77,9 @@ strchrnul (const char *s, int c_in)
      test a longword at a time.  The tricky part is testing if *any of
      the four* bytes in the longword in question are equal to NUL or
      c.  We first use an xor with repeated_c.  This reduces the task
-     to testing whether *any of the four* bytes in longword1 or
-     longword2 is zero.
+     to testing whether *any of the four* bytes in longword1 is zero.
 
-     Let's consider longword1.  We compute tmp =
+     We compute tmp =
        ((longword1 - repeated_one) & ~longword1) & (repeated_one << 7).
      That is, we perform the following operations:
        1. Subtract repeated_one.
@@ -104,23 +101,20 @@ strchrnul (const char *s, int c_in)
      significant bytes (positions j+1..3), but it does not matter since we
      already have a non-zero bit at position 8*j+7.
 
-     The test whether any byte in longword1 or longword2 is zero is equivalent
-     to testing whether tmp1 is nonzero or tmp2 is nonzero.  We can combine
-     this into a single test, whether (tmp1 | tmp2) is nonzero.
+     The test whether any byte in longword1 is zero is equivalent
+     to testing whether tmp is nonzero.
 
-     This test can read more than one byte beyond the end of a string,
-     depending on where the terminating NUL is encountered.  However,
-     this is considered safe since the initialization phase ensured
-     that the read will be aligned, therefore, the read will not cross
-     page boundaries and will not cause a fault.  */
+     This test can read beyond the end of a string, depending on where
+     C_IN is encountered.  However, this is considered safe since the
+     initialization phase ensured that the read will be aligned,
+     therefore, the read will not cross page boundaries and will not
+     cause a fault.  */
 
   while (1)
     {
       longword longword1 = *longword_ptr ^ repeated_c;
-      longword longword2 = *longword_ptr;
 
-      if (((((longword1 - repeated_one) & ~longword1)
-            | ((longword2 - repeated_one) & ~longword2))
+      if ((((longword1 - repeated_one) & ~longword1)
            & (repeated_one << 7)) != 0)
         break;
       longword_ptr++;
@@ -129,14 +123,14 @@ strchrnul (const char *s, int c_in)
   char_ptr = (const unsigned char *) longword_ptr;
 
   /* At this point, we know that one of the sizeof (longword) bytes
-     starting at char_ptr is == 0 or == c.  On little-endian machines,
-     we could determine the first such byte without any further memory
+     starting at char_ptr is == c.  On little-endian machines, we
+     could determine the first such byte without any further memory
      accesses, just by looking at the tmp result from the last loop
      iteration.  But this does not work on big-endian machines.
      Choose code that works in both cases.  */
 
   char_ptr = (unsigned char *) longword_ptr;
-  while (*char_ptr && (*char_ptr != c))
+  while (*char_ptr != c)
     char_ptr++;
-  return (char *) char_ptr;
+  return (void *) char_ptr;
 }

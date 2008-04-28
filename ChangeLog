@@ -1,5 +1,19 @@
 2008-04-28  Eric Blake  <ebb9@byu.net>
 
+	Add rawmemchr module, matching glibc.
+	* modules/string (Makefile.am): New indicator.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Set it.
+	* lib/string.in.h (rawmemchr): Declare when appropriate.
+	* modules/rawmemchr: New file.
+	* m4/rawmemchr.m4: Likewise.
+	* lib/rawmemchr.c: Likewise.
+	* modules/rawmemchr-tests: Likewise.
+	* tests/test-rawmemchr.c: Likewise.
+	* doc/glibc-functions/rawmemchr.texi (rawmemchr): Document
+	module.
+	* modules/strchrnul (Depends-on): Add rawmemchr.
+	* lib/strchrnul.c (strchrnul): Optimize a corner case.
+
 	Whitespace cleanup.
 	* tests/test-strchrnul.c: Reindent.
 	* lib/strchrnul.c: Likewise.
