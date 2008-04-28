@@ -1,3 +1,7 @@
+2008-04-28  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-functions/strdup.texi: Mention mingw problem.
+
 2008-04-27  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stat-time-tests (Depends-on): Add sleep.
