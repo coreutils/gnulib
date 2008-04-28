@@ -102,7 +102,7 @@
 #  define ESHUTDOWN               WSAESHUTDOWN
 # endif
 
-# if defined _WIN32 || defined __WIN32__
+# if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
 #  define setsockopt(a,b,c,d,e) rpl_setsockopt(a,b,c,d,e)
 static inline int
 rpl_setsockopt(int socket, int level, int optname, const void *optval,

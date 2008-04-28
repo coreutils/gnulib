@@ -1,3 +1,10 @@
+2008-04-28  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/sys_socket_h.m4: Require AC_C_INLINE when necessary.
+	* lib/sys_socket.in.h (setsockopt): Use proper win32 tests (don't
+	trigger for cygwin).
+	Reported by Bruno Haible  <bruno@clisp.org>.
+
 2008-04-28  Bruno Haible  <bruno@clisp.org>
 
 	* doc/posix-functions/strdup.texi: Mention mingw problem.

@@ -45,6 +45,7 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
       HAVE_WINSOCK2_H=0
       HAVE_WS2TCPIP_H=0
     else
+      AC_REQUIRE([AC_C_INLINE])
       HAVE_SYS_SOCKET_H=0
       dnl We cannot use AC_CHECK_HEADERS_ONCE here, because that would make
       dnl the check for those headers unconditional; yet cygwin reports
