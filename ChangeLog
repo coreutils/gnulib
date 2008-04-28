@@ -1,5 +1,9 @@
 2008-04-28  Eric Blake  <ebb9@byu.net>
 
+	Whitespace cleanup.
+	* tests/test-strchrnul.c: Reindent.
+	* lib/strchrnul.c: Likewise.
+
 	Optimize and test strchrnul.
 	* lib/strchrnul.c (strchrnul): Rewrite to do parallel search.
 	* modules/strchrnul-tests: New file.
