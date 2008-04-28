@@ -1,5 +1,10 @@
 2008-04-28  Simon Josefsson  <simon@josefsson.org>
 
+	* m4/sys_socket_h.m4: Move AC_REQUIRE([AC_C_INLINE]) to top.
+	Suggested by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
+2008-04-28  Simon Josefsson  <simon@josefsson.org>
+
 	* lib/inet_ntop.h, lib/inet_pton.h: Remove files.
 
 	* lib/inet_ntop.c: Include arpa/inet.h instead of inet_ntop.h.
