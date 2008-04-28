@@ -29,8 +29,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 #include <stdint.h>
 #include <string.h>
 
-#include "intprops.h"
-
 /* Return the first address of either C1 or C2 (treated as unsigned
    char) that occurs within N bytes of the memory region S.  If
    neither byte appears, return NULL.  */
@@ -42,7 +40,7 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
      performance.  On 64-bit hardware, unsigned long is generally 64
      bits already.  Change this typedef to experiment with
      performance.  */
-  typedef unsigned long longword;
+  typedef unsigned long int longword;
 
   const unsigned char *char_ptr;
   const longword *longword_ptr;
@@ -80,7 +78,7 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
   repeated_c2 = c2 | (c2 << 8);
   repeated_c1 |= repeated_c1 << 16;
   repeated_c2 |= repeated_c2 << 16;
-  if (0xffffffffU < TYPE_MAXIMUM (longword))
+  if (0xffffffffU < (longword) -1)
     {
       repeated_one |= repeated_one << 31 << 1;
       repeated_c1 |= repeated_c1 << 31 << 1;

@@ -1,3 +1,14 @@
+2008-04-28  Eric Blake  <ebb9@byu.net>
+
+	Remove intprops dependency.
+	* modules/memchr (Depends-on): Remove intprops.
+	* modules/memrchr (Depends-on): Likewise.
+	* modules/memchr2 (Depends-on): Likewise.
+	* lib/memchr.c (__memchr): Hand-inline the TYPE_MAXIMUM check.
+	* lib/memrchr.c (__memrchr): Likewise.
+	* lib/memrchr2.c (memchr2): Likewise.
+	Reported by Simon Josefsson.
+
 2008-04-28  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/sys_socket_h.m4: Move AC_REQUIRE([AC_C_INLINE]) to top.
@@ -167,7 +178,7 @@
 	* tests/test-memchr.c; New file, based on tests/test-memchr2.c.
 
 2008-04-26  Eric Blake  <ebb9@byu.net>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/memchr.c: Include intprops.h.
 	(__memchr): Optimize parallel detection of matching bytes. Rename local

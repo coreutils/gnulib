@@ -45,8 +45,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 # define BP_SYM(sym) sym
 #endif
 
-#include "intprops.h"
-
 #undef __memchr
 #ifdef _LIBC
 # undef memchr
@@ -65,7 +63,7 @@ __memchr (void const *s, int c_in, size_t n)
      performance.  On 64-bit hardware, unsigned long is generally 64
      bits already.  Change this typedef to experiment with
      performance.  */
-  typedef unsigned long longword;
+  typedef unsigned long int longword;
 
   const unsigned char *char_ptr;
   const longword *longword_ptr;
@@ -94,7 +92,7 @@ __memchr (void const *s, int c_in, size_t n)
   repeated_one = 0x01010101;
   repeated_c = c | (c << 8);
   repeated_c |= repeated_c << 16;
-  if (0xffffffffU < TYPE_MAXIMUM (longword))
+  if (0xffffffffU < (longword) -1)
     {
       repeated_one |= repeated_one << 31 << 1;
       repeated_c |= repeated_c << 31 << 1;
