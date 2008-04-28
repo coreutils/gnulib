@@ -1,5 +1,21 @@
 2008-04-28  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/inet_ntop.h, lib/inet_pton.h: Remove files.
+
+	* lib/inet_ntop.c: Include arpa/inet.h instead of inet_ntop.h.
+
+	* lib/inet_pton.c: Include arpa/inet.h instead of inet_pton.h.
+
+	* lib/arpa_inet.in.h [@GNULIB_INET_NTOP@]: Inline inet_ntop.h
+	declarations.
+	[@GNULIB_INET_PTON@]: Inline inet_pton.h declarations.
+
+	* m4/inet_pton.m4: Don't check for header files.
+
+	* m4/inet_ntop.m4: Don't check for header files.
+
+2008-04-28  Simon Josefsson  <simon@josefsson.org>
+
 	* m4/sys_socket_h.m4: Require AC_C_INLINE when necessary.
 	* lib/sys_socket.in.h (setsockopt): Use proper win32 tests (don't
 	trigger for cygwin).

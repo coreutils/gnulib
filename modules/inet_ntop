@@ -2,7 +2,6 @@ Description:
 Convert internet address from internal to printable, presentable format.
 
 Files:
-lib/inet_ntop.h
 lib/inet_ntop.c
 m4/inet_ntop.m4
 
@@ -22,7 +21,7 @@ License:
 LGPLv2+
 
 Include:
-"inet_ntop.h"
+#include <arpa/inet.h>
 
 Maintainer:
 Yoann Vandoorselaere, glibc

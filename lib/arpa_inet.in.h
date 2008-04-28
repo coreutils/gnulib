@@ -23,7 +23,25 @@
 #include <sys/socket.h>
 
 #if @GNULIB_INET_NTOP@
-# include <inet_ntop.h>
+# if !@HAVE_DECL_INET_NTOP@
+/* Converts an internet address from internal format to a printable,
+   presentable format.
+   AF is an internet address family, such as AF_INET or AF_INET6.
+   SRC points to a 'struct in_addr' (for AF_INET) or 'struct in6_addr'
+   (for AF_INET6).
+   DST points to a buffer having room for CNT bytes.
+   The printable representation of the address (in numeric form, not
+   surrounded by [...], no reverse DNS is done) is placed in DST, and
+   DST is returned.  If an error occurs, the return value is NULL and
+   errno is set.  If CNT bytes are not sufficient to hold the result,
+   the return value is NULL and errno is set to ENOSPC.  A good value
+   for CNT is 46.
+
+   For more details, see the POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/inet_ntop.html>.  */
+extern const char *inet_ntop (int af, const void *restrict src,
+			      char *restrict dst, socklen_t cnt);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef inet_ntop
 # define inet_ntop(af,src,dst,cnt)					\
@@ -33,7 +51,9 @@
 #endif
 
 #if @GNULIB_INET_PTON@
-# include <inet_pton.h>
+# if !@HAVE_DECL_INET_PTON@
+extern int inet_pton (int af, const char *restrict src, void *restrict dst);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef inet_pton
 # define inet_pton(af,src,dst)			    \

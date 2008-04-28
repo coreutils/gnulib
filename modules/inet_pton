@@ -2,7 +2,6 @@ Description:
 Convert internet address from presentation to internal, binary, format.
 
 Files:
-lib/inet_pton.h
 lib/inet_pton.c
 m4/inet_pton.m4
 
@@ -22,7 +21,7 @@ License:
 LGPL
 
 Include:
-"inet_pton.h"
+#include <arpa/inet.h>
 
 Maintainer:
 Simon Josefsson, glibc
