@@ -1,3 +1,8 @@
+2008-04-29  Eric Blake  <ebb9@byu.net>
+
+	Use new header.
+	* lib/getaddrinfo.c (includes): s/"inet_ntop.h"/<arpa/inet.h>/.
+
 2008-04-29  Jim Meyering  <meyering@redhat.com>
 
 	Avoid test segfault on x86_64 due to lack of inet_ntop declaration.
