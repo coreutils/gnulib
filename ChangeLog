@@ -1,3 +1,7 @@
+2008-04-29  Jim Meyering  <meyering@redhat.com>
+
+	* m4/arpa_inet_h.m4: Remove trailing blanks.
+
 2008-04-29  Eric Blake  <ebb9@byu.net>
 
 	Silence valgrind on safe reads beyond potential array bounds.
