@@ -8,6 +8,12 @@ Date        Modules         Changes
 
 2008-04-28  rpmatch         The include file is now <stdlib.h>.
 
+2008-04-28  inet_ntop       The include file is changed from "inet_ntop.h"
+                            to <arpa/inet.h>.
+
+2008-04-28  inet_pton       The include file is changed from "inet_pton.h"
+                            to <arpa/inet.h>.
+
 2008-03-06  freadahead      The return value's computation has changed. It
                             now increases by 1 after ungetc.
 
