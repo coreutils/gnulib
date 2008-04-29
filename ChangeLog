@@ -1,3 +1,11 @@
+2008-04-29  Bruno Haible  <bruno@clisp.org>
+
+	* m4/inet_ntop.m4 (gl_INET_NTOP): Require gl_USE_SYSTEM_EXTENSIONS.
+	* m4/inet_pton.m4 (gl_INET_PTON): Likewise.
+	* modules/inet_ntop (Depends-on): Add extensions.
+	* modules/inet_pton (Depends-on): Likewise.
+	Reported by Simon Josefsson.
+
 2008-04-29  Jim Meyering  <meyering@redhat.com>
 
 	When the is more than one match in a block, match all of them.
