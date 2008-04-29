@@ -1,7 +1,7 @@
 /* getndelim2 - Read a line from a stream, stopping at one of 2 delimiters,
    with bounded memory allocation.
 
-   Copyright (C) 1993, 1996, 1997, 1998, 2000, 2003, 2004, 2006 Free
+   Copyright (C) 1993, 1996, 1997, 1998, 2000, 2003, 2004, 2006, 2008 Free
    Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,14 @@
 
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
+#endif
+#if !HAVE_FLOCKFILE
+# undef flockfile
+# define flockfile(x) ((void) 0)
+#endif
+#if !HAVE_FUNLOCKFILE
+# undef funlockfile
+# define funlockfile(x) ((void) 0)
 #endif
 
 #include <limits.h>
@@ -73,6 +81,8 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
   if (nbytes_avail == 0 && nmax <= size)
     goto done;
 
+  flockfile (stream);
+
   for (;;)
     {
       /* Here always ptr + size == read_pos + nbytes_avail.  */
@@ -95,14 +105,14 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 	    {
 	      size_t newsizemax = offset + GETNDELIM2_MAXIMUM + 1;
 	      if (size == newsizemax)
-		goto done;
+		goto unlock_done;
 	      newsize = newsizemax;
 	    }
 
 	  nbytes_avail = newsize - (read_pos - ptr);
 	  newptr = realloc (ptr, newsize);
 	  if (!newptr)
-	    goto done;
+	    goto unlock_done;
 	  ptr = newptr;
 	  size = newsize;
 	  read_pos = size - nbytes_avail + ptr;
@@ -113,7 +123,7 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 	{
 	  /* Return partial line, if any.  */
 	  if (read_pos == ptr)
-	    goto done;
+	    goto unlock_done;
 	  else
 	    break;
 	}
@@ -135,8 +145,11 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 
   bytes_stored = read_pos - (ptr + offset);
 
+ unlock_done:
+  funlockfile (stream);
+
  done:
   *lineptr = ptr;
   *linesize = size;
-  return bytes_stored;
+  return bytes_stored ? bytes_stored : -1;
 }
