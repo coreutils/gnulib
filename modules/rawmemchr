@@ -3,6 +3,7 @@ rawmemchr() function: Find the first occurrence of C in S.
 
 Files:
 lib/rawmemchr.c
+lib/rawmemchr.valgrind
 m4/rawmemchr.m4
 
 Depends-on:

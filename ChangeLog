@@ -1,3 +1,12 @@
+2008-04-29  Eric Blake  <ebb9@byu.net>
+
+	Silence valgrind on safe reads beyond potential array bounds.
+	* lib/rawmemchr.valgrind: New file.
+	* lib/strchrnul.valgrind: Likewise.
+	* modules/rawmemchr (Files): Distribute new file.
+	* modules/strchrnul (Files): Likewise.
+	Suggested by Bruno Haible.
+
 2008-04-29  Bruno Haible  <bruno@clisp.org>
 
 	* lib/arpa_inet.in.h: Include system's <arpa/inet.h> if it exists.

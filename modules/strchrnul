@@ -4,6 +4,7 @@ byte.
 
 Files:
 lib/strchrnul.c
+lib/strchrnul.valgrind
 m4/strchrnul.m4
 
 Depends-on:
