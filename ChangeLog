@@ -1,5 +1,9 @@
 2008-04-29  Jim Meyering  <meyering@redhat.com>
 
+	When the is more than one match in a block, match all of them.
+	* build-aux/useless-if-before-free: Iterate through each block
+	until there are no more matches.
+
 	Fix broken useless-if-before-free script.
 	* build-aux/useless-if-before-free: Fix typo: missing "?" after
 	the expression to match cast of argument to free-like function.
