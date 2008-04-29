@@ -19,9 +19,11 @@
 
 #include <config.h>
 
+/* Specification.  */
+#include <stdlib.h>
+
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdlib.h>
 
 #if ENABLE_NLS
 # include <sys/types.h>
@@ -117,9 +119,6 @@ try (const char *response, const char *pattern, char **lastp, regex_t *re)
 }
 #endif
 
-
-/* Test a user response to a question.
-   Return 1 if it is affirmative, 0 if it is negative, or -1 if not clear.  */
 
 int
 rpmatch (const char *response)

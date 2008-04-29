@@ -1,5 +1,21 @@
 2008-04-28  Bruno Haible  <bruno@clisp.org>
 
+	Declare rpmatch.
+	* lib/stdlib.in.h (rpmatch): New declaration.
+	* lib/rpmatch.c: Include <stdlib.h> first.
+	* m4/rpmatch.m4 (gl_FUNC_RPMATCH): Require AC_USE_SYSTEM_EXTENSIONS and
+	gl_STDLIB_H_DEFAULTS. Set HAVE_RPMATCH.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize GNULIB_RPMATCH,
+	HAVE_RPMATCH.
+	* modules/rpmatch (Depends-on): Add stdlib, extensions.
+	(configure.ac): Invoke gl_STDLIB_MODULE_INDICATOR.
+	(Include): Set to <stdlib.h>.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_RPMATCH and
+	HAVE_RPMATCH.
+	* NEWS: Document the change.
+
+2008-04-28  Bruno Haible  <bruno@clisp.org>
+
 	Change rpmatch to use nl_langinfo when appropriate.
 	* lib/rpmatch.c: Include stdbool.h, string.h, langinfo.h.
 	(N_): New macro.

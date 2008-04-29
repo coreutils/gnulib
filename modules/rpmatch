@@ -6,16 +6,20 @@ lib/rpmatch.c
 m4/rpmatch.m4
 
 Depends-on:
+stdlib
+extensions
 stdbool
 gettext-h
 regex
 
 configure.ac:
 gl_FUNC_RPMATCH
+gl_STDLIB_MODULE_INDICATOR([rpmatch])
 
 Makefile.am:
 
 Include:
+<stdlib.h>
 
 License:
 GPL
