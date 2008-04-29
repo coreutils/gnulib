@@ -1,3 +1,7 @@
+2008-04-28  Eric Blake  <ebb9@byu.net>
+
+	* MODULES.html.sh: Document new module.
+
 2008-04-20  Bruno Haible  <bruno@clisp.org>
 
 	* lib/c-stack.c (die): Use raise.
