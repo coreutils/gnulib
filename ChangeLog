@@ -1,3 +1,16 @@
+2008-04-28  Bruno Haible  <bruno@clisp.org>
+
+	Change rpmatch to use nl_langinfo when appropriate.
+	* lib/rpmatch.c: Include stdbool.h, string.h, langinfo.h.
+	(N_): New macro.
+	(localized_pattern): New function/macro.
+	(try): Remove match, nomatch arguments. Copy the pattern into safe
+	memory before caching it.
+	(rpmatch): Use localized_pattern. Add translator comments.
+	* m4/rpmatch.m4 (gl_PREREQ_RPMATCH): Test for nl_langinfo and YESEXPR.
+	Suggested by Eric Blake.
+	* modules/rpmatch (Depends-on): Add stdbool.
+
 2008-04-28  Eric Blake  <ebb9@byu.net>
 
 	Add rawmemchr module, matching glibc.

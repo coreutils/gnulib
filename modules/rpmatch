@@ -6,6 +6,7 @@ lib/rpmatch.c
 m4/rpmatch.m4
 
 Depends-on:
+stdbool
 gettext-h
 regex
 
