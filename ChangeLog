@@ -1,5 +1,10 @@
 2008-04-29  Jim Meyering  <meyering@redhat.com>
 
+	Avoid test segfault on x86_64 due to lack of inet_ntop declaration.
+	* tests/test-getaddrinfo.c: Include <arpa/inet.h>, now guaranteed
+	by gnulib to exist and to declare e.g., inet_ntop.
+	Don't include "inet_ntop.h", now removed.
+
 	* m4/arpa_inet_h.m4: Remove trailing blanks.
 
 2008-04-29  Eric Blake  <ebb9@byu.net>

@@ -19,7 +19,7 @@
 
 #include <config.h>
 #include "getaddrinfo.h"
-#include "inet_ntop.h"
+#include <arpa/inet.h>
 #include <stdio.h>
 #include <string.h>
 
