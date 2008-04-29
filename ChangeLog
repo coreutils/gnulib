@@ -1,3 +1,10 @@
+2008-04-29  Eric Blake  <ebb9@byu.net>
+
+	Optimize getndelim2 to use block operations when possible.
+	* modules/getndelim2 (Depends-on): Add stdbool, freadptr,
+	freadseek, and memchr2.
+	* lib/getndelim2.c (getndelim2): Use them for block reads.
+
 2008-04-29  Bruno Haible  <bruno@clisp.org>
 
 	* m4/inet_ntop.m4 (gl_INET_NTOP): Require gl_USE_SYSTEM_EXTENSIONS.

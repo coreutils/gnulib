@@ -23,8 +23,10 @@
 
 #include "getndelim2.h"
 
-#include <stdlib.h>
+#include <stdbool.h>
 #include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
 
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
@@ -40,6 +42,10 @@
 
 #include <limits.h>
 #include <stdint.h>
+
+#include "freadptr.h"
+#include "freadseek.h"
+#include "memchr2.h"
 
 #ifndef SSIZE_MAX
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
@@ -63,6 +69,7 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
   ssize_t bytes_stored = -1;
   char *ptr = *lineptr;
   size_t size = *linesize;
+  bool done = false;
 
   if (!ptr)
     {
@@ -81,23 +88,62 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
   if (nbytes_avail == 0 && nmax <= size)
     goto done;
 
+  /* Normalize delimiters, since memchr2 doesn't handle EOF.  */
+  if (delim1 == EOF)
+    delim1 = delim2;
+  else if (delim2 == EOF)
+    delim2 = delim1;
+
   flockfile (stream);
 
-  for (;;)
+  while (!done)
     {
       /* Here always ptr + size == read_pos + nbytes_avail.  */
 
       int c;
+      const char *buffer;
+      size_t buffer_len;
+
+      buffer = freadptr (stream, &buffer_len);
+      if (buffer)
+	{
+	  if (delim1 != EOF)
+	    {
+	      const char *end = memchr2 (buffer, delim1, delim2, buffer_len);
+	      if (end)
+		{
+		  buffer_len = end - buffer + 1;
+		  done = true;
+		}
+	    }
+	}
+      else
+	{
+	  c = getc (stream);
+	  if (c == EOF)
+	    {
+	      /* Return partial line, if any.  */
+	      if (read_pos == ptr)
+		goto unlock_done;
+	      else
+		break;
+	    }
+	  if (c == delim1 || c == delim2)
+	    done = true;
+	  buffer_len = 1;
+	}
 
       /* We always want at least one byte left in the buffer, since we
 	 always (unless we get an error while reading the first byte)
 	 NUL-terminate the line buffer.  */
 
-      if (nbytes_avail < 2 && size < nmax)
+      if (nbytes_avail < 1 + buffer_len && size < nmax)
 	{
 	  size_t newsize = size < MIN_CHUNK ? size + MIN_CHUNK : 2 * size;
 	  char *newptr;
 
+	  if (newsize < buffer_len)
+	    newsize = buffer_len + size;
 	  if (! (size < newsize && newsize <= nmax))
 	    newsize = nmax;
 
@@ -118,25 +164,20 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 	  read_pos = size - nbytes_avail + ptr;
 	}
 
-      c = getc (stream);
-      if (c == EOF)
+      if (1 < nbytes_avail)
 	{
-	  /* Return partial line, if any.  */
-	  if (read_pos == ptr)
-	    goto unlock_done;
+	  size_t copy_len = nbytes_avail - 1;
+	  if (buffer_len < copy_len)
+	    copy_len = buffer_len;
+	  if (buffer)
+	    memcpy (read_pos, buffer, copy_len);
 	  else
-	    break;
+	    *read_pos = c;
+	  read_pos += copy_len;
+	  nbytes_avail -= copy_len;
 	}
-
-      if (nbytes_avail >= 2)
-	{
-	  *read_pos++ = c;
-	  nbytes_avail--;
-	}
-
-      if (c == delim1 || c == delim2)
-	/* Return the line.  */
-	break;
+      if (buffer && freadseek (stream, buffer_len))
+	goto unlock_done;
     }
 
   /* Done - NUL terminate and return the number of bytes read.

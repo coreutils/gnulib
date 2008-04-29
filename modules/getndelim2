@@ -9,7 +9,11 @@ m4/getndelim2.m4
 
 Depends-on:
 ssize_t
+stdbool
 stdint
+freadptr
+freadseek
+memchr2
 
 configure.ac:
 gl_GETNDELIM2
