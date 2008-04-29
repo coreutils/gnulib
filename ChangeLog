@@ -1,5 +1,8 @@
 2008-04-28  Bruno Haible  <bruno@clisp.org>
 
+	Expect rpmatch to be declared.
+	* lib/yesno.c (rpmatch): Remove declaration.
+
 	Declare rpmatch.
 	* lib/stdlib.in.h (rpmatch): New declaration.
 	* lib/rpmatch.c: Include <stdlib.h> first.
