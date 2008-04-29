@@ -1,3 +1,19 @@
+2008-04-29  Bruno Haible  <bruno@clisp.org>
+
+	* lib/arpa_inet.in.h: Include system's <arpa/inet.h> if it exists.
+	(inet_ntop, inet_pton): Change portability warning's wording.
+	* m4/arpa_inet_h.m4 (gl_HEADER_ARPA_INET): Set HAVE_ARPA_INET_H.
+	Invoke gl_CHECK_NEXT_HEADERS.
+	(gl_ARPA_INET_H_DEFAULTS): Initialize ARPA_INET_H.
+	* m4/inet_ntop.m4 (gl_INET_NTOP): Require gl_ARPA_INET_H_DEFAULTS and
+	set ARPA_INET_H.
+	* m4/inet_pton.m4 (gl_INET_PTON): Likewise.
+	* modules/arpa_inet (Description): No longer only for systems that
+	lack it.
+	(Depends-on): Add include_next.
+	(Makeile.am): Substitute INCLUDE_NEXT, NEXT_ARPA_INET_H,
+	HAVE_ARPA_INET_H.
+
 2008-04-29  Jim Meyering  <meyering@redhat.com>
 
 	* modules/mkdir (License): Re-license as LGPLv2+.

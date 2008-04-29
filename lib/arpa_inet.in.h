@@ -1,5 +1,6 @@
-/* Provide a arpa/inet header file for systems lacking it (read: MinGW)
-   Copyright (C) 2008 Free Software Foundation, Inc.
+/* A GNU-like <arpa/inet.h>.
+
+   Copyright (C) 2005-2006, 2008 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,11 +17,20 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #ifndef _GL_ARPA_INET_H
-#define _GL_ARPA_INET_H
 
 /* Gnulib's sys/socket.h is responsible for pulling in winsock2.h etc
    under MinGW. */
 #include <sys/socket.h>
+
+#if @HAVE_ARPA_INET_H@
+
+/* The include_next requires a split double-inclusion guard.  */
+# @INCLUDE_NEXT@ @NEXT_ARPA_INET_H@
+
+#endif
+
+#ifndef _GL_ARPA_INET_H
+#define _GL_ARPA_INET_H
 
 #if @GNULIB_INET_NTOP@
 # if !@HAVE_DECL_INET_NTOP@
@@ -44,8 +54,8 @@ extern const char *inet_ntop (int af, const void *restrict src,
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef inet_ntop
-# define inet_ntop(af,src,dst,cnt)					\
-    (GL_LINK_WARNING ("inet_ntop doesn't exist on mingw - " \
+# define inet_ntop(af,src,dst,cnt) \
+    (GL_LINK_WARNING ("inet_ntop is unportable - " \
                       "use gnulib module inet_ntop for portability"), \
      inet_ntop (af, src, dst, cnt))
 #endif
@@ -56,10 +66,11 @@ extern int inet_pton (int af, const char *restrict src, void *restrict dst);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef inet_pton
-# define inet_pton(af,src,dst)			    \
-  (GL_LINK_WARNING ("inet_pton doesn't exist on mingw - "	  \
-		    "use gnulib module inet_pton for portability"),	  \
+# define inet_pton(af,src,dst) \
+  (GL_LINK_WARNING ("inet_pton is unportable - " \
+		    "use gnulib module inet_pton for portability"), \
    inet_pton (af, src, dst))
 #endif
 
+#endif /* _GL_ARPA_INET_H */
 #endif /* _GL_ARPA_INET_H */
