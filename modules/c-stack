@@ -10,6 +10,7 @@ Depends-on:
 gettext-h
 exitfail
 unistd
+raise
 
 configure.ac:
 gl_C_STACK

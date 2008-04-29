@@ -119,7 +119,7 @@ die (int signo)
   write (STDERR_FILENO, "\n", 1);
   if (! signo)
     _exit (exit_failure);
-  kill (getpid (), signo);
+  raise (signo);
   abort ();
 }
 
