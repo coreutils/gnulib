@@ -1,3 +1,10 @@
+2008-04-29  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/arpa_inet_h.m4 (gl_ARPA_INET_H_DEFAULTS): Set
+	HAVE_DECL_INET_NTOP and HAVE_DECL_INET_PTON.
+
+	* modules/arpa_inet (arpa/inet.h): Use them.
+
 2008-04-28  Eric Blake  <ebb9@byu.net>
 
 	Test getndelim2.
