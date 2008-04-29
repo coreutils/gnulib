@@ -1,3 +1,9 @@
+2008-04-29  Jim Meyering  <meyering@redhat.com>
+
+	Fix broken useless-if-before-free script.
+	* build-aux/useless-if-before-free: Fix typo: missing "?" after
+	the expression to match cast of argument to free-like function.
+
 2008-04-29  Eric Blake  <ebb9@byu.net>
 
 	Use new header.
