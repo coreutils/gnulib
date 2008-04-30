@@ -1,5 +1,10 @@
 2008-04-30  Jim Meyering  <meyering@redhat.com>
 
+	add tests for vc-list-files
+	* modules/vc-list-files-tests: New module.
+	* tests/test-vc-list-files-cvs.sh: New file.
+	* tests/test-vc-list-files-git.sh: New file.
+
 	avoid a warning from gcc
 	* lib/getndelim2.c (IF_LINT): Define.
 	(getndelim2): Use it to void a "may be used uninitialized" warning.
