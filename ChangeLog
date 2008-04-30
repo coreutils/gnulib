@@ -10,7 +10,8 @@
 	vc-list-files: avoid use of ${*-*} that fails when /bin/sh is dash
 	* build-aux/vc-list-files: Simplify ${*-*} to $dir, since we no longer
 	take more than one file argument, so .  Add quotes, just in case $dir
-	ever contains a shell meta-character.
+	ever contains a shell meta-character.  Prompted by Soren Hansen in
+	<http://thread.gmane.org/gmane.comp.emulators.libvirt/6221/focus=6240>.
 
 2008-04-29  Eric Blake  <ebb9@byu.net>
 
