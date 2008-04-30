@@ -1,5 +1,8 @@
 2008-04-30  Jim Meyering  <meyering@redhat.com>
 
+	vc-list-files: work properly in the CVS+awk case, too
+	* build-aux/vc-list-files: In the CVS+awk case, remove "./" prefix.
+
 	vc-list-files: avoid use of ${*-*} that fails when /bin/sh is dash
 	* build-aux/vc-list-files: Simplify ${*-*} to $dir, since we no longer
 	take more than one file argument, so .  Add quotes, just in case $dir
