@@ -1,5 +1,9 @@
 2008-04-30  Jim Meyering  <meyering@redhat.com>
 
+	avoid a warning from gcc
+	* lib/getndelim2.c (IF_LINT): Define.
+	(getndelim2): Use it to void a "may be used uninitialized" warning.
+
 	vc-list-files: work properly with build-aux/cvsu, too
 	* build-aux/vc-list-files: Hoist the "./"-removing code to apply
 	to all cvs-based clauses.

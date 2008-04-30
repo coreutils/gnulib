@@ -51,6 +51,13 @@
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
 
+/* Use this to suppress gcc's `...may be used before initialized' warnings. */
+#ifdef lint
+# define IF_LINT(Code) Code
+#else
+# define IF_LINT(Code) /* empty */
+#endif
+
 /* The maximum value that getndelim2 can return without suffering from
    overflow problems, either internally (because of pointer
    subtraction overflow) or due to the API (because of ssize_t).  */
@@ -100,7 +107,7 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
     {
       /* Here always ptr + size == read_pos + nbytes_avail.  */
 
-      int c;
+      int c IF_LINT (= 0);
       const char *buffer;
       size_t buffer_len;
 
