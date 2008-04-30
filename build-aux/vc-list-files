@@ -76,12 +76,12 @@ if test -d .git; then
 elif test -d .hg; then
   eval exec hg locate '"$dir/*"' $postprocess
 elif test -d CVS; then
+  test "$postprocess" = '' && postprocess="| sed 's|^\./||'"
   if test -x build-aux/cvsu; then
     eval build-aux/cvsu --find --types=AFGM '"$dir"' $postprocess
   elif (cvsu --help) >/dev/null 2>&1; then
     eval cvsu --find --types=AFGM '"$dir"' $postprocess
   else
-    test "$postprocess" = '' && postprocess="| sed 's|^\./||'"
     eval awk -F/ \''{			\
 	if (!$1 && $3 !~ /^-/) {	\
 	  f=FILENAME;			\
