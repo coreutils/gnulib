@@ -1,3 +1,10 @@
+2008-04-30  Jim Meyering  <meyering@redhat.com>
+
+	vc-list-files: avoid use of ${*-*} that fails when /bin/sh is dash
+	* build-aux/vc-list-files: Simplify ${*-*} to $dir, since we no longer
+	take more than one file argument, so .  Add quotes, just in case $dir
+	ever contains a shell meta-character.
+
 2008-04-29  Eric Blake  <ebb9@byu.net>
 
 	Optimize getndelim2 to use block operations when possible.
