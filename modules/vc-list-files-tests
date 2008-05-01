@@ -5,8 +5,10 @@ tests/test-vc-list-files-cvs.sh
 Depends-on:
 
 configure.ac:
+abs_aux_dir=`cd "$ac_aux_dir"; pwd`
+AC_SUBST([abs_aux_dir])
 
 Makefile.am:
 TESTS += test-vc-list-files-git.sh
 TESTS += test-vc-list-files-cvs.sh
-TESTS_ENVIRONMENT += abs_top_srcdir='$(abs_top_srcdir)'
+TESTS_ENVIRONMENT += PATH='$(abs_aux_dir)':"$$PATH"

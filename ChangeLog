@@ -1,3 +1,16 @@
+2008-05-01  Jim Meyering  <meyering@redhat.com>
+
+	vc-list-files: make the stand-alone gnulib test work
+	* modules/vc-list-files-tests (configure.ac):
+	Define and AC_SUBST abs_aux_dir.
+	(Makefile.am) [TESTS_ENVIRONMENT]: Rather than passing
+	$(abs_top_srcdir) to each script and having each of them
+	duplicate the work of setting PATH, set PATH here, using
+	the new variable, abs_aux_dir instead.
+	* tests/test-vc-list-files-cvs.sh: Don't set PATH here.
+	* tests/test-vc-list-files-git.sh: Likewise.
+	Reported by Bruno Haible.
+
 2008-05-01  Bruno Haible  <bruno@clisp.org>
 
 	* lib/getndelim2.c (getndelim2): Fix newsize computation during

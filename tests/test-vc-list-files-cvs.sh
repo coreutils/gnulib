@@ -16,9 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-PATH="$abs_top_srcdir/build-aux":$PATH
-export PATH
-
 tmpdir=vc-cvs-$$
 trap 'st=$?; cd '"`pwd`"' && rm -rf $tmpdir; exit $st' 0
 trap '(exit $?); exit $?' 1 2 13 15

@@ -16,9 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-PATH="$abs_top_srcdir/build-aux":$PATH
-export PATH
-
 if ( diff --version < /dev/null 2>&1 | grep GNU ) 2>&1 > /dev/null; then
   compare() { diff -u "$@"; }
 elif ( cmp --version < /dev/null 2>&1 | grep GNU ) 2>&1 > /dev/null; then
