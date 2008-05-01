@@ -1,3 +1,8 @@
+2008-05-02  Jim Meyering  <meyering@redhat.com>
+
+	avoid compilation error on FreeBSD 6
+	* tests/test-getaddrinfo.c [!defined EAI_NODATA] (EAI_NODATA): Define.
+
 2008-05-01  Jim Meyering  <meyering@redhat.com>
 
 	useless-if-before-free: correct --help's exit status description
