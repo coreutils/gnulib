@@ -76,7 +76,7 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
   ssize_t bytes_stored = -1;
   char *ptr = *lineptr;
   size_t size = *linesize;
-  bool done = false;
+  bool found_delimiter;
 
   if (!ptr)
     {
@@ -103,7 +103,8 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 
   flockfile (stream);
 
-  while (!done)
+  found_delimiter = false;
+  do
     {
       /* Here always ptr + size == read_pos + nbytes_avail.
 	 Also nbytes_avail > 0 || size < nmax.  */
@@ -121,7 +122,7 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 	      if (end)
 		{
 		  buffer_len = end - buffer + 1;
-		  done = true;
+		  found_delimiter = true;
 		}
 	    }
 	}
@@ -137,7 +138,7 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 		break;
 	    }
 	  if (c == delim1 || c == delim2)
-	    done = true;
+	    found_delimiter = true;
 	  buffer_len = 1;
 	}
 
@@ -145,13 +146,18 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 	 always (unless we get an error while reading the first byte)
 	 NUL-terminate the line buffer.  */
 
-      if (nbytes_avail < 1 + buffer_len && size < nmax)
+      if (nbytes_avail < buffer_len + 1 && size < nmax)
 	{
+	  /* Grow size proportionally, not linearly, to avoid O(n^2)
+	     running time.  */
 	  size_t newsize = size < MIN_CHUNK ? size + MIN_CHUNK : 2 * size;
 	  char *newptr;
 
-	  if (newsize < buffer_len)
-	    newsize = buffer_len + size;
+	  /* Increase newsize so that it becomes
+	     >= (read_pos - ptr) + buffer_len.  */
+	  if (newsize - (read_pos - ptr) < buffer_len + 1)
+	    newsize = (read_pos - ptr) + buffer_len + 1;
+	  /* Respect nmax.  This handles possible integer overflow.  */
 	  if (! (size < newsize && newsize <= nmax))
 	    newsize = nmax;
 
@@ -193,6 +199,7 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
       if (buffer && freadseek (stream, buffer_len))
 	goto unlock_done;
     }
+  while (!found_delimiter);
 
   /* Done - NUL terminate and return the number of bytes read.
      At this point we know that nbytes_avail >= 1.  */

@@ -1,3 +1,8 @@
+2008-05-01  Bruno Haible  <bruno@clisp.org>
+
+	* lib/getndelim2.c (getndelim2): Fix newsize computation during
+	reallocation. Rename 'done' to 'found_delimiter'.
+
 2008-05-01  Jim Meyering  <meyering@redhat.com>
 
 	vc-list-files: accommodate /bin/sh like the one from Solaris 10
