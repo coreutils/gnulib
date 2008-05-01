@@ -105,7 +105,8 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 
   while (!done)
     {
-      /* Here always ptr + size == read_pos + nbytes_avail.  */
+      /* Here always ptr + size == read_pos + nbytes_avail.
+	 Also nbytes_avail > 0 || size < nmax.  */
 
       int c IF_LINT (= 0);
       const char *buffer;
@@ -171,6 +172,9 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 	  read_pos = size - nbytes_avail + ptr;
 	}
 
+      /* Here, if size < nmax, nbytes_avail >= buffer_len + 1.
+	 If size == nmax, nbytes_avail > 0.  */
+
       if (1 < nbytes_avail)
 	{
 	  size_t copy_len = nbytes_avail - 1;
@@ -183,6 +187,9 @@ getndelim2 (char **lineptr, size_t *linesize, size_t offset, size_t nmax,
 	  read_pos += copy_len;
 	  nbytes_avail -= copy_len;
 	}
+
+      /* Here still nbytes_avail > 0.  */
+
       if (buffer && freadseek (stream, buffer_len))
 	goto unlock_done;
     }
