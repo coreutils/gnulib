@@ -1,3 +1,8 @@
+2008-05-01  Jim Meyering  <meyering@redhat.com>
+
+	vc-list-files: accommodate /bin/sh like the one from Solaris 10
+	* build-aux/vc-list-files: Use `...`, not $(...).
+
 2008-04-30  Jim Meyering  <meyering@redhat.com>
 
 	add tests for vc-list-files
