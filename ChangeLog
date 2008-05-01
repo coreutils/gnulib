@@ -1,5 +1,9 @@
 2008-05-01  Jim Meyering  <meyering@redhat.com>
 
+	useless-if-before-free: correct --help's exit status description
+	* build-aux/useless-if-before-free (usage): Like grep, exit 0
+	for one or more matches, etc.  Reported by Bruno Haible.
+
 	vc-list-files: make the stand-alone gnulib test work
 	* modules/vc-list-files-tests (configure.ac):
 	Define and AC_SUBST abs_aux_dir.
