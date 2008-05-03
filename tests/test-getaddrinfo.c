@@ -32,10 +32,6 @@
 # define EAI_SERVICE 0
 #endif
 
-#ifndef EAI_NODATA
-# define EAI_NODATA 0
-#endif
-
 int simple (char *host, char *service)
 {
   char buf[BUFSIZ];
