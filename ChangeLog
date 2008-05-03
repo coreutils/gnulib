@@ -1,3 +1,10 @@
+2008-05-03  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/inet_pton.m4: Set HAVE_DECL_INET_PTON to 0 when declarations
+	are needed from arpa/inet.h.
+	* m4/inet_ntop.m4: Likewise, for HAVE_DECL_INET_NTOP.
+	Reported by Bruno Haible.
+
 2008-05-02  Jim Meyering  <meyering@redhat.com>
 
 	avoid compilation error on FreeBSD 6

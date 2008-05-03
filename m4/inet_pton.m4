@@ -1,4 +1,4 @@
-# inet_pton.m4 serial 4
+# inet_pton.m4 serial 5
 dnl Copyright (C) 2006, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,6 +19,9 @@ AC_DEFUN([gl_INET_PTON],
 # Prerequisites of lib/inet_pton.c.
 AC_DEFUN([gl_PREREQ_INET_PTON], [
   AC_CHECK_DECLS([inet_pton],,,[#include <arpa/inet.h>])
+  if test $ac_cv_have_decl_inet_pton = no; then
+    HAVE_DECL_INET_PTON=0
+  fi
   AC_REQUIRE([gl_SOCKET_FAMILIES])
   AC_REQUIRE([AC_C_RESTRICT])
 ])
