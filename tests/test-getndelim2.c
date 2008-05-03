@@ -138,7 +138,7 @@ main (int argc, char **argv)
 
     result = getndelim2 (&line, &len, 0, GETNLINE_NO_LIMIT, 'g', 'f', f);
     ASSERT (result == 501 * 14 - 1);
-    ASSERT (501 * 14 < len);
+    ASSERT (501 * 14 <= len);
     buffer[499] = 'f';
     buffer[500] = '\0';
     ASSERT (strcmp (buffer, line + 501 * 13) == 0);

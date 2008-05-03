@@ -1,3 +1,8 @@
+2008-05-03  Jim Meyering  <meyering@redhat.com>
+
+	avoid failed assertion with tight malloc
+	* tests/test-getndelim2.c: Correct an off-by-one assertion.
+
 2008-05-03  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/inet_pton.m4: Set HAVE_DECL_INET_PTON to 0 when declarations
