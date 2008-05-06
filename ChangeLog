@@ -1,3 +1,7 @@
+2008-05-06  Soren Hansen  <soren@ubuntu.com>  (tiny change)
+
+	* build-aux/vc-list-files: Add support for bzr.
+
 2008-05-03  Jim Meyering  <meyering@redhat.com>
 
 	avoid failed assertion with tight malloc
