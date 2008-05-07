@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate February 23, 2008
+@set lastupdate May 5, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -305,13 +305,17 @@ for a language that is higher level than C.  Often much of the program
 is written in that language, too.  The Emacs editor pioneered this
 technique.
 
-@cindex GUILE
-The standard extensibility interpreter for GNU software is GUILE
+@cindex Guile
+@cindex GNOME and Guile
+The standard extensibility interpreter for GNU software is Guile
 (@uref{http://www.gnu.org/@/software/@/guile/}), which implements the
-language Scheme (an especially clean and simple dialect of Lisp).  We
-don't reject programs written in other ``scripting languages'' such as
-Perl and Python, but using GUILE is very important for the overall
-consistency of the GNU system.
+language Scheme (an especially clean and simple dialect of Lisp).
+Guile also includes bindings for GTK+/GNOME, making it practical to
+write modern GUI functionality within Guile.  We don't reject programs
+written in other ``scripting languages'' such as Perl and Python, but
+using Guile is very important for the overall consistency of the GNU
+system.  
+
 
 @node Compatibility
 @section Compatibility with Other Implementations
@@ -1022,6 +1026,7 @@ GNU Lesser General Public License, @url{http://www.gnu.org/@/licenses/@/lgpl.htm
 GNU GPL with the exception for Guile; for example, GPLv3+/Guile means
 the GNU GPL version 3 or later, with the extra exception for Guile.
 
+@item GPL/Ada
 GNU GPL with the exception for Ada.
 
 @item Apache
