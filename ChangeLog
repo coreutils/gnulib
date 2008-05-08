@@ -1,3 +1,9 @@
+2008-05-07  Eric Blake  <ebb9@byu.net>
+
+	Support cross-compilation of <wctype.h>.
+	* m4/wctype.m4 (gl_WCTYPE_H): Fix improper nesting in
+	AC_CACHE_CHECK.
+
 2008-05-06  Soren Hansen  <soren@ubuntu.com>  (tiny change)
 
 	* build-aux/vc-list-files: Add support for bzr.
