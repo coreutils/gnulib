@@ -1,3 +1,7 @@
+2008-05-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/wctype.m4 (gl_WCTYPE_H): Correct indentation.
+
 2008-05-07  Eric Blake  <ebb9@byu.net>
 
 	Support cross-compilation of <wctype.h>.
