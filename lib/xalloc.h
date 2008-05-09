@@ -50,6 +50,7 @@ void *xcalloc (size_t n, size_t s);
 void *xrealloc (void *p, size_t s);
 void *x2realloc (void *p, size_t *pn);
 void *xmemdup (void const *p, size_t s);
+void *xmemdup0 (void const *p, size_t s);
 char *xstrdup (char const *str);
 
 /* Return 1 if an array of N objects, each of size S, cannot exist due
@@ -262,6 +263,12 @@ template <typename T> inline T *
 xmemdup (T const *p, size_t s)
 {
   return (T *) xmemdup ((void const *) p, s);
+}
+
+template <typename T> inline T *
+xmemdup0 (T const *p, size_t s)
+{
+  return (T *) xmemdup0 ((void const *) p, s);
 }
 
 # endif
