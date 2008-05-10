@@ -1,0 +1,12 @@
+Files:
+tests/unilbrk/test-u32-width-linebreaks.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u32-width-linebreaks
+check_PROGRAMS += test-u32-width-linebreaks
+test_u32_width_linebreaks_SOURCES = unilbrk/test-u32-width-linebreaks.c
+
