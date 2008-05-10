@@ -50,8 +50,10 @@ chdir_no_follow (char const *dir)
   /* If open follows symlinks, lstat DIR and fstat FD to ensure that
      they are the same file; if they are different files, set errno to
      ELOOP (the same value that open uses for symlinks with
-     O_NOFOLLOW) so the caller can report a failure.  */
-  if (! HAVE_WORKING_O_NOFOLLOW)
+     O_NOFOLLOW) so the caller can report a failure.
+     Skip this check if ELOOP == 0, which should be the case
+     on any system that lacks symlink support.  */
+  if (ELOOP && ! HAVE_WORKING_O_NOFOLLOW)
     {
       struct stat sb1;
       result = lstat (dir, &sb1);

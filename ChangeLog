@@ -1,5 +1,9 @@
 2008-05-10  Jim Meyering  <meyering@redhat.com>
 
+	Make chdir-safer.c more efficient on a system with no symlinks.
+	* lib/chdir-safer.c (chdir_no_follow): Skip lstat and fstat calls
+	also if ELOOP is zero.  Suggested by Bruno Haible.
+
 	Make chdir-safer.c slightly safer.
 	* lib/chdir-safer.c (chdir_no_follow): Test HAVE_WORKING_O_NOFOLLOW,
 	not O_NOFOLLOW, in case the latter is nonzero and open ignores it.
