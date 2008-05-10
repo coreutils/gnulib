@@ -1,5 +1,24 @@
 2008-05-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unilbrk/ulc-common.c: Don't include <stdlib.h>.
+	(iconv_string_length, iconv_string_keeping_offsets): Remove functions.
+	* lib/unilbrk/ulc-common.h (iconv_string_length,
+	iconv_string_keeping_offsets): Remove declarations.
+	* lib/unilbrk/ulc-possible-linebreaks.c: Include <string.h>, uniconv.h.
+	Don't include <iconv.h>, streq.h, xsize.h.
+	(ulc_possible_linebreaks): Use u8_conv_from_encoding for doing the
+	conversion.
+	* lib/unilbrk/ulc-width-linebreaks.c: Include uniconv.h. Don't include
+	<iconv.h>, streq.h, xsize.h.
+	(ulc_width_linebreaks): Use u8_conv_from_encoding for doing the
+	conversion.
+	* modules/unilbrk/ulc-common (Depends-on): Remove iconv.
+	* modules/unilbrk/ulc-possible-linebreaks (Depends-on): Add
+	uniconv/u8-conv-from-enc. Remove iconv_open, streq, xsize.
+	* modules/unilbrk/ulc-width-linebreaks (Depends-on): Likewise.
+
+2008-05-10  Bruno Haible  <bruno@clisp.org>
+
 	* modules/unilbrk/ulc-width-linebreaks-tests: New file.
 	* tests/unilbrk/test-ulc-width-linebreaks.c: New file.
 

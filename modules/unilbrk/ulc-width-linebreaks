@@ -8,10 +8,8 @@ Depends-on:
 unilbrk/base
 unilbrk/u8-width-linebreaks
 unilbrk/ulc-common
+uniconv/u8-conv-from-enc
 c-ctype
-iconv_open
-streq
-xsize
 
 configure.ac:
 

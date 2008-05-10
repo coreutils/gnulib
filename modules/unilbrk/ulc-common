@@ -7,7 +7,6 @@ lib/unilbrk/ulc-common.c
 
 Depends-on:
 c-ctype
-iconv
 streq
 
 configure.ac:

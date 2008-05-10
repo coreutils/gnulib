@@ -21,13 +21,10 @@
 #include "unilbrk.h"
 
 #include <stdlib.h>
-#if HAVE_ICONV
-# include <iconv.h>
-#endif
+#include <string.h>
 
 #include "c-ctype.h"
-#include "streq.h"
-#include "xsize.h"
+#include "uniconv.h"
 #include "unilbrk/ulc-common.h"
 
 /* Line breaking of a string in an arbitrary encoding.
@@ -47,92 +44,73 @@ void
 ulc_possible_linebreaks (const char *s, size_t n, const char *encoding,
 			 char *p)
 {
-  if (n == 0)
-    return;
-  if (is_utf8_encoding (encoding))
-    u8_possible_linebreaks ((const uint8_t *) s, n, encoding, p);
-  else
+  if (n > 0)
     {
-#if HAVE_ICONV
-      iconv_t to_utf8;
-      /* Avoid glibc-2.1 bug with EUC-KR.  */
-# if (__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) && !defined _LIBICONV_VERSION
-      if (STREQ (encoding, "EUC-KR", 'E', 'U', 'C', '-', 'K', 'R', 0, 0, 0))
-	to_utf8 = (iconv_t)(-1);
+      if (is_utf8_encoding (encoding))
+	u8_possible_linebreaks ((const uint8_t *) s, n, encoding, p);
       else
-# endif
-      /* Avoid Solaris 9 bug with GB2312, EUC-TW, BIG5, BIG5-HKSCS, GBK,
-	 GB18030.  */
-# if defined __sun && !defined _LIBICONV_VERSION
-      if (   STREQ (encoding, "GB2312", 'G', 'B', '2', '3', '1', '2', 0, 0, 0)
-	  || STREQ (encoding, "EUC-TW", 'E', 'U', 'C', '-', 'T', 'W', 0, 0, 0)
-	  || STREQ (encoding, "BIG5", 'B', 'I', 'G', '5', 0, 0, 0, 0, 0)
-	  || STREQ (encoding, "BIG5-HKSCS", 'B', 'I', 'G', '5', '-', 'H', 'K', 'S', 'C')
-	  || STREQ (encoding, "GBK", 'G', 'B', 'K', 0, 0, 0, 0, 0, 0)
-	  || STREQ (encoding, "GB18030", 'G', 'B', '1', '8', '0', '3', '0', 0, 0))
-	to_utf8 = (iconv_t)(-1);
-      else
-# endif
-      to_utf8 = iconv_open (UTF8_NAME, encoding);
-      if (to_utf8 != (iconv_t)(-1))
 	{
-	  /* Determine the length of the resulting UTF-8 string.  */
-	  size_t m = iconv_string_length (to_utf8, s, n);
-	  if (m != (size_t)(-1))
+	  /* Convert the string to UTF-8 and build a translation table
+	     from offsets into s to offsets into the translated string.  */
+	  size_t *offsets = (size_t *) malloc (n * sizeof (size_t));
+
+	  if (offsets != NULL)
 	    {
-	      /* Convert the string to UTF-8 and build a translation table
-		 from offsets into s to offsets into the translated string.  */
-	      size_t memory_size = xsum3 (xtimes (n, sizeof (size_t)), m, m);
-	      char *memory =
-		(size_in_bounds_p (memory_size) ? malloc (memory_size) : NULL);
-	      if (memory != NULL)
+	      uint8_t *t = NULL;
+	      size_t m;
+	      if (u8_conv_from_encoding (encoding, iconveh_question_mark,
+					 s, n, offsets, &t, &m)
+		  == 0)
 		{
-		  size_t *offtable = (size_t *) memory;
-		  char *t = (char *) (offtable + n);
-		  char *q = (char *) (t + m);
-		  size_t i;
+		  char *q = (char *) malloc (m);
 
-		  iconv_string_keeping_offsets (to_utf8, s, n, offtable, t, m);
+		  if (q != NULL)
+		    {
+		      size_t i;
 
-		  /* Determine the possible line breaks of the UTF-8 string.  */
-		  u8_possible_linebreaks ((const uint8_t *) t, m, encoding, q);
+		      /* Determine the possible line breaks of the UTF-8
+			 string.  */
+		      u8_possible_linebreaks (t, m, encoding, q);
 
-		  /* Translate the result back to the original string.  */
-		  memset (p, UC_BREAK_PROHIBITED, n);
-		  for (i = 0; i < n; i++)
-		    if (offtable[i] != (size_t)(-1))
-		      p[i] = q[offtable[i]];
+		      /* Translate the result back to the original string.  */
+		      memset (p, UC_BREAK_PROHIBITED, n);
+		      for (i = 0; i < n; i++)
+			if (offsets[i] != (size_t)(-1))
+			  p[i] = q[offsets[i]];
 
-		  free (memory);
-		  iconv_close (to_utf8);
-		  return;
+		      free (q);
+		      free (t);
+		      free (offsets);
+		      return;
+		    }
+		  free (t);
 		}
+	      free (offsets);
 	    }
-	  iconv_close (to_utf8);
-	}
-#endif
-      /* Impossible to convert.  */
+
+	  /* Impossible to convert.  */
 #if C_CTYPE_ASCII
-      if (is_all_ascii (s, n))
-	{
-	  /* ASCII is a subset of UTF-8.  */
-	  u8_possible_linebreaks ((const uint8_t *) s, n, encoding, p);
-	  return;
-	}
+	  if (is_all_ascii (s, n))
+	    {
+	      /* ASCII is a subset of UTF-8.  */
+	      u8_possible_linebreaks ((const uint8_t *) s, n, encoding, p);
+	      return;
+	    }
 #endif
-      /* We have a non-ASCII string and cannot convert it.
-	 Don't produce line breaks except those already present in the
-	 input string.  All we assume here is that the encoding is
-	 minimally ASCII compatible.  */
-      {
-	const char *s_end = s + n;
-	while (s < s_end)
+	  /* We have a non-ASCII string and cannot convert it.
+	     Don't produce line breaks except those already present in the
+	     input string.  All we assume here is that the encoding is
+	     minimally ASCII compatible.  */
 	  {
-	    *p = (*s == '\n' ? UC_BREAK_MANDATORY : UC_BREAK_PROHIBITED);
-	    s++;
-	    p++;
+	    const char *s_end = s + n;
+	    while (s < s_end)
+	      {
+		*p = (*s == '\n' ? UC_BREAK_MANDATORY : UC_BREAK_PROHIBITED);
+		s++;
+		p++;
+	      }
 	  }
-      }
+	}
     }
 }
 

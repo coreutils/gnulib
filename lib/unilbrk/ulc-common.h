@@ -23,22 +23,6 @@
 #define is_utf8_encoding unilbrk_is_utf8_encoding
 extern int is_utf8_encoding (const char *encoding);
 
-#if HAVE_ICONV
-
-# include <iconv.h>
-
-/* Luckily, the encoding's name is platform independent.  */
-# define UTF8_NAME "UTF-8"
-
-/* Return the length of a string after conversion through an iconv_t.  */
-# define iconv_string_length unilbrk_iconv_string_length
-extern size_t iconv_string_length (iconv_t cd, const char *s, size_t n);
-
-# define iconv_string_keeping_offsets unilbrk_iconv_string_keeping_offsets
-extern void iconv_string_keeping_offsets (iconv_t cd, const char *s, size_t n, size_t *offtable, char *t, size_t m);
-
-#endif /* HAVE_ICONV */
-
 #if C_CTYPE_ASCII
 
 # define is_all_ascii unilbrk_is_all_ascii
