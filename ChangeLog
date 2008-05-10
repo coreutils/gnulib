@@ -1,5 +1,12 @@
 2008-05-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unilbrk/ulc-common.c: Include c-strcaseeq.h instead of streq.h.
+	(is_utf8_encoding): Use a case-insensitive comparison.
+	* modules/unilbrk/ulc-common (Depends-on): Add c-strcaseeq. Remove
+	streq.
+
+2008-05-10  Bruno Haible  <bruno@clisp.org>
+
 	* lib/unilbrk/ulc-common.c: Don't include <stdlib.h>.
 	(iconv_string_length, iconv_string_keeping_offsets): Remove functions.
 	* lib/unilbrk/ulc-common.h (iconv_string_length,

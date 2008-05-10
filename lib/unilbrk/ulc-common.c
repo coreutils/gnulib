@@ -21,12 +21,12 @@
 #include "unilbrk/ulc-common.h"
 
 #include "c-ctype.h"
-#include "streq.h"
+#include "c-strcaseeq.h"
 
 int
 is_utf8_encoding (const char *encoding)
 {
-  if (STREQ (encoding, "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0 ,0))
+  if (STRCASEEQ (encoding, "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0, 0))
     return 1;
   return 0;
 }
