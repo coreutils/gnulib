@@ -1,5 +1,8 @@
 2008-05-10  Bruno Haible  <bruno@clisp.org>
 
+	* modules/unilbrk/u32-possible-linebreaks-tests: New file.
+	* tests/unilbrk/test-u32-possible-linebreaks.c: New file.
+
 	* modules/unilbrk/u16-possible-linebreaks-tests: New file.
 	* tests/unilbrk/test-u16-possible-linebreaks.c: New file.
 

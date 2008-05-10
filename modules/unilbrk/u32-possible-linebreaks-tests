@@ -1,0 +1,12 @@
+Files:
+tests/unilbrk/test-u32-possible-linebreaks.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u32-possible-linebreaks
+check_PROGRAMS += test-u32-possible-linebreaks
+test_u32_possible_linebreaks_SOURCES = unilbrk/test-u32-possible-linebreaks.c
+
