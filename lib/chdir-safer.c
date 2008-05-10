@@ -1,6 +1,6 @@
 /* much like chdir(2), but safer
 
-   Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2005-2006, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,6 +28,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "same-inode.h"
+
+#ifndef ELOOP
+# define ELOOP 0
+#endif
 
 /* Like chdir, but fail if DIR is a symbolic link to a directory (or
    similar funny business), or if DIR is not readable.  This avoids a

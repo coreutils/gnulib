@@ -1,3 +1,9 @@
+2008-05-10  Jim Meyering  <meyering@redhat.com>
+
+	Avoid compile failure on systems without ELOOP (like mingw).
+	* lib/chdir-safer.c (ELOOP): Define if not already defined.
+	Reported by Bruno Haible.
+
 2008-05-10  Bruno Haible  <bruno@clisp.org>
 
 	* lib/unilbrk/ulc-common.c: Include c-strcaseeq.h instead of streq.h.
