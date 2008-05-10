@@ -1,5 +1,10 @@
 2008-05-10  Bruno Haible  <bruno@clisp.org>
 
+	* modules/unilbrk/u8-possible-linebreaks-tests: New file.
+	* tests/unilbrk/test-u8-possible-linebreaks.c: New file.
+
+2008-05-10  Bruno Haible  <bruno@clisp.org>
+
 	Split up 'linebreak' module.
 	* lib/unilbrk.h: New file, based on lib/linebreak.h.
 	* lib/unilbrk/lbrkprop1.h: New file, extracted from lib/lbrkprop.h.

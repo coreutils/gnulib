@@ -1,0 +1,12 @@
+Files:
+tests/unilbrk/test-u8-possible-linebreaks.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u8-possible-linebreaks
+check_PROGRAMS += test-u8-possible-linebreaks
+test_u8_possible_linebreaks_SOURCES = unilbrk/test-u8-possible-linebreaks.c
+
