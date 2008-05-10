@@ -1,5 +1,8 @@
 2008-05-10  Bruno Haible  <bruno@clisp.org>
 
+	* modules/unilbrk/u16-width-linebreaks-tests: New file.
+	* tests/unilbrk/test-u16-width-linebreaks.c: New file.
+
 	* modules/unilbrk/u8-width-linebreaks-tests: New file.
 	* tests/unilbrk/test-u8-width-linebreaks.c: New file.
 
