@@ -1,5 +1,9 @@
 2008-05-10  Jim Meyering  <meyering@redhat.com>
 
+	Make chdir-safer.c slightly safer.
+	* lib/chdir-safer.c (chdir_no_follow): Test HAVE_WORKING_O_NOFOLLOW,
+	not O_NOFOLLOW, in case the latter is nonzero and open ignores it.
+
 	Avoid compile failure on systems without ELOOP (like mingw).
 	* lib/chdir-safer.c (ELOOP): Define if not already defined.
 	Reported by Bruno Haible.
