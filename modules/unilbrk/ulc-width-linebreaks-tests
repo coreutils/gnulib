@@ -1,0 +1,13 @@
+Files:
+tests/unilbrk/test-ulc-width-linebreaks.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-ulc-width-linebreaks
+check_PROGRAMS += test-ulc-width-linebreaks
+test_ulc_width_linebreaks_SOURCES = unilbrk/test-ulc-width-linebreaks.c
+test_ulc_width_linebreaks_LDADD = $(LDADD) @LIBICONV@
+
