@@ -1,0 +1,26 @@
+Description:
+Line breaking of UTF-8 strings.
+
+Files:
+lib/unilbrk/u8-width-linebreaks.c
+
+Depends-on:
+unilbrk/base
+unilbrk/u8-possible-linebreaks
+uniwidth/width
+utf8-ucs4-unsafe
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unilbrk/u8-width-linebreaks.c
+
+Include:
+"unilbrk.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

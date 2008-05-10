@@ -1,0 +1,29 @@
+Description:
+Line breaking of strings.
+
+Files:
+lib/unilbrk/ulc-possible-linebreaks.c
+
+Depends-on:
+unilbrk/base
+unilbrk/u8-possible-linebreaks
+unilbrk/ulc-common
+c-ctype
+iconv_open
+streq
+xsize
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unilbrk/ulc-possible-linebreaks.c
+
+Include:
+"unilbrk.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

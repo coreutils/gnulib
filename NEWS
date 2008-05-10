@@ -6,6 +6,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-05-10  linebreak       The module is split into several modules unilbrk/*.
+                            The include file is changed from "linebreak.h" to
+                            "unilbrk.h". Two functions are renamed:
+                            mbs_possible_linebreaks -> ulc_possible_linebreaks
+                            mbs_width_linebreaks -> ulc_width_linebreaks
+
 2008-04-28  rpmatch         The include file is now <stdlib.h>.
 
 2008-04-28  inet_ntop       The include file is changed from "inet_ntop.h"

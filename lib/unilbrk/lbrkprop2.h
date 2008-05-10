@@ -1,34 +1,22 @@
 /* Line breaking properties of Unicode characters.  */
 /* Generated automatically by gen-lbrkprop for Unicode 3.1.0.  */
 
-/* Copyright (C) 2000-2004 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2004, 2008 Free Software Foundation, Inc.
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
+   This program is free software: you can redistribute it and/or modify it
+   under the terms of the GNU Lesser General Public License as published
+   by the Free Software Foundation; either version 3 of the License, or
+   (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#define lbrkprop_header_0 16
-#define lbrkprop_header_1 15
-#define lbrkprop_header_2 7
-#define lbrkprop_header_3 511
-#define lbrkprop_header_4 127
-static const
-struct
-  {
-    int level1[15];
-    int level2[4 << 9];
-    unsigned char level3[100 << 7];
-  }
-lbrkprop =
+const lbrkprop_t unilbrkprop =
 {
   {     0,   512,  1024,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,  1536 },

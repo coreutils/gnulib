@@ -1,0 +1,26 @@
+Description:
+Line breaking auxiliary functions.
+
+Files:
+lib/unilbrk/ulc-common.h
+lib/unilbrk/ulc-common.c
+
+Depends-on:
+c-ctype
+iconv
+streq
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unilbrk/ulc-common.c
+
+Include:
+"unilbrk/ulc-common.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

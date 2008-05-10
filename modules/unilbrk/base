@@ -1,0 +1,23 @@
+Description:
+Base layer for line breaking.
+
+Files:
+lib/unilbrk.h
+
+Depends-on:
+unitypes
+localcharset
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"unilbrk.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -1,3 +1,47 @@
+2008-05-10  Bruno Haible  <bruno@clisp.org>
+
+	Split up 'linebreak' module.
+	* lib/unilbrk.h: New file, based on lib/linebreak.h.
+	* lib/unilbrk/lbrkprop1.h: New file, extracted from lib/lbrkprop.h.
+	* lib/unilbrk/lbrkprop2.h: New file, renamed from lib/lbrkprop.h with
+	modifications.
+	* lib/unilbrk/tables.h: New file, extracted from lib/linebreak.c.
+	* lib/unilbrk/tables.c: New file, extracted from lib/linebreak.c.
+	* lib/unilbrk/u8-possible-linebreaks.c: New file, extracted from
+	lib/linebreak.c.
+	* lib/unilbrk/u16-possible-linebreaks.c: New file, extracted from
+	lib/linebreak.c.
+	* lib/unilbrk/u32-possible-linebreaks.c: New file, extracted from
+	lib/linebreak.c.
+	* lib/unilbrk/ulc-common.h: New file, extracted from lib/linebreak.c.
+	* lib/unilbrk/ulc-common.c: New file, extracted from lib/linebreak.c.
+	* lib/unilbrk/ulc-possible-linebreaks.c: New file, extracted from
+	lib/linebreak.c.
+	* lib/unilbrk/u8-width-linebreaks.c: New file, extracted from
+	lib/linebreak.c.
+	* lib/unilbrk/u16-width-linebreaks.c: New file, extracted from
+	lib/linebreak.c.
+	* lib/unilbrk/u32-width-linebreaks.c: New file, extracted from
+	lib/linebreak.c.
+	* lib/unilbrk/ulc-width-linebreaks.c: New file, extracted from
+	lib/linebreak.c.
+	* modules/unilbrk/base: New file.
+	* modules/unilbrk/tables: New file.
+	* modules/unilbrk/u8-possible-linebreaks: New file.
+	* modules/unilbrk/u16-possible-linebreaks: New file.
+	* modules/unilbrk/u32-possible-linebreaks: New file.
+	* modules/unilbrk/ulc-common: New file.
+	* modules/unilbrk/ulc-possible-linebreaks: New file.
+	* modules/unilbrk/u8-width-linebreaks: New file.
+	* modules/unilbrk/u16-width-linebreaks: New file.
+	* modules/unilbrk/u32-width-linebreaks: New file.
+	* modules/unilbrk/ulc-width-linebreaks: New file.
+	* lib/linebreak.h: Remove file.
+	* lib/linebreak.c: Remove file.
+	* m4/linebreak.m4: Remove file.
+	* modules/linebreak: Remove file.
+	* NEWS: Mention the changes.
+
 2008-05-09  Eric Blake  <ebb9@byu.net>
 
 	Add xmemdup0.

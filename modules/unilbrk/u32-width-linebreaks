@@ -1,0 +1,25 @@
+Description:
+Line breaking of UTF-32 strings.
+
+Files:
+lib/unilbrk/u32-width-linebreaks.c
+
+Depends-on:
+unilbrk/base
+unilbrk/u32-possible-linebreaks
+uniwidth/width
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unilbrk/u32-width-linebreaks.c
+
+Include:
+"unilbrk.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

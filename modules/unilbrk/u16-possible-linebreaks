@@ -1,0 +1,27 @@
+Description:
+Line breaking of UTF-16 strings.
+
+Files:
+lib/unilbrk/u16-possible-linebreaks.c
+lib/uniwidth/cjk.h
+
+Depends-on:
+unilbrk/base
+unilbrk/tables
+utf16-ucs4-unsafe
+streq 
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unilbrk/u16-possible-linebreaks.c
+
+Include:
+"unilbrk.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
