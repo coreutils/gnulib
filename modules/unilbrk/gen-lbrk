@@ -1,0 +1,21 @@
+Description:
+Generates the tables in lib/unilbrk/*.
+
+Files:
+lib/unilbrk/gen-lbrk.c
+lib/unictype/3level.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+
+License:
+GPLed build tool
+
+Maintainer:
+Bruno Haible
+

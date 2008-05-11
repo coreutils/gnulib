@@ -1,5 +1,10 @@
 2008-05-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unilbrk/gen-lbrk.c: New file, from GNU gettext (gen-lbrkprop.c).
+	* modules/unilbrk/gen-lbrk: New file.
+
+2008-05-11  Bruno Haible  <bruno@clisp.org>
+
 	* m4/sha256.m4 (gl_SHA256): Require AC_C_INLINE.
 	* m4/sha512.m4 (gl_SHA512): Likewise.
 
