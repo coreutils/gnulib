@@ -1,3 +1,17 @@
+2008-05-11  Jim Meyering  <meyering@redhat.com>
+
+	New modules: crypto/sha256, crypto/sha512 (from coreutils)
+	* modules/crypto/sha256: New file.
+	* modules/crypto/sha512: Likewise.
+	* lib/sha256.c: Likewise.
+	* lib/sha256.h: Likewise.
+	* lib/sha512.c: Likewise.
+	* lib/sha512.h: Likewise.
+	* lib/u64.h: Likewise.
+	* m4/sha256.m4: Likewise.
+	* m4/sha512.m4: Likewise.
+	* MODULES.html.sh (Cryptographic computations (low-level)): List them.
+
 2008-05-10  Bruno Haible  <bruno@clisp.org>
 
 	* MODULES.html.sh (Environment variables <stdlib.h>): Add unsetenv.

@@ -1798,6 +1798,8 @@ func_all_modules ()
   func_module crypto/md5
   func_module crypto/rijndael
   func_module crypto/sha1
+  func_module crypto/sha256
+  func_module crypto/sha512
   func_end_table
 
   element="Cryptographic computations (high-level)"
