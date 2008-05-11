@@ -1,5 +1,24 @@
 2008-05-10  Bruno Haible  <bruno@clisp.org>
 
+	* MODULES.html.sh (Environment variables <stdlib.h>): Add unsetenv.
+	(Input/Output <stdio.h>): Add xprintf.
+	(Signal handling <signal.h>): Add strsignal.
+	(Cryptographic computations (high-level)): Add crypto/gc-camellia.
+	(Core language properties): Add func.
+	(Mathematics <math.h>): Add ceil, floor, frexp-nolibm.
+	(Support for systems lacking POSIX:2001): Add environ, EOVERFLOW,
+	strings.
+	(Enhancements for POSIX:2001 functions): Add iconv_open-utf.
+	(Input/output): New section.
+	(File system functions): Add openat-die, stat-macros.
+	(Networking functions): Add sockets.
+	(Unicode string functions): Add unictype/*.
+	(Support for building libraries and executables): Add gperf.
+	(Support for building documentation): Add agpl-3.0.
+	(Misc): Add nocrash.
+
+2008-05-10  Bruno Haible  <bruno@clisp.org>
+
 	* modules/unictype/gen-ctype: New file.
 
 2008-05-10  Jim Meyering  <meyering@redhat.com>

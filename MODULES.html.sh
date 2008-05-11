@@ -1632,6 +1632,7 @@ func_all_modules ()
   func_begin_table
   func_module putenv
   func_module setenv
+  func_module unsetenv
   func_module xsetenv
   func_end_table
 
@@ -1728,6 +1729,7 @@ func_all_modules ()
   func_module fwriteerror
   func_module vasnprintf
   func_module vasprintf
+  func_module xprintf
   func_module xvasprintf
   func_end_table
 
@@ -1740,6 +1742,7 @@ func_all_modules ()
   func_begin_table
   func_module fatal-signal
   func_module raise
+  func_module strsignal
   func_end_table
 
   element="Command-line arguments"
@@ -1807,6 +1810,7 @@ func_all_modules ()
   func_module crypto/gc
   func_module crypto/gc-arcfour
   func_module crypto/gc-arctwo
+  func_module crypto/gc-camellia
   func_module crypto/gc-des
   func_module crypto/gc-hmac-md5
   func_module crypto/gc-hmac-sha1
@@ -1860,6 +1864,7 @@ func_all_modules ()
   func_begin_table
   func_module flexmember
   func_module fpucw
+  func_module func
   func_module inline
   func_module vararrays
   func_end_table
@@ -1978,11 +1983,14 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module ceil
   func_module ceilf
   func_module ceill
+  func_module floor
   func_module floorf
   func_module floorl
   func_module frexp
+  func_module frexp-nolibm
   func_module frexpl
   func_module frexpl-nolibm
   func_module isfinite
@@ -2068,6 +2076,8 @@ func_all_modules ()
   func_module calloc-posix
   func_module chown
   func_module dup2
+  func_module environ
+  func_module EOVERFLOW
   func_module fchdir
   func_module fcntl
   func_module fopen
@@ -2106,6 +2116,7 @@ func_all_modules ()
   func_module snprintf-posix
   func_module sprintf-posix
   func_module string
+  func_module strings
   func_module tempname
   func_module time
   func_module time_r
@@ -2162,6 +2173,7 @@ func_all_modules ()
   func_module chdir-long
   func_module dirname
   func_module getopt
+  func_module iconv_open-utf
   func_module unistd-safer
   func_module fnmatch
   func_module fnmatch-posix
@@ -2174,6 +2186,17 @@ func_all_modules ()
   func_section_wrap posix_ext
   func_wrap H2
   func_echo "$element"
+
+  element="Input/output"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap posix_ext_stdio
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module xprintf-posix
+  func_module xvasprintf-posix
+  func_end_table
 
   element="Numeric conversion functions"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
@@ -2220,12 +2243,14 @@ func_all_modules ()
   func_module modechange
   func_module mountlist
   func_module openat
+  func_module openat-die
   func_module pathmax
   func_module read-file
   func_module same
   func_module save-cwd
   func_module savedir
   func_module savewd
+  func_module stat-macros
   func_module stat-time
   func_module tmpdir
   func_module unlinkdir
@@ -2330,6 +2355,7 @@ func_all_modules ()
   func_begin_table
   func_module xgethostname
   func_module canon-host
+  func_module sockets
   func_end_table
 
   element="Multithreading"
@@ -2603,6 +2629,168 @@ func_all_modules ()
   func_module unistdio/u32-u32-vsprintf
   func_module uniname/base
   func_module uniname/uniname
+  func_module unictype/base
+  func_module unictype/bidicategory-byname
+  func_module unictype/bidicategory-name
+  func_module unictype/bidicategory-of
+  func_module unictype/bidicategory-test
+  func_module unictype/bidicategory-all
+  func_module unictype/block-list
+  func_module unictype/block-of
+  func_module unictype/block-test
+  func_module unictype/block-all
+  func_module unictype/category-C
+  func_module unictype/category-Cc
+  func_module unictype/category-Cf
+  func_module unictype/category-Cn
+  func_module unictype/category-Co
+  func_module unictype/category-Cs
+  func_module unictype/category-L
+  func_module unictype/category-Ll
+  func_module unictype/category-Lm
+  func_module unictype/category-Lo
+  func_module unictype/category-Lt
+  func_module unictype/category-Lu
+  func_module unictype/category-M
+  func_module unictype/category-Mc
+  func_module unictype/category-Me
+  func_module unictype/category-Mn
+  func_module unictype/category-N
+  func_module unictype/category-Nd
+  func_module unictype/category-Nl
+  func_module unictype/category-No
+  func_module unictype/category-P
+  func_module unictype/category-Pc
+  func_module unictype/category-Pd
+  func_module unictype/category-Pe
+  func_module unictype/category-Pf
+  func_module unictype/category-Pi
+  func_module unictype/category-Po
+  func_module unictype/category-Ps
+  func_module unictype/category-S
+  func_module unictype/category-Sc
+  func_module unictype/category-Sk
+  func_module unictype/category-Sm
+  func_module unictype/category-So
+  func_module unictype/category-Z
+  func_module unictype/category-Zl
+  func_module unictype/category-Zp
+  func_module unictype/category-Zs
+  func_module unictype/category-and
+  func_module unictype/category-and-not
+  func_module unictype/category-byname
+  func_module unictype/category-name
+  func_module unictype/category-none
+  func_module unictype/category-of
+  func_module unictype/category-or
+  func_module unictype/category-test
+  func_module unictype/category-test-withtable
+  func_module unictype/category-all
+  func_module unictype/combining-class
+  func_module unictype/ctype-alnum
+  func_module unictype/ctype-alpha
+  func_module unictype/ctype-blank
+  func_module unictype/ctype-cntrl
+  func_module unictype/ctype-digit
+  func_module unictype/ctype-graph
+  func_module unictype/ctype-lower
+  func_module unictype/ctype-print
+  func_module unictype/ctype-punct
+  func_module unictype/ctype-space
+  func_module unictype/ctype-upper
+  func_module unictype/ctype-xdigit
+  func_module unictype/decimal-digit
+  func_module unictype/digit
+  func_module unictype/mirror
+  func_module unictype/numeric
+  func_module unictype/property-alphabetic
+  func_module unictype/property-ascii-hex-digit
+  func_module unictype/property-bidi-arabic-digit
+  func_module unictype/property-bidi-arabic-right-to-left
+  func_module unictype/property-bidi-block-separator
+  func_module unictype/property-bidi-boundary-neutral
+  func_module unictype/property-bidi-common-separator
+  func_module unictype/property-bidi-control
+  func_module unictype/property-bidi-embedding-or-override
+  func_module unictype/property-bidi-eur-num-separator
+  func_module unictype/property-bidi-eur-num-terminator
+  func_module unictype/property-bidi-european-digit
+  func_module unictype/property-bidi-hebrew-right-to-left
+  func_module unictype/property-bidi-left-to-right
+  func_module unictype/property-bidi-non-spacing-mark
+  func_module unictype/property-bidi-other-neutral
+  func_module unictype/property-bidi-pdf
+  func_module unictype/property-bidi-segment-separator
+  func_module unictype/property-bidi-whitespace
+  func_module unictype/property-byname
+  func_module unictype/property-combining
+  func_module unictype/property-composite
+  func_module unictype/property-currency-symbol
+  func_module unictype/property-dash
+  func_module unictype/property-decimal-digit
+  func_module unictype/property-default-ignorable-code-point
+  func_module unictype/property-deprecated
+  func_module unictype/property-diacritic
+  func_module unictype/property-extender
+  func_module unictype/property-format-control
+  func_module unictype/property-grapheme-base
+  func_module unictype/property-grapheme-extend
+  func_module unictype/property-grapheme-link
+  func_module unictype/property-hex-digit
+  func_module unictype/property-hyphen
+  func_module unictype/property-id-continue
+  func_module unictype/property-id-start
+  func_module unictype/property-ideographic
+  func_module unictype/property-ids-binary-operator
+  func_module unictype/property-ids-trinary-operator
+  func_module unictype/property-ignorable-control
+  func_module unictype/property-iso-control
+  func_module unictype/property-join-control
+  func_module unictype/property-left-of-pair
+  func_module unictype/property-line-separator
+  func_module unictype/property-logical-order-exception
+  func_module unictype/property-lowercase
+  func_module unictype/property-math
+  func_module unictype/property-non-break
+  func_module unictype/property-not-a-character
+  func_module unictype/property-numeric
+  func_module unictype/property-other-alphabetic
+  func_module unictype/property-other-default-ignorable-code-point
+  func_module unictype/property-other-grapheme-extend
+  func_module unictype/property-other-id-continue
+  func_module unictype/property-other-id-start
+  func_module unictype/property-other-lowercase
+  func_module unictype/property-other-math
+  func_module unictype/property-other-uppercase
+  func_module unictype/property-paired-punctuation
+  func_module unictype/property-paragraph-separator
+  func_module unictype/property-pattern-syntax
+  func_module unictype/property-pattern-white-space
+  func_module unictype/property-private-use
+  func_module unictype/property-punctuation
+  func_module unictype/property-quotation-mark
+  func_module unictype/property-radical
+  func_module unictype/property-sentence-terminal
+  func_module unictype/property-soft-dotted
+  func_module unictype/property-space
+  func_module unictype/property-terminal-punctuation
+  func_module unictype/property-test
+  func_module unictype/property-titlecase
+  func_module unictype/property-unassigned-code-value
+  func_module unictype/property-unified-ideograph
+  func_module unictype/property-uppercase
+  func_module unictype/property-variation-selector
+  func_module unictype/property-white-space
+  func_module unictype/property-xid-continue
+  func_module unictype/property-xid-start
+  func_module unictype/property-zero-width
+  func_module unictype/property-all
+  func_module unictype/scripts
+  func_module unictype/scripts-all
+  func_module unictype/syntax-c-ident
+  func_module unictype/syntax-c-whitespace
+  func_module unictype/syntax-java-ident
+  func_module unictype/syntax-java-whitespace
   func_module uniwidth/base
   func_module uniwidth/u8-strwidth
   func_module uniwidth/u8-width
@@ -2699,6 +2887,7 @@ func_all_modules ()
   func_module configmake
   func_module dummy
   func_module elisp-comp
+  func_module gperf
   func_module havelib
   func_module include_next
   func_module ldd
@@ -2723,6 +2912,7 @@ func_all_modules ()
   func_module gpl-2.0
   func_module gpl-3.0
   func_module lgpl-2.1
+  func_module agpl-3.0
   func_module regexprops-generic
   func_end_table
 
@@ -2752,6 +2942,7 @@ func_all_modules ()
   func_begin_table
   func_module gnu-make
   func_module host-os
+  func_module nocrash
   func_module perl
   func_module posix-shell
   func_module uptime
