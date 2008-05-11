@@ -1,5 +1,9 @@
 2008-05-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unilbrk/gen-lbrk.c (output_lbp): Fix whitespace.
+
+2008-05-11  Bruno Haible  <bruno@clisp.org>
+
 	* lib/unilbrk/gen-lbrk.c: New file, from GNU gettext (gen-lbrkprop.c).
 	* modules/unilbrk/gen-lbrk: New file.
 

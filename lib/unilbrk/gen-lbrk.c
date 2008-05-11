@@ -1178,6 +1178,8 @@ output_lbp (FILE *stream1, FILE *stream2)
   fprintf (stream2, "const lbrkprop_t unilbrkprop =\n");
   fprintf (stream2, "{\n");
   fprintf (stream2, "  {");
+  if (t.level1_size > 8)
+    fprintf (stream2, "\n   ");
   for (i = 0; i < t.level1_size; i++)
     {
       uint32_t offset;
@@ -1188,6 +1190,8 @@ output_lbp (FILE *stream1, FILE *stream2)
 	       offset == 0 ? -1 : (offset - level2_offset) / sizeof (uint32_t),
 	       (i+1 < t.level1_size ? "," : ""));
     }
+  if (t.level1_size > 8)
+    fprintf (stream2, "\n ");
   fprintf (stream2, " },\n");
   fprintf (stream2, "  {");
   if (t.level2_size << t.q > 8)
