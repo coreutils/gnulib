@@ -1,6 +1,6 @@
 /* Generate Unicode conforming character classification tables from a
    UnicodeData file.
-   Copyright (C) 2000-2002, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2000-2002, 2007-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2000-2002.
 
    This program is free software; you can redistribute it and/or modify
@@ -5123,12 +5123,12 @@ main (int argc, char * argv[])
  * compile-command: "
    gcc -O -Wall gen-ctype.c -o gen-ctype && \
    ./gen-ctype \
-        /gfs/ibook/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/UnicodeData.txt \
-        /gfs/ibook/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/PropList.txt \
-        /gfs/ibook/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/DerivedCoreProperties.txt \
-        /gfs/ibook/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/Scripts.txt \
-        /gfs/ibook/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/Blocks.txt \
-        /gfs/ibook/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/UnicodeData.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/PropList.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/DerivedCoreProperties.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/Scripts.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/Blocks.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \
         5.0.0
    "
  * End:
