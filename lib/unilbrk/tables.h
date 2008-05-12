@@ -21,36 +21,43 @@
 
 enum
 {
-  /* Values >= 20 are resolved at run time. */
-  LBP_BK =  0, /* mandatory break */
+  /* Values >= 24 are resolved at run time. */
+  LBP_BK = 24, /* mandatory break */
 /*LBP_CR,         carriage return - not used here because it's a DOSism */
 /*LBP_LF,         line feed - not used here because it's a DOSism */
-  LBP_CM = 20, /* attached characters and combining marks */
+  LBP_CM = 25, /* attached characters and combining marks */
+/*LBP_NL,         next line - not used here because it's equivalent to LBP_BK */
 /*LBP_SG,         surrogates - not used here because they are not characters */
-  LBP_ZW =  1, /* zero width space */
-  LBP_IN =  2, /* inseparable */
-  LBP_GL =  3, /* non-breaking (glue) */
-  LBP_CB = 22, /* contingent break opportunity */
-  LBP_SP = 21, /* space */
-  LBP_BA =  4, /* break opportunity after */
-  LBP_BB =  5, /* break opportunity before */
-  LBP_B2 =  6, /* break opportunity before and after */
-  LBP_HY =  7, /* hyphen */
-  LBP_NS =  8, /* non starter */
-  LBP_OP =  9, /* opening punctuation */
-  LBP_CL = 10, /* closing punctuation */
+  LBP_WJ =  0, /* word joiner */
+  LBP_ZW = 26, /* zero width space */
+  LBP_GL =  1, /* non-breaking (glue) */
+  LBP_SP = 27, /* space */
+  LBP_B2 =  2, /* break opportunity before and after */
+  LBP_BA =  3, /* break opportunity after */
+  LBP_BB =  4, /* break opportunity before */
+  LBP_HY =  5, /* hyphen */
+  LBP_CB = 28, /* contingent break opportunity */
+  LBP_CL =  6, /* closing punctuation */
+  LBP_EX =  7, /* exclamation/interrogation */
+  LBP_IN =  8, /* inseparable */
+  LBP_NS =  9, /* non starter */
+  LBP_OP = 10, /* opening punctuation */
   LBP_QU = 11, /* ambiguous quotation */
-  LBP_EX = 12, /* exclamation/interrogation */
-  LBP_ID = 13, /* ideographic */
-  LBP_NU = 14, /* numeric */
-  LBP_IS = 15, /* infix separator (numeric) */
+  LBP_IS = 12, /* infix separator (numeric) */
+  LBP_NU = 13, /* numeric */
+  LBP_PO = 14, /* postfix (numeric) */
+  LBP_PR = 15, /* prefix (numeric) */
   LBP_SY = 16, /* symbols allowing breaks */
+  LBP_AI = 29, /* ambiguous (alphabetic or ideograph) */
   LBP_AL = 17, /* ordinary alphabetic and symbol characters */
-  LBP_PR = 18, /* prefix (numeric) */
-  LBP_PO = 19, /* postfix (numeric) */
-  LBP_SA = 23, /* complex context (South East Asian) */
-  LBP_AI = 24, /* ambiguous (alphabetic or ideograph) */
-  LBP_XX = 25  /* unknown */
+  LBP_H2 = 18, /* Hangul LV syllable */
+  LBP_H3 = 19, /* Hangul LVT syllable */
+  LBP_ID = 20, /* ideographic */
+  LBP_JL = 21, /* Hangul L Jamo */
+  LBP_JV = 22, /* Hangul V Jamo */
+  LBP_JT = 23, /* Hangul T Jamo */
+  LBP_SA = 30, /* complex context (South East Asian) */
+  LBP_XX = 31  /* unknown */
 };
 
 #include "lbrkprop1.h"
@@ -81,7 +88,7 @@ unilbrkprop_lookup (ucs4_t uc)
 #define I 2  /* indirect break opportunity, '%' in table 7.3 of UTR #14 */
 #define P 3  /* prohibited break,           '^' in table 7.3 of UTR #14 */
 
-extern const unsigned char unilbrk_table[19][19];
+extern const unsigned char unilbrk_table[24][24];
 
 /* We don't support line breaking of complex-context dependent characters
    (Thai, Lao, Myanmar, Khmer) yet, because it requires dictionary lookup. */

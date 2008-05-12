@@ -55,7 +55,7 @@ main ()
       {
 	ASSERT (p[i] == (i == 35 ? UC_BREAK_MANDATORY :
 			 i == 5 || i == 11 || i == 13 || i == 15 || i == 16
-			 || i == 21 || i == 25 || i == 31 ? UC_BREAK_POSSIBLE :
+			 || i == 21 || i == 31 ? UC_BREAK_POSSIBLE :
 			 UC_BREAK_PROHIBITED));
       }
     free (p);

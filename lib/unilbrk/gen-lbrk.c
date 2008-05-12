@@ -20,7 +20,7 @@
      $ gen-lbrk /usr/local/share/Unidata/UnicodeData.txt \
 		/usr/local/share/Unidata/EastAsianWidth.txt \
 		/usr/local/share/Unidata/LineBreak.txt \
-		3.1.0
+		5.0.0
  */
 
 #include <stdio.h>
@@ -323,36 +323,43 @@ fill_width (const char *width_filename)
 
 enum
 {
-  /* Values >= 20 are resolved at run time. */
-  LBP_BK =  0, /* mandatory break */
+  /* Values >= 24 are resolved at run time. */
+  LBP_BK = 24, /* mandatory break */
 /*LBP_CR,         carriage return - not used here because it's a DOSism */
 /*LBP_LF,         line feed - not used here because it's a DOSism */
-  LBP_CM = 20, /* attached characters and combining marks */
+  LBP_CM = 25, /* attached characters and combining marks */
+/*LBP_NL,         next line - not used here because it's equivalent to LBP_BK */
 /*LBP_SG,         surrogates - not used here because they are not characters */
-  LBP_ZW =  1, /* zero width space */
-  LBP_IN =  2, /* inseparable */
-  LBP_GL =  3, /* non-breaking (glue) */
-  LBP_CB = 22, /* contingent break opportunity */
-  LBP_SP = 21, /* space */
-  LBP_BA =  4, /* break opportunity after */
-  LBP_BB =  5, /* break opportunity before */
-  LBP_B2 =  6, /* break opportunity before and after */
-  LBP_HY =  7, /* hyphen */
-  LBP_NS =  8, /* non starter */
-  LBP_OP =  9, /* opening punctuation */
-  LBP_CL = 10, /* closing punctuation */
+  LBP_WJ =  0, /* word joiner */
+  LBP_ZW = 26, /* zero width space */
+  LBP_GL =  1, /* non-breaking (glue) */
+  LBP_SP = 27, /* space */
+  LBP_B2 =  2, /* break opportunity before and after */
+  LBP_BA =  3, /* break opportunity after */
+  LBP_BB =  4, /* break opportunity before */
+  LBP_HY =  5, /* hyphen */
+  LBP_CB = 28, /* contingent break opportunity */
+  LBP_CL =  6, /* closing punctuation */
+  LBP_EX =  7, /* exclamation/interrogation */
+  LBP_IN =  8, /* inseparable */
+  LBP_NS =  9, /* non starter */
+  LBP_OP = 10, /* opening punctuation */
   LBP_QU = 11, /* ambiguous quotation */
-  LBP_EX = 12, /* exclamation/interrogation */
-  LBP_ID = 13, /* ideographic */
-  LBP_NU = 14, /* numeric */
-  LBP_IS = 15, /* infix separator (numeric) */
+  LBP_IS = 12, /* infix separator (numeric) */
+  LBP_NU = 13, /* numeric */
+  LBP_PO = 14, /* postfix (numeric) */
+  LBP_PR = 15, /* prefix (numeric) */
   LBP_SY = 16, /* symbols allowing breaks */
+  LBP_AI = 29, /* ambiguous (alphabetic or ideograph) */
   LBP_AL = 17, /* ordinary alphabetic and symbol characters */
-  LBP_PR = 18, /* prefix (numeric) */
-  LBP_PO = 19, /* postfix (numeric) */
-  LBP_SA = 23, /* complex context (South East Asian) */
-  LBP_AI = 24, /* ambiguous (alphabetic or ideograph) */
-  LBP_XX = 25  /* unknown */
+  LBP_H2 = 18, /* Hangul LV syllable */
+  LBP_H3 = 19, /* Hangul LVT syllable */
+  LBP_ID = 20, /* ideographic */
+  LBP_JL = 21, /* Hangul L Jamo */
+  LBP_JV = 22, /* Hangul V Jamo */
+  LBP_JT = 23, /* Hangul T Jamo */
+  LBP_SA = 30, /* complex context (South East Asian) */
+  LBP_XX = 31  /* unknown */
 };
 
 /* Returns the line breaking classification for ch, as a bit mask.  */
@@ -366,39 +373,43 @@ get_lbp (unsigned int ch)
       /* mandatory break */
       if (ch == 0x000A || ch == 0x000D || ch == 0x0085 /* newline */
 	  || ch == 0x000C /* form feed */
+	  || ch == 0x000B /* line tabulation */
 	  || ch == 0x2028 /* LINE SEPARATOR */
 	  || ch == 0x2029 /* PARAGRAPH SEPARATOR */)
 	attr |= 1 << LBP_BK;
+
+      if (ch == 0x2060 /* WORD JOINER */
+	  || ch == 0xFEFF /* ZERO WIDTH NO-BREAK SPACE */)
+	attr |= 1 << LBP_WJ;
 
       /* zero width space */
       if (ch == 0x200B /* ZERO WIDTH SPACE */)
 	attr |= 1 << LBP_ZW;
 
-      /* inseparable */
-      if (ch == 0x2024 /* ONE DOT LEADER */
-	  || ch == 0x2025 /* TWO DOT LEADER */
-	  || ch == 0x2026 /* HORIZONTAL ELLIPSIS */)
-	attr |= 1 << LBP_IN;
-
       /* non-breaking (glue) */
-      if (ch == 0xFEFF /* ZERO WIDTH NO-BREAK SPACE */
-	  || ch == 0x00A0 /* NO-BREAK SPACE */
+      if (ch == 0x00A0 /* NO-BREAK SPACE */
 	  || ch == 0x202F /* NARROW NO-BREAK SPACE */
+	  || ch == 0x180E /* MONGOLIAN VOWEL SEPARATOR */
+	  || ch == 0x034F /* COMBINING GRAPHEME JOINER */
 	  || ch == 0x2007 /* FIGURE SPACE */
 	  || ch == 0x2011 /* NON-BREAKING HYPHEN */
-	  || ch == 0x0F0C /* TIBETAN MARK DELIMITER TSHEG BSTAR */)
+	  || ch == 0x0F08 /* TIBETAN MARK SBRUL SHAD */
+	  || ch == 0x0F0C /* TIBETAN MARK DELIMITER TSHEG BSTAR */
+	  || ch == 0x0F12 /* TIBETAN MARK RGYA GRAM SHAD */
+	  || (ch >= 0x035C && ch <= 0x0362) /* COMBINING DOUBLE ... */)
 	attr |= 1 << LBP_GL;
-
-      /* contingent break opportunity */
-      if (ch == 0xFFFC /* OBJECT REPLACEMENT CHARACTER */)
-	attr |= 1 << LBP_CB;
 
       /* space */
       if (ch == 0x0020 /* SPACE */)
 	attr |= 1 << LBP_SP;
 
+      /* break opportunity before and after */
+      if (ch == 0x2014 /* EM DASH */)
+	attr |= 1 << LBP_B2;
+
       /* break opportunity after */
-      if (ch == 0x2000 /* EN QUAD */
+      if (ch == 0x1680 /* OGHAM SPACE MARK */
+	  || ch == 0x2000 /* EN QUAD */
 	  || ch == 0x2001 /* EM QUAD */
 	  || ch == 0x2002 /* EN SPACE */
 	  || ch == 0x2003 /* EM SPACE */
@@ -408,101 +419,244 @@ get_lbp (unsigned int ch)
 	  || ch == 0x2008 /* PUNCTUATION SPACE */
 	  || ch == 0x2009 /* THIN SPACE */
 	  || ch == 0x200A /* HAIR SPACE */
+	  || ch == 0x205F /* MEDIUM MATHEMATICAL SPACE */
 	  || ch == 0x0009 /* tab */
+	  || ch == 0x00AD /* SOFT HYPHEN */
 	  || ch == 0x058A /* ARMENIAN HYPHEN */
 	  || ch == 0x2010 /* HYPHEN */
 	  || ch == 0x2012 /* FIGURE DASH */
 	  || ch == 0x2013 /* EN DASH */
-	  || ch == 0x00AD /* SOFT HYPHEN */
+	  || ch == 0x05BE /* HEBREW PUNCTUATION MAQAF */
 	  || ch == 0x0F0B /* TIBETAN MARK INTERSYLLABIC TSHEG */
 	  || ch == 0x1361 /* ETHIOPIC WORDSPACE */
-	  || ch == 0x1680 /* OGHAM SPACE MARK */
-	  || ch == 0x17D5 /* KHMER SIGN BARIYOOSAN */
+	  || ch == 0x17D8 /* KHMER SIGN BEYYAL */
+	  || ch == 0x17DA /* KHMER SIGN KOOMUUT */
 	  || ch == 0x2027 /* HYPHENATION POINT */
-	  || ch == 0x007C /* VERTICAL LINE */)
+	  || ch == 0x007C /* VERTICAL LINE */
+	  || ch == 0x16EB /* RUNIC SINGLE PUNCTUATION */
+	  || ch == 0x16EC /* RUNIC MULTIPLE PUNCTUATION */
+	  || ch == 0x16ED /* RUNIC CROSS PUNCTUATION */
+	  || ch == 0x2056 /* THREE DOT PUNCTUATION */
+	  || ch == 0x2058 /* FOUR DOT PUNCTUATION */
+	  || ch == 0x2059 /* FIVE DOT PUNCTUATION */
+	  || ch == 0x205A /* TWO DOT PUNCTUATION */
+	  || ch == 0x205B /* FOUR DOT MARK */
+	  || ch == 0x205D /* TRICOLON */
+	  || ch == 0x205E /* VERTICAL FOUR DOTS */
+	  || ch == 0x2E19 /* PALM BRANCH */
+	  || ch == 0x2E2A /* TWO DOTS OVER ONE DOT PUNCTUATION */
+	  || ch == 0x2E2B /* ONE DOT OVER TWO DOTS PUNCTUATION */
+	  || ch == 0x2E2C /* SQUARED FOUR DOT PUNCTUATION */
+	  || ch == 0x2E2D /* FIVE DOT PUNCTUATION */
+	  || ch == 0x2E30 /* RING POINT */
+	  || ch == 0x10100 /* AEGEAN WORD SEPARATOR LINE */
+	  || ch == 0x10101 /* AEGEAN WORD SEPARATOR DOT */
+	  || ch == 0x10102 /* AEGEAN CHECK MARK */
+	  || ch == 0x1039F /* UGARITIC WORD DIVIDER */
+	  || ch == 0x103D0 /* OLD PERSIAN WORD DIVIDER */
+	  || ch == 0x1091F /* PHOENICIAN WORD SEPARATOR */
+	  || ch == 0x12470 /* CUNEIFORM PUNCTUATION SIGN OLD ASSYRIAN WORD DIVIDER */
+	  || ch == 0x0964 /* DEVANAGARI DANDA */
+	  || ch == 0x0965 /* DEVANAGARI DOUBLE DANDA */
+	  || ch == 0x0E5A /* THAI CHARACTER ANGKHANKHU */
+	  || ch == 0x0E5B /* THAI CHARACTER KHOMUT */
+	  || ch == 0x104A /* MYANMAR SIGN LITTLE SECTION */
+	  || ch == 0x104B /* MYANMAR SIGN SECTION */
+	  || ch == 0x1735 /* PHILIPPINE SINGLE PUNCTUATION */
+	  || ch == 0x1736 /* PHILIPPINE DOUBLE PUNCTUATION */
+	  || ch == 0x17D4 /* KHMER SIGN KHAN */
+	  || ch == 0x17D5 /* KHMER SIGN BARIYOOSAN */
+	  || ch == 0x1B5E /* BALINESE CARIK SIKI */
+	  || ch == 0x1B5F /* BALINESE CARIK PAREREN */
+	  || ch == 0xA8CE /* SAURASHTRA DANDA */
+	  || ch == 0xA8CF /* SAURASHTRA DOUBLE DANDA */
+	  || ch == 0xAA5D /* CHAM PUNCTUATION DANDA */
+	  || ch == 0xAA5E /* CHAM PUNCTUATION DOUBLE DANDA */
+	  || ch == 0xAA5F /* CHAM PUNCTUATION TRIPLE DANDA */
+	  || ch == 0x10A56 /* KHAROSHTHI PUNCTUATION DANDA */
+	  || ch == 0x10A57 /* KHAROSHTHI PUNCTUATION DOUBLE DANDA */
+	  || ch == 0x0F34 /* TIBETAN MARK BSDUS RTAGS */
+	  || ch == 0x0F7F /* TIBETAN SIGN RNAM BCAD */
+	  || ch == 0x0F85 /* TIBETAN MARK PALUTA */
+	  || ch == 0x0FBE /* TIBETAN KU RU KHA */
+	  || ch == 0x0FBF /* TIBETAN KU RU KHA BZHI MIG CAN */
+	  || ch == 0x0FD2 /* TIBETAN MARK NYIS TSHEG */
+#if !REVISION_22
+	  || ch == 0x1802 /* MONGOLIAN COMMA */
+	  || ch == 0x1803 /* MONGOLIAN FULL STOP */
+#endif
+	  || ch == 0x1804 /* MONGOLIAN COLON */
+	  || ch == 0x1805 /* MONGOLIAN FOUR DOTS */
+#if !REVISION_22
+	  || ch == 0x1808 /* MONGOLIAN MANCHU COMMA */
+	  || ch == 0x1809 /* MONGOLIAN MANCHU FULL STOP */
+#endif
+	  || ch == 0x1B5A /* BALINESE PANTI */
+	  || ch == 0x1B5B /* BALINESE PAMADA */
+	  || ch == 0x1B5C /* BALINESE WINDU */
+	  || ch == 0x1B5D /* BALINESE CARIK PAMUNGKAH */
+	  || ch == 0x1B60 /* BALINESE PAMENENG */
+	  || ch == 0x1C3B /* LEPCHA PUNCTUATION TA-ROL */
+	  || ch == 0x1C3C /* LEPCHA PUNCTUATION NYET THYOOM TA-ROL */
+	  || ch == 0x1C3D /* LEPCHA PUNCTUATION CER-WA */
+	  || ch == 0x1C3E /* LEPCHA PUNCTUATION TSHOOK CER-WA */
+	  || ch == 0x1C3F /* LEPCHA PUNCTUATION TSHOOK */
+	  || ch == 0x1C7E /* OL CHIKI PUNCTUATION MUCAAD */
+	  || ch == 0x1C7F /* OL CHIKI PUNCTUATION DOUBLE MUCAAD */
+#if !REVISION_22
+	  || ch == 0x2CF9 /* COPTIC OLD NUBIAN FULL STOP */
+#endif
+	  || ch == 0x2CFA /* COPTIC OLD NUBIAN DIRECT QUESTION MARK */
+	  || ch == 0x2CFB /* COPTIC OLD NUBIAN INDIRECT QUESTION MARK */
+	  || ch == 0x2CFC /* COPTIC OLD NUBIAN VERSE DIVIDER */
+#if !REVISION_22
+	  || ch == 0x2CFE /* COPTIC FULL STOP */
+#endif
+	  || ch == 0x2CFF /* COPTIC MORPHOLOGICAL DIVIDER */
+	  || (ch >= 0x2E0E && ch <= 0x2E15) /* EDITORIAL CORONIS .. UPWARDS ANCORA */
+	  || ch == 0x2E17 /* DOUBLE OBLIQUE HYPHEN */
+	  || ch == 0xA60D /* VAI COMMA */
+	  || ch == 0xA60F /* VAI QUESTION MARK */
+	  || ch == 0xA92E /* KAYAH LI SIGN CWI */
+	  || ch == 0xA92F /* KAYAH LI SIGN SHYA */
+	  || ch == 0x10A50 /* KHAROSHTHI PUNCTUATION DOT */
+	  || ch == 0x10A51 /* KHAROSHTHI PUNCTUATION SMALL CIRCLE */
+	  || ch == 0x10A52 /* KHAROSHTHI PUNCTUATION CIRCLE */
+	  || ch == 0x10A53 /* KHAROSHTHI PUNCTUATION CRESCENT BAR */
+	  || ch == 0x10A54 /* KHAROSHTHI PUNCTUATION MANGALAM */
+	  || ch == 0x10A55 /* KHAROSHTHI PUNCTUATION LOTUS */
+	  /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+#if !REVISION_22
+	  || ch == 0x1A1E /* BUGINESE PALLAWA */
+#endif
+	  || ch == 0x12471 /* CUNEIFORM PUNCTUATION SIGN VERTICAL COLON */
+	  || ch == 0x12472 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON */
+	  || ch == 0x12473 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL TRICOLON */)
 	attr |= 1 << LBP_BA;
 
       /* break opportunity before */
       if (ch == 0x00B4 /* ACUTE ACCENT */
+#if REVISION_22
+	  || ch == 0x1FFD /* GREEK OXIA */
+	  || ch == 0x02DF /* MODIFIER LETTER CROSS ACCENT */
+#endif
 	  || ch == 0x02C8 /* MODIFIER LETTER VERTICAL LINE */
 	  || ch == 0x02CC /* MODIFIER LETTER LOW VERTICAL LINE */
+	  || ch == 0x0F01 /* TIBETAN MARK GTER YIG MGO TRUNCATED A */
+	  || ch == 0x0F02 /* TIBETAN MARK GTER YIG MGO -UM RNAM BCAD MA */
+	  || ch == 0x0F03 /* TIBETAN MARK GTER YIG MGO -UM GTER TSHEG MA */
+	  || ch == 0x0F04 /* TIBETAN MARK INITIAL YIG MGO MDUN MA */
+	  || ch == 0x0F06 /* TIBETAN MARK CARET YIG MGO PHUR SHAD MA */
+	  || ch == 0x0F07 /* TIBETAN MARK YIG MGO TSHEG SHAD MA */
+	  || ch == 0x0F09 /* TIBETAN MARK BSKUR YIG MGO */
+	  || ch == 0x0F0A /* TIBETAN MARK BKA- SHOG YIG MGO */
+	  || ch == 0x0FD0 /* TIBETAN MARK BSKA- SHOG GI MGO RGYAN */
+	  || ch == 0x0FD1 /* TIBETAN MARK MNYAM YIG GI MGO RGYAN */
+	  || ch == 0x0FD3 /* TIBETAN MARK INITIAL BRDA RNYING YIG MGO MDUN MA */
+	  || ch == 0xA874 /* PHAGS-PA SINGLE HEAD MARK */
+	  || ch == 0xA875 /* PHAGS-PA DOUBLE HEAD MARK */
 	  || ch == 0x1806 /* MONGOLIAN TODO SOFT HYPHEN */)
 	attr |= 1 << LBP_BB;
-
-      /* break opportunity before and after */
-      if (ch == 0x2014 /* EM DASH */)
-	attr |= 1 << LBP_B2;
 
       /* hyphen */
       if (ch == 0x002D /* HYPHEN-MINUS */)
 	attr |= 1 << LBP_HY;
 
+      /* contingent break opportunity */
+      if (ch == 0xFFFC /* OBJECT REPLACEMENT CHARACTER */)
+	attr |= 1 << LBP_CB;
+
+      /* closing punctuation */
+      if ((unicode_attributes[ch].category[0] == 'P'
+	   && unicode_attributes[ch].category[1] == 'e')
+	  || ch == 0x3001 /* IDEOGRAPHIC COMMA */
+	  || ch == 0x3002 /* IDEOGRAPHIC FULL STOP */
+	  || ch == 0xFE11 /* PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC COMMA */
+	  || ch == 0xFE12 /* PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC FULL STOP */
+	  || ch == 0xFE50 /* SMALL COMMA */
+	  || ch == 0xFE52 /* SMALL FULL STOP */
+	  || ch == 0xFF0C /* FULLWIDTH COMMA */
+	  || ch == 0xFF0E /* FULLWIDTH FULL STOP */
+	  || ch == 0xFF61 /* HALFWIDTH IDEOGRAPHIC FULL STOP */
+	  || ch == 0xFF64 /* HALFWIDTH IDEOGRAPHIC COMMA */)
+	attr |= 1 << LBP_CL;
+
       /* exclamation/interrogation */
       if (ch == 0x0021 /* EXCLAMATION MARK */
 	  || ch == 0x003F /* QUESTION MARK */
+	  || ch == 0x05C6 /* HEBREW PUNCTUATION NUN HAFUKHA */
+#if !REVISION_22
+	  || ch == 0x060C /* ARABIC COMMA */
+#endif
+	  || ch == 0x061B /* ARABIC SEMICOLON */
+	  || ch == 0x061E /* ARABIC TRIPLE DOT PUNCTUATION MARK */
+	  || ch == 0x061F /* ARABIC QUESTION MARK */
+#if !REVISION_22
+	  || ch == 0x066A /* ARABIC PERCENT SIGN */
+#endif
+	  || ch == 0x06D4 /* ARABIC FULL STOP */
+	  || ch == 0x07F9 /* NKO EXCLAMATION MARK */
+	  || ch == 0x0F0D /* TIBETAN MARK SHAD */
+	  || ch == 0x0F0E /* TIBETAN MARK NYIS SHAD */
+	  || ch == 0x0F0F /* TIBETAN MARK TSHEG SHAD */
+	  || ch == 0x0F10 /* TIBETAN MARK NYIS TSHEG SHAD */
+	  || ch == 0x0F11 /* TIBETAN MARK RIN CHEN SPUNGS SHAD */
+	  || ch == 0x0F14 /* TIBETAN MARK GTER TSHEG */
+#if REVISION_22
+	  || ch == 0x1802 /* MONGOLIAN COMMA */
+	  || ch == 0x1803 /* MONGOLIAN FULL STOP */
+	  || ch == 0x1808 /* MONGOLIAN MANCHU COMMA */
+	  || ch == 0x1809 /* MONGOLIAN MANCHU FULL STOP */
+#endif
+	  || ch == 0x1944 /* LIMBU EXCLAMATION MARK */
+	  || ch == 0x1945 /* LIMBU QUESTION MARK */
+	  || ch == 0x2762 /* HEAVY EXCLAMATION MARK ORNAMENT */
+	  || ch == 0x2763 /* HEAVY HEART EXCLAMATION MARK ORNAMENT */
+#if REVISION_22
+	  || ch == 0x2CF9 /* COPTIC OLD NUBIAN FULL STOP */
+	  || ch == 0x2CFE /* COPTIC FULL STOP */
+#endif
+	  || ch == 0x2E2E /* REVERSED QUESTION MARK */
+	  || ch == 0xA60C /* VAI SYLLABLE LENGTHENER */
+	  || ch == 0xA60E /* VAI FULL STOP */
+	  || ch == 0xA876 /* PHAGS-PA MARK SHAD */
+	  || ch == 0xA877 /* PHAGS-PA MARK DOUBLE SHAD */
+	  || ch == 0xFE15 /* PRESENTATION FORM FOR VERTICAL EXCLAMATION MARK */
+	  || ch == 0xFE16 /* PRESENTATION FORM FOR VERTICAL QUESTION MARK */
 	  || ch == 0xFE56 /* SMALL QUESTION MARK */
 	  || ch == 0xFE57 /* SMALL EXCLAMATION MARK */
 	  || ch == 0xFF01 /* FULLWIDTH EXCLAMATION MARK */
 	  || ch == 0xFF1F /* FULLWIDTH QUESTION MARK */)
 	attr |= 1 << LBP_EX;
 
-      /* opening punctuation */
-      if (unicode_attributes[ch].category[0] == 'P'
-	  && unicode_attributes[ch].category[1] == 's')
-	attr |= 1 << LBP_OP;
-
-      /* closing punctuation */
-      if (ch == 0x3001 /* IDEOGRAPHIC COMMA */
-	  || ch == 0x3002 /* IDEOGRAPHIC FULL STOP */
-	  || ch == 0xFE50 /* SMALL COMMA */
-	  || ch == 0xFE52 /* SMALL FULL STOP */
-	  || ch == 0xFF0C /* FULLWIDTH COMMA */
-	  || ch == 0xFF0E /* FULLWIDTH FULL STOP */
-	  || ch == 0xFF61 /* HALFWIDTH IDEOGRAPHIC FULL STOP */
-	  || ch == 0xFF64 /* HALFWIDTH IDEOGRAPHIC COMMA */
-	  || (unicode_attributes[ch].category[0] == 'P'
-	      && unicode_attributes[ch].category[1] == 'e'))
-	attr |= 1 << LBP_CL;
-
-      /* ambiguous quotation */
-      if (ch == 0x0022 /* QUOTATION MARK */
-	  || ch == 0x0027 /* APOSTROPHE */
-	  || (unicode_attributes[ch].category[0] == 'P'
-	      && (unicode_attributes[ch].category[1] == 'f'
-		  || unicode_attributes[ch].category[1] == 'i')))
-	attr |= 1 << LBP_QU;
-
-      /* attached characters and combining marks */
-      if ((unicode_attributes[ch].category[0] == 'M'
-	   && (unicode_attributes[ch].category[1] == 'n'
-	       || unicode_attributes[ch].category[1] == 'c'
-	       || unicode_attributes[ch].category[1] == 'e'))
-	  || (ch >= 0x1160 && ch <= 0x11F9)
-	  || (unicode_attributes[ch].category[0] == 'C'
-	      && (unicode_attributes[ch].category[1] == 'c'
-		  || unicode_attributes[ch].category[1] == 'f')))
-	if (!(attr & ((1 << LBP_BK) | (1 << LBP_BA) | (1 << LBP_GL))))
-	  attr |= 1 << LBP_CM;
+      /* inseparable */
+      if (ch == 0x2024 /* ONE DOT LEADER */
+	  || ch == 0x2025 /* TWO DOT LEADER */
+	  || ch == 0x2026 /* HORIZONTAL ELLIPSIS */
+	  || ch == 0xFE19 /* PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS */)
+	attr |= 1 << LBP_IN;
 
       /* non starter */
-      if (ch == 0x0E5A /* THAI CHARACTER ANGKHANKHU */
-	  || ch == 0x0E5B /* THAI CHARACTER KHOMUT */
-	  || ch == 0x17D4 /* KHMER SIGN KHAN */
-	  || ch == 0x17D6 /* KHMER SIGN CAMNUC PII KUUH */
-	  || ch == 0x17D7 /* KHMER SIGN LEK TOO */
-	  || ch == 0x17D8 /* KHMER SIGN BEYYAL */
-	  || ch == 0x17D9 /* KHMER SIGN PHNAEK MUAN */
-	  || ch == 0x17DA /* KHMER SIGN KOOMUUT */
+      if (ch == 0x17D6 /* KHMER SIGN CAMNUC PII KUUH */
 	  || ch == 0x203C /* DOUBLE EXCLAMATION MARK */
-	  || ch == 0x2044 /* FRACTION SLASH */
+	  || ch == 0x203D /* INTERROBANG */
+	  || ch == 0x2047 /* DOUBLE QUESTION MARK */
+	  || ch == 0x2048 /* QUESTION EXCLAMATION MARK */
+	  || ch == 0x2049 /* EXCLAMATION QUESTION MARK */
 	  || ch == 0x3005 /* IDEOGRAPHIC ITERATION MARK */
 	  || ch == 0x301C /* WAVE DASH */
+	  || ch == 0x303C /* MASU MARK */
+	  || ch == 0x303B /* VERTICAL IDEOGRAPHIC ITERATION MARK */
 	  || ch == 0x309B /* KATAKANA-HIRAGANA VOICED SOUND MARK */
 	  || ch == 0x309C /* KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK */
 	  || ch == 0x309D /* HIRAGANA ITERATION MARK */
 	  || ch == 0x309E /* HIRAGANA VOICED ITERATION MARK */
+	  || ch == 0x30A0 /* KATAKANA-HIRAGANA DOUBLE HYPHEN */
 	  || ch == 0x30FB /* KATAKANA MIDDLE DOT */
+	  || ch == 0x30FC /* KATAKANA-HIRAGANA PROLONGED SOUND MARK */
 	  || ch == 0x30FD /* KATAKANA ITERATION MARK */
+	  || ch == 0x30FE /* KATAKANA VOICED ITERATION MARK */
+	  || ch == 0xA015 /* YI SYLLABLE WU */
 	  || ch == 0xFE54 /* SMALL SEMICOLON */
 	  || ch == 0xFE55 /* SMALL COLON */
 	  || ch == 0xFF1A /* FULLWIDTH COLON */
@@ -511,39 +665,72 @@ get_lbp (unsigned int ch)
 	  || ch == 0xFF70 /* HALFWIDTH KATAKANA-HIRAGANA PROLONGED SOUND MARK */
 	  || ch == 0xFF9E /* HALFWIDTH KATAKANA VOICED SOUND MARK */
 	  || ch == 0xFF9F /* HALFWIDTH KATAKANA SEMI-VOICED SOUND MARK */
-	  || (unicode_attributes[ch].category[0] == 'L'
-	      && unicode_attributes[ch].category[1] == 'm'
-	      && (unicode_width[ch][0] == 'W'
-		  || unicode_width[ch][0] == 'H'))
-	  || (unicode_attributes[ch].category[0] == 'S'
-	      && unicode_attributes[ch].category[1] == 'k'
-	      && unicode_width[ch][0] == 'W')
 	  || strstr (unicode_attributes[ch].name, "HIRAGANA LETTER SMALL ") != NULL
 	  || strstr (unicode_attributes[ch].name, "KATAKANA LETTER SMALL ") != NULL)
 	attr |= 1 << LBP_NS;
 
-      /* numeric */
-      if (unicode_attributes[ch].category[0] == 'N'
-	  && unicode_attributes[ch].category[1] == 'd'
-	  && strstr (unicode_attributes[ch].name, "FULLWIDTH") == NULL)
-	attr |= 1 << LBP_NU;
+      /* opening punctuation */
+      if ((unicode_attributes[ch].category[0] == 'P'
+	   && unicode_attributes[ch].category[1] == 's')
+#if REVISION_22
+	  || ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
+	  || ch == 0x00BF /* INVERTED QUESTION MARK */
+#endif
+	  || ch == 0x2E18 /* INVERTED INTERROBANG */)
+	attr |= 1 << LBP_OP;
+
+      /* ambiguous quotation */
+      if ((unicode_attributes[ch].category[0] == 'P'
+	   && (unicode_attributes[ch].category[1] == 'f'
+	       || unicode_attributes[ch].category[1] == 'i'))
+	  || ch == 0x0022 /* QUOTATION MARK */
+	  || ch == 0x0027 /* APOSTROPHE */
+	  || ch == 0x275B /* HEAVY SINGLE TURNED COMMA QUOTATION MARK ORNAMENT */
+	  || ch == 0x275C /* HEAVY SINGLE COMMA QUOTATION MARK ORNAMENT */
+	  || ch == 0x275D /* HEAVY DOUBLE TURNED COMMA QUOTATION MARK ORNAMENT */
+	  || ch == 0x275E /* HEAVY DOUBLE COMMA QUOTATION MARK ORNAMENT */
+	  || ch == 0x2E00 /* RIGHT ANGLE SUBSTITUTION MARKER */
+	  || ch == 0x2E01 /* RIGHT ANGLE DOTTED SUBSTITUTION MARKER */
+	  || ch == 0x2E06 /* RAISED INTERPOLATION MARKER */
+	  || ch == 0x2E07 /* RAISED DOTTED INTERPOLATION MARKER */
+	  || ch == 0x2E08 /* DOTTED TRANSPOSITION MARKER */
+	  || ch == 0x2E0B /* RAISED SQUARE */)
+	attr |= 1 << LBP_QU;
 
       /* infix separator (numeric) */
       if (ch == 0x002C /* COMMA */
 	  || ch == 0x002E /* FULL STOP */
 	  || ch == 0x003A /* COLON */
 	  || ch == 0x003B /* SEMICOLON */
-	  || ch == 0x0589 /* ARMENIAN FULL STOP */)
+	  || ch == 0x037E /* GREEK QUESTION MARK */
+	  || ch == 0x0589 /* ARMENIAN FULL STOP */
+#if REVISION_22
+	  || ch == 0x060C /* ARABIC COMMA */
+#endif
+	  || ch == 0x060D /* ARABIC DATE SEPARATOR */
+	  || ch == 0x07F8 /* NKO COMMA */
+	  || ch == 0x2044 /* FRACTION SLASH */
+	  || ch == 0xFE10 /* PRESENTATION FORM FOR VERTICAL COMMA */
+	  || ch == 0xFE13 /* PRESENTATION FORM FOR VERTICAL COLON */
+	  || ch == 0xFE14 /* PRESENTATION FORM FOR VERTICAL SEMICOLON */)
 	attr |= 1 << LBP_IS;
 
-      /* symbols allowing breaks */
-      if (ch == 0x002F /* SOLIDUS */)
-	attr |= 1 << LBP_SY;
+      /* numeric */
+      if ((unicode_attributes[ch].category[0] == 'N'
+	   && unicode_attributes[ch].category[1] == 'd'
+	   && strstr (unicode_attributes[ch].name, "FULLWIDTH") == NULL)
+	  || ch == 0x066B /* ARABIC DECIMAL SEPARATOR */
+	  || ch == 0x066C /* ARABIC THOUSANDS SEPARATOR */)
+	attr |= 1 << LBP_NU;
 
       /* postfix (numeric) */
       if (ch == 0x0025 /* PERCENT SIGN */
 	  || ch == 0x00A2 /* CENT SIGN */
 	  || ch == 0x00B0 /* DEGREE SIGN */
+	  || ch == 0x060B /* AFGHANI SIGN */
+#if REVISION_22
+	  || ch == 0x066A /* ARABIC PERCENT SIGN */
+#endif
 	  || ch == 0x2030 /* PER MILLE SIGN */
 	  || ch == 0x2031 /* PER TEN THOUSAND SIGN */
 	  || ch == 0x2032 /* PRIME */
@@ -555,45 +742,82 @@ get_lbp (unsigned int ch)
 	  || ch == 0x20A7 /* PESETA SIGN */
 	  || ch == 0x2103 /* DEGREE CELSIUS */
 	  || ch == 0x2109 /* DEGREE FAHRENHEIT */
-	  || ch == 0x2126 /* OHM SIGN */
+	  || ch == 0xFDFC /* RIAL SIGN */
 	  || ch == 0xFE6A /* SMALL PERCENT SIGN */
 	  || ch == 0xFF05 /* FULLWIDTH PERCENT SIGN */
 	  || ch == 0xFFE0 /* FULLWIDTH DIGIT ZERO */)
 	attr |= 1 << LBP_PO;
 
       /* prefix (numeric) */
-      if (ch == 0x002B /* PLUS SIGN */
+      if ((unicode_attributes[ch].category[0] == 'S'
+	   && unicode_attributes[ch].category[1] == 'c')
+	  || ch == 0x002B /* PLUS SIGN */
 	  || ch == 0x005C /* REVERSE SOLIDUS */
 	  || ch == 0x00B1 /* PLUS-MINUS SIGN */
 	  || ch == 0x2116 /* NUMERO SIGN */
 	  || ch == 0x2212 /* MINUS SIGN */
-	  || ch == 0x2213 /* MINUS-OR-PLUS SIGN */
-	  || (unicode_attributes[ch].category[0] == 'S'
-	      && unicode_attributes[ch].category[1] == 'c'))
+	  || ch == 0x2213 /* MINUS-OR-PLUS SIGN */)
 	if (!(attr & (1 << LBP_PO)))
 	  attr |= 1 << LBP_PR;
 
+      /* symbols allowing breaks */
+      if (ch == 0x002F /* SOLIDUS */)
+	attr |= 1 << LBP_SY;
+
+      if (ch >= 0xAC00 && ch <= 0xD7A3 && ((ch - 0xAC00) % 28) == 0)
+	attr |= 1 << LBP_H2;
+
+      if (ch >= 0xAC00 && ch <= 0xD7A3 && ((ch - 0xAC00) % 28) != 0)
+	attr |= 1 << LBP_H3;
+
+      if ((ch >= 0x1100 && ch <= 0x1159) || ch == 0x115F)
+	attr |= 1 << LBP_JL;
+
+      if (ch >= 0x1160 && ch <= 0x11A2)
+	attr |= 1 << LBP_JV;
+
+      if (ch >= 0x11A8 && ch <= 0x11F9)
+	attr |= 1 << LBP_JT;
+
       /* complex context (South East Asian) */
-      if (((ch >= 0x0E00 && ch <= 0x0EFF)
-	   || (ch >= 0x1000 && ch <= 0x109F)
-	   || (ch >= 0x1780 && ch <= 0x17FF))
-	  && unicode_attributes[ch].category[0] == 'L'
-	  && (unicode_attributes[ch].category[1] == 'm'
-	      || unicode_attributes[ch].category[1] == 'o'))
-	if (!(attr & ((1 << LBP_CM) | (1 << LBP_NS) | (1 << LBP_NU) | (1 << LBP_BA) | (1 << LBP_PR))))
-	  attr |= 1 << LBP_SA;
+      if (((unicode_attributes[ch].category[0] == 'C'
+	    && unicode_attributes[ch].category[1] == 'f')
+	   || (unicode_attributes[ch].category[0] == 'L'
+	       && (unicode_attributes[ch].category[1] == 'm'
+		   || unicode_attributes[ch].category[1] == 'o'))
+	   || (unicode_attributes[ch].category[0] == 'M'
+	       && (unicode_attributes[ch].category[1] == 'c'
+		   || unicode_attributes[ch].category[1] == 'n'))
+	   /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+	   || ch == 0x19DE /* NEW TAI LUE SIGN LAE */
+	   || ch == 0x19DF /* NEW TAI LUE SIGN LAEV */)
+	  && ((ch >= 0x0E00 && ch <= 0x0EFF)
+	      || (ch >= 0x1000 && ch <= 0x109F)
+	      || (ch >= 0x1780 && ch <= 0x17FF)
+	      || (ch >= 0x1950 && ch <= 0x19DF)))
+	attr |= 1 << LBP_SA;
+
+      /* attached characters and combining marks */
+      if ((unicode_attributes[ch].category[0] == 'M'
+	   && (unicode_attributes[ch].category[1] == 'c'
+	       || unicode_attributes[ch].category[1] == 'e'
+	       || unicode_attributes[ch].category[1] == 'n'))
+	  || (unicode_attributes[ch].category[0] == 'C'
+	      && (unicode_attributes[ch].category[1] == 'c'
+		  || unicode_attributes[ch].category[1] == 'f')))
+	if (!(attr & ((1 << LBP_BK) | (1 << LBP_BA) | (1 << LBP_GL) | (1 << LBP_SA) | (1 << LBP_WJ) | (1 << LBP_ZW))))
+	  attr |= 1 << LBP_CM;
 
       /* ideographic */
-      if ((ch >= 0x1100 && ch <= 0x115F) /* HANGUL CHOSEONG */
-	  || (ch >= 0x2E80 && ch <= 0x2FFF) /* CJK RADICAL, KANGXI RADICAL, IDEOGRAPHIC DESCRIPTION */
+      if ((ch >= 0x2E80 && ch <= 0x2FFF) /* CJK RADICAL, KANGXI RADICAL, IDEOGRAPHIC DESCRIPTION */
 	  || ch == 0x3000 /* IDEOGRAPHIC SPACE */
-	  || (ch >= 0x3130 && ch <= 0x318F) /* HANGUL LETTER */
-	  || (ch >= 0x3400 && ch <= 0x4DBF) /* CJK Ideograph Extension A */
-	  || (ch >= 0x4E00 && ch <= 0x9FAF) /* CJK Ideograph */
-	  || (ch >= 0xF900 && ch <= 0xFAFF) /* CJK COMPATIBILITY IDEOGRAPH */
-	  || (ch >= 0xAC00 && ch <= 0xD7AF) /* HANGUL SYLLABLE */
-	  || (ch >= 0xA000 && ch <= 0xA48C) /* YI SYLLABLE */
-	  || (ch >= 0xA490 && ch <= 0xA4C6) /* YI RADICAL */
+	  || (ch >= 0x3040 && ch <= 0x309F) /* HIRAGANA */
+	  || (ch >= 0x30A0 && ch <= 0x30FF) /* KATAKANA */
+	  || (ch >= 0x3400 && ch <= 0x4DB5) /* CJK Ideograph Extension A */
+	  || (ch >= 0x4E00 && ch <= 0x9FBB) /* CJK Ideograph */
+	  || (ch >= 0xF900 && ch <= 0xFAD9) /* CJK COMPATIBILITY IDEOGRAPH */
+	  || (ch >= 0xA000 && ch <= 0xA48F) /* YI SYLLABLE */
+	  || (ch >= 0xA490 && ch <= 0xA4CF) /* YI RADICAL */
 	  || ch == 0xFE62 /* SMALL PLUS SIGN */
 	  || ch == 0xFE63 /* SMALL HYPHEN-MINUS */
 	  || ch == 0xFE64 /* SMALL LESS-THAN SIGN */
@@ -611,6 +835,8 @@ get_lbp (unsigned int ch)
 	  || ch == 0xFE32 /* PRESENTATION FORM FOR VERTICAL EN DASH */
 	  || ch == 0xFE33 /* PRESENTATION FORM FOR VERTICAL LOW LINE */
 	  || ch == 0xFE34 /* PRESENTATION FORM FOR VERTICAL WAVY LOW LINE */
+	  || ch == 0xFE45 /* SESAME DOT */
+	  || ch == 0xFE46 /* WHITE SESAME DOT */
 	  || ch == 0xFE49 /* DASHED OVERLINE */
 	  || ch == 0xFE4A /* CENTRELINE OVERLINE */
 	  || ch == 0xFE4B /* WAVY OVERLINE */
@@ -645,15 +871,19 @@ get_lbp (unsigned int ch)
 	  || ch == 0xFF5E /* FULLWIDTH TILDE */
 	  || ch == 0xFFE2 /* FULLWIDTH NOT SIGN */
 	  || ch == 0xFFE3 /* FULLWIDTH MACRON */
-	  || ch == 0xFFE4) /* FULLWIDTH BROKEN BAR */
-	{
-	  /* ambiguous (ideograph) ? */
-	  if (unicode_width[ch] != NULL
-	      && unicode_width[ch][0] == 'A')
-	    attr |= 1 << LBP_AI;
-	  else
-	    attr |= 1 << LBP_ID;
-	}
+	  || ch == 0xFFE4 /* FULLWIDTH BROKEN BAR */)
+	if (!(attr & ((1 << LBP_NS) | (1 << LBP_CM))))
+	  {
+	    /* ambiguous (ideograph) ? */
+	    if ((unicode_width[ch] != NULL
+		 && unicode_width[ch][0] == 'A'
+		 && ch >= 0x2000)
+		|| ch == 0x24EA /* CIRCLED DIGIT ZERO */
+		|| (ch >= 0x2780 && ch <= 0x2793) /* DINGBAT ... CIRCLED DIGIT ... */)
+	      attr |= 1 << LBP_AI;
+	    else
+	      attr |= 1 << LBP_ID;
+	  }
 
       /* ordinary alphabetic and symbol characters */
       if ((unicode_attributes[ch].category[0] == 'L'
@@ -664,201 +894,84 @@ get_lbp (unsigned int ch)
 	       || unicode_attributes[ch].category[1] == 'o'))
 	  || (unicode_attributes[ch].category[0] == 'S'
 	      && (unicode_attributes[ch].category[1] == 'm'
-		  || unicode_attributes[ch].category[1] == 'c'
 		  || unicode_attributes[ch].category[1] == 'k'
 		  || unicode_attributes[ch].category[1] == 'o'))
-	  /* Extra characters for compatibility with Unicode LineBreak.txt.  */
-	  || ch == 0x0023 /* NUMBER SIGN */
-	  || ch == 0x0026 /* AMPERSAND */
-	  || ch == 0x002A /* ASTERISK */
-	  || ch == 0x0040 /* COMMERCIAL AT */
-	  || ch == 0x005F /* LOW LINE */
-	  || ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
-	  || ch == 0x00B2 /* SUPERSCRIPT TWO */
-	  || ch == 0x00B3 /* SUPERSCRIPT THREE */
-	  || ch == 0x00B7 /* MIDDLE DOT */
-	  || ch == 0x00B9 /* SUPERSCRIPT ONE */
-	  || ch == 0x00BC /* VULGAR FRACTION ONE QUARTER */
-	  || ch == 0x00BD /* VULGAR FRACTION ONE HALF */
-	  || ch == 0x00BE /* VULGAR FRACTION THREE QUARTERS */
-	  || ch == 0x00BF /* INVERTED QUESTION MARK */
-	  || ch == 0x037E /* GREEK QUESTION MARK */
-	  || ch == 0x0387 /* GREEK ANO TELEIA */
-	  || ch == 0x055A /* ARMENIAN APOSTROPHE */
-	  || ch == 0x055B /* ARMENIAN EMPHASIS MARK */
-	  || ch == 0x055C /* ARMENIAN EXCLAMATION MARK */
-	  || ch == 0x055D /* ARMENIAN COMMA */
-	  || ch == 0x055E /* ARMENIAN QUESTION MARK */
-	  || ch == 0x055F /* ARMENIAN ABBREVIATION MARK */
-	  || ch == 0x05BE /* HEBREW PUNCTUATION MAQAF */
-	  || ch == 0x05C0 /* HEBREW PUNCTUATION PASEQ */
-	  || ch == 0x05C3 /* HEBREW PUNCTUATION SOF PASUQ */
-	  || ch == 0x05F3 /* HEBREW PUNCTUATION GERESH */
-	  || ch == 0x05F4 /* HEBREW PUNCTUATION GERSHAYIM */
-	  || ch == 0x060C /* ARABIC COMMA */
-	  || ch == 0x061B /* ARABIC SEMICOLON */
-	  || ch == 0x061F /* ARABIC QUESTION MARK */
-	  || ch == 0x066A /* ARABIC PERCENT SIGN */
-	  || ch == 0x066B /* ARABIC DECIMAL SEPARATOR */
-	  || ch == 0x066C /* ARABIC THOUSANDS SEPARATOR */
-	  || ch == 0x066D /* ARABIC FIVE POINTED STAR */
-	  || ch == 0x06D4 /* ARABIC FULL STOP */
-	  || ch == 0x0700 /* SYRIAC END OF PARAGRAPH */
-	  || ch == 0x0701 /* SYRIAC SUPRALINEAR FULL STOP */
-	  || ch == 0x0702 /* SYRIAC SUBLINEAR FULL STOP */
-	  || ch == 0x0703 /* SYRIAC SUPRALINEAR COLON */
-	  || ch == 0x0704 /* SYRIAC SUBLINEAR COLON */
-	  || ch == 0x0705 /* SYRIAC HORIZONTAL COLON */
-	  || ch == 0x0706 /* SYRIAC COLON SKEWED LEFT */
-	  || ch == 0x0707 /* SYRIAC COLON SKEWED RIGHT */
-	  || ch == 0x0708 /* SYRIAC SUPRALINEAR COLON SKEWED LEFT */
-	  || ch == 0x0709 /* SYRIAC SUBLINEAR COLON SKEWED RIGHT */
-	  || ch == 0x070A /* SYRIAC CONTRACTION */
-	  || ch == 0x070B /* SYRIAC HARKLEAN OBELUS */
-	  || ch == 0x070C /* SYRIAC HARKLEAN METOBELUS */
-	  || ch == 0x070D /* SYRIAC HARKLEAN ASTERISCUS */
-	  || ch == 0x0964 /* DEVANAGARI DANDA */
-	  || ch == 0x0965 /* DEVANAGARI DOUBLE DANDA */
-	  || ch == 0x0970 /* DEVANAGARI ABBREVIATION SIGN */
-	  || ch == 0x09F4 /* BENGALI CURRENCY NUMERATOR ONE */
-	  || ch == 0x09F5 /* BENGALI CURRENCY NUMERATOR TWO */
-	  || ch == 0x09F6 /* BENGALI CURRENCY NUMERATOR THREE */
-	  || ch == 0x09F7 /* BENGALI CURRENCY NUMERATOR FOUR */
-	  || ch == 0x09F8 /* BENGALI CURRENCY NUMERATOR ONE LESS THAN THE DENOMINATOR */
-	  || ch == 0x09F9 /* BENGALI CURRENCY DENOMINATOR SIXTEEN */
-	  || ch == 0x0BF0 /* TAMIL NUMBER TEN */
-	  || ch == 0x0BF1 /* TAMIL NUMBER ONE HUNDRED */
-	  || ch == 0x0BF2 /* TAMIL NUMBER ONE THOUSAND */
-	  || ch == 0x0DF4 /* SINHALA PUNCTUATION KUNDDALIYA */
-	  || ch == 0x0E4F /* THAI CHARACTER FONGMAN */
-	  || ch == 0x0F04 /* TIBETAN MARK INITIAL YIG MGO MDUN MA */
-	  || ch == 0x0F05 /* TIBETAN MARK CLOSING YIG MGO SGAB MA */
-	  || ch == 0x0F06 /* TIBETAN MARK CARET YIG MGO PHUR SHAD MA */
-	  || ch == 0x0F07 /* TIBETAN MARK YIG MGO TSHEG SHAD MA */
-	  || ch == 0x0F08 /* TIBETAN MARK SBRUL SHAD */
-	  || ch == 0x0F09 /* TIBETAN MARK BSKUR YIG MGO */
-	  || ch == 0x0F0A /* TIBETAN MARK BKA- SHOG YIG MGO */
-	  || ch == 0x0F0D /* TIBETAN MARK SHAD */
-	  || ch == 0x0F0E /* TIBETAN MARK NYIS SHAD */
-	  || ch == 0x0F0F /* TIBETAN MARK TSHEG SHAD */
-	  || ch == 0x0F10 /* TIBETAN MARK NYIS TSHEG SHAD */
-	  || ch == 0x0F11 /* TIBETAN MARK RIN CHEN SPUNGS SHAD */
-	  || ch == 0x0F12 /* TIBETAN MARK RGYA GRAM SHAD */
-	  || ch == 0x0F2A /* TIBETAN DIGIT HALF ONE */
-	  || ch == 0x0F2B /* TIBETAN DIGIT HALF TWO */
-	  || ch == 0x0F2C /* TIBETAN DIGIT HALF THREE */
-	  || ch == 0x0F2D /* TIBETAN DIGIT HALF FOUR */
-	  || ch == 0x0F2E /* TIBETAN DIGIT HALF FIVE */
-	  || ch == 0x0F2F /* TIBETAN DIGIT HALF SIX */
-	  || ch == 0x0F30 /* TIBETAN DIGIT HALF SEVEN */
-	  || ch == 0x0F31 /* TIBETAN DIGIT HALF EIGHT */
-	  || ch == 0x0F32 /* TIBETAN DIGIT HALF NINE */
-	  || ch == 0x0F33 /* TIBETAN DIGIT HALF ZERO */
-	  || ch == 0x0F85 /* TIBETAN MARK PALUTA */
-	  || ch == 0x104A /* MYANMAR SIGN LITTLE SECTION */
-	  || ch == 0x104B /* MYANMAR SIGN SECTION */
-	  || ch == 0x104C /* MYANMAR SYMBOL LOCATIVE */
-	  || ch == 0x104D /* MYANMAR SYMBOL COMPLETED */
-	  || ch == 0x104E /* MYANMAR SYMBOL AFOREMENTIONED */
-	  || ch == 0x104F /* MYANMAR SYMBOL GENITIVE */
-	  || ch == 0x10FB /* GEORGIAN PARAGRAPH SEPARATOR */
-	  || ch == 0x1362 /* ETHIOPIC FULL STOP */
-	  || ch == 0x1363 /* ETHIOPIC COMMA */
-	  || ch == 0x1364 /* ETHIOPIC SEMICOLON */
-	  || ch == 0x1365 /* ETHIOPIC COLON */
-	  || ch == 0x1366 /* ETHIOPIC PREFACE COLON */
-	  || ch == 0x1367 /* ETHIOPIC QUESTION MARK */
-	  || ch == 0x1368 /* ETHIOPIC PARAGRAPH SEPARATOR */
-	  || ch == 0x1372 /* ETHIOPIC NUMBER TEN */
-	  || ch == 0x1373 /* ETHIOPIC NUMBER TWENTY */
-	  || ch == 0x1374 /* ETHIOPIC NUMBER THIRTY */
-	  || ch == 0x1375 /* ETHIOPIC NUMBER FORTY */
-	  || ch == 0x1376 /* ETHIOPIC NUMBER FIFTY */
-	  || ch == 0x1377 /* ETHIOPIC NUMBER SIXTY */
-	  || ch == 0x1378 /* ETHIOPIC NUMBER SEVENTY */
-	  || ch == 0x1379 /* ETHIOPIC NUMBER EIGHTY */
-	  || ch == 0x137A /* ETHIOPIC NUMBER NINETY */
-	  || ch == 0x137B /* ETHIOPIC NUMBER HUNDRED */
-	  || ch == 0x137C /* ETHIOPIC NUMBER TEN THOUSAND */
-	  || ch == 0x166D /* CANADIAN SYLLABICS CHI SIGN */
-	  || ch == 0x166E /* CANADIAN SYLLABICS FULL STOP */
-	  || ch == 0x16EB /* RUNIC SINGLE PUNCTUATION */
-	  || ch == 0x16EC /* RUNIC MULTIPLE PUNCTUATION */
-	  || ch == 0x16ED /* RUNIC CROSS PUNCTUATION */
-	  || ch == 0x16EE /* RUNIC ARLAUG SYMBOL */
-	  || ch == 0x16EF /* RUNIC TVIMADUR SYMBOL */
-	  || ch == 0x16F0 /* RUNIC BELGTHOR SYMBOL */
-	  || ch == 0x17DC /* KHMER SIGN AVAKRAHASANYA */
-	  || ch == 0x1800 /* MONGOLIAN BIRGA */
-	  || ch == 0x1801 /* MONGOLIAN ELLIPSIS */
-	  || ch == 0x1802 /* MONGOLIAN COMMA */
-	  || ch == 0x1803 /* MONGOLIAN FULL STOP */
-	  || ch == 0x1804 /* MONGOLIAN COLON */
-	  || ch == 0x1805 /* MONGOLIAN FOUR DOTS */
-	  || ch == 0x1807 /* MONGOLIAN SIBE SYLLABLE BOUNDARY MARKER */
-	  || ch == 0x1808 /* MONGOLIAN MANCHU COMMA */
-	  || ch == 0x1809 /* MONGOLIAN MANCHU FULL STOP */
-	  || ch == 0x180A /* MONGOLIAN NIRUGU */
-	  || ch == 0x2015 /* HORIZONTAL BAR */
-	  || ch == 0x2016 /* DOUBLE VERTICAL LINE */
-	  || ch == 0x2017 /* DOUBLE LOW LINE */
-	  || ch == 0x2020 /* DAGGER */
-	  || ch == 0x2021 /* DOUBLE DAGGER */
-	  || ch == 0x2022 /* BULLET */
-	  || ch == 0x2023 /* TRIANGULAR BULLET */
-	  || ch == 0x2038 /* CARET */
-	  || ch == 0x203B /* REFERENCE MARK */
-	  || ch == 0x203D /* INTERROBANG */
-	  || ch == 0x203E /* OVERLINE */
-	  || ch == 0x203F /* UNDERTIE */
-	  || ch == 0x2040 /* CHARACTER TIE */
-	  || ch == 0x2041 /* CARET INSERTION POINT */
-	  || ch == 0x2042 /* ASTERISM */
-	  || ch == 0x2043 /* HYPHEN BULLET */
-	  || ch == 0x2048 /* QUESTION EXCLAMATION MARK */
-	  || ch == 0x2049 /* EXCLAMATION QUESTION MARK */
-	  || ch == 0x204A /* TIRONIAN SIGN ET */
-	  || ch == 0x204B /* REVERSED PILCROW SIGN */
-	  || ch == 0x204C /* BLACK LEFTWARDS BULLET */
-	  || ch == 0x204D /* BLACK RIGHTWARDS BULLET */
-	  || ch == 0x2070 /* SUPERSCRIPT ZERO */
-	  || ch == 0x2074 /* SUPERSCRIPT FOUR */
-	  || ch == 0x2075 /* SUPERSCRIPT FIVE */
-	  || ch == 0x2076 /* SUPERSCRIPT SIX */
-	  || ch == 0x2077 /* SUPERSCRIPT SEVEN */
-	  || ch == 0x2078 /* SUPERSCRIPT EIGHT */
-	  || ch == 0x2079 /* SUPERSCRIPT NINE */
-	  || ch == 0x2080 /* SUBSCRIPT ZERO */
-	  || ch == 0x2081 /* SUBSCRIPT ONE */
-	  || ch == 0x2082 /* SUBSCRIPT TWO */
-	  || ch == 0x2083 /* SUBSCRIPT THREE */
-	  || ch == 0x2084 /* SUBSCRIPT FOUR */
-	  || ch == 0x2085 /* SUBSCRIPT FIVE */
-	  || ch == 0x2086 /* SUBSCRIPT SIX */
-	  || ch == 0x2087 /* SUBSCRIPT SEVEN */
-	  || ch == 0x2088 /* SUBSCRIPT EIGHT */
-	  || ch == 0x2089 /* SUBSCRIPT NINE */
-	  || (ch >= 0x2153 && ch <= 0x215E) /* VULGAR FRACTION */
-	  || ch == 0x215F /* FRACTION NUMERATOR ONE */
-	  || (ch >= 0x2160 && ch <= 0x2183) /* ROMAN NUMERAL */
-	  || (ch >= 0x2460 && ch <= 0x2473) /* CIRCLED NUMBER */
-	  || (ch >= 0x2474 && ch <= 0x2487) /* PARENTHESIZED NUMBER */
-	  || (ch >= 0x2488 && ch <= 0x249B) /* NUMBER FULL STOP */
-	  || ch == 0x24EA /* CIRCLED DIGIT ZERO */
-	  || (ch >= 0x2776 && ch <= 0x2793) /* DINGBAT CIRCLED DIGIT */
-	  || ch == 0x10320 /* OLD ITALIC NUMERAL ONE */
-	  || ch == 0x10321 /* OLD ITALIC NUMERAL FIVE */
-	  || ch == 0x10322 /* OLD ITALIC NUMERAL TEN */
-	  || ch == 0x10323 /* OLD ITALIC NUMERAL FIFTY */
-	  || ch == 0x1034A) /* GOTHIC LETTER NINE HUNDRED */
-	if (!(attr & ((1 << LBP_CM) | (1 << LBP_NS) | (1 << LBP_ID) | (1 << LBP_BA) | (1 << LBP_BB) | (1 << LBP_PO) | (1 << LBP_PR) | (1 << LBP_SA) | (1 << LBP_CB))))
+	  || (unicode_attributes[ch].category[0] == 'N'
+	      && (unicode_attributes[ch].category[1] == 'l'
+		  || unicode_attributes[ch].category[1] == 'o'))
+	  || (unicode_attributes[ch].category[0] == 'P'
+	      && (unicode_attributes[ch].category[1] == 'c'
+		  || unicode_attributes[ch].category[1] == 'd'
+		  || unicode_attributes[ch].category[1] == 'o'))
+	  || ch == 0x0600 /* ARABIC NUMBER SIGN */
+	  || ch == 0x0601 /* ARABIC SIGN SANAH */
+	  || ch == 0x0602 /* ARABIC FOOTNOTE MARKER */
+	  || ch == 0x0603 /* ARABIC SIGN SAFHA */
+	  || ch == 0x06DD /* ARABIC END OF AYAH */
+	  || ch == 0x070F /* SYRIAC ABBREVIATION MARK */
+	  || ch == 0x2061 /* FUNCTION APPLICATION */
+	  || ch == 0x2062 /* INVISIBLE TIMES */
+	  || ch == 0x2063 /* INVISIBLE SEPARATOR */
+	  || ch == 0x2064 /* INVISIBLE PLUS */)
+	if (!(attr & ((1 << LBP_GL) | (1 << LBP_B2) | (1 << LBP_BA) | (1 << LBP_BB) | (1 << LBP_HY) | (1 << LBP_CB) | (1 << LBP_CL) | (1 << LBP_EX) | (1 << LBP_IN) | (1 << LBP_NS) | (1 << LBP_OP) | (1 << LBP_QU) | (1 << LBP_IS) | (1 << LBP_NU) | (1 << LBP_PO) | (1 << LBP_PR) | (1 << LBP_SY) | (1 << LBP_H2) | (1 << LBP_H3) | (1 << LBP_JL) | (1 << LBP_JV) | (1 << LBP_JT) | (1 << LBP_SA) | (1 << LBP_ID))))
 	  {
 	    /* ambiguous (alphabetic) ? */
-	    if (unicode_width[ch] != NULL
-		&& unicode_width[ch][0] == 'A')
+	    if ((unicode_width[ch] != NULL
+		 && unicode_width[ch][0] == 'A'
+		 && ch >= 0x2000
+		 /* Extra exceptions for compatibility with Unicode LineBreak.txt.  */
+		 && ch != 0x2022 /* BULLET */
+		 && ch != 0x203E /* OVERLINE */
+		 && ch != 0x2126 /* OHM SIGN */
+		 && ch != 0x2153 /* VULGAR FRACTION ONE THIRD */
+		 && ch != 0x215C /* VULGAR FRACTION THREE EIGHTHS */
+		 && ch != 0x215D /* VULGAR FRACTION FIVE EIGHTHS */
+		 && ch != 0x21B8 /* NORTH WEST ARROW TO LONG BAR */
+		 && ch != 0x21B9 /* LEFTWARDS ARROW TO BAR OVER RIGHTWARDS ARROW TO BAR */
+		 && ch != 0x21E7 /* UPWARDS WHITE ARROW */
+		 && ch != 0x24FF /* NEGATIVE CIRCLED DIGIT ZERO */
+		 && ch != 0x273D /* HEAVY TEARDROP-SPOKED ASTERISK */)
+#if !REVISION_22
+		|| ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
+		|| ch == 0x00A7 /* SECTION SIGN */
+		|| ch == 0x00A8 /* DIAERESIS */
+		|| ch == 0x00AA /* FEMININE ORDINAL INDICATOR */
+		|| ch == 0x00B2 /* SUPERSCRIPT TWO */
+		|| ch == 0x00B3 /* SUPERSCRIPT THREE */
+		|| ch == 0x00B6 /* PILCROW SIGN */
+		|| ch == 0x00B7 /* MIDDLE DOT */
+		|| ch == 0x00B8 /* CEDILLA */
+		|| ch == 0x00B9 /* SUPERSCRIPT ONE */
+		|| ch == 0x00BA /* MASCULINE ORDINAL INDICATOR */
+		|| ch == 0x00BC /* VULGAR FRACTION ONE QUARTER */
+		|| ch == 0x00BD /* VULGAR FRACTION ONE HALF */
+		|| ch == 0x00BE /* VULGAR FRACTION THREE QUARTERS */
+		|| ch == 0x00BF /* INVERTED QUESTION MARK */
+		|| ch == 0x00D7 /* MULTIPLICATION SIGN */
+		|| ch == 0x00F7 /* DIVISION SIGN */
+		|| ch == 0x02C7 /* CARON */
+		|| ch == 0x02C9 /* MODIFIER LETTER MACRON */
+		|| ch == 0x02CA /* MODIFIER LETTER ACUTE ACCENT */
+		|| ch == 0x02CB /* MODIFIER LETTER GRAVE ACCENT */
+		|| ch == 0x02CD /* MODIFIER LETTER LOW MACRON */
+		|| ch == 0x02D0 /* MODIFIER LETTER TRIANGULAR COLON */
+		|| ch == 0x02D8 /* BREVE */
+		|| ch == 0x02D9 /* DOT ABOVE */
+		|| ch == 0x02DA /* RING ABOVE */
+		|| ch == 0x02DB /* OGONEK */
+		|| ch == 0x02DD /* DOUBLE ACUTE ACCENT */
+#endif
+		|| ch == 0x24EA /* CIRCLED DIGIT ZERO */
+		|| (ch >= 0x2780 && ch <= 0x2793) /* DINGBAT ... CIRCLED DIGIT ... */
+		/* Extra characters for compatibility with Unicode LineBreak.txt.  */
+		|| ch == 0x2155 /* VULGAR FRACTION ONE FIFTH */
+		|| ch == 0x2574 /* BOX DRAWINGS LIGHT LEFT */
+		|| ch == 0x2616 /* WHITE SHOGI PIECE */
+		|| ch == 0x2617 /* BLACK SHOGI PIECE */)
 	      attr |= 1 << LBP_AI;
 	    else
 	      attr |= 1 << LBP_AL;
+	    attr &= ~(1 << LBP_CM);
 	  }
     }
 
@@ -885,30 +998,36 @@ debug_output_lbp (FILE *stream)
   if (attr & (1 << bit)) fprintf (stream, " " #bit);
 	  PRINT_BIT(attr,LBP_BK);
 	  PRINT_BIT(attr,LBP_CM);
+	  PRINT_BIT(attr,LBP_WJ);
 	  PRINT_BIT(attr,LBP_ZW);
-	  PRINT_BIT(attr,LBP_IN);
 	  PRINT_BIT(attr,LBP_GL);
-	  PRINT_BIT(attr,LBP_CB);
 	  PRINT_BIT(attr,LBP_SP);
+	  PRINT_BIT(attr,LBP_B2);
 	  PRINT_BIT(attr,LBP_BA);
 	  PRINT_BIT(attr,LBP_BB);
-	  PRINT_BIT(attr,LBP_B2);
 	  PRINT_BIT(attr,LBP_HY);
+	  PRINT_BIT(attr,LBP_CB);
+	  PRINT_BIT(attr,LBP_CL);
+	  PRINT_BIT(attr,LBP_EX);
+	  PRINT_BIT(attr,LBP_IN);
 	  PRINT_BIT(attr,LBP_NS);
 	  PRINT_BIT(attr,LBP_OP);
-	  PRINT_BIT(attr,LBP_CL);
 	  PRINT_BIT(attr,LBP_QU);
-	  PRINT_BIT(attr,LBP_EX);
-	  PRINT_BIT(attr,LBP_ID);
-	  PRINT_BIT(attr,LBP_NU);
 	  PRINT_BIT(attr,LBP_IS);
-	  PRINT_BIT(attr,LBP_SY);
-	  PRINT_BIT(attr,LBP_AL);
-	  PRINT_BIT(attr,LBP_PR);
+	  PRINT_BIT(attr,LBP_NU);
 	  PRINT_BIT(attr,LBP_PO);
+	  PRINT_BIT(attr,LBP_PR);
+	  PRINT_BIT(attr,LBP_SY);
+	  PRINT_BIT(attr,LBP_AI);
+	  PRINT_BIT(attr,LBP_AL);
+	  PRINT_BIT(attr,LBP_H2);
+	  PRINT_BIT(attr,LBP_H3);
+	  PRINT_BIT(attr,LBP_ID);
+	  PRINT_BIT(attr,LBP_JL);
+	  PRINT_BIT(attr,LBP_JV);
+	  PRINT_BIT(attr,LBP_JT);
 	  PRINT_BIT(attr,LBP_SA);
 	  PRINT_BIT(attr,LBP_XX);
-	  PRINT_BIT(attr,LBP_AI);
 #undef PRINT_BIT
 	  fprintf (stream, "\n");
 	}
@@ -992,33 +1111,40 @@ fill_org_lbp (const char *linebreak_filename)
       if (false) {}
       TRY(LBP_BK)
       TRY(LBP_CM)
+      TRY(LBP_WJ)
       TRY(LBP_ZW)
-      TRY(LBP_IN)
       TRY(LBP_GL)
-      TRY(LBP_CB)
       TRY(LBP_SP)
+      TRY(LBP_B2)
       TRY(LBP_BA)
       TRY(LBP_BB)
-      TRY(LBP_B2)
       TRY(LBP_HY)
+      TRY(LBP_CB)
+      TRY(LBP_CL)
+      TRY(LBP_EX)
+      TRY(LBP_IN)
       TRY(LBP_NS)
       TRY(LBP_OP)
-      TRY(LBP_CL)
       TRY(LBP_QU)
-      TRY(LBP_EX)
-      TRY(LBP_ID)
-      TRY(LBP_NU)
       TRY(LBP_IS)
-      TRY(LBP_SY)
-      TRY(LBP_AL)
-      TRY(LBP_PR)
+      TRY(LBP_NU)
       TRY(LBP_PO)
+      TRY(LBP_PR)
+      TRY(LBP_SY)
+      TRY(LBP_AI)
+      TRY(LBP_AL)
+      TRY(LBP_H2)
+      TRY(LBP_H3)
+      TRY(LBP_ID)
+      TRY(LBP_JL)
+      TRY(LBP_JV)
+      TRY(LBP_JT)
       TRY(LBP_SA)
       TRY(LBP_XX)
-      TRY(LBP_AI)
 #undef TRY
       else if (strcmp (field1, "LF") == 0) value = LBP_BK;
       else if (strcmp (field1, "CR") == 0) value = LBP_BK;
+      else if (strcmp (field1, "NL") == 0) value = LBP_BK;
       else if (strcmp (field1, "SG") == 0) value = LBP_XX;
       else
 	{
@@ -1063,30 +1189,36 @@ debug_output_org_lbp (FILE *stream)
   if (attr == bit) fprintf (stream, " " #bit);
 	  PRINT_BIT(attr,LBP_BK);
 	  PRINT_BIT(attr,LBP_CM);
+	  PRINT_BIT(attr,LBP_WJ);
 	  PRINT_BIT(attr,LBP_ZW);
-	  PRINT_BIT(attr,LBP_IN);
 	  PRINT_BIT(attr,LBP_GL);
-	  PRINT_BIT(attr,LBP_CB);
 	  PRINT_BIT(attr,LBP_SP);
+	  PRINT_BIT(attr,LBP_B2);
 	  PRINT_BIT(attr,LBP_BA);
 	  PRINT_BIT(attr,LBP_BB);
-	  PRINT_BIT(attr,LBP_B2);
 	  PRINT_BIT(attr,LBP_HY);
+	  PRINT_BIT(attr,LBP_CB);
+	  PRINT_BIT(attr,LBP_CL);
+	  PRINT_BIT(attr,LBP_EX);
+	  PRINT_BIT(attr,LBP_IN);
 	  PRINT_BIT(attr,LBP_NS);
 	  PRINT_BIT(attr,LBP_OP);
-	  PRINT_BIT(attr,LBP_CL);
 	  PRINT_BIT(attr,LBP_QU);
-	  PRINT_BIT(attr,LBP_EX);
-	  PRINT_BIT(attr,LBP_ID);
-	  PRINT_BIT(attr,LBP_NU);
 	  PRINT_BIT(attr,LBP_IS);
-	  PRINT_BIT(attr,LBP_SY);
-	  PRINT_BIT(attr,LBP_AL);
-	  PRINT_BIT(attr,LBP_PR);
+	  PRINT_BIT(attr,LBP_NU);
 	  PRINT_BIT(attr,LBP_PO);
+	  PRINT_BIT(attr,LBP_PR);
+	  PRINT_BIT(attr,LBP_SY);
+	  PRINT_BIT(attr,LBP_AI);
+	  PRINT_BIT(attr,LBP_AL);
+	  PRINT_BIT(attr,LBP_H2);
+	  PRINT_BIT(attr,LBP_H3);
+	  PRINT_BIT(attr,LBP_ID);
+	  PRINT_BIT(attr,LBP_JL);
+	  PRINT_BIT(attr,LBP_JV);
+	  PRINT_BIT(attr,LBP_JT);
 	  PRINT_BIT(attr,LBP_SA);
 	  PRINT_BIT(attr,LBP_XX);
-	  PRINT_BIT(attr,LBP_AI);
 #undef PRINT_BIT
 	  fprintf (stream, "\n");
 	}
@@ -1221,30 +1353,36 @@ output_lbp (FILE *stream1, FILE *stream2)
 #define CASE(x) case x: value_string = #x; break;
 	  CASE(LBP_BK);
 	  CASE(LBP_CM);
+	  CASE(LBP_WJ);
 	  CASE(LBP_ZW);
-	  CASE(LBP_IN);
 	  CASE(LBP_GL);
-	  CASE(LBP_CB);
 	  CASE(LBP_SP);
+	  CASE(LBP_B2);
 	  CASE(LBP_BA);
 	  CASE(LBP_BB);
-	  CASE(LBP_B2);
 	  CASE(LBP_HY);
+	  CASE(LBP_CB);
+	  CASE(LBP_CL);
+	  CASE(LBP_EX);
+	  CASE(LBP_IN);
 	  CASE(LBP_NS);
 	  CASE(LBP_OP);
-	  CASE(LBP_CL);
 	  CASE(LBP_QU);
-	  CASE(LBP_EX);
-	  CASE(LBP_ID);
-	  CASE(LBP_NU);
 	  CASE(LBP_IS);
-	  CASE(LBP_SY);
-	  CASE(LBP_AL);
-	  CASE(LBP_PR);
+	  CASE(LBP_NU);
 	  CASE(LBP_PO);
+	  CASE(LBP_PR);
+	  CASE(LBP_SY);
+	  CASE(LBP_AI);
+	  CASE(LBP_AL);
+	  CASE(LBP_H2);
+	  CASE(LBP_H3);
+	  CASE(LBP_ID);
+	  CASE(LBP_JL);
+	  CASE(LBP_JV);
+	  CASE(LBP_JT);
 	  CASE(LBP_SA);
 	  CASE(LBP_XX);
-	  CASE(LBP_AI);
 #undef CASE
 	  default:
 	    abort ();
@@ -1343,3 +1481,17 @@ main (int argc, char * argv[])
 
   return 0;
 }
+
+/*
+ * For Emacs M-x compile
+ * Local Variables:
+ * compile-command: "
+   gcc -O -Wall -I../unictype gen-lbrk.c -o gen-lbrk && \
+   ./gen-lbrk \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/UnicodeData.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/EastAsianWidth.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/LineBreak.txt \
+        5.0.0
+   "
+ * End:
+ */

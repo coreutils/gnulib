@@ -1,5 +1,35 @@
 2008-05-11  Bruno Haible  <bruno@clisp.org>
 
+	Update to Unicode 5.0.0.
+	* lib/unilbrk/tables.h (LBP_*): Add LBP_WJ, LBP_H2, LBP_H3, LBP_JL,
+	LBP_JV, LBP_JT. Redistribute values.
+	(unilbrk_table): Change size.
+	* lib/unilbrk/tables.c (unilbrk_table): Change size. Update to match
+	Unicode TR#14 rev. 22.
+	* lib/unilbrk/gen-lbrk.c (LBP_*): Add LBP_WJ, LBP_H2, LBP_H3, LBP_JL,
+	LBP_JV, LBP_JT. Redistribute values.
+	(get_lbp): Update to match Unicode TR#14 rev. 21/22 and Unicode 5.0.0.
+	(debug_output_lbp, fill_org_lbp, debug_output_org_lbp, output_lbp):
+	Update.
+	* lib/unilbrk/lbrkprop1.h: Regenerated.
+	* lib/unilbrk/lbrkprop2.h: Regenerated.
+	* lib/unilbrk/u8-possible-linebreaks.c (u8_possible_linebreaks):
+	Change handling of LBP_CM after LBP_ZW. Update for new value of LBP_BK.
+	* lib/unilbrk/u16-possible-linebreaks.c (u16_possible_linebreaks):
+	Likewise.
+	* lib/unilbrk/u32-possible-linebreaks.c (u32_possible_linebreaks):
+	Likewise.
+	* tests/unilbrk/test-u8-possible-linebreaks.c (main): Update expected
+	result.
+	* tests/unilbrk/test-u16-possible-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-u32-possible-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-ulc-possible-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-u8-width-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-u16-width-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-u32-width-linebreaks.c (main): Likewise.
+
+2008-05-11  Bruno Haible  <bruno@clisp.org>
+
 	* lib/unilbrk/gen-lbrk.c (output_lbp): Fix whitespace.
 
 2008-05-11  Bruno Haible  <bruno@clisp.org>

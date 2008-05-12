@@ -77,33 +77,52 @@ u8_possible_linebreaks (const uint8_t *s, size_t n, const char *encoding, char *
 	      break;
 	    }
 
-	  /* Deal with combining characters.  */
+	  /* Deal with spaces and combining characters.  */
 	  q = p;
-	  if (prop == LBP_CM)
-	    {
-	      /* Don't break just before a combining character.  */
-	      *p = UC_BREAK_PROHIBITED;
-	      /* A combining character turns a preceding space into LBP_AL.  */
-	      if (seen_space != NULL)
-		{
-		  q = seen_space;
-		  seen_space = seen_space2;
-		  prop = LBP_AL;
-		  goto lookup_via_table;
-		}
-	    }
-	  else if (prop == LBP_SP)
+	  if (prop == LBP_SP)
 	    {
 	      /* Don't break just before a space.  */
 	      *p = UC_BREAK_PROHIBITED;
 	      seen_space2 = seen_space;
 	      seen_space = p;
 	    }
+	  else if (prop == LBP_ZW)
+	    {
+	      /* Don't break just before a zero-width space.  */
+	      *p = UC_BREAK_PROHIBITED;
+	      last_prop = LBP_ZW;
+	      seen_space = NULL;
+	      seen_space2 = NULL;
+	    }
+	  else if (prop == LBP_CM)
+	    {
+	      /* Don't break just before a combining character, except immediately after a
+		 zero-width space.  */
+	      if (last_prop == LBP_ZW)
+		{
+		  /* Break after zero-width space.  */
+		  *p = UC_BREAK_POSSIBLE;
+		  /* A combining character turns a preceding space into LBP_ID.  */
+		  last_prop = LBP_ID;
+		}
+	      else
+		{
+		  *p = UC_BREAK_PROHIBITED;
+		  /* A combining character turns a preceding space into LBP_ID.  */
+		  if (seen_space != NULL)
+		    {
+		      q = seen_space;
+		      seen_space = seen_space2;
+		      prop = LBP_ID;
+		      goto lookup_via_table;
+		    }
+		}
+	    }
 	  else
 	    {
 	     lookup_via_table:
 	      /* prop must be usable as an index for table 7.3 of UTR #14.  */
-	      if (!(prop >= 1 && prop <= sizeof (unilbrk_table) / sizeof (unilbrk_table[0])))
+	      if (!(prop >= 0 && prop < sizeof (unilbrk_table) / sizeof (unilbrk_table[0])))
 		abort ();
 
 	      if (last_prop == LBP_BK)
@@ -111,9 +130,14 @@ u8_possible_linebreaks (const uint8_t *s, size_t n, const char *encoding, char *
 		  /* Don't break at the beginning of a line.  */
 		  *q = UC_BREAK_PROHIBITED;
 		}
+	      else if (last_prop == LBP_ZW)
+		{
+		  /* Break after zero-width space.  */
+		  *q = UC_BREAK_POSSIBLE;
+		}
 	      else
 		{
-		  switch (unilbrk_table [last_prop-1] [prop-1])
+		  switch (unilbrk_table [last_prop] [prop])
 		    {
 		    case D:
 		      *q = UC_BREAK_POSSIBLE;

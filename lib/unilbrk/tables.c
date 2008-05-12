@@ -23,31 +23,37 @@
 /* Define unilbrkprop, table of line breaking properties.  */
 #include "unilbrk/lbrkprop2.h"
 
-const unsigned char unilbrk_table[19][19] =
+const unsigned char unilbrk_table[24][24] =
 {
 				/* after */
-	/* ZW IN GL BA BB B2 HY NS OP CL QU EX ID NU IS SY AL PR PO */
-/* ZW */ { P, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, },
-/* IN */ { P, I, I, I, D, D, I, I, D, P, I, P, D, D, P, P, D, D, D, },
-/* GL */ { P, I, I, I, I, I, I, I, I, P, I, P, I, I, P, P, I, I, I, },
-/* BA */ { P, D, I, I, D, D, I, I, D, P, I, P, D, D, P, P, D, D, D, },
-/* BB */ { P, I, I, I, I, I, I, I, I, P, I, P, I, I, P, P, I, I, I, },
-/* B2 */ { P, D, I, I, D, P, I, I, D, P, I, P, D, D, P, P, D, D, D, },
-/* HY */ { P, D, I, I, D, D, I, I, D, P, I, P, D, D, P, P, D, D, D, },
-/* NS */ { P, D, I, I, D, D, I, I, D, P, I, P, D, D, P, P, D, D, D, },
-/* OP */ { P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, },
-/* CL */ { P, D, I, I, D, D, I, P, D, P, I, P, D, D, P, P, D, D, I, },
-/* QU */ { P, I, I, I, I, I, I, I, P, P, I, P, I, I, P, P, I, I, I, },
-/* EX */ { P, D, I, I, D, D, I, I, D, P, I, P, D, D, P, P, D, D, D, },
-/* ID */ { P, I, I, I, D, D, I, I, D, P, I, P, D, D, P, P, D, D, I, },
-/* NU */ { P, I, I, I, D, D, I, I, D, P, I, P, D, I, P, P, I, D, I, },
-/* IS */ { P, D, I, I, D, D, I, I, D, P, I, P, D, I, P, P, D, D, D, },
-/* SY */ { P, D, I, I, D, D, I, I, D, P, I, P, D, I, P, P, D, D, D, },
-/* AL */ { P, I, I, I, D, D, I, I, D, P, I, P, D, I, P, P, I, D, D, },
-/* PR */ { P, D, I, I, D, D, I, I, I, P, I, P, I, I, P, P, I, D, D, },
-/* PO */ { P, D, I, I, D, D, I, I, D, P, I, P, D, D, P, P, D, D, D, },
+	/* WJ GL B2 BA BB HY CL EX IN NS OP QU IS NU PO PR SY AL H2 H3 ID JL JV JT */
+/* WJ */ { P, I, I, I, I, I, P, P, I, I, I, I, P, I, I, I, P, I, I, I, I, I, I, I, },
+/* GL */ { P, I, I, I, I, I, P, P, I, I, I, I, P, I, I, I, P, I, I, I, I, I, I, I, },
+/* B2 */ { P, I, P, I, D, I, P, P, D, I, D, I, P, D, D, D, P, D, D, D, D, D, D, D, },
+/* BA */ { P, D, D, I, D, I, P, P, D, I, D, I, P, D, D, D, P, D, D, D, D, D, D, D, },
+/* BB */ { P, I, I, I, I, I, P, P, I, I, I, I, P, I, I, I, P, I, I, I, I, I, I, I, },
+/* HY */ { P, D, D, I, D, I, P, P, D, I, D, I, P, I, D, D, P, D, D, D, D, D, D, D, },
+/* CL */ { P, I, D, I, D, I, P, P, D, P, D, I, P, D, I, I, P, D, D, D, D, D, D, D, },
+/* EX */ { P, I, D, I, D, I, P, P, D, I, D, I, P, D, D, D, P, D, D, D, D, D, D, D, },
+/* IN */ { P, I, D, I, D, I, P, P, I, I, D, I, P, D, D, D, P, D, D, D, D, D, D, D, },
+/* NS */ { P, I, D, I, D, I, P, P, D, I, D, I, P, D, D, D, P, D, D, D, D, D, D, D, },
+/* OP */ { P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, },
+/* QU */ { P, I, I, I, I, I, P, P, I, I, P, I, P, I, I, I, P, I, I, I, I, I, I, I, },
+/* IS */ { P, I, D, I, D, I, P, P, D, I, D, I, P, I, D, D, P, I, D, D, D, D, D, D, },
+/* NU */ { P, I, D, I, D, I, P, P, I, I, D, I, P, I, I, I, P, I, D, D, D, D, D, D, },
+/* PO */ { P, I, D, I, D, I, P, P, D, I, I, I, P, I, D, D, P, I, D, D, D, D, D, D, },
+/* PR */ { P, I, D, I, D, I, P, P, D, I, I, I, P, I, D, D, P, I, I, I, I, I, I, I, },
+/* SY */ { P, I, D, I, D, I, P, P, D, I, D, I, P, I, D, D, P, D, D, D, D, D, D, D, },
+/* AL */ { P, I, D, I, D, I, P, P, I, I, D, I, P, I, D, D, P, I, D, D, D, D, D, D, },
+/* H2 */ { P, I, D, I, D, I, P, P, I, I, D, I, P, D, I, D, P, D, D, D, D, D, I, I, },
+/* H3 */ { P, I, D, I, D, I, P, P, I, I, D, I, P, D, I, D, P, D, D, D, D, D, D, I, },
+/* ID */ { P, I, D, I, D, I, P, P, I, I, D, I, P, D, I, D, P, D, D, D, D, D, D, D, },
+/* JL */ { P, I, D, I, D, I, P, P, I, I, D, I, P, D, I, D, P, D, I, I, D, I, I, D, },
+/* JV */ { P, I, D, I, D, I, P, P, I, I, D, I, P, D, I, D, P, D, D, D, D, D, I, I, },
+/* JT */ { P, I, D, I, D, I, P, P, I, I, D, I, P, D, I, D, P, D, D, D, D, D, D, I, },
 /* "" */
 /* before */
 };
 /* Note: The (B2,B2) entry should probably be D instead of P.  */
 /* Note: The (PR,ID) entry should probably be D instead of I.  */
+/* Note: The (WJ,*) and (GL,*) entries should probably be P instead of I.  */

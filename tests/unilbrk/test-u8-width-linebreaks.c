@@ -69,7 +69,7 @@ main ()
       for (i = 0; i < 91; i++)
 	{
 	  ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
-			   i == 25 || i == 50 || i == 77 ? UC_BREAK_POSSIBLE :
+			   i == 13 || i == 39 || i == 61 ? UC_BREAK_POSSIBLE :
 			   UC_BREAK_PROHIBITED));
 	}
       free (p);
