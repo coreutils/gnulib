@@ -1,4 +1,9 @@
-2008-05-11  Bruno Haible  <bruno@clisp.org>
+2008-05-12  Bruno Haible  <bruno@clisp.org>
+
+	Tailor the linebreaking algorithm.
+	* lib/unilbrk/tables.c (unilbrk_table): Change (IS,AL) entry.
+
+2008-05-12  Bruno Haible  <bruno@clisp.org>
 
 	Update to Unicode 5.0.0.
 	* lib/unilbrk/tables.h (LBP_*): Add LBP_WJ, LBP_H2, LBP_H3, LBP_JL,

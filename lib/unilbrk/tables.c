@@ -39,7 +39,7 @@ const unsigned char unilbrk_table[24][24] =
 /* NS */ { P, I, D, I, D, I, P, P, D, I, D, I, P, D, D, D, P, D, D, D, D, D, D, D, },
 /* OP */ { P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, },
 /* QU */ { P, I, I, I, I, I, P, P, I, I, P, I, P, I, I, I, P, I, I, I, I, I, I, I, },
-/* IS */ { P, I, D, I, D, I, P, P, D, I, D, I, P, I, D, D, P, I, D, D, D, D, D, D, },
+/* IS */ { P, I, D, I, D, I, P, P, D, I, D, I, P, I, D, D, P, D, D, D, D, D, D, D, },
 /* NU */ { P, I, D, I, D, I, P, P, I, I, D, I, P, I, I, I, P, I, D, D, D, D, D, D, },
 /* PO */ { P, I, D, I, D, I, P, P, D, I, I, I, P, I, D, D, P, I, D, D, D, D, D, D, },
 /* PR */ { P, I, D, I, D, I, P, P, D, I, I, I, P, I, D, D, P, I, I, I, I, I, I, I, },
@@ -54,6 +54,10 @@ const unsigned char unilbrk_table[24][24] =
 /* "" */
 /* before */
 };
+/* Note: The (IS,AL) entry has been changed from I to D. In other words, the
+   rule "Do not break between numeric punctuation and alphabetics" is not
+   implemented here. We want to break before the HTML tag in strings like
+   "<P>Some sentence.</P>"  */
 /* Note: The (B2,B2) entry should probably be D instead of P.  */
 /* Note: The (PR,ID) entry should probably be D instead of I.  */
 /* Note: The (WJ,*) and (GL,*) entries should probably be P instead of I.  */
