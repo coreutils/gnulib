@@ -1602,7 +1602,7 @@ func_execute_command ()
     echo "executing $*"
     "$@"
   else
-    # Commands like automake produce output to stderr even when the succeed.
+    # Commands like automake produce output to stderr even when they succeed.
     # Turn this output off if the command succeeds.
     "$@" > "$tmp"/cmdout 2>&1
     cmdret=$?
@@ -1686,7 +1686,7 @@ func_emit_lib_Makefile_am ()
             echo "${libname}_${libext}_DEPENDENCIES += @${perhapsLT}ALLOCA@"
           fi
         } > amsnippet.tmp
-        # Skip the contents if its entirely empty.
+        # Skip the contents if it's entirely empty.
         if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
           echo "## begin gnulib module $module"
           echo
@@ -1748,7 +1748,7 @@ func_emit_lib_Makefile_am ()
   echo
   echo "${libname}_${libext}_SOURCES ="
   # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
-  # automake during its analyses looks for $(LIBOBJS), not for @LIBOBJS@.
+  # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
   echo "${libname}_${libext}_LIBADD = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
   echo "${libname}_${libext}_DEPENDENCIES = \$(${macro_prefix}_${perhapsLT}LIBOBJS)"
   echo "EXTRA_${libname}_${libext}_SOURCES ="
@@ -1774,7 +1774,7 @@ func_emit_lib_Makefile_am ()
 }
 
 # func_emit_po_Makevars
-# emits the contents of po/ makefile parametrization to standard output.
+# emits the contents of po/ makefile parameterization to standard output.
 # Input:
 # - local_gnulib_dir  from --local-dir
 # - sourcebase      directory relative to destdir where to place source code
@@ -1912,7 +1912,7 @@ func_emit_tests_Makefile_am ()
             echo "libtests_a_DEPENDENCIES += @${perhapsLT}ALLOCA@"
           fi
         } > amsnippet.tmp
-        # Skip the contents if its entirely empty.
+        # Skip the contents if it's entirely empty.
         if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
           echo "## begin gnulib module $module"
           echo
@@ -2000,7 +2000,7 @@ func_emit_tests_Makefile_am ()
   if $use_libtests; then
     echo "libtests_a_SOURCES ="
     # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
-    # automake during its analyses looks for $(LIBOBJS), not for @LIBOBJS@.
+    # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
     echo "libtests_a_LIBADD = \$(${macro_prefix}tests_LIBOBJS)"
     echo "libtests_a_DEPENDENCIES = \$(${macro_prefix}tests_LIBOBJS)"
     echo "EXTRA_libtests_a_SOURCES ="
@@ -2105,7 +2105,7 @@ func_emit_initmacro_done ()
   echo "])"
   echo
   echo "# Like AC_LIBSOURCES, except the directory where the source file is"
-  echo "# expected is derived from the gnulib-tool parametrization,"
+  echo "# expected is derived from the gnulib-tool parameterization,"
   echo "# and alloca is special cased (for the alloca-opt module)."
   echo "# We could also entirely rely on EXTRA_lib..._SOURCES."
   echo "AC_DEFUN([${macro_prefix_arg}_LIBSOURCES], ["
@@ -2858,7 +2858,7 @@ func_import ()
         func_append added_files "$pobase/$file$nl"
       fi
     done
-    # Create po makefile parametrization, part 1.
+    # Create po makefile parameterization, part 1.
     func_dest_tmpfilename $pobase/Makevars
     func_emit_po_Makevars > "$tmpfile"
     if test -f "$destdir"/$pobase/Makevars; then
@@ -2884,7 +2884,7 @@ func_import ()
       fi
       func_append added_files "$pobase/Makevars$nl"
     fi
-    # Create po makefile parametrization, part 2.
+    # Create po makefile parameterization, part 2.
     func_dest_tmpfilename $pobase/POTFILES.in
     func_emit_po_POTFILES_in > "$tmpfile"
     if test -f "$destdir"/$pobase/POTFILES.in; then

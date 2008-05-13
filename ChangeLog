@@ -1,3 +1,7 @@
+2008-05-13  Eric Blake  <ebb9@byu.net>
+
+	* gnulib-tool: Fix various comment typos.
+
 2008-05-12  Bruno Haible  <bruno@clisp.org>
 
 	Tailor the linebreaking algorithm.
