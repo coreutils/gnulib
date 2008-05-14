@@ -2067,7 +2067,7 @@ func_emit_initmacro_end ()
   # The check is performed only when autoconf is run from the directory where
   # the configure.ac resides; if it is run from a different directory, the
   # check is skipped.
-  echo "  m4_ifval([${macro_prefix_arg}_LIBSOURCES_LIST], ["
+  echo "  m4_ifval(${macro_prefix_arg}_LIBSOURCES_LIST, ["
   echo "    m4_syscmd([test ! -d ]${macro_prefix_arg}_LIBSOURCES_DIR[ ||"
   echo "      for gl_file in ]${macro_prefix_arg}_LIBSOURCES_LIST[ ; do"
   echo "        if test ! -r ]${macro_prefix_arg}_LIBSOURCES_DIR[/\$gl_file ; then"
