@@ -2130,7 +2130,7 @@ func_emit_initmacro_done ()
   echo "  m4_foreach([_gl_NAME], [\$1], ["
   echo "    m4_if(_gl_NAME, [alloca.c], [], ["
   echo "      m4_define([${macro_prefix_arg}_LIBSOURCES_DIR], [$sourcebase_arg])"
-  echo "      m4_append_uniq([${macro_prefix_arg}_LIBSOURCES_LIST], _gl_NAME, [ ])"
+  echo "      m4_append([${macro_prefix_arg}_LIBSOURCES_LIST], _gl_NAME, [ ])"
   echo "    ])"
   echo "  ])"
   echo "])"

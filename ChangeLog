@@ -1,5 +1,9 @@
 2008-05-14  Eric Blake  <ebb9@byu.net>
 
+	Avoid quadratic growth in gl_LIBSOURCES.
+	* gnulib-tool (func_emit_initmacro_done): s/\(m4_append\)_uniq/\1/.
+	Suggested by Bruno Haible.
+
 	Test xmemdup0.
 	* modules/xmemdup0-tests: New file.
 	* tests/test-xmemdup0.c: Likewise.
