@@ -6,7 +6,7 @@
 
 2008-05-14  Jim Meyering  <meyering@redhat.com>
 
-	use dd ifs=$n count=1 ... rather than less-portable head -c$n
+	use dd ibs=$n count=1 ... rather than less-portable head -c$n
 	* build-aux/mktempd (rand_bytes): head's -cN option is not accepted
 	by Solaris 10's /bin/head or by the one from HP-UX 11.x.
 	Reported in http://sourceforge.net/forum/message.php?msg_id=4960334
