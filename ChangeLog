@@ -1,4 +1,14 @@
 2008-05-13  Eric Blake  <ebb9@byu.net>
+
+	Split xmemdup0 into its own module.
+	* modules/xmemdup0: New file.
+	* lib/xmemdup0.h: Likewise.
+	* lib/xmemdup0.c: Likewise.
+	* MODULES.html.sh (Memory management functions): Add xmemdup0.
+	* lib/xalloc.h (xmemdup0): Remove.
+	* lib/xmalloc.c (xmemdup0): Likewise.
+
+2008-05-13  Eric Blake  <ebb9@byu.net>
             Bruno Haible  <bruno@clisp.org>
 
 	Reduce number of forks required during autoconf.

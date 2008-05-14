@@ -113,24 +113,6 @@ xmemdup (void const *p, size_t s)
   return memcpy (xmalloc (s), p, s);
 }
 
-/* Clone an object P of size S, with error checking, and include a
-   terminating NUL byte.
-
-   The terminating NUL makes it safe to use strlen or rawmemchr to
-   check for embedded NUL; it also speeds up algorithms such as escape
-   sequence processing on arbitrary memory, by making it always safe
-   to read the byte after the escape character rather than having to
-   check if each escape character is the last byte in the object.  */
-
-void *
-xmemdup0 (void const *p, size_t s)
-{
-  char *result = xcharalloc (s + 1);
-  memcpy (result, p, s);
-  result[s] = 0;
-  return result;
-}
-
 /* Clone STRING.  */
 
 char *
