@@ -1,4 +1,16 @@
 2008-05-13  Eric Blake  <ebb9@byu.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	Reduce number of forks required during autoconf.
+	* gnulib-tool (func_emit_initmacro_start): Prepare gl_LIBSOURCES_LIST
+	and gl_LIBSOURCES_DIR.
+	(func_emit_initmacro_end): Use them here in a single m4_syscmd...
+	(func_emit_initmacro_done) <gl_LIBSOURCES>: ...rather than in one
+	m4_syscmd per file.
+	<m4_foreach_w>: Move...
+	* m4/gnulib-common.m4 (m4_foreach_w): ...here.
+
+2008-05-13  Eric Blake  <ebb9@byu.net>
 
 	* gnulib-tool: Fix various comment typos.
 

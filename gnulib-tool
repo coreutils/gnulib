@@ -2046,6 +2046,14 @@ func_emit_initmacro_start ()
   # We let automake know about the files to be distributed through the
   # EXTRA_lib_SOURCES variable.
   echo "  m4_pushdef([AC_LIBSOURCES], m4_defn([${macro_prefix_arg}_LIBSOURCES]))"
+  # Create data variables for checking the presence of files that are mentioned
+  # as AC_LIBSOURCES arguments. These are m4 variables, not shell variables,
+  # because we want the check to happen when the configure file is created,
+  # not when it is run. ${macro_prefix_arg}_LIBSOURCES_LIST is the list of
+  # files to check for. ${macro_prefix_arg}_LIBSOURCES_DIR is the subdirectory
+  # in which to expect them.
+  echo "  m4_pushdef([${macro_prefix_arg}_LIBSOURCES_LIST], [])"
+  echo "  m4_pushdef([${macro_prefix_arg}_LIBSOURCES_DIR], [])"
   echo "  gl_COMMON"
 }
 
@@ -2055,6 +2063,23 @@ func_emit_initmacro_start ()
 func_emit_initmacro_end ()
 {
   macro_prefix_arg="$1"
+  # Check the presence of files that are mentioned as AC_LIBSOURCES arguments.
+  # The check is performed only when autoconf is run from the directory where
+  # the configure.ac resides; if it is run from a different directory, the
+  # check is skipped.
+  echo "  m4_ifval([${macro_prefix_arg}_LIBSOURCES_LIST], ["
+  echo "    m4_syscmd([test ! -d ]${macro_prefix_arg}_LIBSOURCES_DIR[ ||"
+  echo "      for gl_file in ]${macro_prefix_arg}_LIBSOURCES_LIST[ ; do"
+  echo "        if test ! -r ]${macro_prefix_arg}_LIBSOURCES_DIR[/\$gl_file ; then"
+  echo "          echo \"missing file ]${macro_prefix_arg}_LIBSOURCES_DIR[/\$gl_file\" >&2"
+  echo "          exit 1"
+  echo "        fi"
+  echo "      done])dnl"
+  echo "      m4_if(m4_sysval, [0], [],"
+  echo "        [AC_FATAL([expected source file, required through AC_LIBSOURCES, not found])])"
+  echo "  ])"
+  echo "  m4_popdef([${macro_prefix_arg}_LIBSOURCES_DIR])"
+  echo "  m4_popdef([${macro_prefix_arg}_LIBSOURCES_LIST])"
   echo "  m4_popdef([AC_LIBSOURCES])"
   echo "  m4_popdef([AC_REPLACE_FUNCS])"
   echo "  m4_popdef([AC_LIBOBJ])"
@@ -2090,13 +2115,6 @@ func_emit_initmacro_done ()
   echo "  ${macro_prefix_arg}_LIBOBJS=\"\$${macro_prefix_arg}_LIBOBJS \$1.\$ac_objext\""
   echo "])"
   echo
-  echo "# m4_foreach_w is provided by autoconf-2.59c and later."
-  echo "# This definition is to accommodate developers using versions"
-  echo "# of autoconf older than that."
-  echo "m4_ifndef([m4_foreach_w],"
-  echo "  [m4_define([m4_foreach_w],"
-  echo "    [m4_foreach([\$1], m4_split(m4_normalize([\$2]), [ ]), [\$3])])])"
-  echo
   echo "# Like AC_REPLACE_FUNCS, except that the module name goes"
   echo "# into ${macro_prefix_arg}_LIBOBJS instead of into LIBOBJS."
   echo "AC_DEFUN([${macro_prefix_arg}_REPLACE_FUNCS], ["
@@ -2111,9 +2129,8 @@ func_emit_initmacro_done ()
   echo "AC_DEFUN([${macro_prefix_arg}_LIBSOURCES], ["
   echo "  m4_foreach([_gl_NAME], [\$1], ["
   echo "    m4_if(_gl_NAME, [alloca.c], [], ["
-  echo "      m4_syscmd([test -r $sourcebase_arg/]_gl_NAME[ || test ! -d $sourcebase_arg])dnl"
-  echo "      m4_if(m4_sysval, [0], [],"
-  echo "        [AC_FATAL([missing $sourcebase_arg/]_gl_NAME)])"
+  echo "      m4_define([${macro_prefix_arg}_LIBSOURCES_DIR], [$sourcebase_arg])"
+  echo "      m4_append_uniq([${macro_prefix_arg}_LIBSOURCES_LIST], _gl_NAME, [ ])"
   echo "    ])"
   echo "  ])"
   echo "])"
