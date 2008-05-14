@@ -1,3 +1,9 @@
+2008-05-14  Lasse Collin  <lasse.collin@tukaani.org>
+
+	use "echo STR|wc -c" rather than unportable "expr length STR"
+	* build-aux/mktempd (mktempd): Vendor-supplied expr from at least
+	OpenBSD 4.3 and Solaris 10 do not honor expr's "length" function.
+
 2008-05-14  Jim Meyering  <meyering@redhat.com>
 
 	use dd ifs=$n count=1 ... rather than less-portable head -c$n

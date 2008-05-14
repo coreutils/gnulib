@@ -114,7 +114,9 @@ mktempd()
   base_template=`echo "$template"|sed 's/XX*$//'`
 
   # Calculate how many X's we've just removed.
-  nx=`expr length "$template" - length "$base_template"`
+  template_length=`echo "$template" | wc -c`
+  nx=`echo "$base_template" | wc -c`
+  nx=`expr $template_length - $nx`
 
   err=
   i=1
