@@ -67,7 +67,9 @@
 # define LONG_NEEDLE_THRESHOLD SIZE_MAX
 #endif
 
-#define MAX(a, b) ((a < b) ? (b) : (a))
+#ifndef MAX
+# define MAX(a, b) ((a < b) ? (b) : (a))
+#endif
 
 #ifndef CANON_ELEMENT
 # define CANON_ELEMENT(c) c

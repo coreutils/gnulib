@@ -1,3 +1,12 @@
+2008-05-15  Eric Blake  <ebb9@byu.net>
+
+	Glibc finally accepted the memmem speedup code, bugzilla #5514.
+	* doc/glibc-functions/memmem.texi (memmem): Mention last broken
+	glibc version.
+	* doc/glibc-functions/strcasestr.texi (strcasestr): Likewise.
+	* doc/posix-functions/strstr.texi (strstr): Likewise.
+	* lib/str-two-way.h (MAX): Sychronize with glibc.
+
 2008-05-15  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/regcomp.c (optimize_utf8): Add a note on why we test

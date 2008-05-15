@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 This function has quadratic instead of linear worst-case complexity on some
 platforms:
-glibc 2.6.1, MacOS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw.
+glibc 2.8, MacOS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
