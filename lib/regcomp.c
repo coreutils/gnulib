@@ -1057,7 +1057,9 @@ optimize_utf8 (re_dfa_t *dfa)
 	  case BUF_LAST:
 	    break;
 	  default:
-	    /* Word anchors etc. cannot be handled.  */
+	    /* Word anchors etc. cannot be handled.  It's okay to test
+	       opr.ctx_type since constraints (for all DFA nodes) are
+	       created by ORing one or more opr.ctx_type values.  */
 	    return;
 	  }
 	break;
@@ -1344,6 +1346,8 @@ calc_first (void *extra, bin_tree_t *node)
       node->node_idx = re_dfa_add_node (dfa, node->token);
       if (BE (node->node_idx == REG_MISSING, 0))
         return REG_ESPACE;
+      if (node->token.type == ANCHOR)
+        dfa->nodes[node->node_idx].constraint = node->token.opr.ctx_type;
     }
   return REG_NOERROR;
 }
@@ -1473,21 +1477,18 @@ duplicate_node_closure (re_dfa_t *dfa, Idx top_org_node, Idx top_clone_node,
 	     destination.  */
 	  org_dest = dfa->edests[org_node].elems[0];
 	  re_node_set_empty (dfa->edests + clone_node);
-	  if (dfa->nodes[org_node].type == ANCHOR)
+	  clone_dest = search_duplicated_node (dfa, org_dest, constraint);
+	  /* If the node is root_node itself, it means the epsilon closure
+	     has a loop.  Then tie it to the destination of the root_node.  */
+	  if (org_node == root_node && clone_node != org_node)
 	    {
-	      /* In case of the node has another constraint, append it.  */
-	      if (org_node == root_node && clone_node != org_node)
-		{
-		  /* ...but if the node is root_node itself, it means the
-		     epsilon closure have a loop, then tie it to the
-		     destination of the root_node.  */
-		  ok = re_node_set_insert (dfa->edests + clone_node, org_dest);
-		  if (BE (! ok, 0))
-		    return REG_ESPACE;
-		  break;
-		}
-	      constraint |= dfa->nodes[org_node].opr.ctx_type;
+	      ok = re_node_set_insert (dfa->edests + clone_node, org_dest);
+	      if (BE (! ok, 0))
+	        return REG_ESPACE;
+	      break;
 	    }
+	  /* In case the node has another constraint, append it.  */
+	  constraint |= dfa->nodes[org_node].constraint;
 	  clone_dest = duplicate_node (dfa, org_dest, constraint);
 	  if (BE (clone_dest == REG_MISSING, 0))
 	    return REG_ESPACE;
@@ -1505,7 +1506,7 @@ duplicate_node_closure (re_dfa_t *dfa, Idx top_org_node, Idx top_clone_node,
 	  clone_dest = search_duplicated_node (dfa, org_dest, constraint);
 	  if (clone_dest == REG_MISSING)
 	    {
-	      /* There are no such a duplicated node, create a new one.  */
+	      /* There is no such duplicated node, create a new one.  */
 	      reg_errcode_t err;
 	      clone_dest = duplicate_node (dfa, org_dest, constraint);
 	      if (BE (clone_dest == REG_MISSING, 0))
@@ -1520,7 +1521,7 @@ duplicate_node_closure (re_dfa_t *dfa, Idx top_org_node, Idx top_clone_node,
 	    }
 	  else
 	    {
-	      /* There are a duplicated node which satisfy the constraint,
+	      /* There is a duplicated node which satisfy the constraint,
 		 use it to avoid infinite loop.  */
 	      ok = re_node_set_insert (dfa->edests + clone_node, clone_dest);
 	      if (BE (! ok, 0))
@@ -1569,8 +1570,7 @@ duplicate_node (re_dfa_t *dfa, Idx org_idx, unsigned int constraint)
   if (BE (dup_idx != REG_MISSING, 1))
     {
       dfa->nodes[dup_idx].constraint = constraint;
-      if (dfa->nodes[org_idx].type == ANCHOR)
-	dfa->nodes[dup_idx].constraint |= dfa->nodes[org_idx].opr.ctx_type;
+      dfa->nodes[dup_idx].constraint |= dfa->nodes[org_idx].constraint;
       dfa->nodes[dup_idx].duplicated = 1;
 
       /* Store the index of the original node.  */
@@ -1652,7 +1652,6 @@ static reg_errcode_t
 calc_eclosure_iter (re_node_set *new_set, re_dfa_t *dfa, Idx node, bool root)
 {
   reg_errcode_t err;
-  unsigned int constraint;
   Idx i;
   bool incomplete;
   bool ok;
@@ -1666,15 +1665,14 @@ calc_eclosure_iter (re_node_set *new_set, re_dfa_t *dfa, Idx node, bool root)
      We reference this value to avoid infinite loop.  */
   dfa->eclosures[node].nelem = REG_MISSING;
 
-  constraint = ((dfa->nodes[node].type == ANCHOR)
-		? dfa->nodes[node].opr.ctx_type : 0);
-  /* If the current node has constraints, duplicate all nodes.
-     Since they must inherit the constraints.  */
-  if (constraint
+  /* If the current node has constraints, duplicate all nodes
+     since they must inherit the constraints.  */
+  if (dfa->nodes[node].constraint
       && dfa->edests[node].nelem
       && !dfa->nodes[dfa->edests[node].elems[0]].duplicated)
     {
-      err = duplicate_node_closure (dfa, node, node, node, constraint);
+      err = duplicate_node_closure (dfa, node, node, node,
+				    dfa->nodes[node].constraint);
       if (BE (err != REG_NOERROR, 0))
 	return err;
     }

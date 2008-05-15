@@ -1,3 +1,15 @@
+2008-05-15  Paolo Bonzini  <bonzini@gnu.org>
+
+	* lib/regcomp.c (optimize_utf8): Add a note on why we test
+	opr.ctx_type.
+	(calc_first): Initialize constraint field.
+	(duplicate_node_closure): Use it instead of special casing ANCHORS.
+	Fix grammar.
+	(duplicate_node): Merge constraint field for all node types.
+	(calc_eclosure_iter): Look at constraint field for all node types.
+	* lib/regex_internal.c (create_cd_newstate): Don't look at
+	opr.ctx_type.
+
 2008-05-14  Bruno Haible  <bruno@clisp.org>
 
 	Help GCC to do better code generation.
