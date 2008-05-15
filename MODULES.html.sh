@@ -2411,7 +2411,6 @@ func_all_modules ()
   func_module unicodeio
   func_module rpmatch
   func_module yesno
-  func_module linebreak
   func_module bison-i18n
   func_end_table
 
@@ -2802,6 +2801,17 @@ func_all_modules ()
   func_module uniwidth/u32-strwidth
   func_module uniwidth/u32-width
   func_module uniwidth/width
+  func_module unilbrk/base
+  func_module unilbrk/tables
+  func_module unilbrk/ulc-common
+  func_module unilbrk/u8-possible-linebreaks
+  func_module unilbrk/u16-possible-linebreaks
+  func_module unilbrk/u32-possible-linebreaks
+  func_module unilbrk/ulc-possible-linebreaks
+  func_module unilbrk/u8-width-linebreaks
+  func_module unilbrk/u16-width-linebreaks
+  func_module unilbrk/u32-width-linebreaks
+  func_module unilbrk/ulc-width-linebreaks
   func_end_table
 
   element="Executing programs"

@@ -1,3 +1,9 @@
+2008-05-15  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh (Internationalization functions): Remove linebreak.
+	(Unicode string functions): Add unilbrk/*.
+	Reported by Karl Berry.
+
 2008-05-15  Eric Blake  <ebb9@byu.net>
 
 	Fix violation of <stdbool.h> replacement in regex.
