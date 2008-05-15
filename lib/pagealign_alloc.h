@@ -1,6 +1,6 @@
 /* Memory allocation aligned to system page boundaries.
 
-   Copyright (C) 2005 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,11 +26,19 @@
    to the next multiple.
    Return a pointer to the start of the memory block. Upon allocation failure,
    return NULL and set errno.  */
-extern void *pagealign_alloc (size_t size);
+extern void *pagealign_alloc (size_t size)
+# if __GNUC__ >= 3
+     __attribute__ ((__malloc__))
+# endif
+     ;
 
 /* Like pagealign_alloc, except it exits the program if the allocation
    fails.  */
-extern void *pagealign_xalloc (size_t size);
+extern void *pagealign_xalloc (size_t size)
+# if __GNUC__ >= 3
+     __attribute__ ((__malloc__))
+# endif
+     ;
 
 /* Free a memory block.
    PTR must be a non-NULL pointer returned by pagealign_alloc or

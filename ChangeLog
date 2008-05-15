@@ -1,3 +1,12 @@
+2008-05-14  Bruno Haible  <bruno@clisp.org>
+
+	Help GCC to do better code generation.
+	* lib/eealloc.h (eemalloc) [GCC >= 3]: Declare with attribute 'malloc'.
+	* lib/pagealign_alloc.h (pagealign_alloc, pagealign_xalloc): Likewise.
+	* lib/xalloc.h (ATTRIBUTE_MALLOC): New macro.
+	(xmalloc, xzalloc, xcalloc, xmemdup, xstrdup, xnmalloc, xcharalloc):
+	Declare with attribute 'malloc' if supported.
+
 2008-05-14  Lasse Collin  <lasse.collin@tukaani.org>
 
 	use "echo STR|wc -c" rather than unportable "expr length STR"

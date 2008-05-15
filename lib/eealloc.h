@@ -1,5 +1,5 @@
 /* Memory allocation with expensive empty allocations.
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003,
    based on prior work by Jim Meyering.
 
@@ -34,6 +34,9 @@
 #if MALLOC_0_IS_NONNULL
 # define eemalloc malloc
 #else
+# if __GNUC__ >= 3
+static inline void *eemalloc (size_t n) __attribute__ ((__malloc__));
+# endif
 static inline void *
 eemalloc (size_t n)
 {
