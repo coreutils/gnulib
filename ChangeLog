@@ -1,3 +1,9 @@
+2008-05-15  Jim Meyering  <meyering@redhat.com>
+
+	avoid distracting test output when git or cvs is not fount
+	* tests/test-vc-list-files-cvs.sh: Suppress 'init' error output.
+	* tests/test-vc-list-files-git.sh: Likewise.
+
 2008-05-15  Eric Blake  <ebb9@byu.net>
 
 	Glibc finally accepted the memmem speedup code, bugzilla #5514.

@@ -31,7 +31,7 @@ trap '(exit $?); exit $?' 1 2 13 15
 fail=1
 mkdir $tmpdir && cd $tmpdir &&
   # without git, skip the test
-  { git init -q || exit 77; } &&
+  { ( git init -q ) > /dev/null 2>&1 || exit 77; } &&
   mkdir d &&
   touch d/a b c &&
   git add . > /dev/null &&

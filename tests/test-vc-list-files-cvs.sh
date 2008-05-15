@@ -44,7 +44,7 @@ for i in with-cvsu without; do
   ok=0
   mkdir $tmpdir && cd $tmpdir &&
     # without cvs, skip the test
-    { cvs -Q -d "$repo" init || exit 77; } &&
+    { ( cvs -Q -d "$repo" init ) > /dev/null 2>&1 || exit 77; } &&
     mkdir w && cd w &&
     mkdir d &&
     touch d/a b c &&
