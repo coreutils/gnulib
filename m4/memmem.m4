@@ -1,4 +1,4 @@
-# memmem.m4 serial 10
+# memmem.m4 serial 11
 dnl Copyright (C) 2002, 2003, 2004, 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,9 +49,21 @@ AC_DEFUN([gl_FUNC_MEMMEM],
     /* Check for empty needle behavior.  */
     return !result || !memmem ("a", 1, 0, 0);]])],
 	[gl_cv_func_memmem_works=yes], [gl_cv_func_memmem_works=no],
-	[dnl pessimistically assume the worst, since even glibc 2.6.1
-	 dnl has quadratic complexity in its memmem
-	 gl_cv_func_memmem_works="guessing no"])])
+	[dnl Only glibc >= 2.9 is known to have a memmem that works in
+	 dnl linear time.
+	 AC_EGREP_CPP([Lucky GNU user],
+	   [
+#include <features.h>
+#ifdef __GNU_LIBRARY__
+ #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 9) || (__GLIBC__ > 2)
+  Lucky GNU user
+ #endif
+#endif
+	   ],
+	   [gl_cv_func_memmem_works=yes],
+	   [gl_cv_func_memmem_works="guessing no"])
+	])
+      ])
     if test "$gl_cv_func_memmem_works" != yes; then
       REPLACE_MEMMEM=1
       AC_LIBOBJ([memmem])

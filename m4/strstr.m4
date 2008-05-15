@@ -1,4 +1,4 @@
-# strstr.m4 serial 2
+# strstr.m4 serial 3
 dnl Copyright (C) 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,9 +34,21 @@ AC_DEFUN([gl_FUNC_STRSTR],
       }
     return !result;]])],
       [gl_cv_func_strstr_linear=yes], [gl_cv_func_strstr_linear=no],
-      [dnl pessimistically assume the worst, since even glibc 2.6.1
-       dnl has quadratic complexity in its strstr
-       gl_cv_func_strstr_linear="guessing no"])])
+      [dnl Only glibc >= 2.9 is known to have an strstr that works in
+       dnl linear time.
+       AC_EGREP_CPP([Lucky GNU user],
+	 [
+#include <features.h>
+#ifdef __GNU_LIBRARY__
+ #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 9) || (__GLIBC__ > 2)
+  Lucky GNU user
+ #endif
+#endif
+	 ],
+	 [gl_cv_func_strstr_linear=yes],
+	 [gl_cv_func_strstr_linear="guessing no"])
+      ])
+    ])
   if test "$gl_cv_func_strstr_linear" != yes; then
     REPLACE_STRSTR=1
     AC_LIBOBJ([strstr])

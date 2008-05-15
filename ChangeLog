@@ -1,5 +1,12 @@
 2008-05-15  Bruno Haible  <bruno@clisp.org>
 
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): When cross-compiling, assume a fast
+	implementation in glibc >= 2.9.
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Likewise.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Likewise.
+
+2008-05-15  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh (Internationalization functions): Remove linebreak.
 	(Unicode string functions): Add unilbrk/*.
 	Reported by Karl Berry.
