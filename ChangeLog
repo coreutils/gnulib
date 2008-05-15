@@ -1,3 +1,9 @@
+2008-05-15  Eric Blake  <ebb9@byu.net>
+
+	Fix violation of <stdbool.h> replacement in regex.
+	* lib/regcomp.c (re_compile_internal): Avoid implicit cast to bool.
+	Reported by Heinrich Mislik <Heinrich.Mislik@univie.ac.at>.
+
 2008-05-15  Jim Meyering  <meyering@redhat.com>
 
 	avoid distracting test output when git or cvs is not fount
@@ -69,7 +75,7 @@
 	* lib/xmalloc.c (xmemdup0): Likewise.
 
 2008-05-13  Eric Blake  <ebb9@byu.net>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Reduce number of forks required during autoconf.
 	* gnulib-tool (func_emit_initmacro_start): Prepare gl_LIBSOURCES_LIST
