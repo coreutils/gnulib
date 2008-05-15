@@ -2,6 +2,7 @@
 
 	Fix violation of <stdbool.h> replacement in regex.
 	* lib/regcomp.c (re_compile_internal): Avoid implicit cast to bool.
+	* lib/regexec.c (re_search_internal): Likewise.
 	Reported by Heinrich Mislik <Heinrich.Mislik@univie.ac.at>.
 
 2008-05-15  Jim Meyering  <meyering@redhat.com>
