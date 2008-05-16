@@ -1,4 +1,4 @@
-# strcasestr.m4 serial 10
+# strcasestr.m4 serial 11
 dnl Copyright (C) 2005, 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,14 +49,20 @@ AC_DEFUN([gl_FUNC_STRCASESTR],
       }
     return !result;]])],
 	[gl_cv_func_strcasestr_linear=yes], [gl_cv_func_strcasestr_linear=no],
-	[dnl Only glibc >= 2.9 is known to have an strcasestr that works in
-	 dnl linear time.
-	 AC_EGREP_CPP([Lucky GNU user],
+        [dnl Only glibc >= 2.9 and cygwin >= 1.7.0 are known to have a
+         dnl strcasestr that works in linear time.
+	 AC_EGREP_CPP([Lucky user],
 	   [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
  #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 9) || (__GLIBC__ > 2)
-  Lucky GNU user
+  Lucky user
+ #endif
+#endif
+#ifdef __CYGWIN__
+ #include <cygwin/version.h>
+ #if CYGWIN_VERSION_DLL_MAJOR >= 1007
+  Lucky user
  #endif
 #endif
 	   ],

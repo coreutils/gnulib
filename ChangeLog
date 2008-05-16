@@ -1,3 +1,11 @@
+2008-05-15  Eric Blake  <ebb9@byu.net>
+
+	Extend previous patch to cygwin 1.7.0.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): When cross-compiling, assume a
+	fast implementation in cygwin >= 1.7.0.
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Likewise.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Likewise.
+
 2008-05-15  Bruno Haible  <bruno@clisp.org>
 
 	* m4/memmem.m4 (gl_FUNC_MEMMEM): When cross-compiling, assume a fast

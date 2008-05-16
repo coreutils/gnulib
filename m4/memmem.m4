@@ -1,4 +1,4 @@
-# memmem.m4 serial 11
+# memmem.m4 serial 12
 dnl Copyright (C) 2002, 2003, 2004, 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,14 +49,20 @@ AC_DEFUN([gl_FUNC_MEMMEM],
     /* Check for empty needle behavior.  */
     return !result || !memmem ("a", 1, 0, 0);]])],
 	[gl_cv_func_memmem_works=yes], [gl_cv_func_memmem_works=no],
-	[dnl Only glibc >= 2.9 is known to have a memmem that works in
-	 dnl linear time.
-	 AC_EGREP_CPP([Lucky GNU user],
+	[dnl Only glibc >= 2.9 and cygwin >= 1.7.0 are known to have a
+	 dnl memmem that works in linear time.
+	 AC_EGREP_CPP([Lucky user],
 	   [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
  #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 9) || (__GLIBC__ > 2)
-  Lucky GNU user
+  Lucky user
+ #endif
+#endif
+#ifdef __CYGWIN__
+ #include <cygwin/version.h>
+ #if CYGWIN_VERSION_DLL_MAJOR >= 1007
+  Lucky user
  #endif
 #endif
 	   ],
