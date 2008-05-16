@@ -28,7 +28,7 @@
 
 2008-05-15  Jim Meyering  <meyering@redhat.com>
 
-	avoid distracting test output when git or cvs is not fount
+	avoid distracting test output when git or cvs is not found
 	* tests/test-vc-list-files-cvs.sh: Suppress 'init' error output.
 	* tests/test-vc-list-files-git.sh: Likewise.
 
