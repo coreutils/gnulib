@@ -1,3 +1,9 @@
+2008-05-16  Jim Meyering  <meyering@redhat.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	Avoid some warnings from "gcc -Wshadow".
+	* lib/vasnprintf.c (exp, remainder): Define to different identifiers.
+
 2008-05-15  Eric Blake  <ebb9@byu.net>
 
 	Extend previous patch to cygwin 1.7.0.

@@ -200,6 +200,13 @@ local_wcslen (const wchar_t *s)
 /* Here we need to call the native sprintf, not rpl_sprintf.  */
 #undef sprintf
 
+/* Avoid some warnings from "gcc -Wshadow".
+   This file doesn't use the exp() and remainder() functions.  */
+#undef exp
+#define exp expo
+#undef remainder
+#define remainder rem
+
 #if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE) && !defined IN_LIBINTL
 /* Determine the decimal-point character according to the current locale.  */
 # ifndef decimal_point_char_defined
