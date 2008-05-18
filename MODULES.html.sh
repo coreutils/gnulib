@@ -2382,6 +2382,7 @@ func_all_modules ()
   func_begin_table
   func_module gettext
   func_module gettext-h
+  func_module propername
   func_module iconv
   func_module striconv
   func_module xstriconv

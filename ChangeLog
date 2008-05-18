@@ -1,3 +1,10 @@
+2008-05-18  Bruno Haible  <bruno@clisp.org>
+
+	* modules/propername: New file, from GNU gettext.
+	* lib/propername.h: New file, from GNU gettext.
+	* lib/propername.c: New file, from GNU gettext.
+	* MODULES.html.sh (Internationalization functions): Add propername.
+
 2008-05-16  Jim Meyering  <meyering@redhat.com>
             Bruno Haible  <bruno@clisp.org>
 
