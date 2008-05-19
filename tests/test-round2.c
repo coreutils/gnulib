@@ -19,7 +19,7 @@
 
 /* Get the two reference implementations of round under the names
    round_reference1 and round_reference2.
-   
+
    round.c will #include <config.h> for us. */
 #define FLOOR_BASED_ROUND round_reference1
 #define FLOOR_FREE_ROUND round_reference2
@@ -60,7 +60,7 @@ equal (const char *message, DOUBLE x, DOUBLE y0, DOUBLE y1)
 {
   if (ISNAN (y0) ? ISNAN (y1) : y0 == y1)
     return true;
-  else 
+  else
     {
       fprintf (stderr, "%s: "FUNCTION"(%g(%a)) = %g(%a) or %g(%a)?\n",
 	       message, x, x, y0, y0, y1, y1);
@@ -75,9 +75,9 @@ check (DOUBLE x)
   DOUBLE ref1 = round_reference1 (x);
   DOUBLE ref2 = round_reference2 (x);
   DOUBLE result = ROUND (x);
-  
+
   /* If the reference implementations disagree, bail out immediately.  */
-  if (!equal ("reference implementations disagree", x, ref1, ref2)) 
+  if (!equal ("reference implementations disagree", x, ref1, ref2))
     exit (EXIT_FAILURE);
 
   /* If the actual implementation is wrong, return an error code.  */

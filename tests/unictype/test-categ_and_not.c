@@ -41,7 +41,7 @@ main ()
     uc_general_category_and_not (
       uc_general_category_or (UC_LETTER, UC_NUMBER),
       uc_general_category_or (UC_UPPERCASE_LETTER, UC_DECIMAL_DIGIT_NUMBER));
-  
+
   ASSERT (!uc_is_general_category ('A', ct));
   ASSERT (uc_is_general_category ('a', ct));
   ASSERT (!uc_is_general_category ('7', ct));

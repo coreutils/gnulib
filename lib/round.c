@@ -67,7 +67,7 @@
 DOUBLE
 FLOOR_BASED_ROUND (DOUBLE x)
 {
-  if (x >= L_(0.0)) 
+  if (x >= L_(0.0))
     {
       DOUBLE y = FLOOR (x);
       if (x - y >= L_(0.5))

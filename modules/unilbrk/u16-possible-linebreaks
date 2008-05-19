@@ -9,7 +9,7 @@ Depends-on:
 unilbrk/base
 unilbrk/tables
 utf16-ucs4-unsafe
-streq 
+streq
 
 configure.ac:
 

@@ -36,7 +36,7 @@
              1.4                 48.0
              1.5                 49.0
              1.6                 50.0
-   target_version can also be given as NULL. In this case, the required 
+   target_version can also be given as NULL. In this case, the required
    target_version is determined from the found JVM (see javaversion.h).
    Specifying target_version is useful when building a library (.jar) that is
    useful outside the given package. Passing target_version = NULL is useful
