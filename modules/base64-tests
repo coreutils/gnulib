@@ -1,0 +1,10 @@
+Files:
+tests/test-base64.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-base64
+check_PROGRAMS += test-base64
