@@ -1,10 +1,15 @@
+2008-05-19  Jim Meyering  <meyering@redhat.com>
+
+	Fix doc typo.
+	* doc/glibc-functions/getpass.texi (getpass): s/PATH_MAX/PASS_MAX/.
+
 2008-05-19  Bruno Haible  <bruno@clisp.org>
 
 	* doc/glibc-functions/getpass.texi: Document limits of other
 	implementations.
 
 2008-05-19  Simon Josefsson  <simon@josefsson.org>
-            Bruno Haible <bruno@clisp.org>
+	    Bruno Haible <bruno@clisp.org>
 
 	* doc/glibc-functions/getpass.texi: Document gnulib implementation.
 
@@ -16,7 +21,7 @@
 	* MODULES.html.sh (Internationalization functions): Add propername.
 
 2008-05-16  Jim Meyering  <meyering@redhat.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Avoid some warnings from "gcc -Wshadow".
 	* lib/vasnprintf.c (exp, remainder): Define to different identifiers.
