@@ -1,8 +1,12 @@
+2008-05-19  Bruno Haible  <bruno@clisp.org>
+
+	* doc/glibc-functions/getpass.texi: Document limits of other
+	implementations.
+
 2008-05-19  Simon Josefsson  <simon@josefsson.org>
             Bruno Haible <bruno@clisp.org>
 
-	* doc/glibc-functions/getpass.texi: Document gnulib
-	implementation.
+	* doc/glibc-functions/getpass.texi: Document gnulib implementation.
 
 2008-05-18  Bruno Haible  <bruno@clisp.org>
 
