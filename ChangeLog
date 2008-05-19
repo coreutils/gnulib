@@ -1,3 +1,22 @@
+2008-05-19  Bo Borgerson <gigabo@gmail.com>
+
+	* lib/base64.c (base64_decode_ctx): If a decode context structure
+	was passed in use it to ignore newlines.  If a context structure
+	was _not_ passed in, continue to treat newlines as garbage (this
+	is the historical behavior).  Formerly base64_decode.
+	(base64_decode_alloc_ctx): Formerly base64_decode_alloc.  Now
+	takes a decode context structure.
+	* lib/base64.h (base64_decode): Macro for four-argument calls.
+	(base64_decode_alloc): Likewise.
+	* lib/base64.c (base64_decode_ctx): If a decode context structure
+	was passed in use it to ignore newlines.  If a context structure
+	was _not_ passed in, continue to treat newlines as garbage (this
+	is the historical behavior).  Formerly base64_decode.
+	(base64_decode_alloc_ctx): Formerly base64_decode_alloc.  Now
+	takes a decode context structure.
+	* lib/base64.h (base64_decode): Macro for four-argument calls.
+	(base64_decode_alloc): Likewise.
+
 2008-05-19  Jim Meyering  <meyering@redhat.com>
 
 	avoid a warning from gcc
