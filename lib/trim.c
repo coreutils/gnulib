@@ -33,6 +33,13 @@
 
 #include "xalloc.h"
 
+/* Use this to suppress gcc's `...may be used before initialized' warnings. */
+#ifdef lint
+# define IF_LINT(Code) Code
+#else
+# define IF_LINT(Code) /* empty */
+#endif
+
 char *
 trim2(const char *s, int how)
 {
@@ -63,7 +70,7 @@ trim2(const char *s, int how)
       if (how != TRIM_LEADING) 
 	{
 	  int state = 0;
-	  char *r; /* used only while state = 2 */
+	  char *r IF_LINT (= NULL); /* used only while state = 2 */
 	  
 	  mbi_init (i, d, strlen (d));
 

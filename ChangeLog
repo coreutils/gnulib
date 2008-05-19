@@ -1,5 +1,9 @@
 2008-05-19  Jim Meyering  <meyering@redhat.com>
 
+	avoid a warning from gcc
+	* lib/trim.c (IF_LINT): Define.
+	(trim2): Use it to void a "may be used uninitialized" warning.
+
 	Fix doc typo.
 	* doc/glibc-functions/getpass.texi (getpass): s/PATH_MAX/PASS_MAX/.
 
