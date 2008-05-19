@@ -2,15 +2,23 @@
 @subsection @code{getpass}
 @findex getpass
 
-Gnulib module: ---
+Gnulib module: getpass or getpass-gnu
 
-Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{getpass} or @code{getpass-gnu}:
 @itemize
 @item
 This function is missing on some platforms:
 mingw, BeOS.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{getpass-gnu}:
+@itemize
+@item
+The gnulib implementation return a password of arbitrary length read
+from /dev/tty (or stdin), other implementations may truncate the
+password to PASS_MAX or 8 characters.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize
