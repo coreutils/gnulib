@@ -1,3 +1,7 @@
+2008-05-19  Martin Lambers  <marlam@marlam.de>  (tiny change)
+
+	* modules/getpass-gnu (Depends-on): Add fseeko.
+
 2008-05-19  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/base64-tests: New file.

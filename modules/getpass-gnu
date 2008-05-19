@@ -7,6 +7,7 @@ lib/getpass.c
 m4/getpass.m4
 
 Depends-on:
+fseeko
 getline
 stdbool
 
