@@ -1,3 +1,10 @@
+2008-05-19  Bruno Haible  <bruno@clisp.org>
+
+	* modules/propername (Notice, configure.ac): Put quoted "..." into
+	--keyword option.
+	* lib/propername.h: Update comments accordingly.
+	Reported by Eric Blake.
+
 2008-05-19  Martin Lambers  <marlam@marlam.de>  (tiny change)
 
 	* modules/getpass-gnu (Depends-on): Add fseeko.
