@@ -1,3 +1,8 @@
+2008-05-20  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-memcmp.c (main): Test also the sign of the result. Test
+	against two known bugs; code taken from autoconf's AC_FUNC_MEMCMP.
+
 2008-05-20  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/memcmp-tests: New file.
