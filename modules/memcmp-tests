@@ -1,0 +1,10 @@
+Files:
+tests/test-memcmp.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-memcmp
+check_PROGRAMS += test-memcmp

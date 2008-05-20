@@ -1,3 +1,8 @@
+2008-05-20  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/memcmp-tests: New file.
+	* tests/test-memcmp.c: New file.
+
 2008-05-19  Bruno Haible  <bruno@clisp.org>
 
 	* modules/propername (Notice, configure.ac): Put quoted "..." into

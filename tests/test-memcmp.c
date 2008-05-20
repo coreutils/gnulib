@@ -1,0 +1,52 @@
+/*
+ * Copyright (C) 2008 Free Software Foundation
+ * Written by Simon Josefsson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+
+#include <config.h>
+
+#include <string.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+	{								     \
+	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+	  fflush (stderr);						     \
+	  abort ();							     \
+	}								     \
+    }									     \
+  while (0)
+
+int
+main (void)
+{
+  char foo[] = "foo";
+  char foobar[] = "foobar";
+  char bar[] = "bar";
+
+  ASSERT (memcmp (NULL, NULL, 0) == 0);
+  ASSERT (memcmp (foo, foobar, 2) == 0);
+  ASSERT (memcmp (foo, foobar, 3) == 0);
+  ASSERT (memcmp (foo, foobar, 4) != 0);
+  ASSERT (memcmp (foo, bar, 1) != 0);
+  ASSERT (memcmp (foo, bar, 3) != 0);
+
+  return 0;
+}
