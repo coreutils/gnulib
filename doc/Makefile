@@ -1,5 +1,5 @@
 # $Id: Makefile,v 1.8 2007-07-06 22:56:38 haible Exp $
-# Makefile for gnulib doc.  
+# Makefile for gnulib doc.
 # Copyright (C) 2004, 2006-2008 Free Software Foundation, Inc.
 #
 # Copying and distribution of this file, with or without modification,

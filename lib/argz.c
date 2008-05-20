@@ -241,7 +241,7 @@ argz_count (const char *argz, size_t argz_len)
   size_t count = 0;
 
   assert ((argz && argz_len) || (!argz && !argz_len));
-  
+
   while (argz_len > 0)
     {
       size_t part_len = strlen (argz);
@@ -249,6 +249,6 @@ argz_count (const char *argz, size_t argz_len)
       argz_len -= part_len + 1;
       count++;
     }
-  
+
   return count;
 }

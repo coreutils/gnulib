@@ -9,7 +9,7 @@ Gnulib module: chown
 Portability problems fixed by Gnulib:
 @itemize
 @item
-When passed an argument of -1, some implementations really set the owner 
+When passed an argument of -1, some implementations really set the owner
 user/group id of the file to this value, rather than leaving that id of the
 file alone.
 @item

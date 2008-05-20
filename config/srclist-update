@@ -120,7 +120,7 @@ cat | while read src dst options; do
 
   # if src was executable, make dst executable, to placate git.
   test -x $src && chmod a+x $dst
-  
+
   if test ! -e $dst; then
     echo "## $srctmp $dst  # new"
     $chicken cp -p $srctmp $dst

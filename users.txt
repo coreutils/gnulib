@@ -55,7 +55,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   texinfo         http://cvs.sv.gnu.org/viewcvs/texinfo/texinfo/
   wget            http://hg.addictivecode.org/wget/mainline/
   wydawca         http://svn.gnu.org.ua/viewvc/wydawca/trunk/
-  wyslij-po       http://svn.gnu.org.ua/viewvc/wyslij-po/trunk/ 
+  wyslij-po       http://svn.gnu.org.ua/viewvc/wyslij-po/trunk/
 
 The following packages are using gnulib without gnulib-tool:
 

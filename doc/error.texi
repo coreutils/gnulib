@@ -18,7 +18,7 @@ does not depend on the @code{progname} module.  Why?  Because
 @code{error} is released under the LGPL, whereas @code{progname} is
 GPL.  RMS does not want additional baggage accompanying the
 @code{error} module, so an LGPL user must provide their own
-replacement @code{program_name}, and a GPL user should manually 
+replacement @code{program_name}, and a GPL user should manually
 specify using the @code{progname} module.
 
 Additionally, using the @code{progname} module is not something that

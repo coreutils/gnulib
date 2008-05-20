@@ -70,16 +70,16 @@ changequote(,)dnl
           dnl                         ***Loader Section***
           dnl                       Loader Header Information
           dnl VERSION#         #SYMtableENT     #RELOCent        LENidSTR
-          dnl 0x00000001       0x00000005       0x0000000d       0x0000001e       
-          dnl 
+          dnl 0x00000001       0x00000005       0x0000000d       0x0000001e
+          dnl
           dnl #IMPfilID        OFFidSTR         LENstrTBL        OFFstrTBL
-          dnl 0x00000002       0x00000134       0x0000000d       0x00000152       
-          dnl 
-          dnl 
+          dnl 0x00000002       0x00000134       0x0000000d       0x00000152
+          dnl
+          dnl
           dnl                         ***Import File Strings***
-          dnl INDEX  PATH                          BASE                MEMBER              
-          dnl 0      /usr/lib:/lib                                                         
-          dnl 1                                    libc.a              shr.o               
+          dnl INDEX  PATH                          BASE                MEMBER
+          dnl 0      /usr/lib:/lib
+          dnl 1                                    libc.a              shr.o
           dnl
           LDDPOSTPROC="2>/dev/null | sed -e '/^[^0-9]/d' -e '/^0x/d' | sed -n -e 's,^[0-9]*         *\\([^ 	]*\\).*\$,\\1,p' | sed -e 's,^.*/,,'"
           ;;
@@ -93,15 +93,15 @@ changequote(,)dnl
         hpux*)
           LDDPROG="chatr"
           dnl The output of "LC_ALL=C chatr program" looks like this:
-          dnl program: 
-          dnl          shared executable 
+          dnl program:
+          dnl          shared executable
           dnl          shared library dynamic path search:
-          dnl              SHLIB_PATH     disabled  second 
+          dnl              SHLIB_PATH     disabled  second
           dnl              embedded path  disabled  first  Not Defined
           dnl          shared library list:
           dnl              dynamic   /usr/lib/libc.2
           dnl          shared library binding:
-          dnl              deferred 
+          dnl              deferred
           dnl          global hash table disabled
           dnl          plabel caching disabled
           dnl          global hash array size:1103
@@ -126,7 +126,7 @@ changequote(,)dnl
           dnl a.out:
           dnl          32-bit ELF executable
           dnl          shared library dynamic path search:
-          dnl              LD_LIBRARY_PATH    enabled  first 
+          dnl              LD_LIBRARY_PATH    enabled  first
           dnl              SHLIB_PATH         enabled  second
           dnl              embedded path      enabled  third  /usr/lib/hpux32:/opt/langtools/lib/hpux32
           dnl          shared library list:
@@ -144,7 +144,7 @@ changequote(,)dnl
           dnl                  7 text     04000000     z---c-    D (default)
           dnl                  8 data     40000000     ---m--    D (default)
           dnl          executable from stack: D (default)
-          dnl          kernel assisted branch prediction enabled 
+          dnl          kernel assisted branch prediction enabled
           dnl          lazy swap allocation for dynamic segments disabled
           dnl          nulptr references disabled
           dnl          address space model: default

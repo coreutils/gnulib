@@ -889,7 +889,7 @@ __argp_parse (const struct argp *argp, int argc, char **argv, unsigned flags,
 #endif
     }
 #endif
-	
+
   if (! (flags & ARGP_NO_HELP))
     /* Add our own options.  */
     {

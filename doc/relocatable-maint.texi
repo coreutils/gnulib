@@ -46,7 +46,7 @@ sets the environment variable that controls shared library searching
 
 This approach does not always work.  On OpenBSD and OpenServer,
 prereleases of Libtool 1.5 put absolute file names of libraries in
-executables, which prevents searching any other locations. 
+executables, which prevents searching any other locations.
 
 @item
 On Windows, the executable's own directory is searched for libraries,
@@ -82,7 +82,7 @@ bindtextdomain (PACKAGE, LOCALEDIR);
 @noindent
 becomes:
 
-@example 
+@example
 bindtextdomain (PACKAGE, relocate (LOCALEDIR));
 @end example
 
@@ -126,7 +126,7 @@ endif
 
 @item
 You may also need to add one or two variable assignments to your
-@file{configure.ac}.  
+@file{configure.ac}.
 
 If your package (or any package you rely on, e.g.@: gettext-runtime)
 will be relocated together with a set of installed shared libraries,

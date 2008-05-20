@@ -88,11 +88,11 @@ struct uparams
   int dup_args_note;
 
   /* Various output columns.  */
-  int short_opt_col;      /* column in which short options start */   
-  int long_opt_col;       /* column in which long options start */ 
+  int short_opt_col;      /* column in which short options start */
+  int long_opt_col;       /* column in which long options start */
   int doc_opt_col;        /* column in which doc options start */
   int opt_doc_col;        /* column in which option text starts */
-  int header_col;         /* column in which group headers are printed */ 
+  int header_col;         /* column in which group headers are printed */
   int usage_indent;       /* indentation of wrapped usage lines */
   int rmargin;            /* right margin used for wrapping */
 
@@ -160,7 +160,7 @@ fill_in_uparams (const struct argp_state *state)
 {
   const char *var = getenv ("ARGP_HELP_FMT");
   struct uparams new_params = uparams;
-  
+
 #define SKIPWS(p) do { while (isspace ((unsigned char) *p)) p++; } while (0);
 
   if (var)
@@ -169,7 +169,7 @@ fill_in_uparams (const struct argp_state *state)
       while (*var)
 	{
 	  SKIPWS (var);
-	  
+
 	  if (isalpha ((unsigned char) *var))
 	    {
 	      size_t var_len;
@@ -180,9 +180,9 @@ fill_in_uparams (const struct argp_state *state)
 	      while (isalnum ((unsigned char) *arg) || *arg == '-' || *arg == '_')
 		arg++;
 	      var_len = arg - var;
-	      
+
 	      SKIPWS (arg);
-	      
+
 	      if (*arg == '\0' || *arg == ',')
 		unspec = 1;
 	      else if (*arg == '=')
@@ -190,7 +190,7 @@ fill_in_uparams (const struct argp_state *state)
 		  arg++;
 		  SKIPWS (arg);
 		}
-	      
+
 	      if (unspec)
 		{
 		  if (var[0] == 'n' && var[1] == 'o' && var[2] == '-')
@@ -209,7 +209,7 @@ fill_in_uparams (const struct argp_state *state)
 		    arg++;
 		  SKIPWS (arg);
 		}
-	      
+
 	      for (un = uparam_names; un->name; un++)
 		if (strlen (un->name) == var_len
 		    && strncmp (var, un->name, var_len) == 0)
@@ -676,7 +676,7 @@ hol_cluster_cmp (const struct hol_cluster *cl1, const struct hol_cluster *cl2)
 {
   /* If one cluster is deeper than the other, use its ancestor at the same
      level, so that finding the common ancestor is straightforward.
-     
+
      clN->depth > 0 means that clN->parent != NULL (see hol_add_cluster) */
   while (cl1->depth > cl2->depth)
     cl1 = cl1->parent;
@@ -806,7 +806,7 @@ hol_entry_cmp (const struct hol_entry *entry1,
 #endif
 	  /* Compare ignoring case, except when the options are both the
 	     same letter, in which case lower-case always comes first.  */
-	  return lower_cmp ? lower_cmp : 
+	  return lower_cmp ? lower_cmp :
                     (rc = first2 - first1) ?
 	             rc : HOL_ENTRY_PTRCMP(entry1, entry2);
 	}

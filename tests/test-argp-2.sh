@@ -28,7 +28,7 @@ func_compare() {
          s,: [^ ]*/test-argp,: test-argp,
          s,: test-argp\.exe,: test-argp,
         }' | LC_ALL=C tr -d '\r' | diff -c $TMP -
-}  
+}
 
 ####
 # Test --usage output
