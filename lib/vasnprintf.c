@@ -117,13 +117,6 @@
 # include "fpucw.h"
 #endif
 
-/* Use this to suppress gcc's `...may be used before initialized' warnings. */
-#ifdef lint
-# define IF_LINT(Code) Code
-#else
-# define IF_LINT(Code) /* empty */
-#endif
-
 #if HAVE_WCHAR_T
 # if HAVE_WCSLEN
 #  define local_wcslen wcslen
@@ -206,6 +199,14 @@ local_wcslen (const wchar_t *s)
 #endif
 /* Here we need to call the native sprintf, not rpl_sprintf.  */
 #undef sprintf
+
+/* GCC >= 4.0 with -Wall emits unjustified "... may be used uninitialized"
+   warnings in this file.  Use -Dlint to suppress them.  */
+#ifdef lint
+# define IF_LINT(Code) Code
+#else
+# define IF_LINT(Code) /* empty */
+#endif
 
 /* Avoid some warnings from "gcc -Wshadow".
    This file doesn't use the exp() and remainder() functions.  */
@@ -3707,7 +3708,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #endif
 		TCHAR_T *fbp;
 		unsigned int prefix_count;
-		int prefixes[2];
+		int prefixes[2] IF_LINT (= { 0, 0 });
 #if !USE_SNPRINTF
 		size_t tmp_length;
 		TCHAR_T tmpbuf[700];

@@ -1,3 +1,9 @@
+2008-05-21  Bruno Haible  <bruno@clisp.org>
+
+	Avoid one more warning from gcc.
+	* lib/vasnprintf.c (IF_LINT): Update comments.
+	(VASNPRINTF): Use it also for the 'prefix' array initializer.
+
 2008-05-21  Jim Meyering  <meyering@redhat.com>
 
 	avoid a warning from gcc
