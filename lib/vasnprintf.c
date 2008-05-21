@@ -3708,7 +3708,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #endif
 		TCHAR_T *fbp;
 		unsigned int prefix_count;
-		int prefixes[2] IF_LINT (= { 0, 0 });
+		int prefixes[2] IF_LINT (= { 0 });
 #if !USE_SNPRINTF
 		size_t tmp_length;
 		TCHAR_T tmpbuf[700];
