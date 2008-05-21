@@ -1,3 +1,8 @@
+2008-05-21  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/memcmp.m4: When cross-compiling, assume memcmp works if it is
+	declared.
+
 2008-05-20  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-memcmp.c (main): Test also the sign of the result. Test
