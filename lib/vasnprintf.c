@@ -117,6 +117,13 @@
 # include "fpucw.h"
 #endif
 
+/* Use this to suppress gcc's `...may be used before initialized' warnings. */
+#ifdef lint
+# define IF_LINT(Code) Code
+#else
+# define IF_LINT(Code) /* empty */
+#endif
+
 #if HAVE_WCHAR_T
 # if HAVE_WCSLEN
 #  define local_wcslen wcslen
@@ -1205,7 +1212,7 @@ scale10_round_decimal_decoded (int e, mpn_t m, void *memory, int n)
 static char *
 scale10_round_decimal_long_double (long double x, int n)
 {
-  int e;
+  int e IF_LINT(= 0);
   mpn_t m;
   void *memory = decode_long_double (x, &e, &m);
   return scale10_round_decimal_decoded (e, m, memory, n);

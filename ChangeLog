@@ -1,3 +1,10 @@
+2008-05-21  Jim Meyering  <meyering@redhat.com>
+
+	avoid a warning from gcc
+	* lib/vasnprintf.c (IF_LINT): Define.
+	(scale10_round_decimal_long_double):
+	Use it to avoid a "may be used uninitialized" warning.
+
 2008-05-21  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/memcmp.m4: When cross-compiling, assume memcmp works if it is
