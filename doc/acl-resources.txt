@@ -82,6 +82,7 @@ Library:
 Functions:
   acl
   facl
+Functions in libsec:
   aclcheck
   aclfrommode
   aclfromtext
