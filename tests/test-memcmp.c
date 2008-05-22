@@ -37,8 +37,10 @@
 int
 main (void)
 {
+  void *nil = NULL; /* Use to avoid gcc attribute((nonnull)) warnings.  */
+
   /* Test equal / not equal distinction.  */
-  ASSERT (memcmp (NULL, NULL, 0) == 0);
+  ASSERT (memcmp (nil, nil, 0) == 0);
   ASSERT (memcmp ("foo", "foobar", 2) == 0);
   ASSERT (memcmp ("foo", "foobar", 3) == 0);
   ASSERT (memcmp ("foo", "foobar", 4) != 0);

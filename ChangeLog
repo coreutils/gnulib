@@ -1,3 +1,8 @@
+2008-05-22  Eric Blake  <ebb9@byu.net>
+
+	Avoid gcc warning.
+	* tests/test-memcmp.c (main): Pass NULL indirectly.
+
 2008-05-21  Bruno Haible  <bruno@clisp.org>
 
 	Add reference doc about ACLs.
