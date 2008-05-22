@@ -6,6 +6,7 @@ lib/acl.h
 lib/acl.c
 lib/acl-internal.h
 lib/acl_entries.c
+lib/copy-acl.c
 lib/file-has-acl.c
 m4/acl.m4
 
@@ -19,6 +20,7 @@ configure.ac:
 gl_FUNC_ACL
 
 Makefile.am:
+lib_SOURCES += acl.c copy-acl.c file-has-acl.c
 
 Include:
 "acl.h"

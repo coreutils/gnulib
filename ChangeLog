@@ -1,5 +1,14 @@
 2008-05-22  Bruno Haible  <bruno@clisp.org>
 
+	Split off copy_acl function to separate file.
+	* lib/copy-acl.c: New file, extracted from lib/acl.c.
+	* lib/acl.c (copy_acl): Moved function to separate file.
+	* m4/acl.m4 (gl_FUNC_ACL): Remove unconditional AC_LIBOBJs.
+	* modules/acl (Files): Add lib/copy-acl.c.
+	(Makefiles.am): Augment lib_SOURCES.
+
+2008-05-22  Bruno Haible  <bruno@clisp.org>
+
 	* modules/copy-file-tests: New file.
 	* tests/test-copy-file.sh: New file.
 	* tests/test-copy-file.c: New file.
