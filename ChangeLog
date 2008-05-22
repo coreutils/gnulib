@@ -1,3 +1,10 @@
+2008-05-22  Bruno Haible  <bruno@clisp.org>
+
+	* modules/copy-file-tests: New file.
+	* tests/test-copy-file.sh: New file.
+	* tests/test-copy-file.c: New file.
+	* tests/test-copy-file-sameacls.c: New file.
+
 2008-05-22  Eric Blake  <ebb9@byu.net>
 
 	Avoid gcc warning.

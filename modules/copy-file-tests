@@ -1,0 +1,33 @@
+Files:
+tests/test-copy-file.sh
+tests/test-copy-file.c
+tests/test-copy-file-sameacls.c
+
+Depends-on:
+acl
+progname
+read-file
+xalloc
+
+configure.ac:
+AC_REQUIRE([gl_FUNC_ACL])
+save_LIBS="$LIBS"
+LIBS="$LIB_ACL $LIBS"
+dnl Test for functions present on Linux, FreeBSD, MacOS X, IRIX, Tru64, Cygwin.
+AC_CHECK_FUNCS([acl_get_file])
+dnl Test for functions present on Solaris.
+AC_CHECK_FUNCS([acl])
+dnl Test for functions present on HP-UX.
+AC_CHECK_FUNCS([getacl])
+dnl Test for functions present on AIX.
+AC_CHECK_FUNCS([aclx_get])
+dnl Test for functions present on older AIX.
+AC_CHECK_FUNCS([statacl])
+LIBS="$save_LIBS"
+
+Makefile.am:
+TESTS += test-copy-file.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-copy-file test-copy-file-sameacls
+test_copy_file_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@
+test_copy_file_sameacls_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@
