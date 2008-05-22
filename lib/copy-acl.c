@@ -40,6 +40,7 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
 
 #if USE_ACL && HAVE_ACL_GET_FILE && HAVE_ACL_SET_FILE && HAVE_ACL_FREE
   /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
+  /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
 
   acl_t acl;
   if (HAVE_ACL_GET_FD && source_desc != -1)
@@ -70,12 +71,13 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
 	  int n = acl_entries (acl);
 
 	  acl_free (acl);
-	  /* On most hosts an ACL is trivial if n == 3, and it cannot be
-	     less than 3.  On IRIX 6.5 it is also trivial if n == -1.
+	  /* On most hosts with MODE_INSIDE_ACL an ACL is trivial if n == 3,
+	     and it cannot be less than 3.  On IRIX 6.5 it is also trivial if
+	     n == -1.
 	     For simplicity and safety, assume the ACL is trivial if n <= 3.
 	     Also see file-has-acl.c for some of the other possibilities;
 	     it's not clear whether that complexity is needed here.  */
-	  if (n <= 3)
+	  if (n <= 3 * MODE_INSIDE_ACL)
 	    {
 	      if (chmod_or_fchmod (dst_name, dest_desc, mode) != 0)
 		saved_errno = errno;
@@ -97,10 +99,10 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
   else
     acl_free (acl);
 
-  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
+  if (!MODE_INSIDE_ACL || (mode & (S_ISUID | S_ISGID | S_ISVTX)))
     {
-      /* We did not call chmod so far, so the special bits have not yet
-         been set.  */
+      /* We did not call chmod so far, and either the mode and the ACL are
+	 separate or special bits are to be set which don't fit into ACLs.  */
 
       if (chmod_or_fchmod (dst_name, dest_desc, mode) != 0)
 	{

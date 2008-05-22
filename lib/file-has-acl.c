@@ -1,6 +1,6 @@
 /* Test whether a file has a nontrivial access control list.
 
-   Copyright (C) 2002, 2003, 2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ file_has_acl (char const *name, struct stat const *sb)
 #elif USE_ACL && HAVE_ACL_GET_FILE && HAVE_ACL_FREE
 
       /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
+      /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
       int ret;
 
       if (HAVE_ACL_EXTENDED_FILE)
@@ -56,7 +57,7 @@ file_has_acl (char const *name, struct stat const *sb)
 	  acl_t acl = acl_get_file (name, ACL_TYPE_ACCESS);
 	  if (acl)
 	    {
-	      ret = (3 < acl_entries (acl));
+	      ret = (3 * MODE_INSIDE_ACL < acl_entries (acl));
 	      acl_free (acl);
 	      if (ret == 0 && S_ISDIR (sb->st_mode))
 		{

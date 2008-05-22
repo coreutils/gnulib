@@ -48,32 +48,42 @@ chmod_or_fchmod (const char *name, int desc, mode_t mode)
 int
 qset_acl (char const *name, int desc, mode_t mode)
 {
-#if USE_ACL && HAVE_ACL_SET_FILE && HAVE_ACL_FREE
+#if USE_ACL
+# if MODE_INSIDE_ACL
+#  if HAVE_ACL_SET_FILE && HAVE_ACL_FREE
   /* POSIX 1003.1e draft 17 (abandoned) specific version.  */
+  /* Linux, FreeBSD, IRIX, Tru64 */
 
-  /* We must also have have_acl_from_text and acl_delete_def_file.
+  /* We must also have acl_from_text and acl_delete_def_file.
      (acl_delete_def_file could be emulated with acl_init followed
       by acl_set_file, but acl_set_file with an empty acl is
       unspecified.)  */
 
-# ifndef HAVE_ACL_FROM_TEXT
-#  error Must have acl_from_text (see POSIX 1003.1e draft 17).
-# endif
-# ifndef HAVE_ACL_DELETE_DEF_FILE
-#  error Must have acl_delete_def_file (see POSIX 1003.1e draft 17).
-# endif
+#   ifndef HAVE_ACL_FROM_TEXT
+#    error Must have acl_from_text (see POSIX 1003.1e draft 17).
+#   endif
+#   ifndef HAVE_ACL_DELETE_DEF_FILE
+#    error Must have acl_delete_def_file (see POSIX 1003.1e draft 17).
+#   endif
 
   acl_t acl;
   int ret;
 
-  if (HAVE_ACL_FROM_MODE)
+  if (HAVE_ACL_FROM_MODE) /* Linux */
     {
       acl = acl_from_mode (mode);
       if (!acl)
 	return -1;
     }
-  else
+  else /* FreeBSD, IRIX, Tru64 */
     {
+      /* If we were to create the ACL using the functions acl_init(),
+	 acl_create_entry(), acl_set_tag_type(), acl_set_qualifier(),
+	 acl_get_permset(), acl_clear_perm[s](), acl_add_perm(), we
+	 would need to create a qualifier.  I don't know how to do this.
+	 So create it using acl_from_text().  */
+
+#   if (HAVE_ACL_DELETE_FD_NP && HAVE_ACL_DELETE_FILE_NP) || HAVE_ACL_TO_SHORT_TEXT /* FreeBSD, IRIX */
       char acl_text[] = "u::---,g::---,o::---";
 
       if (mode & S_IRUSR) acl_text[ 3] = 'r';
@@ -89,6 +99,9 @@ qset_acl (char const *name, int desc, mode_t mode)
       acl = acl_from_text (acl_text);
       if (!acl)
 	return -1;
+#   else /* Unknown flavor of POSIX-like ACLs */
+      return chmod_or_fchmod (name, desc, mode);
+#   endif
     }
   if (HAVE_ACL_SET_FD && desc != -1)
     ret = acl_set_fd (desc, acl);
@@ -124,10 +137,8 @@ qset_acl (char const *name, int desc, mode_t mode)
 	return -1;
     }
   return 0;
-#else
 
-# if USE_ACL && defined ACL_NO_TRIVIAL
-
+#  elif defined ACL_NO_TRIVIAL
   /* Solaris 10, with NFSv4 ACLs.  */
   acl_t *aclp;
   char acl_text[] = "user::---,group::---,mask:---,other:---";
@@ -158,10 +169,66 @@ qset_acl (char const *name, int desc, mode_t mode)
 	  return acl_result;
 	}
     }
-# endif
 
   return chmod_or_fchmod (name, desc, mode);
 
+#  else /* Unknown flavor of ACLs */
+  return chmod_or_fchmod (name, desc, mode);
+#  endif
+# else /* !MODE_INSIDE_ACL */
+#  if HAVE_ACL_SET_FILE && HAVE_ACL_FREE
+  /* POSIX 1003.1e draft 17 (abandoned) specific version.  */
+  /* MacOS X */
+
+  acl_t acl;
+  int ret;
+
+  /* Remove the ACL if the file has ACLs.  */
+  if (HAVE_ACL_GET_FD && desc != -1)
+    acl = acl_get_fd (desc);
+  else
+    acl = acl_get_file (name, ACL_TYPE_ACCESS);
+  if (acl)
+    {
+#   if HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP /* MacOS X */
+      static const char empty_acl_text[] = "!#acl 1\n";
+#   else /* Unknown flavor of POSIX-like ACLs */
+#    error Unknown flavor of POSIX-like ACLs - add support for your platform.
+#   endif
+
+      acl = acl_from_text (empty_acl_text);
+      if (acl)
+	{
+	  if (HAVE_ACL_SET_FD && desc != -1)
+	    ret = acl_set_fd (desc, acl);
+	  else
+	    ret = acl_set_file (name, ACL_TYPE_ACCESS, acl);
+	  if (ret != 0)
+	    {
+	      int saved_errno = errno;
+
+	      acl_free (acl);
+
+	      if (ACL_NOT_WELL_SUPPORTED (saved_errno))
+		{
+		  if (chmod_or_fchmod (name, desc, mode) != 0)
+		    saved_errno = errno;
+		  else
+		    return 0;
+		}
+	      errno = saved_errno;
+	      return -1;
+	    }
+	}
+    }
+
+  return chmod_or_fchmod (name, desc, mode);
+#  else /* Unknown flavor of ACLs */
+  return chmod_or_fchmod (name, desc, mode);
+#  endif
+# endif
+#else /* !USE_ACL */
+  return chmod_or_fchmod (name, desc, mode);
 #endif
 }
 

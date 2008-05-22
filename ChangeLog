@@ -1,5 +1,19 @@
 2008-05-22  Bruno Haible  <bruno@clisp.org>
 
+	Make copy_acl work on MacOS X 10.5.
+	* lib/acl-internal.h (MODE_INSIDE_ACL): New macro.
+	(ACL_NOT_WELL_SUPPORTED): On MacOS X, also handle ENOENT.
+	* lib/acl.c (qset_acl): Add different code branch for !MODE_INSIDE_ACL.
+	If MODE_INSIDE_ACL, don't assume that every system has the same text
+	representation for ACLs as FreeBSD.
+	* lib/copy-acl.c (copy_acl): Add support for platforms with
+	!MODE_INSIDE_ACL.
+	* lib/file-has-acl.c (file_has_acl): Likewise.
+	* m4/acl.m4 (gl_FUNC_ACL): Test for some functions that are witness of
+	FreeBSD, MacOS X, or IRIX, respectively.
+
+2008-05-22  Bruno Haible  <bruno@clisp.org>
+
 	* lib/acl.h: Don't include <sys/acl.h>.
 	(GETACLCNT): Move fallback to lib/acl-internal.h.
 	* lib/acl-internal.h: Include <sys/acl.h> here.

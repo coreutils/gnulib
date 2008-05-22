@@ -1,5 +1,5 @@
 # acl.m4 - check for access control list (ACL) primitives
-# serial 3
+# serial 4
 
 # Copyright (C) 2002, 2004-2008 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -35,7 +35,10 @@ AC_DEFUN([gl_FUNC_ACL],
 	      AC_CHECK_FUNCS(
 		[acl_get_file acl_get_fd acl_set_file acl_set_fd \
 		 acl_free acl_from_mode acl_from_text \
-		 acl_delete_def_file acl_extended_file])
+		 acl_delete_def_file acl_extended_file \
+		 acl_delete_fd_np acl_delete_file_np \
+		 acl_copy_ext_native acl_create_entry_np \
+		 acl_to_short_text])
 	      if test $ac_cv_func_acl_get_file = yes; then
 		# If the acl_get_file bug is detected, disable all ACL support.
 		gl_ACL_GET_FILE( , [use_acl=0])
