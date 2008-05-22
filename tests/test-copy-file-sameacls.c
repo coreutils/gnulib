@@ -119,7 +119,7 @@ main (int argc, char *argv[])
       }
   }
   {
-#if HAVE_ACL_GET_FILE /* Linux, FreeBSD, MacOS X, IRIX, Tru64, Cygwin */
+#if HAVE_ACL_GET_FILE /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
     acl_t acl1;
     char *text1;
     int errno1;
@@ -213,7 +213,7 @@ main (int argc, char *argv[])
 	    return 1;
 	  }
       }
-#elif HAVE_ACL && defined GETACL /* Solaris, not HP-UX */
+#elif HAVE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
   int count1;
   int count2;
 
