@@ -1,6 +1,6 @@
 /* Internal implementation of access control lists.
 
-   Copyright (C) 2002, 2003, 2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,6 +22,15 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+/* All systems define the ACL related API in <sys/acl.h>.  */
+#if HAVE_SYS_ACL_H
+# include <sys/acl.h>
+#endif
+#if defined HAVE_ACL && ! defined GETACLCNT && defined ACL_CNT
+# define GETACLCNT ACL_CNT
+#endif
+
+/* On Linux, additional ACL related API is available in <acl/libacl.h>.  */
 #ifdef HAVE_ACL_LIBACL_H
 # include <acl/libacl.h>
 #endif

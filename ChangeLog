@@ -1,5 +1,12 @@
 2008-05-22  Bruno Haible  <bruno@clisp.org>
 
+	* lib/acl.h: Don't include <sys/acl.h>.
+	(GETACLCNT): Move fallback to lib/acl-internal.h.
+	* lib/acl-internal.h: Include <sys/acl.h> here.
+	(GETACLCNT): New macro fallback, moved here from lib/acl.h.
+
+2008-05-22  Bruno Haible  <bruno@clisp.org>
+
 	Split off copy_acl function to separate file.
 	* lib/copy-acl.c: New file, extracted from lib/acl.c.
 	* lib/acl.c (copy_acl): Moved function to separate file.
