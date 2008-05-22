@@ -407,7 +407,7 @@ cd "$builddir" ||
         func_test_copy tmpfile0 tmpfile2
 
         # Set an ACL for a group.
-        /bin/chmod +a "group daemon allow read" tmpfile0
+        /bin/chmod +a "group:daemon allow read" tmpfile0
 
         func_test_copy tmpfile0 tmpfile3
 
@@ -422,7 +422,7 @@ cd "$builddir" ||
         func_test_copy tmpfile0 tmpfile5
 
         # Remove the ACL for the group.
-        /bin/chmod -a "group daemon allow read" tmpfile0
+        /bin/chmod -a "group:daemon allow read" tmpfile0
 
         func_test_copy tmpfile0 tmpfile7
 
