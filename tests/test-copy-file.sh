@@ -47,7 +47,7 @@ cd "$builddir" ||
 ( cd "$tmp"
 
   # Prepare tmpfile0.
-  rm -f tmpfile[0-9] tmpaclout[12]
+  rm -f tmpfile[0-9] tmpaclout[0-2]
   echo "Simple contents" > tmpfile0
   chmod 600 tmpfile0
 
@@ -322,7 +322,7 @@ cd "$builddir" ||
         func_test_copy tmpfile0 tmpfile3
 
         # Set an ACL for other.
-        setacl -u other:4 tmpfile0
+        setacl -u other::4 tmpfile0
 
         func_test_copy tmpfile0 tmpfile4
 
@@ -331,10 +331,12 @@ cd "$builddir" ||
 
         func_test_copy tmpfile0 tmpfile5
 
-        # Remove the ACL for other.
-        setacl -x other:4 tmpfile0
+        if false; then # would give an error "can't set ACL: Invalid argument"
+          # Remove the ACL for other.
+          setacl -x other::4 tmpfile0
 
-        func_test_copy tmpfile0 tmpfile6
+          func_test_copy tmpfile0 tmpfile6
+        fi
 
         # Remove the ACL for the group.
         setacl -x group:$agid:4 tmpfile0
@@ -350,7 +352,8 @@ cd "$builddir" ||
         # Copy ACLs from a file that has no ACLs.
         echo > tmpfile9
         chmod a+x tmpfile9
-        getacl tmpfile9 | setacl -b -U - tmpfile0
+        getacl tmpfile9 > tmpaclout0
+        setacl -b -U tmpaclout0 tmpfile0
         rm -f tmpfile9
 
         func_test_copy tmpfile0 tmpfile9
@@ -478,7 +481,7 @@ cd "$builddir" ||
     esac
   fi
 
-  rm -f tmpfile[0-9] tmpaclout[12]
+  rm -f tmpfile[0-9] tmpaclout[0-2]
 ) || exit 1
 
 rm -rf "$tmp"
