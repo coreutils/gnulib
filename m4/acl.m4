@@ -1,5 +1,5 @@
 # acl.m4 - check for access control list (ACL) primitives
-# serial 4
+# serial 6
 
 # Copyright (C) 2002, 2004-2008 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -16,6 +16,7 @@ AC_DEFUN([gl_FUNC_ACL],
 
   LIB_ACL=
   use_acl=0
+  AC_REQUIRE([AC_C_INLINE])
   if test "x$enable_acl" != "xno"; then
     dnl Prerequisites of lib/acl.c.
     AC_CHECK_HEADERS(sys/acl.h)
@@ -29,7 +30,8 @@ AC_DEFUN([gl_FUNC_ACL],
 	 AC_CHECK_FUNCS([acl_trivial])],
 	[AC_CHECK_FUNCS([acl_trivial])
 	 if test $ac_cv_func_acl_trivial != yes; then
-	   AC_SEARCH_LIBS([acl_get_file], [acl],
+	   dnl -lacl is needed on Linux, -lpacl is needed on OSF/1.
+	   AC_SEARCH_LIBS([acl_get_file], [acl pacl],
 	     [test "$ac_cv_search_acl_get_file" = "none required" ||
 	      LIB_ACL=$ac_cv_search_acl_get_file
 	      AC_CHECK_FUNCS(
@@ -38,7 +40,7 @@ AC_DEFUN([gl_FUNC_ACL],
 		 acl_delete_def_file acl_extended_file \
 		 acl_delete_fd_np acl_delete_file_np \
 		 acl_copy_ext_native acl_create_entry_np \
-		 acl_to_short_text])
+		 acl_to_short_text acl_free_text])
 	      if test $ac_cv_func_acl_get_file = yes; then
 		# If the acl_get_file bug is detected, disable all ACL support.
 		gl_ACL_GET_FILE( , [use_acl=0])

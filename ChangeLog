@@ -1,5 +1,16 @@
 2008-05-22  Bruno Haible  <bruno@clisp.org>
 
+	Add support for ACLs on OSF/1.
+	* lib/acl-internal.h (acl_get_fd, acl_set_fd): New inline function
+	replacements.
+	(acl_free_text): New macro fallback.
+	* lib/acl_entries.c (acl_entries): Use acl_free_text instead of
+	acl_free.
+	* m4/acl.m4 (gl_FUNC_ACL): Look also in libpacl library. Test for
+	acl_free_text function. Require AC_C_INLINE.
+	
+2008-05-22  Bruno Haible  <bruno@clisp.org>
+
 	Make copy_acl work on MacOS X 10.5.
 	* lib/acl-internal.h (MODE_INSIDE_ACL): New macro.
 	(ACL_NOT_WELL_SUPPORTED): On MacOS X, also handle ENOENT.

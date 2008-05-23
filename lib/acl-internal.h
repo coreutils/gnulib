@@ -59,17 +59,46 @@
 #endif
 
 /* POSIX 1003.1e (draft 17) */
-#ifndef HAVE_ACL_GET_FD
+#ifdef HAVE_ACL_GET_FD
+/* Most platforms have a 1-argument acl_get_fd, only OSF/1 has a 2-argument
+   macro(!).  */
+# if HAVE_ACL_FREE_TEXT /* OSF/1 */
+static inline acl_t
+rpl_acl_get_fd (int fd)
+{
+  return acl_get_fd (fd, ACL_TYPE_ACCESS);
+}
+#  undef acl_get_fd
+#  define acl_get_fd rpl_acl_get_fd
+# endif
+#else
 # define HAVE_ACL_GET_FD false
 # undef acl_get_fd
 # define acl_get_fd(fd) (NULL)
 #endif
 
 /* POSIX 1003.1e (draft 17) */
-#ifndef HAVE_ACL_SET_FD
+#ifdef HAVE_ACL_SET_FD
+/* Most platforms have a 2-argument acl_set_fd, only OSF/1 has a 3-argument
+   macro(!).  */
+# if HAVE_ACL_FREE_TEXT /* OSF/1 */
+static inline int
+rpl_acl_set_fd (int fd, acl_t acl)
+{
+  return acl_set_fd (fd, ACL_TYPE_ACCESS, acl);
+}
+#  undef acl_set_fd
+#  define acl_set_fd rpl_acl_set_fd
+# endif
+#else
 # define HAVE_ACL_SET_FD false
 # undef acl_set_fd
 # define acl_set_fd(fd, acl) (-1)
+#endif
+
+/* POSIX 1003.1e (draft 13) */
+#if ! HAVE_ACL_FREE_TEXT
+# define acl_free_text(buf) acl_free (buf)
 #endif
 
 /* Linux-specific */
