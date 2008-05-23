@@ -83,8 +83,11 @@ qset_acl (char const *name, int desc, mode_t mode)
 	 would need to create a qualifier.  I don't know how to do this.
 	 So create it using acl_from_text().  */
 
-#   if (HAVE_ACL_DELETE_FD_NP && HAVE_ACL_DELETE_FILE_NP) || HAVE_ACL_TO_SHORT_TEXT /* FreeBSD, IRIX */
+#   if HAVE_ACL_FREE_TEXT /* Tru64 */
+      char acl_text[] = "u::---,g::---,o::---,";
+#   else /* FreeBSD, IRIX */
       char acl_text[] = "u::---,g::---,o::---";
+#   endif
 
       if (mode & S_IRUSR) acl_text[ 3] = 'r';
       if (mode & S_IWUSR) acl_text[ 4] = 'w';
@@ -99,9 +102,6 @@ qset_acl (char const *name, int desc, mode_t mode)
       acl = acl_from_text (acl_text);
       if (!acl)
 	return -1;
-#   else /* Unknown flavor of POSIX-like ACLs */
-      return chmod_or_fchmod (name, desc, mode);
-#   endif
     }
   if (HAVE_ACL_SET_FD && desc != -1)
     ret = acl_set_fd (desc, acl);
