@@ -2,6 +2,7 @@
 
 	* tests/test-sameacls.c: Renamed from tests/test-copy-file-sameacls.c.
 	* modules/copy-file-tests (Files, Makefile.am): Update.
+	* tests/test-copy-file.c (func_test_copy): Update.
 
 2008-05-24  Andreas Färber  <andreas.faerber@web.de>  (tiny change)
 
