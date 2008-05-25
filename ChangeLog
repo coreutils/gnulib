@@ -1,5 +1,12 @@
 2008-05-25  Jim Meyering  <meyering@redhat.com>
 
+	useless-if-before-free: freed expr may have white-space differences
+	* build-aux/useless-if-before-free: Recognize cases in which the
+	freed expression differs from the tested one in embedded white
+	space, e.g., if (p[i + 1]) free(p[i+1]).  Correct thinko in prev:
+	$1 was used, so we can't make any regexp shy.  Improved tests now
+	detect this.
+
 	useless-if-before-free: accept white space in the expression.
 	* build-aux/useless-if-before-free: For now, any white space
 	in the expression must be identical in the free argument.
