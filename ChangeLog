@@ -1,3 +1,7 @@
+2008-05-25  Bruno Haible  <bruno@clisp.org>
+
+	* m4/acl.m4 (gl_FUNC_ACL): Don't set LIB_ACL_TRIVIAL.
+
 2008-05-25  Jim Meyering  <meyering@redhat.com>
 
 	useless-if-before-free: freed expr may have white-space differences

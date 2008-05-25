@@ -1,5 +1,5 @@
 # acl.m4 - check for access control list (ACL) primitives
-# serial 6
+# serial 7
 
 # Copyright (C) 2002, 2004-2008 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -64,10 +64,6 @@ AC_DEFUN([gl_FUNC_ACL],
   AC_SUBST([LIB_ACL])
   AC_DEFINE_UNQUOTED([USE_ACL], [$use_acl],
     [Define to nonzero if you want access control list support.])
-
-  # This is for backwards compatibility; remove this by the end of 2007.
-  LIB_ACL_TRIVIAL=
-  AC_SUBST([LIB_ACL_TRIVIAL])
 ])
 
 # gl_ACL_GET_FILE(IF-WORKS, IF-NOT)
