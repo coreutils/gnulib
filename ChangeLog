@@ -1,5 +1,9 @@
 2008-05-25  Jim Meyering  <meyering@redhat.com>
 
+	useless-if-before-free: efficiency tweak
+	* build-aux/useless-if-before-free: Make the expression-matching
+	regexp "shy".
+
 	update code-in-comment to accept cast of free arg
 	* build-aux/useless-if-before-free: Update regexp.
 
@@ -29,7 +33,7 @@
 	acl_free.
 	* m4/acl.m4 (gl_FUNC_ACL): Look also in libpacl library. Test for
 	acl_free_text function. Require AC_C_INLINE.
-	
+
 2008-05-22  Bruno Haible  <bruno@clisp.org>
 
 	Make copy_acl work on MacOS X 10.5.
