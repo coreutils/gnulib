@@ -1,3 +1,8 @@
+2008-05-25  Jim Meyering  <meyering@redhat.com>
+
+	update code-in-comment to accept cast of free arg
+	* build-aux/useless-if-before-free: Update regexp.
+
 2008-05-25  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-sameacls.c: Renamed from tests/test-copy-file-sameacls.c.
