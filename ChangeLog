@@ -1,5 +1,11 @@
 2008-05-25  Bruno Haible  <bruno@clisp.org>
 
+	* lib/set-mode-acl.c: Renamed from lib/acl.c.
+	* modules/acl (Files): Add lib/set-mode-acl.c, remove lib/acl.c.
+	(Makefile.am): Update lib_SOURCES.
+
+2008-05-25  Bruno Haible  <bruno@clisp.org>
+
 	* m4/acl.m4 (gl_FUNC_ACL): Don't set LIB_ACL_TRIVIAL.
 
 2008-05-25  Jim Meyering  <meyering@redhat.com>

@@ -1,4 +1,4 @@
-/* acl.c - access control lists
+/* set-mode-acl.c - set access control list equivalent to a mode
 
    Copyright (C) 2002-2003, 2005-2008 Free Software Foundation, Inc.
 
