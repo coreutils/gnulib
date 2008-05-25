@@ -1,5 +1,9 @@
 2008-05-25  Jim Meyering  <meyering@redhat.com>
 
+	useless-if-before-free: accept white space in the expression.
+	* build-aux/useless-if-before-free: For now, any white space
+	in the expression must be identical in the free argument.
+
 	useless-if-before-free: efficiency tweak
 	* build-aux/useless-if-before-free: Make the expression-matching
 	regexp "shy".

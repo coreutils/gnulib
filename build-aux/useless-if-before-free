@@ -2,7 +2,7 @@
 # Detect instances of "if (p) free (p);".
 # Likewise for "if (p != NULL) free (p);".  And with braces.
 
-my $VERSION = '2008-05-25 16:56'; # UTC
+my $VERSION = '2008-05-25 16:59'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -122,7 +122,7 @@ EOF
       while (defined (my $line = <FH>))
         {
           while ($line =~
-              /\b(?:if\s*\(\s*(\S+?)(?:\s*!=\s*NULL)?\s*\)
+              /\b(?:if\s*\(\s*([^)]+?)(?:\s*!=\s*NULL)?\s*\)
                (?:   \s*$regexp\s*\((?:\s*\([^)]+\))?\s*\1\s*\)|
                 \s*\{\s*$regexp\s*\((?:\s*\([^)]+\))?\s*\1\s*\)\s*;\s*\}))/sxg)
             {
