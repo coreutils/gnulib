@@ -1,3 +1,8 @@
+2008-05-25  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-sameacls.c: Renamed from tests/test-copy-file-sameacls.c.
+	* modules/copy-file-tests (Files, Makefile.am): Update.
+
 2008-05-24  Andreas Färber  <andreas.faerber@web.de>  (tiny change)
 
 	* lib/stdbool.in.h [__HAIKU__]: Disable __BEOS__ workarounds.

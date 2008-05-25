@@ -1,7 +1,7 @@
 Files:
 tests/test-copy-file.sh
 tests/test-copy-file.c
-tests/test-copy-file-sameacls.c
+tests/test-sameacls.c
 
 Depends-on:
 acl
@@ -28,6 +28,6 @@ LIBS="$save_LIBS"
 Makefile.am:
 TESTS += test-copy-file.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
-check_PROGRAMS += test-copy-file test-copy-file-sameacls
+check_PROGRAMS += test-copy-file test-sameacls
 test_copy_file_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@
-test_copy_file_sameacls_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@
+test_sameacls_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@
