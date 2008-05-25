@@ -3,6 +3,7 @@
 	useless-if-before-free: efficiency tweak
 	* build-aux/useless-if-before-free: Make the expression-matching
 	regexp "shy".
+	Make the *outer* regexp shy, not the expr-matching one.
 
 	update code-in-comment to accept cast of free arg
 	* build-aux/useless-if-before-free: Update regexp.
