@@ -1,3 +1,8 @@
+2008-05-26  Jim Meyering  <meyering@redhat.com>
+
+	sha512.c: fix typo in comment
+	* lib/sha512.c (sha512_conclude_ctx): Length is 128-bit, not 64-bit.
+
 2008-05-25  Bruno Haible  <bruno@clisp.org>
 
 	* lib/set-mode-acl.c: Renamed from lib/acl.c.
