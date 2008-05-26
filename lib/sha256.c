@@ -126,7 +126,7 @@ static void
 sha256_conclude_ctx (struct sha256_ctx *ctx)
 {
   /* Take yet unprocessed bytes into account.  */
-  uint32_t bytes = ctx->buflen;
+  size_t bytes = ctx->buflen;
   size_t size = (bytes < 56) ? 64 / 4 : 64 * 2 / 4;
 
   /* Now count remaining bytes.  */

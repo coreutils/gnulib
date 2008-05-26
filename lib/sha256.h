@@ -27,7 +27,7 @@ struct sha256_ctx
   uint32_t state[8];
 
   uint32_t total[2];
-  uint32_t buflen;
+  size_t buflen;
   uint32_t buffer[32];
 };
 
