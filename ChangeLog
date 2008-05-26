@@ -1,5 +1,13 @@
 2008-05-26  Jim Meyering  <meyering@redhat.com>
 
+	avoid unaligned access errors, e.g., on sparc
+	* lib/sha512.c (sha512_conclude_ctx): Use set_uint64 rather than
+	direct access through a possibly-unaligned uint64* pointer.
+	* lib/sha256.c (sha256_conclude_ctx): Use set_uint32 rather than
+	direct access through a possibly-unaligned uint32* pointer.
+	Prompted by this patch from Tom "spot" Callaway:
+	http://thread.gmane.org/gmane.comp.gnu.coreutils.bugs/13638
+
 	sha512.c: fix typo in comment
 	* lib/sha512.c (sha512_conclude_ctx): Length is 128-bit, not 64-bit.
 

@@ -134,9 +134,13 @@ sha256_conclude_ctx (struct sha256_ctx *ctx)
   if (ctx->total[0] < bytes)
     ++ctx->total[1];
 
-  /* Put the 64-bit file length in *bits* at the end of the buffer.  */
-  ctx->buffer[size - 2] = SWAP ((ctx->total[1] << 3) | (ctx->total[0] >> 29));
-  ctx->buffer[size - 1] = SWAP (ctx->total[0] << 3);
+  /* Put the 64-bit file length in *bits* at the end of the buffer.
+     Use set_uint32 rather than a simple assignment, to avoid risk of
+     unaligned access.  */
+  set_uint32 ((char *) &ctx->buffer[size - 2],
+	      SWAP ((ctx->total[1] << 3) | (ctx->total[0] >> 29)));
+  set_uint32 ((char *) &ctx->buffer[size - 1],
+	      SWAP (ctx->total[0] << 3));
 
   memcpy (&((char *) ctx->buffer)[bytes], fillbuf, (size - 2) * 4 - bytes);
 

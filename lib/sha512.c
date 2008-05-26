@@ -141,10 +141,14 @@ sha512_conclude_ctx (struct sha512_ctx *ctx)
   if (u64lt (ctx->total[0], u64lo (bytes)))
     ctx->total[1] = u64plus (ctx->total[1], u64lo (1));
 
-  /* Put the 128-bit file length in *bits* at the end of the buffer.  */
-  ctx->buffer[size - 2] = SWAP (u64or (u64shl (ctx->total[1], 3),
-				       u64shr (ctx->total[0], 61)));
-  ctx->buffer[size - 1] = SWAP (u64shl (ctx->total[0], 3));
+  /* Put the 128-bit file length in *bits* at the end of the buffer.
+     Use set_uint64 rather than a simple assignment, to avoid risk of
+     unaligned access.  */
+  set_uint64 ((char *) &ctx->buffer[size - 2],
+	      SWAP (u64or (u64shl (ctx->total[1], 3),
+			   u64shr (ctx->total[0], 61))));
+  set_uint64 ((char *) &ctx->buffer[size - 1],
+	      SWAP (u64shl (ctx->total[0], 3)));
 
   memcpy (&((char *) ctx->buffer)[bytes], fillbuf, (size - 2) * 8 - bytes);
 
