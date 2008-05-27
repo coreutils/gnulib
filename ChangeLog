@@ -1,3 +1,13 @@
+2008-05-27  Bruno Haible  <bruno@clisp.org>
+
+	* modules/iconv_open (Link): New section, from module 'iconv'.
+	* modules/striconv (Link): Likewise.
+	* modules/striconveh (Link): Likewise.
+	* modules/xstriconv (Link): Likewise.
+	* modules/unicodeio (Link): Likewise.
+	* modules/propername (Link): Likewise.
+	Reported by Jim Meyering.
+
 2008-05-26  Jim Meyering  <meyering@redhat.com>
 
 	sha256: do not artificially restrict buffer length to be < 2^32

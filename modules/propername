@@ -35,6 +35,9 @@ lib_SOURCES += propername.h propername.c
 Include:
 "propername.h"
 
+Link:
+$(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
+
 License:
 GPL
 

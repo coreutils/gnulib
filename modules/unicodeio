@@ -22,6 +22,9 @@ lib_SOURCES += unicodeio.h unicodeio.c
 Include:
 "unicodeio.h"
 
+Link:
+$(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
+
 License:
 GPL
 

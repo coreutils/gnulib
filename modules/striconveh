@@ -33,6 +33,9 @@ endif
 Include:
 "striconveh.h"
 
+Link:
+$(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
+
 License:
 LGPL
 

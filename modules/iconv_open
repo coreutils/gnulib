@@ -61,6 +61,9 @@ EXTRA_DIST           += iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h ico
 Include:
 <iconv.h>
 
+Link:
+$(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
+
 License:
 LGPLv2+
 
