@@ -1,5 +1,11 @@
 2008-05-27  Bruno Haible  <bruno@clisp.org>
 
+	* lib/localename.c (SUBLANG_TIBETAN_BHUTAN): Force value 2. Needed for
+	current mingw.
+	Reported by Jose E. Marchesi <jemarch@gnu.org>.
+
+2008-05-27  Bruno Haible  <bruno@clisp.org>
+
 	* modules/iconv_open (Link): New section, from module 'iconv'.
 	* modules/striconv (Link): Likewise.
 	* modules/striconveh (Link): Likewise.
