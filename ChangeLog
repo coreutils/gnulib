@@ -1,3 +1,11 @@
+2008-05-29  Eric Blake  <ebb9@byu.net>
+
+	Prefer new POSIX 200x interfaces over futimesat.
+	* m4/utimens.m4 (gl_UTIMENS): Check for futimens, utimensat.
+	* lib/utimens.c (gl_futimens): Use them for nanosecond resolution
+	when available.
+	[HAVE_BUGGY_NFS_TIME_STAMPS]: Allow C89 compilation.
+
 2008-05-28  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stpcpy (License): Change to LGPLv2+.

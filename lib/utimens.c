@@ -26,6 +26,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 #include <sys/time.h>
 #include <unistd.h>
 
@@ -94,89 +95,101 @@ gl_futimens (int fd ATTRIBUTE_UNUSED,
     fsync (fd);
 #endif
 
-  /* There's currently no interface to set file timestamps with
+  /* POSIX 200x added two interfaces to set file timestamps with
+     nanosecond resolution.  */
+#if HAVE_UTIMENSAT
+  if (fd < 0)
+    return utimensat (AT_FDCWD, file, timespec, 0);
+#endif
+#if HAVE_FUTIMENS
+  return futimens (fd, timespec);
+#else
+
+  /* The platform lacks an interface to set file timestamps with
      nanosecond resolution, so do the best we can, discarding any
      fractional part of the timestamp.  */
-#if HAVE_FUTIMESAT || HAVE_WORKING_UTIMES
-  struct timeval timeval[2];
-  struct timeval const *t;
-  if (timespec)
-    {
-      timeval[0].tv_sec = timespec[0].tv_sec;
-      timeval[0].tv_usec = timespec[0].tv_nsec / 1000;
-      timeval[1].tv_sec = timespec[1].tv_sec;
-      timeval[1].tv_usec = timespec[1].tv_nsec / 1000;
-      t = timeval;
-    }
-  else
-    t = NULL;
-
-
-  if (fd < 0)
-    {
-# if HAVE_FUTIMESAT
-      return futimesat (AT_FDCWD, file, t);
-# endif
-    }
-  else
-    {
-      /* If futimesat or futimes fails here, don't try to speed things
-	 up by returning right away.  glibc can incorrectly fail with
-	 errno == ENOENT if /proc isn't mounted.  Also, Mandrake 10.0
-	 in high security mode doesn't allow ordinary users to read
-	 /proc/self, so glibc incorrectly fails with errno == EACCES.
-	 If errno == EIO, EPERM, or EROFS, it's probably safe to fail
-	 right away, but these cases are rare enough that they're not
-	 worth optimizing, and who knows what other messed-up systems
-	 are out there?  So play it safe and fall back on the code
-	 below.  */
-# if HAVE_FUTIMESAT
-      if (futimesat (fd, NULL, t) == 0)
-	return 0;
-# elif HAVE_FUTIMES
-      if (futimes (fd, t) == 0)
-	return 0;
-# endif
-    }
-#endif
-
-  if (!file)
-    {
-#if ! (HAVE_FUTIMESAT || (HAVE_WORKING_UTIMES && HAVE_FUTIMES))
-      errno = ENOSYS;
-#endif
-
-      /* Prefer EBADF to ENOSYS if both error numbers apply.  */
-      if (errno == ENOSYS)
-	{
-	  int fd2 = dup (fd);
-	  int dup_errno = errno;
-	  if (0 <= fd2)
-	    close (fd2);
-	  errno = (fd2 < 0 && dup_errno == EBADF ? EBADF : ENOSYS);
-	}
-
-      return -1;
-    }
-
-#if HAVE_WORKING_UTIMES
-  return utimes (file, t);
-#else
   {
-    struct utimbuf utimbuf;
-    struct utimbuf const *ut;
+# if HAVE_FUTIMESAT || HAVE_WORKING_UTIMES
+    struct timeval timeval[2];
+    struct timeval const *t;
     if (timespec)
       {
-	utimbuf.actime = timespec[0].tv_sec;
-	utimbuf.modtime = timespec[1].tv_sec;
-	ut = &utimbuf;
+	timeval[0].tv_sec = timespec[0].tv_sec;
+	timeval[0].tv_usec = timespec[0].tv_nsec / 1000;
+	timeval[1].tv_sec = timespec[1].tv_sec;
+	timeval[1].tv_usec = timespec[1].tv_nsec / 1000;
+	t = timeval;
       }
     else
-      ut = NULL;
+      t = NULL;
 
-    return utime (file, ut);
+    if (fd < 0)
+      {
+#  if HAVE_FUTIMESAT
+	return futimesat (AT_FDCWD, file, t);
+#  endif
+      }
+    else
+      {
+	/* If futimesat or futimes fails here, don't try to speed things
+	   up by returning right away.  glibc can incorrectly fail with
+	   errno == ENOENT if /proc isn't mounted.  Also, Mandrake 10.0
+	   in high security mode doesn't allow ordinary users to read
+	   /proc/self, so glibc incorrectly fails with errno == EACCES.
+	   If errno == EIO, EPERM, or EROFS, it's probably safe to fail
+	   right away, but these cases are rare enough that they're not
+	   worth optimizing, and who knows what other messed-up systems
+	   are out there?  So play it safe and fall back on the code
+	   below.  */
+#  if HAVE_FUTIMESAT
+	if (futimesat (fd, NULL, t) == 0)
+	  return 0;
+#  elif HAVE_FUTIMES
+	if (futimes (fd, t) == 0)
+	  return 0;
+#  endif
+      }
+# endif /* HAVE_FUTIMESAT || HAVE_WORKING_UTIMES */
+
+    if (!file)
+      {
+# if ! (HAVE_FUTIMESAT || (HAVE_WORKING_UTIMES && HAVE_FUTIMES))
+	errno = ENOSYS;
+# endif
+
+	/* Prefer EBADF to ENOSYS if both error numbers apply.  */
+	if (errno == ENOSYS)
+	  {
+	    int fd2 = dup (fd);
+	    int dup_errno = errno;
+	    if (0 <= fd2)
+	      close (fd2);
+	    errno = (fd2 < 0 && dup_errno == EBADF ? EBADF : ENOSYS);
+	  }
+
+	return -1;
+      }
+
+# if HAVE_WORKING_UTIMES
+    return utimes (file, t);
+# else
+    {
+      struct utimbuf utimbuf;
+      struct utimbuf const *ut;
+      if (timespec)
+	{
+	  utimbuf.actime = timespec[0].tv_sec;
+	  utimbuf.modtime = timespec[1].tv_sec;
+	  ut = &utimbuf;
+	}
+      else
+	ut = NULL;
+
+      return utime (file, ut);
+    }
+# endif /* !HAVE_WORKING_UTIMES */
   }
-#endif
+#endif /* !HAVE_FUTIMENS */
 }
 
 /* Set the access and modification time stamps of FILE to be
