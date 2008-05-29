@@ -1,3 +1,8 @@
+2008-05-28  Bruno Haible  <bruno@clisp.org>
+
+	* modules/stpcpy (License): Change to LGPLv2+.
+	Requested by David Lutterkort <dlutter@redhat.com>.
+
 2008-05-27  Bruno Haible  <bruno@clisp.org>
 
 	* lib/localename.c (SUBLANG_TIBETAN_BHUTAN): Force value 2. Needed for
