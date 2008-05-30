@@ -118,7 +118,7 @@ main (int argc, char *argv[])
   if (!ok)
     fprintf (stderr, "decode failed\n");
   if (len != 0)
-    fprintf (stderr, "failure (%ul)\n", (unsigned long) len);
+    fprintf (stderr, "failure (%lu)\n", (unsigned long) len);
 
   memset (out, 0x42, sizeof (out));
   len = 1;
@@ -128,7 +128,7 @@ main (int argc, char *argv[])
   if (len != 1 || memcmp (out, "abcdefg", 1) != 0)
     {
       out[2] = '\0';
-      fprintf (stderr, "failure (%ul: %s)\n", (unsigned long) len, out);
+      fprintf (stderr, "failure (%lu: %s)\n", (unsigned long) len, out);
     }
 
   memset (out, 0x42, sizeof (out));
@@ -139,7 +139,7 @@ main (int argc, char *argv[])
   if (len != 2 || memcmp (out, "abcdefg", 2) != 0)
     {
       out[3] = '\0';
-      fprintf (stderr, "failure (%ul: %s)\n", (unsigned long) len, out);
+      fprintf (stderr, "failure (%lu: %s)\n", (unsigned long) len, out);
     }
 
   memset (out, 0x42, sizeof (out));
@@ -150,7 +150,7 @@ main (int argc, char *argv[])
   if (len != 3 || memcmp (out, "abcdefg", 3) != 0)
     {
       out[4] = '\0';
-      fprintf (stderr, "failure (%ul: %s)\n", (unsigned long) len, out);
+      fprintf (stderr, "failure (%lu: %s)\n", (unsigned long) len, out);
     }
 
   memset (out, 0x42, sizeof (out));
@@ -161,7 +161,7 @@ main (int argc, char *argv[])
   if (len != 3 || memcmp (out, "abcdefg", 3) != 0)
     {
       out[3] = '\0';
-      fprintf (stderr, "failure (%ul: %s)\n", (unsigned long) len, out);
+      fprintf (stderr, "failure (%lu: %s)\n", (unsigned long) len, out);
     }
 
   memset (out, 0x42, sizeof (out));
@@ -172,7 +172,7 @@ main (int argc, char *argv[])
   if (len != 7 || memcmp (out, "abcdefg", 7) != 0)
     {
       out[7] = '\0';
-      fprintf (stderr, "failure (%ul: %s)\n", (unsigned long) len, out);
+      fprintf (stderr, "failure (%lu: %s)\n", (unsigned long) len, out);
     }
 
   return 0;
