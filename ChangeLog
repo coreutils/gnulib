@@ -1,5 +1,9 @@
 2008-05-30  Simon Josefsson  <simon@josefsson.org>
 
+	* modules/autobuild (configure.ac): Call AB_INIT.
+
+2008-05-30  Simon Josefsson  <simon@josefsson.org>
+
 	* tests/test-getaddrinfo.c: Don't print debug messages by default.
 	Suggested by Bruno Haible <bruno@clisp.org>.
 
