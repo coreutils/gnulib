@@ -1,5 +1,10 @@
 2008-05-30  Simon Josefsson  <simon@josefsson.org>
 
+	* tests/test-getaddrinfo.c: Don't print debug messages by default.
+	Suggested by Bruno Haible <bruno@clisp.org>.
+
+2008-05-30  Simon Josefsson  <simon@josefsson.org>
+
 	* tests/test-base64.c: Cast size_t to unsigned long when invoking
 	printf.  Use %lu instead of %d.  Reported by Bruno Haible
 	<bruno@clisp.org>.
