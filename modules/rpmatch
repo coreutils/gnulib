@@ -11,6 +11,7 @@ extensions
 stdbool
 gettext-h
 regex
+strdup
 
 configure.ac:
 gl_FUNC_RPMATCH

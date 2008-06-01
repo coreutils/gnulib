@@ -1,5 +1,9 @@
 2008-06-01  Bruno Haible  <bruno@clisp.org>
 
+	* modules/rpmatch (Depends-on): Add strdup.
+
+2008-06-01  Bruno Haible  <bruno@clisp.org>
+
 	* lib/pipe.c: Include unistd-safer.h.
 	(create_pipe): Ensure the returned file descriptors are not in {0,1,2}.
 	* modules/pipe (Depends-on): Add unistd-safer.
