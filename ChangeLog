@@ -1,5 +1,11 @@
 2008-06-01  Bruno Haible  <bruno@clisp.org>
 
+	* lib/freadahead.c (freadahead) [__DragonFly__]: Use the __sreadahead
+	function.
+	Reported by VOROSKOI Andras <voroskoi@gmail.com>.
+
+2008-06-01  Bruno Haible  <bruno@clisp.org>
+
 	* modules/rpmatch (Depends-on): Add strdup.
 
 2008-06-01  Bruno Haible  <bruno@clisp.org>

@@ -33,8 +33,12 @@ freadahead (FILE *fp)
 #elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
   if ((fp_->_flags & __SWR) != 0 || fp_->_r < 0)
     return 0;
+# if defined __DragonFly__
+  return __sreadahead (fp);
+# else
   return fp_->_r
 	 + (HASUB (fp) ? fp_->_ur : 0);
+# endif
 #elif defined __EMX__               /* emx+gcc */
   if ((fp->_flags & _IOWRT) != 0)
     return 0;
