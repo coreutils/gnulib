@@ -60,7 +60,7 @@
     };
 #  define fp_ub ((struct __sfileext *) fp->_ext._base)->_ub
 # else                                         /* FreeBSD, DragonFly, MacOS X, Cygwin */
-#  define fp_ub fp->_ub
+#  define fp_ub fp_->_ub
 # endif
 
 # define HASUB(fp) (fp_ub._base != NULL)

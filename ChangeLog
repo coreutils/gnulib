@@ -1,3 +1,8 @@
+2008-06-01  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdio-impl.h (fp_ub): Use fp_. Needed for DragonFly BSD.
+	Reported by Voroskoi Andras <voroskoi@gmail.com>.
+
 2008-06-01  Voroskoi Andras  <voroskoi@gmail.com>  (tiny change)
 
 	* lib/stdio-impl.h [__DragonFly__]: Fix typo.
