@@ -1,5 +1,20 @@
 2008-06-01  Bruno Haible  <bruno@clisp.org>
 
+	New ACL tests.
+	* tests/test-file-has-acl.sh: New file.
+	* tests/test-file-has-acl.c: New file.
+	* tests/test-set-mode-acl.sh: New file.
+	* tests/test-set-mode-acl.c: New file.
+	* tests/test-copy-acl.sh: New file, based on tests/test-copy-file.sh.
+	* tests/test-copy-acl.c: New file.
+	* modules/acl-tests: New file, based on modules/copy-file-tests.
+	* modules/copy-file-tests (Files): Remove tests/test-sameacls.c.
+	(Depends-on): Add acl-tests.
+	(configure.ac): Remove checks.
+	(Makefile.am): Don't create test-sameacls program here any more.
+
+2008-06-01  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-copy-file.sh: Portability fixes for Solaris, HP-UX, IRIX.
 	* tests/test-sameacls.c: Include progname.h.
 	(main): Invoke set_program_name. Portability fixes for MacOS X,
