@@ -79,7 +79,7 @@ cd "$builddir" ||
       fi
     fi
   else
-    if (lsacl tmpfile0 >/dev/null) 2>/dev/null; then
+    if (lsacl / >/dev/null) 2>/dev/null; then
       # Platforms with the lsacl and chacl programs.
       # HP-UX, sometimes also IRIX.
       acl_flavor=hpux
@@ -221,7 +221,7 @@ cd "$builddir" ||
 
         # Remove the ACL for other.
         case $acl_flavor in
-          linux)   ;; # impossible
+          linux | solaris) ;; # impossible
           freebsd) setfacl -x other::4 tmpfile0 ;;
           *)       setfacl -d other:4 tmpfile0 ;;
         esac
@@ -447,32 +447,27 @@ cd "$builddir" ||
       irix)
 
         # Set an ACL for a user.
-        /sbin/chacl user:$auid:--x tmpfile0
+        /sbin/chacl user::rw-,group::---,other::---,user:$auid:--x tmpfile0
 
         func_test_copy tmpfile0 tmpfile2
 
         # Set an ACL for a group.
-        /sbin/chacl user:$auid:--x,group:$agid:r-- tmpfile0
+        /sbin/chacl user::rw-,group::---,other::---,user:$auid:--x,group:$agid:r-- tmpfile0
 
         func_test_copy tmpfile0 tmpfile3
 
         # Set an ACL for other.
-        /sbin/chacl user:$auid:--x,group:$agid:r--,other::r-- tmpfile0
+        /sbin/chacl user::rw-,group::---,user:$auid:--x,group:$agid:r--,other::r-- tmpfile0
 
         func_test_copy tmpfile0 tmpfile4
 
         # Remove the ACL for the user.
-        /sbin/chacl group:$agid:r--,other::r-- tmpfile0
+        /sbin/chacl user::rw-,group::---,group:$agid:r--,other::r-- tmpfile0
 
         func_test_copy tmpfile0 tmpfile5
 
-        # Remove the ACL for other.
-        /sbin/chacl group:$agid:r-- tmpfile0
-
-        func_test_copy tmpfile0 tmpfile6
-
         # Remove the ACL for the group.
-        /sbin/chacl , tmpfile0
+        /sbin/chacl user::rw-,group::---,other::r-- tmpfile0
 
         func_test_copy tmpfile0 tmpfile7
 

@@ -29,6 +29,7 @@
 # include <sys/acl.h>
 #endif
 
+#include "progname.h"
 #include "read-file.h"
 #include "xalloc.h"
 
@@ -49,6 +50,8 @@ main (int argc, char *argv[])
 {
   const char *file1;
   const char *file2;
+
+  set_program_name (argv[0]);
 
   ASSERT (argc == 3);
 
@@ -120,97 +123,110 @@ main (int argc, char *argv[])
   }
   {
 #if HAVE_ACL_GET_FILE /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
-    acl_t acl1;
-    char *text1;
-    int errno1;
-    acl_t acl2;
-    char *text2;
-    int errno2;
+    static const int types[] =
+      {
+	ACL_TYPE_ACCESS
+# if HAVE_ACL_TYPE_EXTENDED /* MacOS X */
+	, ACL_TYPE_EXTENDED
+# endif
+      };
+    int t;
 
-    acl1 = acl_get_file (file1, ACL_TYPE_ACCESS);
-    if (acl1 == (acl_t)NULL)
+    for (t = 0; t < sizeof (types) / sizeof (types[0]); t++)
       {
-	text1 = NULL;
-	errno1 = errno;
-      }
-    else
-      {
-	text1 = acl_to_text (acl1, NULL);
-	if (text1 == NULL)
-	  errno1 = errno;
-	else
-	  errno1 = 0;
-      }
-    acl2 = acl_get_file (file2, ACL_TYPE_ACCESS);
-    if (acl2 == (acl_t)NULL)
-      {
-	text2 = NULL;
-	errno2 = errno;
-      }
-    else
-      {
-	text2 = acl_to_text (acl2, NULL);
-	if (text2 == NULL)
-	  errno2 = errno;
-	else
-	  errno2 = 0;
-      }
+	int type = types[t];
+	acl_t acl1;
+	char *text1;
+	int errno1;
+	acl_t acl2;
+	char *text2;
+	int errno2;
 
-    if (acl1 != (acl_t)NULL)
-      {
-	if (acl2 != (acl_t)NULL)
+	acl1 = acl_get_file (file1, type);
+	if (acl1 == (acl_t)NULL)
 	  {
-	    if (text1 != NULL)
+	    text1 = NULL;
+	    errno1 = errno;
+	  }
+	else
+	  {
+	    text1 = acl_to_text (acl1, NULL);
+	    if (text1 == NULL)
+	      errno1 = errno;
+	    else
+	      errno1 = 0;
+	  }
+	acl2 = acl_get_file (file2, type);
+	if (acl2 == (acl_t)NULL)
+	  {
+	    text2 = NULL;
+	    errno2 = errno;
+	  }
+	else
+	  {
+	    text2 = acl_to_text (acl2, NULL);
+	    if (text2 == NULL)
+	      errno2 = errno;
+	    else
+	      errno2 = 0;
+	  }
+
+	if (acl1 != (acl_t)NULL)
+	  {
+	    if (acl2 != (acl_t)NULL)
 	      {
-		if (text2 != NULL)
+		if (text1 != NULL)
 		  {
-		    if (strcmp (text1, text2) != 0)
+		    if (text2 != NULL)
 		      {
-			fprintf (stderr, "files %s and %s have different ACLs:\n%s\n%s\n",
-				 file1, file2, text1, text2);
+			if (strcmp (text1, text2) != 0)
+			  {
+			    fprintf (stderr, "files %s and %s have different ACLs:\n%s\n%s\n",
+				     file1, file2, text1, text2);
+			    return 1;
+			  }
+		      }
+		    else
+		      {
+			fprintf (stderr, "file %s has a valid ACL, but file %s has an invalid ACL\n",
+				 file1, file2);
 			return 1;
 		      }
 		  }
 		else
 		  {
-		    fprintf (stderr, "file %s has a valid ACL, but file %s has an invalid ACL\n",
-			     file1, file2);
-		    return 1;
+		    if (text2 != NULL)
+		      {
+			fprintf (stderr, "file %s has an invalid ACL, but file %s has a valid ACL\n",
+				 file1, file2);
+			return 1;
+		      }
+		    else
+		      {
+			if (errno1 != errno2)
+			  {
+			    fprintf (stderr, "files %s and %s have differently invalid ACLs, errno = %d vs. %d\n",
+				     file1, file2, errno1, errno2);
+			    return 1;
+			  }
+		      }
 		  }
 	      }
 	    else
 	      {
-		if (text2 != NULL)
-		  {
-		    fprintf (stderr, "file %s has an invalid ACL, but file %s has a valid ACL\n",
-			     file1, file2);
-		    return 1;
-		  }
-		else
-		  {
-		    if (errno1 != errno2)
-		      {
-			fprintf (stderr, "files %s and %s have differently invalid ACLs, errno = %d vs. %d\n",
-				 file1, file2, errno1, errno2);
-			return 1;
-		      }
-		  }
+		fprintf (stderr, "file %s has an ACL, but file %s has no ACL\n",
+			 file1, file2);
+		return 1;
 	      }
 	  }
 	else
 	  {
-	    fprintf (stderr, "file %s has an ACL, but file %s has no ACL\n",
-		     file1, file2);
-	    return 1;
-	  }
-      }
-    else
-      {
-	if (acl2 != (acl_t)NULL)
-	  {
-	    fprintf (stderr, "file %s has no ACL, but file %s has an ACL\n",
-		     file1, file2);
-	    return 1;
+	    if (acl2 != (acl_t)NULL)
+	      {
+		fprintf (stderr, "file %s has no ACL, but file %s has an ACL\n",
+			 file1, file2);
+		return 1;
+	      }
 	  }
       }
 #elif HAVE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
@@ -220,20 +236,20 @@ main (int argc, char *argv[])
   count1 = acl (file1, GETACLCNT, 0, NULL);
   count2 = acl (file2, GETACLCNT, 0, NULL);
 
+  if (count1 < 0)
+    {
+      fprintf (stderr, "error accessing the ACLs of file %s\n", file1);
+      fflush (stderr);
+      abort ();
+    }
+  if (count2 < 0)
+    {
+      fprintf (stderr, "error accessing the ACLs of file %s\n", file2);
+      fflush (stderr);
+      abort ();
+    }
   if (count1 != count2)
     {
-      if (count1 < 0)
-	{
-	  fprintf (stderr, "error accessing the ACLs of file %s\n", file1);
-	  fflush (stderr);
-	  abort ();
-	}
-      if (count2 < 0)
-	{
-	  fprintf (stderr, "error accessing the ACLs of file %s\n", file2);
-	  fflush (stderr);
-	  abort ();
-	}
       fprintf (stderr, "files %s and %s have different number of ACLs: %d and %d\n",
 	       file1, file2, count1, count2);
       return 1;
@@ -280,21 +296,25 @@ main (int argc, char *argv[])
     }
 # ifdef ACE_GETACL
   count1 = acl (file1, ACE_GETACLCNT, 0, NULL);
+  if (count1 < 0 && errno == EINVAL)
+    count1 = 0;
   count2 = acl (file2, ACE_GETACLCNT, 0, NULL);
+  if (count2 < 0 && errno == EINVAL)
+    count2 = 0;
+  if (count1 < 0)
+    {
+      fprintf (stderr, "error accessing the ACE-ACLs of file %s\n", file1);
+      fflush (stderr);
+      abort ();
+    }
+  if (count2 < 0)
+    {
+      fprintf (stderr, "error accessing the ACE-ACLs of file %s\n", file2);
+      fflush (stderr);
+      abort ();
+    }
   if (count1 != count2)
     {
-      if (count1 < 0)
-	{
-	  fprintf (stderr, "error accessing the ACE-ACLs of file %s\n", file1);
-	  fflush (stderr);
-	  abort ();
-	}
-      if (count2 < 0)
-	{
-	  fprintf (stderr, "error accessing the ACE-ACLs of file %s\n", file2);
-	  fflush (stderr);
-	  abort ();
-	}
       fprintf (stderr, "files %s and %s have different number of ACE-ACLs: %d and %d\n",
 	       file1, file2, count1, count2);
       return 1;
@@ -351,27 +371,31 @@ main (int argc, char *argv[])
   int count2;
 
   count1 = getacl (file1, 0, NULL);
+  if (count1 < 0 && (errno == ENOSYS || errno == EOPNOTSUPP))
+    count1 = 0;
   count2 = getacl (file2, 0, NULL);
+  if (count2 < 0 && (errno == ENOSYS || errno == EOPNOTSUPP))
+    count2 = 0;
 
+  if (count1 < 0)
+    {
+      fprintf (stderr, "error accessing the ACLs of file %s\n", file1);
+      fflush (stderr);
+      abort ();
+    }
+  if (count2 < 0)
+    {
+      fprintf (stderr, "error accessing the ACLs of file %s\n", file2);
+      fflush (stderr);
+      abort ();
+    }
   if (count1 != count2)
     {
-      if (count1 < 0)
-	{
-	  fprintf (stderr, "error accessing the ACLs of file %s\n", file1);
-	  fflush (stderr);
-	  abort ();
-	}
-      if (count2 < 0)
-	{
-	  fprintf (stderr, "error accessing the ACLs of file %s\n", file2);
-	  fflush (stderr);
-	  abort ();
-	}
       fprintf (stderr, "files %s and %s have different number of ACLs: %d and %d\n",
 	       file1, file2, count1, count2);
       return 1;
     }
-  else
+  else if (count1 > 0)
     {
       struct acl_entry *entries1 = XNMALLOC (count1, struct acl_entry);
       struct acl_entry *entries2 = XNMALLOC (count2, struct acl_entry);

@@ -1,5 +1,12 @@
 2008-06-01  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-copy-file.sh: Portability fixes for Solaris, HP-UX, IRIX.
+	* tests/test-sameacls.c: Include progname.h.
+	(main): Invoke set_program_name. Portability fixes for MacOS X,
+	Solaris, HP-UX.
+
+2008-06-01  Bruno Haible  <bruno@clisp.org>
+
 	* lib/freadahead.c (freadahead) [__DragonFly__]: Use the __sreadahead
 	function.
 	Reported by VOROSKOI Andras <voroskoi@gmail.com>.
