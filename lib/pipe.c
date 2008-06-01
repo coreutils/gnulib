@@ -29,6 +29,7 @@
 
 #include "error.h"
 #include "fatal-signal.h"
+#include "unistd-safer.h"
 #include "wait-process.h"
 #include "gettext.h"
 
@@ -147,10 +148,12 @@ create_pipe (const char *progname,
   prog_argv = prepare_spawn (prog_argv);
 
   if (pipe_stdout)
-    if (_pipe (ifd, 4096, O_BINARY | O_NOINHERIT) < 0)
+    if (_pipe (ifd, 4096, O_BINARY | O_NOINHERIT) < 0
+	|| (ifd[0] = fd_safer (ifd[0])) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));
   if (pipe_stdin)
-    if (_pipe (ofd, 4096, O_BINARY | O_NOINHERIT) < 0)
+    if (_pipe (ofd, 4096, O_BINARY | O_NOINHERIT) < 0
+	|| (ofd[1] = fd_safer (ofd[1])) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));
 /* Data flow diagram:
  *
@@ -254,10 +257,12 @@ create_pipe (const char *progname,
 # endif
 
   if (pipe_stdout)
-    if (pipe (ifd) < 0)
+    if (pipe (ifd) < 0
+	|| (ifd[0] = fd_safer (ifd[0])) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));
   if (pipe_stdin)
-    if (pipe (ofd) < 0)
+    if (pipe (ofd) < 0
+	|| (ofd[1] = fd_safer (ofd[1])) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));
 /* Data flow diagram:
  *

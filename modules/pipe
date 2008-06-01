@@ -16,6 +16,7 @@ gettext-h
 stdbool
 strpbrk
 unistd
+unistd-safer
 environ
 
 configure.ac:

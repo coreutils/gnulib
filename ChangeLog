@@ -1,3 +1,9 @@
+2008-06-01  Bruno Haible  <bruno@clisp.org>
+
+	* lib/pipe.c: Include unistd-safer.h.
+	(create_pipe): Ensure the returned file descriptors are not in {0,1,2}.
+	* modules/pipe (Depends-on): Add unistd-safer.
+
 2008-05-30  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/autobuild (configure.ac): Call AB_INIT.
