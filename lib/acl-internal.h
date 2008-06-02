@@ -54,83 +54,94 @@
 # define fchmod(fd, mode) (-1)
 #endif
 
-#ifndef MIN_ACL_ENTRIES
-# define MIN_ACL_ENTRIES 4
-#endif
+
+#if USE_ACL
+
+# if HAVE_ACL_GET_FILE
+/* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
+/* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
+
+#  ifndef MIN_ACL_ENTRIES
+#   define MIN_ACL_ENTRIES 4
+#  endif
 
 /* POSIX 1003.1e (draft 17) */
-#ifdef HAVE_ACL_GET_FD
+#  ifdef HAVE_ACL_GET_FD
 /* Most platforms have a 1-argument acl_get_fd, only OSF/1 has a 2-argument
    macro(!).  */
-# if HAVE_ACL_FREE_TEXT /* OSF/1 */
+#   if HAVE_ACL_FREE_TEXT /* OSF/1 */
 static inline acl_t
 rpl_acl_get_fd (int fd)
 {
   return acl_get_fd (fd, ACL_TYPE_ACCESS);
 }
-#  undef acl_get_fd
-#  define acl_get_fd rpl_acl_get_fd
-# endif
-#else
-# define HAVE_ACL_GET_FD false
-# undef acl_get_fd
-# define acl_get_fd(fd) (NULL)
-#endif
+#    undef acl_get_fd
+#    define acl_get_fd rpl_acl_get_fd
+#   endif
+#  else
+#   define HAVE_ACL_GET_FD false
+#   undef acl_get_fd
+#   define acl_get_fd(fd) (NULL)
+#  endif
 
 /* POSIX 1003.1e (draft 17) */
-#ifdef HAVE_ACL_SET_FD
+#  ifdef HAVE_ACL_SET_FD
 /* Most platforms have a 2-argument acl_set_fd, only OSF/1 has a 3-argument
    macro(!).  */
-# if HAVE_ACL_FREE_TEXT /* OSF/1 */
+#   if HAVE_ACL_FREE_TEXT /* OSF/1 */
 static inline int
 rpl_acl_set_fd (int fd, acl_t acl)
 {
   return acl_set_fd (fd, ACL_TYPE_ACCESS, acl);
 }
-#  undef acl_set_fd
-#  define acl_set_fd rpl_acl_set_fd
-# endif
-#else
-# define HAVE_ACL_SET_FD false
-# undef acl_set_fd
-# define acl_set_fd(fd, acl) (-1)
-#endif
+#    undef acl_set_fd
+#    define acl_set_fd rpl_acl_set_fd
+#   endif
+#  else
+#   define HAVE_ACL_SET_FD false
+#   undef acl_set_fd
+#   define acl_set_fd(fd, acl) (-1)
+#  endif
 
 /* POSIX 1003.1e (draft 13) */
-#if ! HAVE_ACL_FREE_TEXT
-# define acl_free_text(buf) acl_free (buf)
-#endif
+#  if ! HAVE_ACL_FREE_TEXT
+#   define acl_free_text(buf) acl_free (buf)
+#  endif
 
 /* Linux-specific */
-#ifndef HAVE_ACL_EXTENDED_FILE
-# define HAVE_ACL_EXTENDED_FILE false
-# define acl_extended_file(name) (-1)
-#endif
+#  ifndef HAVE_ACL_EXTENDED_FILE
+#   define HAVE_ACL_EXTENDED_FILE false
+#   define acl_extended_file(name) (-1)
+#  endif
 
 /* Linux-specific */
-#ifndef HAVE_ACL_FROM_MODE
-# define HAVE_ACL_FROM_MODE false
-# define acl_from_mode(mode) (NULL)
-#endif
+#  ifndef HAVE_ACL_FROM_MODE
+#   define HAVE_ACL_FROM_MODE false
+#   define acl_from_mode(mode) (NULL)
+#  endif
 
 /* Set to 1 if a file's mode is implicit by the ACL.
    Set to 0 if a file's mode is stored independently from the ACL.  */
-#if HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP /* MacOS X */
-# define MODE_INSIDE_ACL 0
-#else
-# define MODE_INSIDE_ACL 1
-#endif
+#  if HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP /* MacOS X */
+#   define MODE_INSIDE_ACL 0
+#  else
+#   define MODE_INSIDE_ACL 1
+#  endif
 
-#if defined __APPLE__ && defined __MACH__ /* MacOS X */
-# define ACL_NOT_WELL_SUPPORTED(Err) \
-   ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == ENOENT)
-#else
-# define ACL_NOT_WELL_SUPPORTED(Err) \
-   ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY)
-#endif
+#  if defined __APPLE__ && defined __MACH__ /* MacOS X */
+#   define ACL_NOT_WELL_SUPPORTED(Err) \
+     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == ENOENT)
+#  else
+#   define ACL_NOT_WELL_SUPPORTED(Err) \
+     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY)
+#  endif
 
-/* Define a replacement for acl_entries if needed.  */
-#if USE_ACL && HAVE_ACL_GET_FILE && HAVE_ACL_FREE && !HAVE_ACL_ENTRIES
-# define acl_entries rpl_acl_entries
-int acl_entries (acl_t);
+/* Define a replacement for acl_entries if needed. (Only Linux has it.)  */
+#  if !HAVE_ACL_ENTRIES
+#   define acl_entries rpl_acl_entries
+extern int acl_entries (acl_t);
+#  endif
+
+# endif
+
 #endif

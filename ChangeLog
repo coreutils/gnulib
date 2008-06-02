@@ -1,5 +1,10 @@
 2008-06-02  Bruno Haible  <bruno@clisp.org>
 
+	* lib/acl-entries.h: Enclose most definitions in #ifs for POSIX-draft
+	like ACL APIs.
+
+2008-06-02  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-file-has-acl.sh: Use different code for Cygwin.
 	* tests/test-set-mode-acl.sh: Likewise.
 	* tests/test-copy-acl.sh: Likewise.
