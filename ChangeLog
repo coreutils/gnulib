@@ -1,3 +1,7 @@
+2008-06-02  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-file-has-acl.sh: Remove unused code.
+
 2008-06-01  Bruno Haible  <bruno@clisp.org>
 
 	* lib/copy-acl.c (qcopy_acl): New function, extracted from copy_acl.

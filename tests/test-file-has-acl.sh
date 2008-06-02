@@ -106,18 +106,6 @@ cd "$builddir" ||
     fi
   fi
 
-  # func_test_has_acl file expected
-  # tests the result of the file_has_acl function on file, and checks that it
-  # matches the expected value.
-  func_test_has_acl ()
-  {
-    res=`"$builddir"/test-file-has-acl${EXEEXT} "$1"`
-    test "$res" = "$2" || {
-      echo "file_has_acl(\"$1\") returned $res, expected $2" 1>&2
-      exit 1
-    }
-  }
-
   # func_test_file_has_acl file expected
   # tests the result of the file_has_acl function on file, and checks that it
   # matches the expected value.
