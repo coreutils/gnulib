@@ -1,3 +1,10 @@
+2008-06-03  Eric Blake  <ebb9@byu.net>
+
+	Provide fallback for older kernels.
+	* lib/utimens.c (gl_futimens) [HAVE_UTIMENSAT, HAVE_FUTIMENS]:
+	Provide runtime fallback if kernel lacks support.
+	Reported by Mike Frysinger.
+
 2008-06-02  Bruno Haible  <bruno@clisp.org>
 
 	* lib/acl-internal.h (ACL_NOT_WELL_SUPPORTED): Include EOPNOTSUPP if
