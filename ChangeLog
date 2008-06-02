@@ -14,6 +14,7 @@
 	* lib/copy-acl.c (qcopy_acl): New function, extracted from copy_acl.
 	(copy_acl): Just a wrapper around qcopy_acl that emits the error
 	messages.
+	* lib/set-mode-acl.c (qset_acl): Document return value precisely.
 
 2008-06-01  Bruno Haible  <bruno@clisp.org>
 

@@ -42,8 +42,8 @@ chmod_or_fchmod (const char *name, int desc, mode_t mode)
    filename based operations on NAME.  If access control lists are not
    available, fchmod the target file to MODE.  Also sets the
    non-permission bits of the destination file (S_ISUID, S_ISGID, S_ISVTX)
-   to those from MODE if any are set.  System call return value
-   semantics.  */
+   to those from MODE if any are set.
+   Return 0 if successful.  Return -1 and set errno upon failure.  */
 
 int
 qset_acl (char const *name, int desc, mode_t mode)
