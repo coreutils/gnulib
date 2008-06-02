@@ -1,5 +1,11 @@
 2008-06-01  Bruno Haible  <bruno@clisp.org>
 
+	* lib/copy-acl.c (qcopy_acl): New function, extracted from copy_acl.
+	(copy_acl): Just a wrapper around qcopy_acl that emits the error
+	messages.
+
+2008-06-01  Bruno Haible  <bruno@clisp.org>
+
 	* m4/acl.m4 (gl_FUNC_ACL): Separate the POSIX-like and the Solaris
 	tests. Test for libpacl, needed for OSF/1. Test for extended ACLs,
 	needed for MacOS X. Test for HP-UX API. Test for newer and older AIX

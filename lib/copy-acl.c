@@ -23,6 +23,7 @@
 
 #include "acl-internal.h"
 
+
 /* Copy access control lists from one file to another. If SOURCE_DESC is
    a valid file descriptor, use file descriptor operations, else use
    filename based operations on SRC_NAME. Likewise for DEST_DESC and
@@ -30,11 +31,13 @@
    If access control lists are not available, fchmod the target file to
    MODE.  Also sets the non-permission bits of the destination file
    (S_ISUID, S_ISGID, S_ISVTX) to those from MODE if any are set.
-   Return 0 if successful, otherwise output a diagnostic and return -1.  */
+   Return 0 if successful.
+   Return -2 and set errno for an error relating to the source file.
+   Return -1 and set errno for an error relating to the destination file.  */
 
-int
-copy_acl (const char *src_name, int source_desc, const char *dst_name,
-	  int dest_desc, mode_t mode)
+static int
+qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
+	   int dest_desc, mode_t mode)
 {
   int ret;
 
@@ -52,10 +55,7 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
       if (ACL_NOT_WELL_SUPPORTED (errno))
 	return set_acl (dst_name, dest_desc, mode);
       else
-        {
-	  error (0, errno, "%s", quote (src_name));
-	  return -1;
-	}
+        return -2;
     }
 
   if (HAVE_ACL_SET_FD && dest_desc != -1)
@@ -92,8 +92,7 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
 	  acl_free (acl);
 	  chmod_or_fchmod (dst_name, dest_desc, mode);
 	}
-      error (0, saved_errno, _("preserving permissions for %s"),
-	     quote (dst_name));
+      errno = saved_errno;
       return -1;
     }
   else
@@ -105,27 +104,21 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
 	 separate or special bits are to be set which don't fit into ACLs.  */
 
       if (chmod_or_fchmod (dst_name, dest_desc, mode) != 0)
-	{
-	  error (0, errno, _("preserving permissions for %s"),
-		 quote (dst_name));
-	  return -1;
-	}
+	return -1;
     }
 
   if (S_ISDIR (mode))
     {
       acl = acl_get_file (src_name, ACL_TYPE_DEFAULT);
       if (acl == NULL)
-	{
-	  error (0, errno, "%s", quote (src_name));
-	  return -1;
-	}
+	return -2;
 
       if (acl_set_file (dst_name, ACL_TYPE_DEFAULT, acl))
 	{
-	  error (0, errno, _("preserving permissions for %s"),
-		 quote (dst_name));
+	  int saved_errno = errno;
+
 	  acl_free (acl);
+	  errno = saved_errno;
 	  return -1;
 	}
       else
@@ -142,28 +135,61 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
 	 ? acl_get (src_name, ACL_NO_TRIVIAL, &aclp)
 	 : facl_get (source_desc, ACL_NO_TRIVIAL, &aclp));
   if (ret != 0 && errno != ENOSYS)
-    {
-      error (0, errno, "%s", quote (src_name));
-      return ret;
-    }
+    return -2;
 # endif
 
   ret = qset_acl (dst_name, dest_desc, mode);
   if (ret != 0)
-    error (0, errno, _("preserving permissions for %s"), quote (dst_name));
+    return -1;
 
 # if USE_ACL && defined ACL_NO_TRIVIAL
-  if (ret == 0 && aclp)
+  if (aclp)
     {
       ret = (dest_desc < 0
 	     ? acl_set (dst_name, aclp)
 	     : facl_set (dest_desc, aclp));
       if (ret != 0)
-	error (0, errno, _("preserving permissions for %s"), quote (dst_name));
+	{
+	  int saved_errno = errno;
+
+	  acl_free (aclp);
+	  errno = saved_errno;
+	  return -1;
+	}
       acl_free (aclp);
     }
 # endif
 
-  return ret;
+  return 0;
 #endif
+}
+
+
+/* Copy access control lists from one file to another. If SOURCE_DESC is
+   a valid file descriptor, use file descriptor operations, else use
+   filename based operations on SRC_NAME. Likewise for DEST_DESC and
+   DST_NAME.
+   If access control lists are not available, fchmod the target file to
+   MODE.  Also sets the non-permission bits of the destination file
+   (S_ISUID, S_ISGID, S_ISVTX) to those from MODE if any are set.
+   Return 0 if successful, otherwise output a diagnostic and return -1.  */
+
+int
+copy_acl (const char *src_name, int source_desc, const char *dst_name,
+	  int dest_desc, mode_t mode)
+{
+  int ret = qcopy_acl (src_name, source_desc, dst_name, dest_desc, mode);
+  switch (ret)
+    {
+    case -2:
+      error (0, errno, "%s", quote (src_name));
+      return -1;
+
+    case -1:
+      error (0, errno, _("preserving permissions for %s"), quote (dst_name));
+      return -1;
+
+    default:
+      return 0;
+    }
 }
