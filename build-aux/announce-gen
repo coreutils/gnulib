@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2008-02-08 10:34'; # UTC
+my $VERSION = '2008-06-02 08:18'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -474,7 +474,7 @@ Then, run a command like this:
 If that command fails because you don't have the required public key,
 then run this command to import it:
 
-  gpg --keyserver wwwkeys.pgp.net --recv-keys $gpg_key_id
+  gpg --keyserver keys.gnupg.net --recv-keys $gpg_key_id
 
 and rerun the \`gpg --verify' command.
 EOF

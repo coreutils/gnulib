@@ -1,3 +1,10 @@
+2008-06-02  Jim Meyering  <meyering@redhat.com>
+
+	announce-gen: use a better key-server host name
+	* build-aux/announce-gen (main): Recommend keys.gnupg.net, since
+	it may be more consistently reliable.  Suggested by Werner Koch
+	in <http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/13717>.
+
 2008-06-01  Bruno Haible  <bruno@clisp.org>
 
 	* lib/stdio-impl.h (fp_ub): Use fp_. Needed for DragonFly BSD.
