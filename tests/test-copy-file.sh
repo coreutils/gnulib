@@ -189,7 +189,7 @@ cd "$builddir" ||
     if test "$agid" = "$mygid"; then agid=2; fi
 
     case $acl_flavor in
-      linux | cygwin | freebsd | solaris)
+      linux | freebsd | solaris)
 
         # Set an ACL for a user.
         setfacl -m user:$auid:1 tmpfile0
@@ -257,6 +257,43 @@ cd "$builddir" ||
           freebsd) ;;
           *)       getfacl tmpfile9 | setfacl -f - tmpfile0 ;;
         esac
+        rm -f tmpfile9
+
+        func_test_copy tmpfile0 tmpfile9
+
+        ;;
+
+      cygwin)
+
+        # Set an ACL for a group.
+        setfacl -m group:0:1 tmpfile0
+
+        func_test_copy tmpfile0 tmpfile2
+
+        # Set an ACL for other.
+        setfacl -m other:4 tmpfile0
+
+        func_test_copy tmpfile0 tmpfile4
+
+        # Remove the ACL for the group.
+        setfacl -d group:0 tmpfile0
+
+        func_test_copy tmpfile0 tmpfile5
+
+        # Remove the ACL for other.
+        setfacl -d other:4 tmpfile0
+
+        func_test_copy tmpfile0 tmpfile6
+
+        # Delete all optional ACLs.
+        setfacl -s user::6,group::0,other:0 tmpfile0
+
+        func_test_copy tmpfile0 tmpfile8
+
+        # Copy ACLs from a file that has no ACLs.
+        echo > tmpfile9
+        chmod a+x tmpfile9
+        getfacl tmpfile9 | setfacl -f - tmpfile0
         rm -f tmpfile9
 
         func_test_copy tmpfile0 tmpfile9

@@ -148,10 +148,13 @@ cd "$builddir" ||
         # Prepare a file with an ACL.
         echo "Special contents" > tmpfile2
         chmod 600 tmpfile2
-        # Set an ACL for a user.
+        # Set an ACL for a user (or group).
         case $acl_flavor in
-          linux | cygwin | freebsd | solaris)
+          linux | freebsd | solaris)
             setfacl -m user:$auid:1 tmpfile0
+            ;;
+          cygwin)
+            setfacl -m group:0:1 tmpfile0
             ;;
           hpux)
             orig=`lsacl tmpfile0 | sed -e 's/ tmpfile0$//'`

@@ -1,5 +1,12 @@
 2008-06-02  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-file-has-acl.sh: Use different code for Cygwin.
+	* tests/test-set-mode-acl.sh: Likewise.
+	* tests/test-copy-acl.sh: Likewise.
+	* tests/test-copy-file.sh: Likewise.
+
+2008-06-02  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-file-has-acl.sh: Remove unused code.
 
 2008-06-01  Bruno Haible  <bruno@clisp.org>

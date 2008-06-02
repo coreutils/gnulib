@@ -188,7 +188,7 @@ cd "$builddir" ||
     if test "$agid" = "$mygid"; then agid=2; fi
 
     case $acl_flavor in
-      linux | cygwin | freebsd | solaris)
+      linux | freebsd | solaris)
 
         # Set an ACL for a user.
         if setfacl -m user:$auid:1 tmpfile0; then
@@ -214,6 +214,21 @@ cd "$builddir" ||
             linux | freebsd) setfacl -x mask: tmpfile0 ;;
             *)               setfacl -d mask: tmpfile0 ;;
           esac
+
+          func_test_has_acl tmpfile0 no
+
+        fi
+        ;;
+
+      cygwin)
+
+        # Set an ACL for a group.
+        if setfacl -m group:0:1 tmpfile0; then
+
+          func_test_has_acl tmpfile0 yes
+
+          # Remove the ACL for the group.
+          setfacl -d group:0 tmpfile0
 
           func_test_has_acl tmpfile0 no
 
