@@ -1,5 +1,5 @@
 # acl.m4 - check for access control list (ACL) primitives
-# serial 7
+# serial 8
 
 # Copyright (C) 2002, 2004-2008 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -18,43 +18,100 @@ AC_DEFUN([gl_FUNC_ACL],
   use_acl=0
   AC_REQUIRE([AC_C_INLINE])
   if test "x$enable_acl" != "xno"; then
-    dnl Prerequisites of lib/acl.c.
-    AC_CHECK_HEADERS(sys/acl.h)
+    dnl On all platforms, the ACL related API is declared in <sys/acl.h>.
+    AC_CHECK_HEADERS([sys/acl.h])
     if test $ac_cv_header_sys_acl_h = yes; then
       ac_save_LIBS=$LIBS
-      AC_CHECK_FUNCS([acl])
-      use_acl=1
-      AC_SEARCH_LIBS([acl_trivial], [sec],
-	[test "$ac_cv_search_acl_trivial" = "none required" ||
-	 LIB_ACL=$ac_cv_search_acl_trivial
-	 AC_CHECK_FUNCS([acl_trivial])],
-	[AC_CHECK_FUNCS([acl_trivial])
-	 if test $ac_cv_func_acl_trivial != yes; then
-	   dnl -lacl is needed on Linux, -lpacl is needed on OSF/1.
-	   AC_SEARCH_LIBS([acl_get_file], [acl pacl],
-	     [test "$ac_cv_search_acl_get_file" = "none required" ||
-	      LIB_ACL=$ac_cv_search_acl_get_file
-	      AC_CHECK_FUNCS(
-		[acl_get_file acl_get_fd acl_set_file acl_set_fd \
-		 acl_free acl_from_mode acl_from_text \
-		 acl_delete_def_file acl_extended_file \
-		 acl_delete_fd_np acl_delete_file_np \
-		 acl_copy_ext_native acl_create_entry_np \
-		 acl_to_short_text acl_free_text])
-	      if test $ac_cv_func_acl_get_file = yes; then
-		# If the acl_get_file bug is detected, disable all ACL support.
-		gl_ACL_GET_FILE( , [use_acl=0])
-	      fi
-	      if test $use_acl = 1; then
-		AC_CHECK_HEADERS([acl/libacl.h])
-		if test $ac_cv_func_acl_get_file = yes &&
-		   test $ac_cv_func_acl_free = yes; then
-		  AC_REPLACE_FUNCS([acl_entries])
-		fi
-	      else
-		LIB_ACL=
-	      fi])
-	 fi])
+
+      dnl Test for POSIX-draft-like API (Linux, FreeBSD, MacOS X, IRIX, Tru64).
+      dnl -lacl is needed on Linux, -lpacl is needed on OSF/1.
+      if test $use_acl = 0; then
+	AC_SEARCH_LIBS([acl_get_file], [acl pacl],
+	  [if test "$ac_cv_search_acl_get_file" != "none required"; then
+	     LIB_ACL=$ac_cv_search_acl_get_file
+           fi
+	   AC_CHECK_FUNCS(
+	     [acl_get_file acl_get_fd acl_set_file acl_set_fd \
+	      acl_free acl_from_mode acl_from_text \
+	      acl_delete_def_file acl_extended_file \
+	      acl_delete_fd_np acl_delete_file_np \
+	      acl_copy_ext_native acl_create_entry_np \
+	      acl_to_short_text acl_free_text])
+	   # If the acl_get_file bug is detected, don't enable the ACL support.
+	   gl_ACL_GET_FILE([use_acl=1], [])
+	   if test $use_acl = 1; then
+	     dnl On Linux, additional API is declared in <acl/libacl.h>.
+	     AC_CHECK_HEADERS([acl/libacl.h])
+	     AC_REPLACE_FUNCS([acl_entries])
+	     AC_CACHE_CHECK([for ACL_FIRST_ENTRY],
+	       [gl_cv_acl_ACL_FIRST_ENTRY],
+	       [AC_COMPILE_IFELSE(
+[[#include <sys/types.h>
+#include <sys/acl.h>
+int type = ACL_FIRST_ENTRY;]],
+		  [gl_cv_acl_ACL_FIRST_ENTRY=yes],
+		  [gl_cv_acl_ACL_FIRST_ENTRY=no])])
+	     if test $gl_cv_acl_ACL_FIRST_ENTRY = yes; then
+	       AC_DEFINE([HAVE_ACL_FIRST_ENTRY], 1,
+		 [Define to 1 if the constant ACL_FIRST_ENTRY exists.])
+	     fi
+	     dnl On MacOS X, other types of ACLs are supported.
+	     AC_CACHE_CHECK([for ACL_TYPE_EXTENDED],
+	       [gl_cv_acl_ACL_TYPE_EXTENDED],
+	       [AC_COMPILE_IFELSE(
+[[#include <sys/types.h>
+#include <sys/acl.h>
+int type = ACL_TYPE_EXTENDED;]],
+		  [gl_cv_acl_ACL_TYPE_EXTENDED=yes],
+		  [gl_cv_acl_ACL_TYPE_EXTENDED=no])])
+	     if test $gl_cv_acl_ACL_TYPE_EXTENDED = yes; then
+	       AC_DEFINE([HAVE_ACL_TYPE_EXTENDED], 1,
+		 [Define to 1 if the ACL type ACL_TYPE_EXTENDED exists.])
+	     fi
+	   else
+	     LIB_ACL=
+	   fi
+	  ])
+      fi
+
+      dnl Test for Solaris API (Solaris, Cygwin).
+      if test $use_acl = 0; then
+	AC_CHECK_FUNCS([acl])
+	if test $ac_cv_func_acl = yes; then
+	  AC_SEARCH_LIBS([acl_trivial], [sec],
+	    [if test "$ac_cv_search_acl_trivial" != "none required"; then
+	       LIB_ACL=$ac_cv_search_acl_trivial
+	     fi
+	    ])
+	  AC_CHECK_FUNCS([acl_trivial])
+	  use_acl=1
+	fi
+      fi
+
+      dnl Test for HP-UX API.
+      if test $use_acl = 0 || test "$ac_cv_func_acl" = yes; then
+	AC_CHECK_FUNCS([getacl])
+	if test $ac_cv_func_getacl = yes; then
+	  use_acl=1
+	fi
+      fi
+
+      dnl Test for AIX API (AIX 5.3 or newer).
+      if test $use_acl = 0; then
+	AC_CHECK_FUNCS([aclx_get])
+	if test $ac_cv_func_aclx_get = yes; then
+	  use_acl=1
+	fi
+      fi
+
+      dnl Test for older AIX API.
+      if test $use_acl = 0 || test "$ac_cv_func_aclx_get" = yes; then
+	AC_CHECK_FUNCS([statacl])
+	if test $ac_cv_func_statacl = yes; then
+	  use_acl=1
+	fi
+      fi
+
       LIBS=$ac_save_LIBS
     fi
     if test "x$enable_acl$use_acl" = "xyes0"; then

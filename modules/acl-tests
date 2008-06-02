@@ -14,20 +14,6 @@ unistd
 xalloc
 
 configure.ac:
-AC_REQUIRE([gl_FUNC_ACL])
-save_LIBS="$LIBS"
-LIBS="$LIB_ACL $LIBS"
-dnl Test for functions present on Linux, FreeBSD, MacOS X, IRIX, Tru64.
-AC_CHECK_FUNCS([acl_get_file])
-dnl Test for functions present on Solaris, Cygwin.
-AC_CHECK_FUNCS([acl])
-dnl Test for functions present on HP-UX.
-AC_CHECK_FUNCS([getacl])
-dnl Test for functions present on AIX.
-AC_CHECK_FUNCS([aclx_get])
-dnl Test for functions present on older AIX.
-AC_CHECK_FUNCS([statacl])
-LIBS="$save_LIBS"
 
 Makefile.am:
 TESTS += test-file-has-acl.sh test-set-mode-acl.sh test-copy-acl.sh
