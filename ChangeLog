@@ -1,5 +1,10 @@
 2008-06-02  Bruno Haible  <bruno@clisp.org>
 
+	* lib/acl-internal.h (ACL_NOT_WELL_SUPPORTED): Include EOPNOTSUPP if
+	it exists.
+
+2008-06-02  Bruno Haible  <bruno@clisp.org>
+
 	* lib/acl_entries.c (acl_entries): Rewrite to use acl_get_entry.
 	* lib/copy-acl.c (qcopy_acl): Update comment.
 

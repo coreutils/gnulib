@@ -131,6 +131,9 @@ rpl_acl_set_fd (int fd, acl_t acl)
 #  if defined __APPLE__ && defined __MACH__ /* MacOS X */
 #   define ACL_NOT_WELL_SUPPORTED(Err) \
      ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == ENOENT)
+#  elif defined EOPNOTSUPP /* Tru64 NFS */
+#   define ACL_NOT_WELL_SUPPORTED(Err) \
+     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == EOPNOTSUPP)
 #  else
 #   define ACL_NOT_WELL_SUPPORTED(Err) \
      ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY)
