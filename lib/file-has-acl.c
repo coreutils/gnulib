@@ -30,21 +30,10 @@
 int
 file_has_acl (char const *name, struct stat const *sb)
 {
+#if USE_ACL
   if (! S_ISLNK (sb->st_mode))
     {
-#if USE_ACL && HAVE_ACL_TRIVIAL
-
-      /* Solaris 10, which also has NFSv4 and ZFS style ACLs.  */
-      return acl_trivial (name);
-
-#elif USE_ACL && HAVE_ACL && defined GETACLCNT
-
-      /* Solaris 2.5 through Solaris 9, and contemporaneous versions of
-	 HP-UX and Unixware.  */
-      int n = acl (name, GETACLCNT, 0, NULL);
-      return n < 0 ? (errno == ENOSYS ? 0 : -1) : (MIN_ACL_ENTRIES < n);
-
-#elif USE_ACL && HAVE_ACL_GET_FILE && HAVE_ACL_FREE
+# if HAVE_ACL_GET_FILE
 
       /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
       /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
@@ -77,8 +66,27 @@ file_has_acl (char const *name, struct stat const *sb)
       if (ret < 0)
 	return ACL_NOT_WELL_SUPPORTED (errno) ? 0 : -1;
       return ret;
-#endif
+
+# elif HAVE_ACL && defined GETACLCNT /* Solaris, Cygwin, not HP-UX */
+
+#  if HAVE_ACL_TRIVIAL
+
+      /* Solaris 10, which also has NFSv4 and ZFS style ACLs.  */
+      return acl_trivial (name);
+
+#  else /* Solaris, Cygwin, general case */
+
+      /* Solaris 2.5 through Solaris 10, Cygwin, and contemporaneous versions
+	 of Unixware.  The acl() call returns the access and default ACL both
+	 at once.  */
+      int n = acl (name, GETACLCNT, 0, NULL);
+      return n < 0 ? (errno == ENOSYS ? 0 : -1) : (MIN_ACL_ENTRIES < n);
+
+#  endif
+
+# endif
     }
+#endif
 
   /* FIXME: Add support for AIX, Irix, and Tru64.  Please see Samba's
      source/lib/sysacls.c file for fix-related ideas.  */

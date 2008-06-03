@@ -41,7 +41,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 {
   int ret;
 
-#if USE_ACL && HAVE_ACL_GET_FILE && HAVE_ACL_SET_FILE && HAVE_ACL_FREE
+#if USE_ACL && HAVE_ACL_GET_FILE
   /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
   /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
 
@@ -125,23 +125,20 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     }
   return 0;
 
-#else
-
-# if USE_ACL && defined ACL_NO_TRIVIAL
+#elif USE_ACL && defined ACL_NO_TRIVIAL
   /* Solaris 10 NFSv4 ACLs.  */
+
   acl_t *aclp = NULL;
   ret = (source_desc < 0
 	 ? acl_get (src_name, ACL_NO_TRIVIAL, &aclp)
 	 : facl_get (source_desc, ACL_NO_TRIVIAL, &aclp));
   if (ret != 0 && errno != ENOSYS)
     return -2;
-# endif
 
   ret = qset_acl (dst_name, dest_desc, mode);
   if (ret != 0)
     return -1;
 
-# if USE_ACL && defined ACL_NO_TRIVIAL
   if (aclp)
     {
       ret = (dest_desc < 0
@@ -157,9 +154,13 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 	}
       acl_free (aclp);
     }
-# endif
 
   return 0;
+
+#else
+
+  return qset_acl (dst_name, dest_desc, mode);
+
 #endif
 }
 

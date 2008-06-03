@@ -49,9 +49,10 @@ int
 qset_acl (char const *name, int desc, mode_t mode)
 {
 #if USE_ACL
-# if MODE_INSIDE_ACL
-#  if HAVE_ACL_SET_FILE && HAVE_ACL_FREE
+# if HAVE_ACL_GET_FILE
   /* POSIX 1003.1e draft 17 (abandoned) specific version.  */
+  /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
+#  if MODE_INSIDE_ACL
   /* Linux, FreeBSD, IRIX, Tru64 */
 
   /* We must also have acl_from_text and acl_delete_def_file.
@@ -138,46 +139,7 @@ qset_acl (char const *name, int desc, mode_t mode)
     }
   return 0;
 
-#  elif defined ACL_NO_TRIVIAL
-  /* Solaris 10, with NFSv4 ACLs.  */
-  acl_t *aclp;
-  char acl_text[] = "user::---,group::---,mask:---,other:---";
-
-  if (mode & S_IRUSR) acl_text[ 6] = 'r';
-  if (mode & S_IWUSR) acl_text[ 7] = 'w';
-  if (mode & S_IXUSR) acl_text[ 8] = 'x';
-  if (mode & S_IRGRP) acl_text[17] = acl_text[26] = 'r';
-  if (mode & S_IWGRP) acl_text[18] = acl_text[27] = 'w';
-  if (mode & S_IXGRP) acl_text[19] = acl_text[28] = 'x';
-  if (mode & S_IROTH) acl_text[36] = 'r';
-  if (mode & S_IWOTH) acl_text[37] = 'w';
-  if (mode & S_IXOTH) acl_text[38] = 'x';
-
-  if (acl_fromtext (acl_text, &aclp) != 0)
-    {
-      errno = ENOMEM;
-      return -1;
-    }
-  else
-    {
-      int acl_result = (desc < 0 ? acl_set (name, aclp) : facl_set (desc, aclp));
-      int acl_errno = errno;
-      acl_free (aclp);
-      if (acl_result == 0 || acl_errno != ENOSYS)
-	{
-	  errno = acl_errno;
-	  return acl_result;
-	}
-    }
-
-  return chmod_or_fchmod (name, desc, mode);
-
-#  else /* Unknown flavor of ACLs */
-  return chmod_or_fchmod (name, desc, mode);
-#  endif
-# else /* !MODE_INSIDE_ACL */
-#  if HAVE_ACL_SET_FILE && HAVE_ACL_FREE
-  /* POSIX 1003.1e draft 17 (abandoned) specific version.  */
+#  else /* !MODE_INSIDE_ACL */
   /* MacOS X */
 
   acl_t acl;
@@ -223,9 +185,44 @@ qset_acl (char const *name, int desc, mode_t mode)
     }
 
   return chmod_or_fchmod (name, desc, mode);
-#  else /* Unknown flavor of ACLs */
-  return chmod_or_fchmod (name, desc, mode);
 #  endif
+
+# elif defined ACL_NO_TRIVIAL
+  /* Solaris 10, with NFSv4 ACLs.  */
+  acl_t *aclp;
+  char acl_text[] = "user::---,group::---,mask:---,other:---";
+
+  if (mode & S_IRUSR) acl_text[ 6] = 'r';
+  if (mode & S_IWUSR) acl_text[ 7] = 'w';
+  if (mode & S_IXUSR) acl_text[ 8] = 'x';
+  if (mode & S_IRGRP) acl_text[17] = acl_text[26] = 'r';
+  if (mode & S_IWGRP) acl_text[18] = acl_text[27] = 'w';
+  if (mode & S_IXGRP) acl_text[19] = acl_text[28] = 'x';
+  if (mode & S_IROTH) acl_text[36] = 'r';
+  if (mode & S_IWOTH) acl_text[37] = 'w';
+  if (mode & S_IXOTH) acl_text[38] = 'x';
+
+  if (acl_fromtext (acl_text, &aclp) != 0)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  else
+    {
+      int acl_result = (desc < 0 ? acl_set (name, aclp) : facl_set (desc, aclp));
+      int acl_errno = errno;
+      acl_free (aclp);
+      if (acl_result == 0 || acl_errno != ENOSYS)
+	{
+	  errno = acl_errno;
+	  return acl_result;
+	}
+    }
+
+  return chmod_or_fchmod (name, desc, mode);
+
+# else /* Unknown flavor of ACLs */
+  return chmod_or_fchmod (name, desc, mode);
 # endif
 #else /* !USE_ACL */
   return chmod_or_fchmod (name, desc, mode);
