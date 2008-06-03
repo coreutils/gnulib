@@ -72,8 +72,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
 	  acl_free (acl);
 	  /* On most hosts with MODE_INSIDE_ACL an ACL is trivial if n == 3,
-	     and it cannot be less than 3.  On IRIX 6.5 it is also trivial if
-	     n == -1.
+	     and it cannot be less than 3.
 	     For simplicity and safety, assume the ACL is trivial if n <= 3.
 	     Also see file-has-acl.c for some of the other possibilities;
 	     it's not clear whether that complexity is needed here.  */

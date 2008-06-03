@@ -21,18 +21,38 @@
 
 #include "acl-internal.h"
 
+/* This file assumes POSIX-draft like ACLs
+   (Linux, FreeBSD, MacOS X, IRIX, Tru64).  */
+
 /* Return the number of entries in ACL.  */
 
 int
 acl_entries (acl_t acl)
 {
-  char *t;
-  int entries = 0;
-  char *text = acl_to_text (acl, NULL);
-  if (! text)
-    return -1;
-  for (t = text; *t; t++)
-    entries += (*t == '\n');
-  acl_free_text (text);
-  return entries;
+  int count = 0;
+
+  if (acl != NULL)
+    {
+#if HAVE_ACL_FIRST_ENTRY /* Linux, FreeBSD, MacOS X */
+      acl_entry_t ace;
+      int at_end;
+
+      for (at_end = acl_get_entry (acl, ACL_FIRST_ENTRY, &ace);
+	   !at_end;
+	   at_end = acl_get_entry (acl, ACL_NEXT_ENTRY, &ace))
+	count++;
+#else /* IRIX, Tru64 */
+# if HAVE_ACL_TO_SHORT_TEXT /* IRIX */
+      /* Don't use acl_get_entry: it is undocumented.  */
+      count = acl->acl_cnt;
+# endif
+# if HAVE_ACL_FREE_TEXT /* Tru64 */
+      /* Don't use acl_get_entry: it takes only one argument and does not
+	 work.  */
+      count = acl->acl_num;
+# endif
+#endif
+    }
+
+  return count;
 }

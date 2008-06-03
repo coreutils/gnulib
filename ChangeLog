@@ -1,5 +1,10 @@
 2008-06-02  Bruno Haible  <bruno@clisp.org>
 
+	* lib/acl_entries.c (acl_entries): Rewrite to use acl_get_entry.
+	* lib/copy-acl.c (qcopy_acl): Update comment.
+
+2008-06-02  Bruno Haible  <bruno@clisp.org>
+
 	* lib/acl-entries.h: Enclose most definitions in #ifs for POSIX-draft
 	like ACL APIs.
 
