@@ -7,6 +7,10 @@ lib/argz.c
 m4/argz.m4
 
 Depends-on:
+mempcpy
+stpcpy
+strndup
+strnlen
 
 configure.ac:
 gl_FUNC_ARGZ
@@ -30,4 +34,4 @@ License:
 LGPLv2+
 
 Maintainer:
-bug-libtool@gnu.org
+all

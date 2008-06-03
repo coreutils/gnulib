@@ -230,6 +230,8 @@ $LIBCSRC/stdlib/strtoul.c		lib gpl
 #$LIBCSRC/sysdeps/unix/sysv/gethostname.c	lib gpl
 #$LIBCSRC/sysdeps/unix/utime.c			lib gpl
 
-$LIBTOOL/libltdl/argz.c				lib gpl
-$LIBTOOL/libltdl/argz_.h			lib gpl
-$LIBTOOL/libltdl/m4/argz.m4			m4
+# Now derived from concatenation of separate .c files in glibc.
+# See argz.mk for details.
+#$LIBTOOL/libltdl/argz.c			lib gpl
+#$LIBTOOL/libltdl/argz_.h			lib gpl
+#$LIBTOOL/libltdl/m4/argz.m4			m4

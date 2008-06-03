@@ -1,254 +1,406 @@
-/* argz.c -- argz implementation for non-glibc systems
+/* Functions for dealing with '\0' separated arg vectors.
+   Copyright (C) 1995-1998, 2000-2002, 2006, 2008 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
 
-   Copyright (C) 2004, 2006, 2007, 2008 Free Software Foundation, Inc.
-   Written by Gary V. Vaughan, 2004
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
 
-   NOTE: The canonical source of this file is maintained with the
-   GNU Libtool package.  Report bugs to bug-libtool@gnu.org.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-GNU Libltdl is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2 of the License, or (at your option) any later version.
+   You should have received a copy of the GNU General Public License along
+   with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. */
 
-As a special exception to the GNU Lesser General Public License,
-if you distribute this file as part of a program or library that
-is built using GNU Libtool, you may include this file under the
-same distribution terms that you use for the rest of that program.
-
-GNU Libltdl is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with GNU Libltdl; see the file COPYING.LIB.  If not, a
-copy can be downloaded from  http://www.gnu.org/licenses/lgpl.html,
-or obtained by writing to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-*/
-
-#if defined(LTDL) && defined LT_CONFIG_H
-#  include LT_CONFIG_H
-#else
-#  include <config.h>
-#endif
+#include <config.h>
 
 #include <argz.h>
-
-#include <assert.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <sys/types.h>
 #include <errno.h>
+#include <stdlib.h>
 #include <string.h>
 
-#define EOS_CHAR '\0'
 
+
+/* Add BUF, of length BUF_LEN to the argz vector in ARGZ & ARGZ_LEN.  */
 error_t
-argz_append (char **pargz, size_t *pargz_len, const char *buf, size_t buf_len)
+argz_append (char **argz, size_t *argz_len, const char *buf, size_t buf_len)
 {
-  size_t argz_len;
-  char  *argz;
-
-  assert (pargz);
-  assert (pargz_len);
-  assert ((*pargz && *pargz_len) || (!*pargz && !*pargz_len));
-
-  /* If nothing needs to be appended, no more work is required.  */
-  if (buf_len == 0)
-    return 0;
-
-  /* Ensure there is enough room to append BUF_LEN.  */
-  argz_len = *pargz_len + buf_len;
-  argz = (char *) realloc (*pargz, argz_len);
-  if (!argz)
-    return ENOMEM;
-
-  /* Copy characters from BUF after terminating '\0' in ARGZ.  */
-  memcpy (argz + *pargz_len, buf, buf_len);
-
-  /* Assign new values.  */
-  *pargz = argz;
-  *pargz_len = argz_len;
-
-  return 0;
-}
-
-
-/* Add a string to the argz vector.  */
-error_t
-argz_add (char **pargz, size_t *pargz_len, const char *str)
-{
-  return argz_append (pargz, pargz_len, str, strlen (str) + 1);
-}
-
-
-error_t
-argz_create_sep (const char *str, int delim, char **pargz, size_t *pargz_len)
-{
-  size_t argz_len;
-  char *argz = 0;
-
-  assert (str);
-  assert (pargz);
-  assert (pargz_len);
-
-  /* Make a copy of STR, but replacing each occurrence of
-     DELIM with '\0'.  */
-  argz_len = 1+ strlen (str);
-  if (argz_len)
+  size_t new_argz_len = *argz_len + buf_len;
+  char *new_argz = realloc (*argz, new_argz_len);
+  if (new_argz)
     {
-      const char *p;
-      char *q;
+      memcpy (new_argz + *argz_len, buf, buf_len);
+      *argz = new_argz;
+      *argz_len = new_argz_len;
+      return 0;
+    }
+  else
+    return ENOMEM;
+}
 
-      argz = (char *) malloc (argz_len);
-      if (!argz)
+/* Add STR to the argz vector in ARGZ & ARGZ_LEN.  This should be moved into
+   argz.c in libshouldbelibc.  */
+error_t
+argz_add (char **argz, size_t *argz_len, const char *str)
+{
+  return argz_append (argz, argz_len, str, strlen (str) + 1);
+}
+
+
+
+error_t
+argz_add_sep (char **argz, size_t *argz_len, const char *string, int delim)
+{
+  size_t nlen = strlen (string) + 1;
+
+  if (nlen > 1)
+    {
+      const char *rp;
+      char *wp;
+
+      *argz = (char *) realloc (*argz, *argz_len + nlen);
+      if (*argz == NULL)
 	return ENOMEM;
 
-      for (p = str, q = argz; *p != EOS_CHAR; ++p)
-	{
-	  if (*p == delim)
-	    {
-	      /* Ignore leading delimiters, and fold consecutive
-		 delimiters in STR into a single '\0' in ARGZ.  */
-	      if ((q > argz) && (q[-1] != EOS_CHAR))
-		*q++ = EOS_CHAR;
-	      else
-		--argz_len;
-	    }
-	  else
-	    *q++ = *p;
-	}
-      /* Copy terminating EOS_CHAR.  */
-      *q = *p;
+      wp = *argz + *argz_len;
+      rp = string;
+      do
+	if (*rp == delim)
+	  {
+	    if (wp > *argz && wp[-1] != '\0')
+	      *wp++ = '\0';
+	    else
+	      --nlen;
+	  }
+	else
+	  *wp++ = *rp;
+      while (*rp++ != '\0');
+
+      *argz_len += nlen;
     }
-
-  /* If ARGZ_LEN has shrunk to nothing, release ARGZ's memory.  */
-  if (!argz_len)
-    argz = (free (argz), (char *) 0);
-
-  /* Assign new values.  */
-  *pargz = argz;
-  *pargz_len = argz_len;
 
   return 0;
 }
 
 
+
 error_t
-argz_insert (char **pargz, size_t *pargz_len, char *before, const char *entry)
+argz_create_sep (const char *string, int delim, char **argz, size_t *len)
 {
-  assert (pargz);
-  assert (pargz_len);
-  assert (entry && *entry);
+  size_t nlen = strlen (string) + 1;
 
-  /* No BEFORE address indicates ENTRY should be inserted after the
-     current last element.  */
-  if (!before)
-    return argz_append (pargz, pargz_len, entry, 1+ strlen (entry));
+  if (nlen > 1)
+    {
+      const char *rp;
+      char *wp;
 
-  /* This probably indicates a programmer error, but to preserve
-     semantics, scan back to the start of an entry if BEFORE points
-     into the middle of it.  */
-  while ((before > *pargz) && (before[-1] != EOS_CHAR))
-    --before;
+      *argz = (char *) malloc (nlen);
+      if (*argz == NULL)
+	return ENOMEM;
 
-  {
-    size_t entry_len	= 1+ strlen (entry);
-    size_t argz_len	= *pargz_len + entry_len;
-    size_t offset	= before - *pargz;
-    char   *argz	= (char *) realloc (*pargz, argz_len);
+      rp = string;
+      wp = *argz;
+      do
+	if (*rp == delim)
+	  {
+	    if (wp > *argz && wp[-1] != '\0')
+	      *wp++ = '\0';
+	    else
+	      --nlen;
+	  }
+	else
+	  *wp++ = *rp;
+      while (*rp++ != '\0');
 
-    if (!argz)
-      return ENOMEM;
+      if (nlen == 0)
+	{
+	  free (*argz);
+	  *argz = NULL;
+	  *len = 0;
+	}
 
-    /* Make BEFORE point to the equivalent offset in ARGZ that it
-       used to have in *PARGZ incase realloc() moved the block.  */
-    before = argz + offset;
-
-    /* Move the ARGZ entries starting at BEFORE up into the new
-       space at the end -- making room to copy ENTRY into the
-       resulting gap.  */
-    memmove (before + entry_len, before, *pargz_len - offset);
-    memcpy  (before, entry, entry_len);
-
-    /* Assign new values.  */
-    *pargz = argz;
-    *pargz_len = argz_len;
-  }
+      *len = nlen;
+    }
+  else
+    {
+      *argz = NULL;
+      *len = 0;
+    }
 
   return 0;
+}
+
+
+/* Insert ENTRY into ARGZ & ARGZ_LEN before BEFORE, which should be an
+   existing entry in ARGZ; if BEFORE is NULL, ENTRY is appended to the end.
+   Since ARGZ's first entry is the same as ARGZ, argz_insert (ARGZ, ARGZ_LEN,
+   ARGZ, ENTRY) will insert ENTRY at the beginning of ARGZ.  If BEFORE is not
+   in ARGZ, EINVAL is returned, else if memory can't be allocated for the new
+   ARGZ, ENOMEM is returned, else 0.  */
+error_t
+argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
+{
+  if (! before)
+    return argz_add (argz, argz_len, entry);
+
+  if (before < *argz || before >= *argz + *argz_len)
+    return EINVAL;
+
+  if (before > *argz)
+    /* Make sure before is actually the beginning of an entry.  */
+    while (before[-1])
+      before--;
+
+  {
+    size_t after_before = *argz_len - (before - *argz);
+    size_t entry_len = strlen  (entry) + 1;
+    size_t new_argz_len = *argz_len + entry_len;
+    char *new_argz = realloc (*argz, new_argz_len);
+
+    if (new_argz)
+      {
+	before = new_argz + (before - *argz);
+	memmove (before + entry_len, before, after_before);
+	memmove (before, entry, entry_len);
+	*argz = new_argz;
+	*argz_len = new_argz_len;
+	return 0;
+      }
+    else
+      return ENOMEM;
+  }
 }
 
 
 char *
-argz_next (char *argz, size_t argz_len, const char *entry)
+argz_next (const char *argz, size_t argz_len, const char *entry)
 {
-  assert ((argz && argz_len) || (!argz && !argz_len));
-
   if (entry)
     {
-      /* Either ARGZ/ARGZ_LEN is empty, or ENTRY points into an address
-	 within the ARGZ vector.  */
-      assert ((!argz && !argz_len)
-	      || ((argz <= entry) && (entry < (argz + argz_len))));
+      if (entry < argz + argz_len)
+	entry = strchr (entry, '\0') + 1;
 
-      /* Move to the char immediately after the terminating
-	 '\0' of ENTRY.  */
-      entry = 1+ strchr (entry, EOS_CHAR);
-
-      /* Return either the new ENTRY, or else NULL if ARGZ is
-	 exhausted.  */
-      return (entry >= argz + argz_len) ? 0 : (char *) entry;
+      return entry >= argz + argz_len ? NULL : (char *) entry;
     }
   else
-    {
-      /* This should probably be flagged as a programmer error,
-	 since starting an argz_next loop with the iterator set
-	 to ARGZ is safer.  To preserve semantics, handle the NULL
-	 case by returning the start of ARGZ (if any).  */
-      if (argz_len > 0)
-	return argz;
-      else
-	return 0;
-    }
+    if (argz_len > 0)
+      return (char *) argz;
+    else
+      return NULL;
 }
 
 
+/* Make '\0' separated arg vector ARGZ printable by converting all the '\0's
+   except the last into the character SEP.  */
 void
-argz_stringify (char *argz, size_t argz_len, int sep)
+argz_stringify (char *argz, size_t len, int sep)
 {
-  assert ((argz && argz_len) || (!argz && !argz_len));
+  if (len > 0)
+    while (1)
+      {
+	size_t part_len = strnlen (argz, len);
+	argz += part_len;
+	len -= part_len;
+	if (len-- <= 1)		/* includes final '\0' we want to stop at */
+	  break;
+	*argz++ = sep;
+      }
+}
 
-  if (sep)
+
+/* Returns the number of strings in ARGZ.  */
+size_t
+argz_count (const char *argz, size_t len)
+{
+  size_t count = 0;
+  while (len > 0)
     {
-      --argz_len;		/* don't stringify the terminating EOS */
-      while (--argz_len > 0)
+      size_t part_len = strlen(argz);
+      argz += part_len + 1;
+      len -= part_len + 1;
+      count++;
+    }
+  return count;
+}
+
+
+/* Puts pointers to each string in ARGZ, plus a terminating 0 element, into
+   ARGV, which must be large enough to hold them all.  */
+void
+argz_extract (const char *argz, size_t len, char **argv)
+{
+  while (len > 0)
+    {
+      size_t part_len = strlen (argz);
+      *argv++ = (char *) argz;
+      argz += part_len + 1;
+      len -= part_len + 1;
+    }
+  *argv = 0;
+}
+
+
+/* Make a '\0' separated arg vector from a unix argv vector, returning it in
+   ARGZ, and the total length in LEN.  If a memory allocation error occurs,
+   ENOMEM is returned, otherwise 0.  */
+error_t
+argz_create (char *const argv[], char **argz, size_t *len)
+{
+  int argc;
+  size_t tlen = 0;
+  char *const *ap;
+  char *p;
+
+  for (argc = 0; argv[argc] != NULL; ++argc)
+    tlen += strlen (argv[argc]) + 1;
+
+  if (tlen == 0)
+    *argz = NULL;
+  else
+    {
+      *argz = malloc (tlen);
+      if (*argz == NULL)
+	return ENOMEM;
+
+      for (p = *argz, ap = argv; *ap; ++ap, ++p)
+	p = stpcpy (p, *ap);
+    }
+  *len = tlen;
+
+  return 0;
+}
+
+
+/* Delete ENTRY from ARGZ & ARGZ_LEN, if any.  */
+void
+argz_delete (char **argz, size_t *argz_len, char *entry)
+{
+  if (entry)
+    /* Get rid of the old value for NAME.  */
+    {
+      size_t entry_len = strlen (entry) + 1;
+      *argz_len -= entry_len;
+      memmove (entry, entry + entry_len, *argz_len - (entry - *argz));
+      if (*argz_len == 0)
 	{
-	  if (argz[argz_len] == EOS_CHAR)
-	    argz[argz_len] = sep;
+	  free (*argz);
+	  *argz = 0;
 	}
     }
 }
 
 
-/* Count number of elements (null bytes) in argz vector.  */
-
-size_t
-argz_count (const char *argz, size_t argz_len)
+/* Append BUF, of length BUF_LEN to *TO, of length *TO_LEN, reallocating and
+   updating *TO & *TO_LEN appropriately.  If an allocation error occurs,
+   *TO's old value is freed, and *TO is set to 0.  */
+static void
+str_append (char **to, size_t *to_len, const char *buf, const size_t buf_len)
 {
-  size_t count = 0;
+  size_t new_len = *to_len + buf_len;
+  char *new_to = realloc (*to, new_len + 1);
 
-  assert ((argz && argz_len) || (!argz && !argz_len));
-
-  while (argz_len > 0)
+  if (new_to)
     {
-      size_t part_len = strlen (argz);
-      argz += part_len + 1;
-      argz_len -= part_len + 1;
-      count++;
+      *((char *) mempcpy (new_to + *to_len, buf, buf_len)) = '\0';
+      *to = new_to;
+      *to_len = new_len;
+    }
+  else
+    {
+      free (*to);
+      *to = 0;
+    }
+}
+
+/* Replace any occurrences of the string STR in ARGZ with WITH, reallocating
+   ARGZ as necessary.  If REPLACE_COUNT is non-zero, *REPLACE_COUNT will be
+   incremented by number of replacements performed.  */
+error_t
+argz_replace (char **argz, size_t *argz_len, const char *str, const char *with,
+		unsigned *replace_count)
+{
+  error_t err = 0;
+
+  if (str && *str)
+    {
+      char *arg = 0;
+      char *src = *argz;
+      size_t src_len = *argz_len;
+      char *dst = 0;
+      size_t dst_len = 0;
+      int delayed_copy = 1;	/* True while we've avoided copying anything.  */
+      size_t str_len = strlen (str), with_len = strlen (with);
+
+      while (!err && (arg = argz_next (src, src_len, arg)))
+	{
+	  char *match = strstr (arg, str);
+	  if (match)
+	    {
+	      char *from = match + str_len;
+	      size_t to_len = match - arg;
+	      char *to = strndup (arg, to_len);
+
+	      while (to && from)
+		{
+		  str_append (&to, &to_len, with, with_len);
+		  if (to)
+		    {
+		      match = strstr (from, str);
+		      if (match)
+			{
+			  str_append (&to, &to_len, from, match - from);
+			  from = match + str_len;
+			}
+		      else
+			{
+			  str_append (&to, &to_len, from, strlen (from));
+			  from = 0;
+			}
+		    }
+		}
+
+	      if (to)
+		{
+		  if (delayed_copy)
+		    /* We avoided copying SRC to DST until we found a match;
+                       now that we've done so, copy everything from the start
+                       of SRC.  */
+		    {
+		      if (arg > src)
+			err = argz_append (&dst, &dst_len, src, (arg - src));
+		      delayed_copy = 0;
+		    }
+		  if (! err)
+		    err = argz_add (&dst, &dst_len, to);
+		  free (to);
+		}
+	      else
+		err = ENOMEM;
+
+	      if (replace_count)
+		(*replace_count)++;
+	    }
+	  else if (! delayed_copy)
+	    err = argz_add (&dst, &dst_len, arg);
+	}
+
+      if (! err)
+	{
+	  if (! delayed_copy)
+	    /* We never found any instances of str.  */
+	    {
+	      free (src);
+	      *argz = dst;
+	      *argz_len = dst_len;
+	    }
+	}
+      else if (dst_len > 0)
+	free (dst);
     }
 
-  return count;
+  return err;
 }
