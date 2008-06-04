@@ -1,3 +1,11 @@
+2008-06-05  Jim Meyering  <meyering@redhat.com>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	utimens.c: work around a probable Linux kernel bug
+	* lib/utimens.c (gl_futimens) [HAVE_UTIMENSAT]: Work around what
+	appears to be a kernel bug that causes utimensat to return 280
+	instead of 0, indicating success.
+
 2008-06-04  Bruno Haible  <bruno@clisp.org>
 
 	* lib/copy-acl.c (qcopy_acl): Call qset_acl, not set_acl. Fixes
