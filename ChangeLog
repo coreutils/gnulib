@@ -1,3 +1,10 @@
+2008-06-04  Bruno Haible  <bruno@clisp.org>
+
+	* lib/acl-internal.h (acl_access_nontrivial): New declaration.
+	* lib/file-has-acl.c (acl_access_nontrivial): New function.
+	(file_has_acl): Use it. Save errno afterwards.
+	* lib/copy-acl.c (qcopy_acl): Use acl_access_nontrivial.
+
 2008-06-03  Bruno Haible  <bruno@clisp.org>
 
 	* lib/file-has-acl.c (file_has_acl): Put Solaris 10 code after POSIX-

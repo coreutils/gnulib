@@ -68,15 +68,11 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
       if (ACL_NOT_WELL_SUPPORTED (errno))
         {
-	  int n = acl_entries (acl);
+	  int nontrivial = acl_access_nontrivial (acl);
 
 	  acl_free (acl);
-	  /* On most hosts with MODE_INSIDE_ACL an ACL is trivial if n == 3,
-	     and it cannot be less than 3.
-	     For simplicity and safety, assume the ACL is trivial if n <= 3.
-	     Also see file-has-acl.c for some of the other possibilities;
-	     it's not clear whether that complexity is needed here.  */
-	  if (n <= 3 * MODE_INSIDE_ACL)
+
+	  if (!nontrivial)
 	    {
 	      if (chmod_or_fchmod (dst_name, dest_desc, mode) != 0)
 		saved_errno = errno;

@@ -145,6 +145,12 @@ rpl_acl_set_fd (int fd, acl_t acl)
 extern int acl_entries (acl_t);
 #  endif
 
+/* ACL is an ACL, from a file, stored as type ACL_TYPE_ACCESS.
+   Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.
+   Return -1 and set errno upon failure to determine it.  */
+extern int acl_access_nontrivial (acl_t);
+
 # endif
 
 #endif

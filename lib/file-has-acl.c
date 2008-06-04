@@ -23,6 +23,93 @@
 
 #include "acl-internal.h"
 
+
+#if USE_ACL && HAVE_ACL_GET_FILE
+
+/* ACL is an ACL, from a file, stored as type ACL_TYPE_ACCESS.
+   Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.
+   Return -1 and set errno upon failure to determine it.  */
+int
+acl_access_nontrivial (acl_t acl)
+{
+# if MODE_INSIDE_ACL /* Linux, FreeBSD, IRIX, Tru64 */
+  /* acl is non-trivial if it has some entries other than for "user::",
+     "group::", and "other::".  Normally these three should be present
+     at least, allowing us to write
+	return (3 < acl_entries (acl));
+     but the following code is more robust.  */
+#  if HAVE_ACL_FIRST_ENTRY /* Linux, FreeBSD */
+
+  acl_entry_t ace;
+  int at_end;
+
+  for (at_end = acl_get_entry (acl, ACL_FIRST_ENTRY, &ace);
+       !at_end;
+       at_end = acl_get_entry (acl, ACL_NEXT_ENTRY, &ace))
+    {
+      acl_tag_t tag;
+      if (acl_get_tag_type (ace, &tag) < 0)
+	return -1;
+      if (!(tag == ACL_USER_OBJ || tag == ACL_GROUP_OBJ || tag == ACL_OTHER))
+	return 1;
+    }
+  return 0;
+
+#  else /* IRIX, Tru64 */
+#   if HAVE_ACL_TO_SHORT_TEXT /* IRIX */
+  /* Don't use acl_get_entry: it is undocumented.  */
+
+  int count = acl->acl_cnt;
+  int i;
+
+  for (i = 0; i < count; i++)
+    {
+      acl_entry_t ace = &acl->acl_entry[i];
+      acl_tag_t tag = ace->ae_tag;
+
+      if (!(tag == ACL_USER_OBJ || tag == ACL_GROUP_OBJ
+	    || tag == ACL_OTHER_OBJ))
+	return 1;
+    }
+  return 0;
+
+#   endif
+#   if HAVE_ACL_FREE_TEXT /* Tru64 */
+  /* Don't use acl_get_entry: it takes only one argument and does not work.  */
+
+  int count = acl->acl_num;
+  acl_entry_t ace;
+
+  for (ace = acl->acl_first; count > 0; ace = ace->next, count--)
+    {
+      acl_tag_t tag;
+      acl_perm_t perm;
+
+      tag = ace->entry->acl_type;
+      if (!(tag == ACL_USER_OBJ || tag == ACL_GROUP_OBJ || tag == ACL_OTHER))
+	return 1;
+
+      perm = ace->entry->acl_perm;
+      /* On Tru64, perm can also contain non-standard bits such as
+	 PERM_INSERT, PERM_DELETE, PERM_MODIFY, PERM_LOOKUP, ... */
+      if ((perm & ~(ACL_READ | ACL_WRITE | ACL_EXECUTE)) != 0)
+	return 1;
+    }
+  return 0;
+
+#   endif
+#  endif
+# else /* MacOS X */
+
+  /* acl is non-trivial if it is non-empty.  */
+  return (acl_entries (acl) > 0);
+# endif
+}
+
+#endif
+
+
 /* Return 1 if NAME has a nontrivial access control list, 0 if NAME
    only has no or a base access control list, and -1 (setting errno)
    on error.  SB must be set to the stat buffer of FILE.  */
@@ -46,8 +133,12 @@ file_has_acl (char const *name, struct stat const *sb)
 	  acl_t acl = acl_get_file (name, ACL_TYPE_ACCESS);
 	  if (acl)
 	    {
-	      ret = (3 * MODE_INSIDE_ACL < acl_entries (acl));
+	      int saved_errno;
+
+	      ret = acl_access_nontrivial (acl);
+	      saved_errno = errno;
 	      acl_free (acl);
+	      errno = saved_errno;
 	      if (ret == 0 && S_ISDIR (sb->st_mode))
 		{
 		  acl = acl_get_file (name, ACL_TYPE_DEFAULT);
