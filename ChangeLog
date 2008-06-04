@@ -1,5 +1,10 @@
 2008-06-04  Bruno Haible  <bruno@clisp.org>
 
+	* lib/copy-acl.c (qcopy_acl): Call qset_acl, not set_acl. Fixes
+	2008-06-01 commit.
+
+2008-06-04  Bruno Haible  <bruno@clisp.org>
+
 	* lib/acl-internal.h (acl_access_nontrivial): New declaration.
 	* lib/file-has-acl.c (acl_access_nontrivial): New function.
 	(file_has_acl): Use it. Save errno afterwards.

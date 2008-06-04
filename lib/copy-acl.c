@@ -53,7 +53,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
   if (acl == NULL)
     {
       if (ACL_NOT_WELL_SUPPORTED (errno))
-	return set_acl (dst_name, dest_desc, mode);
+	return qset_acl (dst_name, dest_desc, mode);
       else
         return -2;
     }
