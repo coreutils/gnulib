@@ -3418,9 +3418,8 @@ func_create_testdir ()
     # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
     # Except fnmatch-posix, which conflicts with fnmatch-gnu. FIXME.
     # Except ftruncate, mountlist, which abort the configuration on mingw. FIXME.
-    # Except gnumakefile, which breaks when there is no file '.tarball-version'.
     modules=`func_all_modules`
-    modules=`for m in $modules; do case $m in config-h | fnmatch-posix | ftruncate | mountlist | gnumakefile) ;; *) echo $m;; esac; done`
+    modules=`for m in $modules; do case $m in config-h | fnmatch-posix | ftruncate | mountlist) ;; *) echo $m;; esac; done`
   fi
   modules=`for m in $modules; do echo $m; done | LC_ALL=C sort -u`
 
@@ -3895,8 +3894,7 @@ func_create_megatestdir ()
   # Then, all modules all together.
   # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
   # Except fnmatch-posix, which conflicts with fnmatch-gnu. FIXME.
-  # Except gnumakefile, which breaks when there is no file '.tarball-version'.
-  allmodules=`for m in $allmodules; do if test $m != config-h && test $m != fnmatch-posix && test $m != gnumakefile; then echo $m; fi; done`
+  allmodules=`for m in $allmodules; do if test $m != config-h && test $m != fnmatch-posix; then echo $m; fi; done`
   func_create_testdir "$megatestdir/ALL" "$allmodules"
   func_append megasubdirs "ALL"
 
