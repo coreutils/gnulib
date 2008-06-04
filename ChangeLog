@@ -1,3 +1,10 @@
+2008-06-05  Eric Blake  <ebb9@byu.net>
+
+	Be tolerant of UNKNOWN version in gnulib-tool test dir.
+	* top/GNUmakefile (_dummy): Warn rather than reconfigure if
+	git-version-gen fails to come up with a version.
+	Reported by Simon Josefsson.
+
 2008-06-05  Jim Meyering  <meyering@redhat.com>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 

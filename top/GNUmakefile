@@ -59,9 +59,13 @@ ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
     _curr-ver := $(shell cd $(srcdir) && ./$(_build-aux)/git-version-gen \
                    $(srcdir)/.tarball-version)
     ifneq ($(_curr-ver),$(VERSION))
-      $(info INFO: running autoreconf for new version string: $(_curr-ver))
-      _dummy := $(shell cd $(srcdir) && rm -rf autom4te.cache .version \
-        && $(_autoreconf))
+      ifeq ($(_curr-ver),UNKNOWN)
+        $(info WARNING: unable to verify if $(VERSION) is correct version)
+      else
+        $(info INFO: running autoreconf for new version string: $(_curr-ver))
+        _dummy := $(shell cd $(srcdir) && rm -rf autom4te.cache .version \
+          && $(_autoreconf))
+      endif
     endif
   endif
 endif
