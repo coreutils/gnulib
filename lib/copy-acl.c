@@ -155,7 +155,8 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
 #else
 
-  return qset_acl (dst_name, dest_desc, mode);
+  ret = qset_acl (dst_name, dest_desc, mode);
+  return ret;
 
 #endif
 }

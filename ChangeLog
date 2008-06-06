@@ -1,3 +1,9 @@
+2008-06-06  Eric Blake  <ebb9@byu.net>
+
+	Avoid gcc warning on cygwin.
+	* lib/copy-acl.c (qcopy_acl) [!HAVE_ACL_GET_FILE &&
+	!ACL_NO_TRIVIAL]: Avoid unused variable.
+
 2008-06-05  Eric Blake  <ebb9@byu.net>
 
 	Be tolerant of UNKNOWN version in gnulib-tool test dir.
