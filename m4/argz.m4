@@ -7,7 +7,7 @@
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
 
-# serial 5 argz.m4
+# serial 6 argz.m4
 
 AC_DEFUN([gl_FUNC_ARGZ],
 [gl_PREREQ_ARGZ
@@ -35,7 +35,7 @@ dnl on "known bad" systems). Could use a runtime check, but
 dnl (a) detecting malloc issues is notoriously unreliable
 dnl (b) only known system that declares argz functions,
 dnl     provides them, yet they are broken, is cygwin
-dnl     releases prior to 16-Mar-2007 (1.5.24 and earlier)
+dnl     releases prior to 5-May-2007 (1.5.24 and earlier)
 dnl So, it's more straightforward simply to special case
 dnl this for known bad systems.
 AS_IF([test -z "$ARGZ_H"],

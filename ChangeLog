@@ -1,5 +1,25 @@
 2008-06-06  Eric Blake  <ebb9@byu.net>
 
+	Tweak documentation to cover cygwin argz bugs.
+	* m4/argz.m4 (gl_FUNC_ARGZ): Mention date of last known cygwin
+	argz bug fix; no code change needed since no cygwin releases
+	occurred between the last fix and the bug being tested.
+	* doc/glibc-functions/argz_add.texi (argz_add): Document the argz
+	module and recently fixed cygwin bugs.
+	* doc/glibc-functions/argz_add_sep.texi (argz_add_sep): Likewise.
+	* doc/glibc-functions/argz_append.texi (argz_append): Likewise.
+	* doc/glibc-functions/argz_count.texi (argz_count): Likewise.
+	* doc/glibc-functions/argz_create.texi (argz_create): Likewise.
+	* doc/glibc-functions/argz_create_sep.texi (argz_create_sep):
+	Likewise.
+	* doc/glibc-functions/argz_delete.texi (argz_delete): Likewise.
+	* doc/glibc-functions/argz_extract.texi (argz_extract): Likewise.
+	* doc/glibc-functions/argz_insert.texi (argz_insert): Likewise.
+	* doc/glibc-functions/argz_next.texi (argz_next): Likewise.
+	* doc/glibc-functions/argz_replace.texi (argz_replace): Likewise.
+	* doc/glibc-functions/argz_stringify.texi (argz_stringify):
+	Likewise.
+
 	Avoid gcc warning on cygwin.
 	* lib/copy-acl.c (qcopy_acl) [!HAVE_ACL_GET_FILE &&
 	!ACL_NO_TRIVIAL]: Avoid unused variable.
