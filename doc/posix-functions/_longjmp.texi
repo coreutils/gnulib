@@ -15,4 +15,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Solaris 2.5.1, mingw.
+
+@item
+This function is obsolete; use @code{siglongjmp} instead.
 @end itemize

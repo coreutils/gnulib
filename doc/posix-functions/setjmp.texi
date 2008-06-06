@@ -13,9 +13,6 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-mingw.
-@item
 POSIX does not specify whether @code{setjmp} saves the signal mask in the
 @code{jmp_buf}.  It does on BSD platforms, and on glibc platforms when
 @code{_BSD_SOURCE} is defined; in this case @code{setjmp} behaves like

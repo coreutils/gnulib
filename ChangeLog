@@ -1,5 +1,16 @@
 2008-06-06  Eric Blake  <ebb9@byu.net>
 
+	Document abort() bugs.
+	* doc/posix-functions/abort.texi (abort): Mention anomalies.
+	* doc/posix-functions/setjmp.texi (setjmp): Mingw has setjmp.
+	* doc/posix-functions/sigsetjmp.texi (sigsetjmp): Cygwin has
+	sigsetjmp.
+	* doc/posix-functions/siglongjmp.texi (siglongjmp): Cygwin has
+	siglongjmp, but only as a macro.
+	* doc/posix-functions/_longjmp.texi (_longjmp): Mention that this
+	is obsolete.
+	* doc/posix-functions/_setjmp.texi (_setjmp): Likewise.
+
 	Tweak documentation to cover cygwin argz bugs.
 	* m4/argz.m4 (gl_FUNC_ARGZ): Mention date of last known cygwin
 	argz bug fix; no code change needed since no cygwin releases
