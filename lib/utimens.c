@@ -103,17 +103,17 @@ gl_futimens (int fd ATTRIBUTE_UNUSED,
   if (fd < 0)
     {
       int result = utimensat (AT_FDCWD, file, timespec, 0);
-#ifdef __linux__
+# ifdef __linux__
       /* Work around what might be a kernel bug:
          http://bugzilla.redhat.com/442352
          http://bugzilla.redhat.com/449910
          It appears that utimensat can mistakenly return 280 rather
-         than 0 to indicate success.
+         than -1 upon failure.
          FIXME: remove in 2010 or whenever the offending kernels
          are no longer in common use.  */
       if (0 < result)
-        result = 0;
-#endif
+        errno = ENOSYS;
+# endif
 
       if (result == 0 || errno != ENOSYS)
         return result;
@@ -122,6 +122,11 @@ gl_futimens (int fd ATTRIBUTE_UNUSED,
 #if HAVE_FUTIMENS
   {
     int result = futimens (fd, timespec);
+# ifdef __linux__
+    /* Work around the same bug as above.  */
+    if (0 < result)
+      errno = ENOSYS;
+# endif
     if (result == 0 || errno != ENOSYS)
       return result;
   }

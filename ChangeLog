@@ -1,3 +1,15 @@
+2008-06-09  Jim Meyering  <meyering@redhat.com>
+	and Ondřej Vašík  <ovasik@redhat.com>
+
+	utimens.c: correct kernel bug work-around
+	Ondřej Vašík found that the invalid return value of 280 indicates
+	failure, not success, and the kernel bug we're trying to work
+	around affects not just the utimensat call, but also the fallback
+	futimens call.
+	* lib/utimens.c (gl_futimens) [HAVE_UTIMENSAT]: Simulate failure,
+	not success.
+	[HAVE_FUTIMENS]: Use the same work-around, here.
+
 2008-06-08  Bruno Haible  <bruno@clisp.org>
 
 	* lib/acl-internal.h: Add me as co-author.
