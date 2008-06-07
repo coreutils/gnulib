@@ -1,7 +1,16 @@
+2008-06-07  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-functions/_setjmp.texi: Explain the use of this function
+	regardless of POSIX.
+	* doc/posix-functions/_longjmp.texi: Likewise.
+	* doc/posix-functions/setjmp.texi: Mention HP-UX as not counting as a
+	SystemV platform in this case.
+
 2008-06-06  Eric Blake  <ebb9@byu.net>
 
 	Document abort() bugs.
 	* doc/posix-functions/abort.texi (abort): Mention anomalies.
+
 	* doc/posix-functions/setjmp.texi (setjmp): Mingw has setjmp.
 	* doc/posix-functions/sigsetjmp.texi (sigsetjmp): Cygwin has
 	sigsetjmp.

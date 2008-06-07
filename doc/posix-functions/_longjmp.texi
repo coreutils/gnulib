@@ -15,7 +15,10 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Solaris 2.5.1, mingw.
-
-@item
-This function is obsolete; use @code{siglongjmp} instead.
 @end itemize
+
+Note: A future revision of POSIX later than the 2008/2009 one may drop the
+functions @code{_setjmp} and @code{_longjmp}.  Still, in 2008, on all
+systems which have @code{_setjmp}, it is the fastest way to save the
+registers but not the signal mask (up to 30 times faster than @code{setjmp}
+on some systems).

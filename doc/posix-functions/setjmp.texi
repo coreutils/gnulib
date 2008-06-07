@@ -16,7 +16,8 @@ Portability problems not fixed by Gnulib:
 POSIX does not specify whether @code{setjmp} saves the signal mask in the
 @code{jmp_buf}.  It does on BSD platforms, and on glibc platforms when
 @code{_BSD_SOURCE} is defined; in this case @code{setjmp} behaves like
-@code{sigsetjmp}, and functions @code{_setjmp} and @code{_longjmp} are
-available that don't save or restore the signal mask.  On System V platforms,
-and on glibc platforms by default, @code{setjmp} doesn't save the signal mask.
+@code{sigsetjmp(.,1)}, and functions @code{_setjmp} and @code{_longjmp} are
+available that don't save or restore the signal mask.  On System V platforms
+(excluding HP-UX), and on glibc platforms by default, @code{setjmp} doesn't
+save the signal mask.
 @end itemize
