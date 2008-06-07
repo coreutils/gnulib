@@ -209,13 +209,13 @@ qset_acl (char const *name, int desc, mode_t mode)
     }
   else
     {
-      int acl_result = (desc < 0 ? acl_set (name, aclp) : facl_set (desc, aclp));
-      int acl_errno = errno;
+      int ret = (desc < 0 ? acl_set (name, aclp) : facl_set (desc, aclp));
+      int saved_errno = errno;
       acl_free (aclp);
-      if (acl_result == 0 || acl_errno != ENOSYS)
+      if (ret == 0 || saved_errno != ENOSYS)
 	{
-	  errno = acl_errno;
-	  return acl_result;
+	  errno = saved_errno;
+	  return ret;
 	}
     }
 

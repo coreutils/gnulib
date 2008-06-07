@@ -39,13 +39,13 @@ static int
 qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 	   int dest_desc, mode_t mode)
 {
-  int ret;
-
 #if USE_ACL && HAVE_ACL_GET_FILE
   /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
   /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
 
   acl_t acl;
+  int ret;
+
   if (HAVE_ACL_GET_FD && source_desc != -1)
     acl = acl_get_fd (source_desc);
   else
@@ -124,6 +124,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 #elif USE_ACL && defined ACL_NO_TRIVIAL
   /* Solaris 10 NFSv4 ACLs.  */
 
+  int ret;
   acl_t *aclp = NULL;
   ret = (source_desc < 0
 	 ? acl_get (src_name, ACL_NO_TRIVIAL, &aclp)
@@ -155,8 +156,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
 #else
 
-  ret = qset_acl (dst_name, dest_desc, mode);
-  return ret;
+  return qset_acl (dst_name, dest_desc, mode);
 
 #endif
 }

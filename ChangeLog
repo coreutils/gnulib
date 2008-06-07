@@ -1,5 +1,10 @@
 2008-06-07  Bruno Haible  <bruno@clisp.org>
 
+	* lib/copy-acl.c (qcopy_acl): Make the #if branches independent.
+	* lib/set-mode-acl.c (qset_acl): Choose better local variable names.
+
+2008-06-07  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-functions/_setjmp.texi: Explain the use of this function
 	regardless of POSIX.
 	* doc/posix-functions/_longjmp.texi: Likewise.
