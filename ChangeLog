@@ -1,5 +1,11 @@
 2008-06-07  Bruno Haible  <bruno@clisp.org>
 
+	Improve support for Tru64 ACLs.
+	* lib/file-has-acl.c (file_has_acl): Don't test the ACL_TYPE_DEFAULT
+	ACL on OSF/1.
+
+2008-06-07  Bruno Haible  <bruno@clisp.org>
+
 	Add support for MacOS X ACLs.
 	* lib/file-has-acl.c (file_has_acl): Use ACL_TYPE_EXTENDED instead of
 	ACL_TYPE_ACCESS and ACL_TYPE_DEFAULT.

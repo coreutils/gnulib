@@ -159,6 +159,16 @@ file_has_acl (char const *name, struct stat const *sb)
 	      saved_errno = errno;
 	      acl_free (acl);
 	      errno = saved_errno;
+#   if HAVE_ACL_FREE_TEXT /* Tru64 */
+	      /* On OSF/1, acl_get_file (name, ACL_TYPE_DEFAULT) always
+		 returns NULL with errno not set.  There is no point in
+		 making this call.  */
+#   else /* FreeBSD, IRIX */
+	      /* On Linux, FreeBSD, IRIX, acl_get_file (name, ACL_TYPE_ACCESS)
+		 and acl_get_file (name, ACL_TYPE_DEFAULT) on a directory
+		 either both succeed or both fail; it depends on the
+		 filesystem.  Therefore there is no point in making the second
+		 call if the first one already failed.  */
 	      if (ret == 0 && S_ISDIR (sb->st_mode))
 		{
 		  acl = acl_get_file (name, ACL_TYPE_DEFAULT);
@@ -170,6 +180,7 @@ file_has_acl (char const *name, struct stat const *sb)
 		  else
 		    ret = -1;
 		}
+#   endif
 	    }
 	  else
 	    ret = -1;
