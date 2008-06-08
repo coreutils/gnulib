@@ -179,6 +179,12 @@ extern int acl_nontrivial (int count, aclent_t *entries);
 extern int acl_ace_nontrivial (int count, ace_t *entries);
 #  endif
 
+# elif HAVE_GETACL /* HP-UX */
+
+/* Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+extern int acl_nontrivial (int count, struct acl_entry *entries, struct stat *sb);
+
 # endif
 
 #endif

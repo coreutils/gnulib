@@ -315,6 +315,48 @@ qset_acl (char const *name, int desc, mode_t mode)
 
 #  endif
 
+# elif HAVE_GETACL /* HP-UX */
+
+  struct stat statbuf;
+  struct acl_entry entries[3];
+  int ret;
+
+  if (desc != -1)
+    ret = fstat (desc, &statbuf);
+  else
+    ret = stat (name, &statbuf);
+  if (ret < 0)
+    return -1;
+
+  entries[0].uid = statbuf.st_uid;
+  entries[0].gid = ACL_NSGROUP;
+  entries[0].mode = (mode >> 6) & 7;
+  entries[1].uid = ACL_NSUSER;
+  entries[1].gid = statbuf.st_gid;
+  entries[1].mode = (mode >> 3) & 7;
+  entries[2].uid = ACL_NSUSER;
+  entries[2].gid = ACL_NSGROUP;
+  entries[2].mode = mode & 7;
+
+  if (desc != -1)
+    ret = fsetacl (desc, sizeof (entries) / sizeof (struct acl_entry), entries);
+  else
+    ret = setacl (name, sizeof (entries) / sizeof (struct acl_entry), entries);
+  if (ret < 0)
+    {
+      if (errno == ENOSYS || errno == EOPNOTSUPP)
+	return chmod_or_fchmod (name, desc, mode);
+      return -1;
+    }
+  
+  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
+    {
+      /* We did not call chmod so far, so the special bits have not yet
+	 been set.  */
+      return chmod_or_fchmod (name, desc, mode);
+    }
+  return 0;
+
 # else /* Unknown flavor of ACLs */
   return chmod_or_fchmod (name, desc, mode);
 # endif

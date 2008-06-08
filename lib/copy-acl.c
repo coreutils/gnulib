@@ -392,6 +392,84 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
 # endif
 
+#elif USE_ACL && HAVE_GETACL /* HP-UX */
+
+  int count;
+  struct acl_entry entries[NACLENTRIES];
+  int ret;
+
+  for (;;)
+    {
+      count = (source_desc != -1
+	       ? fgetacl (source_desc, 0, NULL)
+	       : getacl (src_name, 0, NULL));
+
+      if (count < 0)
+	{
+	  if (errno == ENOSYS || errno == EOPNOTSUPP)
+	    {
+	      count = 0;
+	      break;
+	    }
+	  else
+	    return -2;
+	}
+
+      if (count == 0)
+	break;
+
+      if (count > NACLENTRIES)
+	/* If NACLENTRIES cannot be trusted, use dynamic memory allocation.  */
+	abort ();
+
+      if ((source_desc != -1
+	   ? fgetacl (source_desc, count, entries)
+	   : getacl (src_name, count, entries))
+	  == count)
+	break;
+      /* Huh? The number of ACL entries changed since the last call.
+	 Repeat.  */
+    }
+
+  if (count == 0)
+    return qset_acl (dst_name, dest_desc, mode);
+
+  ret = (dest_desc != -1
+	 ? fsetacl (dest_desc, count, entries)
+	 : setacl (dst_name, count, entries));
+  if (ret < 0)
+    {
+      int saved_errno = errno;
+
+      if (errno == ENOSYS || errno == EOPNOTSUPP)
+	{
+	  struct stat source_statbuf;
+
+	  if ((source_desc != -1
+	       ? fstat (source_desc, &source_statbuf)
+	       : stat (src_name, &source_statbuf)) == 0)
+	    {
+	      if (!acl_nontrivial (count, entries, &source_statbuf))
+		return chmod_or_fchmod (dst_name, dest_desc, mode);
+	    }
+	  else
+	    saved_errno = errno;
+	}
+
+      chmod_or_fchmod (dst_name, dest_desc, mode);
+      errno = saved_errno;
+      return -1;
+    }
+
+  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
+    {
+      /* We did not call chmod so far, and either the mode and the ACL are
+	 separate or special bits are to be set which don't fit into ACLs.  */
+
+      return chmod_or_fchmod (dst_name, dest_desc, mode);
+    }
+  return 0;
+
 #else
 
   return qset_acl (dst_name, dest_desc, mode);

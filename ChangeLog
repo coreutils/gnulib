@@ -1,5 +1,14 @@
 2008-06-08  Bruno Haible  <bruno@clisp.org>
 
+	Add support for HP-UX ACLs.
+	* lib/acl-internal.h (acl_nontrivial): New declaration.
+	* lib/file-has-acl.c (acl_nontrivial): New function.
+	(file_has_acl): Add implementation using HP-UX 11 ACL API.
+	* lib/set-mode-acl.c (qset_acl): Likewise.
+	* lib/copy-acl.c (qcopy_acl): Likewise.
+
+2008-06-08  Bruno Haible  <bruno@clisp.org>
+
 	Add support for Cygwin ACLs.
 	* lib/acl-internal.h (MODE_INSIDE_ACL): New macro for Solaris-like API.
 	* lib/set-mode-acl.c (qset_acl) [!MODE_INSIDE_ACL]: Don't optimize away

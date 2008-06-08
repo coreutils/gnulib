@@ -174,6 +174,27 @@ acl_ace_nontrivial (int count, ace_t *entries)
 
 # endif
 
+#elif USE_ACL && HAVE_GETACL /* HP-UX */
+
+/* Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+int
+acl_nontrivial (int count, struct acl_entry *entries, struct stat *sb)
+{
+  int i;
+
+  for (i = 0; i < count; i++)
+    {
+      struct acl_entry *ace = &entries[i];
+
+      if (!((ace->uid == sb->st_uid && ace->gid == ACL_NSGROUP)
+	    || (ace->uid == ACL_NSUSER && ace->gid == sb->st_gid)
+	    || (ace->uid == ACL_NSUSER && ace->gid == ACL_NSGROUP)))
+	return 1;
+    }
+  return 0;
+}
+
 #endif
 
 
@@ -370,6 +391,44 @@ file_has_acl (char const *name, struct stat const *sb)
 
       return 0;
 #  endif
+
+# elif HAVE_GETACL /* HP-UX */
+
+      int count;
+      struct acl_entry entries[NACLENTRIES];
+
+      for (;;)
+	{
+	  count = getacl (name, 0, NULL);
+
+	  if (count < 0)
+	    return (errno == ENOSYS || errno == EOPNOTSUPP ? 0 : -1);
+
+	  if (count == 0)
+	    return 0;
+
+	  if (count > NACLENTRIES)
+	    /* If NACLENTRIES cannot be trusted, use dynamic memory
+	       allocation.  */
+	    abort ();
+
+	  /* If there are more than 3 entries, there cannot be only the
+	     (uid,%), (%,gid), (%,%) entries.  */
+	  if (count > 3)
+	    return 1;
+
+	  if (getacl (name, count, entries) == count)
+	    {
+	      struct stat statbuf;
+
+	      if (stat (name, &statbuf) < 0)
+		return -1;
+
+	      return acl_nontrivial (count, entries, &statbuf);
+	    }
+	  /* Huh? The number of ACL entries changed since the last call.
+	     Repeat.  */
+	}
 
 # endif
     }
