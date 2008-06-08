@@ -357,6 +357,31 @@ qset_acl (char const *name, int desc, mode_t mode)
     }
   return 0;
 
+# elif HAVE_ACLX_GET && 0 /* AIX */
+
+  /* TODO: use aclx_fput or aclx_put, respectively */
+
+# elif HAVE_STATACL /* older AIX */
+
+  union { struct acl a; char room[128]; } u;
+  int ret;
+
+  u.a.acl_len = (char *) &u.a.acl_ext[0] - (char *) &u.a; /* no entries */
+  u.a.acl_mode = mode & ~(S_IXACL | 0777);
+  u.a.u_access = (mode >> 6) & 7;
+  u.a.g_access = (mode >> 3) & 7;
+  u.a.o_access = mode & 7;
+
+  if (desc != -1)
+    ret = fchacl (desc, &u.a, u.a.acl_len);
+  else
+    ret = chacl (name, &u.a, u.a.acl_len);
+
+  if (ret < 0 && errno == ENOSYS)
+    return chmod_or_fchmod (name, desc, mode);
+
+  return ret;
+
 # else /* Unknown flavor of ACLs */
   return chmod_or_fchmod (name, desc, mode);
 # endif

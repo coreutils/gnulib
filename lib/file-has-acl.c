@@ -195,6 +195,36 @@ acl_nontrivial (int count, struct acl_entry *entries, struct stat *sb)
   return 0;
 }
 
+#elif USE_ACL && HAVE_ACLX_GET && 0 /* AIX */
+
+/* TODO */
+
+#elif USE_ACL && HAVE_STATACL /* older AIX */
+
+/* Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+int
+acl_nontrivial (struct acl *a)
+{
+  /* The normal way to iterate through an ACL is like this:
+       struct acl_entry *ace;
+       for (ace = a->acl_ext; ace != acl_last (a); ace = acl_nxt (ace))
+         {
+           struct ace_id *aei;
+           switch (ace->ace_type)
+             {
+             case ACC_PERMIT:
+             case ACC_DENY:
+             case ACC_SPECIFY:
+               ...;
+             }
+           for (aei = ace->ace_id; aei != id_last (ace); aei = id_nxt (aei))
+             ...
+         }
+   */
+  return (acl_last (a) != a->acl_ext ? 1 : 0);
+}
+
 #endif
 
 
@@ -430,12 +460,22 @@ file_has_acl (char const *name, struct stat const *sb)
 	     Repeat.  */
 	}
 
+# elif HAVE_ACLX_GET && 0 /* AIX */
+
+      /* TODO: use aclx_get(), and then?  */
+
+# elif HAVE_STATACL /* older AIX */
+
+      union { struct acl a; char room[4096]; } u;
+
+      if (statacl (name, STX_NORMAL, &u.a, sizeof (u)) < 0)
+	return -1;
+
+      return acl_nontrivial (&u.a);
+
 # endif
     }
 #endif
-
-  /* FIXME: Add support for AIX.  Please see Samba's
-     source/lib/sysacls.c file for fix-related ideas.  */
 
   return 0;
 }

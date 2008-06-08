@@ -470,6 +470,38 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     }
   return 0;
 
+#elif USE_ACL && HAVE_ACLX_GET && 0 /* AIX */
+
+  /* TODO */
+
+#elif USE_ACL && HAVE_STATACL /* older AIX */
+
+  union { struct acl a; char room[4096]; } u;
+  int ret;
+
+  if ((source_desc != -1
+       ? fstatacl (source_desc, STX_NORMAL, &u.a, sizeof (u))
+       : statacl (src_name, STX_NORMAL, &u.a, sizeof (u)))
+      < 0)
+    return -2;
+
+  ret = (dest_desc != -1
+	 ? fchacl (dest_desc, &u.a, u.a.acl_len)
+	 : chacl (dst_name, &u.a, u.a.acl_len));
+  if (ret < 0)
+    {
+      int saved_errno = errno;
+
+      chmod_or_fchmod (dst_name, dest_desc, mode);
+      errno = saved_errno;
+      return -1;
+    }
+
+  /* No need to call chmod_or_fchmod at this point, since the mode bits
+     S_ISUID, S_ISGID, S_ISVTX are also stored in the ACL.  */
+
+  return 0;
+
 #else
 
   return qset_acl (dst_name, dest_desc, mode);

@@ -185,6 +185,16 @@ extern int acl_ace_nontrivial (int count, ace_t *entries);
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
 extern int acl_nontrivial (int count, struct acl_entry *entries, struct stat *sb);
 
+# elif HAVE_ACLX_GET && 0 /* AIX */
+
+/* TODO */
+
+# elif HAVE_STATACL /* older AIX */
+
+/* Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+extern int acl_nontrivial (struct acl *a);
+
 # endif
 
 #endif
