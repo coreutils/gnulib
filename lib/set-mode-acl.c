@@ -143,6 +143,23 @@ qset_acl (char const *name, int desc, mode_t mode)
 #  else /* !MODE_INSIDE_ACL */
   /* MacOS X */
 
+#   if !HAVE_ACL_TYPE_EXTENDED
+#    error Must have ACL_TYPE_EXTENDED
+#   endif
+
+  /* On MacOS X,  acl_get_file (name, ACL_TYPE_ACCESS)
+     and          acl_get_file (name, ACL_TYPE_DEFAULT)
+     always return NULL / EINVAL.  You have to use
+		  acl_get_file (name, ACL_TYPE_EXTENDED)
+     or           acl_get_fd (open (name, ...))
+     to retrieve an ACL.
+     On the other hand,
+		  acl_set_file (name, ACL_TYPE_ACCESS, acl)
+     and          acl_set_file (name, ACL_TYPE_DEFAULT, acl)
+     have the same effect as
+		  acl_set_file (name, ACL_TYPE_EXTENDED, acl):
+     Each of these calls sets the file's ACL.  */
+
   acl_t acl;
   int ret;
 
@@ -150,7 +167,7 @@ qset_acl (char const *name, int desc, mode_t mode)
   if (HAVE_ACL_GET_FD && desc != -1)
     acl = acl_get_fd (desc);
   else
-    acl = acl_get_file (name, ACL_TYPE_ACCESS);
+    acl = acl_get_file (name, ACL_TYPE_EXTENDED);
   if (acl)
     {
       acl_free (acl);
@@ -161,7 +178,7 @@ qset_acl (char const *name, int desc, mode_t mode)
 	  if (HAVE_ACL_SET_FD && desc != -1)
 	    ret = acl_set_fd (desc, acl);
 	  else
-	    ret = acl_set_file (name, ACL_TYPE_ACCESS, acl);
+	    ret = acl_set_file (name, ACL_TYPE_EXTENDED, acl);
 	  if (ret != 0)
 	    {
 	      int saved_errno = errno;

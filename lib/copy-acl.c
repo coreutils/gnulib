@@ -42,6 +42,8 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 #if USE_ACL && HAVE_ACL_GET_FILE
   /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
   /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
+# if MODE_INSIDE_ACL
+  /* Linux, FreeBSD, IRIX, Tru64 */
 
   acl_t acl;
   int ret;
@@ -82,7 +84,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
   else
     acl_free (acl);
 
-  if (!MODE_INSIDE_ACL || (mode & (S_ISUID | S_ISGID | S_ISVTX)))
+  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
     {
       /* We did not call chmod so far, and either the mode and the ACL are
 	 separate or special bits are to be set which don't fit into ACLs.  */
@@ -109,6 +111,70 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
         acl_free (acl);
     }
   return 0;
+
+# else /* !MODE_INSIDE_ACL */
+  /* MacOS X */
+
+#  if !HAVE_ACL_TYPE_EXTENDED
+#   error Must have ACL_TYPE_EXTENDED
+#  endif
+
+  /* On MacOS X,  acl_get_file (name, ACL_TYPE_ACCESS)
+     and          acl_get_file (name, ACL_TYPE_DEFAULT)
+     always return NULL / EINVAL.  You have to use
+		  acl_get_file (name, ACL_TYPE_EXTENDED)
+     or           acl_get_fd (open (name, ...))
+     to retrieve an ACL.
+     On the other hand,
+		  acl_set_file (name, ACL_TYPE_ACCESS, acl)
+     and          acl_set_file (name, ACL_TYPE_DEFAULT, acl)
+     have the same effect as
+		  acl_set_file (name, ACL_TYPE_EXTENDED, acl):
+     Each of these calls sets the file's ACL.  */
+
+  acl_t acl;
+  int ret;
+
+  if (HAVE_ACL_GET_FD && source_desc != -1)
+    acl = acl_get_fd (source_desc);
+  else
+    acl = acl_get_file (src_name, ACL_TYPE_EXTENDED);
+  if (acl == NULL)
+    {
+      if (ACL_NOT_WELL_SUPPORTED (errno))
+	return qset_acl (dst_name, dest_desc, mode);
+      else
+        return -2;
+    }
+
+  if (HAVE_ACL_SET_FD && dest_desc != -1)
+    ret = acl_set_fd (dest_desc, acl);
+  else
+    ret = acl_set_file (dst_name, ACL_TYPE_EXTENDED, acl);
+  if (ret != 0)
+    {
+      int saved_errno = errno;
+
+      if (ACL_NOT_WELL_SUPPORTED (errno) && !(acl_entries (acl) > 0))
+        {
+	  acl_free (acl);
+	  return chmod_or_fchmod (dst_name, dest_desc, mode);
+	}
+      else
+	{
+	  acl_free (acl);
+	  chmod_or_fchmod (dst_name, dest_desc, mode);
+	  errno = saved_errno;
+	  return -1;
+	}
+    }
+  else
+    acl_free (acl);
+
+  /* Since !MODE_INSIDE_ACL, we have to call chmod explicitly.  */
+  return chmod_or_fchmod (dst_name, dest_desc, mode);
+
+# endif
 
 #elif USE_ACL && defined ACL_NO_TRIVIAL
   /* Solaris 10 NFSv4 ACLs.  */

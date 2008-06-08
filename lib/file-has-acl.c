@@ -127,9 +127,29 @@ file_has_acl (char const *name, struct stat const *sb)
       int ret;
 
       if (HAVE_ACL_EXTENDED_FILE)
-	ret = acl_extended_file (name);
+	{
+	  /* On Linux, acl_extended_file is an optimized function: It only
+	     makes two calls to getxattr(), one for ACL_TYPE_ACCESS, one for
+	     ACL_TYPE_DEFAULT.  */
+	  ret = acl_extended_file (name);
+	}
       else
 	{
+#  if HAVE_ACL_TYPE_EXTENDED /* MacOS X */
+	  /* On MacOS X, acl_get_file (name, ACL_TYPE_ACCESS)
+	     and acl_get_file (name, ACL_TYPE_DEFAULT)
+	     always return NULL / EINVAL.  There is no point in making
+	     these two useless calls.  The real ACL is retrieved through
+	     acl_get_file (name, ACL_TYPE_EXTENDED).  */
+	  acl_t acl = acl_get_file (name, ACL_TYPE_EXTENDED);
+	  if (acl)
+	    {
+	      ret = (0 < acl_entries (acl));
+	      acl_free (acl);
+	    }
+	  else
+	    ret = -1;
+#  else /* FreeBSD, IRIX, Tru64 */
 	  acl_t acl = acl_get_file (name, ACL_TYPE_ACCESS);
 	  if (acl)
 	    {
@@ -153,6 +173,7 @@ file_has_acl (char const *name, struct stat const *sb)
 	    }
 	  else
 	    ret = -1;
+#  endif
 	}
       if (ret < 0)
 	return ACL_NOT_WELL_SUPPORTED (errno) ? 0 : -1;
@@ -179,7 +200,7 @@ file_has_acl (char const *name, struct stat const *sb)
     }
 #endif
 
-  /* FIXME: Add support for AIX, Irix, and Tru64.  Please see Samba's
+  /* FIXME: Add support for AIX.  Please see Samba's
      source/lib/sysacls.c file for fix-related ideas.  */
 
   return 0;
