@@ -1,5 +1,11 @@
 2008-06-07  Bruno Haible  <bruno@clisp.org>
 
+	Fix memory leak introduced on 2008-05-22.
+	* lib/set-mode-acl.c (qset_acl) [!MODE_INSIDE_ACL]: Free ACLs after
+	use.
+
+2008-06-07  Bruno Haible  <bruno@clisp.org>
+
 	* lib/set-mode-acl.c (qset_acl): Use acl_init(), not acl_from_text(),
 	to construct an empty ACL.
 

@@ -153,6 +153,8 @@ qset_acl (char const *name, int desc, mode_t mode)
     acl = acl_get_file (name, ACL_TYPE_ACCESS);
   if (acl)
     {
+      acl_free (acl);
+
       acl = acl_init (0);
       if (acl)
 	{
@@ -176,6 +178,7 @@ qset_acl (char const *name, int desc, mode_t mode)
 	      errno = saved_errno;
 	      return -1;
 	    }
+	  acl_free (acl);
 	}
     }
 
