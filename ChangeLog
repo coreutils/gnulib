@@ -1,5 +1,12 @@
 2008-06-08  Bruno Haible  <bruno@clisp.org>
 
+	* lib/acl-internal.h: Add me as co-author.
+	* lib/file-has-acl.c: Likewise.
+	* lib/set-mode-acl.c: Likewise.
+	* lib/copy-acl.c: Likewise.
+
+2008-06-08  Bruno Haible  <bruno@clisp.org>
+
 	Add support for AIX ACLs.
 	* lib/acl-internal.h (acl_nontrivial): New declaration.
 	* lib/file-has-acl.c (acl_nontrivial): New function.

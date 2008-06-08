@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-   Written by Paul Eggert and Andreas Gruenbacher.  */
+   Written by Paul Eggert and Andreas Gruenbacher, and Bruno Haible.  */
 
 #include <config.h>
 
@@ -131,7 +131,7 @@ qset_acl (char const *name, int desc, mode_t mode)
   if (mode & (S_ISUID | S_ISGID | S_ISVTX))
     {
       /* We did not call chmod so far, so the special bits have not yet
-         been set.  */
+	 been set.  */
       return chmod_or_fchmod (name, desc, mode);
     }
   return 0;
@@ -304,11 +304,11 @@ qset_acl (char const *name, int desc, mode_t mode)
 	return -1;
       }
   }
-  
+
   if (!MODE_INSIDE_ACL || (mode & (S_ISUID | S_ISGID | S_ISVTX)))
     {
       /* We did not call chmod so far, so the special bits have not yet
-         been set.  */
+	 been set.  */
       return chmod_or_fchmod (name, desc, mode);
     }
   return 0;
@@ -348,7 +348,7 @@ qset_acl (char const *name, int desc, mode_t mode)
 	return chmod_or_fchmod (name, desc, mode);
       return -1;
     }
-  
+
   if (mode & (S_ISUID | S_ISGID | S_ISVTX))
     {
       /* We did not call chmod so far, so the special bits have not yet

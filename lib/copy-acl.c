@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-   Written by Paul Eggert and Andreas Gruenbacher.  */
+   Written by Paul Eggert, Andreas Grünbacher, and Bruno Haible.  */
 
 #include <config.h>
 
@@ -57,7 +57,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
       if (ACL_NOT_WELL_SUPPORTED (errno))
 	return qset_acl (dst_name, dest_desc, mode);
       else
-        return -2;
+	return -2;
     }
 
   if (HAVE_ACL_SET_FD && dest_desc != -1)
@@ -69,7 +69,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
       int saved_errno = errno;
 
       if (ACL_NOT_WELL_SUPPORTED (errno) && !acl_access_nontrivial (acl))
-        {
+	{
 	  acl_free (acl);
 	  return chmod_or_fchmod (dst_name, dest_desc, mode);
 	}
@@ -108,7 +108,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 	  return -1;
 	}
       else
-        acl_free (acl);
+	acl_free (acl);
     }
   return 0;
 
@@ -144,7 +144,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
       if (ACL_NOT_WELL_SUPPORTED (errno))
 	return qset_acl (dst_name, dest_desc, mode);
       else
-        return -2;
+	return -2;
     }
 
   if (HAVE_ACL_SET_FD && dest_desc != -1)
@@ -156,7 +156,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
       int saved_errno = errno;
 
       if (ACL_NOT_WELL_SUPPORTED (errno) && !acl_extended_nontrivial (acl))
-        {
+	{
 	  acl_free (acl);
 	  return chmod_or_fchmod (dst_name, dest_desc, mode);
 	}
