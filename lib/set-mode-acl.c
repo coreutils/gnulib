@@ -197,8 +197,13 @@ qset_acl (char const *name, int desc, mode_t mode)
   return chmod_or_fchmod (name, desc, mode);
 #  endif
 
-# elif defined ACL_NO_TRIVIAL
-  /* Solaris 10, with NFSv4 ACLs.  */
+# elif HAVE_ACL && defined GETACLCNT /* Solaris, Cygwin, not HP-UX */
+
+#  if defined ACL_NO_TRIVIAL
+  /* Solaris 10 (newer version), which has additional API declared in
+     <sys/acl.h> (acl_t) and implemented in libsec (acl_set, acl_trivial,
+     acl_fromtext, ...).  */
+
   acl_t *aclp;
   char acl_text[] = "user::---,group::---,mask:---,other:---";
 
@@ -230,6 +235,77 @@ qset_acl (char const *name, int desc, mode_t mode)
     }
 
   return chmod_or_fchmod (name, desc, mode);
+
+#  else /* Solaris, Cygwin, general case */
+
+#   ifdef ACE_GETACL
+  /* Solaris also has a different variant of ACLs, used in ZFS and NFSv4
+     file systems (whereas the other ones are used in UFS file systems).  */
+  {
+    ace_t entries[3];
+    int ret;
+
+    entries[0].a_type = ALLOW;
+    entries[0].a_flags = ACE_OWNER;
+    entries[0].a_who = 0; /* irrelevant */
+    entries[0].a_access_mask = (mode >> 6) & 7;
+    entries[1].a_type = ALLOW;
+    entries[1].a_flags = ACE_GROUP;
+    entries[1].a_who = 0; /* irrelevant */
+    entries[1].a_access_mask = (mode >> 3) & 7;
+    entries[2].a_type = ALLOW;
+    entries[2].a_flags = ACE_OTHER;
+    entries[2].a_who = 0;
+    entries[2].a_access_mask = mode & 7;
+
+    if (desc != -1)
+      ret = facl (desc, ACE_SETACL, sizeof (entries) / sizeof (aclent_t), entries);
+    else
+      ret = acl (name, ACE_SETACL, sizeof (entries) / sizeof (aclent_t), entries);
+    if (ret < 0 && errno != EINVAL && errno != ENOTSUP)
+      {
+	if (errno == ENOSYS)
+	  return chmod_or_fchmod (name, desc, mode);
+	return -1;
+      }
+  }
+#   endif
+
+  {
+    aclent_t entries[3];
+    int ret;
+
+    entries[0].a_type = USER_OBJ;
+    entries[0].a_id = 0; /* irrelevant */
+    entries[0].a_perm = (mode >> 6) & 7;
+    entries[1].a_type = GROUP_OBJ;
+    entries[1].a_id = 0; /* irrelevant */
+    entries[1].a_perm = (mode >> 3) & 7;
+    entries[2].a_type = OTHER_OBJ;
+    entries[2].a_id = 0;
+    entries[2].a_perm = mode & 7;
+
+    if (desc != -1)
+      ret = facl (desc, SETACL, sizeof (entries) / sizeof (aclent_t), entries);
+    else
+      ret = acl (name, SETACL, sizeof (entries) / sizeof (aclent_t), entries);
+    if (ret < 0)
+      {
+	if (errno == ENOSYS)
+	  return chmod_or_fchmod (name, desc, mode);
+	return -1;
+      }
+  }
+  
+  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
+    {
+      /* We did not call chmod so far, so the special bits have not yet
+         been set.  */
+      return chmod_or_fchmod (name, desc, mode);
+    }
+  return 0;
+
+#  endif
 
 # else /* Unknown flavor of ACLs */
   return chmod_or_fchmod (name, desc, mode);

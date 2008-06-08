@@ -158,6 +158,19 @@ extern int acl_extended_nontrivial (acl_t);
 extern int acl_access_nontrivial (acl_t);
 #  endif
 
+# elif HAVE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
+
+/* Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+extern int acl_nontrivial (int count, aclent_t *entries);
+
+#  ifdef ACE_GETACL
+/* Test an ACL retrieved with ACE_GETACL.
+   Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+extern int acl_ace_nontrivial (int count, ace_t *entries);
+#  endif
+
 # endif
 
 #endif

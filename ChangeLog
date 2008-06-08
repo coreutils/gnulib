@@ -1,5 +1,16 @@
 2008-06-08  Bruno Haible  <bruno@clisp.org>
 
+	Add support for Solaris 7..10 ACLs.
+	* lib/acl-internal.h (acl_nontrivial, acl_ace_nontrivial): New
+	declarations.
+	* lib/file-has-acl.c (acl_nontrivial, acl_ace_nontrivial): New
+	functions.
+	(file_has_acl): Add implementation using Solaris 7..10 ACL API.
+	* lib/set-mode-acl.c (qset_acl): Likewise.
+	* lib/copy-acl.c (qcopy_acl): Likewise.
+
+2008-06-08  Bruno Haible  <bruno@clisp.org>
+
 	* lib/acl-internal.h (acl_extended_nontrivial) [MacOS X]: New
 	declaration.
 	* lib/file-has-acl.c (acl_extended_nontrivial) [MacOS X]: New function.

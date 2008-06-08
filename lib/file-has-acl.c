@@ -117,6 +117,63 @@ acl_access_nontrivial (acl_t acl)
 
 # endif
 
+
+#elif USE_ACL && HAVE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
+
+/* Test an ACL retrieved with GETACL.
+   Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+int
+acl_nontrivial (int count, aclent_t *entries)
+{
+  int i;
+
+  for (i = 0; i < count; i++)
+    {
+      aclent_t *ace = &entries[i];
+
+      /* Note: If ace->a_type = USER_OBJ, ace->a_id is the st_uid from stat().
+	 If ace->a_type = GROUP_OBJ, ace->a_id is the st_gid from stat().
+	 We don't need to check ace->a_id in these cases.  */
+      if (!(ace->a_type == USER_OBJ
+	    || ace->a_type == GROUP_OBJ
+	    || ace->a_type == OTHER_OBJ
+	    /* Note: Cygwin does not return a CLASS_OBJ ("mask:") entry
+	       sometimes.  */
+	    || ace->a_type == CLASS_OBJ))
+	return 1;
+    }
+  return 0;
+}
+
+# ifdef ACE_GETACL
+
+/* Test an ACL retrieved with ACE_GETACL.
+   Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+int
+acl_ace_nontrivial (int count, ace_t *entries)
+{
+  int i;
+
+  for (i = 0; i < count; i++)
+    {
+      ace_t *ace = &entries[i];
+
+      /* Note: If ace->a_flags = ACE_OWNER, ace->a_who is the st_uid from
+	 stat().  If ace->a_flags = ACE_GROUP, ace->a_who is the st_gid from
+	 stat().  We don't need to check ace->a_who in these cases.  */
+      if (!(ace->a_type == ALLOW
+	    && (ace->a_flags == ACE_OWNER
+		|| ace->a_flags == ACE_GROUP
+		|| ace->a_flags == ACE_OTHER)))
+	return 1;
+    }
+  return 0;
+}
+
+# endif
+
 #endif
 
 
@@ -204,7 +261,9 @@ file_has_acl (char const *name, struct stat const *sb)
 
 #  if HAVE_ACL_TRIVIAL
 
-      /* Solaris 10, which also has NFSv4 and ZFS style ACLs.  */
+      /* Solaris 10 (newer version), which has additional API declared in
+	 <sys/acl.h> (acl_t) and implemented in libsec (acl_set, acl_trivial,
+	 acl_fromtext, ...).  */
       return acl_trivial (name);
 
 #  else /* Solaris, Cygwin, general case */
@@ -212,9 +271,104 @@ file_has_acl (char const *name, struct stat const *sb)
       /* Solaris 2.5 through Solaris 10, Cygwin, and contemporaneous versions
 	 of Unixware.  The acl() call returns the access and default ACL both
 	 at once.  */
-      int n = acl (name, GETACLCNT, 0, NULL);
-      return n < 0 ? (errno == ENOSYS ? 0 : -1) : (MIN_ACL_ENTRIES < n);
+      int count;
+      {
+	aclent_t *entries;
 
+	for (;;)
+	  {
+	    count = acl (name, GETACLCNT, 0, NULL);
+
+	    if (count < 0)
+	      {
+		if (errno == ENOSYS || errno == ENOTSUP)
+		  break;
+		else
+		  return -1;
+	      }
+
+	    if (count == 0)
+	      break;
+
+	    /* Don't use MIN_ACL_ENTRIES:  It's set to 4 on Cygwin, but Cygwin
+	       returns only 3 entries for files with no ACL.  But this is safe:
+	       If there are more than 4 entries, there cannot be only the
+	       "user::", "group::", "other:", and "mask:" entries.  */
+	    if (count > 4)
+	      return 1;
+
+	    entries = (aclent_t *) malloc (count * sizeof (aclent_t));
+	    if (entries == NULL)
+	      {
+		errno = ENOMEM;
+		return -1;
+	      }
+	    if (acl (name, GETACL, count, entries) == count)
+	      {
+		if (acl_nontrivial (count, entries))
+		  {
+		    free (entries);
+		    return 1;
+		  }
+		free (entries);
+		break;
+	      }
+	    /* Huh? The number of ACL entries changed since the last call.
+	       Repeat.  */
+	    free (entries);
+	  }
+      }
+
+#   ifdef ACE_GETACL
+      /* Solaris also has a different variant of ACLs, used in ZFS and NFSv4
+	 file systems (whereas the other ones are used in UFS file systems).  */
+      {
+	ace_t *entries;
+
+	for (;;)
+	  {
+	    count = acl (name, ACE_GETACLCNT, 0, NULL);
+
+	    if (count < 0)
+	      {
+		if (errno == ENOSYS || errno == EINVAL)
+		  break;
+		else
+		  return -1;
+	      }
+
+	    if (count == 0)
+	      break;
+
+	    /* If there are more than 3 entries, there cannot be only the
+	       ACE_OWNER, ACE_GROUP, ACE_OTHER entries.  */
+	    if (count > 3)
+	      return 1;
+
+	    entries = (ace_t *) malloc (count * sizeof (ace_t));
+	    if (entries == NULL)
+	      {
+		errno = ENOMEM;
+		return -1;
+	      }
+	    if (acl (name, ACE_GETACL, count, entries) == count)
+	      {
+		if (acl_ace_nontrivial (count, entries))
+		  {
+		    free (entries);
+		    return 1;
+		  }
+		free (entries);
+		break;
+	      }
+	    /* Huh? The number of ACL entries changed since the last call.
+	       Repeat.  */
+	    free (entries);
+	  }
+      }
+#   endif
+
+      return 0;
 #  endif
 
 # endif

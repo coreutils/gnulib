@@ -176,8 +176,12 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
 # endif
 
-#elif USE_ACL && defined ACL_NO_TRIVIAL
-  /* Solaris 10 NFSv4 ACLs.  */
+#elif USE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
+
+# if defined ACL_NO_TRIVIAL
+  /* Solaris 10 (newer version), which has additional API declared in
+     <sys/acl.h> (acl_t) and implemented in libsec (acl_set, acl_trivial,
+     acl_fromtext, ...).  */
 
   int ret;
   acl_t *aclp = NULL;
@@ -208,6 +212,185 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     }
 
   return 0;
+
+# else /* Solaris, Cygwin, general case */
+
+  /* Solaris 2.5 through Solaris 10, Cygwin, and contemporaneous versions
+     of Unixware.  The acl() call returns the access and default ACL both
+     at once.  */
+#  ifdef ACE_GETACL
+  int ace_count;
+  ace_t *ace_entries;
+#  endif
+  int count;
+  aclent_t *entries;
+  int did_chmod;
+  int saved_errno;
+  int ret;
+
+#  ifdef ACE_GETACL
+  /* Solaris also has a different variant of ACLs, used in ZFS and NFSv4
+     file systems (whereas the other ones are used in UFS file systems).
+     There is an API
+       pathconf (name, _PC_ACL_ENABLED)
+       fpathconf (desc, _PC_ACL_ENABLED)
+     that allows to determine which of the two kinds of ACLs is supported
+     for the given file.  But some file systems may implement this call
+     incorrectly, so better not use it.
+     When fetching the source ACL, we simply fetch both ACL types.
+     When setting the destination ACL, we try either ACL types, assuming
+     that the kernel will translate the ACL from one form to the other.
+     (See in <http://docs.sun.com/app/docs/doc/819-2241/6n4huc7ia?l=en&a=view>
+     the description of ENOTSUP.)  */
+  for (;;)
+    {
+      ace_count = (source_desc != -1
+		   ? facl (source_desc, ACE_GETACLCNT, 0, NULL)
+		   : acl (src_name, ACE_GETACLCNT, 0, NULL));
+
+      if (ace_count < 0)
+	{
+	  if (errno == ENOSYS || errno == EINVAL)
+	    {
+	      ace_count = 0;
+	      ace_entries = NULL;
+	      break;
+	    }
+	  else
+	    return -2;
+	}
+
+      if (ace_count == 0)
+	{
+	  ace_entries = NULL;
+	  break;
+	}
+
+      ace_entries = (ace_t *) malloc (ace_count * sizeof (ace_t));
+      if (ace_entries == NULL)
+	{
+	  errno = ENOMEM;
+	  return -2;
+	}
+
+      if ((source_desc != -1
+	   ? facl (source_desc, ACE_GETACL, ace_count, ace_entries)
+	   : acl (src_name, ACE_GETACL, ace_count, ace_entries))
+	  == ace_count)
+	break;
+      /* Huh? The number of ACL entries changed since the last call.
+	 Repeat.  */
+    }
+#  endif
+
+  for (;;)
+    {
+      count = (source_desc != -1
+	       ? facl (source_desc, GETACLCNT, 0, NULL)
+	       : acl (src_name, GETACLCNT, 0, NULL));
+
+      if (count < 0)
+	{
+	  if (errno == ENOSYS || errno == ENOTSUP)
+	    {
+	      count = 0;
+	      entries = NULL;
+	      break;
+	    }
+	  else
+	    return -2;
+	}
+
+      if (count == 0)
+	{
+	  entries = NULL;
+	  break;
+	}
+
+      entries = (aclent_t *) malloc (count * sizeof (aclent_t));
+      if (entries == NULL)
+	{
+	  errno = ENOMEM;
+	  return -2;
+	}
+
+      if ((source_desc != -1
+	   ? facl (source_desc, GETACL, count, entries)
+	   : acl (src_name, GETACL, count, entries))
+	  == count)
+	break;
+      /* Huh? The number of ACL entries changed since the last call.
+	 Repeat.  */
+    }
+
+  /* Is there an ACL of either kind?  */
+#  ifdef ACE_GETACL
+  if (ace_count == 0)
+#  endif
+    if (count == 0)
+      return qset_acl (dst_name, dest_desc, mode);
+
+  did_chmod = 0; /* set to 1 once the mode bits in 0777 have been set,
+		    set to 2 once the mode bits other than 0777 have been set */
+  saved_errno = 0; /* the first non-ignorable error code */
+
+  /* If both ace_entries and entries are available, try SETACL before
+     ACE_SETACL, because SETACL cannot fail with ENOTSUP whereas ACE_SETACL
+     can.  */
+
+  if (count > 0)
+    {
+      ret = (dest_desc != -1
+	     ? facl (dest_desc, SETACL, count, entries)
+	     : acl (dst_name, SETACL, count, entries));
+      if (ret < 0)
+	{
+	  saved_errno = errno;
+	  if (errno == ENOSYS && !acl_nontrivial (count, entries))
+	    saved_errno = 0;
+	}
+      else
+	did_chmod = 1;
+    }
+  free (entries);
+
+#  ifdef ACE_GETACL
+  if (ace_count > 0)
+    {
+      ret = (dest_desc != -1
+	     ? facl (dest_desc, ACE_SETACL, ace_count, ace_entries)
+	     : acl (dst_name, ACE_SETACL, ace_count, ace_entries));
+      if (ret < 0 && saved_errno == 0)
+	{
+	  saved_errno = errno;
+	  if ((errno == ENOSYS || errno == EINVAL || errno == ENOTSUP)
+	      && !acl_ace_nontrivial (ace_count, ace_entries))
+	    saved_errno = 0;
+	}
+    }
+  free (ace_entries);
+#  endif
+
+  if (did_chmod <= ((mode & (S_ISUID | S_ISGID | S_ISVTX)) ? 1 : 0))
+    {
+      /* We did not call chmod so far, and either the mode and the ACL are
+	 separate or special bits are to be set which don't fit into ACLs.  */
+
+      if (chmod_or_fchmod (dst_name, dest_desc, mode) != 0)
+	{
+	  if (saved_errno == 0)
+	    saved_errno = errno;
+	}
+    }
+
+  if (saved_errno)
+    {
+      errno = saved_errno;
+      return -1;
+    }
+  return 0;
+
+# endif
 
 #else
 
