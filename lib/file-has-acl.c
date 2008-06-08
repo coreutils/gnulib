@@ -26,6 +26,20 @@
 
 #if USE_ACL && HAVE_ACL_GET_FILE
 
+# if HAVE_ACL_TYPE_EXTENDED /* MacOS X */
+
+/* ACL is an ACL, from a file, stored as type ACL_TYPE_EXTENDED.
+   Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial.  */
+int
+acl_extended_nontrivial (acl_t acl)
+{
+  /* acl is non-trivial if it is non-empty.  */
+  return (acl_entries (acl) > 0);
+}
+
+# else /* Linux, FreeBSD, IRIX, Tru64 */
+
 /* ACL is an ACL, from a file, stored as type ACL_TYPE_ACCESS.
    Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.
@@ -33,7 +47,6 @@
 int
 acl_access_nontrivial (acl_t acl)
 {
-# if MODE_INSIDE_ACL /* Linux, FreeBSD, IRIX, Tru64 */
   /* acl is non-trivial if it has some entries other than for "user::",
      "group::", and "other::".  Normally these three should be present
      at least, allowing us to write
@@ -100,12 +113,9 @@ acl_access_nontrivial (acl_t acl)
 
 #   endif
 #  endif
-# else /* MacOS X */
-
-  /* acl is non-trivial if it is non-empty.  */
-  return (acl_entries (acl) > 0);
-# endif
 }
+
+# endif
 
 #endif
 
@@ -144,7 +154,7 @@ file_has_acl (char const *name, struct stat const *sb)
 	  acl_t acl = acl_get_file (name, ACL_TYPE_EXTENDED);
 	  if (acl)
 	    {
-	      ret = (0 < acl_entries (acl));
+	      ret = acl_extended_nontrivial (acl);
 	      acl_free (acl);
 	    }
 	  else

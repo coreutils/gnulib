@@ -1,5 +1,14 @@
 2008-06-08  Bruno Haible  <bruno@clisp.org>
 
+	* lib/acl-internal.h (acl_extended_nontrivial) [MacOS X]: New
+	declaration.
+	* lib/file-has-acl.c (acl_extended_nontrivial) [MacOS X]: New function.
+	(acl_access_nontrivial): Remove MacOS X case.
+	(file_has_acl): Use acl_extended_nontrivial.
+	* lib/copy-acl.c (qcopy_acl): Likewise.
+
+2008-06-08  Bruno Haible  <bruno@clisp.org>
+
 	* lib/set-mode-acl.c (qset_acl): Trivial code simplifications.
 
 2008-06-08  Jim Meyering  <meyering@redhat.com>

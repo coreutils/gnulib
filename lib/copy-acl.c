@@ -155,7 +155,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     {
       int saved_errno = errno;
 
-      if (ACL_NOT_WELL_SUPPORTED (errno) && !(acl_entries (acl) > 0))
+      if (ACL_NOT_WELL_SUPPORTED (errno) && !acl_extended_nontrivial (acl))
         {
 	  acl_free (acl);
 	  return chmod_or_fchmod (dst_name, dest_desc, mode);
