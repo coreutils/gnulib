@@ -206,6 +206,8 @@ qset_acl (char const *name, int desc, mode_t mode)
 
   acl_t *aclp;
   char acl_text[] = "user::---,group::---,mask:---,other:---";
+  int ret;
+  int saved_errno;
 
   if (mode & S_IRUSR) acl_text[ 6] = 'r';
   if (mode & S_IWUSR) acl_text[ 7] = 'w';
@@ -222,19 +224,25 @@ qset_acl (char const *name, int desc, mode_t mode)
       errno = ENOMEM;
       return -1;
     }
-  else
+
+  ret = (desc < 0 ? acl_set (name, aclp) : facl_set (desc, aclp));
+  saved_errno = errno;
+  acl_free (aclp);
+  if (ret < 0)
     {
-      int ret = (desc < 0 ? acl_set (name, aclp) : facl_set (desc, aclp));
-      int saved_errno = errno;
-      acl_free (aclp);
-      if (ret == 0 || saved_errno != ENOSYS)
-	{
-	  errno = saved_errno;
-	  return ret;
-	}
+      if (saved_errno == ENOSYS)
+	return chmod_or_fchmod (name, desc, mode);
+      errno = saved_errno;
+      return -1;
     }
 
-  return chmod_or_fchmod (name, desc, mode);
+  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
+    {
+      /* We did not call chmod so far, so the special bits have not yet
+	 been set.  */
+      return chmod_or_fchmod (name, desc, mode);
+    }
+  return 0;
 
 #  else /* Solaris, Cygwin, general case */
 

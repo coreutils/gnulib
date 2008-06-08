@@ -1,5 +1,11 @@
 2008-06-08  Bruno Haible  <bruno@clisp.org>
 
+	Fix bug with setuid modes in Solaris 10+ code.
+	* lib/set-mode-acl.c (qset_acl): Call chmod_or_fchmod when acl_set
+	succeeded, when the mode contains some special bits.
+
+2008-06-08  Bruno Haible  <bruno@clisp.org>
+
 	Add support for Solaris 7..10 ACLs.
 	* lib/acl-internal.h (acl_nontrivial, acl_ace_nontrivial): New
 	declarations.
