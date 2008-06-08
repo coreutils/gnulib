@@ -126,14 +126,14 @@ file_has_acl (char const *name, struct stat const *sb)
       /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
       int ret;
 
-      if (HAVE_ACL_EXTENDED_FILE)
+      if (HAVE_ACL_EXTENDED_FILE) /* Linux */
 	{
 	  /* On Linux, acl_extended_file is an optimized function: It only
 	     makes two calls to getxattr(), one for ACL_TYPE_ACCESS, one for
 	     ACL_TYPE_DEFAULT.  */
 	  ret = acl_extended_file (name);
 	}
-      else
+      else /* FreeBSD, MacOS X, IRIX, Tru64 */
 	{
 #  if HAVE_ACL_TYPE_EXTENDED /* MacOS X */
 	  /* On MacOS X, acl_get_file (name, ACL_TYPE_ACCESS)
