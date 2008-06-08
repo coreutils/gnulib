@@ -1,5 +1,10 @@
 2008-06-07  Bruno Haible  <bruno@clisp.org>
 
+	* lib/set-mode-acl.c (qset_acl): Use acl_init(), not acl_from_text(),
+	to construct an empty ACL.
+
+2008-06-07  Bruno Haible  <bruno@clisp.org>
+
 	* lib/set-mode-acl.c (chmod_or_fchmod): Document return value
 	precisely.
 	* lib/copy-acl.c (qcopy_acl): Trivial code simplifications.

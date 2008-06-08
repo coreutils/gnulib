@@ -153,13 +153,7 @@ qset_acl (char const *name, int desc, mode_t mode)
     acl = acl_get_file (name, ACL_TYPE_ACCESS);
   if (acl)
     {
-#   if HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP /* MacOS X */
-      static const char empty_acl_text[] = "!#acl 1\n";
-#   else /* Unknown flavor of POSIX-like ACLs */
-#    error Unknown flavor of POSIX-like ACLs - add support for your platform.
-#   endif
-
-      acl = acl_from_text (empty_acl_text);
+      acl = acl_init (0);
       if (acl)
 	{
 	  if (HAVE_ACL_SET_FD && desc != -1)
