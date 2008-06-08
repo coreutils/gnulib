@@ -66,29 +66,18 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     {
       int saved_errno = errno;
 
-      if (ACL_NOT_WELL_SUPPORTED (errno))
+      if (ACL_NOT_WELL_SUPPORTED (errno) && !acl_access_nontrivial (acl))
         {
-	  int nontrivial = acl_access_nontrivial (acl);
-
 	  acl_free (acl);
-
-	  if (!nontrivial)
-	    {
-	      if (chmod_or_fchmod (dst_name, dest_desc, mode) != 0)
-		saved_errno = errno;
-	      else
-		return 0;
-	    }
-	  else
-	    chmod_or_fchmod (dst_name, dest_desc, mode);
+	  return chmod_or_fchmod (dst_name, dest_desc, mode);
 	}
       else
 	{
 	  acl_free (acl);
 	  chmod_or_fchmod (dst_name, dest_desc, mode);
+	  errno = saved_errno;
+	  return -1;
 	}
-      errno = saved_errno;
-      return -1;
     }
   else
     acl_free (acl);

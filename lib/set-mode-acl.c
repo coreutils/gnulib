@@ -26,7 +26,8 @@
 /* If DESC is a valid file descriptor use fchmod to change the
    file's mode to MODE on systems that have fchown. On systems
    that don't have fchown and if DESC is invalid, use chown on
-   NAME instead.  */
+   NAME instead.
+   Return 0 if successful.  Return -1 and set errno upon failure.  */
 
 int
 chmod_or_fchmod (const char *name, int desc, mode_t mode)

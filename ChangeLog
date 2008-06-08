@@ -1,5 +1,11 @@
 2008-06-07  Bruno Haible  <bruno@clisp.org>
 
+	* lib/set-mode-acl.c (chmod_or_fchmod): Document return value
+	precisely.
+	* lib/copy-acl.c (qcopy_acl): Trivial code simplifications.
+
+2008-06-07  Bruno Haible  <bruno@clisp.org>
+
 	* lib/copy-acl.c (qcopy_acl): Make the #if branches independent.
 	* lib/set-mode-acl.c (qset_acl): Choose better local variable names.
 
