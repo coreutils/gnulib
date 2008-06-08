@@ -75,6 +75,7 @@ Manual pages:
   http://docs.sun.com/app/docs/doc/816-5167/acl-2?l=en&a=view
   http://docs.sun.com/app/docs/doc/816-5165/getfacl-1?l=en&a=view
   http://docs.sun.com/app/docs/doc/816-5165/setfacl-1?l=en&a=view
+  http://docs.sun.com/app/docs/doc/816-5167/pathconf-2?l=en&a=view
 Includes:
   <sys/acl.h>
 Library:
