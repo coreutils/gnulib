@@ -115,14 +115,12 @@ qset_acl (char const *name, int desc, mode_t mode)
       acl_free (acl);
 
       if (ACL_NOT_WELL_SUPPORTED (errno))
+	return chmod_or_fchmod (name, desc, mode);
+      else
 	{
-	  if (chmod_or_fchmod (name, desc, mode) != 0)
-	    saved_errno = errno;
-	  else
-	    return 0;
+	  errno = saved_errno;
+	  return -1;
 	}
-      errno = saved_errno;
-      return -1;
     }
   else
     acl_free (acl);
@@ -134,9 +132,7 @@ qset_acl (char const *name, int desc, mode_t mode)
     {
       /* We did not call chmod so far, so the special bits have not yet
          been set.  */
-
-      if (chmod_or_fchmod (name, desc, mode))
-	return -1;
+      return chmod_or_fchmod (name, desc, mode);
     }
   return 0;
 
@@ -186,19 +182,18 @@ qset_acl (char const *name, int desc, mode_t mode)
 	      acl_free (acl);
 
 	      if (ACL_NOT_WELL_SUPPORTED (saved_errno))
+		return chmod_or_fchmod (name, desc, mode);
+	      else
 		{
-		  if (chmod_or_fchmod (name, desc, mode) != 0)
-		    saved_errno = errno;
-		  else
-		    return 0;
+		  errno = saved_errno;
+		  return -1;
 		}
-	      errno = saved_errno;
-	      return -1;
 	    }
 	  acl_free (acl);
 	}
     }
 
+  /* Since !MODE_INSIDE_ACL, we have to call chmod explicitly.  */
   return chmod_or_fchmod (name, desc, mode);
 #  endif
 
