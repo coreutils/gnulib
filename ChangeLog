@@ -1,5 +1,13 @@
 2008-06-08  Bruno Haible  <bruno@clisp.org>
 
+	Add support for Cygwin ACLs.
+	* lib/acl-internal.h (MODE_INSIDE_ACL): New macro for Solaris-like API.
+	* lib/set-mode-acl.c (qset_acl) [!MODE_INSIDE_ACL]: Don't optimize away
+	the chmod_or_fchmod call.
+	* lib/copy-acl.c (qcopy_acl) [!MODE_INSIDE_ACL]: Likewise.
+
+2008-06-08  Bruno Haible  <bruno@clisp.org>
+
 	Fix bug with setuid modes in Solaris 10+ code.
 	* lib/set-mode-acl.c (qset_acl): Call chmod_or_fchmod when acl_set
 	succeeded, when the mode contains some special bits.

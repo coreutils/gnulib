@@ -305,7 +305,7 @@ qset_acl (char const *name, int desc, mode_t mode)
       }
   }
   
-  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
+  if (!MODE_INSIDE_ACL || (mode & (S_ISUID | S_ISGID | S_ISVTX)))
     {
       /* We did not call chmod so far, so the special bits have not yet
          been set.  */

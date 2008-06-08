@@ -160,6 +160,14 @@ extern int acl_access_nontrivial (acl_t);
 
 # elif HAVE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
 
+/* Set to 1 if a file's mode is implicit by the ACL.
+   Set to 0 if a file's mode is stored independently from the ACL.  */
+#  if defined __CYGWIN__ /* Cygwin */
+#   define MODE_INSIDE_ACL 0
+#  else /* Solaris */
+#   define MODE_INSIDE_ACL 1
+#  endif
+
 /* Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
 extern int acl_nontrivial (int count, aclent_t *entries);

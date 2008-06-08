@@ -330,8 +330,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     if (count == 0)
       return qset_acl (dst_name, dest_desc, mode);
 
-  did_chmod = 0; /* set to 1 once the mode bits in 0777 have been set,
-		    set to 2 once the mode bits other than 0777 have been set */
+  did_chmod = 0; /* set to 1 once the mode bits in 0777 have been set */
   saved_errno = 0; /* the first non-ignorable error code */
 
   /* If both ace_entries and entries are available, try SETACL before
@@ -371,7 +370,8 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
   free (ace_entries);
 #  endif
 
-  if (did_chmod <= ((mode & (S_ISUID | S_ISGID | S_ISVTX)) ? 1 : 0))
+  if (!MODE_INSIDE_ACL
+      || did_chmod <= ((mode & (S_ISUID | S_ISGID | S_ISVTX)) ? 1 : 0))
     {
       /* We did not call chmod so far, and either the mode and the ACL are
 	 separate or special bits are to be set which don't fit into ACLs.  */
