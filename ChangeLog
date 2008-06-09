@@ -10,6 +10,12 @@
 	not success.
 	[HAVE_FUTIMENS]: Use the same work-around, here.
 
+2008-06-09  Jim Meyering  <meyering@redhat.com>
+
+	add more guards around definition of ACE_-related code
+	* lib/file-has-acl.c (acl_ace_nontrivial): Define only if
+	ALLOW and ACE_OWNER are also defined.
+
 2008-06-08  Bruno Haible  <bruno@clisp.org>
 
 	* lib/acl-internal.h: Add me as co-author.
