@@ -1,4 +1,4 @@
-# strstr.m4 serial 4
+# strstr.m4 serial 5
 dnl Copyright (C) 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,7 @@ AC_DEFUN([gl_FUNC_STRSTR],
   AC_CACHE_CHECK([whether strstr works in linear time],
     [gl_cv_func_strstr_linear],
     [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#include <signal.h> /* for signal */
 #include <string.h> /* for memmem */
 #include <stdlib.h> /* for malloc */
 #include <unistd.h> /* for alarm */
@@ -20,6 +21,7 @@ AC_DEFUN([gl_FUNC_STRSTR],
     void *result = 0;
     /* Failure to compile this test due to missing alarm is okay,
        since all such platforms (mingw) also have quadratic strstr.  */
+    signal (SIGALRM, SIG_DFL);
     alarm (5);
     /* Check for quadratic performance.  */
     if (haystack && needle)

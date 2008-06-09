@@ -1,5 +1,12 @@
 2008-06-09  Eric Blake  <ebb9@byu.net>
 
+	Work around environments that (stupidly) ignore SIGALRM.
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Reset SIGALRM to default handling
+	before using alarm().
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Likewise.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Likewise.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
 	Produce autobuild blurb earlier in log.
 	* modules/autobuild (configure.ac-early): Move AB_INIT here.
 
