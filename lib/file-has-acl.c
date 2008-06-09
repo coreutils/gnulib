@@ -146,7 +146,7 @@ acl_nontrivial (int count, aclent_t *entries)
   return 0;
 }
 
-# ifdef ACE_GETACL
+# if defined ACE_GETACL && defined ALLOW && defined ACE_OWNER
 
 /* Test an ACL retrieved with ACE_GETACL.
    Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
