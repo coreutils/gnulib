@@ -1,3 +1,6 @@
-testdir*
 *.orig
 *.rej
+*~
+.#*
+\#*#
+testdir*
