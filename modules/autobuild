@@ -6,8 +6,10 @@ m4/autobuild.m4
 
 Depends-on:
 
-configure.ac:
+configure.ac-early:
 AB_INIT
+
+configure.ac:
 
 Makefile.am:
 

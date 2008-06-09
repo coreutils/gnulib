@@ -1,3 +1,8 @@
+2008-06-09  Eric Blake  <ebb9@byu.net>
+
+	Produce autobuild blurb earlier in log.
+	* modules/autobuild (configure.ac-early): Move AB_INIT here.
+
 2008-06-09  Jim Meyering  <meyering@redhat.com>
 	and Ondřej Vašík  <ovasik@redhat.com>
 
