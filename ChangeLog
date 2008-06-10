@@ -1,5 +1,9 @@
 2008-06-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/wait-process.c (wait_subprocess): Try to fix waitid() based code.
+
+2008-06-10  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-memmem.c (main): Reset SIGALRM to default handling before
 	using alarm().
 	* tests/test-strcasestr.c (main): Likewise.
