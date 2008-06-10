@@ -1,3 +1,22 @@
+2008-06-10  Bruno Haible  <bruno@clisp.org>
+
+	* lib/wait-process.h (wait_subprocess): Add termsigp argument.
+	* lib/wait-process.c (wait_subprocess): Likewise.
+	* lib/execute.h (execute): Add termsigp argument.
+	* lib/execute.c (execute): Likewise.
+	* lib/csharpcomp.c (compile_csharp_using_pnet,
+	compile_csharp_using_mono, compile_csharp_using_sscli): Update.
+	* lib/csharpexec.c (execute_csharp_using_pnet,
+	execute_csharp_using_mono, execute_csharp_using_sscli): Update.
+	* lib/javacomp.c (compile_using_envjavac, compile_using_gcj,
+	compile_using_javac, compile_using_jikes, is_envjavac_gcj,
+	is_envjavac_gcj43, is_gcj_present, is_gcj_43, is_javac_present,
+	is_jikes_present): Update.
+	* lib/javaexec.c (execute_java_class): Update.
+	* lib/javaversion.c (execute_and_read_line): Update.
+	* NEWS: Document the changes.
+	Reported by Eric Blake.
+
 2008-06-10  Eric Blake  <ebb9@byu.net>
 
 	Add missing include.

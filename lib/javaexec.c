@@ -1,5 +1,5 @@
 /* Execute a Java program.
-   Copyright (C) 2001-2003, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -209,7 +209,7 @@ execute_java_class (const char *class_name,
 	argv[1] = "--version";
 	argv[2] = NULL;
 	exitstatus = execute ("gij", "gij", argv, false, false, true, true,
-			      true, false);
+			      true, false, NULL);
 	gij_present = (exitstatus == 0);
 	gij_tested = true;
       }
@@ -262,7 +262,7 @@ execute_java_class (const char *class_name,
 	argv[1] = "-version";
 	argv[2] = NULL;
 	exitstatus = execute ("java", "java", argv, false, false, true, true,
-			      true, false);
+			      true, false, NULL);
 	java_present = (exitstatus == 0);
 	java_tested = true;
       }
@@ -316,7 +316,7 @@ execute_java_class (const char *class_name,
 	argv[0] = "jre";
 	argv[1] = NULL;
 	exitstatus = execute ("jre", "jre", argv, false, false, true, true,
-			      true, false);
+			      true, false, NULL);
 	jre_present = (exitstatus == 0 || exitstatus == 1);
 	jre_tested = true;
       }
@@ -373,7 +373,7 @@ execute_java_class (const char *class_name,
 	argv[1] = "-?";
 	argv[2] = NULL;
 	exitstatus = execute ("jview", "jview", argv, false, false, true, true,
-			      true, false);
+			      true, false, NULL);
 	jview_present = (exitstatus == 0 || exitstatus == 1);
 	jview_tested = true;
       }

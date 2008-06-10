@@ -117,7 +117,8 @@ execute (const char *progname,
 	 const char *prog_path, char **prog_argv,
 	 bool ignore_sigpipe,
 	 bool null_stdin, bool null_stdout, bool null_stderr,
-	 bool slave_process, bool exit_on_error)
+	 bool slave_process, bool exit_on_error,
+	 int *termsigp)
 {
 #if defined _MSC_VER || defined __MINGW32__
 
@@ -172,6 +173,9 @@ execute (const char *progname,
     dup2 (orig_stdout, STDOUT_FILENO), close (orig_stdout);
   if (null_stdin)
     dup2 (orig_stdin, STDIN_FILENO), close (orig_stdin);
+
+  if (termsigp != NULL)
+    *termsigp = 0;
 
   if (exitcode == -1)
     {
@@ -251,6 +255,8 @@ execute (const char *progname,
 	posix_spawnattr_destroy (&attrs);
       if (slave_process)
 	unblock_fatal_signals ();
+      if (termsigp != NULL)
+	*termsigp = 0;
       if (exit_on_error || !null_stderr)
 	error (exit_on_error ? EXIT_FAILURE : 0, err,
 	       _("%s subprocess failed"), progname);
@@ -293,6 +299,8 @@ execute (const char *progname,
     {
       if (slave_process)
 	unblock_fatal_signals ();
+      if (termsigp != NULL)
+	*termsigp = 0;
       if (exit_on_error || !null_stderr)
 	error (exit_on_error ? EXIT_FAILURE : 0, errno,
 	       _("%s subprocess failed"), progname);
@@ -306,7 +314,7 @@ execute (const char *progname,
     }
 
   return wait_subprocess (child, progname, ignore_sigpipe, null_stderr,
-			  slave_process, exit_on_error);
+			  slave_process, exit_on_error, termsigp);
 
 #endif
 }

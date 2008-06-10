@@ -1,5 +1,5 @@
 /* Compile a C# program.
-   Copyright (C) 2003-2007 Free Software Foundation, Inc.
+   Copyright (C) 2003-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -83,7 +83,7 @@ compile_csharp_using_pnet (const char * const *sources,
       argv[1] = "--version";
       argv[2] = NULL;
       exitstatus = execute ("cscc", "cscc", argv, false, false, true, true,
-			    true, false);
+			    true, false, NULL);
       cscc_present = (exitstatus == 0);
       cscc_tested = true;
     }
@@ -151,7 +151,7 @@ compile_csharp_using_pnet (const char * const *sources,
 	}
 
       exitstatus = execute ("cscc", "cscc", argv, false, false, false, false,
-			    true, true);
+			    true, true, NULL);
 
       for (i = 0; i < sources_count; i++)
 	if (argv[argc - sources_count + i] != sources[i])
@@ -219,7 +219,7 @@ compile_csharp_using_mono (const char * const *sources,
 	  /* Remove zombie process from process list, and retrieve exit
 	     status.  */
 	  exitstatus =
-	    wait_subprocess (child, "mcs", false, true, true, false);
+	    wait_subprocess (child, "mcs", false, true, true, false, NULL);
 	  if (exitstatus != 0)
 	    mcs_present = false;
 	}
@@ -332,7 +332,8 @@ compile_csharp_using_mono (const char * const *sources,
       fclose (fp);
 
       /* Remove zombie process from process list, and retrieve exit status.  */
-      exitstatus = wait_subprocess (child, "mcs", false, false, true, true);
+      exitstatus =
+	wait_subprocess (child, "mcs", false, false, true, true, NULL);
 
       for (i = 1 + (output_is_library ? 1 : 0);
 	   i < 1 + (output_is_library ? 1 : 0)
@@ -408,7 +409,7 @@ compile_csharp_using_sscli (const char * const *sources,
 	  /* Remove zombie process from process list, and retrieve exit
 	     status.  */
 	  exitstatus =
-	    wait_subprocess (child, "csc", false, true, true, false);
+	    wait_subprocess (child, "csc", false, true, true, false, NULL);
 	  if (exitstatus != 0)
 	    csc_present = false;
 	}
@@ -486,7 +487,7 @@ compile_csharp_using_sscli (const char * const *sources,
 	}
 
       exitstatus = execute ("csc", "csc", argv, false, false, false, false,
-			    true, true);
+			    true, true, NULL);
 
       for (i = 2; i < 3 + libdirs_count + libraries_count; i++)
 	freea (argv[i]);

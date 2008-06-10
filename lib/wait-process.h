@@ -1,5 +1,5 @@
 /* Waiting for a subprocess to finish.
-   Copyright (C) 2001-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006, 2008 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -47,10 +47,14 @@ extern "C" {
    - slave_process should be set to true if the process has been launched as a
      slave process.
    - If exit_on_error is true, any error will cause the main process to exit
-     with an error status.  */
+     with an error status.
+   - If termsigp is not NULL, *termsig will be set to the signal that
+     terminated the subprocess (if supported by the platform: not on native
+     Windows platforms), otherwise 0.  */
 extern int wait_subprocess (pid_t child, const char *progname,
 			    bool ignore_sigpipe, bool null_stderr,
-			    bool slave_process, bool exit_on_error);
+			    bool slave_process, bool exit_on_error,
+			    int *termsigp);
 
 /* Register a subprocess as being a slave process.  This means that the
    subprocess will be terminated when its creator receives a catchable fatal

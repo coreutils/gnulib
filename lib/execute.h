@@ -1,5 +1,5 @@
 /* Creation of autonomous subprocesses.
-   Copyright (C) 2001-2003 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2008 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -29,12 +29,16 @@
    purpose is to write to standard output.
    If slave_process is true, the child process will be terminated when its
    creator receives a catchable fatal signal.
+   If termsigp is not NULL, *termsig will be set to the signal that terminated
+   the subprocess (if supported by the platform: not on native Windows
+   platforms), otherwise 0.
    It is recommended that no signal is blocked or ignored while execute()
    is called.  See pipe.h for the reason.  */
 extern int execute (const char *progname,
 		    const char *prog_path, char **prog_argv,
 		    bool ignore_sigpipe,
 		    bool null_stdin, bool null_stdout, bool null_stderr,
-		    bool slave_process, bool exit_on_error);
+		    bool slave_process, bool exit_on_error,
+		    int *termsigp);
 
 #endif /* _EXECUTE_H */

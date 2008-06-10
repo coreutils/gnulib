@@ -1,5 +1,5 @@
 /* Compile a Java program.
-   Copyright (C) 2001-2003, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -268,7 +268,7 @@ compile_using_envjavac (const char *javac,
   argv[2] = command;
   argv[3] = NULL;
   exitstatus = execute (javac, "/bin/sh", argv, false, false, false,
-			null_stderr, true, true);
+			null_stderr, true, true, NULL);
   err = (exitstatus != 0);
 
   freea (command);
@@ -350,7 +350,7 @@ compile_using_gcj (const char * const *java_sources,
     }
 
   exitstatus = execute ("gcj", "gcj", argv, false, false, false, null_stderr,
-			true, true);
+			true, true, NULL);
   err = (exitstatus != 0);
 
   if (ftarget_arg != NULL)
@@ -421,7 +421,7 @@ compile_using_javac (const char * const *java_sources,
     }
 
   exitstatus = execute ("javac", "javac", argv, false, false, false,
-			null_stderr, true, true);
+			null_stderr, true, true, NULL);
   err = (exitstatus != 0);
 
   freea (argv);
@@ -476,7 +476,7 @@ compile_using_jikes (const char * const *java_sources,
     }
 
   exitstatus = execute ("jikes", "jikes", argv, false, false, false,
-			null_stderr, true, true);
+			null_stderr, true, true, NULL);
   err = (exitstatus != 0);
 
   freea (argv);
@@ -605,7 +605,8 @@ is_envjavac_gcj (const char *javac)
       fclose (fp);
 
       /* Remove zombie process from process list, and retrieve exit status.  */
-      exitstatus = wait_subprocess (child, javac, true, true, true, false);
+      exitstatus =
+	wait_subprocess (child, javac, true, true, true, false, NULL);
       if (exitstatus != 0)
 	envjavac_gcj = false;
 
@@ -689,7 +690,8 @@ is_envjavac_gcj43 (const char *javac)
       fclose (fp);
 
       /* Remove zombie process from process list, and retrieve exit status.  */
-      exitstatus = wait_subprocess (child, javac, true, true, true, false);
+      exitstatus =
+	wait_subprocess (child, javac, true, true, true, false, NULL);
       if (exitstatus != 0)
 	envjavac_gcj43 = false;
 
@@ -1367,7 +1369,7 @@ is_gcj_present (void)
 	  /* Remove zombie process from process list, and retrieve exit
 	     status.  */
 	  exitstatus =
-	    wait_subprocess (child, "gcj", false, true, true, false);
+	    wait_subprocess (child, "gcj", false, true, true, false, NULL);
 	  if (exitstatus != 0)
 	    gcj_present = false;
 	}
@@ -1482,7 +1484,7 @@ is_gcj_43 (void)
 	  /* Remove zombie process from process list, and retrieve exit
 	     status.  */
 	  exitstatus =
-	    wait_subprocess (child, "gcj", false, true, true, false);
+	    wait_subprocess (child, "gcj", false, true, true, false, NULL);
 	  if (exitstatus != 0)
 	    gcj_43 = false;
 	}
@@ -1791,7 +1793,7 @@ is_javac_present (void)
       argv[0] = "javac";
       argv[1] = NULL;
       exitstatus = execute ("javac", "javac", argv, false, false, true, true,
-			    true, false);
+			    true, false, NULL);
       javac_present = (exitstatus == 0 || exitstatus == 1 || exitstatus == 2);
       javac_tested = true;
     }
@@ -2055,7 +2057,7 @@ is_jikes_present (void)
       argv[0] = "jikes";
       argv[1] = NULL;
       exitstatus = execute ("jikes", "jikes", argv, false, false, true, true,
-			    true, false);
+			    true, false, NULL);
       jikes_present = (exitstatus == 0 || exitstatus == 1);
       jikes_tested = true;
     }

@@ -1,5 +1,5 @@
 /* Determine the Java version supported by javaexec.
-   Copyright (C) 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -90,7 +90,8 @@ execute_and_read_line (const char *progname,
   fclose (fp);
 
   /* Remove zombie process from process list, and retrieve exit status.  */
-  exitstatus = wait_subprocess (child, progname, true, false, true, false);
+  exitstatus =
+    wait_subprocess (child, progname, true, false, true, false, NULL);
   if (exitstatus != 0)
     {
       free (line);

@@ -250,7 +250,8 @@ unregister_slave_subprocess (pid_t child)
 int
 wait_subprocess (pid_t child, const char *progname,
 		 bool ignore_sigpipe, bool null_stderr,
-		 bool slave_process, bool exit_on_error)
+		 bool slave_process, bool exit_on_error,
+		 int *termsigp)
 {
 #if HAVE_WAITID && defined WNOWAIT && 0
   /* Commented out because waitid() without WEXITED and with WNOWAIT doesn't
@@ -263,6 +264,9 @@ wait_subprocess (pid_t child, const char *progname,
      before unregister_slave_subprocess() - this process gets a fatal signal,
      it would kill the other totally unrelated process.  */
   siginfo_t info;
+
+  if (termsigp != NULL)
+    *termsigp = 0;
   for (;;)
     {
       if (waitid (P_PID, child, &info, WEXITED | (slave_process ? WNOWAIT : 0))
@@ -317,6 +321,8 @@ wait_subprocess (pid_t child, const char *progname,
     {
     case CLD_KILLED:
     case CLD_DUMPED:
+      if (termsigp != NULL)
+	*termsigp = info.si_status; /* TODO: or info.si_signo? */
 # ifdef SIGPIPE
       if (info.si_status == SIGPIPE && ignore_sigpipe)
 	return 0;
@@ -342,6 +348,8 @@ wait_subprocess (pid_t child, const char *progname,
   /* waitpid() is just as portable as wait() nowadays.  */
   WAIT_T status;
 
+  if (termsigp != NULL)
+    *termsigp = 0;
   *(int *) &status = 0;
   for (;;)
     {
@@ -385,6 +393,8 @@ wait_subprocess (pid_t child, const char *progname,
 
   if (WIFSIGNALED (status))
     {
+      if (termsigp != NULL)
+	*termsigp = WTERMSIG (status);
 # ifdef SIGPIPE
       if (WTERMSIG (status) == SIGPIPE && ignore_sigpipe)
 	return 0;

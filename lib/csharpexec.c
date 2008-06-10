@@ -1,5 +1,5 @@
 /* Execute a C# program.
-   Copyright (C) 2003-2007 Free Software Foundation, Inc.
+   Copyright (C) 2003-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -109,7 +109,7 @@ execute_csharp_using_pnet (const char *assembly_path,
       argv[1] = "--version";
       argv[2] = NULL;
       exitstatus = execute ("ilrun", "ilrun", argv, false, false, true, true,
-			    true, false);
+			    true, false, NULL);
       ilrun_present = (exitstatus == 0);
       ilrun_tested = true;
     }
@@ -179,7 +179,7 @@ execute_csharp_using_mono (const char *assembly_path,
       argv[1] = "--version";
       argv[2] = NULL;
       exitstatus = execute ("mono", "mono", argv, false, false, true, true,
-			    true, false);
+			    true, false, NULL);
       mono_present = (exitstatus == 0);
       mono_tested = true;
     }
@@ -240,7 +240,7 @@ execute_csharp_using_sscli (const char *assembly_path,
       argv[0] = "clix";
       argv[1] = NULL;
       exitstatus = execute ("clix", "clix", argv, false, false, true, true,
-			    true, false);
+			    true, false, NULL);
       clix_present = (exitstatus == 0 || exitstatus == 1);
       clix_tested = true;
     }

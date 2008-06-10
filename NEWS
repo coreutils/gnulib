@@ -6,6 +6,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-06-10  execute         The execute function takes an additional termsigp
+                            argument. Passing termsigp = NULL is ok.
+            wait-process    The wait_subprocess function takes an additional
+                            termsigp argument. Passing termsigp = NULL is ok.
+
 2008-05-10  linebreak       The module is split into several modules unilbrk/*.
                             The include file is changed from "linebreak.h" to
                             "unilbrk.h". Two functions are renamed:
