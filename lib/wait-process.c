@@ -1,5 +1,5 @@
 /* Waiting for a subprocess to finish.
-   Copyright (C) 2001-2003, 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -369,7 +369,8 @@ wait_subprocess (pid_t child, const char *progname,
 	}
 
       /* One of WIFSIGNALED (status), WIFEXITED (status), WIFSTOPPED (status)
-	 must always be true.  Loop until the program terminates.  */
+	 must always be true, since we did not specify WCONTINUED in the
+	 waitpid() call.  Loop until the program terminates.  */
       if (!WIFSTOPPED (status))
 	break;
     }
@@ -394,6 +395,8 @@ wait_subprocess (pid_t child, const char *progname,
 	       progname, (int) WTERMSIG (status));
       return 127;
     }
+  if (!WIFEXITED (status))
+    abort ();
   if (WEXITSTATUS (status) == 127)
     {
       if (exit_on_error || !null_stderr)
