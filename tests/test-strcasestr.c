@@ -43,7 +43,7 @@ main ()
 #if HAVE_DECL_ALARM
   /* Declare failure if test takes too long, by using default abort
      caused by SIGALRM.  All known platforms that lack alarm also lack
-     strcasestr, and the replacement memmem is known to not take too
+     strcasestr, and the replacement strcasestr is known to not take too
      long.  */
   signal (SIGALRM, SIG_DFL);
   alarm (50);
