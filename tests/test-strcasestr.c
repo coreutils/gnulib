@@ -20,6 +20,7 @@
 
 #include <string.h>
 
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -42,7 +43,7 @@ main ()
 #if HAVE_DECL_ALARM
   /* Declare failure if test takes too long, by using default abort
      caused by SIGALRM.  All known platforms that lack alarm also lack
-     memmem, and the replacement memmem is known to not take too
+     strcasestr, and the replacement memmem is known to not take too
      long.  */
   signal (SIGALRM, SIG_DFL);
   alarm (50);

@@ -1,3 +1,10 @@
+2008-06-10  Eric Blake  <ebb9@byu.net>
+
+	Add missing include.
+	* tests/test-strstr.c (includes): Add <signal.h>.
+	* tests/test-strcasestr.c (includes): Likewise.
+	* tests/test-memmem.c (includes): Likewise.
+
 2008-06-10  Bruno Haible  <bruno@clisp.org>
 
 	* lib/wait-process.c (wait_subprocess): Add an assertion.
