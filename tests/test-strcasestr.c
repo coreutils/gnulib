@@ -44,6 +44,7 @@ main ()
      caused by SIGALRM.  All known platforms that lack alarm also lack
      memmem, and the replacement memmem is known to not take too
      long.  */
+  signal (SIGALRM, SIG_DFL);
   alarm (50);
 #endif
 
