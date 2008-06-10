@@ -90,6 +90,22 @@ Functions in libsec:
   aclsort
   acltomode
   acltotext
+Additionally in Solaris 10 patch 118833-17 (<sys/acl.h> version 1.15):
+  acl_t type
+  ACL_NO_TRIVIAL macro
+  ACE_OTHER macro replaced with ACE_EVERYONE macro
+  ACE_OWNER, ACE_GROUP changed their values(!)
+  ALLOW, DENY macros removed(!)
+  acl_check
+  acl_free
+  acl_fromtext
+  acl_get
+  acl_set
+  acl_strip
+  acl_totext
+  acl_trivial
+  facl_get
+  facl_set
 Utilities:
   getfacl
   setfacl

@@ -168,15 +168,36 @@ extern int acl_access_nontrivial (acl_t);
 #   define MODE_INSIDE_ACL 1
 #  endif
 
+#  if !defined ACL_NO_TRIVIAL /* Solaris <= 10, Cygwin */
+
 /* Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
 extern int acl_nontrivial (int count, aclent_t *entries);
 
-#  ifdef ACE_GETACL
+#   ifdef ACE_GETACL /* Solaris 10 */
+
 /* Test an ACL retrieved with ACE_GETACL.
    Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
 extern int acl_ace_nontrivial (int count, ace_t *entries);
+
+/* Definitions for when the built executable is executed on Solaris 10
+   (newer version) or Solaris 11.  */
+/* For a_type.  */
+#    define ACE_ACCESS_ALLOWED_ACE_TYPE 0 /* replaces ALLOW */
+#    define ACE_ACCESS_DENIED_ACE_TYPE  1 /* replaces DENY */
+/* For a_flags.  */
+#    define NEW_ACE_OWNER            0x1000
+#    define NEW_ACE_GROUP            0x2000
+#    define NEW_ACE_IDENTIFIER_GROUP 0x0040
+#    define ACE_EVERYONE             0x4000
+/* For a_access_mask.  */
+#    define NEW_ACE_READ_DATA  0x001 /* corresponds to 'r' */
+#    define NEW_ACE_WRITE_DATA 0x002 /* corresponds to 'w' */
+#    define NEW_ACE_EXECUTE    0x004 /* corresponds to 'x' */
+
+#   endif
+
 #  endif
 
 # elif HAVE_GETACL /* HP-UX */

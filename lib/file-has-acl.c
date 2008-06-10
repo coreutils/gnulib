@@ -120,6 +120,8 @@ acl_access_nontrivial (acl_t acl)
 
 #elif USE_ACL && HAVE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
 
+# if !defined ACL_NO_TRIVIAL /* Solaris <= 10, Cygwin */
+
 /* Test an ACL retrieved with GETACL.
    Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
@@ -146,7 +148,7 @@ acl_nontrivial (int count, aclent_t *entries)
   return 0;
 }
 
-# if defined ACE_GETACL && defined ALLOW && defined ACE_OWNER
+#  ifdef ACE_GETACL
 
 /* Test an ACL retrieved with ACE_GETACL.
    Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
@@ -156,21 +158,58 @@ acl_ace_nontrivial (int count, ace_t *entries)
 {
   int i;
 
-  for (i = 0; i < count; i++)
-    {
-      ace_t *ace = &entries[i];
+  /* The flags in the ace_t structure changed in a binary incompatible way
+     when ACL_NO_TRIVIAL etc. were introduced in <sys/acl.h> version 1.15.
+     How to distinguish the two conventions at runtime?
+     In the old convention, usually three ACEs have a_flags = ACE_OWNER /
+     ACE_GROUP / ACE_OTHER, in the range 0x0100..0x0400.  In the new
+     convention, these values are not used.  */
+  int old_convention = 0;
 
-      /* Note: If ace->a_flags = ACE_OWNER, ace->a_who is the st_uid from
-	 stat().  If ace->a_flags = ACE_GROUP, ace->a_who is the st_gid from
-	 stat().  We don't need to check ace->a_who in these cases.  */
-      if (!(ace->a_type == ALLOW
-	    && (ace->a_flags == ACE_OWNER
-		|| ace->a_flags == ACE_GROUP
-		|| ace->a_flags == ACE_OTHER)))
-	return 1;
-    }
+  for (i = 0; i < count; i++)
+    if (entries[i].a_flags & (ACE_OWNER | ACE_GROUP | ACE_OTHER))
+      {
+	old_convention = 1;
+	break;
+      }
+
+  if (old_convention)
+    /* Running on Solaris 10.  */
+    for (i = 0; i < count; i++)
+      {
+	ace_t *ace = &entries[i];
+
+	/* Note:
+	   If ace->a_flags = ACE_OWNER, ace->a_who is the st_uid from stat().
+	   If ace->a_flags = ACE_GROUP, ace->a_who is the st_gid from stat().
+	   We don't need to check ace->a_who in these cases.  */
+	if (!(ace->a_type == ALLOW
+	      && (ace->a_flags == ACE_OWNER
+		  || ace->a_flags == ACE_GROUP
+		  || ace->a_flags == ACE_OTHER)))
+	  return 1;
+      }
+  else
+    /* Running on Solaris 10 (newer version) or Solaris 11.  */
+    for (i = 0; i < count; i++)
+      {
+	ace_t *ace = &entries[i];
+
+	if (!(ace->a_type == ACE_ACCESS_ALLOWED_ACE_TYPE
+	      && (ace->a_flags == NEW_ACE_OWNER
+		  || ace->a_flags
+		     == (NEW_ACE_GROUP | NEW_ACE_IDENTIFIER_GROUP)
+		  || ace->a_flags == ACE_EVERYONE)
+	      && (ace->a_access_mask
+		  & ~(NEW_ACE_READ_DATA | NEW_ACE_WRITE_DATA | NEW_ACE_EXECUTE))
+		 == 0))
+	  return 1;
+      }
+
   return 0;
 }
+
+#  endif
 
 # endif
 
@@ -310,7 +349,7 @@ file_has_acl (char const *name, struct stat const *sb)
 
 # elif HAVE_ACL && defined GETACLCNT /* Solaris, Cygwin, not HP-UX */
 
-#  if HAVE_ACL_TRIVIAL
+#  if defined ACL_NO_TRIVIAL
 
       /* Solaris 10 (newer version), which has additional API declared in
 	 <sys/acl.h> (acl_t) and implemented in libsec (acl_set, acl_trivial,

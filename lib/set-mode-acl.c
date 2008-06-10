@@ -249,34 +249,118 @@ qset_acl (char const *name, int desc, mode_t mode)
 #   ifdef ACE_GETACL
   /* Solaris also has a different variant of ACLs, used in ZFS and NFSv4
      file systems (whereas the other ones are used in UFS file systems).  */
+
+  /* The flags in the ace_t structure changed in a binary incompatible way
+     when ACL_NO_TRIVIAL etc. were introduced in <sys/acl.h> version 1.15.
+     How to distinguish the two conventions at runtime?
+     We fetch the existing ACL.  In the old convention, usually three ACEs have
+     a_flags = ACE_OWNER / ACE_GROUP / ACE_OTHER, in the range 0x0100..0x0400.
+     In the new convention, these values are not used.  */
+  int convention;
+
   {
-    ace_t entries[3];
-    int ret;
+    int count;
+    ace_t *entries;
 
-    entries[0].a_type = ALLOW;
-    entries[0].a_flags = ACE_OWNER;
-    entries[0].a_who = 0; /* irrelevant */
-    entries[0].a_access_mask = (mode >> 6) & 7;
-    entries[1].a_type = ALLOW;
-    entries[1].a_flags = ACE_GROUP;
-    entries[1].a_who = 0; /* irrelevant */
-    entries[1].a_access_mask = (mode >> 3) & 7;
-    entries[2].a_type = ALLOW;
-    entries[2].a_flags = ACE_OTHER;
-    entries[2].a_who = 0;
-    entries[2].a_access_mask = mode & 7;
-
-    if (desc != -1)
-      ret = facl (desc, ACE_SETACL, sizeof (entries) / sizeof (aclent_t), entries);
-    else
-      ret = acl (name, ACE_SETACL, sizeof (entries) / sizeof (aclent_t), entries);
-    if (ret < 0 && errno != EINVAL && errno != ENOTSUP)
+    for (;;)
       {
-	if (errno == ENOSYS)
-	  return chmod_or_fchmod (name, desc, mode);
-	return -1;
+	if (desc != -1)
+	  count = facl (desc, ACE_GETACLCNT, 0, NULL);
+	else
+	  count = acl (name, ACE_GETACLCNT, 0, NULL);
+	if (count <= 0)
+	  {
+	    convention = -1;
+	    break;
+	  }
+	entries = (ace_t *) malloc (count * sizeof (ace_t));
+	if (entries == NULL)
+	  {
+	    errno = ENOMEM;
+	    return -1;
+	  }
+	if ((desc != -1
+	     ? facl (desc, ACE_GETACL, count, entries)
+	     : acl (name, ACE_GETACL, count, entries))
+	    == count)
+	  {
+	    int i;
+
+	    convention = 0;
+	    for (i = 0; i < count; i++)
+	      if (entries[i].a_flags & (ACE_OWNER | ACE_GROUP | ACE_OTHER))
+		{
+		  convention = 1;
+		  break;
+		}
+	    free (entries);
+	    break;
+	  }
+	/* Huh? The number of ACL entries changed since the last call.
+	   Repeat.  */
+	free (entries);
       }
   }
+
+  if (convention >= 0)
+    {
+      ace_t entries[3];
+      int ret;
+
+      if (convention)
+	{
+	  /* Running on Solaris 10.  */
+	  entries[0].a_type = ALLOW;
+	  entries[0].a_flags = ACE_OWNER;
+	  entries[0].a_who = 0; /* irrelevant */
+	  entries[0].a_access_mask = (mode >> 6) & 7;
+	  entries[1].a_type = ALLOW;
+	  entries[1].a_flags = ACE_GROUP;
+	  entries[1].a_who = 0; /* irrelevant */
+	  entries[1].a_access_mask = (mode >> 3) & 7;
+	  entries[2].a_type = ALLOW;
+	  entries[2].a_flags = ACE_OTHER;
+	  entries[2].a_who = 0;
+	  entries[2].a_access_mask = mode & 7;
+	}
+      else
+	{
+	  /* Running on Solaris 10 (newer version) or Solaris 11.  */
+	  entries[0].a_type = ACE_ACCESS_ALLOWED_ACE_TYPE;
+	  entries[0].a_flags = NEW_ACE_OWNER;
+	  entries[0].a_who = 0; /* irrelevant */
+	  entries[0].a_access_mask =
+	    (mode & 0400 ? NEW_ACE_READ_DATA : 0)
+	    | (mode & 0200 ? NEW_ACE_WRITE_DATA : 0)
+	    | (mode & 0100 ? NEW_ACE_EXECUTE : 0);
+	  entries[1].a_type = ACE_ACCESS_ALLOWED_ACE_TYPE;
+	  entries[1].a_flags = NEW_ACE_GROUP | NEW_ACE_IDENTIFIER_GROUP;
+	  entries[1].a_who = 0; /* irrelevant */
+	  entries[1].a_access_mask =
+	    (mode & 0040 ? NEW_ACE_READ_DATA : 0)
+	    | (mode & 0020 ? NEW_ACE_WRITE_DATA : 0)
+	    | (mode & 0010 ? NEW_ACE_EXECUTE : 0);
+	  entries[2].a_type = ACE_ACCESS_ALLOWED_ACE_TYPE;
+	  entries[2].a_flags = ACE_EVERYONE;
+	  entries[2].a_who = 0;
+	  entries[2].a_access_mask =
+	    (mode & 0004 ? NEW_ACE_READ_DATA : 0)
+	    | (mode & 0002 ? NEW_ACE_WRITE_DATA : 0)
+	    | (mode & 0001 ? NEW_ACE_EXECUTE : 0);
+	}
+      if (desc != -1)
+	ret = facl (desc, ACE_SETACL,
+		    sizeof (entries) / sizeof (aclent_t), entries);
+      else
+	ret = acl (name, ACE_SETACL,
+		   sizeof (entries) / sizeof (aclent_t), entries);
+      if (ret < 0 && errno != EINVAL && errno != ENOTSUP)
+	{
+	  if (errno == ENOSYS)
+	    return chmod_or_fchmod (name, desc, mode);
+	  return -1;
+	}
+    }
 #   endif
 
   {

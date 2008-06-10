@@ -1,3 +1,21 @@
+2008-06-09  Bruno Haible  <bruno@clisp.org>
+
+	Work around the Solaris 10 ACE ACLs ABI change.
+	* lib/acl-internal.h (acl_nontrivial, acl_ace_nontrivial): Don't
+	declare if ACL_NO_TRIVIAL is present.
+	(ACE_ACCESS_ALLOWED_ACE_TYPE, ACE_ACCESS_DENIED_ACE_TYPE,
+	NEW_ACE_OWNER, NEW_ACE_GROUP, NEW_ACE_IDENTIFIER_GROUP, ACE_EVERYONE,
+	NEW_ACE_READ_DATA, NEW_ACE_WRITE_DATA, NEW_ACE_EXECUTE): New macros.
+	* lib/file-has-acl.c (acl_nontrivial, acl_ace_nontrivial): Don't
+	define if ACL_NO_TRIVIAL is present.
+	(acl_ace_nontrivial): Detect whether the old or new ABI is in use,
+	and use the current ABI.
+	(file_has_acl): Use same #if condition as elsewhere.
+	* lib/set-mode-acl.c (qset_acl): Detect whether the old or new ABI is
+	in use, and use the current ABI.
+	* doc/acl-resources.txt: More doc about newer Solaris 10 versions.
+	Reported by Jim Meyering.
+
 2008-06-09  Eric Blake  <ebb9@byu.net>
 
 	Work around environments that (stupidly) ignore SIGALRM.
