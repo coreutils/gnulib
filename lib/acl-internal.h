@@ -46,9 +46,6 @@
 # define ENOTSUP (-1)
 #endif
 
-#include "gettext.h"
-#define _(msgid) gettext (msgid)
-
 #ifndef HAVE_FCHMOD
 # define HAVE_FCHMOD false
 # define fchmod(fd, mode) (-1)

@@ -23,6 +23,10 @@
 
 #include "acl-internal.h"
 
+#include "gettext.h"
+#define _(msgid) gettext (msgid)
+
+
 /* If DESC is a valid file descriptor use fchmod to change the
    file's mode to MODE on systems that have fchown. On systems
    that don't have fchown and if DESC is invalid, use chown on

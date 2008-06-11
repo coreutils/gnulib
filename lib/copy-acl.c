@@ -23,6 +23,9 @@
 
 #include "acl-internal.h"
 
+#include "gettext.h"
+#define _(msgid) gettext (msgid)
+
 
 /* Copy access control lists from one file to another. If SOURCE_DESC is
    a valid file descriptor, use file descriptor operations, else use

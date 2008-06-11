@@ -1,5 +1,11 @@
 2008-06-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/acl-internal.h: Don't include gettext.h here.
+	* lib/set-mode-acl.c: Include gettext.h here.
+	* lib/copy-acl.c: Likewise.
+
+2008-06-10  Bruno Haible  <bruno@clisp.org>
+
 	* lib/wait-process.h (wait_subprocess): Add termsigp argument.
 	* lib/wait-process.c (wait_subprocess): Likewise.
 	* lib/execute.h (execute): Add termsigp argument.
