@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate May 5, 2008
+@set lastupdate June 10, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -1145,10 +1145,10 @@ and @code{unexpand}.
 @samp{-v} in @code{gawk}.
 
 @item assume-new
-@samp{-W} in Make.
+@samp{-W} in @code{make}.
 
 @item assume-old
-@samp{-o} in Make.
+@samp{-o} in @code{make}.
 
 @item auto-check
 @samp{-a} in @code{recode}.
@@ -1270,7 +1270,7 @@ Used in @code{tar} and @code{cpio}.
 @samp{-d} in @code{touch}.
 
 @item debug
-@samp{-d} in Make and @code{m4};
+@samp{-d} in @code{make} and @code{m4};
 @samp{-t} in Bison.
 
 @item define
@@ -1317,7 +1317,7 @@ specially.
 @samp{-X} in @code{strip}.
 
 @item dry-run
-@samp{-n} in Make.
+@samp{-n} in @code{make}.
 
 @item ed
 @samp{-e} in @code{diff}.
@@ -1335,7 +1335,7 @@ specially.
 @samp{-N} in @code{diff}.
 
 @item environment-overrides
-@samp{-e} in Make.
+@samp{-e} in @code{make}.
 
 @item eof
 @samp{-e} in @code{xargs}.
@@ -1387,9 +1387,8 @@ Used in GDB.
 @samp{-E} in @code{m4}.
 
 @item file
-@samp{-f} in @code{info}, @code{gawk}, Make, @code{mt}, and @code{tar};
-@samp{-n} in @code{sed};
-@samp{-r} in @code{touch}.
+@samp{-f} in @code{gawk}, @code{info}, @code{make}, @code{mt},
+@code{sed}, and @code{tar}.
 
 @item field-separator
 @samp{-F} in @code{gawk}.
@@ -1501,7 +1500,7 @@ In @code{makeinfo}, output HTML.
 @samp{-i} in @code{diff} and @code{wdiff}.
 
 @item ignore-errors
-@samp{-i} in Make.
+@samp{-i} in @code{make}.
 
 @item ignore-file
 @samp{-i} in @code{ptx}.
@@ -1529,7 +1528,7 @@ In @code{makeinfo}, output HTML.
 @samp{-I} in @code{m4}.
 
 @item include-dir
-@samp{-I} in Make.
+@samp{-I} in @code{make}.
 
 @item incremental
 @samp{-G} in @code{tar}.
@@ -1563,13 +1562,13 @@ init file.
 Used in @code{date}
 
 @item jobs
-@samp{-j} in Make.
+@samp{-j} in @code{make}.
 
 @item just-print
-@samp{-n} in Make.
+@samp{-n} in @code{make}.
 
 @item keep-going
-@samp{-k} in Make.
+@samp{-k} in @code{make}.
 
 @item keep-files
 @samp{-k} in @code{csplit}.
@@ -1610,7 +1609,7 @@ Used in @code{gawk}.
 @samp{-N} in @code{ls}.
 
 @item load-average
-@samp{-l} in Make.
+@samp{-l} in @code{make}.
 
 @item login
 Used in @code{su}.
@@ -1628,7 +1627,7 @@ Used in @code{uname}.
 @samp{-d} in @code{cpio}.
 
 @item makefile
-@samp{-f} in Make.
+@samp{-f} in @code{make}.
 
 @item mapped
 Used in GDB.
@@ -1643,7 +1642,7 @@ Used in GDB.
 @samp{-l} in @code{xargs}.
 
 @item max-load
-@samp{-l} in Make.
+@samp{-l} in @code{make}.
 
 @item max-procs
 @samp{-P} in @code{xargs}.
@@ -1679,10 +1678,10 @@ Used in GDB.
 @samp{-a} in @code{shar}.
 
 @item new-file
-@samp{-W} in Make.
+@samp{-W} in @code{make}.
 
 @item no-builtin-rules
-@samp{-r} in Make.
+@samp{-r} in @code{make}.
 
 @item no-character-count
 @samp{-w} in @code{shar}.
@@ -1709,7 +1708,7 @@ Used in GDB.
 @samp{-2} in @code{wdiff}.
 
 @item no-keep-going
-@samp{-S} in Make.
+@samp{-S} in @code{make}.
 
 @item no-lines
 @samp{-l} in Bison.
@@ -1784,7 +1783,7 @@ Used in GDB.
 @samp{-o} in @code{tar}.
 
 @item old-file
-@samp{-o} in Make.
+@samp{-o} in @code{make}.
 
 @item one-file-system
 @samp{-l} in @code{tar}, @code{cp}, and @code{du}.
@@ -1869,10 +1868,10 @@ Used in @code{tar} and @code{cp}.
 @samp{-L} in @code{cmp}.
 
 @item print-data-base
-@samp{-p} in Make.
+@samp{-p} in @code{make}.
 
 @item print-directory
-@samp{-w} in Make.
+@samp{-w} in @code{make}.
 
 @item print-file-name
 @samp{-o} in @code{nm}.
@@ -1893,7 +1892,7 @@ Specify an HTTP proxy.
 @samp{-X} in @code{shar}.
 
 @item question
-@samp{-q} in Make.
+@samp{-q} in @code{make}.
 
 @item quiet
 Used in many programs to inhibit the usual output.  Every
@@ -1919,7 +1918,7 @@ Used in @code{gawk}.
 Used in GDB.
 
 @item recon
-@samp{-n} in Make.
+@samp{-n} in @code{make}.
 
 @item record-number
 @samp{-R} in @code{tar}.
@@ -1928,8 +1927,8 @@ Used in GDB.
 Used in @code{chgrp}, @code{chown}, @code{cp}, @code{ls}, @code{diff},
 and @code{rm}.
 
-@item reference-limit
-Used in @code{makeinfo}.
+@item reference
+@samp{-r} in @code{touch}.
 
 @item references
 @samp{-r} in @code{ptx}.
@@ -2061,7 +2060,7 @@ a directory to start processing with.
 @samp{-S} in @code{shar}.
 
 @item stop
-@samp{-S} in Make.
+@samp{-S} in @code{make}.
 
 @item strict
 @samp{-s} in @code{recode}.
@@ -2131,7 +2130,7 @@ Specify how long to wait before giving up on some operation.
 @samp{-c} in @code{du}.
 
 @item touch
-@samp{-t} in Make, @code{ranlib}, and @code{recode}.
+@samp{-t} in @code{make}, @code{ranlib}, and @code{recode}.
 
 @item trace
 @samp{-t} in @code{m4}.
@@ -2196,7 +2195,7 @@ Print the version number.
 @samp{-V} in @code{tar}.
 
 @item what-if
-@samp{-W} in Make.
+@samp{-W} in @code{make}.
 
 @item whole-size-limit
 @samp{-l} in @code{shar}.
