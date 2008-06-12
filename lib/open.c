@@ -58,7 +58,7 @@ open (const char *filename, int flags, ...)
      Rationale: POSIX <http://www.opengroup.org/susv3/basedefs/xbd_chap04.html>
      says that
        "A pathname that contains at least one non-slash character and that
-        ends withone or more trailing slashes shall be resolved as if a
+        ends with one or more trailing slashes shall be resolved as if a
         single dot character ( '.' ) were appended to the pathname."
      and
        "The special filename dot shall refer to the directory specified by
