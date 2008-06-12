@@ -1,5 +1,5 @@
 /* Open a descriptor to a file.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 /* If the fchdir replacement is used, open() is defined in fchdir.c.  */
 #ifndef FCHDIR_REPLACEMENT
 
+# include <errno.h>
 # include <stdarg.h>
 # include <string.h>
 # include <sys/types.h>
@@ -50,6 +51,18 @@ open (const char *filename, int flags, ...)
 
       va_end (arg);
     }
+
+# if OPEN_TRAILING_SLASH_BUG
+  if (flags & (O_CREAT | O_WRONLY | O_RDWR))
+    {
+      size_t len = strlen (filename);
+      if (len > 0 && filename[len - 1] == '/')
+	{
+	  errno = EISDIR;
+	  return -1;
+	}
+    }
+# endif
 
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   if (strcmp (filename, "/dev/null") == 0)

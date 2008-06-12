@@ -1,3 +1,12 @@
+2008-06-11  Bruno Haible  <bruno@clisp.org>
+
+	* m4/open.m4 (gl_FUNC_OPEN): Add test against trailing slash bug.
+	* lib/open.c: Include errno.h.
+	(open): Fail when attempting to write to a file that has a trailing
+	slash.
+	* tests/test-open.c (main): Test against trailing slash bug.
+	* doc/posix-functions/open.texi: Mention the trailing slash bug.
+
 2008-06-10  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-vc-list-files-git.sh: Make double use of 'exit'. Needed

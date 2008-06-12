@@ -38,6 +38,8 @@
 int
 main ()
 {
+  ASSERT (open ("nonexist.ent/", O_CREAT, 0600) < 0);
+
   ASSERT (open ("/dev/null", O_RDONLY) >= 0);
 
   return 0;
