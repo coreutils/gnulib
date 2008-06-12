@@ -53,6 +53,27 @@ open (const char *filename, int flags, ...)
     }
 
 # if OPEN_TRAILING_SLASH_BUG
+  /* If the filename ends in a slash and one of O_CREAT, O_WRONLY, O_RDWR
+     is specified, then fail.
+     Rationale: POSIX <http://www.opengroup.org/susv3/basedefs/xbd_chap04.html>
+     says that
+       "A pathname that contains at least one non-slash character and that
+        ends withone or more trailing slashes shall be resolved as if a
+        single dot character ( '.' ) were appended to the pathname."
+     and
+       "The special filename dot shall refer to the directory specified by
+        its predecessor."
+     If the named file already exists as a directory, then
+       - if O_CREAT is specified, open() must fail because of the semantics
+         of O_CREAT,
+       - if O_WRONLY or O_RDWR is specified, open() must fail because POSIX
+         <http://www.opengroup.org/susv3/functions/open.html> says that it
+         fails with errno = EISDIR in this case.
+     If the named file does not exist or does not name a directory, then
+       - if O_CREAT is specified, open() must fail since open() cannot create
+         directories,
+       - if O_WRONLY or O_RDWR is specified, open() must fail because the
+         file does not contain a '.' directory.  */
   if (flags & (O_CREAT | O_WRONLY | O_RDWR))
     {
       size_t len = strlen (filename);
