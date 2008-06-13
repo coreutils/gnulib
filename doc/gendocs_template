@@ -59,7 +59,7 @@
     (%%TEXI_TGZ_SIZE%%K bytes gzipped tar file).</a></li>
 </ul>
 
-<p>You can <a href="http://www.gnu.org/order/">buy printed copies of
+<p>You can <a href="http://shop.fsf.org/">buy printed copies of
 some manuals</a> (among other items) from the Free Software Foundation;
 this helps support FSF activities.</p>
 
@@ -73,7 +73,7 @@ script</a>.)</p>
 <!-- Please make sure the copyright date is consistent with the document -->
 <!-- and that it is like this "2001, 2002" not this "2001-2002." -->
 </div><!-- for id="content", starts in the include above -->
-<!--#include virtual="/server/footer-min.html" -->
+<!--#include virtual="/server/footer.html" -->
 <div id="footer">
 
 <p>
@@ -87,7 +87,7 @@ Please send broken links and other corrections or suggestions to
 </p>
 
 <p>
-Copyright &copy; 2007 Free Software Foundation, Inc.,
+Copyright &copy; 2008 Free Software Foundation, Inc.,
 </p>
 <address>51 Franklin Street, Fifth Floor, Boston, MA 02111, USA</address>
 <p>Verbatim copying and distribution of this entire article is
