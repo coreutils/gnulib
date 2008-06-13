@@ -1,0 +1,13 @@
+Files:
+tests/test-obstack-printf.c
+
+Depends-on:
+progname
+xalloc
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-obstack-printf
+check_PROGRAMS += test-obstack-printf
+test_obstack_printf_LDADD = $(LDADD) @LIBINTL@

@@ -1,0 +1,28 @@
+Description:
+POSIX formatted printing into an obstack.
+
+Files:
+m4/obstack-printf.m4
+m4/obstack-printf-posix.m4
+lib/obstack_printf.c
+
+Depends-on:
+obstack
+stdio
+vasnprintf-posix
+
+configure.ac:
+gl_FUNC_OBSTACK_PRINTF_POSIX
+gl_STDIO_MODULE_INDICATOR([obstack-printf-posix])
+
+Makefile.am:
+
+Include:
+"obstack.h"
+<stdio.h>
+
+License:
+GPL
+
+Maintainer:
+Eric Blake

@@ -1,3 +1,26 @@
+2008-06-13  Eric Blake  <ebb9@byu.net>
+
+	Add obstack-printf and obstack-printf-posix modules.
+	* modules/obstack-printf: New file.
+	* modules/obstack-printf-posix: Likewise.
+	* MODULES.html.sh (Misc): Mention them.
+	* doc/glibc-functions/obstack_printf.texi (obstack_printf):
+	Likewise.
+	* doc/glibc-functions/obstack_vprintf.texi (obstack_vprintf):
+	Likewise.
+	* modules/stdio (Makefile.am): Accomodate new modules.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Likewise.
+	* lib/stdio.in.h (rpl_obstack_printf, rpl_obstack_vprintf):
+	Declare.
+	* lib/obstack_printf.c (obstack_printf, obstack_vprintf): New
+	functions.
+	* m4/obstack-printf.m4 (gl_OBSTACK_PRINTF)
+	(gl_REPLACE_OBSTACK_PRINTF): New macros
+	* m4/obstack-printf-posix.m4 (gl_OBSTACK_PRINTF_POSIX): Likewise.
+	* tests/test-obstack-printf.c: New file.
+	* modules/obstack-printf-tests: Likewise.
+	* modules/obstack-printf-posix-tests: Likewise.
+
 2008-06-11  Bruno Haible  <bruno@clisp.org>
 
 	* m4/open.m4 (gl_FUNC_OPEN): Add test against trailing slash bug.

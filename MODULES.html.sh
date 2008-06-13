@@ -1845,6 +1845,8 @@ func_all_modules ()
   func_module linebuffer
   func_module memxor
   func_module obstack
+  func_module obstack-printf
+  func_module obstack-printf-posix
   func_module hash-pjw
   func_module hash
   func_module readline
