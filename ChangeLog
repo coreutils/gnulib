@@ -1,3 +1,16 @@
+2008-06-14  Bruno Haible  <bruno@clisp.org>
+
+	* lib/obstack_printf.c (obstack_vprintf): Define the stack-allocated
+	array size as a constant, not as a const variable.
+	* m4/obstack-printf.m4 (gl_FUNC_OBSTACK_PRINTF): Require
+	AC_USE_SYSTEM_EXTENSIONS.
+	* m4/obstack-printf-posix.m4 (gl_FUNC_OBSTACK_PRINTF_POSIX): Likewise.
+	Test whether the obstack_printf function actually exists.
+	* modules/obstack-printf (Depends-on): Add extensions.
+	(Include): Remove obstack.h.
+	* modules/obstack-printf-posix (Depends-on): Add extensions.
+	(Include): Remove obstack.h.
+
 2008-06-13  Eric Blake  <ebb9@byu.net>
 
 	Add obstack-printf and obstack-printf-posix modules.

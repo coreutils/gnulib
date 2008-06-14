@@ -58,16 +58,16 @@ obstack_vprintf (struct obstack *obs, const char *format, va_list args)
      stack-allocated buffer and copy, to reduce the likelihood of a
      small-size malloc.  Otherwise, print directly into the
      obstack.  */
-  const size_t cutoff = 1024;
-  char buf[cutoff];
+  enum { CUTOFF = 1024 };
+  char buf[CUTOFF];
   char *base = obstack_next_free (obs);
   size_t len = obstack_room (obs);
   char *str;
 
-  if (len < cutoff)
+  if (len < CUTOFF)
     {
       base = buf;
-      len = cutoff;
+      len = CUTOFF;
     }
   str = vasnprintf (base, &len, format, args);
   if (!str)

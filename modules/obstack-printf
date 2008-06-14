@@ -9,6 +9,7 @@ Depends-on:
 obstack
 stdio
 vasnprintf
+extensions
 
 configure.ac:
 gl_FUNC_OBSTACK_PRINTF
@@ -17,7 +18,6 @@ gl_STDIO_MODULE_INDICATOR([obstack-printf])
 Makefile.am:
 
 Include:
-"obstack.h"
 <stdio.h>
 
 License:
