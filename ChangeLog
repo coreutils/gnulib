@@ -1,3 +1,10 @@
+2008-06-14  Eric Blake  <ebb9@byu.net>
+
+	Improve obstack-printf test code.
+	* tests/test-obstack-printf.c (test_function): Fix comment, and
+	simplify usage of obstack_* in macros.  Add a test for coverage.
+	Reported by Bruno Haible.
+
 2008-06-14  Bruno Haible  <bruno@clisp.org>
 
 	* lib/obstack_printf.c (obstack_vprintf): Define the stack-allocated

@@ -47,23 +47,22 @@ test_function (int (*my_obstack_printf) (struct obstack *, const char *, ...))
 {
   struct obstack obs;
   obstack_init (&obs);
-  /* In general, don't invoke obstack_* functions inside ASSERT, as
-     not all compilers can avoid multiple side effects.  */
+  /* In general, be careful that arguments to obstack_* don't have
+     side effects, as not all compilers evaluate macro arguments only
+     once.  */
 
-  /* Grow the obstack to near its boundary, then check that output
-     longer than the obstack free space grows the obstack.  */
+  /* Grow the obstack to near its boundary, then check that short
+     output longer than the obstack free space grows the obstack.  */
   {
     char *base = obstack_base (&obs);
     char *new_base;
     int result;
-    int size;
     int room = obstack_room (&obs) - 4;
 
     obstack_blank_fast (&obs, room);
     result = my_obstack_printf (&obs, "%d %s", 123, "456");
     ASSERT (result == 7);
-    size = obstack_object_size (&obs);
-    ASSERT (result + room == size);
+    ASSERT (result + room == obstack_object_size (&obs));
     obstack_1grow (&obs, 0);
     new_base = obstack_finish (&obs);
     ASSERT (base != new_base);
@@ -76,17 +75,33 @@ test_function (int (*my_obstack_printf) (struct obstack *, const char *, ...))
     char *base = obstack_base (&obs);
     char *new_base;
     int result;
-    int size;
     int room = obstack_room (&obs);
 
     ASSERT (8 < room);
     result = my_obstack_printf (&obs, "%d %s", 123, "456");
     ASSERT (result == 7);
-    size = obstack_object_size (&obs);
-    ASSERT (result == size);
+    ASSERT (result == obstack_object_size (&obs));
     new_base = obstack_base (&obs);
     ASSERT (base == new_base);
     ASSERT (strncmp (base, "123 456", result) == 0);
+    obstack_finish (&obs);
+  }
+
+  /* Check for generating much more output than a chunk size.  */
+  {
+    char *base = obstack_base (&obs);
+    char *new_base;
+    int result;
+    int i;
+
+    ASSERT (obstack_chunk_size (&obs) < 10000);
+    result = my_obstack_printf (&obs, "%010000d", 0);
+    ASSERT (result == 10000);
+    ASSERT (result == obstack_object_size (&obs));
+    new_base = obstack_base (&obs);
+    ASSERT (base != new_base);
+    for (i = 0; i < 10000; i++)
+      ASSERT (new_base[i] == '0');
   }
 
   obstack_free (&obs, NULL);
