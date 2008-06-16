@@ -179,13 +179,7 @@ sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
 
 	  for (sig = 0; sig < NSIG; sig++)
 	    if (received[sig])
-	      {
-		#if HAVE_RAISE
-		raise (sig);
-		#else
-		kill (getpid (), sig);
-		#endif
-	      }
+              raise (sig);
 	}
     }
   return 0;

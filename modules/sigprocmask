@@ -8,6 +8,7 @@ m4/signalblocking.m4
 Depends-on:
 signal
 stdint
+raise
 
 configure.ac:
 gl_SIGNALBLOCKING

@@ -1,5 +1,13 @@
 2008-06-16  Eric Blake  <ebb9@byu.net>
 
+	Use raise module consistently.
+	* modules/fatal-signal (Depends-on): Add raise.
+	* modules/sigprocmask (Depends-on): Likewise.
+	* lib/fatal-signal.c (fatal_signal_handler): Rely on raise.
+	* lib/sigprocmask.c (sigprocmask): Likewise.
+	* m4/fatal-signal.m4 (gl_FATAL_SIGNAL): Likewise.
+	* m4/signalblocking.m4 (gl_PREREQ_SIGPROCMASK): Likewise.
+
 	Fix compliance bug in sigpending.
 	* lib/sigprocmask.c (sigpending): Return pending array via
 	parameter, not return value.

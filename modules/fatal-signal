@@ -12,6 +12,7 @@ xalloc
 stdbool
 unistd
 sigprocmask
+raise
 
 configure.ac:
 gl_FATAL_SIGNAL

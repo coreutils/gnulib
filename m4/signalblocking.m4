@@ -1,5 +1,5 @@
-# signalblocking.m4 serial 6
-dnl Copyright (C) 2001-2002, 2006-2007 Free Software Foundation, Inc.
+# signalblocking.m4 serial 7
+dnl Copyright (C) 2001-2002, 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -39,5 +39,4 @@ AC_DEFUN([gl_PREREQ_SIGPROCMASK],
   dnl HAVE_SIGSET_T is 1 if the system lacks the sigprocmask function but has
   dnl the sigset_t type.
   AC_SUBST([HAVE_SIGSET_T])
-  AC_CHECK_FUNCS_ONCE(raise)
 ])
