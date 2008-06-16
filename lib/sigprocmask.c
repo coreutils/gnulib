@@ -1,5 +1,5 @@
 /* POSIX compatible signal blocking.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -107,7 +107,8 @@ sigpending (sigset_t *set)
   for (sig = 0; sig < NSIG; sig++)
     if (pending_array[sig])
       pending |= 1U << sig;
-  return pending;
+  *set = pending;
+  return 0;
 }
 
 /* The previous signal handlers.

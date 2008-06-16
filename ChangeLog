@@ -1,3 +1,9 @@
+2008-06-16  Eric Blake  <ebb9@byu.net>
+
+	Fix compliance bug in sigpending.
+	* lib/sigprocmask.c (sigpending): Return pending array via
+	parameter, not return value.
+
 2008-06-14  Eric Blake  <ebb9@byu.net>
 
 	Improve obstack-printf test code.
