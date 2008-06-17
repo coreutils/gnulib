@@ -1,3 +1,12 @@
+2008-06-17  Eric Blake  <ebb9@byu.net>
+
+	Move c-stack test into testsuite.
+	* modules/c-stack-tests: New file.
+	* lib/c-stack.c [DEBUG]: Move test program...
+	* tests/test-c-stack.c: ...into this new file.  Skip rather than
+	fail test if sigaltstack is lacking.
+	* tests/test-c-stack.sh: New driver file.
+
 2008-06-16  Eric Blake  <ebb9@byu.net>
 
 	Use raise module consistently.

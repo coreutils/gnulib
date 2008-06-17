@@ -76,10 +76,6 @@ typedef struct sigaltstack stack_t;
 # define STDERR_FILENO 2
 #endif
 
-#if DEBUG
-# include <stdio.h>
-#endif
-
 #include "c-stack.h"
 #include "exitfail.h"
 
@@ -265,39 +261,3 @@ c_stack_action (void (*action) (int)  __attribute__ ((unused)))
 }
 
 #endif
-
-
-
-#if DEBUG
-
-int volatile exit_failure;
-
-static long
-recurse (char *p)
-{
-  char array[500];
-  array[0] = 1;
-  return *p + recurse (array);
-}
-
-char *program_name;
-
-int
-main (int argc __attribute__ ((unused)), char **argv)
-{
-  program_name = argv[0];
-  fprintf (stderr,
-	   "The last output line should contain \"stack overflow\".\n");
-  if (c_stack_action (0) == 0)
-    return recurse ("\1");
-  perror ("c_stack_action");
-  return 1;
-}
-
-#endif /* DEBUG */
-
-/*
-Local Variables:
-compile-command: "gcc -DDEBUG -g -O -Wall -W c-stack.c"
-End:
-*/

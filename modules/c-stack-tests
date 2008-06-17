@@ -1,0 +1,15 @@
+Files:
+tests/test-c-stack.c
+tests/test-c-stack.sh
+
+Depends-on:
+exitfail
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-c-stack.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-c-stack
+test_c_stack_LDADD = $(LDADD) @LIBINTL@
+MOSTLYCLEANFILES += t-c-stack.tmp
