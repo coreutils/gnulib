@@ -1,5 +1,13 @@
 2008-06-17  Eric Blake  <ebb9@byu.net>
 
+	Simplify c-stack prerequisites.
+	* lib/c-stack.c (includes): Remove unused <sys/resource.h>.
+	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Posix 200x
+	no longer requires <ucontext.h> to exist.  Optimize setrlimit
+	check.
+	(gl_PREREQ_C_STACK): Remove check for unused getcontext and
+	<sys/resource.h>.
+
 	Move c-stack test into testsuite.
 	* modules/c-stack-tests: New file.
 	* lib/c-stack.c [DEBUG]: Move test program...

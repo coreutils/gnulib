@@ -57,16 +57,8 @@ typedef struct sigaltstack stack_t;
 #include <stdlib.h>
 #include <string.h>
 
-#if HAVE_SYS_RESOURCE_H
-/* Include sys/time.h here, because...
-   SunOS-4.1.x <sys/resource.h> fails to include <sys/time.h>.
-   This gives "incomplete type" errors for ru_utime and tu_stime.  */
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# endif
-# include <sys/resource.h>
-#endif
-
+/* Posix 2001 declares ucontext_t in <ucontext.h>, Posix 200x in
+   <signal.h>.  */
 #if HAVE_UCONTEXT_H
 # include <ucontext.h>
 #endif

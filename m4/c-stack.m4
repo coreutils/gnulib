@@ -1,16 +1,19 @@
 # Check prerequisites for compiling lib/c-stack.c.
 
-# Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
+# Copyright (C) 2002, 2003, 2004, 2008 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
 
+# serial 2
+
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [# for STACK_DIRECTION
    AC_REQUIRE([AC_FUNC_ALLOCA])
-   AC_CHECK_FUNCS(setrlimit)
+   AC_CHECK_FUNCS_ONCE([setrlimit])
+   AC_CHECK_HEADERS_ONCE([ucontext.h])
 
    AC_CACHE_CHECK([for working C stack overflow detection],
      ac_cv_sys_xsi_stack_overflow_heuristic,
@@ -18,7 +21,9 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	[
 	 #include <unistd.h>
 	 #include <signal.h>
-	 #include <ucontext.h>
+	 #if HAVE_UCONTEXT_H
+	 # include <ucontext.h>
+	 #endif
 	 #if HAVE_SETRLIMIT
 	 # include <sys/types.h>
 	 # include <sys/time.h>
@@ -120,9 +125,9 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	a SIGSEGV, and an alternate stack can be established with sigaltstack,
 	and the signal handler is passed a context that specifies the
 	run time stack.  This behavior is defined by POSIX 1003.1-2001
-        with the X/Open System Interface (XSI) option
+	with the X/Open System Interface (XSI) option
 	and is a standardized way to implement a SEGV-based stack
-        overflow detection heuristic.])
+	overflow detection heuristic.])
    fi])
 
 
@@ -132,12 +137,10 @@ AC_DEFUN([gl_PREREQ_C_STACK],
    # for STACK_DIRECTION
    AC_REQUIRE([AC_FUNC_ALLOCA])
 
-   AC_CHECK_FUNCS(getcontext sigaltstack)
-   AC_CHECK_DECLS([getcontext], , , [#include <ucontext.h>])
+   AC_CHECK_FUNCS_ONCE([sigaltstack])
    AC_CHECK_DECLS([sigaltstack], , , [#include <signal.h>])
 
-   AC_CHECK_HEADERS_ONCE(sys/time.h unistd.h)
-   AC_CHECK_HEADERS(sys/resource.h ucontext.h)
+   AC_CHECK_HEADERS_ONCE([unistd.h ucontext.h])
 
    AC_CHECK_MEMBERS([struct sigaction.sa_sigaction], , , [#include <signal.h>])
 
