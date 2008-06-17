@@ -1,3 +1,8 @@
+2008-06-17  Bruno Haible  <bruno@clisp.org>
+
+	* modules/tls (License): Change to LGPLv2+.
+	Reported by Eric Blake.
+
 2008-06-17  Eric Blake  <ebb9@byu.net>
 
 	Simplify c-stack prerequisites.
