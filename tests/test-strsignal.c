@@ -46,7 +46,11 @@
 int
 main (int argc, char **argv)
 {
-  char *str;
+  /* Work around bug in cygwin 1.5.25 <string.h> by declaring str as
+     const char *, even though strsignal is supposed to return char *.
+     At any rate, this doesn't hurt, since POSIX 200x states that "The
+     string pointed to shall not be modified by the application."  */
+  const char *str;
 
   /* We try a couple of signals, since not all signals are supported
      everywhere.  Notwithstanding the #ifdef for neatness, SIGINT should in

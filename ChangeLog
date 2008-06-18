@@ -1,3 +1,9 @@
+2008-06-18  Eric Blake  <ebb9@byu.net>
+
+	Work around cygwin 1.5.25 strsignal bug.
+	* tests/test-strsignal.c: Allow for const char *.
+	* doc/glibc-functions/strsignal.texi (strsignal): Document the bug.
+
 2008-06-18  Simon Josefsson  <simon@josefsson.org>
 
 	* users.txt: Update URL to article and add author/date
