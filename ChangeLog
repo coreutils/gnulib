@@ -1,3 +1,8 @@
+2008-06-18  Simon Josefsson  <simon@josefsson.org>
+
+	* users.txt: Update URL to article and add author/date
+	information.
+
 2008-06-17  Bruno Haible  <bruno@clisp.org>
 
 	New macro gl_DISABLE_THREADS.
