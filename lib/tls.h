@@ -1,5 +1,5 @@
 /* Thread-local storage in multithreaded situations.
-   Copyright (C) 2005, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -285,6 +285,7 @@ typedef DWORD gl_tls_key_t;
       {                                          \
         if (((NAME) = TlsAlloc ()) == (DWORD)-1) \
           abort ();                              \
+        (void) (DESTRUCTOR);                     \
       }                                          \
     while (0)
 # define gl_tls_get(NAME) \
@@ -320,7 +321,8 @@ typedef struct
         }
         gl_tls_key_t;
 # define gl_tls_key_init(NAME, DESTRUCTOR) \
-    (NAME).singlethread_value = NULL
+    ((NAME).singlethread_value = NULL, \
+     (void) (DESTRUCTOR))
 # define gl_tls_get(NAME) \
     (NAME).singlethread_value
 # define gl_tls_set(NAME, POINTER) \
