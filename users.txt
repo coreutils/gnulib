@@ -64,8 +64,9 @@ The following packages are using gnulib without gnulib-tool:
 
 Articles:
 
-  "Using Gnulib to improve software portability"
-  http://programming.linux.com/programming/05/12/16/2051201.shtml?tid=67
+  "Using Gnulib to improve software portability",
+  by Diego 'Flameeyes' Pettenò on December 28, 2005,
+  http://www.linux.com/articles/50702
 
 -----
 
