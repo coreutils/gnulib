@@ -1,5 +1,13 @@
 2008-06-17  Bruno Haible  <bruno@clisp.org>
 
+	New macro gl_DISABLE_THREADS.
+	* m4/lock.m4 (gl_LOCK_EARLY_BODY): Use value gl_use_threads_default
+	if the user did not pass --enable-threads or --disable-threads option.
+	(gl_DISABLE_THREADS): New macro.
+	Reported by Eric Blake <ebb9@byu.net>.
+
+2008-06-17  Bruno Haible  <bruno@clisp.org>
+
 	* lib/tls.h (gl_tls_key_init): Evaluate the destructor argument also
 	when the macro ignores it.
 	Based on a patch by Eric Blake <ebb9@byu.net>.
