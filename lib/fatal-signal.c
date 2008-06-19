@@ -96,6 +96,10 @@ init_fatal_signals (void)
 	  struct sigaction action;
 
 	  if (sigaction (fatal_signals[i], NULL, &action) >= 0
+	      /* POSIX says that SIG_IGN can only occur when action.sa_flags
+		 does not contain SA_SIGINFO.  But in Linux 2.4, for example,
+		 SA_SIGINFO can actually be set and is ignored when sa_handler
+		 is SIG_IGN.  So don't bother testing for SA_SIGINFO.  */
 	      && action.sa_handler == SIG_IGN)
 	    fatal_signals[i] = -1;
 	}
