@@ -1,4 +1,3 @@
-# $Id: Makefile,v 1.8 2007-07-06 22:56:38 haible Exp $
 # Makefile for gnulib doc.
 # Copyright (C) 2004, 2006-2008 Free Software Foundation, Inc.
 #
@@ -25,7 +24,7 @@ dvi: $(doc).dvi
 pdf: $(doc).pdf
 
 # Dependencies. Search for @include to find them all.
-gnulib.info gnulib.html gnulib.dvi gnulib.pdf: gnulib.texi gnulib-intro.texi gnulib-tool.texi $(wildcard headers/*.texi) $(wildcard functions/*.texi) quote.texi error.texi gcd.texi relocatable-maint.texi regexprops-generic.texi fdl.texi
+gnulib.info gnulib.html gnulib.dvi gnulib.pdf: $(filter-out maintain.texi make-stds.texi standards.texi,$(wildcard *.texi)) $(wildcard posix-headers/*.texi) $(wildcard posix-functions/*.texi) $(wildcard glibc-headers/*.texi) $(wildcard glibc-functions/*.texi)
 standards.info standards.html standards.dvi: standards.texi make-stds.texi fdl.texi
 
 mostlyclean:
