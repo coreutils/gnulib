@@ -23,12 +23,19 @@ html: $(doc).html
 dvi: $(doc).dvi
 pdf: $(doc).pdf
 
+GNULIB_TEXI_FILES = $(filter-out maintain.texi make-stds.texi standards.texi,$(wildcard *.texi)) $(wildcard posix-headers/*.texi) $(wildcard posix-functions/*.texi) $(wildcard glibc-headers/*.texi) $(wildcard glibc-functions/*.texi)
+
+# Date of last update. Requires GNU date.
+updated-stamp: $(GNULIB_TEXI_FILES)
+	date -u -r `ls -t $^ | sed 1q` +"@set UPDATED %F %T" > $@
+
 # Dependencies. Search for @include to find them all.
-gnulib.info gnulib.html gnulib.dvi gnulib.pdf: $(filter-out maintain.texi make-stds.texi standards.texi,$(wildcard *.texi)) $(wildcard posix-headers/*.texi) $(wildcard posix-functions/*.texi) $(wildcard glibc-headers/*.texi) $(wildcard glibc-functions/*.texi)
+gnulib.info gnulib.html gnulib.dvi gnulib.pdf: $(GNULIB_TEXI_FILES) updated-stamp
 standards.info standards.html standards.dvi: standards.texi make-stds.texi fdl.texi
 
 mostlyclean:
 	rm -f *.aux *.cp *.cps *.fn *.ky *.log *.pg *.toc *.tp *.vr *.vrs
+	rm -f updated-stamp
 
 clean: mostlyclean
 	rm -f *.info *.html *.dvi *.ps *.pdf

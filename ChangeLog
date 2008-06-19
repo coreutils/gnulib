@@ -1,5 +1,15 @@
 2008-06-19  Bruno Haible  <bruno@clisp.org>
 
+	Fix CVS-ism.
+	* doc/gnulib.texi: Include updated-stamp.texi.
+	* doc/Makefile (GNULIB_TEXI_FILES): New variable.
+	(updated-stamp.texi): New rule.
+	(gnulib.info): Depend on it.
+	* doc/.gitignore: Add updated-stamp.texi.
+	Based on a patch by Thien-Thi Nguyen <ttn@gnuvola.org>.
+
+2008-06-19  Bruno Haible  <bruno@clisp.org>
+
 	* doc/Makefile (gnulib.info): Update and simplify dependencies.
 	Reported by Thien-Thi Nguyen <ttn@gnuvola.org>.
 

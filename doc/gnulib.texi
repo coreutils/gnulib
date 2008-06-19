@@ -10,7 +10,8 @@
 @end ifclear
 @comment %**end of header
 
-@set UPDATED $Date: 2007-09-09 13:20:45 $
+@comment Defines the UPDATED variable.
+@include updated-stamp
 
 @copying
 This manual is for GNU Gnulib (updated @value{UPDATED}),
