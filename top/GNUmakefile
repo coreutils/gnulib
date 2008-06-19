@@ -56,8 +56,8 @@ ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
   _is-dist-target = $(filter-out %clean, \
     $(filter maintainer-% dist% alpha beta major,$(MAKECMDGOALS)))
   ifneq (,$(_is-dist-target))
-    _curr-ver := $(shell cd $(srcdir) && ./$(_build-aux)/git-version-gen \
-                   $(srcdir)/.tarball-version)
+    _curr-ver := $(shell cd $(srcdir) \
+                   && $(_build-aux)/git-version-gen .tarball-version)
     ifneq ($(_curr-ver),$(VERSION))
       ifeq ($(_curr-ver),UNKNOWN)
         $(info WARNING: unable to verify if $(VERSION) is correct version)

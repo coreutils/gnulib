@@ -1,3 +1,9 @@
+2008-06-19  Eric Blake  <ebb9@byu.net>
+
+	Fix VPATH 'make dist' with GNU make and non-VCS tarball.
+	* top/GNUmakefile (_curr-ver): Don't use $(srcdir) unnecessarily.
+	Reported by Stepan Kasal.
+
 2008-06-18  Bruno Haible  <bruno@clisp.org>
 
 	* lib/fatal-signal.c (init_fatal_signals): Add comment.
