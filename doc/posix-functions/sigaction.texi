@@ -4,17 +4,38 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/sigaction.html}
 
-Gnulib module: ---
+Gnulib module: sigaction
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
+POSIX recommends that when specifying SA_RESETHAND, SA_NODEFER must
+also be specified.
+
+@item
+Support for SA_ONSTACK is missing on some platforms:
+mingw, cygwin.
+
+@item
+Support for SA_SIGINFO is missing on some platforms:
+mingw, Interix 3.5.
+
+@item
+Support for SIGCHLD, and thus for SA_NOCLDSTOP and SA_NOCLDWAIT, is
+missing on some platforms:
 mingw.
+
+@item
+Support for SA_RESTART is missing on some platforms:
+mingw.
+
 @item
 The symbolic value @code{SIG_IGN} for the @code{SIGCHLD} signal is equivalent
 to a signal handler

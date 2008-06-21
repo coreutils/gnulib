@@ -34,9 +34,7 @@
 /* The definition of GL_LINK_WARNING is copied here.  */
 
 /* Mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
-#if !@HAVE_POSIX_SIGNALBLOCKING@
-# include <sys/types.h>
-#endif
+#include <sys/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -91,7 +89,63 @@ extern int sigprocmask (int operation, const sigset_t *set, sigset_t *old_set);
    handler.  */
 extern void (*signal (int sig, void (*func) (int))) (int);
 
-#endif
+#endif /* !@HAVE_POSIX_SIGNALBLOCKING@ */
+
+#if !@HAVE_SIGACTION@
+
+# if !@HAVE_SIGINFO_T@
+/* Present to allow compilation, but unsupported by gnulib.  */
+union sigval
+{
+  int sival_int;
+  void *sival_ptr;
+};
+
+/* Present to allow compilation, but unsupported by gnulib.  */
+struct siginfo_t
+{
+  int si_signo;
+  int si_code;
+  int si_errno;
+  pid_t si_pid;
+  uid_t si_uid;
+  void *si_addr;
+  int si_status;
+  long si_band;
+  union sigval si_value;
+};
+typedef struct siginfo_t siginfo_t;
+# endif /* !@HAVE_SIGINFO_T@ */
+
+  /* Due to autoconf conventions, we can't tell if HAVE_SIGACTION
+     means we have the type or means we have the function.  We assume
+     that all implementations either have both or neither.  */
+
+struct sigaction
+{
+  union
+  {
+    void (*_sa_handler) (int);
+    /* Present to allow compilation, but unsupported by gnulib.  POSIX
+       says that implementations may, but not must, make sa_sigaction
+       overlap with sa_handler, but we know of no implementation where
+       they do not overlap.  */
+    void (*_sa_sigaction) (int, siginfo_t *, void *);
+  } _sa_func;
+  sigset_t sa_mask;
+  /* Not all POSIX flags are supported.  */
+  int sa_flags;
+};
+# define sa_handler _sa_func._sa_handler
+# define sa_sigaction _sa_func._sa_sigaction
+/* Unsupported flags are not present.  */
+# define SA_RESETHAND 1
+# define SA_NODEFER 2
+
+extern int sigaction (int, const struct sigaction *restrict,
+                      struct sigaction *restrict);
+
+#endif /* !@HAVE_SIGACTION@ */
 
 
 #ifdef __cplusplus

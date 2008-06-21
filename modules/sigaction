@@ -1,0 +1,25 @@
+Description:
+POSIX compatible signal handlers.
+
+Files:
+lib/sigaction.c
+m4/sigaction.m4
+
+Depends-on:
+signal
+sigprocmask
+
+configure.ac:
+gl_SIGACTION
+gl_SIGNAL_MODULE_INDICATOR([sigaction])
+
+Makefile.am:
+
+Include:
+<signal.h>
+
+License:
+LGPL
+
+Maintainer:
+Eric Blake

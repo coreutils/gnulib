@@ -1,5 +1,24 @@
 2008-06-21  Eric Blake  <ebb9@byu.net>
 
+	New module sigaction, for mingw.
+	* modules/sigaction: New module...
+	* modules/sigaction-tests: ...and its test.
+	* m4/sigaction.m4: New file.
+	* lib/sigaction.c: Likewise.
+	* tests/test-sigaction.c: Likewise.
+	* m4/signal_h.m4 (gl_SIGNAL_H_DEFAULTS): Add sigaction variables.
+	* modules/signal (Makefile.am): Likewise.
+	* lib/signal.in.h (!@HAVE_SIGACTION@): Define replacements when
+	needed.
+	* doc/posix-headers/signal.texi (signal.h): Mention provided
+	types.
+	* doc/posix-functions/siginterrupt.texi (siginterrupt): Mention
+	that sigaction is preferable.
+	* doc/posix-functions/sigaction.texi (sigaction): Mention new
+	module.
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
+	sigaction.
+
 	Improve robustness of sigprocmask by overriding signal.
 	* lib/signal.in.h (rpl_signal): Override signal when sigprocmask
 	is in use.

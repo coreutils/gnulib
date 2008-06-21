@@ -23,8 +23,11 @@ signal.h: signal.in.h
 	  sed -e 's/@''INCLUDE_NEXT''@/$(INCLUDE_NEXT)/g' \
 	      -e 's|@''NEXT_SIGNAL_H''@|$(NEXT_SIGNAL_H)|g' \
 	      -e 's|@''GNULIB_SIGPROCMASK''@|$(GNULIB_SIGPROCMASK)|g' \
+	      -e 's|@''GNULIB_SIGACTION''@|$(GNULIB_SIGACTION)|g' \
 	      -e 's|@''HAVE_POSIX_SIGNALBLOCKING''@|$(HAVE_POSIX_SIGNALBLOCKING)|g' \
 	      -e 's|@''HAVE_SIGSET_T''@|$(HAVE_SIGSET_T)|g' \
+	      -e 's|@''HAVE_SIGINFO_T''@|$(HAVE_SIGINFO_T)|g' \
+	      -e 's|@''HAVE_SIGACTION''@|$(HAVE_SIGACTION)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/signal.in.h; \
 	} > $@-t

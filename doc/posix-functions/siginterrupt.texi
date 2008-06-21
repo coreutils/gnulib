@@ -15,4 +15,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Solaris 2.5.1, mingw, Interix 3.5, BeOS.
+
+@item
+POSIX recommends using @code{sigaction} with SA_NODEFER instead.
 @end itemize

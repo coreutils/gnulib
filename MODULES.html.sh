@@ -2131,6 +2131,7 @@ func_all_modules ()
   func_module rename
   func_module rmdir
   func_module search
+  func_module sigaction
   func_module sigprocmask
   func_module socklen
   func_module ssize_t

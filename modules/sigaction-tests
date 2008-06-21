@@ -1,0 +1,10 @@
+Files:
+tests/test-sigaction.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sigaction
+check_PROGRAMS += test-sigaction
