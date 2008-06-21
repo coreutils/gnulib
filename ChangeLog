@@ -1,3 +1,9 @@
+2008-06-21  Bruno Haible  <bruno@clisp.org>
+
+	* lib/propername.c (proper_name_utf8): Don't use the transliterated
+	result if it contains question marks.
+	Reported by Michael Geng <linux@michaelgeng.de>.
+
 2008-06-19  Bruno Haible  <bruno@clisp.org>
 
 	Fix CVS-ism.
