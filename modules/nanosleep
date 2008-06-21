@@ -9,6 +9,7 @@ Depends-on:
 clock-time
 extensions
 gettime
+sigaction
 stdbool
 sys_select
 sys_time

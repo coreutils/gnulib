@@ -3,6 +3,7 @@ POSIX compatible signal blocking.
 
 Files:
 lib/sigprocmask.c
+lib/sig-handler.h
 m4/signalblocking.m4
 
 Depends-on:

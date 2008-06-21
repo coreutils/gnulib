@@ -11,6 +11,7 @@ Depends-on:
 xalloc
 stdbool
 unistd
+sigaction
 sigprocmask
 raise
 

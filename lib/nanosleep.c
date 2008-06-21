@@ -22,6 +22,7 @@
 
 #include <time.h>
 
+#include "sig-handler.h"
 #include "timespec.h"
 
 #include <stdbool.h>
@@ -102,10 +103,6 @@ rpl_nanosleep (const struct timespec *requested_delay,
 #  define SIGCONT SIGTERM
 # endif
 
-# if ! HAVE_SIGINTERRUPT
-#  define siginterrupt(sig, flag) /* empty */
-# endif
-
 static sig_atomic_t volatile suspended;
 
 /* Handle SIGCONT. */
@@ -150,22 +147,14 @@ rpl_nanosleep (const struct timespec *requested_delay,
   /* set up sig handler */
   if (! initialized)
     {
-# ifdef SA_NOCLDSTOP
       struct sigaction oldact, newact;
       newact.sa_handler = sighandler;
       sigemptyset (&newact.sa_mask);
       newact.sa_flags = 0;
 
       sigaction (SIGCONT, NULL, &oldact);
-      if (oldact.sa_handler != SIG_IGN)
+      if (get_handler (&oldact) != SIG_IGN)
 	sigaction (SIGCONT, &newact, NULL);
-# else
-      if (signal (SIGCONT, SIG_IGN) != SIG_IGN)
-	{
-	  signal (SIGCONT, sighandler);
-	  siginterrupt (SIGCONT, 1);
-	}
-# endif
       initialized = true;
     }
 

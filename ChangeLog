@@ -1,5 +1,24 @@
 2008-06-21  Eric Blake  <ebb9@byu.net>
 
+	Use sigaction module rather than signal().
+	* modules/c-stack (Depends-on): Add sigaction.
+	* modules/fatal-signal (Depends-on): Likewise.
+	* modules/nanosleep (Depends-on): Likewise.
+	* modules/sigprocmask (Files): Add sig-handler.h.
+	* modules/sigaction (Files): Likewise.
+	* lib/sig-handler.h (get_handler): New file, suggested by Paul
+	Eggert.
+	* lib/c-stack.c (SIGACTION_WORKS): Simplify conditions.
+	(c_stack_action) [!SIGACTION_WORKS]: Use sigaction, not signal.
+	* lib/fatal-signal.c (uninstall_handlers, install_handlers)
+	(init_fatal_signals): Likewise.
+	* lib/nanosleep.c (rpl_nanosleep): Likewise.
+	(siginterrupt): Delete fallback.
+	* lib/sigprocmask.c (handler_t, old_handlers): Use sa_handler_t
+	instead.
+	* m4/nanosleep.m4 (gl_PREREQ_NANOSLEEP): Drop check for
+	siginterrupt.
+
 	New module sigaction, for mingw.
 	* modules/sigaction: New module...
 	* modules/sigaction-tests: ...and its test.

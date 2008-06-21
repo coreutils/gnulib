@@ -71,8 +71,7 @@ typedef struct sigaltstack stack_t;
 #include "c-stack.h"
 #include "exitfail.h"
 
-#if (HAVE_STRUCT_SIGACTION_SA_SIGACTION && defined SA_NODEFER \
-     && defined SA_ONSTACK && defined SA_RESETHAND && defined SA_SIGINFO)
+#if defined SA_ONSTACK && defined SA_SIGINFO
 # define SIGACTION_WORKS 1
 #else
 # define SIGACTION_WORKS 0
@@ -168,7 +167,7 @@ segv_handler (int signo, siginfo_t *info,
       char const *faulting_address = info->si_addr;
       size_t s = faulting_address - stack_base;
       size_t page_size = sysconf (_SC_PAGESIZE);
-      if (find_stack_direction (0) < 0)
+      if (find_stack_direction (NULL) < 0)
 	s += page_size;
       if (s < stack_size + page_size)
 	signo = 0;
@@ -213,10 +212,11 @@ c_stack_action (void (*action) (int))
 {
   int r;
   stack_t st;
+  struct sigaction act;
   st.ss_flags = 0;
   st.ss_sp = alternate_signal_stack.buffer;
   st.ss_size = sizeof alternate_signal_stack.buffer;
-  r = sigaltstack (&st, 0);
+  r = sigaltstack (&st, NULL);
   if (r != 0)
     return r;
 
@@ -224,23 +224,20 @@ c_stack_action (void (*action) (int))
   program_error_message = _("program error");
   stack_overflow_message = _("stack overflow");
 
-  {
+  sigemptyset (&act.sa_mask);
+
 # if SIGACTION_WORKS
-    struct sigaction act;
-    sigemptyset (&act.sa_mask);
-
-    /* POSIX 1003.1-2001 says SA_RESETHAND implies SA_NODEFER, but
-       this is not true on Solaris 8 at least.  It doesn't hurt to use
-       SA_NODEFER here, so leave it in.  */
-    act.sa_flags = SA_NODEFER | SA_ONSTACK | SA_RESETHAND | SA_SIGINFO;
-
-    act.sa_sigaction = segv_handler;
-
-    return sigaction (SIGSEGV, &act, 0);
+  /* POSIX 1003.1-2001 says SA_RESETHAND implies SA_NODEFER, but
+     this is not true on Solaris 8 at least.  It doesn't hurt to use
+     SA_NODEFER here, so leave it in.  */
+  act.sa_flags = SA_NODEFER | SA_ONSTACK | SA_RESETHAND | SA_SIGINFO;
+  act.sa_sigaction = segv_handler;
 # else
-    return signal (SIGSEGV, die) == SIG_ERR ? -1 : 0;
+  act.sa_flags = SA_NODEFER | SA_RESETHAND;
+  act.sa_handler = die;
 # endif
-  }
+
+  return sigaction (SIGSEGV, &act, NULL);
 }
 
 #else /* ! (HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK) */

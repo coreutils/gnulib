@@ -24,6 +24,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "sig-handler.h"
+
 /* We assume that a platform without POSIX signal blocking functions
    also does not have the POSIX sigaction() function, only the
    signal() function.  We also assume signal() has SysV semantics,
@@ -42,9 +44,6 @@
 #ifndef SIGSTOP
 # define SIGSTOP (-1)
 #endif
-
-/* A signal handler.  */
-typedef void (*handler_t) (int signal);
 
 int
 sigismember (const sigset_t *set, int sig)
@@ -134,7 +133,7 @@ sigpending (sigset_t *set)
 
 /* The previous signal handlers.
    Only the array elements corresponding to blocked signals are relevant.  */
-static volatile handler_t old_handlers[NSIG];
+static volatile sa_handler_t old_handlers[NSIG];
 
 int
 sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
@@ -208,8 +207,8 @@ sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
 
 /* Install the handler FUNC for signal SIG, and return the previous
    handler.  */
-handler_t
-rpl_signal (int sig, handler_t handler)
+sa_handler_t
+rpl_signal (int sig, sa_handler_t handler)
 {
   /* We must provide a wrapper, so that a user can query what handler
      they installed even if that signal is currently blocked.  */
@@ -227,7 +226,7 @@ rpl_signal (int sig, handler_t handler)
 	     stale information if it calls signal(B).  Oh well -
 	     signal handlers really shouldn't try to manipulate the
 	     installed handlers of unrelated signals.  */
-	  handler_t result = old_handlers[sig];
+	  sa_handler_t result = old_handlers[sig];
 	  old_handlers[sig] = handler;
 	  return result;
 	}

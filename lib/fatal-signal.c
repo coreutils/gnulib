@@ -26,10 +26,10 @@
 #include <signal.h>
 #include <unistd.h>
 
+#include "sig-handler.h"
 #include "xalloc.h"
 
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
-
 
 /* ========================================================================= */
 
@@ -88,7 +88,6 @@ init_fatal_signals (void)
   static bool fatal_signals_initialized = false;
   if (!fatal_signals_initialized)
     {
-#if HAVE_SIGACTION
       size_t i;
 
       for (i = 0; i < num_fatal_signals; i++)
@@ -96,14 +95,9 @@ init_fatal_signals (void)
 	  struct sigaction action;
 
 	  if (sigaction (fatal_signals[i], NULL, &action) >= 0
-	      /* POSIX says that SIG_IGN can only occur when action.sa_flags
-		 does not contain SA_SIGINFO.  But in Linux 2.4, for example,
-		 SA_SIGINFO can actually be set and is ignored when sa_handler
-		 is SIG_IGN.  So don't bother testing for SA_SIGINFO.  */
-	      && action.sa_handler == SIG_IGN)
+	      && get_handler (&action) == SIG_IGN)
 	    fatal_signals[i] = -1;
 	}
-#endif
 
       fatal_signals_initialized = true;
     }
@@ -136,10 +130,14 @@ static inline void
 uninstall_handlers ()
 {
   size_t i;
+  struct sigaction action;
 
+  action.sa_handler = SIG_DFL;
+  action.sa_flags = 0;
+  sigemptyset (&action.sa_mask);
   for (i = 0; i < num_fatal_signals; i++)
     if (fatal_signals[i] >= 0)
-      signal (fatal_signals[i], SIG_DFL);
+      sigaction (fatal_signals[i], &action, NULL);
 }
 
 
@@ -162,9 +160,9 @@ fatal_signal_handler (int sig)
     }
 
   /* Now execute the signal's default action.
-     If signal() blocks the signal being delivered for the duration of the
-     signal handler's execution, the re-raised signal is delivered when this
-     handler returns; otherwise it is delivered already during raise().  */
+     If any cleanup action blocks the signal that triggered the cleanup, the
+     re-raised signal is delivered when this handler returns; otherwise it
+     is delivered already during raise().  */
   uninstall_handlers ();
   raise (sig);
 }
@@ -175,10 +173,16 @@ static inline void
 install_handlers ()
 {
   size_t i;
+  struct sigaction action;
 
+  action.sa_handler = &fatal_signal_handler;
+  /* One-shot handling - if we fault while handling a fault, the
+     cleanup actions are intentionally cut short.  */
+  action.sa_flags = SA_NODEFER | SA_RESETHAND;
+  sigemptyset (&action.sa_mask);
   for (i = 0; i < num_fatal_signals; i++)
     if (fatal_signals[i] >= 0)
-      signal (fatal_signals[i], &fatal_signal_handler);
+      sigaction (fatal_signals[i], &action, NULL);
 }
 
 

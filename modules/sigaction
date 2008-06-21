@@ -3,6 +3,7 @@ POSIX compatible signal handlers.
 
 Files:
 lib/sigaction.c
+lib/sig-handler.h
 m4/sigaction.m4
 
 Depends-on:

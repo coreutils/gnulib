@@ -11,6 +11,7 @@ gettext-h
 exitfail
 unistd
 raise
+sigaction
 
 configure.ac:
 gl_C_STACK
