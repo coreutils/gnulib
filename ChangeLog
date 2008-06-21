@@ -1,5 +1,14 @@
 2008-06-21  Eric Blake  <ebb9@byu.net>
 
+	Improve robustness of sigprocmask by overriding signal.
+	* lib/signal.in.h (rpl_signal): Override signal when sigprocmask
+	is in use.
+	* lib/sigprocmask.c (blocked_handler): Reinstall block handler.
+	(SIGKILL, SIGSTOP): Provide fallbacks.
+	(rpl_signal): Implement.
+	(old_handlers, blocked_set): Mark volatile, since sigprocmask and
+	signal can be called inside handlers.
+
 	Fix nanosleep module on mingw.
 	* modules/nanosleep (Depends-on): Add sys_select.
 	* lib/nanosleep.c (HAVE_SYS_SELECT_H): Rely on gnulib module.

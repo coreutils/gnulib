@@ -24,9 +24,24 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-/* We assume that a platform without POSIX signal blocking functions also
-   does not have the POSIX sigaction() function, only the signal() function.
-   This is true for Woe32 platforms.  */
+/* We assume that a platform without POSIX signal blocking functions
+   also does not have the POSIX sigaction() function, only the
+   signal() function.  We also assume signal() has SysV semantics,
+   where any handler is uninstalled prior to being invoked.  This is
+   true for Woe32 platforms.  */
+
+/* We use raw signal(), but also provide a wrapper rpl_signal() so
+   that applications can query or change a blocked signal.  */
+#undef signal
+
+/* Provide invalid signal numbers as fallbacks if the uncatchable
+   signals are not defined.  */
+#ifndef SIGKILL
+# define SIGKILL (-1)
+#endif
+#ifndef SIGSTOP
+# define SIGSTOP (-1)
+#endif
 
 /* A signal handler.  */
 typedef void (*handler_t) (int signal);
@@ -85,7 +100,7 @@ sigfillset (sigset_t *set)
 }
 
 /* Set of currently blocked signals.  */
-static sigset_t blocked_set /* = 0 */;
+static volatile sigset_t blocked_set /* = 0 */;
 
 /* Set of currently blocked and pending signals.  */
 static volatile sig_atomic_t pending_array[NSIG] /* = { 0 } */;
@@ -94,6 +109,12 @@ static volatile sig_atomic_t pending_array[NSIG] /* = { 0 } */;
 static void
 blocked_handler (int sig)
 {
+  /* Reinstall the handler, in case the signal occurs multiple times
+     while blocked.  There is an inherent race where an asynchronous
+     signal in between when the kernel uninstalled the handler and
+     when we reinstall it will trigger the default handler; oh
+     well.  */
+  signal (sig, blocked_handler);
   if (sig >= 0 && sig < NSIG)
     pending_array[sig] = 1;
 }
@@ -113,7 +134,7 @@ sigpending (sigset_t *set)
 
 /* The previous signal handlers.
    Only the array elements corresponding to blocked signals are relevant.  */
-static handler_t old_handlers[NSIG];
+static volatile handler_t old_handlers[NSIG];
 
 int
 sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
@@ -183,4 +204,38 @@ sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
 	}
     }
   return 0;
+}
+
+/* Install the handler FUNC for signal SIG, and return the previous
+   handler.  */
+handler_t
+rpl_signal (int sig, handler_t handler)
+{
+  /* We must provide a wrapper, so that a user can query what handler
+     they installed even if that signal is currently blocked.  */
+  if (sig >= 0 && sig < NSIG && sig != SIGKILL && sig != SIGSTOP
+      && handler != SIG_ERR)
+    {
+      if (blocked_set & (1U << sig))
+	{
+	  /* POSIX states that sigprocmask and signal are both
+	     async-signal-safe.  This is not true of our
+	     implementation - there is a slight data race where an
+	     asynchronous interrupt on signal A can occur after we
+	     install blocked_handler but before we have updated
+	     old_handlers for signal B, such that handler A can see
+	     stale information if it calls signal(B).  Oh well -
+	     signal handlers really shouldn't try to manipulate the
+	     installed handlers of unrelated signals.  */
+	  handler_t result = old_handlers[sig];
+	  old_handlers[sig] = handler;
+	  return result;
+	}
+      return signal (sig, handler);
+    }
+  else
+    {
+      errno = EINVAL;
+      return SIG_ERR;
+    }
 }

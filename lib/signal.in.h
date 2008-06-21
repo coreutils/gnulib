@@ -1,6 +1,6 @@
 /* A GNU-like <signal.h>.
 
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,6 +33,10 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* Mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
+#if !@HAVE_POSIX_SIGNALBLOCKING@
+# include <sys/types.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,9 +44,6 @@ extern "C" {
 
 
 #if !@HAVE_POSIX_SIGNALBLOCKING@
-
-/* Mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
-# include <sys/types.h>
 
 /* Maximum signal number + 1.  */
 # ifndef NSIG
@@ -84,6 +85,11 @@ extern int sigpending (sigset_t *set);
 # define SIG_SETMASK 1  /* blocked_set = *set; */
 # define SIG_UNBLOCK 2  /* blocked_set = blocked_set & ~*set; */
 extern int sigprocmask (int operation, const sigset_t *set, sigset_t *old_set);
+
+# define signal rpl_signal
+/* Install the handler FUNC for signal SIG, and return the previous
+   handler.  */
+extern void (*signal (int sig, void (*func) (int))) (int);
 
 #endif
 
