@@ -10,6 +10,7 @@ clock-time
 extensions
 gettime
 stdbool
+sys_select
 sys_time
 time
 

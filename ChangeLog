@@ -1,5 +1,9 @@
 2008-06-21  Eric Blake  <ebb9@byu.net>
 
+	Fix nanosleep module on mingw.
+	* modules/nanosleep (Depends-on): Add sys_select.
+	* lib/nanosleep.c (HAVE_SYS_SELECT_H): Rely on gnulib module.
+
 	Fix licensing of sigprocmask.
 	* modules/raise (License): Relicense as LGPL.
 
