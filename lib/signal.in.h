@@ -33,7 +33,8 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
-/* Mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
+/* Define pid_t, uid_t.
+   Also, mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
 #include <sys/types.h>
 
 #ifdef __cplusplus
