@@ -1,5 +1,7 @@
 2008-06-22  Bruno Haible  <bruno@clisp.org>
 
+	* lib/nanosleep.c (rpl_nanosleep): Setup newact only when it is needed.
+
 	* lib/sigprocmask.c: Update a comment.
 
 2008-06-21  Eric Blake  <ebb9@byu.net>

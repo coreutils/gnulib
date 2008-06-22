@@ -147,14 +147,18 @@ rpl_nanosleep (const struct timespec *requested_delay,
   /* set up sig handler */
   if (! initialized)
     {
-      struct sigaction oldact, newact;
-      newact.sa_handler = sighandler;
-      sigemptyset (&newact.sa_mask);
-      newact.sa_flags = 0;
+      struct sigaction oldact;
 
       sigaction (SIGCONT, NULL, &oldact);
       if (get_handler (&oldact) != SIG_IGN)
-	sigaction (SIGCONT, &newact, NULL);
+	{
+	  struct sigaction newact;
+
+	  newact.sa_handler = sighandler;
+	  sigemptyset (&newact.sa_mask);
+	  newact.sa_flags = 0;
+	  sigaction (SIGCONT, &newact, NULL);
+	}
       initialized = true;
     }
 
