@@ -35,11 +35,15 @@
    the situation by reading static storage in a signal handler, which
    POSIX warns is not generically async-signal-safe.  Oh well.
 
-   Additionally, SIGCHLD is not defined, so we don't implement
-   SA_NOCLDSTOP or SA_NOCLDWAIT; sigaltstack() is not present, so we
-   don't implement SA_ONSTACK; and siginterrupt() is not present, so
-   we don't implement SA_RESTART.  Supporting SA_SIGINFO is impossible
-   to do portably.
+   Additionally:
+     - We don't implement SA_NOCLDSTOP or SA_NOCLDWAIT, because SIGCHLD
+       is not defined.
+     - We don't implement SA_ONSTACK, because sigaltstack() is not present.
+     - We ignore SA_RESTART, because blocking Win32 calls are not interrupted
+       anyway when an asynchronous signal occurs, and the MSVCRT runtime
+       never sets errno to EINTR.
+     - We don't implement SA_SIGINFO because it is impossible to do so
+       portably.
 
    POSIX states that an application should not mix signal() and
    sigaction().  We support the use of signal() within the gnulib

@@ -142,6 +142,7 @@ struct sigaction
 /* Unsupported flags are not present.  */
 # define SA_RESETHAND 1
 # define SA_NODEFER 2
+# define SA_RESTART 4
 
 extern int sigaction (int, const struct sigaction *restrict,
                       struct sigaction *restrict);
