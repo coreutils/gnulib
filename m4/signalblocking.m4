@@ -1,4 +1,4 @@
-# signalblocking.m4 serial 7
+# signalblocking.m4 serial 8
 dnl Copyright (C) 2001-2002, 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,4 +39,12 @@ AC_DEFUN([gl_PREREQ_SIGPROCMASK],
   dnl HAVE_SIGSET_T is 1 if the system lacks the sigprocmask function but has
   dnl the sigset_t type.
   AC_SUBST([HAVE_SIGSET_T])
+  gl_PREREQ_SIG_HANDLER_H
+])
+
+# Prerequisites of lib/sig-handler.h.
+AC_DEFUN([gl_PREREQ_SIG_HANDLER_H],
+[
+  AC_REQUIRE([AC_C_INLINE])
+  :
 ])

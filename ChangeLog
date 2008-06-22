@@ -1,5 +1,9 @@
 2008-06-22  Bruno Haible  <bruno@clisp.org>
 
+	* m4/signalblocking.m4 (gl_PREREQ_SIG_HANDLER_H): New macro.
+	(gl_PREREQ_SIGPROCMASK): Invoke it.
+	* m4/sigaction.m4 (gl_PREREQ_SIGACTION): Likewise.
+
 	* lib/nanosleep.c (rpl_nanosleep): Setup newact only when it is needed.
 
 	* lib/sigprocmask.c: Update a comment.
