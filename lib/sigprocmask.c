@@ -188,7 +188,8 @@ sigprocmask (int operation, const sigset_t *set, sigset_t *old_set)
 	      {
 		if (signal (sig, old_handlers[sig]) != blocked_handler)
 		  /* The application changed a signal handler while the signal
-		     was blocked.  We don't support this.  */
+		     was blocked, bypassing our rpl_signal replacement.
+		     We don't support this.  */
 		  abort ();
 		received[sig] = pending_array[sig];
 		blocked_set &= ~(1U << sig);
@@ -230,7 +231,8 @@ rpl_signal (int sig, sa_handler_t handler)
 	  old_handlers[sig] = handler;
 	  return result;
 	}
-      return signal (sig, handler);
+      else
+	return signal (sig, handler);
     }
   else
     {
