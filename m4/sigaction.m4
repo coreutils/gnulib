@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 # Determine if sigaction interface is present.
 AC_DEFUN([gl_SIGACTION],
 [
+  AC_REQUIRE([gl_SIGNAL_H_DEFAULTS])
   dnl Due to autoconf conventions, we can't tell if HAVE_SIGACTION
   dnl means we have the type or means we have the function.  We assume
   dnl that all implementations either have both or neither.

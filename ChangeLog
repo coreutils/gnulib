@@ -1,5 +1,7 @@
 2008-06-22  Bruno Haible  <bruno@clisp.org>
 
+	* m4/sigaction.m4 (gl_SIGACTION): Require gl_SIGNAL_H_DEFAULTS.
+
 	* m4/signalblocking.m4 (gl_PREREQ_SIG_HANDLER_H): New macro.
 	(gl_PREREQ_SIGPROCMASK): Invoke it.
 	* m4/sigaction.m4 (gl_PREREQ_SIGACTION): Likewise.
