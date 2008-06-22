@@ -1,5 +1,11 @@
 2008-06-22  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-stdint.c: Disable the INTMAX_MAX preprocessor test
+	conditionally.
+	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
+
+2008-06-22  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-functions/siginterrupt.texi: Move note.
 
 	* lib/signal.in.h (SA_RESTART): New macro.
