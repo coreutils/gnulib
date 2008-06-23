@@ -1,5 +1,17 @@
 2008-06-23  Bruno Haible  <bruno@clisp.org>
 
+	* m4/signalblocking.m4 (gl_PREREQ_SIG_HANDLER_H): Remove macro.
+	(gl_PREREQ_SIGPROCMASK): Don't invoke it.
+	* m4/sigaction.m4 (gl_PREREQ_SIG_HANDLER_H): New macro, moved here from
+	m4/signalblocking.m4.
+	(gl_PREREQ_SIGACTION): Don't invoke it.
+	* m4/nanosleep.m4 (gl_PREREQ_NANOSLEEP): Invoke
+	gl_PREREQ_SIG_HANDLER_H.
+	* m4/fatal-signal.m4 (gl_FATAL_SIGNAL): Likewise.
+	Don't check for sigaction here.
+
+2008-06-23  Bruno Haible  <bruno@clisp.org>
+
 	* lib/fatal-signal.c (fatal_signal_handler): Update comment.
 	(install_handlers): Don't set the SA_RESETHAND flag.
 

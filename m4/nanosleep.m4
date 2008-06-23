@@ -1,4 +1,4 @@
-#serial 24
+#serial 25
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -112,4 +112,5 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
 AC_DEFUN([gl_PREREQ_NANOSLEEP],
 [
   AC_CHECK_HEADERS_ONCE(sys/select.h)
+  gl_PREREQ_SIG_HANDLER_H
 ])

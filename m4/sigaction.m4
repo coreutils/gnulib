@@ -1,4 +1,4 @@
-# sigaction.m4 serial 2
+# sigaction.m4 serial 3
 dnl Copyright (C) 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,5 +30,11 @@ AC_DEFUN([gl_PREREQ_SIGACTION],
     HAVE_SIGINFO_T=0
     AC_SUBST([HAVE_SIGINFO_T])
   fi
-  gl_PREREQ_SIG_HANDLER_H
+])
+
+# Prerequisites of lib/sig-handler.h.
+AC_DEFUN([gl_PREREQ_SIG_HANDLER_H],
+[
+  AC_REQUIRE([AC_C_INLINE])
+  :
 ])
