@@ -36,9 +36,24 @@
     }									     \
   while (0)
 
+#ifndef SA_NOCLDSTOP
+# define SA_NOCLDSTOP 0
+#endif
+#ifndef SA_ONSTACK
+# define SA_ONSTACK 0
+#endif
 #ifndef SA_SIGINFO
 # define SA_SIGINFO 0
 #endif
+#ifndef SA_NOCLDWAIT
+# define SA_NOCLDWAIT 0
+#endif
+
+/* Define a mask of flags required by POSIX.  Some implementations
+   provide other flags as extensions, such as SA_RESTORER, that we
+   must ignore in this test.  */
+#define SA_MASK (SA_NOCLDSTOP | SA_ONSTACK | SA_RESETHAND | SA_RESTART	\
+		 SA_SIGINFO | SA_NOCLDWAIT | SA_NODEFER)
 
 /* This test is unsafe in the presence of an asynchronous SIGABRT,
    because we install a signal-handler that is intentionally not
@@ -80,7 +95,7 @@ main (int argc, char *argv[])
   ASSERT (raise (SIGABRT) == 0);
   sa.sa_flags = SA_RESETHAND | SA_NODEFER;
   ASSERT (sigaction (SIGABRT, &sa, &old_sa) == 0);
-  ASSERT (old_sa.sa_flags == 0);
+  ASSERT ((old_sa.sa_flags & SA_MASK) == 0);
   ASSERT (old_sa.sa_handler == handler);
   ASSERT (raise (SIGABRT) == 0);
   sa.sa_handler = SIG_DFL;

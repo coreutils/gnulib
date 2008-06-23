@@ -1,5 +1,10 @@
 2008-06-23  Eric Blake  <ebb9@byu.net>
 
+	Avoid test failure due to SA_RESTORER.
+	* tests/test-sigaction.c (SA_MASK): New macro.
+	(main): Avoid failing due to extension flags being set.
+	Reported by Jim Meyering.
+
 	Revert use of sig-handler.h in sigprocmask.c.
 	* modules/sigprocmask (Files): Don't rely on sig-handler.h, since
 	it requires the existence of struct sigaction.
