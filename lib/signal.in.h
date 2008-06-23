@@ -118,9 +118,8 @@ struct siginfo_t
 typedef struct siginfo_t siginfo_t;
 # endif /* !@HAVE_SIGINFO_T@ */
 
-  /* Due to autoconf conventions, we can't tell if HAVE_SIGACTION
-     means we have the type or means we have the function.  We assume
-     that all implementations either have both or neither.  */
+/* We assume that platforms which lack the sigaction() function also lack
+   the 'struct sigaction' type, and vice versa.  */
 
 struct sigaction
 {

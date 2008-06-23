@@ -8,9 +8,6 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_SIGACTION],
 [
   AC_REQUIRE([gl_SIGNAL_H_DEFAULTS])
-  dnl Due to autoconf conventions, we can't tell if HAVE_SIGACTION
-  dnl means we have the type or means we have the function.  We assume
-  dnl that all implementations either have both or neither.
   AC_REPLACE_FUNCS([sigaction])
   if test $ac_cv_func_sigaction = no ; then
     HAVE_SIGACTION=0
