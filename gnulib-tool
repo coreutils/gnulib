@@ -2197,6 +2197,12 @@ func_import ()
         s,^.*gl_LOCAL_DIR([[ ]*\([^])]*\).*$,cached_local_gnulib_dir="\1",p
       }
       /gl_MODULES(/ {
+        :a
+          s/)/)/
+          tb
+          N
+          ba
+        :b
         s,^.*gl_MODULES([[ ]*\([^])]*\).*$,cached_specified_modules="\1",p
       }
       /gl_AVOID(/ {
@@ -3004,7 +3010,9 @@ func_import ()
         esac ;;
     esac
     echo "gl_LOCAL_DIR([$relative_local_gnulib_dir])"
-    echo "gl_MODULES(["`echo $specified_modules`"])"
+    echo "gl_MODULES(["
+    echo "$specified_modules" | sed 's/^/  /g'
+    echo "])"
     echo "gl_AVOID([$avoidlist])"
     echo "gl_SOURCE_BASE([$sourcebase])"
     echo "gl_M4_BASE([$m4base])"

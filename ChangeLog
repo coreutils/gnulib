@@ -1,3 +1,9 @@
+2008-06-23  Eric Blake  <ebb9@byu.net>
+
+	Make gnulib-cache.m4 easier to diff.
+	* gnulib-tool (func_import): Allow newlines when reading cached
+	gl_MODULES, and generate newlines when creating gnulib-cache.m4.
+
 2008-06-23  Bruno Haible  <bruno@clisp.org>
 
 	* m4/signalblocking.m4 (gl_PREREQ_SIG_HANDLER_H): Remove macro.
