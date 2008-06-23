@@ -53,7 +53,7 @@
    provide other flags as extensions, such as SA_RESTORER, that we
    must ignore in this test.  */
 #define MASK_SA_FLAGS (SA_NOCLDSTOP | SA_ONSTACK | SA_RESETHAND | SA_RESTART \
-		       SA_SIGINFO | SA_NOCLDWAIT | SA_NODEFER)
+		       | SA_SIGINFO | SA_NOCLDWAIT | SA_NODEFER)
 
 /* This test is unsafe in the presence of an asynchronous SIGABRT,
    because we install a signal-handler that is intentionally not

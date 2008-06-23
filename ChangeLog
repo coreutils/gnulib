@@ -1,5 +1,8 @@
 2008-06-23  Eric Blake  <ebb9@byu.net>
 
+	Fix typo.
+	* tests/test-sigaction.c (MASK_SA_FLAGS): Add missing operator.
+
 	Avoid SA_ namespace.
 	* tests/test-sigaction.c (MASK_SA_FLAGS): Rename from SA_MASK.
 	Reported by Ralf Wildenhues.
