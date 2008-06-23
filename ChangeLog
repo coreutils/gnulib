@@ -1,5 +1,10 @@
 2008-06-23  Bruno Haible  <bruno@clisp.org>
 
+	* lib/fatal-signal.c (fatal_signal_handler): Update comment.
+	(install_handlers): Don't set the SA_RESETHAND flag.
+
+2008-06-23  Bruno Haible  <bruno@clisp.org>
+
 	* m4/sigaction.m4: Comment fixes.
 	* lib/signal.in.h: Likewise.
 

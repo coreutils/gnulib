@@ -160,9 +160,10 @@ fatal_signal_handler (int sig)
     }
 
   /* Now execute the signal's default action.
-     If any cleanup action blocks the signal that triggered the cleanup, the
-     re-raised signal is delivered when this handler returns; otherwise it
-     is delivered already during raise().  */
+     If the signal being delivered was blocked, the re-raised signal would be
+     delivered when this handler returns.  But the way we install this handler,
+     no signal is blocked, and the re-raised signal is delivered already
+     during raise().  */
   uninstall_handlers ();
   raise (sig);
 }
@@ -176,9 +177,10 @@ install_handlers ()
   struct sigaction action;
 
   action.sa_handler = &fatal_signal_handler;
-  /* One-shot handling - if we fault while handling a fault, the
-     cleanup actions are intentionally cut short.  */
-  action.sa_flags = SA_NODEFER | SA_RESETHAND;
+  /* If we get a fatal signal while executing fatal_signal_handler, enter
+     fatal_signal_handler recursively, since it is reentrant.  Hence no
+     SA_RESETHAND.  */
+  action.sa_flags = SA_NODEFER;
   sigemptyset (&action.sa_mask);
   for (i = 0; i < num_fatal_signals; i++)
     if (fatal_signals[i] >= 0)
