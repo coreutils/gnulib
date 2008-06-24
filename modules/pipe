@@ -8,16 +8,17 @@ lib/w32spawn.h
 m4/pipe.m4
 
 Depends-on:
-wait-process
+environ
 error
 exit
 fatal-signal
 gettext-h
+open
 stdbool
 strpbrk
 unistd
 unistd-safer
-environ
+wait-process
 
 configure.ac:
 gl_PIPE

@@ -7,13 +7,14 @@ lib/dirent.in.h
 m4/fchdir.m4
 
 Depends-on:
-include_next
-dup2
-fcntl
-unistd
 canonicalize-lgpl
 dirfd
+dup2
+fcntl
+include_next
+open
 strdup
+unistd
 
 configure.ac:
 gl_FUNC_FCHDIR

@@ -9,8 +9,9 @@ m4/utimes.m4
 m4/utimes-null.m4
 
 Depends-on:
-safe-read
+open
 full-write
+safe-read
 
 configure.ac:
 gl_FUNC_UTIME
@@ -29,4 +30,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

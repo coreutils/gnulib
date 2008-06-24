@@ -7,13 +7,14 @@ lib/copy-file.c
 m4/copy-file.m4
 
 Depends-on:
-error
-safe-read
-full-write
 acl
 binary-io
+error
 exit
+full-write
 gettext-h
+open
+safe-read
 unistd
 
 configure.ac:

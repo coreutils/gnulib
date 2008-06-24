@@ -9,6 +9,7 @@ lib/open-safer.c
 m4/fcntl-safer.m4
 
 Depends-on:
+open
 unistd-safer
 
 configure.ac:
