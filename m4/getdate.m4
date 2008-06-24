@@ -1,13 +1,19 @@
-# getdate.m4 serial 12
-dnl Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# getdate.m4 serial 13
+dnl Copyright (C) 2002-2006, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
+dnl Define HAVE_COMPOUND_LITERALS if the C compiler supports compound literals
+dnl as in ISO C99.
+dnl Note that compound literals such as (struct s) { 3, 4 } can be used for
+dnl initialization of stack-allocated variables, but are not constant
+dnl expressions and therefore cannot be used as initializer for global or
+dnl static variables (even though gcc supports this in pre-C99 mode).
 AC_DEFUN([gl_C_COMPOUND_LITERALS],
 [
   AC_CACHE_CHECK([for compound literals], gl_cv_compound_literals,
-  [AC_TRY_COMPILE([struct s { int i, j; }; struct s s = (struct s) { 1, 2 };],
+  [AC_TRY_COMPILE([struct s { int i, j; };],
     [struct s t = (struct s) { 3, 4 };
      if (t.i != 0) return 0;],
     gl_cv_compound_literals=yes,

@@ -1,3 +1,8 @@
+2008-06-24  Andreas Schwab  <schwab@suse.de>
+
+	* m4/getdate.m4 (gl_C_COMPOUND_LITERALS): Don't test whether compound
+	literals can be used as initializers for global variables.
+
 2008-06-23  Eric Blake  <ebb9@byu.net>
 
 	Make gnulib-cache.m4 easier to diff.
