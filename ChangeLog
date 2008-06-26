@@ -1,3 +1,18 @@
+2008-06-26  Jim Meyering  <meyering@redhat.com>
+
+	make several modules depend on the "open" module
+	This provides slightly increased consistency when opening-for-write
+	the name of a non-directory spelled with a trailing slash.
+	* modules/chdir-safer: Likewise.
+	* modules/chown: Likewise.
+	* modules/clean-temp: Likewise.
+	* modules/copy-file: Likewise.
+	* modules/fchdir: Likewise.
+	* modules/fcntl-safer: Likewise.
+	* modules/pipe: Likewise.
+	* modules/utime: Likewise.
+	Prompted by Eric Blake and Bruno Haible.
+
 2008-06-24  Andreas Schwab  <schwab@suse.de>
 
 	* m4/getdate.m4 (gl_C_COMPOUND_LITERALS): Don't test whether compound
