@@ -1,3 +1,9 @@
+2008-07-02  Ondřej Vašík  <ovasik@redhat.com>
+
+	getdate.y: factor out common actions
+	* lib/getdate.y (apply_relative_time, set_hhmmss): New functions.
+	Use them in place of open-coded actions.
+
 2008-07-01  Simon Josefsson  <simon@josefsson.org>
 
 	Add self-test for getdate module.
