@@ -3409,6 +3409,18 @@ func_import ()
     fi
   fi
   echo "  - mention \"-I ${m4base}\" in ACLOCAL_AMFLAGS in Makefile.am,"
+  {
+    # Find the first parent directory of $m4base that contains a Makefile.am.
+    sed_last='s,^.*/\([^/][^/]*\)//*$,\1/,
+s,//*$,/,'
+    sed_butlast='s,[^/][^/]*//*$,,'
+    dir1="${m4base}/"; dir2=""
+    while test -n "$dir1" && test ! -f "${destdir}/${dir1}Makefile.am"; do
+      dir2=`echo "$dir1" | sed -e "$sed_last"`"$dir2"
+      dir1=`echo "$dir1" | sed -e "$sed_butlast"`
+    done
+    echo "  - mention ${dir2}gnulib-cache.m4 in EXTRA_DIST in ${dir1}Makefile.am."
+  }
   echo "  - invoke ${macro_prefix}_EARLY in $configure_ac, right after AC_PROG_CC,"
   echo "  - invoke ${macro_prefix}_INIT in $configure_ac."
 }
