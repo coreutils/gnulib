@@ -3248,6 +3248,8 @@ func_import ()
     # Update the .cvsignore and .gitignore files.
     { echo "$added_files" | sed -e '/^$/d' -e 's,\([^/]*\)$,|A|\1,'
       echo "$removed_files" | sed -e '/^$/d' -e 's,\([^/]*\)$,|R|\1,'
+      # Treat gnulib-comp.m4 like an added file, even if it already existed.
+      echo "$m4base/|A|gnulib-comp.m4"
     } | LC_ALL=C sort -t'|' -k1,1 > "$tmp"/fileset-changes
     { # Rearrange file descriptors. Needed because "while ... done < ..."
       # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.

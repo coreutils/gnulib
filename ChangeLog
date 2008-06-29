@@ -1,5 +1,11 @@
 2008-06-29  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import): Put gnulib-comp.m4 into .cvsignore or
+	.gitignore.
+	Reported by Sylvain Beucler <beuc@beuc.net>.
+
+2008-06-29  Bruno Haible  <bruno@clisp.org>
+
 	* doc/gnulib-tool.texi (VCS Issues): Mention --no-vc-files option.
 	* m4/gnulib-tool.m4: Update to match current gnulib-tool.
 
