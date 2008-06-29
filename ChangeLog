@@ -1,5 +1,10 @@
 2008-06-29  Bruno Haible  <bruno@clisp.org>
 
+	* doc/gnulib-tool.texi (VCS Issues): Mention --no-vc-files option.
+	* m4/gnulib-tool.m4: Update to match current gnulib-tool.
+
+2008-06-29  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Recommend to put gnulib-cache.m4 into
 	EXTRA_DIST.
 	Reported by Sylvain Beucler <beuc@beuc.net>.
