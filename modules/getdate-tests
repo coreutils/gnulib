@@ -1,0 +1,11 @@
+Files:
+tests/test-getdate.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getdate
+check_PROGRAMS += test-getdate
+test_getdate_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME)
