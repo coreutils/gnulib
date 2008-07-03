@@ -1,3 +1,7 @@
+2008-07-03  Jim Meyering  <meyering@redhat.com>
+
+	* users.txt: Add libffcall.  From Sam Steingold.
+
 2008-07-03  Ondřej Vašík  <ovasik@redhat.com>
 
 	getdate.y: do not ignore TZ with relative day, month or year offset

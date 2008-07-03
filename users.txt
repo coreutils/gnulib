@@ -26,6 +26,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   inetutils       http://cvs.sv.gnu.org/viewcvs/inetutils/inetutils/
   jwhois          http://cvs.sv.gnu.org/viewvc/jwhois/jwhois/
   libdap          http://scm.opendap.org:8090/svn/trunk/libdap/
+  libffcall       http://savannah.gnu.org/projects/libffcall/
   libgnupdf       http://cvs.savannah.gnu.org/viewvc/libgnupdf/?root=pdf
   libiconv        http://libiconv.cvs.sourceforge.net/libiconv/libiconv/
   libidn          http://git.sv.gnu.org/gitweb/?p=libidn.git
