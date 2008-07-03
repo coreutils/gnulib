@@ -51,6 +51,7 @@ main (int argc, char **argv)
 {
   bool ret;
   struct timespec result;
+  struct timespec result2;
   struct timespec now;
   const char *p;
 
@@ -84,6 +85,18 @@ main (int argc, char **argv)
   LOG (p, now, result);
   ASSERT (now.tv_sec + 4 * 60 * 60 == result.tv_sec
 	  && now.tv_nsec == result.tv_nsec);
+
+  /* test if timezone is not being ignored for day offset */
+  now.tv_sec = 4711;
+  now.tv_nsec = 1267;
+  p = "UTC+400 +24 hours";
+  ASSERT (get_date (&result, p, &now));
+  LOG (p, now, result);
+  p = "UTC+400 +1 day";
+  ASSERT (get_date (&result2, p, &now));
+  LOG (p, now, result2);
+  ASSERT (result.tv_sec == result2.tv_sec
+	  && result.tv_nsec == result2.tv_nsec);
 
   return 0;
 }

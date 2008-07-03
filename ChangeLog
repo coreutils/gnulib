@@ -1,3 +1,11 @@
+2008-07-03  Ondřej Vašík  <ovasik@redhat.com>
+
+	getdate.y: do not ignore TZ with relative day, month or year offset
+	* lib/getdate.y (get_date): Move the tz-handling block to follow the
+	relative-date-handling, since otherwise, the latter would clobber the
+	sole output (an updated Start value) of the tz-handling block.
+	* tests/test-getdate.c: Tests for the fix
+
 2008-07-03  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Recognize 'foo_LIBRARIES += libgnu.a'.

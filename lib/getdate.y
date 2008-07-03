@@ -1,8 +1,8 @@
 %{
 /* Parse a string into an internal time stamp.
 
-   Copyright (C) 1999, 2000, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
-   Foundation, Inc.
+   Copyright (C) 1999, 2000, 2002, 2003, 2004, 2005, 2006, 2007, 2008
+   Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -1417,25 +1417,6 @@ get_date (struct timespec *result, char const *p, struct timespec const *now)
 	    goto fail;
 	}
 
-      if (pc.zones_seen)
-	{
-	  long int delta = pc.time_zone * 60;
-	  time_t t1;
-#ifdef HAVE_TM_GMTOFF
-	  delta -= tm.tm_gmtoff;
-#else
-	  time_t t = Start;
-	  struct tm const *gmt = gmtime (&t);
-	  if (! gmt)
-	    goto fail;
-	  delta -= tm_diff (&tm, gmt);
-#endif
-	  t1 = Start - delta;
-	  if ((Start < t1) != (delta < 0))
-	    goto fail;	/* time_t overflow */
-	  Start = t1;
-	}
-
       /* Add relative date.  */
       if (pc.rel.year | pc.rel.month | pc.rel.day)
 	{
@@ -1456,6 +1437,27 @@ get_date (struct timespec *result, char const *p, struct timespec const *now)
 	  Start = mktime (&tm);
 	  if (Start == (time_t) -1)
 	    goto fail;
+	}
+
+      /* The only "output" of this if-block is an updated Start value,
+	 so this block must follow others that clobber Start.  */
+      if (pc.zones_seen)
+	{
+	  long int delta = pc.time_zone * 60;
+	  time_t t1;
+#ifdef HAVE_TM_GMTOFF
+	  delta -= tm.tm_gmtoff;
+#else
+	  time_t t = Start;
+	  struct tm const *gmt = gmtime (&t);
+	  if (! gmt)
+	    goto fail;
+	  delta -= tm_diff (&tm, gmt);
+#endif
+	  t1 = Start - delta;
+	  if ((Start < t1) != (delta < 0))
+	    goto fail;	/* time_t overflow */
+	  Start = t1;
 	}
 
       /* Add relative hours, minutes, and seconds.  On hosts that support
