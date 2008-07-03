@@ -1737,7 +1737,7 @@ func_emit_lib_Makefile_am ()
     echo "AM_CPPFLAGS ="
   fi
   echo
-  if LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *= *$libname\\.$libext\$" allsnippets.tmp > /dev/null; then
+  if LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *+\{0,1\}= *$libname\\.$libext\$" allsnippets.tmp > /dev/null; then
     # One of the snippets already specifies an installation location for the
     # library. Don't confuse automake by saying it should not be installed.
     :
