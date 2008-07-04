@@ -4,9 +4,9 @@ The following packages appear to be using gnulib and gnulib-tool:
   OPeNDAP         http://scm.opendap.org:8090/svn/trunk/
   anubis          http://cvs.sv.gnu.org/viewcvs/anubis/anubis/
   autobuild       http://josefsson.org/autobuild/
-  bison           http://cvs.sv.gnu.org/viewcvs/bison/bison/
+  bison           http://git.sv.gnu.org/gitweb/?p=bison.git
   clisp           http://clisp.cvs.sourceforge.net/clisp/clisp/
-  coreutils       http://cvs.sv.gnu.org/viewcvs/coreutils/coreutils/
+  coreutils       http://git.sv.gnu.org/gitweb/?p=coreutils.git
   cpio            http://cvs.sv.gnu.org/viewcvs/cpio/cpio/
   cvs             http://cvs.sv.gnu.org/viewcvs/cvs/ccvs/
   diffutils       http://cvs.sv.gnu.org/viewcvs/diffutils/diffutils/
@@ -54,6 +54,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   shishi          http://git.sv.gnu.org/gitweb/?p=shishi.git
   tar             http://cvs.sv.gnu.org/viewcvs/tar/tar/
   texinfo         http://cvs.sv.gnu.org/viewcvs/texinfo/texinfo/
+  vc-dwim         http://git.sv.gnu.org/gitweb/?p=vc-dwim.git
   wget            http://hg.addictivecode.org/wget/mainline/
   wydawca         http://svn.gnu.org.ua/viewvc/wydawca/trunk/
   wyslij-po       http://svn.gnu.org.ua/viewvc/wyslij-po/trunk/

@@ -1,3 +1,8 @@
+2008-07-04  Jim Meyering  <meyering@redhat.com>
+
+	* users.txt: Add vc-dwim.
+	(bison, coreutils): Use the gitweb URL.
+
 2008-07-03  Jim Meyering  <meyering@redhat.com>
 
 	* users.txt: Add libffcall.  From Sam Steingold.
