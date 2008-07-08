@@ -1,3 +1,8 @@
+2008-07-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/onceonly.m4: Update comments.
+	Reported by Ben Pfaff <blp@cs.stanford.edu>.
+
 2008-07-04  Jim Meyering  <meyering@redhat.com>
 
 	* users.txt: Add vc-dwim.
