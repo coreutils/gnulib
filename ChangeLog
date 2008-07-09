@@ -1,3 +1,8 @@
+2008-07-09  Jim Meyering  <meyering@redhat.com>
+
+	posix-shell.m4: fix typo that made this test malfunction
+	* m4/posix-shell.m4: Remove capitalization in variable name.
+
 2008-07-08  Bruno Haible  <bruno@clisp.org>
 
 	* m4/onceonly.m4: Update comments.
