@@ -1,3 +1,10 @@
+2008-07-10  Eric Blake  <ebb9@byu.net>
+
+	Work with tar's bootstrap.
+	* gnulib-tool (func_emit_initmacro_end): Use m4_defn in the case
+	where LIBSOURCES_DIR contains .#bootmp but must not be treated as
+	an m4 comment.
+
 2008-07-09  Jim Meyering  <meyering@redhat.com>
 
 	posix-shell.m4: fix typo that made this test malfunction
