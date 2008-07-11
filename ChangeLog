@@ -1,3 +1,10 @@
+2008-07-11  Jim Meyering  <meyering@redhat.com>
+
+	vc-list-files: make the last-resort awk code more portable
+	* build-aux/vc-list-files: Don't rely on awk's "sub" command.
+	/bin/awk from OpenSolaris 11's SUNWesu version 2008.03.22.10.56
+	does not support it.
+
 2008-07-10  Eric Blake  <ebb9@byu.net>
 
 	Work with tar's bootstrap.
