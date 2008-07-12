@@ -1,0 +1,30 @@
+Description:
+isnanf() function: test for NaN.
+
+Files:
+lib/isnanf.h
+lib/isnanf.c
+lib/isnan.c
+lib/float+.h
+m4/isnanf.m4
+
+Depends-on:
+fpieee
+
+configure.ac:
+gl_FUNC_ISNANF
+
+Makefile.am:
+
+Include:
+#include "isnanf.h"
+
+Link:
+$(ISNANF_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

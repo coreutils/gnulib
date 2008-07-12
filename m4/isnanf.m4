@@ -1,8 +1,42 @@
-# isnanf.m4 serial 6
+# isnanf.m4 serial 7
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
+
+dnl Check how to get or define isnanf().
+
+AC_DEFUN([gl_FUNC_ISNANF],
+[
+  ISNANF_LIBM=
+  gl_HAVE_ISNANF_NO_LIBM
+  if test $gl_cv_func_isnanf_no_libm = no; then
+    gl_HAVE_ISNANF_IN_LIBM
+    if test $gl_cv_func_isnanf_in_libm = yes; then
+      ISNANF_LIBM=-lm
+    fi
+  fi
+  if test $gl_cv_func_isnanf_no_libm = yes \
+     || test $gl_cv_func_isnanf_in_libm = yes; then
+    save_LIBS="$LIBS"
+    LIBS="$LIBS $ISNANF_LIBM"
+    gl_ISNANF_WORKS
+    LIBS="$save_LIBS"
+    case "$gl_cv_func_isnanf_works" in
+      *yes) gl_func_isnanf=yes ;;
+      *)    gl_func_isnanf=no; ISNANF_LIBM= ;;
+    esac
+  else
+    gl_func_isnanf=no
+  fi
+  if test $gl_func_isnanf = yes; then
+    AC_DEFINE([HAVE_ISNANF], 1,
+      [Define if the isnan(float) function is available.])
+  else
+    gl_BUILD_ISNANF
+  fi
+  AC_SUBST([ISNANF_LIBM])
+])
 
 dnl Check how to get or define isnanf() without linking with libm.
 
@@ -21,9 +55,15 @@ AC_DEFUN([gl_FUNC_ISNANF_NO_LIBM],
     AC_DEFINE([HAVE_ISNANF_IN_LIBC], 1,
       [Define if the isnan(float) function is available in libc.])
   else
-    AC_LIBOBJ([isnanf])
-    gl_FLOAT_EXPONENT_LOCATION
+    gl_BUILD_ISNANF
   fi
+])
+
+dnl Pull in replacement isnanf definition.
+AC_DEFUN([gl_BUILD_ISNANF],
+[
+  AC_LIBOBJ([isnanf])
+  gl_FLOAT_EXPONENT_LOCATION
 ])
 
 dnl Test whether isnanf() can be used without libm.
@@ -44,6 +84,30 @@ AC_DEFUN([gl_HAVE_ISNANF_NO_LIBM],
                   [return isnanf (x);],
         [gl_cv_func_isnanf_no_libm=yes],
         [gl_cv_func_isnanf_no_libm=no])
+    ])
+])
+
+dnl Test whether isnanf() can be used with libm.
+AC_DEFUN([gl_HAVE_ISNANF_IN_LIBM],
+[
+  AC_CACHE_CHECK([whether isnan(float) can be used with libm],
+    [gl_cv_func_isnanf_in_libm],
+    [
+      save_LIBS="$LIBS"
+      LIBS="$LIBS -lm"
+      AC_TRY_LINK([#include <math.h>
+                   #if __GNUC__ >= 4
+                   # undef isnanf
+                   # define isnanf(x) __builtin_isnanf ((float)(x))
+                   #elif defined isnan
+                   # undef isnanf
+                   # define isnanf(x) isnan ((float)(x))
+                   #endif
+                   float x;],
+                  [return isnanf (x);],
+        [gl_cv_func_isnanf_in_libm=yes],
+        [gl_cv_func_isnanf_in_libm=no])
+      LIBS="$save_LIBS"
     ])
 ])
 

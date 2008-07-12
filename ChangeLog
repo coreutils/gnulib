@@ -1,5 +1,24 @@
 2008-07-10  Ben Pfaff  <blp@gnu.org>
 
+	Add isnanf module.
+	* lib/isnanf.m4: New file.
+	* m4/isnanf.m4 (gl_FUNC_ISNANF): New macro.
+	(gl_HAVE_ISNANF_IN_LIBM): New macro.
+	(gl_BUILD_ISNANF): New macro used by gl_FUNC_ISNANF,
+	gl_FUNC_ISNANF_NO_LIBM, and gl_FUNC_ISNAN.
+	* modules/isnanf: New file.
+	* modules/isnanf-tests: New file.
+	* modules/isnanf-nolibm-tests: Add tests/test-isnanf.h to list of
+	files.
+	* tests/test-isnanf-nolibm.c: factored most of its contents into
+	new file tests/test-isnanf.h.
+	* tests/test-isnanf.h: New file.
+	* tests/test-isnanf.c: New file.
+	* MODULES.html.sh: Mention new module.
+	* doc/glibc-functions/isnanf.texi: Mention new module.
+
+2008-07-10  Ben Pfaff  <blp@gnu.org>
+
 	Add isnand module.
 	* lib/isnand.h: New file.
 	* m4/isnand.m4 (gl_FUNC_ISNAND): New macro.

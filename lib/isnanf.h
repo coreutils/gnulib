@@ -1,4 +1,4 @@
-/* Test of isnanf() substitute.
+/* Test for NaN.
    Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -14,8 +14,20 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#include <config.h>
-
-#include "isnanf-nolibm.h"
-
-#include "test-isnanf.h"
+#if HAVE_ISNANF
+/* Get declaration of isnan macro or (older) isnanf function.  */
+# include <math.h>
+# if __GNUC__ >= 4
+   /* GCC 4.0 and newer provides three built-ins for isnan.  */
+#  undef isnanf
+#  define isnanf(x) __builtin_isnanf ((float)(x))
+# elif defined isnan
+#  undef isnanf
+#  define isnanf(x) isnan ((float)(x))
+# endif
+#else
+/* Test whether X is a NaN.  */
+# undef isnanf
+# define isnanf rpl_isnanf
+extern int isnanf (float x);
+#endif

@@ -16,6 +16,6 @@
 
 #include <config.h>
 
-#include "isnanf-nolibm.h"
+#include "isnanf.h"
 
 #include "test-isnanf.h"
