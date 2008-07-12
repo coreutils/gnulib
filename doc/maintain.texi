@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 25, 2008
+@set lastupdate July 6, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -831,8 +831,8 @@ important one, important enough to be worth the work of cleaning it up.
 The GNU Coding Standards are a good thing to send people when you ask
 them to clean up changes (@pxref{Top, , Contents, standards, GNU Coding
 Standards}).  The Emacs Lisp manual contains an appendix that gives
-coding standards for Emacs Lisp programs; it is good to urge authors to
-read it (@pxref{Tips, , Tips and Standards, elisp, The GNU Emacs Lisp
+coding standards for Emacs Lisp programs; it is good to urge Lisp authors to
+read it (@pxref{Tips, , Tips and Conventions, elisp, The GNU Emacs Lisp
 Reference Manual}).
 
 
