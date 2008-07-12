@@ -1,4 +1,4 @@
-# isnan.m4 serial 1
+# isnan.m4 serial 2
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,9 +11,6 @@ AC_DEFUN([gl_ISNAN],
   AC_REQUIRE([gl_FUNC_ISNAND])
   AC_REQUIRE([gl_FUNC_ISNANL])
 
-  ISNAN_LIBM="$ISNANF_LIBM $ISNAND_LIBM $ISNANL_LIBM"
-  AC_SUBST([ISNAN_LIBM])
-
   # If we replaced any of the underlying isnan* functions, replace
   # the isnan macro; it undoubtedly suffers from the same flaws.
   AC_MSG_CHECKING([whether isnan macro works])
@@ -21,12 +18,15 @@ AC_DEFUN([gl_ISNAN],
      && test $gl_func_isnand = yes \
      && test $gl_func_isnanl = yes; then
     AC_MSG_RESULT([yes])
+    ISNAN_LIBM="$ISNANF_LIBM $ISNAND_LIBM $ISNANL_LIBM"
   else
+    AC_MSG_RESULT([no])
+    REPLACE_ISNAN=1
     # Make sure the rpl_isnan[fdl] functions get built.
     gl_BUILD_ISNANF
     gl_BUILD_ISNAND
     gl_BUILD_ISNANL
-    REPLACE_ISNAN=1
-    AC_MSG_RESULT([no])
+    ISNAN_LIBM=
   fi
+  AC_SUBST([ISNAN_LIBM])
 ])

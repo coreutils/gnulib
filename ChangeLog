@@ -1,3 +1,8 @@
+2008-07-12  Bruno Haible  <bruno@clisp.org>
+
+	* m4/isnan.m4 (gl_ISNAN): When the replacement is used, set ISNAN_LIBM
+	to empty.
+
 2008-07-10  Ben Pfaff  <blp@gnu.org>
 
 	Add isnan module.
