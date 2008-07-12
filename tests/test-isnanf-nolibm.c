@@ -1,4 +1,4 @@
-/* Test of isnand() substitute.
+/* Test of isnanf() substitute.
    Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#include "isnand.h"
+#include "isnanf-nolibm.h"
 
 #include <limits.h>
 #include <stdio.h>
@@ -42,36 +42,38 @@ int
 main ()
 {
   /* Finite values.  */
-  ASSERT (!isnand (3.141));
-  ASSERT (!isnand (3.141e30));
-  ASSERT (!isnand (3.141e-30));
-  ASSERT (!isnand (-2.718));
-  ASSERT (!isnand (-2.718e30));
-  ASSERT (!isnand (-2.718e-30));
-  ASSERT (!isnand (0.0));
-  ASSERT (!isnand (-0.0));
+  ASSERT (!isnanf (3.141f));
+  ASSERT (!isnanf (3.141e30f));
+  ASSERT (!isnanf (3.141e-30f));
+  ASSERT (!isnanf (-2.718f));
+  ASSERT (!isnanf (-2.718e30f));
+  ASSERT (!isnanf (-2.718e-30f));
+  ASSERT (!isnanf (0.0f));
+  ASSERT (!isnanf (-0.0f));
   /* Infinite values.  */
-  ASSERT (!isnand (1.0 / 0.0));
-  ASSERT (!isnand (-1.0 / 0.0));
+  ASSERT (!isnanf (1.0f / 0.0f));
+  ASSERT (!isnanf (-1.0f / 0.0f));
   /* Quiet NaN.  */
-  ASSERT (isnand (NaNd ()));
-#if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
+  ASSERT (isnanf (NaNf ()));
+#if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
   /* Signalling NaN.  */
   {
     #define NWORDS \
-      ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
-    typedef union { double value; unsigned int word[NWORDS]; } memory_double;
-    memory_double m;
-    m.value = NaNd ();
-# if DBL_EXPBIT0_BIT > 0
-    m.word[DBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (DBL_EXPBIT0_BIT - 1);
+      ((sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+    typedef union { float value; unsigned int word[NWORDS]; } memory_float;
+    memory_float m;
+    m.value = NaNf ();
+# if FLT_EXPBIT0_BIT > 0
+    m.word[FLT_EXPBIT0_WORD] ^= (unsigned int) 1 << (FLT_EXPBIT0_BIT - 1);
 # else
-    m.word[DBL_EXPBIT0_WORD + (DBL_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
+    m.word[FLT_EXPBIT0_WORD + (FLT_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
       ^= (unsigned int) 1 << (sizeof (unsigned int) * CHAR_BIT - 1);
 # endif
-    m.word[DBL_EXPBIT0_WORD + (DBL_EXPBIT0_WORD < NWORDS / 2 ? 1 : - 1)]
-      |= (unsigned int) 1 << DBL_EXPBIT0_BIT;
-    ASSERT (isnand (m.value));
+    if (FLT_EXPBIT0_WORD < NWORDS / 2)
+      m.word[FLT_EXPBIT0_WORD + 1] |= (unsigned int) 1 << FLT_EXPBIT0_BIT;
+    else
+      m.word[0] |= (unsigned int) 1;
+    ASSERT (isnanf (m.value));
   }
 #endif
   return 0;

@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "isnand.h"
+#include "isnand-nolibm.h"
 #include "nan.h"
 
 #define ASSERT(expr) \

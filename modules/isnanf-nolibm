@@ -2,7 +2,7 @@ Description:
 isnanf() function: test for NaN, without requiring libm.
 
 Files:
-lib/isnanf.h
+lib/isnanf-nolibm.h
 lib/isnanf.c
 lib/isnan.c
 lib/float+.h
@@ -17,7 +17,7 @@ gl_FUNC_ISNANF_NO_LIBM
 Makefile.am:
 
 Include:
-#include "isnanf.h"
+#include "isnanf-nolibm.h"
 
 License:
 LGPL

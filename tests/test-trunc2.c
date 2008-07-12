@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "isnand.h"
+#include "isnand-nolibm.h"
 
 #define ASSERT(expr) \
   do									     \

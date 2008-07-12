@@ -2,7 +2,7 @@ Description:
 isnand() function: test for NaN, without requiring libm.
 
 Files:
-lib/isnand.h
+lib/isnand-nolibm.h
 lib/isnand.c
 lib/isnan.c
 lib/float+.h
@@ -17,7 +17,7 @@ gl_FUNC_ISNAND_NO_LIBM
 Makefile.am:
 
 Include:
-#include "isnand.h"
+#include "isnand-nolibm.h"
 
 License:
 LGPL

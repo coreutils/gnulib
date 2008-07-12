@@ -37,7 +37,7 @@
 #ifdef USE_LONG_DOUBLE
 # error Long double not supported.
 #elif ! defined USE_FLOAT
-# include "isnand.h"
+# include "isnand-nolibm.h"
 # define ISNAN isnand
 # define FUNCTION "round"
 # define DOUBLE_UINT uint64_t
@@ -45,7 +45,7 @@
 # define NUM_HIGHBITS 13
 # define NUM_LOWBITS 4
 #else /* defined USE_FLOAT */
-# include "isnanf.h"
+# include "isnanf-nolibm.h"
 # define ISNAN isnanf
 # define FUNCTION "roundf"
 # define DOUBLE_UINT uint32_t

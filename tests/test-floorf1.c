@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "isnanf.h"
+#include "isnanf-nolibm.h"
 #include "nan.h"
 
 #define ASSERT(expr) \

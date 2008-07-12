@@ -95,7 +95,7 @@
 
 #if (NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE) && !defined IN_LIBINTL
 # include <math.h>
-# include "isnand.h"
+# include "isnand-nolibm.h"
 #endif
 
 #if (NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE) && !defined IN_LIBINTL
@@ -106,7 +106,7 @@
 
 #if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_DOUBLE) && !defined IN_LIBINTL
 # include <math.h>
-# include "isnand.h"
+# include "isnand-nolibm.h"
 # include "printf-frexp.h"
 #endif
 

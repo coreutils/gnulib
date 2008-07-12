@@ -27,7 +27,7 @@
 # include "isnanl-nolibm.h"
 # include "fpucw.h"
 #else
-# include "isnand.h"
+# include "isnand-nolibm.h"
 #endif
 
 /* This file assumes FLT_RADIX = 2.  If FLT_RADIX is a power of 2 greater

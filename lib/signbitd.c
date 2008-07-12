@@ -20,7 +20,7 @@
 #include <math.h>
 
 #include <string.h>
-#include "isnand.h"
+#include "isnand-nolibm.h"
 #include "float+.h"
 
 #undef gl_signbitd

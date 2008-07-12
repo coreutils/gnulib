@@ -6,6 +6,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-07-07  isnanf-nolibm   The include file is changed from "isnanf.h"
+                            to "isnanf-nolibm.h".
+            isnand-nolibm   The include file is changed from "isnand.h"
+                            to "isnand-nolibm.h".
+
 2008-06-10  execute         The execute function takes an additional termsigp
                             argument. Passing termsigp = NULL is ok.
             wait-process    The wait_subprocess function takes an additional

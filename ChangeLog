@@ -1,3 +1,33 @@
+2008-07-10  Ben Pfaff  <blp@gnu.org>
+
+	* lib/isnanf.h: Rename lib/isnanf-nolibm.h.
+	* lib/isnand.h: Rename lib/isnand-nolibm.h.
+	* tests/test-isnanf.c: Rename tests/test-isnanf-nolibm.c.
+	* tests/test-isnand.c: Rename tests/test-isnand-nolibm.c.
+	* modules/isnanf-nolibm: Update references to renamed files.
+	* modules/isnand-nolibm: Likewise.
+	* modules/isnanf-nolibm-tests: Likewise.
+	* modules/isnand-nolibm-tests: Likewise.
+        * lib/frexp.c: Likewise.
+	* lib/isfinite.c: Likewise.
+	* lib/signbitd.c: Likewise.
+	* lib/signbitf.c: Likewise.
+	* lib/vasnprintf.c: Likewise.
+	* tests/test-ceilf1.c: Likewise.
+	* tests/test-ceilf2.c: Likewise.
+	* tests/test-floorf1.c: Likewise.
+	* tests/test-floorf2.c: Likewise.
+	* tests/test-frexp.c: Likewise.
+	* tests/test-round1.c: Likewise.
+	* tests/test-round2.c: Likewise.
+	* tests/test-roundf1.c: Likewise.
+	* tests/test-strtod.c: Likewise.
+	* tests/test-trunc1.c: Likewise.
+	* tests/test-trunc2.c: Likewise.
+	* tests/test-truncf1.c: Likewise.
+	* tests/test-truncf2.c: Likewise.
+	* NEWS: Mention the renamed header files.
+
 2008-07-11  Jim Meyering  <meyering@redhat.com>
 
 	vc-list-files: make the last-resort awk code more portable

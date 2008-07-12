@@ -19,8 +19,8 @@
 
 #include <config.h>
 
-#include "isnanf.h"
-#include "isnand.h"
+#include "isnanf-nolibm.h"
+#include "isnand-nolibm.h"
 #include "isnanl-nolibm.h"
 
 int gl_isfinitef (float x)

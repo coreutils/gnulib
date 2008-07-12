@@ -1,5 +1,5 @@
 Files:
-tests/test-isnanf.c
+tests/test-isnanf-nolibm.c
 tests/nan.h
 
 Depends-on:
@@ -8,6 +8,6 @@ configure.ac:
 gl_FLOAT_EXPONENT_LOCATION
 
 Makefile.am:
-TESTS += test-isnanf
-check_PROGRAMS += test-isnanf
+TESTS += test-isnanf-nolibm
+check_PROGRAMS += test-isnanf-nolibm
 
