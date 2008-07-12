@@ -1,4 +1,4 @@
-/* Test of isnand() substitute.
+/* Test for NaN.
    Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -14,9 +14,20 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#include <config.h>
-
-#include "isnand-nolibm.h"
-
-#include "test-isnand.h"
-
+#if HAVE_ISNAND
+/* Get declaration of isnan macro.  */
+# include <math.h>
+# if __GNUC__ >= 4
+   /* GCC 4.0 and newer provides three built-ins for isnan.  */
+#  undef isnand
+#  define isnand(x) __builtin_isnan ((double)(x))
+# else
+#  undef isnand
+#  define isnand(x) isnan ((double)(x))
+# endif
+#else
+/* Test whether X is a NaN.  */
+# undef isnand
+# define isnand rpl_isnand
+extern int isnand (double x);
+#endif

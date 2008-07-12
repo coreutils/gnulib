@@ -1,0 +1,30 @@
+Description:
+isnand() function: test for NaN.
+
+Files:
+lib/isnand.h
+lib/isnand.c
+lib/isnan.c
+lib/float+.h
+m4/isnand.m4
+
+Depends-on:
+fpieee
+
+configure.ac:
+gl_FUNC_ISNAND
+
+Makefile.am:
+
+Include:
+#include "isnand.h"
+
+Link:
+$(ISNAND_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

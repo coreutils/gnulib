@@ -1,5 +1,6 @@
 Files:
 tests/test-isnand-nolibm.c
+tests/test-isnand.h
 tests/nan.h
 
 Depends-on:

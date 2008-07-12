@@ -16,7 +16,7 @@
 
 #include <config.h>
 
-#include "isnand-nolibm.h"
+#include "isnand.h"
 
 #include "test-isnand.h"
 

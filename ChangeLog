@@ -1,5 +1,26 @@
 2008-07-10  Ben Pfaff  <blp@gnu.org>
 
+	Add isnand module.
+	* lib/isnand.h: New file.
+	* m4/isnand.m4 (gl_FUNC_ISNAND): New macro.
+	(gl_FUNC_ISNAND_NO_LIBM): Split partially into new macro
+	gl_HAVE_ISNAND_NO_LIBM so that gl_FUNC_ISNAND can use that
+	functionality also.
+	(gl_BUILD_ISNAND): New macro used by gl_FUNC_ISNAND,
+	gl_FUNC_ISNAND_NO_LIBM, and gl_FUNC_ISNAN.
+	(gl_HAVE_ISNAND_IN_LIBM): New macro.
+	* modules/isnand: New file.
+	* modules/isnand-tests: New file.
+	* modules/isnand-nolibm-tests: Add tests/test-isnand.h to list of
+	files.
+	* tests/test-isnand-nolibm.c: factored most of its contents into
+	new file tests/test-isnand.h.
+	* tests/test-isnand.h: New file.
+	* tests/test-isnand.c: New file.
+	* MODULES.html.sh: Mention new module.
+
+2008-07-10  Ben Pfaff  <blp@gnu.org>
+
 	* lib/isnanf.h: Rename lib/isnanf-nolibm.h.
 	* lib/isnand.h: Rename lib/isnand-nolibm.h.
 	* tests/test-isnanf.c: Rename tests/test-isnanf-nolibm.c.
