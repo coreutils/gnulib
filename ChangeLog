@@ -6,10 +6,10 @@
 2008-07-10  Ben Pfaff  <blp@gnu.org>
 
 	Add isnan module.
-        * doc/posix-functions/isnan.texi: Mention new module.
-        * lib/math.in.h: Define isnan macro if we have decided to replace
-        it.
-        * m4/isnan.m4: New file.
+	* doc/posix-functions/isnan.texi: Mention new module.
+	* lib/math.in.h: Define isnan macro if we have decided to replace
+	it.
+	* m4/isnan.m4: New file.
 	* m4/isnanl.m4 (gl_FUNC_ISNANL): Factor out some code into new
 	macro gl_BUILD_ISNANL so that isnan.m4 can use that functionality
 	also.
@@ -73,7 +73,7 @@
 	* modules/isnand-nolibm: Likewise.
 	* modules/isnanf-nolibm-tests: Likewise.
 	* modules/isnand-nolibm-tests: Likewise.
-        * lib/frexp.c: Likewise.
+	* lib/frexp.c: Likewise.
 	* lib/isfinite.c: Likewise.
 	* lib/signbitd.c: Likewise.
 	* lib/signbitf.c: Likewise.
