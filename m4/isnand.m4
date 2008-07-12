@@ -41,7 +41,7 @@ AC_DEFUN([gl_FUNC_ISNAND_NO_LIBM],
   fi
 ])
 
-dnl Pull in replacement isnand definition.
+dnl Pull in replacement isnand definition. It does not need -lm.
 AC_DEFUN([gl_BUILD_ISNAND],
 [
   AC_LIBOBJ([isnand])

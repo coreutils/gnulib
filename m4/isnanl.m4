@@ -55,7 +55,7 @@ AC_DEFUN([gl_FUNC_ISNANL_NO_LIBM],
   fi
 ])
 
-dnl Pull in replacement isnanl definition.
+dnl Pull in replacement isnanl definition. It does not need -lm.
 AC_DEFUN([gl_BUILD_ISNANL],
 [
   AC_LIBOBJ([isnanl])
