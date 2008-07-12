@@ -4,10 +4,24 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/isnan.html}
 
-Gnulib module: ---
+Gnulib module: isnan
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+@code{isnan} was introduced with C99 and is thus commonly not present
+on pre-C99 systems.
+@item
+On IRIX 6.5 with @code{cc}, @code{isnan} does not recognize some NaNs.
+@item
+On NetBSD/i386 and glibc/ia64, @code{isnan} does not recognize some
+forms of NaNs, such as pseudo-NaNs, pseudo-Infinities, and
+unnormalized numbers.
+@item
+On i686 and @var{x}86-64, @code{__builtin_isnanl} (and thus
+@code{isnan} implementations based on it) in GCC 4.0 and later does
+not recognize pseudo-denormals as NaNs, and similarly for
+pseudo-zeroes, unnormalized numbers, and pseudo-denormals on ia64.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -31,8 +31,7 @@ AC_DEFUN([gl_FUNC_ISNANL],
     AC_DEFINE([HAVE_ISNANL], 1,
       [Define if the isnan(long double) function is available.])
   else
-    AC_LIBOBJ([isnanl])
-    gl_LONG_DOUBLE_EXPONENT_LOCATION
+    gl_BUILD_ISNANL
   fi
   AC_SUBST([ISNANL_LIBM])
 ])
@@ -52,9 +51,15 @@ AC_DEFUN([gl_FUNC_ISNANL_NO_LIBM],
     AC_DEFINE([HAVE_ISNANL_IN_LIBC], 1,
       [Define if the isnan(long double) function is available in libc.])
   else
-    AC_LIBOBJ([isnanl])
-    gl_LONG_DOUBLE_EXPONENT_LOCATION
+    gl_BUILD_ISNANL
   fi
+])
+
+dnl Pull in replacement isnanl definition.
+AC_DEFUN([gl_BUILD_ISNANL],
+[
+  AC_LIBOBJ([isnanl])
+  gl_LONG_DOUBLE_EXPONENT_LOCATION
 ])
 
 dnl Test whether isnanl() can be used without libm.

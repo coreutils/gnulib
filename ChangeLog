@@ -1,5 +1,25 @@
 2008-07-10  Ben Pfaff  <blp@gnu.org>
 
+	Add isnan module.
+        * doc/posix-functions/isnan.texi: Mention new module.
+        * lib/math.in.h: Define isnan macro if we have decided to replace
+        it.
+        * m4/isnan.m4: New file.
+	* m4/isnanl.m4 (gl_FUNC_ISNANL): Factor out some code into new
+	macro gl_BUILD_ISNANL so that isnan.m4 can use that functionality
+	also.
+	(gl_FUNC_ISNANL_NO_LIBM): Factor out same code, to reduce
+	redundancy.
+	* m4/math_h.m4: Initialize and substitute variables for isnan
+	module.
+	* modules/isnan: New file.
+	* modules/isnan-tests: New file.
+	* modules/math: Add substitutions for new module.
+	* tests/test-isnan.c: New file.
+	* MODULES.html.sh: Mention new module.
+
+2008-07-10  Ben Pfaff  <blp@gnu.org>
+
 	Add isnanf module.
 	* lib/isnanf.m4: New file.
 	* m4/isnanf.m4 (gl_FUNC_ISNANF): New macro.
