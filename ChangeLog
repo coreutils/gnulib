@@ -1,3 +1,8 @@
+2008-07-12  Ben Pfaff  <blp@gnu.org>
+
+	Add longlong module.
+	* modules/longlong: New file.
+
 2008-07-12  Bruno Haible  <bruno@clisp.org>
 
 	* m4/isnan.m4 (gl_ISNAN): When the replacement is used, set ISNAN_LIBM

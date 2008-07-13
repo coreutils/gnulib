@@ -1871,6 +1871,7 @@ func_all_modules ()
   func_module fpucw
   func_module func
   func_module inline
+  func_module longlong
   func_module vararrays
   func_end_table
 
