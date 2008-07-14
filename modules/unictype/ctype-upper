@@ -1,5 +1,6 @@
 Description:
-Generalization of <ctype.h> isupper() and <wctype.h> iswupper().
+Generalization of the <ctype.h> isupper() function and the
+<wctype.h> iswupper() function.
 
 Files:
 lib/unictype/ctype_upper.c

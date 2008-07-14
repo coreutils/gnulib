@@ -1,5 +1,6 @@
 Description:
-Generalization of <ctype.h> isalnum() and <wctype.h> iswalnum().
+Generalization of the <ctype.h> isalnum() function and the
+<wctype.h> iswalnum() function.
 
 Files:
 lib/unictype/ctype_alnum.c

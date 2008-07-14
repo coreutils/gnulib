@@ -1,5 +1,6 @@
 Description:
-Generalization of <ctype.h> ispunct() and <wctype.h> iswpunct().
+Generalization of the <ctype.h> ispunct() function and the
+<wctype.h> iswpunct() function.
 
 Files:
 lib/unictype/ctype_punct.c

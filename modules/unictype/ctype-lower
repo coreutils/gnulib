@@ -1,5 +1,6 @@
 Description:
-Generalization of <ctype.h> islower() and <wctype.h> iswlower().
+Generalization of the <ctype.h> islower() function and the
+<wctype.h> iswlower() function.
 
 Files:
 lib/unictype/ctype_lower.c

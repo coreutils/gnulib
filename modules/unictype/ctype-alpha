@@ -1,5 +1,6 @@
 Description:
-Generalization of <ctype.h> isalpha() and <wctype.h> iswalpha().
+Generalization of the <ctype.h> isalpha() function and the
+<wctype.h> iswalpha() function.
 
 Files:
 lib/unictype/ctype_alpha.c

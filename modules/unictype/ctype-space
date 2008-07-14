@@ -1,5 +1,6 @@
 Description:
-Generalization of <ctype.h> isspace() and <wctype.h> iswspace().
+Generalization of the <ctype.h> isspace() function and the
+<wctype.h> iswspace() function.
 
 Files:
 lib/unictype/ctype_space.c

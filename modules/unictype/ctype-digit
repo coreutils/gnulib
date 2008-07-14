@@ -1,5 +1,6 @@
 Description:
-Generalization of <ctype.h> isdigit() and <wctype.h> iswdigit().
+Generalization of the <ctype.h> isdigit() function and the
+<wctype.h> iswdigit() function.
 
 Files:
 lib/unictype/ctype_digit.c

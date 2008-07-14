@@ -1,5 +1,6 @@
 Description:
-Generalization of <ctype.h> isprint() and <wctype.h> iswprint().
+Generalization of the <ctype.h> isprint() function and the
+<wctype.h> iswprint() function.
 
 Files:
 lib/unictype/ctype_print.c

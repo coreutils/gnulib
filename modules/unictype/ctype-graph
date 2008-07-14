@@ -1,5 +1,6 @@
 Description:
-Generalization of <ctype.h> isgraph() and <wctype.h> iswgraph().
+Generalization of the <ctype.h> isgraph() function and the
+<wctype.h> iswgraph() function.
 
 Files:
 lib/unictype/ctype_graph.c

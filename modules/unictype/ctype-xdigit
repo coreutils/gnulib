@@ -1,5 +1,6 @@
 Description:
-Generalization of <ctype.h> isxdigit() and <wctype.h> iswxdigit().
+Generalization of the <ctype.h> isxdigit() function and the
+<wctype.h> iswxdigit() function.
 
 Files:
 lib/unictype/ctype_xdigit.c

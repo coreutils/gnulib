@@ -1,5 +1,6 @@
 Description:
-Generalization of <ctype.h> isblank() and <wctype.h> iswblank().
+Generalization of the <ctype.h> isblank() function and the
+<wctype.h> iswblank() function.
 
 Files:
 lib/unictype/ctype_blank.c
