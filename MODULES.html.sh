@@ -2380,6 +2380,18 @@ func_all_modules ()
   func_module openmp
   func_end_table
 
+  element="Signal handling"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap posix_ext_signal
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module c-stack
+  func_module libsigsegv
+  func_module sig2str
+  func_end_table
+
   element="Internationalization functions"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap posix_ext_i18n
@@ -2877,7 +2889,6 @@ func_all_modules ()
   func_module argz
   func_module byteswap
   func_module exitfail
-  func_module c-stack
   func_module error
   func_module extensions
   func_module getdomainname
@@ -2891,7 +2902,6 @@ func_all_modules ()
   func_module quotearg
   func_module quote
   func_module readutmp
-  func_module sig2str
   func_module sysexits
   func_module verror
   func_module visibility

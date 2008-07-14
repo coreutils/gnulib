@@ -1,3 +1,12 @@
+2008-07-14  Sam Steingold  <sds@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	New module libsigsegv.
+	* modules/libsigsegv: New file.
+	* m4/libsigsegv.m4: New file, from GNU clisp sigsegv.m4 with
+	modifications.
+	* MODULES.html.sh (Signal handling): New section.
+
 2008-07-14  Bruno Haible  <bruno@clisp.org>
 
 	* modules/unictype/ctype-* (Description): Add the word "function".
