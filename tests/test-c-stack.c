@@ -29,11 +29,11 @@
   do									     \
     {									     \
       if (!(expr))							     \
-        {								     \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
+	{								     \
+	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+	  fflush (stderr);						     \
+	  abort ();							     \
+	}								     \
     }									     \
   while (0)
 
@@ -62,7 +62,14 @@ main (int argc, char **argv)
 #endif
 
   if (c_stack_action (0) == 0)
-    return recurse ("\1");
+    {
+      if (1 < argc)
+	{
+	  exit_failure = 77;
+	  ++*argv[argc]; /* Intentionally dereference NULL.  */
+	}
+      return recurse ("\1");
+    }
   perror ("c_stack_action");
   return 77;
 }

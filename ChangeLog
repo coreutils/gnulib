@@ -1,10 +1,18 @@
+2008-07-16  Eric Blake  <ebb9@byu.net>
+
+	c-stack: Expose false positives when not using libsigsegv.
+	* modules/c-stack-tests (Files): Expand test.
+	* tests/test-c-stack.c (main): Add means to conditionally trigger
+	non-overflow SIGSEGV.
+	* tests/test-c-stack2.sh: New file.
+
 2008-07-14  Bruno Haible  <bruno@clisp.org>
 
 	* m4/libsigsegv.m4: Remove unneeded AC_PREREQ.
 	Reported by Eric Blake.
 
 2008-07-14  Sam Steingold  <sds@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	New module libsigsegv.
 	* modules/libsigsegv: New file.
