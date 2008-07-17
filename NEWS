@@ -6,6 +6,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-07-17  c-stack         The module now requires the addition of
+                            $(LIBCSTACK) or $(LTLIBCSTACK) in Makefile.am,
+                            since it may depend on linking with libsigsegv.
+
 2008-07-07  isnanf-nolibm   The include file is changed from "isnanf.h"
                             to "isnanf-nolibm.h".
             isnand-nolibm   The include file is changed from "isnand.h"

@@ -12,6 +12,7 @@ exitfail
 unistd
 raise
 sigaction
+libsigsegv
 
 configure.ac:
 gl_C_STACK
@@ -21,6 +22,9 @@ lib_SOURCES += c-stack.h c-stack.c
 
 Include:
 "c-stack.h"
+
+Link:
+$(LTCSTACK) when linking with libtool, $(LIBCSTACK) otherwise
 
 License:
 GPL

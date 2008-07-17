@@ -53,6 +53,9 @@
 #if ! HAVE_STACK_T && ! defined stack_t
 typedef struct sigaltstack stack_t;
 #endif
+#ifndef SIGSTKSZ
+# define SIGSTKSZ 16384
+#endif
 
 #include <stdlib.h>
 #include <string.h>
@@ -66,6 +69,10 @@ typedef struct sigaltstack stack_t;
 #include <unistd.h>
 #ifndef STDERR_FILENO
 # define STDERR_FILENO 2
+#endif
+
+#if HAVE_LIBSIGSEGV
+# include <sigsegv.h>
 #endif
 
 #include "c-stack.h"
@@ -110,7 +117,115 @@ die (int signo)
   abort ();
 }
 
-#if HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK
+#if (HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK) || HAVE_LIBSIGSEGV
+
+/* Storage for the alternate signal stack.  */
+static union
+{
+  char buffer[SIGSTKSZ];
+
+  /* These other members are for proper alignment.  There's no
+     standard way to guarantee stack alignment, but this seems enough
+     in practice.  */
+  long double ld;
+  long l;
+  void *p;
+} alternate_signal_stack;
+
+static void
+null_action (int signo __attribute__ ((unused)))
+{
+}
+
+#endif /* SIGALTSTACK || LIBSIGSEGV */
+
+/* Only use libsigsegv if we need it; platforms like Solaris can
+   detect stack overflow without the overhead of an external
+   library.  */
+#if HAVE_LIBSIGSEGV && ! HAVE_XSI_STACK_OVERFLOW_HEURISTIC
+
+/* Nonzero if general segv handler could not be installed.  */
+static volatile int segv_handler_missing;
+
+/* Handle a segmentation violation and exit if it cannot be stack
+   overflow.  This function is async-signal-safe.  */
+
+static int segv_handler (void *address __attribute__ ((unused)),
+			 int serious)
+{
+# if DEBUG
+  {
+    char buf[1024];
+    sprintf (buf, "segv_handler serious=%d\n", serious);
+    write (STDERR_FILENO, buf, strlen (buf));
+  }
+# endif
+
+  /* If this fault is not serious, return 0 to let the stack overflow
+     handler take a shot at it.  */
+  if (!serious)
+    return 0;
+  die (SIGSEGV);
+}
+
+/* Handle a segmentation violation that is likely to be a stack
+   overflow and exit.  This function is async-signal-safe.  */
+
+static void overflow_handler (int, stackoverflow_context_t)
+  __attribute__ ((noreturn));
+static void
+overflow_handler (int emergency,
+		  stackoverflow_context_t context __attribute__ ((unused)))
+{
+# if DEBUG
+  {
+    char buf[1024];
+    sprintf (buf, "overflow_handler emergency=%d segv_handler_missing=%d\n",
+	     emergency, segv_handler_missing);
+    write (STDERR_FILENO, buf, strlen (buf));
+  }
+# endif
+
+  die ((!emergency || segv_handler_missing) ? 0 : SIGSEGV);
+}
+
+/* Set up ACTION so that it is invoked on C stack overflow.  Return -1
+   (setting errno) if this cannot be done.
+
+   When ACTION is called, it is passed an argument equal to SIGSEGV
+   for a segmentation violation that does not appear related to stack
+   overflow, and is passed zero otherwise.  On many platforms it is
+   hard to tell; when in doubt, zero is passed.
+
+   A null ACTION acts like an action that does nothing.
+
+   ACTION must be async-signal-safe.  ACTION together with its callees
+   must not require more than SIGSTKSZ bytes of stack space.  Also,
+   ACTION should not call longjmp, because this implementation does
+   not guarantee that it is safe to return to the original stack.  */
+
+int
+c_stack_action (void (*action) (int))
+{
+  segv_action = action ? action : null_action;
+  program_error_message = _("program error");
+  stack_overflow_message = _("stack overflow");
+
+  /* Always install the overflow handler.  */
+  if (stackoverflow_install_handler (overflow_handler,
+                                     alternate_signal_stack.buffer,
+                                     sizeof alternate_signal_stack.buffer))
+    {
+      errno = ENOTSUP;
+      return -1;
+    }
+  /* Try installing a general handler; if it fails, then treat all
+     segv as stack overflow.  */
+  segv_handler_missing = sigsegv_install_handler (segv_handler);
+  return 0;
+}
+
+#elif HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK
 
 /* Direction of the C runtime stack.  This function is
    async-signal-safe.  */
@@ -125,19 +240,6 @@ find_stack_direction (char const *addr)
   return ! addr ? find_stack_direction (&dummy) : addr < &dummy ? 1 : -1;
 }
 # endif
-
-/* Storage for the alternate signal stack.  */
-static union
-{
-  char buffer[SIGSTKSZ];
-
-  /* These other members are for proper alignment.  There's no
-     standard way to guarantee stack alignment, but this seems enough
-     in practice.  */
-  long double ld;
-  long l;
-  void *p;
-} alternate_signal_stack;
 
 # if SIGACTION_WORKS
 
@@ -155,7 +257,14 @@ segv_handler (int signo, siginfo_t *info,
 #  if ! HAVE_XSI_STACK_OVERFLOW_HEURISTIC
       /* We can't easily determine whether it is a stack overflow; so
 	 assume that the rest of our program is perfect (!) and that
-	 this segmentation violation is a stack overflow.  */
+	 this segmentation violation is a stack overflow.
+
+	 Note that although both Linux and Solaris provide
+	 sigaltstack, SA_ONSTACK, and SA_SIGINFO, currently only
+	 Solaris satisfies the XSI heueristic.  This is because
+	 Solaris populates uc_stack with the details of the
+	 interrupted stack, while Linux populates it with the details
+	 of the current stack.  */
       signo = 0;
 #  else
       /* If the faulting address is within the stack, or within one
@@ -189,11 +298,6 @@ segv_handler (int signo, siginfo_t *info,
 }
 # endif
 
-static void
-null_action (int signo __attribute__ ((unused)))
-{
-}
-
 /* Set up ACTION so that it is invoked on C stack overflow.  Return -1
    (setting errno) if this cannot be done.
 
@@ -205,7 +309,9 @@ null_action (int signo __attribute__ ((unused)))
    A null ACTION acts like an action that does nothing.
 
    ACTION must be async-signal-safe.  ACTION together with its callees
-   must not require more than SIGSTKSZ bytes of stack space.  */
+   must not require more than SIGSTKSZ bytes of stack space.  Also,
+   ACTION should not call longjmp, because this implementation does
+   not guarantee that it is safe to return to the original stack.  */
 
 int
 c_stack_action (void (*action) (int))
@@ -240,7 +346,7 @@ c_stack_action (void (*action) (int))
   return sigaction (SIGSEGV, &act, NULL);
 }
 
-#else /* ! (HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK) */
+#else /* ! ((HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK) || HAVE_LIBSIGSEGV) */
 
 int
 c_stack_action (void (*action) (int)  __attribute__ ((unused)))

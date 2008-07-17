@@ -11,7 +11,7 @@ tmpfiles="t-c-stack2.tmp"
 
 case $? in
   77) if grep 'stack overflow' t-c-stack2.tmp >/dev/null ; then
-	echo 'cannot distinguish stack overflow from crash' >&2
+	echo 'cannot tell stack overflow from crash; consider installing libsigsegv' >&2
       else
        cat t-c-stack2.tmp >&2
       fi

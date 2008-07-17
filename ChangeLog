@@ -1,3 +1,20 @@
+2008-07-17  Eric Blake  <ebb9@byu.net>
+
+	Make c-stack use libsigsegv, when available.
+	* modules/c-stack (Depends-on): Add libsigsegv.
+	* modules/c-stack-tests (Makefile.am): Link with libsigsegv, if
+	needed.
+	* lib/c-stack.c (SIGSTKSZ): Define fallback.
+	(segv_handler, overflow_handler, c_stack_action)
+	[HAVE_LIBSIGSEGV && !HAVE_XSI_STACK_OVERFLOW_HEURISTIC]: Add new
+	implementation when libsigsegv is available, but only when using
+	the library is necessary.
+	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Add
+	comment, explaining why XSI check fails on Linux.
+	(gl_PREREQ_C_STACK): Supply LIBCSTACK, LTLIBCSTACK.
+	* tests/test-c-stack2.sh: Tweak skip message.
+	* NEWS: Document new link-time requirements.
+
 2008-07-16  Eric Blake  <ebb9@byu.net>
 
 	c-stack: Expose false positives when not using libsigsegv.

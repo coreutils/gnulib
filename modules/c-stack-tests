@@ -12,5 +12,5 @@ Makefile.am:
 TESTS += test-c-stack.sh test-c-stack2.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-c-stack
-test_c_stack_LDADD = $(LDADD) @LIBINTL@
+test_c_stack_LDADD = $(LDADD) $(LIBCSTACK) @LIBINTL@
 MOSTLYCLEANFILES += t-c-stack.tmp t-c-stack2.tmp

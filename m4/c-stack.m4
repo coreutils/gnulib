@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 2
+# serial 3
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [# for STACK_DIRECTION
@@ -55,6 +55,9 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	 {
 	   if (0 < info->si_code)
 	     {
+               /* For XSI heuristics to work, we need uc_stack to describe
+	          the interrupted stack (as on Solaris), and not the
+		  currently executing stack (as on Linux).  */
 	       ucontext_t const *user_context = context;
 	       char const *stack_min = user_context->uc_stack.ss_sp;
 	       size_t stack_size = user_context->uc_stack.ss_size;
@@ -133,6 +136,7 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 
 AC_DEFUN([gl_PREREQ_C_STACK],
   [AC_REQUIRE([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC])
+   AC_REQUIRE([gl_LIBSIGSEGV])
 
    # for STACK_DIRECTION
    AC_REQUIRE([AC_FUNC_ALLOCA])
@@ -144,7 +148,15 @@ AC_DEFUN([gl_PREREQ_C_STACK],
 
    AC_CHECK_MEMBERS([struct sigaction.sa_sigaction], , , [#include <signal.h>])
 
-   AC_CHECK_TYPES([stack_t], , , [#include <signal.h>])])
+   AC_CHECK_TYPES([stack_t], , , [#include <signal.h>])
+
+   dnl c-stack does not need -lsigsegv if the system has XSI heuristics.
+   if test "$gl_cv_lib_sigsegv" = yes \
+       && test $"ac_cv_sys_xsi_stack_overflow_heuristic" != yes ; then
+     AC_SUBST([LIBCSTACK], [$LIBSIGSEGV])
+     AC_SUBST([LTLIBCSTACK], [$LTLIBSIGSEGV])
+   fi
+])
 
 AC_DEFUN([gl_C_STACK],
 [
