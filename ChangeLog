@@ -1,5 +1,7 @@
 2008-07-17  Eric Blake  <ebb9@byu.net>
 
+	* modules/c-stack (Link): Fix typo.
+
 	Make c-stack use libsigsegv, when available.
 	* modules/c-stack (Depends-on): Add libsigsegv.
 	* modules/c-stack-tests (Makefile.am): Link with libsigsegv, if

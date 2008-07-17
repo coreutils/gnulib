@@ -24,7 +24,7 @@ Include:
 "c-stack.h"
 
 Link:
-$(LTCSTACK) when linking with libtool, $(LIBCSTACK) otherwise
+$(LTLIBCSTACK) when linking with libtool, $(LIBCSTACK) otherwise
 
 License:
 GPL
