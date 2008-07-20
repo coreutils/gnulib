@@ -1,5 +1,11 @@
 2008-07-20  Bruno Haible  <bruno@clisp.org>
 
+	* modules/c-stack-tests (Makefile.am): Add LIBSIGSEGV to
+	TESTS_ENVIRONMENT.
+	* tests/test-c-stack2.sh: React differently if LIBSIGSEGV is in use.
+
+2008-07-20  Bruno Haible  <bruno@clisp.org>
+
 	* lib/c-stack.h (c_stack_action): Add documentation.
 	* lib/c-stack.c (c_stack_action): Remove incomplete documentation.
 

@@ -11,11 +11,18 @@ tmpfiles="t-c-stack2.tmp"
 
 case $? in
   77) if grep 'stack overflow' t-c-stack2.tmp >/dev/null ; then
-	echo 'cannot tell stack overflow from crash; consider installing libsigsegv' >&2
+	if test -z "$LIBSIGSEGV"; then
+	  echo 'cannot tell stack overflow from crash; consider installing libsigsegv' >&2
+	  exit 77
+	else
+	  echo 'cannot tell stack overflow from crash, in spite of libsigsegv' >&2
+	  exit 1
+	fi
       else
-       cat t-c-stack2.tmp >&2
+	cat t-c-stack2.tmp >&2
+	exit 77
       fi
-      (exit 77); exit 77 ;;
+      ;;
   0) (exit 1); exit 1 ;;
 esac
 if grep 'program error' t-c-stack2.tmp >/dev/null ; then
