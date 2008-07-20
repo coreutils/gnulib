@@ -1,3 +1,8 @@
+2008-07-20  Bruno Haible  <bruno@clisp.org>
+
+	* modules/canonicalize-lgpl (License): Relicense under LGPLv2+.
+	* modules/readlink (License): Likewise.
+
 2008-07-17  Eric Blake  <ebb9@byu.net>
 
 	* modules/c-stack (Link): Fix typo.
