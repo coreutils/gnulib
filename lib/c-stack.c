@@ -189,21 +189,6 @@ overflow_handler (int emergency,
   die ((!emergency || segv_handler_missing) ? 0 : SIGSEGV);
 }
 
-/* Set up ACTION so that it is invoked on C stack overflow.  Return -1
-   (setting errno) if this cannot be done.
-
-   When ACTION is called, it is passed an argument equal to SIGSEGV
-   for a segmentation violation that does not appear related to stack
-   overflow, and is passed zero otherwise.  On many platforms it is
-   hard to tell; when in doubt, zero is passed.
-
-   A null ACTION acts like an action that does nothing.
-
-   ACTION must be async-signal-safe.  ACTION together with its callees
-   must not require more than SIGSTKSZ bytes of stack space.  Also,
-   ACTION should not call longjmp, because this implementation does
-   not guarantee that it is safe to return to the original stack.  */
-
 int
 c_stack_action (void (*action) (int))
 {
@@ -297,21 +282,6 @@ segv_handler (int signo, siginfo_t *info,
   die (signo);
 }
 # endif
-
-/* Set up ACTION so that it is invoked on C stack overflow.  Return -1
-   (setting errno) if this cannot be done.
-
-   When ACTION is called, it is passed an argument equal to SIGSEGV
-   for a segmentation violation that does not appear related to stack
-   overflow, and is passed zero otherwise.  On many platforms it is
-   hard to tell; when in doubt, zero is passed.
-
-   A null ACTION acts like an action that does nothing.
-
-   ACTION must be async-signal-safe.  ACTION together with its callees
-   must not require more than SIGSTKSZ bytes of stack space.  Also,
-   ACTION should not call longjmp, because this implementation does
-   not guarantee that it is safe to return to the original stack.  */
 
 int
 c_stack_action (void (*action) (int))
