@@ -1,3 +1,9 @@
+2008-07-21  Eric Blake  <ebb9@byu.net>
+
+	Don't allow installation with stale devel version number.
+	* top/GNUmakefile (_is-install-target): New macro.
+	(_curr-ver): Forbid installation with stale version number.
+
 2008-07-20  Bruno Haible  <bruno@clisp.org>
 
 	* modules/c-stack-tests (Makefile.am): Add LIBSIGSEGV to
