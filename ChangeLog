@@ -1,5 +1,8 @@
 2008-07-21  Eric Blake  <ebb9@byu.net>
 
+	Warn, not fail, on stale version.
+	* top/GNUmakefile (_curr-ver): Tone down previous patch.
+
 	Don't allow installation with stale devel version number.
 	* top/GNUmakefile (_is-install-target): New macro.
 	(_curr-ver): Forbid installation with stale version number.

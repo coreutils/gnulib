@@ -67,10 +67,10 @@ ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
         # recompilation after 'make all'.  But as long as changing the version
         # string alters config.h, the cost of having 'make all' always have an
         # up-to-date version is prohibitive.  So, as a compromise, we merely
-        # refuse to install if the version string is out of date; the user
-        # must run 'autoreconf' (or something like 'make distcheck') to
+        # warn when installing a version string that is out of date; the user
+        # should run 'autoreconf' (or something like 'make distcheck') to
         # fix the version, 'make all' to propagate it, then 'make install'.
-        $(error version string $(VERSION) is out of date; run autoreconf before installing)
+        $(info WARNING: version string $(VERSION) is out of date; run autoreconf -f to fix it)
       else
         $(info INFO: running autoreconf for new version string: $(_curr-ver))
         _dummy := $(shell cd $(srcdir) && rm -rf autom4te.cache .version \
