@@ -1,7 +1,7 @@
 2008-07-23  Ulrich Drepper  <drepper@redhat.com>
 
-	* lib/canonicalize-lgpl.c (__realpath): readlink can write too
-	much into the buffer on platforms without PATH_MAX.
+	* lib/canonicalize-lgpl.c (__realpath): Avoid buffer overflow after
+	readlink on platforms without PATH_MAX.
 
 2008-07-21  Eric Blake  <ebb9@byu.net>
 
