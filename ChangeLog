@@ -1,5 +1,10 @@
 2008-07-23  Ulrich Drepper  <drepper@redhat.com>
 
+	mktime.c: normalize tp->tm_isdst value to -1/0/1.
+	* lib/mktime.c (__mktime_internal): Normalize tp->tm_isdst value.
+	Reported by Michael Ringe <Michael.Ringe@gmx.de> in
+	<http://sourceware.org/bugzilla/show_bug.cgi?id=6723>.
+
 	* lib/canonicalize-lgpl.c (__realpath): Avoid buffer overflow after
 	readlink on platforms without PATH_MAX.
 
