@@ -260,7 +260,7 @@ __realpath (const char *name, char *resolved)
 		  goto error;
 		}
 
-	      n = __readlink (rpath, buf, path_max);
+	      n = __readlink (rpath, buf, path_max - 1);
 	      if (n < 0)
 		{
 		  int saved_errno = errno;
