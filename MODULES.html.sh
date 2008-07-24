@@ -2000,6 +2000,7 @@ func_all_modules ()
   func_module frexpl
   func_module frexpl-nolibm
   func_module isfinite
+  func_module isinf
   func_module isnan
   func_module isnanf
   func_module isnanf-nolibm

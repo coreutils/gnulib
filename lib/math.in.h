@@ -381,6 +381,22 @@ extern int gl_isfinitel (long double x);
 #endif
 
 
+#if @GNULIB_ISINF@
+# if @REPLACE_ISINF@
+extern int gl_isinff (float x);
+extern int gl_isinfd (double x);
+extern int gl_isinfl (long double x);
+#  undef isinf
+#  define isinf(x) \
+   (sizeof (x) == sizeof (long double) ? gl_isinfl (x) : \
+    sizeof (x) == sizeof (double) ? gl_isinfd (x) : \
+    gl_isinff (x))
+# endif
+#elif defined GNULIB_POSIXCHECK
+  /* How to override a macro?  */
+#endif
+
+
 #if @GNULIB_ISNAN@
 # if @REPLACE_ISNAN@
 /* We can't just use the isnanf macro (e.g.) as exposed by

@@ -29,6 +29,7 @@ math.h: math.in.h
 	      -e 's|@''GNULIB_FREXP''@|$(GNULIB_FREXP)|g' \
 	      -e 's|@''GNULIB_FREXPL''@|$(GNULIB_FREXPL)|g' \
 	      -e 's|@''GNULIB_ISFINITE''@|$(GNULIB_ISFINITE)|g' \
+	      -e 's|@''GNULIB_ISINF''@|$(GNULIB_ISINF)|g' \
 	      -e 's|@''GNULIB_ISNAN''@|$(GNULIB_ISNAN)|g' \
 	      -e 's|@''GNULIB_LDEXPL''@|$(GNULIB_LDEXPL)|g' \
 	      -e 's|@''GNULIB_MATHL''@|$(GNULIB_MATHL)|g' \
@@ -60,6 +61,7 @@ math.h: math.in.h
 	      -e 's|@''REPLACE_FREXPL''@|$(REPLACE_FREXPL)|g' \
 	      -e 's|@''REPLACE_HUGE_VAL''@|$(REPLACE_HUGE_VAL)|g' \
 	      -e 's|@''REPLACE_ISFINITE''@|$(REPLACE_ISFINITE)|g' \
+	      -e 's|@''REPLACE_ISINF''@|$(REPLACE_ISINF)|g' \
 	      -e 's|@''REPLACE_ISNAN''@|$(REPLACE_ISNAN)|g' \
 	      -e 's|@''REPLACE_LDEXPL''@|$(REPLACE_LDEXPL)|g' \
 	      -e 's|@''REPLACE_NAN''@|$(REPLACE_NAN)|g' \

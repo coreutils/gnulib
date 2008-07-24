@@ -1,5 +1,21 @@
 2008-07-14  Ben Pfaff  <blp@gnu.org>
 
+	Add isinf module.
+	* lib/isinf.c: New file.
+	* lib/math.in.h: Define isinf macro if we have decided to replace
+	it.
+	* m4/isinf.m4: New file.
+	* m4/math_h.m4: Initialize and substitute variables for isinf
+	module.
+	* modules/isinf: New file.
+	* modules/isinf-tests: New file.
+	* modules/math: Add substitutions for new module.
+	* tests/test-isinf.c: New file.
+	* doc/posix-functions/isinf.texi: Mention new module.
+	* MODULES.html.sh: Mention new module.
+
+2008-07-14  Ben Pfaff  <blp@gnu.org>
+
 	Factor out some macros for use by additional modules.
 	* m4/isnanf.m4 (gl_FLOAT_EXPONENT_LOCATION): Move into new file
 	exponentf.m4.

@@ -1,0 +1,27 @@
+Description:
+isinf macro: test for positive or negative infinity
+
+Files:
+lib/isinf.c
+m4/isinf.m4
+m4/check-math-lib.m4
+
+Depends-on:
+float
+math
+extensions
+
+configure.ac:
+gl_ISINF
+gl_MATH_MODULE_INDICATOR([isinf])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+License:
+GPL
+
+Maintainer:
+Ben Pfaff
