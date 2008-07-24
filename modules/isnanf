@@ -6,6 +6,7 @@ lib/isnanf.h
 lib/isnanf.c
 lib/isnan.c
 lib/float+.h
+m4/exponentf.m4
 m4/isnanf.m4
 
 Depends-on:

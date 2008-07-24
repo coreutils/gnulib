@@ -1,3 +1,19 @@
+2008-07-14  Ben Pfaff  <blp@gnu.org>
+
+	Factor out some macros for use by additional modules.
+	* m4/isnanf.m4 (gl_FLOAT_EXPONENT_LOCATION): Move into new file
+	exponentf.m4.
+	* m4/isnand.m4 (gl_DOUBLE_EXPONENT_LOCATION): Move into new file
+	exponentd.m4.
+	* m4/isnanl.m4 (gl_LONG_DOUBLE_EXPONENT_LOCATION): Move into new
+	file exponentl.m4.
+	* m4/exponentf.m4: New file.
+	* m4/exponentd.m4: New file.
+	* m4/exponentl.m4: New file.
+	* modules/isnanf: Use new file m4/exponentf.m4.
+	* modules/isnand: Use new file m4/exponentd.m4.
+	* modules/isnanl: Use new file m4/exponentl.m4.
+
 2008-07-23  Ulrich Drepper  <drepper@redhat.com>
 
 	mktime.c: normalize tp->tm_isdst value to -1/0/1.
