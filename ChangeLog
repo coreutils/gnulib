@@ -1,3 +1,13 @@
+2008-07-26  Ben Pfaff  <blp@gnu.org>
+
+	Add missing dependencies on new m4/exponent[fdl].m4 files.
+	* modules/isnanf-nolibm: Add m4/exponentf.m4.
+	* modules/isnand-nolibm: Add m4/exponentd.m4.
+	* modules/isnanl-nolibm: Add m4/exponentl.m4.
+	* modules/signbit-tests: Use m4/exponent[fdl].m4 instead of
+	m4/isnan[fdl].m4, because the macros actually used moved.
+	Reported by Jim Meyering.
+
 2008-07-14  Ben Pfaff  <blp@gnu.org>
 
 	Add isinf module.

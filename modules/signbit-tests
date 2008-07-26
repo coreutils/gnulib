@@ -1,8 +1,8 @@
 Files:
 tests/test-signbit.c
-m4/isnanf.m4
-m4/isnand.m4
-m4/isnanl.m4
+m4/exponentf.m4
+m4/exponentd.m4
+m4/exponentl.m4
 
 Depends-on:
 

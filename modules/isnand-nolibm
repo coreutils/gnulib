@@ -6,6 +6,7 @@ lib/isnand-nolibm.h
 lib/isnand.c
 lib/isnan.c
 lib/float+.h
+m4/exponentd.m4
 m4/isnand.m4
 
 Depends-on:
