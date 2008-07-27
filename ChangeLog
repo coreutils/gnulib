@@ -1,3 +1,7 @@
+2008-07-27  Jim Meyering  <meyering@redhat.com>
+
+	* users.txt: Add zile.
+
 2008-07-26  Ben Pfaff  <blp@gnu.org>
 
 	Add missing dependencies on new m4/exponent[fdl].m4 files.

@@ -58,6 +58,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   wget            http://hg.addictivecode.org/wget/mainline/
   wydawca         http://svn.gnu.org.ua/viewvc/wydawca/trunk/
   wyslij-po       http://svn.gnu.org.ua/viewvc/wyslij-po/trunk/
+  zile            http://www.gnu.org/software/zile/
 
 The following packages are using gnulib without gnulib-tool:
 
