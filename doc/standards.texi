@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate June 10, 2008
+@set lastupdate July 25, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -3774,15 +3774,23 @@ all GNU software.
 Each GNU distribution should come with a shell script named
 @code{configure}.  This script is given arguments which describe the
 kind of machine and system you want to compile the program for.
-
 The @code{configure} script must record the configuration options so
 that they affect compilation.
 
-One way to do this is to make a link from a standard name such as
-@file{config.h} to the proper configuration file for the chosen system.
-If you use this technique, the distribution should @emph{not} contain a
-file named @file{config.h}.  This is so that people won't be able to
-build the program without configuring it first.
+The description here is the specification of the interface for the
+@code{configure} script in GNU packages.  Many packages implement it
+using GNU Autoconf (@pxref{Top,, Introduction, autoconf, Autoconf})
+and/or GNU Automake (@pxref{Top,, Introduction, automake, Automake}),
+but you do not have to use these tools.  You can implement it any way
+you like; for instance, by making @code{configure} be a wrapper around
+a completely different configuration system.
+
+Another way for the @code{configure} script to operate is to make a
+link from a standard name such as @file{config.h} to the proper
+configuration file for the chosen system.  If you use this technique,
+the distribution should @emph{not} contain a file named
+@file{config.h}.  This is so that people won't be able to build the
+program without configuring it first.
 
 Another thing that @code{configure} can do is to edit the Makefile.  If
 you do this, the distribution should @emph{not} contain a file named
