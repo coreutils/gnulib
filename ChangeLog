@@ -1,3 +1,9 @@
+2008-07-28  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: work also when there are no .po files in po/
+	* build-aux/bootstrap (update_po_files): Complete the change
+	that I began in bc960df8c789c878f1c1c54a28a3c2648dead8d9.
+
 2008-07-27  Jim Meyering  <meyering@redhat.com>
 
 	* users.txt: Add zile.
