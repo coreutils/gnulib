@@ -39,6 +39,9 @@
     }									     \
   while (0)
 
+/* Avoid requiring -lm just for fabs.  */
+#define FABS(d) ((d) < 0.0 ? -(d) : (d))
+
 int
 main ()
 {
@@ -163,7 +166,7 @@ main ()
     /* FIXME - gnulib's version is rather inaccurate.  It would be
        nice to guarantee an exact result, but for now, we settle for a
        1-ulp error.  */
-    ASSERT (fabs (result - 0.5) < DBL_EPSILON);
+    ASSERT (FABS (result - 0.5) < DBL_EPSILON);
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
@@ -246,7 +249,7 @@ main ()
     /* FIXME - gnulib's version is rather inaccurate.  It would be
        nice to guarantee an exact result, but for now, we settle for a
        1-ulp error.  */
-    ASSERT (fabs (result - 0.5) < DBL_EPSILON);
+    ASSERT (FABS (result - 0.5) < DBL_EPSILON);
     ASSERT (ptr == input + 4);
     ASSERT (errno == 0);
   }

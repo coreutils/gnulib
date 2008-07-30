@@ -1,3 +1,9 @@
+2008-07-30  Eric Blake  <ebb9@byu.net>
+
+	test-strtod: allow compilation without -lm
+	* tests/test-strtod.c (main): Avoid link dependence on fabs.
+	Reported by Dennis Clarke <blastwave@gmail.com>.
+
 2008-07-28  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: work also when there are no .po files in po/
