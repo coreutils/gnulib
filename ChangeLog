@@ -1,3 +1,8 @@
+2008-07-31  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Make change from 2008-06-23 more robust.
+	Reported by Paolo Bonzini <bonzini@gnu.org>.
+
 2008-07-30  Eric Blake  <ebb9@byu.net>
 
 	test-strtod: allow compilation without -lm
