@@ -31,8 +31,8 @@ struct sha256_ctx
   uint32_t buffer[32];
 };
 
-enum { SHA224_DIGEST_SIZE = 24 };
-enum { SHA256_DIGEST_SIZE = 32 };
+enum { SHA224_DIGEST_SIZE = 224 / 8 };
+enum { SHA256_DIGEST_SIZE = 256 / 8 };
 
 /* Initialize structure containing state of computation. */
 extern void sha256_init_ctx (struct sha256_ctx *ctx);

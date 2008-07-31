@@ -1,3 +1,13 @@
+2008-07-31  Jim Meyering  <meyering@redhat.com>
+
+	sha256.h: correct definition of SHA224_DIGEST_SIZE
+	* lib/sha256.h (SHA224_DIGEST_SIZE): Define to 28, not 24.
+	Reported by Paulie Pena IV <paulie4@gmail.com>.
+	Define as 224 / 8, rather than as a literal.
+	(SHA256_DIGEST_SIZE): Define as 256/8 rather than equivalent literal.
+	* lib/sha512.h (SHA384_DIGEST_SIZE): Likewise, define as equiv: 384/8.
+	(SHA512_DIGEST_SIZE): Likewise, define as equivalent quotient: 512/8.
+
 2008-07-31  Bruno Haible  <bruno@clisp.org>
 
 	* lib/regex_internal.h (BITSET_WORD_BITS): Make first conditional work
