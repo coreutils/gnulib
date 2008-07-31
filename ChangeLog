@@ -1,5 +1,11 @@
 2008-07-31  Bruno Haible  <bruno@clisp.org>
 
+	* lib/regex_internal.h (BITSET_WORD_BITS): Make first conditional work
+	on HP-UX 10.20 with "cc -Ae". Fix second conditional.
+	Reported by Jonathan Patschke <jp@centtech.com>.
+
+2008-07-31  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_import): Make change from 2008-06-23 more robust.
 	Reported by Paolo Bonzini <bonzini@gnu.org>.
 
