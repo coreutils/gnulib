@@ -39,6 +39,10 @@
     }									     \
   while (0)
 
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.
+   So we use -zero instead.  */
+long double zero = 0.0L;
+
 int
 main ()
 {
@@ -78,7 +82,7 @@ main ()
   }
 
   { /* Negative zero.  */
-    x = -0.0L;
+    x = -zero;
     y = ldexpl (x, 0); ASSERT (y == x); ASSERT (signbit (x));
     y = ldexpl (x, 5); ASSERT (y == x); ASSERT (signbit (x));
     y = ldexpl (x, -5); ASSERT (y == x); ASSERT (signbit (x));

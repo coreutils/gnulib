@@ -40,6 +40,10 @@
     }									     \
   while (0)
 
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.
+   So we use -zero instead.  */
+long double zero = 0.0L;
+
 int
 main ()
 {
@@ -49,7 +53,7 @@ main ()
 
   /* Zero.  */
   ASSERT (roundl (0.0L) == 0.0L);
-  ASSERT (roundl (-0.0L) == 0.0L);
+  ASSERT (roundl (-zero) == 0.0L);
   /* Positive numbers.  */
   ASSERT (roundl (0.3L) == 0.0L);
   ASSERT (roundl (0.5L) == 1.0L);

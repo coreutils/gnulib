@@ -48,9 +48,17 @@ static int
 have_minus_zero ()
 {
   static double plus_zero = 0.0;
-  static double minus_zero = -0.0;
+  double minus_zero = - plus_zero;
   return memcmp (&plus_zero, &minus_zero, sizeof (double)) != 0;
 }
+
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
+   So we use -zero instead.  */
+double zerod = 0.0;
+
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.
+   So we use -zero instead.  */
+long double zerol = 0.0L;
 
 /* Representation of an 80-bit 'long double' as an initializer for a sequence
    of 'unsigned int' words.  */
@@ -198,7 +206,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* Negative zero.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%a %d", -0.0, 33, 44, 55);
+      my_asprintf (&result, "%a %d", -zerod, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0x0p+0 33") == 0);
@@ -512,7 +520,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* Negative zero.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%La %d", -0.0L, 33, 44, 55);
+      my_asprintf (&result, "%La %d", -zerol, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0x0p+0 33") == 0);
@@ -1025,7 +1033,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* Negative zero.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%f %d", -0.0, 33, 44, 55);
+      my_asprintf (&result, "%f %d", -zerod, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000 33") == 0);
@@ -1324,7 +1332,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* Negative zero.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%Lf %d", -0.0L, 33, 44, 55);
+      my_asprintf (&result, "%Lf %d", -zerol, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000 33") == 0);
@@ -1635,7 +1643,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* Negative zero.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%F %d", -0.0, 33, 44, 55);
+      my_asprintf (&result, "%F %d", -zerod, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000 33") == 0);
@@ -1771,7 +1779,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* Negative zero.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%LF %d", -0.0L, 33, 44, 55);
+      my_asprintf (&result, "%LF %d", -zerol, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000 33") == 0);
@@ -2012,7 +2020,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* Negative zero.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%e %d", -0.0, 33, 44, 55);
+      my_asprintf (&result, "%e %d", -zerod, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000e+00 33") == 0
@@ -2333,7 +2341,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* Negative zero.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%Le %d", -0.0L, 33, 44, 55);
+      my_asprintf (&result, "%Le %d", -zerol, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000e+00 33") == 0);
@@ -2755,7 +2763,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* Negative zero.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%g %d", -0.0, 33, 44, 55);
+      my_asprintf (&result, "%g %d", -zerod, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0 33") == 0);
@@ -3066,7 +3074,7 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   { /* Negative zero.  */
     char *result;
     int retval =
-      my_asprintf (&result, "%Lg %d", -0.0L, 33, 44, 55);
+      my_asprintf (&result, "%Lg %d", -zerol, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0 33") == 0);

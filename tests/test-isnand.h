@@ -34,6 +34,10 @@
     }									     \
   while (0)
 
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
+   So we use -zero instead.  */
+double zero = 0.0;
+
 int
 main ()
 {
@@ -45,7 +49,7 @@ main ()
   ASSERT (!isnand (-2.718e30));
   ASSERT (!isnand (-2.718e-30));
   ASSERT (!isnand (0.0));
-  ASSERT (!isnand (-0.0));
+  ASSERT (!isnand (-zero));
   /* Infinite values.  */
   ASSERT (!isnand (1.0 / 0.0));
   ASSERT (!isnand (-1.0 / 0.0));

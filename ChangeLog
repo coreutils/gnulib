@@ -1,3 +1,60 @@
+2008-08-01  Bruno Haible  <bruno@clisp.org>
+
+	Work around bug of HP-UX 10.20 cc with -0.0 literal.
+	* tests/test-isnanf.h (zero): New variable.
+	(main): Avoid literal -0.0f.
+	* tests/test-isnand.h (zero): New variable.
+	(main): Avoid literal -0.0.
+	* tests/test-isnanl.h (zero): New variable.
+	(main): Avoid literal -0.0L.
+	* tests/test-isnan.c (zerof, zerod, zerol): New variables.
+	(test_float, test_double, test_long_double): Avoid literals -0.0f,
+	-0.0, -0.0L.
+	* tests/test-signbit.c (test_signbitf): Avoid literal -0.0f.
+	(test_signbitd): Avoid literal -0.0.
+	(test_signbitl): Avoid literal -0.0L.
+	* tests/test-ceilf1.c (zero): New variable.
+	(main): Avoid literal -0.0f.
+	* tests/test-ceill.c (zero): New variable.
+	(main): Avoid literal -0.0L.
+	* tests/test-floorf1.c (zero): New variable.
+	(main): Avoid literal -0.0f.
+	* tests/test-floorl.c (zero): New variable.
+	(main): Avoid literal -0.0L.
+	* tests/test-roundf1.c (zero): New variable.
+	(main): Avoid literal -0.0f.
+	* tests/test-round1.c (zero): New variable.
+	(main): Avoid literal -0.0.
+	* tests/test-roundl.c (zero): New variable.
+	(main): Avoid literal -0.0L.
+	* tests/test-truncf1.c (zero): New variable.
+	(main): Avoid literal -0.0f.
+	* tests/test-trunc1.c (zero): New variable.
+	(main): Avoid literal -0.0.
+	* tests/test-truncl.c (zero): New variable.
+	(main): Avoid literal -0.0L.
+	* tests/test-frexp.c (zero): New variable.
+	(main): Avoid literal -0.0.
+	* tests/test-frexpl.c (zero): New variable.
+	(main): Avoid literal -0.0L.
+	* tests/test-ldexpl.c (zero): New variable.
+	(main): Avoid literal -0.0L.
+	* tests/test-snprintf-posix.h (have_minus_zero): Avoid literal -0.0.
+	(zerod, zerol): New variables.
+	(test_function): Avoid literals -0.0, -0.0L.
+	* tests/test-sprintf-posix.h (have_minus_zero): Avoid literal -0.0.
+	(zerod, zerol): New variables.
+	(test_function): Avoid literals -0.0, -0.0L.
+	* tests/test-vasnprintf-posix.c (have_minus_zero): Avoid literal -0.0.
+	(zerod, zerol): New variables.
+	(test_function): Avoid literals -0.0, -0.0L.
+	* tests/test-vasprintf-posix.c (have_minus_zero): Avoid literal -0.0.
+	(zerod, zerol): New variables.
+	(test_function): Avoid literals -0.0, -0.0L.
+	* tests/test-strtod.c (zero): New variable.
+	(main): Avoid literal -0.0.
+	Reported by Jonathan C. Patschke <jp@centtech.com>.
+
 2008-07-31  Jim Meyering  <meyering@redhat.com>
 
 	sha256.h: correct definition of SHA224_DIGEST_SIZE

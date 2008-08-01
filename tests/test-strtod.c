@@ -42,6 +42,10 @@
 /* Avoid requiring -lm just for fabs.  */
 #define FABS(d) ((d) < 0.0 ? -(d) : (d))
 
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
+   So we use -zero instead.  */
+double zero = 0.0;
+
 int
 main ()
 {
@@ -317,7 +321,7 @@ main ()
     errno = 0;
     result = strtod (input, &ptr);
     ASSERT (result == 0.0);
-    ASSERT (!!signbit (result) == !!signbit (-0.0)); /* IRIX 6.5, OSF/1 4.0 */
+    ASSERT (!!signbit (result) == !!signbit (-zero)); /* IRIX 6.5, OSF/1 4.0 */
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
@@ -412,7 +416,7 @@ main ()
     errno = 0;
     result = strtod (input, &ptr);
     ASSERT (result == 0.0);
-    ASSERT (!!signbit (result) == !!signbit (-0.0)); /* MacOS X 10.3, FreeBSD 6.2, IRIX 6.5, OSF/1 4.0 */
+    ASSERT (!!signbit (result) == !!signbit (-zero)); /* MacOS X 10.3, FreeBSD 6.2, IRIX 6.5, OSF/1 4.0 */
     ASSERT (ptr == input + 2);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2 */
     ASSERT (errno == 0);
   }
@@ -537,7 +541,7 @@ main ()
        0 on negative underflow, even though quality of implementation
        demands preserving the sign.  Disable this test until fixed
        glibc is more prevalent.  */
-    ASSERT (!!signbit (result) == !!signbit (-0.0)); /* glibc-2.3.6, mingw */
+    ASSERT (!!signbit (result) == !!signbit (-zero)); /* glibc-2.3.6, mingw */
 #endif
     ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);
@@ -906,7 +910,7 @@ main ()
 	errno = 0;
 	result = strtod (input, &ptr);
 	ASSERT (result == 0.0);
-	ASSERT (!!signbit (result) == !!signbit (-0.0)); /* IRIX 6.5, OSF/1 4.0 */
+	ASSERT (!!signbit (result) == !!signbit (-zero)); /* IRIX 6.5, OSF/1 4.0 */
 	ASSERT (ptr == input + m);
 	ASSERT (errno == 0);
       }

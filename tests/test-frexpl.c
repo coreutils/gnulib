@@ -57,6 +57,10 @@
 # define MIN_NORMAL_EXP LDBL_MIN_EXP
 #endif
 
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.
+   So we use -zero instead.  */
+long double zero = 0.0L;
+
 static long double
 my_ldexp (long double x, int d)
 {
@@ -113,7 +117,7 @@ main ()
   { /* Negative zero.  */
     int exp = -9999;
     long double mantissa;
-    x = -0.0L;
+    x = -zero;
     mantissa = frexpl (x, &exp);
     ASSERT (exp == 0);
     ASSERT (mantissa == x);

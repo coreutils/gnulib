@@ -38,12 +38,16 @@
     }									     \
   while (0)
 
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0f.
+   So we use -zero instead.  */
+float zero = 0.0f;
+
 int
 main ()
 {
   /* Zero.  */
   ASSERT (truncf (0.0f) == 0.0f);
-  ASSERT (truncf (-0.0f) == 0.0f);
+  ASSERT (truncf (-zero) == 0.0f);
   /* Positive numbers.  */
   ASSERT (truncf (0.3f) == 0.0f);
   ASSERT (truncf (0.7f) == 0.0f);

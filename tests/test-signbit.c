@@ -56,9 +56,9 @@ test_signbitf ()
   /* Zeros.  */
   ASSERT (!signbit (0.0f));
   if (1.0f / -zerof < 0)
-    ASSERT (signbit (-0.0f));
+    ASSERT (signbit (-zerof));
   else
-    ASSERT (!signbit (-0.0f));
+    ASSERT (!signbit (-zerof));
   /* Infinite values.  */
   ASSERT (!signbit (1.0f / 0.0f));
   ASSERT (signbit (-1.0f / 0.0f));
@@ -101,9 +101,9 @@ test_signbitd ()
   /* Zeros.  */
   ASSERT (!signbit (0.0));
   if (1.0 / -zerod < 0)
-    ASSERT (signbit (-0.0));
+    ASSERT (signbit (-zerod));
   else
-    ASSERT (!signbit (-0.0));
+    ASSERT (!signbit (-zerod));
   /* Infinite values.  */
   ASSERT (!signbit (1.0 / 0.0));
   ASSERT (signbit (-1.0 / 0.0));
@@ -144,9 +144,9 @@ test_signbitl ()
   /* Zeros.  */
   ASSERT (!signbit (0.0L));
   if (1.0L / minus_zerol < 0)
-    ASSERT (signbit (-0.0L));
+    ASSERT (signbit (-zerol));
   else
-    ASSERT (!signbit (-0.0L));
+    ASSERT (!signbit (-zerol));
   /* Infinite values.  */
   ASSERT (!signbit (1.0L / 0.0L));
   ASSERT (signbit (-1.0L / 0.0L));

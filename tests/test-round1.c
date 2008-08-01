@@ -40,12 +40,16 @@
     }									     \
   while (0)
 
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
+   So we use -zero instead.  */
+double zero = 0.0;
+
 int
 main ()
 {
   /* Zero.  */
   ASSERT (round (0.0) == 0.0);
-  ASSERT (round (-0.0) == 0.0);
+  ASSERT (round (-zero) == 0.0);
   /* Positive numbers.  */
   ASSERT (round (0.3) == 0.0);
   ASSERT (round (0.5) == 1.0);

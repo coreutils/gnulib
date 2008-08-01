@@ -40,6 +40,18 @@
     }									     \
   while (0)
 
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0f.
+   So we use -zero instead.  */
+float zerof = 0.0f;
+
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
+   So we use -zero instead.  */
+double zerod = 0.0;
+
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.
+   So we use -zero instead.  */
+long double zerol = 0.0L;
+
 static void
 test_float (void)
 {
@@ -51,7 +63,7 @@ test_float (void)
   ASSERT (!isnan (-2.718e30f));
   ASSERT (!isnan (-2.718e-30f));
   ASSERT (!isnan (0.0f));
-  ASSERT (!isnan (-0.0f));
+  ASSERT (!isnan (-zerof));
   /* Infinite values.  */
   ASSERT (!isnan (1.0f / 0.0f));
   ASSERT (!isnan (-1.0f / 0.0f));
@@ -91,7 +103,7 @@ test_double (void)
   ASSERT (!isnan (-2.718e30));
   ASSERT (!isnan (-2.718e-30));
   ASSERT (!isnan (0.0));
-  ASSERT (!isnan (-0.0));
+  ASSERT (!isnan (-zerod));
   /* Infinite values.  */
   ASSERT (!isnan (1.0 / 0.0));
   ASSERT (!isnan (-1.0 / 0.0));
@@ -134,7 +146,7 @@ test_long_double (void)
   ASSERT (!isnan (-2.718e30L));
   ASSERT (!isnan (-2.718e-30L));
   ASSERT (!isnan (0.0L));
-  ASSERT (!isnan (-0.0L));
+  ASSERT (!isnan (-zerol));
   /* Infinite values.  */
   ASSERT (!isnan (1.0L / 0.0L));
   ASSERT (!isnan (-1.0L / 0.0L));
