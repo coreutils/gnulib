@@ -60,7 +60,7 @@
 # undef static
 #endif
 
-#include <ctype.h>
+#include <c-ctype.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -900,7 +900,7 @@ lookup_word (parser_control const *pc, char *word)
   for (p = word; *p; p++)
     {
       unsigned char ch = *p;
-      *p = toupper (ch);
+      *p = c_toupper (ch);
     }
 
   for (tp = meridian_table; tp->name; tp++)
@@ -965,7 +965,7 @@ yylex (YYSTYPE *lvalp, parser_control *pc)
 
   for (;;)
     {
-      while (c = *pc->input, isspace (c))
+      while (c = *pc->input, c_isspace (c))
 	pc->input++;
 
       if (ISDIGIT (c) || c == '-' || c == '+')
@@ -976,7 +976,7 @@ yylex (YYSTYPE *lvalp, parser_control *pc)
 	  if (c == '-' || c == '+')
 	    {
 	      sign = c == '-' ? -1 : 1;
-	      while (c = *++pc->input, isspace (c))
+	      while (c = *++pc->input, c_isspace (c))
 		continue;
 	      if (! ISDIGIT (c))
 		/* skip the '-' sign */
@@ -1080,7 +1080,7 @@ yylex (YYSTYPE *lvalp, parser_control *pc)
 	    }
 	}
 
-      if (isalpha (c))
+      if (c_isalpha (c))
 	{
 	  char buff[20];
 	  char *p = buff;
@@ -1092,7 +1092,7 @@ yylex (YYSTYPE *lvalp, parser_control *pc)
 		*p++ = c;
 	      c = *++pc->input;
 	    }
-	  while (isalpha (c) || c == '.');
+	  while (c_isalpha (c) || c == '.');
 
 	  *p = '\0';
 	  tp = lookup_word (pc, buff);
@@ -1205,7 +1205,7 @@ get_date (struct timespec *result, char const *p, struct timespec const *now)
   if (! tmp)
     return false;
 
-  while (c = *p, isspace (c))
+  while (c = *p, c_isspace (c))
     p++;
 
   if (strncmp (p, "TZ=\"", 4) == 0)

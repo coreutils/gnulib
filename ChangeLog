@@ -1,3 +1,16 @@
+2008-08-02  Jim Meyering  <meyering@redhat.com>
+
+	getdate.y: avoid locale-dependent date parsing failure
+	In Turkish locales, getdate would fail to recognize keywords
+	containing a lowercase "i".  The solution is not to rely on
+	locale-sensitive case-conversion.
+	* lib/getdate.y: Include <c-ctype.h> rather than <ctype.h>.
+	(lookup_word): Use c_toupper in place of toupper.
+	(yylex, get_date): Use c_ prefixed variants of isspace and isalpha, too.
+	Reported by Vefa Bicakci <bicave@superonline.com> in
+	<http://thread.gmane.org/gmane.comp.gnu.coreutils.bugs/14184>.
+	* modules/getdate (Depends-on): Add c-ctype.
+
 2008-08-02  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): When updating or creating a .gitignore
