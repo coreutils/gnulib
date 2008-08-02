@@ -3258,9 +3258,20 @@ func_import ()
       func_update_ignorelist ()
       {
         ignore="$1"
+        if test "$ignore" = .gitignore; then
+          # In a .gitignore file, "foo" applies to the current directory and all
+          # subdirectories, whereas "/foo" applies to the current directory only.
+          anchor='/'
+          escaped_anchor='\/'
+          doubly_escaped_anchor='\\/'
+        else
+          anchor=''
+          escaped_anchor=''
+          doubly_escaped_anchor=''
+        fi
         if test -f "$destdir/$dir$ignore"; then
           if test -n "$dir_added" || test -n "$dir_removed"; then
-            LC_ALL=C sort "$destdir/$dir$ignore" > "$tmp"/ignore
+            sed -e "s|^$anchor||" < "$destdir/$dir$ignore" | LC_ALL=C sort > "$tmp"/ignore
             echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u \
               | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-added
             echo "$dir_removed" | sed -e '/^$/d' | LC_ALL=C sort -u \
@@ -3269,9 +3280,12 @@ func_import ()
               if $doit; then
                 echo "Updating $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
                 mv -f "$destdir/$dir$ignore" "$destdir/$dir$ignore"~
-                sed -e 's,^,/^,' -e 's,$,\$/d,' < "$tmp"/ignore-removed > "$tmp"/sed-ignore-removed
-                cat "$destdir/$dir$ignore"~ "$tmp"/ignore-added \
-                  | sed -f "$tmp"/sed-ignore-removed \
+                { sed -e 's,^,/^,' -e 's,$,\$/d,' < "$tmp"/ignore-removed
+                  if test -n "$anchor"; then sed -e "s,^,/^${doubly_escaped_anchor}," -e 's,$,\$/d,' < "$tmp"/ignore-removed; fi
+                } > "$tmp"/sed-ignore-removed
+                { cat "$destdir/$dir$ignore"~
+                  sed -e "s|^|$anchor|" < "$tmp"/ignore-added
+                } | sed -f "$tmp"/sed-ignore-removed \
                   > "$destdir/$dir$ignore"
               else
                 echo "Update $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
@@ -3288,7 +3302,7 @@ func_import ()
                   # Automake generates Makefile rules that create .dirstamp files.
                   echo ".dirstamp"
                 fi
-                echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u
+                echo "$dir_added" | sed -e '/^$/d' -e "s|^|$anchor|" | LC_ALL=C sort -u
               } > "$destdir/$dir$ignore"
             else
               echo "Create $destdir/$dir$ignore"

@@ -1,3 +1,10 @@
+2008-08-02  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): When updating or creating a .gitignore
+	file, prepend each added line with a slash, and ignore leading slashes
+	from the existing lines.
+	Reported by Joel E. Denny <jdenny@ces.clemson.edu>.
+
 2008-08-02  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Portability fix for GNU make 3.79.1.
