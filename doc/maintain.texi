@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate July 6, 2008
+@set lastupdate August 1, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -88,6 +88,9 @@ version for widespread distribution, we suggest you follow these
 guidelines; if you would like to be a GNU maintainer, then it is
 essential to follow these guidelines.
 
+In addition to this document, please read and follow the GNU Coding
+Standards (@pxref{Top, , Contents, standards, GNU Coding Standards}).
+
 Please send corrections or suggestions for this document to
 @email{maintainers@@gnu.org}.  If you make a suggestion, please include
 a suggested new wording for it, to help us consider the suggestion
@@ -95,6 +98,11 @@ efficiently.  We prefer a context diff to the @file{maintain.texi} file,
 but if you don't have that file, you can make a context diff for some
 other version of this document, or propose it in any way that makes it
 clear.
+
+If you have general questions or encounter a situation where it isn't
+clear what to do, you can ask @email{mentors@@gnu.org}, which is a
+list of a few other GNU contributor who have offered to answer
+questions for new maintainers.
 
 This document uses the gender-neutral third-person pronouns ``person'',
 ``per'', ``pers'' and ``perself'' which were promoted, and perhaps
@@ -106,10 +114,10 @@ work, and to enable per to feel person has done the right thing.''
 
 The directory @file{/gd/gnuorg} is found on the GNU file server,
 currently @code{fencepost.gnu.org}; if you are the maintainer of a GNU
-package, you should have an account there.  Contact
-@email{accounts@@gnu.org} if you don't have one.  (You can also ask
-for accounts for people who help you a large amount in working on the
-package.)
+package, you should have an account there.  See
+@url{http://www.gnu.org/software/README.accounts.html} if you don't
+have one.  (You can also ask for accounts for people who help you a
+large amount in working on the package.)
 
 This release of the GNU Maintenance Instructions was last updated
 @value{lastupdate}.
@@ -168,6 +176,11 @@ been appointed jointly as the maintainers of the package, and they carry
 out the maintainer's functions together.  If you would like to propose
 some of your developers as co-maintainers, please contact
 @email{maintainers@@gnu.org}.
+
+We're happy to acknowledge all major contributors to GNU packages on
+the @url{http://www.gnu.org/people/people.html} web page.  Please send
+an entry for yourself to @email{webmasters@@gnu.org}, and feel free to
+suggest it to other significant developers on your package.
 
 
 @node Legal Matters
@@ -903,13 +916,26 @@ used for all GNU programs that don't have their own specific lists.  But
 nowadays we want to give each program its own bug-reporting list and
 move away from using @email{bug-gnu-utils}.
 
+If you wish, you can also have mailing lists such as
+@samp{info-@var{program}} for announcements (@pxref{Announcements}),
+@samp{help-@var{program}} for general help and discussion (see below),
+or any others you find useful.
+
+By far the easiest way to create mailing lists is through
+@code{savannah.gnu.org}.  Once you register your program, you can do
+this yourself through the `Mailing Lists' menu, without needing
+intervention by anyone else.  Furthermore, lists created through
+Savannah will have a reasonable default configuration for antispam
+purposes (see below).
+
 If you are the maintainer of a GNU package, you should have an account
-on the GNU servers; contact @email{accounts@@gnu.org} if you don't have
-one.  (You can also ask for accounts for people who help you a large
-amount in working on the package.)  With this account, you can edit
-@file{/com/mailer/aliases} to create a new unmanaged list or add
-yourself to an existing unmanaged list.  A comment near the beginning of
-that file explains how to create a Mailman-managed mailing list.
+on the GNU servers; contact
+@url{http://www.gnu.org/software/README.accounts.html} if you don't
+have one.  (You can also ask for accounts for people who help you a
+large amount in working on the package.)  With this account, you can
+edit @file{/com/mailer/aliases} to create a new unmanaged list or add
+yourself to an existing unmanaged list.  A comment near the beginning
+of that file explains how to create a Mailman-managed mailing list.
 
 But if you don't want to learn how to do those things, you can
 alternatively ask @email{alias-file@@gnu.org} to add you to the
@@ -1433,11 +1459,15 @@ When you have a new release, please make an announcement.  For
 official new releases, including those made just to fix bugs, we
 recommend using the (moderated) general GNU announcements list,
 @email{info-gnu@@gnu.org}.  Doing so makes it easier for users and
-developers to find the latest GNU releases.
+developers to find the latest GNU releases.  On the other hand, please
+do not announce test releases on @code{info-gnu} unless it's an
+unusual situation.
 
-You can maintain your own mailing list for announcements as well if
-you like.  For your own list, you can decide as you see fit what
-events are worth announcing.
+You can maintain your own mailing list (typically
+@email{info-@var{program}@@gnu.org}) for announcements as well if you
+like.  For your own list, you can decide as you see fit what events
+are worth announcing.  (@xref{Mail}, for more suggestions on handling
+mail for your package.)
 
 
 @node Web Pages
@@ -1446,9 +1476,10 @@ events are worth announcing.
 
 Please write web pages about your package for installation on
 @code{www.gnu.org}.  They should follow our usual standards for web
-pages (see @url{http://www.gnu.org/server}); we chose them in order to
-support a wide variety of browsers, to focus on information rather
-than flashy eye candy, and to keep the site simple and uniform.
+pages (see @url{http://www.gnu.org/server/fsf-html-style-sheet.html}).
+The overall goals are to support a wide variety of browsers, to focus
+on information rather than flashy eye candy, and to keep the site
+simple and uniform.
 
 The simplest way to maintain the web pages for your project is to
 register the project on @code{savannah.gnu.org}.  Then you can edit
@@ -1814,10 +1845,13 @@ on www.gnu.org for more information on how to contribute.
 @cindex Free Software Directory
 @cindex Directory, Free Software
 
-The Free Software Directory aims to be a complete list of free software
-packages, within certain criteria.  Every GNU package should be listed
-there, so please contact @email{bug-directory@@gnu.org} to ask for
-information on how to write an entry for your package.
+The Free Software Directory aims to be a complete list of free
+software packages, within certain criteria.  Every GNU package should
+be listed there, so please see
+@url{http://www.gnu.org/help/directory.html#adding-entries} for
+information on how to write an entry for your package.  Contact
+@email{bug-directory@@gnu.org} with any questions or suggestions for
+the Free Software Directory.
 
 
 @node Using the Proofreaders List
@@ -1897,5 +1931,5 @@ time-stamp-start: "@set lastupdate "
 time-stamp-start: "@set lastupdate "
 time-stamp-end: "$"
 time-stamp-format: "%:b %:d, %:y"
-compile-command: "make just-maintain"
+compile-command: "make -C work.m"
 End:
