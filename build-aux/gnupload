@@ -45,7 +45,11 @@ Recognized destinations are:
                            build directive files and upload files by FTP
   [user@]host:DIRECTORY    upload files with scp
 
-Example:
+Simple single-target single-file examples:
+  gnupload --to alpha.gnu.org:automake automake-1.8.2b.tar.gz
+  gnupload --to ftp.gnu.org:automake automake-1.8.3.tar.gz
+
+Multiple-target multiple-file example:
   gnupload --to sources.redhat.com:~ftp/pub/automake \\
            --to alpha.gnu.org:automake \\
            automake-1.8.2b.tar.gz automake-1.8.2b.tar.bz2
