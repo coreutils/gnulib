@@ -1,3 +1,72 @@
+2008-08-03  Bruno Haible  <bruno@clisp.org>
+
+	Additional non-aborting API for lock and tls.
+	* lib/lock.h: Include <errno.h>.
+	(glthread_lock_init): New macro/function.
+	(gl_lock_init): Define as wrapper around glthread_lock_init.
+	(glthread_lock_lock): New macro/function.
+	(gl_lock_lock): Define as wrapper around glthread_lock_lock.
+	(glthread_lock_unlock): New macro/function.
+	(gl_lock_unlock): Define as wrapper around glthread_lock_unlock.
+	(glthread_lock_destroy): New macro/function.
+	(gl_lock_destroy): Define as wrapper around glthread_lock_destroy.
+	(glthread_rwlock_init): New macro/function.
+	(gl_rwlock_init): Define as wrapper around glthread_rwlock_init.
+	(glthread_rwlock_rdlock): New macro/function.
+	(gl_rwlock_rdlock): Define as wrapper around glthread_rwlock_rdlock.
+	(glthread_rwlock_wrlock): New macro/function.
+	(gl_rwlock_wrlock): Define as wrapper around glthread_rwlock_wrlock.
+	(glthread_rwlock_unlock): New macro/function.
+	(gl_rwlock_unlock): Define as wrapper around glthread_rwlock_unlock.
+	(glthread_rwlock_destroy): New macro/function.
+	(gl_rwlock_destroy): Define as wrapper around glthread_rwlock_destroy.
+	(glthread_recursive_lock_init): New macro/function.
+	(gl_recursive_lock_init): Define as wrapper around
+	glthread_recursive_lock_init.
+	(glthread_recursive_lock_lock): New macro/function.
+	(gl_recursive_lock_lock): Define as wrapper around
+	glthread_recursive_lock_lock.
+	(glthread_recursive_lock_unlock): New macro/function.
+	(gl_recursive_lock_unlock): Define as wrapper around
+	glthread_recursive_lock_unlock.
+	(glthread_recursive_lock_destroy): New macro/function.
+	(gl_recursive_lock_destroy): Define as wrapper around
+	glthread_recursive_lock_destroy.
+	(glthread_once): New macro/function.
+	(gl_once): Define as wrapper around glthread_once.
+	Update function declarations.
+	* lib/lock.c (glthread_rwlock_init_multithreaded): Renamed from
+	glthread_rwlock_init. Return error code.
+	(glthread_rwlock_rdlock_multithreaded): Renamed from
+	glthread_rwlock_rdlock. Return error code.
+	(glthread_rwlock_wrlock_multithreaded): Renamed from
+	glthread_rwlock_wrlock. Return error code.
+	(glthread_rwlock_unlock_multithreaded): Renamed from
+	glthread_rwlock_unlock. Return error code.
+	(glthread_rwlock_destroy_multithreaded): Renamed from
+	glthread_rwlock_destroy. Return error code.
+	(glthread_recursive_lock_init_multithreaded): Renamed from
+	glthread_recursive_lock_init. Return error code.
+	(glthread_recursive_lock_lock_multithreaded): Renamed from
+	glthread_recursive_lock_lock. Return error code.
+	(glthread_recursive_lock_unlock_multithreaded): Renamed from
+	glthread_recursive_lock_unlock. Return error code.
+	(glthread_recursive_lock_destroy_multithreaded): Renamed from
+	glthread_recursive_lock_destroy. Return error code.
+	(glthread_once_call): Make static.
+	(glthread_once_multithreaded): Renamed from glthread_once.
+	* lib/tls.h: Include <errno.h>.
+	(glthread_tls_key_init): New macro/function.
+	(gl_tls_key_init): Define as wrapper around glthread_tls_key_init.
+	(glthread_tls_set): New macro/function.
+	(gl_tls_set): Define as wrapper around glthread_tls_set.
+	(glthread_tls_key_destroy): New macro/function.
+	(gl_tls_key_destroy): Define as wrapper around glthread_tls_key_destroy.
+	Update function declarations.
+	* lib/tls.c (glthread_tls_get_multithreaded): Renamed from
+	glthread_tls_get.
+	Suggested by Yoann Vandoorselaere <yoann@prelude-ids.org>.
+
 2008-08-04  Eric Blake  <ebb9@byu.net>
 
 	gnumakefile: use space, not TAB, outside of targets

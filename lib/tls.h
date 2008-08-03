@@ -20,11 +20,15 @@
    thread library.  It does not contain primitives for creating threads or
    for other multithreading primitives.
 
-   Type:                      gl_tls_key_t
-   Initialization:            gl_tls_key_init (name, destructor);
-   Getting per-thread value:  gl_tls_get (name)
-   Setting per-thread value:  gl_tls_set (name, pointer);
-   De-initialization:         gl_tls_key_destroy (name);
+     Type:                      gl_tls_key_t
+     Initialization:            gl_tls_key_init (name, destructor);
+     Getting per-thread value:  gl_tls_get (name)
+     Setting per-thread value:  gl_tls_set (name, pointer);
+     De-initialization:         gl_tls_key_destroy (name);
+   Equivalent functions with control of error handling:
+     Initialization:            err = glthread_tls_key_init (&name, destructor);
+     Setting per-thread value:  err = glthread_tls_set (&name, pointer);
+     De-initialization:         err = glthread_tls_key_destroy (&name);
 
    A per-thread value is of type 'void *'.
 
@@ -38,6 +42,8 @@
 
 #ifndef _TLS_H
 #define _TLS_H
+
+#include <errno.h>
 
 /* ========================================================================= */
 
@@ -90,41 +96,20 @@ typedef union
           pthread_key_t key;
         }
         gl_tls_key_t;
-# define gl_tls_key_init(NAME, DESTRUCTOR) \
-    do                                                             \
-      {                                                            \
-        if (pthread_in_use ())                                     \
-          {                                                        \
-            if (pthread_key_create (&(NAME).key, DESTRUCTOR) != 0) \
-              abort ();                                            \
-          }                                                        \
-        else                                                       \
-          (NAME).singlethread_value = NULL;                        \
-      }                                                            \
-    while (0)
+# define glthread_tls_key_init(KEY, DESTRUCTOR) \
+    (pthread_in_use ()                              \
+     ? pthread_key_create (&(KEY)->key, DESTRUCTOR) \
+     : ((KEY)->singlethread_value = NULL, 0))
 # define gl_tls_get(NAME) \
     (pthread_in_use ()                  \
      ? pthread_getspecific ((NAME).key) \
      : (NAME).singlethread_value)
-# define gl_tls_set(NAME, POINTER) \
-    do                                                            \
-      {                                                           \
-        if (pthread_in_use ())                                    \
-          {                                                       \
-            if (pthread_setspecific ((NAME).key, (POINTER)) != 0) \
-              abort ();                                           \
-          }                                                       \
-        else                                                      \
-          (NAME).singlethread_value = (POINTER);                  \
-      }                                                           \
-    while (0)
-# define gl_tls_key_destroy(NAME) \
-    do                                                                 \
-      {                                                                \
-        if (pthread_in_use () && pthread_key_delete ((NAME).key) != 0) \
-          abort ();                                                    \
-      }                                                                \
-    while (0)
+# define glthread_tls_set(KEY, POINTER) \
+    (pthread_in_use ()                             \
+     ? pthread_setspecific ((KEY)->key, (POINTER)) \
+     : ((KEY)->singlethread_value = (POINTER), 0))
+# define glthread_tls_key_destroy(KEY) \
+    (pthread_in_use () ? pthread_key_delete ((KEY)->key) : 0)
 
 #endif
 
@@ -163,41 +148,22 @@ typedef union
           pth_key_t key;
         }
         gl_tls_key_t;
-# define gl_tls_key_init(NAME, DESTRUCTOR) \
-    do                                                     \
-      {                                                    \
-        if (pth_in_use ())                                 \
-          {                                                \
-            if (!pth_key_create (&(NAME).key, DESTRUCTOR)) \
-              abort ();                                    \
-          }                                                \
-        else                                               \
-          (NAME).singlethread_value = NULL;                \
-      }                                                    \
-    while (0)
+# define glthread_tls_key_init(KEY, DESTRUCTOR) \
+    (pth_in_use ()                                             \
+     ? (!pth_key_create (&(KEY)->key, DESTRUCTOR) ? errno : 0) \
+     : ((KEY)->singlethread_value = NULL, 0))
 # define gl_tls_get(NAME) \
     (pth_in_use ()                  \
      ? pth_key_getdata ((NAME).key) \
      : (NAME).singlethread_value)
-# define gl_tls_set(NAME, POINTER) \
-    do                                                    \
-      {                                                   \
-        if (pth_in_use ())                                \
-          {                                               \
-            if (!pth_key_setdata ((NAME).key, (POINTER))) \
-              abort ();                                   \
-          }                                               \
-        else                                              \
-          (NAME).singlethread_value = (POINTER);          \
-      }                                                   \
-    while (0)
-# define gl_tls_key_destroy(NAME) \
-    do                                                     \
-      {                                                    \
-        if (pth_in_use () && !pth_key_delete ((NAME).key)) \
-          abort ();                                        \
-      }                                                    \
-    while (0)
+# define glthread_tls_set(KEY, POINTER) \
+    (pth_in_use ()                                            \
+     ? (!pth_key_setdata ((KEY)->key, (POINTER)) ? errno : 0) \
+     : ((KEY)->singlethread_value = (POINTER), 0))
+# define glthread_tls_key_destroy(KEY) \
+    (pth_in_use ()                                \
+     ? (!pth_key_delete ((KEY)->key) ? errno : 0) \
+     : 0)
 
 #endif
 
@@ -235,38 +201,22 @@ typedef union
           thread_key_t key;
         }
         gl_tls_key_t;
-# define gl_tls_key_init(NAME, DESTRUCTOR) \
-    do                                                        \
-      {                                                       \
-        if (thread_in_use ())                                 \
-          {                                                   \
-            if (thr_keycreate (&(NAME).key, DESTRUCTOR) != 0) \
-              abort ();                                       \
-          }                                                   \
-        else                                                  \
-          (NAME).singlethread_value = NULL;                   \
-      }                                                       \
-    while (0)
+# define glthread_tls_key_init(KEY, DESTRUCTOR) \
+    (thread_in_use ()                          \
+     ? thr_keycreate (&(KEY)->key, DESTRUCTOR) \
+     : ((KEY)->singlethread_value = NULL, 0))
 # define gl_tls_get(NAME) \
     (thread_in_use ()                \
-     ? glthread_tls_get ((NAME).key) \
+     ? glthread_tls_get_multithreaded ((NAME).key) \
      : (NAME).singlethread_value)
-extern void *glthread_tls_get (thread_key_t key);
-# define gl_tls_set(NAME, POINTER) \
-    do                                                        \
-      {                                                       \
-        if (thread_in_use ())                                 \
-          {                                                   \
-            if (thr_setspecific ((NAME).key, (POINTER)) != 0) \
-              abort ();                                       \
-          }                                                   \
-        else                                                  \
-          (NAME).singlethread_value = (POINTER);              \
-      }                                                       \
-    while (0)
-# define gl_tls_key_destroy(NAME) \
+extern void *glthread_tls_get_multithreaded (thread_key_t key);
+# define glthread_tls_set(KEY, POINTER) \
+    (thread_in_use ()                              \
+     ? thr_setspecific ((KEY)->key, (POINTER))     \
+     : ((KEY)->singlethread_value = (POINTER), 0))
+# define glthread_tls_key_destroy(KEY) \
     /* Unsupported.  */ \
-    (void)0
+    0
 
 #endif
 
@@ -279,31 +229,15 @@ extern void *glthread_tls_get (thread_key_t key);
 /* ------------------------- gl_tls_key_t datatype ------------------------- */
 
 typedef DWORD gl_tls_key_t;
-# define gl_tls_key_init(NAME, DESTRUCTOR) \
+# define glthread_tls_key_init(KEY, DESTRUCTOR) \
     /* The destructor is unsupported.  */    \
-    do                                           \
-      {                                          \
-        if (((NAME) = TlsAlloc ()) == (DWORD)-1) \
-          abort ();                              \
-        (void) (DESTRUCTOR);                     \
-      }                                          \
-    while (0)
+    ((*(KEY) = TlsAlloc ()) == (DWORD)-1 ? EAGAIN : ((void) (DESTRUCTOR), 0))
 # define gl_tls_get(NAME) \
     TlsGetValue (NAME)
-# define gl_tls_set(NAME, POINTER) \
-    do                                    \
-      {                                   \
-        if (!TlsSetValue (NAME, POINTER)) \
-          abort ();                       \
-      }                                   \
-    while (0)
-# define gl_tls_key_destroy(NAME) \
-    do                       \
-      {                      \
-        if (!TlsFree (NAME)) \
-          abort ();          \
-      }                      \
-    while (0)
+# define glthread_tls_set(KEY, POINTER) \
+    (!TlsSetValue (*(KEY), POINTER) ? EINVAL : 0)
+# define glthread_tls_key_destroy(KEY) \
+    (!TlsFree (*(KEY)) ? EINVAL : 0)
 
 #endif
 
@@ -320,17 +254,46 @@ typedef struct
           void *singlethread_value;
         }
         gl_tls_key_t;
-# define gl_tls_key_init(NAME, DESTRUCTOR) \
-    ((NAME).singlethread_value = NULL, \
-     (void) (DESTRUCTOR))
+# define glthread_tls_key_init(KEY, DESTRUCTOR) \
+    ((KEY)->singlethread_value = NULL, \
+     (void) (DESTRUCTOR),              \
+     0)
 # define gl_tls_get(NAME) \
     (NAME).singlethread_value
-# define gl_tls_set(NAME, POINTER) \
-    (NAME).singlethread_value = (POINTER)
-# define gl_tls_key_destroy(NAME) \
-    (void)0
+# define glthread_tls_set(KEY, POINTER) \
+    ((KEY)->singlethread_value = (POINTER), 0)
+# define glthread_tls_key_destroy(KEY) \
+    0
 
 #endif
+
+/* ========================================================================= */
+
+/* Macros with built-in error handling.  */
+
+/* ------------------------- gl_tls_key_t datatype ------------------------- */
+
+#define gl_tls_key_init(NAME, DESTRUCTOR) \
+   do                                                 \
+     {                                                \
+       if (glthread_tls_key_init (&NAME, DESTRUCTOR)) \
+         abort ();                                    \
+     }                                                \
+   while (0)
+#define gl_tls_set(NAME, POINTER) \
+   do                                         \
+     {                                        \
+       if (glthread_tls_set (&NAME, POINTER)) \
+         abort ();                            \
+     }                                        \
+   while (0)
+#define gl_tls_key_destroy(NAME) \
+   do                                        \
+     {                                       \
+       if (glthread_tls_key_destroy (&NAME)) \
+         abort ();                           \
+     }                                       \
+   while (0)
 
 /* ========================================================================= */
 

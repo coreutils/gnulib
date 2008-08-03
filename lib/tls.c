@@ -1,5 +1,5 @@
 /* Thread-local storage in multithreaded situations.
-   Copyright (C) 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 2005-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@
 /* ------------------------- gl_tls_key_t datatype ------------------------- */
 
 void *
-glthread_tls_get (thread_key_t key)
+glthread_tls_get_multithreaded (thread_key_t key)
 {
   void *value;
 
