@@ -1,0 +1,57 @@
+#!/bin/sh
+# 
+# Copyright 2008 Free Software Foundation.
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License,
+# or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Original author: Karl Berry.
+# Bug reports and correspondence to bug-gnulib@gnu.org.
+# 
+# This is a minimal replacement for ncftpput using standard ftp.
+# It was written for use with the Automake gnupload script for machines
+# without ncftpput, e.g., rename it to ncftpput and put it in your PATH.
+# 
+# The arguments are:
+# host dir file1 file2 ...
+
+host=$1; shift
+dir=$1; shift
+
+newline="
+"
+
+mputs=
+for f
+do
+  if test ! -s "$f"; then
+    echo "$0: $f not readable or empty, goodbye." >&2
+    exit 1
+  fi
+  target=`basename "$f"`
+  mputs="${mputs}put $f $target$newline"
+done
+
+if test "$dir" = .; then
+  dir=
+else
+  dir="cd $dir"
+fi
+
+ftp -i $host <<END_SESSION
+$dir
+bin
+verbose
+$mputs
+quit
+END_SESSION
