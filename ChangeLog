@@ -1,3 +1,8 @@
+2008-08-04  Eric Blake  <ebb9@byu.net>
+
+	gnumakefile: use space, not TAB, outside of targets
+	* top/GNUmakefile (_dummy): Fix whitespace error in prior edit.
+
 2008-08-02  Jim Meyering  <meyering@redhat.com>
 
 	getdate.y: avoid locale-dependent date parsing failure

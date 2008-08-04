@@ -63,20 +63,20 @@ ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
       ifeq ($(_curr-ver),UNKNOWN)
         $(info WARNING: unable to verify if $(VERSION) is correct version)
       else
-	ifneq (,$(_is-install-target))
-	  # GNU Coding Standards state that 'make install' should not cause
-	  # recompilation after 'make all'.  But as long as changing the version
-	  # string alters config.h, the cost of having 'make all' always have an
-	  # up-to-date version is prohibitive.  So, as a compromise, we merely
-	  # warn when installing a version string that is out of date; the user
-	  # should run 'autoreconf' (or something like 'make distcheck') to
-	  # fix the version, 'make all' to propagate it, then 'make install'.
-	  $(info WARNING: version string $(VERSION) is out of date; run autoreconf -f to fix it)
-	else
-	  $(info INFO: running autoreconf for new version string: $(_curr-ver))
-	  _dummy := $(shell cd $(srcdir) && rm -rf autom4te.cache .version \
-	    && $(_autoreconf))
-	endif
+        ifneq (,$(_is-install-target))
+          # GNU Coding Standards state that 'make install' should not cause
+          # recompilation after 'make all'.  But as long as changing the version
+          # string alters config.h, the cost of having 'make all' always have an
+          # up-to-date version is prohibitive.  So, as a compromise, we merely
+          # warn when installing a version string that is out of date; the user
+          # should run 'autoreconf' (or something like 'make distcheck') to
+          # fix the version, 'make all' to propagate it, then 'make install'.
+          $(info WARNING: version string $(VERSION) is out of date; run autoreconf -f to fix it)
+        else
+          $(info INFO: running autoreconf for new version string: $(_curr-ver))
+          _dummy := $(shell cd $(srcdir) && rm -rf autom4te.cache .version \
+            && $(_autoreconf))
+        endif
       endif
     endif
   endif
