@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate August 1, 2008
+@set lastupdate August 4, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -1207,7 +1207,7 @@ before they are made publicly available.
 @node Automated Upload Registration
 @subsection Automated Upload Registration
 
-@cindex registration
+@cindex registration for uploads
 @cindex uploads, registration for
 
 Here is how to register your information so you can perform uploads
@@ -1309,6 +1309,18 @@ Your designated upload email addresses (@pxref{Automated Upload Registration})
 are sent a message if there are any problems processing an upload for your
 package. You also receive a message when your upload has been successfully
 processed.
+
+One relatively easy way to create and transfer the necessary files is
+to use the @code{gnupload} script, which is available from the
+@file{build-aux/} directory of the @code{gnulib} project at
+@url{http://savannah.gnu.org/projects/gnulib}.  Run @code{gnupload
+--help} for a description and examples.
+
+@code{gnupload} uses the @code{ncftpput} program to do the actual
+transfers; if you don't happen to have the @code{ncftp} package
+installed, you can use the @code{ncftpput-ftp} script as a
+replacement, which uses plain command line @code{ftp}.  It's also
+available from the @file{build-aux/} directory of @code{gnulib}.
 
 If you have difficulties processing an upload, email
 @email{ftp-upload@@gnu.org}.
