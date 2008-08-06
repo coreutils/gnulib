@@ -1,3 +1,10 @@
+2008-08-06  Jim Meyering  <meyering@redhat.com>
+
+	inet_pton.c: use locale-independent tolower
+	* lib/inet_pton.c: Include <c-ctype.h> rather than <ctype.h>.
+	(inet_pton6): Use c_tolower rather than tolower.
+	* modules/inet_pton (Depends-on): Add c-ctype.
+
 2008-08-06  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/poll.c (poll): Avoid division when timeout is 0, cache

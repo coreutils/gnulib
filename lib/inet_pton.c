@@ -37,7 +37,7 @@
 /* Specification.  */
 #include <arpa/inet.h>
 
-#include <ctype.h>
+#include <c-ctype.h>
 #include <string.h>
 #include <errno.h>
 
@@ -179,7 +179,7 @@ inet_pton6 (const char *restrict src, unsigned char *restrict dst)
   curtok = src;
   saw_xdigit = 0;
   val = 0;
-  while ((ch = tolower (*src++)) != '\0')
+  while ((ch = c_tolower (*src++)) != '\0')
     {
       const char *pch;
 
