@@ -1,3 +1,7 @@
+2008-08-06  Bruno Haible  <bruno@clisp.org>
+
+	* lib/poll.c (poll): Further micro-optimization.
+
 2008-08-06  Jim Meyering  <meyering@redhat.com>
 
 	inet_pton.c: use locale-independent tolower

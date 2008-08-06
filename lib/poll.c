@@ -55,7 +55,7 @@ poll (pfd, nfd, timeout)
      int timeout;
 {
   fd_set rfds, wfds, efds;
-  struct timeval tv = { 0, 0 };
+  struct timeval tv;
   struct timeval *ptv;
   int maxfd, rc;
   nfds_t i;
@@ -91,7 +91,11 @@ poll (pfd, nfd, timeout)
 
   /* convert timeout number into a timeval structure */
   if (timeout == 0)
-    ptv = &tv;
+    {
+      ptv = &tv;
+      ptv->tv_sec = 0;
+      ptv->tv_usec = 0;
+    }
   else if (timeout > 0)
     {
       ptv = &tv;
