@@ -19,7 +19,7 @@ gl_ARPA_INET_MODULE_INDICATOR([inet_pton])
 Makefile.am:
 
 License:
-LGPL
+LGPLv2+
 
 Include:
 #include <arpa/inet.h>

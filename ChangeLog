@@ -1,3 +1,7 @@
+2008-08-06  Jim Meyering  <meyering@redhat.com>
+
+	* modules/inet_pton (License): Relicense under LGPLv2+.
+
 2008-08-03  Bruno Haible  <bruno@clisp.org>
 
 	Additional non-aborting API for lock and tls.
