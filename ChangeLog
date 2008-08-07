@@ -1,3 +1,8 @@
+2008-08-07  Paolo Bonzini  <bonzini@gnu.org>
+
+	* lib/lock.c (glthread_recursive_lock_init_multithreaded)
+	[!PTHREAD_RECURSIVE_MUTEX_INITIALIZER]: Fix typo.
+
 2008-08-07  Jim Meyering  <meyering@redhat.com>
 
 	* m4/inet_pton.m4: Fix typo in comment: s/inet_ntop/inet_pton/.

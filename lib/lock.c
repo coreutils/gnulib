@@ -372,7 +372,7 @@ glthread_recursive_lock_init_multithreaded (gl_recursive_lock_t *lock)
     }
   err = pthread_mutexattr_destroy (&attributes);
   if (err != 0)
-    return ret;
+    return err;
   lock->initialized = 1;
   return 0;
 }
