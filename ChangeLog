@@ -1,3 +1,7 @@
+2008-08-07  Jim Meyering  <meyering@redhat.com>
+
+	* modules/mkstemp (License): Relicense under LGPLv2+.
+
 2008-08-06  Bruno Haible  <bruno@clisp.org>
 
 	* lib/poll.c (poll): Further micro-optimization.
