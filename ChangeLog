@@ -1,5 +1,7 @@
 2008-08-07  Jim Meyering  <meyering@redhat.com>
 
+	* m4/inet_pton.m4: Fix typo in comment: s/inet_ntop/inet_pton/.
+
 	* modules/mkstemp (License): Relicense under LGPLv2+.
 
 2008-08-06  Bruno Haible  <bruno@clisp.org>
