@@ -1,3 +1,10 @@
+2008-08-10  Jim Meyering  <meyering@redhat.com>
+
+	ensure that return value of uinttostr et al are not ignored
+	* lib/inttostr.h (__GNUC_PREREQ): Define.
+	(__attribute_warn_unused_result__): Define.
+	(offtostr, imaxtostr, umaxtostr, uinttostr): Apply the attribute.
+
 2008-08-07  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/lock.c (glthread_recursive_lock_init_multithreaded)
