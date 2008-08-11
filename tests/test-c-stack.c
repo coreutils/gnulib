@@ -50,17 +50,17 @@ char *program_name;
 int
 main (int argc, char **argv)
 {
-   program_name = argv[0];
 #if HAVE_SETRLIMIT && defined RLIMIT_STACK
-   /* Before starting the endless recursion, try to be friendly to the
-      user's machine.  On some Linux 2.2.x systems, there is no stack
-      limit for user processes at all.  We don't want to kill such
-      systems.  */
-   struct rlimit rl;
-   rl.rlim_cur = rl.rlim_max = 0x100000; /* 1 MB */
-   setrlimit (RLIMIT_STACK, &rl);
+  /* Before starting the endless recursion, try to be friendly to the
+     user's machine.  On some Linux 2.2.x systems, there is no stack
+     limit for user processes at all.  We don't want to kill such
+     systems.  */
+  struct rlimit rl;
+  rl.rlim_cur = rl.rlim_max = 0x100000; /* 1 MB */
+  setrlimit (RLIMIT_STACK, &rl);
 #endif
 
+  program_name = argv[0];
   if (c_stack_action (0) == 0)
     {
       if (1 < argc)

@@ -1,3 +1,10 @@
+2008-08-11  Eric Blake  <ebb9@byu.net>
+
+	test-c-stack: avoid C99-ism
+	* tests/test-c-stack.c (main): Fix whitespace, move declaration
+	before statement.
+	Reported by Alain Guibert.
+
 2008-08-10  Jim Meyering  <meyering@redhat.com>
 
 	ensure that return value of uinttostr et al are not ignored
