@@ -1,6 +1,6 @@
 /* Traverse a file hierarchy.
 
-   Copyright (C) 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2004-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -129,9 +129,9 @@ typedef struct {
      file systems like FAT, CIFS, FUSE-based ones, etc., when entries from
      their name/inode cache are flushed too early.
      Use this flag to make fts_open and fts_read defer the stat/lstat/fststat
-     of each entry until it actually processed.  However, note that if you use
-     this option and also specify a comparison function, that function may not
-     examine any data via fts_statp.  */
+     of each entry until it is actually processed.  However, note that if you
+     use this option and also specify a comparison function, that function may
+     not examine any data via fts_statp.  */
 # define FTS_DEFER_STAT		0x0400
 
 # define FTS_OPTIONMASK	0x07ff		/* valid user option mask */

@@ -1,3 +1,7 @@
+2008-08-11  Jim Meyering  <meyering@redhat.com>
+
+	* lib/fts_.h: Fix grammar (insert a missing "is") in a comment.
+
 2008-08-11  Eric Blake  <ebb9@byu.net>
 
 	test-c-stack: avoid C99-ism
