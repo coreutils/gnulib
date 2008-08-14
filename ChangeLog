@@ -1,5 +1,27 @@
 2008-08-14  Bruno Haible  <bruno@clisp.org>
 
+	* lib/glthread/lock.h (glthread_lock_lock, glthread_lock_unlock,
+	glthread_lock_destroy, glthread_rwlock_rdlock, glthread_rwlock_wrlock,
+	glthread_rwlock_unlock, glthread_rwlock_destroy,
+	glthread_recursive_lock_lock, glthread_recursive_lock_unlock,
+	glthread_recursive_lock_destroy): Define as macros always.
+	* lib/glthread/lock.c (glthread_lock_lock_func): Renamed from
+	glthread_lock_lock.
+	(glthread_lock_unlock_func): Renamed from glthread_lock_unlock.
+	(glthread_lock_destroy_func): Renamed from glthread_lock_destroy.
+	(glthread_rwlock_rdlock_func): Renamed from glthread_rwlock_rdlock.
+	(glthread_rwlock_wrlock_func): Renamed from glthread_rwlock_wrlock.
+	(glthread_rwlock_unlock_func): Renamed from glthread_rwlock_unlock.
+	(glthread_rwlock_destroy_func): Renamed from glthread_rwlock_destroy.
+	(glthread_recursive_lock_lock_func): Renamed from
+	glthread_recursive_lock_lock.
+	(glthread_recursive_lock_unlock_func): Renamed from
+	glthread_recursive_lock_unlock.
+	(glthread_recursive_lock_destroy_func): Renamed from
+	glthread_recursive_lock_destroy.
+
+2008-08-14  Bruno Haible  <bruno@clisp.org>
+
 	* lib/glthread/lock.h: Renamed from lib/lock.h.
 	* lib/glthread/lock.c: Renamed from lib/lock.c. Update includes.
 	* lib/glthread/tls.h: Renamed from lib/tls.h.

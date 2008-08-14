@@ -673,10 +673,16 @@ typedef struct
     { { 0, -1 } }
 # define glthread_lock_init(LOCK) \
     (glthread_lock_init_func (LOCK), 0)
+# define glthread_lock_lock(LOCK) \
+    glthread_lock_lock_func (LOCK)
+# define glthread_lock_unlock(LOCK) \
+    glthread_lock_unlock_func (LOCK)
+# define glthread_lock_destroy(LOCK) \
+    glthread_lock_destroy_func (LOCK)
 extern void glthread_lock_init_func (gl_lock_t *lock);
-extern int glthread_lock_lock (gl_lock_t *lock);
-extern int glthread_lock_unlock (gl_lock_t *lock);
-extern int glthread_lock_destroy (gl_lock_t *lock);
+extern int glthread_lock_lock_func (gl_lock_t *lock);
+extern int glthread_lock_unlock_func (gl_lock_t *lock);
+extern int glthread_lock_destroy_func (gl_lock_t *lock);
 
 /* ------------------------- gl_rwlock_t datatype ------------------------- */
 
@@ -709,11 +715,19 @@ typedef struct
     { { 0, -1 } }
 # define glthread_rwlock_init(LOCK) \
     (glthread_rwlock_init_func (LOCK), 0)
+# define glthread_rwlock_rdlock(LOCK) \
+    glthread_rwlock_rdlock_func (LOCK)
+# define glthread_rwlock_wrlock(LOCK) \
+    glthread_rwlock_wrlock_func (LOCK)
+# define glthread_rwlock_unlock(LOCK) \
+    glthread_rwlock_unlock_func (LOCK)
+# define glthread_rwlock_destroy(LOCK) \
+    glthread_rwlock_destroy_func (LOCK)
 extern void glthread_rwlock_init_func (gl_rwlock_t *lock);
-extern int glthread_rwlock_rdlock (gl_rwlock_t *lock);
-extern int glthread_rwlock_wrlock (gl_rwlock_t *lock);
-extern int glthread_rwlock_unlock (gl_rwlock_t *lock);
-extern int glthread_rwlock_destroy (gl_rwlock_t *lock);
+extern int glthread_rwlock_rdlock_func (gl_rwlock_t *lock);
+extern int glthread_rwlock_wrlock_func (gl_rwlock_t *lock);
+extern int glthread_rwlock_unlock_func (gl_rwlock_t *lock);
+extern int glthread_rwlock_destroy_func (gl_rwlock_t *lock);
 
 /* --------------------- gl_recursive_lock_t datatype --------------------- */
 
@@ -737,10 +751,16 @@ typedef struct
     { { 0, -1 }, 0, 0 }
 # define glthread_recursive_lock_init(LOCK) \
     (glthread_recursive_lock_init_func (LOCK), 0)
+# define glthread_recursive_lock_lock(LOCK) \
+    glthread_recursive_lock_lock_func (LOCK)
+# define glthread_recursive_lock_unlock(LOCK) \
+    glthread_recursive_lock_unlock_func (LOCK)
+# define glthread_recursive_lock_destroy(LOCK) \
+    glthread_recursive_lock_destroy_func (LOCK)
 extern void glthread_recursive_lock_init_func (gl_recursive_lock_t *lock);
-extern int glthread_recursive_lock_lock (gl_recursive_lock_t *lock);
-extern int glthread_recursive_lock_unlock (gl_recursive_lock_t *lock);
-extern int glthread_recursive_lock_destroy (gl_recursive_lock_t *lock);
+extern int glthread_recursive_lock_lock_func (gl_recursive_lock_t *lock);
+extern int glthread_recursive_lock_unlock_func (gl_recursive_lock_t *lock);
+extern int glthread_recursive_lock_destroy_func (gl_recursive_lock_t *lock);
 
 /* -------------------------- gl_once_t datatype -------------------------- */
 
