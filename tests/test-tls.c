@@ -1,5 +1,5 @@
 /* Test of thread-local storage in multithreaded situations.
-   Copyright (C) 2005 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "tls.h"
+#include "glthread/tls.h"
 
 #if ENABLE_DEBUGGING
 # define dbgprintf printf

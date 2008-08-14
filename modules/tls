@@ -2,8 +2,8 @@ Description:
 Thread-local storage in multithreaded situations.
 
 Files:
-lib/tls.h
-lib/tls.c
+lib/glthread/tls.h
+lib/glthread/tls.c
 m4/tls.m4
 
 Depends-on:
@@ -13,10 +13,10 @@ configure.ac:
 gl_TLS
 
 Makefile.am:
-lib_SOURCES += tls.h tls.c
+lib_SOURCES += glthread/tls.h glthread/tls.c
 
 Include:
-"tls.h"
+"glthread/tls.h"
 
 License:
 LGPLv2+

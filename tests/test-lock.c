@@ -1,5 +1,5 @@
 /* Test of locking in multithreaded situations.
-   Copyright (C) 2005 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@
 # undef USE_PTH_THREADS
 # undef USE_WIN32_THREADS
 #endif
-#include "lock.h"
+#include "glthread/lock.h"
 
 #if ENABLE_DEBUGGING
 # define dbgprintf printf

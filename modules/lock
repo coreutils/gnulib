@@ -2,8 +2,8 @@ Description:
 Locking in multithreaded situations.
 
 Files:
-lib/lock.h
-lib/lock.c
+lib/glthread/lock.h
+lib/glthread/lock.c
 m4/lock.m4
 build-aux/config.rpath
 
@@ -17,10 +17,10 @@ configure.ac:
 gl_LOCK
 
 Makefile.am:
-lib_SOURCES += lock.h lock.c
+lib_SOURCES += glthread/lock.h glthread/lock.c
 
 Include:
-"lock.h"
+"glthread/lock.h"
 
 Link:
 $(LTLIBTHREAD) when linking with libtool, $(LIBTHREAD) otherwise

@@ -1,3 +1,19 @@
+2008-08-14  Bruno Haible  <bruno@clisp.org>
+
+	* lib/glthread/lock.h: Renamed from lib/lock.h.
+	* lib/glthread/lock.c: Renamed from lib/lock.c. Update includes.
+	* lib/glthread/tls.h: Renamed from lib/tls.h.
+	* lib/glthread/tls.c: Renamed from lib/tls.c. Update includes.
+	* lib/fstrcmp.c: Update includes.
+	* lib/strsignal.c: Update includes.
+	* modules/lock (Files, Makefile.am): Update.
+	(Include): Change to "glthread/lock.h".
+	* modules/tls (Files, Makefile.am): Update.
+	(Include): Change to "glthread/tls.h".
+	* tests/test-lock.c: Update includes.
+	* tests/test-tls.c: Update includes.
+	* NEWS: Mention the renamed header files.
+
 2008-08-11  Jim Meyering  <meyering@redhat.com>
 
 	* lib/fts_.h: Fix grammar (insert a missing "is") in a comment.

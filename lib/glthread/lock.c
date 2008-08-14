@@ -21,7 +21,7 @@
 
 #include <config.h>
 
-#include "lock.h"
+#include "glthread/lock.h"
 
 /* ========================================================================= */
 
