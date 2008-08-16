@@ -146,7 +146,11 @@ struct sigaction
 extern int sigaction (int, const struct sigaction *restrict,
                       struct sigaction *restrict);
 
-#endif /* !@HAVE_SIGACTION@ */
+#elif !@HAVE_STRUCT_SIGACTION_SA_SIGACTION@
+
+# define sa_sigaction sa_handler
+
+#endif /* !@HAVE_SIGACTION@, !@HAVE_STRUCT_SIGACTION_SA_SIGACTION@ */
 
 
 #ifdef __cplusplus

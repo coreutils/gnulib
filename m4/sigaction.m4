@@ -1,4 +1,4 @@
-# sigaction.m4 serial 3
+# sigaction.m4 serial 4
 dnl Copyright (C) 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,6 +22,7 @@ AC_DEFUN([gl_PREREQ_SIGACTION],
   AC_REQUIRE([gl_SIGNAL_H_DEFAULTS])
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([AC_TYPE_UID_T])
+  AC_REQUIRE([gl_PREREQ_SIG_HANDLER_H])
   AC_CHECK_FUNCS_ONCE([sigaltstack siginterrupt])
   AC_CHECK_TYPES([siginfo_t], [], [], [[
 #include <signal.h>
@@ -36,5 +37,10 @@ AC_DEFUN([gl_PREREQ_SIGACTION],
 AC_DEFUN([gl_PREREQ_SIG_HANDLER_H],
 [
   AC_REQUIRE([AC_C_INLINE])
-  :
+  AC_CHECK_MEMBERS([struct sigaction.sa_sigaction], , ,
+                   [[#include <signal.h>]])
+  if test $ac_cv_member_struct_sigaction_sa_sigaction = no; then
+    HAVE_STRUCT_SIGACTION_SA_SIGACTION=0
+    AC_SUBST([HAVE_STRUCT_SIGACTION_SA_SIGACTION])
+  fi
 ])

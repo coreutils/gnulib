@@ -1,4 +1,4 @@
-# signal_h.m4 serial 4
+# signal_h.m4 serial 5
 dnl Copyright (C) 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,4 +26,6 @@ AC_DEFUN([gl_SIGNAL_H_DEFAULTS],
   HAVE_SIGSET_T=1;             AC_SUBST([HAVE_SIGSET_T])
   HAVE_SIGINFO_T=1;            AC_SUBST([HAVE_SIGINFO_T])
   HAVE_SIGACTION=1;            AC_SUBST([HAVE_SIGACTION])
+  HAVE_STRUCT_SIGACTION_SA_SIGACTION=1;
+                               AC_SUBST([HAVE_STRUCT_SIGACTION_SA_SIGACTION])
 ])

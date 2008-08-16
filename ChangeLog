@@ -1,3 +1,19 @@
+2008-08-16  Eric Blake  <ebb9@byu.net>
+
+	c-stack: fix regression on Irix 5.3 from 2008-06-21
+	* m4/c-stack.m4 (gl_PREREQ_C_STACK): Move check for
+	sa_sigaction...
+	* m4/sigaction.m4 (gl_PREREQ_SIG_HANDLER_H): ...here.
+	(gl_PREREQ_SIGACTION): Depend on sig-handler.h prereq's.
+	* m4/signal_h.m4 (gl_SIGNAL_H_DEFAULTS): Set the default.
+	* modules/signal (Makefile.am): Use the value.
+	* lib/signal.in.h (sa_sigaction) [HAVE_SIGACTION
+	&& !HAVE_STRUCT_SIGACTION_SA_SIGACTION]: Define.
+	* doc/posix-headers/signal.texi (signal.h): Document this
+	portability issue.
+	* doc/posix-functions/sigaction.texi (sigaction): Likewise.
+	Reported by Tom G. Christensen.
+
 2008-08-17  Bruno Haible  <bruno@clisp.org>
 
 	New module 'threadlib'.

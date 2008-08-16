@@ -37,6 +37,11 @@ Support for SA_RESTART is missing on some platforms:
 mingw.
 
 @item
+In spite of having SA_SIGACTION, struct sigaction lacks the
+sa_sigaction member on some platforms:
+Irix 5.3.
+
+@item
 The symbolic value @code{SIG_IGN} for the @code{SIGCHLD} signal is equivalent
 to a signal handler
 @smallexample

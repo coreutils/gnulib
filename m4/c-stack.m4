@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 3
+# serial 4
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [# for STACK_DIRECTION
@@ -145,8 +145,6 @@ AC_DEFUN([gl_PREREQ_C_STACK],
    AC_CHECK_DECLS([sigaltstack], , , [#include <signal.h>])
 
    AC_CHECK_HEADERS_ONCE([unistd.h ucontext.h])
-
-   AC_CHECK_MEMBERS([struct sigaction.sa_sigaction], , , [#include <signal.h>])
 
    AC_CHECK_TYPES([stack_t], , , [#include <signal.h>])
 
