@@ -1,3 +1,9 @@
+2008-08-17  Bruno Haible  <bruno@clisp.org>
+
+	* lib/glthread/lock.h: Include <stdlib.h> always.
+	* lib/glthread/tls.h: Likewise.
+	* lib/glthread/cond.h: Likewise.
+
 2008-08-17  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
 	New module 'cond'.

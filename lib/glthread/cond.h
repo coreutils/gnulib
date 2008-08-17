@@ -51,6 +51,7 @@
 
 #include <errno.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "glthread/lock.h"
 
@@ -61,7 +62,6 @@
 /* Use the POSIX threads library.  */
 
 # include <pthread.h>
-# include <stdlib.h>
 
 # ifdef __cplusplus
 extern "C" {
@@ -149,7 +149,6 @@ typedef pthread_cond_t gl_cond_t;
 /* Use the GNU Pth threads library.  */
 
 # include <pth.h>
-# include <stdlib.h>
 
 # ifdef __cplusplus
 extern "C" {
@@ -206,7 +205,6 @@ extern int glthread_cond_timedwait_multithreaded (gl_cond_t *cond, gl_lock_t *lo
 
 # include <thread.h>
 # include <synch.h>
-# include <stdlib.h>
 
 # ifdef __cplusplus
 extern "C" {

@@ -44,6 +44,7 @@
 #define _TLS_H
 
 #include <errno.h>
+#include <stdlib.h>
 
 /* ========================================================================= */
 
@@ -52,7 +53,6 @@
 /* Use the POSIX threads library.  */
 
 # include <pthread.h>
-# include <stdlib.h>
 
 # if PTHREAD_IN_USE_DETECTION_HARD
 
@@ -120,7 +120,6 @@ typedef union
 /* Use the GNU Pth threads library.  */
 
 # include <pth.h>
-# include <stdlib.h>
 
 # if USE_PTH_THREADS_WEAK
 
@@ -174,7 +173,6 @@ typedef union
 /* Use the old Solaris threads library.  */
 
 # include <thread.h>
-# include <stdlib.h>
 
 # if USE_SOLARIS_THREADS_WEAK
 
