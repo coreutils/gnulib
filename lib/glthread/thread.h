@@ -156,6 +156,10 @@ typedef pthread_t gl_thread_t;
 #  define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
 # endif
 
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 /* ========================================================================= */
@@ -202,6 +206,10 @@ typedef pth_t gl_thread_t;
 # define gl_thread_exit(RETVAL) \
     (pth_in_use () ? pth_exit (RETVAL) : 0)
 # define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif
 
@@ -250,8 +258,12 @@ typedef thread_t gl_thread_t;
 # define gl_thread_exit(RETVAL) \
     (pthread_in_use () ? thr_exit (RETVAL) : 0)
 # define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
-#endif
 
+# ifdef __cplusplus
+}
+# endif
+
+#endif
 
 /* ========================================================================= */
 
@@ -269,10 +281,13 @@ typedef int gl_thread_t;
 
 #endif
 
-
 /* ========================================================================= */
 
 /* Macros with built-in error handling.  */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 static inline gl_thread_t
 gl_thread_create (void *(*func) (void *arg), void *arg)
@@ -306,5 +321,9 @@ gl_thread_create (void *(*func) (void *arg), void *arg)
          abort ();                                   \
      }                                               \
    while (0)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _GLTHREAD_THREAD_H */

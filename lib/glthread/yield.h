@@ -39,6 +39,10 @@ extern "C" {
 # define gl_thread_yield() \
     sched_yield ()
 
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 /* ========================================================================= */
@@ -55,6 +59,10 @@ extern "C" {
 
 # define gl_thread_yield() \
     pth_yield (NULL)
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif
 
@@ -74,6 +82,10 @@ extern "C" {
 # define gl_thread_yield() \
     thr_yield ()
 
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 /* ========================================================================= */
@@ -86,6 +98,10 @@ extern "C" {
 
 # define gl_thread_yield() \
     Sleep (0)
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif
 

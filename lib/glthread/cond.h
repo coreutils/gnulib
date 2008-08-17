@@ -140,6 +140,10 @@ typedef pthread_cond_t gl_cond_t;
 # define glthread_cond_destroy(COND) \
     (pthread_in_use () ? pthread_cond_destroy (COND) : 0)
 
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 /* ========================================================================= */
@@ -194,6 +198,10 @@ typedef pth_cond_t gl_cond_t;
     (pth_in_use () && !pth_cond_notify (COND, TRUE) ? errno : 0)
 # define glthread_cond_destroy(COND) 0
 extern int glthread_cond_timedwait_multithreaded (gl_cond_t *cond, gl_lock_t *lock, struct timespec *abstime);
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif
 
@@ -253,6 +261,10 @@ typedef pthread_cond_t gl_cond_t;
 # define glthread_cond_destroy(COND) \
     (pthread_in_use () ? cond_destroy (COND) : 0)
 
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 /* ========================================================================= */
@@ -276,6 +288,10 @@ typedef int gl_cond_t;
 /* ========================================================================= */
 
 /* Macros with built-in error handling.  */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define gl_cond_init(COND)             \
    do                                  \
@@ -324,5 +340,9 @@ gl_cond_timedwait_func (gl_cond_t *cond, gl_lock_t *lock, struct timespec *absti
          abort ();                        \
      }                                    \
    while (0)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _GLTHREAD_COND_H */
