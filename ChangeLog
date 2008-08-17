@@ -1,3 +1,11 @@
+2008-08-17  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+
+	New module 'cond'.
+	* modules/cond: New file.
+	* lib/glthread/cond.h: New file.
+	* lib/glthread/cond.c: New file.
+	* m4/cond.m4: New file.
+
 2008-08-16  Eric Blake  <ebb9@byu.net>
 
 	c-stack: fix regression on Irix 5.3 from 2008-06-21
