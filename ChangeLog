@@ -5,6 +5,7 @@
 	* lib/glthread/cond.h: New file.
 	* lib/glthread/cond.c: New file.
 	* m4/cond.m4: New file.
+	* MODULES.html.sh (Multithreading): Add cond.
 
 2008-08-16  Eric Blake  <ebb9@byu.net>
 
