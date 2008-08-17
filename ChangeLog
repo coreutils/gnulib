@@ -1,3 +1,21 @@
+2008-08-17  Bruno Haible  <bruno@clisp.org>
+
+	New module 'threadlib'.
+	* modules/threadlib: New file.
+	* m4/threadlib.m4: New file, from m4/lock.m4, renaming gl_LOCK to
+	gl_THREADLIB and gl_LOCK_EARLY to gl_THREADLIB_EARLY.
+	* m4/lock.m4 (gl_LOCK_EARLY, gl_LOCK_EARLY_BODY, gl_LOCK_BODY): Remove
+	macros.
+	(gl_LOCK): Just require gl_THREADLIB and perform checks for lock.h.
+	(gl_DISABLE_THREADS): Remove macro.
+	* modules/lock (Files): Remove build-aux/config.rpath.
+	(Depends-on): Remove havelib. Add threadlib.
+	(configure.ac-early): Remove section.
+	* m4/tls.m4 (gl_TLS): Require gl_THREADLIB instead of gl_LOCK.
+	* modules/tls (Depends-on): Remove lock. Add threadlib.
+	(Link): New section, copied from threadlib.
+	* MODULES.html.sh (Multithreading): Add threadlib.
+
 2008-08-14  Bruno Haible  <bruno@clisp.org>
 
 	* lib/glthread/lock.h (glthread_lock_lock, glthread_lock_unlock,

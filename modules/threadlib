@@ -1,22 +1,22 @@
 Description:
-Thread-local storage in multithreaded situations.
+Access to multithreading primitives.
 
 Files:
-lib/glthread/tls.h
-lib/glthread/tls.c
-m4/tls.m4
+m4/threadlib.m4
+build-aux/config.rpath
 
 Depends-on:
-threadlib
+havelib
+
+configure.ac-early:
+gl_THREADLIB_EARLY
 
 configure.ac:
-gl_TLS
+gl_THREADLIB
 
 Makefile.am:
-lib_SOURCES += glthread/tls.h glthread/tls.c
 
 Include:
-"glthread/tls.h"
 
 Link:
 $(LTLIBTHREAD) when linking with libtool, $(LIBTHREAD) otherwise

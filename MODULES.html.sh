@@ -2376,6 +2376,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module threadlib
   func_module lock
   func_module tls
   func_module openmp

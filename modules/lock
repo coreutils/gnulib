@@ -5,13 +5,9 @@ Files:
 lib/glthread/lock.h
 lib/glthread/lock.c
 m4/lock.m4
-build-aux/config.rpath
 
 Depends-on:
-havelib
-
-configure.ac-early:
-AC_REQUIRE([gl_LOCK_EARLY])
+threadlib
 
 configure.ac:
 gl_LOCK
