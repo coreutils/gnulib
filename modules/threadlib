@@ -2,6 +2,7 @@ Description:
 Access to multithreading primitives.
 
 Files:
+lib/glthread/threadlib.c
 m4/threadlib.m4
 build-aux/config.rpath
 
@@ -15,6 +16,7 @@ configure.ac:
 gl_THREADLIB
 
 Makefile.am:
+lib_SOURCES += glthread/threadlib.c
 
 Include:
 

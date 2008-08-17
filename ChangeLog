@@ -18,6 +18,10 @@
 
 	New module 'threadlib'.
 	* modules/threadlib: New file.
+	* lib/glthread/threadlib.c: New file, extracted from
+	lib/glthread/lock.c.
+	* lib/glthread/lock.c (dummy_thread_func, glthread_in_use): Remove
+	functions.
 	* m4/threadlib.m4: New file, from m4/lock.m4, renaming gl_LOCK to
 	gl_THREADLIB and gl_LOCK_EARLY to gl_THREADLIB_EARLY.
 	* m4/lock.m4 (gl_LOCK_EARLY, gl_LOCK_EARLY_BODY, gl_LOCK_BODY): Remove
