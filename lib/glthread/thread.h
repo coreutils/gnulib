@@ -24,7 +24,7 @@
    Thread data type: gl_thread_t.
 
    Creating a thread:
-       gl_thread_create (thread, func, arg);
+       thread = gl_thread_create (func, arg);
    Or with control of error handling:
        err = glthread_create (&thread, func, arg);
        extern int glthread_create (gl_thread_t *result,
@@ -260,7 +260,7 @@ typedef thread_t gl_thread_t;
 /* Provide dummy implementation if threads are not supported.  */
 
 typedef int gl_thread_t;
-# define glthread_create(THREADP, FUNC, ARG) 0
+# define glthread_create(THREADP, FUNC, ARG) ENOSYS
 # define glthread_sigmask(HOW, SET, OSET) 0
 # define glthread_join(THREAD, RETVALP) 0
 # define gl_thread_self() NULL
@@ -274,20 +274,17 @@ typedef int gl_thread_t;
 
 /* Macros with built-in error handling.  */
 
-static inline int
-gl_thread_create_func (gl_thread_t * thread,
-                       void *(*func) (void *arg),
-                       void *arg)
+static inline gl_thread_t
+gl_thread_create (void *(*func) (void *arg), void *arg)
 {
+  gl_thread_t thread;
   int ret;
 
-  ret = glthread_create (thread, func, arg);
+  ret = glthread_create (&thread, func, arg);
   if (ret != 0)
     abort ();
-  return ret;
+  return thread;
 }
-#define gl_thread_create(THREAD, FUNC, ARG) \
-  gl_thread_create_func (&THREAD, FUNC, ARG)
 #define gl_thread_sigmask(HOW, SET, OSET)     \
    do                                         \
      {                                        \
