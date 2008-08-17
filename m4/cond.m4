@@ -7,5 +7,5 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_COND],
 [
   AC_REQUIRE([gl_THREADLIB])
-  AC_C_INLINE
+  AC_REQUIRE([AC_C_INLINE])
 ])
