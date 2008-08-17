@@ -1,0 +1,313 @@
+/* Creating and controlling threads.
+   Copyright (C) 2005-2008 Free Software Foundation, Inc.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+/* Written by Bruno Haible <bruno@clisp.org>, 2005.
+   Based on GCC's gthr-posix.h, gthr-posix95.h, gthr-solaris.h,
+   gthr-win32.h.  */
+
+/* This file contains primitives for creating and controlling threads.
+
+   Thread data type: gl_thread_t.
+
+   Creating a thread:
+       gl_thread_create (thread, func, arg);
+   Or with control of error handling:
+       err = glthread_create (&thread, func, arg);
+       extern int glthread_create (gl_thread_t *result,
+                                   void *(*func) (void *), void *arg);
+
+   Querying and changing the signal mask of a thread (not supported on all
+   platforms):
+       gl_thread_sigmask (how, newmask, oldmask);
+   Or with control of error handling:
+       err = glthread_sigmask (how, newmask, oldmask);
+       extern int glthread_sigmask (int how, const sigset_t *newmask, sigset_t *oldmask);
+
+   Waiting for termination of another thread:
+       gl_thread_join (thread, &return_value);
+   Or with control of error handling:
+       err = glthread_join (thread, &return_value);
+       extern int glthread_join (gl_thread_t thread, void **return_value_ptr);
+
+   Getting a reference to the current thread:
+       current = gl_thread_self ();
+       extern gl_thread_t gl_thread_self (void);
+
+   Terminating the current thread:
+       gl_thread_exit (return_value);
+       extern void gl_thread_exit (void *return_value) __attribute__ ((noreturn));
+
+   Requesting custom code to be executed at fork() time(not supported on all
+   platforms):
+       gl_thread_atfork (prepare_func, parent_func, child_func);
+   Or with control of error handling:
+       err = glthread_atfork (prepare_func, parent_func, child_func);
+       extern int glthread_atfork (void (*prepare_func) (void),
+                                   void (*parent_func) (void),
+                                   void (*child_func) (void));
+   Note that even on platforms where this is supported, use of fork() and
+   threads together is problematic, see
+     <http://lists.gnu.org/archive/html/bug-gnulib/2008-08/msg00062.html>
+ */
+
+
+#ifndef _GLTHREAD_THREAD_H
+#define _GLTHREAD_THREAD_H
+
+#include <errno.h>
+#include <stdlib.h>
+
+/* ========================================================================= */
+
+#if USE_POSIX_THREADS
+
+/* Use the POSIX threads library.  */
+
+# include <pthread.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+# if PTHREAD_IN_USE_DETECTION_HARD
+
+/* The pthread_in_use() detection needs to be done at runtime.  */
+#  define pthread_in_use() \
+     glthread_in_use ()
+extern int glthread_in_use (void);
+
+# endif
+
+# if USE_POSIX_THREADS_WEAK
+
+/* Use weak references to the POSIX threads library.  */
+
+/* Weak references avoid dragging in external libraries if the other parts
+   of the program don't use them.  Here we use them, because we don't want
+   every program that uses libintl to depend on libpthread.  This assumes
+   that libpthread would not be loaded after libintl; i.e. if libintl is
+   loaded first, by an executable that does not depend on libpthread, and
+   then a module is dynamically loaded that depends on libpthread, libintl
+   will not be multithread-safe.  */
+
+/* The way to test at runtime whether libpthread is present is to test
+   whether a function pointer's value, such as &pthread_mutex_init, is
+   non-NULL.  However, some versions of GCC have a bug through which, in
+   PIC mode, &foo != NULL always evaluates to true if there is a direct
+   call to foo(...) in the same function.  To avoid this, we test the
+   address of a function in libpthread that we don't use.  */
+
+#  pragma weak pthread_create
+#  pragma weak pthread_sigmask
+#  pragma weak pthread_join
+#  ifndef pthread_self
+#   pragma weak pthread_self
+#  endif
+#  pragma weak pthread_exit
+#  if HAVE_PTHREAD_ATFORK
+#   pragma weak pthread_atfork
+#  endif
+
+#  if !PTHREAD_IN_USE_DETECTION_HARD
+#   pragma weak pthread_cancel
+#   define pthread_in_use() (pthread_cancel != NULL)
+#  endif
+
+# else
+
+#  if !PTHREAD_IN_USE_DETECTION_HARD
+#   define pthread_in_use() 1
+#  endif
+
+# endif
+
+/* -------------------------- gl_thread_t datatype -------------------------- */
+
+typedef pthread_t gl_thread_t;
+# define glthread_create(THREADP, FUNC, ARG) \
+    (pthread_in_use () ? pthread_create (THREADP, NULL, FUNC, ARG) : ENOSYS)
+# define glthread_sigmask(HOW, SET, OSET) \
+    (pthread_in_use () ? pthread_sigmask (HOW, SET, OSET) : 0)
+# define glthread_join(THREAD, RETVALP) \
+    (pthread_in_use () ? pthread_join (THREAD, RETVALP) : 0)
+# define gl_thread_self() \
+    (pthread_in_use () ? (void *) pthread_self () : NULL)
+# define gl_thread_exit(RETVAL) \
+    (pthread_in_use () ? pthread_exit (RETVAL) : 0)
+
+# if HAVE_PTHREAD_ATFORK
+#  define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) \
+     (pthread_in_use () ? pthread_atfork (PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) : 0)
+# else
+#  define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
+# endif
+
+#endif
+
+/* ========================================================================= */
+
+#if USE_PTH_THREADS
+
+/* Use the GNU Pth threads library.  */
+
+# include <pth.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+# if USE_PTH_THREADS_WEAK
+
+/* Use weak references to the GNU Pth threads library.  */
+
+#  pragma weak pth_spawn
+#  pragma weak pth_sigmask
+#  pragma weak pth_join
+#  pragma weak pth_self
+#  pragma weak pth_exit
+
+#  pragma weak pth_cancel
+#  define pth_in_use() (pth_cancel != NULL)
+
+# else
+
+#  define pth_in_use() 1
+
+# endif
+/* -------------------------- gl_thread_t datatype -------------------------- */
+
+typedef pth_t gl_thread_t;
+# define glthread_create(THREADP, FUNC, ARG) \
+    (pth_in_use () ? ((*(THREADP) = pth_spawn (NULL, FUNC, ARG)) ? 0 : errno) : 0)
+# define glthread_sigmask(HOW, SET, OSET) \
+    (pth_in_use () && !pth_sigmask (HOW, SET, OSET) ? errno : 0)
+# define glthread_join(THREAD, RETVALP) \
+    (pth_in_use () && !pth_join (THREAD, RETVALP) ? errno : 0)
+# define gl_thread_self() \
+    (pth_in_use () ? (void *) pth_self () : 0)
+# define gl_thread_exit(RETVAL) \
+    (pth_in_use () ? pth_exit (RETVAL) : 0)
+# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
+
+#endif
+
+/* ========================================================================= */
+
+#if USE_SOLARIS_THREADS
+
+/* Use the old Solaris threads library.  */
+
+# include <thread.h>
+# include <synch.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+# if USE_SOLARIS_THREADS_WEAK
+
+/* Use weak references to the old Solaris threads library.  */
+
+#  pragma weak thr_create
+#  pragma weak thr_join
+#  pragma weak thr_self
+#  pragma weak thr_exit
+
+#  pragma weak thr_suspend
+#  define thread_in_use() (thr_suspend != NULL)
+
+# else
+
+#  define thread_in_use() 1
+
+# endif
+
+/* -------------------------- gl_thread_t datatype -------------------------- */
+
+typedef thread_t gl_thread_t;
+# define glthread_create(THREADP, FUNC, ARG) \
+    (thread_in_use () ? thr_create (NULL, 0, FUNC, ARG, 0, THREADP) : 0)
+# define glthread_sigmask(HOW, SET, OSET) \
+    (pthread_in_use () ? sigprocmask (HOW, SET, OSET) : 0)
+# define glthread_join(THREAD, RETVALP) \
+    (pthread_in_use () ? thr_join (THREAD, NULL, RETVALP) : 0)
+# define gl_thread_self() \
+    (pthread_in_use () ? (void *) thr_self () : 0)
+# define gl_thread_exit(RETVAL) \
+    (pthread_in_use () ? thr_exit (RETVAL) : 0)
+# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
+#endif
+
+
+/* ========================================================================= */
+
+#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WIN32_THREADS)
+
+/* Provide dummy implementation if threads are not supported.  */
+
+typedef int gl_thread_t;
+# define glthread_create(THREADP, FUNC, ARG) 0
+# define glthread_sigmask(HOW, SET, OSET) 0
+# define glthread_join(THREAD, RETVALP) 0
+# define gl_thread_self() NULL
+# define gl_thread_exit(RETVAL) 0
+# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
+
+#endif
+
+
+/* ========================================================================= */
+
+/* Macros with built-in error handling.  */
+
+static inline int
+gl_thread_create_func (gl_thread_t * thread,
+                       void *(*func) (void *arg),
+                       void *arg)
+{
+  int ret;
+
+  ret = glthread_create (thread, func, arg);
+  if (ret != 0)
+    abort ();
+  return ret;
+}
+#define gl_thread_create(THREAD, FUNC, ARG) \
+  gl_thread_create_func (&THREAD, FUNC, ARG)
+#define gl_thread_sigmask(HOW, SET, OSET)     \
+   do                                         \
+     {                                        \
+       if (glthread_sigmask (HOW, SET, OSET)) \
+         abort ();                            \
+     }                                        \
+   while (0)
+#define gl_thread_join(THREAD, RETVAL)     \
+   do                                      \
+     {                                     \
+       if (glthread_join (THREAD, RETVAL)) \
+         abort ();                         \
+     }                                     \
+   while (0)
+#define gl_thread_atfork(PREPARE, PARENT, CHILD)     \
+   do                                                \
+     {                                               \
+       if (glthread_atfork (PREPARE, PARENT, CHILD)) \
+         abort ();                                   \
+     }                                               \
+   while (0)
+
+#endif /* _GLTHREAD_THREAD_H */

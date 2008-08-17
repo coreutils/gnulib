@@ -2379,6 +2379,7 @@ func_all_modules ()
   func_module threadlib
   func_module lock
   func_module tls
+  func_module thread
   func_module cond
   func_module openmp
   func_end_table

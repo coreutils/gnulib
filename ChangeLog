@@ -1,3 +1,11 @@
+2008-08-17  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+
+	New module 'thread'.
+	* modules/thread: New file.
+	* lib/glthread/thread.h: New file.
+	* m4/thread.m4: New file.
+	* MODULES.html.sh (Multithreading): Add thread.
+
 2008-08-17  Bruno Haible  <bruno@clisp.org>
 
 	* lib/glthread/lock.h: Include <stdlib.h> always.
