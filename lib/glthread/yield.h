@@ -73,7 +73,6 @@ extern "C" {
 /* Use the old Solaris threads library.  */
 
 # include <thread.h>
-# include <synch.h>
 
 # ifdef __cplusplus
 extern "C" {
@@ -91,6 +90,8 @@ extern "C" {
 /* ========================================================================= */
 
 #if USE_WIN32_THREADS
+
+# include <windows.h>
 
 # ifdef __cplusplus
 extern "C" {
