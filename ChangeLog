@@ -1,5 +1,13 @@
 2008-08-17  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
+	New module 'yield'.
+	* modules/yield: New file.
+	* lib/glthread/yield.h: New file.
+	* m4/yield.m4: New file.
+	* MODULES.html.sh (Multithreading): Add yield.
+
+2008-08-17  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+
 	New module 'thread'.
 	* modules/thread: New file.
 	* lib/glthread/thread.h: New file.
