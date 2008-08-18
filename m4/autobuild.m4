@@ -1,4 +1,4 @@
-# autobuild.m4 serial 6
+# autobuild.m4 serial 7
 dnl Copyright (C) 2004, 2006, 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,7 @@ AC_DEFUN([AB_INIT],
 
   ifelse([$1],[],,[AC_MSG_NOTICE([autobuild mode... $1])])
 
-  date=`TZ=UTC date +%Y%m%d-%H%M%S`
+  date=`TZ=UTC date +%Y%m%dT%H%M%SZ`
   if test "$?" != 0; then
     date=`date`
   fi

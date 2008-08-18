@@ -1,6 +1,7 @@
 2008-08-18  Simon Josefsson  <simon@josefsson.org>
 
-	* m4/autobuild.m4: Use TZ=UTC to avoid time zone complexity.
+	* m4/autobuild.m4: Use TZ=UTC to avoid time zone complexity.  Use
+	ISO 8601 format.  Suggested by Greg Troxel <gdt@ir.bbn.com>.
 
 2008-08-18  Bruno Haible  <bruno@clisp.org>
 
