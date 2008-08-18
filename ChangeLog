@@ -1,3 +1,11 @@
+2008-08-17  Bruno Haible  <bruno@clisp.org>
+
+	* lib/glthread/thread.c: New file, based on code from tests/test-lock.c.
+	* lib/glthread/thread.h: Provide Win32 specific implementation.
+	* modules/thread (Files): Add lib/glthread/thread.c.
+	(Depends-on): Add lock.
+	(Makefile.am): Add glthread/thread.c to lib_SOURCES.
+
 2008-08-17  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
 	New module 'yield'.

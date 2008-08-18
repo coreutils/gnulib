@@ -267,6 +267,46 @@ typedef thread_t gl_thread_t;
 
 /* ========================================================================= */
 
+#if USE_WIN32_THREADS
+
+# include <windows.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+/* -------------------------- gl_thread_t datatype -------------------------- */
+
+/* The gl_thread_t is the thread id, not the thread handle.  If it were the
+   thread handle, it would be hard to implement gl_thread_self()
+   (since GetCurrentThread () returns a pseudo-handle,
+   DuplicateHandle (GetCurrentThread ()) returns a handle that must be closed
+   afterwards, and there is no function for quickly retrieving a thread handle
+   from its id).  */
+typedef DWORD gl_thread_t;
+# define glthread_create(THREADP, FUNC, ARG) \
+    glthread_create_func (THREADP, FUNC, ARG)
+# define glthread_sigmask(HOW, SET, OSET) \
+    /* unsupported */ 0
+# define glthread_join(THREAD, RETVALP) \
+    glthread_join_func (THREAD, RETVALP)
+# define gl_thread_self() \
+    GetCurrentThreadId ()
+# define gl_thread_exit(RETVAL) \
+    gl_thread_exit_func (RETVAL)
+# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
+extern int glthread_create_func (gl_thread_t *threadp, void * (*func) (void *), void *arg);
+extern int glthread_join_func (gl_thread_t thread, void **retvalp);
+extern int gl_thread_exit_func (void *retval);
+
+# ifdef __cplusplus
+}
+# endif
+
+#endif
+
+/* ========================================================================= */
+
 #if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WIN32_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */

@@ -3,16 +3,18 @@ Creating and controlling threads.
 
 Files:
 lib/glthread/thread.h
+lib/glthread/thread.c
 m4/thread.m4
 
 Depends-on:
 threadlib
+lock
 
 configure.ac:
 gl_THREAD
 
 Makefile.am:
-lib_SOURCES += glthread/thread.h 
+lib_SOURCES += glthread/thread.h glthread/thread.c
 
 Include:
 "glthread/thread.h"
