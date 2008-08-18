@@ -1,5 +1,12 @@
 2008-08-18  Bruno Haible  <bruno@clisp.org>
 
+	* lib/glthread/lock.h [USE_SOLARIS_THREADS]: Fix
+	glthread_recursive_lock_* macros.
+	* lib/glthread/lock.c (glthread_recursive_lock_destroy_multithreaded):
+	Fix syntax error.
+
+2008-08-18  Bruno Haible  <bruno@clisp.org>
+
 	* lib/glthread/thread.c: Avoid forcing a context switch right after
 	thread creation.
 

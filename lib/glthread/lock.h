@@ -577,33 +577,13 @@ typedef struct
 # define gl_recursive_lock_initializer \
     { DEFAULTMUTEX, (thread_t) 0, 0 }
 # define glthread_recursive_lock_init(LOCK) \
-    do                                          \
-      {                                         \
-        if (thread_in_use ())                   \
-          glthread_recursive_lock_init_multithreaded (LOCK); \
-      }                                         \
-    while (0)
+    (thread_in_use () ? glthread_recursive_lock_init_multithreaded (LOCK) : 0)
 # define glthread_recursive_lock_lock(LOCK) \
-    do                                          \
-      {                                         \
-        if (thread_in_use ())                   \
-          glthread_recursive_lock_lock_multithreaded (LOCK); \
-      }                                         \
-    while (0)
+    (thread_in_use () ? glthread_recursive_lock_lock_multithreaded (LOCK) : 0)
 # define glthread_recursive_lock_unlock(LOCK) \
-    do                                            \
-      {                                           \
-        if (thread_in_use ())                     \
-          glthread_recursive_lock_unlock_multithreaded (LOCK); \
-      }                                           \
-    while (0)
+    (thread_in_use () ? glthread_recursive_lock_unlock_multithreaded (LOCK) : 0)
 # define glthread_recursive_lock_destroy(LOCK) \
-    do                                             \
-      {                                            \
-        if (thread_in_use ())                      \
-          glthread_recursive_lock_destroy_multithreaded (LOCK); \
-      }                                            \
-    while (0)
+    (thread_in_use () ? glthread_recursive_lock_destroy_multithreaded (LOCK) : 0)
 extern int glthread_recursive_lock_init_multithreaded (gl_recursive_lock_t *lock);
 extern int glthread_recursive_lock_lock_multithreaded (gl_recursive_lock_t *lock);
 extern int glthread_recursive_lock_unlock_multithreaded (gl_recursive_lock_t *lock);
