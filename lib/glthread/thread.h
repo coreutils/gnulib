@@ -250,13 +250,13 @@ typedef thread_t gl_thread_t;
 # define glthread_create(THREADP, FUNC, ARG) \
     (thread_in_use () ? thr_create (NULL, 0, FUNC, ARG, 0, THREADP) : 0)
 # define glthread_sigmask(HOW, SET, OSET) \
-    (pthread_in_use () ? sigprocmask (HOW, SET, OSET) : 0)
+    (thread_in_use () ? sigprocmask (HOW, SET, OSET) : 0)
 # define glthread_join(THREAD, RETVALP) \
-    (pthread_in_use () ? thr_join (THREAD, NULL, RETVALP) : 0)
+    (thread_in_use () ? thr_join (THREAD, NULL, RETVALP) : 0)
 # define gl_thread_self() \
-    (pthread_in_use () ? (void *) thr_self () : 0)
+    (thread_in_use () ? (void *) thr_self () : 0)
 # define gl_thread_exit(RETVAL) \
-    (pthread_in_use () ? thr_exit (RETVAL) : 0)
+    (thread_in_use () ? thr_exit (RETVAL) : 0)
 # define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
 
 # ifdef __cplusplus
