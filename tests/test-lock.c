@@ -678,9 +678,12 @@ main ()
 
 /* No multithreading available.  */
 
+#include <stdio.h>
+
 int
 main ()
 {
+  fputs ("multithreading not enabled\n", stderr);
   return 77;
 }
 

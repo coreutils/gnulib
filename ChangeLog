@@ -1,5 +1,10 @@
 2008-08-22  Eric Blake  <ebb9@byu.net>
 
+	test-lock, test-tls: mention why a test is skipped
+	* tests/test-lock.c (main) [!USE_*_THREADS]: Print why test is
+	skipped.
+	* tests/test-tls.c (main) [!USE_*_THREADS]: Likewise.
+
 	count-one-bits: relax license
 	* modules/count-one-bits (License): Relicense to LGPLv2+.
 	Suggested by Ludovic Courtès, approved by Ben Pfaff.
