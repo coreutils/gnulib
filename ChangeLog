@@ -1,3 +1,9 @@
+2008-08-19  Eric Blake  <ebb9@byu.net>
+
+	strverscmp: add unit test
+	* modules/strverscmp-tests: New file.
+	* tests/test-strverscmp.c: Likewise.
+
 2008-08-19  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/gc-gnulib.c: Indentation cleanup.  Add some comments
