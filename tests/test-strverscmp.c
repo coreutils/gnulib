@@ -19,7 +19,7 @@
 
 #include <config.h>
 
-#include "strverscmp.h"
+#include <string.h>
 
 #include <stdio.h>
 #include <stdlib.h>

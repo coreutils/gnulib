@@ -1,5 +1,21 @@
 2008-08-19  Eric Blake  <ebb9@byu.net>
 
+	strverscmp: migrate from "strverscmp.h" to <string.h>
+	* modules/string (Makefile.am): Add new hooks.
+	* modules/strverscmp (Files): Remove strverscmp.h.
+	(Depends-on): Add string.
+	(configure.ac): Add indicator.
+	(Include): Mention new header.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Provide new
+	defaults.
+	* m4/strverscmp.m4 (gl_FUNC_STRVERSCMP): Inform string module of
+	results.
+	* lib/strverscmp.h: Delete.
+	* lib/string.in.h (strverscmp): Provide declaration, when needed.
+	* tests/test-strverscmp.c (includes): Adjust client.
+	* lib/check-version.c (includes): Likewise.
+	* NEWS: Document the change.
+
 	strverscmp: add unit test
 	* modules/strverscmp-tests: New file.
 	* tests/test-strverscmp.c: Likewise.
