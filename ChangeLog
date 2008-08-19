@@ -1,3 +1,9 @@
+2008-08-18  Ben Pfaff  <blp@gnu.org>
+
+	gitlog-to-changelog: give better diagnostic for failed pipe-open
+	* build-aux/gitlog-to-changelog: Improve error message: suggest
+	that the version of Git may be too old.
+
 2008-08-18  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/autobuild.m4: Use TZ=UTC to avoid time zone complexity.  Use
