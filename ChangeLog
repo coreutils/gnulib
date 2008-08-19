@@ -1,3 +1,8 @@
+2008-08-19  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gc-gnulib.c: Indentation cleanup.  Add some comments
+	regarding Windows crypto stuff, from Mono.
+
 2008-08-19  Adam Strzelecki <ono@java.pl>  (tiny change)
 
 	* lib/gc-gnulib.c: Use CRYPT_VERIFY_CONTEXT.  Try to use Intel CSP
