@@ -78,6 +78,12 @@
 #  include <windows.h>
 #  include <wincrypt.h>
 HCRYPTPROV g_hProv = 0;
+#  ifndef PROV_INTEL_SEC
+#   define PROV_INTEL_SEC 22
+#  endif
+#  ifndef CRYPT_VERIFY_CONTEXT
+#   define CRYPT_VERIFY_CONTEXT 0xF0000000
+#  endif
 # endif
 #endif
 
@@ -88,7 +94,9 @@ gc_init (void)
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   if(g_hProv)
     CryptReleaseContext(g_hProv, 0);
-  CryptAcquireContext(&g_hProv, NULL, NULL, PROV_RSA_FULL, 0);
+  if(!CryptAcquireContext(&g_hProv, NULL, NULL, PROV_INTEL_SEC, CRYPT_VERIFY_CONTEXT))
+    if(!CryptAcquireContext(&g_hProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFY_CONTEXT))
+      return GC_RANDOM_ERROR;
 # endif
 #endif
 

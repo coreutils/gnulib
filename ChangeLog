@@ -1,3 +1,8 @@
+2008-08-19  Adam Strzelecki <ono@java.pl>  (tiny change)
+
+	* lib/gc-gnulib.c: Use CRYPT_VERIFY_CONTEXT.  Try to use Intel CSP
+	if present, for intel RND.  Return error on failures.
+
 2008-08-18  Ben Pfaff  <blp@gnu.org>
 
 	gitlog-to-changelog: give better diagnostic for failed pipe-open
