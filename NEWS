@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-08-19  strverscmp      The include file is changed from "strverscmp.h"
+                            to <string.h>.
+
 2008-08-14  lock            The include file is changed from "lock.h"
                             to "glthread/lock.h".
             tls             The include file is changed from "tls.h"

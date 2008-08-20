@@ -576,6 +576,18 @@ extern char *strsignal (int __sig);
      strsignal (a))
 #endif
 
+#if @GNULIB_STRVERSCMP@
+# if !@HAVE_STRVERSCMP@
+extern int strverscmp (const char *, const char *);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef strverscmp
+# define strverscmp(a, b) \
+    (GL_LINK_WARNING ("strverscmp is unportable - " \
+                      "use gnulib module strverscmp for portability"), \
+     strverscmp (a, b))
+#endif
+
 
 #ifdef __cplusplus
 }

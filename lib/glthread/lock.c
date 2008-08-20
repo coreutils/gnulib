@@ -445,7 +445,7 @@ glthread_recursive_lock_destroy_multithreaded (gl_recursive_lock_t *lock)
 {
   if (lock->owner != (pthread_t) 0)
     return EBUSY;
-  return (pthread_mutex_destroy (&lock->mutex);
+  return pthread_mutex_destroy (&lock->mutex);
 }
 
 # endif

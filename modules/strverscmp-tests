@@ -1,0 +1,10 @@
+Files:
+tests/test-strverscmp.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-strverscmp
+check_PROGRAMS += test-strverscmp

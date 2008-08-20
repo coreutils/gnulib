@@ -22,6 +22,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #if HAVE_SETRLIMIT
+/* At least FreeBSD 5.0 needs extra headers before <sys/resource.h>
+   will compile.  */
+# include <sys/types.h>
+# include <sys/time.h>
 # include <sys/resource.h>
 #endif
 

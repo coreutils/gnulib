@@ -1,3 +1,74 @@
+2008-08-19  Eric Blake  <ebb9@byu.net>
+
+	test-c-stack: fix compilation failure on FreeBSD 5.0
+	* tests/test-c-stack.c [HAVE_SETRLIMIT]: Include prerequisite
+	headers before <sys/resource.h>.
+	* doc/posix-headers/sys_resource.texi (sys/resource.h): Document
+	the bug.
+	Reported by Nelson H. F. Beebe.
+
+	strverscmp: migrate from "strverscmp.h" to <string.h>
+	* modules/string (Makefile.am): Add new hooks.
+	* modules/strverscmp (Files): Remove strverscmp.h.
+	(Depends-on): Add string.
+	(configure.ac): Add indicator.
+	(Include): Mention new header.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Provide new
+	defaults.
+	* m4/strverscmp.m4 (gl_FUNC_STRVERSCMP): Inform string module of
+	results.
+	* lib/strverscmp.h: Delete.
+	* lib/string.in.h (strverscmp): Provide declaration, when needed.
+	* tests/test-strverscmp.c (includes): Adjust client.
+	* lib/check-version.c (includes): Likewise.
+	* NEWS: Document the change.
+
+	strverscmp: add unit test
+	* modules/strverscmp-tests: New file.
+	* tests/test-strverscmp.c: Likewise.
+
+2008-08-19  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gc-gnulib.c: Indentation cleanup.  Add some comments
+	regarding Windows crypto stuff, from Mono.
+
+2008-08-19  Adam Strzelecki <ono@java.pl>  (tiny change)
+
+	* lib/gc-gnulib.c: Use CRYPT_VERIFY_CONTEXT.  Try to use Intel CSP
+	if present, for intel RND.  Return error on failures.
+
+2008-08-18  Ben Pfaff  <blp@gnu.org>
+
+	gitlog-to-changelog: give better diagnostic for failed pipe-open
+	* build-aux/gitlog-to-changelog: Improve error message: suggest
+	that the version of Git may be too old.
+
+2008-08-18  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/autobuild.m4: Use TZ=UTC to avoid time zone complexity.  Use
+	ISO 8601 format.  Suggested by Greg Troxel <gdt@ir.bbn.com>.
+
+2008-08-18  Bruno Haible  <bruno@clisp.org>
+
+	* lib/glthread/thread.h [USE_SOLARIS_THREADS]: Use thread_in_use(), not
+	pthread_in_use().
+
+2008-08-18  Bruno Haible  <bruno@clisp.org>
+
+	* lib/glthread/threadlib.c: Include <pthread.h>.
+
+2008-08-18  Bruno Haible  <bruno@clisp.org>
+
+	* lib/glthread/lock.h [USE_SOLARIS_THREADS]: Fix
+	glthread_recursive_lock_* macros.
+	* lib/glthread/lock.c (glthread_recursive_lock_destroy_multithreaded):
+	Fix syntax error.
+
+2008-08-18  Bruno Haible  <bruno@clisp.org>
+
+	* lib/glthread/thread.c: Avoid forcing a context switch right after
+	thread creation.
+
 2008-08-17  Bruno Haible  <bruno@clisp.org>
 
 	* lib/glthread/thread.c: New file, based on code from tests/test-lock.c.

@@ -78,6 +78,12 @@
 #  include <windows.h>
 #  include <wincrypt.h>
 HCRYPTPROV g_hProv = 0;
+#  ifndef PROV_INTEL_SEC
+#   define PROV_INTEL_SEC 22
+#  endif
+#  ifndef CRYPT_VERIFY_CONTEXT
+#   define CRYPT_VERIFY_CONTEXT 0xF0000000
+#  endif
 # endif
 #endif
 
@@ -86,9 +92,22 @@ gc_init (void)
 {
 #ifdef GNULIB_GC_RANDOM
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  if(g_hProv)
-    CryptReleaseContext(g_hProv, 0);
-  CryptAcquireContext(&g_hProv, NULL, NULL, PROV_RSA_FULL, 0);
+  if (g_hProv)
+    CryptReleaseContext (g_hProv, 0);
+
+  /* There is no need to create a container for just random data, so
+     we can use CRYPT_VERIFY_CONTEXT (one call) see:
+     http://blogs.msdn.com/dangriff/archive/2003/11/19/51709.aspx */
+
+  /* We first try to use the Intel PIII RNG if drivers are present */
+  if (!CryptAcquireContext (&g_hProv, NULL, NULL,
+			    PROV_INTEL_SEC, CRYPT_VERIFY_CONTEXT))
+    {
+      /* not a PIII or no drivers available, use default RSA CSP */
+      if (!CryptAcquireContext (&g_hProv, NULL, NULL,
+				PROV_RSA_FULL, CRYPT_VERIFY_CONTEXT))
+	return GC_RANDOM_ERROR;
+    }
 # endif
 #endif
 
@@ -100,9 +119,9 @@ gc_done (void)
 {
 #ifdef GNULIB_GC_RANDOM
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  if(g_hProv)
+  if (g_hProv)
     {
-      CryptReleaseContext(g_hProv, 0);
+      CryptReleaseContext (g_hProv, 0);
       g_hProv = 0;
     }
 # endif
@@ -119,9 +138,9 @@ static Gc_rc
 randomize (int level, char *data, size_t datalen)
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  if(!g_hProv)
+  if (!g_hProv)
     return GC_RANDOM_ERROR;
-  CryptGenRandom(g_hProv, (DWORD)datalen, data);
+  CryptGenRandom (g_hProv, (DWORD) datalen, data);
 #else
   int fd;
   const char *device;
@@ -206,9 +225,11 @@ gc_set_allocators (gc_malloc_t func_malloc,
 {
   return;
 }
+
 /* Ciphers. */
 
-typedef struct _gc_cipher_ctx {
+typedef struct _gc_cipher_ctx
+{
   Gc_cipher alg;
   Gc_cipher_mode mode;
 #ifdef GNULIB_GC_ARCTWO
@@ -351,7 +372,7 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
 	char keyMaterial[RIJNDAEL_MAX_KEY_SIZE + 1];
 
 	for (i = 0; i < keylen; i++)
-	  sprintf (&keyMaterial[2*i], "%02x", key[i] & 0xFF);
+	  sprintf (&keyMaterial[2 * i], "%02x", key[i] & 0xFF);
 
 	rc = rijndaelMakeKey (&ctx->aesEncKey, RIJNDAEL_DIR_ENCRYPT,
 			      keylen * 8, keyMaterial);
@@ -409,7 +430,7 @@ gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
 	    char ivMaterial[2 * RIJNDAEL_MAX_IV_SIZE + 1];
 
 	    for (i = 0; i < ivlen; i++)
-	      sprintf (&ivMaterial[2*i], "%02x", iv[i] & 0xFF);
+	      sprintf (&ivMaterial[2 * i], "%02x", iv[i] & 0xFF);
 
 	    rc = rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_CBC,
 				     ivMaterial);
@@ -448,7 +469,7 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 
 	case GC_CBC:
 	  for (; len >= ARCTWO_BLOCK_SIZE; len -= ARCTWO_BLOCK_SIZE,
-		 data += ARCTWO_BLOCK_SIZE)
+	       data += ARCTWO_BLOCK_SIZE)
 	    {
 	      size_t i;
 	      for (i = 0; i < ARCTWO_BLOCK_SIZE; i++)
@@ -457,7 +478,7 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 			      ARCTWO_BLOCK_SIZE);
 	      memcpy (ctx->arctwoIV, data, ARCTWO_BLOCK_SIZE);
 	    }
-	    break;
+	  break;
 
 	default:
 	  return GC_INVALID_CIPHER;
@@ -518,7 +539,7 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 
 	case GC_CBC:
 	  for (; len >= ARCTWO_BLOCK_SIZE; len -= ARCTWO_BLOCK_SIZE,
-		 data += ARCTWO_BLOCK_SIZE)
+	       data += ARCTWO_BLOCK_SIZE)
 	    {
 	      char tmpIV[ARCTWO_BLOCK_SIZE];
 	      size_t i;
@@ -587,7 +608,8 @@ gc_cipher_close (gc_cipher_handle handle)
 
 #define MAX_DIGEST_SIZE 20
 
-typedef struct _gc_hash_ctx {
+typedef struct _gc_hash_ctx
+{
   Gc_hash alg;
   Gc_hash_mode mode;
   char hash[MAX_DIGEST_SIZE];
