@@ -1,5 +1,12 @@
 2008-08-19  Eric Blake  <ebb9@byu.net>
 
+	test-c-stack: fix compilation failure on FreeBSD 5.0
+	* tests/test-c-stack.c [HAVE_SETRLIMIT]: Include prerequisite
+	headers before <sys/resource.h>.
+	* doc/posix-headers/sys_resource.texi (sys/resource.h): Document
+	the bug.
+	Reported by Nelson H. F. Beebe.
+
 	strverscmp: migrate from "strverscmp.h" to <string.h>
 	* modules/string (Makefile.am): Add new hooks.
 	* modules/strverscmp (Files): Remove strverscmp.h.
