@@ -1,3 +1,8 @@
+2008-08-21  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/autobuild.m4: Use TZ=UTC0 instead of TZ=UTC.  Reported by
+	Paul Eggert <eggert@CS.UCLA.EDU>.
+
 2008-08-20  Paolo Bonzini  <bonzini@gnu.org>
 
 	* modules/gettext: Add m4/threadlib.m4.

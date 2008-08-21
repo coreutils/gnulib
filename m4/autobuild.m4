@@ -29,7 +29,7 @@ AC_DEFUN([AB_INIT],
 
   ifelse([$1],[],,[AC_MSG_NOTICE([autobuild mode... $1])])
 
-  date=`TZ=UTC date +%Y%m%dT%H%M%SZ`
+  date=`TZ=UTC0 date +%Y%m%dT%H%M%SZ`
   if test "$?" != 0; then
     date=`date`
   fi
