@@ -1,3 +1,7 @@
+2008-08-20  Paolo Bonzini  <bonzini@gnu.org>
+
+	* modules/gettext: Add m4/threadlib.m4.
+
 2008-08-19  Eric Blake  <ebb9@byu.net>
 
 	test-c-stack: fix compilation failure on FreeBSD 5.0
