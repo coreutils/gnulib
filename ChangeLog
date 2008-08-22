@@ -1,3 +1,9 @@
+2008-08-22  Eric Blake  <ebb9@byu.net>
+
+	count-one-bits: relax license
+	* modules/count-one-bits (License): Relicense to LGPLv2+.
+	Suggested by Ludovic Courtès, approved by Ben Pfaff.
+
 2008-08-22  Andreas Schwab  <schwab@suse.de>
 
 	* m4/obstack-printf-posix.m4 (gl_FUNC_OBSTACK_PRINTF_POSIX):
