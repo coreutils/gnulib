@@ -53,7 +53,7 @@ AC_DEFUN([gl_FUNC_OBSTACK_PRINTF_POSIX],
                                                       *yes)
                                                         # obstack_printf exists and is
                                                         # already POSIX compliant.
-                                                        gl_cv_func_obstack_printf_posix= yes
+                                                        gl_cv_func_obstack_printf_posix=yes
                                                         ;;
                                                     esac
                                                     ;;
