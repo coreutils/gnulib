@@ -2,7 +2,7 @@ Installation Instructions
 *************************
 
 Copyright (C) 1994, 1995, 1996, 1999, 2000, 2001, 2002, 2004, 2005,
-2006 Free Software Foundation, Inc.
+2006, 2007, 2008 Free Software Foundation, Inc.
 
 This file is free documentation; the Free Software Foundation gives
 unlimited permission to copy, distribute and modify it.
@@ -100,6 +100,20 @@ architecture at a time in the source code directory.  After you have
 installed the package for one architecture, use `make distclean' before
 reconfiguring for another architecture.
 
+   On MacOS X 10.5 and later systems, you can create libraries and
+executables that work on multiple system types--known as "fat" or
+"universal" binaries--by specifying multiple `-arch' options to the
+compiler but only a single `-arch' option to the preprocessor.  Like
+this:
+
+     ./configure CC="gcc -arch i386 -arch x86_64 -arch ppc -arch ppc64" \
+                 CXX="g++ -arch i386 -arch x86_64 -arch ppc -arch ppc64" \
+                 CPP="gcc -E" CXXCPP="g++ -E"
+
+   This is not guaranteed to produce working output in all cases, you
+may have to build one architecture at a time and combine the results
+using the `lipo' tool if you have problems.
+
 Installation Names
 ==================
 
@@ -137,6 +151,28 @@ package recognizes.
 find the X include and library files automatically, but if it doesn't,
 you can use the `configure' options `--x-includes=DIR' and
 `--x-libraries=DIR' to specify their locations.
+
+Particular systems
+==================
+
+On HP-UX, the default C compiler is not ANSI C compatible.  If GNU CC is
+not installed, it is recommended to use the following options in order
+to use an ANSI C compiler:
+
+     ./configure CC="cc -Ae"
+
+and if that doesn't work, install pre-built binaries of GCC for HP-UX.
+
+   On OSF/1 a.k.a. Tru64, some versions of the default C compiler cannot
+parse its `<wchar.h>' header file.  The option `-nodtk' can be used as
+a workaround.  If GNU CC is not installed, it is therefore recommended
+to try
+
+     ./configure CC="cc"
+
+and if that doesn't work, try
+
+     ./configure CC="cc -nodtk"
 
 Specifying the System Type
 ==========================
