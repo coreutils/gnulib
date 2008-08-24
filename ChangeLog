@@ -1,3 +1,9 @@
+2008-08-24  Bruno Haible  <bruno@clisp.org>
+
+	Fix uc_width(0x00AB) bug, introduced on 2007-07-08.
+	* lib/uniwidth/width.c (nonspacing_table_data): Set bit for 0x00AD,
+	not 0x00AB.
+
 2008-08-22  Eric Blake  <ebb9@byu.net>
 
 	test-lock, test-tls: mention why a test is skipped
