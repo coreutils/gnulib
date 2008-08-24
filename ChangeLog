@@ -11,6 +11,7 @@
 	Fix uc_width(0x00AB) bug, introduced on 2007-07-08.
 	* lib/uniwidth/width.c (nonspacing_table_data): Set bit for 0x00AD,
 	not 0x00AB.
+	Reported by Alexander V. Lukyanov <lav@netis.ru>.
 
 2008-08-22  Eric Blake  <ebb9@byu.net>
 
