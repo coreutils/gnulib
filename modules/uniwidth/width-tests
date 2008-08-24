@@ -1,12 +1,16 @@
 Files:
 tests/uniwidth/test-uc_width.c
+tests/uniwidth/test-uc_width2.c
+tests/uniwidth/test-uc_width2.sh
 
 Depends-on:
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-uc_width
-check_PROGRAMS += test-uc_width
+TESTS += test-uc_width uniwidth/test-uc_width2.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-uc_width test-uc_width2
 test_uc_width_SOURCES = uniwidth/test-uc_width.c
+test_uc_width2_SOURCES = uniwidth/test-uc_width2.c
 

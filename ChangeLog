@@ -1,5 +1,13 @@
 2008-08-24  Bruno Haible  <bruno@clisp.org>
 
+	* tests/uniwidth/test-uc_width2.c: New file.
+	* tests/uniwidth/test-uc_width2.sh: New file.
+	* modules/uniwidth/width-tests (Files): Add the new files.
+	(TESTS): Add uniwidth/test-uc_width2.sh.
+	(TESTS_ENVIRONMENT): New variable.
+	(check_PROGRAMS): Add test-uc_width2.
+	(test_uc_width2_SOURCES): New variable.
+
 	Fix uc_width(0x00AB) bug, introduced on 2007-07-08.
 	* lib/uniwidth/width.c (nonspacing_table_data): Set bit for 0x00AD,
 	not 0x00AB.
