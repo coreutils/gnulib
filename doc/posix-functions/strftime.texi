@@ -19,4 +19,4 @@ specifiers too, i.e., %C, %D, %h, %n, %r, %R, %t, and %T).
 @end itemize
 
 Extension: Gnulib offers a module @samp{strftime} that provides an
-@code{strftime} function with various GNU extensions.
+@code{nstrftime} function with various GNU extensions.

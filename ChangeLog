@@ -1,3 +1,8 @@
+2008-08-25  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-functions/strftime.texi: Fix description of strftime
+	module.
+
 2008-08-24  Bruno Haible  <bruno@clisp.org>
 
 	* tests/uniwidth/test-uc_width2.c: New file.
