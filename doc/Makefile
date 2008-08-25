@@ -23,6 +23,9 @@ html: $(doc).html
 dvi: $(doc).dvi
 pdf: $(doc).pdf
 
+INSTALL: install.texi
+	-$(MAKEINFO) --plaintext --no-warn $< >$@
+
 GNULIB_TEXI_FILES = $(filter-out maintain.texi make-stds.texi standards.texi,$(wildcard *.texi)) $(wildcard posix-headers/*.texi) $(wildcard posix-functions/*.texi) $(wildcard glibc-headers/*.texi) $(wildcard glibc-functions/*.texi)
 
 # Date of last update. Requires GNU date.

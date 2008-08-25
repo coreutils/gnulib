@@ -18,7 +18,8 @@ $TEXINFOSRC/util/gendocs.sh		build-aux
 $TEXINFOSRC/util/gendocs_template	doc
 $TEXINFOSRC/util/gendocs_template_min	doc
 #
-$AUTOCONF/INSTALL		doc
+# we generate INSTALL from this via a rule in doc/Makefile.
+$AUTOCONF/doc/install.texi	doc
 #
 $GNUSTANDARDS/maintain.texi	doc
 $GNUSTANDARDS/standards.texi	doc
