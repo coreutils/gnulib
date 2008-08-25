@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 4
+# serial 5
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [# for STACK_DIRECTION
@@ -16,6 +16,90 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
    AC_CHECK_HEADERS_ONCE([ucontext.h])
 
    AC_CACHE_CHECK([for working C stack overflow detection],
+     [ac_cv_sys_stack_overflow_works],
+     [AC_TRY_RUN(
+	[
+	 #include <unistd.h>
+	 #include <signal.h>
+	 #if HAVE_SETRLIMIT
+	 # include <sys/types.h>
+	 # include <sys/time.h>
+	 # include <sys/resource.h>
+	 #endif
+         #ifndef SIGSTKSZ
+         # define SIGSTKSZ 16384
+         #endif
+
+	 static union
+	 {
+	   char buffer[SIGSTKSZ];
+	   long double ld;
+	   long u;
+	   void *p;
+	 } alternate_signal_stack;
+
+	 static void
+	 segv_handler (int signo)
+	 {
+	   _exit (0);
+	 }
+
+	 static int
+	 c_stack_action ()
+	 {
+	   stack_t st;
+	   struct sigaction act;
+	   int r;
+
+	   st.ss_flags = 0;
+	   st.ss_sp = alternate_signal_stack.buffer;
+	   st.ss_size = sizeof alternate_signal_stack.buffer;
+	   r = sigaltstack (&st, 0);
+	   if (r != 0)
+	     return r;
+
+	   sigemptyset (&act.sa_mask);
+	   act.sa_flags = SA_NODEFER | SA_ONSTACK | SA_RESETHAND;
+	   act.sa_handler = segv_handler;
+	   return sigaction (SIGSEGV, &act, 0);
+	 }
+
+	 static int
+	 recurse (char *p)
+	 {
+	   char array[500];
+	   array[0] = 1;
+	   return *p + recurse (array);
+	 }
+
+	 int
+	 main ()
+	 {
+	   #if HAVE_SETRLIMIT && defined RLIMIT_STACK
+	   /* Before starting the endless recursion, try to be friendly
+	      to the user's machine.  On some Linux 2.2.x systems, there
+	      is no stack limit for user processes at all.  We don't want
+	      to kill such systems.  */
+	   struct rlimit rl;
+	   rl.rlim_cur = rl.rlim_max = 0x100000; /* 1 MB */
+	   setrlimit (RLIMIT_STACK, &rl);
+	   #endif
+
+	   c_stack_action ();
+	   return recurse ("\1");
+	 }
+	],
+	[ac_cv_sys_stack_overflow_works=yes],
+	[ac_cv_sys_stack_overflow_works=no],
+	[ac_cv_sys_stack_overflow_works=cross-compiling])])
+
+  if test $ac_cv_sys_stack_overflow_works = yes; then
+   AC_DEFINE([HAVE_STACK_OVERFLOW_HANDLING], [1],
+     [Define to 1 if extending the stack slightly past the limit causes
+      a SIGSEGV which can be handled on an alternate stack established
+      with sigaltstack.])
+
+   AC_CACHE_CHECK([for precise C stack overflow detection],
      ac_cv_sys_xsi_stack_overflow_heuristic,
      [AC_TRY_RUN(
 	[
@@ -29,6 +113,9 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	 # include <sys/time.h>
 	 # include <sys/resource.h>
 	 #endif
+         #ifndef SIGSTKSZ
+         # define SIGSTKSZ 16384
+         #endif
 
 	 static union
 	 {
@@ -131,7 +218,8 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	with the X/Open System Interface (XSI) option
 	and is a standardized way to implement a SEGV-based stack
 	overflow detection heuristic.])
-   fi])
+   fi
+  fi])
 
 
 AC_DEFUN([gl_PREREQ_C_STACK],

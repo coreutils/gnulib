@@ -117,7 +117,8 @@ die (int signo)
   abort ();
 }
 
-#if (HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK) || HAVE_LIBSIGSEGV
+#if (HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK \
+     && HAVE_STACK_OVERFLOW_HANDLING) || HAVE_LIBSIGSEGV
 
 /* Storage for the alternate signal stack.  */
 static union
@@ -210,7 +211,7 @@ c_stack_action (void (*action) (int))
   return 0;
 }
 
-#elif HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK
+#elif HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK && HAVE_STACK_OVERFLOW_HANDLING
 
 /* Direction of the C runtime stack.  This function is
    async-signal-safe.  */
@@ -316,7 +317,8 @@ c_stack_action (void (*action) (int))
   return sigaction (SIGSEGV, &act, NULL);
 }
 
-#else /* ! ((HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK) || HAVE_LIBSIGSEGV) */
+#else /* ! ((HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK
+	     && HAVE_STACK_OVERFLOW_HANDLING) || HAVE_LIBSIGSEGV) */
 
 int
 c_stack_action (void (*action) (int)  __attribute__ ((unused)))

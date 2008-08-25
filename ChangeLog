@@ -1,3 +1,14 @@
+2008-08-25  Eric Blake  <ebb9@byu.net>
+
+	c-stack: test that stack overflow can be caught
+	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Also check
+	that platform allows handling stack overflow; at least OS/2 EMX
+	has sigaltstack, but crashes before transferring control to
+	handler on stack overflow.
+	* lib/c-stack.c [HAVE_SIGALTSTACK]: Adjust conditions to also
+	check for HAVE_STACK_OVERFLOW_HANDLING.
+	Reported by Elbert Pol.
+
 2008-08-25  Bruno Haible  <bruno@clisp.org>
 
 	* doc/posix-functions/strftime.texi: Fix description of strftime
