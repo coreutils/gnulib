@@ -1,5 +1,12 @@
 2008-08-26  Bruno Haible  <bruno@clisp.org>
 
+	Generate INSTALL file variants with prettier quotes.
+	* doc/Makefile (INSTALL_PRELUDE): New macro.
+	(INSTALL): Use it.
+	(INSTALL.ISO, INSTALL.UTF-8): New rules.
+
+2008-08-26  Bruno Haible  <bruno@clisp.org>
+
 	Run makeinfo in an English locale.
 	* doc/Makefile (MAKEINFO): New variable.
 
