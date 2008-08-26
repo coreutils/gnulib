@@ -1,3 +1,9 @@
+2008-08-26  Jim Meyering  <meyering@redhat.com>
+
+	GNUmakefile: cfg.mk definitions override default autoreconf-rerun policy
+	* top/GNUmakefile (_is-dist-target, _is-install-target): Make
+	these definitions conditional, so that they may be overridden, too.
+
 2008-08-26  Bruno Haible  <bruno@clisp.org>
 
 	Generate INSTALL file variants with prettier quotes.

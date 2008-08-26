@@ -53,9 +53,9 @@ _autoreconf ?= autoreconf
 _have-git-version-gen := \
   $(shell test -f $(srcdir)/$(_build-aux)/git-version-gen && echo yes)
 ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
-  _is-dist-target = $(filter-out %clean, \
+  _is-dist-target ?= $(filter-out %clean, \
     $(filter maintainer-% dist% alpha beta major,$(MAKECMDGOALS)))
-  _is-install-target = $(filter-out %check, $(filter install%,$(MAKECMDGOALS)))
+  _is-install-target ?= $(filter-out %check, $(filter install%,$(MAKECMDGOALS)))
   ifneq (,$(_is-dist-target)$(_is-install-target))
     _curr-ver := $(shell cd $(srcdir) \
                    && $(_build-aux)/git-version-gen .tarball-version)
