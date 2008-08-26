@@ -24,26 +24,17 @@ html: $(doc).html
 dvi: $(doc).dvi
 pdf: $(doc).pdf
 
-INSTALL_PRELUDE = \
-  echo '@firstparagraphindent insert';
-
 # INSTALL file with old ASCII quotation marks (looks ugly on modern machines).
 INSTALL: install.texi
-	{ $(INSTALL_PRELUDE) cat $<; } > tmp.texi
-	$(MAKEINFO) --plaintext --no-validate tmp.texi > $@
-	rm -f tmp.texi
+	$(MAKEINFO) --plaintext --no-validate $< > $@
 
 # INSTALL file with ISO 646 or ISO 8859 quotation marks.
 INSTALL.ISO: install.texi
-	{ $(INSTALL_PRELUDE) cat $<; } > tmpi.texi
-	$(MAKEINFO) --plaintext --no-validate tmpi.texi | sed -e "s/\`\([^']*\)'/'\1'/g" > $@
-	rm -f tmpi.texi
+	$(MAKEINFO) --plaintext --no-validate $< | sed -e "s/\`\([^']*\)'/'\1'/g" > $@
 
 # INSTALL file wit ISO 10646 (Unicode) quotation marks.
 INSTALL.UTF-8: install.texi
-	{ $(INSTALL_PRELUDE) cat $<; } > tmpu.texi
-	$(MAKEINFO) --plaintext --no-validate tmpu.texi | sed -e "s/\`\([^']*\)'/‘\1’/g" > $@
-	rm -f tmpu.texi
+	$(MAKEINFO) --plaintext --no-validate $< | sed -e "s/\`\([^']*\)'/‘\1’/g" > $@
 
 GNULIB_TEXI_FILES = $(filter-out maintain.texi make-stds.texi standards.texi,$(wildcard *.texi)) $(wildcard posix-headers/*.texi) $(wildcard posix-functions/*.texi) $(wildcard glibc-headers/*.texi) $(wildcard glibc-functions/*.texi)
 

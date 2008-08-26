@@ -1,3 +1,14 @@
+2008-08-26  Eric Blake  <ebb9@byu.net>
+
+	doc/INSTALL: resync from autoconf
+	* doc/Makefile (INSTALL, INSTALL.ISO, INSTALL.UTF-8): Simplify.
+	(INSTALL_PRELUDE): Delete; this is done more efficiently by
+	moving...
+	* install.texi [!autoconf]: ...here.  Resync from autoconf.
+	* INSTALL: Regenerate.
+	* INSTALL.ISO: New file.
+	* INSTALL.UTF-8: Likewise.
+
 2008-08-26  Jim Meyering  <meyering@redhat.com>
 
 	GNUmakefile: cfg.mk definitions override default autoreconf-rerun policy

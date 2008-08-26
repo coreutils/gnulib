@@ -2,6 +2,7 @@
 @c the INSTALL file.
 
 @ifclear autoconf
+@firstparagraphindent insert
 
 @unnumbered Installation Instructions
 
@@ -294,7 +295,14 @@ operates.
 @table @option
 @item --help
 @itemx -h
-Print a summary of the options to @command{configure}, and exit.
+Print a summary of all of the options to @command{configure}, and exit.
+
+@item --help=short
+@itemx --help=recursive
+Print a summary of the options unique to this package's
+@command{configure}, and exit.  The @code{short} variant lists options
+used only in the top level, while the @code{recursive} variant lists
+options also present in any nested packages.
 
 @item --version
 @itemx -V
@@ -321,8 +329,24 @@ will still be shown).
 @item --srcdir=@var{dir}
 Look for the package's source code in directory @var{dir}.  Usually
 @command{configure} can determine that directory automatically.
+
+@item --prefix=@var{dir}
+Use @var{dir} as the installation prefix.  @ref{Installation Names}
+for more details, including other options available for fine-tuning
+the installation locations.
+
+@item --no-create
+@itemx -n
+Run the configure checks, but stop before creating any output files.
 @end table
 
 @noindent
 @command{configure} also accepts some other, not widely useful, options.
 Run @samp{configure --help} for more details.
+
+@c Local Variables:
+@c fill-column: 72
+@c ispell-local-dictionary: "american"
+@c indent-tabs-mode: nil
+@c whitespace-check-buffer-indent: nil
+@c End:
