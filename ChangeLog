@@ -1,5 +1,10 @@
 2008-08-26  Bruno Haible  <bruno@clisp.org>
 
+	Run makeinfo in an English locale.
+	* doc/Makefile (MAKEINFO): New variable.
+
+2008-08-26  Bruno Haible  <bruno@clisp.org>
+
 	* doc/Makefile (INSTALL): Use --no-validate instead of --no-warn.
 	Suggested by Eric Blake.
 

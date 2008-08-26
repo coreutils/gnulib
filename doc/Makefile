@@ -7,6 +7,7 @@
 
 doc = gnulib
 
+MAKEINFO = env LANG= LC_MESSAGES= LC_ALL= LANGUAGE= makeinfo
 TEXI2HTML = $(MAKEINFO) --no-split --reference-limit=2000 --html
 %.html: %.texi
 	$(TEXI2HTML) -o $@ $<
