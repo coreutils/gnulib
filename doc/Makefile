@@ -24,7 +24,9 @@ dvi: $(doc).dvi
 pdf: $(doc).pdf
 
 INSTALL: install.texi
-	-$(MAKEINFO) --plaintext --no-warn $< >$@
+	{ echo '@firstparagraphindent insert'; cat $<; } > tmp.texi
+	$(MAKEINFO) --plaintext --no-warn tmp.texi > $@
+	rm -f tmp.texi
 
 GNULIB_TEXI_FILES = $(filter-out maintain.texi make-stds.texi standards.texi,$(wildcard *.texi)) $(wildcard posix-headers/*.texi) $(wildcard posix-functions/*.texi) $(wildcard glibc-headers/*.texi) $(wildcard glibc-functions/*.texi)
 

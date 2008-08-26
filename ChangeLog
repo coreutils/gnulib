@@ -1,3 +1,7 @@
+2008-08-25  Bruno Haible  <bruno@clisp.org>
+
+	* doc/Makefile (INSTALL): Generate with @firstparagraphindent set.
+
 2008-08-25  Eric Blake  <ebb9@byu.net>
 
 	c-stack: test that stack overflow can be caught
