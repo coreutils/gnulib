@@ -1,3 +1,11 @@
+2008-08-27  Paolo Bonzini  <bonzini@gnu.org>
+
+	* lib/getdelim.c (flockfile, funlockfile): Make all of them
+	dummy if one is not available.  Do not touch them if
+	USE_UNLOCKED_IO, instead letting unlocked-io.h do that.
+	(getc_maybe_unlocked): New.
+	* m4/getdelim.m4 (gl_PREREQ_GETDELIM): Check for getc_unlocked.
+
 2008-08-26  Eric Blake  <ebb9@byu.net>
 
 	doc/INSTALL: resync from autoconf
