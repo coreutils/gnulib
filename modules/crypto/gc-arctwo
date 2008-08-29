@@ -10,6 +10,7 @@ m4/arctwo.m4
 Depends-on:
 stdint
 crypto/gc
+bitrotate
 
 configure.ac:
 gl_GC_ARCTWO

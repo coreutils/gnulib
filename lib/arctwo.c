@@ -1,5 +1,5 @@
 /* arctwo.c --- The RC2 cipher as described in RFC 2268.
- * Copyright (C) 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2008 Free Software Foundation, Inc.
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
@@ -30,6 +30,8 @@
 #include <config.h>
 
 #include "arctwo.h"
+
+#include "bitrotate.h"
 
 static const uint8_t arctwo_sbox[] = {
   217, 120, 249, 196, 25, 221, 181, 237,
@@ -65,9 +67,6 @@ static const uint8_t arctwo_sbox[] = {
   197, 243, 219, 71, 229, 165, 156, 119,
   10, 166, 32, 104, 254, 127, 193, 173
 };
-
-#define rotl16(x,n)   (((x) << ((uint16_t)(n))) | ((x) >> (16 - (uint16_t)(n))))
-#define rotr16(x,n)   (((x) >> ((uint16_t)(n))) | ((x) << (16 - (uint16_t)(n))))
 
 /* C89 compliant way to cast 'char' to 'unsigned char'. */
 static inline unsigned char

@@ -1,22 +1,18 @@
 Description:
-ARCTWO block cipher implementation
+Rotate bits in 16 and 32 bit integers.
 
 Files:
-lib/arctwo.h
-lib/arctwo.c
-m4/arctwo.m4
+lib/bitrotate.h
 
 Depends-on:
-stdint
-bitrotate
 
 configure.ac:
-gl_ARCTWO
 
 Makefile.am:
+lib_SOURCES += bitrotate.h
 
 Include:
-"arctwo.h"
+"bitrotate.h"
 
 License:
 LGPLv2+

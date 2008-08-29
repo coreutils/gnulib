@@ -1,3 +1,20 @@
+2008-08-29  Simon Josefsson  <simon@josefsson.org>
+
+	* MODULES.html.sh (Misc): Add bitrotate.
+
+	* modules/bitrotate: New file.
+
+	* lib/bitrotate.h: New file.
+
+	* modules/bitrotate-tests: New file.
+
+	* tests/test-bitrotate.c: New file.
+
+	* modules/crypto/gc-arctwo, modules/crypto/arctwo: Add dependency
+	on the bitrotate module.
+
+	* lib/arctwo.c: Use new bitrotate module.
+
 2008-08-29  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: merge changes from coreutils
