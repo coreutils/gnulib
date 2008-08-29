@@ -1,5 +1,10 @@
 2008-09-23  Paolo Bonzini  <bonzini@gnu.org>
 
+	* lib/poll.c: Rewrite.
+	* modules/poll: Depend on alloca.
+
+2008-09-23  Paolo Bonzini  <bonzini@gnu.org>
+
 	* lib/sys_socket.in.h: Do not implement rpl_setsockopt here,
 	instead define prototypes for a full set of wrappers.  Ensure
 	that Cygwin does not use the compatibility code, which is only
