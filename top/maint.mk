@@ -2,7 +2,7 @@
 # This Makefile fragment is intended to be useful by any GNU-like project.
 # This file originate from coreutils, CPPI, Bison, and Autoconf.
 
-# Copyright (C) 2001-2007 Free Software Foundation, Inc.
+# Copyright (C) 2001-2008 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,10 +21,10 @@ ME := maint.mk
 
 # List of all C-like source code files that will be tested for
 # stylistic "errors".  You may want to define this to something
-# more complex in Makefile.cfg.
+# more complex in cfg.mk.
 C_SOURCES ?= $(shell find . -name '*.[chly]')
 
-# Add some more files to check, typically set in Makefile.cfg.
+# Add some more files to check, typically set in cfg.mk.
 C_SOURCES += $(C_SOURCES_ADD)
 
 # Do not save the original name or timestamp in the .tar.gz file.
