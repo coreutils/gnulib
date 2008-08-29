@@ -1,3 +1,8 @@
+2008-08-29  Bruno Haible  <bruno@clisp.org>
+
+	* MODULES.html.sh: Remove --cvs-urls option. Not useful any more, due
+	to synchronization problems between the git and the cvs repository.
+
 2008-08-28  Jose E. Marchesi  <jemarch@gnu.org>  (tiny change)
 
 	maint.mk: adjust to file name change

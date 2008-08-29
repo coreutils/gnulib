@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# Usage: MODULES.html.sh [--cvs-urls|--git-urls] > MODULES.html
+# Usage: MODULES.html.sh [--git-urls] > MODULES.html
 
 # Extend the PATH so that gnulib-tool is found.
 PATH=`dirname "$0"`:$PATH; export PATH
@@ -31,11 +31,6 @@ repo_url_prefix=
 repo_url_suffix=
 if test $# != 0; then
   case "$1" in
-    --cvs-urls)
-      # Generate URLs to the official gnulib CVS repository.
-      repo_url_prefix='http://cvs.sv.gnu.org/viewcvs/*checkout*/gnulib/'
-      repo_url_suffix='?root=gnulib&content-type=text/plain'
-      ;;
     --git-urls)
       # Generate URLs to the official gnulib git repository.
       repo_url_prefix='http://git.sv.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f='
