@@ -165,7 +165,7 @@ do
     usage
     exit;;
   --gnulib-srcdir=*)
-    GNULIB_SRCDIR=`expr "$option" : '--gnulib-srcdir=\(.*\)'`;;
+    GNULIB_SRCDIR=`expr "X$option" : 'X--gnulib-srcdir=\(.*\)'`;;
   --skip-po)
     SKIP_PO=t;;
   --force)
@@ -383,9 +383,13 @@ cp_mark_as_generated()
 
     if test -z "$c1"; then
       cmp -s "$cp_src" "$cp_dst" || {
+	# Copy the file first to get proper permissions if it
+	# doesn't already exist.  Then overwrite the copy.
 	echo "$0: cp -f $cp_src $cp_dst" &&
 	rm -f "$cp_dst" &&
-	sed "s!$bt_regex/!!g" "$cp_src" > "$cp_dst"
+	cp "$cp_src" "$cp_dst-t" &&
+	sed "s!$bt_regex/!!g" "$cp_src" > "$cp_dst-t" &&
+	mv -f "$cp_dst-t" "$cp_dst"
       }
     else
       # Copy the file first to get proper permissions if it
@@ -525,28 +529,8 @@ if test $with_gettext = yes; then
   cp configure.ac $bt2 &&
   (cd $bt2 && autopoint && rm configure.ac) &&
   slurp $bt2 $bt || exit
-
-  rm -fr $bt $bt2 || exit
 fi
-
-# Coreutils is unusual in that it generates some of its test-related
-# Makefile.am files.  That must be done before invoking automake.
-mam_template=tests/Makefile.am.in
-if test -f $mam_template; then
-  PERL=perl
-  for tool in cut head join pr sort tac tail test tr uniq wc; do
-    m=tests/$tool/Makefile.am
-    t=${m}t
-    rm -f $m $t
-    sed -n '1,/^##test-files-begin/p' $mam_template > $t
-    echo "x = $tool" >> $t
-    srcdir=tests/$tool
-    $PERL -I$srcdir -w -- tests/mk-script $srcdir --list >> $t
-    sed -n '/^##test-files-end/,$p' $mam_template >> $t
-    chmod -w $t
-    mv $t $m
-  done
-fi
+rm -fr $bt $bt2 || exit
 
 # Remove any dangling symlink matching "*.m4" or "*.[ch]" in some
 # gnulib-populated directories.  Such .m4 files would cause aclocal to fail.
