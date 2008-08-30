@@ -1,5 +1,13 @@
 2008-08-30  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_reset_sigpipe): New function.
+	(func_get_automake_snippet, func_modules_transitive_closure,
+	func_import): Invoke it before a join command that reads from stdin,
+	to avoid "echo: write error: Broken pipe" error messages on stderr.
+	Reported by Sam Steingold <sds@gnu.org>.
+
+2008-08-30  Bruno Haible  <bruno@clisp.org>
+
 	* m4/fopen.m4 (gl_FUNC_FOPEN): Test against bug with trailing slash.
 	Code copied from m4/open.m4.
 	* lib/fopen.c (rpl_fopen): Return NULL if the mode specifies write

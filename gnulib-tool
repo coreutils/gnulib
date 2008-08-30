@@ -548,6 +548,31 @@ func_ln_if_changed ()
   fi
 }
 
+# func_reset_sigpipe
+# Resets SIGPIPE to its default behaviour. SIGPIPE is signalled when a process
+# writes into a pipe with no readers, i.e. a pipe where all readers have
+# already closed their file descriptor that read from it or exited entirely.
+# The default behaviour is to terminate the current process without an error
+# message.
+# When "trap '' SIGPIPE" is in effect, the behaviour (at least with bash) is to
+# terminate the current process with an error message.
+# This function should be called at the beginning of a command that only
+# produces output to stdout (i.e. no side effects!), when the command that
+# will read from this pipe might prematurely exit or close its standard input
+# descriptor.
+if test -n "$BASH_VERSION"; then
+  # The problem has only been reported with bash.
+  # Note that Solaris sh does not understand "trap - SIGPIPE".
+  func_reset_sigpipe ()
+  {
+    trap - SIGPIPE
+  }
+else
+  func_reset_sigpipe ()
+  {
+  }
+fi
+
 # Ensure an 'echo' command that does not interpret backslashes.
 # Test cases:
 #   echo '\n' | wc -l                 prints 1 when OK, 2 when KO
@@ -1342,7 +1367,8 @@ func_get_automake_snippet ()
                  done | sed -e 's,^lib/,,'`
       # Remove $already_mentioned_files from $lib_files.
       echo "$lib_files" | LC_ALL=C sort -u > "$tmp"/lib-files
-      extra_files=`for f in $already_mentioned_files; do echo $f; done \
+      extra_files=`func_reset_sigpipe; \
+                   for f in $already_mentioned_files; do echo $f; done \
                    | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/lib-files`
       if test -n "$extra_files"; then
         echo "EXTRA_DIST +=" $extra_files
@@ -1509,7 +1535,7 @@ func_modules_transitive_closure ()
     handledmodules=`for m in $handledmodules $inmodules_this_round; do echo $m; done | LC_ALL=C sort -u`
     # Remove $handledmodules from $inmodules.
     for m in $inmodules; do echo $m; done | LC_ALL=C sort -u > "$tmp"/queued-modules
-    inmodules=`echo "$handledmodules" | LC_ALL=C join -v 2 - "$tmp"/queued-modules`
+    inmodules=`func_reset_sigpipe; echo "$handledmodules" | LC_ALL=C join -v 2 - "$tmp"/queued-modules`
   done
   modules=`for m in $outmodules; do echo $m; done | LC_ALL=C sort -u`
   rm -f "$tmp"/queued-modules
@@ -2406,7 +2432,7 @@ func_import ()
   fi
   # Determine tests-related module list.
   echo "$final_modules" | LC_ALL=C sort -u > "$tmp"/final-modules
-  testsrelated_modules=`echo "$main_modules" | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/final-modules`
+  testsrelated_modules=`func_reset_sigpipe; echo "$main_modules" | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/final-modules`
   if test $verbose -ge 1; then
     echo "Tests-related module list:"
     echo "$testsrelated_modules" | sed -e 's/^/  /'
@@ -3272,10 +3298,12 @@ func_import ()
         if test -f "$destdir/$dir$ignore"; then
           if test -n "$dir_added" || test -n "$dir_removed"; then
             sed -e "s|^$anchor||" < "$destdir/$dir$ignore" | LC_ALL=C sort > "$tmp"/ignore
-            echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u \
-              | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-added
-            echo "$dir_removed" | sed -e '/^$/d' | LC_ALL=C sort -u \
-              | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-removed
+            (func_reset_sigpipe
+             echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u \
+               | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-added
+             echo "$dir_removed" | sed -e '/^$/d' | LC_ALL=C sort -u \
+               | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-removed
+            )
             if test -s "$tmp"/ignore-added || test -s "$tmp"/ignore-removed; then
               if $doit; then
                 echo "Updating $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
