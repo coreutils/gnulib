@@ -205,7 +205,7 @@ typedef struct
 union YYSTYPE;
 static int yylex (union YYSTYPE *, parser_control *);
 static int yyerror (parser_control const *, char const *);
-static long int time_zone_hhmm (textint, long int);
+static long int time_zone_hhmm (parser_control *, textint, long int);
 
 /* Extract into *PC any date and time info from a string of digits
    of the form e.g., YYYYMMDD, YYMMDD, HHMM, HH (and sometimes YYY,
@@ -358,7 +358,7 @@ time:
 	set_hhmmss (pc, $1.value, $3.value, 0, 0);
 	pc->meridian = MER24;
 	pc->zones_seen++;
-	pc->time_zone = time_zone_hhmm ($4, $5);
+	pc->time_zone = time_zone_hhmm (pc, $4, $5);
       }
   | tUNUMBER ':' tUNUMBER ':' unsigned_seconds o_merid
       {
@@ -370,7 +370,7 @@ time:
 	set_hhmmss (pc, $1.value, $3.value, $5.tv_sec, $5.tv_nsec);
 	pc->meridian = MER24;
 	pc->zones_seen++;
-	pc->time_zone = time_zone_hhmm ($6, $7);
+	pc->time_zone = time_zone_hhmm (pc, $6, $7);
       }
   ;
 
@@ -394,7 +394,7 @@ zone:
       { pc->time_zone = $1;
 	apply_relative_time (pc, $2, 1); }
   | tZONE tSNUMBER o_colon_minutes
-      { pc->time_zone = $1 + time_zone_hhmm ($2, $3); }
+      { pc->time_zone = $1 + time_zone_hhmm (pc, $2, $3); }
   | tDAYZONE
       { pc->time_zone = $1 + 60; }
   | tZONE tDST
@@ -795,15 +795,33 @@ static table const military_table[] =
 
 /* Convert a time zone expressed as HH:MM into an integer count of
    minutes.  If MM is negative, then S is of the form HHMM and needs
-   to be picked apart; otherwise, S is of the form HH.  */
+   to be picked apart; otherwise, S is of the form HH.  As specified in
+   http://www.opengroup.org/susv3xbd/xbd_chap08.html#tag_08_03, allow
+   only valid TZ range, and consider first two digits as hours, if no
+   minutes specified.  */
 
 static long int
-time_zone_hhmm (textint s, long int mm)
+time_zone_hhmm (parser_control *pc, textint s, long int mm)
 {
+  long int n_minutes;
+
+  /* If the length of S is 1 or 2 and no minutes are specified,
+     interpret it as a number of hours.  */
+  if (s.digits <= 2 && mm < 0)
+    s.value *= 100;
+
   if (mm < 0)
-    return (s.value / 100) * 60 + s.value % 100;
+    n_minutes = (s.value / 100) * 60 + s.value % 100;
   else
-    return s.value * 60 + (s.negative ? -mm : mm);
+    n_minutes = s.value * 60 + (s.negative ? -mm : mm);
+
+  /* If the absolute number of minutes is larger than 24 hours,
+     arrange to reject it by incrementing pc->zones_seen.  Thus,
+     we allow only values in the range UTC-24:00 to UTC+24:00.  */
+  if (24 * 60 < abs (n_minutes))
+    pc->zones_seen++;
+
+  return n_minutes;
 }
 
 static int
