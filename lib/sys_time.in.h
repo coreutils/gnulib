@@ -1,6 +1,6 @@
 /* Provide a more complete sys/time.h.
 
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 /* Written by Paul Eggert.  */
+
+@PRAGMA_SYSTEM_HEADER@
 
 #if defined _GL_SYS_TIME_H
 

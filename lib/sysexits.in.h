@@ -1,5 +1,5 @@
 /* exit() exit codes for some BSD system programs.
-   Copyright (C) 2003, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2006-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 #ifndef _GL_SYSEXITS_H
 
 #if @HAVE_SYSEXITS_H@
+
+@PRAGMA_SYSTEM_HEADER@
 
 /* IRIX 6.5 has an <unistd.h> that defines a macro EX_OK with a nonzero
    value.  Override it.  See

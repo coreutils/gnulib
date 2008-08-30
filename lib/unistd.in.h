@@ -17,6 +17,8 @@
 
 #ifndef _GL_UNISTD_H
 
+@PRAGMA_SYSTEM_HEADER@
+
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_UNISTD_H@
 # @INCLUDE_NEXT@ @NEXT_UNISTD_H@

@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2007 Free Software Foundation, Inc.
+/* Copyright (C) 2006-2008 Free Software Foundation, Inc.
    Written by Paul Eggert, Bruno Haible, Derek Price.
    This file is part of gnulib.
 
@@ -26,6 +26,7 @@
    The include_next requires a split double-inclusion guard.  */
 #if ! defined INTTYPES_H || defined _GL_JUST_INCLUDE_SYSTEM_INTTYPES_H
 # if @HAVE_INTTYPES_H@
+@PRAGMA_SYSTEM_HEADER@
 #  @INCLUDE_NEXT@ @NEXT_INTTYPES_H@
 # endif
 #endif

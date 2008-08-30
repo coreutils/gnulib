@@ -1,6 +1,6 @@
 /* A more-standard <time.h>.
 
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,6 +15,8 @@
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+@PRAGMA_SYSTEM_HEADER@
 
 /* Don't get in the way of glibc when it includes time.h merely to
    declare a few standard symbols, rather than to declare all the

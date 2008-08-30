@@ -26,6 +26,8 @@
  * the declaration of wcwidth().
  */
 
+@PRAGMA_SYSTEM_HEADER@
+
 #ifdef __need_mbstate_t
 /* Special invocation convention inside uClibc header files.  */
 

@@ -1,6 +1,6 @@
 /* Like <fcntl.h>, but with non-working flags defined to 0.
 
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 /* written by Paul Eggert */
 
 #ifndef _GL_FCNTL_H
+
+@PRAGMA_SYSTEM_HEADER@
 
 #include <sys/types.h>
 #include <sys/stat.h>

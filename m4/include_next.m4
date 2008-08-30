@@ -6,6 +6,21 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Paul Eggert and Derek Price.
 
+dnl Sets INCLUDE_NEXT and PRAGMA_SYSTEM_HEADER.
+dnl
+dnl INCLUDE_NEXT expands to 'include_next' if the compiler supports it, or to
+dnl 'include' otherwise.
+dnl
+dnl PRAGMA_SYSTEM_HEADER can be used in files that contain #include_next,
+dnl so as to avoid GCC warnings when the gcc option -pedantic is used.
+dnl '#pragma GCC system_header' has the same effect as if the file was found
+dnl through the include search path specified with '-isystem' options (as
+dnl opposed to the search path specified with '-I' options). Namely, gcc
+dnl does not warn about some things, and on some systems (Solaris and Interix)
+dnl __STDC__ evaluates to 0 instead of to 1. The latter is an undesired side
+dnl effect; we are therefore careful to use 'defined __STDC__' or '1' instead
+dnl of plain '__STDC__'.
+
 AC_DEFUN([gl_INCLUDE_NEXT],
 [
   AC_LANG_PREPROC_REQUIRE()
@@ -36,12 +51,17 @@ EOF
      CPPFLAGS="$save_CPPFLAGS"
      rm -rf conftestd1 conftestd2
     ])
+  PRAGMA_SYSTEM_HEADER=
   if test $gl_cv_have_include_next = yes; then
     INCLUDE_NEXT=include_next
+    if test -n "$GCC"; then
+      PRAGMA_SYSTEM_HEADER='#pragma GCC system_header'
+    fi
   else
     INCLUDE_NEXT=include
   fi
   AC_SUBST([INCLUDE_NEXT])
+  AC_SUBST([PRAGMA_SYSTEM_HEADER])
 ])
 
 # gl_CHECK_NEXT_HEADERS(HEADER1 HEADER2 ...)

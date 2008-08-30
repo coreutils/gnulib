@@ -16,6 +16,8 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+@PRAGMA_SYSTEM_HEADER@
+
 #if defined __need_FILE || defined __need___FILE
 /* Special invocation convention inside glibc header files.  */
 

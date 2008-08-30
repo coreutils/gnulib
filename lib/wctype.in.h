@@ -28,6 +28,8 @@
 
 #ifndef _GL_WCTYPE_H
 
+@PRAGMA_SYSTEM_HEADER@
+
 #if @HAVE_WINT_T@
 /* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.
    Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before

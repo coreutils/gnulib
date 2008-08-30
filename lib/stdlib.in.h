@@ -15,6 +15,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+@PRAGMA_SYSTEM_HEADER@
+
 #if defined __need_malloc_and_calloc
 /* Special invocation convention inside glibc header files.  */
 

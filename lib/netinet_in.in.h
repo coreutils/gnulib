@@ -1,5 +1,5 @@
 /* Substitute for <netinet/in.h>.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 #ifndef _GL_NETINET_IN_H
 
 #if @HAVE_NETINET_IN_H@
+
+@PRAGMA_SYSTEM_HEADER@
 
 /* On many platforms, <netinet/in.h> assumes prior inclusion of
    <sys/types.h>.  */

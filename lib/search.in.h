@@ -19,6 +19,7 @@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_SEARCH_H@
+@PRAGMA_SYSTEM_HEADER@
 # @INCLUDE_NEXT@ @NEXT_SEARCH_H@
 #endif
 

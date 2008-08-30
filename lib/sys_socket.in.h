@@ -27,6 +27,8 @@
 
 #if @HAVE_SYS_SOCKET_H@
 
+@PRAGMA_SYSTEM_HEADER@
+
 /* On many platforms, <sys/socket.h> assumes prior inclusion of
    <sys/types.h>.  */
 # include <sys/types.h>

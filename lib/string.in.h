@@ -18,6 +18,8 @@
 
 #ifndef _GL_STRING_H
 
+@PRAGMA_SYSTEM_HEADER@
+
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_STRING_H@
 
