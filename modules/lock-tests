@@ -2,12 +2,20 @@ Files:
 tests/test-lock.c
 
 Depends-on:
-thread
-yield
 
 configure.ac:
+dnl Checks for special libraries for the tests/test-lock test.
+dnl On some systems, sched_yield is in librt, rather than in libpthread.
+LIBSCHED=
+if test $gl_threads_api = posix; then
+  dnl Solaris has sched_yield in librt, not in libpthread or libc.
+  AC_CHECK_LIB(rt, sched_yield, [LIBSCHED=-lrt],
+    [dnl Solaris 2.5.1, 2.6 has sched_yield in libposix4, not librt.
+     AC_CHECK_LIB(posix4, sched_yield, [LIBSCHED=-lposix4])])
+fi
+AC_SUBST([LIBSCHED])
 
 Makefile.am:
 TESTS += test-lock
 check_PROGRAMS += test-lock
-test_lock_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@
+test_lock_LDADD = $(LDADD) @LIBMULTITHREAD@ @LIBSCHED@
