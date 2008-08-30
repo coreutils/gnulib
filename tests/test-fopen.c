@@ -36,6 +36,8 @@
 int
 main ()
 {
+  ASSERT (fopen ("nonexist.ent/", "w") == NULL);
+
   ASSERT (fopen ("/dev/null", "r") != NULL);
 
   return 0;

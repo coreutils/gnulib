@@ -9,6 +9,10 @@ Gnulib module: fopen
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function does not fail when the file name argument ends in a slash
+and (without the slash) names a nonexistent file, on some platforms:
+HP-UX 11.00, Solaris 9.
+@item
 On Windows platforms (excluding Cygwin), this function does usually not
 recognize the @file{/dev/null} filename.
 @end itemize
