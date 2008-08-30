@@ -1,4 +1,4 @@
-# include_next.m4 serial 6
+# include_next.m4 serial 7
 dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,12 +37,6 @@ EOF
      rm -rf conftestd1 conftestd2
     ])
   if test $gl_cv_have_include_next = yes; then
-
-    dnl FIXME: Remove HAVE_INCLUDE_NEXT and update everything that uses it
-    dnl to use @INCLUDE_NEXT@ instead.
-    AC_DEFINE([HAVE_INCLUDE_NEXT], 1,
-	      [Define if your compiler supports the #include_next directive.])
-
     INCLUDE_NEXT=include_next
   else
     INCLUDE_NEXT=include
