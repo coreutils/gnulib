@@ -1,5 +1,13 @@
 2008-08-31  Bruno Haible  <bruno@clisp.org>
 
+	New module 'sigpipe-die'.
+	* modules/sigpipe-die: New file.
+	* lib/sigpipe-die.h: New file.
+	* lib/sigpipe-die.c: New file.
+	* MODULES.html.sh (Signal handling): Add sigpipe-die.
+
+2008-08-31  Bruno Haible  <bruno@clisp.org>
+
 	Don't override previously installed signal handlers.
 	* lib/fatal-signal.c (saved_sigactions): New variable.
 	(uninstall_handlers): Reset the signal to the saved handler, not

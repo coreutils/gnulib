@@ -2390,6 +2390,7 @@ func_all_modules ()
   func_module c-stack
   func_module libsigsegv
   func_module sig2str
+  func_module sigpipe-die
   func_end_table
 
   element="Internationalization functions"
