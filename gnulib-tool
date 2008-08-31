@@ -570,6 +570,7 @@ if test -n "$BASH_VERSION"; then
 else
   func_reset_sigpipe ()
   {
+    :
   }
 fi
 
