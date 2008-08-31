@@ -125,19 +125,25 @@ static sig_atomic_t volatile actions_count = 0;
 static size_t actions_allocated = SIZEOF (static_actions);
 
 
+/* The saved signal handlers.
+   Size 32 would not be sufficient: On HP-UX, SIGXCPU = 33, SIGXFSZ = 34.  */
+static struct sigaction saved_sigactions[64];
+
+
 /* Uninstall the handlers.  */
 static inline void
 uninstall_handlers ()
 {
   size_t i;
-  struct sigaction action;
 
-  action.sa_handler = SIG_DFL;
-  action.sa_flags = 0;
-  sigemptyset (&action.sa_mask);
   for (i = 0; i < num_fatal_signals; i++)
     if (fatal_signals[i] >= 0)
-      sigaction (fatal_signals[i], &action, NULL);
+      {
+	int sig = fatal_signals[i];
+	if (saved_sigactions[sig].sa_handler == SIG_IGN)
+	  saved_sigactions[sig].sa_handler = SIG_DFL;
+	sigaction (sig, &saved_sigactions[sig], NULL);
+      }
 }
 
 
@@ -184,7 +190,13 @@ install_handlers ()
   sigemptyset (&action.sa_mask);
   for (i = 0; i < num_fatal_signals; i++)
     if (fatal_signals[i] >= 0)
-      sigaction (fatal_signals[i], &action, NULL);
+      {
+	int sig = fatal_signals[i];
+
+	if (!(sig < sizeof (saved_sigactions) / sizeof (sigactions[0])))
+	  abort ();
+	sigaction (sig, &action, &saved_sigactions[sig]);
+      }
 }
 
 

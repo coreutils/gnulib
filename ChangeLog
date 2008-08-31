@@ -1,3 +1,11 @@
+2008-08-31  Bruno Haible  <bruno@clisp.org>
+
+	Don't override previously installed signal handlers.
+	* lib/fatal-signal.c (saved_sigactions): New variable.
+	(uninstall_handlers): Reset the signal to the saved handler, not
+	to SIG_DFL (except when ignored).
+	(install_handlers): Save the previous handlers.
+
 2008-08-30  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_reset_sigpipe): New function.
