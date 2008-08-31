@@ -6,6 +6,13 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-08-31  havelib         On Solaris, when searching for 64-bit mode
+                            libraries the directory $prefix/lib is now ignored.
+                            Instead the directory $prefix/lib/64 is searched.
+                            You may need to create a symbolic link for
+                            $prefix/lib/64 if you have 64-bit libraries
+                            installed in $prefix/lib.
+
 2008-08-19  strverscmp      The include file is changed from "strverscmp.h"
                             to <string.h>.
 
