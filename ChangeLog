@@ -1,5 +1,7 @@
 2008-08-31  Jim Meyering  <meyering@redhat.com>
 
+	* lib/strftime.h: Add comments describing the two added arguments.
+
 	remove duplicate #include directives
 	* lib/chdir-long.c [TEST_CHDIR]: Remove duplicate #include <stdio.h>.
 	* lib/putenv.c: Remove duplicate #include <stdlib.h>.
