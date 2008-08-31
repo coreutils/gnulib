@@ -193,7 +193,7 @@ install_handlers ()
       {
 	int sig = fatal_signals[i];
 
-	if (!(sig < sizeof (saved_sigactions) / sizeof (sigactions[0])))
+	if (!(sig < sizeof (saved_sigactions) / sizeof (saved_sigactions[0])))
 	  abort ();
 	sigaction (sig, &action, &saved_sigactions[sig]);
       }
