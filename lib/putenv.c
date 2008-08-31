@@ -31,7 +31,6 @@
 # define __set_errno(ev) ((errno) = (ev))
 #endif
 
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 

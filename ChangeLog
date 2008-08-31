@@ -1,3 +1,9 @@
+2008-08-31  Jim Meyering  <meyering@redhat.com>
+
+	remove duplicate #include directives
+	* lib/chdir-long.c [TEST_CHDIR]: Remove duplicate #include <stdio.h>.
+	* lib/putenv.c: Remove duplicate #include <stdlib.h>.
+
 2008-08-31  Bruno Haible  <bruno@clisp.org>
 
 	New module 'sigpipe-die'.
