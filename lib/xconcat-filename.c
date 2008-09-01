@@ -21,53 +21,21 @@
 /* Specification.  */
 #include "concat-filename.h"
 
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "filename.h"
+#include "xalloc.h"
 
 /* Concatenate a directory filename, a relative filename and an optional
    suffix.  The directory may end with the directory separator.  The second
    argument may not start with the directory separator (it is relative).
-   Return a freshly allocated filename.  Return NULL and set errno
-   upon memory allocation failure.  */
+   Return a freshly allocated filename.  */
 char *
-concatenated_filename (const char *directory, const char *filename,
-		       const char *suffix)
+xconcatenated_filename (const char *directory, const char *filename,
+			const char *suffix)
 {
   char *result;
-  char *p;
 
-  if (strcmp (directory, ".") == 0)
-    {
-      /* No need to prepend the directory.  */
-      result = (char *) malloc (strlen (filename)
-				+ (suffix != NULL ? strlen (suffix) : 0)
-				+ 1);
-      if (result == NULL)
-	return NULL; /* errno is set here */
-      p = result;
-    }
-  else
-    {
-      size_t directory_len = strlen (directory);
-      int need_slash =
-	(directory_len > FILE_SYSTEM_PREFIX_LEN (directory)
-	 && !ISSLASH (directory[directory_len - 1]));
-      result = (char *) malloc (directory_len + need_slash
-				+ strlen (filename)
-				+ (suffix != NULL ? strlen (suffix) : 0)
-				+ 1);
-      if (result == NULL)
-	return NULL; /* errno is set here */
-      memcpy (result, directory, directory_len);
-      p = result + directory_len;
-      if (need_slash)
-	*p++ = '/';
-    }
-  p = stpcpy (p, filename);
-  if (suffix != NULL)
-    stpcpy (p, suffix);
+  result = concatenated_filename (directory, filename, suffix);
+  if (result == NULL)
+    xalloc_die ();
+
   return result;
 }

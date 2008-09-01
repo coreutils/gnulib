@@ -20,7 +20,7 @@ safe-read
 xalloc
 xmalloca
 getline
-filename
+xconcat-filename
 fwriteerror
 clean-temp
 error

@@ -41,7 +41,7 @@
 #include "safe-read.h"
 #include "xalloc.h"
 #include "xmalloca.h"
-#include "filename.h"
+#include "concat-filename.h"
 #include "fwriteerror.h"
 #include "clean-temp.h"
 #include "error.h"
@@ -741,7 +741,7 @@ is_envjavac_gcj43_usable (const char *javac,
 	return true;
 
       conftest_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
 			   get_goodcode_snippet (source_version)))
 	{
@@ -751,7 +751,7 @@ is_envjavac_gcj43_usable (const char *javac,
 	}
 
       compiled_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
@@ -785,9 +785,9 @@ is_envjavac_gcj43_usable (const char *javac,
 		  free (conftest_file_name);
 
 		  conftest_file_name =
-		    concatenated_filename (tmpdir->dir_name,
-					   "conftestfail.java",
-					   NULL);
+		    xconcatenated_filename (tmpdir->dir_name,
+					    "conftestfail.java",
+					    NULL);
 		  if (write_temp_file (tmpdir, conftest_file_name, failcode))
 		    {
 		      free (conftest_file_name);
@@ -797,9 +797,9 @@ is_envjavac_gcj43_usable (const char *javac,
 		    }
 
 		  compiled_file_name =
-		    concatenated_filename (tmpdir->dir_name,
-					   "conftestfail.class",
-					   NULL);
+		    xconcatenated_filename (tmpdir->dir_name,
+					    "conftestfail.class",
+					    NULL);
 		  register_temp_file (tmpdir, compiled_file_name);
 
 		  java_sources[0] = conftest_file_name;
@@ -890,7 +890,7 @@ is_envjavac_oldgcj_14_14_usable (const char *javac, bool *usablep)
 	return true;
 
       conftest_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
 			   get_goodcode_snippet ("1.4")))
 	{
@@ -900,7 +900,7 @@ is_envjavac_oldgcj_14_14_usable (const char *javac, bool *usablep)
 	}
 
       compiled_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
@@ -951,7 +951,7 @@ is_envjavac_oldgcj_14_13_usable (const char *javac,
 	return true;
 
       conftest_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
 			   get_goodcode_snippet ("1.3")))
 	{
@@ -961,7 +961,7 @@ is_envjavac_oldgcj_14_13_usable (const char *javac,
 	}
 
       compiled_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
@@ -994,8 +994,8 @@ is_envjavac_oldgcj_14_13_usable (const char *javac,
       if (javac_works && javac_noassert_works)
 	{
 	  conftest_file_name =
-	    concatenated_filename (tmpdir->dir_name, "conftestfail.java",
-				   NULL);
+	    xconcatenated_filename (tmpdir->dir_name, "conftestfail.java",
+				    NULL);
 	  if (write_temp_file (tmpdir, conftest_file_name,
 			       get_failcode_snippet ("1.3")))
 	    {
@@ -1006,8 +1006,8 @@ is_envjavac_oldgcj_14_13_usable (const char *javac,
 	    }
 
 	  compiled_file_name =
-	    concatenated_filename (tmpdir->dir_name, "conftestfail.class",
-				   NULL);
+	    xconcatenated_filename (tmpdir->dir_name, "conftestfail.class",
+				    NULL);
 	  register_temp_file (tmpdir, compiled_file_name);
 
 	  java_sources[0] = conftest_file_name;
@@ -1091,7 +1091,7 @@ is_envjavac_nongcj_usable (const char *javac,
 	return true;
 
       conftest_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
 			   get_goodcode_snippet (source_version)))
 	{
@@ -1101,7 +1101,7 @@ is_envjavac_nongcj_usable (const char *javac,
 	}
 
       compiled_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
@@ -1135,9 +1135,9 @@ is_envjavac_nongcj_usable (const char *javac,
 		  free (conftest_file_name);
 
 		  conftest_file_name =
-		    concatenated_filename (tmpdir->dir_name,
-					   "conftestfail.java",
-					   NULL);
+		    xconcatenated_filename (tmpdir->dir_name,
+					    "conftestfail.java",
+					    NULL);
 		  if (write_temp_file (tmpdir, conftest_file_name, failcode))
 		    {
 		      free (conftest_file_name);
@@ -1147,9 +1147,9 @@ is_envjavac_nongcj_usable (const char *javac,
 		    }
 
 		  compiled_file_name =
-		    concatenated_filename (tmpdir->dir_name,
-					   "conftestfail.class",
-					   NULL);
+		    xconcatenated_filename (tmpdir->dir_name,
+					    "conftestfail.class",
+					    NULL);
 		  register_temp_file (tmpdir, compiled_file_name);
 
 		  java_sources[0] = conftest_file_name;
@@ -1219,9 +1219,9 @@ is_envjavac_nongcj_usable (const char *javac,
 		      free (conftest_file_name);
 
 		      conftest_file_name =
-			concatenated_filename (tmpdir->dir_name,
-					       "conftestfail.java",
-					       NULL);
+			xconcatenated_filename (tmpdir->dir_name,
+						"conftestfail.java",
+						NULL);
 		      if (write_temp_file (tmpdir, conftest_file_name,
 					   failcode))
 			{
@@ -1233,9 +1233,9 @@ is_envjavac_nongcj_usable (const char *javac,
 			}
 
 		      compiled_file_name =
-			concatenated_filename (tmpdir->dir_name,
-					       "conftestfail.class",
-					       NULL);
+			xconcatenated_filename (tmpdir->dir_name,
+						"conftestfail.class",
+						NULL);
 		      register_temp_file (tmpdir, compiled_file_name);
 
 		      java_sources[0] = conftest_file_name;
@@ -1387,8 +1387,8 @@ is_gcj_present (void)
 	      char *conftest_file_name;
 
 	      conftest_file_name =
-		concatenated_filename (tmpdir->dir_name, "conftestlib.java",
-				       NULL);
+		xconcatenated_filename (tmpdir->dir_name, "conftestlib.java",
+					NULL);
 	      if (write_temp_file (tmpdir, conftest_file_name,
 "public class conftestlib {\n"
 "  public static void main (String[] args) {\n"
@@ -1401,9 +1401,9 @@ is_gcj_present (void)
 		  const char *java_sources[1];
 
 		  compiled_file_name =
-		    concatenated_filename (tmpdir->dir_name,
-					   "conftestlib.class",
-					   NULL);
+		    xconcatenated_filename (tmpdir->dir_name,
+					    "conftestlib.class",
+					    NULL);
 		  register_temp_file (tmpdir, compiled_file_name);
 
 		  java_sources[0] = conftest_file_name;
@@ -1531,7 +1531,7 @@ is_gcj43_usable (const char *source_version,
 	return true;
 
       conftest_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
 			   get_goodcode_snippet (source_version)))
 	{
@@ -1541,7 +1541,7 @@ is_gcj43_usable (const char *source_version,
 	}
 
       compiled_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
@@ -1571,9 +1571,9 @@ is_gcj43_usable (const char *source_version,
 		  free (conftest_file_name);
 
 		  conftest_file_name =
-		    concatenated_filename (tmpdir->dir_name,
-					   "conftestfail.java",
-					   NULL);
+		    xconcatenated_filename (tmpdir->dir_name,
+					    "conftestfail.java",
+					    NULL);
 		  if (write_temp_file (tmpdir, conftest_file_name, failcode))
 		    {
 		      free (conftest_file_name);
@@ -1582,9 +1582,9 @@ is_gcj43_usable (const char *source_version,
 		    }
 
 		  compiled_file_name =
-		    concatenated_filename (tmpdir->dir_name,
-					   "conftestfail.class",
-					   NULL);
+		    xconcatenated_filename (tmpdir->dir_name,
+					    "conftestfail.class",
+					    NULL);
 		  register_temp_file (tmpdir, compiled_file_name);
 
 		  java_sources[0] = conftest_file_name;
@@ -1670,7 +1670,7 @@ is_oldgcj_14_14_usable (bool *usablep)
 	return true;
 
       conftest_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
 			   get_goodcode_snippet ("1.4")))
 	{
@@ -1680,7 +1680,7 @@ is_oldgcj_14_14_usable (bool *usablep)
 	}
 
       compiled_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
@@ -1727,7 +1727,7 @@ is_oldgcj_14_13_usable (bool *usablep, bool *need_no_assert_option_p)
 	return true;
 
       conftest_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
 			   get_goodcode_snippet ("1.3")))
 	{
@@ -1737,7 +1737,7 @@ is_oldgcj_14_13_usable (bool *usablep, bool *need_no_assert_option_p)
 	}
 
       compiled_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
@@ -1835,7 +1835,7 @@ is_javac_usable (const char *source_version, const char *target_version,
 	return true;
 
       conftest_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
 			   get_goodcode_snippet (source_version)))
 	{
@@ -1845,7 +1845,7 @@ is_javac_usable (const char *source_version, const char *target_version,
 	}
 
       compiled_file_name =
-	concatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
@@ -1878,9 +1878,9 @@ is_javac_usable (const char *source_version, const char *target_version,
 		  free (conftest_file_name);
 
 		  conftest_file_name =
-		    concatenated_filename (tmpdir->dir_name,
-					   "conftestfail.java",
-					   NULL);
+		    xconcatenated_filename (tmpdir->dir_name,
+					    "conftestfail.java",
+					    NULL);
 		  if (write_temp_file (tmpdir, conftest_file_name, failcode))
 		    {
 		      free (conftest_file_name);
@@ -1889,9 +1889,9 @@ is_javac_usable (const char *source_version, const char *target_version,
 		    }
 
 		  compiled_file_name =
-		    concatenated_filename (tmpdir->dir_name,
-					   "conftestfail.class",
-					   NULL);
+		    xconcatenated_filename (tmpdir->dir_name,
+					    "conftestfail.class",
+					    NULL);
 		  register_temp_file (tmpdir, compiled_file_name);
 
 		  java_sources[0] = conftest_file_name;
@@ -1959,9 +1959,9 @@ is_javac_usable (const char *source_version, const char *target_version,
 		      free (conftest_file_name);
 
 		      conftest_file_name =
-			concatenated_filename (tmpdir->dir_name,
-					       "conftestfail.java",
-					       NULL);
+			xconcatenated_filename (tmpdir->dir_name,
+					        "conftestfail.java",
+					        NULL);
 		      if (write_temp_file (tmpdir, conftest_file_name,
 					   failcode))
 			{
@@ -1971,9 +1971,9 @@ is_javac_usable (const char *source_version, const char *target_version,
 			}
 
 		      compiled_file_name =
-			concatenated_filename (tmpdir->dir_name,
-					       "conftestfail.class",
-					       NULL);
+			xconcatenated_filename (tmpdir->dir_name,
+					        "conftestfail.class",
+					        NULL);
 		      register_temp_file (tmpdir, compiled_file_name);
 
 		      java_sources[0] = conftest_file_name;

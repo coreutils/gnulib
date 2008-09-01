@@ -10,7 +10,7 @@ m4/eaccess.m4
 Depends-on:
 stdbool
 xalloc
-filename
+xconcat-filename
 unistd
 
 configure.ac:

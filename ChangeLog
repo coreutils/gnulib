@@ -1,5 +1,35 @@
 2008-09-01  Bruno Haible  <bruno@clisp.org>
 
+	Split module 'concat-filename' into 'concat-filename' (LGPL) and
+	'xconcat-filename' (GPL).
+	* modules/concat-filename (Depends-on): Add malloc-posix, remove xalloc.
+	(License): Change to LGPLv2+.
+	* modules/xconcat-filename: New file.
+	* lib/concat-filename.h (concatenated_filename): Change specification.
+	(xconcatenated_filename): New declaration.
+	* lib/concat-filename.c: Include errno.h, stdlib.h, not xalloc.h.
+	(concatenated_filename): Use malloc instead of xalloc. Handle out-of-
+	memory situations.
+	* lib/xconcat-filename.c: New file.
+	* NEWS: Mention the change.
+	* lib/findprog.c: Include concat-filename.h, not filename.h.
+	(find_in_path): Use xconcatenated_filename instead of
+	concatenated_filename.
+	* lib/javacomp.c: Include concat-filename.h, not filename.h.
+	(is_envjavac_gcj43_usable, is_envjavac_oldgcj_14_14_usable,
+	is_envjavac_oldgcj_14_13_usable, is_envjavac_nongcj_usable,
+	is_gcj_present, is_gcj43_usable, is_oldgcj_14_14_usable,
+	is_oldgcj_14_13_usable, is_javac_usable): Use xconcatenated_filename
+	instead of concatenated_filename.
+	* lib/javaexec.c: Include concat-filename.h, not filename.h.
+	(execute_java_class): Use xconcatenated_filename instead of
+	concatenated_filename.
+	* modules/findprog (Depends-on): Add xconcat-filename, remove filename.
+	* modules/javacomp (Depends-on): Likewise.
+	* modules/javaexec (Depends-on): Likewise.
+
+2008-09-01  Bruno Haible  <bruno@clisp.org>
+
 	Split module 'filename' into 'filename' and 'concat-filename'.
 	* modules/filename: Keep only lib/filename.h.
 	(License): Change to LGPLv2+.

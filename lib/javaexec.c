@@ -29,7 +29,7 @@
 #include "classpath.h"
 #include "xsetenv.h"
 #include "sh-quote.h"
-#include "filename.h"
+#include "concat-filename.h"
 #include "xalloc.h"
 #include "xmalloca.h"
 #include "error.h"
@@ -94,7 +94,7 @@ execute_java_class (const char *class_name,
   /* First, try a class compiled to a native code executable.  */
   if (exe_dir != NULL)
     {
-      char *exe_pathname = concatenated_filename (exe_dir, class_name, EXEEXT);
+      char *exe_pathname = xconcatenated_filename (exe_dir, class_name, EXEEXT);
       char *old_classpath;
       char **argv = (char **) xmalloca ((1 + nargs + 1) * sizeof (char *));
       unsigned int i;

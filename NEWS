@@ -7,9 +7,10 @@ User visible incompatible changes
 Date        Modules         Changes
 
 2008-09-01  filename        The module does not define the function
-                            concatenated_filename any more. To get this
-                            function, use module 'concat-filename' and the
-                            include file "concat-filename.h".
+                            concatenated_filename any more. To get an
+                            equivalent function, use function
+                            xconcatenated_filename from module
+                            'xconcat-filename'.
 
 2008-08-31  havelib         On Solaris, when searching for 64-bit mode
                             libraries the directory $prefix/lib is now ignored.
