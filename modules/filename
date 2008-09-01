@@ -1,25 +1,20 @@
 Description:
-Construct a full filename by concatenating a directory name, a relative
-filename, and a suffix.
+Basic filename support macros.
 
 Files:
 lib/filename.h
-lib/concat-filename.c
 
 Depends-on:
-xalloc
-stpcpy
 
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += concat-filename.c
 
 Include:
 "filename.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible

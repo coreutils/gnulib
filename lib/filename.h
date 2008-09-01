@@ -1,5 +1,5 @@
-/* Pathname support.
-   Copyright (C) 2001-2004, 2007 Free Software Foundation, Inc.
+/* Basic filename support macros.
+   Copyright (C) 2001-2004, 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -46,10 +46,6 @@ extern "C" {
 # define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
 
-/* Concatenate a directory filename, a relative filename and an optional
-   suffix.  Return a freshly allocated filename.  */
-extern char *concatenated_filename (const char *directory,
-				    const char *filename, const char *suffix);
 
 #ifdef __cplusplus
 }

@@ -1,5 +1,5 @@
-/* Construct a full pathname from a directory and a filename.
-   Copyright (C) 2001-2004, 2006-2007 Free Software Foundation, Inc.
+/* Construct a full filename from a directory and a relative filename.
+   Copyright (C) 2001-2004, 2006-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -19,10 +19,11 @@
 #include <config.h>
 
 /* Specification.  */
-#include "filename.h"
+#include "concat-filename.h"
 
 #include <string.h>
 
+#include "filename.h"
 #include "xalloc.h"
 
 /* Concatenate a directory filename, a relative filename and an optional

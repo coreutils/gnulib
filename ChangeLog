@@ -1,3 +1,14 @@
+2008-09-01  Bruno Haible  <bruno@clisp.org>
+
+	Split module 'filename' into 'filename' and 'concat-filename'.
+	* modules/filename: Keep only lib/filename.h.
+	(License): Change to LGPLv2+.
+	* modules/concat-filename: New file, extracted from modules/filename.
+	* lib/filename.h (concatenated_filename): Remove declaration.
+	* lib/concat-filename.h: New file, extracted from lib/filename.h.
+	* lib/concat-filename.c: Include concat-filename.h.
+	* NEWS: Mention the change.
+
 2008-09-01  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/bitrotate.h (rotl8, rotr8): Add.
