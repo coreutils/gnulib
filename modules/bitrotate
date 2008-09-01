@@ -1,10 +1,11 @@
 Description:
-Rotate bits in 16 and 32 bit integers using stdint.h.
+Rotate bits in 16 and 32 bit integers.
 
 Files:
 lib/bitrotate.h
 
 Depends-on:
+stdint
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
