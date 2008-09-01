@@ -1,3 +1,13 @@
+2008-09-01  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/bitrotate (configure.ac): Need
+	AC_REQUIRE([AC_C_INLINE]).
+	(Description): Mention stdint.h.  Reported by Bruno Haible
+	<bruno@clisp.org>.
+
+	* lib/bitrotate.h (rotr16, rotl16): Fix mask value.  Reported by
+	Paolo Bonzini <bonzini@gnu.org>.
+
 2008-08-31  Bruno Haible  <bruno@clisp.org>
 
 	Assume Solaris specific bi-arch conventions on Solaris systems.

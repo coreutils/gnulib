@@ -45,7 +45,7 @@ rotr32 (uint32_t x, int n)
 static inline uint16_t
 rotl16 (uint16_t x, int n)
 {
-  return ((x << n) | (x >> (16 - n))) & 0xFFFFFFFF;
+  return ((x << n) | (x >> (16 - n))) & 0xFFFF;
 }
 
 /* Given an unsigned 16-bit argument X, return the value corresponding
@@ -54,7 +54,7 @@ rotl16 (uint16_t x, int n)
 static inline uint16_t
 rotr16 (uint16_t x, int n)
 {
-  return ((x >> n) | (x << (16 - n))) & 0xFFFFFFFF;
+  return ((x >> n) | (x << (16 - n))) & 0xFFFF;
 }
 
 #endif /* _GL_BITROTATE_H */
