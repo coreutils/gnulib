@@ -1,5 +1,5 @@
 Description:
-Rotate bits in 16 and 32 bit integers.
+Rotate bits in unsigned 8, 16, and 32 bit integers.
 
 Files:
 lib/bitrotate.h

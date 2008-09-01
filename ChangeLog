@@ -1,5 +1,7 @@
 2008-09-01  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/bitrotate.h (rotl8, rotr8): Add.
+
 	* modules/bitrotate (configure.ac): Need
 	AC_REQUIRE([AC_C_INLINE]).
 	(Description): Mention stdint.h.  Reported by Bruno Haible

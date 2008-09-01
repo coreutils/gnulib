@@ -57,4 +57,22 @@ rotr16 (uint16_t x, int n)
   return ((x >> n) | (x << (16 - n))) & 0xFFFF;
 }
 
+/* Given an unsigned 8-bit argument X, return the value corresponding
+   to rotating the bits N steps to the left.  N must be between 1 to 7
+   inclusive. */
+static inline uint8_t
+rotl8 (uint8_t x, int n)
+{
+  return ((x << n) | (x >> (8 - n))) & 0xFF;
+}
+
+/* Given an unsigned 8-bit argument X, return the value corresponding
+   to rotating the bits N steps to the right.  N must be in 1 to 7
+   inclusive. */
+static inline uint8_t
+rotr8 (uint8_t x, int n)
+{
+  return ((x >> n) | (x << (8 - n))) & 0xFF;
+}
+
 #endif /* _GL_BITROTATE_H */
