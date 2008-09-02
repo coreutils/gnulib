@@ -21,6 +21,26 @@
 
 #include <stdint.h>
 
+#if defined UINT64_MAX && defined UINT64_C
+/* Given an unsigned 64-bit argument X, return the value corresponding
+   to rotating the bits N steps to the left.  N must be between 1 and
+   31 inclusive. */
+static inline uint64_t
+rotl64 (uint64_t x, int n)
+{
+  return ((x << n) | (x >> (64 - n))) & 0xFFFFFFFFFFFFFFFFULL;
+}
+
+/* Given an unsigned 64-bit argument X, return the value corresponding
+   to rotating the bits N steps to the right.  N must be between 1 to
+   31 inclusive.*/
+static inline uint64_t
+rotr64 (uint64_t x, int n)
+{
+  return ((x >> n) | (x << (64 - n))) & 0xFFFFFFFFFFFFFFFFULL;
+}
+#endif
+
 /* Given an unsigned 32-bit argument X, return the value corresponding
    to rotating the bits N steps to the left.  N must be between 1 and
    31 inclusive. */
