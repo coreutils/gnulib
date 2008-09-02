@@ -2,7 +2,8 @@
 
 	* lib/bitrotate.h (rotl64, rotr64): Add.  Suggested by Bruce Korb
 	<bruce.korb@gmail.com> with ideas from Ben Pfaff
-	<blp@cs.stanford.edu> and Bruno Haible <bruno@clisp.org>.
+	<blp@cs.stanford.edu>, Bruno Haible <bruno@clisp.org> and Eric
+	Blake <ebb9@byu.net>.
 
 	* tests/test-bitrotate.c: Add more test vectors.
 
