@@ -3457,6 +3457,19 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   {
     size_t length;
     char *result =
+      my_asnprintf (NULL, &length, "%.*d %d", 4000, 1234567, 99);
+    size_t i;
+    ASSERT (result != NULL);
+    for (i = 0; i < 4000 - 7; i++)
+      ASSERT (result[i] == '0');
+    ASSERT (strcmp (result + 4000 - 7, "1234567 99") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  {
+    size_t length;
+    char *result =
       my_asnprintf (NULL, &length, "%.4000d %d", -1234567, 99);
     size_t i;
     ASSERT (result != NULL);

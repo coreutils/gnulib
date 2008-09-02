@@ -1,3 +1,14 @@
+2008-09-02  Eric Blake  <ebb9@byu.net>
+
+	vasnprintf-posix: handle large precision via %.*d
+	* lib/vasnprintf.c (VASNPRINTF): Don't pass precision to snprintf
+	when handling it ourselves.
+	* tests/test-vasnprintf-posix.c (test_function): Add test.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	Reported by Alain Guibert.
+
 2008-09-01  Eric Blake  <ebb9@byu.net>
 
 	c-stack: make configure-time check more robust

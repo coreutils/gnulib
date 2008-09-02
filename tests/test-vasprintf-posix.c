@@ -3438,6 +3438,19 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
   {
     char *result;
     int retval =
+      my_asprintf (&result, "%.*d %d", 4000, 1234567, 99);
+    size_t i;
+    ASSERT (result != NULL);
+    for (i = 0; i < 4000 - 7; i++)
+      ASSERT (result[i] == '0');
+    ASSERT (strcmp (result + 4000 - 7, "1234567 99") == 0);
+    ASSERT (retval == strlen (result));
+    free (result);
+  }
+
+  {
+    char *result;
+    int retval =
       my_asprintf (&result, "%.4000d %d", -1234567, 99);
     size_t i;
     ASSERT (result != NULL);

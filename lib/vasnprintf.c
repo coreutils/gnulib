@@ -4176,7 +4176,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		      abort ();
 		    prefixes[prefix_count++] = a.arg[dp->width_arg_index].a.a_int;
 		  }
-		if (dp->precision_arg_index != ARG_NONE)
+		if (!prec_ourselves && dp->precision_arg_index != ARG_NONE)
 		  {
 		    if (!(a.arg[dp->precision_arg_index].type == TYPE_INT))
 		      abort ();
