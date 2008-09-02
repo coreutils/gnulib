@@ -1,3 +1,10 @@
+2008-09-01  Eric Blake  <ebb9@byu.net>
+
+	c-stack: make configure-time check more robust
+	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Check for
+	successful sigaction call.
+	Reported by Tom G. Christensen.
+
 2008-09-01  Bruno Haible  <bruno@clisp.org>
 
 	New module 'findprog-lgpl'.

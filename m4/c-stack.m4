@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 5
+# serial 6
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [# for STACK_DIRECTION
@@ -85,8 +85,7 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	   setrlimit (RLIMIT_STACK, &rl);
 	   #endif
 
-	   c_stack_action ();
-	   return recurse ("\1");
+	   return c_stack_action () || recurse ("\1");
 	 }
 	],
 	[ac_cv_sys_stack_overflow_works=yes],
@@ -201,8 +200,7 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	   setrlimit (RLIMIT_STACK, &rl);
 	   #endif
 
-	   c_stack_action ();
-	   return recurse ("\1");
+	   return c_stack_action () || recurse ("\1");
 	 }
 	],
 	[ac_cv_sys_xsi_stack_overflow_heuristic=yes],
