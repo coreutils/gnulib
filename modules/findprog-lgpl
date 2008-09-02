@@ -1,0 +1,32 @@
+Description:
+Locating a program in PATH (LGPLed version).
+
+Files:
+lib/findprog.h
+lib/findprog.c
+lib/findprog-lgpl.c
+m4/findprog.m4
+m4/eaccess.m4
+
+Depends-on:
+stdbool
+strdup
+concat-filename
+unistd
+
+configure.ac:
+gl_FINDPROG
+gl_MODULE_INDICATOR([findprog-lgpl])
+
+Makefile.am:
+lib_SOURCES += findprog.h findprog.c
+
+Include:
+"findprog.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
+

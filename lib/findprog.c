@@ -26,7 +26,12 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "xalloc.h"
+/* Avoid collision between findprog.c and findprog-lgpl.c.  */
+#if IN_FINDPROG_LGPL || ! GNULIB_FINDPROG_LGPL
+
+#if !IN_FINDPROG_LGPL
+# include "xalloc.h"
+#endif
 #include "concat-filename.h"
 
 
@@ -56,7 +61,14 @@ find_in_path (const char *progname)
     return progname;
 
   /* Make a copy, to prepare for destructive modifications.  */
+# if !IN_FINDPROG_LGPL
   path = xstrdup (path);
+# else
+  path = strdup (path);
+  if (path == NULL)
+    /* Out of memory.  */
+    return progname;
+# endif
   for (path_rest = path; ; path_rest = cp + 1)
     {
       const char *dir;
@@ -75,7 +87,17 @@ find_in_path (const char *progname)
 	dir = ".";
 
       /* Concatenate dir and progname.  */
+# if !IN_FINDPROG_LGPL
       progpathname = xconcatenated_filename (dir, progname, NULL);
+# else
+      progpathname = concatenated_filename (dir, progname, NULL);
+      if (progpathname == NULL)
+	{
+	  /* Out of memory.  */
+	  free (path);
+	  return progname;
+	}
+# endif
 
       /* On systems which have the eaccess() system call, let's use it.
 	 On other systems, let's hope that this program is not installed
@@ -112,3 +134,5 @@ find_in_path (const char *progname)
   return progname;
 #endif
 }
+
+#endif

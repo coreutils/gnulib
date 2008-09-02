@@ -1,5 +1,15 @@
 2008-09-01  Bruno Haible  <bruno@clisp.org>
 
+	New module 'findprog-lgpl'.
+	* modules/findprog-lgpl: New file.
+	* lib/findprog-lgpl.c: New file.
+	* lib/findprog.c: Compile nothing in findprog.c if findprog-lgpl.c is
+	also compiled. Consider the possibly defined symbol IN_FINDPROG_LGPL
+	to decide whether to use strdup or xstrdup, concatenated_filename or
+	xconcatenated_filename.
+
+2008-09-01  Bruno Haible  <bruno@clisp.org>
+
 	Split module 'concat-filename' into 'concat-filename' (LGPL) and
 	'xconcat-filename' (GPL).
 	* modules/concat-filename (Depends-on): Add malloc-posix, remove xalloc.
