@@ -1,3 +1,7 @@
+2008-09-03  Bruno Haible  <bruno@clisp.org>
+
+	* doc/glibc-functions/strverscmp.texi: Mention the strverscmp module.
+
 2008-09-02  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/bitrotate.h (rotl64, rotr64): Add.  Suggested by Bruce Korb
