@@ -84,7 +84,7 @@ if (alias) > /dev/null 2>&1 && echo | sed --posix -e d >/dev/null 2>&1; then
 fi
 
 # sed_noop is a sed expression that does nothing.
-# An empty expression does not with the native 'sed' on AIX 6.1.
+# An empty expression does not work with the native 'sed' on AIX 6.1.
 sed_noop='s,x,x,'
 
 # func_usage
