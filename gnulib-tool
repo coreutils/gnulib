@@ -83,6 +83,10 @@ if (alias) > /dev/null 2>&1 && echo | sed --posix -e d >/dev/null 2>&1; then
   alias sed='sed --posix'
 fi
 
+# sed_noop is a sed expression that does nothing.
+# An empty expression does not with the native 'sed' on AIX 6.1.
+sed_noop='s,x,x,'
+
 # func_usage
 # outputs to stdout the --help usage message.
 func_usage ()
@@ -1672,7 +1676,7 @@ func_emit_lib_Makefile_am ()
   if test "$libtool" = true; then
     libext=la
     perhapsLT=LT
-    sed_eliminate_LDFLAGS=
+    sed_eliminate_LDFLAGS="$sed_noop"
   else
     libext=a
     perhapsLT=
@@ -1685,7 +1689,7 @@ func_emit_lib_Makefile_am ()
     # situation. Turn check_PROGRAMS into noinst_PROGRAMS.
     sed_transform_check_PROGRAMS='s,check_PROGRAMS,noinst_PROGRAMS,g'
   else
-    sed_transform_check_PROGRAMS=
+    sed_transform_check_PROGRAMS="$sed_noop"
   fi
   echo "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
   echo "## Process this file with automake to produce Makefile.in."
@@ -1897,7 +1901,7 @@ func_emit_tests_Makefile_am ()
 {
   if test "$libtool" = true; then
     libext=la
-    sed_eliminate_LDFLAGS=
+    sed_eliminate_LDFLAGS="$sed_noop"
   else
     libext=a
     sed_eliminate_LDFLAGS='/^lib_LDFLAGS[	 ]*+=/d'
@@ -1909,7 +1913,7 @@ func_emit_tests_Makefile_am ()
     # situation. Turn check_PROGRAMS into noinst_PROGRAMS.
     sed_transform_check_PROGRAMS='s,check_PROGRAMS,noinst_PROGRAMS,g'
   else
-    sed_transform_check_PROGRAMS=
+    sed_transform_check_PROGRAMS="$sed_noop"
   fi
   testsbase_inverse=`echo "$testsbase" | sed -e 's,/$,,' | sed -e 's,[^/][^/]*,..,g'`
   echo "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
@@ -3153,7 +3157,7 @@ func_import ()
           ba
         }'
     else
-      sed_replace_build_aux=
+      sed_replace_build_aux="$sed_noop"
     fi
     func_emit_initmacro_start $macro_prefix
     echo "  gl_source_base='$sourcebase'"
@@ -3830,7 +3834,7 @@ func_create_testdir ()
          ba
        }'
    else
-     sed_replace_build_aux=
+     sed_replace_build_aux="$sed_noop"
    fi
    func_emit_initmacro_start $macro_prefix
    echo "gl_source_base='$sourcebase'"

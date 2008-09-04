@@ -1,3 +1,13 @@
+2008-09-04  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+            Bruno Haible  <bruno@clisp.org>
+
+	Make gnulib-tool work with native 'sed' on AIX.
+	* gnulib-tool (sed_noop): New variable.
+	(func_emit_lib_Makefile_am, func_emit_tests_Makefile_am, func_import,
+	func_add_or_update, func_create_testdir): Use it to initialize sed
+	script variables.
+	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
+
 2008-09-04  Albert Chin  <bug-gnulib@mlists.thewrittenword.com>
             Bruno Haible  <bruno@clisp.org>
 
