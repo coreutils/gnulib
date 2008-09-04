@@ -1,3 +1,9 @@
+2008-09-04  Albert Chin  <bug-gnulib@mlists.thewrittenword.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* m4/include_next.m4 (gl_INCLUDE_NEXT): Add check whether #include_next
+	also works after #include directives.
+
 2008-09-04  Ondřej Vašík  <ovasik@redhat.com>
 
 	getdate.y: reject an out-of-range timezone value
