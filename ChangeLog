@@ -1,3 +1,12 @@
+2008-09-06  Bruno Haible  <bruno@clisp.org>
+
+	* modules/freadptr (License): Change to LGPLv2+.
+	* modules/freadseek (License): Likewise.
+	Suggested by Eric Blake.
+
+	* modules/memchr2 (License): Change to LGPLv2+.
+	Approved by Eric Blake.
+
 2008-09-04  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
             Bruno Haible  <bruno@clisp.org>
 

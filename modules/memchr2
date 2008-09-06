@@ -18,7 +18,7 @@ Include:
 "memchr2.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 Eric Blake

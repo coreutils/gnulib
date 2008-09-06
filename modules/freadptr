@@ -17,7 +17,7 @@ Include:
 "freadptr.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible
