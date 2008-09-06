@@ -271,6 +271,8 @@
 2008-08-28  Jim Meyering  <meyering@redhat.com>
 
 	* modules/getndelim2 (License): Relicense to LGPLv2+.
+	Approved by Richard Stallman for the version of 1995, and by
+	Paul Eggert, Bruno Haible, Eric Blake for their contributions.
 
 2008-08-27  Paolo Bonzini  <bonzini@gnu.org>
 
