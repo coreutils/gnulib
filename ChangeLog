@@ -1,5 +1,12 @@
 2008-09-06  Bruno Haible  <bruno@clisp.org>
 
+	* lib/freadahead.c (freadahead): Add conditional for SLOW_BUT_NO_HACKS.
+	* lib/freadptr.c (freadptr): Likewise.
+	* lib/freadseek.c (freadptrinc): Likewise.
+	Reported by Simon Josefsson.
+
+2008-09-06  Bruno Haible  <bruno@clisp.org>
+
 	* modules/freadptr (License): Change to LGPLv2+.
 	* modules/freadseek (License): Likewise.
 	Suggested by Eric Blake.

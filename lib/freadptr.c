@@ -85,6 +85,10 @@ freadptr (FILE *fp, size_t *sizep)
     return NULL;
   *sizep = size;
   return (const char *) fp->_Next;
+#elif defined SLOW_BUT_NO_HACKS     /* users can define this */
+  /* This implementation is correct on any ANSI C platform.  It is just
+     awfully slow.  */
+  return NULL;
 #else
  #error "Please port gnulib freadptr.c to your platform! Look at the definition of fflush, fread, getc, getc_unlocked on your system, then report this to bug-gnulib."
 #endif

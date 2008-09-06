@@ -19,6 +19,7 @@
 /* Specification.  */
 #include "freadahead.h"
 
+#include <stdlib.h>
 #include "stdio-impl.h"
 
 size_t
@@ -69,6 +70,9 @@ freadahead (FILE *fp)
 	 + (fp->_Mode & 0x4000 /* _MBYTE */
 	    ? (fp->_Back + sizeof (fp->_Back)) - fp->_Rback
 	    : 0);
+#elif defined SLOW_BUT_NO_HACKS     /* users can define this */
+  abort ();
+  return 0;
 #else
  #error "Please port gnulib freadahead.c to your platform! Look at the definition of fflush, fread, ungetc on your system, then report this to bug-gnulib."
 #endif

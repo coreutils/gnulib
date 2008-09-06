@@ -53,6 +53,7 @@ freadptrinc (FILE *fp, size_t increment)
 # endif
 #elif defined __QNX__               /* QNX */
   fp->_Next += increment;
+#elif defined SLOW_BUT_NO_HACKS     /* users can define this */
 #else
  #error "Please port gnulib freadseek.c to your platform! Look at the definition of getc, getc_unlocked on your system, then report this to bug-gnulib."
 #endif
