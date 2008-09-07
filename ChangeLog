@@ -1,5 +1,8 @@
 2008-09-07  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-striconveh.c (main): Check behaviour when converting from
+	UTF-7.
+
 	Make striconveh work better with stateful encodings.
 	* lib/striconveh.c (iconv_carefully, iconv_carefully_1): Don't assume
 	that iconv does not increment the inptr when returning -1/EINVAL.

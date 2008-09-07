@@ -71,6 +71,7 @@ main ()
   iconv_t cd_utf8_to_88591 = iconv_open ("ISO-8859-1", "UTF-8");
   iconv_t cd_88592_to_utf8 = iconv_open ("UTF-8", "ISO-8859-2");
   iconv_t cd_utf8_to_88592 = iconv_open ("ISO-8859-2", "UTF-8");
+  iconv_t cd_utf7_to_utf8 = iconv_open ("UTF-8", "UTF-7");
 
   ASSERT (cd_88591_to_utf8 != (iconv_t)(-1));
   ASSERT (cd_utf8_to_88591 != (iconv_t)(-1));
@@ -333,6 +334,79 @@ main ()
 	    }
 	  free (result);
 	}
+    }
+
+  if (cd_utf7_to_utf8 != (iconv_t)(-1))
+    {
+      /* Disabled on Solaris, because Solaris 9 iconv() is buggy: it returns
+	 -1 / EILSEQ when converting the 7th byte of the input "+VDLYP9hA".  */
+# if !(defined __sun && !defined _LIBICONV_VERSION)
+      /* Test conversion from UTF-7 to UTF-8 with EINVAL.  */
+      for (h = 0; h < SIZEOF (handlers); h++)
+	{
+	  enum iconv_ilseq_handler handler = handlers[h];
+	  /* This is base64 encoded 0x54 0x32 0xD8 0x3F 0xD8 0x40.  It would
+	     convert to U+5432 U+D83F U+D840 but these are Unicode surrogates.  */
+	  static const char input[] = "+VDLYP9hA";
+	  static const char expected1[] = "\345\220\262"; /* 吲 glibc */
+	  static const char expected2[] = ""; /* libiconv */
+	  char *result = NULL;
+	  size_t length = 0;
+	  int retval = mem_cd_iconveh (input, 7,
+				       cd_utf7_to_utf8,
+				       cd_utf7_to_utf8, (iconv_t)(-1),
+				       handler,
+				       NULL,
+				       &result, &length);
+	  ASSERT (retval == 0);
+	  ASSERT (length == strlen (expected1) || length == strlen (expected2));
+	  ASSERT (result != NULL);
+	  if (length == strlen (expected1))
+	    ASSERT (memcmp (result, expected1, strlen (expected1)) == 0);
+	  else
+	    ASSERT (memcmp (result, expected2, strlen (expected2)) == 0);
+	  free (result);
+	}
+
+      /* Test conversion from UTF-7 to UTF-8 with EILSEQ.  */
+      for (h = 0; h < SIZEOF (handlers); h++)
+	{
+	  enum iconv_ilseq_handler handler = handlers[h];
+	  /* This is base64 encoded 0xD8 0x3F 0xD8 0x40 0xD8 0x41.  It would
+	     convert to U+D83F U+D840 U+D841 but these are Unicode surrogates.  */
+	  static const char input[] = "+2D/YQNhB";
+	  char *result = NULL;
+	  size_t length = 0;
+	  int retval = mem_cd_iconveh (input, strlen (input),
+				       cd_utf7_to_utf8,
+				       cd_utf7_to_utf8, (iconv_t)(-1),
+				       handler,
+				       NULL,
+				       &result, &length);
+	  switch (handler)
+	    {
+	    case iconveh_error:
+	      ASSERT (retval == -1 && errno == EILSEQ);
+	      ASSERT (result == NULL);
+	      break;
+	    case iconveh_question_mark:
+	    case iconveh_escape_sequence:
+	      {
+		static const char expected1[] = "?????"; /* glibc */
+		static const char expected2[] = "?2D/YQNhB"; /* libiconv */
+		ASSERT (retval == 0);
+		ASSERT (length == strlen (expected1) || length == strlen (expected2));
+		ASSERT (result != NULL);
+		if (length == strlen (expected1))
+		  ASSERT (memcmp (result, expected1, strlen (expected1)) == 0);
+		else
+		  ASSERT (memcmp (result, expected2, strlen (expected2)) == 0);
+		free (result);
+	      }
+	      break;
+	    }
+	}
+# endif
     }
 
   /* ------------------------ Test str_cd_iconveh() ------------------------ */
