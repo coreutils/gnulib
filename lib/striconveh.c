@@ -79,9 +79,13 @@ iconv_carefully (iconv_t cd,
 		       &outptr, &outsize);
 	  if (!(res == (size_t)(-1) && errno == EINVAL))
 	    break;
-	  /* We expect that no input bytes have been consumed so far.  */
-	  if (inptr != inptr_before)
-	    abort ();
+	  /* iconv can eat up a shift sequence but give EINVAL while attempting
+	     to convert the first character.  E.g. libiconv does this.  */
+	  if (inptr > inptr_before)
+	    {
+	      res = 0;
+	      break;
+	    }
 	}
 
       if (res == 0)
@@ -117,31 +121,36 @@ iconv_carefully (iconv_t cd,
 # endif
 
 /* iconv_carefully_1 is like iconv_carefully, except that it stops after
-   converting one character.  */
+   converting one character or one shift sequence.  */
 static size_t
 iconv_carefully_1 (iconv_t cd,
 		   const char **inbuf, size_t *inbytesleft,
 		   char **outbuf, size_t *outbytesleft,
 		   bool *incremented)
 {
-  const char *inptr = *inbuf;
-  const char *inptr_end = inptr + *inbytesleft;
+  const char *inptr_before = *inbuf;
+  const char *inptr = inptr_before;
+  const char *inptr_end = inptr_before + *inbytesleft;
   char *outptr = *outbuf;
   size_t outsize = *outbytesleft;
-  const char *inptr_before = inptr;
   size_t res = (size_t)(-1);
   size_t insize;
 
-  for (insize = 1; inptr + insize <= inptr_end; insize++)
+  for (insize = 1; inptr_before + insize <= inptr_end; insize++)
     {
+      inptr = inptr_before;
       res = iconv (cd,
 		   (ICONV_CONST char **) &inptr, &insize,
 		   &outptr, &outsize);
       if (!(res == (size_t)(-1) && errno == EINVAL))
 	break;
-      /* We expect that no input bytes have been consumed so far.  */
-      if (inptr != inptr_before)
-	abort ();
+      /* iconv can eat up a shift sequence but give EINVAL while attempting
+	 to convert the first character.  E.g. libiconv does this.  */
+      if (inptr > inptr_before)
+	{
+	  res = 0;
+	  break;
+	}
     }
 
   *inbuf = inptr;
