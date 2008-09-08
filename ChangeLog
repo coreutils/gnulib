@@ -7,8 +7,8 @@
 	required for 16-bit and 8-bit rotates.
 	* lib/bitrotate.h (rotl64, rotr64, rotl32, rotl32, rotl16, rotr16,
 	rotl8, rotr8): Use UINT64_MAX, UINT32_MAX, UINT16_MAX, and
-	UINT8_MAX instead of hard-coded constants.  Suggested by Paul
-	Eggert.
+	UINT8_MAX instead of hard-coded constants.
+	Suggested by Paul Eggert.
 
 2008-09-07  Bruno Haible  <bruno@clisp.org>
 
