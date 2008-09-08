@@ -28,7 +28,7 @@
 static inline uint64_t
 rotl64 (uint64_t x, int n)
 {
-  return ((x << n) | (x >> (64 - n))) & 0xFFFFFFFFFFFFFFFFULL;
+  return ((x << n) | (x >> (64 - n))) & UINT64_MAX;
 }
 
 /* Given an unsigned 64-bit argument X, return the value corresponding
@@ -37,7 +37,7 @@ rotl64 (uint64_t x, int n)
 static inline uint64_t
 rotr64 (uint64_t x, int n)
 {
-  return ((x >> n) | (x << (64 - n))) & 0xFFFFFFFFFFFFFFFFULL;
+  return ((x >> n) | (x << (64 - n))) & UINT64_MAX;
 }
 #endif
 
@@ -47,7 +47,7 @@ rotr64 (uint64_t x, int n)
 static inline uint32_t
 rotl32 (uint32_t x, int n)
 {
-  return ((x << n) | (x >> (32 - n))) & 0xFFFFFFFF;
+  return ((x << n) | (x >> (32 - n))) & UINT32_MAX;
 }
 
 /* Given an unsigned 32-bit argument X, return the value corresponding
@@ -56,43 +56,51 @@ rotl32 (uint32_t x, int n)
 static inline uint32_t
 rotr32 (uint32_t x, int n)
 {
-  return ((x >> n) | (x << (32 - n))) & 0xFFFFFFFF;
+  return ((x >> n) | (x << (32 - n))) & UINT32_MAX;
 }
 
 /* Given an unsigned 16-bit argument X, return the value corresponding
    to rotating the bits N steps to the left.  N must be between 1 to
-   15 inclusive. */
+   15 inclusive, but on most relevant targets N can also be 0 and 16
+   because 'int' is at least 32 bits and the arguments must widen
+   before shifting. */
 static inline uint16_t
 rotl16 (uint16_t x, int n)
 {
-  return ((x << n) | (x >> (16 - n))) & 0xFFFF;
+  return ((x << n) | (x >> (16 - n))) & UINT16_MAX;
 }
 
 /* Given an unsigned 16-bit argument X, return the value corresponding
    to rotating the bits N steps to the right.  N must be in 1 to 15
-   inclusive. */
+   inclusive, but on most relevant targets N can also be 0 and 16
+   because 'int' is at least 32 bits and the arguments must widen
+   before shifting. */
 static inline uint16_t
 rotr16 (uint16_t x, int n)
 {
-  return ((x >> n) | (x << (16 - n))) & 0xFFFF;
+  return ((x >> n) | (x << (16 - n))) & UINT16_MAX;
 }
 
 /* Given an unsigned 8-bit argument X, return the value corresponding
    to rotating the bits N steps to the left.  N must be between 1 to 7
-   inclusive. */
+   inclusive, but on most relevant targets N can also be 0 and 8
+   because 'int' is at least 32 bits and the arguments must widen
+   before shifting. */
 static inline uint8_t
 rotl8 (uint8_t x, int n)
 {
-  return ((x << n) | (x >> (8 - n))) & 0xFF;
+  return ((x << n) | (x >> (8 - n))) & UINT8_MAX;
 }
 
 /* Given an unsigned 8-bit argument X, return the value corresponding
    to rotating the bits N steps to the right.  N must be in 1 to 7
-   inclusive. */
+   inclusive, but on most relevant targets N can also be 0 and 8
+   because 'int' is at least 32 bits and the arguments must widen
+   before shifting. */
 static inline uint8_t
 rotr8 (uint8_t x, int n)
 {
-  return ((x >> n) | (x << (8 - n))) & 0xFF;
+  return ((x >> n) | (x << (8 - n))) & UINT8_MAX;
 }
 
 #endif /* _GL_BITROTATE_H */
