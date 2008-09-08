@@ -39,6 +39,7 @@
 int
 main (void)
 {
+  ASSERT (rotl8 (42, 0) == 42);
   ASSERT (rotl8 (42, 1) == 84);
   ASSERT (rotl8 (42, 2) == 168);
   ASSERT (rotl8 (42, 3) == 81);
@@ -46,7 +47,9 @@ main (void)
   ASSERT (rotl8 (42, 5) == 69);
   ASSERT (rotl8 (42, 6) == 138);
   ASSERT (rotl8 (42, 7) == 21);
+  ASSERT (rotl8 (42, 8) == 42);
 
+  ASSERT (rotr8 (42, 0) == 42);
   ASSERT (rotr8 (42, 1) == 21);
   ASSERT (rotr8 (42, 2) == 138);
   ASSERT (rotr8 (42, 3) == 69);
@@ -54,7 +57,9 @@ main (void)
   ASSERT (rotr8 (42, 5) == 81);
   ASSERT (rotr8 (42, 6) == 168);
   ASSERT (rotr8 (42, 7) == 84);
+  ASSERT (rotr8 (42, 8) == 42);
 
+  ASSERT (rotl16 (43981, 0) == 43981);
   ASSERT (rotl16 (43981, 1) == 22427);
   ASSERT (rotl16 (43981, 2) == 44854);
   ASSERT (rotl16 (43981, 3) == 24173);
@@ -70,7 +75,9 @@ main (void)
   ASSERT (rotl16 (43981, 13) == 46457);
   ASSERT (rotl16 (43981, 14) == 27379);
   ASSERT (rotl16 (43981, 15) == 54758);
+  ASSERT (rotl16 (43981, 16) == 43981);
 
+  ASSERT (rotr16 (43981, 0) == 43981);
   ASSERT (rotr16 (43981, 1) == 54758);
   ASSERT (rotr16 (43981, 2) == 27379);
   ASSERT (rotr16 (43981, 3) == 46457);
@@ -86,6 +93,7 @@ main (void)
   ASSERT (rotr16 (43981, 13) == 24173);
   ASSERT (rotr16 (43981, 14) == 44854);
   ASSERT (rotr16 (43981, 15) == 22427);
+  ASSERT (rotr16 (43981, 16) == 43981);
 
   ASSERT (rotl32 (2309737967U, 1) == 324508639U);
   ASSERT (rotl32 (2309737967U, 2) == 649017278U);
