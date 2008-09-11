@@ -1,3 +1,7 @@
+2008-09-11  Jim Meyering  <meyering@redhat.com>
+
+	* users.txt: Add gtk-vnc.
+
 2008-09-08  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-bitrotate.c: Test 8/16-bit rotates with 0 and maximum

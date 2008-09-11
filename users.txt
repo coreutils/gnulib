@@ -19,6 +19,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   gpg             http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/
   gsasl           http://git.sv.gnu.org/gitweb/?p=gsasl.git
   gss             http://git.sv.gnu.org/gitweb/?p=gss.git
+  gtk-vnc         http://gtk-vnc.codemonkey.ws/hg/outgoing.hg
   guile           http://cvs.sv.gnu.org/viewvc/guile/guile/guile-core/
   gzip            http://cvs.sv.gnu.org/viewcvs/gzip/gzip/
   hello           http://cvs.sv.gnu.org/viewcvs/hello/hello/
