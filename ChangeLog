@@ -1,5 +1,10 @@
 2008-09-11  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
+	* modules/fnmatch-posix (License): Change to LGPLv2+.
+	* modules/fnmatch-gnu (License): Likewise.
+
+2008-09-11  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+
 	* lib/poll.c (poll): Fix polling unconnected server sockets on WIN32.
 
 2008-09-11  Jim Meyering  <meyering@redhat.com>
