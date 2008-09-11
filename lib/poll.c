@@ -180,6 +180,12 @@ poll (pfd, nfd, timeout)
 #else
 	    char data[64];
 	    r = recv (pfd[i].fd, data, sizeof (data), MSG_PEEK);
+            
+# ifdef WIN32
+	    if (r < 0 && GetLastError() == 10057) /* server socket */
+              socket_errno = ENOTCONN;
+	    else
+# endif
 	    socket_errno = (r < 0) ? errno : 0;
 #endif
 	    if (r == 0)
