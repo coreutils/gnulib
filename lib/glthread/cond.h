@@ -269,7 +269,7 @@ typedef pthread_cond_t gl_cond_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WIN32_THREADS)
+#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

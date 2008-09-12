@@ -1,5 +1,10 @@
 2008-09-11  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
+	* lib/glthread/cond.h: Use dummy implementation also if
+	USE_WIN32_THREADS.
+
+2008-09-11  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+
 	* modules/fnmatch-posix (License): Change to LGPLv2+.
 	* modules/fnmatch-gnu (License): Likewise.
 
