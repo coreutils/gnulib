@@ -3,6 +3,7 @@ A POSIX-like <sys/socket.h>.
 
 Files:
 lib/sys_socket.in.h
+lib/winsock.c
 m4/sys_socket_h.m4
 m4/sockpfaf.m4
 

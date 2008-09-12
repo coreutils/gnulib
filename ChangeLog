@@ -1,5 +1,18 @@
 2008-09-23  Paolo Bonzini  <bonzini@gnu.org>
 
+	* lib/sys_socket.in.h: Do not implement rpl_setsockopt here,
+	instead define prototypes for a full set of wrappers.  Ensure
+	that Cygwin does not use the compatibility code, which is only
+	for MinGW.
+	* lib/winsock.c: New.
+	* m4/sys_socket_h.m4: Compile lib/winsock.c if WinSock is being used.
+	* modules/sys_socket: Add lib/winsock.c.
+
+	* modules/poll-tests: Add errno and perror.
+	* tests/test-poll.c: Use ioctl, not ioctlsocket.
+
+2008-09-23  Paolo Bonzini  <bonzini@gnu.org>
+
 	* tests/test-poll.c: Downgrade minimum needed Winsock version.
 
 2008-09-23  Bruno Haible  <bruno@clisp.org>

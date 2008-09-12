@@ -58,6 +58,10 @@
 
 #else
 
+# ifdef __CYGWIN__
+#  error "Cygwin does have a sys/socket.h, doesn't it?!?"
+# endif
+
 /* A platform that lacks <sys/socket.h>.
 
    Currently only MinGW is supported.  See the gnulib manual regarding
@@ -94,15 +98,85 @@
 #  define SHUT_RDWR SD_BOTH
 # endif
 
-# if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
-#  define setsockopt(a,b,c,d,e) rpl_setsockopt(a,b,c,d,e)
+# if @HAVE_WINSOCK2_H@
+/* Include headers needed by the emulation code.  */
+#  include <sys/types.h>
+#  include <io.h>
+
+typedef int socklen_t;
+
+/* Re-define FD_ISSET to avoid a WSA call while we are not using 
+   network sockets.  */
 static inline int
-rpl_setsockopt(int socket, int level, int optname, const void *optval,
-	       socklen_t optlen)
+rpl_fd_isset (int fd, fd_set * set)
 {
-  return (setsockopt)(socket, level, optname, optval, optlen);
+  int i;
+  if (set == NULL)
+    return 0;
+
+  for (i = 0; i < set->fd_count; i++)
+    if (set->fd_array[i] == fd)
+      return 1;
+
+  return 0;
 }
-# endif
+
+#  undef FD_ISSET
+#  define FD_ISSET(fd, set) rpl_fd_isset(fd, set)
+
+/* Wrap everything else to use libc file descriptors for sockets.  */
+
+#  undef close
+#  define close			rpl_close
+#  undef socket
+#  define socket		rpl_socket
+#  undef connect
+#  define connect		rpl_connect
+#  undef accept
+#  define accept		rpl_accept
+#  undef bind
+#  define bind			rpl_bind
+#  undef getpeername
+#  define getpeername		rpl_getpeername
+#  undef getsockname
+#  define getsockname		rpl_getsockname
+#  undef getsockopt
+#  define getsockopt		rpl_getsockopt
+#  undef listen
+#  define listen		rpl_listen
+#  undef ioctl
+#  define ioctl			rpl_ioctl
+#  undef recv
+#  define recv			rpl_recv
+#  undef send
+#  define send			rpl_send
+#  undef recvfrom
+#  define recvfrom		rpl_recvfrom
+#  undef sendto
+#  define sendto		rpl_sendto
+#  undef setsockopt
+#  define setsockopt		rpl_setsockopt
+
+#  undef select
+#  define select		select_not_supported_under_win32_use_poll
+
+extern int rpl_close(int);
+extern int rpl_socket (int, int, int protocol);
+extern int rpl_connect (int, struct sockaddr *, int);
+extern int rpl_accept (int, struct sockaddr *, int *);
+extern int rpl_bind (int, struct sockaddr *, int);
+extern int rpl_getpeername (int, struct sockaddr *, int *);
+extern int rpl_getsockname (int, struct sockaddr *, int *);
+extern int rpl_getsockopt (int, int, int, void *, int *);
+extern int rpl_listen (int, int);
+extern int rpl_ioctl (int, unsigned long, char *);
+extern int rpl_recv (int, void *, int, int);
+extern int rpl_send (int, const void *, int, int);
+extern int rpl_recvfrom (int, void *, int, int, struct sockaddr *, int *);
+extern int rpl_sendto (int, const void *, int, int, struct sockaddr *, int);
+extern int rpl_setsockopt (int, int, int, const void *, int);
+
+# endif /* HAVE_WINSOCK2_H */
 
 #endif /* HAVE_SYS_SOCKET_H */
 

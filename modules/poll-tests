@@ -8,6 +8,8 @@ netinet_in
 arpa_inet
 extensions
 inet_pton
+errno
+perror
 sockets
 
 configure.ac:
