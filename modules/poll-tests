@@ -11,7 +11,7 @@ inet_pton
 sockets
 
 configure.ac:
-AC_CHECK_HEADERS_ONCE([io.h unistd.h sys/wait.h])
+AC_CHECK_HEADERS_ONCE([unistd.h sys/wait.h])
 
 Makefile.am:
 TESTS += test-poll

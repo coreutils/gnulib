@@ -31,7 +31,7 @@
 #include <errno.h>
 #include "sockets.h"
 
-#ifdef HAVE_IO_H
+#ifdef __MSVCRT__
 #include <io.h>
 #define pipe(x) _pipe(x, 256, O_BINARY)
 #endif
