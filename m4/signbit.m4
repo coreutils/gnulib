@@ -124,12 +124,14 @@ AC_DEFUN([gl_SIGNBIT],
 ])
 
 AC_DEFUN([gl_SIGNBIT_TEST_PROGRAM], [
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
+   So we use -p0f instead.  */
 float p0f = 0.0f;
-float m0f = -0.0f;
+float m0f = -p0f;
 double p0d = 0.0;
-double m0d = -0.0;
+double m0d = -p0d;
 long double p0l = 0.0L;
-long double m0l = -0.0L;
+long double m0l = -p0l;
 int main ()
 {
   {

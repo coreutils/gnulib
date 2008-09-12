@@ -1,3 +1,10 @@
+2008-09-12  Eric Blake  <ebb9@byu.net>
+
+	signbit: work around bug of HP-UX 10.20 cc with -0.0 literal
+	* m4/signbit.m4 (gl_SIGNBIT_TEST_PROGRAM): Rewrite test to avoid
+	literal -0.0.
+	Reported by Jonathan C. Patschke <jp@centtech.com>.
+
 2008-09-11  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
 	* lib/glthread/cond.h: Use dummy implementation also if
