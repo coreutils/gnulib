@@ -1,3 +1,8 @@
+2008-09-12  Paolo Bonzini  <bonzini@gnu.org>
+
+	* modules/poll-tests: New.
+	* tests/test-poll.c: New.
+
 2008-09-12  Eric Blake  <ebb9@byu.net>
 
 	frexp: test for NetBSD failure on -0.0

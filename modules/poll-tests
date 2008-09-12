@@ -1,0 +1,15 @@
+Files:
+tests/test-poll.c
+
+Depends-on:
+sys_socket
+netinet_in
+arpa_inet
+extensions
+
+configure.ac:
+AC_CHECK_HEADERS_ONCE([io.h unistd.h sys/wait.h])
+
+Makefile.am:
+TESTS += test-poll
+check_PROGRAMS += test-poll
