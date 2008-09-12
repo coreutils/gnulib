@@ -1,5 +1,11 @@
 2008-09-12  Eric Blake  <ebb9@byu.net>
 
+	frexp: test for NetBSD failure on -0.0
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Enhance test, since some, but
+	not all, bugs from NetBSD 3.0 have been fixed.
+	* doc/posix-functions/frexp.texi (frexp): Document bug.
+	Reported by Thomas Klausner.
+
 	signbit: work around bug of HP-UX 10.20 cc with -0.0 literal
 	* m4/signbit.m4 (gl_SIGNBIT_TEST_PROGRAM): Rewrite test to avoid
 	literal -0.0.
