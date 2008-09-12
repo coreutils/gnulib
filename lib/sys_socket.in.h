@@ -95,6 +95,7 @@
 # endif
 
 # if defined _WIN32 || defined __WIN32__
+#  define EINPROGRESS		  WSAEINPROGRESS
 #  define ENOTSOCK                WSAENOTSOCK
 #  define EADDRINUSE              WSAEADDRINUSE
 #  define ENETRESET               WSAENETRESET

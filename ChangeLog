@@ -1,5 +1,11 @@
 2008-09-12  Paolo Bonzini  <bonzini@gnu.org>
 
+	* lib/sys_socket.in.h (EINPROGRESS): Define for Winsock case.
+	* modules/poll-tests: Add inet_pton, stdbool, sockets.
+	* tests/test-poll.c: Use them.  Use _pipe on Windows.
+
+2008-09-12  Paolo Bonzini  <bonzini@gnu.org>
+
 	* modules/poll-tests: New.
 	* tests/test-poll.c: New.
 

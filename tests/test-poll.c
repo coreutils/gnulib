@@ -27,10 +27,13 @@
 #include <poll.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <errno.h>
+#include "sockets.h"
 
 #ifdef HAVE_IO_H
 #include <io.h>
+#define pipe(x) _pipe(x, 256, O_BINARY)
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -38,8 +41,6 @@
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
 #endif
-
-enum { FALSE, TRUE };
 
 #ifndef SO_REUSEPORT
 #define SO_REUSEPORT    SO_REUSEADDR
@@ -87,7 +88,7 @@ open_server_socket ()
 
   memset (&ia, 0, sizeof (ia));
   ia.sin_family = AF_INET;
-  inet_aton ("127.0.0.1", &ia.sin_addr);
+  inet_pton (AF_INET, "127.0.0.1", &ia.sin_addr);
   ia.sin_port = htons (TEST_PORT);
   if (bind (s, (struct sockaddr *) &ia, sizeof (ia)) < 0)
     {
@@ -117,14 +118,14 @@ connect_to_socket (int blocking)
 
   memset (&ia, 0, sizeof (ia));
   ia.sin_family = AF_INET;
-  inet_aton ("127.0.0.1", &ia.sin_addr);
+  inet_pton (AF_INET, "127.0.0.1", &ia.sin_addr);
   ia.sin_port = htons (TEST_PORT);
 
   if (!blocking)
     {
 #ifdef __MSVCRT__
       unsigned long iMode = 1;
-      ioctl (s, FIONBIO, &iMode);
+      ioctlsocket (s, FIONBIO, (void *) &iMode);
  
 #elif defined F_GETFL
       int oldflags = fcntl (s, F_GETFL, NULL);
@@ -218,7 +219,7 @@ test_connect_first (void)
   if (poll1_nowait (s, POLLIN | POLLRDNORM | POLLRDBAND) != 0)
     failed ("can read, socket not connected");
 
-  c1 = connect_to_socket (FALSE);
+  c1 = connect_to_socket (false);
 
   if (poll1_wait (s, POLLIN | POLLRDNORM | POLLRDBAND) != (POLLIN | POLLRDNORM))
     failed ("expecting POLLIN | POLLRDNORM on passive socket");
@@ -265,7 +266,7 @@ test_accept_first (void)
   else
     {
       close (s);
-      c = connect_to_socket (TRUE);
+      c = connect_to_socket (true);
       if (poll1_nowait (c, POLLOUT | POLLWRNORM | POLLRDBAND)
 	  != (POLLOUT | POLLWRNORM))
         failed ("cannot write after blocking connect");
@@ -319,7 +320,7 @@ test_socket_pair (void)
 
   socklen_t addrlen = sizeof (ia);
   int s = open_server_socket ();
-  int c1 = connect_to_socket (FALSE);
+  int c1 = connect_to_socket (false);
   int c2 = accept (s, (struct sockaddr *) &ia, &addrlen);
 
   close (s);
@@ -357,6 +358,8 @@ int
 main ()
 {
   int result;
+
+  gl_sockets_startup (SOCKETS_2_0);
 
 #ifdef INTERACTIVE
   printf ("Please press Enter\n");

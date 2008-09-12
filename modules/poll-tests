@@ -2,10 +2,13 @@ Files:
 tests/test-poll.c
 
 Depends-on:
+stdbool
 sys_socket
 netinet_in
 arpa_inet
 extensions
+inet_pton
+sockets
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([io.h unistd.h sys/wait.h])
