@@ -1,3 +1,11 @@
+2008-09-16  Jim Meyering  <meyering@redhat.com>
+
+	posix-shell.m4: reject opensolaris's "sh (AT&T Research) 1993-12-28 s+"
+	* m4/posix-shell.m4 (gl_POSIX_SHELL): Reject a shell that lets
+	a umask modification leak out of a subshell.  Otherwise, the
+	opensolaris /bin/sh would be accepted and thus cause unwarranted
+	failures in the coreutils test suite.
+
 2008-09-16  Paolo Bonzini  <bonzini@gnu.org>
 
 	* tests/test-poll.c (connect_to_socket): Allow non-blocking connect
