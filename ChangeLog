@@ -1,5 +1,8 @@
 2008-09-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/errno-tests: New file.
+	* tests/test-errno.c: New file, incorporating tests/test-EOVERFLOW.c.
+
 	* lib/errno.in.h: New file.
 	* m4/errno_h.m4: New file, borrowing from m4/eoverflow.m4.
 	* modules/errno: New file.

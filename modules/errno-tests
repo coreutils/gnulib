@@ -1,0 +1,11 @@
+Files:
+tests/test-errno.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-errno
+check_PROGRAMS += test-errno
+
