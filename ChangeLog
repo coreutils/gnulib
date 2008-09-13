@@ -1,3 +1,12 @@
+2008-09-13  Bruno Haible  <bruno@clisp.org>
+
+	* lib/glthread/cond.h [USE_SOLARIS_THREADS]
+	(ETIMEDOUT): Remove macro.
+	(glthread_cond_timedwait_multithreaded): New declaration.
+	(glthread_cond_timedwait): Use it.
+	* lib/glthread/cond.c [USE_SOLARIS_THREADS]
+	(glthread_cond_timedwait_multithreaded): New function.
+
 2008-09-12  Paolo Bonzini  <bonzini@gnu.org>
 
 	* modules/poll-tests: Do not check for io.h.

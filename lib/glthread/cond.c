@@ -50,3 +50,24 @@ glthread_cond_timedwait_multithreaded (gl_cond_t *cond,
 #endif
 
 /* ========================================================================= */
+
+#if USE_SOLARIS_THREADS
+
+/* -------------------------- gl_cond_t datatype -------------------------- */
+
+int
+glthread_cond_timedwait_multithreaded (gl_cond_t *cond,
+				       gl_lock_t *lock,
+				       struct timespec *abstime)
+{
+  int ret;
+
+  ret = cond_timedwait (cond, lock, abstime);
+  if (ret == ETIME)
+    return ETIMEDOUT;
+  return ret;
+}
+
+#endif
+
+/* ========================================================================= */

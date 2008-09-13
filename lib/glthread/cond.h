@@ -239,8 +239,6 @@ extern "C" {
 
 /* -------------------------- gl_cond_t datatype -------------------------- */
 
-#define ETIMEDOUT ETIME
-
 typedef pthread_cond_t gl_cond_t;
 # define gl_cond_define(STORAGECLASS, NAME) \
     STORAGECLASS cond_t NAME;
@@ -253,13 +251,14 @@ typedef pthread_cond_t gl_cond_t;
 # define glthread_cond_wait(COND, LOCK) \
     (pthread_in_use () ? cond_wait (COND, LOCK) : 0)
 # define glthread_cond_timedwait(COND, LOCK, ABSTIME) \
-    (pthread_in_use () ? cond_timedwait (COND, LOCK, ABSTIME) : 0)
+    (pthread_in_use () ? glthread_cond_timedwait_multithreaded (COND, LOCK, ABSTIME) : 0)
 # define glthread_cond_signal(COND) \
     (pthread_in_use () ? cond_signal (COND) : 0)
 # define glthread_cond_broadcast(COND) \
     (pthread_in_use () ? cond_broadcast (COND) : 0)
 # define glthread_cond_destroy(COND) \
     (pthread_in_use () ? cond_destroy (COND) : 0)
+extern int glthread_cond_timedwait_multithreaded (gl_cond_t *cond, gl_lock_t *lock, struct timespec *abstime);
 
 # ifdef __cplusplus
 }
