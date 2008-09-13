@@ -43,7 +43,13 @@
 # define POSIX
 #endif
 
-#include <pwd.h>
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# define WINDOWS32
+#endif
+
+#ifndef WINDOWS32
+# include <pwd.h>
+#endif
 
 #include <errno.h>
 #ifndef __set_errno
@@ -565,8 +571,26 @@ glob (pattern, flags, errfunc, pglob)
 	    home_dir = "SYS:";
 # else
 #  ifdef WINDOWS32
+	  /* Windows NT defines HOMEDRIVE and HOMEPATH.  But give preference
+	     to HOME, because the user can change HOME.  */
 	  if (home_dir == NULL || home_dir[0] == '\0')
-            home_dir = "c:/users/default"; /* poor default */
+	    {
+	      const char *home_drive = getenv ("HOMEDRIVE");
+	      const char *home_path = getenv ("HOMEPATH");
+
+	      if (home_drive != NULL && home_path != NULL)
+		{
+		  size_t home_drive_len = strlen (home_drive);
+		  size_t home_path_len = strlen (home_path);
+		  char *mem = alloca (home_drive_len + home_path_len + 1);
+
+		  memcpy (mem, home_drive, home_drive_len);
+		  memcpy (mem + home_drive_len, home_path, home_path_len + 1);
+		  home_dir = mem;
+		}
+	      else
+		home_dir = "c:/users/default"; /* poor default */
+	    }
 #  else
 	  if (home_dir == NULL || home_dir[0] == '\0')
 	    {

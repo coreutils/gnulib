@@ -1,3 +1,10 @@
+2008-09-13  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/glob.c: Don't include <pwd.h> on native Windows.
+	(WINDOWS32): New macro.
+	(glob) [WINDOW32]: Provide a reasonable replacement for getenv("HOME").
+
 2008-09-13  Bruno Haible  <bruno@clisp.org>
 
 	* lib/glthread/cond.h [USE_SOLARIS_THREADS]
