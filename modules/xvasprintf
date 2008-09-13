@@ -17,7 +17,7 @@ vasprintf
 xalloc-die
 xsize
 stdarg
-EOVERFLOW
+errno
 
 configure.ac:
 gl_XVASPRINTF

@@ -23,7 +23,7 @@ alloca-opt
 float
 stdint
 xsize
-EOVERFLOW
+errno
 
 configure.ac:
 gl_FUNC_VASNPRINTF

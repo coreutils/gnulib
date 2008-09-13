@@ -20,7 +20,7 @@ signbit
 fpucw
 nocrash
 printf-safe
-EOVERFLOW
+errno
 
 configure.ac:
 gl_FUNC_FPRINTF_POSIX

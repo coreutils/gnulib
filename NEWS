@@ -6,6 +6,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-09-13  EOVERFLOW       The module is removed. Use module errno instead.
+
 2008-09-01  filename        The module does not define the function
                             concatenated_filename any more. To get an
                             equivalent function, use function

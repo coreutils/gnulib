@@ -2083,7 +2083,6 @@ func_all_modules ()
   func_module dup2
   func_module environ
   func_module errno
-  func_module EOVERFLOW
   func_module fchdir
   func_module fcntl
   func_module fopen

@@ -8,7 +8,7 @@ lib/unistdio/u-vsnprintf.h
 Depends-on:
 unistdio/base
 unistdio/ulc-vasnprintf
-EOVERFLOW
+errno
 
 configure.ac:
 

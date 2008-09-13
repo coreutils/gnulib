@@ -1,5 +1,57 @@
 2008-09-13  Bruno Haible  <bruno@clisp.org>
 
+	* modules/EOVERFLOW: Remove file.
+	* m4/eoverflow.m4: Remove file.
+	* modules/EOVERFLOW-tests: Remove file.
+	* tests/test-EOVERFLOW.c: Remove file.
+	* modules/fprintf-posix (Depends-on): Replace EOVERFLOW with errno.
+	* modules/ftell (Depends-on): Likewise.
+	* modules/getdelim (Depends-on): Likewise.
+	* modules/getugroups (Depends-on): Likewise.
+	* modules/poll (Depends-on): Likewise.
+	* modules/snprintf (Depends-on): Likewise.
+	* modules/sprintf-posix (Depends-on): Likewise.
+	* modules/vasnprintf (Depends-on): Likewise.
+	* modules/vasprintf (Depends-on): Likewise.
+	* modules/vfprintf-posix (Depends-on): Likewise.
+	* modules/vsnprintf (Depends-on): Likewise.
+	* modules/vsprintf-posix (Depends-on): Likewise.
+	* modules/xvasprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-vasprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-vsnprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-vsprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-u8-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-u8-vasprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-u8-vsnprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-u8-vsprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-u16-vasprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-u16-vsnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-u16-vsprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-vasprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-vsnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-vsprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-vasprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-vsnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-vsprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-u32-vasprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-u32-vsnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-u32-vsprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-fprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-vasprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-vfprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-vsnprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-vsprintf (Depends-on): Likewise.
+	* MODULES.html.sh: Remove EOVERFLOW.
+	* NEWS: Mention the change.
+
+2008-09-13  Bruno Haible  <bruno@clisp.org>
+
 	* modules/errno-tests: New file.
 	* tests/test-errno.c: New file, incorporating tests/test-EOVERFLOW.c.
 

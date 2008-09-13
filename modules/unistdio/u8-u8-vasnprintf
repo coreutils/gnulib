@@ -41,7 +41,7 @@ printf-safe
 alloca-opt
 localcharset
 xsize
-EOVERFLOW
+errno
 
 configure.ac:
 gl_PREREQ_VASNPRINTF_WITH_EXTRAS

@@ -15,7 +15,7 @@ Depends-on:
 extensions
 vasnprintf
 stdio
-EOVERFLOW
+errno
 
 configure.ac:
 gl_FUNC_VASPRINTF

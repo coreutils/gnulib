@@ -9,7 +9,7 @@ Depends-on:
 unistdio/base
 unistdio/u32-u32-vasnprintf
 unistr/u32-cpy
-EOVERFLOW
+errno
 
 configure.ac:
 

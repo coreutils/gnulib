@@ -9,7 +9,7 @@ Depends-on:
 unistdio/base
 unistdio/u8-u8-vasnprintf
 stdint
-EOVERFLOW
+errno
 
 configure.ac:
 

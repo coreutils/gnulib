@@ -8,7 +8,7 @@ Depends-on:
 unistdio/base
 unistdio/ulc-vasnprintf
 fseterr
-EOVERFLOW
+errno
 
 configure.ac:
 

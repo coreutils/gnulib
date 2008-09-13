@@ -9,7 +9,7 @@ m4/printf.m4
 Depends-on:
 stdio
 vasnprintf
-EOVERFLOW
+errno
 
 configure.ac:
 gl_FUNC_SNPRINTF
