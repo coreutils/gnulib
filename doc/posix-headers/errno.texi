@@ -3,13 +3,28 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xbd/errno.h.html}
 
-Gnulib module: EOVERFLOW
+Gnulib module: errno, EOVERFLOW
 
 Portability problems fixed by Gnulib:
 @itemize
 @item
-The macro @code{EOVERFLOW} is not defined on some platforms:
-OSF/1 4.0, mingw.
+The macros @code{EOVERFLOW}, @code{ENOLINK}, @code{EMULTIHOP} are not defined
+on some platforms:
+OpenBSD 4.0, OSF/1 4.0, mingw.
+@item
+The macros @code{ENOMSG}, @code{EIDRM}, @code{EPROTO}, @code{EBADMSG},
+@code{ENOTSUP}, @code{ECANCELED} are not defined on some platforms:
+OpenBSD 4.0, mingw.
+@item
+The macros @code{EWOULDBLOCK}, @code{ETXTBSY}, @code{ELOOP}, @code{ENOTSOCK},
+@code{EDESTADDRREQ}, @code{EMSGSIZE}, @code{EPROTOTYPE}, @code{ENOPROTOOPT},
+@code{EPROTONOSUPPORT}, @code{EOPNOTSUPP}, @code{EAFNOSUPPORT},
+@code{EADDRINUSE}, @code{EADDRNOTAVAIL}, @code{ENETDOWN}, @code{ENETUNREACH},
+@code{ENETRESET}, @code{ECONNABORTED}, @code{ECONNRESET}, @code{ENOBUFS},
+@code{EISCONN}, @code{ENOTCONN}, @code{ETIMEDOUT}, @code{ECONNREFUSED},
+@code{EHOSTUNREACH}, @code{EALREADY}, @code{EINPROGRESS}, @code{ESTALE},
+@code{EDQUOT} are not defined on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

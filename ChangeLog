@@ -1,5 +1,13 @@
 2008-09-13  Bruno Haible  <bruno@clisp.org>
 
+	* lib/errno.in.h: New file.
+	* m4/errno_h.m4: New file, borrowing from m4/eoverflow.m4.
+	* modules/errno: New file.
+	* doc/posix-headers/errno.texi: Update documentation.
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add errno.
+
+2008-09-13  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-poll.c: Use #if for native Windows, rather than testing
 	__MSVCRT__.
 
