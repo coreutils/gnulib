@@ -31,7 +31,11 @@
 #include <errno.h>
 #include "sockets.h"
 
-#ifdef __MSVCRT__
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# define WIN32_NATIVE
+#endif
+
+#ifdef WIN32_NATIVE
 #include <io.h>
 #define pipe(x) _pipe(x, 256, O_BINARY)
 #endif
@@ -123,7 +127,7 @@ connect_to_socket (int blocking)
 
   if (!blocking)
     {
-#ifdef __MSVCRT__
+#ifdef WIN32_NATIVE
       unsigned long iMode = 1;
       ioctlsocket (s, FIONBIO, (void *) &iMode);
  
@@ -241,7 +245,7 @@ test_connect_first (void)
 static void
 test_accept_first (void)
 {
-#ifndef __MSVCRT__
+#ifndef WIN32_NATIVE
   int s = open_server_socket ();
   struct sockaddr_in ia;
   socklen_t addrlen;
