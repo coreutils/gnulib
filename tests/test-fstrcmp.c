@@ -45,8 +45,33 @@ check_fstrcmp (const char *string1, const char *string2, double expected)
      compliant by default, to avoid that msgmerge results become platform and
      compiler option dependent.  'volatile' is a portable alternative to gcc's
      -ffloat-store option.  */
-  volatile double result = fstrcmp (string1, string2);
-  return (result == expected);
+  {
+    volatile double result = fstrcmp (string1, string2);
+    if (!(result == expected))
+      return false;
+  }
+  {
+    volatile double result = fstrcmp_bounded (string1, string2, expected);
+    if (!(result == expected))
+      return false;
+  }
+  {
+    double bound = expected * 0.5; /* implies bound <= expected */
+    volatile double result = fstrcmp_bounded (string1, string2, bound);
+    if (!(result == expected))
+      return false;
+  }
+  {
+    double bound = (1 + expected) * 0.5;
+    if (expected < bound)
+      {
+	volatile double result = fstrcmp_bounded (string1, string2, bound);
+	if (!(result < bound))
+	  return false;
+      }
+  }
+
+  return true;
 }
 
 int

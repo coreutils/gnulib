@@ -1,5 +1,6 @@
 /* Fuzzy string comparison.
-   Copyright (C) 1995, 2000, 2002-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1995, 2000, 2002-2003, 2006, 2008 Free Software
+   Foundation, Inc.
 
    This file was written by Peter Miller <pmiller@agso.gov.au>
 
@@ -24,8 +25,18 @@ extern "C" {
 #endif
 
 /* Fuzzy compare of S1 and S2.  Return a measure for the similarity of S1
-   and S1.  The higher the result, the more similar the strings are.  */
+   and S1.  The higher the result, the more similar the strings are.
+   The result is bounded between 0 (meaning very dissimilar strings) and
+   1 (meaning identical strings).  */
 extern double fstrcmp (const char *s1, const char *s2);
+
+/* Like fstrcmp (S1, S2), except that if the result is < LOWER_BOUND, an
+   arbitrary other value < LOWER_BOUND can be returned.  */
+extern double fstrcmp_bounded (const char *s1, const char *s2,
+			       double lower_bound);
+
+/* A shortcut for fstrcmp.  Avoids a function call.  */
+#define fstrcmp(s1,s2) fstrcmp_bounded (s1, s2, 0.0)
 
 #ifdef __cplusplus
 }

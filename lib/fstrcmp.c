@@ -97,46 +97,52 @@ keys_init (void)
 gl_once_define(static, keys_init_once)
 
 
-/* NAME
-	fstrcmp - fuzzy string compare
-
-   SYNOPSIS
-	double fstrcmp(const char *, const char *);
-
-   DESCRIPTION
-	The fstrcmp function may be used to compare two string for
-	similarity.  It is very useful in reducing "cascade" or
-	"secondary" errors in compilers or other situations where
-	symbol tables occur.
-
-   RETURNS
-	double; 0 if the strings are entirly dissimilar, 1 if the
-	strings are identical, and a number in between if they are
-	similar.  */
-
 double
-fstrcmp (const char *string1, const char *string2)
+fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
 {
   struct context ctxt;
-  int xvec_length;
-  int yvec_length;
+  int xvec_length = strlen (string1);
+  int yvec_length = strlen (string2);
   int i;
 
   size_t fdiag_len;
   int *buffer;
   size_t bufmax;
 
+  /* short-circuit obvious comparisons */
+  if (xvec_length == 0 || yvec_length == 0)
+    return (xvec_length == 0 && yvec_length == 0 ? 1.0 : 0.0);
+
+  if (lower_bound > 0)
+    {
+      /* Compute a quick upper bound.
+	 Each edit is an insertion or deletion of an element, hence modifies
+	 the length of the sequence by at most 1.
+	 Therefore, when starting from a sequence X and ending at a sequence Y,
+	 with N edits,  | yvec_length - xvec_length | <= N.  (Proof by
+	 induction over N.)
+	 So, at the end, we will have
+	   xvec_edit_count + yvec_edit_count >= | xvec_length - yvec_length |.
+	 and hence
+	   result
+	     = (xvec_length + yvec_length - (xvec_edit_count + yvec_edit_count))
+	       / (xvec_length + yvec_length)
+	     <= (xvec_length + yvec_length - | yvec_length - xvec_length |)
+		/ (xvec_length + yvec_length)
+	     = 2 * min (xvec_length, yvec_length) / (xvec_length + yvec_length).
+       */
+      volatile double upper_bound =
+	(double) (2 * MIN (xvec_length, yvec_length))
+	/ (xvec_length + yvec_length);
+
+      if (upper_bound < lower_bound)
+	/* Return an arbitrary value < LOWER_BOUND.  */
+	return 0.0;
+    }
+
   /* set the info for each string.  */
   ctxt.xvec = string1;
-  xvec_length = strlen (string1);
   ctxt.yvec = string2;
-  yvec_length = strlen (string2);
-
-  /* short-circuit obvious comparisons */
-  if (xvec_length == 0 && yvec_length == 0)
-    return 1.0;
-  if (xvec_length == 0 || yvec_length == 0)
-    return 0.0;
 
   /* Set TOO_EXPENSIVE to be approximate square root of input size,
      bounded below by 256.  */

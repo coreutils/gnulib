@@ -1,5 +1,13 @@
 2008-09-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	* lib/fstrcmp.h (fstrcmp_bounded): New declaration.
+	(fstrcmp): Define in terms of fstrcmp_bounded.
+	* lib/fstrcmp.c (fstrcmp_bounded): Renamed from fstrcmp. Add lower_bound argument.
+	Return quickly if the result is certainly < lower_bound.
+	* tests/test-fstrcmp.c (check_fstrcmp): Test also fstrcmp_bounded.
+
+2008-09-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
 	* lib/diffseq.h (EARLY_ABORT): New macro.
 	(compareseq): Change return type to bool. Return true when EARLY_ABORT
 	evaluates to true.
