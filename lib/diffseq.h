@@ -49,6 +49,8 @@
      EXTRA_CONTEXT_FIELDS    Declarations of fields for 'struct context'.
      NOTE_DELETE(ctxt, xoff) Record the removal of the object xvec[xoff].
      NOTE_INSERT(ctxt, yoff) Record the insertion of the object yvec[yoff].
+     EARLY_ABORT(ctxt)       (Optional) A boolean expression that triggers an
+                             early abort of the computation.
      USE_HEURISTIC           (Optional) Define if you want to support the
                              heuristic for large vectors.
    Before including this file, you also need to include:
@@ -60,6 +62,11 @@
 /* Maximum value of type OFFSET.  */
 #define OFFSET_MAX \
   ((((OFFSET)1 << (sizeof (OFFSET) * CHAR_BIT - 2)) - 1) * 2 + 1)
+
+/* Default to no early abort.  */
+#ifndef EARLY_ABORT
+# define EARLY_ABORT(ctxt) false
+#endif
 
 /* Use this to suppress gcc's `...may be used before initialized' warnings. */
 #ifndef IF_LINT
@@ -407,9 +414,12 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
    If FIND_MINIMAL, find a minimal difference no matter how
    expensive it is.
 
-   The results are recorded by invoking NOTE_DELETE and NOTE_INSERT.  */
+   The results are recorded by invoking NOTE_DELETE and NOTE_INSERT.
 
-static void
+   Return false if terminated normally, or true if terminated through early
+   abort.  */
+
+static bool
 compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
 	    bool find_minimal, struct context *ctxt)
 {
@@ -435,12 +445,16 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
     while (yoff < ylim)
       {
 	NOTE_INSERT (ctxt, yoff);
+	if (EARLY_ABORT (ctxt))
+	  return true;
 	yoff++;
       }
   else if (yoff == ylim)
     while (xoff < xlim)
       {
 	NOTE_DELETE (ctxt, xoff);
+	if (EARLY_ABORT (ctxt))
+	  return true;
 	xoff++;
       }
   else
@@ -451,9 +465,13 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
       diag (xoff, xlim, yoff, ylim, find_minimal, &part, ctxt);
 
       /* Use the partitions to split this problem into subproblems.  */
-      compareseq (xoff, part.xmid, yoff, part.ymid, part.lo_minimal, ctxt);
-      compareseq (part.xmid, xlim, part.ymid, ylim, part.hi_minimal, ctxt);
+      if (compareseq (xoff, part.xmid, yoff, part.ymid, part.lo_minimal, ctxt))
+	return true;
+      if (compareseq (part.xmid, xlim, part.ymid, ylim, part.hi_minimal, ctxt))
+	return true;
     }
+
+  return false;
 }
 
 #undef ELEMENT
@@ -462,5 +480,6 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
 #undef EXTRA_CONTEXT_FIELDS
 #undef NOTE_DELETE
 #undef NOTE_INSERT
+#undef EARLY_ABORT
 #undef USE_HEURISTIC
 #undef OFFSET_MAX
