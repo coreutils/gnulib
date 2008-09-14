@@ -6,6 +6,7 @@ lib/strerror.c
 m4/strerror.m4
 
 Depends-on:
+errno
 intprops
 string
 

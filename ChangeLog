@@ -1,5 +1,20 @@
 2008-09-13  Bruno Haible  <bruno@clisp.org>
 
+	Extend strerror to cover the added errno values.
+	* lib/strerror.c: Include errno.h and winsock2.h if it exists.
+	(rpl_strerror): Provide error messages for the added errno values and
+	for the WSA* values.
+	* m4/strerror.m4 (gl_FUNC_STRERROR): Test REPLACE_STRERROR.
+	(gl_FUNC_STRERROR_SEPARATE): If errno.h is replaced, always replace
+	strerror.
+	(gl_PREREQ_STRERROR): Test whether winsock2.h exists.
+	* modules/strerror (Depends-on): Add errno.
+	* doc/posix-functions/strerror.texi: Document the change.
+	* tests/test-strerror.c (main): Check also the string for ETIMEDOUT
+	and EOVERFLOW.
+
+2008-09-13  Bruno Haible  <bruno@clisp.org>
+
 	* modules/EOVERFLOW: Remove file.
 	* m4/eoverflow.m4: Remove file.
 	* modules/EOVERFLOW-tests: Remove file.

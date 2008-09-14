@@ -40,7 +40,16 @@ int
 main (int argc, char **argv)
 {
   char *str;
+
   str = strerror (EACCES);
+  ASSERT (str);
+  ASSERT (*str);
+
+  str = strerror (ETIMEDOUT);
+  ASSERT (str);
+  ASSERT (*str);
+
+  str = strerror (EOVERFLOW);
   ASSERT (str);
   ASSERT (*str);
 
