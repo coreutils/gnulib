@@ -65,10 +65,14 @@
 #define EQUAL(x,y) ((x) == (y))
 #define OFFSET int
 #define EXTRA_CONTEXT_FIELDS \
-  /* The number of elements inserted, plus the number of elements deleted. */ \
+  /* The number of edits beyond which the computation can be aborted. */ \
+  int edit_count_limit; \
+  /* The number of edits (= number of elements inserted, plus the number of \
+     elements deleted), temporarily minus edit_count_limit. */ \
   int edit_count;
 #define NOTE_DELETE(ctxt, xoff) ctxt->edit_count++
 #define NOTE_INSERT(ctxt, yoff) ctxt->edit_count++
+#define EARLY_ABORT(ctxt) ctxt->edit_count > 0
 /* We don't need USE_HEURISTIC, since it is unlikely in typical uses of
    fstrcmp().  */
 #include "diffseq.h"
@@ -175,10 +179,28 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
   ctxt.fdiag = buffer + yvec_length + 1;
   ctxt.bdiag = ctxt.fdiag + fdiag_len;
 
+  /* The edit_count is only ever increased.  The computation can be aborted
+     when
+       (xvec_length + yvec_length - edit_count) / (xvec_length + yvec_length)
+       < lower_bound,
+     or equivalently
+       edit_count > (xvec_length + yvec_length) * (1 - lower_bound)
+     or equivalently
+       edit_count > floor((xvec_length + yvec_length) * (1 - lower_bound)).
+     We need to add an epsilon inside the floor(...) argument, to neutralize
+     rounding errors.  */
+  ctxt.edit_count_limit =
+    (lower_bound < 1.0
+     ? (int) ((xvec_length + yvec_length) * (1.0 - lower_bound + 0.000001))
+     : 0);
+
   /* Now do the main comparison algorithm */
-  ctxt.edit_count = 0;
-  compareseq (0, xvec_length, 0, yvec_length, 0,
-	      &ctxt);
+  ctxt.edit_count = - ctxt.edit_count_limit;
+  if (compareseq (0, xvec_length, 0, yvec_length, 0, &ctxt))
+    /* The edit_count passed the limit.  Hence the result would be
+       < lower_bound.  We can return any value < lower_bound instead.  */
+    return 0.0;
+  ctxt.edit_count += ctxt.edit_count_limit;
 
   /* The result is
 	((number of chars in common) / (average length of the strings)).

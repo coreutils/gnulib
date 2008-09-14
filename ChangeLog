@@ -1,3 +1,11 @@
+2008-09-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* lib/fstrcmp.c (EXTRA_CONTEXT_FIELDS): Add field 'edit_count_limit'.
+	(EARLY_ABORT): Return true when the edit_count has grown too beyond the
+	limit.
+	(fstrcmp_bounded): Initialize the edit_count_limit. Return 0 when
+	compareseq was aborted.
+
 2008-09-14  Bruno Haible  <bruno@clisp.org>
 
 	* lib/fstrcmp.c (EXTRA_CONTEXT_FIELDS): Combine xvec_edit_count and
@@ -9,7 +17,8 @@
 
 	* lib/fstrcmp.h (fstrcmp_bounded): New declaration.
 	(fstrcmp): Define in terms of fstrcmp_bounded.
-	* lib/fstrcmp.c (fstrcmp_bounded): Renamed from fstrcmp. Add lower_bound argument.
+	* lib/fstrcmp.c (fstrcmp_bounded): Renamed from fstrcmp. Add
+	lower_bound argument.
 	Return quickly if the result is certainly < lower_bound.
 	* tests/test-fstrcmp.c (check_fstrcmp): Test also fstrcmp_bounded.
 
