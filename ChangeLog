@@ -1,3 +1,10 @@
+2008-09-14  Bruno Haible  <bruno@clisp.org>
+
+	* lib/fstrcmp.c (EXTRA_CONTEXT_FIELDS): Combine xvec_edit_count and
+	yvec_edit_count.
+	(NOTE_DELETE, NOTE_INSERT): Increment the combined edit count.
+	(fstrcmp_bounded): Simplify result computation accordingly.
+
 2008-09-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* lib/fstrcmp.h (fstrcmp_bounded): New declaration.

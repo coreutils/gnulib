@@ -65,11 +65,10 @@
 #define EQUAL(x,y) ((x) == (y))
 #define OFFSET int
 #define EXTRA_CONTEXT_FIELDS \
-  /* The number of elements inserted or deleted. */ \
-  int xvec_edit_count; \
-  int yvec_edit_count;
-#define NOTE_DELETE(ctxt, xoff) ctxt->xvec_edit_count++
-#define NOTE_INSERT(ctxt, yoff) ctxt->yvec_edit_count++
+  /* The number of elements inserted, plus the number of elements deleted. */ \
+  int edit_count;
+#define NOTE_DELETE(ctxt, xoff) ctxt->edit_count++
+#define NOTE_INSERT(ctxt, yoff) ctxt->edit_count++
 /* We don't need USE_HEURISTIC, since it is unlikely in typical uses of
    fstrcmp().  */
 #include "diffseq.h"
@@ -122,10 +121,10 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
 	 with N edits,  | yvec_length - xvec_length | <= N.  (Proof by
 	 induction over N.)
 	 So, at the end, we will have
-	   xvec_edit_count + yvec_edit_count >= | xvec_length - yvec_length |.
+	   edit_count >= | xvec_length - yvec_length |.
 	 and hence
 	   result
-	     = (xvec_length + yvec_length - (xvec_edit_count + yvec_edit_count))
+	     = (xvec_length + yvec_length - edit_count)
 	       / (xvec_length + yvec_length)
 	     <= (xvec_length + yvec_length - | yvec_length - xvec_length |)
 		/ (xvec_length + yvec_length)
@@ -177,16 +176,18 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
   ctxt.bdiag = ctxt.fdiag + fdiag_len;
 
   /* Now do the main comparison algorithm */
-  ctxt.xvec_edit_count = 0;
-  ctxt.yvec_edit_count = 0;
+  ctxt.edit_count = 0;
   compareseq (0, xvec_length, 0, yvec_length, 0,
 	      &ctxt);
 
   /* The result is
 	((number of chars in common) / (average length of the strings)).
+     The numerator is
+	= xvec_length - (number of calls to NOTE_DELETE)
+	= yvec_length - (number of calls to NOTE_INSERT)
+	= 1/2 * (xvec_length + yvec_length - (number of edits)).
      This is admittedly biased towards finding that the strings are
      similar, however it does produce meaningful results.  */
-  return ((double) (xvec_length + yvec_length
-		    - ctxt.yvec_edit_count - ctxt.xvec_edit_count)
+  return ((double) (xvec_length + yvec_length - ctxt.edit_count)
 	  / (xvec_length + yvec_length));
 }
