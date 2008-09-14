@@ -1,0 +1,26 @@
+Description:
+perror() function: print a message describing error code.
+
+Files:
+lib/perror.c
+m4/perror.m4
+
+Depends-on:
+stdio
+errno
+strerror
+
+configure.ac:
+gl_FUNC_PERROR
+gl_STRING_MODULE_INDICATOR([perror])
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+all
