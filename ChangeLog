@@ -1,5 +1,9 @@
 2008-09-13  Bruno Haible  <bruno@clisp.org>
 
+	* lib/sys_socket.in.h (EINPROGRESS, ...): Remove definitions.
+
+2008-09-13  Bruno Haible  <bruno@clisp.org>
+
 	Extend strerror to cover the added errno values.
 	* lib/strerror.c: Include errno.h and winsock2.h if it exists.
 	(rpl_strerror): Provide error messages for the added errno values and

@@ -94,17 +94,6 @@
 #  define SHUT_RDWR SD_BOTH
 # endif
 
-# if defined _WIN32 || defined __WIN32__
-#  define EINPROGRESS		  WSAEINPROGRESS
-#  define ENOTSOCK                WSAENOTSOCK
-#  define EADDRINUSE              WSAEADDRINUSE
-#  define ENETRESET               WSAENETRESET
-#  define ECONNABORTED            WSAECONNABORTED
-#  define ECONNRESET              WSAECONNRESET
-#  define ENOTCONN                WSAENOTCONN
-#  define ESHUTDOWN               WSAESHUTDOWN
-# endif
-
 # if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
 #  define setsockopt(a,b,c,d,e) rpl_setsockopt(a,b,c,d,e)
 static inline int
