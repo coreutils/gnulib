@@ -1,0 +1,12 @@
+Files:
+tests/test-perror.c
+tests/test-perror.sh
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-perror.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-perror

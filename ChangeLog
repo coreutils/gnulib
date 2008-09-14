@@ -1,5 +1,9 @@
 2008-09-14  Bruno Haible  <bruno@clisp.org>
 
+	* modules/perror-tests: New file.
+	* tests/test-perror.sh: New file.
+	* tests/test-perror.c: New file.
+
 	New module 'perror'.
 	* lib/stdio.in.h (perror): New declaration.
 	* lib/perror.c: New file.
