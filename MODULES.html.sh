@@ -2112,6 +2112,7 @@ func_all_modules ()
   func_module mkstemp
   func_module netinet_in
   func_module open
+  func_module perror
   func_module poll
   func_module printf-posix
   func_module readlink

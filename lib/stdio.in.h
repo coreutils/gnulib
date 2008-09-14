@@ -395,6 +395,22 @@ extern ssize_t getline (char **lineptr, size_t *linesize, FILE *stream);
    getline (l, s, f))
 #endif
 
+#if @GNULIB_PERROR@
+# if @REPLACE_PERROR@
+#  define perror rpl_perror
+/* Print a message to standard error, describing the value of ERRNO,
+   (if STRING is not NULL and not empty) prefixed with STRING and ": ",
+   and terminated with a newline.  */
+extern void perror (const char *string);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef perror
+# define perror(s) \
+    (GL_LINK_WARNING ("perror is not always POSIX compliant - " \
+                      "use gnulib module perror for portability"), \
+     perror (s))
+#endif
+
 #ifdef __cplusplus
 }
 #endif

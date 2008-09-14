@@ -1,5 +1,19 @@
 2008-09-14  Bruno Haible  <bruno@clisp.org>
 
+	New module 'perror'.
+	* lib/stdio.in.h (perror): New declaration.
+	* lib/perror.c: New file.
+	* m4/perror.m4: New file.
+	* modules/perror: New file.
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add perror.
+	* doc/posix-functions/perror.texi: Mention the perror module.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize GNULIB_PERROR,
+	REPLACE_PERROR.
+	* modules/stdio (Makefile.am): Substitute GNULIB_PERROR,
+	REPLACE_PERROR.
+
+2008-09-14  Bruno Haible  <bruno@clisp.org>
+
 	* modules/stdio (Makefile.am): Reorder to match the order in
 	lib/stdio.in.h.
 	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Likewise.

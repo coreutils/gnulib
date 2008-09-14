@@ -4,10 +4,14 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/perror.html}
 
-Gnulib module: ---
+Gnulib module: perror
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function does not support the error values that are specified by POSIX
+but not defined by the system, on some platforms:
+OpenBSD 4.0, OSF/1 5.1, mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

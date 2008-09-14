@@ -39,6 +39,7 @@ AC_DEFUN([gl_STDIO_H_DEFAULTS],
   GNULIB_FFLUSH=0;               AC_SUBST([GNULIB_FFLUSH])
   GNULIB_GETDELIM=0;             AC_SUBST([GNULIB_GETDELIM])
   GNULIB_GETLINE=0;              AC_SUBST([GNULIB_GETLINE])
+  GNULIB_PERROR=0;               AC_SUBST([GNULIB_PERROR])
   dnl Assume proper GNU behavior unless another module says otherwise.
   REPLACE_FPRINTF=0;             AC_SUBST([REPLACE_FPRINTF])
   REPLACE_VFPRINTF=0;            AC_SUBST([REPLACE_VFPRINTF])
@@ -66,6 +67,7 @@ AC_DEFUN([gl_STDIO_H_DEFAULTS],
   HAVE_DECL_GETDELIM=1;          AC_SUBST([HAVE_DECL_GETDELIM])
   HAVE_DECL_GETLINE=1;           AC_SUBST([HAVE_DECL_GETLINE])
   REPLACE_GETLINE=0;             AC_SUBST([REPLACE_GETLINE])
+  REPLACE_PERROR=0;              AC_SUBST([REPLACE_PERROR])
 ])
 
 dnl Code shared by fseeko and ftello.  Determine if large files are supported,
