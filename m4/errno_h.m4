@@ -17,7 +17,31 @@ AC_DEFUN([gl_HEADER_ERRNO_H_BODY],
   AC_CACHE_CHECK([for complete errno.h], gl_cv_header_errno_h_complete, [
     AC_EGREP_CPP(booboo,[
 #include <errno.h>
-#if !defined EOVERFLOW || !defined ECANCELED
+#if !defined ENOMSG
+booboo
+#endif
+#if !defined EIDRM
+booboo
+#endif
+#if !defined ENOLINK
+booboo
+#endif
+#if !defined EPROTO
+booboo
+#endif
+#if !defined EMULTIHOP
+booboo
+#endif
+#if !defined EBADMSG
+booboo
+#endif
+#if !defined EOVERFLOW
+booboo
+#endif
+#if !defined ENOTSUP
+booboo
+#endif
+#if !defined ECANCELED
 booboo
 #endif
       ],

@@ -1,5 +1,11 @@
 2008-09-15  Bruno Haible  <bruno@clisp.org>
 
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H_BODY): Test for all the macros that
+	are missing on OpenBSD 4.0 individually.
+	Reported by Yoann Vandoorselaere <yoann.v@prelude-ids.com>.
+
+2008-09-15  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-headers/errno.texi: Mention the Cygwin problem.
 	* doc/posix-functions/strerror.texi: Mention also Cygwin.
 	* doc/posix-functions/perror.texi: Likewise.
