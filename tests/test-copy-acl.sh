@@ -3,6 +3,12 @@
 # Show all commands when run with environment variable VERBOSE=yes.
 test -z "$VERBOSE" || set -x
 
+test "$USE_ACL" = 0 &&
+  {
+    echo "Skipping test: insufficient ACL support"
+    exit 77
+  }
+
 # func_tmpdir
 # creates a temporary directory.
 # Sets variable

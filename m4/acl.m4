@@ -121,6 +121,8 @@ int type = ACL_TYPE_EXTENDED;]],
   AC_SUBST([LIB_ACL])
   AC_DEFINE_UNQUOTED([USE_ACL], [$use_acl],
     [Define to nonzero if you want access control list support.])
+  USE_ACL=$use_acl
+  AC_SUBST([USE_ACL])
 ])
 
 # gl_ACL_GET_FILE(IF-WORKS, IF-NOT)

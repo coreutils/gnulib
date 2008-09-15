@@ -17,7 +17,7 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-file-has-acl.sh test-set-mode-acl.sh test-copy-acl.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' USE_ACL=$(USE_ACL)
 check_PROGRAMS += test-file-has-acl test-set-mode-acl test-copy-acl test-sameacls
 test_file_has_acl_LDADD = $(LDADD) $(LIB_ACL)
 test_set_mode_acl_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@

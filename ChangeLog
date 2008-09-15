@@ -1,3 +1,11 @@
+2008-09-16  Jim Meyering  <meyering@redhat.com>
+
+	avoid spurious test failure when library is built without ACL support
+	* m4/acl.m4 (USE_ACL): Define as a shell variable, too, for...
+	* modules/acl-tests (Makefile.am) [TESTS_ENVIRONMENT]: Add USE_ACL.
+	* tests/test-file-has-acl.sh: Skip if USE_ACL == 0.
+	* tests/test-copy-acl.sh: Likewise.
+
 2008-09-15  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* lib/fstrcmp.c (fstrcmp_bounded): Use a second, less quick upper bound
