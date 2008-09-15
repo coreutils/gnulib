@@ -17,7 +17,7 @@ AC_DEFUN([gl_HEADER_ERRNO_H_BODY],
   AC_CACHE_CHECK([for complete errno.h], gl_cv_header_errno_h_complete, [
     AC_EGREP_CPP(booboo,[
 #include <errno.h>
-#ifndef EOVERFLOW
+#if !defined EOVERFLOW || !defined ECANCELED
 booboo
 #endif
       ],

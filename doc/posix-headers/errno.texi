@@ -10,10 +10,13 @@ Portability problems fixed by Gnulib:
 @item
 The macros @code{EOVERFLOW}, @code{ENOLINK}, @code{EMULTIHOP} are not defined
 on some platforms:
-OpenBSD 4.0, OSF/1 4.0, mingw.
+OpenBSD 4.0, OSF/1 5.1, mingw.
+@item
+The macro @code{ECANCELED} is not defined on some platforms:
+OpenBSD 4.0, Cygwin, mingw.
 @item
 The macros @code{ENOMSG}, @code{EIDRM}, @code{EPROTO}, @code{EBADMSG},
-@code{ENOTSUP}, @code{ECANCELED} are not defined on some platforms:
+@code{ENOTSUP} are not defined on some platforms:
 OpenBSD 4.0, mingw.
 @item
 The macros @code{EWOULDBLOCK}, @code{ETXTBSY}, @code{ELOOP}, @code{ENOTSOCK},

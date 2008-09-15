@@ -94,54 +94,55 @@
 
 /* On OpenBSD 4.0 and on native Windows, the macros ENOMSG, EIDRM, ENOLINK,
    EPROTO, EMULTIHOP, EBADMSG, EOVERFLOW, ENOTSUP, ECANCELED are not defined.
-   Define them here.  Values >= 128 seem safe to use.
+   Define them here.  Values >= 2000 seem safe to use: Solaris ESTALE = 151,
+   HP-UX EWOULDBLOCK = 246, IRIX EDQUOT = 1133.
 
    Note: When one of these systems defines some of these macros some day,
    binaries will have to be recompiled so that they recognizes the new
    errno values from the system.  */
 
 # ifndef ENOMSG
-#  define ENOMSG    128
+#  define ENOMSG    2000
 #  define GNULIB_defined_ENOMSG 1
 # endif
 
 # ifndef EIDRM
-#  define EIDRM     129
+#  define EIDRM     2001
 #  define GNULIB_defined_EIDRM 1
 # endif
 
 # ifndef ENOLINK
-#  define ENOLINK   130
+#  define ENOLINK   2002
 #  define GNULIB_defined_ENOLINK 1
 # endif
 
 # ifndef EPROTO
-#  define EPROTO    131
+#  define EPROTO    2003
 #  define GNULIB_defined_EPROTO 1
 # endif
 
 # ifndef EMULTIHOP
-#  define EMULTIHOP 132
+#  define EMULTIHOP 2004
 #  define GNULIB_defined_EMULTIHOP 1
 # endif
 
 # ifndef EBADMSG
-#  define EBADMSG   133
+#  define EBADMSG   2005
 #  define GNULIB_defined_EBADMSG 1
 # endif
 
 # ifndef EOVERFLOW
-#  define EOVERFLOW 134
+#  define EOVERFLOW 2006
 #  define GNULIB_defined_EOVERFLOW 1
 # endif
 
 # ifndef ENOTSUP
-#  define ENOTSUP   135
+#  define ENOTSUP   2007
 #  define GNULIB_defined_ENOTSUP 1
 # endif
 
 # ifndef ECANCELED
-#  define ECANCELED 136
+#  define ECANCELED 2008
 #  define GNULIB_defined_ECANCELED 1
 # endif
 

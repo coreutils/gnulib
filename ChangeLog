@@ -1,3 +1,15 @@
+2008-09-15  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-headers/errno.texi: Mention the Cygwin problem.
+	* doc/posix-functions/strerror.texi: Mention also Cygwin.
+	* doc/posix-functions/perror.texi: Likewise.
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H_BODY): Test also whether ECANCELED
+	is missing.
+	Reported by Eric Blake.
+
+	* lib/errno.in.h: Use replacement values >= 2000.
+	Reported by Eric Blake.
+
 2008-09-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* lib/fstrcmp.c (EXTRA_CONTEXT_FIELDS): Add field 'edit_count_limit'.
