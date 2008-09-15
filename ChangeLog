@@ -1,3 +1,9 @@
+2008-09-15  Eric Blake  <ebb9@byu.net>
+
+	tests: avoid some compiler warnings
+	* tests/test-memchr.c (main): Pass NULL indirectly.
+	* tests/test-closein.c (main): Avoid unused variable.
+
 2008-09-15  Bruno Haible  <bruno@clisp.org>
 
 	* m4/errno_h.m4 (gl_HEADER_ERRNO_H_BODY): Test for all the macros that
@@ -158,7 +164,7 @@
 	__MSVCRT__.
 
 2008-09-13  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/glob.c: Don't include <pwd.h> on native Windows.
 	(WINDOWS32): New macro.
@@ -263,7 +269,7 @@
 	Approved by Eric Blake.
 
 2008-09-04  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Make gnulib-tool work with native 'sed' on AIX.
 	* gnulib-tool (sed_noop): New variable.
@@ -273,7 +279,7 @@
 	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
 
 2008-09-04  Albert Chin  <bug-gnulib@mlists.thewrittenword.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* m4/include_next.m4 (gl_INCLUDE_NEXT): Add check whether #include_next
 	also works after #include directives.
