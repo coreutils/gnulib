@@ -91,6 +91,29 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 # define DT_MUST_BE(d, t) false
 #endif
 
+enum
+{
+  NOT_AN_INODE_NUMBER = 0
+};
+
+#ifdef D_INO_IN_DIRENT
+# define D_INO(dp) (dp)->d_ino
+#else
+/* Some systems don't have inodes, so fake them to avoid lots of ifdefs.  */
+# define D_INO(dp) NOT_AN_INODE_NUMBER
+#endif
+
+/* If there are more than this many entries in a directory,
+   and the conditions mentioned below are satisfied, then sort
+   the entries on inode number before any further processing.  */
+#ifndef FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD
+# define FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD 10000
+#endif
+enum
+{
+  _FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD = FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD
+};
+
 enum Fts_stat
 {
   FTS_NO_STAT_REQUIRED = 1,
@@ -911,6 +934,57 @@ fts_children (register FTS *sp, int instr)
 	return (sp->fts_child);
 }
 
+#if defined HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
+# include <sys/statfs.h>
+/* FIXME: what about when f_type is not an integral type?
+   deal with that if/when it's encountered.  */
+static bool
+fs_handles_readdir_ordered_dirents_efficiently (uintmax_t fs_type)
+{
+/* From coreutils' src/fs.h */
+#define S_MAGIC_TMPFS 0x1021994
+#define S_MAGIC_NFS 0x6969
+  switch (fs_type)
+    {
+    case S_MAGIC_TMPFS:
+    case S_MAGIC_NFS:
+      return true;
+    default:
+      return false;
+    }
+}
+
+/* Return true if it is easy to determine the file system type of the
+   current directory, and sorting dirents on inode numbers is known to
+   improve traversal performance with that type of file system.  */
+static bool
+dirent_inode_sort_may_be_useful (FTS const *sp)
+{
+  struct statfs fs_buf;
+  /* Skip the sort only if we can determine efficiently
+     that it's the right thing to do.  */
+  bool skip = (ISSET (FTS_CWDFD)
+	       && fstatfs (sp->fts_cwd_fd, &fs_buf) == 0
+	       && fs_handles_readdir_ordered_dirents_efficiently
+	            (fs_buf.f_type));
+  return !skip;
+}
+#else
+static bool dirent_inode_sort_may_be_useful (FTS const *sp) { return true; }
+#endif
+
+/* A comparison function to sort on increasing inode number.
+   For some file system types, sorting either way makes a huge
+   performance difference for a directory with very many entries,
+   but sorting on increasing values is slightly better than sorting
+   on decreasing values.  The difference is in the 5% range.  */
+static int
+fts_compare_ino (struct _ftsent const **a, struct _ftsent const **b)
+{
+  return (a[0]->fts_statp->st_ino < b[0]->fts_statp->st_ino ? 1
+	  : b[0]->fts_statp->st_ino < a[0]->fts_statp->st_ino ? -1 : 0);
+}
+
 /*
  * This is the tricky part -- do not casually change *anything* in here.  The
  * idea is to build the linked list of entries that are used by fts_children
@@ -1111,6 +1185,9 @@ mem1:				saved_errno = errno;
 		if (dp->d_type == DT_WHT)
 			p->fts_flags |= FTS_ISW;
 #endif
+		/* Store dirent.d_ino, in case we need to sort
+		   entries before processing them.  */
+		p->fts_statp->st_ino = D_INO (dp);
 
 		/* Build a file name for fts_stat to stat. */
 		if (ISSET(FTS_NOCHDIR)) {
@@ -1204,6 +1281,18 @@ mem1:				saved_errno = errno;
 			cur->fts_info = FTS_DP;
 		fts_lfree(head);
 		return (NULL);
+	}
+
+	/* If there are many entries, no sorting function has been specified,
+	   and this file system is of a type that may be slow with a large
+	   number of entries, then sort the directory entries on increasing
+	   inode numbers.  */
+	if (nitems > _FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD
+	    && !sp->fts_compar
+	    && dirent_inode_sort_may_be_useful (sp)) {
+		sp->fts_compar = fts_compare_ino;
+		head = fts_sort (sp, head, nitems);
+		sp->fts_compar = NULL;
 	}
 
 	/* Sort the entries. */

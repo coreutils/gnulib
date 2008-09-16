@@ -9,6 +9,7 @@ m4/fts.m4
 
 Depends-on:
 cycle-check
+d-ino
 d-type
 dirfd
 fchdir
