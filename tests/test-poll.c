@@ -139,16 +139,12 @@ connect_to_socket (int blocking)
 #endif
     }
 
-  if (connect (s, (struct sockaddr *) &ia, sizeof (ia)) < 0)
+  if (connect (s, (struct sockaddr *) &ia, sizeof (ia)) < 0
+      && (blocking || errno != EINPROGRESS))
     {
-      if (errno != EINPROGRESS)
-	{
-	  perror ("connect");
-	  exit (77);
-	}
+      perror ("connect");
+      exit (77);
     }
-  else if (!blocking)
-    failed ("huh, connect succeeded?");
 
   return s;
 }

@@ -1,3 +1,8 @@
+2008-09-16  Paolo Bonzini  <bonzini@gnu.org>
+
+	* tests/test-poll.c (connect_to_socket): Allow non-blocking connect
+	to succeed.
+
 2008-09-16  Jim Meyering  <meyering@redhat.com>
 
 	avoid spurious test failure when library is built without ACL support
