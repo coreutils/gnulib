@@ -1,4 +1,12 @@
 2008-09-16  Bruno Haible  <bruno@clisp.org>
+	and Eric Blake  <ebb9@byu.net>
+
+	vasnprintf: support Irix 5.3
+	* lib/vasnprintf.c (VASNPRINTF): Also handle -0.0L on platforms
+	that mishandle long double infinity.
+	Reported by Tom G. Christensen.
+
+2008-09-16  Bruno Haible  <bruno@clisp.org>
 
 	* doc/glibc-functions/scandir.texi: Mention the function is missing on
 	Solaris 9.
