@@ -1,3 +1,8 @@
+2008-09-15  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* lib/fstrcmp.c (fstrcmp_bounded): Use a second, less quick upper bound
+	based on character occurrence counts.
+
 2008-09-15  Eric Blake  <ebb9@byu.net>
 
 	tests: avoid some compiler warnings

@@ -141,6 +141,55 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
       if (upper_bound < lower_bound)
 	/* Return an arbitrary value < LOWER_BOUND.  */
 	return 0.0;
+
+#if CHAR_BIT <= 8
+      /* When X and Y are both small, avoid the overhead of setting up an
+	 array of size 256.  */
+      if (xvec_length + yvec_length >= 20)
+	{
+	  /* Compute a less quick upper bound.
+	     Each edit is an insertion or deletion of a character, hence
+	     modifies the occurrence count of a character by 1 and leaves the
+	     other occurrence counts unchanged.
+	     Therefore, when starting from a sequence X and ending at a
+	     sequence Y, and denoting the occurrence count of C in X with
+	     OCC (X, C), with N edits,
+	       sum_C | OCC (X, C) - OCC (Y, C) | <= N.
+	     (Proof by induction over N.)
+	     So, at the end, we will have
+	       edit_count >= sum_C | OCC (X, C) - OCC (Y, C) |,
+	     and hence
+	       result
+		 = (xvec_length + yvec_length - edit_count)
+		   / (xvec_length + yvec_length)
+		 <= (xvec_length + yvec_length - sum_C | OCC(X,C) - OCC(Y,C) |)
+		    / (xvec_length + yvec_length).
+	   */
+	  int occ_diff[UCHAR_MAX + 1]; /* array C -> OCC(X,C) - OCC(Y,C) */
+	  int sum;
+
+	  /* Determine the occurrence counts in X.  */
+	  memset (occ_diff, 0, sizeof (occ_diff));
+	  for (i = xvec_length - 1; i >= 0; i--)
+	    occ_diff[(unsigned char) string1[i]]++;
+	  /* Subtract the occurrence counts in Y.  */
+	  for (i = yvec_length - 1; i >= 0; i--)
+	    occ_diff[(unsigned char) string2[i]]--;
+	  /* Sum up the absolute values.  */
+	  sum = 0;
+	  for (i = 0; i <= UCHAR_MAX; i++)
+	    {
+	      int d = occ_diff[i];
+	      sum += (d >= 0 ? d : -d);
+	    }
+
+	  upper_bound = 1.0 - (double) sum / (xvec_length + yvec_length);
+
+	  if (upper_bound < lower_bound)
+	    /* Return an arbitrary value < LOWER_BOUND.  */
+	    return 0.0;
+	}
+#endif
     }
 
   /* set the info for each string.  */
