@@ -2578,8 +2578,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # elif NEED_PRINTF_INFINITE_LONG_DOUBLE
 			 || (a.arg[dp->arg_index].type == TYPE_LONGDOUBLE
 			     /* Some systems produce wrong output for Inf,
-				-Inf, and NaN.	Some systems in this category
-				(IRIX 5.3) also do so for -0.0.	 Therefore we
+				-Inf, and NaN.  Some systems in this category
+				(IRIX 5.3) also do so for -0.0.  Therefore we
 				treat this case here as well.  */
 			     && is_infinite_or_zerol (a.arg[dp->arg_index].a.a_longdouble))
 # endif
