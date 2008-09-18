@@ -215,7 +215,7 @@ local_wcslen (const wchar_t *s)
 #undef remainder
 #define remainder rem
 
-#if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE) && !defined IN_LIBINTL
+#if (NEED_PRINTF_DIRECTIVE_A || NEED_PRINTF_LONG_DOUBLE || NEED_PRINTF_INFINITE_LONG_DOUBLE || NEED_PRINTF_DOUBLE || NEED_PRINTF_INFINITE_DOUBLE) && !defined IN_LIBINTL
 /* Determine the decimal-point character according to the current locale.  */
 # ifndef decimal_point_char_defined
 #  define decimal_point_char_defined 1
@@ -3167,11 +3167,6 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 				  }
 				*p++ = dp->conversion; /* 'e' or 'E' */
 				*p++ = '+';
-				/* Produce the same number of exponent digits as
-				   the native printf implementation.  */
-#   if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-				*p++ = '0';
-#   endif
 				*p++ = '0';
 				*p++ = '0';
 			      }
