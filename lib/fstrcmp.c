@@ -100,6 +100,13 @@ keys_init (void)
 gl_once_define(static, keys_init_once)
 
 
+/* In the code below, branch probabilities were measured by Ralf Wildenhues,
+   by running "msgmerge LL.po coreutils.pot" with msgmerge 0.18 for many
+   values of LL.  The probability indicates that the condition evaluates
+   to true; whether that leads to a branch or a non-branch in the code,
+   depends on the compiler's reordering of basic blocks.  */
+
+
 double
 fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
 {
@@ -113,7 +120,7 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
   size_t bufmax;
 
   /* short-circuit obvious comparisons */
-  if (xvec_length == 0 || yvec_length == 0)
+  if (xvec_length == 0 || yvec_length == 0) /* Prob: 1% */
     return (xvec_length == 0 && yvec_length == 0 ? 1.0 : 0.0);
 
   if (lower_bound > 0)
@@ -138,14 +145,14 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
 	(double) (2 * MIN (xvec_length, yvec_length))
 	/ (xvec_length + yvec_length);
 
-      if (upper_bound < lower_bound)
+      if (upper_bound < lower_bound) /* Prob: 74% */
 	/* Return an arbitrary value < LOWER_BOUND.  */
 	return 0.0;
 
 #if CHAR_BIT <= 8
       /* When X and Y are both small, avoid the overhead of setting up an
 	 array of size 256.  */
-      if (xvec_length + yvec_length >= 20)
+      if (xvec_length + yvec_length >= 20) /* Prob: 99% */
 	{
 	  /* Compute a less quick upper bound.
 	     Each edit is an insertion or deletion of a character, hence
@@ -185,7 +192,7 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
 
 	  upper_bound = 1.0 - (double) sum / (xvec_length + yvec_length);
 
-	  if (upper_bound < lower_bound)
+	  if (upper_bound < lower_bound) /* Prob: 66% */
 	    /* Return an arbitrary value < LOWER_BOUND.  */
 	    return 0.0;
 	}
@@ -245,7 +252,7 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
 
   /* Now do the main comparison algorithm */
   ctxt.edit_count = - ctxt.edit_count_limit;
-  if (compareseq (0, xvec_length, 0, yvec_length, 0, &ctxt))
+  if (compareseq (0, xvec_length, 0, yvec_length, 0, &ctxt)) /* Prob: 98% */
     /* The edit_count passed the limit.  Hence the result would be
        < lower_bound.  We can return any value < lower_bound instead.  */
     return 0.0;
