@@ -63,6 +63,12 @@ extern "C" {
 #endif
 
 
+/* Define wint_t.  (Also done in wctype.in.h.)  */
+#if !@HAVE_WINT_T@ && !defined wint_t
+# define wint_t int
+#endif
+
+
 /* Return the number of screen columns needed for WC.  */
 #if @GNULIB_WCWIDTH@
 # if @REPLACE_WCWIDTH@

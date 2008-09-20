@@ -1,3 +1,19 @@
+2008-09-20  Bruno Haible  <bruno@clisp.org>
+
+	Ensure that wint_t gets defined on IRIX 5.3.
+	* lib/wchar.in.h (wint_t): Define if not defined by the system.
+	* lib/wctype.in.h (wint_t): Likewise.
+	(__wctype_wint_t): Remove type.
+	(isw*): Use wint_t instead of __wctype_wint_t.
+	* m4/wchar.m4 (gl_WCHAR_H): Invoke gt_TYPE_WINT_T and set HAVE_WINT_T.
+	* modules/wchar (Files): Add m4/wint_t.m4.
+	(Makefile.am): Substitute HAVE_WINT_T.
+	* tests/test-wchar.c: Check that wchar_t and wint_t are defined.
+	* tests/test-wctype.c: Check that wint_t is defined.
+	* doc/posix-headers/wchar.texi: Mention the IRIX 5 problem.
+	* doc/posix-headers/wctype.texi: Likewise.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 2008-09-18  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_exit): Update comment.

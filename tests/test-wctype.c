@@ -20,6 +20,9 @@
 
 #include <wctype.h>
 
+/* Check that the type wint_t is defined.  */
+wint_t a = 'x';
+
 int
 main ()
 {

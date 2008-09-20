@@ -14,6 +14,9 @@ HP-UX 11.00, BeOS.
 This header file is not self-contained on some platforms:
 Solaris 2.5, OSF/1 with Desktop Toolkit C, BSD/OS 4.0.1.
 @item
+The type @code{wint_t} is missing on some platforms:
+IRIX 5.3.
+@item
 The functions @code{isw*} are missing on some platforms:
 FreeBSD 4.11.
 @item

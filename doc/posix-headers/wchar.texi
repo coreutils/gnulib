@@ -13,6 +13,9 @@ Linux uClibc built without wide character support.
 @item
 This header file is not self-contained on some platforms:
 OSF/1 with Desktop Toolkit C, BSD/OS 4.0.1.
+@item
+The type @code{wint_t} is missing on some platforms:
+IRIX 5.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:
