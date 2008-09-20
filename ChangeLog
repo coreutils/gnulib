@@ -6,11 +6,15 @@
 
 2008-09-18  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (VASNPRINTF): When printing ±0.0L in
+	NEED_PRINTF_INFINITE_LONG_DOUBLE case with 'e' format, always use two
+	digits for the exponent.
+
+2008-09-18  Jim Meyering  <meyering@redhat.com>
+            Bruno Haible  <bruno@clisp.org>
+
 	* lib/vasnprintf.c (decimal_point_char): Define also if
 	NEED_PRINTF_INFINITE_LONG_DOUBLE.
-	(VASNPRINTF): When printing ±0.0L in NEED_PRINTF_INFINITE_LONG_DOUBLE
-	case with 'e' format, always use two digits for the exponent.
-	Reported by Jim Meyering.
 
 2008-09-16  Bruno Haible  <bruno@clisp.org>
 	and Eric Blake  <ebb9@byu.net>
