@@ -262,7 +262,9 @@ func_emit_copyright_notice ()
 }
 
 # func_exit STATUS
-# exit with status
+# exits with a given status.
+# This function needs to be used, rather than 'exit', when a 'trap' handler is
+# in effect that refers to $?.
 func_exit ()
 {
   (exit $1); exit $1
