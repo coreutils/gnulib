@@ -1,5 +1,10 @@
 2008-09-21  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-snprintf-posix.h (test_function): Remove useless ASSERTs.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+
+2008-09-21  Bruno Haible  <bruno@clisp.org>
+
 	* modules/getpass (Depends-on): Add strdup-posix.
 
 	New module 'strdup-posix'.

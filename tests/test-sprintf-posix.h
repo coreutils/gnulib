@@ -1679,7 +1679,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
 	int retval =
 	  my_sprintf (result, "%e", data[k].value);
 	const char *expected = data[k].string;
-	ASSERT (result != NULL);
 	ASSERT (strcmp (result, expected) == 0
 		/* Some implementations produce exponents with 3 digits.  */
 		|| (strlen (result) == strlen (expected) + 1
@@ -2914,7 +2913,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%.4000d %d", 1234567, 99);
     size_t i;
-    ASSERT (result != NULL);
     for (i = 0; i < 4000 - 7; i++)
       ASSERT (result[i] == '0');
     ASSERT (strcmp (result + 4000 - 7, "1234567 99") == 0);
@@ -2926,7 +2924,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%.*d %d", 4000, 1234567, 99);
     size_t i;
-    ASSERT (result != NULL);
     for (i = 0; i < 4000 - 7; i++)
       ASSERT (result[i] == '0');
     ASSERT (strcmp (result + 4000 - 7, "1234567 99") == 0);
@@ -2938,7 +2935,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%.4000d %d", -1234567, 99);
     size_t i;
-    ASSERT (result != NULL);
     ASSERT (result[0] == '-');
     for (i = 0; i < 4000 - 7; i++)
       ASSERT (result[1 + i] == '0');
@@ -2951,7 +2947,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%.4000u %d", 1234567, 99);
     size_t i;
-    ASSERT (result != NULL);
     for (i = 0; i < 4000 - 7; i++)
       ASSERT (result[i] == '0');
     ASSERT (strcmp (result + 4000 - 7, "1234567 99") == 0);
@@ -2963,7 +2958,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%.4000o %d", 1234567, 99);
     size_t i;
-    ASSERT (result != NULL);
     for (i = 0; i < 4000 - 7; i++)
       ASSERT (result[i] == '0');
     ASSERT (strcmp (result + 4000 - 7, "4553207 99") == 0);
@@ -2975,7 +2969,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%.4000x %d", 1234567, 99);
     size_t i;
-    ASSERT (result != NULL);
     for (i = 0; i < 4000 - 6; i++)
       ASSERT (result[i] == '0');
     ASSERT (strcmp (result + 4000 - 6, "12d687 99") == 0);
@@ -2987,7 +2980,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     int retval =
       my_sprintf (result, "%#.4000x %d", 1234567, 99);
     size_t i;
-    ASSERT (result != NULL);
     ASSERT (result[0] == '0');
     ASSERT (result[1] == 'x');
     for (i = 0; i < 4000 - 6; i++)
@@ -3006,7 +2998,6 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
       input[i] = 'a' + ((1000000 / (i + 1)) % 26);
     input[i] = '\0';
     retval = my_sprintf (result, "%.4000s %d", input, 99);
-    ASSERT (result != NULL);
     ASSERT (memcmp (result, input, 4000) == 0);
     ASSERT (strcmp (result + 4000, " 99") == 0);
     ASSERT (retval == strlen (result));
