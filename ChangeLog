@@ -1,5 +1,12 @@
 2008-09-21  Bruno Haible  <bruno@clisp.org>
 
+	* m4/sigaction.m4 (gl_SIGACTION): Remove unnecessary AC_SUBST. Check
+	whether 'struct sigaction' has sa_sigaction here...
+	(gl_PREREQ_SIG_HANDLER_H): ... not here.
+	(gl_PREREQ_SIGACTION): Remove unnecessary AC_SUBST.
+
+2008-09-21  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh (Support for obsolete systems lacking ANSI C 89): New
 	section.
 	(Support for systems lacking ANSI C 89): Move stdlib, exit, strtol,

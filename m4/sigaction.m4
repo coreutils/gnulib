@@ -1,4 +1,4 @@
-# sigaction.m4 serial 4
+# sigaction.m4 serial 5
 dnl Copyright (C) 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,10 +8,16 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_SIGACTION],
 [
   AC_REQUIRE([gl_SIGNAL_H_DEFAULTS])
-  AC_REPLACE_FUNCS([sigaction])
-  if test $ac_cv_func_sigaction = no ; then
+  AC_CHECK_FUNCS_ONCE([sigaction])
+  if test $ac_cv_func_sigaction = yes; then
+    AC_CHECK_MEMBERS([struct sigaction.sa_sigaction], , ,
+                     [[#include <signal.h>]])
+    if test $ac_cv_member_struct_sigaction_sa_sigaction = no; then
+      HAVE_STRUCT_SIGACTION_SA_SIGACTION=0
+    fi
+  else
     HAVE_SIGACTION=0
-    AC_SUBST([HAVE_SIGACTION])
+    AC_LIBOBJ([sigaction])
     gl_PREREQ_SIGACTION
   fi
 ])
@@ -29,7 +35,6 @@ AC_DEFUN([gl_PREREQ_SIGACTION],
   ]])
   if test $ac_cv_type_siginfo_t = no; then
     HAVE_SIGINFO_T=0
-    AC_SUBST([HAVE_SIGINFO_T])
   fi
 ])
 
@@ -37,10 +42,4 @@ AC_DEFUN([gl_PREREQ_SIGACTION],
 AC_DEFUN([gl_PREREQ_SIG_HANDLER_H],
 [
   AC_REQUIRE([AC_C_INLINE])
-  AC_CHECK_MEMBERS([struct sigaction.sa_sigaction], , ,
-                   [[#include <signal.h>]])
-  if test $ac_cv_member_struct_sigaction_sa_sigaction = no; then
-    HAVE_STRUCT_SIGACTION_SA_SIGACTION=0
-    AC_SUBST([HAVE_STRUCT_SIGACTION_SA_SIGACTION])
-  fi
 ])
