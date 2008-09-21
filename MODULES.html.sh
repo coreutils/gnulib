@@ -2121,6 +2121,7 @@ func_all_modules ()
   func_module sleep
   func_module snprintf-posix
   func_module sprintf-posix
+  func_module strdup-posix
   func_module string
   func_module strings
   func_module tempname

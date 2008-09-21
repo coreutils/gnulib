@@ -1,3 +1,20 @@
+2008-09-21  Bruno Haible  <bruno@clisp.org>
+
+	* modules/getpass (Depends-on): Add strdup-posix.
+
+	New module 'strdup-posix'.
+	* modules/strdup-posix: New file.
+	* m4/strdup.m4 (gl_FUNC_STRDUP_POSIX): New macro.
+	* lib/string.in.h (strdup): Replace if REPLACE_STRDUP is 1.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Initialize
+	REPLACE_STRDUP.
+	* modules/string (Makefile.am): Substitute REPLACE_STRDUP.
+	* doc/posix-functions/strdup.texi: Mention module strdup-posix.
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
+	strdup-posix.
+
+	* modules/strdup (Depends-on): Remove malloc-posix.
+
 2008-09-20  Bruno Haible  <bruno@clisp.org>
 
 	* lib/fstrcmp.c: Add data about branch probabilities, from Ralf
