@@ -1,5 +1,15 @@
 2008-09-21  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-vasnprintf-posix.c (test_function): Allow 3-digit
+	exponents in %e and %g results on 'long double'. Needed for mingw's
+	improved *printf functions.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	Reported by Eric Blake.
+
+2008-09-21  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-snprintf-posix.h (test_function): Remove useless ASSERTs.
 	* tests/test-sprintf-posix.h (test_function): Likewise.
 
