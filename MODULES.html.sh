@@ -1486,16 +1486,14 @@ func_end_table ()
 # func_all_modules
 func_all_modules ()
 {
-  element="Support for systems lacking ANSI C 89"
-  func_section_wrap ansic_sup
+  element="Support for obsolete systems lacking ANSI C 89"
+  func_section_wrap ansic_sup_obsolete
   func_wrap H2
   func_echo "$element"
 
   func_begin_table
   func_module stdlib
   func_module exit
-  func_module atexit
-  func_module strtod
   func_module strtol
   func_module strtoul
   func_module memchr
@@ -1505,11 +1503,22 @@ func_all_modules ()
   func_module memset
   func_module strcspn
   func_module strpbrk
+  func_end_table
+
+  func_echo 'These modules are not listed among dependencies below, for simplicity.'
+  func_echo 'If your package requires portability to old, obsolete systems, you need to list these modules explicitly among the modules to import through gnulib-tool.'
+
+  element="Support for systems lacking ANSI C 89"
+  func_section_wrap ansic_sup
+  func_wrap H2
+  func_echo "$element"
+
+  func_begin_table
+  func_module atexit
+  func_module strtod
   func_module strerror
   func_module mktime
   func_end_table
-
-  func_echo 'Most of these modules are not listed among dependencies below, for simplicity.'
 
   element="Enhancements for ANSI C 89 functions"
   func_section_wrap ansic_enh
@@ -1665,7 +1674,6 @@ func_all_modules ()
   func_module strcasestr
   func_module strcasestr-simple
   func_module strchrnul
-  func_module strdup
   func_module streq
   func_module strnlen
   func_module strnlen1
@@ -2070,6 +2078,18 @@ func_all_modules ()
   func_module mbuiter
   func_module mbfile
   func_end_table
+
+  element="Support for obsolete systems lacking POSIX:2001"
+  func_section_wrap posix_sup_obsolete
+  func_wrap H2
+  func_echo "$element"
+
+  func_begin_table
+  func_module strdup
+  func_end_table
+
+  func_echo 'These modules are not listed among dependencies below, for simplicity.'
+  func_echo 'If your package requires portability to old, obsolete systems, you need to list these modules explicitly among the modules to import through gnulib-tool.'
 
   element="Support for systems lacking POSIX:2001"
   func_section_wrap posix_sup

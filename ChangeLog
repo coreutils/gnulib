@@ -1,5 +1,16 @@
 2008-09-21  Bruno Haible  <bruno@clisp.org>
 
+	* MODULES.html.sh (Support for obsolete systems lacking ANSI C 89): New
+	section.
+	(Support for systems lacking ANSI C 89): Move stdlib, exit, strtol,
+	strtoul, memchr, memcmp, memcpy, memmove, memset, strcspn, strpbrk to
+	the new section.
+	(Support for obsolete systems lacking POSIX:2001): New section.
+	(String handling <string.h>): Move strdup to the new section.
+	Suggested by Simon Josefsson and Paolo Bonzini.
+
+2008-09-21  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-vasnprintf-posix.c (test_function): Allow 3-digit
 	exponents in %e and %g results on 'long double'. Needed for mingw's
 	improved *printf functions.
