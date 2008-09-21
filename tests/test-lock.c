@@ -683,7 +683,7 @@ main ()
 int
 main ()
 {
-  fputs ("multithreading not enabled\n", stderr);
+  fputs ("Skipping test: multithreading not enabled\n", stderr);
   return 77;
 }
 

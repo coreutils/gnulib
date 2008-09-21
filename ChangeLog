@@ -1,5 +1,10 @@
 2008-09-21  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-lock.c (main): Tweak skip message.
+	* tests/test-tls.c (main): Likewise.
+
+2008-09-21  Bruno Haible  <bruno@clisp.org>
+
 	* m4/sigaction.m4 (gl_SIGACTION): Remove unnecessary AC_SUBST. Check
 	whether 'struct sigaction' has sa_sigaction here...
 	(gl_PREREQ_SIG_HANDLER_H): ... not here.
