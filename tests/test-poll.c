@@ -359,7 +359,7 @@ main ()
 {
   int result;
 
-  gl_sockets_startup (SOCKETS_2_0);
+  gl_sockets_startup (SOCKETS_1_1);
 
 #ifdef INTERACTIVE
   printf ("Please press Enter\n");
