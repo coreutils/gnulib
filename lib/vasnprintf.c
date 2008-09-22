@@ -2663,9 +2663,11 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
 		/* POSIX specifies the default precision to be 6 for %f, %F,
 		   %e, %E, but not for %g, %G.  Implementations appear to use
-		   the same default precision also for %g, %G.  */
+		   the same default precision also for %g, %G.  But for %a, %A,
+		   the default precision is 0.  */
 		if (!has_precision)
-		  precision = 6;
+		  if (!(dp->conversion == 'a' || dp->conversion == 'A'))
+		    precision = 6;
 
 		/* Allocate a temporary buffer of sufficient size.  */
 # if NEED_PRINTF_DOUBLE && NEED_PRINTF_LONG_DOUBLE
@@ -3181,6 +3183,22 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 				    for (; ndigits > 0; --ndigits)
 				      *p++ = '0';
 				  }
+			      }
+			    else if (dp->conversion == 'a' || dp->conversion == 'A')
+			      {
+				*p++ = '0';
+				*p++ = dp->conversion - 'A' + 'X';
+				pad_ptr = p;
+				*p++ = '0';
+				if ((flags & FLAG_ALT) || precision > 0)
+				  {
+				    *p++ = decimal_point_char ();
+				    for (; precision > 0; precision--)
+				      *p++ = '0';
+				  }
+				*p++ = dp->conversion - 'A' + 'P';
+				*p++ = '+';
+				*p++ = '0';
 			      }
 			    else
 			      abort ();
