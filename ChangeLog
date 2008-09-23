@@ -1,3 +1,10 @@
+2008-09-23  Eric Blake  <ebb9@byu.net>
+
+	fopen: document mingw bug on directories
+	* doc/posix-functions/fopen.texi (fopen): Mention mingw bug for
+	not allowing a stream visiting a directory, even though reading
+	from such a stream is not portable.
+
 2008-09-23  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/poll.c: Rewrite.
