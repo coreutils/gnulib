@@ -10,7 +10,7 @@ Portability problems fixed by either Gnulib module @code{vsnprintf} or @code{vsn
 @itemize
 @item
 This function is missing on some platforms:
-OSF/1 4.0, Solaris 2.5.1.
+IRIX 5.3, OSF/1 4.0, Solaris 2.5.1.
 @item
 This function overwrites memory even when a size argument of 1 is passed on some
 platforms:

@@ -1,3 +1,8 @@
+2008-09-23  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-functions/*: Add info about functions missing on IRIX 5.3.
+	* doc/glibc-functions/*: Likewise.
+
 2008-09-23  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-perror.sh (tmpfiles): Cleanup temporary files on

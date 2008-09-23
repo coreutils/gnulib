@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Solaris 2.5.1, Cygwin.
+IRIX 5.3, Solaris 2.5.1, Cygwin.
 @item
 On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
