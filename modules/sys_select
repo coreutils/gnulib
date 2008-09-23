@@ -3,9 +3,11 @@ A <sys/select.h> for systems lacking it.
 
 Files:
 lib/sys_select.in.h
+lib/winsock-select.c
 m4/sys_select_h.m4
 
 Depends-on:
+alloca
 include_next
 sys_socket
 
@@ -26,6 +28,7 @@ sys/select.h: sys_select.in.h
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''NEXT_SYS_SELECT_H''@|$(NEXT_SYS_SELECT_H)|g' \
 	      -e 's|@''HAVE_SYS_SELECT_H''@|$(HAVE_SYS_SELECT_H)|g' \
+	      -e 's|@''HAVE_WINSOCK2_H''@|$(HAVE_WINSOCK2_H)|g' \
 	      < $(srcdir)/sys_select.in.h; \
 	} > $@-t
 	mv $@-t $@

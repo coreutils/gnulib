@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_HEADER_SYS_SELECT],
 [
+  AC_REQUIRE([gl_HEADER_SYS_SOCKET])
   AC_CACHE_CHECK([whether <sys/select.h> is self-contained],
     [gl_cv_header_sys_select_h_selfcontained],
     [
@@ -26,4 +27,7 @@ AC_DEFUN([gl_HEADER_SYS_SELECT],
     AC_SUBST([HAVE_SYS_SELECT_H])
   fi
   AC_SUBST([SYS_SELECT_H])
+  if test x$ac_cv_header_winsock2_h = xyes; then
+    AC_LIBOBJ(winsock-select)
+  fi
 ])

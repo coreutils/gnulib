@@ -6,6 +6,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-09-24  sys_select      The limitation on `select', introduced 2008-09-23,
+                            was removed.  sys_select now includes a select
+                            wrapper for Winsock.  The wrapper expects socket
+                            and file descriptors to be compatible as arranged
+                            by the sys_socket on MinGW.
+
 2008-09-23  sys_socket      Under Windows (MinGW), the module now adds
                             wrappers around Winsock functions, so that
                             socket descriptors are now compatible with

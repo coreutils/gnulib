@@ -156,9 +156,8 @@ rpl_fd_isset (int fd, fd_set * set)
 #  define sendto		rpl_sendto
 #  undef setsockopt
 #  define setsockopt		rpl_setsockopt
-
 #  undef select
-#  define select		select_not_supported_under_win32_use_poll
+#  define select		select_used_without_including_sys_select_h
 
 extern int rpl_close(int);
 extern int rpl_socket (int, int, int protocol);

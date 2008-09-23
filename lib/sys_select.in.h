@@ -39,6 +39,13 @@
 
 # include <sys/socket.h>
 
+# if @HAVE_WINSOCK2_H@
+#  undef select
+#  define select		rpl_select
+
+extern int rpl_select (int, fd_set *, fd_set *, fd_set *, struct timeval *);
+# endif
+
 #endif
 
 #endif /* _GL_SYS_SELECT_H */

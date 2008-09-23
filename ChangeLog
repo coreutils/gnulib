@@ -1,3 +1,17 @@
+2008-09-24  Paolo Bonzini  <bonzini@gnu.org>
+
+	* NEWS: Document increased portability that sys_select now provides.
+
+	* lib/sys_select.in.h: Install select wrapper.
+	* lib/sys_socket.in.h: Use more descriptive name when there is no
+	select wrapper.
+	* lib/winsock-select.c: New.
+	* m4/sys_select_h.m4: Compile lib/winsock-select.c if WinSock is used.
+	Require gl_HEADER_SYS_SOCKET.
+	* modules/sys_select: Depend on alloca, add lib/winsock-select.c.
+	* modules/sys_select-tests: Copy dependencies from modules/poll-tests.
+	* tests/test-sys_select.c: Add functional tests.
+
 2008-09-24  Eric Blake  <ebb9@byu.net>
 
 	open, fopen: close fd leak in last patch
