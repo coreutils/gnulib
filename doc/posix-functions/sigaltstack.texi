@@ -16,5 +16,11 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 Cygwin, mingw, Interix 3.5, BeOS.
 @item
-@code{sigaltstack} doesn't work on HP-UX 11/IA-64 and OpenBSD 3.6/Sparc64.
+@code{sigaltstack} doesn't work on HP-UX 11/IA-64 and OpenBSD
+3.6/Sparc64.
+@item
+This function interprets the @code{ss_sp} member of @code{stack_t} as
+the upper bound instead of the lower bound of the alternate stack on
+some platforms:
+Irix 6.5
 @end itemize

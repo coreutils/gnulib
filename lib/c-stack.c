@@ -291,8 +291,15 @@ c_stack_action (void (*action) (int))
   stack_t st;
   struct sigaction act;
   st.ss_flags = 0;
+# if SIGALTSTACK_SS_REVERSED
+  /* Irix mistakenly treats ss_sp as the upper bound, rather than
+     lower bound, of the alternate stack.  */
+  st.ss_sp = alternate_signal_stack.buffer + SIGSTKSZ - sizeof (void *);
+  st.ss_size = sizeof alternate_signal_stack.buffer - sizeof (void *);
+# else
   st.ss_sp = alternate_signal_stack.buffer;
   st.ss_size = sizeof alternate_signal_stack.buffer;
+# endif
   r = sigaltstack (&st, NULL);
   if (r != 0)
     return r;

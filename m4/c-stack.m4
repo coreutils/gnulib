@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 6
+# serial 7
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [# for STACK_DIRECTION
@@ -26,13 +26,13 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	 # include <sys/time.h>
 	 # include <sys/resource.h>
 	 #endif
-         #ifndef SIGSTKSZ
-         # define SIGSTKSZ 16384
-         #endif
+	 #ifndef SIGSTKSZ
+	 # define SIGSTKSZ 16384
+	 #endif
 
 	 static union
 	 {
-	   char buffer[SIGSTKSZ];
+	   char buffer[2 * SIGSTKSZ];
 	   long double ld;
 	   long u;
 	   void *p;
@@ -52,8 +52,9 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	   int r;
 
 	   st.ss_flags = 0;
-	   st.ss_sp = alternate_signal_stack.buffer;
-	   st.ss_size = sizeof alternate_signal_stack.buffer;
+	   /* Use the midpoint to avoid Irix sigaltstack bug.  */
+	   st.ss_sp = alternate_signal_stack.buffer + SIGSTKSZ;
+	   st.ss_size = SIGSTKSZ;
 	   r = sigaltstack (&st, 0);
 	   if (r != 0)
 	     return r;
@@ -98,6 +99,68 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
       a SIGSEGV which can be handled on an alternate stack established
       with sigaltstack.])
 
+    dnl The ss_sp field of a stack_t is, according to POSIX, the lowest address
+    dnl of the memory block designated as an alternate stack. But IRIX 5.3
+    dnl interprets it as the highest address!
+    AC_CACHE_CHECK([for correct stack_t interpretation],
+      [gl_cv_sigaltstack_low_base], [
+      AC_RUN_IFELSE([
+	AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+#ifndef SIGSTKSZ
+# define SIGSTKSZ 16384
+#endif
+volatile char *stack_lower_bound;
+volatile char *stack_upper_bound;
+static void check_stack_location (volatile char *addr)
+{
+  if (addr >= stack_lower_bound && addr <= stack_upper_bound)
+    exit (0);
+  else
+    exit (1);
+}
+static void stackoverflow_handler (int sig)
+{
+  char dummy;
+  check_stack_location (&dummy);
+}
+int main ()
+{
+  char mystack[2 * SIGSTKSZ];
+  stack_t altstack;
+  struct sigaction action;
+  /* Install the alternate stack.  */
+  altstack.ss_sp = mystack + SIGSTKSZ;
+  altstack.ss_size = SIGSTKSZ;
+  stack_lower_bound = (char *) altstack.ss_sp;
+  stack_upper_bound = (char *) altstack.ss_sp + altstack.ss_size - 1;
+  altstack.ss_flags = 0; /* no SS_DISABLE */
+  if (sigaltstack (&altstack, NULL) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset (&action.sa_mask);
+  action.sa_handler = &stackoverflow_handler;
+  action.sa_flags = SA_ONSTACK;
+  if (sigaction (SIGSEGV, &action, (struct sigaction *) NULL) < 0)
+    exit(3);
+  /* Provoke a SIGSEGV.  */
+  raise (SIGSEGV);
+  exit (3);
+}]])],
+      [gl_cv_sigaltstack_low_base=yes],
+      [gl_cv_sigaltstack_low_base=no],
+      [gl_cv_sigaltstack_low_base=cross-compiling])])
+   if test "$gl_cv_sigaltstack_low_base" = no; then
+      AC_DEFINE([SIGALTSTACK_SS_REVERSED], [1],
+	[Define if sigaltstack() interprets the stack_t.ss_sp field
+	 incorrectly, as the highest address of the alternate stack range
+	 rather than as the lowest address.])
+    fi
+
    AC_CACHE_CHECK([for precise C stack overflow detection],
      ac_cv_sys_xsi_stack_overflow_heuristic,
      [AC_TRY_RUN(
@@ -112,13 +175,13 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	 # include <sys/time.h>
 	 # include <sys/resource.h>
 	 #endif
-         #ifndef SIGSTKSZ
-         # define SIGSTKSZ 16384
-         #endif
+	 #ifndef SIGSTKSZ
+	 # define SIGSTKSZ 16384
+	 #endif
 
 	 static union
 	 {
-	   char buffer[SIGSTKSZ];
+	   char buffer[2 * SIGSTKSZ];
 	   long double ld;
 	   long u;
 	   void *p;
@@ -141,8 +204,8 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	 {
 	   if (0 < info->si_code)
 	     {
-               /* For XSI heuristics to work, we need uc_stack to describe
-	          the interrupted stack (as on Solaris), and not the
+	       /* For XSI heuristics to work, we need uc_stack to describe
+		  the interrupted stack (as on Solaris), and not the
 		  currently executing stack (as on Linux).  */
 	       ucontext_t const *user_context = context;
 	       char const *stack_min = user_context->uc_stack.ss_sp;
@@ -167,8 +230,9 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	   int r;
 
 	   st.ss_flags = 0;
-	   st.ss_sp = alternate_signal_stack.buffer;
-	   st.ss_size = sizeof alternate_signal_stack.buffer;
+	   /* Use the midpoint to avoid Irix sigaltstack bug.  */
+	   st.ss_sp = alternate_signal_stack.buffer + SIGSTKSZ;
+	   st.ss_size = SIGSTKSZ;
 	   r = sigaltstack (&st, 0);
 	   if (r != 0)
 	     return r;
