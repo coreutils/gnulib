@@ -6,6 +6,26 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-09-23  sys_socket      Under Windows (MinGW), the module now adds
+                            wrappers around Winsock functions, so that
+                            socket descriptors are now compatible with
+                            file descriptors.  In general, this change
+                            will simply improve your code's portability
+                            between POSIX platforms and Windows.  In
+                            particular, you will be able to use ioctl and
+                            close instead of ioctlsocket and closesocket, 
+                            and test errno instead of WSAGetLastError ().
+                            On the other hand, you have to audit your code to
+                            remove usage of these Winsock-specific functions.
+
+                            This change does not remove the need to call
+                            the gl_sockets_startup function from the sockets
+                            gnulib module.  Also, for now select is disabled
+                            when you include the sys_socket module; while
+                            the functionality will be restored soon, for
+                            efficiency it is suggested to use the poll system
+                            poll system call and gnulib module instead.
+
 2008-09-13  EOVERFLOW       The module is removed. Use module errno instead.
 
 2008-09-01  filename        The module does not define the function
