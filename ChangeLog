@@ -1,3 +1,8 @@
+2008-09-23  Simon Josefsson  <simon@josefsson.org>
+
+	* tests/test-perror.sh (tmpfiles): Cleanup temporary files on
+	success.
+
 2008-09-22  Eric Blake  <ebb9@byu.net>
             Bruno Haible  <bruno@clisp.org>
 

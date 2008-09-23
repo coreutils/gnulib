@@ -23,4 +23,5 @@ sed -e 's/^/foo: /' < t-perror.tmp > t-perror2.tmp
 diff t-perror2.tmp t-perror3.tmp
 test $? = 0 || { rm -fr $tmpfiles; exit 1; }
 
+rm -fr $tmpfiles
 exit 0
