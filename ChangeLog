@@ -1,5 +1,11 @@
 2008-09-23  Eric Blake  <ebb9@byu.net>
 
+	c-stack: avoid compiler optimizations when provoking overflow
+	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Make
+	recursion harder to optimize, to ensure a stack overflow occurs.
+	* tests/test-c-stack.c (recurse): Likewise.
+	Borrowed from libsigsegv.
+
 	c-stack: work around Irix sigaltstack bug
 	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Check
 	whether sigaltstack uses wrong end of stack_t (copied in part from

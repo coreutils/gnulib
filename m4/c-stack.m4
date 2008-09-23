@@ -64,15 +64,19 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	   act.sa_handler = segv_handler;
 	   return sigaction (SIGSEGV, &act, 0);
 	 }
-
-	 static int
-	 recurse (char *p)
+	 static volatile int *
+	 recurse_1 (volatile int n, volatile int *p)
 	 {
-	   char array[500];
-	   array[0] = 1;
-	   return *p + recurse (array);
+	   if (n >= 0)
+	     *recurse_1 (n + 1, p) += n;
+	   return p;
 	 }
-
+	 static int
+	 recurse (volatile int n)
+	 {
+	   int sum = 0;
+	   return *recurse_1 (n, &sum);
+	 }
 	 int
 	 main ()
 	 {
@@ -86,7 +90,7 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
 	   setrlimit (RLIMIT_STACK, &rl);
 	   #endif
 
-	   return c_stack_action () || recurse ("\1");
+	   return c_stack_action () || recurse (0);
 	 }
 	],
 	[ac_cv_sys_stack_overflow_works=yes],
@@ -242,15 +246,19 @@ int main ()
 	   act.sa_sigaction = segv_handler;
 	   return sigaction (SIGSEGV, &act, 0);
 	 }
-
-	 static int
-	 recurse (char *p)
+	 static volatile int *
+	 recurse_1 (volatile int n, volatile int *p)
 	 {
-	   char array[500];
-	   array[0] = 1;
-	   return *p + recurse (array);
+	   if (n >= 0)
+	     *recurse_1 (n + 1, p) += n;
+	   return p;
 	 }
-
+	 static int
+	 recurse (volatile int n)
+	 {
+	   int sum = 0;
+	   return *recurse_1 (n, &sum);
+	 }
 	 int
 	 main ()
 	 {
@@ -264,7 +272,7 @@ int main ()
 	   setrlimit (RLIMIT_STACK, &rl);
 	   #endif
 
-	   return c_stack_action () || recurse ("\1");
+	   return c_stack_action () || recurse (0);
 	 }
 	],
 	[ac_cv_sys_xsi_stack_overflow_heuristic=yes],

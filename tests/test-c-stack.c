@@ -41,15 +41,22 @@
     }									     \
   while (0)
 
-static long
-recurse (char *p)
+char *program_name;
+
+static volatile int *
+recurse_1 (volatile int n, volatile int *p)
 {
-  char array[500];
-  array[0] = 1;
-  return *p + recurse (array);
+  if (n >= 0)
+    *recurse_1 (n + 1, p) += n;
+  return p;
 }
 
-char *program_name;
+static int
+recurse (volatile int n)
+{
+  int sum = 0;
+  return *recurse_1 (n, &sum);
+}
 
 int
 main (int argc, char **argv)
@@ -72,8 +79,9 @@ main (int argc, char **argv)
 	  exit_failure = 77;
 	  ++*argv[argc]; /* Intentionally dereference NULL.  */
 	}
-      return recurse ("\1");
+      return recurse (0);
     }
+  fputs ("skipping test: ", stderr);
   perror ("c_stack_action");
   return 77;
 }
