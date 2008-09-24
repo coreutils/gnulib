@@ -72,6 +72,7 @@ rpl_fopen (const char *filename, const char *mode)
 
 	if (fstat (fd, &statbuf) >= 0 && !S_ISDIR (statbuf.st_mode))
 	  {
+	    close (fd);
 	    errno = ENOTDIR;
 	    return NULL;
 	  }

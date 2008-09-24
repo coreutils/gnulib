@@ -115,6 +115,7 @@ open (const char *filename, int flags, ...)
 
 	  if (fstat (fd, &statbuf) >= 0 && !S_ISDIR (statbuf.st_mode))
 	    {
+	      close (fd);
 	      errno = ENOTDIR;
 	      return -1;
 	    }
