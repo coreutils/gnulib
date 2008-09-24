@@ -35,6 +35,7 @@ open (const char *filename, int flags, ...)
 # undef open
 {
   mode_t mode;
+  int fd;
 
   mode = 0;
   if (flags & O_CREAT)
@@ -51,6 +52,11 @@ open (const char *filename, int flags, ...)
 
       va_end (arg);
     }
+
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  if (strcmp (filename, "/dev/null") == 0)
+    filename = "NUL";
+# endif
 
 # if OPEN_TRAILING_SLASH_BUG
   /* If the filename ends in a slash and one of O_CREAT, O_WRONLY, O_RDWR
@@ -85,11 +91,37 @@ open (const char *filename, int flags, ...)
     }
 # endif
 
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  if (strcmp (filename, "/dev/null") == 0)
-    filename = "NUL";
+  fd = open (filename, flags, mode);
+
+# if OPEN_TRAILING_SLASH_BUG
+  /* If the filename ends in a slash and fd does not refer to a directory,
+     then fail.
+     Rationale: POSIX <http://www.opengroup.org/susv3/basedefs/xbd_chap04.html>
+     says that
+       "A pathname that contains at least one non-slash character and that
+        ends with one or more trailing slashes shall be resolved as if a
+        single dot character ( '.' ) were appended to the pathname."
+     and
+       "The special filename dot shall refer to the directory specified by
+        its predecessor."
+     If the named file without the slash is not a directory, open() must fail
+     with ENOTDIR.  */
+  if (fd >= 0)
+    {
+      size_t len = strlen (filename);
+      if (len > 0 && filename[len - 1] == '/')
+	{
+	  struct stat statbuf;
+
+	  if (fstat (fd, &statbuf) >= 0 && !S_ISDIR (statbuf.st_mode))
+	    {
+	      errno = ENOTDIR;
+	      return -1;
+	    }
+	}
+    }
 # endif
 
-  return open (filename, flags, mode);
+  return fd;
 }
 #endif

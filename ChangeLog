@@ -1,3 +1,19 @@
+2008-09-24  Bruno Haible  <bruno@clisp.org>
+
+	Ensure that a filename ending in a slash cannot be used to access a
+	non-directory.
+	* lib/open.c (rpl_open): When the filename ends in a slash, use fstat()
+	to check whether it's really a directory.
+	* lib/fopen.c: Include fcntl.h, unistd.h.
+	(rpl_fopen): When the filename ends in a slash, use open(), fstat(),
+	and fdopen().
+	* modules/fopen (Depends-on): Add unistd.
+	* tests/test-open.c (main): Try to open "/dev/null/" as a directory.
+	* tests/test-fopen.c (main): Likewise.
+	* doc/posix-functions/open.texi: Mention the HP-UX, Solaris bug.
+	* doc/posix-functions/fopen.texi: Likewise.
+	Reported by Eric Blake.
+
 2008-09-23  Eric Blake  <ebb9@byu.net>
 
 	c-stack: avoid compiler optimizations when provoking overflow
