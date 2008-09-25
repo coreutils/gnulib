@@ -3,7 +3,6 @@ tests/test-sys_select.c
 
 Depends-on:
 stdbool
-sys_select
 netinet_in
 arpa_inet
 extensions
