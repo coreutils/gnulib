@@ -2929,12 +2929,19 @@ func_import ()
   fi
   func_note_Makefile_am_edit "" ACLOCAL_AMFLAGS "-I ${m4base}"
   {
-    # Find the first parent directory of $m4base that contains a Makefile.am.
+    # Find the first parent directory of $m4base that contains or will contain
+    # a Makefile.am.
     sed_last='s,^.*/\([^/][^/]*\)//*$,\1/,
 s,//*$,/,'
     sed_butlast='s,[^/][^/]*//*$,,'
     dir1="${m4base}/"; dir2=""
-    while test -n "$dir1" && test ! -f "${destdir}/${dir1}Makefile.am"; do
+    while test -n "$dir1" \
+          && ! { test -f "${destdir}/${dir1}Makefile.am" \
+                 || test "${dir1}Makefile.am" = "$sourcebase/$makefile_am" \
+                 || test "./${dir1}Makefile.am" = "$sourcebase/$makefile_am" \
+                 || { test -n "$inctests" \
+                      && { test "${dir1}Makefile.am" = "$testsbase/$makefile_am" \
+                           || test "./${dir1}Makefile.am" = "$testsbase/$makefile_am"; }; }; }; do
       dir2=`echo "$dir1" | sed -e "$sed_last"`"$dir2"
       dir1=`echo "$dir1" | sed -e "$sed_butlast"`
     done

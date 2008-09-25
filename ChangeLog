@@ -1,3 +1,8 @@
+2008-09-25  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): When computing the edits, consider not
+	only the Makefile.ams that exist but also those that will be generated.
+
 2008-09-25  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/sys_select-tests (Depends-on): Remove sys_select itself,
