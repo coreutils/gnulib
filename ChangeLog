@@ -1,3 +1,9 @@
+2008-09-25  Derek Price  <derek@ximbiot.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Report all license incompatibilities, not
+	just the first one.
+
 2008-09-25  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): When computing the edits, consider not

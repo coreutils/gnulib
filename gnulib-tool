@@ -2516,6 +2516,7 @@ func_import ()
 
   # If --lgpl, verify that the licenses of modules are compatible.
   if test -n "$lgpl"; then
+    license_incompatibilities=
     for module in $main_modules; do
       license=`func_get_license $module`
       case $license in
@@ -2526,13 +2527,13 @@ func_import ()
             yes | 3)
               case $license in
                 LGPL | LGPLv2+) ;;
-                *) func_fatal_error "incompatible license on module $module: $license" ;;
+                *) func_append license_incompatibilities "$module $license$nl" ;;
               esac
               ;;
             2)
               case $license in
                 LGPLv2+) ;;
-                *) func_fatal_error "incompatible license on module $module: $license" ;;
+                *) func_append license_incompatibilities "$module $license$nl" ;;
               esac
               ;;
             *) func_fatal_error "invalid value lgpl=$lgpl" ;;
@@ -2540,6 +2541,13 @@ func_import ()
           ;;
       esac
     done
+    if test -n "$license_incompatibilities"; then
+      # Format the license incompatibilities as a table.
+      sed_expand_column1_width50_indent17='s,^\([^ ]*\) ,\1                                                   ,
+s,^\(.................................................[^ ]*\) *,                 \1 ,'
+      license_incompatibilities=`echo "$license_incompatibilities" | sed -e "$sed_expand_column1_width50_indent17"`
+      func_fatal_error "incompatible license on modules:$nl$license_incompatibilities"
+    fi
   fi
 
   # Show banner notice of every module.
