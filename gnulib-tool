@@ -1664,6 +1664,10 @@ func_execute_command ()
 # - po_domain       prefix of i18n domain to use (without -gnulib suffix)
 # - actioncmd       (optional) command that will reproduce this invocation
 # - for_test        true if creating a package for testing, false otherwise
+# - destfile        filename relative to destdir of makefile being generated
+# Input/Output:
+# - makefile_am_edits and makefile_am_edit${edit}_{dir,var,val}
+#                   list of edits to be done to Makefile.am variables
 # Output:
 # - uses_subdirs    nonempty if object files in subdirs exist
 func_emit_lib_Makefile_am ()
@@ -1748,6 +1752,7 @@ func_emit_lib_Makefile_am ()
   fi
   echo
   if test -z "$makefile_name"; then
+    echo "SUBDIRS ="
     echo "noinst_HEADERS ="
     echo "noinst_LIBRARIES ="
     echo "noinst_LTLIBRARIES ="
@@ -1766,6 +1771,22 @@ func_emit_lib_Makefile_am ()
     echo "CLEANFILES ="
     echo "DISTCLEANFILES ="
     echo "MAINTAINERCLEANFILES ="
+  fi
+  # Execute edits that apply to the Makefile.am being generated.
+  edit=0
+  while test $edit != $makefile_am_edits; do
+    edit=`expr $edit + 1`
+    eval dir=\"\$makefile_am_edit${edit}_dir\"
+    eval var=\"\$makefile_am_edit${edit}_var\"
+    eval val=\"\$makefile_am_edit${edit}_val\"
+    if test -n "$var"; then
+      if test "${dir}Makefile.am" = "$destfile" || test "./${dir}Makefile.am" = "$destfile"; then
+        echo "${var} += ${val}"
+        eval "makefile_am_edit${edit}_var="
+      fi
+    fi
+  done
+  if test -z "$makefile_name"; then
     echo
     echo "AM_CPPFLAGS ="
   fi
@@ -1897,6 +1918,10 @@ func_emit_po_POTFILES_in ()
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
 # - for_test        true if creating a package for testing, false otherwise
 # - use_libtests    true if a libtests.a should be built, false otherwise
+# - destfile        filename relative to destdir of makefile being generated
+# Input/Output:
+# - makefile_am_edits and makefile_am_edit${edit}_{dir,var,val}
+#                   list of edits to be done to Makefile.am variables
 # Output:
 # - uses_subdirs    nonempty if object files in subdirs exist
 func_emit_tests_Makefile_am ()
@@ -2008,6 +2033,20 @@ func_emit_tests_Makefile_am ()
   echo "CLEANFILES ="
   echo "DISTCLEANFILES ="
   echo "MAINTAINERCLEANFILES ="
+  # Execute edits that apply to the Makefile.am being generated.
+  edit=0
+  while test $edit != $makefile_am_edits; do
+    edit=`expr $edit + 1`
+    eval dir=\"\$makefile_am_edit${edit}_dir\"
+    eval var=\"\$makefile_am_edit${edit}_var\"
+    eval val=\"\$makefile_am_edit${edit}_val\"
+    if test -n "$var"; then
+      if test "${dir}Makefile.am" = "$destfile" || test "./${dir}Makefile.am" = "$destfile"; then
+        echo "${var} += ${val}"
+        eval "makefile_am_edit${edit}_var="
+      fi
+    fi
+  done
   echo
   echo "AM_CPPFLAGS = \\"
   echo "  -I. -I\$(srcdir) \\"
@@ -2857,8 +2896,54 @@ func_import ()
   # Create normal Makefile.ams.
   for_test=false
 
+  # Setup list of Makefile.am edits that are to be performed afterwards.
+  # Some of these edits apply to files that we will generate; others are
+  # under the responsibility of the developer.
+  makefile_am_edits=0
+  # func_note_Makefile_am_edit dir var value
+  # remembers that ${dir}Makefile.am needs to be edited to that ${var} mentions
+  # ${value}.
+  func_note_Makefile_am_edit ()
+  {
+    makefile_am_edits=`expr $makefile_am_edits + 1`
+    eval makefile_am_edit${makefile_am_edits}_dir=\"\$1\"
+    eval makefile_am_edit${makefile_am_edits}_var=\"\$2\"
+    eval makefile_am_edit${makefile_am_edits}_val=\"\$3\"
+  }
+  if test "$makefile_am" = Makefile.am; then
+    sourcebase_dir=`echo "$sourcebase" | sed -n -e 's,/[^/]*$,/,p'`
+    sourcebase_base=`basename "$sourcebase"`
+    func_note_Makefile_am_edit "$sourcebase_dir" SUBDIRS "$sourcebase_base"
+  fi
+  if test -n "$pobase"; then
+    pobase_dir=`echo "$pobase" | sed -n -e 's,/[^/]*$,/,p'`
+    pobase_base=`basename "$pobase"`
+    func_note_Makefile_am_edit "$pobase_dir" SUBDIRS "$pobase_base"
+  fi
+  if test -n "$inctests"; then
+    if test "$makefile_am" = Makefile.am; then
+      testsbase_dir=`echo "$testsbase" | sed -n -e 's,/[^/]*$,/,p'`
+      testsbase_base=`basename "$testsbase"`
+      func_note_Makefile_am_edit "$testsbase_dir" SUBDIRS "$testsbase_base"
+    fi
+  fi
+  func_note_Makefile_am_edit "" ACLOCAL_AMFLAGS "-I ${m4base}"
+  {
+    # Find the first parent directory of $m4base that contains a Makefile.am.
+    sed_last='s,^.*/\([^/][^/]*\)//*$,\1/,
+s,//*$,/,'
+    sed_butlast='s,[^/][^/]*//*$,,'
+    dir1="${m4base}/"; dir2=""
+    while test -n "$dir1" && test ! -f "${destdir}/${dir1}Makefile.am"; do
+      dir2=`echo "$dir1" | sed -e "$sed_last"`"$dir2"
+      dir1=`echo "$dir1" | sed -e "$sed_butlast"`
+    done
+    func_note_Makefile_am_edit "$dir1" EXTRA_DIST "${dir2}gnulib-cache.m4"
+  }
+
   # Create library makefile.
   func_dest_tmpfilename $sourcebase/$makefile_am
+  destfile="$sourcebase/$makefile_am"
   modules="$main_modules"
   func_emit_lib_Makefile_am > "$tmpfile"
   if test -f "$destdir"/$sourcebase/$makefile_am; then
@@ -3252,6 +3337,7 @@ func_import ()
   if test -n "$inctests"; then
     # Create tests makefile.
     func_dest_tmpfilename $testsbase/$makefile_am
+    destfile="$testsbase/$makefile_am"
     modules="$testsrelated_modules"
     func_emit_tests_Makefile_am > "$tmpfile"
     if test -f "$destdir"/$testsbase/$makefile_am; then
@@ -3444,36 +3530,16 @@ func_import ()
       echo "  - \"include $makefile_name\" from within \"$testsbase/Makefile.am\","
     fi
   fi
-  if test "$makefile_am" = Makefile.am; then
-    sourcebase_dir=`echo "$sourcebase" | sed -n -e 's,/[^/]*$,/,p'`
-    sourcebase_base=`basename "$sourcebase"`
-    echo "  - mention \"${sourcebase_base}\" in SUBDIRS in ${sourcebase_dir}Makefile.am,"
-  fi
-  if test -n "$pobase"; then
-    pobase_dir=`echo "$pobase" | sed -n -e 's,/[^/]*$,/,p'`
-    pobase_base=`basename "$pobase"`
-    echo "  - mention \"${pobase_base}\" in SUBDIRS in ${pobase_dir}Makefile.am,"
-  fi
-  if test -n "$inctests"; then
-    if test "$makefile_am" = Makefile.am; then
-      testsbase_dir=`echo "$testsbase" | sed -n -e 's,/[^/]*$,/,p'`
-      testsbase_base=`basename "$testsbase"`
-      echo "  - mention \"${testsbase_base}\" in SUBDIRS in ${testsbase_dir}Makefile.am,"
+  edit=0
+  while test $edit != $makefile_am_edits; do
+    edit=`expr $edit + 1`
+    eval dir=\"\$makefile_am_edit${edit}_dir\"
+    eval var=\"\$makefile_am_edit${edit}_var\"
+    eval val=\"\$makefile_am_edit${edit}_val\"
+    if test -n "$var"; then
+      echo "  - mention \"${val}\" in ${var} in ${dir}Makefile.am,"
     fi
-  fi
-  echo "  - mention \"-I ${m4base}\" in ACLOCAL_AMFLAGS in Makefile.am,"
-  {
-    # Find the first parent directory of $m4base that contains a Makefile.am.
-    sed_last='s,^.*/\([^/][^/]*\)//*$,\1/,
-s,//*$,/,'
-    sed_butlast='s,[^/][^/]*//*$,,'
-    dir1="${m4base}/"; dir2=""
-    while test -n "$dir1" && test ! -f "${destdir}/${dir1}Makefile.am"; do
-      dir2=`echo "$dir1" | sed -e "$sed_last"`"$dir2"
-      dir1=`echo "$dir1" | sed -e "$sed_butlast"`
-    done
-    echo "  - mention ${dir2}gnulib-cache.m4 in EXTRA_DIST in ${dir1}Makefile.am."
-  }
+  done
   echo "  - invoke ${macro_prefix}_EARLY in $configure_ac, right after AC_PROG_CC,"
   echo "  - invoke ${macro_prefix}_INIT in $configure_ac."
 }
@@ -3630,8 +3696,12 @@ func_create_testdir ()
   # Create Makefile.ams that are for testing.
   for_test=true
 
+  # No special edits are needed.
+  makefile_am_edits=0
+
   # Create $sourcebase/Makefile.am.
   mkdir -p "$testdir/$sourcebase"
+  destfile="$sourcebase/Makefile.am"
   func_emit_lib_Makefile_am > "$testdir/$sourcebase/Makefile.am"
   any_uses_subdirs="$uses_subdirs"
 
@@ -3667,6 +3737,7 @@ func_create_testdir ()
     auxdir=`echo "$testsbase/"|sed 's%[^/][^/]*//*%../%g'`"$auxdir"
     # Create $testsbase/Makefile.am.
     use_libtests=false
+    destfile="$testsbase/Makefile.am"
     func_emit_tests_Makefile_am > "$testdir/$testsbase/Makefile.am"
     any_uses_subdirs="$any_uses_subdirs$uses_subdirs"
     # Create $testsbase/configure.ac.

@@ -1,3 +1,16 @@
+2008-09-25  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool: Don't ask the user to perform edits in the generated
+	Makefile.ams.
+	(func_emit_lib_Makefile_am): Emit empty SUBDIRS. Execute edits that
+	apply to the Makefile.am being generated.
+	(func_emit_tests_Makefile_am): Execute edits that apply to the
+	Makefile.am being generated.
+	(func_import): Setup list of Makefile.am edits before emitting the
+	Makefile.ams, not at the end.
+	(func_create_testdir): Update.
+	Reported by Yoann Vandoorselaere <yoann.v@prelude-ids.com>.
+
 2008-09-25  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
 	* gnulib-tool (func_import): Store the --tests-base option in the
