@@ -2811,6 +2811,7 @@ func_import ()
     func_append actioncmd " --po-base=$pobase"
   fi
   func_append actioncmd " --doc-base=$docbase"
+  func_append actioncmd " --tests-base=$testsbase"
   func_append actioncmd " --aux-dir=$auxdir"
   if test -n "$inctests"; then
     func_append actioncmd " --with-tests"

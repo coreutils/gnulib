@@ -1,3 +1,8 @@
+2008-09-25  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+
+	* gnulib-tool (func_import): Store the --tests-base option in the
+	comment in gnulib-cache.m4.
+
 2008-09-24  Paolo Bonzini  <bonzini@gnu.org>
 
 	* NEWS: Document increased portability that sys_select now provides.
