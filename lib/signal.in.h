@@ -44,6 +44,17 @@ extern "C" {
 #endif
 
 
+#if @GNULIB_SIGNAL_H_SIGPIPE@
+# ifndef SIGPIPE
+/* Define SIGPIPE to a value that does not overlap with other signals.  */
+#  define SIGPIPE 13
+#  define GNULIB_defined_SIGPIPE 1
+/* To actually use SIGPIPE, you also need the gnulib modules 'sigprocmask',
+   'write', 'stdio'.  */
+# endif
+#endif
+
+
 #if !@HAVE_POSIX_SIGNALBLOCKING@
 
 /* Maximum signal number + 1.  */
@@ -92,7 +103,17 @@ extern int sigprocmask (int operation, const sigset_t *set, sigset_t *old_set);
    handler.  */
 extern void (*signal (int sig, void (*func) (int))) (int);
 
+# if GNULIB_defined_SIGPIPE
+
+/* Raise signal SIG.  */
+#  undef raise
+#  define raise rpl_raise
+extern int raise (int sig);
+
+# endif
+
 #endif /* !@HAVE_POSIX_SIGNALBLOCKING@ */
+
 
 #if !@HAVE_SIGACTION@
 

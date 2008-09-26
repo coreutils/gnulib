@@ -23,6 +23,16 @@
 
 2008-09-26  Bruno Haible  <bruno@clisp.org>
 
+	* lib/signal.in.h (SIGPIPE): Define to a replacement value.
+	(raise): New declaration.
+	* lib/sigprocmask.c (SIGPIPE_handler): New variable.
+	(ext_signal): New function.
+	(rpl_raise): New function.
+	* m4/signal_h.m4 (gl_SIGNAL_H_DEFAULTS): Initialize
+	GNULIB_SIGNAL_H_SIGPIPE.
+	* modules/signal (Makefile.am): Substitute GNULIB_SIGNAL_H_SIGPIPE.
+	* doc/posix-headers/signal.texi: Mention the SIGPIPE issue.
+
 	* modules/sigpipe: New file.
 	* m4/sigpipe.m4: New file.
 

@@ -10,18 +10,22 @@ Portability problems fixed by Gnulib:
 @item
 @code{sigset_t} is only declared in <sys/types.h> on some platforms:
 mingw.
-
 @item
 @code{struct sigaction} and @code{siginfo_t} are missing on some
 platforms:
 mingw.
-
 @item
 @code{struct sigaction} lacks the @code{sa_sigaction} member on some
 platforms:
 Irix 5.3, Interix 3.5.
+@item
+The signal @code{SIGPIPE} is not defined on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Many signals are not defined on some platforms:
+mingw.
 @end itemize
