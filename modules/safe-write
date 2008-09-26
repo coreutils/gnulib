@@ -8,6 +8,7 @@ m4/safe-write.m4
 
 Depends-on:
 safe-read
+write
 
 configure.ac:
 gl_SAFE_WRITE
