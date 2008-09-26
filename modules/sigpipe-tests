@@ -1,0 +1,14 @@
+Files:
+tests/test-sigpipe.c
+tests/test-sigpipe.sh
+
+Depends-on:
+write
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sigpipe.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-sigpipe
+

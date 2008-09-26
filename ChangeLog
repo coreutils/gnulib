@@ -23,6 +23,10 @@
 
 2008-09-26  Bruno Haible  <bruno@clisp.org>
 
+	* modules/sigpipe-tests: New file.
+	* tests/test-sigpipe.c: New file.
+	* tests/test-sigpipe.sh: New file.
+
 	* modules/write: New file.
 	* lib/unistd.in.h: Include <sys/types.h>.
 	(write): New declaration.
