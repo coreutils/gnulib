@@ -3,7 +3,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xbd/errno.h.html}
 
-Gnulib module: errno, EOVERFLOW
+Gnulib module: errno
 
 Portability problems fixed by Gnulib:
 @itemize
