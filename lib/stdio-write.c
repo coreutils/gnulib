@@ -49,7 +49,8 @@
       if (FAILED && GetLastError () == ERROR_NO_DATA && ferror (stream))      \
 	{								      \
 	  int fd = fileno (stream);					      \
-	  if (fd >= 0 && GetFileType (_get_osfhandle (fd)) == FILE_TYPE_PIPE) \
+	  if (fd >= 0							      \
+	      && GetFileType ((HANDLE) _get_osfhandle (fd)) == FILE_TYPE_PIPE)\
 	    {								      \
 	      /* Try to raise signal SIGPIPE.  */			      \
 	      raise (SIGPIPE);						      \
