@@ -160,5 +160,53 @@ main (int argc, char **argv)
   p = "UTC+25:00";
   ASSERT (!get_date (&result, p, &now));
 
+	/* Check for several invalid countable dayshifts */
+  now.tv_sec = 4711;
+  now.tv_nsec = 1267;
+  p = "UTC+4:00 +40 yesterday";
+  ASSERT (!get_date (&result, p, &now));
+  p = "UTC+4:00 next yesterday";
+  ASSERT (!get_date (&result, p, &now));
+  p = "UTC+4:00 tomorrow ago";
+  ASSERT (!get_date (&result, p, &now));
+  p = "UTC+4:00 40 now ago";
+  ASSERT (!get_date (&result, p, &now));
+  p = "UTC+4:00 last tomorrow";
+  ASSERT (!get_date (&result, p, &now));
+  p = "UTC+4:00 -4 today";
+  ASSERT (!get_date (&result, p, &now));
+
+  /* And check correct usage of dayshifts */
+  now.tv_sec = 4711;
+  now.tv_nsec = 1267;
+  p = "UTC+400 tomorrow";
+  ASSERT (get_date (&result, p, &now));
+  LOG (p, now, result);
+  p = "UTC+400 +1 day";
+  ASSERT (get_date (&result2, p, &now));
+  LOG (p, now, result2);
+  ASSERT (result.tv_sec == result2.tv_sec
+	  && result.tv_nsec == result2.tv_nsec);
+  now.tv_sec = 4711;
+  now.tv_nsec = 1267;
+  p = "UTC+400 yesterday";
+  ASSERT (get_date (&result, p, &now));
+  LOG (p, now, result);
+  p = "UTC+400 1 day ago";
+  ASSERT (get_date (&result2, p, &now));
+  LOG (p, now, result2);
+  ASSERT (result.tv_sec == result2.tv_sec
+	  && result.tv_nsec == result2.tv_nsec);
+  now.tv_sec = 4711;
+  now.tv_nsec = 1267;
+  p = "UTC+400 now";
+  ASSERT (get_date (&result, p, &now));
+  LOG (p, now, result);
+  p = "UTC+400 +0 minutes"; /* silly, but simple "UTC+400" is different*/
+  ASSERT (get_date (&result2, p, &now));
+  LOG (p, now, result2);
+  ASSERT (result.tv_sec == result2.tv_sec
+	  && result.tv_nsec == result2.tv_nsec);
+
   return 0;
 }

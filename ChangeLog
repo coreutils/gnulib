@@ -1,3 +1,15 @@
+2008-09-29  Ondřej Vašík  <ovasik@redhat.com>
+
+	getdate.y: disallow countable dayshifts like "4 yesterday ago"
+	* lib/getdate.y (relative_time_table) [tDAY_SHIFT]: New type for
+	exactly specified dayshifts.
+	(dayshift): New rule.
+	(rel): Add dayshift.
+	(relative_time_table) [tomorrow, yesterday, today, now]:
+	Use tDAY_SHIFT in place of tDAY_UNIT.
+	* tests/test-getdate.c: Add tests for now-disallowed countable
+	dayshifts, e.g., "4 yesterday ago".
+
 2008-09-29  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-posix_spawn1.c: Renamed from tests/test-posix_spawn.c.

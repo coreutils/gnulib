@@ -293,7 +293,7 @@ set_hhmmss (parser_control *pc, long int hour, long int minutes,
 %token tAGO tDST
 
 %token tYEAR_UNIT tMONTH_UNIT tHOUR_UNIT tMINUTE_UNIT tSEC_UNIT
-%token <intval> tDAY_UNIT
+%token <intval> tDAY_UNIT tDAY_SHIFT
 
 %token <intval> tDAY tDAYZONE tLOCAL_ZONE tMERIDIAN
 %token <intval> tMONTH tORDINAL tZONE
@@ -304,7 +304,7 @@ set_hhmmss (parser_control *pc, long int hour, long int minutes,
 %type <intval> o_colon_minutes o_merid
 %type <timespec> seconds signed_seconds unsigned_seconds
 
-%type <rel> relunit relunit_snumber
+%type <rel> relunit relunit_snumber dayshift
 
 %%
 
@@ -502,6 +502,8 @@ rel:
       { apply_relative_time (pc, $1, -1); }
   | relunit
       { apply_relative_time (pc, $1, 1); }
+  | dayshift
+      { apply_relative_time (pc, $1, 1); }
   ;
 
 relunit:
@@ -561,6 +563,11 @@ relunit_snumber:
       { $$ = RELATIVE_TIME_0; $$.minutes = $1.value; }
   | tSNUMBER tSEC_UNIT
       { $$ = RELATIVE_TIME_0; $$.seconds = $1.value; }
+  ;
+
+dayshift:
+    tDAY_SHIFT
+      { $$ = RELATIVE_TIME_0; $$.day = $1; }
   ;
 
 seconds: signed_seconds | unsigned_seconds;
@@ -669,10 +676,10 @@ static table const time_units_table[] =
 /* Assorted relative-time words. */
 static table const relative_time_table[] =
 {
-  { "TOMORROW",	tDAY_UNIT,	 1 },
-  { "YESTERDAY",tDAY_UNIT,	-1 },
-  { "TODAY",	tDAY_UNIT,	 0 },
-  { "NOW",	tDAY_UNIT,	 0 },
+  { "TOMORROW",	tDAY_SHIFT,	 1 },
+  { "YESTERDAY",tDAY_SHIFT,	-1 },
+  { "TODAY",	tDAY_SHIFT,	 0 },
+  { "NOW",	tDAY_SHIFT,	 0 },
   { "LAST",	tORDINAL,	-1 },
   { "THIS",	tORDINAL,	 0 },
   { "NEXT",	tORDINAL,	 1 },
