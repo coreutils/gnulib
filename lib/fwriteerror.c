@@ -1,5 +1,5 @@
 /* Detect write error on a stream.
-   Copyright (C) 2003-2006 Free Software Foundation, Inc.
+   Copyright (C) 2003-2006, 2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,19 @@ do_fwriteerror (FILE *fp, bool ignore_ebadf)
       stdout_closed = true;
     }
 
-  /* Need to
+  /* This function returns an error indication if there was a previous failure
+     or if fclose failed, with two exceptions:
+       - Ignore an fclose failure if there was no previous error, no data
+	 remains to be flushed, and fclose failed with EBADF.  That can
+	 happen when a program like cp is invoked like this `cp a b >&-'
+	 (i.e., with standard output closed) and doesn't generate any
+	 output (hence no previous error and nothing to be flushed).
+       - Ignore an fclose failure due to EPIPE.  That can happen when a
+	 program blocks or ignores SIGPIPE, and the output pipe or socket
+	 has no readers now.  The EPIPE tells us that we should stop writing
+	 to this output.  That's what we are doing anyway here.
+
+     Need to
      1. test the error indicator of the stream,
      2. flush the buffers both in userland and in the kernel, through fclose,
         testing for error again.  */
@@ -71,12 +83,12 @@ do_fwriteerror (FILE *fp, bool ignore_ebadf)
       if (fflush (fp))
 	goto close_preserving_errno; /* errno is set here */
       if (fclose (fp) && errno != EBADF)
-	return -1; /* errno is set here */
+	goto got_errno; /* errno is set here */
     }
   else
     {
       if (fclose (fp))
-	return -1; /* errno is set here */
+	goto got_errno; /* errno is set here */
     }
 
   return 0;
@@ -88,8 +100,13 @@ do_fwriteerror (FILE *fp, bool ignore_ebadf)
     int saved_errno = errno;
     fclose (fp);
     errno = saved_errno;
-    return -1;
   }
+ got_errno:
+  /* There's an error.  Ignore EPIPE.  */
+  if (errno == EPIPE)
+    return 0;
+  else
+    return -1;
 }
 
 int
