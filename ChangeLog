@@ -1,5 +1,10 @@
 2008-09-26  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_version): Change directory to $gnulib_dir before
+	invoking git-version-gen.
+
+2008-09-26  Bruno Haible  <bruno@clisp.org>
+
 	* posix-modules: Update to directory names changed on 2008-01-19.
 	Remove commas in output before splitting into words. No more need to
 	avoid 'ftruncate' since 2007-02-19.

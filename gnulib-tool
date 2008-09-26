@@ -216,7 +216,7 @@ q
     date=`echo "$date" | sed -e "$sed_year_before_time"`
     # Use GNU date to compute the time in GMT.
     date=`date -d "$date" -u +"%Y-%m-%d %H:%M:%S"`
-    version=' '`"$gnulib_dir"/build-aux/git-version-gen /dev/null | sed -e 's/-dirty/-modified/'`
+    version=' '`cd "$gnulib_dir" && ./build-aux/git-version-gen /dev/null | sed -e 's/-dirty/-modified/'`
   else
     if test -d "$gnulib_dir"/CVS \
        && (cvs --version) >/dev/null 2>/dev/null; then
