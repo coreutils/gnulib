@@ -4,9 +4,9 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/printf.html}
 
-Gnulib module: printf-posix
+Gnulib module: printf-posix or stdio, sigpipe
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by Gnulib module @code{printf-posix}:
 @itemize
 @item
 This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
@@ -48,6 +48,14 @@ mingw, BeOS.
 @item
 This function can crash in out-of-memory conditions on some platforms:
 MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{stdio} or @code{printf-posix}, together with module @code{sigpipe}:
+@itemize
+@item
+When writing to a pipe with no readers, this function fails, instead of
+obeying the current @code{SIGPIPE} handler, on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

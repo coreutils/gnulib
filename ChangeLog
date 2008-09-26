@@ -23,6 +23,43 @@
 
 2008-09-26  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdio.in.h (fprintf, vfprintf, printf, vprintf, fputc, putc,
+	putchar, fputs, puts, fwrite): Replace when REPLACE_STDIO_WRITE_FUNCS
+	and GNULIB_STDIO_H_SIGPIPE are set.
+	* lib/stdio-write.c: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H): Set GNULIB_FPRINTF, GNULIB_PRINTF,
+	GNULIB_VFPRINTF, GNULIB_VPRINTF, GNULIB_FPUTC, GNULIB_PUTC,
+	GNULIB_PUTCHAR, GNULIB_FPUTS, GNULIB_PUTS, GNULIB_FWRITE,
+	REPLACE_STDIO_WRITE_FUNCS.
+	(gl_STDIO_H_DEFAULTS): Initialize GNULIB_FPRINTF, GNULIB_PRINTF,
+	GNULIB_VFPRINTF, GNULIB_VPRINTF, GNULIB_FPUTC, GNULIB_PUTC,
+	GNULIB_PUTCHAR, GNULIB_FPUTS, GNULIB_PUTS, GNULIB_FWRITE,
+	GNULIB_STDIO_H_SIGPIPE, REPLACE_STDIO_WRITE_FUNCS.
+	* modules/stdio (Files): Add lib/stdio-write.c.
+	(Makefile.am): Substitute GNULIB_FPRINTF, GNULIB_PRINTF,
+	GNULIB_VFPRINTF, GNULIB_VPRINTF, GNULIB_FPUTC, GNULIB_PUTC,
+	GNULIB_PUTCHAR, GNULIB_FPUTS, GNULIB_PUTS, GNULIB_FWRITE,
+	GNULIB_STDIO_H_SIGPIPE, REPLACE_STDIO_WRITE_FUNCS.
+	* m4/fprintf-posix.m4 (gl_REPLACE_FPRINTF): Define
+	REPLACE_FPRINTF_POSIX.
+	* m4/printf-posix-rpl.m4 (gl_REPLACE_PRINTF): Define
+	REPLACE_PRINTF_POSIX.
+	* m4/vfprintf-posix.m4 (gl_REPLACE_VFPRINTF): Define
+	REPLACE_VFPRINTF_POSIX.
+	* m4/vprintf-posix.m4 (gl_REPLACE_VPRINTF): Define
+	REPLACE_VPRINTF_POSIX.
+	* doc/posix-functions/fprintf.texi: Mention the sigpipe module and the
+	SIGPIPE issue.
+	* doc/posix-functions/fputc.texi: Likewise.
+	* doc/posix-functions/fputs.texi: Likewise.
+	* doc/posix-functions/fwrite.texi: Likewise.
+	* doc/posix-functions/printf.texi: Likewise.
+	* doc/posix-functions/putc.texi: Likewise.
+	* doc/posix-functions/putchar.texi: Likewise.
+	* doc/posix-functions/puts.texi: Likewise.
+	* doc/posix-functions/vfprintf.texi: Likewise.
+	* doc/posix-functions/vprintf.texi: Likewise.
+
 	* modules/safe-write (Depends-on): Add write.
 
 	* modules/sigpipe-tests: New file.

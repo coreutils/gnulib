@@ -4,10 +4,14 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/fputc.html}
 
-Gnulib module: ---
+Gnulib module: stdio, sigpipe
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+When writing to a pipe with no readers, this function fails, instead of
+obeying the current @code{SIGPIPE} handler, on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

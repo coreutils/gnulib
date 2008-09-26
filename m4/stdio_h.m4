@@ -1,4 +1,4 @@
-# stdio_h.m4 serial 12
+# stdio_h.m4 serial 13
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,28 @@ AC_DEFUN([gl_STDIO_H],
 [
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   gl_CHECK_NEXT_HEADERS([stdio.h])
+  dnl No need to create extra modules for these functions. Everyone who uses
+  dnl <stdio.h> likely needs them.
+  GNULIB_FPRINTF=1
+  GNULIB_PRINTF=1
+  GNULIB_VFPRINTF=1
+  GNULIB_VPRINTF=1
+  GNULIB_FPUTC=1
+  GNULIB_PUTC=1
+  GNULIB_PUTCHAR=1
+  GNULIB_FPUTS=1
+  GNULIB_PUTS=1
+  GNULIB_FWRITE=1
+  dnl This ifdef is just an optimization, to avoid performing a configure
+  dnl check whose result is not used. It does not make the test of
+  dnl GNULIB_STDIO_H_SIGPIPE or GNULIB_SIGPIPE redundant.
+  m4_ifdef([gl_SIGNAL_SIGPIPE], [
+    gl_SIGNAL_SIGPIPE
+    if test $gl_cv_header_signal_h_SIGPIPE != yes; then
+      REPLACE_STDIO_WRITE_FUNCS=1
+      AC_LIBOBJ([stdio-write])
+    fi
+  ])
 ])
 
 AC_DEFUN([gl_STDIO_MODULE_INDICATOR],
@@ -19,11 +41,15 @@ AC_DEFUN([gl_STDIO_MODULE_INDICATOR],
 
 AC_DEFUN([gl_STDIO_H_DEFAULTS],
 [
+  GNULIB_FPRINTF=0;              AC_SUBST([GNULIB_FPRINTF])
   GNULIB_FPRINTF_POSIX=0;        AC_SUBST([GNULIB_FPRINTF_POSIX])
+  GNULIB_PRINTF=0;               AC_SUBST([GNULIB_PRINTF])
   GNULIB_PRINTF_POSIX=0;         AC_SUBST([GNULIB_PRINTF_POSIX])
   GNULIB_SNPRINTF=0;             AC_SUBST([GNULIB_SNPRINTF])
   GNULIB_SPRINTF_POSIX=0;        AC_SUBST([GNULIB_SPRINTF_POSIX])
+  GNULIB_VFPRINTF=0;             AC_SUBST([GNULIB_VFPRINTF])
   GNULIB_VFPRINTF_POSIX=0;       AC_SUBST([GNULIB_VFPRINTF_POSIX])
+  GNULIB_VPRINTF=0;              AC_SUBST([GNULIB_VPRINTF])
   GNULIB_VPRINTF_POSIX=0;        AC_SUBST([GNULIB_VPRINTF_POSIX])
   GNULIB_VSNPRINTF=0;            AC_SUBST([GNULIB_VSNPRINTF])
   GNULIB_VSPRINTF_POSIX=0;       AC_SUBST([GNULIB_VSPRINTF_POSIX])
@@ -37,10 +63,18 @@ AC_DEFUN([gl_STDIO_H_DEFAULTS],
   GNULIB_FTELL=0;                AC_SUBST([GNULIB_FTELL])
   GNULIB_FTELLO=0;               AC_SUBST([GNULIB_FTELLO])
   GNULIB_FFLUSH=0;               AC_SUBST([GNULIB_FFLUSH])
+  GNULIB_FPUTC=0;                AC_SUBST([GNULIB_FPUTC])
+  GNULIB_PUTC=0;                 AC_SUBST([GNULIB_PUTC])
+  GNULIB_PUTCHAR=0;              AC_SUBST([GNULIB_PUTCHAR])
+  GNULIB_FPUTS=0;                AC_SUBST([GNULIB_FPUTS])
+  GNULIB_PUTS=0;                 AC_SUBST([GNULIB_PUTS])
+  GNULIB_FWRITE=0;               AC_SUBST([GNULIB_FWRITE])
   GNULIB_GETDELIM=0;             AC_SUBST([GNULIB_GETDELIM])
   GNULIB_GETLINE=0;              AC_SUBST([GNULIB_GETLINE])
   GNULIB_PERROR=0;               AC_SUBST([GNULIB_PERROR])
+  GNULIB_STDIO_H_SIGPIPE=0;      AC_SUBST([GNULIB_STDIO_H_SIGPIPE])
   dnl Assume proper GNU behavior unless another module says otherwise.
+  REPLACE_STDIO_WRITE_FUNCS=0;   AC_SUBST([REPLACE_STDIO_WRITE_FUNCS])
   REPLACE_FPRINTF=0;             AC_SUBST([REPLACE_FPRINTF])
   REPLACE_VFPRINTF=0;            AC_SUBST([REPLACE_VFPRINTF])
   REPLACE_PRINTF=0;              AC_SUBST([REPLACE_PRINTF])

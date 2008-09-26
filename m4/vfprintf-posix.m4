@@ -1,4 +1,4 @@
-# vfprintf-posix.m4 serial 11
+# vfprintf-posix.m4 serial 12
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -96,6 +96,8 @@ AC_DEFUN([gl_REPLACE_VFPRINTF],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_LIBOBJ([vfprintf])
   REPLACE_VFPRINTF=1
+  AC_DEFINE([REPLACE_VFPRINTF_POSIX], 1,
+    [Define if vfprintf is overridden by a POSIX compliant gnulib implementation.])
   gl_PREREQ_VFPRINTF
 ])
 
