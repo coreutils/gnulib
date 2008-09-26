@@ -1,5 +1,13 @@
 2008-09-26  Bruno Haible  <bruno@clisp.org>
 
+	* posix-modules (cvsdatestamp, last_checkin_date, version): Remove
+	variables.
+	(func_version): Essentially copied from gnulib-tool.
+	(func_exit, func_gnulib_dir, func_tmpdir, func_fatal_error,
+	func_readlink): Copied from gnulib-tool.
+
+2008-09-26  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_version): Change directory to $gnulib_dir before
 	invoking git-version-gen.
 
