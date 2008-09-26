@@ -1,3 +1,14 @@
+2008-09-27  Eric Blake  <ebb9@byu.net>
+
+	Fix previous patch, and tweak references to $0.
+	* posix-modules: Call func_gnulib_dir before using $gnulib_dir.
+	(func_version, func_gnulib_dir): Don't call this program
+	gnulib-tool.
+	(func_gnulib_dir, func_tmpdir, func_fatal_error): Avoid shell bugs
+	with using $0 in function.
+	* gnulib-tool (func_gnulib_dir, func_tmpdir): Likewise.
+	(func_fatal_error): Reuse the name the user invoked us with.
+
 2008-09-27  Bruno Haible  <bruno@clisp.org>
 
 	* m4/iconv_h.m4 (gl_REPLACE_ICONV_H): New macro.
@@ -150,7 +161,7 @@
 	* m4/sigpipe.m4: New file.
 
 2008-09-25  Derek Price  <derek@ximbiot.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Report all license incompatibilities, not
 	just the first one.

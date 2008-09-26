@@ -272,14 +272,16 @@ func_exit ()
 
 # func_gnulib_dir
 # locates the directory where the gnulib repository lives
+# Input:
+# - progname                 name of this program
 # Sets variables
 # - self_abspathname         absolute pathname of gnulib-tool
 # - gnulib_dir               absolute pathname of gnulib repository
 func_gnulib_dir ()
 {
-  case "$0" in
-    /*) self_abspathname="$0" ;;
-    */*) self_abspathname=`pwd`/"$0" ;;
+  case "$progname" in
+    /*) self_abspathname="$progname" ;;
+    */*) self_abspathname=`pwd`/"$progname" ;;
     *)
       # Look in $PATH.
       # Iterate through the elements of $PATH.
@@ -326,8 +328,8 @@ func_gnulib_dir ()
       for d in $pathx; do
         IFS="$save_IFS"
         test -z "$d" && d=.
-        if test -x "$d/$0" && test ! -d "$d/$0"; then
-          self_abspathname="$d/$0"
+        if test -x "$d/$progname" && test ! -d "$d/$progname"; then
+          self_abspathname="$d/$progname"
           break
         fi
       done
@@ -351,6 +353,8 @@ func_gnulib_dir ()
 
 # func_tmpdir
 # creates a temporary directory.
+# Input:
+# - progname                 name of this program
 # Sets variable
 # - tmp             pathname of freshly created temporary directory
 func_tmpdir ()
@@ -375,7 +379,7 @@ func_tmpdir ()
     (umask 077 && mkdir "$tmp")
   } ||
   {
-    echo "$0: cannot create a temporary directory in $TMPDIR" >&2
+    echo "$progname: cannot create a temporary directory in $TMPDIR" >&2
     func_exit 1
   }
 }
@@ -398,10 +402,12 @@ fi
 
 # func_fatal_error message
 # outputs to stderr a fatal error message, and terminates the program.
+# Input:
+# - progname                 name of this program
 func_fatal_error ()
 {
-  echo "gnulib-tool: *** $1" 1>&2
-  echo "gnulib-tool: *** Stop." 1>&2
+  echo "$progname: *** $1" 1>&2
+  echo "$progname: *** Stop." 1>&2
   func_exit 1
 }
 

@@ -66,7 +66,7 @@ q
   fi
   year=`"$gnulib_dir"/build-aux/mdate-sh "$self_abspathname" | sed 's,^.* ,,'`
   echo "\
-gnulib-tool (GNU $package $date)$version
+posix-modules (GNU $package $date)$version
 Copyright (C) $year Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
@@ -86,14 +86,16 @@ func_exit ()
 
 # func_gnulib_dir
 # locates the directory where the gnulib repository lives
+# Input:
+# - progname                 name of this program
 # Sets variables
-# - self_abspathname         absolute pathname of gnulib-tool
+# - self_abspathname         absolute pathname of this program
 # - gnulib_dir               absolute pathname of gnulib repository
 func_gnulib_dir ()
 {
-  case "$0" in
-    /*) self_abspathname="$0" ;;
-    */*) self_abspathname=`pwd`/"$0" ;;
+  case "$progname" in
+    /*) self_abspathname="$progname" ;;
+    */*) self_abspathname=`pwd`/"$progname" ;;
     *)
       # Look in $PATH.
       # Iterate through the elements of $PATH.
@@ -140,14 +142,14 @@ func_gnulib_dir ()
       for d in $pathx; do
         IFS="$save_IFS"
         test -z "$d" && d=.
-        if test -x "$d/$0" && test ! -d "$d/$0"; then
-          self_abspathname="$d/$0"
+        if test -x "$d/$progname" && test ! -d "$d/$progname"; then
+          self_abspathname="$d/$progname"
           break
         fi
       done
       IFS="$save_IFS"
       if test -z "$self_abspathname"; then
-        func_fatal_error "could not locate the gnulib-tool program - how did you invoke it?"
+        func_fatal_error "could not locate the posix-modules program - how did you invoke it?"
       fi
       ;;
   esac
@@ -165,6 +167,8 @@ func_gnulib_dir ()
 
 # func_tmpdir
 # creates a temporary directory.
+# Input:
+# - progname                 name of this program
 # Sets variable
 # - tmp             pathname of freshly created temporary directory
 func_tmpdir ()
@@ -189,17 +193,19 @@ func_tmpdir ()
     (umask 077 && mkdir "$tmp")
   } ||
   {
-    echo "$0: cannot create a temporary directory in $TMPDIR" >&2
+    echo "$progname: cannot create a temporary directory in $TMPDIR" >&2
     func_exit 1
   }
 }
 
 # func_fatal_error message
 # outputs to stderr a fatal error message, and terminates the program.
+# Input:
+# - progname                 name of this program
 func_fatal_error ()
 {
-  echo "gnulib-tool: *** $1" 1>&2
-  echo "gnulib-tool: *** Stop." 1>&2
+  echo "$progname: *** $1" 1>&2
+  echo "$progname: *** Stop." 1>&2
   func_exit 1
 }
 
@@ -240,6 +246,7 @@ while test $# -gt 0; do
   esac
 done
 
+func_gnulib_dir
 (
   # Get the header modules.
   LC_ALL=C grep -h '^Gnulib module: ' "$gnulib_dir"/doc/posix-headers/* 2>/dev/null \
@@ -253,3 +260,8 @@ done
       tr ' ' '\012' | sed -e '/^---$/d' -e '/^and$/d' -e '/^or$/d' -e '/-gnu$/d'
     } \
   | LC_ALL=C sort | LC_ALL=C uniq
+
+# Local Variables:
+# indent-tabs-mode: nil
+# whitespace-check-buffer-indent: nil
+# End:
