@@ -1,0 +1,25 @@
+Description:
+POSIX compatible write() function: write data to a file descriptor
+
+Files:
+lib/write.c
+m4/write.m4
+
+Depends-on:
+unistd
+
+configure.ac:
+gl_FUNC_WRITE
+gl_UNISTD_MODULE_INDICATOR([write])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
+

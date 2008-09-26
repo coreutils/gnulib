@@ -23,6 +23,18 @@
 
 2008-09-26  Bruno Haible  <bruno@clisp.org>
 
+	* modules/write: New file.
+	* lib/unistd.in.h: Include <sys/types.h>.
+	(write): New declaration.
+	* lib/write.c: New file.
+	* m4/write.m4: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	GNULIB_UNISTD_H_SIGPIPE, GNULIB_WRITE, REPLACE_WRITE.
+	* modules/unistd (Makefile.am): Substitute GNULIB_UNISTD_H_SIGPIPE,
+	GNULIB_WRITE, REPLACE_WRITE.
+	* doc/posix-functions/write.texi: Mention the write, sigpipe modules
+	and the SIGPIPE issue.
+
 	* lib/signal.in.h (SIGPIPE): Define to a replacement value.
 	(raise): New declaration.
 	* lib/sigprocmask.c (SIGPIPE_handler): New variable.

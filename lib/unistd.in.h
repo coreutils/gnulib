@@ -35,6 +35,11 @@
 /* mingw fails to declare _exit in <unistd.h>.  */
 #include <stdlib.h>
 
+#if @GNULIB_WRITE@ && @REPLACE_WRITE@ && @GNULIB_UNISTD_H_SIGPIPE@
+/* Get ssize_t.  */
+# include <sys/types.h>
+#endif
+
 /* The definition of GL_LINK_WARNING is copied here.  */
 
 
@@ -330,6 +335,16 @@ extern unsigned int sleep (unsigned int n);
     (GL_LINK_WARNING ("sleep is unportable - " \
                       "use gnulib module sleep for portability"), \
      sleep (n))
+#endif
+
+
+#if @GNULIB_WRITE@ && @REPLACE_WRITE@ && @GNULIB_UNISTD_H_SIGPIPE@
+/* Write up to COUNT bytes starting at BUF to file descriptor FD.
+   See the POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/write.html>.  */
+# undef write
+# define write rpl_write
+extern ssize_t write (int fd, const void *buf, size_t count);
 #endif
 
 
