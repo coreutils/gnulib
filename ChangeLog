@@ -1,5 +1,9 @@
 2008-09-26  Jim Meyering  <meyering@redhat.com>
 
+	fts: tweak inode comparison function
+	* lib/fts.c (fts_compare_ino): Sort on increasing, not decreasing
+	inode numbers, as documented.
+
 	fts: sort dirent entries on inode number before traversing
 	This avoids a quadratic, seek-related performance penalty when
 	operating on a directory containing many entries (measurable at 10k;
@@ -12,6 +16,7 @@
 	(dirent_inode_sort_may_be_useful, fts_compare_ino): Likewise.
 	(fts_build): Set the stat.st_ino member from D_INO.
 	If it is likely to be useful, sort dirent entries on inode number.
+
 	* m4/fts.m4 (gl_FUNC_FTS_CORE): Check for fstatfs, sys/vfs.h,
 	and the struct statfs.f_type member.
 	* modules/fts (Depends-on): Add d-ino.

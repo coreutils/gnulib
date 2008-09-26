@@ -981,8 +981,8 @@ static bool dirent_inode_sort_may_be_useful (FTS const *sp) { return true; }
 static int
 fts_compare_ino (struct _ftsent const **a, struct _ftsent const **b)
 {
-  return (a[0]->fts_statp->st_ino < b[0]->fts_statp->st_ino ? 1
-	  : b[0]->fts_statp->st_ino < a[0]->fts_statp->st_ino ? -1 : 0);
+  return (a[0]->fts_statp->st_ino < b[0]->fts_statp->st_ino ? -1
+	  : b[0]->fts_statp->st_ino < a[0]->fts_statp->st_ino ? 1 : 0);
 }
 
 /*
