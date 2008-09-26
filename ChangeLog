@@ -23,6 +23,8 @@
 
 2008-09-26  Bruno Haible  <bruno@clisp.org>
 
+	* modules/sigpipe-die (Depends-on): Add sigpipe.
+
 	* lib/stdio.in.h (fprintf, vfprintf, printf, vprintf, fputc, putc,
 	putchar, fputs, puts, fwrite): Replace when REPLACE_STDIO_WRITE_FUNCS
 	and GNULIB_STDIO_H_SIGPIPE are set.
