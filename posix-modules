@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) 2002-2007 Free Software Foundation, Inc.
+# Copyright (C) 2002-2008 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -138,17 +138,14 @@ done
 
 (
   # Get the header modules.
-  LC_ALL=C grep -h '^Gnulib module: ' "$gnulib_dir"/doc/headers/* 2>/dev/null \
+  LC_ALL=C grep -h '^Gnulib module: ' "$gnulib_dir"/doc/posix-headers/* 2>/dev/null \
     | sed -e 's,^Gnulib module: ,,'
   # Get the function modules.
-  LC_ALL=C grep -h '^Gnulib module: ' "$gnulib_dir"/doc/functions/* 2>/dev/null \
+  LC_ALL=C grep -h '^Gnulib module: ' "$gnulib_dir"/doc/posix-functions/* 2>/dev/null \
     | sed -e 's,^Gnulib module: ,,'
-  # Then filter out the words "---", "and", "or" and remove *-gnu modules.
-) | LC_ALL=C sort | LC_ALL=C uniq \
+  # Then filter out the words "---", ",", "and", "or" and remove *-gnu modules.
+) | sed -e 's/,/ /g' | LC_ALL=C sort | LC_ALL=C uniq \
   | { # Then filter out the words "---", "and", "or" and remove *-gnu modules.
       tr ' ' '\012' | sed -e '/^---$/d' -e '/^and$/d' -e '/^or$/d' -e '/-gnu$/d'
     } \
-  | LC_ALL=C sort | LC_ALL=C uniq \
-  | { # Except ftruncate, which aborts the configuration on mingw. FiXME
-      sed -e '/^ftruncate$/d'
-    }
+  | LC_ALL=C sort | LC_ALL=C uniq

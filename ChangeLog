@@ -1,5 +1,11 @@
 2008-09-26  Bruno Haible  <bruno@clisp.org>
 
+	* posix-modules: Update to directory names changed on 2008-01-19.
+	Remove commas in output before splitting into words. No more need to
+	avoid 'ftruncate' since 2007-02-19.
+
+2008-09-26  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-headers/errno.texi: Remove mention of module 'EOVERFLOW'.
 
 2008-09-26  Bruno Haible  <bruno@clisp.org>
