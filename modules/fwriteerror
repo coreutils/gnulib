@@ -6,6 +6,7 @@ lib/fwriteerror.h
 lib/fwriteerror.c
 
 Depends-on:
+errno
 stdbool
 
 configure.ac:

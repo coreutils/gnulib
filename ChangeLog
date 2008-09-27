@@ -24,6 +24,7 @@
 2008-09-26  Bruno Haible  <bruno@clisp.org>
 
 	* lib/fwriteerror.c (do_fwriteerror): Ignore error EPIPE.
+	* modules/fwriteerror (Depends-on): Add errno.
 
 2008-09-26  Bruno Haible  <bruno@clisp.org>
 
