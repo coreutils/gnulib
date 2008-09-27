@@ -1,5 +1,11 @@
 2008-09-27  Bruno Haible  <bruno@clisp.org>
 
+	* m4/iconv_h.m4 (gl_REPLACE_ICONV_H): New macro.
+	(gl_ICONV_H_DEFAULTS): Initialize ICONV_H here...
+	(gl_ICONV_H): Not here.
+	* m4/iconv_open.m4 (gl_REPLACE_ICONV_OPEN): Invoke gl_REPLACE_ICONV_H
+	instead of assigning ICONV_H directly.
+
 	* m4/wchar.m4 (gl_REPLACE_WCHAR_H): New macro.
 	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Invoke it instead of assigning
 	WCHAR_H directly.
