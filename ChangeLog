@@ -1,3 +1,10 @@
+2008-09-27  Bruno Haible  <bruno@clisp.org>
+
+	* lib/arpa_inet.in.h: Include the GL_LINK_WARNING anchor.
+	* modules/arpa_inet (Depends-on): Add link-warning.
+	(Makefile.am): Insert the definition of GL_LINK-WARNING.
+	* modules/unistd (Makefile.am): Likewise.
+
 2008-09-26  Bruno Haible  <bruno@clisp.org>
 
 	* posix-modules (cvsdatestamp, last_checkin_date, version): Remove

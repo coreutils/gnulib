@@ -34,6 +34,8 @@
 #ifndef _GL_ARPA_INET_H
 #define _GL_ARPA_INET_H
 
+/* The definition of GL_LINK_WARNING is copied here.  */
+
 #if @GNULIB_INET_NTOP@
 # if !@HAVE_DECL_INET_NTOP@
 /* Converts an internet address from internal format to a printable,
