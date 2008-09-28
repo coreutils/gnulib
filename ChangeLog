@@ -1,5 +1,11 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	* doc/posix-headers/sys_select.texi: Mention 'struct timeval' problem.
+	* tests/test-sys_select.c: Include <sys/time.h>, for struct timeval.
+	Needed on OSF/1 4.0.
+
+2008-09-28  Bruno Haible  <bruno@clisp.org>
+
 	Override open more carefully.
 	* lib/open.c (orig_open): New function.
 	(rpl_open): Use orig_open instead of open.

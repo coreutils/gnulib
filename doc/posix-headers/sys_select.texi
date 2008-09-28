@@ -17,4 +17,7 @@ This header file is not self-contained on some platforms: it requires
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This header file does not define @code{struct timeval} on some platforms:
+OSF/1 4.0.
 @end itemize
