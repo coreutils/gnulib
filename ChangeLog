@@ -1,5 +1,10 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	* lib/pipe.h (create_pipe_out, create_pipe_bidi): Add comment about
+	SIGPIPE.
+
+2008-09-28  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-sigaction.c (handler, main): Disable the check whether
 	SA_RESETHAND has reverted the installed handler to SIG_DFL. Needed on
 	glibc systems with LinuxThreads.

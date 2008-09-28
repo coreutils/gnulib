@@ -1,5 +1,5 @@
 /* Creation of subprocesses, communicating via pipes.
-   Copyright (C) 2001-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006, 2008 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -78,6 +78,8 @@ extern "C" {
  *           write       system                read
  *    parent  ->   fd[0]   ->   STDIN_FILENO    ->   child
  *
+ * Note: When writing to a child process, it is useful to ignore the SIGPIPE
+ * signal and the EPIPE error code.
  */
 extern pid_t create_pipe_out (const char *progname,
 			      const char *prog_path, char **prog_argv,
@@ -105,6 +107,8 @@ extern pid_t create_pipe_in (const char *progname,
  *    parent  <-   fd[0]   <-   STDOUT_FILENO   <-   child
  *           read        system                write
  *
+ * Note: When writing to a child process, it is useful to ignore the SIGPIPE
+ * signal and the EPIPE error code.
  */
 extern pid_t create_pipe_bidi (const char *progname,
 			       const char *prog_path, char **prog_argv,
