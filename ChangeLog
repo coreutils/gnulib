@@ -1,5 +1,12 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	New module 'posix_spawnattr_getsigmask'.
+	* modules/posix_spawnattr_getsigmask: New file.
+	* lib/spawnattr_getsigmask.c: New file, from GNU libc with
+	modifications.
+	* doc/posix-functions/posix_spawnattr_getsigmask.texi: Mention the
+	new module.
+
 	New module 'posix_spawnattr_setsigdefault'.
 	* modules/posix_spawnattr_setsigdefault: New file.
 	* lib/spawnattr_setdefault.c: New file, from GNU libc with
