@@ -1,5 +1,14 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	* doc/posix-functions/freopen.texi: Mention the trailing slash problem.
+
+	* lib/stdio.in.h (fopen, freopen): Undefine before redefining. Needed
+	with AIX xlc.
+	* lib/fcntl.in.h (open): Likewise.
+	Reported by Rainer Tammer <tammer@tammer.net>.
+
+2008-09-28  Bruno Haible  <bruno@clisp.org>
+
 	* modules/posix_spawnp-tests: New file.
 	* tests/test-posix_spawn.c: New file.
 	* tests/test-posix_spawn.in.sh: New file.

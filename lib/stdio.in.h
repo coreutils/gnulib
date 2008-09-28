@@ -253,6 +253,7 @@ extern int vsprintf (char *str, const char *format, va_list args)
 
 #if @GNULIB_FOPEN@
 # if @REPLACE_FOPEN@
+#  undef fopen
 #  define fopen rpl_fopen
 extern FILE * fopen (const char *filename, const char *mode);
 # endif
@@ -266,6 +267,7 @@ extern FILE * fopen (const char *filename, const char *mode);
 
 #if @GNULIB_FREOPEN@
 # if @REPLACE_FREOPEN@
+#  undef freopen
 #  define freopen rpl_freopen
 extern FILE * freopen (const char *filename, const char *mode, FILE *stream);
 # endif

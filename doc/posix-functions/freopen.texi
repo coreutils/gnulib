@@ -18,4 +18,9 @@ Portability problems not fixed by Gnulib:
 @item
 On Windows platforms (excluding Cygwin), this function does not set @code{errno}
 upon failure.
+@item
+This function does not fail when the file name argument ends in a slash
+and (without the slash) names a nonexistent file or a file that is not a
+directory, on some platforms:
+HP-UX 11.00, Solaris 9, Irix 5.3.
 @end itemize

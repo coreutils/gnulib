@@ -38,6 +38,7 @@ extern "C" {
 #endif
 
 #if (@GNULIB_OPEN@ && @REPLACE_OPEN@) || defined FCHDIR_REPLACEMENT
+# undef open
 # define open rpl_open
 extern int open (const char *filename, int flags, ...);
 #endif
