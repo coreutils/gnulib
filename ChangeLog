@@ -1,5 +1,14 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	* modules/posix_spawnp-tests: New file.
+	* tests/test-posix_spawn.c: New file.
+	* tests/test-posix_spawn.in.sh: New file.
+
+	New module 'posix_spawnp'.
+	* modules/posix_spawnp: New file.
+	* lib/spawnp.c: New file, from GNU libc with modifications.
+	* doc/posix-functions/posix_spawnp.texi: Mention the new module.
+
 	New module 'posix_spawn'.
 	* modules/posix_spawn: New file.
 	* lib/spawn.c: New file, from GNU libc with modifications.

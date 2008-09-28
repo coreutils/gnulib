@@ -1,0 +1,29 @@
+Files:
+tests/test-posix_spawn.c
+tests/test-posix_spawn.in.sh
+
+Depends-on:
+posix_spawn_file_actions_init
+posix_spawn_file_actions_adddup2
+posix_spawn_file_actions_addclose
+posix_spawn_file_actions_addopen
+posix_spawn_file_actions_destroy
+posix_spawnattr_init
+posix_spawnattr_setsigmask
+posix_spawnattr_setflags
+posix_spawnattr_destroy
+sigprocmask
+stdbool
+unistd
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-posix_spawn
+check_PROGRAMS += test-posix_spawn
+
+BUILT_SOURCES += test-posix_spawn.sh
+test-posix_spawn.sh: test-posix_spawn.in.sh
+	cp $(srcdir)/test-posix_spawn.in.sh $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += test-posix_spawn.sh test-posix_spawn.sh-t
