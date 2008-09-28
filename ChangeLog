@@ -1,5 +1,12 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	New module 'posix_spawn_file_actions_adddup2'.
+	* modules/posix_spawn_file_actions_adddup2: New file.
+	* lib/spawn_faction_adddup2.c: New file, from GNU libc with
+	modifications.
+	* doc/posix-functions/posix_spawn_file_actions_adddup2.texi: Mention
+	the new module.
+
 	New module 'posix_spawn_file_actions_addclose'.
 	* modules/posix_spawn_file_actions_addclose: New file.
 	* lib/spawn_faction_addclose.c: New file, from GNU libc with
