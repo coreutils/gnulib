@@ -1,5 +1,8 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	* modules/sched-tests: New file.
+	* tests/test-sched.c: New file.
+
 	New module 'sched'.
 	* modules/sched: New file.
 	* lib/sched.in.h: New file.
