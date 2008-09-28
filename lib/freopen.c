@@ -1,5 +1,5 @@
 /* Open a stream to a file.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,6 +18,17 @@
 
 #include <config.h>
 
+/* Get the original definition of freopen.  It might be defined as a macro.  */
+#define __need_FILE
+#include <stdio.h>
+#undef __need_FILE
+
+static inline FILE *
+orig_freopen (const char *filename, const char *mode, FILE *stream)
+{
+  return freopen (filename, mode, stream);
+}
+
 /* Specification.  */
 #include <stdio.h>
 
@@ -25,12 +36,11 @@
 
 FILE *
 rpl_freopen (const char *filename, const char *mode, FILE *stream)
-#undef freopen
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   if (strcmp (filename, "/dev/null") == 0)
     filename = "NUL";
 #endif
 
-  return freopen (filename, mode, stream);
+  return orig_freopen (filename, mode, stream);
 }

@@ -1,8 +1,14 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	Override freopen more carefully.
+	* lib/freopen.c (orig_freopen): New function.
+	(rpl_freopen): Use orig_freopen instead of freopen.
+	* m4/freopen.m4 (gl_PREREQ_FREOPEN): New macro.
+	(gl_FUNC_FREOPEN): Invoke it.
+
 	Override fopen more carefully.
 	* lib/fopen.c (orig_fopen): New function.
-	(rpl_fopen): Use orig_fopen instead of open.
+	(rpl_fopen): Use orig_fopen instead of fopen.
 	* m4/fopen.m4 (gl_PREREQ_FOPEN): New macro.
 	(gl_FUNC_FOPEN): Invoke it.
 	Needed on AIX. Reported by Rainer Tammer <tammer@tammer.net>.
