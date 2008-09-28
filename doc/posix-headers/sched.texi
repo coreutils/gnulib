@@ -3,15 +3,15 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xbd/sched.h.html}
 
-Gnulib module: ---
+Gnulib module: sched
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
 mingw, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

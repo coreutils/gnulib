@@ -1,0 +1,34 @@
+Description:
+A <sched.h> include file.
+
+Files:
+lib/sched.in.h
+m4/sched_h.m4
+
+Depends-on:
+
+configure.ac:
+gl_SCHED_H
+
+Makefile.am:
+BUILT_SOURCES += $(SPAWN_H)
+
+# We need the following in order to create a replacement for <sched.h> when
+# the system doesn't have one.
+sched.h: sched.in.h
+	rm -f $@-t $@
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  cat < $(srcdir)/sched.in.h; \
+	} > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += sched.h sched.h-t
+
+Include:
+<sched.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

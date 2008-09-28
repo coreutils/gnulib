@@ -1,3 +1,11 @@
+2008-09-28  Bruno Haible  <bruno@clisp.org>
+
+	New module 'sched'.
+	* modules/sched: New file.
+	* lib/sched.in.h: New file.
+	* m4/sched_h.m4: New file.
+	* doc/posix-headers/sched.texi: Mention the new module.
+
 2008-09-27  Eric Blake  <ebb9@byu.net>
 
 	Fix previous patch, and tweak references to $0.
