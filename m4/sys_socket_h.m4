@@ -1,4 +1,4 @@
-# sys_socket_h.m4 serial 6
+# sys_socket_h.m4 serial 7
 dnl Copyright (C) 2005-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,7 +44,6 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
     gl_CHECK_NEXT_HEADERS([sys/socket.h])
     if test $ac_cv_header_sys_socket_h = yes; then
       HAVE_SYS_SOCKET_H=1
-      HAVE_WINSOCK2_H=0
       HAVE_WS2TCPIP_H=0
     else
       HAVE_SYS_SOCKET_H=0
@@ -52,24 +51,40 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
       dnl the check for those headers unconditional; yet cygwin reports
       dnl that the headers are present but cannot be compiled (since on
       dnl cygwin, all socket information should come from sys/socket.h).
-      AC_CHECK_HEADERS([winsock2.h ws2tcpip.h])
-      if test $ac_cv_header_winsock2_h = yes; then
-        HAVE_WINSOCK2_H=1
-      else
-        HAVE_WINSOCK2_H=0
-      fi
+      AC_CHECK_HEADERS([ws2tcpip.h])
       if test $ac_cv_header_ws2tcpip_h = yes; then
         HAVE_WS2TCPIP_H=1
       else
         HAVE_WS2TCPIP_H=0
       fi
     fi
+    gl_PREREQ_SYS_H_WINSOCK2
     if test x$ac_cv_header_winsock2_h = xyes; then
       AC_LIBOBJ(winsock)
     fi
     AC_SUBST([HAVE_SYS_SOCKET_H])
-    AC_SUBST([HAVE_WINSOCK2_H])
     AC_SUBST([HAVE_WS2TCPIP_H])
   fi
   AC_SUBST([SYS_SOCKET_H])
+])
+
+# Common prerequisites of of the <sys/socket.h> replacement and of the
+# <sys/select.h> replacement.
+# Sets and substitutes HAVE_WINSOCK2_H.
+AC_DEFUN([gl_PREREQ_SYS_H_WINSOCK2],
+[
+  AC_CHECK_HEADERS_ONCE([sys/socket.h])
+  if test $ac_cv_header_sys_socket_h != yes; then
+    dnl We cannot use AC_CHECK_HEADERS_ONCE here, because that would make
+    dnl the check for those headers unconditional; yet cygwin reports
+    dnl that the headers are present but cannot be compiled (since on
+    dnl cygwin, all socket information should come from sys/socket.h).
+    AC_CHECK_HEADERS([winsock2.h])
+  fi
+  if test "$ac_cv_header_winsock2_h" = yes; then
+    HAVE_WINSOCK2_H=1
+  else
+    HAVE_WINSOCK2_H=0
+  fi
+  AC_SUBST([HAVE_WINSOCK2_H])
 ])

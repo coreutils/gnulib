@@ -1,5 +1,12 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	* m4/sys_socket_h.m4 (gl_PREREQ_SYS_H_WINSOCK2): New macro, extracted
+	from gl_HEADER_SYS_SOCKET.
+	(gl_HEADER_SYS_SOCKET): Invoke it.
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Likewise.
+
+2008-09-28  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-headers/sys_select.texi: Mention 'struct timeval' problem.
 	* tests/test-sys_select.c: Include <sys/time.h>, for struct timeval.
 	Needed on OSF/1 4.0.
