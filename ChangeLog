@@ -1,5 +1,12 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	New module 'posix_spawnattr_getsigdefault'.
+	* modules/posix_spawnattr_getsigdefault: New file.
+	* lib/spawnattr_getdefault.c: New file, from GNU libc with
+	modifications.
+	* doc/posix-functions/posix_spawnattr_getsigdefault.texi: Mention the
+	new module.
+
 	New module 'posix_spawnattr_setschedpolicy'.
 	* modules/posix_spawnattr_setschedpolicy: New file.
 	* lib/spawnattr_setschedpolicy.c: New file, from GNU libc with
