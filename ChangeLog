@@ -1,5 +1,12 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	New module 'posix_spawnattr_setschedparam'.
+	* modules/posix_spawnattr_setschedparam: New file.
+	* lib/spawnattr_setschedparam.c: New file, from GNU libc with
+	modifications.
+	* doc/posix-functions/posix_spawnattr_setschedparam.texi: Mention the
+	new module.
+
 	New module 'posix_spawnattr_getschedparam'.
 	* modules/posix_spawnattr_getschedparam: New file.
 	* lib/spawnattr_getschedparam.c: New file, from GNU libc with
