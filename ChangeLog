@@ -1,5 +1,11 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	New module 'posix_spawnattr_init'.
+	* modules/posix_spawnattr_init: New file.
+	* lib/spawnattr_init.c: New file, from GNU libc with modifications.
+	* doc/posix-functions/posix_spawnattr_init.texi: Mention the new
+	module.
+
 	New module 'posix_spawn_file_actions_destroy'.
 	* modules/posix_spawn_file_actions_destroy: New file.
 	* lib/spawn_faction_destroy.c: New file, from GNU libc with
