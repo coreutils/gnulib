@@ -18,6 +18,17 @@
 
 #include <config.h>
 
+/* Get the original definition of fopen.  It might be defined as a macro.  */
+#define __need_FILE
+#include <stdio.h>
+#undef __need_FILE
+
+static inline FILE *
+orig_fopen (const char *filename, const char *mode)
+{
+  return fopen (filename, mode);
+}
+
 /* Specification.  */
 #include <stdio.h>
 
@@ -28,7 +39,6 @@
 
 FILE *
 rpl_fopen (const char *filename, const char *mode)
-#undef fopen
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   if (strcmp (filename, "/dev/null") == 0)
@@ -89,5 +99,5 @@ rpl_fopen (const char *filename, const char *mode)
   }
 # endif
 
-  return fopen (filename, mode);
+  return orig_fopen (filename, mode);
 }

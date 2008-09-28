@@ -1,5 +1,14 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	Override fopen more carefully.
+	* lib/fopen.c (orig_fopen): New function.
+	(rpl_fopen): Use orig_fopen instead of open.
+	* m4/fopen.m4 (gl_PREREQ_FOPEN): New macro.
+	(gl_FUNC_FOPEN): Invoke it.
+	Needed on AIX. Reported by Rainer Tammer <tammer@tammer.net>.
+
+2008-09-28  Bruno Haible  <bruno@clisp.org>
+
 	* lib/pipe.h (create_pipe_out, create_pipe_bidi): Add comment about
 	SIGPIPE.
 

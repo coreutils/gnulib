@@ -1,4 +1,4 @@
-# fopen.m4 serial 2
+# fopen.m4 serial 3
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,8 +43,15 @@ changequote([,])dnl
             [Define to 1 if fopen() fails to recognize a trailing slash.])
           REPLACE_FOPEN=1
           AC_LIBOBJ([fopen])
+          gl_PREREQ_FOPEN
           ;;
       esac
       ;;
   esac
+])
+
+# Prerequisites of lib/fopen.c.
+AC_DEFUN([gl_PREREQ_FOPEN],
+[
+  AC_REQUIRE([AC_C_INLINE])
 ])
