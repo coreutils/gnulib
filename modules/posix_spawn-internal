@@ -1,0 +1,25 @@
+Description:
+posix_spawn internals.
+
+Files:
+lib/spawni.c
+lib/spawn_int.h
+m4/posix_spawn.m4
+
+Depends-on:
+spawn
+alloca-opt
+strchrnul
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible, glibc
+

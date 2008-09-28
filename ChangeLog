@@ -1,8 +1,14 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	New module 'posix_spawn-internal'.
+	* modules/posix_spawn-internal: New file.
+	* lib/spawn_int.h: New file, from GNU libc with modifications.
+	* lib/spawni.c: New file, from GNU libc with modifications.
+	* m4/posix_spawn.m4: New file.
+
 	New module 'spawn'.
 	* modules/spawn: New file.
-	* lib/spawn.in.h: New file.
+	* lib/spawn.in.h: New file, from GNU libc with modifications.
 	* m4/spawn_h.m4: New file.
 	* doc/posix-headers/spawn.texi: Mention the new module.
 
