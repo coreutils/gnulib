@@ -1,5 +1,11 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	New module 'posix_spawnattr_destroy'.
+	* modules/posix_spawnattr_destroy: New file.
+	* lib/spawnattr_destroy.c: New file, from GNU libc with modifications.
+	* doc/posix-functions/posix_spawnattr_destroy.texi: Mention the new
+	module.
+
 	New module 'posix_spawnattr_setsigmask'.
 	* modules/posix_spawnattr_setsigmask: New file.
 	* lib/spawnattr_setsigmask.c: New file, from GNU libc with
