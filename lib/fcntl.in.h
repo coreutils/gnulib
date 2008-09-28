@@ -17,9 +17,20 @@
 
 /* written by Paul Eggert */
 
-#ifndef _GL_FCNTL_H
-
 @PRAGMA_SYSTEM_HEADER@
+
+#if defined __need_system_fcntl_h
+/* Special invocation convention.  */
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#@INCLUDE_NEXT@ @NEXT_FCNTL_H@
+
+#else
+/* Normal invocation convention.  */
+
+#ifndef _GL_FCNTL_H
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -121,3 +132,4 @@ extern int open (const char *filename, int flags, ...);
 
 #endif /* _GL_FCNTL_H */
 #endif /* _GL_FCNTL_H */
+#endif

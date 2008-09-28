@@ -1,4 +1,4 @@
-# open.m4 serial 2
+# open.m4 serial 3
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,8 +45,15 @@ changequote([,])dnl
             [Define to 1 if open() fails to recognize a trailing slash.])
           REPLACE_OPEN=1
           AC_LIBOBJ([open])
+          gl_PREREQ_OPEN
           ;;
       esac
       ;;
   esac
+])
+
+# Prerequisites of lib/open.c.
+AC_DEFUN([gl_PREREQ_OPEN],
+[
+  AC_REQUIRE([AC_C_INLINE])
 ])

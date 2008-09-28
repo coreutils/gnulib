@@ -18,6 +18,18 @@
 
 #include <config.h>
 
+/* Get the original definition of open.  It might be defined as a macro.  */
+#define __need_system_fcntl_h
+#include <fcntl.h>
+#undef __need_system_fcntl_h
+#include <sys/types.h>
+
+static inline int
+orig_open (const char *filename, int flags, mode_t mode)
+{
+  return open (filename, flags, mode);
+}
+
 /* Specification.  */
 #include <fcntl.h>
 
@@ -32,7 +44,6 @@
 
 int
 open (const char *filename, int flags, ...)
-# undef open
 {
   mode_t mode;
   int fd;
@@ -91,7 +102,7 @@ open (const char *filename, int flags, ...)
     }
 # endif
 
-  fd = open (filename, flags, mode);
+  fd = orig_open (filename, flags, mode);
 
 # if OPEN_TRAILING_SLASH_BUG
   /* If the filename ends in a slash and fd does not refer to a directory,

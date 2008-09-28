@@ -1,5 +1,12 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	Override open more carefully.
+	* lib/open.c (orig_open): New function.
+	(rpl_open): Use orig_open instead of open.
+	* lib/fcntl.in.h: Add special invocation convention.
+	* m4/open.m4 (gl_PREREQ_OPEN): New macro.
+	(gl_FUNC_OPEN): Invoke it.
+
 	Override freopen more carefully.
 	* lib/freopen.c (orig_freopen): New function.
 	(rpl_freopen): Use orig_freopen instead of freopen.
