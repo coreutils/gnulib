@@ -1,5 +1,13 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	New module 'spawn'.
+	* modules/spawn: New file.
+	* lib/spawn.in.h: New file.
+	* m4/spawn_h.m4: New file.
+	* doc/posix-headers/spawn.texi: Mention the new module.
+
+2008-09-28  Bruno Haible  <bruno@clisp.org>
+
 	* modules/sched-tests: New file.
 	* tests/test-sched.c: New file.
 
