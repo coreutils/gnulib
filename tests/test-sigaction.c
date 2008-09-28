@@ -76,7 +76,12 @@ handler (int sig)
       ASSERT (sa.sa_handler == handler);
       break;
     case 1:
+      /* This assertion fails on glibc-2.3.6 systems with LinuxThreads,
+	 when this program is linked with -lpthread, due to the sigaction()
+	 override in libpthread.so.  */
+#if !defined __GLIBC__
       ASSERT (sa.sa_handler == SIG_DFL);
+#endif
       break;
     default:
       ASSERT (0);
@@ -89,24 +94,31 @@ main (int argc, char *argv[])
   struct sigaction sa;
   struct sigaction old_sa;
   sa.sa_handler = handler;
+
   sa.sa_flags = 0;
   ASSERT (sigemptyset (&sa.sa_mask) == 0);
   ASSERT (sigaction (SIGABRT, &sa, NULL) == 0);
   ASSERT (raise (SIGABRT) == 0);
+
   sa.sa_flags = SA_RESETHAND | SA_NODEFER;
   ASSERT (sigaction (SIGABRT, &sa, &old_sa) == 0);
   ASSERT ((old_sa.sa_flags & MASK_SA_FLAGS) == 0);
   ASSERT (old_sa.sa_handler == handler);
   ASSERT (raise (SIGABRT) == 0);
+
   sa.sa_handler = SIG_DFL;
   ASSERT (sigaction (SIGABRT, &sa, &old_sa) == 0);
   ASSERT ((old_sa.sa_flags & SA_SIGINFO) == 0);
+#if !defined __GLIBC__ /* see above */
   ASSERT (old_sa.sa_handler == SIG_DFL);
+#endif
+
   sa.sa_handler = SIG_IGN;
   ASSERT (sigaction (SIGABRT, &sa, NULL) == 0);
   ASSERT (raise (SIGABRT) == 0);
   ASSERT (sigaction (SIGABRT, NULL, &old_sa) == 0);
   ASSERT (old_sa.sa_handler == SIG_IGN);
   ASSERT (raise (SIGABRT) == 0);
+
   return 0;
 }

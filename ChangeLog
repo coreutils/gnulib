@@ -1,5 +1,11 @@
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-sigaction.c (handler, main): Disable the check whether
+	SA_RESETHAND has reverted the installed handler to SIG_DFL. Needed on
+	glibc systems with LinuxThreads.
+
+2008-09-28  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-functions/freopen.texi: Mention the trailing slash problem.
 
 	* lib/stdio.in.h (fopen, freopen): Undefine before redefining. Needed
