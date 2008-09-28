@@ -1,0 +1,30 @@
+Description:
+posix_spawnattr_getpgroup() function: get process group specified for child
+process.
+
+Files:
+lib/spawnattr_getpgroup.c
+m4/posix_spawn.m4
+
+Depends-on:
+spawn
+
+configure.ac:
+gl_POSIX_SPAWN
+if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+  gl_REPLACE_SPAWN_H
+  AC_LIBOBJ([spawnattr_getpgroup])
+fi
+gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_getpgroup])
+
+Makefile.am:
+
+Include:
+<spawn.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible, glibc
+
