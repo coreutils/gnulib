@@ -4,17 +4,19 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/ioctl.html}
 
-Gnulib module: ---
+Gnulib module: sys_socket
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+On Windows platforms (excluding Cygwin), error codes for @code{accept} are not
+placed in @code{errno}, and @code{WSAGetLastError} must be used instead.
+@item
+@code{ioctl} is called @code{ioctlsocket} under mingw
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-mingw.
 @item
 Most @code{ioctl} requests are platform and hardware specific.
 @end itemize

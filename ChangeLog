@@ -1,3 +1,22 @@
+2008-08-24  Paolo Bonzini  <bonzini@gnu.org>
+
+	* doc/posix-functions/accept.texi: Update mingw problems.
+	* doc/posix-functions/bind.texi: Update mingw problems.
+	* doc/posix-functions/close.texi: Update mingw problems.
+	* doc/posix-functions/connect.texi: Update mingw problems.
+	* doc/posix-functions/getpeername.texi: Update mingw problems.
+	* doc/posix-functions/getsockname.texi: Update mingw problems.
+	* doc/posix-functions/getsockopt.texi: Update mingw problems.
+	* doc/posix-functions/ioctl.texi: Update mingw problems.
+	* doc/posix-functions/listen.texi: Update mingw problems.
+	* doc/posix-functions/recv.texi: Update mingw problems.
+	* doc/posix-functions/recvfrom.texi: Update mingw problems.
+	* doc/posix-functions/select.texi: Update mingw problems.
+	* doc/posix-functions/send.texi: Update mingw problems.
+	* doc/posix-functions/sendto.texi: Update mingw problems.
+	* doc/posix-functions/setsockopt.texi: Update mingw problems.
+	* doc/posix-functions/socket.texi: Update mingw problems.
+
 2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
             Bruno Haible  <bruno@clisp.org>
 
