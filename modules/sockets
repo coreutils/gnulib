@@ -1,5 +1,5 @@
 Description:
-Wrappers for Windows socket functions
+General facilities for using sockets
 
 Files:
 lib/sockets.c
@@ -17,6 +17,9 @@ lib_SOURCES += sockets.h sockets.c
 
 Include:
 "sockets.h"
+
+Link:
+$(LIBSOCKET)
 
 License:
 LGPL

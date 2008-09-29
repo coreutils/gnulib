@@ -1,5 +1,15 @@
 2008-09-29  Bruno Haible  <bruno@clisp.org>
 
+	* m4/sockets.m4 (gl_SOCKETS): Check also for the need to use -lsocket.
+	Set LIBSOCKET instead of augmenting LIBS.
+	* modules/sockets (Link): New section.
+	* modules/sockets-tests (test_sockets_LDADD): New variable.
+	* modules/sys_select-tests (test_sys_select_LDADD): New variable.
+	* modules/poll-tests (test_poll_LDADD): New variable.
+	* NEWS: Document the change.
+
+2008-09-29  Bruno Haible  <bruno@clisp.org>
+
 	* m4/arpa_inet_h.m4 (gl_REPLACE_ARPA_INET_H): New macro.
 	* m4/inet_ntop.m4 (gl_INET_NTOP): Invoke it instead of assigning
 	ARPA_INET_H directly.

@@ -16,6 +16,7 @@ configure.ac:
 Makefile.am:
 TESTS += test-sys_select
 check_PROGRAMS += test-sys_select
+test_sys_select_LDADD = $(LDADD) @LIBSOCKET@
 
 License:
 LGPL
