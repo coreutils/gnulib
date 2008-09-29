@@ -1,3 +1,7 @@
+2008-09-29  Eric Blake  <ebb9@byu.net>
+
+	* m4/arpa_inet_h.m4 (gl_REPLACE_ARPA_INET_H): Fix typo.
+
 2008-08-24  Paolo Bonzini  <bonzini@gnu.org>
 
 	* doc/posix-functions/accept.texi: Update mingw problems.
