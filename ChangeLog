@@ -1,5 +1,11 @@
 2008-09-29  Bruno Haible  <bruno@clisp.org>
 
+	Propagate effects of putenv/setenv/unsetenv to child processes.
+	* lib/execute.c (execute): Use spawnvpe instead of spawnvp.
+	* lib/pipe.c (create_pipe): Likewise.
+
+2008-09-29  Bruno Haible  <bruno@clisp.org>
+
 	Enable use of shell scripts as executables in mingw.
 	* lib/execute.c (execute): When spawnv fails with error ENOEXEC,
 	run the program as a shell script.

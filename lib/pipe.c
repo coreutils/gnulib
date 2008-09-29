@@ -202,15 +202,23 @@ create_pipe (const char *progname,
        we want in the case of STD*_FILENO) and also orig_stdin,
        orig_stdout, orig_stderr (which is not explicitly wanted but
        harmless).  */
+    /* Use spawnvpe and pass the environment explicitly.  This is needed if
+       the program has modified the environment using putenv() or [un]setenv().
+       On Windows, programs have two environments, one in the "environment
+       block" of the process and managed through SetEnvironmentVariable(), and
+       one inside the process, in the location retrieved by the 'environ'
+       macro.  When using spawnvp() without 'e', the child process inherits a
+       copy of the environment block - ignoring the effects of putenv() and
+       [un]setenv().  */
     {
-      child = spawnvp (P_NOWAIT, prog_path, prog_argv);
+      child = spawnvpe (P_NOWAIT, prog_path, prog_argv, environ);
       if (child < 0 && errno == ENOEXEC)
 	{
 	  /* prog is not an native executable.  Try to execute it as a
 	     shell script.  Note that prepare_spawn() has already prepended
 	     a hidden element "sh.exe" to prog_argv.  */
 	  --prog_argv;
-	  child = spawnvp (P_NOWAIT, prog_argv[0], prog_argv);
+	  child = spawnvpe (P_NOWAIT, prog_argv[0], prog_argv, environ);
 	}
     }
   if (stdinfd >= 0)
