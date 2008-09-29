@@ -1,3 +1,10 @@
+2008-09-29  Bruno Haible  <bruno@clisp.org>
+
+	* m4/arpa_inet_h.m4 (gl_REPLACE_ARPA_INET_H): New macro.
+	* m4/inet_ntop.m4 (gl_INET_NTOP): Invoke it instead of assigning
+	ARPA_INET_H directly.
+	* m4/inet_pton.m4 (gl_INET_PTON): Likewise.
+
 2008-09-28  Bruno Haible  <bruno@clisp.org>
 
 	* m4/sys_socket_h.m4 (gl_PREREQ_SYS_H_WINSOCK2): New macro, extracted
