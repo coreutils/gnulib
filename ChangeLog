@@ -1,5 +1,9 @@
 2008-09-29  Bruno Haible  <bruno@clisp.org>
 
+	* lib/winsock.c (rpl_close, rpl_socket): Remove unused variables.
+
+2008-09-29  Bruno Haible  <bruno@clisp.org>
+
 	* m4/sockets.m4 (gl_SOCKETS): Check also for the need to use -lsocket.
 	Set LIBSOCKET instead of augmenting LIBS.
 	* modules/sockets (Link): New section.

@@ -51,7 +51,6 @@ int
 rpl_close (int fd)
 {
   char buf[sizeof (int)];
-  int bufsize = sizeof (buf);
   SOCKET sock = FD_TO_SOCKET (fd);
   WSANETWORKEVENTS ev;
 
@@ -107,8 +106,6 @@ set_winsock_errno (void)
 int
 rpl_socket (int domain, int type, int protocol)
 {
-  int fd;
-
   /* We have to use WSASocket() to create non-overlapped IO sockets.
      Overlapped IO sockets cannot be used with read/write.  */
   SOCKET fh = WSASocket (domain, type, protocol, NULL, 0, 0);
