@@ -77,7 +77,7 @@ fd_safer (int fd)
     }
 
   return fd;
-}  
+}
 
 int
 main ()
