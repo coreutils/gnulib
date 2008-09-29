@@ -130,6 +130,7 @@ execute (const char *progname,
   int nullinfd;
   int nulloutfd;
 
+  /* FIXME: Need to free memory allocated by prepare_spawn.  */
   prog_argv = prepare_spawn (prog_argv);
 
   /* Save standard file handles of parent process.  */
@@ -160,7 +161,17 @@ execute (const char *progname,
 	      && ((null_stdout && nulloutfd == STDOUT_FILENO)
 		  || (null_stderr && nulloutfd == STDERR_FILENO)
 		  || close (nulloutfd) >= 0))))
-    exitcode = spawnvp (P_WAIT, prog_path, prog_argv);
+    {
+      exitcode = spawnvp (P_WAIT, prog_path, prog_argv);
+      if (exitcode < 0 && errno == ENOEXEC)
+	{
+	  /* prog is not an native executable.  Try to execute it as a
+	     shell script.  Note that prepare_spawn() has already prepended
+	     a hidden element "sh.exe" to prog_argv.  */
+	  --prog_argv;
+	  exitcode = spawnvp (P_WAIT, prog_argv[0], prog_argv);
+	}
+    }
   if (nulloutfd >= 0)
     close (nulloutfd);
   if (nullinfd >= 0)

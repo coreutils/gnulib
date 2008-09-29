@@ -1,5 +1,5 @@
 /* Auxiliary functions for the creation of subprocesses.  Native Woe32 API.
-   Copyright (C) 2003, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -91,7 +91,15 @@ prepare_spawn (char **argv)
     ;
 
   /* Allocate new argument vector.  */
-  new_argv = XNMALLOC (argc + 1, char *);
+  new_argv = XNMALLOC (1 + argc + 1, char *);
+
+  /* Add an element upfront that can be used when argv[0] turns out to be a
+     script, not a program.
+     On Unix, this would be "/bin/sh". On native Windows, "sh" is actually
+     "sh.exe".  We have to omit the directory part and rely on the search in
+     PATH, because the mingw "mount points" are not visible inside Win32
+     CreateProcess().  */
+  *new_argv++ = "sh.exe";
 
   /* Put quoted arguments into the new argument vector.  */
   for (i = 0; i < argc; i++)

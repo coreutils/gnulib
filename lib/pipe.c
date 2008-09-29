@@ -145,6 +145,7 @@ create_pipe (const char *progname,
   int stdinfd;
   int stdoutfd;
 
+  /* FIXME: Need to free memory allocated by prepare_spawn.  */
   prog_argv = prepare_spawn (prog_argv);
 
   if (pipe_stdout)
@@ -201,7 +202,17 @@ create_pipe (const char *progname,
        we want in the case of STD*_FILENO) and also orig_stdin,
        orig_stdout, orig_stderr (which is not explicitly wanted but
        harmless).  */
-    child = spawnvp (P_NOWAIT, prog_path, prog_argv);
+    {
+      child = spawnvp (P_NOWAIT, prog_path, prog_argv);
+      if (child < 0 && errno == ENOEXEC)
+	{
+	  /* prog is not an native executable.  Try to execute it as a
+	     shell script.  Note that prepare_spawn() has already prepended
+	     a hidden element "sh.exe" to prog_argv.  */
+	  --prog_argv;
+	  child = spawnvp (P_NOWAIT, prog_argv[0], prog_argv);
+	}
+    }
   if (stdinfd >= 0)
     close (stdinfd);
   if (stdoutfd >= 0)

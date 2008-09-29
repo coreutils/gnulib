@@ -1,3 +1,12 @@
+2008-09-29  Bruno Haible  <bruno@clisp.org>
+
+	Enable use of shell scripts as executables in mingw.
+	* lib/execute.c (execute): When spawnv fails with error ENOEXEC,
+	run the program as a shell script.
+	* lib/pipe.c (create_pipe): Likewise.
+	* lib/w32spawn.h (prepare_spawn): Add a hidden element in front of the
+	resulting array.
+
 2008-09-29  Eric Blake  <ebb9@byu.net>
 
 	* m4/arpa_inet_h.m4 (gl_REPLACE_ARPA_INET_H): Fix typo.
