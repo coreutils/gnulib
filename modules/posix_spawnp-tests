@@ -1,6 +1,8 @@
 Files:
-tests/test-posix_spawn.c
-tests/test-posix_spawn.in.sh
+tests/test-posix_spawn1.c
+tests/test-posix_spawn1.in.sh
+tests/test-posix_spawn2.c
+tests/test-posix_spawn2.in.sh
 
 Depends-on:
 posix_spawn_file_actions_init
@@ -19,11 +21,17 @@ unistd
 configure.ac:
 
 Makefile.am:
-TESTS += test-posix_spawn
-check_PROGRAMS += test-posix_spawn
+TESTS += test-posix_spawn1 test-posix_spawn2
+check_PROGRAMS += test-posix_spawn1 test-posix_spawn2
 
-BUILT_SOURCES += test-posix_spawn.sh
-test-posix_spawn.sh: test-posix_spawn.in.sh
-	cp $(srcdir)/test-posix_spawn.in.sh $@-t
+BUILT_SOURCES += test-posix_spawn1.sh
+test-posix_spawn1.sh: test-posix_spawn1.in.sh
+	cp $(srcdir)/test-posix_spawn1.in.sh $@-t
 	mv $@-t $@
-MOSTLYCLEANFILES += test-posix_spawn.sh test-posix_spawn.sh-t
+MOSTLYCLEANFILES += test-posix_spawn1.sh test-posix_spawn1.sh-t
+
+BUILT_SOURCES += test-posix_spawn2.sh
+test-posix_spawn2.sh: test-posix_spawn2.in.sh
+	cp $(srcdir)/test-posix_spawn2.in.sh $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += test-posix_spawn2.sh test-posix_spawn2.sh-t

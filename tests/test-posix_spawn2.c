@@ -62,7 +62,7 @@ extern char **environ;
 # define WIFSTOPPED(x) (WTERMSIG (x) == 0x7f)
 #endif
 
-#define CHILD_PROGRAM_FILENAME "test-posix_spawn.sh"
+#define CHILD_PROGRAM_FILENAME "test-posix_spawn2.sh"
 
 static int
 fd_safer (int fd)
@@ -83,7 +83,7 @@ int
 main ()
 {
   char *argv[3] = { "/bin/sh", CHILD_PROGRAM_FILENAME, NULL };
-  int ifd[2];
+  int ofd[2];
   sigset_t blocked_signals;
   sigset_t fatal_signal_set;
   posix_spawn_file_actions_t actions;
@@ -94,11 +94,11 @@ main ()
   pid_t child;
   int fd;
   FILE *fp;
-  char line[80];
+  int written;
   int status;
   int exitstatus;
 
-  if (pipe (ifd) < 0 || (ifd[0] = fd_safer (ifd[0])) < 0)
+  if (pipe (ofd) < 0 || (ofd[1] = fd_safer (ofd[1])) < 0)
     {
       perror ("cannot create pipe");
       exit (1);
@@ -114,10 +114,9 @@ main ()
   attrs_allocated = false;
   if ((err = posix_spawn_file_actions_init (&actions)) != 0
       || (actions_allocated = true,
-          (err = posix_spawn_file_actions_adddup2 (&actions, ifd[1], STDOUT_FILENO)) != 0
-          || (err = posix_spawn_file_actions_addclose (&actions, ifd[1])) != 0
-          || (err = posix_spawn_file_actions_addclose (&actions, ifd[0])) != 0
-          || (err = posix_spawn_file_actions_addopen (&actions, STDIN_FILENO, "/dev/null", O_RDONLY, 0)) != 0
+          (err = posix_spawn_file_actions_adddup2 (&actions, ofd[0], STDIN_FILENO)) != 0
+          || (err = posix_spawn_file_actions_addclose (&actions, ofd[0])) != 0
+          || (err = posix_spawn_file_actions_addclose (&actions, ofd[1])) != 0
           || (err = posix_spawnattr_init (&attrs)) != 0
           || (attrs_allocated = true,
               (err = posix_spawnattr_setsigmask (&attrs, &blocked_signals)) != 0
@@ -136,22 +135,18 @@ main ()
   posix_spawn_file_actions_destroy (&actions);
   posix_spawnattr_destroy (&attrs);
   sigprocmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
-  close (ifd[1]);
-  fd = ifd[0];
-  fp = fdopen (fd, "r");
+  close (ofd[0]);
+  fd = ofd[1];
+  fp = fdopen (fd, "w");
   if (fp == NULL)
     {
       fprintf (stderr, "fdopen() failed\n");
       exit (1);
     }
-  if (fread (line, 1, 80, fp) < 12)
+  written = fwrite ("Halle Potta\n", 1, 12, fp);
+  if (written < 12)
     {
-      fprintf (stderr, "could not read expected output\n");
-      exit (1);
-    }
-  if (memcmp (line, "Halle Potta", 11) != 0)
-    {
-      fprintf (stderr, "read output is not the expected output");
+      fprintf (stderr, "could not write input\n");
       exit (1);
     }
   fclose (fp);

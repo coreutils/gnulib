@@ -1,5 +1,15 @@
 2008-09-29  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-posix_spawn1.c: Renamed from tests/test-posix_spawn.c.
+	* tests/test-posix_spawn1.in.sh: Renamed from
+	tests/test-posix_spawn.in.sh.
+	* tests/test-posix_spawn2.c: New file.
+	* tests/test-posix_spawn2.in.sh: New file.
+	* modules/posix_spawnp-tests (Files): Update.
+	(Makefile.am): Update. Add test-posix_spawn2 to the tests.
+
+2008-09-29  Bruno Haible  <bruno@clisp.org>
+
 	Propagate effects of putenv/setenv/unsetenv to child processes.
 	* lib/execute.c (execute): Use spawnvpe instead of spawnvp.
 	* lib/pipe.c (create_pipe): Likewise.
