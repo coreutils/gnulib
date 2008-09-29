@@ -59,7 +59,7 @@
 	* doc/posix-functions/socket.texi: Update mingw problems.
 
 2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/sys_select.in.h: Include sys/time.h.
 	* m4/sys_select.h.m4: Test that struct timeval is fully defined.
