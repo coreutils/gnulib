@@ -40,10 +40,19 @@
 # include <sys/socket.h>
 
 # if @HAVE_WINSOCK2_H@
+
+#  ifdef __cplusplus
+extern "C" {
+#  endif
+
 #  undef select
 #  define select		rpl_select
-
 extern int rpl_select (int, fd_set *, fd_set *, fd_set *, struct timeval *);
+
+#  ifdef __cplusplus
+}
+#  endif
+
 # endif
 
 #endif

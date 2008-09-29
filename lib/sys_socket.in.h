@@ -105,6 +105,10 @@
 
 typedef int socklen_t;
 
+#  ifdef __cplusplus
+extern "C" {
+#  endif
+
 /* Re-define FD_ISSET to avoid a WSA call while we are not using 
    network sockets.  */
 static inline int
@@ -174,6 +178,10 @@ extern int rpl_send (int, const void *, int, int);
 extern int rpl_recvfrom (int, void *, int, int, struct sockaddr *, int *);
 extern int rpl_sendto (int, const void *, int, int, struct sockaddr *, int);
 extern int rpl_setsockopt (int, int, int, const void *, int);
+
+#  ifdef __cplusplus
+}
+#  endif
 
 # endif /* HAVE_WINSOCK2_H */
 
