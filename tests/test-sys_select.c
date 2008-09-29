@@ -19,10 +19,13 @@
 
 #include <config.h>
 
+#include <sys/select.h>
+
+/* Check that the 'struct timeval' type is defined.  */
+struct timeval t1;
+
 #include <stdio.h>
 #include <string.h>
-#include <sys/select.h>
-#include <sys/time.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <fcntl.h>

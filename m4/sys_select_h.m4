@@ -10,7 +10,8 @@ AC_DEFUN([gl_HEADER_SYS_SELECT],
   AC_CACHE_CHECK([whether <sys/select.h> is self-contained],
     [gl_cv_header_sys_select_h_selfcontained],
     [
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/select.h>]], [[]])],
+      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/select.h>]],
+					 [[struct timeval b;]])],
         [gl_cv_header_sys_select_h_selfcontained=yes],
         [gl_cv_header_sys_select_h_selfcontained=no])
     ])
