@@ -1,3 +1,9 @@
+2008-09-15  Simon Josefsson  <simon@josefsson.org>
+
+	tests: avoid some compiler warnings
+	* tests/test-memchr.c (main): Pass NULL indirectly.
+	* tests/test-getdate.c (main): Remove unused variable 'ret'.
+
 2008-09-29  Ondřej Vašík  <ovasik@redhat.com>
 
 	getdate.y: disallow countable dayshifts like "4 yesterday ago"

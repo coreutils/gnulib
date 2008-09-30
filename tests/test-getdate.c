@@ -49,7 +49,6 @@
 int
 main (int argc, char **argv)
 {
-  bool ret;
   struct timespec result;
   struct timespec result2;
   struct timespec now;
