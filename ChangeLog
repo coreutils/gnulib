@@ -1,3 +1,9 @@
+2008-09-30  Jim Meyering  <meyering@redhat.com>
+
+	fts.m4: correct the test for statfs.f_type
+	* m4/fts.m4 (gl_FUNC_FTS_CORE): Include <sys/statfs.h>
+	when checking for statfs.f_type.
+
 2008-09-15  Simon Josefsson  <simon@josefsson.org>
 
 	tests: avoid some compiler warnings

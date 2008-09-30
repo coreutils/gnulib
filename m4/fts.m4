@@ -1,4 +1,4 @@
-#serial 14
+#serial 15
 dnl Copyright (C) 2005-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,5 +25,7 @@ AC_DEFUN([gl_FUNC_FTS_CORE],
 
   AC_CHECK_FUNCS_ONCE([fstatfs])
   AC_CHECK_HEADERS_ONCE([sys/param.h sys/vfs])dnl
-  AC_CHECK_MEMBERS([struct statfs.f_type])
+  AC_CHECK_MEMBERS([struct statfs.f_type],,,
+    [$ac_includes_default
+     #include <sys/statfs.h>])
 ])
