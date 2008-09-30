@@ -1,3 +1,8 @@
+2008-09-30  Bruno Haible  <bruno@clisp.org>
+
+	* lib/winsock-select.c (win32_poll_handle): Add shortcut for regular
+	files.
+
 2008-09-30  Jim Meyering  <meyering@redhat.com>
 
 	fts.m4: correct the test for statfs.f_type

@@ -93,6 +93,11 @@ win32_poll_handle (HANDLE h, int fd, struct bitset *rbits, struct bitset *wbits,
   read = write = except = FALSE;
   switch (GetFileType (h))
     {
+    case FILE_TYPE_DISK:
+      read = TRUE;
+      write = TRUE;
+      break;
+
     case FILE_TYPE_PIPE:
       if (!once_only)
 	{
