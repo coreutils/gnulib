@@ -1,3 +1,9 @@
+2008-10-01  Jim Meyering  <meyering@redhat.com>
+
+	fts.c: adjust a new interface to be more generally useful
+	* lib/fts.c (dirent_inode_sort_may_be_useful): Take an FD parameter.
+	(fts_build): Adjust caller.
+
 2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
 
 	* modules/cond-tests: New file.

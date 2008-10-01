@@ -955,18 +955,19 @@ fs_handles_readdir_ordered_dirents_efficiently (uintmax_t fs_type)
 }
 
 /* Return true if it is easy to determine the file system type of the
-   current directory, and sorting dirents on inode numbers is known to
-   improve traversal performance with that type of file system.  */
+   directory on which DIR_FD is open, and sorting dirents on inode numbers
+   is known to improve traversal performance with that type of file system.  */
 static bool
-dirent_inode_sort_may_be_useful (FTS const *sp)
+dirent_inode_sort_may_be_useful (int dir_fd)
 {
-  struct statfs fs_buf;
   /* Skip the sort only if we can determine efficiently
-     that it's the right thing to do.  */
-  bool skip = (ISSET (FTS_CWDFD)
-	       && fstatfs (sp->fts_cwd_fd, &fs_buf) == 0
-	       && fs_handles_readdir_ordered_dirents_efficiently
-	            (fs_buf.f_type));
+     that skipping it is the right thing to do.
+     The cost of performing an unnecessary sort is negligible,
+     while the cost of *not* performing it can be O(N^2) with
+     a very large constant.  */
+  struct statfs fs_buf;
+  bool skip = (fstatfs (dir_fd, &fs_buf) == 0
+	       && fs_handles_readdir_ordered_dirents_efficiently (dir_fd));
   return !skip;
 }
 #else
@@ -1289,7 +1290,8 @@ mem1:				saved_errno = errno;
 	   inode numbers.  */
 	if (nitems > _FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD
 	    && !sp->fts_compar
-	    && dirent_inode_sort_may_be_useful (sp)) {
+	    && ISSET (FTS_CWDFD)
+	    && dirent_inode_sort_may_be_useful (sp->fts_cwd_fd)) {
 		sp->fts_compar = fts_compare_ino;
 		head = fts_sort (sp, head, nitems);
 		sp->fts_compar = NULL;
