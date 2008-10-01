@@ -6,6 +6,7 @@ lib/execute.h
 lib/execute.c
 lib/w32spawn.h
 m4/execute.m4
+m4/posix_spawn.m4
 
 Depends-on:
 error

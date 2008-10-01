@@ -1,3 +1,17 @@
+2008-10-01  Bruno Haible  <bruno@clisp.org>
+
+	Avoid the broken posix_spawn function on AIX 5.3 and 6.1.
+	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_WORKS): New macro.
+	(gl_POSIX_SPAWN_BODY): Invoke it. Set REPLACE_POSIX_SPAWN if needed.
+	* doc/posix-functions/posix_spawn.texi: Mention the AIX bugs.
+	* doc/posix-functions/posix_spawnp.texi: Likewise.
+	* m4/execute.m4 (gl_EXECUTE): Invoke gl_POSIX_SPAWN_WORKS, to check
+	whether posix_spawn actually works.
+	* m4/pipe.m4 (gl_PIPE): Likewise.
+	* modules/execute (Files): Add m4/posix_spawn.m4.
+	* modules/pipe (Files): Add m4/posix_spawn.m4.
+	Reported and analyzed by Rainer Tammer <tammer@tammer.net>.
+
 2008-10-01  Jim Meyering  <meyering@redhat.com>
 
 	remove trailing spaces

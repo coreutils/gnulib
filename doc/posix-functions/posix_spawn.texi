@@ -11,11 +11,15 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin, mingw, Interix 3.5, BeOS.
+@item
+When this function fails, it causes the stdio buffer contents to be output
+twice on some platforms:
+AIX 6.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function does not work on some platforms:
-mingw.
+AIX 6.1 (under particular circumstances), mingw.
 @end itemize

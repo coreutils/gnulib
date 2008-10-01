@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 1
+# posix_spawn.m4 serial 2
 dnl Copyright (C) 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,13 +36,177 @@ AC_DEFUN([gl_POSIX_SPAWN_BODY],
   dnl AC_CHECK_FUNCS_ONCE([posix_spawnattr_getsigmask])
   dnl AC_CHECK_FUNCS_ONCE([posix_spawnattr_setsigmask])
   dnl AC_CHECK_FUNCS_ONCE([posix_spawnattr_destroy])
-  if test $ac_cv_func_posix_spawn != yes; then
+  if test $ac_cv_func_posix_spawn = yes; then
+    gl_POSIX_SPAWN_WORKS
+    case "$gl_cv_func_posix_spawn_works" in
+      *yes) ;;
+      *) REPLACE_POSIX_SPAWN=1 ;;
+    esac
+  else
     HAVE_POSIX_SPAWN=0
-    dnl For now, assume that if posix_spawn exists, it also works.
-    if false; then
-      REPLACE_POSIX_SPAWN=1
-    fi
   fi
+])
+
+dnl Test whether posix_spawn actually works.
+dnl posix_spawn on AIX 5.3..6.1 has a bug: When it fails to execute the
+dnl program, the child process exits with exit() rather than _exit(),
+dnl which causes the stdio buffers to be flushed. Reported by Rainer Tammer.
+dnl posix_spawn on AIX 5.3..6.1 has also a second bug: It does not work
+dnl when POSIX threads are used. But we don't test against this bug here.
+AC_DEFUN([gl_POSIX_SPAWN_WORKS],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether posix_spawn works], [gl_cv_func_posix_spawn_works],
+    [if test $cross_compiling = no; then
+       AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <spawn.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+extern char **environ;
+
+#ifndef STDIN_FILENO
+# define STDIN_FILENO 0
+#endif
+#ifndef STDOUT_FILENO
+# define STDOUT_FILENO 1
+#endif
+#ifndef STDERR_FILENO
+# define STDERR_FILENO 2
+#endif
+
+#ifndef WTERMSIG
+# define WTERMSIG(x) ((x) & 0x7f)
+#endif
+#ifndef WCOREDUMP
+# define WCOREDUMP(x) ((x) & 0x80)
+#endif
+#ifndef WEXITSTATUS
+# define WEXITSTATUS(x) (((x) >> 8) & 0xff)
+#endif
+#ifndef WIFSIGNALED
+# define WIFSIGNALED(x) (WTERMSIG (x) != 0 && WTERMSIG(x) != 0x7f)
+#endif
+#ifndef WIFEXITED
+# define WIFEXITED(x) (WTERMSIG (x) == 0)
+#endif
+#ifndef WIFSTOPPED
+# define WIFSTOPPED(x) (WTERMSIG (x) == 0x7f)
+#endif
+
+#define CHILD_PROGRAM_FILENAME "/non/exist/ent"
+
+static int
+fd_safer (int fd)
+{
+  if (0 <= fd && fd <= 2)
+    {
+      int f = fd_safer (dup (fd));
+      int e = errno;
+      close (fd);
+      errno = e;
+      fd = f;
+    }
+
+  return fd;
+}  
+]],
+dnl Now comes the main() function.
+[[
+  char *argv[2] = { CHILD_PROGRAM_FILENAME, NULL };
+  int ofd[2];
+  sigset_t blocked_signals;
+  sigset_t fatal_signal_set;
+  posix_spawn_file_actions_t actions;
+  bool actions_allocated;
+  posix_spawnattr_t attrs;
+  bool attrs_allocated;
+  int err;
+  pid_t child;
+  int status;
+  int exitstatus;
+
+  setvbuf (stdout, NULL, _IOFBF, 0);
+  puts ("This should be seen only once.");
+  if (pipe (ofd) < 0 || (ofd[1] = fd_safer (ofd[1])) < 0)
+    {
+      perror ("cannot create pipe");
+      exit (1);
+    }
+  sigprocmask (SIG_SETMASK, NULL, &blocked_signals);
+  sigemptyset (&fatal_signal_set);
+  sigaddset (&fatal_signal_set, SIGINT);
+  sigaddset (&fatal_signal_set, SIGTERM);
+  sigaddset (&fatal_signal_set, SIGHUP);
+  sigaddset (&fatal_signal_set, SIGPIPE);
+  sigprocmask (SIG_BLOCK, &fatal_signal_set, NULL);
+  actions_allocated = false;
+  attrs_allocated = false;
+  if ((err = posix_spawn_file_actions_init (&actions)) != 0
+      || (actions_allocated = true,
+          (err = posix_spawn_file_actions_adddup2 (&actions, ofd[0], STDIN_FILENO)) != 0
+          || (err = posix_spawn_file_actions_addclose (&actions, ofd[0])) != 0
+          || (err = posix_spawn_file_actions_addclose (&actions, ofd[1])) != 0
+          || (err = posix_spawnattr_init (&attrs)) != 0
+          || (attrs_allocated = true,
+              (err = posix_spawnattr_setsigmask (&attrs, &blocked_signals)) != 0
+              || (err = posix_spawnattr_setflags (&attrs, POSIX_SPAWN_SETSIGMASK)) != 0)
+          || (err = posix_spawnp (&child, CHILD_PROGRAM_FILENAME, &actions, &attrs, argv, environ)) != 0))
+    {
+      if (actions_allocated)
+	posix_spawn_file_actions_destroy (&actions);
+      if (attrs_allocated)
+	posix_spawnattr_destroy (&attrs);
+      sigprocmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
+      errno = err;
+      perror ("subprocess failed");
+      exit (1);
+    }
+  posix_spawn_file_actions_destroy (&actions);
+  posix_spawnattr_destroy (&attrs);
+  sigprocmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
+  close (ofd[0]);
+  close (ofd[1]);
+  status = 0;
+  while (waitpid (child, &status, 0) != child)
+    ;
+  if (!WIFEXITED (status))
+    {
+      fprintf (stderr, "subprocess terminated with unexpected wait status %d\n", status);
+      exit (1);
+    }
+  exitstatus = WEXITSTATUS (status);
+  if (exitstatus != 127)
+    {
+      fprintf (stderr, "subprocess terminated with unexpected exit status %d\n", exitstatus);
+      exit (1);
+    }
+]])],
+         [if test -s conftest$ac_exeext \
+             && ./conftest$ac_exeext > conftest.out \
+             && echo 'This should be seen only once.' > conftest.ok \
+             && cmp conftest.out conftest.ok > /dev/null; then
+            gl_cv_func_posix_spawn_works=yes
+          else
+            gl_cv_func_posix_spawn_works=no
+          fi],
+         [gl_cv_func_posix_spawn_works=no])
+     else
+       case "$host_os" in
+         aix*) gl_cv_func_posix_spawn_works="guessing no";;
+         *)    gl_cv_func_posix_spawn_works="guessing yes";;
+       esac
+     fi
+    ])
 ])
 
 AC_DEFUN([gl_POSIX_SPAWN_INTERNAL],
