@@ -1,6 +1,17 @@
 2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
             Bruno Haible  <bruno@clisp.org>
 
+	* modules/tls-tests (Depends-on): Add thread, yield.
+	(configure.ac): Remove all checks.
+	(test_tls_LDADD): Use YIELD_LIB instead of LIBSCHED.
+	* tests/test-tls.c (gl_thread_t, gl_thread_join, gl_thread_yield,
+	gl_thread_self): Remove definitions. Include glthread/thread.h and
+	glthread/yield.h instead.
+	(test_tls): Pass an additional NULL argument to gl_thread_join.
+
+2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+            Bruno Haible  <bruno@clisp.org>
+
 	* modules/lock-tests (Depends-on): Add thread, yield.
 	(configure.ac): Remove all checks.
 	(test_lock_LDADD): Use YIELD_LIB instead of LIBSCHED.
