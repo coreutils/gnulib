@@ -1,6 +1,11 @@
 2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
             Bruno Haible  <bruno@clisp.org>
 
+	* m4/thread.m4 (gl_THREAD): Fix detection of pthread_atfork function.
+
+2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+            Bruno Haible  <bruno@clisp.org>
+
 	* modules/tls-tests (Depends-on): Add thread, yield.
 	(configure.ac): Remove all checks.
 	(test_tls_LDADD): Use YIELD_LIB instead of LIBSCHED.
