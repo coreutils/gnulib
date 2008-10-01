@@ -21,6 +21,7 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include "glthread/thread.h"
 
 #include <stdlib.h>
@@ -32,95 +33,148 @@
 
 /* -------------------------- gl_thread_t datatype -------------------------- */
 
-/* Use a wrapper function, instead of adding WINAPI through a cast.
-   This struct also holds the thread's exit value.  */
-struct thread_extra
-  {
-    /* Fields for managing the association between thread id and handle.  */
-    DWORD volatile id;
-    HANDLE volatile handle;
-    CRITICAL_SECTION handle_lock;
-    struct thread_extra * volatile next;
-    /* Fields for managing the exit value.  */
-    void * volatile result;
-    /* Fields for managing the thread start.  */
-    void * (*func) (void *);
-    void *arg;
-  };
+/* The Thread-Local Storage (TLS) key that allows to access each thread's
+   'struct gl_thread_struct *' pointer.  */
+static DWORD self_key = (DWORD)-1;
 
-/* Linked list of thread_extra of running or zombie (not-yet-joined)
-   threads.
-   TODO: Use a hash table indexed by id instead of a linked list.  */
-static struct thread_extra *running_threads /* = NULL */;
+/* Initializes self_key.  This function must only be called once.  */
+static void
+do_init_self_key (void)
+{
+  self_key = TlsAlloc ();
+  /* If this fails, we're hosed.  */
+  if (self_key == (DWORD)-1)
+    abort ();
+}
 
-/* Lock protecting running_threads.  */
-gl_lock_define_initialized(static, running_lock)
+/* Initializes self_key.  */
+static void
+init_self_key (void)
+{
+  gl_once_define(static, once)
+  gl_once (once, do_init_self_key);
+}
 
+/* This structure contains information about a thread.
+   It is stored in TLS under key self_key.  */
+struct gl_thread_struct
+{
+  /* Fields for managing the handle.  */
+  HANDLE volatile handle;
+  CRITICAL_SECTION handle_lock;
+  /* Fields for managing the exit value.  */
+  void * volatile result;
+  /* Fields for managing the thread start.  */
+  void * (*func) (void *);
+  void *arg;
+};
+
+/* Return a real HANDLE object for the current thread.  */
+static inline HANDLE
+get_current_thread_handle (void)
+{
+  HANDLE this_handle;
+
+  /* GetCurrentThread() returns a pseudo-handle, i.e. only a symbolic
+     identifier, not a real handle.  */
+  if (!DuplicateHandle (GetCurrentProcess (), GetCurrentThread (),
+			GetCurrentProcess (), &this_handle,
+			0, FALSE, DUPLICATE_SAME_ACCESS))
+    abort ();
+  return this_handle;
+}
+
+gl_thread_t
+gl_thread_self_func (void)
+{
+  gl_thread_t thread;
+
+  if (self_key == (DWORD)-1)
+    init_self_key ();
+  thread = TlsGetValue (self_key);
+  if (thread == NULL)
+    {
+      /* This happens only in threads that have not been created through
+	 glthread_create(), such as the main thread.  */
+      for (;;)
+	{
+	  thread =
+	    (struct gl_thread_struct *)
+	    malloc (sizeof (struct gl_thread_struct));
+	  if (thread != NULL)
+	    break;
+	  /* Memory allocation failed.  There is not much we can do.  Have to
+	     busy-loop, waiting for the availability of memory.  */
+	  Sleep (1);
+	}
+
+      thread->handle = get_current_thread_handle ();
+      InitializeCriticalSection (&thread->handle_lock);
+      thread->result = NULL; /* just to be deterministic */
+      TlsSetValue (self_key, thread);
+    }
+  return thread;
+}
+
+/* The main function of a freshly creating thread.  It's a wrapper around
+   the FUNC and ARG arguments passed to glthread_create_func.  */
 static DWORD WINAPI
 wrapper_func (void *varg)
 {
-  struct thread_extra *xarg = (struct thread_extra *)varg;
+  struct gl_thread_struct *thread = (struct gl_thread_struct *)varg;
 
-  EnterCriticalSection (&xarg->handle_lock);
-  xarg->id = GetCurrentThreadId ();
+  EnterCriticalSection (&thread->handle_lock);
   /* Create a new handle for the thread only if the parent thread did not yet
      fill in the handle.  */
-  if (xarg->handle == NULL)
-    {
-      HANDLE this_thread;
-      if (!DuplicateHandle (GetCurrentProcess (), GetCurrentThread (),
-			    GetCurrentProcess (), &this_thread,
-			    0, FALSE, DUPLICATE_SAME_ACCESS))
-	abort ();
-      xarg->handle = this_thread;
-    }
-  LeaveCriticalSection (&xarg->handle_lock);
-  /* Add xarg to the list of running thread_extra.  */
-  gl_lock_lock (running_lock);
-  if (!(xarg->id == GetCurrentThreadId ()))
-    abort ();
-  xarg->next = running_threads;
-  running_threads = xarg;
-  gl_lock_unlock (running_lock);
+  if (thread->handle == NULL)
+    thread->handle = get_current_thread_handle ();
+  LeaveCriticalSection (&thread->handle_lock);
+
+  if (self_key == (DWORD)-1)
+    init_self_key ();
+  TlsSetValue (self_key, thread);
 
   /* Run the thread.  Store the exit value if the thread was not terminated
      otherwise.  */
-  xarg->result = xarg->func (xarg->arg);
+  thread->result = thread->func (thread->arg);
   return 0;
 }
 
 int
 glthread_create_func (gl_thread_t *threadp, void * (*func) (void *), void *arg)
 {
-  struct thread_extra *x =
-    (struct thread_extra *) malloc (sizeof (struct thread_extra));
-  if (x == NULL)
+  struct gl_thread_struct *thread =
+    (struct gl_thread_struct *) malloc (sizeof (struct gl_thread_struct));
+  if (thread == NULL)
     return ENOMEM;
-  x->handle = NULL;
-  InitializeCriticalSection (&x->handle_lock);
-  x->result = NULL; /* just to be deterministic */
-  x->func = func;
-  x->arg = arg;
+  thread->handle = NULL;
+  InitializeCriticalSection (&thread->handle_lock);
+  thread->result = NULL; /* just to be deterministic */
+  thread->func = func;
+  thread->arg = arg;
+
   {
     DWORD thread_id;
     HANDLE thread_handle;
 
-    thread_handle = CreateThread (NULL, 100000, wrapper_func, x, 0, &thread_id);
+    thread_handle =
+      CreateThread (NULL, 100000, wrapper_func, thread, 0, &thread_id);
     if (thread_handle == NULL)
       {
-	DeleteCriticalSection (&x->handle_lock);
-	free (x);
+	DeleteCriticalSection (&thread->handle_lock);
+	free (thread);
 	return EAGAIN;
       }
-    EnterCriticalSection (&x->handle_lock);
-    x->id = thread_id;
-    if (x->handle == NULL)
-      x->handle = thread_handle;
+
+    EnterCriticalSection (&thread->handle_lock);
+    if (thread->handle == NULL)
+      thread->handle = thread_handle;
     else
-      /* x->handle was already set by the thread itself.  */
+      /* thread->handle was already set by the thread itself.  */
       CloseHandle (thread_handle);
-    LeaveCriticalSection (&x->handle_lock);
-    *threadp = thread_id;
+    LeaveCriticalSection (&thread->handle_lock);
+
+    *threadp = thread;
     return 0;
   }
 }
@@ -128,54 +182,21 @@ glthread_create_func (gl_thread_t *threadp, void * (*func) (void *), void *arg)
 int
 glthread_join_func (gl_thread_t thread, void **retvalp)
 {
-  HANDLE thread_handle;
+  if (thread == NULL)
+    return EINVAL;
 
   if (thread == gl_thread_self ())
     return EDEADLK;
 
-  /* Find the thread handle that corresponds to the thread id.
-     The thread argument must come from either the parent thread or from the
-     thread itself.  So at this point, either glthread_create_func or
-     wrapper_func (whichever was executed first) has filled in x->handle.  */
-  thread_handle = NULL;
-  gl_lock_lock (running_lock);
-  {
-    struct thread_extra *x;
-    for (x = running_threads; x != NULL; x = x->next)
-      if (x->id == thread)
-	{
-	  thread_handle = x->handle;
-	  break;
-	}
-  }
-  gl_lock_unlock (running_lock);
-  if (thread_handle == NULL)
-    return ESRCH;
-
-  if (WaitForSingleObject (thread_handle, INFINITE) == WAIT_FAILED)
+  if (WaitForSingleObject (thread->handle, INFINITE) == WAIT_FAILED)
     return EINVAL;
 
-  /* Remove the 'struct thread_extra' from running_threads.  */
-  gl_lock_lock (running_lock);
-  {
-    struct thread_extra * volatile *xp;
-    for (xp = &running_threads; *xp != NULL; xp = &(*xp)->next)
-      if ((*xp)->id == thread)
-	{
-	  struct thread_extra *x = *xp;
-	  if (retvalp != NULL)
-	    *retvalp = x->result;
-	  if (x->handle != thread_handle)
-	    abort ();
-	  *xp = x->next;
-	  DeleteCriticalSection (&x->handle_lock);
-	  free (x);
-	  break;
-	}
-  }
-  gl_lock_unlock (running_lock);
+  if (retvalp != NULL)
+    *retvalp = thread->result;
 
-  CloseHandle (thread_handle);
+  DeleteCriticalSection (&thread->handle_lock);
+  CloseHandle (thread->handle);
+  free (thread);
 
   return 0;
 }
@@ -183,21 +204,8 @@ glthread_join_func (gl_thread_t thread, void **retvalp)
 int
 gl_thread_exit_func (void *retval)
 {
-  DWORD this_thread = GetCurrentThreadId ();
-
-  /* Store the exit value in the appropriate element of running_threads.  */
-  gl_lock_lock (running_lock);
-  {
-    struct thread_extra *x;
-    for (x = running_threads; x != NULL; x = x->next)
-      if (x->id == this_thread)
-	{
-	  x->result = retval;
-	  break;
-	}
-  }
-  gl_lock_unlock (running_lock);
-
+  gl_thread_t thread = gl_thread_self ();
+  thread->result = retval;
   ExitThread (0);
 }
 

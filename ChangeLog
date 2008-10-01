@@ -1,5 +1,22 @@
 2008-09-30  Bruno Haible  <bruno@clisp.org>
 
+	Fix the Win32 implementation of the 'thread' module.
+	* lib/glthread/thread.h [USE_WIN32_THREADS] (gl_thread_t): Change to a
+	pointer type.
+	(gl_thread_self): Invoke gl_thread_self_func.
+	(gl_thread_self_func): New declaration.
+	* lib/glthread/thread.c [USE_WIN32_THREADS] (self_key): New variable.
+	(do_init_self_key, init_self_key): New functions.
+	(struct gl_thread_struct): Renamed from 'struct thread_extra'.
+	Remove some fields.
+	(running_threads, running_lock): Remove variables.
+	(get_current_thread_handle): New function.
+	(gl_thread_self_func, wrapper_func, glthread_create_func,
+	glthread_join_func, gl_thread_exit_func): Largely rewritten and
+	simplified.
+
+2008-09-30  Bruno Haible  <bruno@clisp.org>
+
 	* lib/winsock-select.c (win32_poll_handle): Add shortcut for regular
 	files.
 
