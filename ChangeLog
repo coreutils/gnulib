@@ -1,4 +1,9 @@
 2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+
+	* modules/cond-tests: New file.
+	* tests/test-cond.c: New file.
+
+2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
             Bruno Haible  <bruno@clisp.org>
 
 	* modules/cond (Dependencies): Add errno, time.
