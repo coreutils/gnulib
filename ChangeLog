@@ -1,6 +1,14 @@
 2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
             Bruno Haible  <bruno@clisp.org>
 
+	* modules/cond (Dependencies): Add errno, time.
+	* lib/glthread/cond.h: Include <time.h>.
+	(gl_cond_define, gl_cond_define_initialized): Use the same definition
+	across platforms.
+
+2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+            Bruno Haible  <bruno@clisp.org>
+
 	* m4/thread.m4 (gl_THREAD): Fix detection of pthread_atfork function.
 
 2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
