@@ -130,10 +130,10 @@ connect_to_socket (int blocking)
 #ifdef WIN32_NATIVE
       unsigned long iMode = 1;
       ioctl (s, FIONBIO, (char *) &iMode);
- 
+
 #elif defined F_GETFL
       int oldflags = fcntl (s, F_GETFL, NULL);
- 
+
       if (!(oldflags & O_NONBLOCK))
         fcntl (s, F_SETFL, oldflags | O_NONBLOCK);
 #endif
@@ -161,7 +161,7 @@ poll1 (int fd, int ev, int time)
   pfd.fd = fd;
   pfd.events = ev;
   pfd.revents = 0;
-  r = poll (&pfd, 1, time);  
+  r = poll (&pfd, 1, time);
   if (r < 0)
     return r;
 

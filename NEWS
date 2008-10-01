@@ -22,7 +22,7 @@ Date        Modules         Changes
                             will simply improve your code's portability
                             between POSIX platforms and Windows.  In
                             particular, you will be able to use ioctl and
-                            close instead of ioctlsocket and closesocket, 
+                            close instead of ioctlsocket and closesocket,
                             and test errno instead of WSAGetLastError ().
                             On the other hand, you have to audit your code to
                             remove usage of these Winsock-specific functions.

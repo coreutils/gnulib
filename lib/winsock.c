@@ -61,7 +61,7 @@ rpl_close (int fd)
       /* FIXME: other applications, like squid, use an undocumented
 	 _free_osfhnd free function.  Instead, here we just close twice
 	 the file descriptor.  I could not get the former to work
-	 (pb, Sep 22 2008).  */ 
+	 (pb, Sep 22 2008).  */
       int r = closesocket (sock);
       _close (fd);
       return r;

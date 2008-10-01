@@ -109,7 +109,7 @@ typedef int socklen_t;
 extern "C" {
 #  endif
 
-/* Re-define FD_ISSET to avoid a WSA call while we are not using 
+/* Re-define FD_ISSET to avoid a WSA call while we are not using
    network sockets.  */
 static inline int
 rpl_fd_isset (int fd, fd_set * set)

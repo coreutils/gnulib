@@ -12,7 +12,7 @@ configure.ac:
 gl_YIELD
 
 Makefile.am:
-lib_SOURCES += glthread/yield.h 
+lib_SOURCES += glthread/yield.h
 
 Include:
 "glthread/yield.h"

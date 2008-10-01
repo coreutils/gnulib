@@ -543,7 +543,7 @@ poll (pfd, nfd, timeout)
 	    ev.lNetworkEvents |= FD_WRITE | FD_CONNECT;
 	  if (FD_ISSET ((SOCKET) h, &xfds))
 	    ev.lNetworkEvents |= FD_OOB;
-	     
+
           happened = win32_compute_revents_socket ((SOCKET) h, pfd[i].events,
 						   ev.lNetworkEvents);
         }

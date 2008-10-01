@@ -17,7 +17,7 @@ AC_DEFUN([gl_FUNC_MEMCMP],
 				]], [[int ret = memcmp ("foo", "bar", 0);]])],
 			[ac_cv_func_memcmp_working=yes],
 			[ac_cv_func_memcmp_working=no])])
-  fi 
+  fi
   AC_FUNC_MEMCMP
   dnl Note: AC_FUNC_MEMCMP does AC_LIBOBJ(memcmp).
   if test $ac_cv_func_memcmp_working = no; then

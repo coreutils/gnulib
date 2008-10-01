@@ -135,10 +135,10 @@ connect_to_socket (int blocking)
 #ifdef WIN32_NATIVE
       unsigned long iMode = 1;
       ioctl (s, FIONBIO, (char *) &iMode);
- 
+
 #elif defined F_GETFL
       int oldflags = fcntl (s, F_GETFL, NULL);
- 
+
       if (!(oldflags & O_NONBLOCK))
         fcntl (s, F_SETFL, oldflags | O_NONBLOCK);
 #endif

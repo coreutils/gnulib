@@ -1,5 +1,15 @@
 2008-10-01  Jim Meyering  <meyering@redhat.com>
 
+	remove trailing spaces
+	* NEWS: Likewise.
+	* lib/poll.c (poll): Likewise.
+	* lib/sys_socket.in.h (SHUT_RDWR): Likewise.
+	* lib/winsock.c (rpl_close): Likewise.
+	* m4/memcmp.m4 (gl_FUNC_MEMCMP): Likewise.
+	* modules/yield: Likewise.
+	* tests/test-poll.c (connect_to_socket, poll1): Likewise.
+	* tests/test-sys_select.c (connect_to_socket): Likewise.
+
 	fts.c: adjust a new interface to be more generally useful
 	* lib/fts.c (dirent_inode_sort_may_be_useful): Take an FD parameter.
 	(fts_build): Adjust caller.
@@ -10,7 +20,7 @@
 	* tests/test-cond.c: New file.
 
 2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* modules/cond (Dependencies): Add errno, time.
 	* lib/glthread/cond.h: Include <time.h>.
@@ -18,12 +28,12 @@
 	across platforms.
 
 2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* m4/thread.m4 (gl_THREAD): Fix detection of pthread_atfork function.
 
 2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* modules/tls-tests (Depends-on): Add thread, yield.
 	(configure.ac): Remove all checks.
@@ -34,7 +44,7 @@
 	(test_tls): Pass an additional NULL argument to gl_thread_join.
 
 2008-09-30  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* modules/lock-tests (Depends-on): Add thread, yield.
 	(configure.ac): Remove all checks.
