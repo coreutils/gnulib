@@ -2110,6 +2110,7 @@ func_all_modules ()
   func_module freopen
   func_module fseek
   func_module fseeko
+  func_module fsync
   func_module ftell
   func_module ftello
   func_module ftruncate

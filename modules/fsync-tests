@@ -1,0 +1,10 @@
+Files:
+tests/test-fsync.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fsync
+check_PROGRAMS += test-fsync

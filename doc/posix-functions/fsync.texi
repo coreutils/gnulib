@@ -4,15 +4,15 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/fsync.html}
 
-Gnulib module: ---
+Gnulib module: fsync
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 mingw.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

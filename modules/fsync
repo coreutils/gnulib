@@ -1,0 +1,24 @@
+Description:
+fsync(2) function: synchronize writes to a file.
+
+Files:
+lib/fsync.c
+m4/fsync.m4
+
+Depends-on:
+unistd
+
+configure.ac:
+gl_FUNC_FSYNC
+gl_UNISTD_MODULE_INDICATOR([fsync])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Richard W.M. Jones, Jim Meyering
