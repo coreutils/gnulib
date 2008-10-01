@@ -52,6 +52,7 @@
 #include <errno.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "glthread/lock.h"
 
@@ -122,9 +123,9 @@ extern int glthread_in_use (void);
 
 typedef pthread_cond_t gl_cond_t;
 # define gl_cond_define(STORAGECLASS, NAME) \
-    STORAGECLASS pthread_cond_t NAME;
+    STORAGECLASS gl_cond_t NAME;
 # define gl_cond_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS pthread_cond_t NAME = gl_cond_initializer;
+    STORAGECLASS gl_cond_t NAME = gl_cond_initializer;
 # define gl_cond_initializer \
     PTHREAD_COND_INITIALIZER
 # define glthread_cond_init(COND) \
@@ -181,9 +182,9 @@ extern "C" {
 
 typedef pth_cond_t gl_cond_t;
 # define gl_cond_define(STORAGECLASS, NAME) \
-    STORAGECLASS pth_cond_t NAME;
+    STORAGECLASS gl_cond_t NAME;
 # define gl_cond_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS pth_cond_t NAME = gl_cond_initializer;
+    STORAGECLASS gl_cond_t NAME = gl_cond_initializer;
 # define gl_cond_initializer \
     PTH_COND_INIT
 # define glthread_cond_init(COND) \
@@ -239,11 +240,11 @@ extern "C" {
 
 /* -------------------------- gl_cond_t datatype -------------------------- */
 
-typedef pthread_cond_t gl_cond_t;
+typedef cond_t gl_cond_t;
 # define gl_cond_define(STORAGECLASS, NAME) \
-    STORAGECLASS cond_t NAME;
+    STORAGECLASS gl_cond_t NAME;
 # define gl_cond_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS cond_t NAME = gl_cond_initializer;
+    STORAGECLASS gl_cond_t NAME = gl_cond_initializer;
 # define gl_cond_initializer \
     DEFAULTCV
 # define glthread_cond_init(COND) \

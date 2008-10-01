@@ -9,7 +9,9 @@ m4/cond.m4
 Depends-on:
 threadlib
 lock
+errno
 stdbool
+time
 
 configure.ac:
 gl_COND
