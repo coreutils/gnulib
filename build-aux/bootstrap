@@ -224,11 +224,20 @@ cleanup_gnulib() {
   exit $status
 }
 
+git_modules_config () {
+  GIT_CONFIG_LOCAL=.gitmodules git config "$@"
+}
+
 # Get gnulib files.
 
 case ${GNULIB_SRCDIR--} in
 -)
-  if [ ! -d gnulib ]; then
+  if git_modules_config submodule.gnulib.url >/dev/null; then
+    echo "$0: getting gnulib files..."
+    git submodule init || exit $?
+    git submodule update || exit $?
+
+  elif [ ! -d gnulib ]; then
     echo "$0: getting gnulib files..."
 
     trap cleanup_gnulib 1 2 13 15
@@ -239,6 +248,20 @@ case ${GNULIB_SRCDIR--} in
     trap - 1 2 13 15
   fi
   GNULIB_SRCDIR=gnulib
+  ;;
+*)
+  # Redirect the gnulib submodule to the directory on the command line
+  # if possible.
+  if test -d "$GNULIB_SRCDIR"/.git && \
+	git_modules_config submodule.gnulib.url >/dev/null; then
+    git submodule init
+    GNULIB_SRCDIR=`cd $GNULIB_SRCDIR && pwd`
+    git config --replace-all submodule.gnulib.url $GNULIB_SRCDIR
+    echo "$0: getting gnulib files..."
+    git submodule update || exit $?
+    GNULIB_SRCDIR=gnulib
+  fi
+  ;;
 esac
 
 gnulib_tool=$GNULIB_SRCDIR/gnulib-tool

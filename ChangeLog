@@ -1,3 +1,8 @@
+2008-10-02  Paolo Bonzini  <bonzini@gnu.org>
+
+	* build-aux/bootstrap: Recognize `gnulib' being a submodule in a
+	git repository, and initialize/update it accordingly.
+
 2008-10-02  Jim Meyering  <meyering@redhat.com>
 
 	fts.c: sync with similar code from coreutils' remove.c
