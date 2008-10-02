@@ -13,6 +13,22 @@
 	* build-aux/bootstrap: Recognize `gnulib' being a submodule in a
 	git repository, and initialize/update it accordingly.
 
+2008-10-02  Richard W.M. Jones  <rjones@redhat.com>
+
+	* modules/fsync-tests: New file.
+	* tests/test-fsync.c: New file.
+
+	New module 'fsync'.
+	* lib/fsync.c: New file.
+	* m4/fsync.m4: New file.
+	* modules/fsync: New file.
+	* lib/unistd.in.h (fsync): New declaration.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Define and AC_SUBST both
+	GNULIB_FSYNC and HAVE_FSYNC.
+	* modules/unistd: Substitute GNULIB_FSYNC and HAVE_FSYNC.
+	* MODULES.html.sh (posix_functions): Add fsync.
+	* doc/posix-functions/fsync.texi: Mention the new module.
+
 2008-10-02  Jim Meyering  <meyering@redhat.com>
 
 	fts.c: sync with similar code from coreutils' remove.c
