@@ -1,5 +1,10 @@
 2008-10-02  Paolo Bonzini  <bonzini@gnu.org>
 
+	* build-aux/bootstrap: Install git-merge-changelog configuration
+	items into .gitconfig if needed.
+
+2008-10-02  Paolo Bonzini  <bonzini@gnu.org>
+
 	* build-aux/bootstrap: Recognize `gnulib' being a submodule in a
 	git repository, and initialize/update it accordingly.
 
