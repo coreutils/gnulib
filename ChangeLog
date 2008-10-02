@@ -1,3 +1,11 @@
+2008-10-02  Jim Meyering  <meyering@redhat.com>
+
+	fts: bug fixes
+	* lib/fts.c: Remove unnecessary "defined" in cpp directive.
+	Include <sys/vfs.h>, not <sys/statfs.h>.
+	* m4/fts.m4 (gl_FUNC_FTS_CORE): Fix typo s/vfs/vfs.h/.
+	Include <sys/vfs.h>, not <sys/statfs.h>.
+
 2008-10-01  Bruno Haible  <bruno@clisp.org>
 
 	Avoid the broken posix_spawn function on AIX 5.3 and 6.1.

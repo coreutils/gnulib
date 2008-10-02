@@ -934,8 +934,8 @@ fts_children (register FTS *sp, int instr)
 	return (sp->fts_child);
 }
 
-#if defined HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
-# include <sys/statfs.h>
+#if HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
+# include <sys/vfs.h>
 /* FIXME: what about when f_type is not an integral type?
    deal with that if/when it's encountered.  */
 static bool
