@@ -1,3 +1,7 @@
+2008-10-02  Bruno Haible  <bruno@clisp.org>
+
+	* modules/posix_spawn-internal (Depends-on): Add 'open'.
+
 2008-10-02  Paolo Bonzini  <bonzini@gnu.org>
 
 	* build-aux/bootstrap: Allow renaming bootstrap, and change the
