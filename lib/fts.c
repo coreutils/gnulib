@@ -934,29 +934,19 @@ fts_children (register FTS *sp, int instr)
 	return (sp->fts_child);
 }
 
-#if HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
-# include <sys/vfs.h>
-/* FIXME: what about when f_type is not an integral type?
-   deal with that if/when it's encountered.  */
-static bool
-fs_handles_readdir_ordered_dirents_efficiently (uintmax_t fs_type)
-{
-/* From coreutils' src/fs.h */
-#define S_MAGIC_TMPFS 0x1021994
-#define S_MAGIC_NFS 0x6969
-  switch (fs_type)
-    {
-    case S_MAGIC_TMPFS:
-    case S_MAGIC_NFS:
-      return true;
-    default:
-      return false;
-    }
-}
+#if defined __linux__ \
+  && HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
 
-/* Return true if it is easy to determine the file system type of the
-   directory on which DIR_FD is open, and sorting dirents on inode numbers
-   is known to improve traversal performance with that type of file system.  */
+#include <sys/vfs.h>
+
+/* Linux-specific constants from coreutils' src/fs.h */
+# define S_MAGIC_TMPFS 0x1021994
+# define S_MAGIC_NFS 0x6969
+
+/* Return false if it is easy to determine the file system type of
+   the directory on which DIR_FD is open, and sorting dirents on
+   inode numbers is known not to improve traversal performance with
+   that type of file system.  Otherwise, return true.  */
 static bool
 dirent_inode_sort_may_be_useful (int dir_fd)
 {
@@ -966,12 +956,27 @@ dirent_inode_sort_may_be_useful (int dir_fd)
      while the cost of *not* performing it can be O(N^2) with
      a very large constant.  */
   struct statfs fs_buf;
-  bool skip = (fstatfs (dir_fd, &fs_buf) == 0
-	       && fs_handles_readdir_ordered_dirents_efficiently (dir_fd));
-  return !skip;
+
+  /* If fstatfs fails, assume sorting would be useful.  */
+  if (fstatfs (dir_fd, &fs_buf) != 0)
+    return true;
+
+  /* FIXME: what about when f_type is not an integral type?
+     deal with that if/when it's encountered.  */
+  switch (fs_buf.f_type)
+    {
+    case S_MAGIC_TMPFS:
+    case S_MAGIC_NFS:
+      /* On a file system of any of these types, sorting
+	 is unnecessary, and hence wasteful.  */
+      return false;
+
+    default:
+      return true;
+    }
 }
 #else
-static bool dirent_inode_sort_may_be_useful (FTS const *sp) { return true; }
+static bool dirent_inode_sort_may_be_useful (int dir_fd) { return true; }
 #endif
 
 /* A comparison function to sort on increasing inode number.

@@ -1,8 +1,16 @@
 2008-10-02  Jim Meyering  <meyering@redhat.com>
 
+	fts.c: sync with similar code from coreutils' remove.c
+	* lib/fts.c (dirent_inode_sort_may_be_useful): Merge from coreutils.
+	Guard also with "#if defined __linux__", since for now at least,
+	this code is Linux-kernel-specific.
+
+2008-10-02  Jim Meyering  <meyering@redhat.com>
+
 	fts: bug fixes
 	* lib/fts.c: Remove unnecessary "defined" in cpp directive.
 	Include <sys/vfs.h>, not <sys/statfs.h>.
+
 	* m4/fts.m4 (gl_FUNC_FTS_CORE): Fix typo s/vfs/vfs.h/.
 	Include <sys/vfs.h>, not <sys/statfs.h>.
 
