@@ -1,3 +1,8 @@
+2008-10-03  Bruno Haible  <bruno@clisp.org>
+
+	* lib/c-ctype.h: Add comment.
+	Reported by Jim Meyering.
+
 2008-10-02  Bruno Haible  <bruno@clisp.org>
 
 	* modules/posix_spawn-internal (Depends-on): Add 'open'.
