@@ -91,6 +91,9 @@ set_winsock_errno (void)
     case WSA_INVALID_PARAMETER:
       errno = EINVAL;
       break;
+    case WSAEWOULDBLOCK:
+      errno = EWOULDBLOCK;
+      break;
     case WSAENAMETOOLONG:
       errno = ENAMETOOLONG;
       break;

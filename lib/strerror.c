@@ -49,8 +49,7 @@ rpl_strerror (int n)
 # endif
 
 # if GNULIB_defined_ESOCK /* native Windows platforms */
-    case EWOULDBLOCK:
-      return "Operation would block";
+    /* EWOULDBLOCK is the same as EAGAIN.  */
     case EINPROGRESS:
       return "Operation now in progress";
     case EALREADY:
@@ -134,8 +133,8 @@ rpl_strerror (int n)
     /* WSAEACCES maps to EACCES */
     /* WSAEFAULT maps to EFAULT */
     /* WSAEINVAL maps to EINVAL */
-    /* WSAEMFILE maos to EMFILE */
-    /* WSAEWOULDBLOCK is EWOULDBLOCK */
+    /* WSAEMFILE maps to EMFILE */
+    /* WSAEWOULDBLOCK maps to EWOULDBLOCK */
     /* WSAEINPROGRESS is EINPROGRESS */
     /* WSAEALREADY is EALREADY */
     /* WSAENOTSOCK is ENOTSOCK */

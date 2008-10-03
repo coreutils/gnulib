@@ -1,3 +1,10 @@
+2008-10-03  Paolo Bonzini  <bonzini@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/errno.in.h (EWOULDBLOCK) [win32]: Define to EAGAIN.
+	* lib/winsock.c (set_winsock_errno): Map WSAEWOULDBLOCK to EWOULDBLOCK.
+	* lib/strerror.c (rpl_strerror): Remove error string for EWOULDBLOCK.
+
 2008-10-03  Kamil Dudka  <kdudka@redhat.com>
 
 	filevercmp: new module

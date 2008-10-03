@@ -30,13 +30,15 @@
 /* On native Windows platforms, many macros are not defined.  */
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
+/* POSIX says that EAGAIN and EWOULDBLOCK may have the same value.  */
+#  define EWOULDBLOCK     EAGAIN
+
 /* Values >= 100 seem safe to use.  */
 #  define ETXTBSY   100
 #  define GNULIB_defined_ETXTBSY 1
 
 /* These are intentionally the same values as the WSA* error numbers, defined
    in <winsock2.h>.  */
-#  define EWOULDBLOCK     10035
 #  define EINPROGRESS     10036
 #  define EALREADY        10037
 #  define ENOTSOCK        10038
