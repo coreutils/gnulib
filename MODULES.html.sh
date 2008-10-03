@@ -1856,6 +1856,7 @@ func_all_modules ()
   func_module readtokens
   func_module readtokens0
   func_module strverscmp
+  func_module filevercmp
   func_end_table
 
   element="Support for systems lacking ISO C 99"

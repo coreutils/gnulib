@@ -1,3 +1,13 @@
+2008-10-03  Kamil Dudka  <kdudka@redhat.com>
+
+	filevercmp: new module
+	* lib/filevercmp.h: New function filevercmp comparing version strings.
+	* lib/filevercmp.c: Implementation of filevercmp function.
+	* modules/filevercmp: Module metadata.
+	* tests/test-filevercmp.c: Unit test for new module.
+	* modules/filevercmp-tests: Unit test metadata.
+	* MODULES.html.sh: Add filevercmp module.
+
 2008-10-03  Bruno Haible  <bruno@clisp.org>
 
 	* lib/c-ctype.h: Add comment.
