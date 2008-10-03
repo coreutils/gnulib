@@ -396,6 +396,7 @@ fgets
 fgetwc
 fgetws
 fileno
+flock
 flockfile
 floor
 floorf
@@ -2106,6 +2107,7 @@ func_all_modules ()
   func_module errno
   func_module fchdir
   func_module fcntl
+  func_module flock
   func_module fopen
   func_module fprintf-posix
   func_module freopen

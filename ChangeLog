@@ -1,3 +1,18 @@
+2008-10-07  Richard W.M. Jones <rjones@redhat.com>
+
+	flock: new module
+	* MODULES.html.sh: Add to list of modules.
+	* lib/flock.c: flock implementation for Windows and Unix systems
+	which have fcntl.
+	* doc/glibc-functions/flock.texi: Update documentation.
+	* lib/sys_file.in.h: <sys/file.h> header file.
+	* m4/flock.m4: M4 macros.
+	* m4/sys_file_h.m4: M4 macros for replacement sys/file.h.
+	* modules/flock: flock module.
+	* modules/flock-tests: flock tests module.
+	* modules/sys_file: sys/file.h module.
+	* tests/test-flock.c: test suite for flock.
+
 2008-10-06  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: check for LT_INIT more portably still ;-)

@@ -1,0 +1,24 @@
+Description:
+flock(2) function: advisory file locks.
+
+Files:
+lib/flock.c
+m4/flock.m4
+
+Depends-on:
+sys_file
+
+configure.ac:
+gl_FUNC_FLOCK
+gl_HEADER_SYS_FILE_MODULE_INDICATOR([flock])
+
+Makefile.am:
+
+Include:
+<sys/file.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Richard W.M. Jones, Jim Meyering

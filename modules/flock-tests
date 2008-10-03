@@ -1,0 +1,11 @@
+Files:
+tests/test-flock.c
+
+Depends-on:
+unistd
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-flock
+check_PROGRAMS += test-flock
