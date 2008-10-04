@@ -1,5 +1,17 @@
 2008-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* modules/dup2 (License): Change to LGPLv2+.
+	* modules/sleep (License): Likewise.
+	* modules/perror (License): Likewise.
+	* modules/fopen (License): Change to LGPLv2+, with approval by Eric
+	Blake.
+	* modules/signal (License): Likewise.
+	* modules/sigprocmask (License): Likewise.
+	* modules/raise (License): Change to LGPLv2+, with approval by Jim
+	Meyering.
+
+2008-10-04  Bruno Haible  <bruno@clisp.org>
+
 	* lib/spawn.in.h (POSIX_SPAWN_*): Undefine before redefining.
 	Reported by Rainer Tammer <tammer@tammer.net>.
 
