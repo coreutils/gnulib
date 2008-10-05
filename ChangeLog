@@ -1,3 +1,9 @@
+2008-10-05  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: check for LT_INIT, too
+	* build-aux/bootstrap: Both AC_PROG_LIBTOOL and AM_PROG_LIBTOOL
+	are deprecated.  Suggestion from Ralf Wildenhues.
+
 2008-10-05  Bruno Haible  <bruno@clisp.org>
 
 	* lib/spawn.in.h (POSIX_SPAWN_*): Use the system's values, rather than
