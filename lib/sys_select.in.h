@@ -62,7 +62,7 @@ extern int rpl_select (int, fd_set *, fd_set *, fd_set *, struct timeval *);
 #  undef select
 #  define select(n,r,w,e,t) \
      (GL_LINK_WARNING ("select is not always POSIX compliant - " \
-                       "use gnulib module for portability"), \
+                       "use gnulib module select for portability"), \
       select (n, r, w, e, t))
 # endif
 
