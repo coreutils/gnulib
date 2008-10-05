@@ -1,3 +1,9 @@
+2008-10-05  Bruno Haible  <bruno@clisp.org>
+
+	* lib/spawn.in.h (POSIX_SPAWN_*): Use the system's values, rather than
+	overriding them by ours.
+	(POSIX_SPAWN_USEVFORK): Use the next free bit position.
+
 2008-10-05  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: check for AC_PROG_LIBTOOL as well as AM_PROG_LIBTOOL
