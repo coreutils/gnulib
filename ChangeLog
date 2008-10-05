@@ -1,5 +1,8 @@
 2008-10-05  Bruno Haible  <bruno@clisp.org>
 
+	* modules/getdtablesize-tests: New file.
+	* tests/test-getdtablesize.c: New file.
+
 	New module 'getdtablesize'.
 	* lib/unistd.in.h (getdtablesize): New declaration.
 	* lib/getdtablesize.c: New file.

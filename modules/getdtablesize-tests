@@ -1,0 +1,10 @@
+Files:
+tests/test-getdtablesize.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getdtablesize
+check_PROGRAMS += test-getdtablesize
