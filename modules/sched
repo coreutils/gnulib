@@ -11,7 +11,7 @@ configure.ac:
 gl_SCHED_H
 
 Makefile.am:
-BUILT_SOURCES += $(SPAWN_H)
+BUILT_SOURCES += $(SCHED_H)
 
 # We need the following in order to create a replacement for <sched.h> when
 # the system doesn't have one.
