@@ -1,5 +1,15 @@
 2008-10-05  Bruno Haible  <bruno@clisp.org>
 
+	* lib/spawn_faction_addclose.c (__sysconf): Use getdtablesize always.
+	* lib/spawn_faction_adddup2.c (__sysconf): Likewise.
+	* lib/spawn_faction_addopen.c (__sysconf): Likewise.
+	* modules/posix_spawn_file_actions_addclose (Depends-on): Add
+	getdtablesize.
+	* modules/posix_spawn_file_actions_adddup2 (Depends-on): Likewise.
+	* modules/posix_spawn_file_actions_addopen (Depends-on): Likewise.
+
+2008-10-05  Bruno Haible  <bruno@clisp.org>
+
 	* modules/getdtablesize-tests: New file.
 	* tests/test-getdtablesize.c: New file.
 

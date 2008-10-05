@@ -23,12 +23,7 @@
 #include <unistd.h>
 
 #if !_LIBC
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-#  include <stdio.h>
-#  define __sysconf(open_max) _getmaxstdio ()
-# else
-#  define __sysconf(open_max) getdtablesize ()
-# endif
+# define __sysconf(open_max) getdtablesize ()
 #endif
 
 #include "spawn_int.h"

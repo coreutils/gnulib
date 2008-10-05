@@ -9,6 +9,7 @@ m4/posix_spawn.m4
 
 Depends-on:
 spawn
+getdtablesize
 
 configure.ac:
 gl_POSIX_SPAWN
