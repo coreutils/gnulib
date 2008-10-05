@@ -1,0 +1,25 @@
+Description:
+getdtablesize() function: return maximum number of file descriptors.
+
+Files:
+lib/getdtablesize.c
+m4/getdtablesize.m4
+
+Depends-on:
+unistd
+
+configure.ac:
+gl_FUNC_GETDTABLESIZE
+gl_UNISTD_MODULE_INDICATOR([getdtablesize])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

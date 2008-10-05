@@ -1,5 +1,18 @@
 2008-10-05  Bruno Haible  <bruno@clisp.org>
 
+	New module 'getdtablesize'.
+	* lib/unistd.in.h (getdtablesize): New declaration.
+	* lib/getdtablesize.c: New file.
+	* m4/getdtablesize.m4: New file.
+	* modules/getdtablesize: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	GNULIB_GETDTABLESIZE, HAVE_GETDTABLESIZE.
+	* modules/unistd (Makefile.am): Substitute GNULIB_GETDTABLESIZE,
+	HAVE_GETDTABLESIZE.
+	* doc/glibc-functions/getdtablesize.texi: Mention the new module.
+
+2008-10-05  Bruno Haible  <bruno@clisp.org>
+
 	* modules/sched (Makefile.am): Fix typo.
 
 2008-10-05  Jim Meyering  <meyering@redhat.com>

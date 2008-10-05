@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 12
+# unistd_h.m4 serial 13
 dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,6 +39,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_FSYNC=0;            AC_SUBST([GNULIB_FSYNC])
   GNULIB_FTRUNCATE=0;        AC_SUBST([GNULIB_FTRUNCATE])
   GNULIB_GETCWD=0;           AC_SUBST([GNULIB_GETCWD])
+  GNULIB_GETDTABLESIZE=0;    AC_SUBST([GNULIB_GETDTABLESIZE])
   GNULIB_GETLOGIN_R=0;       AC_SUBST([GNULIB_GETLOGIN_R])
   GNULIB_GETPAGESIZE=0;      AC_SUBST([GNULIB_GETPAGESIZE])
   GNULIB_LCHOWN=0;           AC_SUBST([GNULIB_LCHOWN])
@@ -51,6 +52,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   HAVE_DUP2=1;            AC_SUBST([HAVE_DUP2])
   HAVE_FSYNC=1;           AC_SUBST([HAVE_FSYNC])
   HAVE_FTRUNCATE=1;       AC_SUBST([HAVE_FTRUNCATE])
+  HAVE_GETDTABLESIZE=1;   AC_SUBST([HAVE_GETDTABLESIZE])
   HAVE_GETPAGESIZE=1;     AC_SUBST([HAVE_GETPAGESIZE])
   HAVE_READLINK=1;        AC_SUBST([HAVE_READLINK])
   HAVE_SLEEP=1;           AC_SUBST([HAVE_SLEEP])

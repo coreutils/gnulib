@@ -201,6 +201,20 @@ extern char * getcwd (char *buf, size_t size);
 #endif
 
 
+#if @GNULIB_GETDTABLESIZE@
+# if !@HAVE_GETDTABLESIZE@
+/* Return the maximum number of file descriptors in the current process.  */
+extern int getdtablesize (void);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef getdtablesize
+# define getdtablesize() \
+    (GL_LINK_WARNING ("getdtablesize is unportable - " \
+                      "use gnulib module getdtablesize for portability"), \
+     getdtablesize ())
+#endif
+
+
 #if @GNULIB_GETLOGIN_R@
 /* Copies the user's login name to NAME.
    The array pointed to by NAME has room for SIZE bytes.
