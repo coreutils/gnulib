@@ -13,11 +13,11 @@ HP-UX 11, mingw, BeOS.
 @item
 This header file is not self-contained on some platforms: it requires
 @code{<sys/types.h>} to be included first.
+@item
+This header file does not define @code{struct timeval} on some platforms:
+OSF/1 4.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This header file does not define @code{struct timeval} on some platforms:
-OSF/1 4.0.
 @end itemize
