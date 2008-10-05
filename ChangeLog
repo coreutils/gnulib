@@ -27,6 +27,7 @@
 2008-10-05  Bruno Haible  <bruno@clisp.org>
 
 	* modules/sched (Makefile.am): Fix typo.
+	Reported by Simon Josefsson.
 
 2008-10-05  Jim Meyering  <meyering@redhat.com>
 
