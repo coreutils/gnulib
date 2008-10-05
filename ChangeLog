@@ -18,6 +18,7 @@
 	(Depends-on): Remove alloca.
 	(Makefile.am): Substitute GNULIB_SELECT.
 	* modules/select: New file.
+	* doc/posix-functions/select.texi: Update.
 
 2008-10-05  Bruno Haible  <bruno@clisp.org>
 

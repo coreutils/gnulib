@@ -4,7 +4,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/select.html}
 
-Gnulib module: sys_select
+Gnulib module: select
 
 Portability problems fixed by Gnulib:
 @itemize
