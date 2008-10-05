@@ -39,7 +39,6 @@
 #undef recvfrom
 #undef sendto
 #undef setsockopt
-#undef strerror
 
 # define FD_TO_SOCKET(fd)   ((SOCKET) _get_osfhandle ((fd)))
 # define SOCKET_TO_FD(fh)   (_open_osfhandle ((long) (fh), O_RDWR | O_BINARY))
@@ -50,7 +49,6 @@
 int
 rpl_close (int fd)
 {
-  char buf[sizeof (int)];
   SOCKET sock = FD_TO_SOCKET (fd);
   WSANETWORKEVENTS ev;
 

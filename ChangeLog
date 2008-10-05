@@ -1,5 +1,12 @@
 2008-10-05  Bruno Haible  <bruno@clisp.org>
 
+	* lib/winsock.c (strerror): Remove unused #undef.
+	(rpl_close): Remove unused local variable.
+
+	* modules/sys_socket (Depends-on); Add errno.
+
+2008-10-05  Bruno Haible  <bruno@clisp.org>
+
 	* lib/sys_select.in.h: Include the GL_LINK_WARNING definition.
 	(select): Add a link warning when the 'select' module is not used.
 	* modules/sys_select (Depends-on): Add link-warning.

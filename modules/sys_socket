@@ -9,6 +9,7 @@ m4/sockpfaf.m4
 
 Depends-on:
 include_next
+errno
 
 configure.ac:
 gl_HEADER_SYS_SOCKET
