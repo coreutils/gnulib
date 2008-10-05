@@ -1,5 +1,26 @@
 2008-10-05  Bruno Haible  <bruno@clisp.org>
 
+	* modules/select-tests: New file, mostly copied from
+	modules/sys_select-tests.
+	* tests/test-select.c: New file, mostly copied from
+	tests/test-sys_select.c.
+	* tests/test-sys_select.c: Move most of the code to tests/test-select.c.
+	* modules/sys_select-tests (Depends-on): Remove all dependencies.
+	(Makefile.am): Remove test_sys_select_LDADD.
+
+	* lib/sys_select.in.h (select): If GNULIB_SELECT is not set, define it
+	to an undefined symbol, for an error message.
+	* m4/sys_select_h.m4 (gl_SYS_SELECT_MODULE_INDICATOR): New macro.
+	(gl_SYS_SELECT_H_DEFAULTS): New macro.
+	(gl_HEADER_SYS_SELECT): Require it. Don't require compilation of
+	winsock-select.c here.
+	* modules/sys_select (Files): Remove lib/winsock-select.c.
+	(Depends-on): Remove alloca.
+	(Makefile.am): Substitute GNULIB_SELECT.
+	* modules/select: New file.
+
+2008-10-05  Bruno Haible  <bruno@clisp.org>
+
 	* lib/spawn_faction_addclose.c (__sysconf): Use getdtablesize always.
 	* lib/spawn_faction_adddup2.c (__sysconf): Likewise.
 	* lib/spawn_faction_addopen.c (__sysconf): Likewise.

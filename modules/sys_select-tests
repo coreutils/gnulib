@@ -2,21 +2,12 @@ Files:
 tests/test-sys_select.c
 
 Depends-on:
-stdbool
-netinet_in
-arpa_inet
-extensions
-inet_pton
-errno
-perror
-sockets
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-sys_select
 check_PROGRAMS += test-sys_select
-test_sys_select_LDADD = $(LDADD) @LIBSOCKET@
 
 License:
 LGPL

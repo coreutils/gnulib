@@ -1,0 +1,22 @@
+Files:
+tests/test-select.c
+
+Depends-on:
+stdbool
+netinet_in
+arpa_inet
+extensions
+inet_pton
+errno
+perror
+sockets
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-select
+check_PROGRAMS += test-select
+test_select_LDADD = $(LDADD) @LIBSOCKET@
+
+License:
+LGPL
