@@ -1,3 +1,9 @@
+2008-10-06  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: check for LT_INIT more portably still ;-)
+	* build-aux/bootstrap: Don't rely on \>, since it's not portable.
+	Spotted by Bruno Haible.
+
 2008-10-06  Eric Blake  <ebb9@byu.net>
 
 	test-signbit: avoid tripping Irix cc bug on -0.0L
