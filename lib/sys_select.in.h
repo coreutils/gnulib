@@ -43,25 +43,31 @@
 
 # include <sys/socket.h>
 
-# if @HAVE_WINSOCK2_H@
+/* The definition of GL_LINK_WARNING is copied here.  */
 
-#  ifdef __cplusplus
+# ifdef __cplusplus
 extern "C" {
-#  endif
+# endif
 
-#  if @GNULIB_SELECT@
+# if @GNULIB_SELECT@
+#  if @HAVE_WINSOCK2_H@
 #   undef select
 #   define select rpl_select
 extern int rpl_select (int, fd_set *, fd_set *, fd_set *, struct timeval *);
-#  else
-#   undef select
-#   define select select_used_without_requesting_gnulib_module_select
 #  endif
+# elif @HAVE_WINSOCK2_H@
+#  undef select
+#  define select select_used_without_requesting_gnulib_module_select
+# elif defined GNULIB_POSIXCHECK
+#  undef select
+#  define select(n,r,w,e,t) \
+     (GL_LINK_WARNING ("select is not always POSIX compliant - " \
+                       "use gnulib module for portability"), \
+      select (n, r, w, e, t))
+# endif
 
-#  ifdef __cplusplus
+# ifdef __cplusplus
 }
-#  endif
-
 # endif
 
 #endif

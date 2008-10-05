@@ -1,3 +1,11 @@
+2008-10-05  Bruno Haible  <bruno@clisp.org>
+
+	* lib/sys_select.in.h: Include the GL_LINK_WARNING definition.
+	(select): Add a link warning when the 'select' module is not used.
+	* modules/sys_select (Depends-on): Add link-warning.
+	(Makefile.am): Substitute the definition of GL_LINK_WARNING.
+	Suggested by Paolo Bonzini.
+
 2008-10-05  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: check for LT_INIT more portably
