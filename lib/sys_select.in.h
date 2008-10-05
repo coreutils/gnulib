@@ -49,9 +49,14 @@
 extern "C" {
 #  endif
 
-#  undef select
-#  define select		rpl_select
+#  if @GNULIB_SELECT@
+#   undef select
+#   define select rpl_select
 extern int rpl_select (int, fd_set *, fd_set *, fd_set *, struct timeval *);
+#  else
+#   undef select
+#   define select select_used_without_requesting_gnulib_module_select
+#  endif
 
 #  ifdef __cplusplus
 }

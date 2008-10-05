@@ -1,0 +1,27 @@
+Description:
+select() function: synchronous I/O multiplexing.
+
+Files:
+lib/winsock-select.c
+
+Depends-on:
+alloca
+sys_select
+
+configure.ac:
+AC_REQUIRE([gl_HEADER_SYS_SELECT])
+if test "$ac_cv_header_winsock2_h" = yes; then
+  AC_LIBOBJ([winsock-select])
+fi
+gl_SYS_SELECT_MODULE_INDICATOR([select])
+
+Makefile.am:
+
+Include:
+#include <sys/select.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Simon Josefsson
