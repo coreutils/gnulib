@@ -1,3 +1,10 @@
+2008-10-05  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: check for AC_PROG_LIBTOOL as well as AM_PROG_LIBTOOL
+	* build-aux/bootstrap: Check for AC_PROG_LIBTOOL, as well as the
+	obsolete AM_PROG_LIBTOOL.
+	Spotted by Debarshi 'Rishi' Ray <debarshi.ray@gmail.com>.
+
 2008-10-04  Bruno Haible  <bruno@clisp.org>
 
 	* modules/dup2 (License): Change to LGPLv2+.

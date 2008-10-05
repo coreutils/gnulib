@@ -597,7 +597,7 @@ for command in \
   'automake --add-missing --copy --force-missing';
 do
   if test "$command" = libtool; then
-    grep '^[	 ]*AM_PROG_LIBTOOL\>' configure.ac >/dev/null ||
+    grep '^[	 ]*A[CM]_PROG_LIBTOOL\>' configure.ac >/dev/null ||
       continue
     command='libtoolize -c -f'
   fi
