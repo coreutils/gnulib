@@ -1,6 +1,6 @@
 /* Close a stream, with nicer error checking than fclose's.
 
-   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2006, 2007 Free
+   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2006, 2007, 2008 Free
    Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -32,6 +32,10 @@
 /* Close STREAM.  Return 0 if successful, EOF (setting errno)
    otherwise.  A failure might set errno to 0 if the error number
    cannot be determined.
+
+   A failure with errno set to EPIPE may or may not indicate an error
+   situation worth signaling to the user.  See the documentation of the
+   close_stdout_set_ignore_EPIPE function for details.
 
    If a program writes *anything* to STREAM, that program should close
    STREAM and make sure that it succeeds before exiting.  Otherwise,

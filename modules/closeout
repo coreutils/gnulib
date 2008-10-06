@@ -12,6 +12,7 @@ gettext-h
 error
 quotearg
 exitfail
+stdbool
 
 configure.ac:
 gl_CLOSEOUT

@@ -1,4 +1,18 @@
 2008-10-05  Bruno Haible  <bruno@clisp.org>
+            Jim Meyering  <jim@meyering.net>
+
+	Add an option for ignoring EPIPE during close_stdout.
+	* lib/closeout.h: Include <stdbool.h>.
+	(close_stdout_set_ignore_EPIPE): New declaration.
+	* lib/closeout.c: Include <stdbool.h>.
+	(ignore_EPIPE): New variable.
+	(close_stdout_set_ignore_EPIPE): New function.
+	(close_stdout): Ignore EPIPE error if ignore_EPIPE is set.
+	* lib/close-stream.c (close_stream): Mention the possible EPIPE
+	failure.
+	* modules/closeout (Depends-on): Add stdbool.
+
+2008-10-05  Bruno Haible  <bruno@clisp.org>
 
 	* modules/accept: New file.
 	* modules/bind: New file.
