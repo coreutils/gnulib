@@ -1,3 +1,10 @@
+2008-10-06  Eric Blake  <ebb9@byu.net>
+
+	test-signbit: avoid tripping Irix cc bug on -0.0L
+	* tests/test-signbit.c (minus_zerol): Delete, and replace with
+	'-zerol'.  This may break on HP-UX/hppa, but at least makes the
+	entire testsuite consistent and avoids an Irix 6.2 bug.
+
 2008-10-05  Bruno Haible  <bruno@clisp.org>
             Jim Meyering  <jim@meyering.net>
 

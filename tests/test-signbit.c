@@ -39,9 +39,6 @@
 float zerof = 0.0f;
 double zerod = 0.0;
 long double zerol = 0.0L;
-/* We cannot use the expression '-zerol' here, because on HP-UX/hppa it
-   evaluates to 0.0L, not -0.0L.  */
-long double minus_zerol = -0.0L;
 
 static void
 test_signbitf ()
@@ -143,7 +140,7 @@ test_signbitl ()
   ASSERT (signbit (-2.718e-30L));
   /* Zeros.  */
   ASSERT (!signbit (0.0L));
-  if (1.0L / minus_zerol < 0)
+  if (1.0L / -zerol < 0)
     ASSERT (signbit (-zerol));
   else
     ASSERT (!signbit (-zerol));
