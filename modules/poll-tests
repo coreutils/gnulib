@@ -11,6 +11,12 @@ inet_pton
 errno
 perror
 sockets
+socket
+bind
+setsockopt
+listen
+connect
+accept
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([unistd.h sys/wait.h])

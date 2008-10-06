@@ -104,6 +104,7 @@ set_winsock_errno (void)
     }
 }
 
+#if GNULIB_SOCKET
 int
 rpl_socket (int domain, int type, int protocol)
 {
@@ -119,8 +120,9 @@ rpl_socket (int domain, int type, int protocol)
   else
     return SOCKET_TO_FD (fh);
 }
+#endif
 
-
+#if GNULIB_CONNECT
 int
 rpl_connect (int fd, struct sockaddr *sockaddr, int len)
 {
@@ -138,7 +140,9 @@ rpl_connect (int fd, struct sockaddr *sockaddr, int len)
 
   return r;
 }
+#endif
 
+#if GNULIB_ACCEPT
 int
 rpl_accept (int fd, struct sockaddr *addr, int *addrlen)
 {
@@ -151,7 +155,9 @@ rpl_accept (int fd, struct sockaddr *addr, int *addrlen)
   else
     return SOCKET_TO_FD (fh);
 }
+#endif
 
+#if GNULIB_BIND
 int
 rpl_bind (int fd, struct sockaddr *sockaddr, int len)
 {
@@ -162,7 +168,9 @@ rpl_bind (int fd, struct sockaddr *sockaddr, int len)
 
   return r;
 }
+#endif
 
+#if GNULIB_GETPEERNAME
 int
 rpl_getpeername (int fd, struct sockaddr *addr, int *addrlen)
 {
@@ -173,7 +181,9 @@ rpl_getpeername (int fd, struct sockaddr *addr, int *addrlen)
 
   return r;
 }
+#endif
 
+#if GNULIB_GETSOCKNAME
 int
 rpl_getsockname (int fd, struct sockaddr *addr, int *addrlen)
 {
@@ -184,7 +194,9 @@ rpl_getsockname (int fd, struct sockaddr *addr, int *addrlen)
 
   return r;
 }
+#endif
 
+#if GNULIB_GETSOCKOPT
 int
 rpl_getsockopt (int fd, int level, int optname, void *optval, int *optlen)
 {
@@ -195,7 +207,9 @@ rpl_getsockopt (int fd, int level, int optname, void *optval, int *optlen)
 
   return r;
 }
+#endif
 
+#if GNULIB_LISTEN
 int
 rpl_listen (int fd, int backlog)
 {
@@ -206,6 +220,7 @@ rpl_listen (int fd, int backlog)
 
   return r;
 }
+#endif
 
 int
 rpl_ioctl (int fd, unsigned long req, char *buf)
@@ -218,6 +233,7 @@ rpl_ioctl (int fd, unsigned long req, char *buf)
   return r;
 }
 
+#if GNULIB_RECV
 int
 rpl_recv (int fd, void *buf, int len, int flags)
 {
@@ -228,7 +244,9 @@ rpl_recv (int fd, void *buf, int len, int flags)
 
   return r;
 }
+#endif
 
+#if GNULIB_SEND
 int
 rpl_send (int fd, const void *buf, int len, int flags)
 {
@@ -239,7 +257,9 @@ rpl_send (int fd, const void *buf, int len, int flags)
 
   return r;
 }
+#endif
 
+#if GNULIB_RECVFROM
 int
 rpl_recvfrom (int fd, void *buf, int len, int flags, struct sockaddr *from,
 	      int *fromlen)
@@ -258,7 +278,9 @@ rpl_recvfrom (int fd, void *buf, int len, int flags, struct sockaddr *from,
 
   return r;
 }
+#endif
 
+#if GNULIB_SENDTO
 int
 rpl_sendto (int fd, const void *buf, int len, int flags,
 	    struct sockaddr *to, int tolen)
@@ -270,7 +292,9 @@ rpl_sendto (int fd, const void *buf, int len, int flags,
 
   return r;
 }
+#endif
 
+#if GNULIB_SETSOCKOPT
 int
 rpl_setsockopt (int fd, int level, int optname, const void *optval, int optlen)
 {
@@ -281,3 +305,4 @@ rpl_setsockopt (int fd, int level, int optname, const void *optval, int optlen)
 
   return r;
 }
+#endif

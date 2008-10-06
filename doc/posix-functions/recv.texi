@@ -4,7 +4,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/recv.html}
 
-Gnulib module: sys_socket
+Gnulib module: recv
 
 Portability problems fixed by Gnulib:
 @itemize

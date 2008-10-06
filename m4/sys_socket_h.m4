@@ -1,4 +1,4 @@
-# sys_socket_h.m4 serial 7
+# sys_socket_h.m4 serial 8
 dnl Copyright (C) 2005-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ dnl From Simon Josefsson.
 
 AC_DEFUN([gl_HEADER_SYS_SOCKET],
 [
+  AC_REQUIRE([gl_SYS_SOCKET_H_DEFAULTS])
   AC_REQUIRE([AC_C_INLINE])
 
   AC_CACHE_CHECK([whether <sys/socket.h> is self-contained],
@@ -87,4 +88,29 @@ AC_DEFUN([gl_PREREQ_SYS_H_WINSOCK2],
     HAVE_WINSOCK2_H=0
   fi
   AC_SUBST([HAVE_WINSOCK2_H])
+])
+
+AC_DEFUN([gl_SYS_SOCKET_MODULE_INDICATOR],
+[
+  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
+  AC_REQUIRE([gl_SYS_SOCKET_H_DEFAULTS])
+  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+  gl_MODULE_INDICATOR([$1])
+])
+
+AC_DEFUN([gl_SYS_SOCKET_H_DEFAULTS],
+[
+  GNULIB_SOCKET=0;      AC_SUBST([GNULIB_SOCKET])
+  GNULIB_CONNECT=0;     AC_SUBST([GNULIB_CONNECT])
+  GNULIB_ACCEPT=0;      AC_SUBST([GNULIB_ACCEPT])
+  GNULIB_BIND=0;        AC_SUBST([GNULIB_BIND])
+  GNULIB_GETPEERNAME=0; AC_SUBST([GNULIB_GETPEERNAME])
+  GNULIB_GETSOCKNAME=0; AC_SUBST([GNULIB_GETSOCKNAME])
+  GNULIB_GETSOCKOPT=0;  AC_SUBST([GNULIB_GETSOCKOPT])
+  GNULIB_LISTEN=0;      AC_SUBST([GNULIB_LISTEN])
+  GNULIB_RECV=0;        AC_SUBST([GNULIB_RECV])
+  GNULIB_SEND=0;        AC_SUBST([GNULIB_SEND])
+  GNULIB_RECVFROM=0;    AC_SUBST([GNULIB_RECVFROM])
+  GNULIB_SENDTO=0;      AC_SUBST([GNULIB_SENDTO])
+  GNULIB_SETSOCKOPT=0;  AC_SUBST([GNULIB_SETSOCKOPT])
 ])

@@ -9,6 +9,7 @@ m4/sockpfaf.m4
 
 Depends-on:
 include_next
+link-warning
 errno
 
 configure.ac:
@@ -27,8 +28,22 @@ sys/socket.h: sys_socket.in.h
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''NEXT_SYS_SOCKET_H''@|$(NEXT_SYS_SOCKET_H)|g' \
 	      -e 's|@''HAVE_SYS_SOCKET_H''@|$(HAVE_SYS_SOCKET_H)|g' \
+	      -e 's|@''GNULIB_SOCKET''@|$(GNULIB_SOCKET)|g' \
+	      -e 's|@''GNULIB_CONNECT''@|$(GNULIB_CONNECT)|g' \
+	      -e 's|@''GNULIB_ACCEPT''@|$(GNULIB_ACCEPT)|g' \
+	      -e 's|@''GNULIB_BIND''@|$(GNULIB_BIND)|g' \
+	      -e 's|@''GNULIB_GETPEERNAME''@|$(GNULIB_GETPEERNAME)|g' \
+	      -e 's|@''GNULIB_GETSOCKNAME''@|$(GNULIB_GETSOCKNAME)|g' \
+	      -e 's|@''GNULIB_GETSOCKOPT''@|$(GNULIB_GETSOCKOPT)|g' \
+	      -e 's|@''GNULIB_LISTEN''@|$(GNULIB_LISTEN)|g' \
+	      -e 's|@''GNULIB_RECV''@|$(GNULIB_RECV)|g' \
+	      -e 's|@''GNULIB_SEND''@|$()GNULIB_SEND|g' \
+	      -e 's|@''GNULIB_RECVFROM''@|$(GNULIB_RECVFROM)|g' \
+	      -e 's|@''GNULIB_SENDTO''@|$(GNULIB_SENDTO)|g' \
+	      -e 's|@''GNULIB_SETSOCKOPT''@|$(GNULIB_SETSOCKOPT)|g' \
 	      -e 's|@''HAVE_WINSOCK2_H''@|$(HAVE_WINSOCK2_H)|g' \
 	      -e 's|@''HAVE_WS2TCPIP_H''@|$(HAVE_WS2TCPIP_H)|g' \
+	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/sys_socket.in.h; \
 	} > $@-t
 	mv -f $@-t $@

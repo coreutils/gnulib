@@ -1,0 +1,27 @@
+Description:
+accept() function: accept a connection to a server socket.
+
+Files:
+lib/winsock.c
+
+Depends-on:
+sys_socket
+errno
+
+configure.ac:
+AC_REQUIRE([gl_HEADER_SYS_SOCKET])
+if test "$ac_cv_header_winsock2_h" = yes; then
+  AC_LIBOBJ([winsock])
+fi
+gl_SYS_SOCKET_MODULE_INDICATOR([accept])
+
+Makefile.am:
+
+Include:
+<sys/socket.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Paolo Bonzini, Simon Josefsson

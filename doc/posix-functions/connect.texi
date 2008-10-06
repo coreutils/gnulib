@@ -4,7 +4,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/connect.html}
 
-Gnulib module: sys_socket
+Gnulib module: connect
 
 Portability problems fixed by Gnulib:
 @itemize

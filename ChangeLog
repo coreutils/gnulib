@@ -1,5 +1,59 @@
 2008-10-05  Bruno Haible  <bruno@clisp.org>
 
+	* modules/accept: New file.
+	* modules/bind: New file.
+	* modules/connect: New file.
+	* modules/getpeername: New file.
+	* modules/getsockname: New file.
+	* modules/getsockopt: New file.
+	* modules/listen: New file.
+	* modules/recv: New file.
+	* modules/recvfrom: New file.
+	* modules/send: New file.
+	* modules/sendto: New file.
+	* modules/setsockopt: New file.
+	* modules/socket: New file.
+	* lib/sys_socket.in.h: Include the GL_LINK_WARNING definition.
+	(socket, connect, accept, bind, getpeername, getsockname, getsockopt,
+	listen, recv, send, recvfrom, sendto, setsockopt): Declare only when
+	the particular module is requested. Add a link warning when the
+	particular module is not requested.
+	* lib/winsock.c (rpl_socket, rpl_connect, rpl_accept, rpl_bind,
+	rpl_getpeername, rpl_getsockname, rpl_getsockopt, rpl_listen, rpl_recv,
+	rpl_send, rpl_recvfrom, rpl_sendto, rpl_setsockopt): Define only when
+	the particular module is requested.
+	* m4/sys_socket_h.m4 (gl_SYS_SOCKET_MODULE_INDICATOR,
+	gl_SYS_SOCKET_H_DEFAULTS): New macros.
+	(gl_HEADER_SYS_SOCKET): Require gl_SYS_SOCKET_H_DEFAULTS.
+	* modules/sys_socket (Depends-on): Add link-warning.
+	(Makeifle.am): Substitute GNULIB_SOCKET, GNULIB_CONNECT, GNULIB_ACCEPT,
+	GNULIB_BIND, GNULIB_GETPEERNAME, GNULIB_GETSOCKNAME, GNULIB_GETSOCKOPT,
+	GNULIB_LISTEN, GNULIB_RECV, GNULIB_SEND, GNULIB_RECVFROM,
+	GNULIB_SENDTO, GNULIB_SETSOCKOPT, and the definition of
+	GL_LINK_WARNING.
+	* doc/posix-functions/accept.texi: Mention the new module 'accept'.
+	* doc/posix-functions/bind.texi: Mention the new module 'bind'.
+	* doc/posix-functions/connect.texi: Mention the new module 'connect'.
+	* doc/posix-functions/getpeername.texi: Mention the new module
+	'getpeername'.
+	* doc/posix-functions/getsockname.texi: Mention the new module
+	'getsockname'.
+	* doc/posix-functions/getsockopt.texi: Mention the new module
+	'getsockopt'.
+	* doc/posix-functions/listen.texi: Mention the new module 'listen'.
+	* doc/posix-functions/recv.texi: Mention the new module 'recv'.
+	* doc/posix-functions/recvfrom.texi: Mention the new module 'recvfrom'.
+	* doc/posix-functions/send.texi: Mention the new module 'send'.
+	* doc/posix-functions/sendto.texi: Mention the new module 'sendto'.
+	* doc/posix-functions/setsockopt.texi: Mention the new module
+	'setsockopt'.
+	* doc/posix-functions/socket.texi: Mention the new module 'socket'.
+	* modules/poll-tests (Depends-on): Add socket, bind, getsockopt,
+	listen, connect, accept.
+	* modules/select-tests (Depends-on): Likewise.
+
+2008-10-05  Bruno Haible  <bruno@clisp.org>
+
 	* lib/winsock.c (strerror): Remove unused #undef.
 	(rpl_close): Remove unused local variable.
 

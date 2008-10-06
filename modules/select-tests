@@ -10,6 +10,12 @@ inet_pton
 errno
 perror
 sockets
+socket
+bind
+setsockopt
+listen
+connect
+accept
 
 configure.ac:
 
