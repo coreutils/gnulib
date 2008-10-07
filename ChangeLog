@@ -1,5 +1,8 @@
 2008-10-07  Simon Josefsson  <simon@josefsson.org>
 
+	* MODULES.html.sh (Support for building documentation): Mention
+	pmccabe2html.  Sort entries.
+
 	Add pmccabe2html module, from gnupdf.
 	* build-aux/pmccabe.css: New file.
 	* build-aux/pmccabe2html: New file.
