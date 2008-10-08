@@ -1,3 +1,9 @@
+2008-10-08  Eric Blake  <ebb9@byu.net>
+
+	GNUmakefile: add 'make version' target
+	* top/GNUmakefile (_curr-ver): Split version update rules...
+	(version): ...into a target.
+
 2008-10-07  Bruno Haible  <bruno@clisp.org>
 
 	Use a more portable replacement expression for -0.0L.
@@ -116,7 +122,7 @@
 	entire testsuite consistent and avoids an Irix 6.2 bug.
 
 2008-10-05  Bruno Haible  <bruno@clisp.org>
-            Jim Meyering  <jim@meyering.net>
+	    Jim Meyering  <jim@meyering.net>
 
 	Add an option for ignoring EPIPE during close_stdout.
 	* lib/closeout.h: Include <stdbool.h>.
@@ -298,7 +304,7 @@
 	Reported by Rainer Tammer <tammer@tammer.net>.
 
 2008-10-03  Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/errno.in.h (EWOULDBLOCK) [win32]: Define to EAGAIN.
 	* lib/winsock.c (set_winsock_errno): Map WSAEWOULDBLOCK to EWOULDBLOCK.
