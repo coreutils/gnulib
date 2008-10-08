@@ -28,12 +28,12 @@ have_minus_zero ()
 }
 
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
-   So we use -zero instead.  */
+   So we use -zerod instead.  */
 double zerod = 0.0;
 
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.
-   So we use -zero instead.  */
-long double zerol = 0.0L;
+/* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
+   So we use minus_zerol instead.  */
+long double minus_zerol = -LDBL_MIN * LDBL_MIN;
 
 /* Representation of an 80-bit 'long double' as an initializer for a sequence
    of 'unsigned int' words.  */
@@ -444,7 +444,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* Negative zero.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%La %d", -zerol, 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%La %d", minus_zerol, 33, 44, 55);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0x0p+0 33") == 0);
     ASSERT (retval == strlen (result));
@@ -1146,7 +1146,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* Negative zero.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%Lf %d", -zerol, 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%Lf %d", minus_zerol, 33, 44, 55);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (retval == strlen (result));
@@ -1513,7 +1513,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* Negative zero.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%LF %d", -zerol, 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%LF %d", minus_zerol, 33, 44, 55);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (retval == strlen (result));
@@ -2015,7 +2015,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* Negative zero.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%Le %d", -zerol, 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%Le %d", minus_zerol, 33, 44, 55);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000e+00 33") == 0
 	      || strcmp (result, "-0.000000e+000 33") == 0);
@@ -2668,7 +2668,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   { /* Negative zero.  */
     char result[100];
     int retval =
-      my_snprintf (result, sizeof (result), "%Lg %d", -zerol, 33, 44, 55);
+      my_snprintf (result, sizeof (result), "%Lg %d", minus_zerol, 33, 44, 55);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0 33") == 0);
     ASSERT (retval == strlen (result));

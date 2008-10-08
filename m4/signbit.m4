@@ -1,4 +1,4 @@
-# signbit.m4 serial 3
+# signbit.m4 serial 4
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -123,15 +123,21 @@ AC_DEFUN([gl_SIGNBIT],
   fi
 ])
 
-AC_DEFUN([gl_SIGNBIT_TEST_PROGRAM], [
+AC_DEFUN([gl_SIGNBIT_TEST_PROGRAM], [[
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
-   So we use -p0f instead.  */
+   So we use -p0f and -p0d instead.  */
 float p0f = 0.0f;
 float m0f = -p0f;
 double p0d = 0.0;
 double m0d = -p0d;
+/* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
+   So we use another constant expression instead.  */
 long double p0l = 0.0L;
+#ifdef __hpux
+long double m0l = -LDBL_MIN * LDBL_MIN;
+#else
 long double m0l = -p0l;
+#endif
 int main ()
 {
   {
@@ -169,7 +175,7 @@ int main ()
   }
   return 0;
 }
-])
+]])
 
 AC_DEFUN([gl_FLOAT_SIGN_LOCATION],
 [

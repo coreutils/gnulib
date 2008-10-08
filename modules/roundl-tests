@@ -4,6 +4,7 @@ tests/test-roundl.c
 Depends-on:
 fpucw
 isnanl-nolibm
+float
 
 configure.ac:
 

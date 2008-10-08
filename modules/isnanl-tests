@@ -3,6 +3,7 @@ tests/test-isnanl.c
 tests/test-isnanl.h
 
 Depends-on:
+float
 
 configure.ac:
 gl_LONG_DOUBLE_EXPONENT_LOCATION

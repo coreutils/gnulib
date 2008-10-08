@@ -6,6 +6,7 @@ tests/nan.h
 
 Depends-on:
 stdint
+float
 
 configure.ac:
 AC_DEFINE([CHECK_SNPRINTF_POSIX], 1,

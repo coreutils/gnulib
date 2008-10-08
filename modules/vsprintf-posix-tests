@@ -5,6 +5,7 @@ tests/nan.h
 
 Depends-on:
 stdint
+float
 
 configure.ac:
 

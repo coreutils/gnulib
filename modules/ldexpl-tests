@@ -5,6 +5,7 @@ Depends-on:
 fpucw
 isnanl-nolibm
 signbit
+float
 
 configure.ac:
 

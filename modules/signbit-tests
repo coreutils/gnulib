@@ -5,6 +5,7 @@ m4/exponentd.m4
 m4/exponentl.m4
 
 Depends-on:
+float
 
 configure.ac:
 AC_REQUIRE([gl_FLOAT_EXPONENT_LOCATION])

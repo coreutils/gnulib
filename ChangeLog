@@ -1,3 +1,81 @@
+2008-10-07  Bruno Haible  <bruno@clisp.org>
+
+	Use a more portable replacement expression for -0.0L.
+	* m4/signbit.m4 (gl_SIGNBIT_TEST_PROGRAM): Use -LDBL_MIN * LDBL_MIN
+	instead of -0.0L. Fix m4 quotation.
+
+	* tests/test-signbit.c: Include <float.h>.
+	(minus_zero): New variable.
+	(test_signbitl): Use minus_zero instead of -zero.
+	* modules/signbit-tests (Depends-on): Add float.
+
+	* tests/test-ceill.c: Include <float.h>.
+	(zero): Remove variable.
+	(minus_zero): New variable.
+	(main): Use minus_zero instead of -zero.
+	* modules/ceill-tests (Depends-on): Add float.
+
+	* tests/test-floorl.c: Include <float.h>.
+	(zero): Remove variable.
+	(minus_zero): New variable.
+	(main): Use minus_zero instead of -zero.
+	* modules/floorl-tests (Depends-on): Add float.
+
+	* tests/test-roundl.c: Include <float.h>.
+	(zero): Remove variable.
+	(minus_zero): New variable.
+	(main): Use minus_zero instead of -zero.
+	* modules/roundl-tests (Depends-on): Add float.
+
+	* tests/test-truncl.c: Include <float.h>.
+	(zero): Remove variable.
+	(minus_zero): New variable.
+	(main): Use minus_zero instead of -zero.
+	* modules/truncl-tests (Depends-on): Add float.
+
+	* tests/test-frexpl.c (zero): Remove variable.
+	(minus_zero): New variable.
+	(main): Use minus_zero instead of -zero.
+	* modules/frexpl-tests (Depends-on): Add float.
+
+	* tests/test-isnan.c (zerol): Remove variable.
+	(minus_zerol): New variable.
+	(test_long_double): Use minus_zerol instead of -zerol.
+	* modules/isnan-tests (Depends-on): Add float.
+
+	* tests/test-isnanl.h (zero): Remove variable.
+	(minus_zero): New variable.
+	(main): Use minus_zero instead of -zero.
+	* modules/isnanl-nolibm-tests (Depends-on): Add float.
+	* modules/isnanl-tests (Depends-on): Add float.
+
+	* tests/test-ldexpl.c (zero): Remove variable.
+	(minus_zero): New variable.
+	(main): Use minus_zero instead of -zero.
+	* modules/ldexpl-tests (Depends-on): Add float.
+
+	* tests/test-snprintf-posix.h (zerol): Remove variable.
+	(minus_zerol): New variable.
+	(test_function): Use minus_zerol instead of -zerol.
+	* modules/snprintf-posix-tests (Depends-on): Add float.
+	* modules/vsnprintf-posix-tests (Depends-on): Add float.
+
+	* tests/test-sprintf-posix.h (zerol): Remove variable.
+	(minus_zerol): New variable.
+	(test_function): Use minus_zerol instead of -zerol.
+	* modules/sprintf-posix-tests (Depends-on): Add float.
+	* modules/vsprintf-posix-tests (Depends-on): Add float.
+
+	* tests/test-vasnprintf-posix.c (zerol): Remove variable.
+	(minus_zerol): New variable.
+	(test_function): Use minus_zerol instead of -zerol.
+	* modules/vasnprintf-posix-tests (Depends-on): Add float.
+
+	* tests/test-vasprintf-posix.c (zerol): Remove variable.
+	(minus_zerol): New variable.
+	(test_function): Use minus_zerol instead of -zerol.
+	* modules/vasprintf-posix-tests (Depends-on): Add float.
+
 2008-10-07  Simon Josefsson  <simon@josefsson.org>
 
 	* MODULES.html.sh (Support for building documentation): Mention

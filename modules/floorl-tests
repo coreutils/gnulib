@@ -4,6 +4,7 @@ tests/test-floorl.c
 Depends-on:
 fpucw
 isnanl-nolibm
+float
 
 configure.ac:
 

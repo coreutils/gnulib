@@ -53,12 +53,12 @@ have_minus_zero ()
 }
 
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
-   So we use -zero instead.  */
+   So we use -zerod instead.  */
 double zerod = 0.0;
 
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.
-   So we use -zero instead.  */
-long double zerol = 0.0L;
+/* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
+   So we use minus_zerol instead.  */
+long double minus_zerol = -LDBL_MIN * LDBL_MIN;
 
 /* Representation of an 80-bit 'long double' as an initializer for a sequence
    of 'unsigned int' words.  */
@@ -539,7 +539,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   { /* Negative zero.  */
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%La %d", -zerol, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%La %d", minus_zerol, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0x0p+0 33") == 0);
@@ -1351,7 +1351,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   { /* Negative zero.  */
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%Lf %d", -zerol, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%Lf %d", minus_zerol, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000 33") == 0);
@@ -1798,7 +1798,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   { /* Negative zero.  */
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%LF %d", -zerol, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%LF %d", minus_zerol, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000 33") == 0);
@@ -2372,7 +2372,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   { /* Negative zero.  */
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%Le %d", -zerol, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%Le %d", minus_zerol, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000e+00 33") == 0
@@ -3127,7 +3127,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   { /* Negative zero.  */
     size_t length;
     char *result =
-      my_asnprintf (NULL, &length, "%Lg %d", -zerol, 33, 44, 55);
+      my_asnprintf (NULL, &length, "%Lg %d", minus_zerol, 33, 44, 55);
     ASSERT (result != NULL);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0 33") == 0);

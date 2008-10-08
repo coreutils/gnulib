@@ -20,6 +20,7 @@
 
 #include <math.h>
 
+#include <float.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -38,9 +39,9 @@
     }									     \
   while (0)
 
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.
-   So we use -zero instead.  */
-long double zero = 0.0L;
+/* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
+   So we use minus_zero instead.  */
+long double minus_zero = -LDBL_MIN * LDBL_MIN;
 
 int
 main ()
@@ -51,7 +52,7 @@ main ()
 
   /* Zero.  */
   ASSERT (ceill (0.0L) == 0.0L);
-  ASSERT (ceill (-zero) == 0.0L);
+  ASSERT (ceill (minus_zero) == 0.0L);
   /* Positive numbers.  */
   ASSERT (ceill (0.3L) == 1.0L);
   ASSERT (ceill (0.7L) == 1.0L);

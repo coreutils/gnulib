@@ -20,6 +20,7 @@
 
 #include <math.h>
 
+#include <float.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,6 +40,16 @@
 float zerof = 0.0f;
 double zerod = 0.0;
 long double zerol = 0.0L;
+
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0f.
+   So we use -zerof instead.  */
+
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
+   So we use -zerod instead.  */
+
+/* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
+   So we use minus_zerol instead.  */
+long double minus_zerol = -LDBL_MIN * LDBL_MIN;
 
 static void
 test_signbitf ()
@@ -140,10 +151,10 @@ test_signbitl ()
   ASSERT (signbit (-2.718e-30L));
   /* Zeros.  */
   ASSERT (!signbit (0.0L));
-  if (1.0L / -zerol < 0)
-    ASSERT (signbit (-zerol));
+  if (1.0L / minus_zerol < 0)
+    ASSERT (signbit (minus_zerol));
   else
-    ASSERT (!signbit (-zerol));
+    ASSERT (!signbit (minus_zerol));
   /* Infinite values.  */
   ASSERT (!signbit (1.0L / 0.0L));
   ASSERT (signbit (-1.0L / 0.0L));

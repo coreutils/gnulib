@@ -48,9 +48,9 @@ float zerof = 0.0f;
    So we use -zero instead.  */
 double zerod = 0.0;
 
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.
-   So we use -zero instead.  */
-long double zerol = 0.0L;
+/* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
+   So we use minus_zerol instead.  */
+long double minus_zerol = -LDBL_MIN * LDBL_MIN;
 
 static void
 test_float (void)
@@ -146,7 +146,7 @@ test_long_double (void)
   ASSERT (!isnan (-2.718e30L));
   ASSERT (!isnan (-2.718e-30L));
   ASSERT (!isnan (0.0L));
-  ASSERT (!isnan (-zerol));
+  ASSERT (!isnan (minus_zerol));
   /* Infinite values.  */
   ASSERT (!isnan (1.0L / 0.0L));
   ASSERT (!isnan (-1.0L / 0.0L));

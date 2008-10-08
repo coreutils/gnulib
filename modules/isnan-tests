@@ -3,6 +3,7 @@ tests/test-isnan.c
 tests/nan.h
 
 Depends-on:
+float
 
 configure.ac:
 gl_FLOAT_EXPONENT_LOCATION
