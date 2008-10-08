@@ -1,3 +1,9 @@
+2008-10-08  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/sys_socket_h.m4: Don't AC_LIBOBJ(winsock).  The file is
+	AC_LIBOBJ'ed by each gnulib module that needs it (e.g., socket,
+	listen).
+
 2008-10-08  Eric Blake  <ebb9@byu.net>
 
 	GNUmakefile: add 'make version' target

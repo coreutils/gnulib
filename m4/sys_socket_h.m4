@@ -60,9 +60,6 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
       fi
     fi
     gl_PREREQ_SYS_H_WINSOCK2
-    if test x$ac_cv_header_winsock2_h = xyes; then
-      AC_LIBOBJ(winsock)
-    fi
     AC_SUBST([HAVE_SYS_SOCKET_H])
     AC_SUBST([HAVE_WS2TCPIP_H])
   fi
