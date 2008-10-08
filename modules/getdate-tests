@@ -8,4 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-getdate
 check_PROGRAMS += test-getdate
-test_getdate_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME)
+test_getdate_LDADD = $(LDADD) @LIBINTL@ $(LIB_CLOCK_GETTIME)
