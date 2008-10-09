@@ -48,10 +48,17 @@
 extern "C" {
 #endif
 
-#if (@GNULIB_OPEN@ && @REPLACE_OPEN@) || defined FCHDIR_REPLACEMENT
-# undef open
-# define open rpl_open
+#if @GNULIB_OPEN@
+# if @REPLACE_OPEN@
+#  undef open
+#  define open rpl_open
 extern int open (const char *filename, int flags, ...);
+# endif
+#endif
+
+#ifdef FCHDIR_REPLACEMENT
+/* gnulib internal function.  */
+extern void _gl_register_fd (int fd, const char *filename);
 #endif
 
 #ifdef __cplusplus

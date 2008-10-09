@@ -1,5 +1,5 @@
-# fchdir.m4 serial 4
-dnl Copyright (C) 2006-2007 Free Software Foundation, Inc.
+# fchdir.m4 serial 5
+dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -14,6 +14,7 @@ AC_DEFUN([gl_FUNC_FCHDIR],
     gl_PREREQ_FCHDIR
     AC_DEFINE([FCHDIR_REPLACEMENT], 1,
       [Define if gnulib's fchdir() replacement is used.])
+    gl_REPLACE_OPEN
     gl_CHECK_NEXT_HEADERS([dirent.h])
     DIRENT_H='dirent.h'
   else

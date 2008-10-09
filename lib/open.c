@@ -33,14 +33,11 @@ orig_open (const char *filename, int flags, mode_t mode)
 /* Specification.  */
 #include <fcntl.h>
 
-/* If the fchdir replacement is used, open() is defined in fchdir.c.  */
-#ifndef FCHDIR_REPLACEMENT
-
-# include <errno.h>
-# include <stdarg.h>
-# include <string.h>
-# include <sys/types.h>
-# include <sys/stat.h>
+#include <errno.h>
+#include <stdarg.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 int
 open (const char *filename, int flags, ...)
@@ -64,12 +61,12 @@ open (const char *filename, int flags, ...)
       va_end (arg);
     }
 
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   if (strcmp (filename, "/dev/null") == 0)
     filename = "NUL";
-# endif
+#endif
 
-# if OPEN_TRAILING_SLASH_BUG
+#if OPEN_TRAILING_SLASH_BUG
   /* If the filename ends in a slash and one of O_CREAT, O_WRONLY, O_RDWR
      is specified, then fail.
      Rationale: POSIX <http://www.opengroup.org/susv3/basedefs/xbd_chap04.html>
@@ -100,11 +97,11 @@ open (const char *filename, int flags, ...)
 	  return -1;
 	}
     }
-# endif
+#endif
 
   fd = orig_open (filename, flags, mode);
 
-# if OPEN_TRAILING_SLASH_BUG
+#if OPEN_TRAILING_SLASH_BUG
   /* If the filename ends in a slash and fd does not refer to a directory,
      then fail.
      Rationale: POSIX <http://www.opengroup.org/susv3/basedefs/xbd_chap04.html>
@@ -132,8 +129,12 @@ open (const char *filename, int flags, ...)
 	    }
 	}
     }
-# endif
+#endif
+
+#ifdef FCHDIR_REPLACEMENT
+  if (fd >= 0)
+    _gl_register_fd (fd, filename);
+#endif
 
   return fd;
 }
-#endif

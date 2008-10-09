@@ -1,3 +1,15 @@
+2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/fcntl.in.h (open): Simplify conditionals.
+	(_gl_register_fd): New declaration.
+	* lib/fchdir.c (rpl_open): Remove function.
+	* lib/open.c: When FCHDIR_REPLACEMENT is defined, compile the file
+	also.
+	(open): When FCHDIR_REPLACEMENT is defined, invoke _gl_register_fd.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): When replacing fchdir, also replace
+	open.
+
 2008-10-09  Jim Meyering  <meyering@redhat.com>
 
 	GNUmakefile: use the more name-space-friendly "_version"

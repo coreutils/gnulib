@@ -105,7 +105,7 @@ _gl_register_fd (int fd, const char *filename)
     }
 }
 
-/* Override open() and close(), to keep track of the open file descriptors.  */
+/* Override close(), to keep track of the open file descriptors.  */
 
 int
 rpl_close (int fd)
@@ -116,39 +116,6 @@ rpl_close (int fd)
   if (retval >= 0)
     _gl_unregister_fd (fd);
   return retval;
-}
-
-int
-rpl_open (const char *filename, int flags, ...)
-#undef open
-{
-  mode_t mode;
-  int fd;
-  struct stat statbuf;
-
-  mode = 0;
-  if (flags & O_CREAT)
-    {
-      va_list arg;
-      va_start (arg, flags);
-
-      /* If mode_t is narrower than int, use the promoted type (int),
-	 not mode_t.  Use sizeof to guess whether mode_t is narrower;
-	 we don't know of any practical counterexamples.  */
-      mode = (sizeof (mode_t) < sizeof (int)
-	      ? va_arg (arg, int)
-	      : va_arg (arg, mode_t));
-
-      va_end (arg);
-    }
-#if defined GNULIB_OPEN && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
-  if (strcmp (filename, "/dev/null") == 0)
-    filename = "NUL";
-#endif
-  fd = open (filename, flags, mode);
-  if (fd >= 0)
-    _gl_register_fd (fd, filename);
-  return fd;
 }
 
 /* Override opendir() and closedir(), to keep track of the open file
