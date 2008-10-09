@@ -1,3 +1,10 @@
+2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
+
+	Fix organization of 'open' replacement.
+	* m4/open.m4 (gl_REPLACE_OPEN): New macro.
+	(gl_FUNC_OPEN): Use it.
+	(gl_PREREQ_OPEN): Add a : to make the body non-empty.
+
 2008-10-08  Bruno Haible  <bruno@clisp.org>
 
 	* modules/getdate-tests (test_getdata_LDADD): Add LIBINTL.
