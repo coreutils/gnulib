@@ -1,5 +1,5 @@
 /* fchdir replacement.
-   Copyright (C) 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -75,6 +75,36 @@ ensure_dirs_slot (size_t fd)
     }
 }
 
+/* Hook into the gnulib replacements for open() and close() to keep track
+   of the open file descriptors.  */
+
+void
+_gl_unregister_fd (int fd)
+{
+  if (fd >= 0 && fd < dirs_allocated)
+    {
+      if (dirs[fd].name != NULL)
+	free (dirs[fd].name);
+      dirs[fd].name = NULL;
+      dirs[fd].saved_errno = ENOTDIR;
+    }
+}
+
+void
+_gl_register_fd (int fd, const char *filename)
+{
+  struct stat statbuf;
+
+  ensure_dirs_slot (fd);
+  if (fd < dirs_allocated
+      && fstat (fd, &statbuf) >= 0 && S_ISDIR (statbuf.st_mode))
+    {
+      dirs[fd].name = canonicalize_file_name (filename);
+      if (dirs[fd].name == NULL)
+	dirs[fd].saved_errno = errno;
+    }
+}
+
 /* Override open() and close(), to keep track of the open file descriptors.  */
 
 int
@@ -83,13 +113,8 @@ rpl_close (int fd)
 {
   int retval = close (fd);
 
-  if (retval >= 0 && fd >= 0 && fd < dirs_allocated)
-    {
-      if (dirs[fd].name != NULL)
-	free (dirs[fd].name);
-      dirs[fd].name = NULL;
-      dirs[fd].saved_errno = ENOTDIR;
-    }
+  if (retval >= 0)
+    _gl_unregister_fd (fd);
   return retval;
 }
 
@@ -122,16 +147,7 @@ rpl_open (const char *filename, int flags, ...)
 #endif
   fd = open (filename, flags, mode);
   if (fd >= 0)
-    {
-      ensure_dirs_slot (fd);
-      if (fd < dirs_allocated
-	  && fstat (fd, &statbuf) >= 0 && S_ISDIR (statbuf.st_mode))
-	{
-	  dirs[fd].name = canonicalize_file_name (filename);
-	  if (dirs[fd].name == NULL)
-	    dirs[fd].saved_errno = errno;
-	}
-    }
+    _gl_register_fd (fd, filename);
   return fd;
 }
 
@@ -145,13 +161,8 @@ rpl_closedir (DIR *dp)
   int fd = dirfd (dp);
   int retval = closedir (dp);
 
-  if (retval >= 0 && fd >= 0 && fd < dirs_allocated)
-    {
-      if (dirs[fd].name != NULL)
-	free (dirs[fd].name);
-      dirs[fd].name = NULL;
-      dirs[fd].saved_errno = ENOTDIR;
-    }
+  if (retval >= 0)
+    _gl_unregister_fd (fd);
   return retval;
 }
 
@@ -166,15 +177,7 @@ rpl_opendir (const char *filename)
     {
       int fd = dirfd (dp);
       if (fd >= 0)
-	{
-	  ensure_dirs_slot (fd);
-	  if (fd < dirs_allocated)
-	    {
-	      dirs[fd].name = canonicalize_file_name (filename);
-	      if (dirs[fd].name == NULL)
-	        dirs[fd].saved_errno = errno;
-	    }
-	}
+	_gl_register_fd (fd, filename);
     }
   return dp;
 }

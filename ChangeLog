@@ -1,4 +1,13 @@
 2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/fchdir.c (_gl_unregister_fd): New functions, extracted from
+	rpl_close.
+	(_gl_register_fd): New function, extracted from rpl_open.
+	(rpl_close, rpl_closedir): Use _gl_unregister_fd.
+	(rpl_open, rpl_opendir): Use _gl_register_fd.
+
+2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
 
 	Fix organization of 'open' replacement.
 	* m4/open.m4 (gl_REPLACE_OPEN): New macro.
