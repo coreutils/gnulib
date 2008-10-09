@@ -82,6 +82,15 @@ extern int chown (const char *file, uid_t uid, gid_t gid);
 #  define close rpl_close
 extern int close (int);
 # endif
+#elif @UNISTD_H_HAVE_WINSOCK2_H@
+# undef close
+# define close close_used_without_requesting_gnulib_module_close
+#elif defined GNULIB_POSIXCHECK
+# undef close
+# define close(f) \
+    (GL_LINK_WARNING ("close does not portably work on sockets - " \
+                      "use gnulib module close for portability"), \
+     close (f))
 #endif
 
 

@@ -138,10 +138,9 @@ rpl_fd_isset (int fd, fd_set * set)
 
 /* Wrap everything else to use libc file descriptors for sockets.  */
 
-# if @HAVE_WINSOCK2_H@
+# if @HAVE_WINSOCK2_H@ && !defined _GL_UNISTD_H
 #  undef close
-#  define close			rpl_close
-extern int rpl_close(int);
+#  define close close_used_without_including_unistd_h
 # endif
 
 # if @GNULIB_SOCKET@
@@ -374,6 +373,12 @@ extern int rpl_setsockopt (int, int, int, const void *, int);
 # if @HAVE_WINSOCK2_H@
 #  undef select
 #  define select		select_used_without_including_sys_select_h
+# endif
+
+# if @GNULIB_CLOSE@ && @HAVE_WINSOCK2_H@
+/* gnulib internal function.  */
+#  define HAVE__GL_CLOSE_FD_MAYBE_SOCKET 1
+extern int _gl_close_fd_maybe_socket (int fd);
 # endif
 
 # ifdef __cplusplus

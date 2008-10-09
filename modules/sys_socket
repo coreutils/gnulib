@@ -6,6 +6,7 @@ lib/sys_socket.in.h
 lib/winsock.c
 m4/sys_socket_h.m4
 m4/sockpfaf.m4
+m4/unistd_h.m4
 
 Depends-on:
 include_next
@@ -14,6 +15,7 @@ errno
 
 configure.ac:
 gl_HEADER_SYS_SOCKET
+gl_MODULE_INDICATOR([sys_socket])
 AC_PROG_MKDIR_P
 
 Makefile.am:
@@ -28,6 +30,7 @@ sys/socket.h: sys_socket.in.h
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''NEXT_SYS_SOCKET_H''@|$(NEXT_SYS_SOCKET_H)|g' \
 	      -e 's|@''HAVE_SYS_SOCKET_H''@|$(HAVE_SYS_SOCKET_H)|g' \
+	      -e 's|@''GNULIB_CLOSE''@|$(GNULIB_CLOSE)|g' \
 	      -e 's|@''GNULIB_SOCKET''@|$(GNULIB_SOCKET)|g' \
 	      -e 's|@''GNULIB_CONNECT''@|$(GNULIB_CONNECT)|g' \
 	      -e 's|@''GNULIB_ACCEPT''@|$(GNULIB_ACCEPT)|g' \

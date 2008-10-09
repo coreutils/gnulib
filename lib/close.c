@@ -19,6 +19,10 @@
 /* Specification.  */
 #include <unistd.h>
 
+#if GNULIB_SYS_SOCKET
+# include <sys/socket.h>
+#endif
+
 
 /* Override close() to call into other gnulib modules.  */
 
@@ -26,7 +30,11 @@ int
 rpl_close (int fd)
 #undef close
 {
+#if HAVE__GL_CLOSE_FD_MAYBE_SOCKET
+  int retval = _gl_close_fd_maybe_socket (fd);
+#else
   int retval = close (fd);
+#endif
 
 #ifdef FCHDIR_REPLACEMENT
   if (retval >= 0)

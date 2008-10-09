@@ -1,6 +1,32 @@
 2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
             Bruno Haible  <bruno@clisp.org>
 
+	Combine the two replacements of 'close'.
+	* lib/sys_socket.in.h (close): Define to a reminder to include <unistd.h>.
+	(_gl_close_fd_maybe_socket): New declaration.
+	(HAVE__GL_CLOSE_FD_MAYBE_SOCKET): New macro.
+	* lib/winsock.c (close): Remove undefinition.
+	(_gl_close_fd_maybe_socket): Renamed from rpl_close. Define only when
+	needed for the gnulib module 'close'.
+	* lib/unistd.in.h (close): If the gnulib module 'close' is not used,
+	define to an error symbol or to a warning, if suitable.
+	* lib/close.c: Include <sys/socket.h>.
+	(rpl_close): Invoke _gl_close_fd_maybe_socket when gnulib defines it.
+	* m4/sys_socket_h.m4 (gl_PREREQ_SYS_H_WINSOCK2): Set also
+	UNISTD_H_HAVE_WINSOCK2_H.
+	(gl_SYS_SOCKET_H_DEFAULTS): Require gl_UNISTD_H_DEFAULTS.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	UNISTD_H_HAVE_WINSOCK2_H.
+	* modules/sys_socket (Files): Add m4/unistd_h.m4.
+	(configure.ac): Set a module indicator.
+	(Makefile.am): Substitute GNULIB_CLOSE.
+	* modules/unistd (Makefile.am): Substitute UNISTD_H_HAVE_WINSOCK2_H.
+	* modules/poll-tests (Depends-on): Add close.
+	* modules/select-tests (Depends-on): Likewise.
+
+2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
 	New module 'close'.
 	* modules/close: New file.
 	* lib/unistd.in.h (close): Move declaration out of the

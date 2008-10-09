@@ -16,6 +16,7 @@ setsockopt
 listen
 connect
 accept
+close
 
 configure.ac:
 

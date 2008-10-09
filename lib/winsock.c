@@ -25,7 +25,6 @@
 #include <io.h>
 #include <sys/socket.h>
 
-#undef close
 #undef socket
 #undef connect
 #undef accept
@@ -44,10 +43,11 @@
 # define SOCKET_TO_FD(fh)   (_open_osfhandle ((long) (fh), O_RDWR | O_BINARY))
 
 
-/* Wrappers for libc functions.  */
+/* Hook for gnulib module close.  */
 
+#if HAVE__GL_CLOSE_FD_MAYBE_SOCKET
 int
-rpl_close (int fd)
+_gl_close_fd_maybe_socket (int fd)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
   WSANETWORKEVENTS ev;
@@ -67,6 +67,7 @@ rpl_close (int fd)
   else
     return _close (fd);
 }
+#endif
 
 
 /* Wrappers for WinSock functions.  */

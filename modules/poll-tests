@@ -17,6 +17,7 @@ setsockopt
 listen
 connect
 accept
+close
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([unistd.h sys/wait.h])
