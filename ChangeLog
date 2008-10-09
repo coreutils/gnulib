@@ -1,6 +1,25 @@
 2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
             Bruno Haible  <bruno@clisp.org>
 
+	New module 'close'.
+	* modules/close: New file.
+	* lib/unistd.in.h (close): Move declaration out of the
+	FCHDIR_REPLACEMENT scope.
+	(_gl_unregister_fd): New declaration.
+	* lib/close.c: New file.
+	* lib/fchdir.c (rpl_close): Remove function.
+	* m4/close.m4: New file.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): When replacing fchdir, also replace
+	close.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_CLOSE and
+	REPLACE_CLOSE.
+	* modules/unistd (Makefile.am): Substitute GNULIB_CLOSE and
+	REPLACE_CLOSE.
+	* modules/fchdir (Depends-on): Add close.
+
+2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
 	* lib/fcntl.in.h (open): Simplify conditionals.
 	(_gl_register_fd): New declaration.
 	* lib/fchdir.c (rpl_open): Remove function.

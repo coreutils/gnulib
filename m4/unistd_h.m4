@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 13
+# unistd_h.m4 serial 14
 dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,6 +33,7 @@ AC_DEFUN([gl_UNISTD_MODULE_INDICATOR],
 AC_DEFUN([gl_UNISTD_H_DEFAULTS],
 [
   GNULIB_CHOWN=0;            AC_SUBST([GNULIB_CHOWN])
+  GNULIB_CLOSE=0;            AC_SUBST([GNULIB_CLOSE])
   GNULIB_DUP2=0;             AC_SUBST([GNULIB_DUP2])
   GNULIB_ENVIRON=0;          AC_SUBST([GNULIB_ENVIRON])
   GNULIB_FCHDIR=0;           AC_SUBST([GNULIB_FCHDIR])
@@ -61,6 +62,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   HAVE_OS_H=0;            AC_SUBST([HAVE_OS_H])
   HAVE_SYS_PARAM_H=0;     AC_SUBST([HAVE_SYS_PARAM_H])
   REPLACE_CHOWN=0;        AC_SUBST([REPLACE_CHOWN])
+  REPLACE_CLOSE=0;        AC_SUBST([REPLACE_CLOSE])
   REPLACE_FCHDIR=0;       AC_SUBST([REPLACE_FCHDIR])
   REPLACE_GETCWD=0;       AC_SUBST([REPLACE_GETCWD])
   REPLACE_GETPAGESIZE=0;  AC_SUBST([REPLACE_GETPAGESIZE])

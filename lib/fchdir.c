@@ -105,19 +105,6 @@ _gl_register_fd (int fd, const char *filename)
     }
 }
 
-/* Override close(), to keep track of the open file descriptors.  */
-
-int
-rpl_close (int fd)
-#undef close
-{
-  int retval = close (fd);
-
-  if (retval >= 0)
-    _gl_unregister_fd (fd);
-  return retval;
-}
-
 /* Override opendir() and closedir(), to keep track of the open file
    descriptors.  Needed because there is a function dirfd().  */
 

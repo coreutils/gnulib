@@ -8,6 +8,7 @@ m4/fchdir.m4
 
 Depends-on:
 canonicalize-lgpl
+close
 dirfd
 dup2
 fcntl

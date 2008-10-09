@@ -75,6 +75,16 @@ extern int chown (const char *file, uid_t uid, gid_t gid);
 #endif
 
 
+#if @GNULIB_CLOSE@
+# if @REPLACE_CLOSE@
+/* Automatically included by modules that need a replacement for close.  */
+#  undef close
+#  define close rpl_close
+extern int close (int);
+# endif
+#endif
+
+
 #if @GNULIB_DUP2@
 # if !@HAVE_DUP2@
 /* Copy the file descriptor OLDFD into file descriptor NEWFD.  Do nothing if
@@ -123,8 +133,6 @@ extern char **environ;
    <http://www.opengroup.org/susv3xsh/fchdir.html>.  */
 extern int fchdir (int /*fd*/);
 
-#  define close rpl_close
-extern int close (int);
 #  define dup rpl_dup
 extern int dup (int);
 #  define dup2 rpl_dup2
@@ -376,6 +384,12 @@ extern unsigned int sleep (unsigned int n);
 # undef write
 # define write rpl_write
 extern ssize_t write (int fd, const void *buf, size_t count);
+#endif
+
+
+#ifdef FCHDIR_REPLACEMENT
+/* gnulib internal function.  */
+extern void _gl_unregister_fd (int fd);
 #endif
 
 

@@ -15,6 +15,7 @@ AC_DEFUN([gl_FUNC_FCHDIR],
     AC_DEFINE([FCHDIR_REPLACEMENT], 1,
       [Define if gnulib's fchdir() replacement is used.])
     gl_REPLACE_OPEN
+    gl_REPLACE_CLOSE
     gl_CHECK_NEXT_HEADERS([dirent.h])
     DIRENT_H='dirent.h'
   else
