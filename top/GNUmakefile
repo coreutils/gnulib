@@ -72,18 +72,18 @@ ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
           # should run 'autoreconf' (or something like 'make distcheck') to
           # fix the version, 'make all' to propagate it, then 'make install'.
           $(info WARNING: version string $(VERSION) is out of date;)
-          $(info run '$(MAKE) version' to fix it)
+          $(info run '$(MAKE) _version' to fix it)
         else
           $(info INFO: running autoreconf for new version string: $(_curr-ver))
-          _dummy := $(shell $(MAKE) $(AM_MAKEFLAGS) version)
+          _dummy := $(shell $(MAKE) $(AM_MAKEFLAGS) _version)
         endif
       endif
     endif
   endif
 endif
 
-.PHONY: version
-version:
+.PHONY: _version
+_version:
 	cd $(srcdir) && rm -rf autom4te.cache .version && $(_autoreconf)
 
 else
