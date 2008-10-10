@@ -4,7 +4,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/ioctl.html}
 
-Gnulib module: sys_socket
+Gnulib module: ioctl
 
 Portability problems fixed by Gnulib:
 @itemize

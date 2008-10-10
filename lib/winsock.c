@@ -25,6 +25,9 @@
 #include <fcntl.h>
 #include <io.h>
 #include <sys/socket.h>
+#if GNULIB_IOCTL
+#include <sys/ioctl.h>
+#endif
 
 #undef socket
 #undef connect
@@ -224,6 +227,7 @@ rpl_listen (int fd, int backlog)
 }
 #endif
 
+#if GNULIB_IOCTL
 int
 rpl_ioctl (int fd, int req, ...)
 {
@@ -243,6 +247,7 @@ rpl_ioctl (int fd, int req, ...)
 
   return r;
 }
+#endif
 
 #if GNULIB_RECV
 int

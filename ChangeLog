@@ -1,5 +1,17 @@
 2008-10-09  Bruno Haible  <bruno@clisp.org>
 
+	New module 'ioctl'.
+	* modules/ioctl: New file.
+	* lib/sys_socket.in.h (ioctl): Remove declaration.
+	* lib/winsock.c: Include <sys/ioctl.h>.
+	(rpl_ioctl): Define only of the gnulib module 'ioctl' is present.
+	* m4/sys_socket_h.m4 (gl_PREREQ_SYS_H_WINSOCK2): Require
+	gl_SYS_IOCTL_H_DEFAULTS. Set also SYS_IOCTL_H_HAVE_WINSOCK2_H.
+	* modules/sys_socket (Files): Add m4/sys_ioctl_h.m4.
+	* doc/posix-functions/ioctl.texi: Mention the new module.
+
+2008-10-09  Bruno Haible  <bruno@clisp.org>
+
 	New module 'sys_ioctl'.
 	* lib/sys_ioctl.in.h: New file.
 	* m4/sys_ioctl_h.m4: New file.

@@ -1,4 +1,4 @@
-# sys_socket_h.m4 serial 9
+# sys_socket_h.m4 serial 10
 dnl Copyright (C) 2005-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -72,6 +72,7 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
 AC_DEFUN([gl_PREREQ_SYS_H_WINSOCK2],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([gl_SYS_IOCTL_H_DEFAULTS])
   AC_CHECK_HEADERS_ONCE([sys/socket.h])
   if test $ac_cv_header_sys_socket_h != yes; then
     dnl We cannot use AC_CHECK_HEADERS_ONCE here, because that would make
@@ -83,6 +84,7 @@ AC_DEFUN([gl_PREREQ_SYS_H_WINSOCK2],
   if test "$ac_cv_header_winsock2_h" = yes; then
     HAVE_WINSOCK2_H=1
     UNISTD_H_HAVE_WINSOCK2_H=1
+    SYS_IOCTL_H_HAVE_WINSOCK2_H=1
   else
     HAVE_WINSOCK2_H=0
   fi
