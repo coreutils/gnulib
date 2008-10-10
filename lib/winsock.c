@@ -18,6 +18,7 @@
 /* Written by Paolo Bonzini */
 
 #include <config.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -224,10 +225,19 @@ rpl_listen (int fd, int backlog)
 #endif
 
 int
-rpl_ioctl (int fd, unsigned long req, char *buf)
+rpl_ioctl (int fd, int req, ...)
 {
-  SOCKET sock = FD_TO_SOCKET (fd);
-  int r = ioctlsocket (sock, req, (void *) buf);
+  void *buf;
+  va_list args;
+  SOCKET sock;
+  int r;
+
+  va_start (args, req);
+  buf = va_arg (args, void *);
+  va_end (args);
+
+  sock = FD_TO_SOCKET (fd);
+  r = ioctlsocket (sock, req, buf);
   if (r < 0)
     set_winsock_errno ();
 

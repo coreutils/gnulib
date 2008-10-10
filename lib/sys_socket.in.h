@@ -282,7 +282,7 @@ extern int rpl_listen (int, int);
 # if @HAVE_WINSOCK2_H@
 #  undef ioctl
 #  define ioctl			rpl_ioctl
-extern int rpl_ioctl (int, unsigned long, char *);
+extern int rpl_ioctl (int, int, ...);
 # endif
 
 # if @GNULIB_RECV@

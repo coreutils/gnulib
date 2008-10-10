@@ -1,5 +1,11 @@
 2008-10-09  Bruno Haible  <bruno@clisp.org>
 
+	* lib/sys_socket.in.h (ioctl): Make signature POSIX compliant.
+	* lib/winsock.c: Include <stdarg.h>.
+	(rpl_ioctl): Change to second argument 'int' and then varargs.
+
+2008-10-09  Bruno Haible  <bruno@clisp.org>
+
 	* m4/close.m4 (gl_FUNC_CLOSE): Arrange to replace the close() function when
 	the sys_socket module is present and the system has <winsock2.h>.
 
