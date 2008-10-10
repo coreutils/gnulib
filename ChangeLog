@@ -1,5 +1,13 @@
 2008-10-09  Bruno Haible  <bruno@clisp.org>
 
+	New module 'sys_ioctl'.
+	* lib/sys_ioctl.in.h: New file.
+	* m4/sys_ioctl_h.m4: New file.
+	* modules/sys_ioctl: New file.
+	* doc/glibc-headers/sys_ioctl.texi: Mention the new module.
+
+2008-10-09  Bruno Haible  <bruno@clisp.org>
+
 	* lib/sys_socket.in.h (ioctl): Make signature POSIX compliant.
 	* lib/winsock.c: Include <stdarg.h>.
 	(rpl_ioctl): Change to second argument 'int' and then varargs.

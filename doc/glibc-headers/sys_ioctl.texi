@@ -16,13 +16,9 @@ Documentation:
 @uref{http://www.kernel.org/doc/man-pages/online/pages/man2/ioctl.2.html,,man ioctl}.
 @end itemize
 
-Gnulib module: ---
+Gnulib module: sys_ioctl
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
@@ -30,4 +26,8 @@ mingw.
 @item
 This header file does not declare the @code{ioctl} function on some platforms:
 AIX 5.1, Solaris 10.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize
