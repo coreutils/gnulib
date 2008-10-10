@@ -1,3 +1,9 @@
+2008-10-10  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: use git's --depth=N option only if it's supported
+	* build-aux/bootstrap: Work with git-1.4.4.4, which does not
+	recognize the --depth option.  Reported by Pádraig Brady.
+
 2008-10-09  Bruno Haible  <bruno@clisp.org>
 
 	New module 'ioctl'.
