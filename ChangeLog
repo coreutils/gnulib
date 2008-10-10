@@ -26,8 +26,8 @@
 
 2008-10-09  Bruno Haible  <bruno@clisp.org>
 
-	* m4/close.m4 (gl_FUNC_CLOSE): Arrange to replace the close() function when
-	the sys_socket module is present and the system has <winsock2.h>.
+	* m4/close.m4 (gl_FUNC_CLOSE): Arrange to replace the close() function
+	when the sys_socket module is present and the system has <winsock2.h>.
 
 2008-10-09  Bruno Haible  <bruno@clisp.org>
 
@@ -43,7 +43,8 @@
             Bruno Haible  <bruno@clisp.org>
 
 	Combine the two replacements of 'close'.
-	* lib/sys_socket.in.h (close): Define to a reminder to include <unistd.h>.
+	* lib/sys_socket.in.h (close): Define to a reminder to include
+	<unistd.h>.
 	(_gl_close_fd_maybe_socket): New declaration.
 	(HAVE__GL_CLOSE_FD_MAYBE_SOCKET): New macro.
 	* lib/winsock.c (close): Remove undefinition.
