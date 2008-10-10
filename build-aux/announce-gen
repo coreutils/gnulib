@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2008-06-02 08:18'; # UTC
+my $VERSION = '2008-10-10 05:12'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -92,10 +92,10 @@ The following are optional:
    --news=NEWS_FILE
    --bootstrap-tools=TOOL_LIST  a comma-separated list of tools, e.g.,
                                 autoconf,automake,bison,gnulib
-   --gnulib-snapshot-date=DATE  if gnulib is in the bootstrap tool list,
-                                then report this as the snapshot date.
-                                If not specified, use the current date/time.
-                                If you specify a date here, be sure it is UTC.
+   --gnulib-version=VERSION     report VERSION as the gnulib version, where
+                                VERSION is the result of running git describe
+                                in the gnulib source directory.
+                                required if gnulib is in TOOL_LIST.
 
    --help             display this help and exit
    --version          output version information and exit
@@ -432,6 +432,8 @@ sub get_tool_versions ($$)
   my $xd = "$package_name-$prev_version-$curr_version.xdelta";
 
   my @tarballs = grep {-f $_} ($tgz, $tbz, $lzma);
+  @tarballs
+    or die "$ME: none of $tgz, $tbz, or $lzma were found\n";
   my @sizable = @tarballs;
   -f $xd
     and push @sizable, $xd;

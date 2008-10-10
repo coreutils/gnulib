@@ -1,3 +1,9 @@
+2008-10-09  Ben Pfaff  <blp@gnu.org>
+
+	* build-aux/announce-gen: Fix gnulib version related part of usage
+	message.  Die with a useful error message if no tarballs are
+	found.
+
 2008-10-10  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: use git's --depth=N option only if it's supported
