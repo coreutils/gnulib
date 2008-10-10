@@ -6,7 +6,12 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_CLOSE],
 [
-  :
+  m4_ifdef([gl_PREREQ_SYS_H_WINSOCK2], [
+    gl_PREREQ_SYS_H_WINSOCK2
+    if test $UNISTD_H_HAVE_WINSOCK2_H = 1; then
+      gl_REPLACE_CLOSE
+    fi
+  ])
 ])
 
 AC_DEFUN([gl_REPLACE_CLOSE],
