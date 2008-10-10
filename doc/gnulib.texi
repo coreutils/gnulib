@@ -2937,6 +2937,7 @@ not worked around by Gnulib.
 * pty.h::
 * resolv.h::
 * shadow.h::
+* sys/ioctl.h::
 * sysexits.h::
 * ttyent.h::
 @end menu
@@ -2969,6 +2970,7 @@ not worked around by Gnulib.
 @include glibc-headers/pty.texi
 @include glibc-headers/resolv.texi
 @include glibc-headers/shadow.texi
+@include glibc-headers/sys_ioctl.texi
 @include glibc-headers/sysexits.texi
 @include glibc-headers/ttyent.texi
 
@@ -5087,6 +5089,9 @@ This list of functions is sorted according to the header that declares them.
 
 @include glibc-functions/ioperm.texi
 @include glibc-functions/iopl.texi
+
+@c @node Glibc sys/ioctl.h
+@c @section Glibc @code{<sys/ioctl.h>}
 
 @c @node Glibc sys/ipc.h
 @c @section Glibc Extensions to @code{<sys/ipc.h>}
