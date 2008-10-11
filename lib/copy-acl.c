@@ -336,6 +336,16 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
   did_chmod = 0; /* set to 1 once the mode bits in 0777 have been set */
   saved_errno = 0; /* the first non-ignorable error code */
 
+  if (!MODE_INSIDE_ACL)
+    {
+      /* On Cygwin, it is necessary to call chmod before acl, because
+	 chmod can change the contents of the ACL (in ways that don't
+	 change the allowed accesses, but still visible).  */
+      if (chmod_or_fchmod (dst_name, dest_desc, mode) != 0)
+	saved_errno = errno;
+      did_chmod = 1;
+    }
+
   /* If both ace_entries and entries are available, try SETACL before
      ACE_SETACL, because SETACL cannot fail with ENOTSUP whereas ACE_SETACL
      can.  */
@@ -345,7 +355,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
       ret = (dest_desc != -1
 	     ? facl (dest_desc, SETACL, count, entries)
 	     : acl (dst_name, SETACL, count, entries));
-      if (ret < 0)
+      if (ret < 0 && saved_errno == 0)
 	{
 	  saved_errno = errno;
 	  if (errno == ENOSYS && !acl_nontrivial (count, entries))
@@ -373,8 +383,8 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
   free (ace_entries);
 #  endif
 
-  if (!MODE_INSIDE_ACL
-      || did_chmod <= ((mode & (S_ISUID | S_ISGID | S_ISVTX)) ? 1 : 0))
+  if (MODE_INSIDE_ACL
+      && did_chmod <= ((mode & (S_ISUID | S_ISGID | S_ISVTX)) ? 1 : 0))
     {
       /* We did not call chmod so far, and either the mode and the ACL are
 	 separate or special bits are to be set which don't fit into ACLs.  */

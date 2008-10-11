@@ -1,3 +1,8 @@
+2008-10-10  Bruno Haible  <bruno@clisp.org>
+
+	* lib/copy-acl.c (qcopy_acl) [CYGWIN]: Call chmod before setting the
+	ACL, not afterwards. Fixes test failure on Cygwin.
+
 2008-10-09  Ben Pfaff  <blp@gnu.org>
 
 	* build-aux/announce-gen: Fix gnulib version related part of usage
