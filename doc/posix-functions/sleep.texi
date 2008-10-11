@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 mingw (2005 or newer).
+@item
+This function takes milliseconds as argument and returns @code{void} on some
+platforms:
+mingw (2005 and older).
 @end itemize
 
 Portability problems not fixed by Gnulib:

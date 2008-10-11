@@ -1,5 +1,13 @@
 2008-10-11  Bruno Haible  <bruno@clisp.org>
 
+	Make sleep work on older versions of mingw.
+	* m4/sleep.m4 (gl_FUNC_SLEEP): Test whether 'sleep' is declared, not
+	only whether it exists.
+	* doc/posix-functions/sleep.texi: Mention the problem with older
+	versions of mingw.
+
+2008-10-11  Bruno Haible  <bruno@clisp.org>
+
 	New module 'shutdown'.
 	* modules/shutdown: New file.
 	* lib/sys_socket.in.h (shutdown): New declaration.
