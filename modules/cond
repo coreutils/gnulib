@@ -12,6 +12,7 @@ lock
 errno
 stdbool
 time
+gettimeofday
 
 configure.ac:
 gl_COND

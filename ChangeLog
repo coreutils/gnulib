@@ -1,3 +1,14 @@
+2008-10-11  Yoann Vandoorselaere  <yoann@prelude-ids.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	Provide a Win32 implementation of the 'cond' module.
+	* lib/glthread/cond.h [USE_WIN32]: New implementation.
+	* lib/glthread/cond.c (glthread_cond_init_func,
+	glthread_cond_wait_func, glthread_cond_timedwait_func,
+	glthread_cond_signal_func, glthread_cond_broadcast_func,
+	glthread_cond_destroy_func) [USE_WIN32]: New functions.
+	* modules/cond (Dependencies): Add gettimeofday.
+
 2008-10-11  Bruno Haible  <bruno@clisp.org>
 
 	Make sleep work on older versions of mingw.
