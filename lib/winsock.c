@@ -42,9 +42,10 @@
 #undef recvfrom
 #undef sendto
 #undef setsockopt
+#undef shutdown
 
-# define FD_TO_SOCKET(fd)   ((SOCKET) _get_osfhandle ((fd)))
-# define SOCKET_TO_FD(fh)   (_open_osfhandle ((long) (fh), O_RDWR | O_BINARY))
+#define FD_TO_SOCKET(fd)   ((SOCKET) _get_osfhandle ((fd)))
+#define SOCKET_TO_FD(fh)   (_open_osfhandle ((long) (fh), O_RDWR | O_BINARY))
 
 
 static inline void
@@ -326,6 +327,19 @@ rpl_setsockopt (int fd, int level, int optname, const void *optval, int optlen)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
   int r = setsockopt (sock, level, optname, optval, optlen);
+  if (r < 0)
+    set_winsock_errno ();
+
+  return r;
+}
+#endif
+
+#if GNULIB_SHUTDOWN
+int
+rpl_shutdown (int fd, int how)
+{
+  SOCKET sock = FD_TO_SOCKET (fd);
+  int r = shutdown (sock, how);
   if (r < 0)
     set_winsock_errno ();
 

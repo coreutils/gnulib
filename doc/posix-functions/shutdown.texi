@@ -4,15 +4,15 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/shutdown.html}
 
-Gnulib module: ---
+Gnulib module: shutdown
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+On Windows platforms (excluding Cygwin), error codes for @code{shutdown} are
+not placed in @code{errno}, and @code{WSAGetLastError} must be used instead.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-mingw.
 @end itemize

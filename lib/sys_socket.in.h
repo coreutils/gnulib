@@ -364,6 +364,23 @@ extern int rpl_setsockopt (int, int, int, const void *, int);
       setsockopt (s, lvl, o, v, l))
 # endif
 
+# if @GNULIB_SHUTDOWN@
+#  if @HAVE_WINSOCK2_H@
+#   undef shutdown
+#   define shutdown		rpl_shutdown
+extern int rpl_shutdown (int, int);
+#  endif
+# elif @HAVE_WINSOCK2_H@
+#  undef shutdown
+#  define shutdown shutdown_used_without_requesting_gnulib_module_shutdown
+# elif defined GNULIB_POSIXCHECK
+#  undef shutdown
+#  define shutdown(s,h) \
+     (GL_LINK_WARNING ("shutdown is not always POSIX compliant - " \
+                       "use gnulib module shutdown for portability"), \
+      shutdown (s, h))
+# endif
+
 # if @HAVE_WINSOCK2_H@
 #  undef select
 #  define select		select_used_without_including_sys_select_h

@@ -1,3 +1,14 @@
+2008-10-11  Bruno Haible  <bruno@clisp.org>
+
+	New module 'shutdown'.
+	* modules/shutdown: New file.
+	* lib/sys_socket.in.h (shutdown): New declaration.
+	* lib/winsock.c (shutdown): New function.
+	* m4/sys_socket_h.m4 (gl_SYS_SOCKET_H_DEFAULTS): Initialize
+	GNULIB_SHUTDOWN.
+	* modules/sys_socket (Makefile.am): Substitute GNULIB_SHUTDOWN.
+	* doc/posix-functions/shutdown.texi: Document the new module.
+
 2008-10-11  Jim Meyering  <meyering@redhat.com>
 
 	* lib/fclose.c: Fix typo in comment: s/close/fclose/.
