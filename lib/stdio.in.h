@@ -373,6 +373,21 @@ extern long rpl_ftell (FILE *fp);
     fflush (f))
 #endif
 
+#if @GNULIB_FCLOSE@
+# if @REPLACE_FCLOSE@
+#  define fclose rpl_fclose
+  /* Close STREAM and its underlying file descriptor.  */
+extern int fclose (FILE *stream);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef fclose
+# define fclose(f) \
+   (GL_LINK_WARNING ("fclose is not always POSIX compliant - " \
+                     "use gnulib module fclose for portable " \
+                     "POSIX compliance"), \
+    fclose (f))
+#endif
+
 #if @GNULIB_FPUTC@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
 # undef fputc
 # define fputc rpl_fputc

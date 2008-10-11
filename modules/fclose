@@ -1,0 +1,26 @@
+Description:
+fclose() function: close a stream.
+
+Files:
+lib/fclose.c
+m4/fclose.m4
+
+Depends-on:
+stdio
+close
+
+configure.ac:
+gl_FUNC_FCLOSE
+gl_STDIO_MODULE_INDICATOR([fclose])
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
+

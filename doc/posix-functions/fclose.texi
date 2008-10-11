@@ -4,10 +4,14 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/fclose.html}
 
-Gnulib module: ---
+Gnulib module: fclose
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+On Windows platforms (excluding Cygwin), @code{socket} and @code{accept}
+followed by @code{fdopen} do not return streams that can be closed by
+@code{fclose}.
 @end itemize
 
 Portability problems not fixed by Gnulib:

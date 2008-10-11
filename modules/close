@@ -7,6 +7,7 @@ m4/close.m4
 
 Depends-on:
 unistd
+fclose
 
 configure.ac:
 gl_FUNC_CLOSE

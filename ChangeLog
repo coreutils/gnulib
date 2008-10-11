@@ -1,5 +1,20 @@
 2008-10-11  Bruno Haible  <bruno@clisp.org>
 
+	New module 'fclose'.
+	* modules/fclose: New file.
+	* lib/stdio.in.h (fclose): New declaration.
+	* lib/fclose.c: New file.
+	* m4/fclose.m4: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize GNULIB_FCLOSE,
+	REPLACE_FCLOSE.
+	* m4/close.m4 (gl_REPLACE_CLOSE): Invoke gl_REPLACE_FCLOSE.
+	* modules/stdio (Makefile.am): Substitute GNULIB_FCLOSE,
+	REPLACE_FCLOSE.
+	* modules/close (Depends-on): fclose.
+	* doc/posix-functions/fclose.texi: Mention the problem on Windows.
+
+2008-10-11  Bruno Haible  <bruno@clisp.org>
+
 	* lib/winsock.c (_gl_close_fd_maybe_socket): If closesocket fails,
 	set errno and don't call _close.
 
