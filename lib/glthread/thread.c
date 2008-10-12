@@ -31,6 +31,8 @@
 
 #if USE_WIN32_THREADS
 
+#include <process.h>
+
 /* -------------------------- gl_thread_t datatype -------------------------- */
 
 /* The Thread-Local Storage (TLS) key that allows to access each thread's
@@ -118,7 +120,7 @@ gl_thread_self_func (void)
 
 /* The main function of a freshly creating thread.  It's a wrapper around
    the FUNC and ARG arguments passed to glthread_create_func.  */
-static DWORD WINAPI
+static unsigned int WINAPI
 wrapper_func (void *varg)
 {
   struct gl_thread_struct *thread = (struct gl_thread_struct *)varg;
@@ -154,11 +156,12 @@ glthread_create_func (gl_thread_t *threadp, void * (*func) (void *), void *arg)
   thread->arg = arg;
 
   {
-    DWORD thread_id;
+    unsigned int thread_id;
     HANDLE thread_handle;
 
-    thread_handle =
-      CreateThread (NULL, 100000, wrapper_func, thread, 0, &thread_id);
+    thread_handle = (HANDLE)
+      _beginthreadex (NULL, 100000, wrapper_func, thread, 0, &thread_id);
+      /* calls CreateThread with the same arguments */
     if (thread_handle == NULL)
       {
 	DeleteCriticalSection (&thread->handle_lock);
@@ -206,7 +209,7 @@ gl_thread_exit_func (void *retval)
 {
   gl_thread_t thread = gl_thread_self ();
   thread->result = retval;
-  ExitThread (0);
+  _endthreadex (0); /* calls ExitThread (0) */
 }
 
 #endif

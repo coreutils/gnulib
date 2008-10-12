@@ -1,3 +1,11 @@
+2008-10-12  Bruno Haible  <bruno@clisp.org>
+
+	Use msvcrt aware primitives for creation/termination of Win32 threads.
+	* lib/glthread/thread.c: Include <process.h>.
+	(glthread_create_func): Use _beginthreadex instead of CreateThread.
+	(wrapper_func): Update signature.
+	(gl_thread_exit_func): Use _endthreadex instead of EndThread.
+
 2008-10-11  Yoann Vandoorselaere  <yoann@prelude-ids.org>
             Bruno Haible  <bruno@clisp.org>
 
