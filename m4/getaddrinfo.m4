@@ -99,6 +99,11 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
   AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+
+  dnl Including sys/socket.h is wrong for Windows, but Windows does not
+  dnl have sa_len so the result is correct anyway.
+  AC_CHECK_MEMBERS([struct sockaddr.sa_len], , , [#include <sys/socket.h>])
+
   AC_CHECK_HEADERS_ONCE(netinet/in.h netdb.h)
   AC_CHECK_DECLS([getaddrinfo, freeaddrinfo, gai_strerror, getnameinfo],,,[
   /* sys/types.h is not needed according to POSIX, but the

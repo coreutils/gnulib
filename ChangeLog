@@ -1,3 +1,10 @@
+2008-10-13  Paolo Bonzini  <bonzini@gnu.org>
+
+	fix getaddrinfo emulation for systems with struct sockaddr.sa_len
+	* m4/getaddrinfo.m4 (gl_PREREQ_GETADDRINFO): Detect
+	struct sockaddr.sa_len.
+	* lib/getaddrinfo.c (getaddrinfo): Set it if appropriate.
+
 2008-10-13  Simon Josefsson  <simon@josefsson.org>
 
 	* build-aux/pmccabe2html: Add css and css_url parameters.
