@@ -1,5 +1,10 @@
 2008-10-12  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-sameacls.c (main) [AIX]: Clear type argument before
+	calling aclx_get.
+
+2008-10-12  Bruno Haible  <bruno@clisp.org>
+
 	Use msvcrt aware primitives for creation/termination of Win32 threads.
 	* lib/glthread/thread.c: Include <process.h>.
 	(glthread_create_func): Use _beginthreadex instead of CreateThread.

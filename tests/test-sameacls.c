@@ -447,6 +447,7 @@ main (int argc, char *argv[])
   mode_t mode2;
   char text2[1000];
 
+  memset (&type1, 0, sizeof (type1)); /* type1 = ACL_ANY */
   if (aclx_get (file1, 0, &type1, acl1, &aclsize1, &mode1) < 0)
     {
       fprintf (stderr, "error accessing the ACLs of file %s\n", file1);
@@ -460,6 +461,7 @@ main (int argc, char *argv[])
       abort ();
     }
 
+  memset (&type2, 0, sizeof (type2)); /* type2 = ACL_ANY */
   if (aclx_get (file2, 0, &type2, acl2, &aclsize2, &mode2) < 0)
     {
       fprintf (stderr, "error accessing the ACLs of file %s\n", file2);
