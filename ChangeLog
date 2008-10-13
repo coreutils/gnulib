@@ -1,3 +1,7 @@
+2008-10-13  Simon Josefsson  <simon@josefsson.org>
+
+	* build-aux/pmccabe2html: Add css and css_url parameters.
+
 2008-10-12  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-sameacls.c (main) [AIX]: Clear type argument before
