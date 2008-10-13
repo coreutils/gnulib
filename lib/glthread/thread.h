@@ -137,6 +137,9 @@ extern int glthread_in_use (void);
 
 /* -------------------------- gl_thread_t datatype -------------------------- */
 
+/* This choice of gl_thread_t assumes that
+     pthread_equal (a, b)  is equivalent to  ((a) == (b)).
+   This is the case on all platforms in use in 2008.  */
 typedef pthread_t gl_thread_t;
 # define glthread_create(THREADP, FUNC, ARG) \
     (pthread_in_use () ? pthread_create (THREADP, NULL, FUNC, ARG) : ENOSYS)
