@@ -2,6 +2,7 @@
 
 	* tests/test-sameacls.c (main) [AIX]: Clear type argument before
 	calling aclx_get.
+	Reported by Rainer Tammer <tammer@tammer.net>.
 
 2008-10-12  Bruno Haible  <bruno@clisp.org>
 
