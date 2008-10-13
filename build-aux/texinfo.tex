@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-10-12.11}
+\def\texinfoversion{2008-10-12.17}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -3878,7 +3878,7 @@ end
     % The \closeout helps reduce unnecessary open files; the limit on the
     % Acorn RISC OS is a mere 16 files.
     \expandafter\closeout\csname#2indfile\endcsname
-    \expandafter\let\csname\donesynindex#2\endcsname = 1
+    \expandafter\let\csname donesynindex#2\endcsname = 1
   \fi
   % redefine \fooindfile:
   \expandafter\let\expandafter\temp\expandafter=\csname#3indfile\endcsname
