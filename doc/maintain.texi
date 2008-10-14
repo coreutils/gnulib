@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate August 4, 2008
+@set lastupdate October 13, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -1466,20 +1466,32 @@ your package (in the example above, that is @code{bar}).
 
 @node Announcements
 @section Announcing Releases
+@cindex announcements
 
+@cindex @code{info-gnu} mailing list
 When you have a new release, please make an announcement.  For
 official new releases, including those made just to fix bugs, we
-recommend using the (moderated) general GNU announcements list,
-@email{info-gnu@@gnu.org}.  Doing so makes it easier for users and
-developers to find the latest GNU releases.  On the other hand, please
-do not announce test releases on @code{info-gnu} unless it's an
+strongly recommend using the (moderated) general GNU announcements
+list, @email{info-gnu@@gnu.org}.  Doing so makes it easier for users
+and developers to find the latest GNU releases.  On the other hand,
+please do not announce test releases on @code{info-gnu} unless it's an
 unusual situation.
 
+@cindex @url{http://planet.gnu.org}
+@cindex Savannah, news area
+Please also post release announcements in the news section of your
+Savannah project site.  It is fine to also write news entries for test
+releases and any other newsworthy events.  The news feeds from all GNU
+projects at savannah are aggregated at @url{http://planet.gnu.org}.
+(You can also post items directly, or arrange for feeds from other
+locations; see contact information on the GNU Planet web page.) 
+
+@cindex announcement mailing list, project-specific
 You can maintain your own mailing list (typically
 @email{info-@var{program}@@gnu.org}) for announcements as well if you
-like.  For your own list, you can decide as you see fit what events
-are worth announcing.  (@xref{Mail}, for more suggestions on handling
-mail for your package.)
+like.  For your own list, of course you can decide as you see fit what
+events are worth announcing.  (@xref{Mail}, for more suggestions on
+handling mail for your package.)
 
 
 @node Web Pages
