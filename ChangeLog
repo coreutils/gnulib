@@ -1,3 +1,8 @@
+2008-10-13  Bruno Haible  <bruno@clisp.org>
+
+	* lib/glthread/cond.c (glthread_cond_wait_func,
+	glthread_cond_timedwait_func): Add a comment.
+
 2008-10-13  Yoann Vandoorselaere  <yoann@prelude-ids.org>
 
 	* tests/test-poll.c: Include <sys/ioctl.h>, for ioctl().

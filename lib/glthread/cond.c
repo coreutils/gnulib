@@ -159,7 +159,8 @@ glthread_cond_wait_func (gl_cond_t *cond, gl_lock_t *lock)
 	      break;
 	  }
 
-	/* Take the lock again.  */
+	/* Take the lock again.  It does not matter whether this is done
+	   before or after the bookkeeping.  */
 	err = glthread_lock_lock (lock);
 
 	/* Do the bookkeeping.  */
@@ -285,7 +286,8 @@ glthread_cond_timedwait_func (gl_cond_t *cond, gl_lock_t *lock, struct timespec 
 	      break;
 	  }
 
-	/* Take the lock again.  */
+	/* Take the lock again.  It does not matter whether this is done
+	   before or after the bookkeeping.  */
 	err = glthread_lock_lock (lock);
 
 	/* Do the bookkeeping.  */
