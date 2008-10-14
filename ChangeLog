@@ -1,3 +1,9 @@
+2008-10-13  Bruno Haible  <bruno@clisp.org>
+
+	* lib/glthread/cond.c (glthread_cond_wait_func,
+	glthread_cond_timedwait_func): Fix variable name.
+	Reported by Yoann Vandoorselaere <yoann@prelude-ids.org>.
+
 2008-10-13  Paolo Bonzini  <bonzini@gnu.org>
 
 	fix getaddrinfo emulation for systems with struct sockaddr.sa_len

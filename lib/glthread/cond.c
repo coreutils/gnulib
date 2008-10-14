@@ -179,7 +179,7 @@ glthread_cond_wait_func (gl_cond_t *cond, gl_lock_t *lock)
 	LeaveCriticalSection (&cond->lock);
 
 	return (err ? err :
-		ret == WAIT_OBJECT_0 ? 0 :
+		result == WAIT_OBJECT_0 ? 0 :
 		/* WAIT_FAILED shouldn't happen */ EAGAIN);
       }
     }
@@ -305,8 +305,8 @@ glthread_cond_timedwait_func (gl_cond_t *cond, gl_lock_t *lock, struct timespec 
 	LeaveCriticalSection (&cond->lock);
 
 	return (err ? err :
-		ret == WAIT_OBJECT_0 ? 0 :
-		ret == WAIT_TIMEOUT ? ETIMEDOUT :
+		result == WAIT_OBJECT_0 ? 0 :
+		result == WAIT_TIMEOUT ? ETIMEDOUT :
 		/* WAIT_FAILED shouldn't happen */ EAGAIN);
       }
     }
