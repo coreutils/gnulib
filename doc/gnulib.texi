@@ -326,21 +326,16 @@ other functions too.
 
 The getaddrinfo function exists in ws2tcpip.h and -lws2_32 on Windows
 XP.  The function declaration is present if @code{WINVER >= 0x0501}.
-Windows 2000 does not have getaddrinfo in its @file{WS2_32.dll}.
+Windows 2000 does not have getaddrinfo in its @file{WS2_32.DLL}.
 
 Thus, if you want to assume Windows XP or later, you can add
 AC_DEFINE(WINVER, 0x0501) to avoid compiling to (partial) getaddrinfo
 implementation.
 
-If you want to support Windows 2000, don't do anything, but be aware
-that gnulib will use its own (partial) getaddrinfo implementation even
-on Windows XP.  Currently the code does not attempt to determine if
-the getaddrinfo function is available during runtime.
-
-Todo: Make getaddrinfo.c open the WS2_32.DLL and check for the
-getaddrinfo symbol and use it if present, otherwise fall back to our
-own implementation.
-
+If you want to support Windows 2000, don't do anything.  The
+replacement function will open @file{WS2_32.DLL} during run-time to
+see if there is a getaddrinfo function available, and use it when
+available.
 
 @node Libtool and Windows
 @section Libtool and Windows
