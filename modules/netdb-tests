@@ -1,0 +1,13 @@
+Files:
+tests/test-netdb.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-netdb
+check_PROGRAMS += test-netdb
+
+License:
+LGPL

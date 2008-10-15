@@ -2134,6 +2134,7 @@ func_all_modules ()
   func_module mkdir
   func_module mkdtemp
   func_module mkstemp
+  func_module netdb
   func_module netinet_in
   func_module open
   func_module perror

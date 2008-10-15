@@ -1,5 +1,17 @@
 2008-10-15  Simon Josefsson  <simon@josefsson.org>
 
+	* modules/netdb, modules/netdb-tests: New file.
+	* m4/netdb_h.m4: New file.
+	* lib/netdb.in.h: Add, currently just an empty file pending
+	definitions.
+	* tests/test-netdb.c: New file.
+	* doc/posix-headers/netdb.texi: Mention that we replace it if
+	needed.
+	* MODULES.html.sh (Support for systems lacking POSIX:2001): Add
+	netdb.
+
+2008-10-15  Simon Josefsson  <simon@josefsson.org>
+
 	* doc/gnulib.texi (Getaddrinfo and WINVER): Sync documentation
 	with code.
 
