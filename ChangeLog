@@ -1,3 +1,11 @@
+2008-10-17  Jim Meyering  <meyering@redhat.com>
+
+	ignore-value: new module
+	* modules/ignore-value: New file.
+	* lib/ignore-value.h: New file.
+	* MODULES.html.sh (Compiler warning management): New section,
+	just for this module.  More to come.
+
 2008-10-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	open-safer.c: avoid 'signed and unsigned in conditional...' warning

@@ -1830,6 +1830,16 @@ func_all_modules ()
   func_module crypto/gc-sha1
   func_end_table
 
+  element="Compiler warning management"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap ansic_ext_misc
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module ignore-value
+  func_end_table
+
   element="Misc"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap ansic_ext_misc

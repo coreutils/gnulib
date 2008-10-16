@@ -1,0 +1,22 @@
+Description:
+ignore a value to quiet a compiler warning
+
+Files:
+lib/ignore-value.h
+
+Depends-on:
+inline
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += ignore-value.h
+
+Include:
+#include <ignore-value.h>
+
+License:
+LGPL
+
+Maintainer:
+Jim Meyering
