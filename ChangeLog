@@ -1,3 +1,9 @@
+2008-10-16  Jim Meyering  <meyering@redhat.com>
+
+	openat-die.c: avoid 'no previous prototype' warning
+	* lib/openat-die.c: Include "openat.h".
+	Reported by Reuben Thomas <rrt@sc3d.org>.
+
 2008-10-16  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/netdb_h.m4: Assume that if netdb.h exists, it works.
