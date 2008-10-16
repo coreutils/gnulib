@@ -40,7 +40,10 @@
 
 #else
 
-/* Declarations for a platform that has <netdb.h>.  */
+/* Get netdb.h definitions such as struct hostent for MinGW.  */
+#include <sys/socket.h>
+
+/* Declarations for a platform that lacks <netdb.h>.  */
 
 #endif /* HAVE_NETDB_H */
 

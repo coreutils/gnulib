@@ -1,3 +1,13 @@
+2008-10-16  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/netdb_h.m4: Assume that if netdb.h exists, it works.
+	* lib/netdb.in.h: Fix typo.
+	Reported by Bruno Haible  <bruno@clisp.org>
+
+	* lib/netdb.in.h: Include sys/socket.h for platforms without
+	netdb.h, to get structures like hostent on MinGW.
+	* modules/netdb (Depends-on): Add sys_socket.
+
 2008-10-15  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/netdb, modules/netdb-tests: New file.

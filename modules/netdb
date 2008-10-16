@@ -7,6 +7,7 @@ m4/netdb_h.m4
 
 Depends-on:
 include_next
+sys_socket
 
 configure.ac:
 gl_HEADER_NETDB

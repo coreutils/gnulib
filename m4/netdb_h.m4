@@ -1,4 +1,4 @@
-# netdb_h.m4 serial 1
+# netdb_h.m4 serial 2
 dnl Copyright (C) 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,26 +7,15 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_HEADER_NETDB],
 [
   AC_REQUIRE([gl_NETDB_H_DEFAULTS])
-  AC_CACHE_CHECK([whether <netdb.h> is self-contained],
-    [gl_cv_header_netdb_h_selfcontained],
-    [
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <netdb.h>]],
-					 [[struct hostent h;]])],
-        [gl_cv_header_netdb_h_selfcontained=yes],
-        [gl_cv_header_netdb_h_selfcontained=no])
-    ])
-  if test $gl_cv_header_netdb_h_selfcontained = yes; then
+  gl_CHECK_NEXT_HEADERS([netdb.h])
+  if test $ac_cv_header_netdb_h = yes; then
     NETDB_H=''
+    HAVE_NETDB_H=1
   else
     NETDB_H='netdb.h'
-    gl_CHECK_NEXT_HEADERS([netdb.h])
-    if test $ac_cv_header_netdb_h = yes; then
-      HAVE_NETDB_H=1
-    else
-      HAVE_NETDB_H=0
-    fi
-    AC_SUBST([HAVE_NETDB_H])
+    HAVE_NETDB_H=0
   fi
+  AC_SUBST([HAVE_NETDB_H])
   AC_SUBST([NETDB_H])
 ])
 
