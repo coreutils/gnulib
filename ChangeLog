@@ -1,3 +1,9 @@
+2008-10-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	open-safer.c: avoid 'signed and unsigned in conditional...' warning
+	* lib/open-safer.c (open_safer): Use an "if/else" statement in place
+	of the ternary operator.  Reported by Reuben Thomas <rrt@sc3d.org>.
+
 2008-10-16  Jim Meyering  <meyering@redhat.com>
 
 	openat-die.c: avoid 'no previous prototype' warning
