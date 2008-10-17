@@ -279,18 +279,21 @@ extern "C" {
 
 /* -------------------------- gl_cond_t datatype -------------------------- */
 
+struct gl_waitqueue_link
+{
+  struct gl_waitqueue_link *wql_next;
+  struct gl_waitqueue_link *wql_prev;
+};
+typedef struct
+        {
+          struct gl_waitqueue_link wq_list; /* circular list of waiting threads */
+        }
+        gl_linked_waitqueue_t;
 typedef struct
         {
           gl_spinlock_t guard; /* protects the initialization */
           CRITICAL_SECTION lock; /* protects the remaining fields */
-          HANDLE event; /* an event configured for manual reset */
-          unsigned int waiters_count; /* number of threads currently waiting */
-          unsigned int release_count; /* number of threads that are currently
-                                         being notified but have not yet
-                                         acknowledged. Always
-                                         release_count <= waiters_count */
-          unsigned int wait_generation_count; /* incremented each time a signal
-                                                 or broadcast is performed */
+          gl_linked_waitqueue_t waiters; /* waiting threads */
         }
         gl_cond_t;
 # define gl_cond_define(STORAGECLASS, NAME) \

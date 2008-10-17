@@ -680,6 +680,9 @@ glthread_lock_destroy_func (gl_lock_t *lock)
 
 /* ------------------------- gl_rwlock_t datatype ------------------------- */
 
+/* In this file, the waitqueues are implemented as circular arrays.  */
+#define gl_waitqueue_t gl_carray_waitqueue_t
+
 static inline void
 gl_waitqueue_init (gl_waitqueue_t *wq)
 {

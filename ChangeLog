@@ -1,3 +1,21 @@
+2008-10-17  Bruno Haible  <bruno@clisp.org>
+
+	New implementation of condition variables for Win32.
+	* lib/glthread/cond.h (struct gl_waitqueue_link): New type.
+	(gl_linked_waitqueue_t): New type.
+	(gl_cond_t): Use it.
+	* lib/glthread/cond.c (struct gl_waitqueue_element): New type.
+	(gl_waitqueue_init, gl_waitqueue_add, gl_waitqueue_remove,
+	gl_waitqueue_notify_first, gl_waitqueue_notify_all): New functions.
+	(glthread_cond_init_func, glthread_cond_wait_func,
+	glthread_cond_timedwait_func, glthread_cond_signal_func,
+	glthread_cond_broadcast_func, glthread_cond_destroy_func):
+	Reimplemented on the basis of gl_linked_waitqueue_t.
+	* lib/glthread/lock.h (gl_carray_waitqueue_t): Renamed from
+	gl_waitqueue_t.
+	(gl_rwlock_t): Update.
+	* lib/glthread/lock.c (gl_waitqueue_t): Alias to gl_carray_waitqueue_t.
+
 2008-10-17  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/recvfrom (Depends-on): Add dependency on getpeername.

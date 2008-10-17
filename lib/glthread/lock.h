@@ -675,13 +675,13 @@ typedef struct
           unsigned int alloc; /* length of allocated array */
           unsigned int offset; /* index of first waiting thread in array */
         }
-        gl_waitqueue_t;
+        gl_carray_waitqueue_t;
 typedef struct
         {
           gl_spinlock_t guard; /* protects the initialization */
           CRITICAL_SECTION lock; /* protects the remaining fields */
-          gl_waitqueue_t waiting_readers; /* waiting readers */
-          gl_waitqueue_t waiting_writers; /* waiting writers */
+          gl_carray_waitqueue_t waiting_readers; /* waiting readers */
+          gl_carray_waitqueue_t waiting_writers; /* waiting writers */
           int runcount; /* number of readers running, or -1 when a writer runs */
         }
         gl_rwlock_t;
