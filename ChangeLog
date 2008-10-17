@@ -1,3 +1,11 @@
+2008-10-17  Bruno Haible  <bruno@clisp.org>
+
+	Avoid gcc warnings because of #pragma GCC system_header on older gcc.
+	* m4/include_next.m4: Require autoconf >= 2.60.
+	(gl_INCLUDE_NEXT): Use #pragma GCC system_header only for GCC 3.0 or
+	newer.
+	Reported by Yoann Vandoorselaere <yoann.v@prelude-ids.com>.
+
 2008-10-17  Jim Meyering  <meyering@redhat.com>
 
 	ignore-value: don't depend on inline module
