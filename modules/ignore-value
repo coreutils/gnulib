@@ -5,9 +5,9 @@ Files:
 lib/ignore-value.h
 
 Depends-on:
-inline
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += ignore-value.h

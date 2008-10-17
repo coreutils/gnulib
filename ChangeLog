@@ -1,3 +1,10 @@
+2008-10-17  Jim Meyering  <meyering@redhat.com>
+
+	ignore-value: don't depend on inline module
+	* modules/ignore-value (Depends-on): Remove 'inline'.
+	(configure.ac): Instead, add AC_REQUIRE([AC_C_INLINE]) here.
+	Suggestion from Bruno Haible.
+
 2008-10-17  Bruno Haible  <bruno@clisp.org>
 
 	New implementation of condition variables for Win32.
