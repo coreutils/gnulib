@@ -1,3 +1,8 @@
+2008-10-17  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/recvfrom (Depends-on): Add dependency on getpeername.
+	Reported by Yoann Vandoorselaere <yoann@prelude-ids.org>.
+
 2008-10-17  Jim Meyering  <meyering@redhat.com>
 
 	ignore-value: new module
