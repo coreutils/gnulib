@@ -1,3 +1,30 @@
+2008-10-18  Bruno Haible  <bruno@clisp.org>
+
+	* doc/glibc-functions/dirfd.texi: Mention the module 'dirfd'.
+	* doc/glibc-functions/error.texi: Mention the module 'error'.
+	* doc/glibc-functions/euidaccess.texi: Mention the module 'euidaccess'.
+	* doc/glibc-functions/getdomainname.texi: Mention the module
+	'getdomainname'.
+	* doc/glibc-functions/getloadavg.texi: Mention the module 'getloadavg'.
+	* doc/glibc-functions/getpagesize.texi: Mention the module
+	'getpagesize'.
+	* doc/glibc-functions/getusershell.texi: Mention the module
+	'getusershell'.
+	* doc/glibc-functions/isnanl.texi: Mention the module 'isnanl'.
+	* doc/glibc-functions/lchmod.texi: Mention the module 'lchmod'.
+	* doc/glibc-functions/mempcpy.texi: Mention the module 'mempcpy'.
+	* doc/glibc-functions/memrchr.texi: Mention the module 'memrchr'.
+	* doc/glibc-functions/mkdtemp.texi: Mention the module 'mkdtemp'.
+	* doc/glibc-functions/rpmatch.texi: Mention the module 'rpmatch'.
+	* doc/glibc-functions/stpcpy.texi: Mention the module 'stpcpy'.
+	* doc/glibc-functions/stpncpy.texi: Mention the module 'stpncpy'.
+	* doc/glibc-functions/strchrnul.texi: Mention the module 'strchrnul'.
+	* doc/glibc-functions/strndup.texi: Mention the module 'strndup'.
+	* doc/glibc-functions/strnlen.texi: Mention the module 'strnlen'.
+	* doc/glibc-functions/strsep.texi: Mention the module 'strsep'.
+	* doc/glibc-functions/timegm.texi: Mention the module 'timegm'.
+	* doc/glibc-functions/vasprintf.texi: Mention the module 'vasprintf'.
+
 2008-10-17  Bruno Haible  <bruno@clisp.org>
 
 	* m4/signbit.m4 (gl_SIGNBIT_TEST_PROGRAM): On platforms other than

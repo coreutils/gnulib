@@ -2,15 +2,15 @@
 @subsection @code{getdomainname}
 @findex getdomainname
 
-Gnulib module: ---
+Gnulib module: getdomainname
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 AIX 5.1, mingw, Interix 3.5, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

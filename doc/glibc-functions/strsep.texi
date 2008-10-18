@@ -2,15 +2,15 @@
 @subsection @code{strsep}
 @findex strsep
 
-Gnulib module: ---
+Gnulib module: strsep
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 AIX 4.3.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

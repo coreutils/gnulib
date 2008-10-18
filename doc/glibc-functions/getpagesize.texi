@@ -2,15 +2,18 @@
 @subsection @code{getpagesize}
 @findex getpagesize
 
-Gnulib module: ---
+Gnulib module: getpagesize
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+BeOS.
+@item
+This function is broken on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-mingw, BeOS.
 @end itemize
