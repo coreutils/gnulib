@@ -131,9 +131,11 @@ float m0f = -p0f;
 double p0d = 0.0;
 double m0d = -p0d;
 /* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
-   So we use another constant expression instead.  */
+   So we use another constant expression instead.
+   But that expression does not work on other platforms, such as when
+   cross-compiling to PowerPC on MacOS X 10.5.  */
 long double p0l = 0.0L;
-#ifdef __hpux
+#if defined __hpux || defined __sgi
 long double m0l = -LDBL_MIN * LDBL_MIN;
 #else
 long double m0l = -p0l;

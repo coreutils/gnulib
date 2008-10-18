@@ -49,8 +49,14 @@ float zerof = 0.0f;
 double zerod = 0.0;
 
 /* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
-   So we use minus_zerol instead.  */
+   So we use minus_zerol instead.
+   Note that the expression -LDBL_MIN * LDBL_MIN does not work on other
+   platforms, such as when cross-compiling to PowerPC on MacOS X 10.5.  */
+#if defined __hpux || defined __sgi
 long double minus_zerol = -LDBL_MIN * LDBL_MIN;
+#else
+long double minus_zerol = -0.0L;
+#endif
 
 static void
 test_float (void)

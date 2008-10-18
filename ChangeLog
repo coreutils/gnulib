@@ -1,5 +1,25 @@
 2008-10-17  Bruno Haible  <bruno@clisp.org>
 
+	* m4/signbit.m4 (gl_SIGNBIT_TEST_PROGRAM): On platforms other than
+	HP-UX and IRIX, use -0.0L.
+	* tests/test-ceill.c (minus_zero): Likewise.
+	* tests/test-floorl.c (minus_zero): Likewise.
+	* tests/test-frexpl.c (minus_zero): Likewise.
+	* tests/test-isnan.c (minus_zerol): Likewise.
+	* tests/test-isnanl.h (minus_zero): Likewise.
+	* tests/test-ldexpl.c (minus_zero): Likewise.
+	* tests/test-roundl.c (minus_zero): Likewise.
+	* tests/test-signbit.c (minus_zerol): Likewise.
+	* tests/test-snprintf-posix.h (minus_zerol): Likewise.
+	* tests/test-sprintf-posix.h (minus_zerol): Likewise.
+	* tests/test-truncl.c (minus_zero): Likewise.
+	* tests/test-vasnprintf-posix.c (minus_zerol): Likewise.
+	* tests/test-vasprintf-posix.c (minus_zerol): Likewise.
+	Reported by Markus Armbruster <armbru@redhat.com> via Jim Meyering
+	and by Nelson H. F. Beebe <beebe@math.utah.edu> via Eric Blake.
+
+2008-10-17  Bruno Haible  <bruno@clisp.org>
+
 	Avoid gcc warnings because of #pragma GCC system_header on older gcc.
 	* lib/arpa_inet.in.h: Encloses reference to PRAGMA_SYSTEM_HEADER so
 	that it gets activated only for gcc >= 3.0.
