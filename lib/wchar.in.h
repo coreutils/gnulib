@@ -26,7 +26,9 @@
  * the declaration of wcwidth().
  */
 
+#if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
+#endif
 
 #ifdef __need_mbstate_t
 /* Special invocation convention inside uClibc header files.  */

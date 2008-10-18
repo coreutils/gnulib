@@ -1,12 +1,10 @@
-# include_next.m4 serial 9
+# include_next.m4 serial 8
 dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Paul Eggert and Derek Price.
-
-AC_PREREQ([2.60])
 
 dnl Sets INCLUDE_NEXT and PRAGMA_SYSTEM_HEADER.
 dnl
@@ -61,10 +59,7 @@ EOF
   if test $gl_cv_have_include_next = yes; then
     INCLUDE_NEXT=include_next
     if test -n "$GCC"; then
-      dnl GCC 3.0 or newer supports #pragma GCC system_header.
-      PRAGMA_SYSTEM_HEADER='#if __GNUC__ >= 3
-#pragma GCC system_header
-#endif'
+      PRAGMA_SYSTEM_HEADER='#pragma GCC system_header'
     fi
   else
     INCLUDE_NEXT=include

@@ -16,7 +16,9 @@
 
 #ifndef _GL_DIRENT_H
 
+#if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
+#endif
 
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_DIRENT_H@

@@ -19,7 +19,9 @@
 /* Written by Richard W.M. Jones.  */
 #ifndef _GL_SYS_FILE_H
 
+# if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
+# endif
 
 /* The include_next requires a split double-inclusion guard.  */
 # if @HAVE_SYS_FILE_H@

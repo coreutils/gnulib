@@ -1,9 +1,38 @@
 2008-10-17  Bruno Haible  <bruno@clisp.org>
 
 	Avoid gcc warnings because of #pragma GCC system_header on older gcc.
-	* m4/include_next.m4: Require autoconf >= 2.60.
-	(gl_INCLUDE_NEXT): Use #pragma GCC system_header only for GCC 3.0 or
-	newer.
+	* lib/arpa_inet.in.h: Encloses reference to PRAGMA_SYSTEM_HEADER so
+	that it gets activated only for gcc >= 3.0.
+	* lib/dirent.in.h: Likewise.
+	* lib/errno.in.h: Likewise.
+	* lib/fcntl.in.h: Likewise.
+	* lib/float.in.h: Likewise.
+	* lib/iconv.in.h: Likewise.
+	* lib/inttypes.in.h: Likewise.
+	* lib/locale.in.h: Likewise.
+	* lib/math.in.h: Likewise.
+	* lib/netdb.in.h: Likewise.
+	* lib/netinet_in.in.h: Likewise.
+	* lib/search.in.h: Likewise.
+	* lib/signal.in.h: Likewise.
+	* lib/spawn.in.h: Likewise.
+	* lib/stdarg.in.h: Likewise.
+	* lib/stdint.in.h: Likewise.
+	* lib/stdio.in.h: Likewise.
+	* lib/stdlib.in.h: Likewise.
+	* lib/string.in.h: Likewise.
+	* lib/strings.in.h: Likewise.
+	* lib/sys_file.in.h: Likewise.
+	* lib/sys_ioctl.in.h: Likewise.
+	* lib/sys_select.in.h: Likewise.
+	* lib/sys_socket.in.h: Likewise.
+	* lib/sys_stat.in.h: Likewise.
+	* lib/sys_time.in.h: Likewise.
+	* lib/sysexits.in.h: Likewise.
+	* lib/time.in.h: Likewise.
+	* lib/unistd.in.h: Likewise.
+	* lib/wchar.in.h: Likewise.
+	* lib/wctype.in.h: Likewise.
 	Reported by Yoann Vandoorselaere <yoann.v@prelude-ids.com>.
 
 2008-10-17  Jim Meyering  <meyering@redhat.com>

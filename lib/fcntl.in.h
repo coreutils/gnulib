@@ -17,7 +17,9 @@
 
 /* written by Paul Eggert */
 
+#if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
+#endif
 
 #if defined __need_system_fcntl_h
 /* Special invocation convention.  */

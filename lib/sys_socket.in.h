@@ -27,7 +27,9 @@
 
 #if @HAVE_SYS_SOCKET_H@
 
+# if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
+# endif
 
 /* On many platforms, <sys/socket.h> assumes prior inclusion of
    <sys/types.h>.  */

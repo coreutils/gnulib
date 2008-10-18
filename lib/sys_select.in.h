@@ -19,7 +19,9 @@
 
 #if @HAVE_SYS_SELECT_H@
 
+# if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
+# endif
 
 /* On many platforms, <sys/select.h> assumes prior inclusion of
    <sys/types.h>.  */

@@ -18,7 +18,9 @@
 
 /* Written by Paul Eggert.  */
 
+#if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
+#endif
 
 #if defined _GL_SYS_TIME_H
 
