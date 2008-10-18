@@ -1,5 +1,16 @@
 2008-10-18  Bruno Haible  <bruno@clisp.org>
 
+	* modules/dirent: New file.
+	* m4/dirent_h.m4: New file.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Require gl_DIRENT_H_DEFAULTS.
+	Invoke gl_REPLACE_DIRENT_H. Don't assign DIRENT_H directly.
+	* modules/fchdir (Files): Remove lib/dirent.in.h.
+	(Depends-on): Add dirent.
+	(Makefile.am): Move rules to modules/dirent.
+	* doc/posix-headers/dirent.texi: Mention the new module.
+
+2008-10-18  Bruno Haible  <bruno@clisp.org>
+
 	Avoid -Wunused-parameter warnings in public gnulib header files.
 	* m4/gnulib-common.m4 (gl_COMMON_BODY): Define _UNUSED_PARAMETER_ as a
 	macro.

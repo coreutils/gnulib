@@ -3,12 +3,12 @@ fchdir() function: change current directory, given an open file descriptor.
 
 Files:
 lib/fchdir.c
-lib/dirent.in.h
 m4/fchdir.m4
 
 Depends-on:
 canonicalize-lgpl
 close
+dirent
 dirfd
 dup2
 fcntl
@@ -22,21 +22,6 @@ gl_FUNC_FCHDIR
 gl_UNISTD_MODULE_INDICATOR([fchdir])
 
 Makefile.am:
-BUILT_SOURCES += $(DIRENT_H)
-
-# We need the following in order to create <dirent.h> when the system
-# doesn't have one that works with the given compiler.
-dirent.h: dirent.in.h
-	rm -f $@-t $@
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
-	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
-	      -e 's|@''NEXT_DIRENT_H''@|$(NEXT_DIRENT_H)|g' \
-	      -e 's|@''REPLACE_FCHDIR''@|$(REPLACE_FCHDIR)|g' \
-	      < $(srcdir)/dirent.in.h; \
-	} > $@-t
-	mv $@-t $@
-MOSTLYCLEANFILES += dirent.h dirent.h-t
 
 Include:
 #include <unistd.h>

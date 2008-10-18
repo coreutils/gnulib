@@ -3,7 +3,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xbd/dirent.h.html}
 
-Gnulib module: ---
+Gnulib module: dirent
 
 Portability problems fixed by Gnulib:
 @itemize

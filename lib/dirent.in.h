@@ -1,4 +1,4 @@
-/* Wrapper around <dirent.h>.
+/* A GNU-like <dirent.h>.
    Copyright (C) 2006-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
