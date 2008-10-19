@@ -1,5 +1,10 @@
 2008-10-19  Bruno Haible  <bruno@clisp.org>
 
+	* lib/wait-process.c: Include simply <sys/wait.h>.
+	(waitpid, WTERMSIG, WCOREDUMP, WEXITSTATUS, WIFSIGNALED, WIFEXITED,
+	WIFSTOPPED): Remove fallback definitions.
+	* modules/wait-process (Depends-on): Add sys_wait.
+
 	New module 'sys_wait'.
 	* modules/sys_wait: New file.
 	* lib/sys_wait.in.h: New file, partially copied from

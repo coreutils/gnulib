@@ -14,6 +14,7 @@ exit
 xalloc
 gettext-h
 stdbool
+sys_wait
 unistd
 
 configure.ac:

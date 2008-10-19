@@ -27,50 +27,7 @@
 #include <signal.h>
 
 #include <sys/types.h>
-
-#if defined _MSC_VER || defined __MINGW32__
-
-/* Native Woe32 API.  */
-#include <process.h>
-#define waitpid(pid,statusp,options) _cwait (statusp, pid, WAIT_CHILD)
-#define WTERMSIG(x) ((x) & 0xff) /* or: SIGABRT ?? */
-#define WCOREDUMP(x) 0
-#define WEXITSTATUS(x) (((x) >> 8) & 0xff) /* or: (x) ?? */
-#define WIFSIGNALED(x) (WTERMSIG (x) != 0) /* or: ((x) == 3) ?? */
-#define WIFEXITED(x) (WTERMSIG (x) == 0) /* or: ((x) != 3) ?? */
-#define WIFSTOPPED(x) 0
-
-#else
-
-/* Unix API.  */
 #include <sys/wait.h>
-/* On Linux, WEXITSTATUS are bits 15..8 and WTERMSIG are bits 7..0, while
-   BeOS uses the contrary.  Therefore we use the abstract macros.  */
-#ifndef WTERMSIG
-# define WTERMSIG(x) ((x) & 0x7f)
-#endif
-#ifndef WCOREDUMP
-# define WCOREDUMP(x) ((x) & 0x80)
-#endif
-#ifndef WEXITSTATUS
-# define WEXITSTATUS(x) (((x) >> 8) & 0xff)
-#endif
-/* For valid x, exactly one of WIFSIGNALED(x), WIFEXITED(x), WIFSTOPPED(x)
-   is true.  */
-#ifndef WIFSIGNALED
-# define WIFSIGNALED(x) (WTERMSIG (x) != 0 && WTERMSIG(x) != 0x7f)
-#endif
-#ifndef WIFEXITED
-# define WIFEXITED(x) (WTERMSIG (x) == 0)
-#endif
-#ifndef WIFSTOPPED
-# define WIFSTOPPED(x) (WTERMSIG (x) == 0x7f)
-#endif
-/* Note that portable applications may access
-   WTERMSIG(x) only if WIFSIGNALED(x) is true, and
-   WEXITSTATUS(x) only if WIFEXITED(x) is true.  */
-
-#endif
 
 #include "error.h"
 #include "fatal-signal.h"
