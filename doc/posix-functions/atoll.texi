@@ -4,15 +4,15 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/atoll.html}
 
-Gnulib module: ---
+Gnulib module: atoll
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 AIX 5.1, HP-UX 11, OSF/1 5.1, Interix 3.5.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

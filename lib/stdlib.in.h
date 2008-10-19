@@ -108,6 +108,21 @@ extern void * calloc (size_t nmemb, size_t size);
 #endif
 
 
+#if @GNULIB_ATOLL@
+# if !@HAVE_ATOLL@
+/* Parse a signed decimal integer.
+   Returns the value of the integer.  Errors are not detected.  */
+extern long long atoll (const char *string);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef atoll
+# define atoll(s) \
+    (GL_LINK_WARNING ("atoll is unportable - " \
+                      "use gnulib module atoll for portability"), \
+     atoll (s))
+#endif
+
+
 #if @GNULIB_GETLOADAVG@
 # if !@HAVE_DECL_GETLOADAVG@
 /* Store max(NELEM,3) load average numbers in LOADAVG[].

@@ -1,5 +1,17 @@
 2008-10-19  Bruno Haible  <bruno@clisp.org>
 
+	New module 'atoll'.
+	* modules/atoll: New file.
+	* lib/stdlib.in.h (atoll): New declaration.
+	* lib/atoll.c: New file, from glibc with modifications.
+	* m4/atoll.m4: New file.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize GNULIB_ATOLL,
+	HAVE_ATOLL.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_ATOLL, HAVE_ATOLL.
+	* doc/posix-functions/atoll.texi: Mention the new module.
+
+2008-10-19  Bruno Haible  <bruno@clisp.org>
+
 	Add strtoull() declaration to <stdlib.h>.
 	* lib/stdlib.in.h (strtoull): New declaration.
 	* m4/strtoull.m4 (gl_FUNC_STRTOLL): Require gl_STDLIB_H_DEFAULTS.
