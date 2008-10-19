@@ -7,10 +7,12 @@ m4/longlong.m4
 m4/strtoll.m4
 
 Depends-on:
+stdlib
 strtol
 
 configure.ac:
 gl_FUNC_STRTOLL
+gl_STDLIB_MODULE_INDICATOR([strtoll])
 
 Makefile.am:
 

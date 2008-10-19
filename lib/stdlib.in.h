@@ -257,6 +257,27 @@ extern double strtod (const char *str, char **endp);
 #endif
 
 
+#if @GNULIB_STRTOLL@
+# if !@HAVE_STRTOLL@
+/* Parse a signed integer whose textual representation starts at STRING.
+   The integer is expected to be in base BASE (2 <= BASE <= 36); if BASE == 0,
+   it may be decimal or octal (with prefix "0") or hexadecimal (with prefix
+   "0x").
+   If ENDPTR is not NULL, the address of the first byte after the integer is
+   stored in *ENDPTR.
+   Upon overflow or underflow, the return value is LLONG_MAX or LLONG_MIN,
+   respectively, and errno is set to ERANGE.  */
+extern long long strtoll (const char *string, char **endptr, int base);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef strtoll
+# define strtoll(s,e,b) \
+    (GL_LINK_WARNING ("strtoll is unportable - " \
+                      "use gnulib module strtoll for portability"), \
+     strtoll (s, e, b))
+#endif
+
+
 #ifdef __cplusplus
 }
 #endif
