@@ -1,5 +1,9 @@
 2008-10-19  Bruno Haible  <bruno@clisp.org>
 
+	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_WORKS): Remove unneeded code.
+
+2008-10-19  Bruno Haible  <bruno@clisp.org>
+
 	* lib/wait-process.c: Include simply <sys/wait.h>.
 	(waitpid, WTERMSIG, WCOREDUMP, WEXITSTATUS, WIFSIGNALED, WIFEXITED,
 	WIFSTOPPED): Remove fallback definitions.
