@@ -1,5 +1,9 @@
 2008-10-19  Bruno Haible  <bruno@clisp.org>
 
+	* doc/posix-functions/atexit.texi: Update doc regarding mingw.
+
+2008-10-19  Bruno Haible  <bruno@clisp.org>
+
 	* lib/openat-die.c (openat_save_fail, openat_restore_fail): Rename
 	the parameter from 'errno' to 'errnum'. Fixes a compilation error on
 	mingw.
