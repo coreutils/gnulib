@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-10-18  lchmod          The include file is changed from "lchmod.h" to
+                            <sys/stat.h>.
+
 2008-10-18  dirfd           The include file is changed from "dirfd.h" to
                             <dirent.h>.
 

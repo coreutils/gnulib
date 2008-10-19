@@ -1,5 +1,26 @@
 2008-10-18  Bruno Haible  <bruno@clisp.org>
 
+	* lib/dirchownmod.c: Don't include lchmod.h.
+
+	Move the lchmod() declaration to <sys/stat.h>.
+	* lib/lchmod.h: Remove file.
+	* lib/sys_stat.in.h: Add placeholder for GL_LINK_WARNING.
+	(lchmod): New declaration, moved here from lib/lchown.h.
+	* m4/lchmod.m4 (gl_FUNC_LCHMOD): Require gl_SYS_STAT_H_DEFAULTS and
+	AC_USE_SYSTEM_EXTENSIONS. Set HAVE_LCHMOD.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Initialize GNULIB_LCHMOD
+	and HAVE_LCHMOD.
+	* modules/lchmod (Files): Remove lib/lchmod.h.
+	(Depends-on): Add sys_stat, extensions.
+	(configure.ac): Invoke gl_SYS_STAT_MODULE_INDICATOR.
+	(Include): Specify <sys/stat.h> instead of lchmod.h.
+	* modules/sys_stat (Depends-on): Add link-warning.
+	(Makefile.am): Substitute GNULIB_LCHMOD, HAVE_LCHMOD, and the
+	definition of GL_LINK_WARNING.
+	* NEWS: Mention the change.
+
+2008-10-18  Bruno Haible  <bruno@clisp.org>
+
 	* lib/fchdir.c: Don't include dirfd.h.
 	* lib/fts.c: Likewise.
 	* lib/getcwd.c: Likewise.
