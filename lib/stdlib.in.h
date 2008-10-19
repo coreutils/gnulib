@@ -36,6 +36,11 @@
 #define _GL_STDLIB_H
 
 
+/* Solaris declares getloadavg() in <sys/loadavg.h>.  */
+#if @GNULIB_GETLOADAVG@ && @HAVE_SYS_LOADAVG_H@
+# include <sys/loadavg.h>
+#endif
+
 /* The definition of GL_LINK_WARNING is copied here.  */
 
 
@@ -100,6 +105,23 @@ extern void * calloc (size_t nmemb, size_t size);
     (GL_LINK_WARNING ("calloc is not POSIX compliant everywhere - " \
                       "use gnulib module calloc-posix for portability"), \
      calloc (n, s))
+#endif
+
+
+#if @GNULIB_GETLOADAVG@
+# if !@HAVE_DECL_GETLOADAVG@
+/* Store max(NELEM,3) load average numbers in LOADAVG[].
+   The three numbers are the load average of the last 1 minute, the last 5
+   minutes, and the last 15 minutes, respectively.
+   LOADAVG is an array of NELEM numbers.  */
+extern int getloadavg (double loadavg[], int nelem);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef getloadavg
+# define getloadavg(l,n) \
+    (GL_LINK_WARNING ("getloadavg is not portable - " \
+                      "use gnulib module getloadavg for portability"), \
+     getloadavg (l, n))
 #endif
 
 

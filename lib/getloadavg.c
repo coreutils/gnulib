@@ -1,7 +1,7 @@
 /* Get the system load averages.
 
    Copyright (C) 1985, 1986, 1987, 1988, 1989, 1991, 1992, 1993, 1994,
-   1995, 1997, 1999, 2000, 2003, 2004, 2005, 2006, 2007 Free Software
+   1995, 1997, 1999, 2000, 2003, 2004, 2005, 2006, 2007, 2008 Free Software
    Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with gnulib.
@@ -89,9 +89,11 @@
 # include <stdbool.h>
 #endif
 
+/* Specification.  */
+#include <stdlib.h>
+
 #include <errno.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 /* Exclude all the code except the test program at the end
    if the system has its own `getloadavg' function.  */

@@ -1,7 +1,7 @@
 # Check for getloadavg.
 
 # Copyright (C) 1992, 1993, 1994, 1995, 1996, 1999, 2000, 2002, 2003,
-# 2006 Free Software Foundation, Inc.
+# 2006, 2008 Free Software Foundation, Inc.
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,12 @@
 # gl_GETLOADAVG(LIBOBJDIR)
 # ------------------------
 AC_DEFUN([gl_GETLOADAVG],
-[gl_have_func=no # yes means we've found a way to get the load average.
+[AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
+
+# Persuade glibc <stdlib.h> to declare getloadavg().
+AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+
+gl_have_func=no # yes means we've found a way to get the load average.
 
 # Make sure getloadavg.c is where it belongs, at configure-time.
 test -f "$srcdir/$1/getloadavg.c" ||
@@ -106,6 +111,20 @@ fi
 LIBS=$gl_save_LIBS
 
 AC_SUBST(GETLOADAVG_LIBS)dnl
+
+# Test whether the system declares getloadavg. Solaris has the function
+# but declares it in <sys/loadavg.h>, not <stdlib.h>.
+AC_CHECK_HEADERS([sys/loadavg.h])
+if test $ac_cv_header_sys_loadavg_h = yes; then
+  HAVE_SYS_LOADAVG_H=1
+else
+  HAVE_SYS_LOADAVG_H=0
+fi
+AC_CHECK_DECL([getloadavg], [], [HAVE_DECL_GETLOADAVG=0],
+  [#if HAVE_SYS_LOADAVG_H
+   # include <sys/loadavg.h>
+   #endif
+   #include <stdlib.h>])
 ])# gl_GETLOADAVG
 
 

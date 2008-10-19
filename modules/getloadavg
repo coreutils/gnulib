@@ -6,6 +6,8 @@ lib/getloadavg.c
 m4/getloadavg.m4
 
 Depends-on:
+stdlib
+extensions
 cloexec
 xalloc
 c-strtod
@@ -15,10 +17,12 @@ fcntl-safer
 
 configure.ac:
 gl_GETLOADAVG([$gl_source_base])
+gl_STDLIB_MODULE_INDICATOR([getloadavg])
 
 Makefile.am:
 
 Include:
+<stdlib.h>
 
 License:
 GPL
