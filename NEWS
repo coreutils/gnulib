@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-10-18  getdomainname   The include file is changed from "getdomainname.h"
+                            to <unistd.h>.
+
 2008-09-28  sockets         When using this module, you now need to link with
                             $(LIBSOCKET).
 

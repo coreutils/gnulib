@@ -1,5 +1,26 @@
 2008-10-18  Bruno Haible  <bruno@clisp.org>
 
+	* lib/xgetdomainname.c: Include <unistd.h> instead of getdomainname.h.
+
+	Move the getdomainname() declaration to <unistd.h>.
+	* lib/getdomainname.h: Remove file.
+	* lib/unistd.in.h (getdomainname): New declaration.
+	* lib/getdomainname.c: Include <unistd.h> instead of getdomainname.h.
+	* m4/getdomainname.m4 (gl_FUNC_GETDOMAINNAME): Require
+	gl_UNISTD_H_DEFAULTS and AC_USE_SYSTEM_EXTENSIONS. Set
+	HAVE_GETDOMAINNAME.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	GNULIB_GETDOMAINNAME and HAVE_GETDOMAINNAME.
+	* modules/getdomainname (Files): Remove lib/getdomainname.h.
+	(Depends-on): Add unistd, extensions.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+	(Includes): Specify <unistd.h> instead of getdomainname.h.
+	* modules/unistd (Makefile.am): Substitute GNULIB_GETDOMAINNAME and
+	HAVE_GETDOMAINNAME.
+	* NEWS: Mention the change.
+
+2008-10-18  Bruno Haible  <bruno@clisp.org>
+
 	* modules/dirent: New file.
 	* m4/dirent_h.m4: New file.
 	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Require gl_DIRENT_H_DEFAULTS.

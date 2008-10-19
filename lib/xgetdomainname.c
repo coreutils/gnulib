@@ -1,5 +1,5 @@
 /* xgetdomainname.c -- Return the NIS domain name, without size limitations.
-   Copyright (C) 1992, 1996, 2000, 2001, 2003, 2004, 2006 Free Software
+   Copyright (C) 1992, 1996, 2000-2001, 2003-2004, 2006, 2008 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@
 #include "xgetdomainname.h"
 
 /* Get getdomainname.  */
-#include "getdomainname.h"
+#include <unistd.h>
 
 /* Get errno.  */
 #include <errno.h>

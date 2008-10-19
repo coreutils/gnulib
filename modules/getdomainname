@@ -2,19 +2,21 @@ Description:
 getdomainname() function: Return machine's NIS domain name.
 
 Files:
-lib/getdomainname.h
 lib/getdomainname.c
 m4/getdomainname.m4
 
 Depends-on:
+unistd
+extensions
 
 configure.ac:
 gl_FUNC_GETDOMAINNAME
+gl_UNISTD_MODULE_INDICATOR([getdomainname])
 
 Makefile.am:
 
 Include:
-"getdomainname.h"
+<unistd.h>
 
 License:
 GPL
