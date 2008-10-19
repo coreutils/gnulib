@@ -1,5 +1,18 @@
 2008-10-19  Bruno Haible  <bruno@clisp.org>
 
+	Add strtoull() declaration to <stdlib.h>.
+	* lib/stdlib.in.h (strtoull): New declaration.
+	* m4/strtoull.m4 (gl_FUNC_STRTOLL): Require gl_STDLIB_H_DEFAULTS.
+	Set HAVE_STRTOULL.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize GNULIB_STRTOULL,
+	HAVE_STRTOULL.
+	* modules/strtoull (Depends-on): Add stdlib.
+	(configure.ac): Invoke gl_STDLIB_MODULE_INDICATOR.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_STRTOULL,
+	HAVE_STRTOULL.
+
+2008-10-19  Bruno Haible  <bruno@clisp.org>
+
 	Add strtoll() declaration to <stdlib.h>.
 	* lib/stdlib.in.h (strtoll): New declaration.
 	* m4/strtoll.m4 (gl_FUNC_STRTOLL): Require gl_STDLIB_H_DEFAULTS.

@@ -265,8 +265,8 @@ extern double strtod (const char *str, char **endp);
    "0x").
    If ENDPTR is not NULL, the address of the first byte after the integer is
    stored in *ENDPTR.
-   Upon overflow or underflow, the return value is LLONG_MAX or LLONG_MIN,
-   respectively, and errno is set to ERANGE.  */
+   Upon overflow, the return value is LLONG_MAX or LLONG_MIN, and errno is set
+   to ERANGE.  */
 extern long long strtoll (const char *string, char **endptr, int base);
 # endif
 #elif defined GNULIB_POSIXCHECK
@@ -275,6 +275,27 @@ extern long long strtoll (const char *string, char **endptr, int base);
     (GL_LINK_WARNING ("strtoll is unportable - " \
                       "use gnulib module strtoll for portability"), \
      strtoll (s, e, b))
+#endif
+
+
+#if @GNULIB_STRTOULL@
+# if !@HAVE_STRTOULL@
+/* Parse an unsigned integer whose textual representation starts at STRING.
+   The integer is expected to be in base BASE (2 <= BASE <= 36); if BASE == 0,
+   it may be decimal or octal (with prefix "0") or hexadecimal (with prefix
+   "0x").
+   If ENDPTR is not NULL, the address of the first byte after the integer is
+   stored in *ENDPTR.
+   Upon overflow, the return value is ULLONG_MAX, and errno is set to
+   ERANGE.  */
+extern unsigned long long strtoull (const char *string, char **endptr, int base);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef strtoull
+# define strtoull(s,e,b) \
+    (GL_LINK_WARNING ("strtoull is unportable - " \
+                      "use gnulib module strtoull for portability"), \
+     strtoull (s, e, b))
 #endif
 
 
