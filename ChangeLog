@@ -1,5 +1,9 @@
 2008-10-19  Bruno Haible  <bruno@clisp.org>
 
+	* m4/wait-process.m4 (gl_WAIT_PROCESS): Remove test for unistd.h.
+
+2008-10-19  Bruno Haible  <bruno@clisp.org>
+
 	Assume that waitpid() fills an 'int' status, not a 'union wait'.
 	* lib/wait-process.c (WAIT_T): Remove type.
 	(WTERMSIG, WCOREDUMP, WEXITSTATUS): Define fallbacks using bit masks.
