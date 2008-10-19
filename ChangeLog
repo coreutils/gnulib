@@ -1,5 +1,14 @@
 2008-10-19  Bruno Haible  <bruno@clisp.org>
 
+	New module 'sys_wait'.
+	* modules/sys_wait: New file.
+	* lib/sys_wait.in.h: New file, partially copied from
+	lib/wait-process.c.
+	* m4/sys_wait_h.m4: New file.
+	* doc/posix-headers/sys_wait.texi: Mention the new module.
+
+2008-10-19  Bruno Haible  <bruno@clisp.org>
+
 	* m4/wait-process.m4 (gl_WAIT_PROCESS): Remove test for unistd.h.
 
 2008-10-19  Bruno Haible  <bruno@clisp.org>
