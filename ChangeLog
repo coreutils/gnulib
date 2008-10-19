@@ -1,5 +1,10 @@
 2008-10-19  Bruno Haible  <bruno@clisp.org>
 
+	* modules/bcopy (Depends-on): Add strings.
+	(Include): Specify <strings.h>.
+
+2008-10-19  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-functions/atexit.texi: Update doc regarding mingw.
 
 2008-10-19  Bruno Haible  <bruno@clisp.org>
