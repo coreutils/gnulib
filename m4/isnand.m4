@@ -1,12 +1,14 @@
-# isnand.m4 serial 4
+# isnand.m4 serial 5
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 dnl Check how to get or define isnand().
+
 AC_DEFUN([gl_FUNC_ISNAND],
 [
+  AC_REQUIRE([gl_MATH_H_DEFAULTS])
   ISNAND_LIBM=
   gl_HAVE_ISNAND_NO_LIBM
   if test $gl_cv_func_isnand_no_libm = no; then
@@ -19,10 +21,9 @@ AC_DEFUN([gl_FUNC_ISNAND],
   if test $gl_cv_func_isnand_no_libm = yes \
      || test $gl_cv_func_isnand_in_libm = yes; then
     gl_func_isnand=yes
-    AC_DEFINE([HAVE_ISNAND], 1,
-      [Define if the isnan(double) function is available.])
   else
     gl_func_isnand=no
+    HAVE_ISNAND=0
     gl_BUILD_ISNAND
   fi
   AC_SUBST([ISNAND_LIBM])

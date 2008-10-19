@@ -52,7 +52,6 @@
 #include "trigl.h"
 #include "trigl.c"
 #include "sincosl.c"
-#include "isnanl.h"
 
 long double
 sinl (long double x)

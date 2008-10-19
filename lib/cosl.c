@@ -54,7 +54,6 @@
 #include "trigl.c"
 #include "sincosl.c"
 #endif
-#include "isnanl.h"
 
 long double cosl(long double x)
 {

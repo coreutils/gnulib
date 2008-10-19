@@ -401,25 +401,92 @@ extern int gl_isinfl (long double x);
 #endif
 
 
+#if @GNULIB_ISNANF@
+/* Test for NaN for 'float' numbers.  */
+# if @HAVE_ISNANF@
+/* The original <math.h> included above provides a declaration of isnan macro
+   or (older) isnanf function.  */
+#  include <math.h>
+#  if __GNUC__ >= 4
+    /* GCC 4.0 and newer provides three built-ins for isnan.  */
+#   undef isnanf
+#   define isnanf(x) __builtin_isnanf ((float)(x))
+#  elif defined isnan
+#   undef isnanf
+#   define isnanf(x) isnan ((float)(x))
+#  endif
+# else
+/* Test whether X is a NaN.  */
+#  undef isnanf
+#  define isnanf rpl_isnanf
+extern int isnanf (float x);
+# endif
+#endif
+
+#if @GNULIB_ISNAND@
+/* Test for NaN for 'double' numbers.
+   This function is a gnulib extension, unlike isnan() which applied only
+   to 'double' numbers earlier but now is a type-generic macro.  */
+# if @HAVE_ISNAND@
+/* The original <math.h> included above provides a declaration of isnan macro.  */
+#  include <math.h>
+#  if __GNUC__ >= 4
+    /* GCC 4.0 and newer provides three built-ins for isnan.  */
+#   undef isnand
+#   define isnand(x) __builtin_isnan ((double)(x))
+#  else
+#   undef isnand
+#   define isnand(x) isnan ((double)(x))
+#  endif
+# else
+/* Test whether X is a NaN.  */
+#  undef isnand
+#  define isnand rpl_isnand
+extern int isnand (double x);
+# endif
+#endif
+
+#if @GNULIB_ISNANL@
+/* Test for NaN for 'long double' numbers.  */
+# if @HAVE_ISNANL@
+/* The original <math.h> included above provides a declaration of isnan macro or (older) isnanl function.  */
+#  include <math.h>
+#  if __GNUC__ >= 4
+    /* GCC 4.0 and newer provides three built-ins for isnan.  */
+#   undef isnanl
+#   define isnanl(x) __builtin_isnanl ((long double)(x))
+#  elif defined isnan
+#   undef isnanl
+#   define isnanl(x) isnan ((long double)(x))
+#  endif
+# else
+/* Test whether X is a NaN.  */
+#  undef isnanl
+#  define isnanl rpl_isnanl
+extern int isnanl (long double x);
+# endif
+#endif
+
+/* This must come *after* the snippets for GNULIB_ISNANF and GNULIB_ISNANL!  */
 #if @GNULIB_ISNAN@
 # if @REPLACE_ISNAN@
 /* We can't just use the isnanf macro (e.g.) as exposed by
    isnanf.h (e.g.) here, because those may end up being macros
    that recursively expand back to isnan.  So use the gnulib
    replacements for them directly. */
-#  if HAVE_ISNANF && __GNUC__ >= 4
+#  if @HAVE_ISNANF@ && __GNUC__ >= 4
 #   define gl_isnan_f(x) __builtin_isnan ((float)(x))
 #  else
 extern int rpl_isnanf (float x);
 #   define gl_isnan_f(x) rpl_isnanf (x)
 #  endif
-#  if HAVE_ISNAND && __GNUC__ >= 4
+#  if @HAVE_ISNAND@ && __GNUC__ >= 4
 #   define gl_isnan_d(x) __builtin_isnan ((double)(x))
 #  else
 extern int rpl_isnand (double x);
 #   define gl_isnan_d(x) rpl_isnand (x)
 #  endif
-#  if HAVE_ISNANL && __GNUC__ >= 4
+#  if @HAVE_ISNANL@ && __GNUC__ >= 4
 #   define gl_isnan_l(x) __builtin_isnan ((long double)(x))
 #  else
 extern int rpl_isnanl (long double x);

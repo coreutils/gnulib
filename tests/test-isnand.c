@@ -16,7 +16,7 @@
 
 #include <config.h>
 
-#include "isnand.h"
+#include <math.h>
 
 #include "test-isnand.h"
 

@@ -55,7 +55,6 @@
 #include "trigl.c"
 #endif
 #endif
-#include "isnanl.h"
 
 /*
  * ====================================================

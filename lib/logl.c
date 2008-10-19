@@ -62,8 +62,6 @@
  *
  */
 
-#include "isnanl.h"
-
 /* log(1+x) = x - .5 x^2 + x^3 l(x)
    -.0078125 <= x <= +.0078125
    peak relative error 1.2e-37 */

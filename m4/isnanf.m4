@@ -1,4 +1,4 @@
-# isnanf.m4 serial 8
+# isnanf.m4 serial 9
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ dnl Check how to get or define isnanf().
 
 AC_DEFUN([gl_FUNC_ISNANF],
 [
+  AC_REQUIRE([gl_MATH_H_DEFAULTS])
   ISNANF_LIBM=
   gl_HAVE_ISNANF_NO_LIBM
   if test $gl_cv_func_isnanf_no_libm = no; then
@@ -29,10 +30,8 @@ AC_DEFUN([gl_FUNC_ISNANF],
   else
     gl_func_isnanf=no
   fi
-  if test $gl_func_isnanf = yes; then
-    AC_DEFINE([HAVE_ISNANF], 1,
-      [Define if the isnan(float) function is available.])
-  else
+  if test $gl_func_isnanf != yes; then
+    HAVE_ISNANF=0
     gl_BUILD_ISNANF
   fi
   AC_SUBST([ISNANF_LIBM])

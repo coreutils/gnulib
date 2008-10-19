@@ -1,5 +1,49 @@
 2008-10-18  Bruno Haible  <bruno@clisp.org>
 
+	* lib/atanl.c: Don't include isnanl.h.
+	* lib/cosl.c: Likewise.
+	* lib/ldexpl.c: Likewise.
+	* lib/logl.c: Likewise.
+	* lib/sinl.c: Likewise.
+	* lib/sqrtl.c: Likewise.
+	* lib/tanl.c: Likewise.
+
+	Move the isnanf(), isnand(), isnanl() declarations to <math.h>.
+	* lib/isnanf.h: Remove file.
+	* lib/isnand.h: Remove file.
+	* lib/isnanl.h: Remove file.
+	* lib/math.in.h: Include the contents of lib/isnanf.h, lib/isnand.h,
+	lib/isnanl.h. Use HAVE_ISNANF, HAVE_ISNAND, HAVE_ISNANL as substituted
+	macros.
+	* m4/isnanf.m4 (gl_FUNC_ISNANF): Require gl_MATH_H_DEFAULTS. Set
+	HAVE_ISNANF, don't define it as a C macro.
+	* m4/isnand.m4 (gl_FUNC_ISNAND): Require gl_MATH_H_DEFAULTS. Set
+	HAVE_ISNAND, don't define it as a C macro.
+	* m4/isnanl.m4 (gl_FUNC_ISNANL): Require gl_MATH_H_DEFAULTS. Set
+	HAVE_ISNANL, don't define it as a C macro.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_ISNAN[FDL] and
+	HAVE_ISNAN[FDL].
+	* modules/isnanf (Files): Remove lib/isnanf.h.
+	(Depends-on): Add math.
+	(configure.ac): Invoke gl_MATH_MODULE_INDICATOR.
+	(Include): Specify <math.h> instead of isnanf.h.
+	* modules/isnand (Files): Remove lib/isnand.h.
+	(Depends-on): Add math.
+	(configure.ac): Invoke gl_MATH_MODULE_INDICATOR.
+	(Include): Specify <math.h> instead of isnand.h.
+	* modules/isnanl (Files): Remove lib/isnanl.h.
+	(Depends-on): Add math.
+	(configure.ac): Invoke gl_MATH_MODULE_INDICATOR.
+	(Include): Specify <math.h> instead of isnanl.h.
+	* modules/math (Makefile.am): Substitute GNULIB_ISNAN[FDL] and
+	HAVE_ISNAN[FDL].
+	* tests/test-isnanf.c: Include <math.h> instead of isnanf.h.
+	* tests/test-isnand.c: Include <math.h> instead of isnand.h.
+	* tests/test-isnanl.c: Include <math.h> instead of isnanl.h.
+	* NEWS: Mention the change.
+
+2008-10-18  Bruno Haible  <bruno@clisp.org>
+
 	Add getusershell(), setusershell(), endusershell() declarations to
 	<unistd.h>.
 	* lib/unistd.in.h (getusershell, setusershell, endusershell): New

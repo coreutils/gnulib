@@ -6,6 +6,13 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-10-19  isnanf          The include file is changed from "isnanf.h" to
+                            <math.h>.
+            isnand          The include file is changed from "isnand.h" to
+                            <math.h>.
+            isnanl          The include file is changed from "isnanl.h" to
+                            <math.h>.
+
 2008-10-18  lchmod          The include file is changed from "lchmod.h" to
                             <sys/stat.h>.
 

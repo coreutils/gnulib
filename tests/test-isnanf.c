@@ -16,6 +16,6 @@
 
 #include <config.h>
 
-#include "isnanf.h"
+#include <math.h>
 
 #include "test-isnanf.h"

@@ -2,7 +2,6 @@ Description:
 isnanf() function: test for NaN.
 
 Files:
-lib/isnanf.h
 lib/isnanf.c
 lib/isnan.c
 lib/float+.h
@@ -10,15 +9,17 @@ m4/exponentf.m4
 m4/isnanf.m4
 
 Depends-on:
+math
 fpieee
 
 configure.ac:
 gl_FUNC_ISNANF
+gl_MATH_MODULE_INDICATOR([isnanf])
 
 Makefile.am:
 
 Include:
-#include "isnanf.h"
+<math.h>
 
 Link:
 $(ISNANF_LIBM)

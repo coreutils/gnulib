@@ -1,4 +1,4 @@
-# math_h.m4 serial 13
+# math_h.m4 serial 14
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -53,6 +53,9 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_ISFINITE=0; AC_SUBST([GNULIB_ISFINITE])
   GNULIB_ISINF=0;    AC_SUBST([GNULIB_ISINF])
   GNULIB_ISNAN=0;    AC_SUBST([GNULIB_ISNAN])
+  GNULIB_ISNANF=0;   AC_SUBST([GNULIB_ISNANF])
+  GNULIB_ISNAND=0;   AC_SUBST([GNULIB_ISNAND])
+  GNULIB_ISNANL=0;   AC_SUBST([GNULIB_ISNANL])
   GNULIB_LDEXPL=0;   AC_SUBST([GNULIB_LDEXPL])
   GNULIB_MATHL=0;    AC_SUBST([GNULIB_MATHL])
   GNULIB_ROUND=0;    AC_SUBST([GNULIB_ROUND])
@@ -63,6 +66,9 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_TRUNCF=0;   AC_SUBST([GNULIB_TRUNCF])
   GNULIB_TRUNCL=0;   AC_SUBST([GNULIB_TRUNCL])
   dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_ISNANF=1;               AC_SUBST([HAVE_ISNANF])
+  HAVE_ISNAND=1;               AC_SUBST([HAVE_ISNAND])
+  HAVE_ISNANL=1;               AC_SUBST([HAVE_ISNANL])
   HAVE_DECL_ACOSL=1;           AC_SUBST([HAVE_DECL_ACOSL])
   HAVE_DECL_ASINL=1;           AC_SUBST([HAVE_DECL_ASINL])
   HAVE_DECL_ATANL=1;           AC_SUBST([HAVE_DECL_ATANL])

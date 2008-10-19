@@ -24,7 +24,6 @@
 #include <math.h>
 
 #include <float.h>
-#include "isnanl.h"
 
 /* A simple Newton-Raphson method. */
 long double

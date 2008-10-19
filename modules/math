@@ -32,6 +32,9 @@ math.h: math.in.h
 	      -e 's|@''GNULIB_ISFINITE''@|$(GNULIB_ISFINITE)|g' \
 	      -e 's|@''GNULIB_ISINF''@|$(GNULIB_ISINF)|g' \
 	      -e 's|@''GNULIB_ISNAN''@|$(GNULIB_ISNAN)|g' \
+	      -e 's|@''GNULIB_ISNANF''@|$(GNULIB_ISNANF)|g' \
+	      -e 's|@''GNULIB_ISNAND''@|$(GNULIB_ISNAND)|g' \
+	      -e 's|@''GNULIB_ISNANL''@|$(GNULIB_ISNANL)|g' \
 	      -e 's|@''GNULIB_LDEXPL''@|$(GNULIB_LDEXPL)|g' \
 	      -e 's|@''GNULIB_MATHL''@|$(GNULIB_MATHL)|g' \
 	      -e 's|@''GNULIB_ROUND''@|$(GNULIB_ROUND)|g' \
@@ -41,6 +44,9 @@ math.h: math.in.h
 	      -e 's|@''GNULIB_TRUNC''@|$(GNULIB_TRUNC)|g' \
 	      -e 's|@''GNULIB_TRUNCF''@|$(GNULIB_TRUNCF)|g' \
 	      -e 's|@''GNULIB_TRUNCL''@|$(GNULIB_TRUNCL)|g' \
+	      -e 's|@''HAVE_ISNANF''@|$(HAVE_ISNANF)|g' \
+	      -e 's|@''HAVE_ISNAND''@|$(HAVE_ISNAND)|g' \
+	      -e 's|@''HAVE_ISNANL''@|$(HAVE_ISNANL)|g' \
 	      -e 's|@''HAVE_DECL_ACOSL''@|$(HAVE_DECL_ACOSL)|g' \
 	      -e 's|@''HAVE_DECL_ASINL''@|$(HAVE_DECL_ASINL)|g' \
 	      -e 's|@''HAVE_DECL_ATANL''@|$(HAVE_DECL_ATANL)|g' \

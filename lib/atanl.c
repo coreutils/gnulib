@@ -62,8 +62,6 @@
  *
  */
 
-#include "isnanl.h"
-
 /* arctan(k/8), k = 0, ..., 82 */
 static const long double atantbl[84] = {
   0.0000000000000000000000000000000000000000E0L,
