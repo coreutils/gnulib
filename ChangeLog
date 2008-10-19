@@ -1,5 +1,12 @@
 2008-10-19  Bruno Haible  <bruno@clisp.org>
 
+	Assume that waitpid() fills an 'int' status, not a 'union wait'.
+	* lib/wait-process.c (WAIT_T): Remove type.
+	(WTERMSIG, WCOREDUMP, WEXITSTATUS): Define fallbacks using bit masks.
+	(wait_subprocess): Update.
+
+2008-10-19  Bruno Haible  <bruno@clisp.org>
+
 	New module 'atoll'.
 	* modules/atoll: New file.
 	* lib/stdlib.in.h (atoll): New declaration.

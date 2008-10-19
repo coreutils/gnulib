@@ -33,7 +33,6 @@
 /* Native Woe32 API.  */
 #include <process.h>
 #define waitpid(pid,statusp,options) _cwait (statusp, pid, WAIT_CHILD)
-#define WAIT_T int
 #define WTERMSIG(x) ((x) & 0xff) /* or: SIGABRT ?? */
 #define WCOREDUMP(x) 0
 #define WEXITSTATUS(x) (((x) >> 8) & 0xff) /* or: (x) ?? */
@@ -47,28 +46,14 @@
 #include <sys/wait.h>
 /* On Linux, WEXITSTATUS are bits 15..8 and WTERMSIG are bits 7..0, while
    BeOS uses the contrary.  Therefore we use the abstract macros.  */
-#if HAVE_UNION_WAIT
-# define WAIT_T union wait
-# ifndef WTERMSIG
-#  define WTERMSIG(x) ((x).w_termsig)
-# endif
-# ifndef WCOREDUMP
-#  define WCOREDUMP(x) ((x).w_coredump)
-# endif
-# ifndef WEXITSTATUS
-#  define WEXITSTATUS(x) ((x).w_retcode)
-# endif
-#else
-# define WAIT_T int
-# ifndef WTERMSIG
-#  define WTERMSIG(x) ((x) & 0x7f)
-# endif
-# ifndef WCOREDUMP
-#  define WCOREDUMP(x) ((x) & 0x80)
-# endif
-# ifndef WEXITSTATUS
-#  define WEXITSTATUS(x) (((x) >> 8) & 0xff)
-# endif
+#ifndef WTERMSIG
+# define WTERMSIG(x) ((x) & 0x7f)
+#endif
+#ifndef WCOREDUMP
+# define WCOREDUMP(x) ((x) & 0x80)
+#endif
+#ifndef WEXITSTATUS
+# define WEXITSTATUS(x) (((x) >> 8) & 0xff)
 #endif
 /* For valid x, exactly one of WIFSIGNALED(x), WIFEXITED(x), WIFSTOPPED(x)
    is true.  */
@@ -346,7 +331,7 @@ wait_subprocess (pid_t child, const char *progname,
     }
 #else
   /* waitpid() is just as portable as wait() nowadays.  */
-  WAIT_T status;
+  int status;
 
   if (termsigp != NULL)
     *termsigp = 0;
