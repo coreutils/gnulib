@@ -29,9 +29,9 @@
 #define N_(msgid) msgid
 
 void
-openat_save_fail (int errno)
+openat_save_fail (int errnum)
 {
-  error (exit_failure, errno,
+  error (exit_failure, errnum,
 	 _("unable to record current working directory"));
 
   /* The `noreturn' attribute cannot be applied to error, since it returns
@@ -42,9 +42,9 @@ openat_save_fail (int errno)
 }
 
 void
-openat_restore_fail (int errno)
+openat_restore_fail (int errnum)
 {
-  error (exit_failure, errno,
+  error (exit_failure, errnum,
 	 _("failed to return to initial working directory"));
 
   /* As above.  */
