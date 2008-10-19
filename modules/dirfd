@@ -2,19 +2,21 @@ Description:
 Retrieving the file descriptor of an open directory stream.  (Unportable.)
 
 Files:
-lib/dirfd.h
 lib/dirfd.c
 m4/dirfd.m4
 
 Depends-on:
+dirent
+extensions
 
 configure.ac:
 gl_FUNC_DIRFD
+gl_DIRENT_MODULE_INDICATOR([dirfd])
 
 Makefile.am:
 
 Include:
-"dirfd.h"
+<dirent.h>
 
 License:
 LGPLv2+

@@ -26,18 +26,36 @@
 #ifndef _GL_DIRENT_H
 #define _GL_DIRENT_H
 
+/* The definition of GL_LINK_WARNING is copied here.  */
 
-/* Declare overridden functions.  */
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* Declare overridden functions.  */
 
 #if @REPLACE_FCHDIR@
 # define opendir rpl_opendir
 extern DIR * opendir (const char *);
 # define closedir rpl_closedir
 extern int closedir (DIR *);
+#endif
+
+/* Declare GNU extensions.  */
+
+#if @GNULIB_DIRFD@
+# if !@HAVE_DECL_DIRFD@ && !defined dirfd
+/* Return the file descriptor associated with the given directory stream,
+   or -1 if none exists.  */
+extern int dirfd (DIR const *dir);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef dirfd
+# define dirfd(d) \
+    (GL_LINK_WARNING ("dirfd is unportable - " \
+                      "use gnulib module dirfd for portability"), \
+     dirfd (d))
 #endif
 
 #ifdef __cplusplus

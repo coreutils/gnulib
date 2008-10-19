@@ -1,4 +1,4 @@
-# dirent_h.m4 serial 1
+# dirent_h.m4 serial 2
 dnl Copyright (C) 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,6 +32,8 @@ AC_DEFUN([gl_DIRENT_MODULE_INDICATOR],
 AC_DEFUN([gl_DIRENT_H_DEFAULTS],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS]) dnl for REPLACE_FCHDIR
+  GNULIB_DIRFD=0;    AC_SUBST([GNULIB_DIRFD])
   dnl Assume proper GNU behavior unless another module says otherwise.
-  DIRENT_H='';      AC_SUBST([DIRENT_H])
+  HAVE_DECL_DIRFD=1; AC_SUBST([HAVE_DECL_DIRFD])
+  DIRENT_H='';       AC_SUBST([DIRENT_H])
 ])

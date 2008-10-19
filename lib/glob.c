@@ -153,10 +153,6 @@
 
 #include <fnmatch.h>
 
-#ifndef _LIBC
-# include "dirfd.h"
-#endif
-
 #ifdef _SC_GETPW_R_SIZE_MAX
 # define GETPW_R_SIZE_MAX()	sysconf (_SC_GETPW_R_SIZE_MAX)
 #else

@@ -62,7 +62,6 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 #endif
 #include <fcntl.h>
 #include <errno.h>
-#include "dirfd.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>

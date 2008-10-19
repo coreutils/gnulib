@@ -1,5 +1,4 @@
-/* Copyright (C) 1991,92,93,94,95,96,97,98,99,2004,2005,2006,2007 Free Software
-   Foundation, Inc.
+/* Copyright (C) 1991-1999, 2004-2008 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -18,7 +17,6 @@
 #if !_LIBC
 # include <config.h>
 # include <unistd.h>
-# include "dirfd.h"
 #endif
 
 #include <errno.h>

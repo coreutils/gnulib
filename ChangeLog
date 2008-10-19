@@ -1,5 +1,31 @@
 2008-10-18  Bruno Haible  <bruno@clisp.org>
 
+	* lib/fchdir.c: Don't include dirfd.h.
+	* lib/fts.c: Likewise.
+	* lib/getcwd.c: Likewise.
+	* lib/glob.c: Likewise.
+
+	Move the dirfd() declaration to <dirent.h>.
+	* lib/dirfd.h: Remove file.
+	* lib/dirent.in.h: Add placeholder for GL_LINK_WARNING.
+	(dirfd): New declaration.
+	* lib/dirfd.c: Include <dirent.h> instead of dirfd.h.
+	* m4/dirfd.m4 (gl_FUNC_DIRFD): Require gl_DIRENT_H_DEFAULTS and
+	AC_USE_SYSTEM_EXTENSIONS. Invoke gl_REPLACE_DIRENT_H. Set
+	HAVE_DECL_DIRFD.
+	* m4/dirent_h.m4 (gl_DIRENT_H_DEFAULTS): Initialize GNULIB_DIRFD and
+	HAVE_DECL_DIRFD.
+	* modules/dirfd (Files): Remove lib/dirfd.h.
+	(Depends-on): Add dirent, extensions.
+	(configure.ac): Invoke gl_DIRENT_MODULE_INDICATOR.
+	(Include): Specify <dirent.h> instead of dirfd.h.
+	* modules/dirent (Depends-on): Add link-warning.
+	(Makefile.am): Substitute GNULIB_DIRFD, HAVE_DECL_DIRFD, and
+	definition of GL_LINK_WARNING.
+	* NEWS: Mention the change.
+
+2008-10-18  Bruno Haible  <bruno@clisp.org>
+
 	Move the euidaccess() declaration to <unistd.h>.
 	* lib/euidaccess.h: Remove file.
 	* lib/unistd.in.h (euidaccess): New declaration.

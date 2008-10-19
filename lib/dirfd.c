@@ -1,6 +1,6 @@
 /* dirfd.c -- return the file descriptor associated with an open DIR*
 
-   Copyright (C) 2001, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2006, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 
 #include <config.h>
 
-#include "dirfd.h"
+#include <dirent.h>
 
 int
 dirfd (DIR const *dir_p)
