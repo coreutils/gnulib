@@ -1,5 +1,23 @@
 2008-10-18  Bruno Haible  <bruno@clisp.org>
 
+	Add getusershell(), setusershell(), endusershell() declarations to
+	<unistd.h>.
+	* lib/unistd.in.h (getusershell, setusershell, endusershell): New
+	declarations.
+	* lib/getusershell.c: Include unistd.h.
+	* m4/getusershell.m4 (gl_FUNC_GETUSERSHELL): Require
+	gl_UNISTD_H_DEFAULTS and AC_USE_SYSTEM_EXTENSIONS. Set
+	HAVE_GETUSERSHELL.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_GETUSERSHELL
+	and HAVE_GETUSERSHELL.
+	* modules/getusershell (Depends-on): Add unistd, extensions.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+	(Include): Specify <unistd.h>.
+	* modules/unistd (Makefile.am): Substitute GNULIB_GETUSERSHELL and
+	HAVE_GETUSERSHELL.
+
+2008-10-18  Bruno Haible  <bruno@clisp.org>
+
 	Add a getloadavg() declaration to <stdlib.h>.
 	* lib/stdlib.in.h; Include <sys/loadavg.h> when needed for the
 	getloadavg declaration.

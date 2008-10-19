@@ -353,6 +353,36 @@ extern int getpagesize (void);
 #endif
 
 
+#if @GNULIB_GETUSERSHELL@
+# if !@HAVE_GETUSERSHELL@
+/* Return the next valid login shell on the system, or NULL when the end of
+   the list has been reached.  */
+extern char *getusershell (void);
+/* Rewind to pointer that is advanced at each getusershell() call.  */
+extern void setusershell (void);
+/* Free the pointer that is advanced at each getusershell() call and
+   associated resources.  */
+extern void endusershell (void);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef getusershell
+# define getusershell() \
+    (GL_LINK_WARNING ("getusershell is unportable - " \
+                      "use gnulib module getusershell for portability"), \
+     getusershell ())
+# undef setusershell
+# define setusershell() \
+    (GL_LINK_WARNING ("setusershell is unportable - " \
+                      "use gnulib module getusershell for portability"), \
+     setusershell ())
+# undef endusershell
+# define endusershell() \
+    (GL_LINK_WARNING ("endusershell is unportable - " \
+                      "use gnulib module getusershell for portability"), \
+     endusershell ())
+#endif
+
+
 #if @GNULIB_LCHOWN@
 # if @REPLACE_LCHOWN@
 /* Change the owner of FILE to UID (if UID is not -1) and the group of FILE

@@ -1,6 +1,6 @@
 /* getusershell.c -- Return names of valid user shells.
 
-   Copyright (C) 1991, 1997, 2000, 2001, 2003, 2004, 2005, 2006 Free
+   Copyright (C) 1991, 1997, 2000, 2001, 2003, 2004, 2005, 2006, 2008 Free
    Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,9 @@
 /* Written by David MacKenzie <djm@gnu.ai.mit.edu> */
 
 #include <config.h>
+
+/* Specification.  */
+#include <unistd.h>
 
 #ifndef SHELLS_FILE
 # ifndef __DJGPP__
