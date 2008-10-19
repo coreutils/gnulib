@@ -134,6 +134,21 @@ extern char **environ;
 #endif
 
 
+#if @GNULIB_EUIDACCESS@
+# if !@HAVE_EUIDACCESS@
+/* Like access(), except that is uses the effective user id and group id of
+   the current process.  */
+extern int euidaccess (const char *filename, int mode);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef euidaccess
+# define euidaccess(f,m) \
+    (GL_LINK_WARNING ("euidaccess is unportable - " \
+                      "use gnulib module euidaccess for portability"), \
+     euidaccess (f, m))
+#endif
+
+
 #if @GNULIB_FCHDIR@
 # if @REPLACE_FCHDIR@
 

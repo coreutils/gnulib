@@ -1,5 +1,23 @@
 2008-10-18  Bruno Haible  <bruno@clisp.org>
 
+	Move the euidaccess() declaration to <unistd.h>.
+	* lib/euidaccess.h: Remove file.
+	* lib/unistd.in.h (euidaccess): New declaration.
+	* lib/euidaccess.c: Don't include euidaccess.h.
+	* m4/euidaccess.m4 (gl_FUNC_EUIDACCESS): Require gl_UNISTD_H_DEFAULTS.
+	Don't check whether euidaccess is declared. Set HAVE_EUIDACCESS.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_EUIDACCESS
+	and HAVE_EUIDACCESS.
+	* modules/euidaccess (Files): Remove lib/euidaccess.h.
+	(Depends-on): Add unistd.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+	(Include): Specify <unistd.h> instead of euidaccess.h.
+	* modules/unistd (Makefile.am): Substitute GNULIB_EUIDACCESS and
+	HAVE_EUIDACCESS.
+	* NEWS: Mention the change.
+
+2008-10-18  Bruno Haible  <bruno@clisp.org>
+
 	* lib/xgetdomainname.c: Include <unistd.h> instead of getdomainname.h.
 
 	Move the getdomainname() declaration to <unistd.h>.
