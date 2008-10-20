@@ -59,7 +59,7 @@ AC_DEFUN([gl_POSIX_SPAWN_WORKS],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether posix_spawn works], [gl_cv_func_posix_spawn_works],
     [if test $cross_compiling = no; then
-       AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+       AC_LINK_IFELSE([AC_LANG_SOURCE([[
 #include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
@@ -109,10 +109,11 @@ fd_safer (int fd)
     }
 
   return fd;
-}  
-]],
-dnl Now comes the main() function.
-[[
+}
+
+int
+main ()
+{
   char *argv[2] = { CHILD_PROGRAM_FILENAME, NULL };
   int ofd[2];
   sigset_t blocked_signals;
@@ -181,6 +182,8 @@ dnl Now comes the main() function.
       fprintf (stderr, "subprocess terminated with unexpected exit status %d\n", exitstatus);
       exit (1);
     }
+  return 0;
+}
 ]])],
          [if test -s conftest$ac_exeext \
              && ./conftest$ac_exeext > conftest.out \
