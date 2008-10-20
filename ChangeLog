@@ -1,5 +1,15 @@
 2008-10-20  Bruno Haible  <bruno@clisp.org>
 
+	Take into account the role of SIGABRT_COMPAT on Windows 2008.
+	* lib/sigprocmask.c (SIGABRT_COMPAT, SIGABRT_COMPAT_MASK): New macros.
+	(sigismember, sigaddset, sigdelset, sigfillset, rpl_signal): Handle it
+	as an alias for SIGABRT.
+	* lib/sigaction.c (SIGABRT_COMPAT): New macro.
+	(sigaction): Map it to SIGABRT.
+	Reported by Ramiro Polla <ramiro.polla@gmail.com> via Eric Blake.
+
+2008-10-20  Bruno Haible  <bruno@clisp.org>
+
 	* lib/fts.c: Don't include lstat.h.
 	* lib/openat.c: Include <sys/stat.h> instead of lstat.h.
 

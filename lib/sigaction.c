@@ -64,6 +64,14 @@
 # define SIGSTOP (-1)
 #endif
 
+/* On native Windows, as of 2008, the signal SIGABRT_COMPAT is an alias
+   for the signal SIGABRT.  Only one signal handler is stored for both
+   SIGABRT and SIGABRT_COMPAT.  SIGABRT_COMPAT is not a signal of its own.  */
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# undef SIGABRT_COMPAT
+# define SIGABRT_COMPAT 6
+#endif
+
 /* A signal handler.  */
 typedef void (*handler_t) (int signal);
 
@@ -133,6 +141,11 @@ sigaction (int sig, const struct sigaction *restrict act,
       errno = EINVAL;
       return -1;
     }
+
+  #ifdef SIGABRT_COMPAT
+  if (sig == SIGABRT_COMPAT)
+    sig = SIGABRT;
+  #endif
 
   /* POSIX requires sigaction() to be async-signal-safe.  In other
      words, if an asynchronous signal can occur while we are anywhere
