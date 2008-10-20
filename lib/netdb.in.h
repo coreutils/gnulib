@@ -123,7 +123,11 @@ struct addrinfo
 #  define EAI_SYSTEM	  -11	/* System error returned in `errno'.  */
 # endif
 
-# ifdef __USE_GNU
+# if 0
+/* The commented out definitions below are not yet implemented in the
+   GNULIB getaddrinfo() replacement, so are not yet needed.
+
+   If they are restored, be sure to protect the definitions with #ifndef.  */
 #  ifndef EAI_INPROGRESS
 #   define EAI_INPROGRESS	-100	/* Processing request in progress.  */
 #   define EAI_CANCELED		-101	/* Request canceled.  */

@@ -1,5 +1,11 @@
 2008-10-20  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/netdb.in.h: Don't define GNU specific constants until they
+	are supported or needed.  Reported by Bruno Haible
+	<bruno@clisp.org>.
+
+2008-10-20  Simon Josefsson  <simon@josefsson.org>
+
 	* lib/getaddrinfo.h: Remove file.
 	* modules/getaddrinfo: Reflect move from getaddrinfo.h to netdb.h.
 	* m4/getaddrinfo.m4: Call gl_HEADER_NETDB.  Don't check for netdb.h.
