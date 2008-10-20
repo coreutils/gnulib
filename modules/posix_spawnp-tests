@@ -17,6 +17,7 @@ posix_spawnattr_destroy
 sigprocmask
 stdbool
 unistd
+sys_wait
 
 configure.ac:
 

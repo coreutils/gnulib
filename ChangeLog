@@ -1,5 +1,13 @@
 2008-10-20  Bruno Haible  <bruno@clisp.org>
 
+	* modules/posix_spawnp-tests (Depends-on): Add sys_wait.
+	* tests/test-posix_spawn1.c (WTERMSIG, WCOREDUMP, WEXITSTATUS,
+	WIFSIGNALED, WIFEXITED, WIFSTOPPED): Remove fallback definitions.
+	* tests/test-posix_spawn2.c (WTERMSIG, WCOREDUMP, WEXITSTATUS,
+	WIFSIGNALED, WIFEXITED, WIFSTOPPED): Likewise.
+
+2008-10-20  Bruno Haible  <bruno@clisp.org>
+
 	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_WORKS): Test against another bug
 	of posix_spawn on AIX 5.3.
 

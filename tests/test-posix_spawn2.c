@@ -43,25 +43,6 @@ extern char **environ;
 # define STDERR_FILENO 2
 #endif
 
-#ifndef WTERMSIG
-# define WTERMSIG(x) ((x) & 0x7f)
-#endif
-#ifndef WCOREDUMP
-# define WCOREDUMP(x) ((x) & 0x80)
-#endif
-#ifndef WEXITSTATUS
-# define WEXITSTATUS(x) (((x) >> 8) & 0xff)
-#endif
-#ifndef WIFSIGNALED
-# define WIFSIGNALED(x) (WTERMSIG (x) != 0 && WTERMSIG(x) != 0x7f)
-#endif
-#ifndef WIFEXITED
-# define WIFEXITED(x) (WTERMSIG (x) == 0)
-#endif
-#ifndef WIFSTOPPED
-# define WIFSTOPPED(x) (WTERMSIG (x) == 0x7f)
-#endif
-
 #define CHILD_PROGRAM_FILENAME "test-posix_spawn2.sh"
 
 static int
