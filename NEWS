@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-10-20  lstat           The include file is changed from "lstat.h" to
+                            <sys/stat.h>.
+
 2008-10-20  getaddrinfo     The include file is changed from "getaddrinfo.h"
                             to <netdb.h>.
 

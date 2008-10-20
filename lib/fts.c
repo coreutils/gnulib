@@ -69,7 +69,6 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 
 #if ! _LIBC
 # include "fcntl--.h"
-# include "lstat.h"
 # include "openat.h"
 # include "unistd--.h"
 # include "same-inode.h"

@@ -1,5 +1,27 @@
 2008-10-20  Bruno Haible  <bruno@clisp.org>
 
+	* lib/fts.c: Don't include lstat.h.
+	* lib/openat.c: Include <sys/stat.h> instead of lstat.h.
+
+	Move the lstat() declaration to <sys/stat.h>.
+	* lib/lstat.h: Remove file.
+	* lib/sys_stat.in.h: Add special invocation convention.
+	(lstat): New declaration.
+	* lib/lstat.c (orig_lstat): New function.
+	(rpl_lstat): Use orig_lstat instead of lstat.
+	* m4/lstat.m4 (gl_FUNC_LSTAT): Require gl_SYS_STAT_H_DEFAULTS and
+	AC_C_INLINE. Set REPLACE_LSTAT.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Initialize GNULIB_LSTAT
+	and REPLACE_LSTAT.
+	* modules/lstat (Files): Remove lib/lstat.h.
+	(configure.ac): Invoke gl_SYS_STAT_MODULE_INDICATOR.
+	(Include): Specify <sys/stat.h> instead of lstat.h.
+	* modules/sys_stat (Makefile.am): Substitute GNULIB_LSTAT and
+	REPLACE_LSTAT.
+	* NEWS: Mention the change.
+
+2008-10-20  Bruno Haible  <bruno@clisp.org>
+
 	* modules/posix_spawn-tests: New file.
 	* tests/test-posix_spawn3.c: New file.
 

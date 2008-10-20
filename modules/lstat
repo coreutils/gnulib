@@ -3,7 +3,6 @@ lstat() function: return information about a file or symbolic link.
 
 Files:
 lib/lstat.c
-lib/lstat.h
 m4/lstat.m4
 
 Depends-on:
@@ -11,11 +10,12 @@ sys_stat
 
 configure.ac:
 gl_FUNC_LSTAT
+gl_SYS_STAT_MODULE_INDICATOR([lstat])
 
 Makefile.am:
 
 Include:
-"lstat.h"
+<sys/stat.h>
 
 License:
 LGPL

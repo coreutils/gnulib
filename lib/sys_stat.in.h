@@ -21,11 +21,19 @@
    incomplete.  It is intended to provide definitions and prototypes
    needed by an application.  Start with what the system provides.  */
 
-#ifndef _GL_SYS_STAT_H
-
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+
+#if defined __need_system_sys_stat_h
+/* Special invocation convention.  */
+
+#@INCLUDE_NEXT@ @NEXT_SYS_STAT_H@
+
+#else
+/* Normal invocation convention.  */
+
+#ifndef _GL_SYS_STAT_H
 
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_SYS_STAT_H@
@@ -272,6 +280,12 @@
 #if ! @HAVE_LSTAT@
 # define lstat stat
 #endif
+#if @GNULIB_LSTAT@ && @REPLACE_LSTAT@
+# undef lstat
+# define lstat rpl_lstat
+extern int rpl_lstat (const char *name, struct stat *buf);
+#endif
+
 
 #if @REPLACE_MKDIR@
 # undef mkdir
@@ -322,3 +336,4 @@ extern int lchmod (const char *filename, mode_t mode);
 
 #endif /* _GL_SYS_STAT_H */
 #endif /* _GL_SYS_STAT_H */
+#endif
