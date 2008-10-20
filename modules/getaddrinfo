@@ -2,7 +2,6 @@ Description:
 getaddrinfo() function: Get address information.
 
 Files:
-lib/getaddrinfo.h
 lib/getaddrinfo.c
 lib/gai_strerror.c
 m4/getaddrinfo.m4
@@ -15,14 +14,16 @@ snprintf
 socklen
 stdbool
 sys_socket
+netdb
 
 configure.ac:
 gl_GETADDRINFO
+gl_NETDB_MODULE_INDICATOR([getaddrinfo])
 
 Makefile.am:
 
 Include:
-"getaddrinfo.h"
+<netdb.h>
 
 License:
 LGPLv2+

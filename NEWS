@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-10-20  getaddrinfo     The include file is changed from "getaddrinfo.h"
+                            to <netdb.h>.
+
 2008-10-19  isnanf          The include file is changed from "isnanf.h" to
                             <math.h>.
             isnand          The include file is changed from "isnand.h" to

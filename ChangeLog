@@ -1,3 +1,16 @@
+2008-10-20  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/getaddrinfo.h: Remove file.
+	* modules/getaddrinfo: Reflect move from getaddrinfo.h to netdb.h.
+	* m4/getaddrinfo.m4: Call gl_HEADER_NETDB.  Don't check for netdb.h.
+	* lib/netdb.in.h: Add declarations from getaddrinfo.h.
+	* m4/netdb_h.m4: Initialize GNULIB_GETADDRINFO to 0.
+	* modules/netdb: Substitute GNULIB_GETADDRINFO.
+	* lib/getaddrinfo.c: Include netdb.h instead of getaddrinfo.h.
+	* tests/test-getaddrinfo.c: Likewise.
+	* lib/gai_strerror.c: Likewise.  Also drop HAVE_NETDB_H check.
+	* NEWS: Mention change.
+
 2008-10-19  Bruno Haible  <bruno@clisp.org>
 
 	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_WORKS): Remove unneeded code.

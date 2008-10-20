@@ -19,7 +19,7 @@
 
 #include <config.h>
 
-#include "getaddrinfo.h"
+#include <netdb.h>
 
 #if HAVE_NETINET_IN_H
 # include <netinet/in.h>
