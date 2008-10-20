@@ -1,0 +1,16 @@
+Files:
+tests/test-posix_spawn3.c
+
+Depends-on:
+posix_spawn_file_actions_init
+posix_spawn_file_actions_addopen
+posix_spawn_file_actions_destroy
+stdbool
+unistd
+sys_wait
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-posix_spawn3
+check_PROGRAMS += test-posix_spawn3

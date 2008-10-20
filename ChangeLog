@@ -1,5 +1,10 @@
 2008-10-20  Bruno Haible  <bruno@clisp.org>
 
+	* modules/posix_spawn-tests: New file.
+	* tests/test-posix_spawn3.c: New file.
+
+2008-10-20  Bruno Haible  <bruno@clisp.org>
+
 	* modules/posix_spawnp-tests (Depends-on): Add sys_wait.
 	* tests/test-posix_spawn1.c (WTERMSIG, WCOREDUMP, WEXITSTATUS,
 	WIFSIGNALED, WIFEXITED, WIFSTOPPED): Remove fallback definitions.
