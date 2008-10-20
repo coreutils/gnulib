@@ -20,6 +20,10 @@
 
 2008-10-20  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/canon-host.c: Include netdb.h instead of getaddrinfo.h.
+
+2008-10-20  Simon Josefsson  <simon@josefsson.org>
+
 	* lib/getaddrinfo.h: Remove file.
 	* modules/getaddrinfo: Reflect move from getaddrinfo.h to netdb.h.
 	* m4/getaddrinfo.m4: Call gl_HEADER_NETDB.  Don't check for netdb.h.
