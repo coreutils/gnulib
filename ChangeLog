@@ -1,5 +1,10 @@
 2008-10-20  Bruno Haible  <bruno@clisp.org>
 
+	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_WORKS): Test against another bug
+	of posix_spawn on AIX 5.3.
+
+2008-10-20  Bruno Haible  <bruno@clisp.org>
+
 	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_WORKS): Make the check on MacOS X.
 
 2008-10-20  Bruno Haible  <bruno@clisp.org>
