@@ -2,15 +2,6 @@
 # define SELINUX_CONTEXT_H
 
 # include <errno.h>
-/* Some systems don't have ENOTSUP.  */
-# ifndef ENOTSUP
-#  ifdef ENOSYS
-#   define ENOTSUP ENOSYS
-#  else
-/* Some systems don't have ENOSYS either.  */
-#   define ENOTSUP EINVAL
-#  endif
-# endif
 
 typedef int context_t;
 static inline context_t context_new (char const *s)

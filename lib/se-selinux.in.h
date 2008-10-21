@@ -3,15 +3,6 @@
 
 # include <sys/types.h>
 # include <errno.h>
-/* Some systems don't have ENOTSUP.  */
-# ifndef ENOTSUP
-#  ifdef ENOSYS
-#   define ENOTSUP ENOSYS
-#  else
-/* Some systems don't have ENOSYS either.  */
-#   define ENOTSUP EINVAL
-#  endif
-# endif
 
 typedef unsigned short security_class_t;
 # define security_context_t char*

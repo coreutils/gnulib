@@ -8,10 +8,12 @@ m4/selinux-context-h.m4
 m4/selinux-selinux-h.m4
 
 Depends-on:
+errno
 
 configure.ac:
 gl_HEADERS_SELINUX_SELINUX_H
 gl_HEADERS_SELINUX_CONTEXT_H
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += se-context.in.h se-selinux.in.h
