@@ -96,7 +96,6 @@ AC_DEFUN([gl_SYS_SOCKET_MODULE_INDICATOR],
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_SYS_SOCKET_H_DEFAULTS])
   GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
-  gl_MODULE_INDICATOR([$1])
 ])
 
 AC_DEFUN([gl_SYS_SOCKET_H_DEFAULTS],

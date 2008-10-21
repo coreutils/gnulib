@@ -29,7 +29,7 @@
 /* Get set_winsock_errno, FD_TO_SOCKET etc. */
 #include "w32sock.h"
 
-int
+static int
 _gl_close_fd_maybe_socket (int fd)
 {
   SOCKET sock = FD_TO_SOCKET (fd);

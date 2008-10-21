@@ -1,5 +1,23 @@
 2008-10-21  Bruno Haible  <bruno@clisp.org>
 
+	Simplification.
+	* lib/sys_socket.in.h (_gl_close_fd_maybe_socket): Remove declaration.
+	* lib/close.c (_gl_close_fd_maybe_socket): Make static.
+
+	Simplification.
+	* lib/ioctl.c (ioctl): Don't undefine.
+	* lib/socket.c (socket): Don't undefine.
+
+	Remove unused module indicator macros.
+	* m4/sys_socket_h.m4 (gl_SYS_SOCKET_MODULE_INDICATOR): Don't define
+	GNULIB_$1 as a C macro.
+
+	* doc/posix-functions/close.texi: Undo last change.
+	* doc/posix-functions/ioctl.texi: Merge the two paragraphs about
+	Windows platforms.
+
+2008-10-21  Bruno Haible  <bruno@clisp.org>
+
 	Add gethostname() declaration to <unistd.h>.
 	* lib/unistd.in.h (gethostname): New declaration.
 	* lib/gethostname.c: Include <unistd.h>.

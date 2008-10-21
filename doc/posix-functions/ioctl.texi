@@ -9,11 +9,9 @@ Gnulib module: ioctl
 Portability problems fixed by Gnulib:
 @itemize
 @item
-On Windows platforms (excluding Cygwin), error codes for @code{ioctl}
-are not placed in @code{errno}, and @code{WSAGetLastError} must be
-used instead.
-@item
-@code{ioctl} is called @code{ioctlsocket} under mingw
+On Windows platforms (excluding Cygwin), @code{ioctl} is called
+@code{ioctlsocket}, and error codes for this function are not placed in
+@code{errno}, and @code{WSAGetLastError} must be used instead.
 @end itemize
 
 Portability problems not fixed by Gnulib:

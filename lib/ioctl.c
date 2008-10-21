@@ -28,8 +28,6 @@
 /* Get set_winsock_errno, FD_TO_SOCKET etc. */
 #include "w32sock.h"
 
-#undef ioctl
-
 int
 rpl_ioctl (int fd, int req, ...)
 {

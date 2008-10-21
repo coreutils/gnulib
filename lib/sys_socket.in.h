@@ -389,9 +389,8 @@ extern int rpl_shutdown (int, int);
 # endif
 
 # if @GNULIB_CLOSE@ && @HAVE_WINSOCK2_H@
-/* gnulib internal function.  */
+/* Need a gnulib internal function.  */
 #  define HAVE__GL_CLOSE_FD_MAYBE_SOCKET 1
-extern int _gl_close_fd_maybe_socket (int fd);
 # endif
 
 # ifdef __cplusplus
