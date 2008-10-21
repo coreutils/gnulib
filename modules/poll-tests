@@ -6,6 +6,7 @@ stdbool
 sys_socket
 netinet_in
 arpa_inet
+sys_ioctl
 extensions
 inet_pton
 errno
@@ -17,6 +18,7 @@ setsockopt
 listen
 connect
 accept
+ioctl
 close
 
 configure.ac:
