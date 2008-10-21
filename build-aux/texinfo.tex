@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-10-16.09}
+\def\texinfoversion{2008-10-20.21}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -926,6 +926,7 @@ where each line of input produces a line of output.}
   {%
     \makevalueexpandable  % we want to expand any @value in FILE.
     \turnoffactive        % and allow special characters in the expansion
+    \indexnofonts         % Allow `@@' and other weird things in file names.
     \edef\temp{\noexpand\input #1 }%
     %
     % This trickery is to read FILE outside of a group, in case it makes
@@ -6175,8 +6176,8 @@ end
 \def\doverbatiminclude#1{%
   {%
     \makevalueexpandable
-    \def\@{@}% we want to use \indexnofonts, but then verbatim ends prematurely
     \setupverbatim
+    \indexnofonts       % Allow `@@' and other weird things in file names.
     \input #1
     \afterenvbreak
   }%
