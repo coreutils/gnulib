@@ -20,9 +20,46 @@
 #include <unistd.h>
 
 #if GNULIB_SYS_SOCKET
+# define WIN32_LEAN_AND_MEAN
 # include <sys/socket.h>
 #endif
 
+#if HAVE__GL_CLOSE_FD_MAYBE_SOCKET
+
+/* Get set_winsock_errno, FD_TO_SOCKET etc. */
+#include "w32sock.h"
+
+int
+_gl_close_fd_maybe_socket (int fd)
+{
+  SOCKET sock = FD_TO_SOCKET (fd);
+  WSANETWORKEVENTS ev;
+
+  ev.lNetworkEvents = 0xDEADBEEF;
+  WSAEnumNetworkEvents (sock, NULL, &ev);
+  if (ev.lNetworkEvents != 0xDEADBEEF)
+    {
+      /* FIXME: other applications, like squid, use an undocumented
+	 _free_osfhnd free function.  But this is not enough: The 'osfile'
+	 flags for fd also needs to be cleared, but it is hard to access it.
+	 Instead, here we just close twice the file descriptor.  */
+      if (closesocket (sock))
+	{
+	  set_winsock_errno ();
+	  return -1;
+	}
+      else
+	{
+	  /* This call frees the file descriptor and does a
+	     CloseHandle ((HANDLE) _get_osfhandle (fd)), which fails.  */
+	  _close (fd);
+	  return 0;
+	}
+    }
+  else
+    return _close (fd);
+}
+#endif
 
 /* Override close() to call into other gnulib modules.  */
 

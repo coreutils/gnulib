@@ -2,7 +2,8 @@ Description:
 listen() function: make a server socket ready for accepting connections.
 
 Files:
-lib/winsock.c
+lib/listen.c
+lib/w32sock.h
 
 Depends-on:
 sys_socket
@@ -11,7 +12,7 @@ errno
 configure.ac:
 AC_REQUIRE([gl_HEADER_SYS_SOCKET])
 if test "$ac_cv_header_winsock2_h" = yes; then
-  AC_LIBOBJ([winsock])
+  AC_LIBOBJ([listen])
 fi
 gl_SYS_SOCKET_MODULE_INDICATOR([listen])
 

@@ -12,6 +12,10 @@ Portability problems fixed by Gnulib:
 On Windows platforms (excluding Cygwin), @code{socket} and @code{accept}
 do not return file descriptors that can be closed by @code{close}.
 Instead, @code{closesocket} must be used.
+@item
+On Windows platforms (excluding Cygwin), error codes for @code{close}
+are not placed in @code{errno}, and @code{WSAGetLastError} must be
+used instead.
 @end itemize
 
 Portability problems not fixed by Gnulib:

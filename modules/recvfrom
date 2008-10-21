@@ -2,7 +2,8 @@ Description:
 recvfrom() function: receive (read) data from a potentially unconnected socket.
 
 Files:
-lib/winsock.c
+lib/recvfrom.c
+lib/w32sock.h
 
 Depends-on:
 sys_socket
@@ -12,7 +13,7 @@ getpeername
 configure.ac:
 AC_REQUIRE([gl_HEADER_SYS_SOCKET])
 if test "$ac_cv_header_winsock2_h" = yes; then
-  AC_LIBOBJ([winsock])
+  AC_LIBOBJ([recvfrom])
 fi
 gl_SYS_SOCKET_MODULE_INDICATOR([recvfrom])
 

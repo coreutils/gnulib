@@ -2,7 +2,8 @@ Description:
 send() function: send (write) data to a connected socket.
 
 Files:
-lib/winsock.c
+lib/send.c
+lib/w32sock.h
 
 Depends-on:
 sys_socket
@@ -11,7 +12,7 @@ errno
 configure.ac:
 AC_REQUIRE([gl_HEADER_SYS_SOCKET])
 if test "$ac_cv_header_winsock2_h" = yes; then
-  AC_LIBOBJ([winsock])
+  AC_LIBOBJ([send])
 fi
 gl_SYS_SOCKET_MODULE_INDICATOR([send])
 

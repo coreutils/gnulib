@@ -2,7 +2,8 @@ Description:
 sendto() function: send (write) data to a potentially unconnected socket.
 
 Files:
-lib/winsock.c
+lib/sendto.c
+lib/w32sock.h
 
 Depends-on:
 sys_socket
@@ -11,7 +12,7 @@ errno
 configure.ac:
 AC_REQUIRE([gl_HEADER_SYS_SOCKET])
 if test "$ac_cv_header_winsock2_h" = yes; then
-  AC_LIBOBJ([winsock])
+  AC_LIBOBJ([sendto])
 fi
 gl_SYS_SOCKET_MODULE_INDICATOR([sendto])
 

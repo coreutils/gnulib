@@ -3,7 +3,8 @@ getpeername() function: return information about the remote end of a connected
 socket.
 
 Files:
-lib/winsock.c
+lib/getpeername.c
+lib/w32sock.h
 
 Depends-on:
 sys_socket
@@ -12,7 +13,7 @@ errno
 configure.ac:
 AC_REQUIRE([gl_HEADER_SYS_SOCKET])
 if test "$ac_cv_header_winsock2_h" = yes; then
-  AC_LIBOBJ([winsock])
+  AC_LIBOBJ([getpeername])
 fi
 gl_SYS_SOCKET_MODULE_INDICATOR([getpeername])
 

@@ -1,3 +1,56 @@
+2008-10-21  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/close.c: Add _gl_close_fd_maybe_socket from winsock.c.
+	* lib/accept.c: New file, based on winsock.c.
+	* lib/bind.c: New file, based on winsock.c.
+	* lib/connect.c: New file, based on winsock.c.
+	* lib/getpeername.c: New file, based on winsock.c.
+	* lib/getsockname.c: New file, based on winsock.c.
+	* lib/getsockopt.c: New file, based on winsock.c.
+	* lib/ioctl.c: New file, based on winsock.c.
+	* lib/listen.c: New file, based on winsock.c.
+	* lib/recv.c: New file, based on winsock.c.
+	* lib/recvfrom.c: New file, based on winsock.c.
+	* lib/send.c: New file, based on winsock.c.
+	* lib/sendto.c: New file, based on winsock.c.
+	* lib/setsockopt.c: New file, based on winsock.c.
+	* lib/shutdown.c: New file, based on winsock.c.
+	* lib/socket.c: New file, based on winsock.c.
+	* lib/w32sock.h: New file, based on winsock.c.
+	* lib/winsock.c: Remove file.
+	* modules/accept: Likewise.
+	* modules/bind: Likewise.
+	* modules/connect: Likewise.
+	* modules/getpeername: Likewise.
+	* modules/getsockname: Likewise.
+	* modules/getsockopt: Likewise.
+	* modules/ioctl: Likewise.
+	* modules/listen: Likewise.
+	* modules/recv: Likewise.
+	* modules/recvfrom: Likewise.
+	* modules/send: Likewise.
+	* modules/sendto: Likewise.
+	* modules/setsockopt: Likewise.
+	* modules/shutdown: Likewise.
+	* modules/socket: Use socket.c instead of winsock.c.
+	* modules/sys_socket: Remove (unneeded?) dependency on winsock.c.
+	* doc/posix-functions/accept.texi: Doc fix.
+	* doc/posix-functions/bind.texi: Doc fix.
+	* doc/posix-functions/close.texi: Doc fix.
+	* doc/posix-functions/connect.texi: Doc fix.
+	* doc/posix-functions/getpeername.texi: Doc fix.
+	* doc/posix-functions/getsockname.texi: Doc fix.
+	* doc/posix-functions/getsockopt.texi: Doc fix.
+	* doc/posix-functions/ioctl.texi: Doc fix.
+	* doc/posix-functions/listen.texi: Doc fix.
+	* doc/posix-functions/recv.texi: Doc fix.
+	* doc/posix-functions/recvfrom.texi: Doc fix.
+	* doc/posix-functions/send.texi: Doc fix.
+	* doc/posix-functions/sendto.texi: Doc fix.
+	* doc/posix-functions/setsockopt.texi: Doc fix.
+	* doc/posix-functions/shutdown.texi: Doc fix.
+	* doc/posix-functions/socket.texi: Doc fix.
+
 2008-10-20  Bruno Haible  <bruno@clisp.org>
 
 	Take into account the role of SIGABRT_COMPAT on Windows 2008.

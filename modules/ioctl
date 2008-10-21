@@ -2,7 +2,8 @@ Description:
 ioctl() function: issue device specific requests on files, devices, or sockets.
 
 Files:
-lib/winsock.c
+lib/ioctl.c
+lib/w32sock.h
 
 Depends-on:
 sys_ioctl
@@ -12,7 +13,7 @@ errno
 configure.ac:
 AC_REQUIRE([gl_HEADER_SYS_SOCKET])
 if test "$ac_cv_header_winsock2_h" = yes; then
-  AC_LIBOBJ([winsock])
+  AC_LIBOBJ([ioctl])
   gl_REPLACE_SYS_IOCTL_H
 fi
 gl_SYS_IOCTL_MODULE_INDICATOR([ioctl])
