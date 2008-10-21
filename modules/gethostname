@@ -6,13 +6,16 @@ lib/gethostname.c
 m4/gethostname.m4
 
 Depends-on:
+unistd
 
 configure.ac:
 gl_FUNC_GETHOSTNAME
+gl_UNISTD_MODULE_INDICATOR([gethostname])
 
 Makefile.am:
 
 Include:
+<unistd.h>
 
 License:
 LGPL

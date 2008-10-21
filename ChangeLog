@@ -1,5 +1,21 @@
 2008-10-21  Bruno Haible  <bruno@clisp.org>
 
+	Add gethostname() declaration to <unistd.h>.
+	* lib/unistd.in.h (gethostname): New declaration.
+	* lib/gethostname.c: Include <unistd.h>.
+	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): Require
+	gl_UNISTD_H_DEFAULTS. Set HAVE_GETHOSTNAME.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_GETHOSTNAME
+	and HAVE_GETHOSTNAME.
+	* modules/gethostname (Depends-on): Add unistd.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+	(Include): Specify <unistd.h>.
+	* modules/unistd (Makefile.am): Substitute GNULIB_GETHOSTNAME and
+	HAVE_GETHOSTNAME.
+	* tests/test-gethostname.c: Include <unistd.h> first.
+
+2008-10-21  Bruno Haible  <bruno@clisp.org>
+
 	* modules/poll-tests (Depends-on): Add sys_ioctl, ioctl.
 	* modules/select-tests (Depends-on): Likewise.
 	Reported by Simon Josefsson.

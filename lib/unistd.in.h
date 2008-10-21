@@ -272,6 +272,26 @@ extern int getdtablesize (void);
 #endif
 
 
+#if @GNULIB_GETHOSTNAME@
+/* Return the standard host name of the machine.
+   WARNING! The host name may or may not be fully qualified.
+
+   Put up to LEN bytes of the host name into NAME.
+   Null terminate it if the name is shorter than LEN.
+   If the host name is longer than LEN, set errno = EINVAL and return -1.
+   Return 0 if successful, otherwise set errno and return -1.  */
+# if !@HAVE_GETHOSTNAME@
+extern int gethostname(char *name, size_t len);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef gethostname
+# define gethostname(n,l) \
+    (GL_LINK_WARNING ("gethostname is unportable - " \
+                      "use gnulib module gethostname for portability"), \
+     gethostname (n, l))
+#endif
+
+
 #if @GNULIB_GETLOGIN_R@
 /* Copies the user's login name to NAME.
    The array pointed to by NAME has room for SIZE bytes.

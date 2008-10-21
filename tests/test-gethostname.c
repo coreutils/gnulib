@@ -17,10 +17,11 @@
 
 #include <config.h>
 
+#include <unistd.h>
+
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include <unistd.h>
 
 #define NOHOSTNAME "magic-gnulib-test-string"
 
