@@ -41,6 +41,9 @@ Include:
 #include <selinux/selinux.h>
 #include <selinux/context.h>
 
+Link:
+$(LIB_SELINUX)
+
 License:
 LGPLv2+
 

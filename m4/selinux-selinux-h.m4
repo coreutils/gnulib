@@ -14,4 +14,12 @@ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
 		   [SELINUX_SELINUX_H=],
 		   [SELINUX_SELINUX_H=selinux/selinux.h])
   AC_SUBST([SELINUX_SELINUX_H])
+
+  LIB_SELINUX=
+  gl_save_LIBS=$LIBS
+  AC_SEARCH_LIBS([setfilecon], [selinux],
+                 [test "$ac_cv_search_setfilecon" = "none required" ||
+                  LIB_SELINUX=$ac_cv_search_setfilecon])
+  AC_SUBST(LIB_SELINUX)
+  LIBS=$gl_save_LIBS
 ])
