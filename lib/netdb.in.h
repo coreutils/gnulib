@@ -36,7 +36,7 @@
 #ifndef _GL_NETDB_H
 #define _GL_NETDB_H
 
-#if @HAVE_NETDB_H@
+#if @HAVE_NETDB_H@ && HAVE_STRUCT_ADDRINFO
 
 /* Declarations for a platform that has <netdb.h>.  */
 
@@ -45,7 +45,8 @@
 /* Get netdb.h definitions such as struct hostent for MinGW.  */
 #include <sys/socket.h>
 
-/* Declarations for a platform that lacks <netdb.h>.  */
+/* Declarations for a platform that lacks <netdb.h>, or where it is
+   incomplete.  */
 
 #if @GNULIB_GETADDRINFO@
 

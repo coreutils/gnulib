@@ -1,3 +1,12 @@
+2008-10-22  Eric Blake  <ebb9@byu.net>
+
+	netdb: also supply struct addrinfo for cygwin 1.5.x
+	* m4/netdb_h.m4 (gl_HEADER_NETDB): Check for incomplete header on
+	older cygwin.
+	* lib/netdb.in.h [!HAVE_STRUCT_ADDRINFO]: Also supply contents for
+	cygwin.
+	* doc/posix-headers/netdb.texi (netdb.h): Document this.
+
 2008-10-22  Bruno Haible  <bruno@clisp.org>
 
 	* users.txt: Update entry about pspp.
