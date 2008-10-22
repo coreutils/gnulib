@@ -210,6 +210,7 @@ gl_thread_exit_func (void *retval)
   gl_thread_t thread = gl_thread_self ();
   thread->result = retval;
   _endthreadex (0); /* calls ExitThread (0) */
+  abort ();
 }
 
 #endif

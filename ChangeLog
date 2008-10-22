@@ -1,5 +1,11 @@
 2008-10-22  Eric Blake  <ebb9@byu.net>
 
+	glthread/thread: avoid compiler warning
+	* lib/glthread/thread.c (gl_thread_exit_func) [USE_WIN32_THREADS]:
+	Add unreachable abort to silence compiler.
+
+2008-10-22  Eric Blake  <ebb9@byu.net>
+
 	netdb: also supply struct addrinfo for cygwin 1.5.x
 	* m4/netdb_h.m4 (gl_HEADER_NETDB): Check for incomplete header on
 	older cygwin.
