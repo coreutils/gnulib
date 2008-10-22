@@ -49,7 +49,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   parted          http://git.debian.org/?p=parted/parted.git;a=summary
   prelude-lml     https://trac.prelude-ids.org/browser/trunk/prelude-lml/
   prelude-manager https://trac.prelude-ids.org/browser/trunk/prelude-manager/
-  pspp            http://cvs.sv.gnu.org/viewcvs/pspp/pspp/
+  pspp            http://git.sv.gnu.org/gitweb/?p=pspp.git
   radius          http://cvs.sv.gnu.org/viewcvs/radius/radius/
   sed             http://cvs.savannah.gnu.org/viewcvs/sed/?root=sed
   shishi          http://git.sv.gnu.org/gitweb/?p=shishi.git
