@@ -1,5 +1,9 @@
 2008-10-22  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/sys_socket.in.h (FD_ISSET): Fix warnings under mingw.
+
+2008-10-22  Simon Josefsson  <simon@josefsson.org>
+
 	* m4/getgroups.m4: Avoid invoking test with wrong parameters.
 
 2008-10-22  Eric Blake  <ebb9@byu.net>

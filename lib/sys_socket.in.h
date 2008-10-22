@@ -120,9 +120,9 @@ extern "C" {
 /* Re-define FD_ISSET to avoid a WSA call while we are not using
    network sockets.  */
 static inline int
-rpl_fd_isset (int fd, fd_set * set)
+rpl_fd_isset (SOCKET fd, fd_set * set)
 {
-  int i;
+  u_int i;
   if (set == NULL)
     return 0;
 
