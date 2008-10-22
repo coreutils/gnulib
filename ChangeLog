@@ -1,3 +1,9 @@
+2008-10-23  Jim Meyering  <meyering@redhat.com>
+
+	selinux-h: mark parameters of stub functions as intentionally unused
+	* lib/se-selinux.in.h: Mark parameters as _UNUSED_PARAMETER_.
+	* lib/se-context.in.h: Likewise.
+
 2008-10-22  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/sys_socket.in.h (FD_ISSET): Fix warnings under mingw.
