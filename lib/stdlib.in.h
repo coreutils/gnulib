@@ -217,6 +217,43 @@ extern int putenv (char *string);
 #endif
 
 
+#if @GNULIB_RANDOM_R@
+# if !@HAVE_RANDOM_R@
+
+#  ifndef RAND_MAX
+#   define RAND_MAX 2147483647
+#  endif
+
+int srandom_r (unsigned int seed, struct random_data *rand_state);
+int initstate_r (unsigned int seed, char *buf, size_t buf_size,
+		 struct random_data *rand_state);
+int setstate_r (char *arg_state, struct random_data *rand_state);
+int random_r (struct random_data *buf, int32_t *result);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef random_r
+# define random_r(b,r)				  \
+    (GL_LINK_WARNING ("random_r is unportable - " \
+                      "use gnulib module random_r for portability"), \
+     random_r (b,r))
+# undef initstate_r
+# define initstate_r(s,b,sz,r)			     \
+    (GL_LINK_WARNING ("initstate_r is unportable - " \
+                      "use gnulib module random_r for portability"), \
+     initstate_r (s,b,sz,r))
+# undef srandom_r
+# define srandom_r(s,r)				   \
+    (GL_LINK_WARNING ("srandom_r is unportable - " \
+                      "use gnulib module random_r for portability"), \
+     srandom_r (s,r))
+# undef setstate_r
+# define setstate_r(a,r)				    \
+    (GL_LINK_WARNING ("setstate_r is unportable - " \
+                      "use gnulib module random_r for portability"), \
+     setstate_r (a,r))
+#endif
+
+
 #if @GNULIB_RPMATCH@
 # if !@HAVE_RPMATCH@
 /* Test a user response to a question.

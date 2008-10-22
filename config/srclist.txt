@@ -179,6 +179,7 @@ $LIBCSRC/stdlib/strtoul.c		lib gpl
 #$LIBCSRC/posix/glob.h			lib gpl (glob-libc.h in gnulib)
 #
 #$LIBCSRC/stdlib/putenv.c		lib gpl
+#$LIBCSRC/stdlib/random_r.c		lib gpl
 #$LIBCSRC/stdlib/rpmatch.c		lib gpl
 #$LIBCSRC/stdlib/strtol.c		lib gpl
 #$LIBCSRC/string/strndup.c		lib gpl

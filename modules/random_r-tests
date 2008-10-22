@@ -1,0 +1,13 @@
+Files:
+tests/test-random_r.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-random_r
+check_PROGRAMS += test-random_r
+
+License:
+LGPL

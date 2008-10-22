@@ -1,0 +1,24 @@
+Description:
+reentrant random number generator
+
+Files:
+lib/random_r.c
+m4/random_r.m4
+
+Depends-on:
+stdlib
+
+configure.ac:
+gl_FUNC_RANDOM_R
+gl_STDLIB_MODULE_INDICATOR([random_r])
+
+Makefile.am:
+
+Include:
+#include <stdlib.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Jim Meyering

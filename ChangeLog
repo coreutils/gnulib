@@ -1,3 +1,23 @@
+2008-10-23  Jim Meyering  <meyering@redhat.com>
+
+	random_r: new module
+	* modules/random_r: New file.
+	* m4/random_r.m4: New file.
+	* lib/random_r.c: New file, from glibc.
+	* modules/random_r-tests: New file.
+	* tests/test-random_r.c: New file.
+	* lib/stdlib.in.h (srandom_r, initstate_r, setstate_r, random_r):
+	 Declare.
+	(RAND_MAX): Define.
+	* m4/stdlib_h.m4: Define and AC_SUBST GNULIB_RANDOM_R and HAVE_RANDOM_R.
+	* modules/stdlib: Substitute them, too.
+	* MODULES.html.sh (Extra functions based on POSIX:2001) [Misc]: Add it.
+	* doc/glibc-functions/initstate_r.texi: Mention the new module.
+	* doc/glibc-functions/random_r.texi: Likewise.
+	* doc/glibc-functions/setstate_r.texi: Likewise.
+	* doc/glibc-functions/srandom_r.texi: Likewise.
+	* config/srclist.txt: Mention it.
+
 2008-10-23  David Lutterkort  <lutter@redhat.com>
 
 	* modules/selinux-h: Search for LIB_SELINUX and mark it as a

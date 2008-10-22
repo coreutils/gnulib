@@ -2941,6 +2941,7 @@ func_all_modules ()
   func_module quotearg
   func_module quote
   func_module readutmp
+  func_module random_r
   func_module sysexits
   func_module verror
   func_module visibility
