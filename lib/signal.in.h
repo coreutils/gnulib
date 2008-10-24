@@ -178,6 +178,12 @@ extern int sigaction (int, const struct sigaction *restrict,
 #endif /* !@HAVE_SIGACTION@, !@HAVE_STRUCT_SIGACTION_SA_SIGACTION@ */
 
 
+/* Some systems don't have SA_NODEFER.  */
+#ifndef SA_NODEFER
+# define SA_NODEFER 0
+#endif
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,5 +1,12 @@
 2008-10-23  Bruno Haible  <bruno@clisp.org>
 
+	Define a dummy SA_NODEFER macro on Interix.
+	* lib/signal.in.h (SA_NODEFER): Define fallback.
+	Reported by Aleksey Cheusov <cheusov@tut.by> via
+	Thomas Klausner <wiz@netbsd.org> and Eric Blake.
+
+2008-10-23  Bruno Haible  <bruno@clisp.org>
+
 	* modules/freadahead (License): Change to LGPLv2+.
 	Suggested by Simon Josefsson.
 
