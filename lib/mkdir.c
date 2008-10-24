@@ -40,12 +40,15 @@
    alias mkdir), only in the nonstandard io.h.  */
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # define mkdir(name,mode) _mkdir (name)
+# define maybe_unused _UNUSED_PARAMETER_
+#else
+# define maybe_unused /* empty */
 #endif
 
 /* This function is required at least for NetBSD 1.5.2.  */
 
 int
-rpl_mkdir (char const *dir, mode_t mode)
+rpl_mkdir (char const *dir, mode_t mode maybe_unused)
 {
   int ret_val;
   char *tmp_dir;
