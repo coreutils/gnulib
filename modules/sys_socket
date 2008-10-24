@@ -40,7 +40,7 @@ sys/socket.h: sys_socket.in.h
 	      -e 's|@''GNULIB_GETSOCKOPT''@|$(GNULIB_GETSOCKOPT)|g' \
 	      -e 's|@''GNULIB_LISTEN''@|$(GNULIB_LISTEN)|g' \
 	      -e 's|@''GNULIB_RECV''@|$(GNULIB_RECV)|g' \
-	      -e 's|@''GNULIB_SEND''@|$()GNULIB_SEND|g' \
+	      -e 's|@''GNULIB_SEND''@|$(GNULIB_SEND)|g' \
 	      -e 's|@''GNULIB_RECVFROM''@|$(GNULIB_RECVFROM)|g' \
 	      -e 's|@''GNULIB_SENDTO''@|$(GNULIB_SENDTO)|g' \
 	      -e 's|@''GNULIB_SETSOCKOPT''@|$(GNULIB_SETSOCKOPT)|g' \

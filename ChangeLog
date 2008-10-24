@@ -1,3 +1,8 @@
+2008-10-24  Jim Meyering  <meyering@redhat.com>
+
+	sys_socket: fix typo that inhibited expansion of @GNULIB_SEND@
+	* modules/sys_socket (Depends-on) [Depends-on]: Fix typo.
+
 2008-10-24  Eric Blake  <ebb9@byu.net>
 
 	getgroups: fix compilation when getgroups is available
