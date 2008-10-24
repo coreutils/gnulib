@@ -1,3 +1,9 @@
+2008-10-24  Bruno Haible  <bruno@clisp.org>
+
+	* modules/intprops (License): Change to LGPLv2+, with approval by Paul
+	Eggert.
+	* modules/strerror (License): Likewise.
+
 2008-10-24  Jim Meyering  <meyering@redhat.com>
 
 	sys_socket: fix typo that inhibited expansion of @GNULIB_SEND@

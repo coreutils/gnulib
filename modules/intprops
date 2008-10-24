@@ -14,7 +14,7 @@ Include:
 "intprops.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Paul Eggert
