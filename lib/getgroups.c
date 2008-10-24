@@ -1,6 +1,7 @@
 /* provide consistent interface to getgroups for systems that don't allow N==0
 
-   Copyright (C) 1996, 1999, 2003, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 1996, 1999, 2003, 2006, 2007, 2008 Free Software
+   Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,10 +20,13 @@
 
 #include <config.h>
 
+#undef getgroups
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "xalloc.h"
 
@@ -37,8 +41,6 @@ rpl_getgroups (int n, GETGROUPS_T *group)
   int n_groups;
   GETGROUPS_T *gbuf;
   int saved_errno;
-
-#undef getgroups
 
   if (n != 0)
     return getgroups (n, group);

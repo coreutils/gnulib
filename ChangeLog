@@ -1,3 +1,9 @@
+2008-10-24  Eric Blake  <ebb9@byu.net>
+
+	getgroups: fix compilation when getgroups is available
+	* lib/getgroups.c (includes): Include <unistd.h> for getgroups,
+	but with <config.h> override of getgroups disabled.
+
 2008-10-24  Simon Josefsson  <simon@josefsson.org>
 
 	* doc/gnulib.texi (Header files): Add note about C++ problems.
