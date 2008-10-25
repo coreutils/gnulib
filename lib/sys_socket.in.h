@@ -388,11 +388,6 @@ extern int rpl_shutdown (int, int);
 #  define select		select_used_without_including_sys_select_h
 # endif
 
-# if @GNULIB_CLOSE@ && @HAVE_WINSOCK2_H@
-/* Need a gnulib internal function.  */
-#  define HAVE__GL_CLOSE_FD_MAYBE_SOCKET 1
-# endif
-
 # ifdef __cplusplus
 }
 # endif

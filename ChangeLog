@@ -1,3 +1,11 @@
+2008-10-25  Bruno Haible  <bruno@clisp.org>
+
+	* lib/sys_socket.in.h (HAVE__GL_CLOSE_FD_MAYBE_SOCKET); Move macro from
+	here ...
+	* lib/unistd.in.h (HAVE__GL_CLOSE_FD_MAYBE_SOCKET); ... to here.
+	* m4/sys_socket_h.m4 (gl_SYS_SOCKET_H_DEFAULTS): Remove invocation of
+	gl_UNISTD_H_DEFAULTS.
+	
 2008-10-25  Eric Blake  <ebb9@byu.net>
 
 	signbit: avoid spurious compiler failure
