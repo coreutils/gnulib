@@ -71,8 +71,8 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
 # Sets and substitutes HAVE_WINSOCK2_H.
 AC_DEFUN([gl_PREREQ_SYS_H_WINSOCK2],
 [
-  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
-  AC_REQUIRE([gl_SYS_IOCTL_H_DEFAULTS])
+  m4_ifdef([gl_UNISTD_H_DEFAULTS], [AC_REQUIRE([gl_UNISTD_H_DEFAULTS])])
+  m4_ifdef([gl_SYS_IOCTL_H_DEFAULTS], [AC_REQUIRE([gl_SYS_IOCTL_H_DEFAULTS])])
   AC_CHECK_HEADERS_ONCE([sys/socket.h])
   if test $ac_cv_header_sys_socket_h != yes; then
     dnl We cannot use AC_CHECK_HEADERS_ONCE here, because that would make

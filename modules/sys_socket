@@ -5,8 +5,6 @@ Files:
 lib/sys_socket.in.h
 m4/sys_socket_h.m4
 m4/sockpfaf.m4
-m4/unistd_h.m4
-m4/sys_ioctl_h.m4
 
 Depends-on:
 include_next

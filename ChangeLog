@@ -1,5 +1,9 @@
 2008-10-25  Bruno Haible  <bruno@clisp.org>
 
+	* m4/sys_socket_h.m4 (gl_PREREQ_SYS_H_WINSOCK2): Require
+	gl_UNISTD_H_DEFAULTS, gl_SYS_IOCTL_H_DEFAULTS only if they exist.
+	* modules/sys_socket (Files): Remove m4/unistd_h.m4, m4/sys_ioctl_h.m4.
+
 	* lib/sys_socket.in.h (HAVE__GL_CLOSE_FD_MAYBE_SOCKET); Move macro from
 	here ...
 	* lib/unistd.in.h (HAVE__GL_CLOSE_FD_MAYBE_SOCKET); ... to here.
