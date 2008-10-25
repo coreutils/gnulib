@@ -41,6 +41,10 @@
 # include <sys/loadavg.h>
 #endif
 
+#if @GNULIB_RANDOM_R@
+# include <stdint.h>
+#endif
+
 /* The definition of GL_LINK_WARNING is copied here.  */
 
 

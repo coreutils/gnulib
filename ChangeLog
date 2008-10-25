@@ -1,3 +1,9 @@
+2008-10-24  Simon Josefsson  <simon@josefsson.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdlib.in.h (@GNULIB_RANDOM_R@): Include stdint.h.
+	* modules/random_r (Depends-on): Add stdint.
+
 2008-10-24  Bruno Haible  <bruno@clisp.org>
 
 	* modules/intprops (License): Change to LGPLv2+, with approval by Paul

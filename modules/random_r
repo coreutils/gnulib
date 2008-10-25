@@ -7,6 +7,7 @@ m4/random_r.m4
 
 Depends-on:
 stdlib
+stdint
 
 configure.ac:
 gl_FUNC_RANDOM_R
