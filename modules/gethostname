@@ -4,6 +4,7 @@ gethostname() function: Return machine's hostname.
 Files:
 lib/gethostname.c
 m4/gethostname.m4
+m4/sys_socket_h.m4
 
 Depends-on:
 unistd

@@ -42,6 +42,47 @@
 # include <sys/types.h>
 #endif
 
+#if @GNULIB_GETHOSTNAME@
+/* Get all possible declarations of gethostname().  */
+# if @UNISTD_H_HAVE_WINSOCK2_H@
+#  include <winsock2.h>
+#  if !defined _GL_SYS_SOCKET_H
+#   undef socket
+#   define socket		socket_used_without_including_sys_socket_h
+#   undef connect
+#   define connect		connect_used_without_including_sys_socket_h
+#   undef accept
+#   define accept		accept_used_without_including_sys_socket_h
+#   undef bind
+#   define bind			bind_used_without_including_sys_socket_h
+#   undef getpeername
+#   define getpeername		getpeername_used_without_including_sys_socket_h
+#   undef getsockname
+#   define getsockname		getsockname_used_without_including_sys_socket_h
+#   undef getsockopt
+#   define getsockopt		getsockopt_used_without_including_sys_socket_h
+#   undef listen
+#   define listen		listen_used_without_including_sys_socket_h
+#   undef recv
+#   define recv			recv_used_without_including_sys_socket_h
+#   undef send
+#   define send			send_used_without_including_sys_socket_h
+#   undef recvfrom
+#   define recvfrom		recvfrom_used_without_including_sys_socket_h
+#   undef sendto
+#   define sendto		sendto_used_without_including_sys_socket_h
+#   undef setsockopt
+#   define setsockopt		setsockopt_used_without_including_sys_socket_h
+#   undef shutdown
+#   define shutdown		shutdown_used_without_including_sys_socket_h
+#  endif
+#  if !defined _GL_SYS_SELECT_H
+#   undef select
+#   define select		select_used_without_including_sys_select_h
+#  endif
+# endif
+#endif
+
 /* The definition of GL_LINK_WARNING is copied here.  */
 
 
@@ -284,9 +325,16 @@ extern int getdtablesize (void);
    Null terminate it if the name is shorter than LEN.
    If the host name is longer than LEN, set errno = EINVAL and return -1.
    Return 0 if successful, otherwise set errno and return -1.  */
-# if !@HAVE_GETHOSTNAME@
+# if @UNISTD_H_HAVE_WINSOCK2_H@
+#  undef gethostname
+#  define gethostname rpl_gethostname
+# endif
+# if @UNISTD_H_HAVE_WINSOCK2_H@ || !@HAVE_GETHOSTNAME@
 extern int gethostname(char *name, size_t len);
 # endif
+#elif @UNISTD_H_HAVE_WINSOCK2_H@
+# undef gethostname
+# define gethostname gethostname_used_without_requesting_gnulib_module_gethostname
 #elif defined GNULIB_POSIXCHECK
 # undef gethostname
 # define gethostname(n,l) \

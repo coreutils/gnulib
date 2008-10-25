@@ -145,6 +145,11 @@ rpl_fd_isset (SOCKET fd, fd_set * set)
 #  define close close_used_without_including_unistd_h
 # endif
 
+# if @HAVE_WINSOCK2_H@ && !defined _GL_UNISTD_H
+#  undef gethostname
+#  define gethostname gethostname_used_without_including_unistd_h
+# endif
+
 # if @GNULIB_SOCKET@
 #  if @HAVE_WINSOCK2_H@
 #   undef socket

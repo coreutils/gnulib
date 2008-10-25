@@ -1,3 +1,17 @@
+2008-10-25  Ben Pfaff  <blp@cs.stanford.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/unistd.in.h: Include <winsock2.h>.
+	(socket, connect,accept, bind, getpeername, getsockname, getsockopt,
+	listen, recv, send, recvfrom, sendto, setsockopt, shutdown, select):
+	Provide dummy declarations.
+	(gethostname): Override.
+	* lib/sys_socket.in.h (gethostname): Provide dummy declaration.
+	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): Invoke
+	gl_PREREQ_SYS_H_WINSOCK2.
+	* modules/gethostname (Files): Add m4/sys_socket_h.m4.
+	* doc/posix-functions/gethostname.texi: More details.
+
 2008-10-25  Bruno Haible  <bruno@clisp.org>
 
 	* m4/sys_socket_h.m4 (gl_PREREQ_SYS_H_WINSOCK2): Require
