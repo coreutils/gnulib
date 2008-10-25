@@ -1,3 +1,9 @@
+2008-10-25  Eric Blake  <ebb9@byu.net>
+
+	signbit: avoid spurious compiler failure
+	* m4/signbit.m4 (gl_SIGNBIT_TEST_PROGRAM): Move non-constant
+	declarations inside function.
+
 2008-10-24  Simon Josefsson  <simon@josefsson.org>
             Bruno Haible  <bruno@clisp.org>
 

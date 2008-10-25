@@ -124,6 +124,8 @@ AC_DEFUN([gl_SIGNBIT],
 ])
 
 AC_DEFUN([gl_SIGNBIT_TEST_PROGRAM], [[
+int main ()
+{
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
    So we use -p0f and -p0d instead.  */
 float p0f = 0.0f;
@@ -140,8 +142,6 @@ long double m0l = -LDBL_MIN * LDBL_MIN;
 #else
 long double m0l = -p0l;
 #endif
-int main ()
-{
   {
     float plus_inf = 1.0f / p0f;
     float minus_inf = -1.0f / p0f;
