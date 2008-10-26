@@ -1,3 +1,8 @@
+2008-10-26  Simon Josefsson  <simon@josefsson.org>
+
+	* doc/gnulib.texi (Header files): C++ fixes, based on Bruno's
+	findings.
+
 2008-10-25  Ben Pfaff  <blp@cs.stanford.edu>
             Bruno Haible  <bruno@clisp.org>
 
