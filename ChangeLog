@@ -1,5 +1,10 @@
 2008-10-26  Simon Josefsson  <simon@josefsson.org>
 
+	* doc/gnulib.texi (@copying): Use GFDLv1.2+.
+	* doc/gnulib-intro.texi (Copyright): Likewise.
+
+2008-10-26  Simon Josefsson  <simon@josefsson.org>
+
 	* doc/gnulib.texi (Header files): C++ fixes, based on Bruno's
 	findings.
 

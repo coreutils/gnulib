@@ -250,12 +250,13 @@ not a problem, since compiled tests are not installed by ``make install''.
 Documentation files are under this copyright:
 
 @quotation
-Copyright @copyright{} 200X-200Y Free Software Foundation, Inc.@*
+Copyright @copyright{} 2004-2008 Free Software Foundation, Inc.@*
 Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.1 or
+under the terms of the GNU Free Documentation License, Version 1.2 or
 any later version published by the Free Software Foundation; with no
-Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
-Texts.
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled ``GNU Free
+Documentation License''.
 @end quotation
 @end table
 
