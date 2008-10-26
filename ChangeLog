@@ -3,7 +3,7 @@
 	* lib/mkdir.c (rpl_mkdir) [_WIN32...]: Mark mode as an unused parameter.
 
 2008-10-26  Simon Josefsson  <simon@josefsson.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Fix a clash between the type DATADIR on Windows and the macro DATADIR.
 	* modules/configmake (Include): Add a note that the include must come
@@ -36,7 +36,7 @@
 	findings.
 
 2008-10-25  Ben Pfaff  <blp@cs.stanford.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/unistd.in.h: Include <winsock2.h>.
 	(socket, connect,accept, bind, getpeername, getsockname, getsockopt,
@@ -60,7 +60,7 @@
 	* lib/unistd.in.h (HAVE__GL_CLOSE_FD_MAYBE_SOCKET); ... to here.
 	* m4/sys_socket_h.m4 (gl_SYS_SOCKET_H_DEFAULTS): Remove invocation of
 	gl_UNISTD_H_DEFAULTS.
-	
+
 2008-10-25  Eric Blake  <ebb9@byu.net>
 
 	signbit: avoid spurious compiler failure
@@ -68,7 +68,7 @@
 	declarations inside function.
 
 2008-10-24  Simon Josefsson  <simon@josefsson.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/stdlib.in.h (@GNULIB_RANDOM_R@): Include stdint.h.
 	* modules/random_r (Depends-on): Add stdint.
@@ -808,7 +808,7 @@
 	(gl_thread_exit_func): Use _endthreadex instead of EndThread.
 
 2008-10-11  Yoann Vandoorselaere  <yoann@prelude-ids.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Provide a Win32 implementation of the 'cond' module.
 	* lib/glthread/cond.h [USE_WIN32]: New implementation.
@@ -920,7 +920,7 @@
 	* doc/gnulib.texi: Include it.
 
 2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Combine the two replacements of 'close'.
 	* lib/sys_socket.in.h (close): Define to a reminder to include
@@ -947,7 +947,7 @@
 	* modules/select-tests (Depends-on): Likewise.
 
 2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	New module 'close'.
 	* modules/close: New file.
@@ -966,7 +966,7 @@
 	* modules/fchdir (Depends-on): Add close.
 
 2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/fcntl.in.h (open): Simplify conditionals.
 	(_gl_register_fd): New declaration.
@@ -984,7 +984,7 @@
 	(_version): Rename from "version".
 
 2008-10-09  Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/fchdir.c (_gl_unregister_fd): New functions, extracted from
 	rpl_close.
