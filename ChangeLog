@@ -1,3 +1,9 @@
+2008-10-26  Bruno Haible  <bruno@clisp.org>
+
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Set default of
+	HAVE_STRUCT_RANDOM_DATA to 1.
+	(gl_STDLIB_H): Simplify.
+
 2008-10-26  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/stdlib_h.m4: Check for struct random_data.  Initialize and
