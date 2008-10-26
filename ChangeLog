@@ -1,10 +1,10 @@
-2008-10-26  Bruno Haible  <bruno@clisp.org>
+2008-10-26  Simon Josefsson  <simon@josefsson.org>
+            Bruno Haible  <bruno@clisp.org>
 
 	Fix a clash between the type DATADIR on Windows and the macro DATADIR.
 	* modules/configmake (Include): Add a note that the include must come
 	after all system headers.
 	* lib/javaversion.c: Include configmake.h after all other includes.
-	Reported by Simon Josefsson.
 
 2008-10-26  Bruno Haible  <bruno@clisp.org>
 
