@@ -30,9 +30,6 @@
 # define relocate(pathname) (pathname)
 #endif
 
-/* Get PKGDATADIR.  */
-#include "configmake.h"
-
 #include "javaexec.h"
 #include "pipe.h"
 #include "wait-process.h"
@@ -40,6 +37,9 @@
 #include "gettext.h"
 
 #define _(str) gettext (str)
+
+/* Get PKGDATADIR.  */
+#include "configmake.h"
 
 
 struct locals
