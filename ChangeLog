@@ -1,5 +1,14 @@
 2008-10-26  Simon Josefsson  <simon@josefsson.org>
 
+	* m4/stdlib_h.m4: Check for struct random_data.  Initialize and
+	substitute HAVE_STRUCT_RANDOM_DATA.
+	* lib/stdlib.in.h [!HAVE_STRUCT_RANDOM_DATA]: Provide struct
+	random_data.
+	* modules/stdlib (Makefile.am): Substitute
+	HAVE_STRUCT_RANDOM_DATA.
+
+2008-10-26  Simon Josefsson  <simon@josefsson.org>
+
 	* doc/gnulib.texi (@copying): Use GFDLv1.2+.
 	* doc/gnulib-intro.texi (Copyright): Likewise.
 

@@ -41,8 +41,21 @@
 # include <sys/loadavg.h>
 #endif
 
-#if @GNULIB_RANDOM_R@
+#if @GNULIB_RANDOM_R@ || !@HAVE_STRUCT_RANDOM_DATA@
 # include <stdint.h>
+#endif
+
+#if !@HAVE_STRUCT_RANDOM_DATA@
+struct random_data
+{
+  int32_t *fptr;		/* Front pointer.  */
+  int32_t *rptr;		/* Rear pointer.  */
+  int32_t *state;		/* Array of state values.  */
+  int rand_type;		/* Type of random number generator.  */
+  int rand_deg;		/* Degree of random number generator.  */
+  int rand_sep;		/* Distance between front and rear.  */
+  int32_t *end_ptr;		/* Pointer behind state table.  */
+};
 #endif
 
 /* The definition of GL_LINK_WARNING is copied here.  */

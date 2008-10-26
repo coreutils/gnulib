@@ -1,4 +1,4 @@
-# stdlib_h.m4 serial 11
+# stdlib_h.m4 serial 12
 dnl Copyright (C) 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ AC_DEFUN([gl_STDLIB_H],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   gl_CHECK_NEXT_HEADERS([stdlib.h])
+  AC_CHECK_TYPES([struct random_data], [], [], [[#include <stdlib.h>]])
 ])
 
 AC_DEFUN([gl_STDLIB_MODULE_INDICATOR],
@@ -48,6 +49,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   HAVE_STRTOD=1;          AC_SUBST([HAVE_STRTOD])
   HAVE_STRTOLL=1;         AC_SUBST([HAVE_STRTOLL])
   HAVE_STRTOULL=1;        AC_SUBST([HAVE_STRTOULL])
+  HAVE_STRUCT_RANDOM_DATA=0;   AC_SUBST([HAVE_STRUCT_RANDOM_DATA])
   HAVE_SYS_LOADAVG_H=0;   AC_SUBST([HAVE_SYS_LOADAVG_H])
   HAVE_UNSETENV=1;        AC_SUBST([HAVE_UNSETENV])
   HAVE_DECL_GETLOADAVG=1; AC_SUBST([HAVE_DECL_GETLOADAVG])
