@@ -285,7 +285,7 @@
 #  define lstat rpl_lstat
 extern int rpl_lstat (const char *name, struct stat *buf);
 # endif
-#elif define GNULIB_POSIXCHECK
+#elif defined GNULIB_POSIXCHECK
 # undef lstat
 # define lstat(p,b)							\
   (GL_LINK_WARNING ("lstat is unportable - "				\
