@@ -39,7 +39,7 @@ Usage: test-argp [-tvCSOlp?V] [-f FILE] [-o[ARG]] [--test] [--file=FILE]
             [--version] ARGS...
 EOT
 
-./test-argp --usage | func_compare || ERR=1
+./test-argp$EXEEXT --usage | func_compare || ERR=1
 
 ####
 # Test working usage-indent format
@@ -50,7 +50,7 @@ Usage: test-argp [-tvCSOlp?V] [-f FILE] [-o[ARG]] [--test] [--file=FILE]
 [--limerick] [--poem] [--help] [--usage] [--version] ARGS...
 EOT
 
-ARGP_HELP_FMT='usage-indent=0' ./test-argp --usage | func_compare || ERR=1
+ARGP_HELP_FMT='usage-indent=0' ./test-argp$EXEEXT --usage | func_compare || ERR=1
 
 ####
 # Test --help output
@@ -93,16 +93,16 @@ for any corresponding short options.
 Report bugs to <>.
 EOT
 
-./test-argp --help | func_compare || ERR=1
+./test-argp$EXEEXT --help | func_compare || ERR=1
 
 ####
 # Test ambiguous option handling
 
-./test-argp --optio 2>/dev/null && ERR=1
+./test-argp$EXEEXT --optio 2>/dev/null && ERR=1
 
 ####
 # Run built-in tests
-./test-argp || ERR=1
+./test-argp$EXEEXT || ERR=1
 
 rm $TMP
 

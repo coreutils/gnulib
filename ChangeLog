@@ -1,5 +1,12 @@
 2008-10-27  Simon Josefsson  <simon@josefsson.org>
 
+	* gnulib-tool (func_emit_tests_Makefile_am): Set EXEEXT in
+	TESTS_ENVIRONMENT, for shell scripts that needs to call built
+	programs.
+	* tests/test-argp-2.sh: Use $EXEEXT when needed.
+
+2008-10-27  Simon Josefsson  <simon@josefsson.org>
+
 	* lib/sys_stat.in.h (lstat): Fix declaration for mingw.
 
 2008-10-27  Bruno Haible  <bruno@clisp.org>
