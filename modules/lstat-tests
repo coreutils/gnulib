@@ -1,0 +1,10 @@
+Files:
+tests/test-lstat.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-lstat
+check_PROGRAMS += test-lstat

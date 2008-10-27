@@ -1,3 +1,8 @@
+2008-10-27  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/lstat-tests: New module.
+	* tests/test-lstat.c: New file.
+
 2008-10-26  Jim Meyering  <meyering@redhat.com>
 
 	* lib/mkdir.c (rpl_mkdir) [_WIN32...]: Mark mode as an unused parameter.
