@@ -275,15 +275,22 @@
 # define S_IRWXUGO (S_IRWXU | S_IRWXG | S_IRWXO)
 #endif
 
+#if @GNULIB_LSTAT@
+# if ! @HAVE_LSTAT@
 /* mingw does not support symlinks, therefore it does not have lstat.  But
    without links, stat does just fine.  */
-#if ! @HAVE_LSTAT@
-# define lstat stat
-#endif
-#if @GNULIB_LSTAT@ && @REPLACE_LSTAT@
-# undef lstat
-# define lstat rpl_lstat
+#  define lstat stat
+# elif @REPLACE_LSTAT@
+#  undef lstat
+#  define lstat rpl_lstat
 extern int rpl_lstat (const char *name, struct stat *buf);
+# endif
+#elif define GNULIB_POSIXCHECK
+# undef lstat
+# define lstat(p,b)							\
+  (GL_LINK_WARNING ("lstat is unportable - "				\
+		    "use gnulib module lstat for portability"),		\
+   lstat (p, b))
 #endif
 
 
