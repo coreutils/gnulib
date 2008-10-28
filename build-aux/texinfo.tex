@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-10-25.08}
+\def\texinfoversion{2008-10-28.11}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -6038,12 +6038,6 @@ end
 \def\uncatcodespecials{%
   \def\do##1{\catcode`##1=\other}\dospecials}
 %
-% [Knuth] pp. 380,381,391
-% Disable Spanish ligatures ?` and !` of \tt font
-\begingroup
-  \catcode`\`=\active\gdef`{\relax\lq}
-\endgroup
-%
 % Setup for the @verb command.
 %
 % Eight spaces for a tab
@@ -6093,7 +6087,7 @@ end
 \def\codequoteleft{%
   \expandafter\ifx\csname SETtxicodequotebacktick\endcsname\relax
     \expandafter\ifx\csname SETcodequotebacktick\endcsname\relax
-      `%
+      \relax`% the \relax disables the `! and `? ligatures
     \else \char'22 \fi
   \else \char'22 \fi
 }
@@ -9021,7 +9015,13 @@ directory should work if nowhere else does.}
 @catcode`@# = @other
 @catcode`@% = @other
 
-
+@c Finally, make ` and ' active, so that txicodequoteundirected and
+@c txicodequotebacktick work right in, e.g., @w{@code{`foo'}}.  If we
+@c don't make ` and ' active, @code will not get them as active chars.
+@c Do this last of all since we use ` in the previous @catcode assignments.
+@catcode`@'=@active @let'@rq
+@catcode`@`=@active @let`@lq
+ 
 @c Local variables:
 @c eval: (add-hook 'write-file-hooks 'time-stamp)
 @c page-delimiter: "^\\\\message"
