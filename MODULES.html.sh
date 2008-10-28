@@ -2162,6 +2162,7 @@ func_all_modules ()
   func_module tempname
   func_module time
   func_module time_r
+  func_module times
   func_module timespec
   func_module nanosleep
   func_module regex
@@ -2178,6 +2179,7 @@ func_all_modules ()
   func_module sys_socket
   func_module sys_stat
   func_module sys_time
+  func_module sys_times
   func_module tsearch
   func_module unistd
   func_module utime

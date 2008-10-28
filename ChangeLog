@@ -1,3 +1,17 @@
+2008-10-28  Simon Josefsson  <simon@josefsson.org>
+
+	* MODULES.html.sh (Support for systems lacking POSIX:2001):
+	Mention times and sys_times.
+	* modules/sys_times, modules/sys_times-tests: New modules.
+	* modules/times, modules/times-tests: Likewise
+	* m4/sys_times_h.m4: New file.
+	* lib/sys_times.in.h: Likewise
+	* lib/times.c: Likewise.
+	* tests/test-sys_times.c: Likewise.
+	* tests/test-times.c: Likewise.
+	* doc/posix-headers/sys_times.texi: Update.
+	* doc/posix-functions/times.texi: Update.
+
 2008-10-28  Jim Meyering  <meyering@redhat.com>
 
 	* modules/tempname (Depends-on): Add lstat.

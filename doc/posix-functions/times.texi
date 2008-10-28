@@ -4,15 +4,19 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xsh/times.html}
 
-Gnulib module: ---
+Gnulib module: times
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-mingw.
+There is no function on Windows to measure consumed process child
+times, thus the @code{tms_cutime} and @code{tms_cstime} will always be
+0 when the module is used.
 @end itemize
