@@ -1,3 +1,7 @@
+2008-10-28  Jim Meyering  <meyering@redhat.com>
+
+	* modules/lstat (License): Relicense: LGPL -> LGPLv2+.
+
 2008-10-28  Simon Josefsson  <simon@josefsson.org>
 
 	* gnulib-tool (func_emit_tests_Makefile_am): Revert last commit.
