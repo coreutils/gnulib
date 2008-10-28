@@ -1,5 +1,7 @@
 2008-10-28  Jim Meyering  <meyering@redhat.com>
 
+	* modules/tempname (Depends-on): Add lstat.
+
 	* modules/lstat (License): Relicense: LGPL -> LGPLv2+.
 
 2008-10-28  Simon Josefsson  <simon@josefsson.org>

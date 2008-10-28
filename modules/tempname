@@ -9,6 +9,7 @@ m4/tempname.m4
 Depends-on:
 extensions
 gettimeofday
+lstat
 stdint
 sys_stat
 sys_time
