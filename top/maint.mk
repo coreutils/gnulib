@@ -105,6 +105,30 @@ syntax-check-rules := $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p' $(ME))
 
 syntax-check: $(syntax-check-rules)
 
+# Code Coverage
+
+init-coverage:
+	make clean
+	lcov --directory . --zerocounters
+
+COVERAGE_CCOPTS ?= "-g -fprofile-arcs -ftest-coverage"
+COVERAGE_OUT ?= doc/coverage
+
+build-coverage:
+	make CFLAGS=$(COVERAGE_CCOPTS) CXXFLAGS=$(COVERAGE_CCOPTS)
+	make CFLAGS=$(COVERAGE_CCOPTS) CXXFLAGS=$(COVERAGE_CCOPTS) check
+	mkdir -p $(COVERAGE_OUT)
+	lcov --directory . --output-file $(COVERAGE_OUT)/$(PACKAGE).info \
+		--capture
+
+gen-coverage:
+	genhtml --output-directory $(COVERAGE_OUT) \
+		$(COVERAGE_OUT)/$(PACKAGE).info \
+		--highlight --frames --legend \
+		--title "$(PACKAGE_NAME)"
+
+coverage: init-coverage build-coverage gen-coverage
+
 # Update gettext files.
 PACKAGE ?= $(shell basename $(PWD))
 POURL = http://translationproject.org/latest/$(PACKAGE)/

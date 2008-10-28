@@ -1,5 +1,9 @@
 2008-10-28  Simon Josefsson  <simon@josefsson.org>
 
+	* top/maint.mk: Add coverage rules, inspired by scripts in gnupdf.
+
+2008-10-28  Simon Josefsson  <simon@josefsson.org>
+
 	* MODULES.html.sh (Support for systems lacking POSIX:2001):
 	Mention times and sys_times.
 	* modules/sys_times, modules/sys_times-tests: New modules.
