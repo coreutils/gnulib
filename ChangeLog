@@ -1,3 +1,9 @@
+2008-10-28  Simon Josefsson  <simon@josefsson.org>
+
+	* gnulib-tool (func_emit_tests_Makefile_am): Revert last commit.
+	* modules/argp-tests (test_argp_LDADD): Set EXEEXT here instead,
+	using idiom used elsewhere in gnulib.
+
 2008-10-27  Jim Meyering  <meyering@redhat.com>
 
 	* modules/gethostname (License): Relicense: LGPL -> LGPLv2+.

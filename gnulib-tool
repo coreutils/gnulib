@@ -2012,7 +2012,7 @@ func_emit_tests_Makefile_am ()
   #   "AM_GNU_GETTEXT used but SUBDIRS not defined"
   echo "SUBDIRS ="
   echo "TESTS ="
-  echo "TESTS_ENVIRONMENT = EXEEXT=\$(EXEEXT)"
+  echo "TESTS_ENVIRONMENT ="
   echo "noinst_PROGRAMS ="
   if ! $for_test; then
     echo "check_PROGRAMS ="
