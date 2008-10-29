@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-10-28.11}
+\def\texinfoversion{2008-10-29.15}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -9019,8 +9019,9 @@ directory should work if nowhere else does.}
 @c txicodequotebacktick work right in, e.g., @w{@code{`foo'}}.  If we
 @c don't make ` and ' active, @code will not get them as active chars.
 @c Do this last of all since we use ` in the previous @catcode assignments.
-@catcode`@'=@active @let'@rq
-@catcode`@`=@active @let`@lq
+@c (not ready yet, sigh)
+@c atcode`@'=@active @let'@rq
+@c atcode`@`=@active @let`@lq
  
 @c Local variables:
 @c eval: (add-hook 'write-file-hooks 'time-stamp)
