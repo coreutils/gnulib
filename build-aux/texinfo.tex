@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-10-29.15}
+\def\texinfoversion{2008-10-30.07}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -2490,6 +2490,7 @@ end
 {
   \catcode`\-=\active \catcode`\_=\active
   \catcode`\'=\active \catcode`\`=\active
+  \global\let'=\rq \global\let`=\lq  % default definitions
   %
   \global\def\code{\begingroup
     \catcode\rquoteChar=\active \catcode\lquoteChar=\active
