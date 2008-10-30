@@ -1,3 +1,7 @@
+2008-10-30  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/sockets (License): Change from LGPL to LGPLv2+.
+
 2008-10-28  Simon Josefsson  <simon@josefsson.org>
 
 	* top/maint.mk: Add coverage rules, inspired by scripts in gnupdf.
