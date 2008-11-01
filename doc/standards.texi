@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate July 25, 2008
+@set lastupdate October 31, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -526,6 +526,7 @@ command line interface, and how libraries should behave.
 * Graphical Interfaces::        Standards for graphical interfaces.
 * Command-Line Interfaces::     Standards for command line interfaces.
 * Option Table::                Table of long options.
+* OID Allocations::             Table of OID slots for GNU.
 * Memory Usage::                When and how to care about memory needs.
 * File Usage::                  Which files to use, and where.
 @end menu
@@ -2212,6 +2213,28 @@ Print the version number.
 @item zeros
 @samp{-z} in @code{gprof}.
 @end table
+
+@node OID Allocations
+@section OID Allocations
+@cindex OID allocations for GNU
+@cindex SNMP
+@cindex LDAP
+@cindex X.509
+
+The OID (object identifier) 1.3.6.1.4.1.11591 has been assigned to the
+GNU Project (thanks to Werner Koch).  These are used for SNMP, LDAP,
+X.509 certificates, and so on.  The web site
+@url{http://www.alvestrand.no/objectid} has a (voluntary) listing of
+many OID assignments.
+
+If you need a new slot for your GNU package, write
+@email{maintainers@@gnu.org}.  Here is a list of arcs currently
+assigned:
+
+@example
+@include gnu-oids.texi
+@end example
+
 
 @node Memory Usage
 @section Memory Usage
