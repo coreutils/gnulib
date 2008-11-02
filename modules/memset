@@ -1,6 +1,12 @@
 Description:
 memset() function: fill memory with a constant byte.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/memset.c
 m4/memset.m4
