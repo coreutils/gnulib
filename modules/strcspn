@@ -1,6 +1,12 @@
 Description:
 strcspn() function: search a string for any of a set of characters.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/strcspn.c
 m4/strcspn.m4
