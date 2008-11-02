@@ -18,6 +18,7 @@ gettext-h
 localcharset
 malloc
 memcmp
+memmove
 stdbool
 stdint
 ssize_t

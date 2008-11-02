@@ -1,5 +1,23 @@
 2008-11-02  Bruno Haible  <bruno@clisp.org>
 
+	Mark 'memmove' obsolete.
+	* modules/memmove (Status, Notice): New sections.
+	* modules/argp (Depends-on): Add memmove.
+	* modules/argz (Depends-on): Likewise.
+	* modules/canonicalize (Depends-on): Likewise.
+	* modules/canonicalize-lgpl (Depends-on): Likewise.
+	* modules/fts (Depends-on): Likewise.
+	* modules/getcwd (Depends-on): Likewise.
+	* modules/human (Depends-on): Likewise.
+	* modules/regex (Depends-on): Likewise.
+	* modules/striconveh (Depends-on): Likewise.
+	* modules/trim (Depends-on): Likewise.
+	* modules/unistr/u8-move (Depends-on): Likewise.
+	* modules/unistr/u16-move (Depends-on): Likewise.
+	* modules/unistr/u32-move (Depends-on): Likewise.
+
+2008-11-02  Bruno Haible  <bruno@clisp.org>
+
 	Mark 'memcpy' obsolete.
 	* modules/memcpy (Status, Notice): New sections.
 

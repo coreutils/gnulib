@@ -9,6 +9,7 @@ Depends-on:
 xalloc
 mbchar
 mbiter
+memmove
 
 configure.ac:
 gl_FUNC_MBRTOWC

@@ -7,6 +7,7 @@ lib/unistr/u-move.h
 
 Depends-on:
 unistr/base
+memmove
 
 configure.ac:
 

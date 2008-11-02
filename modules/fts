@@ -18,6 +18,7 @@ fcntl-safer
 hash
 i-ring
 lstat
+memmove
 openat
 stdbool
 unistd-safer

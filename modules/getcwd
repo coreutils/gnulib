@@ -12,6 +12,7 @@ mempcpy
 d-ino
 dirfd
 extensions
+memmove
 openat
 stdbool
 unistd

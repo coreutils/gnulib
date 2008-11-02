@@ -7,6 +7,7 @@ lib/argz.c
 m4/argz.m4
 
 Depends-on:
+memmove
 mempcpy
 stpcpy
 strndup

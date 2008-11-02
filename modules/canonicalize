@@ -12,6 +12,7 @@ areadlink-with-size
 file-set
 filenamecat
 hash-triple
+memmove
 sys_stat
 xalloc
 xgetcwd

@@ -37,6 +37,7 @@ vsnprintf
 sleep
 strerror
 memchr
+memmove
 
 configure.ac:
 gl_ARGP

@@ -17,6 +17,7 @@ unistr/u8-uctomb
 strdup
 c-strcase
 c-strcaseeq
+memmove
 
 configure.ac:
 if test $gl_cond_libtool = false; then

@@ -1,6 +1,12 @@
 Description:
 memmove() function: copy memory area.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/memmove.c
 m4/memmove.m4
