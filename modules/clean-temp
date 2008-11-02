@@ -14,6 +14,7 @@ open
 pathmax
 tmpdir
 mkdtemp
+rmdir
 xalloc
 xmalloca
 linkedhash-list
