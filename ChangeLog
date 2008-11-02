@@ -1,5 +1,13 @@
 2008-11-02  Bruno Haible  <bruno@clisp.org>
 
+	Mark 'raise' obsolete.
+	* modules/raise (Status, Notice): New sections.
+	(Include): Specify <signal.h>.
+	* modules/stdio (Depends-on): Add raise.
+	* modules/write (Depends-on): Likewise.
+
+2008-11-02  Bruno Haible  <bruno@clisp.org>
+
 	Mark 'memset' obsolete.
 	* modules/memset (Status, Notice): New sections.
 

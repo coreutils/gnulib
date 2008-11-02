@@ -9,6 +9,7 @@ m4/stdio_h.m4
 Depends-on:
 include_next
 link-warning
+raise
 
 configure.ac:
 gl_STDIO_H
