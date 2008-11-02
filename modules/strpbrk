@@ -1,6 +1,12 @@
 Description:
 strpbrk() function: search a string for any of a set of characters.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/strpbrk.c
 m4/strpbrk.m4

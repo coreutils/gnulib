@@ -7,6 +7,7 @@ m4/strtok_r.m4
 
 Depends-on:
 string
+strpbrk
 
 configure.ac:
 gl_FUNC_STRTOK_R

@@ -1,5 +1,11 @@
 2008-11-02  Bruno Haible  <bruno@clisp.org>
 
+	Mark 'strpbrk' obsolete.
+	* modules/strpbrk (Status, Notice): New sections.
+	* modules/strtok_r (Depends-on): Add strpbrk.
+
+2008-11-02  Bruno Haible  <bruno@clisp.org>
+
 	Mark 'strdup' obsolete.
 	* modules/strdup (Status, Notice): New sections.
 	* modules/findprog (Depends-on): Add strdup.
