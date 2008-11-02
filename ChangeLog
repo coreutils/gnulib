@@ -1,5 +1,20 @@
 2008-11-02  Bruno Haible  <bruno@clisp.org>
 
+	Mark 'memchr' obsolete.
+	* modules/memchr (Status, Notice): New sections.
+	* modules/argp (Depends-on): Add memchr.
+	* modules/base64 (Depends-on): Likewise.
+	* modules/c-strcasestr (Depends-on): Likewise.
+	* modules/chdir-long (Depends-on): Likewise.
+	* modules/fnmatch (Depends-on): Likewise.
+	* modules/getsubopt (Depends-on): Likewise.
+	* modules/git-merge-changelog (Depends-on): Likewise.
+	* modules/glob (Depends-on): Likewise.
+	* modules/strcasestr (Depends-on): Likewise.
+	* modules/strnlen (Depends-on): Likewise.
+
+2008-11-02  Bruno Haible  <bruno@clisp.org>
+
 	Mark 'atexit' obsolete.
 	* modules/atexit (Status, Notice): New sections.
 	* modules/chdir-long (Depends-on): Add atexit.

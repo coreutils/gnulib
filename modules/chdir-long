@@ -11,6 +11,7 @@ atexit
 fchdir
 fcntl
 openat
+memchr
 mempcpy
 memrchr
 stdbool

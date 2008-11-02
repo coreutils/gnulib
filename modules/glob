@@ -15,6 +15,7 @@ dirfd
 extensions
 fnmatch
 getlogin_r
+memchr
 mempcpy
 stdbool
 strdup

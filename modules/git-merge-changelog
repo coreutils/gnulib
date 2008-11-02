@@ -21,6 +21,7 @@ fstrcmp
 minmax
 c-strstr
 fwriteerror
+memchr
 
 configure.ac:
 

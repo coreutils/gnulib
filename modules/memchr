@@ -1,6 +1,12 @@
 Description:
 memchr() function: scan memory for a byte.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/memchr.c
 m4/memchr.m4

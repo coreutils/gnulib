@@ -36,6 +36,7 @@ extensions
 vsnprintf
 sleep
 strerror
+memchr
 
 configure.ac:
 gl_ARGP

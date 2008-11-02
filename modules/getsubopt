@@ -9,6 +9,7 @@ Depends-on:
 extensions
 strchrnul
 stdlib
+memchr
 
 configure.ac:
 gl_FUNC_GETSUBOPT
