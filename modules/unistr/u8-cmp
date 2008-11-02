@@ -6,6 +6,7 @@ lib/unistr/u8-cmp.c
 
 Depends-on:
 unistr/base
+memcmp
 
 configure.ac:
 

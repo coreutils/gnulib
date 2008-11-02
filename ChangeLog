@@ -1,5 +1,35 @@
 2008-11-02  Bruno Haible  <bruno@clisp.org>
 
+	Mark 'memcmp' obsolete.
+	* modules/memcmp (Status, Notice): New sections.
+	* modules/argmatch (Depends-on): Add memchr.
+	* modules/backupfile (Depends-on): Likewise.
+	* modules/c-strcasestr (Depends-on): Likewise.
+	* modules/crypto/des (Depends-on): Likewise.
+	* modules/csharpcomp (Depends-on): Likewise.
+	* modules/fnmatch (Depends-on): Likewise.
+	* modules/git-merge-changelog (Depends-on): Likewise.
+	* modules/isnand (Depends-on): Likewise.
+	* modules/isnand-nolibm (Depends-on): Likewise.
+	* modules/isnanf (Depends-on): Likewise.
+	* modules/isnanf-nolibm (Depends-on): Likewise.
+	* modules/isnanl (Depends-on): Likewise.
+	* modules/isnanl-nolibm (Depends-on): Likewise.
+	* modules/mbchar (Depends-on): Likewise.
+	* modules/memcoll (Depends-on): Likewise.
+	* modules/quotearg (Depends-on): Likewise.
+	* modules/regex (Depends-on): Likewise.
+	* modules/relocatable-prog (Depends-on): Likewise.
+	* modules/same (Depends-on): Likewise.
+	* modules/signbit (Depends-on): Likewise.
+	* modules/strcasestr-simple (Depends-on): Likewise.
+	* modules/unictype/gen-ctype (Depends-on): Likewise.
+	* modules/unilbrk/gen-lbrk (Depends-on): Likewise.
+	* modules/uniname/uniname (Depends-on): Likewise.
+	* modules/unistr/u8-cmp (Depends-on): Likewise.
+
+2008-11-02  Bruno Haible  <bruno@clisp.org>
+
 	Mark 'memchr' obsolete.
 	* modules/memchr (Status, Notice): New sections.
 	* modules/argp (Depends-on): Add memchr.

@@ -8,6 +8,7 @@ lib/uniname/uniname.c
 
 Depends-on:
 uniname/base
+memcmp
 
 configure.ac:
 

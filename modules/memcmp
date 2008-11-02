@@ -1,6 +1,12 @@
 Description:
 memcmp() function: compare memory areas.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/memcmp.c
 m4/memcmp.m4

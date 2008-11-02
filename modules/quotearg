@@ -10,6 +10,7 @@ m4/quotearg.m4
 
 Depends-on:
 gettext-h
+memcmp
 stdbool
 wchar
 wctype

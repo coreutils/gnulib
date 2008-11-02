@@ -7,6 +7,7 @@ lib/unictype/3level.h
 lib/unictype/3levelbit.h
 
 Depends-on:
+memcmp
 
 configure.ac:
 

@@ -15,6 +15,7 @@ stdbool
 wchar
 wctype
 memchr
+memcmp
 
 configure.ac:
 # No macro. You should also use one of fnmatch-posix or fnmatch-gnu.

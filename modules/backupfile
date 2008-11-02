@@ -12,6 +12,7 @@ Depends-on:
 argmatch
 d-ino
 dirname
+memcmp
 stdbool
 
 configure.ac:

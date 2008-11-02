@@ -17,6 +17,7 @@ extensions
 gettext-h
 localcharset
 malloc
+memcmp
 stdbool
 stdint
 ssize_t

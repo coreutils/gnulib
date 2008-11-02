@@ -11,6 +11,7 @@ m4/isnand.m4
 Depends-on:
 math
 fpieee
+memcmp
 
 configure.ac:
 gl_FUNC_ISNAND

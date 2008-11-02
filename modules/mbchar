@@ -12,6 +12,7 @@ stdbool
 wchar
 wctype
 wcwidth
+memcmp
 
 configure.ac:
 gl_MBCHAR

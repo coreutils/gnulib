@@ -15,6 +15,7 @@ isnanf-nolibm
 isnand-nolibm
 isnanl-nolibm
 fpieee
+memcmp
 
 configure.ac:
 gl_SIGNBIT

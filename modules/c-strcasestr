@@ -11,6 +11,7 @@ c-ctype
 c-strcase
 stdbool
 memchr
+memcmp
 
 configure.ac:
 

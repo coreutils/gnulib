@@ -6,6 +6,7 @@ lib/unilbrk/gen-lbrk.c
 lib/unictype/3level.h
 
 Depends-on:
+memcmp
 
 configure.ac:
 

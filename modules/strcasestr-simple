@@ -11,6 +11,7 @@ string
 stdbool
 strcase
 memchr
+memcmp
 
 configure.ac:
 gl_FUNC_STRCASESTR_SIMPLE

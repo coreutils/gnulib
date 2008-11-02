@@ -12,6 +12,7 @@ Depends-on:
 math
 float
 fpieee
+memcmp
 
 configure.ac:
 gl_FUNC_ISNANL

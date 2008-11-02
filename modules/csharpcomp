@@ -16,6 +16,7 @@ sh-quote
 safe-read
 error
 gettext-h
+memcmp
 csharpcomp-script
 
 configure.ac:

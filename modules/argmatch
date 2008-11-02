@@ -15,6 +15,7 @@ exit
 exitfail
 verify
 stdbool
+memcmp
 
 configure.ac:
 gl_ARGMATCH

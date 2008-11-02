@@ -12,6 +12,7 @@ m4/isnanl.m4
 Depends-on:
 float
 fpieee
+memcmp
 
 configure.ac:
 gl_FUNC_ISNANL_NO_LIBM
