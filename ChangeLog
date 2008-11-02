@@ -1,5 +1,13 @@
 2008-11-02  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool: New option --with-obsolete.
+	(func_usage): Document it.
+	(func_modules_transitive_closure): Drop obsolete dependencies if
+	incobsolete is not true.
+	(func_import): Read and save the incobsolete variable to the cache.
+
+2008-11-02  Bruno Haible  <bruno@clisp.org>
+
 	* modules/TEMPLATE-EXTENDED: New field 'Status'.
 	* gnulib-tool: New option --extract-status.
 	(func_usage): Document it.

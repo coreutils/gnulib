@@ -167,6 +167,9 @@ Options for --import:
       --aux-dir=DIRECTORY   Directory relative to --dir where auxiliary build
                             tools are placed (default \"build-aux\").
       --with-tests          Include unit tests for the included modules.
+      --with-obsolete       Include obsolete modules when they occur among the
+                            dependencies. By default, dependencies to obsolete
+                            modules are ignored.
       --avoid=MODULE        Avoid including the given MODULE. Useful if you
                             have code that provides equivalent functionality.
                             This option can be repeated.
@@ -748,6 +751,7 @@ fi
 # - testsbase       from --tests-base
 # - auxdir          from --aux-dir
 # - inctests        true if --with-tests was given, blank otherwise
+# - incobsolete     true if --with-obsolete was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            yes or a number if --lgpl was given, blank otherwise
 # - makefile_name   from --makefile-name
@@ -778,6 +782,7 @@ fi
   testsbase=
   auxdir=
   inctests=
+  incobsolete=
   avoidlist=
   lgpl=
   makefile_name=
@@ -920,6 +925,9 @@ fi
       --with-tests )
         inctests=true
         shift ;;
+      --with-obsolete )
+        incobsolete=true
+        shift ;;
       --avoid )
         shift
         if test $# = 0; then
@@ -1030,9 +1038,10 @@ fi
     if test -n "$local_gnulib_dir" || test -n "$supplied_libname" \
        || test -n "$sourcebase" || test -n "$m4base" || test -n "$pobase" \
        || test -n "$docbase" || test -n "$testsbase" || test -n "$auxdir" \
-       || test -n "$inctests" || test -n "$avoidlist" || test -n "$lgpl" \
-       || test -n "$makefile_name" || test -n "$macro_prefix" \
-       || test -n "$po_domain" || test -n "$vc_files"; then
+       || test -n "$inctests" || test -n "$incobsolete" \
+       || test -n "$avoidlist" || test -n "$lgpl" || test -n "$makefile_name" \
+       || test -n "$macro_prefix" || test -n "$po_domain" \
+       || test -n "$vc_files"; then
       echo "gnulib-tool: invalid options for 'update' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
       echo "If you really want to modify the gnulib configuration of your project," 1>&2
@@ -1519,6 +1528,8 @@ func_acceptable ()
 # - local_gnulib_dir  from --local-dir
 # - modules         list of specified modules
 # - inctests        true if tests should be included, blank otherwise
+# - incobsolete     true if obsolete modules among dependencies should be
+#                   included, blank otherwise
 # - avoidlist       list of modules to avoid
 # - tmp             pathname of a temporary directory
 # Output:
@@ -1547,7 +1558,12 @@ func_modules_transitive_closure ()
           if test -n "$duplicated_deps"; then
             echo "warning: module $module has duplicated dependencies: "`echo $duplicated_deps` 1>&2
           fi
-          func_append inmodules " $deps"
+          for dep in $deps; do
+            if test -n "$incobsolete" \
+               || { status=`func_get_status $dep`; test "$status" != obsolete; }; then
+              func_append inmodules " $dep"
+            fi
+          done
           if test -n "$inctests"; then
             testsmodule=`func_get_tests_module $module`
             if test -n "$testsmodule"; then
@@ -2239,6 +2255,7 @@ func_emit_initmacro_done ()
 # - testsbase       directory relative to destdir where to place unit test code
 # - auxdir          directory relative to destdir where to place build aux files
 # - inctests        true if --with-tests was given, blank otherwise
+# - incobsolete     true if --with-obsolete was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            yes or a number if library's license shall be LGPL,
 #                   blank otherwise
@@ -2262,6 +2279,7 @@ func_import ()
   # Get the cached settings.
   cached_local_gnulib_dir=
   cached_specified_modules=
+  cached_incobsolete=
   cached_avoidlist=
   cached_sourcebase=
   cached_m4base=
@@ -2295,6 +2313,9 @@ func_import ()
           ba
         :b
         s,^.*gl_MODULES([[ ]*\([^])]*\).*$,cached_specified_modules="\1",p
+      }
+      /gl_WITH_OBSOLETE/ {
+        s,^.*$,cached_incobsolete=true,p
       }
       /gl_AVOID(/ {
         s,^.*gl_AVOID([[ ]*\([^])]*\).*$,cached_avoidlist="\1",p
@@ -2390,6 +2411,10 @@ func_import ()
   # Append the cached and the specified module names. So that
   # "gnulib-tool --import foo" means to add the module foo.
   specified_modules="$cached_specified_modules $1"
+  # Included obsolete modules among the dependencies if specified either way.
+  if test -z "$incobsolete"; then
+    incobsolete="$cached_incobsolete"
+  fi
   # Append the cached and the specified avoidlist. This is probably better
   # than dropping the cached one when --avoid is specified at least once.
   avoidlist=`for m in $cached_avoidlist $avoidlist; do echo $m; done | LC_ALL=C sort -u`
@@ -2881,6 +2906,9 @@ s,^\(.................................................[^ ]*\) *,                
   if test -n "$inctests"; then
     func_append actioncmd " --with-tests"
   fi
+  if test -n "$incobsolete"; then
+    func_append actioncmd " --with-obsolete"
+  fi
   for module in $avoidlist; do
     func_append actioncmd " --avoid=$module"
   done
@@ -3166,6 +3194,7 @@ s,//*$,/,'
     echo "gl_MODULES(["
     echo "$specified_modules" | sed 's/^/  /g'
     echo "])"
+    test -z "$incobsolete" || echo "gl_WITH_OBSOLETE"
     echo "gl_AVOID([$avoidlist])"
     echo "gl_SOURCE_BASE([$sourcebase])"
     echo "gl_M4_BASE([$m4base])"
@@ -4277,9 +4306,9 @@ case $mode in
             for m4base in $m4dirs; do
               # Perform func_import in a subshell, so that variable values
               # such as
-              #   local_gnulib_dir, avoidlist, sourcebase, m4base, pobase,
-              #   docbase, testsbase, inctests, libname, lgpl, makefile_name,
-              #   libtool, macro_prefix, po_domain, vc_files
+              #   local_gnulib_dir, incobsolete, avoidlist, sourcebase, m4base,
+              #   pobase, docbase, testsbase, inctests, libname, lgpl,
+              #   makefile_name, libtool, macro_prefix, po_domain, vc_files
               # don't propagate from one directory to another.
               (func_import) || func_exit 1
             done
