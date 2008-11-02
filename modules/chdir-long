@@ -7,6 +7,7 @@ lib/chdir-long.c
 m4/chdir-long.m4
 
 Depends-on:
+atexit
 fchdir
 fcntl
 openat

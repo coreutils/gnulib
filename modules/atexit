@@ -1,6 +1,12 @@
 Description:
 atexit() function: register a function to be called at program termination.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/atexit.c
 m4/atexit.m4

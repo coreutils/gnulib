@@ -16,6 +16,7 @@ gettext-h
 stdbool
 sys_wait
 unistd
+atexit
 
 configure.ac:
 gl_WAIT_PROCESS
