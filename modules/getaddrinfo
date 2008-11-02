@@ -15,6 +15,7 @@ socklen
 stdbool
 sys_socket
 netdb
+strdup
 
 configure.ac:
 gl_GETADDRINFO

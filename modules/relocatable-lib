@@ -10,6 +10,7 @@ m4/relocatable-lib.m4
 
 Depends-on:
 xalloc
+strdup
 
 configure.ac:
 gl_RELOCATABLE_LIBRARY

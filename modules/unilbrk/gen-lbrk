@@ -7,6 +7,7 @@ lib/unictype/3level.h
 
 Depends-on:
 memcmp
+strdup
 
 configure.ac:
 

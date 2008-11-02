@@ -9,6 +9,7 @@ lib/relocatable.c
 m4/relocatable-lib.m4
 
 Depends-on:
+strdup
 
 configure.ac:
 gl_RELOCATABLE_LIBRARY

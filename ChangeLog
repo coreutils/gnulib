@@ -1,5 +1,19 @@
 2008-11-02  Bruno Haible  <bruno@clisp.org>
 
+	Mark 'strdup' obsolete.
+	* modules/strdup (Status, Notice): New sections.
+	* modules/findprog (Depends-on): Add strdup.
+	* modules/getaddrinfo (Depends-on): Likewise.
+	* modules/localename (Depends-on): Likewise.
+	* modules/relocatable-lib (Depends-on): Likewise.
+	* modules/relocatable-lib-lgpl (Depends-on): Likewise.
+	* modules/relocatable-prog (Depends-on): Likewise.
+	* modules/trim (Depends-on): Likewise.
+	* modules/unictype/gen-ctype (Depends-on): Likewise.
+	* modules/unilbrk/gen-lbrk (Depends-on): Likewise.
+
+2008-11-02  Bruno Haible  <bruno@clisp.org>
+
 	Mark 'strcspn' obsolete.
 	* modules/strcspn (Status, Notice): New sections.
 

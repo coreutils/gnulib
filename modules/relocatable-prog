@@ -22,6 +22,7 @@ xreadlink
 stdbool
 unistd
 memcmp
+strdup
 
 configure.ac:
 gl_RELOCATABLE([$gl_source_base])
