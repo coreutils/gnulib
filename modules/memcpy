@@ -1,6 +1,12 @@
 Description:
 memcpy() function: copy memory area.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/memcpy.c
 m4/memcpy.m4
