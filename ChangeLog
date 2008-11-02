@@ -1,3 +1,11 @@
+2008-11-02  Bruno Haible  <bruno@clisp.org>
+
+	* modules/TEMPLATE-EXTENDED: New field 'Status'.
+	* gnulib-tool: New option --extract-status.
+	(func_usage): Document it.
+	(sed_extract_prog): Recognize it.
+	(func_get_status): New function.
+
 2008-10-30  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/sockets (License): Change from LGPL to LGPLv2+.

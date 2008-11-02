@@ -100,6 +100,7 @@ Usage: gnulib-tool --list
        gnulib-tool --test --dir=directory module1 ... moduleN
        gnulib-tool --megatest --dir=directory [module1 ... moduleN]
        gnulib-tool --extract-description module
+       gnulib-tool --extract-status module
        gnulib-tool --extract-notice module
        gnulib-tool --extract-filelist module
        gnulib-tool --extract-dependencies module
@@ -126,6 +127,7 @@ Operation modes:
       --megatest            test the given modules one by one and all together
                             (recommended to use CC=\"gcc -Wall\" here)
       --extract-description        extract the description
+      --extract-status             extract the status (obsolete or not)
       --extract-notice             extract the notice or banner
       --extract-filelist           extract the list of files
       --extract-dependencies       extract the dependencies
@@ -1256,6 +1258,7 @@ sed_extract_prog=':[	 ]*$/ {
   :a
     n
     s/^Description:[	 ]*$//
+    s/^Status:[	 ]*$//
     s/^Notice:[	 ]*$//
     s/^Files:[	 ]*$//
     s/^Depends-on:[	 ]*$//
@@ -1279,6 +1282,15 @@ func_get_description ()
 {
   func_lookup_file "modules/$1"
   sed -n -e "/^Description$sed_extract_prog" < "$lookedup_file"
+}
+
+# func_get_status module
+# Input:
+# - local_gnulib_dir  from --local-dir
+func_get_status ()
+{
+  func_lookup_file "modules/$1"
+  sed -n -e "/^Status$sed_extract_prog" < "$lookedup_file"
 }
 
 # func_get_notice module
@@ -4352,6 +4364,16 @@ case $mode in
       func_verify_module
       if test -n "$module"; then
         func_get_description "$module"
+      fi
+    done
+    ;;
+
+  extract-status )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_status "$module"
       fi
     done
     ;;
