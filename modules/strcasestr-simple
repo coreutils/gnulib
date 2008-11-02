@@ -10,6 +10,7 @@ Depends-on:
 string
 stdbool
 strcase
+memchr
 
 configure.ac:
 gl_FUNC_STRCASESTR_SIMPLE

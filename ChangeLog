@@ -10,7 +10,7 @@
 	* modules/getsubopt (Depends-on): Likewise.
 	* modules/git-merge-changelog (Depends-on): Likewise.
 	* modules/glob (Depends-on): Likewise.
-	* modules/strcasestr (Depends-on): Likewise.
+	* modules/strcasestr-simple (Depends-on): Likewise.
 	* modules/strnlen (Depends-on): Likewise.
 
 2008-11-02  Bruno Haible  <bruno@clisp.org>

@@ -5,7 +5,6 @@ Files:
 
 Depends-on:
 strcasestr-simple
-memchr
 
 configure.ac:
 gl_FUNC_STRCASESTR
