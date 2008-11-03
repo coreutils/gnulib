@@ -111,7 +111,7 @@ init-coverage:
 	make clean
 	lcov --directory . --zerocounters
 
-COVERAGE_CCOPTS ?= "-g -fprofile-arcs -ftest-coverage"
+COVERAGE_CCOPTS ?= "-g --coverage"
 COVERAGE_OUT ?= doc/coverage
 
 build-coverage:

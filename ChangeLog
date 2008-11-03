@@ -1,3 +1,9 @@
+2008-11-03  Simon Josefsson  <simon@josefsson.org>
+
+	* top/maint.mk (COVERAGE_CCOPTS): Use --coverage instead of
+	-fprofile-arcs -ftest-coverage.  Suggested by Ludovic Courtès
+	<ludo@gnu.org>.
+
 2008-11-02  Bruno Haible  <bruno@clisp.org>
 
 	Mark 'strpbrk' obsolete.
