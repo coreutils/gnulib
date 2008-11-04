@@ -1,4 +1,4 @@
-# include_next.m4 serial 8
+# include_next.m4 serial 9
 dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -87,6 +87,7 @@ EOF
 AC_DEFUN([gl_CHECK_NEXT_HEADERS],
 [
   AC_REQUIRE([gl_INCLUDE_NEXT])
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_HEADERS_ONCE([$1])
 
   m4_foreach_w([gl_HEADER_NAME], [$1],
@@ -105,11 +106,22 @@ AC_DEFUN([gl_CHECK_NEXT_HEADERS],
 	      [AC_LANG_SOURCE(
 		 [[#include <]]m4_dquote(m4_defn([gl_HEADER_NAME]))[[>]]
 	       )])
-	    dnl eval is necessary to expand ac_cpp.
+	    dnl AIX "xlc -E" and "cc -E" omit #line directives for header files
+	    dnl that contain only a #include of other header files and no
+	    dnl non-comment tokens of their own. This leads to a failure to
+	    dnl detect the absolute name of <dirent.h>, <signal.h>, <poll.h>
+	    dnl and others. The workaround is to force preservation of comments
+	    dnl through option -C. This ensures all necessary #line directives
+	    dnl are present. GCC supports option -C as well.
+	    case "$host_os" in
+	      aix*) gl_absname_cpp="$ac_cpp -C" ;;
+	      *)    gl_absname_cpp="$ac_cpp" ;;
+	    esac
+	    dnl eval is necessary to expand gl_absname_cpp.
 	    dnl Ultrix and Pyramid sh refuse to redirect output of eval,
 	    dnl so use subshell.
 	    AS_VAR_SET([gl_next_header],
-	      ['"'`(eval "$ac_cpp conftest.$ac_ext") 2>&AS_MESSAGE_LOG_FD |
+	      ['"'`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&AS_MESSAGE_LOG_FD |
 	       sed -n '\#/]m4_quote(m4_defn([gl_HEADER_NAME]))[#{
 		 s#.*"\(.*/]m4_quote(m4_defn([gl_HEADER_NAME]))[\)".*#\1#
 		 s#^/[^/]#//&#
