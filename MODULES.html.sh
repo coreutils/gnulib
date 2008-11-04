@@ -2982,6 +2982,7 @@ func_all_modules ()
   func_begin_table
   func_module agpl-3.0
   func_module fdl
+  func_module fdl-1.3
   func_module gendocs
   func_module gpl-2.0
   func_module gpl-3.0
