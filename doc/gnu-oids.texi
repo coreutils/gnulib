@@ -1,4 +1,4 @@
-@c This table of OID's is included in the GNU maintainers manual.
+@c This table of OID's is included in the GNU Coding Standards manual.
 @c
 @c Copyright 2008 Free Software Foundation, Inc.
 @c
