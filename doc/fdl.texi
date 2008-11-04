@@ -1,5 +1,5 @@
 @c The GNU Free Documentation License.
-@center Version 1.2, November 2002
+@center Version 1.3, November 2002
 
 @c This file is intended to be included within another document,
 @c hence no sectioning command or @node.
@@ -417,7 +417,7 @@ license notices just after the title page:
 @group
   Copyright (C)  @var{year}  @var{your name}.
   Permission is granted to copy, distribute and/or modify this document
-  under the terms of the GNU Free Documentation License, Version 1.2
+  under the terms of the GNU Free Documentation License, Version 1.3
   or any later version published by the Free Software Foundation;
   with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
   Texts.  A copy of the license is included in the section entitled ``GNU

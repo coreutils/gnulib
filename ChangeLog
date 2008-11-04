@@ -1,5 +1,34 @@
 2008-11-04  Simon Josefsson  <simon@josefsson.org>
 
+	* doc/alloca-opt.texi: Change license to GFDLv1.3+, as suggested
+	by karl@freefriends.org (Karl Berry).
+	* doc/alloca.texi: Likewise.
+	* doc/c-ctype.texi: Likewise.
+	* doc/c-strcase.texi: Likewise.
+	* doc/c-strcaseeq.texi: Likewise.
+	* doc/c-strcasestr.texi: Likewise.
+	* doc/c-strstr.texi: Likewise.
+	* doc/c-strtod.texi: Likewise.
+	* doc/c-strtold.texi: Likewise.
+	* doc/ctime.texi: Likewise.
+	* doc/error.texi: Likewise.
+	* doc/fdl.texi: Likewise.
+	* doc/gcd.texi: Likewise.
+	* doc/getdate.texi: Likewise.
+	* doc/gnulib-intro.texi: Likewise.
+	* doc/gnulib-tool.texi: Likewise.
+	* doc/gnulib.texi: Likewise.
+	* doc/inet_ntoa.texi: Likewise.
+	* doc/maintain.texi: Likewise.
+	* doc/make-stds.texi: Likewise.
+	* doc/quote.texi: Likewise.
+	* doc/regexprops-generic.texi: Likewise.
+	* doc/standards.texi: Likewise.
+	* doc/verify.texi: Likewise.
+	* doc/visibility.texi: Likewise.
+
+2008-11-04  Simon Josefsson  <simon@josefsson.org>
+
 	* doc/fdl-1.3.texi: New file, from
 	<http://www.gnu.org/licenses/fdl-1.3.texi>.
 	* modules/fdl-1.3: Add.
