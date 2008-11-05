@@ -3,6 +3,7 @@ close() function: close a file or socket.
 
 Files:
 lib/close.c
+lib/w32sock.h
 m4/close.m4
 
 Depends-on:

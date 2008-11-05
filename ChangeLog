@@ -1,3 +1,8 @@
+2008-11-05  Ben Pfaff  <blp@gnu.org>
+
+	Fix lib/close.c build on Windows.
+	* modules/close (Files): Add lib/w32sock.h.
+
 2008-11-05  Joel E. Denny  <jdenny@ces.clemson.edu>
 
 	Accept Bison's NEWS format.
