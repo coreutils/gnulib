@@ -1,3 +1,9 @@
+2008-11-05  Joel E. Denny  <jdenny@ces.clemson.edu>
+
+	Accept Bison's NEWS format.
+	* build-aux/announce-gen (print_news_deltas): Tweak
+	$re_prefix.
+
 2008-11-04  Bruno Haible  <bruno@clisp.org>
 
 	* modules/random_r (Maintainer): Add glibc.

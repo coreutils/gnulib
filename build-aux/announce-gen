@@ -207,7 +207,7 @@ sub print_news_deltas ($$$)
   # the first occurrence of $prev_version.
   my $in_items;
 
-  my $re_prefix = qr/\* (?:Noteworthy|Major) change/;
+  my $re_prefix = qr/(?:\* )?(?:Noteworthy c|Major c|C)(?i:hanges)/;
 
   open NEWS, '<', $news_file
     or die "$ME: $news_file: cannot open for reading: $!\n";
