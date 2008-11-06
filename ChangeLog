@@ -1,3 +1,8 @@
+2008-11-06  Alexander V. Lukyanov  <lav@netis.ru>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/sys_stat.in.h: Enclose function definitions in extern "C".
+
 2008-10-12  Giuseppe Scrivano  <gscrivano@gnu.org>
 
 	* build-aux/pmccabe2html: Added support for C++ source files.
