@@ -18,6 +18,7 @@
 
 # Written by Jose E. Marchesi <jemarch@gnu.org>.
 # Adapted for gnulib by Simon Josefsson <simon@josefsson.org>.
+# Added support for C++ by Giuseppe Scrivano <gscrivano@gnu.org>.
 
 # Typical Invocation is from a Makefile.am:
 #
@@ -117,7 +118,7 @@ function html_fnc_table_complete (caption)
 
 function html_fnc_table_abbrev (caption)
 {
-    html_fnc_table(caption, 1, 0, 0, 0, 0, 0, 0)
+    html_fnc_table(caption, 1, 0, 1, 0, 1, 0, 0)
 }
 
 
@@ -144,8 +145,7 @@ function html_fnc_table (caption,
                     file_p)
     for (nfnc = 1; nfnc < nfuncs; nfnc++)
     {
-        fnc = fnames[nfnc]
-        html_fnc(fnc, 
+        html_fnc(nfnc,
                  fname_p, 
                  mcyclo_p, 
                  cyclo_p, 
@@ -292,7 +292,7 @@ function html_fnc_header (fname_p,
     print "</tr>"
 }
 
-function html_fnc (fname,
+function html_fnc (nfun,
                    fname_p,
                    mcyclo_p,
                    cyclo_p,
@@ -301,17 +301,19 @@ function html_fnc (fname,
                    first_line_p,
                    file_p)
 {
+    fname = fnames[nfun]
+
     # Function name
     trclass = "function_entry_simple"
-    if (mcyclo[fname] > cyclo_high_max)
+    if (mcyclo[nfun] > cyclo_high_max)
     {
         trclass="function_entry_untestable"
     }   
-    else if (mcyclo[fname] > cyclo_moderate_max)
+    else if (mcyclo[nfun] > cyclo_moderate_max)
     {
         trclass="function_entry_high"
     }
-    else if (mcyclo[fname] > cyclo_simple_max)
+    else if (mcyclo[nfun] > cyclo_simple_max)
     {
         trclass="function_entry_moderate"
     }
@@ -320,7 +322,7 @@ function html_fnc (fname,
     if (fname_p)
     {
         print "<td class=\"function_entry_filename\">"
-        if (mcyclo[fname] > cyclo_simple_max)
+        if (file_p && mcyclo[nfun] > cyclo_simple_max)
         {
             print "<a href=\"javascript:void(0);\" title=\"show/hide function source\" onClick=\"javascript:show_hide('" fname "_src', '" fname "_button')\">\
 <span id=\"" fname "_button\">&darr;</span></a>"
@@ -339,35 +341,35 @@ function html_fnc (fname,
     {
         # Modified cyclo
         print "<td class=\"function_entry_cyclo\">"
-        print mcyclo[fname]
+        print mcyclo[nfun]
         print "</td>"
     }
     if (cyclo_p)
     {
         # Cyclo
         print "<td class=\"function_entry_cyclo\">"
-        print cyclo[fname]
+        print cyclo[nfun]
         print "</td>"
     }
     if (num_statements_p)
     {
         # Number of statements
         print "<td class=\"function_entry_number\">"
-        print num_statements[fname]
+        print num_statements[nfun]
         print "</td>"
     }
     if (num_lines_p)
     {
         # Number of lines
         print "<td class=\"function_entry_number\">"
-        print num_lines[fname]
+        print num_lines[nfun]
         print "</td>"
     }
     if (first_line_p)
     {
         # First line
         print "<td class=\"function_entry_number\">"
-        print first_line[fname]
+        print first_line[nfun]
         print "</td>"
     }
     if (file_p)
@@ -377,18 +379,18 @@ function html_fnc (fname,
         {
             # Get href target
             href = source_file_link_tmpl
-            sub(/%FILENAME%/, file[fname], href)
+            sub(/%FILENAME%/, file[nfun], href)
         }
 
         # Source file
         print "<td class=\"function_entry_filename\">"
         if (href != "")
         {
-            print "<a href=\"" href "\">" file[fname] "</a>"
+            print "<a href=\"" href "\">" file[nfun] "</a>"
         }
         else
         {
-            print file[fname]
+            print file[nfun]
         }
  
         print "</td>"
@@ -396,7 +398,7 @@ function html_fnc (fname,
 
         print "</tr>"
 
-        if (mcyclo[fname] > cyclo_simple_max)
+        if (mcyclo[nfun] > cyclo_simple_max)
         {
             print "<tr>"
 
@@ -412,7 +414,8 @@ function html_fnc (fname,
             print "<td colspan=\"" num_columns "\" height=\"0\">"
             print "<div id=\"" fname "_src\" class=\"function_src\" style=\"position: relative; display: none;\">"
             print "<pre class=\"function_src\">"
-            while ((getline codeline < (fname "_fn.txt")) > 0)
+
+            while ((getline codeline < (fname nfun "_fn.txt")) > 0)
             {
                 sub(/\\</, "&lt;", codeline)
                 sub(/\\>/, "&gt;", codeline)
@@ -420,8 +423,8 @@ function html_fnc (fname,
                 
                 print codeline
             }
-            close(fname "_fn.txt")
-            system("rm " fname "_fn.txt")
+            close(fname nfun "_fn.txt")
+            system("rm " fname nfun "_fn.txt")
             print "</pre>"
             print "</div>"
             print "</td>"
@@ -653,8 +656,7 @@ function wiki_fnc_table (caption,
                     file_p)
     for (nfnc = 1; nfnc < nfuncs; nfnc++)
     {
-        fnc = fnames[nfnc]
-        wiki_fnc(fnc, 
+        wiki_fnc(nfnc,
                  fname_p, 
                  mcyclo_p, 
                  cyclo_p, 
@@ -707,7 +709,7 @@ function wiki_fnc_header (fname_p,
     }
 }
 
-function wiki_fnc (fname,
+function wiki_fnc (nfnc,
                    fname_p,
                    mcyclo_p,
                    cyclo_p,
@@ -716,17 +718,19 @@ function wiki_fnc (fname,
                    first_line_p,
                    file_p)
 {
+   fname = fnames[nfnc]
+
     # Function name
     trclass = "cyclo_function_entry_simple"
-    if (mcyclo[fname] > cyclo_high_max)
+    if (mcyclo[nfnc] > cyclo_high_max)
     {
         trclass="cyclo_function_entry_untestable"
     }   
-    else if (mcyclo[fname] > cyclo_moderate_max)
+    else if (mcyclo[nfnc] > cyclo_moderate_max)
     {
         trclass="cyclo_function_entry_high"
     }
-    else if (mcyclo[fname] > cyclo_simple_max)
+    else if (mcyclo[nfnc] > cyclo_simple_max)
     {
         trclass="cyclo_function_entry_moderate"
     }
@@ -739,27 +743,27 @@ function wiki_fnc (fname,
     if (mcyclo_p)
     {
         # Modified cyclo
-        print "| class=\"cyclo_function_entry_cyclo\" |" mcyclo[fname]
+        print "| class=\"cyclo_function_entry_cyclo\" |" mcyclo[nfnc]
     }
     if (cyclo_p)
     {
         # Cyclo
-        print "| class=\"cyclo_function_entry_cyclo\" |" cyclo[fname]
+        print "| class=\"cyclo_function_entry_cyclo\" |" cyclo[nfnc]
     }
     if (num_statements_p)
     {
         # Number of statements
-        print "| class=\"cyclo_function_entry_number\" |" num_statements[fname]
+        print "| class=\"cyclo_function_entry_number\" |" num_statements[nfnc]
     }
     if (num_lines_p)
     {
         # Number of lines
-        print "| class=\"cyclo_function_entry_number\" |" num_lines[fname]
+        print "| class=\"cyclo_function_entry_number\" |" num_lines[nfnc]
     }
     if (first_line_p)
     {
         # First line
-        print "| class=\"cyclo_function_entry_number\" |" first_line[fname]
+        print "| class=\"cyclo_function_entry_number\" |" first_line[nfnc]
     }
     if (file_p)
     {
@@ -768,12 +772,12 @@ function wiki_fnc (fname,
         {
             # Get href target
             href = source_file_link_tmpl
-            sub(/%FILENAME%/, file[fname], href)
+            sub(/%FILENAME%/, file[nfnc], href)
         }
         
         # Source file
         print "| class=\"cyclo_function_entry_filename\" |" \
-            ((href != "") ? "[" href " " file[fname] "]" : "[" file[fname] "]")
+            ((href != "") ? "[" href " " file[nfnc] "]" : "[" file[nfnc] "]")
     }
 }
 
@@ -783,34 +787,36 @@ function wiki_fnc (fname,
 
     nfuncs++;
     fnames[nfuncs] = function_name
-    mcyclo[function_name] = $1
-    cyclo[function_name] = $2
-    num_statements[function_name] = $3
-    first_line[function_name] = $4
-    num_lines[function_name] = $5
+    mcyclo[nfuncs] = $1
+    cyclo[nfuncs] = $2
+    num_statements[nfuncs] = $3
+    first_line[nfuncs] = $4
+    num_lines[nfuncs] = $5
 
     # Build the filename from the file_spec ($6)
     begin_util_path = index($6, cut_dir)
     tmpfilename = substr($6, begin_util_path + length(cut_dir))
     sub(/\([0-9]+\):/, "", tmpfilename)
-    file[function_name] = tmpfilename
+    file[nfuncs] = tmpfilename
 
-    if (mcyclo[function_name] > cyclo_simple_max)
+    if (mcyclo[nfuncs] > cyclo_simple_max)
     {
         # Extract function contents to a fn_txt file
         filepath = $6
+
         sub(/\([0-9]+\):/, "", filepath)
         num_line = 0
+
         while ((getline codeline < filepath) > 0)
         {
             num_line++;
-            if ((num_line >= first_line[function_name]) &&
-                (num_line < first_line[function_name] + num_lines[function_name]))
+            if ((num_line >= first_line[nfuncs]) &&
+                (num_line < first_line[nfuncs] + num_lines[nfuncs]))
             {
-                print codeline > (function_name "_fn.txt")
+                print codeline > (function_name nfuncs "_fn.txt")
             }
         }
-        close (function_name "_fn.txt")
+        close (function_name nfuncs "_fn.txt")
         close(filepath)
     }
 
