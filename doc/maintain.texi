@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 13, 2008
+@set lastupdate November 6, 2008
 @c %**end of header
 
 @dircategory GNU organization
