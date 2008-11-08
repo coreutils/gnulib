@@ -1,5 +1,10 @@
 2008-11-07  Bruno Haible  <bruno@clisp.org>
 
+	* m4/sys_ioctl_h.m4 (gl_SYS_IOCTL_H): Avoid using AC_CHECK_DECL inside
+	AC_CACHE_CHECK.
+
+2008-11-07  Bruno Haible  <bruno@clisp.org>
+
 	* modules/select-tests (configure.ac): Check for unistd.h, sys/wait.h.
 
 2008-11-07  Bruno Haible  <bruno@clisp.org>
