@@ -1,3 +1,15 @@
+2008-11-07  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-select-fd.c: New file.
+	* tests/test-select-in.sh: New file.
+	* tests/test-select-out.sh: New file.
+	* tests/test-select-stdin.c: New file.
+	* modules/select-tests (Files): Add the new files.
+	(Depends-on): Add gettimeofday.
+	(Makefile.am): Add test-select-in.sh, test-select-out.sh to TESTS.
+	Set TESTS_ENVIRONMENT. Add test-select-fd, test-select-stdin to
+	check_PROGRAMS. Define test_select_fd_LDADD, test_select_stdin_LDADD.
+
 2008-11-06  Alexander V. Lukyanov  <lav@netis.ru>
             Bruno Haible  <bruno@clisp.org>
 

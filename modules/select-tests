@@ -1,5 +1,9 @@
 Files:
 tests/test-select.c
+tests/test-select-fd.c
+tests/test-select-in.sh
+tests/test-select-out.sh
+tests/test-select-stdin.c
 
 Depends-on:
 stdbool
@@ -19,13 +23,18 @@ connect
 accept
 ioctl
 close
+gettimeofday
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-select
-check_PROGRAMS += test-select
+TESTS += test-select test-select-in.sh test-select-out.sh
+# test-select-stdin has to be run by hand.
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-select test-select-fd test-select-stdin
 test_select_LDADD = $(LDADD) @LIBSOCKET@
+test_select_fd_LDADD = $(LDADD) @LIBSOCKET@
+test_select_stdin_LDADD = $(LDADD) @LIBSOCKET@
 
 License:
 LGPL
