@@ -26,6 +26,7 @@ close
 gettimeofday
 
 configure.ac:
+AC_CHECK_HEADERS_ONCE([unistd.h sys/wait.h])
 
 Makefile.am:
 TESTS += test-select test-select-in.sh test-select-out.sh
