@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate November 6, 2008
+@set lastupdate November 8, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -619,11 +619,12 @@ Every nontrivial file needs a license notice as well as the copyright
 notice.  (Without a license notice giving permission to copy and
 change the file, the file is non-free.)
 
-The package itself should contain a full copy of GPL (conventionally
-in a file named @file{COPYING}) and the GNU Free Documentation License
-(included within your documentation).  If the package contains any
-files distributed under the Lesser GPL, it should contain a full copy
-of that as well (conventionally in a file named
+The package itself should contain a full copy of GPL in plain text
+(conventionally in a file named @file{COPYING}) and the GNU Free
+Documentation License (included within your documentation, so there is
+no need for a separate plain text version).  If the package contains
+any files distributed under the Lesser GPL, it should contain a full
+copy of its plain text version also (conventionally in a file named
 @file{COPYING.LESSER}).
 
 If you have questions about license issues for your GNU package,
