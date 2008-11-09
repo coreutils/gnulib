@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-10-30.07}
+\def\texinfoversion{2008-11-09.10}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1628,6 +1628,10 @@ output) for that.)}
 \def\bf{\fam=\bffam \setfontstyle{bf}}\def\bfstylename{bf}
 \def\tt{\fam=\ttfam \setfontstyle{tt}}
 
+% Unfortunately, we have to override this for titles and the like, since
+% in those cases "rm" is bold.  Sigh.
+\def\rmisbold{\rm\def\curfontstyle{bf}}
+
 % Texinfo sort of supports the sans serif font style, which plain TeX does not.
 % So we set up a \sf.
 \newfam\sffam
@@ -2025,8 +2029,6 @@ end
 \setfont\titlesc\scbshape{10}{\magstep4}{OT1}
 \font\titlei=cmmi12 scaled \magstep3
 \font\titlesy=cmsy10 scaled \magstep4
-\def\authorrm{\secrm}
-\def\authortt{\sectt}
 \def\titleecsize{2074}
 
 % Chapter (and unnumbered) fonts (17.28pt).
@@ -2158,8 +2160,6 @@ end
 \setfont\titlesc\scbshape{10}{\magstep4}{OT1}
 \font\titlei=cmmi12 scaled \magstep3
 \font\titlesy=cmsy10 scaled \magstep4
-\def\authorrm{\secrm}
-\def\authortt{\sectt}
 \def\titleecsize{2074}
 
 % Chapter fonts (14.4pt).
@@ -2291,7 +2291,7 @@ end
   \def\curfontsize{title}%
   \def\lsize{chap}\def\lllsize{subsec}%
   \resetmathfonts \setleading{25pt}}
-\def\titlefont#1{{\titlefonts\rm #1}}
+\def\titlefont#1{{\titlefonts\rmisbold #1}}
 \def\chapfonts{%
   \let\tenrm=\chaprm \let\tenit=\chapit \let\tensl=\chapsl
   \let\tenbf=\chapbf \let\tentt=\chaptt \let\smallcaps=\chapsc
@@ -2751,8 +2751,35 @@ end
 \def\quotedblbase{{\ecfont \char"12}}
 \def\quotesinglbase{{\ecfont \char"0D}}
 %
+% This positioning is not perfect (see the ogonek LaTeX package), but
+% we have the precomposed glyphs for the most common cases.  We put the
+% tests to use those glyphs in the single \ogonek macro so we have fewer
+% dummy definitions to worry about for index entries, etc.
+% 
+% ogonek is also used with other letters in Lithuanian (IOU), but using
+% the precomposed glyphs for those is not so easy since they aren't in
+% the same EC font.
+\def\ogonek#1{{%
+  \def\temp{#1}%
+  \ifx\temp\macrocharA\Aogonek
+  \else\ifx\temp\macrochara\aogonek
+  \else\ifx\temp\macrocharE\Eogonek
+  \else\ifx\temp\macrochare\eogonek
+  \else
+    \ecfont \setbox0=\hbox{#1}%
+    \ifdim\ht0=1ex\accent"0C #1%
+    \else\ooalign{\unhbox0\crcr\hidewidth\char"0C \hidewidth}%
+    \fi
+  \fi\fi\fi\fi
+  }%
+}
+\def\Aogonek{{\ecfont \char"81}}\def\macrocharA{A}
+\def\aogonek{{\ecfont \char"A1}}\def\macrochara{a}
+\def\Eogonek{{\ecfont \char"86}}\def\macrocharE{E}
+\def\eogonek{{\ecfont \char"A6}}\def\macrochare{e}
+%
 \def\ecfont{%
-  % We can't distinguish serif/sanserif and italic/slanted, but this
+  % We can't distinguish serif/sans and italic/slanted, but this
   % is used for crude hacks anyway (like adding French and German
   % quotes to documents typeset with CM, where we lose kerning), so
   % hopefully nobody will notice/care.
@@ -2880,12 +2907,9 @@ end
 \let\subtitlerm=\tenrm
 \def\subtitlefont{\subtitlerm \normalbaselineskip = 13pt \normalbaselines}
 
-\def\authorfont{\authorrm \normalbaselineskip = 16pt \normalbaselines
-		\let\tt=\authortt}
-
 \parseargdef\title{%
   \checkenv\titlepage
-  \leftline{\titlefonts\rm #1}
+  \leftline{\titlefonts\rmisbold #1}
   % print a rule at the page bottom also.
   \finishedtitlepagefalse
   \vskip4pt \hrule height 4pt width \hsize \vskip4pt
@@ -2906,7 +2930,7 @@ end
   \else
     \checkenv\titlepage
     \ifseenauthor\else \vskip 0pt plus 1filll \seenauthortrue \fi
-    {\authorfont \leftline{#1}}%
+    {\secfonts\rmisbold \leftline{#1}}%
   \fi
 }
 
@@ -4038,6 +4062,7 @@ end
   \definedummyword\guilsinglright
   \definedummyword\expansion
   \definedummyword\minus
+  \definedummyword\ogonek
   \definedummyword\pounds
   \definedummyword\point
   \definedummyword\print
@@ -4081,6 +4106,7 @@ end
   \definedummyword\v
   \definedummyword\H
   \definedummyword\dotaccent
+  \definedummyword\ogonek
   \definedummyword\ringaccent
   \definedummyword\tieaccent
   \definedummyword\ubaraccent
@@ -5063,7 +5089,6 @@ end
 %       3) Likewise, headings look best if no \parindent is used, and
 %          if justification is not attempted.  Hence \raggedright.
 
-
 \def\majorheading{%
   {\advance\chapheadingskip by 10pt \chapbreak }%
   \parsearg\chapheadingzzz
@@ -5073,7 +5098,7 @@ end
 \def\chapheadingzzz#1{%
   {\chapfonts \vbox{\hyphenpenalty=10000\tolerance=5000
                     \parindent=0pt\raggedright
-                    \rm #1\hfill}}%
+                    \rmisbold #1\hfill}}%
   \bigskip \par\penalty 200\relax
   \suppressfirstparagraphindent
 }
@@ -5192,7 +5217,7 @@ end
   \domark
   %
   {%
-    \chapfonts \rm
+    \chapfonts \rmisbold
     %
     % Have to define \lastsection before calling \donoderef, because the
     % xref code eventually uses it.  On the other hand, it has to be called
@@ -5254,7 +5279,7 @@ end
 \def\unnchfopen #1{%
 \chapoddpage {\chapfonts \vbox{\hyphenpenalty=10000\tolerance=5000
                        \parindent=0pt\raggedright
-                       \rm #1\hfill}}\bigskip \par\nobreak
+                       \rmisbold #1\hfill}}\bigskip \par\nobreak
 }
 \def\chfopen #1#2{\chapoddpage {\chapfonts
 \vbox to 3in{\vfil \hbox to\hsize{\hfil #2} \hbox to\hsize{\hfil #1} \vfil}}%
@@ -5263,7 +5288,7 @@ end
 \def\centerchfopen #1{%
 \chapoddpage {\chapfonts \vbox{\hyphenpenalty=10000\tolerance=5000
                        \parindent=0pt
-                       \hfill {\rm #1}\hfill}}\bigskip \par\nobreak
+                       \hfill {\rmisbold #1}\hfill}}\bigskip \par\nobreak
 }
 \def\CHAPFopen{%
   \global\let\chapmacro=\chfopen
@@ -5296,7 +5321,7 @@ end
 \def\sectionheading#1#2#3#4{%
   {%
     % Switch to the right set of fonts.
-    \csname #2fonts\endcsname \rm
+    \csname #2fonts\endcsname \rmisbold
     %
     \def\sectionlevel{#2}%
     \def\temptype{#3}%
@@ -7911,7 +7936,7 @@ directory should work if nowhere else does.}
   \gdef^^a8{\"{}} 
   \gdef^^a9{\copyright} 
   \gdef^^aa{\ordf}
-  \gdef^^ab{\missingcharmsg{LEFT-POINTING DOUBLE ANGLE QUOTATION MARK}} 
+  \gdef^^ab{\guillemetleft}
   \gdef^^ac{$\lnot$}
   \gdef^^ad{\-} 
   \gdef^^ae{\registeredsymbol} 
@@ -7930,7 +7955,7 @@ directory should work if nowhere else does.}
   \gdef^^b9{$^1$}
   \gdef^^ba{\ordm}
   %
-  \gdef^^bb{\missingcharmsg{RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK}}
+  \gdef^^bb{\guilletright}
   \gdef^^bc{$1\over4$}
   \gdef^^bd{$1\over2$}
   \gdef^^be{$3\over4$}
@@ -8023,7 +8048,7 @@ directory should work if nowhere else does.}
 % Latin2 (ISO-8859-2) character definitions.
 \def\lattwochardefs{%
   \gdef^^a0{~}
-  \gdef^^a1{\missingcharmsg{LATIN CAPITAL LETTER A WITH OGONEK}}
+  \gdef^^a1{\ogonek{A}}
   \gdef^^a2{\u{}}
   \gdef^^a3{\L}
   \gdef^^a4{\missingcharmsg{CURRENCY SIGN}}
@@ -8040,8 +8065,8 @@ directory should work if nowhere else does.}
   \gdef^^af{\dotaccent Z}
   %
   \gdef^^b0{\textdegree}
-  \gdef^^b1{\missingcharmsg{LATIN SMALL LETTER A WITH OGONEK}}
-  \gdef^^b2{\missingcharmsg{OGONEK}}
+  \gdef^^b1{\ogonek{a}}
+  \gdef^^b2{\ogonek{ }}
   \gdef^^b3{\l}
   \gdef^^b4{\'{}}
   \gdef^^b5{\v l}
@@ -8066,7 +8091,7 @@ directory should work if nowhere else does.}
   \gdef^^c7{\cedilla C}
   \gdef^^c8{\v C}
   \gdef^^c9{\'E}
-  \gdef^^ca{\missingcharmsg{LATIN CAPITAL LETTER E WITH OGONEK}}
+  \gdef^^ca{\ogonek{E}}
   \gdef^^cb{\"E}
   \gdef^^cc{\v E}
   \gdef^^cd{\'I}
@@ -8100,7 +8125,7 @@ directory should work if nowhere else does.}
   \gdef^^e7{\cedilla c}
   \gdef^^e8{\v c}
   \gdef^^e9{\'e}
-  \gdef^^ea{\missingcharmsg{LATIN SMALL LETTER E WITH OGONEK}}
+  \gdef^^ea{\ogonek{e}}
   \gdef^^eb{\"e}
   \gdef^^ec{\v e}
   \gdef^^ed{\'\i}
@@ -8329,10 +8354,14 @@ directory should work if nowhere else does.}
   \DeclareUnicodeCharacter{0101}{\=a}
   \DeclareUnicodeCharacter{0102}{\u{A}}
   \DeclareUnicodeCharacter{0103}{\u{a}}
+  \DeclareUnicodeCharacter{0104}{\ogonek{A}}
+  \DeclareUnicodeCharacter{0105}{\ogonek{e}}
   \DeclareUnicodeCharacter{0106}{\'C}
   \DeclareUnicodeCharacter{0107}{\'c}
   \DeclareUnicodeCharacter{0108}{\^C}
   \DeclareUnicodeCharacter{0109}{\^c}
+  \DeclareUnicodeCharacter{0118}{\ogonek{E}}
+  \DeclareUnicodeCharacter{0119}{\ogonek{e}}
   \DeclareUnicodeCharacter{010A}{\dotaccent{C}}
   \DeclareUnicodeCharacter{010B}{\dotaccent{c}}
   \DeclareUnicodeCharacter{010C}{\v{C}}
@@ -8479,6 +8508,8 @@ directory should work if nowhere else does.}
   \DeclareUnicodeCharacter{0232}{\=Y}
   \DeclareUnicodeCharacter{0233}{\=y}
   \DeclareUnicodeCharacter{0237}{\dotless{j}}
+
+  \DeclareUnicodeCharacter{02DB}{\ogonek{ }}
 
   \DeclareUnicodeCharacter{1E02}{\dotaccent{B}}
   \DeclareUnicodeCharacter{1E03}{\dotaccent{b}}
