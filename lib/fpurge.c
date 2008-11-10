@@ -19,7 +19,7 @@
 /* Specification.  */
 #include "fpurge.h"
 
-#if HAVE___FPURGE                   /* glibc >= 2.2, Solaris >= 7 */
+#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7 */
 # include <stdio_ext.h>
 #endif
 #include <stdlib.h>
@@ -29,7 +29,7 @@
 int
 fpurge (FILE *fp)
 {
-#if HAVE___FPURGE                   /* glibc >= 2.2, Solaris >= 7 */
+#if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7 */
 
   __fpurge (fp);
   /* The __fpurge function does not have a return value.  */
