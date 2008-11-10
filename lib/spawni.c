@@ -133,6 +133,10 @@ __spawni (pid_t *pid, const char *file,
   /* Do this once.  */
   short int flags = attrp == NULL ? 0 : attrp->_flags;
 
+  /* Avoid gcc warning
+       "variable 'flags' might be clobbered by 'longjmp' or 'vfork'"  */
+  (void) &flags;
+
   /* Generate the new process.  */
 #if HAVE_VFORK
   if ((flags & POSIX_SPAWN_USEVFORK) != 0

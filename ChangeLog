@@ -1,5 +1,9 @@
 2008-11-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/spawni.c (__spawni): Force variable into the stack.
+
+2008-11-10  Bruno Haible  <bruno@clisp.org>
+
 	Add support for Haiku.
 	* lib/fbufmode.c (fbufmode): Test a symbol that is not only defined on
 	glibc and BeOS, but also on Haiku.
