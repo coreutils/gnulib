@@ -1,5 +1,10 @@
 2008-11-10  Bruno Haible  <bruno@clisp.org>
 
+	* m4/printf.m4 (gl_PRINTF_ENOMEM): Guess yes on Haiku. Use the
+	cross-compiling guesses also when the native compile gives no result.
+
+2008-11-10  Bruno Haible  <bruno@clisp.org>
+
 	* lib/spawni.c (__spawni): Force variable into the stack.
 
 2008-11-10  Bruno Haible  <bruno@clisp.org>

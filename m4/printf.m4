@@ -1,4 +1,4 @@
-# printf.m4 serial 23
+# printf.m4 serial 24
 dnl Copyright (C) 2003, 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -815,6 +815,7 @@ AC_DEFUN([gl_PRINTF_ENOMEM],
   AC_CACHE_CHECK([whether printf survives out-of-memory conditions],
     [gl_cv_func_printf_enomem],
     [
+      gl_cv_func_printf_enomem="guessing no"
       if test "$cross_compiling" = no; then
         AC_LANG_CONFTEST([AC_LANG_SOURCE([
 ]GL_NOCRASH[
@@ -880,7 +881,8 @@ changequote([,])dnl
           gl_cv_func_printf_enomem="guessing no"
         fi
         rm -fr conftest*
-      else
+      fi
+      if test "$gl_cv_func_printf_enomem" = "guessing no"; then
 changequote(,)dnl
         case "$host_os" in
                     # Guess yes on glibc systems.
@@ -901,6 +903,8 @@ changequote(,)dnl
           osf*)     gl_cv_func_printf_enomem="guessing yes";;
                     # Guess yes on BeOS.
           beos*)    gl_cv_func_printf_enomem="guessing yes";;
+                    # Guess yes on Haiku.
+          haiku*)   gl_cv_func_printf_enomem="guessing yes";;
                     # If we don't know, assume the worst.
           *)        gl_cv_func_printf_enomem="guessing no";;
         esac
@@ -1305,5 +1309,6 @@ dnl   OSF/1 5.1                      #  .  #  #  #  #  .  .  .  .  #  .  .  .  .
 dnl   OSF/1 4.0d                     #  .  #  #  #  #  .  .  .  .  #  .  .  #  #  #  #  #  #
 dnl   NetBSD 4.0                     .  ?  ?  ?  ?  ?  .  .  ?  ?  ?  ?  ?  .  .  .  ?  ?  ?
 dnl   NetBSD 3.0                     .  .  .  .  #  #  .  #  #  ?  #  .  #  .  .  .  .  .  .
+dnl   Haiku                          .  .  .  #  #  #  .  .  .  .  .  .  ?  .  .  .  .  .  .
 dnl   BeOS                           #  #  .  #  #  #  .  #  .  ?  .  #  ?  .  .  .  .  .  .
 dnl   mingw                          #  #  #  #  #  #  .  #  #  .  #  #  ?  .  #  #  #  .  .
