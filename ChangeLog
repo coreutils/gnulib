@@ -1,3 +1,24 @@
+2008-11-10  Bruno Haible  <bruno@clisp.org>
+
+	Add support for Haiku.
+	* lib/fbufmode.c (fbufmode): Test a symbol that is not only defined on
+	glibc and BeOS, but also on Haiku.
+	* lib/fpurge.c (fpurge): Likewise.
+	* lib/freadable.c (freadable): Likewise.
+	* lib/freadahead.c (freadahead): Likewise.
+	* lib/freading.c (freading): Likewise.
+	* lib/freadptr.c (freadptr): Likewise.
+	* lib/freadseek.c (freadptrinc): Likewise.
+	* lib/fseeko.c (rpl_fseeko): Likewise.
+	* lib/fseterr.c (fseterr): Likewise.
+	* lib/fwritable.c (fwritable): Likewise.
+	* lib/fwriting.c (fwriting): Likewise.
+	Reported by Ingo Weinhold <ingo_weinhold@gmx.de>.
+
+2008-11-10  Ingo Weinhold  <ingo_weinhold@gmx.de>
+
+	* lib/config.charset: Treat Haiku like BeOS.
+
 2008-11-10  Ingo Weinhold  <ingo_weinhold@gmx.de>
 
 	* lib/binary-io.h (O_BINARY, O_TEXT): Treat Haiku like BeOS.
