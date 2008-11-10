@@ -127,8 +127,8 @@ extern void _gl_register_fd (int fd, const char *filename);
 # define O_TEXT _O_TEXT
 #endif
 
-#ifdef __BEOS__
-  /* BeOS 5 has O_BINARY and O_TEXT, but they have no effect.  */
+#if defined __BEOS__ || defined __HAIKU__
+  /* BeOS 5 and Haiku have O_BINARY and O_TEXT, but they have no effect.  */
 # undef O_BINARY
 # undef O_TEXT
 #endif

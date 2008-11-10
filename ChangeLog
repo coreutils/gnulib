@@ -1,13 +1,18 @@
-2008-11-07  Bruno Haible  <bruno@clisp.org>
+2008-11-10  Ingo Weinhold  <ingo_weinhold@gmx.de>
+
+	* lib/binary-io.h (O_BINARY, O_TEXT): Treat Haiku like BeOS.
+	* lib/fcntl.in.h (O_BINARY, O_TEXT): Likewise.
+
+2008-11-08  Bruno Haible  <bruno@clisp.org>
 
 	* m4/sys_ioctl_h.m4 (gl_SYS_IOCTL_H): Avoid using AC_CHECK_DECL inside
 	AC_CACHE_CHECK.
 
-2008-11-07  Bruno Haible  <bruno@clisp.org>
+2008-11-08  Bruno Haible  <bruno@clisp.org>
 
 	* modules/select-tests (configure.ac): Check for unistd.h, sys/wait.h.
 
-2008-11-07  Bruno Haible  <bruno@clisp.org>
+2008-11-08  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-select-fd.c: New file.
 	* tests/test-select-in.sh: New file.
