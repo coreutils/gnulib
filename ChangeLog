@@ -1,3 +1,8 @@
+2008-11-10  Eric Blake  <ebb9@byu.net>
+
+	fdl.texi: revert accidental change to license
+	* doc/fdl.texi: This is FDL 1.2, not 1.3.
+
 2008-11-10  Bruno Haible  <bruno@clisp.org>
 
 	* m4/printf.m4 (gl_PRINTF_ENOMEM): Guess yes on Haiku. Use the
@@ -55,7 +60,7 @@
 	check_PROGRAMS. Define test_select_fd_LDADD, test_select_stdin_LDADD.
 
 2008-11-06  Alexander V. Lukyanov  <lav@netis.ru>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/sys_stat.in.h: Enclose function definitions in extern "C".
 
