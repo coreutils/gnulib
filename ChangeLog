@@ -1,3 +1,8 @@
+2008-11-11  Eric Blake  <ebb9@byu.net>
+
+	fdl.texi: avoid git symlinks
+	* doc/fdl.texi: Copy, rather than link, fdl-1.3.texi.
+
 2008-11-11  Paolo Bonzini  <bonzini@gnu.org>
 
 	* m4/warnings.m4 (gl_WARN_ADD): Don't AC_SUBST the empty string.
