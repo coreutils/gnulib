@@ -25,6 +25,7 @@ $GNUSTANDARDS/maintain.texi	doc
 $GNUSTANDARDS/standards.texi	doc
 $GNUSTANDARDS/make-stds.texi	doc
 $GNUSTANDARDS/gnu-oids.texi	doc
+$GNUSTANDARDS/fdl.texi		doc
 #
 # The official forms for contributors to fill out, mentioned in maintain.
 $GNUORG/conditions.text				doc/Copyright

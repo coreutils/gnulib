@@ -1,3 +1,7 @@
+2008-11-11  Karl Berry  <karl@gnu.org>
+
+	* config/srclist.txt (fdl.texi): add, syncing from gnustandards.
+
 2008-11-11  Eric Blake  <ebb9@byu.net>
 
 	fdl.texi: avoid git symlinks
