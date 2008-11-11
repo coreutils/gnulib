@@ -1,0 +1,16 @@
+Description:
+Helper M4 functions for safely adding compiler warning parameters.
+
+Files:
+m4/warnings.m4
+
+Depends-on:
+
+configure.ac:
+gl_WARN_INIT
+
+License:
+unlimited
+
+Maintainer:
+Simon Josefsson
