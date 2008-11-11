@@ -25,7 +25,7 @@
 int
 main (int argc, char *argv[])
 {
-  if (argc == 3)
+  if (argc == 4)
     {
       char mode = argv[1][0];
 
@@ -35,32 +35,38 @@ main (int argc, char *argv[])
 
 	  if (fd >= 0)
 	    {
-	      fd_set fds;
-	      struct timeval timeout;
-	      int ret;
+	      const char *result_file_name = argv[3];
+	      FILE *result_file = fopen (result_file_name, "wb");
 
-	      FD_ZERO (&fds);
-	      FD_SET (fd, &fds);
-	      timeout.tv_sec = 0;
-	      timeout.tv_usec = 10000;
-	      ret = (mode == 'r'
-		     ? select (fd + 1, &fds, NULL, NULL, &timeout)
-		     : select (fd + 1, NULL, &fds, NULL, &timeout));
-	      if (ret < 0)
+	      if (result_file != NULL)
 		{
-		  perror ("select failed");
-		  exit (1);
+		  fd_set fds;
+		  struct timeval timeout;
+		  int ret;
+
+		  FD_ZERO (&fds);
+		  FD_SET (fd, &fds);
+		  timeout.tv_sec = 0;
+		  timeout.tv_usec = 10000;
+		  ret = (mode == 'r'
+			 ? select (fd + 1, &fds, NULL, NULL, &timeout)
+			 : select (fd + 1, NULL, &fds, NULL, &timeout));
+		  if (ret < 0)
+		    {
+		      perror ("select failed");
+		      exit (1);
+		    }
+		  if ((ret == 0) != ! FD_ISSET (fd, &fds))
+		    {
+		      fprintf (stderr, "incorrect return value\n");
+		      exit (1);
+		    }
+		  fprintf (result_file, "%d\n", ret);
+		  exit (0);
 		}
-	      if ((ret == 0) != ! FD_ISSET (fd, &fds))
-		{
-		  fprintf (stderr, "incorrect return value\n");
-		  exit (1);
-		}
-	      fprintf (stderr, "%d\n", ret);
-	      exit (0);
 	    }
 	}
     }
-  fprintf (stderr, "Usage: test-select-fd mode fd\n");
+  fprintf (stderr, "Usage: test-select-fd mode fd result-file-name\n");
   exit (1);
 }

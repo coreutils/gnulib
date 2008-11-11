@@ -1,5 +1,12 @@
 2008-11-10  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-select-fd.c (main): Accept the result file name as fourth
+	argument.
+	* tests/test-select-in.sh: Pass t-select-in.tmp as fourth argument.
+	* tests/test-select-out.sh: Pass t-select-out.tmp as fourth argument.
+
+2008-11-10  Bruno Haible  <bruno@clisp.org>
+
 	* lib/netdb.in.h: Use HAVE_STRUCT_ADDRINFO, HAVE_DECL_GETADDRINFO,
 	HAVE_DECL_FREEADDRINFO, HAVE_DECL_GAI_STRERROR, HAVE_DECL_GETNAMEINFO
 	as autoconf-substituted macros.

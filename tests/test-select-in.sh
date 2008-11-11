@@ -8,20 +8,24 @@ tmpfiles="$tmpfiles t-select-in.tmp"
 
 # Regular files.
 
-./test-select-fd${EXEEXT} r 0 < ./test-select-fd${EXEEXT} 2> t-select-in.tmp
+rm -f t-select-in.tmp
+./test-select-fd${EXEEXT} r 0 t-select-in.tmp < ./test-select-fd${EXEEXT}
 test `cat t-select-in.tmp` = "1" || exit 1
 
 # Pipes.
 
-{ sleep 1; echo abc; } | ./test-select-fd${EXEEXT} r 0 2> t-select-in.tmp
+rm -f t-select-in.tmp
+{ sleep 1; echo abc; } | ./test-select-fd${EXEEXT} r 0 t-select-in.tmp
 test `cat t-select-in.tmp` = "0" || exit 1
 
-echo abc | { sleep 1; ./test-select-fd${EXEEXT} r 0; } 2> t-select-in.tmp
+rm -f t-select-in.tmp
+echo abc | { sleep 1; ./test-select-fd${EXEEXT} r 0 t-select-in.tmp; }
 test `cat t-select-in.tmp` = "1" || exit 1
 
 # Special files.
 
-./test-select-fd${EXEEXT} r 0 < /dev/null 2> t-select-in.tmp
+rm -f t-select-in.tmp
+./test-select-fd${EXEEXT} r 0 t-select-in.tmp < /dev/null
 test `cat t-select-in.tmp` = "1" || exit 1
 
 rm -fr $tmpfiles
