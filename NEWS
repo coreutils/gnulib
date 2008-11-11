@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-11-11  warnings        This module subsumes the file m4/warning.m4 which
+                            was removed.
+
 2008-10-20  lstat           The include file is changed from "lstat.h" to
                             <sys/stat.h>.
 
