@@ -13,22 +13,38 @@ AC_DEFUN([gl_WARN_INIT],
   AC_ARG_VAR(WARN_CFLAGS, [C compiler warning flags])
 ])
 
-# gl_WARN_ADD([parameter]) adds parameter to WARN_CFLAGS if compiler
-# supports it.  For example, use gl_WARN_ADD([-Werror]).
+# gl_AS_VAR_IF(VAR, VALUE, [IF-MATCH], [IF-NOT-MATCH])
+# ----------------------------------------------------
+# Provide the functionality of AS_VAR_IF if Autoconf does not have it.
+m4_ifdef([AS_VAR_IF],
+[m4_copy([AS_VAR_IF], [gl_AS_VAR_IF])],
+[m4_define([gl_AS_VAR_IF],
+[AS_IF([test x"AS_VAR_GET([$1])" = x""$2], [$3], [$4])])])
+
+# gl_AS_VAR_APPEND(VAR, VALUE)
+# ----------------------------
+# Provide the functionality of AS_VAR_APPEND if Autoconf does not have it.
+m4_ifdef([AS_VAR_APPEND],
+[m4_copy([AS_VAR_APPEND], [gl_AS_VAR_APPEND])],
+[m4_define([gl_AS_VAR_APPEND],
+[AS_VAR_SET([$1], [AS_VAR_GET([$1])$2])])])
+
+# gl_WARN_ADD(PARAMETER, [VARIABLE = WARN_CFLAGS])
+# ------------------------------------------------
+# Adds parameter to WARN_CFLAGS if the compiler supports it.  For example,
+# gl_WARN_ADD([-Wparentheses]).
 AC_DEFUN([gl_WARN_ADD],
-[
-  pushdef([param],[translit([$1],[ABCDEFGHIJKLMNOPQRSTUVWXYZ./-],
-                                 [abcdefghijklmnopqrstuvwxyz___])])
-
-  AC_CACHE_CHECK([whether compiler handles $1], [gl_cv_warn[]param[]], [
-    save_CFLAGS="$CFLAGS"
-    CFLAGS="${CFLAGS} $1"
-    AC_PREPROC_IFELSE([AC_LANG_PROGRAM([])],
-                       gl_cv_warn[]param=yes, gl_cv_warn[]param=no)
-    CFLAGS="$save_CFLAGS"
-  ])
-
-  if test $gl_cv_warn[]param = "yes"; then
-    WARN_CFLAGS="$WARN_CFLAGS $1"
-  fi
+[AS_VAR_PUSHDEF([gl_Warn], [gl_cv_warn_$1])dnl
+AC_CACHE_CHECK([whether compiler handles $1], [gl_Warn], [
+  save_CFLAGS="$CFLAGS"
+  CFLAGS="${CFLAGS} $1"
+  AC_PREPROC_IFELSE([AC_LANG_PROGRAM([])],
+                    [AS_VAR_SET([gl_Warn], [yes])],
+		    [AS_VAR_SET([gl_Warn], [no])])
+  CFLAGS="$save_CFLAGS"
+])
+AS_VAR_PUSHDEF([gl_Flags], m4_if([$2], [], [[WARN_CFLAGS]], [[$2]]))dnl
+gl_AS_VAR_IF([gl_Warn], [yes], [gl_AS_VAR_APPEND([gl_Flags], [" $1"])])
+AS_VAR_POPDEF([gl_Flags])dnl
+AS_VAR_POPDEF([gl_Warn])dnl
 ])

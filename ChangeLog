@@ -1,3 +1,7 @@
+2008-11-11  Paolo Bonzini  <bonzini@gnu.org>
+
+	* m4/warnings.m4: Almost complete rewrite. :-)
+
 2008-11-10  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/warnings: New module.
