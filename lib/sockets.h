@@ -20,9 +20,9 @@
 #ifndef SOCKETS_H
 # define SOCKETS_H 1
 
-#define SOCKETS_1_0 0x100
+#define SOCKETS_1_0 0x100  /* don't use - does not work on Windows XP */
 #define SOCKETS_1_1 0x101
-#define SOCKETS_2_0 0x200
+#define SOCKETS_2_0 0x200  /* don't use - does not work on Windows XP */
 #define SOCKETS_2_1 0x201
 #define SOCKETS_2_2 0x202
 
