@@ -1,4 +1,4 @@
-# netdb_h.m4 serial 3
+# netdb_h.m4 serial 4
 dnl Copyright (C) 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,4 +30,10 @@ AC_DEFUN([gl_NETDB_MODULE_INDICATOR],
 AC_DEFUN([gl_NETDB_H_DEFAULTS],
 [
   GNULIB_GETADDRINFO=0; AC_SUBST([GNULIB_GETADDRINFO])
+  dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_STRUCT_ADDRINFO=1;   AC_SUBST([HAVE_STRUCT_ADDRINFO])
+  HAVE_DECL_FREEADDRINFO=1; AC_SUBST([HAVE_DECL_FREEADDRINFO])
+  HAVE_DECL_GAI_STRERROR=1; AC_SUBST([HAVE_DECL_GAI_STRERROR])
+  HAVE_DECL_GETADDRINFO=1;  AC_SUBST([HAVE_DECL_GETADDRINFO])
+  HAVE_DECL_GETNAMEINFO=1;  AC_SUBST([HAVE_DECL_GETNAMEINFO])
 ])

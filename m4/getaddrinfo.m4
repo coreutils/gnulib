@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 16
+# getaddrinfo.m4 serial 17
 dnl Copyright (C) 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -71,8 +71,9 @@ AC_DEFUN([gl_GETADDRINFO],
   gl_PREREQ_GETADDRINFO
 ])
 
-# Prerequisites of lib/getaddrinfo.c.
+# Prerequisites of lib/netdb.in.h and lib/getaddrinfo.c.
 AC_DEFUN([gl_PREREQ_GETADDRINFO], [
+  AC_REQUIRE([gl_NETDB_H_DEFAULTS])
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])dnl for HAVE_SYS_SOCKET_H, HAVE_WINSOCK2_H
   AC_SEARCH_LIBS(gethostbyname, [inet nsl])
   AC_SEARCH_LIBS(getservbyname, [inet nsl socket xnet])
@@ -104,6 +105,7 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   AC_CHECK_MEMBERS([struct sockaddr.sa_len], , , [#include <sys/socket.h>])
 
   AC_CHECK_HEADERS_ONCE(netinet/in.h)
+
   AC_CHECK_DECLS([getaddrinfo, freeaddrinfo, gai_strerror, getnameinfo],,,[
   /* sys/types.h is not needed according to POSIX, but the
      sys/socket.h in i386-unknown-freebsd4.10 and
@@ -119,6 +121,19 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
 #include <ws2tcpip.h>
 #endif
 ])
+  if test $ac_cv_have_decl_getaddrinfo = no; then
+    HAVE_DECL_GETADDRINFO=0
+  fi
+  if test $ac_cv_have_decl_freeaddrinfo = no; then
+    HAVE_DECL_FREEADDRINFO=0
+  fi
+  if test $ac_cv_have_decl_gai_strerror = no; then
+    HAVE_DECL_GAI_STRERROR=0
+  fi
+  if test $ac_cv_have_decl_getnameinfo = no; then
+    HAVE_DECL_GETNAMEINFO=0
+  fi
+
   AC_CHECK_TYPES([struct addrinfo],,,[
 #include <sys/types.h>
 #ifdef HAVE_SYS_SOCKET_H
@@ -131,4 +146,7 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
 #include <ws2tcpip.h>
 #endif
 ])
+  if test $ac_cv_type_struct_addrinfo = no; then
+    HAVE_STRUCT_ADDRINFO=0
+  fi
 ])

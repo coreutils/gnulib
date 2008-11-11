@@ -1,3 +1,13 @@
+2008-11-10  Bruno Haible  <bruno@clisp.org>
+
+	* lib/netdb.in.h: Use HAVE_STRUCT_ADDRINFO, HAVE_DECL_GETADDRINFO,
+	HAVE_DECL_FREEADDRINFO, HAVE_DECL_GAI_STRERROR, HAVE_DECL_GETNAMEINFO
+	as autoconf-substituted macros.
+	* m4/netdb_h.m4 (gl_NETDB_H_DEFAULTS): Initialize these variables to 1.
+	* m4/getaddrinfo.m4 (gl_PREREQ_GETADDRINFO): Require
+	gl_NETDB_H_DEFAULTS. Set these variables.
+	* modules/netdb (Makefile.am): Substitute these variables.
+
 2008-11-10  Eric Blake  <ebb9@byu.net>
 
 	standards.texi: include correct file for FDL 1.3
