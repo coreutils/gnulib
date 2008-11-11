@@ -1,5 +1,9 @@
 2008-11-11  Paolo Bonzini  <bonzini@gnu.org>
 
+	* m4/warnings.m4 (gl_WARN_ADD): Don't AC_SUBST the empty string.
+
+2008-11-11  Paolo Bonzini  <bonzini@gnu.org>
+
 	* m4/warnings.m4 (gl_WARN_INIT): Substitute WARN_CFLAGS.
 	(gl_WARN_ADD): Substitute $2 if literal.
 
