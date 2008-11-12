@@ -1,6 +1,6 @@
 /* Unicode character output to streams with locale dependent encoding.
 
-   Copyright (C) 2000-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2000-2003, 2006, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <haible@clisp.cons.org>.  */
-
-/* Note: This file requires the locale_charset() function.  See in
-   libiconv-1.8/libcharset/INTEGRATE for how to obtain it.  */
 
 #include <config.h>
 
@@ -40,6 +37,7 @@
 #define N_(msgid) msgid
 
 #include "localcharset.h"
+#include "unistr.h"
 
 /* When we pass a Unicode character to iconv(), we must pass it in a
    suitable encoding. The standardized Unicode encodings are
@@ -52,42 +50,6 @@
    mark, but this is not backed by an RFC.
    So we use UTF-8. It supports characters up to \U7FFFFFFF and is
    unambiguously defined.  */
-
-/* Stores the UTF-8 representation of the Unicode character wc in r[0..5].
-   Returns the number of bytes stored, or -1 if wc is out of range.  */
-static int
-utf8_wctomb (unsigned char *r, unsigned int wc)
-{
-  int count;
-
-  if (wc < 0x80)
-    count = 1;
-  else if (wc < 0x800)
-    count = 2;
-  else if (wc < 0x10000)
-    count = 3;
-  else if (wc < 0x200000)
-    count = 4;
-  else if (wc < 0x4000000)
-    count = 5;
-  else if (wc <= 0x7fffffff)
-    count = 6;
-  else
-    return -1;
-
-  switch (count)
-    {
-      /* Note: code falls through cases! */
-      case 6: r[5] = 0x80 | (wc & 0x3f); wc = wc >> 6; wc |= 0x4000000;
-      case 5: r[4] = 0x80 | (wc & 0x3f); wc = wc >> 6; wc |= 0x200000;
-      case 4: r[3] = 0x80 | (wc & 0x3f); wc = wc >> 6; wc |= 0x10000;
-      case 3: r[2] = 0x80 | (wc & 0x3f); wc = wc >> 6; wc |= 0x800;
-      case 2: r[1] = 0x80 | (wc & 0x3f); wc = wc >> 6; wc |= 0xc0;
-      case 1: r[0] = wc;
-    }
-
-  return count;
-}
 
 /* Luckily, the encoding's name is platform independent.  */
 #define UTF8_NAME "UTF-8"
@@ -144,7 +106,7 @@ unicode_to_mb (unsigned int code,
     }
 
   /* Convert the character to UTF-8.  */
-  count = utf8_wctomb ((unsigned char *) inbuf, code);
+  count = utf8_uctomb ((unsigned char *) inbuf, code, sizeof (inbuf));
   if (count < 0)
     return failure (code, N_("character out of range"), callback_arg);
 

@@ -1,3 +1,9 @@
+2008-11-12  Bruno Haible  <bruno@clisp.org>
+
+	* lib/unicodeio.c: Include unistr.h.
+	(utf8_wctomb): Remove function.
+	(unicode_to_mb): Use utf8_uctomb instead of utf8_wctomb.
+
 2008-11-12  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/warnings.m4 (gl_WARN_INIT): Remove, suggested by Ralf
