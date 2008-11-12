@@ -6,13 +6,6 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Simon Josefsson
 
-# gl_WARN_INIT
-# Initializes WARN_CFLAGS variable.
-AC_DEFUN([gl_WARN_INIT],
-[AC_SUBST([WARN_CFLAGS])dnl
-AC_ARG_VAR([WARN_CFLAGS], [C compiler warning flags])
-])
-
 # gl_AS_VAR_IF(VAR, VALUE, [IF-MATCH], [IF-NOT-MATCH])
 # ----------------------------------------------------
 # Provide the functionality of AS_VAR_IF if Autoconf does not have it.
