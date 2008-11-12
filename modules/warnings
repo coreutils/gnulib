@@ -7,6 +7,7 @@ m4/warnings.m4
 Depends-on:
 
 configure.ac:
+AC_SUBST([WARN_CFLAGS])
 
 License:
 unlimited

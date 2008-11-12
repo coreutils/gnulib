@@ -1,3 +1,8 @@
+2008-11-12  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/warnings (configure.ac): Do AC_SUBST([WARN_CFLAGS]) here
+	instead.
+
 2008-11-12  Bruno Haible  <bruno@clisp.org>
 
 	* lib/unicodeio.c: Include unistr.h.
