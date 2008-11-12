@@ -1,3 +1,7 @@
+2008-11-12  Jim Meyering  <meyering@redhat.com>
+
+	* lib/unicodeio.c (unicode_to_mb): Correct spelling of u8_uctomb.
+
 2008-11-12  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/warnings (configure.ac): Do AC_SUBST([WARN_CFLAGS]) here

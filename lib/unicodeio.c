@@ -106,7 +106,7 @@ unicode_to_mb (unsigned int code,
     }
 
   /* Convert the character to UTF-8.  */
-  count = utf8_uctomb ((unsigned char *) inbuf, code, sizeof (inbuf));
+  count = u8_uctomb ((unsigned char *) inbuf, code, sizeof (inbuf));
   if (count < 0)
     return failure (code, N_("character out of range"), callback_arg);
 
