@@ -1,3 +1,11 @@
+2008-11-13  Jim Meyering  <meyering@redhat.com>
+
+	test-argp-2: avoid test failure when PACKAGE_BUGREPORT is defined
+	* tests/test-argp-2.sh: When PACKAGE_BUGREPORT was defined, this
+	test would fail due to the difference in the Report bugs to ...
+	line.  The expected address is empty, "<>", while the actual
+	would contain e.g., "<bug-tar@gnu.org>".  Filter out any address.
+
 2008-11-12  Bruno Haible  <bruno@clisp.org>
 
 	lstat: don't compile lstat.c on systems lacking lstat

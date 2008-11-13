@@ -93,7 +93,9 @@ for any corresponding short options.
 Report bugs to <>.
 EOT
 
-./test-argp$EXEEXT --help | func_compare || ERR=1
+# Compare --help output, but filter out any bug-reporting email address.
+./test-argp$EXEEXT --help \
+    | sed 's/^\(Report bugs to \)<[^>]*>.$/\1<>./' | func_compare || ERR=1
 
 ####
 # Test ambiguous option handling
