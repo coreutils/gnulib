@@ -1,3 +1,10 @@
+2008-11-12  Bruno Haible  <bruno@clisp.org>
+
+	lstat: don't compile lstat.c on systems lacking lstat
+	* m4/lstat.m4 (gl_FUNC_LSTAT): Don't compile lstat.c on systems
+	which don't have lstat; this is handled by lib/sys_stat.in.h already.
+	Reported by Daniel P. Berrange via Jim Meyering.
+
 2008-11-12  Jim Meyering  <meyering@redhat.com>
 
 	* lib/unicodeio.c (unicode_to_mb): Correct spelling of u8_uctomb.
