@@ -1,7 +1,7 @@
 #!/bin/sh
 # Sign files and upload them.
 
-scriptversion=2008-04-02.19
+scriptversion=2008-11-12.21
 
 # Copyright (C) 2004, 2005, 2006, 2007, 2008  Free Software Foundation
 #
@@ -24,10 +24,12 @@ set -e
 
 GPG='gpg --batch --no-tty'
 to=
+delete=false
 
 usage="Usage: $0 [OPTIONS]... FILES...
 
-Sign all FILES, and upload them to selected destinations, according to
+Sign all FILES, and upload them to (or delete them from) selected
+destinations, according to
 <http://www.gnu.org/prep/maintain/html_node/Automated-FTP-Uploads.html>.
 
 Options:
@@ -35,6 +37,7 @@ Options:
   --to DEST                specify one destination for FILES
                            (multiple --to options are allowed)
   --user NAME              sign with key NAME
+  --delete                 delete FILES from destination instead of uploading
   --version                output version information and exit
 
 Recognized destinations are:
@@ -45,9 +48,14 @@ Recognized destinations are:
                            build directive files and upload files by FTP
   [user@]host:DIRECTORY    upload files with scp
 
+Deletion only works for ftp.gnu.org and alpha.gnu.org (using the
+archive: directive).  Otherwise it is a no-op.  Deleting a file foo also
+deletes foo.sig; do not specify the .sig explicitly.
+
 Simple single-target single-file examples:
   gnupload --to alpha.gnu.org:automake automake-1.8.2b.tar.gz
   gnupload --to ftp.gnu.org:automake automake-1.8.3.tar.gz
+  gnupload --to alpha.gnu.org:automake --delete automake-oops.tar.gz
 
 Multiple-target multiple-file example:
   gnupload --to sources.redhat.com:~ftp/pub/automake \\
@@ -59,6 +67,10 @@ Send patches to <automake-patches@gnu.org>."
 
 while test -n "$1"; do
   case $1 in
+    --delete)
+      delete=true
+      shift
+      ;;
     --help)
       echo "$usage"
       exit $?
@@ -96,23 +108,25 @@ while test -n "$1"; do
 done
 
 if test $# = 0; then
-  echo "$0: No file to upload" 1>&2
+  echo "$0: No file to upload or delete" 1>&2
   exit 1
 else
   :
 fi
 
-# Make sure all files exist.  We don't want to ask
-# for the passphrase if the script will fail.
-for file
-do
-  if test ! -f $file; then
-    echo "$0: Cannot find \`$file'" 1>&2
-    exit 1
-  else
-    :
-  fi
-done
+if $delete; then :; else
+  # Make sure all files exist.  We don't want to ask
+  # for the passphrase if the script will fail.
+  for file
+  do
+    if test ! -f $file; then
+      echo "$0: Cannot find \`$file'" 1>&2
+      exit 1
+    else
+      :
+    fi
+  done
+fi
 
 # Make sure passphrase is not exported in the environment.
 unset passphrase
@@ -129,27 +143,39 @@ read -r passphrase
 stty echo
 echo
 
-for file
-do
-  echo "Signing $file..."
-  rm -f $file.sig
-  echo $passphrase | $GPG --passphrase-fd 0 -ba -o $file.sig $file
-done
+# Nothing to sign if deleting.
+if $delete; then :; else
+  for file
+  do
+    echo "Signing $file..."
+    rm -f $file.sig
+    echo $passphrase | $GPG --passphrase-fd 0 -ba -o $file.sig $file
+  done
+fi
 
 for dest in $to
 do
   for file
   do
-    echo "Uploading $file to $dest..."
-    files="$file $file.sig"
+    # Prepare arguments.
+    if $delete; then
+      echo "Removing $file from $dest..."
+      files=  # nothing to upload if deleting
+      directive="archive: $file"
+    else
+      echo "Uploading $file to $dest..."
+      files="$file $file.sig"
+      directive="filename: "`basename -- "$file"`
+    fi
     destdir=`echo $dest | sed 's/[^:]*://'`
+
     case $dest in
       alpha.gnu.org:*)
 	rm -f $file.directive $file.directive.asc
 	cat >$file.directive<<EOF
 version: 1.1
 directory: $destdir
-filename: `basename -- "$file"`
+$directive
 EOF
 	echo "$passphrase" | $GPG --passphrase-fd 0 --clearsign $file.directive
         ncftpput ftp-upload.gnu.org /incoming/alpha $files $file.directive.asc
@@ -160,20 +186,24 @@ EOF
 	cat >$file.directive<<EOF
 version: 1.1
 directory: $destdir
-filename: `basename -- "$file"`
+$directive
 EOF
 	echo "$passphrase" | $GPG --passphrase-fd 0 --clearsign $file.directive
         ncftpput ftp-upload.gnu.org /incoming/ftp $files $file.directive.asc
 	rm -f $file.directive $file.directive.asc
 	;;
       savannah.gnu.org:*)
-        ncftpput savannah.gnu.org /incoming/savannah/$destdir $files
+        # We only know how to implement delete for {ftp,alpha}.gnu.org.
+        $delete \
+        || ncftpput savannah.gnu.org /incoming/savannah/$destdir $files
 	;;
       savannah.nongnu.org:*)
-        ncftpput savannah.nongnu.org /incoming/savannah/$destdir $files
+        $delete \
+        || ncftpput savannah.nongnu.org /incoming/savannah/$destdir $files
 	;;
       *)
-	scp $files $dest
+        $delete \
+	|| scp $files $dest
 	;;
     esac
   done
