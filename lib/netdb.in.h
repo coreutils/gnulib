@@ -36,12 +36,6 @@
 #ifndef _GL_NETDB_H
 #define _GL_NETDB_H
 
-#if @HAVE_NETDB_H@ && @HAVE_STRUCT_ADDRINFO@
-
-/* Declarations for a platform that has <netdb.h>.  */
-
-#else
-
 /* Get netdb.h definitions such as struct hostent for MinGW.  */
 #include <sys/socket.h>
 
@@ -112,7 +106,7 @@ struct addrinfo
 # endif
 
 # ifndef EAI_OVERFLOW
-/* Not defined on mingw32. */
+/* Not defined on mingw32 and Haiku. */
 #  define EAI_OVERFLOW	  -12	/* Argument buffer overflow.  */
 # endif
 # ifndef EAI_ADDRFAMILY
@@ -183,8 +177,6 @@ extern int getnameinfo(const struct sockaddr *restrict sa, socklen_t salen,
 # endif
 
 #endif /* @GNULIB_GETADDRINFO@ */
-
-#endif /* HAVE_NETDB_H */
 
 #endif /* _GL_NETDB_H */
 #endif /* _GL_NETDB_H */

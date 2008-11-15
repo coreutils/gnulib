@@ -13,7 +13,7 @@ mingw, BeOS.
 
 @item
 This header file is incomplete on some platforms:
-Cygwin 1.5.x
+Cygwin 1.5.x, Haiku.
 @end itemize
 
 Portability problems not fixed by Gnulib:
