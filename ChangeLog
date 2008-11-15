@@ -1,3 +1,17 @@
+2008-11-15  Bruno Haible  <bruno@clisp.org>
+
+	Make the 'sched' module work on platforms where <sched.h> exists but
+	is incomplete (such as Haiku).
+	* lib/sched.in.h; Include the system's <sched.h> if it exists.
+	(SCHED_FIFO, SCHED_RR, SCHED_OTHER): New macros.
+	* m4/sched_h.m4 (gl_SCHED_H): Test whether <sched.h> exists and also
+	defines SCHED_FIFO, SCHED_RR, SCHED_OTHER. Set HAVE_SCHED_H,
+	HAVE_STRUCT_SCHED_PARAM.
+	* modules/sched (Depends-on): Add include_next.
+	(Makefile.am): Substitute HAVE_SCHED_H, INCLUDE_NEXT,
+	PRAGMA_SYSTEM_HEADER, NEXT_SCHED_H, HAVE_STRUCT_SCHED_PARAM.
+	* doc/posix-headers/sched.texi: Document the issue.
+
 2008-11-13  Jim Meyering  <meyering@redhat.com>
 
 	test-argp-2: avoid test failure when PACKAGE_BUGREPORT is defined

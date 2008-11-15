@@ -6,6 +6,7 @@ lib/sched.in.h
 m4/sched_h.m4
 
 Depends-on:
+include_next
 
 configure.ac:
 gl_SCHED_H
@@ -18,7 +19,12 @@ BUILT_SOURCES += $(SCHED_H)
 sched.h: sched.in.h
 	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat < $(srcdir)/sched.in.h; \
+	  sed -e 's|@''HAVE_SCHED_H''@|$(HAVE_SCHED_H)|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''NEXT_SCHED_H''@|$(NEXT_SCHED_H)|g' \
+	      -e 's|@''HAVE_STRUCT_SCHED_PARAM''@|$(HAVE_STRUCT_SCHED_PARAM)|g' \
+	      < $(srcdir)/sched.in.h; \
 	} > $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += sched.h sched.h-t

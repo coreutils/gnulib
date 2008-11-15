@@ -10,6 +10,13 @@ Portability problems fixed by Gnulib:
 @item
 This header file is missing on some platforms:
 mingw, BeOS.
+@item
+@code{struct sched_param} is not defined on some platforms:
+Haiku.
+@item
+@code{SCHED_FIFO}, @code{SCHED_RR}, @code{SCHED_OTHER} are not defined on
+some platforms:
+Haiku.
 @end itemize
 
 Portability problems not fixed by Gnulib:
