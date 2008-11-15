@@ -23,6 +23,9 @@
 /* Check that 'struct sched_param' is defined.  */
 static struct sched_param a;
 
+/* Check that the SCHED_* macris are defined and compile-time constants.  */
+static int b[] = { SCHED_FIFO, SCHED_RR, SCHED_OTHER };
+
 static int f1;
 
 int
