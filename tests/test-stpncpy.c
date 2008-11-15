@@ -1,5 +1,5 @@
 /* Test the system defined function stpncpy().
-   Copyright (C) 2003 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -13,6 +13,8 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+
+#include <config.h>
 
 #include <string.h>
 #include <stdio.h>
