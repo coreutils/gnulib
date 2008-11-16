@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate November 8, 2008
+@set lastupdate November 14, 2008
 @c %**end of header
 
 @dircategory GNU organization
@@ -1261,9 +1261,9 @@ corresponding packages.
 
 @cindex uploads
 
-Once you have registered your information as described in the
-previous section, you will be able to do unattended ftp uploads using
-the following procedure.
+Once you have registered your information as described in the previous
+section, you will be able to do ftp uploads for yourself using the
+following procedure.
 
 For each upload destined for @code{ftp.gnu.org} or
 @code{alpha.gnu.org}, three files (a @dfn{triplet}) need to be
@@ -1290,9 +1290,9 @@ extension. If you do not follow this naming convention, the upload
 @emph{will not be processed}.
 
 Since v1.1 of the upload script, it is also possible to upload a
-@dfn{directive file} on its own to perform certain operations on
-uploaded files.  @xref{FTP Upload Directive File - v1.1}, for more
-information.
+clearsigned directive file on its own (no accompanying @file{.sig} or
+any other file) to perform certain operations on the server.
+@xref{FTP Upload Directive File - v1.1}, for more information.
 
 Upload the file(s) via anonymous ftp to @code{ftp-upload.gnu.org}. If
 the upload is destined for @code{ftp.gnu.org}, place the file(s) in
@@ -1314,14 +1314,15 @@ processed.
 One relatively easy way to create and transfer the necessary files is
 to use the @code{gnupload} script, which is available from the
 @file{build-aux/} directory of the @code{gnulib} project at
-@url{http://savannah.gnu.org/projects/gnulib}.  Run @code{gnupload
---help} for a description and examples.
+@url{http://savannah.gnu.org/projects/gnulib}.  @code{gnupload} can
+also remove uploaded files.  Run @code{gnupload --help} for a
+description and examples.
 
 @code{gnupload} uses the @code{ncftpput} program to do the actual
 transfers; if you don't happen to have the @code{ncftp} package
-installed, you can use the @code{ncftpput-ftp} script as a
-replacement, which uses plain command line @code{ftp}.  It's also
-available from the @file{build-aux/} directory of @code{gnulib}.
+installed, the @code{ncftpput-ftp} script in the @file{build-aux/}
+directory of @code{gnulib}.  serves as a replacement which uses plain
+command line @code{ftp}.
 
 If you have difficulties processing an upload, email
 @email{ftp-upload@@gnu.org}.
@@ -1376,7 +1377,7 @@ When uploaded by itself, the directive file must contain one or more
 of the directives @code{symlink}, @code{rmsymlink} or @code{archive},
 in addition to the obligatory @code{directory} and @code{version}
 directives.  A @code{filename} directive is not allowed, and a
-@code{comment} directive is optional.
+@code{comment} directive remains optional.
 
 If you use more than one directive, the directives are executed in the
 sequence they are specified in.
