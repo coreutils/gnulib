@@ -15,6 +15,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
+
+#include <errno.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -37,7 +39,8 @@ main ()
   int fd;
   const char *file = "test-fsync.txt";
 
-  ASSERT (fsync (0) != 0);
+  if (fsync (0) != 0)
+    ASSERT (errno == EINVAL);
   fd = open (file, O_WRONLY|O_CREAT|O_TRUNC, 0644);
   ASSERT (0 <= fd);
   ASSERT (write (fd, "hello", 5) == 5);
