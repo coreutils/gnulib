@@ -18,7 +18,7 @@ AC_DEFUN([gl_HOSTENT],
   gl_saved_libs="$LIBS"
   AC_SEARCH_LIBS([gethostbyname], [nsl network net],
     [if test "$ac_cv_search_gethostbyname" != "none required"; then
-       SERVENT_LIB="$ac_cv_search_gethostbyname"
+       HOSTENT_LIB="$ac_cv_search_gethostbyname"
      fi])
   LIBS="$gl_saved_libs"
   if test -z "$HOSTENT_LIB"; then
