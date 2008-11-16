@@ -1,5 +1,9 @@
 2008-11-16  Bruno Haible  <bruno@clisp.org>
 
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Fix indentation.
+
+2008-11-16  Bruno Haible  <bruno@clisp.org>
+
 	Avoid test failure on Haiku.
 	* tests/test-fsync.c: Include <errno.h>.
 	(main): Don't require that fsync (0) fails.

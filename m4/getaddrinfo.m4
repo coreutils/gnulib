@@ -36,7 +36,8 @@ AC_DEFUN([gl_GETADDRINFO],
 #endif
 #include <stddef.h>
 ], [getaddrinfo(NULL, NULL, NULL, NULL);], gl_cv_w32_getaddrinfo=yes)
-    LIBS="$am_save_LIBS"])
+      LIBS="$am_save_LIBS"
+    ])
     if test "$gl_cv_w32_getaddrinfo" = "yes"; then
       LIBS="$LIBS -lws2_32"
     else
