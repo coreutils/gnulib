@@ -1,0 +1,24 @@
+Description:
+Parse a duration given as string.
+
+Files:
+lib/parse-duration.h
+lib/parse-duration.c
+
+Depends-on:
+
+configure.ac:
+AC_REQUIRE([AC_C_INLINE])
+
+Makefile.am:
+lib_SOURCES += parse-duration.c
+
+Include:
+"parse-duration.h"
+
+License:
+GPL
+
+Maintainer:
+Bruce Korb
+
