@@ -1,5 +1,9 @@
 2008-11-17  Bruce Korb  <bkorb@gnu.org>
 
+	* modules/parse-duration-tests: New file.
+	* tests/test-parse-duration.sh: New file.
+	* tests/test-parse-duration.c: New file.
+
 	New module 'parse-duration'.
 	* lib/parse-duration.h: New file.
 	* lib/parse-duration.c: New file.
