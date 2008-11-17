@@ -42,3 +42,87 @@ AS_VAR_POPDEF([gl_Flags])dnl
 AS_VAR_POPDEF([gl_Warn])dnl
 m4_ifval([$2], [AS_LITERAL_IF([$2], [AC_SUBST([$2])], [])])dnl
 ])
+
+# gl_WARN_SUPPORTED(VARIABLE)
+# ----------------------
+# Add all supported warning parameters to variable VARIABLE
+# using gl_WARN_ADD.
+AC_DEFUN([gl_WARN_SUPPORTED],
+[
+ # List of all supported warning parameters according to GCC 4.3.2 manual.
+ for w in \
+   -Wall \
+   -W \
+   -Wformat-y2k \
+   -Wformat-nonliteral \
+   -Wformat-security \
+   -Winit-self \
+   -Wmissing-include-dirs \
+   -Wswitch-default \
+   -Wswitch-enum \
+   -Wunused \
+   -Wunknown-pragmas \
+   -Wstrict-aliasing \
+   -Wstrict-overflow \
+   -Wsystem-headers \
+   -Wfloat-equal \
+   -Wtraditional \
+   -Wtraditional-conversion \
+   -Wdeclaration-after-statement \
+   -Wundef \
+   -Wshadow \
+   -Wunsafe-loop-optimizations \
+   -Wpointer-arith \
+   -Wbad-function-cast \
+   -Wc++-compat \
+   -Wcast-qual \
+   -Wcast-align \
+   -Wwrite-strings \
+   -Wconversion \
+   -Wsign-conversion \
+   -Wlogical-op \
+   -Waggregate-return \
+   -Wstrict-prototypes \
+   -Wold-style-definition \
+   -Wmissing-prototypes \
+   -Wmissing-declarations \
+   -Wmissing-noreturn \
+   -Wmissing-format-attribute \
+   -Wpacked \
+   -Wpadded \
+   -Wredundant-decls \
+   -Wnested-externs \
+   -Wunreachable-code \
+   -Winline \
+   -Winvalid-pch \
+   -Wlong-long \
+   -Wvla \
+   -Wvolatile-register-var \
+   -Wdisabled-optimization \
+   -Wstack-protector \
+   -Woverlength-strings \
+  ; do
+    gl_WARN_ADD($w, $1)
+  done
+])
+
+# gl_WARN_COMPLEMENT(OUTVAR, LISTVAR, REMOVEVAR)
+# ----------------------
+# Copy LISTVAR to OUTVAR except for the entries in REMOVEVAR.
+# Elements separated by whitespace.  In set logic terms, the function
+# does OUTVAR = LISTVAR \ REMOVEVAR.
+AC_DEFUN([gl_WARN_COMPLEMENT],
+[
+  FOO=
+  set -- "$2"
+  for w in $_; do
+    case "$3" in
+      *" $w "* | *" $w" | "$w "*)
+        ;;
+      *)
+        FOO="$FOO $w"
+        ;;
+    esac
+  done
+  $1=$FOO
+])

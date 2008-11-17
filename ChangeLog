@@ -1,3 +1,7 @@
+2008-11-17  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/warnings.m4: Add gl_WARN_COMPLEMENT and gl_WARN_SUPPORTED.
+
 2008-11-17  Bruce Korb  <bkorb@gnu.org>
 
 	* modules/parse-duration-tests: New file.
