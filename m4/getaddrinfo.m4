@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 17
+# getaddrinfo.m4 serial 18
 dnl Copyright (C) 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -76,25 +76,9 @@ AC_DEFUN([gl_GETADDRINFO],
 AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   AC_REQUIRE([gl_NETDB_H_DEFAULTS])
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])dnl for HAVE_SYS_SOCKET_H, HAVE_WINSOCK2_H
-  AC_SEARCH_LIBS(gethostbyname, [inet nsl])
-  AC_SEARCH_LIBS(getservbyname, [inet nsl socket xnet])
-  AC_CHECK_FUNCS(gethostbyname,, [
-    AC_CACHE_CHECK(for gethostbyname in winsock2.h and -lws2_32,
-		   gl_cv_w32_gethostbyname, [
-      gl_cv_w32_gethostbyname=no
-      am_save_LIBS="$LIBS"
-      LIBS="$LIBS -lws2_32"
-      AC_TRY_LINK([
-#ifdef HAVE_WINSOCK2_H
-#include <winsock2.h>
-#endif
-#include <stddef.h>
-], [gethostbyname(NULL);], gl_cv_w32_gethostbyname=yes)
-    LIBS="$am_save_LIBS"])
-    if test "$gl_cv_w32_gethostbyname" = "yes"; then
-      LIBS="$LIBS -lws2_32"
-    fi
-    ])
+  AC_REQUIRE([gl_HOSTENT]) dnl for HOSTENT_LIB
+  AC_REQUIRE([gl_SERVENT]) dnl for SERVENT_LIB
+  LIBS="$LIBS $HOSTENT_LIB $SERVENT_LIB"
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([gl_SOCKET_FAMILIES])
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])

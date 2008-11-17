@@ -16,6 +16,8 @@ stdbool
 sys_socket
 netdb
 strdup
+servent
+hostent
 
 configure.ac:
 gl_GETADDRINFO
