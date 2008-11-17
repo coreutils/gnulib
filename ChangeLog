@@ -1,5 +1,10 @@
 2008-11-17  Simon Josefsson  <simon@josefsson.org>
 
+	* m4/warnings.m4: Improve code.  Reported by Ralf Wildenhues
+	<Ralf.Wildenhues@gmx.de> and Paolo Bonzini <bonzini@gnu.org>.
+
+2008-11-17  Simon Josefsson  <simon@josefsson.org>
+
 	* m4/warnings.m4: Use CPPFLAGS to really check whether the
 	parameter works.
 

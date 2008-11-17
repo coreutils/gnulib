@@ -114,16 +114,17 @@ AC_DEFUN([gl_WARN_SUPPORTED],
 # does OUTVAR = LISTVAR \ REMOVEVAR.
 AC_DEFUN([gl_WARN_COMPLEMENT],
 [
-  FOO=
-  set -- "$2"
-  for w in $_; do
-    case "$3" in
-      *" $w "* | *" $w" | "$w "*)
+  gl_warn_set=
+  set x $2; shift
+  for gl_warn_item
+  do
+    case " $3 " in
+      *" $gl_warn_item "*)
         ;;
       *)
-        FOO="$FOO $w"
+        gl_warn_set="$gl_warn_set $gl_warn_item"
         ;;
     esac
   done
-  $1=$FOO
+  $1=$gl_warn_set
 ])
