@@ -45,10 +45,10 @@ m4_ifval([$2], [AS_LITERAL_IF([$2], [AC_SUBST([$2])], [])])dnl
 
 # gl_WARN_SUPPORTED(VARIABLE)
 # ----------------------
-# Add all supported warning parameters to variable VARIABLE
-# using gl_WARN_ADD.
+# Add all supported warning parameters to variable VARIABLE.
 AC_DEFUN([gl_WARN_SUPPORTED],
 [
+ FOO=
  # List of all supported warning parameters according to GCC 4.3.2 manual.
  for w in \
    -Wall \
@@ -102,8 +102,9 @@ AC_DEFUN([gl_WARN_SUPPORTED],
    -Wstack-protector \
    -Woverlength-strings \
   ; do
-    gl_WARN_ADD($w, $1)
+    FOO="$FOO $w"
   done
+  $1=$FOO
 ])
 
 # gl_WARN_COMPLEMENT(OUTVAR, LISTVAR, REMOVEVAR)
