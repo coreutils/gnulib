@@ -1,5 +1,10 @@
 2008-11-17  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-select-out.sh: Comment out the first pipe test.
+	Reported by Simon Josefsson.
+
+2008-11-17  Bruno Haible  <bruno@clisp.org>
+
 	* modules/getaddrinfo (Depends-on): Add servent, hostent.
 	* m4/getaddrinfo.m4 (gl_PREREQ_GETADDRINFO): Use gl_SERVENT and
 	gl_HOSTENT.
