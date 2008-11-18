@@ -139,7 +139,7 @@ refresh-po:
 	wget --no-verbose --directory-prefix $(PODIR) --no-directories --recursive --level 1 --accept .po --accept .po.1 $(POURL) && \
 	echo 'en@boldquot' > $(PODIR)/LINGUAS && \
 	echo 'en@quot' >> $(PODIR)/LINGUAS && \
-	ls $(PODIR)/*.po | sed 's/.po//' | sed 's,$(PODIR)/,,' | sort >> $(PODIR)/LINGUAS
+	ls $(PODIR)/*.po | sed 's/\.po//' | sed 's,$(PODIR)/,,' | sort >> $(PODIR)/LINGUAS
 
 INDENT_SOURCES ?= $(C_SOURCES)
 .PHONY: indent

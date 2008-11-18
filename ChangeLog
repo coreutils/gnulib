@@ -1,3 +1,8 @@
+2008-11-18  Simon Josefsson  <simon@josefsson.org>
+
+	* top/maint.mk (refresh-po): Fix sed regexp to avoid problems with
+	paths like 'lib/po/foo.po'.
+
 2008-11-17  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/warnings.m4: Improve code.  Reported by Ralf Wildenhues
