@@ -35,6 +35,7 @@ a real run without changing anything.
 * gettextize and autopoint::    Caveat: @code{gettextize} and @code{autopoint} users!
 * Localization::                Handling Gnulib's own message translations.
 * VCS Issues::                  Integration with Version Control Systems.
+* Unit tests::                  Bundling the unit tests of the Gnulib modules.
 @end menu
 
 
@@ -540,3 +541,39 @@ Also it does not report in the ChangeLogs the files that it had to add
 because they were missing.
 
 @end itemize
+
+
+@node Unit tests
+@section Bundling the unit tests of the Gnulib modules
+
+You can bundle the unit tests of the Gnulib modules together with your
+package, through the @samp{--with-tests} option.  Together with
+@samp{--with-tests}, you also specify the directory for these tests
+through the @samp{--tests-base} option.  Of course, you need to add this
+directory to the @code{SUBDIRS} variable in the @code{Makefile.am} of
+the parent directory.
+
+The advantage of having the unit tests bundled is that when your program
+has a problem on a particular platform, running the unit tests may help
+determine quickly if the problem is on Gnulib's side or on your package's
+side.  Also, it helps verifying Gnulib's portability, of course.
+
+The unit tests will be compiled and run when the user runs @samp{make check}.
+When the user runs only @samp{make}, the unit tests will not be compiled.
+
+In the @code{SUBDIRS} variable, it is useful to put the Gnulib tests directory
+after the directory containing the other tests, not before:
+
+@smallexample
+SUBDIRS = gnulib-lib src man tests gnulib-tests
+@end smallexample
+
+@noindent
+This will ensure that on platforms where there are test failures in either
+directory, users will see and report the failures from the tests of your
+program.
+
+Note: In packages which use more than one invocation of @code{gnulib-tool}
+in the scope of the same @code{configure.ac}, you cannot use
+@samp{--with-tests}.  You will have to use a separate @code{configure.ac}
+in this case.

@@ -1,3 +1,7 @@
+2008-11-18  Bruno Haible  <bruno@clisp.org>
+
+	* doc/gnulib-tool.texi (Unit tests): New section.
+
 2008-11-18  Simon Josefsson  <simon@josefsson.org>
 
 	* top/maint.mk (refresh-po): Fix sed regexp to avoid problems with
