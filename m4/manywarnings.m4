@@ -11,7 +11,7 @@ dnl From Simon Josefsson
 # Copy LISTVAR to OUTVAR except for the entries in REMOVEVAR.
 # Elements separated by whitespace.  In set logic terms, the function
 # does OUTVAR = LISTVAR \ REMOVEVAR.
-AC_DEFUN([gl_COMPLEMENT],
+AC_DEFUN([gl_MANYWARN_COMPLEMENT],
 [
   gl_warn_set=
   set x $2; shift
