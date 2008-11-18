@@ -1,3 +1,12 @@
+2008-11-18  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/manywarnings.m4: New file with gl_MANYWARN_COMPLEMENT and
+	gl_MANYWARN_ALL_GCC.
+	* m4/warnings.m4: Removed gl_WARN_SUPPORTED and
+	gl_WARN_COMPLEMENT.  Suggested by Bruno Haible <bruno@clisp.org>.
+	* modules/manywarnings: New file.
+	* MODULES.html.sh: Mention manywarnings module.
+
 2008-11-18  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib-tool.texi (Unit tests): New section.

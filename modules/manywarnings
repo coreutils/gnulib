@@ -1,0 +1,15 @@
+Description:
+Helper M4 functions to help work out a set of warning parameters to use.
+
+Files:
+m4/manywarnings.m4
+
+Depends-on:
+
+configure.ac:
+
+License:
+unlimited
+
+Maintainer:
+Simon Josefsson
