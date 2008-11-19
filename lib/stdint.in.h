@@ -122,46 +122,58 @@
 
 #undef int8_t
 #undef uint8_t
-#define int8_t signed char
-#define uint8_t unsigned char
+typedef signed char gl_int8_t;
+typedef unsigned char gl_uint8_t;
+#define int8_t gl_int8_t
+#define uint8_t gl_uint8_t
 
 #undef int16_t
 #undef uint16_t
-#define int16_t short int
-#define uint16_t unsigned short int
+typedef short int gl_int16_t;
+typedef unsigned short int gl_uint16_t;
+#define int16_t gl_int16_t
+#define uint16_t gl_uint16_t
 
 #undef int32_t
 #undef uint32_t
-#define int32_t int
-#define uint32_t unsigned int
+typedef int gl_int32_t;
+typedef unsigned int gl_uint32_t;
+#define int32_t gl_int32_t
+#define uint32_t gl_uint32_t
 
 /* Do not undefine int64_t if gnulib is not being used with 64-bit
    types, since otherwise it breaks platforms like Tandem/NSK.  */
 #if LONG_MAX >> 31 >> 31 == 1
 # undef int64_t
-# define int64_t long int
+typedef long int gl_int64_t;
+# define int64_t gl_int64_t
 # define GL_INT64_T
 #elif defined _MSC_VER
 # undef int64_t
-# define int64_t __int64
+typedef __int64 gl_int64_t;
+# define int64_t gl_int64_t
 # define GL_INT64_T
 #elif @HAVE_LONG_LONG_INT@
 # undef int64_t
-# define int64_t long long int
+typedef long long int gl_int64_t;
+# define int64_t gl_int64_t
 # define GL_INT64_T
 #endif
 
 #if ULONG_MAX >> 31 >> 31 >> 1 == 1
 # undef uint64_t
-# define uint64_t unsigned long int
+typedef unsigned long int gl_uint64_t;
+# define uint64_t gl_uint64_t
 # define GL_UINT64_T
 #elif defined _MSC_VER
 # undef uint64_t
-# define uint64_t unsigned __int64
+typedef unsigned __int64 gl_uint64_t;
+# define uint64_t gl_uint64_t
 # define GL_UINT64_T
 #elif @HAVE_UNSIGNED_LONG_LONG_INT@
 # undef uint64_t
-# define uint64_t unsigned long long int
+typedef unsigned long long int gl_uint64_t;
+# define uint64_t gl_uint64_t
 # define GL_UINT64_T
 #endif
 
@@ -216,12 +228,18 @@
 #undef uint_fast32_t
 #undef int_fast64_t
 #undef uint_fast64_t
-#define int_fast8_t long int
-#define uint_fast8_t unsigned int_fast8_t
-#define int_fast16_t long int
-#define uint_fast16_t unsigned int_fast16_t
-#define int_fast32_t long int
-#define uint_fast32_t unsigned int_fast32_t
+typedef long int gl_int_fast8_t;
+typedef unsigned long int gl_uint_fast8_t;
+typedef long int gl_int_fast16_t;
+typedef unsigned long int gl_uint_fast16_t;
+typedef long int gl_int_fast32_t;
+typedef unsigned long int gl_uint_fast32_t;
+#define int_fast8_t gl_int_fast8_t
+#define uint_fast8_t gl_uint_fast8_t
+#define int_fast16_t gl_int_fast16_t
+#define uint_fast16_t gl_uint_fast16_t
+#define int_fast32_t gl_int_fast32_t
+#define uint_fast32_t gl_uint_fast32_t
 #ifdef GL_INT64_T
 # define int_fast64_t int64_t
 #endif
@@ -233,8 +251,10 @@
 
 #undef intptr_t
 #undef uintptr_t
-#define intptr_t long int
-#define uintptr_t unsigned long int
+typedef long int gl_intptr_t;
+typedef unsigned long int gl_uintptr_t;
+#define intptr_t gl_intptr_t
+#define uintptr_t gl_uintptr_t
 
 /* 7.18.1.5. Greatest-width integer types */
 
@@ -243,20 +263,24 @@
 
 #undef intmax_t
 #if @HAVE_LONG_LONG_INT@ && LONG_MAX >> 30 == 1
-# define intmax_t long long int
+typedef long long int gl_intmax_t;
+# define intmax_t gl_intmax_t
 #elif defined GL_INT64_T
 # define intmax_t int64_t
 #else
-# define intmax_t long int
+typedef long int gl_intmax_t;
+# define intmax_t gl_intmax_t
 #endif
 
 #undef uintmax_t
 #if @HAVE_UNSIGNED_LONG_LONG_INT@ && ULONG_MAX >> 31 == 1
-# define uintmax_t unsigned long long int
+typedef unsigned long long int gl_uintmax_t;
+# define uintmax_t gl_uintmax_t
 #elif defined GL_UINT64_T
 # define uintmax_t uint64_t
 #else
-# define uintmax_t unsigned long int
+typedef unsigned long int gl_uintmax_t;
+# define uintmax_t gl_uintmax_t
 #endif
 
 /* Verify that intmax_t and uintmax_t have the same size.  Too much code

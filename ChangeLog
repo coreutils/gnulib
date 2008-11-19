@@ -1,3 +1,10 @@
+2008-11-18  Alexandre Duret-Lutz  <adl@lrde.epita.fr>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdint.in.h: Define all type macros so that their expansion is
+	a single typedef'ed token. Fixes a compilation failure in Boost which
+	does "using ::int8_t;".
+
 2008-11-18  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/manywarnings.m4: New file with gl_MANYWARN_COMPLEMENT and
