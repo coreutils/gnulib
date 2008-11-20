@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-11-09.14}
+\def\texinfoversion{2008-11-17.21}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -98,6 +98,8 @@
 \let\ptexstar=\*
 \let\ptext=\t
 \let\ptextop=\top
+{\catcode`\'=\active
+\global\let\ptexquoteright'}% Math-mode def from plain.tex.
 
 % If this character appears in an error message or help string, it
 % starts a new line in the output.
@@ -945,6 +947,8 @@ where each line of input produces a line of output.}
   \catcode`>=\other
   \catcode`+=\other
   \catcode`-=\other
+  \catcode`\`=\other
+  \catcode`\'=\other
 }
 
 \def\pushthisfilestack{%
@@ -1143,11 +1147,13 @@ where each line of input produces a line of output.}
   \catcode`< = \active
   \catcode`> = \active
   \catcode`+ = \active
+  \catcode`' = \active
   \gdef\mathactive{%
     \let^ = \ptexhat
     \let< = \ptexless
     \let> = \ptexgtr
     \let+ = \ptexplus
+    \let' = \ptexquoteright
   }
 }
 
@@ -2397,7 +2403,7 @@ end
 
 \let\i=\smartitalic
 \let\slanted=\smartslanted
-\let\var=\smartslanted
+\def\var#1{{\setupmarkupstyle{var}\smartslanted{#1}}}
 \let\dfn=\smartslanted
 \let\emph=\smartitalic
 
@@ -2437,7 +2443,7 @@ end
   {\tt \rawbackslash \plainfrenchspacing #1}%
   \null
 }
-\def\samp#1{`\tclose{#1}'\null}
+\def\samp#1{{\setupmarkupstyle{samp}\lq\tclose{#1}\rq\null}}
 \setfont\keyrm\rmshape{8}{1000}{OT1}
 \font\keysy=cmsy9
 \def\key#1{{\keyrm\textfont2=\keysy \leavevmode\hbox{%
@@ -2446,7 +2452,7 @@ end
      \hbox{\raise0.4pt\hbox{\vphantom{\angleleft}}#1}}%
     \kern-0.4pt\hrule}%
   \kern-.06em\raise0.4pt\hbox{\angleright}}}}
-\def\key #1{{\nohyphenation \uppercase{#1}}\null}
+\def\key #1{{\setupmarkupstyle{key}\nohyphenation \uppercase{#1}}\null}
 % The old definition, with no lozenge:
 %\def\key #1{{\ttsl \nohyphenation \uppercase{#1}}\null}
 \def\ctrl #1{{\tt \rawbackslash \hat}#1}
@@ -2493,9 +2499,8 @@ end
   \global\let'=\rq \global\let`=\lq  % default definitions
   %
   \global\def\code{\begingroup
-    \catcode\rquoteChar=\active \catcode\lquoteChar=\active
-    \let'\codequoteright \let`\codequoteleft
-    %
+    \setupmarkupstyle{code}%
+    % The following should really be moved into \setupmarkupstyle handlers.
     \catcode\dashChar=\active  \catcode\underChar=\active
     \ifallowcodebreaks
      \let-\codedash
@@ -2574,8 +2579,8 @@ end
 \def\xkey{\key}
 \def\kbdfoo#1#2#3\par{\def\one{#1}\def\three{#3}\def\threex{??}%
 \ifx\one\xkey\ifx\threex\three \key{#2}%
-\else{\tclose{\kbdfont\look}}\fi
-\else{\tclose{\kbdfont\look}}\fi}
+\else{\tclose{\kbdfont\setupmarkupstyle{kbd}\look}}\fi
+\else{\tclose{\kbdfont\setupmarkupstyle{kbd}\look}}\fi}
 
 % For @indicateurl, @env, @command quotes seem unnecessary, so use \code.
 \let\indicateurl=\code
@@ -2650,7 +2655,7 @@ end
 %
 \def\dmn#1{\thinspace #1}
 
-\def\kbd#1{\def\look{#1}\expandafter\kbdfoo\look??\par}
+\def\kbd#1{{\setupmarkupstyle{kbd}\def\look{#1}\expandafter\kbdfoo\look??\par}}
 
 % @l was never documented to mean ``switch to the Lisp font'',
 % and it is not used as such in any manual I can find.  We need it for
@@ -5704,6 +5709,109 @@ end
 \message{environments,}
 % @foo ... @end foo.
 
+% Markup style infrastructure.  \defmarkupstylesetup\INITMACRO will
+% define and register \INITMACRO to be called on markup style changes.
+% \INITMACRO can check \currentmarkupstyle for the innermost
+% style and the set of \ifmarkupSTYLE switches for all styles
+% currently in effect.
+\newif\ifmarkupvar
+\newif\ifmarkupsamp
+\newif\ifmarkupkey
+%\newif\ifmarkupfile % @file == @samp.
+%\newif\ifmarkupoption % @option == @samp.
+\newif\ifmarkupcode
+\newif\ifmarkupkbd
+%\newif\ifmarkupenv % @env == @code.
+%\newif\ifmarkupcommand % @command == @code.
+\newif\ifmarkuptex % @tex (and part of @math, for now).
+\newif\ifmarkupexample
+\newif\ifmarkupverb
+\newif\ifmarkupverbatim
+
+\let\currentmarkupstyle\empty
+
+\def\setupmarkupstyle#1{%
+  \csname markup#1true\endcsname
+  \def\currentmarkupstyle{#1}%
+  \markupstylesetup
+}
+
+\let\markupstylesetup\empty
+
+\def\defmarkupstylesetup#1{%
+  \expandafter\def\expandafter\markupstylesetup
+    \expandafter{\markupstylesetup #1}%
+  \def#1%
+}
+
+% Markup style setup for left and right quotes.
+\defmarkupstylesetup\markupsetuplq{%
+  \expandafter\let\expandafter \temp \csname markupsetuplq\currentmarkupstyle\endcsname
+  \ifx\temp\relax \markupsetuplqdefault \else \temp \fi
+}
+
+\defmarkupstylesetup\markupsetuprq{%
+  \expandafter\let\expandafter \temp \csname markupsetuprq\currentmarkupstyle\endcsname
+  \ifx\temp\relax \markupsetuprqdefault \else \temp \fi
+}
+
+{
+\catcode`\'=\active
+\catcode`\`=\active
+
+\gdef\markupsetuplqdefault{\let`\lq}
+\gdef\markupsetuprqdefault{\let'\rq}
+
+\gdef\markupsetcodequoteleft{\let`\codequoteleft}
+\gdef\markupsetcodequoteright{\let'\codequoteright}
+
+\gdef\markupsetnoligaturesquoteleft{\let`\noligaturesquoteleft}
+}
+
+\let\markupsetuplqcode \markupsetcodequoteleft
+\let\markupsetuprqcode \markupsetcodequoteright
+\let\markupsetuplqexample \markupsetcodequoteleft
+\let\markupsetuprqexample \markupsetcodequoteright
+\let\markupsetuplqverb \markupsetcodequoteleft
+\let\markupsetuprqverb \markupsetcodequoteright
+\let\markupsetuplqverbatim \markupsetcodequoteleft
+\let\markupsetuprqverbatim \markupsetcodequoteright
+
+\let\markupsetuplqsamp \markupsetnoligaturesquoteleft
+\let\markupsetuplqkbd \markupsetnoligaturesquoteleft
+
+% Allow an option to not replace quotes with a regular directed right
+% quote/apostrophe (char 0x27), but instead use the undirected quote
+% from cmtt (char 0x0d).  The undirected quote is ugly, so don't make it
+% the default, but it works for pasting with more pdf viewers (at least
+% evince), the lilypond developers report.  xpdf does work with the
+% regular 0x27.  
+% 
+\def\codequoteright{%
+  \expandafter\ifx\csname SETtxicodequoteundirected\endcsname\relax
+    \expandafter\ifx\csname SETcodequoteundirected\endcsname\relax
+      '%
+    \else \char'15 \fi
+  \else \char'15 \fi
+}
+%
+% and a similar option for the left quote char vs. a grave accent.
+% Modern fonts display ASCII 0x60 as a grave accent, so some people like
+% the code environments to do likewise.
+% 
+\def\codequoteleft{%
+  \expandafter\ifx\csname SETtxicodequotebacktick\endcsname\relax
+    \expandafter\ifx\csname SETcodequotebacktick\endcsname\relax
+      % [Knuth] pp. 380,381,391
+      % \relax disables Spanish ligatures ?` and !` of \tt font.
+      \relax`%
+    \else \char'22 \fi
+  \else \char'22 \fi
+}
+
+% [Knuth] pp. 380,381,391, disable Spanish ligatures ?` and !` of \tt font.
+\def\noligaturesquoteleft{\relax\lq}
+
 % @point{}, @result{}, @expansion{}, @print{}, @equiv{}.
 %
 % Since these characters are used in examples, they should be an even number of
@@ -5744,6 +5852,7 @@ end
 % But \@ or @@ will get a plain tex @ character.
 
 \envdef\tex{%
+  \setupmarkupstyle{tex}%
   \catcode `\\=0 \catcode `\{=1 \catcode `\}=2
   \catcode `\$=3 \catcode `\&=4 \catcode `\#=6
   \catcode `\^=7 \catcode `\_=8 \catcode `\~=\active \let~=\tie
@@ -5753,6 +5862,8 @@ end
   \catcode `\|=\other
   \catcode `\<=\other
   \catcode `\>=\other
+  \catcode`\`=\other
+  \catcode`\'=\other
   \escapechar=`\\
   %
   \let\b=\ptexb
@@ -5954,7 +6065,7 @@ end
 %
 \maketwodispenvs {lisp}{example}{%
   \nonfillstart
-  \tt\quoteexpand
+  \tt\setupmarkupstyle{example}%
   \let\kbdfont = \kbdexamplefont % Allow @kbd to do something special.
   \gobble       % eat return
 }
@@ -6058,6 +6169,10 @@ end
   \do\ \do\\\do\{\do\}\do\$\do\&%
   \do\#\do\^\do\^^K\do\_\do\^^A\do\%\do\~%
   \do\<\do\>\do\|\do\@\do+\do\"%
+  % Don't do the quotes -- if we do, @set txicodequoteundirected and
+  % @set txicodequotebacktick will not have effect on @verb and
+  % @verbatim, and ?` and !` ligatures won't get disabled.
+  %\do\`\do\'%
 }
 %
 % [Knuth] p. 380
@@ -6075,7 +6190,7 @@ end
 \def\setupverb{%
   \tt  % easiest (and conventionally used) font for verbatim
   \def\par{\leavevmode\endgraf}%
-  \catcode`\`=\active
+  \setupmarkupstyle{verb}%
   \tabeightspaces
   % Respect line breaks,
   % print special symbols as themselves, and
@@ -6090,33 +6205,6 @@ end
 \newdimen\tabw \setbox0=\hbox{\tt\space} \tabw=8\wd0 % tab amount
 %
 \def\starttabbox{\setbox0=\hbox\bgroup}
-
-% Allow an option to not replace quotes with a regular directed right
-% quote/apostrophe (char 0x27), but instead use the undirected quote
-% from cmtt (char 0x0d).  The undirected quote is ugly, so don't make it
-% the default, but it works for pasting with more pdf viewers (at least
-% evince), the lilypond developers report.  xpdf does work with the
-% regular 0x27.  
-% 
-\def\codequoteright{%
-  \expandafter\ifx\csname SETtxicodequoteundirected\endcsname\relax
-    \expandafter\ifx\csname SETcodequoteundirected\endcsname\relax
-      '%
-    \else \char'15 \fi
-  \else \char'15 \fi
-}
-%
-% and a similar option for the left quote char vs. a grave accent.
-% Modern fonts display ASCII 0x60 as a grave accent, so some people like
-% the code environments to do likewise.
-% 
-\def\codequoteleft{%
-  \expandafter\ifx\csname SETtxicodequotebacktick\endcsname\relax
-    \expandafter\ifx\csname SETcodequotebacktick\endcsname\relax
-      \relax`% the \relax disables the `! and `? ligatures
-    \else \char'22 \fi
-  \else \char'22 \fi
-}
 %
 \begingroup
   \catcode`\^^I=\active
@@ -6130,13 +6218,6 @@ end
       \wd0=\dimen0 \box0 \starttabbox
     }%
   }
-  \catcode`\'=\active
-  \gdef\rquoteexpand{\catcode\rquoteChar=\active \def'{\codequoteright}}%
-  %
-  \catcode`\`=\active
-  \gdef\lquoteexpand{\catcode\lquoteChar=\active \def`{\codequoteleft}}%
-  %
-  \gdef\quoteexpand{\rquoteexpand \lquoteexpand}%
 \endgroup
 
 % start the verbatim environment.
@@ -6146,9 +6227,8 @@ end
   % Easiest (and conventionally used) font for verbatim
   \tt
   \def\par{\leavevmode\egroup\box0\endgraf}%
-  \catcode`\`=\active
   \tabexpand
-  \quoteexpand
+  \setupmarkupstyle{verbatim}%
   % Respect line breaks,
   % print special symbols as themselves, and
   % make each space count
@@ -6487,7 +6567,7 @@ end
   %
   % On the other hand, if an argument has two dashes (for instance), we
   % want a way to get ttsl.  Let's try @var for that.
-  \let\var=\ttslanted
+  \def\var##1{{\setupmarkupstyle{var}\ttslanted{##1}}}%
   #1%
   \sl\hyphenchar\font=45
 }
@@ -9013,6 +9093,8 @@ directory should work if nowhere else does.}
   @let>=@normalgreater
   @let+=@normalplus
   @let$=@normaldollar %$ font-lock fix
+  @markupsetuplqdefault
+  @markupsetuprqdefault
   @unsepspaces
 }
 
@@ -9051,9 +9133,10 @@ directory should work if nowhere else does.}
 @c txicodequotebacktick work right in, e.g., @w{@code{`foo'}}.  If we
 @c don't make ` and ' active, @code will not get them as active chars.
 @c Do this last of all since we use ` in the previous @catcode assignments.
-@c (not ready yet, sigh)
-@c atcode`@'=@active @let'@rq
-@c atcode`@`=@active @let`@lq
+@catcode`@'=@active
+@catcode`@`=@active
+@markupsetuplqdefault
+@markupsetuprqdefault
  
 @c Local variables:
 @c eval: (add-hook 'write-file-hooks 'time-stamp)
