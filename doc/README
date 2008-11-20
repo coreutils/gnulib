@@ -17,7 +17,7 @@ How to update gnulib manual on www.gnu.org
    especially the note about symlinks.
 
 3) Assuming GNULIB_CHECKOUT refers to a checkout of the gnulib dir,
-   and      GNULIB_WWW_CHECKOUT refers to the other directory created above (2),
+   and      GNULIB_WWW_CHECKOUT refers to the other directory created above (1),
    do
 
    GNULIB_WWW_CHECKOUT=`cd $GNULIB_WWW_CHECKOUT && pwd`
