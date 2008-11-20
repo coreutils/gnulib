@@ -22,7 +22,7 @@
 #endif
 
 /* The include_next requires a split double-inclusion guard.  */
-#@INCLUDE_NEXT@ @NEXT_MATH_H@
+#@INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_MATH_H@
 
 #ifndef _GL_MATH_H
 #define _GL_MATH_H
