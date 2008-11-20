@@ -7,6 +7,7 @@
 	INCLUDE_NEXT_AS_FIRST_DIRECTIVE.
 	* modules/math (Makefile.am): Substitute
 	INCLUDE_NEXT_AS_FIRST_DIRECTIVE instead of INCLUDE_NEXT.
+	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
 
 2008-11-18  Alexandre Duret-Lutz  <adl@lrde.epita.fr>
             Bruno Haible  <bruno@clisp.org>
