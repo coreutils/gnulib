@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-11-23.16}
+\def\texinfoversion{2008-11-25.16}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1604,7 +1604,9 @@ output) for that.)}
     \setcolor{\linkcolor}#1\endlink}
   \def\done{\edef\st{\global\noexpand\toksA={\the\toksB}}\st}
 \else
-  \let\pdfmkdest = \gobble
+  % non-pdf mode
+  % \unskip in hmode, since that's what \safewhatsit does.
+  \def\pdfmkdest{\ifhmode\unskip\fi\gobble}
   \let\pdfurl = \gobble
   \let\endlink = \relax
   \let\setcolor = \gobble
@@ -4337,6 +4339,13 @@ end
 %
 \def\safewhatsit#1{%
 \ifhmode
+  % The \unskip is in case we are preceded by glue; we don't want to
+  % allow a line break just before us.  For example, if a paragraph
+  % happens to end perfectly justified and the next line is
+  % @cindex foo
+  % (with no blank line preceding), our whatsit would end up on a line
+  % by itself, appearing as a spurious blank line in the output.
+  \unskip
   #1%
 \else
   % \lastskip and \lastpenalty cannot both be nonzero simultaneously.
