@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-11-25.16}
+\def\texinfoversion{2008-11-27.12}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -2350,6 +2350,16 @@ end
   \def\lsize{smaller}\def\lllsize{smaller}%
   \resetmathfonts \setleading{9.5pt}}
 
+% Fonts for short table of contents.
+\setfont\shortcontrm\rmshape{12}{1000}{OT1}
+\setfont\shortcontbf\bfshape{10}{\magstep1}{OT1}  % no cmb12
+\setfont\shortcontsl\slshape{12}{1000}{OT1}
+\setfont\shortconttt\ttshape{12}{1000}{OT1TT}
+
+% Define these just so they can be easily changed for other fonts.
+\def\angleleft{$\langle$}
+\def\angleright{$\rangle$}
+
 % Set the fonts to use with the @small... environments.
 \let\smallexamplefonts = \smallfonts
 
@@ -2363,27 +2373,127 @@ end
 %
 % By the way, for comparison, here's what fits with @example (10pt):
 %   8.5x11=71  smallbook=60  a4=75  a5=58
-%
-% I wish the USA used A4 paper.
 % --karl, 24jan03.
-
 
 % Set up the default fonts, so we can use them for creating boxes.
 %
 \definetextfontsizexi
 
-% Define these so they can be easily changed for other fonts.
-\def\angleleft{$\langle$}
-\def\angleright{$\rangle$}
+
+\message{markup,}
+
+% Check if we are currently using a typewriter font.  Since all the
+% Computer Modern typewriter fonts have zero interword stretch (and
+% shrink), and it is reasonable to expect all typewriter fonts to have
+% this property, we can check that font parameter.
+%
+\def\ifmonospace{\ifdim\fontdimen3\font=0pt }
+
+% Markup style infrastructure.  \defmarkupstylesetup\INITMACRO will
+% define and register \INITMACRO to be called on markup style changes.
+% \INITMACRO can check \currentmarkupstyle for the innermost
+% style and the set of \ifmarkupSTYLE switches for all styles
+% currently in effect.
+\newif\ifmarkupvar
+\newif\ifmarkupsamp
+\newif\ifmarkupkey
+%\newif\ifmarkupfile % @file == @samp.
+%\newif\ifmarkupoption % @option == @samp.
+\newif\ifmarkupcode
+\newif\ifmarkupkbd
+%\newif\ifmarkupenv % @env == @code.
+%\newif\ifmarkupcommand % @command == @code.
+\newif\ifmarkuptex % @tex (and part of @math, for now).
+\newif\ifmarkupexample
+\newif\ifmarkupverb
+\newif\ifmarkupverbatim
+
+\let\currentmarkupstyle\empty
+
+\def\setupmarkupstyle#1{%
+  \csname markup#1true\endcsname
+  \def\currentmarkupstyle{#1}%
+  \markupstylesetup
+}
+
+\let\markupstylesetup\empty
+
+\def\defmarkupstylesetup#1{%
+  \expandafter\def\expandafter\markupstylesetup
+    \expandafter{\markupstylesetup #1}%
+  \def#1%
+}
+
+% Markup style setup for left and right quotes.
+\defmarkupstylesetup\markupsetuplq{%
+  \expandafter\let\expandafter \temp \csname markupsetuplq\currentmarkupstyle\endcsname
+  \ifx\temp\relax \markupsetuplqdefault \else \temp \fi
+}
+
+\defmarkupstylesetup\markupsetuprq{%
+  \expandafter\let\expandafter \temp \csname markupsetuprq\currentmarkupstyle\endcsname
+  \ifx\temp\relax \markupsetuprqdefault \else \temp \fi
+}
+
+{
+\catcode`\'=\active
+\catcode`\`=\active
+
+\gdef\markupsetuplqdefault{\let`\lq}
+\gdef\markupsetuprqdefault{\let'\rq}
+
+\gdef\markupsetcodequoteleft{\let`\codequoteleft}
+\gdef\markupsetcodequoteright{\let'\codequoteright}
+
+\gdef\markupsetnoligaturesquoteleft{\let`\noligaturesquoteleft}
+}
+
+\let\markupsetuplqcode \markupsetcodequoteleft
+\let\markupsetuprqcode \markupsetcodequoteright
+\let\markupsetuplqexample \markupsetcodequoteleft
+\let\markupsetuprqexample \markupsetcodequoteright
+\let\markupsetuplqverb \markupsetcodequoteleft
+\let\markupsetuprqverb \markupsetcodequoteright
+\let\markupsetuplqverbatim \markupsetcodequoteleft
+\let\markupsetuprqverbatim \markupsetcodequoteright
+
+\let\markupsetuplqsamp \markupsetnoligaturesquoteleft
+\let\markupsetuplqkbd \markupsetnoligaturesquoteleft
+
+% Allow an option to not replace quotes with a regular directed right
+% quote/apostrophe (char 0x27), but instead use the undirected quote
+% from cmtt (char 0x0d).  The undirected quote is ugly, so don't make it
+% the default, but it works for pasting with more pdf viewers (at least
+% evince), the lilypond developers report.  xpdf does work with the
+% regular 0x27.  
+% 
+\def\codequoteright{%
+  \expandafter\ifx\csname SETtxicodequoteundirected\endcsname\relax
+    \expandafter\ifx\csname SETcodequoteundirected\endcsname\relax
+      '%
+    \else \char'15 \fi
+  \else \char'15 \fi
+}
+%
+% and a similar option for the left quote char vs. a grave accent.
+% Modern fonts display ASCII 0x60 as a grave accent, so some people like
+% the code environments to do likewise.
+% 
+\def\codequoteleft{%
+  \expandafter\ifx\csname SETtxicodequotebacktick\endcsname\relax
+    \expandafter\ifx\csname SETcodequotebacktick\endcsname\relax
+      % [Knuth] pp. 380,381,391
+      % \relax disables Spanish ligatures ?` and !` of \tt font.
+      \relax`%
+    \else \char'22 \fi
+  \else \char'22 \fi
+}
+
+% [Knuth] pp. 380,381,391, disable Spanish ligatures ?` and !` of \tt font.
+\def\noligaturesquoteleft{\relax\lq}
 
 % Count depth in font-changes, for error checks
 \newcount\fontdepth \fontdepth=0
-
-% Fonts for short table of contents.
-\setfont\shortcontrm\rmshape{12}{1000}{OT1}
-\setfont\shortcontbf\bfshape{10}{\magstep1}{OT1}  % no cmb12
-\setfont\shortcontsl\slshape{12}{1000}{OT1}
-\setfont\shortconttt\ttshape{12}{1000}{OT1TT}
 
 %% Add scribe-like font environments, plus @l for inline lisp (usually sans
 %% serif) and @ii for TeX italic
@@ -2399,7 +2509,7 @@ end
 % @var is set to this for defun arguments.
 \def\ttslanted#1{{\ttsl #1}\futurelet\next\smartitalicx}
 
-% like \smartslanted except unconditionally use \sl.  We never want
+% @cite is like \smartslanted except unconditionally use \sl.  We never want
 % ttsl for book titles, do we?
 \def\cite#1{{\sl #1}\futurelet\next\smartitalicx}
 
@@ -2409,7 +2519,12 @@ end
 \let\dfn=\smartslanted
 \let\emph=\smartitalic
 
-% @b, explicit bold.
+% Explicit font changes: @r, @sc, undocumented @ii.
+\def\r#1{{\rm #1}}              % roman font
+\def\sc#1{{\smallcaps#1}}       % smallcaps font
+\def\ii#1{{\it #1}}             % italic font
+
+% @b, explicit bold.  Also @strong.
 \def\b#1{{\bf #1}}
 \let\strong=\b
 
@@ -2441,22 +2556,35 @@ end
 \catcode`@=\other
 \def\endofsentencespacefactor{3000}% default
 
+% @t, explicit typewriter.
 \def\t#1{%
   {\tt \rawbackslash \plainfrenchspacing #1}%
   \null
 }
+
+% @samp.
 \def\samp#1{{\setupmarkupstyle{samp}\lq\tclose{#1}\rq\null}}
-\setfont\keyrm\rmshape{8}{1000}{OT1}
-\font\keysy=cmsy9
-\def\key#1{{\keyrm\textfont2=\keysy \leavevmode\hbox{%
-  \raise0.4pt\hbox{\angleleft}\kern-.08em\vtop{%
-    \vbox{\hrule\kern-0.4pt
-     \hbox{\raise0.4pt\hbox{\vphantom{\angleleft}}#1}}%
-    \kern-0.4pt\hrule}%
-  \kern-.06em\raise0.4pt\hbox{\angleright}}}}
-\def\key #1{{\setupmarkupstyle{key}\nohyphenation \uppercase{#1}}\null}
-% The old definition, with no lozenge:
-%\def\key #1{{\ttsl \nohyphenation \uppercase{#1}}\null}
+
+% definition of @key that produces a lozenge.  Doesn't adjust to text size.
+%\setfont\keyrm\rmshape{8}{1000}{OT1}
+%\font\keysy=cmsy9
+%\def\key#1{{\keyrm\textfont2=\keysy \leavevmode\hbox{%
+%  \raise0.4pt\hbox{\angleleft}\kern-.08em\vtop{%
+%    \vbox{\hrule\kern-0.4pt
+%     \hbox{\raise0.4pt\hbox{\vphantom{\angleleft}}#1}}%
+%    \kern-0.4pt\hrule}%
+%  \kern-.06em\raise0.4pt\hbox{\angleright}}}}
+
+% definition of @key with no lozenge.  If the current font is already
+% monospace, don't change it; that way, we respect @kbdinputstyle.  But
+% if it isn't monospace, then use \tt.
+%
+\def\key#1{{\setupmarkupstyle{key}
+  \nohyphenation
+  \ifmonospace\else\tt\fi
+  #1}\null}
+
+% ctrl is no longer a Texinfo command.
 \def\ctrl #1{{\tt \rawbackslash \hat}#1}
 
 % @file, @option are the same as @samp.
@@ -2554,6 +2682,7 @@ end
 
 % @kbd is like @code, except that if the argument is just one @key command,
 % then @kbd has no effect.
+\def\kbd#1{{\setupmarkupstyle{kbd}\def\look{#1}\expandafter\kbdfoo\look??\par}}
 
 % @kbdinputstyle -- arg is `distinct' (@kbd uses slanted tty font always),
 %   `example' (@kbd uses ttsl only inside of @example and friends),
@@ -2575,7 +2704,7 @@ end
 \def\wordexample{example}
 \def\wordcode{code}
 
-% Default is `distinct.'
+% Default is `distinct'.
 \kbdinputstyle distinct
 
 \def\xkey{\key}
@@ -2645,29 +2774,15 @@ end
   \let\email=\uref
 \fi
 
-% Check if we are currently using a typewriter font.  Since all the
-% Computer Modern typewriter fonts have zero interword stretch (and
-% shrink), and it is reasonable to expect all typewriter fonts to have
-% this property, we can check that font parameter.
-%
-\def\ifmonospace{\ifdim\fontdimen3\font=0pt }
-
 % Typeset a dimension, e.g., `in' or `pt'.  The only reason for the
 % argument is to make the input look right: @dmn{pt} instead of @dmn{}pt.
 %
 \def\dmn#1{\thinspace #1}
 
-\def\kbd#1{{\setupmarkupstyle{kbd}\def\look{#1}\expandafter\kbdfoo\look??\par}}
-
 % @l was never documented to mean ``switch to the Lisp font'',
 % and it is not used as such in any manual I can find.  We need it for
 % Polish suppressed-l.  --karl, 22sep96.
 %\def\l#1{{\li #1}\null}
-
-% Explicit font changes: @r, @sc, undocumented @ii.
-\def\r#1{{\rm #1}}              % roman font
-\def\sc#1{{\smallcaps#1}}       % smallcaps font
-\def\ii#1{{\it #1}}             % italic font
 
 % @acronym for "FBI", "NATO", and the like.
 % We print this one point size smaller, since it's intended for
@@ -2693,6 +2808,44 @@ end
     \space ({\unsepspaces \ignorespaces \temp \unskip})%
   \fi
 }
+
+
+\message{glyphs,}
+
+% @point{}, @result{}, @expansion{}, @print{}, @equiv{}.
+%
+% Since these characters are used in examples, they should be an even number of
+% \tt widths. Each \tt character is 1en, so two makes it 1em.
+%
+\def\point{$\star$}
+\def\arrow{\leavevmode\raise.05ex\hbox to 1em{\hfil$\rightarrow$\hfil}}
+\def\result{\leavevmode\raise.05ex\hbox to 1em{\hfil$\Rightarrow$\hfil}}
+\def\expansion{\leavevmode\hbox to 1em{\hfil$\mapsto$\hfil}}
+\def\print{\leavevmode\lower.1ex\hbox to 1em{\hfil$\dashv$\hfil}}
+\def\equiv{\leavevmode\hbox to 1em{\hfil$\ptexequiv$\hfil}}
+
+% The @error{} command.
+% Adapted from the TeXbook's \boxit.
+%
+\newbox\errorbox
+%
+{\tentt \global\dimen0 = 3em}% Width of the box.
+\dimen2 = .55pt % Thickness of rules
+% The text. (`r' is open on the right, `e' somewhat less so on the left.)
+\setbox0 = \hbox{\kern-.75pt \reducedsf error\kern-1.5pt}
+%
+\setbox\errorbox=\hbox to \dimen0{\hfil
+   \hsize = \dimen0 \advance\hsize by -5.8pt % Space to left+right.
+   \advance\hsize by -2\dimen2 % Rules.
+   \vbox{%
+      \hrule height\dimen2
+      \hbox{\vrule width\dimen2 \kern3pt          % Space to left of text.
+         \vtop{\kern2.4pt \box0 \kern2.4pt}% Space above/below.
+         \kern3pt\vrule width\dimen2}% Space to right.
+      \hrule height\dimen2}
+    \hfil}
+%
+\def\error{\leavevmode\lower.7ex\copy\errorbox}
 
 % @pounds{} is a sterling sign, which Knuth put in the CM italic font.
 %
@@ -5717,144 +5870,6 @@ end
 
 \message{environments,}
 % @foo ... @end foo.
-
-% Markup style infrastructure.  \defmarkupstylesetup\INITMACRO will
-% define and register \INITMACRO to be called on markup style changes.
-% \INITMACRO can check \currentmarkupstyle for the innermost
-% style and the set of \ifmarkupSTYLE switches for all styles
-% currently in effect.
-\newif\ifmarkupvar
-\newif\ifmarkupsamp
-\newif\ifmarkupkey
-%\newif\ifmarkupfile % @file == @samp.
-%\newif\ifmarkupoption % @option == @samp.
-\newif\ifmarkupcode
-\newif\ifmarkupkbd
-%\newif\ifmarkupenv % @env == @code.
-%\newif\ifmarkupcommand % @command == @code.
-\newif\ifmarkuptex % @tex (and part of @math, for now).
-\newif\ifmarkupexample
-\newif\ifmarkupverb
-\newif\ifmarkupverbatim
-
-\let\currentmarkupstyle\empty
-
-\def\setupmarkupstyle#1{%
-  \csname markup#1true\endcsname
-  \def\currentmarkupstyle{#1}%
-  \markupstylesetup
-}
-
-\let\markupstylesetup\empty
-
-\def\defmarkupstylesetup#1{%
-  \expandafter\def\expandafter\markupstylesetup
-    \expandafter{\markupstylesetup #1}%
-  \def#1%
-}
-
-% Markup style setup for left and right quotes.
-\defmarkupstylesetup\markupsetuplq{%
-  \expandafter\let\expandafter \temp \csname markupsetuplq\currentmarkupstyle\endcsname
-  \ifx\temp\relax \markupsetuplqdefault \else \temp \fi
-}
-
-\defmarkupstylesetup\markupsetuprq{%
-  \expandafter\let\expandafter \temp \csname markupsetuprq\currentmarkupstyle\endcsname
-  \ifx\temp\relax \markupsetuprqdefault \else \temp \fi
-}
-
-{
-\catcode`\'=\active
-\catcode`\`=\active
-
-\gdef\markupsetuplqdefault{\let`\lq}
-\gdef\markupsetuprqdefault{\let'\rq}
-
-\gdef\markupsetcodequoteleft{\let`\codequoteleft}
-\gdef\markupsetcodequoteright{\let'\codequoteright}
-
-\gdef\markupsetnoligaturesquoteleft{\let`\noligaturesquoteleft}
-}
-
-\let\markupsetuplqcode \markupsetcodequoteleft
-\let\markupsetuprqcode \markupsetcodequoteright
-\let\markupsetuplqexample \markupsetcodequoteleft
-\let\markupsetuprqexample \markupsetcodequoteright
-\let\markupsetuplqverb \markupsetcodequoteleft
-\let\markupsetuprqverb \markupsetcodequoteright
-\let\markupsetuplqverbatim \markupsetcodequoteleft
-\let\markupsetuprqverbatim \markupsetcodequoteright
-
-\let\markupsetuplqsamp \markupsetnoligaturesquoteleft
-\let\markupsetuplqkbd \markupsetnoligaturesquoteleft
-
-% Allow an option to not replace quotes with a regular directed right
-% quote/apostrophe (char 0x27), but instead use the undirected quote
-% from cmtt (char 0x0d).  The undirected quote is ugly, so don't make it
-% the default, but it works for pasting with more pdf viewers (at least
-% evince), the lilypond developers report.  xpdf does work with the
-% regular 0x27.  
-% 
-\def\codequoteright{%
-  \expandafter\ifx\csname SETtxicodequoteundirected\endcsname\relax
-    \expandafter\ifx\csname SETcodequoteundirected\endcsname\relax
-      '%
-    \else \char'15 \fi
-  \else \char'15 \fi
-}
-%
-% and a similar option for the left quote char vs. a grave accent.
-% Modern fonts display ASCII 0x60 as a grave accent, so some people like
-% the code environments to do likewise.
-% 
-\def\codequoteleft{%
-  \expandafter\ifx\csname SETtxicodequotebacktick\endcsname\relax
-    \expandafter\ifx\csname SETcodequotebacktick\endcsname\relax
-      % [Knuth] pp. 380,381,391
-      % \relax disables Spanish ligatures ?` and !` of \tt font.
-      \relax`%
-    \else \char'22 \fi
-  \else \char'22 \fi
-}
-
-% [Knuth] pp. 380,381,391, disable Spanish ligatures ?` and !` of \tt font.
-\def\noligaturesquoteleft{\relax\lq}
-
-% @point{}, @result{}, @expansion{}, @print{}, @equiv{}.
-%
-% Since these characters are used in examples, they should be an even number of
-% \tt widths. Each \tt character is 1en, so two makes it 1em.
-%
-\def\point{$\star$}
-\def\arrow{\leavevmode\raise.05ex\hbox to 1em{\hfil$\rightarrow$\hfil}}
-\def\result{\leavevmode\raise.05ex\hbox to 1em{\hfil$\Rightarrow$\hfil}}
-\def\expansion{\leavevmode\hbox to 1em{\hfil$\mapsto$\hfil}}
-\def\print{\leavevmode\lower.1ex\hbox to 1em{\hfil$\dashv$\hfil}}
-\def\equiv{\leavevmode\hbox to 1em{\hfil$\ptexequiv$\hfil}}
-
-% The @error{} command.
-% Adapted from the TeXbook's \boxit.
-%
-\newbox\errorbox
-%
-{\tentt \global\dimen0 = 3em}% Width of the box.
-\dimen2 = .55pt % Thickness of rules
-% The text. (`r' is open on the right, `e' somewhat less so on the left.)
-\setbox0 = \hbox{\kern-.75pt \reducedsf error\kern-1.5pt}
-%
-\setbox\errorbox=\hbox to \dimen0{\hfil
-   \hsize = \dimen0 \advance\hsize by -5.8pt % Space to left+right.
-   \advance\hsize by -2\dimen2 % Rules.
-   \vbox{%
-      \hrule height\dimen2
-      \hbox{\vrule width\dimen2 \kern3pt          % Space to left of text.
-         \vtop{\kern2.4pt \box0 \kern2.4pt}% Space above/below.
-         \kern3pt\vrule width\dimen2}% Space to right.
-      \hrule height\dimen2}
-    \hfil}
-%
-\def\error{\leavevmode\lower.7ex\copy\errorbox}
 
 % @tex ... @end tex    escapes into raw Tex temporarily.
 % One exception: @ is still an escape character, so that @end tex works.
