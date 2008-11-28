@@ -1,3 +1,9 @@
+2008-11-28  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/sys_time.in.h: Add extern "C" block for C++.  Suggested by
+	Brian Dessent <brian@dessent.net>.  Reported by Sam Steingold
+	<sds@gnu.org>.
+
 2008-11-20  Bruno Haible  <bruno@clisp.org>
 
 	Attempt to work around an AIX 5.3, 6.1 compiler bug with include_next.
