@@ -84,9 +84,31 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 # define DT_IS_KNOWN(d) ((d)->d_type != DT_UNKNOWN)
 /* True if the type of the directory entry D must be T.  */
 # define DT_MUST_BE(d, t) ((d)->d_type == (t))
+# define D_TYPE(d) ((d)->d_type)
 #else
 # define DT_IS_KNOWN(d) false
 # define DT_MUST_BE(d, t) false
+# define D_TYPE(d) DT_UNKNOWN
+
+# undef DT_UNKNOWN
+# define DT_UNKNOWN 0
+
+/* Any nonzero values will do here, so long as they're distinct.
+   Undef any existing macros out of the way.  */
+# undef DT_BLK
+# undef DT_CHR
+# undef DT_DIR
+# undef DT_FIFO
+# undef DT_LNK
+# undef DT_REG
+# undef DT_SOCK
+# define DT_BLK 1
+# define DT_CHR 2
+# define DT_DIR 3
+# define DT_FIFO 4
+# define DT_LNK 5
+# define DT_REG 6
+# define DT_SOCK 7
 #endif
 
 enum
@@ -989,6 +1011,61 @@ fts_compare_ino (struct _ftsent const **a, struct _ftsent const **b)
 	  : b[0]->fts_statp->st_ino < a[0]->fts_statp->st_ino ? 1 : 0);
 }
 
+/* Return the number of bits by which a d_type value must be shifted
+   left in order to put it into the S_IFMT bits of stat.st_mode.  */
+static int
+s_ifmt_shift_bits (void)
+{
+  unsigned int v = S_IFMT; /* usually, 0170000 */
+  static const int MultiplyDeBruijnBitPosition[32] =
+    {
+      0, 1, 28, 2, 29, 14, 24, 3, 30, 22, 20, 15, 25, 17, 4, 8,
+      31, 27, 13, 23, 21, 19, 16, 7, 26, 12, 18, 6, 11, 5, 10, 9
+    };
+
+  /* Find the smallest power of two, P (e.g., 0010000) such that P & V == P. */
+  unsigned int p = v ^ (v & (v - 1));
+
+  /* Compute and return r = log2 (p), using code from
+     http://graphics.stanford.edu/~seander/bithacks.html#IntegerLogDeBruijn */
+  return MultiplyDeBruijnBitPosition[(uint32_t) (p * 0x077CB531UL) >> 27];
+}
+
+/* Map the dirent.d_type value, DTYPE, to the corresponding stat.st_mode
+   S_IF* bit and set ST.st_mode, thus clearing all other bits in that field.  */
+static void
+set_stat_type (struct stat *st, unsigned int dtype)
+{
+  mode_t type;
+  switch (dtype)
+    {
+    case DT_BLK:
+      type = S_IFBLK;
+      break;
+    case DT_CHR:
+      type = S_IFCHR;
+      break;
+    case DT_DIR:
+      type = S_IFDIR;
+      break;
+    case DT_FIFO:
+      type = S_IFIFO;
+      break;
+    case DT_LNK:
+      type = S_IFLNK;
+      break;
+    case DT_REG:
+      type = S_IFREG;
+      break;
+    case DT_SOCK:
+      type = S_IFSOCK;
+      break;
+    default:
+      type = 0;
+    }
+  st->st_mode = dtype << s_ifmt_shift_bits ();
+}
+
 /*
  * This is the tricky part -- do not casually change *anything* in here.  The
  * idea is to build the linked list of entries that are used by fts_children
@@ -1218,6 +1295,9 @@ mem1:				saved_errno = errno;
 					  && DT_IS_KNOWN(dp)
 					  && ! DT_MUST_BE(dp, DT_DIR));
 			p->fts_info = FTS_NSOK;
+			/* Propagate dirent.d_type information back
+			   to caller, when possible.  */
+			set_stat_type (p->fts_statp, D_TYPE (dp));
 			fts_set_stat_required(p, !skip_stat);
 			is_dir = (ISSET(FTS_PHYSICAL) && ISSET(FTS_NOSTAT)
 				  && DT_MUST_BE(dp, DT_DIR));

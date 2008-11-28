@@ -1,3 +1,16 @@
+2008-11-29  Jim Meyering  <meyering@redhat.com>
+
+	fts: provide dirent.d_type via FTSENT.fts_statp, when possible
+	* lib/fts.c (D_TYPE): Define.
+	(DT_UNKNOWN, DT_BLK, DT_CHR) [HAVE_STRUCT_DIRENT_D_TYPE]: Define.
+	(DT_DIR, DT_FIFO, DT_LNK, DT_REG, DT_SOCK): Likewise.
+	(s_ifmt_shift_bits): New function.
+	(set_stat_type): New function.
+	(fts_build): When not calling fts_stat, call set_stat_type
+	to propagate dirent.d_type info to fts_read caller.
+	* lib/fts_.h (FTSENT) [FTS_DEFER_STAT]: Mention that
+	fts_statp->st_mode type information may be valid.
+
 2008-11-28  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/sys_time.in.h: Add extern "C" block for C++.  Suggested by
@@ -16,7 +29,7 @@
 	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
 
 2008-11-18  Alexandre Duret-Lutz  <adl@lrde.epita.fr>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/stdint.in.h: Define all type macros so that their expansion is
 	a single typedef'ed token. Fixes a compilation failure in Boost which

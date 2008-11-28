@@ -131,7 +131,10 @@ typedef struct {
      Use this flag to make fts_open and fts_read defer the stat/lstat/fststat
      of each entry until it is actually processed.  However, note that if you
      use this option and also specify a comparison function, that function may
-     not examine any data via fts_statp.  */
+     not examine any data via fts_statp.  However, when fts_statp->st_mode is
+     nonzero, the S_IFMT type bits are valid, with mapped dirent.d_type data.
+     Of course, that happens only on file systems that provide useful
+     dirent.d_type data.  */
 # define FTS_DEFER_STAT		0x0400
 
 # define FTS_OPTIONMASK	0x07ff		/* valid user option mask */
