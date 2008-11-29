@@ -1,5 +1,11 @@
 2008-11-29  Jim Meyering  <meyering@redhat.com>
 
+	fts: fix a thinko
+	* lib/fts.c (s_ifmt_shift_bits): Remove function.  Not needed after all.
+	(set_stat_type): Return S_IF*-valued "type" directly.
+	Prompted by James Youngman's spotting a related bug.
+	Confirmed by further testing through find.
+
 	fts: provide dirent.d_type via FTSENT.fts_statp, when possible
 	* lib/fts.c (D_TYPE): Define.
 	(DT_UNKNOWN, DT_BLK, DT_CHR) [HAVE_STRUCT_DIRENT_D_TYPE]: Define.

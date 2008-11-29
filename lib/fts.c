@@ -1011,26 +1011,6 @@ fts_compare_ino (struct _ftsent const **a, struct _ftsent const **b)
 	  : b[0]->fts_statp->st_ino < a[0]->fts_statp->st_ino ? 1 : 0);
 }
 
-/* Return the number of bits by which a d_type value must be shifted
-   left in order to put it into the S_IFMT bits of stat.st_mode.  */
-static int
-s_ifmt_shift_bits (void)
-{
-  unsigned int v = S_IFMT; /* usually, 0170000 */
-  static const int MultiplyDeBruijnBitPosition[32] =
-    {
-      0, 1, 28, 2, 29, 14, 24, 3, 30, 22, 20, 15, 25, 17, 4, 8,
-      31, 27, 13, 23, 21, 19, 16, 7, 26, 12, 18, 6, 11, 5, 10, 9
-    };
-
-  /* Find the smallest power of two, P (e.g., 0010000) such that P & V == P. */
-  unsigned int p = v ^ (v & (v - 1));
-
-  /* Compute and return r = log2 (p), using code from
-     http://graphics.stanford.edu/~seander/bithacks.html#IntegerLogDeBruijn */
-  return MultiplyDeBruijnBitPosition[(uint32_t) (p * 0x077CB531UL) >> 27];
-}
-
 /* Map the dirent.d_type value, DTYPE, to the corresponding stat.st_mode
    S_IF* bit and set ST.st_mode, thus clearing all other bits in that field.  */
 static void
@@ -1063,7 +1043,7 @@ set_stat_type (struct stat *st, unsigned int dtype)
     default:
       type = 0;
     }
-  st->st_mode = dtype << s_ifmt_shift_bits ();
+  st->st_mode = type;
 }
 
 /*
