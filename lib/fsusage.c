@@ -1,6 +1,6 @@
 /* fsusage.c -- return space usage of mounted file systems
 
-   Copyright (C) 1991, 1992, 1996, 1998, 1999, 2002, 2003, 2004, 2005, 2006
+   Copyright (C) 1991-1992, 1996, 1998-1999, 2002-2006, 2008
    Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -84,6 +84,12 @@
    otherwise, use PROPAGATE_ALL_ONES.  */
 #define PROPAGATE_TOP_BIT(x) ((x) | ~ (EXTRACT_TOP_BIT (x) - 1))
 
+#ifdef STAT_READ_FILSYS
+# define UNUSED_PARAM /* empty */
+#else
+# define UNUSED_PARAM _UNUSED_PARAMETER_
+#endif
+
 /* Fill in the fields of FSP with information about space usage for
    the file system on which FILE resides.
    DISK is the device on which FILE is mounted, for space-getting
@@ -92,7 +98,8 @@
    ERRNO is either a system error value, or zero if DISK is NULL
    on a system that requires a non-NULL value.  */
 int
-get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
+get_fs_usage (char const *file, char const *disk UNUSED_PARAM,
+	      struct fs_usage *fsp)
 {
 #if defined STAT_STATVFS		/* POSIX */
 

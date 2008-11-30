@@ -28,6 +28,8 @@
 # include <config.h>
 # if FPRINTFTIME
 #  include "fprintftime.h"
+# else
+#  include "strftime.h"
 # endif
 #endif
 

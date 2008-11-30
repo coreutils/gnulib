@@ -1,7 +1,6 @@
 /* mountlist.c -- return a list of mounted file systems
 
-   Copyright (C) 1991, 1992, 1997, 1998, 1999, 2000, 2001, 2002, 2003,
-   2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 1991, 1992, 1997-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -298,11 +297,17 @@ fstype_to_string (int t)
 
 #if defined MOUNTED_GETMNTENT1 || defined MOUNTED_GETMNTENT2
 
+#undef UNUSED_PARAM
+#ifdef __linux__
+# define UNUSED_PARAM _UNUSED_PARAMETER_
+#else
+# define UNUSED_PARAM
+#endif
+
 /* Return the device number from MOUNT_OPTIONS, if possible.
    Otherwise return (dev_t) -1.  */
-
 static dev_t
-dev_from_mount_options (char const *mount_options)
+dev_from_mount_options (char const *mount_options UNUSED_PARAM)
 {
   /* GNU/Linux allows file system implementations to define their own
      meaning for "dev=" mount options, so don't trust the meaning
@@ -333,13 +338,20 @@ dev_from_mount_options (char const *mount_options)
 
 #endif
 
+#undef UNUSED_PARAM
+#ifdef GETFSTYP
+# define UNUSED_PARAM
+#else
+# define UNUSED_PARAM _UNUSED_PARAMETER_
+#endif
+
 /* Return a list of the currently mounted file systems, or NULL on error.
    Add each entry to the tail of the list so that they stay in order.
    If NEED_FS_TYPE is true, ensure that the file system type fields in
    the returned list are valid.  Otherwise, they might not be.  */
 
 struct mount_entry *
-read_file_system_list (bool need_fs_type)
+read_file_system_list (bool need_fs_type UNUSED_PARAM)
 {
   struct mount_entry *mount_list;
   struct mount_entry *me;
@@ -378,7 +390,7 @@ read_file_system_list (bool need_fs_type)
 #ifdef MOUNTED_GETMNTENT1 /* GNU/Linux, 4.3BSD, SunOS, HP-UX, Dynix, Irix.  */
   {
     struct mntent *mnt;
-    char *table = MOUNTED;
+    char const *table = MOUNTED;
     FILE *fp;
 
     fp = setmntent (table, "r");

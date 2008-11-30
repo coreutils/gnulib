@@ -42,7 +42,7 @@ enum { BILLION = 1000 * 1000 * 1000 };
 
 #if HAVE_BUG_BIG_NANOSLEEP
 
-void
+static void
 getnow (struct timespec *t)
 {
 # if defined CLOCK_MONOTONIC && HAVE_CLOCK_GETTIME
