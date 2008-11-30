@@ -1,6 +1,6 @@
 /* inttostr.c -- convert integers to printable strings
 
-   Copyright (C) 2001, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2006, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,6 +16,11 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* Written by Paul Eggert */
+
+/* Tell gcc not to warn about the (i < 0) test, below.  */
+#if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+# pragma GCC diagnostic ignored "-Wtype-limits"
+#endif
 
 #include <config.h>
 
