@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2008-10-10 05:12'; # UTC
+my $VERSION = '2008-12-02 16:28'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -429,11 +429,13 @@ sub get_tool_versions ($$)
   my $tgz = "$my_distdir.tar.gz";
   my $tbz = "$my_distdir.tar.bz2";
   my $lzma = "$my_distdir.tar.lzma";
+  my $xz = "$my_distdir.tar.xz";
+
   my $xd = "$package_name-$prev_version-$curr_version.xdelta";
 
-  my @tarballs = grep {-f $_} ($tgz, $tbz, $lzma);
+  my @tarballs = grep {-f $_} ($tgz, $tbz, $lzma, $xz);
   @tarballs
-    or die "$ME: none of $tgz, $tbz, or $lzma were found\n";
+    or die "$ME: none of $tgz, $tbz, $lzma or $xz were found\n";
   my @sizable = @tarballs;
   -f $xd
     and push @sizable, $xd;
