@@ -47,9 +47,10 @@ finish_interval (void)
   if (current_width != 0)
     {
       if (current_start == current_end)
-	printf ("%04X\t\t%c\n", current_start, current_width);
+	printf ("%04X\t\t%c\n", (unsigned) current_start, current_width);
       else
-	printf ("%04X..%04X\t%c\n", current_start, current_end, current_width);
+	printf ("%04X..%04X\t%c\n", (unsigned) current_start,
+		(unsigned) current_end, current_width);
       current_width = 0;
     }
 }

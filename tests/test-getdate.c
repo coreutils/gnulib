@@ -43,7 +43,7 @@
   printf ("string `%s' diff %d %d\n",			\
 	  str, res.tv_sec - now.tv_sec, res.tv_nsec - now.tv_nsec);
 #else
-#define LOG(str, now, res) 0
+#define LOG(str, now, res) (void) 0
 #endif
 
 int
