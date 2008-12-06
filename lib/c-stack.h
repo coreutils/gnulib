@@ -36,6 +36,9 @@
    ACTION must be async-signal-safe.  ACTION together with its callees
    must not require more than SIGSTKSZ bytes of stack space.  Also,
    ACTION should not call longjmp, because this implementation does
-   not guarantee that it is safe to return to the original stack.  */
+   not guarantee that it is safe to return to the original stack.
+
+   This function may install a handler for the SIGSEGV signal or for the SIGBUS
+   signal or exercise other system dependent exception handling APIs.  */
 
 extern int c_stack_action (void (* /*action*/) (int));

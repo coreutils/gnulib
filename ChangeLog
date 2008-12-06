@@ -1,5 +1,10 @@
 2008-12-06  Bruno Haible  <bruno@clisp.org>
 
+	* lib/c-stack.h (c_stack_action): Clarify possible side effects.
+	Suggested by Eric Blake.
+
+2008-12-06  Bruno Haible  <bruno@clisp.org>
+
 	Fix a c-stack test failure on MacOS X.
 	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Require
 	AC_CANONICAL_HOST. Define FAULT_YIELDS_SIGBUS. If set, install a signal
