@@ -1,5 +1,11 @@
 2008-12-06  Bruno Haible  <bruno@clisp.org>
 
+	Advocacy documentation.
+	* doc/gnulib-intro.texi (Benefits): New section.
+	* doc/gnulib.texi: Update.
+
+2008-12-06  Bruno Haible  <bruno@clisp.org>
+
 	Document the 'manywarnings' module.
 	* doc/manywarnings.texi: New file.
 	* doc/gnulib.texi: Include it.

@@ -1,3 +1,37 @@
+@node Benefits
+@section Benefits of using Gnulib
+
+Gnulib is useful to enhance various aspects of a package:
+
+@itemize @bullet
+@item
+Portability: With Gnulib, a package maintainer can program against the
+POSIX and GNU libc APIs and nevertheless expect good portability to
+platforms that don't implement POSIX.
+
+@item
+Maintainability: When a package uses modules from Gnulib instead of code
+written specifically for that package, the maintainer has less code to
+maintain.
+
+@item
+Security: Gnulib provides functions that are immune against vulnerabilities
+that plagues the uses of the corresponding commonplace functions. For
+example, @code{asprintf}, @code{canonicalize_file_name} are not affected
+by buffer sizing problems that affect @code{sprintf}, @code{realpath}.
+@code{openat} does not have the race conditions that @code{open} has. Etc.
+
+@item
+Reliability: Gnulib provides functions that combine a call to a system
+function with a check of the result. Examples are @code{xalloc},
+@code{xprintf}, @code{xstrtod}, @code{xgetcwd}.
+
+@item
+Structure: Gnulib offers a way to structure code into modules, typically
+one include file, one source code file, and one autoconf macro for each
+functionality. Modularity helps maintainability.
+@end itemize
+
 @node Library vs Reusable Code
 @section Library vs. Reusable Code
 

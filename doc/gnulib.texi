@@ -78,6 +78,7 @@ If you need this particular \thing\, you may write to
 @w{@code{<bug-gnulib at gnu dot org>}}.
 @end macro
 
+
 @node Introduction
 @chapter Introduction
 
@@ -96,6 +97,7 @@ Resources:
 @end itemize
 
 @menu
+* Benefits::
 * Library vs Reusable Code::
 * Portability and Application Code::
 * Modules::
