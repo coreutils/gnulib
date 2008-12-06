@@ -1,3 +1,9 @@
+2008-12-06  Bruno Haible  <bruno@clisp.org>
+
+	Document the 'manywarnings' module.
+	* doc/manywarnings.texi: New file.
+	* doc/gnulib.texi: Include it.
+
 2008-12-05  Eric Blake  <ebb9@byu.net>
 
 	tests: silence some gcc warnings

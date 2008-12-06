@@ -5757,6 +5757,7 @@ This list of functions is sorted according to the header that declares them.
 * Supporting Relocation::
 * func::
 * warnings::
+* manywarnings::
 @end menu
 
 @node alloca
@@ -5839,6 +5840,8 @@ generated automatically.
 @include func.texi
 
 @include warnings.texi
+
+@include manywarnings.texi
 
 
 @node GNU Free Documentation License
