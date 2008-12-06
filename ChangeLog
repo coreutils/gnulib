@@ -1,5 +1,15 @@
 2008-12-06  Bruno Haible  <bruno@clisp.org>
 
+	Fix a c-stack test failure on MacOS X.
+	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Require
+	AC_CANONICAL_HOST. Define FAULT_YIELDS_SIGBUS. If set, install a signal
+	handler for SIGBUS as well.
+	* lib/c-stack.c (c_stack_action): If FAULT_YIELDS_SIGBUS is set,
+	install a signal handler for SIGBUS as well.
+	Reported by Bruce Dugan <bld0401@gmail.com> via Eric Blake.
+
+2008-12-06  Bruno Haible  <bruno@clisp.org>
+
 	Advocacy documentation.
 	* doc/gnulib-intro.texi (Benefits): New section.
 	* doc/gnulib.texi: Update.

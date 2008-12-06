@@ -321,6 +321,10 @@ c_stack_action (void (*action) (int))
   act.sa_handler = die;
 # endif
 
+# if FAULT_YIELDS_SIGBUS
+  if (sigaction (SIGBUS, &act, NULL) < 0)
+    return -1;
+# endif
   return sigaction (SIGSEGV, &act, NULL);
 }
 
