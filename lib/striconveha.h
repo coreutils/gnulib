@@ -1,5 +1,5 @@
 /* Character set conversion with error handling and autodetection.
-   Copyright (C) 2002, 2005, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2005, 2007-2008 Free Software Foundation, Inc.
    Written by Bruno Haible.
 
    This program is free software: you can redistribute it and/or modify
@@ -82,8 +82,8 @@ extern char *
    Returns 0 upon success, or -1 (with errno set) in case of error.
    Particular errno values: ENOMEM.  */
 extern int
-       iconv_register_autodetect (const char *name,
-				  const char * const *try_in_order);
+       uniconv_register_autodetect (const char *name,
+				    const char * const *try_in_order);
 
 
 #ifdef __cplusplus
