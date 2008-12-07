@@ -3822,7 +3822,14 @@ func_create_testdir ()
      for module in $modules; do
        func_verify_module
        if test -n "$module"; then
-         func_get_autoconf_early_snippet "$module"
+         case $module in
+           gnumakefile | maintainer-makefile)
+             # These modules are meant to be used only in the top-level directory.
+             ;;
+           *)
+             func_get_autoconf_early_snippet "$module"
+             ;;
+         esac
        fi
      done \
        | sed -e '/^$/d;' -e 's/AC_REQUIRE(\[\([^()]*\)\])/\1/'
@@ -3857,8 +3864,15 @@ func_create_testdir ()
      for module in $modules; do
        func_verify_nontests_module
        if test -n "$module"; then
-         func_get_autoconf_snippet "$module" \
-           | sed -e "$sed_replace_build_aux"
+         case $module in
+           gnumakefile | maintainer-makefile)
+             # These modules are meant to be used only in the top-level directory.
+             ;;
+           *)
+             func_get_autoconf_snippet "$module" \
+               | sed -e "$sed_replace_build_aux"
+             ;;
+         esac
        fi
      done
      echo "gl_source_base='.'"

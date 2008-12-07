@@ -1,3 +1,9 @@
+2008-12-07  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_create_testdir): When building the tests
+	subdirectory, ignore the modules gnumakefile and maintainer-makefile.
+	Reported by Simon Josefsson.
+
 2008-12-07  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* doc/manywarnings.texi, doc/gnulib-intro.texi: Fix typos.
