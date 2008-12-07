@@ -1,5 +1,11 @@
 2008-12-07  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-lock.c (test_lock, test_rwlock, test_recursive_lock,
+	test_once): Mark functions as static.
+	* tests/test-tls.c (test_tls): Likewise.
+
+2008-12-07  Bruno Haible  <bruno@clisp.org>
+
 	* lib/striconveha.h (uniconv_register_autodetect): Renamed from
 	iconv_register_autodetect.
 

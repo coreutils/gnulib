@@ -75,6 +75,9 @@ perhaps_yield (void)
     yield ();
 }
 
+
+/* ----------------------- Test thread-local storage ----------------------- */
+
 #define KEYS_COUNT 4
 
 static gl_tls_key_t mykeys[KEYS_COUNT];
@@ -146,7 +149,7 @@ worker_thread (void *arg)
   return NULL;
 }
 
-void
+static void
 test_tls (void)
 {
   int pass, i;
@@ -174,6 +177,9 @@ test_tls (void)
 	gl_tls_key_destroy (mykeys[i]);
     }
 }
+
+
+/* -------------------------------------------------------------------------- */
 
 int
 main ()
