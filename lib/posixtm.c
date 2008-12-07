@@ -186,15 +186,7 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
 bool
 posixtime (time_t *p, const char *s, unsigned int syntax_bits)
 {
-  struct tm tm0
-#ifdef lint
-  /* Placate gcc-4's -Wuninitialized.
-     posix_time_parse fails to set all of tm0 only when it returns
-     nonzero (due to year() returning nonzero), and in that case,
-     this code doesn't use the tm0 at all.  */
-    = { 0, }
-#endif
-    ;
+  struct tm tm0;
   struct tm tm1;
   struct tm const *tm;
   time_t t;

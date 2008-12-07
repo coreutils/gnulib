@@ -1,5 +1,10 @@
 2008-12-07  Jim Meyering  <meyering@redhat.com>
 
+	posixtm.c: avoid a warning
+	* lib/posixtm.c (posixtime): Don't initialize tm0.
+	It's no longer needed to placate gcc4's -Wuninitialized,
+	and the attempt to placate would elicit a new warning.
+
 	unicodeio.c: mark unused parameters
 	* lib/unicodeio.c (exit_failure_callback): Mark unused parameter.
 	(fallback_failure_callback): Likewise.
