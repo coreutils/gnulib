@@ -3,7 +3,7 @@
 
 The @code{manywarnings} module allows you to enable as many GCC warnings as
 possible for your package. The purpose is to protect against introducing new
-code that triggers warning that weren't already triggered by the existing code
+code that triggers warnings that weren't already triggered by the existing code
 base.
 
 An example use of the module is as follows:
@@ -25,11 +25,11 @@ done
 @end smallexample
 
 This module is meant to be used by developers who are not very experienced
-regarding the various GCC warning option. In the beginning you will set the
+regarding the various GCC warning options. In the beginning you will set the
 list of undesired warnings (@samp{nw} in the example above) to empty, and
 compile the package with all possible warnings enabled. The GCC option
 @code{-fdiagnostics-show-option}, available in GCC 4.1 or newer, helps
-understanding which warnings is originated from which option. Then you will
+understanding which warnings originated from which option. Then you will
 go through the list of warnings. You will likely deactivate warnings that
 occur often and don't point to mistakes in the code, by adding them to the
 @samp{nw} variable, then reconfiguring and recompiling. When warnings point

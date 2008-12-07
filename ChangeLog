@@ -1,3 +1,7 @@
+2008-12-07  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* doc/manywarnings.texi, doc/gnulib-intro.texi: Fix typos.
+
 2008-12-06  Bruno Haible  <bruno@clisp.org>
 
 	* lib/c-stack.h (c_stack_action): Clarify possible side effects.

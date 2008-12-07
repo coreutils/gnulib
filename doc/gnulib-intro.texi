@@ -16,7 +16,7 @@ maintain.
 
 @item
 Security: Gnulib provides functions that are immune against vulnerabilities
-that plagues the uses of the corresponding commonplace functions. For
+that plague the uses of the corresponding commonplace functions. For
 example, @code{asprintf}, @code{canonicalize_file_name} are not affected
 by buffer sizing problems that affect @code{sprintf}, @code{realpath}.
 @code{openat} does not have the race conditions that @code{open} has. Etc.
