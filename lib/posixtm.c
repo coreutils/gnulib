@@ -41,8 +41,6 @@
    of `digit' even when the host does not conform to POSIX.  */
 #define ISDIGIT(c) ((unsigned int) (c) - '0' <= 9)
 
-time_t mktime ();
-
 /*
   POSIX requires:
 
