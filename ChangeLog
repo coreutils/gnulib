@@ -1,3 +1,9 @@
+2008-12-08  Jim Meyering  <meyering@redhat.com>
+
+	work around mingw's lack of some S_IF definitions
+	* lib/fts.c (S_IFLNK, S_IFSOCK): Define if not already defined.
+	Reported by Simon Josefsson.
+
 2008-12-08  Bruno Haible  <bruno@clisp.org>
 
 	* m4/signbitl.m4 (gl_SIGNBIT_TEST_PROGRAM): Add a link check of signbit

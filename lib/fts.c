@@ -111,6 +111,13 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 # define DT_SOCK 7
 #endif
 
+#ifndef S_IFLNK
+# define S_IFLNK 0
+#endif
+#ifndef S_IFSOCK
+# define S_IFSOCK 0
+#endif
+
 enum
 {
   NOT_AN_INODE_NUMBER = 0
