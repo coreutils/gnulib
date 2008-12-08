@@ -1,3 +1,11 @@
+2008-12-08  William Pursell  <bill.pursell@gmail.com>  (tiny change)
+	and Eric Blake  <ebb9@byu.net>
+
+	assert: honor --enable-assert
+	* m4/assert.m4 (gl_ASSERT): Synchronize with autoconf 2.64, in
+	order to honor --enable-assert, rather than treating it as a
+	synonym for --disable-assert.
+
 2008-12-08  Jim Meyering  <meyering@redhat.com>
 
 	* lib/posixtm.c: Remove now-useless declaration of mktime.
