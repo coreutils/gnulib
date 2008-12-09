@@ -1,3 +1,9 @@
+2008-12-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/signbitl.m4 (gl_SIGNBIT_TEST_PROGRAM): Add a link check of signbit
+	applied to variables. Needed on MacOS X 10.4/PowerPC.
+	Reported by Simon Josefsson.
+
 2008-12-08  William Pursell  <bill.pursell@gmail.com>  (tiny change)
 	and Eric Blake  <ebb9@byu.net>
 

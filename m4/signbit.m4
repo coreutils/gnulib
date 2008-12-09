@@ -1,4 +1,4 @@
-# signbit.m4 serial 4
+# signbit.m4 serial 5
 dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -124,6 +124,12 @@ AC_DEFUN([gl_SIGNBIT],
 ])
 
 AC_DEFUN([gl_SIGNBIT_TEST_PROGRAM], [[
+/* Global variables.
+   Needed because GCC 4 constant-folds __builtin_signbitl (literal)
+   but cannot constant-fold            __builtin_signbitl (variable).  */
+float vf;
+double vd;
+long double vl;
 int main ()
 {
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
@@ -142,6 +148,8 @@ long double m0l = -LDBL_MIN * LDBL_MIN;
 #else
 long double m0l = -p0l;
 #endif
+  if (signbit (vf))
+    vf++;
   {
     float plus_inf = 1.0f / p0f;
     float minus_inf = -1.0f / p0f;
@@ -153,6 +161,8 @@ long double m0l = -p0l;
           && signbit (minus_inf)))
       return 1;
   }
+  if (signbit (vd))
+    vd++;
   {
     double plus_inf = 1.0 / p0d;
     double minus_inf = -1.0 / p0d;
@@ -164,6 +174,8 @@ long double m0l = -p0l;
           && signbit (minus_inf)))
       return 1;
   }
+  if (signbit (vl))
+    vl++;
   {
     long double plus_inf = 1.0L / p0l;
     long double minus_inf = -1.0L / p0l;
