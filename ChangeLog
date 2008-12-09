@@ -1,5 +1,9 @@
 2008-12-09  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	add missing include to parse-duration.c
+	* lib/parse-duration.c: #include "xalloc.h", for xstrdup.
+	* modules/parse-duration (Depends-on): Add xalloc.
+
 	fix sed script reading maint.mk
 	* top/maint.mk (MYSELF): New macro, define as $(srcdir)/$(ME).
 	(syntax-check-rules): Use it.

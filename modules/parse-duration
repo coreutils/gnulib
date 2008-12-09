@@ -6,6 +6,7 @@ lib/parse-duration.h
 lib/parse-duration.c
 
 Depends-on:
+xalloc
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
