@@ -1,3 +1,9 @@
+2008-12-09  Bruno Haible  <bruno@clisp.org>
+
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL_WORKS): Add another check, that fails on
+	MacOS X 10.4/PowerPC.
+	Reported by Simon Josefsson.
+
 2008-12-08  Jim Meyering  <meyering@redhat.com>
 
 	work around mingw's lack of some S_IF definitions
