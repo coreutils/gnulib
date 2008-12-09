@@ -1,3 +1,9 @@
+2008-12-09  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	fix sed script reading maint.mk
+	* top/maint.mk (MYSELF): New macro, define as $(srcdir)/$(ME).
+	(syntax-check-rules): Use it.
+
 2008-12-09  Bruno Haible  <bruno@clisp.org>
 
 	* m4/ldexpl.m4 (gl_FUNC_LDEXPL_WORKS): Add another check, that fails on
