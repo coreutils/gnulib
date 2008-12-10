@@ -1,3 +1,13 @@
+2008-12-10  Jim Meyering  <meyering@redhat.com>
+
+	gl_ASSERT: don't say assertions are disabled when they're not
+	* m4/assert.m4 (gl_ASSERT): Do not make configure report
+	"checking whether to enable assertions... no", when they are in
+	fact enabled.  This is solely a bug in the output of configure.
+	In spite of saying "no", NDEBUG was not defined in that case.
+	Also, as noted by Eric Blake, leave assertions enabled upon
+	--enable-assert=INVALID.
+
 2008-12-10  Bruno Haible  <bruno@clisp.org>
 
 	Change MODULES.html to refer to POSIX:2008 where possible.
