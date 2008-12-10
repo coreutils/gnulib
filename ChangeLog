@@ -1,3 +1,18 @@
+2008-12-10  Bruno Haible  <bruno@clisp.org>
+
+	Change MODULES.html to refer to POSIX:2008 where possible.
+	* MODULES.html.sh (POSIX2008_URL): New variable.
+	(posix_headers): Remove sys/timeb, ucontext.
+	(posix2001_headers): New variable.
+	(posix_functions): Remove bcmp, bcopy, bsd_signal, bzero, ecvt, fcvt,
+	ftime, gcvt, getcontext, gethostbyaddr, gethostbyname, getwd, h_errno,
+	index, makecontext, mktemp, pthread_attr_getstackaddr,
+	pthread_attr_setstackaddr, rindex, scalb, setcontext, swapcontext,
+	ualarm, usleep, vfork, wcswcs. Add the new POSIX:2008 functions.
+	(posix2001_functions): New variable.
+	(func_module): Use URLs to POSIX:2008 where possible and to POSIX:2001
+	otherwise.
+
 2008-12-09  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	add missing include to parse-duration.c

@@ -22,10 +22,7 @@
 PATH=`dirname "$0"`:$PATH; export PATH
 
 POSIX2001_URL='http://www.opengroup.org/susv3'
-case $USER in
-  bruno )
-    POSIX2001_URL='file:/packages/www/www.opengroup.org/susv3' ;;
-esac
+POSIX2008_URL='http://www.opengroup.org/onlinepubs/9699919799'
 
 repo_url_prefix=
 repo_url_suffix=
@@ -113,7 +110,6 @@ sys/socket
 sys/stat
 sys/statvfs
 sys/time
-sys/timeb
 sys/times
 sys/types
 sys/uio
@@ -126,7 +122,6 @@ termios
 tgmath
 time
 trace
-ucontext
 ulimit
 unistd
 utime
@@ -134,6 +129,10 @@ utmpx
 wchar
 wctype
 wordexp
+' | sed -e "$sed_alt1" | tr -d "$trnl" | sed -e "$sed_alt2" -e "$sed_alt3"`
+posix2001_headers=`echo '
+sys/timeb
+ucontext
 ' | sed -e "$sed_alt1" | tr -d "$trnl" | sed -e "$sed_alt2" -e "$sed_alt3"`
 posix_functions=`echo '
 FD_CLR
@@ -165,6 +164,7 @@ aio_return
 aio_suspend
 aio_write
 alarm
+alphasort
 asctime
 asctime_r
 asin
@@ -189,13 +189,9 @@ atoi
 atol
 atoll
 basename
-bcmp
-bcopy
 bind
-bsd_signal
 bsearch
 btowc
-bzero
 cabs
 cabsf
 cabsl
@@ -316,16 +312,18 @@ dbm_nextkey
 dbm_open
 dbm_store
 difftime
+dirfd
 dirname
 div
 dlclose
 dlerror
 dlopen
 dlsym
+dprintf
 drand48
 dup
 dup2
-ecvt
+duplocale
 encrypt
 endgrent
 endhostent
@@ -362,19 +360,22 @@ expm1l
 fabs
 fabsf
 fabsl
+faccessat
 fattach
 fchdir
 fchmod
+fchmodat
 fchown
+fchownat
 fclose
 fcntl
-fcvt
 fdatasync
 fdetach
 fdim
 fdimf
 fdiml
 fdopen
+fdopendir
 feclearexcept
 fegetenv
 fegetexceptflag
@@ -388,6 +389,7 @@ fesetexceptflag
 fesetround
 fetestexcept
 feupdateenv
+fexecve
 fflush
 ffs
 fgetc
@@ -407,6 +409,7 @@ fmal
 fmax
 fmaxf
 fmaxl
+fmemopen
 fmin
 fminf
 fminl
@@ -427,6 +430,7 @@ fputws
 fread
 free
 freeaddrinfo
+freelocale
 freopen
 frexp
 frexpf
@@ -436,30 +440,31 @@ fseek
 fseeko
 fsetpos
 fstat
+fstatat
 fstatvfs
 fsync
 ftell
 ftello
-ftime
 ftok
 ftruncate
 ftrylockfile
 ftw
 funlockfile
+futimens
 fwide
 fwprintf
 fwrite
 fwscanf
 gai_strerror
-gcvt
 getaddrinfo
 getc
 getc_unlocked
 getchar
 getchar_unlocked
-getcontext
 getcwd
 getdate
+getdate_err
+getdelim
 getegid
 getenv
 geteuid
@@ -470,12 +475,11 @@ getgrgid_r
 getgrnam
 getgrnam_r
 getgroups
-gethostbyaddr
-gethostbyname
 gethostent
 gethostid
 gethostname
 getitimer
+getline
 getlogin
 getlogin_r
 getmsg
@@ -516,13 +520,11 @@ getutxid
 getutxline
 getwc
 getwchar
-getwd
 glob
 globfree
 gmtime
 gmtime_r
 grantpt
-h_errno
 hcreate
 hdestroy
 hsearch
@@ -543,7 +545,6 @@ ilogbf
 ilogbl
 imaxabs
 imaxdiv
-index
 inet_addr
 inet_ntoa
 inet_ntop
@@ -552,15 +553,21 @@ initstate
 insque
 ioctl
 isalnum
+isalnum_l
 isalpha
+isalpha_l
 isascii
 isastream
 isatty
 isblank
+isblank_l
 iscntrl
+iscntrl_l
 isdigit
+isdigit_l
 isfinite
 isgraph
+isgraph_l
 isgreater
 isgreaterequal
 isinf
@@ -568,27 +575,46 @@ isless
 islessequal
 islessgreater
 islower
+islower_l
 isnan
 isnormal
 isprint
+isprint_l
 ispunct
+ispunct_l
 isspace
+isspace_l
 isunordered
 isupper
+isupper_l
 iswalnum
+iswalnum_l
 iswalpha
+iswalpha_l
 iswblank
+iswblank_l
 iswcntrl
+iswcntrl_l
 iswctype
+iswctype_l
 iswdigit
+iswdigit_l
 iswgraph
+iswgraph_l
 iswlower
+iswlower_l
 iswprint
+iswprint_l
 iswpunct
+iswpunct_l
 iswspace
+iswspace_l
 iswupper
+iswupper_l
 iswxdigit
+iswxdigit_l
 isxdigit
+isxdigit_l
 j0
 j1
 jn
@@ -608,6 +634,7 @@ lgamma
 lgammaf
 lgammal
 link
+linkat
 lio_listio
 listen
 llabs
@@ -648,12 +675,12 @@ lroundl
 lsearch
 lseek
 lstat
-makecontext
 malloc
 mblen
 mbrlen
 mbrtowc
 mbsinit
+mbsnrtowcs
 mbsrtowcs
 mbstowcs
 mbtowc
@@ -664,10 +691,13 @@ memcpy
 memmove
 memset
 mkdir
+mkdirat
+mkdtemp
 mkfifo
+mkfifoat
 mknod
+mknodat
 mkstemp
-mktemp
 mktime
 mlock
 mlockall
@@ -702,6 +732,7 @@ nanosleep
 nearbyint
 nearbyintf
 nearbyintl
+newlocale
 nextafter
 nextafterf
 nextafterl
@@ -711,13 +742,20 @@ nexttowardl
 nftw
 nice
 nl_langinfo
+nl_langinfo_l
 nrand48
 ntohl
 ntohs
 open
+open_memstream
+open_wmemstream
+openat
 opendir
 openlog
 optarg
+opterr
+optind
+optopt
 pathconf
 pause
 pclose
@@ -810,6 +848,8 @@ powl
 pread
 printf
 pselect
+psiginfo
+psignal
 pthread_atfork
 pthread_attr_destroy
 pthread_attr_getdetachstate
@@ -819,7 +859,6 @@ pthread_attr_getschedparam
 pthread_attr_getschedpolicy
 pthread_attr_getscope
 pthread_attr_getstack
-pthread_attr_getstackaddr
 pthread_attr_getstacksize
 pthread_attr_init
 pthread_attr_setdetachstate
@@ -829,7 +868,6 @@ pthread_attr_setschedparam
 pthread_attr_setschedpolicy
 pthread_attr_setscope
 pthread_attr_setstack
-pthread_attr_setstackaddr
 pthread_attr_setstacksize
 pthread_barrier_destroy
 pthread_barrier_init
@@ -865,6 +903,7 @@ pthread_join
 pthread_key_create
 pthread_key_delete
 pthread_kill
+pthread_mutex_consistent
 pthread_mutex_destroy
 pthread_mutex_getprioceiling
 pthread_mutex_init
@@ -877,11 +916,13 @@ pthread_mutexattr_destroy
 pthread_mutexattr_getprioceiling
 pthread_mutexattr_getprotocol
 pthread_mutexattr_getpshared
+pthread_mutexattr_getrobust
 pthread_mutexattr_gettype
 pthread_mutexattr_init
 pthread_mutexattr_setprioceiling
 pthread_mutexattr_setprotocol
 pthread_mutexattr_setpshared
+pthread_mutexattr_setrobust
 pthread_mutexattr_settype
 pthread_once
 pthread_rwlock_destroy
@@ -933,6 +974,7 @@ read
 readdir
 readdir_r
 readlink
+readlinkat
 readv
 realloc
 realpath
@@ -952,9 +994,9 @@ remquo
 remquof
 remquol
 rename
+renameat
 rewind
 rewinddir
-rindex
 rint
 rintf
 rintl
@@ -962,15 +1004,16 @@ rmdir
 round
 roundf
 roundl
-scalb
 scalbln
 scalblnf
 scalblnl
 scalbn
 scalbnf
 scalbnl
+scandir
 scanf
 sched_get_priority_max
+sched_get_priority_min
 sched_getparam
 sched_getscheduler
 sched_rr_get_interval
@@ -997,7 +1040,6 @@ send
 sendmsg
 sendto
 setbuf
-setcontext
 setegid
 setenv
 seteuid
@@ -1045,6 +1087,7 @@ sigismember
 siglongjmp
 signal
 signbit
+signgam
 sigpause
 sigpending
 sigprocmask
@@ -1077,27 +1120,40 @@ srandom
 sscanf
 stat
 statvfs
+stderr
 stdin
+stdout
+stpcpy
+stpncpy
 strcasecmp
+strcasecmp_l
 strcat
 strchr
 strcmp
 strcoll
+strcoll_l
 strcpy
 strcspn
 strdup
 strerror
+strerror_l
 strerror_r
 strfmon
+strfmon_l
 strftime
+strftime_l
 strlen
 strncasecmp
+strncasecmp_l
 strncat
 strncmp
 strncpy
+strndup
+strnlen
 strpbrk
 strptime
 strrchr
+strsignal
 strspn
 strstr
 strtod
@@ -1112,11 +1168,12 @@ strtoul
 strtoull
 strtoumax
 strxfrm
+strxfrm_l
 swab
-swapcontext
 swprintf
 swscanf
 symlink
+symlinkat
 sync
 sysconf
 syslog
@@ -1147,6 +1204,7 @@ time
 timer_create
 timer_delete
 timer_getoverrun
+timer_gettime
 timer_settime
 times
 timezone
@@ -1154,10 +1212,15 @@ tmpfile
 tmpnam
 toascii
 tolower
+tolower_l
 toupper
+toupper_l
 towctrans
+towctrans_l
 towlower
+towlower_l
 towupper
+towupper_l
 trunc
 truncate
 truncf
@@ -1168,23 +1231,24 @@ ttyname_r
 twalk
 tzname
 tzset
-ualarm
 ulimit
 umask
 uname
 ungetc
 ungetwc
 unlink
+unlinkat
 unlockpt
 unsetenv
-usleep
+uselocale
 utime
+utimensat
 utimes
 va_arg
 va_copy
 va_end
 va_start
-vfork
+vdprintf
 vfprintf
 vfscanf
 vfwprintf
@@ -1201,18 +1265,28 @@ vwscanf
 wait
 waitid
 waitpid
+wcpcpy
+wcpncpy
 wcrtomb
+wcscasecmp
+wcscasecmp_l
 wcscat
 wcschr
 wcscmp
 wcscoll
+wcscoll_l
 wcscpy
 wcscspn
+wcsdup
 wcsftime
 wcslen
+wcsncasecmp
+wcsncasecmp_l
 wcsncat
 wcsncmp
 wcsncpy
+wcsnlen
+wcsnrtombs
 wcspbrk
 wcsrchr
 wcsrtombs
@@ -1229,13 +1303,15 @@ wcstombs
 wcstoul
 wcstoull
 wcstoumax
-wcswcs
 wcswidth
 wcsxfrm
+wcsxfrm_l
 wctob
 wctomb
 wctrans
+wctrans_l
 wctype
+wctype_l
 wcwidth
 wmemchr
 wmemcmp
@@ -1251,6 +1327,34 @@ wscanf
 y0
 y1
 yn
+' | sed -e "$sed_alt1" | tr -d "$trnl" | sed -e "$sed_alt2" -e "$sed_alt3"`
+posix2001_functions=`echo '
+bcmp
+bcopy
+bsd_signal
+bzero
+ecvt
+fcvt
+ftime
+gcvt
+getcontext
+gethostbyaddr
+gethostbyname
+getwd
+h_errno
+index
+makecontext
+mktemp
+pthread_attr_getstackaddr
+pthread_attr_setstackaddr
+rindex
+scalb
+setcontext
+swapcontext
+ualarm
+usleep
+vfork
+wcswcs
 ' | sed -e "$sed_alt1" | tr -d "$trnl" | sed -e "$sed_alt2" -e "$sed_alt3"`
 
 indent=""
@@ -1410,9 +1514,12 @@ func_module ()
     element=`gnulib-tool --extract-description $1 \
              | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" \
                    -e 's,^, ,' -e 's,$, ,' \
-                   -e 's,\([^a-zA-Z_]\)'"${posix_functions}"'() \(function\|macro\),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A> \3,g' \
-                   -e 's,\([^a-zA-Z_]\)'"${posix_functions}"' \(function\|macro\),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A> \3,g' \
-                   -e 's,\([^a-zA-Z_]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A> <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g' \
+                   -e 's,\([^a-zA-Z_]\)'"${posix_functions}"'() \(function\|macro\),\1<A HREF="'"$POSIX2008_URL"'/functions/\2.html">\2</A> \3,g' \
+                   -e 's,\([^a-zA-Z_]\)'"${posix_functions}"' \(function\|macro\),\1<A HREF="'"$POSIX2008_URL"'/functions/\2.html">\2</A> \3,g' \
+                   -e 's,\([^a-zA-Z_]\)'"${posix_functions}"'(),\1<A HREF="'"$POSIX2008_URL"'/functions/\2.html">\2</A> <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g' \
+                   -e 's,\([^a-zA-Z_]\)'"${posix2001_functions}"'() \(function\|macro\),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A> \3,g' \
+                   -e 's,\([^a-zA-Z_]\)'"${posix2001_functions}"' \(function\|macro\),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A> \3,g' \
+                   -e 's,\([^a-zA-Z_]\)'"${posix2001_functions}"'(),\1<A HREF="'"$POSIX2001_URL"'xsh/\2.html">\2</A> <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g' \
                    -e 's,\([^a-zA-Z_]\)\([a-zA-Z_][a-zA-Z0-9_]*\)() \(function\|macro\),\1\2 \3,g' \
                    -e 's,\([^a-zA-Z_]\)\([a-zA-Z_][a-zA-Z0-9_]*\)(),\1\2 <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g' \
                    -e 's, '"'"'\([a-zA-Z0-9_ -]*\)'"'"'\([^a-zA-Z0-9_]\), <CODE>\1</CODE>\2,g' \
@@ -1434,7 +1541,9 @@ func_module ()
     element=`echo "$includes" \
              | sed -e "$sed_lt" -e "$sed_gt" -e "$sed_remove_trailing_empty_line" \
                    -e 's,^#include "\(.*\)"$,#include "<A HREF="'$repo_url_prefix'lib/\1'$repo_url_suffix_repl'">\1</A>",' \
-                   -e 's,^#include &lt;'"${posix_headers}"'\.h&gt;$,#include \&lt;<A HREF="'"$POSIX2001_URL"'xbd/\1.h.html">\1.h</A>\&gt;,' \
+                   -e 's,^#include &lt;'"${posix_headers}"'\.h&gt;$,#include \&lt;<A HREF="'"$POSIX2008_URL"'/basedefs/\1.h.html">\1.h</A>\&gt;,' \
+                   -e 's,<A HREF="'"$POSIX2008_URL"'/basedefs/\([a-zA-Z0-9_]*\)/\([a-zA-Z0-9_]*\)\.h\.html">,<A HREF="'"$POSIX2008_URL"'/basedefs/\1_\2.h.html">,' \
+                   -e 's,^#include &lt;'"${posix2001_headers}"'\.h&gt;$,#include \&lt;<A HREF="'"$POSIX2001_URL"'xbd/\1.h.html">\1.h</A>\&gt;,' \
                    -e 's/$/<BR>/' | tr -d "$trnl" | sed -e 's/<BR>$//'`
     test -n "$element" || element='---'
     func_echo "<TD ALIGN=LEFT VALIGN=TOP>$element"
