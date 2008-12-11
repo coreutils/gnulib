@@ -1,3 +1,7 @@
+2008-12-11  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Add more warnings.
+
 2008-12-10  Jim Meyering  <meyering@redhat.com>
 
 	gl_ASSERT: don't say assertions are disabled when they're not

@@ -90,5 +90,15 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC],
   ; do
     gl_manywarn_set="$gl_manywarn_set $gl_manywarn_item"
   done
+ # The following are not documented in the manual but are included in
+ # output from gcc --help=warnings.
+ for gl_manywarn_item in \
+   -Wattributes \
+   -Wcoverage-mismatch \
+   -Wmultichar \
+   -Wunused-macros \
+  ; do
+    gl_manywarn_set="$gl_manywarn_set $gl_manywarn_item"
+  done
   $1=$gl_manywarn_set
 ])
