@@ -1,3 +1,7 @@
+2008-12-11  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* modules/strtoull (Depends-on): Add stdlib.
+
 2008-12-11  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Add more warnings.

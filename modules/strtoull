@@ -8,6 +8,7 @@ m4/strtoull.m4
 
 Depends-on:
 unistd
+stdlib
 strtoul
 
 configure.ac:
