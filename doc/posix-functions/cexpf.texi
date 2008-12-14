@@ -2,7 +2,7 @@
 @section @code{cexpf}
 @findex cexpf
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/cexpf.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/cexpf.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{chdir}
 @findex chdir
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/chdir.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/chdir.html}
 
 Gnulib module: ---
 

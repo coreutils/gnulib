@@ -2,7 +2,7 @@
 @section @code{cos}
 @findex cos
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/cos.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/cos.html}
 
 Gnulib module: ---
 

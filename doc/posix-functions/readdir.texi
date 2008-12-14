@@ -2,7 +2,7 @@
 @section @code{readdir}
 @findex readdir
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/readdir.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/readdir.html}
 
 Gnulib module: ---
 

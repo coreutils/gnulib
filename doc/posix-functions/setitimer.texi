@@ -2,7 +2,7 @@
 @section @code{setitimer}
 @findex setitimer
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/setitimer.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/setitimer.html}
 
 Gnulib module: ---
 

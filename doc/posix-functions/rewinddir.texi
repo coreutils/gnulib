@@ -2,7 +2,7 @@
 @section @code{rewinddir}
 @findex rewinddir
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/rewinddir.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/rewinddir.html}
 
 Gnulib module: ---
 

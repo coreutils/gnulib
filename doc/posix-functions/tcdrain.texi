@@ -2,7 +2,7 @@
 @section @code{tcdrain}
 @findex tcdrain
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/tcdrain.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/tcdrain.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{copysignf}
 @findex copysignf
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/copysignf.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/copysignf.html}
 
 Gnulib module: ---
 

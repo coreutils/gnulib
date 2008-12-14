@@ -2,7 +2,7 @@
 @section @code{FD_CLR}
 @findex FD_CLR
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/FD_CLR.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/FD_CLR.html}
 
 Gnulib module: ---
 

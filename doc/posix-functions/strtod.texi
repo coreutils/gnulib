@@ -2,7 +2,7 @@
 @section @code{strtod}
 @findex strtod
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/strtod.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strtod.html}
 
 Gnulib module: strtod
 

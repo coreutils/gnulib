@@ -2,7 +2,7 @@
 @section @code{ccosh}
 @findex ccosh
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/ccosh.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ccosh.html}
 
 Gnulib module: ---
 

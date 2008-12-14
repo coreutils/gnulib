@@ -2,7 +2,7 @@
 @section @code{pthread_create}
 @findex pthread_create
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_create.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_create.html}
 
 Gnulib module: ---
 

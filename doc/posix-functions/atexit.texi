@@ -2,7 +2,7 @@
 @section @code{atexit}
 @findex atexit
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/atexit.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/atexit.html}
 
 Gnulib module: atexit
 

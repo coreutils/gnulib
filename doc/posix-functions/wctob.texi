@@ -2,7 +2,7 @@
 @section @code{wctob}
 @findex wctob
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/wctob.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wctob.html}
 
 Gnulib module: ---
 

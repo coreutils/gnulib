@@ -2,7 +2,7 @@
 @section @code{telldir}
 @findex telldir
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/telldir.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/telldir.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{getrlimit}
 @findex getrlimit
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getrlimit.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getrlimit.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{strtold}
 @findex strtold
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/strtold.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strtold.html}
 
 Gnulib module: ---
 

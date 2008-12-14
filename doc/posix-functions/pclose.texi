@@ -2,7 +2,7 @@
 @section @code{pclose}
 @findex pclose
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pclose.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pclose.html}
 
 Gnulib module: ---
 

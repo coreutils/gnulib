@@ -2,7 +2,7 @@
 @section @code{putenv}
 @findex putenv
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/putenv.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/putenv.html}
 
 Gnulib module: ---
 

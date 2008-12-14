@@ -2,7 +2,7 @@
 @section @code{pthread_cond_timedwait}
 @findex pthread_cond_timedwait
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_cond_timedwait.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_cond_timedwait.html}
 
 Gnulib module: ---
 

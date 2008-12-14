@@ -2,7 +2,7 @@
 @section @code{sched_rr_get_interval}
 @findex sched_rr_get_interval
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/sched_rr_get_interval.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sched_rr_get_interval.html}
 
 Gnulib module: ---
 

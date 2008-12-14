@@ -2,7 +2,7 @@
 @section @code{unlockpt}
 @findex unlockpt
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/unlockpt.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/unlockpt.html}
 
 Gnulib module: ---
 

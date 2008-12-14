@@ -2,7 +2,7 @@
 @section @code{msgsnd}
 @findex msgsnd
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/msgsnd.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/msgsnd.html}
 
 Gnulib module: ---
 

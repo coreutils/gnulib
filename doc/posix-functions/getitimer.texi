@@ -2,7 +2,7 @@
 @section @code{getitimer}
 @findex getitimer
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getitimer.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getitimer.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{wcscat}
 @findex wcscat
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/wcscat.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcscat.html}
 
 Gnulib module: ---
 

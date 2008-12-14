@@ -2,7 +2,7 @@
 @section @code{pthread_mutexattr_setprotocol}
 @findex pthread_mutexattr_setprotocol
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_mutexattr_setprotocol.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_mutexattr_setprotocol.html}
 
 Gnulib module: ---
 

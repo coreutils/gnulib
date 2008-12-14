@@ -2,7 +2,7 @@
 @section @code{log10}
 @findex log10
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/log10.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/log10.html}
 
 Gnulib module: ---
 

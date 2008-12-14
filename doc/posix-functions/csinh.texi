@@ -2,7 +2,7 @@
 @section @code{csinh}
 @findex csinh
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/csinh.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/csinh.html}
 
 Gnulib module: ---
 

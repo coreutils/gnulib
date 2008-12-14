@@ -2,7 +2,7 @@
 @section @code{remquol}
 @findex remquol
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/remquol.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/remquol.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{a64l}
 @findex a64l
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/a64l.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/a64l.html}
 
 Gnulib module: ---
 

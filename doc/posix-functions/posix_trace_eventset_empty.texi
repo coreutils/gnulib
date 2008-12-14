@@ -2,7 +2,7 @@
 @section @code{posix_trace_eventset_empty}
 @findex posix_trace_eventset_empty
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/posix_trace_eventset_empty.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_eventset_empty.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{getpeername}
 @findex getpeername
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getpeername.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getpeername.html}
 
 Gnulib module: getpeername
 

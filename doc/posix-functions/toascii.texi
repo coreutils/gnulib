@@ -2,7 +2,7 @@
 @section @code{toascii}
 @findex toascii
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/toascii.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/toascii.html}
 
 Gnulib module: ---
 

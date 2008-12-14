@@ -2,7 +2,7 @@
 @section @code{ftell}
 @findex ftell
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/ftell.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ftell.html}
 
 Gnulib module: ftell
 

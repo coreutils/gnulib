@@ -2,7 +2,7 @@
 @section @code{cproj}
 @findex cproj
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/cproj.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/cproj.html}
 
 Gnulib module: ---
 

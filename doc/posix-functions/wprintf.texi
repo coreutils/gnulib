@@ -2,7 +2,7 @@
 @section @code{wprintf}
 @findex wprintf
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/wprintf.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wprintf.html}
 
 Gnulib module: ---
 

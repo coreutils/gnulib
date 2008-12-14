@@ -2,7 +2,7 @@
 @section @code{getprotobynumber}
 @findex getprotobynumber
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getprotobynumber.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getprotobynumber.html}
 
 Gnulib module: ---
 

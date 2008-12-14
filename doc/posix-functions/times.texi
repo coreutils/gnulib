@@ -2,7 +2,7 @@
 @section @code{times}
 @findex times
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/times.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/times.html}
 
 Gnulib module: times
 

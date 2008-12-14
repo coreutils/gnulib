@@ -2,7 +2,7 @@
 @section @code{mblen}
 @findex mblen
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/mblen.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mblen.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{dbm_store}
 @findex dbm_store
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/dbm_store.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/dbm_store.html}
 
 Gnulib module: ---
 

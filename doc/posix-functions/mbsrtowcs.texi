@@ -2,7 +2,7 @@
 @section @code{mbsrtowcs}
 @findex mbsrtowcs
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/mbsrtowcs.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mbsrtowcs.html}
 
 Gnulib module: ---
 

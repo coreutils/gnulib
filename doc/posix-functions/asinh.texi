@@ -2,7 +2,7 @@
 @section @code{asinh}
 @findex asinh
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/asinh.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/asinh.html}
 
 Gnulib module: ---
 

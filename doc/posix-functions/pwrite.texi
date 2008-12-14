@@ -2,7 +2,7 @@
 @section @code{pwrite}
 @findex pwrite
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pwrite.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pwrite.html}
 
 Gnulib module: ---
 

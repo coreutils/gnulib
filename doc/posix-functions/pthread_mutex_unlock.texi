@@ -2,7 +2,7 @@
 @section @code{pthread_mutex_unlock}
 @findex pthread_mutex_unlock
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_mutex_unlock.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_mutex_unlock.html}
 
 Gnulib module: ---
 

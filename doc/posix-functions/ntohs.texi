@@ -2,7 +2,7 @@
 @section @code{ntohs}
 @findex ntohs
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/ntohs.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ntohs.html}
 
 Gnulib module: ---
 

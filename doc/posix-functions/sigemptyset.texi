@@ -2,7 +2,7 @@
 @section @code{sigemptyset}
 @findex sigemptyset
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/sigemptyset.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigemptyset.html}
 
 Gnulib module: sigprocmask
 

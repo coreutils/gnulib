@@ -2,7 +2,7 @@
 @section @code{if_indextoname}
 @findex if_indextoname
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/if_indextoname.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/if_indextoname.html}
 
 Gnulib module: ---
 

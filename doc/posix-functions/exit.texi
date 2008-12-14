@@ -2,7 +2,7 @@
 @section @code{exit}
 @findex exit
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/exit.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/exit.html}
 
 Gnulib module: exit
 

@@ -2,7 +2,7 @@
 @section @code{pthread_sigmask}
 @findex pthread_sigmask
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_sigmask.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_sigmask.html}
 
 Gnulib module: ---
 

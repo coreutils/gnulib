@@ -2,7 +2,7 @@
 @section @code{strcat}
 @findex strcat
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/strcat.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strcat.html}
 
 Gnulib module: ---
 

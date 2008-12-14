@@ -2,7 +2,7 @@
 @section @code{isnan}
 @findex isnan
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/isnan.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/isnan.html}
 
 Gnulib module: isnan
 

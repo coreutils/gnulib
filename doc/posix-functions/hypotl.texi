@@ -2,7 +2,7 @@
 @section @code{hypotl}
 @findex hypotl
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/hypotl.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/hypotl.html}
 
 Gnulib module: ---
 

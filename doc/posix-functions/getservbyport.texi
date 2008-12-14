@@ -2,7 +2,7 @@
 @section @code{getservbyport}
 @findex getservbyport
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getservbyport.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getservbyport.html}
 
 Gnulib module: ---
 

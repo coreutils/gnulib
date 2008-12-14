@@ -2,7 +2,7 @@
 @section @code{fputws}
 @findex fputws
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/fputws.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fputws.html}
 
 Gnulib module: ---
 

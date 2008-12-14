@@ -2,7 +2,7 @@
 @section @code{ispunct}
 @findex ispunct
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/ispunct.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ispunct.html}
 
 Gnulib module: ---
 

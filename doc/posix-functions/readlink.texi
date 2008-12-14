@@ -2,7 +2,7 @@
 @section @code{readlink}
 @findex readlink
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/readlink.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/readlink.html}
 
 Gnulib module: readlink
 

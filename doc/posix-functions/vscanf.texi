@@ -2,7 +2,7 @@
 @section @code{vscanf}
 @findex vscanf
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/vscanf.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/vscanf.html}
 
 Gnulib module: ---
 

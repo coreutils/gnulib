@@ -2,7 +2,7 @@
 @section @code{posix_trace_getnext_event}
 @findex posix_trace_getnext_event
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/posix_trace_getnext_event.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_getnext_event.html}
 
 Gnulib module: ---
 

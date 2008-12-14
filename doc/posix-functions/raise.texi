@@ -2,7 +2,7 @@
 @section @code{raise}
 @findex raise
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/raise.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/raise.html}
 
 Gnulib module: raise
 

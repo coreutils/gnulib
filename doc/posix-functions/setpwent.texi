@@ -2,7 +2,7 @@
 @section @code{setpwent}
 @findex setpwent
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/setpwent.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/setpwent.html}
 
 Gnulib module: ---
 

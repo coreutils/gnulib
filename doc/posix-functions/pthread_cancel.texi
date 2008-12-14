@@ -2,7 +2,7 @@
 @section @code{pthread_cancel}
 @findex pthread_cancel
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_cancel.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_cancel.html}
 
 Gnulib module: ---
 

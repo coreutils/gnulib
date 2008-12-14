@@ -2,7 +2,7 @@
 @section @code{fdiml}
 @findex fdiml
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/fdiml.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fdiml.html}
 
 Gnulib module: ---
 

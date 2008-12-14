@@ -2,7 +2,7 @@
 @section @code{setlogmask}
 @findex setlogmask
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/setlogmask.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/setlogmask.html}
 
 Gnulib module: ---
 

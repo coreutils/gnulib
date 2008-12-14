@@ -2,7 +2,7 @@
 @section @code{posix_trace_eventid_equal}
 @findex posix_trace_eventid_equal
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/posix_trace_eventid_equal.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_eventid_equal.html}
 
 Gnulib module: ---
 

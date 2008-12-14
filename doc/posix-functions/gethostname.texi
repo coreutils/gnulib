@@ -2,7 +2,7 @@
 @section @code{gethostname}
 @findex gethostname
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/gethostname.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/gethostname.html}
 
 Gnulib module: gethostname
 

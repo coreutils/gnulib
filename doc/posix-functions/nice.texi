@@ -2,7 +2,7 @@
 @section @code{nice}
 @findex nice
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/nice.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/nice.html}
 
 Gnulib module: ---
 

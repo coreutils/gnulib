@@ -2,7 +2,7 @@
 @section @code{vsnprintf}
 @findex vsnprintf
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/vsnprintf.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/vsnprintf.html}
 
 Gnulib module: vsnprintf or vsnprintf-posix
 

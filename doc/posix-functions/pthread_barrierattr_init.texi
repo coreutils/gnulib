@@ -2,7 +2,7 @@
 @section @code{pthread_barrierattr_init}
 @findex pthread_barrierattr_init
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_barrierattr_init.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_barrierattr_init.html}
 
 Gnulib module: ---
 

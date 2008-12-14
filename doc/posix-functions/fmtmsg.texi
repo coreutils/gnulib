@@ -2,7 +2,7 @@
 @section @code{fmtmsg}
 @findex fmtmsg
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/fmtmsg.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fmtmsg.html}
 
 Gnulib module: ---
 

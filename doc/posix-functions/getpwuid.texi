@@ -2,7 +2,7 @@
 @section @code{getpwuid}
 @findex getpwuid
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getpwuid.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getpwuid.html}
 
 Gnulib module: ---
 

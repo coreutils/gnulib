@@ -2,7 +2,7 @@
 @section @code{aio_write}
 @findex aio_write
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/aio_write.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/aio_write.html}
 
 Gnulib module: ---
 

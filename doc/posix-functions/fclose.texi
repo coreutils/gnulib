@@ -2,7 +2,7 @@
 @section @code{fclose}
 @findex fclose
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/fclose.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fclose.html}
 
 Gnulib module: fclose
 

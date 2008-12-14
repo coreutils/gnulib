@@ -2,7 +2,7 @@
 @section @code{clock}
 @findex clock
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/clock.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/clock.html}
 
 Gnulib module: ---
 

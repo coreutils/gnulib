@@ -2,7 +2,7 @@
 @section @code{rand}
 @findex rand
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/rand.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/rand.html}
 
 Gnulib module: ---
 

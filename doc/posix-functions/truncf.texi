@@ -2,7 +2,7 @@
 @section @code{truncf}
 @findex truncf
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/truncf.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/truncf.html}
 
 Gnulib module: truncf
 

@@ -2,7 +2,7 @@
 @section @code{putchar}
 @findex putchar
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/putchar.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/putchar.html}
 
 Gnulib module: stdio, sigpipe
 

@@ -2,7 +2,7 @@
 @section @code{iswblank}
 @findex iswblank
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/iswblank.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/iswblank.html}
 
 Gnulib module: wctype
 

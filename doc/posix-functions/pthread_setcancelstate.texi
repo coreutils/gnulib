@@ -2,7 +2,7 @@
 @section @code{pthread_setcancelstate}
 @findex pthread_setcancelstate
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_setcancelstate.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_setcancelstate.html}
 
 Gnulib module: ---
 

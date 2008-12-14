@@ -2,7 +2,7 @@
 @section @code{semop}
 @findex semop
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/semop.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/semop.html}
 
 Gnulib module: ---
 

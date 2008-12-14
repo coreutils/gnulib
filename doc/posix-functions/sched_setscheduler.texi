@@ -2,7 +2,7 @@
 @section @code{sched_setscheduler}
 @findex sched_setscheduler
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/sched_setscheduler.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sched_setscheduler.html}
 
 Gnulib module: ---
 

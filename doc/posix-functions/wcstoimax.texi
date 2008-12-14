@@ -2,7 +2,7 @@
 @section @code{wcstoimax}
 @findex wcstoimax
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/wcstoimax.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcstoimax.html}
 
 Gnulib module: ---
 

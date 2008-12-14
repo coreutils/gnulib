@@ -2,7 +2,7 @@
 @section @code{sem_init}
 @findex sem_init
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/sem_init.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sem_init.html}
 
 Gnulib module: ---
 

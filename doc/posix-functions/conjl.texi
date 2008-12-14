@@ -2,7 +2,7 @@
 @section @code{conjl}
 @findex conjl
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/conjl.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/conjl.html}
 
 Gnulib module: ---
 

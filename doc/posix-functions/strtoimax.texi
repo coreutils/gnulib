@@ -2,7 +2,7 @@
 @section @code{strtoimax}
 @findex strtoimax
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/strtoimax.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strtoimax.html}
 
 Gnulib module: strtoimax
 

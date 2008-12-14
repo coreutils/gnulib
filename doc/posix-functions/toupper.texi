@@ -2,7 +2,7 @@
 @section @code{toupper}
 @findex toupper
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/toupper.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/toupper.html}
 
 Gnulib module: ---
 

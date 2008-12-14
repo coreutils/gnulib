@@ -2,7 +2,7 @@
 @section @code{sigwaitinfo}
 @findex sigwaitinfo
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/sigwaitinfo.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigwaitinfo.html}
 
 Gnulib module: ---
 

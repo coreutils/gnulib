@@ -2,7 +2,7 @@
 @section @code{encrypt}
 @findex encrypt
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/encrypt.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/encrypt.html}
 
 Gnulib module: ---
 

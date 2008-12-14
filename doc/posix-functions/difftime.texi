@@ -2,7 +2,7 @@
 @section @code{difftime}
 @findex difftime
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/difftime.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/difftime.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{fminl}
 @findex fminl
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/fminl.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fminl.html}
 
 Gnulib module: ---
 

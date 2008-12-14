@@ -2,7 +2,7 @@
 @section @code{pthread_setspecific}
 @findex pthread_setspecific
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_setspecific.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_setspecific.html}
 
 Gnulib module: ---
 

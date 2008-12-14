@@ -2,7 +2,7 @@
 @section @code{getgrgid_r}
 @findex getgrgid_r
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getgrgid_r.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getgrgid_r.html}
 
 Gnulib module: ---
 

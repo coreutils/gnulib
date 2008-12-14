@@ -2,7 +2,7 @@
 @section @code{msgget}
 @findex msgget
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/msgget.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/msgget.html}
 
 Gnulib module: ---
 

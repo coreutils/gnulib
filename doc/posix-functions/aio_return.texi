@@ -2,7 +2,7 @@
 @section @code{aio_return}
 @findex aio_return
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/aio_return.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/aio_return.html}
 
 Gnulib module: ---
 

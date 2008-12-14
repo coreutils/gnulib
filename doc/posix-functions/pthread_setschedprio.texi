@@ -2,7 +2,7 @@
 @section @code{pthread_setschedprio}
 @findex pthread_setschedprio
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_setschedprio.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_setschedprio.html}
 
 Gnulib module: ---
 

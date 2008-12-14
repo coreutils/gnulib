@@ -2,7 +2,7 @@
 @section @code{cfgetispeed}
 @findex cfgetispeed
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/cfgetispeed.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/cfgetispeed.html}
 
 Gnulib module: ---
 

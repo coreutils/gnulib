@@ -2,7 +2,7 @@
 @section @code{atan2}
 @findex atan2
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/atan2.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/atan2.html}
 
 Gnulib module: ---
 

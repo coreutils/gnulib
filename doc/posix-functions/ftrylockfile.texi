@@ -2,7 +2,7 @@
 @section @code{ftrylockfile}
 @findex ftrylockfile
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/ftrylockfile.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ftrylockfile.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{jrand48}
 @findex jrand48
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/jrand48.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/jrand48.html}
 
 Gnulib module: ---
 

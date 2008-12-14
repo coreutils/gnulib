@@ -2,7 +2,7 @@
 @section @code{pthread_kill}
 @findex pthread_kill
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_kill.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_kill.html}
 
 Gnulib module: ---
 

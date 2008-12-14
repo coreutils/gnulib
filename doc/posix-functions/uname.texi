@@ -2,7 +2,7 @@
 @section @code{uname}
 @findex uname
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/uname.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/uname.html}
 
 Gnulib module: ---
 

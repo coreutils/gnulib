@@ -2,7 +2,7 @@
 @section @code{sem_destroy}
 @findex sem_destroy
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/sem_destroy.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sem_destroy.html}
 
 Gnulib module: ---
 

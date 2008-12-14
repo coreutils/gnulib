@@ -2,7 +2,7 @@
 @section @code{strerror}
 @findex strerror
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/strerror.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strerror.html}
 
 Gnulib module: strerror
 

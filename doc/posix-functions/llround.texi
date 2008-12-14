@@ -2,7 +2,7 @@
 @section @code{llround}
 @findex llround
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/llround.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/llround.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{getrusage}
 @findex getrusage
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getrusage.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getrusage.html}
 
 Gnulib module: ---
 

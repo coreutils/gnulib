@@ -2,7 +2,7 @@
 @section @code{gai_strerror}
 @findex gai_strerror
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/gai_strerror.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/gai_strerror.html}
 
 Gnulib module: getaddrinfo
 

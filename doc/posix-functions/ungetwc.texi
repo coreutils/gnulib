@@ -2,7 +2,7 @@
 @section @code{ungetwc}
 @findex ungetwc
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/ungetwc.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ungetwc.html}
 
 Gnulib module: ---
 

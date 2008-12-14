@@ -2,7 +2,7 @@
 @section @code{readv}
 @findex readv
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/readv.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/readv.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{dlsym}
 @findex dlsym
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/dlsym.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/dlsym.html}
 
 Gnulib module: ---
 

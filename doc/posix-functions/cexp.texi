@@ -2,7 +2,7 @@
 @section @code{cexp}
 @findex cexp
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/cexp.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/cexp.html}
 
 Gnulib module: ---
 

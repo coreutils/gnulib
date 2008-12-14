@@ -2,7 +2,7 @@
 @section @code{getgrnam_r}
 @findex getgrnam_r
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getgrnam_r.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getgrnam_r.html}
 
 Gnulib module: ---
 

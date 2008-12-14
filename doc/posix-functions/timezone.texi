@@ -2,7 +2,7 @@
 @section @code{timezone}
 @findex timezone
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/timezone.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/timezone.html}
 
 Gnulib module: ---
 

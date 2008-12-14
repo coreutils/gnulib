@@ -2,7 +2,7 @@
 @section @code{setlocale}
 @findex setlocale
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/setlocale.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/setlocale.html}
 
 Gnulib module: ---
 

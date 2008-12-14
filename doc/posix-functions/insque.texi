@@ -2,7 +2,7 @@
 @section @code{insque}
 @findex insque
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/insque.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/insque.html}
 
 Gnulib module: ---
 

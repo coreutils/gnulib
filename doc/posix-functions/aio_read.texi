@@ -2,7 +2,7 @@
 @section @code{aio_read}
 @findex aio_read
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/aio_read.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/aio_read.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{islower}
 @findex islower
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/islower.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/islower.html}
 
 Gnulib module: ---
 

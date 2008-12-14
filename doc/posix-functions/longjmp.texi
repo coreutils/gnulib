@@ -2,7 +2,7 @@
 @section @code{longjmp}
 @findex longjmp
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/longjmp.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/longjmp.html}
 
 Gnulib module: ---
 

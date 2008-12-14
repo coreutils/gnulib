@@ -2,7 +2,7 @@
 @section @code{mbtowc}
 @findex mbtowc
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/mbtowc.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mbtowc.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{umask}
 @findex umask
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/umask.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/umask.html}
 
 Gnulib module: ---
 

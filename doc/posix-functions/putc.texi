@@ -2,7 +2,7 @@
 @section @code{putc}
 @findex putc
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/putc.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/putc.html}
 
 Gnulib module: stdio, sigpipe
 

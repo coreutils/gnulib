@@ -2,7 +2,7 @@
 @section @code{regfree}
 @findex regfree
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/regfree.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/regfree.html}
 
 Gnulib module: regex
 

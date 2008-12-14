@@ -2,7 +2,7 @@
 @section @code{wcstombs}
 @findex wcstombs
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/wcstombs.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcstombs.html}
 
 Gnulib module: ---
 

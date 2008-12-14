@@ -2,7 +2,7 @@
 @section @code{getpmsg}
 @findex getpmsg
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getpmsg.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getpmsg.html}
 
 Gnulib module: ---
 

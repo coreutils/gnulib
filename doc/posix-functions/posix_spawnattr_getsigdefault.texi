@@ -2,7 +2,7 @@
 @section @code{posix_spawnattr_getsigdefault}
 @findex posix_spawnattr_getsigdefault
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/posix_spawnattr_getsigdefault.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_spawnattr_getsigdefault.html}
 
 Gnulib module: posix_spawnattr_getsigdefault
 

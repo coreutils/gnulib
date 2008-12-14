@@ -2,7 +2,7 @@
 @section @code{ungetc}
 @findex ungetc
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/ungetc.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ungetc.html}
 
 Gnulib module: ---
 

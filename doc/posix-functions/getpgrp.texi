@@ -2,7 +2,7 @@
 @section @code{getpgrp}
 @findex getpgrp
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getpgrp.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getpgrp.html}
 
 Gnulib module: ---
 

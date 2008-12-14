@@ -2,7 +2,7 @@
 @section @code{srand}
 @findex srand
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/srand.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/srand.html}
 
 Gnulib module: ---
 

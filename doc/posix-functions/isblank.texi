@@ -2,7 +2,7 @@
 @section @code{isblank}
 @findex isblank
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/isblank.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/isblank.html}
 
 Gnulib module: ---
 

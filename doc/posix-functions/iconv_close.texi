@@ -2,7 +2,7 @@
 @section @code{iconv_close}
 @findex iconv_close
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/iconv_close.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/iconv_close.html}
 
 Gnulib module: iconv
 

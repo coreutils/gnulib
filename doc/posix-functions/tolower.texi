@@ -2,7 +2,7 @@
 @section @code{tolower}
 @findex tolower
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/tolower.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/tolower.html}
 
 Gnulib module: ---
 

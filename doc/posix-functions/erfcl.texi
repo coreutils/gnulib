@@ -2,7 +2,7 @@
 @section @code{erfcl}
 @findex erfcl
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/erfcl.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/erfcl.html}
 
 Gnulib module: ---
 

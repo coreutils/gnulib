@@ -2,7 +2,7 @@
 @section @code{iswprint}
 @findex iswprint
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/iswprint.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/iswprint.html}
 
 Gnulib module: wctype
 

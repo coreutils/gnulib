@@ -2,7 +2,7 @@
 @section @code{read}
 @findex read
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/read.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/read.html}
 
 Gnulib module: ---
 

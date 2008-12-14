@@ -2,7 +2,7 @@
 @section @code{setbuf}
 @findex setbuf
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/setbuf.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/setbuf.html}
 
 Gnulib module: ---
 

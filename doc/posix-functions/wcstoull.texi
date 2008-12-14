@@ -2,7 +2,7 @@
 @section @code{wcstoull}
 @findex wcstoull
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/wcstoull.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcstoull.html}
 
 Gnulib module: ---
 

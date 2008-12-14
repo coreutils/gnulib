@@ -2,7 +2,7 @@
 @section @code{errno}
 @findex errno
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/errno.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/errno.html}
 
 Gnulib module: ---
 

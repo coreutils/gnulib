@@ -2,7 +2,7 @@
 @section @code{getchar}
 @findex getchar
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getchar.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getchar.html}
 
 Gnulib module: ---
 

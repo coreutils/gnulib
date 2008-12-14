@@ -2,7 +2,7 @@
 @section @code{gmtime}
 @findex gmtime
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/gmtime.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/gmtime.html}
 
 Gnulib module: ---
 

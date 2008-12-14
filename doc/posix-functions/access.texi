@@ -2,7 +2,7 @@
 @section @code{access}
 @findex access
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/access.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/access.html}
 
 Gnulib module: ---
 

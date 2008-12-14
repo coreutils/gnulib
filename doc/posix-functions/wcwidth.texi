@@ -2,7 +2,7 @@
 @section @code{wcwidth}
 @findex wcwidth
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/wcwidth.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcwidth.html}
 
 Gnulib module: wcwidth
 

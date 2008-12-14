@@ -2,7 +2,7 @@
 @section @code{mq_timedreceive}
 @findex mq_timedreceive
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/mq_timedreceive.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mq_timedreceive.html}
 
 Gnulib module: ---
 

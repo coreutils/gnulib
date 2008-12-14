@@ -2,7 +2,7 @@
 @section @code{strncmp}
 @findex strncmp
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/strncmp.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strncmp.html}
 
 Gnulib module: ---
 

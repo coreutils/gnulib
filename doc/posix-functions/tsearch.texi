@@ -2,7 +2,7 @@
 @section @code{tsearch}
 @findex tsearch
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/tsearch.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/tsearch.html}
 
 Gnulib module: tsearch
 

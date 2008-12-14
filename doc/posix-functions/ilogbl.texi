@@ -2,7 +2,7 @@
 @section @code{ilogbl}
 @findex ilogbl
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/ilogbl.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ilogbl.html}
 
 Gnulib module: ---
 

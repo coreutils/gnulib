@@ -2,7 +2,7 @@
 @section @code{tmpfile}
 @findex tmpfile
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/tmpfile.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/tmpfile.html}
 
 Gnulib module: tmpfile
 

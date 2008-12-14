@@ -2,7 +2,7 @@
 @section @code{getsockopt}
 @findex getsockopt
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getsockopt.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getsockopt.html}
 
 Gnulib module: getsockopt
 

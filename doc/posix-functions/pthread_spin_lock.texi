@@ -2,7 +2,7 @@
 @section @code{pthread_spin_lock}
 @findex pthread_spin_lock
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_spin_lock.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_spin_lock.html}
 
 Gnulib module: ---
 

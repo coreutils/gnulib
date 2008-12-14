@@ -2,7 +2,7 @@
 @section @code{nexttowardf}
 @findex nexttowardf
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/nexttowardf.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/nexttowardf.html}
 
 Gnulib module: ---
 

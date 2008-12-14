@@ -2,7 +2,7 @@
 @section @code{setrlimit}
 @findex setrlimit
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/setrlimit.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/setrlimit.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{strtok}
 @findex strtok
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/strtok.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strtok.html}
 
 Gnulib module: ---
 

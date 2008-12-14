@@ -2,7 +2,7 @@
 @section @code{wcsncpy}
 @findex wcsncpy
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/wcsncpy.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcsncpy.html}
 
 Gnulib module: ---
 

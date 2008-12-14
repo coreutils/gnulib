@@ -2,7 +2,7 @@
 @section @code{fchown}
 @findex fchown
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/fchown.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fchown.html}
 
 Gnulib module: ---
 

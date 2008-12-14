@@ -2,7 +2,7 @@
 @section @code{floor}
 @findex floor
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/floor.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/floor.html}
 
 Gnulib module: floor
 

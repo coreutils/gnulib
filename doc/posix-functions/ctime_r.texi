@@ -2,7 +2,7 @@
 @section @code{ctime_r}
 @findex ctime_r
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/ctime_r.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ctime_r.html}
 
 Gnulib module: ---
 

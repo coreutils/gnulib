@@ -2,7 +2,7 @@
 @section @code{yn}
 @findex yn
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/yn.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/yn.html}
 
 Gnulib module: ---
 

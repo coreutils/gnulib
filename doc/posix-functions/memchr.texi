@@ -2,7 +2,7 @@
 @section @code{memchr}
 @findex memchr
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/memchr.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/memchr.html}
 
 Gnulib module: memchr
 

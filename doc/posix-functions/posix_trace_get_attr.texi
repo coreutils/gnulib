@@ -2,7 +2,7 @@
 @section @code{posix_trace_get_attr}
 @findex posix_trace_get_attr
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/posix_trace_get_attr.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_get_attr.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{sinl}
 @findex sinl
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/sinl.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sinl.html}
 
 Gnulib module: ---
 

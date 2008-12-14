@@ -2,7 +2,7 @@
 @section @code{setprotoent}
 @findex setprotoent
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/setprotoent.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/setprotoent.html}
 
 Gnulib module: ---
 

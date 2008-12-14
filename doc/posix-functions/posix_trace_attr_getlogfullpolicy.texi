@@ -2,7 +2,7 @@
 @section @code{posix_trace_attr_getlogfullpolicy}
 @findex posix_trace_attr_getlogfullpolicy
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/posix_trace_attr_getlogfullpolicy.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_attr_getlogfullpolicy.html}
 
 Gnulib module: ---
 

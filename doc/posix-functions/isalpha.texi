@@ -2,7 +2,7 @@
 @section @code{isalpha}
 @findex isalpha
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/isalpha.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/isalpha.html}
 
 Gnulib module: ---
 

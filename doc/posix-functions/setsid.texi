@@ -2,7 +2,7 @@
 @section @code{setsid}
 @findex setsid
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/setsid.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/setsid.html}
 
 Gnulib module: ---
 

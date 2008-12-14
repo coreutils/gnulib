@@ -2,7 +2,7 @@
 @section @code{waitid}
 @findex waitid
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/waitid.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/waitid.html}
 
 Gnulib module: ---
 

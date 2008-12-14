@@ -2,7 +2,7 @@
 @section @code{endpwent}
 @findex endpwent
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/endpwent.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/endpwent.html}
 
 Gnulib module: ---
 

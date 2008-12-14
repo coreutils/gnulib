@@ -2,7 +2,7 @@
 @section @code{getwc}
 @findex getwc
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getwc.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getwc.html}
 
 Gnulib module: ---
 

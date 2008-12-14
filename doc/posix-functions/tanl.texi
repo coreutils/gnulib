@@ -2,7 +2,7 @@
 @section @code{tanl}
 @findex tanl
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/tanl.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/tanl.html}
 
 Gnulib module: ---
 

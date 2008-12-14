@@ -2,7 +2,7 @@
 @section @code{iswalpha}
 @findex iswalpha
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/iswalpha.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/iswalpha.html}
 
 Gnulib module: wctype
 

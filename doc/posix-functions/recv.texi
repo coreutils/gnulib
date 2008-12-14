@@ -2,7 +2,7 @@
 @section @code{recv}
 @findex recv
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/recv.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/recv.html}
 
 Gnulib module: recv
 

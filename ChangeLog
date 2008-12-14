@@ -1,6 +1,11 @@
 2008-12-14  Bruno Haible  <bruno@clisp.org>
 
 	Update doc for POSIX:2008.
+	* doc/posix-functions/*.texi: Update URL of POSIX specification.
+
+2008-12-14  Bruno Haible  <bruno@clisp.org>
+
+	Update doc for POSIX:2008.
 	* doc/pastposix-functions/bcmp.texi: Renamed from
 	doc/posix-functions/bcmp.texi.
 	* doc/pastposix-functions/bcopy.texi: Renamed from

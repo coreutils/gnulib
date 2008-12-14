@@ -2,7 +2,7 @@
 @section @code{seekdir}
 @findex seekdir
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/seekdir.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/seekdir.html}
 
 Gnulib module: ---
 

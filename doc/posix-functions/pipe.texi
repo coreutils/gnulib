@@ -2,7 +2,7 @@
 @section @code{pipe}
 @findex pipe
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pipe.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pipe.html}
 
 Gnulib module: ---
 

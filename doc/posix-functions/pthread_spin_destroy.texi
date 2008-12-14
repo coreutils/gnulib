@@ -2,7 +2,7 @@
 @section @code{pthread_spin_destroy}
 @findex pthread_spin_destroy
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_spin_destroy.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_spin_destroy.html}
 
 Gnulib module: ---
 

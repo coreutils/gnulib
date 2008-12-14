@@ -2,7 +2,7 @@
 @section @code{seteuid}
 @findex seteuid
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/seteuid.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/seteuid.html}
 
 Gnulib module: ---
 

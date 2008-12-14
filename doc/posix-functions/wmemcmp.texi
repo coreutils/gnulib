@@ -2,7 +2,7 @@
 @section @code{wmemcmp}
 @findex wmemcmp
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/wmemcmp.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wmemcmp.html}
 
 Gnulib module: ---
 

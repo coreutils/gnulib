@@ -2,7 +2,7 @@
 @section @code{logb}
 @findex logb
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/logb.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/logb.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{labs}
 @findex labs
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/labs.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/labs.html}
 
 Gnulib module: ---
 

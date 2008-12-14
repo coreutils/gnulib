@@ -2,7 +2,7 @@
 @section @code{getc_unlocked}
 @findex getc_unlocked
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getc_unlocked.html}
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getc_unlocked.html}
 
 Gnulib module: ---
 
