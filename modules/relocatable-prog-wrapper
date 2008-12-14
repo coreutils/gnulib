@@ -33,6 +33,7 @@ m4/strerror.m4
 
 Depends-on:
 alloca-opt
+errno
 pathmax
 ssize_t
 stdbool

@@ -1,4 +1,9 @@
 2008-12-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* modules/relocatable-prog-wrapper (Depends-on): Add errno, needed by
+	m4/strerror.m4.
+
+2008-12-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
             Bruno Haible  <bruno@clisp.org>
 
 	* modules/unilbrk/tables (Depends-on): Add unilbrk/base.
