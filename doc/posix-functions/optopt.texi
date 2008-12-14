@@ -1,0 +1,18 @@
+@node optopt
+@section @code{optopt}
+@findex optopt
+
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/optopt.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This variable is missing on some platforms:
+MacOS X 10.3, IRIX 6.5, OSF/1 5.1, Cygwin.
+@end itemize

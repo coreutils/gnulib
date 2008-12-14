@@ -692,6 +692,7 @@ by Gnulib.
 * aio_suspend::
 * aio_write::
 * alarm::
+* alphasort::
 * asctime::
 * asctime_r::
 * asin::
@@ -839,15 +840,18 @@ by Gnulib.
 * dbm_open::
 * dbm_store::
 * difftime::
+* dirfd::
 * dirname::
 * div::
 * dlclose::
 * dlerror::
 * dlopen::
 * dlsym::
+* dprintf::
 * drand48::
 * dup::
 * dup2::
+* duplocale::
 * encrypt::
 * endgrent::
 * endhostent::
@@ -909,6 +913,7 @@ by Gnulib.
 * fesetround::
 * fetestexcept::
 * feupdateenv::
+* fexecve::
 * fflush::
 * ffs::
 * fgetc::
@@ -927,6 +932,7 @@ by Gnulib.
 * fmax::
 * fmaxf::
 * fmaxl::
+* fmemopen::
 * fmin::
 * fminf::
 * fminl::
@@ -947,6 +953,7 @@ by Gnulib.
 * fread::
 * free::
 * freeaddrinfo::
+* freelocale::
 * freopen::
 * frexp::
 * frexpf::
@@ -977,6 +984,7 @@ by Gnulib.
 * getchar_unlocked::
 * getcwd::
 * getdate::
+* getdate_err::
 * getdelim::
 * getegid::
 * getenv::
@@ -1066,15 +1074,21 @@ by Gnulib.
 * insque::
 * ioctl::
 * isalnum::
+* isalnum_l::
 * isalpha::
+* isalpha_l::
 * isascii::
 * isastream::
 * isatty::
 * isblank::
+* isblank_l::
 * iscntrl::
+* iscntrl_l::
 * isdigit::
+* isdigit_l::
 * isfinite::
 * isgraph::
+* isgraph_l::
 * isgreater::
 * isgreaterequal::
 * isinf::
@@ -1082,27 +1096,46 @@ by Gnulib.
 * islessequal::
 * islessgreater::
 * islower::
+* islower_l::
 * isnan::
 * isnormal::
 * isprint::
+* isprint_l::
 * ispunct::
+* ispunct_l::
 * isspace::
+* isspace_l::
 * isunordered::
 * isupper::
+* isupper_l::
 * iswalnum::
+* iswalnum_l::
 * iswalpha::
+* iswalpha_l::
 * iswblank::
+* iswblank_l::
 * iswcntrl::
+* iswcntrl_l::
 * iswctype::
+* iswctype_l::
 * iswdigit::
+* iswdigit_l::
 * iswgraph::
+* iswgraph_l::
 * iswlower::
+* iswlower_l::
 * iswprint::
+* iswprint_l::
 * iswpunct::
+* iswpunct_l::
 * iswspace::
+* iswspace_l::
 * iswupper::
+* iswupper_l::
 * iswxdigit::
+* iswxdigit_l::
 * isxdigit::
+* isxdigit_l::
 * j0::
 * j1::
 * jn::
@@ -1167,6 +1200,7 @@ by Gnulib.
 * mbrlen::
 * mbrtowc::
 * mbsinit::
+* mbsnrtowcs::
 * mbsrtowcs::
 * mbstowcs::
 * mbtowc::
@@ -1177,6 +1211,7 @@ by Gnulib.
 * memmove::
 * memset::
 * mkdir::
+* mkdtemp::
 * mkfifo::
 * mknod::
 * mkstemp::
@@ -1214,6 +1249,7 @@ by Gnulib.
 * nearbyint::
 * nearbyintf::
 * nearbyintl::
+* newlocale::
 * nextafter::
 * nextafterf::
 * nextafterl::
@@ -1223,13 +1259,18 @@ by Gnulib.
 * nftw::
 * nice::
 * nl_langinfo::
+* nl_langinfo_l::
 * nrand48::
 * ntohl::
 * ntohs::
 * open::
 * opendir::
 * openlog::
+* open_memstream::
 * optarg::
+* opterr::
+* optind::
+* optopt::
 * pathconf::
 * pause::
 * pclose::
@@ -1322,6 +1363,7 @@ by Gnulib.
 * pread::
 * printf::
 * pselect::
+* psignal::
 * pthread_atfork::
 * pthread_attr_destroy::
 * pthread_attr_getdetachstate::
@@ -1477,8 +1519,10 @@ by Gnulib.
 * scalbn::
 * scalbnf::
 * scalbnl::
+* scandir::
 * scanf::
 * sched_get_priority_max::
+* sched_get_priority_min::
 * sched_getparam::
 * sched_getscheduler::
 * sched_rr_get_interval::
@@ -1552,6 +1596,7 @@ by Gnulib.
 * siglongjmp::
 * signal::
 * signbit::
+* signgam::
 * sigpause::
 * sigpending::
 * sigprocmask::
@@ -1587,26 +1632,36 @@ by Gnulib.
 * stderr::
 * stdin::
 * stdout::
+* stpcpy::
+* stpncpy::
 * strcasecmp::
+* strcasecmp_l::
 * strcat::
 * strchr::
 * strcmp::
 * strcoll::
+* strcoll_l::
 * strcpy::
 * strcspn::
 * strdup::
 * strerror::
 * strerror_r::
 * strfmon::
+* strfmon_l::
 * strftime::
+* strftime_l::
 * strlen::
 * strncasecmp::
+* strncasecmp_l::
 * strncat::
 * strncmp::
 * strncpy::
+* strndup::
+* strnlen::
 * strpbrk::
 * strptime::
 * strrchr::
+* strsignal::
 * strspn::
 * strstr::
 * strtod::
@@ -1621,6 +1676,7 @@ by Gnulib.
 * strtoull::
 * strtoumax::
 * strxfrm::
+* strxfrm_l::
 * swab::
 * swprintf::
 * swscanf::
@@ -1655,6 +1711,7 @@ by Gnulib.
 * timer_create::
 * timer_delete::
 * timer_getoverrun::
+* timer_gettime::
 * timer_settime::
 * times::
 * timezone::
@@ -1662,10 +1719,15 @@ by Gnulib.
 * tmpnam::
 * toascii::
 * tolower::
+* tolower_l::
 * toupper::
+* toupper_l::
 * towctrans::
+* towctrans_l::
 * towlower::
+* towlower_l::
 * towupper::
+* towupper_l::
 * trunc::
 * truncate::
 * truncf::
@@ -1684,12 +1746,14 @@ by Gnulib.
 * unlink::
 * unlockpt::
 * unsetenv::
+* uselocale::
 * utime::
 * utimes::
 * va_arg::
 * va_copy::
 * va_end::
 * va_start::
+* vdprintf::
 * vfprintf::
 * vfscanf::
 * vfwprintf::
@@ -1706,18 +1770,28 @@ by Gnulib.
 * wait::
 * waitid::
 * waitpid::
+* wcpcpy::
+* wcpncpy::
 * wcrtomb::
+* wcscasecmp::
+* wcscasecmp_l::
 * wcscat::
 * wcschr::
 * wcscmp::
 * wcscoll::
+* wcscoll_l::
 * wcscpy::
 * wcscspn::
+* wcsdup::
 * wcsftime::
 * wcslen::
+* wcsncasecmp::
+* wcsncasecmp_l::
 * wcsncat::
 * wcsncmp::
 * wcsncpy::
+* wcsnlen::
+* wcsnrtombs::
 * wcspbrk::
 * wcsrchr::
 * wcsrtombs::
@@ -1736,10 +1810,13 @@ by Gnulib.
 * wcstoumax::
 * wcswidth::
 * wcsxfrm::
+* wcsxfrm_l::
 * wctob::
 * wctomb::
 * wctrans::
+* wctrans_l::
 * wctype::
+* wctype_l::
 * wcwidth::
 * wmemchr::
 * wmemcmp::
@@ -1786,6 +1863,7 @@ by Gnulib.
 @include posix-functions/aio_suspend.texi
 @include posix-functions/aio_write.texi
 @include posix-functions/alarm.texi
+@include posix-functions/alphasort.texi
 @include posix-functions/asctime.texi
 @include posix-functions/asctime_r.texi
 @include posix-functions/asin.texi
@@ -1933,15 +2011,18 @@ by Gnulib.
 @include posix-functions/dbm_open.texi
 @include posix-functions/dbm_store.texi
 @include posix-functions/difftime.texi
+@include posix-functions/dirfd.texi
 @include posix-functions/dirname.texi
 @include posix-functions/div.texi
 @include posix-functions/dlclose.texi
 @include posix-functions/dlerror.texi
 @include posix-functions/dlopen.texi
 @include posix-functions/dlsym.texi
+@include posix-functions/dprintf.texi
 @include posix-functions/drand48.texi
 @include posix-functions/dup.texi
 @include posix-functions/dup2.texi
+@include posix-functions/duplocale.texi
 @include posix-functions/encrypt.texi
 @include posix-functions/endgrent.texi
 @include posix-functions/endhostent.texi
@@ -2003,6 +2084,7 @@ by Gnulib.
 @include posix-functions/fesetround.texi
 @include posix-functions/fetestexcept.texi
 @include posix-functions/feupdateenv.texi
+@include posix-functions/fexecve.texi
 @include posix-functions/fflush.texi
 @include posix-functions/ffs.texi
 @include posix-functions/fgetc.texi
@@ -2021,6 +2103,7 @@ by Gnulib.
 @include posix-functions/fmax.texi
 @include posix-functions/fmaxf.texi
 @include posix-functions/fmaxl.texi
+@include posix-functions/fmemopen.texi
 @include posix-functions/fmin.texi
 @include posix-functions/fminf.texi
 @include posix-functions/fminl.texi
@@ -2041,6 +2124,7 @@ by Gnulib.
 @include posix-functions/fread.texi
 @include posix-functions/free.texi
 @include posix-functions/freeaddrinfo.texi
+@include posix-functions/freelocale.texi
 @include posix-functions/freopen.texi
 @include posix-functions/frexp.texi
 @include posix-functions/frexpf.texi
@@ -2071,6 +2155,7 @@ by Gnulib.
 @include posix-functions/getchar_unlocked.texi
 @include posix-functions/getcwd.texi
 @include posix-functions/getdate.texi
+@include posix-functions/getdate_err.texi
 @include posix-functions/getdelim.texi
 @include posix-functions/getegid.texi
 @include posix-functions/getenv.texi
@@ -2160,15 +2245,21 @@ by Gnulib.
 @include posix-functions/insque.texi
 @include posix-functions/ioctl.texi
 @include posix-functions/isalnum.texi
+@include posix-functions/isalnum_l.texi
 @include posix-functions/isalpha.texi
+@include posix-functions/isalpha_l.texi
 @include posix-functions/isascii.texi
 @include posix-functions/isastream.texi
 @include posix-functions/isatty.texi
 @include posix-functions/isblank.texi
+@include posix-functions/isblank_l.texi
 @include posix-functions/iscntrl.texi
+@include posix-functions/iscntrl_l.texi
 @include posix-functions/isdigit.texi
+@include posix-functions/isdigit_l.texi
 @include posix-functions/isfinite.texi
 @include posix-functions/isgraph.texi
+@include posix-functions/isgraph_l.texi
 @include posix-functions/isgreater.texi
 @include posix-functions/isgreaterequal.texi
 @include posix-functions/isinf.texi
@@ -2176,27 +2267,46 @@ by Gnulib.
 @include posix-functions/islessequal.texi
 @include posix-functions/islessgreater.texi
 @include posix-functions/islower.texi
+@include posix-functions/islower_l.texi
 @include posix-functions/isnan.texi
 @include posix-functions/isnormal.texi
 @include posix-functions/isprint.texi
+@include posix-functions/isprint_l.texi
 @include posix-functions/ispunct.texi
+@include posix-functions/ispunct_l.texi
 @include posix-functions/isspace.texi
+@include posix-functions/isspace_l.texi
 @include posix-functions/isunordered.texi
 @include posix-functions/isupper.texi
+@include posix-functions/isupper_l.texi
 @include posix-functions/iswalnum.texi
+@include posix-functions/iswalnum_l.texi
 @include posix-functions/iswalpha.texi
+@include posix-functions/iswalpha_l.texi
 @include posix-functions/iswblank.texi
+@include posix-functions/iswblank_l.texi
 @include posix-functions/iswcntrl.texi
+@include posix-functions/iswcntrl_l.texi
 @include posix-functions/iswctype.texi
+@include posix-functions/iswctype_l.texi
 @include posix-functions/iswdigit.texi
+@include posix-functions/iswdigit_l.texi
 @include posix-functions/iswgraph.texi
+@include posix-functions/iswgraph_l.texi
 @include posix-functions/iswlower.texi
+@include posix-functions/iswlower_l.texi
 @include posix-functions/iswprint.texi
+@include posix-functions/iswprint_l.texi
 @include posix-functions/iswpunct.texi
+@include posix-functions/iswpunct_l.texi
 @include posix-functions/iswspace.texi
+@include posix-functions/iswspace_l.texi
 @include posix-functions/iswupper.texi
+@include posix-functions/iswupper_l.texi
 @include posix-functions/iswxdigit.texi
+@include posix-functions/iswxdigit_l.texi
 @include posix-functions/isxdigit.texi
+@include posix-functions/isxdigit_l.texi
 @include posix-functions/j0.texi
 @include posix-functions/j1.texi
 @include posix-functions/jn.texi
@@ -2261,6 +2371,7 @@ by Gnulib.
 @include posix-functions/mbrlen.texi
 @include posix-functions/mbrtowc.texi
 @include posix-functions/mbsinit.texi
+@include posix-functions/mbsnrtowcs.texi
 @include posix-functions/mbsrtowcs.texi
 @include posix-functions/mbstowcs.texi
 @include posix-functions/mbtowc.texi
@@ -2271,6 +2382,7 @@ by Gnulib.
 @include posix-functions/memmove.texi
 @include posix-functions/memset.texi
 @include posix-functions/mkdir.texi
+@include posix-functions/mkdtemp.texi
 @include posix-functions/mkfifo.texi
 @include posix-functions/mknod.texi
 @include posix-functions/mkstemp.texi
@@ -2308,6 +2420,7 @@ by Gnulib.
 @include posix-functions/nearbyint.texi
 @include posix-functions/nearbyintf.texi
 @include posix-functions/nearbyintl.texi
+@include posix-functions/newlocale.texi
 @include posix-functions/nextafter.texi
 @include posix-functions/nextafterf.texi
 @include posix-functions/nextafterl.texi
@@ -2317,13 +2430,18 @@ by Gnulib.
 @include posix-functions/nftw.texi
 @include posix-functions/nice.texi
 @include posix-functions/nl_langinfo.texi
+@include posix-functions/nl_langinfo_l.texi
 @include posix-functions/nrand48.texi
 @include posix-functions/ntohl.texi
 @include posix-functions/ntohs.texi
 @include posix-functions/open.texi
 @include posix-functions/opendir.texi
 @include posix-functions/openlog.texi
+@include posix-functions/open_memstream.texi
 @include posix-functions/optarg.texi
+@include posix-functions/opterr.texi
+@include posix-functions/optind.texi
+@include posix-functions/optopt.texi
 @include posix-functions/pathconf.texi
 @include posix-functions/pause.texi
 @include posix-functions/pclose.texi
@@ -2416,6 +2534,7 @@ by Gnulib.
 @include posix-functions/pread.texi
 @include posix-functions/printf.texi
 @include posix-functions/pselect.texi
+@include posix-functions/psignal.texi
 @include posix-functions/pthread_atfork.texi
 @include posix-functions/pthread_attr_destroy.texi
 @include posix-functions/pthread_attr_getdetachstate.texi
@@ -2571,8 +2690,10 @@ by Gnulib.
 @include posix-functions/scalbn.texi
 @include posix-functions/scalbnf.texi
 @include posix-functions/scalbnl.texi
+@include posix-functions/scandir.texi
 @include posix-functions/scanf.texi
 @include posix-functions/sched_get_priority_max.texi
+@include posix-functions/sched_get_priority_min.texi
 @include posix-functions/sched_getparam.texi
 @include posix-functions/sched_getscheduler.texi
 @include posix-functions/sched_rr_get_interval.texi
@@ -2646,6 +2767,7 @@ by Gnulib.
 @include posix-functions/siglongjmp.texi
 @include posix-functions/signal.texi
 @include posix-functions/signbit.texi
+@include posix-functions/signgam.texi
 @include posix-functions/sigpause.texi
 @include posix-functions/sigpending.texi
 @include posix-functions/sigprocmask.texi
@@ -2681,26 +2803,36 @@ by Gnulib.
 @include posix-functions/stderr.texi
 @include posix-functions/stdin.texi
 @include posix-functions/stdout.texi
+@include posix-functions/stpcpy.texi
+@include posix-functions/stpncpy.texi
 @include posix-functions/strcasecmp.texi
+@include posix-functions/strcasecmp_l.texi
 @include posix-functions/strcat.texi
 @include posix-functions/strchr.texi
 @include posix-functions/strcmp.texi
 @include posix-functions/strcoll.texi
+@include posix-functions/strcoll_l.texi
 @include posix-functions/strcpy.texi
 @include posix-functions/strcspn.texi
 @include posix-functions/strdup.texi
 @include posix-functions/strerror.texi
 @include posix-functions/strerror_r.texi
 @include posix-functions/strfmon.texi
+@include posix-functions/strfmon_l.texi
 @include posix-functions/strftime.texi
+@include posix-functions/strftime_l.texi
 @include posix-functions/strlen.texi
 @include posix-functions/strncasecmp.texi
+@include posix-functions/strncasecmp_l.texi
 @include posix-functions/strncat.texi
 @include posix-functions/strncmp.texi
 @include posix-functions/strncpy.texi
+@include posix-functions/strndup.texi
+@include posix-functions/strnlen.texi
 @include posix-functions/strpbrk.texi
 @include posix-functions/strptime.texi
 @include posix-functions/strrchr.texi
+@include posix-functions/strsignal.texi
 @include posix-functions/strspn.texi
 @include posix-functions/strstr.texi
 @include posix-functions/strtod.texi
@@ -2715,6 +2847,7 @@ by Gnulib.
 @include posix-functions/strtoull.texi
 @include posix-functions/strtoumax.texi
 @include posix-functions/strxfrm.texi
+@include posix-functions/strxfrm_l.texi
 @include posix-functions/swab.texi
 @include posix-functions/swprintf.texi
 @include posix-functions/swscanf.texi
@@ -2749,6 +2882,7 @@ by Gnulib.
 @include posix-functions/timer_create.texi
 @include posix-functions/timer_delete.texi
 @include posix-functions/timer_getoverrun.texi
+@include posix-functions/timer_gettime.texi
 @include posix-functions/timer_settime.texi
 @include posix-functions/times.texi
 @include posix-functions/timezone.texi
@@ -2756,10 +2890,15 @@ by Gnulib.
 @include posix-functions/tmpnam.texi
 @include posix-functions/toascii.texi
 @include posix-functions/tolower.texi
+@include posix-functions/tolower_l.texi
 @include posix-functions/toupper.texi
+@include posix-functions/toupper_l.texi
 @include posix-functions/towctrans.texi
+@include posix-functions/towctrans_l.texi
 @include posix-functions/towlower.texi
+@include posix-functions/towlower_l.texi
 @include posix-functions/towupper.texi
+@include posix-functions/towupper_l.texi
 @include posix-functions/trunc.texi
 @include posix-functions/truncate.texi
 @include posix-functions/truncf.texi
@@ -2778,12 +2917,14 @@ by Gnulib.
 @include posix-functions/unlink.texi
 @include posix-functions/unlockpt.texi
 @include posix-functions/unsetenv.texi
+@include posix-functions/uselocale.texi
 @include posix-functions/utime.texi
 @include posix-functions/utimes.texi
 @include posix-functions/va_arg.texi
 @include posix-functions/va_copy.texi
 @include posix-functions/va_end.texi
 @include posix-functions/va_start.texi
+@include posix-functions/vdprintf.texi
 @include posix-functions/vfprintf.texi
 @include posix-functions/vfscanf.texi
 @include posix-functions/vfwprintf.texi
@@ -2800,18 +2941,28 @@ by Gnulib.
 @include posix-functions/wait.texi
 @include posix-functions/waitid.texi
 @include posix-functions/waitpid.texi
+@include posix-functions/wcpcpy.texi
+@include posix-functions/wcpncpy.texi
 @include posix-functions/wcrtomb.texi
+@include posix-functions/wcscasecmp.texi
+@include posix-functions/wcscasecmp_l.texi
 @include posix-functions/wcscat.texi
 @include posix-functions/wcschr.texi
 @include posix-functions/wcscmp.texi
 @include posix-functions/wcscoll.texi
+@include posix-functions/wcscoll_l.texi
 @include posix-functions/wcscpy.texi
 @include posix-functions/wcscspn.texi
+@include posix-functions/wcsdup.texi
 @include posix-functions/wcsftime.texi
 @include posix-functions/wcslen.texi
+@include posix-functions/wcsncasecmp.texi
+@include posix-functions/wcsncasecmp_l.texi
 @include posix-functions/wcsncat.texi
 @include posix-functions/wcsncmp.texi
 @include posix-functions/wcsncpy.texi
+@include posix-functions/wcsnlen.texi
+@include posix-functions/wcsnrtombs.texi
 @include posix-functions/wcspbrk.texi
 @include posix-functions/wcsrchr.texi
 @include posix-functions/wcsrtombs.texi
@@ -2830,10 +2981,13 @@ by Gnulib.
 @include posix-functions/wcstoumax.texi
 @include posix-functions/wcswidth.texi
 @include posix-functions/wcsxfrm.texi
+@include posix-functions/wcsxfrm_l.texi
 @include posix-functions/wctob.texi
 @include posix-functions/wctomb.texi
 @include posix-functions/wctrans.texi
+@include posix-functions/wctrans_l.texi
 @include posix-functions/wctype.texi
+@include posix-functions/wctype_l.texi
 @include posix-functions/wcwidth.texi
 @include posix-functions/wmemchr.texi
 @include posix-functions/wmemcmp.texi
@@ -3031,14 +3185,11 @@ This list of functions is sorted according to the header that declares them.
 * Glibc gnu/libc-version.h::
 * Glibc grp.h::
 * Glibc ifaddrs.h::
-* Glibc langinfo.h::
 * Glibc libintl.h::
 * Glibc link.h::
-* Glibc locale.h::
 * Glibc malloc.h::
 * Glibc math.h::
 * Glibc mcheck.h::
-* Glibc monetary.h::
 * Glibc mntent.h::
 * Glibc netdb.h::
 * Glibc netinet/ether.h::
@@ -3117,7 +3268,6 @@ This list of functions is sorted according to the header that declares them.
 * Glibc utmp.h::
 * Glibc utmpx.h::
 * Glibc wchar.h::
-* Glibc wctype.h::
 @end menu
 
 @c @node Glibc a.out.h
@@ -3291,54 +3441,20 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<ctype.h>}
 
 @menu
-* isalnum_l::
-* isalpha_l::
-* isblank_l::
-* iscntrl_l::
 * isctype::
-* isdigit_l::
-* isgraph_l::
-* islower_l::
-* isprint_l::
-* ispunct_l::
-* isspace_l::
-* isupper_l::
-* isxdigit_l::
-* tolower_l::
-* toupper_l::
 @end menu
 
-@include glibc-functions/isalnum_l.texi
-@include glibc-functions/isalpha_l.texi
-@include glibc-functions/isblank_l.texi
-@include glibc-functions/iscntrl_l.texi
 @include glibc-functions/isctype.texi
-@include glibc-functions/isdigit_l.texi
-@include glibc-functions/isgraph_l.texi
-@include glibc-functions/islower_l.texi
-@include glibc-functions/isprint_l.texi
-@include glibc-functions/ispunct_l.texi
-@include glibc-functions/isspace_l.texi
-@include glibc-functions/isupper_l.texi
-@include glibc-functions/isxdigit_l.texi
-@include glibc-functions/tolower_l.texi
-@include glibc-functions/toupper_l.texi
 
 @node Glibc dirent.h
 @section Glibc Extensions to @code{<dirent.h>}
 
 @menu
-* alphasort::
-* dirfd::
 * getdirentries::
-* scandir::
 * versionsort::
 @end menu
 
-@include glibc-functions/alphasort.texi
-@include glibc-functions/dirfd.texi
 @include glibc-functions/getdirentries.texi
-@include glibc-functions/scandir.texi
 @include glibc-functions/versionsort.texi
 
 @node Glibc dlfcn.h
@@ -3527,16 +3643,10 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * getopt_long::
 * getopt_long_only::
-* opterr::
-* optind::
-* optopt::
 @end menu
 
 @include glibc-functions/getopt_long.texi
 @include glibc-functions/getopt_long_only.texi
-@include glibc-functions/opterr.texi
-@include glibc-functions/optind.texi
-@include glibc-functions/optopt.texi
 
 @node Glibc glob.h
 @section Glibc Extensions to @code{<glob.h>}
@@ -3602,14 +3712,8 @@ This list of functions is sorted according to the header that declares them.
 @c @node Glibc iso646.h
 @c @section Glibc Extensions to @code{<iso646.h>}
 
-@node Glibc langinfo.h
-@section Glibc Extensions to @code{<langinfo.h>}
-
-@menu
-* nl_langinfo_l::
-@end menu
-
-@include glibc-functions/nl_langinfo_l.texi
+@c @node Glibc langinfo.h
+@c @section Glibc Extensions to @code{<langinfo.h>}
 
 @c @node Glibc libgen.h
 @c @section Glibc Extensions to @code{<libgen.h>}
@@ -3651,20 +3755,8 @@ This list of functions is sorted according to the header that declares them.
 
 @include glibc-functions/dl_iterate_phdr.texi
 
-@node Glibc locale.h
-@section Glibc Extensions to @code{<locale.h>}
-
-@menu
-* duplocale::
-* freelocale::
-* newlocale::
-* uselocale::
-@end menu
-
-@include glibc-functions/duplocale.texi
-@include glibc-functions/freelocale.texi
-@include glibc-functions/newlocale.texi
-@include glibc-functions/uselocale.texi
+@c @node Glibc locale.h
+@c @section Glibc Extensions to @code{<locale.h>}
 
 @node Glibc malloc.h
 @section Glibc @code{<malloc.h>}
@@ -3726,7 +3818,6 @@ This list of functions is sorted according to the header that declares them.
 * pow10l::
 * scalbf::
 * scalbl::
-* signgam::
 * significand::
 * significandf::
 * significandl::
@@ -3772,7 +3863,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/pow10l.texi
 @include glibc-functions/scalbf.texi
 @include glibc-functions/scalbl.texi
-@include glibc-functions/signgam.texi
 @include glibc-functions/significand.texi
 @include glibc-functions/significandf.texi
 @include glibc-functions/significandl.texi
@@ -3805,14 +3895,8 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/mtrace.texi
 @include glibc-functions/muntrace.texi
 
-@node Glibc monetary.h
-@section Glibc Extensions to @code{<monetary.h>}
-
-@menu
-* strfmon_l::
-@end menu
-
-@include glibc-functions/strfmon_l.texi
+@c @node Glibc monetary.h
+@c @section Glibc Extensions to @code{<monetary.h>}
 
 @node Glibc mntent.h
 @section Glibc @code{<mntent.h>}
@@ -4730,13 +4814,11 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * clone::
 * sched_getaffinity::
-* sched_get_priority_min::
 * sched_setaffinity::
 @end menu
 
 @include glibc-functions/clone.texi
 @include glibc-functions/sched_getaffinity.texi
-@include glibc-functions/sched_get_priority_min.texi
 @include glibc-functions/sched_setaffinity.texi
 
 @node Glibc search.h
@@ -4798,7 +4880,6 @@ This list of functions is sorted according to the header that declares them.
 
 @menu
 * gsignal::
-* psignal::
 * sigandset::
 * sigblock::
 * siggetmask::
@@ -4814,7 +4895,6 @@ This list of functions is sorted according to the header that declares them.
 @end menu
 
 @include glibc-functions/gsignal.texi
-@include glibc-functions/psignal.texi
 @include glibc-functions/sigandset.texi
 @include glibc-functions/sigblock.texi
 @include glibc-functions/siggetmask.texi
@@ -4849,7 +4929,6 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * asprintf::
 * cuserid::
-* dprintf::
 * clearerr_unlocked::
 * fcloseall::
 * feof_unlocked::
@@ -4858,14 +4937,12 @@ This list of functions is sorted according to the header that declares them.
 * fgetc_unlocked::
 * fgets_unlocked::
 * fileno_unlocked::
-* fmemopen::
 * fopencookie::
 * fputc_unlocked::
 * fputs_unlocked::
 * fread_unlocked::
 * fwrite_unlocked::
 * getw::
-* open_memstream::
 * putw::
 * setbuffer::
 * setlinebuf::
@@ -4873,12 +4950,10 @@ This list of functions is sorted according to the header that declares them.
 * sys_nerr::
 * tmpnam_r::
 * vasprintf::
-* vdprintf::
 @end menu
 
 @include glibc-functions/asprintf.texi
 @include glibc-functions/cuserid.texi
-@include glibc-functions/dprintf.texi
 @include glibc-functions/clearerr_unlocked.texi
 @include glibc-functions/fcloseall.texi
 @include glibc-functions/feof_unlocked.texi
@@ -4887,14 +4962,12 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/fgetc_unlocked.texi
 @include glibc-functions/fgets_unlocked.texi
 @include glibc-functions/fileno_unlocked.texi
-@include glibc-functions/fmemopen.texi
 @include glibc-functions/fopencookie.texi
 @include glibc-functions/fputc_unlocked.texi
 @include glibc-functions/fputs_unlocked.texi
 @include glibc-functions/fread_unlocked.texi
 @include glibc-functions/fwrite_unlocked.texi
 @include glibc-functions/getw.texi
-@include glibc-functions/open_memstream.texi
 @include glibc-functions/putw.texi
 @include glibc-functions/setbuffer.texi
 @include glibc-functions/setlinebuf.texi
@@ -4902,7 +4975,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/sys_nerr.texi
 @include glibc-functions/tmpnam_r.texi
 @include glibc-functions/vasprintf.texi
-@include glibc-functions/vdprintf.texi
 
 @node Glibc stdlib.h
 @section Glibc Extensions to @code{<stdlib.h>}
@@ -4921,7 +4993,6 @@ This list of functions is sorted according to the header that declares them.
 * jrand48_r::
 * lcong48_r::
 * lrand48_r::
-* mkdtemp::
 * mrand48_r::
 * nrand48_r::
 * on_exit::
@@ -4962,7 +5033,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/jrand48_r.texi
 @include glibc-functions/lcong48_r.texi
 @include glibc-functions/lrand48_r.texi
-@include glibc-functions/mkdtemp.texi
 @include glibc-functions/mrand48_r.texi
 @include glibc-functions/nrand48_r.texi
 @include glibc-functions/on_exit.texi
@@ -5000,20 +5070,11 @@ This list of functions is sorted according to the header that declares them.
 * mempcpy::
 * memrchr::
 * rawmemchr::
-* stpcpy::
-* stpncpy::
-* strcasecmp_l::
 * strcasestr::
 * strchrnul::
-* strcoll_l::
 * strfry::
 * strsep::
-* strsignal::
-* strncasecmp_l::
-* strndup::
-* strnlen::
 * strverscmp::
-* strxfrm_l::
 @end menu
 
 @include glibc-functions/ffsl.texi
@@ -5023,20 +5084,11 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/mempcpy.texi
 @include glibc-functions/memrchr.texi
 @include glibc-functions/rawmemchr.texi
-@include glibc-functions/stpcpy.texi
-@include glibc-functions/stpncpy.texi
-@include glibc-functions/strcasecmp_l.texi
 @include glibc-functions/strcasestr.texi
 @include glibc-functions/strchrnul.texi
-@include glibc-functions/strcoll_l.texi
 @include glibc-functions/strfry.texi
 @include glibc-functions/strsep.texi
-@include glibc-functions/strsignal.texi
-@include glibc-functions/strncasecmp_l.texi
-@include glibc-functions/strndup.texi
-@include glibc-functions/strnlen.texi
 @include glibc-functions/strverscmp.texi
-@include glibc-functions/strxfrm_l.texi
 
 @c @node Glibc strings.h
 @c @section Glibc Extensions to @code{<strings.h>}
@@ -5487,25 +5539,19 @@ This list of functions is sorted according to the header that declares them.
 
 @menu
 * dysize::
-* getdate_err::
 * getdate_r::
 * stime::
-* strftime_l::
 * strptime_l::
 * timegm::
 * timelocal::
-* timer_gettime::
 @end menu
 
 @include glibc-functions/dysize.texi
-@include glibc-functions/getdate_err.texi
 @include glibc-functions/getdate_r.texi
 @include glibc-functions/stime.texi
-@include glibc-functions/strftime_l.texi
 @include glibc-functions/strptime_l.texi
 @include glibc-functions/timegm.texi
 @include glibc-functions/timelocal.texi
-@include glibc-functions/timer_gettime.texi
 
 @c @node Glibc trace.h
 @c @section Glibc Extensions to @code{<trace.h>}
@@ -5541,7 +5587,6 @@ This list of functions is sorted according to the header that declares them.
 * daemon::
 * endusershell::
 * euidaccess::
-* fexecve::
 * get_current_dir_name::
 * getdomainname::
 * getdtablesize::
@@ -5572,7 +5617,6 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/daemon.texi
 @include glibc-functions/endusershell.texi
 @include glibc-functions/euidaccess.texi
-@include glibc-functions/fexecve.texi
 @include glibc-functions/get_current_dir_name.texi
 @include glibc-functions/getdomainname.texi
 @include glibc-functions/getdtablesize.texi
@@ -5653,21 +5697,10 @@ This list of functions is sorted according to the header that declares them.
 * fputws_unlocked::
 * getwc_unlocked::
 * getwchar_unlocked::
-* mbsnrtowcs::
 * putwc_unlocked::
 * putwchar_unlocked::
-* wcpcpy::
-* wcpncpy::
-* wcscasecmp::
-* wcscasecmp_l::
 * wcschrnul::
-* wcscoll_l::
-* wcsdup::
 * wcsftime_l::
-* wcsncasecmp::
-* wcsncasecmp_l::
-* wcsnlen::
-* wcsnrtombs::
 * wcstod_l::
 * wcstof_l::
 * wcstol_l::
@@ -5677,7 +5710,6 @@ This list of functions is sorted according to the header that declares them.
 * wcstoul_l::
 * wcstoull_l::
 * wcstouq::
-* wcsxfrm_l::
 * wmempcpy::
 @end menu
 
@@ -5687,21 +5719,10 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/fputws_unlocked.texi
 @include glibc-functions/getwc_unlocked.texi
 @include glibc-functions/getwchar_unlocked.texi
-@include glibc-functions/mbsnrtowcs.texi
 @include glibc-functions/putwc_unlocked.texi
 @include glibc-functions/putwchar_unlocked.texi
-@include glibc-functions/wcpcpy.texi
-@include glibc-functions/wcpncpy.texi
-@include glibc-functions/wcscasecmp.texi
-@include glibc-functions/wcscasecmp_l.texi
 @include glibc-functions/wcschrnul.texi
-@include glibc-functions/wcscoll_l.texi
-@include glibc-functions/wcsdup.texi
 @include glibc-functions/wcsftime_l.texi
-@include glibc-functions/wcsncasecmp.texi
-@include glibc-functions/wcsncasecmp_l.texi
-@include glibc-functions/wcsnlen.texi
-@include glibc-functions/wcsnrtombs.texi
 @include glibc-functions/wcstod_l.texi
 @include glibc-functions/wcstof_l.texi
 @include glibc-functions/wcstol_l.texi
@@ -5711,51 +5732,10 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/wcstoul_l.texi
 @include glibc-functions/wcstoull_l.texi
 @include glibc-functions/wcstouq.texi
-@include glibc-functions/wcsxfrm_l.texi
 @include glibc-functions/wmempcpy.texi
 
-@node Glibc wctype.h
-@section Glibc Extensions to @code{<wctype.h>}
-
-@menu
-* iswalnum_l::
-* iswalpha_l::
-* iswblank_l::
-* iswcntrl_l::
-* iswctype_l::
-* iswdigit_l::
-* iswgraph_l::
-* iswlower_l::
-* iswprint_l::
-* iswpunct_l::
-* iswspace_l::
-* iswupper_l::
-* iswxdigit_l::
-* towctrans_l::
-* towlower_l::
-* towupper_l::
-* wctrans_l::
-* wctype_l::
-@end menu
-
-@include glibc-functions/iswalnum_l.texi
-@include glibc-functions/iswalpha_l.texi
-@include glibc-functions/iswblank_l.texi
-@include glibc-functions/iswcntrl_l.texi
-@include glibc-functions/iswctype_l.texi
-@include glibc-functions/iswdigit_l.texi
-@include glibc-functions/iswgraph_l.texi
-@include glibc-functions/iswlower_l.texi
-@include glibc-functions/iswprint_l.texi
-@include glibc-functions/iswpunct_l.texi
-@include glibc-functions/iswspace_l.texi
-@include glibc-functions/iswupper_l.texi
-@include glibc-functions/iswxdigit_l.texi
-@include glibc-functions/towctrans_l.texi
-@include glibc-functions/towlower_l.texi
-@include glibc-functions/towupper_l.texi
-@include glibc-functions/wctrans_l.texi
-@include glibc-functions/wctype_l.texi
+@c @node Glibc wctype.h
+@c @section Glibc Extensions to @code{<wctype.h>}
 
 @c @node Glibc wordexp.h
 @c @section Glibc Extensions to @code{<wordexp.h>}

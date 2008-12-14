@@ -1,6 +1,171 @@
 2008-12-14  Bruno Haible  <bruno@clisp.org>
 
 	Update doc for POSIX:2008.
+	* doc/posix-functions/alphasort.texi: Renamed from
+	doc/glibc-functions/alphasort.texi.
+	* doc/posix-functions/dirfd.texi: Renamed from
+	doc/glibc-functions/dirfd.texi.
+	* doc/posix-functions/dprintf.texi: Renamed from
+	doc/glibc-functions/dprintf.texi.
+	* doc/posix-functions/duplocale.texi: Renamed from
+	doc/glibc-functions/duplocale.texi.
+	* doc/posix-functions/fexecve.texi: Renamed from
+	doc/glibc-functions/fexecve.texi.
+	* doc/posix-functions/fmemopen.texi: Renamed from
+	doc/glibc-functions/fmemopen.texi.
+	* doc/posix-functions/freelocale.texi: Renamed from
+	doc/glibc-functions/freelocale.texi.
+	* doc/posix-functions/getdate_err.texi: Renamed from
+	doc/glibc-functions/getdate_err.texi.
+	* doc/posix-functions/isalnum_l.texi: Renamed from
+	doc/glibc-functions/isalnum_l.texi.
+	* doc/posix-functions/isalpha_l.texi: Renamed from
+	doc/glibc-functions/isalpha_l.texi.
+	* doc/posix-functions/isblank_l.texi: Renamed from
+	doc/glibc-functions/isblank_l.texi.
+	* doc/posix-functions/iscntrl_l.texi: Renamed from
+	doc/glibc-functions/iscntrl_l.texi.
+	* doc/posix-functions/isdigit_l.texi: Renamed from
+	doc/glibc-functions/isdigit_l.texi.
+	* doc/posix-functions/isgraph_l.texi: Renamed from
+	doc/glibc-functions/isgraph_l.texi.
+	* doc/posix-functions/islower_l.texi: Renamed from
+	doc/glibc-functions/islower_l.texi.
+	* doc/posix-functions/isprint_l.texi: Renamed from
+	doc/glibc-functions/isprint_l.texi.
+	* doc/posix-functions/ispunct_l.texi: Renamed from
+	doc/glibc-functions/ispunct_l.texi.
+	* doc/posix-functions/isspace_l.texi: Renamed from
+	doc/glibc-functions/isspace_l.texi.
+	* doc/posix-functions/isupper_l.texi: Renamed from
+	doc/glibc-functions/isupper_l.texi.
+	* doc/posix-functions/iswalnum_l.texi: Renamed from
+	doc/glibc-functions/iswalnum_l.texi.
+	* doc/posix-functions/iswalpha_l.texi: Renamed from
+	doc/glibc-functions/iswalpha_l.texi.
+	* doc/posix-functions/iswblank_l.texi: Renamed from
+	doc/glibc-functions/iswblank_l.texi.
+	* doc/posix-functions/iswcntrl_l.texi: Renamed from
+	doc/glibc-functions/iswcntrl_l.texi.
+	* doc/posix-functions/iswctype_l.texi: Renamed from
+	doc/glibc-functions/iswctype_l.texi.
+	* doc/posix-functions/iswdigit_l.texi: Renamed from
+	doc/glibc-functions/iswdigit_l.texi.
+	* doc/posix-functions/iswgraph_l.texi: Renamed from
+	doc/glibc-functions/iswgraph_l.texi.
+	* doc/posix-functions/iswlower_l.texi: Renamed from
+	doc/glibc-functions/iswlower_l.texi.
+	* doc/posix-functions/iswprint_l.texi: Renamed from
+	doc/glibc-functions/iswprint_l.texi.
+	* doc/posix-functions/iswpunct_l.texi: Renamed from
+	doc/glibc-functions/iswpunct_l.texi.
+	* doc/posix-functions/iswspace_l.texi: Renamed from
+	doc/glibc-functions/iswspace_l.texi.
+	* doc/posix-functions/iswupper_l.texi: Renamed from
+	doc/glibc-functions/iswupper_l.texi.
+	* doc/posix-functions/iswxdigit_l.texi: Renamed from
+	doc/glibc-functions/iswxdigit_l.texi.
+	* doc/posix-functions/isxdigit_l.texi: Renamed from
+	doc/glibc-functions/isxdigit_l.texi.
+	* doc/posix-functions/mbsnrtowcs.texi: Renamed from
+	doc/glibc-functions/mbsnrtowcs.texi.
+	* doc/posix-functions/mkdtemp.texi: Renamed from
+	doc/glibc-functions/mkdtemp.texi.
+	* doc/posix-functions/newlocale.texi: Renamed from
+	doc/glibc-functions/newlocale.texi.
+	* doc/posix-functions/nl_langinfo_l.texi: Renamed from
+	doc/glibc-functions/nl_langinfo_l.texi.
+	* doc/posix-functions/open_memstream.texi: Renamed from
+	doc/glibc-functions/open_memstream.texi.
+	* doc/posix-functions/opterr.texi: Renamed from
+	doc/glibc-functions/opterr.texi.
+	* doc/posix-functions/optind.texi: Renamed from
+	doc/glibc-functions/optind.texi.
+	* doc/posix-functions/optopt.texi: Renamed from
+	doc/glibc-functions/optopt.texi.
+	* doc/posix-functions/psignal.texi: Renamed from
+	doc/glibc-functions/psignal.texi.
+	* doc/posix-functions/scandir.texi: Renamed from
+	doc/glibc-functions/scandir.texi.
+	* doc/posix-functions/sched_get_priority_min.texi: Renamed from
+	doc/glibc-functions/sched_get_priority_min.texi.
+	* doc/posix-functions/signgam.texi: Renamed from
+	doc/glibc-functions/signgam.texi.
+	* doc/posix-functions/stpcpy.texi: Renamed from
+	doc/glibc-functions/stpcpy.texi.
+	* doc/posix-functions/stpncpy.texi: Renamed from
+	doc/glibc-functions/stpncpy.texi.
+	* doc/posix-functions/strcasecmp_l.texi: Renamed from
+	doc/glibc-functions/strcasecmp_l.texi.
+	* doc/posix-functions/strcoll_l.texi: Renamed from
+	doc/glibc-functions/strcoll_l.texi.
+	* doc/posix-functions/strfmon_l.texi: Renamed from
+	doc/glibc-functions/strfmon_l.texi.
+	* doc/posix-functions/strftime_l.texi: Renamed from
+	doc/glibc-functions/strftime_l.texi.
+	* doc/posix-functions/strncasecmp_l.texi: Renamed from
+	doc/glibc-functions/strncasecmp_l.texi.
+	* doc/posix-functions/strndup.texi: Renamed from
+	doc/glibc-functions/strndup.texi.
+	* doc/posix-functions/strnlen.texi: Renamed from
+	doc/glibc-functions/strnlen.texi.
+	* doc/posix-functions/strsignal.texi: Renamed from
+	doc/glibc-functions/strsignal.texi.
+	* doc/posix-functions/strxfrm_l.texi: Renamed from
+	doc/glibc-functions/strxfrm_l.texi.
+	* doc/posix-functions/timer_gettime.texi: Renamed from
+	doc/glibc-functions/timer_gettime.texi.
+	* doc/posix-functions/tolower_l.texi: Renamed from
+	doc/glibc-functions/tolower_l.texi.
+	* doc/posix-functions/toupper_l.texi: Renamed from
+	doc/glibc-functions/toupper_l.texi.
+	* doc/posix-functions/towctrans_l.texi: Renamed from
+	doc/glibc-functions/towctrans_l.texi.
+	* doc/posix-functions/towlower_l.texi: Renamed from
+	doc/glibc-functions/towlower_l.texi.
+	* doc/posix-functions/towupper_l.texi: Renamed from
+	doc/glibc-functions/towupper_l.texi.
+	* doc/posix-functions/uselocale.texi: Renamed from
+	doc/glibc-functions/uselocale.texi.
+	* doc/posix-functions/vdprintf.texi: Renamed from
+	doc/glibc-functions/vdprintf.texi.
+	* doc/posix-functions/wcpcpy.texi:
+	Renamed from doc/glibc-functions/wcpcpy.texi.
+	* doc/posix-functions/wcpncpy.texi: Renamed from
+	doc/glibc-functions/wcpncpy.texi.
+	* doc/posix-functions/wcscasecmp.texi: Renamed from
+	doc/glibc-functions/wcscasecmp.texi.
+	* doc/posix-functions/wcscasecmp_l.texi: Renamed from
+	doc/glibc-functions/wcscasecmp_l.texi.
+	* doc/posix-functions/wcscoll_l.texi: Renamed from
+	doc/glibc-functions/wcscoll_l.texi.
+	* doc/posix-functions/wcsdup.texi: Renamed from
+	doc/glibc-functions/wcsdup.texi.
+	* doc/posix-functions/wcsncasecmp.texi: Renamed from
+	doc/glibc-functions/wcsncasecmp.texi.
+	* doc/posix-functions/wcsncasecmp_l.texi: Renamed from
+	doc/glibc-functions/wcsncasecmp_l.texi.
+	* doc/posix-functions/wcsnlen.texi: Renamed from
+	doc/glibc-functions/wcsnlen.texi.
+	* doc/posix-functions/wcsnrtombs.texi: Renamed from
+	doc/glibc-functions/wcsnrtombs.texi.
+	* doc/posix-functions/wcsxfrm_l.texi: Renamed from
+	doc/glibc-functions/wcsxfrm_l.texi.
+	* doc/posix-functions/wctrans_l.texi: Renamed from
+	doc/glibc-functions/wctrans_l.texi.
+	* doc/posix-functions/wctype_l.texi: Renamed from
+	doc/glibc-functions/wctype_l.texi.
+	* doc/gnulib.texi (Function Substitutes): Add these subsections.
+	(Glibc ctype.h, Glibc dirent.h, Glibc getopt.h, Glibc math.h,
+	Glibc sched.h, Glibc signal.h, Glibc stdio.h, Glibc stdlib.h,
+	Glibc string.h, Glibc time.h, Glibc unistd.h, Glibc wchar.h): Remove
+	these subsections.
+	(Glibc langinfo.h, Glibc locale.h, Glibc monetary.h, Glibc wctype.h):
+	Remove sections.
+
+2008-12-14  Bruno Haible  <bruno@clisp.org>
+
+	Update doc for POSIX:2008.
 	* doc/posix-functions/*.texi: Update URL of POSIX specification.
 
 2008-12-14  Bruno Haible  <bruno@clisp.org>
