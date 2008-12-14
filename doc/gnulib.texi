@@ -59,6 +59,7 @@ Documentation License''.
 * POSIX Substitutes Library::       Building as a separate substitutes library.
 * Header File Substitutes::         Overriding system headers.
 * Function Substitutes::            Replacing system functions.
+* Legacy Function Substitutes::     Replacing system functions.
 * Glibc Header File Substitutes::   Overriding system headers.
 * Glibc Function Substitutes::      Replacing system functions.
 * Particular Modules::              Documentation of individual modules.
@@ -715,13 +716,9 @@ by Gnulib.
 * atol::
 * atoll::
 * basename::
-* bcmp::
-* bcopy::
 * bind::
-* bsd_signal::
 * bsearch::
 * btowc::
-* bzero::
 * cabs::
 * cabsf::
 * cabsl::
@@ -851,7 +848,6 @@ by Gnulib.
 * drand48::
 * dup::
 * dup2::
-* ecvt::
 * encrypt::
 * endgrent::
 * endhostent::
@@ -894,7 +890,6 @@ by Gnulib.
 * fchown::
 * fclose::
 * fcntl::
-* fcvt::
 * fdatasync::
 * fdetach::
 * fdim::
@@ -965,7 +960,6 @@ by Gnulib.
 * fsync::
 * ftell::
 * ftello::
-* ftime::
 * ftok::
 * ftruncate::
 * ftrylockfile::
@@ -976,13 +970,11 @@ by Gnulib.
 * fwrite::
 * fwscanf::
 * gai_strerror::
-* gcvt::
 * getaddrinfo::
 * getc::
 * getc_unlocked::
 * getchar::
 * getchar_unlocked::
-* getcontext::
 * getcwd::
 * getdate::
 * getdelim::
@@ -996,8 +988,6 @@ by Gnulib.
 * getgrnam::
 * getgrnam_r::
 * getgroups::
-* gethostbyaddr::
-* gethostbyname::
 * gethostent::
 * gethostid::
 * gethostname::
@@ -1043,13 +1033,11 @@ by Gnulib.
 * getutxline::
 * getwc::
 * getwchar::
-* getwd::
 * glob::
 * globfree::
 * gmtime::
 * gmtime_r::
 * grantpt::
-* h_errno::
 * hcreate::
 * hdestroy::
 * hsearch::
@@ -1070,7 +1058,6 @@ by Gnulib.
 * ilogbl::
 * imaxabs::
 * imaxdiv::
-* index::
 * inet_addr::
 * inet_ntoa::
 * inet_ntop::
@@ -1175,7 +1162,6 @@ by Gnulib.
 * lsearch::
 * lseek::
 * lstat::
-* makecontext::
 * malloc::
 * mblen::
 * mbrlen::
@@ -1194,7 +1180,6 @@ by Gnulib.
 * mkfifo::
 * mknod::
 * mkstemp::
-* mktemp::
 * mktime::
 * mlock::
 * mlockall::
@@ -1346,7 +1331,6 @@ by Gnulib.
 * pthread_attr_getschedpolicy::
 * pthread_attr_getscope::
 * pthread_attr_getstack::
-* pthread_attr_getstackaddr::
 * pthread_attr_getstacksize::
 * pthread_attr_init::
 * pthread_attr_setdetachstate::
@@ -1356,7 +1340,6 @@ by Gnulib.
 * pthread_attr_setschedpolicy::
 * pthread_attr_setscope::
 * pthread_attr_setstack::
-* pthread_attr_setstackaddr::
 * pthread_attr_setstacksize::
 * pthread_barrier_destroy::
 * pthread_barrier_init::
@@ -1481,7 +1464,6 @@ by Gnulib.
 * rename::
 * rewind::
 * rewinddir::
-* rindex::
 * rint::
 * rintf::
 * rintl::
@@ -1489,7 +1471,6 @@ by Gnulib.
 * round::
 * roundf::
 * roundl::
-* scalb::
 * scalbln::
 * scalblnf::
 * scalblnl::
@@ -1524,7 +1505,6 @@ by Gnulib.
 * sendmsg::
 * sendto::
 * setbuf::
-* setcontext::
 * setegid::
 * setenv::
 * seteuid::
@@ -1642,7 +1622,6 @@ by Gnulib.
 * strtoumax::
 * strxfrm::
 * swab::
-* swapcontext::
 * swprintf::
 * swscanf::
 * symlink::
@@ -1697,7 +1676,6 @@ by Gnulib.
 * twalk::
 * tzname::
 * tzset::
-* ualarm::
 * ulimit::
 * umask::
 * uname::
@@ -1706,14 +1684,12 @@ by Gnulib.
 * unlink::
 * unlockpt::
 * unsetenv::
-* usleep::
 * utime::
 * utimes::
 * va_arg::
 * va_copy::
 * va_end::
 * va_start::
-* vfork::
 * vfprintf::
 * vfscanf::
 * vfwprintf::
@@ -1758,7 +1734,6 @@ by Gnulib.
 * wcstoul::
 * wcstoull::
 * wcstoumax::
-* wcswcs::
 * wcswidth::
 * wcsxfrm::
 * wctob::
@@ -1835,13 +1810,9 @@ by Gnulib.
 @include posix-functions/atol.texi
 @include posix-functions/atoll.texi
 @include posix-functions/basename.texi
-@include posix-functions/bcmp.texi
-@include posix-functions/bcopy.texi
 @include posix-functions/bind.texi
-@include posix-functions/bsd_signal.texi
 @include posix-functions/bsearch.texi
 @include posix-functions/btowc.texi
-@include posix-functions/bzero.texi
 @include posix-functions/cabs.texi
 @include posix-functions/cabsf.texi
 @include posix-functions/cabsl.texi
@@ -1971,7 +1942,6 @@ by Gnulib.
 @include posix-functions/drand48.texi
 @include posix-functions/dup.texi
 @include posix-functions/dup2.texi
-@include posix-functions/ecvt.texi
 @include posix-functions/encrypt.texi
 @include posix-functions/endgrent.texi
 @include posix-functions/endhostent.texi
@@ -2014,7 +1984,6 @@ by Gnulib.
 @include posix-functions/fchown.texi
 @include posix-functions/fclose.texi
 @include posix-functions/fcntl.texi
-@include posix-functions/fcvt.texi
 @include posix-functions/fdatasync.texi
 @include posix-functions/fdetach.texi
 @include posix-functions/fdim.texi
@@ -2085,7 +2054,6 @@ by Gnulib.
 @include posix-functions/fsync.texi
 @include posix-functions/ftell.texi
 @include posix-functions/ftello.texi
-@include posix-functions/ftime.texi
 @include posix-functions/ftok.texi
 @include posix-functions/ftruncate.texi
 @include posix-functions/ftrylockfile.texi
@@ -2096,13 +2064,11 @@ by Gnulib.
 @include posix-functions/fwrite.texi
 @include posix-functions/fwscanf.texi
 @include posix-functions/gai_strerror.texi
-@include posix-functions/gcvt.texi
 @include posix-functions/getaddrinfo.texi
 @include posix-functions/getc.texi
 @include posix-functions/getc_unlocked.texi
 @include posix-functions/getchar.texi
 @include posix-functions/getchar_unlocked.texi
-@include posix-functions/getcontext.texi
 @include posix-functions/getcwd.texi
 @include posix-functions/getdate.texi
 @include posix-functions/getdelim.texi
@@ -2116,8 +2082,6 @@ by Gnulib.
 @include posix-functions/getgrnam.texi
 @include posix-functions/getgrnam_r.texi
 @include posix-functions/getgroups.texi
-@include posix-functions/gethostbyaddr.texi
-@include posix-functions/gethostbyname.texi
 @include posix-functions/gethostent.texi
 @include posix-functions/gethostid.texi
 @include posix-functions/gethostname.texi
@@ -2163,13 +2127,11 @@ by Gnulib.
 @include posix-functions/getutxline.texi
 @include posix-functions/getwc.texi
 @include posix-functions/getwchar.texi
-@include posix-functions/getwd.texi
 @include posix-functions/glob.texi
 @include posix-functions/globfree.texi
 @include posix-functions/gmtime.texi
 @include posix-functions/gmtime_r.texi
 @include posix-functions/grantpt.texi
-@include posix-functions/h_errno.texi
 @include posix-functions/hcreate.texi
 @include posix-functions/hdestroy.texi
 @include posix-functions/hsearch.texi
@@ -2190,7 +2152,6 @@ by Gnulib.
 @include posix-functions/ilogbl.texi
 @include posix-functions/imaxabs.texi
 @include posix-functions/imaxdiv.texi
-@include posix-functions/index.texi
 @include posix-functions/inet_addr.texi
 @include posix-functions/inet_ntoa.texi
 @include posix-functions/inet_ntop.texi
@@ -2295,7 +2256,6 @@ by Gnulib.
 @include posix-functions/lsearch.texi
 @include posix-functions/lseek.texi
 @include posix-functions/lstat.texi
-@include posix-functions/makecontext.texi
 @include posix-functions/malloc.texi
 @include posix-functions/mblen.texi
 @include posix-functions/mbrlen.texi
@@ -2314,7 +2274,6 @@ by Gnulib.
 @include posix-functions/mkfifo.texi
 @include posix-functions/mknod.texi
 @include posix-functions/mkstemp.texi
-@include posix-functions/mktemp.texi
 @include posix-functions/mktime.texi
 @include posix-functions/mlock.texi
 @include posix-functions/mlockall.texi
@@ -2466,7 +2425,6 @@ by Gnulib.
 @include posix-functions/pthread_attr_getschedpolicy.texi
 @include posix-functions/pthread_attr_getscope.texi
 @include posix-functions/pthread_attr_getstack.texi
-@include posix-functions/pthread_attr_getstackaddr.texi
 @include posix-functions/pthread_attr_getstacksize.texi
 @include posix-functions/pthread_attr_init.texi
 @include posix-functions/pthread_attr_setdetachstate.texi
@@ -2476,7 +2434,6 @@ by Gnulib.
 @include posix-functions/pthread_attr_setschedpolicy.texi
 @include posix-functions/pthread_attr_setscope.texi
 @include posix-functions/pthread_attr_setstack.texi
-@include posix-functions/pthread_attr_setstackaddr.texi
 @include posix-functions/pthread_attr_setstacksize.texi
 @include posix-functions/pthread_barrier_destroy.texi
 @include posix-functions/pthread_barrier_init.texi
@@ -2601,7 +2558,6 @@ by Gnulib.
 @include posix-functions/rename.texi
 @include posix-functions/rewind.texi
 @include posix-functions/rewinddir.texi
-@include posix-functions/rindex.texi
 @include posix-functions/rint.texi
 @include posix-functions/rintf.texi
 @include posix-functions/rintl.texi
@@ -2609,7 +2565,6 @@ by Gnulib.
 @include posix-functions/round.texi
 @include posix-functions/roundf.texi
 @include posix-functions/roundl.texi
-@include posix-functions/scalb.texi
 @include posix-functions/scalbln.texi
 @include posix-functions/scalblnf.texi
 @include posix-functions/scalblnl.texi
@@ -2644,7 +2599,6 @@ by Gnulib.
 @include posix-functions/sendmsg.texi
 @include posix-functions/sendto.texi
 @include posix-functions/setbuf.texi
-@include posix-functions/setcontext.texi
 @include posix-functions/setegid.texi
 @include posix-functions/setenv.texi
 @include posix-functions/seteuid.texi
@@ -2762,7 +2716,6 @@ by Gnulib.
 @include posix-functions/strtoumax.texi
 @include posix-functions/strxfrm.texi
 @include posix-functions/swab.texi
-@include posix-functions/swapcontext.texi
 @include posix-functions/swprintf.texi
 @include posix-functions/swscanf.texi
 @include posix-functions/symlink.texi
@@ -2817,7 +2770,6 @@ by Gnulib.
 @include posix-functions/twalk.texi
 @include posix-functions/tzname.texi
 @include posix-functions/tzset.texi
-@include posix-functions/ualarm.texi
 @include posix-functions/ulimit.texi
 @include posix-functions/umask.texi
 @include posix-functions/uname.texi
@@ -2826,14 +2778,12 @@ by Gnulib.
 @include posix-functions/unlink.texi
 @include posix-functions/unlockpt.texi
 @include posix-functions/unsetenv.texi
-@include posix-functions/usleep.texi
 @include posix-functions/utime.texi
 @include posix-functions/utimes.texi
 @include posix-functions/va_arg.texi
 @include posix-functions/va_copy.texi
 @include posix-functions/va_end.texi
 @include posix-functions/va_start.texi
-@include posix-functions/vfork.texi
 @include posix-functions/vfprintf.texi
 @include posix-functions/vfscanf.texi
 @include posix-functions/vfwprintf.texi
@@ -2878,7 +2828,6 @@ by Gnulib.
 @include posix-functions/wcstoul.texi
 @include posix-functions/wcstoull.texi
 @include posix-functions/wcstoumax.texi
-@include posix-functions/wcswcs.texi
 @include posix-functions/wcswidth.texi
 @include posix-functions/wcsxfrm.texi
 @include posix-functions/wctob.texi
@@ -2900,6 +2849,72 @@ by Gnulib.
 @include posix-functions/y0.texi
 @include posix-functions/y1.texi
 @include posix-functions/yn.texi
+
+@node Legacy Function Substitutes
+@chapter Past POSIX Function Substitutes
+
+This chapter describes which functions and function-like macros specified by
+older versions of POSIX (POSIX:2001) are substituted by Gnulib, which
+portability pitfalls are fixed by Gnulib, and which (known) portability
+problems are not worked around by Gnulib.
+
+@nosuchmodulenote function
+
+@menu
+* bcmp::
+* bcopy::
+* bsd_signal::
+* bzero::
+* ecvt::
+* fcvt::
+* ftime::
+* gcvt::
+* getcontext::
+* gethostbyaddr::
+* gethostbyname::
+* getwd::
+* h_errno::
+* index::
+* makecontext::
+* mktemp::
+* pthread_attr_getstackaddr::
+* pthread_attr_setstackaddr::
+* rindex::
+* scalb::
+* setcontext::
+* swapcontext::
+* ualarm::
+* usleep::
+* vfork::
+* wcswcs::
+@end menu
+
+@include pastposix-functions/bcmp.texi
+@include pastposix-functions/bcopy.texi
+@include pastposix-functions/bsd_signal.texi
+@include pastposix-functions/bzero.texi
+@include pastposix-functions/ecvt.texi
+@include pastposix-functions/fcvt.texi
+@include pastposix-functions/ftime.texi
+@include pastposix-functions/gcvt.texi
+@include pastposix-functions/getcontext.texi
+@include pastposix-functions/gethostbyaddr.texi
+@include pastposix-functions/gethostbyname.texi
+@include pastposix-functions/getwd.texi
+@include pastposix-functions/h_errno.texi
+@include pastposix-functions/index.texi
+@include pastposix-functions/makecontext.texi
+@include pastposix-functions/mktemp.texi
+@include pastposix-functions/pthread_attr_getstackaddr.texi
+@include pastposix-functions/pthread_attr_setstackaddr.texi
+@include pastposix-functions/rindex.texi
+@include pastposix-functions/scalb.texi
+@include pastposix-functions/setcontext.texi
+@include pastposix-functions/swapcontext.texi
+@include pastposix-functions/ualarm.texi
+@include pastposix-functions/usleep.texi
+@include pastposix-functions/vfork.texi
+@include pastposix-functions/wcswcs.texi
 
 @node Glibc Header File Substitutes
 @chapter Glibc Header File Substitutes

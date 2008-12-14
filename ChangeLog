@@ -1,3 +1,61 @@
+2008-12-14  Bruno Haible  <bruno@clisp.org>
+
+	Update doc for POSIX:2008.
+	* doc/pastposix-functions/bcmp.texi: Renamed from
+	doc/posix-functions/bcmp.texi.
+	* doc/pastposix-functions/bcopy.texi: Renamed from
+	doc/posix-functions/bcopy.texi.
+	* doc/pastposix-functions/bsd_signal.texi: Renamed from
+	doc/posix-functions/bsd_signal.texi.
+	* doc/pastposix-functions/bzero.texi: Renamed from
+	doc/posix-functions/bzero.texi.
+	* doc/pastposix-functions/ecvt.texi: Renamed from
+	doc/posix-functions/ecvt.texi.
+	* doc/pastposix-functions/fcvt.texi: Renamed from
+	doc/posix-functions/fcvt.texi.
+	* doc/pastposix-functions/ftime.texi: Renamed from
+	doc/posix-functions/ftime.texi.
+	* doc/pastposix-functions/gcvt.texi: Renamed from
+	doc/posix-functions/gcvt.texi.
+	* doc/pastposix-functions/getcontext.texi: Renamed from
+	doc/posix-functions/getcontext.texi.
+	* doc/pastposix-functions/gethostbyaddr.texi: Renamed from
+	doc/posix-functions/gethostbyaddr.texi.
+	* doc/pastposix-functions/gethostbyname.texi: Renamed from
+	doc/posix-functions/gethostbyname.texi.
+	* doc/pastposix-functions/getwd.texi: Renamed from
+	doc/posix-functions/getwd.texi.
+	* doc/pastposix-functions/h_errno.texi: Renamed from
+	doc/posix-functions/h_errno.texi.
+	* doc/pastposix-functions/index.texi: Renamed from
+	doc/posix-functions/index.texi.
+	* doc/pastposix-functions/makecontext.texi: Renamed from
+	doc/posix-functions/makecontext.texi.
+	* doc/pastposix-functions/mktemp.texi: Renamed from
+	doc/posix-functions/mktemp.texi.
+	* doc/pastposix-functions/pthread_attr_getstackaddr.texi: Renamed from
+	doc/posix-functions/pthread_attr_getstackaddr.texi.
+	* doc/pastposix-functions/pthread_attr_setstackaddr.texi: Renamed from
+	doc/posix-functions/pthread_attr_setstackaddr.texi.
+	* doc/pastposix-functions/rindex.texi: Renamed from
+	doc/posix-functions/rindex.texi.
+	* doc/pastposix-functions/scalb.texi: Renamed from
+	doc/posix-functions/scalb.texi.
+	* doc/pastposix-functions/setcontext.texi: Renamed from
+	doc/posix-functions/setcontext.texi.
+	* doc/pastposix-functions/swapcontext.texi: Renamed from
+	doc/posix-functions/swapcontext.texi.
+	* doc/pastposix-functions/ualarm.texi: Renamed from
+	doc/posix-functions/ualarm.texi.
+	* doc/pastposix-functions/usleep.texi: Renamed from
+	doc/posix-functions/usleep.texi.
+	* doc/pastposix-functions/vfork.texi: Renamed from
+	doc/posix-functions/vfork.texi.
+	* doc/pastposix-functions/wcswcs.texi: Renamed from
+	doc/posix-functions/wcswcs.texi.
+	* doc/gnulib.texi (Legacy Function Substitutes): New chapter.
+	(Function Substitutes): Update.
+
 2008-12-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* modules/relocatable-prog-wrapper (Depends-on): Add errno, needed by
