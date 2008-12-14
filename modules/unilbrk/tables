@@ -8,6 +8,7 @@ lib/unilbrk/lbrkprop1.h
 lib/unilbrk/lbrkprop2.h
 
 Depends-on:
+unilbrk/base
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
