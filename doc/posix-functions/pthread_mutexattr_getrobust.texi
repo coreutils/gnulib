@@ -1,0 +1,18 @@
+@node pthread_mutexattr_getrobust
+@section @code{pthread_mutexattr_getrobust}
+@findex pthread_mutexattr_getrobust
+
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_mutexattr_getrobust.html}
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.3.6, MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize

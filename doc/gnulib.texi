@@ -888,10 +888,13 @@ by Gnulib.
 * fabs::
 * fabsf::
 * fabsl::
+* faccessat::
 * fattach::
 * fchdir::
 * fchmod::
+* fchmodat::
 * fchown::
+* fchownat::
 * fclose::
 * fcntl::
 * fdatasync::
@@ -900,6 +903,7 @@ by Gnulib.
 * fdimf::
 * fdiml::
 * fdopen::
+* fdopendir::
 * feclearexcept::
 * fegetenv::
 * fegetexceptflag::
@@ -963,6 +967,7 @@ by Gnulib.
 * fseeko::
 * fsetpos::
 * fstat::
+* fstatat::
 * fstatvfs::
 * fsync::
 * ftell::
@@ -972,6 +977,7 @@ by Gnulib.
 * ftrylockfile::
 * ftw::
 * funlockfile::
+* futimens::
 * fwide::
 * fwprintf::
 * fwrite::
@@ -1155,6 +1161,7 @@ by Gnulib.
 * lgammaf::
 * lgammal::
 * link::
+* linkat::
 * lio_listio::
 * listen::
 * llabs::
@@ -1211,9 +1218,12 @@ by Gnulib.
 * memmove::
 * memset::
 * mkdir::
+* mkdirat::
 * mkdtemp::
 * mkfifo::
+* mkfifoat::
 * mknod::
+* mknodat::
 * mkstemp::
 * mktime::
 * mlock::
@@ -1264,9 +1274,11 @@ by Gnulib.
 * ntohl::
 * ntohs::
 * open::
+* openat::
 * opendir::
 * openlog::
 * open_memstream::
+* open_wmemstream::
 * optarg::
 * opterr::
 * optind::
@@ -1363,6 +1375,7 @@ by Gnulib.
 * pread::
 * printf::
 * pselect::
+* psiginfo::
 * psignal::
 * pthread_atfork::
 * pthread_attr_destroy::
@@ -1417,6 +1430,7 @@ by Gnulib.
 * pthread_key_create::
 * pthread_key_delete::
 * pthread_kill::
+* pthread_mutex_consistent::
 * pthread_mutex_destroy::
 * pthread_mutex_getprioceiling::
 * pthread_mutex_init::
@@ -1429,11 +1443,13 @@ by Gnulib.
 * pthread_mutexattr_getprioceiling::
 * pthread_mutexattr_getprotocol::
 * pthread_mutexattr_getpshared::
+* pthread_mutexattr_getrobust::
 * pthread_mutexattr_gettype::
 * pthread_mutexattr_init::
 * pthread_mutexattr_setprioceiling::
 * pthread_mutexattr_setprotocol::
 * pthread_mutexattr_setpshared::
+* pthread_mutexattr_setrobust::
 * pthread_mutexattr_settype::
 * pthread_once::
 * pthread_rwlock_destroy::
@@ -1485,6 +1501,7 @@ by Gnulib.
 * readdir::
 * readdir_r::
 * readlink::
+* readlinkat::
 * readv::
 * realloc::
 * realpath::
@@ -1504,6 +1521,7 @@ by Gnulib.
 * remquof::
 * remquol::
 * rename::
+* renameat::
 * rewind::
 * rewinddir::
 * rint::
@@ -1645,6 +1663,7 @@ by Gnulib.
 * strcspn::
 * strdup::
 * strerror::
+* strerror_l::
 * strerror_r::
 * strfmon::
 * strfmon_l::
@@ -1681,6 +1700,7 @@ by Gnulib.
 * swprintf::
 * swscanf::
 * symlink::
+* symlinkat::
 * sync::
 * sysconf::
 * syslog::
@@ -1744,10 +1764,12 @@ by Gnulib.
 * ungetc::
 * ungetwc::
 * unlink::
+* unlinkat::
 * unlockpt::
 * unsetenv::
 * uselocale::
 * utime::
+* utimensat::
 * utimes::
 * va_arg::
 * va_copy::
@@ -2059,10 +2081,13 @@ by Gnulib.
 @include posix-functions/fabs.texi
 @include posix-functions/fabsf.texi
 @include posix-functions/fabsl.texi
+@include posix-functions/faccessat.texi
 @include posix-functions/fattach.texi
 @include posix-functions/fchdir.texi
 @include posix-functions/fchmod.texi
+@include posix-functions/fchmodat.texi
 @include posix-functions/fchown.texi
+@include posix-functions/fchownat.texi
 @include posix-functions/fclose.texi
 @include posix-functions/fcntl.texi
 @include posix-functions/fdatasync.texi
@@ -2071,6 +2096,7 @@ by Gnulib.
 @include posix-functions/fdimf.texi
 @include posix-functions/fdiml.texi
 @include posix-functions/fdopen.texi
+@include posix-functions/fdopendir.texi
 @include posix-functions/feclearexcept.texi
 @include posix-functions/fegetenv.texi
 @include posix-functions/fegetexceptflag.texi
@@ -2134,6 +2160,7 @@ by Gnulib.
 @include posix-functions/fseeko.texi
 @include posix-functions/fsetpos.texi
 @include posix-functions/fstat.texi
+@include posix-functions/fstatat.texi
 @include posix-functions/fstatvfs.texi
 @include posix-functions/fsync.texi
 @include posix-functions/ftell.texi
@@ -2143,6 +2170,7 @@ by Gnulib.
 @include posix-functions/ftrylockfile.texi
 @include posix-functions/ftw.texi
 @include posix-functions/funlockfile.texi
+@include posix-functions/futimens.texi
 @include posix-functions/fwide.texi
 @include posix-functions/fwprintf.texi
 @include posix-functions/fwrite.texi
@@ -2326,6 +2354,7 @@ by Gnulib.
 @include posix-functions/lgammaf.texi
 @include posix-functions/lgammal.texi
 @include posix-functions/link.texi
+@include posix-functions/linkat.texi
 @include posix-functions/lio_listio.texi
 @include posix-functions/listen.texi
 @include posix-functions/llabs.texi
@@ -2382,9 +2411,12 @@ by Gnulib.
 @include posix-functions/memmove.texi
 @include posix-functions/memset.texi
 @include posix-functions/mkdir.texi
+@include posix-functions/mkdirat.texi
 @include posix-functions/mkdtemp.texi
 @include posix-functions/mkfifo.texi
+@include posix-functions/mkfifoat.texi
 @include posix-functions/mknod.texi
+@include posix-functions/mknodat.texi
 @include posix-functions/mkstemp.texi
 @include posix-functions/mktime.texi
 @include posix-functions/mlock.texi
@@ -2435,9 +2467,11 @@ by Gnulib.
 @include posix-functions/ntohl.texi
 @include posix-functions/ntohs.texi
 @include posix-functions/open.texi
+@include posix-functions/openat.texi
 @include posix-functions/opendir.texi
 @include posix-functions/openlog.texi
 @include posix-functions/open_memstream.texi
+@include posix-functions/open_wmemstream.texi
 @include posix-functions/optarg.texi
 @include posix-functions/opterr.texi
 @include posix-functions/optind.texi
@@ -2534,6 +2568,7 @@ by Gnulib.
 @include posix-functions/pread.texi
 @include posix-functions/printf.texi
 @include posix-functions/pselect.texi
+@include posix-functions/psiginfo.texi
 @include posix-functions/psignal.texi
 @include posix-functions/pthread_atfork.texi
 @include posix-functions/pthread_attr_destroy.texi
@@ -2588,6 +2623,7 @@ by Gnulib.
 @include posix-functions/pthread_key_create.texi
 @include posix-functions/pthread_key_delete.texi
 @include posix-functions/pthread_kill.texi
+@include posix-functions/pthread_mutex_consistent.texi
 @include posix-functions/pthread_mutex_destroy.texi
 @include posix-functions/pthread_mutex_getprioceiling.texi
 @include posix-functions/pthread_mutex_init.texi
@@ -2600,11 +2636,13 @@ by Gnulib.
 @include posix-functions/pthread_mutexattr_getprioceiling.texi
 @include posix-functions/pthread_mutexattr_getprotocol.texi
 @include posix-functions/pthread_mutexattr_getpshared.texi
+@include posix-functions/pthread_mutexattr_getrobust.texi
 @include posix-functions/pthread_mutexattr_gettype.texi
 @include posix-functions/pthread_mutexattr_init.texi
 @include posix-functions/pthread_mutexattr_setprioceiling.texi
 @include posix-functions/pthread_mutexattr_setprotocol.texi
 @include posix-functions/pthread_mutexattr_setpshared.texi
+@include posix-functions/pthread_mutexattr_setrobust.texi
 @include posix-functions/pthread_mutexattr_settype.texi
 @include posix-functions/pthread_once.texi
 @include posix-functions/pthread_rwlock_destroy.texi
@@ -2656,6 +2694,7 @@ by Gnulib.
 @include posix-functions/readdir.texi
 @include posix-functions/readdir_r.texi
 @include posix-functions/readlink.texi
+@include posix-functions/readlinkat.texi
 @include posix-functions/readv.texi
 @include posix-functions/realloc.texi
 @include posix-functions/realpath.texi
@@ -2675,6 +2714,7 @@ by Gnulib.
 @include posix-functions/remquof.texi
 @include posix-functions/remquol.texi
 @include posix-functions/rename.texi
+@include posix-functions/renameat.texi
 @include posix-functions/rewind.texi
 @include posix-functions/rewinddir.texi
 @include posix-functions/rint.texi
@@ -2816,6 +2856,7 @@ by Gnulib.
 @include posix-functions/strcspn.texi
 @include posix-functions/strdup.texi
 @include posix-functions/strerror.texi
+@include posix-functions/strerror_l.texi
 @include posix-functions/strerror_r.texi
 @include posix-functions/strfmon.texi
 @include posix-functions/strfmon_l.texi
@@ -2852,6 +2893,7 @@ by Gnulib.
 @include posix-functions/swprintf.texi
 @include posix-functions/swscanf.texi
 @include posix-functions/symlink.texi
+@include posix-functions/symlinkat.texi
 @include posix-functions/sync.texi
 @include posix-functions/sysconf.texi
 @include posix-functions/syslog.texi
@@ -2915,10 +2957,12 @@ by Gnulib.
 @include posix-functions/ungetc.texi
 @include posix-functions/ungetwc.texi
 @include posix-functions/unlink.texi
+@include posix-functions/unlinkat.texi
 @include posix-functions/unlockpt.texi
 @include posix-functions/unsetenv.texi
 @include posix-functions/uselocale.texi
 @include posix-functions/utime.texi
+@include posix-functions/utimensat.texi
 @include posix-functions/utimes.texi
 @include posix-functions/va_arg.texi
 @include posix-functions/va_copy.texi

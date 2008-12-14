@@ -1,6 +1,33 @@
 2008-12-14  Bruno Haible  <bruno@clisp.org>
 
 	Update doc for POSIX:2008.
+	* doc/posix-functions/faccessat.texi: New file.
+	* doc/posix-functions/fchmodat.texi: New file.
+	* doc/posix-functions/fchownat.texi: New file.
+	* doc/posix-functions/fdopendir.texi: New file.
+	* doc/posix-functions/fstatat.texi: New file.
+	* doc/posix-functions/futimens.texi: New file.
+	* doc/posix-functions/linkat.texi: New file.
+	* doc/posix-functions/mkdirat.texi: New file.
+	* doc/posix-functions/mkfifoat.texi: New file.
+	* doc/posix-functions/mknodat.texi: New file.
+	* doc/posix-functions/open_wmemstream.texi: New file.
+	* doc/posix-functions/openat.texi: New file.
+	* doc/posix-functions/psiginfo.texi: New file.
+	* doc/posix-functions/pthread_mutex_consistent.texi: New file.
+	* doc/posix-functions/pthread_mutexattr_getrobust.texi: New file.
+	* doc/posix-functions/pthread_mutexattr_setrobust.texi: New file.
+	* doc/posix-functions/readlinkat.texi: New file.
+	* doc/posix-functions/renameat.texi: New file.
+	* doc/posix-functions/strerror_l.texi: New file.
+	* doc/posix-functions/symlinkat.texi: New file.
+	* doc/posix-functions/unlinkat.texi: New file.
+	* doc/posix-functions/utimensat.texi: New file.
+	* doc/gnulib.texi (Function Substitutes): Add these subsections.
+
+2008-12-14  Bruno Haible  <bruno@clisp.org>
+
+	Update doc for POSIX:2008.
 	* doc/posix-functions/alphasort.texi: Renamed from
 	doc/glibc-functions/alphasort.texi.
 	* doc/posix-functions/dirfd.texi: Renamed from
