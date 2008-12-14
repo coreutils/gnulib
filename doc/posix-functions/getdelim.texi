@@ -2,8 +2,7 @@
 @section @code{getdelim}
 @findex getdelim
 
-POSIX specification: Draft 3 of 200x; to access it, free membership at
-@url{http://www.opengroup.org/austin/} is required.
+POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getdelim.html}
 
 Gnulib module: getdelim
 
