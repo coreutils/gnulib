@@ -1,7 +1,7 @@
 #! /bin/sh
 # Common stub for a few missing GNU programs while installing.
 
-scriptversion=2008-11-24.07
+scriptversion=2008-12-13.14
 
 # Copyright (C) 1996, 1997, 1999, 2000, 2002, 2003, 2004, 2005, 2006,
 # 2008  Free Software Foundation, Inc.
@@ -108,7 +108,10 @@ Send bug reports to <bug-automake@gnu.org>."
 esac
 
 # normalize program name to check for.
-program=`echo "$1" | sed 's/^gnu-//; t; s/^gnu//; t; s/^g//; t'`
+program=`echo "$1" | sed '
+  s/^gnu-//; t
+  s/^gnu//; t
+  s/^g//; t'`
 
 # Now exit if we have it, but it failed.  Also exit now if we
 # don't have it and --version was passed (most likely to detect
