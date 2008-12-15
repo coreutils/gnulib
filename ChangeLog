@@ -1,3 +1,13 @@
+2008-12-15  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-functions/openat.texi: Mention the 'openat' module.
+	* doc/posix-functions/fchmodat.texi: Likewise.
+	* doc/posix-functions/fchownat.texi: Likewise.
+	* doc/posix-functions/fdopendir.texi: Likewise.
+	* doc/posix-functions/fstatat.texi: Likewise.
+	* doc/posix-functions/mkdirat.texi: Likewise.
+	* doc/posix-functions/unlinkat.texi: Likewise.
+
 2008-12-14  Bruno Haible  <bruno@clisp.org>
 
 	Update doc for POSIX:2008.
