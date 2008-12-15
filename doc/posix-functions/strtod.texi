@@ -66,7 +66,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function returns +0.0 (not -0.0) for negative underflow on some
 platforms:
-glibc 2.7, Cygwin, mingw.
+glibc 2.7, Cygwin 1.5.x, mingw.
 
 @item
 This function cannot distinguish between ``nan'' and ``-nan'' on some
