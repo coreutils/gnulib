@@ -1,3 +1,20 @@
+2008-12-15  Bruno Haible  <bruno@clisp.org>
+
+	* doc/glibc-functions/fgetxattr.texi: Tweak wording.
+	* doc/glibc-functions/flistxattr.texi: Likewise.
+	* doc/glibc-functions/fopencookie.texi: Likewise.
+	* doc/glibc-functions/fremovexattr.texi: Likewise.
+	* doc/glibc-functions/fsetxattr.texi: Likewise.
+	* doc/glibc-functions/getxattr.texi: Likewise.
+	* doc/glibc-functions/lgetxattr.texi: Likewise.
+	* doc/glibc-functions/listxattr.texi: Likewise.
+	* doc/glibc-functions/llistxattr.texi: Likewise.
+	* doc/glibc-functions/lremovexattr.texi: Likewise.
+	* doc/glibc-functions/lsetxattr.texi: Likewise.
+	* doc/glibc-functions/removexattr.texi: Likewise.
+	* doc/glibc-functions/setxattr.texi: Likewise.
+	* doc/posix-functions/open_memstream.texi: Likewise.
+
 2008-12-15  Eric Blake  <ebb9@byu.net>
 
 	Update doc for cygwin 1.7.
