@@ -1,5 +1,12 @@
 2008-12-15  Bruno Haible  <bruno@clisp.org>
 
+	Fix compilation error on OSF/1 4.0.
+	* lib/sys_select.in.h: When invoked from OSF/1 <sys/types.h> or
+	<sys/time.h>, simply delegate to the system header.
+	Reported by Daniel Richard G. <oss@teragram.com>.
+
+2008-12-15  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-functions/openat.texi: Mention the 'openat' module.
 	* doc/posix-functions/fchmodat.texi: Likewise.
 	* doc/posix-functions/fchownat.texi: Likewise.
