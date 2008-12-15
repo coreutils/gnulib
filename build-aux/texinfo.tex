@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-12-03.17}
+\def\texinfoversion{2008-12-15.10}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1335,7 +1335,10 @@ output) for that.)}
   \def\cmykDarkRed{0.28 1 1 0.35}
   \def\cmykBlack{0 0 0 1}
   %
-  \def\pdfsetcolor#1{\pdfliteral{#1 k}}
+  % k sets the color for filling (usual text, etc.);
+  % K sets the color for stroking (thin rules, e.g., normal _'s).
+  \def\pdfsetcolor#1{\pdfliteral{#1 k  #1 K}}
+  %
   % Set color, and create a mark which defines \thiscolor accordingly,
   % so that \makeheadline knows which color to restore.
   \def\setcolor#1{%
