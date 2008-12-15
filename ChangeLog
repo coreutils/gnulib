@@ -17,7 +17,7 @@
 	* doc/posix-functions/if_indextoname.texi: Likewise.
 	* doc/posix-functions/if_nameindex.texi: Likewise.
 	* doc/posix-functions/if_nametoindex.texi: Likewise.
-	* doc/posix-functions/insque	.texi: Likewise.
+	* doc/posix-functions/insque.texi: Likewise.
 	* doc/posix-functions/linkat.texi: Likewise.
 	* doc/posix-functions/llrint.texi: Likewise.
 	* doc/posix-functions/llrintf.texi: Likewise.
@@ -368,7 +368,7 @@
 	m4/strerror.m4.
 
 2008-12-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* modules/unilbrk/tables (Depends-on): Add unilbrk/base.
 
