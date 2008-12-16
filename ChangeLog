@@ -1,5 +1,10 @@
 2008-12-16  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-parse-duration.sh: Produce no output when the test
+	succeeds.
+
+2008-12-16  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-parse-duration.sh: Fix quoting of $tmp and $tmpf
 	expressions.
 

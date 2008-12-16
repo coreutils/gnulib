@@ -59,13 +59,10 @@ cat > "${tmpf}" <<- _EOF_
 	P 1-2-25 T 5:6:7
 	_EOF_
 
-ls -l "${tmpf}"
-
 exec 3< "${tmpf}"
 while read -u3 line
 do
-    v=`${exe} "${line}"` || die "Failed: ${exe} '${line}'"
+    v=`${exe} "${line}"` || { ls -l "${tmpf}"; die "Failed: ${exe} '${line}'"; }
     test $v -eq 38898367 || die $v is not 38898367
-    echo OK: ${line}
 done
 exec 3>&-
