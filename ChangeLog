@@ -1,5 +1,18 @@
 2008-12-16  Bruno Haible  <bruno@clisp.org>
 
+	* lib/parse-duration.h (parse_duration): Document return value
+	convention.
+	* lib/parse-duration.c: Include specification header first. Add
+	comments.
+	(_): Remove macro.
+	(parse_year_month_day, parse_hour_minute_second): Move side effects
+	outside of strchr call.
+	(parse_non_iso8601): Move side effects outside of isspace call.
+	(parse_duration): Don't test errno is res != BAD_TIME. Remove fprintf
+	call.
+
+2008-12-16  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-parse-duration.sh: Produce no output when the test
 	succeeds.
 
