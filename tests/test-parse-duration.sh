@@ -46,10 +46,10 @@ die ()
 }
 
 func_tmpdir
-trap "rm -rf ${tmp}" EXIT
-tmpf=${tmp}/tests.txt
+trap 'rm -rf "${tmp}"' EXIT
+tmpf="${tmp}/tests.txt"
 
-cat > ${tmpf} <<- _EOF_
+cat > "${tmpf}" <<- _EOF_
 	1 Y 2 M 3 W 4 d 5 h 6 m 7 s
 	P 00010225 T 05:06:07
 	P 1Y2M3W4D T 5H6M7S
@@ -59,9 +59,9 @@ cat > ${tmpf} <<- _EOF_
 	P 1-2-25 T 5:6:7
 	_EOF_
 
-ls -l $tmpf
+ls -l "${tmpf}"
 
-exec 3< ${tmpf}
+exec 3< "${tmpf}"
 while read -u3 line
 do
     v=`${exe} "${line}"` || die "Failed: ${exe} '${line}'"

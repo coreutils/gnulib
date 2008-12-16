@@ -1,3 +1,8 @@
+2008-12-16  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-parse-duration.sh: Fix quoting of $tmp and $tmpf
+	expressions.
+
 2008-12-15  Bruno Haible  <bruno@clisp.org>
 
 	* doc/glibc-functions/fgetxattr.texi: Tweak wording.
