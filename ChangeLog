@@ -1,5 +1,10 @@
 2008-12-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/btowc-tests: New file.
+	* tests/test-btowc1.sh: New file.
+	* tests/test-btowc2.sh: New file.
+	* tests/test-btowc.c: New file.
+
 	New module 'btowc'.
 	* lib/wchar.in.h (btowc): New declaration.
 	* lib/btowc.c: New file.

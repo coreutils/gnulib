@@ -1,0 +1,18 @@
+Files:
+tests/test-btowc1.sh
+tests/test-btowc2.sh
+tests/test-btowc.c
+m4/locale-fr.m4
+m4/codeset.m4
+
+Depends-on:
+
+configure.ac:
+gt_LOCALE_FR
+gt_LOCALE_FR_UTF8
+
+Makefile.am:
+TESTS += test-btowc1.sh test-btowc2.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
+check_PROGRAMS += test-btowc
+
