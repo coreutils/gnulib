@@ -71,6 +71,20 @@ extern "C" {
 #endif
 
 
+/* Test whether *PS is in the initial state.  */
+#if @GNULIB_MBSINIT@
+# if !@HAVE_MBSINIT@
+extern int mbsinit (const mbstate_t *ps);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef mbsinit
+# define mbsinit(p) \
+    (GL_LINK_WARNING ("mbsinit is unportable - " \
+                      "use gnulib module mbsinit for portability"), \
+     mbsinit (p))
+#endif
+
+
 /* Return the number of screen columns needed for WC.  */
 #if @GNULIB_WCWIDTH@
 # if @REPLACE_WCWIDTH@

@@ -1,0 +1,26 @@
+Description:
+mbsinit() function: test for initial conversion state.
+
+Files:
+lib/mbsinit.c
+m4/mbsinit.m4
+m4/mbstate_t.m4
+
+Depends-on:
+wchar
+
+configure.ac:
+gl_FUNC_MBSINIT
+gl_WCHAR_MODULE_INDICATOR([mbsinit])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

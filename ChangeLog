@@ -1,3 +1,16 @@
+2008-12-17  Bruno Haible  <bruno@clisp.org>
+
+	New module 'mbsinit'.
+	* lib/wchar.in.h (mbsinit): New declaration.
+	* lib/mbsinit.c: New file.
+	* m4/mbsinit.m4: New file.
+	* modules/mbsinit: New file.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize GNULIB_MBSINIT and
+	HAVE_MBSINIT.
+	* modules/wchar (Makefile.am): Substitute GNULIB_MBSINIT and
+	HAVE_MBSINIT.
+	* doc/posix-functions/mbsinit.texi: Document the new module.
+
 2008-12-16  Bruno Haible  <bruno@clisp.org>
 
 	* lib/unistd.in.h: Add comment.
