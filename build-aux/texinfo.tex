@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-12-16.11}
+\def\texinfoversion{2008-12-16.21}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -6023,6 +6023,7 @@ end
 
 % This macro is called at the beginning of all the @example variants,
 % inside a group.
+\newdimen\nonfillparindent
 \def\nonfillstart{%
   \aboveenvbreak
   \hfuzz = 12pt % Don't be fussy
@@ -6030,7 +6031,12 @@ end
   \let\par = \lisppar % don't ignore blank lines
   \obeylines % each line of input is a line of output
   \parskip = 0pt
+  % Turn off paragraph indentation but redefine \indent to emulate
+  % the normal \indent.
+  \nonfillparindent=\parindent
   \parindent = 0pt
+  \let\indent\nonfillindent
+  %
   \emergencystretch = 0pt % don't try to avoid overfull boxes
   \ifx\nonarrowing\relax
     \advance \leftskip by \lispnarrowing
@@ -6040,6 +6046,24 @@ end
   \fi
   \let\exdent=\nofillexdent
 }
+
+\begingroup
+\obeyspaces
+% We want to swallow spaces (but not other tokens) after the fake
+% @indent in our nonfill-environments, where spaces are normally
+% active and set to @tie, resulting in them not being ignored after
+% @indent.
+\gdef\nonfillindent{\futurelet\temp\nonfillindentcheck}%
+\gdef\nonfillindentcheck{%
+\ifx\temp %
+\expandafter\nonfillindentgobble%
+\else%
+\leavevmode\nonfillindentbox%
+\fi%
+}%
+\endgroup
+\def\nonfillindentgobble#1{\nonfillindent}
+\def\nonfillindentbox{\hbox to \nonfillparindent{\hss}}
 
 % If you want all examples etc. small: @set dispenvsize small.
 % If you want even small examples the full size: @set dispenvsize nosmall.
