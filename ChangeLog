@@ -1,5 +1,10 @@
 2008-12-16  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unistd.in.h: Add comment.
+	* tests/test-environ.c: Don't include <stdlib.h>.
+
+2008-12-16  Bruno Haible  <bruno@clisp.org>
+
 	* lib/parse-duration.h (parse_duration): Document return value
 	convention.
 	* lib/parse-duration.c: Include specification header first. Add
