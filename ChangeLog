@@ -1,5 +1,29 @@
 2008-12-17  Bruno Haible  <bruno@clisp.org>
 
+	* m4/mbrtowc.m4 (AC_FUNC_MBRTOWC): Renamed from gl_FUNC_MBRTOWC.
+	* m4/mbfile.m4 (gl_MBFILE): Use AC_FUNC_MBRTOWC instead of
+	gl_FUNC_MBRTOWC.
+	* m4/mbiter.m4 (gl_MBITER): LIkewise.
+	* m4/mbscasecmp.m4 (gl_PREREQ_MBSCASECMP): Likewise.
+	* m4/mbscasestr.m4 (gl_PREREQ_MBSCASESTR): Likewise.
+	* m4/mbschr.m4 (gl_PREREQ_MBSCHR): Likewise.
+	* m4/mbscspn.m4 (gl_PREREQ_MBSCSPN): Likewise.
+	* m4/mbslen.m4 (gl_PREREQ_MBSLEN): Likewise.
+	* m4/mbsncasecmp.m4 (gl_PREREQ_MBSNCASECMP): Likewise.
+	* m4/mbsnlen.m4 (gl_PREREQ_MBSNLEN): Likewise.
+	* m4/mbspbrk.m4 (gl_PREREQ_MBSPBRK): Likewise.
+	* m4/mbspcasecmp.m4 (gl_PREREQ_MBSPCASECMP): Likewise.
+	* m4/mbsrchr.m4 (gl_PREREQ_MBSRCHR): Likewise.
+	* m4/mbssep.m4 (gl_PREREQ_MBSSEP): Likewise.
+	* m4/mbsspn.m4 (gl_PREREQ_MBSSPN): Likewise.
+	* m4/mbsstr.m4 (gl_PREREQ_MBSSTR): Likewise.
+	* m4/mbstok_r.m4 (gl_PREREQ_MBSTOK_R): Likewise.
+	* m4/mbswidth.m4 (gl_MBSWIDTH): Likewise.
+	* m4/quotearg.m4 (gl_QUOTEARG): Likewise.
+	* modules/trim (configure.ac): Likewise.
+
+2008-12-17  Bruno Haible  <bruno@clisp.org>
+
 	* modules/btowc-tests: New file.
 	* tests/test-btowc1.sh: New file.
 	* tests/test-btowc2.sh: New file.
