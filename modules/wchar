@@ -25,9 +25,11 @@ wchar.h: wchar.in.h
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''NEXT_WCHAR_H''@|$(NEXT_WCHAR_H)|g' \
 	      -e 's/@''HAVE_WCHAR_H''@/$(HAVE_WCHAR_H)/g' \
+	      -e 's|@''GNULIB_BTOWC''@|$(GNULIB_BTOWC)|g' \
 	      -e 's|@''GNULIB_MBSINIT''@|$(GNULIB_MBSINIT)|g' \
 	      -e 's|@''GNULIB_WCWIDTH''@|$(GNULIB_WCWIDTH)|g' \
 	      -e 's/@''HAVE_WINT_T''@/$(HAVE_WINT_T)/g' \
+	      -e 's|@''HAVE_BTOWC''@|$(HAVE_BTOWC)|g' \
 	      -e 's|@''HAVE_MBSINIT''@|$(HAVE_MBSINIT)|g' \
 	      -e 's|@''HAVE_DECL_WCWIDTH''@|$(HAVE_DECL_WCWIDTH)|g' \
 	      -e 's|@''REPLACE_WCWIDTH''@|$(REPLACE_WCWIDTH)|g' \

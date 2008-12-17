@@ -1,0 +1,25 @@
+Description:
+btowc() function: convert unibyte character to wide character.
+
+Files:
+lib/btowc.c
+m4/btowc.m4
+
+Depends-on:
+wchar
+
+configure.ac:
+gl_FUNC_BTOWC
+gl_WCHAR_MODULE_INDICATOR([btowc])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
