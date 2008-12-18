@@ -160,7 +160,7 @@ flock (int fd, int operation)
 
 #else /* !Windows */
 
-#ifdef HAVE_FLOCK_L_TYPE
+#ifdef HAVE_STRUCT_FLOCK_L_TYPE
 /* We know how to implement flock in terms of fcntl. */
 
 #ifdef HAVE_FCNTL_H
@@ -170,6 +170,9 @@ flock (int fd, int operation)
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#include <errno.h>
+#include <string.h>
 
 int
 flock (int fd, int operation)
@@ -210,10 +213,10 @@ flock (int fd, int operation)
   return r;
 }
 
-#else /* !HAVE_FLOCK_L_TYPE */
+#else /* !HAVE_STRUCT_FLOCK_L_TYPE */
 
 #error "This platform lacks flock function, and Gnulib doesn't provide a replacement. This is a bug in Gnulib."
 
-#endif /* !HAVE_FLOCK_L_TYPE */
+#endif /* !HAVE_STRUCT_FLOCK_L_TYPE */
 
 #endif /* !Windows */

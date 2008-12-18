@@ -1,3 +1,15 @@
+2008-12-18  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/flock.c: Use proper #if symbol in check.  Reported by "Tom
+	G. Christensen" <tgc@jupiterrise.com>.
+
+	* lib/flock.c: Need to include errno.h.  Reported by "Tom
+	G. Christensen" <tgc@jupiterrise.com>.
+
+	* lib/flock.c: Need to include string.h.  Reported by "Tom
+	G. Christensen" <tgc@jupiterrise.com> and Eric Blake
+	<ebb9@byu.net>.
+
 2008-12-18  Bruno Haible  <bruno@clisp.org>
 
 	* m4/locale-ja.m4: New file, from GNU gettext.
