@@ -9,6 +9,7 @@ dnl From Paul Eggert
 dnl This override of an autoconf macro can be removed when autoconf 2.60 or
 dnl newer can be assumed everywhere.
 
+m4_if(m4_version_compare(m4_defn([m4_PACKAGE_VERSION]),[2.60]),[-1],[
 AC_DEFUN([AC_FUNC_MBRTOWC],
 [
   dnl Same as AC_FUNC_MBRTOWC in autoconf-2.60.
@@ -28,4 +29,5 @@ AC_DEFUN([AC_FUNC_MBRTOWC],
     AC_DEFINE([HAVE_MBRTOWC], 1,
       [Define to 1 if mbrtowc and mbstate_t are properly declared.])
   fi
+])
 ])

@@ -1,5 +1,10 @@
 2008-12-17  Bruno Haible  <bruno@clisp.org>
 
+	* m4/mbrtowc.m4 (AC_FUNC_MBRTOWC): Don't override in autoconf >= 2.60.
+	Suggested by Eric Blake.
+
+2008-12-17  Bruno Haible  <bruno@clisp.org>
+
 	* m4/errno_h.m4 (AC_COMPUTE_INT): Provide fallback definition.
 
 2008-12-17  Bruno Haible  <bruno@clisp.org>
