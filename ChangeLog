@@ -1,5 +1,11 @@
 2008-12-17  Bruno Haible  <bruno@clisp.org>
 
+	* lib/mbsinit.c: Include verify.h. Verify an assumption.
+	* modules/mbsinit (Depends-on): Add verify.
+	Suggested by Paul Eggert.
+
+2008-12-17  Bruno Haible  <bruno@clisp.org>
+
 	* m4/mbrtowc.m4 (AC_FUNC_MBRTOWC): Renamed from gl_FUNC_MBRTOWC.
 	* m4/mbfile.m4 (gl_MBFILE): Use AC_FUNC_MBRTOWC instead of
 	gl_FUNC_MBRTOWC.

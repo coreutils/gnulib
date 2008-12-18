@@ -20,6 +20,8 @@
 /* Specification.  */
 #include <wchar.h>
 
+#include "verify.h"
+
 /* Platforms that lack mbsinit() also lack mbrlen(), mbrtowc(), mbsrtowcs()
    and wcrtomb(), wcsrtombs().
    We assume that
@@ -33,6 +35,8 @@
        buffered bytes (in the range 0..3), followed by up to 3 buffered bytes.
      - In wc -> mb direction, mbstate_t contains no information. In other
        words, it is always in the initial state.  */
+
+verify (sizeof (mbstate_t) >= 4);
 
 int
 mbsinit (const mbstate_t *ps)
