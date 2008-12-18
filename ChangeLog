@@ -1,5 +1,9 @@
 2008-12-17  Bruno Haible  <bruno@clisp.org>
 
+	* m4/errno_h.m4 (AC_COMPUTE_INT): Provide fallback definition.
+
+2008-12-17  Bruno Haible  <bruno@clisp.org>
+
 	* lib/mbsinit.c: Include verify.h. Verify an assumption.
 	* modules/mbsinit (Depends-on): Add verify.
 	Suggested by Paul Eggert.
