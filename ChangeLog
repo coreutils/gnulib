@@ -1,3 +1,7 @@
+2008-12-18  Bruno Haible  <bruno@clisp.org>
+
+	* m4/locale-ja.m4: New file, from GNU gettext.
+
 2008-12-17  Bruno Haible  <bruno@clisp.org>
 
 	* m4/mbrtowc.m4 (AC_FUNC_MBRTOWC): Don't override in autoconf >= 2.60.
