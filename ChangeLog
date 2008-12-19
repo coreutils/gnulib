@@ -1,5 +1,12 @@
 2008-12-18  Bruno Haible  <bruno@clisp.org>
 
+	* modules/mbrtowc-tests: New file.
+	* tests/test-mbrtowc1.sh: New file.
+	* tests/test-mbrtowc2.sh: New file.
+	* tests/test-mbrtowc3.sh: New file.
+	* tests/test-mbrtowc4.sh: New file.
+	* tests/test-mbrtowc.c: New file.
+
 	New module 'mbrtowc'.
 	* lib/wchar.in.h (mbstate_t): Override when the system does not have
 	mbsinit and mbrtowc.
