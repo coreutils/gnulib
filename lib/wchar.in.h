@@ -137,6 +137,20 @@ extern size_t mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps);
 #endif
 
 
+/* Recognize a multibyte character.  */
+#if @GNULIB_MBRLEN@
+# if !@HAVE_MBRLEN@
+extern size_t mbrlen (const char *s, size_t n, mbstate_t *ps);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef mbrlen
+# define mbrlen(s,n,p) \
+    (GL_LINK_WARNING ("mbrlen is unportable - " \
+                      "use gnulib module mbrlen for portability"), \
+     mbrlen (s, n, p))
+#endif
+
+
 /* Return the number of screen columns needed for WC.  */
 #if @GNULIB_WCWIDTH@
 # if @REPLACE_WCWIDTH@

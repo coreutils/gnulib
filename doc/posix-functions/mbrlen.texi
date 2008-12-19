@@ -4,15 +4,15 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mbrlen.html}
 
-Gnulib module: ---
+Gnulib module: mbrlen
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 HP-UX 11, IRIX 6.5, Solaris 2.6, mingw, Interix 3.5.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

@@ -1,5 +1,18 @@
 2008-12-19  Bruno Haible  <bruno@clisp.org>
 
+	New module 'mbrlen'.
+	* lib/wchar.in.h (mbrlen): New declaration.
+	* lib/mbrlen.c: New file.
+	* m4/mbrlen.m4: New file.
+	* modules/mbrlen: New file.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize GNULIB_MBRLEN and
+	HAVE_MBRLEN.
+	* modules/wchar (Makefile.am): Substitute GNULIB_MBRLEN and
+	HAVE_MBRLEN.
+	* doc/posix-functions/mbrlen.texi: Document the new module.
+
+2008-12-19  Bruno Haible  <bruno@clisp.org>
+
 	* lib/mbrtowc.c: Include verify.h. Verify an assumption.
 	* modules/mbrtowc (Depends-on): Add verify.
 	Suggested by Paul Eggert.
