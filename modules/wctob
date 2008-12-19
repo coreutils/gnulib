@@ -1,0 +1,25 @@
+Description:
+wctob() function: convert wide character to unibyte character.
+
+Files:
+lib/wctob.c
+m4/wctob.m4
+
+Depends-on:
+wchar
+
+configure.ac:
+gl_FUNC_WCTOB
+gl_WCHAR_MODULE_INDICATOR([wctob])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

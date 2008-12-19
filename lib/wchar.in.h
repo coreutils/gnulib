@@ -85,6 +85,20 @@ extern wint_t btowc (int c);
 #endif
 
 
+/* Convert a wide character to a single-byte character.  */
+#if @GNULIB_WCTOB@
+# if !@HAVE_WCTOB@
+extern int wctob (wint_t wc);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef wctob
+# define wctob(w) \
+    (GL_LINK_WARNING ("wctob is unportable - " \
+                      "use gnulib module wctob for portability"), \
+     wctob (w))
+#endif
+
+
 /* Test whether *PS is in the initial state.  */
 #if @GNULIB_MBSINIT@
 # if !@HAVE_MBSINIT@
