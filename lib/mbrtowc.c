@@ -25,7 +25,10 @@
 
 #include "localcharset.h"
 #include "streq.h"
+#include "verify.h"
 
+
+verify (sizeof (mbstate_t) >= 4);
 
 static char internal_state[4];
 

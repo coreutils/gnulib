@@ -1,3 +1,9 @@
+2008-12-19  Bruno Haible  <bruno@clisp.org>
+
+	* lib/mbrtowc.c: Include verify.h. Verify an assumption.
+	* modules/mbrtowc (Depends-on): Add verify.
+	Suggested by Paul Eggert.
+
 2008-12-18  Bruno Haible  <bruno@clisp.org>
 
 	* modules/mbsinit-tests: New file.
