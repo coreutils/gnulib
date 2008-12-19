@@ -71,6 +71,16 @@ extern "C" {
 #endif
 
 
+/* Override mbstate_t if it is too small.
+   On IRIX 6.5, sizeof (mbstate_t) == 1, which is not sufficient for
+   implementing mbrtowc for encodings like UTF-8.  */
+#if !(@HAVE_MBSINIT@ && @HAVE_MBRTOWC@)
+typedef int rpl_mbstate_t;
+# undef mbstate_t
+# define mbstate_t rpl_mbstate_t
+#endif
+
+
 /* Convert a single-byte character to a wide character.  */
 #if @GNULIB_BTOWC@
 # if !@HAVE_BTOWC@
@@ -110,6 +120,20 @@ extern int mbsinit (const mbstate_t *ps);
     (GL_LINK_WARNING ("mbsinit is unportable - " \
                       "use gnulib module mbsinit for portability"), \
      mbsinit (p))
+#endif
+
+
+/* Convert a multibyte character to a wide character.  */
+#if @GNULIB_MBRTOWC@
+# if !@HAVE_MBRTOWC@
+extern size_t mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef mbrtowc
+# define mbrtowc(w,s,n,p) \
+    (GL_LINK_WARNING ("mbrtowc is unportable - " \
+                      "use gnulib module mbrtowc for portability"), \
+     mbrtowc (w, s, n, p))
 #endif
 
 

@@ -1,5 +1,20 @@
 2008-12-18  Bruno Haible  <bruno@clisp.org>
 
+	New module 'mbrtowc'.
+	* lib/wchar.in.h (mbstate_t): Override when the system does not have
+	mbsinit and mbrtowc.
+	(mbrtowc): New declaration.
+	* lib/mbrtowc.c: New file.
+	* m4/mbrtowc.m4 (gl_FUNC_MBRTOWC, gl_PREREQ_MBRTOWC): New macros.
+	* modules/mbrtowc: New file.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize GNULIB_MBRTOWC and
+	HAVE_MBRTOWC.
+	* modules/wchar (Makefile.am): Substitute GNULIB_MBRTOWC and
+	HAVE_MBRTOWC.
+	* doc/posix-functions/mbrtowc.texi: Document the new module.
+
+2008-12-18  Bruno Haible  <bruno@clisp.org>
+
 	New module 'wctob'.
 	* lib/wchar.in.h (wctob): New declaration.
 	* lib/wctob.c: New file.
