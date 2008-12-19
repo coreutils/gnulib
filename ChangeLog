@@ -1,5 +1,11 @@
 2008-12-18  Bruno Haible  <bruno@clisp.org>
 
+	* modules/mbsinit-tests: New file.
+	* tests/test-mbsinit.sh: New file.
+	* tests/test-mbsinit.c: New file.
+
+2008-12-18  Bruno Haible  <bruno@clisp.org>
+
 	* modules/mbrtowc-tests: New file.
 	* tests/test-mbrtowc1.sh: New file.
 	* tests/test-mbrtowc2.sh: New file.
