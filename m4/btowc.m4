@@ -1,4 +1,4 @@
-# btowc.m4 serial 1
+# btowc.m4 serial 2
 dnl Copyright (C) 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,7 @@ AC_DEFUN([gl_FUNC_BTOWC],
   AC_CHECK_FUNCS_ONCE([btowc])
   if test $ac_cv_func_btowc = no; then
     HAVE_BTOWC=0
+    gl_REPLACE_WCHAR_H
     AC_LIBOBJ([btowc])
     gl_PREREQ_BTOWC
   fi
