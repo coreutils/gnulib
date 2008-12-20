@@ -1,0 +1,27 @@
+Description:
+mbrlen() function: recognize multibyte character.
+
+Files:
+lib/mbrlen.c
+m4/mbrlen.m4
+m4/mbstate_t.m4
+
+Depends-on:
+wchar
+mbrtowc
+
+configure.ac:
+gl_FUNC_MBRLEN
+gl_WCHAR_MODULE_INDICATOR([mbrlen])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
