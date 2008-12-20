@@ -11,6 +11,7 @@ wchar
 localcharset
 streq
 verify
+extensions
 
 configure.ac:
 gl_FUNC_MBRTOWC

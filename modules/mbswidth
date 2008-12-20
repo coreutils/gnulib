@@ -12,6 +12,7 @@ Depends-on:
 wchar
 wctype
 wcwidth
+extensions
 
 configure.ac:
 gl_MBSWIDTH

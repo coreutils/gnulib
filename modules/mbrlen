@@ -9,6 +9,7 @@ m4/mbstate_t.m4
 Depends-on:
 wchar
 mbrtowc
+extensions
 
 configure.ac:
 gl_FUNC_MBRLEN
