@@ -1,5 +1,12 @@
 2008-12-19  Bruno Haible  <bruno@clisp.org>
 
+	* modules/mbsrtowcs-tests: New file.
+	* tests/test-mbsrtowcs1.sh: New file.
+	* tests/test-mbsrtowcs2.sh: New file.
+	* tests/test-mbsrtowcs3.sh: New file.
+	* tests/test-mbsrtowcs4.sh: New file.
+	* tests/test-mbsrtowcs.c: New file.
+
 	New module 'mbsrtowcs'.
 	* lib/wchar.in.h (mbsrtowcs): New declaration.
 	* lib/mbsrtowcs.c: New file.
