@@ -64,14 +64,14 @@ main (int argc, char *argv[])
     ASSERT (ret == 0);
     ASSERT (mbsinit (&state));
 
-    wc = 0xBADFACE;
+    wc = (wchar_t) 0xBADFACE;
     src = "";
     ret = mbsrtowcs (&wc, &src, 0, &state);
     ASSERT (ret == 0);
     ASSERT (wc == (wchar_t) 0xBADFACE);
     ASSERT (mbsinit (&state));
 
-    wc = 0xBADFACE;
+    wc = (wchar_t) 0xBADFACE;
     src = "";
     ret = mbsrtowcs (&wc, &src, 1, &state);
     ASSERT (ret == 0);
@@ -92,7 +92,7 @@ main (int argc, char *argv[])
 	  {
 	    size_t i;
 	    for (i = 0; i < BUFSIZE; i++)
-	      buf[i] = 0xBADFACE;
+	      buf[i] = (wchar_t) 0xBADFACE;
 	  }
 
 	  switch (argv[1][0])
@@ -103,14 +103,14 @@ main (int argc, char *argv[])
 		char input[] = "B\374\337er"; /* "Büßer" */
 		memset (&state, '\0', sizeof (mbstate_t));
 
-		wc = 0xBADFACE;
+		wc = (wchar_t) 0xBADFACE;
 		ret = mbrtowc (&wc, input, 1, &state);
 		ASSERT (ret == 1);
 		ASSERT (wc == 'B');
 		ASSERT (mbsinit (&state));
 		input[0] = '\0';
 
-		wc = 0xBADFACE;
+		wc = (wchar_t) 0xBADFACE;
 		ret = mbrtowc (&wc, input + 1, 1, &state);
 		ASSERT (ret == 1);
 		ASSERT (wctob (wc) == (unsigned char) '\374');
@@ -147,14 +147,14 @@ main (int argc, char *argv[])
 		char input[] = "B\303\274\303\237er"; /* "Büßer" */
 		memset (&state, '\0', sizeof (mbstate_t));
 
-		wc = 0xBADFACE;
+		wc = (wchar_t) 0xBADFACE;
 		ret = mbrtowc (&wc, input, 1, &state);
 		ASSERT (ret == 1);
 		ASSERT (wc == 'B');
 		ASSERT (mbsinit (&state));
 		input[0] = '\0';
 
-		wc = 0xBADFACE;
+		wc = (wchar_t) 0xBADFACE;
 		ret = mbrtowc (&wc, input + 1, 1, &state);
 		ASSERT (ret == (size_t)(-2));
 		ASSERT (wc == (wchar_t) 0xBADFACE);
@@ -192,14 +192,14 @@ main (int argc, char *argv[])
 		char input[] = "B\217\253\344\217\251\316er"; /* "Büßer" */
 		memset (&state, '\0', sizeof (mbstate_t));
 
-		wc = 0xBADFACE;
+		wc = (wchar_t) 0xBADFACE;
 		ret = mbrtowc (&wc, input, 1, &state);
 		ASSERT (ret == 1);
 		ASSERT (wc == 'B');
 		ASSERT (mbsinit (&state));
 		input[0] = '\0';
 
-		wc = 0xBADFACE;
+		wc = (wchar_t) 0xBADFACE;
 		ret = mbrtowc (&wc, input + 1, 1, &state);
 		ASSERT (ret == (size_t)(-2));
 		ASSERT (wc == (wchar_t) 0xBADFACE);
@@ -237,14 +237,14 @@ main (int argc, char *argv[])
 		char input[] = "B\250\271\201\060\211\070er"; /* "Büßer" */
 		memset (&state, '\0', sizeof (mbstate_t));
 
-		wc = 0xBADFACE;
+		wc = (wchar_t) 0xBADFACE;
 		ret = mbrtowc (&wc, input, 1, &state);
 		ASSERT (ret == 1);
 		ASSERT (wc == 'B');
 		ASSERT (mbsinit (&state));
 		input[0] = '\0';
 
-		wc = 0xBADFACE;
+		wc = (wchar_t) 0xBADFACE;
 		ret = mbrtowc (&wc, input + 1, 1, &state);
 		ASSERT (ret == (size_t)(-2));
 		ASSERT (wc == (wchar_t) 0xBADFACE);
