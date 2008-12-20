@@ -28,6 +28,10 @@ unmodified.
 On BeOS, @code{select} can only be called on descriptors created by the
 @code{socket} function, not on regular file descriptors.
 @item
+On Solaris 2.6 and older, @code{select} applied to a file descriptor opened
+for reading and associated with @code{/dev/null} hangs, waiting for input,
+when instead it should return immediately.
+@item
 On Linux, when some file descriptor refers to a regular file, @code{select}
 may fail, setting @code{errno} to @code{EBADF}.
 @end itemize

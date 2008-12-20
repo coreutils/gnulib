@@ -1,6 +1,9 @@
 #!/bin/sh
 # Test select() on file descriptors opened for reading.
 
+# This test is known to fail on Solaris 2.6 and older, due to its handling
+# of /dev/null.
+
 tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
@@ -23,6 +26,7 @@ echo abc | { sleep 1; ./test-select-fd${EXEEXT} r 0 t-select-in.tmp; }
 test `cat t-select-in.tmp` = "1" || exit 1
 
 # Special files.
+# This part of the test is known to fail on Solaris 2.6 and older.
 
 rm -f t-select-in.tmp
 ./test-select-fd${EXEEXT} r 0 t-select-in.tmp < /dev/null
