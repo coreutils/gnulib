@@ -1,0 +1,28 @@
+Description:
+mbsrtowcs() function: convert string to wide string.
+
+Files:
+lib/mbsrtowcs.c
+m4/mbsrtowcs.m4
+m4/mbstate_t.m4
+
+Depends-on:
+wchar
+mbrtowc
+strnlen1
+
+configure.ac:
+gl_FUNC_MBSRTOWCS
+gl_WCHAR_MODULE_INDICATOR([mbsrtowcs])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
