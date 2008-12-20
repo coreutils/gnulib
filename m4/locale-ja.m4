@@ -1,4 +1,4 @@
-# locale-ja.m4 serial 4
+# locale-ja.m4 serial 5
 dnl Copyright (C) 2003, 2005-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -65,6 +65,10 @@ int main ()
      LC_ALL is set on the command line.  */
   if (strchr (getenv ("LC_ALL"), '.') == NULL) return 1;
 #endif
+  /* Check whether MB_CUR_MAX is > 1.  This excludes the dysfunctional locales
+     on Cygwin 1.5.x.  */
+  if (MB_CUR_MAX == 1)
+    return 1;
   /* Check whether in a month name, no byte in the range 0x80..0x9F occurs.
      This excludes the UTF-8 encoding.  */
   t.tm_year = 1975 - 1900; t.tm_mon = 2 - 1; t.tm_mday = 4;

@@ -1,5 +1,11 @@
 2008-12-20  Bruno Haible  <bruno@clisp.org>
 
+	Don't pretend that Cygwin has a ja_JP.EUC-JP locale.
+	* m4/locale-ja.m4 (gt_LOCALE_JA): Add test for MB_CUR_MAX. Needed on
+	Cygwin 1.5.x.
+
+2008-12-20  Bruno Haible  <bruno@clisp.org>
+
 	Ensure mbstate_t is defined on HP-UX 11.11.
 	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS): Require
 	AC_CANONICAL_HOST. On HP-UX, define _XOPEN_SOURCE to 500.
