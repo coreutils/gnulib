@@ -68,7 +68,7 @@ main (int argc, char *argv[])
     src = "";
     ret = mbsrtowcs (&wc, &src, 0, &state);
     ASSERT (ret == 0);
-    ASSERT (wc == 0xBADFACE);
+    ASSERT (wc == (wchar_t) 0xBADFACE);
     ASSERT (mbsinit (&state));
 
     wc = 0xBADFACE;
@@ -133,10 +133,10 @@ main (int argc, char *argv[])
 		    ASSERT (buf[1] == 'e');
 		    ASSERT (buf[2] == 'r');
 		    ASSERT (buf[3] == 0);
-		    ASSERT (buf[4] == 0xBADFACE);
+		    ASSERT (buf[4] == (wchar_t) 0xBADFACE);
 		  }
 		else
-		  ASSERT (buf[1] == 0xBADFACE);
+		  ASSERT (buf[1] == (wchar_t) 0xBADFACE);
 		ASSERT (mbsinit (&state));
 	      }
 	      return 0;
@@ -157,7 +157,7 @@ main (int argc, char *argv[])
 		wc = 0xBADFACE;
 		ret = mbrtowc (&wc, input + 1, 1, &state);
 		ASSERT (ret == (size_t)(-2));
-		ASSERT (wc == 0xBADFACE);
+		ASSERT (wc == (wchar_t) 0xBADFACE);
 		ASSERT (!mbsinit (&state));
 		input[1] = '\0';
 
@@ -178,10 +178,10 @@ main (int argc, char *argv[])
 		    ASSERT (buf[2] == 'e');
 		    ASSERT (buf[3] == 'r');
 		    ASSERT (buf[4] == 0);
-		    ASSERT (buf[5] == 0xBADFACE);
+		    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
 		  }
 		else
-		  ASSERT (buf[2] == 0xBADFACE);
+		  ASSERT (buf[2] == (wchar_t) 0xBADFACE);
 		ASSERT (mbsinit (&state));
 	      }
 	      return 0;
@@ -202,7 +202,7 @@ main (int argc, char *argv[])
 		wc = 0xBADFACE;
 		ret = mbrtowc (&wc, input + 1, 1, &state);
 		ASSERT (ret == (size_t)(-2));
-		ASSERT (wc == 0xBADFACE);
+		ASSERT (wc == (wchar_t) 0xBADFACE);
 		ASSERT (!mbsinit (&state));
 		input[1] = '\0';
 
@@ -223,10 +223,10 @@ main (int argc, char *argv[])
 		    ASSERT (buf[2] == 'e');
 		    ASSERT (buf[3] == 'r');
 		    ASSERT (buf[4] == 0);
-		    ASSERT (buf[5] == 0xBADFACE);
+		    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
 		  }
 		else
-		  ASSERT (buf[2] == 0xBADFACE);
+		  ASSERT (buf[2] == (wchar_t) 0xBADFACE);
 		ASSERT (mbsinit (&state));
 	      }
 	      return 0;
@@ -247,7 +247,7 @@ main (int argc, char *argv[])
 		wc = 0xBADFACE;
 		ret = mbrtowc (&wc, input + 1, 1, &state);
 		ASSERT (ret == (size_t)(-2));
-		ASSERT (wc == 0xBADFACE);
+		ASSERT (wc == (wchar_t) 0xBADFACE);
 		ASSERT (!mbsinit (&state));
 		input[1] = '\0';
 
@@ -268,10 +268,10 @@ main (int argc, char *argv[])
 		    ASSERT (buf[2] == 'e');
 		    ASSERT (buf[3] == 'r');
 		    ASSERT (buf[4] == 0);
-		    ASSERT (buf[5] == 0xBADFACE);
+		    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
 		  }
 		else
-		  ASSERT (buf[2] == 0xBADFACE);
+		  ASSERT (buf[2] == (wchar_t) 0xBADFACE);
 		ASSERT (mbsinit (&state));
 	      }
 	      return 0;

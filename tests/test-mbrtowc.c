@@ -120,7 +120,7 @@ main (int argc, char *argv[])
     wc = 0xBADFACE;
     ret = mbrtowc (&wc, NULL, 5, &state);
     ASSERT (ret == 0);
-    ASSERT (wc == 0xBADFACE);
+    ASSERT (wc == (wchar_t) 0xBADFACE);
     ASSERT (mbsinit (&state));
   }
 
@@ -185,7 +185,7 @@ main (int argc, char *argv[])
 	  wc = 0xBADFACE;
 	  ret = mbrtowc (&wc, input + 1, 1, &state);
 	  ASSERT (ret == (size_t)(-2));
-	  ASSERT (wc == 0xBADFACE);
+	  ASSERT (wc == (wchar_t) 0xBADFACE);
 	  ASSERT (!mbsinit (&state));
 	  input[1] = '\0';
 
@@ -235,7 +235,7 @@ main (int argc, char *argv[])
 	  wc = 0xBADFACE;
 	  ret = mbrtowc (&wc, input + 1, 1, &state);
 	  ASSERT (ret == (size_t)(-2));
-	  ASSERT (wc == 0xBADFACE);
+	  ASSERT (wc == (wchar_t) 0xBADFACE);
 	  ASSERT (!mbsinit (&state));
 	  input[1] = '\0';
 
@@ -287,7 +287,7 @@ main (int argc, char *argv[])
 	  wc = 0xBADFACE;
 	  ret = mbrtowc (&wc, input + 1, 1, &state);
 	  ASSERT (ret == (size_t)(-2));
-	  ASSERT (wc == 0xBADFACE);
+	  ASSERT (wc == (wchar_t) 0xBADFACE);
 	  ASSERT (!mbsinit (&state));
 	  input[1] = '\0';
 
