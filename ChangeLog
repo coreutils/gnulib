@@ -1,3 +1,15 @@
+2008-12-20  Bruno Haible  <bruno@clisp.org>
+
+	Ensure wctob is declared on IRIX 6.5.
+	* lib/wchar.in.h (wctob): Declare also when HAVE_DECL_WCTOB is 0.
+	* m4/wctob.m4 (gl_FUNC_WCTOB): Set HAVE_DECL_WCTOB instead of
+	HAVE_WCTOB. Also test whether <wchar.h> declares wctob.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize HAVE_DECL_WCTOB instead
+	of HAVE_WCTOB.
+	* modules/wchar (Makefile.am): Substitute HAVE_DECL_WCTOB instead of
+	HAVE_WCTOB.
+	* doc/posix-functions/wctob.texi: Mention missing declaration on IRIX.
+
 2008-12-19  Bruno Haible  <bruno@clisp.org>
 
 	* modules/mbsrtowcs-tests: New file.
