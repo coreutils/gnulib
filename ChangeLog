@@ -1,5 +1,19 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wcsrtombs'.
+	* lib/wchar.in.h (wcsrtombs): New declaration.
+	* lib/wcsrtombs.c: New file.
+	* m4/wcsrtombs.m4: New file.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSRTOMBS,
+	HAVE_WCSRTOMBS, REPLACE_WCSRTOMBS.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSRTOMBS,
+	HAVE_WCSRTOMBS, REPLACE_WCSRTOMBS.
+	* modules/wcsrtombs: New file.
+	* doc/posix-functions/wcsrtombs.texi: Mention the new module and the
+	bugs.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
 	Work around a wcrtomb() bug on Solaris 10 and OSF/1 5.1.
 	* lib/wchar.in.h (wcrtomb): Override if REPLACE_WCRTOMB is set.
 	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): Test the return value of wcrtomb

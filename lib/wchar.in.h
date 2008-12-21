@@ -223,6 +223,24 @@ extern size_t wcrtomb (char *s, wchar_t wc, mbstate_t *ps);
 #endif
 
 
+/* Convert a wide string to a string.  */
+#if @GNULIB_WCSRTOMBS@
+# if @REPLACE_WCSRTOMBS@
+#  undef wcsrtombs
+#  define wcsrtombs rpl_wcsrtombs
+# endif
+# if !@HAVE_WCSRTOMBS@ || @REPLACE_WCSRTOMBS@
+extern size_t wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t *ps);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef wcsrtombs
+# define wcsrtombs(d,s,l,p) \
+    (GL_LINK_WARNING ("wcsrtombs is unportable - " \
+                      "use gnulib module wcsrtombs for portability"), \
+     wcsrtombs (d, s, l, p))
+#endif
+
+
 /* Return the number of screen columns needed for WC.  */
 #if @GNULIB_WCWIDTH@
 # if @REPLACE_WCWIDTH@
