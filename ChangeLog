@@ -1,3 +1,18 @@
+2008-12-21  William Pursell  <bill.pursell@gmail.com>
+
+	gitlog-to-changelog: pass all command-line arguments to git-log
+	* build-aux/gitlog-to-changelog: When producing a ChangeLog,
+	it is sometimes convenient to filter the commits in various ways.
+	gitlog-to-changelog only allows --since to specify a start date,
+	but git-log itself supports many other filtering mechanisms.
+	At the moment, I want to filter by branch name.  Rather than
+	adding a --branch option to gitlog-to-changelog, it seems more
+	flexible to simply pass all options directly to git-log and let
+	git do the work.  Notice that this effectively makes --since a
+	redundant option for gitlog-to-changelog, but removing it would
+	require current usage to change since calls would then require
+	an additional '--'.
+
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
 	* modules/mbsnrtowcs-tests: New file.

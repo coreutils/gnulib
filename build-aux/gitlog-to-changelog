@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2008-08-19 05:01'; # UTC
+my $VERSION = '2008-12-21 12:07'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -50,9 +50,11 @@ sub usage ($)
   else
     {
       print $STREAM <<EOF;
-Usage: $ME [OPTIONS]
+Usage: $ME [OPTIONS] [ARGS]
 
-Convert git log output to ChangeLog format.
+Convert git log output to ChangeLog format.  If present, any ARGS
+are passed to "git log".  To avoid ARGS being parsed as options to
+$ME, they may be preceded by '--'.
 
 OPTIONS:
 
@@ -65,6 +67,7 @@ OPTIONS:
 EXAMPLE:
 
   $ME --since=2008-01-01 > ChangeLog
+  $ME -- -n 5 foo > last-5-commits-to-branch-foo
 
 EOF
     }
@@ -100,11 +103,8 @@ sub quoted_cmd(@)
      'since=s' => \$since_date,
     ) or usage 1;
 
-  @ARGV
-    and (warn "$ME: too many arguments\n"), usage 1;
-
   my @cmd = (qw (git log --log-size), "--since=$since_date",
-             '--pretty=format:%ct  %an  <%ae>%n%n%s%n%b%n');
+             '--pretty=format:%ct  %an  <%ae>%n%n%s%n%b%n', @ARGV);
   open PIPE, '-|', @cmd
     or die ("$ME: failed to run `". quoted_cmd (@cmd) ."': $!\n"
             . "(Is your Git too old?  Version 1.5.1 or later is required.)\n");
