@@ -201,6 +201,20 @@ extern size_t mbsnrtowcs (wchar_t *dest, const char **srcp, size_t srclen, size_
 #endif
 
 
+/* Convert a wide character to a multibyte character.  */
+#if @GNULIB_WCRTOMB@
+# if !@HAVE_WCRTOMB@
+extern size_t wcrtomb (char *s, wchar_t wc, mbstate_t *ps);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef wcrtomb
+# define wcrtomb(s,w,p) \
+    (GL_LINK_WARNING ("wcrtomb is unportable - " \
+                      "use gnulib module wcrtomb for portability"), \
+     wcrtomb (s, w, p))
+#endif
+
+
 /* Return the number of screen columns needed for WC.  */
 #if @GNULIB_WCWIDTH@
 # if @REPLACE_WCWIDTH@
