@@ -1,5 +1,38 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	Update for HP-UX 11.11.
+	* doc/posix-functions/btowc.texi: Clarify that the function is missing
+	in HP-UX version 11.00, not in all versions of HP-UX 11.
+	* doc/posix-functions/fwide.texi: Likewise.
+	* doc/posix-functions/fwprintf.texi: Likewise.
+	* doc/posix-functions/fwscanf.texi: Likewise.
+	* doc/posix-functions/inet_ntop.texi: Likewise.
+	* doc/posix-functions/inet_pton.texi: Likewise.
+	* doc/posix-functions/mbrlen.texi: Likewise.
+	* doc/posix-functions/mbrtowc.texi: Likewise.
+	* doc/posix-functions/mbsinit.texi: Likewise.
+	* doc/posix-functions/mbsrtowcs.texi: Likewise.
+	* doc/posix-functions/swprintf.texi: Likewise.
+	* doc/posix-functions/swscanf.texi: Likewise.
+	* doc/posix-functions/towctrans.texi: Likewise.
+	* doc/posix-functions/vfwprintf.texi: Likewise.
+	* doc/posix-functions/vswprintf.texi: Likewise.
+	* doc/posix-functions/vwprintf.texi: Likewise.
+	* doc/posix-functions/wcrtomb.texi: Likewise.
+	* doc/posix-functions/wcsrtombs.texi: Likewise.
+	* doc/posix-functions/wcsstr.texi: Likewise.
+	* doc/posix-functions/wctob.texi: Likewise.
+	* doc/posix-functions/wctrans.texi: Likewise.
+	* doc/posix-functions/wmemchr.texi: Likewise.
+	* doc/posix-functions/wmemcmp.texi: Likewise.
+	* doc/posix-functions/wmemcpy.texi: Likewise.
+	* doc/posix-functions/wmemmove.texi: Likewise.
+	* doc/posix-functions/wmemset.texi: Likewise.
+	* doc/posix-functions/wprintf.texi: Likewise.
+	* doc/posix-functions/wscanf.texi: Likewise.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
 	Work around a portability problem.
 	* tests/test-mbsrtowcs.c (main): Use a temporary conversion state.
 	* doc/posix-functions/mbsrtowcs.texi: Document the portability problem.
