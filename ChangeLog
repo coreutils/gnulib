@@ -1,5 +1,18 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	Work around a wcrtomb() bug on Solaris 10 and OSF/1 5.1.
+	* lib/wchar.in.h (wcrtomb): Override if REPLACE_WCRTOMB is set.
+	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): Test the return value of wcrtomb
+	with NULL destination argument in various locales. Set REPLACE_WCRTOMB
+	if not correct.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize REPLACE_WCRTOMB.
+	* modules/wchar (Makefile.am): Substitute REPLACE_WCRTOMB.
+	* modules/wcrtomb (Files): Add m4/locale-fr.m4, m4/locale-ja.m4,
+	m4/locale-zh.m4, m4/codeset.m4.
+	* doc/posix-functions/wcrtomb.texi: Document the bug.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
 	Work around a btowc() bug on IRIX 6.5.
 	* lib/wchar.in.h (btowc): Override if REPLACE_BTOWC is set.
 	* m4/btowc.m4 (gl_FUNC_BTOWC): Test whether btowc(EOF) is correct. Set

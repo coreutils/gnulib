@@ -207,7 +207,11 @@ extern size_t mbsnrtowcs (wchar_t *dest, const char **srcp, size_t srclen, size_
 
 /* Convert a wide character to a multibyte character.  */
 #if @GNULIB_WCRTOMB@
-# if !@HAVE_WCRTOMB@
+# if @REPLACE_WCRTOMB@
+#  undef wcrtomb
+#  define wcrtomb rpl_wcrtomb
+# endif
+# if !@HAVE_WCRTOMB@ || @REPLACE_WCRTOMB@
 extern size_t wcrtomb (char *s, wchar_t wc, mbstate_t *ps);
 # endif
 #elif defined GNULIB_POSIXCHECK

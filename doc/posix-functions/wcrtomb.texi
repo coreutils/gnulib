@@ -11,6 +11,9 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 HP-UX 11.00, IRIX 6.5, Solaris 2.6, mingw, Interix 3.5.
+@item
+This function returns 0 when the first argument is NULL in some locales on some platforms:
+OSF/1 5.1, Solaris 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:

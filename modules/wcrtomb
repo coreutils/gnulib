@@ -5,6 +5,10 @@ Files:
 lib/wcrtomb.c
 m4/wcrtomb.m4
 m4/mbstate_t.m4
+m4/locale-fr.m4
+m4/locale-ja.m4
+m4/locale-zh.m4
+m4/codeset.m4
 
 Depends-on:
 wchar
