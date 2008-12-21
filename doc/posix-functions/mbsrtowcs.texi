@@ -18,4 +18,11 @@ Portability problems not fixed by Gnulib:
 @item
 On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
+@item
+The specification is not clear about whether this function should update the
+conversion state when the first argument (the destination pointer) is NULL.
+The glibc implementation does not update the state in this case; the MacOS X
+and FreeBSD implementations do.
+For portability, when passing a NULL destination argument, it is best to pass
+a pointer to a temporary copy of the conversion state.
 @end itemize

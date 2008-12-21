@@ -1,3 +1,9 @@
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
+	Work around a portability problem.
+	* tests/test-mbsrtowcs.c (main): Use a temporary conversion state.
+	* doc/posix-functions/mbsrtowcs.texi: Document the portability problem.
+
 2008-12-20  Bruno Haible  <bruno@clisp.org>
 
 	* lib/wchar.in.h (mbsrtowcs): Redefine if REPLACE_MBSRTOWCS is set.

@@ -88,6 +88,7 @@ main (int argc, char *argv[])
 	  #define BUFSIZE 10
 	  wchar_t buf[BUFSIZE];
 	  const char *src;
+	  mbstate_t temp_state;
 
 	  {
 	    size_t i;
@@ -118,7 +119,8 @@ main (int argc, char *argv[])
 		input[1] = '\0';
 
 		src = input + 2;
-		ret = mbsrtowcs (NULL, &src, unlimited ? BUFSIZE : 1, &state);
+		temp_state = state;
+		ret = mbsrtowcs (NULL, &src, unlimited ? BUFSIZE : 1, &temp_state);
 		ASSERT (ret == 3);
 		ASSERT (src == input + 2);
 		ASSERT (mbsinit (&state));
@@ -162,7 +164,8 @@ main (int argc, char *argv[])
 		input[1] = '\0';
 
 		src = input + 2;
-		ret = mbsrtowcs (NULL, &src, unlimited ? BUFSIZE : 2, &state);
+		temp_state = state;
+		ret = mbsrtowcs (NULL, &src, unlimited ? BUFSIZE : 2, &temp_state);
 		ASSERT (ret == 4);
 		ASSERT (src == input + 2);
 		ASSERT (!mbsinit (&state));
@@ -215,7 +218,8 @@ main (int argc, char *argv[])
 		input[3] = '\0';
 
 		src = input + 4;
-		ret = mbsrtowcs (NULL, &src, unlimited ? BUFSIZE : 2, &state);
+		temp_state = state;
+		ret = mbsrtowcs (NULL, &src, unlimited ? BUFSIZE : 2, &temp_state);
 		ASSERT (ret == 3);
 		ASSERT (src == input + 4);
 		ASSERT (!mbsinit (&state));
@@ -259,7 +263,8 @@ main (int argc, char *argv[])
 		input[1] = '\0';
 
 		src = input + 2;
-		ret = mbsrtowcs (NULL, &src, unlimited ? BUFSIZE : 2, &state);
+		temp_state = state;
+		ret = mbsrtowcs (NULL, &src, unlimited ? BUFSIZE : 2, &temp_state);
 		ASSERT (ret == 4);
 		ASSERT (src == input + 2);
 		ASSERT (!mbsinit (&state));
