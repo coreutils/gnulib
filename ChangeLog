@@ -1,5 +1,11 @@
 2008-12-20  Bruno Haible  <bruno@clisp.org>
 
+	* lib/wchar.in.h (mbsrtowcs): Redefine if REPLACE_MBSRTOWCS is set.
+	* m4/mbsrtowcs.m4 (gl_FUNC_MBSRTOWCS): Invoke gl_MBSTATE_T_BROKEN. Set
+	REPLACE_MBSRTOWCS if mbsrtowcs needs to be overridden.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize REPLACE_MBSRTOWCS.
+	* modules/wchar (Makefile.am): Substitute REPLACE_MBSRTOWCS.
+
 	Work around mbrtowc bugs on AIX, HP-UX, OSF/1, Solaris.
 	* lib/wchar.in.h (mbstate_t): Redefine also if REPLACE_MBSTATE_T is
 	set.

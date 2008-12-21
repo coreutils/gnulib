@@ -167,7 +167,11 @@ extern size_t mbrlen (const char *s, size_t n, mbstate_t *ps);
 
 /* Convert a string to a wide string.  */
 #if @GNULIB_MBSRTOWCS@
-# if !@HAVE_MBSRTOWCS@
+# if @REPLACE_MBSRTOWCS@
+#  undef mbsrtowcs
+#  define mbsrtowcs rpl_mbsrtowcs
+# endif
+# if !@HAVE_MBSRTOWCS@ || @REPLACE_MBSRTOWCS@
 extern size_t mbsrtowcs (wchar_t *dest, const char **srcp, size_t len, mbstate_t *ps);
 # endif
 #elif defined GNULIB_POSIXCHECK
